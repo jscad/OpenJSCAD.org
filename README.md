@@ -6,7 +6,14 @@ A few functions are available to make the transition from OpenSCAD to OpenJSCAD 
 
 <h2>Installation</h2>
 
-None
+<b>Immediate Use</b>: No installation, go to <b><a href="http://openjscad.org">OpenJSCAD.org</a></b>
+
+Local Use: 
+<pre>
+% git clone https://github.com/Spiritdude/OpenJSCAD.org
+</pre>
+
+and then access the files via local web-site and your web-browser.
 
 <h2>History</h2>
 <ul>
