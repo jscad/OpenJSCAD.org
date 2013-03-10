@@ -29,6 +29,11 @@ and then access the files via local web-site and your web-browser.
 <li> example of platonic solids
 </ul>
 
+<h2>Documentation</h2>
+<ul>
+<b><a href="wiki/User-Guide">OpenJSCAD User Guide</a></b>
+</ul>
+
 <h2>See Also</h2>
 <ul>
 <li><a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a>, parent of this project
