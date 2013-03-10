@@ -1,14 +1,14 @@
-// -- Example 2
+// -- Example 020:
 
 var cubes = new Array();
 
 function main() {
    for(var i=0; i<100; i++) {
       cubes[i] = translate([
-         50*Math.random()-25,
-         50*Math.random()-25,
-         50*Math.random()-25],
-         cube(1));
+         150*Math.random()-25,
+         150*Math.random()-25,
+         150*Math.random()-25],
+         cube(5));
    }
    return union(cubes);
 }

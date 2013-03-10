@@ -66,7 +66,7 @@ function difference() {
    var o,i,a=arguments; 
    if(a[0].length) a = a[0]; 
    for(o=a[0],i=1; i<a.length; i++) { 
-      o = o.subtract(a[i]); 
+      o = o.subtract(a[i].setColor(1,1,0));  // -- color the cuts
    } 
    return o; 
 }
@@ -75,7 +75,7 @@ function intersection() {
    var o,i,a=arguments; 
    if(a[0].length) a = a[0]; 
    for(o=a[0],i=1; i<a.length; i++) { 
-      o = o.intersect(a[i]); 
+      o = o.intersect(a[i].setColor(1,1,0)); 
    } 
    return o; 
 }

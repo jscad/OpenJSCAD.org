@@ -1,9 +1,15 @@
-// -- Example 1
+// -- Example 000:
 
 function main() {
-   return translate([0,0,7.5],scale(5,union(
-        difference(
-            cube({size: 3, center: true}),
-            sphere(2).setColor(1,1,0)),
-        sphere(1.0).setColor(1,1,0))));
+   return scale(10,
+      translate([0,0,1.5],
+         
+      union(
+            difference(
+               cube({size: 3, center: true}),
+               sphere(2)
+            ),
+            sphere(1.3).setColor(1,1,0)
+         )
+      ));
 }

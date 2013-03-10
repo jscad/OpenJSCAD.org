@@ -100,6 +100,13 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
   gl.ondraw = function() {
     _this.onDraw();
   };
+  gl.onresize = function(e) {    // is not called
+     var viewer = document.getElementById('viewer');
+     // fix distortion after resize of canvas
+     //gl.perspective(45, viewer.offsetWidth / viewer.offsetHeight, 0.5, 1000);
+     gl.perspective(45, containerelement.offsetWidth / containerelement.offsetHeight, 0.5, 1000);
+     //alert(1);
+  }
   gl.onmousewheel = function(e) {
     var wheelDelta = 0;    
     if (e.wheelDelta)
@@ -211,9 +218,18 @@ OpenJsCad.Viewer.prototype = {
       gl.enable(gl.BLEND);
       gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
       gl.begin(gl.LINES);
-      var plate = 50;
-      gl.color(.5,.5,.5,.5); //negative direction is lighter
+      var plate = 200;
+      gl.color(.8,.8,.8,.5); //negative direction is lighter
       for(var x=-plate/2; x<=plate/2; x++) {
+         if(x%10) {
+            gl.vertex(-plate/2, x, 0);
+            gl.vertex(plate/2, x, 0);
+            gl.vertex(x, -plate/2, 0);
+            gl.vertex(x, plate/2, 0);
+         }
+      }
+      gl.color(.5,.5,.5,.5); //negative direction is lighter
+      for(var x=-plate/2; x<=plate/2; x+=10) {
          gl.vertex(-plate/2, x, 0);
          gl.vertex(plate/2, x, 0);
          gl.vertex(x, -plate/2, 0);
@@ -599,7 +615,7 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
   this.zoomControl = null;
   //this.viewerwidth = 1200;
   //this.viewerheight = 800;
-  this.initialViewerDistance = 50;
+  this.initialViewerDistance = 100;
   this.processing = false;
   this.currentObject = null;
   this.hasValidCurrentObject = false;
@@ -696,7 +712,8 @@ OpenJsCad.Processor.prototype = {
 
        //end of zoom control
     }
-    this.errordiv = document.createElement("div");
+    //this.errordiv = document.createElement("div");
+    this.errordiv = document.getElementById("errordiv");
     this.errorpre = document.createElement("pre"); 
     this.errordiv.appendChild(this.errorpre);
     //this.statusdiv = document.createElement("div");
@@ -744,8 +761,8 @@ OpenJsCad.Processor.prototype = {
     this.parametersdiv.appendChild(parseParametersButton);
     this.enableItems();    
     //this.containerdiv.appendChild(this.statusdiv);
-    this.containerdiv.appendChild(this.errordiv);
-    this.containerdiv.appendChild(this.parametersdiv);
+    //this.containerdiv.appendChild(this.errordiv);
+    //this.containerdiv.appendChild(this.parametersdiv); // fix this!
     this.clearViewer();
   },
   
