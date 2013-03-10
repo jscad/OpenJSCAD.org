@@ -21,6 +21,12 @@ and then access the files via local web-site and your web-browser.
 <li>2013/03/10: 0.001: initial version
 </ul>
 
+<h2>Todo</h2>
+<ul>
+<li> torus
+<li> example of platonic solids
+</ul>
+
 <h2>See Also</h2>
 <ul>
 <li><a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a>, parent of this project
