@@ -40,6 +40,10 @@ and then access the files via local web-site and your web-browser.
 <li><b><a href="wiki/User-Guide">OpenJSCAD User Guide</a></b>
 </ul>
 
+<h2>Screenshot</h2>
+
+<img src="doc/sshot.png">
+
 <h2>See Also</h2>
 <ul>
 <li><a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a>, inspiration of this project and the following below
