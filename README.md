@@ -36,8 +36,8 @@ and then access the files via local web-site and your web-browser.
 
 <h2>See Also</h2>
 <ul>
-<li><a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a>, parent of this project
-<li><a href="http://garyhodgson.github.com/openscad.net/">OpenSCAD.net</a>, another parent
-<li><a href="http://kaosat-dev.github.com/CoffeeSCad/">CoffeeSCad</a>, JavaScript on simplified, similar approach
+<li><a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a>, inspiration of this project and the following below
+<li><a href="http://garyhodgson.github.com/openscad.net/">OpenSCAD.net</a>, another place of inspiration
+<li><a href="http://kaosat-dev.github.com/CoffeeSCad/">CoffeeSCad</a>, JavaScript simplified (no more {}), very active development
 </ul>
 
