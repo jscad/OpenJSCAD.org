@@ -1,7 +1,7 @@
 // openscad.js, a few functions to simplify coding OpenSCAD-like
 //    written by Rene K. Mueller <spiritdude@gmail.com>, License: GPLv2
 //
-// Version: 0.005
+// Version: 0.006
 //
 // Description:
 // Helping to convert OpenSCAD .scad files to OpenJSCad .jscad files with 
@@ -9,6 +9,7 @@
 //     http://joostn.github.com/OpenJsCad/processfile.html
 //
 // History:
+// 2013/03/10: 0.006: colored intersection() & difference(), added mirror(), cylinder supports start/end coordinates too
 // 2013/03/04: 0.005: intersect() -> intersection(), sin, cos, asin, acos included, more examples 
 // 2013/03/02: 0.004: better install, examples/, etc refinements (working on 2d primitives)
 // 2013/03/01: 0.003: example.jscad vs example.scad, openscad.js/.jscad split up, and openjscad cli in nodejs implemented
@@ -122,8 +123,13 @@ function cylinder(p) {
    }
    if(p&&p.fn) fn = p.fn;
    if(p&&p.center==true) zoff = -h/2;
-   var o = CSG.cylinder({start:[0,0,0],end:[0,0,h],radiusStart:r1,radiusEnd:r2,resolution:fn});
-   if(zoff) o = o.translate([0,0,zoff]);
+   var o;
+   if(p&&(p.start&&p.end)) {
+      o = CSG.cylinder({start:p.start,end:p.end,radiusStart:r1,radiusEnd:r2,resolution:fn});
+   } else {
+      o = CSG.cylinder({start:[0,0,0],end:[0,0,h],radiusStart:r1,radiusEnd:r2,resolution:fn});
+      if(zoff) o = o.translate([0,0,zoff]);
+   }
    return o;
 }
 
@@ -149,6 +155,18 @@ function rotate(v,o) {
       
    } else {                   // rotate([x,y,z],o)
       return o.rotateX(v[0]).rotateY(v[1]).rotateZ(v[2]); 
+   }
+}
+
+function mirror(v,o) { 
+   if(arguments.length==3) {  // mirror(r,[x,y,z],o)
+      var r = arguments[0];
+      var v = arguments[1];
+      var o = arguments[2];
+      return o.mirrorX(v[0]*r).mirrorY(v[1]*r).mirrorZ(v[2]*r);
+      
+   } else {                   // rotate([x,y,z],o)
+      return o.mirrorX(v[0]).mirrorY(v[1]).mirrorZ(v[2]); 
    }
 }
 
