@@ -29,7 +29,8 @@ and then access the files via local web-site and your web-browser.
 <li> complete 2D primitives and transformations
 <li> implementation of linear_extrude(), rotate_extrude() (parameter compatible or very close so)
 <li> example of platonic solids (based on triangle())
-<li> 3d transformation: hull()
+<li> simple text (extruded)
+<li> 3d operation: hull()
 <li> processing bar (0..100%), perhaps even visual progress seen in the model direct
 <li> STL & AMF importer / exporter
 <li> integration into <a href="https://github.com/Spiritdude/RepRapCloud">RepRap Cloud</a> as first stage of the workflow.

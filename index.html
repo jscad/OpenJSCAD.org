@@ -51,15 +51,23 @@ canvas {
    height: 300px;
    position: absolute;
    font-size: 0.6em;
-   background: #ccc;
+   background: #fff;
    border: 1px solid #999;
    border-radius: 5px;
-   -moz-opacity: 0.5;
-   opacity: 0.5;
+   -moz-opacity: 0.6;
+   opacity: 0.6;
    padding: 1em;
    //display: none;
+   box-shadow: 0px 0px 15px black;
 }
 
+.closeButton {
+   right: 0px;
+   top: 0px;
+   margin: 3px; 
+   position: absolute;
+   z-index: 4;
+}
 #footer {
    //width: 99%;    // avoid scrollbar
    padding: 0.3em;
@@ -105,6 +113,7 @@ function main() {
 }
 </div>
 <div id="hint">
+<div class="closeButton" onclick="document.getElementById('hint').style.display=(document.getElementById('hint').style.display!='none'?'none':'block');"><img src="imgs/closeButton.png"></div>
 <span id=header>OpenJSCAD.org</span> ALPHA<p>
 <b>Shift + Return</b> (or F5, F6): render code<p>
 <b>left mouse</b>: rotate XY<br>
