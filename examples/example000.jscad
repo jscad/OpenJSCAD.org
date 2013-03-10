@@ -9,7 +9,11 @@ function main() {
                cube({size: 3, center: true}),
                sphere(2)
             ),
-            sphere(1.3).setColor(1,1,0)
+            intersection(
+                sphere(1.3),
+                cube({size: 2.1, center: true})
+            )
          )
       ));
 }
+
