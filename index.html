@@ -1,0 +1,296 @@
+<html><head>
+<title>OpenJSCAD.org</title>
+<link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
+</head><body onload="onload()">
+<script src="lightgl.js"></script>
+<script src="csg.js"></script>
+<script src="openjscad.js"></script>
+<script src="openscad.js"></script>
+<link rel="stylesheet" href="openjscad.css" type="text/css">
+
+<style type="text/css" media="screen">
+body { 
+   margin: 0px; 
+   padding: 2px; 
+   font-family: Helvetica, Arial, Sans;
+}
+
+#header {
+   color: #82c;
+   font-size: 1.2em;
+   font-weight: bold;
+}
+
+#editor { 
+   width: 40%;
+   top: 0px;
+   bottom: 0px;
+   right: 0px;
+}
+
+#editor {
+   background: rgba(200,200,200,0.1);
+}
+
+#viewer {
+   background: #fff;
+   width: 100%;
+   top: 0px;
+   bottom: 0px;
+}
+canvas { 
+   cursor: move; 
+   padding: 0px; 
+   margin: 0px;
+}
+#hint {
+   z-index: 2;
+   top: 30px;
+   left: 30px;
+   width: 30%
+   height: 300px;
+   position: absolute;
+   font-size: 0.6em;
+   background: #ccc;
+   border: 1px solid #999;
+   border-radius: 5px;
+   -moz-opacity: 0.5;
+   opacity: 0.5;
+   padding: 1em;
+   //display: none;
+}
+
+#footer {
+   //width: 99%;    // avoid scrollbar
+   padding: 0.3em;
+   font-size: 0.7em;
+   text-align: left;
+   -moz-opacity: 0.5;
+   opacity: 0.5;
+   margin-top: 1em;
+}
+
+#tail { 
+   z-index: 4;
+   position: absolute;
+   bottom: 1px; 
+   margin: 1em;
+}
+
+.ace-chrome .ace_gutter { 
+   border-left: 2px dashed rgba(200,200,200,0.2);
+   background: none 
+}
+</style>
+</head>
+<body>
+
+<div id="editor">// -- Example 000:
+
+function main() {
+   return scale(10,
+      translate([0,0,1.5],
+         
+      union(
+            difference(
+               cube({size: 3, center: true}),
+               sphere(2)
+            ),
+            intersection(
+                sphere(1.3),
+                cube({size: 2.1, center: true})
+            )
+         )
+      ));
+}
+</div>
+<div id="hint">
+<span id=header>OpenJSCAD.org</span> ALPHA<p>
+<b>Shift + Return</b> (or F5, F6): render code<p>
+<b>left mouse</b>: rotate XY<br>
+<b>middle mouse</b>: pan<br>
+<b>right mouse</b>: rotate XZ<br>
+<b>wheel mouse</b>: zoom in/out<p>
+Supported formats:<br>
+<b>.jscad</b> (<a href="http://joostn.github.com/OpenJsCad/">OpenJsCad</a>)<br>
+<b>.scad</b> (coming soon, <a href="http://openscad.org">OpenSCAD.org</a>)<br>
+<b>.stl</b> (planned, STL importer)<br>
+<b>.amf</b> (planned, AMF importer/exporter)
+</div>
+
+<div oncontextmenu="return false;" id="viewer"></div>
+
+<div id=tail>
+<div id="statusdiv"></div>
+<div id="errordiv"></div>
+<div id="filedropzone">
+  <div id="filedropzone_empty">Drop your .jscad file here or edit code in built-in editor</div>
+  <div id="filedropzone_filled">
+    <span id="currentfile">...</span>
+    <div id="filebuttons">
+      <button id="getstlbutton" style="display:none" onclick="getStl();">Get STL</button>
+      <button onclick="parseFile(false,false);">Reload</button>
+      <button onclick="parseFile(true,false);">Debug (see below)</button>
+	   <label for="autoreload">Auto Reload</label><input type="checkbox" name="autoreload" value="" id="autoreload" onclick="toggleAutoReload();">
+    </div>
+  </div>
+</div>
+
+<div id=footer>
+OpenJSCAD.org 0.002 2013/03/10, GPLv2 & MIT License - get your own copy from <a href="https://github.com/Spiritdude/OpenJSCAD.org">github.com</a>
+</div>
+</div>
+
+<script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+var gCurrentFile = null;
+var gProcessor = null;
+var editor = null;
+
+function onload() {
+   // -- http://ace.ajax.org/#nav=howto
+   editor = ace.edit("editor");
+   editor.setTheme("ace/theme/chrome");
+   //document.getElementById('ace_gutter').style.background = 'none';
+   editor.getSession().setMode("ace/mode/javascript");
+   editor.getSession().on('change', function(e) {
+      ;
+   });
+   editor.commands.addCommand({
+       name: 'myCommand',
+       bindKey: {win: 'F5',  mac: 'F5'},
+       exec: function(editor) {
+           gProcessor.setJsCad(editor.getValue());
+      },
+   });
+   editor.commands.addCommand({
+       name: 'myCommand',
+       bindKey: {win: 'F6',  mac: 'F6'},
+       exec: function(editor) {
+           gProcessor.setJsCad(editor.getValue());
+      },
+   });
+   editor.commands.addCommand({
+       name: 'myCommand',
+       bindKey: {win: 'Shift-Return',  mac: 'Shift-Return'},
+       exec: function(editor) {
+           gProcessor.setJsCad(editor.getValue());
+      },
+   });
+   gProcessor = new OpenJsCad.Processor(document.getElementById("viewer"));
+   setupDragDrop();
+   //gProcessor.setDebugging(debugging); 
+   gProcessor.setJsCad(editor.getValue());
+}
+
+// -----------------------------------------------------------------------------------------------------------
+// from old OpenJsCad processfile.html below:
+
+// Show all exceptions to the user:
+OpenJsCad.AlertUserOfUncaughtExceptions();
+
+function setupDragDrop() {
+  // Check for the various File API support.
+  if (window.File && window.FileReader && window.FileList) {
+    // Great success! All the File APIs are supported.
+  } else {
+    throw new Error("Error: Your browser does not fully support the HTML File API");
+  }
+  var dropZone = document.getElementById('filedropzone');
+  dropZone.addEventListener('dragover', function(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy';
+  }, false);
+  dropZone.addEventListener('drop', handleFileSelect, false);
+}
+
+function handleFileSelect(evt) {
+  evt.stopPropagation();
+  evt.preventDefault();
+  
+  if(!evt.dataTransfer) throw new Error("Not a datatransfer (1)");
+  if(!evt.dataTransfer.files) throw new Error("Not a datatransfer (2)");
+  if(evt.dataTransfer.files.length != 1) {
+    throw new Error("Please drop a single .jscad file");
+  }
+  var file = evt.dataTransfer.files[0];
+  if(!file.name.match(/\.jscad$/i)) {
+    throw new Error("Please drop a file with .jscad extension");
+  }
+  if(file.size == 0) {
+    throw new Error("You have dropped an empty file");
+  }              
+  gCurrentFile = file;
+  gPreviousModificationTime = "";
+  fileChanged();
+}
+
+function fileChanged() {
+  var dropZone = document.getElementById('filedropzone');
+  if(gCurrentFile) {
+    var txt = "Current file: "+gCurrentFile.name;
+    document.getElementById("currentfile").innerHTML = txt;
+    document.getElementById("filedropzone_filled").style.display = "block";
+    document.getElementById("filedropzone_empty").style.display = "none";
+  } else {
+    document.getElementById("filedropzone_filled").style.display = "none";
+    document.getElementById("filedropzone_empty").style.display = "block";
+  }
+  parseFile(false,false);
+}
+
+var autoReloadTimer = null;
+
+function toggleAutoReload() {
+	if (document.getElementById("autoreload").checked) {
+		autoReloadTimer = setInterval(function(){
+		  parseFile(false,true);
+    }, 1000);
+	} else {
+		if (autoReloadTimer !== null) {
+			clearInterval(autoReloadTimer);
+			autoReloadTimer = null;
+		}
+	}
+}
+
+var previousScript = null;
+function parseFile(debugging, onlyifchanged) {
+  if(gCurrentFile) {
+    var reader = new FileReader();
+    reader.onload = function(evt) {
+      var txt = evt.target.result;
+    };
+    reader.onloadend = function(evt) {
+      if (evt.target.readyState == FileReader.DONE) {
+        var jscadscript = evt.target.result;
+        if(jscadscript == "") {
+          if(document.location.toString().match(/^file\:\//i)) {
+            throw new Error("Could not read file. You are using a local copy of OpenJSCAD.org; if you are using Chrome, you need to launch it with the following command line option:\n\n--allow-file-access-from-files\n\notherwise the browser will not have access to uploaded files due to security restrictions.");
+          } else {
+            throw new Error("Could not read file.");
+          }            
+        } else {         
+          if(gProcessor && ((!onlyifchanged) || (previousScript !== jscadscript))) {
+            var filename = gCurrentFile.name;
+            filename = filename.replace(/^.*\/([^\/]*)$/, "$1");
+            gProcessor.setDebugging(debugging); 
+            editor.setValue(jscadscript);
+            gProcessor.setJsCad(jscadscript, filename);
+						previousScript = jscadscript;
+          }
+        }
+      } else {
+        throw new Error("Failed to read file");
+        if(gProcessor) gProcessor.clearViewer();
+				previousScript = null;
+      }
+    };
+    reader.readAsText(gCurrentFile, "UTF-8");
+  }
+}
+
+</script>
+</body></html>
