@@ -1,4 +1,4 @@
-VERSION=0.001
+VERSION=0.003
 
 all::
 	@echo "nothing to do" 

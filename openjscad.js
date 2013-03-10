@@ -100,12 +100,12 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
   gl.ondraw = function() {
     _this.onDraw();
   };
-  gl.onresize = function(e) {    // is not called
+  containerelement.onresize = function(e) {    // is not called
      var viewer = document.getElementById('viewer');
      // fix distortion after resize of canvas
      //gl.perspective(45, viewer.offsetWidth / viewer.offsetHeight, 0.5, 1000);
-     gl.perspective(45, containerelement.offsetWidth / containerelement.offsetHeight, 0.5, 1000);
-     //alert(1);
+     //_this.gl.perspective(45, containerelement.offsetWidth / containerelement.offsetHeight, 0.5, 1000);
+     alert("canvas has been resized");
   }
   gl.onmousewheel = function(e) {
     var wheelDelta = 0;    
