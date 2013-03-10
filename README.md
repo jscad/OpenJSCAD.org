@@ -47,3 +47,8 @@ and then access the files via local web-site and your web-browser.
 <li><a href="http://kaosat-dev.github.com/CoffeeSCad/">CoffeeSCad</a>, JavaScript simplified (no more {}), very active development
 </ul>
 
+
+That's all for now,
+
+Rene K. Mueller<br>
+initial version 2013/03/10
