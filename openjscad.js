@@ -597,8 +597,8 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
   this.viewerdiv = null;
   this.viewer = null;
   this.zoomControl = null;
-  this.viewerwidth = 1200;
-  this.viewerheight = 800;
+  //this.viewerwidth = 1200;
+  //this.viewerheight = 800;
   this.initialViewerDistance = 50;
   this.processing = false;
   this.currentObject = null;
@@ -649,14 +649,14 @@ OpenJsCad.Processor.prototype = {
 */    
     var viewerdiv = document.createElement("div");
     viewerdiv.className = "viewer";
-    viewerdiv.style.width = this.viewerwidth + "px";
-    viewerdiv.style.height = this.viewerheight + "px";
+    viewerdiv.style.width = '100%'; //this.viewerwidth; // + "px";
+    viewerdiv.style.height = '100%'; //this.viewerheight; // + "px";
     viewerdiv.style.backgroundColor = "rgb(200,200,200)";
     this.containerdiv.appendChild(viewerdiv);
     this.viewerdiv = viewerdiv;
-    try
-    {
-      this.viewer = new OpenJsCad.Viewer(this.viewerdiv, this.viewerwidth, this.viewerheight, this.initialViewerDistance);
+    try {
+      //this.viewer = new OpenJsCad.Viewer(this.viewerdiv, this.viewerwidth, this.viewerheight, this.initialViewerDistance);
+      this.viewer = new OpenJsCad.Viewer(this.viewerdiv, viewerdiv.offsetWidth, viewer.offsetHeight, this.initialViewerDistance);
     } catch(e) {
       //      this.viewer = null;
       this.viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad currently requires Google Chrome with WebGL enabled";
@@ -699,8 +699,9 @@ OpenJsCad.Processor.prototype = {
     this.errordiv = document.createElement("div");
     this.errorpre = document.createElement("pre"); 
     this.errordiv.appendChild(this.errorpre);
-    this.statusdiv = document.createElement("div");
-    this.statusdiv.className = "statusdiv";
+    //this.statusdiv = document.createElement("div");
+    this.statusdiv = document.getElementById("statusdiv");
+    //this.statusdiv.className = "statusdiv";
     //this.statusdiv.style.width = this.viewerwidth + "px";
     this.statusspan = document.createElement("span");
     this.statusbuttons = document.createElement("div");
@@ -742,7 +743,7 @@ OpenJsCad.Processor.prototype = {
     };
     this.parametersdiv.appendChild(parseParametersButton);
     this.enableItems();    
-    this.containerdiv.appendChild(this.statusdiv);
+    //this.containerdiv.appendChild(this.statusdiv);
     this.containerdiv.appendChild(this.errordiv);
     this.containerdiv.appendChild(this.parametersdiv);
     this.clearViewer();
