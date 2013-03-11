@@ -1,5 +1,8 @@
-// original by Joost Nieuwenhuijse (MIT License)
-//   few adjustments by Rene K. Mueller for OpenJSCAD.org
+// == openjscad.js, originally written by Joost Nieuwenhuijse (MIT License)
+//   few adjustments by Rene K. Mueller <spiritdude@gmail.com> for OpenJSCAD.org
+//
+// History:
+// 2013/03/11: few changes to fit design of http://openjscad.org
 
 OpenJsCad = function() {
 };

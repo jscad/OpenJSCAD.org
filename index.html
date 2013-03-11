@@ -1,4 +1,18 @@
 <html><head>
+<!-- 
+== OpenJSCAD.org, written by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License ==
+
+Purpose: 
+More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
+
+History:
+- 2013/03/11: resize of browser fixed by fixing canvas size to full screen, and avoid scrollbars
+- 2013/03/10: first version, integrating ACE editor, for now pulled from 3rd party web-site
+
+Todo:
+- saving source code edited in ACE locally
+
+-->
 <title>OpenJSCAD.org</title>
 <link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
 </head><body onload="onload()">
@@ -13,8 +27,9 @@ body {
    margin: 0px; 
    padding: 2px; 
    font-family: Helvetica, Arial, Sans;
-   /* viewer/canvas is screen.width x screen.height so when window */
-   /* is resized all remains intact */
+
+   /* viewer/canvas is screen.width x screen.height so when window 
+      is resized all remains intact, but we make sure no scrollbar appears */
    overflow: hidden;       
 }
 
