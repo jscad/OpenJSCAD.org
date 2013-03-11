@@ -185,13 +185,24 @@ function rotate() {
 }
 
 function mirror(v,o) { 
+   var a = arguments, v,o,i = 1;
    if(arguments.length==3) {  // mirror(r,[x,y,z],o)
-      var r = arguments[0];
-      var v = arguments[1];
-      var o = arguments[2];
-      return o.mirrorX(v[0]*r).mirrorY(v[1]*r).mirrorZ(v[2]*r);
+      r = a[0];
+      v = a[1];
+      i = 2;
+      if(a[2].length) { a = a[2]; i = 0; }
       
    } else {                   // rotate([x,y,z],o)
+      v = a[0];
+      i = 1;
+      if(a[1].length) { a = a[1]; i = 0; }
+   }
+   for(o=a[i++]; i<a.length; i++) { 
+      o = o.union(a[i]);
+   } 
+   if(r!=1) {
+      return o.mirrorX(v[0]*r).mirrorY(v[1]*r).mirrorZ(v[2]*r);
+   } else {
       return o.mirrorX(v[0]).mirrorY(v[1]).mirrorZ(v[2]); 
    }
 }
