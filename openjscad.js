@@ -174,17 +174,17 @@ OpenJsCad.Viewer.prototype = {
   onMouseMove: function(e) {
     if (e.dragging) {
       e.preventDefault();
-      if(e.altKey||e.button==2) {                      // ROTATE Z, X    (ALT or right mouse button)
-        this.angleZ += e.deltaX * 2;
-        this.angleX += e.deltaY * 2;
+      if(e.altKey||e.button==2) {                      // ROTATE X,Y    (ALT or right mouse button)
+        this.angleY += e.deltaX;
+        this.angleX += e.deltaY;
+        //this.angleX = Math.max(-180, Math.min(180, this.angleX));
       } else if(e.shiftKey||e.button==1||e.button==4) {// PAN  (SHIFT or middle mouse button)
         var factor = 5e-3;
         this.viewpointX += factor * e.deltaX * this.viewpointZ;
         this.viewpointY -= factor * e.deltaY * this.viewpointZ;
-      } else {                                         // ROTATE X, Y, left mouse button
-        this.angleY += e.deltaX * 2;
-        this.angleX += e.deltaY * 2;
-        //this.angleX = Math.max(-180, Math.min(180, this.angleX));
+      } else {                                         // ROTATE X,Z  left mouse button
+        this.angleZ += e.deltaX;
+        this.angleX += e.deltaY;
       }
       this.onDraw();    
     }
