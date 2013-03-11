@@ -40,7 +40,7 @@ and then access the files via local web-site and your web-browser.
 
 <h2>Documentation</h2>
 <ul>
-<li><b><a href="wiki/User-Guide">OpenJSCAD User Guide</a></b>
+<li><b><a href="wiki/User-Guide">OpenJSCAD User & Programming Guide</a></b>
 </ul>
 
 <h2>Screenshot</h2>
