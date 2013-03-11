@@ -52,34 +52,38 @@
 // }
 
 
-// wrapper functions for OpenJsCAD:
+// wrapper functions for OpenJsCAD & OpenJSCAD.org
+
+// -- 3D operations (OpenSCAD like notion)
 
 function union() { 
-   var o,i,a=arguments; 
+   var o,i=0,a=arguments; 
    if(a[0].length) a = a[0]; 
-   for(o=a[0],i=1; i<a.length; i++) { 
+   for(o=a[i++]; i<a.length; i++) { 
       o = o.union(a[i]); 
    } 
    return o; 
 }
 
 function difference() { 
-   var o,i,a=arguments; 
+   var o,i=0,a=arguments; 
    if(a[0].length) a = a[0]; 
-   for(o=a[0],i=1; i<a.length; i++) { 
-      o = o.subtract(a[i].setColor(1,1,0));  // -- color the cuts
+   for(o=a[i++]; i<a.length; i++) { 
+      o = o.subtract(a[i].setColor(1,1,0));     // -- color the cuts
    } 
    return o; 
 }
 
 function intersection() { 
-   var o,i,a=arguments; 
+   var o,i=0,a=arguments; 
    if(a[0].length) a = a[0]; 
-   for(o=a[0],i=1; i<a.length; i++) { 
-      o = o.intersect(a[i].setColor(1,1,0)); 
+   for(o=a[i++]; i<a.length; i++) { 
+      o = o.intersect(a[i].setColor(1,1,0));    // -- color the cuts
    } 
    return o; 
 }
+
+// -- 3D primitives (OpenSCAD like notion)
 
 function cube(p) { 
    var s = 1, v, off = 0;
@@ -134,27 +138,48 @@ function cylinder(p) {
 }
 
 function polyhedron() { 
-   OpenJsCad.log("polyhedron() not yet implemented"); 
+   console.log("polyhedron() not yet implemented"); 
 }
    
+// -- 3D transformations (OpenSCAD like notion)
 
-function translate(v,o) { 
+function translate() {      // v, obj or array
+   var a = arguments, v = a[0], o, i = 1;
+   if(a[1].length) { a = a[1]; i = 0; }
+   for(o=a[i++]; i<a.length; i++) { 
+      o = o.union(a[i]);
+   } 
    return o.translate(v); 
 }
 
-function scale(v,o) { 
+function scale() {         // v, obj or array
+   var a = arguments, v = a[0], o, i = 1;
+   if(a[1].length) { a = a[1]; i = 0; }
+   for(o=a[i++]; i<a.length; i++) { 
+      o = o.union(a[i]);
+   } 
    return o.scale(v); 
 }
 
-function rotate(v,o) { 
-   if(arguments.length==3) {  // rotate(r,[x,y,z],o)
-      var r = arguments[0];
-      var v = arguments[1];
-      var o = arguments[2];
-      return o.rotateX(v[0]*r).rotateY(v[1]*r).rotateZ(v[2]*r);
-      
+function rotate() { 
+   var o,i,v, r = 1, a = arguments;
+   if(!a[0].length) {        // rotate(r,[x,y,z],o)
+      r = a[0];
+      v = a[1];
+      i = 2;
+      if(a[2].length) { a = a[2]; i = 0; }
    } else {                   // rotate([x,y,z],o)
-      return o.rotateX(v[0]).rotateY(v[1]).rotateZ(v[2]); 
+      v = a[0];
+      i = 1;
+      if(a[1].length) { a = a[1]; i = 0 }
+   }
+   for(o=a[i++]; i<a.length; i++) { 
+      o = o.union(a[i]);
+   } 
+   if(r!=1) {
+      return o.rotateX(v[0]*r).rotateY(v[1]*r).rotateZ(v[2]*r);
+   } else {
+      return o.rotateX(v[0]).rotateY(v[1]).rotateZ(v[2]);
    }
 }
 
@@ -169,6 +194,29 @@ function mirror(v,o) {
       return o.mirrorX(v[0]).mirrorY(v[1]).mirrorZ(v[2]); 
    }
 }
+
+function multmatrix() {
+   console.log("multmatrix() not yet implemented"); 
+}
+
+function color() {
+   var o,i,a=arguments,c = a[0]; 
+   if(a[1].length) { a = a[1], i = 0 } else { i = 1; }
+   for(o=a[i++]; i<a.length; i++) { 
+      o = o.union(a[i]);
+   } 
+   return o.setColor(c[0],c[1],c[2]);
+}
+
+function minkowski() {
+   console.log("minkowski() not yet implemented"); 
+}
+
+function hull() {
+   console.log("hull() not yet implemented"); 
+}
+
+// -- 2D to 3D primitives (OpenSCAD like notion)
 
 function linear_extrude(p,s) {
    console.log("linear_extrude() not yet implemented");
@@ -185,7 +233,7 @@ function rotate_extrude(p) {
    console.log("rotate_extrude() not yet implemented");
 }
 
-// 2D primitives not yet ready 
+// -- 2D primitives (OpenSCAD like notion)
 
 function square() {
    var v = [1,1], off = [0,0]; var a = arguments;
@@ -212,6 +260,15 @@ function polygon() {
    var o = CAG.fromPoints(a);
    return o;
 }
+
+function triangle() {         // -- new addition
+   var a = arguments;
+   if(a[0]&&a[0].length) a = a[0];
+   var o = CAG.fromPoints(a);
+   return o;
+}
+
+// -- Math functions (360 deg based vs 2pi)
 
 function sin(a) {
    return Math.sin(a/360*Math.PI*2);

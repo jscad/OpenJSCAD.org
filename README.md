@@ -26,13 +26,14 @@ and then access the files via local web-site and your web-browser.
 <h2>Todo</h2>
 <ul>
 <li> 3d primitive: torus()
+<li> save to local from built-in editor
 <li> complete 2D primitives and transformations
 <li> implementation of linear_extrude(), rotate_extrude() (parameter compatible or very close so)
 <li> example of platonic solids (based on triangle())
-<li> simple text (extruded)
+<li> simple 2D/3D text
 <li> 3d operation: hull()
 <li> processing bar (0..100%), perhaps even visual progress seen in the model direct
-<li> STL & AMF importer / exporter
+<li> STL importer & AMF importer / exporter
 <li> integration into <a href="https://github.com/Spiritdude/RepRapCloud">RepRap Cloud</a> as first stage of the workflow.
 </ul>
 
