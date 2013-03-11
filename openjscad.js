@@ -670,6 +670,9 @@ OpenJsCad.Processor.prototype = {
     viewerdiv.className = "viewer";
     viewerdiv.style.width = '100%'; //this.viewerwidth; // + "px";
     viewerdiv.style.height = '100%'; //this.viewerheight; // + "px";
+    viewerdiv.style.width = screen.width;
+    viewerdiv.style.height = screen.height;
+    //viewerdiv.style.overflow = 'hidden';
     viewerdiv.style.backgroundColor = "rgb(200,200,200)";
     this.containerdiv.appendChild(viewerdiv);
     this.viewerdiv = viewerdiv;
