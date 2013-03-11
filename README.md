@@ -1,7 +1,7 @@
 <img src="doc/logo.png" align=right>
 <h1>OpenJSCAD.org</h1>
 
-<b>Version 0.003</b> (ALPHA)
+<b>Version 0.004</b> (ALPHA)
 
 <b>OpenJSCAD.org</b> is more up-to-date <a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a> frontend where you can edit .jscad files either locally or online via JS editor (built-in).
 A few functions are available to make the transition from <a href="http://openscad.org/">OpenSCAD</a> to OpenJSCAD easier (<a href="https://github.com/Spiritdude/OpenSCAD.jscad">OpenSCAD.jscad</a> built-in).
@@ -19,6 +19,7 @@ and then access the files via local web-site and your web-browser.
 
 <h2>History</h2>
 <ul>
+<li>2013/03/11: 0.004: openscad.js: many improvements, more OpenSCAD-like functions
 <li>2013/03/10: 0.003: solidify the functionality (few bug fixes)
 <li>2013/03/10: 0.001: initial version
 </ul>

@@ -1,7 +1,7 @@
 // openscad.js, a few functions to simplify coding OpenSCAD-like
 //    written by Rene K. Mueller <spiritdude@gmail.com>, License: GPLv2
 //
-// Version: 0.006
+// Version: 0.007
 //
 // Description:
 // Helping to convert OpenSCAD .scad files to OpenJSCad .jscad files with 
@@ -9,6 +9,7 @@
 //     http://joostn.github.com/OpenJsCad/processfile.html
 //
 // History:
+// 2013/03/11: 0.007: most function transforming CSG now take array as well, more functions for OpenSCAD-alike behaviour
 // 2013/03/10: 0.006: colored intersection() & difference(), added mirror(), cylinder supports start/end coordinates too
 // 2013/03/04: 0.005: intersect() -> intersection(), sin, cos, asin, acos included, more examples 
 // 2013/03/02: 0.004: better install, examples/, etc refinements (working on 2d primitives)
