@@ -1,3 +1,6 @@
+// original by Joost Nieuwenhuijse (MIT License)
+//   few adjustments by Rene K. Mueller for OpenJSCAD.org
+
 OpenJsCad = function() {
 };
 

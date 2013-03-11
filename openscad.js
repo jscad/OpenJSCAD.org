@@ -5,8 +5,11 @@
 //
 // Description:
 // Helping to convert OpenSCAD .scad files to OpenJSCad .jscad files with 
-// little editing; e.g. drop this file at 
+// little editing, can be used at
 //     http://joostn.github.com/OpenJsCad/processfile.html
+//
+// and has been integrated at
+//     http://openjscad.org/
 //
 // History:
 // 2013/03/11: 0.007: most function transforming CSG now take array as well, more functions for OpenSCAD-alike behaviour
