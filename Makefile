@@ -1,4 +1,5 @@
 VERSION=0.004
+LIB = /usr/local/lib/openjscad/
 
 all::
 	@echo "make install deinstall" 
