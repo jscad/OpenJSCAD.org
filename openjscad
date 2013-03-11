@@ -1,0 +1,73 @@
+#!/usr/bin/nodejs
+
+// OpenJsCad CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>
+// License: GPLv2
+//
+var version = '0.002';
+//
+// Description:
+//   openjscad <file> [-o <stl>]
+// e.g.
+//   openjscad test.jscad                    
+//   openjscad test.jscad -osomething.stl
+//
+// History:
+// 2013/03/02: 0.002: proper installation of the dependencies (csg.js & openscad.js) so openjscad can be used properly
+// 2013/03/01: 0.001: initial version, with base function from openscad.jscad
+//
+
+var lib = '/usr/local/lib/openjscad/';    // for now hard-coded
+
+var fs = require('fs');
+var vm = require('vm');
+//include('./openscad.js');         // later
+
+var CSG = require(lib+'./csg.js').CSG;
+var CAG = require(lib+'./csg.js').CAG;  // any way to include CSG & CAG in once?
+
+//require(lib+'./OpenJsCad/openjscad.js'); // make it a nodejs module (later)
+
+// hint: https://github.com/substack/node-optimist
+//       https://github.com/visionmedia/commander.js
+//
+//process.argv.forEach(function (val, index, array) {
+//  console.log(index + ': ' + val);
+//});
+
+var args = process.argv.splice(2);
+
+var inf = args[0];
+var outf = inf;
+outf = outf.replace(/\.[^\.]+$/,'.stl');
+
+// output setting like openscad
+if(args.length==2) {                         // -o<file.stl>
+   outf = args[1];
+   outf = outf.replace(/^\-o(\S+)$/,'$1');
+} else if(args.length==3&&args[1]=='-o') {   // -o <file.stl>
+   outf = args[2];
+}
+
+//console.log("reading "+inf);
+var src = fs.readFileSync(inf);
+var scad = fs.readFileSync(lib+'./openscad.js');
+
+//var csg = sphere(1);          // -- basic test
+//var csg = require(file).main; // -- treating .jscad as module? later perhaps
+
+console.log("computing stl from "+inf+" to "+outf);
+var csg = eval(src+"\n"+scad+"\nmain()\n");    // openscad.js + *.jscad + main()
+
+//var stl = csg.fixTJunctions().toStlBinary();
+var stl = csg.fixTJunctions().toStlString();
+
+var s = fs.WriteStream(outf);
+s.write(stl);
+
+
+// -- helper functions 
+
+function include(fn) {
+   return eval(fs.readFileSync(fn));
+}
+
