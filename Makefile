@@ -3,12 +3,15 @@ VERSION=0.004
 all::
 	@echo "make install deinstall" 
 
+
 install::
-	sudo cp openjscad /usr/local/bin
-
+	sudo scp openjscad /usr/local/bin/
+	sudo mkdir -p ${LIB}
+	sudo scp *.js ${LIB}
+                                
 deinstall::
-	sudo rm -f /usr/local/bin/openjscad
-
+	sudo rm -f ${LIB}/*.js 
+                                        
 # --- developers only below
 
 github::
