@@ -45,7 +45,7 @@ and then access the files via local web-site and your web-browser.
 
 <h2>Screenshot</h2>
 
-<img src="doc/sshot01.png">
+<img src="doc/sshot-01.png">
 
 <h2>See Also</h2>
 <ul>
