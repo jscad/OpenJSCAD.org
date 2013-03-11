@@ -43,10 +43,9 @@ body {
    width: 40%;
    top: 0px;
    bottom: 0px;
+   /* height: 100%;    note: newer ace expects height */
    right: 0px;
-}
-
-#editor {
+   z-index: 6;
    background: rgba(200,200,200,0.1);
 }
 
@@ -170,7 +169,8 @@ OpenJSCAD.org 0.004 2013/03/11, MIT License & GPLv2 - get your own copy from <a 
 </div>
 </div>
 
-<script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<!--script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script-->
+<script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 
 <script>
 var gCurrentFile = null;
@@ -185,7 +185,7 @@ function onload() {
    editor.getSession().setMode("ace/mode/javascript");
    editor.getSession().on('change', function(e) {
       ;
-   });
+   });             
    editor.commands.addCommand({
        name: 'myCommand',
        bindKey: {win: 'F5',  mac: 'F5'},
