@@ -48,6 +48,8 @@ and then access the files via local web-site and your web-browser.
 
 <img src="doc/sshot-01.png">
 
+<img src="doc/sshot-02.png">
+
 <h2>See Also</h2>
 <ul>
 <li><a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a>, inspiration of this project and the following below
