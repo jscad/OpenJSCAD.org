@@ -1128,7 +1128,7 @@ OpenJsCad.Processor.prototype = {
     // create a random directory name:
     var dirname = "OpenJsCadOutput1_"+parseInt(Math.random()*1000000000, 10)+"."+extension;
     var extension = this.selectedFormatInfo().extension;
-    var filename = this.filename+"."+extension;
+    var filename = "output."+extension;
     var that = this;
     window.requestFileSystem(TEMPORARY, 20*1024*1024, function(fs){
         fs.root.getDirectory(dirname, {create: true, exclusive: true}, function(dirEntry) {
