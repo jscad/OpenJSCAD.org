@@ -33,7 +33,7 @@ and then access the files via local web-site and your web-browser.
 <li> example of platonic solids (based on triangle())
 <li> simple 2D/3D text
 <li> 3d operation: hull()
-<li> processing bar (0..100%), perhaps even visual progress seen in the model direct
+<li> processing/progress bar (0..100%), perhaps even visual progress seen in the model direct
 <li> STL importer & AMF importer / exporter
 <li> integration into <a href="https://github.com/Spiritdude/RepRapCloud">RepRap Cloud</a> as first stage of the workflow.
 </ul>
