@@ -48,7 +48,7 @@ and then access the files via local web-site and your web-browser.
 
 <img src="doc/sshot-01.png">
 
-<img src="doc/sshot-03.png">
+<img src="doc/sshot-03-illu.png">
 
 <h2>See Also</h2>
 <ul>
