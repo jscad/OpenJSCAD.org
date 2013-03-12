@@ -1,3 +1,4 @@
+// -- Example 002
 
 function example002() {
 	return intersection(

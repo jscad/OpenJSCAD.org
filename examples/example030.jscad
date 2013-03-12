@@ -1,3 +1,5 @@
+// -- Example 030: Servo Motor
+
 // This demo intends to show how to use properties and connectors.
 // The servoMotor() function constructs the shape of a standard servo
 // It also defines a property for the cutout shape, and a connector property

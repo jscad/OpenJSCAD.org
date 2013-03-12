@@ -1,4 +1,4 @@
-// Example 024
+// -- Example 024
 
 function main() {
    return scale(10,expand(0.2, 8, 

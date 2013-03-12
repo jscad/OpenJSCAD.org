@@ -1,4 +1,4 @@
-// Example 021
+// -- Example 021
 
 function main() {
     var cyl = new Array();

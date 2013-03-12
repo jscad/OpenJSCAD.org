@@ -1,3 +1,4 @@
+// -- Example 001
 
 function r_from_dia(d) { return d / 2 }
 

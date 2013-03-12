@@ -1,4 +1,4 @@
-// Example 023
+// -- Example 023
 
 // from http://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Mathematical_Functions
 

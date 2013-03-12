@@ -1,4 +1,4 @@
-// Example 022
+// -- Example 022
 
 function main() {
    var w = new Array();

@@ -1,3 +1,4 @@
+// -- Example 005
 
 function example005() {
    var cy = new Array();

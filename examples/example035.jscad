@@ -1,3 +1,5 @@
+// -- Example 035: Lamp Shade
+
 function main(params)
 {
   CSG.defaultResolution2D = (params.quality == "DRAFT")? 8:32;

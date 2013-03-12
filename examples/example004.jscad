@@ -1,3 +1,4 @@
+// -- Example 004
 
 function example004() {
 	return difference(
