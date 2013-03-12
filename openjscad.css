@@ -42,9 +42,18 @@ canvas {
   padding: 10px;
   background: rgba(255,255,255,0.7);
 }
+.parametersdiv td {
+  font-size: 0.8em;
+}
+.parametersdiv input, .parametersdiv textarea, .parametersdiv select {
+  font-size: 0.9em;
+  background: #fea;
+  border: none;
+}
 
 .parametersdiv .header {
   font-weight: bold;
+  font-size: 0.9em;
 }
 
 .statusdiv {

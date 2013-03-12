@@ -61,7 +61,7 @@ canvas {
    margin: 0px;
 }
 #hint {
-   z-index: 2;
+   z-index: 10;
    top: 30px;
    left: 30px;
    width: 30%
@@ -143,6 +143,32 @@ Supported formats:<br>
 <b>.stl</b> (planned, STL importer)<br>
 <b>.amf</b> (planned, AMF importer/exporter)
 <p>
+Examples:
+<script>
+var ex = [ 
+{ file:'example000.jscad', title: 'Logo' },
+{ file:'example001.jscad', title: 'Example 1' },
+{ file:'example002.jscad', title: 'Example 2' },
+{ file:'example003.jscad', title: 'Example 3' },
+{ file:'example004.jscad', title: 'Example 4' },
+{ file:'example005.jscad', title: 'Example 5' },
+{ file:'example020.jscad', title: 'Bunch of Cubes' },
+{ file:'example023.jscad', title: 'Demo lookup()' },
+{ file:'example024.jscad', title: 'Demo expand()' },
+{ file:'example030.jscad', title: 'Interactive Params: Servo Motor' },
+{ file:'example031.jscad', title: 'Interactive Params: Gear' },
+{ file:'example032.jscad', title: 'Interactive Params: S Hook' },
+{ file:'example033.jscad', title: 'Interactive Params: Grille' },
+{ file:'example034.jscad', title: 'Interactive Params: Server Motor' },
+{ file:'example035.jscad', title: 'Interactive Params: Lamp Shade' },
+{ file:'example034.jscad', title: 'Interactive Params: Celtic Knot Ring' }
+];
+for(var i=0; i<ex.length; i++) {
+   document.write("<li><a href=# onclick='getExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n");
+   //document.write("<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n");
+}
+</script>
+<p>
 <b><a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">User Guide / Documentation</a></b>
 </div>
 
@@ -166,7 +192,7 @@ Supported formats:<br>
 </div>
 
 <div id=footer>
-OpenJSCAD.org 0.005 2013/03/12, MIT License & GPLv2 - get your own copy from <a href="https://github.com/Spiritdude/OpenJSCAD.org">github.com</a>
+OpenJSCAD.org 0.006 2013/03/12, MIT License & GPLv2 - get your own copy from <a href="https://github.com/Spiritdude/OpenJSCAD.org">github.com</a>
 </div>
 </div>
 
@@ -212,6 +238,22 @@ function onload() {
    setupDragDrop();
    //gProcessor.setDebugging(debugging); 
    gProcessor.setJsCad(editor.getValue());
+}
+
+function getExample(fn) {
+   if(1) {     // doesn't work off-line yet
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", fn, true);
+      xhr.onload = function() {
+         jscadscript = this.responseText;
+         editor.setValue(jscadscript);
+         gProcessor.setJsCad(jscadscript, fn);
+   	   previousScript = jscadscript;
+         gPreviousModificationTime = "";
+         fileChanged();
+      }
+      xhr.send();
+   }
 }
 
 // -----------------------------------------------------------------------------------------------------------
