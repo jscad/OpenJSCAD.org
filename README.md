@@ -19,6 +19,7 @@ and then access the files via local web-site and your web-browser.
 
 <h2>History</h2>
 <ul>
+<li>2013/03/12: 0.006: included examples available in the web-frontend direct
 <li>2013/03/12: 0.005: supporting webgui parameters as of original OpenJsCad (see examples/example030.jscad)
 <li>2013/03/11: 0.004: openscad.js: many improvements, more OpenSCAD-like functions
 <li>2013/03/10: 0.003: solidify the functionality (few bug fixes)
