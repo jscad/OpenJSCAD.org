@@ -2,6 +2,7 @@
 //   few adjustments by Rene K. Mueller <spiritdude@gmail.com> for OpenJSCAD.org
 //
 // History:
+// 2013/03/12: reenable webgui parameters to fit in current design
 // 2013/03/11: few changes to fit design of http://openjscad.org
 
 OpenJsCad = function() {
