@@ -211,6 +211,13 @@ function mirror(v,o) {
    }
 }
 
+function expand(r,n,o) {
+   return o.expand(r,n);
+}
+function contract(r,n,o) {
+   return o.contract(r,n);
+}
+
 function multmatrix() {
    console.log("multmatrix() not yet implemented"); 
 }

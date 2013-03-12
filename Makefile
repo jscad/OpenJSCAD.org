@@ -1,4 +1,4 @@
-VERSION=0.004
+VERSION=0.005
 LIB = /usr/local/lib/openjscad/
 
 all::
