@@ -46,8 +46,10 @@ and then access the files via local web-site and your web-browser.
 
 <h2>Screenshot</h2>
 
+Simple example (example000.jscad):
 <img src="doc/sshot-01.png">
 
+Very sophisticated example, fully OO programmed with interactive parameters (example031.jscad):
 <img src="doc/sshot-03-illu.png">
 
 <h2>See Also</h2>
