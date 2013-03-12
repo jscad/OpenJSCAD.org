@@ -365,8 +365,9 @@ function sign(a) {
 function sqrt(a) {
    return Math.sqrt(a);
 }
-
-
+function round(a) {
+   return floor(a+0.5)
+}
 function echo() {
    var s = "", a = arguments;
    for(var i=0; i<a.length; i++) {
