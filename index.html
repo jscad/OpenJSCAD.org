@@ -159,7 +159,7 @@ var ex = [
 { file:'example031.jscad', title: 'Interactive Params: Gear' },
 { file:'example032.jscad', title: 'Interactive Params: S Hook' },
 { file:'example033.jscad', title: 'Interactive Params: Grille' },
-{ file:'example034.jscad', title: 'Interactive Params: Server Motor' },
+{ file:'example034.jscad', title: 'Interactive Params: Axis Coupler' },
 { file:'example035.jscad', title: 'Interactive Params: Lamp Shade' },
 { file:'example034.jscad', title: 'Interactive Params: Celtic Knot Ring' }
 ];
@@ -248,6 +248,7 @@ function getExample(fn) {
          jscadscript = this.responseText;
          editor.setValue(jscadscript); 
          editor.clearSelection();
+         //editor.moveCursorFileStart();
          gProcessor.setJsCad(jscadscript, fn);
    	   previousScript = jscadscript;
          gPreviousModificationTime = "";
@@ -352,6 +353,7 @@ function parseFile(debugging, onlyifchanged) {
             gProcessor.setDebugging(debugging); 
             editor.setValue(jscadscript); 
             editor.clearSelection();
+            //editor.moveCursorFileStart();
             gProcessor.setJsCad(jscadscript, filename);
 				previousScript = jscadscript;
           }
