@@ -249,6 +249,7 @@ function getExample(fn) {
          editor.setValue(jscadscript); 
          editor.clearSelection();
          //editor.moveCursorFileStart();
+         editor.navigateFileStart();
          gProcessor.setJsCad(jscadscript, fn);
    	   previousScript = jscadscript;
          gPreviousModificationTime = "";
@@ -354,6 +355,7 @@ function parseFile(debugging, onlyifchanged) {
             editor.setValue(jscadscript); 
             editor.clearSelection();
             //editor.moveCursorFileStart();
+            editor.navigateFileStart();
             gProcessor.setJsCad(jscadscript, filename);
 				previousScript = jscadscript;
           }
