@@ -246,7 +246,8 @@ function getExample(fn) {
       xhr.open("GET", fn, true);
       xhr.onload = function() {
          jscadscript = this.responseText;
-         editor.setValue(jscadscript);
+         editor.setValue(jscadscript); 
+         editor.clearSelection();
          gProcessor.setJsCad(jscadscript, fn);
    	   previousScript = jscadscript;
          gPreviousModificationTime = "";
@@ -349,7 +350,8 @@ function parseFile(debugging, onlyifchanged) {
             var filename = gCurrentFile.name;
             filename = filename.replace(/^.*\/([^\/]*)$/, "$1");
             gProcessor.setDebugging(debugging); 
-            editor.setValue(jscadscript);
+            editor.setValue(jscadscript); 
+            editor.clearSelection();
             gProcessor.setJsCad(jscadscript, filename);
 				previousScript = jscadscript;
           }
