@@ -1,9 +1,10 @@
 <html><head>
 <!-- 
 == OpenJSCAD.org, written by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License ==
+                  with some code from OpenJsCad processfile.html by Joost Nieuwenhuijse 
 
 Purpose: 
-More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
+   More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
 - 2013/03/11: resize of browser fixed by fixing canvas size to full screen, and avoid scrollbars
@@ -253,14 +254,14 @@ function getExample(fn) {
          gProcessor.setJsCad(jscadscript, fn);
    	   previousScript = jscadscript;
          gPreviousModificationTime = "";
-         //fileChanged();
+         fileChanged();
       }
       xhr.send();
    }
 }
 
 // -----------------------------------------------------------------------------------------------------------
-// from old OpenJsCad processfile.html below:
+// from old OpenJsCad processfile.html by Joost Nieuwenhuijse below:
 
 // Show all exceptions to the user:
 OpenJsCad.AlertUserOfUncaughtExceptions();

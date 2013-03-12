@@ -15,9 +15,13 @@ deinstall::
                                         
 # --- developers only below
 
-github::
+push::
 	git remote set-url origin git@github.com:Spiritdude/OpenJSCAD.org.git
 	git push -u origin master
+
+pull::
+	git remote set-url origin git@github.com:Spiritdude/OpenJSCAD.org.git
+	git pull -u origin master
 
 dist::	
 	cd ..; tar cfz Backup/openjscad.org-${VERSION}.tar.gz "--exclude=*.git/*" OpenJSCAD.org/
