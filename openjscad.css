@@ -25,7 +25,9 @@
 }
 
 #filebuttons {
-  float: right;
+  /*float: right;*/
+  margin-left: 2em;
+  display: inline;
 }
 
 canvas { 

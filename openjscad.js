@@ -5,8 +5,7 @@
 // 2013/03/12: reenable webgui parameters to fit in current design
 // 2013/03/11: few changes to fit design of http://openjscad.org
 
-OpenJsCad = function() {
-};
+OpenJsCad = function() { };
 
 OpenJsCad.log = function(txt) {
   var timeInMs = Date.now();
@@ -16,12 +15,9 @@ OpenJsCad.log = function(txt) {
   OpenJsCad.log.prevLogTime = timeInMs;
   var timefmt = (deltatime*0.001).toFixed(3);
   txt = "["+timefmt+"] "+txt;
-  if( (typeof(console) == "object") && (typeof(console.log) == "function") )
-  {
+  if( (typeof(console) == "object") && (typeof(console.log) == "function") ) {
     console.log(txt);
-  }
-  else if( (typeof(self) == "object") && (typeof(self.postMessage) == "function") )
-  {
+  } else if( (typeof(self) == "object") && (typeof(self.postMessage) == "function") ) {
     self.postMessage({cmd: 'log', txt: txt});
   }
   else throw new Error("Cannot log");
@@ -116,17 +112,13 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
   }
   gl.onmousewheel = function(e) {
     var wheelDelta = 0;    
-    if (e.wheelDelta)
-    {
+    if (e.wheelDelta) {
       wheelDelta = e.wheelDelta;
-    }
-    else if (e.detail)
-    {
+    } else if (e.detail) {
       // for firefox, see http://stackoverflow.com/questions/8886281/event-wheeldelta-returns-undefined
       wheelDelta = e.detail * -40;     
     }
-    if(wheelDelta)
-    {
+    if(wheelDelta) {
       var factor = Math.pow(1.003, -wheelDelta);
       var coeff = _this.getZoom();
       coeff *= factor;
@@ -160,8 +152,7 @@ OpenJsCad.Viewer.prototype = {
     coeff=Math.max(coeff, 0);
     coeff=Math.min(coeff, 1);
     this.viewpointZ = this.ZOOM_MIN + coeff * (this.ZOOM_MAX - this.ZOOM_MIN);
-    if(this.onZoomChanged)
-    {
+    if(this.onZoomChanged) {
       this.onZoomChanged();
     }
     this.onDraw();
@@ -209,8 +200,7 @@ OpenJsCad.Viewer.prototype = {
     }
     if (!this.lineOverlay) gl.disable(gl.POLYGON_OFFSET_FILL);
 
-    if(this.drawLines)
-    {
+    if(this.drawLines) {
       if (this.lineOverlay) gl.disable(gl.DEPTH_TEST);
       gl.enable(gl.BLEND);
       for (var i = 0; i < this.meshes.length; i++) {  
@@ -305,23 +295,18 @@ OpenJsCad.Viewer.csgToMeshes = function(csg) {
   var smoothlighting = false;   
   var polygons = csg.toPolygons();
   var numpolygons = polygons.length;
-  for(var polygonindex = 0; polygonindex < numpolygons; polygonindex++)
-  {
+  for(var polygonindex = 0; polygonindex < numpolygons; polygonindex++) {
     var polygon = polygons[polygonindex];
     var color = [1,.4,1];      // -- default color
-    if(polygon.shared && polygon.shared.color)
-    {
+    if(polygon.shared && polygon.shared.color) {
       color = polygon.shared.color;
     }
     var indices = polygon.vertices.map(function(vertex) {
       var vertextag = vertex.getTag();
       var vertexindex;
-      if(smoothlighting && (vertextag in vertexTag2Index))
-      {
+      if(smoothlighting && (vertextag in vertexTag2Index)) {
         vertexindex = vertexTag2Index[vertextag];
-      }
-      else
-      {
+      } else {
         vertexindex = vertices.length;
         vertexTag2Index[vertextag] = vertexindex;
         vertices.push([vertex.pos.x, vertex.pos.y, vertex.pos.z]);
@@ -360,32 +345,25 @@ OpenJsCad.Viewer.csgToMeshes = function(csg) {
 // this is a bit of a hack; doesn't properly supports urls that start with '/'
 // but does handle relative urls containing ../
 OpenJsCad.makeAbsoluteUrl = function(url, baseurl) {
-  if(!url.match(/^[a-z]+\:/i))
-  {
+  if(!url.match(/^[a-z]+\:/i)) {
     var basecomps = baseurl.split("/");
-    if(basecomps.length > 0)
-    {
+    if(basecomps.length > 0) {
       basecomps.splice(basecomps.length - 1, 1);
     }
     var urlcomps = url.split("/");
     var comps = basecomps.concat(urlcomps);
     var comps2 = [];
     comps.map(function(c) {
-      if(c == "..")
-      {
-        if(comps2.length > 0)
-        {
+      if(c == "..") {
+        if(comps2.length > 0) {
           comps2.splice(comps2.length - 1, 1);
         }
-      }
-      else
-      {
+      } else {
         comps2.push(c);
       }
     });  
     url = "";
-    for(var i = 0; i < comps2.length; i++)
-    {
+    for(var i = 0; i < comps2.length; i++) {
       if(i > 0) url += "/";
       url += comps2[i];
     }
@@ -393,33 +371,27 @@ OpenJsCad.makeAbsoluteUrl = function(url, baseurl) {
   return url;
 };
 
-OpenJsCad.isChrome = function()
-{
+OpenJsCad.isChrome = function() {
   return (navigator.userAgent.search("Chrome") >= 0);
 };
 
 // This is called from within the web worker. Execute the main() function of the supplied script
 // and post a message to the calling thread when finished
-OpenJsCad.runMainInWorker = function(mainParameters)
-{
-  try
-  {
+OpenJsCad.runMainInWorker = function(mainParameters) {
+  try {
     if(typeof(main) != 'function') throw new Error('Your jscad file should contain a function main() which returns a CSG solid or a CAG area.');
     OpenJsCad.log.prevLogTime = Date.now();    
     var result = main(mainParameters);
-    if( (typeof(result) != "object") || ((!(result instanceof CSG)) && (!(result instanceof CAG))))
-    {
+    if( (typeof(result) != "object") || ((!(result instanceof CSG)) && (!(result instanceof CAG)))) {
       throw new Error("Your main() function should return a CSG solid or a CAG area.");
     }
     var result_compact = result.toCompactBinary();
     result = null; // not needed anymore
     self.postMessage({cmd: 'rendered', result: result_compact});
   }
-  catch(e)
-  {
+  catch(e) {
     var errtxt = e.stack;
-    if(!errtxt)
-    {
+    if(!errtxt) {
       errtxt = e.toString();
     } 
     self.postMessage({cmd: 'error', err: errtxt});
@@ -429,8 +401,7 @@ OpenJsCad.runMainInWorker = function(mainParameters)
 OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
   var workerscript = "";
   workerscript += script;
-  if(debugging)
-  {
+  if(debugging) {
     workerscript += "\n\n\n\n\n\n\n/* -------------------------------------------------------------------------\n";
     workerscript += "OpenJsCad debugging\n\nAssuming you are running Chrome:\nF10 steps over an instruction\nF11 steps into an instruction\n";
     workerscript += "F8  continues running\nPress the (||) button at the bottom to enable pausing whenever an error occurs\n";
@@ -441,10 +412,15 @@ OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
     workerscript += "debugger;\n";
   }
   workerscript += "return main("+JSON.stringify(mainParameters)+");";  
-  var f = new Function(workerscript);
-  OpenJsCad.log.prevLogTime = Date.now();    
-  var result = f();
-  return result;
+  if(0) {
+    OpenJsCad.log.prevLogTime = Date.now();    
+    return eval(workerscript);      // old fashion-way
+
+  } else {
+    var f = new Function(workerscript);
+    OpenJsCad.log.prevLogTime = Date.now();    
+    return f();                     // execute the actual code
+  }
 };
 
 // callback: should be function(error, csg)
@@ -468,7 +444,21 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
 
   var workerscript = "";
   workerscript += script;
-  workerscript += "\n\n\n\n//// The following code is added by OpenJsCad:\n";
+  workerscript += "\n\n\n\n//// The following code is added by OpenJsCad + OpenJSCAD.org:\n";
+
+// trying to get include() somewhere, but for now we fail due xhr not allowed in blobs
+//  workerscript += "function include(fn) {\
+//   var xhr = new XMLHttpRequest();\
+//   xhr.open('GET', fn, true);\
+//   xhr.onload = function() {\
+//      return eval(this.responseText);\
+//   };\
+//   xhr.onerror = function() {\
+//   };\
+//   xhr.send();\
+//}\
+//";
+  
   workerscript += "var _csg_baselibraries=" + JSON.stringify(baselibraries)+";\n";
   workerscript += "var _csg_libraries=" + JSON.stringify(libraries)+";\n";
   workerscript += "var _csg_baseurl=" + JSON.stringify(baseurl)+";\n";
@@ -589,10 +579,12 @@ OpenJsCad.AlertUserOfUncaughtExceptions = function() {
 // parse the jscad script to get the parameter definitions
 OpenJsCad.getParamDefinitions = function(script) {
   var scriptisvalid = true;
+  script += "\nfunction include() {}";    // at least make it not throw an error so early
   try
   {
     // first try to execute the script itself
     // this will catch any syntax errors
+    //    BUT we can't introduce any new function!!!
     var f = new Function(script);
     f();
   }
@@ -699,7 +691,7 @@ OpenJsCad.Processor.prototype = {
        div.style.width = this.viewerwidth * 11 + 'px';
        div.style.height = '1px';
        this.zoomControl.appendChild(div);
-       this.zoomChangedBySlider=false;
+       this.zoomChangedBySlider = false;
        this.zoomControl.onscroll = function(event) {
          var zoom = that.zoomControl;
          var newzoom=zoom.scrollLeft / (10 * zoom.offsetWidth);
@@ -1270,3 +1262,5 @@ OpenJsCad.Processor.prototype = {
     this.paramControls = paramControls;
   },
 };
+
+

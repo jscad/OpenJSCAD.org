@@ -252,6 +252,7 @@ function getExample(fn) {
          //editor.moveCursorFileStart();
          editor.navigateFileStart();
          gProcessor.setJsCad(jscadscript, fn);
+         previousFilename = fn;
    	   previousScript = jscadscript;
          gPreviousModificationTime = "";
          //fileChanged();
