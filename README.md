@@ -16,7 +16,10 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 % git clone https://github.com/Spiritdude/OpenJSCAD.org
 </pre>
 
-and then access the files via local web-site and your web-browser.
+and then access the files via local web-site and your web-browser, or perform server-side stuff:
+<pre>
+% openjscad example/example005.jscad 
+</pre>
 
 <h2>History</h2>
 <ul>
