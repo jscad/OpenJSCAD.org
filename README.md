@@ -20,7 +20,7 @@ and then access the files via local web-site and your web-browser, or perform se
 <pre>
 % openjscad example/example005.jscad 
 </pre>
-creates example/example005.stl
+creates <tt>example/example005.stl</tt>
 
 <h2>History</h2>
 <ul>
