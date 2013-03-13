@@ -50,7 +50,7 @@ creates example/example005.stl
 <li><b><a href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">OpenJSCAD User & Programming Guide</a></b>
 </ul>
 
-<h2>Screenshot</h2>
+<h2>Screenshots</h2>
 
 Simple JSCAD example (example000.jscad):
 <img src="doc/sshot-01.png">
