@@ -745,6 +745,7 @@ OpenJsCad.Processor.prototype = {
     };
     this.statusbuttons.appendChild(this.generateOutputFileButton);
     this.downloadOutputFileLink = document.createElement("a");
+    this.downloadOutputFileLink.className = "downloadOutputFileLink"; // so we can css it
     this.statusbuttons.appendChild(this.downloadOutputFileLink);
     //this.parametersdiv = document.createElement("div");
     this.parametersdiv = document.getElementById("parametersdiv");

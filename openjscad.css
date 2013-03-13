@@ -36,6 +36,20 @@ canvas {
   cursor: move; 
 }
 
+.downloadOutputFileLink {
+   padding: 2px;
+   padding-left: 8px;
+   padding-right: 8px;
+   border: 1px solid black;
+   border-radius: 4px;
+   background: #d8f;
+   text-decoration: none;
+   color: black;
+   font-size: 0.9em;
+   font-weight: bold;
+   box-shadow: 0px 0px 8px black;
+}
+
 .parametersdiv {
   border: 1px solid rgb(200,200,200);
   -moz-border-radius: 5px;
