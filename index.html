@@ -1,15 +1,15 @@
 <html><head>
 <!-- 
 == OpenJSCAD.org, written by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License ==
-                  with some code from OpenJsCad processfile.html by Joost Nieuwenhuijse 
+   with some code from OpenJsCad processfile.html by Joost Nieuwenhuijse 
 
 Purpose: 
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
-- 2013/03/14: including jQuery to make UI changes easier, e.g. hint window moveable now
-- 2013/03/11: resize of browser fixed by fixing canvas size to full screen, and avoid scrollbars
-- 2013/03/10: first version, integrating ACE editor, for now pulled from 3rd party web-site
+- 2013/03/14: 0.007: including jQuery to make UI changes easier, e.g. hint window moveable now
+- 2013/03/11: 0.005: resize of browser fixed by fixing canvas size to full screen, and avoid scrollbars
+- 2013/03/10: 0.001: first version, integrating ACE editor, for now pulled from 3rd party web-site
 
 Todo:
 - saving source code edited in ACE locally
@@ -71,8 +71,10 @@ canvas {
 }
 #hint {
    z-index: 10;
-   -moz-opacity: 0.8;
+
    opacity: 0.8;
+   -moz-opacity: 0.8;   /* css mess (why do it simple, when we can do it complicate!) */
+
    font-size: 0.6em;
    top: 30px;
    left: 30px;
@@ -81,9 +83,12 @@ canvas {
    position: absolute;
    background: #fff;
    border: 1px solid #999;
+
    border-radius: 5px;
+   -moz-border-radius: 5px;    /* css mess (why do it simple, when we can do it complicate!) */
+   -webkit-border-radius: 5px;
+
    padding: 1em;
-   //display: none;
    box-shadow: 0px 0px 15px black;
    cursor: move;  /* it's draggable */
 }
@@ -97,12 +102,13 @@ canvas {
    cursor: auto;
 }
 #footer {
-   //width: 99%;    // avoid scrollbar
    padding: 0.3em;
    font-size: 0.7em;
    text-align: left;
-   -moz-opacity: 0.5;
-   opacity: 0.5;
+
+   opacity: 0.5;    
+   -moz-opacity: 0.5;      /* css mess (why do it simple, when we can do it complicate!) */
+
    margin-top: 1em;
 }
 
@@ -113,9 +119,10 @@ canvas {
    margin: 1em;
 }
 
+/* we choose chrome them for ace, and make sure line number is transparent too */
 .ace-chrome .ace_gutter { 
    border-left: 2px dashed rgba(200,200,200,0.2);
-   background: none 
+   background: none;
 }
 </style>
 </head>

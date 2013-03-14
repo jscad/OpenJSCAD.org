@@ -747,8 +747,8 @@ OpenJsCad.Processor.prototype = {
     this.downloadOutputFileLink = document.createElement("a");
     this.downloadOutputFileLink.className = "downloadOutputFileLink"; // so we can css it
     this.statusbuttons.appendChild(this.downloadOutputFileLink);
-    //this.parametersdiv = document.createElement("div");
-    this.parametersdiv = document.getElementById("parametersdiv");
+    //this.parametersdiv = document.createElement("div");            // already created
+    this.parametersdiv = document.getElementById("parametersdiv");   // get the info
     this.parametersdiv.className = "parametersdiv";
     var headerdiv = document.createElement("div");
     headerdiv.innerText = "Parameters:";
@@ -764,9 +764,12 @@ OpenJsCad.Processor.prototype = {
     };
     this.parametersdiv.appendChild(parseParametersButton);
     this.enableItems();    
+
+    // they exist already, so no appendChild anymore (remains here)
     //this.containerdiv.appendChild(this.statusdiv);
     //this.containerdiv.appendChild(this.errordiv);
-    //this.containerdiv.appendChild(this.parametersdiv); // fix this!
+    //this.containerdiv.appendChild(this.parametersdiv); 
+
     this.clearViewer();
   },
   
