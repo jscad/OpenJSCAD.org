@@ -82,6 +82,10 @@ canvas {
   font-size: 0.9em;
 }
 
+.parametersdiv .caption {
+   text-align: right;
+}
+
 #instantUpdate {
    margin-left: 1em;
 }
