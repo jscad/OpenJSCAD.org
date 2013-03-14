@@ -7,6 +7,7 @@ Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
+- 2013/03/14: including jQuery to make UI changes easier, e.g. hint window moveable now
 - 2013/03/11: resize of browser fixed by fixing canvas size to full screen, and avoid scrollbars
 - 2013/03/10: first version, integrating ACE editor, for now pulled from 3rd party web-site
 
@@ -19,7 +20,10 @@ Todo:
 <link rel="stylesheet" href="jquery/themes/base/jquery-ui.css" />
 <script src="jquery/jquery-1.9.1.js"></script>
 <script src="jquery/jquery-ui.js"></script>
-<script>$(function() { $("#hint").draggable(); });</script>
+<script>
+   $(function() { $("#hint").draggable(); });
+   $(function() { $("#parametersdiv").draggable(); });
+</script>
 </head><body onload="onload()">
 <script src="lightgl.js"></script>
 <script src="csg.js"></script>
