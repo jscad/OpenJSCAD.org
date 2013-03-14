@@ -1269,6 +1269,7 @@ OpenJsCad.Processor.prototype = {
       if('caption' in paramdef)
       {
         label = paramdef.caption;
+        td.style.textAlign = 'right';     // looks nicer
       }
        
       td.innerHTML = label;
