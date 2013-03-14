@@ -648,7 +648,7 @@ OpenJsCad.Processor.convertToSolid = function(obj) {
 
 OpenJsCad.Processor.prototype = {
   createElements: function() {
-    var that = this;//for event handlers
+    var that = this;   // for event handlers
 
     while(this.containerdiv.children.length > 0)
     {
@@ -757,12 +757,24 @@ OpenJsCad.Processor.prototype = {
     this.parameterstable = document.createElement("table");
     this.parameterstable.className = "parameterstable";
     this.parametersdiv.appendChild(this.parameterstable);
+
     var parseParametersButton = document.createElement("button");
     parseParametersButton.innerHTML = "Update";
     parseParametersButton.onclick = function(e) {
       that.rebuildSolid();
     };
     this.parametersdiv.appendChild(parseParametersButton);
+
+    // implementing instantUpdate
+    var instantUpdateCheckbox = document.createElement("input");
+    instantUpdateCheckbox.type = "checkbox";
+    instantUpdateCheckbox.id = "instantUpdate";
+    this.parametersdiv.appendChild(instantUpdateCheckbox);
+
+    var instantUpdateCheckboxText = document.createElement("span");
+    instantUpdateCheckboxText.innerHTML = "Instant Update";
+    this.parametersdiv.appendChild(instantUpdateCheckboxText);
+
     this.enableItems();    
 
     // they exist already, so no appendChild anymore (remains here)
@@ -1243,6 +1255,12 @@ OpenJsCad.Processor.prototype = {
           control.selectedIndex = selectedindex;
         }        
       }
+      // implementing instantUpdate
+      control.onchange = function() { 
+         if(document.getElementById("instantUpdate").checked==true) {
+            that.rebuildSolid();
+         }
+      };
       paramControls.push(control);
       var tr = document.createElement("tr");
       var td = document.createElement("td");

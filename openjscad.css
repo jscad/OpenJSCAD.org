@@ -82,5 +82,9 @@ canvas {
   font-size: 0.9em;
 }
 
+#instantUpdate {
+   margin-left: 1em;
+}
+
 .statusdiv {
 }
