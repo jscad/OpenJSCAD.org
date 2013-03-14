@@ -31,3 +31,7 @@ backup::
 
 edit::
 	dee4 index.html Makefile README.md *.css *.js
+
+live::
+	# -- do not enable --delete is it will destroy stats folder
+	rsync -av --exclude=.git ./ the-labs.com:Sites/openjscad.org/ 
