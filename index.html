@@ -16,6 +16,10 @@ Todo:
 -->
 <title>OpenJSCAD.org</title>
 <link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<script>$(function() { $("#hint").draggable(); });</script>
 </head><body onload="onload()">
 <script src="lightgl.js"></script>
 <script src="csg.js"></script>
@@ -63,20 +67,21 @@ canvas {
 }
 #hint {
    z-index: 10;
+   -moz-opacity: 0.6;
+   opacity: 0.6;
+   font-size: 0.6em;
    top: 30px;
    left: 30px;
    width: 30%
    height: 300px;
    position: absolute;
-   font-size: 0.6em;
    background: #fff;
    border: 1px solid #999;
    border-radius: 5px;
-   -moz-opacity: 0.6;
-   opacity: 0.6;
    padding: 1em;
    //display: none;
    box-shadow: 0px 0px 15px black;
+   cursor: move;  /* it's draggable */
 }
 
 .closeButton {
@@ -85,6 +90,7 @@ canvas {
    margin: 3px; 
    position: absolute;
    z-index: 4;
+   cursor: auto;
 }
 #footer {
    //width: 99%;    // avoid scrollbar
@@ -130,7 +136,7 @@ function main() {
       ));
 }
 </div>
-<div id="hint">
+<div id="hint" title="OpenJSCAD.org ALPHA">
 <div class="closeButton" onclick="document.getElementById('hint').style.display=(document.getElementById('hint').style.display!='none'?'none':'block');"><img src="imgs/closeButton.png"></div>
 <span id=header>OpenJSCAD.org</span> ALPHA<p>
 <b>Shift + Return</b> (or F5, F6): render code<p>
@@ -173,7 +179,7 @@ for(var i=0; i<ex.length; i++) {
 <b><a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">User Guide / Documentation</a></b>
 </div>
 
-<div oncontextmenu="return false;" id="viewer"></div>
+<div oncontextmenu="return false;" id="viewer"></div> <!-- avoiding popup when right mouse is clicked -->
 
 <div id=tail>
 <div id="parametersdiv"></div>
@@ -193,7 +199,7 @@ for(var i=0; i<ex.length; i++) {
 </div>
 
 <div id=footer>
-OpenJSCAD.org 0.006 2013/03/12, MIT License & GPLv2, <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">User Guide</a> - get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">github.com</a>
+OpenJSCAD.org 0.007 2013/03/12, MIT License & GPLv2, <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">User Guide</a> - get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">github.com</a>
 </div>
 </div>
 
