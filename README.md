@@ -14,9 +14,13 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 <b>Local Use:</b>
 <pre>
 % git clone https://github.com/Spiritdude/OpenJSCAD.org
+% cd OpenJSCAD.org
+% make install
 </pre>
 
-and then access the files via local web-site and your web-browser, or perform server-side stuff:
+and then access the files via local web-site and your web-browser. 
+
+For CLI (command-line interface) rendering install NodeJS as well, e.g. <tt>apt-get install nodejs</tt> and then test it:
 <pre>
 % openjscad example/example005.jscad 
 </pre>
