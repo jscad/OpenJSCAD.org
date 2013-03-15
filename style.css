@@ -1,0 +1,97 @@
+/* 
+ * style.css for index.html of http://OpenJSCAD.org/
+ */
+
+body { 
+   margin: 0px; 
+   padding: 2px; 
+   font-family: Helvetica, Arial, Sans;
+
+   /* viewer/canvas is screen.width x screen.height so when window 
+      is resized all remains intact, but we make sure no scrollbar appears */
+   overflow: hidden;       
+}
+
+#header {
+   color: #82c;
+   font-size: 1.2em;
+   font-weight: bold;
+}
+
+#editor { 
+   width: 40%;
+   top: 0px;
+   bottom: 0px;
+   /* height: 100%;    note: newer ace expects height */
+   right: 0px;
+   z-index: 6;
+   background: rgba(255,255,255,0.15);
+}
+
+#viewer {
+   background: #fff;
+   width: 100%;
+   top: 0px;
+   bottom: 0px;
+}
+canvas { 
+   cursor: move; 
+   padding: 0px; 
+   margin: 0px;
+}
+#hint {
+   z-index: 10;
+
+   opacity: 0.8;
+   -moz-opacity: 0.8;   /* css mess (why do it simple, when we can do it complicate!) */
+
+   font-size: 0.6em;
+   top: 30px;
+   left: 30px;
+   width: 30%
+   height: 300px;
+   position: absolute;
+   background: #fff;
+   border: 1px solid #999;
+
+   border-radius: 5px;
+   -moz-border-radius: 5px;    /* css mess (why do it simple, when we can do it complicate!) */
+   -webkit-border-radius: 5px;
+
+   padding: 1em;
+   box-shadow: 0px 0px 15px black;
+   cursor: move;  /* it's draggable */
+}
+
+.closeButton {
+   right: 0px;
+   top: 0px;
+   margin: 3px; 
+   position: absolute;
+   z-index: 4;
+   cursor: auto;
+}
+#footer {
+   padding: 0.3em;
+   font-size: 0.7em;
+   text-align: left;
+
+   opacity: 0.5;    
+   -moz-opacity: 0.5;      /* css mess (why do it simple, when we can do it complicate!) */
+
+   margin-top: 1em;
+}
+
+#tail { 
+   z-index: 4;
+   position: absolute;
+   bottom: 1px; 
+   margin: 1em;
+}
+
+/* we choose chrome theme for ace, and make sure line number is transparent too */
+.ace-chrome .ace_gutter { 
+   border-left: 2px dashed rgba(200,200,200,0.2);
+   background: none;
+}
+
