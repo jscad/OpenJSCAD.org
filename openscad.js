@@ -246,22 +246,25 @@ function hull() {
 function linear_extrude(p,s) {
    //console.log("linear_extrude() not yet implemented");
    //return;
-   var h = 1, off = 0, convexity = 10, twist = 0, slices = 10, zoff = 0;
+   var h = 1, off = 0, convexity = 10, twist = 0, slices = 10;
    if(p.height) h = p.height;
    //if(p.convexity) convexity = p.convexity;      // abandoned
    if(p.twist) twist = p.twist;
    if(p.slices) slices = p.slices;
-   if(p.center==true) zoff = -h/2;
    var o = s.extrude({offset:[0,0,h], twistangle:twist, twiststeps:slices});
-   if(zoff) {
-      // for true center we need to know x and y, which we disregard for now (fix it!)
-      o.translate([0,0,zoff]);
+   if(p.center==true) {
+      var off, b = new Array;
+      b = o.getBounds();      // b[0] = min, b[1] = max
+      off = b[1].plus(b[0]);
+      off = off.times(-0.5);
+      o = o.translate(off);
    }
    return o;
 }
 
-function rotate_extrude(p) {
+function rotate_extrude(p,o) {
    console.log("rotate_extrude() not yet implemented");
+   return o;
 }
 
 // -- 2D primitives (OpenSCAD like notion)

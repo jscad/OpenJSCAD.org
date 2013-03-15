@@ -14,9 +14,9 @@ function main() {
             translate([2,0,0], circle({r: 1, fn: 8, center: true}))
          ).translate([0,-6,0])
       ),
-      scale(3,linear_extrude({height: 10, twist: -90 }, 
-            polygon({ points:[[0,0],[3,0],[1,4],[2,1]] })
-         ).translate([0,-15,0])
+      scale(3,linear_extrude({height: 20, twist: -90, center: true }, 
+            polygon({ points:[[0,0],[4,1],[1,1],[1,4]] })
+         ).translate([0,-13,0])
       )
    );
 }
