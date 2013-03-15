@@ -271,15 +271,11 @@ function square() {
    if(p&&!p.size) v = [p,p];
    if(p.length) v = a, p = a[1];
    if(p&&p.size) v = p.size;
-   //var o = CAG.rectangle({center:off,radius:v});
 
-   var r = 1/2;  // sqrt(2)/2;
    off = [v[0]/2,v[1]/2];
    if(p&&p.center==true) off = [0,0];
 
-   var o = CAG.rectangle({center:[0,0],radius:[r,r]});
-   if(v[0]!=1||v[1]!=1) o = o.scale(v);
-   if(off[0]!=0||off[1]!=0) o = o.translate(off);
+   var o = CAG.rectangle({center:off,radius:[v[0]/2,v[1]/2]});
 
    return o;
 }
