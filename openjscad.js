@@ -723,6 +723,7 @@ OpenJsCad.Processor.prototype = {
     this.statusdiv.className = "statusdiv";
     //this.statusdiv.style.width = this.viewerwidth + "px";
     this.statusspan = document.createElement("span");
+    //this.statusspan.style.marginRight = '2em';
     this.statusbuttons = document.createElement("div");
     this.statusbuttons.style.float = "right";
     this.statusdiv.appendChild(this.statusspan);
