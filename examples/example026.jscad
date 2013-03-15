@@ -18,7 +18,7 @@ function main() {
          ).translate([0,-6,0])
       ),
       scale(3,
-         linear_extrude({height: 10, twist: 90 }, 
+         linear_extrude({height: 10, twist: -90 }, 
             polygon({ points:[[0,0],[3,0],[1,4],[2,1]] })
          ).translate([0,10,0])
       )
