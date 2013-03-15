@@ -1,7 +1,7 @@
 <img src="doc/logo.png" align=right>
 <h1>OpenJSCAD.org</h1>
 
-<b>Version 0.007</b> (ALPHA)
+<b>Version 0.008</b> (ALPHA)
 
 <b>OpenJSCAD.org</b> is a more up-to-date <a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a> frontend where you can edit .jscad files either locally or online via JS editor (built-in).
 A few functions are available to make the transition from <a href="http://openscad.org/">OpenSCAD</a> to OpenJSCAD easier (<a href="https://github.com/Spiritdude/OpenSCAD.jscad">OpenSCAD.jscad</a> built-in),
@@ -30,6 +30,7 @@ creates <tt>example/example005.stl</tt>
 
 <h2>History</h2>
 <ul>
+<li>2013/03/15: 0.008: circle(), square(), polygon() partially and linear_extrude() implemented (openscad-like)
 <li>2013/03/14: 0.007: integrating jQuery for new features; draggable hint window
 <li>2013/03/12: 0.006: included examples available in the web-frontend direct
 <li>2013/03/12: 0.005: supporting webgui parameters as of original OpenJsCad (see examples/example030.jscad)
@@ -42,8 +43,8 @@ creates <tt>example/example005.stl</tt>
 <ul>
 <li> 3d primitive: torus()
 <li> save to local from built-in editor
-<li> complete 2D primitives and transformations
-<li> implementation of linear_extrude(), rotate_extrude() (parameter compatible or very close so)
+<li> <strike>complete 2D primitives and transformations</strike> (done)
+<li> implementation of <strike>linear_extrude()</strike> (done), rotate_extrude() (parameter compatible or very close so)
 <li> example of platonic solids (based on triangle())
 <li> simple 2D/3D text
 <li> 3d operation: hull()
