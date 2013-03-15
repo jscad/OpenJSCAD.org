@@ -20,7 +20,7 @@ function main() {
       scale(3,
          linear_extrude({height: 10, twist: -90 }, 
             polygon({ points:[[0,0],[3,0],[1,4],[2,1]] })
-         ).translate([0,10,0])
+         ).translate([0,12,0])
       )
    );
 }
