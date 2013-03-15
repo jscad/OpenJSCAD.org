@@ -56,10 +56,19 @@ canvas {
    box-shadow: 0px 0px 8px black;
 }
 
-.parametersdiv {
-  /* display: inline-block;      ineffective since we do control in openjscad.js */
+#parametersdiv {
+  /* display: inline-block;     ineffective since we do control in openjscad.js */
+  position: absolute;         
+
+  bottom: 8em;                /* draggable via jQuery cannot move bottom: align, stick at the bottom (bug!!) */
+  left: 1em;
+  /* top: 2em;                if draggable, but must be left/top oriented, cannot be aligned bottom which looks nicer
+     left: 16em;
+   */
   
+  z-index: 4;
   border: 1px solid rgb(200,200,200);
+ 
   border-radius: 5px;     
   -moz-border-radius: 5px;    /* css mess */
   -webkit-border-radius: 5px;
@@ -69,24 +78,24 @@ canvas {
   opacity: 0.8;
   
   box-shadow: 0px 0px 15px black;
-  margin-bottom: 1em;
-  cursor: move;     /* moveable now */
+  
+  /* cursor: move;     moveable now */
 }
-.parametersdiv td {
+#parametersdiv td {
   font-size: 0.8em;
 }
-.parametersdiv input, .parametersdiv textarea, .parametersdiv select {
+#parametersdiv input, #parametersdiv textarea, #parametersdiv select {
   font-size: 0.9em;
   background: #fea;
   border: none;
 }
 
-.parametersdiv .parameterheader {
+#parametersdiv .parameterheader {
    font-weight: bold;
    font-size: 0.9em;
 }
 
-.parametersdiv .caption {
+#parametersdiv .caption {
    text-align: right;
 }
 

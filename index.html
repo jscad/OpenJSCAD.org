@@ -21,10 +21,6 @@ Todo:
 <link rel="stylesheet" href="jquery/themes/base/jquery-ui.css" />
 <script src="jquery/jquery-1.9.1.js"></script>
 <script src="jquery/jquery-ui.js"></script>
-<script>
-   $(function() { $("#hint").draggable(); });
-   $(function() { $("#parametersdiv").draggable(); });
-</script>
 </head><body onload="onload()">
 <script src="lightgl.js"></script>
 <script src="csg.js"></script>
@@ -32,6 +28,10 @@ Todo:
 <script src="openscad.js"></script>
 <link rel="stylesheet" href="style.css" type="text/css">
 <link rel="stylesheet" href="openjscad.css" type="text/css">
+<script>
+   $(function() { $("#hint").draggable(); });
+   //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
+</script>
 </head>
 <body>
 
@@ -100,8 +100,8 @@ for(var i=0; i<ex.length; i++) {
 
 <div oncontextmenu="return false;" id="viewer"></div> <!-- avoiding popup when right mouse is clicked -->
 
-<div id=tail>
 <div id="parametersdiv"></div>
+<div id="tail">
 <div id="statusdiv"></div>
 <div id="errordiv"></div>
 <div id="filedropzone">

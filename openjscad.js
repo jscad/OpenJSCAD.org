@@ -748,9 +748,11 @@ OpenJsCad.Processor.prototype = {
     this.downloadOutputFileLink = document.createElement("a");
     this.downloadOutputFileLink.className = "downloadOutputFileLink"; // so we can css it
     this.statusbuttons.appendChild(this.downloadOutputFileLink);
+
     //this.parametersdiv = document.createElement("div");            // already created
     this.parametersdiv = document.getElementById("parametersdiv");   // get the info
-    this.parametersdiv.className = "parametersdiv";
+    this.parametersdiv.id = "parametersdiv";
+    // this.parametersdiv.className = "ui-draggable";                   // via jQuery draggable() but it screws up 
 
     var headerdiv = document.createElement("div");
     //headerdiv.innerText = "Parameters:";
@@ -850,7 +852,7 @@ OpenJsCad.Processor.prototype = {
     this.formatDropdown.style.display = ((!this.hasOutputFile)&&(this.hasValidCurrentObject))? "inline":"none";
     this.generateOutputFileButton.style.display = ((!this.hasOutputFile)&&(this.hasValidCurrentObject))? "inline":"none";
     this.downloadOutputFileLink.style.display = this.hasOutputFile? "inline":"none";
-    this.parametersdiv.style.display = (this.paramControls.length > 0)? "block":"none";      // inline-block would be nicer, but then transparent area doesn't allow to rotate models anymore (confusion to user)
+    this.parametersdiv.style.display = (this.paramControls.length > 0)? "inline-block":"none";     // was 'block' 
     this.errordiv.style.display = this.hasError? "block":"none";
     this.statusdiv.style.display = this.hasError? "none":"block";    
   },
