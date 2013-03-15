@@ -720,7 +720,7 @@ OpenJsCad.Processor.prototype = {
     this.errordiv.appendChild(this.errorpre);
     //this.statusdiv = document.createElement("div");
     this.statusdiv = document.getElementById("statusdiv");
-    //this.statusdiv.className = "statusdiv";
+    this.statusdiv.className = "statusdiv";
     //this.statusdiv.style.width = this.viewerwidth + "px";
     this.statusspan = document.createElement("span");
     this.statusbuttons = document.createElement("div");
@@ -750,10 +750,13 @@ OpenJsCad.Processor.prototype = {
     //this.parametersdiv = document.createElement("div");            // already created
     this.parametersdiv = document.getElementById("parametersdiv");   // get the info
     this.parametersdiv.className = "parametersdiv";
+
     var headerdiv = document.createElement("div");
-    headerdiv.innerText = "Parameters:";
-    headerdiv.className = "header";
+    //headerdiv.innerText = "Parameters:";
+    headerdiv.innerHTML = "Parameters:";
+    headerdiv.className = "parameterheader";
     this.parametersdiv.appendChild(headerdiv);
+
     this.parameterstable = document.createElement("table");
     this.parameterstable.className = "parameterstable";
     this.parametersdiv.appendChild(this.parameterstable);
@@ -846,7 +849,7 @@ OpenJsCad.Processor.prototype = {
     this.formatDropdown.style.display = ((!this.hasOutputFile)&&(this.hasValidCurrentObject))? "inline":"none";
     this.generateOutputFileButton.style.display = ((!this.hasOutputFile)&&(this.hasValidCurrentObject))? "inline":"none";
     this.downloadOutputFileLink.style.display = this.hasOutputFile? "inline":"none";
-    this.parametersdiv.style.display = (this.paramControls.length > 0)? "block":"none";
+    this.parametersdiv.style.display = (this.paramControls.length > 0)? "inline-block":"none";
     this.errordiv.style.display = this.hasError? "block":"none";
     this.statusdiv.style.display = this.hasError? "none":"block";    
   },
