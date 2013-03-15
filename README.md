@@ -42,6 +42,7 @@ creates <tt>example/example005.stl</tt>
 <h2>Todo</h2>
 <ul>
 <li> 3d primitive: <b>torus()</b>
+<li> include() for Web-GUI and CLI to include libraries and modules
 <li> save to local from built-in editor
 <li> <del>complete 2D primitives and transformations</del> (done)
 <li> implementation of <del>linear_extrude()</del> (done), <b>rotate_extrude()</b> (parameter compatible to OpenSCAD or very close so)
@@ -50,7 +51,7 @@ creates <tt>example/example005.stl</tt>
 <li> 3d operation: hull()
 <li> processing/progress bar (0..100%), perhaps even visual progress seen in the model direct
 <li> STL importer & AMF importer / exporter
-<li> integration into <a href="https://github.com/Spiritdude/RepRapCloud">RepRap Cloud</a> as first stage of the workflow.
+<li> integration into <a href="https://github.com/Spiritdude/RepRapCloud">RepRap Cloud</a> as first stage of the workflow
 </ul>
 
 <h2>Documentation</h2>
