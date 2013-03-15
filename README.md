@@ -41,10 +41,10 @@ creates <tt>example/example005.stl</tt>
 
 <h2>Todo</h2>
 <ul>
-<li> 3d primitive: torus()
+<li> 3d primitive: <b>torus()</b>
 <li> save to local from built-in editor
 <li> <del>complete 2D primitives and transformations</del> (done)
-<li> implementation of <del>linear_extrude()</del> (done), rotate_extrude() (parameter compatible or very close so)
+<li> implementation of <del>linear_extrude()</del> (done), <b>rotate_extrude()</b> (parameter compatible to OpenSCAD or very close so)
 <li> example of platonic solids (based on triangle())
 <li> simple 2D/3D text
 <li> 3d operation: hull()
