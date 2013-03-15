@@ -1,7 +1,7 @@
 // openscad.js, a few functions to simplify coding OpenSCAD-like
 //    written by Rene K. Mueller <spiritdude@gmail.com>, License: GPLv2
 //
-// Version: 0.009
+// Version: 0.010
 //
 // Description:
 // Helping to convert OpenSCAD .scad files to OpenJSCad .jscad files with 
@@ -12,6 +12,7 @@
 //     http://openjscad.org/
 //
 // History:
+// 2013/03/15: 0.010: circle(), square() and linear_extrude() included
 // 2013/03/13: 0.009: adding include() for web-gui
 // 2013/03/12: 0.008: covering most mathematical function of OpenSCAD in JS as well
 // 2013/03/11: 0.007: most function transforming CSG now take array as well, more functions for OpenSCAD-alike behaviour
@@ -243,14 +244,19 @@ function hull() {
 // -- 2D to 3D primitives (OpenSCAD like notion)
 
 function linear_extrude(p,s) {
-   console.log("linear_extrude() not yet implemented");
-   return;
-   var h = 1, off = 0, convexity = 10, twist = 0, slices = 10;
+   //console.log("linear_extrude() not yet implemented");
+   //return;
+   var h = 1, off = 0, convexity = 10, twist = 0, slices = 10, o, zoff = 0;
    if(p.height) h = p.height;
    //if(p.convexity) convexity = p.convexity;      // abandoned
    if(p.twist) twist = p.twist;
    if(p.slices) slices = p.slices;
-   return s.extrude({offset:[0,0,h], twistangle:0, twiststeps:twist, slices:slices});
+   if(p.center==true) zoff = -h/2;
+   o = s.extrude({offset:[0,0,h], twistangle:twist, twiststeps:slices});
+   if(zoff) {
+      o.translate([0,0,zoff]);
+   }
+   return o;
 }
 
 function rotate_extrude(p) {
@@ -260,21 +266,24 @@ function rotate_extrude(p) {
 // -- 2D primitives (OpenSCAD like notion)
 
 function square() {
-   var v = [1,1], off = [0,0]; var a = arguments;
-   if(a&&a[0].length) v = a[0];
-   if(a&&a[1].center==true) off = v; 
+   var v = [1,1], off; var a = arguments, p = a[0];
    var o = CAG.rectangle({center:[0,0],radius:v});
-   if(off[0]||off[1]) o = o.translate([-off[0]/2,-off[1]/2]);
+   if(p.length) v = a, p = a[1];
+   if(p&&p.size) v = p.size;
+   if(p&&p.center==true) { off = [0,0]; } else { off = [-p.size[0]/2,-p.size[1]/2]; }
+   if(v[0]!=1||v[1]!=1) o = o.scale(v);
+   if(off[0]||off[1]) o = o.translate(off);
    return o;
 }
 
 function circle() {
-   var r = 1, off = [0,0], fn = 32; var a = arguments;
-   if(a&&a[0]) r = a[0];
-   if(a&&a[1]&&a[1].fn) fn = p.fn;
-   if(a&&a[1]&&a[1].center==true) off = r;
-   var o = CAG.circle({center:[r,r],radius:r});
-   //if(off) o = o.translate([-off,-off]);
+   var r = 1, off, fn = 32; var a = arguments, p = a[0];
+   if(p&&p.r) r = p.r;
+   if(p&&p.fn) fn = p.fn;
+   if(p&&!p.r) r = p;
+   off = [r,r];
+   if(p&&p.center==true) { off = [0,0]; } 
+   var o = CAG.circle({center:off,radius:r,resolution:fn});
    return o;
 }
 
