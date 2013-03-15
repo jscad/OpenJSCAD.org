@@ -42,11 +42,11 @@ creates <tt>example/example005.stl</tt>
 <h2>Todo</h2>
 <ul>
 <li> 3d primitive: <b>torus()</b>
-<li> include() for Web-GUI and CLI to include libraries and modules
-<li> save to local from built-in editor
+<li> <b>include()</b> for Web-GUI and CLI to include libraries and modules
+<li> save from built-in editor to local
 <li> <del>complete 2D primitives and transformations</del> (done)
 <li> implementation of <del>linear_extrude()</del> (done), <b>rotate_extrude()</b> (parameter compatible to OpenSCAD or very close so)
-<li> example of platonic solids (based on triangle())
+<li> example of platonic solids (in progress, requires include())
 <li> simple 2D/3D text
 <li> 3d operation: hull()
 <li> processing/progress bar (0..100%), perhaps even visual progress seen in the model direct
