@@ -246,13 +246,13 @@ function hull() {
 function linear_extrude(p,s) {
    //console.log("linear_extrude() not yet implemented");
    //return;
-   var h = 1, off = 0, convexity = 10, twist = 0, slices = 10, o, zoff = 0;
+   var h = 1, off = 0, convexity = 10, twist = 0, slices = 10, zoff = 0;
    if(p.height) h = p.height;
    //if(p.convexity) convexity = p.convexity;      // abandoned
    if(p.twist) twist = p.twist;
    if(p.slices) slices = p.slices;
    if(p.center==true) zoff = -h/2;
-   o = s.extrude({offset:[0,0,h], twistangle:twist, twiststeps:slices});
+   var o = s.extrude({offset:[0,0,h], twistangle:twist, twiststeps:slices});
    if(zoff) {
       // for true center we need to know x and y, which we disregard for now (fix it!)
       o.translate([0,0,zoff]);
@@ -291,11 +291,22 @@ function circle() {
    return o;
 }
 
-function polygon() {
-   var a = arguments;
-   if(a[0]&&a[0].length) a = a[0];
-   var o = CAG.fromPoints(a);
-   return o;
+function polygon(p) {  // array of po(ints) and pa(ths)
+   var points = new Array();
+   if(p.paths&&p.paths.length&&p.paths[0].length) {          // pa(th): [[0,1,2],[2,3,1]] (two paths)
+      for(var j=0; j<p.paths.length; j++) {
+         for(var i=0; i<p.paths[j].length; i++) {
+            points[i] = p.points[p.paths[j][i]];
+         }
+      }
+   } else if(p.paths&&p.paths.length) {                 // pa(th): [0,1,2,3,4] (single path)
+      for(var i=0; i<p.paths.length; i++) {
+         points[i] = p.points[p.paths[i]];
+      }
+   } else {                               // pa(th) = po(ints)
+      points = p.points;
+   }
+   return CAG.fromPoints(points);
 }
 
 function triangle() {         // -- new addition
