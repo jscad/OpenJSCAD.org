@@ -22,5 +22,5 @@ function example005() {
 }
 
 function main() {
-   return example005();
-}
+   return example005().scale(1/3);
+}                               
