@@ -43,7 +43,7 @@ creates <tt>example/example005.stl</tt>
 <ul>
 <li> 3d primitive: torus()
 <li> save to local from built-in editor
-<li> ~~complete~~ 2D primitives and transformations (done)
+<li> <del>complete 2D primitives and transformations</del> (done)
 <li> implementation of <strike>linear_extrude()</strike> (done), rotate_extrude() (parameter compatible or very close so)
 <li> example of platonic solids (based on triangle())
 <li> simple 2D/3D text
