@@ -12,7 +12,7 @@
 //     http://openjscad.org/
 //
 // History:
-// 2013/03/15: 0.010: circle(), square() and linear_extrude() included
+// 2013/03/15: 0.010: circle(), square(), polygon() (partially) and linear_extrude() implemented
 // 2013/03/13: 0.009: adding include() for web-gui
 // 2013/03/12: 0.008: covering most mathematical function of OpenSCAD in JS as well
 // 2013/03/11: 0.007: most function transforming CSG now take array as well, more functions for OpenSCAD-alike behaviour
