@@ -254,6 +254,7 @@ function linear_extrude(p,s) {
    if(p.center==true) zoff = -h/2;
    o = s.extrude({offset:[0,0,h], twistangle:twist, twiststeps:slices});
    if(zoff) {
+      // for true center we need to know x and y, which we disregard for now (fix it!)
       o.translate([0,0,zoff]);
    }
    return o;
