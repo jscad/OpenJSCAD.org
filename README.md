@@ -21,7 +21,8 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 and then access the files via local web-site and your web-browser. 
 
 <b>Local CLI Use:</b>
-For CLI (command-line interface) rendering install NodeJS as well, e.g. <tt>apt-get install nodejs</tt> and then test it:
+
+For CLI (command-line interface) rendering install <a href="http://nodejs.org/">NodeJS</a> as well, e.g. <tt>apt-get install nodejs</tt> and then test it:
 <pre>
 % openjscad example/example005.jscad 
 </pre>
