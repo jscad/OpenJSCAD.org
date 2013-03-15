@@ -304,7 +304,11 @@ function polygon(p) {  // array of po(ints) and pa(ths)
          points[i] = p.points[p.paths[i]];
       }
    } else {                               // pa(th) = po(ints)
-      points = p.points;
+      if(p.length) {
+         points = p;
+      } else {
+         points = p.points;
+      }
    }
    return CAG.fromPoints(points);
 }
