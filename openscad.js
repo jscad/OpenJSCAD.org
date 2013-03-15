@@ -267,12 +267,19 @@ function rotate_extrude(p) {
 
 function square() {
    var v = [1,1], off; var a = arguments, p = a[0];
-   var o = CAG.rectangle({center:[0,0],radius:v});
+   if(p&&!p.size) v = [p,p];
    if(p.length) v = a, p = a[1];
    if(p&&p.size) v = p.size;
-   if(p&&p.center==true) { off = [0,0]; } else { off = [-p.size[0]/2,-p.size[1]/2]; }
+   //var o = CAG.rectangle({center:off,radius:v});
+
+   var r = 1/2;  // sqrt(2)/2;
+   off = [v[0]/2,v[1]/2];
+   if(p&&p.center==true) off = [0,0];
+
+   var o = CAG.rectangle({center:[0,0],radius:[r,r]});
    if(v[0]!=1||v[1]!=1) o = o.scale(v);
-   if(off[0]||off[1]) o = o.translate(off);
+   if(off[0]!=0||off[1]!=0) o = o.translate(off);
+
    return o;
 }
 
