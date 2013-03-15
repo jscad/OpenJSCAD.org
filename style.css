@@ -71,21 +71,23 @@ canvas {
    z-index: 4;
    cursor: auto;
 }
+
 #footer {
-   padding: 0.3em;
    font-size: 0.7em;
    text-align: left;
+   position: absolute; 
 
+   margin-left: 1.5em;
+   bottom: 0.5em; 
+   
    opacity: 0.5;    
    -moz-opacity: 0.5;      /* css mess (why do it simple, when we can do it complicate!) */
-
-   margin-top: 1em;
 }
 
 #tail { 
    z-index: 4;
    position: absolute;
-   bottom: 1px; 
+   bottom: 1em; 
    margin: 1em;
 }
 
