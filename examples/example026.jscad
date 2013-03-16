@@ -3,11 +3,10 @@
 function main() {
    return union(
       scale(3,linear_extrude({height: 10}, 
-            circle({r: 1, fn: 5, center: true})
-         )
+         circle({r: 1, fn: 5, center: true}))
       ),
       scale(3,linear_extrude({height: 10, twist: 90}, 
-            translate([2,0,0], square({size: [1,2], center: true}))
+            square({size: [1,2], center: true})
          ).translate([0,5,0])
       ),
       scale(3,linear_extrude({height: 10, twist: -500, slices: 50 }, 
