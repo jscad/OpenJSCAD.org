@@ -1,17 +1,24 @@
-VERSION=0.008
+VERSION=0.009
 LIB = /usr/local/lib/openjscad/
 
 all::
-	@echo "make install deinstall" 
+	@echo "make install deinstall tests" 
 
 
 install::
+	sudo npm -g install openscad-openjscad-translator sylvester underscore requirejs
 	sudo scp openjscad /usr/local/bin/
 	sudo mkdir -p ${LIB}
 	sudo scp *.js ${LIB}
                                 
 deinstall::
 	sudo rm -f ${LIB}/*.js 
+
+tests::
+	openjscad examples/example000.jscad
+	openjscad examples/example001.jscad
+	openjscad examples/example001.scad -o examples/example001-fromSCAD.stl
+	openjscad examples/example001.scad -o examples/example001-fromSCAD.jscad
                                         
 # --- developers only below
 
@@ -30,7 +37,7 @@ backup::
 	scp ../Backup/openjscad.org-${VERSION}.tar.gz the-labs.com:Backup/
 
 edit::
-	dee4 index.html Makefile README.md *.css *.js
+	dee4 index.html Makefile README.md *.css *.js openjscad
 
 live::
 	# -- do not enable --delete is it will destroy stats folder

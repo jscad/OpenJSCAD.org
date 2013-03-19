@@ -3,7 +3,7 @@
 // OpenJsCad CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>
 // License: GPLv2
 //
-var version = '0.002';
+var version = '0.003';
 //
 // Description:
 //   openjscad <file> [-o <stl>]
@@ -12,6 +12,7 @@ var version = '0.002';
 //   openjscad test.jscad -osomething.stl
 //
 // History:
+// 2013/03/18: 0.003: true .scad support by Gary Hodgson's openscad-openjscad-translator module
 // 2013/03/02: 0.002: proper installation of the dependencies (csg.js & openscad.js) so openjscad can be used properly
 // 2013/03/01: 0.001: initial version, with base function from openscad.jscad
 //
@@ -49,21 +50,44 @@ if(args.length==2) {                         // -o<file.stl>
 }
 
 //console.log("reading "+inf);
-var src = fs.readFileSync(inf);
+var src = fs.readFileSync(inf,"UTF8");
 var scad = fs.readFileSync(lib+'./openscad.js');
 
 //var csg = sphere(1);          // -- basic test
 //var csg = require(file).main; // -- treating .jscad as module? later perhaps
 
-console.log("computing stl from "+inf+" to "+outf);
-var csg = eval(src+"\n"+scad+"\nmain()\n");    // openscad.js + *.jscad + main()
+var exportSTL = 0;
 
-//var stl = csg.fixTJunctions().toStlBinary();
-var stl = csg.fixTJunctions().toStlString();
+if(/\.scad$/.exec(inf)) {       // -- .scad file
+   var scadParser = require('openscad-openjscad-translator');    
+   //var scadParser = require('/usr/local/lib/node_modules/openscad-openjscad-translator');    
+   if(/.jscad/.exec(outf)) {    // -- output isn't .stl, but .jscad
+      console.log("computing "+inf+" to "+outf);
+      src = scadParser.parse(src); //    doing the magick
+      src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
+      var s = fs.WriteStream(outf);
+      s.write(src);
+      
+   } else {
+      console.log("computing "+inf+" to jscad");
+      src = scadParser.parse(src); //    doing the magick
+      console.log("computing jscad to "+outf);
+      exportSTL = 1;
+   }
+   
+} else {
+   console.log("computing "+inf+" to "+outf);
+}
 
-var s = fs.WriteStream(outf);
-s.write(stl);
+if(exportSTL) {
+   var csg = eval(src+"\n"+scad+"\nmain()\n");    // openscad.js + *.jscad + main()
+   
+   //var stl = csg.fixTJunctions().toStlBinary();
+   var stl = csg.fixTJunctions().toStlString();
 
+   var s = fs.WriteStream(outf);
+   s.write(stl);
+}
 
 // -- helper functions 
 
