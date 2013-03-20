@@ -198,7 +198,7 @@ function fetchExample(fn) {
             
          } else if(fn.match(/\.scad$/i)) {
             jscadscript = openscadOpanJscadParser.parse(jscadscript);
-            jscadscript = "// OpenJSCAD.org scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+jscadscript;
+            jscadscript = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+jscadscript;
             gProcessor.setJsCad(jscadscript, fn);
 
          } else if(fn.match(/\.stl$/i)) {
@@ -322,7 +322,7 @@ function parseFile(debugging, onlyifchanged) {
                ; // default
             } else if(gCurrentFile._type=='scad') {
                jscadscript = openscadOpanJscadParser.parse(jscadscript);
-               jscadscript = "// OpenJSCAD.org scad importer (openscad-openjscad-translator) '"+filename+"'\n\n"+jscadscript;
+               jscadscript = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+filename+"'\n\n"+jscadscript;
                
             } else if(gCurrentFile._type=='stl') {
                jscadscript = parseSTL(jscadscript,filename);
