@@ -503,11 +503,6 @@
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 391.32782,683.79075 117.14286,35.71429"
-       id="path4248"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 461.32782,599.50504 50,0"
        id="path4252"
        inkscape:connector-curvature="0" />
@@ -571,5 +566,10 @@
          id="tspan4304"
          x="209.19855"
          y="839.39203">by Rene K. Mueller 2013/03/20 0.001 CC-BY</tspan></text>
+    <path
+       inkscape:connector-curvature="0"
+       id="path4489"
+       d="m 384.17563,618.98633 122.22846,98.99495"
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
   </g>
 </svg>
