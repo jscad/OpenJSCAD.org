@@ -69,6 +69,9 @@ Simple JSCAD example (example000.jscad):
 More sophisticated JSCAD example, fully object-oriented (OO) programmed with interactive parameters (example031.jscad):
 <img src="doc/sshot-03-illu.png">
 
+Import of STL models:
+<img src="doc/sshot-04.png">
+
 <h2>See Also</h2>
 <ul>
 <li><a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a>, inspiration of this project and the following below
