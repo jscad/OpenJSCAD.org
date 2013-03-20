@@ -585,7 +585,7 @@ function parseAsciiSTL(stl,fn) {
                }
             }
             if(skip) {
-               //continue;
+               continue;
             }
             if(0&&skip) {
                var j = 1+3;
