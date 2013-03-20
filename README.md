@@ -30,7 +30,7 @@ creates <tt>example/example005.stl</tt>
 
 <h2>History</h2>
 <ul>
-<li>2013/03/20: 0.009: OpenSCAD .scad syntax support inclded via <a href="https://github.com/garyhodgson/openscad-openjscad-translator">openscad-openjscad-translator</a> module, on web and cli; and experimental .stl import support (binary & ascii)
+<li>2013/03/20: 0.009: OpenSCAD .scad syntax support included via <a href="https://github.com/garyhodgson/openscad-openjscad-translator">openscad-openjscad-translator</a> module, on web and cli; and experimental .stl import support (binary & ascii)
 <li>2013/03/15: 0.008: circle(), square(), polygon() partially and linear_extrude() implemented (openscad-like)
 <li>2013/03/14: 0.007: integrating jQuery for new features; draggable hint window
 <li>2013/03/12: 0.006: included examples available in the web-frontend direct
@@ -47,12 +47,12 @@ creates <tt>example/example005.stl</tt>
 <li> <b>include()</b> for Web-GUI and CLI to include libraries and modules
 <li> save from built-in editor to local
 <li> <del>complete 2D primitives and transformations</del> (done)
-<li> implementation of <del>linear_extrude()</del> (done), <b>rotate_extrude()</b> (parameter compatible to OpenSCAD or very close so)
+<li> implementation of <del><b>linear_extrude()</b></del> (done), <b>rotate_extrude()</b> (parameter compatible to OpenSCAD or very close so)
 <li> example of platonic solids (in progress, requires include())
 <li> simple 2D/3D text
 <li> 3d operation: hull()
 <li> processing/progress bar (0..100%), perhaps even visual progress seen in the model direct
-<li> STL importer & AMF importer / exporter
+<li> <del>STL importer</del> (done) & AMF importer / exporter
 <li> integration into <a href="https://github.com/Spiritdude/RepRapCloud">RepRap Cloud</a> as first stage of the workflow
 </ul>
 
