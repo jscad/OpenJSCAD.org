@@ -1,7 +1,5 @@
 VERSION=0.009
 LIB = /usr/local/lib/openjscad/
-DISPLAY=
-NODE_PATH = /usr/local/lib/node_modules
 
 all::
 	@echo "make install deinstall tests clean" 
@@ -22,7 +20,8 @@ tests::
 	openjscad examples/example001.jscad -o examples/example001-fromJSCAD.stl
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.stl
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.jscad
-	openscad examples/example001.scad -o examples/example001-fromSCADviaOpenSCAD.stl
+   # -- enable if you have openscad installed ('unsetenv DISPLAY' perhaps too)
+	# openscad examples/example001.scad -o examples/example001-fromSCADviaOpenSCAD.stl
 
 clean::
 	rm -f examples/example001-from*
