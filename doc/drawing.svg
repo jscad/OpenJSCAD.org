@@ -56,9 +56,9 @@
        style="fill:#ffffff;fill-opacity:1;stroke:none"
        id="rect4300"
        width="711.1474"
-       height="941.46216"
+       height="884.31927"
        x="-8.0812197"
-       y="-66.886833"
+       y="-26.886833"
        inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\doc\drawing-01.png"
        inkscape:export-xdpi="50.619999"
        inkscape:export-ydpi="50.619999" />
@@ -76,12 +76,12 @@
     <text
        sodipodi:linespacing="125%"
        id="text4254"
-       y="-5.745306"
-       x="347.35736"
-       style="font-size:46.12111282px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       y="11.552971"
+       x="343.10223"
+       style="font-size:35.68124771px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
        xml:space="preserve"><tspan
-         y="-5.745306"
-         x="347.35739"
+         y="11.552971"
+         x="343.10223"
          id="tspan4256"
          sodipodi:role="line">OpenJSCAD.org Dual Use</tspan></text>
     <rect
@@ -93,18 +93,18 @@
        y="98.076477" />
     <text
        xml:space="preserve"
-       style="font-size:16.87065887px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="215.21535"
-       y="130.02577"
+       style="font-size:20.29867935px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="190.70367"
+       y="128.77122"
        id="text3757"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3759"
-         x="215.21535"
-         y="130.02577">http://OpenJSCAD.org/</tspan><tspan
+         x="190.70367"
+         y="128.77122">http://OpenJSCAD.org/</tspan><tspan
          sodipodi:role="line"
-         x="215.21535"
-         y="151.11409"
+         x="190.70367"
+         y="154.14458"
          id="tspan3763">http://locahost/OpenJSCAD.org/</tspan></text>
     <rect
        y="498.07648"
@@ -562,14 +562,14 @@
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <text
        xml:space="preserve"
-       style="font-size:20.70535278px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="140.17609"
-       y="849.17603"
+       style="font-size:13.81185818px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="209.19855"
+       y="839.39203"
        id="text4302"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4304"
-         x="140.17609"
-         y="849.17603">by Rene K. Mueller 2013/03/20 0.001 CC-BY</tspan></text>
+         x="209.19855"
+         y="839.39203">by Rene K. Mueller 2013/03/20 0.001 CC-BY</tspan></text>
   </g>
 </svg>
