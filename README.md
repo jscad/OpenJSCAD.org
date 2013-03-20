@@ -30,7 +30,7 @@ creates <tt>example/example005.stl</tt>
 
 <h2>History</h2>
 <ul>
-<li>2013/03/18: 0.009: OpenSCAD .scad syntax support through openscad-openjscad-translator module
+<li>2013/03/20: 0.009: OpenSCAD .scad syntax support inclded via <a href="https://github.com/garyhodgson/openscad-openjscad-translator">openscad-openjscad-translator</a> module, on web and cli; and experimental .stl import support (binary & ascii)
 <li>2013/03/15: 0.008: circle(), square(), polygon() partially and linear_extrude() implemented (openscad-like)
 <li>2013/03/14: 0.007: integrating jQuery for new features; draggable hint window
 <li>2013/03/12: 0.006: included examples available in the web-frontend direct

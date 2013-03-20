@@ -9,7 +9,7 @@ Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
-- 2013/03/18: 0.009: .scad and .stl support integrated (be aware .stl can be binary)
+- 2013/03/20: 0.009: OpenSCAD .scad (via openscad-openjscad-translator) and .stl experimental import support integrated
 - 2013/03/15: 0.008: minor changes, parameter window smaller, css changes
 - 2013/03/14: 0.007: including jQuery to make UI changes easier, e.g. hint window moveable now
 - 2013/03/11: 0.005: resize of browser fixed by fixing canvas size to full screen, and avoid scrollbars
@@ -80,9 +80,10 @@ Examples:
 <script>
 var ex = [ 
 { file:'example000.jscad', title: 'OpenJSCAD.org Logo' },
-{ file:'example001.jscad', title: 'Example 1: Sphere with cutouts (.jscad)' },
-{ file:'example001.scad', title: 'Example 1: Sphere with cutouts (.scad)' },
-{ file:'example002.jscad', title: 'Example 2: Cone with cutouts' },
+{ file:'example001.jscad', title: 'Example 1: Sphere with cutouts (JSCAD)' },
+{ file:'example001.scad', title: 'Example 1: Sphere with cutouts (SCAD)' },
+{ file:'example002.jscad', title: 'Example 2: Cone with cutouts (JSCAD)' },
+{ file:'example002.scad', title: 'Example 2: Cone with cutouts (SCAD)' },
 { file:'example003.jscad', title: 'Example 3: Cube with cutouts' },
 { file:'example004.jscad', title: 'Example 4: Cube minus sphere' },
 { file:'example005.jscad', title: 'Example 5: Pavillon' },
@@ -90,7 +91,7 @@ var ex = [
 { file:'example023.jscad', title: 'Example: lookup()' },
 { file:'example024.jscad', title: 'Example: expand()' },
 { file:'example026.jscad', title: 'Example: linear_extrude()' },
-{ file:'example027.jscad', title: 'Example: polyhedron()' },
+{ file:'example027.jscad', title: 'Example: polyhedron()' },
 { file:'example030.jscad', title: 'Interactive Params: Servo Motor' },
 { file:'example031.jscad', title: 'Interactive Params: Gear' },
 { file:'example032.jscad', title: 'Interactive Params: S Hook' },
@@ -98,9 +99,9 @@ var ex = [
 { file:'example034.jscad', title: 'Interactive Params: Axis Coupler' },
 { file:'example035.jscad', title: 'Interactive Params: Lamp Shade' },
 { file:'example036.jscad', title: 'Interactive Params: Celtic Knot Ring' },
+{ file:'3d_sculpture-VernonBussler.stl', title: 'Example STL: 3D Sculpture (Vernon Bussler)' },
 { file:'frog-OwenCollins.stl', title: 'Example STL: Frog (Owen Collins)' },
 // { file:'organic_flower-Bogoboy23.stl', title: 'Example STL: Organic Flower (Bogoboy23)' }, // all wrong normals!!
-{ file:'3d_sculpture-VernonBussler.stl', title: 'Example STL: 3D Sculpture (Vernon Bussler)' },
 { file:'yoda-RichRap.stl', title: 'Example STL: Yoda (RichRap)' },
 // { file:'klein_bottle-DizingOf.stl', title: 'Example STL: Klein Bottle (DizingOf)' } // too slow, over 400k triangles, huge memory consumption
 ];
@@ -197,7 +198,7 @@ function fetchExample(fn) {
             
          } else if(fn.match(/\.scad$/i)) {
             jscadscript = openscadOpanJscadParser.parse(jscadscript);
-            jscadscript = "// OpenJSCAD.org scad importer (openscad-openscad-translator) '"+fn+"'\n\n"+jscadscript;
+            jscadscript = "// OpenJSCAD.org scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+jscadscript;
             gProcessor.setJsCad(jscadscript, fn);
 
          } else if(fn.match(/\.stl$/i)) {
@@ -321,7 +322,7 @@ function parseFile(debugging, onlyifchanged) {
                ; // default
             } else if(gCurrentFile._type=='scad') {
                jscadscript = openscadOpanJscadParser.parse(jscadscript);
-               jscadscript = "// OpenJSCAD.org scad importer (openscad-openscad-translator) '"+filename+"'\n\n"+jscadscript;
+               jscadscript = "// OpenJSCAD.org scad importer (openscad-openjscad-translator) '"+filename+"'\n\n"+jscadscript;
                
             } else if(gCurrentFile._type=='stl') {
                jscadscript = parseSTL(jscadscript,filename);
