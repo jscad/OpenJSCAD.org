@@ -30,6 +30,7 @@ creates <tt>example/example005.stl</tt>
 
 <h2>History</h2>
 <ul>
+<li>2013/03/18: 0.009: OpenSCAD .scad syntax support through openscad-openjscad-translator module
 <li>2013/03/15: 0.008: circle(), square(), polygon() partially and linear_extrude() implemented (openscad-like)
 <li>2013/03/14: 0.007: integrating jQuery for new features; draggable hint window
 <li>2013/03/12: 0.006: included examples available in the web-frontend direct
@@ -42,6 +43,7 @@ creates <tt>example/example005.stl</tt>
 <h2>Todo</h2>
 <ul>
 <li> 3d primitive: <b>torus()</b>
+<li> <del>OpenSCAD .scad support for both Web-GUI and CLI</del> (done)
 <li> <b>include()</b> for Web-GUI and CLI to include libraries and modules
 <li> save from built-in editor to local
 <li> <del>complete 2D primitives and transformations</del> (done)

@@ -1,4 +1,5 @@
 <html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 <!-- 
 == OpenJSCAD.org, written by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License ==
    with some code from OpenJsCad processfile.html by Joost Nieuwenhuijse 
@@ -8,6 +9,7 @@ Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
+- 2013/03/18: 0.009: .scad and .stl support integrated (be aware .stl can be binary)
 - 2013/03/15: 0.008: minor changes, parameter window smaller, css changes
 - 2013/03/14: 0.007: including jQuery to make UI changes easier, e.g. hint window moveable now
 - 2013/03/11: 0.005: resize of browser fixed by fixing canvas size to full screen, and avoid scrollbars
@@ -27,6 +29,8 @@ Todo:
 <script src="csg.js"></script>
 <script src="openjscad.js"></script>
 <script src="openscad.js"></script>
+<script src="underscore.js"></script>
+<script src="openscad-openjscad-translator.js"></script>
 <link rel="stylesheet" href="style.css" type="text/css">
 <link rel="stylesheet" href="openjscad.css" type="text/css">
 <script>
@@ -58,40 +62,50 @@ function main() {
 <div id="hint" title="OpenJSCAD.org ALPHA">
 <div class="closeButton" onclick="document.getElementById('hint').style.display=(document.getElementById('hint').style.display!='none'?'none':'block');"><img src="imgs/closeButton.png"></div>
 <span id=header>OpenJSCAD.org</span> ALPHA<p>
-<b>Shift + Return</b> (or F5, F6): render code<p>
-<b>left mouse</b>: rotate XZ<br>
-<b>middle mouse</b>: pan<br>
-<b>right mouse</b>: rotate XY<br>
-<b>wheel mouse</b>: zoom in/out<p>
-Supported formats:<br>
-<b>.jscad</b> (<a target=_blank href="http://joostn.github.com/OpenJsCad/">OpenJsCad</a>)<br>
-<b>.scad</b> (coming soon, <a target=_blank href="http://openscad.org">OpenSCAD.org</a>)<br>
-<b>.stl</b> (planned, STL importer)<br>
-<b>.amf</b> (planned, AMF importer/exporter)
-<p>
-<b>Examples</b>:
+<table>
+<tr><td align=right><b>Shift + Return</b> (or F5, F6):</td><td>render code</td></tr>
+<tr><td align=right><b>left mouse</b>:</td><td>rotate XZ</td></tr>
+<tr><td align=right><b>middle mouse</b>:</td><td>pan</td></tr>
+<tr><td align=right><b>right mouse</b>:</td><td>rotate XY</td></tr>
+<tr><td align=right><b>wheel mouse</b>:</td><td>zoom in/out</td></tr>
+</table>
+Supported Formats:<br>
+<table>
+<tr><td align=right><b>.jscad</b></td><td><a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">OpenJSCAD</a> (native)</td></tr>
+<tr><td align=right><b>.scad</b></td><td><a target=_blank href="http://openscad.org">OpenSCAD.org</a></td></tr>
+<tr><td align=right><b>.stl</b></td><td><a target=_blank href="http://en.wikipedia.org/wiki/STL_(file_format)">STL format</a> (experimental)</td></tr>
+<tr><td align=right><b>.amf</b></td><td>(planned) AMF importer/exporter</td></tr>
+</table>
+Examples:
 <script>
 var ex = [ 
 { file:'example000.jscad', title: 'OpenJSCAD.org Logo' },
-{ file:'example001.jscad', title: 'Example 1: Sphere with cutouts' },
+{ file:'example001.jscad', title: 'Example 1: Sphere with cutouts (.jscad)' },
+{ file:'example001.scad', title: 'Example 1: Sphere with cutouts (.scad)' },
 { file:'example002.jscad', title: 'Example 2: Cone with cutouts' },
 { file:'example003.jscad', title: 'Example 3: Cube with cutouts' },
 { file:'example004.jscad', title: 'Example 4: Cube minus sphere' },
 { file:'example005.jscad', title: 'Example 5: Pavillon' },
 // { file:'example020.jscad', title: 'Bunch of Cubes' }, // too slow for demo, needs speed up
-{ file:'example023.jscad', title: 'lookup()' },
-{ file:'example024.jscad', title: 'expand()' },
-{ file:'example026.jscad', title: 'linear_extrude()' },
+{ file:'example023.jscad', title: 'Example: lookup()' },
+{ file:'example024.jscad', title: 'Example: expand()' },
+{ file:'example026.jscad', title: 'Example: linear_extrude()' },
+{ file:'example027.jscad', title: 'Example: polyhedron()' },
 { file:'example030.jscad', title: 'Interactive Params: Servo Motor' },
 { file:'example031.jscad', title: 'Interactive Params: Gear' },
 { file:'example032.jscad', title: 'Interactive Params: S Hook' },
 { file:'example033.jscad', title: 'Interactive Params: Grille' },
 { file:'example034.jscad', title: 'Interactive Params: Axis Coupler' },
 { file:'example035.jscad', title: 'Interactive Params: Lamp Shade' },
-{ file:'example036.jscad', title: 'Interactive Params: Celtic Knot Ring' }
+{ file:'example036.jscad', title: 'Interactive Params: Celtic Knot Ring' },
+{ file:'frog-OwenCollins.stl', title: 'Example STL: Frog (Owen Collins)' },
+// { file:'organic_flower-Bogoboy23.stl', title: 'Example STL: Organic Flower (Bogoboy23)' }, // all wrong normals!!
+{ file:'3d_sculpture-VernonBussler.stl', title: 'Example STL: 3D Sculpture (Vernon Bussler)' },
+{ file:'yoda-RichRap.stl', title: 'Example STL: Yoda (RichRap)' },
+// { file:'klein_bottle-DizingOf.stl', title: 'Example STL: Klein Bottle (DizingOf)' } // too slow, over 400k triangles, huge memory consumption
 ];
 for(var i=0; i<ex.length; i++) {
-   document.write("<li><a href=# onclick='getExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n");
+   document.write("<li><a href=# onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n");
    //document.write("<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n");
 }
 </script>
@@ -106,7 +120,7 @@ for(var i=0; i<ex.length; i++) {
 <div id="statusdiv"></div>
 <div id="errordiv"></div>
 <div id="filedropzone">
-  <div id="filedropzone_empty">Drop your .jscad file here or edit code in built-in editor</div>
+  <div id="filedropzone_empty">Drop your .jscad, .scad or .stl file here or edit code in built-in editor</div>
   <div id="filedropzone_filled">
     <span id="currentfile">...</span>
     <div id="filebuttons">
@@ -119,7 +133,7 @@ for(var i=0; i<ex.length; i++) {
 </div>
 </div>
 <div id=footer>
-OpenJSCAD.org 0.008 (2013/03/15), MIT License & GPLv2, <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">User Guide</a> - get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">github.com</a>
+OpenJSCAD.org 0.009 (2013/03/18), MIT License & GPLv2, <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">User Guide</a> - get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">github.com</a>
 </div>
 
 <!--script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script-->
@@ -141,21 +155,21 @@ function onload() {
    });             
    editor.commands.addCommand({
        name: 'myCommand',
-       bindKey: {win: 'F5',  mac: 'F5'},
+       bindKey: {win: 'F5', mac: 'F5'},
        exec: function(editor) {
            gProcessor.setJsCad(editor.getValue());
       },
    });
    editor.commands.addCommand({
        name: 'myCommand',
-       bindKey: {win: 'F6',  mac: 'F6'},
+       bindKey: {win: 'F6', mac: 'F6'},
        exec: function(editor) {
            gProcessor.setJsCad(editor.getValue());
       },
    });
    editor.commands.addCommand({
        name: 'myCommand',
-       bindKey: {win: 'Shift-Return',  mac: 'Shift-Return'},
+       bindKey: {win: 'Shift-Return', mac: 'Shift-Return'},
        exec: function(editor) {
            gProcessor.setJsCad(editor.getValue());
       },
@@ -166,21 +180,37 @@ function onload() {
    gProcessor.setJsCad(editor.getValue());
 }
 
-function getExample(fn) {
+function fetchExample(fn) {
    if(1) {     // doesn't work off-line yet
       var xhr = new XMLHttpRequest();
       xhr.open("GET", fn, true);
+      if(fn.match(/\.stl$/i)) {
+         xhr.overrideMimeType("text/plain; charset=x-user-defined");    // our pseudo binary retrieval (works with Chrome)
+      }
+      status("Loading "+fn+" ...");
       xhr.onload = function() {
-         jscadscript = this.responseText;
+         var jscadscript = this.responseText;
+
+         status("Processing "+fn);
+         if(fn.match(/\.jscad$/i)) {
+            gProcessor.setJsCad(jscadscript, fn);
+            
+         } else if(fn.match(/\.scad$/i)) {
+            jscadscript = openscadOpanJscadParser.parse(jscadscript);
+            jscadscript = "// OpenJSCAD.org scad importer (openscad-openscad-translator) '"+fn+"'\n\n"+jscadscript;
+            gProcessor.setJsCad(jscadscript, fn);
+
+         } else if(fn.match(/\.stl$/i)) {
+            jscadscript = parseSTL(jscadscript,fn);
+            gProcessor.setJsCad(jscadscript, fn);
+         }
          editor.setValue(jscadscript); 
          editor.clearSelection();
-         //editor.moveCursorFileStart();
          editor.navigateFileStart();
-         gProcessor.setJsCad(jscadscript, fn);
+
          previousFilename = fn;
    	   previousScript = jscadscript;
          gPreviousModificationTime = "";
-         //fileChanged();
       }
       xhr.send();
    }
@@ -215,17 +245,24 @@ function handleFileSelect(evt) {
   if(!evt.dataTransfer) throw new Error("Not a datatransfer (1)");
   if(!evt.dataTransfer.files) throw new Error("Not a datatransfer (2)");
   if(evt.dataTransfer.files.length != 1) {
-    throw new Error("Please drop a single .jscad file");
+    throw new Error("Please drop a single .jscad/.scad/.stl file");
   }
   var file = evt.dataTransfer.files[0];
-  if(!file.name.match(/\.jscad$/i)) {
-    throw new Error("Please drop a file with .jscad extension");
+  
+  gCurrentFile = file;
+  gPreviousModificationTime = "";
+  if(file.name.match(/\.jscad$/i)) {
+    gCurrentFile._type = 'jscad';
+  } else if(file.name.match(/\.scad$/i)) {
+    gCurrentFile._type = 'scad';
+  } else if(file.name.match(/\.stl$/i)) {
+    gCurrentFile._type = 'stl';
+  } else {
+    throw new Error("Please drop a file with .jscad, .scad or .stl extension");
   }
   if(file.size == 0) {
     throw new Error("You have dropped an empty file");
   }              
-  gCurrentFile = file;
-  gPreviousModificationTime = "";
   fileChanged();
 }
 
@@ -279,6 +316,17 @@ function parseFile(debugging, onlyifchanged) {
             var filename = gCurrentFile.name;
             filename = filename.replace(/^.*\/([^\/]*)$/, "$1");
             gProcessor.setDebugging(debugging); 
+            echo(gCurrentFile._type);
+            if(gCurrentFile._type=='jscad') {
+               ; // default
+            } else if(gCurrentFile._type=='scad') {
+               jscadscript = openscadOpanJscadParser.parse(jscadscript);
+               jscadscript = "// OpenJSCAD.org scad importer (openscad-openscad-translator) '"+filename+"'\n\n"+jscadscript;
+               
+            } else if(gCurrentFile._type=='stl') {
+               jscadscript = parseSTL(jscadscript,filename);
+            } else {
+            }
             editor.setValue(jscadscript); 
             editor.clearSelection();
             //editor.moveCursorFileStart();
@@ -293,7 +341,11 @@ function parseFile(debugging, onlyifchanged) {
 				previousScript = null;
       }
     };
-    reader.readAsText(gCurrentFile, "UTF-8");
+    if(gCurrentFile._type=='stl') {
+       reader.readAsBinaryString(gCurrentFile,"UTF-8");
+    } else {
+       reader.readAsText(gCurrentFile, "UTF-8");
+    }
   }
 }
 

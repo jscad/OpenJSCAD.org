@@ -1,12 +1,14 @@
 VERSION=0.009
 LIB = /usr/local/lib/openjscad/
+DISPLAY=
+NODE_PATH = /usr/local/lib/node_modules
 
 all::
-	@echo "make install deinstall tests" 
+	@echo "make install deinstall tests clean" 
 
 
 install::
-	sudo npm -g install openscad-openjscad-translator sylvester underscore requirejs
+	sudo npm -g install openscad-openjscad-translator
 	sudo scp openjscad /usr/local/bin/
 	sudo mkdir -p ${LIB}
 	sudo scp *.js ${LIB}
@@ -17,8 +19,13 @@ deinstall::
 tests::
 	openjscad examples/example000.jscad
 	openjscad examples/example001.jscad
+	openjscad examples/example001.jscad -o examples/example001-fromJSCAD.stl
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.stl
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.jscad
+	openscad examples/example001.scad -o examples/example001-fromSCADviaOpenSCAD.stl
+
+clean::
+	rm -f examples/example001-from*
                                         
 # --- developers only below
 

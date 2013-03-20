@@ -1,9 +1,9 @@
 #!/usr/bin/nodejs
 
-// OpenJsCad CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>
+// OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>
 // License: GPLv2
 //
-var version = '0.003';
+var version = '0.004';
 //
 // Description:
 //   openjscad <file> [-o <stl>]
@@ -12,12 +12,14 @@ var version = '0.003';
 //   openjscad test.jscad -osomething.stl
 //
 // History:
-// 2013/03/18: 0.003: true .scad support by Gary Hodgson's openscad-openjscad-translator module
+// 2013/03/18: 0.004: STL .stl (binary & ascii) support (experimental via openscad.js)
+// 2013/03/18: 0.003: OpenSCAD .scad support by Gary Hodgson's openscad-openjscad-translator module
 // 2013/03/02: 0.002: proper installation of the dependencies (csg.js & openscad.js) so openjscad can be used properly
 // 2013/03/01: 0.001: initial version, with base function from openscad.jscad
 //
 
-var lib = '/usr/local/lib/openjscad/';    // for now hard-coded
+global.lib = '/usr/local/lib/openjscad/';    // for now hard-coded
+//global.lib = './';
 
 var fs = require('fs');
 var vm = require('vm');
@@ -42,41 +44,54 @@ var outf = inf;
 outf = outf.replace(/\.[^\.]+$/,'.stl');
 
 // output setting like openscad
-if(args.length==2) {                         // -o<file.stl>
+if(args.length==2) {                         // -o<output>
    outf = args[1];
    outf = outf.replace(/^\-o(\S+)$/,'$1');
-} else if(args.length==3&&args[1]=='-o') {   // -o <file.stl>
+} else if(args.length==3&&args[1]=='-o') {   // -o <output>
    outf = args[2];
 }
 
 //console.log("reading "+inf);
-var src = fs.readFileSync(inf,"UTF8");
+var src = fs.readFileSync(inf,inf.match(/\.stl$/)?"binary":"UTF8");
 var scad = fs.readFileSync(lib+'./openscad.js');
 
 //var csg = sphere(1);          // -- basic test
 //var csg = require(file).main; // -- treating .jscad as module? later perhaps
 
-var exportSTL = 0;
+var exportSTL = false;
 
-if(/\.scad$/.exec(inf)) {       // -- .scad file
-   var scadParser = require('openscad-openjscad-translator');    
-   //var scadParser = require('/usr/local/lib/node_modules/openscad-openjscad-translator');    
-   if(/.jscad/.exec(outf)) {    // -- output isn't .stl, but .jscad
-      console.log("computing "+inf+" to "+outf);
+if(/\.scad$/.exec(inf)) {       // -- input .scad file
+   //var scadParser = require('openscad-openjscad-translator');     // npm installed but doesn't find it (crap!)
+   var scadParser = require('/usr/local/lib/node_modules/openscad-openjscad-translator');  // hardcoded is bad, but works
+   if(/\.jscad/.exec(outf)) {    // -- output isn't .stl, but .jscad
+      console.log("converting "+inf+" to "+outf);
       src = scadParser.parse(src); //    doing the magick
       src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
       var s = fs.WriteStream(outf);
       s.write(src);
       
    } else {
-      console.log("computing "+inf+" to jscad");
-      src = scadParser.parse(src); //    doing the magick
-      console.log("computing jscad to "+outf);
-      exportSTL = 1;
+      console.log("converting "+inf+" to jscad");
+      src = scadParser.parse(src); // doing the magick
+      console.log("converting jscad to "+outf);
+      exportSTL = true;
+   }
+   
+} else if(/\.stl$/.exec(inf)) {       // -- input .stl file
+   if(/\.jscad/.exec(outf)) {         // -- output isn't .stl, but .jscad
+      console.log("converting "+inf+" to "+outf);
+      var openscad = require(lib+'openscad.js');
+      src = openscad.parseSTL(src,inf);
+      var s = fs.WriteStream(outf);
+      s.write(src);
+      
+   } else {
+      console.log("stl to stl skipped, choose e.g. '-o test.jscad' to force .jscad output");
    }
    
 } else {
-   console.log("computing "+inf+" to "+outf);
+   console.log("converting "+inf+" to "+outf);
+   exportSTL = true;
 }
 
 if(exportSTL) {
