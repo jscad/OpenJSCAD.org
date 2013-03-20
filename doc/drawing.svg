@@ -192,21 +192,6 @@
          x="527.32782"
          sodipodi:role="line" /></text>
     <text
-       xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="527.32782"
-       y="672.36218"
-       id="text3892"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan3894"
-         x="527.32782"
-         y="672.36218">.scad</tspan><tspan
-         sodipodi:role="line"
-         x="527.32782"
-         y="722.36218"
-         id="tspan3896" /></text>
-    <text
        sodipodi:linespacing="125%"
        id="text3898"
        y="732.36218"
@@ -238,13 +223,6 @@
        height="25"
        x="152.75639"
        y="707.00507" />
-    <rect
-       style="fill:#e700ea;fill-opacity:1;stroke:none"
-       id="rect3868"
-       width="20"
-       height="25"
-       x="498.75641"
-       y="647.00507" />
     <rect
        y="707.00507"
        x="498.75641"
@@ -550,11 +528,6 @@
        height="25"
        x="498.75641"
        y="187.00507" />
-    <path
-       inkscape:connector-curvature="0"
-       id="path4298"
-       d="m 461.32782,659.50504 50,0"
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <text
        xml:space="preserve"
        style="font-size:13.81185818px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
