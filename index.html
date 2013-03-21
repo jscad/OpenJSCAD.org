@@ -189,11 +189,11 @@ function fetchExample(fn) {
       if(fn.match(/\.stl$/i)) {
          xhr.overrideMimeType("text/plain; charset=x-user-defined");    // our pseudo binary retrieval (works with Chrome)
       }
-      status("Loading "+fn+" ...");
+      status("Loading "+fn+" <img id=busy src='imgs/busy.gif'>");
       xhr.onload = function() {
          var jscadscript = this.responseText;
 
-         status("Processing "+fn);
+         status("Processing "+fn+" <img id=busy src='imgs/busy.gif'>");
          if(fn.match(/\.jscad$/i)) {
             gProcessor.setJsCad(jscadscript, fn);
             
