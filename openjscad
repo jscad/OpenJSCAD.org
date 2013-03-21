@@ -21,12 +21,13 @@ var version = '0.004';
 // 2013/03/01: 0.001: initial version, with base function from openscad.jscad
 //
 
-global.lib = '/usr/local/lib/openjscad/';    // for now hard-coded
-//global.lib = './';
-
 var fs = require('fs');
 var vm = require('vm');
 //include('./openscad.js');         // later
+
+global.lib = '/usr/local/lib/openjscad/';    // for now hard-coded
+if (!fs.exists(global.lib))
+   global.lib = './';
 
 var CSG = require(lib+'./csg.js').CSG;
 var CAG = require(lib+'./csg.js').CAG;  // any way to include CSG & CAG in once?
@@ -43,6 +44,8 @@ var CAG = require(lib+'./csg.js').CAG;  // any way to include CSG & CAG in once?
 var args = process.argv.splice(2);
 
 var inf = args[0];
+if (null != inf)
+{
 var outf = inf;
 outf = outf.replace(/\.[^\.]+$/,'.stl');
 
@@ -109,6 +112,10 @@ if(exportSTL) {
    var s = fs.WriteStream(outf);
    s.write(stl);
 }
+
+}
+else
+   console.log("Usage: openjscad <file> [-o <stl>]");
 
 // -- helper functions 
 
