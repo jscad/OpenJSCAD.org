@@ -25,10 +25,10 @@ and then access the files via local web-site and your web-browser.
 For CLI (command-line interface) rendering install <a href="http://nodejs.org/">NodeJS</a> as well, e.g. <tt>apt-get install nodejs</tt> and then test it:
 <pre>
 % cd examples/
-% openjscad example005.jscad                       # -- creates example005.stl as default
+% openjscad example005.jscad                         # -- creates example005.stl as default
 % openjscad example001.jscad -o test.stl
-% openjscad example001.scad -o example001.jscad    # -- convert .scad into .jscad
-% openjscad frog.stl -o test.jscad                 # -- convert .stl into .jscad
+% openjscad example001.scad -o example001scad.jscad  # -- convert .scad into .jscad
+% openjscad frog.stl -o test.jscad                   # -- convert .stl into .jscad
 </pre>
 
 Note: on some systems NodeJS exactuable is <tt>node</tt> or <tt>nodejs</tt> (default), edit <tt>openjscad</tt> first line to reflect this.
