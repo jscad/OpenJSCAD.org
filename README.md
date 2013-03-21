@@ -1,4 +1,4 @@
-<img src="doc/logo.png" align=right>
+<img src="doc/logo.png" width=256 align=right>
 <h1>OpenJSCAD.org</h1>
 
 <b>Version 0.009</b> (ALPHA)
