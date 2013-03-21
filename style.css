@@ -15,6 +15,7 @@ body {
 a {
    text-decoration: none;
    color: #6020a0;
+   font-weight: bold;
 }
 
 a:visited {
