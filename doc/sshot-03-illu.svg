@@ -24,7 +24,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -92,13 +92,13 @@
      sodipodi:nodetypes="csc" />
   <path
      style="fill:none;stroke:#ff0000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
-     d="m 91.118644,837.38983 c 0,0 377.177966,-79.49901 525.016946,-195.25424 C 754.76768,533.5892 889.33735,319.67096 889.33735,319.67096"
+     d="m 88.949152,861.25424 c 0,0 379.347458,-103.36342 527.186438,-219.11865 C 754.76768,533.5892 889.33735,319.67096 889.33735,319.67096"
      id="path4203"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="csc" />
   <path
      style="fill:#ff0000;fill-opacity:1;stroke:none"
-     d="m 271.72031,601.20363 -18.02976,62.36158 48.5929,-46.72044 -26.88482,10.9847 z"
+     d="m 255.72031,627.20363 -18.02976,62.36158 48.5929,-46.72044 -26.88482,10.9847 z"
      id="path4751"
      inkscape:connector-curvature="0"
      inkscape:transform-center-y="-31.34763"
