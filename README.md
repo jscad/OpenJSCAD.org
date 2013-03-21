@@ -24,9 +24,12 @@ and then access the files via local web-site and your web-browser.
 
 For CLI (command-line interface) rendering install <a href="http://nodejs.org/">NodeJS</a> as well, e.g. <tt>apt-get install nodejs</tt> and then test it:
 <pre>
-% openjscad example/example005.jscad 
+% cd examples/
+% openjscad example005.jscad                       # -- creates example005.stl as default
+% openjscad example001.jscad -o test.stl
+% openjscad example001.scad -o example001.jscad    # -- convert .scad into .jscad
+% openjscad frog.stl -o test.jscad                 # -- convert .stl into .jscad
 </pre>
-creates <tt>example/example005.stl</tt>
 
 <h2>History</h2>
 <ul>
@@ -84,4 +87,4 @@ Import of STL models:
 That's all for now,
 
 Rene K. Mueller<br>
-initial version 2013/03/10
+initial version 2013/03/10, updated 2013/03/21
