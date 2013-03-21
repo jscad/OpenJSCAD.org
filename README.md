@@ -31,7 +31,7 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 % openjscad frog.stl -o test.jscad                   # -- convert .stl into .jscad
 </pre>
 
-Note: on some systems NodeJS exactuable is <tt>node</tt> or <tt>nodejs</tt> (default), edit <tt>openjscad</tt> first line to reflect this.
+Note: on some systems the NodeJS executable is <tt>node</tt> or <tt>nodejs</tt> (default), edit <tt>openjscad</tt> first line to reflect this.
 
 <h2>History</h2>
 <ul>
