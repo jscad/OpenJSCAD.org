@@ -13,10 +13,10 @@ body {
 }
 
 #header {
-   color: #a4c; 
-   /* color: #888; */
-   font-size: 1.8em;
-   font-weight: bold;
+   position: absolute;
+   top: 1em;
+   left: 1em;
+   z-index: 1;
 }
 
 #editor { 
@@ -47,8 +47,8 @@ canvas {
    -moz-opacity: 0.8;   /* css mess (why do it simple, when we can do it complicate!) */
 
    font-size: 0.6em;
-   top: 30px;
-   left: 30px;
+   top: 60px;
+   left: 20px;
    width: 30%
    height: 300px;
    position: absolute;

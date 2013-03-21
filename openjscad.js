@@ -147,6 +147,7 @@ OpenJsCad.Viewer.prototype = {
   ZOOM_MAX: 1000,
   ZOOM_MIN: 10,
   onZoomChanged: null,
+  plate: true,                   // render plate
 
   setZoom: function(coeff) { //0...1
     coeff=Math.max(coeff, 0);
@@ -216,21 +217,23 @@ OpenJsCad.Viewer.prototype = {
       gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
       gl.begin(gl.LINES);
       var plate = 200;
-      gl.color(.8,.8,.8,.5); //negative direction is lighter
-      for(var x=-plate/2; x<=plate/2; x++) {
-         if(x%10) {
+      if(this.plate) {
+         gl.color(.8,.8,.8,.5); // -- minor grid
+         for(var x=-plate/2; x<=plate/2; x++) {
+            if(x%10) {
+               gl.vertex(-plate/2, x, 0);
+               gl.vertex(plate/2, x, 0);
+               gl.vertex(x, -plate/2, 0);
+               gl.vertex(x, plate/2, 0);
+            }
+         }
+         gl.color(.5,.5,.5,.5); // -- major grid
+         for(var x=-plate/2; x<=plate/2; x+=10) {
             gl.vertex(-plate/2, x, 0);
             gl.vertex(plate/2, x, 0);
             gl.vertex(x, -plate/2, 0);
             gl.vertex(x, plate/2, 0);
          }
-      }
-      gl.color(.5,.5,.5,.5); //negative direction is lighter
-      for(var x=-plate/2; x<=plate/2; x+=10) {
-         gl.vertex(-plate/2, x, 0);
-         gl.vertex(plate/2, x, 0);
-         gl.vertex(x, -plate/2, 0);
-         gl.vertex(x, plate/2, 0);
       }
       if(0) {
          //X - red
