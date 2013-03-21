@@ -12,6 +12,15 @@ body {
    overflow: hidden;       
 }
 
+a {
+   text-decoration: none;
+   color: #6020a0;
+}
+
+a:visited {
+   color: #6020a0;
+}
+
 #header {
    position: absolute;
    top: 1em;
