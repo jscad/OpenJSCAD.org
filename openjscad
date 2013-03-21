@@ -9,7 +9,10 @@ var version = '0.004';
 //   openjscad <file> [-o <stl>]
 // e.g.
 //   openjscad test.jscad                    
-//   openjscad test.jscad -osomething.stl
+//   openjscad test.jscad -o test.stl
+//   openjscad test.scad -o testFromSCAD.jscad
+//   openjscad test.scad -o test.stl
+//   openjscad test.stl -o test2.stl      # reprocessed: stl -> jscad -> stl
 //
 // History:
 // 2013/03/18: 0.004: STL .stl (binary & ascii) support (experimental via openscad.js)
@@ -78,15 +81,18 @@ if(/\.scad$/.exec(inf)) {       // -- input .scad file
    }
    
 } else if(/\.stl$/.exec(inf)) {       // -- input .stl file
+   console.log("converting "+inf+" to jscad");
+   var openscad = require(lib+'openscad.js');
+   src = openscad.parseSTL(src,inf);
    if(/\.jscad/.exec(outf)) {         // -- output isn't .stl, but .jscad
       console.log("converting "+inf+" to "+outf);
-      var openscad = require(lib+'openscad.js');
-      src = openscad.parseSTL(src,inf);
       var s = fs.WriteStream(outf);
       s.write(src);
       
    } else {
-      console.log("stl to stl skipped, choose e.g. '-o test.jscad' to force .jscad output");
+      //console.log("stl to stl skipped, choose e.g. '-o test.jscad' to force .jscad output");
+      console.log("converting jscad to "+outf);
+      exportSTL = true;
    }
    
 } else {

@@ -1,12 +1,12 @@
 VERSION=0.009
 LIB = /usr/local/lib/openjscad/
-
+NODE_MODULES = /usr/local/lib/node_modules/
 all::
 	@echo "make install deinstall tests clean" 
 
 
 install::
-	sudo npm -g install openscad-openjscad-translator
+	test -d ${NODE_MODULES}/openscad-openjscad-translator || sudo npm -g install openscad-openjscad-translator
 	sudo scp openjscad /usr/local/bin/
 	sudo mkdir -p ${LIB}
 	sudo scp *.js ${LIB}
