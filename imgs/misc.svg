@@ -125,7 +125,7 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
+     inkscape:zoom="0.98994949"
      inkscape:cx="43.842821"
      inkscape:cy="653.98673"
      inkscape:document-units="px"
@@ -145,7 +145,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -153,6 +153,16 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       y="455.36203"
+       x="-371.70062"
+       height="83.842674"
+       width="90.913727"
+       id="rect3870"
+       style="opacity:0.00100002;fill:#b0b0b0;fill-opacity:1;stroke:none"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\checked.png"
+       inkscape:export-xdpi="12.110054"
+       inkscape:export-ydpi="12.110054" />
     <path
        style="fill:none;stroke:#ccc9c9;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m -145,263.07647 c 0,0 -4.28571,-8.57142 2.14286,-22.14285 6.42857,-13.57143 25.71428,-30.71429 25.71428,-30.71429"
@@ -604,5 +614,38 @@
        id="path4094"
        d="m 211.77232,347.97768 -13.625,-23.59375 11.1875,6.4375 0,-23.75 5.15625,0 0,23.5 10.8125,-5.59375 -13.53125,23 z"
        style="fill:#ff0000;fill-opacity:1;stroke:none" />
+    <rect
+       y="481.62601"
+       x="-352.54834"
+       height="55.558392"
+       width="55.558392"
+       id="rect3851"
+       style="fill:none;stroke:#a1a1a1;stroke-width:5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="fill:none;stroke:#b700c4;stroke-width:15;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -353.55339,492.73767 19.1929,31.31473 41.41626,-55.55839"
+       id="path3853"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+    <rect
+       style="fill:none;stroke:#a1a1a1;stroke-width:5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3922"
+       width="55.558392"
+       height="55.558392"
+       x="-452.54834"
+       y="481.62601"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\unchecked.png"
+       inkscape:export-xdpi="12.110054"
+       inkscape:export-ydpi="12.110054" />
+    <rect
+       inkscape:export-ydpi="12.110054"
+       inkscape:export-xdpi="12.110054"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\unchecked.png"
+       style="opacity:0.00100002;fill:#b0b0b0;fill-opacity:1;stroke:none"
+       id="rect3935"
+       width="90.913727"
+       height="83.842674"
+       x="-471.70062"
+       y="455.36203" />
   </g>
 </svg>

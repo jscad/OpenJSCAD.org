@@ -65,7 +65,7 @@ function main() {
 <div id="hint" title="OpenJSCAD.org ALPHA">
 <div class="closeButton" onclick="document.getElementById('hint').style.display=(document.getElementById('hint').style.display!='none'?'none':'block');"><img src="imgs/closeButton.png"></div>
 <table>
-<tr><td align=right><b>Shift + Return</b> (or F5, F6):</td><td>render code</td></tr>
+<tr><td align=right><b>Shift + Return</b>:</td><td>render code</td></tr>
 <tr><td align=right><b>left mouse</b>:</td><td>rotate XZ</td></tr>
 <tr><td align=right><b>middle mouse</b>:</td><td>pan</td></tr>
 <tr><td align=right><b>right mouse</b>:</td><td>rotate XY</td></tr>
@@ -111,7 +111,7 @@ var ex = [
 ];
 for(var i=0; i<ex.length; i++) {
    document.write("<li><a href=# onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n");
-   if(ex[i].type) document.write(" ("+ex[i].type+")");
+   if(ex[i].type) document.write(" <span class=type>("+ex[i].type+")</span></a>");
    //document.write("<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n");
 }
 </script>
@@ -173,36 +173,18 @@ function onload() {
    editor.getSession().setMode("ace/mode/javascript");
    editor.getSession().on('change', function(e) {
       ;
-   });             
-   editor.commands.addCommand({
-      name: 'myCommand',
-      bindKey: {win: 'F5', mac: 'F5'},
-      exec: function(editor) {
-         var src = editor.getValue();
-         if(src.match(/^\/\/\!OpenSCAD/i)) 
-            src = openscadOpenJscadParser.parse(src);
-         gProcessor.setJsCad(src);
-      },
-   });
-   editor.commands.addCommand({
-      name: 'myCommand',
-      bindKey: {win: 'F6', mac: 'F6'},
-      exec: function(editor) {
-         var src = editor.getValue();
-         if(src.match(/^\/\/\!OpenSCAD/i)) 
-            src = openscadOpenJscadParser.parse(src);
-         gProcessor.setJsCad(src);
-      },
-   });
-   editor.commands.addCommand({
-      name: 'myCommand',
-      bindKey: {win: 'Shift-Return', mac: 'Shift-Return'},
-      exec: function(editor) {
-         var src = editor.getValue();
-         if(src.match(/^\/\/\!OpenSCAD/i)) 
-            src = openscadOpenJscadParser.parse(src);
-         gProcessor.setJsCad(src);
-      },
+   });               
+   ['Shift-Return'].forEach(function(key) {
+      editor.commands.addCommand({
+         name: 'myCommand',
+         bindKey: { win: key, mac: key },
+         exec: function(editor) {
+            var src = editor.getValue();
+            if(src.match(/^\/\/\!OpenSCAD/i)) 
+               src = openscadOpenJscadParser.parse(src);
+            gProcessor.setJsCad(src);
+         },
+      });
    });
    gProcessor = new OpenJsCad.Processor(document.getElementById("viewer"));
    setupDragDrop();
