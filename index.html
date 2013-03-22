@@ -180,8 +180,10 @@ function onload() {
          bindKey: { win: key, mac: key },
          exec: function(editor) {
             var src = editor.getValue();
-            if(src.match(/^\/\/\!OpenSCAD/i)) 
+            if(src.match(/^\/\/\!OpenSCAD/i)) {
+               editor.getSession().setMode("ace/mode/scad");
                src = openscadOpenJscadParser.parse(src);
+            }
             gProcessor.setJsCad(src);
          },
       });
