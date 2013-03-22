@@ -83,10 +83,11 @@ Examples:
 var ex = [ 
 { file:'example000.jscad', title: 'OpenJSCAD.org Logo' },
 { file:'example001.jscad', title: 'Example 1: Sphere with cutouts' },
-{ file:'example001.scad', title: 'Example 1: Sphere with cutouts (OpenSCAD)' },
+{ file:'example001.scad', title: 'Example 1: Sphere with cutouts', type: 'OpenSCAD' },
 { file:'example002.jscad', title: 'Example 2: Cone with cutouts' },
-{ file:'example002.scad', title: 'Example 2: Cone with cutouts (OpenSCAD)' },
+{ file:'example002.scad', title: 'Example 2: Cone with cutouts', type: 'OpenSCAD' },
 { file:'example003.jscad', title: 'Example 3: Cube with cutouts' },
+{ file:'example003.scad', title: 'Example 3: Cube with cutouts', type: 'OpenSCAD' },
 { file:'example004.jscad', title: 'Example 4: Cube minus sphere' },
 { file:'example005.jscad', title: 'Example 5: Pavillon' },
 // { file:'example020.jscad', title: 'Bunch of Cubes' }, // too slow for demo, needs speed up
@@ -101,15 +102,16 @@ var ex = [
 { file:'example034.jscad', title: 'Interactive Params: Axis Coupler' },
 { file:'example035.jscad', title: 'Interactive Params: Lamp Shade' },
 { file:'example036.jscad', title: 'Interactive Params: Celtic Knot Ring' },
-{ file:'3d_sculpture-VernonBussler.stl', title: 'Example STL: 3D Sculpture (Vernon Bussler)' },
-{ file:'frog-OwenCollins.stl', title: 'Example STL: Frog (Owen Collins)' },  
-// { file:'treefrog-Jerrill.stl', title: 'Example STL: Treefrog (Jerrill)' },    // nice frog, yet slow 
-// { file:'organic_flower-Bogoboy23.stl', title: 'Example STL: Organic Flower (Bogoboy23)' }, // all wrong normals!!
-{ file:'yoda-RichRap.stl', title: 'Example STL: Yoda (RichRap)' },
-// { file:'klein_bottle-DizingOf.stl', title: 'Example STL: Klein Bottle (DizingOf)' } // too slow, over 400k triangles, huge memory consumption
+{ file:'3d_sculpture-VernonBussler.stl', title: '3D Model: 3D Sculpture (Vernon Bussler)', type: 'STL' },
+{ file:'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' },  
+{ file:'yoda-RichRap.stl', title: '3D Model: Yoda (RichRap)', type: 'STL' },
+// { file:'treefrog-Jerrill.stl', title: '3D Model: Treefrog (Jerrill)', type: 'STL' },    // nice frog, yet slow 
+// { file:'organic_flower-Bogoboy23.stl', title: '3D Model: Organic Flower (Bogoboy23)', type: 'STL' }, // all wrong normals!!
+// { file:'klein_bottle-DizingOf.stl', title: '3D Model: Klein Bottle (DizingOf)', type: 'STL' } // too slow, over 400k triangles, huge memory consumption
 ];
 for(var i=0; i<ex.length; i++) {
    document.write("<li><a href=# onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n");
+   if(ex[i].type) document.write(" ("+ex[i].type+")");
    //document.write("<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n");
 }
 </script>
