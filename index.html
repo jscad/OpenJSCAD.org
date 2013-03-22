@@ -9,6 +9,7 @@ Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
+- 2013/03/22: 0.010: leave .scad file intact, and translate on-the-fly
 - 2013/03/20: 0.009: OpenSCAD .scad (via openscad-openjscad-translator) and .stl experimental import support integrated
 - 2013/03/15: 0.008: minor changes, parameter window smaller, css changes
 - 2013/03/14: 0.007: including jQuery to make UI changes easier, e.g. hint window moveable now
@@ -136,7 +137,7 @@ for(var i=0; i<ex.length; i++) {
 </div>
 </div>
 <div id=footer>
-OpenJSCAD.org 0.009 (2013/03/20), MIT License & GPLv2, <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">User Guide</a> - get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">github.com</a>
+OpenJSCAD.org 0.010 (2013/03/22), MIT License & GPLv2, <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">User Guide</a> - get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">github.com</a>
 </div>
 
 <!--script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script-->
@@ -157,24 +158,33 @@ function onload() {
       ;
    });             
    editor.commands.addCommand({
-       name: 'myCommand',
-       bindKey: {win: 'F5', mac: 'F5'},
-       exec: function(editor) {
-           gProcessor.setJsCad(editor.getValue());
+      name: 'myCommand',
+      bindKey: {win: 'F5', mac: 'F5'},
+      exec: function(editor) {
+         var src = editor.getValue();
+         if(src.match(/^\/\/\!OpenSCAD/)) 
+            src = openscadOpenJscadParser.parse(src);
+         gProcessor.setJsCad(src);
       },
    });
    editor.commands.addCommand({
-       name: 'myCommand',
-       bindKey: {win: 'F6', mac: 'F6'},
-       exec: function(editor) {
-           gProcessor.setJsCad(editor.getValue());
+      name: 'myCommand',
+      bindKey: {win: 'F6', mac: 'F6'},
+      exec: function(editor) {
+         var src = editor.getValue();
+         if(src.match(/^\/\/\!OpenSCAD/)) 
+            src = openscadOpenJscadParser.parse(src);
+         gProcessor.setJsCad(src);
       },
    });
    editor.commands.addCommand({
-       name: 'myCommand',
-       bindKey: {win: 'Shift-Return', mac: 'Shift-Return'},
-       exec: function(editor) {
-           gProcessor.setJsCad(editor.getValue());
+      name: 'myCommand',
+      bindKey: {win: 'Shift-Return', mac: 'Shift-Return'},
+      exec: function(editor) {
+         var src = editor.getValue();
+         if(src.match(/^\/\/\!OpenSCAD/)) 
+            src = openscadOpenJscadParser.parse(src);
+         gProcessor.setJsCad(src);
       },
    });
    gProcessor = new OpenJsCad.Processor(document.getElementById("viewer"));
@@ -192,31 +202,62 @@ function fetchExample(fn) {
       }
       status("Loading "+fn+" <img id=busy src='imgs/busy.gif'>");
       xhr.onload = function() {
-         var jscadscript = this.responseText;
-
+         var source = this.responseText;
+         var editorSource = source;
+         var asyncComputation = false;
+         
          status("Processing "+fn+" <img id=busy src='imgs/busy.gif'>");
          if(fn.match(/\.jscad$/i)) {
-            gProcessor.setJsCad(jscadscript, fn);
+            putSourceInEditor(editorSource,fn);
+            gProcessor.setJsCad(source,fn);
             
          } else if(fn.match(/\.scad$/i)) {
-            jscadscript = openscadOpenJscadParser.parse(jscadscript);
-            jscadscript = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+jscadscript;
-            gProcessor.setJsCad(jscadscript, fn);
-
+            editorSource = source;
+            editorSource = "//!OpenSCAD (force OpenSCAD syntax)\n"+editorSource;
+            source = openscadOpenJscadParser.parse(editorSource);
+            if(0) {
+               source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;
+            }
+            putSourceInEditor(editorSource,fn);
+            gProcessor.setJsCad(source,fn);
+            
          } else if(fn.match(/\.stl$/i)) {
-            jscadscript = parseSTL(jscadscript,fn);
-            gProcessor.setJsCad(jscadscript, fn);
+            if(0) {
+               // preparing a Worker() approach (not yet working)
+               var blob = new Blob([
+                  // this blob is like a separated .js, executed in the background, but we require openscad.js
+                  // -- won't work yet .. 
+                  "onmessage = function(e) { postMessage(parseSTL(e.data)); }"
+                  ]);
+               var blobURL = window.URL.createObjectURL(blob);
+               var worker = new Worker(blobURL);
+               worker.onmessage = function(e) {
+                  var src = e.data;
+                  putSourceInEditor(src,'');
+               };
+               worker.postMessage(source);
+               asyncComputation = true;
+            } else {
+               editorSource = source = parseSTL(source,fn);   
+               putSourceInEditor(source,fn);
+            }
+            if(!asyncComputation) {
+               gProcessor.setJsCad(source,fn);
+            }
          }
-         editor.setValue(jscadscript); 
-         editor.clearSelection();
-         editor.navigateFileStart();
-
-         previousFilename = fn;
-   	   previousScript = jscadscript;
-         gPreviousModificationTime = "";
       }
       xhr.send();
    }
+}
+
+function putSourceInEditor(src,fn) {
+   editor.setValue(src); 
+   editor.clearSelection();
+   editor.navigateFileStart();
+
+   previousFilename = fn;
+   previousScript = src;
+   gPreviousModificationTime = "";
 }
 
 // -----------------------------------------------------------------------------------------------------------
@@ -255,11 +296,11 @@ function handleFileSelect(evt) {
   gCurrentFile = file;
   gPreviousModificationTime = "";
   if(file.name.match(/\.jscad$/i)) {
-    gCurrentFile._type = 'jscad';
+    gCurrentFile.lang = 'jscad';
   } else if(file.name.match(/\.scad$/i)) {
-    gCurrentFile._type = 'scad';
+    gCurrentFile.lang = 'scad';
   } else if(file.name.match(/\.stl$/i)) {
-    gCurrentFile._type = 'stl';
+    gCurrentFile.lang = 'stl';
   } else {
     throw new Error("Please drop a file with .jscad, .scad or .stl extension");
   }
@@ -307,35 +348,37 @@ function parseFile(debugging, onlyifchanged) {
     };
     reader.onloadend = function(evt) {
       if (evt.target.readyState == FileReader.DONE) {
-        var jscadscript = evt.target.result;
-        if(jscadscript == "") {
+        var source = evt.target.result;
+        var editorSource = source;
+        if(source == "") {
           if(document.location.toString().match(/^file\:\//i)) {
             throw new Error("Could not read file. You are using a local copy of OpenJSCAD.org; if you are using Chrome, you need to launch it with the following command line option:\n\n--allow-file-access-from-files\n\notherwise the browser will not have access to uploaded files due to security restrictions.");
           } else {
             throw new Error("Could not read file.");
           }            
         } else {         
-          if(gProcessor && ((!onlyifchanged) || (previousScript !== jscadscript))) {
+          if(gProcessor && ((!onlyifchanged) || (previousScript !== source))) {
             var filename = gCurrentFile.name;
             filename = filename.replace(/^.*\/([^\/]*)$/, "$1");
             gProcessor.setDebugging(debugging); 
-            echo(gCurrentFile._type);
-            if(gCurrentFile._type=='jscad') {
+            //echo(gCurrentFile.lang);
+            if(gCurrentFile.lang=='jscad') {
                ; // default
-            } else if(gCurrentFile._type=='scad') {
-               jscadscript = openscadOpenJscadParser.parse(jscadscript);
-               jscadscript = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+filename+"'\n\n"+jscadscript;
+            } else if(gCurrentFile.lang=='scad') {
+               editorSource = source;
+               editorSource = "//!OpenSCAD (force OpenSCAD syntax)\n"+editorSource;
+               source = openscadOpenJscadParser.parse(editorSource);
+               if(0) {
+                  source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+filename+"'\n\n"+source;
+               }
                
-            } else if(gCurrentFile._type=='stl') {
-               jscadscript = parseSTL(jscadscript,filename);
+            } else if(gCurrentFile.lang=='stl') {
+               editorSource = source = parseSTL(source,filename);
             } else {
+               ;
             }
-            editor.setValue(jscadscript); 
-            editor.clearSelection();
-            //editor.moveCursorFileStart();
-            editor.navigateFileStart();
-            gProcessor.setJsCad(jscadscript, filename);
-				previousScript = jscadscript;
+            putSourceInEditor(editorSource,filename);
+            gProcessor.setJsCad(source,filename);
           }
         }
       } else {
@@ -344,10 +387,10 @@ function parseFile(debugging, onlyifchanged) {
 				previousScript = null;
       }
     };
-    if(gCurrentFile._type=='stl') {
+    if(gCurrentFile.lang=='stl') {
        reader.readAsBinaryString(gCurrentFile,"UTF-8");
     } else {
-       reader.readAsText(gCurrentFile, "UTF-8");
+       reader.readAsText(gCurrentFile,"UTF-8");
     }
   }
 }
