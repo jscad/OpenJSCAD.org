@@ -209,6 +209,7 @@ function fetchExample(fn) {
          var asyncComputation = false;
          
          status("Processing "+fn+" <img id=busy src='imgs/busy.gif'>");
+         //editor.getSession().setMode("ace/mode/javascript");
          if(fn.match(/\.jscad$/i)) {
             putSourceInEditor(editorSource,fn);
             gProcessor.setJsCad(source,fn);
@@ -220,6 +221,7 @@ function fetchExample(fn) {
             if(0) {
                source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;
             }
+            //editor.getSession().setMode("ace/mode/openscad");      // doesn't exist yet
             putSourceInEditor(editorSource,fn);
             gProcessor.setJsCad(source,fn);
             
@@ -364,6 +366,7 @@ function parseFile(debugging, onlyifchanged) {
             filename = filename.replace(/^.*\/([^\/]*)$/, "$1");
             gProcessor.setDebugging(debugging); 
             //echo(gCurrentFile.lang);
+            //editor.getSession().setMode("ace/mode/javascript");
             if(gCurrentFile.lang=='jscad') {
                ; // default
             } else if(gCurrentFile.lang=='scad') {
@@ -373,6 +376,7 @@ function parseFile(debugging, onlyifchanged) {
                if(0) {
                   source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+filename+"'\n\n"+source;
                }
+               //editor.getSession().setMode("ace/mode/openscad");   // doesn't exist yet
                
             } else if(gCurrentFile.lang=='stl') {
                editorSource = source = parseSTL(source,filename);
