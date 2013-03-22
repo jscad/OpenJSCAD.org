@@ -183,6 +183,8 @@ function onload() {
             if(src.match(/^\/\/\!OpenSCAD/i)) {
                editor.getSession().setMode("ace/mode/scad");
                src = openscadOpenJscadParser.parse(src);
+            } else {
+               editor.getSession().setMode("ace/mode/javascript");
             }
             gProcessor.setJsCad(src);
          },
