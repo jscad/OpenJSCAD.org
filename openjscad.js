@@ -966,7 +966,7 @@ OpenJsCad.Processor.prototype = {
     this.setError("");
     this.clearViewer();
     this.processing = true;
-    this.statusspan.innerHTML = "Processing, please wait <img id=busy src='imgs/busy.gif'>";
+    this.statusspan.innerHTML = "Rendering code, please wait <img id=busy src='imgs/busy.gif'>";
     this.enableItems();
     var that = this;
     var paramValues = this.getParamValues();
