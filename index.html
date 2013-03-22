@@ -162,7 +162,7 @@ function onload() {
       bindKey: {win: 'F5', mac: 'F5'},
       exec: function(editor) {
          var src = editor.getValue();
-         if(src.match(/^\/\/\!OpenSCAD/)) 
+         if(src.match(/^\/\/\!OpenSCAD/i)) 
             src = openscadOpenJscadParser.parse(src);
          gProcessor.setJsCad(src);
       },
@@ -172,7 +172,7 @@ function onload() {
       bindKey: {win: 'F6', mac: 'F6'},
       exec: function(editor) {
          var src = editor.getValue();
-         if(src.match(/^\/\/\!OpenSCAD/)) 
+         if(src.match(/^\/\/\!OpenSCAD/i)) 
             src = openscadOpenJscadParser.parse(src);
          gProcessor.setJsCad(src);
       },
@@ -182,7 +182,7 @@ function onload() {
       bindKey: {win: 'Shift-Return', mac: 'Shift-Return'},
       exec: function(editor) {
          var src = editor.getValue();
-         if(src.match(/^\/\/\!OpenSCAD/)) 
+         if(src.match(/^\/\/\!OpenSCAD/i)) 
             src = openscadOpenJscadParser.parse(src);
          gProcessor.setJsCad(src);
       },
@@ -213,7 +213,7 @@ function fetchExample(fn) {
             
          } else if(fn.match(/\.scad$/i)) {
             editorSource = source;
-            editorSource = "//!OpenSCAD (force OpenSCAD syntax)\n"+editorSource;
+            editorSource = "//!OpenSCAD\n"+editorSource;
             source = openscadOpenJscadParser.parse(editorSource);
             if(0) {
                source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;
@@ -366,7 +366,7 @@ function parseFile(debugging, onlyifchanged) {
                ; // default
             } else if(gCurrentFile.lang=='scad') {
                editorSource = source;
-               editorSource = "//!OpenSCAD (force OpenSCAD syntax)\n"+editorSource;
+               editorSource = "//!OpenSCAD\n"+editorSource;
                source = openscadOpenJscadParser.parse(editorSource);
                if(0) {
                   source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+filename+"'\n\n"+source;
