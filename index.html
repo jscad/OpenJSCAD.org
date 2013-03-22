@@ -145,6 +145,21 @@ OpenJSCAD.org 0.010 (2013/03/22), MIT License & GPLv2, <a target=_blank href="ht
 <!--script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script-->
 <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 
+<script id=stlWorker type="javascript/worker">
+self.onmessage = function(e) {      // Worker to import STL as it can take quite some while for 1MB+ large STLs
+   var data = e.data; // JSON.parse(e.data);
+   if(data.url) {    // RANT: why do something simple, when it can be done complicate: workers & importScript (guys!!)
+      var url = data.url;
+      var index = url.indexOf('index.html');
+      if(index!=-1) {
+         url = url.substring(0,index);
+      }
+      importScripts(url+'csg.js',url+'openjscad.js',url+'openscad.js');
+      self.postMessage({ source: parseSTL(data.stlSource,data.filename), filename: data.filename });
+   }
+};
+</script>
+
 <script>
 var gCurrentFile = null;
 var gProcessor = null;
@@ -208,40 +223,48 @@ function fetchExample(fn) {
          var editorSource = source;
          var asyncComputation = false;
          
-         status("Processing "+fn+" <img id=busy src='imgs/busy.gif'>");
-         //editor.getSession().setMode("ace/mode/javascript");
+         editor.getSession().setMode("ace/mode/javascript");
          if(fn.match(/\.jscad$/i)) {
+            status("Processing "+fn+" <img id=busy src='imgs/busy.gif'>");
             putSourceInEditor(editorSource,fn);
             gProcessor.setJsCad(source,fn);
             
          } else if(fn.match(/\.scad$/i)) {
+            status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
             editorSource = source;
             editorSource = "//!OpenSCAD\n"+editorSource;
             source = openscadOpenJscadParser.parse(editorSource);
             if(0) {
                source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;
             }
-            //editor.getSession().setMode("ace/mode/openscad");      // doesn't exist yet
+            editor.getSession().setMode("ace/mode/scad");
             putSourceInEditor(editorSource,fn);
             gProcessor.setJsCad(source,fn);
             
          } else if(fn.match(/\.stl$/i)) {
-            if(0) {
+            status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
+            if(1) {
                // preparing a Worker() approach (not yet working)
-               var blob = new Blob([
-                  // this blob is like a separated .js, executed in the background, but we require openscad.js
-                  // -- won't work yet .. 
-                  "onmessage = function(e) { postMessage(parseSTL(e.data)); }"
-                  ]);
-               var blobURL = window.URL.createObjectURL(blob);
-               var worker = new Worker(blobURL);
+               // RANT: the whole Blob() & Worker() is anything but a clean concept, mess over mess:
+               //       for example, to pass a DOM variable to worker via postMessage may create a circular reference
+               //       as the data is serialized, e.g. you cannot pass document and in the Worker access document.window.
+               var blobURL = new Blob([document.querySelector('#stlWorker').textContent]);
+               // -- the messy part coming here:
+               var worker = new Worker(window.webkitURL!==undefined?window.webkitURL.createObjectURL(blobURL):window.URL.createObjectURL(blobURL()));
+               //var worker = new Worker(window.webkitURL.createObjectURL(blobURL));
                worker.onmessage = function(e) {
-                  var src = e.data;
-                  putSourceInEditor(src,'');
+                  var data = e.data;
+                  //echo("worker end:",data.source,data.filename);
+                  putSourceInEditor(data.source,data.filename);
+                  gProcessor.setJsCad(data.source,data.filename);
                };
-               worker.postMessage(source);
+               echo("worker start:",document.location.href,fn);
+               //worker.postMessage({url: document.location.href, stlSource: source, filename: fn });
+               //worker.postMessage(JSON.stringify({url: document.location.href, stlSource: source, filename: fn }));
+               worker.postMessage({url: document.location.href, stlSource: source, filename: fn });
                asyncComputation = true;
             } else {
+               status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
                editorSource = source = parseSTL(source,fn);   
                putSourceInEditor(source,fn);
             }
@@ -376,7 +399,7 @@ function parseFile(debugging, onlyifchanged) {
                if(0) {
                   source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+filename+"'\n\n"+source;
                }
-               //editor.getSession().setMode("ace/mode/openscad");   // doesn't exist yet
+               editor.getSession().setMode("ace/mode/scad");  
                
             } else if(gCurrentFile.lang=='stl') {
                editorSource = source = parseSTL(source,filename);
