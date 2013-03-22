@@ -389,7 +389,8 @@ function parseFile(debugging, onlyifchanged) {
             filename = filename.replace(/^.*\/([^\/]*)$/, "$1");
             gProcessor.setDebugging(debugging); 
             //echo(gCurrentFile.lang);
-            //editor.getSession().setMode("ace/mode/javascript");
+            editor.getSession().setMode("ace/mode/javascript");
+            
             if(gCurrentFile.lang=='jscad') {
                ; // default
             } else if(gCurrentFile.lang=='scad') {
