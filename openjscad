@@ -26,7 +26,7 @@ var vm = require('vm');
 //include('./openscad.js');         // later
 
 global.lib = '/usr/local/lib/openjscad/';    // for now hard-coded
-if (!fs.exists(global.lib))
+if (!fs.existsSync(global.lib))
    global.lib = './';
 
 var CSG = require(lib+'./csg.js').CSG;
