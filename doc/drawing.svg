@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -56,9 +56,9 @@
        style="fill:#ffffff;fill-opacity:1;stroke:none"
        id="rect4300"
        width="711.1474"
-       height="884.31927"
+       height="852.89069"
        x="-8.0812197"
-       y="-26.886833"
+       y="4.541738"
        inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\doc\drawing-01.png"
        inkscape:export-xdpi="50.619999"
        inkscape:export-ydpi="50.619999" />
@@ -73,17 +73,6 @@
          id="tspan4130"
          x="286.88333"
          y="306.8696" /></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text4254"
-       y="11.552971"
-       x="343.10223"
-       style="font-size:35.68124771px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
-       xml:space="preserve"><tspan
-         y="11.552971"
-         x="343.10223"
-         id="tspan4256"
-         sodipodi:role="line">OpenJSCAD.org Dual Use</tspan></text>
     <rect
        style="fill:#f2eeee;fill-opacity:1;stroke:#000000;stroke-width:1.83592307999999990;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect3967"

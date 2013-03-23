@@ -284,6 +284,7 @@ function setupDragDrop() {
     throw new Error("Error: Your browser does not fully support the HTML File API");
   }
   var dropZone = document.getElementById('filedropzone');
+  //var dropZone = document.getElementById('viewer');
   dropZone.addEventListener('dragover', function(evt) {
     evt.stopPropagation();
     evt.preventDefault();

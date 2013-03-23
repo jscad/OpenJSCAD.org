@@ -261,7 +261,6 @@ OpenJsCad.Viewer.prototype = {
          gl.vertex(0, 0, 0);
          gl.vertex(0, 0, 100);
       }
-      gl.end();
       if(0) {
          gl.triangle();
          gl.color(0.6, 0.2, 0.6, 0.2); //positive direction
@@ -275,8 +274,9 @@ OpenJsCad.Viewer.prototype = {
          gl.vertex(-plate,plate,0);
          gl.vertex(-plate,-plate,0);
          gl.end();
-         gl.disable(gl.BLEND);
       }
+      gl.end();
+      gl.disable(gl.BLEND);
       // GL.Mesh.plane({ detailX: 20, detailY: 40 });
     }
   }
