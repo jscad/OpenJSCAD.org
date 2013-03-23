@@ -9,6 +9,7 @@ Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
+- 2013/03/22: 0.010: leave .scad file intact, and translate on-the-fly
 - 2013/03/20: 0.009: OpenSCAD .scad (via openscad-openjscad-translator) and .stl experimental import support integrated
 - 2013/03/15: 0.008: minor changes, parameter window smaller, css changes
 - 2013/03/14: 0.007: including jQuery to make UI changes easier, e.g. hint window moveable now
@@ -42,12 +43,11 @@ Todo:
 
 <img id="header" src="imgs/title.png" onclick="$('#hint').show()");">
 
-<div id="editor">// -- Example 000
+<div id="editor">// -- Example 000: OpenJSCAD.org logo
 
 function main() {
    return scale(10,
       translate([0,0,1.5],
-         
       union(
             difference(
                cube({size: 3, center: true}),
@@ -58,13 +58,14 @@ function main() {
                 cube({size: 2.1, center: true})
             )
          )
-      ));
+      )
+   );
 }
 </div>
 <div id="hint" title="OpenJSCAD.org ALPHA">
 <div class="closeButton" onclick="document.getElementById('hint').style.display=(document.getElementById('hint').style.display!='none'?'none':'block');"><img src="imgs/closeButton.png"></div>
 <table>
-<tr><td align=right><b>Shift + Return</b> (or F5, F6):</td><td>render code</td></tr>
+<tr><td align=right><b>Shift + Return</b>:</td><td>render code</td></tr>
 <tr><td align=right><b>left mouse</b>:</td><td>rotate XZ</td></tr>
 <tr><td align=right><b>middle mouse</b>:</td><td>pan</td></tr>
 <tr><td align=right><b>right mouse</b>:</td><td>rotate XY</td></tr>
@@ -81,11 +82,12 @@ Examples:
 <script>
 var ex = [ 
 { file:'example000.jscad', title: 'OpenJSCAD.org Logo' },
-{ file:'example001.jscad', title: 'Example 1: Sphere with cutouts (JSCAD)' },
-{ file:'example001.scad', title: 'Example 1: Sphere with cutouts (SCAD)' },
-{ file:'example002.jscad', title: 'Example 2: Cone with cutouts (JSCAD)' },
-{ file:'example002.scad', title: 'Example 2: Cone with cutouts (SCAD)' },
+{ file:'example001.jscad', title: 'Example 1: Sphere with cutouts' },
+{ file:'example001.scad', title: 'Example 1: Sphere with cutouts', type: 'OpenSCAD' },
+{ file:'example002.jscad', title: 'Example 2: Cone with cutouts' },
+{ file:'example002.scad', title: 'Example 2: Cone with cutouts', type: 'OpenSCAD' },
 { file:'example003.jscad', title: 'Example 3: Cube with cutouts' },
+{ file:'example003.scad', title: 'Example 3: Cube with cutouts', type: 'OpenSCAD' },
 { file:'example004.jscad', title: 'Example 4: Cube minus sphere' },
 { file:'example005.jscad', title: 'Example 5: Pavillon' },
 // { file:'example020.jscad', title: 'Bunch of Cubes' }, // too slow for demo, needs speed up
@@ -100,14 +102,16 @@ var ex = [
 { file:'example034.jscad', title: 'Interactive Params: Axis Coupler' },
 { file:'example035.jscad', title: 'Interactive Params: Lamp Shade' },
 { file:'example036.jscad', title: 'Interactive Params: Celtic Knot Ring' },
-{ file:'3d_sculpture-VernonBussler.stl', title: 'Example STL: 3D Sculpture (Vernon Bussler)' },
-{ file:'frog-OwenCollins.stl', title: 'Example STL: Frog (Owen Collins)' },
-// { file:'organic_flower-Bogoboy23.stl', title: 'Example STL: Organic Flower (Bogoboy23)' }, // all wrong normals!!
-{ file:'yoda-RichRap.stl', title: 'Example STL: Yoda (RichRap)' },
-// { file:'klein_bottle-DizingOf.stl', title: 'Example STL: Klein Bottle (DizingOf)' } // too slow, over 400k triangles, huge memory consumption
+{ file:'3d_sculpture-VernonBussler.stl', title: '3D Model: 3D Sculpture (Vernon Bussler)', type: 'STL' },
+{ file:'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' },  
+{ file:'yoda-RichRap.stl', title: '3D Model: Yoda (RichRap)', type: 'STL' },
+// { file:'treefrog-Jerrill.stl', title: '3D Model: Treefrog (Jerrill)', type: 'STL' },    // nice frog, yet slow 
+// { file:'organic_flower-Bogoboy23.stl', title: '3D Model: Organic Flower (Bogoboy23)', type: 'STL' }, // all wrong normals!!
+// { file:'klein_bottle-DizingOf.stl', title: '3D Model: Klein Bottle (DizingOf)', type: 'STL' } // too slow, over 400k triangles, huge memory consumption
 ];
 for(var i=0; i<ex.length; i++) {
    document.write("<li><a href=# onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n");
+   if(ex[i].type) document.write(" <span class=type>("+ex[i].type+")</span></a>");
    //document.write("<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n");
 }
 </script>
@@ -135,11 +139,26 @@ for(var i=0; i<ex.length; i++) {
 </div>
 </div>
 <div id=footer>
-OpenJSCAD.org 0.009 (2013/03/20), MIT License & GPLv2, <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">User Guide</a> - get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">github.com</a>
+OpenJSCAD.org 0.010 (2013/03/22), MIT License & GPLv2, <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">User Guide</a> - get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">github.com</a>
 </div>
 
 <!--script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script-->
 <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
+
+<script id=stlWorker type="javascript/worker">
+self.onmessage = function(e) {      // Worker to import STL as it can take quite some while for 1MB+ large STLs
+   var data = e.data; // JSON.parse(e.data);
+   if(data.url) {     // RANT: why do something simple, when it can be done complicate: Workers & importScripts() (guys!!)
+      var url = data.url;
+      var index = url.indexOf('index.html');
+      if(index!=-1) {
+         url = url.substring(0,index);
+      }
+      importScripts(url+'csg.js',url+'openjscad.js',url+'openscad.js');
+      self.postMessage({ source: parseSTL(data.stlSource,data.filename), filename: data.filename });
+   }
+};
+</script>
 
 <script>
 var gCurrentFile = null;
@@ -154,27 +173,22 @@ function onload() {
    editor.getSession().setMode("ace/mode/javascript");
    editor.getSession().on('change', function(e) {
       ;
-   });             
-   editor.commands.addCommand({
-       name: 'myCommand',
-       bindKey: {win: 'F5', mac: 'F5'},
-       exec: function(editor) {
-           gProcessor.setJsCad(editor.getValue());
-      },
-   });
-   editor.commands.addCommand({
-       name: 'myCommand',
-       bindKey: {win: 'F6', mac: 'F6'},
-       exec: function(editor) {
-           gProcessor.setJsCad(editor.getValue());
-      },
-   });
-   editor.commands.addCommand({
-       name: 'myCommand',
-       bindKey: {win: 'Shift-Return', mac: 'Shift-Return'},
-       exec: function(editor) {
-           gProcessor.setJsCad(editor.getValue());
-      },
+   });               
+   ['Shift-Return'].forEach(function(key) {
+      editor.commands.addCommand({
+         name: 'myCommand',
+         bindKey: { win: key, mac: key },
+         exec: function(editor) {
+            var src = editor.getValue();
+            if(src.match(/^\/\/\!OpenSCAD/i)) {
+               editor.getSession().setMode("ace/mode/scad");
+               src = openscadOpenJscadParser.parse(src);
+            } else {
+               editor.getSession().setMode("ace/mode/javascript");
+            }
+            gProcessor.setJsCad(src);
+         },
+      });
    });
    gProcessor = new OpenJsCad.Processor(document.getElementById("viewer"));
    setupDragDrop();
@@ -191,31 +205,69 @@ function fetchExample(fn) {
       }
       status("Loading "+fn+" <img id=busy src='imgs/busy.gif'>");
       xhr.onload = function() {
-         var jscadscript = this.responseText;
-
-         status("Processing "+fn+" <img id=busy src='imgs/busy.gif'>");
+         var source = this.responseText;
+         var editorSource = source;
+         var asyncComputation = false;
+         
+         editor.getSession().setMode("ace/mode/javascript");
          if(fn.match(/\.jscad$/i)) {
-            gProcessor.setJsCad(jscadscript, fn);
+            status("Processing "+fn+" <img id=busy src='imgs/busy.gif'>");
+            putSourceInEditor(editorSource,fn);
+            gProcessor.setJsCad(source,fn);
             
          } else if(fn.match(/\.scad$/i)) {
-            jscadscript = openscadOpenJscadParser.parse(jscadscript);
-            jscadscript = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+jscadscript;
-            gProcessor.setJsCad(jscadscript, fn);
-
+            status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
+            editorSource = source;
+            editorSource = "//!OpenSCAD\n"+editorSource;
+            source = openscadOpenJscadParser.parse(editorSource);
+            if(0) {
+               source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;
+            }
+            editor.getSession().setMode("ace/mode/scad");
+            putSourceInEditor(editorSource,fn);
+            gProcessor.setJsCad(source,fn);
+            
          } else if(fn.match(/\.stl$/i)) {
-            jscadscript = parseSTL(jscadscript,fn);
-            gProcessor.setJsCad(jscadscript, fn);
+            status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
+            if(1) {
+               // import STL via Worker() (async computation) as it takes quite some time
+               // RANT: the whole Blob() & Worker() is anything but a clean concept, mess over mess:
+               //       for example, to pass a DOM variable to worker via postMessage may create a circular reference
+               //       as the data is serialized, e.g. you cannot pass document and in the Worker access document.window.
+               //       Dear Google / JavaScript developers: don't make JS unuseable with this mess!
+               var blobURL = new Blob([document.querySelector('#stlWorker').textContent]);
+               // -- the messy part coming here:
+               var worker = new Worker(window.webkitURL!==undefined?window.webkitURL.createObjectURL(blobURL):window.URL.createObjectURL(blobURL()));
+               worker.onmessage = function(e) {    // worker finished
+                  var data = e.data;
+                  //echo("worker end:",data.source,data.filename);
+                  putSourceInEditor(data.source,data.filename);
+                  gProcessor.setJsCad(data.source,data.filename);
+               };
+               worker.postMessage({url: document.location.href, stlSource: source, filename: fn }); // start worker
+               asyncComputation = true;
+            } else {       // async (disabled)
+               status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
+               editorSource = source = parseSTL(source,fn);   
+               putSourceInEditor(source,fn);
+            }
+            if(!asyncComputation) {
+               gProcessor.setJsCad(source,fn);
+            }
          }
-         editor.setValue(jscadscript); 
-         editor.clearSelection();
-         editor.navigateFileStart();
-
-         previousFilename = fn;
-   	   previousScript = jscadscript;
-         gPreviousModificationTime = "";
       }
       xhr.send();
    }
+}
+
+function putSourceInEditor(src,fn) {
+   editor.setValue(src); 
+   editor.clearSelection();
+   editor.navigateFileStart();
+
+   previousFilename = fn;
+   previousScript = src;
+   gPreviousModificationTime = "";
 }
 
 // -----------------------------------------------------------------------------------------------------------
@@ -254,11 +306,11 @@ function handleFileSelect(evt) {
   gCurrentFile = file;
   gPreviousModificationTime = "";
   if(file.name.match(/\.jscad$/i)) {
-    gCurrentFile._type = 'jscad';
+    gCurrentFile.lang = 'jscad';
   } else if(file.name.match(/\.scad$/i)) {
-    gCurrentFile._type = 'scad';
+    gCurrentFile.lang = 'scad';
   } else if(file.name.match(/\.stl$/i)) {
-    gCurrentFile._type = 'stl';
+    gCurrentFile.lang = 'stl';
   } else {
     throw new Error("Please drop a file with .jscad, .scad or .stl extension");
   }
@@ -306,35 +358,57 @@ function parseFile(debugging, onlyifchanged) {
     };
     reader.onloadend = function(evt) {
       if (evt.target.readyState == FileReader.DONE) {
-        var jscadscript = evt.target.result;
-        if(jscadscript == "") {
+        var source = evt.target.result;
+        var editorSource = source;
+        if(source == "") {
           if(document.location.toString().match(/^file\:\//i)) {
             throw new Error("Could not read file. You are using a local copy of OpenJSCAD.org; if you are using Chrome, you need to launch it with the following command line option:\n\n--allow-file-access-from-files\n\notherwise the browser will not have access to uploaded files due to security restrictions.");
           } else {
             throw new Error("Could not read file.");
           }            
         } else {         
-          if(gProcessor && ((!onlyifchanged) || (previousScript !== jscadscript))) {
-            var filename = gCurrentFile.name;
-            filename = filename.replace(/^.*\/([^\/]*)$/, "$1");
+          if(gProcessor && ((!onlyifchanged) || (previousScript !== source))) {
+            var fn = gCurrentFile.name;
+            fn = fn.replace(/^.*\/([^\/]*)$/, "$1");
             gProcessor.setDebugging(debugging); 
-            echo(gCurrentFile._type);
-            if(gCurrentFile._type=='jscad') {
+            //echo(gCurrentFile.lang);
+            editor.getSession().setMode("ace/mode/javascript");
+            var asyncComputation = false;
+            
+            if(gCurrentFile.lang=='jscad') {
                ; // default
-            } else if(gCurrentFile._type=='scad') {
-               jscadscript = openscadOpenJscadParser.parse(jscadscript);
-               jscadscript = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+filename+"'\n\n"+jscadscript;
+            } else if(gCurrentFile.lang=='scad') {
+               editorSource = source;
+               editorSource = "//!OpenSCAD\n"+editorSource;
+               source = openscadOpenJscadParser.parse(editorSource);
+               if(0) {
+                  source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;
+               }
+               editor.getSession().setMode("ace/mode/scad");  
                
-            } else if(gCurrentFile._type=='stl') {
-               jscadscript = parseSTL(jscadscript,filename);
+            } else if(gCurrentFile.lang=='stl') {
+               status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
+               if(1) {
+                  var blobURL = new Blob([document.querySelector('#stlWorker').textContent]);
+                  // -- the messy part coming here:
+                  var worker = new Worker(window.webkitURL!==undefined?window.webkitURL.createObjectURL(blobURL):window.URL.createObjectURL(blobURL()));
+                  worker.onmessage = function(e) {
+                     var data = e.data;
+                     putSourceInEditor(data.source,data.filename);
+                     gProcessor.setJsCad(data.source,data.filename);
+                  };
+                  worker.postMessage({url: document.location.href, stlSource: source, filename: fn });
+                  asyncComputation = true;
+               } else {
+                  editorSource = source = parseSTL(source,fn);
+               }
             } else {
+               ;
             }
-            editor.setValue(jscadscript); 
-            editor.clearSelection();
-            //editor.moveCursorFileStart();
-            editor.navigateFileStart();
-            gProcessor.setJsCad(jscadscript, filename);
-				previousScript = jscadscript;
+            if(!asyncComputation) {
+               putSourceInEditor(editorSource,fn);
+               gProcessor.setJsCad(source,fn);
+            }
           }
         }
       } else {
@@ -343,10 +417,10 @@ function parseFile(debugging, onlyifchanged) {
 				previousScript = null;
       }
     };
-    if(gCurrentFile._type=='stl') {
+    if(gCurrentFile.lang=='stl') {
        reader.readAsBinaryString(gCurrentFile,"UTF-8");
     } else {
-       reader.readAsText(gCurrentFile, "UTF-8");
+       reader.readAsText(gCurrentFile,"UTF-8");
     }
   }
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * style.css for index.html of http://OpenJSCAD.org/
  */
 
@@ -98,6 +98,10 @@ canvas {
    cursor: auto;
 }
 
+#hint .type {
+   color: rgba(80,80,80,0.6);
+}
+
 #footer {
    font-size: 0.7em;
    text-align: left;
@@ -119,6 +123,10 @@ canvas {
 
 #busy {
    vertical-align: middle;
+}
+
+.support {
+   vertical-align: bottom;
 }
 
 /* we choose chrome theme for ace, and make sure line number is transparent too */
