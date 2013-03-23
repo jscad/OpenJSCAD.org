@@ -481,7 +481,7 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
     
   var blobURL = OpenJsCad.textToBlobUrl(workerscript);
   
-  if(!window.Worker) throw new Error("Your browser doesn't support Web Workers. Please try the Chrome browser instead.");
+  if(!window.Worker) throw new Error("Your browser doesn't support Web Workers. Please try the Chrome or Firefox browser instead.");
   var worker = new Worker(blobURL);
   worker.onmessage = function(e) {
     if(e.data)
@@ -680,7 +680,7 @@ OpenJsCad.Processor.prototype = {
       this.viewer = new OpenJsCad.Viewer(this.viewerdiv, viewerdiv.offsetWidth, viewer.offsetHeight, this.initialViewerDistance);
     } catch(e) {
       //      this.viewer = null;
-      this.viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad currently requires Google Chrome with WebGL enabled";
+      this.viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad currently requires Google Chrome or Firefox with WebGL enabled";
       //      this.viewerdiv.innerHTML = e.toString();
     }
     //Zoom control
@@ -727,8 +727,8 @@ OpenJsCad.Processor.prototype = {
     //this.statusdiv.style.width = this.viewerwidth + "px";
     this.statusspan = document.createElement("span");
     this.statusspan.id = 'statusspan';
-    //this.statusspan.style.marginRight = '2em';
-    this.statusbuttons = document.createElement("div");
+    this.statusspan.style.marginRight = '2em';
+    this.statusbuttons = document.createElement("span");
     this.statusbuttons.style.float = "right";
     this.statusdiv.appendChild(this.statusspan);
     this.statusdiv.appendChild(this.statusbuttons);
