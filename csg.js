@@ -956,6 +956,7 @@ CSG.prototype = {
 		return result;
 	},
 
+   // TODO: support alpha (transparent parts), just add ', alpha' won't do it (tried it)
 	setColor: function(red, green, blue) {
 		var newshared = new CSG.Polygon.Shared([red, green, blue]);
 		return this.setShared(newshared);

@@ -803,6 +803,8 @@ function include(fn) {          // doesn't work yet ... as we run in a blob and 
    xhr.send();
 }
 
+// -------------------------------------------------------------------------------------------------
+
 if(typeof module !== 'undefined') {    // we are used as module in nodejs require()
    var CSG = require(global.lib+'./csg.js').CSG;
    //console.log("lib="+global.lib);

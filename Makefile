@@ -12,6 +12,7 @@ install::
 	sudo scp *.js ${LIB}
                                 
 deinstall::
+	sudo rm -rf ${NODE_MODULES}/openscad-openjscad-translator
 	sudo rm -f ${LIB}/*.js 
 
 tests::

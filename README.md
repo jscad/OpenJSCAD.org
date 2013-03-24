@@ -9,7 +9,7 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 
 <h2>Installation</h2>
 
-<b>Immediate Use</b>: No installation, go to <b><a href="http://openjscad.org">OpenJSCAD.org</a></b>
+<b>Immediate Use</b>: No installation, go to <b><a href="http://openjscad.org">OpenJSCAD.org</a></b> (Google Chrome, Firefox)
 
 <b>Local Web Use:</b>
 <pre>

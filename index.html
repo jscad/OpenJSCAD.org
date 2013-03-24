@@ -237,7 +237,7 @@ function fetchExample(fn) {
                //       Dear Google / JavaScript developers: don't make JS unuseable with this mess!
                var blobURL = new Blob([document.querySelector('#stlWorker').textContent]);
                // -- the messy part coming here:
-               var worker = new Worker(window.webkitURL!==undefined?window.webkitURL.createObjectURL(blobURL):window.URL.createObjectURL(blobURL()));
+               var worker = new Worker(window.webkitURL!==undefined?window.webkitURL.createObjectURL(blobURL):window.URL.createObjectURL(blobURL));
                worker.onmessage = function(e) {    // worker finished
                   var data = e.data;
                   //echo("worker end:",data.source,data.filename);
@@ -284,6 +284,7 @@ function setupDragDrop() {
     throw new Error("Error: Your browser does not fully support the HTML File API");
   }
   var dropZone = document.getElementById('filedropzone');
+  //var dropZone = document.getElementById('viewer');
   dropZone.addEventListener('dragover', function(evt) {
     evt.stopPropagation();
     evt.preventDefault();
