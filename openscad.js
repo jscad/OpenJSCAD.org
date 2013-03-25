@@ -811,7 +811,7 @@ function __include(fn) {          // doesn't work yet ... as we run in a blob an
 
    //echo("include",fn,"me="+me);
 
-   if(me=='web') {
+   if(me=='web-online') {
       var xhr = new XMLHttpRequest();
       //OpenJsCad.log(">>>"+previousFilename);
       xhr.open("GET",fn,true);
@@ -822,13 +822,13 @@ function __include(fn) {          // doesn't work yet ... as we run in a blob an
          echo("ERROR: could not include(\""+fn+"\")");
       }
       xhr.send();
-   // } else if(type=='web') {
-   // 
-   } else {
+   } else if(me=='web-offline') {
+    
+   } else {    // cli
       src = fs.readFileSync(fn)
       src = processSource(src,fn);
    }
-   if(me!='web') {
+   if(me!='web-offline'&&me!='web-online') {
       if(0) {
          echo("push:",src);
          inc.push(src);
