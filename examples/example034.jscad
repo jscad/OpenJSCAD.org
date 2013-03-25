@@ -11,7 +11,7 @@ function getParameterDefinitions() {
       caption: 'Quality',
       values: [0, 1],
       captions: ["Draft","High"], 
-      default: 0,
+      default: 0
     },    
   
     { name: 'diameter1', caption: 'Axis diameter of first coupler:', type: 'float', default: 12.2 },
@@ -85,7 +85,7 @@ function makeShaft(innerdiameter, outerdiameter, spidercenterdiameter, shaftleng
   var grubnutradiusAtFlatSide = nutradius * Math.cos(Math.PI / 180 * 30);
   var nutcutoutrectangle = CSG.cube({
     radius: [outerlength/2, grubnutradiusAtFlatSide, nutthickness/2],
-    center: [outerlength/2, 0, 0],
+    center: [outerlength/2, 0, 0]
   });
   nutcutout = nutcutout.union(nutcutoutrectangle);
   nutcutout = nutcutout.rotateY(90);
@@ -125,7 +125,7 @@ function makePie(radius, height, startangle, endangle)
   points.push(new CSG.Vector2D(0,0));
   var shape2d=new CSG.Polygon2D(points);
   var extruded=shape2d.extrude({
-    offset: [0,0,height],   // direction for extrusion
+    offset: [0,0,height]   // direction for extrusion
   });
   return extruded;  
 }
@@ -139,8 +139,8 @@ function hexagon(radius, height)
     vertices.push(new CSG.Vertex(point));
   }
   var polygon=new CSG.Polygon(vertices);
-  var hexagon=polygon.extrude([0,0,height]);
-  return hexagon;
+  var hex=polygon.extrude([0,0,height]);
+  return hex;
 }
 
 function makeSpider(outerdiameter, spidercenterdiameter, spiderlength, numteeth)

@@ -1,6 +1,6 @@
 // -- Example 001
 
-function r_from_dia(d) { return d / 2 }
+function r_from_dia(d) { return d / 2; }
 
 function rotcy(rot, r, h) {
 	return rotate(90, rot,

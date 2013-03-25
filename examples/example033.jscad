@@ -16,32 +16,32 @@ function getParameterDefinitions() {
       caption: 'Add loops (for easy removal):',
       values: [0, 1],
       captions: ["No", "Yes"], 
-      default: 1,
-    },    
+      default: 1
+    },
     {
       name: 'show', 
       type: 'choice',
       caption: 'Show:',
       values: ["all", "grille", "holders"],
       captions: ["All", "Grille (for printing)", "Holders (for printing)"], 
-      default: "all",
-    },    
+      default: "all"
+    },
     {
       name: 'mouseears', 
       type: 'choice',
       caption: 'Add mouse ears:',
       values: [0, 1],
       captions: ["No", "Yes"], 
-      default: 1,
-    },    
+      default: 1
+    },
     {
       name: 'quality', 
       type: 'choice',
       caption: 'Quality:',
       values: [0, 1],
       captions: ["Draft", "Final"], 
-      default: 0,
-    },    
+      default: 0
+    }
   ];
 }
 
@@ -54,7 +54,7 @@ function main(params)
   var innerdistance = params.innerdistance;  
   var bladescale = params.bladescale;
   
-  var draft = params.quality == 0;
+  var draft = params.quality != 1;
   
   var marginleftright = 21;
   var margintopbottom = 15;
@@ -106,7 +106,7 @@ function main(params)
       radius: 15 * bladescale,
       startangle: 20,
       endangle: 80,
-      resolution: draft? 8:32,
+      resolution: draft? 8:32
     });
     var blade = curvedpath.rectangularExtrude(thickness, bladewidth, draft? 4:16, true);
     var bladecenter = blade.getBounds()[0].plus(blade.getBounds()[1]).times(0.5);
@@ -132,9 +132,9 @@ function main(params)
     if(params.numdividers > 0)
     {
       var w1 = (bladewidth - params.numdividers * thickness)/(params.numdividers+1); 
-      for(var i = 0; i < params.numdividers; i++)
+      for(var j = 0; j < params.numdividers; j++)
       {
-        var x = -(params.numdividers-1)*(w1+thickness)/2 + i*(w1+thickness);
+        var x = -(params.numdividers-1)*(w1+thickness)/2 + j*(w1+thickness);
         var z1 = outerdepth+frontextend;
         var divider = CSG.cube({center: [x, 0, (z1+innerdistance)/2], radius: [thickness/2, bladesheight/2, (z1-innerdistance)/2]});
         dividers = dividers.union(divider);
@@ -157,7 +157,7 @@ function main(params)
     result = result.union(grille);
     
     // create the looseners:
-    if(params.addlooseners != 0)
+    if(params.addlooseners == 1)
     {
       var loosenerinnerwidth = 5;
       var loosenerinnerheight = 2;
@@ -173,25 +173,25 @@ function main(params)
       result = result.union(looseners);
     } 
 
-    if(params.mouseears != 0)
+    if(params.mouseears == 1)
     {
-      for(var i = 0; i < 4; i++)
+      for(var k = 0; k < 4; k++)
       {
         var xpos=outerwidth/2-10;
         var ypos=outerheight/2;
-        if(i&1) xpos = -xpos;
-        if(i&2) ypos = -ypos;
+        if(k&1) xpos = -xpos;
+        if(k&2) ypos = -ypos;
         var cylinder = CSG.cylinder({start: [xpos, ypos, 0], end: [xpos, ypos, 0.5], radius: 15});
         result = result.union(cylinder);
       }
-      for(var i = 0; i < 4; i++)
+      for(var m = 0; m < 4; m++)
       {
-        var xpos=bladewidth/2 + thickness/2;
-        var ypos=bladesheight/2 + thickness/2;
-        if(i&1) xpos = -xpos;
-        if(i&2) ypos = -ypos;
-        var cyl1 = CSG.cylinder({start: [xpos, ypos, 0], end: [xpos, ypos, 0.5], radius: 15});
-        var cyl2 = CSG.cylinder({start: [xpos, ypos, 0], end: [xpos, ypos, innerdistance], radius: 5});
+        var xpos2=bladewidth/2 + thickness/2;
+        var ypos2=bladesheight/2 + thickness/2;
+        if(m&1) xpos2 = -xpos2;
+        if(m&2) ypos2 = -ypos2;
+        var cyl1 = CSG.cylinder({start: [xpos2, ypos2, 0], end: [xpos2, ypos2, 0.5], radius: 15});
+        var cyl2 = CSG.cylinder({start: [xpos2, ypos2, 0], end: [xpos2, ypos2, innerdistance], radius: 5});
         result = result.union(cyl1.union(cyl2));
       }
     }
