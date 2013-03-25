@@ -181,7 +181,9 @@ function onload() {
    setupDragDrop();
    //gProcessor.setDebugging(debugging); 
    if(document.location.toString().match(/^file:/)) {    // we are local
+      ;
    } else {
+      // gProcessor.setJsCad(editor.getValue());
       fetchExample('examples/'+ex[0].file);
    }
 }
