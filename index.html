@@ -26,6 +26,9 @@ Todo:
 <script src="jquery/jquery-1.9.1.js"></script>
 <script src="jquery/jquery-ui.js"></script>
 </head><body onload="onload()">
+<script>
+me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
+</script>
 <script src="lightgl.js"></script>
 <script src="csg.js"></script>
 <script src="openjscad.js"></script>
@@ -60,7 +63,6 @@ Supported Formats:<br>
 <tr><td align=right><b>.stl</b></td><td><a target=_blank href="http://en.wikipedia.org/wiki/STL_(file_format)">STL format</a> (experimental)</td></tr>
 <tr><td align=right><b>.amf</b></td><td>(planned) AMF importer/exporter</td></tr>
 </table>
-Examples:
 <script>
 var ex = [ 
 { file:'example000.jscad', title: 'OpenJSCAD.org Logo' },
@@ -93,10 +95,15 @@ var ex = [
 // { file:'organic_flower-Bogoboy23.stl', title: '3D Model: Organic Flower (Bogoboy23)', type: 'STL' }, // all wrong normals!!
 // { file:'klein_bottle-DizingOf.stl', title: '3D Model: Klein Bottle (DizingOf)', type: 'STL' } // too slow, over 400k triangles, huge memory consumption
 ];
-for(var i=0; i<ex.length; i++) {
-   document.write("<li><a href=# onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n");
-   if(ex[i].type) document.write(" <span class=type>("+ex[i].type+")</span></a>");
-   //document.write("<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n");
+if(me=='web-online') {
+   document.write('Examples:');
+   for(var i=0; i<ex.length; i++) {
+      document.write("<li><a href=# onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n");
+      if(ex[i].type) document.write(" <span class=type>("+ex[i].type+")</span></a>");
+      //document.write("<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n");
+   }
+} else {
+   // examples off-line won't work yet as XHR is used
 }
 </script>
 <p>
@@ -150,7 +157,6 @@ self.onmessage = function(e) {      // Worker to import STL as it can take quite
 var gCurrentFile = null;
 var gProcessor = null;
 var editor = null;
-me = 'web'
 
 function onload() {
    // -- http://ace.ajax.org/#nav=howto
@@ -180,10 +186,8 @@ function onload() {
    gProcessor = new OpenJsCad.Processor(document.getElementById("viewer"));
    setupDragDrop();
    //gProcessor.setDebugging(debugging); 
-   if(document.location.toString().match(/^file:/)) {    // we are local
-      ;
-   } else {
-      // gProcessor.setJsCad(editor.getValue());
+   if(me=='web-online') {    // we are online, fetch first example
+      //    gProcessor.setJsCad(editor.getValue());
       fetchExample('examples/'+ex[0].file);
    }
 }
