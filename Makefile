@@ -4,7 +4,6 @@ NODE_MODULES = /usr/local/lib/node_modules/
 all::
 	@echo "make install deinstall tests clean" 
 
-
 install::
 	test -d ${NODE_MODULES}/openscad-openjscad-translator || sudo npm -g install openscad-openjscad-translator
 	sudo scp openjscad /usr/local/bin/
@@ -26,7 +25,10 @@ tests::
 
 clean::
 	rm -f examples/example001-from*
-                                        
+
+# TODO:                                        
+# - locally submodule of openscad-openjscad-translator, see http://git-scm.com/book/en/Git-Tools-Submodules
+
 # --- developers only below
 
 push::

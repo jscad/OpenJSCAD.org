@@ -18,7 +18,7 @@ History:
 
 Todo:
 - saving source code edited in ACE locally, perhaps 'SaveAs' (.JSCAD, .STL)
-
+- include(); support of multiple files, see http://jsfiddle.net/yybRu/
 -->
 <title>OpenJSCAD.org</title>
 <link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
@@ -43,25 +43,7 @@ Todo:
 
 <img id="header" src="imgs/title.png" onclick="$('#hint').show()");">
 
-<div id="editor">// -- Example 000: OpenJSCAD.org logo
-
-function main() {
-   return scale(10,
-      translate([0,0,1.5],
-      union(
-            difference(
-               cube({size: 3, center: true}),
-               sphere(2)
-            ),
-            intersection(
-                sphere(1.3),
-                cube({size: 2.1, center: true})
-            )
-         )
-      )
-   );
-}
-</div>
+<div id="editor"></div>
 <div id="hint" title="OpenJSCAD.org ALPHA">
 <div class="closeButton" onclick="document.getElementById('hint').style.display=(document.getElementById('hint').style.display!='none'?'none':'block');"><img src="imgs/closeButton.png"></div>
 <table>
@@ -146,6 +128,8 @@ OpenJSCAD.org 0.010 (2013/03/22), MIT License & GPLv2, <a target=_blank href="ht
 <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 
 <script id=stlWorker type="javascript/worker">
+// adapted from http://www.html5rocks.com/en/tutorials/workers/basics/
+
 self.onmessage = function(e) {      // Worker to import STL as it can take quite some while for 1MB+ large STLs
    var data = e.data; // JSON.parse(e.data);
    if(data.url) {     // RANT: why do something simple, when it can be done complicate: Workers & importScripts() (guys!!)
@@ -193,7 +177,8 @@ function onload() {
    gProcessor = new OpenJsCad.Processor(document.getElementById("viewer"));
    setupDragDrop();
    //gProcessor.setDebugging(debugging); 
-   gProcessor.setJsCad(editor.getValue());
+   //gProcessor.setJsCad(editor.getValue());
+   fetchExample('examples/'+ex[0].file);
 }
 
 function fetchExample(fn) {
