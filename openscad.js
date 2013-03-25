@@ -61,6 +61,8 @@
 
 // wrapper functions for OpenJsCAD & OpenJSCAD.org
 
+var me = 'cli';
+
 // -- 3D operations (OpenSCAD like notion)
 
 function union() { 
@@ -790,17 +792,53 @@ BinaryReader.prototype = {
 
 // -------------------------------------------------------------------------------------------------
 
-function include(fn) {          // doesn't work yet ... as we run in a blob and XHR aren't permitted
-   var xhr = new XMLHttpRequest();
-   //OpenJsCad.log(">>>"+previousFilename);
-   xhr.open("GET", fn, true);
-   xhr.onload = function() {
-      return eval(this.responseText);
-   };
-   xhr.error = function() {
-      echo("ERROR: could not include(\""+fn+"\")");
+function processSource(src,fn) {
+   if(fn.match(/\.jscad/i)) {
+      ;
+   } else if(fn.match(/\.scad/i)) {
+      src = openscadOpenJscadParser.parse(src);
+   } else if(fn.match(/\.stl/i)) {
+      src = parseSTL(src);
+   } else {
+      echo("extension of '"+fn+"' not recognized, considering it as .jscad");
    }
-   xhr.send();
+   return src;       // .jscad now
+}
+   
+function __include(fn) {          // doesn't work yet ... as we run in a blob and XHR aren't permitted
+   // case 1): cli, we simply include it
+   // case 2): web, XHR won't work as we likely pull more stuff from within a web-worker & blob, where XHR isn't permitted
+
+   //echo("include",fn,"me="+me);
+
+   if(me=='web') {
+      var xhr = new XMLHttpRequest();
+      //OpenJsCad.log(">>>"+previousFilename);
+      xhr.open("GET",fn,true);
+      xhr.onload = function() {
+         return processSource(this.responseText,fn);
+      };
+      xhr.error = function() {
+         echo("ERROR: could not include(\""+fn+"\")");
+      }
+      xhr.send();
+   // } else if(type=='web') {
+   // 
+   } else {
+      src = fs.readFileSync(fn)
+      src = processSource(src,fn);
+   }
+   if(me!='web') {
+      if(0) {
+         echo("push:",src);
+         inc.push(src);
+         return;
+      } else {
+         echo("eval:",src);
+         return eval(src);
+      }
+   }
+   return src;
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -812,5 +850,6 @@ if(typeof module !== 'undefined') {    // we are used as module in nodejs requir
       // -- list all functions we export
       parseSTL: function(stl,fn) { return parseSTL(stl,fn); } 
    };
+   me = 'cli';
 }
 

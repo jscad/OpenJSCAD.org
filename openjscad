@@ -60,6 +60,7 @@ if(args.length==2) {                         // -o<output>
 //console.log("reading "+inf);
 var src = fs.readFileSync(inf,inf.match(/\.stl$/)?"binary":"UTF8");
 var scad = fs.readFileSync(lib+'./openscad.js');
+var inc = [];
 
 //var csg = sphere(1);          // -- basic test
 //var csg = require(file).main; // -- treating .jscad as module? later perhaps
@@ -104,8 +105,21 @@ if(/\.scad$/.exec(inf)) {       // -- input .scad file
 }
 
 if(exportSTL) {
-   var csg = eval(src+"\n"+scad+"\nmain()\n");    // openscad.js + *.jscad + main()
-   
+   var csg;
+   if(1) {
+      csg = eval(src+"\n"+scad+"\nmain()\n");    // *.jscad + openscad.js + main()
+
+   } else {
+      eval(src+"\n"+scad);    // *.jscad + openscad.js
+
+      var incs = "";
+      for(var i=0; i<inc.length; i++) {
+         incs += inc[i];
+      }
+      //console.log("incs",inc,incs);
+
+      var csg = eval(incs+"main()");         // all includes + main()
+   }
    //var stl = csg.fixTJunctions().toStlBinary();
    var stl = csg.fixTJunctions().toStlString();
 
@@ -119,7 +133,17 @@ else
 
 // -- helper functions 
 
-function include(fn) {
-   return eval(fs.readFileSync(fn));
+function include(fn) {     // preparing include(), not yet working
+   console.log("local.include",fn);
+   if(0) {
+      //var script = vm.createScript(fs.readFileSync(fn),fn);
+      //script.runInThisContext();
+      var script = vm.runInThisContext(fs.readFileSync(fn),fn);
+      return script;
+   } else {
+      var src = fs.readFileSync(fn);
+      //console.log("exec",src);
+      return eval(src);
+   }
 }
 
