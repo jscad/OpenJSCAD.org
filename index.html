@@ -26,9 +26,6 @@ Todo:
 <script src="jquery/jquery-1.9.1.js"></script>
 <script src="jquery/jquery-ui.js"></script>
 </head><body onload="onload()">
-<script>
-me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
-</script>
 <script src="lightgl.js"></script>
 <script src="csg.js"></script>
 <script src="openjscad.js"></script>
@@ -46,7 +43,21 @@ me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; //
 
 <img id="header" src="imgs/title.png" onclick="$('#hint').show()");">
 
-<div id="editor"></div>
+<div id="editor">// -- OpenJSCAD.org logo
+
+function main() {
+   return union(
+      difference(
+         cube({size: 3, center: true}),
+         sphere(2)
+      ),
+      intersection(
+          sphere(1.3),
+          cube({size: 2.1, center: true})
+      )
+   ).translate([0,0,1.5]).scale(10);
+}
+</div>
 <div id="hint" title="OpenJSCAD.org ALPHA">
 <div class="closeButton" onclick="document.getElementById('hint').style.display=(document.getElementById('hint').style.display!='none'?'none':'block');"><img src="imgs/closeButton.png"></div>
 <table>
@@ -64,6 +75,7 @@ Supported Formats:<br>
 <tr><td align=right><b>.amf</b></td><td>(planned) AMF importer/exporter</td></tr>
 </table>
 <script>
+var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
 var ex = [ 
 { file:'example000.jscad', title: 'OpenJSCAD.org Logo' },
 { file:'example001.jscad', title: 'Example 1: Sphere with cutouts' },
@@ -189,6 +201,8 @@ function onload() {
    if(me=='web-online') {    // we are online, fetch first example
       //    gProcessor.setJsCad(editor.getValue());
       fetchExample('examples/'+ex[0].file);
+   } else {
+      gProcessor.setJsCad(editor.getValue());
    }
 }
 
