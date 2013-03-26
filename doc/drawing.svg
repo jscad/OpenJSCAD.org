@@ -25,7 +25,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="325.32411"
+     inkscape:cx="-16.104461"
      inkscape:cy="609.87173"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -56,12 +56,19 @@
        style="fill:#ffffff;fill-opacity:1;stroke:none"
        id="rect4300"
        width="748.29028"
-       height="852.89069"
+       height="864.31927"
        x="-45.224075"
-       y="4.541738"
+       y="-46.886833"
        inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\doc\drawing-01.png"
        inkscape:export-xdpi="50.619999"
        inkscape:export-ydpi="50.619999" />
+    <rect
+       y="545.87537"
+       x="152.75639"
+       height="220.77257"
+       width="366.18152"
+       id="rect3238"
+       style="fill:#f2eeee;fill-opacity:1;stroke:#000000;stroke-width:1.66455102;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -74,45 +81,23 @@
          x="286.88333"
          y="306.8696" /></text>
     <rect
-       style="fill:#f2eeee;fill-opacity:1;stroke:#000000;stroke-width:1.83592307999999990;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#f2eeee;fill-opacity:1;stroke:#000000;stroke-width:1.66455102;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect3967"
        width="366.18152"
-       height="268.57144"
+       height="220.77257"
        x="152.75639"
-       y="98.076477" />
-    <text
-       xml:space="preserve"
-       style="font-size:20.29867935px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="190.70367"
-       y="128.77122"
-       id="text3757"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan3759"
-         x="190.70367"
-         y="128.77122">http://OpenJSCAD.org/</tspan><tspan
-         sodipodi:role="line"
-         x="190.70367"
-         y="154.14458"
-         id="tspan3763">http://localhost/OpenJSCAD.org/</tspan></text>
-    <rect
-       y="498.07648"
-       x="152.75639"
-       height="268.57144"
-       width="366.18152"
-       id="rect3778"
-       style="fill:#f2eeee;fill-opacity:1;stroke:#000000;stroke-width:1.83592307999999990;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+       y="145.87535" />
     <text
        xml:space="preserve"
        style="font-size:35px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
        x="333.68753"
-       y="86.528961"
+       y="14.528961"
        id="text3788"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3790"
          x="333.68753"
-         y="86.528961">Browser</tspan></text>
+         y="14.528961">Web Browser</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:35px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
@@ -309,14 +294,14 @@
     <text
        sodipodi:linespacing="125%"
        id="text4014"
-       y="547.41669"
-       x="234.40965"
-       style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       y="529.21191"
+       x="234.07422"
+       style="font-size:32.07167816px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Monospace;-inkscape-font-specification:Monospace"
        xml:space="preserve"><tspan
          id="tspan4018"
-         y="547.41669"
-         x="234.40965"
-         sodipodi:role="line">openjscad (nodejs)</tspan></text>
+         y="529.21191"
+         x="234.07422"
+         sodipodi:role="line">openjscad</tspan></text>
     <rect
        style="fill:#f58afd;fill-opacity:1;stroke:none"
        id="rect4126"
@@ -533,5 +518,24 @@
        id="path4489"
        d="m 384.17563,618.98633 122.22846,98.99495"
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text3205"
+       y="52.728828"
+       x="27.319841"
+       style="font-size:22.26272202px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Monospace;-inkscape-font-specification:Monospace"
+       xml:space="preserve"><tspan
+         y="52.728828"
+         x="27.319841"
+         id="tspan3207"
+         sodipodi:role="line"> online: http://OpenJSCAD.org/</tspan><tspan
+         id="tspan3209"
+         y="80.557228"
+         x="27.319841"
+         sodipodi:role="line">locally: http://localhost/OpenJSCAD.org/</tspan><tspan
+         id="tspan3211"
+         y="108.38563"
+         x="27.319841"
+         sodipodi:role="line">offline: file://Downloads/OpenJSCAD.org/index.html</tspan></text>
   </g>
 </svg>

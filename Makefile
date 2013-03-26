@@ -24,7 +24,7 @@ tests::
 	# openscad examples/example001.scad -o examples/example001-fromSCADviaOpenSCAD.stl
 
 clean::
-	rm -f examples/example001-from*
+	rm -f examples/example000.stl examples/example001.stl examples/example001-from*
 
 # TODO:                                        
 # - locally submodule of openscad-openjscad-translator, see http://git-scm.com/book/en/Git-Tools-Submodules

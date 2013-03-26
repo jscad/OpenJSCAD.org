@@ -3,7 +3,7 @@
 // OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>
 // License: GPLv2
 //
-var version = '0.004';
+var version = '0.005';
 //
 // Description:
 //   openjscad <file> [-o <stl>]
@@ -15,18 +15,24 @@ var version = '0.004';
 //   openjscad test.stl -o test2.stl      # reprocessed: stl -> jscad -> stl
 //
 // History:
+// 2013/03/25: 0.005: more sanity check on input and local installation support
 // 2013/03/18: 0.004: STL .stl (binary & ascii) support (experimental via openscad.js)
 // 2013/03/18: 0.003: OpenSCAD .scad support by Gary Hodgson's openscad-openjscad-translator module
 // 2013/03/02: 0.002: proper installation of the dependencies (csg.js & openscad.js) so openjscad can be used properly
 // 2013/03/01: 0.001: initial version, with base function from openscad.jscad
 //
 
+var me = 'cli';
+
 var fs = require('fs');
 var vm = require('vm');
 //include('./openscad.js');         // later
 
 global.lib = '/usr/local/lib/openjscad/';    // for now hard-coded
-if (!fs.existsSync(global.lib))
+
+//if (!fs.existsSync(global.lib))            // requires node 0.10.1 
+//   global.lib = './';
+if(!fs.statSync(global.lib).isDirectory())  // same but works with 0.6.1+
    global.lib = './';
 
 var CSG = require(lib+'./csg.js').CSG;
@@ -44,8 +50,11 @@ var CAG = require(lib+'./csg.js').CAG;  // any way to include CSG & CAG in once?
 var args = process.argv.splice(2);
 
 var inf = args[0];
-if (null != inf)
-{
+if(inf==null||inf.length<=0||!fs.statSync(inf).isFile()) {
+   console.log("USAGE ("+version+"): openjscad <file> [-o <output>]\n\twhereas file: <name>.jscad, <name>.scad or <name>.stl\n\tand output: <name>.jscad or <name>.stl");
+   process.exit(1);
+}
+
 var outf = inf;
 outf = outf.replace(/\.[^\.]+$/,'.stl');
 
@@ -109,7 +118,7 @@ if(exportSTL) {
    if(1) {
       csg = eval(src+"\n"+scad+"\nmain()\n");    // *.jscad + openscad.js + main()
 
-   } else {
+   } else {                   // -- experimenting to get include() working (not yet)
       eval(src+"\n"+scad);    // *.jscad + openscad.js
 
       var incs = "";
@@ -126,10 +135,6 @@ if(exportSTL) {
    var s = fs.WriteStream(outf);
    s.write(stl);
 }
-
-}
-else
-   console.log("Usage: openjscad <file> [-o <stl>]");
 
 // -- helper functions 
 
