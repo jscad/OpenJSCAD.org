@@ -61,8 +61,6 @@
 
 // wrapper functions for OpenJsCAD & OpenJSCAD.org
 
-var me = 'cli';
-
 // -- 3D operations (OpenSCAD like notion)
 
 function union() { 

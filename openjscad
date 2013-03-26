@@ -21,6 +21,7 @@ var version = '0.004';
 // 2013/03/01: 0.001: initial version, with base function from openscad.jscad
 //
 
+var me = 'cli';
 global.lib = '/usr/local/lib/openjscad/';    // for now hard-coded
 //global.lib = './';
 

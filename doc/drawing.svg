@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -82,19 +82,23 @@
        y="98.076477" />
     <text
        xml:space="preserve"
-       style="font-size:20.29867935px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="190.70367"
-       y="128.77122"
+       style="font-size:15.47607327px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="190.74841"
+       y="121.55026"
        id="text3757"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3759"
-         x="190.70367"
-         y="128.77122">http://OpenJSCAD.org/</tspan><tspan
+         x="190.74841"
+         y="121.55026">http://OpenJSCAD.org/</tspan><tspan
          sodipodi:role="line"
-         x="190.70367"
-         y="154.14458"
-         id="tspan3763">http://localhost/OpenJSCAD.org/</tspan></text>
+         x="190.74841"
+         y="140.89536"
+         id="tspan3763">http://localhost/OpenJSCAD.org/</tspan><tspan
+         sodipodi:role="line"
+         x="190.74841"
+         y="160.24045"
+         id="tspan3203">file://Downloads/OpenJSCAD.org/index.html</tspan></text>
     <rect
        y="498.07648"
        x="152.75639"
