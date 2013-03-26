@@ -388,13 +388,13 @@ function solidToOuterShellPlates(csg, thickness)
 function getParameterDefinitions()
 {
   return [
-    {name: 'topdiameter', type: 'float', default: 160, caption: "Top diameter:"},
-    {name: 'bottomdiameter', type: 'float', default: 300, caption: "Bottom diameter:"},
-    {name: 'height', type: 'float', default: 170, caption: "Height:"},
-    {name: 'numfaces', type: 'int', default: 5, caption: "Number of faces:"},
-    {name: 'thickness', type: 'float', default: 4, caption: "Thickness of stock material:"},
-    {name: 'topholediameter', type: 'float', default: 42, caption: "Diameter of top hole:"},
-    {name: 'cutterdiameter', type: 'float', default: 3.2, caption: "Diameter of CNC cutter / laser beam:"},
+    {name: 'topdiameter', type: 'float', initial: 160, caption: "Top diameter:"},
+    {name: 'bottomdiameter', type: 'float', initial: 300, caption: "Bottom diameter:"},
+    {name: 'height', type: 'float', initial: 170, caption: "Height:"},
+    {name: 'numfaces', type: 'int', initial: 5, caption: "Number of faces:"},
+    {name: 'thickness', type: 'float', initial: 4, caption: "Thickness of stock material:"},
+    {name: 'topholediameter', type: 'float', initial: 42, caption: "Diameter of top hole:"},
+    {name: 'cutterdiameter', type: 'float', initial: 3.2, caption: "Diameter of CNC cutter / laser beam:"},
 
     {
       name: 'type',
@@ -403,7 +403,7 @@ function getParameterDefinitions()
       captions: ["Assembled", "Top plate (DXF output)", "Side plate (DXF output)"],  // optional, these values are shown in the listbox
                                                    // if omitted, the items in the 'values' array are used
       caption: 'Show:',                           // optional, displayed left of the input field
-      default: "ASSEMBLED"                              // optional, default selected value
+      initial: "ASSEMBLED"                              // optional, default selected value
                                                    // if omitted, the first item is selected by default
     },
     {
@@ -413,7 +413,7 @@ function getParameterDefinitions()
       captions: ["Draft", "High"],  // optional, these values are shown in the listbox
                                                    // if omitted, the items in the 'values' array are used
       caption: 'Quality:',                           // optional, displayed left of the input field
-      default: "DRAFT"                              // optional, default selected value
+      initial: "DRAFT"                              // optional, default selected value
                                                    // if omitted, the first item is selected by default
     }
   ];

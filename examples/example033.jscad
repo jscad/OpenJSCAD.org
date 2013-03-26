@@ -3,20 +3,20 @@
 // Here we define the user editable parameters: 
 function getParameterDefinitions() {
   return [
-    { name: 'outerwidth', caption: 'Outer width of grille:', type: 'float', default: 190 },
-    { name: 'outerheight', caption: 'Outer height of grille:', type: 'float', default: 120 },
-    { name: 'outerdepth', caption: 'Outer depth of grille:', type: 'float', default: 12 },
-    { name: 'thickness', caption: 'Wall thickness:', type: 'float', default: 2.5 },
-    { name: 'innerdistance', caption: 'Inner standoff distance:', type: 'float', default: 2 },
-    { name: 'bladescale', caption: 'Relative size of blades (1.0 is default):', type: 'float', default: 1 },
-    { name: 'numdividers', caption: 'Number of vertical dividers:', type: 'int', default: 2 },
+    { name: 'outerwidth', caption: 'Outer width of grille:', type: 'float', initial: 190 },
+    { name: 'outerheight', caption: 'Outer height of grille:', type: 'float', initial: 120 },
+    { name: 'outerdepth', caption: 'Outer depth of grille:', type: 'float', initial: 12 },
+    { name: 'thickness', caption: 'Wall thickness:', type: 'float', initial: 2.5 },
+    { name: 'innerdistance', caption: 'Inner standoff distance:', type: 'float', initial: 2 },
+    { name: 'bladescale', caption: 'Relative size of blades (1.0 is default):', type: 'float', initial: 1 },
+    { name: 'numdividers', caption: 'Number of vertical dividers:', type: 'int', initial: 2 },
     {
       name: 'addlooseners', 
       type: 'choice',
       caption: 'Add loops (for easy removal):',
       values: [0, 1],
       captions: ["No", "Yes"], 
-      default: 1
+      initial: 1
     },
     {
       name: 'show', 
@@ -24,7 +24,7 @@ function getParameterDefinitions() {
       caption: 'Show:',
       values: ["all", "grille", "holders"],
       captions: ["All", "Grille (for printing)", "Holders (for printing)"], 
-      default: "all"
+      initial: "all"
     },
     {
       name: 'mouseears', 
@@ -32,7 +32,7 @@ function getParameterDefinitions() {
       caption: 'Add mouse ears:',
       values: [0, 1],
       captions: ["No", "Yes"], 
-      default: 1
+      initial: 1
     },
     {
       name: 'quality', 
@@ -40,7 +40,7 @@ function getParameterDefinitions() {
       caption: 'Quality:',
       values: [0, 1],
       captions: ["Draft", "Final"], 
-      default: 0
+      initial: 0
     }
   ];
 }
