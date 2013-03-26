@@ -24,9 +24,9 @@ function main(params)
   plates = removePlateWithNormal(plates, [0,0,-1]);
   plates = removePlateWithNormal(plates, [0,0,1]);
 
-  for(var i = 1; i < numfaces; i++)
+  for(var j = 1; j < numfaces; j++)
   {
-    plates[i] = plates[0].rotateZ(i * 360 / numfaces);
+    plates[j] = plates[0].rotateZ(j * 360 / numfaces);
   }
   
   var topplate = getStockPlate(1000,1000,thickness)
@@ -55,10 +55,10 @@ function main(params)
     }
     else
     {
-      for(var i = 0; i < numfaces; i++)
+      for(var k = 0; k < numfaces; k++)
       {
-        var plate3d =  plateCAGToCSG(plate2d, plates[i].properties.platebasis, thickness);
-        plates[i] = plate3d;
+        var plate3d =  plateCAGToCSG(plate2d, plates[k].properties.platebasis, thickness);
+        plates[k] = plate3d;
       }
       var result = new CSG().union(plates);
       result = result.rotateX(90);
@@ -76,7 +76,7 @@ function addRandomHoles(plate)
   // maskarea: the 'forbidden' area for holes:
   var maskarea = plate.contract(distancefromedge, 4);
   var bounds = maskarea.getBounds();
-  var maskarea = maskarea.flipped();  
+  maskarea = maskarea.flipped();  
   var holes = [];
   var existingholecenters = [];
   var existingholeradii = [];
@@ -105,15 +105,15 @@ function addRandomHoles(plate)
         // check if the hole is not too close to the edges:
         var hole = CAG.circle({radius: holeradius, center: holecenter});
         var testarea = maskarea.intersect(hole);
-        if(testarea.sides.length != 0) valid = false;
+        if(testarea.sides.length !== 0) valid = false;
+        if(valid)
+        {
+          existingholeradii.push(holeradius);
+          existingholecenters.push(holecenter);
+          holes.push(hole);
+          break;
+        }
       } 
-      if(valid)
-      {
-        existingholeradii.push(holeradius);
-        existingholecenters.push(holecenter);
-        holes.push(hole);
-        break;
-      }
     }
   }
   return plate.subtract(holes);
@@ -224,7 +224,7 @@ function fingerJointTwo(plate1, plate2, options)
   } 
   // get the intersection solid of the 2 plates:
   var intersection = plate1.intersect(plate2);
-  if(intersection.polygons.length == 0)
+  if(intersection.polygons.length === 0)
   {
     // plates do not intersect. Return unmodified:
     return [plate1, plate2];
@@ -237,7 +237,7 @@ function fingerJointTwo(plate1, plate2, options)
     var jointline = plane1.intersectWithPlane(plane2);
     // Now we need to find the two endpoints on jointline (the points at the edges of intersection):
     // construct a plane perpendicular to jointline:
-    var plane1 = CSG.Plane.fromNormalAndPoint(jointline.direction, jointline.point);
+    plane1 = CSG.Plane.fromNormalAndPoint(jointline.direction, jointline.point);
     // make the plane into an orthonormal basis:
     var basis1 = new CSG.OrthoNormalBasis(plane1);
     // get the projection matrix for the orthobasis:
@@ -279,8 +279,8 @@ function fingerJointTwo(plate1, plate2, options)
       var cutouts2d = [];
       for(var fingerindex = 0; fingerindex < numfingers; fingerindex++)
       {
-        if( (plateindex == 0) && ((fingerindex & 1)==0) ) continue;
-        if( (plateindex == 1) && ((fingerindex & 1)!=0) ) continue;
+        if( (plateindex === 0) && ((fingerindex & 1)===0) ) continue;
+        if( (plateindex  == 1) && ((fingerindex & 1)!==0) ) continue;
         var minx = jointline_origin_2d.x + fingerindex * fingerwidth - margin/2;
         var maxx = minx + fingerwidth + margin;
         var cutout = createRectCutoutWithCutterRadius(minx, miny, maxx, maxy, cutterRadius, plate2d);
@@ -339,8 +339,8 @@ function createRectCutoutWithCutterRadius(minx, miny, maxx, maxy, cutterRadius, 
       var testrectbcentery = (corner & 1)? (maxy-halfcutterradius):(miny+halfcutterradius);
       var testrecta = CAG.rectangle({radius: [halfcutterradius, halfcutterradius], center: [testrectacenterx, testrectacentery]}); 
       var testrectb = CAG.rectangle({radius: [halfcutterradius, halfcutterradius], center: [testrectbcenterx, testrectbcentery]});
-      if( (plate2d.intersect(testrecta).sides.length > 0)  
-       && (plate2d.intersect(testrectb).sides.length > 0) )
+      if( (plate2d.intersect(testrecta).sides.length > 0)  &&
+       (plate2d.intersect(testrectb).sides.length > 0) )
       {
         cornercutouts.push(cornercutout);
       }
@@ -403,7 +403,7 @@ function getParameterDefinitions()
       captions: ["Assembled", "Top plate (DXF output)", "Side plate (DXF output)"],  // optional, these values are shown in the listbox
                                                    // if omitted, the items in the 'values' array are used
       caption: 'Show:',                           // optional, displayed left of the input field
-      default: "ASSEMBLED",                              // optional, default selected value
+      default: "ASSEMBLED"                              // optional, default selected value
                                                    // if omitted, the first item is selected by default
     },
     {
@@ -413,12 +413,9 @@ function getParameterDefinitions()
       captions: ["Draft", "High"],  // optional, these values are shown in the listbox
                                                    // if omitted, the items in the 'values' array are used
       caption: 'Quality:',                           // optional, displayed left of the input field
-      default: "DRAFT",                              // optional, default selected value
+      default: "DRAFT"                              // optional, default selected value
                                                    // if omitted, the first item is selected by default
-    },
-
-
-
+    }
   ];
 }
 

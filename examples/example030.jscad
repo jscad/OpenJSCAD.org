@@ -42,10 +42,10 @@ function main(params)
   
   // Construct the result; use the parameters set by the end user:
   var result = new CSG();
-  if(params.cutout != 0) plate = plate.subtract(servo.properties.servomotor.cutout);
-  if(params.showplate != 0) result = result.union(plate);
-  if(params.showservo != 0) result = result.union(servo);
-  if(params.showcutout != 0) result = result.union(servo.properties.servomotor.cutout.setColor(0,0.8,0));
+  if(params.cutout !== 0) plate = plate.subtract(servo.properties.servomotor.cutout);
+  if(params.showplate !== 0) result = result.union(plate);
+  if(params.showservo !== 0) result = result.union(servo);
+  if(params.showcutout !== 0) result = result.union(servo.properties.servomotor.cutout.setColor(0,0.8,0));
 
   return result;
 }
@@ -56,7 +56,7 @@ function getParameterDefinitions() {
     { name: 'showservo', caption: 'Show servo:', type: 'choice', values: [0, 1], default: 1, captions: ["No", "Yes"]},
     { name: 'showplate', caption: 'Show plate:', type: 'choice', values: [0, 1], default: 1, captions: ["No", "Yes"]},
     { name: 'showcutout', caption: 'Show cutout:', type: 'choice', values: [0, 1], default: 0, captions: ["No", "Yes"]},
-    { name: 'cutout', caption: 'Subtract the servo cutout shape from the plate:', type: 'choice', values: [0, 1], default: 1, captions: ["No", "Yes"]},
+    { name: 'cutout', caption: 'Subtract the servo cutout shape from the plate:', type: 'choice', values: [0, 1], default: 1, captions: ["No", "Yes"]}
   ];
 }
 

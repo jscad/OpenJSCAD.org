@@ -8,7 +8,7 @@ function getParameterDefinitions() {
     { name: 'pressureAngle', caption: 'Pressure angle:', type: 'float', default: 20 },
     { name: 'clearance', caption: 'Clearance:', type: 'float', default: 0 },
     { name: 'thickness', caption: 'Thickness:', type: 'float', default: 5 },
-    { name: 'centerholeradius', caption: 'Radius of center hole (0 for no hole):', type: 'float', default: 2 },
+    { name: 'centerholeradius', caption: 'Radius of center hole (0 for no hole):', type: 'float', default: 2 }
   ];
 }
 
@@ -86,10 +86,10 @@ function involuteGear(numTeeth, circularPitch, pressureAngle, clearance, thickne
   var tooth3d = new CSG.Polygon2D(points).extrude({offset: [0, 0, thickness]});
 
   var allteeth = new CSG();
-  for(var i = 0; i < numTeeth; i++)
+  for(var j = 0; j < numTeeth; j++)
   {
-    var angle = i*360/numTeeth;
-    var rotatedtooth = tooth3d.rotateZ(angle);
+    var ang = j*360/numTeeth;
+    var rotatedtooth = tooth3d.rotateZ(ang);
     allteeth = allteeth.unionForNonIntersecting(rotatedtooth);
   }
 
@@ -97,11 +97,11 @@ function involuteGear(numTeeth, circularPitch, pressureAngle, clearance, thickne
   points = [];
   var toothAngle = 2 * Math.PI / numTeeth;
   var toothCenterAngle = 0.5 * angularToothWidthAtBase; 
-  for(var i = 0; i < numTeeth; i++)
+  for(var k = 0; k < numTeeth; k++)
   {
-    var angle = toothCenterAngle + i * toothAngle;
-    var p = CSG.Vector2D.fromAngle(angle).times(rootRadius);
-    points.push(p);
+    var angl = toothCenterAngle + k * toothAngle;
+    var p1 = CSG.Vector2D.fromAngle(angl).times(rootRadius);
+    points.push(p1);
   }
 
   // create the polygon and extrude into 3D:

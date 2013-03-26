@@ -16,7 +16,7 @@ function getParameterDefinitions() {
       caption: 'Rounded edges',
       values: [0, 1],
       captions: ["No", "Yes (rendering will take a long time!)"], 
-      default: 0,
+      default: 0
     },    
     { name: 'roundness', caption: 'Diameter of rounded edges (if enabled):', type: 'float', default: 1.5 },
     { name: 'buildwidth', caption: 'Width (x) of build area (to print multiple copies):', type: 'float', default: 90 },
@@ -38,7 +38,7 @@ function main(params) {
   bottomradius += halfthickness;
   
   var roundness = params.roundness;
-  if(params.rounded == 0)
+  if(params.rounded != 1)
   {
     roundness = 0;
   }
@@ -72,7 +72,7 @@ function main(params) {
     startangle: topstartangle,
     endangle: 180,
     resolution: pathresolution,
-    maketangent: true,
+    maketangent: true
   });
   path = path.concat(topcurvepath);
 
@@ -89,7 +89,7 @@ function main(params) {
     startangle: 0,
     endangle: -180-gravityangle,
     resolution: pathresolution,
-    maketangent: true,
+    maketangent: true
   });
   path = path.concat(bottomcurvepath);
   
