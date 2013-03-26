@@ -3,24 +3,24 @@
 // Here we define the user editable parameters: 
 function getParameterDefinitions() {
   return [
-    { name: 'topdiameter', caption: 'Inner diameter of top hook:', type: 'float', default: 16.7 },
-    { name: 'clampfactor', caption: 'Snugness of top hook (0 - 100):', type: 'float', default: 25 },
-    { name: 'cliplength', caption: 'Top hook clip length:', type: 'float', default: 5 },
-    { name: 'bottomdiameter', caption: 'Inner diameter of bottom hook:', type: 'float', default: 20 },
-    { name: 'height', caption: 'Outer height of the hook:', type: 'float', default: 60 },
-    { name: 'thickness', caption: 'Thickness:', type: 'float', default: 5 },
-    { name: 'width', caption: 'Width:', type: 'float', default: 7 },
+    { name: 'topdiameter', caption: 'Inner diameter of top hook:', type: 'float', initial: 16.7 },
+    { name: 'clampfactor', caption: 'Snugness of top hook (0 - 100):', type: 'float', initial: 25 },
+    { name: 'cliplength', caption: 'Top hook clip length:', type: 'float', initial: 5 },
+    { name: 'bottomdiameter', caption: 'Inner diameter of bottom hook:', type: 'float', initial: 20 },
+    { name: 'height', caption: 'Outer height of the hook:', type: 'float', initial: 60 },
+    { name: 'thickness', caption: 'Thickness:', type: 'float', initial: 5 },
+    { name: 'width', caption: 'Width:', type: 'float', initial: 7 },
     {
       name: 'rounded', 
       type: 'choice',
       caption: 'Rounded edges',
       values: [0, 1],
       captions: ["No", "Yes (rendering will take a long time!)"], 
-      default: 0
+      initial: 0
     },    
-    { name: 'roundness', caption: 'Diameter of rounded edges (if enabled):', type: 'float', default: 1.5 },
-    { name: 'buildwidth', caption: 'Width (x) of build area (to print multiple copies):', type: 'float', default: 90 },
-    { name: 'builddepth', caption: 'Depth (y) of build area (to print multiple copies):', type: 'float', default: 90 },    
+    { name: 'roundness', caption: 'Diameter of rounded edges (if enabled):', type: 'float', initial: 1.5 },
+    { name: 'buildwidth', caption: 'Width (x) of build area (to print multiple copies):', type: 'float', initial: 90 },
+    { name: 'builddepth', caption: 'Depth (y) of build area (to print multiple copies):', type: 'float', initial: 90 }    
   ];
 }
 
