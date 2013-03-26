@@ -32,7 +32,6 @@ global.lib = '/usr/local/lib/openjscad/';    // for now hard-coded
 
 //if (!fs.existsSync(global.lib))            // requires node 0.10.1 
 //   global.lib = './';
-
 if(!fs.statSync(global.lib).isDirectory())  // same but works with 0.6.1+
    global.lib = './';
 
