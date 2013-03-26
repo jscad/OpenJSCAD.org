@@ -11,26 +11,25 @@ function getParameterDefinitions() {
       caption: 'Quality',
       values: [0, 1],
       captions: ["Draft","High"], 
-      default: 0
+      initial: 0
     },    
   
-    { name: 'diameter1', caption: 'Axis diameter of first coupler:', type: 'float', default: 12.2 },
-    { name: 'shaftlength1', caption: 'Axis depth of first coupler:', type: 'float', default: 15 },
-    { name: 'outerlength1', caption: 'Outer length of first coupler:', type: 'float', default: 20 },
-    { name: 'nutradius1', caption: 'Nut radius of first coupler:', type: 'float', default: 4.65 },
-    { name: 'nutthickness1', caption: 'Nut thickness of first coupler:', type: 'float', default: 4.2},
-    { name: 'screwdiameter1', caption: 'Screw diameter of first coupler:', type: 'float', default: 5},
-    { name: 'diameter2', caption: 'Axis diameter of second coupler:', type: 'float', default: 9.5 },
-    { name: 'shaftlength2', caption: 'Axis depth of second coupler:', type: 'float', default: 10 },
-    { name: 'outerlength2', caption: 'Outer length of second coupler:', type: 'float', default: 15 },
-    { name: 'nutradius2', caption: 'Nut radius of second coupler:', type: 'float', default: 3.2 },
-    { name: 'nutthickness2', caption: 'Nut thickness of second coupler:', type: 'float', default: 2.6},
-    { name: 'screwdiameter2', caption: 'Screw diameter of second coupler:', type: 'float', default: 3},
-    { name: 'outerdiameter', caption: 'Outer diameter:', type: 'float', default: 30 },
-    { name: 'spiderlength', caption: 'Spider thickness:', type: 'float', default: 12 },
-    { name: 'spidermargin', caption: 'Spider tolerance:', type: 'float', default: 0 },
-    { name: 'numteeth', caption: 'Num teeth per coupler:', type: 'int', default: 2},
-    
+    { name: 'diameter1', caption: 'Axis diameter of first coupler:', type: 'float', initial: 12.2 },
+    { name: 'shaftlength1', caption: 'Axis depth of first coupler:', type: 'float', initial: 15 },
+    { name: 'outerlength1', caption: 'Outer length of first coupler:', type: 'float', initial: 20 },
+    { name: 'nutradius1', caption: 'Nut radius of first coupler:', type: 'float', initial: 4.65 },
+    { name: 'nutthickness1', caption: 'Nut thickness of first coupler:', type: 'float', initial: 4.2},
+    { name: 'screwdiameter1', caption: 'Screw diameter of first coupler:', type: 'float', initial: 5},
+    { name: 'diameter2', caption: 'Axis diameter of second coupler:', type: 'float', initial: 9.5 },
+    { name: 'shaftlength2', caption: 'Axis depth of second coupler:', type: 'float', initial: 10 },
+    { name: 'outerlength2', caption: 'Outer length of second coupler:', type: 'float', initial: 15 },
+    { name: 'nutradius2', caption: 'Nut radius of second coupler:', type: 'float', initial: 3.2 },
+    { name: 'nutthickness2', caption: 'Nut thickness of second coupler:', type: 'float', initial: 2.6},
+    { name: 'screwdiameter2', caption: 'Screw diameter of second coupler:', type: 'float', initial: 3},
+    { name: 'outerdiameter', caption: 'Outer diameter:', type: 'float', initial: 30 },
+    { name: 'spiderlength', caption: 'Spider thickness:', type: 'float', initial: 12 },
+    { name: 'spidermargin', caption: 'Spider tolerance:', type: 'float', initial: 0 },
+    { name: 'numteeth', caption: 'Num teeth per coupler:', type: 'int', initial: 2}
   ];
 }
 

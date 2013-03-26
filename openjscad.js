@@ -1213,6 +1213,8 @@ OpenJsCad.Processor.prototype = {
         {
           control.value = paramdef.default;
         }
+        else if('initial' in paramdef)
+          control.value = paramdef.initial;
         else
         {
           if( (type == "int") || (type == "float") )
@@ -1256,6 +1258,13 @@ OpenJsCad.Processor.prototype = {
           if('default' in paramdef)
           {
             if(paramdef.default == values[valueindex])
+            {
+              selectedindex = valueindex;
+            }
+          }
+          else if('initial' in paramdef)
+          {
+            if(paramdef.initial == values[valueindex])
             {
               selectedindex = valueindex;
             }

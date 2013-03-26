@@ -13,7 +13,7 @@ function getParameterDefinitions() {
       caption: 'For Daniel or Zette:',
       values: [0, 1],
       captions: ["Dan", "Suzette"], 
-      default: 0
+      initial: 0
     }
    ];
 }

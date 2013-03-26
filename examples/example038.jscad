@@ -21,21 +21,21 @@ function getParameterDefinitions() {
       caption: 'Quality:',
       values: ["draft", "smooth", "supersmooth"],
       captions: ["Draft (no rounded corners)", "Smooth (rounded corners)", "Super smooth (rounded corners)"], 
-      default: "draft",
+      initial: "draft"
     },
     {
       name: 'iphonemargin', 
       type: 'float', 
-      default: 0.5,
-      caption: "Margin around iphone (in mm):", 
+      initial: 0.5,
+      caption: "Margin around iphone (in mm):"
     },
     {
       name: 'plugmargin', 
       type: 'float', 
-      default: 0.25,
-      caption: "Margin around dock connector (in mm):", 
+      initial: 0.25,
+      caption: "Margin around dock connector (in mm):"
     },
-    { name: 'mouseear', caption: 'Add mouse ear:', type: 'choice', values: [0, 1], default: 1, captions: ["No", "Yes"]},
+    { name: 'mouseear', caption: 'Add mouse ear:', type: 'choice', values: [0, 1], initial: 1, captions: ["No", "Yes"]}
   ];
 }
 
@@ -156,7 +156,7 @@ function main(params)
   base = base.subtract(iphone).subtract(plug).subtract(cablecutout).subtract(gapForUsbPlug);
   
   // add mouse ear:
-  if(params.mouseear != 0)
+  if(params.mouseear == 1)
   {
     var mouseearpoint = new CSG.Vector3D(0, y3, 0);
     var mouseearthickness = 0.5;
@@ -187,19 +187,19 @@ function getIphoneDockConnector(margin, resolution)
     start: [(dockConnectorSize.x-dockConnectorSize.y)/2, 0, -dockConnectorSize.z/2],
     end: [(dockConnectorSize.x-dockConnectorSize.y)/2, 0, dockConnectorSize.z/2],
     radius: dockConnectorSize.y/2,
-    resolution: resolution,
+    resolution: resolution
   }));
   dockConnector = dockConnector.union(CSG.cylinder({
     start: [-(dockConnectorSize.x-dockConnectorSize.y)/2, 0, -dockConnectorSize.z/2],
     end: [-(dockConnectorSize.x-dockConnectorSize.y)/2, 0, dockConnectorSize.z/2],
     radius: dockConnectorSize.y/2,
-    resolution: resolution,
+    resolution: resolution
   }));
   var cableTube = CSG.cylinder({
     start: [0, 0, -dockConnectorSize.z/2-5.70-margin.z],
     end: [0, 0, -dockConnectorSize.z/2],
     radius: 2.25+margin.y,
-    resolution: resolution,
+    resolution: resolution
   }); 
   dockConnector = dockConnector.union(cableTube);
   
