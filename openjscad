@@ -51,7 +51,7 @@ var args = process.argv.splice(2);
 
 var inf = args[0];
 if(inf==null||inf.length<=0||!fs.statSync(inf).isFile()) {
-   console.log("Usage: openjscad <file> [-o <stl>]");
+   console.log("Usage: openjscad <file> [-o <output>]\n\twhereas file: <name>.jscad, <name>.scad or <name>.stl\n\tand output: <name>.jscad or <name>.stl");
    process.exit(1);
 }
 
