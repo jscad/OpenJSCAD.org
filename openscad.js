@@ -652,7 +652,7 @@ function vt2jscad(v,t,n) {
       if(j++) src += ",\n\t";
       src += "["+v[i]+"]"; //.join(", ");
    }
-   src += "], triangles: [\n\t";
+   src += "],\n\ttriangles: [\n\t";
    for(var i=0,j=0; i<t.length; i++) {
       if(j++) src += ",\n\t";
       src += "["+t[i]+"]"; //.join(', ');
