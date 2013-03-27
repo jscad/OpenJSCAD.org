@@ -647,15 +647,15 @@ function parseAsciiSTL(stl,fn) {
 
 function vt2jscad(v,t,n) {
    var src = '', j;
-   src += "polyhedron({ points: [";
+   src += "polyhedron({ points: [\n\t";
    for(var i=0,j=0; i<v.length; i++) {
-      if(j++) src += ",  ";
-      src += "\t["+v[i]+"]\n"; //.join(", ");
+      if(j++) src += ",\n\t";
+      src += "["+v[i]+"]"; //.join(", ");
    }
-   src += "], triangles: [";
+   src += "], triangles: [\n\t";
    for(var i=0,j=0; i<t.length; i++) {
-      if(j++) src += ",  ";
-      src += "\t["+t[i]+"]\n"; //.join(', ');
+      if(j++) src += ",\n\t";
+      src += "["+t[i]+"]"; //.join(', ');
    }
    src += "] })\n";
    return src;
