@@ -314,20 +314,18 @@ function rotate_extrude(p,o) {
          var p = [];
          var m;
 
-         p[0] = new CSG.Vector3D(o.sides[j].vertex0.pos.x,0,o.sides[j].vertex0.pos.y);
          m = new CSG.Matrix4x4.rotationZ(i/fn*360);
+         p[0] = new CSG.Vector3D(o.sides[j].vertex0.pos.x,0,o.sides[j].vertex0.pos.y);
          p[0] = m.rightMultiply1x3Vector(p[0]);
          
          p[1] = new CSG.Vector3D(o.sides[j].vertex1.pos.x,0,o.sides[j].vertex1.pos.y);
-         m = new CSG.Matrix4x4.rotationZ(i/fn*360);
          p[1] = m.rightMultiply1x3Vector(p[1]);
          
-         p[2] = new CSG.Vector3D(o.sides[j].vertex1.pos.x,0,o.sides[j].vertex1.pos.y);
          m = new CSG.Matrix4x4.rotationZ((i+1)/fn*360);
+         p[2] = new CSG.Vector3D(o.sides[j].vertex1.pos.x,0,o.sides[j].vertex1.pos.y);
          p[2] = m.rightMultiply1x3Vector(p[2]);
          
          p[3] = new CSG.Vector3D(o.sides[j].vertex0.pos.x,0,o.sides[j].vertex0.pos.y);
-         m = new CSG.Matrix4x4.rotationZ((i+1)/fn*360);
          p[3] = m.rightMultiply1x3Vector(p[3]);
 
          var p1 = new CSG.Polygon([
