@@ -9,6 +9,6 @@ function main() {
       // object-oriented
       new CSG.Path2D([ [10,10], [-10,10], [-20,0], [-10,-10], [10,-10] ], /*closed=*/true).
          rectangularExtrude(/*w=*/1, /*h=*/3, /*res=*/10, /*round=*/true).translate([0,-15,0])
-   );
+   ).scale(3);
 }
 

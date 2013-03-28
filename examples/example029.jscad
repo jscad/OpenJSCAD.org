@@ -12,6 +12,6 @@ function main() {
       torus({ ofn:8 }).translate([10,0,0]),
       torus({ ofn:4 }).translate([20,0,0]),
       torus({ ofn:3 }).translate([30,0,0])
-   );
+   ).scale(3);
 }
 
