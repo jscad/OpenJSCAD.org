@@ -348,7 +348,14 @@ function rotate_extrude(p,o) {
 }
 
 function rectangular_extrude(pa,p) {
-   return new CSG.Path2D(pa,p.closed).rectangularExtrude(p.w,p.h,p.edges,true);
+   var w = 1, h = 1, fn = 3, closed = true;
+   if(p) {
+      if(p.w) w = p.w;
+      if(p.h) h = p.h;
+      if(p.fn) fn = p.fn;
+      if(p.closed!=='undefined') closed = p.closed;
+   }
+   return new CSG.Path2D(pa,closed).rectangularExtrude(w,h,fn);
 }
 
 // -- 2D primitives (OpenSCAD like notion)
