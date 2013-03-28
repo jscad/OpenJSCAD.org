@@ -1,3 +1,9 @@
+/*
+	Contributed By: Willliam A Adams
+	September 2011
+	Adapted for OpenJSCAD.org by Rene K. Mueller, 2013/03/20
+*/
+
 include("maths_geodesic.jscad");
 
 // Information about platonic solids 
