@@ -159,8 +159,7 @@ function torus(p) {
    //echo(ir,or,ifn,ofn,irot);
    var c = circle({r:ir,fn:ifn,center:true});
    if(irot) c = c.rotateZ(irot);
-   c = c.translate([or,0,0]);
-   return rotate_extrude({fn:ofn},c);
+   return rotate_extrude({fn:ofn},c.translate([or,0,0]));
 }
 
 function polyhedron(p) { 
