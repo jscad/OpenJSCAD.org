@@ -108,6 +108,7 @@ canvas {
    padding-left: 4px;
    padding-right: 4px;
    background: yellow;
+   border-radius: 5px;
 }
 
 #footer {
