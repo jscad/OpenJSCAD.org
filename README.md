@@ -49,12 +49,12 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 
 <h2>Todo</h2>
 <ul>
-<li> 3d primitive: <b>torus()</b>
+<li> <del>3d primitive: <b>torus()</b></del> (done)
 <li> <del>OpenSCAD .scad support for both Web-GUI and CLI</del> (done)
 <li> <b>include()</b> for Web-GUI and CLI to include libraries and modules
 <li> save from built-in editor to local
 <li> <del>complete 2D primitives and transformations</del> (done)
-<li> implementation of <del><b>linear_extrude()</b></del> (done), <del><b>rotate_extrude()</b></del> (done), parameter compatible to OpenSCAD or very close so
+<li> <del>implementation of <b>linear_extrude()</b> <b>rotate_extrude()</b>, parameter compatible to OpenSCAD</del> (done)
 <li> example of platonic solids (in progress, requires include())
 <li> simple 2D/3D text
 <li> 3d operation: hull()
