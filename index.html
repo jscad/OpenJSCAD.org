@@ -9,6 +9,7 @@ Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
+- 2013/03/28: 0.011: rotate_extrude() added, and torus()
 - 2013/03/22: 0.010: leave .scad file intact, and translate on-the-fly
 - 2013/03/20: 0.009: OpenSCAD .scad (via openscad-openjscad-translator) and .stl experimental import support integrated
 - 2013/03/15: 0.008: minor changes, parameter window smaller, css changes
@@ -89,7 +90,8 @@ var ex = [
 // { file:'example020.jscad', title: 'Bunch of Cubes' }, // too slow for demo, needs speed up
 { file:'example023.jscad', title: 'Example: Lookup()' },
 { file:'example024.jscad', title: 'Example: Expand()' },
-{ file:'example026.jscad', title: 'Example: Linear_extrude()' },
+{ file:'example026.jscad', title: 'Example: Rotate_extrude()' },
+{ file:'example028.jscad', title: 'Example: Polyhedron()' },
 { file:'example027.jscad', title: 'Example: Polyhedron()' },
 { file:'example030.jscad', title: 'Interactive Params: Servo Motor' },
 { file:'example031.jscad', title: 'Interactive Params: Gear' },
@@ -143,7 +145,7 @@ if(me=='web-online') {
 </div>
 </div>
 <div id=footer>
-OpenJSCAD.org 0.010 (2013/03/26), MIT License & GPLv2, <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">User Guide</a>, see also <a href="https://plus.google.com/115007999023701819645" target=_blank rel="publisher">Google+</a> for updates - get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">github.com</a>
+OpenJSCAD.org 0.011 (2013/03/28), MIT License & GPLv2, <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">User Guide</a>, see also <a href="https://plus.google.com/115007999023701819645" target=_blank rel="publisher">Google+</a> for updates - get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">github.com</a>
 </div>
 
 <!--script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script-->

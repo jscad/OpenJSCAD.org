@@ -1,7 +1,7 @@
 // openscad.js, a few functions to simplify coding OpenSCAD-like
 //    written by Rene K. Mueller <spiritdude@gmail.com>, License: GPLv2
 //
-// Version: 0.011
+// Version: 0.012
 //
 // Description:
 // Helping to convert OpenSCAD .scad files to OpenJSCad .jscad files with 
@@ -12,6 +12,7 @@
 //     http://openjscad.org/
 //
 // History:
+// 2013/03/28: 0.012: rotate_extrude() added
 // 2013/03/18: 0.011: import of STL (binary / ASCII), polyhedron() implemented, better blend between browser & nodejs
 // 2013/03/15: 0.010: circle(), square(), polygon() (partially) and linear_extrude() implemented
 // 2013/03/13: 0.009: adding include() for web-gui
@@ -142,6 +143,23 @@ function cylinder(p) {
       if(zoff) o = o.translate([0,0,zoff]);
    }
    return o;
+}
+
+function torus(p) {
+   var ir = 1, or = 4, ifn = 32, ofn = 32, irot = 0;
+   if(p) {
+      if(p.ir) ir = p.ir;
+      if(p.ifn) ifn = p.ifn;
+      if(p.irot) irot = p.irot;
+      if(p.or) or = p.or;
+      if(p.ofn) ofn = p.ofn;
+   }
+   if(ifn<3) ifn = 3;
+   if(ofn<3) ofn = 3;
+   echo(ir,or,ifn,ofn,irot);
+   var c = circle({r:ir,fn:ifn,center:true}).translate([or,0,0]);
+   if(irot) c = c.rotateZ(irot);
+   return rotate_extrude({fn:ofn},c);
 }
 
 function polyhedron(p) { 
@@ -281,8 +299,53 @@ function linear_extrude(p,s) {
 }
 
 function rotate_extrude(p,o) {
-   console.log("rotate_extrude() not yet implemented");
-   return o;
+   var fn = 32;
+   if(arguments.length<2) {
+      o = p;      // no switches, just an object
+   } else if(p!=='undefined') {
+      fn = p.fn;
+   }
+   if(fn<3) fn = 3;
+   var ps = [];
+   for(var i=0; i<fn; i++) {
+      // o.{x,y} -> rotate([0,0,i:0..360], obj->{o.x,0,o.y})
+      for(var j=0; j<o.sides.length; j++) {
+         // has o.sides[j].vertex{0,1}.pos (only x,y)
+         var p = [];
+         var m;
+
+         p[0] = new CSG.Vector3D(o.sides[j].vertex0.pos.x,0,o.sides[j].vertex0.pos.y);
+         m = new CSG.Matrix4x4.rotationZ(i/fn*360);
+         p[0] = m.rightMultiply1x3Vector(p[0]);
+         
+         p[1] = new CSG.Vector3D(o.sides[j].vertex1.pos.x,0,o.sides[j].vertex1.pos.y);
+         m = new CSG.Matrix4x4.rotationZ(i/fn*360);
+         p[1] = m.rightMultiply1x3Vector(p[1]);
+         
+         p[2] = new CSG.Vector3D(o.sides[j].vertex1.pos.x,0,o.sides[j].vertex1.pos.y);
+         m = new CSG.Matrix4x4.rotationZ((i+1)/fn*360);
+         p[2] = m.rightMultiply1x3Vector(p[2]);
+         
+         p[3] = new CSG.Vector3D(o.sides[j].vertex0.pos.x,0,o.sides[j].vertex0.pos.y);
+         m = new CSG.Matrix4x4.rotationZ((i+1)/fn*360);
+         p[3] = m.rightMultiply1x3Vector(p[3]);
+
+         var p1 = new CSG.Polygon([
+            new CSG.Vertex(p[0]),
+            new CSG.Vertex(p[1]),
+            new CSG.Vertex(p[2]),
+         ]);
+         var p2 = new CSG.Polygon([
+            new CSG.Vertex(p[0]),
+            new CSG.Vertex(p[2]),
+            new CSG.Vertex(p[3]),
+         ]);
+         ps.push(p1);
+         ps.push(p2);
+         //echo("i="+i,i/fn*360,"j="+j);
+      }
+   }
+   return CSG.fromPolygons(ps);
 }
 
 // -- 2D primitives (OpenSCAD like notion)
