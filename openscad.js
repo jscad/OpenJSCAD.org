@@ -12,7 +12,7 @@
 //     http://openjscad.org/
 //
 // History:
-// 2013/03/28: 0.012: rotate_extrude() added
+// 2013/03/28: 0.012: rotate_extrude() and torus() added
 // 2013/03/18: 0.011: import of STL (binary / ASCII), polyhedron() implemented, better blend between browser & nodejs
 // 2013/03/15: 0.010: circle(), square(), polygon() (partially) and linear_extrude() implemented
 // 2013/03/13: 0.009: adding include() for web-gui
