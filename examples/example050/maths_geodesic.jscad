@@ -118,6 +118,7 @@ function sph_dist(c1, c2) { return sqrt(
 function poly_sum_interior_angles(sides) { return (sides-2)*180; }
 function poly_single_interior_angle(pq) { return poly_sum_interior_angles(pq[0])/pq[0]; }
 
+
 // Calculate angular deficiency of each vertex in a platonic solid
 // p - sides
 // q - number of edges per vertex
@@ -125,7 +126,6 @@ function angular_defect(pq) { return 360 - (poly_single_interior_angle(pq)*pq[1]
 function plat_deficiency(pq) { return DEGREES(2*Cpi - pq[1]*Cpi*(1-2/pq[0])); }
 
 function plat_dihedral(pq) { return 2 * asin( cos(180/pq[1])/sin(180/pq[0])); }
-
 
 // Given a set of coordinates, return the frequency
 // Simply calculated by adding up the values of the coordinates

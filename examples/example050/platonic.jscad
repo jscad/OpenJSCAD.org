@@ -3,8 +3,7 @@
 	September 2011
 	Adapted for OpenJSCAD.org by Rene K. Mueller, 2013/03/20
 */
-
-include("maths_geodesic.jscad");
+include("maths_geodesic.scad");
 
 // Information about platonic solids 
 // This information is useful in constructing the various solids
@@ -19,11 +18,47 @@ include("maths_geodesic.jscad");
 //dodecahedron = [4, 20, 30, 12, [5,3], 116.565, "ether", "universe"];
 //icosahedron = [5, 12, 30, 20, [3,5], 138.190, "water", "water"];
 
-// A couple of useful constants
-var Cpi = 3.14159;
-var Cphi = 1.61803399;
-var Cepsilon = 0.00000001;
+// Schlafli representation for the platonic solids
+// Given this representation, we have enough information
+// to derive a number of other attributes of the solids
+var tetra_sch = [3,3];
+var hexa_sch = [4,3];
+var octa_sch = [3,4];
+var dodeca_sch = [5,3];
+var icosa_sch = [3,5];
+ 
+// Given the schlafli representation, calculate
+// the number of edges, vertices, and faces for the solid
+function plat_edges(pq) { return (2*pq[0]*pq[1])/
+	((2*pq[0])-(pq[0]*pq[1])+(2*pq[1])); }
+function plat_vertices(pq) { return (2*plat_edges(pq))/pq[1]; }
+function plat_faces(pq) { return (2*plat_edges(pq))/pq[0]; }
 
+
+// Calculate angular deficiency of each vertex in a platonic solid 
+// p - sides
+// q - number of edges per vertex
+//function angular_defect(pq) = 360 - (poly_single_interior_angle(pq)*pq[1]);
+function plat_deficiency(pq) { return DEGREES(2*Cpi - pq[1]*Cpi*(1-2/pq[0])); }
+
+function plat_dihedral(pq) { return 2 * asin( cos(180/pq[1])/sin(180/pq[0])); }
+
+function plat_circumradius(pq, a) { 
+	return (a/2)*
+	tan(Cpi/pq[1])*
+	tan(plat_dihedral(pq)/2);
+}
+
+function plat_midradius(pq, a) {
+	return (a/2)*
+	cot(Cpi/pq[0])*
+	tan(plat_dihedral(pq)/2);
+}
+
+function plat_inradius(pq,a) {
+	return a/(2*tan(DEGREES(Cpi/pq[0])))*
+	sqrt((1-cos(plat_dihedral(pq)))/(1+cos(plat_dihedral(pq))));
+}
 
 //================================================
 //	Tetrahedron
@@ -35,26 +70,32 @@ var tetra_cart = [
 	[+1, -1, -1]
 ];
 
-function tetra_unit(rad) {
-   rad = rad===undefined?1:rad;
+function tetra_unit(rad=1) {
    return [
 	sph_to_cart(sphu_from_cart(tetra_cart[0], rad)), 
 	sph_to_cart(sphu_from_cart(tetra_cart[1], rad)),
 	sph_to_cart(sphu_from_cart(tetra_cart[2], rad)),
 	sph_to_cart(sphu_from_cart(tetra_cart[3], rad)),
-	]; }
-
+	];
+}
 
 var tetrafaces = [
-	[0,3,1],
+	[0, 3, 1],
 	[0,1,2],
 	[2,1,3],
 	[0,2,3]
 ];
 
-function tetrahedron(rad) { 
-   rad = rad===undefined?1:rad;
-   return [tetra_unit(rad), tetrafaces]; };
+var tetra_edges = [
+	[0,1],
+	[0,2],
+	[0,3], 
+	[1,2], 
+	[1,3], 
+	[2,3],	
+	];
+
+function tetrahedron(rad=1) { return [tetra_unit(rad), tetrafaces, tetra_edges]; }
 
 
 //================================================
@@ -72,8 +113,7 @@ var hexa_cart = [
 	[0.5, -0.5, -0.5],
 ];
 
-function hexa_unit(rad) { 
-   rad = rad===undefined?1:rad;
+function hexa_unit(rad=1) {
    return [
 	sph_to_cart(sphu_from_cart(hexa_cart[0], rad)), 
 	sph_to_cart(sphu_from_cart(hexa_cart[1], rad)),
@@ -83,8 +123,8 @@ function hexa_unit(rad) {
 	sph_to_cart(sphu_from_cart(hexa_cart[5], rad)), 
 	sph_to_cart(sphu_from_cart(hexa_cart[6], rad)),
 	sph_to_cart(sphu_from_cart(hexa_cart[7], rad)),
-	]; }
-
+	];
+}
 
 // enumerate the faces of a cube
 // vertex order is clockwise winding
@@ -97,9 +137,27 @@ var hexafaces = [
 	[4,5,6,7],	// bottom
 ];
 
-function hexahedron(rad) { 
-   rad = rad===undefined?1:rad;
-return [hexa_unit(rad), hexafaces]; }
+var hexa_edges = [
+	[0,1],
+	[0,3], 
+	[0,4], 
+	[1,2],
+	[1,5],
+	[2,3],
+	[2,6], 
+	[3,7], 
+	[4,5], 	
+	[4,7], 
+	[5,4],
+	[5,6], 
+	[6,7], 
+	];
+
+
+function hexahedron(rad) {
+  rad = rad!=='undefined'?rad:1;
+  return [hexa_unit(rad), hexafaces, hexa_edges]; 
+}
 
 
 //================================================
@@ -116,7 +174,7 @@ var octa_cart = [
 ];
 
 function octa_unit(rad) { 
-   rad = rad===undefined?1:rad;
+   rad = rad!=='undefined'?rad:1;
    return [
 	sph_to_cart(sphu_from_cart(octa_cart[0], rad)), 
 	sph_to_cart(sphu_from_cart(octa_cart[1], rad)),
@@ -124,7 +182,8 @@ function octa_unit(rad) {
 	sph_to_cart(sphu_from_cart(octa_cart[3], rad)),
 	sph_to_cart(sphu_from_cart(octa_cart[4], rad)), 
 	sph_to_cart(sphu_from_cart(octa_cart[5], rad)), 
-	]; }
+	];
+}
 
 var octafaces = [
 	[4,2,0],
@@ -137,9 +196,25 @@ var octafaces = [
 	[5,2,1]
 	];
 
-function octahedron(rad) { 
-   rad = rad===undefined?1:rad;
-   return [octa_unit(rad), octafaces]; }
+var octa_edges = [
+	[0,2], 
+	[0,3],
+	[0,4],
+	[0,5],
+	[1,2],
+	[1,3],
+	[1,4],
+	[1,5],
+	[2,4], 
+	[2,5],
+	[3,4],
+	[3,5],
+	];
+
+function octahedron(rad) {
+   rad = rad!=='undefined'?rad:1;
+   return [octa_unit(rad), octafaces, octa_edges];
+}
 
 //================================================
 //	Dodecahedron
@@ -176,8 +251,8 @@ var dodeca_cart = [
 	[-Cphi, 0, -1/Cphi],		// 4, 19
 ];
 
-function dodeca_unit(rad) { 
-   rad = rad===undefined?1:rad;
+function dodeca_unit(rad) {
+   rad = rad!=='undefined'?rad:1;
    return [
 	sph_to_cart(sphu_from_cart(dodeca_cart[0], rad)), 
 	sph_to_cart(sphu_from_cart(dodeca_cart[1], rad)),
@@ -199,28 +274,123 @@ function dodeca_unit(rad) {
 	sph_to_cart(sphu_from_cart(dodeca_cart[17], rad)),
 	sph_to_cart(sphu_from_cart(dodeca_cart[18], rad)),
 	sph_to_cart(sphu_from_cart(dodeca_cart[19], rad)), 
-	]; }
+	];
+}
 
 
-
-var dodecafaces=[ 
-	[1,9,8,0,17],
-	[9,1,14,15,2],
-	[9,2,16,3,8],
-	[8,3,12,13,0],
-	[0,13,4,18,17],
-	[1,17,18,7,14],
-	[15,14,7,10,6],
-	[2,15,6,19,16],
-	[16,19,5,12,3],
-	[12,5,11,4,13],
-	[18,4,11,10,7],
-	[19,6,10,11,5]
+// These are the pentagon faces
+// but CGAL has a problem rendering if things are 
+// not EXACTLY coplanar
+// so use the triangle faces instead
+//dodeca_faces=[ 
+//	[1,9,8,0,17],
+//	[9,1,14,15,2],
+//	[9,2,16,3,8],
+//	[8,3,12,13,0],
+//	[0,13,4,18,17],
+//	[1,17,18,7,14],
+//	[15,14,7,10,6],
+//	[2,15,6,19,16],
+//	[16,19,5,12,3],
+//	[12,5,11,4,13],
+//	[18,4,11,10,7],
+//	[19,6,10,11,5]
+//	];
+var dodeca_faces = [
+	[1,9,8], 
+	[1,8,0],
+	[1,0,17],
+	
+	[9,1,14],
+	[9,14,15],
+	[9,15,2],
+	
+	[9,2,16],
+	[9,16,3],
+	[9,3,8],
+	
+	[8,3,12],
+	[8,12,13],
+	[8,13,0],
+	
+	[0,13,4],
+	[0,4,18],
+	[0,18,17],
+	
+	[1,17,18],
+	[1,18,7],
+	[1,7,14],
+	
+	[15,14,7],
+	[15,7,10],
+	[15,10,6],
+	
+	[2,15,6],
+	[2,6,19],
+	[2,19,16],
+	
+	[16,19,5],
+	[16,5,12],
+	[16,12,3],
+	
+	[12,5,11],
+	[12,11,4],
+	[12,4,13],
+	
+	[18,4,11],
+	[18,11,10],
+	[18,10,7],
+	
+	[19,6,10],
+	[19,10,11],
+	[19,11,5]
 	];
 
-function dodecahedron(rad) { 
-   rad = rad===undefined?1:rad;
-   return [dodeca_unit(rad), dodecafaces]; }
+var dodeca_edges=[
+	[0,8],
+	[0,13],
+	[0,17],
+
+	[1,9],
+	[1,14],
+	[1,17],
+
+	[2,9],
+	[2,15],
+	[2,16],
+
+	[3,8],
+	[3,12],
+	[3,16],
+
+	[4,11],
+	[4,13],
+	[4,18],
+
+	[5,11],
+	[5,12],
+	[5,19],
+
+	[6,10],
+	[6,15],
+	[6,19],
+
+	[7,10],
+	[7,14],
+	[7,18],
+
+	[8,9],
+	[10,11],
+	[12,13],
+	[14,15],
+	[16,19],
+	[17,18],
+	];
+
+function dodecahedron(rad) {
+   rad = rad!=='undefined'?rad:1;
+   return [dodeca_unit(rad), dodeca_faces, dodeca_edges];
+}
 
 //================================================
 //	Icosahedron
@@ -247,8 +417,26 @@ var icosa_cart = [
 	[-1, +Cphi, 0]	// 11
 	];
 
-function icosa_unit(rad) { 
-   rad = rad===undefined?1:rad;
+function icosa_sph(rad) {
+   rad = rad!=='undefined'?rad:1;
+   return [
+	sphu_from_cart(icosa_cart[0], rad), 
+	sphu_from_cart(icosa_cart[1], rad),
+	sphu_from_cart(icosa_cart[2], rad),
+	sphu_from_cart(icosa_cart[3], rad),
+	sphu_from_cart(icosa_cart[4], rad), 
+	sphu_from_cart(icosa_cart[5], rad), 
+	sphu_from_cart(icosa_cart[6], rad),
+	sphu_from_cart(icosa_cart[7], rad),
+	sphu_from_cart(icosa_cart[8], rad),
+	sphu_from_cart(icosa_cart[9], rad), 
+	sphu_from_cart(icosa_cart[10], rad), 
+	sphu_from_cart(icosa_cart[11], rad),
+	];
+}
+
+function icosa_unit(rad) {
+   rad = rad!=='undefined'?rad:1;
    return [
 	sph_to_cart(sphu_from_cart(icosa_cart[0], rad)), 
 	sph_to_cart(sphu_from_cart(icosa_cart[1], rad)),
@@ -262,9 +450,10 @@ function icosa_unit(rad) {
 	sph_to_cart(sphu_from_cart(icosa_cart[9], rad)), 
 	sph_to_cart(sphu_from_cart(icosa_cart[10], rad)), 
 	sph_to_cart(sphu_from_cart(icosa_cart[11], rad)),
-	]; }
+	];
+}
 
-var icosafaces = [ 
+var icosa_faces = [ 
 	[3,0,4],
 	[3,4,9],
 	[3,9,10],
@@ -287,7 +476,41 @@ var icosafaces = [
 	[2,1,6]
 	];
 
-function icosahedron(rad) { 
-   rad = rad===undefined?1:rad;
-   return [icosa_unit(rad), icosafaces]; }
+var icosa_edges = [
+	[0,3],
+	[0,4],
+	[0,7],
+	[0,8],
+	[0,11],
+	[1,5],
+	[1,8],
+	[1,11],
+	[1,6],
+	[1,2],
+	[2,5],
+	[2,6],
+	[2,9],
+	[2,10],
+	[3,4],
+	[3,9],
+	[3,10],
+	[3,7],
+	[4,5],
+	[4,8],
+	[4,9],
+	[5,8],
+	[5,9],
+	[6,7],		
+	[6,10],
+	[6,11],
+	[7,10],
+	[7,11],
+	[8,11],
+	[9,10],
+	];
+
+function icosahedron(rad) {
+   rad = rad!=='undefined'?rad:1;
+   return [icosa_unit(rad), icosa_faces, icosa_edges];
+}
 

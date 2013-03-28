@@ -63,17 +63,9 @@ function deg_to_dec(d) = d[0] + d[1]/60 + d[2]/60/60;
 function sph(long, lat, rad=1) = [long, lat, rad];
 
 // Convert spherical to cartesian
-//function sph_to_cart(s) = [
-//	clean(s[2]*sin(s[1])*cos(s[0])),  
-//	clean(s[2]*sin(s[1])*sin(s[0])),
-//	clean(s[2]*cos(s[1]))
-//	];
-
 function sph_to_cart(s) = [
 	clean(s[2]*sin(s[1])*cos(s[0])),  
-
 	clean(s[2]*sin(s[1])*sin(s[0])),
-
 	clean(s[2]*cos(s[1]))
 	];
 
@@ -117,13 +109,6 @@ function sph_dist(c1, c2) = sqrt(
 function poly_sum_interior_angles(sides) = (sides-2)*180;
 function poly_single_interior_angle(pq) = poly_sum_interior_angles(pq[0])/pq[0];
 
-// Calculate angular deficiency of each vertex in a platonic solid
-// p - sides
-// q - number of edges per vertex
-function angular_defect(pq) = 360 - (poly_single_interior_angle(pq)*pq[1]);
-function plat_deficiency(pq) = DEGREES(2*Cpi - pq[1]*Cpi*(1-2/pq[0]));
-
-function plat_dihedral(pq) = 2 * asin( cos(180/pq[1])/sin(180/pq[0]));
 
 
 // Given a set of coordinates, return the frequency
