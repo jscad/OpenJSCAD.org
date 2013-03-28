@@ -156,7 +156,7 @@ function torus(p) {
    }
    if(ifn<3) ifn = 3;
    if(ofn<3) ofn = 3;
-   echo(ir,or,ifn,ofn,irot);
+   //echo(ir,or,ifn,ofn,irot);
    var c = circle({r:ir,fn:ifn,center:true}).translate([or,0,0]);
    if(irot) c = c.rotateZ(irot);
    return rotate_extrude({fn:ofn},c);
