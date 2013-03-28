@@ -332,14 +332,15 @@ function rotate_extrude(p,o) {
             new CSG.Vertex(p[0]),
             new CSG.Vertex(p[1]),
             new CSG.Vertex(p[2]),
+            new CSG.Vertex(p[3]),      // we make a square polygon (instead of 2 triangles)
          ]);
-         var p2 = new CSG.Polygon([
-            new CSG.Vertex(p[0]),
-            new CSG.Vertex(p[2]),
-            new CSG.Vertex(p[3]),
-         ]);
+         //var p2 = new CSG.Polygon([
+         //   new CSG.Vertex(p[0]),
+         //   new CSG.Vertex(p[2]),
+         //   new CSG.Vertex(p[3]),
+         //]);
          ps.push(p1);
-         ps.push(p2);
+         //ps.push(p2);
          //echo("i="+i,i/fn*360,"j="+j);
       }
    }
