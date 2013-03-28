@@ -1,21 +1,14 @@
-// Example 025: Dodecahedron
-
-function dodecahedron(h) {  // from http://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Commented_Example_Projects
-   var c = cube({ size: [2,2,1], center: true });
-
-   for(var i=0; i<=4; i++) { // loop i from 0 to 4, and intersect results
-      // make a cube, rotate it 116.565 degrees around the X axis,
-      // then 72*i around the Z axis
-      c = c.intersect(
-         cube({size: [2,2,1], center: true}).
-         rotateX(116.565).
-         rotateZ(72*i)
-      );
-   }
-   return scale([h,h,h],c); // scale by height parameter
-}
+// Example 025: rectangular_extrude()
 
 function main() {
-   return dodecahedron(30);
+   return union( 
+      // openscade like
+      rectangular_extrude([ [0,0], [10,0], [0,10] ], {w: 1, h: 3, edges: 3, closed: false}),
+      rectangular_extrude([ [0,0], [10,0], [0,10] ], {w: 1, h: 3, edges: 5, closed: true}).translate([0,15,0]),
+
+      // object-oriented
+      new CSG.Path2D([ [10,10], [-10,10], [-10,-10], [10,-10] ], true).
+         rectangularExtrude(1, 3, 10, true).translate([0,-15,0])
+   );
 }
 

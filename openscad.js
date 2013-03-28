@@ -347,6 +347,10 @@ function rotate_extrude(p,o) {
    return CSG.fromPolygons(ps);
 }
 
+function rectangular_extrude(pa,p) {
+   return new CSG.Path2D(pa,p.closed).rectangularExtrude(p.w,p.h,p.edges,true);
+}
+
 // -- 2D primitives (OpenSCAD like notion)
 
 function square() {
