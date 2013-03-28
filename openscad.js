@@ -352,8 +352,8 @@ function rotate_extrude(p,o) {
 function square() {
    var v = [1,1], off; var a = arguments, p = a[0];
    if(p&&!p.size) v = [p,p];
-   if(p.length) v = a, p = a[1];
-   if(p&&p.size) v = p.size;
+   if(p&&p.length) v = a[0], p = a[1];
+   if(p&&p.size&&p.size.length) v = p.size;
 
    off = [v[0]/2,v[1]/2];
    if(p&&p.center==true) off = [0,0];
