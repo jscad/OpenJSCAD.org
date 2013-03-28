@@ -146,20 +146,19 @@ function cylinder(p) {
 }
 
 function torus(p) {
-   var ir = 1, or = 4, ifn = 32, ofn = 32, irot = 0;
+   var ri = 1, ro = 4, fni = 16, fno = 32, roti = 0;
    if(p) {
-      if(p.ir) ir = p.ir;
-      if(p.ifn) ifn = p.ifn;
-      if(p.irot) irot = p.irot;
-      if(p.or) or = p.or;
-      if(p.ofn) ofn = p.ofn;
+      if(p.ri) ri = p.ri;
+      if(p.fni) fni = p.fni;
+      if(p.roti) roti = p.roti;
+      if(p.ro) ro = p.ro;
+      if(p.fno) fno = p.fno;
    }
-   if(ifn<3) ifn = 3;
-   if(ofn<3) ofn = 3;
-   //echo(ir,or,ifn,ofn,irot);
-   var c = circle({r:ir,fn:ifn,center:true});
-   if(irot) c = c.rotateZ(irot);
-   return rotate_extrude({fn:ofn},c.translate([or,0,0]));
+   if(fni<3) fni = 3;
+   if(fno<3) fno = 3;
+   var c = circle({r:ri,fn:fni,center:true});
+   if(roti) c = c.rotateZ(roti);
+   return rotate_extrude({fn:fno},c.translate([ro,0,0]));
 }
 
 function polyhedron(p) { 
