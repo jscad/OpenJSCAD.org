@@ -1,7 +1,7 @@
 <img src="doc/logo.png" width=256 align=right>
 <h1>OpenJSCAD.org</h1>
 
-<b>Version 0.010</b> (ALPHA)
+<b>Version 0.011</b> (ALPHA)
 
 <b>OpenJSCAD.org</b> is a more up-to-date <a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a> frontend where you can edit .jscad files either locally or online via JS editor (built-in).
 A few functions are available to make the transition from <a href="http://openscad.org/">OpenSCAD</a> to OpenJSCAD easier (<a href="https://github.com/Spiritdude/OpenSCAD.jscad">OpenSCAD.jscad</a> built-in),
@@ -35,6 +35,7 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 
 <h2>History</h2>
 <ul>
+<li>2013/03/28: 0.011: added support for rotate_extrude() and torus()
 <li>2013/03/22: 0.010: leave .scad file intact, and translate on-the-fly
 <li>2013/03/20: 0.009: OpenSCAD .scad syntax support included via <a href="https://github.com/garyhodgson/openscad-openjscad-translator">openscad-openjscad-translator</a> module, on web and cli; and experimental .stl import support (binary & ascii)
 <li>2013/03/15: 0.008: circle(), square(), polygon() partially and linear_extrude() implemented (openscad-like)
@@ -53,7 +54,7 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 <li> <b>include()</b> for Web-GUI and CLI to include libraries and modules
 <li> save from built-in editor to local
 <li> <del>complete 2D primitives and transformations</del> (done)
-<li> implementation of <del><b>linear_extrude()</b></del> (done), <b>rotate_extrude()</b> (parameter compatible to OpenSCAD or very close so)
+<li> implementation of <del><b>linear_extrude()</b></del> (done), <del><b>rotate_extrude()</b></del> (done), parameter compatible to OpenSCAD or very close so
 <li> example of platonic solids (in progress, requires include())
 <li> simple 2D/3D text
 <li> 3d operation: hull()
