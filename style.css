@@ -102,6 +102,14 @@ canvas {
    color: rgba(80,80,80,0.6);
 }
 
+#hint .newExample {
+   color: black;
+   padding: 0px;
+   padding-left: 4px;
+   padding-right: 4px;
+   background: yellow;
+}
+
 #footer {
    font-size: 0.7em;
    text-align: left;

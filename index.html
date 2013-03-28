@@ -90,11 +90,11 @@ var ex = [
 // { file:'example020.jscad', title: 'Bunch of Cubes' }, // too slow for demo, needs speed up
 { file:'example023.jscad', title: 'Example: Lookup()' },
 { file:'example024.jscad', title: 'Example: Expand()' },
-{ file:'example025.jscad', title: 'Example: Rectangular_extrude()' },
+{ file:'example025.jscad', title: 'Example: Rectangular_extrude()', new: true },
 { file:'example026.jscad', title: 'Example: Linear_extrude()' },
-{ file:'example028.jscad', title: 'Example: Rotate_extrude()' },
+{ file:'example028.jscad', title: 'Example: Rotate_extrude()', new: true },
 { file:'example027.jscad', title: 'Example: Polyhedron()' },
-{ file:'example029.jscad', title: 'Example: Torus()' },
+{ file:'example029.jscad', title: 'Example: Torus()', new: true },
 { file:'example030.jscad', title: 'Interactive Params: Servo Motor' },
 { file:'example031.jscad', title: 'Interactive Params: Gear' },
 { file:'example032.jscad', title: 'Interactive Params: S Hook' },
@@ -117,6 +117,7 @@ if(me=='web-online') {
    for(var i=0; i<ex.length; i++) {
       document.write("<li><a href=# onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n");
       if(ex[i].type) document.write(" <span class=type>("+ex[i].type+")</span></a>");
+      if(ex[i].new) document.write(" <span class=newExample>new</span></a>");
       //document.write("<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n");
    }
 } else {
