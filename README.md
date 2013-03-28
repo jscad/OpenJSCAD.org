@@ -35,7 +35,7 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 
 <h2>History</h2>
 <ul>
-<li>2013/03/28: 0.011: added support for rotate_extrude() and torus()
+<li>2013/03/28: 0.011: added support for rectangular_extrude(), rotate_extrude() and torus()
 <li>2013/03/22: 0.010: leave .scad file intact, and translate on-the-fly
 <li>2013/03/20: 0.009: OpenSCAD .scad syntax support included via <a href="https://github.com/garyhodgson/openscad-openjscad-translator">openscad-openjscad-translator</a> module, on web and cli; and experimental .stl import support (binary & ascii)
 <li>2013/03/15: 0.008: circle(), square(), polygon() partially and linear_extrude() implemented (openscad-like)
