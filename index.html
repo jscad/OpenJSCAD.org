@@ -157,7 +157,7 @@ OpenJSCAD.org 0.011 (2013/03/28), MIT License & GPLv2, <a target=_blank href="ht
 <script id=stlWorker type="javascript/worker">
 // adapted from http://www.html5rocks.com/en/tutorials/workers/basics/
 
-self.onmessage = function(e) {      // Worker to import STL as it can take quite some while for 1MB+ large STLs
+self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take quite some while for 1MB+ large STLs
    var data = e.data; // JSON.parse(e.data);
    if(data.url) {     // RANT: why do something simple, when it can be done complicate: Workers & importScripts() (guys!!)
       var url = data.url;
@@ -166,7 +166,13 @@ self.onmessage = function(e) {      // Worker to import STL as it can take quite
          url = url.substring(0,index);
       }
       importScripts(url+'csg.js',url+'openjscad.js',url+'openscad.js');
-      self.postMessage({ source: parseSTL(data.stlSource,data.filename), filename: data.filename });
+      var src;
+      if(data.filename.match(/\.obj$/i)) {
+         src = parseOBJ(data.source,data.filename);
+      } else {
+         src = parseSTL(data.source,data.filename);
+      }
+      self.postMessage({ source: src, filename: data.filename });
    }
 };
 </script>
@@ -243,10 +249,10 @@ function fetchExample(fn) {
             putSourceInEditor(editorSource,fn);
             gProcessor.setJsCad(source,fn);
             
-         } else if(fn.match(/\.stl$/i)) {
+         } else if(fn.match(/\.stl$/i)||fn.match(/\.obj$/i)) {
             status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
             if(1) {
-               // import STL via Worker() (async computation) as it takes quite some time
+               // import STL/OBJ via Worker() (async computation) as it takes quite some time
                // RANT: the whole Blob() & Worker() is anything but a clean concept, mess over mess:
                //       for example, to pass a DOM variable to worker via postMessage may create a circular reference
                //       as the data is serialized, e.g. you cannot pass document and in the Worker access document.window.
@@ -260,12 +266,18 @@ function fetchExample(fn) {
                   putSourceInEditor(data.source,data.filename);
                   gProcessor.setJsCad(data.source,data.filename);
                };
-               worker.postMessage({url: document.location.href, stlSource: source, filename: fn }); // start worker
+               worker.postMessage({url: document.location.href, source: source, filename: fn }); // start worker
                asyncComputation = true;
+
             } else {       // async (disabled)
                status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-               editorSource = source = parseSTL(source,fn);   
-               putSourceInEditor(source,fn);
+               if(fn.match(/\.obj$/i)) {
+                  editorSource = source = parseOBJ(source,fn);   
+                  putSourceInEditor(source,fn);
+               } else {
+                  editorSource = source = parseSTL(source,fn);   
+                  putSourceInEditor(source,fn);
+               }
             }
             if(!asyncComputation) {
                gProcessor.setJsCad(source,fn);
@@ -328,6 +340,8 @@ function handleFileSelect(evt) {
     gCurrentFile.lang = 'scad';
   } else if(file.name.match(/\.stl$/i)) {
     gCurrentFile.lang = 'stl';
+  } else if(file.name.match(/\.obj$/i)) {
+    gCurrentFile.lang = 'obj';
   } else {
     throw new Error("Please drop a file with .jscad, .scad or .stl extension");
   }
@@ -403,7 +417,7 @@ function parseFile(debugging, onlyifchanged) {
                }
                editor.getSession().setMode("ace/mode/scad");  
                
-            } else if(gCurrentFile.lang=='stl') {
+            } else if(gCurrentFile.lang=='stl'||gCurrentFile.lang=='obj') {
                status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
                if(1) {     // -- if you debug the STL parsing, change it to 0 so echo() works, otherwise in workers
                            //    echo() is not working.. 
@@ -421,7 +435,7 @@ function parseFile(debugging, onlyifchanged) {
                         // echo("STL worker",data);
                      }
                   };
-                  worker.postMessage({url: document.location.href, stlSource: source, filename: fn });
+                  worker.postMessage({url: document.location.href, source: source, filename: fn });
                   asyncComputation = true;
                } else {
                   editorSource = source = parseSTL(source,fn);

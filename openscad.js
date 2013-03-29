@@ -164,17 +164,20 @@ function torus(p) {
 function polyhedron(p) { 
    //console.log("polyhedron() not yet implemented"); 
    var pgs = [];
-   for(var i=0; i<p.triangles.length; i++) {
-      var pp = []; //new Array();
-      pp[0] = p.points[p.triangles[i][0]];
-      pp[1] = p.points[p.triangles[i][1]];
-      pp[2] = p.points[p.triangles[i][2]];
-      // --- we reverse order to examples of OpenSCAD work
-      pgs.push(new CSG.Polygon([
-         new CSG.Vertex(new CSG.Vector3D(pp[2][0],pp[2][1],pp[2][2])),
-         new CSG.Vertex(new CSG.Vector3D(pp[1][0],pp[1][1],pp[1][2])),
-         new CSG.Vertex(new CSG.Vector3D(pp[0][0],pp[0][1],pp[0][2]))
-      ]));
+   var ref = p.triangles||p.polygons;
+   
+   for(var i=0; i<ref.length; i++) {
+      var pp = []; 
+      for(var j=0; j<ref[i].length; j++) {
+         pp[j] = p.points[ref[i][j]];
+      }
+
+      var v = [];
+      for(j=ref[i].length-1; j>=0; j--) {       // --- we reverse order for examples of OpenSCAD work
+      //for(var j=0; j<ref[i].length-1; j++) {
+         v.push(new CSG.Vertex(new CSG.Vector3D(pp[j][0],pp[j][1],pp[j][2])));
+      }
+      pgs.push(new CSG.Polygon(v));
    }
    var r = CSG.fromPolygons(pgs);
    //r.properties.polyhedron = new CSG.Properties();
@@ -522,9 +525,52 @@ function status(s) {
 
 // --------------------------------------------------------------------------------------------
 
+function parseOBJ(obj,fn) {
+   var l = obj.split(/\n/);
+   var v = [], f = [];
+   var tc = 0;
+   
+   for(var i=0; i<l.length; i++) {
+      var s = l[i];
+      var a = s.split(/\s+/);
+
+      if(a[0]=='v') {
+         v.push([a[1],a[2],a[3]]);
+         
+      } else if(a[0]=='f') {
+         var fc = [];
+         var skip = 0;
+
+         for(var j=1; j<a.length; j++) {
+            var c = a[j];            
+            c.replace(/\/.*$/,'');     // -- if coord# is '840/840' -> 840
+            c--;                       // -- starts with 1, but we start with 0
+            if(c>=v.length) 
+               skip++;
+            if(skip==0)
+               fc.push(c);
+         }
+         if(skip==0) 
+            f.push(fc);
+
+      } else {
+         ;     // vn vt and all others disregarded
+      }
+   }
+   var src = "// OpenJSCAD.org: obj importer '"+fn+"'\n\n";
+   //if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
+   src += "// objects: 1\n// object #1: polygons: "+f.length+"\n";
+   src += "function main() { return "; 
+   src += vt2jscad(v,f);
+   src += "; }";
+   return src;
+}
+
 // STL function from http://jsfiddle.net/Riham/yzvGD/35/ 
 // CC BY-SA by Riham
 // changes by Rene K. Mueller <spiritdude@gmail.com>
+//
+// 2013/03/28: lot of rework and debugging included, and error handling
 // 2013/03/18: renamed functions, creating .jscad source direct via polyhedron()
 
 function parseSTL(stl,fn) {
@@ -744,7 +790,7 @@ function vt2jscad(v,t,n) {
       if(j++) src += ",\n\t";
       src += "["+v[i]+"]"; //.join(", ");
    }
-   src += "],\n\ttriangles: [\n\t";
+   src += "],\n\tpolygons: [\n\t";
    for(var i=0,j=0; i<t.length; i++) {
       if(j++) src += ",\n\t";
       src += "["+t[i]+"]"; //.join(', ');
