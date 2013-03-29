@@ -405,14 +405,21 @@ function parseFile(debugging, onlyifchanged) {
                
             } else if(gCurrentFile.lang=='stl') {
                status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-               if(1) {
+               if(1) {     // -- if you debug the STL parsing, change it to 0 so echo() works, otherwise in workers
+                           //    echo() is not working.. 
                   var blobURL = new Blob([document.querySelector('#stlWorker').textContent]);
                   // -- the messy part coming here:
                   var worker = new Worker(window.webkitURL!==undefined?window.webkitURL.createObjectURL(blobURL):window.URL.createObjectURL(blobURL()));
                   worker.onmessage = function(e) {
                      var data = e.data;
-                     putSourceInEditor(data.source,data.filename);
-                     gProcessor.setJsCad(data.source,data.filename);
+                     //echo("finished converting, source:",data.source);
+                     if(data&&data.source&&data.source.length) {
+                        putSourceInEditor(data.source,data.filename);
+                        gProcessor.setJsCad(data.source,data.filename);
+                     } else {
+                        // worker responds gibberish (likely echo(), but format unknown)
+                        // echo("STL worker",data);
+                     }
                   };
                   worker.postMessage({url: document.location.href, stlSource: source, filename: fn });
                   asyncComputation = true;

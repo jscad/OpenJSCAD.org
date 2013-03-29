@@ -505,7 +505,7 @@ function echo() {
       if(i) s += ", ";
       s += a[i];
    }
-   if(typeof OpenJsCad !=='undefined') {
+   if(typeof OpenJsCad !== 'undefined') {
       OpenJsCad.log(s);
    } else {
       console.log(s);
@@ -530,19 +530,21 @@ function status(s) {
 function parseSTL(stl,fn) {
    var isAscii = true;
 
-   for (var i = 0; i < stl.length; i++) {
-      if (stl[i].charCodeAt(0) == 0) {
+   for(var i=0; i<stl.length; i++) {
+      if(stl[i].charCodeAt(0) == 0) {
          isAscii = false;
          break;
       }
    }
-   var o;
+   //echo("STL:"+fn,isAscii?"ascii":"binary");
+   var src;
    if(!isAscii) {
-      o = parseBinarySTL(stl,fn);
+      src = parseBinarySTL(stl,fn);
    } else {
-      o = parseAsciiSTL(stl,fn);
+      src = parseAsciiSTL(stl,fn);
    }
-   return o;
+   //echo("STL converted JSCAD",src);
+   return src;
 }
 
 function parseBinarySTL(stl,fn) {
@@ -568,7 +570,6 @@ function parseBinarySTL(stl,fn) {
              REAL32[3] . Vertex 2
              REAL32[3] . Vertex 3
                 UINT16 . Attribute byte count */
-
         // -- Parse normal
         var no = []; no.push(br.readFloat()); no.push(br.readFloat()); no.push(br.readFloat());
 
@@ -576,7 +577,19 @@ function parseBinarySTL(stl,fn) {
         var v1 = []; v1.push(br.readFloat()); v1.push(br.readFloat()); v1.push(br.readFloat());
         var v2 = []; v2.push(br.readFloat()); v2.push(br.readFloat()); v2.push(br.readFloat());
         var v3 = []; v3.push(br.readFloat()); v3.push(br.readFloat()); v3.push(br.readFloat());
-   
+
+        var skip = 0;
+        if(1) {
+           for(var i=0; i<3; i++) {
+              //if(isNaN(v1[i])) skip++;
+              //if(isNaN(v2[i])) skip++;
+              //if(isNaN(v3[i])) skip++;
+              if(isNaN(no[i])) skip++;
+           }
+           if(skip>0) {
+              echo("bad triangle vertice coords/normal: ",skip);
+           }
+        }
         // -- every 3 vertices create a triangle.
         var triangle = []; triangle.push(vertexIndex++); triangle.push(vertexIndex++); triangle.push(vertexIndex++);
 
@@ -584,7 +597,7 @@ function parseBinarySTL(stl,fn) {
 
         // -- Add 3 vertices for every triangle
         // -- TODO: OPTIMIZE: Check if the vertex is already in the array, if it is just reuse the index
-        {  // checking cw vs ccw: 
+        if(skip==0) {  // checking cw vs ccw, given all normal/vertice are valid
            // E1 = B - A
            // E2 = C - A
            // test = dot( Normal, cross( E1, E2 ) )
