@@ -554,6 +554,7 @@ function parseBinarySTL(stl,fn) {
     var normals = [];
     var vertexIndex = 0;
     var converted = 0;
+    var err = 0;
     var br = new BinaryReader(stl);
     
     br.seek(80); //Skip header
@@ -581,15 +582,16 @@ function parseBinarySTL(stl,fn) {
         var skip = 0;
         if(1) {
            for(var i=0; i<3; i++) {
-              //if(isNaN(v1[i])) skip++;
-              //if(isNaN(v2[i])) skip++;
-              //if(isNaN(v3[i])) skip++;
+              if(isNaN(v1[i])) skip++;
+              if(isNaN(v2[i])) skip++;
+              if(isNaN(v3[i])) skip++;
               if(isNaN(no[i])) skip++;
            }
            if(skip>0) {
               echo("bad triangle vertice coords/normal: ",skip);
            }
         }
+        err += skip;
         // -- every 3 vertices create a triangle.
         var triangle = []; triangle.push(vertexIndex++); triangle.push(vertexIndex++); triangle.push(vertexIndex++);
 
@@ -622,6 +624,7 @@ function parseBinarySTL(stl,fn) {
         converted++;
     }
     var src = "// OpenJSCAD.org: stl importer (binary) '"+fn+"'\n\n";
+    if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
     src += "// objects: 1\n// object #1: triangles: "+totalTriangles+"\n";
     src += "function main() { return "; 
     src += vt2jscad(vertices,triangles,normals);
@@ -646,10 +649,10 @@ function parseAsciiSTL(stl,fn) {
         var triangles = [];
         var normals = [];
         var vertexIndex = 0;
-
+        var err = 0;
+        
         match = stl.match(patt);
         if (match == null) continue;
-        src += "// object #"+(o)+": triangles: "+match.length+"\n";
         for (var i = 0; i < match.length; i++) {
             //if(converted%100==0) status('stl to jscad: converted '+converted+' out of '+match.length+ ' facets');
             // -- 1 normal with 3 numbers, 3 different vertex objects each with 3 numbers:
@@ -670,6 +673,7 @@ function parseAsciiSTL(stl,fn) {
                   skip++;
                }
             }
+            err += skip;
             if(skip) {
                continue;
             }
@@ -725,6 +729,8 @@ function parseAsciiSTL(stl,fn) {
             converted++;
         }
         if(n++) src += ",";
+        if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
+        src += "// object #"+(o)+": triangles: "+match.length+"\n";
         src += vt2jscad(vertices,triangles,normals);
     }
     src += "); }\n";
