@@ -1073,7 +1073,9 @@ OpenJsCad.Processor.prototype = {
     var blob;
     if(format == "stl")
     {      
-      blob=this.currentObject.fixTJunctions().toStlBinary();
+      //blob=this.currentObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now
+      blob = this.currentObject.toStlBinary();        // gives no normal errors, but stl which require cleanup
+                                                      // HINT: fixTJunction() needs debugging
     }
     else if(format == "x3d") {
       blob=this.currentObject.fixTJunctions().toX3D(bb);

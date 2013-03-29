@@ -130,8 +130,8 @@ if(exportSTL) {
       var csg = eval(incs+"main()");         // all includes + main()
    }
    //var stl = csg.fixTJunctions().toStlBinary();   // creates a Blob, which with nodejs doesn't exist yet
-   var stl = csg.fixTJunctions().toStlString();     // creates bad facet normals!! in some cases
-   //var stl = csg.toStlString();
+   //var stl = csg.fixTJunctions().toStlString();     // creates bad facet normals!! in some cases
+   var stl = csg.toStlString();  // creates correct normals, but stl which require clean-up (fixTJunction() needs debug)
 
    var s = fs.WriteStream(outf);
    s.write(stl);
