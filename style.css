@@ -128,7 +128,7 @@ canvas {
    position: fixed;
    z-index: 5;
 
-   font-size: 1em;
+   font-size: 0.9em;
    
    box-shadow: 4px 0 10px rgba(0,0,0,0.25);
    -moz-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
@@ -136,11 +136,11 @@ canvas {
 }
  
 #menu {
-   left: 0; /* Change to right: 0; if you want the panel to display on the right side. */
+   left: 0; 
 }
 
 #menu:hover, #menu:focus ~ #menuHandle:hover, #menuHandle:focus {
-   left: 0 !important; /* Change to right: 0 !important; if you want the panel to display on the right side. */
+   left: 0 !important;  /* slide out */
 }
 
 #menuHandle {
