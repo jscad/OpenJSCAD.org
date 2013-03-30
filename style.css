@@ -167,7 +167,7 @@ canvas {
 
 #menuHandle {
    right: -25px;
-   top: 60px;
+   top: 45%;
    position: absolute;
    z-index: 6;
 }
