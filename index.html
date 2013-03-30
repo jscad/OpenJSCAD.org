@@ -35,14 +35,64 @@ Todo:
 <script src="openscad-openjscad-translator.js"></script>
 <link rel="stylesheet" href="style.css" type="text/css">
 <link rel="stylesheet" href="openjscad.css" type="text/css">
-<script>
+<script lang=JavaScript>
+var version = '0.012 (2013/03/30)';
    $(function() { $("#hint").draggable(); });
    //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
+$(document).ready(function() {
+   $("#menu").height($(document).height());
+   $(window).resize(function() {
+      $("#menu").height($(document).height());
+   });
+   setTimeout( function(){$('#menu').css('left','-270px');},3000);
+   //setTimeout( function(){$('#hint').css('display','none');},15000);
+});   
 </script>
 </head>
 <body>
 
-<img id="header" src="imgs/title.png" onclick="$('#hint').show()");">
+<img id="header" src="imgs/title.png">
+
+<div id=menu>
+<img id=menuHandle src="imgs/menuHandle.png">
+<nav>
+<div id=menuVersion>Version <script>document.write(version);</script></div>
+<p>
+<table class=info>
+<tr><td align=right><b>Shift + Return</b>:</td><td>render code</td></tr>
+<tr><td align=right><b>left mouse</b>:</td><td>rotate XZ</td></tr>
+<tr><td align=right><b>middle mouse</b>:</td><td>pan</td></tr>
+<tr><td align=right><b>right mouse</b>:</td><td>rotate XY</td></tr>
+<tr><td align=right><b>wheel mouse</b>:</td><td>zoom in/out</td></tr>
+</table>
+<p><a class=navlink href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide" target=_blank>User Guide / Documentation</a></p>
+<p><a class=navlink href="https://plus.google.com/115007999023701819645" rel="publisher" target=_blank>Updates & Blog</a></p>
+<b>Examples</b>
+<div id=examples></div>
+<p/>
+<b>Supported Formats</b>
+<table class=info>
+<tr><td align=right><b>.jscad</b></td><td><a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">OpenJSCAD</a> (native)</td></tr>
+<tr><td align=right><b>.scad</b></td><td><a target=_blank href="http://openscad.org">OpenSCAD.org</a></td></tr>
+<tr><td align=right><b>.stl</b></td><td><a target=_blank href="http://en.wikipedia.org/wiki/STL_(file_format)">STL format</a> (experimental)</td></tr>
+<tr><td align=right><b>.amf</b></td><td>(planned) AMF importer/exporter</td></tr>
+</table>
+<p><a class=navlink href="#" onclick="$('#about').css({display: 'block'}); return false;">About</a></p>
+</nav>
+</div>
+
+<div id=about>
+<img src="imgs/title.png"><br>
+Version <script>document.write(version);</script>
+<p>
+by Ren&eacute; K. M&uuml;ller, 
+Joost Nieuwenhuijse (core), 
+Gary Hogdson (OpenSCAD import)
+<p>csg.js core & improvements by 
+Eduard Bespalov, Joost Nieuwenhuijse, Evan Wallace, Alexandre Girard
+<p>
+<a class=okButton href='#' onclick="$('#about').css({display: 'none'}); return false;"> OK </a>
+</div>
 
 <div id="editor">// -- OpenJSCAD.org logo
 
@@ -59,22 +109,7 @@ function main() {
    ).translate([0,0,1.5]).scale(10);
 }
 </div>
-<div id="hint" title="OpenJSCAD.org ALPHA">
-<div class="closeButton" onclick="document.getElementById('hint').style.display=(document.getElementById('hint').style.display!='none'?'none':'block');"><img src="imgs/closeButton.png"></div>
-<table>
-<tr><td align=right><b>Shift + Return</b>:</td><td>render code</td></tr>
-<tr><td align=right><b>left mouse</b>:</td><td>rotate XZ</td></tr>
-<tr><td align=right><b>middle mouse</b>:</td><td>pan</td></tr>
-<tr><td align=right><b>right mouse</b>:</td><td>rotate XY</td></tr>
-<tr><td align=right><b>wheel mouse</b>:</td><td>zoom in/out</td></tr>
-</table>
-Supported Formats:<br>
-<table>
-<tr><td align=right><b>.jscad</b></td><td><a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">OpenJSCAD</a> (native)</td></tr>
-<tr><td align=right><b>.scad</b></td><td><a target=_blank href="http://openscad.org">OpenSCAD.org</a></td></tr>
-<tr><td align=right><b>.stl</b></td><td><a target=_blank href="http://en.wikipedia.org/wiki/STL_(file_format)">STL format</a> (experimental)</td></tr>
-<tr><td align=right><b>.amf</b></td><td>(planned) AMF importer/exporter</td></tr>
-</table>
+
 <script>
 var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
 var ex = [ 
@@ -113,20 +148,19 @@ var ex = [
 // { file:'klein_bottle-DizingOf.stl', title: '3D Model: Klein Bottle (DizingOf)', type: 'STL' } // too slow, over 400k triangles, huge memory consumption
 ];
 if(me=='web-online') {
-   document.write('Examples:');
+   var src = '';
+   //src += 'Examples:';
    for(var i=0; i<ex.length; i++) {
-      document.write("<li><a href=# onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n");
-      if(ex[i].type) document.write(" <span class=type>("+ex[i].type+")</span></a>");
-      if(ex[i].new) document.write(" <span class=newExample>new</span></a>");
-      //document.write("<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n");
+      src += "<li><a href=# onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n";
+      if(ex[i].type) src += " <span class=type>("+ex[i].type+")</span></a>";
+      if(ex[i].new) src += " <span class=newExample>new</span></a>";
+      //src += "<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n";
    }
+   $('#examples').html(src);
 } else {
    // examples off-line won't work yet as XHR is used
 }
 </script>
-<p>
-<b><a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">User Guide / Documentation</a></b>
-</div>
 
 <div oncontextmenu="return false;" id="viewer"></div> <!-- avoiding popup when right mouse is clicked -->
 
@@ -148,7 +182,8 @@ if(me=='web-online') {
 </div>
 </div>
 <div id=footer>
-OpenJSCAD.org 0.011 (2013/03/29), MIT License & GPLv2, <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">User Guide</a>, see also <a href="https://plus.google.com/115007999023701819645" target=_blank rel="publisher">Google+</a> for updates - get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">github.com</a>
+OpenJSCAD.org 
+<script>document.write(version);</script>, MIT License & GPLv2, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">github.com</a>
 </div>
 
 <!--script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script-->

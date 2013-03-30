@@ -26,7 +26,7 @@ a:visited {
    position: absolute;
    top: 1em;
    left: 1em;
-   z-index: 1;
+   z-index: 20;
 }
 
 #editor { 
@@ -58,7 +58,7 @@ canvas {
 
    font-size: 0.6em;
    top: 70px;
-   left: 20px;
+   left: 200px;
    width: 30%
    height: 300px;
    position: absolute;
@@ -74,41 +74,33 @@ canvas {
    cursor: move;  /* it's draggable */
 }
 
-#hint table {
-   border-spacing: 0;
-   border-collapse: collapse;
-   margin-bottom: 0.5em;
-}
-
-#hint table td {
-   margin: 0px;
-   padding-left: 2px;
-   padding-right: 2px;
-   padding-top: 0px;
-   padding-bottom: 0px;
-   font-size: 0.6em;
-}
-
-.closeButton {
-   right: 0px;
-   top: 0px;
-   margin: 3px; 
+#about {
    position: absolute;
-   z-index: 4;
-   cursor: auto;
+   width: 30%;
+   left: 30%;
+   top: 30%;
+   font-size: 0.75em;
+   box-shadow: 0px 0px 20px black;
+   color: #404040;
+   border-radius: 20px;
+   background: white;
+   display: none;
+   padding: 1.5em;
+   text-align: center;
+   z-index: 100;
 }
 
-#hint .type {
-   color: rgba(80,80,80,0.6);
+.okButton {
+   border: 2px solid #808080;
+   border-radius: 4px;
+   padding: 0.5em; 
+   padding-left: 2em;
+   padding-right: 2em;
+   margin-top: 3em;
 }
 
-#hint .newExample {
-   color: black;
-   padding: 0px;
-   padding-left: 4px;
-   padding-right: 4px;
-   background: yellow;
-   border-radius: 5px;
+.okButton:hover {
+   background: #c0c0c0;
 }
 
 #footer {
@@ -136,6 +128,91 @@ canvas {
 
 .support {
    vertical-align: bottom;
+}
+
+#menu, #menu nav a {
+   transition: all 0.4s;
+   -o-transition: all 0.4s;
+   -moz-transition: all 0.4s;
+   -webkit-transition: all 0.4s;
+}
+
+#menu {
+   background: white;
+
+   opacity: 0.7;    
+   -moz-opacity: 0.7;      /* css mess (why do it simple, when we can do it complicate!) */
+
+   border-right: 1px solid black;
+   width: 250px;
+   padding-left: 10px;
+   padding-right: 10px;
+   position: fixed;
+   z-index: 5;
+
+   font-size: 1em;
+   
+   box-shadow: 4px 0 10px rgba(0,0,0,0.25);
+   -moz-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
+   -webkit-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
+}
+ 
+#menu {
+   left: 0; /* Change to right: 0; if you want the panel to display on the right side. */
+}
+
+#menu:hover, #menu:focus ~ #menuHandle:hover, #menuHandle:focus {
+   left: 0 !important; /* Change to right: 0 !important; if you want the panel to display on the right side. */
+}
+
+#menuHandle {
+   right: -25px;
+   top: 60px;
+   position: absolute;
+   z-index: 6;
+}
+
+#menu nav {
+   position: relative;
+   top: 42px;
+}
+
+#menu nav .navlink, #menu nav {
+   /*clear: both;*/
+   /*display: block;*/
+   margin-top: 0.5em;
+   margin-bottom: 0.5em;
+}
+
+#menu #examples {
+   font-size: 0.6em;
+}
+
+#menu #examples, #menu #examples a {
+   margin-top: 0px;
+   clear: none;
+   display: inline;
+}
+
+#menu .info {
+   border-spacing: 0;
+   border-collapse: collapse;
+   margin-bottom: 0.5em;
+}
+
+#menu .info td {
+   margin: 0px;
+   padding-left: 2px;
+   padding-right: 2px;
+   padding-top: 0px;
+   padding-bottom: 0px;
+   font-size: 0.6em;
+}
+
+#menuVersion {
+   text-align: center; 
+   font-size: 0.6em;
+   color: #666;
 }
 
 /* we choose chrome theme for ace, and make sure line number is transparent too */

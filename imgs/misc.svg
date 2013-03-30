@@ -118,6 +118,18 @@
          stdDeviation="3.4467656"
          id="feGaussianBlur3973" />
     </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter3952"
+       x="-0.43301887"
+       width="1.8660377"
+       y="-0.092789757"
+       height="1.1855795">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="10.825472"
+         id="feGaussianBlur3954" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -126,18 +138,23 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="43.842821"
-     inkscape:cy="784.3624"
+     inkscape:zoom="0.7"
+     inkscape:cx="-293.30003"
+     inkscape:cy="837.21954"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      showborder="false"
-     inkscape:window-width="469"
-     inkscape:window-height="437"
-     inkscape:window-x="362"
-     inkscape:window-y="1118"
-     inkscape:window-maximized="0" />
+     inkscape:window-width="1280"
+     inkscape:window-height="748"
+     inkscape:window-x="-8"
+     inkscape:window-y="1016"
+     inkscape:window-maximized="1"
+     inkscape:snap-global="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3098" />
+  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -154,6 +171,25 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <path
+       inkscape:export-ydpi="35.709999"
+       inkscape:export-xdpi="35.709999"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandle.png"
+       sodipodi:nodetypes="czzcc"
+       inkscape:connector-curvature="0"
+       id="path3942"
+       d="m -860,-127.63782 c 0,0 60,20 60,60.000003 0,39.999999 0,120 0,160 0,39.999997 -60,59.999997 -60,59.999997 z"
+       style="fill:#6a007c;fill-opacity:1;stroke:#4a0059;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter3952)" />
+    <rect
+       style="opacity:0.00100002;fill:#710084;fill-opacity:1;stroke:none"
+       id="rect3927"
+       width="85.714287"
+       height="311.42859"
+       x="-858.57147"
+       y="-139.06638"
+       inkscape:export-xdpi="26.25"
+       inkscape:export-ydpi="26.25"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandle.png" />
     <rect
        y="455.36203"
        x="-371.70062"
@@ -625,5 +661,50 @@
        height="83.842674"
        x="-471.70062"
        y="455.36203" />
+    <path
+       style="fill:#ef94ff;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -860,-127.63782 60,40.000003 0,199.999997 -60,40 z"
+       id="path3096"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandle.png"
+       inkscape:export-xdpi="35.709999"
+       inkscape:export-ydpi="35.709999" />
+    <path
+       style="opacity:0.37980769;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -830.57142,-86.187827 0,137.385746"
+       id="path3100"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3894"
+       d="m -846.57142,-94.18783 0,137.385749"
+       style="opacity:0.37980769;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="opacity:0.37980769;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -816.57142,-78.187827 0,137.385746"
+       id="path3896"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3908"
+       d="m -828.57142,-86.187827 0,137.385746"
+       style="opacity:0.37980769;fill:none;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="opacity:0.37980769;fill:none;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -844.57142,-94.18783 0,137.385749"
+       id="path3910"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3912"
+       d="m -814.57142,-78.187827 0,137.385746"
+       style="opacity:0.37980769;fill:none;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
   </g>
 </svg>
