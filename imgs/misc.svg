@@ -172,10 +172,10 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       y="439.64777"
+       y="431.07632"
        x="-683.70062"
-       height="99.556961"
-       width="103.66759"
+       height="108.12839"
+       width="119.38187"
        id="rect3880"
        style="opacity:0.00100002;fill:#b0b0b0;fill-opacity:1;stroke:none"
        inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\externalLink.png"
@@ -727,12 +727,12 @@
        id="rect3095"
        style="fill:none;stroke:#3d3d3d;stroke-width:5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     <path
-       style="fill:#e56bff;fill-opacity:1;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m -586.29169,444.88147 -70.16866,19.77401 26.77274,8.04901 -25.72246,27.2979 18.19859,17.14831 25.72247,-27.29789 9.62444,26.2476 z"
+       style="fill:#e56bff;fill-opacity:1;stroke:#1d1d1d;stroke-width:5.49543047;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -569.04383,436.28931 -80.65721,24.7653 28.19352,7.73089 -32.88593,31.16717 17.23155,18.11996 32.88594,-31.16716 6.26957,28.50901 z"
        id="path3110"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccc"
-       inkscape:transform-center-x="-29.052529"
-       inkscape:transform-center-y="-28.223006" />
+       inkscape:transform-center-x="-38.709909"
+       inkscape:transform-center-y="-32.736485" />
   </g>
 </svg>
