@@ -94,7 +94,7 @@ function intersection() {
 // -- 3D primitives (OpenSCAD like notion)
 
 function cube(p) { 
-   var s = 1, v, off = 0;
+   var s = 1, v = null, off = 0;
    if(p&&p.length) v = p;		
    if(p&&p.size&&p.size.length) v = p.size;
    if(p&&p.size&&!p.size.length) s = p.size;
@@ -216,7 +216,7 @@ function rotate() {
    } else {                   // rotate([x,y,z],o)
       v = a[0];
       i = 1;
-      if(a[1].length) { a = a[1]; i = 0 }
+      if(a[1].length) { a = a[1]; i = 0; }
    }
    for(o=a[i++]; i<a.length; i++) { 
       o = o.union(a[i]);
@@ -264,7 +264,7 @@ function multmatrix() {
 
 function color() {
    var o,i,a=arguments,c = a[0]; 
-   if(a[1].length) { a = a[1], i = 0 } else { i = 1; }
+   if(a[1].length) { a = a[1], i = 0; } else { i = 1; }
    for(o=a[i++]; i<a.length; i++) { 
       o = o.union(a[i]);
    } 
@@ -284,14 +284,14 @@ function hull() {
 function linear_extrude(p,s) {
    //console.log("linear_extrude() not yet implemented");
    //return;
-   var h = 1, off = 0, convexity = 10, twist = 0, slices = 10;
+   var h = 1, off = 0, /* convexity = 10,*/ twist = 0, slices = 10;
    if(p.height) h = p.height;
    //if(p.convexity) convexity = p.convexity;      // abandoned
    if(p.twist) twist = p.twist;
    if(p.slices) slices = p.slices;
    var o = s.extrude({offset:[0,0,h], twistangle:twist, twiststeps:slices});
    if(p.center==true) {
-      var off, b = new Array;
+      var b = new Array;
       b = o.getBounds();      // b[0] = min, b[1] = max
       off = b[1].plus(b[0]);
       off = off.times(-0.5);
@@ -499,7 +499,7 @@ function sqrt(a) {
    return Math.sqrt(a);
 }
 function round(a) {
-   return floor(a+0.5)
+   return floor(a+0.5);
 }
 
 function echo() {
@@ -528,7 +528,6 @@ function status(s) {
 function parseOBJ(obj,fn) {
    var l = obj.split(/\n/);
    var v = [], f = [];
-   var tc = 0;
    
    for(var i=0; i<l.length; i++) {
       var s = l[i];
@@ -682,6 +681,7 @@ function parseAsciiSTL(stl,fn) {
     var src = "// OpenJSCAD.org: stl importer (ascii) '"+fn+"'\n\n";
     var n = 0;
     var converted = 0;
+    var o;
      
     src += "function main() { return union(\n"; 
     // -- Find all models
@@ -732,9 +732,9 @@ function parseAsciiSTL(stl,fn) {
                var w1 = new CSG.Vector3D(v1);
                var w2 = new CSG.Vector3D(v2);
                var w3 = new CSG.Vector3D(v3);
-               var u = w1.minus(w3);
-               var v = w1.minus(w2);
-               var norm = u.cross(v).unit();
+               var _u = w1.minus(w3);
+               var _v = w1.minus(w2);
+               var norm = _u.cross(_v).unit();
                j = 1;
                v[j++] = norm._x;
                v[j++] = norm._y;
@@ -784,7 +784,7 @@ function parseAsciiSTL(stl,fn) {
 }
 
 function vt2jscad(v,t,n) {
-   var src = '', j;
+   var src = '';
    src += "polyhedron({ points: [\n\t";
    for(var i=0,j=0; i<v.length; i++) {
       if(j++) src += ",\n\t";
@@ -956,12 +956,12 @@ function __include(fn) {          // doesn't work yet ... as we run in a blob an
       };
       xhr.error = function() {
          echo("ERROR: could not include(\""+fn+"\")");
-      }
+      };
       xhr.send();
    } else if(me=='web-offline') {
     
    } else {    // cli
-      src = fs.readFileSync(fn)
+      src = fs.readFileSync(fn);
       src = processSource(src,fn);
    }
    if(me!='web-offline'&&me!='web-online') {
