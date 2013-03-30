@@ -30,6 +30,14 @@ Todo:
 <link rel="stylesheet" href="style.css" type="text/css">
 <link rel="stylesheet" href="openjscad.css" type="text/css">
 </head><body onload="onload()">
+<style>
+/* we choose chrome theme for ace, and make sure line number is transparent too */
+/* this has to stay in the body (not head) otherwise does not take effect */
+.ace-chrome .ace_gutter { 
+   border-left: 2px dashed rgba(200,200,200,0.2);
+   background: none;
+}
+</style>
 <script src="lightgl.js"></script>
 <script src="csg.js"></script>
 <script src="openjscad.js"></script>
