@@ -188,6 +188,13 @@ canvas {
    font-size: 0.6em;
 }
 
+#menu #examples .newExample {
+   border-radius: 5px;
+   background: yellow;
+   padding-left: 4px;
+   padding-right: 4px;
+}
+
 #menu #examples, #menu #examples a {
    margin-top: 0px;
    clear: none;
