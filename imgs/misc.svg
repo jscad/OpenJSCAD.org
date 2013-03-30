@@ -139,8 +139,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="-293.30003"
-     inkscape:cy="837.21954"
+     inkscape:cx="-360.44289"
+     inkscape:cy="867.21954"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -171,6 +171,16 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       y="439.64777"
+       x="-683.70062"
+       height="99.556961"
+       width="103.66759"
+       id="rect3880"
+       style="opacity:0.00100002;fill:#b0b0b0;fill-opacity:1;stroke:none"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\externalLink.png"
+       inkscape:export-xdpi="12.110054"
+       inkscape:export-ydpi="12.110054" />
     <path
        inkscape:export-ydpi="35.709999"
        inkscape:export-xdpi="35.709999"
@@ -706,5 +716,23 @@
        id="path3912"
        d="m -814.57142,-78.187827 0,137.385746"
        style="opacity:0.37980769;fill:none;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <rect
+       inkscape:export-ydpi="12.110054"
+       inkscape:export-xdpi="12.110054"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\unchecked.png"
+       y="481.62601"
+       x="-672.54834"
+       height="55.558392"
+       width="55.558392"
+       id="rect3095"
+       style="fill:none;stroke:#3d3d3d;stroke-width:5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="fill:#e56bff;fill-opacity:1;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -586.29169,444.88147 -70.16866,19.77401 26.77274,8.04901 -25.72246,27.2979 18.19859,17.14831 25.72247,-27.29789 9.62444,26.2476 z"
+       id="path3110"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:transform-center-x="-29.052529"
+       inkscape:transform-center-y="-28.223006" />
   </g>
 </svg>

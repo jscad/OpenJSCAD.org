@@ -200,6 +200,10 @@ canvas {
    color: #666;
 }
 
+.externalLink {
+   vertical: middle;
+}
+
 /* we choose chrome theme for ace, and make sure line number is transparent too */
 .ace-chrome .ace_gutter { 
    border-left: 2px dashed rgba(200,200,200,0.2);
