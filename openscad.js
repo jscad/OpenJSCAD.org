@@ -525,6 +525,8 @@ function status(s) {
 
 // --------------------------------------------------------------------------------------------
 
+// coded based on info at http://www.andrewnoske.com/wiki/index.php?title=OBJ_file_format
+
 function parseOBJ(obj,fn) {
    var l = obj.split(/\n/);
    var v = [], f = [];
