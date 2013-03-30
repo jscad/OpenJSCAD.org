@@ -46,20 +46,21 @@ Todo:
 <script src="openscad-openjscad-translator.js"></script>
 <script lang=JavaScript>
 var version = '0.012 (2013/03/30)';
-   //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
+//$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
+
 $(document).ready(function() {
    $("#menu").height($(document).height());
    $(window).resize(function() {
       $("#menu").height($(document).height());
       $("#menuHandle").css({top: '45%'});
    });
-   setTimeout( function(){$('#menu').css('left','-270px');},3000);
+   setTimeout( function(){$('#menu').css('left','-270px');},3000); // -- hide slide-menu after 3secs
 });   
 </script>
 </head>
 <body>
 
-<img id="header" src="imgs/title.png">
+<img id="header" src="imgs/title.png" onclick="$('#about').show();">
 
 <div id=menu>
 <img id=menuHandle src="imgs/menuHandle.png">
@@ -88,7 +89,7 @@ $(document).ready(function() {
 </table>
 <p><a class=navlink href="#" onclick="$('#about').show(); return false;">About</a></p>
 </nav>
-</div>
+</div> <!-- /menu -->
 
 <div id=about>
 <img src="imgs/title.png"><br>
