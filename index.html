@@ -44,6 +44,7 @@ $(document).ready(function() {
    $("#menu").height($(document).height());
    $(window).resize(function() {
       $("#menu").height($(document).height());
+      $("#menuHandle").css({top: '45%'});
    });
    setTimeout( function(){$('#menu').css('left','-270px');},3000);
    //setTimeout( function(){$('#hint').css('display','none');},15000);
