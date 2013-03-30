@@ -152,14 +152,14 @@ canvas {
 
 #menu nav {
    position: relative;
-   top: 42px;
+   top: 50px;
 }
 
-#menu nav .navlink, #menu nav {
+#menu nav .navlink {
    /*clear: both;*/
    /*display: block;*/
-   margin-top: 0.5em;
-   margin-bottom: 0.5em;
+   margin-top: 0.3em;
+   margin-bottom: 0.3em;
 }
 
 #menu #examples {
