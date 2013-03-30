@@ -104,12 +104,12 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
     _this.onDraw();
   };
   containerelement.onresize = function(e) {    // is not called
-     var viewer = document.getElementById('viewer');
+     // var viewer = document.getElementById('viewer');
      // fix distortion after resize of canvas
      //gl.perspective(45, viewer.offsetWidth / viewer.offsetHeight, 0.5, 1000);
      //_this.gl.perspective(45, containerelement.offsetWidth / containerelement.offsetHeight, 0.5, 1000);
      alert("canvas has been resized");
-  }
+  };
   gl.onmousewheel = function(e) {
     var wheelDelta = 0;    
     if (e.wheelDelta) {
@@ -280,12 +280,12 @@ OpenJsCad.Viewer.prototype = {
       // GL.Mesh.plane({ detailX: 20, detailY: 40 });
     }
   }
-}
+};
 
 // Convert from CSG solid to an array of GL.Mesh objects
 // limiting the number of vertices per mesh to less than 2^16
-OpenJsCad.Viewer.csgToMeshes = function(csg) {
-  var csg = csg.canonicalized();
+OpenJsCad.Viewer.csgToMeshes = function(initial_csg) {
+  var csg = initial_csg.canonicalized();
   var mesh = new GL.Mesh({ normals: true, colors: true });
   var meshes = [ mesh ];
   var vertexTag2Index = {};
@@ -533,14 +533,14 @@ OpenJsCad.getWindowURL = function() {
 OpenJsCad.textToBlobUrl = function(txt) {
   var windowURL=OpenJsCad.getWindowURL();
   var blob = new Blob([txt]);
-  var blobURL = windowURL.createObjectURL(blob)
+  var blobURL = windowURL.createObjectURL(blob);
   if(!blobURL) throw new Error("createObjectURL() failed"); 
   return blobURL;
 };
 
 OpenJsCad.revokeBlobUrl = function(url) {
-  if(window.URL) window.URL.revokeObjectURL(url)
-  else if(window.webkitURL) window.webkitURL.revokeObjectURL(url)
+  if(window.URL) window.URL.revokeObjectURL(url);
+  else if(window.webkitURL) window.webkitURL.revokeObjectURL(url);
   else throw new Error("Your browser doesn't support window.URL");
 };
 
@@ -588,8 +588,7 @@ OpenJsCad.getParamDefinitions = function(script) {
     // first try to execute the script itself
     // this will catch any syntax errors
     //    BUT we can't introduce any new function!!!
-    var f = new Function(script);
-    f();
+    (new Function(script))();
   }
   catch(e) {
     scriptisvalid = false;
@@ -930,7 +929,7 @@ OpenJsCad.Processor.prototype = {
         type = paramdef.type;
       }
       var control = this.paramControls[i];
-      var value;
+      var value = null;
       if( (type == "text") || (type == "float") || (type == "int") )
       {
         value = control.value;
@@ -971,7 +970,6 @@ OpenJsCad.Processor.prototype = {
     var that = this;
     var paramValues = this.getParamValues();
     var useSync = this.debugging;
-    var options = {};
 
     if(!useSync)
     {
@@ -1129,7 +1127,7 @@ OpenJsCad.Processor.prototype = {
   generateOutputFileBlobUrl: function() {
     var blob = this.currentObjectToBlob();
     var windowURL=OpenJsCad.getWindowURL();
-    this.outputFileBlobUrl = windowURL.createObjectURL(blob)
+    this.outputFileBlobUrl = windowURL.createObjectURL(blob);
     if(!this.outputFileBlobUrl) throw new Error("createObjectURL() failed"); 
     this.hasOutputFile = true;
     this.downloadOutputFileLink.href = this.outputFileBlobUrl;
@@ -1213,7 +1211,7 @@ OpenJsCad.Processor.prototype = {
         control.type = "text";
         if('default' in paramdef)
         {
-          control.value = paramdef.default;
+          control.value = paramdef["default"];
         }
         else if('initial' in paramdef)
           control.value = paramdef.initial;
@@ -1259,7 +1257,7 @@ OpenJsCad.Processor.prototype = {
           control.add(option);
           if('default' in paramdef)
           {
-            if(paramdef.default == values[valueindex])
+            if(paramdef["default"] == values[valueindex])
             {
               selectedindex = valueindex;
             }
