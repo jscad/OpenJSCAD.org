@@ -172,15 +172,15 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       y="431.07632"
+       y="444.48495"
        x="-683.70062"
-       height="108.12839"
-       width="119.38187"
+       height="98.719757"
+       width="98.851196"
        id="rect3880"
        style="opacity:0.00100002;fill:#b0b0b0;fill-opacity:1;stroke:none"
        inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\externalLink.png"
-       inkscape:export-xdpi="12.110054"
-       inkscape:export-ydpi="12.110054" />
+       inkscape:export-xdpi="11.851734"
+       inkscape:export-ydpi="11.851734" />
     <path
        inkscape:export-ydpi="35.709999"
        inkscape:export-xdpi="35.709999"
@@ -720,19 +720,51 @@
        inkscape:export-ydpi="12.110054"
        inkscape:export-xdpi="12.110054"
        inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\unchecked.png"
-       y="481.62601"
-       x="-672.54834"
-       height="55.558392"
-       width="55.558392"
+       y="482.99561"
+       x="-672.6073"
+       height="54.247768"
+       width="54.247768"
        id="rect3095"
-       style="fill:none;stroke:#3d3d3d;stroke-width:5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+       style="fill:none;stroke:#3d3d3d;stroke-width:4.88205004;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     <path
-       style="fill:#e56bff;fill-opacity:1;stroke:#1d1d1d;stroke-width:5.49543047;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m -569.04383,436.28931 -80.65721,24.7653 28.19352,7.73089 -32.88593,31.16717 17.23155,18.11996 32.88594,-31.16716 6.26957,28.50901 z"
-       id="path3110"
+       inkscape:transform-center-y="-56.85105"
+       inkscape:transform-center-x="-2.574839"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:connector-curvature="0"
+       id="path3098"
+       d="m -807.78235,400.20158 -37.57911,75.54281 25.01942,-15.12183 -0.0428,45.30867 25.00518,-0.0189 0.0428,-45.30866 24.9909,15.08395 z"
+       style="fill:#e56bff;fill-opacity:1;stroke:#1d1d1d;stroke-width:5.49543047;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="fill:#e56bff;fill-opacity:1;stroke:#1d1d1d;stroke-width:4.80796862;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -907.78235,424.99992 -37.57911,57.82464 25.01942,-11.57509 -0.0428,34.68176 25.00518,-0.0145 0.0428,-34.68175 24.9909,11.54609 z"
+       id="path3101"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccc"
-       inkscape:transform-center-x="-38.709909"
-       inkscape:transform-center-y="-32.736485" />
+       inkscape:transform-center-x="-2.574839"
+       inkscape:transform-center-y="-43.516932" />
+    <path
+       inkscape:transform-center-y="-43.516932"
+       inkscape:transform-center-x="-2.574839"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:connector-curvature="0"
+       id="path3116"
+       d="m -1000,432.36218 -40,40 20,0 0,40 40,0 0,-40 20,0 z"
+       style="fill:#e56bff;fill-opacity:1;stroke:#1d1d1d;stroke-width:4.80796862;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="fill:#e56bff;fill-opacity:1;stroke:#1d1d1d;stroke-width:4.80796862;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -587.39744,452.65919 -67.40431,14.57865 25.91309,9.40562 -24.45829,24.58898 17.76034,17.60197 24.45829,-24.58897 9.60757,25.79829 z"
+       id="path3118"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:transform-center-x="-27.328954"
+       inkscape:transform-center-y="-24.059617" />
+    <path
+       style="fill:#e56bff;fill-opacity:1;stroke:#1d1d1d;stroke-width:6.00996065;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -1010,312.36218 -50,50 37.5,-12.5 0,62.5 25,0 0,-62.5 37.5,12.5 z"
+       id="path3144"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:transform-center-x="-3.2185474"
+       inkscape:transform-center-y="-54.396165" />
   </g>
 </svg>

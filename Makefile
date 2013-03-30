@@ -10,6 +10,7 @@ install::
 	sudo scp openjscad /usr/local/bin/
 	sudo mkdir -p ${LIB}
 	sudo scp *.js ${LIB}
+	mkdir -p cache; chmod a+rw cache
                                 
 deinstall::
 	sudo rm -rf ${NODE_MODULES}/openscad-openjscad-translator
@@ -51,4 +52,4 @@ edit::
 
 live::
 	# -- do not enable --delete is it will destroy stats folder
-	rsync -av --exclude=.git ./ the-labs.com:Sites/openjscad.org/ 
+	rsync -av --exclude=.git --exclude=cache/ ./ the-labs.com:Sites/openjscad.org/ 

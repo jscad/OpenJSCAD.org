@@ -156,10 +156,6 @@ canvas {
 }
 
 #menu nav .navlink {
-   /*clear: both;*/
-   /*display: block;*/
-   margin-top: 0.3em;
-   margin-bottom: 0.3em;
 }
 
 #menu #examples {
@@ -175,8 +171,6 @@ canvas {
 
 #menu #examples, #menu #examples a {
    margin-top: 0px;
-   clear: none;
-   display: inline;
 }
 
 #menu .info {
@@ -196,6 +190,11 @@ canvas {
 
 #menuVersion {
    text-align: center; 
+   font-size: 0.6em;
+   color: #666;
+}
+
+.menuSubInfo {
    font-size: 0.6em;
    color: #666;
 }
