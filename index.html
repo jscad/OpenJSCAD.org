@@ -38,7 +38,6 @@ Todo:
 <link rel="stylesheet" href="openjscad.css" type="text/css">
 <script lang=JavaScript>
 var version = '0.012 (2013/03/30)';
-   $(function() { $("#hint").draggable(); });
    //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
 $(document).ready(function() {
    $("#menu").height($(document).height());
@@ -47,7 +46,6 @@ $(document).ready(function() {
       $("#menuHandle").css({top: '45%'});
    });
    setTimeout( function(){$('#menu').css('left','-270px');},3000);
-   //setTimeout( function(){$('#hint').css('display','none');},15000);
 });   
 </script>
 </head>
