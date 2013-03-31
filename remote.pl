@@ -30,7 +30,11 @@ sub cacheLocal {
    my($local) = time()."-".sprintf("%05d",rand()*10_000);
    my($ext) = ($fn=~/\.([^\.]+)$/);
 
-   $ext = '.jscad' unless($ext);
+   if($ext eq 'jscad'||$ext eq 'scad'||$ext eq 'stl') {
+      ;     # -- valid
+   } else {
+      $ext = '.jscad';
+   }
    $local = "$dir/$local.$ext";
    
    $fn =~ s/\.\.//g;
