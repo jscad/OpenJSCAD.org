@@ -75,5 +75,5 @@ sub cacheLocal {
    }
    close(F);
    print "Content-type: text/plain\n\n";
-   print "{ \"filename\": \"$fn\", \"file\": \"$local\" }\n";
+   print "{ \"url\": \"$u\", \"filename\": \"$fn\", \"file\": \"$local\" }\n";
 }   
