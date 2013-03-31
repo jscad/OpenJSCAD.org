@@ -317,7 +317,9 @@ function fetchExample(fn) {
          } else if(fn.match(/\.scad$/i)) {
             status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
             editorSource = source;
-            editorSource = "//!OpenSCAD\n"+editorSource;
+            if(!editorSource.match(/^\/\/!OpenSCAD/i)) {
+               editorSource = "//!OpenSCAD\n"+editorSource;
+            }
             source = openscadOpenJscadParser.parse(editorSource);
             if(0) {
                source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;
@@ -487,7 +489,9 @@ function parseFile(debugging, onlyifchanged) {
                ; // default
             } else if(gCurrentFile.lang=='scad') {
                editorSource = source;
-               editorSource = "//!OpenSCAD\n"+editorSource;
+               if(!editorSource.match(/^\/\/!OpenSCAD/i)) {
+                  editorSource = "//!OpenSCAD\n"+editorSource;
+               }
                source = openscadOpenJscadParser.parse(editorSource);
                if(0) {
                   source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;

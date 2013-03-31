@@ -2,10 +2,11 @@
 
 # -- Fetch Remote File into Cache, written by Rene K. Mueller <spiritdude@gmail.com>
 #
-$VERSION = '0.001';
+$VERSION = '0.002';
 #
 # History:
-# 2013/03/30: first version
+# 2013/03/31: 0.002: checking content, enforcing jscad, scad or stl
+# 2013/03/30: 0.001: first version
 
 use CGI;
 
@@ -33,7 +34,7 @@ sub cacheLocal {
    if($ext eq 'jscad'||$ext eq 'scad'||$ext eq 'stl') {
       ;     # -- valid
    } else {
-      $ext = '.jscad';
+      $ext = 'jscad';
    }
    $local = "$dir/$local.$ext";
    
@@ -46,6 +47,16 @@ sub cacheLocal {
    } else { 
       wait;
    }
+   open(F,$local);
+   $_ = <F>;      # -- one-line (could be a lot, needs fixing)
+   if($ext eq 'jscad'&&/^\/\/!OpenSCAD/i) {     # -- content is SCAD?
+      my $new = $local; 
+      $fn =~ s/\.jscad$/.scad/;     # -- filename
+      $new =~ s/\.jscad$/.scad/;    # -- internal cache
+      rename($local,$new);
+      $local = $new;
+   }
+   close(F);
    print "Content-type: text/plain\n\n";
    print "{ \"filename\": \"$fn\", \"file\": \"$local\" }\n";
 }   
