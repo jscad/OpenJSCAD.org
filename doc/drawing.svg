@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="-16.104461"
-     inkscape:cy="609.87173"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="326.33725"
+     inkscape:cy="683.61287"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -58,17 +58,17 @@
        width="748.29028"
        height="864.31927"
        x="-45.224075"
-       y="-46.886833"
+       y="-58.886833"
        inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\doc\drawing-01.png"
        inkscape:export-xdpi="50.619999"
        inkscape:export-ydpi="50.619999" />
     <rect
-       y="545.87537"
+       y="527.94733"
        x="152.75639"
-       height="220.77257"
+       height="238.70061"
        width="366.18152"
        id="rect3238"
-       style="fill:#f2eeee;fill-opacity:1;stroke:#000000;stroke-width:1.66455102;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+       style="fill:#f2eeee;fill-opacity:1;stroke:#000000;stroke-width:1.73081768;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -80,24 +80,17 @@
          id="tspan4130"
          x="286.88333"
          y="306.8696" /></text>
-    <rect
-       style="fill:#f2eeee;fill-opacity:1;stroke:#000000;stroke-width:1.66455102;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-       id="rect3967"
-       width="366.18152"
-       height="220.77257"
-       x="152.75639"
-       y="145.87535" />
     <text
        xml:space="preserve"
        style="font-size:35px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
        x="333.68753"
-       y="14.528961"
+       y="-5.4710388"
        id="text3788"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3790"
          x="333.68753"
-         y="14.528961">Web Browser</tspan></text>
+         y="-5.4710388">Web Browser</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:35px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
@@ -212,6 +205,13 @@
        id="rect3904"
        style="fill:#e700ea;fill-opacity:1;stroke:none" />
     <rect
+       style="fill:#f2eeee;fill-opacity:1;stroke:#000000;stroke-width:1.78616428;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3083"
+       width="366.18152"
+       height="254.145"
+       x="152.75639"
+       y="112.50293" />
+    <rect
        y="187.00507"
        x="152.75639"
        height="25"
@@ -294,13 +294,13 @@
     <text
        sodipodi:linespacing="125%"
        id="text4014"
-       y="529.21191"
-       x="234.07422"
-       style="font-size:32.07167816px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Monospace;-inkscape-font-specification:Monospace"
+       y="513.43469"
+       x="275.66348"
+       style="font-size:22.08099937px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Monospace;-inkscape-font-specification:Monospace"
        xml:space="preserve"><tspan
          id="tspan4018"
-         y="529.21191"
-         x="234.07422"
+         y="513.43469"
+         x="275.66348"
          sodipodi:role="line">openjscad</tspan></text>
     <rect
        style="fill:#f58afd;fill-opacity:1;stroke:none"
@@ -521,21 +521,43 @@
     <text
        sodipodi:linespacing="125%"
        id="text3205"
-       y="52.728828"
+       y="32.728828"
        x="27.319841"
        style="font-size:22.26272202px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Monospace;-inkscape-font-specification:Monospace"
        xml:space="preserve"><tspan
-         y="52.728828"
+         y="32.728828"
          x="27.319841"
          id="tspan3207"
          sodipodi:role="line"> online: http://OpenJSCAD.org/</tspan><tspan
          id="tspan3209"
-         y="80.557228"
+         y="60.557232"
          x="27.319841"
          sodipodi:role="line">locally: http://localhost/OpenJSCAD.org/</tspan><tspan
          id="tspan3211"
-         y="108.38563"
+         y="88.385635"
          x="27.319841"
          sodipodi:role="line">offline: file://Downloads/OpenJSCAD.org/index.html</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:23.31046486px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="436.37433"
+       y="556.71484"
+       id="text3068"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3070"
+         x="436.37433"
+         y="556.71484">nodejs</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3085"
+       y="144.71484"
+       x="166.37433"
+       style="font-size:23.31046486px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><tspan
+         y="144.71484"
+         x="166.37433"
+         id="tspan3087"
+         sodipodi:role="line">chrome/firefox: css/html/js/webgl</tspan></text>
   </g>
 </svg>
