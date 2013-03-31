@@ -80,6 +80,9 @@ More sophisticated JSCAD example, fully object-oriented (OO) programmed with int
 Import of STL models:
 <img src="doc/sshot-04.png">
 
+Drag'n'drop a local file:
+<img src="doc/sshot-05-illu.png">
+
 <h2>See Also</h2>
 <ul>
 <li><a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a>, starting point of OpenJSCAD.org
