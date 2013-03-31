@@ -279,7 +279,7 @@ function onload() {
          xhr.onload = function() {
             echo(this.responseText);
             var data = JSON.parse(this.responseText);
-            echo(data.filename,data.file);
+            //echo(data.url,data.filename,data.file);
             fetchExample(data.file);
          }
          xhr.send(); 
