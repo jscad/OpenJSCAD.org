@@ -345,7 +345,10 @@ function fetchExample(fn) {
                   putSourceInEditor(data.source,data.filename);
                   gProcessor.setJsCad(data.source,data.filename);
                };
-               worker.postMessage({url: document.location.href, source: source, filename: fn }); // start worker
+               var u = document.location.href;
+               u = u.replace(/#.*$/,'');
+               u = u.replace(/\?.*$/,'');
+               worker.postMessage({url: u, source: source, filename: fn }); // start worker
                asyncComputation = true;
 
             } else {       // async (disabled)

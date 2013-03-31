@@ -12,7 +12,8 @@ use CGI;
 
 my $dir = 'cache';
 my $q = new CGI;
-my $maxSize = 10_000_000;
+my $maxSize = 10_000_000;     # [bytes], max size of file
+my $maxTime = 60;             # [s], max download time
 
 cacheLocal($q->param('url'));
 
@@ -43,16 +44,32 @@ sub cacheLocal {
    $fn =~ s/[^!-~\s]//g;      # -- non-ascii away
    
    if(fork()==0) {
-      exec('curl','--max-filesize',$maxSize,'--max-time',60,'-s',$u,'-o',"$local");
+      exec('curl',
+         '-L',                         # -- follow redirects (e.g. thingiverse.com)
+         '--max-filesize',$maxSize,    # -- max file size
+         '--max-time',$maxTime,        # -- max time of download
+         '-s',$u,                      # -- server with URL
+         '-o',"$local");               # -- save locally
    } else { 
       wait;
    }
+   my $extNew;
+   my $buff;
+   
    open(F,$local);
-   $_ = <F>;      # -- one-line (could be a lot, needs fixing)
-   if($ext eq 'jscad'&&/^\/\/!OpenSCAD/i) {     # -- content is SCAD?
+   read(F,$buff,1024);
+   
+   if($ext eq 'jscad'&&$buff=~/^\/\/!OpenSCAD/i) {     # -- content is SCAD?
+      $extNew = 'scad';
+
+   } elsif($ext eq 'jscad'&&($buff=~/^solid/i||-B $buff||$buff=~/\0/)) {   # -- content is STL?
+      $extNew = 'stl';
+   }
+
+   if($extNew) {
       my $new = $local; 
-      $fn =~ s/\.jscad$/.scad/;     # -- filename
-      $new =~ s/\.jscad$/.scad/;    # -- internal cache
+      $fn =~ s/\.jscad$/.$extNew/;     # -- filename
+      $new =~ s/\.jscad$/.$extNew/;    # -- internal cache
       rename($local,$new);
       $local = $new;
    }
