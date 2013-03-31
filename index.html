@@ -277,7 +277,7 @@ function onload() {
          }
          status("Fetching "+u+" <img id=busy src='imgs/busy.gif'>");
          xhr.onload = function() {
-            echo(this.responseText);
+            //echo(this.responseText);
             var data = JSON.parse(this.responseText);
             //echo(data.url,data.filename,data.file);
             fetchExample(data.file);
