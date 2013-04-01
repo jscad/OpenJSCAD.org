@@ -478,7 +478,7 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
   if(0) {\
     _csg_libraries.push(fn);\
   } else if(1) {\
-    var url = _csg_baseurl;\
+    var url = _csg_baseurl+baseurl;\
     var index = url.indexOf('index.html');\
     if(index!=-1) {\
        url = url.substring(0,index);\
