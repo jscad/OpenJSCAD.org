@@ -431,6 +431,7 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
   var baselibraries = [
     "csg.js",
     "openjscad.js",
+    //"a.jscad",
     "openscad.js"
   ];
 
@@ -447,25 +448,13 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
   }
 
   var workerscript = "";
+  workerscript += "var _csg_baseurl=" + JSON.stringify(baseurl)+";\n";        // -- we need it early for include()
+  
   workerscript += script;
   workerscript += "\n\n\n\n//// The following code is added by OpenJsCad + OpenJSCAD.org:\n";
 
-// trying to get include() somewhere, but for now we fail due xhr not allowed in blobs
-//  workerscript += "function include(fn) {\
-//   var xhr = new XMLHttpRequest();\
-//   xhr.open('GET', fn, true);\
-//   xhr.onload = function() {\
-//      return eval(this.responseText);\
-//   };\
-//   xhr.onerror = function() {\
-//   };\
-//   xhr.send();\
-//}\
-//";
-  
   workerscript += "var _csg_baselibraries=" + JSON.stringify(baselibraries)+";\n";
   workerscript += "var _csg_libraries=" + JSON.stringify(libraries)+";\n";
-  workerscript += "var _csg_baseurl=" + JSON.stringify(baseurl)+";\n";
   workerscript += "var _csg_openjscadurl=" + JSON.stringify(openjscadurl)+";\n";
   workerscript += "var _csg_makeAbsoluteURL=" + OpenJsCad.makeAbsoluteUrl.toString()+";\n";
 //  workerscript += "if(typeof(libs) == 'function') _csg_libraries = _csg_libraries.concat(libs());\n";
@@ -479,7 +468,35 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
 //  workerscript += "  var csg; try {csg = main("+JSON.stringify(mainParameters)+"); self.postMessage({cmd: 'rendered', csg: csg});}";
 //  workerscript += "  catch(e) {var errtxt = e.stack; self.postMessage({cmd: 'error', err: errtxt});}";
   workerscript += "}},false);\n";
-    
+
+// trying to get include() somewhere, but 
+// 1) for now we fail due xhr not allowed in blobs
+// 2) importScripts works (finally!)
+// 3) _csg_libraries.push(fn) provides only 1 level include()
+
+  workerscript += "function include(fn) {\
+  if(0) {\
+    _csg_libraries.push(fn);\
+  } else if(1) {\
+    var url = _csg_baseurl;\
+    var index = url.indexOf('index.html');\
+    if(index!=-1) {\
+       url = url.substring(0,index);\
+    }\
+  	 importScripts(url+fn);\
+  } else {\
+   var xhr = new XMLHttpRequest();\
+   xhr.open('GET', fn, true);\
+   xhr.onload = function() {\
+      return eval(this.responseText);\
+   };\
+   xhr.onerror = function() {\
+   };\
+   xhr.send();\
+  }\
+}\
+";
+  
   var blobURL = OpenJsCad.textToBlobUrl(workerscript);
   
   if(!window.Worker) throw new Error("Your browser doesn't support Web Workers. Please try the Chrome or Firefox browser instead.");
