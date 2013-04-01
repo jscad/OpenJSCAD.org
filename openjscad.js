@@ -434,11 +434,10 @@ OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
   	 importScripts(url+fn);\
   } else {\
    var xhr = new XMLHttpRequest();\
-   xhr.open('GET', _includePath+fn, true);\
+   xhr.open('GET', _includePath+fn, false);\
    console.log('include:'+_includePath+fn);\
    xhr.onload = function() {\
       var src = this.responseText;\
-      console.log('eval:'+_includePath+fn+':'+src);\
       eval(src);\
    };\
    xhr.onerror = function() {\
