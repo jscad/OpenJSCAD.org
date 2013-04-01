@@ -1,4 +1,3 @@
-echo("in platonic.jscad");
 /*
 	Contributed By: Willliam A Adams
 	September 2011

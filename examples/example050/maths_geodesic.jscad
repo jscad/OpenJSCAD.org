@@ -1,4 +1,3 @@
-echo("in maths_platonic.jscad");
 /*
    License: This code is placed in the public Domain
 	Contributed By: Willliam A Adams
