@@ -22,7 +22,8 @@ tests::
 	openjscad examples/example001.jscad -o examples/example001-fromJSCAD.stl
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.stl
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.jscad
-   # -- enable if you have openscad installed ('unsetenv DISPLAY' perhaps too)
+	cd examples/example50 && make
+	# -- enable if you have openscad installed ('unsetenv DISPLAY' perhaps too)
 	# openscad examples/example001.scad -o examples/example001-fromSCADviaOpenSCAD.stl
 
 clean::
