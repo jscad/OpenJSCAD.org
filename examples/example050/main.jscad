@@ -1,17 +1,23 @@
 // Example 050: platonic library (not yet working)
 
 include("platonic.jscad");
+//require("./platonic.jscad");
+
+function platonic(n) {
+   var a = n();
+   return polyhedron({points: a[0], triangles: a[1]});
+}
 
 function main() {
    var s = [];
-   s.push( tetrahedron() );
-   s.push( cube() );
-   s.push( octahedron() );
-   s.push( dodecahedron() );
-   s.push( icosahedron() );
+   s.push(platonic(tetrahedron));
+   s.push(platonic(hexahedron));
+   s.push(platonic(octahedron));
+   s.push(platonic(dodecahedron));
+   s.push(platonic(icosahedron));
    for(var i=0; i<s.length; i++) {
-      s.translate([i-2,0,0]);
+      s[i] = s[i].translate([i*2,0,0]);
    }
-   return union(s);
+   return union(s).scale(5);
 }
 

@@ -1,0 +1,2 @@
+all::
+	../../openjscad main.jscad

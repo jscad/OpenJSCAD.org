@@ -1,3 +1,4 @@
+echo("in maths_platonic.jscad");
 /*
    License: This code is placed in the public Domain
 	Contributed By: Willliam A Adams
@@ -6,9 +7,12 @@
 */
 
 // A couple of useful constants
-var Cpi = 3.14159;
-var Cphi = 1.61803399;
-var Cepsilon = 0.00000001;
+Cpi = 3.14159;       // global!
+Cphi = 1.61803399;
+Cepsilon = 0.00000001;
+//var Cpi = 3.14159;    // local!
+//var Cphi = 1.61803399;
+//var Cepsilon = 0.00000001;
 
  
 // Function: clean
@@ -70,7 +74,8 @@ function sph(long, lat, rad) { return [long, lat, rad===undefined?1:rad] }
 //	clean(s[2]*cos(s[1]))
 //	]; }
 
-function sph_to_cart(s) { return [
+sph_to_cart = function sph_to_cart(s) { 
+   return [
 	clean(s[2]*sin(s[1])*cos(s[0])),  
 
 	clean(s[2]*sin(s[1])*sin(s[0])),
@@ -79,20 +84,23 @@ function sph_to_cart(s) { return [
 	]; }
 
 // Convert from cartesian to spherical
-function sph_from_cart(c) { return sph(
+sph_from_cart = function sph_from_cart(c) { 
+   return sph(
 	atan2(c[1],c[0]), 
 	atan2(sqrt(c[0]*c[0]+c[1]*c[1]), c[2]), 
 	sqrt(c[0]*c[0]+c[1]*c[1]+c[2]*c[2])
 	); }
 
-function sphu_from_cart(c, rad) { return sph(
+sphu_from_cart = function sphu_from_cart(c, rad) { 
+   return sph(
 	atan2(c[1],c[0]), 
 	atan2(sqrt(c[0]*c[0]+c[1]*c[1]), c[2]), 
 	rad===undefined?1:rad
 	); }
 
 // compute the chord distance between two points on a sphere
-function sph_dist(c1, c2) { return sqrt(
+sph_dist = function sph_dist(c1, c2) { 
+   return sqrt(
 	c1[2]*c1[2] + c2[2]*c2[2] - 
 	2*c1[2]*c2[2]*
 	((cos(c1[1])*cos(c2[1])) + cos(c1[0]-c2[0])*sin(c1[1])*sin(c2[1]))   
@@ -138,39 +146,46 @@ function geo_tri2_tri3(xyf) { return [xyf[1], xyf[0]-xyf[1], xyf[2]-xyf[0]]; }
 // Given coordinates for a vertex on the octahedron face
 // return the spherical coordinates for the vertex
 // class 1, method 1
-function octa_class1(c) { return sph(
+function octa_class1(c) { 
+   return sph(
 	atan(safediv(c[0], c[1])),
 	atan(sqrt(c[0]*c[0]+c[1]*c[1])/c[2]),
 	1 
 	); }
 
-function octa_class2(c) { return sph(
+function octa_class2(c) { 
+   return sph(
 	atan(c[0]/c[1]),
 	atan( sqrt( 2*(c[0]*c[0]+c[1]*c[1])) /c[2]),
 	1 
 	); }
 
-function icosa_class1(c) { return octa_class1(
+function icosa_class1(c) { 
+   return 
+   octa_class1(
 	[
 		c[0]*sin(72),  
 		c[1]+c[0]*cos(72),  
 		geo_freq(c)/2+c[2]/Cphi
 	]); }
 
-function icosa_class2(c) { return sph(
+function icosa_class2(c) { 
+   return sph(
 	atan([c0]/c[1]), 
 	atan(sqrt(c[0]*c[0]+c[1]*c[1]))/cos(36)*c[2],
 	1
 	); }
  
-function tetra_class1(c) { return octa_class1(
+function tetra_class1(c) { 
+   return octa_class1(
 	[
 		sqrt(3*c[0]),  
 		2*c[1]-c[0],  
 		(3*c[2]-c[0]-c[1])/sqrt(2)
 	]); }
 
-function class1_icosa_chord_factor(v1, v2, freq) { return sph_dist( 
+function class1_icosa_chord_factor(v1, v2, freq) { 
+   return sph_dist( 
 		icosa_class1(geo_tri2_tri3( [v1[0], v1[1], freq])),
 		icosa_class1(geo_tri2_tri3( [v2[0], v2[1], freq]))
 	); }

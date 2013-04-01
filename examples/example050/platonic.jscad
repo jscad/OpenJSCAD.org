@@ -1,9 +1,14 @@
+echo("in platonic.jscad");
 /*
 	Contributed By: Willliam A Adams
 	September 2011
 	Adapted for OpenJSCAD.org by Rene K. Mueller, 2013/03/20
 */
-include("maths_geodesic.scad");
+include("maths_geodesic.jscad");
+
+//var Cpi = 3.14159;
+//var Cphi = 1.61803399;
+//var Cepsilon = 0.00000001;
 
 // Information about platonic solids 
 // This information is useful in constructing the various solids
@@ -70,7 +75,8 @@ var tetra_cart = [
 	[+1, -1, -1]
 ];
 
-function tetra_unit(rad=1) {
+function tetra_unit(rad) {
+   rad = rad==='undefined'?1:rad;
    return [
 	sph_to_cart(sphu_from_cart(tetra_cart[0], rad)), 
 	sph_to_cart(sphu_from_cart(tetra_cart[1], rad)),
@@ -95,7 +101,12 @@ var tetra_edges = [
 	[2,3],	
 	];
 
-function tetrahedron(rad=1) { return [tetra_unit(rad), tetrafaces, tetra_edges]; }
+tetrahedron = function tetrahedron(rad) { 
+//tetrahedron = function(rad) { 
+   rad = rad==='undefined'?1:rad;
+   return [tetra_unit(rad), tetrafaces, tetra_edges]; 
+}
+
 
 
 //================================================
@@ -113,7 +124,8 @@ var hexa_cart = [
 	[0.5, -0.5, -0.5],
 ];
 
-function hexa_unit(rad=1) {
+function hexa_unit(rad) {
+   rad = rad==='undefined'?1:rad;
    return [
 	sph_to_cart(sphu_from_cart(hexa_cart[0], rad)), 
 	sph_to_cart(sphu_from_cart(hexa_cart[1], rad)),
@@ -154,7 +166,7 @@ var hexa_edges = [
 	];
 
 
-function hexahedron(rad) {
+hexahedron = function hexahedron(rad) {
   rad = rad!=='undefined'?rad:1;
   return [hexa_unit(rad), hexafaces, hexa_edges]; 
 }
@@ -211,7 +223,7 @@ var octa_edges = [
 	[3,5],
 	];
 
-function octahedron(rad) {
+octahedron = function octahedron(rad) {
    rad = rad!=='undefined'?rad:1;
    return [octa_unit(rad), octafaces, octa_edges];
 }
@@ -387,7 +399,7 @@ var dodeca_edges=[
 	[17,18],
 	];
 
-function dodecahedron(rad) {
+dodecahedron = function dodecahedron(rad) {
    rad = rad!=='undefined'?rad:1;
    return [dodeca_unit(rad), dodeca_faces, dodeca_edges];
 }
@@ -509,8 +521,27 @@ var icosa_edges = [
 	[9,10],
 	];
 
-function icosahedron(rad) {
+icosahedron = function icosahedron(rad) {
    rad = rad!=='undefined'?rad:1;
    return [icosa_unit(rad), icosa_faces, icosa_edges];
+}
+
+if(0) {
+   if(typeof module !== 'undefined') {    // we are used as module in nodejs require()
+      var CSG = require(global.lib+'./csg.js').CSG;
+      //console.log("lib="+global.lib);
+      module.exports = { 
+         // -- list all functions we export
+         tetrahedron: function(rad) { return tetrahedron(rad); } 
+      };
+      me = 'cli';
+   }
+}
+
+if(0) {
+   for(var k in global) {
+      console.log(k);
+   }
+   // function a() { } do not show up here ...
 }
 

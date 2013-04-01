@@ -114,21 +114,7 @@ if(/\.scad$/.exec(inf)) {       // -- input .scad file
 }
 
 if(exportSTL) {
-   var csg;
-   if(1) {
-      csg = eval(src+"\n"+scad+"\nmain()\n");    // *.jscad + openscad.js + main()
-
-   } else {                   // -- experimenting to get include() working (not yet)
-      eval(src+"\n"+scad);    // *.jscad + openscad.js
-
-      var incs = "";
-      for(var i=0; i<inc.length; i++) {
-         incs += inc[i];
-      }
-      //console.log("incs",inc,incs);
-
-      var csg = eval(incs+"main()");         // all includes + main()
-   }
+   var csg = eval(src+"\n"+scad+"\nmain()\n");    // *.jscad + openscad.js + main()
    //var stl = csg.fixTJunctions().toStlBinary();   // creates a Blob, which with nodejs doesn't exist yet
    //var stl = csg.fixTJunctions().toStlString();     // creates bad facet normals!! in some cases
    var stl = csg.toStlString();  // creates correct normals, but stl which require clean-up (fixTJunction() needs debug)
@@ -139,17 +125,22 @@ if(exportSTL) {
 
 // -- helper functions 
 
-function include(fn) {     // preparing include(), not yet working
-   console.log("local.include",fn);
+function include(fn) {    
+   //console.log(arguments.callee.caller,"include:"+fn);
    if(0) {
       //var script = vm.createScript(fs.readFileSync(fn),fn);
       //script.runInThisContext();
       var script = vm.runInThisContext(fs.readFileSync(fn),fn);
       return script;
+   } else if(0) {
+      inc.push(fn);
+      
    } else {
       var src = fs.readFileSync(fn);
       //console.log("exec",src);
-      return eval(src);
+      var r = eval(src+scad,'',fn);
+      //echo("result:",r);
+      return r;
    }
 }
 
