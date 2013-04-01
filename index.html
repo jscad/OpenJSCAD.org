@@ -285,7 +285,10 @@ function onload() {
          xhr.send(); 
  
       } else if(document.URL.match(/#(examples\/\S+)$/)) {    // local example, e.g. http://openjscad.org/#examples/example001.jscad
-         fetchExample(RegExp.$1);
+         var fn = RegExp.$1;
+         includePath = fn;
+         includePath = includePath.replace(/\/[^\/]+$/,'/');
+         fetchExample(fn);
       
       } else {
          fetchExample('examples/'+ex[0].file);

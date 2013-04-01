@@ -401,8 +401,10 @@ OpenJsCad.runMainInWorker = function(mainParameters) {
   }
 };
 
+// --- called when drag'n'drop
 OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
   var workerscript = "";
+  workerscript += "_includePath = '';\n";
   workerscript += script;
   if(debugging) {
     workerscript += "\n\n\n\n\n\n\n/* -------------------------------------------------------------------------\n";
@@ -415,6 +417,38 @@ OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
     workerscript += "debugger;\n";
   }
   workerscript += "return main("+JSON.stringify(mainParameters)+");";  
+// trying to get include() somewhere:
+// 1) XHR works for SYNC <---
+// 2) importScripts() does not work in SYNC
+// 3) _csg_libraries.push(fn) provides only 1 level include()
+
+  workerscript += "function include(fn) {\
+  if(0) {\
+    _csg_libraries.push(fn);\
+  } else if(0) {\
+    var url = _includePath!=='undefined'?_includePath:'./';\
+    var index = url.indexOf('index.html');\
+    if(index!=-1) {\
+       url = url.substring(0,index);\
+    }\
+  	 importScripts(url+fn);\
+  } else {\
+   var xhr = new XMLHttpRequest();\
+   xhr.open('GET', _includePath+fn, true);\
+   console.log('include:'+_includePath+fn);\
+   xhr.onload = function() {\
+      var src = this.responseText;\
+      console.log('eval:'+_includePath+fn+':'+src);\
+      eval(src);\
+   };\
+   xhr.onerror = function() {\
+   };\
+   xhr.send();\
+  }\
+}\
+";
+  workerscript += "function includePath(p) { _includePath = p; }\n";
+  
   if(0) {
     OpenJsCad.log.prevLogTime = Date.now();    
     return eval(workerscript);      // old fashion-way
@@ -431,7 +465,6 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
   var baselibraries = [
     "csg.js",
     "openjscad.js",
-    //"a.jscad",
     "openscad.js"
   ];
 
@@ -449,6 +482,7 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
 
   var workerscript = "";
   workerscript += "var _csg_baseurl=" + JSON.stringify(baseurl)+";\n";        // -- we need it early for include()
+  workerscript += "var _includePath=" + JSON.stringify(includePath)+";\n";    //        ''            ''
   
   workerscript += script;
   workerscript += "\n\n\n\n//// The following code is added by OpenJsCad + OpenJSCAD.org:\n";
@@ -469,16 +503,16 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
 //  workerscript += "  catch(e) {var errtxt = e.stack; self.postMessage({cmd: 'error', err: errtxt});}";
   workerscript += "}},false);\n";
 
-// trying to get include() somewhere, but 
-// 1) for now we fail due xhr not allowed in blobs
-// 2) importScripts works (finally!)
+// trying to get include() somewhere: 
+// 1) XHR fails: not allowed in blobs
+// 2) importScripts() works for ASYNC <----
 // 3) _csg_libraries.push(fn) provides only 1 level include()
 
   workerscript += "function include(fn) {\
   if(0) {\
     _csg_libraries.push(fn);\
   } else if(1) {\
-    var url = _csg_baseurl+baseurl;\
+    var url = _csg_baseurl+_includePath;\
     var index = url.indexOf('index.html');\
     if(index!=-1) {\
        url = url.substring(0,index);\
@@ -486,7 +520,7 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
   	 importScripts(url+fn);\
   } else {\
    var xhr = new XMLHttpRequest();\
-   xhr.open('GET', fn, true);\
+   xhr.open('GET', _includePath+fn, true);\
    xhr.onload = function() {\
       return eval(this.responseText);\
    };\
@@ -496,6 +530,7 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
   }\
 }\
 ";
+  workerscript += "function includePath(p) { _includePath = p; }\n";
   
   var blobURL = OpenJsCad.textToBlobUrl(workerscript);
   
