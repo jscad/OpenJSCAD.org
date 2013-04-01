@@ -56,7 +56,7 @@ See for more details <a href="https://plus.google.com/115007999023701819645">G+ 
 <ul>
 <li> <del>3d primitive: <b>torus()</b></del> (done)
 <li> <del>OpenSCAD .scad support for both Web-GUI and CLI</del> (done)
-<li> <del><b>include()</b> for Web-GUI and CLI to include libraries and modules</del> (done) (offline mode not supportet yet)
+<li> <del><b>include()</b> for Web-GUI and CLI to include libraries and modules</del> (done) (offline mode file://Downloads/OpenJSCAD/index.html with include() not supported yet)
 <li> save from built-in editor to local
 <li> <del>complete 2D primitives and transformations</del> (done)
 <li> <del>implementation of <b>linear_extrude()</b> <b>rotate_extrude()</b>, parameter compatible to OpenSCAD</del> (done)
