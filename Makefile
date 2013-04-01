@@ -22,12 +22,13 @@ tests::
 	openjscad examples/example001.jscad -o examples/example001-fromJSCAD.stl
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.stl
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.jscad
-	cd examples/example50 && make
+	cd examples/example050 && make
 	# -- enable if you have openscad installed ('unsetenv DISPLAY' perhaps too)
 	# openscad examples/example001.scad -o examples/example001-fromSCADviaOpenSCAD.stl
 
 clean::
 	rm -f examples/example000.stl examples/example001.stl examples/example001-from*
+	cd examples/example050 && make clean
 
 # TODO:                                        
 # - locally submodule of openscad-openjscad-translator, see http://git-scm.com/book/en/Git-Tools-Submodules
