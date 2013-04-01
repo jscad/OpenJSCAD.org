@@ -140,7 +140,7 @@ function include(fn) {
       //console.log("exec",src);
       var r;
       try {
-         r = eval(src,'',fn);
+         r = eval(src+scad,'',fn);
       } catch(e) {
          if(e instanceof SyntaxError) {
             console.log(e.message);
