@@ -1,7 +1,7 @@
-// Example 050: platonic library (not yet working)
+// Example 050: platonics with library
 
 include("platonic.jscad");
-//require("./platonic.jscad");
+//require("./platonic.jscad");    // doesn't like .jscad extension
 
 function platonic(n) {
    var a = n();
