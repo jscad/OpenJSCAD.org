@@ -1,6 +1,12 @@
 include("a02.jscad");
 
 n = 10;
-a = function a() { 
-   return b().translate([0,0,0]); 
+
+a01 = function() { 
+   return a02.b().translate([0,0,0]); 
+};
+
+a01.b = function(n) {     
+   return n*2;
 }
+

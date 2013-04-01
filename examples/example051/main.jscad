@@ -8,5 +8,5 @@ include("a01.jscad");
 
 function main() {
    echo("n="+n);
-	return a().scale(5);
+	return a01().scale(5);
 }
