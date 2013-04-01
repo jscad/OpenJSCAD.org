@@ -57,7 +57,7 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 <li> save from built-in editor to local
 <li> <del>complete 2D primitives and transformations</del> (done)
 <li> <del>implementation of <b>linear_extrude()</b> <b>rotate_extrude()</b>, parameter compatible to OpenSCAD</del> (done)
-<li> example of platonic solids (in progress, requires include())
+<li> <del>example of platonic solids (in progress, requires include())</del> (done)
 <li> simple 2D/3D text
 <li> 3d operation: hull()
 <li> processing/progress bar (0..100%), perhaps even visual progress seen in the model direct
