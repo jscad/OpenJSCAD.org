@@ -9,6 +9,7 @@ Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
+- 2013/04/01: 0.013: include() on web-online & drag'n'drop (but not off-line) and cli (server-side)
 - 2013/03/20: 0.012: improved UI (slider from the left)
 - 2013/03/28: 0.011: rectangular_extrude(), rotate_extrude() added, and torus()
 - 2013/03/22: 0.010: leave .scad file intact, and translate on-the-fly
@@ -45,7 +46,7 @@ Todo:
 <script src="underscore.js"></script>
 <script src="openscad-openjscad-translator.js"></script>
 <script lang=JavaScript>
-var version = '0.012 (2013/03/30)';
+var version = '0.013 (2013/04/01)';
 //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
 
 $(document).ready(function() {
