@@ -49,6 +49,9 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 <li>2013/03/10: 0.001: initial version
 </ul>
 
+See for more details <a href="https://plus.google.com/115007999023701819645">G+ OpenJSCAD.org Announcements</a> and
+<a href="https://plus.google.com/communities/114958480887231067224">G+ OpenJSCAD Community</a> to discuss with other user and developers.
+
 <h2>Todo</h2>
 <ul>
 <li> <del>3d primitive: <b>torus()</b></del> (done)
