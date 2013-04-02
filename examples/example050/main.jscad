@@ -1,10 +1,6 @@
 // Example 050: platonics with library
 
-// only required when drag'n'drop (must run local web-server)
-includePath("examples/example050/");      
-
 include("platonic.jscad");
-//require("./platonic.jscad");    // doesn't like .jscad extension
 
 function platonic(n) {
    var a = n();

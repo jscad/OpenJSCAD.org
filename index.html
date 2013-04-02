@@ -288,8 +288,6 @@ function onload() {
  
       } else if(document.URL.match(/#(examples\/\S+)$/)) {    // local example, e.g. http://openjscad.org/#examples/example001.jscad
          var fn = RegExp.$1;
-         includePath = fn;
-         includePath = includePath.replace(/\/[^\/]+$/,'/');
          fetchExample(fn);
       
       } else {
@@ -301,6 +299,14 @@ function onload() {
 }
 
 function fetchExample(fn) {
+   if(fn.match(/\.[^\/]+$/)) {     // -- has extension
+      ;                                  // -- we could already check if valid extension (later)
+   } else {                              // -- folder referenced
+      if(!fn.match(/\/$/)) 
+         fn += "/";      // add tailing /
+      fn += 'main.jscad';
+   }
+   
    if(1) {     // doesn't work off-line yet
       var xhr = new XMLHttpRequest();
       xhr.open("GET", fn, true);
@@ -312,6 +318,8 @@ function fetchExample(fn) {
          var source = this.responseText;
          var editorSource = source;
          var asyncComputation = false;
+         var path = fn;
+         includePath(path.replace(/\/[^\/]+$/,'/'));
          
          editor.getSession().setMode("ace/mode/javascript");
          if(fn.match(/\.jscad$/i)) {
@@ -383,6 +391,10 @@ function putSourceInEditor(src,fn) {
    previousFilename = fn;
    previousScript = src;
    gPreviousModificationTime = "";
+}
+
+function includePath(p) {
+   _includePath = p;
 }
 
 // -----------------------------------------------------------------------------------------------------------

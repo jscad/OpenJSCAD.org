@@ -481,7 +481,7 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
 
   var workerscript = "";
   workerscript += "var _csg_baseurl=" + JSON.stringify(baseurl)+";\n";        // -- we need it early for include()
-  workerscript += "var _includePath=" + JSON.stringify(includePath)+";\n";    //        ''            ''
+  workerscript += "var _includePath=" + JSON.stringify(_includePath)+";\n";    //        ''            ''
   
   workerscript += script;
   workerscript += "\n\n\n\n//// The following code is added by OpenJsCad + OpenJSCAD.org:\n";
