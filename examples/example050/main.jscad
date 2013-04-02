@@ -15,7 +15,7 @@ function main() {
    s.push(platonic(dodecahedron));
    s.push(platonic(icosahedron));
    for(var i=0; i<s.length; i++) {
-      s[i] = s[i].translate([i*2,0,0]);
+      s[i] = s[i].translate([(i-s.length/2)*2,0,0]);
    }
    return union(s).scale(5);
 }
