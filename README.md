@@ -85,8 +85,11 @@ More sophisticated JSCAD example, fully object-oriented (OO) programmed with int
 Import of STL models:
 <img src="doc/sshot-04.png">
 
-Drag'n'drop a local file:
+Drag & drop a local file:
 <img src="doc/sshot-05-illu.png">
+
+Drag & drop multiple files (Chrome & Firefox) or a folder (Chrome):
+<img src="doc/sshot-06-illu.png">
 
 <h2>See Also</h2>
 <ul>
