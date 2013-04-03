@@ -166,16 +166,21 @@ OpenJsCad.Viewer.prototype = {
   
   onMouseMove: function(e) {
     if (e.dragging) {
+      //console.log(e.which,e.button);
+      var b = e.button;
+      if(e.which) {                            // RANT: not even the mouse buttons are coherent among the brand (chrome,firefox,etc)
+         b = e.which;
+      }
       e.preventDefault();
-      if(e.altKey||e.button==2) {                      // ROTATE X,Y    (ALT or right mouse button)
+      if(e.altKey||b==3) {                     // ROTATE X,Y (ALT or right mouse button)
         this.angleY += e.deltaX;
         this.angleX += e.deltaY;
         //this.angleX = Math.max(-180, Math.min(180, this.angleX));
-      } else if(e.shiftKey||e.button==1||e.button==4) {// PAN  (SHIFT or middle mouse button)
+      } else if(e.shiftKey||b==2) {            // PAN  (SHIFT or middle mouse button)
         var factor = 5e-3;
         this.viewpointX += factor * e.deltaX * this.viewpointZ;
         this.viewpointY -= factor * e.deltaY * this.viewpointZ;
-      } else {                                         // ROTATE X,Z  left mouse button
+      } else {                                 // ROTATE X,Z  left mouse button
         this.angleZ += e.deltaX;
         this.angleX += e.deltaY;
       }
@@ -401,10 +406,9 @@ OpenJsCad.runMainInWorker = function(mainParameters) {
   }
 };
 
-// --- called when drag'n'drop
 OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
-  var workerscript = "";
-  workerscript += "_includePath = '';\n";
+  var workerscript = "//SYNC\n";
+  workerscript += "_includePath = "+JSON.stringify(_includePath)+";\n";
   workerscript += script;
   if(debugging) {
     workerscript += "\n\n\n\n\n\n\n/* -------------------------------------------------------------------------\n";
@@ -433,8 +437,13 @@ OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
     }\
   	 importScripts(url+fn);\
   } else {\
+   console.log('SYNC checking gMemFs for '+fn);\
+   if(gMemFs[fn]) {\
+      console.log('found locally & eval:',gMemFs[fn].name);\
+      eval(gMemFs[fn].source); return;\
+   }\
    var xhr = new XMLHttpRequest();\
-   xhr.open('GET', _includePath+fn, false);\
+   xhr.open('GET',_includePath+fn,false);\
    console.log('include:'+_includePath+fn);\
    xhr.onload = function() {\
       var src = this.responseText;\
@@ -446,7 +455,7 @@ OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
   }\
 }\
 ";
-  workerscript += "function includePath(p) { _includePath = p; }\n";
+  //workerscript += "function includePath(p) { _includePath = p; }\n";
   
   if(0) {
     OpenJsCad.log.prevLogTime = Date.now();    
@@ -479,11 +488,27 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
     libraries = options['libraries'];
   }
 
-  var workerscript = "";
+  var workerscript = "//ASYNC\n";
   workerscript += "var _csg_baseurl=" + JSON.stringify(baseurl)+";\n";        // -- we need it early for include()
   workerscript += "var _includePath=" + JSON.stringify(_includePath)+";\n";    //        ''            ''
-  
-  workerscript += script;
+  workerscript += "var gMemFs = []\n";
+  var ignoreInclude = false;
+  var mainFile;
+  for(var fn in gMemFs) {
+     workerscript += "// "+gMemFs[fn].name+":\n";
+     //workerscript += gMemFs[i].source+"\n";
+     if(!mainFile) 
+        mainFile = fn;
+     if(fn=='main.jscad'||fn.match(/\/main.jscad$/)) 
+        mainFile = fn;
+     workerscript += "gMemFs[\""+gMemFs[fn].name+"\"] = "+JSON.stringify(gMemFs[fn].source)+";\n";
+     ignoreInclude = true;
+  }
+  if(ignoreInclude) {
+     workerscript += "eval(gMemFs['"+mainFile+"']);\n";
+  } else {
+     workerscript += script;
+  }
   workerscript += "\n\n\n\n//// The following code is added by OpenJsCad + OpenJSCAD.org:\n";
 
   workerscript += "var _csg_baselibraries=" + JSON.stringify(baselibraries)+";\n";
@@ -507,10 +532,14 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
 // 2) importScripts() works for ASYNC <----
 // 3) _csg_libraries.push(fn) provides only 1 level include()
 
-  workerscript += "function include(fn) {\
+  if(!ignoreInclude) {
+     workerscript += "function include(fn) {\
   if(0) {\
     _csg_libraries.push(fn);\
   } else if(1) {\
+   if(gMemFs[fn]) {\
+      eval(gMemFs[fn]); return;\
+   }\
     var url = _csg_baseurl+_includePath;\
     var index = url.indexOf('index.html');\
     if(index!=-1) {\
@@ -529,8 +558,11 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
   }\
 }\
 ";
-  workerscript += "function includePath(p) { _includePath = p; }\n";
-  
+  } else {
+     //workerscript += "function include() {}\n";
+     workerscript += "function include(fn) { eval(gMemFs[fn]); }\n";
+  }
+  //workerscript += "function includePath(p) { _includePath = p; }\n";
   var blobURL = OpenJsCad.textToBlobUrl(workerscript);
   
   if(!window.Worker) throw new Error("Your browser doesn't support Web Workers. Please try the Chrome or Firefox browser instead.");
@@ -728,7 +760,8 @@ OpenJsCad.Processor.prototype = {
     this.viewerdiv = viewerdiv;
     try {
       //this.viewer = new OpenJsCad.Viewer(this.viewerdiv, this.viewerwidth, this.viewerheight, this.initialViewerDistance);
-      this.viewer = new OpenJsCad.Viewer(this.viewerdiv, viewerdiv.offsetWidth, viewer.offsetHeight, this.initialViewerDistance);
+      //this.viewer = new OpenJsCad.Viewer(this.viewerdiv, viewerdiv.offsetWidth, viewer.offsetHeight, this.initialViewerDistance);
+      this.viewer = new OpenJsCad.Viewer(this.viewerdiv, screen.width, screen.height, this.initialViewerDistance);
     } catch(e) {
       //      this.viewer = null;
       this.viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad currently requires Google Chrome or Firefox with WebGL enabled";
@@ -1028,7 +1061,8 @@ OpenJsCad.Processor.prototype = {
     {
       try
       {
-        this.worker = OpenJsCad.parseJsCadScriptASync(this.script, paramValues, this.options, function(err, obj) {
+          console.log("trying async compute");
+          this.worker = OpenJsCad.parseJsCadScriptASync(this.script, paramValues, this.options, function(err, obj) {
           that.processing = false;
           that.worker = null;
           if(err)
@@ -1047,6 +1081,7 @@ OpenJsCad.Processor.prototype = {
       }
       catch(e)
       {
+        console.log("async failed, try sync compute, error: "+e.message);
         useSync = true;
       }
     }
@@ -1055,6 +1090,7 @@ OpenJsCad.Processor.prototype = {
     {
       try
       {
+        this.statusspan.innerHTML = "Rendering code, please wait <img id=busy src='imgs/busy.gif'>";
         var obj = OpenJsCad.parseJsCadScriptSync(this.script, paramValues, this.debugging);
         that.setCurrentObject(obj);
         that.processing = false;

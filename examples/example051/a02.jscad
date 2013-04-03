@@ -3,8 +3,10 @@ n = 11;
 a02 = function() {};
 
 a02.b = function b() { 
-   return union(
-      cube({center:true}),
-      sphere(0.5).translate([-1.5,0,0])
-   ); 
+   var o = [];
+   for(var i=0; i<8; i++) {
+      o.push(cube([4,1,1]).translate([1,-0.5,-0.5]).rotateZ(i/8*360));
+   }
+   o.push(sphere({r:1.2, center:true}));
+   return union(o);
 }

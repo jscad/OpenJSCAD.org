@@ -1,7 +1,7 @@
 <img src="doc/logo.png" width=256 align=right>
 <h1>OpenJSCAD.org</h1>
 
-<b>Version 0.013</b> (ALPHA)
+<b>Version 0.014</b> (ALPHA)
 
 <b>OpenJSCAD.org</b> is a more up-to-date <a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a> frontend where you can edit .jscad files either locally or online via JS editor (built-in).
 A few functions are available to make the transition from <a href="http://openscad.org/">OpenSCAD</a> to OpenJSCAD easier (<a href="https://github.com/Spiritdude/OpenSCAD.jscad">OpenSCAD.jscad</a> built-in),
@@ -35,6 +35,7 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 
 <h2>History</h2>
 <ul>
+<li>2013/04/03: 0.014: multiple files via drag'n'drop, developing locally
 <li>2013/04/01: 0.013: include() on web-online & drag'n'drop (but not off-line) and cli (server-side)
 <li>2013/03/20: 0.012: improved UI (slider from the left)
 <li>2013/03/28: 0.011: added support for rectangular_extrude(), rotate_extrude() and torus()
