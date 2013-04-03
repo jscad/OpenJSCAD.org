@@ -15,7 +15,7 @@
    inkscape:version="0.48.2 r9819"
    width="1280"
    height="800"
-   sodipodi:docname="sshot-06.png">
+   sodipodi:docname="sshot-06-illu.svg">
   <metadata
      id="metadata8">
     <rdf:RDF>
@@ -44,30 +44,30 @@
      id="namedview4"
      showgrid="false"
      inkscape:zoom="0.528125"
-     inkscape:cx="405.69441"
-     inkscape:cy="156.32012"
+     inkscape:cx="834.7903"
+     inkscape:cy="510.89464"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2" />
   <image
-     width="1280"
-     height="800"
+     y="1.0076751"
+     x="-0.0056014634"
+     id="image3840"
      xlink:href="file:////BRAHMA/kiwi/Projects/OpenJSCAD.org/doc/sshot-06.png"
-     id="image10"
-     x="0"
-     y="0" />
+     height="800"
+     width="1280" />
   <text
      xml:space="preserve"
      style="font-size:27.15993118px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;font-family:Sans"
      x="901.90125"
-     y="394.33759"
+     y="368.33759"
      id="text2987"
      sodipodi:linespacing="125%"><tspan
        sodipodi:role="line"
        id="tspan2989"
        x="901.90125"
-       y="394.33759">use your favorite editor</tspan></text>
+       y="368.33759">use your favorite editor</tspan></text>
   <path
      style="fill:none;stroke:#ff0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
      d="m 994.80301,228.28952 c 0,0 -68.28392,-62.92832 -321.3361,28.11691 -253.05218,91.04523 -467.27625,439.15934 -467.27625,439.15934"
@@ -84,14 +84,8 @@
      sodipodi:nodetypes="csc"
      inkscape:connector-curvature="0"
      id="path2995"
-     d="m 1004.1753,293.15104 c 0,0 -66.94501,-84.35074 -97.73972,-84.35074 -30.79471,0 -37.48921,-4.01669 -37.48921,-4.01669"
-     style="fill:none;stroke:#ff0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
-  <path
-     style="fill:#ff0000;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
-     d="m 203.51286,702.26027 13.38901,-46.86151 0,22.7613 22.7613,-13.389 z"
-     id="path3778"
-     inkscape:connector-curvature="0"
-     sodipodi:nodetypes="ccccc" />
+     d="m 1004.1753,293.15104 c 0,0 -66.94501,-84.35074 -97.73972,-84.35074 -30.79471,0 -43.64306,0.71704 -43.64306,0.71704"
+     style="fill:none;stroke:#ff0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
   <text
      xml:space="preserve"
      style="font-size:16.32581711px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -115,15 +109,16 @@
        x="343.28113"
        sodipodi:role="line">drag &amp; drop multiple .jscad once</tspan></text>
   <path
-     style="fill:none;stroke:#ff0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-     d="M 1044.3423,402.34658 929.19689,609.87614"
+     style="fill:none;stroke:#ff0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     d="M 1034.8748,374.65427 929.19689,569.87614"
      id="path3796"
-     inkscape:connector-curvature="0" />
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
   <path
      sodipodi:nodetypes="ccccc"
      inkscape:connector-curvature="0"
      id="path3798"
-     d="m 925.18018,616.57064 13.38901,-46.86151 0,22.7613 22.7613,-13.389 z"
+     d="m 925.18018,576.57064 13.38901,-46.86151 0,22.7613 22.7613,-13.389 z"
      style="fill:#ff0000;fill-opacity:1;stroke:none" />
   <text
      sodipodi:linespacing="125%"
@@ -155,4 +150,12 @@
      sodipodi:nodetypes="ccccc"
      inkscape:transform-center-x="-22.231245"
      inkscape:transform-center-y="-20.97315" />
+  <path
+     inkscape:transform-center-y="-22.74721"
+     inkscape:transform-center-x="-19.66145"
+     sodipodi:nodetypes="ccccc"
+     inkscape:connector-curvature="0"
+     id="path3843"
+     d="m 201.02343,703.04753 17.47924,-45.49442 -2.01214,22.67218 23.8558,-11.32444 z"
+     style="fill:#ff0000;fill-opacity:1;stroke:none" />
 </svg>
