@@ -60,7 +60,7 @@ canvas {
   /* display: inline-block;     ineffective since we do control in openjscad.js */
   position: absolute;         
 
-  bottom: 8em;                /* draggable via jQuery cannot move bottom: align, stick at the bottom (bug!!) */
+  bottom: 9em;                /* draggable via jQuery cannot move bottom: align, stick at the bottom (bug!!) */
   left: 1em;
   /* top: 2em;                if draggable, but must be left/top oriented, cannot be aligned bottom which looks nicer
      left: 16em;
