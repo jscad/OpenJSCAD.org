@@ -35,8 +35,8 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 
 <h2>History</h2>
 <ul>
-<li>2013/04/03: 0.014: multiple files via drag'n'drop, developing locally
-<li>2013/04/01: 0.013: include() on web-online & drag'n'drop (but not off-line) and cli (server-side)
+<li>2013/04/03: 0.014: multiple files via drag & drop, developing locally
+<li>2013/04/01: 0.013: include() on web-online & drag & drop (but not off-line) and cli (server-side)
 <li>2013/03/20: 0.012: improved UI (slider from the left)
 <li>2013/03/28: 0.011: added support for rectangular_extrude(), rotate_extrude() and torus()
 <li>2013/03/22: 0.010: leave .scad file intact, and translate on-the-fly
@@ -57,7 +57,7 @@ See for more details <a href="https://plus.google.com/115007999023701819645">G+ 
 <ul>
 <li> <del>3d primitive: <b>torus()</b></del> (done)
 <li> <del>OpenSCAD .scad support for both Web-GUI and CLI</del> (done)
-<li> <del><b>include()</b> for Web-GUI and CLI to include libraries and modules, support of multiple .jscad drag'n'drop with include()</del> (done) 
+<li> <del><b>include()</b> for Web-GUI and CLI to include libraries and modules, support of multiple .jscad drag & drop with include()</del> (done) 
 <li> save from built-in editor to local
 <li> <del>complete 2D primitives and transformations</del> (done)
 <li> <del>implementation of <b>linear_extrude()</b> <b>rotate_extrude()</b>, parameter compatible to OpenSCAD</del> (done)
