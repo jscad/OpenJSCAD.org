@@ -2699,24 +2699,18 @@ CSG.Polygon.prototype = {
 		{
 			// AMF requires triangular polygons. If our polygon has more vertices, create
 			// multiple triangles:
-			var n = 1, t = [];
-			var firstVertexAMF = this.vertices[0].toAMFString();
+			var n = 0, t = [];
 			result += "<mesh>\n<vertices>\n";
-			for(var i = 0; i < this.vertices.length - 2; i++) {
-				//result += <vertex>\n<coordinates>";
-				result += firstVertexAMF;
-				result += this.vertices[i + 1].toAMFString();
-				result += this.vertices[i + 2].toAMFString();
-				//result += "</coordinates>\n</vertex>\n";
-				t.push([0,n++,n++]);
-			}
+			for(var i = 0; i < this.vertices.length; i++) {
+            result += this.vertices[i].toAMFString();
+         }
 			result += "</vertices>\n<volume>\n";
-			for(var i=0; i<t.length; i++) {
- 				result += "<triangle>\n";
- 				for(var j=1; j<=3; j++) {
- 					result += "<v" + j + ">" + t[i][j-1] + "</v" + j +">\n";
-				}
- 				result += "</triangle>\n";
+			for(var i = 0; i < this.vertices.length - 2; i++) {
+				result += "<triangle>\n";
+				result += "<v1>"+n+"</v1>";
+				result += "<v2>"+(n+i+1)+"</v2>";
+				result += "<v3>"+(n+i+2)+"</v3>";
+				result += "</triangle>\n";
 			}
 			result += "</volume>\n";
 			result += "</mesh>\n";

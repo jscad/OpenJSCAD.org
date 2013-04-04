@@ -581,7 +581,7 @@ function parseAMF(amf,fn) {
                var v1 = parseInt(el.find('v1').text());
                var v2 = parseInt(el.find('v2').text());
                var v3 = parseInt(el.find('v3').text());
-               f.push([v1+sn,v2+sn,v3+sn]);
+               f.push([v1+sn,v3+sn,v2+sn]);        // reverse order for polyhedron()
             });
          });
       });
