@@ -2710,7 +2710,7 @@ CSG.Polygon.prototype = {
 				//result += "</coordinates>\n</vertex>\n";
 				t.push([0,n++,n++]);
 			}
-			result += "<volume>\n";
+			result += "</vertices>\n<volume>\n";
 			for(var i=0; i<t.length; i++) {
  				result += "<triangle>\n";
  				for(var j=1; j<=3; j++) {

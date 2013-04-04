@@ -554,7 +554,7 @@ function parseAMF(amf,fn) {
    var f = [];
    obj.each(function() {
       var el = $(this);
-      var mesh = el.find('meshs');
+      var mesh = el.find('mesh');
       mesh.each(function() {
          var el = $(this);
          var vertices = el.find('vertices');
