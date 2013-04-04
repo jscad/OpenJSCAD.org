@@ -48,9 +48,9 @@ Todo:
 <script src="underscore.js"></script>
 <script src="openscad-openjscad-translator.js"></script>
 <script lang=JavaScript>
-version = '0.014 (2013/04/03)';
+var version = '0.014 (2013/04/04)';
 //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
-me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
+var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
 var browser = 'unknown';
 if(navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)/i))
    browser = RegExp.$1.toLowerCase();
