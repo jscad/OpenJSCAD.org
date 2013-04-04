@@ -63,7 +63,7 @@ See for more details <a href="https://plus.google.com/115007999023701819645">G+ 
 <li> <del>implementation of <b>linear_extrude()</b> <b>rotate_extrude()</b>, parameter compatible to OpenSCAD</del> (done)
 <li> <del>example of platonic solids (in progress, requires include())</del> (done)
 <li> simple 2D/3D text
-<li> 3d operation: hull()
+<li> 3d operation: hull(), see also <a href="http://www.qhull.org/">QHull.org</a>
 <li> processing/progress bar (0..100%), perhaps even visual progress seen in the model direct
 <li> <del>STL importer</del> (done) & AMF importer / exporter
 <li> integration into <a href="https://github.com/Spiritdude/RepRapCloud">RepRap Cloud</a> as first stage of the workflow

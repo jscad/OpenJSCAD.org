@@ -108,7 +108,9 @@ function cube(p) {
 
    var x = s, y = s, z = s; 
    if(v&&v.length) { x = v[0], y = v[1], z = v[2] }
-   var o = round?CSG.roundedCube({radius:[x/2,y/2,z/2], roundradius:r, resolution: fn}):CSG.cube({radius:[x/2,y/2,z/2]});
+   var o = round?
+      CSG.roundedCube({radius:[x/2,y/2,z/2], roundradius:r, resolution: fn}):
+      CSG.cube({radius:[x/2,y/2,z/2]});
    if(off) o = o.translate([x/2,y/2,z/2]);
    //if(v&&v.length) o = o.scale(v);      // we don't scale afterwards, we already created box with the correct size
    return o;
