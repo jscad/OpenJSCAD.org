@@ -323,13 +323,15 @@ function onload() {
             var data = JSON.parse(this.responseText);
             //echo(data.url,data.filename,data.file);
             fetchExample(data.file);
+            document.location = document.URL.replace(/#.*$/,'#');
          }
          xhr.send(); 
  
       } else if(document.URL.match(/#(examples\/\S+)$/)) {    // local example, e.g. http://openjscad.org/#examples/example001.jscad
          var fn = RegExp.$1;
          fetchExample(fn);
-      
+         document.location = document.URL.replace(/#.*$/,'#');
+         
       } else {
          fetchExample('examples/'+ex[0].file);
       }
