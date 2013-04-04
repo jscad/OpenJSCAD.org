@@ -232,7 +232,7 @@ OpenJSCAD.org
 <!--script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script-->
 <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 
-<script id=stlWorker type="javascript/worker">
+<script id=conversionWorker type="javascript/worker">
 // adapted from http://www.html5rocks.com/en/tutorials/workers/basics/
 
 self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take quite some while for 1MB+ large STLs
@@ -246,9 +246,13 @@ self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take q
          url = url.substring(0,index);
       }
       importScripts(url+'csg.js',url+'openjscad.js',url+'openscad.js');
-      var src;
-      if(data.filename.match(/\.obj$/i)) {
+      var src, type;
+      data.filename.match(/\.(stl|obj|amf)$/i);
+      type = RegExp.$1;
+      if(type=='obj') {
          src = parseOBJ(data.source,data.filename);
+      } else if(type=='amf') {
+         src = parseAMF(data.source,data.filename);
       } else {
          src = parseSTL(data.source,data.filename);
       }
@@ -392,15 +396,15 @@ function fetchExample(fn) {
             putSourceInEditor(editorSource,fn);
             gProcessor.setJsCad(source,fn);
             
-         } else if(fn.match(/\.stl$/i)||fn.match(/\.obj$/i)) {
+         } else if(fn.match(/\.(stl|obj|amf)$/i)) {
             status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
             if(1) {
-               // import STL/OBJ via Worker() (async computation) as it takes quite some time
+               // import STL/OBJ/AMF via Worker() (async computation) as it takes quite some time
                // RANT: the whole Blob() & Worker() is anything but a clean concept, mess over mess:
                //       for example, to pass a DOM variable to worker via postMessage may create a circular reference
                //       as the data is serialized, e.g. you cannot pass document and in the Worker access document.window.
                //       Dear Google / JavaScript developers: don't make JS unuseable with this mess!
-               var blobURL = new Blob([document.querySelector('#stlWorker').textContent]);
+               var blobURL = new Blob([document.querySelector('#conversionWorker').textContent]);
                // -- the messy part coming here:
                //var url = window.URL; url = url.replace(/#.*$/,''); url = url.createObjectURL(blobURL);
                var worker = new Worker(window.webkitURL!==undefined?window.webkitURL.createObjectURL(blobURL):window.URL.createObjectURL(blobURL));
@@ -419,8 +423,13 @@ function fetchExample(fn) {
 
             } else {       // async (disabled)
                status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-               if(fn.match(/\.obj$/i)) {
+               fn.match(/\.(stl|obj|amf)$/i);
+               var type = RegExp.$1;
+               if(type=='obj') {
                   editorSource = source = parseOBJ(source,fn);   
+                  putSourceInEditor(source,fn);
+               } else if(type=='amf') {
+                  editorSource = source = parseAMF(source,fn);   
                   putSourceInEditor(source,fn);
                } else {
                   editorSource = source = parseSTL(source,fn);   
@@ -515,7 +524,7 @@ function walkFileTree(item,path) {              // this is the core of the drag'
    //console.log("item=",item);
    if(item.isFile) {
       item.file(function(file) {                // this is also asynchronous ... (making everything complicate)
-         if(file.name.match(/\.(jscad|scad|stl)$/)) {   // for now all files OpenJSCAD can handle
+         if(file.name.match(/\.(jscad|scad|stl|amf)$/)) {   // for now all files OpenJSCAD can handle
             console.log("walkFileTree File: "+path+item.name);
             gMemFsTotal++;
             gCurrentFiles.push(file);
@@ -557,14 +566,8 @@ function setCurrentFile(file) {              // set one file (the one dragged) o
   gPreviousModificationTime = "";
 
   console.log("execute: "+file.name);
-  if(file.name.match(/\.jscad$/i)) {
-    gCurrentFile.lang = 'jscad';
-  } else if(file.name.match(/\.scad$/i)) {
-    gCurrentFile.lang = 'scad';
-  } else if(file.name.match(/\.stl$/i)) {
-    gCurrentFile.lang = 'stl';
-  } else if(file.name.match(/\.obj$/i)) {
-    gCurrentFile.lang = 'obj';
+  if(file.name.match(/\.(jscad|scad|stl|obj|amf)$/i)) {
+    gCurrentFile.lang = RegExp.$1;
   } else {
     throw new Error("Please drop a file with .jscad, .scad or .stl extension");
   }
@@ -730,11 +733,11 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
          }
          editor.getSession().setMode("ace/mode/scad");  
          
-      } else if(gCurrentFile.lang=='stl'||gCurrentFile.lang=='obj') {
+      } else if(gCurrentFile.lang.match(/(stl|obj|amf)/i)) {
          status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-         if(1) {     // -- if you debug the STL parsing, change it to 0 so echo() works, otherwise in workers
+         if(0) {     // -- if you debug the STL parsing, change it to 0 so echo() works, otherwise in workers
                      //    echo() is not working.. 
-            var blobURL = new Blob([document.querySelector('#stlWorker').textContent]);
+            var blobURL = new Blob([document.querySelector('#conversionWorker').textContent]);
             // -- the messy part coming here:
             var worker = new Worker(window.webkitURL!==undefined?window.webkitURL.createObjectURL(blobURL):window.URL.createObjectURL(blobURL));
             worker.onmessage = function(e) {
@@ -755,7 +758,15 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
             worker.postMessage({url: u, source: source, filename: fn });
             asyncComputation = true;
          } else {
-            editorSource = source = parseSTL(source,fn);
+            fn.match(/\.(stl|obj|amf)$/i);
+            var type = RegExp.$1;
+            if(type=='obj') {
+               editorSource = source = parseOBJ(source,fn);   
+            } else if(type=='amf') {
+               editorSource = source = parseAMF(source,fn);   
+            } else {
+               editorSource = source = parseSTL(source,fn);   
+            }
          }
       } else {
          throw new Error("Please drop a file with .jscad, .scad or .stl extension");

@@ -539,6 +539,59 @@ function status(s) {
 
 // --------------------------------------------------------------------------------------------
 
+// http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format
+
+function parseAMF(amf,fn) {
+   var xml, err = '';
+   try {
+      xml = $.parseXML(amf);
+   } catch(e) {
+      echo("XML parsing error:",e.message);
+      err += "XML parsing error / invalid XML";
+   }
+   var obj = $(xml).find('object');
+   var v = [];
+   var f = [];
+   obj.each(function() {
+      var el = $(this);
+      var mesh = el.find('meshs');
+      mesh.each(function() {
+         var el = $(this);
+         var vertices = el.find('vertices');
+         vertices.each(function() {
+            var el = $(this);
+            var vertex = el.find('vertex');
+            vertex.each(function() {
+               var el = $(this);
+               var x = el.find('x');
+               var y = el.find('y');
+               var z = el.find('z');
+               v.push([x,y,z]);
+            });
+         });
+         var volumes = el.find('volumes');
+         volumes.each(function() {
+            var el = $(this);
+            var triangle = el.find('triangle');
+            triangle.each(function() {
+               var el = $(this);
+               var v1 = el.find('v1');
+               var v2 = el.find('v2');
+               var v3 = el.find('v3');
+               f.push([v1,v2,v3]);
+            });
+         });
+      });
+   });
+   var src = "// OpenJSCAD.org: amf importer '"+fn+"'\n\n";
+   if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
+   src += "// objects: 1\n// object #1: polygons: "+f.length+"\n";
+   src += "function main() { return "; 
+   src += vt2jscad(v,f);
+   src += "; }";
+   return src;
+}
+
 // coded based on info at http://www.andrewnoske.com/wiki/index.php?title=OBJ_file_format
 
 function parseOBJ(obj,fn) {
@@ -1000,7 +1053,8 @@ if(typeof module !== 'undefined') {    // we are used as module in nodejs requir
    //console.log("lib="+global.lib);
    module.exports = { 
       // -- list all functions we export
-      parseSTL: function(stl,fn) { return parseSTL(stl,fn); } 
+      parseSTL: function(stl,fn) { return parseSTL(stl,fn); },
+      parseAMF: function(amf,fn) { return parseAMF(amf,fn); } 
    };
    me = 'cli';
 }

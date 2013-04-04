@@ -413,6 +413,16 @@ CSG.prototype = {
 		}
 		result += "<object id=\"0\">\n";
 		this.polygons.map(function(p) {
+			var r = 1, g = 0.4, b = 1, colorSet = false;
+			if(p.shared && p.shared.color) {
+				r = p.shared.color[0];
+				g = p.shared.color[1];
+				b = p.shared.color[2];
+				colorSet = true;
+			}
+			if(1||colorSet) {
+   			result += "<color><r>"+r+"</r><g>"+g+"</g><b>"+b+"</b></color>\n";
+			}
 			result += p.toAMFString();
 		});
 		result += "</object>\n";
