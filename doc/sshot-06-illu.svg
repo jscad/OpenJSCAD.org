@@ -24,7 +24,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -43,7 +43,7 @@
      inkscape:window-height="748"
      id="namedview4"
      showgrid="false"
-     inkscape:zoom="0.528125"
+     inkscape:zoom="0.74688154"
      inkscape:cx="834.7903"
      inkscape:cy="510.89464"
      inkscape:window-x="-8"
@@ -73,13 +73,13 @@
        y="488.81094">use your favorite editor or IDE</tspan></text>
   <path
      style="fill:none;stroke:#ff0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-     d="m 994.80301,228.28952 c 0,0 -68.28392,-62.92832 -321.3361,28.11691 -253.05218,91.04523 -467.27625,439.15934 -467.27625,439.15934"
+     d="m 995.27638,232.0765 c 0,0 -68.75729,-66.7153 -321.80947,24.32993 -253.05218,91.04523 -467.27625,439.15934 -467.27625,439.15934"
      id="path2991"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="csc" />
   <path
-     style="fill:none;stroke:#ff0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-     d="m 1004.1753,275.15104 c 0,0 -64.26721,-66.94503 -95.06192,-66.94503 -30.79471,0 -64.26722,2.67781 -64.26722,2.67781"
+     style="fill:none;stroke:#ff0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     d="m 1004.1753,275.15104 c 0,0 -39.78629,-48.85408 -68.55304,-59.84444 -32.21483,-12.30769 -93.14296,-2.52929 -93.14296,-2.52929"
      id="path2993"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="csc" />
@@ -87,7 +87,7 @@
      sodipodi:nodetypes="csc"
      inkscape:connector-curvature="0"
      id="path2995"
-     d="m 1004.1753,293.15104 c 0,0 -66.94501,-84.35074 -97.73972,-84.35074 -30.79471,0 -43.64306,0.71704 -43.64306,0.71704"
+     d="m 1004.1753,293.15104 c 0,0 -53.69057,-64.94246 -91.1125,-77.25015 -29.25319,-9.62107 -62.1046,-4.49006 -62.1046,-4.49006"
      style="fill:none;stroke:#ff0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
   <text
      xml:space="preserve"
