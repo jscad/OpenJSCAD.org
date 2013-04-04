@@ -240,7 +240,7 @@ self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take q
    var data = e.data; // JSON.parse(e.data);
    if(data.url) {     // RANT: why do something simple, when it can be done complicate: Workers & importScripts() (guys!!)
       var url = data.url;
-      url = url.replace(/#.*$/,'');
+      url = url.replace(/#.*$/,'');    // -- just to be sure ...
       url = url.replace(/\?.*$/,'');
       var index = url.indexOf('index.html');
       if(index!=-1) {
@@ -750,7 +750,10 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
                   // echo("STL worker",data);
                }
             };
-            worker.postMessage({url: document.location.href, source: source, filename: fn });
+            var u = document.location.href;
+            u = u.replace(/#.*$/,'');
+            u = u.replace(/\?.*$/,'');
+            worker.postMessage({url: u, source: source, filename: fn });
             asyncComputation = true;
          } else {
             editorSource = source = parseSTL(source,fn);
