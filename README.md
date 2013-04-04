@@ -103,4 +103,4 @@ Drag & drop multiple files (Chrome & Firefox) or a folder (Chrome):
 That's all for now,
 
 Rene K. Mueller<br>
-initial version 2013/03/10, updated 2013/03/21
+initial version 2013/03/10, updated 2013/04/04
