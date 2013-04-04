@@ -1168,7 +1168,10 @@ OpenJsCad.Processor.prototype = {
                                                          // HINT: fixTJunction() needs debugging
     }
     else if(format == "amf") {
-      blob = this.currentObject.toAMFString();
+      blob = this.currentObject.toAMFString({
+        creator: "OpenJSCAD.org "+version,
+        date: new Date()
+      });
       blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
     }  
     else if(format == "x3d") {

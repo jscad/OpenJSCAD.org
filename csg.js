@@ -5,6 +5,7 @@ Copyright (c) 2013 Eduard Bespalov (edwbes@gmail.com)
 Copyright (c) 2012 Joost Nieuwenhuijse (joost@newhouse.nl)
 Copyright (c) 2011 Evan Wallace (http://evanw.github.com/csg.js/)
 Copyright (c) 2012 Alexandre Girard (https://github.com/alx)
+Copyright (c) 2013 Rene K. Mueller (http://OpenJSCAD.org): AMF export added
 
 All code released under MIT license
 
@@ -405,8 +406,11 @@ CSG.prototype = {
 		return result;
 	},
 
-	toAMFString: function() {
+	toAMFString: function(m) {
 		var result = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<amf unit=\"millimeter\">\n";
+		for(var k in m) {
+			result += "<metadata type=\""+k+"\">"+m[k]+"</metadata>\n";
+		}
 		result += "<object id=\"0\">\n";
 		this.polygons.map(function(p) {
 			result += p.toAMFString();
