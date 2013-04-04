@@ -1158,12 +1158,14 @@ OpenJsCad.Processor.prototype = {
     var format = this.selectedFormat();
     
     var blob;
-    if(format == "stl")
-    {      
+    if(format == "stl") {      
       //blob=this.currentObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now
       blob = this.currentObject.toStlBinary();        // gives no normal errors, but stl which require cleanup
                                                       // HINT: fixTJunction() needs debugging
     }
+    else if(format == "amf") {
+      blob=this.currentObject.toAMF(bb);
+      
     else if(format == "x3d") {
       blob=this.currentObject.fixTJunctions().toX3D(bb);
     }
@@ -1194,6 +1196,11 @@ OpenJsCad.Processor.prototype = {
         displayName: "STL",
         extension: "stl",
         mimetype: "application/sla",
+        },
+      amf: {
+        displayName: "AMF",
+        extension: "amf",
+        mimetype: "application/amf",
         },
       x3d: {
         displayName: "X3D",

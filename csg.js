@@ -405,6 +405,15 @@ CSG.prototype = {
 		return result;
 	},
 
+	toAMFString: function() {
+		var result = "<?xml version="1.0" encoding="UTF-8"?>\n<amf unit="millimeter">\n";
+		this.polygons.map(function(p) {
+			result += p.toAMFString();
+		});
+		result += "</amf>\n";
+		return result;
+	},
+
 	toX3D: function() {
 		// materialPolygonLists
 		// key: a color string (e.g. "0 1 1" for yellow)
@@ -2166,6 +2175,10 @@ CSG.Vector3D.prototype = {
 		return this._x + " " + this._y + " " + this._z;
 	},
 
+	toAMFString: function() {
+		return "<x>"+this._x + "</x><y>" + this._y + "</y><z>" + this._z + "</z>";
+	},
+
 	toString: function() {
 		return "(" + this._x.toFixed(2) + ", " + this._y.toFixed(2) + ", " + this._z.toFixed(2) + ")";
 	},
@@ -2241,6 +2254,10 @@ CSG.Vertex.prototype = {
 
 	toStlString: function() {
 		return "vertex " + this.pos.toStlString() + "\n";
+	},
+
+	toStlString: function() {
+		return "<vertex>\n<coordinates>" + this.pos.toStlString() + "\n</coordinates>\n</vertex>\n";
 	},
 
 	toString: function() {
@@ -2656,6 +2673,37 @@ CSG.Polygon.prototype = {
 				result += this.vertices[i + 2].toStlString();
 				result += "endloop\nendfacet\n";
 			}
+		}
+		return result;
+	},
+
+	toAMFString: function() {
+		var result = "";
+		if(this.vertices.length >= 3) // should be!
+		{
+			// AMF requires triangular polygons. If our polygon has more vertices, create
+			// multiple triangles:
+			var n = 0;
+			var firstVertexStl = this.vertices[0].toStlString();
+			result += "<mesh>\n<vertices>\n";
+			for(var i = 0; i < this.vertices.length - 2; i++) {
+				//result += <vertex>\n<coordinates>";
+				result += firstVertxStl;
+				result += this.vertices[i + 1].toStlString();
+				result += this.vertices[i + 2].toStlString();
+				//result += "</coordinates>\n</vertex>\n";
+				push(t,[n++,n++,n++]);
+			}
+			result += "\n<volume>";
+			for(var i=0; i<n; i++) {
+ 				result += "<triangle>\n";
+ 				for(var j in [1,2,3]) {
+ 					result += "<v"+j+">"+t[i][j-1]+"</v"+j+">\n";
+				}
+ 				result += "</triangle>\n";
+			}
+			result += "</volume>\n";
+			result += "</mesh>\n";
 		}
 		return result;
 	},
