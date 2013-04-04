@@ -24,7 +24,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -40,14 +40,14 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1280"
-     inkscape:window-height="1002"
+     inkscape:window-height="748"
      id="namedview4"
      showgrid="false"
      inkscape:zoom="0.528125"
      inkscape:cx="834.7903"
      inkscape:cy="510.89464"
      inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-y="1016"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2" />
   <image
@@ -63,14 +63,14 @@
   <text
      xml:space="preserve"
      style="font-size:27.15993118px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;font-family:Sans"
-     x="901.90125"
-     y="368.33759"
+     x="871.45154"
+     y="488.81094"
      id="text2987"
      sodipodi:linespacing="125%"><tspan
        sodipodi:role="line"
        id="tspan2989"
-       x="901.90125"
-       y="368.33759">use your favorite editor</tspan></text>
+       x="871.45154"
+       y="488.81094">use your favorite editor or IDE</tspan></text>
   <path
      style="fill:none;stroke:#ff0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
      d="m 994.80301,228.28952 c 0,0 -68.28392,-62.92832 -321.3361,28.11691 -253.05218,91.04523 -467.27625,439.15934 -467.27625,439.15934"
@@ -111,48 +111,27 @@
        y="228.05782"
        x="343.28113"
        sodipodi:role="line">drag &amp; drop multiple .jscad once</tspan></text>
-  <path
-     style="fill:none;stroke:#ff0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-     d="M 1034.8748,374.65427 929.19689,569.87614"
-     id="path3796"
-     inkscape:connector-curvature="0"
-     sodipodi:nodetypes="cc" />
-  <path
-     sodipodi:nodetypes="ccccc"
-     inkscape:connector-curvature="0"
-     id="path3798"
-     d="m 925.18018,576.57064 13.38901,-46.86151 0,22.7613 22.7613,-13.389 z"
-     style="fill:#ff0000;fill-opacity:1;stroke:none" />
   <text
      sodipodi:linespacing="125%"
      id="text3800"
-     y="630.15387"
-     x="292.0321"
-     style="font-size:27.15993118px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;font-family:Sans"
+     y="704.6842"
+     x="524.27478"
+     style="font-size:21.07926559px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;font-family:Sans"
      xml:space="preserve"><tspan
-       y="630.15387"
-       x="292.0321"
+       y="704.6842"
+       x="524.27478"
        id="tspan3802"
-       sodipodi:role="line">when you save file, 3D preview updates</tspan></text>
+       sodipodi:role="line">when you update any file, </tspan><tspan
+       y="731.03326"
+       x="524.27478"
+       sodipodi:role="line"
+       id="tspan3021">it auto reloads</tspan></text>
   <path
      style="fill:none;stroke:#ff0000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
      d="m 491.3681,704.26862 5.3556,6.6945 7.36396,-12.71955"
      id="path3804"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="ccc" />
-  <path
-     style="fill:none;stroke:#ff0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-     d="m 562.31312,643.357 -44.85316,47.53097"
-     id="path3806"
-     inkscape:connector-curvature="0" />
-  <path
-     style="fill:#ff0000;fill-opacity:1;stroke:none"
-     d="m 510.39573,697.69193 24.8148,-41.9463 -5.76145,22.02004 25.40914,-7.19151 z"
-     id="path3808"
-     inkscape:connector-curvature="0"
-     sodipodi:nodetypes="ccccc"
-     inkscape:transform-center-x="-22.231245"
-     inkscape:transform-center-y="-20.97315" />
   <path
      inkscape:transform-center-y="-22.74721"
      inkscape:transform-center-x="-19.66145"
