@@ -1,7 +1,7 @@
 // openscad.js, a few functions to simplify coding OpenSCAD-like
 //    written by Rene K. Mueller <spiritdude@gmail.com>, License: GPLv2
 //
-// Version: 0.012
+// Version: 0.013
 //
 // Description:
 // Helping to convert OpenSCAD .scad files to OpenJSCad .jscad files with 
@@ -12,6 +12,7 @@
 //     http://openjscad.org/
 //
 // History:
+// 2013/04/04: 0.013: cube({round: true}), cylinder({round: true}) added
 // 2013/03/28: 0.012: rectangular_extrude() along 2d path, rotate_extrude() and torus() added
 // 2013/03/18: 0.011: import of STL (binary / ASCII), polyhedron() implemented, better blend between browser & nodejs
 // 2013/03/15: 0.010: circle(), square(), polygon() (partially) and linear_extrude() implemented
@@ -94,16 +95,22 @@ function intersection() {
 // -- 3D primitives (OpenSCAD like notion)
 
 function cube(p) { 
-   var s = 1, v = null, off = 0;
+   var s = 1, v = null, off = 0, round = false, r = 0, fn = 8;
    if(p&&p.length) v = p;		
    if(p&&p.size&&p.size.length) v = p.size;
    if(p&&p.size&&!p.size.length) s = p.size;
-   if(p&&!p.size&&!p.length&&p.center===undefined) s = p;
+   if(p&&!p.size&&!p.length&&p.center===undefined&&!p.round&&!p.radius) s = p;
    off = s/2;
    if(p&&p.center==true) off = 0;
-   var o = CSG.cube({radius:s/2});
-   if(off) o = o.translate([off,off,off]);
-   if(v&&v.length) o = o.scale(v);
+   if(p&&p.round==true) { round = true, r = v&&v.length?(v[0]+v[1]+v[2])/30:s/10}
+   if(p&&p.radius) { round = true, r = p.radius; }
+   if(p&&p.fn) fn = p.fn;
+
+   var x = s, y = s, z = s; 
+   if(v&&v.length) { x = v[0], y = v[1], z = v[2] }
+   var o = round?CSG.roundedCube({radius:[x/2,y/2,z/2], roundradius:r, resolution: fn}):CSG.cube({radius:[x/2,y/2,z/2]});
+   if(off) o = o.translate([x/2,y/2,z/2]);
+   //if(v&&v.length) o = o.scale(v);      // we don't scale afterwards, we already created box with the correct size
    return o;
 }
 
@@ -122,7 +129,7 @@ function sphere(p) {
 }
 
 function cylinder(p) {
-   var r1 = 1, r2 = 1, h = 1, fn = 32; var a = arguments;
+   var r1 = 1, r2 = 1, h = 1, fn = 32, round = false; var a = arguments;
    var zoff = 0;
    if(p&&p.r) {
       r1 = p.r; r2 = p.r; if(p.h) h = p.h;
@@ -135,11 +142,16 @@ function cylinder(p) {
    }
    if(p&&p.fn) fn = p.fn;
    if(p&&p.center==true) zoff = -h/2;
+   if(p&&p.round==true) round = true;
    var o;
    if(p&&(p.start&&p.end)) {
-      o = CSG.cylinder({start:p.start,end:p.end,radiusStart:r1,radiusEnd:r2,resolution:fn});
+      o = round?
+         CSG.roundedCylinder({start:p.start,end:p.end,radiusStart:r1,radiusEnd:r2,resolution:fn}):
+         CSG.cylinder({start:p.start,end:p.end,radiusStart:r1,radiusEnd:r2,resolution:fn});
    } else {
-      o = CSG.cylinder({start:[0,0,0],end:[0,0,h],radiusStart:r1,radiusEnd:r2,resolution:fn});
+      o = round?
+         CSG.roundedCylinder({start:[0,0,0],end:[0,0,h],radiusStart:r1,radiusEnd:r2,resolution:fn}):
+         CSG.cylinder({start:[0,0,0],end:[0,0,h],radiusStart:r1,radiusEnd:r2,resolution:fn});
       if(zoff) o = o.translate([0,0,zoff]);
    }
    return o;
