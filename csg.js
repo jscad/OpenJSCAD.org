@@ -406,10 +406,12 @@ CSG.prototype = {
 	},
 
 	toAMFString: function() {
-		var result = "<?xml version="1.0" encoding="UTF-8"?>\n<amf unit="millimeter">\n";
+		var result = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<amf unit=\"millimeter\">\n";
+		result += "<object id=\"0\">\n";
 		this.polygons.map(function(p) {
 			result += p.toAMFString();
 		});
+		result += "</object>\n";
 		result += "</amf>\n";
 		return result;
 	},
@@ -2176,7 +2178,7 @@ CSG.Vector3D.prototype = {
 	},
 
 	toAMFString: function() {
-		return "<x>"+this._x + "</x><y>" + this._y + "</y><z>" + this._z + "</z>";
+		return "<x>" + this._x + "</x><y>" + this._y + "</y><z>" + this._z + "</z>";
 	},
 
 	toString: function() {
@@ -2256,8 +2258,8 @@ CSG.Vertex.prototype = {
 		return "vertex " + this.pos.toStlString() + "\n";
 	},
 
-	toStlString: function() {
-		return "<vertex>\n<coordinates>" + this.pos.toStlString() + "\n</coordinates>\n</vertex>\n";
+	toAMFString: function() {
+		return "<vertex><coordinates>" + this.pos.toAMFString() + "</coordinates></vertex>\n";
 	},
 
 	toString: function() {
@@ -2683,22 +2685,22 @@ CSG.Polygon.prototype = {
 		{
 			// AMF requires triangular polygons. If our polygon has more vertices, create
 			// multiple triangles:
-			var n = 0;
-			var firstVertexStl = this.vertices[0].toStlString();
+			var n = 1, t = [];
+			var firstVertexAMF = this.vertices[0].toAMFString();
 			result += "<mesh>\n<vertices>\n";
 			for(var i = 0; i < this.vertices.length - 2; i++) {
 				//result += <vertex>\n<coordinates>";
-				result += firstVertxStl;
-				result += this.vertices[i + 1].toStlString();
-				result += this.vertices[i + 2].toStlString();
+				result += firstVertexAMF;
+				result += this.vertices[i + 1].toAMFString();
+				result += this.vertices[i + 2].toAMFString();
 				//result += "</coordinates>\n</vertex>\n";
-				push(t,[n++,n++,n++]);
+				t.push([0,n++,n++]);
 			}
-			result += "\n<volume>";
-			for(var i=0; i<n; i++) {
+			result += "<volume>\n";
+			for(var i=0; i<t.length; i++) {
  				result += "<triangle>\n";
- 				for(var j in [1,2,3]) {
- 					result += "<v"+j+">"+t[i][j-1]+"</v"+j+">\n";
+ 				for(var j=1; j<=3; j++) {
+ 					result += "<v" + j + ">" + t[i][j-1] + "</v" + j +">\n";
 				}
  				result += "</triangle>\n";
 			}

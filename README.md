@@ -97,6 +97,7 @@ Drag & drop multiple files (Chrome & Firefox) or a folder (Chrome):
 <li><a href="http://garyhodgson.github.com/openscad.net/">OpenSCAD.net</a>, another place of inspiration, where the OpenSCAD translator was adapted from
 <li><a href="http://kaosat-dev.github.com/CoffeeSCad/">CoffeeSCad</a>, JavaScript simplified (no more {}), very active development
 <li><a href="http://rsmith.home.xs4all.nl/software/py-stl-stl2pov.html">stl2pov</a> tool to convert .stl to .pov, and then render via <a href="http://povray.org">PovRay.org</a>
+<li><a href="https://github.com/D1plo1d/p3d">P3D</a> STL/AMF/OBJ viewer
 </ul>
 
 

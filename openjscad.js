@@ -1160,18 +1160,24 @@ OpenJsCad.Processor.prototype = {
     var blob;
     if(format == "stl") {      
       //blob=this.currentObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now
-      blob = this.currentObject.toStlBinary();        // gives no normal errors, but stl which require cleanup
-                                                      // HINT: fixTJunction() needs debugging
+      if(1) {
+         blob = this.currentObject.toStlBinary();        // gives no normal errors, but stl which require cleanup
+                                                         // HINT: fixTJunction() needs debugging
+      } else {
+         blob = this.currentObject.toStlString();        
+         blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
+      }
     }
     else if(format == "amf") {
-      blob=this.currentObject.toAMF(bb);
-      
+      blob = this.currentObject.toAMFString();
+      blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
+    }  
     else if(format == "x3d") {
-      blob=this.currentObject.fixTJunctions().toX3D(bb);
+      blob = this.currentObject.fixTJunctions().toX3D(bb);
     }
     else if(format == "dxf")
     {
-      blob=this.currentObject.toDxf();
+      blob = this.currentObject.toDxf();
     }
     else
     {
@@ -1182,7 +1188,7 @@ OpenJsCad.Processor.prototype = {
   
   supportedFormatsForCurrentObject: function() {
     if (this.currentObject instanceof CSG) {
-      return ["stl", "x3d"];
+      return ["stl", "amf", "x3d"];
     } else if (this.currentObject instanceof CAG) {
       return ["dxf"];
     } else {
@@ -1200,7 +1206,7 @@ OpenJsCad.Processor.prototype = {
       amf: {
         displayName: "AMF",
         extension: "amf",
-        mimetype: "application/amf",
+        mimetype: "application/amf+xml",
         },
       x3d: {
         displayName: "X3D",
@@ -1263,7 +1269,8 @@ OpenJsCad.Processor.prototype = {
                       throw new Error('Write failed: ' + e.toString());
                     };
                     var blob = that.currentObjectToBlob();
-                    fileWriter.write(blob);                
+                    console.log(blob,blob.length);                
+                    fileWriter.write(blob);
                   }, 
                   function(fileerror){OpenJsCad.FileSystemApiErrorHandler(fileerror, "createWriter");} 
                 );
