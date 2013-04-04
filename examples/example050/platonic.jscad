@@ -525,22 +525,4 @@ icosahedron = function icosahedron(rad) {
    return [icosa_unit(rad), icosa_faces, icosa_edges];
 }
 
-if(0) {
-   if(typeof module !== 'undefined') {    // we are used as module in nodejs require()
-      var CSG = require(global.lib+'./csg.js').CSG;
-      //console.log("lib="+global.lib);
-      module.exports = { 
-         // -- list all functions we export
-         tetrahedron: function(rad) { return tetrahedron(rad); } 
-      };
-      me = 'cli';
-   }
-}
-
-if(0) {
-   for(var k in global) {
-      console.log(k);
-   }
-   // function a() { } do not show up here ...
-}
 
