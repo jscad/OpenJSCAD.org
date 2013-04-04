@@ -1213,7 +1213,7 @@ OpenJsCad.Processor.prototype = {
         mimetype: "application/sla",
         },
       amf: {
-        displayName: "AMF",
+        displayName: "AMF (experimental)",
         extension: "amf",
         mimetype: "application/amf+xml",
         },
