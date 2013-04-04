@@ -550,16 +550,22 @@ function parseAMF(amf,fn) {
       err += "XML parsing error / invalid XML";
    }
    var obj = $(xml).find('object');
-   var v = [];
-   var f = [];
-   var n = 0;
+   var v = [];    // vertices
+   var f = [];    // faces
+   var c = [];    // color settings (per face)
+   var nv = 0;
    obj.each(function() {
       var el = $(this);
       var mesh = el.find('mesh');
       mesh.each(function() {
          var el = $(this);
+
+         var c = el.find('color');
+         var rgb = [];
+         if(c.length) rgb = [c.find('r').text(),c.find('g').text(),c.find('b').text()];
+
          var vertices = el.find('vertices');
-         var sn = n;
+         var sn = nv;
          vertices.each(function() {
             var el = $(this);
             var vertex = el.find('vertex');
@@ -569,7 +575,7 @@ function parseAMF(amf,fn) {
                var y = el.find('y').text();
                var z = el.find('z').text();
                v.push([x,y,z]);
-               n++;
+               nv++;
             });
          });
          var volume = el.find('volume');
@@ -581,6 +587,7 @@ function parseAMF(amf,fn) {
                var v1 = parseInt(el.find('v1').text());
                var v2 = parseInt(el.find('v2').text());
                var v3 = parseInt(el.find('v3').text());
+               if(rgb.length) c[f.length] = rgb;
                f.push([v1+sn,v3+sn,v2+sn]);        // reverse order for polyhedron()
             });
          });
@@ -590,7 +597,7 @@ function parseAMF(amf,fn) {
    if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
    src += "// objects: 1\n// object #1: polygons: "+f.length+"\n";
    src += "function main() { return "; 
-   src += vt2jscad(v,f);
+   src += vt2jscad(v,f,[],c);
    src += "; }";
    return src;
 }
@@ -855,7 +862,7 @@ function parseAsciiSTL(stl,fn) {
     return src;
 }
 
-function vt2jscad(v,t,n) {
+function vt2jscad(v,t,n,c) {     // vertices, triangles, normals and colors
    var src = '';
    src += "polyhedron({ points: [\n\t";
    for(var i=0,j=0; i<v.length; i++) {

@@ -420,10 +420,10 @@ CSG.prototype = {
 				b = p.shared.color[2];
 				colorSet = true;
 			}
-			if(1||colorSet) {
+			if(0&&colorSet) {
    			result += "<color><r>"+r+"</r><g>"+g+"</g><b>"+b+"</b></color>\n";
 			}
-			result += p.toAMFString();
+			result += p.toAMFString({color:[r,g,b]});
 		});
 		result += "</object>\n";
 		result += "</amf>\n";
@@ -2693,7 +2693,7 @@ CSG.Polygon.prototype = {
 		return result;
 	},
 
-	toAMFString: function() {
+	toAMFString: function(p) {
 		var result = "";
 		if(this.vertices.length >= 3) // should be!
 		{
@@ -2705,6 +2705,7 @@ CSG.Polygon.prototype = {
             result += this.vertices[i].toAMFString();
          }
 			result += "</vertices>\n<volume>\n";
+			result += "<color><r>"+p.color[0]+"</r><g>"+p.color[1]+"</g><b>"+p.color[2]+"</b></color>\n";
 			for(var i = 0; i < this.vertices.length - 2; i++) {
 				result += "<triangle>\n";
 				result += "<v1>"+n+"</v1>";
