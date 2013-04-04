@@ -563,9 +563,9 @@ function parseAMF(amf,fn) {
             var vertex = el.find('vertex');
             vertex.each(function() {
                var el = $(this);
-               var x = el.find('x');
-               var y = el.find('y');
-               var z = el.find('z');
+               var x = el.find('x').attr('content');
+               var y = el.find('y').attr('content');
+               var z = el.find('z').attr('content');
                v.push([x,y,z]);
             });
          });
@@ -575,9 +575,9 @@ function parseAMF(amf,fn) {
             var triangle = el.find('triangle');
             triangle.each(function() {
                var el = $(this);
-               var v1 = el.find('v1');
-               var v2 = el.find('v2');
-               var v3 = el.find('v3');
+               var v1 = el.find('v1').attr('content');
+               var v2 = el.find('v2').attr('content');
+               var v3 = el.find('v3').attr('content');
                f.push([v1,v2,v3]);
             });
          });
