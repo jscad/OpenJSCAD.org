@@ -552,33 +552,36 @@ function parseAMF(amf,fn) {
    var obj = $(xml).find('object');
    var v = [];
    var f = [];
+   var n = 0;
    obj.each(function() {
       var el = $(this);
       var mesh = el.find('mesh');
       mesh.each(function() {
          var el = $(this);
          var vertices = el.find('vertices');
+         var sn = n;
          vertices.each(function() {
             var el = $(this);
             var vertex = el.find('vertex');
             vertex.each(function() {
                var el = $(this);
-               var x = el.find('x').attr('content');
-               var y = el.find('y').attr('content');
-               var z = el.find('z').attr('content');
+               var x = el.find('x').text();
+               var y = el.find('y').text();
+               var z = el.find('z').text();
                v.push([x,y,z]);
+               n++;
             });
          });
-         var volumes = el.find('volumes');
-         volumes.each(function() {
+         var volume = el.find('volume');
+         volume.each(function() {
             var el = $(this);
             var triangle = el.find('triangle');
             triangle.each(function() {
                var el = $(this);
-               var v1 = el.find('v1').attr('content');
-               var v2 = el.find('v2').attr('content');
-               var v3 = el.find('v3').attr('content');
-               f.push([v1,v2,v3]);
+               var v1 = parseInt(el.find('v1').text());
+               var v2 = parseInt(el.find('v2').text());
+               var v3 = parseInt(el.find('v3').text());
+               f.push([v1+sn,v2+sn,v3+sn]);
             });
          });
       });

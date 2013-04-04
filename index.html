@@ -735,8 +735,8 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
          
       } else if(gCurrentFile.lang.match(/(stl|obj|amf)/i)) {
          status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-         if(1) {     // -- if you debug the STL parsing, change it to 0 so echo() works, otherwise in workers
-                     //    echo() is not working.. 
+         if(!fn.match(/amf/i)) {     // -- if you debug the STL parsing, change it to 0 so echo() works, otherwise in workers
+                                     //    echo() is not working.., and parseAMF requires jquery, which seem not working in workers
             var blobURL = new Blob([document.querySelector('#conversionWorker').textContent]);
             // -- the messy part coming here:
             var worker = new Worker(window.webkitURL!==undefined?window.webkitURL.createObjectURL(blobURL):window.URL.createObjectURL(blobURL));
