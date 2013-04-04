@@ -23,7 +23,7 @@ History:
 
 Todo:
 - saving source code edited in ACE locally, perhaps 'SaveAs' (.JSCAD, .STL)
-- include(); support of multiple files, see http://jsfiddle.net/yybRu/
+- DONE: include(); support of multiple files, see http://jsfiddle.net/yybRu/
 -->
 <title>OpenJSCAD.org</title>
 <link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
@@ -510,7 +510,7 @@ function walkFileTree(item,path) {              // this is the core of the drag'
    //console.log("item=",item);
    if(item.isFile) {
       item.file(function(file) {                // this is also asynchronous ... (making everything complicate)
-         if(1||file.name.match(/\.jscad$/)) {   // for now all files in a folder are included() (also files OpenJSCAD does not direct support)
+         if(file.name.match(/\.(jscad|scad|stl)$/)) {   // for now all files OpenJSCAD can handle
             console.log("walkFileTree File: "+path+item.name);
             gMemFsTotal++;
             gCurrentFiles.push(file);
