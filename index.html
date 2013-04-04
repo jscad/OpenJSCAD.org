@@ -240,6 +240,8 @@ self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take q
    var data = e.data; // JSON.parse(e.data);
    if(data.url) {     // RANT: why do something simple, when it can be done complicate: Workers & importScripts() (guys!!)
       var url = data.url;
+      url = url.replace(/#.*$/,'');
+      url = url.replace(/\?.*$/,'');
       var index = url.indexOf('index.html');
       if(index!=-1) {
          url = url.substring(0,index);
@@ -401,7 +403,9 @@ function fetchExample(fn) {
                //       Dear Google / JavaScript developers: don't make JS unuseable with this mess!
                var blobURL = new Blob([document.querySelector('#stlWorker').textContent]);
                // -- the messy part coming here:
+               //var url = window.URL; url = url.replace(/#.*$/,''); url = url.createObjectURL(blobURL);
                var worker = new Worker(window.webkitURL!==undefined?window.webkitURL.createObjectURL(blobURL):window.URL.createObjectURL(blobURL));
+               //var worker = new Worker(window.URL.createObjectURL(blobURL));
                worker.onmessage = function(e) {    // worker finished
                   var data = e.data;
                   //echo("worker end:",data.source,data.filename);

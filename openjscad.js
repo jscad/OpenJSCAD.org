@@ -1158,15 +1158,14 @@ OpenJsCad.Processor.prototype = {
     var format = this.selectedFormat();
     
     var blob;
-    if(format == "stl") {      
+    if(format == "stla") {      
+      blob = this.currentObject.toStlString();        
+      blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
+    }
+    else if(format == "stlb") {      
       //blob=this.currentObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now
-      if(1) {
-         blob = this.currentObject.toStlBinary();        // gives no normal errors, but stl which require cleanup
+      blob = this.currentObject.toStlBinary();        // gives no normal errors, but stl which require cleanup
                                                          // HINT: fixTJunction() needs debugging
-      } else {
-         blob = this.currentObject.toStlString();        
-         blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
-      }
     }
     else if(format == "amf") {
       blob = this.currentObject.toAMFString();
@@ -1188,7 +1187,7 @@ OpenJsCad.Processor.prototype = {
   
   supportedFormatsForCurrentObject: function() {
     if (this.currentObject instanceof CSG) {
-      return ["stl", "amf", "x3d"];
+      return ["stlb", "stla", "amf", "x3d"];
     } else if (this.currentObject instanceof CAG) {
       return ["dxf"];
     } else {
@@ -1198,8 +1197,13 @@ OpenJsCad.Processor.prototype = {
   
   formatInfo: function(format) {
     return {
-      stl: {
-        displayName: "STL",
+      stla: {
+        displayName: "STL (ASCII)",
+        extension: "stl",
+        mimetype: "application/sla",
+        },
+      stlb: {
+        displayName: "STL (Binary)",
         extension: "stl",
         mimetype: "application/sla",
         },
