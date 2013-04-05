@@ -130,7 +130,12 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
 
 OpenJsCad.Viewer.prototype = {
   setCsg: function(csg) {
-    this.meshes = OpenJsCad.Viewer.csgToMeshes(csg);
+    if(0&&csg.length) {                            // preparing multiple CSG's (not union-ed), not yet working
+       for(var i=0; i<csg.length; i++)
+          this.meshes.concat(OpenJsCad.Viewer.csgToMeshes(csg[i]));
+    } else {
+       this.meshes = OpenJsCad.Viewer.csgToMeshes(csg);
+    }
     this.onDraw();    
   },
 
@@ -300,15 +305,20 @@ OpenJsCad.Viewer.csgToMeshes = function(initial_csg) {
   // set to true if we want to use interpolated vertex normals
   // this creates nice round spheres but does not represent the shape of
   // the actual model
-  var smoothlighting = false;   
+  var smoothlighting = false;
   var polygons = csg.toPolygons();
   var numpolygons = polygons.length;
-  for(var polygonindex = 0; polygonindex < numpolygons; polygonindex++) {
-    var polygon = polygons[polygonindex];
+  for(var j = 0; j < numpolygons; j++) {
+    var polygon = polygons[j];
     var color = [1,.4,1];      // -- default color
+
     if(polygon.shared && polygon.shared.color) {
       color = polygon.shared.color;
     }
+    if(polygon.color) {
+      color = polygon.color;
+    }
+
     var indices = polygon.vertices.map(function(vertex) {
       var vertextag = vertex.getTag();
       var vertexindex;
@@ -391,11 +401,19 @@ OpenJsCad.runMainInWorker = function(mainParameters) {
     OpenJsCad.log.prevLogTime = Date.now();    
     var result = main(mainParameters);
     if( (typeof(result) != "object") || ((!(result instanceof CSG)) && (!(result instanceof CAG)))) {
-      throw new Error("Your main() function should return a CSG solid or a CAG area.");
+      //throw new Error("Your main() function should return a CSG solid or a CAG area.");
     }
-    var result_compact = result.toCompactBinary();
-    result = null; // not needed anymore
-    self.postMessage({cmd: 'rendered', result: result_compact});
+    if(0&&result.length) {                             // preparing to render multiple CSG (not union-ed), not yet working
+       for(var i=0; i<result.length; i++) {
+          var result_compact = result[i].toCompactBinary();
+          result = null; // not needed anymore
+          self.postMessage({cmd: 'rendered', result: result_compact});
+       }
+    } else {
+       var result_compact = result.toCompactBinary();   
+       result = null; // not needed anymore
+       self.postMessage({cmd: 'rendered', result: result_compact});
+    }
   }
   catch(e) {
     var errtxt = e.stack;
@@ -484,7 +502,7 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
   if (options['openJsCadPath'] != null) {
     openjscadurl = OpenJsCad.makeAbsoluteUrl( options['openJsCadPath'], baseurl );
   }
-
+        
   var libraries = [];
   if (options['libraries'] != null) {
     libraries = options['libraries'];
@@ -493,7 +511,7 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
   var workerscript = "//ASYNC\n";
   workerscript += "var _csg_baseurl=" + JSON.stringify(baseurl)+";\n";        // -- we need it early for include()
   workerscript += "var _includePath=" + JSON.stringify(_includePath)+";\n";    //        ''            ''
-  workerscript += "var gMemFs = []\n";
+  workerscript += "var gMemFs = [];\n";
   var ignoreInclude = false;
   var mainFile;
   for(var fn in gMemFs) {

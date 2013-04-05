@@ -12,6 +12,7 @@
 //     http://openjscad.org/
 //
 // History:
+// 2013/04/05: 0.014: parseAMF(), experimental parseOBJ() and parseGCode()
 // 2013/04/04: 0.013: cube({round: true}), cylinder({round: true}) added
 // 2013/03/28: 0.012: rectangular_extrude() along 2d path, rotate_extrude() and torus() added
 // 2013/03/18: 0.011: import of STL (binary / ASCII), polyhedron() implemented, better blend between browser & nodejs
@@ -539,9 +540,7 @@ function status(s) {
 
 // --------------------------------------------------------------------------------------------
 
-// http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format
-
-function parseAMF(amf,fn) {
+function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format
    var xml, err = '';
    try {
       xml = $.parseXML(amf);
@@ -552,8 +551,11 @@ function parseAMF(amf,fn) {
    var obj = $(xml).find('object');
    var v = [];    // vertices
    var f = [];    // faces
-   var c = [];    // color settings (per face)
-   var nv = 0;
+   //var c = [];    // color settings (per face)
+   var nv = 0, np = 0;
+   var src = '', srci = '';
+
+   srci = "\tvar pgs = [];\n";
    obj.each(function() {
       var el = $(this);
       var mesh = el.find('mesh');
@@ -563,7 +565,8 @@ function parseAMF(amf,fn) {
          var c = el.find('color');
          var rgb = [];
          if(c.length) rgb = [c.find('r').text(),c.find('g').text(),c.find('b').text()];
-
+         v = []; f = []; nv = 0;        // we create each individual polygon
+         
          var vertices = el.find('vertices');
          var sn = nv;
          vertices.each(function() {
@@ -588,23 +591,41 @@ function parseAMF(amf,fn) {
                var v2 = parseInt(el.find('v2').text());
                var v3 = parseInt(el.find('v3').text());
                if(rgb.length) c[f.length] = rgb;
-               f.push([v1+sn,v3+sn,v2+sn]);        // reverse order for polyhedron()
+               f.push([v1+sn,v2+sn,v3+sn]);        // HINT: reverse order for polyhedron()
             });
          });
+         // v[] has the vertices
+         // f[] has the faces
+         for(var i=0; i<f.length; i++) {
+            srci += "\tpgs.push(new CSG.Polygon([\n\t\t";
+            for(var j=0; j<f[i].length; j++) {
+               if(j) srci += ",\n\t\t";
+               //srci += "<!-- "+v+","+f+" -->";
+               //srci += "<!-- "+f[i]+":"+v.length+":"+v[f[i]]+" -->";
+               //srci += "new CSG.Vertex(new CSG.Vector3D("+v[f[i][j]]+"))";
+               srci += "VV("+v[f[i][j]]+")";
+            }
+            srci += "])";
+            //if(c[i]) srci += "/*.setColor("+c[i]+")*/";      // FIX: Polygon doesn't have .setColor yet
+            if(c[i]) srci += ".setColor("+c[i]+")";      // FIX: Polygon doesn't have .setColor yet
+            srci += ");\n";
+            np++;
+         }
       });
    });
    var src = "// OpenJSCAD.org: amf importer '"+fn+"'\n\n";
    if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
-   src += "// objects: 1\n// object #1: polygons: "+f.length+"\n";
-   src += "function main() { return "; 
-   src += vt2jscad(v,f,[],c);
-   src += "; }";
+   src += "// objects: 1\n// object #1: polygons: "+np+"\n";
+   src += "function VV(x,y,z) { return new CSG.Vertex(new CSG.Vector3D(x,y,z)); }\n";
+   src += "function main() {\n"; 
+   //src += vt2jscad(v,f,[],c);
+   src += srci;
+   src += "\treturn CSG.fromPolygons(pgs);\n}\n";
    return src;
 }
+   
 
-// coded based on info at http://www.andrewnoske.com/wiki/index.php?title=OBJ_file_format
-
-function parseOBJ(obj,fn) {
+function parseOBJ(obj,fn) {   // http://www.andrewnoske.com/wiki/index.php?title=OBJ_file_format
    var l = obj.split(/\n/);
    var v = [], f = [];
    
@@ -1005,6 +1026,93 @@ BinaryReader.prototype = {
    }
 };
 
+function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code 
+                                  // just as experiment ... (WARNING: very very slow rendering) due union() - will be resolved later for independent object not united
+
+   var l = gcode.split(/[\n]/);   // for now just GCODE ASCII 
+   var srci = '';
+   var d = 0, pos = [], lpos = [], le = 0, ld = 0, p = [];
+   var origin = [-100,-100];
+   var layers = 0;
+   var lh = 0.35, lz = 0;
+   
+   for(var i=0; i<l.length; i++) {
+      var val = '', k, e = 0;
+      if(l[i].match(/^\s*;/))
+         continue;
+      var c = l[i].split(/\s+/);
+      for(var j=0; j<c.length; j++) {
+         if(c[j].match(/G(\d+)/)) {
+            var n = parseInt(RegExp.$1);
+            if(n==1) d++;
+            if(n==90) pos.type = 'abs';
+            if(n==91) pos.type = 'rel';
+            
+         } else if(c[j].match(/M(\d+)/)) {
+            var n = parseInt(RegExp.$1);
+            if(n==104||n==109)
+               k = 'temp'; 
+   
+         } else if(c[j].match(/S([\d\.]+)/)) {
+            var v = parseInt(RegExp.$1);
+            if(k!=='undefined') 
+               val[k] = v;
+            
+         } else if(c[j].match(/([XYZE])([\-\d\.]+)/)) {
+            var a = RegExp.$1, v = parseFloat(RegExp.$2);
+            if(pos.type=='abs') {
+               if(d) pos[a] = v;
+            } else {
+               if(d) pos[a] += v;
+            }
+            //console.log(d,a,pos.E,lpos.E);
+            if(d&&a=='E'&&lpos.E==='undefined') 
+               lpos.E = pos.E;
+            if(d&&a=='E'&&(pos.E-lpos.E)>0) {
+               //console.log(pos.E,lpos.E);
+               e++;
+            }
+         }
+      }
+      if(d&&pos.X&&pos.Y) {
+         if(e) {
+            if(!le&&lpos.X&&lpos.Y) {
+               //console.log(lpos.X,lpos.Y);
+               p.push("["+(lpos.X+origin[0])+","+(lpos.Y+origin[1])+"]");
+            }
+            p.push("["+(pos.X+origin[0])+","+(pos.Y+origin[1])+"]");
+         } 
+         if(!e&&le&&p.length>1) {
+            if(srci.length) srci += ",\n\t\t";
+            if(pos.Z!=lz) { 
+               lh = pos.Z-lz;
+               layers++;
+            }
+            srci += "rectangular_extrude(["+p.join(', ')+"],{w: "+lh*1.1+", h:"+lh*1.02+", fn:1, closed: false}).translate([0,0,"+pos['Z']+"])";
+            p = [];
+            lz = pos.Z;
+            //if(layers>2) 
+            //   break;
+         } 
+         le = e;
+         lpos.X = pos.X;
+         lpos.Y = pos.Y;
+         lpos.Z = pos.Z;
+         lpos.E = pos.E;
+      }
+      ld = d;
+   }
+   
+   var src = "// OpenJSCAD.org: gcode importer (ascii) '"+fn+"'\n\n";
+   //if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
+   src += "// layers: "+layers+"\n";
+   src += "function main() {\n\treturn union("; 
+   src += srci;
+   src += "\n\t);\n}\n";
+   return src;
+}
+
+
 // -------------------------------------------------------------------------------------------------
 
 function processSource(src,fn) {
@@ -1018,6 +1126,15 @@ function processSource(src,fn) {
       echo("extension of '"+fn+"' not recognized, considering it as .jscad");
    }
    return src;       // .jscad now
+}
+
+function clone(obj) {
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+    }
+    return copy;
 }
    
 function __include(fn) {          // doesn't work yet ... as we run in a blob and XHR aren't permitted

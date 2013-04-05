@@ -10,6 +10,7 @@ Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
+- 2013/04/05: 0.015: rudimentary AMF export and import, web and cli
 - 2013/04/03: 0.014: multiple files via drag'n'drop, developing locally
 - 2013/04/01: 0.013: include() on web-online & drag'n'drop (but not off-line) and cli (server-side)
 - 2013/03/20: 0.012: improved UI (slider from the left)
@@ -48,7 +49,7 @@ Todo:
 <script src="underscore.js"></script>
 <script src="openscad-openjscad-translator.js"></script>
 <script lang=JavaScript>
-var version = '0.014 (2013/04/04)';
+var version = '0.015 (2013/04/05)';
 //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
 var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
 var browser = 'unknown';
@@ -247,12 +248,14 @@ self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take q
       }
       importScripts(url+'csg.js',url+'openjscad.js',url+'openscad.js');
       var src, type;
-      data.filename.match(/\.(stl|obj|amf)$/i);
+      data.filename.match(/\.(stl|obj|amf|gcode)$/i);
       type = RegExp.$1;
       if(type=='obj') {
          src = parseOBJ(data.source,data.filename);
       } else if(type=='amf') {
          src = parseAMF(data.source,data.filename);
+      } else if(type=='gcode') {
+         src = parseGCode(data.source,data.filename);
       } else {
          src = parseSTL(data.source,data.filename);
       }
@@ -319,7 +322,7 @@ function onload() {
          var xhr = new XMLHttpRequest();
          //echo("fetching",u);
          xhr.open("GET",'./remote.pl?url='+u,true);
-         if(u.match(/\.stl$/i)) {
+         if(u.match(/\.(stl|gcode)$/i)) {
             xhr.overrideMimeType("text/plain; charset=x-user-defined");    // our pseudo binary retrieval (works with Chrome)
          }
          status("Fetching "+u+" <img id=busy src='imgs/busy.gif'>");
@@ -365,7 +368,7 @@ function fetchExample(fn) {
    if(1) {     // doesn't work off-line yet
       var xhr = new XMLHttpRequest();
       xhr.open("GET", fn, true);
-      if(fn.match(/\.stl$/i)) {
+      if(fn.match(/\.(stl|gcode)$/i)) {
          xhr.overrideMimeType("text/plain; charset=x-user-defined");    // our pseudo binary retrieval (works with Chrome)
       }
       status("Loading "+fn+" <img id=busy src='imgs/busy.gif'>");
@@ -396,9 +399,9 @@ function fetchExample(fn) {
             putSourceInEditor(editorSource,fn);
             gProcessor.setJsCad(source,fn);
             
-         } else if(fn.match(/\.(stl|obj|amf)$/i)) {
+         } else if(fn.match(/\.(stl|obj|amf|gcode)$/i)) {
             status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-            if(1) {
+            if(!fn.match(/\.amf/)) {
                // import STL/OBJ/AMF via Worker() (async computation) as it takes quite some time
                // RANT: the whole Blob() & Worker() is anything but a clean concept, mess over mess:
                //       for example, to pass a DOM variable to worker via postMessage may create a circular reference
@@ -423,13 +426,16 @@ function fetchExample(fn) {
 
             } else {       // async (disabled)
                status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-               fn.match(/\.(stl|obj|amf)$/i);
+               fn.match(/\.(stl|obj|amf|gcode)$/i);
                var type = RegExp.$1;
                if(type=='obj') {
                   editorSource = source = parseOBJ(source,fn);   
                   putSourceInEditor(source,fn);
                } else if(type=='amf') {
                   editorSource = source = parseAMF(source,fn);   
+                  putSourceInEditor(source,fn);
+               } else if(type=='gcode') {
+                  editorSource = source = parseGCode(source,fn);   
                   putSourceInEditor(source,fn);
                } else {
                   editorSource = source = parseSTL(source,fn);   
@@ -524,7 +530,7 @@ function walkFileTree(item,path) {              // this is the core of the drag'
    //console.log("item=",item);
    if(item.isFile) {
       item.file(function(file) {                // this is also asynchronous ... (making everything complicate)
-         if(file.name.match(/\.(jscad|scad|stl|amf)$/)) {   // for now all files OpenJSCAD can handle
+         if(file.name.match(/\.(jscad|scad|stl|amf|gcode)$/)) {   // for now all files OpenJSCAD can handle
             console.log("walkFileTree File: "+path+item.name);
             gMemFsTotal++;
             gCurrentFiles.push(file);
@@ -566,7 +572,7 @@ function setCurrentFile(file) {              // set one file (the one dragged) o
   gPreviousModificationTime = "";
 
   console.log("execute: "+file.name);
-  if(file.name.match(/\.(jscad|scad|stl|obj|amf)$/i)) {
+  if(file.name.match(/\.(jscad|scad|stl|obj|amf|gcode)$/i)) {
     gCurrentFile.lang = RegExp.$1;
   } else {
     throw new Error("Please drop a file with .jscad, .scad or .stl extension");
@@ -628,7 +634,7 @@ function readFileAsync(f) {                // RANT: JavaScript at its finest: 50
 		  previousScript = null;
      }
   };
-  if(f.name.match(/\.stl$/)) {
+  if(f.name.match(/\.(stl|gcode)$/)) {
      reader.readAsBinaryString(f,"UTF-8");
   } else {
      reader.readAsText(f,"UTF-8");
@@ -733,9 +739,9 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
          }
          editor.getSession().setMode("ace/mode/scad");  
          
-      } else if(gCurrentFile.lang.match(/(stl|obj|amf)/i)) {
+      } else if(gCurrentFile.lang.match(/(stl|obj|amf|gcode)/i)) {
          status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-         if(!fn.match(/amf/i)) {     // -- if you debug the STL parsing, change it to 0 so echo() works, otherwise in workers
+         if(!fn.match(/amf/i)) {     // -- if you debug the STL parsing, change it to 'if(0&&...' so echo() works, otherwise in workers
                                      //    echo() is not working.., and parseAMF requires jquery, which seem not working in workers
             var blobURL = new Blob([document.querySelector('#conversionWorker').textContent]);
             // -- the messy part coming here:
@@ -758,12 +764,14 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
             worker.postMessage({url: u, source: source, filename: fn });
             asyncComputation = true;
          } else {
-            fn.match(/\.(stl|obj|amf)$/i);
+            fn.match(/\.(stl|obj|amf|gcode)$/i);
             var type = RegExp.$1;
             if(type=='obj') {
                editorSource = source = parseOBJ(source,fn);   
             } else if(type=='amf') {
                editorSource = source = parseAMF(source,fn);   
+            } else if(type=='gcode') {
+               editorSource = source = parseGCode(source,fn);   
             } else {
                editorSource = source = parseSTL(source,fn);   
             }

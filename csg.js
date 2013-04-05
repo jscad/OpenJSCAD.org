@@ -2705,7 +2705,13 @@ CSG.Polygon.prototype = {
             result += this.vertices[i].toAMFString();
          }
 			result += "</vertices>\n<volume>\n";
-			result += "<color><r>"+p.color[0]+"</r><g>"+p.color[1]+"</g><b>"+p.color[2]+"</b></color>\n";
+         if(this.color&&this.color.length) {
+   			result += "<color><r>"+this.color[0]+"</r><g>"+this.color[1]+"</g><b>"+this.color[2]+"</b></color>\n";
+         } else if(this.shared&&this.shared.color&&this.shared.color.length) {
+   			result += "<color><r>"+this.shared.color[0]+"</r><g>"+this.shared.color[1]+"</g><b>"+this.shared.color[2]+"</b></color>\n";
+			} else { 
+   			result += "<color><r>"+p.color[0]+"</r><g>"+p.color[1]+"</g><b>"+p.color[2]+"</b></color>\n";
+         }
 			for(var i = 0; i < this.vertices.length - 2; i++) {
 				result += "<triangle>\n";
 				result += "<v1>"+n+"</v1>";
@@ -2742,7 +2748,15 @@ CSG.Polygon.prototype = {
 			result = result.flipped();
 		}
 		return result;
-	}
+	},
+
+   setColor: function(r,g,b) {
+		//var newshared = new CSG.Polygon.Shared([r,g,b]);
+		//return this.setShared(newshared);
+		//this.setShared = [r,g,b];
+		this.color = [r,g,b];
+		return this;
+   }
 };
 
 CSG.Polygon.verticesConvex = function(vertices, planenormal) {

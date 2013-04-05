@@ -1,20 +1,22 @@
-#!/usr/bin/nodejs
+#!/usr/local/bin/node
 
 // OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>
 // License: GPLv2
 //
-var version = '0.005';
+var version = '0.006';
 //
 // Description:
 //   openjscad <file> [-o <stl>]
 // e.g.
 //   openjscad test.jscad                    
 //   openjscad test.jscad -o test.stl
+//   openjscad test.jscad -o test.amf
 //   openjscad test.scad -o testFromSCAD.jscad
 //   openjscad test.scad -o test.stl
 //   openjscad test.stl -o test2.stl      # reprocessed: stl -> jscad -> stl
 //
 // History:
+// 2013/04/05: 0.006: support of AMF added, requires node 0.8.1+
 // 2013/03/25: 0.005: more sanity check on input and local installation support
 // 2013/03/18: 0.004: STL .stl (binary & ascii) support (experimental via openscad.js)
 // 2013/03/18: 0.003: OpenSCAD .scad support by Gary Hodgson's openscad-openjscad-translator module
@@ -26,11 +28,16 @@ var me = 'cli';
 
 var fs = require('fs');
 var vm = require('vm');
+
 //include('./openscad.js');         // later
 
-global.lib = '/usr/local/lib/openjscad/';    // for now hard-coded
+global.lib = '/usr/local/lib/openjscad/';             // for now hard-coded
+global.nodeModules = '/usr/local/lib/node_modules/';  // for now hard-coded too
 
-//if (!fs.existsSync(global.lib))            // requires node 0.10.1 
+var $ = require(global.nodeModules+'jquery');   // needed for AMF (XML) parsing
+                                                // if you don't use AMF import you can comment the line above, and run older nodejs 0.6.1+ 
+                                                       
+//if (!fs.existsSync(global.lib))           // requires node 0.10.1 
 //   global.lib = './';
 if(!fs.statSync(global.lib).isDirectory())  // same but works with 0.6.1+
    global.lib = './';
@@ -74,59 +81,69 @@ var inc = [];
 //var csg = sphere(1);          // -- basic test
 //var csg = require(file).main; // -- treating .jscad as module? later perhaps
 
-var exportSTL = false;
+var outFormat, inFormat;
 
-if(/\.scad$/.exec(inf)) {       // -- input .scad file
-   //var scadParser = require('openscad-openjscad-translator');     // npm installed but doesn't find it (crap!)
-   var scadParser = require('/usr/local/lib/node_modules/openscad-openjscad-translator');  // hardcoded is bad, but works
-   if(/\.jscad/.exec(outf)) {    // -- output isn't .stl, but .jscad
-      console.log("converting "+inf+" to "+outf);
-      src = scadParser.parse(src); //    doing the magick
-      src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
-      var s = fs.WriteStream(outf);
-      s.write(src);
-      
-   } else {
-      console.log("converting "+inf+" to jscad");
-      src = scadParser.parse(src); // doing the magick
-      console.log("converting jscad to "+outf);
-      exportSTL = true;
-   }
-   
-} else if(/\.stl$/.exec(inf)) {       // -- input .stl file
-   console.log("converting "+inf+" to jscad");
-   var openscad = require(lib+'openscad.js');
-   src = openscad.parseSTL(src,inf);
-   if(/\.jscad/.exec(outf)) {         // -- output isn't .stl, but .jscad
-      console.log("converting "+inf+" to "+outf);
-      var s = fs.WriteStream(outf);
-      s.write(src);
-      
-   } else {
-      //console.log("stl to stl skipped, choose e.g. '-o test.jscad' to force .jscad output");
-      console.log("converting jscad to "+outf);
-      exportSTL = true;
-   }
-   
+if(inf.match(/\.(jscad|scad|stl|amf)$/)) {
+   inFormat = RegExp.$1;
 } else {
-   console.log("converting "+inf+" to "+outf);
-   exportSTL = true;
+   console.log("ERROR: only jscad, scad, stl or amf as input format");
+   process.exit(1);
 }
 
-if(exportSTL) {
+if(outf.match(/\.(jscad|stl|amf)$/)) {
+   outFormat = RegExp.$1;
+} else {
+   console.log("ERROR: only jscad, stl or amf as output format");
+   process.exit(1);
+}
+
+console.log("converting "+inf+" -> "+outf);
+
+// -- include input, and convert into JSCAD source
+if(inFormat=='scad') {
+   //var scadParser = require('openscad-openjscad-translator');     // npm installed but doesn't find it (crap!)
+   var scadParser = require(global.nodeModules+'openscad-openjscad-translator');  // hardcoded is bad, but works
+   src = scadParser.parse(src); //    doing the magick
+   src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
+   
+} else if(inFormat=='stl') {
+   //console.log("converting "+inf+" to jscad");
+   var openscad = require(lib+'openscad.js');
+   src = openscad.parseSTL(src,inf);
+   src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
+   
+} else if(inFormat=='amf') {
+   //console.log("converting "+inf+" to jscad");
+   var openscad = require(lib+'openscad.js');
+   src = openscad.parseAMF(src,inf);
+   src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
+   
+} else {
+   // jscad
+   ;
+}
+
+// -- convert from JSCAD into suitable format wanted
+if(outFormat=='jscad') {
+   out = src;
+} else {
+   //console.log("render jscad to "+outFormat);
    var csg = eval(src+"\n"+scad+"\nmain()\n");    // *.jscad + openscad.js + main()
    //var stl = csg.fixTJunctions().toStlBinary();   // creates a Blob, which with nodejs doesn't exist yet
    //var stl = csg.fixTJunctions().toStlString();     // creates bad facet normals!! in some cases
-   var stl = csg.toStlString();  // creates correct normals, but stl which require clean-up (fixTJunction() needs debug)
-
-   var s = fs.WriteStream(outf);
-   s.write(stl);
+   var out;
+   if(outFormat=='amf') {
+      out = csg.toAMFString();
+   } else {
+      // out = csg.toStlBinary();            // TODO: already uses Blob in csg.js, needs to be removed and put into openjscad.js
+      out = csg.toStlString();
+   }
 }
+
+var s = fs.WriteStream(outf);
+s.write(out);
 
 // -- helper functions 
-
-function includePath(p) { 
-}
 
 function include(fn) {    
    //console.log(arguments.callee.caller,"include:"+fn);

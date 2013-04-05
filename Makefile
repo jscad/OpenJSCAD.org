@@ -1,4 +1,4 @@
-VERSION=0.014
+VERSION = 0.015
 LIB = /usr/local/lib/openjscad/
 NODE_MODULES = /usr/local/lib/node_modules/
 
@@ -7,6 +7,7 @@ all::
 
 install::
 	test -d ${NODE_MODULES}/openscad-openjscad-translator || sudo npm -g install openscad-openjscad-translator
+	test -d ${NODE_MODULES}/jquery || sudo npm -g install jquery
 	sudo scp openjscad /usr/local/bin/
 	sudo mkdir -p ${LIB}
 	sudo scp *.js ${LIB}
@@ -20,7 +21,9 @@ tests::
 	openjscad examples/example000.jscad
 	openjscad examples/example001.jscad
 	openjscad examples/example001.jscad -o examples/example001-fromJSCAD.stl
+	openjscad examples/example001.jscad -o examples/example001-fromJSCAD.amf
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.stl
+	openjscad examples/example001.scad -o examples/example001-fromSCAD.amf
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.jscad
 	cd examples/example050 && make
 	cd examples/example051 && make
