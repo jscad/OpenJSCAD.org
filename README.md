@@ -22,7 +22,7 @@ and then access the files via local web-site and your web-browser.
 
 <b>Local CLI Use:</b>
 
-For CLI (command-line interface) rendering install <a href="http://nodejs.org/">NodeJS</a> as well, e.g. <tt>apt-get install nodejs</tt> and then test it:
+For CLI (command-line interface) rendering install <a href="http://nodejs.org/">NodeJS</a> as well, e.g. <tt>apt-get install nodejs</tt> (be aware <b>NodeJS &gt; 0.8.1 is required</b>) and then test it:
 <pre>
 % cd examples/
 % openjscad example005.jscad                         # -- creates example005.stl as default
@@ -31,7 +31,7 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 % openjscad frog.stl -o test.jscad                   # -- convert .stl into .jscad
 </pre>
 
-<b>Note:</b> on some systems the NodeJS executable is <tt>node</tt> or <tt>nodejs</tt> (default), edit <tt>openjscad</tt> first line to reflect this.
+<b>Note:</b> on some systems the NodeJS executable is <tt>node</tt> (default) or <tt>nodejs</tt>, edit <tt>openjscad</tt> first line to reflect this.
 
 <h2>History</h2>
 <ul>
