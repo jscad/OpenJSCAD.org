@@ -199,7 +199,7 @@
        y="-139.06638"
        inkscape:export-xdpi="26.25"
        inkscape:export-ydpi="26.25"
-       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandle.png" />
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandleVL.png" />
     <rect
        y="455.36203"
        x="-371.70062"
@@ -766,5 +766,203 @@
        sodipodi:nodetypes="cccccccc"
        inkscape:transform-center-x="-3.2185474"
        inkscape:transform-center-y="-54.396165" />
+    <path
+       style="fill:#6a007c;fill-opacity:1;stroke:#4a0059;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter3952)"
+       d="m -860,-127.63782 c 0,0 60,20 60,60.000003 0,39.999999 0,120 0,160 0,39.999997 -60,59.999997 -60,59.999997 z"
+       id="path3102"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="czzcc"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandleH.png"
+       inkscape:export-xdpi="35.709999"
+       inkscape:export-ydpi="35.709999"
+       transform="matrix(0,1,1,0,-482.28134,842.28134)" />
+    <path
+       inkscape:export-ydpi="35.709999"
+       inkscape:export-xdpi="35.709999"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandle.png"
+       sodipodi:nodetypes="ccccc"
+       inkscape:connector-curvature="0"
+       id="path3106"
+       d="m -609.91916,-17.71866 40,60 200,0 40,-60 z"
+       style="fill:#ef94ff;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3108"
+       d="m -568.46917,11.70992 137.38575,0"
+       style="opacity:0.37980766;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="opacity:0.37980766;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -576.46917,-4.29008 137.38575,0"
+       id="path3110"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3112"
+       d="m -560.46917,25.70992 137.38575,0"
+       style="opacity:0.37980766;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="opacity:0.37980766;fill:none;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -568.46917,13.70992 137.38575,0"
+       id="path3114"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3117"
+       d="m -576.46917,-2.29008 137.38575,0"
+       style="opacity:0.37980766;fill:none;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="opacity:0.37980766;fill:none;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -560.46917,27.70992 137.38575,0"
+       id="path3119"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <rect
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandleHU.png"
+       inkscape:export-ydpi="26.25"
+       inkscape:export-xdpi="26.25"
+       y="-627.34772"
+       x="-16.290131"
+       height="311.42859"
+       width="85.714287"
+       id="rect3104"
+       style="opacity:0.00100002;fill:#710084;fill-opacity:1;stroke:none"
+       transform="matrix(0,1,1,0,0,0)" />
+    <path
+       style="fill:#6a007c;fill-opacity:1;stroke:#4a0059;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter3952)"
+       d="m -860,-127.63782 c 0,0 60,20 60,60.000003 0,39.999999 0,120 0,160 0,39.999997 -60,59.999997 -60,59.999997 z"
+       id="path3141"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="czzcc"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandle.png"
+       inkscape:export-xdpi="35.709999"
+       inkscape:export-ydpi="35.709999"
+       transform="matrix(-1,0,0,1,-1859.8383,0)" />
+    <rect
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandleVR.png"
+       inkscape:export-ydpi="26.25"
+       inkscape:export-xdpi="26.25"
+       y="-139.06638"
+       x="1001.2668"
+       height="311.42859"
+       width="85.714287"
+       id="rect3143"
+       style="opacity:0.00100002;fill:#710084;fill-opacity:1;stroke:none"
+       transform="scale(-1,1)" />
+    <path
+       inkscape:export-ydpi="35.709999"
+       inkscape:export-xdpi="35.709999"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandle.png"
+       sodipodi:nodetypes="ccccc"
+       inkscape:connector-curvature="0"
+       id="path3145"
+       d="m -999.83832,-127.63782 -59.99998,40.000003 0,199.999997 59.99998,40 z"
+       style="fill:#ef94ff;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3147"
+       d="m -1029.2669,-86.187827 0,137.385746"
+       style="opacity:0.37980766;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="opacity:0.37980766;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -1013.2669,-94.18783 0,137.385749"
+       id="path3149"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3151"
+       d="m -1043.2669,-78.187827 0,137.385746"
+       style="opacity:0.37980766;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="opacity:0.37980766;fill:none;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -1031.2669,-86.187827 0,137.385746"
+       id="path3153"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3155"
+       d="m -1015.2669,-94.18783 0,137.385749"
+       style="opacity:0.37980766;fill:none;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="opacity:0.37980766;fill:none;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -1045.2669,-78.187827 0,137.385746"
+       id="path3157"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       transform="matrix(0,-1,1,0,-482.28134,-677.55698)"
+       inkscape:export-ydpi="35.709999"
+       inkscape:export-xdpi="35.709999"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandleH.png"
+       sodipodi:nodetypes="czzcc"
+       inkscape:connector-curvature="0"
+       id="path3159"
+       d="m -860,-127.63782 c 0,0 60,20 60,60.000003 0,39.999999 0,120 0,160 0,39.999997 -60,59.999997 -60,59.999997 z"
+       style="fill:#6a007c;fill-opacity:1;stroke:#4a0059;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter3952)" />
+    <path
+       style="fill:#ef94ff;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -609.91916,182.44302 40,-60 200,0 40,60 z"
+       id="path3161"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandle.png"
+       inkscape:export-xdpi="35.709999"
+       inkscape:export-ydpi="35.709999" />
+    <path
+       style="opacity:0.37980766;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -568.46917,153.01444 137.38575,0"
+       id="path3163"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3165"
+       d="m -576.46917,169.01444 137.38575,0"
+       style="opacity:0.37980766;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="opacity:0.37980766;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -560.46917,139.01444 137.38575,0"
+       id="path3167"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3169"
+       d="m -568.46917,151.01444 137.38575,0"
+       style="opacity:0.37980766;fill:none;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="opacity:0.37980766;fill:none;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -576.46917,167.01444 137.38575,0"
+       id="path3171"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3173"
+       d="m -560.46917,137.01444 137.38575,0"
+       style="opacity:0.37980766;fill:none;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <rect
+       transform="matrix(0,-1,1,0,0,0)"
+       style="opacity:0.00100002;fill:#710084;fill-opacity:1;stroke:none"
+       id="rect3175"
+       width="85.714287"
+       height="311.42859"
+       x="-181.0145"
+       y="-627.34772"
+       inkscape:export-xdpi="26.25"
+       inkscape:export-ydpi="26.25"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandleHD.png" />
   </g>
 </svg>
