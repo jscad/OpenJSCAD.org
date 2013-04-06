@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="326.33725"
-     inkscape:cy="360.36406"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="327.8781"
+     inkscape:cy="387.50692"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -560,14 +560,7 @@
          id="tspan3087"
          sodipodi:role="line">chrome/firefox: css/html/js/webgl</tspan></text>
     <rect
-       y="707.00507"
-       x="498.75641"
-       height="25"
-       width="20"
-       id="rect3085"
-       style="fill:none;stroke:#eb00ff;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:6, 6;stroke-dashoffset:0" />
-    <rect
-       style="fill:none;stroke:#eb00ff;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:6, 6;stroke-dashoffset:0"
+       style="fill:#e900ff;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:6, 6;stroke-dashoffset:0;fill-opacity:1"
        id="rect3855"
        width="20"
        height="25"
@@ -586,17 +579,6 @@
          sodipodi:role="line">.amf</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:0.28846154;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="527.32782"
-       y="732.36218"
-       id="text3861"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         x="527.32782"
-         y="732.36218"
-         id="tspan3863">.amf</tspan></text>
-    <text
-       xml:space="preserve"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans;opacity:0.3"
        x="141.32782"
        y="392.36218"
@@ -612,14 +594,14 @@
        height="25"
        width="20"
        id="rect3863"
-       style="fill:none;stroke:#eb00ff;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:6, 6;stroke-dashoffset:0" />
+       style="fill:#e900ff;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:6, 6;stroke-dashoffset:0;fill-opacity:1" />
     <rect
        y="827.00507"
        x="498.75641"
        height="25"
        width="20"
        id="rect3878"
-       style="fill:none;stroke:#eb00ff;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:6, 6;stroke-dashoffset:0" />
+       style="fill:#e900ff;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:6, 6;stroke-dashoffset:0;fill-opacity:1" />
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:0.28846154;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
@@ -643,11 +625,55 @@
          x="141.32782"
          sodipodi:role="line">.amf</tspan></text>
     <rect
-       style="fill:none;stroke:#eb00ff;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:6, 6;stroke-dashoffset:0"
+       style="fill:#e900ff;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:6, 6;stroke-dashoffset:0;fill-opacity:1"
        id="rect3888"
        width="20"
        height="25"
        x="154.75641"
        y="827.00507" />
+    <text
+       xml:space="preserve"
+       style="font-size:20.21109009px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="589.28644"
+       y="791.09814"
+       id="text3878"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3880"
+         x="589.28644"
+         y="791.09814">ascii / binary</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3882"
+       y="791.09814"
+       x="-28.713562"
+       style="font-size:20.21109009px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><tspan
+         y="791.09814"
+         x="-28.713562"
+         id="tspan3884"
+         sodipodi:role="line">ascii / binary</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20.21109009px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-28.713562"
+       y="331.09814"
+       id="text3887"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3889"
+         x="-28.713562"
+         y="331.09814">ascii / binary</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3891"
+       y="331.09814"
+       x="591.28644"
+       style="font-size:20.21109009px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><tspan
+         y="331.09814"
+         x="591.28644"
+         id="tspan3893"
+         sodipodi:role="line">ascii / binary</tspan></text>
   </g>
 </svg>
