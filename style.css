@@ -189,6 +189,16 @@ canvas {
    font-size: 0.6em;
 }
 
+.info .infoOperation {
+   font-weight: bold;
+   color: #802080;
+}
+
+.info .infoKey {
+   font-weight: bold;
+   color: #808080;
+}
+
 #menuVersion {
    text-align: center; 
    font-size: 0.6em;
