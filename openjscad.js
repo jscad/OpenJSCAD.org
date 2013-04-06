@@ -185,6 +185,11 @@ OpenJsCad.Viewer.prototype = {
         var factor = 5e-3;
         this.viewpointX += factor * e.deltaX * this.viewpointZ;
         this.viewpointY -= factor * e.deltaY * this.viewpointZ;
+      } else if(e.ctrlKey) {                   // ZOOM IN/OU
+         var factor = Math.pow(1.006, e.deltaX+e.deltaY);
+         var coeff = this.getZoom();
+         coeff *= factor;
+         this.setZoom(coeff);
       } else {                                 // ROTATE X,Z  left mouse button
         this.angleZ += e.deltaX;
         this.angleX += e.deltaY;

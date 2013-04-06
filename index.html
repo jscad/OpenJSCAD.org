@@ -80,18 +80,14 @@ $(document).ready(function() {
 <div id=menuVersion>Version <script>document.write(version);</script></div>
 <p/>
 <table class=info>
-<tr><td align=right><b>SHIFT + RETURN</b>:</td><td>render code</td></tr>
-<tr><td align=right><b>left mouse</b>:</td><td>rotate XZ</td></tr>
-<script>
-if(browser=='chrome') {
-   document.write("<tr><td align=right><b>middle mouse</b>:</td><td>pan</td></tr>\n");
-   document.write("<tr><td align=right><b>right mouse</b>:</td><td>rotate XY</td></tr>\n");
-} else {
-   document.write("<tr><td align=right><b>SHIFT + left mouse</b>:</td><td>pan</td></tr>\n");
-   document.write("<tr><td align=right><b>ALT + left mouse</b>:</td><td>rotate XY</td></tr>\n");
-}
-</script>
-<tr><td align=right><b>wheel mouse</b>:</td><td>zoom in/out</td></tr>
+<tr><td align=right>render code</td><td><b>SHIFT + RETURN</b></td></tr>
+<tr><td align=right>rotate XZ</td><td><b>left mouse</b></td></tr>
+<tr><td align=right>pan</td><td><b>middle mouse</b> or</td></tr>
+<tr><td align=right></td><td><b>SHIFT + left mouse</b></td></tr>
+<tr><td align=right>rotate XY</td><td><b>right mouse</b> or</td></tr>
+<tr><td align=right></td><td><b>ALT + left mouse</b> or</td></tr>
+<tr><td align=right>zoom in/out</td><td><b>wheel mouse</b> or</td></tr>
+<tr><td align=right></td><td><b>CTRL + left mouse</b></td></tr>
 </table>
 <p><a class=navlink href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide" target=_blank>User Guide / Documentation <img src="imgs/externalLink.png" style=externalLink></a>
 <br/><span class=menuSubInfo>How to program with OpenJSCAD: online, offline & CLI</span></p>
