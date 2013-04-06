@@ -191,12 +191,12 @@ canvas {
 
 .info .infoOperation {
    font-weight: bold;
-   color: #802080;
+   color: #602080;
 }
 
 .info .infoKey {
    font-weight: bold;
-   color: #608080;
+   color: #808080;
 }
 
 #menuVersion {
