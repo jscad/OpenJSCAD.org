@@ -1,12 +1,11 @@
 /*
 ## License
 
-Copyright (c) 2013 Eduard Bespalov (edwbes@gmail.com)
-Copyright (c) 2012 Joost Nieuwenhuijse (joost@newhouse.nl)
-Copyright (c) 2011 Evan Wallace (http://evanw.github.com/csg.js/)
-Copyright (c) 2012 Alexandre Girard (https://github.com/alx)
+Copyright (c) 2013 Eduard Bespalov (edwbes@gmail.com): .solidFromSlices()
 Copyright (c) 2013 Rene K. Mueller (http://OpenJSCAD.org): AMF export added
-Copyright (c) 2013 Eduard Bespalov: .solidFromSlices()
+Copyright (c) 2012 Joost Nieuwenhuijse (joost@newhouse.nl)
+Copyright (c) 2012 Alexandre Girard (https://github.com/alx)
+Copyright (c) 2011 Evan Wallace (http://evanw.github.com/csg.js/) -- original csg.js
 
 All code released under MIT license
 
@@ -2605,7 +2604,8 @@ CSG.Polygon.prototype = {
 	 * @param {Array} color [red, green, blue] color values are float numbers 0..1
 	 * @return {CSG.Polygon} The current polygon
 	 */
-	setColor: function(color) {
+	setColor: function(red, green, blue) {
+		var color = red instanceof Array ? red : [red, green, blue];
 		this.shared = new CSG.Polygon.Shared(color);
 		return this;
 	},

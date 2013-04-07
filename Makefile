@@ -19,6 +19,7 @@ deinstall::
 
 tests::
 	openjscad examples/logo.jscad
+	openjscad examples/logo.jscad -o examples/logo.amf
 	openjscad examples/example001.jscad
 	openjscad examples/example001.jscad -o examples/example001-fromJSCAD.stl
 	openjscad examples/example001.jscad -o examples/example001-fromJSCAD.amf
