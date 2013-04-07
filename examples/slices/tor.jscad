@@ -1,4 +1,5 @@
-// TOR:
+// -- Tor (multi-color)
+
 function main(params) {
 	var sqrt3 = Math.sqrt(3) / 2;
 	var radius = 10;

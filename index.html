@@ -10,6 +10,7 @@ Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
+- 2013/04/07: 0.016: csg.js: solidFromSlices() and .setColor() on polygon level, and examples by Eduard Bespalov
 - 2013/04/05: 0.015: rudimentary AMF export and import, web and cli
 - 2013/04/03: 0.014: multiple files via drag'n'drop, developing locally
 - 2013/04/01: 0.013: include() on web-online & drag'n'drop (but not off-line) and cli (server-side)
@@ -49,7 +50,7 @@ Todo:
 <script src="underscore.js"></script>
 <script src="openscad-openjscad-translator.js"></script>
 <script lang=JavaScript>
-var version = '0.015 (2013/04/06)';
+var version = '0.016 (2013/04/07)';
 //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
 var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
 var browser = 'unknown';
@@ -93,10 +94,7 @@ $(document).ready(function() {
 <p><a class=navlink href="https://plus.google.com/communities/114958480887231067224" target=_blank>Google+ Community <img src="imgs/externalLink.png" style=externalLink></a>
 <br/><span class=menuSubInfo>Discuss with other users &amp; developers</span></p>
 <b>Examples</b>
-<div id=examples onmouseout="$('#examplesList').css('height','0');">
-<div id=examplesList onmouseoutx="$('#examplesList').css('height','0');"></div>
-<img id=examplesHandle src="imgs/menuHandleHU.png" onmouseover="$('#examplesList').css('height','100%');">
-</div>
+<div id=examples></div>
 <p/>
 <b>Supported Formats</b>
 <table class=info>
@@ -115,6 +113,7 @@ Version <script>document.write(version);</script>
 <p>
 by Ren&eacute; K. M&uuml;ller (UI & CLI),
 Joost Nieuwenhuijse (core functionality), 
+Eduard Bespalov (core functionality),
 Gary Hogdson (OpenSCAD translator)
 <p>csg.js core &amp; improvements by 
 Evan Wallace, 
@@ -147,6 +146,7 @@ function main() {
 <script>
 var ex = [ 
 { file:'logo.jscad', title: 'OpenJSCAD.org Logo' },
+
 { file:'example001.jscad', title: 'Sphere with cutouts' },
 { file:'example001.scad', title: 'Sphere with cutouts', type: 'OpenSCAD' },
 { file:'example002.jscad', title: 'Cone with cutouts' },
@@ -155,24 +155,34 @@ var ex = [
 { file:'example003.scad', title: 'Cube with cutouts', type: 'OpenSCAD' },
 { file:'example004.jscad', title: 'Cube minus sphere' },
 { file:'example005.jscad', title: 'Pavillon' },
+
 // { file:'bunch-cubes.jscad', title: 'Bunch of Cubes' }, // too slow for demo, needs speed up
 { file:'lookup.jscad', title: 'Lookup()' },
 { file:'expand.jscad', title: 'Expand()' },
-{ file:'rectangular_extrude.jscad', title: 'Rectangular_extrude()', new: true },
+{ file:'rectangular_extrude.jscad', title: 'Rectangular_extrude()' },
 { file:'linear_extrude.jscad', title: 'Linear_extrude()' },
-{ file:'rotate_extrude.jscad', title: 'Rotate_extrude()', new: true },
+{ file:'rotate_extrude.jscad', title: 'Rotate_extrude()' },
 { file:'polyhedron.jscad', title: 'Polyhedron()' },
-{ file:'torus.jscad', title: 'Torus()', new: true },
+{ file:'torus.jscad', title: 'Torus()' },
+
+{ file:'slices/double-screw.jscad', title: 'SolidFromSlices(): Double Screw', new: true },
+{ file:'slices/four2three.jscad', title: 'SolidFromSlices(): 4 to 3', new: true },
+{ file:'slices/four2three-round.jscad', title: 'SolidFromSlices(): 4 to 3 round', new: true },
+{ file:'slices/spring.jscad', title: 'SolidFromSlices(): Spring', new: true },
+{ file:'slices/tor.jscad', title: 'SolidFromSlices(): Tor (multi-color)', new: true },
+
 { file:'servo.jscad', title: 'Interactive Params: Servo Motor' },
 { file:'gear.jscad', title: 'Interactive Params: Gear' },
 { file:'s-hook.jscad', title: 'Interactive Params: S Hook' },
-{ file:'grille.jscad', title: 'Interactive Params: Grille' },
+//{ file:'grille.jscad', title: 'Interactive Params: Grille' },
 { file:'axis-coupler.jscad', title: 'Interactive Params: Axis Coupler' },
 { file:'lamp-shade.jscad', title: 'Interactive Params: Lamp Shade' },
-{ file:'celtic-knot-ring.jscad', title: 'Interactive Params: Celtic Knot Ring' },
+//{ file:'celtic-knot-ring.jscad', title: 'Interactive Params: Celtic Knot Ring' },
 { file:'stepper-motor.jscad', title: 'Interactive Params: Stepper Motor' },
 { file:'iphone4-case.jscad', title: 'Interactive Params: iPhone4 Case' },
+
 { file:'platonics/', title: 'Recursive Include(): Platonics', new: true },
+
 { file:'3d_sculpture-VernonBussler.stl', title: '3D Model: 3D Sculpture (Vernon Bussler)', type: 'STL' },
 { file:'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' },  
 { file:'thing_7-Zomboe.stl', title: '3D Model: Thing 7 / Flower (Zomboe)', type: 'STL' },  
@@ -191,7 +201,7 @@ if(me=='web-online') {
       if(ex[i].new) src += " <span class=newExample>new</span></a>";
       //src += "<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n";
    }
-   $('#examplesList').html(src);
+   $('#examples').html(src);
 } else {
    // examples off-line won't work yet as XHR is used
    $('#examples').html("You are offline, drag'n'drop the examples from your installation");

@@ -1,4 +1,5 @@
-// TOR:
+// -- Non Affine Transformation
+
 function main(params) {
 	var radius = 20,
 		height = 60,

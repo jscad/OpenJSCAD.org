@@ -222,10 +222,6 @@ canvas {
 }
 
 #examples {
-   /*border-left: 1px solid #888;*/
-   position: absolute; /*relative;*/
-   background: white;
-   z-index: 6;
 }
 
 #examplesList { 

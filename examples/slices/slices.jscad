@@ -1,4 +1,5 @@
-//screw
+// -- Slices (single screw evolution)
+
 function main(params) {
 	var sqrt3 = Math.sqrt(3) / 2;
 	var radius = 20;

@@ -6,6 +6,7 @@ Copyright (c) 2012 Joost Nieuwenhuijse (joost@newhouse.nl)
 Copyright (c) 2011 Evan Wallace (http://evanw.github.com/csg.js/)
 Copyright (c) 2012 Alexandre Girard (https://github.com/alx)
 Copyright (c) 2013 Rene K. Mueller (http://OpenJSCAD.org): AMF export added
+Copyright (c) 2013 Eduard Bespalov: .solidFromSlices()
 
 All code released under MIT license
 

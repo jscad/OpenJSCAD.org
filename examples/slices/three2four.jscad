@@ -1,3 +1,5 @@
+// -- Three to four (sides)
+
 function getParameterDefinitions() {
   return [
 	{ name: 'radius', caption: 'Radius:', type: 'float', default: 10 },

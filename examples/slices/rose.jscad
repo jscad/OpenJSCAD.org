@@ -1,4 +1,5 @@
-// rose curve:
+// -- Rose Curve
+
 function main(params) {
 	var radius = 50,
 		height = 60,
