@@ -541,7 +541,7 @@ function status(s) {
 // --------------------------------------------------------------------------------------------
 
 function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format
-   var xml, err = '';
+   var xml, err = '';            // http://api.jquery.com/category/traversing/
    try {
       xml = $.parseXML(amf);
    } catch(e) {
@@ -610,8 +610,7 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
             srci += "\tpgs.push(new CSG.Polygon([\n\t\t";
             for(var j=0; j<f[i].length; j++) {
                if(f[i][j]<0||f[i][j]>=v.length) {
-                  err++;
-                  console.log("pos:"+f[i][j]);
+                  if(err.length=='') err += "bad index for vertice (out of range)";
                   continue;
                }
                if(j) srci += ",\n\t\t";
