@@ -18,22 +18,22 @@ deinstall::
 	sudo rm -f ${LIB}/*.js 
 
 tests::
-	openjscad examples/example000.jscad
+	openjscad examples/logo.jscad
 	openjscad examples/example001.jscad
 	openjscad examples/example001.jscad -o examples/example001-fromJSCAD.stl
 	openjscad examples/example001.jscad -o examples/example001-fromJSCAD.amf
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.stl
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.amf
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.jscad
-	cd examples/example050 && make
-	cd examples/example051 && make
+	cd examples/platonics && make
+	cd examples/include-test && make
 	# -- enable if you have openscad installed ('unsetenv DISPLAY' perhaps too)
 	# openscad examples/example001.scad -o examples/example001-fromSCADviaOpenSCAD.stl
 
 clean::
-	rm -f examples/example000.stl examples/example001.stl examples/example001-from*
-	cd examples/example050 && make clean
-	cd examples/example051 && make clean
+	rm -f examples/logo.stl examples/example001.stl examples/example001-from*
+	cd examples/platonics && make clean
+	cd examples/include-test && make clean
 
 # TODO:                                        
 # - locally submodule of openscad-openjscad-translator, see http://git-scm.com/book/en/Git-Tools-Submodules
