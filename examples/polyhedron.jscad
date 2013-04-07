@@ -1,4 +1,4 @@
-// Example 027: polyhedron()
+// -- polyhedron()
 
 function main() {
    return polyhedron({ 

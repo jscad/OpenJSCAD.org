@@ -1,4 +1,4 @@
-// -- Example 036: Celtic Knot Ring
+// -- Celtic Knot Ring
 
 // -*- mode: javascript; -*-
 

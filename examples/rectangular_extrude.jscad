@@ -1,4 +1,4 @@
-// Example 025: rectangular_extrude()
+// -- rectangular_extrude()
 
 function main() {
    return union( 

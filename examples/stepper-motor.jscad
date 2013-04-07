@@ -1,4 +1,4 @@
-// -- Example 037: Stepper Motor
+// -- Stepper Motor
 
 function getParameterDefinitions()
 {

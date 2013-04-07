@@ -1,4 +1,4 @@
-// -- Example 032: S Hook
+// -- S Hook
 
 // Here we define the user editable parameters: 
 function getParameterDefinitions() {

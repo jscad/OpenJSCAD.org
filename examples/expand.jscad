@@ -1,4 +1,4 @@
-// -- Example 024
+// -- expand()
 
 function main() {
    return union(

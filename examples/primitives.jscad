@@ -1,4 +1,4 @@
-// Example 019: 3d primitives
+// -- Primitives
 
 function main() {
    var o = [

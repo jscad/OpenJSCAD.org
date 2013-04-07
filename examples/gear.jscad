@@ -1,4 +1,4 @@
-// -- Example 031: Gear
+// -- Gear
 
 // Here we define the user editable parameters: 
 function getParameterDefinitions() {

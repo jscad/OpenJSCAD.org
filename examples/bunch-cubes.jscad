@@ -1,4 +1,4 @@
-// -- Example 020
+// -- Bunch of Cubes
 
 var cubes = new Array();
 

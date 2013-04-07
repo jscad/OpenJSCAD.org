@@ -1,4 +1,4 @@
-// -- Example 035: Lamp Shade
+// -- Lamp Shade
 
 function main(params)
 {

@@ -1,4 +1,4 @@
-// -- Example 034: Axis Coupler
+// -- Axis Coupler
 
 var cylresolution=16;
 

@@ -1,4 +1,4 @@
-// Example 029: torus()
+// -- torus()
 
 function main() {
    return union(

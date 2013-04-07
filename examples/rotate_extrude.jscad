@@ -1,4 +1,4 @@
-// Example 028: rotate_extrude()
+// -- rotate_extrude()
 
 function main() {
    return union(

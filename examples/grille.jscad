@@ -1,4 +1,4 @@
-// -- Example 033: Grille
+// -- Grille
 
 // Here we define the user editable parameters: 
 function getParameterDefinitions() {
