@@ -1081,7 +1081,7 @@ OpenJsCad.Processor.prototype = {
     var paramValues = this.getParamValues();
     var useSync = this.debugging;
 
-    //useSync = false;
+    //useSync = true;
     if(!useSync)
     {
       try
