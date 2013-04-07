@@ -542,7 +542,7 @@ function status(s) {
 /**
  * Converts an RGB color value to HSL. Conversion formula
  * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
- * Assumes r, g, and b are contained in the set [0, 255] and
+ * Assumes r, g, and b are contained in the set [0, 1] and
  * returns h, s, and l in the set [0, 1].
  *
  * @param   Number  r       The red color value
@@ -575,7 +575,7 @@ function rgb2hsl(r, g, b){
  * Converts an HSL color value to RGB. Conversion formula
  * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
  * Assumes h, s, and l are contained in the set [0, 1] and
- * returns r, g, and b in the set [0, 255].
+ * returns r, g, and b in the set [0, 1].
  *
  * @param   Number  h       The hue
  * @param   Number  s       The saturation
@@ -583,7 +583,7 @@ function rgb2hsl(r, g, b){
  * @return  Array           The RGB representation
  */
 function hsl2rgb(h, s, l){
-    if(h.length) { l = h[2], s = h[1], l = l[0]; }
+    if(h.length) { l = h[2], s = h[1], h = h[0]; }
     var r, g, b;
 
     if(s == 0){
@@ -611,7 +611,7 @@ function hsl2rgb(h, s, l){
 /**
  * Converts an RGB color value to HSV. Conversion formula
  * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
- * Assumes r, g, and b are contained in the set [0, 255] and
+ * Assumes r, g, and b are contained in the set [0, 1] and
  * returns h, s, and v in the set [0, 1].
  *
  * @param   Number  r       The red color value
@@ -620,6 +620,7 @@ function hsl2rgb(h, s, l){
  * @return  Array           The HSV representation
  */
 function rgb2hsv(r, g, b){
+    if(r.length) { b = r[2], g = r[1], r = r[0]; }
     var max = Math.max(r, g, b), min = Math.min(r, g, b);
     var h, s, v = max;
 
@@ -644,7 +645,7 @@ function rgb2hsv(r, g, b){
  * Converts an HSV color value to RGB. Conversion formula
  * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
  * Assumes h, s, and v are contained in the set [0, 1] and
- * returns r, g, and b in the set [0, 255].
+ * returns r, g, and b in the set [0, 1].
  *
  * @param   Number  h       The hue
  * @param   Number  s       The saturation
@@ -652,6 +653,7 @@ function rgb2hsv(r, g, b){
  * @return  Array           The RGB representation
  */
 function hsv2rgb(h, s, v){
+    if(h.length) { v = h[2], s = h[1], h = h[0]; }
     var r, g, b;
 
     var i = Math.floor(h * 6);
