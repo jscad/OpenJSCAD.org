@@ -587,18 +587,33 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
             var triangle = el.find('triangle');
             triangle.each(function() {
                var el = $(this);
-               var v1 = parseInt(el.find('v1').text());
-               var v2 = parseInt(el.find('v2').text());
-               var v3 = parseInt(el.find('v3').text());
+               var v1 = parseInt(el.find('v1').first().text()); // -- why: v1 might occur <v1>1</v1><map><v1>0</v1></map> -> find('v1') return '1'+'0' = '10'
+               var v2 = parseInt(el.find('v2').first().text());
+               var v3 = parseInt(el.find('v3').first().text());
                if(rgb.length) c[f.length] = rgb;
                f.push([v1+sn,v2+sn,v3+sn]);        // HINT: reverse order for polyhedron()
+
+               var maps = el.find('map');
+               maps.each(function() {
+                  ;        // not yet
+               });
             });
          });
+         var textures = el.find('texture');
+         textures.each(function() {
+            ; // not yet
+         });
+         
          // v[] has the vertices
          // f[] has the faces
          for(var i=0; i<f.length; i++) {
             srci += "\tpgs.push(new CSG.Polygon([\n\t\t";
             for(var j=0; j<f[i].length; j++) {
+               if(f[i][j]<0||f[i][j]>=v.length) {
+                  err++;
+                  console.log("pos:"+f[i][j]);
+                  continue;
+               }
                if(j) srci += ",\n\t\t";
                //srci += "<!-- "+v+","+f+" -->";
                //srci += "<!-- "+f[i]+":"+v.length+":"+v[f[i]]+" -->";
