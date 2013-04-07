@@ -214,3 +214,33 @@ canvas {
    vertical: middle;
 }
 
+#examplesList {
+   transition: all 0.4s;
+   -o-transition: all 0.4s;
+   -moz-transition: all 0.4s;
+   -webkit-transition: all 0.4s;
+}
+
+#examples {
+   /*border-left: 1px solid #888;*/
+   position: absolute; /*relative;*/
+   background: white;
+   z-index: 6;
+}
+
+#examplesList { 
+   border-bottom: 1px solid #888;
+   height: 4px;
+   overflow: hidden;
+}
+
+#examplesList:hover {
+   /*height: 100%;*/
+}
+
+#examplesHandle {
+   bottom: 0px;
+   left: 45%;
+   position: relative;
+   z-index: 10;
+}

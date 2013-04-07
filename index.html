@@ -93,7 +93,10 @@ $(document).ready(function() {
 <p><a class=navlink href="https://plus.google.com/communities/114958480887231067224" target=_blank>Google+ Community <img src="imgs/externalLink.png" style=externalLink></a>
 <br/><span class=menuSubInfo>Discuss with other users &amp; developers</span></p>
 <b>Examples</b>
-<div id=examples></div>
+<div id=examples onmouseout="$('#examplesList').css('height','0');">
+<div id=examplesList onmouseoutx="$('#examplesList').css('height','0');"></div>
+<img id=examplesHandle src="imgs/menuHandleHU.png" onmouseover="$('#examplesList').css('height','100%');">
+</div>
 <p/>
 <b>Supported Formats</b>
 <table class=info>
@@ -180,6 +183,7 @@ var ex = [
 ];
 if(me=='web-online') {
    var src = '';
+   //src += "<img id=examplesHandle src=\"imgs/menuHandleHU.png\">";
    //src += '<b>Examples:</b>';
    for(var i=0; i<ex.length; i++) {
       src += "<li><a href=# onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n";
@@ -187,7 +191,7 @@ if(me=='web-online') {
       if(ex[i].new) src += " <span class=newExample>new</span></a>";
       //src += "<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n";
    }
-   $('#examples').html(src);
+   $('#examplesList').html(src);
 } else {
    // examples off-line won't work yet as XHR is used
    $('#examples').html("You are offline, drag'n'drop the examples from your installation");
