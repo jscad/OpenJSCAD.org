@@ -1,4 +1,5 @@
 // -- Non Affine Transformation
+//    by Eduard Bespalov
 
 function main(params) {
 	var radius = 20,

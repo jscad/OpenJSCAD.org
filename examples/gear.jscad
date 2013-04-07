@@ -1,4 +1,5 @@
 // -- Gear
+//    by Joost Nieuwenhuijse
 
 // Here we define the user editable parameters: 
 function getParameterDefinitions() {

@@ -1,4 +1,5 @@
 // -- Rose Curve
+//    by Eduard Bespalov
 
 function main(params) {
 	var radius = 50,

@@ -1,4 +1,5 @@
 // -- Stepper Motor
+//    by Derrick Oswald
 
 function getParameterDefinitions()
 {
