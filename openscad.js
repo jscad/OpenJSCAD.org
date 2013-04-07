@@ -564,7 +564,7 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
 
          var c = el.find('color');
          var rgb = [];
-         if(c.length) rgb = [c.find('r').text(),c.find('g').text(),c.find('b').text()];
+         if(c.length) rgb = [c.find('r').first().text(), c.find('g').first().text(), c.find('b').first().text()];
          v = []; f = []; nv = 0;        // we create each individual polygon
          
          var vertices = el.find('vertices');
@@ -607,7 +607,8 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
          // v[] has the vertices
          // f[] has the faces
          for(var i=0; i<f.length; i++) {
-            srci += "\tpgs.push(new CSG.Polygon([\n\t\t";
+            //srci += "\tpgs.push(new CSG.Polygon([\n\t\t";
+            srci += "\tpgs.push(PP([\n\t\t";
             for(var j=0; j<f[i].length; j++) {
                if(f[i][j]<0||f[i][j]>=v.length) {
                   if(err.length=='') err += "bad index for vertice (out of range)";
@@ -630,6 +631,7 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
    var src = "// OpenJSCAD.org: amf importer '"+fn+"'\n\n";
    if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
    src += "// objects: 1\n// object #1: polygons: "+np+"\n";
+   src += "function PP(a) { return new CSG.Polygon(a); }\n"; 
    src += "function VV(x,y,z) { return new CSG.Vertex(new CSG.Vector3D(x,y,z)); }\n";
    src += "function main() {\n"; 
    //src += vt2jscad(v,f,[],c);
