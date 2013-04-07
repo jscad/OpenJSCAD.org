@@ -18,14 +18,10 @@ function main(params) {
 		numslices: 360 / angle,
 		loop: true,
 		callback: function(t, slice) {
-			var red = (t > 0.5 ? (1 - t) : t) * 2,
-				green = t,
-				blue = 1 - t;
+			var c = hsl2rgb(t,1,0.5);
 			return this.rotate(
 					[0,20,0], [-1, 0, 0], angle * slice
-				).setColor(
-					[red, green, blue]
-				);
+				).setColor(c);
 		}
 	});
 }
