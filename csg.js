@@ -2749,14 +2749,6 @@ CSG.Polygon.prototype = {
 		}
 		return result;
 	},
-
-   setColor: function(r,g,b) {
-		//var newshared = new CSG.Polygon.Shared([r,g,b]);
-		//return this.setShared(newshared);
-		//this.setShared = [r,g,b];
-		//this.color = [r,g,b];        // doesn't work yet
-		return this;
-   }
 };
 
 CSG.Polygon.verticesConvex = function(vertices, planenormal) {
