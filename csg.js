@@ -994,7 +994,9 @@ CSG.prototype = {
 	 * @param {Array} color [red, green, blue] color values are float numbers 0..1
 	 * @return {CSG} new CSG instance
 	 */
-	setColor: function(color) {
+	//setColor: function(color) {
+	setColor: function(red, green, blue) { //for backward compatibility
+		var color = red instanceof Array ? red : [red, green, blue];
 		var newshared = new CSG.Polygon.Shared(color);
 		return this.setShared(newshared);
 	},
