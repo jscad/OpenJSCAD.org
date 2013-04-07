@@ -22,7 +22,7 @@ function main(params) {
 		numslices: 300,
 		loop: true,
 		callback: function(t, slice) {
-			var angle = t * Math.PI * 4,
+			var angle = t * Math.PI * 3,
 				r = radius * Math.sin(k * angle),
 				x = r * Math.cos(angle),
 				y = r * Math.sin(angle),
