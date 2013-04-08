@@ -137,7 +137,7 @@ function sphere(p) {
    //if(p&&p.center==true) zoff = 0;
    var o = CSG.sphere({radius:r,resolution:fn});
    //if(zoff) o = o.translate([0,0,zoff]);
-   if(p&&p.center.length) {         // preparing individual x,y,z center
+   if(p&&p.center&&p.center.length) {         // preparing individual x,y,z center
       off = [p.center[0]?0:r,p.center[1]?0:r,p.center[2]?0:r];
    } else if(p&&p.center==true) { 
       off = [0,0,0];
