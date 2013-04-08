@@ -1,7 +1,7 @@
 // openscad.js, a few functions to simplify coding OpenSCAD-like
 //    written by Rene K. Mueller <spiritdude@gmail.com>, License: GPLv2
 //
-// Version: 0.013
+// Version: 0.015
 //
 // Description:
 // Helping to convert OpenSCAD .scad files to OpenJSCad .jscad files with 
@@ -12,6 +12,7 @@
 //     http://openjscad.org/
 //
 // History:
+// 2013/04/08: 0.015: individual center: [true,false,true] possible for cube(), sphere() and cylinder()
 // 2013/04/05: 0.014: parseAMF(), experimental parseOBJ() and parseGCode()
 // 2013/04/04: 0.013: cube({round: true}), cylinder({round: true}) added
 // 2013/03/28: 0.012: rectangular_extrude() along 2d path, rotate_extrude() and torus() added
