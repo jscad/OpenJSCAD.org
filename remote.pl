@@ -2,9 +2,10 @@
 
 # -- Fetch Remote File into Cache, written by Rene K. Mueller <spiritdude@gmail.com>
 #
-$VERSION = '0.002';
+$VERSION = '0.003';
 #
 # History:
+# 2013/04/08: 0.003: support of amf
 # 2013/03/31: 0.002: checking content, enforcing jscad, scad or stl
 # 2013/03/30: 0.001: first version
 
@@ -61,6 +62,9 @@ sub cacheLocal {
    
    if($ext eq 'jscad'&&$buff=~/^\/\/!OpenSCAD/i) {     # -- content is SCAD?
       $extNew = 'scad';
+
+   } elsif($ext eq 'jscad'&&($buff=~/^<\?xml/i&&$buff=~/[\n\r]<amf/)) {    # -- content is AMF?
+      $extNew = 'amf';
 
    } elsif($ext eq 'jscad'&&($buff=~/^solid/i||-B $buff||$buff=~/\0/)) {   # -- content is STL?
       $extNew = 'stl';
