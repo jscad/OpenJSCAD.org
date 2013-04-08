@@ -114,7 +114,7 @@ function cube(p) {
    var o = round?
       CSG.roundedCube({radius:[x/2,y/2,z/2], roundradius:r, resolution: fn}):
       CSG.cube({radius:[x/2,y/2,z/2]});
-   if(p&&p.center.length) {
+   if(p&&p.center&&p.center.length) {
       off = [p.center[0]?0:x/2,p.center[1]?0:y/2,p.center[2]?0:z/2];
    } else if(p&&p.center==true) { 
       off = [0,0,0];
