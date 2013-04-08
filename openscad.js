@@ -96,23 +96,32 @@ function intersection() {
 // -- 3D primitives (OpenSCAD like notion)
 
 function cube(p) { 
-   var s = 1, v = null, off = 0, round = false, r = 0, fn = 8;
+   var s = 1, v = null, off = [0,0,0], round = false, r = 0, fn = 8;
    if(p&&p.length) v = p;		
    if(p&&p.size&&p.size.length) v = p.size;
    if(p&&p.size&&!p.size.length) s = p.size;
-   if(p&&!p.size&&!p.length&&p.center===undefined&&!p.round&&!p.radius) s = p;
-   off = s/2;
-   if(p&&p.center==true) off = 0;
+   if(p&&!p.size&&!p.length&&p.center==='undefined'&&!p.round&&!p.radius) s = p;
+   off = [s/2,s/2,s/2];
+   if(p&&p.center==true) off = [0,0,0];
    if(p&&p.round==true) { round = true, r = v&&v.length?(v[0]+v[1]+v[2])/30:s/10}
    if(p&&p.radius) { round = true, r = p.radius; }
    if(p&&p.fn) fn = p.fn;
 
    var x = s, y = s, z = s; 
-   if(v&&v.length) { x = v[0], y = v[1], z = v[2] }
+   if(v&&v.length) { 
+      x = v[0], y = v[1], z = v[2]; 
+   }
    var o = round?
       CSG.roundedCube({radius:[x/2,y/2,z/2], roundradius:r, resolution: fn}):
       CSG.cube({radius:[x/2,y/2,z/2]});
-   if(off) o = o.translate([x/2,y/2,z/2]);
+   if(p&&p.center.length) {
+      off = [p.center[0]?0:x/2,p.center[1]?0:y/2,p.center[2]?0:z/2];
+   } else if(p&&p.center==true) { 
+      off = [0,0,0];
+   } else if(p&&p.center==false) {
+      off = [x/2,y/2,z/2];
+   }
+   if(off[0]||off[1]||off[2]) o = o.translate(off);
    //if(v&&v.length) o = o.scale(v);      // we don't scale afterwards, we already created box with the correct size
    return o;
 }
@@ -128,23 +137,30 @@ function sphere(p) {
    //if(p&&p.center==true) zoff = 0;
    var o = CSG.sphere({radius:r,resolution:fn});
    //if(zoff) o = o.translate([0,0,zoff]);
+   if(p&&p.center.length) {         // preparing individual x,y,z center
+      off = [p.center[0]?0:r,p.center[1]?0:r,p.center[2]?0:r];
+   } else if(p&&p.center==true) { 
+      off = [0,0,0];
+   } else if(p&&p.center==false) {
+      off = [r,r,r];
+   }
    return o;
 }
 
 function cylinder(p) {
    var r1 = 1, r2 = 1, h = 1, fn = 32, round = false; var a = arguments;
-   var zoff = 0;
+   var off = [0,0,0];
    if(p&&p.r) {
       r1 = p.r; r2 = p.r; if(p.h) h = p.h;
    }
    if(p&&(p.r1||p.r2)) {
       r1 = p.r1; r2 = p.r2; if(p.h) h = p.h;
    } 
-   if(a&&a[0].length) {
+   if(a&&a[0]&&a[0].length) {
       a = a[0]; r1 = a[0]; r2 = a[1]; h = a[2]; if(a.length==4) fn = a[3];
    }
    if(p&&p.fn) fn = p.fn;
-   if(p&&p.center==true) zoff = -h/2;
+   //if(p&&p.center==true) zoff = -h/2;
    if(p&&p.round==true) round = true;
    var o;
    if(p&&(p.start&&p.end)) {
@@ -155,7 +171,15 @@ function cylinder(p) {
       o = round?
          CSG.roundedCylinder({start:[0,0,0],end:[0,0,h],radiusStart:r1,radiusEnd:r2,resolution:fn}):
          CSG.cylinder({start:[0,0,0],end:[0,0,h],radiusStart:r1,radiusEnd:r2,resolution:fn});
-      if(zoff) o = o.translate([0,0,zoff]);
+      var r = r1>r2?r1:r2;
+      if(p&&p.center.length) {         // preparing individual x,y,z center
+         off = [p.center[0]?0:r,p.center[1]?0:r,p.center[2]?-h/2:0];
+      } else if(p&&p.center==true) { 
+         off = [0,0,-h/2];
+      } else if(p&&p.center==false) {
+         off = [r,r,0];
+      }
+      if(off[0]||off[1]||off[2]) o = o.translate(off);
    }
    return o;
 }
