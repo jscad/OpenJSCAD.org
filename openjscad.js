@@ -512,7 +512,15 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
   if (options['libraries'] != null) {
     libraries = options['libraries'];
   }
-
+  for(var i in gMemFs) {            // let's test all files and check syntax before we do anything
+    var src = gMemFs[i].source+"\nfunction include() { }\n";
+    var f;
+    try {
+       f = new Function(src);
+    } catch(e) {
+      this.setError(i+": "+e.message);
+    }
+  }
   var workerscript = "//ASYNC\n";
   workerscript += "var _csg_baseurl=" + JSON.stringify(baseurl)+";\n";        // -- we need it early for include()
   workerscript += "var _includePath=" + JSON.stringify(_includePath)+";\n";    //        ''            ''
