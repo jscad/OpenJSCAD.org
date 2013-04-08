@@ -129,14 +129,14 @@ function cube(p) {
 function sphere(p) {
    var r = 1;
    var fn = 32;
+   var off = [0,0,0];      
    //var zoff = 0; // sphere() in openscad has no center:true|false
    if(p&&p.r) r = p.r;
    if(p&&p.fn) fn = p.fn;
    if(p&&!p.r&&!p.fn) r = p;
-   //zoff = r;
-   //if(p&&p.center==true) zoff = 0;
+   off = [0,0,0];       // center: false (default)
+
    var o = CSG.sphere({radius:r,resolution:fn});
-   //if(zoff) o = o.translate([0,0,zoff]);
    if(p&&p.center&&p.center.length) {         // preparing individual x,y,z center
       off = [p.center[0]?0:r,p.center[1]?0:r,p.center[2]?0:r];
    } else if(p&&p.center==true) { 
@@ -144,6 +144,7 @@ function sphere(p) {
    } else if(p&&p.center==false) {
       off = [r,r,r];
    }
+   if(off[0]||off[1]||off[2]) o = o.translate(off);
    return o;
 }
 
