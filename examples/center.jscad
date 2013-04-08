@@ -2,28 +2,38 @@
 
 function main() {
    var o = [];
-   
+
+   pos = function(p) {
+      o.push(
+         union(
+            cube({size: [2,0.05,0.05], center: [false,true,true]}).setColor(1,0,0), 
+            cube({size: [2,0.05,0.05], center: [false,true,true]}).setColor(1,0,0).rotateY(-90), 
+            cube({size: [2,0.05,0.05], center: [false,true,true]}).setColor(1,0,0).rotateZ(90), 
+            p
+         )
+      );
+   }
    echo("start compose");
-   o.push(cube());
-   o.push(cube({size: 1.5}));
-   o.push(cube({size: [1,2,3]}));
-   o.push(cube({size: [1,2,3], center: true}));
-   o.push(cube({size: [1,2,3], center: [true,true,false]}));
-   o.push(cube({size: [1,2,3], round: true, center: [true,true,false]}));
+   pos(cube());
+   pos(cube({size: 1.5}));
+   pos(cube({size: [1,2,3]}));
+   pos(cube({size: [1,2,3], center: true}));
+   pos(cube({size: [1,2,3], center: [true,true,false]}));
+   pos(cube({size: [1,2,3], round: true, center: [true,true,false]}));
 
-   o.push(sphere());
-   o.push(sphere(0.8));
-   o.push(sphere({r: 1.1}));
-   o.push(sphere({r: 1, center: false}));
-   o.push(sphere({r: 1, center: [true, true, false]}));
-   o.push(sphere({r: 1, fn: 10}));
+   pos(sphere());
+   pos(sphere(0.8));
+   pos(sphere({r: 1.1}));
+   pos(sphere({r: 1, center: false}));
+   pos(sphere({r: 1, center: [true, true, false]}));
+   pos(sphere({r: 1, fn: 10}));
 
-   o.push(cylinder());
-   o.push(cylinder({r:1, h: 4}));
-   o.push(cylinder({r:1, h: 4, center: true}));
-   o.push(cylinder({r:1, h: 4, center: [true,true,false]}));
-   o.push(cylinder({r1:1, r2:0, h: 4, center: [false,false,true]}));
-   o.push(cylinder({r: 1, start: [0,0,0], end:[1,1,4], center: [true,true,false]}));
+   pos(cylinder());
+   pos(cylinder({r:1, h: 4}));
+   pos(cylinder({r:1, h: 4, center: true}));
+   pos(cylinder({r:1, h: 4, center: [true,true,false]}));
+   pos(cylinder({r1:1, r2:0, h: 4, center: [false,false,true]}));
+   pos(cylinder({r: 1, start: [0,0,0], end:[1,1,4], center: [true,true,false]}));
    echo("end compose, translate");
    
    for(var i=0; i<o.length; i++) {
