@@ -103,8 +103,6 @@ function cube(p) {
    if(p&&p.size&&p.size.length) v = p.size;
    if(p&&p.size&&!p.size.length) s = p.size;
    if(p&&!p.size&&!p.length&&p.center==='undefined'&&!p.round&&!p.radius) s = p;
-   off = [s/2,s/2,s/2];
-   if(p&&p.center==true) off = [0,0,0];
    if(p&&p.round==true) { round = true, r = v&&v.length?(v[0]+v[1]+v[2])/30:s/10}
    if(p&&p.radius) { round = true, r = p.radius; }
    if(p&&p.fn) fn = p.fn;
@@ -113,11 +111,12 @@ function cube(p) {
    if(v&&v.length) { 
       x = v[0], y = v[1], z = v[2]; 
    }
+   off = [x/2,y/2,z/2];       // center: false default
    var o = round?
       CSG.roundedCube({radius:[x/2,y/2,z/2], roundradius:r, resolution: fn}):
       CSG.cube({radius:[x/2,y/2,z/2]});
    if(p&&p.center&&p.center.length) {
-      off = [p.center[0]?0:x/2,p.center[1]?0:y/2,p.center[2]?0:z/2];
+      off = [p.center[0]?0:x/2, p.center[1]?0:y/2,p.center[2]?0:z/2];
    } else if(p&&p.center==true) { 
       off = [0,0,0];
    } else if(p&&p.center==false) {
