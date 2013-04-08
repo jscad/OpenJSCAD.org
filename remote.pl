@@ -78,6 +78,7 @@ sub cacheLocal {
       $local = $new;
    }
    close(F);
+   $u =~ s/(["\\])/\\$1/g;
    print "Content-type: text/plain\n\n";
-   print "{ \"filename\": \"$fn\", \"file\": \"$local\" }\n";
+   print "{ \"filename\": \"$fn\", \"file\": \"$local\", \"url\": \"$u\" }\n";
 }   

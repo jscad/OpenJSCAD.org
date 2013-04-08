@@ -268,7 +268,7 @@ self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take q
       } else {
          src = parseSTL(data.source,data.filename);
       }
-      self.postMessage({ source: src, filename: data.filename });
+      self.postMessage({ source: src, filename: data.filename, url: data.remote });
    }
 };
 </script>
@@ -340,8 +340,8 @@ function onload() {
             //echo(this.responseText);
             var data = JSON.parse(this.responseText);
             //echo(data.url,data.filename,data.file);
-            fetchExample(data.file);
-            document.location = document.URL.replace(/#.*$/,'#');
+            fetchExample(data.file,data.url);
+            document.location = document.URL.replace(/#.*$/,'#');       // this won't reload the entire web-page
          }
          xhr.send(); 
  
@@ -358,7 +358,7 @@ function onload() {
    }
 }
 
-function fetchExample(fn) {
+function fetchExample(fn,url) {
    gMemFs = []; gCurrentFiles = [];
    
    $('#editor').show();
@@ -387,17 +387,20 @@ function fetchExample(fn) {
          var editorSource = source;
          var asyncComputation = false;
          var path = fn;
+
          _includePath = path.replace(/\/[^\/]+$/,'/');
          
          editor.getSession().setMode("ace/mode/javascript");
          if(fn.match(/\.jscad$/i)) {
             status("Processing "+fn+" <img id=busy src='imgs/busy.gif'>");
+            //if(url) editorSource = "// Remote retrieved <"+url+">\n"+editorSource;
             putSourceInEditor(editorSource,fn);
             gProcessor.setJsCad(source,fn);
             
          } else if(fn.match(/\.scad$/i)) {
             status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
             editorSource = source;
+            //if(url) editorSource = "// Remote retrieved <"+url+">\n"+editorSource;
             if(!editorSource.match(/^\/\/!OpenSCAD/i)) {
                editorSource = "//!OpenSCAD\n"+editorSource;
             }
@@ -425,13 +428,14 @@ function fetchExample(fn) {
                worker.onmessage = function(e) {    // worker finished
                   var data = e.data;
                   //echo("worker end:",data.source,data.filename);
+                  if(e.url) data.source = "// Remote retrieve <"+e.url+">\n"+data.source;
                   putSourceInEditor(data.source,data.filename);
                   gProcessor.setJsCad(data.source,data.filename);
                };
                var u = document.location.href;
                u = u.replace(/#.*$/,'');
                u = u.replace(/\?.*$/,'');
-               worker.postMessage({url: u, source: source, filename: fn }); // start worker
+               worker.postMessage({url: u, remote: url, source: source, filename: fn }); // start worker
                asyncComputation = true;
 
             } else {       // async (disabled)
@@ -440,17 +444,15 @@ function fetchExample(fn) {
                var type = RegExp.$1;
                if(type=='obj') {
                   editorSource = source = parseOBJ(source,fn);   
-                  putSourceInEditor(source,fn);
                } else if(type=='amf') {
                   editorSource = source = parseAMF(source,fn);   
-                  putSourceInEditor(source,fn);
                } else if(type=='gcode') {
                   editorSource = source = parseGCode(source,fn);   
-                  putSourceInEditor(source,fn);
                } else {
                   editorSource = source = parseSTL(source,fn);   
-                  putSourceInEditor(source,fn);
                }
+               //if(url) editorSource = source = "// Remote retrieved <"+url+">\n"+editorSource;
+               putSourceInEditor(source,fn);
             }
             if(!asyncComputation) {
                gProcessor.setJsCad(source,fn);
