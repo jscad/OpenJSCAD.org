@@ -179,7 +179,7 @@ function cylinder(p) {
       } else if(p&&p.center==true) { 
          off = [0,0,-h/2];
       } else if(p&&p.center==false) {
-         off = [r,r,0];
+         off = [0,0,0];
       }
       if(off[0]||off[1]||off[2]) o = o.translate(off);
    }
