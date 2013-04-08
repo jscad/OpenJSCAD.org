@@ -1,7 +1,7 @@
 // openscad.js, a few functions to simplify coding OpenSCAD-like
 //    written by Rene K. Mueller <spiritdude@gmail.com>, License: GPLv2
 //
-// Version: 0.015
+// Version: 0.016
 //
 // Description:
 // Helping to convert OpenSCAD .scad files to OpenJSCad .jscad files with 
@@ -12,6 +12,7 @@
 //     http://openjscad.org/
 //
 // History:
+// 2013/04/08: 0.016: added hull() which takes multiple 2d polygons (CAG)
 // 2013/04/08: 0.015: individual center: [true,false,true] possible for cube(), sphere() and cylinder()
 // 2013/04/05: 0.014: parseAMF(), experimental parseOBJ() and parseGCode()
 // 2013/04/04: 0.013: cube({round: true}), cylinder({round: true}) added
@@ -317,8 +318,147 @@ function minkowski() {
 }
 
 function hull() {
-   console.log("hull() not yet implemented"); 
+   var pts = [];
+
+   var a = arguments;                     
+   if(a[0].length) a = a[0];
+   
+   for(var i=0; i<a.length; i++) {              // extract all points of the CAG in the argument list
+      var cag = a[i];
+      for(var j=0; j<cag.sides.length; j++) {
+         pts.push({ x:cag.sides[j].vertex0.pos.x,y: cag.sides[j].vertex0.pos.y });
+      }
+   }
+   //echo(pts.length+" points in",pts);
+
+   // from http://www.psychedelicdevelopment.com/grahamscan/
+   //
+   ConvexHullPoint = function(i, a, d) {
+      this.index = i;
+      this.angle = a;
+      this.distance = d;
+   
+      this.compare = function(p) {
+         if (this.angle<p.angle)
+            return -1;
+         else if (this.angle>p.angle)
+            return 1;
+         else {
+            if (this.distance<p.distance)
+               return -1;
+            else if (this.distance>p.distance)
+               return 1;
+         }
+         return 0;
+      }
+   }
+   
+   ConvexHull = function() {
+      this.points = null;
+      this.indices = null;
+   
+      this.getIndices = function() {
+         return this.indices;
+      }
+   
+      this.clear = function() {
+         this.indices = null;
+         this.points = null;
+      }
+   
+      this.ccw = function(p1, p2, p3) {
+         return (this.points[p2].x - this.points[p1].x+1e-5)*(this.points[p3].y - this.points[p1].y+1e-5) - (this.points[p2].y - this.points[p1].y+1e-5)*(this.points[p3].x - this.points[p1].x+1e-5);
+      }
+   
+      this.angle = function(o, a) {
+         //return Math.atan((this.points[a].y-this.points[o].y) / (this.points[a].x - this.points[o].x + 1e-5));
+         return Math.atan2((this.points[a].y-this.points[o].y+1e-5), (this.points[a].x - this.points[o].x + 1e-5));
+      }
+       
+      this.distance = function(a, b) {
+         return ((this.points[b].x-this.points[a].x+1e-5)*(this.points[b].x-this.points[a].x+1e-5)+(this.points[b].y-this.points[a].y+1e-5)*(this.points[b].y-this.points[a].y+1e-5));
+      }
+   
+      this.compute = function(_points) {
+         this.indices=null;
+         if (_points.length<3)
+            return;
+         this.points=_points;
+   
+         // Find the lowest point
+         var min = 0;
+         for(var i = 1; i < this.points.length; i++) {
+            if(this.points[i].y==this.points[min].y) {
+               if(this.points[i].x<this.points[min].x)
+                  min = i;
+            }
+            else if(this.points[i].y<this.points[min].y)
+               min = i;
+         }
+   
+         // Calculate angle and distance from base
+         var al = new Array();
+         var ang = 0.0;
+         var dist = 0.0;
+         for (i = 0; i<this.points.length; i++) {
+            if (i==min)
+               continue;
+            ang = this.angle(min, i);
+            if (ang<0)
+               ang += Math.PI;
+            dist = this.distance(min, i);
+            al.push(new ConvexHullPoint(i, ang, dist));
+         }
+   
+         al.sort(function (a, b) { return a.compare(b); });
+   
+         // Create stack
+         var stack = new Array(this.points.length+1);
+         var j = 2;
+         for(i = 0; i<this.points.length; i++) {
+            if(i==min)
+               continue;
+            stack[j] = al[j-2].index;
+            j++;
+         }
+         stack[0] = stack[this.points.length];
+         stack[1] = min;
+   
+         var tmp;
+         var M = 2;
+         for(i = 3; i<=this.points.length; i++) {
+            while(this.ccw(stack[M-1], stack[M], stack[i]) <= 0)
+               M--;
+            M++;
+            tmp = stack[i];
+            stack[i] = stack[M];
+            stack[M] = tmp;
+         }
+   
+         this.indices = new Array(M);
+         for (i = 0; i<M; i++) {
+            this.indices[i] = stack[i+1];
+         }
+      }
+   }
+
+   var hull = new ConvexHull();
+
+   hull.compute(pts);
+   var indices = hull.getIndices();
+
+   if(indices&&indices.length>0) {
+      var ch = [];
+      for(var i=0; i<indices.length; i++) {
+         ch.push(pts[indices[i]]);
+         //echo(pts[indices[i]]);
+      }
+      //echo(ch.length+" points out",ch);
+      return CAG.fromPoints(ch);
+      //return CAG.fromPointsNoCheck(ch);
+   }
 }
+
 
 // -- 2D to 3D primitives (OpenSCAD like notion)
 
