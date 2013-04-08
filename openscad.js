@@ -366,16 +366,16 @@ function hull() {
       }
    
       this.ccw = function(p1, p2, p3) {
-         return (this.points[p2].x - this.points[p1].x+1e-5)*(this.points[p3].y - this.points[p1].y+1e-5) - (this.points[p2].y - this.points[p1].y+1e-5)*(this.points[p3].x - this.points[p1].x+1e-5);
+         return (this.points[p2].x - this.points[p1].x)*(this.points[p3].y - this.points[p1].y) - (this.points[p2].y - this.points[p1].y)*(this.points[p3].x - this.points[p1].x);
       }
    
       this.angle = function(o, a) {
          //return Math.atan((this.points[a].y-this.points[o].y) / (this.points[a].x - this.points[o].x + 1e-5));
-         return Math.atan2((this.points[a].y-this.points[o].y+1e-5), (this.points[a].x - this.points[o].x + 1e-5));
+         return Math.atan2((this.points[a].y-this.points[o].y), (this.points[a].x - this.points[o].x));
       }
        
       this.distance = function(a, b) {
-         return ((this.points[b].x-this.points[a].x+1e-5)*(this.points[b].x-this.points[a].x+1e-5)+(this.points[b].y-this.points[a].y+1e-5)*(this.points[b].y-this.points[a].y+1e-5));
+         return ((this.points[b].x-this.points[a].x)*(this.points[b].x-this.points[a].x)+(this.points[b].y-this.points[a].y)*(this.points[b].y-this.points[a].y));
       }
    
       this.compute = function(_points) {
