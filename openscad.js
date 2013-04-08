@@ -173,7 +173,7 @@ function cylinder(p) {
          CSG.roundedCylinder({start:[0,0,0],end:[0,0,h],radiusStart:r1,radiusEnd:r2,resolution:fn}):
          CSG.cylinder({start:[0,0,0],end:[0,0,h],radiusStart:r1,radiusEnd:r2,resolution:fn});
       var r = r1>r2?r1:r2;
-      if(p&&p.center.length) {         // preparing individual x,y,z center
+      if(p&&p.center&&p.center.length) {         // preparing individual x,y,z center
          off = [p.center[0]?0:r,p.center[1]?0:r,p.center[2]?-h/2:0];
       } else if(p&&p.center==true) { 
          off = [0,0,-h/2];
