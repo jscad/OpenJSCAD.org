@@ -2,7 +2,7 @@
 
 function showHull() {
    var o = Array.prototype.slice.call(arguments);
-   return group( 
+   return union( 
       union(o).translate([20,0,0]),    // flat single
       hull(o).translate([-10,0,0]),    // flat convex hulled
       linear_extrude({height: 10},     // convex hulled extruded
