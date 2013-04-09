@@ -69,7 +69,12 @@
 
 // color table from http://www.w3.org/TR/css3-color/
 
-function color(c,o) {
+function color() {
+   var o,i,a=arguments,c = a[0]; 
+   if(a[1].length) { a = a[1], i = 0; } else { i = 1; }
+   for(o=a[i++]; i<a.length; i++) { 
+      o = o.union(a[i]);
+   } 
    var map = {
    "black" : [ 0/255,0/255,0/255 ],
    "silver": [ 192/255,192/255,192/255 ],
@@ -234,6 +239,7 @@ function color(c,o) {
    "whitesmoke"  : [ 245/255,245/255,245/255 ],
    "yellow"   : [ 255/255,255/255,0/255 ],
    "yellowgreen" : [ 154/255,205/255,50/255 ] };
+
    if(typeof c == 'string') {
       return o.setColor(map[c.toLowerCase()]);
    } else {
@@ -476,15 +482,6 @@ function contract(r,n,o) {
 
 function multmatrix() {
    console.log("multmatrix() not yet implemented"); 
-}
-
-function color() {
-   var o,i,a=arguments,c = a[0]; 
-   if(a[1].length) { a = a[1], i = 0; } else { i = 1; }
-   for(o=a[i++]; i<a.length; i++) { 
-      o = o.union(a[i]);
-   } 
-   return o.setColor(c[0],c[1],c[2]);
 }
 
 function minkowski() {
