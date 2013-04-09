@@ -252,8 +252,18 @@ function color() {
 function union() { 
    var o,i=0,a=arguments; 
    if(a[0].length) a = a[0]; 
-   for(o=a[i++]; i<a.length; i++) { 
-      o = o.union(a[i]); 
+   
+   if((typeof(a[i]) == "object") && (a[i] instanceof CAG)) {
+      o = a[i].extrude({offset: [0,0,0.1]});    // -- convert a 2D shape to a thin solid, note: do not a[i] = a[i].extrude()
+   } else {
+      o = a[i++];                               
+   }
+   for(; i<a.length; i++) { 
+      var obj = a[i];
+      if((typeof(a[i]) == "object") && (a[i] instanceof CAG)) {
+         obj = a[i].extrude({offset: [0,0,0.1]});    // -- convert a 2D shape to a thin solid:
+      }
+      o = o.union(obj); 
    } 
    return o; 
 }
@@ -493,11 +503,14 @@ function hull() {
 
    var a = arguments;                     
    if(a[0].length) a = a[0];
-   
    for(var i=0; i<a.length; i++) {              // extract all points of the CAG in the argument list
       var cag = a[i];
+      if(!(cag instanceof CAG)) {
+         echo("ERROR: hull() accepts only 2D forms / CAG");
+         return;
+      }
       for(var j=0; j<cag.sides.length; j++) {
-         pts.push({ x:cag.sides[j].vertex0.pos.x,y: cag.sides[j].vertex0.pos.y });
+         pts.push({ x:cag.sides[j].vertex0.pos.x, y:cag.sides[j].vertex0.pos.y });
       }
    }
    //echo(pts.length+" points in",pts);
