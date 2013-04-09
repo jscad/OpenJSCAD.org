@@ -1,7 +1,7 @@
 // -- torus()
 
 function main() {
-   return group(
+   return [
       torus(),
       torus({ ri:0.5, fni: 8}).translate([0,10,0]),
    
@@ -13,6 +13,6 @@ function main() {
       torus({ fno:8 }).translate([10,0,0]),
       torus({ fno:4 }).translate([20,0,0]),
       torus({ fno:3 }).translate([30,0,0])
-   ).scale(3);
+   ];
 }
 
