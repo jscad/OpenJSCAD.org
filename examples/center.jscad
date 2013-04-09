@@ -38,7 +38,7 @@ function main() {
    pos(cylinder({r:1, h: 4, center: [true,true,false]}));
    pos(cylinder({r1:1, r2:0, h: 4, center: [false,false,true]}));
    pos(cylinder({r: 1, start: [0,0,0], end:[1,1,4], center: [true,true,false]}));
-   pos(cylinder({r: 1, start: [0,0,0], end:[1,1,4], center: [true,true,false]}).setColor(yellow));
+   pos(color("yellow",cylinder({r: 1, start: [0,0,0], end:[1,1,4], center: [true,true,false]})));
    pos(cube({size: 0.01, center: true}));
 
    echo("end compose, translate");
