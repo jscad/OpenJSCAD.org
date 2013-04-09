@@ -18,7 +18,7 @@ function main() {
       //echo(i, get_cylinder_h(i));
       w.push( translate([ i, 0, -30 ], 
          cylinder({r1: 2, r2: 2, h: get_cylinder_h(i)*3, fn: 16})).
-            setColor(hsl2rgb(((i+100)/200),1,0.5)));
+            setColor(hsl2rgb(((i+100)/200)*0.3+0.6,1,0.5)));
    }
    return w;
 }
