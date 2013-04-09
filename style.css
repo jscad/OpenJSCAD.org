@@ -119,8 +119,8 @@ canvas {
 #menu {
    background: white;
 
-   opacity: 0.7;    
-   -moz-opacity: 0.7;      /* css mess (why do it simple, when we can do it complicate!) */
+   opacity: 0.8;    
+   -moz-opacity: 0.8;
 
    border-right: 1px solid black;
    width: 250px;
@@ -214,7 +214,7 @@ canvas {
    vertical: middle;
 }
 
-#examplesList {
+#examples {
    transition: all 0.4s;
    -o-transition: all 0.4s;
    -moz-transition: all 0.4s;
@@ -222,6 +222,24 @@ canvas {
 }
 
 #examples {
+   /* width: 60em; */
+   width: auto;
+   z-index: 12;
+   position: absolute;
+   display: none;
+   background: #f8e8ff;
+   border: solid 1px #888;
+   padding: 1em;
+   border-radius: 5px;
+   box-shadow: 0px 0px 10px #849;
+}
+
+#examples td {
+   white-space: nowrap;
+}
+
+#examples li {
+   list-style-type: none;
 }
 
 #examplesList { 
@@ -239,4 +257,7 @@ canvas {
    left: 45%;
    position: relative;
    z-index: 10;
+}
+
+.examplesSeparator {
 }

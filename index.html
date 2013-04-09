@@ -68,6 +68,17 @@ $(document).ready(function() {
       $("#viewer").height($(window).height());
    });
    setTimeout( function(){$('#menu').css('left','-280px');},3000); // -- hide slide-menu after 3secs
+   $('#examplesTitle').click(function() {
+      $('#examples').css('200%','auto'); 
+      $('#examples').css('height','auto'); 
+      $('#examples').show(); 
+   });
+   $('#menu').mouseleave(function() {
+      $('#examples').css('height',0); $('#examples').hide(); 
+   });
+   $('#examples').mouseleave(function() {
+      $('#examples').css('height',0); $('#examples').hide(); 
+   });
 });   
 </script>
 </head>
@@ -93,8 +104,9 @@ $(document).ready(function() {
 <br/><span class=menuSubInfo>Announcements of recent developments</span></p>
 <p><a class=navlink href="https://plus.google.com/communities/114958480887231067224" target=_blank>Google+ Community <img src="imgs/externalLink.png" style=externalLink></a>
 <br/><span class=menuSubInfo>Discuss with other users &amp; developers</span></p>
-<b>Examples</b>
+<div id=examplesTitle><a href='#' onclick='return false'>Examples</a></div>
 <div id=examples></div>
+<span class=menuSubInfo>Dozens of examples to learn from</span></p>
 <p/>
 <b>Supported Formats</b>
 <table class=info>
@@ -156,6 +168,7 @@ var ex = [
 { file:'example003.scad', title: 'Cube with cutouts', type: 'OpenSCAD' },
 //{ file:'example004.jscad', title: 'Cube minus sphere' },
 { file:'example005.jscad', title: 'Pavillon' },
+//{ file:'center.jscad', title: 'Centers of Primitives' },
 
 // { file:'bunch-cubes.jscad', title: 'Bunch of Cubes', new: true }, 
 { file:'lookup.jscad', title: 'Lookup()' },
@@ -177,10 +190,10 @@ var ex = [
 { file:'servo.jscad', title: 'Interactive Params: Servo Motor' },
 { file:'gear.jscad', title: 'Interactive Params: Gear' },
 { file:'s-hook.jscad', title: 'Interactive Params: S Hook' },
-//{ file:'grille.jscad', title: 'Interactive Params: Grille' },
+{ file:'grille.jscad', title: 'Interactive Params: Grille' },
 { file:'axis-coupler.jscad', title: 'Interactive Params: Axis Coupler' },
 { file:'lamp-shade.jscad', title: 'Interactive Params: Lamp Shade' },
-//{ file:'celtic-knot-ring.jscad', title: 'Interactive Params: Celtic Knot Ring' },
+{ file:'celtic-knot-ring.jscad', title: 'Interactive Params: Celtic Knot Ring' },
 { file:'stepper-motor.jscad', title: 'Interactive Params: Stepper Motor' },
 { file:'iphone4-case.jscad', title: 'Interactive Params: iPhone4 Case' },
 
@@ -196,15 +209,21 @@ var ex = [
 // { file:'klein_bottle-DizingOf.stl', title: '3D Model: Klein Bottle (DizingOf)', type: 'STL' } // too slow, over 400k triangles, huge memory consumption
 ];
 if(me=='web-online') {
-   var src = '';
+   var wrap = 50;
+   var colp = 100/Math.floor(ex.length/wrap+1)+"%";
+   var src = '<table width=100%><tr><td width="+colp+" valign=top>';
    //src += "<img id=examplesHandle src=\"imgs/menuHandleHU.png\">";
    //src += '<b>Examples:</b>';
    for(var i=0; i<ex.length; i++) {
+      if(i&&i%wrap==0) {
+         src += "</td><td class=examplesSeparator width="+colp+" valign=top>";
+      }
       src += "<li><a href=# onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n";
       if(ex[i].type) src += " <span class=type>("+ex[i].type+")</span></a>";
       if(ex[i].new) src += " <span class=newExample>new</span></a>";
       //src += "<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n";
    }
+   src += "</td></tr></table>";
    $('#examples').html(src);
 } else {
    // examples off-line won't work yet as XHR is used
