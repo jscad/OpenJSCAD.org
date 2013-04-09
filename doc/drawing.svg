@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -737,5 +737,49 @@
        d="M 161.62441,838.20984 274.76149,782.65145"
        id="path3197"
        inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:20.21109009px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="9.286438"
+       y="871.09814"
+       id="text3199"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3201"
+         x="9.286438"
+         y="871.09814">uncompressed</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3203"
+       y="871.09814"
+       x="529.28644"
+       style="font-size:20.21109009px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><tspan
+         y="871.09814"
+         x="529.28644"
+         id="tspan3205"
+         sodipodi:role="line">uncompressed</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3207"
+       y="411.09814"
+       x="9.286438"
+       style="font-size:20.21109009px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><tspan
+         y="411.09814"
+         x="9.286438"
+         id="tspan3210"
+         sodipodi:role="line">uncompressed</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20.21109009px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="529.28644"
+       y="411.09814"
+       id="text3212"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3214"
+         x="529.28644"
+         y="411.09814">uncompressed</tspan></text>
   </g>
 </svg>
