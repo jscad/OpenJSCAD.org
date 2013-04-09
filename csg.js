@@ -2807,7 +2807,7 @@ CSG.Polygon.prototype = {
 				fnCallback = options.callback;
 		}
 		if (!fnCallback) {
-			var square = new CSG.Polygon.createFromPoints([
+			var square = CSG.Polygon.createFromPoints([
 						[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0]
 					]);
 			fnCallback = function(t, slice) {
@@ -2848,7 +2848,6 @@ CSG.Polygon.prototype = {
 			} //else - already generated
 		} else {
 			//save top and bottom
-			//TODO: flip if necessary
 			polygons.unshift(flipped ? bottom : bottom.flipped());
 			polygons.push(flipped ? top.flipped() : top);
 		}
