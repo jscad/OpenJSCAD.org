@@ -129,6 +129,13 @@ if(outFormat=='jscad') {
 } else {
    //console.log("render jscad to "+outFormat);
    var csg = eval(src+"\n"+scad+"\nmain()\n");    // *.jscad + openscad.js + main()
+   if(csg.length) {
+      var o = csg[0];
+      for(i=1; i<csg.length; i++) {
+         o = o.unionForNonIntersecting(csg[i]);
+      }
+      csg = o;
+   }
    //var stl = csg.fixTJunctions().toStlBinary();   // creates a Blob, which with nodejs doesn't exist yet
    //var stl = csg.fixTJunctions().toStlString();     // creates bad facet normals!! in some cases
    var out;

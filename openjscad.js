@@ -408,17 +408,16 @@ OpenJsCad.runMainInWorker = function(mainParameters) {
     if( (typeof(result) != "object") || ((!(result instanceof CSG)) && (!(result instanceof CAG)))) {
       //throw new Error("Your main() function should return a CSG solid or a CAG area.");
     }
-    if(0&&result.length) {                             // preparing to render multiple CSG (not union-ed), not yet working
-       for(var i=0; i<result.length; i++) {
-          var result_compact = result[i].toCompactBinary();
-          result = null; // not needed anymore
-          self.postMessage({cmd: 'rendered', result: result_compact});
+    if(result.length) {                   // main() return an array, we consider it a bunch of CSG not intersecting
+       var o = result[0];
+       for(var i=1; i<result.length; i++) {
+          o = o.unionForNonIntersecting(result[i]);
        }
-    } else {
-       var result_compact = result.toCompactBinary();   
-       result = null; // not needed anymore
-       self.postMessage({cmd: 'rendered', result: result_compact});
-    }
+       result = o;
+    } 
+    var result_compact = result.toCompactBinary();   
+    result = null; // not needed anymore
+    self.postMessage({cmd: 'rendered', result: result_compact});
   }
   catch(e) {
     var errtxt = e.stack;
@@ -512,7 +511,15 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
   if (options['libraries'] != null) {
     libraries = options['libraries'];
   }
-
+  for(var i in gMemFs) {            // let's test all files and check syntax before we do anything
+    var src = gMemFs[i].source+"\nfunction include() { }\n";
+    var f;
+    try {
+       f = new Function(src);
+    } catch(e) {
+      this.setError(i+": "+e.message);
+    }
+  }
   var workerscript = "//ASYNC\n";
   workerscript += "var _csg_baseurl=" + JSON.stringify(baseurl)+";\n";        // -- we need it early for include()
   workerscript += "var _includePath=" + JSON.stringify(_includePath)+";\n";    //        ''            ''
@@ -741,17 +748,26 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
 };
 
 OpenJsCad.Processor.convertToSolid = function(obj) {
-  if( (typeof(obj) == "object") && ((obj instanceof CAG)) )
-  {
+  //echo("typeof="+typeof(obj),obj.length);
+
+  if( (typeof(obj) == "object") && ((obj instanceof CAG)) ) {
     // convert a 2D shape to a thin solid:
-    obj=obj.extrude({offset: [0,0,0.1]});
-  }
-  else if( (typeof(obj) == "object") && ((obj instanceof CSG)) )
-  {
-    // obj already is a solid
-  }
-  else
-  {
+    obj = obj.extrude({offset: [0,0,0.1]});
+
+  } else if( (typeof(obj) == "object") && ((obj instanceof CSG)) ) {
+    // obj already is a solid, nothing to do
+    ;
+    
+  } else if(obj.length) {                   // main() return an array, we consider it a bunch of CSG not intersecting
+    //echo("putting them together");
+    var o = obj[0];
+    for(var i=1; i<obj.length; i++) {
+       o = o.unionForNonIntersecting(obj[i]);
+    }
+    obj = o;
+    //echo("done.");
+    
+  } else {
     throw new Error("Cannot convert to solid");
   }
   return obj;
@@ -906,11 +922,12 @@ OpenJsCad.Processor.prototype = {
   },
   
   setCurrentObject: function(obj) {
-    this.currentObject = obj;
-    if(this.viewer)
-    {
-      var csg = OpenJsCad.Processor.convertToSolid(obj); 
+    this.currentObject = obj;                                  // CAG or CSG
+    if(this.viewer) {
+      var csg = OpenJsCad.Processor.convertToSolid(obj);       // enfore CSG to display
       this.viewer.setCsg(csg);
+      if(obj.length)             // if it was an array (multiple CSG is now one CSG), we have to reassign currentObject
+         this.currentObject = csg;
     }
     this.hasValidCurrentObject = true;
     

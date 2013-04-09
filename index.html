@@ -50,7 +50,7 @@ Todo:
 <script src="underscore.js"></script>
 <script src="openscad-openjscad-translator.js"></script>
 <script lang=JavaScript>
-var version = '0.016 (2013/04/07)';
+var version = '0.016 (2013/04/09)';
 //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
 var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
 var browser = 'unknown';
@@ -68,6 +68,17 @@ $(document).ready(function() {
       $("#viewer").height($(window).height());
    });
    setTimeout( function(){$('#menu').css('left','-280px');},3000); // -- hide slide-menu after 3secs
+   $('#examplesTitle').click(function() {
+      $('#examples').css('200%','auto'); 
+      $('#examples').css('height','auto'); 
+      $('#examples').show(); 
+   });
+   $('#menu').mouseleave(function() {
+      $('#examples').css('height',0); $('#examples').hide(); 
+   });
+   $('#examples').mouseleave(function() {
+      $('#examples').css('height',0); $('#examples').hide(); 
+   });
 });   
 </script>
 </head>
@@ -93,15 +104,16 @@ $(document).ready(function() {
 <br/><span class=menuSubInfo>Announcements of recent developments</span></p>
 <p><a class=navlink href="https://plus.google.com/communities/114958480887231067224" target=_blank>Google+ Community <img src="imgs/externalLink.png" style=externalLink></a>
 <br/><span class=menuSubInfo>Discuss with other users &amp; developers</span></p>
-<b>Examples</b>
+<div id=examplesTitle class=navlink><a href='#' onclick='return false'>Examples</a></div>
 <div id=examples></div>
+<span class=menuSubInfo>Dozens of examples to learn from</span></p>
 <p/>
 <b>Supported Formats</b>
 <table class=info>
 <tr><td align=right><b>jscad</b></td><td><a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">OpenJSCAD</a> (native, import/export)</td></tr>
-<tr><td align=right><b>scad</b></td><td><a target=_blank href="http://openscad.org">OpenSCAD</a> (import)</td></tr>
+<tr><td align=right><b>scad</b></td><td><a target=_blank href="http://openscad.org">OpenSCAD</a> (<a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#direct-openscad-scad-import">experimental</a>, import)</td></tr>
 <tr><td align=right><b>stl</b></td><td><a target=_blank href="http://en.wikipedia.org/wiki/STL_(file_format)">STL format</a> (experimental, import/export)</td></tr>
-<tr><td align=right><b>amf</b></td><td><a href="http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format">AMF format</a> (experimental, import/export)</td></tr>
+<tr><td align=right><b>amf</b></td><td><a target=_blank href="http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format">AMF format</a> (experimental, import/export)</td></tr>
 </table>
 <p><a class=navlink href="#" onclick="$('#about').show(); return false;">About</a></p>
 </nav>
@@ -133,10 +145,10 @@ function main() {
    return union(
       difference(
          cube({size: 3, center: true}),
-         sphere(2)
+         sphere({r:2, center: true})
       ),
       intersection(
-          sphere(1.3),
+          sphere({r: 1.3, center: true}),
           cube({size: 2.1, center: true})
       )
    ).translate([0,0,1.5]).scale(10);
@@ -156,14 +168,16 @@ var ex = [
 { file:'example003.scad', title: 'Cube with cutouts', type: 'OpenSCAD' },
 //{ file:'example004.jscad', title: 'Cube minus sphere' },
 { file:'example005.jscad', title: 'Pavillon' },
+//{ file:'center.jscad', title: 'Centers of Primitives' },
 
-// { file:'bunch-cubes.jscad', title: 'Bunch of Cubes' }, // too slow for demo, needs speed up
+// { file:'bunch-cubes.jscad', title: 'Bunch of Cubes', new: true }, 
 { file:'lookup.jscad', title: 'Lookup()' },
 { file:'expand.jscad', title: 'Expand()' },
 { file:'rectangular_extrude.jscad', title: 'Rectangular_extrude()' },
 { file:'linear_extrude.jscad', title: 'Linear_extrude()' },
 { file:'rotate_extrude.jscad', title: 'Rotate_extrude()' },
 { file:'polyhedron.jscad', title: 'Polyhedron()' },
+{ file:'hull.jscad', title: 'Hull()', new: true },
 { file:'torus.jscad', title: 'Torus()' },
 
 { file:'slices/double-screw.jscad', title: 'SolidFromSlices(): Double Screw', new: true },
@@ -171,14 +185,15 @@ var ex = [
 { file:'slices/four2three-round.jscad', title: 'SolidFromSlices(): 4 to 3 round', new: true },
 { file:'slices/spring.jscad', title: 'SolidFromSlices(): Spring', new: true },
 { file:'slices/tor.jscad', title: 'SolidFromSlices(): Tor (multi-color)', new: true },
+{ file:'slices/rose.jscad', title: 'SolidFromSlices(): Rose Curve', new: true },
 
 { file:'servo.jscad', title: 'Interactive Params: Servo Motor' },
 { file:'gear.jscad', title: 'Interactive Params: Gear' },
 { file:'s-hook.jscad', title: 'Interactive Params: S Hook' },
-//{ file:'grille.jscad', title: 'Interactive Params: Grille' },
+{ file:'grille.jscad', title: 'Interactive Params: Grille' },
 { file:'axis-coupler.jscad', title: 'Interactive Params: Axis Coupler' },
 { file:'lamp-shade.jscad', title: 'Interactive Params: Lamp Shade' },
-//{ file:'celtic-knot-ring.jscad', title: 'Interactive Params: Celtic Knot Ring' },
+{ file:'celtic-knot-ring.jscad', title: 'Interactive Params: Celtic Knot Ring' },
 { file:'stepper-motor.jscad', title: 'Interactive Params: Stepper Motor' },
 { file:'iphone4-case.jscad', title: 'Interactive Params: iPhone4 Case' },
 
@@ -188,20 +203,27 @@ var ex = [
 { file:'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' },  
 { file:'thing_7-Zomboe.stl', title: '3D Model: Thing 7 / Flower (Zomboe)', type: 'STL' },  
 { file:'yoda-RichRap.stl', title: '3D Model: Yoda (RichRap)', type: 'STL' },
+// { url:'http://pastebin.com/raw.php?i=wJLctyAQ', title: 'OpenJSCAD.org Logo', type:'Remote JSCAD' }
 // { file:'treefrog-Jerrill.stl', title: '3D Model: Treefrog (Jerrill)', type: 'STL' },    // nice frog, yet slow 
 // { file:'organic_flower-Bogoboy23.stl', title: '3D Model: Organic Flower (Bogoboy23)', type: 'STL' }, // all wrong normals!!
 // { file:'klein_bottle-DizingOf.stl', title: '3D Model: Klein Bottle (DizingOf)', type: 'STL' } // too slow, over 400k triangles, huge memory consumption
 ];
 if(me=='web-online') {
-   var src = '';
+   var wrap = 50;
+   var colp = 100/Math.floor(ex.length/wrap+1)+"%";
+   var src = '<table width=100%><tr><td width="+colp+" valign=top>';
    //src += "<img id=examplesHandle src=\"imgs/menuHandleHU.png\">";
    //src += '<b>Examples:</b>';
    for(var i=0; i<ex.length; i++) {
+      if(i&&i%wrap==0) {
+         src += "</td><td class=examplesSeparator width="+colp+" valign=top>";
+      }
       src += "<li><a href=# onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n";
       if(ex[i].type) src += " <span class=type>("+ex[i].type+")</span></a>";
       if(ex[i].new) src += " <span class=newExample>new</span></a>";
       //src += "<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n";
    }
+   src += "</td></tr></table>";
    $('#examples').html(src);
 } else {
    // examples off-line won't work yet as XHR is used
@@ -267,7 +289,7 @@ self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take q
       } else {
          src = parseSTL(data.source,data.filename);
       }
-      self.postMessage({ source: src, filename: data.filename });
+      self.postMessage({ source: src, filename: data.filename, url: data.remote });
    }
 };
 </script>
@@ -339,8 +361,8 @@ function onload() {
             //echo(this.responseText);
             var data = JSON.parse(this.responseText);
             //echo(data.url,data.filename,data.file);
-            fetchExample(data.file);
-            document.location = document.URL.replace(/#.*$/,'#');
+            fetchExample(data.file,data.url);
+            document.location = document.URL.replace(/#.*$/,'#');       // this won't reload the entire web-page
          }
          xhr.send(); 
  
@@ -357,7 +379,7 @@ function onload() {
    }
 }
 
-function fetchExample(fn) {
+function fetchExample(fn,url) {
    gMemFs = []; gCurrentFiles = [];
    
    $('#editor').show();
@@ -386,17 +408,20 @@ function fetchExample(fn) {
          var editorSource = source;
          var asyncComputation = false;
          var path = fn;
+
          _includePath = path.replace(/\/[^\/]+$/,'/');
          
          editor.getSession().setMode("ace/mode/javascript");
          if(fn.match(/\.jscad$/i)) {
             status("Processing "+fn+" <img id=busy src='imgs/busy.gif'>");
+            //if(url) editorSource = "// Remote retrieved <"+url+">\n"+editorSource;
             putSourceInEditor(editorSource,fn);
             gProcessor.setJsCad(source,fn);
             
          } else if(fn.match(/\.scad$/i)) {
             status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
             editorSource = source;
+            //if(url) editorSource = "// Remote retrieved <"+url+">\n"+editorSource;
             if(!editorSource.match(/^\/\/!OpenSCAD/i)) {
                editorSource = "//!OpenSCAD\n"+editorSource;
             }
@@ -424,13 +449,14 @@ function fetchExample(fn) {
                worker.onmessage = function(e) {    // worker finished
                   var data = e.data;
                   //echo("worker end:",data.source,data.filename);
+                  if(e.url) data.source = "// Remote retrieve <"+e.url+">\n"+data.source;
                   putSourceInEditor(data.source,data.filename);
                   gProcessor.setJsCad(data.source,data.filename);
                };
                var u = document.location.href;
                u = u.replace(/#.*$/,'');
                u = u.replace(/\?.*$/,'');
-               worker.postMessage({url: u, source: source, filename: fn }); // start worker
+               worker.postMessage({url: u, remote: url, source: source, filename: fn }); // start worker
                asyncComputation = true;
 
             } else {       // async (disabled)
@@ -439,17 +465,15 @@ function fetchExample(fn) {
                var type = RegExp.$1;
                if(type=='obj') {
                   editorSource = source = parseOBJ(source,fn);   
-                  putSourceInEditor(source,fn);
                } else if(type=='amf') {
                   editorSource = source = parseAMF(source,fn);   
-                  putSourceInEditor(source,fn);
                } else if(type=='gcode') {
                   editorSource = source = parseGCode(source,fn);   
-                  putSourceInEditor(source,fn);
                } else {
                   editorSource = source = parseSTL(source,fn);   
-                  putSourceInEditor(source,fn);
                }
+               //if(url) editorSource = source = "// Remote retrieved <"+url+">\n"+editorSource;
+               putSourceInEditor(source,fn);
             }
             if(!asyncComputation) {
                gProcessor.setJsCad(source,fn);

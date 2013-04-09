@@ -1,4 +1,5 @@
 // -- Celtic Knot Ring
+//    by Joost Nieuwenhuijse
 
 // -*- mode: javascript; -*-
 

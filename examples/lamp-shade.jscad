@@ -1,4 +1,5 @@
 // -- Lamp Shade
+//    by Joost Nieuwenhuijse
 
 function main(params)
 {

@@ -1,4 +1,5 @@
 // -- Three to four (sides)
+//    by Eduard Bespalov
 
 function getParameterDefinitions() {
   return [

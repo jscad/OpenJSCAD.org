@@ -31,8 +31,8 @@ function main() {
    s.push(platonicSolid(dodecahedron));
    s.push(platonicSolid(icosahedron));
    for(var i=0; i<s.length; i++) {
-      s[i] = s[i].translate([(i-s.length/2)*2,0,0]);
+      s[i] = s[i].scale(5).translate([(i-s.length/2)*10,0,0]);
    }
-   return union(s).scale(5);
+   return s;
 }
 

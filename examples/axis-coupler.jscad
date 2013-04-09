@@ -1,4 +1,5 @@
 // -- Axis Coupler
+//    by Joost Nieuwenhuijse
 
 var cylresolution=16;
 

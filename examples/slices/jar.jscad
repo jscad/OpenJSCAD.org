@@ -1,4 +1,5 @@
 // -- Jar
+//    by Eduard Bespalov
 
 // Here we define the user editable parameters:
 function getParameterDefinitions() {

@@ -1,7 +1,7 @@
 // openscad.js, a few functions to simplify coding OpenSCAD-like
 //    written by Rene K. Mueller <spiritdude@gmail.com>, License: GPLv2
 //
-// Version: 0.013
+// Version: 0.017
 //
 // Description:
 // Helping to convert OpenSCAD .scad files to OpenJSCad .jscad files with 
@@ -12,6 +12,9 @@
 //     http://openjscad.org/
 //
 // History:
+// 2013/04/09: 0.017: added color()
+// 2013/04/08: 0.016: added hull() which takes multiple 2d polygons (CAG)
+// 2013/04/08: 0.015: individual center: [true,false,true] possible for cube(), sphere() and cylinder()
 // 2013/04/05: 0.014: parseAMF(), experimental parseOBJ() and parseGCode()
 // 2013/04/04: 0.013: cube({round: true}), cylinder({round: true}) added
 // 2013/03/28: 0.012: rectangular_extrude() along 2d path, rotate_extrude() and torus() added
@@ -64,13 +67,222 @@
 
 // wrapper functions for OpenJsCAD & OpenJSCAD.org
 
+// color table from http://www.w3.org/TR/css3-color/
+
+function color() {
+   var o,i,a=arguments,c = a[0]; 
+   if(a[1].length) { a = a[1], i = 0; } else { i = 1; }
+   for(o=a[i++]; i<a.length; i++) { 
+      o = o.union(a[i]);
+   } 
+   var map = {
+   "black" : [ 0/255,0/255,0/255 ],
+   "silver": [ 192/255,192/255,192/255 ],
+   "gray"  : [ 128/255,128/255,128/255 ],
+   "white" : [ 255/255,255/255,255/255 ],
+   "maroon": [ 128/255,0/255,0/255 ],
+   "red"   : [ 255/255,0/255,0/255 ],
+   "purple": [ 128/255,0/255,128/255 ],
+   "fuchsia": [ 255/255,0/255,255/255 ],
+   "green" : [ 0/255,128/255,0/255 ],
+   "lime"  : [ 0/255,255/255,0/255 ],
+   "olive" : [ 128/255,128/255,0/255 ],
+   "yellow": [ 255/255,255/255,0/255 ],
+   "navy"  : [ 0/255,0/255,128/255 ],
+   "blue"  : [ 0/255,0/255,255/255 ],
+   "teal"  : [ 0/255,128/255,128/255 ],
+   "aqua"  : [ 0/255,255/255,255/255 ],
+   "aliceblue"   : [ 240/255,248/255,255/255 ],
+   "antiquewhite"   : [ 250/255,235/255,215/255 ],
+   "aqua"  : [ 0/255,255/255,255/255 ],
+   "aquamarine"  : [ 127/255,255/255,212/255 ],
+   "azure" : [ 240/255,255/255,255/255 ],
+   "beige" : [ 245/255,245/255,220/255 ],
+   "bisque"   : [ 255/255,228/255,196/255 ],
+   "black" : [ 0/255,0/255,0/255 ],
+   "blanchedalmond" : [ 255/255,235/255,205/255 ],
+   "blue"  : [ 0/255,0/255,255/255 ],
+   "blueviolet"  : [ 138/255,43/255,226/255 ],
+   "brown" : [ 165/255,42/255,42/255 ],
+   "burlywood"   : [ 222/255,184/255,135/255 ],
+   "cadetblue"   : [ 95/255,158/255,160/255 ],
+   "chartreuse"  : [ 127/255,255/255,0/255 ],
+   "chocolate"   : [ 210/255,105/255,30/255 ],
+   "coral" : [ 255/255,127/255,80/255 ],
+   "cornflowerblue" : [ 100/255,149/255,237/255 ],
+   "cornsilk" : [ 255/255,248/255,220/255 ],
+   "crimson"  : [ 220/255,20/255,60/255 ],
+   "cyan"  : [ 0/255,255/255,255/255 ],
+   "darkblue" : [ 0/255,0/255,139/255 ],
+   "darkcyan" : [ 0/255,139/255,139/255 ],
+   "darkgoldenrod"  : [ 184/255,134/255,11/255 ],
+   "darkgray" : [ 169/255,169/255,169/255 ],
+   "darkgreen"   : [ 0/255,100/255,0/255 ],
+   "darkgrey" : [ 169/255,169/255,169/255 ],
+   "darkkhaki"   : [ 189/255,183/255,107/255 ],
+   "darkmagenta" : [ 139/255,0/255,139/255 ],
+   "darkolivegreen" : [ 85/255,107/255,47/255 ],
+   "darkorange"  : [ 255/255,140/255,0/255 ],
+   "darkorchid"  : [ 153/255,50/255,204/255 ],
+   "darkred"  : [ 139/255,0/255,0/255 ],
+   "darksalmon"  : [ 233/255,150/255,122/255 ],
+   "darkseagreen"   : [ 143/255,188/255,143/255 ],
+   "darkslateblue"  : [ 72/255,61/255,139/255 ],
+   "darkslategray"  : [ 47/255,79/255,79/255 ],
+   "darkslategrey"  : [ 47/255,79/255,79/255 ],
+   "darkturquoise"  : [ 0/255,206/255,209/255 ],
+   "darkviolet"  : [ 148/255,0/255,211/255 ],
+   "deeppink" : [ 255/255,20/255,147/255 ],
+   "deepskyblue" : [ 0/255,191/255,255/255 ],
+   "dimgray"  : [ 105/255,105/255,105/255 ],
+   "dimgrey"  : [ 105/255,105/255,105/255 ],
+   "dodgerblue"  : [ 30/255,144/255,255/255 ],
+   "firebrick"   : [ 178/255,34/255,34/255 ],
+   "floralwhite" : [ 255/255,250/255,240/255 ],
+   "forestgreen" : [ 34/255,139/255,34/255 ],
+   "fuchsia"  : [ 255/255,0/255,255/255 ],
+   "gainsboro"   : [ 220/255,220/255,220/255 ],
+   "ghostwhite"  : [ 248/255,248/255,255/255 ],
+   "gold"  : [ 255/255,215/255,0/255 ],
+   "goldenrod"   : [ 218/255,165/255,32/255 ],
+   "gray"  : [ 128/255,128/255,128/255 ],
+   "green" : [ 0/255,128/255,0/255 ],
+   "greenyellow" : [ 173/255,255/255,47/255 ],
+   "grey"  : [ 128/255,128/255,128/255 ],
+   "honeydew" : [ 240/255,255/255,240/255 ],
+   "hotpink"  : [ 255/255,105/255,180/255 ],
+   "indianred"   : [ 205/255,92/255,92/255 ],
+   "indigo"   : [ 75/255,0/255,130/255 ],
+   "ivory" : [ 255/255,255/255,240/255 ],
+   "khaki" : [ 240/255,230/255,140/255 ],
+   "lavender" : [ 230/255,230/255,250/255 ],
+   "lavenderblush"  : [ 255/255,240/255,245/255 ],
+   "lawngreen"   : [ 124/255,252/255,0/255 ],
+   "lemonchiffon"   : [ 255/255,250/255,205/255 ],
+   "lightblue"   : [ 173/255,216/255,230/255 ],
+   "lightcoral"  : [ 240/255,128/255,128/255 ],
+   "lightcyan"   : [ 224/255,255/255,255/255 ],
+   "lightgoldenrodyellow" : [ 250/255,250/255,210/255 ],
+   "lightgray"   : [ 211/255,211/255,211/255 ],
+   "lightgreen"  : [ 144/255,238/255,144/255 ],
+   "lightgrey"   : [ 211/255,211/255,211/255 ],
+   "lightpink"   : [ 255/255,182/255,193/255 ],
+   "lightsalmon" : [ 255/255,160/255,122/255 ],
+   "lightseagreen"  : [ 32/255,178/255,170/255 ],
+   "lightskyblue"   : [ 135/255,206/255,250/255 ],
+   "lightslategray" : [ 119/255,136/255,153/255 ],
+   "lightslategrey" : [ 119/255,136/255,153/255 ],
+   "lightsteelblue" : [ 176/255,196/255,222/255 ],
+   "lightyellow" : [ 255/255,255/255,224/255 ],
+   "lime"  : [ 0/255,255/255,0/255 ],
+   "limegreen"   : [ 50/255,205/255,50/255 ],
+   "linen" : [ 250/255,240/255,230/255 ],
+   "magenta"  : [ 255/255,0/255,255/255 ],
+   "maroon"   : [ 128/255,0/255,0/255 ],
+   "mediumaquamarine"  : [ 102/255,205/255,170/255 ],
+   "mediumblue"  : [ 0/255,0/255,205/255 ],
+   "mediumorchid"   : [ 186/255,85/255,211/255 ],
+   "mediumpurple"   : [ 147/255,112/255,219/255 ],
+   "mediumseagreen" : [ 60/255,179/255,113/255 ],
+   "mediumslateblue"   : [ 123/255,104/255,238/255 ],
+   "mediumspringgreen" : [ 0/255,250/255,154/255 ],
+   "mediumturquoise"   : [ 72/255,209/255,204/255 ],
+   "mediumvioletred"   : [ 199/255,21/255,133/255 ],
+   "midnightblue"   : [ 25/255,25/255,112/255 ],
+   "mintcream"   : [ 245/255,255/255,250/255 ],
+   "mistyrose"   : [ 255/255,228/255,225/255 ],
+   "moccasin" : [ 255/255,228/255,181/255 ],
+   "navajowhite" : [ 255/255,222/255,173/255 ],
+   "navy"  : [ 0/255,0/255,128/255 ],
+   "oldlace"  : [ 253/255,245/255,230/255 ],
+   "olive" : [ 128/255,128/255,0/255 ],
+   "olivedrab"   : [ 107/255,142/255,35/255 ],
+   "orange"   : [ 255/255,165/255,0/255 ],
+   "orangered"   : [ 255/255,69/255,0/255 ],
+   "orchid"   : [ 218/255,112/255,214/255 ],
+   "palegoldenrod"  : [ 238/255,232/255,170/255 ],
+   "palegreen"   : [ 152/255,251/255,152/255 ],
+   "paleturquoise"  : [ 175/255,238/255,238/255 ],
+   "palevioletred"  : [ 219/255,112/255,147/255 ],
+   "papayawhip"  : [ 255/255,239/255,213/255 ],
+   "peachpuff"   : [ 255/255,218/255,185/255 ],
+   "peru"  : [ 205/255,133/255,63/255 ],
+   "pink"  : [ 255/255,192/255,203/255 ],
+   "plum"  : [ 221/255,160/255,221/255 ],
+   "powderblue"  : [ 176/255,224/255,230/255 ],
+   "purple"   : [ 128/255,0/255,128/255 ],
+   "red"   : [ 255/255,0/255,0/255 ],
+   "rosybrown"   : [ 188/255,143/255,143/255 ],
+   "royalblue"   : [ 65/255,105/255,225/255 ],
+   "saddlebrown" : [ 139/255,69/255,19/255 ],
+   "salmon"   : [ 250/255,128/255,114/255 ],
+   "sandybrown"  : [ 244/255,164/255,96/255 ],
+   "seagreen" : [ 46/255,139/255,87/255 ],
+   "seashell" : [ 255/255,245/255,238/255 ],
+   "sienna"   : [ 160/255,82/255,45/255 ],
+   "silver"   : [ 192/255,192/255,192/255 ],
+   "skyblue"  : [ 135/255,206/255,235/255 ],
+   "slateblue"   : [ 106/255,90/255,205/255 ],
+   "slategray"   : [ 112/255,128/255,144/255 ],
+   "slategrey"   : [ 112/255,128/255,144/255 ],
+   "snow"  : [ 255/255,250/255,250/255 ],
+   "springgreen" : [ 0/255,255/255,127/255 ],
+   "steelblue"   : [ 70/255,130/255,180/255 ],
+   "tan"   : [ 210/255,180/255,140/255 ],
+   "teal"  : [ 0/255,128/255,128/255 ],
+   "thistle"  : [ 216/255,191/255,216/255 ],
+   "tomato"   : [ 255/255,99/255,71/255 ],
+   "turquoise"   : [ 64/255,224/255,208/255 ],
+   "violet"   : [ 238/255,130/255,238/255 ],
+   "wheat" : [ 245/255,222/255,179/255 ],
+   "white" : [ 255/255,255/255,255/255 ],
+   "whitesmoke"  : [ 245/255,245/255,245/255 ],
+   "yellow"   : [ 255/255,255/255,0/255 ],
+   "yellowgreen" : [ 154/255,205/255,50/255 ] };
+
+   if(typeof c == 'string') {
+      return o.setColor(map[c.toLowerCase()]);
+   } else {
+      return o.setColor(c);
+   }
+}
+
 // -- 3D operations (OpenSCAD like notion)
+
+function group() {                              // experimental
+   var o,i=0,a=arguments; 
+   if(a[0].length) a = a[0]; 
+   
+   if((typeof(a[i]) == "object") && (a[i] instanceof CAG)) {
+      o = a[i].extrude({offset: [0,0,0.1]});    // -- convert a 2D shape to a thin solid, note: do not a[i] = a[i].extrude()
+   } else {
+      o = a[i++];                               
+   }
+   for(; i<a.length; i++) { 
+      var obj = a[i];
+      if((typeof(a[i]) == "object") && (a[i] instanceof CAG)) {
+         obj = a[i].extrude({offset: [0,0,0.1]});    // -- convert a 2D shape to a thin solid:
+      }
+      o = o.unionForNonIntersecting(obj); 
+   } 
+   return o; 
+}
 
 function union() { 
    var o,i=0,a=arguments; 
    if(a[0].length) a = a[0]; 
-   for(o=a[i++]; i<a.length; i++) { 
-      o = o.union(a[i]); 
+   
+   if((typeof(a[i]) == "object") && (a[i] instanceof CAG)) {
+      o = a[i].extrude({offset: [0,0,0.1]});    // -- convert a 2D shape to a thin solid, note: do not a[i] = a[i].extrude()
+   } else {
+      o = a[i++];                               
+   }
+   for(; i<a.length; i++) { 
+      var obj = a[i];
+      if((typeof(a[i]) == "object") && (a[i] instanceof CAG)) {
+         obj = a[i].extrude({offset: [0,0,0.1]});    // -- convert a 2D shape to a thin solid:
+      }
+      o = o.union(obj); 
    } 
    return o; 
 }
@@ -96,23 +308,31 @@ function intersection() {
 // -- 3D primitives (OpenSCAD like notion)
 
 function cube(p) { 
-   var s = 1, v = null, off = 0, round = false, r = 0, fn = 8;
+   var s = 1, v = null, off = [0,0,0], round = false, r = 0, fn = 8;
    if(p&&p.length) v = p;		
-   if(p&&p.size&&p.size.length) v = p.size;
-   if(p&&p.size&&!p.size.length) s = p.size;
-   if(p&&!p.size&&!p.length&&p.center===undefined&&!p.round&&!p.radius) s = p;
-   off = s/2;
-   if(p&&p.center==true) off = 0;
+   if(p&&p.size&&p.size.length) v = p.size;        // { size: [1,2,3] }
+   if(p&&p.size&&!p.size.length) s = p.size;       // { size: 1 }
+   if(p&&!p.size&&!p.length&&p.center===undefined&&!p.round&&!p.radius) s = p;      // (2)
    if(p&&p.round==true) { round = true, r = v&&v.length?(v[0]+v[1]+v[2])/30:s/10}
    if(p&&p.radius) { round = true, r = p.radius; }
-   if(p&&p.fn) fn = p.fn;
+   if(p&&p.fn) fn = p.fn;              // applies in case of round: true
 
    var x = s, y = s, z = s; 
-   if(v&&v.length) { x = v[0], y = v[1], z = v[2] }
+   if(v&&v.length) { 
+      x = v[0], y = v[1], z = v[2]; 
+   }
+   off = [x/2,y/2,z/2];       // center: false default
    var o = round?
       CSG.roundedCube({radius:[x/2,y/2,z/2], roundradius:r, resolution: fn}):
       CSG.cube({radius:[x/2,y/2,z/2]});
-   if(off) o = o.translate([x/2,y/2,z/2]);
+   if(p&&p.center&&p.center.length) {
+      off = [p.center[0]?0:x/2, p.center[1]?0:y/2,p.center[2]?0:z/2];
+   } else if(p&&p.center==true) { 
+      off = [0,0,0];
+   } else if(p&&p.center==false) {
+      off = [x/2,y/2,z/2];
+   }
+   if(off[0]||off[1]||off[2]) o = o.translate(off);
    //if(v&&v.length) o = o.scale(v);      // we don't scale afterwards, we already created box with the correct size
    return o;
 }
@@ -120,31 +340,39 @@ function cube(p) {
 function sphere(p) {
    var r = 1;
    var fn = 32;
+   var off = [0,0,0];      
    //var zoff = 0; // sphere() in openscad has no center:true|false
    if(p&&p.r) r = p.r;
    if(p&&p.fn) fn = p.fn;
    if(p&&!p.r&&!p.fn) r = p;
-   //zoff = r;
-   //if(p&&p.center==true) zoff = 0;
+   off = [0,0,0];       // center: false (default)
+
    var o = CSG.sphere({radius:r,resolution:fn});
-   //if(zoff) o = o.translate([0,0,zoff]);
+   if(p&&p.center&&p.center.length) {         // preparing individual x,y,z center
+      off = [p.center[0]?0:r,p.center[1]?0:r,p.center[2]?0:r];
+   } else if(p&&p.center==true) { 
+      off = [0,0,0];
+   } else if(p&&p.center==false) {
+      off = [r,r,r];
+   }
+   if(off[0]||off[1]||off[2]) o = o.translate(off);
    return o;
 }
 
 function cylinder(p) {
    var r1 = 1, r2 = 1, h = 1, fn = 32, round = false; var a = arguments;
-   var zoff = 0;
+   var off = [0,0,0];
    if(p&&p.r) {
       r1 = p.r; r2 = p.r; if(p.h) h = p.h;
    }
    if(p&&(p.r1||p.r2)) {
       r1 = p.r1; r2 = p.r2; if(p.h) h = p.h;
    } 
-   if(a&&a[0].length) {
+   if(a&&a[0]&&a[0].length) {
       a = a[0]; r1 = a[0]; r2 = a[1]; h = a[2]; if(a.length==4) fn = a[3];
    }
    if(p&&p.fn) fn = p.fn;
-   if(p&&p.center==true) zoff = -h/2;
+   //if(p&&p.center==true) zoff = -h/2;
    if(p&&p.round==true) round = true;
    var o;
    if(p&&(p.start&&p.end)) {
@@ -155,7 +383,15 @@ function cylinder(p) {
       o = round?
          CSG.roundedCylinder({start:[0,0,0],end:[0,0,h],radiusStart:r1,radiusEnd:r2,resolution:fn}):
          CSG.cylinder({start:[0,0,0],end:[0,0,h],radiusStart:r1,radiusEnd:r2,resolution:fn});
-      if(zoff) o = o.translate([0,0,zoff]);
+      var r = r1>r2?r1:r2;
+      if(p&&p.center&&p.center.length) {         // preparing individual x,y,z center
+         off = [p.center[0]?0:r,p.center[1]?0:r,p.center[2]?-h/2:0];
+      } else if(p&&p.center==true) { 
+         off = [0,0,-h/2];
+      } else if(p&&p.center==false) {
+         off = [0,0,0];
+      }
+      if(off[0]||off[1]||off[2]) o = o.translate(off);
    }
    return o;
 }
@@ -244,7 +480,7 @@ function rotate() {
 }
 
 function mirror(v,o) { 
-   var a = arguments, v,o,i = 1;
+   var a = arguments, v,o,i = 1, r = 0;
    if(arguments.length==3) {  // mirror(r,[x,y,z],o)
       r = a[0];
       v = a[1];
@@ -260,9 +496,9 @@ function mirror(v,o) {
       o = o.union(a[i]);
    } 
    if(r!=1) {
-      return o.mirrorX(v[0]*r).mirrorY(v[1]*r).mirrorZ(v[2]*r);
+      return o.mirroredX(v[0]*r).mirroredY(v[1]*r).mirroredZ(v[2]*r);
    } else {
-      return o.mirrorX(v[0]).mirrorY(v[1]).mirrorZ(v[2]); 
+      return o.mirroredX(v[0]).mirroredY(v[1]).mirroredZ(v[2]); 
    }
 }
 
@@ -277,22 +513,155 @@ function multmatrix() {
    console.log("multmatrix() not yet implemented"); 
 }
 
-function color() {
-   var o,i,a=arguments,c = a[0]; 
-   if(a[1].length) { a = a[1], i = 0; } else { i = 1; }
-   for(o=a[i++]; i<a.length; i++) { 
-      o = o.union(a[i]);
-   } 
-   return o.setColor(c[0],c[1],c[2]);
-}
-
 function minkowski() {
    console.log("minkowski() not yet implemented"); 
 }
 
 function hull() {
-   console.log("hull() not yet implemented"); 
+   var pts = [];
+
+   var a = arguments;                     
+   if(a[0].length) a = a[0];
+   for(var i=0; i<a.length; i++) {              // extract all points of the CAG in the argument list
+      var cag = a[i];
+      if(!(cag instanceof CAG)) {
+         echo("ERROR: hull() accepts only 2D forms / CAG");
+         return;
+      }
+      for(var j=0; j<cag.sides.length; j++) {
+         pts.push({ x:cag.sides[j].vertex0.pos.x, y:cag.sides[j].vertex0.pos.y });
+      }
+   }
+   //echo(pts.length+" points in",pts);
+
+   // from http://www.psychedelicdevelopment.com/grahamscan/
+   //
+   ConvexHullPoint = function(i, a, d) {
+      this.index = i;
+      this.angle = a;
+      this.distance = d;
+   
+      this.compare = function(p) {
+         if (this.angle<p.angle)
+            return -1;
+         else if (this.angle>p.angle)
+            return 1;
+         else {
+            if (this.distance<p.distance)
+               return -1;
+            else if (this.distance>p.distance)
+               return 1;
+         }
+         return 0;
+      }
+   }
+   
+   ConvexHull = function() {
+      this.points = null;
+      this.indices = null;
+   
+      this.getIndices = function() {
+         return this.indices;
+      }
+   
+      this.clear = function() {
+         this.indices = null;
+         this.points = null;
+      }
+   
+      this.ccw = function(p1, p2, p3) {
+         return (this.points[p2].x - this.points[p1].x)*(this.points[p3].y - this.points[p1].y) - (this.points[p2].y - this.points[p1].y)*(this.points[p3].x - this.points[p1].x);
+      }
+   
+      this.angle = function(o, a) {
+         //return Math.atan((this.points[a].y-this.points[o].y) / (this.points[a].x - this.points[o].x + 1e-5));
+         return Math.atan2((this.points[a].y-this.points[o].y), (this.points[a].x - this.points[o].x));
+      }
+       
+      this.distance = function(a, b) {
+         return ((this.points[b].x-this.points[a].x)*(this.points[b].x-this.points[a].x)+(this.points[b].y-this.points[a].y)*(this.points[b].y-this.points[a].y));
+      }
+   
+      this.compute = function(_points) {
+         this.indices=null;
+         if (_points.length<3)
+            return;
+         this.points=_points;
+   
+         // Find the lowest point
+         var min = 0;
+         for(var i = 1; i < this.points.length; i++) {
+            if(this.points[i].y==this.points[min].y) {
+               if(this.points[i].x<this.points[min].x)
+                  min = i;
+            }
+            else if(this.points[i].y<this.points[min].y)
+               min = i;
+         }
+   
+         // Calculate angle and distance from base
+         var al = new Array();
+         var ang = 0.0;
+         var dist = 0.0;
+         for (i = 0; i<this.points.length; i++) {
+            if (i==min)
+               continue;
+            ang = this.angle(min, i);
+            if (ang<0)
+               ang += Math.PI;
+            dist = this.distance(min, i);
+            al.push(new ConvexHullPoint(i, ang, dist));
+         }
+   
+         al.sort(function (a, b) { return a.compare(b); });
+   
+         // Create stack
+         var stack = new Array(this.points.length+1);
+         var j = 2;
+         for(i = 0; i<this.points.length; i++) {
+            if(i==min)
+               continue;
+            stack[j] = al[j-2].index;
+            j++;
+         }
+         stack[0] = stack[this.points.length];
+         stack[1] = min;
+   
+         var tmp;
+         var M = 2;
+         for(i = 3; i<=this.points.length; i++) {
+            while(this.ccw(stack[M-1], stack[M], stack[i]) <= 0)
+               M--;
+            M++;
+            tmp = stack[i];
+            stack[i] = stack[M];
+            stack[M] = tmp;
+         }
+   
+         this.indices = new Array(M);
+         for (i = 0; i<M; i++) {
+            this.indices[i] = stack[i+1];
+         }
+      }
+   }
+
+   var hull = new ConvexHull();
+
+   hull.compute(pts);
+   var indices = hull.getIndices();
+
+   if(indices&&indices.length>0) {
+      var ch = [];
+      for(var i=0; i<indices.length; i++) {
+         ch.push(pts[indices[i]]);
+         //echo(pts[indices[i]]);
+      }
+      //echo(ch.length+" points out",ch);
+      return CAG.fromPoints(ch);
+      //return CAG.fromPointsNoCheck(ch);
+   }
 }
+
 
 // -- 2D to 3D primitives (OpenSCAD like notion)
 
@@ -319,7 +688,7 @@ function rotate_extrude(p,o) {
    var fn = 32;
    if(arguments.length<2) {
       o = p;      // no switches, just an object
-   } else if(p!=='undefined') {
+   } else if(p!==undefined) {
       fn = p.fn;
    }
    if(fn<3) fn = 3;
@@ -370,8 +739,8 @@ function rectangular_extrude(pa,p) {
       if(p.w) w = p.w;
       if(p.h) h = p.h;
       if(p.fn) fn = p.fn;
-      if(p.closed!=='undefined') closed = p.closed;
-      if(p.round!=='undefined') round = p.round;
+      if(p.closed!==undefined) closed = p.closed;
+      if(p.round!==undefined) round = p.round;
    }
    return new CSG.Path2D(pa,closed).rectangularExtrude(w,h,fn,round);
 }
@@ -536,6 +905,142 @@ function status(s) {
    } else {
       echo(s);
    }
+}
+
+// from http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
+/**
+ * Converts an RGB color value to HSL. Conversion formula
+ * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
+ * Assumes r, g, and b are contained in the set [0, 1] and
+ * returns h, s, and l in the set [0, 1].
+ *
+ * @param   Number  r       The red color value
+ * @param   Number  g       The green color value
+ * @param   Number  b       The blue color value
+ * @return  Array           The HSL representation
+ */
+function rgb2hsl(r, g, b){
+    if(r.length) { b = r[2], g = r[1], r = r[0]; }
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+
+    if(max == min){
+        h = s = 0; // achromatic
+    }else{
+        var d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch(max){
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+
+    return [h, s, l];
+}
+
+/**
+ * Converts an HSL color value to RGB. Conversion formula
+ * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
+ * Assumes h, s, and l are contained in the set [0, 1] and
+ * returns r, g, and b in the set [0, 1].
+ *
+ * @param   Number  h       The hue
+ * @param   Number  s       The saturation
+ * @param   Number  l       The lightness
+ * @return  Array           The RGB representation
+ */
+function hsl2rgb(h, s, l){
+    if(h.length) { l = h[2], s = h[1], h = h[0]; }
+    var r, g, b;
+
+    if(s == 0){
+        r = g = b = l; // achromatic
+    }else{
+        function hue2rgb(p, q, t){
+            if(t < 0) t += 1;
+            if(t > 1) t -= 1;
+            if(t < 1/6) return p + (q - p) * 6 * t;
+            if(t < 1/2) return q;
+            if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+            return p;
+        }
+
+        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        var p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1/3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1/3);
+    }
+
+    return [r, g, b];
+}
+
+/**
+ * Converts an RGB color value to HSV. Conversion formula
+ * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
+ * Assumes r, g, and b are contained in the set [0, 1] and
+ * returns h, s, and v in the set [0, 1].
+ *
+ * @param   Number  r       The red color value
+ * @param   Number  g       The green color value
+ * @param   Number  b       The blue color value
+ * @return  Array           The HSV representation
+ */
+function rgb2hsv(r, g, b){
+    if(r.length) { b = r[2], g = r[1], r = r[0]; }
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, v = max;
+
+    var d = max - min;
+    s = max == 0 ? 0 : d / max;
+
+    if(max == min){
+        h = 0; // achromatic
+    }else{
+        switch(max){
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+
+    return [h, s, v];
+}
+
+/**
+ * Converts an HSV color value to RGB. Conversion formula
+ * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
+ * Assumes h, s, and v are contained in the set [0, 1] and
+ * returns r, g, and b in the set [0, 1].
+ *
+ * @param   Number  h       The hue
+ * @param   Number  s       The saturation
+ * @param   Number  v       The value
+ * @return  Array           The RGB representation
+ */
+function hsv2rgb(h, s, v){
+    if(h.length) { v = h[2], s = h[1], h = h[0]; }
+    var r, g, b;
+
+    var i = Math.floor(h * 6);
+    var f = h * 6 - i;
+    var p = v * (1 - s);
+    var q = v * (1 - f * s);
+    var t = v * (1 - (1 - f) * s);
+
+    switch(i % 6){
+        case 0: r = v, g = t, b = p; break;
+        case 1: r = q, g = v, b = p; break;
+        case 2: r = p, g = v, b = t; break;
+        case 3: r = p, g = q, b = v; break;
+        case 4: r = t, g = p, b = v; break;
+        case 5: r = v, g = p, b = q; break;
+    }
+
+    return [r, g, b];
 }
 
 // --------------------------------------------------------------------------------------------
@@ -1071,7 +1576,7 @@ function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code
    
          } else if(c[j].match(/S([\d\.]+)/)) {
             var v = parseInt(RegExp.$1);
-            if(k!=='undefined') 
+            if(k!==undefined) 
                val[k] = v;
             
          } else if(c[j].match(/([XYZE])([\-\d\.]+)/)) {
@@ -1082,7 +1587,7 @@ function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code
                if(d) pos[a] += v;
             }
             //console.log(d,a,pos.E,lpos.E);
-            if(d&&a=='E'&&lpos.E==='undefined') 
+            if(d&&a=='E'&&lpos.E===undefined) 
                lpos.E = pos.E;
             if(d&&a=='E'&&(pos.E-lpos.E)>0) {
                //console.log(pos.E,lpos.E);
