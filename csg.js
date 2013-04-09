@@ -916,6 +916,14 @@ CSG.prototype = {
 		} else {
 			var mybounds = this.getBounds();
 			var otherbounds = csg.getBounds();
+         // [0].x/y  
+         //    +-----+
+         //    |     |
+         //    |     |
+         //    +-----+ 
+         //          [1].x/y
+         //return false;
+         //echo(mybounds,"=",otherbounds);
 			if(mybounds[1].x < otherbounds[0].x) return false;
 			if(mybounds[0].x > otherbounds[1].x) return false;
 			if(mybounds[1].y < otherbounds[0].y) return false;

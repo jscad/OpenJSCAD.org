@@ -748,7 +748,7 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
 };
 
 OpenJsCad.Processor.convertToSolid = function(obj) {
-  echo("typeof="+typeof(obj),obj.length);
+  //echo("typeof="+typeof(obj),obj.length);
 
   if( (typeof(obj) == "object") && ((obj instanceof CAG)) ) {
     // convert a 2D shape to a thin solid:
