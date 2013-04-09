@@ -159,6 +159,9 @@ canvas {
 #menu nav .navlink {
 }
 
+#menu nav .navlink:hover {
+}
+
 #menu #examples {
    font-size: 0.6em;
 }
