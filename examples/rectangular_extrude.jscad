@@ -1,7 +1,7 @@
 // -- rectangular_extrude()
 
 function main() {
-   return union( 
+   return group(
       // openscade like
       rectangular_extrude([ [0,0], [10,0], [5,10], [0,10] ]),
       rectangular_extrude([ [0,0], [10,0], [5,10], [0,10] ], {w: 1, h: 3, fn: 1, closed: false}).translate([0,15,0]),

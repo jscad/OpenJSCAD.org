@@ -1,7 +1,7 @@
 // -- rotate_extrude()
 
 function main() {
-   return union(
+   return group(
       // openscad-like
       rotate_extrude(translate([4,0,0],circle({r: 1, fn: 30, center: true}))),
       rotate_extrude({fn: 5},

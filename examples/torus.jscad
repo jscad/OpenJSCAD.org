@@ -1,7 +1,7 @@
 // -- torus()
 
 function main() {
-   return union(
+   return group(
       torus(),
       torus({ ri:0.5, fni: 8}).translate([0,10,0]),
    

@@ -22,7 +22,7 @@ function spread() {
          a[i] = a[i].translate([(i%rows)*spacing,Math.floor(i/rows)*spacing,0]);
       }
    }
-   return union(a);
+   return a;
 }
 
 function main() {

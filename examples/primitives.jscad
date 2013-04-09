@@ -18,6 +18,6 @@ function main() {
    for(var i=0; i<o.length; i++) {
       o[i] = o[i].translate([(i%4-2)*6,Math.floor(i/4-2)*6,0]);
    }
-   return union(o);
+   return o;
 }
 
