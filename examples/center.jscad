@@ -46,9 +46,7 @@ function main() {
    for(var i=0; i<o.length; i++) {
       o[i] = o[i].translate([(i%8)*3,Math.floor(i/8)*4,0]);
    }
-   echo("end translate, union");
-   o = union(o);
-   echo("end union");
+   echo("end translate");
    return o;
 }
 
