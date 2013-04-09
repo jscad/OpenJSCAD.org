@@ -26,7 +26,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.49497475"
      inkscape:cx="327.8781"
-     inkscape:cy="387.50692"
+     inkscape:cy="498.6237"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -336,35 +336,36 @@
        xml:space="preserve"><tspan
          y="266.49921"
          x="335.89682"
-         id="tspan4134"
-         sodipodi:role="line">openjscad.js</tspan><tspan
+         sodipodi:role="line"
+         id="tspan4138">lightgl.js</tspan><tspan
          y="289.61441"
          x="335.89682"
          sodipodi:role="line"
-         id="tspan4138">openscad.js</tspan></text>
+         id="tspan3104">openjscad.js</tspan></text>
     <rect
        style="fill:#f58afd;fill-opacity:1;stroke:none"
        id="rect4158"
        width="123.23861"
        height="28.284271"
        x="274.069"
-       y="307.05237" />
+       y="339.05237" />
     <text
        xml:space="preserve"
        style="font-size:14.94204521px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
        x="337.4892"
-       y="325.63519"
+       y="357.63519"
        id="text4160"
        sodipodi:linespacing="125%"><tspan
          id="tspan4164"
          sodipodi:role="line"
          x="337.4892"
-         y="325.63519">scad translator</tspan></text>
+         y="357.63519">scad translator</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 163.96238,318.99143 275.07916,279.59549"
+       d="m 163.96238,318.99143 111.11678,4.04062"
        id="path4168"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 162.95223,198.78328 112.12693,29.29443 0,0"
@@ -372,9 +373,10 @@
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 163.96238,261.41274 110.10663,60.60915"
+       d="m 163.96238,261.41274 111.11679,91.92388"
        id="path4172"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 384.17563,218.98633 122.22846,98.99495"
@@ -405,53 +407,10 @@
          x="300.33438"
          id="tspan4228"
          sodipodi:role="line">csg.js</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:18.4921627px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="335.89682"
-       y="726.49921"
-       id="text4230"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan4232"
-         x="335.89682"
-         y="726.49921">openjscad.js</tspan><tspan
-         id="tspan4234"
-         sodipodi:role="line"
-         x="335.89682"
-         y="749.61438">openscad.js</tspan></text>
-    <rect
-       y="767.05237"
-       x="274.069"
-       height="28.284271"
-       width="123.23861"
-       id="rect4236"
-       style="fill:#f58afd;fill-opacity:1;stroke:none" />
-    <text
-       sodipodi:linespacing="125%"
-       id="text4238"
-       y="785.63519"
-       x="337.4892"
-       style="font-size:14.94204521px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       xml:space="preserve"><tspan
-         y="785.63519"
-         x="337.4892"
-         sodipodi:role="line"
-         id="tspan4240">scad translator</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 159.89925,658.07647 114.28571,37.14286"
        id="path4242"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 162.75639,722.36218 111.42857,57.14286"
-       id="path4244"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 167.04211,776.6479 274.18496,729.50504"
-       id="path4246"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -512,7 +471,7 @@
          sodipodi:role="line"
          id="tspan4304"
          x="330.52991"
-         y="939.39203">by Rene K. Mueller 2013/03/20, update 2013/04/06 0.002 CC-BY</tspan></text>
+         y="939.39203">by Rene K. Mueller 2013/03/20, update 2013/04/09 0.003 CC-BY</tspan></text>
     <path
        inkscape:connector-curvature="0"
        id="path4489"
@@ -681,11 +640,6 @@
        id="path3895"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 161.62441,838.20984 274.76149,745.27581"
-       id="path3910"
-       inkscape:connector-curvature="0" />
-    <path
        inkscape:connector-curvature="0"
        id="path3912"
        d="m 387.89858,220.62605 121.2183,159.6041"
@@ -693,7 +647,95 @@
     <path
        inkscape:connector-curvature="0"
        id="path3914"
-       d="M 161.62441,378.20984 274.76149,285.27581"
+       d="M 161.62441,378.20984 274.76149,322.65145"
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       sodipodi:nodetypes="cc" />
+    <rect
+       y="307.05237"
+       x="274.069"
+       height="28.284271"
+       width="123.23861"
+       id="rect3096"
+       style="fill:#f58afd;fill-opacity:1;stroke:none" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text3098"
+       y="325.63519"
+       x="337.4892"
+       style="font-size:14.94204521px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       xml:space="preserve"><tspan
+         y="325.63519"
+         x="337.4892"
+         sodipodi:role="line"
+         id="tspan3100">openscad.js</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:18.4921627px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="335.89682"
+       y="726.49921"
+       id="text3142"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan3144"
+         sodipodi:role="line"
+         x="335.89682"
+         y="726.49921">lightgl.js</tspan><tspan
+         id="tspan3146"
+         sodipodi:role="line"
+         x="335.89682"
+         y="749.61438">openjscad.js</tspan></text>
+    <rect
+       y="799.05237"
+       x="274.069"
+       height="28.284271"
+       width="123.23861"
+       id="rect3148"
+       style="fill:#f58afd;fill-opacity:1;stroke:none" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text3150"
+       y="817.63519"
+       x="337.4892"
+       style="font-size:14.94204521px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       xml:space="preserve"><tspan
+         y="817.63519"
+         x="337.4892"
+         sodipodi:role="line"
+         id="tspan3152">scad translator</tspan></text>
+    <rect
+       style="fill:#f58afd;fill-opacity:1;stroke:none"
+       id="rect3154"
+       width="123.23861"
+       height="28.284271"
+       x="274.069"
+       y="767.05237" />
+    <text
+       xml:space="preserve"
+       style="font-size:14.94204521px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="337.4892"
+       y="785.63519"
+       id="text3156"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan3158"
+         sodipodi:role="line"
+         x="337.4892"
+         y="785.63519">openscad.js</tspan></text>
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3193"
+       d="m 163.96238,778.99143 111.11678,4.04062"
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3195"
+       d="m 163.96238,721.41274 111.11679,91.92388"
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       sodipodi:nodetypes="cc"
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 161.62441,838.20984 274.76149,782.65145"
+       id="path3197"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>
