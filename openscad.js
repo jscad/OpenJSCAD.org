@@ -1050,7 +1050,7 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
    try {
       xml = $.parseXML(amf);
    } catch(e) {
-      echo("XML parsing error:",e.message);
+      echo("XML parsing error:",e.message.substring(0,120)+"..");
       err += "XML parsing error / invalid XML";
    }
    var v = [];    // vertices
@@ -1151,12 +1151,13 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
          }
       });
    });
-   var src = "// OpenJSCAD.org: amf importer '"+fn+"'\n\n";
+   var src = "";
    for(var k in meta) {
       src += "// AMF."+k+": "+meta[k]+"\n";
    }
-   src += "// creator: OpenJSCAD "+me.toUpperCase()+" "+version+" AMF Importer\n";
+   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" AMF Importer\n";
    src += "// date: "+(new Date())+"\n";
+   src += "// source: "+fn+"\n";
    src += "\n";
    
    if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
@@ -1202,9 +1203,13 @@ function parseOBJ(obj,fn) {   // http://www.andrewnoske.com/wiki/index.php?title
          ;     // vn vt and all others disregarded
       }
    }
-   var src = "// OpenJSCAD.org: obj importer '"+fn+"'\n\n";
+   var src = ""; 
+   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" OBJ Importer\n";
+   src += "// date: "+(new Date())+"\n";
+   src += "// source: "+fn+"\n";
+   src += "\n";
    //if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
-   src += "// objects: 1\n// object #1: polygons: "+f.length+"\n";
+   src += "// objects: 1\n// object #1: polygons: "+f.length+"\n\n";
    src += "function main() { return "; 
    src += vt2jscad(v,f);
    src += "; }";
@@ -1314,21 +1319,29 @@ function parseBinarySTL(stl,fn) {
         normals.push(no);
         converted++;
     }
-    var src = "// OpenJSCAD.org: stl importer (binary) '"+fn+"'\n\n";
-    if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
-    src += "// objects: 1\n// object #1: triangles: "+totalTriangles+"\n";
-    src += "function main() { return "; 
-    src += vt2jscad(vertices,triangles,normals);
-    src += "; }";
-    return src;
+   var src = "";
+   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" STL Binary Importer\n";
+   src += "// date: "+(new Date())+"\n";
+   src += "// source: "+fn+"\n";
+   src += "\n";
+   if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
+   src += "// objects: 1\n// object #1: triangles: "+totalTriangles+"\n\n";
+   src += "function main() { return "; 
+   src += vt2jscad(vertices,triangles,normals);
+   src += "; }";
+   return src;
 }
 
 function parseAsciiSTL(stl,fn) {
-    var src = "// OpenJSCAD.org: stl importer (ascii) '"+fn+"'\n\n";
-    var n = 0;
-    var converted = 0;
-    var o;
+   var src = "";
+   var n = 0;
+   var converted = 0;
+   var o;
      
+   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" STL Binary Importer\n";
+   src += "// date: "+(new Date())+"\n";
+   src += "// source: "+fn+"\n";
+   src += "\n";
     src += "function main() { return union(\n"; 
     // -- Find all models
     var objects = stl.split('endsolid');
@@ -1648,7 +1661,11 @@ function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code
       ld = d;
    }
    
-   var src = "// OpenJSCAD.org: gcode importer (ascii) '"+fn+"'\n\n";
+   var src = "";
+   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" GCode Importer\n";
+   src += "// date: "+(new Date())+"\n";
+   src += "// source: "+fn+"\n";
+   src += "\n";
    //if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
    src += "// layers: "+layers+"\n";
    src += "function main() {\n\tvar EX = function(p,opt) { return rectangular_extrude(p,opt); }\n\treturn ["; 
@@ -1660,19 +1677,6 @@ function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code
 
 // -------------------------------------------------------------------------------------------------
 
-function processSource(src,fn) {
-   if(fn.match(/\.jscad/i)) {
-      ;
-   } else if(fn.match(/\.scad/i)) {
-      src = openscadOpenJscadParser.parse(src);
-   } else if(fn.match(/\.stl/i)) {
-      src = parseSTL(src);
-   } else {
-      echo("extension of '"+fn+"' not recognized, considering it as .jscad");
-   }
-   return src;       // .jscad now
-}
-
 function clone(obj) {
     if (null == obj || "object" != typeof obj) return obj;
     var copy = obj.constructor();
@@ -1682,42 +1686,6 @@ function clone(obj) {
     return copy;
 }
    
-function __include(fn) {          // doesn't work yet ... as we run in a blob and XHR aren't permitted
-   // case 1): cli, we simply include it
-   // case 2): web, XHR won't work as we likely pull more stuff from within a web-worker & blob, where XHR isn't permitted
-
-   //echo("include",fn,"me="+me);
-
-   if(me=='web-online') {
-      var xhr = new XMLHttpRequest();
-      //OpenJsCad.log(">>>"+previousFilename);
-      xhr.open("GET",fn,true);
-      xhr.onload = function() {
-         return processSource(this.responseText,fn);
-      };
-      xhr.error = function() {
-         echo("ERROR: could not include(\""+fn+"\")");
-      };
-      xhr.send();
-   } else if(me=='web-offline') {
-    
-   } else {    // cli
-      src = fs.readFileSync(fn);
-      src = processSource(src,fn);
-   }
-   if(me!='web-offline'&&me!='web-online') {
-      if(0) {
-         echo("push:",src);
-         inc.push(src);
-         return;
-      } else {
-         echo("eval:",src);
-         return eval(src);
-      }
-   }
-   return src;
-}
-
 // -------------------------------------------------------------------------------------------------
 
 if(typeof module !== 'undefined') {    // we are used as module in nodejs require()

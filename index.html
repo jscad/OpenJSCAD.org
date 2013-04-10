@@ -358,6 +358,8 @@ OpenJSCAD.org
 
 self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take quite some while for 1MB+ large STLs
    var data = e.data; // JSON.parse(e.data);
+   me = data.me;
+   version = data.version;
    if(data.url) {     // RANT: why do something simple, when it can be done complicate: Workers & importScripts() (guys!!)
       var url = data.url;
       url = url.replace(/#.*$/,'');    // -- just to be sure ...
@@ -546,7 +548,7 @@ function fetchExample(fn,url) {
                var u = document.location.href;
                u = u.replace(/#.*$/,'');
                u = u.replace(/\?.*$/,'');
-               worker.postMessage({url: u, remote: url, source: source, filename: fn }); // start worker
+               worker.postMessage({me: me, version: version, url: u, remote: url, source: source, filename: fn }); // start worker
                asyncComputation = true;
 
             } else {       // async (disabled)
@@ -884,7 +886,7 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
             var u = document.location.href;
             u = u.replace(/#.*$/,'');
             u = u.replace(/\?.*$/,'');
-            worker.postMessage({url: u, source: source, filename: fn });
+            worker.postMessage({me: me, version: version, url: u, source: source, filename: fn });
             asyncComputation = true;
          } else {
             fn.match(/\.(stl|obj|amf|gcode)$/i);
