@@ -1061,11 +1061,11 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
 
    srci = "\tvar pgs = [];\n";
 
-   var meta;
+   var meta = [];
    var metatag = $(xml).find('metadata');    // -- extract metadata
    metatag.each(function() {
       var el = $(this);
-      m[el.attr('type')] = el.text();
+      meta[el.attr('type')] = el.text();
    });
    
    var obj = $(xml).find('object');
@@ -1153,7 +1153,7 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
    });
    var src = "// OpenJSCAD.org: amf importer '"+fn+"'\n\n";
    for(var k in meta) {
-      src += "// "+k+": "+meta[k]+"\n";
+      src += "// AMF."+k+": "+meta[k]+"\n";
    }
    if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
    src += "// objects: 1\n// object #1: polygons: "+np+"\n";

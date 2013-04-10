@@ -55,6 +55,10 @@ var CAG = require(lib+'./csg.js').CAG;  // any way to include CSG & CAG in once?
 //});
 
 var args = process.argv.splice(2);
+var meta = [];
+
+meta.creator = "OpenJSCAD CLI "+version;
+meta.date = new Date();
 
 var inf = args[0];
 if(inf==null||inf.length<=0||!fs.statSync(inf).isFile()) {
@@ -140,7 +144,7 @@ if(outFormat=='jscad') {
    //var stl = csg.fixTJunctions().toStlString();     // creates bad facet normals!! in some cases
    var out;
    if(outFormat=='amf') {
-      out = csg.toAMFString();
+      out = csg.toAMFString(meta);
    } else {
       // out = csg.toStlBinary();            // TODO: already uses Blob in csg.js, needs to be removed and put into openjscad.js
       out = csg.toStlString();
