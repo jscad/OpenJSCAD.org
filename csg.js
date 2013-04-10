@@ -419,7 +419,7 @@ CSG.prototype = {
 		for(var k in m) {
 			result += "<metadata type=\""+k+"\">"+m[k]+"</metadata>\n";
 		}
-		result += "<object id=\"0\">\n";
+		result += "<object id=\"0\"><mesh>\n";
 		this.polygons.map(function(p) {
 			var r = 1, g = 0.4, b = 1, colorSet = false;
 			if(p.shared && p.shared.color) {
@@ -429,11 +429,11 @@ CSG.prototype = {
 				colorSet = true;
 			}
 			if(0&&colorSet) {
-			result += "<color><r>"+r+"</r><g>"+g+"</g><b>"+b+"</b></color>\n";
+				result += "<color><r>"+r+"</r><g>"+g+"</g><b>"+b+"</b></color>\n";
 			}
-			result += p.toAMFString({color:[r,g,b]});
+			result += p.toAMFString(); //{color:[r,g,b]});
 		});
-		result += "</object>\n";
+		result += "</mesh></object>\n";
 		result += "</amf>\n";
 		return result;
 	},
@@ -2733,7 +2733,7 @@ CSG.Polygon.prototype = {
 			// AMF requires triangular polygons. If our polygon has more vertices, create
 			// multiple triangles:
 			var n = 0, t = [];
-			result += "<mesh>\n<vertices>\n";
+			//result += "<mesh>\n<vertices>\n";
 			for(var i = 0; i < this.vertices.length; i++) {
 			result += this.vertices[i].toAMFString();
 		 }
@@ -2753,7 +2753,7 @@ CSG.Polygon.prototype = {
 				result += "</triangle>\n";
 			}
 			result += "</volume>\n";
-			result += "</mesh>\n";
+			//result += "</mesh>\n";
 		}
 		return result;
 	},

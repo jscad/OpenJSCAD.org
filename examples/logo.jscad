@@ -1,5 +1,11 @@
 // -- OpenJSCAD.org logo
 
+// Title: OpenJSCAD.org Logo
+// Author: Rene K. Mueller 
+// License: Creative Commons CC BY
+// URL: http://openjscad.org/#examples/logo.jscad
+// Revision: 0.003
+
 function main() {
    return union(
       difference(

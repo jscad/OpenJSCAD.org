@@ -68,17 +68,42 @@ $(document).ready(function() {
       $("#viewer").height($(window).height());
    });
    setTimeout( function(){$('#menu').css('left','-280px');},3000); // -- hide slide-menu after 3secs
-   $('#examplesTitle').click(function() {
-      $('#examples').css('200%','auto'); 
-      $('#examples').css('height','auto'); 
-      $('#examples').show(); 
-   });
+
    $('#menu').mouseleave(function() {
       $('#examples').css('height',0); $('#examples').hide(); 
+      $('#options').css('height',0); $('#options').hide(); 
+   });
+
+   // -- Examples
+   $('#examplesTitle').click(function() {
+      $('#examples').css('height','auto'); 
+      $('#examples').show(); 
+      $('#options').css('height',0); $('#options').hide(); 
    });
    $('#examples').mouseleave(function() {
       $('#examples').css('height',0); $('#examples').hide(); 
    });
+
+   // -- Options 
+   $('#optionsTitle').click(function() {
+      $('#options').css('height','auto'); $('#options').show(); 
+      $('#examples').css('height',0); $('#examples').hide(); 
+   });
+   $('#options').mouseleave(function() {
+      $('#options').css('height',0); $('#options').hide(); 
+   });
+   getOptions();
+
+   //$('#optionsForm').submit(function() {
+   //   // save to cookie
+   //   $('#optionsForm').hide();
+   //   return false;
+   //});
+   $('#optionsForm').change(function() {
+      // save to cookie
+      saveOptions();
+   });
+   
 });   
 </script>
 </head>
@@ -107,6 +132,10 @@ $(document).ready(function() {
 <div id=examplesTitle class=navlink><a href='#' onclick='return false'>Examples</a></div>
 <div id=examples></div>
 <span class=menuSubInfo>Dozens of examples to learn from</span></p>
+<p/>
+<div id=optionsTitle class=navlink><a href='#' onclick='return false'>Options</a></div>
+<div id=options>...</div>
+<span class=menuSubInfo>Your personal settings</span></p>
 <p/>
 <b>Supported Formats</b>
 <table class=info>
@@ -228,6 +257,67 @@ if(me=='web-online') {
 } else {
    // examples off-line won't work yet as XHR is used
    $('#examples').html("You are offline, drag'n'drop the examples from your installation");
+}
+
+{
+   var options = [ 'renderCode', 'author', 'license' ];
+   var metakeys = [ 'author', 'license' ];
+   saveOptions = function() {
+      for(var k in options) {
+         k = options[k];
+         //echo("setting "+k);
+         setCookie(k,$('#'+k).val());
+         if(metakeys[k]) metadata[k] = options[k];
+      }
+   }
+   getOptions = function() {
+      for(var k in options) {
+         k = options[k];
+         //echo("getting "+k);
+         if(getCookie(k)) $('#'+k).val(getCookie(k))
+      }
+   }
+   
+   var src = '';
+   src += "<form id=optionsForm onsubmit='saveOptions(); return false'>";
+   src += "<div class=optionGroup><b>Your Identity / Fullname</b><br/>";
+   src += "<input id=author type=text name=author size=30><div class=optionInfo>Applies when you export AMF (sets metadata)</div></div>";
+
+   var licenseOptions = {
+      publicDomain: "Public Domain", 
+      "CC BY": "Creative Commons CC BY", 
+      "CC BY-ND": "Creative Commons CC BY-ND", 
+      "CC BY-NC": "Creative Commons CC BY-NC", 
+      "CC BY-SA": "Creative Commons CC BY-SA", 
+      "CC BY-NC-SA": "Creative Commons CC BY-NC-SA", 
+      "CC BY-NC-ND": "Creative Commons CC BY-NC-ND", 
+      MIT: "MIT", 
+      GPLv2: "GPLv2", 
+      GPLv3: "GPLv3", 
+      Copyright: "Copyright",
+   };
+   src += "<div class=optionGroup><b>Your License</b><br/>";
+   src += "<select id=license name=license>";
+   for(var k in licenseOptions) {
+      src += "<option value='"+k+"'>"+licenseOptions[k];
+      src += "<br/>";
+   }
+   src += "</select><div class=optionInfo>Applies when you export AMF (sets metadata)</div></div>\n";
+
+   var renderCodeOptions = {
+      shiftReturn: "SHIFT+RETURN", 
+      auto: "Automatic"
+   };
+   if(0) {
+      src += "<div class=optionGroup><b>Render Code</b></br>";
+      src += "<select id=renderCode name=renderCode>";
+      for(var k in renderCodeOptions) {
+         src += "<option value='"+k+"'>"+renderCodeOptions[k];
+      }
+      src += "</select></div>";
+   }
+   src += "</form>";
+   $('#options').html(src);
 }
 </script>
 
@@ -819,6 +909,32 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
       }
     }
   }
+}
+
+// ---------------------------------------------------------------------------------------------------------
+
+function setCookie(name, value, days) {
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        var expires = "; expires=" + date.toGMTString();
+    } else var expires = "";
+    document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
+}
+
+function getCookie(name) {
+    var nameEQ = escape(name) + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return unescape(c.substring(nameEQ.length, c.length));
+    }
+    return null;
+}
+
+function deleteCookie(name) {
+    createCookie(name, "", -1);
 }
 
 </script>

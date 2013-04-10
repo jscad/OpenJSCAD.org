@@ -1053,7 +1053,6 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
       echo("XML parsing error:",e.message);
       err += "XML parsing error / invalid XML";
    }
-   var obj = $(xml).find('object');
    var v = [];    // vertices
    var f = [];    // faces
    //var c = [];    // color settings (per face)
@@ -1061,6 +1060,15 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
    var src = '', srci = '';
 
    srci = "\tvar pgs = [];\n";
+
+   var meta;
+   var metatag = $(xml).find('metadata');    // -- extract metadata
+   metatag.each(function() {
+      var el = $(this);
+      m[el.attr('type')] = el.text();
+   });
+   
+   var obj = $(xml).find('object');
    obj.each(function() {
       var el = $(this);
       var mesh = el.find('mesh');
@@ -1134,6 +1142,9 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
       });
    });
    var src = "// OpenJSCAD.org: amf importer '"+fn+"'\n\n";
+   for(var k in meta) {
+      src += "// "+k+": "+meta[k]+"\n";
+   }
    if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
    src += "// objects: 1\n// object #1: polygons: "+np+"\n";
    src += "function main() {\n"; 
