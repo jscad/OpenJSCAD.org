@@ -1155,8 +1155,8 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
    for(var k in meta) {
       src += "// AMF."+k+": "+meta[k]+"\n";
    }
-   src += "// date: "+(new Date())+"\n";
    src += "// creator: OpenJSCAD "+me.toUpperCase()+" "+version+" AMF Importer\n";
+   src += "// date: "+(new Date())+"\n";
    src += "\n";
    
    if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
