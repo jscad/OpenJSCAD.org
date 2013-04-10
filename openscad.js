@@ -1074,10 +1074,12 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
       var mesh = el.find('mesh');
       mesh.each(function() {
          var el = $(this);
+         var c = [];
+         var co = el.find('color');
+         var rgbm = [];
+         if(co.length) 
+            rgbm = [co.find('r').first().text(), co.find('g').first().text(), co.find('b').first().text()];
 
-         var c = el.find('color');
-         var rgb = [];
-         if(c.length) rgb = [c.find('r').first().text(), c.find('g').first().text(), c.find('b').first().text()];
          v = []; f = []; nv = 0;        // we create each individual polygon
          
          var vertices = el.find('vertices');
@@ -1097,13 +1099,21 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
          var volume = el.find('volume');
          volume.each(function() {
             var el = $(this);
+            var rgbv = [], co = el.find('color');
+            if(co.length) 
+               rgbv = [co.find('r').first().text(), co.find('g').first().text(), co.find('b').first().text()];
+
             var triangle = el.find('triangle');
             triangle.each(function() {
                var el = $(this);
+               var rgbt = [], co = el.find('color');
+               if(co.length) 
+                  rgbt = [co.find('r').first().text(), co.find('g').first().text(), co.find('b').first().text()];
                var v1 = parseInt(el.find('v1').first().text()); // -- why: v1 might occur <v1>1</v1><map><v1>0</v1></map> -> find('v1') return '1'+'0' = '10'
                var v2 = parseInt(el.find('v2').first().text());
                var v3 = parseInt(el.find('v3').first().text());
-               if(rgb.length) c[f.length] = rgb;
+               if(rgbm.length||rgbv.length||rgbt.length) 
+                  c[f.length] = rgbt.length?rgbt:(rgbv.length?rgbv:rgbm);
                f.push([v1+sn,v2+sn,v3+sn]);        // HINT: reverse order for polyhedron()
 
                var maps = el.find('map');

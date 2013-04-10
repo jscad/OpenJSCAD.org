@@ -419,21 +419,46 @@ CSG.prototype = {
 		for(var k in m) {
 			result += "<metadata type=\""+k+"\">"+m[k]+"</metadata>\n";
 		}
-		result += "<object id=\"0\"><mesh>\n";
-		this.polygons.map(function(p) {
+		result += "<object id=\"0\">\n<mesh>\n<vertices>\n";
+
+		this.polygons.map(function(p) {                  // first we dump all vertices of all polygons
+         for(var i=0; i<p.vertices.length; i++) {
+            result += p.vertices[i].toAMFString();
+         }
+      });
+      result += "</vertices>\n";
+
+      var n = 0;
+		this.polygons.map(function(p) {                  // then we dump all polygons
+         result += "<volume>\n";
+         if(p.vertices.length<3) 
+            return;
 			var r = 1, g = 0.4, b = 1, colorSet = false;
 			if(p.shared && p.shared.color) {
 				r = p.shared.color[0];
 				g = p.shared.color[1];
 				b = p.shared.color[2];
 				colorSet = true;
-			}
-			if(0&&colorSet) {
-				result += "<color><r>"+r+"</r><g>"+g+"</g><b>"+b+"</b></color>\n";
-			}
-			result += p.toAMFString(); //{color:[r,g,b]});
+			} else if(p.color) {
+            r = p.color[0];
+            g = p.color[1];
+            b = p.color[2];
+				colorSet = true;
+         }
+   		//if(colorSet) {
+   			result += "<color><r>"+r+"</r><g>"+g+"</g><b>"+b+"</b></color>";
+   		//}
+         for(var i=0; i<p.vertices.length-2; i++) {      // making sure they are all triangles (triangular polygons)
+            result += "<triangle>";
+            result += "<v1>" + (n) + "</v1>";
+            result += "<v2>" + (n+i+1) + "</v2>";
+            result += "<v3>" + (n+i+2) + "</v3>";
+            result += "</triangle>\n";
+         }
+         n += p.vertices.length;
+         result += "</volume>\n";
 		});
-		result += "</mesh></object>\n";
+		result += "</mesh>\n</object>\n";
 		result += "</amf>\n";
 		return result;
 	},
@@ -2722,38 +2747,6 @@ CSG.Polygon.prototype = {
 				result += this.vertices[i + 2].toStlString();
 				result += "endloop\nendfacet\n";
 			}
-		}
-		return result;
-	},
-
-	toAMFString: function(p) {
-		var result = "";
-		if(this.vertices.length >= 3) // should be!
-		{
-			// AMF requires triangular polygons. If our polygon has more vertices, create
-			// multiple triangles:
-			var n = 0, t = [];
-			//result += "<mesh>\n<vertices>\n";
-			for(var i = 0; i < this.vertices.length; i++) {
-			result += this.vertices[i].toAMFString();
-		 }
-			result += "</vertices>\n<volume>\n";
-		 if(this.color&&this.color.length) {
-			result += "<color><r>"+this.color[0]+"</r><g>"+this.color[1]+"</g><b>"+this.color[2]+"</b></color>\n";
-		 } else if(this.shared&&this.shared.color&&this.shared.color.length) {
-			result += "<color><r>"+this.shared.color[0]+"</r><g>"+this.shared.color[1]+"</g><b>"+this.shared.color[2]+"</b></color>\n";
-			} else {
-			result += "<color><r>"+p.color[0]+"</r><g>"+p.color[1]+"</g><b>"+p.color[2]+"</b></color>\n";
-		 }
-			for(var i = 0; i < this.vertices.length - 2; i++) {
-				result += "<triangle>\n";
-				result += "<v1>"+n+"</v1>";
-				result += "<v2>"+(n+i+1)+"</v2>";
-				result += "<v3>"+(n+i+2)+"</v3>";
-				result += "</triangle>\n";
-			}
-			result += "</volume>\n";
-			//result += "</mesh>\n";
 		}
 		return result;
 	},
