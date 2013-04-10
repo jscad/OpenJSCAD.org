@@ -1155,8 +1155,12 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
    for(var k in meta) {
       src += "// AMF."+k+": "+meta[k]+"\n";
    }
+   src += "// date: "+(new Date())+"\n";
+   src += "// creator: OpenJSCAD "+me.toUpperCase()+" "+version+" AMF Importer\n";
+   src += "\n";
+   
    if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
-   src += "// objects: 1\n// object #1: polygons: "+np+"\n";
+   src += "// objects: 1\n// object #1: polygons: "+np+"\n\n";
    src += "function main() {\n"; 
    src += "\tvar PP = function(a) { return new CSG.Polygon(a); }\n"; 
    src += "\tvar VV = function(x,y,z) { return new CSG.Vertex(new CSG.Vector3D(x,y,z)); }\n";
