@@ -536,7 +536,7 @@ function hull() {
 
    // from http://www.psychedelicdevelopment.com/grahamscan/
    //
-   ConvexHullPoint = function(i, a, d) {
+   var ConvexHullPoint = function(i, a, d) {
       this.index = i;
       this.angle = a;
       this.distance = d;
@@ -556,7 +556,7 @@ function hull() {
       }
    }
    
-   ConvexHull = function() {
+   var ConvexHull = function() {
       this.points = null;
       this.indices = null;
    
@@ -1136,9 +1136,9 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
    var src = "// OpenJSCAD.org: amf importer '"+fn+"'\n\n";
    if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
    src += "// objects: 1\n// object #1: polygons: "+np+"\n";
-   src += "function PP(a) { return new CSG.Polygon(a); }\n"; 
-   src += "function VV(x,y,z) { return new CSG.Vertex(new CSG.Vector3D(x,y,z)); }\n";
    src += "function main() {\n"; 
+   src += "\tvar PP = function(a) { return new CSG.Polygon(a); }\n"; 
+   src += "\tvar VV = function(x,y,z) { return new CSG.Vertex(new CSG.Vector3D(x,y,z)); }\n";
    //src += vt2jscad(v,f,[],c);
    src += srci;
    src += "\treturn CSG.fromPolygons(pgs);\n}\n";
@@ -1548,8 +1548,7 @@ BinaryReader.prototype = {
 };
 
 function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code 
-                                  // just as experiment ... (WARNING: very very slow rendering) due union() - will be resolved later for independent object not united
-
+                                  // just as experiment ... 
    var l = gcode.split(/[\n]/);   // for now just GCODE ASCII 
    var srci = '';
    var d = 0, pos = [], lpos = [], le = 0, ld = 0, p = [];
@@ -1609,7 +1608,7 @@ function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code
                lh = pos.Z-lz;
                layers++;
             }
-            srci += "rectangular_extrude(["+p.join(', ')+"],{w: "+lh*1.1+", h:"+lh*1.02+", fn:1, closed: false}).translate([0,0,"+pos['Z']+"])";
+            srci += "EX(["+p.join(', ')+"],{w: "+lh*1.1+", h:"+lh*1.02+", fn:1, closed: false}).translate([0,0,"+pos['Z']+"])";
             p = [];
             lz = pos.Z;
             //if(layers>2) 
@@ -1627,9 +1626,9 @@ function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code
    var src = "// OpenJSCAD.org: gcode importer (ascii) '"+fn+"'\n\n";
    //if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
    src += "// layers: "+layers+"\n";
-   src += "function main() {\n\treturn union("; 
+   src += "function main() {\n\tvar EX = function(p,opt) { return rectangular_extrude(p,opt); }\n\treturn ["; 
    src += srci;
-   src += "\n\t);\n}\n";
+   src += "\n\t];\n}\n";
    return src;
 }
 
