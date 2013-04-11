@@ -3,7 +3,7 @@
 // OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>
 // License: GPLv2
 //
-var version = '0.006';
+version = '0.006';
 //
 // Description:
 //   openjscad <file> [-o <stl>]
@@ -24,7 +24,7 @@ var version = '0.006';
 // 2013/03/01: 0.001: initial version, with base function from openscad.jscad
 //
 
-var me = 'cli';
+me = 'cli';
 
 var fs = require('fs');
 var vm = require('vm');
@@ -34,8 +34,8 @@ var vm = require('vm');
 global.lib = '/usr/local/lib/openjscad/';             // for now hard-coded
 global.nodeModules = '/usr/local/lib/node_modules/';  // for now hard-coded too
 
-var $ = require(global.nodeModules+'jquery');   // needed for AMF (XML) parsing
-                                                // if you don't use AMF import you can comment the line above, and run older nodejs 0.6.1+ 
+$ = require(global.nodeModules+'jquery');   // needed for AMF (XML) parsing
+                                            // if you don't use AMF import you can comment the line above, and run older nodejs 0.6.1+ 
                                                        
 //if (!fs.existsSync(global.lib))           // requires node 0.10.1 
 //   global.lib = './';
@@ -55,6 +55,10 @@ var CAG = require(lib+'./csg.js').CAG;  // any way to include CSG & CAG in once?
 //});
 
 var args = process.argv.splice(2);
+var meta = [];
+
+meta.producer = "OpenJSCAD "+me.toUpperCase()+" "+version;
+meta.date = new Date();
 
 var inf = args[0];
 if(inf==null||inf.length<=0||!fs.statSync(inf).isFile()) {
@@ -104,19 +108,20 @@ if(inFormat=='scad') {
    //var scadParser = require('openscad-openjscad-translator');     // npm installed but doesn't find it (crap!)
    var scadParser = require(global.nodeModules+'openscad-openjscad-translator');  // hardcoded is bad, but works
    src = scadParser.parse(src); //    doing the magick
-   src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
+   src = "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+"\n"+src;
+   src = "// source: "+outf+"\n\n"+src;
    
 } else if(inFormat=='stl') {
    //console.log("converting "+inf+" to jscad");
    var openscad = require(lib+'openscad.js');
    src = openscad.parseSTL(src,inf);
-   src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
+   //src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
    
 } else if(inFormat=='amf') {
    //console.log("converting "+inf+" to jscad");
    var openscad = require(lib+'openscad.js');
    src = openscad.parseAMF(src,inf);
-   src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
+   //src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
    
 } else {
    // jscad
@@ -140,7 +145,7 @@ if(outFormat=='jscad') {
    //var stl = csg.fixTJunctions().toStlString();     // creates bad facet normals!! in some cases
    var out;
    if(outFormat=='amf') {
-      out = csg.toAMFString();
+      out = csg.toAMFString(meta);
    } else {
       // out = csg.toStlBinary();            // TODO: already uses Blob in csg.js, needs to be removed and put into openjscad.js
       out = csg.toStlString();

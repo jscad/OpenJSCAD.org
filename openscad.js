@@ -65,6 +65,34 @@
 //    );
 // }
 
+function JStoMeta(src) {
+   var l = src.split(/\n/);
+   var n = 0;
+   var m = [];
+   for(var i=0; ; i++) {
+      if(l[i].match(/^\/\/\s*(\S[^:]+):\s*(\S.*)/)) {
+         var k = RegExp.$1;
+         var v = RegExp.$2;
+         m[k] = v;
+         n++;
+      } else {
+         if(i>5&&n==0)
+            break;
+         else if(n>0)
+            break;
+      }
+   }
+   return m;
+}
+
+function MetaToJS(m) {
+   var s = "";
+   for(var k in m) {
+      s += "// "+k+": "+m[k]+"\n";
+   }
+   return s;
+}
+
 // wrapper functions for OpenJsCAD & OpenJSCAD.org
 
 // color table from http://www.w3.org/TR/css3-color/
@@ -536,7 +564,7 @@ function hull() {
 
    // from http://www.psychedelicdevelopment.com/grahamscan/
    //
-   ConvexHullPoint = function(i, a, d) {
+   var ConvexHullPoint = function(i, a, d) {
       this.index = i;
       this.angle = a;
       this.distance = d;
@@ -556,7 +584,7 @@ function hull() {
       }
    }
    
-   ConvexHull = function() {
+   var ConvexHull = function() {
       this.points = null;
       this.indices = null;
    
@@ -1050,10 +1078,9 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
    try {
       xml = $.parseXML(amf);
    } catch(e) {
-      echo("XML parsing error:",e.message);
+      echo("XML parsing error:",e.message.substring(0,120)+"..");
       err += "XML parsing error / invalid XML";
    }
-   var obj = $(xml).find('object');
    var v = [];    // vertices
    var f = [];    // faces
    //var c = [];    // color settings (per face)
@@ -1061,15 +1088,26 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
    var src = '', srci = '';
 
    srci = "\tvar pgs = [];\n";
+
+   var meta = [];
+   var metatag = $(xml).find('metadata');    // -- extract metadata
+   metatag.each(function() {
+      var el = $(this);
+      meta[el.attr('type')] = el.text();
+   });
+   
+   var obj = $(xml).find('object');
    obj.each(function() {
       var el = $(this);
       var mesh = el.find('mesh');
       mesh.each(function() {
          var el = $(this);
+         var c = [];
+         var co = el.find('color');
+         var rgbm = [];
+         if(co.length) 
+            rgbm = [co.find('r').first().text(), co.find('g').first().text(), co.find('b').first().text()];
 
-         var c = el.find('color');
-         var rgb = [];
-         if(c.length) rgb = [c.find('r').first().text(), c.find('g').first().text(), c.find('b').first().text()];
          v = []; f = []; nv = 0;        // we create each individual polygon
          
          var vertices = el.find('vertices');
@@ -1089,13 +1127,21 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
          var volume = el.find('volume');
          volume.each(function() {
             var el = $(this);
+            var rgbv = [], co = el.find('color');
+            if(co.length) 
+               rgbv = [co.find('r').first().text(), co.find('g').first().text(), co.find('b').first().text()];
+
             var triangle = el.find('triangle');
             triangle.each(function() {
                var el = $(this);
+               var rgbt = [], co = el.find('color');
+               if(co.length) 
+                  rgbt = [co.find('r').first().text(), co.find('g').first().text(), co.find('b').first().text()];
                var v1 = parseInt(el.find('v1').first().text()); // -- why: v1 might occur <v1>1</v1><map><v1>0</v1></map> -> find('v1') return '1'+'0' = '10'
                var v2 = parseInt(el.find('v2').first().text());
                var v3 = parseInt(el.find('v3').first().text());
-               if(rgb.length) c[f.length] = rgb;
+               if(rgbm.length||rgbv.length||rgbt.length) 
+                  c[f.length] = rgbt.length?rgbt:(rgbv.length?rgbv:rgbm);
                f.push([v1+sn,v2+sn,v3+sn]);        // HINT: reverse order for polyhedron()
 
                var maps = el.find('map');
@@ -1133,12 +1179,20 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
          }
       });
    });
-   var src = "// OpenJSCAD.org: amf importer '"+fn+"'\n\n";
+   var src = "";
+   for(var k in meta) {
+      src += "// AMF."+k+": "+meta[k]+"\n";
+   }
+   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" AMF Importer\n";
+   src += "// date: "+(new Date())+"\n";
+   src += "// source: "+fn+"\n";
+   src += "\n";
+   
    if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
-   src += "// objects: 1\n// object #1: polygons: "+np+"\n";
-   src += "function PP(a) { return new CSG.Polygon(a); }\n"; 
-   src += "function VV(x,y,z) { return new CSG.Vertex(new CSG.Vector3D(x,y,z)); }\n";
+   src += "// objects: 1\n// object #1: polygons: "+np+"\n\n";
    src += "function main() {\n"; 
+   src += "\tvar PP = function(a) { return new CSG.Polygon(a); }\n"; 
+   src += "\tvar VV = function(x,y,z) { return new CSG.Vertex(new CSG.Vector3D(x,y,z)); }\n";
    //src += vt2jscad(v,f,[],c);
    src += srci;
    src += "\treturn CSG.fromPolygons(pgs);\n}\n";
@@ -1177,9 +1231,13 @@ function parseOBJ(obj,fn) {   // http://www.andrewnoske.com/wiki/index.php?title
          ;     // vn vt and all others disregarded
       }
    }
-   var src = "// OpenJSCAD.org: obj importer '"+fn+"'\n\n";
+   var src = ""; 
+   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" OBJ Importer\n";
+   src += "// date: "+(new Date())+"\n";
+   src += "// source: "+fn+"\n";
+   src += "\n";
    //if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
-   src += "// objects: 1\n// object #1: polygons: "+f.length+"\n";
+   src += "// objects: 1\n// object #1: polygons: "+f.length+"\n\n";
    src += "function main() { return "; 
    src += vt2jscad(v,f);
    src += "; }";
@@ -1289,21 +1347,29 @@ function parseBinarySTL(stl,fn) {
         normals.push(no);
         converted++;
     }
-    var src = "// OpenJSCAD.org: stl importer (binary) '"+fn+"'\n\n";
-    if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
-    src += "// objects: 1\n// object #1: triangles: "+totalTriangles+"\n";
-    src += "function main() { return "; 
-    src += vt2jscad(vertices,triangles,normals);
-    src += "; }";
-    return src;
+   var src = "";
+   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" STL Binary Importer\n";
+   src += "// date: "+(new Date())+"\n";
+   src += "// source: "+fn+"\n";
+   src += "\n";
+   if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
+   src += "// objects: 1\n// object #1: triangles: "+totalTriangles+"\n\n";
+   src += "function main() { return "; 
+   src += vt2jscad(vertices,triangles,normals);
+   src += "; }";
+   return src;
 }
 
 function parseAsciiSTL(stl,fn) {
-    var src = "// OpenJSCAD.org: stl importer (ascii) '"+fn+"'\n\n";
-    var n = 0;
-    var converted = 0;
-    var o;
+   var src = "";
+   var n = 0;
+   var converted = 0;
+   var o;
      
+   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" STL Binary Importer\n";
+   src += "// date: "+(new Date())+"\n";
+   src += "// source: "+fn+"\n";
+   src += "\n";
     src += "function main() { return union(\n"; 
     // -- Find all models
     var objects = stl.split('endsolid');
@@ -1548,8 +1614,7 @@ BinaryReader.prototype = {
 };
 
 function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code 
-                                  // just as experiment ... (WARNING: very very slow rendering) due union() - will be resolved later for independent object not united
-
+                                  // just as experiment ... 
    var l = gcode.split(/[\n]/);   // for now just GCODE ASCII 
    var srci = '';
    var d = 0, pos = [], lpos = [], le = 0, ld = 0, p = [];
@@ -1609,7 +1674,7 @@ function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code
                lh = pos.Z-lz;
                layers++;
             }
-            srci += "rectangular_extrude(["+p.join(', ')+"],{w: "+lh*1.1+", h:"+lh*1.02+", fn:1, closed: false}).translate([0,0,"+pos['Z']+"])";
+            srci += "EX(["+p.join(', ')+"],{w: "+lh*1.1+", h:"+lh*1.02+", fn:1, closed: false}).translate([0,0,"+pos['Z']+"])";
             p = [];
             lz = pos.Z;
             //if(layers>2) 
@@ -1624,30 +1689,21 @@ function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code
       ld = d;
    }
    
-   var src = "// OpenJSCAD.org: gcode importer (ascii) '"+fn+"'\n\n";
+   var src = "";
+   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" GCode Importer\n";
+   src += "// date: "+(new Date())+"\n";
+   src += "// source: "+fn+"\n";
+   src += "\n";
    //if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
    src += "// layers: "+layers+"\n";
-   src += "function main() {\n\treturn union("; 
+   src += "function main() {\n\tvar EX = function(p,opt) { return rectangular_extrude(p,opt); }\n\treturn ["; 
    src += srci;
-   src += "\n\t);\n}\n";
+   src += "\n\t];\n}\n";
    return src;
 }
 
 
 // -------------------------------------------------------------------------------------------------
-
-function processSource(src,fn) {
-   if(fn.match(/\.jscad/i)) {
-      ;
-   } else if(fn.match(/\.scad/i)) {
-      src = openscadOpenJscadParser.parse(src);
-   } else if(fn.match(/\.stl/i)) {
-      src = parseSTL(src);
-   } else {
-      echo("extension of '"+fn+"' not recognized, considering it as .jscad");
-   }
-   return src;       // .jscad now
-}
 
 function clone(obj) {
     if (null == obj || "object" != typeof obj) return obj;
@@ -1658,42 +1714,6 @@ function clone(obj) {
     return copy;
 }
    
-function __include(fn) {          // doesn't work yet ... as we run in a blob and XHR aren't permitted
-   // case 1): cli, we simply include it
-   // case 2): web, XHR won't work as we likely pull more stuff from within a web-worker & blob, where XHR isn't permitted
-
-   //echo("include",fn,"me="+me);
-
-   if(me=='web-online') {
-      var xhr = new XMLHttpRequest();
-      //OpenJsCad.log(">>>"+previousFilename);
-      xhr.open("GET",fn,true);
-      xhr.onload = function() {
-         return processSource(this.responseText,fn);
-      };
-      xhr.error = function() {
-         echo("ERROR: could not include(\""+fn+"\")");
-      };
-      xhr.send();
-   } else if(me=='web-offline') {
-    
-   } else {    // cli
-      src = fs.readFileSync(fn);
-      src = processSource(src,fn);
-   }
-   if(me!='web-offline'&&me!='web-online') {
-      if(0) {
-         echo("push:",src);
-         inc.push(src);
-         return;
-      } else {
-         echo("eval:",src);
-         return eval(src);
-      }
-   }
-   return src;
-}
-
 // -------------------------------------------------------------------------------------------------
 
 if(typeof module !== 'undefined') {    // we are used as module in nodejs require()

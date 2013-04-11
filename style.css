@@ -218,13 +218,6 @@ canvas {
 }
 
 #examples {
-   transition: all 0.4s;
-   -o-transition: all 0.4s;
-   -moz-transition: all 0.4s;
-   -webkit-transition: all 0.4s;
-}
-
-#examples {
    /* width: 60em; */
    width: auto;
    z-index: 12;
@@ -264,3 +257,35 @@ canvas {
 
 .examplesSeparator {
 }
+
+#options {
+   width: auto;
+   z-index: 12;
+   position: absolute;
+   display: none;
+   background: #f8e8ff;
+   border: solid 1px #888;
+   padding: 0.5em;
+   border-radius: 5px;
+   box-shadow: 0px 0px 10px #849;
+   font-size: 0.8em;
+}
+
+.optionGroup {
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   padding: 0.5em;
+   margin: 0.5em;
+   background: white;
+}
+
+.optionGroup input, .optionGroup select {
+  background: #fea;
+  border: none;
+}
+
+.optionInfo {
+   font-size: 0.8em;
+   color: #888;
+}
+

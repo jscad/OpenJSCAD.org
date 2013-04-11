@@ -13,7 +13,6 @@ function main() {
          )
       );
    }
-   echo("start compose");
    pos(cube());
    pos(cube(1.5));
    pos(cube({size: 0.8}));
@@ -41,12 +40,10 @@ function main() {
    pos(color("yellow",cylinder({r: 1, start: [0,0,0], end:[1,1,4], center: [true,true,false]})));
    pos(cube({size: 0.01, center: true}));
 
-   echo("end compose, translate");
-   
    for(var i=0; i<o.length; i++) {
       o[i] = o[i].translate([(i%8)*3,Math.floor(i/8)*4,0]);
    }
-   echo("end translate");
+
    return o;
 }
 
