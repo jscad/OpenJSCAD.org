@@ -72,24 +72,27 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
   // Shader with diffuse and specular lighting
   this.lightingShader = new GL.Shader('\
     varying vec3 color;\
+    varying float alpha;\
     varying vec3 normal;\
     varying vec3 light;\
     void main() {\
       const vec3 lightDir = vec3(1.0, 2.0, 3.0) / 3.741657386773941;\
       light = lightDir;\
       color = gl_Color.rgb;\
+      alpha = gl_Color.a;\
       normal = gl_NormalMatrix * gl_Normal;\
       gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\
     }\
   ', '\
     varying vec3 color;\
+    varying float alpha;\
     varying vec3 normal;\
     varying vec3 light;\
     void main() {\
       vec3 n = normalize(normal);\
       float diffuse = max(0.0, dot(light, n));\
       float specular = pow(max(0.0, -reflect(light, n).z), 10.0) * sqrt(diffuse);\
-      gl_FragColor = vec4(mix(color * (0.3 + 0.7 * diffuse), vec3(1.0), specular), 1.0);\
+      gl_FragColor = vec4(mix(color * (0.3 + 0.7 * diffuse), vec3(1.0), specular), alpha);\
     }\
   ');
 
@@ -209,23 +212,6 @@ OpenJsCad.Viewer.prototype = {
     gl.rotate(this.angleY, 0, 1, 0);
     gl.rotate(this.angleZ, 0, 0, 1);
 
-    if (!this.lineOverlay) gl.enable(gl.POLYGON_OFFSET_FILL);
-    for (var i = 0; i < this.meshes.length; i++) {  
-      var mesh = this.meshes[i];
-      this.lightingShader.draw(mesh, gl.TRIANGLES);
-    }
-    if (!this.lineOverlay) gl.disable(gl.POLYGON_OFFSET_FILL);
-
-    if(this.drawLines) {
-      if (this.lineOverlay) gl.disable(gl.DEPTH_TEST);
-      gl.enable(gl.BLEND);
-      for (var i = 0; i < this.meshes.length; i++) {  
-        var mesh = this.meshes[i];
-        this.blackShader.draw(mesh, gl.LINES);
-      }
-      gl.disable(gl.BLEND);
-      if (this.lineOverlay) gl.enable(gl.DEPTH_TEST);
-    }
     //EDW: axes
     if (this.drawAxes) {
       gl.enable(gl.BLEND);
@@ -294,6 +280,28 @@ OpenJsCad.Viewer.prototype = {
       gl.disable(gl.BLEND);
       // GL.Mesh.plane({ detailX: 20, detailY: 40 });
     }
+
+    gl.enable(gl.BLEND);
+    //gl.disable(gl.DEPTH_TEST);
+    if (!this.lineOverlay) gl.enable(gl.POLYGON_OFFSET_FILL);
+    for (var i = 0; i < this.meshes.length; i++) {
+      var mesh = this.meshes[i];
+      this.lightingShader.draw(mesh, gl.TRIANGLES);
+    }
+    if (!this.lineOverlay) gl.disable(gl.POLYGON_OFFSET_FILL);
+    gl.disable(gl.BLEND);
+    //gl.enable(gl.DEPTH_TEST);
+
+    if(this.drawLines) {
+      if (this.lineOverlay) gl.disable(gl.DEPTH_TEST);
+      gl.enable(gl.BLEND);
+      for (var i = 0; i < this.meshes.length; i++) {
+        var mesh = this.meshes[i];
+        this.blackShader.draw(mesh, gl.LINES);
+      }
+      gl.disable(gl.BLEND);
+      if (this.lineOverlay) gl.enable(gl.DEPTH_TEST);
+    }
   }
 };
 
@@ -315,7 +323,7 @@ OpenJsCad.Viewer.csgToMeshes = function(initial_csg) {
   var numpolygons = polygons.length;
   for(var j = 0; j < numpolygons; j++) {
     var polygon = polygons[j];
-    var color = [1,.4,1];      // -- default color
+    var color = [1,.4,1,1];      // -- default color
 
     if(polygon.shared && polygon.shared.color) {
       color = polygon.shared.color;
@@ -323,6 +331,9 @@ OpenJsCad.Viewer.csgToMeshes = function(initial_csg) {
     if(polygon.color) {
       color = polygon.color;
     }
+
+	if (color.length < 4)
+		color.push(1.); //opaque
 
     var indices = polygon.vertices.map(function(vertex) {
       var vertextag = vertex.getTag();
