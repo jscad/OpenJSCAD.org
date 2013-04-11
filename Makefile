@@ -1,4 +1,4 @@
-VERSION = 0.016
+VERSION = 0.017
 LIB = /usr/local/lib/openjscad/
 NODE_MODULES = /usr/local/lib/node_modules/
 

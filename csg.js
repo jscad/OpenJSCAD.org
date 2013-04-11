@@ -433,21 +433,23 @@ CSG.prototype = {
          result += "<volume>\n";
          if(p.vertices.length<3) 
             return;
-			var r = 1, g = 0.4, b = 1, colorSet = false;
+			var r = 1, g = 0.4, b = 1, a = 1, colorSet = false;
 			if(p.shared && p.shared.color) {
 				r = p.shared.color[0];
 				g = p.shared.color[1];
 				b = p.shared.color[2];
+            if(p.shared.color[3]!==undefined) a = p.shared.color[3];
 				colorSet = true;
 			} else if(p.color) {
             r = p.color[0];
             g = p.color[1];
             b = p.color[2];
+            if(p.color.length()>3) a = p.color[3];
 				colorSet = true;
          }
-   		//if(colorSet) {
-   			result += "<color><r>"+r+"</r><g>"+g+"</g><b>"+b+"</b></color>";
-   		//}
+
+   		result += "<color><r>"+r+"</r><g>"+g+"</g><b>"+b+"</b>"+(a!==undefined?"<a>"+a+"</a>":"")+"</color>";
+
          for(var i=0; i<p.vertices.length-2; i++) {      // making sure they are all triangles (triangular polygons)
             result += "<triangle>";
             result += "<v1>" + (n) + "</v1>";

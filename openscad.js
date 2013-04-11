@@ -98,11 +98,6 @@ function MetaToJS(m) {
 // color table from http://www.w3.org/TR/css3-color/
 
 function color() {
-   var o,i,a=arguments,c = a[0]; 
-   if(a[1].length) { a = a[1], i = 0; } else { i = 1; }
-   for(o=a[i++]; i<a.length; i++) { 
-      o = o.union(a[i]);
-   } 
    var map = {
    "black" : [ 0/255,0/255,0/255 ],
    "silver": [ 192/255,192/255,192/255 ],
@@ -268,11 +263,18 @@ function color() {
    "yellow"   : [ 255/255,255/255,0/255 ],
    "yellowgreen" : [ 154/255,205/255,50/255 ] };
 
-   if(typeof c == 'string') {
-      return o.setColor(map[c.toLowerCase()]);
-   } else {
-      return o.setColor(c);
-   }
+   var o, i = 1, a = arguments, c = a[0], alpha;
+
+   if(a[0].length<4 && (a[i]*1-0)==a[i]) { alpha = a[i++]; }  // first argument rgb (no a), and next one is numeric?
+   if(a[i].length) { a = a[i], i = 0; }                       // next arg an array, make it our main array to walk through
+   if(typeof c == 'string')
+      c = map[c.toLowerCase()];
+   if(alpha!==undefined) 
+      c = c.concat(alpha);
+   for(o=a[i++]; i<a.length; i++) { 
+      o = o.union(a[i]);
+   } 
+   return o.setColor(c);
 }
 
 // -- 3D operations (OpenSCAD like notion)
@@ -391,7 +393,10 @@ function cylinder(p) {
    var r1 = 1, r2 = 1, h = 1, fn = 32, round = false; var a = arguments;
    var off = [0,0,0];
    if(p&&p.r) {
-      r1 = p.r; r2 = p.r; if(p.h) h = p.h;
+      r1 = p.r; r2 = p.r; 
+   }
+   if(p&&p.h) {
+      h = p.h;
    }
    if(p&&(p.r1||p.r2)) {
       r1 = p.r1; r2 = p.r2; if(p.h) h = p.h;
