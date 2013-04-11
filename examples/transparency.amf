@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <amf>
 <metadata type="producer">OpenJSCAD CLI 0.007</metadata>
-<metadata type="date">Thu Apr 11 2013 22:51:38 GMT+0200 (CEST)</metadata>
+<metadata type="date">Thu Apr 11 2013 22:54:49 GMT+0200 (CEST)</metadata>
 <object id="0">
 <mesh>
 <vertices>

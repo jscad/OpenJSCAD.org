@@ -4,7 +4,7 @@
 
 function main() {
    var o = [];
-   for(var i=0; i<8; i++) {
+   for(var i=7; i>=0; i--) {        // reverse order for seeing through all cylinders (see http://www.opengl.org/wiki/Transparency_Sorting)
       o.push(cylinder({r:3,h:20}).
          setColor( 
             hsl2rgb(i/8,1,0.5).  // hsl to rgb, creating rainbow [r,g,b]
