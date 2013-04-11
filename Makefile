@@ -27,6 +27,7 @@ tests::
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.stl
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.amf
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.jscad
+	openjscad examples/transparency.jscad -o examples/transparency.amf
 	cd examples/platonics && make
 	cd examples/include-test && make
 	# -- enable if you have openscad installed ('unsetenv DISPLAY' perhaps too)

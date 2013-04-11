@@ -438,7 +438,7 @@ CSG.prototype = {
 				r = p.shared.color[0];
 				g = p.shared.color[1];
 				b = p.shared.color[2];
-            if(p.shared.color[3]!==undefined) a = p.shared.color[3];
+            a = p.shared.color[3];
 				colorSet = true;
 			} else if(p.color) {
             r = p.color[0];
@@ -1029,7 +1029,7 @@ CSG.prototype = {
 	 * @return {CSG} new CSG instance
 	 */
 	setColor: function(red, green, blue, alpha) { //for backward compatibility
-		var color = red instanceof Array ? red : [red|0, green|0, blue|0, isNaN(alpha) ? 1. : alpha];
+		var color = red instanceof Array ? red : [red||0, green||0, blue||0, isNaN(alpha) ? 1. : alpha];
 		var newshared = new CSG.Polygon.Shared(color);
 		return this.setShared(newshared);
 	},
@@ -2637,7 +2637,7 @@ CSG.Polygon.prototype = {
 	 * @return {CSG.Polygon} The current polygon
 	 */
 	setColor: function(red, green, blue, alpha) {
-		var color = red instanceof Array ? red : [red|0, green|0, blue|0, isNaN(alpha) ? 1. : alpha];
+		var color = red instanceof Array ? red : [red||0, green||0, blue||0, isNaN(alpha) ? 1. : alpha];
 		this.shared = new CSG.Polygon.Shared(color);
 		return this;
 	},

@@ -1,7 +1,7 @@
 // openscad.js, a few functions to simplify coding OpenSCAD-like
 //    written by Rene K. Mueller <spiritdude@gmail.com>, License: GPLv2
 //
-// Version: 0.017
+// Version: 0.018
 //
 // Description:
 // Helping to convert OpenSCAD .scad files to OpenJSCad .jscad files with 
@@ -12,6 +12,7 @@
 //     http://openjscad.org/
 //
 // History:
+// 2013/04/11: 0.018: added alpha supported to AMF export
 // 2013/04/09: 0.017: added color()
 // 2013/04/08: 0.016: added hull() which takes multiple 2d polygons (CAG)
 // 2013/04/08: 0.015: individual center: [true,false,true] possible for cube(), sphere() and cylinder()
@@ -1112,9 +1113,10 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
          var c = [];
          var co = el.find('color');
          var rgbm = [];
-         if(co.length) 
+         if(co.length) {
             rgbm = [co.find('r').first().text(), co.find('g').first().text(), co.find('b').first().text()];
-
+            if(co.find('a').length) rgbm = rgbm.concat(co.find('a').first().text());
+         }
          v = []; f = []; nv = 0;        // we create each individual polygon
          
          var vertices = el.find('vertices');
@@ -1135,15 +1137,18 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
          volume.each(function() {
             var el = $(this);
             var rgbv = [], co = el.find('color');
-            if(co.length) 
+            if(co.length) {
                rgbv = [co.find('r').first().text(), co.find('g').first().text(), co.find('b').first().text()];
-
+               if(co.find('a').length) rgbv = rgbv.concat(co.find('a').first().text());
+            }
             var triangle = el.find('triangle');
             triangle.each(function() {
                var el = $(this);
                var rgbt = [], co = el.find('color');
-               if(co.length) 
+               if(co.length) {
                   rgbt = [co.find('r').first().text(), co.find('g').first().text(), co.find('b').first().text()];
+                  if(co.find('a').length) rgbt = rgbt.concat(co.find('a').first().text());
+               }
                var v1 = parseInt(el.find('v1').first().text()); // -- why: v1 might occur <v1>1</v1><map><v1>0</v1></map> -> find('v1') return '1'+'0' = '10'
                var v2 = parseInt(el.find('v2').first().text());
                var v3 = parseInt(el.find('v3').first().text());
@@ -1179,8 +1184,7 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
                srci += "VV("+v[f[i][j]]+")";
             }
             srci += "])";
-            //if(c[i]) srci += "/*.setColor("+c[i]+")*/";      // FIX: Polygon doesn't have .setColor yet
-            if(c[i]) srci += ".setColor("+c[i]+")";      // FIX: Polygon doesn't have .setColor yet
+            if(c[i]) srci += ".setColor("+c[i]+")";
             srci += ");\n";
             np++;
          }

@@ -3,7 +3,7 @@
 // OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>
 // License: GPLv2
 //
-version = '0.006';
+version = '0.007';
 //
 // Description:
 //   openjscad <file> [-o <stl>]
@@ -16,6 +16,7 @@ version = '0.006';
 //   openjscad test.stl -o test2.stl      # reprocessed: stl -> jscad -> stl
 //
 // History:
+// 2013/04/11: 0.007: support of alpha for AMF addded, bumping version
 // 2013/04/05: 0.006: support of AMF added, requires node 0.8.1+
 // 2013/03/25: 0.005: more sanity check on input and local installation support
 // 2013/03/18: 0.004: STL .stl (binary & ascii) support (experimental via openscad.js)
