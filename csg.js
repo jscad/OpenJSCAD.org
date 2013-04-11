@@ -1022,14 +1022,12 @@ CSG.prototype = {
 		return result;
 	},
 
-	// TODO: support alpha (transparent parts) - [red, green, blue, alpha]
 	/**
 	 * @param {Array} color [red, green, blue] color values are float numbers 0..1
 	 * @return {CSG} new CSG instance
 	 */
-	//setColor: function(color) {
-	setColor: function(red, green, blue) { //for backward compatibility
-		var color = red instanceof Array ? red : [red, green, blue];
+	setColor: function(red, green, blue, alpha) { //for backward compatibility
+		var color = red instanceof Array ? red : [red|0, green|0, blue|0, isNaN(alpha) ? 1. : alpha];
 		var newshared = new CSG.Polygon.Shared(color);
 		return this.setShared(newshared);
 	},
@@ -2632,13 +2630,12 @@ CSG.Polygon.prototype = {
 		}
 	},
 
-	// TODO: support alpha (transparent parts) - [red, green, blue, alpha]
 	/**
-	 * @param {Array} color [red, green, blue] color values are float numbers 0..1
+	 * @param {Array} color [red, green, blue, alpha] color values are float numbers 0..1
 	 * @return {CSG.Polygon} The current polygon
 	 */
-	setColor: function(red, green, blue) {
-		var color = red instanceof Array ? red : [red, green, blue];
+	setColor: function(red, green, blue, alpha) {
+		var color = red instanceof Array ? red : [red|0, green|0, blue|0, isNaN(alpha) ? 1. : alpha];
 		this.shared = new CSG.Polygon.Shared(color);
 		return this;
 	},
@@ -2808,7 +2805,7 @@ CSG.Polygon.prototype = {
 				fnCallback = options.callback;
 		}
 		if (!fnCallback) {
-			var square = CSG.Polygon.createFromPoints([
+			var square = new CSG.Polygon.createFromPoints([
 						[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0]
 					]);
 			fnCallback = function(t, slice) {
@@ -2849,6 +2846,7 @@ CSG.Polygon.prototype = {
 			} //else - already generated
 		} else {
 			//save top and bottom
+			//TODO: flip if necessary
 			polygons.unshift(flipped ? bottom : bottom.flipped());
 			polygons.push(flipped ? top.flipped() : top);
 		}
@@ -3057,7 +3055,7 @@ CSG.Polygon.Shared.prototype = {
 	// get a string uniquely identifying this object
 	getHash: function() {
 		if(!this.color) return "null";
-		return "" + this.color[0] + "/" + this.color[1] + "/" + this.color[2];
+		return "" + this.color[0] + "/" + this.color[1] + "/" + this.color[2] + "/" + this.color[3];
 	}
 };
 
