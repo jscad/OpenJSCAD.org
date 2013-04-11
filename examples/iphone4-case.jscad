@@ -1,3 +1,6 @@
+// title: iPhone 4 Dock
+// author: Joost Nieuwenhuijse
+
 /*
 
 OpenJsCad script for iPhone 4 dock

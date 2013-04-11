@@ -1,4 +1,6 @@
-// -- Example 005
+// title: Example 005
+// author: OpenSCAD.org
+// description: example001.scad ported to OpenJSCAD
 
 function example005() {
    var cy = new Array();

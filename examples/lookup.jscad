@@ -1,4 +1,6 @@
-// -- lookup()
+// title: Lookup()
+// author: OpenSCAD.org, adapted by Rene K. Mueller
+// description: testing lookup() function 
 
 // from http://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Mathematical_Functions
 

@@ -1,6 +1,8 @@
-// Umbilical Torus generator, by Bruce Mueller 2013/03/30 CC-BY-SA
-//
-// adapted for OpenJSCAD.org by Rene K. Mueller 2013/03/30
+// title: Umbilical Torus generator
+// author: Bruce Mueller 
+// date: 2013/03/30 
+// license: Creative Commons CC BY-SA
+// description: adapted for OpenJSCAD.org by Rene K. Mueller 2013/03/30
 
 // inc = incremental segments
 // r = radius of circle

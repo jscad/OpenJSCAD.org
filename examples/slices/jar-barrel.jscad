@@ -1,5 +1,7 @@
-// -- Jar barrel
-//    by Eduard Bespalov
+// title: Jar barrel
+// author: Eduard Bespalov
+// license: MIT License
+// description: testing solidFromSlices()
 
 // Here we define the user editable parameters:
 function getParameterDefinitions() {

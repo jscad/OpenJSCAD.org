@@ -1,5 +1,6 @@
-// -- Celtic Knot Ring
-//    by Joost Nieuwenhuijse
+// title: Celtic Knot Ring
+// author: Joost Nieuwenhuijse
+// license: MIT License
 
 // -*- mode: javascript; -*-
 

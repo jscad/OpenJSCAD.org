@@ -1,4 +1,6 @@
-// -- rectangular_extrude()
+// title: Rectangular_extrude()
+// author: Rene K. Mueller
+// license: MIT License
 
 function main() {
    return [

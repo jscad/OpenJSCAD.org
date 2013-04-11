@@ -1,5 +1,5 @@
-// -- Stepper Motor
-//    by Derrick Oswald
+// title: Stepper Motor
+// author: Derrick Oswald
 
 function getParameterDefinitions()
 {

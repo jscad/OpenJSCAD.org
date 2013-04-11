@@ -1,5 +1,7 @@
-// -- Rose Curve
-//    by Eduard Bespalov
+// title: Rose Curve
+// author: Eduard Bespalov
+// license: MIT License
+// description: testing solidFromSlices()
 
 function main(params) {
 	var radius = 50,

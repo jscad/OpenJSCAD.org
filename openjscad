@@ -25,6 +25,7 @@ version = '0.006';
 //
 
 me = 'cli';
+global.time = new Date();
 
 var fs = require('fs');
 var vm = require('vm');
@@ -34,9 +35,6 @@ var vm = require('vm');
 global.lib = '/usr/local/lib/openjscad/';             // for now hard-coded
 global.nodeModules = '/usr/local/lib/node_modules/';  // for now hard-coded too
 
-$ = require(global.nodeModules+'jquery');   // needed for AMF (XML) parsing
-                                            // if you don't use AMF import you can comment the line above, and run older nodejs 0.6.1+ 
-                                                       
 //if (!fs.existsSync(global.lib))           // requires node 0.10.1 
 //   global.lib = './';
 if(!fs.statSync(global.lib).isDirectory())  // same but works with 0.6.1+
@@ -119,6 +117,7 @@ if(inFormat=='scad') {
    
 } else if(inFormat=='amf') {
    //console.log("converting "+inf+" to jscad");
+   $ = require(global.nodeModules+'jquery');   // needed for AMF (XML) parsing
    var openscad = require(lib+'openscad.js');
    src = openscad.parseAMF(src,inf);
    //src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;

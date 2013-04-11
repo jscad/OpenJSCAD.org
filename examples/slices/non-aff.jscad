@@ -1,5 +1,7 @@
-// -- Non Affine Transformation
-//    by Eduard Bespalov
+// title: Non Affine Transformation
+// author: Eduard Bespalov
+// license: MIT License
+// description: testing solidFromSlices()
 
 function main(params) {
 	var radius = 20,

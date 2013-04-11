@@ -1,4 +1,6 @@
-// -- Bunch of Cubes
+// title: Bunch of Cubes
+// author: Rene K. Mueller
+// license: MIT License
 
 var cubes = new Array();
 

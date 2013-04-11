@@ -1,5 +1,6 @@
-// -- Lamp Shade
-//    by Joost Nieuwenhuijse
+// title: Lamp Shade
+// author: Joost Nieuwenhuijse
+// license: MIT License
 
 function main(params)
 {

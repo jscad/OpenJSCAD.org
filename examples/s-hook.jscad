@@ -1,5 +1,6 @@
-// -- S Hook
-//    by Joost Nieuwenhuijse
+// title: S Hook
+// author: Joost Nieuwenhuijse
+// license: MIT License
 
 // Here we define the user editable parameters: 
 function getParameterDefinitions() {

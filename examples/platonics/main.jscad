@@ -1,4 +1,8 @@
-// Example 050: platonics with library
+// title: Platonics
+// author: Willliam A. Adams, Rene K. Mueller
+// license: Public Domain
+// date: 2011/09, 2013/04/01
+// description: original an OpenSCAD.org code, adapted for OpenJSCAD.org and testing recursive include()
 
 include("platonic.jscad");
 

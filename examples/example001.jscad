@@ -1,4 +1,6 @@
-// -- Example 001
+// title: Example 001
+// author: OpenSCAD.org
+// description: example001.scad ported to OpenJSCAD.org
 
 function r_from_dia(d) { return d / 2; }
 

@@ -1,5 +1,3 @@
-// -- OpenJSCAD.org logo
-
 // title: OpenJSCAD.org Logo
 // author: Rene K. Mueller 
 // license: Creative Commons CC BY

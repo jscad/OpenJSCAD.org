@@ -1,5 +1,7 @@
-// -- Screw
-//    by Eduard Bespalov
+// title: Screw
+// author: Eduard Bespalov
+// license: MIT License
+// description: testing solidFromSlices()
 
 function main(params) {
 	var sqrt3 = Math.sqrt(3) / 2;

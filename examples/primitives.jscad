@@ -1,4 +1,6 @@
-// -- Primitives
+// title: Primitives
+// author: Rene K. Mueller
+// license: MIT License
 
 function main() {
    var o = [

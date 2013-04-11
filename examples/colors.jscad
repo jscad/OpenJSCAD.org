@@ -1,4 +1,6 @@
-// -- colors
+// title: Colors
+// author: Rene K. Mueller
+// license: MIT License
 
 function spread() {
    var a = Array.prototype.slice.call(arguments);

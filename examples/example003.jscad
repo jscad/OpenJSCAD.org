@@ -1,4 +1,6 @@
-// -- Example 003
+// title: Example 003
+// author: OpenSCAD.org
+// description: example001.scad ported to OpenJSCAD.org
 
 function example003() {
 	return difference(

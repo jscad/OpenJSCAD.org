@@ -1,5 +1,7 @@
-// -- Four to three (sides)
-//    by Eduard Bespalov
+// title: Four to three (sides)
+// author: Eduard Bespalov
+// license: MIT License
+// description: testing solidFromSlices()
 
 function getParameterDefinitions() {
   return [

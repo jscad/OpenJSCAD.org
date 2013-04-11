@@ -1,5 +1,7 @@
-// -- Spring
-//    by Eduard Bespalov
+// title: Spring
+// author: Eduard Bespalov
+// license: MIT License
+// description: testing solidFromSlices()
 
 function main(params) {
 	var sqrt3 = Math.sqrt(3) / 2;

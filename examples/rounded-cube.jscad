@@ -1,4 +1,4 @@
-// -- Rounded Cube
+// title: Rounded Cube
 
 function getParameterDefinitions() {
   return [

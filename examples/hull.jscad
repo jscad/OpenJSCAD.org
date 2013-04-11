@@ -1,4 +1,6 @@
-// -- hull() 
+// title: Hull() 
+// author: Rene K. Mueller
+// license: MIT License
 
 function showHull() {
    var o = Array.prototype.slice.call(arguments);

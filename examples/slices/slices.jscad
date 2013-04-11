@@ -1,5 +1,7 @@
-// -- Slices (single screw evolution)
-//    by Eduard Bespalov
+// title: Slices (single screw evolution)
+// author: Eduard Bespalov
+// license: MIT License
+// description: testing solidFromSlices()
 
 function main(params) {
 	var sqrt3 = Math.sqrt(3) / 2;

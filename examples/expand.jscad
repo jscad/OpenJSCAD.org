@@ -1,4 +1,4 @@
-// -- expand()
+// title: Expand()
 
 function main() {
    return union(

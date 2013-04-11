@@ -104,6 +104,13 @@ $(document).ready(function() {
       saveOptions();
    });
    
+   $('#plate').change(function() {
+      if($('#plate').val()=='custom') {
+         $('#customPlate').show();
+      } else {
+         $('#customPlate').hide();
+      }
+   });
 });   
 </script>
 </head>
@@ -135,8 +142,8 @@ $(document).ready(function() {
 <p/>
 <!--<div id=optionsTitle class=navlink><a href='#' onclick='return false'>Options</a></div>
 <div id=options>...</div>
-<span class=menuSubInfo>Your personal settings</span></p>-->
-<p/>
+<span class=menuSubInfo>Your personal settings</span></p>
+<p/>-->
 <b>Supported Formats</b>
 <table class=info>
 <tr><td align=right><b>jscad</b></td><td><a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">OpenJSCAD</a> (native, import/export)</td></tr>
@@ -280,23 +287,23 @@ if(me=='web-online') {
    
    var src = '';
    src += "<form id=optionsForm onsubmit='saveOptions(); return false'>";
-   src += "<div class=optionGroup><b>Your Identity / Fullname</b><br/>";
+   src += "<div class=optionGroup><b>Your Identity / Full Name & Email</b><br/>";
    src += "<input id=author type=text name=author size=30><div class=optionInfo>Applies when you export AMF (sets metadata)</div></div>";
 
    var licenseOptions = {
-      publicDomain: "Public Domain", 
+      "Public Domain": "Public Domain", 
       "CC BY": "Creative Commons CC BY", 
       "CC BY-ND": "Creative Commons CC BY-ND", 
       "CC BY-NC": "Creative Commons CC BY-NC", 
       "CC BY-SA": "Creative Commons CC BY-SA", 
       "CC BY-NC-SA": "Creative Commons CC BY-NC-SA", 
       "CC BY-NC-ND": "Creative Commons CC BY-NC-ND", 
-      MIT: "MIT", 
-      GPLv2: "GPLv2", 
-      GPLv3: "GPLv3", 
-      Copyright: "Copyright",
+      "MIT": "MIT License", 
+      "GPLv2": "GPLv2", 
+      "GPLv3": "GPLv3", 
+      "Copyright": "Copyright",
    };
-   src += "<div class=optionGroup><b>Your License</b><br/>";
+   src += "<div class=optionGroup><b>Default License</b><br/>";
    src += "<select id=license name=license>";
    for(var k in licenseOptions) {
       src += "<option value='"+k+"'>"+licenseOptions[k];
@@ -304,11 +311,11 @@ if(me=='web-online') {
    }
    src += "</select><div class=optionInfo>Applies when you export AMF (sets metadata)</div></div>\n";
 
-   var renderCodeOptions = {
-      shiftReturn: "SHIFT+RETURN", 
-      auto: "Automatic"
-   };
    if(0) {
+      var renderCodeOptions = {
+         shiftReturn: "SHIFT+RETURN", 
+         auto: "Automatic"
+      };
       src += "<div class=optionGroup><b>Render Code</b></br>";
       src += "<select id=renderCode name=renderCode>";
       for(var k in renderCodeOptions) {
@@ -316,6 +323,38 @@ if(me=='web-online') {
       }
       src += "</select></div>";
    }
+   if(1) {
+      var plateOptions = {
+         "200x200": "200mm x 200mm",
+         "150x150": "150mm x 150mm",
+         "100x100": "100mm x 100mm",
+         "custom": "Custom",
+         "none": "None",
+      };
+      src += "<div class=optionGroup><b>Plate</b></br>";
+      src += "<select id=plate name=plate>";
+      for(var k in plateOptions) {
+         src += "<option value='"+k+"'>"+plateOptions[k];
+      }
+      src += "</select><br/>";
+      src += "<div style='display: none' id=customPlate>Custom: <input type=text id=plateCustomX name=plateCustomX size=4 value='125'> x <input type=text id=plateCustomY name=plateCustomY size=4 value='125'> [mm]</div>";
+      src += "</div>";
+      
+   }
+   if(1) {
+      var themeOptions = {
+         "bright": "Bright",
+         "dark": "Dark",
+      };
+      src += "<div class=optionGroup><b>Theme</b></br>";
+      src += "<select id=theme name=theme>";
+      for(var k in themeOptions) {
+         src += "<option value='"+k+"'>"+themeOptions[k];
+      }
+      src += "</select><br/>";
+      src += "</div>";
+   }
+   
    src += "</form>";
    $('#options').html(src);
 }
@@ -358,8 +397,9 @@ OpenJSCAD.org
 
 self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take quite some while for 1MB+ large STLs
    var data = e.data; // JSON.parse(e.data);
-   me = data.me;
-   version = data.version;
+   me = data.me;                    // required for openscad.js parse*() 
+   version = data.version;          //     ''               ''
+
    if(data.url) {     // RANT: why do something simple, when it can be done complicate: Workers & importScripts() (guys!!)
       var url = data.url;
       url = url.replace(/#.*$/,'');    // -- just to be sure ...

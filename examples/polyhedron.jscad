@@ -1,4 +1,5 @@
-// -- polyhedron()
+// title: Polyhedron()
+// author: OpenSCAD.org, adapted by Rene K. Mueller
 
 function main() {
    return polyhedron({ 
