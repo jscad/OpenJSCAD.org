@@ -1232,12 +1232,10 @@ OpenJsCad.Processor.prototype = {
     else if(format == "x3d") {
       blob = this.currentObject.fixTJunctions().toX3D(bb);
     }
-    else if(format == "dxf")
-    {
+    else if(format == "dxf") {
       blob = this.currentObject.toDxf();
     }
-    else
-    {
+    else {
       throw new Error("Not supported");
     }    
     return blob;

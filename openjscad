@@ -186,14 +186,22 @@ function include(fn) {
    }
 }
 
-function getXMLContent(s,tag) {
+function getXMLContent(s,tag) { 
    var match = '/<\/'+tag+'>/';
    var m = s.split(match);
+   var r = [];
    for(var i=0; i<s.length; i++) {
-      match = '/.*<'+tag+'>/';
+      match = '/.*<'+tag+'(.*)>/';
       if(!m[i]) 
          continue;
-      m[i] = m[i].replace(match);
+      var content = m[i].replace(match);
+      var attr = [];
+      if(RegExp.$1) {
+         var a = RegExp.$1;
+         // processing ' something="this" that="here"' .. (later)
+      }
+      if(content.length) 
+         r.push({ text: content, attr: attr });
    }
    return m;
 }
@@ -236,12 +244,12 @@ function parseAMF(amf,fn) {      // re-implemented since node-jquery doesn't do 
       volume.forEach(function(v,i) {
          var triangle = v.split(/<\/triangle>/);
          var color = v.split("<\/color>");
-         var rgb = [];
+         var rgbv = [];
          color.forEach(function(v,i) {
             var rgba = v.split(/<\/[rgba]>/);
             rgba.forEach(function(v,i) {
                if(v.match(/<[rgba]>(\S+)/))
-                  rgb.push(RegExp.$1);
+                  rgbv.push(RegExp.$1);
             });
          });
          triangle.forEach(function(v,i) {
@@ -253,8 +261,8 @@ function parseAMF(amf,fn) {      // re-implemented since node-jquery doesn't do 
             });
             if(fc.length==3) {
                tt.push(fc);
-               if(rgb.length) 
-                  co[tt.length-1] = rgb;
+               if(rgbv.length) 
+                  co[tt.length-1] = rgbv;
             }
          });
       });
