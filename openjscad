@@ -3,7 +3,7 @@
 // OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>
 // License: GPLv2
 //
-version = '0.007';
+version = '0.008';
 //
 // Description:
 //   openjscad <file> [-o <stl>]
@@ -14,8 +14,10 @@ version = '0.007';
 //   openjscad test.scad -o testFromSCAD.jscad
 //   openjscad test.scad -o test.stl
 //   openjscad test.stl -o test2.stl      # reprocessed: stl -> jscad -> stl
+//   openjscad test.amf -o test2.jscad    
 //
 // History:
+// 2013/04/12: 0.008: reimplement parseAMF without jquery
 // 2013/04/11: 0.007: support of alpha for AMF addded, bumping version
 // 2013/04/05: 0.006: support of AMF added, requires node 0.8.1+
 // 2013/03/25: 0.005: more sanity check on input and local installation support
@@ -118,9 +120,10 @@ if(inFormat=='scad') {
    
 } else if(inFormat=='amf') {
    //console.log("converting "+inf+" to jscad");
-   $ = require(global.nodeModules+'jquery');   // needed for AMF (XML) parsing
-   var openscad = require(lib+'openscad.js');
-   src = openscad.parseAMF(src,inf);
+   // $ = require(global.nodeModules+'jquery');   // needed for AMF (XML) parsing
+   // var openscad = require(lib+'openscad.js');
+   // src = openscad.parseAMF(src,inf);
+   src = parseAMF(src,inf);
    //src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
    
 } else {
@@ -181,5 +184,117 @@ function include(fn) {
       //echo("result:",r);
       return r;
    }
+}
+
+function getXMLContent(s,tag) {
+   var match = '/<\/'+tag+'>/';
+   var m = s.split(match);
+   for(var i=0; i<s.length; i++) {
+      match = '/.*<'+tag+'>/';
+      if(!m[i]) 
+         continue;
+      m[i] = m[i].replace(match);
+   }
+   return m;
+}
+
+function parseAMF(amf,fn) {                    // re-implemented since node-jquery doesn't do parse.XML (great!)
+   //var meta = getXMLContent(amf,'metatag');
+   var vt = [];
+   var tt = [];
+   var co = [];
+
+   var mesh = amf.split(/<\/mesh>/);
+   mesh.forEach(function(v,i) {
+      var vertices = v.split(/<\/vertices>/);
+      vertices.forEach(function(v,i) {
+         var vertex = v.split(/<\/vertex>/);
+         vertex.forEach(function(v,i) {
+            var coordinates = v.split(/<\/coordinates>/);
+            coordinates.forEach(function(v,i) {
+               var xyz = v.split(/<\/[xyz]/);
+               var coord = [];
+               xyz.forEach(function(v,i) {
+                  //console.log("==="+v);
+                  if(v.match(/[xyz]>([^<]+)/)) 
+                     coord.push(RegExp.$1);
+               });
+               if(coord.length==3) {
+                  //console.log("vertex: "+coord);
+                  vt.push(coord);
+               }
+            });
+         });
+      });
+      var volume = v.split(/<\/volume>/);
+      volume.forEach(function(v,i) {
+         var triangle = v.split(/<\/triangle>/);
+         var color = v.split("<\/color>");
+         var rgb = [];
+         color.forEach(function(v,i) {
+            var rgba = v.split(/<\/[rgba]>/);
+            rgba.forEach(function(v,i) {
+               if(v.match(/<[rgba]>(\S+)/))
+                  rgb.push(RegExp.$1);
+            });
+         });
+         triangle.forEach(function(v,i) {
+            var faces = v.split(/<\/v[123]>/);
+            var fc = [];
+            faces.forEach(function(v,i) {
+               if(v.match(/<v[123]>(\d+)/))
+                  fc.push(RegExp.$1);
+            });
+            if(fc.length==3) {
+               tt.push(fc);
+               if(rgb.length) 
+                  co[tt.length-1] = rgb;
+            }
+         });
+      });
+   });
+
+   // vt[] has the vertices
+   // tt[] has the faces
+   var srci = '', err = '';
+   var np = 0; 
+   
+   srci = "\tvar pgs = [];\n";
+   
+   for(var i=0; i<tt.length; i++) {
+      //srci += "\tpgs.push(new CSG.Polygon([\n\t\t";
+      srci += "\tpgs.push(PP([\n\t\t";
+      for(var j=0; j<tt[i].length; j++) {
+         if(tt[i][j]<0||tt[i][j]>=vt.length) {
+            if(err.length=='') err += "bad index for vertice (out of range)";
+            continue;
+         }
+         if(j) srci += ",\n\t\t";
+         srci += "VV("+vt[tt[i][j]]+")";
+      }
+      srci += "])";
+      if(co[i]) srci += ".setColor("+co[i]+")";
+      srci += ");\n";
+      np++;
+   }
+   var src = "";
+   for(var k in meta) {
+      src += "// AMF."+k+": "+meta[k]+"\n";
+   }
+   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" AMF Importer\n";
+   src += "// date: "+(new Date())+"\n";
+   src += "// source: "+fn+"\n";
+   src += "\n";
+   
+   if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
+   src += "// objects: 1\n// object #1: polygons: "+np+"\n\n";
+   src += "function main() {\n"; 
+   src += "\tvar PP = function(a) { return new CSG.Polygon(a); }\n"; 
+   src += "\tvar VV = function(x,y,z) { return new CSG.Vertex(new CSG.Vector3D(x,y,z)); }\n";
+   //src += vt2jscad(v,f,[],c);
+   src += srci;
+   src += "\treturn CSG.fromPolygons(pgs);\n}\n";
+   return src;
+   
 }
 
