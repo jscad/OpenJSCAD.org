@@ -158,7 +158,7 @@ if(outFormat=='jscad') {
 var s = fs.WriteStream(outf);
 s.write(out);
 
-// -- helper functions 
+// -- helper functions ---------------------------------------------------------------------------------------
 
 function include(fn) {    
    //console.log(arguments.callee.caller,"include:"+fn);
@@ -186,24 +186,45 @@ function include(fn) {
    }
 }
 
-function getXMLContent(s,tag) { 
-   var match = '/<\/'+tag+'>/';
-   var m = s.split(match);
-   var r = [];
-   for(var i=0; i<s.length; i++) {
-      match = '/.*<'+tag+'(.*)>/';
-      if(!m[i]) 
-         continue;
-      var content = m[i].replace(match);
-      var attr = [];
-      if(RegExp.$1) {
-         var a = RegExp.$1;
-         // processing ' something="this" that="here"' .. (later)
-      }
-      if(content.length) 
-         r.push({ text: content, attr: attr });
-   }
+function getXMLContent(s,tag) {
+   var match = '</'+tag+'>';
+   var m = s.split(new RegExp(match,'m'));
    return m;
+
+   // -- below a more elaborate parsing (not yet working)
+   var r = [];            
+   var err = '';
+   
+   match = '<'+tag+'([^>]*)>([^<]*)';
+   //match = '<'+tag+'>([^<]*)';
+   console.log(tag);
+   for(var i=0; i<m.length; i++) {
+      //console.log(tag,i,m[i].substr(0,500)+".."+m[i].substr(m[i].length-100),m[i].length);
+      if(!m[i].length) 
+         continue;
+      if(m[i].match(new RegExp(match,'m'))) {
+         var a = RegExp.$1;
+         var t = RegExp.$2;
+         var attr = [];
+         if(a.length) {
+            // processing ' something="this" that="here"' .. (later)
+         }
+         if(t.length) {
+            r.push(t); 
+            //r.push({ text: t, attr: attr });
+            //console.log(tag+": '"+t+"'");
+         } else {
+            //console.log(tag+": '"+t+"' (empty)");
+         }
+      }
+   }
+   if(r.length==0) {
+      err += "no <"+tag+"> found despite finding </"+tag+"> "+(m.length)+" time(s)"
+   }
+   if(err) {
+      console.log("XML parse error: "+err);
+   }
+   return r;
 }
 
 function parseAMF(amf,fn) {      // re-implemented since node-jquery doesn't do parse.XML (great!)
@@ -212,58 +233,77 @@ function parseAMF(amf,fn) {      // re-implemented since node-jquery doesn't do 
    var co = [];
    var meta = [];
 
+   //parseXML(amf);
+   
    var metadata = amf.split(/<\/metadata>/);
    metadata.forEach(function(v,i) {
       if(v.match(/<metadata\s+type="([^"]+)"\s*>(.*)/))
          meta[RegExp.$1] = RegExp.$2;
    });
    
-   var mesh = amf.split(/<\/mesh>/);
-   mesh.forEach(function(v,i) {
-      var vertices = v.split(/<\/vertices>/);
-      vertices.forEach(function(v,i) {
-         var vertex = v.split(/<\/vertex>/);
-         vertex.forEach(function(v,i) {
-            var coordinates = v.split(/<\/coordinates>/);
-            coordinates.forEach(function(v,i) {
-               var xyz = v.split(/<\/[xyz]/);
-               var coord = [];
-               xyz.forEach(function(v,i) {
-                  //console.log("==="+v);
-                  if(v.match(/[xyz]>([^<]+)/)) 
-                     coord.push(RegExp.$1);
+   var object = getXMLContent(amf,'object');
+   //var object = amf.split(/<\/object>/);
+   object.forEach(function(v,i) {
+      var mesh = getXMLContent(v,'mesh');
+      //var mesh = v.split(/<\/mesh>/);
+      mesh.forEach(function(v,i) {
+         var vertices = getXMLContent(v,'vertices');
+         //var vertices = v.split(/<\/vertices>/);
+         vertices.forEach(function(v,i) {
+            var vertex = getXMLContent(v,'vertex');
+            //var vertex = v.split(/<\/vertex>/);
+            vertex.forEach(function(v,i) {
+               var coordinates = getXMLContent(v,'coordinates'); 
+               //var coordinates = v.split(/<\/coordinates>/);
+               coordinates.forEach(function(v,i) {
+                  var xyz = getXMLContent(v,'[xyz]');
+                  //var xyz = v.split(/<\/[xyz]/);
+                  var coord = [];
+                  xyz.forEach(function(v,i) {
+                     //console.log("==="+v);
+                     if(v.match(/<[xyz]>([^<]+)/)) 
+                        coord.push(RegExp.$1);
+                     //coord.push(v);
+                  });
+                  if(coord.length==3) {
+                     //console.log("vertex: "+coord);
+                     vt.push(coord);
+                  }
                });
-               if(coord.length==3) {
-                  //console.log("vertex: "+coord);
-                  vt.push(coord);
+            });
+         });
+         //var volume = getXMLContent(v,'volume');
+         var volume = v.split(/<\/volume>/);
+         volume.forEach(function(v,i) {
+            //var triangle = getXMLContent(v,'triangle');
+            var triangle = v.split(/<\/triangle>/);
+            //var color = getXMLContent(v,'color');
+            var color = v.split("<\/color>");
+            var rgbv = [];
+            color.forEach(function(v,i) {
+               //var rgba = getXMLContent(v,'[rgba]');
+               var rgba = v.split(/<\/[rgba]>/);
+               rgba.forEach(function(v,i) {
+                  if(v.match(/<[rgba]>(\S+)/))
+                     rgbv.push(RegExp.$1);
+                  //rgbv.push(v);
+               });
+            });
+            triangle.forEach(function(v,i) {
+               //var faces = getXMLContent(v,'v[123]');
+               var faces = v.split(/<\/v[123]>/);
+               var fc = [];
+               faces.forEach(function(v,i) {
+                  if(v.match(/<v[123]>(\d+)/))
+                     fc.push(RegExp.$1);
+                  //fc.push(v);
+               });
+               if(fc.length==3) {
+                  tt.push(fc);
+                  if(rgbv.length) 
+                     co[tt.length-1] = rgbv;
                }
             });
-         });
-      });
-      var volume = v.split(/<\/volume>/);
-      volume.forEach(function(v,i) {
-         var triangle = v.split(/<\/triangle>/);
-         var color = v.split("<\/color>");
-         var rgbv = [];
-         color.forEach(function(v,i) {
-            var rgba = v.split(/<\/[rgba]>/);
-            rgba.forEach(function(v,i) {
-               if(v.match(/<[rgba]>(\S+)/))
-                  rgbv.push(RegExp.$1);
-            });
-         });
-         triangle.forEach(function(v,i) {
-            var faces = v.split(/<\/v[123]>/);
-            var fc = [];
-            faces.forEach(function(v,i) {
-               if(v.match(/<v[123]>(\d+)/))
-                  fc.push(RegExp.$1);
-            });
-            if(fc.length==3) {
-               tt.push(fc);
-               if(rgbv.length) 
-                  co[tt.length-1] = rgbv;
-            }
          });
       });
    });
@@ -311,4 +351,43 @@ function parseAMF(amf,fn) {      // re-implemented since node-jquery doesn't do 
    return src;
    
 }
+
+// preparing XML parsing to JSON (not yet working) to parse AMF natively (without dependency of any library)
+
+function parseXML(xml,fn) {
+   var state = 'default';
+   var stack = [];
+   
+   stack.push('root');
+   var tag = '';
+   
+   for(var i=0; i<xml.length; i++) {
+      var c = xml.substr(i,1);
+      if(c=='<'&&state=='default') {
+         tag = '';
+         state = 'tagStart';
+      } else if(c=='>'&&(state=='tagStart'||state=='tagEnd')) {
+         //console.log(tag,state);
+         if(state=='tagEnd') {
+            stack.pop();
+         } else {
+            stack.push({tag: tag, content: ''});
+         }
+         state = 'default';
+      } else if(c=='/'&&state=='tagStart') {
+         state = 'tagEnd';
+      } else if(state=='tagStart'||state=='tagEnd') {
+         tag += c;
+      } else {
+         stack[stack.length-1].content += c;
+      }
+   }
+   if(stack.length) {
+      console.log("missing closing tags:");   
+      for(var i=0; i<stack.length; i++) {
+         console.log(stack[i]);
+      }
+   }
+}
+   
 
