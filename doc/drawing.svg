@@ -25,7 +25,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.49497475"
-     inkscape:cx="-706.993"
+     inkscape:cx="-948.41946"
      inkscape:cy="539.13854"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -33,8 +33,8 @@
      showborder="false"
      inkscape:window-width="835"
      inkscape:window-height="635"
-     inkscape:window-x="50"
-     inkscape:window-y="50"
+     inkscape:window-x="165"
+     inkscape:window-y="62"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
@@ -814,7 +814,7 @@
     <g
        id="g3987"
        style="font-size:46.28084946px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sylfaen;-inkscape-font-specification:Sylfaen Bold"
-       transform="matrix(2.0152778,0,0,2.0152778,-975.7576,-1147.1713)">
+       transform="matrix(2.0152778,0,0,2.0152778,-975.7576,-1163.1713)">
       <path
          id="path3989"
          style="font-size:46.28084946px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#5a5a5a;fill-opacity:1;font-family:Sylfaen;-inkscape-font-specification:Sylfaen Bold"
@@ -883,19 +883,15 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-size:40.5047493px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="-786.39575"
-       y="557.20319"
+       style="font-size:31.99423599000000000px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans;opacity:0.47115385"
+       x="-786.46802"
+       y="518.94885"
        id="text3997"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         id="tspan3999"
-         x="-786.39575"
-         y="557.20319">Supported File Formats:</tspan><tspan
-         sodipodi:role="line"
-         x="-786.39575"
-         y="607.83411"
-         id="tspan4059">JSCAD, SCAD*, STL, AMF*</tspan></text>
+         x="-786.46802"
+         y="518.94885"
+         id="tspan4059">OpenSCAD + JavaScript = OpenJSCAD</tspan></text>
     <path
        style="fill:#f487ff;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        d="m -786.55841,146.79887 c -96.91969,0 -185.08163,37.42695 -250.87509,98.59375 45.72294,49.98987 140.87834,84.34375 250.87509,84.34375 110.0156,0 205.19252,-34.37121 250.90625,-84.375 -65.79183,-61.15883 -153.99367,-98.5625 -250.90625,-98.5625 z"
@@ -908,30 +904,30 @@
        inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr"
-       x="-907.15802"
-       y="210.75317"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="-914.68738"
+       y="200.75317"
        id="text4031"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4033"
-         x="-907.15802"
-         y="210.75317">Web Browser</tspan><tspan
+         x="-914.68738"
+         y="200.75317">Web Browser</tspan><tspan
          sodipodi:role="line"
-         x="-907.15802"
-         y="260.75317"
+         x="-914.68738"
+         y="250.75317"
          id="tspan4035" /></text>
     <text
        xml:space="preserve"
        style="font-size:19px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="-898.56671"
-       y="235.82443"
+       x="-898.56677"
+       y="223.82443"
        id="text4037"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4039"
-         x="-898.56671"
-         y="235.82443">WebGL: Chrome &amp; Firefox</tspan></text>
+         x="-898.56677"
+         y="223.82443">WebGL: Chrome &amp; Firefox</tspan></text>
     <text
        sodipodi:linespacing="125%"
        id="text4041"
@@ -972,25 +968,25 @@
     <text
        sodipodi:linespacing="125%"
        id="text4131"
-       y="261.80173"
-       x="-786.60962"
-       style="font-size:13.03143787px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Courier New;-inkscape-font-specification:Courier New Bold"
+       y="247.80173"
+       x="-786.63513"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Courier New;-inkscape-font-specification:Courier New Bold"
        xml:space="preserve"><tspan
-         y="261.80173"
-         x="-786.60962"
+         y="247.80173"
+         x="-786.63513"
          id="tspan4133"
          sodipodi:role="line">http://openjscad.org</tspan><tspan
-         y="278.09103"
-         x="-786.60962"
+         y="270.30173"
+         x="-786.63513"
          sodipodi:role="line"
          id="tspan4135">http://localhost/OpenJSCAD.org/</tspan><tspan
-         y="294.38031"
-         x="-786.60962"
+         y="292.80173"
+         x="-786.63513"
          sodipodi:role="line"
-         id="tspan4137">file:///Downloads/OpenJSCAD.org/index.html</tspan></text>
+         id="tspan4137">file:///OpenJSCAD.org/index.html</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:13.03143787px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Courier New;-inkscape-font-specification:Courier New Bold"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Courier New;-inkscape-font-specification:Courier New Bold"
        x="-786.60962"
        y="841.80176"
        id="text4139"
@@ -998,6 +994,28 @@
          id="tspan4145"
          sodipodi:role="line"
          x="-786.60962"
-         y="841.80176">% openjscad test.jscad -o test.amf</tspan></text>
+         y="841.80176">% openjscad test.jscad</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3151"
+       y="613.11987"
+       x="-786.44043"
+       style="font-size:29.06705856px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       xml:space="preserve"><tspan
+         id="tspan3155"
+         y="613.11987"
+         x="-786.44043"
+         sodipodi:role="line">JSCAD, SCAD*, STL, AMF*</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:21.06399345px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="-786.11169"
+       y="571.00189"
+       id="text3159"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="-786.11169"
+         y="571.00189"
+         id="tspan3163">Supported File Formats:</tspan></text>
   </g>
 </svg>
