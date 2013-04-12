@@ -195,9 +195,9 @@ function main() {
 <script>
 var ex = [ 
 { file:'logo.jscad', title: 'OpenJSCAD.org Logo' },
-{ file:'logo.amf', title: 'OpenJSCAD.org Logo', type: 'AMF', new: true, spacing: true },
+{ file:'logo.amf', title: 'OpenJSCAD.org Logo', type: 'AMF', new: true },
 
-{ file:'example001.jscad', title: 'Sphere with cutouts' },
+{ file:'example001.jscad', title: 'Sphere with cutouts', spacing: true },
 { file:'example001.scad', title: 'Sphere with cutouts', type: 'OpenSCAD' },
 { file:'example002.jscad', title: 'Cone with cutouts' },
 { file:'example002.scad', title: 'Cone with cutouts', type: 'OpenSCAD' },
@@ -205,10 +205,10 @@ var ex = [
 { file:'example003.scad', title: 'Cube with cutouts', type: 'OpenSCAD' },
 // { file:'example004.jscad', title: 'Cube minus sphere' },
 { file:'example005.jscad', title: 'Pavillon' },
-// { file:'center.jscad', title: 'Centers of Primitives', spacing: true },
+// { file:'center.jscad', title: 'Centers of Primitives' },
 
 // { file:'bunch-cubes.jscad', title: 'Bunch of Cubes', new: true }, 
-{ file:'lookup.jscad', title: 'Lookup()' },
+{ file:'lookup.jscad', title: 'Lookup()', spacing: true },
 { file:'expand.jscad', title: 'Expand()' },
 { file:'rectangular_extrude.jscad', title: 'Rectangular_extrude()' },
 { file:'linear_extrude.jscad', title: 'Linear_extrude()' },
@@ -217,16 +217,16 @@ var ex = [
 { file:'hull.jscad', title: 'Hull()', new: true },
 { file:'torus.jscad', title: 'Torus()', spacing: true },
 
-{ file:'transparency.jscad', title: 'Transparency', new: true},
-{ file:'transparency.amf', title: 'Transparency', type: 'AMF', new: true},
-{ file:'transparency2.jscad', title: 'Transparency 2', new: true, spacing: true},
+{ file:'transparency.jscad', title: 'Transparency', new: true },
+{ file:'transparency.amf', title: 'Transparency', type: 'AMF', new: true },
+{ file:'transparency2.jscad', title: 'Transparency 2', new: true },
 
-{ file:'slices/double-screw.jscad', title: 'SolidFromSlices(): Double Screw', new: true },
+{ file:'slices/double-screw.jscad', title: 'SolidFromSlices(): Double Screw', new: true, spacing: true },
 { file:'slices/four2three.jscad', title: 'SolidFromSlices(): 4 to 3', new: true },
 { file:'slices/four2three-round.jscad', title: 'SolidFromSlices(): 4 to 3 round', new: true },
 { file:'slices/spring.jscad', title: 'SolidFromSlices(): Spring', new: true },
 { file:'slices/tor.jscad', title: 'SolidFromSlices(): Tor (multi-color)', new: true },
-{ file:'slices/rose.jscad', title: 'SolidFromSlices(): Rose Curve', new: true, spacing: true },
+{ file:'slices/rose.jscad', title: 'SolidFromSlices(): Rose Curve', new: true },
 
 { file:'servo.jscad', title: 'Interactive Params: Servo Motor', wrap: true },
 { file:'gear.jscad', title: 'Interactive Params: Gear' },
@@ -236,11 +236,11 @@ var ex = [
 { file:'lamp-shade.jscad', title: 'Interactive Params: Lamp Shade' },
 { file:'celtic-knot-ring.jscad', title: 'Interactive Params: Celtic Knot Ring' },
 { file:'stepper-motor.jscad', title: 'Interactive Params: Stepper Motor' },
-{ file:'iphone4-case.jscad', title: 'Interactive Params: iPhone4 Case', spacing: true },
+{ file:'iphone4-case.jscad', title: 'Interactive Params: iPhone4 Case' },
 
 { file:'platonics/', title: 'Recursive Include(): Platonics', new: true, spacing: true },
 
-{ file:'3d_sculpture-VernonBussler.stl', title: '3D Model: 3D Sculpture (Vernon Bussler)', type: 'STL' },
+{ file:'3d_sculpture-VernonBussler.stl', title: '3D Model: 3D Sculpture (Vernon Bussler)', type: 'STL', spacing: true },
 { file:'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' },  
 { file:'thing_7-Zomboe.stl', title: '3D Model: Thing 7 / Flower (Zomboe)', type: 'STL' },  
 // { file:'organic_flower-Bogoboy23.stl', title: '3D Model: Organic Flower (Bogoboy23)', type: 'STL' }, // all wrong normals!!
@@ -259,10 +259,10 @@ if(me=='web-online') {
       if(ex[i].wrap) {
          src += "</td><td class=examplesSeparator widthx="+colp+" valign=top>";
       }
+      if(ex[i].spacing) src += "<p/>";
       src += "<li><a href=# onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n";
       if(ex[i].type) src += " <span class=type>("+ex[i].type+")</span></a>";
       if(ex[i].new) src += " <span class=newExample>new</span></a>";
-      if(ex[i].spacing) src += "<p/>";
       //src += "<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n";
    }
    src += "</td></tr></table>";
