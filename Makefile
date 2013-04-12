@@ -7,8 +7,7 @@ all::
 
 install::
 	test -d ${NODE_MODULES}/openscad-openjscad-translator || sudo npm -g install openscad-openjscad-translator
-	test -d ${NODE_MODULES}/jquery || sudo npm -g install jquery
-	test -d ${NODE_MODULES}/xmldom || sudo npm -g install xmldom
+	#test -d ${NODE_MODULES}/jquery || sudo npm -g install jquery
 	sudo scp openjscad /usr/local/bin/
 	sudo mkdir -p ${LIB}
 	sudo scp *.js ${LIB}
@@ -21,7 +20,7 @@ deinstall::
 tests::
 	openjscad examples/logo.jscad
 	openjscad examples/logo.jscad -o examples/logo.amf
-	#openjscad examples/logo.amf -o examples/logo-fromAMF.jscad
+	openjscad examples/logo.amf -o examples/logo-fromAMF.jscad
 	openjscad examples/example001.jscad
 	openjscad examples/example001.jscad -o examples/example001-fromJSCAD.stl
 	openjscad examples/example001.jscad -o examples/example001-fromJSCAD.amf
