@@ -198,12 +198,18 @@ function getXMLContent(s,tag) {
    return m;
 }
 
-function parseAMF(amf,fn) {                    // re-implemented since node-jquery doesn't do parse.XML (great!)
-   //var meta = getXMLContent(amf,'metatag');
+function parseAMF(amf,fn) {      // re-implemented since node-jquery doesn't do parse.XML (great!)
    var vt = [];
    var tt = [];
    var co = [];
-
+   var meta = [];
+   
+   var metadata = amf.split(/<\/metadata>/);
+   metadata.forEach(function(v,i) {
+      if(v.match(/<metadata\s+type="([^"]+)"\s*>(.*)/))
+         meta[RegExp.$1] = RegExp.$2;
+   });
+   
    var mesh = amf.split(/<\/mesh>/);
    mesh.forEach(function(v,i) {
       var vertices = v.split(/<\/vertices>/);
