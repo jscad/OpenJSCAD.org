@@ -199,11 +199,11 @@ function getXMLContent(s,tag) {
 }
 
 function parseAMF(amf,fn) {      // re-implemented since node-jquery doesn't do parse.XML (great!)
-   var vt = [];
-   var tt = [];
+   var vt = [];                  // works: color per volume
+   var tt = [];                  // missing: materials neither color per triangle (fix it)
    var co = [];
    var meta = [];
-   
+
    var metadata = amf.split(/<\/metadata>/);
    metadata.forEach(function(v,i) {
       if(v.match(/<metadata\s+type="([^"]+)"\s*>(.*)/))
