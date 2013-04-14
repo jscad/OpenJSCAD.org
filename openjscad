@@ -65,7 +65,7 @@ meta.date = new Date();
 
 var inf = args[0];
 if(inf==null||inf.length<=0||!fs.statSync(inf).isFile()) {
-   console.log("USAGE ("+version+"): openjscad <file> [-o <output>]\n\twhereas file: <name>.jscad, <name>.scad or <name>.stl\n\tand output: <name>.jscad or <name>.stl");
+   console.log("USAGE ("+version+"):\n\topenjscad <file> [-o <output>]\n\topenjscad <file> [-of <format>]\n\t\t<file>: <name>.jscad, .scad, .stl or .amf\n\t\t<output>: <name>.jscad, .stl or .amf\n\t\t<format>: jscad, stl, amf");
    process.exit(1);
 }
 
