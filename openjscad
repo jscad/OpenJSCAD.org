@@ -3,7 +3,7 @@
 // OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>
 // License: GPLv2
 //
-version = '0.008';
+version = '0.009';
 //
 // Description:
 //   openjscad <file> [-o <stl>]
@@ -15,6 +15,8 @@ version = '0.008';
 //   openjscad test.scad -o test.stl
 //   openjscad test.stl -o test2.stl      # reprocessed: stl -> jscad -> stl
 //   openjscad test.amf -o test2.jscad    
+//   openjscad test.jscad -of amf
+//   openjscad test.jscad -of stl
 //
 // History:
 // 2013/04/12: 0.008: reimplement parseAMF without jquery
@@ -67,15 +69,28 @@ if(inf==null||inf.length<=0||!fs.statSync(inf).isFile()) {
    process.exit(1);
 }
 
-var outf = inf;
-outf = outf.replace(/\.[^\.]+$/,'.stl');
+if(inf.match(/\.(jscad|scad|stl|amf)$/)) {
+   inFormat = RegExp.$1;
+} else {
+   console.log("ERROR: only jscad, scad, stl or amf as input format");
+   process.exit(1);
+}
 
-// output setting like openscad
-if(args.length==2) {                         // -o<output>
-   outf = args[1];
-   outf = outf.replace(/^\-o(\S+)$/,'$1');
-} else if(args.length==3&&args[1]=='-o') {   // -o <output>
-   outf = args[2];
+var outFormat = 'stl', inFormat;          
+var outf;
+
+for(var i=1; i<args.length; i++) {
+   if(args[i]=='-of') {                         // -of <format>
+      outFormat = args[++i];
+   } else if(args[i].match(/^-o(\S.+)/)) {      // -o<output>
+      outf = args[i];
+      outf = outf.replace(/^\-o(\S+)$/,'$1');
+   } else if(args[i]=='-o') {                   // -o <output>
+      outf = args[++i];
+   } else {
+      console.log("ERROR: bad argument/switch <"+arg[i]+">");
+      process.exit(1);
+   }
 }
 
 //console.log("reading "+inf);
@@ -86,19 +101,21 @@ var inc = [];
 //var csg = sphere(1);          // -- basic test
 //var csg = require(file).main; // -- treating .jscad as module? later perhaps
 
-var outFormat, inFormat;
-
-if(inf.match(/\.(jscad|scad|stl|amf)$/)) {
-   inFormat = RegExp.$1;
-} else {
-   console.log("ERROR: only jscad, scad, stl or amf as input format");
-   process.exit(1);
-}
-
-if(outf.match(/\.(jscad|stl|amf)$/)) {
+if(outf&&outf.length&&outf.match(/\.(jscad|stl|amf)$/)) {         // output filename set
    outFormat = RegExp.$1;
+
+} else if(outf&&outf.length) {                                    // output filename isn't valid
+   console.log("ERROR: bad output filename <"+outf+">, only .jscad, .stl or .amf as output format");
+   process.exit(1);
+
+} else if(outFormat.match(/(jscad|stl|stla|stlb|amf)/)) {   // output format defined?
+   var ext = RegExp.$1;
+   ext = ext.replace(/stl[ab]/,'stl');                      // drop [ab] from stl
+   outf = inf;
+   outf = outf.replace(/\.([^\.]+)$/,"."+ext);
+
 } else {
-   console.log("ERROR: only jscad, stl or amf as output format");
+   console.log("ERROR: output format <"+outFormat+">, only jscad, stl or amf as output format");
    process.exit(1);
 }
 
@@ -144,14 +161,19 @@ if(outFormat=='jscad') {
       }
       csg = o;
    }
-   //var stl = csg.fixTJunctions().toStlBinary();   // creates a Blob, which with nodejs doesn't exist yet
-   //var stl = csg.fixTJunctions().toStlString();     // creates bad facet normals!! in some cases
    var out;
    if(outFormat=='amf') {
       out = csg.toAMFString(meta);
-   } else {
-      // out = csg.toStlBinary();            // TODO: already uses Blob in csg.js, needs to be removed and put into openjscad.js
+
+   } else if(outFormat=='stlb') {
+      out = csg.toStlBinary();                              // not yet supported
+
+   } else if(outFormat=='stl'||outFormat=='stla') {
       out = csg.toStlString();
+
+   } else {
+      console.log("ERROR: only jscad, stl or amf as output format");
+      process.exit(1);
    }
 }
 

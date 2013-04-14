@@ -630,9 +630,20 @@ CSG.prototype = {
 				byteoffset += 50;
 			}
 		});
-		return new Blob([headerarray.buffer, ar1.buffer, allTrianglesBuffer], {
+      if(0) {
+         // concat 3 buffers together (not yet working) -- don't make blob so early, we want it on nodejs too
+   		var stlBinary = new ArrayBuffer(headerarray.buffer.length + ar1.buffer.length + allTrianglesBuffer.length);
+         var view = new Uint8Array(stlBinary);
+         view.set(headerarray.buffer,0);
+         view.set(ar1.buffer,headerarray.buffer.length);
+         view.set(allTrianglesBuffer,headerarray.buffer.length+ar1.buffer.length);
+         return stlBinary.buffer;
+         
+      } else {
+			return new Blob([headerarray.buffer, ar1.buffer, allTrianglesBuffer], {
 			type: "application/sla"
-		});
+			});
+      }   
 	},
 
 	toString: function() {

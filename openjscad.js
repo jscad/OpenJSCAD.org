@@ -1218,9 +1218,9 @@ OpenJsCad.Processor.prototype = {
       blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
     }
     else if(format == "stlb") {      
-      //blob=this.currentObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now
-      blob = this.currentObject.toStlBinary();        // gives no normal errors, but stl which require cleanup
-                                                         // HINT: fixTJunction() needs debugging
+      //blob=this.currentObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now (fixTJunctions() needs debugging)
+      blob = this.currentObject.toStlBinary();     
+      //blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });   // enable it once csg.js:toStlBinary() doesn't blob anymore
     }
     else if(format == "amf") {
       blob = this.currentObject.toAMFString({
