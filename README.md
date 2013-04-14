@@ -29,6 +29,7 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 % openjscad example001.jscad -o test.stl
 % openjscad example001.scad -o example001scad.jscad  # -- convert .scad into .jscad
 % openjscad frog.stl -o test.jscad                   # -- convert .stl into .jscad
+% openjscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf
 </pre>
 
 <b>Note:</b> on some systems the NodeJS executable is <tt>node</tt> (default) or <tt>nodejs</tt>, edit <tt>openjscad</tt> first line to reflect this.
