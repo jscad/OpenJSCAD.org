@@ -73,7 +73,7 @@ var formatName = {
 
 var inf = args[0];
 if(inf==null||inf.length<=0||!fs.statSync(inf).isFile()) {
-   console.log("USAGE openjscad ("+me.toUpperCase()+" "+version+"):\n\topenjscad <file> [-o <output>]\n\topenjscad <file> [-of <format>]\n\t\t<file>: <name>.jscad, .scad, .stl or .amf\n\t\t<output>: <name>.jscad, .stl or .amf\n\t\t<format>: jscad, stl, amf");
+   console.log("USAGE openjscad ("+me.toUpperCase()+" "+version+"): <file> [-of <format>] [-o <output>]\n\t<file>: <name>.jscad, .scad, .stl or .amf\n\t<output>: <name>.jscad, .stl or .amf\n\t<format>: jscad, stl, amf");
    process.exit(1);
 }
 
@@ -109,19 +109,21 @@ var inc = [];
 //var csg = sphere(1);          // -- basic test
 //var csg = require(file).main; // -- treating .jscad as module? later perhaps
 
-if(outf&&outf.length&&outf.match(/\.(jscad|stl|amf)$/)) {         // output filename set
+if(!outFormat&&outf&&outf.length&&outf.match(/\.(jscad|stl|amf)$/)) {         // output filename set
    outFormat = RegExp.$1;
 
-} else if(outf&&outf.length) {                                    // output filename isn't valid
+} else if(!outFormat&&outf&&outf.length) {                                    // output filename isn't valid
    console.log("ERROR: bad output filename <"+outf+">, only .jscad, .stl or .amf as output format");
    process.exit(1);
 
 } else if(outFormat.match(/(jscad|stl|stla|stlb|amf)/i)) {  // output format defined?
    var ext = RegExp.$1;
-   ext = ext.replace(/stl[ab]/,'stl');                      // drop [ab] from stl
-   outf = inf;
-   outf = outf.replace(/\.([^\.]+)$/,"."+ext);              // compose output filename
-
+   if(!outf) {                                              // unless output filename not set, compose it
+      ext = ext.replace(/stl[ab]/,'stl');                      // drop [ab] from stl
+      outf = inf;
+      outf = outf.replace(/\.([^\.]+)$/,"."+ext);              // compose output filename
+   }
+   
 } else {
    console.log("ERROR: output format <"+outFormat+">, only jscad, stl or amf as output format");
    process.exit(1);

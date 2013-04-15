@@ -19,6 +19,7 @@ deinstall::
 
 tests::
 	openjscad examples/logo.jscad
+	openjscad examples/logo.jscad -of stlb -o examples/logo-binary.stl
 	openjscad examples/logo.jscad -of amf
 	openjscad examples/logo.amf -o examples/logo-fromAMF.jscad
 	openjscad examples/example001.jscad
@@ -35,7 +36,7 @@ tests::
 	openjscad examples/benchmark.jscad
 
 clean::
-	rm -f examples/logo.stl examples/example001.stl examples/example001-from* examples/benchmark.stl
+	rm -f examples/logo.stl examples/logo-binary.stl examples/example001.stl examples/example001-from* examples/benchmark.stl
 	cd examples/platonics && make clean
 	cd examples/include-test && make clean
 
