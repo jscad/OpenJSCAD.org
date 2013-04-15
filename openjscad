@@ -73,7 +73,7 @@ var formatName = {
 
 var inf = args[0];
 if(inf==null||inf.length<=0||!fs.statSync(inf).isFile()) {
-   console.log("USAGE openjscad ("+me.toUpperCase()+" "+version+"): <file> [-of <format>] [-o <output>]\n\t<file>: <name>.jscad, .scad, .stl or .amf\n\t<output>: <name>.jscad, .stl or .amf\n\t<format>: jscad, stl, amf");
+   console.log("USAGE openjscad ("+me.toUpperCase()+" "+version+"): <file> [-of <format>] [-o <output>]\n\t<file>: <name>.jscad, .scad, .stl or .amf\n\t<output>: <name>.jscad, .stl or .amf\n\t<format>: jscad, stl, stla (ASCII), stlb (Binary), amf");
    process.exit(1);
 }
 
@@ -84,21 +84,28 @@ if(inf.match(/\.(jscad|scad|stl|amf)$/i)) {
    process.exit(1);
 }
 
-var outFormat = 'stl', inFormat;          
+var outFormat, inFormat;          
 var outf;
 
 for(var i=1; i<args.length; i++) {
    if(args[i]=='-of') {                         // -of <format>
       outFormat = args[++i];
+
    } else if(args[i].match(/^-o(\S.+)/)) {      // -o<output>
       outf = args[i];
       outf = outf.replace(/^\-o(\S+)$/,'$1');
+      
    } else if(args[i]=='-o') {                   // -o <output>
       outf = args[++i];
+
    } else {
       console.log("ERROR: bad argument/switch <"+arg[i]+">");
       process.exit(1);
    }
+}
+
+if(!outFormat&&!outf) {
+   outFormat = 'stl';
 }
 
 //console.log("reading "+inf);
