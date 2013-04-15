@@ -574,7 +574,7 @@ CSG.prototype = {
 	},
 
 	// see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
-	toStlBinary: function() {
+	toStlBinary: function(p) {
 		// first check if the host is little-endian:
 		var buffer = new ArrayBuffer(4);
 		var int32buffer = new Int32Array(buffer, 0, 1);
@@ -630,20 +630,23 @@ CSG.prototype = {
 				byteoffset += 50;
 			}
 		});
-      if(0) {
-         // concat 3 buffers together (not yet working) -- don't make blob so early, we want data (non-blob) for nodejs too
-         //    must be string data direct to write
-         var stl = new Uint8Array(headerarray.buffer.byteLength + ar1.buffer.byteLength + allTrianglesBuffer.byteLength);
-         stl.set(headerarray.buffer,0);
-         stl.set(ar1.buffer,headerarray.buffer.length);
-         stl.set(allTrianglesBuffer,headerarray.buffer.length+ar1.buffer.length);
-         //return stl.buffer;
-         return String.fromCharCode.apply(null, new Uint8Array(stl.buffer));
-         
-      } else {
+      if(p&&p.webBlob) {      // -- want a blob direct
 			return new Blob([headerarray.buffer, ar1.buffer, allTrianglesBuffer], {
 			   type: "application/sla"
 			});
+      } else {
+         // we differentiate, as binary string blobbing gives bad blob in web, we need binary string for CLI
+         //    perhaps there is a way to make it working (see openjscad for stlb)\
+         //
+         // concat 3 buffers together -- don't make blob so early, we want data (non-blob) for nodejs too
+         //    must be string data direct to write
+         var stl = new Uint8Array(headerarray.buffer.byteLength + ar1.buffer.byteLength + allTrianglesBuffer.byteLength);
+         var j = 0;
+         for(var i=0; i<headerarray.buffer.byteLength; i++) { stl.buffer[j++] = headerarray.buffer[i]; }
+         for(var i=0; i<ar1.buffer.byteLength; i++) { stl.buffer[j++] = ar1.buffer[i]; }
+         for(var i=0; i<allTrianglesBuffer.byteLength; i++) { stl.buffer[j++] = allTrianglesBuffer[i]; }
+         return String.fromCharCode.apply(null, new Uint8Array(stl.buffer)); 
+         
       }   
 	},
 

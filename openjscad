@@ -77,7 +77,7 @@ if(inf==null||inf.length<=0||!fs.statSync(inf).isFile()) {
    process.exit(1);
 }
 
-if(inf.match(/\.(jscad|scad|stl|amf)$/)) {
+if(inf.match(/\.(jscad|scad|stl|amf)$/i)) {
    inFormat = RegExp.$1;
 } else {
    console.log("ERROR: only jscad, scad, stl or amf as input format");
@@ -102,7 +102,7 @@ for(var i=1; i<args.length; i++) {
 }
 
 //console.log("reading "+inf);
-var src = fs.readFileSync(inf,inf.match(/\.stl$/)?"binary":"UTF8");
+var src = fs.readFileSync(inf,inf.match(/\.stl$/i)?"binary":"UTF8");
 var scad = fs.readFileSync(lib+'./openscad.js');
 var inc = [];
 
@@ -116,7 +116,7 @@ if(outf&&outf.length&&outf.match(/\.(jscad|stl|amf)$/)) {         // output file
    console.log("ERROR: bad output filename <"+outf+">, only .jscad, .stl or .amf as output format");
    process.exit(1);
 
-} else if(outFormat.match(/(jscad|stl|stla|stlb|amf)/)) {   // output format defined?
+} else if(outFormat.match(/(jscad|stl|stla|stlb|amf)/i)) {  // output format defined?
    var ext = RegExp.$1;
    ext = ext.replace(/stl[ab]/,'stl');                      // drop [ab] from stl
    outf = inf;
@@ -185,8 +185,7 @@ if(outFormat=='jscad') {
    }
 }
 
-var s = fs.WriteStream(outf);
-s.write(out);
+fs.writeFileSync(outf,out,outFormat=='stlb'?"binary":"utf8");
 
 // -- helper functions ---------------------------------------------------------------------------------------
 
