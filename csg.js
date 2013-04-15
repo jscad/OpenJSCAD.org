@@ -631,17 +631,18 @@ CSG.prototype = {
 			}
 		});
       if(0) {
-         // concat 3 buffers together (not yet working) -- don't make blob so early, we want it on nodejs too
-   		var stlBinary = new ArrayBuffer(headerarray.buffer.length + ar1.buffer.length + allTrianglesBuffer.length);
-         var view = new Uint8Array(stlBinary);
-         view.set(headerarray.buffer,0);
-         view.set(ar1.buffer,headerarray.buffer.length);
-         view.set(allTrianglesBuffer,headerarray.buffer.length+ar1.buffer.length);
-         return stlBinary.buffer;
+         // concat 3 buffers together (not yet working) -- don't make blob so early, we want data (non-blob) for nodejs too
+         //    must be string data direct to write
+         var stl = new Uint8Array(headerarray.buffer.byteLength + ar1.buffer.byteLength + allTrianglesBuffer.byteLength);
+         stl.set(headerarray.buffer,0);
+         stl.set(ar1.buffer,headerarray.buffer.length);
+         stl.set(allTrianglesBuffer,headerarray.buffer.length+ar1.buffer.length);
+         //return stl.buffer;
+         return String.fromCharCode.apply(null, new Uint8Array(stl.buffer));
          
       } else {
 			return new Blob([headerarray.buffer, ar1.buffer, allTrianglesBuffer], {
-			type: "application/sla"
+			   type: "application/sla"
 			});
       }   
 	},

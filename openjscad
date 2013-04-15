@@ -63,9 +63,17 @@ var meta = [];
 meta.producer = "OpenJSCAD "+me.toUpperCase()+" "+version;
 meta.date = new Date();
 
+var formatName = { 
+   jscad: "OpenJSCAD.org Source", 
+   stl: "STereoLithography, ASCII", 
+   stla: "STereoLithography, ASCII", 
+   stlb: "STereoLithography, Binary", 
+   amf: "Additive Manufacturing File Format" 
+};
+
 var inf = args[0];
 if(inf==null||inf.length<=0||!fs.statSync(inf).isFile()) {
-   console.log("USAGE ("+version+"):\n\topenjscad <file> [-o <output>]\n\topenjscad <file> [-of <format>]\n\t\t<file>: <name>.jscad, .scad, .stl or .amf\n\t\t<output>: <name>.jscad, .stl or .amf\n\t\t<format>: jscad, stl, amf");
+   console.log("USAGE openjscad ("+me.toUpperCase()+" "+version+"):\n\topenjscad <file> [-o <output>]\n\topenjscad <file> [-of <format>]\n\t\t<file>: <name>.jscad, .scad, .stl or .amf\n\t\t<output>: <name>.jscad, .stl or .amf\n\t\t<format>: jscad, stl, amf");
    process.exit(1);
 }
 
@@ -112,14 +120,14 @@ if(outf&&outf.length&&outf.match(/\.(jscad|stl|amf)$/)) {         // output file
    var ext = RegExp.$1;
    ext = ext.replace(/stl[ab]/,'stl');                      // drop [ab] from stl
    outf = inf;
-   outf = outf.replace(/\.([^\.]+)$/,"."+ext);
+   outf = outf.replace(/\.([^\.]+)$/,"."+ext);              // compose output filename
 
 } else {
    console.log("ERROR: output format <"+outFormat+">, only jscad, stl or amf as output format");
    process.exit(1);
 }
 
-console.log("converting "+inf+" -> "+outf);
+console.log("converting "+inf+" -> "+outf+" ("+formatName[outFormat]+")");
 
 // -- include input, and convert into JSCAD source
 if(inFormat=='scad') {
