@@ -73,7 +73,7 @@ var formatName = {
 
 var inf = args[0];
 if(inf==null||inf.length<=0||!fs.statSync(inf).isFile()) {
-   console.log("USAGE openjscad ("+me.toUpperCase()+" "+version+"): <file> [-of <format>] [-o <output>]\n\t<file>: <name>.jscad, .scad, .stl or .amf\n\t<output>: <name>.jscad, .stl or .amf\n\t<format>: jscad, stl, stla (ASCII), stlb (Binary), amf");
+   console.log("USAGE openjscad ("+me.toUpperCase()+" "+version+"): <file> [-of <format>] [-o <output>]\n\t<file>: <name>.jscad, .scad, .stl or .amf\n\t<output>: <name>.jscad, .stl or .amf\n\t<format>: 'jscad', 'stl' (default), 'stla' (STL ASCII), 'stlb' (STL Binary), 'amf'");
    process.exit(1);
 }
 
