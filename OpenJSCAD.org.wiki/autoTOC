@@ -5,7 +5,7 @@ print "#Table of Contents\n";
 while(<>) {
    chop;
    if(/^(#+)\s*(\S.*)/) {
-      my($n) = length($1);
+      my($n) = length($1)-1;     # -- right now ## is minimum, if you have a # only, remove '-1'
       my($t) = $2;
       for(my $i=0; $i<$n; $i++) {
          print " ";

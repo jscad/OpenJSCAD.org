@@ -1,6 +1,7 @@
 // title: Celtic Knot Ring
 // author: Joost Nieuwenhuijse
 // license: MIT License
+// tags: Catmull Spline
 
 // -*- mode: javascript; -*-
 

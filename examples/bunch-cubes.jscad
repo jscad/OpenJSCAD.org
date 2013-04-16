@@ -1,6 +1,7 @@
 // title: Bunch of Cubes
 // author: Rene K. Mueller
 // license: MIT License
+// description: creating 100 cubes in space ...
 
 var cubes = new Array();
 
