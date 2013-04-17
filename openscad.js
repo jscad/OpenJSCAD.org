@@ -618,9 +618,8 @@ function hull() {
       }
    
       this.angle = function(o, a) {
-         return Math.atan((this.points[a].y-this.points[o].y) / (this.points[a].x - this.points[o].x + 1e-5)); // make sure it doesn't become divide by zero
-         // works better with atan() even though atan2 is more accurate, https://github.com/Spiritdude/OpenJSCAD.org/issues/18
-         //return Math.atan2((this.points[a].y-this.points[o].y), (this.points[a].x - this.points[o].x));
+         //return Math.atan((this.points[a].y-this.points[o].y) / (this.points[a].x - this.points[o].x)); 
+         return Math.atan2((this.points[a].y-this.points[o].y), (this.points[a].x - this.points[o].x));
       }
        
       this.distance = function(a, b) {
