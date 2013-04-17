@@ -556,21 +556,32 @@ function hull() {
 
    var a = arguments;                     
    if(a[0].length) a = a[0];
+   var done = [];
    for(var i=0; i<a.length; i++) {              // extract all points of the CAG in the argument list
       var cag = a[i];
       if(!(cag instanceof CAG)) {
-         echo("ERROR: hull() accepts only 2D forms / CAG");
+         throw("ERROR: hull() accepts only 2D forms / CAG");
          return;
       }
       for(var j=0; j<cag.sides.length; j++) {
-         pts.push({ x:cag.sides[j].vertex0.pos.x, y:cag.sides[j].vertex0.pos.y });
+         var x = cag.sides[j].vertex0.pos.x;
+         var y = cag.sides[j].vertex0.pos.y;
+         if(done[''+x+','+y])  // avoid some coord to appear multiple times
+            continue;
+         pts.push({ x:x, y:y });
+         done[''+x+','+y]++;
+         echo(x,y);
       }
    }
    //echo(pts.length+" points in",pts);
 
    // from http://www.psychedelicdevelopment.com/grahamscan/
-   //
+   //    see also at https://github.com/bkiers/GrahamScan/blob/master/src/main/cg/GrahamScan.java
    var ConvexHullPoint = function(i, a, d) {
+
+      if(d<1e-5)           // we need some margin, otherwise sorting and ccw() won't work see https://github.com/Spiritdude/OpenJSCAD.org/issues/18 
+         d = 0;
+      
       this.index = i;
       this.angle = a;
       this.distance = d;
@@ -604,7 +615,8 @@ function hull() {
       }
    
       this.ccw = function(p1, p2, p3) {
-         return (this.points[p2].x - this.points[p1].x)*(this.points[p3].y - this.points[p1].y) - (this.points[p2].y - this.points[p1].y)*(this.points[p3].x - this.points[p1].x);
+         return (this.points[p2].x - this.points[p1].x)*(this.points[p3].y - this.points[p1].y) - 
+                (this.points[p2].y - this.points[p1].y)*(this.points[p3].x - this.points[p1].x);
       }
    
       this.angle = function(o, a) {
@@ -799,7 +811,7 @@ function circle() {
    var r = 1, off, fn = 32; var a = arguments, p = a[0];
    if(p&&p.r) r = p.r;
    if(p&&p.fn) fn = p.fn;
-   if(p&&!p.r) r = p;
+   if(p&&!p.r&&!p.fn&&!p.center) r = p;
    off = [r,r];
    if(p&&p.center==true) { off = [0,0]; } 
    var o = CAG.circle({center:off,radius:r,resolution:fn});
