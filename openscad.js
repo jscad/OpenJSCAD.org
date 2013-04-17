@@ -557,6 +557,7 @@ function hull() {
    var a = arguments;                     
    if(a[0].length) a = a[0];
    var done = [];
+
    for(var i=0; i<a.length; i++) {              // extract all points of the CAG in the argument list
       var cag = a[i];
       if(!(cag instanceof CAG)) {
@@ -570,7 +571,7 @@ function hull() {
             continue;
          pts.push({ x:x, y:y });
          done[''+x+','+y]++;
-         echo(x,y);
+         //echo(x,y);
       }
    }
    //echo(pts.length+" points in",pts);
@@ -579,9 +580,6 @@ function hull() {
    //    see also at https://github.com/bkiers/GrahamScan/blob/master/src/main/cg/GrahamScan.java
    var ConvexHullPoint = function(i, a, d) {
 
-      if(d<1e-5)           // we need some margin, otherwise sorting and ccw() won't work see https://github.com/Spiritdude/OpenJSCAD.org/issues/18 
-         d = 0;
-      
       this.index = i;
       this.angle = a;
       this.distance = d;
@@ -620,12 +618,14 @@ function hull() {
       }
    
       this.angle = function(o, a) {
-         //return Math.atan((this.points[a].y-this.points[o].y) / (this.points[a].x - this.points[o].x + 1e-5));
-         return Math.atan2((this.points[a].y-this.points[o].y), (this.points[a].x - this.points[o].x));
+         return Math.atan((this.points[a].y-this.points[o].y) / (this.points[a].x - this.points[o].x + 1e-5)); // make sure it doesn't become divide by zero
+         // works better with atan() even though atan2 is more accurate, https://github.com/Spiritdude/OpenJSCAD.org/issues/18
+         //return Math.atan2((this.points[a].y-this.points[o].y), (this.points[a].x - this.points[o].x));
       }
        
       this.distance = function(a, b) {
-         return ((this.points[b].x-this.points[a].x)*(this.points[b].x-this.points[a].x)+(this.points[b].y-this.points[a].y)*(this.points[b].y-this.points[a].y));
+         return ((this.points[b].x-this.points[a].x)*(this.points[b].x-this.points[a].x)+
+                 (this.points[b].y-this.points[a].y)*(this.points[b].y-this.points[a].y));
       }
    
       this.compute = function(_points) {
