@@ -613,8 +613,11 @@ function hull() {
       }
    
       this.ccw = function(p1, p2, p3) {
-         return (this.points[p2].x - this.points[p1].x)*(this.points[p3].y - this.points[p1].y) - 
-                (this.points[p2].y - this.points[p1].y)*(this.points[p3].x - this.points[p1].x);
+         var ccw = (this.points[p2].x - this.points[p1].x)*(this.points[p3].y - this.points[p1].y) - 
+                   (this.points[p2].y - this.points[p1].y)*(this.points[p3].x - this.points[p1].x);
+         if(ccw<1e-5)      // we need this, otherwise sorting never ends, see https://github.com/Spiritdude/OpenJSCAD.org/issues/18
+            return 0
+         return ccw;
       }
    
       this.angle = function(o, a) {
