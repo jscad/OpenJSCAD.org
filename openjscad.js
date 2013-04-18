@@ -421,8 +421,15 @@ OpenJsCad.runMainInWorker = function(mainParameters) {
     }
     if(result.length) {                   // main() return an array, we consider it a bunch of CSG not intersecting
        var o = result[0];
+       if(o instanceof CAG) {
+          o = o.extrude({offset: [0,0,0.1]});
+       }
        for(var i=1; i<result.length; i++) {
-          o = o.unionForNonIntersecting(result[i]);
+          var c = result[i];
+          if(c instanceof CAG) {
+             c = c.extrude({offset: [0,0,0.1]});
+          }
+          o = o.unionForNonIntersecting(c);
        }
        result = o;
     } 

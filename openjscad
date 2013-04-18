@@ -173,8 +173,13 @@ if(outFormat=='jscad') {
    var csg = eval(src+"\n"+scad+"\nmain()\n");    // *.jscad + openscad.js + main()
    if(csg.length) {
       var o = csg[0];
+      if(o instanceof CAG) {
+         o = o.extrude({offset: [0,0,0.1]});
+      }
       for(i=1; i<csg.length; i++) {
-         o = o.unionForNonIntersecting(csg[i]);
+         var c = csg[i];
+         c = c.extrude({offset: [0,0,0.1]});
+         o = o.unionForNonIntersecting(c);
       }
       csg = o;
    }
