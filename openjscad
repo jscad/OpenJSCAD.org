@@ -178,7 +178,9 @@ if(outFormat=='jscad') {
       }
       for(i=1; i<csg.length; i++) {
          var c = csg[i];
-         c = c.extrude({offset: [0,0,0.1]});
+         if(c instanceof CAG) {
+            c = c.extrude({offset: [0,0,0.1]});
+         }
          o = o.unionForNonIntersecting(c);
       }
       csg = o;
