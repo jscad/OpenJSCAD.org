@@ -1,7 +1,8 @@
 // title: Chain Hull
 // author: Rene K. Mueller
 // date: 2013/04/18
-// description: Whosa whatsis suggested "Chain Hull" as described at https://plus.google.com/u/0/105535247347788377245/posts/aZGXKFX1ACN
+// description: Whosa whatsis suggested "Chain Hull" as described at 
+//    https://plus.google.com/u/0/105535247347788377245/posts/aZGXKFX1ACN
 
 function main() {
    var o = [], p = [];
