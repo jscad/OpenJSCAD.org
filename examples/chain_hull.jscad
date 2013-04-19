@@ -20,7 +20,7 @@ function main() {
    }
 
    return [
-      linear_extrude({height: 10}, chain_hull(o)).translate([-20,0,0]), 
+      linear_extrude({height: 5}, chain_hull(o)).translate([-20,0,0]), 
       chain_hull(o), 
       union(o).translate([20,0,0]),
 
