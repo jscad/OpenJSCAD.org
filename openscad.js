@@ -806,7 +806,7 @@ function rotate_extrude(p,o) {
 }
 
 function rectangular_extrude(pa,p) {
-   var w = 1, h = 1, fn = 8, closed = true, round = true;
+   var w = 1, h = 1, fn = 8, closed = false, round = true;
    if(p) {
       if(p.w) w = p.w;
       if(p.h) h = p.h;
