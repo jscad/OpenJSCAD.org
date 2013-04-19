@@ -715,6 +715,25 @@ function hull() {
    }
 }
 
+// "Whosa whatsis" suggested "Chain Hull" as described at https://plus.google.com/u/0/105535247347788377245/posts/aZGXKFX1ACN
+// essentially hull A+B, B+C, C+D and then union those
+
+function chain_hull() {
+   var a = arguments;
+   var j = 0, closed = false;
+
+   if(a[j].closed!==undefined) 
+      closed = a[j++].closed;
+   
+   if(a[j].length) 
+      a = a[j];
+
+   var h = []; var n = a.length-(closed?0:1); 
+   for(var i=0; i<n; i++) {
+      h.push(hull(a[i],a[(i+1)%a.length]));
+   }
+   return union(h);
+}
 
 // -- 2D to 3D primitives (OpenSCAD like notion)
 
