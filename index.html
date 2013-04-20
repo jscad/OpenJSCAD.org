@@ -487,7 +487,8 @@ function onload() {
    if(me=='web-online') {    // we are online, fetch first example
       //    gProcessor.setJsCad(editor.getValue());
 
-      if(document.URL.match(/#(http:\/\/\S+)$/)||document.URL.match(/#(https:\/\/\S+)$/)) {   // remote file referenced, e.g. http://openjscad.org/#http://somewhere/something.ext
+      if(document.URL.match(/#(http:\/\/\S+)$/)||
+         document.URL.match(/#(https:\/\/\S+)$/)) {   // remote file referenced, e.g. http://openjscad.org/#http://somewhere/something.ext
          var u = RegExp.$1;
          var xhr = new XMLHttpRequest();
          //echo("fetching",u);
