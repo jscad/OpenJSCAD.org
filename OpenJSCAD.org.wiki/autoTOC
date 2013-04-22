@@ -13,6 +13,7 @@ while(<>) {
       
       # Web Browser & Command-Line Interface aka "Dual Use"
       # web-browser--command-line-interface-aka-dual-use
+      $t =~ s/\s*$//;
       my($l) = lc($t);
       $l =~ s/[^\w -]//g;
       $l =~ s/ /-/g;
