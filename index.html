@@ -51,7 +51,7 @@ Todo:
 <script src="underscore.js"></script>
 <script src="openscad-openjscad-translator.js"></script>
 <script lang=JavaScript>
-var version = '0.017 (2013/04/19)';
+var version = '0.017 (2013/04/23)';
 //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
 var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
 var browser = 'unknown';
@@ -217,6 +217,8 @@ var ex = [
 { file:'hull.jscad', title: 'Hull()', new: true },
 { file:'chain_hull.jscad', title: 'Chain_hull()', new: true },
 { file:'torus.jscad', title: 'Torus()' },
+
+{ file:'text.jscad', title: 'Vector_text()', new: true, spacing: true },
 
 { file:'transparency.jscad', title: 'Transparency', new: true, spacing: true },
 { file:'transparency.amf', title: 'Transparency', type: 'AMF', new: true },

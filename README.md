@@ -66,7 +66,7 @@ See for more details <a href="https://plus.google.com/115007999023701819645">G+ 
 <li> <del>complete 2D primitives and transformations</del> (done)
 <li> <del>implementation of <b>linear_extrude()</b> <b>rotate_extrude()</b>, parameter compatible to OpenSCAD</del> (done)
 <li> <del>example of platonic solids (in progress, requires include())</del> (done)
-<li> simple 2D/3D text
+<li> <del>simple 2D/3D text</del> (done)
 <li> <del>2d operation: hull()</del> (done)
 <li> processing/progress bar (0..100%), perhaps even visual progress seen in the model direct
 <li> <del>STL importer</del> (done) & AMF importer / exporter
