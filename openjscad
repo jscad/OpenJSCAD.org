@@ -205,19 +205,6 @@ fs.writeFileSync(outf,out,outFormat=='stlb'?"binary":"utf8");
 
 // -- helper functions ---------------------------------------------------------------------------------------
 
-_getParameterDefinitions() {
-   if(getParameterDefinitions!==undefined) {
-      var p;
-      var pa = getParameterDefinitions();
-      p.forEach(function(a) {
-         p[name] = pa.default||pa.initial;
-      });
-      return p;
-   } else 
-      return null;
-}
-
-
 function include(fn) {    
    //console.log(arguments.callee.caller,"include:"+fn);
    if(0) {

@@ -2566,6 +2566,18 @@ vsprintf = function(fmt, argv) {
 	return sprintf.apply(null, argv);
 };
 
+_getParameterDefinitions = function() {         // used for openjscad CLI only
+   if(getParameterDefinitions!==undefined) {
+      var p = {};
+      var pa = getParameterDefinitions();
+      pa.forEach(function(a) {
+         p[a.name] = a.default||a.initial;
+      });
+      return p;
+   } else 
+      return null;
+}
+
 // -------------------------------------------------------------------------------------------------
 
 if(typeof module !== 'undefined') {    // we are used as module in nodejs require()
