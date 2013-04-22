@@ -552,7 +552,7 @@ function fetchExample(fn,url) {
          _includePath = path.replace(/\/[^\/]+$/,'/');
          
          editor.getSession().setMode("ace/mode/javascript");
-         if(fn.match(/\.jscad$/i)) {
+         if(fn.match(/\.jscad$/i)||fn.match(/\.js$/i)) {
             status("Processing "+fn+" <img id=busy src='imgs/busy.gif'>");
             //if(url) editorSource = "// Remote retrieved <"+url+">\n"+editorSource;
             putSourceInEditor(editorSource,fn);
@@ -745,7 +745,7 @@ function setCurrentFile(file) {              // set one file (the one dragged) o
   gPreviousModificationTime = "";
 
   console.log("execute: "+file.name);
-  if(file.name.match(/\.(jscad|scad|stl|obj|amf|gcode)$/i)) {
+  if(file.name.match(/\.(jscad|js|scad|stl|obj|amf|gcode)$/i)) {
     gCurrentFile.lang = RegExp.$1;
   } else {
     throw new Error("Please drop a file with .jscad, .scad or .stl extension");
@@ -899,7 +899,7 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
       editor.getSession().setMode("ace/mode/javascript");
       var asyncComputation = false;
       
-      if(gCurrentFile.lang=='jscad') {
+      if(gCurrentFile.lang=='jscad'||gCurrentFile.lang=='js') {
          ; // default
       } else if(gCurrentFile.lang=='scad') {
          editorSource = source;

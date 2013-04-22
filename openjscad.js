@@ -1398,6 +1398,8 @@ OpenJsCad.Processor.prototype = {
             control.value = "";
           }
         }
+        if(paramdef.size!==undefined) 
+           control.size = paramdef.size;
       }
       else if(type == "choice")
       {
