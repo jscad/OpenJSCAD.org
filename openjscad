@@ -170,7 +170,7 @@ if(outFormat=='jscad') {
    out = src;
 } else {
    //console.log("render jscad to "+outFormat);
-   var csg = eval(src+"\n"+scad+"\nmain(getParameterDefinitions!==undefined?getParameterDefinitions():null)\n");    // *.jscad + openscad.js + main()
+   var csg = eval(src+"\n"+scad+"\nmain(_getParameterDefinitions())\n");    // *.jscad + openscad.js + main()
    if(csg.length) {
       var o = csg[0];
       if(o instanceof CAG) {
@@ -204,6 +204,19 @@ if(outFormat=='jscad') {
 fs.writeFileSync(outf,out,outFormat=='stlb'?"binary":"utf8");
 
 // -- helper functions ---------------------------------------------------------------------------------------
+
+_getParameterDefinitions() {
+   if(getParameterDefinitions!==undefined) {
+      var p;
+      var pa = getParameterDefinitions();
+      p.forEach(function(a) {
+         p[name] = pa.default||pa.initial;
+      });
+      return p;
+   } else 
+      return null;
+}
+
 
 function include(fn) {    
    //console.log(arguments.callee.caller,"include:"+fn);
