@@ -2567,7 +2567,7 @@ vsprintf = function(fmt, argv) {
 };
 
 _getParameterDefinitions = function() {         // used for openjscad CLI only
-   if(getParameterDefinitions!==undefined) {
+   if(typeof getParameterDefinitions!=='undefined') {
       var p = {};
       var pa = getParameterDefinitions();
       pa.forEach(function(a) {
