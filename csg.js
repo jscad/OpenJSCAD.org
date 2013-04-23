@@ -2,7 +2,7 @@
 ## License
 
 Copyright (c) 2013 Eduard Bespalov (edwbes@gmail.com): .solidFromSlices()
-Copyright (c) 2013 Rene K. Mueller (http://OpenJSCAD.org): AMF export added
+Copyright (c) 2013 Rene K. Mueller (http://OpenJSCAD.org): AMF export added, CSG.center([flag,flag,flag]);
 Copyright (c) 2012 Joost Nieuwenhuijse (joost@newhouse.nl)
 Copyright (c) 2012 Alexandre Girard (https://github.com/alx)
 Copyright (c) 2011 Evan Wallace (http://evanw.github.com/csg.js/) -- original csg.js
@@ -5396,6 +5396,13 @@ CAG.prototype = {
 		});
 		return [minpoint, maxpoint];
 	},
+
+   center: function(c) {
+      var b = this.getBounds();
+      return this.translate([
+         c[0]?-(b[1].x-b[0].x)/2-b[0].x:0,
+         c[1]?-(b[1].y-b[0].y)/2-b[0].y:0]);
+   },
 
 	isSelfIntersecting: function() {
 		var numsides = this.sides.length;
