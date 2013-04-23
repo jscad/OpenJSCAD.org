@@ -658,6 +658,14 @@ CSG.prototype = {
 		return result;
 	},
 
+   center: function(c) {
+      var b = this.getBounds();
+      return this.translate([
+         c[0]?-(b[1].x-b[0].x)/2-b[0].x:0,
+         c[1]?-(b[1].y-b[0].y)/2-b[0].y:0,
+         c[2]?-(b[1].z-b[0].z)/2-b[0].z:0]);
+   },
+
 	// Expand the solid
 	// resolution: number of points per 360 degree for the rounded corners
 	expand: function(radius, resolution) {

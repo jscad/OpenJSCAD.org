@@ -1121,7 +1121,7 @@ function hsv2rgb(h, s, v){
 // --------------------------------------------------------------------------------------------
 
 function vector_char(x,y,c) {
-   c = c.charCodeAt(c,0);
+   c = c.charCodeAt(0);
    c -= 32;
    if(c<0||c>=95) return { width: 0, segments: [] };
 
