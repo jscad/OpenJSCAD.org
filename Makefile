@@ -33,6 +33,7 @@ tests::
 	cd examples/include-test && make
 	# -- enable if you have openscad installed ('unsetenv DISPLAY' perhaps too)
 	# openscad examples/example001.scad -o examples/example001-fromSCADviaOpenSCAD.stl
+	openjscad examples/name_plate.jscad --name "Just Me" --title "Geek" -o examples/JustMe_Geek_name_plate.amf
 	openjscad examples/benchmark.jscad
 
 clean::

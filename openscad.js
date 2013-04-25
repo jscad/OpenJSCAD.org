@@ -2576,13 +2576,23 @@ vsprintf = function(fmt, argv) {
 	return sprintf.apply(null, argv);
 };
 
-_getParameterDefinitions = function() {         // used for openjscad CLI only
+_getParameterDefinitions = function(param) {         // used for openjscad CLI only
    if(typeof getParameterDefinitions!=='undefined') {
       var p = {};
       var pa = getParameterDefinitions();
-      pa.forEach(function(a) {
-         p[a.name] = a.default||a.initial;
-      });
+      for(var a in pa) {               // defaults, given by getParameterDefinitions()
+         p[pa[a].name] = pa[a].default||pa[a].initial;
+         //echo("default=",pa[a].name,p[pa[a].name]);
+      }
+      for(var a in param) {            // given by command-line
+         p[a] = param[a];
+         //echo("cli=",a,p[a]);
+      }
+      if(0) {
+         for(var a in p) {
+            echo("param=",a,p[a]);
+         }
+      }
       return p;
    } else 
       return null;

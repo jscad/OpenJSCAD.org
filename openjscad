@@ -3,7 +3,7 @@
 // OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>
 // License: GPLv2
 //
-version = '0.009';
+version = '0.010';
 //
 // Description:
 //   openjscad <file> [-o <stl>]
@@ -17,8 +17,10 @@ version = '0.009';
 //   openjscad test.amf -o test2.jscad    
 //   openjscad test.jscad -of amf
 //   openjscad test.jscad -of stl
+//   openjscad name_plate.jscad --name "Just Me" --title "CEO" -o amf test.amf
 //
 // History:
+// 2013/04/25: 0.010: support of params passed to main()
 // 2013/04/12: 0.008: reimplement parseAMF without jquery
 // 2013/04/11: 0.007: support of alpha for AMF addded, bumping version
 // 2013/04/05: 0.006: support of AMF added, requires node 0.8.1+
@@ -31,6 +33,7 @@ version = '0.009';
 
 me = 'cli';
 global.time = new Date();
+gMainParam = {};
 
 var fs = require('fs');
 var vm = require('vm');
@@ -97,6 +100,12 @@ for(var i=1; i<args.length; i++) {
       
    } else if(args[i]=='-o') {                   // -o <output>
       outf = args[++i];
+
+   } else if(args[i].match(/^--(\w+)=(\S+)/)) { // params for main()
+      gMainParam[RegExp.$1] = RegExp.$2;
+
+   } else if(args[i].match(/^--(\w+)$/)) {      // params for main()
+      gMainParam[RegExp.$1] = args[++i];
 
    } else {
       console.log("ERROR: bad argument/switch <"+arg[i]+">");
@@ -170,7 +179,10 @@ if(outFormat=='jscad') {
    out = src;
 } else {
    //console.log("render jscad to "+outFormat);
-   var csg = eval(src+"\n"+scad+"\nmain(_getParameterDefinitions())\n");    // *.jscad + openscad.js + main()
+   //console.log(JSON.stringify(gMainParam));
+
+   var csg = eval(src+"\n"+scad+"\nmain(_getParameterDefinitions("+JSON.stringify(gMainParam)+"))\n");    // *.jscad + openscad.js + main()
+
    if(csg.length) {
       var o = csg[0];
       if(o instanceof CAG) {
