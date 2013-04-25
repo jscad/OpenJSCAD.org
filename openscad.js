@@ -2380,7 +2380,6 @@ function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code
    return src;
 }
 
-
 // -------------------------------------------------------------------------------------------------
 
 function clone(obj) {

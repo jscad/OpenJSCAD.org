@@ -51,7 +51,7 @@ Todo:
 <script src="underscore.js"></script>
 <script src="openscad-openjscad-translator.js"></script>
 <script lang=JavaScript>
-var version = '0.017 (2013/04/22)';
+var version = '0.017 (2013/04/25)';
 //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
 var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
 var browser = 'unknown';
@@ -667,7 +667,7 @@ function setupDragDrop() {
 function handleFileSelect(evt) {
   evt.stopPropagation();
   evt.preventDefault();
-  gMemFs = [];
+  gMemFs = []; gMainFile = null;
   if(!evt.dataTransfer) throw new Error("Not a datatransfer (1)");
   if(!evt.dataTransfer.files) throw new Error("Not a datatransfer (2)");
 
@@ -706,7 +706,7 @@ function walkFileTree(item,path) {              // this is the core of the drag'
    //console.log("item=",item);
    if(item.isFile) {
       item.file(function(file) {                // this is also asynchronous ... (making everything complicate)
-         if(file.name.match(/\.(jscad|scad|stl|amf|gcode)$/)) {   // for now all files OpenJSCAD can handle
+         if(file.name.match(/\.(jscad|js|scad|stl|amf|gcode)$/)) {   // for now all files OpenJSCAD can handle
             console.log("walkFileTree File: "+path+item.name);
             gMemFsTotal++;
             gCurrentFiles.push(file);
@@ -788,9 +788,11 @@ function readFileAsync(f) {                // RANT: JavaScript at its finest: 50
            if(gMemFsTotal>1) {
               if(gMemFs['main.jscad']) {
                  gMainFile = gMemFs['main.jscad'];
+              } else if(gMemFs['main.js']) {
+                 gMainFile = gMemFs['main.js'];
               } else {
                  for(var fn in gMemFs) {
-                   if(gMemFs[fn].name.match(/\/main.jscad$/)) {
+                   if(gMemFs[fn].name.match(/\/main.jscad$/)||gMemFs[fn].name.match(/\/main.js$/)) {
                       gMainFile = gMemFs[fn];
                    }
                  }
@@ -799,6 +801,8 @@ function readFileAsync(f) {                // RANT: JavaScript at its finest: 50
              gMainFile = f;  
            }
            if(gMemFsChanged>0) {
+              if(!gMainFile)
+                throw("No main.jscad found");
               console.log("update & redraw "+gMainFile.name);
               setCurrentFile(gMainFile);
            }
