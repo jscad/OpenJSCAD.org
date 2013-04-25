@@ -659,6 +659,7 @@ CSG.prototype = {
 	},
 
    center: function(c) {
+      if(!c.length) c = [c,c,c];
       var b = this.getBounds();
       return this.translate([
          c[0]?-(b[1].x-b[0].x)/2-b[0].x:0,
@@ -5398,6 +5399,7 @@ CAG.prototype = {
 	},
 
    center: function(c) {
+      if(!c.length) c = [c,c];
       var b = this.getBounds();
       return this.translate([
          c[0]?-(b[1].x-b[0].x)/2-b[0].x:0,
