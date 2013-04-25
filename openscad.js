@@ -1,7 +1,7 @@
 // openscad.js, a few functions to simplify coding OpenSCAD-like
 //    written by Rene K. Mueller <spiritdude@gmail.com>, License: GPLv2
 //
-// Version: 0.019
+// Version: 0.020
 //
 // Description:
 // Helping to convert OpenSCAD .scad files to OpenJSCad .jscad files with 
@@ -12,6 +12,7 @@
 //     http://openjscad.org/
 //
 // History:
+// 2013/04/25: 0.020: center(v,obj) added, uses new .center(v)
 // 2013/04/22: 0.019: vector_char() and vector_text() added, vector font rendering
 // 2013/04/11: 0.018: added alpha supported to AMF export
 // 2013/04/09: 0.017: added color()
@@ -486,6 +487,15 @@ function translate() {      // v, obj or array
       o = o.union(a[i]);
    } 
    return o.translate(v); 
+}
+
+function center() { // v, obj or array
+   var a = arguments, v = a[0], o, i = 1;
+   if(a[1].length) { a = a[1]; i = 0; }
+   for(o=a[i++]; i<a.length; i++) { 
+      o = o.union(a[i]);
+   } 
+   return o.center(v);
 }
 
 function scale() {         // v, obj or array
