@@ -2595,7 +2595,7 @@ _getParameterDefinitions = function(param) {         // used for openjscad CLI o
       }
       return p;
    } else 
-      return null;
+      return param;
 }
 
 // -------------------------------------------------------------------------------------------------

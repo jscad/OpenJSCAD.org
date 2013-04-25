@@ -101,7 +101,7 @@ for(var i=1; i<args.length; i++) {
    } else if(args[i]=='-o') {                   // -o <output>
       outf = args[++i];
 
-   } else if(args[i].match(/^--(\w+)=(\S+)/)) { // params for main()
+   } else if(args[i].match(/^--(\w+)=(.*)/)) { // params for main()
       gMainParam[RegExp.$1] = RegExp.$2;
 
    } else if(args[i].match(/^--(\w+)$/)) {      // params for main()
