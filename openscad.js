@@ -406,7 +406,7 @@ function sphere(p) {
 }
 
 function geodesicSphere(p) {
-   var r = 1, fn = 4;
+   var r = 1, fn = 5; 
 
    var ci = [              // hard-coded data of icosahedron (20 faces, all triangles)
       [0.850651,0.000000,-0.525731],
