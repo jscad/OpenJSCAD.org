@@ -460,7 +460,7 @@ function geodesicSphere(p) {
                   q[k][l] /= r;
                }
             }
-            c.push(clone(q[0]),clone(q[1]),clone(q[2]));
+            c.push(q[0],q[1],q[2]);
             f.push([n,n+1,n+2]); n += 3;
             
             if(j<fn-i-1) {
