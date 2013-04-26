@@ -473,7 +473,7 @@ function geodesicSphere(p) {
                for(var k=0; k<3; k++) {
                   var r = Math.sqrt(q[k][0]*q[k][0]+q[k][1]*q[k][1]+q[k][2]*q[k][2]);
                   for(var l=0; l<3; l++) {
-                     q[k][l] = q[k][l]/r;
+                     q[k][l] /= r;
                   }
                }
                c.push(q[0],q[1],q[2]);
