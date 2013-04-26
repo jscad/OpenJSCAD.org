@@ -706,7 +706,7 @@ function walkFileTree(item,path) {              // this is the core of the drag'
    //console.log("item=",item);
    if(item.isFile) {
       item.file(function(file) {                // this is also asynchronous ... (making everything complicate)
-         if(file.name.match(/\.(jscad|js|scad|stl|amf|gcode)$/)) {   // for now all files OpenJSCAD can handle
+         if(file.name.match(/\.(jscad|js|scad|obj|stl|amf|gcode)$/)) {   // for now all files OpenJSCAD can handle
             console.log("walkFileTree File: "+path+item.name);
             gMemFsTotal++;
             gCurrentFiles.push(file);

@@ -379,13 +379,21 @@ function sphere(p) {
    var r = 1;
    var fn = 32;
    var off = [0,0,0];      
+   var type = 'normal';
+   
    //var zoff = 0; // sphere() in openscad has no center:true|false
    if(p&&p.r) r = p.r;
    if(p&&p.fn) fn = p.fn;
-   if(p&&!p.r&&!p.fn) r = p;
+   if(p&&p.type) type = p.type;
+   if(p&&!p.r&&!p.fn&&!p.type) r = p;
    off = [0,0,0];       // center: false (default)
 
-   var o = CSG.sphere({radius:r,resolution:fn});
+   var o;
+   if(type=='geodesic')
+      o = geodesicSphere(p);
+   else 
+      o = CSG.sphere({radius:r,resolution:fn});
+   
    if(p&&p.center&&p.center.length) {         // preparing individual x,y,z center
       off = [p.center[0]?0:r,p.center[1]?0:r,p.center[2]?0:r];
    } else if(p&&p.center==true) { 
@@ -395,6 +403,114 @@ function sphere(p) {
    }
    if(off[0]||off[1]||off[2]) o = o.translate(off);
    return o;
+}
+
+function geodesicSphere(p) {
+   var r = 1, fn = 4;
+
+   var ci = [              // hard-coded data of icosahedron (20 faces, all triangles)
+      [0.850651,0.000000,-0.525731],
+      [0.850651,-0.000000,0.525731],
+      [-0.850651,-0.000000,0.525731],
+      [-0.850651,0.000000,-0.525731],
+      [0.000000,-0.525731,0.850651],
+      [0.000000,0.525731,0.850651],
+      [0.000000,0.525731,-0.850651],
+      [0.000000,-0.525731,-0.850651],
+      [-0.525731,-0.850651,-0.000000],
+      [0.525731,-0.850651,-0.000000],
+      [0.525731,0.850651,0.000000],
+      [-0.525731,0.850651,0.000000]];
+   
+   var ti = [ [0,9,1], [1,10,0], [6,7,0], [10,6,0], [7,9,0], [5,1,4], [4,1,9], [5,10,1], [2,8,3], [3,11,2], [2,5,4], 
+      [4,8,2], [2,11,5], [3,7,6], [6,11,3], [8,7,3], [9,8,4], [11,10,5], [10,11,6], [8,9,7]];
+   
+   var geodesicSubDivide = function(p,fn,off) {
+      var p1 = p[0], p2 = p[1], p3 = p[2];
+      var n = off;
+      var c = [];
+      var f = [];
+   
+      //           p3
+      //           /\
+      //          /__\     fn = 3
+      //      i  /\  /\
+      //        /__\/__\       total triangles = 9 (fn*fn)
+      //       /\  /\  /\         
+      //     0/__\/__\/__\   
+      //    p1 0   j      p2
+   
+      for(var i=0; i<fn; i++) {
+         for(var j=0; j<fn-i; j++) {
+            var t0 = i/fn;
+            var t1 = (i+1)/fn;
+            var s0 = j/(fn-i);
+            var s1 = (j+1)/(fn-i);
+            var s2 = fn-i-1?j/(fn-i-1):1;
+            var q = [];
+            
+            q[0] = mix3(mix3(p1,p2,s0),p3,t0);
+            q[1] = mix3(mix3(p1,p2,s1),p3,t0);
+            q[2] = mix3(mix3(p1,p2,s2),p3,t1);
+            
+            // -- normalize
+            for(var k=0; k<3; k++) {
+               var r = Math.sqrt(q[k][0]*q[k][0]+q[k][1]*q[k][1]+q[k][2]*q[k][2]);
+               for(var l=0; l<3; l++) {
+                  q[k][l] /= r;
+               }
+            }
+            c.push(clone(q[0]),clone(q[1]),clone(q[2]));
+            f.push([n,n+1,n+2]); n += 3;
+            
+            if(j<fn-i-1) {
+               var s3 = fn-i-1?(j+1)/(fn-i-1):1;
+               q[0] = mix3(mix3(p1,p2,s1),p3,t0);
+               q[1] = mix3(mix3(p1,p2,s3),p3,t1);
+               q[2] = mix3(mix3(p1,p2,s2),p3,t1);
+   
+               // -- normalize
+               for(var k=0; k<3; k++) {
+                  var r = Math.sqrt(q[k][0]*q[k][0]+q[k][1]*q[k][1]+q[k][2]*q[k][2]);
+                  for(var l=0; l<3; l++) {
+                     q[k][l] = q[k][l]/r;
+                  }
+               }
+               c.push(q[0],q[1],q[2]);
+               f.push([n,n+1,n+2]); n += 3;
+            }
+         }
+      } 
+      return { points: c, triangles: f, off: n };
+   }
+   
+   var mix3 = function(a,b,f) {
+      var _f = 1-f;
+      var c = [];
+      for(var i=0; i<3; i++) {
+         c[i] = a[i]*_f+b[i]*f;
+      }
+      return c;
+   }
+
+   if(p) {
+      if(p.fn) fn = Math.floor(p.fn/6);
+      if(p.r) r = p.r;
+   }
+
+   if(fn<=0) fn = 1;
+   
+   var q = [];
+   var c = [], f = [];
+   var off = 0;
+
+   for(var i=0; i<ti.length; i++) {
+      var g = geodesicSubDivide([ ci[ti[i][0]], ci[ti[i][1]], ci[ti[i][2]] ],fn,off);
+      c = c.concat(g.points);
+      f = f.concat(g.triangles);
+      off = g.off;
+   }
+   return polyhedron({points: c, triangles: f}).scale(r);
 }
 
 function cylinder(p) {
@@ -1878,7 +1994,7 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
 }
    
 
-function parseOBJ(obj,fn) {   // http://www.andrewnoske.com/wiki/index.php?title=OBJ_file_format
+function parseOBJ(obj,fn) {   // http://en.wikipedia.org/wiki/Wavefront_.obj_file
    var l = obj.split(/\n/);
    var v = [], f = [];
    
@@ -1895,22 +2011,23 @@ function parseOBJ(obj,fn) {   // http://www.andrewnoske.com/wiki/index.php?title
 
          for(var j=1; j<a.length; j++) {
             var c = a[j];            
-            c.replace(/\/.*$/,'');     // -- if coord# is '840/840' -> 840
+            c = c.replace(/\/.*$/,'');     // -- if coord# is '840/840' -> 840
             c--;                       // -- starts with 1, but we start with 0
             if(c>=v.length) 
                skip++;
             if(skip==0)
                fc.push(c);
          }
+         //fc.reverse();
          if(skip==0) 
             f.push(fc);
-
+         
       } else {
          ;     // vn vt and all others disregarded
       }
    }
    var src = ""; 
-   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" OBJ Importer\n";
+   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" Wavefront OBJ Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
