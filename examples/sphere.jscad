@@ -5,8 +5,8 @@
 
 function main() {
    return [
-      sphere({r: 10, fn: 16}).translate([15,-25,0]),
-      sphere({r: 10, fn: 16, type: 'geodesic'}).translate([-15,-25,0]),
+      sphere({r: 10, fn: 18}).translate([15,-25,0]),
+      sphere({r: 10, fn: 18, type: 'geodesic'}).translate([-15,-25,0]),
 
       sphere({r: 10, fn: 32}).translate([15,0,0]),
       sphere({r: 10, fn: 32, type: 'geodesic'}).translate([-15,0,0]),
