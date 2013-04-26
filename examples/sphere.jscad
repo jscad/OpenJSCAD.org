@@ -1,6 +1,7 @@
 // title: Sphere
 // author: Rene K. Mueller
-// description: sphere, two kinds of
+// date: 2013/04/26
+// description: sphere, two kinds: 'normal' (default) and 'geodesic'
 
 function main() {
    return [
