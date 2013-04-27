@@ -1,7 +1,7 @@
 // openscad.js, a few functions to simplify coding OpenSCAD-like
 //    written by Rene K. Mueller <spiritdude@gmail.com>, License: GPLv2
 //
-// Version: 0.020
+// Version: 0.021
 //
 // Description:
 // Helping to convert OpenSCAD .scad files to OpenJSCad .jscad files with 
@@ -12,6 +12,7 @@
 //     http://openjscad.org/
 //
 // History:
+// 2013/04/26: 0.021: sphere() geodesic option added
 // 2013/04/25: 0.020: center(v,obj) added, uses new .center(v)
 // 2013/04/22: 0.019: vector_char() and vector_text() added, vector font rendering
 // 2013/04/11: 0.018: added alpha supported to AMF export
