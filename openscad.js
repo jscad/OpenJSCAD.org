@@ -15,7 +15,7 @@
 // 2013/04/26: 0.021: sphere() geodesic option added
 // 2013/04/25: 0.020: center(v,obj) added, uses new .center(v)
 // 2013/04/22: 0.019: vector_char() and vector_text() added, vector font rendering
-// 2013/04/11: 0.018: added alpha supported to AMF export
+// 2013/04/11: 0.018: added alpha support to AMF export
 // 2013/04/09: 0.017: added color()
 // 2013/04/08: 0.016: added hull() which takes multiple 2d polygons (CAG)
 // 2013/04/08: 0.015: individual center: [true,false,true] possible for cube(), sphere() and cylinder()
