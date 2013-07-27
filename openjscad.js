@@ -310,7 +310,7 @@ OpenJsCad.Viewer.prototype = {
 OpenJsCad.Viewer.csgToMeshes = function(initial_csg) {
   var csg = initial_csg.canonicalized();
   var mesh = new GL.Mesh({ normals: true, colors: true });
-  var meshes = [ mesh ];
+  var meshes = [];
   var vertexTag2Index = {};
   var vertices = [];
   var colors = [];
@@ -359,12 +359,15 @@ OpenJsCad.Viewer.csgToMeshes = function(initial_csg) {
       mesh.colors = colors;
       mesh.computeWireframe();
       mesh.computeNormals();
+      
+      if ( mesh.vertices.length ) {
+        meshes.push(mesh);
+      }
       // start a new mesh
       mesh = new GL.Mesh({ normals: true, colors: true });
       triangles = [];
       colors = [];
       vertices = [];
-      meshes.push(mesh);	
     }
   }
   // finalize last mesh
@@ -373,6 +376,11 @@ OpenJsCad.Viewer.csgToMeshes = function(initial_csg) {
   mesh.colors = colors;
   mesh.computeWireframe();
   mesh.computeNormals();
+  
+  if ( mesh.vertices.length ) {
+    meshes.push(mesh);
+  }
+  
   return meshes;
 };
 
@@ -668,7 +676,7 @@ OpenJsCad.getWindowURL = function() {
 
 OpenJsCad.textToBlobUrl = function(txt) {
   var windowURL=OpenJsCad.getWindowURL();
-  var blob = new Blob([txt]);
+  var blob = new Blob([txt], { type : 'application/javascript' });
   var blobURL = windowURL.createObjectURL(blob);
   if(!blobURL) throw new Error("createObjectURL() failed"); 
   return blobURL;
