@@ -668,7 +668,7 @@ OpenJsCad.getWindowURL = function() {
 
 OpenJsCad.textToBlobUrl = function(txt) {
   var windowURL=OpenJsCad.getWindowURL();
-  var blob = new Blob([txt]);
+  var blob = new Blob([txt], { type : 'application/javascript' });
   var blobURL = windowURL.createObjectURL(blob);
   if(!blobURL) throw new Error("createObjectURL() failed"); 
   return blobURL;
