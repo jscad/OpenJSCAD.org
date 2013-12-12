@@ -351,7 +351,8 @@ function cube(p) {
    if(p&&p.length) v = p;		
    if(p&&p.size&&p.size.length) v = p.size;        // { size: [1,2,3] }
    if(p&&p.size&&!p.size.length) s = p.size;       // { size: 1 }
-   if(p&&!p.size&&!p.length&&p.center===undefined&&!p.round&&!p.radius) s = p;      // (2)
+   //if(p&&!p.size&&!p.length&&p.center===undefined&&!p.round&&!p.radius) s = p;      // (2)
+   if(p&&(typeof p!='object')) s = p;      // (2)
    if(p&&p.round==true) { round = true, r = v&&v.length?(v[0]+v[1]+v[2])/30:s/10}
    if(p&&p.radius) { round = true, r = p.radius; }
    if(p&&p.fn) fn = p.fn;              // applies in case of round: true
@@ -386,7 +387,8 @@ function sphere(p) {
    if(p&&p.r) r = p.r;
    if(p&&p.fn) fn = p.fn;
    if(p&&p.type) type = p.type;
-   if(p&&!p.r&&!p.fn&&!p.type) r = p;
+   //if(p&&!p.r&&!p.fn&&!p.type) r = p;
+   if(p&&(typeof p!='object')) r = p;
    off = [0,0,0];       // center: false (default)
 
    var o;
