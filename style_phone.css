@@ -107,7 +107,8 @@ canvas {
 #tail { 
    z-index: 4;
    position: absolute;
-   left: 0.2em;
+   /* MM: left: 0.2em; */
+   left: 15px;
    bottom: 0.2em; 
    margin: 0.2em;
    /* MM: arrange buttons on left on tiny screens, otherwise they might move under the editor*/
@@ -171,7 +172,7 @@ canvas {
 	MM:  */
    width: 50px;
    right: -50px;   
-   top: 50px;   
+   top: 30px;   
    position: absolute; 
 }
 
