@@ -75,3 +75,7 @@ several, but specifically
 <li>* Flipping screen orientation not recommended. rather refresh page afterwards.
 </ul>
 
+<br/><br/><br/><br/>
+If you want to provide some feedback or send a comment, have a look at my post:
+<a href="http://technikhobby.blogspot.ch/2013/12/openjscad-goes-mobile.html#comment-form"></a>
+
