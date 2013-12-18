@@ -38,6 +38,11 @@ Point your device to http://yourspace/OpenJSCAD/phone.html
 DONE.
 </pre>
 
+<h2>DEMO</h2>
+Point your device to GitHub
+<a href="https://rawgithub.com/miguelitoelgrande/OpenJSCAD.org/master/phone.html">
+https://rawgithub.com/miguelitoelgrande/OpenJSCAD.org/master/phone.html</a>
+
 <h2>Additional functionality in this mod</h2>
 <ul>
 <li>One Finger touch gesture on the left half of the screen will rotate the 3D view.
