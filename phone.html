@@ -134,10 +134,11 @@ $(document).ready(function() {
 <div id=menu>
 
 <!-- MM: added some toggle code for touch devices...
+     Fix: Some code from "mouseleave" handler..
 <img id=menuHandle src="imgs/menuHandleVL.png" >
 -->
 <img id=menuHandle src="imgs/menuHandleVL.png" 
- onclick="if (document.getElementById('menu').className == 'visible') { document.getElementById('menu').className = ''; } else { document.getElementById('menu').className = 'visible'; } "
+ onclick="if (document.getElementById('menu').className == 'visible') { document.getElementById('menu').className = ''; $('#examples').css('height',0); $('#examples').hide(); $('#options').css('height',0); $('#options').hide();  } else { document.getElementById('menu').className = 'visible'; } "
  />
 <nav>
 <div id=menuVersion>Version <script>document.write(version);</script></div>
