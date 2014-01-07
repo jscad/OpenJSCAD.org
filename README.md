@@ -1,111 +1,86 @@
 <img src="doc/logo.png" width=256 align=right>
-<h1>OpenJSCAD.org</h1>
+<h1>OpenJSCAD@Android</h1>
 
-<b>Version 0.017</b> (ALPHA)
 
-<b>OpenJSCAD.org</b> is a more up-to-date <a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a> frontend where you can edit .jscad files either locally or online via JS editor (built-in).
-A few functions are available to make the transition from <a href="http://openscad.org/">OpenSCAD</a> to OpenJSCAD easier (<a href="https://github.com/Spiritdude/OpenSCAD.jscad">OpenSCAD.jscad</a> built-in),
-as well CLI (command-line interface) for server-side computations with NodeJS.
 
-<h2>Installation</h2>
+This is just a minimalistic mod of the original <a href="https://github.com/Spiritdude/OpenJSCAD.org">OpenJSCAD</a>
+to give it a try on my android devices. <br/>
 
-<b>Immediate Use</b>: No installation, go to <b><a href="http://openjscad.org">OpenJSCAD.org</a></b> (Google Chrome, Firefox)
+<img src="doc/FirefoxAndroid.png">
 
-<b>Local Web Use:</b>
+<h2>Preparations</h2>
 <pre>
-% git clone https://github.com/Spiritdude/OpenJSCAD.org
-% cd OpenJSCAD.org
-% make install
+Download the ZIP file from GitHub or clone this fork
+% git clone https://github.com/miguelitoelgrande/OpenJSCAD.org
+cd to the OpenJSCAD.org local copy.
+You may remove the "OpenJSCAD.org.wiki" and "doc" folders and also most of the "examples" if you really want to reduce the footprint to less than 2MB.
 </pre>
 
-and then access the files via local web-site and your web-browser. 
-
-<b>Local CLI Use:</b>
-
-For CLI (command-line interface) rendering install <a href="http://nodejs.org/">NodeJS</a> as well, e.g. <tt>apt-get install nodejs</tt> (be aware <b>NodeJS &gt; 0.8.1 or newer is required</b>) and then test it:
+<br/>
+<h2>Instructions for Mobile Device use as a Local Installation:</h2>
 <pre>
-% cd examples/
-% openjscad example005.jscad                         # -- creates example005.stl as default
-% openjscad example001.jscad -o test.stl
-% openjscad example001.scad -o example001scad.jscad  # -- convert .scad into .jscad
-% openjscad frog.stl -o test.jscad                   # -- convert .stl into .jscad
-% openjscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf
+Copy the OpenJSCAD.org folder to the internal Android SD Storage.
+Rename the folder, it should now be found as /sdcard/OpenJSCAD with a file browser on your device.
+Use FireFox on Android, preferrably with the "Fullscreen" add-on.
+Type the URL:  
+file:///sdcard/OpenJSCAD/phone.html
+DONE.
+</pre>
+Create an icon on the launcher as you like.<br/>
+<img src="doc/Launcher.png">
+
+<br/>
+<h2>Server-sided installation</h2>
+<pre>
+Almost the same as above.
+Copy the folder to your webspace.
+Point your device to http://yourspace/OpenJSCAD/phone.html  
+DONE.
 </pre>
 
-<b>Note:</b> on some systems the NodeJS executable is <tt>node</tt> (default) or <tt>nodejs</tt>, edit <tt>openjscad</tt> first line to reflect this.
+<h2>DEMO</h2>
+Point your device to GitHub
+<a href="https://rawgithub.com/miguelitoelgrande/OpenJSCAD.org/master/phone.html">
+https://rawgithub.com/miguelitoelgrande/OpenJSCAD.org/master/phone.html</a>
 
-<h2>History</h2>
+<h2>Additional functionality in this mod</h2>
 <ul>
-<li>2013/04/11: 0.017: alpha channel supported in color() and .setColor()
-<li>2013/04/07: 0.016: csg.js: solidFromSlices() and .setColor() on polygon level, and examples by Eduard Bespalov
-<li>2013/04/05: 0.015: rudimentary AMF export and import, web and cli
-<li>2013/04/03: 0.014: multiple files via drag & drop, developing locally
-<li>2013/04/01: 0.013: include() on web-online & drag & drop (but not off-line) and cli (server-side)
-<li>2013/03/20: 0.012: improved UI (slider from the left)
-<li>2013/03/28: 0.011: added support for rectangular_extrude(), rotate_extrude() and torus()
-<li>2013/03/22: 0.010: leave .scad file intact, and translate on-the-fly
-<li>2013/03/20: 0.009: OpenSCAD .scad syntax support included via <a href="https://github.com/garyhodgson/openscad-openjscad-translator">openscad-openjscad-translator</a> module, on web and cli; and experimental .stl import support (binary & ascii)
-<li>2013/03/15: 0.008: circle(), square(), polygon() partially and linear_extrude() implemented (openscad-like)
-<li>2013/03/14: 0.007: integrating jQuery for new features; draggable hint window
-<li>2013/03/12: 0.006: included examples available in the web-frontend direct
-<li>2013/03/12: 0.005: supporting webgui parameters as of original OpenJsCad (see examples/example030.jscad)
-<li>2013/03/11: 0.004: openscad.js: many improvements, more OpenSCAD-like functions
-<li>2013/03/10: 0.003: solidify the functionality (few bug fixes)
-<li>2013/03/10: 0.001: initial version
+<li>One Finger touch gesture on the left half of the screen will rotate the 3D view.
+<li>Two finger pinch gestures (careful!) will zoom.
+<li>Three fingers will pan the view.
+
+<li>"Open" will allow to browse for local (.scad/.jscad) files on the device.
+<li>"Save" will download the editor content to the browsers download folder.
+
+<li>"KeepSession" will save editors content to localStorage of browser.
+<li>earlier session will be loaded, if stored with THIS browser and same URL.
+<li>Recompile Button: Click this button after changing or loading source.
+<li>Stripped down menu. But new functionality mentioned there.
+<li>Push the menu handle to toggle menu.
+
 </ul>
 
-See for more details <a href="https://plus.google.com/115007999023701819645">G+ OpenJSCAD.org Announcements</a> and
-<a href="https://plus.google.com/communities/114958480887231067224">G+ OpenJSCAD Community</a> to discuss with other user and developers.
+<br/>
 
-<h2>Todo</h2>
+<h2>Major Changes</h2>
 <ul>
-<li> <del>3d primitive: <b>torus()</b></del> (done)
-<li> <del>OpenSCAD .scad support for both Web-GUI and CLI</del> (done)
-<li> <del><b>include()</b> for Web-GUI and CLI to include libraries and modules, support of multiple .jscad drag & drop with include()</del> (done) 
-<li> save from built-in editor to local
-<li> <del>complete 2D primitives and transformations</del> (done)
-<li> <del>implementation of <b>linear_extrude()</b> <b>rotate_extrude()</b>, parameter compatible to OpenSCAD</del> (done)
-<li> <del>example of platonic solids (in progress, requires include())</del> (done)
-<li> <del>simple 2D/3D text</del> (done)
-<li> <del>2d operation: hull()</del> (done)
-<li> processing/progress bar (0..100%), perhaps even visual progress seen in the model direct
-<li> <del>STL importer</del> (done) & AMF importer / exporter
-<li> integration into <a href="https://github.com/Spiritdude/RepRapCloud">RepRap Cloud</a> as first stage of the workflow
+<li>Reduced footprint (everything in 2MB possible)
+<li>Added simple touch support (cf. openjscad.js).
+<li>phone.html and style_phone.css as derivate of index.html mainly to optimize for tiny screens.
+<li>Menu toggles on/off on handle bar -> hover does not work well on touch.
+<li>* Extra buttons: File operations as drag and drop not possible.
+<li>* Compile Button additional to Shift+Control
+<li>* Ability to store editor contents in browser across sessions (localStorage).
 </ul>
 
-<h2>Documentation</h2>
+<h2>Limitations</h2>
+several, but specifically
 <ul>
-<li><b><a href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">OpenJSCAD User & Programming Guide</a></b>
+<li>* The Swype-Keyboard on Android does not support backspace. Use another keyboard for editing.
+<li>* Flipping screen orientation not recommended. rather refresh page afterwards.
 </ul>
 
-<h2>Screenshots</h2>
+<br/><br/><br/><br/>
+If you want to provide some feedback or send a comment, have a look at my post:
+<a href="http://technikhobby.blogspot.ch/2013/12/openjscad-goes-mobile.html#comment-form"></a>
 
-Simple JSCAD example (example000.jscad):
-<img src="doc/sshot-01.png">
-
-More sophisticated JSCAD example, fully object-oriented (OO) programmed with interactive parameters (example031.jscad):
-<img src="doc/sshot-03-illu.png">
-
-Import of STL models:
-<img src="doc/sshot-04.png">
-
-Drag & drop a local file:
-<img src="doc/sshot-05-illu.png">
-
-Drag & drop multiple files (Chrome & Firefox) or a folder (Chrome):
-<img src="doc/sshot-06-illu.png">
-
-<h2>See Also</h2>
-<ul>
-<li><a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a>, starting point of OpenJSCAD.org
-<li><a href="http://garyhodgson.github.com/openscad.net/">OpenSCAD.net</a>, another place of inspiration, where the OpenSCAD translator was adapted from
-<li><a href="http://kaosat-dev.github.com/CoffeeSCad/">CoffeeSCad</a>, JavaScript simplified (no more {}), very active development
-<li><a href="http://rsmith.home.xs4all.nl/software/py-stl-stl2pov.html">stl2pov</a> tool to convert .stl to .pov, and then render via <a href="http://povray.org">PovRay.org</a>
-<li><a href="https://github.com/D1plo1d/p3d">P3D</a> STL/AMF/OBJ viewer
-</ul>
-
-
-That's all for now,
-
-Rene K. Mueller<br>
-initial version 2013/03/10, updated 2013/04/04

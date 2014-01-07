@@ -4,6 +4,7 @@
 // History:
 // 2013/03/12: reenable webgui parameters to fit in current design
 // 2013/03/11: few changes to fit design of http://openjscad.org
+// 2013/12/18: added basic touch support -> onTouchMove
 
 OpenJsCad = function() { };
 
@@ -23,6 +24,7 @@ OpenJsCad.log = function(txt) {
   else throw new Error("Cannot log");
 };
 
+
 // A viewer is a WebGL canvas that lets the user view a mesh. The user can
 // tumble it around by dragging the mouse.
 OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
@@ -34,6 +36,9 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
   this.viewpointX = 0;
   this.viewpointY = -5;
   this.viewpointZ = initialdepth;
+
+  //MM: for onTouchMove...
+  this.oldFingerDist = -1;
 
   // Draw axes flag:
   this.drawAxes = true;
@@ -50,6 +55,7 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
   gl.loadIdentity();
   gl.perspective(45, width / height, 0.5, 1000);
   gl.matrixMode(gl.MODELVIEW);
+
 
   // Set up WebGL state
   gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
@@ -106,6 +112,16 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
   gl.ondraw = function() {
     _this.onDraw();
   };
+  
+/////////////////////////////////  
+ //MM:
+   gl.ontouchmove = function(e) {
+    _this.onTouchMove(e);
+  };
+
+ ////////////////////
+
+  
   containerelement.onresize = function(e) {    // is not called
      // var viewer = document.getElementById('viewer');
      // fix distortion after resize of canvas
@@ -130,6 +146,7 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
   };
   this.clear();
 };
+
 
 OpenJsCad.Viewer.prototype = {
   setCsg: function(csg) {
@@ -171,8 +188,8 @@ OpenJsCad.Viewer.prototype = {
     var coeff = (this.viewpointZ-this.ZOOM_MIN) / (this.ZOOM_MAX - this.ZOOM_MIN);
     return coeff;
   },
-  
   onMouseMove: function(e) {
+ //   console.log("MM: OnMouseMove: ", e.which,e.button, e.dragging);
     if (e.dragging) {
       //console.log(e.which,e.button);
       var b = e.button;
@@ -196,11 +213,68 @@ OpenJsCad.Viewer.prototype = {
       } else {                                 // ROTATE X,Z  left mouse button
         this.angleZ += e.deltaX;
         this.angleX += e.deltaY;
-      }
+//   console.log("MM: ROTATE", this.angleZ, this.angleX );
+      }	  
       this.onDraw();    
     }
   },
-
+////////////////////////////////////////////////////////////
+// MM: TODO: simple touch for the moment, similar to mouse:
+// TODO: also put in info box on GUI
+//  3 finger: PAN
+//  2 fingers: "pinch" ZOOM
+//  1 or 4 fingers: Rotate
+ onTouchMove: function(e) {
+  
+   /*  // MM: debug block...  /////////////
+   //   console.log("MM: OnTouchMove: ", e.touches.length);
+   // document.getElementById('statusspan').innerHTML = "Touch: dX"+e.deltaX+", dY"+e.deltaY +" ";
+   document.getElementById('statusspan').innerHTML = "X1="+ e.targetTouches[0].pageX +",Y1="+e.targetTouches[0].pageY ;
+   if (e.touches.length > 1) {      
+	   document.getElementById('statusspan').innerHTML += "X2="+ e.targetTouches[1].pageX +",Y2="+e.targetTouches[1].pageY ;         
+    }
+    */
+	/////////////////////
+     				
+	var fingerCount = e.touches.length ;
+	if (fingerCount != 2) { oldFingerDist=-1;  } // resetting pinch zoom
+	
+    if (e.dragging) {
+      //console.log(e.which,e.button);
+      var b = fingerCount;
+      
+      e.preventDefault();
+      if(e.altKey||b==4) {                     // ROTATE X,Y (ALT or right mouse button)
+        this.angleY += e.deltaX;
+        this.angleX += e.deltaY;
+        //this.angleX = Math.max(-180, Math.min(180, this.angleX));
+      } else if(e.shiftKey||b==3) {            // PAN  (SHIFT or middle mouse button)
+        var factor = 5e-4;
+        this.viewpointX += factor * e.deltaX * this.viewpointZ;
+        this.viewpointY -= factor * e.deltaY * this.viewpointZ;
+      } else if(b==2) {    // pinch zoom                  // ZOOM IN/OUT 	      
+// MM: using status for debugging..
+ //  document.getElementById('statusspan').innerHTML = "Touch: dX"+e.deltaX+", dY"+e.deltaY ;            
+	     var p1 = e.touches[0]; // read touches across whole screen, NOT event.targetTouches[0];
+         var p2 = e.touches[1];              
+         var fingerDist = Math.abs(p2.pageX - p1.pageX) + Math.abs(p2.pageY - p1.pageY); // simplified distance only, for better performance
+    	 if (this.oldFingerDist == -1) { this.oldFingerDist = fingerDist; } 			
+		 var delta =  this.oldFingerDist - fingerDist;
+         var factor =  Math.pow(1.006, delta); // 1 + (delta / (screen.height + screen.width));
+ // MM: document.getElementById('statusspan').innerHTML = "Touch: factor"+factor+", delta"+delta ;		 
+         var coeff = this.getZoom();
+         coeff *= factor;
+         this.setZoom(coeff);		 
+		 this.oldFingerDist = fingerDist; // store value for next delta calculation...
+      } else {                                 // ROTATE X,Z  left mouse button
+        this.angleZ += e.deltaX;
+        this.angleX += e.deltaY;
+ //  console.log("MM: OnTouchMove: ROTATE", this.angleZ, this.angleX );
+      }	  
+      this.onDraw();    
+    }
+  },
+///////////////////////////////////////////////////////////
   onDraw: function(e) {
     var gl = this.gl;
     gl.makeCurrent();
@@ -811,18 +885,25 @@ OpenJsCad.Processor.prototype = {
 */    
     var viewerdiv = document.createElement("div");
     viewerdiv.className = "viewer";
-    viewerdiv.style.width = '100%'; //this.viewerwidth; // + "px";
-    viewerdiv.style.height = '100%'; //this.viewerheight; // + "px";
-    viewerdiv.style.width = screen.width;
-    viewerdiv.style.height = screen.height;
+// MM: override of stylesheet defs for "viewer" messed up on tiny phone screens...	
+//MM:    viewerdiv.style.width = '100%'; //this.viewerwidth; // + "px";
+//MM:     viewerdiv.style.height = '100%'; //this.viewerheight; // + "px";
+//MM:      viewerdiv.style.width = screen.width;
+//MM:      viewerdiv.style.height = screen.height;
+
+//MM: change to window.inner*  -> better for tiny devices...
+      viewerdiv.style.width =  window.innerWidth;	  
+      viewerdiv.style.height =  window.innerHeight;
     //viewerdiv.style.overflow = 'hidden';
-    viewerdiv.style.backgroundColor = "rgb(200,200,200)";
+//MM:    viewerdiv.style.backgroundColor = "rgb(200,200,200)";
     this.containerdiv.appendChild(viewerdiv);
     this.viewerdiv = viewerdiv;
     try {
       //this.viewer = new OpenJsCad.Viewer(this.viewerdiv, this.viewerwidth, this.viewerheight, this.initialViewerDistance);
       //this.viewer = new OpenJsCad.Viewer(this.viewerdiv, viewerdiv.offsetWidth, viewer.offsetHeight, this.initialViewerDistance);
-      this.viewer = new OpenJsCad.Viewer(this.viewerdiv, screen.width, screen.height, this.initialViewerDistance);
+//MM: change to window.inner*  -> better for tiny devices...
+//MM      this.viewer = new OpenJsCad.Viewer(this.viewerdiv, screen.width, screen.height, this.initialViewerDistance);
+      this.viewer = new OpenJsCad.Viewer(this.viewerdiv, window.innerWidth,  window.innerHeight, this.initialViewerDistance);
     } catch(e) {
       //      this.viewer = null;
       this.viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad currently requires Google Chrome or Firefox with WebGL enabled";
@@ -1201,7 +1282,7 @@ OpenJsCad.Processor.prototype = {
     }
   },
 
-  generateOutputFile: function() {
+  generateOutputFile: function() {	 
     this.clearOutputFile();
     if(this.hasValidCurrentObject)
     {
@@ -1249,6 +1330,8 @@ OpenJsCad.Processor.prototype = {
     }    
     return blob;
   },
+  
+
   
   supportedFormatsForCurrentObject: function() {
     if (this.currentObject instanceof CSG) {
@@ -1308,6 +1391,7 @@ OpenJsCad.Processor.prototype = {
     this.enableItems();
     if(this.onchange) this.onchange();
   },
+
 
   generateOutputFileFileSystem: function() {
     window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;

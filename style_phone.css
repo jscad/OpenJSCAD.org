@@ -1,0 +1,333 @@
+/*
+ * style_phone.css for index.html of http://OpenJSCAD.org/
+ *  a copy of "style.css" with some adjustments for small tablet/smartphone screens
+ */
+
+body { 
+   margin: 0px; 
+   padding: 0px; 
+   font-family: Helvetica, Arial, Sans;
+   /* viewer/canvas is screen.width x screen.height so when window 
+      is resized all remains intact, but we make sure no scrollbar appears */
+   overflow: hidden; 
+   /* MM: background... just to be on the safe side of browser defaults */   
+   background: white;   
+}
+
+a {
+   text-decoration: none;
+   color: #6020a0;
+   font-weight: bold;
+}
+
+a:visited {
+   color: #6020a0;
+}
+
+#header {
+   position: absolute;
+   top: 0.1em;
+   left: 0.1em;
+   z-index: 20;
+}
+
+#editor { 
+   width: 50%;
+   top: 0px;
+   bottom: 0px;
+   /* height: 100%;    note: newer ace expects height */
+   right: 0px;
+   z-index: 6;
+   /* background: rgba(255,255,255,0.15); */
+   background: rgba(0,0,0,0.05);
+}
+
+#viewer {
+   /* MM: blue for debugging... if we ever see blue borders it, its wrong ;-) 
+      ...apart of this, the canvas base grid may get a nice blue touch */
+   background: darkblue;  
+   /* background: #fff;  */
+   
+   /* width: 100%; */
+   /* height: 100%; */
+   top: 0px;
+   bottom: 0px;
+}
+canvas { 
+   cursor: move; 
+   padding: 0px; 
+   margin: 0px;
+
+   /* width: 100%; */
+   /* height: 100%; */
+}
+
+#about {
+   position: absolute;
+   width: 30%;
+   left: 30%;
+   top: 30%;
+   font-size: 0.75em;
+   box-shadow: 0px 0px 20px black;
+   color: #404040;
+   border-radius: 20px;
+   background: white;
+   display: none;
+   padding: 1.5em;
+   text-align: center;
+   z-index: 100;
+}
+
+.okButton {
+   border: 2px solid #808080;
+   border-radius: 4px;
+   padding: 0.5em; 
+   padding-left: 2em;
+   padding-right: 2em;
+   margin-top: 3em;
+   background: #eee;
+}
+
+.okButton:hover {
+   background: #ccc;
+}
+
+#footer {
+   font-size: 0.7em;
+   text-align: left;
+   position: absolute; 
+
+   margin-left: 1.5em;
+   bottom: 0.5em; 
+   
+   opacity: 0.5;    
+   -moz-opacity: 0.5;      /* css mess (why do it simple, when we can do it complicate!) */
+}
+
+#tail { 
+   z-index: 4;
+   position: absolute;
+   /* MM: left: 0.2em; */
+   left: 15px;
+   bottom: 0.2em; 
+   margin: 0.2em;
+   /* MM: arrange buttons on left on tiny screens, otherwise they might move under the editor*/
+   width: 30%; 
+}
+
+#busy {
+   vertical-align: middle;
+}
+
+.support {
+   vertical-align: bottom;
+}
+
+#menu, #menu nav a {
+   transition: all 0.4s;
+   -o-transition: all 0.4s;
+   -moz-transition: all 0.4s;
+   -webkit-transition: all 0.4s;
+}
+
+#menu {
+   background: white;
+
+   opacity: 0.8;    
+   -moz-opacity: 0.8;
+
+   border-right: 1px solid black;
+   width: 230px;
+   /* width: 250px; */
+   padding-left: 20px;
+   padding-right: 10px;
+   position: fixed;
+   z-index: 5;
+
+   font-size: 0.9em;
+   
+   box-shadow: 4px 0 10px rgba(0,0,0,0.25);
+   -moz-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
+   -webkit-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
+}
+ 
+#menu {
+   left: 0; 
+}
+
+/*
+#menu:hover, #menu:focus ~ #menuHandle:hover, #menuHandle:focus {
+   left: 0 !important;  /* slide out */
+/* } */
+
+/* MM: quick and dirty fix for touch devices: toggle menu to visible by assigning class on handle click... */
+#menu.visible {
+   left: 0 !important;  /* slide out */
+}
+
+
+#menuHandle {
+   /* right: -25px; 
+      top: 20%; 
+	MM:  */
+   width: 50px;
+   right: -50px;   
+   top: 30px;   
+   position: absolute; 
+}
+
+#menu nav {
+   position: relative;
+   top: 50px;
+}
+
+#menu nav .navlink {
+}
+
+#menu nav .navlink:hover {
+}
+
+#menu #examples {
+   font-size: 0.6em;
+}
+
+#menu #examples .newExample {
+   border-radius: 5px;
+   background: yellow;
+   padding-left: 4px;
+   padding-right: 4px;
+}
+
+#menu #examples, #menu #examples a {
+   margin-top: 0px;
+}
+
+#menu .info {
+   border-spacing: 0;
+   border-collapse: collapse;
+   margin-bottom: 0.5em;
+}
+
+#menu .info td {
+   margin: 0px;
+   padding-left: 2px;
+   padding-right: 2px;
+   padding-top: 0px;
+   padding-bottom: 0px;
+   font-size: 0.6em;
+}
+
+.info .infoOperation {
+   font-weight: bold;
+   color: #602080;
+}
+
+.info .infoKey {
+   font-weight: bold;
+   color: #808080;
+}
+
+#menuVersion {
+   text-align: center; 
+   font-size: 0.6em;
+   color: #666;
+}
+
+.menuSubInfo {
+   font-size: 0.6em;
+   color: #666;
+}
+
+.externalLink {
+   vertical: middle;
+}
+
+#examples {
+   /* width: 60em; */
+   width: auto;
+   z-index: 12;
+   position: absolute;
+   display: none;
+   background: #f8e8ff;
+   border: solid 1px #888;
+   padding: 1em;
+   border-radius: 5px;
+   box-shadow: 0px 0px 10px #849;
+}
+
+#examples td {
+   white-space: nowrap;
+}
+
+#examples li {
+   list-style-type: none;
+}
+
+#examplesList { 
+   border-bottom: 1px solid #888;
+   height: 4px;
+   overflow: hidden;
+}
+
+#examplesList:hover {
+   /*height: 100%;*/
+}
+
+#examplesHandle {
+   bottom: 0px;
+   left: 45%;
+   position: relative;
+   z-index: 10;
+}
+
+.examplesSeparator {
+}
+
+#options {
+   width: auto;
+   z-index: 12;
+   position: absolute;
+   display: none;
+   background: #f8e8ff;
+   border: solid 1px #888;
+   padding: 0.5em;
+   border-radius: 5px;
+   box-shadow: 0px 0px 10px #849;
+   font-size: 0.8em;
+}
+
+.optionGroup {
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   padding: 0.5em;
+   margin: 0.5em;
+   background: white;
+}
+
+.optionGroup input, .optionGroup select {
+  background: #fea;
+  border: none;
+}
+
+.optionInfo {
+   font-size: 0.8em;
+   color: #888;
+}
+
+/* MM: */
+select, button, input[type=button]  {
+/* similar to downloadOutputFileLink { */
+    padding: 2px 8px;
+    border: 1px solid black;
+    border-radius: 4px;
+    background: -moz-linear-gradient(center top , rgb(238, 170, 255), rgb(204, 102, 255)) repeat scroll 0% 0% transparent;
+    text-decoration: none;
+    color: black;
+    font-size: 1.4em;
+    font-weight: bold;
+    box-shadow: 0px 0px 8px black;
+}
+
+input[type=button]:active , input[type=file] :active{
+   background:yellow;
+}
