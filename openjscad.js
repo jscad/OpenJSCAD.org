@@ -1225,7 +1225,7 @@ OpenJsCad.Processor.prototype = {
       blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
     }
     else if(format == "stlb") {      
-      //blob=this.currentObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now (fixTJunctions() needs debugging)
+      //blob = this.currentObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now (fixTJunctions() needs debugging)
       blob = this.currentObject.toStlBinary({webBlob: true});     
 
       // -- binary string -> blob gives bad data, so we request cgs.js already blobbing the binary

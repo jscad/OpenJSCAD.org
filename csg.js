@@ -1802,7 +1802,7 @@ CSG.cylinder = function(options) {
 		throw new Error("Either radiusStart or radiusEnd should be positive");
 	}
 
-	var slices = CSG.parseOptionAsFloat(options, "resolution", CSG.defaultResolution2D);
+	var slices = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution2D);
 	var ray = e.minus(s);
 	var axisZ = ray.unit(); //, isY = (Math.abs(axisZ.y) > 0.5);
 	var axisX = axisZ.randomNonParallelVector().unit();
@@ -1874,7 +1874,7 @@ CSG.roundedCylinder = function(options) {
 		defaultnormal = new CSG.Vector3D(1, 0, 0);
 	}
 	var normal = CSG.parseOptionAs3DVector(options, "normal", defaultnormal);
-	var resolution = CSG.parseOptionAsFloat(options, "resolution", CSG.defaultResolution3D);
+	var resolution = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution3D);
 	if(resolution < 4) resolution = 4;
 	var polygons = [];
 	var qresolution = Math.floor(0.25 * resolution);
@@ -1960,7 +1960,7 @@ CSG.roundedCylinder = function(options) {
 CSG.roundedCube = function(options) {
 	var center = CSG.parseOptionAs3DVector(options, "center", [0, 0, 0]);
 	var cuberadius = CSG.parseOptionAs3DVector(options, "radius", [1, 1, 1]);
-	var resolution = CSG.parseOptionAsFloat(options, "resolution", CSG.defaultResolution3D);
+	var resolution = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution3D);
 	if(resolution < 4) resolution = 4;
 	var roundradius = CSG.parseOptionAsFloat(options, "roundradius", 0.2);
 	var innercuberadius = cuberadius;
@@ -4911,7 +4911,7 @@ CSG.Path2D.arc = function(options) {
 	var radius = CSG.parseOptionAsFloat(options, "radius", 1);
 	var startangle = CSG.parseOptionAsFloat(options, "startangle", 0);
 	var endangle = CSG.parseOptionAsFloat(options, "endangle", 360);
-	var resolution = CSG.parseOptionAsFloat(options, "resolution", CSG.defaultResolution2D);
+	var resolution = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution2D);
 	var maketangent = CSG.parseOptionAsBool(options, "maketangent", false);
 	// no need to make multiple turns:
 	while(endangle - startangle >= 720) {
@@ -5205,7 +5205,7 @@ CAG.roundedRectangle = function(options) {
 	var center = CSG.parseOptionAs2DVector(options, "center", [0, 0]);
 	var radius = CSG.parseOptionAs2DVector(options, "radius", [1, 1]);
 	var roundradius = CSG.parseOptionAsFloat(options, "roundradius", 0.2);
-	var resolution = CSG.parseOptionAsFloat(options, "resolution", CSG.defaultResolution2D);
+	var resolution = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution2D);
 	var maxroundradius = Math.min(radius.x, radius.y);
 	maxroundradius -= 0.1;
 	roundradius = Math.min(roundradius, maxroundradius);
