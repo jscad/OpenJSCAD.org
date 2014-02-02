@@ -212,6 +212,27 @@ OpenJsCad.Viewer.prototype = {
     gl.rotate(this.angleY, 0, 1, 0);
     gl.rotate(this.angleZ, 0, 0, 1);
 
+    gl.enable(gl.BLEND);
+    //gl.disable(gl.DEPTH_TEST);
+    if (!this.lineOverlay) gl.enable(gl.POLYGON_OFFSET_FILL);
+    for (var i = 0; i < this.meshes.length; i++) {
+      var mesh = this.meshes[i];
+      this.lightingShader.draw(mesh, gl.TRIANGLES);
+    }
+    if (!this.lineOverlay) gl.disable(gl.POLYGON_OFFSET_FILL);
+    gl.disable(gl.BLEND);
+    //gl.enable(gl.DEPTH_TEST);
+
+    if(this.drawLines) {
+      if (this.lineOverlay) gl.disable(gl.DEPTH_TEST);
+      gl.enable(gl.BLEND);
+      for (var i = 0; i < this.meshes.length; i++) {
+        var mesh = this.meshes[i];
+        this.blackShader.draw(mesh, gl.LINES);
+      }
+      gl.disable(gl.BLEND);
+      if (this.lineOverlay) gl.enable(gl.DEPTH_TEST);
+    }
     //EDW: axes
     if (this.drawAxes) {
       gl.enable(gl.BLEND);
@@ -279,28 +300,6 @@ OpenJsCad.Viewer.prototype = {
       gl.end();
       gl.disable(gl.BLEND);
       // GL.Mesh.plane({ detailX: 20, detailY: 40 });
-    }
-
-    gl.enable(gl.BLEND);
-    //gl.disable(gl.DEPTH_TEST);
-    if (!this.lineOverlay) gl.enable(gl.POLYGON_OFFSET_FILL);
-    for (var i = 0; i < this.meshes.length; i++) {
-      var mesh = this.meshes[i];
-      this.lightingShader.draw(mesh, gl.TRIANGLES);
-    }
-    if (!this.lineOverlay) gl.disable(gl.POLYGON_OFFSET_FILL);
-    gl.disable(gl.BLEND);
-    //gl.enable(gl.DEPTH_TEST);
-
-    if(this.drawLines) {
-      if (this.lineOverlay) gl.disable(gl.DEPTH_TEST);
-      gl.enable(gl.BLEND);
-      for (var i = 0; i < this.meshes.length; i++) {
-        var mesh = this.meshes[i];
-        this.blackShader.draw(mesh, gl.LINES);
-      }
-      gl.disable(gl.BLEND);
-      if (this.lineOverlay) gl.enable(gl.DEPTH_TEST);
     }
   }
 };
