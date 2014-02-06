@@ -289,3 +289,54 @@ canvas {
    color: #888;
 }
 
+/* arrows */
+
+.shift-scene {
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   border-radius: 50%;
+   border: 5px dotted #999;
+   width: 160px;
+   height: 160px;
+   margin-top: -80px;
+   margin-left: -80px;
+   background: transparent;
+   cursor: move;
+   opacity: 0.8;
+   display: none;
+}
+.shift-scene.active {
+   display: block;
+}
+.arrow {
+   width: 0px;
+   height: 0px;
+   border: 50px solid transparent;
+   position: absolute;
+   z-index: 100;
+   margin-left: 30px;
+   margin-top: 30px;
+}
+.arrow-left {
+   border-right-color: #666;
+   margin-left: -90px;
+}
+.arrow-right {
+   border-left-color: #666;
+   margin-left: 150px;
+}
+.arrow-top {
+   border-bottom-color: #666;
+   margin-top: -90px;
+}
+.arrow-bottom {
+   border-top-color: #666;
+   margin-top: 150px;
+}
+.shift-vertical .arrow-left,
+.shift-vertical .arrow-right,
+.shift-horizontal .arrow-top,
+.shift-horizontal .arrow-bottom {
+   display: none;
+}
