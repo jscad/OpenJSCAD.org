@@ -125,6 +125,11 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
           e.preventDefault();
       }
     }).on("touch", function(e) {
+      if (e.gesture.pointerType != 'touch'){
+        e.preventDefault();
+        return;
+      }
+
       if (e.gesture.touches.length == 1) {
           var point = e.gesture.center;
           _this.touch.shiftTimer = setTimeout(function(){
@@ -139,6 +144,11 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
         _this.clearShift();
       }
     }).on("drag", function(e) {
+      if (e.gesture.pointerType != 'touch') {
+        e.preventDefault();
+        return;
+      }
+
       if (!_this.touch.cur || _this.touch.cur == 'dragging') {
           _this.clearShift();
           _this.onPanTilt(e);
@@ -257,7 +267,7 @@ OpenJsCad.Viewer.prototype = {
         this.angleZ += e.deltaX;
         this.angleX += e.deltaY;
       }
-      this.onDraw();    
+      this.onDraw();
     }
   },
   clearShift: function() {
@@ -298,7 +308,7 @@ OpenJsCad.Viewer.prototype = {
           .css('top', e.gesture.center.pageY + 'px');
         delta = e.gesture.deltaY - this.touch.lastY;
         this.viewpointY -= factor * delta * this.viewpointZ;
-        //this.angleX += delta;
+        this.angleX += delta;
     } 
     if (this.touch.lastX && (e.gesture.direction == 'left' || e.gesture.direction == 'right')) {
         this.touch.shiftControl
@@ -307,7 +317,7 @@ OpenJsCad.Viewer.prototype = {
           .css('left', e.gesture.center.pageX + 'px');
         delta = e.gesture.deltaX - this.touch.lastX;
         this.viewpointX += factor * delta * this.viewpointZ;
-        //this.angleZ += delta;
+        this.angleZ += delta;
     }
     if (delta)
       this.onDraw();
