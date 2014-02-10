@@ -35,6 +35,17 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
   this.viewpointY = -5;
   this.viewpointZ = initialdepth;
 
+  this.touch = {
+    lastX: 0,
+    lastY: 0,
+    scale: 0,
+    ctrl: 0,
+    shiftTimer: null,
+    shiftControl: null,
+    cur: null //current state
+  };
+
+
   // Draw axes flag:
   this.drawAxes = true;
   // Draw triangle lines:
@@ -62,43 +73,102 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
   this.blackShader = new GL.Shader('\
     void main() {\
       gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\
-    }\
-  ', '\
+    }', '\
     void main() {\
       gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);\
-    }\
-  ');
+    }'
+  );
 
   // Shader with diffuse and specular lighting
   this.lightingShader = new GL.Shader('\
-    varying vec3 color;\
-    varying float alpha;\
-    varying vec3 normal;\
-    varying vec3 light;\
-    void main() {\
-      const vec3 lightDir = vec3(1.0, 2.0, 3.0) / 3.741657386773941;\
-      light = lightDir;\
-      color = gl_Color.rgb;\
-      alpha = gl_Color.a;\
-      normal = gl_NormalMatrix * gl_Normal;\
-      gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\
-    }\
-  ', '\
-    varying vec3 color;\
-    varying float alpha;\
-    varying vec3 normal;\
-    varying vec3 light;\
-    void main() {\
-      vec3 n = normalize(normal);\
-      float diffuse = max(0.0, dot(light, n));\
-      float specular = pow(max(0.0, -reflect(light, n).z), 10.0) * sqrt(diffuse);\
-      gl_FragColor = vec4(mix(color * (0.3 + 0.7 * diffuse), vec3(1.0), specular), alpha);\
-    }\
-  ');
-
-  containerelement.appendChild(gl.canvas);  
+      varying vec3 color;\
+      varying float alpha;\
+      varying vec3 normal;\
+      varying vec3 light;\
+      void main() {\
+        const vec3 lightDir = vec3(1.0, 2.0, 3.0) / 3.741657386773941;\
+        light = lightDir;\
+        color = gl_Color.rgb;\
+        alpha = gl_Color.a;\
+        normal = gl_NormalMatrix * gl_Normal;\
+        gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\
+      }',
+     '\
+      varying vec3 color;\
+      varying float alpha;\
+      varying vec3 normal;\
+      varying vec3 light;\
+      void main() {\
+        vec3 n = normalize(normal);\
+        float diffuse = max(0.0, dot(light, n));\
+        float specular = pow(max(0.0, -reflect(light, n).z), 10.0) * sqrt(diffuse);\
+        gl_FragColor = vec4(mix(color * (0.3 + 0.7 * diffuse), vec3(1.0), specular), alpha);\
+      }'
+  );
 
   var _this=this;
+
+  var shiftControl = $('<div class="shift-scene"><div class="arrow arrow-left" />\
+    <div class="arrow arrow-right" />\
+    <div class="arrow arrow-top" />\
+    <div class="arrow arrow-bottom" /></div>');
+  this.touch.shiftControl = shiftControl;
+
+  $(containerelement).append(gl.canvas)
+    .append(shiftControl)
+    .hammer({//touch screen control
+      drag_lock_to_axis: true
+    }).on("transform", function(e){
+      if (e.gesture.touches.length >= 2) {
+          _this.clearShift();
+          _this.onTransform(e);
+          e.preventDefault();
+      }
+    }).on("touch", function(e) {
+      if (e.gesture.pointerType != 'touch'){
+        e.preventDefault();
+        return;
+      }
+
+      if (e.gesture.touches.length == 1) {
+          var point = e.gesture.center;
+          _this.touch.shiftTimer = setTimeout(function(){
+              shiftControl.addClass('active').css({
+                  left: point.pageX + 'px',
+                  top: point.pageY + 'px'
+              });
+              _this.touch.shiftTimer = null;
+              _this.touch.cur = 'shifting';
+        }, 500);
+      } else {
+        _this.clearShift();
+      }
+    }).on("drag", function(e) {
+      if (e.gesture.pointerType != 'touch') {
+        e.preventDefault();
+        return;
+      }
+
+      if (!_this.touch.cur || _this.touch.cur == 'dragging') {
+          _this.clearShift();
+          _this.onPanTilt(e);
+      } else if (_this.touch.cur == 'shifting') {
+          _this.onShift(e);
+      }
+    }).on("touchend", function(e) {
+        _this.clearShift();
+        if (_this.touch.cur) {
+            shiftControl.removeClass('active shift-horizontal shift-vertical');
+        }
+    }).on("transformend dragstart dragend", function(e) {
+      if ((e.type == 'transformend' && _this.touch.cur == 'transforming') || 
+          (e.type == 'dragend' && _this.touch.cur == 'shifting') ||
+          (e.type == 'dragend' && _this.touch.cur == 'dragging'))
+        _this.touch.cur = null;
+      _this.touch.lastX = 0;
+      _this.touch.lastY = 0;
+      _this.touch.scale = 0;
+    });
 
   gl.onmousemove = function(e) {
     _this.onMouseMove(e);
@@ -197,10 +267,75 @@ OpenJsCad.Viewer.prototype = {
         this.angleZ += e.deltaX;
         this.angleX += e.deltaY;
       }
-      this.onDraw();    
+      this.onDraw();
     }
   },
+  clearShift: function() {
+      if(this.touch.shiftTimer) {
+          clearTimeout(this.touch.shiftTimer);
+          this.touch.shiftTimer = null;
+      }
+      return this;
+  },
+  //pan & tilt with one finger
+  onPanTilt: function(e) {
+    this.touch.cur = 'dragging';
+    var delta = 0;
+    if (this.touch.lastY && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
+        //tilt
+        delta = e.gesture.deltaY - this.touch.lastY;
+        this.angleX += delta;
+    } else if (this.touch.lastX && (e.gesture.direction == 'left' || e.gesture.direction == 'right')) {
+        //pan
+        delta = e.gesture.deltaX - this.touch.lastX;
+        this.angleZ += delta;
+    }
+    if (delta)
+      this.onDraw();
+    this.touch.lastX = e.gesture.deltaX;
+    this.touch.lastY = e.gesture.deltaY;
+  },
+  //shift after 0.5s touch&hold
+  onShift: function(e) {
+    this.touch.cur = 'shifting';
+    var factor = 5e-3;
+    var delta = 0;
 
+    if (this.touch.lastY && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
+        this.touch.shiftControl
+          .removeClass('shift-horizontal')
+          .addClass('shift-vertical')
+          .css('top', e.gesture.center.pageY + 'px');
+        delta = e.gesture.deltaY - this.touch.lastY;
+        this.viewpointY -= factor * delta * this.viewpointZ;
+        this.angleX += delta;
+    } 
+    if (this.touch.lastX && (e.gesture.direction == 'left' || e.gesture.direction == 'right')) {
+        this.touch.shiftControl
+          .removeClass('shift-vertical')
+          .addClass('shift-horizontal')
+          .css('left', e.gesture.center.pageX + 'px');
+        delta = e.gesture.deltaX - this.touch.lastX;
+        this.viewpointX += factor * delta * this.viewpointZ;
+        this.angleZ += delta;
+    }
+    if (delta)
+      this.onDraw();
+    this.touch.lastX = e.gesture.deltaX;
+    this.touch.lastY = e.gesture.deltaY;
+  },
+  //zooming
+  onTransform: function(e) {
+      this.touch.cur = 'transforming';
+      if (this.touch.scale) {
+        var factor = 1 / (1 + e.gesture.scale - this.touch.scale);
+        var coeff = this.getZoom();
+        coeff *= factor;
+        this.setZoom( coeff);
+      }
+      this.touch.scale = e.gesture.scale;
+      return this;
+  },
   onDraw: function(e) {
     var gl = this.gl;
     gl.makeCurrent();
@@ -212,6 +347,27 @@ OpenJsCad.Viewer.prototype = {
     gl.rotate(this.angleY, 0, 1, 0);
     gl.rotate(this.angleZ, 0, 0, 1);
 
+    gl.enable(gl.BLEND);
+    //gl.disable(gl.DEPTH_TEST);
+    if (!this.lineOverlay) gl.enable(gl.POLYGON_OFFSET_FILL);
+    for (var i = 0; i < this.meshes.length; i++) {
+      var mesh = this.meshes[i];
+      this.lightingShader.draw(mesh, gl.TRIANGLES);
+    }
+    if (!this.lineOverlay) gl.disable(gl.POLYGON_OFFSET_FILL);
+    gl.disable(gl.BLEND);
+    //gl.enable(gl.DEPTH_TEST);
+
+    if(this.drawLines) {
+      if (this.lineOverlay) gl.disable(gl.DEPTH_TEST);
+      gl.enable(gl.BLEND);
+      for (var i = 0; i < this.meshes.length; i++) {
+        var mesh = this.meshes[i];
+        this.blackShader.draw(mesh, gl.LINES);
+      }
+      gl.disable(gl.BLEND);
+      if (this.lineOverlay) gl.enable(gl.DEPTH_TEST);
+    }
     //EDW: axes
     if (this.drawAxes) {
       gl.enable(gl.BLEND);
@@ -279,28 +435,6 @@ OpenJsCad.Viewer.prototype = {
       gl.end();
       gl.disable(gl.BLEND);
       // GL.Mesh.plane({ detailX: 20, detailY: 40 });
-    }
-
-    gl.enable(gl.BLEND);
-    //gl.disable(gl.DEPTH_TEST);
-    if (!this.lineOverlay) gl.enable(gl.POLYGON_OFFSET_FILL);
-    for (var i = 0; i < this.meshes.length; i++) {
-      var mesh = this.meshes[i];
-      this.lightingShader.draw(mesh, gl.TRIANGLES);
-    }
-    if (!this.lineOverlay) gl.disable(gl.POLYGON_OFFSET_FILL);
-    gl.disable(gl.BLEND);
-    //gl.enable(gl.DEPTH_TEST);
-
-    if(this.drawLines) {
-      if (this.lineOverlay) gl.disable(gl.DEPTH_TEST);
-      gl.enable(gl.BLEND);
-      for (var i = 0; i < this.meshes.length; i++) {
-        var mesh = this.meshes[i];
-        this.blackShader.draw(mesh, gl.LINES);
-      }
-      gl.disable(gl.BLEND);
-      if (this.lineOverlay) gl.enable(gl.DEPTH_TEST);
     }
   }
 };
