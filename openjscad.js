@@ -1239,6 +1239,26 @@ OpenJsCad.Processor.prototype = {
     }
     return paramValues;
   },
+
+  updateControlDependencies: function()
+  {
+    var values = this.getParamValues();
+    for(var i = 0; i < this.paramDepends.length; i++)
+    {
+	  var dep = this.paramDepends[i];
+	  console.log(dep);
+      if(values[dep.depend] == dep.dependvalue)
+      {
+        // Enable the control
+        dep.row.style.display = 'block';
+      }
+      else
+      {
+        // Disable the control
+        dep.row.style.display = 'none';
+      }
+    }
+  },
     
   rebuildSolid: function()
   {
@@ -1491,6 +1511,7 @@ OpenJsCad.Processor.prototype = {
   createParamControls: function() {
     this.parameterstable.innerHTML = "";
     this.paramControls = [];
+    this.paramDepends = [];
     var paramControls = [];
     var tablerows = [];
     for(var i = 0; i < this.paramDefinitions.length; i++)
@@ -1585,12 +1606,14 @@ OpenJsCad.Processor.prototype = {
       }
       // implementing instantUpdate
       control.onchange = function() { 
+		 that.updateControlDependencies();
          if(document.getElementById("instantUpdate").checked==true) {
             that.rebuildSolid();
          }
       };
       paramControls.push(control);
       var tr = document.createElement("tr");
+      tr.style.display = 'block';
       var td = document.createElement("td");
       var label = paramdef.name + ":";
       if('caption' in paramdef)
@@ -1605,12 +1628,22 @@ OpenJsCad.Processor.prototype = {
       td.appendChild(control);
       tr.appendChild(td);
       tablerows.push(tr);
+
+      if('depends' in paramdef)
+      {
+		if(!('dependvalue' in paramdef))
+		{
+		  throw new Error(errorprefix + "Should include a 'dependvalue' parameter");
+		}
+		this.paramDepends.push({'row': tr, 'depend': paramdef.depends, 'dependvalue': paramdef.dependvalue});
+      }
     }
     var that = this;
     tablerows.map(function(tr){
       that.parameterstable.appendChild(tr);
     }); 
     this.paramControls = paramControls;
+    this.updateControlDependencies();
   },
 };
 
