@@ -1245,8 +1245,7 @@ OpenJsCad.Processor.prototype = {
     var values = this.getParamValues();
     for(var i = 0; i < this.paramDepends.length; i++)
     {
-	  var dep = this.paramDepends[i];
-	  console.log(dep);
+      var dep = this.paramDepends[i];
       if(values[dep.depend] == dep.dependvalue)
       {
         // Enable the control
@@ -1606,7 +1605,7 @@ OpenJsCad.Processor.prototype = {
       }
       // implementing instantUpdate
       control.onchange = function() { 
-		 that.updateControlDependencies();
+         that.updateControlDependencies();
          if(document.getElementById("instantUpdate").checked==true) {
             that.rebuildSolid();
          }
@@ -1631,11 +1630,11 @@ OpenJsCad.Processor.prototype = {
 
       if('depends' in paramdef)
       {
-		if(!('dependvalue' in paramdef))
-		{
-		  throw new Error(errorprefix + "Should include a 'dependvalue' parameter");
-		}
-		this.paramDepends.push({'row': tr, 'depend': paramdef.depends, 'dependvalue': paramdef.dependvalue});
+        if(!('dependvalue' in paramdef))
+        {
+          throw new Error(errorprefix + "Should include a 'dependvalue' parameter");
+        }
+        this.paramDepends.push({'row': tr, 'depend': paramdef.depends, 'dependvalue': paramdef.dependvalue});
       }
     }
     var that = this;
