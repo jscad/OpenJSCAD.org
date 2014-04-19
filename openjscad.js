@@ -45,9 +45,6 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
     cur: null //current state
   };
 
-
-  // Draw axes flag:
-  this.drawAxes = true;
   // Draw triangle lines:
   this.drawLines = false;
   // Set to true so lines don't use the depth buffer
@@ -202,6 +199,11 @@ OpenJsCad.Viewer = function(containerelement, width, height, initialdepth) {
 };
 
 OpenJsCad.Viewer.prototype = {
+    drawAxes: true,
+    drawGridPlaneX: false,
+    drawGridPlaneY: false,
+    drawGridPlaneZ: true,
+
   setCsg: function(csg) {
     if(0&&csg.length) {                            // preparing multiple CSG's (not union-ed), not yet working
        for(var i=0; i<csg.length; i++)
@@ -369,34 +371,46 @@ OpenJsCad.Viewer.prototype = {
       if (this.lineOverlay) gl.enable(gl.DEPTH_TEST);
     }
     //EDW: axes
-    if (this.drawAxes) {
-      gl.enable(gl.BLEND);
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-      gl.begin(gl.LINES);
-      var plate = 200;
-      if(this.plate) {
-         gl.color(.8,.8,.8,.5); // -- minor grid
-         for(var x=-plate/2; x<=plate/2; x++) {
-            if(x%10) {
-               gl.vertex(-plate/2, x, 0);
-               gl.vertex(plate/2, x, 0);
-               gl.vertex(x, -plate/2, 0);
-               gl.vertex(x, plate/2, 0);
+    if (this.drawGridPlaneX || this.drawGridPlaneY || this.drawGridPlaneZ) {
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        gl.begin(gl.LINES);
+        var planesize = 200;
+
+        for (var index = -planesize / 2; index <= planesize / 2; index++) {
+            if (index % 10)    gl.color(.8, .8, .8, .5); // -- minor grid
+            else               gl.color(.5, .5, .5, .5); // -- major grid
+            
+            if (this.drawGridPlaneX) {
+                gl.vertex(0, -planesize / 2, index);
+                gl.vertex(0, planesize / 2, index);
+                gl.vertex(0, index, -planesize / 2);
+                gl.vertex(0, index, planesize / 2);
             }
-         }
-         gl.color(.5,.5,.5,.5); // -- major grid
-         for(var x=-plate/2; x<=plate/2; x+=10) {
-            gl.vertex(-plate/2, x, 0);
-            gl.vertex(plate/2, x, 0);
-            gl.vertex(x, -plate/2, 0);
-            gl.vertex(x, plate/2, 0);
-         }
-      }
-      if(0) {
+            if (this.drawGridPlaneY) {
+                gl.vertex(-planesize / 2, 0, index);
+                gl.vertex(planesize / 2, 0, index);
+                gl.vertex(index, 0, -planesize / 2);
+                gl.vertex(index, 0, planesize / 2);
+            }
+            if (this.drawGridPlaneZ) {
+                gl.vertex(-planesize / 2, index, 0);
+                gl.vertex(planesize / 2, index, 0);
+                gl.vertex(index, -planesize / 2, 0);
+                gl.vertex(index, planesize / 2, 0);
+            }
+        }
+        gl.end();
+        gl.disable(gl.BLEND);
+    }
+    if (this.drawAxes) {
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        gl.begin(gl.LINES);
          //X - red
          gl.color(1, 0.5, 0.5, 0.2); //negative direction is lighter
          gl.vertex(-100, 0, 0);
-         gl.vertex(0, 0, 0);
+         gl.vertex(0, 0, 0);         
    
          gl.color(1, 0, 0, 0.8); //positive direction
          gl.vertex(0, 0, 0);
@@ -417,20 +431,20 @@ OpenJsCad.Viewer.prototype = {
          gl.color(0.2, 0.2, 0.2, 0.8); //positive direction
          gl.vertex(0, 0, 0);
          gl.vertex(0, 0, 100);
-      }
+      
       if(0) {
          gl.triangle();
          gl.color(0.6, 0.2, 0.6, 0.2); //positive direction
          gl.vertex(-plate,-plate,0);
          gl.vertex(plate,-plate,0);
          gl.vertex(plate,plate,0);
-         gl.end();
+         //gl.end();
          gl.triangle();
          gl.color(0.6, 0.2, 0.6, 0.2); //positive direction
          gl.vertex(plate,plate,0);
          gl.vertex(-plate,plate,0);
          gl.vertex(-plate,-plate,0);
-         gl.end();
+         //gl.end();
       }
       gl.end();
       gl.disable(gl.BLEND);

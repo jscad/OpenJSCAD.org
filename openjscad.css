@@ -81,6 +81,20 @@ canvas {
   
   /* cursor: move;     moveable now */
 }
+#controlsdiv {
+  display: inline-block;
+  position: absolute;         
+  top: 5em;
+  left: 1em;
+  z-index: 4;
+  border: 1px solid rgb(200,200,200);
+  border-radius: 5px;     
+  -moz-border-radius: 5px;    /* css mess */
+  -webkit-border-radius: 5px;
+  padding: 10px;
+  background: #fff; /* rgba(255,255,255,0.7); */
+  opacity: 0.8;
+}
 #parametersdiv td {
   font-size: 0.8em;
 }

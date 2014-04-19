@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 <!-- 
@@ -155,6 +155,15 @@ $(document).ready(function() {
 <tr><td align=right><b>amf</b></td><td><a target=_blank href="http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format">AMF format</a> (experimental, import/export)</td></tr>
 </table>
 <p><a class=navlink href="#" onclick="$('#about').show(); return false;">About</a></p>
+
+<b>Options</b>
+<table class=info>
+<tr><td><label><input type="checkbox" id="ShowAxesCheckBox" onclick="updateOptions();"/>Show Axes</label></td></tr>
+<tr><td><label><input type="checkbox" id="ShowXGridPlaneCheckBox" onclick="updateOptions();"/>Show X Grid Plane</label></td></tr>
+<tr><td><label><input type="checkbox" id="ShowYGridPlaneCheckBox" onclick="updateOptions();"/>Show Y Grid Plane</label></td></tr>
+<tr><td><label><input type="checkbox" id="ShowZGridPlaneCheckBox" onclick="updateOptions();" checked="checked"/>Show Z Grid Plane</label></td></tr>
+</table>
+
 </nav>
 </div> <!-- /menu -->
 
@@ -177,6 +186,8 @@ Get your copy/clone/fork from <a href="https://github.com/Spiritdude/OpenJSCAD.o
 <p><br>
 <a class=okButton href='#' onclick="$('#about').hide(); return false;"> OK </a>
 </div>
+
+
 
 <div id="editor">// -- OpenJSCAD.org logo
 
@@ -376,6 +387,11 @@ if(me=='web-online') {
 <div oncontextmenu="return false;" id="viewer"></div> <!-- avoiding popup when right mouse is clicked -->
 
 <div id="parametersdiv"></div>
+<div id="controlsdiv">
+    <b>Controls</b><br />
+    <button id="centerbutton" onclick="CenterButtonClick();">Center</button>
+
+</div>
 <div id="tail">
 <div id="statusdiv"></div>
 <div id="errordiv"></div>
@@ -488,6 +504,11 @@ function onload() {
    }
    
    gProcessor = new OpenJsCad.Processor(document.getElementById("viewer"));
+   gProcessor.viewer.drawAxes = false;
+   gProcessor.viewer.drawGridPlaneX = false;
+   gProcessor.viewer.drawGridPlaneY = false;
+   gProcessor.viewer.drawGridPlaneZ = true;
+
    setupDragDrop();
    //gProcessor.setDebugging(debugging); 
    if(me=='web-online') {    // we are online, fetch first example
@@ -969,6 +990,30 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
       }
     }
   }
+}
+
+    // ---------------------------------------------------------------------------------------------------------
+    // Constrols and Options functions
+function updateOptions() {
+    if (gProcessor) {
+        gProcessor.viewer.drawGridPlaneX = ShowXGridPlaneCheckBox.checked;
+        gProcessor.viewer.drawGridPlaneY = ShowYGridPlaneCheckBox.checked;
+        gProcessor.viewer.drawGridPlaneZ = ShowZGridPlaneCheckBox.checked;
+        gProcessor.viewer.drawAxes = ShowAxesCheckBox.checked;
+
+        gProcessor.rebuildSolid();
+    }
+}
+
+function CenterButtonClick() {
+    gProcessor.viewer.angleX = -60;
+    gProcessor.viewer.angleY = 0;
+    gProcessor.viewer.angleZ = -45;
+    gProcessor.viewer.viewpointX = 0;
+    gProcessor.viewer.viewpointY = -5;
+    gProcessor.viewer.viewpointZ = 100;
+
+    gProcessor.rebuildSolid();
 }
 
 // ---------------------------------------------------------------------------------------------------------
