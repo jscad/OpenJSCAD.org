@@ -1001,7 +1001,7 @@ function updateOptions() {
         gProcessor.viewer.drawGridPlaneZ = ShowZGridPlaneCheckBox.checked;
         gProcessor.viewer.drawAxes = ShowAxesCheckBox.checked;
 
-        gProcessor.rebuildSolid();
+        gProcessor.viewer.onDraw();
     }
 }
 
@@ -1013,7 +1013,7 @@ function CenterButtonClick() {
     gProcessor.viewer.viewpointY = -5;
     gProcessor.viewer.viewpointZ = 100;
 
-    gProcessor.rebuildSolid();
+    gProcessor.viewer.onDraw();
 }
 
 // ---------------------------------------------------------------------------------------------------------
