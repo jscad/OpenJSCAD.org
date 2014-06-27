@@ -1300,12 +1300,7 @@ OpenJsCad.Processor.prototype = {
       catch(e)
       {
         that.processing = false;
-        var errtxt = e.stack;
-        if(!errtxt)
-        {
-          errtxt = e.toString();
-        }
-        that.setError(errtxt);
+        that.setError(e);
         that.statusspan.innerHTML = "Error.";
       }
       that.enableItems();
