@@ -1152,7 +1152,12 @@ OpenJsCad.Processor.prototype = {
     this.options[ 'libraries' ].push( lib );
   },
   
-  setError: function(txt) {
+  setError: function(o) {
+    var txt = o.toString();
+    if (o.stack) {
+    	// TODO: display the stack trace where this is more space in UI (popup?)
+    	// txt += '\n'+o.stack;
+    }
     this.hasError = (txt != "");
     this.errorpre.textContent = txt;
     this.enableItems();
