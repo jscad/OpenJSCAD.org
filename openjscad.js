@@ -1154,7 +1154,7 @@ OpenJsCad.Processor.prototype = {
   
   setError: function(txt) {
     this.hasError = (txt != "");
-    this.errorpre.innerText = txt;
+    this.errorpre.textContent = txt;
     this.enableItems();
   },
   
