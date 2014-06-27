@@ -572,9 +572,9 @@ OpenJsCad.runMainInWorker = function(mainParameters) {
     self.postMessage({cmd: 'rendered', result: result_compact});
   }
   catch(e) {
-    var errtxt = e.stack;
-    if(!errtxt) {
-      errtxt = e.toString();
+    var errtxt = e.toString();
+    if(!e.stack) {
+      errtxt += '\nStack trace:\n'+e.stack;
     } 
     self.postMessage({cmd: 'error', err: errtxt});
   }
@@ -1152,12 +1152,7 @@ OpenJsCad.Processor.prototype = {
     this.options[ 'libraries' ].push( lib );
   },
   
-  setError: function(o) {
-    var txt = o.toString();
-    if (o.stack) {
-    	// TODO: display the stack trace where this is more space in UI (popup?)
-    	// txt += '\n'+o.stack;
-    }
+  setError: function(txt) {
     this.hasError = (txt != "");
     this.errorpre.textContent = txt;
     this.enableItems();
@@ -1300,7 +1295,10 @@ OpenJsCad.Processor.prototype = {
       catch(e)
       {
         that.processing = false;
-        that.setError(e);
+        var errtxt = e.toString();
+        if(!e.stack) {
+          errtxt += '\nStack trace:\n'+e.stack;
+        } 
         that.statusspan.innerHTML = "Error.";
       }
       that.enableItems();
