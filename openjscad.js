@@ -573,7 +573,7 @@ OpenJsCad.runMainInWorker = function(mainParameters) {
   }
   catch(e) {
     var errtxt = e.toString();
-    if(!e.stack) {
+    if(e.stack) {
       errtxt += '\nStack trace:\n'+e.stack;
     } 
     self.postMessage({cmd: 'error', err: errtxt});
@@ -1296,7 +1296,7 @@ OpenJsCad.Processor.prototype = {
       {
         that.processing = false;
         var errtxt = e.toString();
-        if(!e.stack) {
+        if(e.stack) {
           errtxt += '\nStack trace:\n'+e.stack;
         } 
         that.statusspan.innerHTML = "Error.";
