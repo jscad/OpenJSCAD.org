@@ -856,7 +856,7 @@ function superviseAllFiles(p) {           // check if there were changes: (re-)l
    if(p&&p.forceReload) 
       gMemFsChanged++;
    
-   if(!gRootFs||me=='web-offline') {              // walkFileTree won't work with file:// (regardless of chrome|firefox)
+   if(!gRootFs||gRootFs.length==0||me=='web-offline') {              // walkFileTree won't work with file:// (regardless of chrome|firefox)
      for(var i=0; i<gCurrentFiles.length; i++) {
         console.log("[offline] checking "+gCurrentFiles[i].name);
         gMemFsTotal++;
