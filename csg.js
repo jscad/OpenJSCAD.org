@@ -5060,6 +5060,17 @@ CSG.addTransformationMethodsToPrototype = function(prot) {
 	prot.rotate = function(rotationCenter, rotationAxis, degrees) {
 		return this.transform(CSG.Matrix4x4.rotation(rotationCenter, rotationAxis, degrees));
 	};
+	
+	prot.rotateEulerAngles = function(alpha, beta, gamma, position) {
+        position = position || [0,0,0];
+		
+        var Rz1 = CSG.Matrix4x4.rotationZ(alpha);
+        var Rx  = CSG.Matrix4x4.rotationX(beta);
+        var Rz2 = CSG.Matrix4x4.rotationZ(gamma);
+        var T   = CSG.Matrix4x4.translation(new CSG.Vector3D(position));
+		
+		return this.transform(Rz2.multiply(Rx).multiply(Rz1).multiply(T));
+	};
 };
 
 //////////////////
