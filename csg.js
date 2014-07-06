@@ -3697,7 +3697,7 @@ CSG.Matrix4x4.mirroring = function(plane) {
 		(1.0 - 2.0 * nx * nx), (-2.0 * ny * nx), (-2.0 * nz * nx), 0,
 		(-2.0 * nx * ny), (1.0 - 2.0 * ny * ny), (-2.0 * nz * ny), 0,
 		(-2.0 * nx * nz), (-2.0 * ny * nz), (1.0 - 2.0 * nz * nz), 0,
-		(-2.0 * nx * w), (-2.0 * ny * w), (-2.0 * nz * w), 1
+		( 2.0 * nx * w), ( 2.0 * ny * w), ( 2.0 * nz * w), 1
 	];
 	return new CSG.Matrix4x4(els);
 };
