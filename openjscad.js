@@ -1211,10 +1211,10 @@ OpenJsCad.Processor.prototype = {
       }
       var control = this.paramControls[i];
       var value = null;
-      if( (type == "text") || (type == "float") || (type == "int") )
+      if( (type == "text") || (type == "float") || (type == "int") || (type == "number") )
       {
         value = control.value;
-        if( (type == "float") || (type == "int") )
+        if( (type == "float") || (type == "int") || (type == "number") )
         {
           var isnumber = !isNaN(parseFloat(value)) && isFinite(value);
           if(!isnumber)
@@ -1506,15 +1506,18 @@ OpenJsCad.Processor.prototype = {
       {
         type = paramdef.type;
       }
-      if( (type !== "text") && (type !== "int") && (type !== "float") && (type !== "choice") )
+      if( (type !== "text") && (type !== "int") && (type !== "float") && (type !== "choice") && (type !== "number") )
       {
         throw new Error(errorprefix + "Unknown parameter type '"+type+"'");
       }
       var control;
-      if( (type == "text") || (type == "int") || (type == "float") )
+      if( (type == "text") || (type == "int") || (type == "float") || (type == "number") )
       {
         control = document.createElement("input");
-        control.type = "text";
+        if (type == "number")
+            control.type = "number";
+        else
+            control.type = "text";
         if('default' in paramdef)
         {
           control.value = paramdef["default"];
@@ -1523,7 +1526,7 @@ OpenJsCad.Processor.prototype = {
           control.value = paramdef.initial;
         else
         {
-          if( (type == "int") || (type == "float") )
+          if( (type == "int") || (type == "float") || (type == "number") )
           {
             control.value = "0";
           }
@@ -1534,6 +1537,10 @@ OpenJsCad.Processor.prototype = {
         }
         if(paramdef.size!==undefined) 
            control.size = paramdef.size;
+        for (var property in paramdef)
+            if (paramdef.hasOwnProperty (property))
+                if ((property != "name") && (property != "type") && (property != "default") && (property != "initial") && (property != "caption"))
+                    control.setAttribute (property, paramdef[property]);
       }
       else if(type == "choice")
       {
