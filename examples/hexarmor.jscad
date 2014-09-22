@@ -14,10 +14,11 @@ function newCanvas() {
   var control = undefined;
   function done() {
     wrapper.style.display = "none";
-    var img = document.createElement("img");
+    var img = document.getElementById("hexpreview")
+    if (!img) { var img = document.createElement("img"); }
     img.width = "150";
     img.src = canvas.toDataURL();
-    control.innerHTML = "";
+    img.id = "hexpreview"
     control.appendChild(img);
     control.value = value;
   }
@@ -70,7 +71,6 @@ function newCanvas() {
       }
     }
   }
-
   tick();
   canvas.onclick = tick;
   function open() {
@@ -79,6 +79,45 @@ function newCanvas() {
   }
   function getControl() {
     control = document.createElement("div");
+    control.id = "hexcontrol";
+    var style=document.createElement("style");
+    style.setAttribute("type", "text/css");
+    style.innerHTML = "\
+#canvas-modal { \
+  background: white; \
+  display: none; /* hide to start */ \
+  left: 50%; \
+  margin-left: -270px; \
+  margin-top: -215px; \
+  position: fixed; \
+  top: 50%; \
+  z-index: 10; \
+}  \
+#canvas-modal .content { \
+  background: white; \
+  position: relative; \
+  z-index: 11; \
+}  \
+#canvas-modal canvas { \
+  cursor: pointer;   \
+} \
+#canvas-modal .save { \
+  position: absolute; \
+  top: 100%; \
+  right: 0; \
+} \
+#canvas-modal:before { \
+  background: rgba(0,0,0,0.25); \
+  content: \"\"; \
+  display: block; \
+  height: 100%; \
+  left: 0; \
+  position: fixed; \
+  top: 0; \
+  width: 100%; \
+  z-index: 9; \
+}";
+    control.appendChild(style);
     control.onclick = open;
     done();
     return control;
