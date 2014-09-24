@@ -60,6 +60,8 @@ var version = '0.017 (2014/07/12)';
 //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
 var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
 var browser = 'unknown';
+var showEditor = true;
+var remoteUrl = './remote.pl?url=';
 if(navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)/i))
    browser = RegExp.$1.toLowerCase();
 
@@ -492,13 +494,42 @@ function onload() {
    //gProcessor.setDebugging(debugging); 
    if(me=='web-online') {    // we are online, fetch first example
       //    gProcessor.setJsCad(editor.getValue());
-
-      if(document.URL.match(/#(http:\/\/\S+)$/)||
-         document.URL.match(/#(https:\/\/\S+)$/)) {   // remote file referenced, e.g. http://openjscad.org/#http://somewhere/something.ext
+      docUrl = document.URL;
+      params = {};
+      docTitle = '';
+      if((!docUrl.match(/#(https?:\/\/\S+)$/)) && (!docUrl.match(/#(examples\/\S+)$/))) {
+         if(possibleParams = docUrl.split("&")) {
+            console.log(possibleParams);
+            for (i = 0; i < possibleParams.length; ++i) {
+               console.log("looping over: "+possibleParams[i]);
+                if(match = possibleParams[i].match(/^.*#?param\[([^\]]+)\]=(.*)$/)) {
+                  console.log("matched parameter: key="+decodeURIComponent(match[1])+", val="+decodeURIComponent(match[2])+"");
+                  params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
+                }
+                else if(match = possibleParams[i].match(/^.*#?showEditor=false$/i)) {
+                  console.log("not showing editor.");
+                  showEditor = false;
+                  $('#editor').hide();
+                }
+                else if(match = possibleParams[i].match(/^.*#?fetchUrl=(.*)$/)) {
+                  console.log("matched fetchUrl="+match[1]);
+                  urlParts = document.URL.match(/^([^#]+)#/);
+                  // derive an old-style URL for compatibility's sake
+                  docUrl = urlParts[1] + "#" + decodeURIComponent(match[1]);
+                }
+                else if(match = possibleParams[i].match(/^.*#?title=(.*)$/)) {
+                  console.log("matched title="+decodeURIComponent(match[1]));
+                  docTitle = decodeURIComponent(match[1]);
+                }
+            }
+            console.log(params,docUrl,docTitle);
+         }
+      }
+      if(docUrl.match(/#(https?:\/\/\S+)$/)) {   // remote file referenced, e.g. http://openjscad.org/#http://somewhere/something.ext
          var u = RegExp.$1;
          var xhr = new XMLHttpRequest();
-         //echo("fetching",u);
-         xhr.open("GET",'./remote.pl?url='+u,true);
+         echo("fetching",u);
+         xhr.open("GET",remoteUrl+u,true);
          if(u.match(/\.(stl|gcode)$/i)) {
             xhr.overrideMimeType("text/plain; charset=x-user-defined");    // our pseudo binary retrieval (works with Chrome)
          }
@@ -508,14 +539,14 @@ function onload() {
             var data = JSON.parse(this.responseText);
             //echo(data.url,data.filename,data.file);
             fetchExample(data.file,data.url);
-            document.location = document.URL.replace(/#.*$/,'#');       // this won't reload the entire web-page
+            document.location = docUrl.replace(/#.*$/,'#');       // this won't reload the entire web-page
          }
          xhr.send(); 
  
-      } else if(document.URL.match(/#(examples\/\S+)$/)) {    // local example, e.g. http://openjscad.org/#examples/example001.jscad
+      } else if(docUrl.match(/#(examples\/\S+)$/)) {    // local example, e.g. http://openjscad.org/#examples/example001.jscad
          var fn = RegExp.$1;
          fetchExample(fn);
-         document.location = document.URL.replace(/#.*$/,'#');
+         document.location = docUrl.replace(/#.*$/,'#');
          
       } else {
          fetchExample('examples/'+ex[0].file);
@@ -528,7 +559,11 @@ function onload() {
 function fetchExample(fn,url) {
    gMemFs = []; gCurrentFiles = [];
    
-   $('#editor').show();
+   if(showEditor) {
+      $('#editor').show();
+   } else {
+      $('#editor').hide();
+   }
    
    if(fn.match(/\.[^\/]+$/)) {     // -- has extension
       ;                                  // -- we could already check if valid extension (later)
