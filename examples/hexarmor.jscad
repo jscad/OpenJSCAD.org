@@ -11,14 +11,14 @@ function newCanvas() {
   canvas.style.display = "block";
   canvas.width = 540;
   canvas.height = 430;
-  var control = undefined;
+  var control;
   function done() {
     wrapper.style.display = "none";
-    var img = document.getElementById("hexpreview")
-    if (!img) { var img = document.createElement("img"); }
+    var img = document.getElementById("hexpreview");
+    if (!img) { img = document.createElement("img"); }
     img.width = "150";
     img.src = canvas.toDataURL();
-    img.id = "hexpreview"
+    img.id = "hexpreview";
     control.appendChild(img);
     control.value = value;
   }
@@ -52,7 +52,7 @@ function newCanvas() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
     for (j=0;j<n_rows;j++) {
       for (i=0;i<n_cols;i++) {
-        spin = ((i+j)%2==0)?1:-1;
+        spin = ((i+j)%2===0)?1:-1;
         var x = sx*i+margin,y=sy*j+margin;
         if (e) {
           var dx = x-e.offsetX, dy = y-e.offsetY;
@@ -67,7 +67,7 @@ function newCanvas() {
         ctx.lineTo(x+r*Math.cos(_t),y+r*Math.sin(_t));
         ctx.fillStyle="#333";
         ctx.stroke();
-        if (!!value[j][i]) { ctx.fill() };
+        if (!!value[j][i]) { ctx.fill(); }
       }
     }
   }
@@ -127,7 +127,7 @@ function newCanvas() {
     value: value,
     getControl: getControl,
     getValue: function() { return this.value; }
-  }
+  };
 }
 
 function getParameterDefinitions() {
@@ -164,7 +164,7 @@ function torus2(p) {
 function generate_hex(_d) {
   var hex = linear_extrude({height:_d.hex.h},circle(_d.hex)).rotateZ(30).center(true);
   var skew = 1.25;
-  return hex.scale([1,skew,1])
+  return hex.scale([1,skew,1]);
 }
 function generate_link(_d) {
   var c = circle(_d.hex.h/2).center(true);
@@ -184,10 +184,10 @@ function get_unit_cell(_d) {
     cube(2*r_total).scale([1,2,1]).center(true).translate([-r_total*2,0,0]), // bisect hex
     otri, //round hole
     osq //square hole
-  )
+  );
   var cylinder = linear_extrude({height:_d.hex.h/2},circle(_d.tri.ri/3).center(true))
     .translate([_d.tri.ro,0,-_d.hex.h/2]);
-  tri_big = torus2({fno:3,ro:_d.hex.r*cos(30)+_d.tri.ro,ri:0.1}) // outer calibration triangle
+  tri_big = torus2({fno:3,ro:_d.hex.r*cos(30)+_d.tri.ro,ri:0.1}); // outer calibration triangle
   var unit_cell = union([
     //tri_big, //useful for trying to get the triangles lined up
     tri,
@@ -196,15 +196,16 @@ function get_unit_cell(_d) {
     half_join.rotateZ(-120),
     cylinder,
     cylinder.rotateZ(120),
-    cylinder.rotateZ(-120),
-  ])
+    cylinder.rotateZ(-120)
+  ]);
   return unit_cell;
 }
+
 function main(p) {
   _d = {
     hex: {fn:6,rotx:45},
-    tri: {fno:3,rotx:60,roty:15},
-  }
+    tri: {fno:3,rotx:60,roty:15}
+  };
   // These first two don't work well when you edit the pattern
   _d.hex.r = 7; //p.hex_r;
   _d.tri.ro = 12; //p.tri_ro;
@@ -214,13 +215,13 @@ function main(p) {
   _d.dx = sin(30)*(2*_d.tri.ro + _d.hex.r); //height of unit_cell
   _d.dy = cos(30)*(2*_d.tri.ro + _d.hex.r); //width of unit_cell
   var unit_cell = get_unit_cell(_d).translate([0,0,_d.hex.h/2]);
-  if (p.bisect == 1) { return difference(unit_cell,cube(100).center(true).translate([0,50,0])) }
+  if (p.bisect == 1) { return difference(unit_cell,cube(100).center(true).translate([0,50,0])); }
   var y_shift = _d.dy-(1+cos(30))*_d.tri.ro;
   var from_pattern = [];
   for (var ri=0; ri<p.pattern.length; ri++) {
     for (var ci=0; ci<p.pattern[ri].length; ci++) {
-      if (p.pattern[ri][ci] == 0) { continue; }
-      t = unit_cell;
+      if (p.pattern[ri][ci] === 0) { continue; }
+      var t = unit_cell;
       if (p.pattern[ri][ci] == -1) { t = t.rotateZ(60).translate([2*y_shift,0,0]); } // this translate is bs'd
       t = t.translate([(ri-3)*_d.dy,(ci-2)*_d.dx,0]);
       from_pattern.push(t);
