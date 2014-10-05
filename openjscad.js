@@ -1235,8 +1235,9 @@ OpenJsCad.Processor.prototype = {
       {
         value = control.options[control.selectedIndex].value;
       }
-      else if(type == "custom") {
-        value = this.paramInstances[paramdef.name].getValue();
+      else if(type == "custom")
+      {
+        value = JSON.parse(control.value);
       }
       paramValues[paramdef.name] = value;
     }
@@ -1494,7 +1495,6 @@ OpenJsCad.Processor.prototype = {
   createParamControls: function() {
     this.parameterstable.innerHTML = "";
     this.paramControls = [];
-    this.paramInstances = {};
     var paramControls = [];
     var tablerows = [];
     for(var i = 0; i < this.paramDefinitions.length; i++)
@@ -1596,8 +1596,7 @@ OpenJsCad.Processor.prototype = {
         }
       }
       else if (type == "custom") {
-        this.paramInstances[paramdef.name] = instance = new paramdef.constructor(paramdef);
-        control = instance.getControl();
+        control = new paramdef.constructor(paramdef);
       }
       // implementing instantUpdate
       control.onchange = function() { 

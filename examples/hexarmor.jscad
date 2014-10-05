@@ -1,89 +1,12 @@
 function newCanvas() {
-  var wrapper = document.createElement("div");
-  var content = document.createElement("div");
-  var canvas = document.createElement("canvas");
-  content.appendChild(canvas);
-  wrapper.appendChild(content);
-  document.querySelector("body").appendChild(wrapper);
-  wrapper.id = "canvas-modal";
-  wrapper.style.display = "none";
-  content.className = "content";
-  canvas.style.display = "block";
-  canvas.width = 540;
-  canvas.height = 430;
-  var control;
-  function done() {
-    wrapper.style.display = "none";
-    var img = document.getElementById("hexpreview");
-    if (!img) { img = document.createElement("img"); }
-    img.width = "150";
-    img.src = canvas.toDataURL();
-    img.id = "hexpreview";
-    control.appendChild(img);
-    control.value = value;
-  }
-  var button = document.createElement("button");
-  button.className = "save";
-  button.innerHTML = "Save and close";
-  button.onclick = done;
-  content.appendChild(button);
-  var margin = 60;
-  var r = 40;
-  var sx = 60;
-  var sy = sx/3*4;
-  var ctx = canvas.getContext("2d");
-  var n_rows = 5,n_cols = 8, value = [];
-
-  for (j=0;j<n_rows;j++) {
-    row = [];
-    for (i=0;i<n_cols;i++) {
-      row.push(0);
-    }
-    value.push(row);
-  }
-  value[2][4] = 1;
-  value[1][4] = -1;
-  //value[2][3] = -1;
-  //value[2][2] = 1;
-  //value[3][3] = 1;
-
-  function tick(e) {
-    // draw grid
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    for (j=0;j<n_rows;j++) {
-      for (i=0;i<n_cols;i++) {
-        spin = ((i+j)%2===0)?1:-1;
-        var x = sx*i+margin,y=sy*j+margin;
-        if (e) {
-          var dx = x-e.offsetX, dy = y-e.offsetY;
-          if (Math.sqrt(dx*dx+dy*dy) < r*0.75) { value[j][i] = value[j][i]?0:spin; }
-        }
-        ctx.beginPath();
-        _t = spin*Math.PI/2;
-        if (spin == 1) { y -= sy/4; }
-        ctx.moveTo(x+r*Math.cos(_t),y+r*Math.sin(_t));
-        ctx.lineTo(x+r*Math.cos(Math.PI*2/3+_t),y+r*Math.sin(Math.PI*2/3+_t));
-        ctx.lineTo(x+r*Math.cos(Math.PI*4/3+_t),y+r*Math.sin(Math.PI*4/3+_t));
-        ctx.lineTo(x+r*Math.cos(_t),y+r*Math.sin(_t));
-        ctx.fillStyle="#333";
-        ctx.stroke();
-        if (!!value[j][i]) { ctx.fill(); }
-      }
-    }
-  }
-  tick();
-  canvas.onclick = tick;
-  function open() {
-    wrapper.style.display = "block";
-    tick();
-  }
-  function getControl() {
-    control = document.createElement("div");
-    control.id = "hexcontrol";
+  function createCanvas() {
+    wrapper = document.createElement("div");
+    var content = document.createElement("div");
+    canvas = document.createElement("canvas");
     var style=document.createElement("style");
     style.setAttribute("type", "text/css");
     style.innerHTML = "\
-#canvas-modal { \
+#hexarmor-modal { \
   background: white; \
   display: none; /* hide to start */ \
   left: 50%; \
@@ -93,20 +16,20 @@ function newCanvas() {
   top: 50%; \
   z-index: 10; \
 }  \
-#canvas-modal .content { \
+#hexarmor-modal .content { \
   background: white; \
   position: relative; \
   z-index: 11; \
 }  \
-#canvas-modal canvas { \
+#hexarmor-modal canvas { \
   cursor: pointer;   \
 } \
-#canvas-modal .save { \
+#hexarmor-modal .save { \
   position: absolute; \
   top: 100%; \
   right: 0; \
 } \
-#canvas-modal:before { \
+#hexarmor-modal:before { \
   background: rgba(0,0,0,0.25); \
   content: \"\"; \
   display: block; \
@@ -117,17 +40,96 @@ function newCanvas() {
   width: 100%; \
   z-index: 9; \
 }";
-    control.appendChild(style);
-    control.onclick = open;
-    done();
+    wrapper.appendChild(style);
+    content.appendChild(canvas);
+    wrapper.appendChild(content);
+    document.body.appendChild(wrapper);
+    wrapper.id = "hexarmor-modal";
+    wrapper.style.display = "none";
+    content.className = "content";
+    canvas.style.display = "block";
+    canvas.width = 540;
+    canvas.height = 430;
+    var button = document.createElement("button");
+    button.className = "save";
+    button.innerHTML = "Save and close";
+    button.onclick = done;
+    content.appendChild(button);
+    return wrapper;
+  }
+  function createControl() {
+    // create all the elements
+    control = document.createElement("input");
+    control.type = "image";
+    var n_rows = 5,n_cols = 8, value = [];
+
+    for (j=0;j<n_rows;j++) {
+      row = [];
+      for (i=0;i<n_cols;i++) {
+        row.push(0);
+      }
+      value.push(row);
+    }
+    value[2][4] = 1;
+    value[1][4] = -1;
+    //value[2][3] = -1;
+    //value[2][2] = 1;
+    //value[3][3] = 1;
+    control.value = JSON.stringify(value);
     return control;
   }
-  return {
-    open: open,
-    value: value,
-    getControl: getControl,
-    getValue: function() { return this.value; }
-  };
+  function done() {
+    wrapper.style.display = "none";
+    control.width = "150";
+    control.src = canvas.toDataURL();
+    control.dispatchEvent(new Event('change'));
+  }
+  function tick(e) {
+    var margin = 60;
+    var r = 40;
+    var sx = 60;
+    var sy = sx/3*4;
+    // draw grid
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    value = JSON.parse(control.value);
+    for (j=0;j<value.length;j++) {
+      var row = value[j];
+      for (i=0;i<row.length;i++) {
+        spin = ((i+j)%2===0)?1:-1;
+        var x = sx*i+margin,y=sy*j+margin;
+        if (e) {
+          var dx = x-e.offsetX, dy = y-e.offsetY;
+          if (Math.sqrt(dx*dx+dy*dy) < r*0.75) { row[i] = row[i]?0:spin; }
+        }
+        ctx.beginPath();
+        _t = spin*Math.PI/2;
+        if (spin == 1) { y -= sy/4; }
+        ctx.moveTo(x+r*Math.cos(_t),y+r*Math.sin(_t));
+        ctx.lineTo(x+r*Math.cos(Math.PI*2/3+_t),y+r*Math.sin(Math.PI*2/3+_t));
+        ctx.lineTo(x+r*Math.cos(Math.PI*4/3+_t),y+r*Math.sin(Math.PI*4/3+_t));
+        ctx.lineTo(x+r*Math.cos(_t),y+r*Math.sin(_t));
+        ctx.fillStyle="#333";
+        ctx.stroke();
+        if (!!row[i]) { ctx.fill(); }
+      }
+    }
+    control.value = JSON.stringify(value);
+  }
+  function open() {
+    wrapper.style.display = "block";
+    tick();
+  }
+  var control = document.getElementById("hexarmor-control");
+  var wrapper = document.querySelector("#hexarmor-modal");
+  if (!control) { control = createControl(); } // only init if we haven't been here before
+  if (!wrapper) { wrapper = createCanvas(); } // only init if we haven't been here before
+  var canvas = document.querySelector("#hexarmor-modal canvas");
+  control.onclick = open;
+  tick();
+  done();
+  canvas.onclick = tick;
+  return control;
 }
 
 function getParameterDefinitions() {
