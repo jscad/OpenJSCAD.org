@@ -493,12 +493,16 @@ OpenJsCad.Viewer.csgToMeshes = function(initial_csg) {
       mesh.colors = colors;
       mesh.computeWireframe();
       mesh.computeNormals();
+
+      if ( mesh.vertices.length ) {
+        meshes.push(mesh);
+      }
+
       // start a new mesh
       mesh = new GL.Mesh({ normals: true, colors: true });
       triangles = [];
       colors = [];
       vertices = [];
-      meshes.push(mesh);	
     }
   }
   // finalize last mesh
@@ -507,6 +511,11 @@ OpenJsCad.Viewer.csgToMeshes = function(initial_csg) {
   mesh.colors = colors;
   mesh.computeWireframe();
   mesh.computeNormals();
+
+  if ( mesh.vertices.length ) {
+    meshes.push(mesh);
+  }
+
   return meshes;
 };
 
