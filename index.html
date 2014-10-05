@@ -119,7 +119,10 @@ $(document).ready(function() {
    });
 });   
 </script>
-<img id="header" src="imgs/title.png">
+<div id="header">
+<img src="imgs/title.png">
+<div id="errordiv"></div>
+</div>
 
 <div id=menu>
 <img id=menuHandle src="imgs/menuHandleVL.png">
@@ -378,7 +381,6 @@ if(me=='web-online') {
 <div id="parametersdiv"></div>
 <div id="tail">
 <div id="statusdiv"></div>
-<div id="errordiv"></div>
 <div id="filedropzone">
   <div id="filedropzone_empty">
   <script>document.write("Drop your jscad, scad, amf, stl file or multiple jscad files "+
@@ -854,7 +856,7 @@ function superviseAllFiles(p) {           // check if there were changes: (re-)l
    if(p&&p.forceReload) 
       gMemFsChanged++;
    
-   if(!gRootFs||me=='web-offline') {              // walkFileTree won't work with file:// (regardless of chrome|firefox)
+   if(!gRootFs||gRootFs.length==0||me=='web-offline') {              // walkFileTree won't work with file:// (regardless of chrome|firefox)
      for(var i=0; i<gCurrentFiles.length; i++) {
         console.log("[offline] checking "+gCurrentFiles[i].name);
         gMemFsTotal++;
