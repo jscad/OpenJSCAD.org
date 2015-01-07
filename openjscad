@@ -8,18 +8,21 @@ version = '0.010';
 // Description:
 //   openjscad <file> [-o <stl>]
 // e.g.
-//   openjscad test.jscad                    
+//   openjscad test.jscad
 //   openjscad test.jscad -o test.stl
 //   openjscad test.jscad -o test.amf
+//   openjscad test.jscad -o test.dxf
 //   openjscad test.scad -o testFromSCAD.jscad
 //   openjscad test.scad -o test.stl
 //   openjscad test.stl -o test2.stl      # reprocessed: stl -> jscad -> stl
-//   openjscad test.amf -o test2.jscad    
+//   openjscad test.amf -o test2.jscad
 //   openjscad test.jscad -of amf
+//   openjscad test.jscad -of dxf
 //   openjscad test.jscad -of stl
 //   openjscad name_plate.jscad --name "Just Me" --title "CEO" -o amf test.amf
 //
 // History:
+// 2014/12/09: 0.019: support of DXF output for 2D objects (laser cutter)
 // 2013/04/25: 0.010: support of params passed to main()
 // 2013/04/12: 0.008: reimplement parseAMF without jquery
 // 2013/04/11: 0.007: support of alpha for AMF addded, bumping version
@@ -66,18 +69,19 @@ var meta = [];
 meta.producer = "OpenJSCAD "+me.toUpperCase()+" "+version;
 meta.date = new Date();
 
-var formatName = { 
-   jscad: "OpenJSCAD.org Source", 
-   js: "JavaScript Source", 
-   stl: "STereoLithography, ASCII", 
-   stla: "STereoLithography, ASCII", 
-   stlb: "STereoLithography, Binary", 
-   amf: "Additive Manufacturing File Format" 
+var formatName = {
+   jscad: "OpenJSCAD.org Source",
+   js: "JavaScript Source",
+   stl: "STereoLithography, ASCII",
+   stla: "STereoLithography, ASCII",
+   stlb: "STereoLithography, Binary",
+   amf: "Additive Manufacturing File Format",
+   dxf: "AutoCAD Drawing Exchange Format"
 };
 
 var inf = args[0];
 if(inf==null||inf.length<=0||!fs.statSync(inf).isFile()) {
-   console.log("USAGE openjscad ("+me.toUpperCase()+" "+version+"): <file> [-of <format>] [-o <output>]\n\t<file>: <name>.jscad, .scad, .stl or .amf\n\t<output>: <name>.jscad, .stl or .amf\n\t<format>: 'jscad', 'stl' (default), 'stla' (STL ASCII), 'stlb' (STL Binary), 'amf'");
+   console.log("USAGE openjscad ("+me.toUpperCase()+" "+version+"): <file> [-of <format>] [-o <output>]\n\t<file>: <name>.jscad, .scad, .stl or .amf\n\t<output>: <name>.jscad, .stl, .amf or .dxf\n\t<format>: 'jscad', 'stl' (default), 'stla' (STL ASCII), 'stlb' (STL Binary), 'amf', 'dxf'");
    process.exit(1);
 }
 
@@ -126,14 +130,14 @@ var inc = [];
 //var csg = sphere(1);          // -- basic test
 //var csg = require(file).main; // -- treating .jscad as module? later perhaps
 
-if(!outFormat&&outf&&outf.length&&outf.match(/\.(jscad|js|stl|amf)$/)) {         // output filename set
+if(!outFormat&&outf&&outf.length&&outf.match(/\.(jscad|js|stl|amf|dxf)$/)) {         // output filename set
    outFormat = RegExp.$1;
 
 } else if(!outFormat&&outf&&outf.length) {                                    // output filename isn't valid
-   console.log("ERROR: bad output filename <"+outf+">, only .jscad, .stl or .amf as output format");
+   console.log("ERROR: bad output filename <"+outf+">, only .jscad, .stl, .amf or .dxf as output format");
    process.exit(1);
 
-} else if(outFormat.match(/(jscad|js|stl|stla|stlb|amf)/i)) {  // output format defined?
+} else if(outFormat.match(/(jscad|js|stl|stla|stlb|amf|dxf)/i)) {  // output format defined?
    var ext = RegExp.$1;
    if(!outf) {                                              // unless output filename not set, compose it
       ext = ext.replace(/stl[ab]/,'stl');                      // drop [ab] from stl
@@ -142,7 +146,7 @@ if(!outFormat&&outf&&outf.length&&outf.match(/\.(jscad|js|stl|amf)$/)) {        
    }
    
 } else {
-   console.log("ERROR: output format <"+outFormat+">, only jscad, stl or amf as output format");
+   console.log("ERROR: output format <"+outFormat+">, only jscad, stl, amf or dxf as output format");
    process.exit(1);
 }
 
@@ -155,13 +159,13 @@ if(inFormat=='scad') {
    src = scadParser.parse(src); //    doing the magick
    src = "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+"\n"+src;
    src = "// source: "+outf+"\n\n"+src;
-   
+
 } else if(inFormat=='stl') {
    //console.log("converting "+inf+" to jscad");
    var openscad = require(lib+'openscad.js');
    src = openscad.parseSTL(src,inf);
    //src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
-   
+
 } else if(inFormat=='amf') {
    //console.log("converting "+inf+" to jscad");
    // $ = require(global.nodeModules+'jquery');   // needed for AMF (XML) parsing
@@ -169,7 +173,7 @@ if(inFormat=='scad') {
    // src = openscad.parseAMF(src,inf);
    src = parseAMF(src,inf);
    //src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
-   
+
 } else {
    // jscad or js
    ;
@@ -202,6 +206,9 @@ if(outFormat=='jscad'||outFormat=='js') {
    if(outFormat=='amf') {
       out = csg.toAMFString(meta);
 
+   } else if(outFormat=='dxf') {
+      out = csg.toDxfString();
+
    } else if(outFormat=='stlb') {
       out = csg.toStlBinary();                              // not yet supported
 
@@ -209,7 +216,7 @@ if(outFormat=='jscad'||outFormat=='js') {
       out = csg.toStlString();
 
    } else {
-      console.log("ERROR: only jscad, stl or amf as output format");
+      console.log("ERROR: only jscad, stl, amf or dxf as output format");
       process.exit(1);
    }
 }
