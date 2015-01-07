@@ -1,7 +1,7 @@
 // openscad.js, a few functions to simplify coding OpenSCAD-like
 //    written by Rene K. Mueller <spiritdude@gmail.com>, License: GPLv2
 //
-// Version: 0.021
+// Version: 0.022
 //
 // Description:
 // Helping to convert OpenSCAD .scad files to OpenJSCad .jscad files with 
@@ -12,6 +12,7 @@
 //     http://openjscad.org/
 //
 // History:
+// 2014/01/07: 0.022: cylinder() supports d, d1 & d2 to be OpenSCAD-like (github issue #61)
 // 2013/04/26: 0.021: sphere() geodesic option added
 // 2013/04/25: 0.020: center(v,obj) added, uses new .center(v)
 // 2013/04/22: 0.019: vector_char() and vector_text() added, vector font rendering
@@ -519,6 +520,9 @@ function geodesicSphere(p) {
 function cylinder(p) {
    var r1 = 1, r2 = 1, h = 1, fn = 32, round = false; var a = arguments;
    var off = [0,0,0];
+   if(p&&p.d) {
+      r1 = r2 = p.d/2;
+   }
    if(p&&p.r) {
       r1 = p.r; r2 = p.r; 
    }
@@ -527,7 +531,11 @@ function cylinder(p) {
    }
    if(p&&(p.r1||p.r2)) {
       r1 = p.r1; r2 = p.r2; if(p.h) h = p.h;
-   } 
+   }
+   if(p&&(p.d1||p.d2)) {
+      r1 = p.d1/2; r2 = p.d2/2;
+   }
+    
    if(a&&a[0]&&a[0].length) {
       a = a[0]; r1 = a[0]; r2 = a[1]; h = a[2]; if(a.length==4) fn = a[3];
    }
