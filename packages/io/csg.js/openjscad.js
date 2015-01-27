@@ -123,12 +123,12 @@ OpenJsCad.Viewer.prototype = {
       var this_ = this;
       this.canvas.addEventListener("webglcontextlost", function(e) {
           e.preventDefault();
-          this_.pauseRender_ = true;
-          cancelAnimationFrame(this_.requestID_);
+          this_.cancelAnimate();
       }, false);
       this.canvas.addEventListener("webglcontextrestored", function(e) {
-        this.cancelAnimate();
-      }, false);
+        this_.createRenderer(true);
+        this_.animate();
+        }, false);
     },
     render: function() {
       if (!this.pauseRender_) {
