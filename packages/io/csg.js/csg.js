@@ -977,8 +977,8 @@ for solid CAD anyway.
             return result;
         },
 
-        setColor: function(red, green, blue) {
-            var newshared = new CSG.Polygon.Shared([red, green, blue]);
+        setColor: function(red, green, blue, alpha) {
+            var newshared = new CSG.Polygon.Shared([red, green, blue, isNaN(parseFloat(alpha)) ? 1 : alpha ]);
             return this.setShared(newshared);
         },
 
@@ -3165,7 +3165,7 @@ for solid CAD anyway.
         // get a string uniquely identifying this object
         getHash: function() {
             if (!this.color) return "null";
-            return "" + this.color[0] + "/" + this.color[1] + "/" + this.color[2];
+            return this.color.join("/");
         }
     };
 

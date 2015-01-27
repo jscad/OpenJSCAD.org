@@ -22,302 +22,252 @@ OpenJsCad.log = function(txt) {
 
 // A viewer is a WebGL canvas that lets the user view a mesh. The user can
 // tumble it around by dragging the mouse.
-OpenJsCad.Viewer = function(containerelement, width, height, initialdepth, displayW, displayH, options) {
-  options = options || {};
-  this.color = options.color || [0,0,1];
-  this.bgColor = options.bgColor || [0.93, 0.93, 0.93, 1];
-  var gl = GL.create();
-  this.gl = gl;
-  this.angleX = -60;
-  this.angleY = 0;
-  this.angleZ = -45;
-  this.viewpointX = 0;
-  this.viewpointY = 0;
-  this.viewpointZ = initialdepth;
+OpenJsCad.Viewer = function(containerElm, size, options) {
+    // config stuff
+    // fg and bg colors
+    var defaultBgColor = [0.93, 0.93, 0.93];
+    var defaultMeshColor = [0, 0, 1];
+    var drawAxes = true;
+    var axLength = 1000;
+    this.perspective = 45; // in degrees
+    this.drawOptions = {
+      // Draw black triangle lines ("wireframe")
+      lines: options.drawLines,
+      // Draw surfaces
+      faces: options.drawFaces
+    };
+    // end config stuff
 
-  // Draw axes flag:
-  this.drawAxes = true;
-  // Draw triangle lines:
-  this.drawLines = options.showLines || false;
-  // Set to true so lines don't use the depth buffer
-  this.lineOverlay = options.showLines || false;
-
-  gl.canvas.style.width = displayW;
-  gl.canvas.style.height = displayH;
-  // Set up the viewport
-  gl.canvas.width = width;
-  gl.canvas.height = height;
-  gl.viewport(0, 0, width, height);
-  gl.matrixMode(gl.PROJECTION);
-  gl.loadIdentity();
-  gl.perspective(45, width / height, 0.5, 100000);
-  gl.matrixMode(gl.MODELVIEW);
-
-  // Set up WebGL state
-  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-  // gl.clearColor(0.93, 0.93, 0.93, 1);
-  gl.clearColor.apply(gl, this.bgColor);
-  gl.enable(gl.DEPTH_TEST);
-  gl.enable(gl.CULL_FACE);
-  gl.polygonOffset(1, 1);
-
-  // Black shader for wireframe
-  this.blackShader = new GL.Shader('\
-    void main() {\
-      gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\
-    }\
-  ', '\
-    void main() {\
-      gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);\
-    }\
-  ');
-
-  // Shader with diffuse and specular lighting
-  this.lightingShader = new GL.Shader('\
-    varying vec3 color;\
-    varying vec3 normal;\
-    varying vec3 light;\
-    void main() {\
-      const vec3 lightDir = vec3(1.0, 2.0, 3.0) / 3.741657386773941;\
-      light = lightDir;\
-      color = gl_Color.rgb;\
-      normal = gl_NormalMatrix * gl_Normal;\
-      gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\
-    }\
-  ', '\
-    varying vec3 color;\
-    varying vec3 normal;\
-    varying vec3 light;\
-    void main() {\
-      vec3 n = normalize(normal);\
-      float diffuse = max(0.0, dot(light, n));\
-      float specular = pow(max(0.0, -reflect(light, n).z), 10.0) * sqrt(diffuse);\
-      gl_FragColor = vec4(mix(color * (0.3 + 0.7 * diffuse), vec3(1.0), specular), 1.0);\
-    }\
-  ');
-
-  containerelement.appendChild(gl.canvas);
-
-  var _this=this;
-
-  gl.onmousemove = function(e) {
-    _this.onMouseMove(e);
-  };
-  gl.ondraw = function() {
-    _this.onDraw();
-  };
-  gl.onmousewheel = function(e) {
-    var wheelDelta = 0;
-    if (e.wheelDelta)
-    {
-      wheelDelta = e.wheelDelta;
+    this.size = size;
+    this.defaultColor_ = options.color || defaultMeshColor;
+    // default is opaque if not defined otherwise
+    if (this.defaultColor_.length == 3) {
+      this.defaultColor_.push(1);
     }
-    else if (e.detail)
-    {
-      // for firefox, see http://stackoverflow.com/questions/8886281/event-wheeldelta-returns-undefined
-      wheelDelta = e.detail * -40;
-    }
-    if(wheelDelta)
-    {
-      var factor = Math.pow(1.003, -wheelDelta);
-      var coeff = _this.getZoom();
-      coeff = Math.max(coeff, 1e-3);
-      coeff *= factor;
-      _this.setZoom(coeff);
-    }
-  };
-  this.clear();
+    this.bgColor_ = new THREE.Color();
+    this.bgColor_.setRGB.apply(this.bgColor_, options.bgColor || defaultBgColor);
+    // the elm to contain the canvas
+    this.containerElm_ = containerElm;
+
+    this.createScene(drawAxes, axLength);
+    this.createCamera();
+    this.parseSizeParams();
+    // createRenderer will also call render
+    this.createRenderer(options.noWebGL);
+    this.animate();
 };
 
 OpenJsCad.Viewer.prototype = {
-  setCsg: function(csg) {
-    this.gl.makeCurrent();
-    this.meshes = OpenJsCad.Viewer.csgToMeshes(csg, this.color);
-    this.onDraw();
-  },
-
-  clear: function() {
-    // empty mesh list:
-    this.meshes = [];
-    this.onDraw();
-  },
-
-  supported: function() {
-    return !!this.gl;
-  },
-
-  ZOOM_MAX: 10000,
-  ZOOM_MIN: 10,
-  onZoomChanged: null,
-
-  setZoom: function(coeff) { //0...1
-    coeff=Math.max(coeff, 0);
-    coeff=Math.min(coeff, 1);
-    this.viewpointZ = this.ZOOM_MIN + coeff * (this.ZOOM_MAX - this.ZOOM_MIN);
-    if(this.onZoomChanged)
-    {
-      this.onZoomChanged();
-    }
-    this.onDraw();
-  },
-
-  getZoom: function() {
-    var coeff = (this.viewpointZ-this.ZOOM_MIN) / (this.ZOOM_MAX - this.ZOOM_MIN);
-    return coeff;
-  },
-  
-  onMouseMove: function(e) {
-    if (e.dragging) {
-      e.preventDefault();
-      if(e.altKey) {
-        //ROTATE X, Y
-        this.angleY += e.deltaX * 2;
-        this.angleX += e.deltaY * 2;
-        //this.angleX = Math.max(-180, Math.min(180, this.angleX));
-      } else if(e.shiftKey) {//PAN
-        var factor = 5e-3;
-        this.viewpointX += factor * e.deltaX * this.viewpointZ;
-        this.viewpointY -= factor * e.deltaY * this.viewpointZ;
-      } else {
-        //ROTATE Z, X
-        this.angleZ += e.deltaX * 2;
-        this.angleX += e.deltaY * 2;
+    // adds axes too
+    createScene: function(drawAxes, axLen) {
+      var scene = new THREE.Scene();
+      this.scene_ = scene;
+      if (drawAxes) {
+        this.drawAxes(axLen);
       }
-      this.onDraw();
-    }
-  },
+    },
+    createCamera: function() {
+      var light = new THREE.PointLight();
+      light.position.set(0, 0, 0);
+      // aspect ration changes later - just a placeholder
+      var camera = new THREE.PerspectiveCamera(this.perspective, 1/1, 0.01, 1000000);
+      this.camera_ = camera;
+      camera.add(light);
+      camera.up.set(0, 0, 1);
+      this.scene_.add(camera);
+    },
+    createControls: function(canvas) {
+      // controls. just change this line (and script include) to other threejs controls if desired
+      var controls = new THREE.OrbitControls(this.camera_, canvas);
+      this.controls_ = controls;
+      controls.noKeys = true;
+      controls.zoomSpeed = 0.5;
+      // controls.autoRotate = true;
+      controls.autoRotateSpeed = 1;
+      controls.addEventListener( 'change', this.render.bind(this));
+    },
+    webGLAvailable: function() {
+        try {
+            var canvas = document.createElement("canvas");
+            return !!
+                window.WebGLRenderingContext &&
+                (canvas.getContext("webgl") ||
+                    canvas.getContext("experimental-webgl"));
+        } catch(e) {
+            return false;
+        }
+    },
+    createRenderer: function(bool_noWebGL) {
+      var Renderer = this.webGLAvailable() && !bool_noWebGL ?
+          THREE.WebGLRenderer : THREE.CanvasRenderer;
+      // we're creating new canvas on switching renderer, as same
+      // canvas doesn't tolerate moving from webgl to canvasrenderer 
+      var renderer = new Renderer({precision: 'highp'});
+      this.renderer_ = renderer;
 
-  onDraw: function(e) {
-    var gl = this.gl;
-    gl.makeCurrent();
-
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.loadIdentity();
-    gl.translate(this.viewpointX, this.viewpointY, -this.viewpointZ);
-    gl.rotate(this.angleX, 1, 0, 0);
-    gl.rotate(this.angleY, 0, 1, 0);
-    gl.rotate(this.angleZ, 0, 0, 1);
-
-    if (!this.lineOverlay) gl.enable(gl.POLYGON_OFFSET_FILL);
-    for (var i = 0; i < this.meshes.length; i++) {
-      var mesh = this.meshes[i];
-      this.lightingShader.draw(mesh, gl.TRIANGLES);
-    }
-    if (!this.lineOverlay) gl.disable(gl.POLYGON_OFFSET_FILL);
-
-    if(this.drawLines)
-    {
-      if (this.lineOverlay) gl.disable(gl.DEPTH_TEST);
-      gl.enable(gl.BLEND);
-      for (var i = 0; i < this.meshes.length; i++) {
-        var mesh = this.meshes[i];
-        this.blackShader.draw(mesh, gl.LINES);
+      if (this.canvas) {
+        this.canvas.remove();
       }
-      gl.disable(gl.BLEND);
-      if (this.lineOverlay) gl.enable(gl.DEPTH_TEST);
-    }
-    //EDW: axes
-    if (this.drawAxes) {
-      gl.enable(gl.BLEND);
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-      gl.begin(gl.LINES);
-      //X - red
-      gl.color(1, 0.5, 0.5, 0.2); //negative direction is lighter
-      gl.vertex(-100, 0, 0);
-      gl.vertex(0, 0, 0);
+      this.canvas = renderer.domElement;
+      this.containerElm_.appendChild(this.canvas);
+      // scene.fog = new THREE.FogExp2( 0xcccccc, 0.002 )
+      renderer.setClearColor(this.bgColor_);
+      // renderer.setClearColor(scene.fog.color);
+      // and add controls
+      this.createControls(renderer.domElement);
 
-      gl.color(1, 0, 0, 0.8); //positive direction
-      gl.vertex(0, 0, 0);
-      gl.vertex(100, 0, 0);
-      //Y - green
-      gl.color(0.5, 1, 0.5, 0.2); //negative direction is lighter
-      gl.vertex(0, -100, 0);
-      gl.vertex(0, 0, 0);
-
-      gl.color(0, 1, 0, 0.8); //positive direction
-      gl.vertex(0, 0, 0);
-      gl.vertex(0, 100, 0);
-      //Z - black
-      gl.color(0.5, 0.5, 0.5, 0.2); //negative direction is lighter
-      gl.vertex(0, 0, -100);
-      gl.vertex(0, 0, 0);
-
-      gl.color(0.2, 0.2, 0.2, 0.8); //positive direction
-      gl.vertex(0, 0, 0);
-      gl.vertex(0, 0, 100);
-
-      gl.end();
-      gl.disable(gl.BLEND);
-    }
-  }
-};
-
-// Convert from CSG solid to an array of GL.Mesh objects
-// limiting the number of vertices per mesh to less than 2^16
-OpenJsCad.Viewer.csgToMeshes = function(csg, defaultColor) {
-  csg = csg.canonicalized();
-  var mesh = new GL.Mesh({ normals: true, colors: true });
-  var meshes = [ mesh ];
-  var vertexTag2Index = {};
-  var vertices = [];
-  var colors = [];
-  var triangles = [];
-  // set to true if we want to use interpolated vertex normals
-  // this creates nice round spheres but does not represent the shape of
-  // the actual model
-  var smoothlighting = false;
-  var polygons = csg.toPolygons();
-  var numpolygons = polygons.length;
-  for(var polygonindex = 0; polygonindex < numpolygons; polygonindex++)
-  {
-    var polygon = polygons[polygonindex];
-    var color = defaultColor || [0,0,1];
-    if(polygon.shared && polygon.shared.color)
-    {
-      color = polygon.shared.color;
-    }
-    var indices = polygon.vertices.map(function(vertex) {
-      var vertextag = vertex.getTag();
-      var vertexindex;
-      if(smoothlighting && (vertextag in vertexTag2Index))
-      {
-        vertexindex = vertexTag2Index[vertextag];
+      // if coming in from contextrestore, enable rendering here
+      this.pauseRender_ = false;
+      this.handleResize();
+      // handling context lost
+      var this_ = this;
+      this.canvas.addEventListener("webglcontextlost", function(e) {
+          e.preventDefault();
+          this_.pauseRender_ = true;
+          cancelAnimationFrame(this_.requestID_);
+      }, false);
+      this.canvas.addEventListener("webglcontextrestored", function(e) {
+        this.cancelAnimate();
+      }, false);
+    },
+    render: function() {
+      if (!this.pauseRender_) {
+        this.renderer_.render(this.scene_, this.camera_);
       }
-      else
-      {
-        vertexindex = vertices.length;
-        vertexTag2Index[vertextag] = vertexindex;
-        vertices.push([vertex.pos.x, vertex.pos.y, vertex.pos.z]);
-        colors.push(color);
-      }
-      return vertexindex;
-    });
-    for (var i = 2; i < indices.length; i++) {
-      triangles.push([indices[0], indices[i - 1], indices[i]]);
+    },
+    animate: function() {
+        // reduce fps? replace func with
+        // setTimeout( function() {
+        //     requestAnimationFrame(this.animate.bind(this));
+        // }, 1000 / 40 ); // last num = fps
+        this.requestID_ = requestAnimationFrame(this.animate.bind(this));
+        this.controls_.update();
+    },
+    cancelAnimate: function() {
+        this.pauseRender_ = true;
+        cancelAnimationFrame(this.requestID_);
+    },
+    refreshRenderer: function(bool_noWebGL) {
+        this.cancelAnimate();
+        if (!bool_noWebGL) {
+          // need to refresh scene objects except camera
+          var objs = this.scene_.children.filter(function(ch) {
+            return !(ch instanceof THREE.Camera);
+          });
+          this.scene_.remove.apply(this.scene_, objs);
+          var newObjs = objs.map(function(obj) {
+            obj.geometry = obj.geometry.clone();
+            obj.material = obj.material.clone();
+            return obj.clone();
+          });
+          this.scene_.add.apply(this.scene_, newObjs);
+          this.applyDrawOptions();
+        }
+        this.createRenderer(bool_noWebGL);
+        this.animate();
+    },
+    // https://www.youtube.com/watch?v=c-O-tOYdAFY#t=858 (pause) for a basic grid
+    drawAxes: function(axLen) {
+        axLen = axLen || 1000;
+        function v(x,y,z){
+            return new THREE.Vector3(x,y,z);
+        }
+        var origin = v(0, 0, 0);
+        [[v(axLen, 0, 0), 0xFF0000], [v(-axLen, 0, 0), 0xD3D3D3],
+         [v(0, axLen, 0), 0x00FF00], [v(0, -axLen, 0), 0xD3D3D3],
+         [v(0, 0, axLen), 0x0000FF], [v(0, 0, -axLen), 0xD3D3D3]]
+            .forEach(function(axdef) {
+                var lineGeometry = new THREE.Geometry();
+                lineGeometry.vertices.push(origin, axdef[0]);
+                this.scene_.add(new THREE.Line(lineGeometry,
+                    new THREE.LineBasicMaterial({color: axdef[1], lineWidth: 1})))
+        }, this);
+    },
+    setCsg: function(csg, resetZoom) {
+        this.clear();
+        var res = THREE.CSG.fromCSG(csg, this.defaultColor_);
+        var colorMeshes = [].concat(res.colorMesh)
+          .map(function(mesh) {
+            mesh.userData = {faces: true};
+            return mesh;
+        });
+        var wireMesh = res.wireframe;
+        wireMesh.userData = {lines: true};
+        this.scene_.add.apply(this.scene_, colorMeshes);
+        this.scene_.add(wireMesh);
+        resetZoom && this.resetZoom(res.boundLen);
+        this.applyDrawOptions();
+    },
+    applyDrawOptions: function() {
+        this.getUserMeshes('faces').forEach(function(faceMesh) {
+          faceMesh.visible = !!this.drawOptions.faces;
+        }, this);
+        this.getUserMeshes('lines').forEach(function(lineMesh) {
+          lineMesh.visible = !! this.drawOptions.lines;
+        }, this);
+        this.render();
+    },
+    clear: function() {
+        this.scene_.remove.apply(this.scene_, this.getUserMeshes());
+    },
+    // gets the meshes created by setCsg
+    getUserMeshes: function(str) {
+        return this.scene_.children.filter(function(ch) {
+          if (str) {
+            return ch.userData[str];
+          } else {
+            return ch.userData.lines || ch.userData.faces;
+          }
+        });
+    },
+    resetZoom: function(r) {
+        var d = r / Math.tan(this.perspective * Math.PI / 180);
+        // play here for different start zoom
+        this.camera_.position.set(d*2, d*2, d);
+        this.camera_.zoom = 1;
+        this.camera_.lookAt(this.scene_.position);
+        this.camera_.updateProjectionMatrix();
+    },
+    parseSizeParams: function() {
+        // essentially, allow all relative + px. Not cm and such.
+        var winResizeUnits = ['%', 'vh', 'vw', 'vmax', 'vmin'];
+        var width, height;
+        if (!this.size.width) {
+            this.size.width = this.size.widthDefault;
+        }
+        if (!this.size.height) {
+            this.size.height = this.size.heightDefault;
+        }
+        var wUnit = this.size.width.match(/^(\d+(?:\.\d+)?)(.*)$/)[2];
+        var hUnit = typeof this.size.height == 'string' ?
+            this.size.height.match(/^(\d+(?:\.\d+)?)(.*)$/)[2] :
+            '';
+        // whether unit scales on win resize
+        var isDynUnit = winResizeUnits.indexOf(wUnit) != -1 ||
+            winResizeUnits.indexOf(hUnit) != -1;
+        // e.g if units are %, need to keep resizing canvas with dom
+        if (isDynUnit) {
+            window.addEventListener('resize', this.handleResize.bind(this))
+        }
+    },
+    handleResize: function() {
+        var hIsRatio = typeof this.size.height != 'string';
+        // apply css, then check px size. This is in case css is not in px
+        this.canvas.style.width = this.size.width;
+        if (!hIsRatio) {
+            this.canvas.style.height = this.size.height;
+        }
+        var widthInPx = this.canvas.clientWidth;
+        var heightInPx = hIsRatio ?
+            widthInPx * this.size.height :
+            this.canvas.clientHeight;  // size.height.match(/^(\d+(?:\.\d+)?)(.*)$/)[1];
+
+        this.camera_.aspect = widthInPx/heightInPx;
+        this.camera_.updateProjectionMatrix();
+        // set canvas attributes (false => don't set css)
+        this.renderer_.setSize(widthInPx, heightInPx, false);
+        this.render();
     }
-    // if too many vertices, start a new mesh;
-    if (vertices.length > 65000) {
-      // finalize the old mesh	
-      mesh.triangles = triangles;
-      mesh.vertices = vertices;
-      mesh.colors = colors;
-      mesh.computeWireframe();
-      mesh.computeNormals();
-      // start a new mesh
-      mesh = new GL.Mesh({ normals: true, colors: true });
-      triangles = [];
-      colors = [];
-      vertices = [];
-      meshes.push(mesh);
-    }
-  }
-  // finalize last mesh
-  mesh.triangles = triangles;
-  mesh.vertices = vertices;
-  mesh.colors = colors;
-  mesh.computeWireframe();
-  mesh.computeNormals();
-  return meshes;
 };
 
 // make a full url path out of a base path and url component.
@@ -593,7 +543,7 @@ OpenJsCad.getWindowURL = function() {
 
 OpenJsCad.textToBlobUrl = function(txt) {
   var windowURL=OpenJsCad.getWindowURL();
-  var blob = new Blob([txt]);
+  var blob = new Blob([txt], {type : 'application/javascript'});
   var blobURL = windowURL.createObjectURL(blob);
   if(!blobURL) throw new Error("createObjectURL() failed");
   return blobURL;
@@ -670,23 +620,40 @@ OpenJsCad.getParamDefinitions = function(script) {
 
 /**
  * options parameter:
- * - showLines: display all triangle lines without respecting depth buffer
+ * - drawLines: display wireframe lines
+ * - drawFaces: display surfaces
  * - bgColor: canvas background color
  * - color: object color
- * - viewerwidth, viewerheight: set rendering size. If in pixels, both canvas resolution and
- * display size are affected. If not (e.g. in %), canvas resolution is unaffected, but gets zoomed
- * to display size
+ * - viewerwidth, viewerheight: set rendering size. Works with any css unit.
+ *     viewerheight can also be specified as a ratio to width, ie number e (0, 1]
+ * - noWebGL: force render without webGL
  */
 OpenJsCad.Processor = function(containerdiv, options, onchange) {
   this.containerdiv = containerdiv;
+  this.options = options || {};
   this.onchange = onchange;
+
+  // Draw black triangle lines ("wireframe")
+  this.options.drawLines = (options && options.drawLines) || false;
+  // Draw surfaces
+  this.options.drawFaces = (options && options.drawFaces) || true;
+
+  // default applies unless sizes specified in options
+  this.widthDefault = "800px";
+  this.heightDefault = "600px";
+
   this.viewerdiv = null;
   this.viewer = null;
-  this.zoomControl = null;
-  this.options = options || {};
-  this.viewerwidth = this.options.viewerwidth || "800px";
-  this.viewerheight = this.options.viewerheight || "600px";
-  this.initialViewerDistance = 200;
+
+  this.viewerSize = {
+    widthDefault: this.widthDefault,
+    heightDefault: this.heightDefault,
+    width: this.options.viewerwidth,
+    height: this.options.viewerheight,
+    heightratio: this.options.viewerheightratio
+  };
+  // this.viewerwidth = this.options.viewerwidth || "800px";
+  // this.viewerheight = this.options.viewerheight || "600px";
   this.processing = false;
   this.currentObject = null;
   this.hasValidCurrentObject = false;
@@ -718,11 +685,20 @@ OpenJsCad.Processor.convertToSolid = function(obj) {
 };
 
 OpenJsCad.Processor.prototype = {
-  setLineDisplay: function(bool) {
-    // Draw triangle lines:
-    this.viewer.drawLines = bool;
-    // Set to true so lines don't use the depth buffer
-    this.viewer.lineOverlay = bool;
+  // pass "faces" or "lines"
+  toggleDrawOption: function(str) {
+    if (str == 'faces' || str == 'lines') {
+      var newState = !this.viewer.drawOptions[str];
+      this.setDrawOption(str, newState);
+      return newState;
+    }
+  },
+  // e.g. setDrawOption('lines', false);
+  setDrawOption: function(str, bool) {
+    if (str == 'faces' || str == 'lines') {
+      this.viewer.drawOptions[str] = !!bool;      
+    }
+    this.viewer.applyDrawOptions();
   },
 
   createElements: function() {
@@ -735,75 +711,35 @@ OpenJsCad.Processor.prototype = {
   
     var viewerdiv = document.createElement("div");
     viewerdiv.className = "viewer";
-    viewerdiv.style.width = this.viewerwidth;
-    viewerdiv.style.height = this.viewerheight;
-    // viewerdiv.style.backgroundColor = "rgb(200,200,200)";
     this.containerdiv.appendChild(viewerdiv);
     this.viewerdiv = viewerdiv;
-    // if viewerdiv sizes in px -> size canvas accordingly. Else use 800x600, canvas will then scale
-    var wArr = this.viewerwidth.match(/^(\d+(?:\.\d+)?)(.*)$/);
-    var hArr = this.viewerheight.match(/^(\d+(?:\.\d+)?)(.*)$/);
-    var canvasW = wArr[2] == 'px' ? wArr[1] : '800';
-    var canvasH = hArr[2] == 'px' ? hArr[1] : '600';
-    try
-    {
-      this.viewer = new OpenJsCad.Viewer(this.viewerdiv, canvasW, canvasH,
-          this.initialViewerDistance, this.viewerwidth, this.viewerheight, this.options);
-    } catch(e) {
-      //      this.viewer = null;
-      this.viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad requires a WebGL enabled browser. Try a recent version of Chrome of Firefox.";
-      //      this.viewerdiv.innerHTML = e.toString();
-    }
-    //Zoom control
-    var div = document.createElement("div");
-    this.zoomControl = div.cloneNode(false);
-    this.zoomControl.style.width = this.viewerwidth;
-    this.zoomControl.style.height = '20px';
-    this.zoomControl.style.backgroundColor = 'transparent';
-    this.zoomControl.style.overflowX = 'scroll';
-    // div.style.width = this.viewerwidth * 11 + 'px';
-    // FIXME - below doesn't behave as expected if
-    // options.viewerwidth not in pixels
-    div.style.width = this.viewerdiv.canvasW * 11 + 'px';
-    div.style.height = '1px';
-    this.zoomControl.appendChild(div);
-    this.zoomChangedBySlider=false;
-    this.zoomControl.onscroll = function(event) {
-      var zoom = that.zoomControl;
-      var newzoom=zoom.scrollLeft / (10 * zoom.offsetWidth);
-      that.zoomChangedBySlider=true; // prevent recursion via onZoomChanged 
-      that.viewer.setZoom(newzoom);
-      that.zoomChangedBySlider=false;
-    };
-    if(this.viewer)
-    {
-      this.viewer.onZoomChanged = function() {
-        if(!that.zoomChangedBySlider)
-        {
-          var newzoom = that.viewer.getZoom();
-          that.zoomControl.scrollLeft = newzoom * (10 * that.zoomControl.offsetWidth);
-        }
-      };
-      this.zoomControl.scrollLeft = this.viewer.viewpointZ / this.viewer.ZOOM_MAX *
-        (this.zoomControl.scrollWidth - this.zoomControl.offsetWidth);
-    }
-
-    this.containerdiv.appendChild(this.zoomControl);
-    //this.zoomControl.scrollLeft = this.viewer.viewpointZ / this.viewer.ZOOM_MAX * this.zoomControl.offsetWidth;
-
-    //end of zoom control
-
+    this.viewer = new OpenJsCad.Viewer(this.viewerdiv, this.viewerSize, this.options);
     this.errordiv = document.createElement("div");
     this.errorpre = document.createElement("pre");
     this.errordiv.appendChild(this.errorpre);
     this.statusdiv = document.createElement("div");
     this.statusdiv.className = "statusdiv";
-    //this.statusdiv.style.width = this.viewerwidth + "px";
+    // surface/line draw
+    this.controldiv = document.createElement("div");
+    var this_ = this;
+    [['faces', 'surfaces', this.options.drawFaces],
+     ['lines', 'lines', this.options.drawLines]].forEach(function(tup) {
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.id = 'cb_' + tup[0];
+        cb.checked = tup[2];
+        cb.addEventListener('click', function() {this.checked = this_.toggleDrawOption(tup[0])});
+        var lb = document.createElement('label');
+        lb.htmlFor = "cb_" + tup[0];
+        lb.appendChild(document.createTextNode(tup[1] + "  "));
+        [cb, lb].forEach(function(ui) {this.controldiv.appendChild(ui)}, this);
+    }, this);
     this.statusspan = document.createElement("span");
     this.statusbuttons = document.createElement("div");
     this.statusbuttons.style.float = "right";
     this.statusdiv.appendChild(this.statusspan);
     this.statusdiv.appendChild(this.statusbuttons);
+    this.statusdiv.appendChild(this.controldiv);
     this.abortbutton = document.createElement("button");
     this.abortbutton.innerHTML = "Abort";
     this.abortbutton.onclick = function(e) {
@@ -922,7 +858,7 @@ OpenJsCad.Processor.prototype = {
     var obj;
     if(index < 0)
     {
-      obj=new CSG();
+      obj = null;
     }
     else
     {
@@ -930,25 +866,31 @@ OpenJsCad.Processor.prototype = {
     }
     this.currentObjectIndex = index;
     this.currentObject = obj;
-    if(this.viewer)
-    {
-      var csg = OpenJsCad.Processor.convertToSolid(obj);
-      this.viewer.setCsg(csg);
-    }
-    this.hasValidCurrentObject = true;
-    
+
     while(this.formatDropdown.options.length > 0)
       this.formatDropdown.options.remove(0);
+
+    if (obj !== null) {
+      var csg = OpenJsCad.Processor.convertToSolid(obj);
+      // don't reset zoom if toggling between valid objects
+      this.viewer.setCsg(csg, !this.hasValidCurrentObject);
+      this.hasValidCurrentObject = true;
+
+      this.supportedFormatsForCurrentObject().forEach(function(format) {
+        var option = document.createElement("option");
+        option.setAttribute("value", format);
+        option.appendChild(document.createTextNode(this.formatInfo(format).displayName));
+        this.formatDropdown.options.add(option);
+      }, this);
+
+      this.updateDownloadLink();
+
+    } else {
+      this.viewer.clear();
+      this.hasValidCurrentObject = false;
+    }
     
-    var that = this;
-    this.supportedFormatsForCurrentObject().forEach(function(format) {
-      var option = document.createElement("option");
-      option.setAttribute("value", format);
-      option.appendChild(document.createTextNode(that.formatInfo(format).displayName));
-      that.formatDropdown.options.add(option);
-    });
     
-    this.updateDownloadLink();
   },
   
   selectedFormat: function() {
