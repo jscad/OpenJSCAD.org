@@ -1055,6 +1055,7 @@ OpenJsCad.Processor.prototype = {
     {
       this.worker = OpenJsCad.parseJsCadScriptASync(this.script, paramValues, this.options, function(err, obj) {
         that.processing = false;
+        that.worker.terminate();
         that.worker = null;
         if(err)
         {
