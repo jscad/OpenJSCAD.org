@@ -67,13 +67,10 @@ if(navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)/i))
 
 $(document).ready(function() {
    $("#menu").height($(window).height());       // initial height
-   $("#viewer").height($(window).height());
 
    $(window).resize(function() {                // adjust the relevant divs
       $("#menu").height($(window).height());
       $("#menuHandle").css({top: '45%'});
-      $("#viewer").width($(window).width());
-      $("#viewer").height($(window).height());
    });
    setTimeout( function(){$('#menu').css('left','-280px');},3000); // -- hide slide-menu after 3secs
 
@@ -378,7 +375,7 @@ if(me=='web-online') {
 }
 </script>
 
-<div oncontextmenu="return false;" id="viewer"></div> <!-- avoiding popup when right mouse is clicked -->
+<div oncontextmenu="return false;" id="viewerContext"></div> <!-- avoiding popup when right mouse is clicked -->
 
 <div id="parametersdiv"></div>
 <div id="tail">
@@ -491,7 +488,7 @@ function onload() {
       };
    }
    
-   gProcessor = new OpenJsCad.Processor(document.getElementById("viewer"));
+   gProcessor = new OpenJsCad.Processor(document.getElementById("viewerContext"));
    setupDragDrop();
    //gProcessor.setDebugging(debugging); 
    if(me=='web-online') {    // we are online, fetch first example
@@ -662,7 +659,7 @@ function setupDragDrop() {
     throw new Error("Error: Your browser does not fully support the HTML File API");
   }
   var dropZone = document.getElementById('filedropzone');
-  //var dropZone = document.getElementById('viewer');
+  //var dropZone = document.getElementById('viewerContext');
   dropZone.addEventListener('dragover', function(evt) {
     evt.stopPropagation();
     evt.preventDefault();
