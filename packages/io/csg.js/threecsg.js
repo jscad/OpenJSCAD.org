@@ -95,10 +95,10 @@ THREE.CSG = {
 
         var colorMesh = new THREE.Mesh(three_geometry, new THREE.MeshFaceMaterial(materials));
 
-        // pass back bounding sphere radius
+        // pass back bounding sphere radius (or 0 if empty object)
         three_geometry.computeBoundingSphere();
         var boundLen = three_geometry.boundingSphere.radius +
-            three_geometry.boundingSphere.center.length();
+            three_geometry.boundingSphere.center.length() || 0;
 
         var phongWireframeMaterial = new THREE.MeshPhongMaterial({
             wireframe: true,

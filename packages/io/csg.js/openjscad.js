@@ -221,6 +221,10 @@ OpenJsCad.Viewer.prototype = {
         });
     },
     resetZoom: function(r) {
+        if (!r) {
+          // empty object - any default zoom
+          r = 10;
+        }
         var d = r / Math.tan(this.perspective * Math.PI / 180);
         // play here for different start zoom
         this.camera_.position.set(d*2, d*2, d);
