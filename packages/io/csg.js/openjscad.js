@@ -638,7 +638,7 @@ OpenJsCad.Processor = function(containerdiv, options, onchange) {
   this.onchange = onchange;
 
   // Draw black triangle lines ("wireframe")
-  this.options.drawLines = (options && options.drawLines) || false;
+  this.options.drawLines = (options && options.drawLines) || false;
   // Draw surfaces
   this.options.drawFaces = (options && options.drawFaces) || true;
 
@@ -735,7 +735,7 @@ OpenJsCad.Processor.prototype = {
         cb.addEventListener('click', function() {this.checked = this_.toggleDrawOption(tup[0])});
         var lb = document.createElement('label');
         lb.htmlFor = "cb_" + tup[0];
-        lb.appendChild(document.createTextNode(tup[1] + "  "));
+        lb.appendChild(document.createTextNode(tup[1] + "  "));
         [cb, lb].forEach(function(ui) {this.controldiv.appendChild(ui)}, this);
     }, this);
     this.statusspan = document.createElement("span");
