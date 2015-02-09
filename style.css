@@ -3,17 +3,17 @@
  */
 
 html, body { 
-   margin: 0px; /* not inherited */
-   border: 0px none black; /* not inherited */
-   padding: 0px; /* not inherited */
+   margin: 0px;             /* not inherited */
+   border: 0px none black;  /* not inherited */
+   padding: 0px;            /* not inherited */
    font-family: Helvetica, Arial, Sans;
 
-   /* these insure that the document uses the whole width and height of the browser */
+   /* ensure that the document uses the whole width and height of the browser */
    min-height: 100%;
    height: 100%;
    min-width: 100%;
    width: 100%;
-
+   
    /* viewer/canvas is full screen so when window 
       is resized all remains intact, but we make sure no scrollbar appears */
    overflow: hidden;       
@@ -47,12 +47,12 @@ a:visited {
 }
 
 #viewerContext {
-   margin: 0px; /* not inherited */
-   border: 0px none black; /* not inherited */
-   padding: 0px; /* not inherited */
+   margin: 0px;             /* not inherited */
+   border: 0px none black;  /* not inherited */
+   padding: 0px;            /* not inherited */
 
-   /* these insure that the canvas uses the whole width and height of the document */
-   background: blue;
+   /* ensure that the canvas uses the whole width and height of the document */
+   background: white;
    height: 100%;
    width: 100%;
 
@@ -61,15 +61,15 @@ a:visited {
 }
 
 canvas { 
-   margin: 0px; /* not inherited */
+   margin: 0px;            /* not inherited */
    border: 0px none black; /* not inherited */
-   padding: 0px; /* not inherited */
+   padding: 0px;           /* not inherited */
 
-   /* these insure that the canvas uses the whole width and height of the document */
+   /* ensure that the canvas uses the whole width and height of the document */
    height: 100%;
    width: 100%;
 
-   cursor: move; 
+   cursor: move;        /* show that we can change orientation of view */
 }
 
 #about {
