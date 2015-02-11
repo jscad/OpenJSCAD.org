@@ -631,16 +631,19 @@ OpenJsCad.getParamDefinitions = function(script) {
  * - viewerwidth, viewerheight: set rendering size. Works with any css unit.
  *     viewerheight can also be specified as a ratio to width, ie number e (0, 1]
  * - noWebGL: force render without webGL
+ * - verbose: show additional info (currently only time used for rendering)
  */
 OpenJsCad.Processor = function(containerdiv, options, onchange) {
   this.containerdiv = containerdiv;
-  this.options = options || {};
+  this.options = options = options || {};
   this.onchange = onchange;
 
   // Draw black triangle lines ("wireframe")
-  this.options.drawLines = (options && options.drawLines) || false;
+  this.options.drawLines = !!this.cleanOption(options.drawLines, false);
   // Draw surfaces
-  this.options.drawFaces = (options && options.drawFaces) || true;
+  this.options.drawFaces = !!this.cleanOption(options.drawFaces, true);
+  // verbose output
+  this.options.verbose = !!this.cleanOption(options.verbose, true);
 
   // default applies unless sizes specified in options
   this.widthDefault = "800px";
@@ -689,6 +692,9 @@ OpenJsCad.Processor.convertToSolid = function(obj) {
 };
 
 OpenJsCad.Processor.prototype = {
+  cleanOption: function(option, deflt) {
+    return typeof option != "undefined" ? option : deflt;
+  },
   // pass "faces" or "lines"
   toggleDrawOption: function(str) {
     if (str == 'faces' || str == 'lines') {
@@ -1072,7 +1078,8 @@ OpenJsCad.Processor.prototype = {
           that.setRenderedObjects(obj);
           var currentTime = Date.now();
           var elapsed = (currentTime - startTime);
-          that.statusspan.innerHTML = "Ready.  Rendered in " + elapsed + "ms";
+          that.statusspan.innerHTML = "Ready." + (that.options.verbose ?
+              "  Rendered in " + elapsed + "ms" : "");
         }
         that.enableItems();
         if(that.onchange) that.onchange();
