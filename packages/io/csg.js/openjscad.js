@@ -1054,9 +1054,10 @@ OpenJsCad.Processor.prototype = {
     var paramValues = this.getParamValues();
     var useSync = this.debugging;
     var options = {};
+    var startTime = Date.now();
 
-    if(!useSync)
-    {
+      if(!useSync)
+      {
       this.worker = OpenJsCad.parseJsCadScriptASync(this.script, paramValues, this.options, function(err, obj) {
         that.processing = false;
         that.worker.terminate();
@@ -1069,7 +1070,9 @@ OpenJsCad.Processor.prototype = {
         else
         {
           that.setRenderedObjects(obj);
-          that.statusspan.innerHTML = "Ready.";
+          var currentTime = Date.now();
+          var elapsed = (currentTime - startTime);
+          that.statusspan.innerHTML = "Ready.  Rendered in " + elapsed + "ms";
         }
         that.enableItems();
         if(that.onchange) that.onchange();

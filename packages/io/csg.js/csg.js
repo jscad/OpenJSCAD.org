@@ -3247,18 +3247,21 @@ for solid CAD anyway.
         },
 
         getPolygons: function(result) {
-            if (this.polygon) {
-                // the polygon hasn't been broken yet. We can ignore the children and return our polygon:
-                result.push(this.polygon);
-            } else {
-                // our polygon has been split up and broken, so gather all subpolygons from the children:
-                var childpolygons = [];
-                this.children.map(function(child) {
-                    child.getPolygons(childpolygons);
-                });
-                childpolygons.map(function(p) {
-                    result.push(p);
-                });
+            var children = [this];
+            var queue = [children];
+            var i, j, l, node;
+            for (i = 0; i < queue.length; ++i ) { // queue size can change in loop, don't cache length
+                children = queue[i];
+                for (j = 0, l = children.length; j < l; j++) { // ok to cache length
+                    node = children[j];
+                    if (node.polygon) {
+                        // the polygon hasn't been broken yet. We can ignore the children and return our polygon:
+                        result.push(node.polygon);
+                    } else {
+                        // our polygon has been split up and broken, so gather all subpolygons from the children
+                        queue.push(node.children);
+                    }
+                }
             }
         },
 
@@ -3267,61 +3270,72 @@ for solid CAD anyway.
         // If the plane does intersect the polygon, two new child nodes are created for the front and back fragments,
         //  and added to both arrays.
         splitByPlane: function(plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes) {
-            var children = this.children;
-            var numchildren = children.length;
-            if (numchildren > 0) {
-                // if we have children, split the children
-                for (var i = 0; i < numchildren; i++) {
-                    children[i].splitByPlane(plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes);
+            if (this.children.length) {
+                var queue = [this.children], i, j, l, node, nodes;
+                for (i = 0; i < queue.length; i++) { // queue.length can increase, do not cache
+                    nodes = queue[i];
+                    for (j = 0, l = nodes.length; j < l; j++) { // ok to cache length
+                        node = nodes[j];
+                        if (node.children.length) {
+                            queue.push(node.children);
+                        } else {
+                            // no children. Split the polygon:
+                            node._splitByPlane(plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes);
+                        }
+                    }
                 }
             } else {
-                // no children. Split the polygon:
-                var polygon = this.polygon;
-                if (polygon) {
-                    var bound = polygon.boundingSphere();
-                    var sphereradius = bound[1] + 1e-4;
-                    var planenormal = plane.normal;
-                    var spherecenter = bound[0];
-                    var d = planenormal.dot(spherecenter) - plane.w;
-                    if (d > sphereradius) {
-                        frontnodes.push(this);
-                    } else if (d < -sphereradius) {
-                        backnodes.push(this);
-                    } else {
-                        var splitresult = plane.splitPolygon(polygon);
-                        switch (splitresult.type) {
-                            case 0:
-                                // coplanar front:
-                                coplanarfrontnodes.push(this);
-                                break;
+                this._splitByPlane(plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes);
+            }
+        },
 
-                            case 1:
-                                // coplanar back:
-                                coplanarbacknodes.push(this);
-                                break;
+        // only to be called for nodes with no children
+        _splitByPlane: function (plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes) {
+            var polygon = this.polygon;
+            if (polygon) {
+                var bound = polygon.boundingSphere();
+                var sphereradius = bound[1] + 1e-4;
+                var planenormal = plane.normal;
+                var spherecenter = bound[0];
+                var d = planenormal.dot(spherecenter) - plane.w;
+                if (d > sphereradius) {
+                    frontnodes.push(this);
+                } else if (d < -sphereradius) {
+                    backnodes.push(this);
+                } else {
+                    var splitresult = plane.splitPolygon(polygon);
+                    switch (splitresult.type) {
+                        case 0:
+                            // coplanar front:
+                            coplanarfrontnodes.push(this);
+                            break;
 
-                            case 2:
-                                // front:
-                                frontnodes.push(this);
-                                break;
+                        case 1:
+                            // coplanar back:
+                            coplanarbacknodes.push(this);
+                            break;
 
-                            case 3:
-                                // back:
-                                backnodes.push(this);
-                                break;
+                        case 2:
+                            // front:
+                            frontnodes.push(this);
+                            break;
 
-                            case 4:
-                                // spanning:
-                                if (splitresult.front) {
-                                    var frontnode = this.addChild(splitresult.front);
-                                    frontnodes.push(frontnode);
-                                }
-                                if (splitresult.back) {
-                                    var backnode = this.addChild(splitresult.back);
-                                    backnodes.push(backnode);
-                                }
-                                break;
-                        }
+                        case 3:
+                            // back:
+                            backnodes.push(this);
+                            break;
+
+                        case 4:
+                            // spanning:
+                            if (splitresult.front) {
+                                var frontnode = this.addChild(splitresult.front);
+                                frontnodes.push(frontnode);
+                            }
+                            if (splitresult.back) {
+                                var backnode = this.addChild(splitresult.back);
+                                backnodes.push(backnode);
+                            }
+                            break;
                     }
                 }
             }
@@ -3342,19 +3356,27 @@ for solid CAD anyway.
         },
 
         invertSub: function() {
-            if (this.polygon) {
-                this.polygon = this.polygon.flipped();
+            var children = [this];
+            var queue = [children];
+            var i, j, l, node;
+            for (i = 0; i < queue.length; i++) {
+                children = queue[i];
+                for (j = 0, l = children.length; j < l; j++) {
+                    node = children[j];
+                    if (node.polygon) {
+                        node.polygon = node.polygon.flipped();
+                    }
+                    queue.push(node.children);
+                }
             }
-            this.children.map(function(child) {
-                child.invertSub();
-            });
         },
 
         recursivelyInvalidatePolygon: function() {
-            if (this.polygon) {
-                this.polygon = null;
-                if (this.parent) {
-                    this.parent.recursivelyInvalidatePolygon();
+            var node = this;
+            while (node.polygon) {
+                node.polygon = null;
+                if (node.parent) {
+                    node = node.parent;
                 }
             }
         }
@@ -3419,95 +3441,110 @@ for solid CAD anyway.
     CSG.Node.prototype = {
         // Convert solid space to empty space and empty space to solid space.
         invert: function() {
-            if (this.plane) this.plane = this.plane.flipped();
-            if (this.front) this.front.invert();
-            if (this.back) this.back.invert();
-            var temp = this.front;
-            this.front = this.back;
-            this.back = temp;
+            var queue = [this];
+            var i, node;
+            for (var i = 0; i < queue.length; i++) {
+                node = queue[i];
+                if(node.plane) node.plane = node.plane.flipped();
+                if(node.front) queue.push(node.front);
+                if(node.back) queue.push(node.back);
+                var temp = node.front;
+                node.front = node.back;
+                node.back = temp;
+            }
         },
 
         // clip polygontreenodes to our plane
         // calls remove() for all clipped PolygonTreeNodes
         clipPolygons: function(polygontreenodes, alsoRemovecoplanarFront) {
-            if (this.plane) {
-                var backnodes = [];
-                var frontnodes = [];
-                var coplanarfrontnodes = alsoRemovecoplanarFront ? backnodes : frontnodes;
-                var plane = this.plane;
-                var numpolygontreenodes = polygontreenodes.length;
-                for (var i = 0; i < numpolygontreenodes; i++) {
-                    var node = polygontreenodes[i];
-                    if (!node.isRemoved()) {
-                        node.splitByPlane(plane, coplanarfrontnodes, backnodes, frontnodes, backnodes);
+            var args = {'node': this, 'polygontreenodes': polygontreenodes }
+            var node;
+            var stack = [];
+
+            do {
+                node = args.node;
+                polygontreenodes = args.polygontreenodes;
+
+                // begin "function"
+                if(node.plane) {
+                    var backnodes = [];
+                    var frontnodes = [];
+                    var coplanarfrontnodes = alsoRemovecoplanarFront ? backnodes : frontnodes;
+                    var plane = node.plane;
+                    var numpolygontreenodes = polygontreenodes.length;
+                    for(i = 0; i < numpolygontreenodes; i++) {
+                        var node1 = polygontreenodes[i];
+                        if(!node1.isRemoved()) {
+                            node1.splitByPlane(plane, coplanarfrontnodes, backnodes, frontnodes, backnodes);
+                        }
+                    }
+
+                    if(node.front && (frontnodes.length > 0)) {
+                        stack.push({'node': node.front, 'polygontreenodes': frontnodes});
+                    }
+                    var numbacknodes = backnodes.length;
+                    if (node.back && (numbacknodes > 0)) {
+                        stack.push({'node': node.back, 'polygontreenodes': backnodes});
+                    } else {
+                        // there's nothing behind this plane. Delete the nodes behind this plane:
+                        for (var i = 0; i < numbacknodes; i++) {
+                            backnodes[i].remove();
+                        }
                     }
                 }
-                if (this.front && (frontnodes.length > 0)) {
-                    this.front.clipPolygons(frontnodes, alsoRemovecoplanarFront);
-                }
-                var numbacknodes = backnodes.length;
-                if (this.back && (numbacknodes > 0)) {
-                    this.back.clipPolygons(backnodes, alsoRemovecoplanarFront);
-                } else {
-                    // there's nothing behind this plane. Delete the nodes behind this plane:
-                    for (var i = 0; i < numbacknodes; i++) {
-                        backnodes[i].remove();
-                    }
-                }
-            }
+                args = stack.pop();
+            } while (typeof(args) !== 'undefined');
         },
 
         // Remove all polygons in this BSP tree that are inside the other BSP tree
         // `tree`.
         clipTo: function(tree, alsoRemovecoplanarFront) {
-            if (this.polygontreenodes.length > 0) {
-                tree.rootnode.clipPolygons(this.polygontreenodes, alsoRemovecoplanarFront);
-            }
-            if (this.front) this.front.clipTo(tree, alsoRemovecoplanarFront);
-            if (this.back) this.back.clipTo(tree, alsoRemovecoplanarFront);
+            var node = this, stack = [];
+            do {
+                if(node.polygontreenodes.length > 0) {
+                    tree.rootnode.clipPolygons(node.polygontreenodes, alsoRemovecoplanarFront);
+                }
+                if(node.front) stack.push(node.front);
+                if(node.back) stack.push(node.back);
+                node = stack.pop();
+            } while(typeof(node) !== 'undefined');
         },
 
         addPolygonTreeNodes: function(polygontreenodes) {
-            if (polygontreenodes.length === 0) return;
-            var _this = this;
-            if (!this.plane) {
-                var bestplane = polygontreenodes[0].getPolygon().plane;
-                /*
-      var parentnormals = [];
-      this.getParentPlaneNormals(parentnormals, 6);
-//parentnormals = [];
-      var numparentnormals = parentnormals.length;
-      var minmaxnormal = 1.0;
-      polygontreenodes.map(function(polygontreenode){
-        var plane = polygontreenodes[0].getPolygon().plane;
-        var planenormal = plane.normal;
-        var maxnormaldot = -1.0;
-        parentnormals.map(function(parentnormal){
-          var dot = parentnormal.dot(planenormal);
-          if(dot > maxnormaldot) maxnormaldot = dot;
-        });
-        if(maxnormaldot < minmaxnormal)
-        {
-          minmaxnormal = maxnormaldot;
-          bestplane = plane;
-        }
-      });
-*/
-                this.plane = bestplane;
-            }
-            var frontnodes = [];
-            var backnodes = [];
-            polygontreenodes.map(function(polygontreenode) {
-                polygontreenode.splitByPlane(_this.plane, _this.polygontreenodes, backnodes, frontnodes, backnodes);
-            });
-            if (frontnodes.length > 0) {
-                if (!this.front) this.front = new CSG.Node(this);
-                this.front.addPolygonTreeNodes(frontnodes);
-            }
-            if (backnodes.length > 0) {
-                if (!this.back) this.back = new CSG.Node(this);
-                this.back.addPolygonTreeNodes(backnodes);
-            }
+            var args = {'node': this, 'polygontreenodes': polygontreenodes };
+            var node;
+            var stack = [];
+            do {
+                node = args.node;
+                polygontreenodes = args.polygontreenodes;
+
+                if (polygontreenodes.length === 0) {
+                    args = stack.pop();
+                    continue;
+                }
+                var _this = node;
+                if (!node.plane) {
+                    var bestplane = polygontreenodes[0].getPolygon().plane;
+                    node.plane = bestplane;
+                }
+                var frontnodes = [];
+                var backnodes = [];
+
+                for (var i = 0, n = polygontreenodes.length ; i < n; ++i) {
+                    polygontreenodes[i].splitByPlane(_this.plane, _this.polygontreenodes, backnodes, frontnodes, backnodes);
+                }
+
+                if (frontnodes.length > 0) {
+                    if (!node.front) node.front = new CSG.Node(node);
+                    stack.push({'node': node.front, 'polygontreenodes': frontnodes});
+                }
+                if (backnodes.length > 0) {
+                    if (!node.back) node.back = new CSG.Node(node);
+                    stack.push({'node': node.back, 'polygontreenodes': backnodes});
+                }
+
+                args = stack.pop();
+            } while (typeof(args) !== 'undefined');
         },
 
         getParentPlaneNormals: function(normals, maxdepth) {
@@ -4041,12 +4078,12 @@ for solid CAD anyway.
             return distance;
         },
         /*FIXME: has error - origin is not defined, the method is never used
-    closestPoint: function(point) {
-        point = new CSG.Vector2D(point);
-        var vector = point.dot(this.direction());
-        return origin.plus(vector);
-    },
-    */
+         closestPoint: function(point) {
+         point = new CSG.Vector2D(point);
+         var vector = point.dot(this.direction());
+         return origin.plus(vector);
+         },
+         */
 
         // intersection between two lines, returns point as Vector2D
         intersectWithLine: function(line2d) {
@@ -4269,43 +4306,43 @@ for solid CAD anyway.
     };
 
     /*
-    // test code for CSG.OrthoNormalBasis.GetCartesian()
-    CSG.OrthoNormalBasis.GetCartesian_Test=function() {
-        var axisnames=["X","Y","Z","-X","-Y","-Z"];
-        var axisvectors=[[1,0,0], [0,1,0], [0,0,1], [-1,0,0], [0,-1,0], [0,0,-1]];
-        for(var axis1=0; axis1 < 3; axis1++)
-        {
-            for(var axis1inverted=0; axis1inverted < 2; axis1inverted++)
-            {
-                var axis1name=axisnames[axis1+3*axis1inverted];
-                var axis1vector=axisvectors[axis1+3*axis1inverted];
-                for(var axis2=0; axis2 < 3; axis2++)
-                {
-                    if(axis2 != axis1)
-                    {
-                        for(var axis2inverted=0; axis2inverted < 2; axis2inverted++)
-                        {
-                            var axis2name=axisnames[axis2+3*axis2inverted];
-                            var axis2vector=axisvectors[axis2+3*axis2inverted];
-                            var orthobasis=CSG.OrthoNormalBasis.GetCartesian(axis1name, axis2name);
-                            var test1=orthobasis.to3D(new CSG.Vector2D([1,0]));
-                            var test2=orthobasis.to3D(new CSG.Vector2D([0,1]));
-                            var expected1=new CSG.Vector3D(axis1vector);
-                            var expected2=new CSG.Vector3D(axis2vector);
-                            var d1=test1.distanceTo(expected1);
-                            var d2=test2.distanceTo(expected2);
-                            if( (d1 > 0.01) || (d2 > 0.01) )
-                            {
-                                throw new Error("Wrong!");
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        throw new Error("OK");
-    };
-    */
+     // test code for CSG.OrthoNormalBasis.GetCartesian()
+     CSG.OrthoNormalBasis.GetCartesian_Test=function() {
+     var axisnames=["X","Y","Z","-X","-Y","-Z"];
+     var axisvectors=[[1,0,0], [0,1,0], [0,0,1], [-1,0,0], [0,-1,0], [0,0,-1]];
+     for(var axis1=0; axis1 < 3; axis1++)
+     {
+     for(var axis1inverted=0; axis1inverted < 2; axis1inverted++)
+     {
+     var axis1name=axisnames[axis1+3*axis1inverted];
+     var axis1vector=axisvectors[axis1+3*axis1inverted];
+     for(var axis2=0; axis2 < 3; axis2++)
+     {
+     if(axis2 != axis1)
+     {
+     for(var axis2inverted=0; axis2inverted < 2; axis2inverted++)
+     {
+     var axis2name=axisnames[axis2+3*axis2inverted];
+     var axis2vector=axisvectors[axis2+3*axis2inverted];
+     var orthobasis=CSG.OrthoNormalBasis.GetCartesian(axis1name, axis2name);
+     var test1=orthobasis.to3D(new CSG.Vector2D([1,0]));
+     var test2=orthobasis.to3D(new CSG.Vector2D([0,1]));
+     var expected1=new CSG.Vector3D(axis1vector);
+     var expected2=new CSG.Vector3D(axis2vector);
+     var d1=test1.distanceTo(expected1);
+     var d2=test2.distanceTo(expected2);
+     if( (d1 > 0.01) || (d2 > 0.01) )
+     {
+     throw new Error("Wrong!");
+     }
+     }
+     }
+     }
+     }
+     }
+     throw new Error("OK");
+     };
+     */
 
     // The z=0 plane, with the 3D x and y vectors mapped to the 2D x and y vector
     CSG.OrthoNormalBasis.Z0Plane = function() {
@@ -5052,20 +5089,20 @@ for solid CAD anyway.
     };
 
     /*
-    Construct a (part of a) circle. Parameters:
-      options.center: the center point of the arc (CSG.Vector2D or array [x,y])
-      options.radius: the circle radius (float)
-      options.startangle: the starting angle of the arc, in degrees
-        0 degrees corresponds to [1,0]
-        90 degrees to [0,1]
-        and so on
-      options.endangle: the ending angle of the arc, in degrees
-      options.resolution: number of points per 360 degree of rotation
-      options.maketangent: adds two extra tiny line segments at both ends of the circle
-        this ensures that the gradients at the edges are tangent to the circle
-    Returns a CSG.Path2D. The path is not closed (even if it is a 360 degree arc).
-    close() the resultin path if you want to create a true circle.
-    */
+     Construct a (part of a) circle. Parameters:
+     options.center: the center point of the arc (CSG.Vector2D or array [x,y])
+     options.radius: the circle radius (float)
+     options.startangle: the starting angle of the arc, in degrees
+     0 degrees corresponds to [1,0]
+     90 degrees to [0,1]
+     and so on
+     options.endangle: the ending angle of the arc, in degrees
+     options.resolution: number of points per 360 degree of rotation
+     options.maketangent: adds two extra tiny line segments at both ends of the circle
+     this ensures that the gradients at the edges are tangent to the circle
+     Returns a CSG.Path2D. The path is not closed (even if it is a 360 degree arc).
+     close() the resultin path if you want to create a true circle.
+     */
     CSG.Path2D.arc = function(options) {
         var center = CSG.parseOptionAs2DVector(options, "center", 0);
         var radius = CSG.parseOptionAsFloat(options, "radius", 1);
@@ -5303,20 +5340,20 @@ for solid CAD anyway.
         },
 
         /*
-        options:
-            .resolution // smoothness of the arc (number of segments per 360 degree of rotation)
-            // to create a circular arc:
-            .radius
-            // to create an elliptical arc:
-            .xradius
-            .yradius
-            .xaxisrotation  // the rotation (in degrees) of the x axis of the ellipse with respect to the x axis of our coordinate system
-            // this still leaves 4 possible arcs between the two given points. The following two flags select which one we draw:
-            .clockwise // = true | false (default is false). Two of the 4 solutions draw clockwise with respect to the center point, the other 2 counterclockwise
-            .large     // = true | false (default is false). Two of the 4 solutions are an arc longer than 180 degrees, the other two are <= 180 degrees
-        This implementation follows the SVG arc specs. For the details see 
-        http://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
-    */
+         options:
+         .resolution // smoothness of the arc (number of segments per 360 degree of rotation)
+         // to create a circular arc:
+         .radius
+         // to create an elliptical arc:
+         .xradius
+         .yradius
+         .xaxisrotation  // the rotation (in degrees) of the x axis of the ellipse with respect to the x axis of our coordinate system
+         // this still leaves 4 possible arcs between the two given points. The following two flags select which one we draw:
+         .clockwise // = true | false (default is false). Two of the 4 solutions draw clockwise with respect to the center point, the other 2 counterclockwise
+         .large     // = true | false (default is false). Two of the 4 solutions are an arc longer than 180 degrees, the other two are <= 180 degrees
+         This implementation follows the SVG arc specs. For the details see
+         http://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
+         */
         appendArc: function(endpoint, options) {
             if (arguments.length < 2) {
                 options = {};
@@ -5545,12 +5582,12 @@ for solid CAD anyway.
     };
 
     /* Construct a circle
-       options:
-         center: a 2D center point
-         radius: a scalar
-         resolution: number of sides per 360 degree rotation
-       returns a CAG object
-    */
+     options:
+     center: a 2D center point
+     radius: a scalar
+     resolution: number of sides per 360 degree rotation
+     returns a CAG object
+     */
     CAG.circle = function(options) {
         options = options || {};
         var center = CSG.parseOptionAs2DVector(options, "center", [0, 0]);
@@ -5571,11 +5608,11 @@ for solid CAD anyway.
     };
 
     /* Construct a rectangle
-       options:
-         center: a 2D center point
-         radius: a 2D vector with width and height
-       returns a CAG object
-    */
+     options:
+     center: a 2D center point
+     radius: a 2D vector with width and height
+     returns a CAG object
+     */
     CAG.rectangle = function(options) {
         options = options || {};
         var c, r;
@@ -5699,7 +5736,7 @@ for solid CAD anyway.
                     return pair.map(function(v) {
                         return v.transform(m);
                     });
-                }); 
+                });
             }
             return pairs;
         },
@@ -6053,7 +6090,7 @@ for solid CAD anyway.
                 normalVector: normalVector.rotateZ(twistangle), flipped: offsetVector.z < 0 ? true:false}));
             // walls
             for (var i = 0; i < twiststeps; i++) {
-                var c1 = new CSG.Connector(offsetVector.times(i / twiststeps), [0, 0, offsetVector.z], 
+                var c1 = new CSG.Connector(offsetVector.times(i / twiststeps), [0, 0, offsetVector.z],
                     normalVector.rotateZ(i * twistangle/twiststeps));
                 var c2 = new CSG.Connector(offsetVector.times((i + 1) / twiststeps), [0, 0, offsetVector.z],
                     normalVector.rotateZ((i + 1) * twistangle/twiststeps));
@@ -6262,13 +6299,13 @@ for solid CAD anyway.
         },
 
         /*
-    cag = cag.overCutInsideCorners(cutterradius);
+         cag = cag.overCutInsideCorners(cutterradius);
 
-    Using a CNC router it's impossible to cut out a true sharp inside corner. The inside corner
-    will be rounded due to the radius of the cutter. This function compensates for this by creating 
-    an extra cutout at each inner corner so that the actual cut out shape will be at least as large
-    as needed.
-    */
+         Using a CNC router it's impossible to cut out a true sharp inside corner. The inside corner
+         will be rounded due to the radius of the cutter. This function compensates for this by creating
+         an extra cutout at each inner corner so that the actual cut out shape will be at least as large
+         as needed.
+         */
         overCutInsideCorners: function(cutterradius) {
             var cag = this.canonicalized();
             // for each vertex determine the 'incoming' side and 'outgoing' side:
@@ -6523,14 +6560,14 @@ for solid CAD anyway.
     CSG.addTransformationMethodsToPrototype(CSG.OrthoNormalBasis.prototype);
 
     /*
-      2D polygons are now supported through the CAG class.
-      With many improvements (see documentation):
-        - shapes do no longer have to be convex
-        - union/intersect/subtract is supported
-        - expand / contract are supported
+     2D polygons are now supported through the CAG class.
+     With many improvements (see documentation):
+     - shapes do no longer have to be convex
+     - union/intersect/subtract is supported
+     - expand / contract are supported
 
-      But we'll keep CSG.Polygon2D as a stub for backwards compatibility
-    */
+     But we'll keep CSG.Polygon2D as a stub for backwards compatibility
+     */
     CSG.Polygon2D = function(points) {
         var cag = CAG.fromPoints(points);
         this.sides = cag.sides;
