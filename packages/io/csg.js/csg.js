@@ -4079,9 +4079,9 @@ for solid CAD anyway.
         },
         /*FIXME: has error - origin is not defined, the method is never used
          closestPoint: function(point) {
-         point = new CSG.Vector2D(point);
-         var vector = point.dot(this.direction());
-         return origin.plus(vector);
+             point = new CSG.Vector2D(point);
+             var vector = point.dot(this.direction());
+             return origin.plus(vector);
          },
          */
 
@@ -4306,43 +4306,32 @@ for solid CAD anyway.
     };
 
     /*
-     // test code for CSG.OrthoNormalBasis.GetCartesian()
-     CSG.OrthoNormalBasis.GetCartesian_Test=function() {
-     var axisnames=["X","Y","Z","-X","-Y","-Z"];
-     var axisvectors=[[1,0,0], [0,1,0], [0,0,1], [-1,0,0], [0,-1,0], [0,0,-1]];
-     for(var axis1=0; axis1 < 3; axis1++)
-     {
-     for(var axis1inverted=0; axis1inverted < 2; axis1inverted++)
-     {
-     var axis1name=axisnames[axis1+3*axis1inverted];
-     var axis1vector=axisvectors[axis1+3*axis1inverted];
-     for(var axis2=0; axis2 < 3; axis2++)
-     {
-     if(axis2 != axis1)
-     {
-     for(var axis2inverted=0; axis2inverted < 2; axis2inverted++)
-     {
-     var axis2name=axisnames[axis2+3*axis2inverted];
-     var axis2vector=axisvectors[axis2+3*axis2inverted];
-     var orthobasis=CSG.OrthoNormalBasis.GetCartesian(axis1name, axis2name);
-     var test1=orthobasis.to3D(new CSG.Vector2D([1,0]));
-     var test2=orthobasis.to3D(new CSG.Vector2D([0,1]));
-     var expected1=new CSG.Vector3D(axis1vector);
-     var expected2=new CSG.Vector3D(axis2vector);
-     var d1=test1.distanceTo(expected1);
-     var d2=test2.distanceTo(expected2);
-     if( (d1 > 0.01) || (d2 > 0.01) )
-     {
-     throw new Error("Wrong!");
-     }
-     }
-     }
-     }
-     }
-     }
-     throw new Error("OK");
-     };
-     */
+    // test code for CSG.OrthoNormalBasis.GetCartesian()
+    CSG.OrthoNormalBasis.GetCartesian_Test=function() {
+      var axisnames=["X","Y","Z","-X","-Y","-Z"];
+      var axisvectors=[[1,0,0], [0,1,0], [0,0,1], [-1,0,0], [0,-1,0], [0,0,-1]];
+      for(var axis1=0; axis1 < 3; axis1++) {
+        for(var axis1inverted=0; axis1inverted < 2; axis1inverted++) {
+          var axis1name=axisnames[axis1+3*axis1inverted];
+          var axis1vector=axisvectors[axis1+3*axis1inverted];
+          for(var axis2=0; axis2 < 3; axis2++) {
+            if(axis2 != axis1) {
+              for(var axis2inverted=0; axis2inverted < 2; axis2inverted++) {
+                var axis2name=axisnames[axis2+3*axis2inverted];
+                var axis2vector=axisvectors[axis2+3*axis2inverted];
+                var orthobasis=CSG.OrthoNormalBasis.GetCartesian(axis1name, axis2name);
+                var test1=orthobasis.to3D(new CSG.Vector2D([1,0]));
+                var test2=orthobasis.to3D(new CSG.Vector2D([0,1]));
+                var expected1=new CSG.Vector3D(axis1vector);
+                var expected2=new CSG.Vector3D(axis2vector);
+                var d1=test1.distanceTo(expected1);
+                var d2=test2.distanceTo(expected2);
+                if( (d1 > 0.01) || (d2 > 0.01) ) {
+                  throw new Error("Wrong!");
+      }}}}}}
+      throw new Error("OK");
+    };
+    */
 
     // The z=0 plane, with the 3D x and y vectors mapped to the 2D x and y vector
     CSG.OrthoNormalBasis.Z0Plane = function() {
@@ -5089,20 +5078,20 @@ for solid CAD anyway.
     };
 
     /*
-     Construct a (part of a) circle. Parameters:
-     options.center: the center point of the arc (CSG.Vector2D or array [x,y])
-     options.radius: the circle radius (float)
-     options.startangle: the starting angle of the arc, in degrees
-     0 degrees corresponds to [1,0]
-     90 degrees to [0,1]
-     and so on
-     options.endangle: the ending angle of the arc, in degrees
-     options.resolution: number of points per 360 degree of rotation
-     options.maketangent: adds two extra tiny line segments at both ends of the circle
-     this ensures that the gradients at the edges are tangent to the circle
-     Returns a CSG.Path2D. The path is not closed (even if it is a 360 degree arc).
-     close() the resultin path if you want to create a true circle.
-     */
+    Construct a (part of a) circle. Parameters:
+      options.center: the center point of the arc (CSG.Vector2D or array [x,y])
+      options.radius: the circle radius (float)
+      options.startangle: the starting angle of the arc, in degrees
+        0 degrees corresponds to [1,0]
+        90 degrees to [0,1]
+        and so on
+      options.endangle: the ending angle of the arc, in degrees
+      options.resolution: number of points per 360 degree of rotation
+      options.maketangent: adds two extra tiny line segments at both ends of the circle
+        this ensures that the gradients at the edges are tangent to the circle
+    Returns a CSG.Path2D. The path is not closed (even if it is a 360 degree arc).
+    close() the resulting path if you want to create a true circle.
+    */
     CSG.Path2D.arc = function(options) {
         var center = CSG.parseOptionAs2DVector(options, "center", 0);
         var radius = CSG.parseOptionAsFloat(options, "radius", 1);
@@ -5582,12 +5571,12 @@ for solid CAD anyway.
     };
 
     /* Construct a circle
-     options:
-     center: a 2D center point
-     radius: a scalar
-     resolution: number of sides per 360 degree rotation
-     returns a CAG object
-     */
+    options:
+      center: a 2D center point
+      radius: a scalar
+      resolution: number of sides per 360 degree rotation
+    returns a CAG object
+    */
     CAG.circle = function(options) {
         options = options || {};
         var center = CSG.parseOptionAs2DVector(options, "center", [0, 0]);
@@ -5608,11 +5597,11 @@ for solid CAD anyway.
     };
 
     /* Construct a rectangle
-     options:
-     center: a 2D center point
-     radius: a 2D vector with width and height
-     returns a CAG object
-     */
+    options:
+      center: a 2D center point
+      radius: a 2D vector with width and height
+      returns a CAG object
+    */
     CAG.rectangle = function(options) {
         options = options || {};
         var c, r;
@@ -6299,13 +6288,13 @@ for solid CAD anyway.
         },
 
         /*
-         cag = cag.overCutInsideCorners(cutterradius);
+        cag = cag.overCutInsideCorners(cutterradius);
 
-         Using a CNC router it's impossible to cut out a true sharp inside corner. The inside corner
-         will be rounded due to the radius of the cutter. This function compensates for this by creating
-         an extra cutout at each inner corner so that the actual cut out shape will be at least as large
-         as needed.
-         */
+        Using a CNC router it's impossible to cut out a true sharp inside corner. The inside corner
+        will be rounded due to the radius of the cutter. This function compensates for this by creating
+        an extra cutout at each inner corner so that the actual cut out shape will be at least as large
+        as needed.
+        */
         overCutInsideCorners: function(cutterradius) {
             var cag = this.canonicalized();
             // for each vertex determine the 'incoming' side and 'outgoing' side:
@@ -6560,14 +6549,14 @@ for solid CAD anyway.
     CSG.addTransformationMethodsToPrototype(CSG.OrthoNormalBasis.prototype);
 
     /*
-     2D polygons are now supported through the CAG class.
-     With many improvements (see documentation):
-     - shapes do no longer have to be convex
-     - union/intersect/subtract is supported
-     - expand / contract are supported
+    2D polygons are now supported through the CAG class.
+    With many improvements (see documentation):
+      - shapes do no longer have to be convex
+      - union/intersect/subtract is supported
+      - expand / contract are supported
 
-     But we'll keep CSG.Polygon2D as a stub for backwards compatibility
-     */
+    But we'll keep CSG.Polygon2D as a stub for backwards compatibility
+    */
     CSG.Polygon2D = function(points) {
         var cag = CAG.fromPoints(points);
         this.sides = cag.sides;
