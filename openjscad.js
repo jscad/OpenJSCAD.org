@@ -63,7 +63,7 @@ OpenJsCad.Viewer = function(containerelement, initialdepth) {
   this.gl.matrixMode(this.gl.MODELVIEW);
 
   // Set up WebGL state
-  this.gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+  this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
   this.gl.clearColor(0.93, 0.93, 0.93, 1);
   this.gl.enable(this.gl.DEPTH_TEST);
   this.gl.enable(this.gl.CULL_FACE);
@@ -240,6 +240,11 @@ OpenJsCad.Viewer.prototype = {
   ZOOM_MIN: 10,
   onZoomChanged: null,
   plate: true,                   // render plate
+  // state of view
+  // 0 - initialized, no object
+  // 1 - cleared, no object
+  // 2 - showing, object
+  state: 0,
 
   setZoom: function(coeff) { //0...1
     coeff=Math.max(coeff, 0);
@@ -910,9 +915,7 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
   //this.viewerwidth = 1200;
   //this.viewerheight = 800;
   this.initialViewerDistance = 100;
-  this.processing = false;
   this.currentObject = null;
-  this.hasValidCurrentObject = false;
   this.hasOutputFile = false;
   this.worker = null;
   this.paramDefinitions = [];
@@ -922,6 +925,12 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
   this.debugging = false;
   this.options = {};
   this.createElements();
+// state of the processor
+// 0 - initialized - no viewer, no parameters, etc
+// 1 - processing  - processing JSCAD script
+// 2 - complete    - completed processing
+// 3 - incomplete  - incompleted due to errors in processing
+  this.state = 0; // initialized
 };
 
 OpenJsCad.Processor.convertToSolid = function(obj) {
@@ -977,9 +986,7 @@ OpenJsCad.Processor.prototype = {
       //this.viewer = new OpenJsCad.Viewer(this.viewerdiv, viewerdiv.offsetWidth, viewer.offsetHeight, this.initialViewerDistance);
       this.viewer = new OpenJsCad.Viewer(this.viewerdiv, this.initialViewerDistance);
     } catch(e) {
-      //      this.viewer = null;
       this.viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad currently requires Google Chrome or Firefox with WebGL enabled";
-      //      this.viewerdiv.innerHTML = e.toString();
     }
     //Zoom control
     if(0) {
@@ -1099,10 +1106,10 @@ OpenJsCad.Processor.prototype = {
     if(this.viewer) {
       var csg = OpenJsCad.Processor.convertToSolid(obj);       // enfore CSG to display
       this.viewer.setCsg(csg);
+      this.viewer.state = 2;
       if(obj.length)             // if it was an array (multiple CSG is now one CSG), we have to reassign currentObject
          this.currentObject = csg;
     }
-    this.hasValidCurrentObject = true;
     
     while(this.formatDropdown.options.length > 0)
       this.formatDropdown.options.remove(0);
@@ -1133,27 +1140,31 @@ OpenJsCad.Processor.prototype = {
   
   clearViewer: function() {
     this.clearOutputFile();
-    this.setCurrentObject(new CSG());
-    this.hasValidCurrentObject = false;
+    if (this.currentObject) {
+      this.setCurrentObject(new CSG());
+      this.currentObject = null;
+    }
+    this.viewer.state = 1; // cleared
     this.enableItems();
   },
   
   abort: function() {
-    if(this.processing)
+  // abort if state is processing
+    if(this.state == 1)
     {
       //todo: abort
-      this.processing=false;
       this.statusspan.innerHTML = "Aborted.";
       this.worker.terminate();
+      this.state = 3; // incomplete
       this.enableItems();
       if(this.onchange) this.onchange();
     }
   },
   
   enableItems: function() {
-    this.abortbutton.style.display = this.processing? "inline":"none";
-    this.formatDropdown.style.display = ((!this.hasOutputFile)&&(this.hasValidCurrentObject))? "inline":"none";
-    this.generateOutputFileButton.style.display = ((!this.hasOutputFile)&&(this.hasValidCurrentObject))? "inline":"none";
+    this.abortbutton.style.display = (this.state == 1) ? "inline":"none";
+    this.formatDropdown.style.display = ((!this.hasOutputFile)&&(this.currentObject))? "inline":"none";
+    this.generateOutputFileButton.style.display = ((!this.hasOutputFile)&&(this.currentObject))? "inline":"none";
     this.downloadOutputFileLink.style.display = this.hasOutputFile? "inline":"none";
     this.parametersdiv.style.display = (this.paramControls.length > 0)? "inline-block":"none";     // was 'block' 
     this.errordiv.style.display = this.hasError? "block":"none";
@@ -1187,7 +1198,6 @@ OpenJsCad.Processor.prototype = {
     if(!filename) filename = "openjscad.jscad";
     filename = filename.replace(/\.jscad$/i, "");
     this.abort();
-    this.clearViewer();
     this.paramDefinitions = [];
     this.paramControls = [];
     this.script = null;
@@ -1264,7 +1274,6 @@ OpenJsCad.Processor.prototype = {
     this.abort();
     this.setError("");
     this.clearViewer();
-    this.processing = true;
     this.statusspan.innerHTML = "Rendering code, please wait <img id=busy src='imgs/busy.gif'>";
     this.enableItems();
     var that = this;
@@ -1277,18 +1286,20 @@ OpenJsCad.Processor.prototype = {
       try
       {
           console.log("trying async compute");
+          that.state = 1; // processing
           this.worker = OpenJsCad.parseJsCadScriptASync(this.script, paramValues, this.options, function(err, obj) {
-          that.processing = false;
           that.worker = null;
           if(err)
           {
             that.setError(err);
             that.statusspan.innerHTML = "Error.";
+            that.state = 3; // incomplete
           }
           else
           {
             that.setCurrentObject(obj);
             that.statusspan.innerHTML = "Ready.";
+            that.state = 2; // complete
           }
           that.enableItems();
           if(that.onchange) that.onchange();
@@ -1305,34 +1316,31 @@ OpenJsCad.Processor.prototype = {
     {
       try
       {
+        that.state = 1; // processing
         this.statusspan.innerHTML = "Rendering code, please wait <img id=busy src='imgs/busy.gif'>";
         var obj = OpenJsCad.parseJsCadScriptSync(this.script, paramValues, this.debugging);
         that.setCurrentObject(obj);
-        that.processing = false;
         that.statusspan.innerHTML = "Ready.";
+        that.state = 2; // complete
       }
       catch(e)
       {
-        that.processing = false;
         var errtxt = e.toString();
         if(e.stack) {
           errtxt += '\nStack trace:\n'+e.stack;
         } 
         that.statusspan.innerHTML = "Error.";
+        that.state = 3; // incomplete
       }
       that.enableItems();
       if(that.onchange) that.onchange();
     }
   },
   
-  hasSolid: function() {
-    return this.hasValidCurrentObject;
+  getState: function() {
+    return this.state;
   },
 
-  isProcessing: function() {
-    return this.processing;
-  },
-   
   clearOutputFile: function() {
     if(this.hasOutputFile)
     {
@@ -1354,7 +1362,7 @@ OpenJsCad.Processor.prototype = {
 
   generateOutputFile: function() {
     this.clearOutputFile();
-    if(this.hasValidCurrentObject)
+    if(this.currentObject)
     {
       try
       {
@@ -1390,7 +1398,7 @@ OpenJsCad.Processor.prototype = {
       blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
     }  
     else if(format == "x3d") {
-      blob = this.currentObject.fixTJunctions().toX3D(bb);
+      blob = this.currentObject.fixTJunctions().toX3D();
     }
     else if(format == "dxf") {
       blob = this.currentObject.toDxf();
