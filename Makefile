@@ -1,4 +1,4 @@
-VERSION = 0.018
+VERSION = 0.023
 LIB = /usr/local/lib/openjscad/
 NODE_MODULES = /usr/local/lib/node_modules/
 
@@ -61,7 +61,7 @@ backup::
 	scp ../Backup/openjscad.org-${VERSION}.tar.gz the-labs.com:Backup/
 
 edit::
-	dee4 index.html Makefile README.md *.css *.js openjscad
+	dee4 index.html Makefile LICENSE README.md *.css *.js openjscad
 
 live::
 	# -- do not enable --delete is it will destroy stats folder

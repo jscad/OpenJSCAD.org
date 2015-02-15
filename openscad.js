@@ -1,7 +1,9 @@
 // openscad.js, a few functions to simplify coding OpenSCAD-like
-//    written by Rene K. Mueller <spiritdude@gmail.com>, License: GPLv2
 //
-// Version: 0.022
+// Copyright (c) 2013-2015 by Rene K. Mueller <spiritdude@gmail.com>
+//
+// Version: 0.023
+// License: MIT License
 //
 // Description:
 // Helping to convert OpenSCAD .scad files to OpenJSCad .jscad files with 
@@ -12,7 +14,8 @@
 //     http://openjscad.org/
 //
 // History:
-// 2014/01/07: 0.022: cylinder() supports d, d1 & d2 to be OpenSCAD-like (github issue #61)
+// 2015/02/15: 0.023: change license from GPL to MIT license, for sake of simpleness
+// 2015/01/07: 0.022: cylinder() supports d, d1 & d2 to be OpenSCAD-like (github issue #61)
 // 2013/04/26: 0.021: sphere() geodesic option added
 // 2013/04/25: 0.020: center(v,obj) added, uses new .center(v)
 // 2013/04/22: 0.019: vector_char() and vector_text() added, vector font rendering
