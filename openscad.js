@@ -14,7 +14,7 @@
 //     http://openjscad.org/
 //
 // History:
-// 2015/02/15: 0.023: change license from GPL to MIT license, for sake of simpleness
+// 2015/02/15: 0.023: change license from GPL to MIT license, for sake of simpleness, pull request for mirror() fix (github issue #65) included
 // 2015/01/07: 0.022: cylinder() supports d, d1 & d2 to be OpenSCAD-like (github issue #61)
 // 2013/04/26: 0.021: sphere() geodesic option added
 // 2013/04/25: 0.020: center(v,obj) added, uses new .center(v)
