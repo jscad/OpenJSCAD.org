@@ -216,16 +216,18 @@ for solid CAD anyway.
         union: function(csg) {
             var csgs;
             if (csg instanceof Array) {
-                csgs = csg;
+                csgs = csg.slice(0);
+                csgs.push(this);
             } else {
-                csgs = [csg];
+                csgs = [this, csg];
             }
-            var result = this;
-            for (var i = 0; i < csgs.length; i++) {
-                var islast = (i == (csgs.length - 1));
-                result = result.unionSub(csgs[i], islast, islast);
+
+            // combine csg pairs in a way that forms a balanced binary tree pattern
+            for (var i = 1; i < csgs.length; i += 2) {
+                csgs.push(csgs[i-1].unionSub(csgs[i]));
             }
-            return result;
+
+            return csgs[i - 1].reTesselated().canonicalized();
         },
 
         unionSub: function(csg, retesselate, canonicalize) {
