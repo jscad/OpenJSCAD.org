@@ -5090,9 +5090,12 @@ CAG.fromPoints = function(points) {
 		var point = new CSG.Vector2D(p);
 		var vertex = new CAG.Vertex(point);
 		var side = new CAG.Side(prevvertex, vertex);
-		sides.push(side);
-		prevvertex = vertex;
+		if(side.lengthSquared() > 1e-5) {
+			sides.push(side);
+			prevvertex = vertex;
+		}
 	});
+	if(sides.length < 3) throw new Error("CAG shape needs at least 3 distinct points")
 	var result = CAG.fromSides(sides);
 	if(result.isSelfIntersecting()) {
 		throw new Error("Polygon is self intersecting!");
