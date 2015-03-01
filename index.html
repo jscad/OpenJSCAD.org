@@ -41,7 +41,8 @@ Todo:
 <link rel="stylesheet" href="style.css" type="text/css">
 <link rel="stylesheet" href="openjscad.css" type="text/css">
 </head>
-<body onload="onload()">
+
+<body>
 
 <style>
 /* we choose chrome theme for ace, and make sure line number is transparent too */
@@ -481,7 +482,7 @@ var gRootFs = [];             // root(s) of folders
 
 var _includePath = './';
 
-function onload() {
+$(document).ready(function() {
    // -- http://ace.ajax.org/#nav=howto
    editor = ace.edit("editor");
    editor.setTheme("ace/theme/chrome");
@@ -551,7 +552,7 @@ function onload() {
    } else {
       gProcessor.setJsCad(editor.getValue());
    }
-}
+});
 
 function fetchExample(fn,url) {
    gMemFs = []; gCurrentFiles = [];
