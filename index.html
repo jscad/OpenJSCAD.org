@@ -42,6 +42,7 @@ Todo:
 <link rel="stylesheet" href="openjscad.css" type="text/css">
 </head>
 <body onload="onload()">
+
 <style>
 /* we choose chrome theme for ace, and make sure line number is transparent too */
 /* this has to stay in the body (not head) otherwise does not take effect */
@@ -53,13 +54,15 @@ Todo:
    font-size: 10pt;     // -- not 'px', but 'pt' for high dpi screens
 }
 </style>
+
 <script src="lightgl.js"></script>
 <script src="csg.js"></script>
 <script src="openjscad.js"></script>
 <script src="openscad.js"></script>
 <script src="underscore.js"></script>
 <script src="openscad-openjscad-translator.js"></script>
-<script lang=JavaScript>
+
+<script>
 var version = '0.023 (2015/02/14)';
 //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
 var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
@@ -118,72 +121,91 @@ $(document).ready(function() {
          $('#customPlate').hide();
       }
    });
-});   
+});
 </script>
+
 <div id="header">
 <img src="imgs/title.png">
 <div id="errordiv"></div>
 </div>
 
-<div id=menu>
-<img id=menuHandle src="imgs/menuHandleVL.png">
-<nav>
-<div id=menuVersion>Version <script>document.write(version);</script></div>
-<p/>
-<table class=info>
-<tr><td align=right class=infoOperation>Render Code</td><td class=infoKey>SHIFT + RETURN</td></tr>
-<tr><td align=right class=infoOperation>Rotate XZ</td><td class=infoKey>Left Mouse</td></tr>
-<tr><td align=right class=infoOperation>Pan</td><td class=infoKey>Middle Mouse or SHIFT + Left Mouse</td></tr>
-<tr><td align=right class=infoOperation>Rotate XY</td><td class=infoKey>Right Mouse or ALT + Left Mouse</td></tr>
-<tr><td align=right class=infoOperation>Zoom In/Out</td><td class=infoKey>Wheel Mouse or CTRL + Left Mouse</td></tr>
-</table>
-<p><a class=navlink href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide" target=_blank>User Guide / Documentation <img src="imgs/externalLink.png" style=externalLink></a>
-<br/><span class=menuSubInfo>How to program with OpenJSCAD: online, offline & CLI</span></p>
-<p><a class=navlink href="https://plus.google.com/115007999023701819645" rel="publisher" target=_blank>Recent Updates <img src="imgs/externalLink.png" style=externalLink></a>
-<br/><span class=menuSubInfo>Announcements of recent developments</span></p>
-<p><a class=navlink href="https://plus.google.com/communities/114958480887231067224" target=_blank>Google+ Community <img src="imgs/externalLink.png" style=externalLink></a>
-<br/><span class=menuSubInfo>Discuss with other users &amp; developers</span></p>
-<div id=examplesTitle class=navlink><a href='#' onclick='return false'>Examples</a></div>
-<div id=examples></div>
-<span class=menuSubInfo>Dozens of examples to learn from</span></p>
-<p/>
-<!--<div id=optionsTitle class=navlink><a href='#' onclick='return false'>Options</a></div>
-<div id=options>...</div>
-<span class=menuSubInfo>Your personal settings</span></p>
-<p/>-->
-<b>Supported Formats</b>
-<table class=info>
-<tr><td align=right><b>jscad</b></td><td><a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">OpenJSCAD</a> (native, import/export)</td></tr>
-<tr><td align=right><b>scad</b></td><td><a target=_blank href="http://openscad.org">OpenSCAD</a> (<a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#direct-openscad-scad-import">experimental</a>, import)</td></tr>
-<tr><td align=right><b>stl</b></td><td><a target=_blank href="http://en.wikipedia.org/wiki/STL_(file_format)">STL format</a> (experimental, import/export)</td></tr>
-<tr><td align=right><b>amf</b></td><td><a target=_blank href="http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format">AMF format</a> (experimental, import/export)</td></tr>
-</table>
-<p><a class=navlink href="#" onclick="$('#about').show(); return false;">About</a></p>
-</nav>
-</div> <!-- /menu -->
+<div id="menu">
+   <img id=menuHandle src="imgs/menuHandleVL.png">
+   <nav>
+      <div id=menuVersion>Version <script>document.write(version);</script></div>
+      <p/>
+      <table class=info>
+         <tr><td align=right class=infoOperation>Render Code</td><td class=infoKey>SHIFT + RETURN</td></tr>
+         <tr><td align=right class=infoOperation>Rotate XZ</td><td class=infoKey>Left Mouse</td></tr>
+         <tr><td align=right class=infoOperation>Pan</td><td class=infoKey>Middle Mouse or SHIFT + Left Mouse</td></tr>
+         <tr><td align=right class=infoOperation>Rotate XY</td><td class=infoKey>Right Mouse or ALT + Left Mouse</td></tr>
+         <tr><td align=right class=infoOperation>Zoom In/Out</td><td class=infoKey>Wheel Mouse or CTRL + Left Mouse</td></tr>
+      </table>
+      <p>
+         <a class=navlink href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide" target=_blank>User Guide / Documentation <img src="imgs/externalLink.png" style=externalLink></a>
+         <br/>
+         <span class=menuSubInfo>How to program with OpenJSCAD: online, offline & CLI</span>
+      </p>
+      <p>
+         <a class=navlink href="https://plus.google.com/115007999023701819645" rel="publisher" target=_blank>Recent Updates <img src="imgs/externalLink.png" style=externalLink></a>
+         <br/>
+         <span class=menuSubInfo>Announcements of recent developments</span>
+      </p>
+      <p>
+         <a class=navlink href="https://plus.google.com/communities/114958480887231067224" target=_blank>Google+ Community <img src="imgs/externalLink.png" style=externalLink></a>
+         <br/>
+         <span class=menuSubInfo>Discuss with other users &amp; developers</span>
+      </p>
+      <div id=examplesTitle class=navlink><a href='#' onclick='return false'>Examples</a></div>
+      <div id=examples></div>
+      <span class=menuSubInfo>Dozens of examples to learn from</span>
+      </p>
+      <p/>
+      <!--
+         <div id=optionsTitle class=navlink><a href='#' onclick='return false'>Options</a></div>
+         <div id=options>...</div>
+         <span class=menuSubInfo>Your personal settings</span></p>
+         <p/>
+      -->
 
-<div id=about>
-<img src="imgs/title.png"><br>
-Version <script>document.write(version);</script>
-<p>
-by Ren&eacute; K. M&uuml;ller (UI & CLI),
-Joost Nieuwenhuijse (core), 
-Eduard Bespalov (core),
-Gary Hogdson (OpenSCAD translator)
-<p>csg.js core &amp; improvements by 
-Evan Wallace, 
-Eduard Bespalov, 
-Joost Nieuwenhuijse, 
-Alexandre Girard
-<p>
-License: MIT License<br>
-Get your copy/clone/fork from <a href="https://github.com/Spiritdude/OpenJSCAD.org" target=_blank>GitHub: OpenJSCAD</a>
-<p><br>
-<a class=okButton href='#' onclick="$('#about').hide(); return false;"> OK </a>
+      <b>Supported Formats</b>
+      <table class=info>
+         <tr><td align=right><b>jscad</b></td><td><a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">OpenJSCAD</a> (native, import/export)</td></tr>
+         <tr><td align=right><b>scad</b></td><td><a target=_blank href="http://openscad.org">OpenSCAD</a> (<a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#direct-openscad-scad-import">experimental</a>, import)</td></tr>
+         <tr><td align=right><b>stl</b></td><td><a target=_blank href="http://en.wikipedia.org/wiki/STL_(file_format)">STL format</a> (experimental, import/export)</td></tr>
+         <tr><td align=right><b>amf</b></td><td><a target=_blank href="http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format">AMF format</a> (experimental, import/export)</td></tr>
+      </table>
+      <p><a class=navlink href="#" onclick="$('#about').show(); return false;">About</a></p>
+   </nav>
+</div>
+
+<div id="about">
+   <p>
+      <img src="imgs/title.png">
+      Version <script>document.write(version);</script>
+   </p>
+   <p>
+      by Ren&eacute; K. M&uuml;ller (UI &amp; CLI),
+      Joost Nieuwenhuijse (core),
+      Eduard Bespalov (core),
+      Gary Hogdson (OpenSCAD translator)
+   </p>
+   <p>csg.js core &amp; improvements by
+      Evan Wallace,
+      Eduard Bespalov,
+      Joost Nieuwenhuijse,
+      Alexandre Girard
+   </p>
+   <p>
+      License: MIT License<br>
+      Get your copy/clone/fork from <a href="https://github.com/Spiritdude/OpenJSCAD.org" target="_blank">GitHub: OpenJSCAD</a>
+   </p>
+   <p>
+      <a class="okButton" href='#' onclick="$('#about').hide(); return false;"> OK </a>
+   </p>
 </div>
 
 <div id="editor">// -- OpenJSCAD.org logo
-
 function main() {
    return union(
       difference(
@@ -199,7 +221,7 @@ function main() {
 </div>
 
 <script>
-var ex = [ 
+var ex = [
 { file:'logo.jscad', title: 'OpenJSCAD.org Logo' },
 { file:'logo.amf', title: 'OpenJSCAD.org Logo', type: 'AMF', new: true },
 
@@ -380,35 +402,38 @@ if(me=='web-online') {
 <div oncontextmenu="return false;" id="viewerContext"></div> <!-- avoiding popup when right mouse is clicked -->
 
 <div id="parametersdiv"></div>
+
 <div id="tail">
-<div id="statusdiv"></div>
-<div id="filedropzone">
-  <div id="filedropzone_empty">
-  <script>document.write("Drop your jscad, scad, amf, stl file or multiple jscad files "+
-     (browser=='chrome'&&me=='web-online'?"or folder with jscad files ":"")+
-     " here (see <a style='font-weight: normal' href='https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#support-of-include' target=_blank>details</a>) "+
-     "<br>or edit OpenJSCAD or OpenSCAD source-code in built-in editor direct.");
-  </script></div>
-  <div id="filedropzone_filled">
-    <span id="currentfile">...</span>
-    <div id="filebuttons">
-      <button id="getstlbutton" style="display:none" onclick="getStl();">Get STL</button>
-      <button onclick="superviseAllFiles({forceReload:true});">Reload</button>
-      <!--button onclick="parseFile(gCurrentFile,true,false);">Debug (see below)</button-->
-	   <label for="autoreload">Auto Reload</label><input type="checkbox" name="autoreload" value="" id="autoreload" onclick="toggleAutoReload();">
-    </div>
-  </div>
+   <div id="statusdiv"></div>
+   <div id="filedropzone">
+     <div id="filedropzone_empty">
+        <script>document.write("Drop your jscad, scad, amf, stl file or multiple jscad files "+
+           (browser=='chrome'&&me=='web-online'?"or folder with jscad files ":"")+
+           " here (see <a style='font-weight: normal' href='https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#support-of-include' target=_blank>details</a>) "+
+           "<br>or edit OpenJSCAD or OpenSCAD source-code in built-in editor direct.");
+        </script>
+     </div>
+     <div id="filedropzone_filled">
+       <span id="currentfile">...</span>
+       <div id="filebuttons">
+         <button id="getstlbutton" style="display:none" onclick="getStl();">Get STL</button>
+         <button onclick="superviseAllFiles({forceReload:true});">Reload</button>
+         <!--button onclick="parseFile(gCurrentFile,true,false);">Debug (see below)</button-->
+   	   <label for="autoreload">Auto Reload</label><input type="checkbox" name="autoreload" value="" id="autoreload" onclick="toggleAutoReload();">
+       </div>
+     </div>
+   </div>
 </div>
-</div>
-<div id=footer>
-OpenJSCAD.org 
-<script>document.write(version);</script>, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>
+
+<div id="footer">
+   OpenJSCAD.org
+   <script>document.write(version);</script>, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>
 </div>
 
 <!--script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script-->
 <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 
-<script id=conversionWorker type="javascript/worker">
+<script id="conversionWorker" type="javascript/worker">
 // adapted from http://www.html5rocks.com/en/tutorials/workers/basics/
 
 self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take quite some while for 1MB+ large STLs
@@ -817,7 +842,7 @@ function readFileAsync(f) {                // RANT: JavaScript at its finest: 50
      } else {
         throw new Error("Failed to read file");
         if(gProcessor) gProcessor.clearViewer();
-		  previousScript = null;
+        previousScript = null;
      }
   };
   if(f.name.match(/\.(stl|gcode)$/)) {
@@ -873,17 +898,17 @@ function superviseAllFiles(p) {           // check if there were changes: (re-)l
 var autoReloadTimer = null;
 
 function toggleAutoReload() {
-	if (document.getElementById("autoreload").checked) {
-		autoReloadTimer = setInterval(function(){
-		  //parseFile(gCurrentFile,false,true);
-		  superviseAllFiles();
+   if (document.getElementById("autoreload").checked) {
+      autoReloadTimer = setInterval(function(){
+        //parseFile(gCurrentFile,false,true);
+        superviseAllFiles();
     }, 1000);
-	} else {
-		if (autoReloadTimer !== null) {
-			clearInterval(autoReloadTimer);
-			autoReloadTimer = null;
-		}
-	}
+   } else {
+      if (autoReloadTimer !== null) {
+         clearInterval(autoReloadTimer);
+         autoReloadTimer = null;
+      }
+   }
 }
 
 var previousScript = null;
@@ -999,6 +1024,6 @@ function getCookie(name) {
 function deleteCookie(name) {
     createCookie(name, "", -1);
 }
-
 </script>
+
 </body></html> 
