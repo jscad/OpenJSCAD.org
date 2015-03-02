@@ -5482,6 +5482,24 @@ for solid CAD anyway.
         };
     };
 
+    // TODO: consider generalization and adding to addTransformationMethodsToPrototype
+    CSG.addCenteringToPrototype = function(prot, axes) {
+        prot.center = function(cAxes) {
+            cAxes = Array.prototype.map.call(arguments, function(a) {
+                return a.toLowerCase();
+            });
+            // no args: center on all axes
+            if (!cAxes.length) {
+                cAxes = axes.slice();
+            }
+            var b = this.getBounds();
+            return this.translate(axes.map(function(a) {
+                return cAxes.indexOf(a) > -1 ?
+                    -(b[0][a] + b[1][a])/2 : 0;
+            }));
+        };
+    };
+
     //////////////////
     // CAG: solid area geometry: like CSG but 2D
     // Each area consists of a number of sides
@@ -6549,6 +6567,9 @@ for solid CAD anyway.
     CSG.addTransformationMethodsToPrototype(CAG.prototype);
     CSG.addTransformationMethodsToPrototype(CAG.Side.prototype);
     CSG.addTransformationMethodsToPrototype(CSG.OrthoNormalBasis.prototype);
+
+    CSG.addCenteringToPrototype(CSG.prototype, ['x', 'y', 'z']);
+    CSG.addCenteringToPrototype(CAG.prototype, ['x', 'y']);
 
     /*
     2D polygons are now supported through the CAG class.
