@@ -6548,6 +6548,10 @@ for solid CAD anyway.
             var _this = this;
             var newsides = sourcecag.sides.map(function(side) {
                 return _this.getSide(side);
+            })
+            // remove bad sides (mostly a user input issue)
+            .filter(function(side) {
+                return side.length() > 1e-5;
             });
             return CAG.fromSides(newsides);
         }
