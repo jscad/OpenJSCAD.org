@@ -5,7 +5,53 @@
 // History:
 // 2013/04/02: massively upgraded to support multiple-files (chrome & firefox) and entire directory drag'n'drop (chrome only)
 
+// --- Dependencies
+// * gProcessor var
+// * putSourceInEditor function
+// * notifyNewFilesLoaded function
+// * #conversionWorker element with the worker code
+// * #filedropzone element
+// * #filedropzone_filled element
+// * #filedropzone_empty element
+// * #currentfile element
+
+// --- Init
+$(document).ready(setupDragDrop);
+
+
 // --- Public API
+// TODO: make these private
+var gCurrentFiles = [];       // linear array, contains files (to read)
+var gMemFs = [];              // associated array, contains file content in source gMemFs[i].{name,source}
+
+function reloadAllFiles() {
+  superviseAllFiles({forceReload:true});
+}
+
+function toggleAutoReload() {
+   if (document.getElementById("autoreload").checked) {
+      autoReloadTimer = setInterval(function(){
+        //parseFile(gCurrentFile,false,true);
+        superviseAllFiles();
+    }, 1000);
+   } else {
+      if (autoReloadTimer !== null) {
+         clearInterval(autoReloadTimer);
+         autoReloadTimer = null;
+      }
+   }
+}
+
+// --- Private API
+var autoReloadTimer = null;
+
+var gCurrentFile = null;
+
+var gMemFsCount = 0;          // async reading: count of already read files
+var gMemFsTotal = 0;          // async reading: total files to read (Count==Total => all files read)
+var gMemFsChanged = 0;        // how many files have changed
+var gRootFs = [];             // root(s) of folders
+
 
 function setupDragDrop() {
   // Check for the various File API support.
@@ -23,28 +69,6 @@ function setupDragDrop() {
   }, false);
   dropZone.addEventListener('drop', handleFileSelect, false);
 }
-
-function reloadAllFiles() {
-  superviseAllFiles({forceReload:true});
-}
-
-var autoReloadTimer = null;
-
-function toggleAutoReload() {
-   if (document.getElementById("autoreload").checked) {
-      autoReloadTimer = setInterval(function(){
-        //parseFile(gCurrentFile,false,true);
-        superviseAllFiles();
-    }, 1000);
-   } else {
-      if (autoReloadTimer !== null) {
-         clearInterval(autoReloadTimer);
-         autoReloadTimer = null;
-      }
-   }
-}
-
-// --- Private API
 
 function handleFileSelect(evt) {
   evt.stopPropagation();
@@ -127,7 +151,6 @@ function loadLocalFiles() {               // this is the linear drag'n'drop, a l
 
 function setCurrentFile(file) {              // set one file (the one dragged) or main.jscad
   gCurrentFile = file;
-  gPreviousModificationTime = "";
 
   console.log("execute: "+file.name);
   if(file.name.match(/\.(jscad|js|scad|stl|obj|amf|gcode)$/i)) {
@@ -139,7 +162,7 @@ function setCurrentFile(file) {              // set one file (the one dragged) o
     throw new Error("You have dropped an empty file");
   }              
   fileChanged(file);
-}     
+}
 
 function readFileAsync(f) {                // RANT: JavaScript at its finest: 50 lines code to read a SINGLE file 
   var reader = new FileReader();           //       this code looks complicate and it is complicate.
@@ -161,12 +184,8 @@ function readFileAsync(f) {                // RANT: JavaScript at its finest: 50
 
         if(gMemFsCount==gMemFsTotal) {                // -- are we done reading all?
            console.log("all "+gMemFsTotal+" files read.");
-           if(gMemFsTotal>1||gMemFsCount>1) {         // we deal with multiple files, so we hide the editor to avoid confusion
-             $('#editor').hide();
-           } else {
-             $('#editor').show();
-           }
-           
+           notifyNewFilesLoaded(gMemFsTotal);
+
            if(gMemFsTotal>1) {
               if(gMemFs['main.jscad']) {
                  gMainFile = gMemFs['main.jscad'];
@@ -257,6 +276,8 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
   //gCurrentFile = f;
   var source = f.source;
   var editorSource = source;
+  var editorSourceType = "javascript";
+
   if(source == "") {
     if(document.location.toString().match(/^file\:\//i)) {
       throw new Error("Could not read file. You are using a local copy of OpenJSCAD.org; if you are using Chrome, you need to launch it with the following command line option:\n\n--allow-file-access-from-files\n\notherwise the browser will not have access to uploaded files due to security restrictions.");
@@ -268,22 +289,23 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
       var fn = gCurrentFile.name;
       fn = fn.replace(/^.*\/([^\/]*)$/,"$1");     // remove path, leave filename itself
       gProcessor.setDebugging(debugging); 
+
       //echo(gCurrentFile.lang);
-      editor.getSession().setMode("ace/mode/javascript");
       var asyncComputation = false;
       
       if(gCurrentFile.lang=='jscad'||gCurrentFile.lang=='js') {
          ; // default
       } else if(gCurrentFile.lang=='scad') {
          editorSource = source;
-         if(!editorSource.match(/^\/\/!OpenSCAD/i)) {
-            editorSource = "//!OpenSCAD\n"+editorSource;
+         if(!source.match(/^\/\/!OpenSCAD/i)) {
+            source = "//!OpenSCAD\n" + source;
          }
-         source = openscadOpenJscadParser.parse(editorSource);
+         source = openscadOpenJscadParser.parse(source);
          if(0) {
             source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;
          }
-         editor.getSession().setMode("ace/mode/scad");  
+         editorSource = source;
+         editorSourceType = "scad";
          
       } else if(gCurrentFile.lang.match(/(stl|obj|amf|gcode)/i)) {
          status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
@@ -296,7 +318,7 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
                var data = e.data;
                //echo("finished converting, source:",data.source);
                if(data&&data.source&&data.source.length) {              // end of async conversion
-                  putSourceInEditor(data.source,data.filename);
+                  putSourceInEditor(data.source,data.filename, editorSourceType);
                   gMemFs[data.filename].source = data.source;
                   gProcessor.setJsCad(data.source,data.filename);
                } else {
@@ -326,7 +348,7 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
          throw new Error("Please drop a file with .jscad, .scad or .stl extension");
       }
       if(!asyncComputation) {                   // end of synchronous conversion
-         putSourceInEditor(editorSource,fn);
+         putSourceInEditor(editorSource,fn, editorSourceType);
          gMemFs[fn].source = source;
          gProcessor.setJsCad(source,fn);
       }

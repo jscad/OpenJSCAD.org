@@ -1,17 +1,37 @@
-var gCurrentFile = null;
-var gProcessor = null;
+// --- Dependencies
+// * gProcessor var
+// * gMemFS var (written to)
+// * gCurrentFiles var (written to)
+// * #editor element
+
+// --- Init
+$(document).ready(setupUIEditor);
+
+// --- Public API
 var editor = null;
-
-var gCurrentFiles = [];       // linear array, contains files (to read)
-var gMemFs = [];              // associated array, contains file content in source gMemFs[i].{name,source}
-var gMemFsCount = 0;          // async reading: count of already read files
-var gMemFsTotal = 0;          // async reading: total files to read (Count==Total => all files read)
-var gMemFsChanged = 0;        // how many files have changed
-var gRootFs = [];             // root(s) of folders
-
 var _includePath = './';
 
-$(document).ready(function() {
+function putSourceInEditor(src,fn,type) {
+   editor.getSession().setMode("ace/mode/" + type);
+
+   editor.setValue(src); 
+   editor.clearSelection();
+   editor.navigateFileStart();
+
+   previousFilename = fn;
+   previousScript = src;
+}
+
+function notifyNewFilesLoaded(count) {
+  if(count > 1) {         // we deal with multiple files, so we hide the editor to avoid confusion
+     $('#editor').hide();
+  } else {
+     $('#editor').show();
+  }
+}
+
+// --- Private
+function setupUIEditor() {
    // -- http://ace.ajax.org/#nav=howto
    editor = ace.edit("editor");
    editor.setTheme("ace/theme/chrome");
@@ -37,20 +57,8 @@ $(document).ready(function() {
          },
       });
    });
-   if(0) {     // for reload when drag'n'dropped file(s) ([Reload] equivalent)
-      viewer.onkeypress = function(evt) {
-         if(evt.shiftKey&&evt.keyCode=='13') {   // Shift + Return
-            superviseFiles({forceReload:true});
-         }
-      };
-   }
    
-   gProcessor = new OpenJsCad.Processor(document.getElementById("viewerContext"));
-   setupDragDrop();
-   //gProcessor.setDebugging(debugging); 
    if(me=='web-online') {    // we are online, fetch first example
-      //    gProcessor.setJsCad(editor.getValue());
-
       if(document.URL.match(/#(http:\/\/\S+)$/)||
          document.URL.match(/#(https:\/\/\S+)$/)) {   // remote file referenced, e.g. http://openjscad.org/#http://somewhere/something.ext
          var u = RegExp.$1;
@@ -81,7 +89,7 @@ $(document).ready(function() {
    } else {
       gProcessor.setJsCad(editor.getValue());
    }
-});
+}
 
 function fetchExample(fn,url) {
    gMemFs = []; gCurrentFiles = [];
@@ -96,10 +104,6 @@ function fetchExample(fn,url) {
       fn += 'main.jscad';
    }
 
-   //echo("checking gMemFs");
-   //if(gMemFs[fn]) {
-   //   console.log("found locally:",gMemFs[i].name);
-   //}
    if(1) {     // doesn't work off-line yet
       var xhr = new XMLHttpRequest();
       xhr.open("GET", fn, true);
@@ -129,7 +133,7 @@ function fetchExample(fn,url) {
             if(!source.match(/^\/\/!OpenSCAD/i)) {
                source = "//!OpenSCAD\n" + source;
             }
-            source = openscadOpenJscadParser.parse(editorSource);
+            source = openscadOpenJscadParser.parse(source);
             if(0) {
                source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;
             }
@@ -187,14 +191,4 @@ function fetchExample(fn,url) {
       }
       xhr.send();
    }
-}
-
-function putSourceInEditor(src,fn) {
-   editor.setValue(src); 
-   editor.clearSelection();
-   editor.navigateFileStart();
-
-   previousFilename = fn;
-   previousScript = src;
-   gPreviousModificationTime = "";
 }
