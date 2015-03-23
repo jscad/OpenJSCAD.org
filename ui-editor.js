@@ -126,13 +126,14 @@ function fetchExample(fn,url) {
             status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
             editorSource = source;
             //if(url) editorSource = "// Remote retrieved <"+url+">\n"+editorSource;
-            if(!editorSource.match(/^\/\/!OpenSCAD/i)) {
-               editorSource = "//!OpenSCAD\n"+editorSource;
+            if(!source.match(/^\/\/!OpenSCAD/i)) {
+               source = "//!OpenSCAD\n" + source;
             }
             source = openscadOpenJscadParser.parse(editorSource);
             if(0) {
                source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;
             }
+            editorSource = source;
             editor.getSession().setMode("ace/mode/scad");
             putSourceInEditor(editorSource,fn);
             gProcessor.setJsCad(source,fn);
