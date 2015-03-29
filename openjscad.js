@@ -46,10 +46,14 @@ OpenJsCad.Viewer = function(containerelement, initialdepth) {
   };
 
 
-  // Draw axes flag:
-  this.drawAxes = true;
-  // Draw triangle lines:
-  this.drawLines = false;
+  this.plateSize = 200;
+  this.drawGrid = true;       // Draw grid flag:
+  this.drawBounds = true;     // Draw a bounding cube around plate
+  this.drawAxes = true;       // Draw X,Y,Z positive axes as R,G,B lines
+  this.drawPlane = true;
+
+  this.drawLines = false;     // Draw triangle lines:
+  
   // Set to true so lines don't use the depth buffer
   this.lineOverlay = false;
 
@@ -350,107 +354,157 @@ OpenJsCad.Viewer.prototype = {
       this.touch.scale = e.gesture.scale;
       return this;
   },
-  onDraw: function(e) {
-    var gl = this.gl;
-    gl.makeCurrent();
+    onDraw: function(e) {
+        var gl = this.gl;
+        gl.makeCurrent();
 
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.loadIdentity();
-    gl.translate(this.viewpointX, this.viewpointY, -this.viewpointZ);
-    gl.rotate(this.angleX, 1, 0, 0);
-    gl.rotate(this.angleY, 0, 1, 0);
-    gl.rotate(this.angleZ, 0, 0, 1);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        gl.loadIdentity();
+        gl.translate(this.viewpointX, this.viewpointY, -this.viewpointZ);
+        gl.rotate(this.angleX, 1, 0, 0);
+        gl.rotate(this.angleY, 0, 1, 0);
+        gl.rotate(this.angleZ, 0, 0, 1);
 
     gl.enable(gl.BLEND);
     //gl.disable(gl.DEPTH_TEST);
-    if (!this.lineOverlay) gl.enable(gl.POLYGON_OFFSET_FILL);
-    for (var i = 0; i < this.meshes.length; i++) {
-      var mesh = this.meshes[i];
-      this.lightingShader.draw(mesh, gl.TRIANGLES);
-    }
-    if (!this.lineOverlay) gl.disable(gl.POLYGON_OFFSET_FILL);
+        if (!this.lineOverlay) gl.enable(gl.POLYGON_OFFSET_FILL);
+        for (var i = 0; i < this.meshes.length; i++) {
+            var mesh = this.meshes[i];
+            this.lightingShader.draw(mesh, gl.TRIANGLES);
+        }
+        if (!this.lineOverlay) gl.disable(gl.POLYGON_OFFSET_FILL);
     gl.disable(gl.BLEND);
     //gl.enable(gl.DEPTH_TEST);
 
-    if(this.drawLines) {
-      if (this.lineOverlay) gl.disable(gl.DEPTH_TEST);
+        if(this.drawLines) {
+            if (this.lineOverlay) gl.disable(gl.DEPTH_TEST);
       gl.enable(gl.BLEND);
-      for (var i = 0; i < this.meshes.length; i++) {
-        var mesh = this.meshes[i];
-        this.blackShader.draw(mesh, gl.LINES);
-      }
-      gl.disable(gl.BLEND);
-      if (this.lineOverlay) gl.enable(gl.DEPTH_TEST);
-    }
-    //EDW: axes
-    if (this.drawAxes) {
-      gl.enable(gl.BLEND);
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-      gl.begin(gl.LINES);
-      var plate = 200;
-      if(this.plate) {
-         gl.color(.8,.8,.8,.5); // -- minor grid
-         for(var x=-plate/2; x<=plate/2; x++) {
-            if(x%10) {
-               gl.vertex(-plate/2, x, 0);
-               gl.vertex(plate/2, x, 0);
-               gl.vertex(x, -plate/2, 0);
-               gl.vertex(x, plate/2, 0);
+            for (var i = 0; i < this.meshes.length; i++) {
+                var mesh = this.meshes[i];
+                this.blackShader.draw(mesh, gl.LINES);
             }
-         }
-         gl.color(.5,.5,.5,.5); // -- major grid
-         for(var x=-plate/2; x<=plate/2; x+=10) {
-            gl.vertex(-plate/2, x, 0);
-            gl.vertex(plate/2, x, 0);
-            gl.vertex(x, -plate/2, 0);
-            gl.vertex(x, plate/2, 0);
-         }
-      }
-      if(0) {
-         //X - red
-         gl.color(1, 0.5, 0.5, 0.2); //negative direction is lighter
-         gl.vertex(-100, 0, 0);
-         gl.vertex(0, 0, 0);
-   
-         gl.color(1, 0, 0, 0.8); //positive direction
-         gl.vertex(0, 0, 0);
-         gl.vertex(100, 0, 0);
-         //Y - green
-         gl.color(0.5, 1, 0.5, 0.2); //negative direction is lighter
-         gl.vertex(0, -100, 0);
-         gl.vertex(0, 0, 0);
-   
-         gl.color(0, 1, 0, 0.8); //positive direction
-         gl.vertex(0, 0, 0);
-         gl.vertex(0, 100, 0);
-         //Z - black
-         gl.color(0.5, 0.5, 0.5, 0.2); //negative direction is lighter
-         gl.vertex(0, 0, -100);
-         gl.vertex(0, 0, 0);
-   
-         gl.color(0.2, 0.2, 0.2, 0.8); //positive direction
-         gl.vertex(0, 0, 0);
-         gl.vertex(0, 0, 100);
-      }
-      if(0) {
-         gl.triangle();
-         gl.color(0.6, 0.2, 0.6, 0.2); //positive direction
-         gl.vertex(-plate,-plate,0);
-         gl.vertex(plate,-plate,0);
-         gl.vertex(plate,plate,0);
-         gl.end();
-         gl.triangle();
-         gl.color(0.6, 0.2, 0.6, 0.2); //positive direction
-         gl.vertex(plate,plate,0);
-         gl.vertex(-plate,plate,0);
-         gl.vertex(-plate,-plate,0);
-         gl.end();
-      }
-      gl.end();
       gl.disable(gl.BLEND);
-      // GL.Mesh.plane({ detailX: 20, detailY: 40 });
+            if (this.lineOverlay) gl.enable(gl.DEPTH_TEST);
+        }
+
+
+        if (this.plateSize) {
+            var plate = this.plateSize;
+            var size = plate / 2;
+
+            gl.enable(gl.BLEND);
+            gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+            if (this.drawGrid) {
+                gl.begin(gl.LINES);
+                gl.color(.8, .8, .8, .5); // -- minor grid
+                for (var x = -plate / 2; x <= plate / 2; x++) {
+                    if (x % 10) {
+                        gl.vertex(-size, x, 0);
+                        gl.vertex(size, x, 0);
+                        gl.vertex(x, -size, 0);
+                        gl.vertex(x, size, 0);
+                    }
+                }
+                gl.color(.5, .5, .5, .5); // -- major grid
+                for (var x = -size; x <= size; x += 10) {
+                    if (x == 0 && this.drawAxes) {
+                        // draw only negative x and y axis in normal color,
+                        // positive axes will be drawn in other colors
+                        gl.vertex(-size, 0, 0);
+                        gl.vertex(0, 0, 0);
+                        gl.vertex(0, -size, 0);
+                        gl.vertex(0, 0, 0);
+                    } else {
+                        gl.vertex(-size, x, 0);
+                        gl.vertex(size, x, 0);
+                        gl.vertex(x, -size, 0);
+                        gl.vertex(x, size, 0);
+                    }
+                }
+                gl.end();
+            }
+
+            if (this.drawAxes) {
+                gl.begin(gl.LINES);
+
+                gl.color(1, 0, 0, 1); // draw positive x axis in red
+                gl.vertex(0, 0, 0);
+                gl.vertex(size, 0, 0);
+
+                gl.color(0, 1, 0, 1); // draw positive y axis in green
+                gl.vertex(0, 0, 0);
+                gl.vertex(0, size, 0);
+
+                gl.color(0, 0, 1, 1); // draw positive z axis in blue
+                gl.vertex(0, 0, 0);
+                gl.vertex(0, 0, size);
+
+                gl.end();
+            }
+
+            if (this.drawBounds) {
+                gl.color(.5, .5, .5, .5); // -- major grid
+                if (!this.drawGrid) {
+                    // bottom lines of bounding cube
+                    gl.begin(gl.LINE_LOOP);
+                    gl.vertex(-size, -size, 0);
+                    gl.vertex(size, -size, 0);
+                    gl.vertex(size, size, 0);
+                    gl.vertex(-size, size, 0);
+                    gl.end();
+
+                }
+                // vertical lines of bounding cube
+                gl.begin(gl.LINES);
+                gl.vertex(-size, -size, 0);
+                gl.vertex(-size, -size, plate);
+                gl.vertex(size, -size, 0);
+                gl.vertex(size, -size, plate);
+                gl.vertex(size, size, 0);
+                gl.vertex(size, size, plate);
+                gl.vertex(-size, size, 0);
+                gl.vertex(-size, size, plate);
+                gl.end();
+
+                // top lines of bounding cube
+                gl.begin(gl.LINE_LOOP);
+                gl.vertex(-size, -size, plate);
+                gl.vertex(size, -size, plate);
+                gl.vertex(size, size, plate);
+                gl.vertex(-size, size, plate);
+                gl.end();
+            }
+
+            if (this.drawPlane) {
+                gl.color(0, 1, 1, 0.1);
+
+                gl.begin(gl.TRIANGLES);
+                var z = 0.01;
+                gl.vertex(-size, -size, -z);
+                gl.vertex(size, -size, -z);
+                gl.vertex(size, size, -z);
+
+                gl.vertex(size, size, -z);
+                gl.vertex(-size, size, -z);
+                gl.vertex(-size, -size, -z);
+
+                // reverse order of vertices to render underside
+                gl.vertex(-size, -size, z);
+                gl.vertex(size, size, z);
+                gl.vertex(size, -size, z);
+
+                gl.vertex(size, size, z);
+                gl.vertex(-size, -size, z);
+                gl.vertex(-size, size, z);
+
+                gl.end();
+            }
+            gl.disable(gl.BLEND);
+        }
+
+        // GL.Mesh.plane({ detailX: 20, detailY: 40 });
     }
-  }
 };
 
 // Convert from CSG solid to an array of GL.Mesh objects
