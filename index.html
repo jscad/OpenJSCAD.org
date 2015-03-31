@@ -426,7 +426,7 @@ self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take q
       }
       importScripts(url+'csg.js',url+'openjscad.js',url+'openscad.js');
       var src, type;
-      data.filename.match(/\.(stl|obj|amf|gcode)$/i);
+      data.filename.toLowerCase().match(/\.(stl|obj|amf|gcode)$/i);
       type = RegExp.$1;
       if(type=='obj') {
          src = parseOBJ(data.source,data.filename);
