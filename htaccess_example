@@ -1,0 +1,8 @@
+# Purpose: can be used in case perl is not supported.
+# Add this .htaccess file as follows:
+# 1. rename to .htaccess (don't forget the dot in front)
+# 2. make sure it's on a server that supports this and has a working php installation
+
+Options +FollowSymlinks
+RewriteEngine on
+RewriteRule ^remote\.pl$ remote.php [NC]
