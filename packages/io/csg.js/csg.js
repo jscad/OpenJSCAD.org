@@ -1,4 +1,14 @@
 /*
+
+## IMPORTANT NOTE --- IMPORTANT 
+The master for this file is located at:
+https://github.com/joostn/openjscad/tree/gh-pages
+That is the gh-pages branch of the joostn/openjscad project
+If contributing from openjscad.org, please do NOT edit this local file but make pull requests against
+above joostn/gh-pages branch.
+## IMPORTANT NOTE --- IMPORTANT NOTE
+
+
 ## License
 
 Copyright (c) 2014 bebbi (elghatta@gmail.com)
