@@ -711,6 +711,10 @@ OpenJsCad.Processor.prototype = {
     this.viewer.applyDrawOptions();
   },
 
+  handleResize: function() {
+    this.viewer && (this.viewer.handleResize());
+  },
+
   createElements: function() {
     var that = this;//for event handlers
 
