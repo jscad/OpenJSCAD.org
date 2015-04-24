@@ -50,6 +50,10 @@ push::
 	git remote set-url origin git@github.com:Spiritdude/OpenJSCAD.org.git
 	git push -u origin master
 
+push-dev::
+	git remote set-url origin git@github.com:Spiritdude/OpenJSCAD.org.git
+	git push -u origin dev
+
 pull::
 	git remote set-url origin git@github.com:Spiritdude/OpenJSCAD.org.git
 	git pull -u origin master
