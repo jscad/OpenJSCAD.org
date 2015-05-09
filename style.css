@@ -37,13 +37,18 @@ a:visited {
 }
 
 #editor { 
-   width: 40%;
-   top: 0px;
-   bottom: 0px;
-   /* height: 100%;    note: newer ace expects height */
-   right: 0px;
-   z-index: 6;
+   margin: 0;
+   position: absolute;
+   top:    0;
+   bottom: 0;
+   right:  0;
+/*
+   left:   0;
    background: rgba(255,255,255,0.15);
+*/
+   width: 40%;
+   z-index: 6;
+   background: transparent;
 }
 
 #viewerContext {
@@ -234,7 +239,7 @@ canvas {
 }
 
 .externalLink {
-   vertical: middle;
+   vertical-align: middle;
 }
 
 #examples {

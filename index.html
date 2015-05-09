@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<html>
+<head>
 <!-- 
 == OpenJSCAD.org, Copyright (c) 2013-2015 by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License ==
    with some code from OpenJsCad processfile.html by Joost Nieuwenhuijse 
@@ -33,33 +33,26 @@ Todo:
 - saving source code edited in ACE locally, perhaps 'SaveAs' (.JSCAD, .STL, .AMF)
 - DONE: include(); support of multiple files, see http://jsfiddle.net/yybRu/
 -->
-<title>OpenJSCAD.org</title>
-<link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
-<link rel="stylesheet" href="jquery/themes/base/jquery-ui.css" />
-<script src="jquery/jquery-1.9.1.js"></script>
-<script src="jquery/jquery-ui.js"></script>
-<script src="jquery/jquery.hammer.js"></script>
-<link rel="stylesheet" href="style.css" type="text/css">
-<link rel="stylesheet" href="openjscad.css" type="text/css">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+  <title>OpenJSCAD.org</title>
+  <link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
+  <link rel="stylesheet" href="jquery/themes/base/jquery-ui.css" />
+  <link rel="stylesheet" href="style.css" type="text/css">
+  <link rel="stylesheet" href="openjscad.css" type="text/css">
 </head>
 <body onload="onload()">
-<style>
-/* we choose chrome theme for ace, and make sure line number is transparent too */
-/* this has to stay in the body (not head) otherwise does not take effect */
-.ace-chrome .ace_gutter { 
-   border-left: 2px dashed rgba(200,200,200,0.2);
-   background: none;
-}
-.ace-chrome {
-   font-size: 10pt;     // -- not 'px', but 'pt' for high dpi screens
-}
-</style>
-<script src="lightgl.js"></script>
-<script src="csg.js"></script>
-<script src="openjscad.js"></script>
-<script src="openscad.js"></script>
-<script src="underscore.js"></script>
-<script src="openscad-openjscad-translator.js"></script>
+  <script src="jquery/jquery-1.9.1.js"></script>
+  <script src="jquery/jquery-ui.js"></script>
+  <script src="jquery/jquery.hammer.js"></script>
+  <script src="lightgl.js"></script>
+  <script src="csg.js"></script>
+  <script src="formats.js"></script>
+  <script src="openjscad.js"></script>
+  <script src="openscad.js"></script>
+  <script src="underscore.js"></script>
+  <script src="openscad-openjscad-translator.js"></script>
+  <script src="ace/ace.js" charset="utf-8"></script>
+
 <script lang=JavaScript>
 var version = '0.2.4-DEV (2015/04/24)';
 //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
@@ -274,7 +267,7 @@ if(me=='web-online') {
          src += "</td><td class=examplesSeparator widthx="+colp+" valign=top>";
       }
       if(ex[i].spacing) src += "<p/>";
-      src += "<li><a href=# onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n";
+      src += "<li><a href='#' onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n";
       if(ex[i].type) src += " <span class=type>("+ex[i].type+")</span></a>";
       if(ex[i].new) src += " <span class=newExample>new</span></a>";
       //src += "<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n";
@@ -408,9 +401,6 @@ OpenJSCAD.org
 <script>document.write(version);</script>, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>
 </div>
 
-<!--script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script-->
-<script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
-
 <script id=conversionWorker type="javascript/worker">
 // adapted from http://www.html5rocks.com/en/tutorials/workers/basics/
 
@@ -448,7 +438,7 @@ self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take q
 <script>
 var gCurrentFile = null;
 var gProcessor = null;
-var editor = null;
+var gEditor = null;
 
 var gCurrentFiles = [];       // linear array, contains files (to read)
 var gMemFs = [];              // associated array, contains file content in source gMemFs[i].{name,source}
@@ -460,25 +450,26 @@ var gRootFs = [];             // root(s) of folders
 var _includePath = './';
 
 function onload() {
+   gProcessor = new OpenJsCad.Processor(document.getElementById("viewerContext"));
+
    // -- http://ace.ajax.org/#nav=howto
-   editor = ace.edit("editor");
-   editor.setTheme("ace/theme/chrome");
+   gEditor = ace.edit("editor");
+   gEditor.setTheme("ace/theme/chrome");
    //document.getElementById('ace_gutter').style.background = 'none';
-   editor.getSession().setMode("ace/mode/javascript");
-   editor.getSession().on('change', function(e) {
-      ;
-   });               
+   gEditor.getSession().setMode("ace/mode/javascript");
+   //gEditor.getSession().on('change', function(e) { ; });               
+
    ['Shift-Return'].forEach(function(key) {
-      editor.commands.addCommand({
+      gEditor.commands.addCommand({
          name: 'myCommand',
          bindKey: { win: key, mac: key },
          exec: function(editor) {
             var src = editor.getValue();
             if(src.match(/^\/\/\!OpenSCAD/i)) {
-               editor.getSession().setMode("ace/mode/scad");
+               //editor.getSession().setMode("ace/mode/scad");
                src = openscadOpenJscadParser.parse(src);
             } else {
-               editor.getSession().setMode("ace/mode/javascript");
+               //editor.getSession().setMode("ace/mode/javascript");
             }
             gMemFs = [];
             gProcessor.setJsCad(src);
@@ -493,40 +484,39 @@ function onload() {
       };
    }
    
-   gProcessor = new OpenJsCad.Processor(document.getElementById("viewerContext"));
    setupDragDrop();
    //gProcessor.setDebugging(debugging); 
    if(me=='web-online') {    // we are online, fetch first example
-      //    gProcessor.setJsCad(editor.getValue());
+      //    gProcessor.setJsCad(gEditor.getValue());
       docUrl = document.URL;
       params = {};
       docTitle = '';
       if((!docUrl.match(/#(https?:\/\/\S+)$/)) && (!docUrl.match(/#(examples\/\S+)$/))) {
          if(possibleParams = docUrl.split("&")) {
-            console.log(possibleParams);
+            //console.log(possibleParams);
             for (i = 0; i < possibleParams.length; ++i) {
-               console.log("looping over: "+possibleParams[i]);
+               //console.log("looping over: "+possibleParams[i]);
                 if(match = possibleParams[i].match(/^.*#?param\[([^\]]+)\]=(.*)$/i)) {
-                  console.log("matched parameter: key="+decodeURIComponent(match[1])+", val="+decodeURIComponent(match[2])+"");
+                  //console.log("matched parameter: key="+decodeURIComponent(match[1])+", val="+decodeURIComponent(match[2])+"");
                   params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
                 }
                 else if(match = possibleParams[i].match(/^.*#?showEditor=false$/i)) {
-                  console.log("not showing editor.");
+                  //console.log("not showing editor.");
                   showEditor = false;
                   $('#editor').hide();
                 }
                 else if(match = possibleParams[i].match(/^.*#?fetchUrl=(.*)$/i)) {
-                  console.log("matched fetchUrl="+match[1]);
+                  //console.log("matched fetchUrl="+match[1]);
                   urlParts = document.URL.match(/^([^#]+)#/);
                   // derive an old-style URL for compatibility's sake
                   docUrl = urlParts[1] + "#" + decodeURIComponent(match[1]);
                 }
                 else if(match = possibleParams[i].match(/^.*#?title=(.*)$/i)) {
-                  console.log("matched title="+decodeURIComponent(match[1]));
+                  //console.log("matched title="+decodeURIComponent(match[1]));
                   docTitle = decodeURIComponent(match[1]);
                 }
             }
-            console.log(params,docUrl,docTitle);
+            //console.log(params,docUrl,docTitle);
          }
       }
       if(docUrl.match(/#(https?:\/\/\S+)$/)) {   // remote file referenced, e.g. http://openjscad.org/#http://somewhere/something.ext
@@ -556,7 +546,7 @@ function onload() {
          fetchExample('examples/'+ex[0].file);
       }
    } else {
-      gProcessor.setJsCad(editor.getValue());
+      gProcessor.setJsCad(gEditor.getValue());
    }
 }
 
@@ -596,7 +586,7 @@ function fetchExample(fn,url) {
 
          _includePath = path.replace(/\/[^\/]+$/,'/');
          
-         editor.getSession().setMode("ace/mode/javascript");
+         //gEditor.getSession().setMode("ace/mode/javascript");
          if(fn.match(/\.jscad$/i)||fn.match(/\.js$/i)) {
             status("Processing "+fn+" <img id=busy src='imgs/busy.gif'>");
             //if(url) editorSource = "// Remote retrieved <"+url+">\n"+editorSource;
@@ -614,7 +604,7 @@ function fetchExample(fn,url) {
             if(0) {
                source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;
             }
-            editor.getSession().setMode("ace/mode/scad");
+            //gEditor.getSession().setMode("ace/mode/scad");
             putSourceInEditor(editorSource,fn);
             gProcessor.setJsCad(source,fn);
             
@@ -670,9 +660,9 @@ function fetchExample(fn,url) {
 }
 
 function putSourceInEditor(src,fn) {
-   editor.setValue(src); 
-   editor.clearSelection();
-   editor.navigateFileStart();
+   gEditor.setValue(src); 
+   gEditor.clearSelection();
+   gEditor.navigateFileStart();
 
    previousFilename = fn;
    previousScript = src;
@@ -749,7 +739,7 @@ function walkFileTree(item,path) {              // this is the core of the drag'
    if(item.isFile) {
       item.file(function(file) {                // this is also asynchronous ... (making everything complicate)
          if(file.name.match(/\.(jscad|js|scad|obj|stl|amf|gcode)$/)) {   // for now all files OpenJSCAD can handle
-            console.log("walkFileTree File: "+path+item.name);
+            //console.log("walkFileTree File: "+path+item.name);
             gMemFsTotal++;
             gCurrentFiles.push(file);
             readFileAsync(file);
@@ -758,7 +748,7 @@ function walkFileTree(item,path) {              // this is the core of the drag'
 
    } else if(item.isDirectory) {
       var dirReader = item.createReader();
-      console.log("walkFileTree Folder: "+item.name);
+      //console.log("walkFileTree Folder: "+item.name);
       dirReader.readEntries(function(entries) {
         // console.log("===",entries,entries.length);
          for(var i=0; i<entries.length; i++) {
@@ -772,14 +762,14 @@ function walkFileTree(item,path) {              // this is the core of the drag'
 
 function loadLocalFiles() {               // this is the linear drag'n'drop, a list of files to read (when folders aren't supported)
   var items = gCurrentFiles;
-  console.log("loadLocalFiles",items);
+  //console.log("loadLocalFiles",items);
   gMemFsCount = 0;
   gMemFsTotal = items.length;      
   gMemFsChanged = 0;
   
   for(var i=0; i<items.length; i++) {
      var f = items[i];
-     console.log(f);
+     //console.log(f);
      readFileAsync(f);
      //gMemFs[f.name] = f;
   }
@@ -789,7 +779,7 @@ function setCurrentFile(file) {              // set one file (the one dragged) o
   gCurrentFile = file;
   gPreviousModificationTime = "";
 
-  console.log("execute: "+file.name);
+  //console.log("execute: "+file.name);
   if(file.name.match(/\.(jscad|js|scad|stl|obj|amf|gcode)$/i)) {
     gCurrentFile.lang = RegExp.$1;
   } else {
@@ -804,12 +794,12 @@ function setCurrentFile(file) {              // set one file (the one dragged) o
 function readFileAsync(f) {                // RANT: JavaScript at its finest: 50 lines code to read a SINGLE file 
   var reader = new FileReader();           //       this code looks complicate and it is complicate.
 
-  console.log("request: "+f.name+" ("+f.fullPath+")");
+  //console.log("request: "+f.name+" ("+f.fullPath+")");
   reader.onloadend = function(evt) {
      if(evt.target.readyState == FileReader.DONE) {
         var source = evt.target.result;
 
-        console.log("done reading: "+f.name,source?source.length:0);   // it could have been vanished while fetching (race condition)
+        //console.log("done reading: "+f.name,source?source.length:0);   // it could have been vanished while fetching (race condition)
         gMemFsCount++;
         
         if(!gMemFs[f.name]||gMemFs[f.name].source!=source)     // note: assigning f.source = source too make gMemFs[].source the same, therefore as next
@@ -820,7 +810,7 @@ function readFileAsync(f) {                // RANT: JavaScript at its finest: 50
         gMemFs[f.name] = f;                // -- we cache the file (and its actual content)
 
         if(gMemFsCount==gMemFsTotal) {                // -- are we done reading all?
-           console.log("all "+gMemFsTotal+" files read.");
+           //console.log("all "+gMemFsTotal+" files read.");
            if(gMemFsTotal>1||gMemFsCount>1) {         // we deal with multiple files, so we hide the editor to avoid confusion
              $('#editor').hide();
            } else {
@@ -845,7 +835,7 @@ function readFileAsync(f) {                // RANT: JavaScript at its finest: 50
            if(gMemFsChanged>0) {
               if(!gMainFile)
                 throw("No main.jscad found");
-              console.log("update & redraw "+gMainFile.name);
+              //console.log("update & redraw "+gMainFile.name);
               setCurrentFile(gMainFile);
            }
         }
@@ -885,7 +875,7 @@ function fileChanged(f) {               // update the dropzone visual & call the
 
 function superviseAllFiles(p) {           // check if there were changes: (re-)load all files and check if content was changed
    //var f = gMainFile;                   // note: main functionality lies in readFileAsync()
-   console.log("superviseAllFiles()");
+   //console.log("superviseAllFiles()");
    
    gMemFsCount = gMemFsTotal = 0;
    gMemFsChanged = 0;
@@ -895,7 +885,7 @@ function superviseAllFiles(p) {           // check if there were changes: (re-)l
    
    if(!gRootFs||gRootFs.length==0||me=='web-offline') {              // walkFileTree won't work with file:// (regardless of chrome|firefox)
      for(var i=0; i<gCurrentFiles.length; i++) {
-        console.log("[offline] checking "+gCurrentFiles[i].name);
+        //console.log("[offline] checking "+gCurrentFiles[i].name);
         gMemFsTotal++;
         readFileAsync(gCurrentFiles[i]);
       }
@@ -945,7 +935,7 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
       fn = fn.replace(/^.*\/([^\/]*)$/,"$1");     // remove path, leave filename itself
       gProcessor.setDebugging(debugging); 
       //echo(gCurrentFile.lang);
-      editor.getSession().setMode("ace/mode/javascript");
+      //gEditor.getSession().setMode("ace/mode/javascript");
       var asyncComputation = false;
       
       if(gCurrentFile.lang=='jscad'||gCurrentFile.lang=='js') {
@@ -959,7 +949,7 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
          if(0) {
             source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;
          }
-         editor.getSession().setMode("ace/mode/scad");  
+         //gEditor.getSession().setMode("ace/mode/scad");  
          
       } else if(gCurrentFile.lang.match(/(stl|obj|amf|gcode)/i)) {
          status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
