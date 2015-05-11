@@ -1,9 +1,10 @@
-// title: OpenJSCAD.org Logo
-// author: Rene K. Mueller 
-// license: Creative Commons CC BY
-// URL: http://openjscad.org/#examples/logo.jscad
-// revision: 0.003
-// tags: Logo,Intersection,Sphere,Cube
+// title      : OpenJSCAD.org Logo
+// author     : Rene K. Mueller
+// license    : MIT License
+// description: testing hull() function
+// revision   : 0.003
+// tags       : Logo,Intersection,Sphere,Cube
+// file       : logo.jscad
 
 function main() {
    return union(

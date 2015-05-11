@@ -1,6 +1,8 @@
-// title: Rectangular_extrude()
-// author: Rene K. Mueller
-// license: MIT License
+// title      : Rectangular Extrude
+// author     : Rene K. Mueller
+// license    : MIT License
+// description: testing rectangular_extrude() function
+// file       : rectangular_extrude.jscad
 
 function main() {
    return [

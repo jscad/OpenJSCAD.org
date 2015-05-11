@@ -1,12 +1,12 @@
-// title: Celtic Knot Ring
-// author: Joost Nieuwenhuijse
-// license: MIT License
-// tags: Catmull Spline
+// title      : Celtic Knot Ring
+// author     : Joost Nieuwenhuijse
+// license    : MIT License
+// description: a Celtic knot ring
+// file       : celtic-knot-ring.jscad
+// tags       : Catmull Spline
 
 // -*- mode: javascript; -*-
 
-
-'use strict';
 
 function getParameterDefinitions() {
   return [

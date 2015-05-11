@@ -1,6 +1,8 @@
-// title: S Hook
-// author: Joost Nieuwenhuijse
-// license: MIT License
+// title      : S Hook
+// author     : Joost Nieuwenhuijse
+// license    : MIT License
+// description: a simple S-hook design
+// file       : s-hook.jscad
 
 // Here we define the user editable parameters: 
 function getParameterDefinitions() {
