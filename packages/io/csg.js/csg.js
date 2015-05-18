@@ -1638,7 +1638,7 @@ for solid CAD anyway.
             throw new Error("Either radiusStart or radiusEnd should be positive");
         }
 
-        var slices = CSG.parseOptionAsFloat(options, "resolution", CSG.defaultResolution2D);
+        var slices = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution2D);
         var ray = e.minus(s);
         var axisZ = ray.unit(); //, isY = (Math.abs(axisZ.y) > 0.5);
         var axisX = axisZ.randomNonParallelVector().unit();
@@ -1723,7 +1723,7 @@ for solid CAD anyway.
             defaultnormal = new CSG.Vector3D(1, 0, 0);
         }
         var normal = CSG.parseOptionAs3DVector(options, "normal", defaultnormal);
-        var resolution = CSG.parseOptionAsFloat(options, "resolution", CSG.defaultResolution3D);
+        var resolution = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution3D);
         if (resolution < 4) resolution = 4;
         var polygons = [];
         var qresolution = Math.floor(0.25 * resolution);
@@ -1824,7 +1824,7 @@ for solid CAD anyway.
             cuberadius = CSG.parseOptionAs3DVector(options, "radius", [1, 1, 1]);
         }
         cuberadius = cuberadius.abs(); // negative radii make no sense
-        var resolution = CSG.parseOptionAsFloat(options, "resolution", CSG.defaultResolution3D);
+        var resolution = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution3D);
         if (resolution < 4) resolution = 4;
         if (resolution%2 == 1 && resolution < 8) resolution = 8; // avoid ugly
         var roundradius = CSG.parseOptionAs3DVector(options, "roundradius", [0.2, 0.2, 0.2]);
@@ -4995,7 +4995,7 @@ for solid CAD anyway.
         var radius = CSG.parseOptionAsFloat(options, "radius", 1);
         var startangle = CSG.parseOptionAsFloat(options, "startangle", 0);
         var endangle = CSG.parseOptionAsFloat(options, "endangle", 360);
-        var resolution = CSG.parseOptionAsFloat(options, "resolution", CSG.defaultResolution2D);
+        var resolution = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution2D);
         var maketangent = CSG.parseOptionAsBool(options, "maketangent", false);
         // no need to make multiple turns:
         while (endangle - startangle >= 720) {
@@ -5567,7 +5567,7 @@ for solid CAD anyway.
         }
         radius = radius.abs(); // negative radii make no sense
         var roundradius = CSG.parseOptionAsFloat(options, "roundradius", 0.2);
-        var resolution = CSG.parseOptionAsFloat(options, "resolution", CSG.defaultResolution2D);
+        var resolution = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution2D);
         var maxroundradius = Math.min(radius.x, radius.y);
         maxroundradius -= 0.1;
         roundradius = Math.min(roundradius, maxroundradius);
