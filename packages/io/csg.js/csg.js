@@ -823,8 +823,8 @@ for solid CAD anyway.
             return result;
         },
 
-        setColor: function(red, green, blue, alpha) {
-            var newshared = new CSG.Polygon.Shared([red, green, blue, isNaN(parseFloat(alpha)) ? 1 : alpha ]);
+        setColor: function(args) {
+            var newshared = CSG.Polygon.Shared.fromColor.apply(this, arguments);
             return this.setShared(newshared);
         },
 
@@ -2470,8 +2470,9 @@ for solid CAD anyway.
             }
         },
 
-        setColor: function(color) {
-            this.shared = new CSG.Polygon.Shared(color);
+        setColor: function(args) {
+            var newshared = CSG.Polygon.Shared.fromColor.apply(this, arguments);
+            this.shared = newshared;
             return this;
         },
 
@@ -2891,12 +2892,41 @@ for solid CAD anyway.
 
     // # class CSG.Polygon.Shared
     // Holds the shared properties for each polygon (currently only color)
+    // Constructor expects a 4 element array [r,g,b,a], values from 0 to 1, or null
     CSG.Polygon.Shared = function(color) {
+        if(color !== null)
+        {
+            if (color.length != 4) {
+                throw new Error("Expecting 4 element array");
+            }
+        }
         this.color = color;
     };
 
     CSG.Polygon.Shared.fromObject = function(obj) {
         return new CSG.Polygon.Shared(obj.color);
+    };
+
+    // Create CSG.Polygon.Shared from a color, can be called as follows:
+    // var s = CSG.Polygon.Shared.fromColor(r,g,b [,a])
+    // var s = CSG.Polygon.Shared.fromColor([r,g,b [,a]])
+    CSG.Polygon.Shared.fromColor = function(args) {
+        var color;
+        if(arguments.length == 1) {
+            color = arguments[0].slice(); // make deep copy
+        }
+        else {
+            color = [];
+            for(var i=0; i < arguments.length; i++) {
+                color.push(arguments[i]);
+            }
+        }
+        if(color.length == 3) {
+            color.push(1);
+        } else if(color.length != 4) {
+            throw new Error("setColor expects either an array with 3 or 4 elements, or 3 or 4 parameters.");
+        }
+        return new CSG.Polygon.Shared(color);
     };
 
     CSG.Polygon.Shared.prototype = {
