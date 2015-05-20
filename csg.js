@@ -823,8 +823,8 @@ for solid CAD anyway.
             return result;
         },
 
-        setColor: function(red, green, blue, alpha) {
-            var newshared = new CSG.Polygon.Shared([red, green, blue, isNaN(parseFloat(alpha)) ? 1 : alpha ]);
+        setColor: function(args) {
+            var newshared = CSG.Polygon.Shared.fromColor.apply(this, arguments);
             return this.setShared(newshared);
         },
 
@@ -1638,7 +1638,7 @@ for solid CAD anyway.
             throw new Error("Either radiusStart or radiusEnd should be positive");
         }
 
-        var slices = CSG.parseOptionAsFloat(options, "resolution", CSG.defaultResolution2D);
+        var slices = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution2D);
         var ray = e.minus(s);
         var axisZ = ray.unit(); //, isY = (Math.abs(axisZ.y) > 0.5);
         var axisX = axisZ.randomNonParallelVector().unit();
@@ -1723,7 +1723,7 @@ for solid CAD anyway.
             defaultnormal = new CSG.Vector3D(1, 0, 0);
         }
         var normal = CSG.parseOptionAs3DVector(options, "normal", defaultnormal);
-        var resolution = CSG.parseOptionAsFloat(options, "resolution", CSG.defaultResolution3D);
+        var resolution = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution3D);
         if (resolution < 4) resolution = 4;
         var polygons = [];
         var qresolution = Math.floor(0.25 * resolution);
@@ -1824,7 +1824,7 @@ for solid CAD anyway.
             cuberadius = CSG.parseOptionAs3DVector(options, "radius", [1, 1, 1]);
         }
         cuberadius = cuberadius.abs(); // negative radii make no sense
-        var resolution = CSG.parseOptionAsFloat(options, "resolution", CSG.defaultResolution3D);
+        var resolution = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution3D);
         if (resolution < 4) resolution = 4;
         if (resolution%2 == 1 && resolution < 8) resolution = 8; // avoid ugly
         var roundradius = CSG.parseOptionAs3DVector(options, "roundradius", [0.2, 0.2, 0.2]);
@@ -2470,8 +2470,9 @@ for solid CAD anyway.
             }
         },
 
-        setColor: function(color) {
-            this.shared = new CSG.Polygon.Shared(color);
+        setColor: function(args) {
+            var newshared = CSG.Polygon.Shared.fromColor.apply(this, arguments);
+            this.shared = newshared;
             return this;
         },
 
@@ -2891,12 +2892,41 @@ for solid CAD anyway.
 
     // # class CSG.Polygon.Shared
     // Holds the shared properties for each polygon (currently only color)
+    // Constructor expects a 4 element array [r,g,b,a], values from 0 to 1, or null
     CSG.Polygon.Shared = function(color) {
+        if(color !== null)
+        {
+            if (color.length != 4) {
+                throw new Error("Expecting 4 element array");
+            }
+        }
         this.color = color;
     };
 
     CSG.Polygon.Shared.fromObject = function(obj) {
         return new CSG.Polygon.Shared(obj.color);
+    };
+
+    // Create CSG.Polygon.Shared from a color, can be called as follows:
+    // var s = CSG.Polygon.Shared.fromColor(r,g,b [,a])
+    // var s = CSG.Polygon.Shared.fromColor([r,g,b [,a]])
+    CSG.Polygon.Shared.fromColor = function(args) {
+        var color;
+        if(arguments.length == 1) {
+            color = arguments[0].slice(); // make deep copy
+        }
+        else {
+            color = [];
+            for(var i=0; i < arguments.length; i++) {
+                color.push(arguments[i]);
+            }
+        }
+        if(color.length == 3) {
+            color.push(1);
+        } else if(color.length != 4) {
+            throw new Error("setColor expects either an array with 3 or 4 elements, or 3 or 4 parameters.");
+        }
+        return new CSG.Polygon.Shared(color);
     };
 
     CSG.Polygon.Shared.prototype = {
@@ -4995,7 +5025,7 @@ for solid CAD anyway.
         var radius = CSG.parseOptionAsFloat(options, "radius", 1);
         var startangle = CSG.parseOptionAsFloat(options, "startangle", 0);
         var endangle = CSG.parseOptionAsFloat(options, "endangle", 360);
-        var resolution = CSG.parseOptionAsFloat(options, "resolution", CSG.defaultResolution2D);
+        var resolution = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution2D);
         var maketangent = CSG.parseOptionAsBool(options, "maketangent", false);
         // no need to make multiple turns:
         while (endangle - startangle >= 720) {
@@ -5382,7 +5412,7 @@ for solid CAD anyway.
     CSG.addCenteringToPrototype = function(prot, axes) {
         prot.center = function(cAxes) {
             cAxes = Array.prototype.map.call(arguments, function(a) {
-                return a.toLowerCase();
+                return a; //.toLowerCase();
             });
             // no args: center on all axes
             if (!cAxes.length) {
@@ -5567,7 +5597,7 @@ for solid CAD anyway.
         }
         radius = radius.abs(); // negative radii make no sense
         var roundradius = CSG.parseOptionAsFloat(options, "roundradius", 0.2);
-        var resolution = CSG.parseOptionAsFloat(options, "resolution", CSG.defaultResolution2D);
+        var resolution = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution2D);
         var maxroundradius = Math.min(radius.x, radius.y);
         maxroundradius -= 0.1;
         roundradius = Math.min(roundradius, maxroundradius);
