@@ -1,8 +1,10 @@
-// title: Chain Hull
-// author: Rene K. Mueller
-// date: 2013/04/18
+// title      : Chain Hull
+// author     : Rene K. Mueller
+// license    : MIT License
+// date       : 2013/04/18
 // description: Whosa whatsis suggested "Chain Hull" as described at 
 //    https://plus.google.com/u/0/105535247347788377245/posts/aZGXKFX1ACN
+// file       : hull.jscad
 
 function main() {
    var o = [], p = [];
@@ -14,9 +16,9 @@ function main() {
    }
 
    var n = 6;
-   for(var i=0; i<n; i++) {            // -- hexagon chain hulled
-      var x = sin(i/n*360)*10;
-      var y = cos(i/n*360)*10;
+   for(i=0; i<n; i++) {            // -- hexagon chain hulled
+      x = sin(i/n*360)*10;
+      y = cos(i/n*360)*10;
       p.push(circle({center: true}).translate([x,y,0]));
    }
 

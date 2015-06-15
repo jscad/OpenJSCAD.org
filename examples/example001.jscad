@@ -1,6 +1,8 @@
-// title: Example 001
-// author: OpenSCAD.org
+// title      : Example 001
+// author     : OpenSCAD.org, adapted by Rene K. Mueller
+// license    : MIT License
 // description: example001.scad ported to OpenJSCAD.org
+// file       : hull.jscad
 
 function r_from_dia(d) { return d / 2; }
 

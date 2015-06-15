@@ -1,7 +1,9 @@
-// title: Vector Text Rendering
-// author: Rene K. Mueller
-// date: 2013/04/22
+// title      : Vector Text Rendering
+// author     : Rene K. Mueller
+// license    : MIT License
 // description: playing with vector font
+// date       : 2013/04/22
+// file       : hull.jscad
 
 function getParameterDefinitions() {
    return [

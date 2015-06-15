@@ -1,7 +1,8 @@
-// title: Bunch of Cubes
-// author: Rene K. Mueller
-// license: MIT License
+// title      : Bunch of Cubes
+// author     : Rene K. Mueller
+// license    : MIT License
 // description: creating 100 cubes in space ...
+// file       : bunch-cubes.jscad
 
 var cubes = new Array();
 

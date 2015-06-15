@@ -1,5 +1,8 @@
-// title: Dodecahedron
-// author: OpenSCAD, adapted by Rene K. Mueller
+// title      : Dodecahedron
+// author     : OpenSCAD, adapted by Rene K. Mueller
+// license    : MIT License
+// description: testing dodecahedron() function
+// file       : dodecahedron.jscad
 
 function dodecahedron(h) {  // from http://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Commented_Example_Projects
    var c = cube({ size: [2,2,1], center: true });

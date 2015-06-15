@@ -1,5 +1,8 @@
-// title: Linear_extrude()
-// author: Rene K. Mueller
+// title      : Linear Extrude
+// author     : Rene K. Mueller
+// license    : MIT License
+// description: testing linear_extrude() function
+// file       : linear_extrude.jscad
 
 function main() {
    return [

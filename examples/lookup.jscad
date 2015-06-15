@@ -1,6 +1,7 @@
-// title: Lookup()
-// author: OpenSCAD.org, adapted by Rene K. Mueller
+// title      : Lookup
+// author     : OpenSCAD.org, adapted by Rene K. Mueller
 // description: testing lookup() function 
+// file       : lookup.jscad
 
 // from http://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Mathematical_Functions
 
@@ -15,7 +16,7 @@ function get_cylinder_h(p) {
 }
 
 function main() { 
-   var w = new Array();
+   var w = [];
    for (var i =-100; i<=100; i+=5) {
       //echo(i, get_cylinder_h(i));
       w.push( translate([ i, 0, -30 ], 

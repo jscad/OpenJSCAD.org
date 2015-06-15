@@ -1,5 +1,8 @@
-// title: Stepper Motor
-// author: Derrick Oswald
+// title      : Stepper Motor
+// author     : Derrick Oswald
+// license    : MIT License
+// description: a simple stepper motor design
+// file       : stepper-motor.jscad
 
 function getParameterDefinitions()
 {

@@ -1,6 +1,8 @@
-// title: Transparency
-// author: Rene K. Mueller
+// title      : Transparency
+// author     : Rene K. Mueller
+// license    : MIT License
 // description: showing transparent objects
+// file       : transparency.jscad
 
 function main() {
    var o = [];

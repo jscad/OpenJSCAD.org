@@ -1,6 +1,8 @@
-// title: Primitives
-// author: Rene K. Mueller
-// license: MIT License
+// title      : Primitives
+// author     : Rene K. Mueller
+// license    : MIT License
+// description: testing primitives function
+// file       : primitives.jscad
 
 function main() {
    var o = [

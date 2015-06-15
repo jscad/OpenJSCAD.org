@@ -1,6 +1,8 @@
-// title: Axis Coupler
-// author: Joost Nieuwenhuijse
-// license: MIT License
+// title      : Axis Coupler
+// author     : Joost Nieuwenhuijse
+// license    : MIT License
+// description: a simple axis coupler
+// file       : axis-coupler.jscad
 
 var cylresolution=16;
 

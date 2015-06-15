@@ -1,7 +1,8 @@
-// title: Benchmark
-// author: Rene K. Mueller
-// date: 2013/04/11
+// title      : Benchmark
+// author     : Rene K. Mueller
+// license    : MIT License
 // description: testing how fast the computations are done
+// file       : benchmark.jscad
 
 function main() {
    var p = { 'spheres': sphere, 'cubes': cube, 'cylinders': cylinder, 'torus': torus };

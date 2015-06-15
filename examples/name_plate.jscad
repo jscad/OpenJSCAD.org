@@ -1,8 +1,9 @@
-// title: Name Plate
-// author: Rene K. Mueller
-// date: 2013/04/24
+// title      : Name Plate
+// author     : Rene K. Mueller
+// license    : MIT License
 // description: create your own name plate
-// license: MIT License
+// date       : 2013/04/24
+// file       : name_plate.jscad
 
 function getParameterDefinitions() {
    return [
