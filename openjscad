@@ -6,7 +6,7 @@
 version = '0.010';
 //
 // Description:
-//   openjscad <file> [-o <stl>]
+//   openjscad <file> [-of <format>] [-o <output>]
 // e.g.
 //   openjscad test.jscad
 //   openjscad test.jscad -o test.stl
@@ -51,8 +51,8 @@ global.nodeModules = '/usr/local/lib/node_modules/';  // for now hard-coded too
 if(!fs.statSync(global.lib).isDirectory())  // same but works with 0.6.1+
    global.lib = './';
 
-var CSG = require(lib+'./csg.js').CSG;
-var CAG = require(lib+'./csg.js').CAG;  // any way to include CSG & CAG in once?
+var CSG = require(lib+'./formats.js').CSG;
+var CAG = require(lib+'./csg.js').CAG;
 
 //require(lib+'./OpenJsCad/openjscad.js'); // make it a nodejs module (later)
 
@@ -154,8 +154,7 @@ console.log("converting "+inf+" -> "+outf+" ("+formatName[outFormat]+")");
 
 // -- include input, and convert into JSCAD source
 if(inFormat=='scad') {
-   //var scadParser = require('openscad-openjscad-translator');     // npm installed but doesn't find it (crap!)
-   var scadParser = require(global.nodeModules+'openscad-openjscad-translator');  // hardcoded is bad, but works
+   var scadParser = require(lib+'openscad-openjscad-translator');  // hardcoded is bad, but works
    src = scadParser.parse(src); //    doing the magick
    src = "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+"\n"+src;
    src = "// source: "+outf+"\n\n"+src;
