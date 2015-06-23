@@ -886,8 +886,11 @@ OpenJsCad.Processor.prototype = {
 
     if (obj !== null) {
       var csg = OpenJsCad.Processor.convertToSolid(obj);
-      // don't reset zoom if toggling between valid objects
-      this.viewer.setCsg(csg, !this.hasValidCurrentObject);
+      // // reset zoom unless toggling between valid objects
+      // this.viewer.setCsg(csg, !this.hasValidCurrentObject);
+      this.isFirstRender_ = typeof this.isFirstRender_ == 'undefined' ? true : false;
+      // (re-)set zoom only on very first rendering action
+      this.viewer.setCsg(csg, this.isFirstRender_);
       this.hasValidCurrentObject = true;
 
       this.supportedFormatsForCurrentObject().forEach(function(format) {
