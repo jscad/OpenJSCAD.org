@@ -377,7 +377,7 @@ if(me=='web-online') {
 }
 </script>
 
-<div oncontextmenu="return false;" id="viewerContext"></div> <!-- avoiding popup when right mouse is clicked -->
+<div id="viewerContext"></div> <!-- avoiding popup when right mouse is clicked -->
 
 <div id="parametersdiv"></div>
 <div id="tail">
@@ -490,7 +490,14 @@ function onload() {
       };
    }
    
-   gProcessor = new OpenJsCad.Processor(document.getElementById("viewerContext"));
+   var viewerContext = document.getElementById("viewerContext");
+   // allow for right click drag to rotate XY in viewer
+   viewerContext.addEventListener('contextmenu', function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+   }, false);
+
+   gProcessor = new OpenJsCad.Processor(viewerContext);
    setupDragDrop();
    //gProcessor.setDebugging(debugging); 
    if(me=='web-online') {    // we are online, fetch first example
