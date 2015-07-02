@@ -10,6 +10,7 @@ Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
+- 2015/07/02: 0.3.0: format.js (Stefan Baumann), and Blob.js/openjscad improved by Z3 Dev
 - 2015/05/20: 0.2.4: renumbering, latest csg.js from http://joostn.github.com/OpenJsCad/ adapted
 - 2015/04/08: 0.024: dev branch opened
 - 2015/02/14: 0.023: bumping version based on openscad.js
@@ -55,7 +56,7 @@ Todo:
   <script src="ace/ace.js" charset="utf-8"></script>
 
 <script lang=JavaScript>
-var version = '0.2.4-DEV (2015/05/20)';
+var version = '0.3.0-DEV (2015/07/02)';
 //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
 var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
 var browser = 'unknown';
@@ -165,6 +166,8 @@ Version <script>document.write(version);</script>
 <p>
 by Ren&eacute; K. M&uuml;ller (UI & CLI),
 Joost Nieuwenhuijse (core), 
+Stefan Baumann (core),
+Z3 Dev (CLI),
 Eduard Bespalov (core),
 Gary Hogdson (OpenSCAD translator)
 <p>csg.js core &amp; improvements by 

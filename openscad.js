@@ -2,7 +2,7 @@
 //
 // Copyright (c) 2013-2015 by Rene K. Mueller <spiritdude@gmail.com>
 //
-// Version: 0.2.4
+// Version: 0.3.0
 // License: MIT License
 //
 // Description:

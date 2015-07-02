@@ -3,12 +3,19 @@
  * See https://developer.mozilla.org/en-US/docs/Web/API/Blob
  *
  * Node and Browserify Compatible
+ * 
+ * Copyright (c) 2015 by Z3 Dev (@zdev/www.z3dev.jp)
+ * License: MIT License
  *
  * This implementation uses the Buffer class for all storage.
  * See https://nodejs.org/api/buffer.html
  *
  * URL.createObjectURL(blob);
+ *
+ * History:
+ * 2015/07/02: 0.0.1: contributed to OpenJSCAD.org CLI openjscad
  */
+ 
 (function(module) {
   var Blob = function(contents, options) {
   // make the optional options non-optional
