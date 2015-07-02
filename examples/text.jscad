@@ -3,7 +3,7 @@
 // license    : MIT License
 // description: playing with vector font
 // date       : 2013/04/22
-// file       : hull.jscad
+// file       : text.jscad
 
 function getParameterDefinitions() {
    return [

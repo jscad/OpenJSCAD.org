@@ -1,9 +1,9 @@
-#!/usr/local/bin/node
+#!/usr/bin/nodejs
 
 // OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>
 // License: GPLv2
 //
-version = '0.010';
+version = '0.024';
 //
 // Description:
 //   openjscad <file> [-o <stl>]
@@ -22,6 +22,7 @@ version = '0.010';
 //   openjscad name_plate.jscad --name "Just Me" --title "CEO" -o amf test.amf
 //
 // History:
+// 2015/07/02: 0.024: node 0.10.x requirement
 // 2014/12/09: 0.019: support of DXF output for 2D objects (laser cutter)
 // 2013/04/25: 0.010: support of params passed to main()
 // 2013/04/12: 0.008: reimplement parseAMF without jquery
@@ -46,10 +47,10 @@ var vm = require('vm');
 global.lib = '/usr/local/lib/openjscad/';             // for now hard-coded
 global.nodeModules = '/usr/local/lib/node_modules/';  // for now hard-coded too
 
-//if (!fs.existsSync(global.lib))           // requires node 0.10.1 
-//   global.lib = './';
-if(!fs.statSync(global.lib).isDirectory())  // same but works with 0.6.1+
+if (!fs.existsSync(global.lib))           // requires node 0.10.1 
    global.lib = './';
+//if(!fs.statSync(global.lib).isDirectory())  // same but works with 0.6.1+
+//   global.lib = './';
 
 var CSG = require(lib+'./csg.js').CSG;
 var CAG = require(lib+'./csg.js').CAG;  // any way to include CSG & CAG in once?

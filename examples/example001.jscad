@@ -2,7 +2,7 @@
 // author     : OpenSCAD.org, adapted by Rene K. Mueller
 // license    : MIT License
 // description: example001.scad ported to OpenJSCAD.org
-// file       : hull.jscad
+// file       : example001.jscad
 
 function r_from_dia(d) { return d / 2; }
 
