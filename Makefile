@@ -1,4 +1,4 @@
-VERSION = 0.023
+VERSION = 0.024
 LIB = /usr/local/lib/openjscad/
 NODE_MODULES = /usr/local/lib/node_modules/
 
@@ -30,6 +30,7 @@ tests::
 	openjscad examples/example001.scad -o examples/example001-fromSCAD.jscad
 	openjscad examples/transparency.jscad -o examples/transparency.amf
 	cd examples/platonics && make
+	cd examples; openjscad globe.jscad
 	cd examples/include-test && make
 	# -- enable if you have openscad installed ('unsetenv DISPLAY' perhaps too)
 	# openscad examples/example001.scad -o examples/example001-fromSCADviaOpenSCAD.stl

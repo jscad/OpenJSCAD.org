@@ -26,7 +26,7 @@ Cepsilon = 0.00000001;
 // 	returned.  Otherwise, the original number will be returned.
 //
 
-function clean(n) { return (n < 0) ? ((n < -Cepsilon) ? n : 0) : 
+clean = function clean(n) { return (n < 0) ? ((n < -Cepsilon) ? n : 0) : 
 	(n < Cepsilon) ? 0 : n; };
 
 // Function: safediv
@@ -40,20 +40,20 @@ function clean(n) { return (n < 0) ? ((n < -Cepsilon) ? n : 0) :
 //	will return '0' whenever there is a division by zero.  Although this will
 //	mask some erroneous division by zero errors, it is often the case
 //	that you actually want this behavior.  So, it makes it convenient.
-function safediv(n,d) { return (d==0) ? 0 : n/d; }
+savediv = function safediv(n,d) { return (d==0) ? 0 : n/d; }
 
 
 //==================================
 // Degrees
 //==================================
 
-function DEGREES(radians) { return (180/Cpi) * radians; }
+DEGREES = function DEGREES(radians) { return (180/Cpi) * radians; }
 
-function RADIANS(degrees) { return Cpi/180 * degrees; }
+RADIANS = function RADIANS(degrees) { return Cpi/180 * degrees; }
 
-function deg(deg, min, sec) { return [deg, min===undefined?0:min, sec===undefined?0:sec]; }
+deg = function deg(deg, min, sec) { return [deg, min===undefined?0:min, sec===undefined?0:sec]; }
 
-function deg_to_dec(d) { return d[0] + d[1]/60 + d[2]/60/60; }
+deg_to_dec = function deg_to_dec(d) { return d[0] + d[1]/60 + d[2]/60/60; }
 
 
 //==================================
@@ -64,7 +64,7 @@ function deg_to_dec(d) { return d[0] + d[1]/60 + d[2]/60/60; }
 // long - rotation around z -axis
 // lat - latitude, starting at 0 == 'north pole'
 // rad - distance from center
-function sph(long, lat, rad) { return [long, lat, rad===undefined?1:rad] }
+sph = function sph(long, lat, rad) { return [long, lat, rad===undefined?1:rad] }
 
 // Convert spherical to cartesian
 //function sph_to_cart(s) { return [
@@ -129,37 +129,37 @@ function poly_single_interior_angle(pq) { return poly_sum_interior_angles(pq[0])
 // Calculate angular deficiency of each vertex in a platonic solid
 // p - sides
 // q - number of edges per vertex
-function angular_defect(pq) { return 360 - (poly_single_interior_angle(pq)*pq[1]); }
-function plat_deficiency(pq) { return DEGREES(2*Cpi - pq[1]*Cpi*(1-2/pq[0])); }
+angular_defect = function angular_defect(pq) { return 360 - (poly_single_interior_angle(pq)*pq[1]); }
+plat_deficiency = function plat_deficiency(pq) { return DEGREES(2*Cpi - pq[1]*Cpi*(1-2/pq[0])); }
 
-function plat_dihedral(pq) { return 2 * asin( cos(180/pq[1])/sin(180/pq[0])); }
+plat_dihedral = function plat_dihedral(pq) { return 2 * asin( cos(180/pq[1])/sin(180/pq[0])); }
 
 // Given a set of coordinates, return the frequency
 // Simply calculated by adding up the values of the coordinates
-function geo_freq(xyz) { return xyz[0]+xyz[1]+xyz[2]; }
+geo_freq = function geo_freq(xyz) { return xyz[0]+xyz[1]+xyz[2]; }
 
 // Convert between the 2D coordinates of vertices on the face triangle
 // to the 3D vertices needed to calculate spherical coordinates
-function geo_tri2_tri3(xyf) { return [xyf[1], xyf[0]-xyf[1], xyf[2]-xyf[0]]; }
+geo_tri2_tri3 = function geo_tri2_tri3(xyf) { return [xyf[1], xyf[0]-xyf[1], xyf[2]-xyf[0]]; }
 
 // Given coordinates for a vertex on the octahedron face
 // return the spherical coordinates for the vertex
 // class 1, method 1
-function octa_class1(c) { 
+octa_class1 = function octa_class1(c) { 
    return sph(
 	atan(safediv(c[0], c[1])),
 	atan(sqrt(c[0]*c[0]+c[1]*c[1])/c[2]),
 	1 
 	); }
 
-function octa_class2(c) { 
+octa_class2 = function octa_class2(c) { 
    return sph(
 	atan(c[0]/c[1]),
 	atan( sqrt( 2*(c[0]*c[0]+c[1]*c[1])) /c[2]),
 	1 
 	); }
 
-function icosa_class1(c) { 
+icosa_class1 = function icosa_class1(c) { 
    return 
    octa_class1(
 	[
@@ -168,14 +168,14 @@ function icosa_class1(c) {
 		geo_freq(c)/2+c[2]/Cphi
 	]); }
 
-function icosa_class2(c) { 
+icosa_class2 = function icosa_class2(c) { 
    return sph(
 	atan([c0]/c[1]), 
 	atan(sqrt(c[0]*c[0]+c[1]*c[1]))/cos(36)*c[2],
 	1
 	); }
  
-function tetra_class1(c) { 
+tetra_class1 = function tetra_class1(c) { 
    return octa_class1(
 	[
 		sqrt(3*c[0]),  
@@ -183,7 +183,7 @@ function tetra_class1(c) {
 		(3*c[2]-c[0]-c[1])/sqrt(2)
 	]); }
 
-function class1_icosa_chord_factor(v1, v2, freq) { 
+class1_icosa_chord_factor = function class1_icosa_chord_factor(v1, v2, freq) { 
    return sph_dist( 
 		icosa_class1(geo_tri2_tri3( [v1[0], v1[1], freq])),
 		icosa_class1(geo_tri2_tri3( [v2[0], v2[1], freq]))
