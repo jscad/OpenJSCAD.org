@@ -34,7 +34,7 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 
 <b>Note:</b> on some systems the NodeJS executable is <tt>node</tt> (default) or <tt>nodejs</tt>, edit <tt>openjscad</tt> first line to reflect this.
 
-<b>Node.js (as library)<b>
+<b>Node.js (as library)</b>
 
 Add to project: 
 
