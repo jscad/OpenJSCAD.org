@@ -34,6 +34,42 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 
 <b>Note:</b> on some systems the NodeJS executable is <tt>node</tt> (default) or <tt>nodejs</tt>, edit <tt>openjscad</tt> first line to reflect this.
 
+<b>Node.js (as library)<b>
+
+Add to project: 
+
+```shell
+npm i --save jscad 
+
+```
+
+Create a 'lumber' module:
+
+```javascript
+
+require('./cadlib');
+
+exports._2x4 = function _2x4() {
+  return cube({size:[2,4,96]});
+}
+
+```
+
+Use your module to build something and render 
+to STL file:
+
+```javascript
+var cad = require('jscad');
+inc('./lumber.js');
+
+function board(n) {
+  return [ color('yellow', _2x4().rotateY(210).translate([0,n*24,0])) ] 
+}
+
+cad.renderFile(board(0), 'boards.stl');
+
+```
+
 <h2>History</h2>
 <ul>
 <li>2014/10/05: 0.018: various pull requests from github merged

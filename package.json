@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/Spiritdude/OpenJSCAD.org#readme",
   "dependencies": {
-    "g": "^2.0.0",
-    "shelljs": "^0.5.1"
+    "better-log": "^1.2.0",
+    "g": "^2.0.0"
   }
 }

@@ -2724,8 +2724,37 @@ if(typeof module !== 'undefined') {    // we are used as module in nodejs requir
 
    module.exports = { 
       // -- list all functions we export
-      parseSTL: function(stl,fn) { return parseSTL(stl,fn); },
-      parseAMF: function(amf,fn) { return parseAMF(amf,fn); } 
+      parseSTL: parseSTL,
+      parseAMF: parseAMF,
+      CSG: CSG, 
+      color:color, group:group, union:union, 
+      difference:difference, 
+      intersection:intersection,
+      simplexFont: simplexFont,
+      vector_text: vector_text, 
+      vector_char: vector_char,
+      hsv2rgb: hsv2rgb, rgb2hsv: rgb2hsv,
+      hsl2rgb: hsl2rgb, rgb2hsl: rgb2hsl,
+      pow: pow, sign: sign,
+      sqrt: sqrt, round:round, log:log,
+      lookup: lookup, rands: rands, atan: atan,
+      atan2: atan2, ceil:ceil, floor:floor,
+      abs:abs, min:min, max:max, tan:tan,
+      acos:acos, cos:cos, asin:asin, sin:sin,
+      triangle:triangle, polygon:polygon, circle:circle,
+      square:square, 
+      rectangular_extrude:rectangular_extrude,
+      rotate_extrude: rotate_extrude,
+      linear_extrude:linear_extrude,
+      chain_hull:chain_hull,
+      hull:hull, minkowski:minkowski,
+      multmatrix:multmatrix,
+      expand:expand, contract:contract, mirror:mirror,
+      rotate:rotate, scale:scale, center:center,
+      translate:translate, polyhedron:polyhedron,
+      torus:torus, cylinder:cylinder, 
+      geodesicSphere: geodesicSphere, sphere: sphere,
+      cube:cube 
    };
    me = 'cli';
 }
