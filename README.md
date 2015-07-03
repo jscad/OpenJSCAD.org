@@ -22,7 +22,7 @@ and then access the files via local web-site and your web-browser.
 
 <b>Local CLI Use:</b>
 
-For CLI (command-line interface) rendering install <a href="http://nodejs.org/">NodeJS</a> as well, e.g. <tt>apt-get install nodejs</tt> (be aware <b>NodeJS &gt; 0.8.1 or newer is required</b>) and then test it:
+For CLI (command-line interface) rendering install <a href="http://nodejs.org/">NodeJS</a> as well, e.g. <tt>apt-get install nodejs</tt> (be aware <b>NodeJS &gt; 0.10 or newer is required</b>).  You can also simply run `npm i -g jscad` instead of cloning and running make install.  Then test it:
 <pre>
 % cd examples/
 % openjscad example005.jscad                         # -- creates example005.stl as default
