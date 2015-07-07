@@ -36,6 +36,12 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 
 <h2>History</h2>
 <ul>
+<li>2015/07/02: 0.3.0: format.js (Stefan Baumann), and Blob.js/openjscad improved by Z3 Dev
+<li>2015/05/20: 0.2.4: renumbering, latest csg.js from http://joostn.github.com/OpenJsCad/ adapted
+<li>2015/04/08: 0.024: dev branch opened
+<li>2015/02/14: 0.023: bumping version based on openscad.js
+<li>2015/02/04; 0.020: browser window resizing done properly, thanks to Z3 devs via pull request
+<li>2015/01/07: 0.019: various pull requests from github merged again
 <li>2014/10/05: 0.018: various pull requests from github merged
 <li>2013/04/11: 0.017: alpha channel supported in color() and .setColor()
 <li>2013/04/07: 0.016: csg.js: solidFromSlices() and .setColor() on polygon level, and examples by Eduard Bespalov
