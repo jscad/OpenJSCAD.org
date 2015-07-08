@@ -5544,6 +5544,24 @@ for solid CAD anyway.
         }
         return CAG.fromSides(sides);
     };
+	
+	/* Construct a ellipse
+    options:
+      radiousX: a scalar
+	  radiousY: a scalar
+      resolution: number of sides per 360 degree rotation
+    returns a CSG object
+    */
+	CAG.ellipse = function ellipse(params) {
+		var points = [];
+		for (var i = 0 ; i <= params.resolution ; i++) {
+			var angle = 360/params.resolution * i;
+			var rX = params.radiousX * cos(angle);
+			var rY = params.radiousY * sin(angle);
+			points[i] = [rX,rY,0];
+		}
+		return CSG.fromPolygons([CSG.Polygon.createFromPoints(points)]);
+	};
 
     /* Construct a rectangle
     options:
