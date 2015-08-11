@@ -69,5 +69,5 @@ edit::
 	dee4 index.html Makefile LICENSE README.md *.css *.js openjscad
 
 live::
-	# -- do not enable --delete ass it will destroy stats folder
+	# -- do not enable --delete as it will destroy stats folder
 	rsync -av --exclude=.git --exclude=cache/ ./ delta:Sites/openjscad.org/ 
