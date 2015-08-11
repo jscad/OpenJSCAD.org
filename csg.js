@@ -3594,7 +3594,10 @@ for solid CAD anyway.
         var nz = plane.normal.z;
         var w = plane.w;
         var els = [
-            (1.0 - 2.0 * nx * nx), (-2.0 * ny * nx), (-2.0 * nz * nx), 0, (-2.0 * nx * ny), (1.0 - 2.0 * ny * ny), (-2.0 * nz * ny), 0, (-2.0 * nx * nz), (-2.0 * ny * nz), (1.0 - 2.0 * nz * nz), 0, (-2.0 * nx * w), (-2.0 * ny * w), (-2.0 * nz * w), 1
+            (1.0 - 2.0 * nx * nx), (-2.0 * ny * nx), (-2.0 * nz * nx), 0,
+            (-2.0 * nx * ny), (1.0 - 2.0 * ny * ny), (-2.0 * nz * ny), 0,
+            (-2.0 * nx * nz), (-2.0 * ny * nz), (1.0 - 2.0 * nz * nz), 0,
+            (2.0 * nx * w), (2.0 * ny * w), (2.0 * nz * w), 1
         ];
         return new CSG.Matrix4x4(els);
     };
@@ -5405,6 +5408,17 @@ for solid CAD anyway.
 
         prot.rotate = function(rotationCenter, rotationAxis, degrees) {
             return this.transform(CSG.Matrix4x4.rotation(rotationCenter, rotationAxis, degrees));
+        };
+
+        prot.rotateEulerAngles = function(alpha, beta, gamma, position) {
+            position = position || [0,0,0];
+
+            var Rz1 = CSG.Matrix4x4.rotationZ(alpha);
+            var Rx  = CSG.Matrix4x4.rotationX(beta);
+            var Rz2 = CSG.Matrix4x4.rotationZ(gamma);
+            var T   = CSG.Matrix4x4.translation(new CSG.Vector3D(position));
+
+            return this.transform(Rz2.multiply(Rx).multiply(Rz1).multiply(T));
         };
     };
 
