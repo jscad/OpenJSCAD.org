@@ -70,4 +70,4 @@ edit::
 
 live::
 	# -- do not enable --delete is it will destroy stats folder
-	rsync -av --exclude=.git --exclude=cache/ ./ the-labs.com:Sites/openjscad.org/ 
+	rsync -av --exclude=.git --exclude=cache/ ./ delta:Sites/openjscad.org/ 
