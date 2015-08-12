@@ -14,9 +14,9 @@ All code released under MIT license
 // import the required modules if necessary
 
 if(typeof module !== 'undefined') {    // used via nodejs
-    CSG = require(lib+'csg.js').CSG;
-    CAG = require(lib+'csg.js').CAG;
-    Blob = require(lib+'Blob.js').Blob;
+    CSG = require('./csg.js').CSG;
+    CAG = require('./csg.js').CAG;
+    Blob = require('./Blob.js').Blob;
 }
 
 ////////////////////////////////////////////

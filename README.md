@@ -22,7 +22,7 @@ and then access the files via local web-site and your web-browser.
 
 <b>Local CLI Use:</b>
 
-For CLI (command-line interface) rendering install <a href="http://nodejs.org/">NodeJS</a> as well, e.g. <tt>apt-get install nodejs</tt> (be aware <b>NodeJS &gt; 0.8.1 or newer is required</b>) and then test it:
+For CLI (command-line interface) rendering install <a href="http://nodejs.org/">NodeJS</a> as well, e.g. <tt>apt-get install nodejs</tt> (be aware <b>NodeJS &gt; 0.10 or newer is required</b>).  You can also simply run `npm i -g jscad` instead of cloning and running make install.  Then test it:
 <pre>
 % cd examples/
 % openjscad example005.jscad                         # -- creates example005.stl as default
@@ -33,6 +33,42 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 </pre>
 
 <b>Note:</b> on some systems the NodeJS executable is <tt>node</tt> (default) or <tt>nodejs</tt>, edit <tt>openjscad</tt> first line to reflect this.
+
+<b>Node.js (as library)</b>
+
+Add to project: 
+
+```shell
+npm i --save jscad 
+
+```
+
+Create a 'lumber' module:
+
+```javascript
+
+require('jscad');
+
+exports._2x4 = function _2x4() {
+  return cube({size:[2,4,96]});
+}
+
+```
+
+Use your module to build something and render 
+to STL file:
+
+```javascript
+var cad = require('jscad');
+inc('./lumber.js');
+
+function board(n) {
+  return [ color('yellow', _2x4().rotateY(210).translate([0,n*24,0])) ] 
+}
+
+cad.renderFile(board(0), 'boards.stl');
+
+```
 
 <h2>History</h2>
 <ul>

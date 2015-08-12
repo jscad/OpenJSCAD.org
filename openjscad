@@ -42,19 +42,10 @@ gMainParam = {};
 var fs = require('fs');
 var vm = require('vm');
 
-//include('./openscad.js');         // later
+var CSG = require('./formats').CSG;
 
-global.lib = '/usr/local/lib/openjscad/';             // for now hard-coded
-global.nodeModules = '/usr/local/lib/node_modules/';  // for now hard-coded too
-
-if (!fs.existsSync(global.lib))           // requires node 0.10.1 
-   global.lib = './';
-//if(!fs.statSync(global.lib).isDirectory())  // same but works with 0.6.1+
-//   global.lib = './';
-
-var CSG  = require(lib+'./formats.js').CSG; // use the CSG with extended prototypes
-var CAG  = require(lib+'./formats.js').CAG; // use the CAG with extended prototypes
-var Blob = require(lib+'./Blob.js').Blob;
+var CAG  = require('./formats.js').CAG; // use the CAG with extended prototypes
+var Blob = require('./Blob.js').Blob;
 
 //require(lib+'./OpenJsCad/openjscad.js'); // make it a nodejs module (later)
 
@@ -126,7 +117,7 @@ if(!outFormat&&!outf) {
 
 //console.log("reading "+inf);
 var src = fs.readFileSync(inf,inf.match(/\.stl$/i)?"binary":"UTF8");
-var scad = fs.readFileSync(lib+'./openscad.js');
+var scad = fs.readFileSync(__dirname+'/openscad.js');
 var inc = [];
 
 //var csg = sphere(1);          // -- basic test

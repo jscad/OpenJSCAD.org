@@ -1,0 +1,39 @@
+{
+  "name": "jscad",
+  "version": "1.0.0",
+  "description": "OpenJSCAD",
+  "main": "cadlib.js",
+  "bin": {
+    "openjscad": "openjscad"
+  },
+  "directories": {
+    "doc": "doc",
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spiritdude/OpenJSCAD.org.git"
+  },
+  "keywords": [
+    "3d",
+    "OpenJSCAD",
+    "cad",
+    "jscad",
+    "scad",
+    "stl",
+    "viewer"
+  ],
+  "author": "authors",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Spiritdude/OpenJSCAD.org/issues"
+  },
+  "homepage": "https://github.com/Spiritdude/OpenJSCAD.org#readme",
+  "dependencies": {
+    "better-log": "^1.2.0",
+    "g": "^2.0.0"
+  }
+}
