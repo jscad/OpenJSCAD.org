@@ -5,7 +5,9 @@
 // 2013/03/12: reenable webgui parameters to fit in current design
 // 2013/03/11: few changes to fit design of http://openjscad.org
 
-OpenJsCad = function() { };
+var OpenJsCad = function() { };
+
+OpenJsCad.version = '0.3.0 (2015/07/07)';
 
 OpenJsCad.log = function(txt) {
   var timeInMs = Date.now();
@@ -131,15 +133,15 @@ OpenJsCad.Viewer = function(containerelement, initialdepth) {
       }
 
       if (e.gesture.touches.length == 1) {
-          var point = e.gesture.center;
-          _this.touch.shiftTimer = setTimeout(function(){
+        var point = e.gesture.center;
+        _this.touch.shiftTimer = setTimeout(function(){
               shiftControl.addClass('active').css({
                   left: point.pageX + 'px',
                   top: point.pageY + 'px'
               });
               _this.touch.shiftTimer = null;
               _this.touch.cur = 'shifting';
-        }, 500);
+              }, 500);
       } else {
         _this.clearShift();
       }
@@ -150,16 +152,16 @@ OpenJsCad.Viewer = function(containerelement, initialdepth) {
       }
 
       if (!_this.touch.cur || _this.touch.cur == 'dragging') {
-          _this.clearShift();
-          _this.onPanTilt(e);
+        _this.clearShift();
+        _this.onPanTilt(e);
       } else if (_this.touch.cur == 'shifting') {
-          _this.onShift(e);
+        _this.onShift(e);
       }
     }).on("touchend", function(e) {
-        _this.clearShift();
-        if (_this.touch.cur) {
-            shiftControl.removeClass('active shift-horizontal shift-vertical');
-        }
+      _this.clearShift();
+      if (_this.touch.cur) {
+        shiftControl.removeClass('active shift-horizontal shift-vertical');
+      }
     }).on("transformend dragstart dragend", function(e) {
       if ((e.type == 'transformend' && _this.touch.cur == 'transforming') || 
           (e.type == 'dragend' && _this.touch.cur == 'shifting') ||
@@ -218,10 +220,10 @@ OpenJsCad.Viewer = function(containerelement, initialdepth) {
 OpenJsCad.Viewer.prototype = {
   setCsg: function(csg) {
     if(0&&csg.length) {                            // preparing multiple CSG's (not union-ed), not yet working
-       for(var i=0; i<csg.length; i++)
-          this.meshes.concat(OpenJsCad.Viewer.csgToMeshes(csg[i]));
+      for(var i=0; i<csg.length; i++)
+        this.meshes.concat(OpenJsCad.Viewer.csgToMeshes(csg[i]));
     } else {
-       this.meshes = OpenJsCad.Viewer.csgToMeshes(csg);
+      this.meshes = OpenJsCad.Viewer.csgToMeshes(csg);
     }
     this.onDraw();    
   },
@@ -266,7 +268,7 @@ OpenJsCad.Viewer.prototype = {
       //console.log(e.which,e.button);
       var b = e.button;
       if(e.which) {                            // RANT: not even the mouse buttons are coherent among the brand (chrome,firefox,etc)
-         b = e.which;
+        b = e.which;
       }
       e.preventDefault();
       if(e.altKey||b==3) {                     // ROTATE X,Y (ALT or right mouse button)
@@ -278,10 +280,10 @@ OpenJsCad.Viewer.prototype = {
         this.viewpointX += factor * e.deltaX * this.viewpointZ;
         this.viewpointY -= factor * e.deltaY * this.viewpointZ;
       } else if(e.ctrlKey) {                   // ZOOM IN/OU
-         var factor = Math.pow(1.006, e.deltaX+e.deltaY);
-         var coeff = this.getZoom();
-         coeff *= factor;
-         this.setZoom(coeff);
+        var factor = Math.pow(1.006, e.deltaX+e.deltaY);
+        var coeff = this.getZoom();
+        coeff *= factor;
+        this.setZoom(coeff);
       } else {                                 // ROTATE X,Z  left mouse button
         this.angleZ += e.deltaX;
         this.angleX += e.deltaY;
@@ -289,31 +291,34 @@ OpenJsCad.Viewer.prototype = {
       this.onDraw();
     }
   },
+
   clearShift: function() {
-      if(this.touch.shiftTimer) {
-          clearTimeout(this.touch.shiftTimer);
-          this.touch.shiftTimer = null;
-      }
-      return this;
+    if(this.touch.shiftTimer) {
+      clearTimeout(this.touch.shiftTimer);
+      this.touch.shiftTimer = null;
+    }
+    return this;
   },
+
   //pan & tilt with one finger
   onPanTilt: function(e) {
     this.touch.cur = 'dragging';
     var delta = 0;
     if (this.touch.lastY && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
-        //tilt
-        delta = e.gesture.deltaY - this.touch.lastY;
-        this.angleX += delta;
+      //tilt
+      delta = e.gesture.deltaY - this.touch.lastY;
+      this.angleX += delta;
     } else if (this.touch.lastX && (e.gesture.direction == 'left' || e.gesture.direction == 'right')) {
-        //pan
-        delta = e.gesture.deltaX - this.touch.lastX;
-        this.angleZ += delta;
+      //pan
+      delta = e.gesture.deltaX - this.touch.lastX;
+      this.angleZ += delta;
     }
     if (delta)
       this.onDraw();
     this.touch.lastX = e.gesture.deltaX;
     this.touch.lastY = e.gesture.deltaY;
   },
+
   //shift after 0.5s touch&hold
   onShift: function(e) {
     this.touch.cur = 'shifting';
@@ -321,40 +326,42 @@ OpenJsCad.Viewer.prototype = {
     var delta = 0;
 
     if (this.touch.lastY && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
-        this.touch.shiftControl
+      this.touch.shiftControl
           .removeClass('shift-horizontal')
           .addClass('shift-vertical')
           .css('top', e.gesture.center.pageY + 'px');
-        delta = e.gesture.deltaY - this.touch.lastY;
-        this.viewpointY -= factor * delta * this.viewpointZ;
-        this.angleX += delta;
+      delta = e.gesture.deltaY - this.touch.lastY;
+      this.viewpointY -= factor * delta * this.viewpointZ;
+      this.angleX += delta;
     } 
     if (this.touch.lastX && (e.gesture.direction == 'left' || e.gesture.direction == 'right')) {
-        this.touch.shiftControl
+      this.touch.shiftControl
           .removeClass('shift-vertical')
           .addClass('shift-horizontal')
           .css('left', e.gesture.center.pageX + 'px');
-        delta = e.gesture.deltaX - this.touch.lastX;
-        this.viewpointX += factor * delta * this.viewpointZ;
-        this.angleZ += delta;
+      delta = e.gesture.deltaX - this.touch.lastX;
+      this.viewpointX += factor * delta * this.viewpointZ;
+      this.angleZ += delta;
     }
     if (delta)
       this.onDraw();
     this.touch.lastX = e.gesture.deltaX;
     this.touch.lastY = e.gesture.deltaY;
   },
+
   //zooming
   onTransform: function(e) {
-      this.touch.cur = 'transforming';
-      if (this.touch.scale) {
-        var factor = 1 / (1 + e.gesture.scale - this.touch.scale);
-        var coeff = this.getZoom();
-        coeff *= factor;
-        this.setZoom( coeff);
-      }
-      this.touch.scale = e.gesture.scale;
-      return this;
+    this.touch.cur = 'transforming';
+    if (this.touch.scale) {
+      var factor = 1 / (1 + e.gesture.scale - this.touch.scale);
+      var coeff = this.getZoom();
+      coeff *= factor;
+      this.setZoom( coeff);
+    }
+    this.touch.scale = e.gesture.scale;
+    return this;
   },
+
   onDraw: function(e) {
     var gl = this.gl;
     gl.makeCurrent();
@@ -394,62 +401,62 @@ OpenJsCad.Viewer.prototype = {
       gl.begin(gl.LINES);
       var plate = 200;
       if(this.plate) {
-         gl.color(.8,.8,.8,.5); // -- minor grid
-         for(var x=-plate/2; x<=plate/2; x++) {
-            if(x%10) {
-               gl.vertex(-plate/2, x, 0);
-               gl.vertex(plate/2, x, 0);
-               gl.vertex(x, -plate/2, 0);
-               gl.vertex(x, plate/2, 0);
-            }
-         }
-         gl.color(.5,.5,.5,.5); // -- major grid
-         for(var x=-plate/2; x<=plate/2; x+=10) {
+        gl.color(.8,.8,.8,.5); // -- minor grid
+        for(var x=-plate/2; x<=plate/2; x++) {
+          if(x%10) {
             gl.vertex(-plate/2, x, 0);
             gl.vertex(plate/2, x, 0);
             gl.vertex(x, -plate/2, 0);
             gl.vertex(x, plate/2, 0);
-         }
+          }
+        }
+        gl.color(.5,.5,.5,.5); // -- major grid
+        for(var x=-plate/2; x<=plate/2; x+=10) {
+          gl.vertex(-plate/2, x, 0);
+          gl.vertex(plate/2, x, 0);
+          gl.vertex(x, -plate/2, 0);
+          gl.vertex(x, plate/2, 0);
+        }
       }
       if(0) {
-         //X - red
-         gl.color(1, 0.5, 0.5, 0.2); //negative direction is lighter
-         gl.vertex(-100, 0, 0);
-         gl.vertex(0, 0, 0);
+        //X - red
+        gl.color(1, 0.5, 0.5, 0.2); //negative direction is lighter
+        gl.vertex(-100, 0, 0);
+        gl.vertex(0, 0, 0);
    
-         gl.color(1, 0, 0, 0.8); //positive direction
-         gl.vertex(0, 0, 0);
-         gl.vertex(100, 0, 0);
-         //Y - green
-         gl.color(0.5, 1, 0.5, 0.2); //negative direction is lighter
-         gl.vertex(0, -100, 0);
-         gl.vertex(0, 0, 0);
+        gl.color(1, 0, 0, 0.8); //positive direction
+        gl.vertex(0, 0, 0);
+        gl.vertex(100, 0, 0);
+        //Y - green
+        gl.color(0.5, 1, 0.5, 0.2); //negative direction is lighter
+        gl.vertex(0, -100, 0);
+        gl.vertex(0, 0, 0);
    
-         gl.color(0, 1, 0, 0.8); //positive direction
-         gl.vertex(0, 0, 0);
-         gl.vertex(0, 100, 0);
+        gl.color(0, 1, 0, 0.8); //positive direction
+        gl.vertex(0, 0, 0);
+        gl.vertex(0, 100, 0);
          //Z - black
-         gl.color(0.5, 0.5, 0.5, 0.2); //negative direction is lighter
-         gl.vertex(0, 0, -100);
-         gl.vertex(0, 0, 0);
+        gl.color(0.5, 0.5, 0.5, 0.2); //negative direction is lighter
+        gl.vertex(0, 0, -100);
+        gl.vertex(0, 0, 0);
    
-         gl.color(0.2, 0.2, 0.2, 0.8); //positive direction
-         gl.vertex(0, 0, 0);
-         gl.vertex(0, 0, 100);
+        gl.color(0.2, 0.2, 0.2, 0.8); //positive direction
+        gl.vertex(0, 0, 0);
+        gl.vertex(0, 0, 100);
       }
       if(0) {
-         gl.triangle();
-         gl.color(0.6, 0.2, 0.6, 0.2); //positive direction
-         gl.vertex(-plate,-plate,0);
-         gl.vertex(plate,-plate,0);
-         gl.vertex(plate,plate,0);
-         gl.end();
-         gl.triangle();
-         gl.color(0.6, 0.2, 0.6, 0.2); //positive direction
-         gl.vertex(plate,plate,0);
-         gl.vertex(-plate,plate,0);
-         gl.vertex(-plate,-plate,0);
-         gl.end();
+        gl.triangle();
+        gl.color(0.6, 0.2, 0.6, 0.2); //positive direction
+        gl.vertex(-plate,-plate,0);
+        gl.vertex(plate,-plate,0);
+        gl.vertex(plate,plate,0);
+        gl.end();
+        gl.triangle();
+        gl.color(0.6, 0.2, 0.6, 0.2); //positive direction
+        gl.vertex(plate,plate,0);
+        gl.vertex(-plate,plate,0);
+        gl.vertex(-plate,-plate,0);
+        gl.end();
       }
       gl.end();
       gl.disable(gl.BLEND);
@@ -485,8 +492,8 @@ OpenJsCad.Viewer.csgToMeshes = function(initial_csg) {
       color = polygon.color;
     }
 
-	if (color.length < 4)
-		color.push(1.); //opaque
+    if (color.length < 4)
+      color.push(1.); //opaque
 
     var indices = polygon.vertices.map(function(vertex) {
       var vertextag = vertex.getTag();
@@ -506,7 +513,7 @@ OpenJsCad.Viewer.csgToMeshes = function(initial_csg) {
     }
     // if too many vertices, start a new mesh;
     if (vertices.length > 65000) {
-      // finalize the old mesh	
+      // finalize the old mesh
       mesh.triangles = triangles;
       mesh.vertices = vertices;
       mesh.colors = colors;
@@ -582,18 +589,18 @@ OpenJsCad.runMainInWorker = function(mainParameters) {
       //throw new Error("Your main() function should return a CSG solid or a CAG area.");
     }
     if(result.length) {                   // main() return an array, we consider it a bunch of CSG not intersecting
-       var o = result[0];
-       if(o instanceof CAG) {
-          o = o.extrude({offset: [0,0,0.1]});
-       }
-       for(var i=1; i<result.length; i++) {
-          var c = result[i];
-          if(c instanceof CAG) {
-             c = c.extrude({offset: [0,0,0.1]});
-          }
-          o = o.unionForNonIntersecting(c);
-       }
-       result = o;
+      var o = result[0];
+      if(o instanceof CAG) {
+        o = o.extrude({offset: [0,0,0.1]});
+      }
+      for(var i=1; i<result.length; i++) {
+        var c = result[i];
+        if(c instanceof CAG) {
+          c = c.extrude({offset: [0,0,0.1]});
+        }
+        o = o.unionForNonIntersecting(c);
+      }
+      result = o;
     } 
     var result_compact = result.toCompactBinary();   
     result = null; // not needed anymore
@@ -630,34 +637,34 @@ OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
 // 3) _csg_libraries.push(fn) provides only 1 level include()
 
   workerscript += "function include(fn) {\
-  if(0) {\
-    _csg_libraries.push(fn);\
-  } else if(0) {\
-    var url = _includePath!=='undefined'?_includePath:'./';\
-    var index = url.indexOf('index.html');\
-    if(index!=-1) {\
-       url = url.substring(0,index);\
+    if(0) {\
+      _csg_libraries.push(fn);\
+    } else if(0) {\
+      var url = _includePath!=='undefined'?_includePath:'./';\
+      var index = url.indexOf('index.html');\
+      if(index!=-1) {\
+        url = url.substring(0,index);\
+      }\
+      importScripts(url+fn);\
+    } else {\
+      console.log('SYNC checking gMemFs for '+fn);\
+      if(gMemFs[fn]) {\
+        console.log('found locally & eval:',gMemFs[fn].name);\
+        eval(gMemFs[fn].source); return;\
+      }\
+      var xhr = new XMLHttpRequest();\
+      xhr.open('GET',_includePath+fn,false);\
+      console.log('include:'+_includePath+fn);\
+      xhr.onload = function() {\
+        var src = this.responseText;\
+        eval(src);\
+      };\
+      xhr.onerror = function() {\
+      };\
+      xhr.send();\
     }\
-  	 importScripts(url+fn);\
-  } else {\
-   console.log('SYNC checking gMemFs for '+fn);\
-   if(gMemFs[fn]) {\
-      console.log('found locally & eval:',gMemFs[fn].name);\
-      eval(gMemFs[fn].source); return;\
-   }\
-   var xhr = new XMLHttpRequest();\
-   xhr.open('GET',_includePath+fn,false);\
-   console.log('include:'+_includePath+fn);\
-   xhr.onload = function() {\
-      var src = this.responseText;\
-      eval(src);\
-   };\
-   xhr.onerror = function() {\
-   };\
-   xhr.send();\
   }\
-}\
-";
+  ";
   //workerscript += "function includePath(p) { _includePath = p; }\n";
   
   if(0) {
@@ -696,7 +703,7 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
     var src = gMemFs[i].source+"\nfunction include() { }\n";
     var f;
     try {
-       f = new Function(src);
+      f = new Function(src);
     } catch(e) {
       this.setError(i+": "+e.message);
     }
@@ -709,19 +716,19 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
   var ignoreInclude = false;
   var mainFile;
   for(var fn in gMemFs) {
-     workerscript += "// "+gMemFs[fn].name+":\n";
-     //workerscript += gMemFs[i].source+"\n";
-     if(!mainFile) 
-        mainFile = fn;
-     if(fn=='main.jscad'||fn.match(/\/main.jscad$/)) 
-        mainFile = fn;
-     workerscript += "gMemFs[\""+gMemFs[fn].name+"\"] = "+JSON.stringify(gMemFs[fn].source)+";\n";
-     ignoreInclude = true;
+    workerscript += "// "+gMemFs[fn].name+":\n";
+    //workerscript += gMemFs[i].source+"\n";
+    if(!mainFile) 
+      mainFile = fn;
+    if(fn=='main.jscad'||fn.match(/\/main.jscad$/)) 
+      mainFile = fn;
+    workerscript += "gMemFs[\""+gMemFs[fn].name+"\"] = "+JSON.stringify(gMemFs[fn].source)+";\n";
+    ignoreInclude = true;
   }
   if(ignoreInclude) {
-     workerscript += "eval(gMemFs['"+mainFile+"']);\n";
+    workerscript += "eval(gMemFs['"+mainFile+"']);\n";
   } else {
-     workerscript += script;
+    workerscript += script;
   }
   workerscript += "\n\n\n\n//// The following code is added by OpenJsCad + OpenJSCAD.org:\n";
 
@@ -747,34 +754,34 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
 // 3) _csg_libraries.push(fn) provides only 1 level include()
 
   if(!ignoreInclude) {
-     workerscript += "function include(fn) {\
-  if(0) {\
-    _csg_libraries.push(fn);\
-  } else if(1) {\
-   if(gMemFs[fn]) {\
-      eval(gMemFs[fn]); return;\
-   }\
-    var url = _csg_baseurl+_includePath;\
-    var index = url.indexOf('index.html');\
-    if(index!=-1) {\
-       url = url.substring(0,index);\
+    workerscript += "function include(fn) {\
+      if(0) {\
+        _csg_libraries.push(fn);\
+      } else if(1) {\
+        if(gMemFs[fn]) {\
+          eval(gMemFs[fn]); return;\
+        }\
+        var url = _csg_baseurl+_includePath;\
+        var index = url.indexOf('index.html');\
+        if(index!=-1) {\
+          url = url.substring(0,index);\
+        }\
+        importScripts(url+fn);\
+      } else {\
+        var xhr = new XMLHttpRequest();\
+        xhr.open('GET', _includePath+fn, true);\
+        xhr.onload = function() {\
+          return eval(this.responseText);\
+        };\
+        xhr.onerror = function() {\
+        };\
+        xhr.send();\
+      }\
     }\
-  	 importScripts(url+fn);\
-  } else {\
-   var xhr = new XMLHttpRequest();\
-   xhr.open('GET', _includePath+fn, true);\
-   xhr.onload = function() {\
-      return eval(this.responseText);\
-   };\
-   xhr.onerror = function() {\
-   };\
-   xhr.send();\
-  }\
-}\
-";
+  ";
   } else {
-     //workerscript += "function include() {}\n";
-     workerscript += "function include(fn) { eval(gMemFs[fn]); }\n";
+    //workerscript += "function include() {}\n";
+    workerscript += "function include(fn) { eval(gMemFs[fn]); }\n";
   }
   //workerscript += "function includePath(p) { _includePath = p; }\n";
   var blobURL = OpenJsCad.textToBlobUrl(workerscript);
@@ -948,7 +955,7 @@ OpenJsCad.Processor.convertToSolid = function(obj) {
     //echo("putting them together");
     var o = obj[0];
     for(var i=1; i<obj.length; i++) {
-       o = o.unionForNonIntersecting(obj[i]);
+      o = o.unionForNonIntersecting(obj[i]);
     }
     obj = o;
     //echo("done.");
@@ -990,37 +997,37 @@ OpenJsCad.Processor.prototype = {
     }
     //Zoom control
     if(0) {
-       var div = document.createElement("div");
-       this.zoomControl = div.cloneNode(false);
-       this.zoomControl.style.width = this.viewerwidth + 'px';
-       this.zoomControl.style.height = '20px';
-       this.zoomControl.style.backgroundColor = 'transparent';
-       this.zoomControl.style.overflowX = 'scroll';
-       div.style.width = this.viewerwidth * 11 + 'px';
-       div.style.height = '1px';
-       this.zoomControl.appendChild(div);
-       this.zoomChangedBySlider = false;
-       this.zoomControl.onscroll = function(event) {
-         var zoom = that.zoomControl;
-         var newzoom=zoom.scrollLeft / (10 * zoom.offsetWidth);
-         that.zoomChangedBySlider=true; // prevent recursion via onZoomChanged 
-         that.viewer.setZoom(newzoom);
-         that.zoomChangedBySlider=false;
-       };
-       this.viewer.onZoomChanged = function() {
-         if(!that.zoomChangedBySlider)
-         {
-           var newzoom = that.viewer.getZoom();
-           that.zoomControl.scrollLeft = newzoom * (10 * that.zoomControl.offsetWidth);
-         }
-       };
+      var div = document.createElement("div");
+      this.zoomControl = div.cloneNode(false);
+      this.zoomControl.style.width = this.viewerwidth + 'px';
+      this.zoomControl.style.height = '20px';
+      this.zoomControl.style.backgroundColor = 'transparent';
+      this.zoomControl.style.overflowX = 'scroll';
+      div.style.width = this.viewerwidth * 11 + 'px';
+      div.style.height = '1px';
+      this.zoomControl.appendChild(div);
+      this.zoomChangedBySlider = false;
+      this.zoomControl.onscroll = function(event) {
+        var zoom = that.zoomControl;
+        var newzoom=zoom.scrollLeft / (10 * zoom.offsetWidth);
+        that.zoomChangedBySlider=true; // prevent recursion via onZoomChanged 
+        that.viewer.setZoom(newzoom);
+        that.zoomChangedBySlider=false;
+      };
+      this.viewer.onZoomChanged = function() {
+        if(!that.zoomChangedBySlider)
+        {
+          var newzoom = that.viewer.getZoom();
+          that.zoomControl.scrollLeft = newzoom * (10 * that.zoomControl.offsetWidth);
+        }
+      };
 
-       this.containerdiv.appendChild(this.zoomControl);
-       //this.zoomControl.scrollLeft = this.viewer.viewpointZ / this.viewer.ZOOM_MAX * this.zoomControl.offsetWidth;
-       this.zoomControl.scrollLeft = this.viewer.viewpointZ / this.viewer.ZOOM_MAX * 
+      this.containerdiv.appendChild(this.zoomControl);
+      //this.zoomControl.scrollLeft = this.viewer.viewpointZ / this.viewer.ZOOM_MAX * this.zoomControl.offsetWidth;
+      this.zoomControl.scrollLeft = this.viewer.viewpointZ / this.viewer.ZOOM_MAX * 
          (this.zoomControl.scrollWidth - this.zoomControl.offsetWidth);
 
-       //end of zoom control
+      //end of zoom control
     }
     //this.errordiv = document.createElement("div");
     this.errordiv = document.getElementById("errordiv");
@@ -1274,7 +1281,7 @@ OpenJsCad.Processor.prototype = {
     this.abort();
     this.setError("");
     this.clearViewer();
-    this.statusspan.innerHTML = "Rendering code, please wait <img id=busy src='imgs/busy.gif'>";
+    this.statusspan.innerHTML = "Rendering. Please wait <img id=busy src='imgs/busy.gif'>";
     this.enableItems();
     var that = this;
     var paramValues = this.getParamValues();
@@ -1285,9 +1292,9 @@ OpenJsCad.Processor.prototype = {
     {
       try
       {
-          console.log("trying async compute");
-          that.state = 1; // processing
-          this.worker = OpenJsCad.parseJsCadScriptASync(this.script, paramValues, this.options, function(err, obj) {
+        console.log("trying async compute");
+        that.state = 1; // processing
+        this.worker = OpenJsCad.parseJsCadScriptASync(this.script, paramValues, this.options, function(err, obj) {
           that.worker = null;
           if(err)
           {
@@ -1378,7 +1385,7 @@ OpenJsCad.Processor.prototype = {
   currentObjectToBlob: function() {
     var format = this.selectedFormat();
     
-    var blob;
+    var blob = null;
     if(format == "stla") {      
       blob = this.currentObject.toStlString();        
       blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
@@ -1392,7 +1399,7 @@ OpenJsCad.Processor.prototype = {
     }
     else if(format == "amf") {
       blob = this.currentObject.toAMFString({
-        producer: "OpenJSCAD.org "+version,
+        producer: "OpenJSCAD.org "+OpenJsCad.version,
         date: new Date()
       });
       blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
@@ -1540,9 +1547,9 @@ OpenJsCad.Processor.prototype = {
       {
         control = document.createElement("input");
         if (type == "number")
-            control.type = "number";
+          control.type = "number";
         else
-            control.type = "text";
+          control.type = "text";
         if('default' in paramdef)
         {
           control.value = paramdef["default"];
@@ -1561,11 +1568,11 @@ OpenJsCad.Processor.prototype = {
           }
         }
         if(paramdef.size!==undefined) 
-           control.size = paramdef.size;
+          control.size = paramdef.size;
         for (var property in paramdef)
-            if (paramdef.hasOwnProperty (property))
-                if ((property != "name") && (property != "type") && (property != "default") && (property != "initial") && (property != "caption"))
-                    control.setAttribute (property, paramdef[property]);
+          if (paramdef.hasOwnProperty (property))
+            if ((property != "name") && (property != "type") && (property != "default") && (property != "initial") && (property != "caption"))
+              control.setAttribute (property, paramdef[property]);
       }
       else if(type == "choice")
       {
@@ -1617,9 +1624,9 @@ OpenJsCad.Processor.prototype = {
       }
       // implementing instantUpdate
       control.onchange = function() { 
-         if(document.getElementById("instantUpdate").checked==true) {
-            that.rebuildSolid();
-         }
+        if(document.getElementById("instantUpdate").checked==true) {
+          that.rebuildSolid();
+        }
       };
       paramControls.push(control);
       var tr = document.createElement("tr");
