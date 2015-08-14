@@ -1264,6 +1264,10 @@ OpenJsCad.Processor.prototype = {
       {
         value = control.options[control.selectedIndex].value;
       }
+      else if(type == "custom")
+      {
+        value = JSON.parse(control.value);
+      }
       paramValues[paramdef.name] = value;
     }
     return paramValues;
@@ -1531,7 +1535,8 @@ OpenJsCad.Processor.prototype = {
       {
         type = paramdef.type;
       }
-      if( (type !== "text") && (type !== "int") && (type !== "float") && (type !== "choice") && (type !== "number") )
+      var allowed_types = ["text","int","float","choice","number","custom"];
+      if (allowed_types.indexOf(type) == -1)
       {
         throw new Error(errorprefix + "Unknown parameter type '"+type+"'");
       }
@@ -1572,7 +1577,7 @@ OpenJsCad.Processor.prototype = {
         if(!('values' in paramdef))
         {
           throw new Error(errorprefix + "Should include a 'values' parameter");
-        }        
+        }
         control = document.createElement("select");
         var values = paramdef.values;
         var captions;
@@ -1613,7 +1618,10 @@ OpenJsCad.Processor.prototype = {
         if(values.length > 0)
         {
           control.selectedIndex = selectedindex;
-        }        
+        }
+      }
+      else if (type == "custom") {
+        control = new paramdef.constructor(paramdef);
       }
       // implementing instantUpdate
       control.onchange = function() { 
@@ -1630,7 +1638,7 @@ OpenJsCad.Processor.prototype = {
         label = paramdef.caption;
         td.className = 'caption';
       }
-       
+
       td.innerHTML = label;
       tr.appendChild(td);
       td = document.createElement("td");
