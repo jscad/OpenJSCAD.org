@@ -1,9 +1,7 @@
-#!/usr/bin/nodejs
+#!/usr/local/bin/node --log_all
 
 // OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>
 // License: GPLv2
-//
-version = '0.3.0';
 //
 // Description:
 //   openjscad <file> [-of <format>] [-o <output>]
@@ -35,12 +33,12 @@ version = '0.3.0';
 // 2013/03/01: 0.001: initial version, with base function from openscad.jscad
 //
 
-me = 'cli';
 global.time = new Date();
 gMainParam = {};
 
 var fs = require('fs');
 var vm = require('vm');
+//var os = require('os');
 
 //include('./openscad.js');         // later
 
@@ -56,7 +54,8 @@ var CSG  = require(lib+'./formats.js').CSG; // use the CSG with extended prototy
 var CAG  = require(lib+'./formats.js').CAG; // use the CAG with extended prototypes
 var Blob = require(lib+'./Blob.js').Blob;
 
-//require(lib+'./OpenJsCad/openjscad.js'); // make it a nodejs module (later)
+var OpenJsCad = require(lib+'./openjscad.js').OpenJsCad;
+var openscad  = require(lib+'./openscad.js');
 
 // hint: https://github.com/substack/node-optimist
 //       https://github.com/visionmedia/commander.js
@@ -68,7 +67,7 @@ var Blob = require(lib+'./Blob.js').Blob;
 var args = process.argv.splice(2);
 var meta = [];
 
-meta.producer = "OpenJSCAD "+me.toUpperCase()+" "+version;
+meta.producer = "OpenJSCAD "+" "+OpenJsCad.version;
 meta.date = new Date();
 
 var formatName = {
@@ -81,23 +80,17 @@ var formatName = {
    dxf: "AutoCAD Drawing Exchange Format"
 };
 
-var inf = args[0];
-if(inf==null||inf.length<=0||!fs.statSync(inf).isFile()) {
-   console.log("USAGE openjscad ("+me.toUpperCase()+" "+version+"): <file> [-of <format>] [-o <output>]\n\t<file>: <name>.jscad, .scad, .stl or .amf\n\t<output>: <name>.jscad, .stl, .amf or .dxf\n\t<format>: 'jscad', 'stl' (default), 'stla' (STL ASCII), 'stlb' (STL Binary), 'amf', 'dxf'");
+if(args.length < 1) {
+   console.log("USAGE openjscad [-v] <file> [-of <format>] [-o <output>]\n\t<file>: <name>.jscad, .scad, .stl or .amf\n\t<output>: <name>.jscad, .stl, .amf or .dxf\n\t<format>: 'jscad', 'stl' (default), 'stla' (STL ASCII), 'stlb' (STL Binary), 'amf', 'dxf'");
    process.exit(1);
 }
 
-if(inf.match(/\.(jscad|js|scad|stl|amf)$/i)) {
-   inFormat = RegExp.$1;
-} else {
-   console.log("ERROR: only jscad, scad, stl or amf as input format");
-   process.exit(1);
-}
+// arguments found
+var inf = null;
+var outFormat, inFormat;
+var outf = null;
 
-var outFormat, inFormat;          
-var outf;
-
-for(var i=1; i<args.length; i++) {
+for(var i=0; i<args.length; i++) {
    if(args[i]=='-of') {                         // -of <format>
       outFormat = args[++i];
 
@@ -114,11 +107,29 @@ for(var i=1; i<args.length; i++) {
    } else if(args[i].match(/^--(\w+)$/)) {      // params for main()
       gMainParam[RegExp.$1] = args[++i];
 
+   } else if(args[i].match(/^--(\w+)$/)) {      // params for main()
+      gMainParam[RegExp.$1] = args[++i];
+
+   } else if(args[i].match(/.+\.(jscad|js|scad|stl|amf)$/i)) {
+      inf = args[i];
+      inFormat = RegExp.$1;
+      if(!fs.statSync(inf).isFile()) {
+        console.log("ERROR: cannot open file <"+inf+">");
+        process.exit(1);
+      }
+
+   } else if(args[i].match(/^-v$/)) { // show the version and the environment information
+      OpenJsCad.env();
+      console.log("OpenSCAD Compatibility ("+openscad.version()+")");
+
    } else {
-      console.log("ERROR: bad argument/switch <"+arg[i]+">");
+      console.log("ERROR: bad file name or argument <"+args[i]+">");
+      console.log("ERROR: only jscad, js, scad, stl or amf file formats are accepted");
       process.exit(1);
    }
 }
+// exit if a input file was not provided
+if (inf==null) process.exit(1);
 
 if(!outFormat&&!outf) {
    outFormat = 'stl';
@@ -158,14 +169,14 @@ console.log("converting "+inf+" -> "+outf+" ("+formatName[outFormat]+")");
 if(inFormat=='scad') {
    var scadParser = require('openscad-openjscad-translator');  // hardcoded is bad, but works
    src = scadParser.parse(src); //    doing the magick
-   src = "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+"\n"+src;
+   src = "// producer: OpenJSCAD "+OpenJsCad.version+"\n"+src;
    src = "// source: "+outf+"\n\n"+src;
 
 } else if(inFormat=='stl') {
    //console.log("converting "+inf+" to jscad");
-   var openscad = require(lib+'openscad.js');
+   //var openscad = require(lib+'openscad.js');
    src = openscad.parseSTL(src,inf);
-   //src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
+   //src = "// "+outf+" created by openjscad-"+OpenJsCad.version+" from "+inf+"\n\n"+src;
 
 } else if(inFormat=='amf') {
    //console.log("converting "+inf+" to jscad");
@@ -173,7 +184,7 @@ if(inFormat=='scad') {
    // var openscad = require(lib+'openscad.js');
    // src = openscad.parseAMF(src,inf);
    src = parseAMF(src,inf);
-   //src = "// "+outf+" created by openjscad-"+version+" from "+inf+"\n\n"+src;
+   //src = "// "+outf+" created by openjscad-"+OpenJsCad.version+" from "+inf+"\n\n"+src;
 
 } else {
    // jscad or js
@@ -411,7 +422,7 @@ function parseAMF(amf,fn) {      // re-implemented since node-jquery doesn't do 
    for(var k in meta) {
       src += "// AMF."+k+": "+meta[k]+"\n";
    }
-   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" AMF Importer\n";
+   src += "// producer: OpenJSCAD "+OpenJsCad.version+" AMF Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";

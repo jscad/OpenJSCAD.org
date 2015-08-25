@@ -5,6 +5,8 @@
 // 2013/03/12: reenable webgui parameters to fit in current design
 // 2013/03/11: few changes to fit design of http://openjscad.org
 
+(function(module) {
+
 var OpenJsCad = function() { };
 
 OpenJsCad.version = '0.3.0 (2015/07/07)';
@@ -24,6 +26,28 @@ OpenJsCad.log = function(txt) {
   }
   else throw new Error("Cannot log");
 };
+
+OpenJsCad.status = function(s) {
+  if(typeof document !== 'undefined') {
+    document.getElementById('statusspan').innerHTML = s;
+  } else {
+    OpenJsCad.log(s);
+  }
+}
+
+OpenJsCad.env = function() {
+  var env = "OpenJSCAD "+OpenJsCad.version;
+  if(typeof document !== 'undefined') {
+    var w = document.defaultView;
+    env = env+" ["+w.navigator.userAgent+"]";
+  } else {
+    if (typeof require == 'function') {
+      var os = require("os");
+      env = env+" ["+os.type()+":"+os.release()+","+os.platform()+":"+os.arch()+"]";
+    }
+  }
+  console.log(env);
+}
 
 // A viewer is a WebGL canvas that lets the user view a mesh. The user can
 // tumble it around by dragging the mouse.
@@ -1653,4 +1677,6 @@ OpenJsCad.Processor.prototype = {
   },
 };
 
+module.OpenJsCad = OpenJsCad;
 
+})(this);
