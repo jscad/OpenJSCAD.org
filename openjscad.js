@@ -1086,9 +1086,10 @@ OpenJsCad.Processor.prototype = {
     instantUpdateCheckbox.id = "instantUpdate";
     this.parametersdiv.appendChild(instantUpdateCheckbox);
 
-    var instantUpdateCheckboxText = document.createElement("span");
+    var instantUpdateCheckboxText = document.createElement("label");
     instantUpdateCheckboxText.innerHTML = "Instant Update";
     instantUpdateCheckboxText.id = "instantUpdateLabel";
+    instantUpdateCheckboxText.setAttribute("for", instantUpdateCheckbox.id);
     this.parametersdiv.appendChild(instantUpdateCheckboxText);
 
     this.enableItems();    
