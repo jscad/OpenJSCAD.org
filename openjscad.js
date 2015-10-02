@@ -671,14 +671,14 @@ OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
       }\
       importScripts(url+fn);\
     } else {\
-      console.log('SYNC checking gMemFs for '+fn);\
+      //console.log('SYNC checking gMemFs for '+fn);\
       if(gMemFs[fn]) {\
-        console.log('found locally & eval:',gMemFs[fn].name);\
+        //console.log('found locally & eval:',gMemFs[fn].name);\
         eval(gMemFs[fn].source); return;\
       }\
       var xhr = new XMLHttpRequest();\
       xhr.open('GET',_includePath+fn,false);\
-      console.log('include:'+_includePath+fn);\
+      //console.log('include:'+_includePath+fn);\
       xhr.onload = function() {\
         var src = this.responseText;\
         eval(src);\
@@ -903,8 +903,24 @@ OpenJsCad.FileSystemApiErrorHandler = function(fileError, operation) {
 
 OpenJsCad.AlertUserOfUncaughtExceptions = function() {
   window.onerror = function(message, url, line) {
-    message = message.replace(/^Uncaught /i, "");
-    alert(message+"\n\n("+url+" line "+line+")");
+    switch (arguments.length) {
+      case 1: // message
+        console.log(arguments[0]);
+        break;
+      case 2: // message and url
+        console.log(arguments[0]+'\n('+arguments[1]+')');
+        break;
+      case 3: // message and url and line#
+        console.log(arguments[0]+'\nLine: '+arguments[2]+'\n('+arguments[1]+')');
+        break;
+      case 4: // message and url and line# and column#
+      case 5: // message and url and line# and column# and Error
+        console.log(arguments[0]+'\nLine: '+arguments[2]+',col: '+arguments[3]+'\n('+arguments[1]+')');
+        break;
+      default:
+        console.log("uncaught exception");
+    }
+    return false;
   };
 };
 
@@ -1094,22 +1110,20 @@ OpenJsCad.Processor.prototype = {
     this.parametersdiv.id = "parametersdiv";
     // this.parametersdiv.className = "ui-draggable";                   // via jQuery draggable() but it screws up 
 
-    var headerdiv = document.createElement("div");
-    //headerdiv.innerText = "Parameters:";
-    headerdiv.innerHTML = "Parameters:";
-    headerdiv.className = "parameterheader";
-    this.parametersdiv.appendChild(headerdiv);
-
     this.parameterstable = document.createElement("table");
     this.parameterstable.className = "parameterstable";
     this.parametersdiv.appendChild(this.parameterstable);
 
-    var parseParametersButton = document.createElement("button");
-    parseParametersButton.innerHTML = "Update";
-    parseParametersButton.onclick = function(e) {
+    var element = document.getElementById("updateButton");
+    if (element === null) {
+      element = document.createElement("button");
+      element.innerHTML = "Update";
+      element.id = "updateButton";
+    }
+    element.onclick = function(e) {
       that.rebuildSolid();
     };
-    this.parametersdiv.appendChild(parseParametersButton);
+    this.parametersdiv.appendChild(element);
 
     // implementing instantUpdate
     var instantUpdateCheckbox = document.createElement("input");
@@ -1117,10 +1131,14 @@ OpenJsCad.Processor.prototype = {
     instantUpdateCheckbox.id = "instantUpdate";
     this.parametersdiv.appendChild(instantUpdateCheckbox);
 
-    var instantUpdateCheckboxText = document.createElement("span");
-    instantUpdateCheckboxText.innerHTML = "Instant Update";
-    instantUpdateCheckboxText.id = "instantUpdateLabel";
-    this.parametersdiv.appendChild(instantUpdateCheckboxText);
+    element = document.getElementById("instantUpdateLabel");
+    if (element === null) {
+      element = document.createElement("label");
+      element.innerHTML = "Instant Update";
+      element.id = "instantUpdateLabel";
+    }
+    element.setAttribute("for",instantUpdateCheckbox.id);
+    this.parametersdiv.appendChild(element);
 
     this.enableItems();    
 
@@ -1257,49 +1275,51 @@ OpenJsCad.Processor.prototype = {
       if(this.onchange) this.onchange();
     }
   },
-  
+
   getParamValues: function()
   {
     var paramValues = {};
-    for(var i = 0; i < this.paramDefinitions.length; i++)
+    for(var i = 0; i < this.paramControls.length; i++)
     {
-      var paramdef = this.paramDefinitions[i];
-      var type = "text";
-      if('type' in paramdef)
-      {
-        type = paramdef.type;
-      }
       var control = this.paramControls[i];
-      var value = null;
-      if( (type == "text") || (type == "float") || (type == "int") || (type == "number") )
-      {
-        value = control.value;
-        if( (type == "float") || (type == "int") || (type == "number") )
-        {
-          var isnumber = !isNaN(parseFloat(value)) && isFinite(value);
-          if(!isnumber)
-          {
-            throw new Error("Not a number: "+value);
+      switch (control.paramType) {
+        case 'choice':
+          paramValues[control.paramName] = control.options[control.selectedIndex].value;
+          break;
+        case 'float':
+        case 'number':
+          var value = control.value;
+          if (!isNaN(parseFloat(value)) && isFinite(value)) {
+            paramValues[control.paramName] = parseFloat(value);
+          } else {
+            throw new Error("Parameter ("+control.paramName+") is not a valid number ("+value+")");
           }
-          if(type == "int")
-          {
-            value = parseInt(value);
+          break;
+        case 'int':
+          var value = control.value;
+          if (!isNaN(parseFloat(value)) && isFinite(value)) {
+            paramValues[control.paramName] = parseInt(value);
+          } else {
+            throw new Error("Parameter ("+control.paramName+") is not a valid number ("+value+")");
           }
-          else
-          {
-            value = parseFloat(value);
+          break;
+        case 'checkbox':
+        case 'radio':
+          if (control.checked == true && control.value.length > 0) {
+            paramValues[control.paramName] = control.value;
+          } else {
+            paramValues[control.paramName] = control.checked;
           }
-        }
+          break;
+        default:
+          paramValues[control.paramName] = control.value;
+          break;
       }
-      else if(type == "choice")
-      {
-        value = control.options[control.selectedIndex].value;
-      }
-      paramValues[paramdef.name] = value;
+      //console.log(paramValues[control.paramName]);
     }
     return paramValues;
   },
-    
+
   rebuildSolid: function()
   {
     this.abort();
@@ -1348,7 +1368,7 @@ OpenJsCad.Processor.prototype = {
       try
       {
         that.state = 1; // processing
-        this.statusspan.innerHTML = "Rendering code, please wait <img id=busy src='imgs/busy.gif'>";
+        this.statusspan.innerHTML = "Rendering. Please wait <img id=busy src='imgs/busy.gif'>";
         var obj = OpenJsCad.parseJsCadScriptSync(this.script, paramValues, this.debugging);
         that.setCurrentObject(obj);
         that.statusspan.innerHTML = "Ready.";
@@ -1528,7 +1548,6 @@ OpenJsCad.Processor.prototype = {
                       throw new Error('Write failed: ' + e.toString());
                     };
                     var blob = that.currentObjectToBlob();
-                    console.log(blob,blob.length);                
                     fileWriter.write(blob);
                   }, 
                   function(fileerror){OpenJsCad.FileSystemApiErrorHandler(fileerror, "createWriter");} 
@@ -1543,137 +1562,207 @@ OpenJsCad.Processor.prototype = {
       function(fileerror){OpenJsCad.FileSystemApiErrorHandler(fileerror, "requestFileSystem");}
     );
   },
-  
+
+  createGroupControl: function(definition) {
+    var control = document.createElement("title");
+    control.paramName = definition.name;
+    control.paramType = definition.type;
+    if('caption' in definition) {
+      control.text = definition.caption;
+      control.className = 'caption';
+    } else {
+      control.text = definition.name;
+    }
+    return control;
+  },
+
+  createChoiceControl: function(definition) {
+    if(!('values' in definition))
+    {
+      throw new Error("Definition of choice parameter ("+definition.name+") should include a 'values' parameter");
+    }
+    var control = document.createElement("select");
+    control.paramName = definition.name;
+    control.paramType = definition.type;
+    var values = definition.values;
+    var captions;
+    if('captions' in definition)
+    {
+      captions = definition.captions;
+      if(captions.length != values.length)
+      {
+        throw new Error("Definition of choice parameter ("+definition.name+") should have the same number of items for 'captions' and 'values'");
+      }
+    }
+    else
+    {
+      captions = values;
+    }
+    var selectedindex = 0;
+    for(var valueindex = 0; valueindex < values.length; valueindex++)
+    {
+      var option = document.createElement("option");
+      option.value = values[valueindex];
+      option.text = captions[valueindex];
+      control.add(option);
+      if('default' in definition)
+      {
+        if(definition["default"] == values[valueindex])
+        {
+          selectedindex = valueindex;
+        }
+      }
+      else if('initial' in definition)
+      {
+        if(definition.initial == values[valueindex])
+        {
+          selectedindex = valueindex;
+        }
+      }
+    }
+    if(values.length > 0)
+    {
+      control.selectedIndex = selectedindex;
+    }
+    return control;
+  },
+
+  createControl: function(definition) {
+    var control_list = [
+      {type: "text"    , control: "text"    , required: ["index","type","name"], initial: ""},
+      {type: "int"     , control: "number"  , required: ["index","type","name"], initial: 0},
+      {type: "float"   , control: "number"  , required: ["index","type","name"], initial: 0.0},
+      {type: "number"  , control: "number"  , required: ["index","type","name"], initial: 0.0},
+      {type: "checkbox", control: "checkbox", required: ["index","type","name"], initial: ""},
+      {type: "radio"   , control: "radio"   , required: ["index","type","name"], initial: ""},
+      {type: "color"   , control: "color"   , required: ["index","type","name"], initial: "#000000"},
+      {type: "date"    , control: "date"    , required: ["index","type","name"], initial: ""},
+      {type: "email"   , control: "email"   , required: ["index","type","name"], initial: ""},
+      {type: "password", control: "password", required: ["index","type","name"], initial: ""},
+      {type: "url"     , control: "url"     , required: ["index","type","name"], initial: ""},
+      {type: "slider"  , control: "range"   , required: ["index","type","name","min","max"], initial: 0, label: true},
+    ];
+  // check for required parameters
+    if(!('type' in definition)) {
+      throw new Error("Parameter definition ("+definition.index+ ") must include a 'type' parameter");
+    }
+    var control = document.createElement("input");
+    var i,j,c_type,p_name;
+    for (i = 0; i < control_list.length; i++) {
+      c_type = control_list[i];
+      if (c_type.type == definition.type) {
+        for (j = 0; j < c_type.required.length; j++) {
+          p_name = c_type.required[j];
+          if(p_name in definition) {
+            if(p_name == "index") continue;
+            if(p_name == "type") continue;
+            if (p_name == "checked") { // setAttribute() only accepts strings
+              control.checked = definition.checked;
+            } else {
+              control.setAttribute(p_name, definition[p_name]);
+            }
+          } else {
+            throw new Error("Parameter definition ("+definition.index+ ") must include a '"+p_name+"' parameter");
+          }
+        }
+        break;
+      }
+    }
+    if (i == control_list.length) {
+      throw new Error("Parameter definition ("+definition.index+ ") is not a valid 'type'");
+    }
+  // set the control type
+    control.setAttribute("type", c_type.control);
+  // set name and type for obtaining values
+    control.paramName = definition.name;
+    control.paramType = definition.type;
+  // determine initial value of control
+    if('initial' in definition) {
+      control.value = definition.initial;
+    } else if('default' in definition) {
+      control.value = definition.default;
+    } else {
+      control.value = c_type.initial;
+    }
+  // set generic HTML attributes
+    for (var property in definition) {
+      if (definition.hasOwnProperty(property)) {
+        if (c_type.required.indexOf(property) < 0) {
+          control.setAttribute(property, definition[property]);
+        }
+      }
+    }
+  // add a label if necessary
+    if('label' in c_type) {
+      control.label = document.createElement("label");
+      control.label.innerHTML = control.value;
+    }
+    return control;
+  },
+
   createParamControls: function() {
     this.parameterstable.innerHTML = "";
     this.paramControls = [];
-    var paramControls = [];
-    var tablerows = [];
+
     for(var i = 0; i < this.paramDefinitions.length; i++)
     {
-      var errorprefix = "Error in parameter definition #"+(i+1)+": ";
       var paramdef = this.paramDefinitions[i];
-      if(!('name' in paramdef))
-      {
-        throw new Error(errorprefix + "Should include a 'name' parameter");
+      paramdef.index = i+1;
+
+      var control = null;
+      var type = paramdef.type.toLowerCase();
+      switch (type) {
+        case 'choice':
+          control = this.createChoiceControl(paramdef);
+          break;
+        case 'group':
+          control = this.createGroupControl(paramdef);
+          break;
+        default:
+          control = this.createControl(paramdef);
+          break;
       }
-      var type = "text";
-      if('type' in paramdef)
-      {
-        type = paramdef.type;
-      }
-      if( (type !== "text") && (type !== "int") && (type !== "float") && (type !== "choice") && (type !== "number") )
-      {
-        throw new Error(errorprefix + "Unknown parameter type '"+type+"'");
-      }
-      var control;
-      if( (type == "text") || (type == "int") || (type == "float") || (type == "number") )
-      {
-        control = document.createElement("input");
-        if (type == "number")
-          control.type = "number";
-        else
-          control.type = "text";
-        if('default' in paramdef)
-        {
-          control.value = paramdef["default"];
-        }
-        else if('initial' in paramdef)
-          control.value = paramdef.initial;
-        else
-        {
-          if( (type == "int") || (type == "float") || (type == "number") )
-          {
-            control.value = "0";
-          }
-          else
-          {
-            control.value = "";
-          }
-        }
-        if(paramdef.size!==undefined) 
-          control.size = paramdef.size;
-        for (var property in paramdef)
-          if (paramdef.hasOwnProperty (property))
-            if ((property != "name") && (property != "type") && (property != "default") && (property != "initial") && (property != "caption"))
-              control.setAttribute (property, paramdef[property]);
-      }
-      else if(type == "choice")
-      {
-        if(!('values' in paramdef))
-        {
-          throw new Error(errorprefix + "Should include a 'values' parameter");
-        }        
-        control = document.createElement("select");
-        var values = paramdef.values;
-        var captions;
-        if('captions' in paramdef)
-        {
-          captions = paramdef.captions;
-          if(captions.length != values.length)
-          {
-            throw new Error(errorprefix + "'captions' and 'values' should have the same number of items");
-          }
-        }
-        else
-        {
-          captions = values;
-        }
-        var selectedindex = 0;
-        for(var valueindex = 0; valueindex < values.length; valueindex++)
-        {
-          var option = document.createElement("option");
-          option.value = values[valueindex];
-          option.text = captions[valueindex];
-          control.add(option);
-          if('default' in paramdef)
-          {
-            if(paramdef["default"] == values[valueindex])
-            {
-              selectedindex = valueindex;
-            }
-          }
-          else if('initial' in paramdef)
-          {
-            if(paramdef.initial == values[valueindex])
-            {
-              selectedindex = valueindex;
-            }
-          }
-        }
-        if(values.length > 0)
-        {
-          control.selectedIndex = selectedindex;
-        }        
-      }
-      // implementing instantUpdate
-      control.onchange = function() { 
-        if(document.getElementById("instantUpdate").checked==true) {
-          that.rebuildSolid();
-        }
-      };
-      paramControls.push(control);
+    // add the appropriate element to the table
       var tr = document.createElement("tr");
-      var td = document.createElement("td");
-      var label = paramdef.name + ":";
-      if('caption' in paramdef)
-      {
-        label = paramdef.caption;
-        td.className = 'caption';
+      if(type == "group") {
+        var th = document.createElement("th");
+        if('className' in control) {
+          th.className = control.className;
+        }
+        th.innerHTML = control.text;
+        tr.appendChild(th);
+      } else {
+        // implementing instantUpdate
+        var that = this;
+        control.onchange = function(e) { 
+          var l = e.currentTarget.nextElementSibling;
+          if(l !== null && l.nodeName == "LABEL") {
+            l.innerHTML = e.currentTarget.value;
+          }
+          if(document.getElementById("instantUpdate").checked==true) {
+            that.rebuildSolid();
+          }
+        };
+        this.paramControls.push(control);
+
+        var td = document.createElement("td");
+        var label = paramdef.name + ":";
+        if('caption' in paramdef)
+        {
+          label = paramdef.caption;
+          td.className = 'caption';
+        }
+        td.innerHTML = label;
+        tr.appendChild(td);
+        td = document.createElement("td");
+        td.appendChild(control);
+        if("label" in control) {
+          td.appendChild(control.label);
+        }
+        tr.appendChild(td);
       }
-       
-      td.innerHTML = label;
-      tr.appendChild(td);
-      td = document.createElement("td");
-      td.appendChild(control);
-      tr.appendChild(td);
-      tablerows.push(tr);
+      this.parameterstable.appendChild(tr);
     }
-    var that = this;
-    tablerows.map(function(tr){
-      that.parameterstable.appendChild(tr);
-    }); 
-    this.paramControls = paramControls;
   },
 };
 
