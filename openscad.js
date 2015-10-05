@@ -74,6 +74,10 @@
 //    );
 // }
 
+function version() {
+  return [0,3,0];
+}
+
 function JStoMeta(src) {
    var l = src.split(/\n/);
    var n = 0;
@@ -1094,22 +1098,12 @@ function echo() {
       if(i) s += ", ";
       s += a[i];
    }
-   if(typeof OpenJsCad !== 'undefined') {
-      OpenJsCad.log(s);
-   } else {
-      //var t = (new Date()-global.time)/1000;
-      //console.log(t,s);
-      console.log(s);
-   }
+   //var t = (new Date()-global.time)/1000;
+   //console.log(t,s);
+   console.log(s);
 }
 
-function status(s) {
-   if(typeof document !== 'undefined') {
-      document.getElementById('statusspan').innerHTML = s;
-   } else {
-      echo(s);
-   }
-}
+
 
 // from http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
 /**
@@ -1980,7 +1974,7 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
    for(var k in meta) {
       src += "// AMF."+k+": "+meta[k]+"\n";
    }
-   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" AMF Importer\n";
+   src += "// producer: OpenJSCAD Compatibilty ("+version()+") AMF Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -2030,7 +2024,7 @@ function parseOBJ(obj,fn) {   // http://en.wikipedia.org/wiki/Wavefront_.obj_fil
       }
    }
    var src = ""; 
-   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" Wavefront OBJ Importer\n";
+   src += "// producer: OpenJSCAD Compatibility ("+version()+") Wavefront OBJ Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -2146,7 +2140,7 @@ function parseBinarySTL(stl,fn) {
         converted++;
     }
    var src = "";
-   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" STL Binary Importer\n";
+   src += "// producer: OpenSCAD Compatibility ("+version()+") STL Binary Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -2164,7 +2158,7 @@ function parseAsciiSTL(stl,fn) {
    var converted = 0;
    var o;
      
-   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" STL ASCII Importer\n";
+   src += "// producer: OpenSCAD Compatibility ("+version()+") STL ASCII Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -2488,7 +2482,7 @@ function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code
    }
    
    var src = "";
-   src += "// producer: OpenJSCAD "+me.toUpperCase()+" "+version+" GCode Importer\n";
+   src += "// producer: OpenSCAD Compatibility ("+version()+") GCode Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -2722,12 +2716,41 @@ _getParameterDefinitions = function(param) {         // used for openjscad CLI o
 if(typeof module !== 'undefined') {    // we are used as module in nodejs require()
    var CSG = require(global.lib+'./csg.js').CSG;
    //console.log("lib="+global.lib);
-   module.exports = { 
-      // -- list all functions we export
-      parseSTL: function(stl,fn) { return parseSTL(stl,fn); },
-      parseAMF: function(amf,fn) { return parseAMF(amf,fn); } 
-   };
-   me = 'cli';
+
+  module.exports = { 
+    // -- list all functions we export
+    version: version,
+    parseSTL: parseSTL,
+    parseAMF: parseAMF,
+    color:color, group:group, union:union, 
+    difference:difference, 
+    intersection:intersection,
+    simplexFont: simplexFont,
+    vector_text: vector_text, 
+    vector_char: vector_char,
+    hsv2rgb: hsv2rgb, rgb2hsv: rgb2hsv,
+    hsl2rgb: hsl2rgb, rgb2hsl: rgb2hsl,
+    pow: pow, sign: sign,
+    sqrt: sqrt, round:round, log:log,
+    lookup: lookup, rands: rands, atan: atan,
+    atan2: atan2, ceil:ceil, floor:floor,
+    abs:abs, min:min, max:max, tan:tan,
+    acos:acos, cos:cos, asin:asin, sin:sin,
+    triangle:triangle, polygon:polygon, circle:circle,
+    square:square, 
+    rectangular_extrude:rectangular_extrude,
+    rotate_extrude: rotate_extrude,
+    linear_extrude:linear_extrude,
+    chain_hull:chain_hull,
+    hull:hull, minkowski:minkowski,
+    multmatrix:multmatrix,
+    expand:expand, contract:contract, mirror:mirror,
+    rotate:rotate, scale:scale, center:center,
+    translate:translate, polyhedron:polyhedron,
+    torus:torus, cylinder:cylinder, 
+    geodesicSphere: geodesicSphere, sphere: sphere,
+    cube:cube 
+  };
 }
 
 
