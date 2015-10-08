@@ -1264,6 +1264,15 @@ OpenJsCad.Processor.prototype = {
       {
         value = control.options[control.selectedIndex].value;
       }
+      else if(type == "color")
+      {
+        //Convert from hex to RGB and resize 1 and 0 to match OpenSCAD color system.
+        var hex = control.value.substr(1,6);
+        var r = parseInt(hex.substr(0, 2), 16)/255;
+        var g = parseInt(hex.substr(2, 2), 16)/255;
+        var b = parseInt(hex.substr(4, 2), 16)/255;
+        value  = [r, g, b];
+      }
       paramValues[paramdef.name] = value;
     }
     return paramValues;
@@ -1531,7 +1540,7 @@ OpenJsCad.Processor.prototype = {
       {
         type = paramdef.type;
       }
-      if( (type !== "text") && (type !== "int") && (type !== "float") && (type !== "choice") && (type !== "number") )
+      if( (type !== "text") && (type !== "int") && (type !== "float") && (type !== "choice") && (type !== "number") && (type !== "color") )
       {
         throw new Error(errorprefix + "Unknown parameter type '"+type+"'");
       }
@@ -1614,6 +1623,39 @@ OpenJsCad.Processor.prototype = {
         {
           control.selectedIndex = selectedindex;
         }        
+      }
+      else if(type == "color")
+      {
+        function rgb2hex(colorarray) {
+          var rgb = colorarray[0]*255 << 16 | colorarray[1]*255 << 8 | colorarray[2]*255;
+          return "#" + (0x1000000 | rgb).toString(16).substring(1);
+        }
+        if ('default' in paramdef)
+        {
+          if(paramdef["default"] > 3)
+          {
+            throw new Error(errorprefix + "Colors parameters should be an array of 3 elements, [r,g,b]. Colors with alpha (transparency) are not supported.");
+          }
+          if(Math.min.apply(null, paramdef["default"]) < 0 || Math.max.apply(null, paramdef["default"]) > 1 ) 
+          {
+            throw new Error(errorprefix + "Color values should be between 0 and 1. (e.g. [1,0,0.2] and NOT [255,0,51])");
+          }
+          control.value = rgb2hex(paramdef["default"]);
+        }
+        else
+        {
+          control.value = rgb2hex([1,.4,1,1]);      // -- default color
+        }
+        if(paramdef.size!==undefined)
+        {
+          control.size = paramdef.size;
+        }
+        control = document.createElement("input");
+        control.type = "color"
+        for (var property in paramdef)
+            if (paramdef.hasOwnProperty (property))
+                if ((property != "name") && (property != "type") && (property != "default") && (property != "initial") && (property != "caption") )
+                    control.setAttribute (property, paramdef[property]);
       }
       // implementing instantUpdate
       control.onchange = function() { 
