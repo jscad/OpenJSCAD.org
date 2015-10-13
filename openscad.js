@@ -1241,6 +1241,38 @@ function hsv2rgb(h, s, v){
     return [r, g, b];
 }
 
+/**
+ * Converts a HTML5 color value (string) to RGB values
+ * See the color input type of HTML5 forms
+ * Conversion formula:
+ * - split the string; "#RRGGBB" into RGB components
+ * - convert the HEX value into RGB values
+ */
+function html2rgb(s) {
+    var r = 0;
+    var g = 0;
+    var b = 0;
+    if(s.length == 7) {
+      r = parseInt('0x'+s.slice(1,3))/255;
+      g = parseInt('0x'+s.slice(3,5))/255;
+      b = parseInt('0x'+s.slice(5,7))/255;
+    }
+    return [r,g,b];
+}
+
+/**
+ * Converts RGB color value to HTML5 color value (string)
+ * Conversion forumla:
+ * - convert R, G, B into HEX strings
+ * - return HTML formatted string "#RRGGBB"
+ */
+function rgb2html(r, g, b){
+    if(r.length) { b = r[2], g = r[1], r = r[0]; }
+    var s = '#' +
+      Number(0x1000000+r*255*0x10000+g*255*0x100+b*255).toString(16).substring(1);
+    return s;
+}
+
 // --------------------------------------------------------------------------------------------
 
 function vector_char(x,y,c) {
