@@ -10,6 +10,7 @@ Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
+- 2015/10/23: 0.3.1: including new parameter options by Z3 Dev
 - 2015/07/02: 0.3.0: format.js (Stefan Baumann), and Blob.js/openjscad improved by Z3 Dev
 - 2015/05/20: 0.2.4: renumbering, latest csg.js from http://joostn.github.com/OpenJsCad/ adapted
 - 2015/04/08: 0.024: dev branch opened
@@ -48,13 +49,13 @@ Todo:
   <script src="jquery/jquery-ui.js"></script>
   <script src="jquery/jquery.hammer.js"></script>
   <script src="lightgl.js"></script>
-  <script src="csg.js"></script>
-  <script src="formats.js"></script>
-  <script src="openjscad.js"></script>
-  <script src="openscad.js"></script>
+  <script src="csg.js?0.3.1"></script>
+  <script src="formats.js?0.3.1"></script>
+  <script src="openjscad.js?0.3.1"></script>
+  <script src="openscad.js?0.3.1"></script>
   <script src="underscore.js"></script>
   <script src="openscad-openjscad-translator.js"></script>
-  <script src="ace/ace.js" charset="utf-8"></script>
+  <script src="ace/ace.js?0.3.1" charset="utf-8"></script>
 
 <script lang=JavaScript>
 //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
@@ -164,10 +165,11 @@ $(document).ready(function() {
 <img src="imgs/title.png"><br>
 Version <script>document.write(OpenJsCad.version);</script>
 <p>
-by Ren&eacute; K. M&uuml;ller (UI & CLI),
+by 
 Joost Nieuwenhuijse (core), 
+Ren&eacute; K. M&uuml;ller (UI & CLI),
 Stefan Baumann (core),
-Z3 Dev (CLI),
+Z3 Dev (CLI & GUI),
 Eduard Bespalov (core),
 Gary Hogdson (OpenSCAD translator)
 <p>csg.js core &amp; improvements by 
@@ -247,7 +249,7 @@ var ex = [
 { file:'stepper-motor.jscad', title: 'Interactive Params: Stepper Motor' },
 { file:'iphone4-case.jscad', title: 'Interactive Params: iPhone4 Case' },
 { file:'name_plate.jscad', title: 'Interactive Params: Name Plate' },
-{ file:'balloons.jscad', title: 'Interactive Params: Balloons' },
+{ file:'balloons.jscad', title: 'Interactive Params: Balloons', new: true },
 { file:'globe.jscad', title: 'Globe' },
 
 { file:'platonics/', title: 'Recursive Include(): Platonics', spacing: true },

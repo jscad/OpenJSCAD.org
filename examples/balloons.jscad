@@ -1,3 +1,9 @@
+// title      : Balloons
+// author     : Z3 Dev
+// license    : MIT License
+// description: multiple balloons, testing new parameters
+// file       : balloons.jscad
+
 function getParameterDefinitions() { 
   return [ 
     { name: 'balloon', type: 'group', caption: 'Balloons' }, 
