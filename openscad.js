@@ -2726,12 +2726,19 @@ _getParameterDefinitions = function(param) {         // used for openjscad CLI o
       var p = {};
       var pa = getParameterDefinitions();
       for(var a in pa) {               // defaults, given by getParameterDefinitions()
-         p[pa[a].name] = pa[a].default||pa[a].initial;
-         //echo("default=",pa[a].name,p[pa[a].name]);
+         var x = pa[a];
+         if ('default' in x) {
+           p[pa[a].name] = pa[a].default;
+         } else
+         if ('initial' in x) {
+           p[pa[a].name] = pa[a].initial;
+         } else
+         if ('checked' in x) {
+           p[pa[a].name] = pa[a].checked;
+         }
       }
       for(var a in param) {            // given by command-line
          p[a] = param[a];
-         //echo("cli=",a,p[a]);
       }
       if(0) {
          for(var a in p) {
