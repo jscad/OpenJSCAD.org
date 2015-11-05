@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <!-- 
@@ -63,7 +63,7 @@ var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'
 var browser = 'unknown';
 var showEditor = true;
 var remoteUrl = './remote.pl?url=';
-if(navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)/i))
+if(navigator.userAgent.match(/(edge|opera|chrome|safari|firefox|trident)/i))
    browser = RegExp.$1.toLowerCase();
 
 $(document).ready(function() {
@@ -128,7 +128,7 @@ $(document).ready(function() {
 <img id=menuHandle src="imgs/menuHandleVL.png">
 <nav>
 <div id=menuVersion>Version <script>document.write(OpenJsCad.version);</script></div>
-<p/>
+    <p></p>
 <table class=info>
 <tr><td align=right class=infoOperation>Render Code</td><td class=infoKey>SHIFT + RETURN</td></tr>
 <tr><td align=right class=infoOperation>Rotate XZ</td><td class=infoKey>Left Mouse</td></tr>
@@ -144,8 +144,8 @@ $(document).ready(function() {
 <br/><span class=menuSubInfo>Discuss with other users &amp; developers</span></p>
 <div id=examplesTitle class=navlink><a href='#' onclick='return false'>Examples</a></div>
 <div id=examples></div>
-<span class=menuSubInfo>Dozens of examples to learn from</span></p>
-<p/>
+<span class=menuSubInfo>Dozens of examples to learn from</span>
+    <p></p>
 <!--<div id=optionsTitle class=navlink><a href='#' onclick='return false'>Options</a></div>
 <div id=options>...</div>
 <span class=menuSubInfo>Your personal settings</span></p>
@@ -708,7 +708,15 @@ function handleFileSelect(evt) {
   if(!evt.dataTransfer) throw new Error("Not a datatransfer (1)");
   if(!evt.dataTransfer.files) throw new Error("Not a datatransfer (2)");
 
-  if(evt.dataTransfer.items&&evt.dataTransfer.items.length) {     // full directories, let's try
+    if (evt.dataTransfer.files.length > 0) {
+        gCurrentFiles = [];                              // -- be aware: gCurrentFiles = evt.dataTransfer.files won't work, as rewriting file will mess up the array
+        for (var i = 0; i < evt.dataTransfer.files.length; i++) {
+            gCurrentFiles.push(evt.dataTransfer.files[i]);  // -- need to transfer the single elements
+        }
+        loadLocalFiles();
+    } 
+
+  if (evt.dataTransfer.items && evt.dataTransfer.items.length) {     // full directories, let's try
     var items = evt.dataTransfer.items;
     gCurrentFiles = [];
     gMemFsCount = 0;
@@ -721,17 +729,6 @@ function handleFileSelect(evt) {
        walkFileTree(items[i].webkitGetAsEntry());
        gRootFs.push(items[i].webkitGetAsEntry());
     }
-  }
-  if(browser=='firefox'||me=='web-offline') {     // -- fallback, walkFileTree won't work with file://
-     if(evt.dataTransfer.files.length>0) {
-       gCurrentFiles = [];                              // -- be aware: gCurrentFiles = evt.dataTransfer.files won't work, as rewriting file will mess up the array
-       for(var i=0; i<evt.dataTransfer.files.length; i++) {
-         gCurrentFiles.push(evt.dataTransfer.files[i]);  // -- need to transfer the single elements
-       }
-       loadLocalFiles();
-     } else {
-       throw new Error("Please drop a single jscad, scad, stl file, or multiple jscad files");
-     }
   }
 }
 
