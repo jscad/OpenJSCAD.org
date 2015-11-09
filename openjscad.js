@@ -10,7 +10,7 @@
 
 var OpenJsCad = function() { };
 
-OpenJsCad.version = '0.3.1 (2015/10/23)';
+OpenJsCad.version = '0.3.2 (2015/11/08)';
 
 OpenJsCad.log = function(txt) {
   var timeInMs = Date.now();
@@ -973,6 +973,7 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
   this.debugging = false;
   this.options = {};
   this.createElements();
+  Windows3DPrinting.initialize(this.statusbuttons);
 // state of the processor
 // 0 - initialized - no viewer, no parameters, etc
 // 1 - processing  - processing JSCAD script
