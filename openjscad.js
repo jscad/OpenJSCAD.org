@@ -973,7 +973,7 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
   this.debugging = false;
   this.options = {};
   this.createElements();
-  Windows3DPrinting.initialize(this.statusbuttons);
+  Windows3DPrinting.initialize(this);
 // state of the processor
 // 0 - initialized - no viewer, no parameters, etc
 // 1 - processing  - processing JSCAD script
