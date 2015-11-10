@@ -126,7 +126,8 @@
 
     function createModelPackageAsync() {
         if (cadProcessor.currentObject === null) {
-            return;
+            alert("Wait for model to generate before printing.");
+            return null;
         }
 
         var printing3D = Windows.Graphics.Printing3D;
