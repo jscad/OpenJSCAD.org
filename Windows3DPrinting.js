@@ -174,29 +174,12 @@
 
         model.build.components.append(component);
 
-        return mesh.verifyAsync(printing3D.Printing3DMeshVerificationMode.findFirstError).then(function (verifyResult) {
-            if (verifyResult.isValid) {
-                return model.repairAsync();
-            }
-            var message = "Mesh is not valid:\n" + verifyResult.nonmanifoldTriangles.length + " non-manifold triangles\n" + verifyResult.reversedNormalTriangles.length + " reversed normal triangles";
-            var messageDialog = new Windows.UI.Popups.MessageDialog(message, "Error Printing Model");
-
-            messageDialog.showAsync();
-
-            return false;
-        }, function(verifyError) {
-            console.error("Failed to verify mesh: " + verifyError.message);
-        }).then(function (repairResult) {
-            if (repairResult) {
+        return model.repairAsync()
+            .then(function (repairResult) {
                 modelPackage = new printing3D.Printing3D3MFPackage();
 
                 return modelPackage.saveModelToPackageAsync(model);
-            }
-            return false;
-        }, function(repairError) {
-            console.error("Error repairing model: " + repairError.message);
-        });
-
+            });
     }
 
     function printHandler(args) {
@@ -238,14 +221,8 @@
             print3DManager.addEventListener("taskrequested", onTaskRequested);
             taskRequestedAdded = true;
         }
-
-        var promise = createModelPackageAsync();
         
-        if (promise == null) {
-            return;
-        }
-        
-        promise.then(function (isCreated) {
+        createModelPackageAsync().then(function (isCreated) {
             if (isCreated) {
                 printing3D.Print3DManager.showPrintUIAsync().done(function() {
                     console.log("Print UI shown.");
@@ -254,7 +231,9 @@
                 });
             } 
         }, function(error) {
-            console.error("Failed to create model package: " + error.message);
+            var messageDialog = new Windows.UI.Popups.MessageDialog(error.message, "Error Printing");
+
+            messageDialog.showAsync();
         });
 
     }
