@@ -4,60 +4,55 @@
     "use strict";
     var cadProcessor = null,
         intSize = 4,
-        floatSize = 8;
+        floatSize = 8,
+        taskRequestedAdded = false;
 
-    function getVertices(triangles) {
-        var printing3D = Windows.Graphics.Printing3D,
-            mesh = new printing3D.Printing3DMesh();
+    function getVertices(vertexList) {
+        var printing3D = Windows.Graphics.Printing3D;
 
-        mesh.createVertexPositions(floatSize * 3 * triangles.length);
+        var mesh = new printing3D.Printing3DMesh();
+
+        mesh.createVertexPositions(floatSize * 3 * vertexList.length);
         var buffer = mesh.getVertexPositions();
 
         var index = 0;
 
         var dataWriter = new Float64Array(buffer);
-        triangles.forEach(function (triangle) {
-            triangle.vertices.forEach(function(vertex) {
-                dataWriter[index] = vertex.pos.x;
-                index++;
-                dataWriter[index] = vertex.pos.y;
-                index++;
-                dataWriter[index] = vertex.pos.z;
-                index++;
-            });
+
+        vertexList.forEach(function (vertex) {
+            dataWriter[index] = vertex.pos.x;
+            index++;
+            dataWriter[index] = vertex.pos.y;
+            index++;
+            dataWriter[index] = vertex.pos.z;
+            index++;
         });
 
-        mesh.vertexCount = triangles.length * 3;
+        mesh.vertexCount = vertexList.length;
 
         return mesh;
     }
 
-    function getIndices(triangles, mesh) {
-        var printing3D = Windows.Graphics.Printing3D;
-        var description = {
+    function getIndices(indices, mesh) {
+        var printing3D = Windows.Graphics.Printing3D,
+            description = {
             format: printing3D.Printing3DBufferFormat.R32G32B32A32Float,
             stride: 7
         };
 
-        mesh.indexCount = triangles.length * 3;
-
         mesh.vertexPositionsDescription = description;
 
-        mesh.createTriangleIndices(intSize * description.stride * mesh.indexCount);
+        mesh.createTriangleIndices(intSize * description.stride * indices.length);
 
         var buffer = mesh.getTriangleIndices();
 
         var dataWriter = new Float64Array(buffer);
 
-        triangles.forEach(function(triangle, index) {
-            dataWriter[index * 3] = triangle.x;
-            dataWriter[1 + index * 3] = triangle.y;
-            dataWriter[2 + index * 3] = triangle.z;
-            dataWriter[3 + index * 3] = 0;
-            dataWriter[4 + index * 3] = 0;
-            dataWriter[5 + index * 3] = 0;
-            dataWriter[6 + index * 3] = 0;
+        indices.forEach(function (index, indexPos) {
+            dataWriter[indexPos] = index;
         });
+
+        mesh.indexCount = indices.length;
     }
 
     function identity() {
@@ -84,48 +79,82 @@
     }
 
     function printHandler(args) {
-        var Printing3D = Windows.Graphics.Printing3D;
+        /// <summary>Create the Print package</summary>
+        /// <param name="args" type="Windows.Graphics.Printing3D.Print3DTaskSourceRequestedArgs">the 3D print task source requested arguments</param>
+        try {
+            if (cadProcessor.currentObject === null) {
+                return;
+            }
 
-        var modelPackage = new Printing3D.Printing3D3MFPackage();
+            var printing3D = Windows.Graphics.Printing3D;
 
-        var model = new Printing3D.Printing3DModel();
+            var model = new printing3D.Printing3DModel();
 
-        model.unit = Printing3D.Printing3DModelUnit.Millimeter;
+            model.unit = printing3D.Printing3DModelUnit.Millimeter;
 
-        var materialGroup = new Printing3D.Printing3DBaseMaterialGroup(0);
-        var material = new Printing3D.Printing3DBaseMaterial();
+            var materialGroup = new printing3D.Printing3DBaseMaterialGroup(0);
+            var material = new printing3D.Printing3DBaseMaterial();
 
-        material.name = Printing3D.Printing3DBaseMaterial.Pla;
+            material.name = printing3D.Printing3DBaseMaterial.Pla;
 
-        materialGroup.bases.append(material);
+            materialGroup.bases.append(material);
 
-        model.material.baseGroups.append(materialGroup);
+            model.material.baseGroups.append(materialGroup);
 
-        var component = new Printing3D.Printing3DComponent();
+            var component = new printing3D.Printing3DComponent();
 
-        var triangles = cadProcessor.currentObject.toTriangles();
-                
-        var mesh = getVertices(triangles);
+            var triangles = cadProcessor.currentObject.toTriangles();
 
-        getIndices(triangles, mesh);
+            var vertices = [];
+            var indices = [];
 
-        model.meshes.append(mesh);
+            triangles.forEach(function(triangle) {
+                triangle.vertices.forEach(function(vertex) {
+                    var index = vertices.indexOf(vertex);
 
-        component.mesh = mesh;
+                    if (index === -1) {
+                        index = vertices.push(vertex) - 1;
+                    }
 
-        model.components.append(component);
+                    indices.push(index);
+                });
+                indices.push(0);
+                indices.push(0);
+                indices.push(0);
+                indices.push(0);
+            });
 
-        var componentWithMatrix = new Printing3D.Printing3DComponentWithMatrix();
+            var mesh = getVertices(vertices);
 
-        componentWithMatrix.component = component;
+            getIndices(indices, mesh);
 
-        componentWithMatrix.matrix = identity();
+            model.meshes.append(mesh);
 
-        model.build.components.append(componentWithMatrix);
+            component.mesh = mesh;
 
-        modelPackage.saveModelToPackageAsync(model).then(function() {
-            args.setSource(modelPackage);
-        });
+            model.components.append(component);
+
+            var componentWithMatrix = new printing3D.Printing3DComponentWithMatrix();
+
+            componentWithMatrix.component = component;
+
+            componentWithMatrix.matrix = identity();
+
+            model.build.components.append(componentWithMatrix);
+
+
+
+            var modelPackage = new printing3D.Printing3D3MFPackage();
+
+            modelPackage.saveModelToPackageAsync(model).then(function () {
+                args.setSource(modelPackage);
+            }, function (error) {
+                console.error("Error saving model to package: " + error);
+            });
+
+        } catch (error) {
+            console.error("Error printing: " + error);
+        }
     }
 
     function onPrintRequestCompleted(args) {
@@ -137,6 +166,9 @@
     }
 
     function onTaskRequested(eventArgs) {
+        ///<summary>Print task requested</summary>
+        ///<param name="eventArgs" type="Windows.Graphics.Printing3D.Print3DTaskRequestedEventArgs">the 3D print task requested event arguments</param>
+
         var request = eventArgs.request;
 
         console.log("Print task requested.");
@@ -148,28 +180,25 @@
     }
 
     function print3D() {
-        var print3DManager = Windows.Graphics.Printing3D.Print3DManager.getForCurrentView();
+        ///<summary>Start a 3D Print on Windows 10</summary>
 
-        print3DManager.addEventListener("taskrequested", onTaskRequested);
+        var printing3D = Windows.Graphics.Printing3D;
 
-        Windows.Graphics.Printing3D.Print3DManager.showPrintUIAsync().done(function () {
+        var print3DManager = printing3D.Print3DManager.getForCurrentView();
+
+        if (!taskRequestedAdded) {
+            print3DManager.addEventListener("taskrequested", onTaskRequested);
+            taskRequestedAdded = true;
+        }
+        printing3D.Print3DManager.showPrintUIAsync().done(function () {
             console.log("Print UI shown.");
         }, function(error) {
             console.error("Error printing: " + error);
         });
     }
 
-    Windows3DPrinting.initialize = function (processor) {
-        if (typeof Windows === "undefined") {
-            // this should only run inside a Windows 10 hosted web app.
-            return;
-        }
-
-        MSApp.clearTemporaryWebDataAsync();
-
-        var statusButtons = processor.statusbuttons;
-        cadProcessor = processor;
-
+    function addButton(parent) {
+        ///<summary>Add the print button</summary>
         var printButton = document.createElement("button");
         printButton.setAttribute("style", "position:absolute; left:5px; bottom:5px;");
         var icon = document.createElement("span");
@@ -180,8 +209,22 @@
         printButton.appendChild(document.createTextNode("Print"));
         printButton.onclick = print3D;
 
+        parent.appendChild(printButton);
+    }
 
-        statusButtons.appendChild(printButton);
+    Windows3DPrinting.initialize = function (processor) {
+        /// <summary>Add the 3D print button if running on Windows 10 as a 
+        /// hosted web app.</summary>
+        if (typeof Windows === "undefined") {
+            // this should only run inside a Windows 10 hosted web app.
+            return;
+        }
+
+        MSApp.clearTemporaryWebDataAsync();
+
+        cadProcessor = processor;
+
+        addButton(processor.statusbuttons);
     }
 })();
 
