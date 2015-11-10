@@ -131,8 +131,7 @@
 
             messageDialog.showAsync();
 
-            alert("Wait for model to generate before printing.");
-            return null;
+            return false;
         }
 
         var printing3D = Windows.Graphics.Printing3D;
