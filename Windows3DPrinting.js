@@ -126,6 +126,11 @@
 
     function createModelPackageAsync() {
         if (cadProcessor.currentObject === null) {
+            var message = "Wait for model to generate before printing.";
+            var messageDialog = new Windows.UI.Popups.MessageDialog(message, "Print Model");
+
+            messageDialog.showAsync();
+
             alert("Wait for model to generate before printing.");
             return null;
         }
@@ -134,7 +139,7 @@
 
         var model = new printing3D.Printing3DModel();
 
-        model.unit = printing3D.Printing3DModelUnit.Millimeter;
+        model.unit = printing3D.Printing3DModelUnit.millimeter;
 
         setMaterial(model);
 
@@ -170,9 +175,29 @@
 
         model.build.components.append(component);
 
-        modelPackage = new printing3D.Printing3D3MFPackage();
+        return mesh.verifyAsync(printing3D.Printing3DMeshVerificationMode.findFirstError).then(function (verifyResult) {
+            if (verifyResult.isValid) {
+                return model.repairAsync();
+            }
+            var message = "Mesh is not valid:\n" + verifyResult.nonmanifoldTriangles.length + " non-manifold triangles\n" + verifyResult.reversedNormalTriangles.length + " reversed normal triangles";
+            var messageDialog = new Windows.UI.Popups.MessageDialog(message, "Error Printing Model");
 
-        return modelPackage.saveModelToPackageAsync(model);
+            messageDialog.showAsync();
+
+            return false;
+        }, function(verifyError) {
+            console.error("Failed to verify mesh: " + verifyError.message);
+        }).then(function (repairResult) {
+            if (repairResult) {
+                modelPackage = new printing3D.Printing3D3MFPackage();
+
+                return modelPackage.saveModelToPackageAsync(model);
+            }
+            return false;
+        }, function(repairError) {
+            console.error("Error repairing model: " + repairError.message);
+        });
+
     }
 
     function printHandler(args) {
@@ -215,12 +240,20 @@
             taskRequestedAdded = true;
         }
 
-        createModelPackageAsync().then(function() {
-            printing3D.Print3DManager.showPrintUIAsync().done(function() {
-                console.log("Print UI shown.");
-            }, function(error) {
-                console.error("Error printing: " + error);
-            });
+        var promise = createModelPackageAsync();
+        
+        if (promise == null) {
+            return;
+        }
+        
+        promise.then(function (isCreated) {
+            if (isCreated) {
+                printing3D.Print3DManager.showPrintUIAsync().done(function() {
+                    console.log("Print UI shown.");
+                }, function(error) {
+                    console.error("Error printing: " + error);
+                });
+            } 
         }, function(error) {
             console.error("Failed to create model package: " + error.message);
         });
