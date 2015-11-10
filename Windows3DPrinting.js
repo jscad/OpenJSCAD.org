@@ -7,12 +7,14 @@
         floatSize = 8,
         taskRequestedAdded = false;
 
-    function getVertices(vertexList) {
+    function createMesh(vertexList) {
+        /// <param name="vertexList">List of vertex object</param>
         var printing3D = Windows.Graphics.Printing3D;
 
         var mesh = new printing3D.Printing3DMesh();
 
         mesh.createVertexPositions(floatSize * 3 * vertexList.length);
+
         var buffer = mesh.getVertexPositions();
 
         var index = 0;
@@ -30,17 +32,24 @@
 
         mesh.vertexCount = vertexList.length;
 
+        var desc = {
+            format: printing3D.Printing3DBufferFormat.r32G32B32Float,
+            stride: 3
+        };
+
+        mesh.vertexPositionsDescription = desc;
+
         return mesh;
     }
 
     function getIndices(indices, mesh) {
         var printing3D = Windows.Graphics.Printing3D,
             description = {
-            format: printing3D.Printing3DBufferFormat.R32G32B32A32Float,
+            format: printing3D.Printing3DBufferFormat.r32G32B32A32Int,
             stride: 7
         };
 
-        mesh.vertexPositionsDescription = description;
+        mesh.triangleIndicesDescription = description;
 
         mesh.createTriangleIndices(intSize * description.stride * indices.length);
 
@@ -124,7 +133,7 @@
                 indices.push(0);
             });
 
-            var mesh = getVertices(vertices);
+            var mesh = createMesh(vertices);
 
             getIndices(indices, mesh);
 
@@ -141,8 +150,6 @@
             componentWithMatrix.matrix = identity();
 
             model.build.components.append(componentWithMatrix);
-
-
 
             var modelPackage = new printing3D.Printing3D3MFPackage();
 
