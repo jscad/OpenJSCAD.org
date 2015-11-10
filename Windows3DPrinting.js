@@ -5,10 +5,13 @@
     var cadProcessor = null,
         intSize = 4,
         floatSize = 8,
-        taskRequestedAdded = false;
+        taskRequestedAdded = false,
+        modelPackage = null; // the model package created in createModelPackageAsync()
 
     function createMesh(vertexList) {
+        /// <summary>Creates a mesh and sets it vertex list</summary>
         /// <param name="vertexList">List of vertex object</param>
+        /// <returns type="Windows.Graphics.Printing3D.Printing3DMesh"></returns>
         var printing3D = Windows.Graphics.Printing3D;
 
         var mesh = new printing3D.Printing3DMesh();
@@ -42,12 +45,16 @@
         return mesh;
     }
 
-    function getIndices(indices, mesh) {
+    function setMeshIndices(indices, mesh) {
+        /// <summary>Set the mesh indices</summary>
+        /// <param name="indices">the list of triangle indices</param>
+        /// <param name="mesh" type="Windows.Graphics.Printing3D.Printing3DMesh">the mesh</param>
+
         var printing3D = Windows.Graphics.Printing3D,
             description = {
-            format: printing3D.Printing3DBufferFormat.r32G32B32A32Int,
-            stride: 7
-        };
+                format: printing3D.Printing3DBufferFormat.r32G32B32Float,
+                stride: 7
+            };
 
         mesh.triangleIndicesDescription = description;
 
@@ -87,81 +94,90 @@
         return identityMatrix;
     }
 
+    function createComponent(mesh, model) {
+        var printing3D = Windows.Graphics.Printing3D;
+
+        var component = new printing3D.Printing3DComponent();
+
+        component.mesh = mesh;
+
+        model.components.append(component);
+
+        var componentWithMatrix = new printing3D.Printing3DComponentWithMatrix();
+
+        componentWithMatrix.component = component;
+
+        componentWithMatrix.matrix = identity();
+
+        return componentWithMatrix;
+    }
+
+    function setMaterial(model) {
+        var printing3D = Windows.Graphics.Printing3D;
+        var materialGroup = new printing3D.Printing3DBaseMaterialGroup(0);
+        var material = new printing3D.Printing3DBaseMaterial();
+
+        material.name = printing3D.Printing3DBaseMaterial.Pla;
+
+        materialGroup.bases.append(material);
+
+        model.material.baseGroups.append(materialGroup);
+    }
+
+    function createModelPackageAsync() {
+        if (cadProcessor.currentObject === null) {
+            return;
+        }
+
+        var printing3D = Windows.Graphics.Printing3D;
+
+        var model = new printing3D.Printing3DModel();
+
+        model.unit = printing3D.Printing3DModelUnit.Millimeter;
+
+        setMaterial(model);
+
+        var triangles = cadProcessor.currentObject.toTriangles();
+
+        var vertices = [];
+        var indices = [];
+
+        // Create a vertex list and index list for the triangles
+        triangles.forEach(function(triangle) {
+            triangle.vertices.forEach(function(vertex) {
+                var index = vertices.indexOf(vertex);
+
+                if (index === -1) {
+                    index = vertices.push(vertex) - 1;
+                }
+
+                indices.push(index);
+            });
+            indices.push(0);
+            indices.push(0);
+            indices.push(0);
+            indices.push(0);
+        });
+
+        var mesh = createMesh(vertices);
+
+        setMeshIndices(indices, mesh);
+
+        model.meshes.append(mesh);
+
+        var component = createComponent(mesh, model);
+
+        model.build.components.append(component);
+
+        modelPackage = new printing3D.Printing3D3MFPackage();
+
+        return modelPackage.saveModelToPackageAsync(model);
+    }
+
     function printHandler(args) {
         /// <summary>Create the Print package</summary>
         /// <param name="args" type="Windows.Graphics.Printing3D.Print3DTaskSourceRequestedArgs">the 3D print task source requested arguments</param>
-        try {
-            if (cadProcessor.currentObject === null) {
-                return;
-            }
-
-            var printing3D = Windows.Graphics.Printing3D;
-
-            var model = new printing3D.Printing3DModel();
-
-            model.unit = printing3D.Printing3DModelUnit.Millimeter;
-
-            var materialGroup = new printing3D.Printing3DBaseMaterialGroup(0);
-            var material = new printing3D.Printing3DBaseMaterial();
-
-            material.name = printing3D.Printing3DBaseMaterial.Pla;
-
-            materialGroup.bases.append(material);
-
-            model.material.baseGroups.append(materialGroup);
-
-            var component = new printing3D.Printing3DComponent();
-
-            var triangles = cadProcessor.currentObject.toTriangles();
-
-            var vertices = [];
-            var indices = [];
-
-            triangles.forEach(function(triangle) {
-                triangle.vertices.forEach(function(vertex) {
-                    var index = vertices.indexOf(vertex);
-
-                    if (index === -1) {
-                        index = vertices.push(vertex) - 1;
-                    }
-
-                    indices.push(index);
-                });
-                indices.push(0);
-                indices.push(0);
-                indices.push(0);
-                indices.push(0);
-            });
-
-            var mesh = createMesh(vertices);
-
-            getIndices(indices, mesh);
-
-            model.meshes.append(mesh);
-
-            component.mesh = mesh;
-
-            model.components.append(component);
-
-            var componentWithMatrix = new printing3D.Printing3DComponentWithMatrix();
-
-            componentWithMatrix.component = component;
-
-            componentWithMatrix.matrix = identity();
-
-            model.build.components.append(componentWithMatrix);
-
-            var modelPackage = new printing3D.Printing3D3MFPackage();
-
-            modelPackage.saveModelToPackageAsync(model).then(function () {
-                args.setSource(modelPackage);
-            }, function (error) {
-                console.error("Error saving model to package: " + error);
-            });
-
-        } catch (error) {
-            console.error("Error printing: " + error);
-        }
+        args.setSource(modelPackage);
     }
 
     function onPrintRequestCompleted(args) {
@@ -197,11 +213,17 @@
             print3DManager.addEventListener("taskrequested", onTaskRequested);
             taskRequestedAdded = true;
         }
-        printing3D.Print3DManager.showPrintUIAsync().done(function () {
-            console.log("Print UI shown.");
+
+        createModelPackageAsync().then(function() {
+            printing3D.Print3DManager.showPrintUIAsync().done(function() {
+                console.log("Print UI shown.");
+            }, function(error) {
+                console.error("Error printing: " + error);
+            });
         }, function(error) {
-            console.error("Error printing: " + error);
+            console.error("Failed to create model package: " + error.message);
         });
+
     }
 
     function addButton(parent) {
