@@ -52,7 +52,7 @@
 
         var printing3D = Windows.Graphics.Printing3D,
             description = {
-                format: printing3D.Printing3DBufferFormat.r32G32B32Float,
+                format: printing3D.Printing3DBufferFormat.r32G32B32UInt,
                 stride: 7
             };
 
@@ -62,7 +62,7 @@
 
         var buffer = mesh.getTriangleIndices();
 
-        var dataWriter = new Float64Array(buffer);
+        var dataWriter = new Uint32Array(buffer);
 
         indices.forEach(function (index, indexPos) {
             dataWriter[indexPos] = index;
@@ -114,14 +114,30 @@
 
     function setMaterial(model) {
         var printing3D = Windows.Graphics.Printing3D;
-        var materialGroup = new printing3D.Printing3DBaseMaterialGroup(0);
+        var materialGroup = new printing3D.Printing3DBaseMaterialGroup(1);
         var material = new printing3D.Printing3DBaseMaterial();
 
         material.name = printing3D.Printing3DBaseMaterial.Pla;
 
-        materialGroup.bases.append(material);
+        var colrMat = new printing3D.Printing3DColorMaterial();
+
+        colrMat.color = Windows.UI.Colors.gold;
+
+        material.color = colrMat; materialGroup.bases.append(material);
 
         model.material.baseGroups.append(materialGroup);
+    }
+
+    // vertex filtering function
+    function isVertex(value, index, array1) {
+        var thisVertex = this.toString();
+        var valueVertex = value.toString();
+
+        if (thisVertex == valueVertex) {
+            return true;
+        }
+
+        return false;
     }
 
     function createModelPackageAsync() {
@@ -154,6 +170,8 @@
 
                 if (index === -1) {
                     index = vertices.push(vertex) - 1;
+                } else {
+                    console.log("Vertex " + vertex + " at " + index);
                 }
 
                 indices.push(index);
@@ -169,6 +187,8 @@
         setMeshIndices(indices, mesh);
 
         model.meshes.append(mesh);
+
+        console.log("Created mesh with " + indices.length + "indices and " + vertices.length + " vertices.");
 
         var component = createComponent(mesh, model);
 

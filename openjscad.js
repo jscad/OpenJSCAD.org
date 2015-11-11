@@ -1524,7 +1524,7 @@ OpenJsCad.Processor.prototype = {
   generateOutputFileFileSystem: function() {
       window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
 
-    if(!window.requestFileSystem && !window.navigator.msSaveOrOpenBlob)
+    if(!window.requestFileSystem && !window.navigator.msSaveOrOpenBlob && !Windows)
     {
       throw new Error("Your browser does not support the HTML5 FileSystem API. Please try the Chrome browser instead.");
     }
@@ -1542,7 +1542,41 @@ OpenJsCad.Processor.prototype = {
               window.navigator.msSaveOrOpenBlob(blob, filename);
           }
           if (that.onchange) that.onchange();
-      } else {
+    } else if (Windows) {
+        // Hosted Web App in Windows 10
+        var extension = this.selectedFormatInfo().extension;
+        var filename = "output." + extension;
+        var that = this;
+        that.hasOutputFile = true;
+        that.enableItems();
+        var blob = that.currentObjectToBlob();
+        that.downloadOutputFileLink.innerHTML = that.downloadLinkTextForCurrentObject();
+        that.downloadOutputFileLink.onclick = function () {
+            var url = URL.createObjectURL(blob, {oneTimeOnly: true});
+            var uri = new Windows.Foundation.Uri(url);
+            var streamReference = Windows.Storage.Streams.RandomAccessStreamReference.createFromUri(uri);
+            var current = Windows.Storage.ApplicationData.current;
+            var tempFileStream;
+            var storageFile;
+            current.temporaryFolder.createFileAsync(
+                filename,
+                Windows.Storage.CreationCollisionOption.generateUniqueName)
+            .then(function (tempFile) {
+                storageFile = tempFile;
+                return tempFile.openAsync(Windows.Storage.FileAccessMode.readWrite);
+            })
+            .then(function (outputStream) {
+                var raStream = new Windows.Storage.Streams.RandomAccessStream();
+                return raStream.copyAndCloseAsync(streamReference, outputStream);
+            })
+            .then(function() {
+                Windows.System.Launcher.launchFileAsync(storageFile);
+                });
+
+        }
+        if (that.onchange) that.onchange();
+
+    } else {
 
           // create a random directory name:
           var dirname = "OpenJsCadOutput1_" + parseInt(Math.random() * 1000000000, 10) + "." + extension;
