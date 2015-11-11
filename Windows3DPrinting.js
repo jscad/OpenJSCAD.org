@@ -292,18 +292,19 @@ var Windows3DPrinting = {};
         that.enableItems();
         that.downloadOutputFileLink.innerHTML = that.downloadLinkTextForCurrentObject();
         that.downloadOutputFileLink.onclick = function () {
-            var blob = that.currentObjectToBlob();
-            var inputStream = blob.msDetachStream();
-
             var current = Windows.Storage.ApplicationData.current;
             var tempFileStream;
 
             var picker = new Windows.Storage.Pickers.FileSavePicker();
+
             picker.defaultFileExtension = ".stl";
             picker.suggestedFileName = filename;
             picker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.objects3D;
             picker.settingsIdentifer = "Save Location";
+            picker.fileTypeChoices.insert("3MF Files", [".3mf"]);
             picker.fileTypeChoices.insert("STL Files", [".stl"]);
+            picker.fileTypeChoices.insert("3D Files", [".3mf", ".stl"]);
+
             var storageFile;
 
             picker.pickSaveFileAsync()
@@ -320,9 +321,26 @@ var Windows3DPrinting = {};
                     return null;
                 }
 
-                var raStream = Windows.Storage.Streams.RandomAccessStream;
-                return raStream.copyAndCloseAsync(inputStream, outputStream);
-            })
+                    if (storageFile.fileType === ".stl") {
+
+                        var blob = that.currentObjectToBlob();
+                        var inputStream = blob.msDetachStream();
+
+                        var raStream = Windows.Storage.Streams.RandomAccessStream;
+                        return raStream.copyAndCloseAsync(inputStream, outputStream);
+                    } else if (storageFile.fileType === ".3mf") {
+                        return createModelPackageAsync()
+                            .then(function() {
+                                return modelPackage.saveAsync();
+                            })
+                            .then(function(inputStream) {
+                                var raStream = Windows.Storage.Streams.RandomAccessStream;
+                                return raStream.copyAndCloseAsync(inputStream, outputStream);
+                            });
+                    }
+
+                    return null;
+                })
             .then(function () {
                 if (storageFile != null) {
                     Windows.System.Launcher.launchFileAsync(storageFile);

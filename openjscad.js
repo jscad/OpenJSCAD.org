@@ -1463,9 +1463,13 @@ OpenJsCad.Processor.prototype = {
   },
   
   supportedFormatsForCurrentObject: function() {
-    if (this.currentObject instanceof CSG) {
-      return ["stlb", "stla", "amf", "x3d"];
-    } else if (this.currentObject instanceof CAG) {
+      if (this.currentObject instanceof CSG) {
+          if (typeof Windows === "undefined") {
+              return ["stlb", "stla", "amf", "x3d"];
+          } else {
+              return ["stlb", "stla", "amf", "x3d", "_3mf"];
+          }
+      } else if (this.currentObject instanceof CAG) {
       return ["dxf"];
     } else {
       throw new Error("Not supported");
@@ -1498,6 +1502,11 @@ OpenJsCad.Processor.prototype = {
         displayName: "DXF",
         extension: "dxf",
         mimetype: "application/dxf",
+      },
+        _3mf: {
+            displayName: "3D Manufacturing Format",
+            extension: "3mf",
+            mimetype: "application/octet-stream"
         }
     }[format];
   },
