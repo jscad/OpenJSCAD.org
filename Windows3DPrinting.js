@@ -17,7 +17,7 @@
 
         var mesh = new printing3D.Printing3DMesh();
 
-        mesh.createVertexPositions(floatSize * vertexList.length);
+        mesh.createVertexPositions(floatSize * 3 * vertexList.length);
 
         var buffer = mesh.getVertexPositions();
 
@@ -231,20 +231,15 @@
             taskRequestedAdded = true;
         }
         
-        createModelPackageAsync().then(function (isCreated) {
-            if (isCreated) {
-                printing3D.Print3DManager.showPrintUIAsync().done(function() {
-                    console.log("Print UI shown.");
-                }, function(error) {
-                    console.error("Error printing: " + error);
-                });
-            } 
+        createModelPackageAsync().then(function() {
+            return printing3D.Print3DManager.showPrintUIAsync();
+        }).done(function() {
+            console.log("Print UI shown.");
         }, function(error) {
             var messageDialog = new Windows.UI.Popups.MessageDialog(error.message, "Error Printing");
 
             messageDialog.showAsync();
         });
-
     }
 
     function addButton(parent) {
