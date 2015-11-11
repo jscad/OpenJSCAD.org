@@ -1,4 +1,13 @@
-﻿var Windows3DPrinting = {};
+﻿/// Windows 10 Hosted Web App support
+/// Created by Michael S. Scherotter
+/// Forked from OpenJSCAD.org
+/// Source available on https://github.com/mscherotter/OpenJSCAD.org 
+/// Updated 2015-11-11 
+/// Features
+/// - Direct 3D Printing
+/// - Download .stl and open in 3D Builder (default .stl handler)
+
+var Windows3DPrinting = {};
 
 (function () {
     "use strict";
