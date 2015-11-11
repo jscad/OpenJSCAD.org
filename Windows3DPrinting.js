@@ -271,5 +271,58 @@
 
         addButton(processor.statusbuttons);
     }
+
+    Windows3DPrinting.downloadModel = function (openJscad) {
+        /// <summary>Download and launch the .STL file</summary>
+        /// <param name="openJscad">the OpenJSCAD object</param>
+
+        var extension = openJscad.selectedFormatInfo().extension;
+        var filename = "output." + extension;
+        var that = openJscad;
+        that.hasOutputFile = true;
+        that.enableItems();
+        that.downloadOutputFileLink.innerHTML = that.downloadLinkTextForCurrentObject();
+        that.downloadOutputFileLink.onclick = function () {
+            var blob = that.currentObjectToBlob();
+            var inputStream = blob.msDetachStream();
+
+            var current = Windows.Storage.ApplicationData.current;
+            var tempFileStream;
+
+            var picker = new Windows.Storage.Pickers.FileSavePicker();
+            picker.defaultFileExtension = ".stl";
+            picker.suggestedFileName = filename;
+            picker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.objects3D;
+            picker.settingsIdentifer = "Save Location";
+            picker.fileTypeChoices.insert("STL Files", [".stl"]);
+            var storageFile;
+
+            picker.pickSaveFileAsync()
+            .then(function (pickedFile) {
+                if (pickedFile == null) {
+                    return null;
+                }
+
+                storageFile = pickedFile;
+                return storageFile.openAsync(Windows.Storage.FileAccessMode.readWrite);
+            })
+            .then(function (outputStream) {
+                if (outputStream == null) {
+                    return null;
+                }
+
+                var raStream = Windows.Storage.Streams.RandomAccessStream;
+                return raStream.copyAndCloseAsync(inputStream, outputStream);
+            })
+            .then(function () {
+                if (storageFile != null) {
+                    Windows.System.Launcher.launchFileAsync(storageFile);
+
+                }
+            });
+
+        }
+        if (that.onchange) that.onchange();
+    }
 })();
 
