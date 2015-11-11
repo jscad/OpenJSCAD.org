@@ -5,6 +5,7 @@
     var cadProcessor = null,
         intSize = 4,
         floatSize = 8,
+        indexStride = 7,
         taskRequestedAdded = false,
         modelPackage = null; // the model package created in createModelPackageAsync()
 
@@ -16,7 +17,7 @@
 
         var mesh = new printing3D.Printing3DMesh();
 
-        mesh.createVertexPositions(floatSize * 3 * vertexList.length);
+        mesh.createVertexPositions(floatSize * vertexList.length);
 
         var buffer = mesh.getVertexPositions();
 
@@ -53,12 +54,12 @@
         var printing3D = Windows.Graphics.Printing3D,
             description = {
                 format: printing3D.Printing3DBufferFormat.r32G32B32UInt,
-                stride: 7
+                stride: indexStride
             };
 
         mesh.triangleIndicesDescription = description;
 
-        mesh.createTriangleIndices(intSize * description.stride * indices.length);
+        mesh.createTriangleIndices(intSize * indices.length);
 
         var buffer = mesh.getTriangleIndices();
 
@@ -68,7 +69,7 @@
             dataWriter[indexPos] = index;
         });
 
-        mesh.indexCount = indices.length;
+        mesh.indexCount = indices.length / indexStride;
     }
 
     function identity() {
@@ -121,23 +122,13 @@
 
         var colrMat = new printing3D.Printing3DColorMaterial();
 
-        colrMat.color = Windows.UI.Colors.gold;
+        colrMat.value = 16768768;
 
-        material.color = colrMat; materialGroup.bases.append(material);
+        material.color = colrMat;
+
+        materialGroup.bases.append(material);
 
         model.material.baseGroups.append(materialGroup);
-    }
-
-    // vertex filtering function
-    function isVertex(value, index, array1) {
-        var thisVertex = this.toString();
-        var valueVertex = value.toString();
-
-        if (thisVertex == valueVertex) {
-            return true;
-        }
-
-        return false;
     }
 
     function createModelPackageAsync() {
@@ -170,8 +161,6 @@
 
                 if (index === -1) {
                     index = vertices.push(vertex) - 1;
-                } else {
-                    console.log("Vertex " + vertex + " at " + index);
                 }
 
                 indices.push(index);
@@ -188,7 +177,7 @@
 
         model.meshes.append(mesh);
 
-        console.log("Created mesh with " + indices.length + "indices and " + vertices.length + " vertices.");
+        console.log("Created mesh with " + indices.length + " indices and " + vertices.length + " vertices.");
 
         var component = createComponent(mesh, model);
 
