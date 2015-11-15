@@ -2,7 +2,7 @@
 /// Created by Michael S. Scherotter
 /// Forked from OpenJSCAD.org
 /// Source available on https://github.com/mscherotter/OpenJSCAD.org 
-/// Updated 2015-11-11 
+/// Updated 2015-11-15 
 /// Features
 /// - Direct 3D Printing
 /// - Download .stl and open in 3D Builder (default .stl handler)
@@ -197,6 +197,13 @@ var Windows3DPrinting = {};
                 modelPackage = new printing3D.Printing3D3MFPackage();
 
                 return modelPackage.saveModelToPackageAsync(model);
+            },
+            function (repairError) {
+                console.error("Error repairing model (typical in Windows TH2): " + repairError);
+
+                modelPackage = new printing3D.Printing3D3MFPackage();
+
+                return modelPackage.saveModelToPackageAsync(model);
             });
     }
 
@@ -299,7 +306,13 @@ var Windows3DPrinting = {};
 
             picker.defaultFileExtension = ".stl";
             picker.suggestedFileName = filename;
-            picker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.objects3D;
+            try {
+                picker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.objects3D;
+            } catch (error) {
+                // there is an bug in Windows 10 TH2 that causes this error
+                picker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.documentsLibrary;
+
+            }
             picker.settingsIdentifer = "Save Location";
             picker.fileTypeChoices.insert("3MF Files", [".3mf"]);
             picker.fileTypeChoices.insert("STL Files", [".stl"]);
