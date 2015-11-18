@@ -28,10 +28,6 @@
         var specs = "height=" + height + ",width=" + width + ", left=" + left + ", top=" + top;
 
         var newWindow = window.open("blockly/index.html", "_blank", specs);
-
-        //console.log(window.document.location.href);
-
-        //var viewId = MSApp.getViewId(newWindow);
     }
 
     function receiveMessage(event) {
@@ -52,6 +48,11 @@
 
             cadProcessor.setJsCad(script);
         }
+    }
+
+    Blockly.newWindow = function() {
+        showBlockly();
+        openBlockly();
     }
 
     function addButton() {
