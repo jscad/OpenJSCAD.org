@@ -3,7 +3,21 @@
 (function() {
     "use strict";
 
-    var cadProcessor;
+    var cadProcessor,
+        isShown = false,
+        script = null;
+
+    function showBlockly() {
+        var blockly = document.getElementById("blockly");
+
+        if (isShown) {
+            blockly.style.display = "none";
+        } else {
+            blockly.style.display = "block";
+        }
+
+        isShown = !isShown;
+    }
 
     function openBlockly() {
         var height = window.outerHeight;
@@ -29,11 +43,15 @@
             return;
         }
 
-        var script = "// Model from Blockly\n\nfunction main() {\n    return " + event.data + ";\n}";
+        script = "// Model from Blockly\n\nfunction main() {\n    return " + event.data + ";\n}";
+    }
 
-        putSourceInEditor(script, "Blockly");
+    Blockly.updateCode = function() {
+        if (script != null) {
+            putSourceInEditor(script, "Blockly");
 
-        cadProcessor.setJsCad(script);
+            cadProcessor.setJsCad(script);
+        }
     }
 
     function addButton() {
@@ -47,7 +65,7 @@
         img.setAttribute("width", 72);
         img.setAttribute("height", 34);
         blocklyButton.appendChild(img);
-        blocklyButton.onclick = openBlockly;
+        blocklyButton.onclick = showBlockly;//openBlockly;
 
         var parent = document.body;
         parent.appendChild(blocklyButton);
