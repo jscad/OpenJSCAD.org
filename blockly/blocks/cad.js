@@ -8,14 +8,15 @@ goog.require('Blockly.Blocks');
 Blockly.Blocks['cad_sphere'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField("Sphere");
+            .appendField("sphere");
         this.appendValueInput("Radius")
             .setCheck("Number")
-            .appendField("Radius");
+            .appendField("radius")
+            .appendField(new Blockly.FieldTextInput("10"), "Radius");
         this.appendValueInput("Center")
             .setCheck("Boolean")
-            .appendField("Center")
-            .appendField(new Blockly.FieldCheckbox("TRUE"), "Center");
+            .appendField("center")
+            .appendField(new Blockly.FieldCheckbox("FALSE"), "Center");
         this.setPreviousStatement(true, 'cad_union');
         this.setNextStatement(true, 'cad_sphere');
         this.setColour(20);
@@ -28,16 +29,19 @@ Blockly.Blocks['cad_sphere'] = {
 Blockly.Blocks['cad_translate'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField("Translate");
+            .appendField("translate");
         this.appendValueInput("X")
             .setCheck("Number")
-            .appendField("X");
-        this.appendValueInput("Y")
+            .appendField("x")
+            .appendField(new Blockly.FieldTextInput("0"), "X");
+        this.appendValueInput( "Y")
             .setCheck("Number")
-            .appendField("Y");
+            .appendField("y")
+            .appendField(new Blockly.FieldTextInput("0"), "Y");
         this.appendValueInput("Z")
             .setCheck("Number")
-            .appendField("Z");
+            .appendField("z")
+            .appendField(new Blockly.FieldTextInput("0"), "Z");
         this.setColour(65);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, ['cad_sphere', 'cad_cube']);
@@ -49,16 +53,19 @@ Blockly.Blocks['cad_translate'] = {
 Blockly.Blocks['cad_scale'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField("Scale");
+            .appendField("scale");
         this.appendValueInput("X")
             .setCheck("Number")
-            .appendField("X");
+            .appendField("x")
+            .appendField(new Blockly.FieldTextInput("1"), "X");
         this.appendValueInput("Y")
             .setCheck("Number")
-            .appendField("Y");
+            .appendField("y")
+            .appendField(new Blockly.FieldTextInput("1"), "Y");
         this.appendValueInput("Z")
             .setCheck("Number")
-            .appendField("Z");
+            .appendField("z")
+            .appendField(new Blockly.FieldTextInput("1"), "Z");
         this.setColour(65);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, ['cad_sphere', 'cad_cube']);
@@ -70,9 +77,9 @@ Blockly.Blocks['cad_scale'] = {
 Blockly.Blocks['cad_subtract'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField("Subtract");
+            .appendField("subtract");
         this.appendStatementInput("Object")
-            .appendField("Object");
+            .appendField("shape");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, 'cad_cube');
         this.setColour(120);
@@ -84,9 +91,9 @@ Blockly.Blocks['cad_subtract'] = {
 Blockly.Blocks['cad_union'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField("Union");
+            .appendField("union");
         this.appendStatementInput("Object")
-            .appendField("Shape");
+            .appendField("shape");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, ['cad_sphere', 'cad_cube']);
         this.setColour(120);
@@ -99,20 +106,23 @@ Blockly.Blocks['cad_union'] = {
 Blockly.Blocks['cad_cube'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField("Cube");
+            .appendField("cube");
         this.appendValueInput("X")
             .setCheck("Number")
-            .appendField("X");
+            .appendField("x")
+            .appendField(new Blockly.FieldTextInput("10"), "X");
         this.appendValueInput("Y")
             .setCheck("Number")
-            .appendField("Y");
+            .appendField("y")
+            .appendField(new Blockly.FieldTextInput("10"), "Y");
         this.appendValueInput("Z")
             .setCheck("Number")
-            .appendField("Z");
+            .appendField("z")
+            .appendField(new Blockly.FieldTextInput("10"), "Z");
         this.appendValueInput("Center")
             .setCheck("Boolean")
-            .appendField("Center")
-            .appendField(new Blockly.FieldCheckbox("TRUE"), "Center");
+            .appendField("center")
+            .appendField(new Blockly.FieldCheckbox("FALSE"), "Center");
         this.setPreviousStatement(true, ['cad_union', 'cad_subtract']);
         this.setNextStatement(true, 'cad_sphere');
         this.setColour(20);
@@ -124,10 +134,10 @@ Blockly.Blocks['cad_cube'] = {
 Blockly.Blocks['cad_rotate'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField("Rotate")
+            .appendField("rotate")
             .appendField(new Blockly.FieldDropdown([["X", "X"], ["Y", "Y"], ["Z", "Z"]]), "Axis");
         this.appendValueInput("NAME")
-            .appendField("Angle")
+            .appendField("angle")
             .appendField(new Blockly.FieldAngle("0"), "Angle");
         this.setPreviousStatement(true);
         this.setNextStatement(true);
@@ -135,6 +145,26 @@ Blockly.Blocks['cad_rotate'] = {
         this.setTooltip('rotate the shape along the x, y, or z axis.');
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, ['cad_sphere', 'cad_cube']);
+        this.setHelpUrl('http://www.example.com/');
+    }
+};
+
+Blockly.Blocks['cad_cylinder'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("cylinder");
+        this.appendValueInput("Radius")
+            .setCheck("Number")
+            .appendField("radius")
+            .appendField(new Blockly.FieldTextInput("10"), "radius");
+        this.appendValueInput("Height")
+            .setCheck("Number")
+            .appendField("height")
+            .appendField(new Blockly.FieldTextInput("10"), "Height");
+        this.setPreviousStatement(true, ['cad_union', 'cad_subtract']);
+        this.setNextStatement(true, null);
+        this.setColour(20);
+        this.setTooltip('');
         this.setHelpUrl('http://www.example.com/');
     }
 };

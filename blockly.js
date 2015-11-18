@@ -40,12 +40,12 @@
         ///<summary>Add the Blockly button</summary>
 
         var blocklyButton = document.createElement("button");
-        blocklyButton.setAttribute("style", "position:absolute; right:40%; top:0px; width:80px; height:44px; padding:2px");
+        blocklyButton.setAttribute("style", "position:absolute; right:40%; top:0px; width:78px; height:40px; padding:2px");
         var img = document.createElement("img");
         img.setAttribute("src", "imgs/blockly.png");
         img.setAttribute("alt", "Create solid modeling code with block programming.");
-        img.setAttribute("width", 76);
-        img.setAttribute("height", 40);
+        img.setAttribute("width", 72);
+        img.setAttribute("height", 34);
         blocklyButton.appendChild(img);
         blocklyButton.onclick = openBlockly;
 

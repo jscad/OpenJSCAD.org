@@ -1,18 +1,22 @@
 ﻿Blockly.JavaScript['cad_cube'] = function (block) {
+    var textX = block.getFieldValue('X');
+    var textY = block.getFieldValue('Y');
+    var textZ = block.getFieldValue('Z');
     var valueX = Blockly.JavaScript.valueToCode(block, 'X', Blockly.JavaScript.ORDER_ATOMIC);
     var valueY = Blockly.JavaScript.valueToCode(block, 'Y', Blockly.JavaScript.ORDER_ATOMIC);
     var valueZ = Blockly.JavaScript.valueToCode(block, 'Z', Blockly.JavaScript.ORDER_ATOMIC);
     var checkbox_center = block.getFieldValue('Center') == 'TRUE';
-    var code = "cube({size:[" + (valueX === "" ? 1 : valueX) + ", " + (valueY === "" ? 1 : valueY) + ", " + (valueZ === "" ? 1 : valueZ) + "], center: " + checkbox_center + "})";
+    var code = "cube({size:[" + (textX === "" ? 1 : textX) + ", " + (textY === "" ? 1 : textY) + ", " + (textZ === "" ? 1 : textZ) + "], center: " + checkbox_center + "})";
 
     return code;
 };
 
 Blockly.JavaScript['cad_sphere'] = function (block) {
+    var text_radius = block.getFieldValue('Radius');
     var radius = Blockly.JavaScript.valueToCode(block, 'Radius', Blockly.JavaScript.ORDER_ATOMIC);
     var checkbox_center = block.getFieldValue('Center') == 'TRUE';
 
-    var code = "sphere({r:" + (radius === "" ? 1 : radius) + ", center:" + checkbox_center + "})";
+    var code = "sphere({r:" + (text_radius === "" ? 1 : text_radius) + ", center:" + checkbox_center + "})";
 
     return code;
 };
@@ -21,15 +25,21 @@ Blockly.JavaScript['cad_translate'] = function (block) {
     var value_x = Blockly.JavaScript.valueToCode(block, 'X', Blockly.JavaScript.ORDER_ATOMIC);
     var value_y = Blockly.JavaScript.valueToCode(block, 'Y', Blockly.JavaScript.ORDER_ATOMIC);
     var value_z = Blockly.JavaScript.valueToCode(block, 'Z', Blockly.JavaScript.ORDER_ATOMIC);
-    var code = "\n.translate([" + (value_x === "" ? 0 : value_x) + ", " + (value_y === "" ? 0 : value_y) + ", " + (value_z === "" ? 0 : value_z) + "])";
+    var text_x = block.getFieldValue('X');
+    var text_y = block.getFieldValue('Y');
+    var text_z = block.getFieldValue('Z');
+    var code = "\n.translate([" + (text_x === "" ? 0 : text_x) + ", " + (text_y === "" ? 0 : text_y) + ", " + (text_z === "" ? 0 : text_z) + "])";
     return code;
 };
 
 Blockly.JavaScript['cad_scale'] = function (block) {
+    var text_x = block.getFieldValue('X');
+    var text_y = block.getFieldValue('Y');
+    var text_z = block.getFieldValue('Z');
     var value_x = Blockly.JavaScript.valueToCode(block, 'X', Blockly.JavaScript.ORDER_ATOMIC);
     var value_y = Blockly.JavaScript.valueToCode(block, 'Y', Blockly.JavaScript.ORDER_ATOMIC);
     var value_z = Blockly.JavaScript.valueToCode(block, 'Z', Blockly.JavaScript.ORDER_ATOMIC);
-    var code = "\n.scale([" + (value_x === "" ? 1 : value_x) + ", " + (value_y === "" ? 1 : value_y) + ", " + (value_z === "" ? 1 : value_z) + "])";
+    var code = "\n.scale([" + (text_x === "" ? 1 : text_x) + ", " + (text_y === "" ? 1 : text_y) + ", " + (text_z === "" ? 1 : text_z) + "])";
     return code;
 };
 
@@ -52,5 +62,16 @@ Blockly.JavaScript['cad_subtract'] = function (block) {
 Blockly.JavaScript['cad_union'] = function (block) {
     var statements_object = Blockly.JavaScript.statementToCode(block, 'Object');
     var code = "\n.union(" + statements_object + ")";
+    return code;
+};
+
+Blockly.JavaScript['cad_cylinder'] = function (block) {
+    var text_radius = block.getFieldValue('radius');
+    var value_radius = Blockly.JavaScript.valueToCode(block, 'Radius', Blockly.JavaScript.ORDER_ATOMIC);
+    var text_height = block.getFieldValue('Height');
+    var value_height = Blockly.JavaScript.valueToCode(block, 'Height', Blockly.JavaScript.ORDER_ATOMIC);
+
+    var code = "cylinder({r:" + text_radius + ", h:" + text_height + "})";
+
     return code;
 };
