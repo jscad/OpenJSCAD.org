@@ -2,14 +2,14 @@
 /// Created by Michael S. Scherotter
 /// Forked from OpenJSCAD.org
 /// Source available on https://github.com/mscherotter/OpenJSCAD.org 
-/// Updated 2015-11-15 
+/// Updated 2015-11-17
 /// Features
 /// - Direct 3D Printing
 /// - Download .stl and open in 3D Builder (default .stl handler)
 
 var Windows3DPrinting = {};
 
-(function () {
+(function() {
     "use strict";
     var cadProcessor = null,
         intSize = 4,
@@ -34,7 +34,7 @@ var Windows3DPrinting = {};
 
         var dataWriter = new Float64Array(buffer);
 
-        vertexList.forEach(function (vertex) {
+        vertexList.forEach(function(vertex) {
             dataWriter[index] = vertex.pos.x;
             index++;
             dataWriter[index] = vertex.pos.y;
@@ -74,7 +74,7 @@ var Windows3DPrinting = {};
 
         var dataWriter = new Uint32Array(buffer);
 
-        indices.forEach(function (index, indexPos) {
+        indices.forEach(function(index, indexPos) {
             dataWriter[indexPos] = index;
         });
 
@@ -193,18 +193,18 @@ var Windows3DPrinting = {};
         model.build.components.append(component);
 
         return model.repairAsync()
-            .then(function (repairResult) {
-                modelPackage = new printing3D.Printing3D3MFPackage();
+            .then(function(repairResult) {
+                    modelPackage = new printing3D.Printing3D3MFPackage();
 
-                return modelPackage.saveModelToPackageAsync(model);
-            },
-            function (repairError) {
-                console.error("Error repairing model (typical in Windows TH2): " + repairError);
+                    return modelPackage.saveModelToPackageAsync(model);
+                },
+                function(repairError) {
+                    console.error("Error repairing model (typical in Windows TH2): " + repairError);
 
-                modelPackage = new printing3D.Printing3D3MFPackage();
+                    modelPackage = new printing3D.Printing3D3MFPackage();
 
-                return modelPackage.saveModelToPackageAsync(model);
-            });
+                    return modelPackage.saveModelToPackageAsync(model);
+                });
     }
 
     function printHandler(args) {
@@ -246,7 +246,7 @@ var Windows3DPrinting = {};
             print3DManager.addEventListener("taskrequested", onTaskRequested);
             taskRequestedAdded = true;
         }
-        
+
         createModelPackageAsync().then(function() {
             return printing3D.Print3DManager.showPrintUIAsync();
         }).done(function() {
