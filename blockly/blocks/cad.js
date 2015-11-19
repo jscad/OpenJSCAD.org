@@ -176,7 +176,8 @@ Blockly.Blocks['cad_intersect'] = {
     init: function () {
         this.appendDummyInput()
             .appendField("intersect");
-        this.appendStatementInput("Shape");
+        this.appendStatementInput("Shape")
+            .appendField("shape");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, ["Transform", "Operation"]);
         this.setColour(120);
