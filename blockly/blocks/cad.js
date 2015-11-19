@@ -113,6 +113,24 @@ Blockly.Blocks['cad_cone'] = {
     }
 };
 
+Blockly.Blocks['cad_torus'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("torus");
+        this.appendValueInput("ri")
+            .setCheck("Number")
+            .appendField("inner radius");
+        this.appendValueInput("ro")
+            .setCheck("Number")
+            .appendField("outer adius");
+        this.setPreviousStatement(true, "Solid");
+        this.setNextStatement(true, ["Operation", "Transform"]);
+        this.setColour(20);
+        this.setTooltip('Create a torus (defaults: inner radius=1, outer radius=4)');
+        this.setHelpUrl('http://www.example.com/');
+    }
+};
+
 Blockly.Blocks['cad_translate'] = {
     init: function () {
         this.appendDummyInput()

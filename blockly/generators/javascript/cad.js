@@ -120,3 +120,11 @@ Blockly.JavaScript['cad_cone'] = function (block) {
 
     return code;
 };
+
+Blockly.JavaScript['cad_torus'] = function (block) {
+    var value_ri = Blockly.JavaScript.valueToCode(block, 'ri', Blockly.JavaScript.ORDER_ATOMIC);
+    var value_ro = Blockly.JavaScript.valueToCode(block, 'ro', Blockly.JavaScript.ORDER_ATOMIC);
+    // TODO: Assemble JavaScript into code variable.
+    var code = "torus({ ri: " + (value_ri === "" ? 1 : value_ri) + ", ro: " + (value_ro === "" ? 4 : value_ro) + "})";
+    return code;
+};
