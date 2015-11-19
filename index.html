@@ -222,16 +222,11 @@
 <div id="blockly" style="background-color: white; display: none; width: 40%; height: 100%; z-index: 10; position: absolute; right: 0%; top: 0px;">
     <table style="height: 100%; width: 100%;">
         <tr>
-            <td style="height: 25px;">
-                <span style="position: absolute; right: 4px; top: 4px;" >
-                    <button onclick="Blockly.updateCode()">Update code</button>&nbsp;
-                    <button onclick="Blockly.newWindow()">New window</button>
-                </span>
-            </td>
-        </tr>
-        <tr>
             <td>
                 <iframe src="blockly/index.html" style="height: 100%; width: 100%;"></iframe>
+                <span style="position: absolute; right: 4px; top: 4px;">
+                    <button onclick="Blockly.newWindow()">New window</button>
+                </span>
             </td>
         </tr>
     </table>

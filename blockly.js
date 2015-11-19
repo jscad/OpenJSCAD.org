@@ -52,7 +52,8 @@
             // extrudeText() is used in the code
             script = header + extrudeText + main;
         }
-        
+
+        Blockly.updateCode();
     }
 
     Blockly.updateCode = function() {

@@ -42,11 +42,11 @@
 
 <body>
     <table>
-        <!--<tr>
+        <tr>
             <td>
-                <h1>OpenJSCAD</h1>
+                <button onclick="updateSource()">Update code</button>
             </td>
-        </tr>-->
+        </tr>
         <tr>
             <td id="blocklyArea"></td>
         </tr>
@@ -149,7 +149,7 @@
             onresize();
 
 
-            workspace.addChangeListener(updateSource);
+            //workspace.addChangeListener(updateSource);
         }
 
         initialize();
