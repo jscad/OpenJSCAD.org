@@ -19,13 +19,14 @@ Blockly.Blocks['cad_text'] = {
             .setCheck("Number")
             .appendField("height")
             .appendField(new Blockly.FieldTextInput("2"), "height");
-        this.setPreviousStatement(true, "Shape");
+        this.setPreviousStatement(true, "Solid");
         this.setNextStatement(true, ["Transform", "Operation"]);
         this.setColour(20);
         this.setTooltip('');
         this.setHelpUrl('http://www.example.com/');
     }
 };
+
 Blockly.Blocks['cad_cube'] = {
     init: function () {
         this.appendDummyInput()
@@ -46,14 +47,13 @@ Blockly.Blocks['cad_cube'] = {
             .setCheck("Boolean")
             .appendField("center")
             .appendField(new Blockly.FieldCheckbox("FALSE"), "Center");
-        this.setPreviousStatement(true, "Shape");
+        this.setPreviousStatement(true, "Solid");
         this.setNextStatement(true, ["Transform", "Operation"]);
         this.setColour(20);
         this.setTooltip('Create a cube');
         this.setHelpUrl('http://www.example.com/');
     }
 };
-
 
 Blockly.Blocks['cad_sphere'] = {
     init: function () {
@@ -67,7 +67,7 @@ Blockly.Blocks['cad_sphere'] = {
             .setCheck("Boolean")
             .appendField("center")
             .appendField(new Blockly.FieldCheckbox("FALSE"), "Center");
-        this.setPreviousStatement(true, "Shape");
+        this.setPreviousStatement(true, "Solid");
         this.setNextStatement(true, ["Transform", "Operation"]);
         this.setColour(20);
         this.setTooltip('Create a sphere');
@@ -87,7 +87,7 @@ Blockly.Blocks['cad_cylinder'] = {
             .setCheck("Number")
             .appendField("height")
             .appendField(new Blockly.FieldTextInput("10"), "Height");
-        this.setPreviousStatement(true, "Shape");
+        this.setPreviousStatement(true, "Solid");
         this.setNextStatement(true, ["Operation", "Transform"]);
         this.setColour(20);
         this.setTooltip('');
@@ -95,6 +95,23 @@ Blockly.Blocks['cad_cylinder'] = {
     }
 };
 
+Blockly.Blocks['cad_cone'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("cone");
+        this.appendValueInput("radius")
+            .setCheck("Number")
+            .appendField("radius");
+        this.appendValueInput("height")
+            .setCheck("Number")
+            .appendField("height");
+        this.setPreviousStatement(true, "Solid");
+        this.setNextStatement(true, ["Transform", "Operation"]);
+        this.setColour(20);
+        this.setTooltip('');
+        this.setHelpUrl('http://www.example.com/');
+    }
+};
 
 Blockly.Blocks['cad_translate'] = {
     init: function () {
@@ -113,7 +130,7 @@ Blockly.Blocks['cad_translate'] = {
             .appendField("z")
             .appendField(new Blockly.FieldTextInput("0"), "Z");
         this.setColour(65);
-        this.setPreviousStatement(true, ["Operation", "Transform", "Shape"]);
+        this.setPreviousStatement(true, ["Operation", "Transform", "Solid"]);
         this.setNextStatement(true, ["Operation", "Transform"]);
         this.setTooltip('');
         this.setHelpUrl('http://www.example.com/');
@@ -137,7 +154,7 @@ Blockly.Blocks['cad_scale'] = {
             .appendField("z")
             .appendField(new Blockly.FieldTextInput("1"), "Z");
         this.setColour(65);
-        this.setPreviousStatement(true, ["Operation", "Transform", "Shape"]);
+        this.setPreviousStatement(true, ["Operation", "Transform", "Solid"]);
         this.setNextStatement(true, ["Operation", "Transform"]);
         this.setTooltip('');
         this.setHelpUrl('http://www.example.com/');
@@ -148,8 +165,7 @@ Blockly.Blocks['cad_subtract'] = {
     init: function () {
         this.appendDummyInput()
             .appendField("subtract");
-        this.appendStatementInput("Object")
-            .appendField("shape");
+        this.appendStatementInput("Object");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, ["Transform", "Operation"]);
         this.setColour(120);
@@ -162,8 +178,7 @@ Blockly.Blocks['cad_union'] = {
     init: function () {
         this.appendDummyInput()
             .appendField("union");
-        this.appendStatementInput("Object")
-            .appendField("shape");
+        this.appendStatementInput("Object");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, ["Transform", "Operation"]);
         this.setColour(120);
@@ -176,8 +191,7 @@ Blockly.Blocks['cad_intersect'] = {
     init: function () {
         this.appendDummyInput()
             .appendField("intersect");
-        this.appendStatementInput("Shape")
-            .appendField("shape");
+        this.appendStatementInput("Shape");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, ["Transform", "Operation"]);
         this.setColour(120);
@@ -198,7 +212,7 @@ Blockly.Blocks['cad_rotate'] = {
         this.setNextStatement(true);
         this.setColour(65);
         this.setTooltip('rotate the shape along the x, y, or z axis.');
-        this.setPreviousStatement(true, ["Operation", "Transform", "Shape"]);
+        this.setPreviousStatement(true, ["Operation", "Transform", "Solid"]);
         this.setNextStatement(true, ["Operation", "Transform"]);
         this.setHelpUrl('http://www.example.com/');
     }
@@ -213,7 +227,7 @@ Blockly.Blocks['cad_color'] = {
             .appendField("value")
             .appendField(new Blockly.FieldColour("#ff0000"), "Color");
         this.appendStatementInput("Shape")
-            .setCheck(["Shape", "Operation", "Modifier"]);
+            .setCheck(["Solid", "Operation", "Modifier"]);
         this.setPreviousStatement(true, "Modifier");
         this.setNextStatement(true, "Transform");
         this.setColour(120);

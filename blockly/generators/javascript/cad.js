@@ -111,3 +111,12 @@ Blockly.JavaScript['cad_text'] = function (block) {
     var code = "extrudeText('" + text_textstring + "', " + text_width + ", " + text_height + ")";
     return code;
 };
+
+Blockly.JavaScript['cad_cone'] = function (block) {
+    var value_radius = Blockly.JavaScript.valueToCode(block, 'radius', Blockly.JavaScript.ORDER_ATOMIC);
+    var value_height = Blockly.JavaScript.valueToCode(block, 'height', Blockly.JavaScript.ORDER_ATOMIC);
+    
+    var code = "cylinder({r1: " + value_radius + ", r2: 0, h: " + value_height + "})";
+
+    return code;
+};
