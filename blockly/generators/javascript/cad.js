@@ -92,3 +92,22 @@ Blockly.JavaScript['cad_color'] = function (block) {
     var code = "color([" + red + ", " + green +  ", " + blue + "], " + statements_shape + ")";
     return code;
 };
+
+Blockly.JavaScript['cad_intersect'] = function (block) {
+    var statements_shape = Blockly.JavaScript.statementToCode(block, 'Shape');
+    // TODO: Assemble JavaScript into code variable.
+    var code = "\n.intersect(" + statements_shape + ")";
+    return code;
+};
+
+Blockly.JavaScript['cad_text'] = function (block) {
+    var text_textstring = block.getFieldValue('TextString');
+    var value_textvalue = Blockly.JavaScript.valueToCode(block, 'TextValue', Blockly.JavaScript.ORDER_ATOMIC);
+    var text_width = block.getFieldValue('width');
+    var value_width = Blockly.JavaScript.valueToCode(block, 'Width', Blockly.JavaScript.ORDER_ATOMIC);
+    var text_height = block.getFieldValue('height');
+    var value_height = Blockly.JavaScript.valueToCode(block, 'Height', Blockly.JavaScript.ORDER_ATOMIC);
+    // TODO: Assemble JavaScript into code variable.
+    var code = "extrudeText('" + text_textstring + "', " + text_width + ", " + text_height + ")";
+    return code;
+};

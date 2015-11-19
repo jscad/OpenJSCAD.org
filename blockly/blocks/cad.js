@@ -4,6 +4,28 @@ goog.provide('Blockly.Blocks.cad');
 
 goog.require('Blockly.Blocks');
 
+Blockly.Blocks['cad_text'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("text");
+        this.appendValueInput("TextValue")
+            .setCheck("String")
+            .appendField(new Blockly.FieldTextInput("ABC"), "TextString");
+        this.appendValueInput("Width")
+            .setCheck("Number")
+            .appendField("width")
+            .appendField(new Blockly.FieldTextInput("2"), "width");
+        this.appendValueInput("Height")
+            .setCheck("Number")
+            .appendField("height")
+            .appendField(new Blockly.FieldTextInput("2"), "height");
+        this.setPreviousStatement(true, "Shape");
+        this.setNextStatement(true, ["Transform", "Operation"]);
+        this.setColour(20);
+        this.setTooltip('');
+        this.setHelpUrl('http://www.example.com/');
+    }
+};
 Blockly.Blocks['cad_cube'] = {
     init: function () {
         this.appendDummyInput()
@@ -40,7 +62,7 @@ Blockly.Blocks['cad_sphere'] = {
         this.appendValueInput("Radius")
             .setCheck("Number")
             .appendField("radius")
-            .appendField(new Blockly.FieldTextInput("10"), "Radius");
+            .appendField(new Blockly.FieldTextInput("5"), "Radius");
         this.appendValueInput("Center")
             .setCheck("Boolean")
             .appendField("center")
@@ -150,7 +172,18 @@ Blockly.Blocks['cad_union'] = {
     }
 };
 
-
+Blockly.Blocks['cad_intersect'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("intersect");
+        this.appendStatementInput("Shape");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, ["Transform", "Operation"]);
+        this.setColour(120);
+        this.setTooltip('');
+        this.setHelpUrl('http://www.example.com/');
+    }
+};
 
 Blockly.Blocks['cad_rotate'] = {
     init: function () {
