@@ -131,6 +131,28 @@ Blockly.Blocks['cad_torus'] = {
     }
 };
 
+Blockly.Blocks['cad_linear_extrude'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("linear extrude");
+        this.appendValueInput("height")
+            .setCheck("Number")
+            .appendField("height");
+        this.appendValueInput("twist")
+            .setCheck("Number")
+            .appendField("twist")
+            .appendField(new Blockly.FieldAngle("0"), "Angle");
+        this.appendValueInput("shape")
+            .setCheck("Shape")
+            .appendField("shape");
+        this.setPreviousStatement(true, "Solid");
+        this.setNextStatement(true, ["Operation", "Transform"]);
+        this.setColour(20);
+        this.setTooltip('');
+        this.setHelpUrl('http://www.example.com/');
+    }
+};
+
 Blockly.Blocks['cad_translate'] = {
     init: function () {
         this.appendDummyInput()
@@ -254,3 +276,34 @@ Blockly.Blocks['cad_color'] = {
     }
 };
  
+
+Blockly.Blocks['cad_rectangle'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("rectangle");
+        this.appendValueInput("width")
+            .setCheck("Number")
+            .appendField("width");
+        this.appendValueInput("height")
+            .setCheck("Number")
+            .appendField("height");
+        this.setOutput(true, "Shape");
+        this.setColour(210);
+        this.setTooltip('');
+        this.setHelpUrl('http://www.example.com/');
+    }
+};
+
+Blockly.Blocks['cad_circle'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("circle");
+        this.appendValueInput("radius")
+            .setCheck("Number")
+            .appendField("radius");
+        this.setOutput(true, "Shape");
+        this.setColour(210);
+        this.setTooltip('');
+        this.setHelpUrl('http://www.example.com/');
+    }
+};

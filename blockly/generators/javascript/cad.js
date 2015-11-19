@@ -128,3 +128,35 @@ Blockly.JavaScript['cad_torus'] = function (block) {
     var code = "torus({ ri: " + (value_ri === "" ? 1 : value_ri) + ", ro: " + (value_ro === "" ? 4 : value_ro) + "})";
     return code;
 };
+
+Blockly.JavaScript['cad_linear_extrude'] = function (block) {
+    var text_twist = block.getFieldValue('Angle');
+
+    var value_height = Blockly.JavaScript.valueToCode(block, 'height', Blockly.JavaScript.ORDER_ATOMIC);
+    var value_twist = Blockly.JavaScript.valueToCode(block, 'twist', Blockly.JavaScript.ORDER_ATOMIC);
+    var value_shape = Blockly.JavaScript.valueToCode(block, 'shape', Blockly.JavaScript.ORDER_ATOMIC);
+
+    var code = "linear_extrude({height: " + (value_height === "" ? 1 : value_height) + ", twist: " + (text_twist === "" ? 0 : text_twist) + "}, " + (value_shape === "" ? "square()" : value_shape) + ")";
+
+    return code;
+};
+
+Blockly.JavaScript['cad_rectangle'] = function (block) {
+    var value_height = Blockly.JavaScript.valueToCode(block, 'height', Blockly.JavaScript.ORDER_ATOMIC);
+    var value_width = Blockly.JavaScript.valueToCode(block, 'width', Blockly.JavaScript.ORDER_ATOMIC);
+
+    var code = "square([" + (value_width === "" ? 1 : value_width) + ", " + (value_height === "" ? 1 : value_height) + "])";
+
+    // TODO: Change ORDER_NONE to the correct strength.
+    return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['cad_circle'] = function (block) {
+    var value_radius = Blockly.JavaScript.valueToCode(block, 'radius', Blockly.JavaScript.ORDER_ATOMIC);
+    // TODO: Assemble JavaScript into code variable.
+
+    var code = "circle({r: " + (value_radius === "" ? 1 : value_radius) + "})";
+
+    // TODO: Change ORDER_NONE to the correct strength.
+    return [code, Blockly.JavaScript.ORDER_NONE];
+};
