@@ -25,7 +25,7 @@
         var left = window.screenX + (window.outerWidth * 0.6);
         var top = window.screenY - (window.outerHeight - window.innerHeight);
 
-        var specs = "height=" + height + ",width=" + width + ", left=" + left + ", top=" + top;
+        var specs = "resizable=yes,height=" + height + ",width=" + width + ", left=" + left + ", top=" + top;
 
         var newWindow = window.open("blockly/index.html", "_blank", specs);
     }
