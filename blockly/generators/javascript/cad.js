@@ -75,3 +75,20 @@ Blockly.JavaScript['cad_cylinder'] = function (block) {
 
     return code;
 };
+
+Blockly.JavaScript['cad_color'] = function (block) {
+    var colour_color = block.getFieldValue('Color');
+
+
+    var value_color = Blockly.JavaScript.valueToCode(block, 'Color', Blockly.JavaScript.ORDER_ATOMIC);
+    var statements_shape = Blockly.JavaScript.statementToCode(block, 'Shape');
+    // TODO: Assemble JavaScript into code variable.
+
+    var red = parseInt(colour_color.substr(1, 2), 16) / 255;
+    var green = parseInt(colour_color.substr(3, 2), 16) / 255;
+    var blue = parseInt(colour_color.substr(5, 2), 16) / 255;
+    var rgb = [red, green, blue];
+
+    var code = "color([" + red + ", " + green +  ", " + blue + "], " + statements_shape + ")";
+    return code;
+};
