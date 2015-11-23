@@ -2,10 +2,11 @@
 /// Created by Michael S. Scherotter
 /// Forked from OpenJSCAD.org
 /// Source available on https://github.com/mscherotter/OpenJSCAD.org 
-/// Updated 2015-11-17
+/// Updated 2015-11-23
 /// Features
 /// - Direct 3D Printing
 /// - Download .stl and open in 3D Builder (default .stl handler)
+/// - .jscad file activation
 
 var Windows3DPrinting = {};
 
@@ -273,6 +274,35 @@ var Windows3DPrinting = {};
         parent.appendChild(printButton);
     }
 
+    function activateFiles(files) {
+        /// <summary>Put the text of the first file into the editor</summary>
+        /// <param name="files" type="array">array of Windows.Storage.StorageFile objects</param>
+        var firstFile = files[0];
+        var fileIo = Windows.Storage.FileIO;
+
+        fileIo.readTextAsync(firstFile).then(function(text) {
+            putSourceInEditor(text, firstFile.name);
+        });
+    }
+
+    function onActivated(eventArgs) {
+        /// <summary>Application activated event handler</summary>
+        /// <param name="eventArgs" type="Windows.ApplicationModel.Activation.FileActivatedEventArgs">file activated event arguments</param>
+        switch (eventArgs.kind) {
+            case Windows.ApplicationModel.Activation.ActivationKind.file:
+                activateFiles(eventArgs.files);
+                break;
+            default:
+                break;
+        }
+    }
+
+    function addFileActivation() {
+        /// <summary>Add a file activation event</summary>
+        var webUi = Windows.UI.WebUI.WebUIApplication;
+        webUi.addEventListener("activated", onActivated);
+    }
+
     Windows3DPrinting.initialize = function (processor) {
         /// <summary>Add the 3D print button if running on Windows 10 as a 
         /// hosted web app.</summary>
@@ -286,6 +316,8 @@ var Windows3DPrinting = {};
         cadProcessor = processor;
 
         addButton(processor.statusbuttons);
+
+        addFileActivation();
     }
 
     Windows3DPrinting.downloadModel = function (openJscad) {
