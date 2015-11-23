@@ -2,6 +2,7 @@
 //   few adjustments by Rene K. Mueller <spiritdude@gmail.com> for OpenJSCAD.org
 //
 // History:
+// 2013/11/03: Added code to enabled downloading file to Microsoft Internet Explorer 11 and Microsoft Edge.
 // 2013/03/12: reenable webgui parameters to fit in current design
 // 2013/03/11: few changes to fit design of http://openjscad.org
 
@@ -9,7 +10,7 @@
 
 var OpenJsCad = function() { };
 
-OpenJsCad.version = '0.3.1 (2015/10/23)';
+OpenJsCad.version = '0.3.2 (2015/11/08)';
 
 OpenJsCad.log = function(txt) {
   var timeInMs = Date.now();
@@ -972,6 +973,8 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
   this.debugging = false;
   this.options = {};
   this.createElements();
+  Windows3DPrinting.initialize(this);
+    Blockly.initialize(this);
 // state of the processor
 // 0 - initialized - no viewer, no parameters, etc
 // 1 - processing  - processing JSCAD script
@@ -1461,9 +1464,13 @@ OpenJsCad.Processor.prototype = {
   },
   
   supportedFormatsForCurrentObject: function() {
-    if (this.currentObject instanceof CSG) {
-      return ["stlb", "stla", "amf", "x3d"];
-    } else if (this.currentObject instanceof CAG) {
+      if (this.currentObject instanceof CSG) {
+          if (typeof Windows === "undefined") {
+              return ["stlb", "stla", "amf", "x3d"];
+          } else {
+              return ["stlb", "stla", "amf", "x3d", "_3mf"];
+          }
+      } else if (this.currentObject instanceof CAG) {
       return ["dxf"];
     } else {
       throw new Error("Not supported");
@@ -1496,6 +1503,11 @@ OpenJsCad.Processor.prototype = {
         displayName: "DXF",
         extension: "dxf",
         mimetype: "application/dxf",
+      },
+        _3mf: {
+            displayName: "3D Manufacturing Format",
+            extension: "3mf",
+            mimetype: "application/octet-stream"
         }
     }[format];
   },
@@ -1520,47 +1532,67 @@ OpenJsCad.Processor.prototype = {
   },
 
   generateOutputFileFileSystem: function() {
-    window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-    if(!window.requestFileSystem)
+      window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+
+    if(!window.requestFileSystem && !window.navigator.msSaveOrOpenBlob && !Windows)
     {
       throw new Error("Your browser does not support the HTML5 FileSystem API. Please try the Chrome browser instead.");
     }
-    // create a random directory name:
-    var dirname = "OpenJsCadOutput1_"+parseInt(Math.random()*1000000000, 10)+"."+extension;
-    var extension = this.selectedFormatInfo().extension;
-    var filename = "output."+extension;
-    var that = this;
-    window.requestFileSystem(TEMPORARY, 20*1024*1024, function(fs){
-        fs.root.getDirectory(dirname, {create: true, exclusive: true}, function(dirEntry) {
-            that.outputFileDirEntry = dirEntry;
-            dirEntry.getFile(filename, {create: true, exclusive: true}, function(fileEntry) {
-                 fileEntry.createWriter(function(fileWriter) {
-                    fileWriter.onwriteend = function(e) {
-                      that.hasOutputFile = true;
-                      that.downloadOutputFileLink.href = fileEntry.toURL();
-                      that.downloadOutputFileLink.type = that.selectedFormatInfo().mimetype; 
-                      that.downloadOutputFileLink.innerHTML = that.downloadLinkTextForCurrentObject();
-                      that.downloadOutputFileLink.setAttribute("download", fileEntry.name);
-                      that.enableItems();
-                      if(that.onchange) that.onchange();
-                    };
-                    fileWriter.onerror = function(e) {
-                      throw new Error('Write failed: ' + e.toString());
-                    };
-                    var blob = that.currentObjectToBlob();
-                    fileWriter.write(blob);
-                  }, 
-                  function(fileerror){OpenJsCad.FileSystemApiErrorHandler(fileerror, "createWriter");} 
-                );
+
+    if (window.navigator.msSaveOrOpenBlob) {
+        // Microsoft Internet Explorer 11 and Microsoft Edge use the msSaveOrOpenBlob() to save or open a BLOB.
+          var extension = this.selectedFormatInfo().extension;
+          var filename = "output." + extension;
+          var that = this;
+          that.hasOutputFile = true;
+          that.enableItems();
+          var blob = that.currentObjectToBlob();
+          that.downloadOutputFileLink.innerHTML = that.downloadLinkTextForCurrentObject();
+          that.downloadOutputFileLink.onclick = function() {
+              window.navigator.msSaveOrOpenBlob(blob, filename);
+          }
+          if (that.onchange) that.onchange();
+    } else if (Windows) {
+        Windows3DPrinting.downloadModel(this);
+    } else {
+
+          // create a random directory name:
+          var dirname = "OpenJsCadOutput1_" + parseInt(Math.random() * 1000000000, 10) + "." + extension;
+          var extension = this.selectedFormatInfo().extension;
+          var filename = "output." + extension;
+          var that = this;
+          window.requestFileSystem(TEMPORARY, 20 * 1024 * 1024, function(fs) {
+                  fs.root.getDirectory(dirname, { create: true, exclusive: true }, function(dirEntry) {
+                          that.outputFileDirEntry = dirEntry;
+                          dirEntry.getFile(filename, { create: true, exclusive: true }, function(fileEntry) {
+                                  fileEntry.createWriter(function(fileWriter) {
+                                          fileWriter.onwriteend = function(e) {
+                                              that.hasOutputFile = true;
+                                              that.downloadOutputFileLink.href = fileEntry.toURL();
+                                              that.downloadOutputFileLink.type = that.selectedFormatInfo().mimetype;
+                                              that.downloadOutputFileLink.innerHTML = that.downloadLinkTextForCurrentObject();
+                                              that.downloadOutputFileLink.setAttribute("download", fileEntry.name);
+                                              that.enableItems();
+                                              if (that.onchange) that.onchange();
+                                          };
+                                          fileWriter.onerror = function(e) {
+                                              throw new Error('Write failed: ' + e.toString());
+                                          };
+                                          var blob = that.currentObjectToBlob();
+                                          fileWriter.write(blob);
+                                      },
+                                      function(fileerror) { OpenJsCad.FileSystemApiErrorHandler(fileerror, "createWriter"); }
+                                  );
+                              },
+                              function(fileerror) { OpenJsCad.FileSystemApiErrorHandler(fileerror, "getFile('" + filename + "')"); }
+                          );
+                      },
+                      function(fileerror) { OpenJsCad.FileSystemApiErrorHandler(fileerror, "getDirectory('" + dirname + "')"); }
+                  );
               },
-              function(fileerror){OpenJsCad.FileSystemApiErrorHandler(fileerror, "getFile('"+filename+"')");} 
-            );
-          },
-          function(fileerror){OpenJsCad.FileSystemApiErrorHandler(fileerror, "getDirectory('"+dirname+"')");} 
-        );         
-      }, 
-      function(fileerror){OpenJsCad.FileSystemApiErrorHandler(fileerror, "requestFileSystem");}
-    );
+              function(fileerror) { OpenJsCad.FileSystemApiErrorHandler(fileerror, "requestFileSystem"); }
+          );
+      }
   },
 
   createGroupControl: function(definition) {

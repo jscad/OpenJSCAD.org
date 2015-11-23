@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>OpenJSCAD + Blockly</title>
+    <script src="blockly_compressed.js"></script>
+    <script src="blocks_compressed.js"></script>
+    <script src="blocks/cad.js"></script>
+    <script src="javascript_compressed.js"></script>
+    <script src="generators/javascript/cad.js"></script>
+    <script src="appengine/storage.js"></script>
+
+    <script src="msg/js/en.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            background-color: #fff;
+            font-family: sans-serif;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-weight: normal;
+            font-size: 140%;
+        }
+
+        table {
+            height: 100%;
+            width: 100%;
+        }
+
+        #blocklyArea {
+            height: 99%;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>
+                <button onclick="updateSource()">Update code</button>
+            </td>
+        </tr>
+        <tr>
+            <td id="blocklyArea"></td>
+        </tr>
+    </table>
+
+    <div id="blocklyDiv" style="position: absolute"></div>
+
+    <xml id="toolbox" style="display: none">
+        <category name="Solids" colour="20">
+            <block type="cad_sphere"></block>
+            <block type="cad_cube"></block>
+            <block type="cad_cylinder"></block>
+            <block type="cad_cone"></block>
+            <block type="cad_torus"></block>
+            <block type="cad_text"></block>
+            <block type="cad_linear_extrude"></block>
+        </category>
+        <category name="Transforms" colour="65">
+            <block type="cad_translate"></block>
+            <block type="cad_rotate"></block>
+            <block type="cad_scale"></block>
+        </category>
+        <category name="Operations" colour="120">
+            <block type="cad_color"></block>
+            <block type="cad_union"></block>
+            <block type="cad_subtract"></block>
+            <block type="cad_intersect"></block>
+        </category>
+        <category name="Shapes" colour="210">
+            <block type="cad_circle"></block>
+            <block type="cad_rectangle"></block>
+        </category>
+        <sep></sep>
+        <category name="Control">
+            <block type="controls_if"></block>
+            <block type="controls_repeat_ext"></block>
+        </category>
+        <category name="Logic">
+            <block type="logic_compare"></block>
+        </category>
+        <category name="Math">
+            <block type="math_number"></block>
+            <block type="math_arithmetic"></block>
+        </category>
+        <!--<category name="Text">
+            <block type="text"></block>
+            <block type="text_print"></block>
+        </category>-->
+        <sep></sep>
+        <category name="Variables" custom="VARIABLE"></category>
+        <category name="Functions" custom="PROCEDURE"></category>
+    </xml>
+
+    <script>
+        var workspace;
+
+        function updateSource() {
+            var code = Blockly.JavaScript.workspaceToCode(workspace);
+
+            if (code.indexOf("\n\n") >= 0) {
+                console.log("multiple objects - not sending code.");
+                return;
+            }
+
+            try {
+                if (typeof window.opener === "undefined") {
+                    window.parent.postMessage(code, "*");
+                } else {
+                    window.opener.postMessage(code, "*");
+                }
+                console.log("Posted code: " + code);
+            } catch (error) {
+            }
+
+        }
+
+        function initialize() {
+            var blocklyArea = document.getElementById('blocklyArea');
+            var blocklyDiv = document.getElementById('blocklyDiv');
+            workspace = Blockly.inject(blocklyDiv,
+            {
+                media: 'media/',
+                toolbox: document.getElementById('toolbox'),
+                zoom:{
+                     controls: true,
+                     wheel: true,
+                     startScale: 1.0,
+                     maxScale: 3,
+                     minScale: 0.3,
+                     scaleSpeed: 1.2
+                 }
+            });
+
+            window.setTimeout(BlocklyStorage.restoreBlocks, 0);
+
+            BlocklyStorage.backupOnUnload();
+
+            var onresize = function (e) {
+                // Compute the absolute coordinates and dimensions of blocklyArea.
+                var element = blocklyArea;
+                var x = 0;
+                var y = 0;
+                do {
+                    x += element.offsetLeft;
+                    y += element.offsetTop;
+                    element = element.offsetParent;
+                } while (element);
+                // Position blocklyDiv over blocklyArea.
+                blocklyDiv.style.left = x + 'px';
+                blocklyDiv.style.top = y + 'px';
+                blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+                blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+            };
+            window.addEventListener('resize', onresize, false);
+            onresize();
+
+
+            //workspace.addChangeListener(updateSource);
+        }
+
+        initialize();
+    </script>
+</body>
+</html>
