@@ -1,14 +1,18 @@
-// title      : Benchmark SCAD Compatibility
-// author     : Rene K. Mueller
+// title      : Benchmark CAG
+// author     : Z3 Development
 // license    : MIT License
-// description: testing how fast the computations are done
-// file       : benchmark.jscad
+// description: testing how fast the CAG objects are created
 
 function main() {
-   var p = { 'spheres': sphere, 'cubes': cube, 'cylinders': cylinder, 'torus': torus };
+   echo("OpenJSCAD "+OpenJsCad.version+" CSG Benchmark");
+
+   var p = {
+             'rectangles': CAG.rectangle,
+             'roundedRectangles': CAG.roundedRectangle,
+             'circles': CAG.circle,
+           };
+
    var o = [];
-   var sum = 0;
-   echo("OpenJSCAD "+OpenJsCad.version+" Benchmark");
    for(var i in p) {
       var n = 100;
       var start = new Date();
@@ -18,9 +22,7 @@ function main() {
       var t = (new Date()-start)/n; // milliseconds per iteration
       t = 1000 / t;                 // iterations per second
       echo(i+" "+t.toFixed(4)+" iterations / sec");
-      sum += t;
    }
-   echo("total "+sum.toFixed(4));
    return o[0];
 }   
    

@@ -10,6 +10,7 @@ Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
+- 2015/10/23: 0.3.1: including new parameter options by Z3 Dev
 - 2015/07/02: 0.3.0: format.js (Stefan Baumann), and Blob.js/openjscad improved by Z3 Dev
 - 2015/05/20: 0.2.4: renumbering, latest csg.js from http://joostn.github.com/OpenJsCad/ adapted
 - 2015/04/08: 0.024: dev branch opened
@@ -47,16 +48,16 @@ Todo:
   <script src="jquery/jquery-ui.js"></script>
   <script src="jquery/jquery.hammer.js"></script>
   <script src="lightgl.js"></script>
-  <script src="csg.js"></script>
-  <script src="formats.js"></script>
-  <script src="openjscad.js"></script>
-  <script src="openscad.js"></script>
+  <script src="csg.js?0.3.1"></script>
+  <script src="formats.js?0.3.1"></script>
+  <script src="openjscad.js?0.3.1"></script>
+  <script src="openscad.js?0.3.1"></script>
   <script src="underscore.js"></script>
   <script src="openscad-openjscad-translator.js"></script>
-  <script src="ace/ace.js" charset="utf-8"></script>
+  <script src="ace/ace.js?0.3.1" charset="utf-8"></script>
 
 <script lang=JavaScript>
-var version = '0.3.0 (2015/08/11)';
+var version = '0.3.0 (2015/07/07)';
 //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
 var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
 var browser = 'unknown';
@@ -126,7 +127,7 @@ $(document).ready(function() {
 <div id=menu>
 <img id=menuHandle src="imgs/menuHandleVL.png">
 <nav>
-<div id=menuVersion>Version <script>document.write(version);</script></div>
+<div id=menuVersion>Version <script>document.write(OpenJsCad.version);</script></div>
 <p/>
 <table class=info>
 <tr><td align=right class=infoOperation>Render Code</td><td class=infoKey>SHIFT + RETURN</td></tr>
@@ -162,12 +163,13 @@ $(document).ready(function() {
 
 <div id=about>
 <img src="imgs/title.png"><br>
-Version <script>document.write(version);</script>
+Version <script>document.write(OpenJsCad.version);</script>
 <p>
-by Ren&eacute; K. M&uuml;ller (UI & CLI),
+by 
 Joost Nieuwenhuijse (core), 
+Ren&eacute; K. M&uuml;ller (UI & CLI),
 Stefan Baumann (core),
-Z3 Dev (CLI),
+Z3 Dev (CLI & GUI),
 Eduard Bespalov (core),
 Gary Hogdson (OpenSCAD translator)
 <p>csg.js core &amp; improvements by 
@@ -247,6 +249,7 @@ var ex = [
 { file:'stepper-motor.jscad', title: 'Interactive Params: Stepper Motor' },
 { file:'iphone4-case.jscad', title: 'Interactive Params: iPhone4 Case' },
 { file:'name_plate.jscad', title: 'Interactive Params: Name Plate' },
+{ file:'balloons.jscad', title: 'Interactive Params: Balloons', new: true },
 { file:'globe.jscad', title: 'Globe' },
 
 { file:'platonics/', title: 'Recursive Include(): Platonics', spacing: true },
@@ -402,7 +405,7 @@ if(me=='web-online') {
 </div>
 <div id=footer>
 OpenJSCAD.org 
-<script>document.write(version);</script>, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>
+<script>document.write(OpenJsCad.version);</script>, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>
 </div>
 
 <script id=conversionWorker type="javascript/worker">
@@ -531,7 +534,7 @@ function onload() {
          if(u.match(/\.(stl|gcode)$/i)) {
             xhr.overrideMimeType("text/plain; charset=x-user-defined");    // our pseudo binary retrieval (works with Chrome)
          }
-         status("Fetching "+u+" <img id=busy src='imgs/busy.gif'>");
+         OpenJsCad.status("Fetching "+u+" <img id=busy src='imgs/busy.gif'>");
          xhr.onload = function() {
             //echo(this.responseText);
             var data = JSON.parse(this.responseText);
@@ -581,7 +584,7 @@ function fetchExample(fn,url) {
       if(fn.match(/\.(stl|gcode)$/i)) {
          xhr.overrideMimeType("text/plain; charset=x-user-defined");    // our pseudo binary retrieval (works with Chrome)
       }
-      status("Loading "+fn+" <img id=busy src='imgs/busy.gif'>");
+      OpenJsCad.status("Loading "+fn+" <img id=busy src='imgs/busy.gif'>");
       xhr.onload = function() {
          var source = this.responseText;
          var editorSource = source;
@@ -592,13 +595,13 @@ function fetchExample(fn,url) {
          
          //gEditor.getSession().setMode("ace/mode/javascript");
          if(fn.match(/\.jscad$/i)||fn.match(/\.js$/i)) {
-            status("Processing "+fn+" <img id=busy src='imgs/busy.gif'>");
+            OpenJsCad.status("Processing "+fn+" <img id=busy src='imgs/busy.gif'>");
             //if(url) editorSource = "// Remote retrieved <"+url+">\n"+editorSource;
             putSourceInEditor(editorSource,fn);
             gProcessor.setJsCad(source,fn);
             
          } else if(fn.match(/\.scad$/i)) {
-            status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
+            OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
             editorSource = source;
             //if(url) editorSource = "// Remote retrieved <"+url+">\n"+editorSource;
             if(!editorSource.match(/^\/\/!OpenSCAD/i)) {
@@ -613,7 +616,7 @@ function fetchExample(fn,url) {
             gProcessor.setJsCad(source,fn);
             
          } else if(fn.match(/\.(stl|obj|amf|gcode)$/i)) {
-            status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
+            OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
             if(!fn.match(/\.amf/)) {
                // import STL/OBJ/AMF via Worker() (async computation) as it takes quite some time
                // RANT: the whole Blob() & Worker() is anything but a clean concept, mess over mess:
@@ -635,11 +638,11 @@ function fetchExample(fn,url) {
                var u = document.location.href;
                u = u.replace(/#.*$/,'');
                u = u.replace(/\?.*$/,'');
-               worker.postMessage({me: me, version: version, url: u, remote: url, source: source, filename: fn }); // start worker
+               worker.postMessage({url: u, remote: url, source: source, filename: fn }); // start worker
                asyncComputation = true;
 
             } else {       // async (disabled)
-               status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
+               OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
                fn.match(/\.(stl|obj|amf|gcode)$/i);
                var type = RegExp.$1;
                if(type=='obj') {
@@ -977,7 +980,7 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
             var u = document.location.href;
             u = u.replace(/#.*$/,'');
             u = u.replace(/\?.*$/,'');
-            worker.postMessage({me: me, version: version, url: u, source: source, filename: fn });
+            worker.postMessage({url: u, source: source, filename: fn });
             asyncComputation = true;
          } else {
             fn.match(/\.(stl|obj|amf|gcode)$/i);
