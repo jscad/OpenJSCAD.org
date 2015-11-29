@@ -1,7 +1,7 @@
 <img src="doc/logo.png" width=256 align=right>
 <h1>OpenJSCAD.org</h1>
 
-<b>Version 0.3.0</b> (ALPHA)
+<b>Version 0.3.1</b> (ALPHA)
 
 <b>OpenJSCAD.org</b> is a more up-to-date <a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a> frontend where you can edit .jscad files either locally or online via JS editor (built-in).
 A few functions are available to make the transition from <a href="http://openscad.org/">OpenSCAD</a> to OpenJSCAD easier (<a href="https://github.com/Spiritdude/OpenSCAD.jscad">OpenSCAD.jscad</a> built-in),
@@ -36,6 +36,7 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 
 <h2>History</h2>
 <ul>
+<li>2015/10/23: 0.3.1: including new parameter options by Z3 Dev
 <li>2015/07/02: 0.3.0: format.js (Stefan Baumann), and Blob.js/openjscad improved by Z3 Dev
 <li>2015/05/20: 0.2.4: renumbering, latest csg.js from http://joostn.github.com/OpenJsCad/ adapted
 <li>2015/04/08: 0.024: dev branch opened
