@@ -18,7 +18,9 @@ var Windows3DPrinting = {};
         floatSize = 8,
         indexStride = 7,
         taskRequestedAdded = false,
-        modelPackage = null; // the model package created in createModelPackageAsync()
+        modelPackage = null, // the model package created in createModelPackageAsync()
+        jscadFile = null,
+        fileDateModified = null; 
 
     function isTh2(){
         /// <summary>Is Windows Threshold 2 (November 2015 Update)?</summary>
@@ -386,11 +388,15 @@ var Windows3DPrinting = {};
     function activateFiles(files) {
         /// <summary>Put the text of the first file into the editor</summary>
         /// <param name="files" type="array">array of Windows.Storage.StorageFile objects</param>
-        var firstFile = files[0];
+        jscadFile = files[0];
         var fileIo = Windows.Storage.FileIO;
 
-        fileIo.readTextAsync(firstFile).then(function(text) {
-            putSourceInEditor(text, firstFile.name);
+        fileIo.readTextAsync(jscadFile).then(function(text) {
+            putSourceInEditor(text, jscadFile.name);
+
+            return jscadFile.getBasicPropertiesAsync();
+        }).then(function(basicProperties) {
+            fileDateModified = basicProperties.dateModified;
         });
     }
 
@@ -406,10 +412,41 @@ var Windows3DPrinting = {};
         }
     }
 
+    function onFocus() {
+        ///<summary>The window got the focus so check to see if the file has changed</summary>
+        
+        if (jscadFile == null) {
+            return;
+        }
+
+        //todo: we should check the "Auto Reload" checkbox before doing this.
+
+        jscadFile.getBasicPropertiesAsync().then(function(basicProperties) {
+            var dateModified = basicProperties.dateModified;
+
+            if (dateModified === fileDateModified) {
+                return null;
+            }
+            fileDateModified = dateModified;
+
+            var fileIo = Windows.Storage.FileIO;
+
+            return fileIo.readTextAsync(jscadFile);
+        }).then(function (text) {
+            if (text === null) {
+                return;
+            }
+
+            putSourceInEditor(text, jscadFile.name);
+        });
+    }
+
     function addFileActivation() {
         /// <summary>Add a file activation event</summary>
         var webUi = Windows.UI.WebUI.WebUIApplication;
         webUi.addEventListener("activated", onActivated);
+
+        window.addEventListener("focus", onFocus);
     }
 
     Windows3DPrinting.initialize = function (processor) {
