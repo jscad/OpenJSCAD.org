@@ -2,8 +2,9 @@
 /// Created by Michael S. Scherotter
 /// Forked from OpenJSCAD.org
 /// Source available on https://github.com/mscherotter/OpenJSCAD.org 
-/// Updated 2015-11-23
+/// Updated 2015-12-01
 /// Features
+/// - Windows 10 November Update (TH2)
 /// - Direct 3D Printing
 /// - Download .stl and open in 3D Builder (default .stl handler)
 /// - .jscad file activation
@@ -19,6 +20,16 @@ var Windows3DPrinting = {};
         taskRequestedAdded = false,
         modelPackage = null; // the model package created in createModelPackageAsync()
 
+    function isTh2(){
+        /// <summary>Is Windows Threshold 2 (November 2015 Update)?</summary>
+        /// <returns type="bool">true if running Windows TH2 (November 2015 Update)</returns>
+
+        var apiInformation = Windows.Foundation.Metadata.ApiInformation,
+            universalApiContract = "Windows.Foundation.UniversalApiContract";
+
+        return apiInformation.isApiContractPresent(universalApiContract, 2);
+    }
+
     function createMesh(vertexList) {
         /// <summary>Creates a mesh and sets it vertex list</summary>
         /// <param name="vertexList">List of vertex object</param>
@@ -28,6 +39,43 @@ var Windows3DPrinting = {};
         var mesh = new printing3D.Printing3DMesh();
 
         mesh.createVertexPositions(floatSize * 3 * vertexList.length);
+
+        var buffer = mesh.getVertexPositions();
+
+        var index = 0;
+
+        var dataWriter = new Float64Array(buffer);
+
+        vertexList.forEach(function(vertex) {
+            dataWriter[index] = vertex.pos.x;
+            index++;
+            dataWriter[index] = vertex.pos.y;
+            index++;
+            dataWriter[index] = vertex.pos.z;
+            index++;
+        });
+
+        mesh.vertexCount = vertexList.length;
+
+        var desc = {
+            format: printing3D.Printing3DBufferFormat.printing3DDouble,
+            stride: 3
+        };
+
+        mesh.vertexPositionsDescription = desc;
+
+        return mesh;
+    }
+
+    function createMeshTH(vertexList) {
+        /// <summary>Creates a mesh and sets it vertex list</summary>
+        /// <param name="vertexList">List of vertex object</param>
+        /// <returns type="Windows.Graphics.Printing3D.Printing3DMesh"></returns>
+        var printing3D = Windows.Graphics.Printing3D;
+
+        var mesh = new printing3D.Printing3DMesh();
+
+        mesh.createVertexPositions(floatSize * vertexList.length);
 
         var buffer = mesh.getVertexPositions();
 
@@ -63,13 +111,39 @@ var Windows3DPrinting = {};
 
         var printing3D = Windows.Graphics.Printing3D,
             description = {
+                format: printing3D.Printing3DBufferFormat.printing3DUInt,
+                stride: 3
+            };
+
+        mesh.triangleIndicesDescription = description;
+
+        mesh.createTriangleIndices(intSize * description.stride * indices.length);
+
+        var buffer = mesh.getTriangleIndices();
+
+        var dataWriter = new Uint32Array(buffer);
+
+        indices.forEach(function(index, indexPos) {
+            dataWriter[indexPos] = index;
+        });
+
+        mesh.indexCount = indices.length;
+    }
+
+    function setMeshIndicesTh(indices, mesh) {
+        /// <summary>Set the mesh indices</summary>
+        /// <param name="indices">the list of triangle indices</param>
+        /// <param name="mesh" type="Windows.Graphics.Printing3D.Printing3DMesh">the mesh</param>
+
+        var printing3D = Windows.Graphics.Printing3D,
+            description = {
                 format: printing3D.Printing3DBufferFormat.r32G32B32UInt,
                 stride: indexStride
             };
 
         mesh.triangleIndicesDescription = description;
 
-        mesh.createTriangleIndices(intSize * indices.length);
+        mesh.createTriangleIndices(intSize * description.stride * indices.length);
 
         var buffer = mesh.getTriangleIndices();
 
@@ -132,6 +206,24 @@ var Windows3DPrinting = {};
 
         var colrMat = new printing3D.Printing3DColorMaterial();
 
+        colrMat.color = Windows.UI.Colors.gold;
+
+        material.color = colrMat;
+
+        materialGroup.bases.append(material);
+
+        model.material.baseGroups.append(materialGroup);
+    }
+
+    function setMaterialTH(model) {
+        var printing3D = Windows.Graphics.Printing3D;
+        var materialGroup = new printing3D.Printing3DBaseMaterialGroup(1);
+        var material = new printing3D.Printing3DBaseMaterial();
+
+        material.name = printing3D.Printing3DBaseMaterial.Pla;
+
+        var colrMat = new printing3D.Printing3DColorMaterial();
+
         colrMat.value = 16768768;
 
         material.color = colrMat;
@@ -157,7 +249,11 @@ var Windows3DPrinting = {};
 
         model.unit = printing3D.Printing3DModelUnit.millimeter;
 
-        setMaterial(model);
+        if (isTh2()) {
+            setMaterial(model);
+        } else {
+            setMaterialTH(model);
+        }
 
         var triangles = cadProcessor.currentObject.toTriangles();
 
@@ -175,15 +271,28 @@ var Windows3DPrinting = {};
 
                 indices.push(index);
             });
-            indices.push(0);
-            indices.push(0);
-            indices.push(0);
-            indices.push(0);
+
+            if (!isTh2()) {
+                indices.push(0);
+                indices.push(0);
+                indices.push(0);
+                indices.push(0);
+            }
         });
 
-        var mesh = createMesh(vertices);
+        var mesh;
 
-        setMeshIndices(indices, mesh);
+        if (isTh2()) {
+            mesh = createMesh(vertices);
+        } else {
+            mesh = createMeshTH(vertices);
+        }
+
+        if (isTh2()) {
+            setMeshIndices(indices, mesh);
+        } else {
+            setMeshIndicesTh(indices, mesh);
+        }
 
         model.meshes.append(mesh);
 
