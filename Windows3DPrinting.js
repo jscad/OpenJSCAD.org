@@ -117,7 +117,7 @@ var Windows3DPrinting = {};
 
         mesh.triangleIndicesDescription = description;
 
-        mesh.createTriangleIndices(intSize * description.stride * indices.length);
+        mesh.createTriangleIndices(intSize * indices.length);
 
         var buffer = mesh.getTriangleIndices();
 
@@ -127,7 +127,7 @@ var Windows3DPrinting = {};
             dataWriter[indexPos] = index;
         });
 
-        mesh.indexCount = indices.length;
+        mesh.indexCount = indices.length / 3;
     }
 
     function setMeshIndicesTh(indices, mesh) {
