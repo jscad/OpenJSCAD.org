@@ -343,8 +343,8 @@ var Windows3DPrinting = {};
 
         var task = request.createTask("OpenJSCAD Model", "", printHandler);
 
-        task.addEventListener("completed", onPrintRequestCompleted);
-        task.addEventListener("submitting", onPrintRequestSubmitting);
+        //task.addEventListener("completed", onPrintRequestCompleted);
+        //task.addEventListener("submitting", onPrintRequestSubmitting);
     }
 
     function print3D() {
