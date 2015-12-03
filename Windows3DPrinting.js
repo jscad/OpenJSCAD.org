@@ -2,7 +2,7 @@
 /// Created by Michael S. Scherotter
 /// Forked from OpenJSCAD.org
 /// Source available on https://github.com/mscherotter/OpenJSCAD.org 
-/// Updated 2015-12-01
+/// Updated 2015-12-03
 /// Features
 /// - Windows 10 November Update (TH2)
 /// - Direct 3D Printing
@@ -199,22 +199,63 @@ var Windows3DPrinting = {};
         return componentWithMatrix;
     }
 
-    function setMaterial(model) {
+    function isColor(value) {
+        return (value.a === this.a &&
+            value.r === this.r &&
+            value.g === this.g &&
+            value.b === this.b);
+    }
+
+    function addColorMaterial(model, id, color) {
         var printing3D = Windows.Graphics.Printing3D;
-        var materialGroup = new printing3D.Printing3DBaseMaterialGroup(1);
+        var materialGroup = new printing3D.Printing3DBaseMaterialGroup(id);
+
         var material = new printing3D.Printing3DBaseMaterial();
 
         material.name = printing3D.Printing3DBaseMaterial.Pla;
 
         var colrMat = new printing3D.Printing3DColorMaterial();
 
-        colrMat.color = Windows.UI.Colors.gold;
+        colrMat.color = color;
 
         material.color = colrMat;
 
         materialGroup.bases.append(material);
 
         model.material.baseGroups.append(materialGroup);
+    }
+
+    function setMaterial(model, triangles) {
+        var printing3D = Windows.Graphics.Printing3D;
+
+        var colorMap = [];
+
+        colorMap.push(Windows.UI.ColorHelper.fromArgb(255, 255, 0, 255));
+
+        addColorMaterial(model, 1, colorMap[0]);
+
+        triangles.forEach(function (triangle) {
+            if (triangle.shared === null) {
+                return;
+            }
+            if (triangle.shared.color === null) {
+                return;
+            }
+            var color = Windows.UI.ColorHelper.fromArgb(
+                triangle.shared.color[3] * 255,
+                triangle.shared.color[0] * 255,
+                triangle.shared.color[1] * 255,
+                triangle.shared.color[2] * 255);
+
+            if (colorMap.filter(isColor, color).length === 0) {
+
+                colorMap.push(color);
+
+                addColorMaterial(model, colorMap.length, color);
+            }
+        });
+
+        return colorMap;
     }
 
     function setMaterialTH(model) {
@@ -235,6 +276,36 @@ var Windows3DPrinting = {};
         model.material.baseGroups.append(materialGroup);
     }
 
+    function setMaterialIndices(mesh, materialIndices) {
+        ///<summary>Set the material indices</summary>
+        var printing3D = Windows.Graphics.Printing3D,
+            description = {
+                format: printing3D.Printing3DBufferFormat.printing3DUInt,
+                stride: 4
+            };
+
+        mesh.triangleMaterialIndicesDescription = description;
+        mesh.createTriangleMaterialIndices(intSize * 4 * mesh.indexCount);
+
+        var buffer = mesh.getTriangleMaterialIndices();
+
+        var dataWriter = new Uint32Array(buffer);
+
+        var count = 0;
+
+        for (var index = 0; index < materialIndices.length; index++) {
+            // for each triangle
+            dataWriter[count] = materialIndices[index]; // this is the color index
+            count++;
+            dataWriter[count] = 0;
+            count++;
+            dataWriter[count] = 0;
+            count++;
+            dataWriter[count] = 0;
+            count++;
+        }
+    }
+
     function createModelPackageAsync() {
         if (cadProcessor.currentObject === null) {
             var message = "Wait for model to generate before printing.";
@@ -251,16 +322,19 @@ var Windows3DPrinting = {};
 
         model.unit = printing3D.Printing3DModelUnit.millimeter;
 
+        var triangles = cadProcessor.currentObject.toTriangles();
+
+        var colorMap = null;
+
         if (isTh2()) {
-            setMaterial(model);
+            colorMap = setMaterial(model, triangles);
         } else {
             setMaterialTH(model);
         }
 
-        var triangles = cadProcessor.currentObject.toTriangles();
-
         var vertices = [];
         var indices = [];
+        var materialIndices = [];
 
         // Create a vertex list and index list for the triangles
         triangles.forEach(function(triangle) {
@@ -280,6 +354,31 @@ var Windows3DPrinting = {};
                 indices.push(0);
                 indices.push(0);
             }
+
+            var triangleColor = 1;
+
+            if (triangle.shared === null || triangle.shared.color === null) {
+                triangleColor = 1;
+            } else {
+                var color = Windows.UI.ColorHelper.fromArgb(
+                    triangle.shared.color[3] * 255,
+                    triangle.shared.color[0] * 255,
+                    triangle.shared.color[1] * 255,
+                    triangle.shared.color[2] * 255);
+
+                for (var i = 0; i < colorMap.length; i++) {
+                    if (colorMap[i].a === color.a &&
+                        colorMap[i].r === color.r && 
+                        colorMap[i].g === color.g &&
+                        colorMap[i].b === color.b) {
+
+                        triangleColor = i + 1;
+                        break;
+                    }
+                }
+            }
+
+            materialIndices.push(triangleColor);
         });
 
         var mesh;
@@ -292,6 +391,7 @@ var Windows3DPrinting = {};
 
         if (isTh2()) {
             setMeshIndices(indices, mesh);
+            setMaterialIndices(mesh, materialIndices);
         } else {
             setMeshIndicesTh(indices, mesh);
         }
@@ -304,33 +404,30 @@ var Windows3DPrinting = {};
 
         model.build.components.append(component);
 
-        return model.repairAsync()
-            .then(function(repairResult) {
-                    modelPackage = new printing3D.Printing3D3MFPackage();
+        var mode = Windows.Graphics.Printing3D.Printing3DMeshVerificationMode.findAllErrors;
 
-                    return modelPackage.saveModelToPackageAsync(model);
-                },
-                function(repairError) {
-                    console.error("Error repairing model (typical in Windows TH2): " + repairError);
+        return mesh.verifyAsync(mode).then(function(verificationResult) {
+            return model.repairAsync();
+        }, function(verificationResult) {
+            return model.repairAsync();
+        }).then(function() {
+                modelPackage = new printing3D.Printing3D3MFPackage();
 
-                    modelPackage = new printing3D.Printing3D3MFPackage();
+                return modelPackage.saveModelToPackageAsync(model);
+            },
+            function(repairError) {
+                console.error("Error repairing model (typical in Windows TH2): " + repairError);
 
-                    return modelPackage.saveModelToPackageAsync(model);
-                });
-    }
+                modelPackage = new printing3D.Printing3D3MFPackage();
+
+                return modelPackage.saveModelToPackageAsync(model);
+            });
+}
 
     function printHandler(args) {
         /// <summary>Create the Print package</summary>
         /// <param name="args" type="Windows.Graphics.Printing3D.Print3DTaskSourceRequestedArgs">the 3D print task source requested arguments</param>
         args.setSource(modelPackage);
-    }
-
-    function onPrintRequestCompleted(args) {
-        console.log("Print request completed: " + args);
-    }
-
-    function onPrintRequestSubmitting(args) {
-        console.log("Print request submitting: " + args);
     }
 
     function onTaskRequested(eventArgs) {
