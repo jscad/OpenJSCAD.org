@@ -2,7 +2,8 @@
 //   few adjustments by Rene K. Mueller <spiritdude@gmail.com> for OpenJSCAD.org
 //
 // History:
-// 2013/11/03: Added code to enabled downloading file to Microsoft Internet Explorer 11 and Microsoft Edge.
+// 2015/12/03: Added code for Hosted Windows 10 app 
+// 2015/11/03: Added code to enabled downloading file to Microsoft Internet Explorer 11 and Microsoft Edge.
 // 2013/03/12: reenable webgui parameters to fit in current design
 // 2013/03/11: few changes to fit design of http://openjscad.org
 
@@ -10,7 +11,7 @@
 
 var OpenJsCad = function() { };
 
-OpenJsCad.version = '0.3.2 (2015/11/08)';
+OpenJsCad.version = '0.3.3 (2015/12/03)';
 
 OpenJsCad.log = function(txt) {
   var timeInMs = Date.now();
