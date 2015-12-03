@@ -383,6 +383,12 @@ var Windows3DPrinting = {};
         printButton.onclick = print3D;
 
         parent.appendChild(printButton);
+
+        var fileDropZone = document.getElementById("filedropzone");
+
+        if (fileDropZone != null) {
+            fileDropZone.style.marginLeft = "60px";
+        }
     }
 
     function activateFiles(files) {
