@@ -77,7 +77,7 @@ var Windows3DPrinting = {};
 
         var mesh = new printing3D.Printing3DMesh();
 
-        mesh.createVertexPositions(floatSize * vertexList.length);
+        mesh.createVertexPositions(floatSize * 3 * vertexList.length);
 
         var buffer = mesh.getVertexPositions();
 
