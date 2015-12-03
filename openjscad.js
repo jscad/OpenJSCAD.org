@@ -1468,7 +1468,7 @@ OpenJsCad.Processor.prototype = {
           if (typeof Windows === "undefined") {
               return ["stlb", "stla", "amf", "x3d"];
           } else {
-              return ["stlb", "stla", "amf", "x3d", "_3mf"];
+              return ["_3mf", "stlb", "stla", "amf", "x3d"];
           }
       } else if (this.currentObject instanceof CAG) {
       return ["dxf"];
