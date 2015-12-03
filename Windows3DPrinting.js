@@ -324,7 +324,7 @@ var Windows3DPrinting = {};
 
         var triangles = cadProcessor.currentObject.toTriangles();
 
-        var colorMap = null;
+        var colorMap = [];
 
         if (isTh2()) {
             colorMap = setMaterial(model, triangles);
