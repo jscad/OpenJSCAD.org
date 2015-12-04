@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html  xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 <!-- 
 == OpenJSCAD.org, Copyright (c) 2013-2015 by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License ==
    with some code from OpenJsCad processfile.html by Joost Nieuwenhuijse 
@@ -37,134 +38,144 @@ Todo:
 - DONE: include(); support of multiple files, see http://jsfiddle.net/yybRu/
 
 -->
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-  <title>OpenJSCAD.org</title>
-  <link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
-  <link rel="stylesheet" href="jquery/themes/base/jquery-ui.css" />
-  <link rel="stylesheet" href="style.css" type="text/css">
-  <link rel="stylesheet" href="openjscad.css" type="text/css">
-</head>
-<body onload="onload()">
-  <script src="jquery/jquery-1.9.1.js"></script>
-  <script src="jquery/jquery-ui.js"></script>
-  <script src="jquery/jquery.hammer.js"></script>
-  <script src="lightgl.js"></script>
-  <script src="csg.js?0.3.1"></script>
-  <script src="formats.js?0.3.1"></script>
-  <script src="openjscad.js?0.3.1"></script>
-  <script src="openscad.js?0.3.1"></script>
-  <script src="underscore.js"></script>
-  <script src="openscad-openjscad-translator.js"></script>
-  <script src="ace/ace.js?0.3.1" charset="utf-8"></script>
+    <title>OpenJSCAD.org</title>
+    <link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
+    <link rel="stylesheet" href="jquery/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="openjscad.css" type="text/css">
+  </head>
+  <body>
+    <script src="jquery/jquery-1.9.1.js"></script>
+    <script src="jquery/jquery-ui.js"></script>
+    <script src="jquery/jquery.hammer.js"></script>
+    <script src="lightgl.js"></script>
+    <script src="csg.js?0.3.1"></script>
+    <script src="formats.js?0.3.1"></script>
+    <script src="openjscad.js?0.3.1"></script>
+    <script src="openscad.js?0.3.1"></script>
+    <script src="underscore.js"></script>
+    <script src="openscad-openjscad-translator.js"></script>
+    <script src="ace/ace.js?0.3.1" charset="utf-8"></script>
 
-<script lang=JavaScript>
-//$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
-var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
-var browser = 'unknown';
-var showEditor = true;
-var remoteUrl = './remote.pl?url=';
-if(navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)/i))
-   browser = RegExp.$1.toLowerCase();
+    <script lang="JavaScript">
+      var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
+      var browser = 'unknown';
+      var showEditor = true;
+      var remoteUrl = './remote.pl?url=';
+      if(navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)/i))
+        browser = RegExp.$1.toLowerCase();
 
-$(document).ready(function() {
-   $("#menu").height($(window).height());       // initial height
+      $(document).ready(function() {
+          $("#menu").height($(window).height());       // initial height
 
-   $(window).resize(function() {                // adjust the relevant divs
-      $("#menu").height($(window).height());
-      $("#menuHandle").css({top: '45%'});
-   });
-   setTimeout( function(){$('#menu').css('left','-280px');},3000); // -- hide slide-menu after 3secs
+          $(window).resize(function() {                // adjust the relevant divs
+              $("#menu").height($(window).height());
+              $("#menuHandle").css({top: '45%'});
+            });
+          setTimeout( function(){$('#menu').css('left','-280px');},3000); // -- hide slide-menu after 3secs
 
-   $('#menu').mouseleave(function() {
-      $('#examples').css('height',0); $('#examples').hide(); 
-      $('#options').css('height',0); $('#options').hide(); 
-   });
+          $('#menu').mouseleave(function() {
+              $('#examples').css('height',0); $('#examples').hide();
+              $('#options').css('height',0); $('#options').hide();
+            });
 
-   // -- Examples
-   $('#examplesTitle').click(function() {
-      $('#examples').css('height','auto'); 
-      $('#examples').show(); 
-      $('#options').css('height',0); $('#options').hide(); 
-   });
-   $('#examples').mouseleave(function() {
-      $('#examples').css('height',0); $('#examples').hide(); 
-   });
+        // -- Examples
+          $('#examplesTitle').click(function() {
+              $('#examples').css('height','auto');
+              $('#examples').show();
+              $('#options').css('height',0);
+              $('#options').hide();
+            });
+          $('#examples').mouseleave(function() {
+              $('#examples').css('height',0);
+              $('#examples').hide();
+            });
 
-   // -- Options 
-   $('#optionsTitle').click(function() {
-      $('#options').css('height','auto'); $('#options').show(); 
-      $('#examples').css('height',0); $('#examples').hide(); 
-   });
-   $('#options').mouseleave(function() {
-      $('#options').css('height',0); $('#options').hide(); 
-   });
-   getOptions();
+        // -- Options 
+          $('#optionsTitle').click(function() {
+              $('#options').css('height','auto');
+              $('#options').show();
+              $('#examples').css('height',0);
+              $('#examples').hide();
+            });
+          $('#options').mouseleave(function() {
+              $('#options').css('height',0);
+              $('#options').hide();
+            });
+          getOptions();
 
-   //$('#optionsForm').submit(function() {
-   //   // save to cookie
-   //   $('#optionsForm').hide();
-   //   return false;
-   //});
-   $('#optionsForm').change(function() {
-      // save to cookie
-      saveOptions();
-   });
+          //$('#optionsForm').submit(function() {
+          //   // save to cookie
+          //   $('#optionsForm').hide();
+          //   return false;
+          //});
+          $('#optionsForm').change(function() {
+            // save to cookie
+              saveOptions();
+            });
    
-   $('#plate').change(function() {
-      if($('#plate').val()=='custom') {
-         $('#customPlate').show();
-      } else {
-         $('#customPlate').hide();
-      }
-   });
-});   
-</script>
-<div id="header">
-<img src="imgs/title.png">
-<div id="errordiv"></div>
-</div>
+          $('#plate').change(function() {
+              if($('#plate').val()=='custom') {
+                $('#customPlate').show();
+              } else {
+                $('#customPlate').hide();
+              }
+            });
+        });
+    </script>
 
-<div id=menu>
-<img id=menuHandle src="imgs/menuHandleVL.png">
-<nav>
-<div id=menuVersion>Version <script>document.write(OpenJsCad.version);</script></div>
-<p/>
-<table class=info>
-<tr><td align=right class=infoOperation>Render Code</td><td class=infoKey>SHIFT + RETURN</td></tr>
-<tr><td align=right class=infoOperation>Rotate XZ</td><td class=infoKey>Left Mouse</td></tr>
-<tr><td align=right class=infoOperation>Pan</td><td class=infoKey>Middle Mouse or SHIFT + Left Mouse</td></tr>
-<tr><td align=right class=infoOperation>Rotate XY</td><td class=infoKey>Right Mouse or ALT + Left Mouse</td></tr>
-<tr><td align=right class=infoOperation>Zoom In/Out</td><td class=infoKey>Wheel Mouse or CTRL + Left Mouse</td></tr>
-</table>
-<p><a class=navlink href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide" target=_blank>User Guide / Documentation <img src="imgs/externalLink.png" style=externalLink></a>
-<br/><span class=menuSubInfo>How to program with OpenJSCAD: online, offline & CLI</span></p>
-<p><a class=navlink href="https://plus.google.com/115007999023701819645" rel="publisher" target=_blank>Recent Updates <img src="imgs/externalLink.png" style=externalLink></a>
-<br/><span class=menuSubInfo>Announcements of recent developments</span></p>
-<p><a class=navlink href="https://plus.google.com/communities/114958480887231067224" target=_blank>Google+ Community <img src="imgs/externalLink.png" style=externalLink></a>
-<br/><span class=menuSubInfo>Discuss with other users &amp; developers</span></p>
-<div id=examplesTitle class=navlink><a href='#' onclick='return false'>Examples</a></div>
-<div id=examples></div>
-<span class=menuSubInfo>Dozens of examples to learn from</span></p>
-<p/>
-<!--<div id=optionsTitle class=navlink><a href='#' onclick='return false'>Options</a></div>
-<div id=options>...</div>
-<span class=menuSubInfo>Your personal settings</span></p>
-<p/>-->
-<b>Supported Formats</b>
-<table class=info>
-<tr><td align=right><b>jscad</b></td><td><a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">OpenJSCAD</a> (native, import/export)</td></tr>
-<tr><td align=right><b>scad</b></td><td><a target=_blank href="http://openscad.org">OpenSCAD</a> (<a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#direct-openscad-scad-import">experimental</a>, import)</td></tr>
-<tr><td align=right><b>stl</b></td><td><a target=_blank href="http://en.wikipedia.org/wiki/STL_(file_format)">STL format</a> (experimental, import/export)</td></tr>
-<tr><td align=right><b>amf</b></td><td><a target=_blank href="http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format">AMF format</a> (experimental, import/export)</td></tr>
-</table>
-<p><a class=navlink href="#" onclick="$('#about').show(); return false;">About</a></p>
-</nav>
-</div> <!-- /menu -->
+    <div id="header">
+      <img src="imgs/title.png">
+      <div id="errordiv"></div>
+    </div>
 
-<div id=about>
-<img src="imgs/title.png"><br>
-Version <script>document.write(OpenJsCad.version);</script>
-<p>
+    <div id="menu">
+      <img id="menuHandle" src="imgs/menuHandleVL.png">
+      <nav>
+        <div id="menuVersion">Version <script>document.write(OpenJsCad.version);</script></div>
+        <p/>
+        <table class="info">
+          <tr><td align="right" class="infoOperation">Render Code</td><td class="infoKey">SHIFT + RETURN</td></tr>
+          <tr><td align="right" class="infoOperation">Rotate XZ</td><td class="infoKey">Left Mouse</td></tr>
+          <tr><td align="right" class="infoOperation">Pan</td><td class="infoKey">Middle Mouse or SHIFT + Left Mouse</td></tr>
+          <tr><td align="right" class="infoOperation">Rotate XY</td><td class="infoKey">Right Mouse or ALT + Left Mouse</td></tr>
+          <tr><td align="right" class="infoOperation">Zoom In/Out</td><td class="infoKey">Wheel Mouse or CTRL + Left Mouse</td></tr>
+        </table>
+        <p>
+          <a class="navlink" href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide" target="_blank">User Guide / Documentation <img src="imgs/externalLink.png" style="externalLink"></a>
+          <br/><span class="menuSubInfo">How to program with OpenJSCAD: online, offline & CLI</span>
+        </p>
+        <p>
+          <a class="navlink" href="https://plus.google.com/115007999023701819645" rel="publisher" target="_blank">Recent Updates <img src="imgs/externalLink.png" style="externalLink"></a>
+          <br/><span class="menuSubInfo">Announcements of recent developments</span>
+        </p>
+        <p>
+          <a class="navlink" href="https://plus.google.com/communities/114958480887231067224" target="_blank">Google+ Community <img src="imgs/externalLink.png" style="externalLink"></a>
+          <br/><span class="menuSubInfo">Discuss with other users &amp; developers</span>
+        </p>
+        <div id="examplesTitle" class="navlink"><a href='#' onclick='return false'>Examples</a></div>
+        <div id="examples"></div>
+        <span class="menuSubInfo">Dozens of examples to learn from</span>
+        <p/>
+        <!--<div id="optionsTitle" class="navlink"><a href='#' onclick='return false'>Options</a></div>
+        <div id="options">...</div>
+        <span class="menuSubInfo">Your personal settings</span></p>
+        <p/>-->
+        <b>Supported Formats</b>
+        <table class="info">
+          <tr><td align="right"><b>jscad</b></td><td><a target="_blank" href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">OpenJSCAD</a> (native, import/export)</td></tr>
+          <tr><td align="right"><b>scad</b></td><td><a target="_blank" href="http://openscad.org">OpenSCAD</a> (<a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#direct-openscad-scad-import">experimental</a>, import)</td></tr>
+          <tr><td align="right"><b>stl</b></td><td><a target="_blank" href="http://en.wikipedia.org/wiki/STL_(file_format)">STL format</a> (experimental, import/export)</td></tr>
+          <tr><td align="right"><b>amf</b></td><td><a target="_blank" href="http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format">AMF format</a> (experimental, import/export)</td></tr>
+        </table>
+        <p><a class="navlink" href="#" onclick="$('#about').show(); return false;">About</a></p>
+      </nav>
+    </div> <!-- /menu -->
+
+    <div id="about">
+      <img src="imgs/title.png">
+      <br/>Version <script>document.write(OpenJsCad.version);</script>
+      <p>
 by 
 Joost Nieuwenhuijse (core), 
 Ren&eacute; K. M&uuml;ller (UI & CLI),
@@ -172,19 +183,24 @@ Stefan Baumann (core),
 Z3 Dev (CLI & GUI),
 Eduard Bespalov (core),
 Gary Hogdson (OpenSCAD translator)
-<p>csg.js core &amp; improvements by 
+      </p>
+      <p>csg.js core &amp; improvements by 
 Evan Wallace, 
 Eduard Bespalov, 
 Joost Nieuwenhuijse, 
 Alexandre Girard
-<p>
+      </p>
+      <p>
 License: MIT License<br>
 Get your copy/clone/fork from <a href="https://github.com/Spiritdude/OpenJSCAD.org" target=_blank>GitHub: OpenJSCAD</a>
-<p><br>
-<a class=okButton href='#' onclick="$('#about').hide(); return false;"> OK </a>
-</div>
+      </p>
+      <p>
+        <br/><a class="okButton" href='#' onclick="$('#about').hide(); return false;"> OK </a>
+      </p>
+    </div> <!-- about -->
 
-<div id="editor">// -- OpenJSCAD.org logo
+    <div id="editor">
+// -- OpenJSCAD.org logo
 
 function main() {
    return union(
@@ -198,10 +214,10 @@ function main() {
       )
    ).translate([0,0,1.5]).scale(10);
 }
-</div>
+    </div> <!-- editor -->
 
 <script>
-var ex = [ 
+var ex = [
 { file:'logo.jscad', title: 'OpenJSCAD.org Logo' },
 { file:'logo.amf', title: 'OpenJSCAD.org Logo', type: 'AMF' },
 
@@ -380,35 +396,36 @@ if(me=='web-online') {
 }
 </script>
 
-<div oncontextmenu="return false;" id="viewerContext"></div> <!-- avoiding popup when right mouse is clicked -->
+    <div oncontextmenu="return false;" id="viewerContext"></div> <!-- avoiding popup when right mouse is clicked -->
 
-<div id="parametersdiv"></div>
-<div id="tail">
-<div id="statusdiv"></div>
-<div id="filedropzone">
-  <div id="filedropzone_empty">
-  <script>document.write("Drop your jscad, scad, amf, stl file or multiple jscad files "+
+    <div id="parametersdiv"></div>
+    <div id="tail">
+      <div id="statusdiv"></div>
+      <div id="filedropzone">
+        <div id="filedropzone_empty">
+<script>document.write("Drop your jscad, scad, amf, stl file or multiple jscad files "+
      (browser=='chrome'&&me=='web-online'?"or folder with jscad files ":"")+
      " here (see <a style='font-weight: normal' href='https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#support-of-include' target=_blank>details</a>) "+
      "<br>or edit OpenJSCAD or OpenSCAD source-code in built-in editor direct.");
-  </script></div>
-  <div id="filedropzone_filled">
-    <span id="currentfile">...</span>
-    <div id="filebuttons">
-      <button id="getstlbutton" style="display:none" onclick="getStl();">Get STL</button>
-      <button onclick="superviseAllFiles({forceReload:true});">Reload</button>
-      <!--button onclick="parseFile(gCurrentFile,true,false);">Debug (see below)</button-->
-	   <label for="autoreload">Auto Reload</label><input type="checkbox" name="autoreload" value="" id="autoreload" onclick="toggleAutoReload();">
-    </div>
-  </div>
-</div>
-</div>
-<div id=footer>
-OpenJSCAD.org 
-<script>document.write(OpenJsCad.version);</script>, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>
-</div>
+</script>
+       </div>
+       <div id="filedropzone_filled">
+         <span id="currentfile">...</span>
+         <div id="filebuttons">
+           <button id="getstlbutton" style="display:none" onclick="getStl();">Get STL</button>
+           <button onclick="superviseAllFiles({forceReload:true});">Reload</button>
+           <!--button onclick="parseFile(gCurrentFile,true,false);">Debug (see below)</button-->
+           <label for="autoreload">Auto Reload</label><input type="checkbox" name="autoreload" value="" id="autoreload" onclick="toggleAutoReload();">
+         </div>
+       </div>
+      </div>
+    </div> <!-- tail -->
 
-<script id=conversionWorker type="javascript/worker">
+    <div id="footer">
+OpenJSCAD.org <script>document.write(OpenJsCad.version);</script>, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>
+    </div>
+
+<script id="conversionWorker" type="javascript/worker">
 // adapted from http://www.html5rocks.com/en/tutorials/workers/basics/
 
 self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take quite some while for 1MB+ large STLs
@@ -454,12 +471,15 @@ var gRootFs = [];             // root(s) of folders
 
 var _includePath = './';
 
+$(document).ready(onload());
+
 function onload() {
    gProcessor = new OpenJsCad.Processor(document.getElementById("viewerContext"));
 
    // -- http://ace.ajax.org/#nav=howto
    gEditor = ace.edit("editor");
    gEditor.setTheme("ace/theme/chrome");
+   gEditor.$blockScrolling = Infinity;
    //document.getElementById('ace_gutter').style.background = 'none';
    gEditor.getSession().setMode("ace/mode/javascript");
    //gEditor.getSession().on('change', function(e) { ; });               
@@ -490,7 +510,7 @@ function onload() {
    }
    
    setupDragDrop();
-   //gProcessor.setDebugging(debugging); 
+   //gProcessor.setDebugging(debugging);
    if(me=='web-online') {    // we are online, fetch first example
       //    gProcessor.setJsCad(gEditor.getValue());
       docUrl = document.URL;
@@ -540,7 +560,7 @@ function onload() {
             fetchExample(data.file,data.url);
             document.location = docUrl.replace(/#.*$/,'#');       // this won't reload the entire web-page
          }
-         xhr.send(); 
+         xhr.send();
  
       } else if(docUrl.match(/#(examples\/\S+)$/)) {    // local example, e.g. http://openjscad.org/#examples/example001.jscad
          var fn = RegExp.$1;
@@ -556,7 +576,8 @@ function onload() {
 }
 
 function fetchExample(fn,url) {
-   gMemFs = []; gCurrentFiles = [];
+   gMemFs = [];
+   gCurrentFiles = [];
    
    if(showEditor) {
       $('#editor').show();
@@ -644,13 +665,13 @@ function fetchExample(fn,url) {
                fn.match(/\.(stl|obj|amf|gcode)$/i);
                var type = RegExp.$1;
                if(type=='obj') {
-                  editorSource = source = parseOBJ(source,fn);   
+                  editorSource = source = parseOBJ(source,fn);
                } else if(type=='amf') {
-                  editorSource = source = parseAMF(source,fn);   
+                  editorSource = source = parseAMF(source,fn);
                } else if(type=='gcode') {
-                  editorSource = source = parseGCode(source,fn);   
+                  editorSource = source = parseGCode(source,fn);
                } else {
-                  editorSource = source = parseSTL(source,fn);   
+                  editorSource = source = parseSTL(source,fn);
                }
                //if(url) editorSource = source = "// Remote retrieved <"+url+">\n"+editorSource;
                putSourceInEditor(source,fn);
@@ -665,7 +686,7 @@ function fetchExample(fn,url) {
 }
 
 function putSourceInEditor(src,fn) {
-   gEditor.setValue(src); 
+   gEditor.setValue(src);
    gEditor.clearSelection();
    gEditor.navigateFileStart();
 
@@ -704,7 +725,8 @@ function setupDragDrop() {
 function handleFileSelect(evt) {
   evt.stopPropagation();
   evt.preventDefault();
-  gMemFs = []; gMainFile = null;
+  gMemFs = [];
+  gMainFile = null;
   if(!evt.dataTransfer) throw new Error("Not a datatransfer (1)");
   if(!evt.dataTransfer.files) throw new Error("Not a datatransfer (2)");
 
@@ -769,7 +791,7 @@ function loadLocalFiles() {               // this is the linear drag'n'drop, a l
   var items = gCurrentFiles;
   //console.log("loadLocalFiles",items);
   gMemFsCount = 0;
-  gMemFsTotal = items.length;      
+  gMemFsTotal = items.length;
   gMemFsChanged = 0;
   
   for(var i=0; i<items.length; i++) {
@@ -835,7 +857,7 @@ function readFileAsync(f) {                // RANT: JavaScript at its finest: 50
                  }
               }
            } else {
-             gMainFile = f;  
+             gMainFile = f;
            }
            if(gMemFsChanged>0) {
               if(!gMainFile)
@@ -848,7 +870,7 @@ function readFileAsync(f) {                // RANT: JavaScript at its finest: 50
      } else {
         throw new Error("Failed to read file");
         if(gProcessor) gProcessor.clearViewer();
-		  previousScript = null;
+  previousScript = null;
      }
   };
   if(f.name.match(/\.(stl|gcode)$/)) {
@@ -904,17 +926,17 @@ function superviseAllFiles(p) {           // check if there were changes: (re-)l
 var autoReloadTimer = null;
 
 function toggleAutoReload() {
-	if (document.getElementById("autoreload").checked) {
-		autoReloadTimer = setInterval(function(){
-		  //parseFile(gCurrentFile,false,true);
-		  superviseAllFiles();
+if (document.getElementById("autoreload").checked) {
+autoReloadTimer = setInterval(function(){
+  //parseFile(gCurrentFile,false,true);
+  superviseAllFiles();
     }, 1000);
-	} else {
-		if (autoReloadTimer !== null) {
-			clearInterval(autoReloadTimer);
-			autoReloadTimer = null;
-		}
-	}
+} else {
+if (autoReloadTimer !== null) {
+clearInterval(autoReloadTimer);
+autoReloadTimer = null;
+}
+}
 }
 
 var previousScript = null;
@@ -938,7 +960,7 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
     if(gProcessor && ((!onlyifchanged) || (previousScript !== source))) {
       var fn = gCurrentFile.name;
       fn = fn.replace(/^.*\/([^\/]*)$/,"$1");     // remove path, leave filename itself
-      gProcessor.setDebugging(debugging); 
+      gProcessor.setDebugging(debugging);
       //echo(gCurrentFile.lang);
       //gEditor.getSession().setMode("ace/mode/javascript");
       var asyncComputation = false;
@@ -954,7 +976,7 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
          if(0) {
             source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;
          }
-         //gEditor.getSession().setMode("ace/mode/scad");  
+         //gEditor.getSession().setMode("ace/mode/scad");
          
       } else if(gCurrentFile.lang.match(/(stl|obj|amf|gcode)/i)) {
          OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
@@ -984,13 +1006,13 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
             fn.match(/\.(stl|obj|amf|gcode)$/i);
             var type = RegExp.$1;
             if(type=='obj') {
-               editorSource = source = parseOBJ(source,fn);   
+               editorSource = source = parseOBJ(source,fn);
             } else if(type=='amf') {
-               editorSource = source = parseAMF(source,fn);   
+               editorSource = source = parseAMF(source,fn);
             } else if(type=='gcode') {
-               editorSource = source = parseGCode(source,fn);   
+               editorSource = source = parseGCode(source,fn);
             } else {
-               editorSource = source = parseSTL(source,fn);   
+               editorSource = source = parseSTL(source,fn);
             }
          }
       } else {
@@ -1032,4 +1054,5 @@ function deleteCookie(name) {
 }
 
 </script>
-</body></html> 
+  </body>
+</html> 
