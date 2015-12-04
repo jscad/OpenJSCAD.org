@@ -130,10 +130,6 @@ canvas {
    vertical-align: middle;
 }
 
-.support {
-   vertical-align: bottom;
-}
-
 #menu, #menu nav a {
    transition: all 0.4s;
    -o-transition: all 0.4s;
@@ -238,10 +234,6 @@ canvas {
    color: #666;
 }
 
-.externalLink {
-   vertical-align: middle;
-}
-
 #examples {
    /* width: 60em; */
    width: auto;
@@ -261,16 +253,6 @@ canvas {
 
 #examples li {
    list-style-type: none;
-}
-
-#examplesList { 
-   border-bottom: 1px solid #888;
-   height: 4px;
-   overflow: hidden;
-}
-
-#examplesList:hover {
-   /*height: 100%;*/
 }
 
 #examplesHandle {
