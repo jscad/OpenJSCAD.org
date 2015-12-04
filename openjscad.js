@@ -60,6 +60,14 @@ OpenJsCad.Viewer = function(containerelement, initialdepth) {
   this.viewpointX = 0;
   this.viewpointY = -5;
   this.viewpointZ = initialdepth;
+  this.onZoomChanged = null;
+  this.plate = true;  // render plate
+
+  // state of view
+  // 0 - initialized, no object
+  // 1 - cleared, no object
+  // 2 - showing, object
+  this.state = 0;
 
   this.touch = {
     lastX: 0,
@@ -264,13 +272,6 @@ OpenJsCad.Viewer.prototype = {
 
   ZOOM_MAX: 1000,
   ZOOM_MIN: 10,
-  onZoomChanged: null,
-  plate: true,                   // render plate
-  // state of view
-  // 0 - initialized, no object
-  // 1 - cleared, no object
-  // 2 - showing, object
-  state: 0,
 
   setZoom: function(coeff) { //0...1
     coeff=Math.max(coeff, 0);
@@ -706,6 +707,7 @@ OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
 OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, callback) {
   var baselibraries = [
     "csg.js",
+    "formats.js",
     "openjscad.js",
     "openscad.js"
     //"jquery/jquery-1.9.1.js",
@@ -956,7 +958,7 @@ OpenJsCad.getParamDefinitions = function(script) {
 OpenJsCad.Processor = function(containerdiv, onchange) {
   this.containerdiv = containerdiv;
   this.onchange = onchange;
-  this.viewerdiv = null;
+
   this.viewer = null;
   this.zoomControl = null;
   //this.viewerwidth = 1200;
@@ -1027,13 +1029,12 @@ OpenJsCad.Processor.prototype = {
     viewerdiv.style.width = '100%';
     viewerdiv.style.height = '100%';
     this.containerdiv.appendChild(viewerdiv);
-    this.viewerdiv = viewerdiv;
     try {
-      //this.viewer = new OpenJsCad.Viewer(this.viewerdiv, this.viewerwidth, this.viewerheight, this.initialViewerDistance);
-      //this.viewer = new OpenJsCad.Viewer(this.viewerdiv, viewerdiv.offsetWidth, viewer.offsetHeight, this.initialViewerDistance);
-      this.viewer = new OpenJsCad.Viewer(this.viewerdiv, this.initialViewerDistance);
+      //this.viewer = new OpenJsCad.Viewer(viewerdiv, this.viewerwidth, this.viewerheight, this.initialViewerDistance);
+      //this.viewer = new OpenJsCad.Viewer(viewerdiv, viewerdiv.offsetWidth, viewer.offsetHeight, this.initialViewerDistance);
+      this.viewer = new OpenJsCad.Viewer(viewerdiv, this.initialViewerDistance);
     } catch(e) {
-      this.viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad currently requires Google Chrome or Firefox with WebGL enabled";
+      viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad currently requires Google Chrome or Firefox with WebGL enabled";
     }
     //Zoom control
     if(0) {
