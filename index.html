@@ -2,12 +2,12 @@
 <html  xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-<!-- 
+<!--
 == OpenJSCAD.org, Copyright (c) 2013-2015 by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License ==
-   with some code from OpenJsCad processfile.html by Joost Nieuwenhuijse 
+   with some code from OpenJsCad processfile.html by Joost Nieuwenhuijse
    in conjunction with csg.js, openjscad.js, lightgl.js by various authors (see them listed in the individual files)
 
-Purpose: 
+Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
@@ -57,6 +57,7 @@ Todo:
     <script src="openscad-openjscad-translator.js"></script>
     <script src="ace/ace.js?0.3.1" charset="utf-8"></script>
     <script src="js/ui-drag-drop.js" charset="utf-8"></script>
+    <script src="js/ui-editor.js" charset="utf-8"></script>
 
     <script lang="JavaScript">
       var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
@@ -92,7 +93,7 @@ Todo:
               $('#examples').hide();
             });
 
-        // -- Options 
+        // -- Options
           $('#optionsTitle').click(function() {
               $('#options').css('height','auto');
               $('#options').show();
@@ -114,7 +115,7 @@ Todo:
             // save to cookie
               saveOptions();
             });
-   
+
           $('#plate').change(function() {
               if($('#plate').val()=='custom') {
                 $('#customPlate').show();
@@ -177,18 +178,18 @@ Todo:
       <img src="imgs/title.png">
       <br/>Version <script>document.write(OpenJsCad.version);</script>
       <p>
-by 
-Joost Nieuwenhuijse (core), 
+by
+Joost Nieuwenhuijse (core),
 Ren&eacute; K. M&uuml;ller (UI & CLI),
 Stefan Baumann (core),
 Z3 Dev (CLI & GUI),
 Eduard Bespalov (core),
 Gary Hogdson (OpenSCAD translator)
       </p>
-      <p>csg.js core &amp; improvements by 
-Evan Wallace, 
-Eduard Bespalov, 
-Joost Nieuwenhuijse, 
+      <p>csg.js core &amp; improvements by
+Evan Wallace,
+Eduard Bespalov,
+Joost Nieuwenhuijse,
 Alexandre Girard
       </p>
       <p>
@@ -232,7 +233,7 @@ var ex = [
 { file:'example005.jscad', title: 'Pavillon' },
 // { file:'center.jscad', title: 'Centers of Primitives' },
 
-// { file:'bunch-cubes.jscad', title: 'Bunch of Cubes', new: true }, 
+// { file:'bunch-cubes.jscad', title: 'Bunch of Cubes', new: true },
 { file:'lookup.jscad', title: 'Lookup()', spacing: true },
 { file:'expand.jscad', title: 'Expand()' },
 { file:'rectangular_extrude.jscad', title: 'Rectangular_extrude()' },
@@ -272,12 +273,12 @@ var ex = [
 { file:'platonics/', title: 'Recursive Include(): Platonics', spacing: true },
 
 { file:'3d_sculpture-VernonBussler.stl', title: '3D Model: 3D Sculpture (Vernon Bussler)', type: 'STL', spacing: true },
-{ file:'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' },  
-{ file:'thing_7-Zomboe.stl', title: '3D Model: Thing 7 / Flower (Zomboe)', type: 'STL' },  
+{ file:'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' },
+{ file:'thing_7-Zomboe.stl', title: '3D Model: Thing 7 / Flower (Zomboe)', type: 'STL' },
 // { file:'organic_flower-Bogoboy23.stl', title: '3D Model: Organic Flower (Bogoboy23)', type: 'STL' }, // all wrong normals!!
 { file:'yoda-RichRap.stl', title: '3D Model: Yoda (RichRap)', type: 'STL' },
 // { url:'http://pastebin.com/raw.php?i=wJLctyAQ', title: 'OpenJSCAD.org Logo', type:'Remote JSCAD' }
-// { file:'treefrog-Jerrill.stl', title: '3D Model: Treefrog (Jerrill)', type: 'STL' },    // nice frog, yet slow 
+// { file:'treefrog-Jerrill.stl', title: '3D Model: Treefrog (Jerrill)', type: 'STL' },    // nice frog, yet slow
 // { file:'klein_bottle-DizingOf.stl', title: '3D Model: Klein Bottle (DizingOf)', type: 'STL' } // too slow, over 400k triangles, huge memory consumption
 ];
 if(me=='web-online') {
@@ -321,23 +322,23 @@ if(me=='web-online') {
          if(getCookie(k)) $('#'+k).val(getCookie(k))
       }
    }
-   
+
    var src = '';
    src += "<form id=optionsForm onsubmit='saveOptions(); return false'>";
    src += "<div class=optionGroup><b>Your Identity / Full Name & Email</b><br/>";
    src += "<input id=author type=text name=author size=30><div class=optionInfo>Applies when you export AMF (sets metadata)</div></div>";
 
    var licenseOptions = {
-      "Public Domain": "Public Domain", 
-      "CC BY": "Creative Commons CC BY", 
-      "CC BY-ND": "Creative Commons CC BY-ND", 
-      "CC BY-NC": "Creative Commons CC BY-NC", 
-      "CC BY-SA": "Creative Commons CC BY-SA", 
-      "CC BY-NC-SA": "Creative Commons CC BY-NC-SA", 
-      "CC BY-NC-ND": "Creative Commons CC BY-NC-ND", 
-      "MIT": "MIT License", 
-      "GPLv2": "GPLv2", 
-      "GPLv3": "GPLv3", 
+      "Public Domain": "Public Domain",
+      "CC BY": "Creative Commons CC BY",
+      "CC BY-ND": "Creative Commons CC BY-ND",
+      "CC BY-NC": "Creative Commons CC BY-NC",
+      "CC BY-SA": "Creative Commons CC BY-SA",
+      "CC BY-NC-SA": "Creative Commons CC BY-NC-SA",
+      "CC BY-NC-ND": "Creative Commons CC BY-NC-ND",
+      "MIT": "MIT License",
+      "GPLv2": "GPLv2",
+      "GPLv3": "GPLv3",
       "Copyright": "Copyright",
    };
    src += "<div class=optionGroup><b>Default License</b><br/>";
@@ -350,7 +351,7 @@ if(me=='web-online') {
 
    if(0) {
       var renderCodeOptions = {
-         shiftReturn: "SHIFT+RETURN", 
+         shiftReturn: "SHIFT+RETURN",
          auto: "Automatic"
       };
       src += "<div class=optionGroup><b>Render Code</b></br>";
@@ -376,7 +377,6 @@ if(me=='web-online') {
       src += "</select><br/>";
       src += "<div style='display: none' id=customPlate>Custom: <input type=text id=plateCustomX name=plateCustomX size=4 value='125'> x <input type=text id=plateCustomY name=plateCustomY size=4 value='125'> [mm]</div>";
       src += "</div>";
-      
    }
    if(1) {
       var themeOptions = {
@@ -391,7 +391,7 @@ if(me=='web-online') {
       src += "</select><br/>";
       src += "</div>";
    }
-   
+
    src += "</form>";
    $('#options').html(src);
 }
@@ -430,7 +430,7 @@ OpenJSCAD.org <script>document.write(OpenJsCad.version);</script>, MIT License, 
 // adapted from http://www.html5rocks.com/en/tutorials/workers/basics/
 
 self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take quite some while for 1MB+ large STLs
-   var data = e.data; // JSON.parse(e.data);
+   var data = e.data;
 
    if(data.url) {     // RANT: why do something simple, when it can be done complicate: Workers & importScripts() (guys!!)
       var url = data.url;
@@ -459,9 +459,7 @@ self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take q
 </script>
 
 <script>
-var gCurrentFile = null;
 var gProcessor = null;
-var gEditor = null;
 
 var _includePath = './';
 
@@ -469,44 +467,11 @@ $(document).ready(onload());
 
 function onload() {
    gProcessor = new OpenJsCad.Processor(document.getElementById("viewerContext"));
-
-   // -- http://ace.ajax.org/#nav=howto
-   gEditor = ace.edit("editor");
-   gEditor.setTheme("ace/theme/chrome");
-   gEditor.$blockScrolling = Infinity;
-   //document.getElementById('ace_gutter').style.background = 'none';
-   gEditor.getSession().setMode("ace/mode/javascript");
-   //gEditor.getSession().on('change', function(e) { ; });               
-
-   ['Shift-Return'].forEach(function(key) {
-      gEditor.commands.addCommand({
-         name: 'myCommand',
-         bindKey: { win: key, mac: key },
-         exec: function(editor) {
-            var src = editor.getValue();
-            if(src.match(/^\/\/\!OpenSCAD/i)) {
-               //editor.getSession().setMode("ace/mode/scad");
-               src = openscadOpenJscadParser.parse(src);
-            } else {
-               //editor.getSession().setMode("ace/mode/javascript");
-            }
-            gMemFs = [];
-            gProcessor.setJsCad(src);
-         },
-      });
-   });
-   if(0) {     // for reload when drag'n'dropped file(s) ([Reload] equivalent)
-      viewer.onkeypress = function(evt) {
-         if(evt.shiftKey&&evt.keyCode=='13') {   // Shift + Return
-            superviseFiles({forceReload:true});
-         }
-      };
-   }
-   
+   setUpEditor();
    setupDragDrop();
+
    //gProcessor.setDebugging(debugging);
    if(me=='web-online') {    // we are online, fetch first example
-      //    gProcessor.setJsCad(gEditor.getValue());
       docUrl = document.URL;
       params = {};
       docTitle = '';
@@ -555,34 +520,33 @@ function onload() {
             document.location = docUrl.replace(/#.*$/,'#');       // this won't reload the entire web-page
          }
          xhr.send();
- 
+
       } else if(docUrl.match(/#(examples\/\S+)$/)) {    // local example, e.g. http://openjscad.org/#examples/example001.jscad
          var fn = RegExp.$1;
          fetchExample(fn);
          document.location = docUrl.replace(/#.*$/,'#');
-         
+
       } else {
          fetchExample('examples/'+ex[0].file);
       }
-   } else {
-      gProcessor.setJsCad(gEditor.getValue());
-   }
+  } else {
+    gProcessor.setJsCad(getSourceFromEditor());
+  }
 }
 
 function fetchExample(fn,url) {
    gMemFs = [];
-   gCurrentFiles = [];
-   
-   if(showEditor) {
+
+   if(showEditor) { // FIXME test for the element
       $('#editor').show();
    } else {
       $('#editor').hide();
    }
-   
+
    if(fn.match(/\.[^\/]+$/)) {     // -- has extension
       ;                                  // -- we could already check if valid extension (later)
    } else {                              // -- folder referenced
-      if(!fn.match(/\/$/)) 
+      if(!fn.match(/\/$/))
          fn += "/";      // add tailing /
       fn += 'main.jscad';
    }
@@ -601,14 +565,12 @@ function fetchExample(fn,url) {
          var path = fn;
 
          _includePath = path.replace(/\/[^\/]+$/,'/');
-         
-         //gEditor.getSession().setMode("ace/mode/javascript");
+
          if(fn.match(/\.jscad$/i)||fn.match(/\.js$/i)) {
             OpenJsCad.status("Processing "+fn+" <img id=busy src='imgs/busy.gif'>");
-            //if(url) editorSource = "// Remote retrieved <"+url+">\n"+editorSource;
             putSourceInEditor(editorSource,fn);
             gProcessor.setJsCad(source,fn);
-            
+
          } else if(fn.match(/\.scad$/i)) {
             OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
             editorSource = source;
@@ -620,10 +582,9 @@ function fetchExample(fn,url) {
             if(0) {
                source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;
             }
-            //gEditor.getSession().setMode("ace/mode/scad");
             putSourceInEditor(editorSource,fn);
             gProcessor.setJsCad(source,fn);
-            
+
          } else if(fn.match(/\.(stl|obj|amf|gcode)$/i)) {
             OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
             if(!fn.match(/\.amf/)) {
@@ -663,7 +624,6 @@ function fetchExample(fn,url) {
                } else {
                   editorSource = source = parseSTL(source,fn);
                }
-               //if(url) editorSource = source = "// Remote retrieved <"+url+">\n"+editorSource;
                putSourceInEditor(source,fn);
             }
             if(!asyncComputation) {
@@ -673,16 +633,6 @@ function fetchExample(fn,url) {
       }
       xhr.send();
    }
-}
-
-function putSourceInEditor(src,fn) {
-   gEditor.setValue(src);
-   gEditor.clearSelection();
-   gEditor.navigateFileStart();
-
-   previousFilename = fn;
-   previousScript = src;
-   gPreviousModificationTime = "";
 }
 
 // Show all exceptions to the user:
@@ -716,4 +666,4 @@ function deleteCookie(name) {
 
 </script>
   </body>
-</html> 
+</html>

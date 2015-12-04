@@ -147,7 +147,6 @@ function loadLocalFiles() {
 // set one file (the one dragged) or main.jscad
 function setCurrentFile(file) {
   gCurrentFile = file;
-  gPreviousModificationTime = "";
 
   console.log("execute: "+file.name);
   if(file.name.match(/\.(jscad|js|scad|stl|obj|amf|gcode)$/i)) { // FIXME where is the list?
