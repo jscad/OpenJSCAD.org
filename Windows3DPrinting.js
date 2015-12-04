@@ -470,13 +470,13 @@ var Windows3DPrinting = {};
     function addButton(parent) {
         ///<summary>Add the print button</summary>
         var printButton = document.createElement("button");
-        printButton.setAttribute("style", "position:absolute; left:5px; bottom:5px;");
+        printButton.setAttribute("style", "position:absolute; left:5px; bottom:5px; font-size:7pt;");
         var icon = document.createElement("span");
         icon.setAttribute("style", "font-family: Segoe MDL2 Assets; font-size:24pt;");
         icon.appendChild(document.createTextNode(""));//"&#xE2F7;"));
         printButton.appendChild(icon);
         printButton.appendChild(document.createElement("br"));
-        printButton.appendChild(document.createTextNode("Print"));
+        printButton.appendChild(document.createTextNode("3D Print"));
         printButton.onclick = print3D;
 
         parent.appendChild(printButton);

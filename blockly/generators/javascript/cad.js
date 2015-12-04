@@ -29,6 +29,8 @@ Blockly.JavaScript['cad_translate'] = function (block) {
     var text_y = block.getFieldValue('Y');
     var text_z = block.getFieldValue('Z');
     var code = "\n.translate([" + (text_x === "" ? 0 : text_x) + ", " + (text_y === "" ? 0 : text_y) + ", " + (text_z === "" ? 0 : text_z) + "])";
+
+    //if (block.childBlocks_.length === 0 &&)
     return code;
 };
 
@@ -60,6 +62,9 @@ Blockly.JavaScript['cad_subtract'] = function (block) {
 };
 
 Blockly.JavaScript['cad_union'] = function (block) {
+    //if (block.childBlocks_.length === 1 && block.childBlocks_[0].type === "controls_repeat_ext") {
+    //    var arrayFunction = "function(){" + 
+    //}
     var statements_object = Blockly.JavaScript.statementToCode(block, 'Object');
     var code = "\n.union(" + statements_object + ")";
     return code;
