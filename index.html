@@ -577,11 +577,21 @@ document.write("Drop your jscad, scad, amf, stl file or multiple jscad files " +
                     }
                     xhr.send();
 
-                } else if (docUrl.match(/#(examples\/\S+)$/)) {    // local example, e.g. http://openjscad.org/#examples/example001.jscad
+                } else if (docUrl.match(/#(examples\/\S+)$/)) { // local example, e.g. http://openjscad.org/#examples/example001.jscad
                     var fn = RegExp.$1;
                     fetchExample(fn);
                     document.location = docUrl.replace(/#.*$/, '#');
+                } else if (docUrl.indexOf("?token=") > 0) {
+                    console.log("Loading from local token + " + docUrl);
 
+                    Windows3DPrinting.activateFileAsync().then(function (args) {
+                        console.log("Activated file loaded: " + args.source);
+                        OpenJsCad.status("Processing " + args.filename + " <img id=busy src='imgs/busy.gif'>");
+                        
+                        putSourceInEditor(args.source, args.filename);
+
+                        gProcessor.setJsCad(args.source, args.filename);
+                    });
                 } else {
                     fetchExample('examples/' + ex[0].file);
                 }
