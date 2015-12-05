@@ -74,16 +74,18 @@
             <block type="cad_union"></block>
             <block type="cad_subtract"></block>
             <block type="cad_intersect"></block>
+            <block type="cad_encapsulate"></block>
+            <block type="cad_array"></block>
         </category>
         <category name="Shapes" colour="210">
             <block type="cad_circle"></block>
             <block type="cad_rectangle"></block>
         </category>
         <sep></sep>
-        <!--<category name="Control">
+        <category name="Control">
             <block type="controls_if"></block>
-            <block type="controls_repeat_ext"></block>
-        </category>-->
+            <!--<block type="controls_repeat_ext"></block>-->
+        </category>
         <category name="Logic">
             <block type="logic_compare"></block>
         </category>
@@ -95,10 +97,10 @@
             <block type="text"></block>
             <block type="text_print"></block>
         </category>-->
-        <!--
+        
              <sep></sep>
        <category name="Variables" custom="VARIABLE"></category>
-        <category name="Functions" custom="PROCEDURE"></category>-->
+        <category name="Functions" custom="PROCEDURE"></category>
     </xml>
 
     <script>
@@ -107,10 +109,10 @@
         function updateSource() {
             var code = Blockly.JavaScript.workspaceToCode(workspace);
 
-            if (code.indexOf("\n\n") >= 0) {
-                console.log("multiple objects - not sending code.");
-                return;
-            }
+            //if (code.indexOf("\n\n") >= 0) {
+            //    console.log("multiple objects - not sending code:\n" + code);
+            //    return;
+            //}
 
             try {
                 if (typeof window.opener === "undefined") {
@@ -124,6 +126,7 @@
 
         }
 
+       
         function initialize() {
             var blocklyArea = document.getElementById('blocklyArea');
             var blocklyDiv = document.getElementById('blocklyDiv');
@@ -141,7 +144,14 @@
                  }
             });
 
-            window.setTimeout(BlocklyStorage.restoreBlocks, 0);
+
+            window.setTimeout(function() {
+                BlocklyStorage.restoreBlocks(workspace);
+                if (workspace.topBlocks_.length === 0) {
+                    var xml = '<xml><block type="cad_model" deletable="false" movable="false"></block></xml>';
+                    Blockly.Xml.domToWorkspace(workspace, Blockly.Xml.textToDom(xml));
+                }
+            }, 0);
 
             BlocklyStorage.backupOnUnload();
 

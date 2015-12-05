@@ -39,18 +39,16 @@
             return;
         }
 
-        var header = "// Model from Blockly\n\n";
+        var header = "// Model from Block Coding\n\n";
 
         // the extrudeText() helper function
         var extrudeText = "function extrudeText(text, width, height){\n    var l = vector_text(0, 0, text);\n    var o = [];\n    l.forEach(function(pl) {\n        o.push(rectangular_extrude(pl, {w: width, h: height}));\n    });\n\n    return union(o);\n}\n\n";
-        
-        var main = "function main() {\n    return " + event.data + ";\n}";
 
         if (event.data.indexOf("extrudeText") === -1) {
-            script = header + main;
+            script = header + event.data;
         } else {
             // extrudeText() is used in the code
-            script = header + extrudeText + main;
+            script = header + extrudeText + event.data;
         }
 
         Blockly.updateCode();

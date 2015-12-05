@@ -1,28 +1,36 @@
-﻿'use strict';
+﻿'use strict';   
 
 goog.provide('Blockly.Blocks.cad');
 
 goog.require('Blockly.Blocks');
 
+Blockly.Blocks['cad_model'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("model");
+        this.appendStatementInput("NAME");
+        this.setColour(330);
+        this.setTooltip("Create your model inside this block.");
+        this.setHelpUrl('http://www.example.com/');
+    }
+};
+
 Blockly.Blocks['cad_text'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField("text");
-        this.appendValueInput("TextValue")
-            .setCheck("String")
-            .appendField(new Blockly.FieldTextInput("ABC"), "TextString");
+            .appendField("text")
+            .appendField(new Blockly.FieldTextInput(""), "Text");
         this.appendValueInput("Width")
             .setCheck("Number")
-            .appendField("width")
-            .appendField(new Blockly.FieldTextInput("2"), "width");
+            .appendField("width");
         this.appendValueInput("Height")
             .setCheck("Number")
-            .appendField("height")
-            .appendField(new Blockly.FieldTextInput("2"), "height");
+            .appendField("height");
         this.setPreviousStatement(true, "Solid");
         this.setNextStatement(true, ["Transform", "Operation"]);
         this.setColour(20);
         this.setTooltip('');
+        this.setInputsInline(false);
         this.setHelpUrl('http://www.example.com/');
     }
 };
@@ -33,24 +41,21 @@ Blockly.Blocks['cad_cube'] = {
             .appendField("cube");
         this.appendValueInput("X")
             .setCheck("Number")
-            .appendField("x")
-            .appendField(new Blockly.FieldTextInput("10"), "X");
+            .appendField("x");
         this.appendValueInput("Y")
             .setCheck("Number")
-            .appendField("y")
-            .appendField(new Blockly.FieldTextInput("10"), "Y");
+            .appendField("y");
         this.appendValueInput("Z")
             .setCheck("Number")
-            .appendField("z")
-            .appendField(new Blockly.FieldTextInput("10"), "Z");
-        this.appendValueInput("Center")
-            .setCheck("Boolean")
+            .appendField("z");
+        this.appendDummyInput()
             .appendField("center")
             .appendField(new Blockly.FieldCheckbox("FALSE"), "Center");
         this.setPreviousStatement(true, "Solid");
         this.setNextStatement(true, ["Transform", "Operation"]);
         this.setColour(20);
         this.setTooltip('Create a cube');
+        this.setInputsInline(false);
         this.setHelpUrl('http://www.example.com/');
     }
 };
@@ -61,15 +66,14 @@ Blockly.Blocks['cad_sphere'] = {
             .appendField("sphere");
         this.appendValueInput("Radius")
             .setCheck("Number")
-            .appendField("radius")
-            .appendField(new Blockly.FieldTextInput("5"), "Radius");
-        this.appendValueInput("Center")
-            .setCheck("Boolean")
+            .appendField("radius");
+        this.appendDummyInput()
             .appendField("center")
             .appendField(new Blockly.FieldCheckbox("FALSE"), "Center");
         this.setPreviousStatement(true, "Solid");
         this.setNextStatement(true, ["Transform", "Operation"]);
         this.setColour(20);
+        this.setInputsInline(false);
         this.setTooltip('Create a sphere');
         this.setHelpUrl('http://www.example.com/');
     }
@@ -81,12 +85,10 @@ Blockly.Blocks['cad_cylinder'] = {
             .appendField("cylinder");
         this.appendValueInput("Radius")
             .setCheck("Number")
-            .appendField("radius")
-            .appendField(new Blockly.FieldTextInput("10"), "radius");
+            .appendField("radius");
         this.appendValueInput("Height")
             .setCheck("Number")
-            .appendField("height")
-            .appendField(new Blockly.FieldTextInput("10"), "Height");
+            .appendField("height");
         this.setPreviousStatement(true, "Solid");
         this.setNextStatement(true, ["Operation", "Transform"]);
         this.setColour(20);
@@ -122,7 +124,7 @@ Blockly.Blocks['cad_torus'] = {
             .appendField("inner radius");
         this.appendValueInput("ro")
             .setCheck("Number")
-            .appendField("outer adius");
+            .appendField("outer radius");
         this.setPreviousStatement(true, "Solid");
         this.setNextStatement(true, ["Operation", "Transform"]);
         this.setColour(20);
@@ -138,10 +140,9 @@ Blockly.Blocks['cad_linear_extrude'] = {
         this.appendValueInput("height")
             .setCheck("Number")
             .appendField("height");
-        this.appendValueInput("twist")
-            .setCheck("Number")
+        this.appendDummyInput()
             .appendField("twist")
-            .appendField(new Blockly.FieldAngle("0"), "Angle");
+            .appendField(new Blockly.FieldAngle("0"), "twist");
         this.appendValueInput("shape")
             .setCheck("Shape")
             .appendField("shape");
@@ -149,6 +150,7 @@ Blockly.Blocks['cad_linear_extrude'] = {
         this.setNextStatement(true, ["Operation", "Transform"]);
         this.setColour(20);
         this.setTooltip('');
+        this.setInputsInline(false);
         this.setHelpUrl('http://www.example.com/');
     }
 };
@@ -159,16 +161,13 @@ Blockly.Blocks['cad_translate'] = {
             .appendField("translate");
         this.appendValueInput("X")
             .setCheck("Number")
-            .appendField("x")
-            .appendField(new Blockly.FieldTextInput("0"), "X");
-        this.appendValueInput( "Y")
+            .appendField("x");
+        this.appendValueInput("Y")
             .setCheck("Number")
-            .appendField("y")
-            .appendField(new Blockly.FieldTextInput("0"), "Y");
+            .appendField("y");
         this.appendValueInput("Z")
             .setCheck("Number")
-            .appendField("z")
-            .appendField(new Blockly.FieldTextInput("0"), "Z");
+            .appendField("z");
         this.setColour(65);
         this.setPreviousStatement(true, ["Operation", "Transform", "Solid"]);
         this.setNextStatement(true, ["Operation", "Transform"]);
@@ -183,16 +182,13 @@ Blockly.Blocks['cad_scale'] = {
             .appendField("scale");
         this.appendValueInput("X")
             .setCheck("Number")
-            .appendField("x")
-            .appendField(new Blockly.FieldTextInput("1"), "X");
+            .appendField("x");
         this.appendValueInput("Y")
             .setCheck("Number")
-            .appendField("y")
-            .appendField(new Blockly.FieldTextInput("1"), "Y");
+            .appendField("y");
         this.appendValueInput("Z")
             .setCheck("Number")
-            .appendField("z")
-            .appendField(new Blockly.FieldTextInput("1"), "Z");
+            .appendField("z");
         this.setColour(65);
         this.setPreviousStatement(true, ["Operation", "Transform", "Solid"]);
         this.setNextStatement(true, ["Operation", "Transform"]);
@@ -245,37 +241,35 @@ Blockly.Blocks['cad_rotate'] = {
         this.appendDummyInput()
             .appendField("rotate")
             .appendField(new Blockly.FieldDropdown([["X", "X"], ["Y", "Y"], ["Z", "Z"]]), "Axis");
-        this.appendValueInput("NAME")
+        this.appendDummyInput()
             .appendField("angle")
             .appendField(new Blockly.FieldAngle("0"), "Angle");
         this.setPreviousStatement(true);
         this.setNextStatement(true);
         this.setColour(65);
-        this.setTooltip('rotate the shape along the x, y, or z axis.');
+        this.setTooltip('rotate the solid along the x, y, or z axis.');
+        this.setInputsInline(false);
         this.setPreviousStatement(true, ["Operation", "Transform", "Solid"]);
         this.setNextStatement(true, ["Operation", "Transform"]);
         this.setHelpUrl('http://www.example.com/');
     }
 };
 
-
 Blockly.Blocks['cad_color'] = {
     init: function() {
         this.appendDummyInput()
-            .appendField("color");
-        this.appendValueInput("Color")
-            .appendField("value")
+            .appendField("color")
             .appendField(new Blockly.FieldColour("#ff0000"), "Color");
         this.appendStatementInput("Shape")
             .setCheck(["Solid", "Operation", "Modifier"]);
         this.setPreviousStatement(true, "Modifier");
         this.setNextStatement(true, "Transform");
         this.setColour(120);
+        this.setInputsInline(false);
         this.setTooltip('');
         this.setHelpUrl('http://www.example.com/');
     }
 };
- 
 
 Blockly.Blocks['cad_rectangle'] = {
     init: function () {
@@ -303,6 +297,36 @@ Blockly.Blocks['cad_circle'] = {
             .appendField("radius");
         this.setOutput(true, "Shape");
         this.setColour(210);
+        this.setTooltip('');
+        this.setHelpUrl('http://www.example.com/');
+    }
+};
+
+Blockly.Blocks['cad_encapsulate'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("encapsulate");
+        this.appendStatementInput("Child");
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setColour(120);
+        this.setTooltip('Encapsulate a solid so that it can be used in another block.');
+        this.setHelpUrl('http://www.example.com/');
+    }
+};
+
+Blockly.Blocks['cad_array'] = {
+    init: function () {
+        this.appendValueInput("Index")
+            .setCheck("Number")
+            .appendField("array ")
+            .appendField(new Blockly.FieldVariable("index"), "Index")
+            .appendField("size");
+        this.appendStatementInput("Contents");
+        this.setInputsInline(true);
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setColour(120);
         this.setTooltip('');
         this.setHelpUrl('http://www.example.com/');
     }
