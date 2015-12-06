@@ -556,6 +556,11 @@ var Windows3DPrinting = {};
         /// <summary>Add the 3D print button if running on Windows 10 as a 
         /// hosted web app.</summary>
         if (typeof Windows === "undefined") {
+
+            if (navigator.userAgent.indexOf("Windows NT 10.0") > 0) {
+                // Display the Windows 10 Badge only when running on Windows 10                
+                document.getElementById("Windows10Badge").style.display = "block";
+            }
             // this should only run inside a Windows 10 hosted web app.
             return;
         }
