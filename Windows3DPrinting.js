@@ -488,31 +488,29 @@ var Windows3DPrinting = {};
         }
     }
 
-    function activateFiles(files) {
+    function loadFileAsync(file) {
+        console.log("Reading file " + file.path);
+
         /// <summary>Put the text of the first file into the editor</summary>
         /// <param name="files" type="array">array of Windows.Storage.StorageFile objects</param>
-        jscadFile = files[0];
-        var fileIo = Windows.Storage.FileIO;
+        jscadFile = file;
+        var fileIo = Windows.Storage.FileIO,
+            sourceCode;
 
-        fileIo.readTextAsync(jscadFile).then(function(text) {
-            putSourceInEditor(text, jscadFile.name);
+        return fileIo.readTextAsync(jscadFile).then(function (text) {
+            console.log("Getting basic properties...");
+            sourceCode = text;
 
             return jscadFile.getBasicPropertiesAsync();
-        }).then(function(basicProperties) {
+        }).then(function (basicProperties) {
+            console.log("returning async data...");
             fileDateModified = basicProperties.dateModified;
-        });
-    }
 
-    function onActivated(eventArgs) {
-        /// <summary>Application activated event handler</summary>
-        /// <param name="eventArgs" type="Windows.ApplicationModel.Activation.FileActivatedEventArgs">file activated event arguments</param>
-        switch (eventArgs.kind) {
-            case Windows.ApplicationModel.Activation.ActivationKind.file:
-                activateFiles(eventArgs.files);
-                break;
-            default:
-                break;
-        }
+            return {
+                source: sourceCode,
+                filename: jscadFile.name
+            };
+        });
     }
 
     function onFocus() {
@@ -546,10 +544,26 @@ var Windows3DPrinting = {};
 
     function addFileActivation() {
         /// <summary>Add a file activation event</summary>
-        var webUi = Windows.UI.WebUI.WebUIApplication;
-        webUi.addEventListener("activated", onActivated);
 
         window.addEventListener("focus", onFocus);
+    }
+
+    Windows3DPrinting.activateFileAsync = function () {
+        ///<summary>Activate a file and return a promise when the file was activated</summary>
+
+        if (document.location.search.indexOf("?token=") === 0) {
+            var token = document.location.search.substr(7),
+                futureAccessList = Windows.Storage.AccessCache.StorageApplicationPermissions.futureAccessList;
+
+            console.log("Activated file token ", token);
+
+            return futureAccessList.getItemAsync(token).then(function (file) {
+                console.log("Activating file ", file.path);
+                futureAccessList.remove(token);
+
+                return loadFileAsync(file);
+            });
+        }
     }
 
     Windows3DPrinting.initialize = function (processor) {
