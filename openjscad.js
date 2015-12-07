@@ -672,14 +672,11 @@ OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
       }\
       importScripts(url+fn);\
     } else {\
-      //console.log('SYNC checking gMemFs for '+fn);\
       if(gMemFs[fn]) {\
-        //console.log('found locally & eval:',gMemFs[fn].name);\
         eval(gMemFs[fn].source); return;\
       }\
       var xhr = new XMLHttpRequest();\
       xhr.open('GET',_includePath+fn,false);\
-      //console.log('include:'+_includePath+fn);\
       xhr.onload = function() {\
         var src = this.responseText;\
         eval(src);\
@@ -731,7 +728,7 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
     try {
       f = new Function(src);
     } catch(e) {
-      this.setError(i+": "+e.message);
+      throw new Error(i+':'+e.message);
     }
   }
   var workerscript = "//ASYNC\n";
@@ -1381,6 +1378,7 @@ OpenJsCad.Processor.prototype = {
         if(e.stack) {
           errtxt += '\nStack trace:\n'+e.stack;
         } 
+        that.setError(errtxt);
         that.statusspan.innerHTML = "Error.";
         that.state = 3; // incomplete
       }
