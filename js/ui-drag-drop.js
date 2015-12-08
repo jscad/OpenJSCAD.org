@@ -80,12 +80,13 @@ function handleFileSelect(evt) {
     gMemFsChanged = 0;
     gRootFs = [];
     for(var i=0; i<items.length; i++) {
+       var item = items[i];
        walkFileTree(items[i].webkitGetAsEntry());
        gRootFs.push(items[i].webkitGetAsEntry());
     }
   }
-// FIXME determine existance of functionality via other methods
-  if(browser=='firefox' || me=='web-offline') {     // -- fallback, walkFileTree won't work with file://
+// use the files list if not already processed above
+  if(!evt.dataTransfer.items) {
     if(evt.dataTransfer.files.length>0) {
       gCurrentFiles = [];                              // -- be aware: gCurrentFiles = evt.dataTransfer.files won't work, as rewriting file will mess up the array
       for(var i=0; i<evt.dataTransfer.files.length; i++) {
@@ -93,7 +94,7 @@ function handleFileSelect(evt) {
       }
       loadLocalFiles();
     } else {
-      throw new Error("Please drop a single jscad, scad, stl file, or multiple jscad files");
+      throw new Error("Please drop and drop one or more files");
     }
   }
 };
@@ -108,7 +109,7 @@ function walkFileTree(item,path) {
  if(item.isFile) {
    item.file(function(file) {                // this is also asynchronous ... (making everything complicate)
      if(file.name.match(/\.(jscad|js|scad|obj|stl|amf|gcode)$/)) {   // FIXME now all files OpenJSCAD can handle
-       console.log("walkFileTree File: "+path+item.name);
+       //console.log("walkFileTree File: "+path+item.name);
        gMemFsTotal++;
        gCurrentFiles.push(file);
        readFileAsync(file);
@@ -116,7 +117,7 @@ function walkFileTree(item,path) {
    });
   } else if(item.isDirectory) {
     var dirReader = item.createReader();
-    console.log("walkFileTree Folder: "+item.name);
+    //console.log("walkFileTree Folder: "+item.name);
     dirReader.readEntries(function(entries) {
       // console.log("===",entries,entries.length);
       for(var i=0; i<entries.length; i++) {
@@ -130,14 +131,14 @@ function walkFileTree(item,path) {
 // this is the linear drag'n'drop, a list of files to read (when folders aren't supported)
 function loadLocalFiles() {
   var items = gCurrentFiles;
-  console.log("loadLocalFiles",items);
+  //console.log("loadLocalFiles",items);
   gMemFsCount = 0;
   gMemFsTotal = items.length;
   gMemFsChanged = 0;
 
   for(var i=0; i<items.length; i++) {
     var f = items[i];
-    console.log(f);
+    //console.log(f);
     readFileAsync(f);
   }
 };
@@ -146,11 +147,11 @@ function loadLocalFiles() {
 function setCurrentFile(file) {
   gCurrentFile = file;
 
-  console.log("execute: "+file.name);
+  //console.log("execute: "+file.name);
   if(file.name.match(/\.(jscad|js|scad|stl|obj|amf|gcode)$/i)) { // FIXME where is the list?
     gCurrentFile.lang = RegExp.$1;
   } else {
-    throw new Error("Please drop a file with .jscad, .scad or .stl extension");
+    throw new Error("Please drag and drop a compatible file");
   }
   if(file.size == 0) {
     throw new Error("You have dropped an empty file");
@@ -161,14 +162,14 @@ function setCurrentFile(file) {
 // RANT: JavaScript at its finest: 50 lines code to read a SINGLE file
 //       this code looks complicate and it is complicate.
 function readFileAsync(f) {
-  console.log("request: "+f.name+" ("+f.fullPath+")");
+  //console.log("readFileAsync: "+f.name);
 
   var reader = new FileReader();
   reader.onloadend = function(evt) {
     if(evt.target.readyState == FileReader.DONE) {
       var source = evt.target.result;
 
-      console.log("done reading: "+f.name,source?source.length:0);   // it could have been vanished while fetching (race condition)
+      //console.log("done reading: "+f.name,source?source.length:0);   // it could have been vanished while fetching (race condition)
       gMemFsCount++;
 
      // note: assigning f.source = source too make gMemFs[].source the same, therefore as next
@@ -180,7 +181,7 @@ function readFileAsync(f) {
       gMemFs[f.name] = f;                // -- we cache the file (and its actual content)
 
       if(gMemFsCount==gMemFsTotal) {                // -- are we done reading all?
-        console.log("all "+gMemFsTotal+" files read.");
+        //console.log("all "+gMemFsTotal+" files read.");
         if(gMemFsTotal>1||gMemFsCount>1) {         // we deal with multiple files, so we hide the editor to avoid confusion
           $('#editor').hide();
         } else {
@@ -205,7 +206,7 @@ function readFileAsync(f) {
         if(gMemFsChanged>0) {
           if(!gMainFile)
             throw("No main.jscad found");
-            console.log("update & redraw "+gMainFile.name);
+            //console.log("update & redraw "+gMainFile.name);
             setCurrentFile(gMainFile);
          }
       }
@@ -246,7 +247,7 @@ function fileChanged(f) {
 
 // check if there were changes: (re-)load all files and check if content was changed
 function superviseAllFiles(p) {
-  console.log("superviseAllFiles()");
+  //console.log("superviseAllFiles()");
 
   gMemFsCount = gMemFsTotal = 0;
   gMemFsChanged = 0;
@@ -256,7 +257,7 @@ function superviseAllFiles(p) {
 
   if(!gRootFs||gRootFs.length==0||me=='web-offline') {              // walkFileTree won't work with file:// (regardless of chrome|firefox)
     for(var i=0; i<gCurrentFiles.length; i++) {
-      console.log("[offline] checking "+gCurrentFiles[i].name);
+      //console.log("[offline] checking "+gCurrentFiles[i].name);
       gMemFsTotal++;
       readFileAsync(gCurrentFiles[i]);
     }
@@ -268,6 +269,11 @@ function superviseAllFiles(p) {
 };
 
 var previousScript = null;
+
+function saveScript(filename,source) {
+  var f = {name: filename, source: source};
+  gMemFs[filename] = f;
+}
 
 // parse the file (and convert) to a renderable source (jscad)
 function parseFile(f, debugging, onlyifchanged) {
@@ -287,63 +293,29 @@ function parseFile(f, debugging, onlyifchanged) {
     throw new Error("Could not read file.");
   }
 
-  if(gProcessor && ((!onlyifchanged) || (previousScript !== source))) {
+  if(previousScript == source) return;
+
+  if(gProcessor && (!onlyifchanged)) {
     var fn = gCurrentFile.name;
     fn = fn.replace(/^.*\/([^\/]*)$/,"$1");     // remove path, leave filename itself
-    gProcessor.setDebugging(debugging);
-    var asyncComputation = false;
 
-    if(gCurrentFile.lang=='jscad'||gCurrentFile.lang=='js') {
-      ; // default
-    } else if(gCurrentFile.lang=='scad') {
-      if(!editorSource.match(/^\/\/!OpenSCAD/i)) {
-        editorSource = "//!OpenSCAD\n"+editorSource;
-      }
-      source = openscadOpenJscadParser.parse(editorSource);
-      editor.getSession().setMode("ace/mode/scad");
+    saveScript(fn,source);
 
-    } else if(gCurrentFile.lang.match(/(stl|obj|amf|gcode)/i)) {
-      status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-      if(!fn.match(/amf/i)) {     // -- if you debug the STL parsing, change it to 'if(0&&...' so echo() works, otherwise in workers
-                                  //    echo() is not working.., and parseAMF requires jquery, which seem not working in workers
-        var blobURL = new Blob([document.querySelector('#conversionWorker').textContent]);
-        // -- the messy part coming here:
-        var worker = new Worker(window.webkitURL!==undefined?window.webkitURL.createObjectURL(blobURL):window.URL.createObjectURL(blobURL));
-        worker.onmessage = function(e) {
-          var data = e.data;
-          if(data&&data.source&&data.source.length) {              // end of async conversion
-            putSourceInEditor(data.source,data.filename);
-            gMemFs[data.filename].source = data.source;
-            gProcessor.setJsCad(data.source,data.filename);
-          } else {
-            // worker responds gibberish
-          }
-        };
-        var u = document.location.href;
-        u = u.replace(/#.*$/,'');
-        u = u.replace(/\?.*$/,'');
-        worker.postMessage({me: me, version: version, url: u, source: source, filename: fn });
-        asyncComputation = true;
-      } else {
-        fn.match(/\.(stl|obj|amf|gcode)$/i);
-        var type = RegExp.$1;
-        if(type=='obj') {
-          editorSource = source = parseOBJ(source,fn);
-        } else if(type=='amf') {
-          editorSource = source = parseAMF(source,fn);
-        } else if(type=='gcode') {
-          editorSource = source = parseGCode(source,fn);
-        } else {
-          editorSource = source = parseSTL(source,fn);
-        }
-      }
-    } else {
-      throw new Error("Please drop a file with .jscad, .scad or .stl extension");
-    }
-    if(!asyncComputation) {                   // end of synchronous conversion
-      putSourceInEditor(editorSource,fn);
-      gMemFs[fn].source = source;
+    var e = fn.toLowerCase().match(/\.(jscad|js|scad|stl|obj|amf|gcode)$/i);
+    e = RegExp.$1;
+    if(e == 'amf') {
+    // FIXME remove this branch once JQUERY is no longer needed for AMF
+      source = parseAMF(source,fn);
+      putSourceInEditor(source,fn);
       gProcessor.setJsCad(source,fn);
+    } else {
+      OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
+      var worker = createConversionWorker();
+      var u = document.location.href;
+      u = u.replace(/#.*$/,'');
+      u = u.replace(/\?.*$/,'');
+    // NOTE: cache: true is very important to control the evaluation of all cachced files (code)
+      worker.postMessage({url: u, source: source, filename: fn, cache: true});
     }
   }
 };
