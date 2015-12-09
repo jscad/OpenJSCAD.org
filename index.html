@@ -58,79 +58,17 @@ Todo:
     <script src="ace/ace.js?0.3.1" charset="utf-8"></script>
     <script src="js/ui-drag-drop.js" charset="utf-8"></script>
     <script src="js/ui-editor.js" charset="utf-8"></script>
+    <script src="js/ui-cookies.js" charset="utf-8"></script>
+    <script src="js/ui-worker.js" charset="utf-8"></script>
+    <script src="js/index.js" charset="utf-8"></script>
 
-    <script lang="JavaScript">
-      var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
-      var browser = 'unknown';
-      var showEditor = true;
-      var remoteUrl = './remote.pl?url=';
-      if(navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)/i))
-        browser = RegExp.$1.toLowerCase();
-
-      $(document).ready(function() {
-          $("#menu").height($(window).height());       // initial height
-
-          $(window).resize(function() {                // adjust the relevant divs
-              $("#menu").height($(window).height());
-              $("#menuHandle").css({top: '45%'});
-            });
-          setTimeout( function(){$('#menu').css('left','-280px');},3000); // -- hide slide-menu after 3secs
-
-          $('#menu').mouseleave(function() {
-              $('#examples').css('height',0); $('#examples').hide();
-              $('#options').css('height',0); $('#options').hide();
-            });
-
-        // -- Examples
-          $('#examplesTitle').click(function() {
-              $('#examples').css('height','auto');
-              $('#examples').show();
-              $('#options').css('height',0);
-              $('#options').hide();
-            });
-          $('#examples').mouseleave(function() {
-              $('#examples').css('height',0);
-              $('#examples').hide();
-            });
-
-        // -- Options
-          $('#optionsTitle').click(function() {
-              $('#options').css('height','auto');
-              $('#options').show();
-              $('#examples').css('height',0);
-              $('#examples').hide();
-            });
-          $('#options').mouseleave(function() {
-              $('#options').css('height',0);
-              $('#options').hide();
-            });
-          getOptions();
-
-          //$('#optionsForm').submit(function() {
-          //   // save to cookie
-          //   $('#optionsForm').hide();
-          //   return false;
-          //});
-          $('#optionsForm').change(function() {
-            // save to cookie
-              saveOptions();
-            });
-
-          $('#plate').change(function() {
-              if($('#plate').val()=='custom') {
-                $('#customPlate').show();
-              } else {
-                $('#customPlate').hide();
-              }
-            });
-        });
-    </script>
-
+<!-- top left header (logo and error message) -->
     <div id="header">
       <img src="imgs/title.png">
       <div id="errordiv"></div>
     </div>
 
+<!-- sliding tab (help, links, examples, options, etc) -->
     <div id="menu">
       <img id="menuHandle" src="imgs/menuHandleVL.png">
       <nav>
@@ -159,10 +97,10 @@ Todo:
         <div id="examples"></div>
         <span class="menuSubInfo">Dozens of examples to learn from</span>
         <p/>
-        <!--<div id="optionsTitle" class="navlink"><a href='#' onclick='return false'>Options</a></div>
-        <div id="options">...</div>
+        <div id="optionsTitle" class="navlink"><a href='#' onclick='return false'>Options</a></div>
+        <div id="options"></div>
         <span class="menuSubInfo">Your personal settings</span></p>
-        <p/>-->
+        <p/>
         <b>Supported Formats</b>
         <table class="info">
           <tr><td align="right"><b>jscad</b></td><td><a target="_blank" href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">OpenJSCAD</a> (native, import/export)</td></tr>
@@ -174,6 +112,7 @@ Todo:
       </nav>
     </div> <!-- /menu -->
 
+<!-- about dialog -->
     <div id="about">
       <img src="imgs/title.png">
       <br/>Version <script>document.write(OpenJsCad.version);</script>
@@ -201,6 +140,7 @@ Get your copy/clone/fork from <a href="https://github.com/Spiritdude/OpenJSCAD.o
       </p>
     </div> <!-- about -->
 
+<!-- editor -->
     <div id="editor">
 // -- OpenJSCAD.org logo
 
@@ -218,188 +158,13 @@ function main() {
 }
     </div> <!-- editor -->
 
-<script>
-var ex = [
-{ file:'logo.jscad', title: 'OpenJSCAD.org Logo' },
-{ file:'logo.amf', title: 'OpenJSCAD.org Logo', type: 'AMF' },
-
-{ file:'example001.jscad', title: 'Sphere with cutouts', spacing: true },
-{ file:'example001.scad', title: 'Sphere with cutouts', type: 'OpenSCAD' },
-{ file:'example002.jscad', title: 'Cone with cutouts' },
-{ file:'example002.scad', title: 'Cone with cutouts', type: 'OpenSCAD' },
-{ file:'example003.jscad', title: 'Cube with cutouts' },
-{ file:'example003.scad', title: 'Cube with cutouts', type: 'OpenSCAD' },
-// { file:'example004.jscad', title: 'Cube minus sphere' },
-{ file:'example005.jscad', title: 'Pavillon' },
-// { file:'center.jscad', title: 'Centers of Primitives' },
-
-// { file:'bunch-cubes.jscad', title: 'Bunch of Cubes', new: true },
-{ file:'lookup.jscad', title: 'Lookup()', spacing: true },
-{ file:'expand.jscad', title: 'Expand()' },
-{ file:'rectangular_extrude.jscad', title: 'Rectangular_extrude()' },
-{ file:'linear_extrude.jscad', title: 'Linear_extrude()' },
-{ file:'rotate_extrude.jscad', title: 'Rotate_extrude()' },
-{ file:'polyhedron.jscad', title: 'Polyhedron()' },
-{ file:'hull.jscad', title: 'Hull()' },
-{ file:'chain_hull.jscad', title: 'Chain_hull()' },
-{ file:'torus.jscad', title: 'Torus()' },
-
-{ file:'text.jscad', title: 'Vector_text()', spacing: true },
-
-{ file:'transparency.jscad', title: 'Transparency', spacing: true },
-{ file:'transparency.amf', title: 'Transparency', type: 'AMF' },
-{ file:'transparency2.jscad', title: 'Transparency 2' },
-
-{ file:'slices/double-screw.jscad', title: 'SolidFromSlices(): Double Screw', spacing: true },
-{ file:'slices/four2three.jscad', title: 'SolidFromSlices(): 4 to 3' },
-{ file:'slices/four2three-round.jscad', title: 'SolidFromSlices(): 4 to 3 round' },
-{ file:'slices/spring.jscad', title: 'SolidFromSlices(): Spring' },
-{ file:'slices/tor.jscad', title: 'SolidFromSlices(): Tor (multi-color)' },
-{ file:'slices/rose.jscad', title: 'SolidFromSlices(): Rose Curve' },
-
-{ file:'servo.jscad', title: 'Interactive Params: Servo Motor', wrap: true },
-{ file:'gear.jscad', title: 'Interactive Params: Gear' },
-{ file:'s-hook.jscad', title: 'Interactive Params: S Hook' },
-{ file:'grille.jscad', title: 'Interactive Params: Grille' },
-{ file:'axis-coupler.jscad', title: 'Interactive Params: Axis Coupler' },
-{ file:'lamp-shade.jscad', title: 'Interactive Params: Lamp Shade' },
-{ file:'celtic-knot-ring.jscad', title: 'Interactive Params: Celtic Knot Ring' },
-{ file:'stepper-motor.jscad', title: 'Interactive Params: Stepper Motor' },
-{ file:'iphone4-case.jscad', title: 'Interactive Params: iPhone4 Case' },
-{ file:'name_plate.jscad', title: 'Interactive Params: Name Plate' },
-{ file:'balloons.jscad', title: 'Interactive Params: Balloons', new: true },
-{ file:'globe.jscad', title: 'Globe' },
-
-{ file:'platonics/', title: 'Recursive Include(): Platonics', spacing: true },
-
-{ file:'3d_sculpture-VernonBussler.stl', title: '3D Model: 3D Sculpture (Vernon Bussler)', type: 'STL', spacing: true },
-{ file:'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' },
-{ file:'thing_7-Zomboe.stl', title: '3D Model: Thing 7 / Flower (Zomboe)', type: 'STL' },
-// { file:'organic_flower-Bogoboy23.stl', title: '3D Model: Organic Flower (Bogoboy23)', type: 'STL' }, // all wrong normals!!
-{ file:'yoda-RichRap.stl', title: '3D Model: Yoda (RichRap)', type: 'STL' },
-// { url:'http://pastebin.com/raw.php?i=wJLctyAQ', title: 'OpenJSCAD.org Logo', type:'Remote JSCAD' }
-// { file:'treefrog-Jerrill.stl', title: '3D Model: Treefrog (Jerrill)', type: 'STL' },    // nice frog, yet slow
-// { file:'klein_bottle-DizingOf.stl', title: '3D Model: Klein Bottle (DizingOf)', type: 'STL' } // too slow, over 400k triangles, huge memory consumption
-];
-if(me=='web-online') {
-   var wrap = 26;
-   var colp = 100/Math.floor(ex.length/wrap+1)+"%";
-   var src = '<table width=100%><tr><td widthx="+colp+" valign=top>';
-   //src += "<img id=examplesHandle src=\"imgs/menuHandleHU.png\">";
-   //src += '<b>Examples:</b>';
-   for(var i=0; i<ex.length; i++) {
-      if(ex[i].wrap) {
-         src += "</td><td class=examplesSeparator widthx="+colp+" valign=top>";
-      }
-      if(ex[i].spacing) src += "<p/>";
-      src += "<li><a href='#' onclick='fetchExample(\"examples/"+ex[i].file+"\"); return false;'>"+ex[i].title+"</a>\n";
-      if(ex[i].type) src += " <span class=type>("+ex[i].type+")</span></a>";
-      if(ex[i].new) src += " <span class=newExample>new</span></a>";
-      //src += "<li><a href='examples/"+ex[i].file+"\'>"+ex[i].title+"</a>\n";
-   }
-   src += "</td></tr></table>";
-   $('#examples').html(src);
-} else {
-   // examples off-line won't work yet as XHR is used
-   $('#examples').html("You are offline, drag'n'drop the examples from your installation");
-}
-
-{
-   var options = [ 'renderCode', 'author', 'license' ];
-   var metakeys = [ 'author', 'license' ];
-   saveOptions = function() {
-      for(var k in options) {
-         k = options[k];
-         //echo("setting "+k);
-         setCookie(k,$('#'+k).val());
-         if(metakeys[k]) metadata[k] = options[k];
-      }
-   }
-   getOptions = function() {
-      for(var k in options) {
-         k = options[k];
-         //echo("getting "+k);
-         if(getCookie(k)) $('#'+k).val(getCookie(k))
-      }
-   }
-
-   var src = '';
-   src += "<form id=optionsForm onsubmit='saveOptions(); return false'>";
-   src += "<div class=optionGroup><b>Your Identity / Full Name & Email</b><br/>";
-   src += "<input id=author type=text name=author size=30><div class=optionInfo>Applies when you export AMF (sets metadata)</div></div>";
-
-   var licenseOptions = {
-      "Public Domain": "Public Domain",
-      "CC BY": "Creative Commons CC BY",
-      "CC BY-ND": "Creative Commons CC BY-ND",
-      "CC BY-NC": "Creative Commons CC BY-NC",
-      "CC BY-SA": "Creative Commons CC BY-SA",
-      "CC BY-NC-SA": "Creative Commons CC BY-NC-SA",
-      "CC BY-NC-ND": "Creative Commons CC BY-NC-ND",
-      "MIT": "MIT License",
-      "GPLv2": "GPLv2",
-      "GPLv3": "GPLv3",
-      "Copyright": "Copyright",
-   };
-   src += "<div class=optionGroup><b>Default License</b><br/>";
-   src += "<select id=license name=license>";
-   for(var k in licenseOptions) {
-      src += "<option value='"+k+"'>"+licenseOptions[k];
-      src += "<br/>";
-   }
-   src += "</select><div class=optionInfo>Applies when you export AMF (sets metadata)</div></div>\n";
-
-   if(0) {
-      var renderCodeOptions = {
-         shiftReturn: "SHIFT+RETURN",
-         auto: "Automatic"
-      };
-      src += "<div class=optionGroup><b>Render Code</b></br>";
-      src += "<select id=renderCode name=renderCode>";
-      for(var k in renderCodeOptions) {
-         src += "<option value='"+k+"'>"+renderCodeOptions[k];
-      }
-      src += "</select></div>";
-   }
-   if(1) {
-      var plateOptions = {
-         "200x200": "200mm x 200mm",
-         "150x150": "150mm x 150mm",
-         "100x100": "100mm x 100mm",
-         "custom": "Custom",
-         "none": "None",
-      };
-      src += "<div class=optionGroup><b>Plate</b></br>";
-      src += "<select id=plate name=plate>";
-      for(var k in plateOptions) {
-         src += "<option value='"+k+"'>"+plateOptions[k];
-      }
-      src += "</select><br/>";
-      src += "<div style='display: none' id=customPlate>Custom: <input type=text id=plateCustomX name=plateCustomX size=4 value='125'> x <input type=text id=plateCustomY name=plateCustomY size=4 value='125'> [mm]</div>";
-      src += "</div>";
-   }
-   if(1) {
-      var themeOptions = {
-         "bright": "Bright",
-         "dark": "Dark",
-      };
-      src += "<div class=optionGroup><b>Theme</b></br>";
-      src += "<select id=theme name=theme>";
-      for(var k in themeOptions) {
-         src += "<option value='"+k+"'>"+themeOptions[k];
-      }
-      src += "</select><br/>";
-      src += "</div>";
-   }
-
-   src += "</form>";
-   $('#options').html(src);
-}
-</script>
-
+<!-- design viewer -->
     <div oncontextmenu="return false;" id="viewerContext"></div> <!-- avoiding popup when right mouse is clicked -->
 
+<!-- design parameters -->
     <div id="parametersdiv"></div>
+
+<!-- design information (status message, download buttons, drag and drop area, etc) -->
     <div id="tail">
       <div id="statusdiv"></div>
       <div id="filedropzone">
@@ -422,248 +187,9 @@ if(me=='web-online') {
       </div>
     </div> <!-- tail -->
 
+<!-- footer (version, copyright) -->
     <div id="footer">
-OpenJSCAD.org <script>document.write(OpenJsCad.version);</script>, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>
+      OpenJSCAD.org <script>document.write(OpenJsCad.version);</script>, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>
     </div>
-
-<script id="conversionWorker" type="javascript/worker">
-// adapted from http://www.html5rocks.com/en/tutorials/workers/basics/
-
-self.onmessage = function(e) {      // Worker to import STL/OBJ as it can take quite some while for 1MB+ large STLs
-   var data = e.data;
-
-   if(data.url) {     // RANT: why do something simple, when it can be done complicate: Workers & importScripts() (guys!!)
-      var url = data.url;
-      url = url.replace(/#.*$/,'');    // -- just to be sure ...
-      url = url.replace(/\?.*$/,'');
-      var index = url.indexOf('index.html');
-      if(index!=-1) {
-         url = url.substring(0,index);
-      }
-      importScripts(url+'csg.js',url+'openjscad.js',url+'openscad.js');
-      var src, type;
-      data.filename.toLowerCase().match(/\.(stl|obj|amf|gcode)$/i);
-      type = RegExp.$1;
-      if(type=='obj') {
-         src = parseOBJ(data.source,data.filename);
-      } else if(type=='amf') {
-         src = parseAMF(data.source,data.filename);
-      } else if(type=='gcode') {
-         src = parseGCode(data.source,data.filename);
-      } else {
-         src = parseSTL(data.source,data.filename);
-      }
-      self.postMessage({ source: src, filename: data.filename, url: data.remote });
-   }
-};
-</script>
-
-<script>
-var gProcessor = null;
-
-var _includePath = './';
-
-$(document).ready(onload());
-
-function onload() {
-   gProcessor = new OpenJsCad.Processor(document.getElementById("viewerContext"));
-   setUpEditor();
-   setupDragDrop();
-
-   //gProcessor.setDebugging(debugging);
-   if(me=='web-online') {    // we are online, fetch first example
-      docUrl = document.URL;
-      params = {};
-      docTitle = '';
-      if((!docUrl.match(/#(https?:\/\/\S+)$/)) && (!docUrl.match(/#(examples\/\S+)$/))) {
-         if(possibleParams = docUrl.split("&")) {
-            //console.log(possibleParams);
-            for (i = 0; i < possibleParams.length; ++i) {
-               //console.log("looping over: "+possibleParams[i]);
-                if(match = possibleParams[i].match(/^.*#?param\[([^\]]+)\]=(.*)$/i)) {
-                  //console.log("matched parameter: key="+decodeURIComponent(match[1])+", val="+decodeURIComponent(match[2])+"");
-                  params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
-                }
-                else if(match = possibleParams[i].match(/^.*#?showEditor=false$/i)) {
-                  //console.log("not showing editor.");
-                  showEditor = false;
-                  $('#editor').hide();
-                }
-                else if(match = possibleParams[i].match(/^.*#?fetchUrl=(.*)$/i)) {
-                  //console.log("matched fetchUrl="+match[1]);
-                  urlParts = document.URL.match(/^([^#]+)#/);
-                  // derive an old-style URL for compatibility's sake
-                  docUrl = urlParts[1] + "#" + decodeURIComponent(match[1]);
-                }
-                else if(match = possibleParams[i].match(/^.*#?title=(.*)$/i)) {
-                  //console.log("matched title="+decodeURIComponent(match[1]));
-                  docTitle = decodeURIComponent(match[1]);
-                }
-            }
-            //console.log(params,docUrl,docTitle);
-         }
-      }
-      if(docUrl.match(/#(https?:\/\/\S+)$/)) {   // remote file referenced, e.g. http://openjscad.org/#http://somewhere/something.ext
-         var u = RegExp.$1;
-         var xhr = new XMLHttpRequest();
-         echo("fetching",u);
-         xhr.open("GET",remoteUrl+u,true);
-         if(u.match(/\.(stl|gcode)$/i)) {
-            xhr.overrideMimeType("text/plain; charset=x-user-defined");    // our pseudo binary retrieval (works with Chrome)
-         }
-         OpenJsCad.status("Fetching "+u+" <img id=busy src='imgs/busy.gif'>");
-         xhr.onload = function() {
-            //echo(this.responseText);
-            var data = JSON.parse(this.responseText);
-            //echo(data.url,data.filename,data.file);
-            fetchExample(data.file,data.url);
-            document.location = docUrl.replace(/#.*$/,'#');       // this won't reload the entire web-page
-         }
-         xhr.send();
-
-      } else if(docUrl.match(/#(examples\/\S+)$/)) {    // local example, e.g. http://openjscad.org/#examples/example001.jscad
-         var fn = RegExp.$1;
-         fetchExample(fn);
-         document.location = docUrl.replace(/#.*$/,'#');
-
-      } else {
-         fetchExample('examples/'+ex[0].file);
-      }
-  } else {
-    gProcessor.setJsCad(getSourceFromEditor());
-  }
-}
-
-function fetchExample(fn,url) {
-   gMemFs = [];
-
-   if(showEditor) { // FIXME test for the element
-      $('#editor').show();
-   } else {
-      $('#editor').hide();
-   }
-
-   if(fn.match(/\.[^\/]+$/)) {     // -- has extension
-      ;                                  // -- we could already check if valid extension (later)
-   } else {                              // -- folder referenced
-      if(!fn.match(/\/$/))
-         fn += "/";      // add tailing /
-      fn += 'main.jscad';
-   }
-
-   if(1) {     // doesn't work off-line yet
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", fn, true);
-      if(fn.match(/\.(stl|gcode)$/i)) {
-         xhr.overrideMimeType("text/plain; charset=x-user-defined");    // our pseudo binary retrieval (works with Chrome)
-      }
-      OpenJsCad.status("Loading "+fn+" <img id=busy src='imgs/busy.gif'>");
-      xhr.onload = function() {
-         var source = this.responseText;
-         var editorSource = source;
-         var asyncComputation = false;
-         var path = fn;
-
-         _includePath = path.replace(/\/[^\/]+$/,'/');
-
-         if(fn.match(/\.jscad$/i)||fn.match(/\.js$/i)) {
-            OpenJsCad.status("Processing "+fn+" <img id=busy src='imgs/busy.gif'>");
-            putSourceInEditor(editorSource,fn);
-            gProcessor.setJsCad(source,fn);
-
-         } else if(fn.match(/\.scad$/i)) {
-            OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-            editorSource = source;
-            //if(url) editorSource = "// Remote retrieved <"+url+">\n"+editorSource;
-            if(!editorSource.match(/^\/\/!OpenSCAD/i)) {
-               editorSource = "//!OpenSCAD\n"+editorSource;
-            }
-            source = openscadOpenJscadParser.parse(editorSource);
-            if(0) {
-               source = "// OpenJSCAD.org: scad importer (openscad-openjscad-translator) '"+fn+"'\n\n"+source;
-            }
-            putSourceInEditor(editorSource,fn);
-            gProcessor.setJsCad(source,fn);
-
-         } else if(fn.match(/\.(stl|obj|amf|gcode)$/i)) {
-            OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-            if(!fn.match(/\.amf/)) {
-               // import STL/OBJ/AMF via Worker() (async computation) as it takes quite some time
-               // RANT: the whole Blob() & Worker() is anything but a clean concept, mess over mess:
-               //       for example, to pass a DOM variable to worker via postMessage may create a circular reference
-               //       as the data is serialized, e.g. you cannot pass document and in the Worker access document.window.
-               //       Dear Google / JavaScript developers: don't make JS unuseable with this mess!
-               var blobURL = new Blob([document.querySelector('#conversionWorker').textContent]);
-               // -- the messy part coming here:
-               //var url = window.URL; url = url.replace(/#.*$/,''); url = url.createObjectURL(blobURL);
-               var worker = new Worker(window.webkitURL!==undefined?window.webkitURL.createObjectURL(blobURL):window.URL.createObjectURL(blobURL));
-               //var worker = new Worker(window.URL.createObjectURL(blobURL));
-               worker.onmessage = function(e) {    // worker finished
-                  var data = e.data;
-                  //echo("worker end:",data.source,data.filename);
-                  if(e.url) data.source = "// Remote retrieve <"+e.url+">\n"+data.source;
-                  putSourceInEditor(data.source,data.filename);
-                  gProcessor.setJsCad(data.source,data.filename);
-               };
-               var u = document.location.href;
-               u = u.replace(/#.*$/,'');
-               u = u.replace(/\?.*$/,'');
-               worker.postMessage({url: u, remote: url, source: source, filename: fn }); // start worker
-               asyncComputation = true;
-
-            } else {       // async (disabled)
-               OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-               fn.match(/\.(stl|obj|amf|gcode)$/i);
-               var type = RegExp.$1;
-               if(type=='obj') {
-                  editorSource = source = parseOBJ(source,fn);
-               } else if(type=='amf') {
-                  editorSource = source = parseAMF(source,fn);
-               } else if(type=='gcode') {
-                  editorSource = source = parseGCode(source,fn);
-               } else {
-                  editorSource = source = parseSTL(source,fn);
-               }
-               putSourceInEditor(source,fn);
-            }
-            if(!asyncComputation) {
-               gProcessor.setJsCad(source,fn);
-            }
-         }
-      }
-      xhr.send();
-   }
-}
-
-// Show all exceptions to the user:
-OpenJsCad.AlertUserOfUncaughtExceptions();
-
-// ---------------------------------------------------------------------------------------------------------
-
-function setCookie(name, value, days) {
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        var expires = "; expires=" + date.toGMTString();
-    } else var expires = "";
-    document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
-}
-
-function getCookie(name) {
-    var nameEQ = escape(name) + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0) return unescape(c.substring(nameEQ.length, c.length));
-    }
-    return null;
-}
-
-function deleteCookie(name) {
-    createCookie(name, "", -1);
-}
-
-</script>
   </body>
 </html>
