@@ -1,4 +1,9 @@
-﻿'use strict';   
+﻿/// Blockly JavaScript Generator for OpenJSCAD.AzureWebsites.net
+/// Author: Michael S. Scherotter mischero@microsoft.com
+/// Revision History
+/// 2015-12-09 MSS - added tooltip to cad_scale
+
+"use strict";
 
 goog.provide('Blockly.Blocks.cad');
 
@@ -192,7 +197,7 @@ Blockly.Blocks['cad_scale'] = {
         this.setColour(65);
         this.setPreviousStatement(true, ["Operation", "Transform", "Solid"]);
         this.setNextStatement(true, ["Operation", "Transform"]);
-        this.setTooltip('');
+        this.setTooltip("Scale transformation. defaults X:1, Y:1, Z:1");
         this.setHelpUrl('http://www.example.com/');
     }
 };

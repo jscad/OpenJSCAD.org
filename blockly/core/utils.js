@@ -137,13 +137,26 @@ Blockly.bindEvent_ = function(node, name, thisObject, func) {
  * @type {Object}
  */
 Blockly.bindEvent_.TOUCH_MAP = {};
-if (goog.events.BrowserFeature.TOUCH_ENABLED) {
-  Blockly.bindEvent_.TOUCH_MAP = {
-    'mousedown': ['touchstart'],
-    'mousemove': ['touchmove'],
-    'mouseup': ['touchend', 'touchcancel']
-  };
+if (window.navigator.pointerEnabled) {  // IE 11+ support
+    Blockly.bindEvent_.TOUCH_MAP = {
+        mousedown: 'pointerdown',
+        mousemove: 'pointermove',
+        mouseup: 'pointerup'
+    };
+} else if (window.navigator.msPointerEnabled) {  // IE 10 support
+    Blockly.bindEvent_.TOUCH_MAP = {
+        mousedown: 'MSPointerDown',
+        mousemove: 'MSPointerMove',
+        mouseup: 'MSPointerUp'
+    };
+} else if ('ontouchstart' in document.documentElement) {
+    Blockly.bindEvent_.TOUCH_MAP = {
+        mousedown: 'touchstart',
+        mousemove: 'touchmove',
+        mouseup: 'touchend'
+    };
 }
+
 
 /**
  * Unbind one or more events event from a function call.

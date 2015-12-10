@@ -1,4 +1,9 @@
-﻿Blockly.JavaScript['cad_model'] = function (block) {
+﻿/// Blockly JavaScript Generator for OpenJSCAD.AzureWebsites.net
+/// Author: Michael S. Scherotter mischero@microsoft.com
+/// Revision History
+/// 2015-12-09 MSS - Fixed cad_scale default values
+
+Blockly.JavaScript['cad_model'] = function (block) {
     var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME').trim();
     
     if (statements_name[0] === ".") {
@@ -48,13 +53,11 @@ Blockly.JavaScript['cad_translate'] = function (block) {
 };
 
 Blockly.JavaScript['cad_scale'] = function (block) {
-    var text_x = block.getFieldValue('X');
-    var text_y = block.getFieldValue('Y');
-    var text_z = block.getFieldValue('Z');
     var value_x = Blockly.JavaScript.valueToCode(block, 'X', Blockly.JavaScript.ORDER_ATOMIC);
     var value_y = Blockly.JavaScript.valueToCode(block, 'Y', Blockly.JavaScript.ORDER_ATOMIC);
     var value_z = Blockly.JavaScript.valueToCode(block, 'Z', Blockly.JavaScript.ORDER_ATOMIC);
-    var code = "\n.scale([" + (text_x === "" ? 1 : text_x) + ", " + (text_y === "" ? 1 : text_y) + ", " + (text_z === "" ? 1 : text_z) + "])";
+
+    var code = "\n.scale([" + (value_x === "" ? 1 : value_x) + ", " + (value_y === "" ? 1 : value_y) + ", " + (value_z === "" ? 1 : value_z) + "])";
     return code;
 };
 
