@@ -77,7 +77,7 @@ function putSourceInEditor(src,fn) {
     if(!src.match(/^\/\/!OpenSCAD/i)) {
       gEditor.getSession().setMode("ace/mode/scad");
     } else {
-      gEditor.getSession().setMode("ace/mode/js");
+      gEditor.getSession().setMode("ace/mode/javascript");
     }
   }
 }
