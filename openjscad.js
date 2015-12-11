@@ -737,6 +737,7 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
   workerscript += "var _includePath=" + JSON.stringify(_includePath)+";\n";    //        ''            ''
   workerscript += "var gMemFs = [];\n";
   var ignoreInclude = false;
+  //console.log("SCRIPT ["+workerscript+"]");
   var mainFile;
   for(var fn in gMemFs) {
     workerscript += "// "+gMemFs[fn].name+":\n";
@@ -807,6 +808,7 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
     workerscript += "function include(fn) { eval(gMemFs[fn]); }\n";
   }
   //workerscript += "function includePath(p) { _includePath = p; }\n";
+  //console.log("SCRIPT ["+workerscript+"]");
   var blobURL = OpenJsCad.textToBlobUrl(workerscript);
   
   if(!window.Worker) throw new Error("Your browser doesn't support Web Workers. Please try the Chrome or Firefox browser instead.");
@@ -900,24 +902,35 @@ OpenJsCad.FileSystemApiErrorHandler = function(fileError, operation) {
   throw new Error(errtxt);
 };
 
+// Call this routine to install a handler for uncaught exceptions
 OpenJsCad.AlertUserOfUncaughtExceptions = function() {
   window.onerror = function(message, url, line) {
+    var msg = "uncaught exception";
     switch (arguments.length) {
       case 1: // message
-        console.log(arguments[0]);
+        msg = arguments[0];
         break;
       case 2: // message and url
-        console.log(arguments[0]+'\n('+arguments[1]+')');
+        msg = arguments[0]+'\n('+arguments[1]+')';
         break;
       case 3: // message and url and line#
-        console.log(arguments[0]+'\nLine: '+arguments[2]+'\n('+arguments[1]+')');
+        msg = arguments[0]+'\nLine: '+arguments[2]+'\n('+arguments[1]+')';
         break;
       case 4: // message and url and line# and column#
       case 5: // message and url and line# and column# and Error
-        console.log(arguments[0]+'\nLine: '+arguments[2]+',col: '+arguments[3]+'\n('+arguments[1]+')');
+        msg = arguments[0]+'\nLine: '+arguments[2]+',col: '+arguments[3]+'\n('+arguments[1]+')';
         break;
       default:
-        console.log("uncaught exception");
+        break;
+    }
+    if(typeof document !== 'undefined') {
+      var e = document.getElementById("errordiv");
+      if (e !== null) {
+        e.firstChild.textContent = msg;
+        e.style.display = "block";
+      }
+    } else {
+      console.log(msg);
     }
     return false;
   };
