@@ -54,8 +54,6 @@ function toggleAutoReload() {
 // --- Private Variables
 var autoReloadTimer = null;
 
-var gCurrentFile = null;
-
 var gMemFsCount = 0;          // async reading: count of already read files
 var gMemFsTotal = 0;          // async reading: total files to read (Count==Total => all files read)
 var gMemFsChanged = 0;        // how many files have changed
@@ -105,11 +103,9 @@ function handleFileSelect(evt) {
 //    3) re-render if there was a change (via readFileAsync)
 function walkFileTree(item,path) {
  path = path||"";
- //console.log("item=",item);
  if(item.isFile) {
    item.file(function(file) {                // this is also asynchronous ... (making everything complicate)
      if(file.name.match(/\.(jscad|js|scad|obj|stl|amf|gcode)$/)) {   // FIXME now all files OpenJSCAD can handle
-       //console.log("walkFileTree File: "+path+item.name);
        gMemFsTotal++;
        gCurrentFiles.push(file);
        readFileAsync(file);
@@ -130,8 +126,8 @@ function walkFileTree(item,path) {
 
 // this is the linear drag'n'drop, a list of files to read (when folders aren't supported)
 function loadLocalFiles() {
+  //console.log("loadLocalFiles: ",gCurrentFiles.length);
   var items = gCurrentFiles;
-  //console.log("loadLocalFiles",items);
   gMemFsCount = 0;
   gMemFsTotal = items.length;
   gMemFsChanged = 0;
@@ -145,12 +141,7 @@ function loadLocalFiles() {
 
 // set one file (the one dragged) or main.jscad
 function setCurrentFile(file) {
-  gCurrentFile = file;
-
-  //console.log("execute: "+file.name);
-  if(file.name.match(/\.(jscad|js|scad|stl|obj|amf|gcode)$/i)) { // FIXME where is the list?
-    gCurrentFile.lang = RegExp.$1;
-  } else {
+  if(!file.name.match(/\.(jscad|js|scad|stl|obj|amf|gcode)$/i)) { // FIXME where is the list?
     throw new Error("Please drag and drop a compatible file");
   }
   if(file.size == 0) {
@@ -227,13 +218,12 @@ function readFileAsync(f) {
 // update the dropzone visual & call the main parser
 function fileChanged(f) {
   var dropZone = document.getElementById('filedropzone');
-  gCurrentFile = f;
-  if(gCurrentFile) {
+  if(f) {
     var txt;
     if(gMemFsTotal>1) {
-      txt = "Current file: "+gCurrentFile.name+" (+ "+(gMemFsTotal-1)+" more files)";
+      txt = "Current file: "+f.name+" (+ "+(gMemFsTotal-1)+" more files)";
     } else {
-      txt = "Current file: "+gCurrentFile.name;
+      txt = "Current file: "+f.name;
     }
     document.getElementById("currentfile").innerHTML = txt;
     document.getElementById("filedropzone_filled").style.display = "block";
@@ -242,7 +232,7 @@ function fileChanged(f) {
     document.getElementById("filedropzone_filled").style.display = "none";
     document.getElementById("filedropzone_empty").style.display = "block";
   }
-  parseFile(f,false,false);
+  parseFile(f,false);
 };
 
 // check if there were changes: (re-)load all files and check if content was changed
@@ -276,13 +266,8 @@ function saveScript(filename,source) {
 }
 
 // parse the file (and convert) to a renderable source (jscad)
-function parseFile(f, debugging, onlyifchanged) {
-  if(arguments.length==2) {
-    debugging = arguments[1];
-    onlyifchanged = arguments[2];
-    f = gCurrentFile;
-  }
-  //gCurrentFile = f;
+function parseFile(f, onlyifchanged) {
+  //console.log("parseFile: "+f.name+"]");
   var source = f.source;
   var editorSource = source;
 
@@ -296,8 +281,7 @@ function parseFile(f, debugging, onlyifchanged) {
   if(previousScript == source) return;
 
   if(gProcessor && (!onlyifchanged)) {
-    var fn = gCurrentFile.name;
-    fn = fn.replace(/^.*\/([^\/]*)$/,"$1");     // remove path, leave filename itself
+    var fn = f.name;
 
     saveScript(fn,source);
 
