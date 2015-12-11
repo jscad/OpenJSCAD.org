@@ -328,7 +328,7 @@ $(document).ready(function() {
         fetchExample('examples/'+ex[0].file);
       }
     } else {
-      gProcessor.setJsCad(getSourceFromEditor());
+      gProcessor.setJsCad(getSourceFromEditor(),"example.jscad");
     }
   });
 
