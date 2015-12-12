@@ -1,8 +1,6 @@
 ﻿(function() {
     "use strict";
 
-    var viewModel = null;
-
     function ViewModel() {
         this.blocks = [
         {
@@ -62,7 +60,7 @@
         },
         {
             id: "cad_subtract",
-            name: "Rotate",
+            name: "Subtract",
             description: "Subtract one solid from another"
         },
         {
@@ -79,18 +77,38 @@
             id: "cad_color",
             name: "Color",
             description: "Sets the color of a solid"
+        },
+        {
+            id: "cad_rectangle",
+            name: "Rectangle",
+            description: "A rectangular shape for the linear extrude"
+        },
+        {
+            id: "cad_circle",
+            name: "Circle",
+            description: "A circle shape for the linear extrude"
+        },
+        {
+            id: "cad_encapsulate",
+            name: "Encapsulate",
+            description: "encapsulate a solid with transformations"
+        },
+        {
+            id: "cad_array",
+            name: "Array",
+            description: "array solids"
         }
         ];
     }
 
     $(document).ready(function () {
-        viewModel = new ViewModel();
+        var vm = new ViewModel();
 
-        ko.applyBindings(viewModel);
+        ko.applyBindings(vm);
 
         var blocklyDiv = document.getElementById('blocklyDiv');
 
-        viewModel.blocks.forEach(function (block) {
+        vm.blocks.forEach(function (block) {
             var blocklyDiv = block.id + "_div";
 
             var workspace = Blockly.inject(blocklyDiv,

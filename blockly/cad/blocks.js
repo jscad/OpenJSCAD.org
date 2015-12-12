@@ -1,6 +1,7 @@
 ﻿/// Blockly JavaScript Generator for OpenJSCAD.AzureWebsites.net
 /// Author: Michael S. Scherotter mischero@microsoft.com
 /// Revision History
+/// 2015-12-12 mss - added help URLs.
 /// 2015-12-09 MSS - added tooltip to cad_scale
 
 "use strict";
@@ -134,14 +135,14 @@ Blockly.Blocks['cad_torus'] = {
         this.setNextStatement(true, ["Operation", "Transform"]);
         this.setColour(20);
         this.setTooltip('Create a torus (defaults: inner radius=1, outer radius=4)');
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_torus");
     }
 };
 
 Blockly.Blocks['cad_linear_extrude'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField("linear extrude");
+            .appendField("linear extrusion");
         this.appendValueInput("height")
             .setCheck("Number")
             .appendField("height");
@@ -156,7 +157,7 @@ Blockly.Blocks['cad_linear_extrude'] = {
         this.setColour(20);
         this.setTooltip('');
         this.setInputsInline(false);
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_linear_extrude");
     }
 };
 
@@ -177,7 +178,7 @@ Blockly.Blocks['cad_translate'] = {
         this.setPreviousStatement(true, ["Operation", "Transform", "Solid"]);
         this.setNextStatement(true, ["Operation", "Transform"]);
         this.setTooltip('');
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_translate");
     }
 };
 
@@ -198,7 +199,7 @@ Blockly.Blocks['cad_scale'] = {
         this.setPreviousStatement(true, ["Operation", "Transform", "Solid"]);
         this.setNextStatement(true, ["Operation", "Transform"]);
         this.setTooltip("Scale transformation. defaults X:1, Y:1, Z:1");
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_scale");
     }
 };
 
@@ -211,7 +212,7 @@ Blockly.Blocks['cad_subtract'] = {
         this.setNextStatement(true, ["Transform", "Operation"]);
         this.setColour(120);
         this.setTooltip('');
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_subtract");
     }
 };
 
@@ -224,7 +225,7 @@ Blockly.Blocks['cad_union'] = {
         this.setNextStatement(true, ["Transform", "Operation"]);
         this.setColour(120);
         this.setTooltip('');
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_union");
     }
 };
 
@@ -237,7 +238,7 @@ Blockly.Blocks['cad_intersect'] = {
         this.setNextStatement(true, ["Transform", "Operation"]);
         this.setColour(120);
         this.setTooltip('');
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_intersect");
     }
 };
 
@@ -256,7 +257,7 @@ Blockly.Blocks['cad_rotate'] = {
         this.setInputsInline(false);
         this.setPreviousStatement(true, ["Operation", "Transform", "Solid"]);
         this.setNextStatement(true, ["Operation", "Transform"]);
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_rotate");
     }
 };
 
@@ -272,7 +273,7 @@ Blockly.Blocks['cad_color'] = {
         this.setColour(120);
         this.setInputsInline(false);
         this.setTooltip('');
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_color");
     }
 };
 
@@ -289,7 +290,7 @@ Blockly.Blocks['cad_rectangle'] = {
         this.setOutput(true, "Shape");
         this.setColour(210);
         this.setTooltip('');
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_rectangle");
     }
 };
 
@@ -303,7 +304,7 @@ Blockly.Blocks['cad_circle'] = {
         this.setOutput(true, "Shape");
         this.setColour(210);
         this.setTooltip('');
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_circle");
     }
 };
 
@@ -316,7 +317,7 @@ Blockly.Blocks['cad_encapsulate'] = {
         this.setNextStatement(true);
         this.setColour(120);
         this.setTooltip('Encapsulate a solid so that it can be used in another block.');
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_encapsulate");
     }
 };
 
@@ -333,6 +334,6 @@ Blockly.Blocks['cad_array'] = {
         this.setNextStatement(true);
         this.setColour(120);
         this.setTooltip('');
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_array");
     }
 };
