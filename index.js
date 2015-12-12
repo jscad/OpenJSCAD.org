@@ -44,10 +44,6 @@
             $("#JavascriptCodingItem").removeClass("selectedMenuItem");
             isMenuShown = false;
         });
-
-        setTimeout(function() {
-            $("#editor").hide();
-        }, 1000);
     }
 
     $(document).ready(initialize);
