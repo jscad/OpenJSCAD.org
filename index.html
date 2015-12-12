@@ -66,7 +66,8 @@
     <script src="openscad-openjscad-translator.js"></script>
     <script src="ace/ace.js?0.3.1" charset="utf-8"></script>
     <script src="Windows3DPrinting.js"></script>
-    <script src="blockly.js"></script>
+<script src="blockly.js"></script>
+    <script src="index.js" type="text/javascript"></script>
 
     <script lang=JavaScript>
         //$(function() { $("#parametersdiv").draggable(); }); // doesn't work well, disabled
@@ -135,7 +136,7 @@
         <div id="errordiv"></div>
     </div>
 
-    <div id=menu>
+    <div id="menu">
         <img id=menuHandle src="imgs/menuHandleVL.png">
         <nav>
             <div id=menuVersion>Version
@@ -221,13 +222,13 @@
     ).translate([0,0,1.5]).scale(10);
     }
 </div>
-<div id="blockly" style="background-color: white; display: none; width: 40%; height: 100%; z-index: 10; position: absolute; right: 0%; top: 0px;">
+<div id="blockly">
     <table style="height: 100%; width: 100%;">
         <tr>
             <td>
                 <iframe src="blockly/index.html" style="height: 100%; width: 100%;"></iframe>
                 <span style="position: absolute; right: 4px; top: 4px;">
-                    <button onclick="Blockly.newWindow()">New window</button>
+                    <button id="NewWindowButton" onclick="Blockly.newWindow()">New window</button>
                 </span>
             </td>
         </tr>
@@ -442,9 +443,18 @@ document.write("Drop your jscad, scad, amf, stl file or multiple jscad files " +
         OpenJSCAD.org
         <script>document.write(OpenJsCad.version);</script>, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>
     </div>
-    <div id="Windows10Badge" style="display:none; position:absolute; right:calc(40% + 80px); top:0px; z-index:10;">
+<div id="Windows10Badge" >
+    <a href="https://www.microsoft.com/store/apps/9nblggh6j6j9"><img src="https://assets.windowsphone.com/76e1bede-a902-4ca0-b415-b6760ef1c2a2/English_Get_it_Win_10_InvariantCulture_Default.png" alt="Download from Windows Store"/></a>
+</div>
+<div id="menuButton"></div>
+<div id="dropDownMenu">
+    <div class="menuItem selectedMenuItem" id="3DViewItem">3D view</div>
+    <div class="menuItem" id="JavascriptCodingItem">JavaScript coding</div>
+    <div class="menuItem" id="BlockCodingItem">Block coding</div>
+    <div class="menuItem">
         <a href="https://www.microsoft.com/store/apps/9nblggh6j6j9"><img src="https://assets.windowsphone.com/76e1bede-a902-4ca0-b415-b6760ef1c2a2/English_Get_it_Win_10_InvariantCulture_Default.png" alt="Download from Windows Store" /></a>
     </div>
+</div>
     <script id=conversionWorker type="javascript/worker">
         // adapted from http://www.html5rocks.com/en/tutorials/workers/basics/
 

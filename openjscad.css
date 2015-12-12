@@ -2,6 +2,8 @@
  *    few changes made by Rene K. Mueller for OpenSCAD.org
  */
 
+/* CSS Breakpoints at 320, 720, 1024 pixels wide*/
+
 #filedropzone {
   border: 2px dashed #bbb;
   -moz-border-radius: 5px;
@@ -108,4 +110,144 @@ canvas {
 }
 
 .statusdiv {
+}
+
+#menuButton {
+    display: none;
+    position: absolute;
+    z-index: 255;
+    left: 0px;
+    top: 0px;
+    width: 40px;
+    height: 40px;
+    background-position: center;
+    background-image: url("imgs/menu.png");
+    background-color: white;
+    cursor: pointer;
+}
+
+#dropDownMenu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    z-index: 255;
+    width: 100%;
+    background-color: white;
+    padding: 12px;
+}
+
+.menuItem {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+#blockly {
+    background-color: white; 
+    display: none; 
+    width: 40%; 
+    height: 100%; 
+    z-index: 10; 
+    position: absolute; 
+    right: 0%; 
+    top: 0px;
+}
+
+.selectedMenuItem {
+    font-weight: bold;
+}
+
+@media screen and (max-width: 720px) {
+    #header {
+        top: 2px;
+        left: 44px;
+    }
+    #tail {
+        display: none;
+    }
+    #editor {
+        background: white;
+        display: none;
+        width: 100%;
+        top: 40px;
+        height: calc(100% - 40px);
+    }
+    #NewWindowButton {
+        display: none;
+    }
+    #Windows10Badge {
+        display: none;   
+    }
+
+    #Windows10Badge.a {
+        display: none;   
+    }
+
+    body {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+    #menuButton {
+        display: block;
+    }
+
+    #BlocklyButton {
+        display: none;
+    }
+
+    #blockly {
+        width: 100%;
+        top: 40px;
+        height: calc(100% - 40px); 
+    }
+}
+
+@media screen and (min-width: 720px) and (max-width: 1024px) {
+    body {
+        margin-left: 24px;
+        margin-right: 24px;
+    }
+
+    #Windows10Badge {
+        display: none;
+        position: absolute;
+        right: calc(40% + 80px);
+        top: 0px;
+        z-index: 10;
+    }
+
+    #BlocklyButton {
+        display: block;
+        position: absolute;
+        right: 40%;
+        top: 0px;
+        width: 78px;
+        height: 40px;
+        padding: 2px;
+    }
+}
+
+@media screen and (min-width: 1024px){
+    body {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    #Windows10Badge {
+        display: none;
+        position: absolute;
+        right: calc(40% + 80px);
+        top: 0px;
+        z-index: 10;
+    }
+
+    #BlocklyButton {
+        display: block;
+        position: absolute;
+        right: 40%;
+        top: 0px;
+        width: 78px;
+        height: 40px;
+        padding: 2px;
+    }
 }

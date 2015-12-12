@@ -16,7 +16,7 @@ Blockly.Blocks['cad_model'] = {
         this.appendStatementInput("NAME");
         this.setColour(330);
         this.setTooltip("Create your model inside this block.");
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_model");
     }
 };
 
@@ -36,7 +36,7 @@ Blockly.Blocks['cad_text'] = {
         this.setColour(20);
         this.setTooltip('');
         this.setInputsInline(false);
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_text");
     }
 };
 
@@ -61,7 +61,7 @@ Blockly.Blocks['cad_cube'] = {
         this.setColour(20);
         this.setTooltip('Create a cube');
         this.setInputsInline(false);
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_cube");
     }
 };
 
@@ -80,7 +80,7 @@ Blockly.Blocks['cad_sphere'] = {
         this.setColour(20);
         this.setInputsInline(false);
         this.setTooltip('Create a sphere');
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_sphere");
     }
 };
 
@@ -98,7 +98,7 @@ Blockly.Blocks['cad_cylinder'] = {
         this.setNextStatement(true, ["Operation", "Transform"]);
         this.setColour(20);
         this.setTooltip('');
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_cylinder");
     }
 };
 
@@ -116,7 +116,7 @@ Blockly.Blocks['cad_cone'] = {
         this.setNextStatement(true, ["Transform", "Operation"]);
         this.setColour(20);
         this.setTooltip('');
-        this.setHelpUrl('http://www.example.com/');
+        this.setHelpUrl("http://openjscad.azurewebsites.net/blockly/cad/index.html#cad_cone");
     }
 };
 

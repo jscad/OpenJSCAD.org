@@ -1,0 +1,16 @@
+﻿body {
+    font-family: sans-serif;
+}
+
+.blocklyDiv {
+    width: 120px;
+    height: 140px;
+}
+
+.description {
+    vertical-align: top;
+}
+
+.blocklyMainBackground {
+    stroke: none;
+}

@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>OpenJSCAD Coding Block</title>
+    <meta charset="utf-8" />
+    <script src="../../Scripts/jquery-2.1.4.min.js"></script>
+    <script src="../../Scripts/knockout-3.4.0.js"></script>
+    <script src="../blockly_compressed.js"></script>
+    <script src="../blocks_compressed.js"></script>
+    <script src="../msg/js/en.js"></script>
+    <script src="blocks.js"></script>
+    <script src="index.js" type="text/javascript"></script>
+    <link href="index.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <h1>OpenJSCAD Coding Blocks</h1>
+    </header>
+    <section>
+        <h2>Contents</h2>
+        <ul data-bind="foreach: blocks">
+            <li><a data-bind="attr: {href: '#' + id}, text: name"></a></li>
+        </ul>
+    </section>
+    <hr />
+    <div data-bind="foreach: blocks">
+        <section>
+            <a data-bind="attr: {id: id}"></a>
+            <h2 data-bind="text: name"></h2>
+            <table>
+                <tr>
+                    <td>
+                        <div class="blocklyDiv" data-bind="attr: {id: id + '_div'}"></div>
+                    </td>
+                    <td class="description">
+                        <p data-bind="text: description"></p>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </div>
+    <footer><h6>Created by Michael S. Scherotter</h6></footer>
+</body>
+</html>

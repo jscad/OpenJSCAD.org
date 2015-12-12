@@ -71,6 +71,7 @@
         ///<summary>Add the Blockly button</summary>
 
         var blocklyButton = document.createElement("button");
+        blocklyButton.setAttribute("id", "BlocklyButton");
         blocklyButton.setAttribute("style", "position:absolute; right:40%; top:0px; width:78px; height:40px; padding:2px");
         var img = document.createElement("img");
         img.setAttribute("src", "imgs/blockly.png");
