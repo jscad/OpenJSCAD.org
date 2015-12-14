@@ -2006,7 +2006,7 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
    for(var k in meta) {
       src += "// AMF."+k+": "+meta[k]+"\n";
    }
-   src += "// producer: OpenJSCAD Compatibilty ("+version+") AMF Importer\n";
+   src += "// producer: OpenJSCAD Compatibilty ("+version().join('.')+") AMF Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -2056,7 +2056,7 @@ function parseOBJ(obj,fn) {   // http://en.wikipedia.org/wiki/Wavefront_.obj_fil
       }
    }
    var src = ""; 
-   src += "// producer: OpenJSCAD Compatibility ("+version+") Wavefront OBJ Importer\n";
+   src += "// producer: OpenJSCAD Compatibility ("+version().join('.')+") Wavefront OBJ Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -2172,7 +2172,7 @@ function parseBinarySTL(stl,fn) {
         converted++;
     }
    var src = "";
-   src += "// producer: OpenSCAD Compatibility ("+version+") STL Binary Importer\n";
+   src += "// producer: OpenSCAD Compatibility ("+version().join('.')+") STL Binary Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -2190,7 +2190,7 @@ function parseAsciiSTL(stl,fn) {
    var converted = 0;
    var o;
      
-   src += "// producer: OpenSCAD Compatibility ("+version+") STL ASCII Importer\n";
+   src += "// producer: OpenSCAD Compatibility ("+version().join('.')+") STL ASCII Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -2514,7 +2514,7 @@ function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code
    }
    
    var src = "";
-   src += "// producer: OpenSCAD Compatibility ("+version+") GCode Importer\n";
+   src += "// producer: OpenSCAD Compatibility ("+version().join('.')+") GCode Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
