@@ -60,6 +60,14 @@ OpenJsCad.Viewer = function(containerelement, initialdepth) {
   this.viewpointX = 0;
   this.viewpointY = -5;
   this.viewpointZ = initialdepth;
+  this.onZoomChanged = null;
+  this.plate = true;  // render plate
+
+  // state of view
+  // 0 - initialized, no object
+  // 1 - cleared, no object
+  // 2 - showing, object
+  this.state = 0;
 
   this.touch = {
     lastX: 0,
@@ -264,13 +272,6 @@ OpenJsCad.Viewer.prototype = {
 
   ZOOM_MAX: 1000,
   ZOOM_MIN: 10,
-  onZoomChanged: null,
-  plate: true,                   // render plate
-  // state of view
-  // 0 - initialized, no object
-  // 1 - cleared, no object
-  // 2 - showing, object
-  state: 0,
 
   setZoom: function(coeff) { //0...1
     coeff=Math.max(coeff, 0);
@@ -653,7 +654,6 @@ OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
     workerscript += "\n\n// Now press F11 twice to enter your main() function:\n\n";
     workerscript += "debugger;\n";
   }
-  workerscript += "var me = " + JSON.stringify(me) + ";\n";
   workerscript += "return main("+JSON.stringify(mainParameters)+");";  
 // trying to get include() somewhere:
 // 1) XHR works for SYNC <---
@@ -671,14 +671,11 @@ OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
       }\
       importScripts(url+fn);\
     } else {\
-      //console.log('SYNC checking gMemFs for '+fn);\
       if(gMemFs[fn]) {\
-        //console.log('found locally & eval:',gMemFs[fn].name);\
         eval(gMemFs[fn].source); return;\
       }\
       var xhr = new XMLHttpRequest();\
       xhr.open('GET',_includePath+fn,false);\
-      //console.log('include:'+_includePath+fn);\
       xhr.onload = function() {\
         var src = this.responseText;\
         eval(src);\
@@ -706,6 +703,7 @@ OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
 OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, callback) {
   var baselibraries = [
     "csg.js",
+    "formats.js",
     "openjscad.js",
     "openscad.js"
     //"jquery/jquery-1.9.1.js",
@@ -729,15 +727,15 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
     try {
       f = new Function(src);
     } catch(e) {
-      this.setError(i+": "+e.message);
+      throw new Error(i+':'+e.message);
     }
   }
   var workerscript = "//ASYNC\n";
-  workerscript += "var me = " + JSON.stringify(me) + ";\n";
   workerscript += "var _csg_baseurl=" + JSON.stringify(baseurl)+";\n";        // -- we need it early for include()
   workerscript += "var _includePath=" + JSON.stringify(_includePath)+";\n";    //        ''            ''
   workerscript += "var gMemFs = [];\n";
   var ignoreInclude = false;
+  //console.log("SCRIPT ["+workerscript+"]");
   var mainFile;
   for(var fn in gMemFs) {
     workerscript += "// "+gMemFs[fn].name+":\n";
@@ -808,6 +806,7 @@ OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, call
     workerscript += "function include(fn) { eval(gMemFs[fn]); }\n";
   }
   //workerscript += "function includePath(p) { _includePath = p; }\n";
+  //console.log("SCRIPT ["+workerscript+"]");
   var blobURL = OpenJsCad.textToBlobUrl(workerscript);
   
   if(!window.Worker) throw new Error("Your browser doesn't support Web Workers. Please try the Chrome or Firefox browser instead.");
@@ -901,24 +900,35 @@ OpenJsCad.FileSystemApiErrorHandler = function(fileError, operation) {
   throw new Error(errtxt);
 };
 
+// Call this routine to install a handler for uncaught exceptions
 OpenJsCad.AlertUserOfUncaughtExceptions = function() {
   window.onerror = function(message, url, line) {
+    var msg = "uncaught exception";
     switch (arguments.length) {
       case 1: // message
-        console.log(arguments[0]);
+        msg = arguments[0];
         break;
       case 2: // message and url
-        console.log(arguments[0]+'\n('+arguments[1]+')');
+        msg = arguments[0]+'\n('+arguments[1]+')';
         break;
       case 3: // message and url and line#
-        console.log(arguments[0]+'\nLine: '+arguments[2]+'\n('+arguments[1]+')');
+        msg = arguments[0]+'\nLine: '+arguments[2]+'\n('+arguments[1]+')';
         break;
       case 4: // message and url and line# and column#
       case 5: // message and url and line# and column# and Error
-        console.log(arguments[0]+'\nLine: '+arguments[2]+',col: '+arguments[3]+'\n('+arguments[1]+')');
+        msg = arguments[0]+'\nLine: '+arguments[2]+',col: '+arguments[3]+'\n('+arguments[1]+')';
         break;
       default:
-        console.log("uncaught exception");
+        break;
+    }
+    if(typeof document !== 'undefined') {
+      var e = document.getElementById("errordiv");
+      if (e !== null) {
+        e.firstChild.textContent = msg;
+        e.style.display = "block";
+      }
+    } else {
+      console.log(msg);
     }
     return false;
   };
@@ -956,7 +966,7 @@ OpenJsCad.getParamDefinitions = function(script) {
 OpenJsCad.Processor = function(containerdiv, onchange) {
   this.containerdiv = containerdiv;
   this.onchange = onchange;
-  this.viewerdiv = null;
+
   this.viewer = null;
   this.zoomControl = null;
   //this.viewerwidth = 1200;
@@ -1027,13 +1037,12 @@ OpenJsCad.Processor.prototype = {
     viewerdiv.style.width = '100%';
     viewerdiv.style.height = '100%';
     this.containerdiv.appendChild(viewerdiv);
-    this.viewerdiv = viewerdiv;
     try {
-      //this.viewer = new OpenJsCad.Viewer(this.viewerdiv, this.viewerwidth, this.viewerheight, this.initialViewerDistance);
-      //this.viewer = new OpenJsCad.Viewer(this.viewerdiv, viewerdiv.offsetWidth, viewer.offsetHeight, this.initialViewerDistance);
-      this.viewer = new OpenJsCad.Viewer(this.viewerdiv, this.initialViewerDistance);
+      //this.viewer = new OpenJsCad.Viewer(viewerdiv, this.viewerwidth, this.viewerheight, this.initialViewerDistance);
+      //this.viewer = new OpenJsCad.Viewer(viewerdiv, viewerdiv.offsetWidth, viewer.offsetHeight, this.initialViewerDistance);
+      this.viewer = new OpenJsCad.Viewer(viewerdiv, this.initialViewerDistance);
     } catch(e) {
-      this.viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad currently requires Google Chrome or Firefox with WebGL enabled";
+      viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad currently requires Google Chrome or Firefox with WebGL enabled";
     }
     //Zoom control
     if(0) {
@@ -1380,6 +1389,7 @@ OpenJsCad.Processor.prototype = {
         if(e.stack) {
           errtxt += '\nStack trace:\n'+e.stack;
         } 
+        that.setError(errtxt);
         that.statusspan.innerHTML = "Error.";
         that.state = 3; // incomplete
       }
