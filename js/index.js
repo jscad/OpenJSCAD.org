@@ -26,15 +26,25 @@ $(document).ready(function() {
 
     $("#menu").height($(window).height());       // initial height
 
+    $('#editFrame').height($(window).height());
     $(window).resize(function() {                // adjust the relevant divs
         $("#menu").height($(window).height());
         $("#menuHandle").css({top: '45%'});
+        $("#editFrame").height($(window).height());
       });
     setTimeout( function(){$('#menu').css('left','-280px');},3000); // -- hide slide-menu after 3secs
 
     $('#menu').mouseleave(function() {
         $('#examples').css('height',0); $('#examples').hide();
         $('#options').css('height',0); $('#options').hide();
+      });
+
+    $("#editHandle").click(function() {
+        if ($("#editFrame").width() == 0) {
+          $("#editFrame").css("width",'40%');
+        } else {
+          $("#editFrame").css("width",'0px');
+        }
       });
 
   // -- Examples
