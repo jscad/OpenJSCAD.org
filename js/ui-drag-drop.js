@@ -220,7 +220,7 @@ function readFileAsync(f) {
             }
           }
         } else {
-          gMainFile = f;
+          gMainFile = gMemFs[f.name];
         }
         if(gMemFsChanged>0) {
           if(!gMainFile)
@@ -335,11 +335,9 @@ function parseFile(f, onlyifchanged) {
     } else {
       OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
       var worker = createConversionWorker();
-      var u = document.location.href;
-      u = u.replace(/#.*$/,'');
-      u = u.replace(/\?.*$/,'');
+      var u = gProcessor.baseurl;
     // NOTE: cache: true is very important to control the evaluation of all cached files (code)
-      worker.postMessage({url: u, source: source, filename: fn, cache: true});
+      worker.postMessage({baseurl: u, source: source, filename: fn, cache: true});
     }
   }
 };
