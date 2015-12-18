@@ -14,7 +14,7 @@
    height="1052.3622047"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.2 r9819"
+   inkscape:version="0.91 r13725"
    sodipodi:docname="misc.svg">
   <defs
      id="defs4">
@@ -138,17 +138,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="-360.44289"
-     inkscape:cy="867.21954"
+     inkscape:zoom="1.4"
+     inkscape:cx="-1233.5464"
+     inkscape:cy="908.64811"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      showborder="false"
-     inkscape:window-width="1280"
-     inkscape:window-height="748"
-     inkscape:window-x="-8"
-     inkscape:window-y="1016"
+     inkscape:window-width="1879"
+     inkscape:window-height="1056"
+     inkscape:window-x="41"
+     inkscape:window-y="24"
      inkscape:window-maximized="1"
      inkscape:snap-global="true">
     <inkscape:grid
@@ -163,7 +163,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -171,6 +171,26 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="opacity:0.00100002;fill:#710084;fill-opacity:1;stroke:none"
+       id="rect4366"
+       width="85.714287"
+       height="311.42859"
+       x="-1486.5715"
+       y="-139.06638"
+       inkscape:export-xdpi="26.25"
+       inkscape:export-ydpi="26.25"
+       inkscape:export-filename="./editHandleIn.png" />
+    <rect
+       inkscape:export-filename="./editHandleOut.png"
+       inkscape:export-ydpi="26.25"
+       inkscape:export-xdpi="26.25"
+       y="-139.06638"
+       x="-1266.5715"
+       height="311.42859"
+       width="85.714287"
+       id="rect4364"
+       style="opacity:0.00100002;fill:#710084;fill-opacity:1;stroke:none" />
     <rect
        y="444.48495"
        x="-683.70062"
@@ -964,5 +984,55 @@
        inkscape:export-xdpi="26.25"
        inkscape:export-ydpi="26.25"
        inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandleHD.png" />
+    <path
+       transform="matrix(-1,0,0,1,-2039.8383,0)"
+       inkscape:export-ydpi="35.709999"
+       inkscape:export-xdpi="35.709999"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandle.png"
+       sodipodi:nodetypes="czzcc"
+       inkscape:connector-curvature="0"
+       id="path4280"
+       d="m -860,-127.63782 c 0,0 60,20 60,60.000003 0,39.999999 0,120 0,160 0,39.999997 -60,59.999997 -60,59.999997 z"
+       style="fill:#6a007c;fill-opacity:1;stroke:#4a0059;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter3952)" />
+    <path
+       style="fill:#ef94ff;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m -1179.8383,-127.63782 -60,40.000003 0,199.999997 60,40 z"
+       id="path4284"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="./editHandleOut.png"
+       inkscape:export-xdpi="35.709999"
+       inkscape:export-ydpi="35.709999" />
+    <path
+       style="fill:#6a007c;fill-opacity:1;stroke:#4a0059;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter3952)"
+       d="m -860,-127.63782 c 0,0 60,20 60,60.000003 0,39.999999 0,120 0,160 0,39.999997 -60,59.999997 -60,59.999997 z"
+       id="path4302"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="czzcc"
+       inkscape:export-filename="\\BRAHMA\kiwi\Projects\OpenJSCAD.org\imgs\menuHandle.png"
+       inkscape:export-xdpi="35.709999"
+       inkscape:export-ydpi="35.709999"
+       transform="matrix(-1,0,0,1,-2259.8383,0)" />
+    <path
+       inkscape:export-ydpi="35.709999"
+       inkscape:export-xdpi="35.709999"
+       inkscape:export-filename="./editHandleIn.png"
+       sodipodi:nodetypes="ccccc"
+       inkscape:connector-curvature="0"
+       id="path4306"
+       d="m -1399.8383,-127.63782 -60,40.000003 0,199.999997 60,40 z"
+       style="fill:#ef94ff;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       sodipodi:nodetypes="cccc"
+       inkscape:connector-curvature="0"
+       id="path4320"
+       d="m -1444.6305,-5.9596376 32.7745,19.1155926 -32.6517,17.528042 z"
+       style="opacity:0.33300003;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4.29798698;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       style="opacity:0.33300003;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4.29798698;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m -1195.856,-5.9596376 -32.7745,19.1155926 32.6517,17.528042 z"
+       id="path4441"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
   </g>
 </svg>
