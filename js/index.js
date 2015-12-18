@@ -383,11 +383,9 @@ function fetchExample(fn,url) {
         } else {
            OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
            var worker = createConversionWorker();
-           var u = document.location.href;
-           u = u.replace(/#.*$/,'');
-           u = u.replace(/\?.*$/,'');
+           var u = gProcessor.baseurl;
         // NOTE: cache: false is set to allow evaluation of 'include' statements
-           worker.postMessage({url: u, source: source, filename: fn, cache: false});
+           worker.postMessage({baseurl: u, source: source, filename: fn, cache: false});
         }
       };
       xhr.send();
