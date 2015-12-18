@@ -982,6 +982,11 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
   this.debugging = false;
   this.options = {};
   this.createElements();
+  this.baseurl = document.location.href;
+  if (this.baseurl.lastIndexOf('/') != (this.baseurl.length-1)) {
+    this.baseurl = this.baseurl.substring(0,this.baseurl.lastIndexOf('/')+1);
+  }
+
 // state of the processor
 // 0 - initialized - no viewer, no parameters, etc
 // 1 - processing  - processing JSCAD script
@@ -1254,7 +1259,6 @@ OpenJsCad.Processor.prototype = {
   // filename: optional, the name of the .jscad file
   setJsCad: function(script, filename) {
     if(!filename) filename = "openjscad.jscad";
-    filename = filename.replace(/\.jscad$/i, "");
     this.abort();
     this.paramDefinitions = [];
     this.paramControls = [];
