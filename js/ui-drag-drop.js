@@ -97,6 +97,36 @@ function handleFileSelect(evt) {
   }
 };
 
+function errorHandler(e) {
+  var msg = '';
+
+  switch (e.code) {
+    case FileError.QUOTA_EXCEEDED_ERR:
+      msg = 'QUOTA_EXCEEDED_ERR';
+      break;
+    case FileError.NOT_FOUND_ERR:
+      msg = 'NOT_FOUND_ERR';
+      break;
+    case FileError.SECURITY_ERR:
+      msg = 'SECURITY_ERR';
+      break;
+    case FileError.INVALID_MODIFICATION_ERR:
+      msg = 'INVALID_MODIFICATION_ERR';
+      break;
+    case FileError.INVALID_STATE_ERR:
+      msg = 'INVALID_STATE_ERR';
+      break;
+    case FileError.ENCODING_ERR:
+      msg = 'ENCODING_ERR';
+      break;
+    default:
+      msg = 'Unknown Error';
+      break;
+  };
+
+  console.log('Error: ['+e.code+'] '+msg);
+};
+
 // this is the core of the drag'n'drop:
 //    1) walk the tree
 //    2) read the files (readFileAsync)
@@ -110,7 +140,7 @@ function walkFileTree(item,path) {
        gCurrentFiles.push(file);
        readFileAsync(file);
      }
-   });
+   }, errorHandler);
   } else if(item.isDirectory) {
     var dirReader = item.createReader();
     //console.log("walkFileTree Folder: "+item.name);
@@ -167,9 +197,7 @@ function readFileAsync(f) {
       if(!gMemFs[f.name]||gMemFs[f.name].source!=source)
         gMemFsChanged++;
 
-      f.source = source;                 // -- do it after comparing
-
-      gMemFs[f.name] = f;                // -- we cache the file (and its actual content)
+      saveScript(f.name,source);
 
       if(gMemFsCount==gMemFsTotal) {                // -- are we done reading all?
         //console.log("all "+gMemFsTotal+" files read.");
@@ -265,9 +293,21 @@ function saveScript(filename,source) {
   gMemFs[filename] = f;
 }
 
+function convertMemFsJson() {
+  var s = '[';
+  var comma = '';
+  for(var fn in gMemFs) {
+    s += comma;
+    s += JSON.stringify(gMemFs[fn]);
+    comma = ',';
+  }
+  s += ']';
+  return s;
+}
+
 // parse the file (and convert) to a renderable source (jscad)
 function parseFile(f, onlyifchanged) {
-  //console.log("parseFile: "+f.name+"]");
+  //console.log("parseFile("+f.name+")");
   var source = f.source;
   var editorSource = source;
 
@@ -298,7 +338,7 @@ function parseFile(f, onlyifchanged) {
       var u = document.location.href;
       u = u.replace(/#.*$/,'');
       u = u.replace(/\?.*$/,'');
-    // NOTE: cache: true is very important to control the evaluation of all cachced files (code)
+    // NOTE: cache: true is very important to control the evaluation of all cached files (code)
       worker.postMessage({url: u, source: source, filename: fn, cache: true});
     }
   }

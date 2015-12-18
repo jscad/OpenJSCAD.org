@@ -18,46 +18,36 @@
 //
 // NOTE: Additional scripts (libraries) are imported only if necessary
 onmessage = function (e) {
-  var r = { source: "", converted: "", filename: "", url: "", cache: false };
+  var r = { source: "", converted: "", filename: "", baseurl: "", cache: false };
   if (e.data instanceof Object) {
     var data = e.data;
-    var baseurl = '';
     if ('cache' in data) {
       r.cache = data.cache; // forward cache (gMemFS) controls
     }
-    if ('url' in data) {
-      r.url = data.url;
-      baseurl = data.url;
-      baseurl = baseurl.replace(/#.*$/,'');    // -- just to be sure ...
-      baseurl = baseurl.replace(/\?.*$/,'');
-      var index = baseurl.indexOf('index.html');
-      if(index >= 0) {
-         baseurl = baseurl.substring(0,index);
-      }
+    if ('baseurl' in data) {
+      r.baseurl = data.baseurl;
     }
     if ('filename' in data) {
       r.filename = data.filename;
       if ('source' in data) {
-        r.source = data.source;
-      // FIXME this list should come from a global list
-        var e = data.filename.toLowerCase().match(/\.(jscad|js|scad|stl|obj|amf|gcode)$/i);
+        var e = data.filename.toLowerCase().match(/\.(\w+)$/i);
         e = RegExp.$1;
         switch (e) {
           case 'amf':
           // FIXME correct the importScripts once JQUERY is not required
-            importScripts(baseurl+'csg.js',baseurl+'openjscad.js',baseurl+'openscad.js');
+            importScripts(r.baseurl+'csg.js',r.baseurl+'openjscad.js',r.baseurl+'openscad.js');
             r.source = r.converted = parseAMF(data.source,data.filename);
             break;
           case 'gcode':
-            importScripts(baseurl+'csg.js',baseurl+'openjscad.js',baseurl+'openscad.js');
+            importScripts(r.baseurl+'csg.js',r.baseurl+'openjscad.js',r.baseurl+'openscad.js');
             r.source = r.converted = parseGCode(data.source,data.filename);
             break;
           case 'obj':
-            importScripts(baseurl+'csg.js',baseurl+'openjscad.js',baseurl+'openscad.js');
+            importScripts(r.baseurl+'csg.js',r.baseurl+'openjscad.js',r.baseurl+'openscad.js');
             r.source = r.converted = parseOBJ(data.source,data.filename);
             break;
           case 'scad':
-            importScripts(baseurl+'csg.js',baseurl+'openjscad.js',baseurl+'openscad.js',baseurl+'underscore.js',baseurl+'openscad-openjscad-translator.js');
+            importScripts(r.baseurl+'csg.js',r.baseurl+'openjscad.js',r.baseurl+'openscad.js',r.baseurl+'underscore.js',r.baseurl+'openscad-openjscad-translator.js');
             r.source = data.source;
             if(!r.source.match(/^\/\/!OpenSCAD/i)) {
                r.source = "//!OpenSCAD\n"+data.source;
@@ -65,7 +55,7 @@ onmessage = function (e) {
             r.converted = openscadOpenJscadParser.parse(r.source);
             break;
           case 'stl':
-            importScripts(baseurl+'csg.js',baseurl+'openjscad.js',baseurl+'openscad.js');
+            importScripts(r.baseurl+'csg.js',r.baseurl+'openjscad.js',r.baseurl+'openscad.js');
             r.source = r.converted = parseSTL(data.source,data.filename);
             break;
           case 'js':
@@ -75,6 +65,7 @@ onmessage = function (e) {
             r.source = r.converted = data.source;
             break;
           default:
+            console.log("WARNING: Invalid file type in conversion ("+e+")");
             break;
         }
       }

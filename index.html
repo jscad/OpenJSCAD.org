@@ -41,7 +41,7 @@ Todo:
     <meta http-equiv=Pragma content=no-cache>
     <meta http-equiv=Expires content=-1>
     <meta http-equiv=CACHE-CONTROL content=NO-CACHE>
-    
+
     <title>OpenJSCAD.org</title>
     <link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
     <link rel="stylesheet" href="jquery/themes/base/jquery-ui.css" />
@@ -145,7 +145,11 @@ Get your copy/clone/fork from <a href="https://github.com/Spiritdude/OpenJSCAD.o
     </div> <!-- about -->
 
 <!-- editor -->
-    <div id="editor">
+    <div id="editFrame">
+      <div>
+        <img id="editHandle" src="imgs/editHandle.png"></img>
+      </div>
+      <div id="editor">
 // -- OpenJSCAD.org logo
 
 function main() {
@@ -160,6 +164,7 @@ function main() {
       )
    ).translate([0,0,1.5]).scale(10);
 }
+      </div>
     </div> <!-- editor -->
 
 <!-- design viewer -->
