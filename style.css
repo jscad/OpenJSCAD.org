@@ -55,6 +55,7 @@ a:visited {
   top: 45%;
   position: absolute;
   z-index: 6;
+  opacity: 0.9;
 }
 
 #editFrame {
