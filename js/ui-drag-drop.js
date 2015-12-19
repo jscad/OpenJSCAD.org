@@ -132,15 +132,15 @@ function errorHandler(e) {
 //    2) read the files (readFileAsync)
 //    3) re-render if there was a change (via readFileAsync)
 function walkFileTree(item,path) {
- path = path||"";
- if(item.isFile) {
-   item.file(function(file) {                // this is also asynchronous ... (making everything complicate)
-     if(file.name.match(/\.(jscad|js|scad|obj|stl|amf|gcode)$/)) {   // FIXME now all files OpenJSCAD can handle
-       gMemFsTotal++;
-       gCurrentFiles.push(file);
-       readFileAsync(file);
-     }
-   }, errorHandler);
+  path = path||"";
+  if(item.isFile) {
+    item.file(function(file) {                // this is also asynchronous ... (making everything complicate)
+      if(file.name.match(/\.(jscad|js|scad|obj|stl|amf|gcode)$/)) {   // FIXME now all files OpenJSCAD can handle
+        gMemFsTotal++;
+        gCurrentFiles.push(file);
+        readFileAsync(file);
+      }
+    }, errorHandler);
   } else if(item.isDirectory) {
     var dirReader = item.createReader();
     //console.log("walkFileTree Folder: "+item.name);
@@ -223,11 +223,10 @@ function readFileAsync(f) {
           gMainFile = gMemFs[f.name];
         }
         if(gMemFsChanged>0) {
-          if(!gMainFile)
-            throw("No main.jscad found");
-            //console.log("update & redraw "+gMainFile.name);
-            setCurrentFile(gMainFile);
-         }
+          if(!gMainFile) throw("No main.jscad found");
+          //console.log("update & redraw "+gMainFile.name);
+          setCurrentFile(gMainFile);
+        }
       }
     } else {
       throw new Error("Failed to read file");
