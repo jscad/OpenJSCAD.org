@@ -600,8 +600,12 @@ OpenJsCad.makeAbsoluteUrl = function(url, baseurl) {
 };
 
 OpenJsCad.isChrome = function() {
-  return (navigator.userAgent.search("Chrome") >= 0);
+  return (window.navigator.userAgent.search("Chrome") >= 0);
 };
+
+OpenJsCad.isSafari = function() {
+  return /Version\/[\d\.]+.*Safari/.test(window.navigator.userAgent); // FIXME WWW says don't use this
+}
 
 // This is called from within the web worker. Execute the main() function of the supplied script
 // and post a message to the calling thread when finished
@@ -1520,33 +1524,52 @@ OpenJsCad.Processor.prototype = {
   },
 
   generateOutputFileBlobUrl: function() {
-    var blob = this.currentObjectToBlob();
-    var windowURL=OpenJsCad.getWindowURL();
-    this.outputFileBlobUrl = windowURL.createObjectURL(blob);
-    if(!this.outputFileBlobUrl) throw new Error("createObjectURL() failed");
-    this.hasOutputFile = true;
-    this.downloadOutputFileLink.href = this.outputFileBlobUrl;
-    this.downloadOutputFileLink.innerHTML = this.downloadLinkTextForCurrentObject();
-    var ext = this.selectedFormatInfo().extension;
-    this.downloadOutputFileLink.setAttribute("download", "openjscad."+ext);
-    this.enableItems();
-    if(this.onchange) this.onchange();
+    if (OpenJsCad.isSafari()) {
+    // convert BLOB to DATA URI
+      var blob = this.currentObjectToBlob();
+      var that = this;
+      var reader = new FileReader();
+      reader.onloadend = function() {
+        if (reader.result) {
+          that.hasOutputFile = true;
+          that.downloadOutputFileLink.href = reader.result;
+          that.downloadOutputFileLink.innerHTML = that.downloadLinkTextForCurrentObject();
+          var ext = that.selectedFormatInfo().extension;
+          that.downloadOutputFileLink.setAttribute("download","openjscad."+ext);
+          that.downloadOutputFileLink.setAttribute("target", "_blank");
+          that.enableItems();
+          if(that.onchange) that.onchange();
+        }
+      };
+      reader.readAsDataURL(blob);
+    } else {
+      var blob = this.currentObjectToBlob();
+      var windowURL=OpenJsCad.getWindowURL();
+      this.outputFileBlobUrl = windowURL.createObjectURL(blob);
+      if(!this.outputFileBlobUrl) throw new Error("createObjectURL() failed");
+      this.hasOutputFile = true;
+      this.downloadOutputFileLink.href = this.outputFileBlobUrl;
+      this.downloadOutputFileLink.innerHTML = this.downloadLinkTextForCurrentObject();
+      var ext = this.selectedFormatInfo().extension;
+      this.downloadOutputFileLink.setAttribute("download", "openjscad."+ext);
+      this.enableItems();
+      if(this.onchange) this.onchange();
+    }
   },
 
   generateOutputFileFileSystem: function() {
-    window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-    if(!window.requestFileSystem)
-    {
+    var request = window.requestFileSystem || window.webkitRequestFileSystem;
+    if(!request) {
       throw new Error("Your browser does not support the HTML5 FileSystem API. Please try the Chrome browser instead.");
     }
     // create a random directory name:
-    var dirname = "OpenJsCadOutput1_"+parseInt(Math.random()*1000000000, 10)+"."+extension;
     var extension = this.selectedFormatInfo().extension;
-    var filename = "output."+extension;
+    var dirname = "OpenJsCadOutput1_"+parseInt(Math.random()*1000000000, 10)+"."+extension;
+    var filename = "output."+extension; // FIXME this should come from this.filename
     var that = this;
-    window.requestFileSystem(TEMPORARY, 20*1024*1024, function(fs){
+    request(TEMPORARY, 20*1024*1024, function(fs){
         fs.root.getDirectory(dirname, {create: true, exclusive: true}, function(dirEntry) {
-            that.outputFileDirEntry = dirEntry;
+            that.outputFileDirEntry = dirEntry; // save for later removal
             dirEntry.getFile(filename, {create: true, exclusive: true}, function(fileEntry) {
                  fileEntry.createWriter(function(fileWriter) {
                     fileWriter.onwriteend = function(e) {
