@@ -55,6 +55,18 @@ a:visited {
   top: 45%;
   position: absolute;
   z-index: 6;
+  opacity: 0.9;
+}
+
+#editFrame {
+  transition: width 0.4s;
+  -o-transition: width 0.4s;
+  -moz-transition: width 0.4s;
+  -webkit-transition: width 0.4s;
+}
+
+.ace_gutter {
+   border-left: 1px solid #ccc;
 }
 
 #editor {

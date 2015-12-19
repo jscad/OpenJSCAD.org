@@ -42,8 +42,10 @@ $(document).ready(function() {
     $("#editHandle").click(function() {
         if ($("#editFrame").width() == 0) {
           $("#editFrame").css("width",'40%');
+          $("#editHandle").attr('src',"imgs/editHandleIn.png");
         } else {
           $("#editFrame").css("width",'0px');
+          $("#editHandle").attr('src',"imgs/editHandleOut.png");
         }
       });
 
