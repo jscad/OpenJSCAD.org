@@ -132,15 +132,15 @@ function errorHandler(e) {
 //    2) read the files (readFileAsync)
 //    3) re-render if there was a change (via readFileAsync)
 function walkFileTree(item,path) {
- path = path||"";
- if(item.isFile) {
-   item.file(function(file) {                // this is also asynchronous ... (making everything complicate)
-     if(file.name.match(/\.(jscad|js|scad|obj|stl|amf|gcode)$/)) {   // FIXME now all files OpenJSCAD can handle
-       gMemFsTotal++;
-       gCurrentFiles.push(file);
-       readFileAsync(file);
-     }
-   }, errorHandler);
+  path = path||"";
+  if(item.isFile) {
+    item.file(function(file) {                // this is also asynchronous ... (making everything complicate)
+      if(file.name.match(/\.(jscad|js|scad|obj|stl|amf|gcode)$/)) {   // FIXME now all files OpenJSCAD can handle
+        gMemFsTotal++;
+        gCurrentFiles.push(file);
+        readFileAsync(file);
+      }
+    }, errorHandler);
   } else if(item.isDirectory) {
     var dirReader = item.createReader();
     //console.log("walkFileTree Folder: "+item.name);
@@ -220,14 +220,13 @@ function readFileAsync(f) {
             }
           }
         } else {
-          gMainFile = f;
+          gMainFile = gMemFs[f.name];
         }
         if(gMemFsChanged>0) {
-          if(!gMainFile)
-            throw("No main.jscad found");
-            //console.log("update & redraw "+gMainFile.name);
-            setCurrentFile(gMainFile);
-         }
+          if(!gMainFile) throw("No main.jscad found");
+          //console.log("update & redraw "+gMainFile.name);
+          setCurrentFile(gMainFile);
+        }
       }
     } else {
       throw new Error("Failed to read file");
@@ -335,11 +334,9 @@ function parseFile(f, onlyifchanged) {
     } else {
       OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
       var worker = createConversionWorker();
-      var u = document.location.href;
-      u = u.replace(/#.*$/,'');
-      u = u.replace(/\?.*$/,'');
+      var u = gProcessor.baseurl;
     // NOTE: cache: true is very important to control the evaluation of all cached files (code)
-      worker.postMessage({url: u, source: source, filename: fn, cache: true});
+      worker.postMessage({baseurl: u, source: source, filename: fn, cache: true});
     }
   }
 };
