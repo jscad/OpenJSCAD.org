@@ -11,6 +11,7 @@
   <script src="formats.js"></script>
   <script src="openjscad.js"></script>
   <script src="openscad.js"></script>
+  <script src="js/jscad-worker.js" charset="utf-8"></script>
   <link rel="stylesheet" href="min.css" type="text/css">
 </head>
 
@@ -38,8 +39,6 @@
 <!-- define the design and the parameters -->
   <script type="text/javascript">
     var gProcessor = null;        // required by OpenJScad.org
-    var gMemFs = [];              // required by OpenJScad.org
-    var _includePath = './';      // required by OpenJScad.org
 
     var gComponents = [ { file: 'examples/logo.jscad' } ];
 
