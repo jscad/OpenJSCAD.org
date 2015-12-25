@@ -301,18 +301,6 @@ function saveScript(filename,source) {
   gMemFs[filename] = f;
 }
 
-function convertMemFsJson() {
-  var s = '[';
-  var comma = '';
-  for(var fn in gMemFs) {
-    s += comma;
-    s += JSON.stringify(gMemFs[fn]);
-    comma = ',';
-  }
-  s += ']';
-  return s;
-}
-
 // parse the file (and convert) to a renderable source (jscad)
 function parseFile(f, onlyifchanged) {
   //console.log("parseFile("+f.name+")");
