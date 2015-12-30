@@ -646,7 +646,7 @@ OpenJsCad.runMainInWorker = function(mainParameters) {
 
 OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
   var workerscript = "//SYNC\n";
-  workerscript += "_includePath = "+JSON.stringify(_includePath)+";\n";
+  workerscript += "var _includePath = "+JSON.stringify(_includePath)+";\n";
   workerscript += script;
   if(debugging) {
     workerscript += "\n\n\n\n\n\n\n/* -------------------------------------------------------------------------\n";
@@ -1000,8 +1000,6 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
 };
 
 OpenJsCad.Processor.convertToSolid = function(objs) {
-  echo("convertToSolid: typeof="+typeof(objs));
-
   if (objs.length === undefined) {
     if ((objs instanceof CAG) || (objs instanceof CSG)) {
       var obj = objs;
@@ -1343,11 +1341,11 @@ OpenJsCad.Processor.prototype = {
     var script = "";
   // add the file cache
     script += 'var gMemFs = [';
-    if (!typeof gMemFs) {
+    if (typeof(gMemFs) == 'object') {
       var comma = '';
       for(var fn in gMemFs) {
-        s += comma;
-        s += JSON.stringify(gMemFs[fn]);
+        script += comma;
+        script += JSON.stringify(gMemFs[fn]);
         comma = ',';
       }
     }
@@ -1360,7 +1358,7 @@ OpenJsCad.Processor.prototype = {
 
   rebuildSolidAsync: function()
   {
-  console.log("rebuildSolidAsync");
+    //console.log("rebuildSolidAsync");
     var parameters = this.getParamValues();
     var script     = this.getFullScript();
 
@@ -1372,7 +1370,6 @@ OpenJsCad.Processor.prototype = {
     that.worker = createJscadWorker( this.baseurl+this.filename, script,
     // handle the results
       function(err, objs) {
-        console.log("callback");
         that.worker = null;
         if(err) {
           that.setError(err);
@@ -1398,6 +1395,33 @@ OpenJsCad.Processor.prototype = {
     that.worker.postMessage({cmd: "render", parameters: parameters, libraries: libraries});
   },
 
+  rebuildSolidSync: function()
+  {
+    //console.log("rebuildSolidSync");
+    var parameters = this.getParamValues();
+    try {
+      this.state = 1; // processing
+      this.statusspan.innerHTML = "Rendering. Please wait <img id=busy src='imgs/busy.gif'>";
+      var func = createJscadFunction(this.baseurl+this.filename, this.script);
+      var obj = func(parameters);
+      this.setCurrentObject(obj);
+      this.statusspan.innerHTML = "Ready.";
+      this.state = 2; // complete
+    }
+    catch(err)
+    {
+      var errtxt = err.toString();
+      if(err.stack) {
+        errtxt += '\nStack trace:\n'+err.stack;
+      }
+      this.setError(errtxt);
+      this.statusspan.innerHTML = "Error.";
+      this.state = 3; // incomplete
+    }
+    this.enableItems();
+    if(this.onchange) this.onchange();
+  },
+
   rebuildSolid: function()
   {
   // clear previous solid and settings
@@ -1411,7 +1435,7 @@ OpenJsCad.Processor.prototype = {
       this.rebuildSolidAsync();
     } catch(e) {
       console.log("async failed, try sync compute, error: "+e.message);
-    // TODO rebuild sync
+      this.rebuildSolidSync();
     }
   },
 
@@ -1603,7 +1627,7 @@ OpenJsCad.Processor.prototype = {
 
   generateOutputFileBlobUrl: function() {
     if (OpenJsCad.isSafari()) {
-console.log("Trying download via DATA URI");
+      //console.log("Trying download via DATA URI");
     // convert BLOB to DATA URI
       var blob = this.currentObjectToBlob();
       var that = this;
@@ -1622,7 +1646,7 @@ console.log("Trying download via DATA URI");
       };
       reader.readAsDataURL(blob);
     } else {
-console.log("Trying download via BLOB URL");
+      //console.log("Trying download via BLOB URL");
     // convert BLOB to BLOB URL (HTML5 Standard)
       var blob = this.currentObjectToBlob();
       var windowURL=OpenJsCad.getWindowURL();
@@ -1643,7 +1667,7 @@ console.log("Trying download via BLOB URL");
     if(!request) {
       throw new Error("Your browser does not support the HTML5 FileSystem API. Please try the Chrome browser instead.");
     }
-console.log("Trying download via FileSystem API");
+    //console.log("Trying download via FileSystem API");
     // create a random directory name:
     var extension = this.selectedFormatInfo().extension;
     var dirname = "OpenJsCadOutput1_"+parseInt(Math.random()*1000000000, 10)+"."+extension;
