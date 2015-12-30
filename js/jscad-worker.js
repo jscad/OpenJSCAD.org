@@ -10,13 +10,11 @@
 // Upon receiving the message, the callback routine is called with the results
 //
 function createJscadWorker(fullurl, script, callback) {
-console.log("createJscadWorker()");
-
   var source = buildJscadWorkerScript(fullurl, script);
-  console.log("SOURCE ["+source+"]");
-
   var blobURL = OpenJsCad.textToBlobUrl(source);
   var w = new Worker(blobURL);
+
+  console.log("createJscadWorker: "+source);
 
 // when the worker finishes
 // - call back the provided function with the results
@@ -58,7 +56,6 @@ console.log("createJscadWorker()");
 //   fullscript - full JSCAD script
 // Note: The full script must be define all data and functions required
 function buildJscadWorkerScript(fullpath, fullscript) {
-console.log("buildJscadWorker("+fullpath+")");
 // determine the relative base path for include(<relativepath>)
   var relpath = fullpath;
   if (relpath.lastIndexOf('/') >= 0) {
@@ -90,36 +87,17 @@ console.log("buildJscadWorker("+fullpath+")");
 // (Note: This function is appended together with the JSCAD script)
 //
 function includeJscad(fn) {
-// TODO it might be possible to support both MemFs and URL together
-  if ((!typeof gMemFs) && gMemFs.length > 0) {
-     includeJscadMemFs(fn);
-  } else {
-     includeJscadUrl(fn)
-  }
-};
-
-// Include the requested script via MemFs
-//
-// (Note: This function is appended together with the JSCAD script)
-//
-function includeJscadMemFs(fn) {
-  for (var i = 0; i < gMemFs.length; i++) {
-    if (gMemFs[i].name == fn) {
-      eval(gMemFs[i].source);
-      return true;
+// include the requested script via MemFs if possible
+  if (typeof(gMemFs) == 'object') {
+    for (var i = 0; i < gMemFs.length; i++) {
+      if (gMemFs[i].name == fn) {
+        eval(gMemFs[i].source);
+        return;
+      }
     }
   }
-  return false;
-};
-
-// Include the requested script via URL
-//   If the URL is relative then the relative path is prefixed
-//
-// (Note: This function is appended together with the JSCAD script)
-//
-function includeJscadUrl(fn) {
+// include the requested script via importScripts
 // TODO check for FULL URL and use directly
-// add relative path if available
   if (self.relpath) fn = self.relpath + fn;
   importScripts(fn);
   return true;
@@ -136,7 +114,6 @@ function includeJscadUrl(fn) {
 // (Note: This function is appended together with the JSCAD script)
 //
 function runJscadWorker(e) {
-console.log("onmessage()");
   var r = {cmd: "error", txt: "try again"};
   if (e.data instanceof Object) {
     var data = e.data;
