@@ -21,6 +21,7 @@ var gMemFs = [];              // associated array, contains file content in sour
 // --- Public API
 
 function setupDragDrop() {
+  //console.log("setupDragDrop()");
   // Check for the various File API support.
   if (window.File && window.FileReader && window.FileList) {
     // Great success! All the File APIs are supported.
@@ -37,10 +38,12 @@ function setupDragDrop() {
 };
 
 function reloadAllFiles() {
+  //console.log("reloadAllFiles()");
   superviseAllFiles({forceReload:true});
 };
 
 function toggleAutoReload() {
+  //console.log("toggleAutoReload()");
   if (document.getElementById("autoreload").checked) {
     autoReloadTimer = setInterval(function(){superviseAllFiles();}, 1000);
   } else {
@@ -58,17 +61,20 @@ var gMemFsCount = 0;          // async reading: count of already read files
 var gMemFsTotal = 0;          // async reading: total files to read (Count==Total => all files read)
 var gMemFsChanged = 0;        // how many files have changed
 var gRootFs = [];             // root(s) of folders
+var gMailFile = null;         // file entry containing main()
 
 // --- Private API
 
 function handleFileSelect(evt) {
+  //console.log("handleFileSelect()");
   evt.stopPropagation();
   evt.preventDefault();
 
   if(!evt.dataTransfer) throw new Error("Event is not a datatransfer (1)");
   if(!evt.dataTransfer.files) throw new Error("Event is not a datatransfer (2)");
 
-  gMemFs = []; gMainFile = null;
+  gMemFs = [];
+  gMainFile = null;
 
   if(evt.dataTransfer.items && evt.dataTransfer.items.length) {     // full directories, let's try
     var items = evt.dataTransfer.items;
@@ -132,6 +138,7 @@ function errorHandler(e) {
 //    2) read the files (readFileAsync)
 //    3) re-render if there was a change (via readFileAsync)
 function walkFileTree(item,path) {
+  //console.log("walkFileTree()");
   path = path||"";
   if(item.isFile) {
     item.file(function(file) {                // this is also asynchronous ... (making everything complicate)
@@ -171,6 +178,7 @@ function loadLocalFiles() {
 
 // set one file (the one dragged) or main.jscad
 function setCurrentFile(file) {
+  //console.log("setCurrentFile("+file.name+":"+file.source+")");
   if(!file.name.match(/\.(jscad|js|scad|stl|obj|amf|gcode)$/i)) { // FIXME where is the list?
     throw new Error("Please drag and drop a compatible file");
   }
@@ -200,22 +208,21 @@ function readFileAsync(f) {
       saveScript(f.name,source);
 
       if(gMemFsCount==gMemFsTotal) {                // -- are we done reading all?
-        //console.log("all "+gMemFsTotal+" files read.");
-        if(gMemFsTotal>1||gMemFsCount>1) {         // we deal with multiple files, so we hide the editor to avoid confusion
-          $('#editor').hide();
-        } else {
-          $('#editor').show();
-        }
+        //console.log("readFileAsync: "+gMemFsTotal+" files read");
 
         if(gMemFsTotal>1) {
-          if(gMemFs['main.jscad']) {
-            gMainFile = gMemFs['main.jscad'];
-          } else if(gMemFs['main.js']) {
-            gMainFile = gMemFs['main.js'];
-          } else {
+          for(var fn in gMemFs) {
+            if(gMemFs[fn].name.match(/main.(jscad|js)$/)) {
+              gMainFile = gMemFs[fn];
+              break;
+            }
+          }
+          if (!gMailFile) {
+          // try again but search for the function declaration of main()
             for(var fn in gMemFs) {
-              if(gMemFs[fn].name.match(/\/main.jscad$/)||gMemFs[fn].name.match(/\/main.js$/)) {
+              if(gMemFs[fn].source.search(/function\s+main\s*\(/) >= 0) {
                 gMainFile = gMemFs[fn];
+                break;
               }
             }
           }
@@ -244,6 +251,7 @@ function readFileAsync(f) {
 
 // update the dropzone visual & call the main parser
 function fileChanged(f) {
+  //console.log("fileChanged()");
   var dropZone = document.getElementById('filedropzone');
   if(f) {
     var txt;
@@ -288,6 +296,7 @@ function superviseAllFiles(p) {
 var previousScript = null;
 
 function saveScript(filename,source) {
+  //console.log("saveScript("+filename+","+source+")");
   var f = {name: filename, source: source};
   gMemFs[filename] = f;
 }
