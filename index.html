@@ -958,7 +958,7 @@ function parseFile(f, debugging, onlyifchanged) {     // here we convert the fil
          //gEditor.getSession().setMode("ace/mode/scad");  
          
       } else if(gCurrentFile.lang.match(/(stl|obj|amf|gcode)/i)) {
-         status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
+         OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
          if(!fn.match(/amf/i)) {     // -- if you debug the STL parsing, change it to 'if(0&&...' so echo() works, otherwise in workers
                                      //    echo() is not working.., and parseAMF requires jquery, which seem not working in workers
             var blobURL = new Blob([document.querySelector('#conversionWorker').textContent]);
