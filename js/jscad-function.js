@@ -53,9 +53,12 @@ function includeJscadSync(fn) {
     }
   }
 // include the requested script via webserver access
-// TODO check for FULL URL and use directly
   var xhr = new XMLHttpRequest();
-  xhr.open('GET',relpath+fn,false);
+  var url = relpath+fn;
+  if (fn.match(/^(https:|http:)/i)) {
+    url = fn;
+  }
+  xhr.open('GET',url,false);
   xhr.onload = function() {
     var src = this.responseText;
     eval(src);

@@ -97,8 +97,10 @@ function includeJscad(fn) {
     }
   }
 // include the requested script via importScripts
-// TODO check for FULL URL and use directly
-  if (self.relpath) fn = self.relpath + fn;
+  var url = self.relpath+fn;
+  if (fn.match(/^(https:|http:)/i)) {
+    url = fn;
+  }
   importScripts(fn);
   return true;
 };
