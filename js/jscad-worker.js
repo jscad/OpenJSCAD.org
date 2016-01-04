@@ -14,7 +14,7 @@ function createJscadWorker(fullurl, script, callback) {
   var blobURL = OpenJsCad.textToBlobUrl(source);
   var w = new Worker(blobURL);
 
-  console.log("createJscadWorker: "+source);
+  //console.log("createJscadWorker: "+source);
 
 // when the worker finishes
 // - call back the provided function with the results
@@ -67,8 +67,6 @@ function buildJscadWorkerScript(fullpath, fullscript) {
   source += '  self.relpath = "'+relpath+'";\n';
   source += '\n';
   source += fullscript+'\n';
-  source += includeJscadMemFs.toString()+'\n';
-  source += includeJscadUrl.toString()+'\n';
   source += includeJscad.toString()+'\n';
   source += runJscadWorker.toString()+'\n';
   source += '  runJscadWorker(e);\n';
@@ -101,7 +99,7 @@ function includeJscad(fn) {
   if (fn.match(/^(https:|http:)/i)) {
     url = fn;
   }
-  importScripts(fn);
+  importScripts(url);
   return true;
 };
 
