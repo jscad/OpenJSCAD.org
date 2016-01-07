@@ -274,8 +274,6 @@ function createOptions() {
 
 var gProcessor = null;
 
-var _includePath = './';
-
 $(document).ready(function() {
     // Show all exceptions to the user:
     OpenJsCad.AlertUserOfUncaughtExceptions();

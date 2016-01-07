@@ -646,7 +646,7 @@ OpenJsCad.runMainInWorker = function(mainParameters) {
 
 OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
   var workerscript = "//SYNC\n";
-  workerscript += "_includePath = "+JSON.stringify(_includePath)+";\n";
+  workerscript += "var _includePath = "+JSON.stringify(_includePath)+";\n";
   workerscript += script;
   if(debugging) {
     workerscript += "\n\n\n\n\n\n\n/* -------------------------------------------------------------------------\n";
@@ -999,30 +999,29 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
   this.state = 0; // initialized
 };
 
-OpenJsCad.Processor.convertToSolid = function(obj) {
-  //echo("typeof="+typeof(obj),obj.length);
-
-  if( (typeof(obj) == "object") && ((obj instanceof CAG)) ) {
-    // convert a 2D shape to a thin solid:
-    obj = obj.extrude({offset: [0,0,0.1]});
-
-  } else if( (typeof(obj) == "object") && ((obj instanceof CSG)) ) {
-    // obj already is a solid, nothing to do
-    ;
-
-  } else if(obj.length) {                   // main() return an array, we consider it a bunch of CSG not intersecting
-    //echo("putting them together");
-    var o = obj[0];
-    for(var i=1; i<obj.length; i++) {
-      o = o.unionForNonIntersecting(obj[i]);
+OpenJsCad.Processor.convertToSolid = function(objs) {
+  if (objs.length === undefined) {
+    if ((objs instanceof CAG) || (objs instanceof CSG)) {
+      var obj = objs;
+      objs = [obj];
+    } else {
+      throw new Error("Cannot convert object ("+typeof(objs)+") to solid");
     }
-    obj = o;
-    //echo("done.");
-
-  } else {
-    throw new Error("Cannot convert to solid");
   }
-  return obj;
+
+  var solid = null;
+  for(var i=0; i<objs.length; i++) {
+    var obj = objs[i];
+    if (obj instanceof CAG) {
+      obj = obj.extrude({offset: [0,0,0.1]}); // convert CAG to a thin solid CSG
+    }
+    if (solid !== null) {
+      solid = solid.unionForNonIntersecting(obj);
+    } else {
+      solid = obj;
+    }
+  }
+  return solid;
 };
 
 OpenJsCad.Processor.prototype = {
@@ -1168,13 +1167,13 @@ OpenJsCad.Processor.prototype = {
     this.clearViewer();
   },
 
-  setCurrentObject: function(obj) {
-    this.currentObject = obj;                                  // CAG or CSG
+  setCurrentObject: function(objs) {
+    this.currentObject = objs;                                  // CAG or CSG
     if(this.viewer) {
-      var csg = OpenJsCad.Processor.convertToSolid(obj);       // enfore CSG to display
+      var csg = OpenJsCad.Processor.convertToSolid(objs);       // enfore CSG to display
       this.viewer.setCsg(csg);
       this.viewer.state = 2;
-      if(obj.length)             // if it was an array (multiple CSG is now one CSG), we have to reassign currentObject
+      if(objs.length)             // if it was an array (multiple CSG is now one CSG), we have to reassign currentObject
          this.currentObject = csg;
     }
 
@@ -1337,7 +1336,110 @@ OpenJsCad.Processor.prototype = {
     return paramValues;
   },
 
+  getFullScript: function()
+  {
+    var script = "";
+  // add the file cache
+    script += 'var gMemFs = [';
+    if (typeof(gMemFs) == 'object') {
+      var comma = '';
+      for(var fn in gMemFs) {
+        script += comma;
+        script += JSON.stringify(gMemFs[fn]);
+        comma = ',';
+      }
+    }
+    script += '];\n';
+    script += '\n';
+  // add the main script
+    script += this.script;
+    return script;
+  },
+
+  rebuildSolidAsync: function()
+  {
+    //console.log("rebuildSolidAsync");
+    var parameters = this.getParamValues();
+    var script     = this.getFullScript();
+
+    if(!window.Worker) throw new Error("Worker threads are unsupported.");
+
+  // create the worker
+    var that = this;
+    that.state = 1; // processing
+    that.worker = createJscadWorker( this.baseurl+this.filename, script,
+    // handle the results
+      function(err, objs) {
+        that.worker = null;
+        if(err) {
+          that.setError(err);
+          that.statusspan.innerHTML = "Error.";
+          that.state = 3; // incomplete
+        } else {
+          that.setCurrentObject(objs);
+          that.statusspan.innerHTML = "Ready.";
+          that.state = 2; // complete
+        }
+        that.enableItems();
+        if(that.onchange) that.onchange();
+      }
+    );
+  // FIXME this list should come from the Processor
+    var libraries = [
+      this.baseurl+"csg.js",
+      this.baseurl+"formats.js",
+      this.baseurl+"openjscad.js",
+      this.baseurl+"openscad.js"
+    ];
+  // start the worker
+    that.worker.postMessage({cmd: "render", parameters: parameters, libraries: libraries});
+  },
+
+  rebuildSolidSync: function()
+  {
+    //console.log("rebuildSolidSync");
+    var parameters = this.getParamValues();
+    try {
+      this.state = 1; // processing
+      this.statusspan.innerHTML = "Rendering. Please wait <img id=busy src='imgs/busy.gif'>";
+      var func = createJscadFunction(this.baseurl+this.filename, this.script);
+      var obj = func(parameters);
+      this.setCurrentObject(obj);
+      this.statusspan.innerHTML = "Ready.";
+      this.state = 2; // complete
+    }
+    catch(err)
+    {
+      var errtxt = err.toString();
+      if(err.stack) {
+        errtxt += '\nStack trace:\n'+err.stack;
+      }
+      this.setError(errtxt);
+      this.statusspan.innerHTML = "Error.";
+      this.state = 3; // incomplete
+    }
+    this.enableItems();
+    if(this.onchange) this.onchange();
+  },
+
   rebuildSolid: function()
+  {
+  // clear previous solid and settings
+    this.abort();
+    this.setError("");
+    this.clearViewer();
+    this.enableItems();
+    this.statusspan.innerHTML = "Rendering. Please wait <img id=busy src='imgs/busy.gif'>";
+  // rebuild the solid
+    try {
+      this.rebuildSolidAsync();
+    } catch(e) {
+      console.log("async failed, try sync compute, error: "+e.message);
+      this.rebuildSolidSync();
+    }
+  },
+
+  rebuildSolidOld: function()
   {
     this.abort();
     this.setError("");
@@ -1525,6 +1627,7 @@ OpenJsCad.Processor.prototype = {
 
   generateOutputFileBlobUrl: function() {
     if (OpenJsCad.isSafari()) {
+      //console.log("Trying download via DATA URI");
     // convert BLOB to DATA URI
       var blob = this.currentObjectToBlob();
       var that = this;
@@ -1543,6 +1646,8 @@ OpenJsCad.Processor.prototype = {
       };
       reader.readAsDataURL(blob);
     } else {
+      //console.log("Trying download via BLOB URL");
+    // convert BLOB to BLOB URL (HTML5 Standard)
       var blob = this.currentObjectToBlob();
       var windowURL=OpenJsCad.getWindowURL();
       this.outputFileBlobUrl = windowURL.createObjectURL(blob);
@@ -1562,6 +1667,7 @@ OpenJsCad.Processor.prototype = {
     if(!request) {
       throw new Error("Your browser does not support the HTML5 FileSystem API. Please try the Chrome browser instead.");
     }
+    //console.log("Trying download via FileSystem API");
     // create a random directory name:
     var extension = this.selectedFormatInfo().extension;
     var dirname = "OpenJsCadOutput1_"+parseInt(Math.random()*1000000000, 10)+"."+extension;

@@ -104,33 +104,7 @@ function handleFileSelect(evt) {
 };
 
 function errorHandler(e) {
-  var msg = '';
-
-  switch (e.code) {
-    case FileError.QUOTA_EXCEEDED_ERR:
-      msg = 'QUOTA_EXCEEDED_ERR';
-      break;
-    case FileError.NOT_FOUND_ERR:
-      msg = 'NOT_FOUND_ERR';
-      break;
-    case FileError.SECURITY_ERR:
-      msg = 'SECURITY_ERR';
-      break;
-    case FileError.INVALID_MODIFICATION_ERR:
-      msg = 'INVALID_MODIFICATION_ERR';
-      break;
-    case FileError.INVALID_STATE_ERR:
-      msg = 'INVALID_STATE_ERR';
-      break;
-    case FileError.ENCODING_ERR:
-      msg = 'ENCODING_ERR';
-      break;
-    default:
-      msg = 'Unknown Error';
-      break;
-  };
-
-  console.log('Error: ['+e.code+'] '+msg);
+  console.log('File Error: ['+e.name+'] Please check permissions');
 };
 
 // this is the core of the drag'n'drop:
@@ -141,18 +115,19 @@ function walkFileTree(item,path) {
   //console.log("walkFileTree()");
   path = path||"";
   if(item.isFile) {
+    //console.log("walkFileTree File: "+item.name);
     item.file(function(file) {                // this is also asynchronous ... (making everything complicate)
-      if(file.name.match(/\.(jscad|js|scad|obj|stl|amf|gcode)$/)) {   // FIXME now all files OpenJSCAD can handle
+      if(file.name.match(/\.(jscad|js|scad|obj|stl|amf|gcode)$/i)) {   // FIXME now all files OpenJSCAD can handle
         gMemFsTotal++;
         gCurrentFiles.push(file);
         readFileAsync(file);
       }
     }, errorHandler);
   } else if(item.isDirectory) {
+    //console.log("walkFileTree Directory: "+item.name);
     var dirReader = item.createReader();
-    //console.log("walkFileTree Folder: "+item.name);
     dirReader.readEntries(function(entries) {
-      // console.log("===",entries,entries.length);
+      //console.log("===",entries,entries.length);
       for(var i=0; i<entries.length; i++) {
         //console.log(i,entries[i]);
         walkFileTree(entries[i],path+item.name+"/");
@@ -299,18 +274,6 @@ function saveScript(filename,source) {
   //console.log("saveScript("+filename+","+source+")");
   var f = {name: filename, source: source};
   gMemFs[filename] = f;
-}
-
-function convertMemFsJson() {
-  var s = '[';
-  var comma = '';
-  for(var fn in gMemFs) {
-    s += comma;
-    s += JSON.stringify(gMemFs[fn]);
-    comma = ',';
-  }
-  s += ']';
-  return s;
 }
 
 // parse the file (and convert) to a renderable source (jscad)
