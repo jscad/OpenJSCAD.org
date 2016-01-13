@@ -925,7 +925,7 @@ OpenJsCad.AlertUserOfUncaughtExceptions = function() {
       default:
         break;
     }
-    if(typeof document !== 'undefined') {
+    if(typeof document == 'object') {
       var e = document.getElementById("errordiv");
       if (e !== null) {
         e.firstChild.textContent = msg;
@@ -1169,12 +1169,14 @@ OpenJsCad.Processor.prototype = {
 
   setCurrentObject: function(objs) {
     this.currentObject = objs;                                  // CAG or CSG
+
+    var csg = OpenJsCad.Processor.convertToSolid(objs);         // enforce CSG to display
+    if(objs.length)             // if it was an array (multiple CSG is now one CSG), we have to reassign currentObject
+       this.currentObject = csg;
+
     if(this.viewer) {
-      var csg = OpenJsCad.Processor.convertToSolid(objs);       // enfore CSG to display
       this.viewer.setCsg(csg);
       this.viewer.state = 2;
-      if(objs.length)             // if it was an array (multiple CSG is now one CSG), we have to reassign currentObject
-         this.currentObject = csg;
     }
 
     while(this.formatDropdown.options.length > 0)
@@ -1219,7 +1221,7 @@ OpenJsCad.Processor.prototype = {
     if(this.state == 1)
     {
       //todo: abort
-      this.statusspan.innerHTML = "Aborted.";
+      this.setStatus("Aborted.");
       this.worker.terminate();
       this.state = 3; // incomplete
       this.enableItems();
@@ -1254,6 +1256,10 @@ OpenJsCad.Processor.prototype = {
     this.enableItems();
   },
 
+  setStatus: function(txt) {
+    OpenJsCad.status(txt);
+  },
+
   setDebugging: function(debugging) {
     this.debugging = debugging;
   },
@@ -1276,7 +1282,7 @@ OpenJsCad.Processor.prototype = {
     catch(e)
     {
       this.setError(e.toString());
-      this.statusspan.innerHTML = "Error.";
+      this.setStatus("Error.");
       scripthaserrors = true;
     }
     if(!scripthaserrors)
@@ -1331,7 +1337,7 @@ OpenJsCad.Processor.prototype = {
           paramValues[control.paramName] = control.value;
           break;
       }
-      //console.log(paramValues[control.paramName]);
+      //console.log(control.paramName+":"+paramValues[control.paramName]);
     }
     return paramValues;
   },
@@ -1373,11 +1379,11 @@ OpenJsCad.Processor.prototype = {
         that.worker = null;
         if(err) {
           that.setError(err);
-          that.statusspan.innerHTML = "Error.";
+          that.setStatus("Error.");
           that.state = 3; // incomplete
         } else {
           that.setCurrentObject(objs);
-          that.statusspan.innerHTML = "Ready.";
+          that.setStatus("Ready.");
           that.state = 2; // complete
         }
         that.enableItems();
@@ -1401,11 +1407,10 @@ OpenJsCad.Processor.prototype = {
     var parameters = this.getParamValues();
     try {
       this.state = 1; // processing
-      this.statusspan.innerHTML = "Rendering. Please wait <img id=busy src='imgs/busy.gif'>";
       var func = createJscadFunction(this.baseurl+this.filename, this.script);
       var obj = func(parameters);
       this.setCurrentObject(obj);
-      this.statusspan.innerHTML = "Ready.";
+      this.setStatus("Ready.");
       this.state = 2; // complete
     }
     catch(err)
@@ -1415,7 +1420,7 @@ OpenJsCad.Processor.prototype = {
         errtxt += '\nStack trace:\n'+err.stack;
       }
       this.setError(errtxt);
-      this.statusspan.innerHTML = "Error.";
+      this.setStatus("Error.");
       this.state = 3; // incomplete
     }
     this.enableItems();
@@ -1429,7 +1434,7 @@ OpenJsCad.Processor.prototype = {
     this.setError("");
     this.clearViewer();
     this.enableItems();
-    this.statusspan.innerHTML = "Rendering. Please wait <img id=busy src='imgs/busy.gif'>";
+    this.setStatus("Rendering. Please wait <img id=busy src='imgs/busy.gif'>");
   // rebuild the solid
     try {
       this.rebuildSolidAsync();
@@ -1444,7 +1449,7 @@ OpenJsCad.Processor.prototype = {
     this.abort();
     this.setError("");
     this.clearViewer();
-    this.statusspan.innerHTML = "Rendering. Please wait <img id=busy src='imgs/busy.gif'>";
+    this.setStatus("Rendering. Please wait <img id=busy src='imgs/busy.gif'>");
     this.enableItems();
     var that = this;
     var paramValues = this.getParamValues();
@@ -1462,13 +1467,13 @@ OpenJsCad.Processor.prototype = {
           if(err)
           {
             that.setError(err);
-            that.statusspan.innerHTML = "Error.";
+            that.setStatus("Error.");
             that.state = 3; // incomplete
           }
           else
           {
             that.setCurrentObject(obj);
-            that.statusspan.innerHTML = "Ready.";
+            that.setStatus("Ready.");
             that.state = 2; // complete
           }
           that.enableItems();
@@ -1490,7 +1495,7 @@ OpenJsCad.Processor.prototype = {
         this.statusspan.innerHTML = "Rendering. Please wait <img id=busy src='imgs/busy.gif'>";
         var obj = OpenJsCad.parseJsCadScriptSync(this.script, paramValues, this.debugging);
         that.setCurrentObject(obj);
-        that.statusspan.innerHTML = "Ready.";
+        that.setStatus("Ready.");
         that.state = 2; // complete
       }
       catch(e)
@@ -1500,7 +1505,7 @@ OpenJsCad.Processor.prototype = {
           errtxt += '\nStack trace:\n'+e.stack;
         }
         that.setError(errtxt);
-        that.statusspan.innerHTML = "Error.";
+        that.setStatus("Error.");
         that.state = 3; // incomplete
       }
       that.enableItems();
