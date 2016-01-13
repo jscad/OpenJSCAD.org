@@ -973,8 +973,6 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
 
   this.viewer = null;
   this.zoomControl = null;
-  //this.viewerwidth = 1200;
-  //this.viewerheight = 800;
   this.initialViewerDistance = 100;
   this.currentObject = null;
   this.hasOutputFile = false;
@@ -1032,22 +1030,12 @@ OpenJsCad.Processor.prototype = {
     {
       this.containerdiv.removeChild(0);
     }
-/*
-    if(!OpenJsCad.isChrome() )
-    {
-      var div = document.createElement("div");
-      div.innerHTML = "Please note: OpenJsCad currently only runs reliably on Google Chrome!";
-      this.containerdiv.appendChild(div);
-    }
-*/
     var viewerdiv = document.createElement("div");
     viewerdiv.className = "viewer";
     viewerdiv.style.width = '100%';
     viewerdiv.style.height = '100%';
     this.containerdiv.appendChild(viewerdiv);
     try {
-      //this.viewer = new OpenJsCad.Viewer(viewerdiv, this.viewerwidth, this.viewerheight, this.initialViewerDistance);
-      //this.viewer = new OpenJsCad.Viewer(viewerdiv, viewerdiv.offsetWidth, viewer.offsetHeight, this.initialViewerDistance);
       this.viewer = new OpenJsCad.Viewer(viewerdiv, this.initialViewerDistance);
     } catch(e) {
       viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad currently requires Google Chrome or Firefox with WebGL enabled";
@@ -1550,35 +1538,34 @@ OpenJsCad.Processor.prototype = {
   },
 
   currentObjectToBlob: function() {
-    var format = this.selectedFormat();
+    return convertToBlob(this.currentObject,this.selectedFormat());
+  },
 
+  convertToBlob: function(object,format) {
     var blob = null;
-    if(format == "stla") {
-      blob = this.currentObject.toStlString();
-      blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
-    }
-    else if(format == "stlb") {
-      //blob = this.currentObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now (fixTJunctions() needs debugging)
-      blob = this.currentObject.toStlBinary({webBlob: true});
-
-      // -- binary string -> blob gives bad data, so we request cgs.js already blobbing the binary
-      //blob = new Blob([blob],{ type: this.formatInfo(format).mimetype+"/charset=UTF-8" });
-    }
-    else if(format == "amf") {
-      blob = this.currentObject.toAMFString({
-        producer: "OpenJSCAD.org "+OpenJsCad.version,
-        date: new Date()
-      });
-      blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
-    }
-    else if(format == "x3d") {
-      blob = this.currentObject.fixTJunctions().toX3D();
-    }
-    else if(format == "dxf") {
-      blob = this.currentObject.toDxf();
-    }
-    else {
-      throw new Error("Not supported");
+    switch(format) {
+      case 'stla':
+        blob = object.toStlString();
+        break;
+      case 'stlb':
+        //blob = this.currentObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now (fixTJunctions() needs debugging)
+        blob = object.toStlBinary({webBlob: true});
+        break;
+      case 'amf':
+        blob = object.toAMFString({
+          producer: "OpenJSCAD.org "+OpenJsCad.version,
+          date: new Date()
+        });
+        blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
+        break;
+      case 'x3d':
+        blob = object.fixTJunctions().toX3D();
+        break;
+      case 'dxf':
+        blob = object.toDxf();
+        break;
+      default:
+        throw new Error("Not supported");
     }
     return blob;
   },
