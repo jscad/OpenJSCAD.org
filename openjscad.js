@@ -1364,7 +1364,6 @@ OpenJsCad.Processor.prototype = {
 
   rebuildSolidAsync: function()
   {
-    //console.log("rebuildSolidAsync");
     var parameters = this.getParamValues();
     var script     = this.getFullScript();
 
@@ -1403,7 +1402,6 @@ OpenJsCad.Processor.prototype = {
 
   rebuildSolidSync: function()
   {
-    //console.log("rebuildSolidSync");
     var parameters = this.getParamValues();
     try {
       this.state = 1; // processing
@@ -1439,7 +1437,7 @@ OpenJsCad.Processor.prototype = {
     try {
       this.rebuildSolidAsync();
     } catch(e) {
-      console.log("async failed, try sync compute, error: "+e.message);
+      //console.log("async failed, try sync compute, error: "+e.message);
       this.rebuildSolidSync();
     }
   },
@@ -1492,7 +1490,7 @@ OpenJsCad.Processor.prototype = {
       try
       {
         that.state = 1; // processing
-        this.statusspan.innerHTML = "Rendering. Please wait <img id=busy src='imgs/busy.gif'>";
+        that.setStatus("Rendering. Please wait <img id=busy src='imgs/busy.gif'>");
         var obj = OpenJsCad.parseJsCadScriptSync(this.script, paramValues, this.debugging);
         that.setCurrentObject(obj);
         that.setStatus("Ready.");
@@ -1781,8 +1779,8 @@ OpenJsCad.Processor.prototype = {
       {type: "int"     , control: "number"  , required: ["index","type","name"], initial: 0},
       {type: "float"   , control: "number"  , required: ["index","type","name"], initial: 0.0},
       {type: "number"  , control: "number"  , required: ["index","type","name"], initial: 0.0},
-      {type: "checkbox", control: "checkbox", required: ["index","type","name"], initial: ""},
-      {type: "radio"   , control: "radio"   , required: ["index","type","name"], initial: ""},
+      {type: "checkbox", control: "checkbox", required: ["index","type","name","checked"], initial: ""},
+      {type: "radio"   , control: "radio"   , required: ["index","type","name","checked"], initial: ""},
       {type: "color"   , control: "color"   , required: ["index","type","name"], initial: "#000000"},
       {type: "date"    , control: "date"    , required: ["index","type","name"], initial: ""},
       {type: "email"   , control: "email"   , required: ["index","type","name"], initial: ""},
