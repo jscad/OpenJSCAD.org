@@ -1393,7 +1393,7 @@ OpenJsCad.Processor.prototype = {
     var parameters = this.getParamValues();
     try {
       this.state = 1; // processing
-      var func = createJscadFunction(this.baseurl+this.filename, this.script);
+      var func = OpenJsCad.createJscadFunction(this.baseurl+this.filename, this.script);
       var obj = func(parameters);
       this.setCurrentObject(obj);
       this.setStatus("Ready.");
