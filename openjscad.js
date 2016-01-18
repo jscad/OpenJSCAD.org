@@ -1538,7 +1538,7 @@ OpenJsCad.Processor.prototype = {
   },
 
   currentObjectToBlob: function() {
-    return convertToBlob(this.currentObject,this.selectedFormat());
+    return this.convertToBlob(this.currentObject,this.selectedFormat());
   },
 
   convertToBlob: function(object,format) {
