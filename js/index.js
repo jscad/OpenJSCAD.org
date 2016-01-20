@@ -322,7 +322,7 @@ $(document).ready(function() {
         if(u.match(/\.(stl|gcode)$/i)) {
           xhr.overrideMimeType("text/plain; charset=x-user-defined");    // our pseudo binary retrieval (works with Chrome)
         }
-        OpenJsCad.status("Fetching "+u+" <img id=busy src='imgs/busy.gif'>");
+        gProcessor.setStatus("Fetching "+u+" <img id=busy src='imgs/busy.gif'>");
         xhr.onload = function() {
           var data = JSON.parse(this.responseText);
           fetchExample(data.file,data.url);
@@ -365,7 +365,7 @@ function fetchExample(fn,url) {
     if(fn.match(/\.(stl|gcode)$/i)) {
       xhr.overrideMimeType("text/plain; charset=x-user-defined");    // our pseudo binary retrieval (works with Chrome)
     }
-    OpenJsCad.status("Loading "+fn+" <img id=busy src='imgs/busy.gif'>");
+    gProcessor.setStatus("Loading "+fn+" <img id=busy src='imgs/busy.gif'>");
     xhr.onload = function() {
         var source = this.responseText;
         var editorSource = source;
@@ -381,7 +381,7 @@ function fetchExample(fn,url) {
           putSourceInEditor(source,fn);
           gProcessor.setJsCad(source,fn);
         } else {
-           OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
+           gProcessor.setStatus("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
            var worker = createConversionWorker();
            var u = gProcessor.baseurl;
         // NOTE: cache: false is set to allow evaluation of 'include' statements

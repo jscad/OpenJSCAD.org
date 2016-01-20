@@ -7,7 +7,7 @@
 // This function creates an anonymous Function, which is invoked to execute the thread.
 // The function executes in the GLOBAL context, so all necessary parameters are provided.
 //
-function createJscadFunction(fullurl, script, callback) {
+OpenJsCad.createJscadFunction = function(fullurl, script, callback) {
   //console.log("createJscadFunction()");
 
 // determine the relative base path for include(<relativepath>)

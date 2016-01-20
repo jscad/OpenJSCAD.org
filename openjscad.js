@@ -925,7 +925,7 @@ OpenJsCad.AlertUserOfUncaughtExceptions = function() {
       default:
         break;
     }
-    if(typeof document !== 'undefined') {
+    if(typeof document == 'object') {
       var e = document.getElementById("errordiv");
       if (e !== null) {
         e.firstChild.textContent = msg;
@@ -973,8 +973,6 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
 
   this.viewer = null;
   this.zoomControl = null;
-  //this.viewerwidth = 1200;
-  //this.viewerheight = 800;
   this.initialViewerDistance = 100;
   this.currentObject = null;
   this.hasOutputFile = false;
@@ -1032,22 +1030,12 @@ OpenJsCad.Processor.prototype = {
     {
       this.containerdiv.removeChild(0);
     }
-/*
-    if(!OpenJsCad.isChrome() )
-    {
-      var div = document.createElement("div");
-      div.innerHTML = "Please note: OpenJsCad currently only runs reliably on Google Chrome!";
-      this.containerdiv.appendChild(div);
-    }
-*/
     var viewerdiv = document.createElement("div");
     viewerdiv.className = "viewer";
     viewerdiv.style.width = '100%';
     viewerdiv.style.height = '100%';
     this.containerdiv.appendChild(viewerdiv);
     try {
-      //this.viewer = new OpenJsCad.Viewer(viewerdiv, this.viewerwidth, this.viewerheight, this.initialViewerDistance);
-      //this.viewer = new OpenJsCad.Viewer(viewerdiv, viewerdiv.offsetWidth, viewer.offsetHeight, this.initialViewerDistance);
       this.viewer = new OpenJsCad.Viewer(viewerdiv, this.initialViewerDistance);
     } catch(e) {
       viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad currently requires Google Chrome or Firefox with WebGL enabled";
@@ -1169,12 +1157,14 @@ OpenJsCad.Processor.prototype = {
 
   setCurrentObject: function(objs) {
     this.currentObject = objs;                                  // CAG or CSG
+
+    var csg = OpenJsCad.Processor.convertToSolid(objs);         // enforce CSG to display
+    if(objs.length)             // if it was an array (multiple CSG is now one CSG), we have to reassign currentObject
+       this.currentObject = csg;
+
     if(this.viewer) {
-      var csg = OpenJsCad.Processor.convertToSolid(objs);       // enfore CSG to display
       this.viewer.setCsg(csg);
       this.viewer.state = 2;
-      if(objs.length)             // if it was an array (multiple CSG is now one CSG), we have to reassign currentObject
-         this.currentObject = csg;
     }
 
     while(this.formatDropdown.options.length > 0)
@@ -1219,7 +1209,7 @@ OpenJsCad.Processor.prototype = {
     if(this.state == 1)
     {
       //todo: abort
-      this.statusspan.innerHTML = "Aborted.";
+      this.setStatus("Aborted.");
       this.worker.terminate();
       this.state = 3; // incomplete
       this.enableItems();
@@ -1254,6 +1244,10 @@ OpenJsCad.Processor.prototype = {
     this.enableItems();
   },
 
+  setStatus: function(txt) {
+    OpenJsCad.status(txt);
+  },
+
   setDebugging: function(debugging) {
     this.debugging = debugging;
   },
@@ -1276,7 +1270,7 @@ OpenJsCad.Processor.prototype = {
     catch(e)
     {
       this.setError(e.toString());
-      this.statusspan.innerHTML = "Error.";
+      this.setStatus("Error.");
       scripthaserrors = true;
     }
     if(!scripthaserrors)
@@ -1331,7 +1325,7 @@ OpenJsCad.Processor.prototype = {
           paramValues[control.paramName] = control.value;
           break;
       }
-      //console.log(paramValues[control.paramName]);
+      //console.log(control.paramName+":"+paramValues[control.paramName]);
     }
     return paramValues;
   },
@@ -1358,7 +1352,6 @@ OpenJsCad.Processor.prototype = {
 
   rebuildSolidAsync: function()
   {
-    //console.log("rebuildSolidAsync");
     var parameters = this.getParamValues();
     var script     = this.getFullScript();
 
@@ -1373,11 +1366,11 @@ OpenJsCad.Processor.prototype = {
         that.worker = null;
         if(err) {
           that.setError(err);
-          that.statusspan.innerHTML = "Error.";
+          that.setStatus("Error.");
           that.state = 3; // incomplete
         } else {
           that.setCurrentObject(objs);
-          that.statusspan.innerHTML = "Ready.";
+          that.setStatus("Ready.");
           that.state = 2; // complete
         }
         that.enableItems();
@@ -1397,15 +1390,13 @@ OpenJsCad.Processor.prototype = {
 
   rebuildSolidSync: function()
   {
-    //console.log("rebuildSolidSync");
     var parameters = this.getParamValues();
     try {
       this.state = 1; // processing
-      this.statusspan.innerHTML = "Rendering. Please wait <img id=busy src='imgs/busy.gif'>";
-      var func = createJscadFunction(this.baseurl+this.filename, this.script);
+      var func = OpenJsCad.createJscadFunction(this.baseurl+this.filename, this.script);
       var obj = func(parameters);
       this.setCurrentObject(obj);
-      this.statusspan.innerHTML = "Ready.";
+      this.setStatus("Ready.");
       this.state = 2; // complete
     }
     catch(err)
@@ -1415,7 +1406,7 @@ OpenJsCad.Processor.prototype = {
         errtxt += '\nStack trace:\n'+err.stack;
       }
       this.setError(errtxt);
-      this.statusspan.innerHTML = "Error.";
+      this.setStatus("Error.");
       this.state = 3; // incomplete
     }
     this.enableItems();
@@ -1429,12 +1420,12 @@ OpenJsCad.Processor.prototype = {
     this.setError("");
     this.clearViewer();
     this.enableItems();
-    this.statusspan.innerHTML = "Rendering. Please wait <img id=busy src='imgs/busy.gif'>";
+    this.setStatus("Rendering. Please wait <img id=busy src='imgs/busy.gif'>");
   // rebuild the solid
     try {
       this.rebuildSolidAsync();
     } catch(e) {
-      console.log("async failed, try sync compute, error: "+e.message);
+      //console.log("async failed, try sync compute, error: "+e.message);
       this.rebuildSolidSync();
     }
   },
@@ -1444,7 +1435,7 @@ OpenJsCad.Processor.prototype = {
     this.abort();
     this.setError("");
     this.clearViewer();
-    this.statusspan.innerHTML = "Rendering. Please wait <img id=busy src='imgs/busy.gif'>";
+    this.setStatus("Rendering. Please wait <img id=busy src='imgs/busy.gif'>");
     this.enableItems();
     var that = this;
     var paramValues = this.getParamValues();
@@ -1462,13 +1453,13 @@ OpenJsCad.Processor.prototype = {
           if(err)
           {
             that.setError(err);
-            that.statusspan.innerHTML = "Error.";
+            that.setStatus("Error.");
             that.state = 3; // incomplete
           }
           else
           {
             that.setCurrentObject(obj);
-            that.statusspan.innerHTML = "Ready.";
+            that.setStatus("Ready.");
             that.state = 2; // complete
           }
           that.enableItems();
@@ -1487,10 +1478,10 @@ OpenJsCad.Processor.prototype = {
       try
       {
         that.state = 1; // processing
-        this.statusspan.innerHTML = "Rendering. Please wait <img id=busy src='imgs/busy.gif'>";
+        that.setStatus("Rendering. Please wait <img id=busy src='imgs/busy.gif'>");
         var obj = OpenJsCad.parseJsCadScriptSync(this.script, paramValues, this.debugging);
         that.setCurrentObject(obj);
-        that.statusspan.innerHTML = "Ready.";
+        that.setStatus("Ready.");
         that.state = 2; // complete
       }
       catch(e)
@@ -1500,7 +1491,7 @@ OpenJsCad.Processor.prototype = {
           errtxt += '\nStack trace:\n'+e.stack;
         }
         that.setError(errtxt);
-        that.statusspan.innerHTML = "Error.";
+        that.setStatus("Error.");
         that.state = 3; // incomplete
       }
       that.enableItems();
@@ -1547,35 +1538,34 @@ OpenJsCad.Processor.prototype = {
   },
 
   currentObjectToBlob: function() {
-    var format = this.selectedFormat();
+    return this.convertToBlob(this.currentObject,this.selectedFormat());
+  },
 
+  convertToBlob: function(object,format) {
     var blob = null;
-    if(format == "stla") {
-      blob = this.currentObject.toStlString();
-      blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
-    }
-    else if(format == "stlb") {
-      //blob = this.currentObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now (fixTJunctions() needs debugging)
-      blob = this.currentObject.toStlBinary({webBlob: true});
-
-      // -- binary string -> blob gives bad data, so we request cgs.js already blobbing the binary
-      //blob = new Blob([blob],{ type: this.formatInfo(format).mimetype+"/charset=UTF-8" });
-    }
-    else if(format == "amf") {
-      blob = this.currentObject.toAMFString({
-        producer: "OpenJSCAD.org "+OpenJsCad.version,
-        date: new Date()
-      });
-      blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
-    }
-    else if(format == "x3d") {
-      blob = this.currentObject.fixTJunctions().toX3D();
-    }
-    else if(format == "dxf") {
-      blob = this.currentObject.toDxf();
-    }
-    else {
-      throw new Error("Not supported");
+    switch(format) {
+      case 'stla':
+        blob = object.toStlString();
+        break;
+      case 'stlb':
+        //blob = this.currentObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now (fixTJunctions() needs debugging)
+        blob = object.toStlBinary({webBlob: true});
+        break;
+      case 'amf':
+        blob = object.toAMFString({
+          producer: "OpenJSCAD.org "+OpenJsCad.version,
+          date: new Date()
+        });
+        blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
+        break;
+      case 'x3d':
+        blob = object.fixTJunctions().toX3D();
+        break;
+      case 'dxf':
+        blob = object.toDxf();
+        break;
+      default:
+        throw new Error("Not supported");
     }
     return blob;
   },
@@ -1776,8 +1766,8 @@ OpenJsCad.Processor.prototype = {
       {type: "int"     , control: "number"  , required: ["index","type","name"], initial: 0},
       {type: "float"   , control: "number"  , required: ["index","type","name"], initial: 0.0},
       {type: "number"  , control: "number"  , required: ["index","type","name"], initial: 0.0},
-      {type: "checkbox", control: "checkbox", required: ["index","type","name"], initial: ""},
-      {type: "radio"   , control: "radio"   , required: ["index","type","name"], initial: ""},
+      {type: "checkbox", control: "checkbox", required: ["index","type","name","checked"], initial: ""},
+      {type: "radio"   , control: "radio"   , required: ["index","type","name","checked"], initial: ""},
       {type: "color"   , control: "color"   , required: ["index","type","name"], initial: "#000000"},
       {type: "date"    , control: "date"    , required: ["index","type","name"], initial: ""},
       {type: "email"   , control: "email"   , required: ["index","type","name"], initial: ""},

@@ -52,14 +52,14 @@
       var filepath = gComponents[choice].file;
       var xhr = new XMLHttpRequest();
       xhr.open("GET", filepath, true);
-      OpenJsCad.status("Loading "+filepath+" <img id=busy src='imgs/busy.gif'>");
+      gProcessor.setStatus("Loading "+filepath+" <img id=busy src='imgs/busy.gif'>");
 
       xhr.onload = function() {
         var source = this.responseText;
         console.log(source);
 
         if(filepath.match(/\.jscad$/i)||filepath.match(/\.js$/i)) {
-          OpenJsCad.status("Processing "+filepath+" <img id=busy src='imgs/busy.gif'>");
+          gProcessor.setStatus("Processing "+filepath+" <img id=busy src='imgs/busy.gif'>");
           gProcessor.setJsCad(source,filepath);
         }
       }
