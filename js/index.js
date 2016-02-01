@@ -105,6 +105,7 @@ var ex = [
   { file:'example003.scad', title: 'Cube with cutouts', type: 'OpenSCAD' },
   // { file:'example004.jscad', title: 'Cube minus sphere' },
   { file:'example005.jscad', title: 'Pavillon' },
+  { file:'cnc-cutout.jscad', title: 'CNC Corner Cutouts', new: true },
   // { file:'center.jscad', title: 'Centers of Primitives' },
 
   // { file:'bunch-cubes.jscad', title: 'Bunch of Cubes', new: true },
