@@ -1157,6 +1157,10 @@ OpenJsCad.Processor.prototype = {
 
   setCurrentObject: function(objs) {
     this.currentObject = objs;                                  // CAG or CSG
+    if (length in objs && objs.length == 1) {
+      this.currentObject = objs[0];                             // CAG or CSG
+      objs = this.currentObject;
+    }
 
     var csg = OpenJsCad.Processor.convertToSolid(objs);         // enforce CSG to display
     if(objs.length)             // if it was an array (multiple CSG is now one CSG), we have to reassign currentObject
