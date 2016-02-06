@@ -1,8 +1,9 @@
 // openscad.js, a few functions to simplify coding OpenSCAD-like
 //
-// Copyright (c) 2013-2015 by Rene K. Mueller <spiritdude@gmail.com>
+// Copyright (c) 2013-2016 by Rene K. Mueller <spiritdude@gmail.com>
 //
-// Version: 0.3.0
+// Version: 0.4.0
+//
 // License: MIT License
 //
 // Description:
@@ -14,6 +15,7 @@
 //     http://openjscad.org/
 //
 // History:
+// 2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
 // 2015/05/20: 0.2.4: renumbering to 0.024 -> 0.2.4
 // 2015/02/15: 0.023: change license from GPL to MIT license, for sake of simpleness, pull request for mirror() fix (github issue #65) included
 // 2015/01/07: 0.022: cylinder() supports d, d1 & d2 to be OpenSCAD-like (github issue #61)
@@ -75,7 +77,7 @@
 // }
 
 function version() {
-  return [0,3,0];
+  return [0,4,0];
 }
 
 function JStoMeta(src) {

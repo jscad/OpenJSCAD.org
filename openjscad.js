@@ -9,7 +9,7 @@
 
 var OpenJsCad = function() { };
 
-OpenJsCad.version = '0.4.0 (2016/02/02)';
+OpenJsCad.version = '0.4.0 (2016/02/06)';
 
 OpenJsCad.log = function(txt) {
   var timeInMs = Date.now();
