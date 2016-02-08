@@ -1,4 +1,4 @@
-// title      : CNC Cutout
+// title      : CNC Corner Cutout
 // author     : Jeff Gay
 // license    : MIT License
 // revision   : 0.0.1
