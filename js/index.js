@@ -1,5 +1,12 @@
-// -----------------------------------------------------------------------------------------------------------
-// Page Specific Functionality: index.html
+// index.js
+//
+// == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
+//
+// Purpose:
+//   Page Specific Functionality: index.html
+//
+// History:
+//   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
 
 // --- Dependencies
 // none

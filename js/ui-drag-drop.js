@@ -1,9 +1,14 @@
-// -----------------------------------------------------------------------------------------------------------
+// ui-drag-drop.js
+//
+// == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
+//    from old OpenJsCad processfile.html by Joost Nieuwenhuijse,
+//    with changes by Rene K. Mueller
+//
 // Drag'n'Drop Functionality
-// from old OpenJsCad processfile.html by Joost Nieuwenhuijse,
-//     with changes by Rene K. Mueller
+//
 // History:
-// 2013/04/02: massively upgraded to support multiple-files (chrome & firefox) and entire directory drag'n'drop (chrome only)
+//   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
+//   2013/04/02: massively upgraded to support multiple-files (chrome & firefox) and entire directory drag'n'drop (chrome only)
 
 // --- Dependencies
 // * gProcessor var

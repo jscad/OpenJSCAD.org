@@ -1,8 +1,8 @@
 #!/usr/local/bin/node --log_all
 
-// == OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>
+// == OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License
 //
-// License: GPLv2
+// Version: 0.4.0
 //
 // Description:
 //   openjscad <file> [-of <format>] [-o <output>]
