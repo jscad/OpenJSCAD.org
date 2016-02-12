@@ -65,6 +65,12 @@ dev-to-master::
 	git checkout master
 	git merge dev
 
+master-to-dev::
+	git checkout master
+	git merge -s ours dev
+	git checkout dev
+	git merge master
+
 dist::	
 	cd ..; tar cfz Backup/openjscad.org-${VERSION}.tar.gz "--exclude=*.git/*" OpenJSCAD.org/
 
