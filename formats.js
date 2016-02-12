@@ -1,13 +1,19 @@
 /*
-## License
+## Formats.js
 
 Copyright (c) 2014 bebbi (elghatta@gmail.com)
 Copyright (c) 2013 Eduard Bespalov (edwbes@gmail.com)
+Copyright (c) 2013 Rene K. Mueller (spiritdude@gmail.com)
 Copyright (c) 2012 Joost Nieuwenhuijse (joost@newhouse.nl)
 Copyright (c) 2011 Evan Wallace (http://evanw.github.com/csg.js/)
 Copyright (c) 2012 Alexandre Girard (https://github.com/alx)
 
-All code released under MIT license
+Exporting CSG into various formats:
+   - STL (ASCII & Binary)
+   - DXF
+   - AMF 
+
+License: MIT license
 
 */
 
@@ -74,7 +80,7 @@ CSG.prototype.toX3D = function() {
 
     // create output document
     var docType = document.implementation.createDocumentType("X3D",
-        'ISO//Web3D//DTD X3D 3.1//EN" "http://www.web3d.org/specifications/x3d-3.1.dtd', null);
+        "ISO//Web3D//DTD X3D 3.1//EN","http://www.web3d.org/specifications/x3d-3.1.dtd");
     var exportDoc = document.implementation.createDocument(null, "X3D", docType);
     exportDoc.insertBefore(
         exportDoc.createProcessingInstruction('xml', 'version="1.0" encoding="UTF-8"'),

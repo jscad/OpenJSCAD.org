@@ -11,8 +11,8 @@ function getParameterDefinitions() {
     { name: 'color', type: 'color', initial: '#FFB431', caption: 'Color?' }, 
     { name: 'count', type: 'slider', initial: 3, min: 2, max: 10, step: 1, caption: 'How many?' }, 
     { name: 'friend', type: 'group', caption: 'Friend' }, 
-    { name: 'name', type: 'text', size: 20, maxLength: 20, caption: 'Name?', placeholder: '20 characters' }, 
-    { name: 'date',  type: 'date', min: '1915-01-01', max: '2015-12-31', caption: 'Birthday?', placeholder: 'YYYY-MM-DD' }, 
+    { name: 'name', type: 'text', initial: '', size: 20, maxLength: 20, caption: 'Name?', placeholder: '20 characters' }, 
+    { name: 'date',  type: 'date', initial: '', min: '1915-01-01', max: '2015-12-31', caption: 'Birthday?', placeholder: 'YYYY-MM-DD' }, 
     { name: 'age', type: 'int', initial: 20, min: 1, max: 100, step: 1, caption: 'Age?' }, 
     ]; 
 } 

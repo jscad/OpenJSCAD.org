@@ -2,7 +2,7 @@
  * style.css for index.html of http://OpenJSCAD.org/
  */
 
-html, body { 
+html, body {
    margin: 0px;             /* not inherited */
    border: 0px none black;  /* not inherited */
    padding: 0px;            /* not inherited */
@@ -13,10 +13,10 @@ html, body {
    height: 100%;
    min-width: 100%;
    width: 100%;
-   
-   /* viewer/canvas is full screen so when window 
+
+   /* viewer/canvas is full screen so when window
       is resized all remains intact, but we make sure no scrollbar appears */
-   overflow: hidden;       
+   overflow: hidden;
 }
 
 a {
@@ -36,19 +36,52 @@ a:visited {
    z-index: 20;
 }
 
-#editor { 
-   margin: 0;
-   position: absolute;
-   top:    0;
-   bottom: 0;
-   right:  0;
+#editFrame {
+/*  display: none; */
+
+  margin: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+/*  left: 0; */
+  right: 0;
+
+  width: 40%;
+  font-weight: normal;
+}
+
+#editHandle {
+  left: -25px;
+  top: 45%;
+  position: absolute;
+  z-index: 6;
+  opacity: 0.9;
+}
+
+#editFrame {
+  transition: width 0.4s;
+  -o-transition: width 0.4s;
+  -moz-transition: width 0.4s;
+  -webkit-transition: width 0.4s;
+}
+
+.ace_gutter {
+   border-left: 1px solid #ccc;
+}
+
+#editor {
+  margin: inherit;
+  position: inherit;
+  top:    inherit;
+  bottom: inherit;
+  left:   inherit;
+  right:  inherit;
+  width: 100%;
+  z-index: 6;
 /*
-   left:   0;
-   background: rgba(255,255,255,0.15);
-*/
-   width: 40%;
-   z-index: 6;
    background: transparent;
+*/
+  background: rgba(255,255,255,0.15);
 }
 
 #viewerContext {
@@ -65,7 +98,7 @@ a:visited {
    bottom: 0px;
 }
 
-canvas { 
+canvas {
    margin: 0px;            /* not inherited */
    border: 0px none black; /* not inherited */
    padding: 0px;           /* not inherited */
@@ -96,7 +129,7 @@ canvas {
 .okButton {
    border: 2px solid #808080;
    border-radius: 4px;
-   padding: 0.5em; 
+   padding: 0.5em;
    padding-left: 2em;
    padding-right: 2em;
    margin-top: 3em;
@@ -110,28 +143,24 @@ canvas {
 #footer {
    font-size: 0.7em;
    text-align: left;
-   position: absolute; 
+   position: absolute;
 
    margin-left: 1.5em;
-   bottom: 0.5em; 
-   
-   opacity: 0.5;    
+   bottom: 0.5em;
+
+   opacity: 0.5;
    -moz-opacity: 0.5;      /* css mess (why do it simple, when we can do it complicate!) */
 }
 
-#tail { 
+#tail {
    z-index: 4;
    position: absolute;
-   bottom: 1em; 
+   bottom: 1em;
    margin: 1em;
 }
 
 #busy {
    vertical-align: middle;
-}
-
-.support {
-   vertical-align: bottom;
 }
 
 #menu, #menu nav a {
@@ -144,7 +173,7 @@ canvas {
 #menu {
    background: white;
 
-   opacity: 0.8;    
+   opacity: 0.8;
    -moz-opacity: 0.8;
 
    border-right: 1px solid black;
@@ -155,14 +184,14 @@ canvas {
    z-index: 5;
 
    font-size: 0.9em;
-   
+
    box-shadow: 4px 0 10px rgba(0,0,0,0.25);
    -moz-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
    -webkit-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
 }
- 
+
 #menu {
-   left: 0; 
+   left: 0;
 }
 
 #menu:hover, #menu:focus ~ #menuHandle:hover, #menuHandle:focus {
@@ -228,7 +257,7 @@ canvas {
 }
 
 #menuVersion {
-   text-align: center; 
+   text-align: center;
    font-size: 0.6em;
    color: #666;
 }
@@ -236,10 +265,6 @@ canvas {
 .menuSubInfo {
    font-size: 0.6em;
    color: #666;
-}
-
-.externalLink {
-   vertical-align: middle;
 }
 
 #examples {
@@ -261,16 +286,6 @@ canvas {
 
 #examples li {
    list-style-type: none;
-}
-
-#examplesList { 
-   border-bottom: 1px solid #888;
-   height: 4px;
-   overflow: hidden;
-}
-
-#examplesList:hover {
-   /*height: 100%;*/
 }
 
 #examplesHandle {
