@@ -59,6 +59,12 @@ pull::
 	git remote set-url origin git@github.com:Spiritdude/OpenJSCAD.org.git
 	git pull -u origin master
 
+dev-to-master::
+	git checkout dev
+	git merge -s ours master
+	git checkout master
+	git merge dev
+
 dist::	
 	cd ..; tar cfz Backup/openjscad.org-${VERSION}.tar.gz "--exclude=*.git/*" OpenJSCAD.org/
 
