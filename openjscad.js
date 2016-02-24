@@ -986,6 +986,8 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
   this.options = {};
   this.createElements();
   this.baseurl = document.location.href;
+  this.baseurl = this.baseurl.replace(/#.*$/,''); // remove remote URL
+  this.baseurl = this.baseurl.replace(/\?.*$/,''); // remove parameters
   if (this.baseurl.lastIndexOf('/') != (this.baseurl.length-1)) {
     this.baseurl = this.baseurl.substring(0,this.baseurl.lastIndexOf('/')+1);
   }
