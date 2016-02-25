@@ -36,7 +36,7 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 
 <h2>History</h2>
 <ul>
-<li>2016/02/02: 0.4.0: refactored, functionality split up into more files, mostly done by Z3 Dev
+<li>2016/02/25: 0.4.0: refactored, functionality split up into more files, mostly done by Z3 Dev
 <li>2015/10/23: 0.3.1: including new parameter options by Z3 Dev
 <li>2015/07/02: 0.3.0: format.js (Stefan Baumann), and Blob.js/openjscad improved by Z3 Dev
 <li>2015/05/20: 0.2.4: renumbering, latest csg.js from http://joostn.github.com/OpenJsCad/ adapted
