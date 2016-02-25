@@ -2,7 +2,7 @@
 //   few adjustments by Rene K. Mueller <spiritdude@gmail.com> for OpenJSCAD.org
 //
 // History:
-// 2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
+// 2016/02/25: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
 // 2013/03/12: reenable webgui parameters to fit in current design
 // 2013/03/11: few changes to fit design of http://openjscad.org
 
@@ -986,6 +986,8 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
   this.options = {};
   this.createElements();
   this.baseurl = document.location.href;
+  this.baseurl = this.baseurl.replace(/#.*$/,''); // remove remote URL
+  this.baseurl = this.baseurl.replace(/\?.*$/,''); // remove parameters
   if (this.baseurl.lastIndexOf('/') != (this.baseurl.length-1)) {
     this.baseurl = this.baseurl.substring(0,this.baseurl.lastIndexOf('/')+1);
   }
