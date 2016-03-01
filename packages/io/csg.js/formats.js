@@ -80,7 +80,7 @@ CSG.prototype.toX3D = function() {
 
     // create output document
     var docType = document.implementation.createDocumentType("X3D",
-        'ISO//Web3D//DTD X3D 3.1//EN" "http://www.web3d.org/specifications/x3d-3.1.dtd', null);
+        "ISO//Web3D//DTD X3D 3.1//EN","http://www.web3d.org/specifications/x3d-3.1.dtd");
     var exportDoc = document.implementation.createDocument(null, "X3D", docType);
     exportDoc.insertBefore(
         exportDoc.createProcessingInstruction('xml', 'version="1.0" encoding="UTF-8"'),
