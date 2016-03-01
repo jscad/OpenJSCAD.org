@@ -1,24 +1,35 @@
 /*
-## License
+## Formats.js
 
 Copyright (c) 2014 bebbi (elghatta@gmail.com)
 Copyright (c) 2013 Eduard Bespalov (edwbes@gmail.com)
+Copyright (c) 2013 Rene K. Mueller (spiritdude@gmail.com)
 Copyright (c) 2012 Joost Nieuwenhuijse (joost@newhouse.nl)
 Copyright (c) 2011 Evan Wallace (http://evanw.github.com/csg.js/)
 Copyright (c) 2012 Alexandre Girard (https://github.com/alx)
 
-All code released under MIT license
+Exporting CSG into various formats:
+   - STL (ASCII & Binary)
+   - DXF
+   - AMF 
+
+License: MIT license
 
 */
+
+// import the required modules if necessary
 
 if(typeof module !== 'undefined') {    // used via nodejs
     CSG = require(lib+'csg.js').CSG;
     CAG = require(lib+'csg.js').CAG;
+    Blob = require(lib+'Blob.js').Blob;
 }
 
 ////////////////////////////////////////////
 // X3D Export
 ////////////////////////////////////////////
+
+(function(module) {
 
 CSG.prototype.toX3D = function() {
     // materialPolygonLists
@@ -204,7 +215,9 @@ CSG.prototype.toStlString = function() {
         result += p.toStlString();
     });
     result += "endsolid csg.js\n";
-    return result;
+    return new Blob([result], {
+        type: "application/sla"
+    });
 };
 
 CSG.Vector3D.prototype.toStlString = function() {
@@ -326,7 +339,9 @@ CSG.prototype.toAMFString = function(m) {
     });
     result += "</mesh>\n</object>\n";
     result += "</amf>\n";
-    return result;
+    return new Blob([result], {
+        type: "application/amf+xml"
+    });
 };
 
 CSG.Vector3D.prototype.toAMFString = function() {
@@ -336,4 +351,9 @@ CSG.Vector3D.prototype.toAMFString = function() {
 CSG.Vertex.prototype.toAMFString = function() {
    return "<vertex><coordinates>" + this.pos.toAMFString() + "</coordinates></vertex>\n";
 };
+
+// re-export CSG and CAG with the extended prototypes
+    module.CSG = CSG;
+    module.CAG = CAG;
+})(this);
 
