@@ -60,8 +60,6 @@ Todo:
     <script src="js/jscad-worker.js?0.4.0" charset="utf-8"></script>
     <script src="js/jscad-function.js?0.4.0" charset="utf-8"></script>
     <script src="openscad.js?0.4.0"></script>
-    <script src="underscore.js"></script>
-    <script src="openscad-openjscad-translator.js"></script>
     <script src="ace/ace.js?0.4.0" charset="utf-8"></script>
     <script src="js/ui-drag-drop.js?0.4.0" charset="utf-8"></script>
     <script src="js/ui-editor.js?0.4.0" charset="utf-8"></script>
@@ -116,6 +114,8 @@ Todo:
           <tr><td align="right"><b>scad</b></td><td><a target="_blank" href="http://openscad.org">OpenSCAD</a> (<a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#direct-openscad-scad-import">experimental</a>, import)</td></tr>
           <tr><td align="right"><b>stl</b></td><td><a target="_blank" href="http://en.wikipedia.org/wiki/STL_(file_format)">STL format</a> (experimental, import/export)</td></tr>
           <tr><td align="right"><b>amf</b></td><td><a target="_blank" href="http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format">AMF format</a> (experimental, import/export)</td></tr>
+          <tr><td align="right"><b>dxf</b></td><td><a target="_blank" href="https://en.wikipedia.org/wiki/AutoCAD_DXF">DXF format</a> (experimental, import/export)</td></tr>
+          <tr><td align="right"><b>svg</b></td><td><a target="_blank" href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG format</a> (experimental, import/export)</td></tr>
         </table>
         <p><a class="navlink" href="#" onclick="$('#about').show(); return false;">About</a></p>
       </nav>
@@ -183,10 +183,10 @@ function main() {
       <div id="statusdiv"></div>
       <div id="filedropzone">
         <div id="filedropzone_empty">
-<script>document.write("Drop your jscad, scad, amf, stl file or multiple jscad files "+
-     (browser=='chrome'&&me=='web-online'?"or folder with jscad files ":"")+
+<script>document.write("Drop one or more supported files"+
+     (browser=='chrome'&&me=='web-online'?", or folder with jscad files ":"")+
      " here (see <a style='font-weight: normal' href='https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#support-of-include' target=_blank>details</a>) "+
-     "<br>or edit OpenJSCAD or OpenSCAD source-code in built-in editor direct.");
+     "<br>or directly edit OpenJSCAD or OpenSCAD code using the editor.");
 </script>
        </div>
        <div id="filedropzone_filled">
