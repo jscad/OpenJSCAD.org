@@ -70,8 +70,12 @@ onmessage = function (e) {
           case 'jscad':
             r.source = r.converted = data.source;
             break;
+          case 'svg':
+            importScripts(r.baseurl+'csg.js',r.baseurl+'openjscad.js',r.baseurl+'js/lib/sax-js-1.1.5/lib/sax.js',r.baseurl+'js/jscad-parseSVG.js');
+            r.source = r.converted = OpenJsCad.parseSVG(data.source,data.filename);
+            break;
           default:
-            console.log("WARNING: Invalid file type in conversion ("+e+")");
+            r.source = r.converted = '// Invalid file type in conversion ('+e+')';
             break;
         }
       }
