@@ -122,7 +122,9 @@ function walkFileTree(item,path) {
   if(item.isFile) {
     //console.log("walkFileTree File: "+item.name);
     item.file(function(file) {                // this is also asynchronous ... (making everything complicate)
-      if(file.name.match(/\.(jscad|js|scad|obj|stl|amf|gcode)$/i)) {   // FIXME now all files OpenJSCAD can handle
+      var e = file.name.toLowerCase().match(/\.(\w+)$/i);
+      e = RegExp.$1;
+      if(OpenJsCad.conversionFormats.indexOf(e) >= 0) {
         gMemFsTotal++;
         gCurrentFiles.push(file);
         readFileAsync(file);
@@ -159,7 +161,9 @@ function loadLocalFiles() {
 // set one file (the one dragged) or main.jscad
 function setCurrentFile(file) {
   //console.log("setCurrentFile("+file.name+":"+file.source+")");
-  if(!file.name.match(/\.(jscad|js|scad|stl|obj|amf|gcode)$/i)) { // FIXME where is the list?
+  var e = file.name.toLowerCase().match(/\.(\w+)$/i);
+  e = RegExp.$1;
+  if(OpenJsCad.conversionFormats.indexOf(e) < 0) {
     throw new Error("Please drag and drop a compatible file");
   }
   if(file.size == 0) {
@@ -301,7 +305,7 @@ function parseFile(f, onlyifchanged) {
 
     saveScript(fn,source);
 
-    var e = fn.toLowerCase().match(/\.(jscad|js|scad|stl|obj|amf|gcode)$/i);
+    var e = fn.toLowerCase().match(/\.(w+)$/i);
     e = RegExp.$1;
     if(e == 'amf') {
     // FIXME remove this branch once JQUERY is no longer needed for AMF
@@ -310,7 +314,7 @@ function parseFile(f, onlyifchanged) {
       gProcessor.setJsCad(source,fn);
     } else {
       OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-      var worker = createConversionWorker();
+      var worker = OpenJsCad.createConversionWorker();
       var u = gProcessor.baseurl;
     // NOTE: cache: true is very important to control the evaluation of all cached files (code)
       worker.postMessage({baseurl: u, source: source, filename: fn, cache: true});
