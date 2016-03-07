@@ -23,6 +23,7 @@ if(navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)/i))
 
 var showEditor = true;
 var remoteUrl = './remote.pl?url=';
+//var remoteUrl = './remote.php?url=';
 
 //console.log('me: ['+me+']');
 //console.log('browser: ['+browser+']');
@@ -113,8 +114,7 @@ var ex = [
   // { file:'example004.jscad', title: 'Cube minus sphere' },
   { file:'example005.jscad', title: 'Pavillon' },
 
-  // { file:'cnc-cutout.jscad', title: 'CNC Corner Cutouts', new: true, spacing: true },
-  // { file:'center.jscad', title: 'Centers of Primitives' },
+  //{ file:'cnc-cutout.jscad', title: 'CNC Corner Cutouts', new: true, spacing: true },
 
   // { file:'bunch-cubes.jscad', title: 'Bunch of Cubes', new: true },
   { file:'lookup.jscad', title: 'Lookup()', spacing: true },
@@ -154,6 +154,8 @@ var ex = [
   { file:'globe.jscad', title: 'Globe' },
 
   { file:'platonics/', title: 'Recursive Include(): Platonics', spacing: true },
+
+  { file:'babypanda2.svg', title: 'SVG Image: Baby Panda', spacing: true, new: true },
 
   { file:'3d_sculpture-VernonBussler.stl', title: '3D Model: 3D Sculpture (Vernon Bussler)', type: 'STL', spacing: true },
   { file:'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' },
@@ -382,7 +384,7 @@ function fetchExample(fn,url) {
 
         _includePath = path.replace(/\/[^\/]+$/,'/');
 
-        var e = fn.toLowerCase().match(/\.(jscad|js|scad|stl|obj|amf|gcode)$/i);
+        var e = fn.toLowerCase().match(/\.(\w+)$/i);
         e = RegExp.$1;
         if(e == 'amf') {
         // FIXME remove this branch once JQUERY is no longer needed for AMF
@@ -391,7 +393,7 @@ function fetchExample(fn,url) {
           gProcessor.setJsCad(source,fn);
         } else {
            gProcessor.setStatus("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-           var worker = createConversionWorker();
+           var worker = OpenJsCad.createConversionWorker();
            var u = gProcessor.baseurl;
         // NOTE: cache: false is set to allow evaluation of 'include' statements
            worker.postMessage({baseurl: u, source: source, filename: fn, cache: false});

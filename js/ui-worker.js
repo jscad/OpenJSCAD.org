@@ -9,7 +9,7 @@
 //
 // See worker-conversion.js for the conversion process
 //
-function createConversionWorker() {
+OpenJsCad.createConversionWorker = function() {
   var w = new Worker('js/worker-conversion.js');
 // when the worker finishes
 // - put the converted source into the editor
@@ -33,4 +33,21 @@ function createConversionWorker() {
     };
   return w;
 };
+
+// Create a list of supported conversions
+//
+// See worker-conversion.js for the conversion process
+//
+OpenJsCad.conversionFormats = [
+// 3D file formats
+  'amf',
+  'gcode',
+  'js',
+  'jscad',
+  'obj',
+  'scad',
+  'stl',
+// 2D file formats
+  'svg',
+];
 

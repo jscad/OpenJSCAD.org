@@ -1571,6 +1571,9 @@ OpenJsCad.Processor.prototype = {
       case 'dxf':
         blob = object.toDxf();
         break;
+      case 'svg':
+        blob = object.toSvg();
+        break;
       default:
         throw new Error("Not supported");
     }
@@ -1581,7 +1584,7 @@ OpenJsCad.Processor.prototype = {
     if (this.currentObject instanceof CSG) {
       return ["stlb", "stla", "amf", "x3d"];
     } else if (this.currentObject instanceof CAG) {
-      return ["dxf"];
+      return ["dxf","svg"];
     } else {
       throw new Error("Not supported");
     }
@@ -1613,6 +1616,11 @@ OpenJsCad.Processor.prototype = {
         displayName: "DXF",
         extension: "dxf",
         mimetype: "application/dxf",
+        },
+      svg: {
+        displayName: "SVG",
+        extension: "svg",
+        mimetype: "image/svg+xml",
         }
     }[format];
   },
