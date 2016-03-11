@@ -432,14 +432,9 @@ sax.SAXParser.prototype.svgSvg = function(element) {
   obj.unitsPmm = [this.pxPmm,this.pxPmm];
 
   if ('PXPMM' in element) {
-  // WOW! a supplied value for pixel widths!!!
+  // WOW! a supplied value for pixels per milimeter!!!
     obj.pxPmm = element.PXPMM;
-    //this.pxPmm = parseFloat(element.PXPMM);
-    //if (isNaN(this.pxPmm)) { this.pxPmm = 1/this.cssPxUnit; } // use the default calculation
-    //if (this.svgGroups.length == 0) {
-    //  obj.pxPmm = this.pxPmm;
-    //  console.log('*****PIXELS PER MM: '+this.pxPmm);
-    //}
+    obj.unitsPmm = [obj.pxPmm,obj.pxPmm];
   }
   if ('WIDTH' in element)  { obj.width  = element.WIDTH; }
   if ('HEIGHT' in element) { obj.height = element.HEIGHT; }
@@ -455,18 +450,20 @@ sax.SAXParser.prototype.svgSvg = function(element) {
     }
   // apply the viewbox
     if (obj.width.indexOf('%') < 0) {
-    // calculate units per mm of the view box
-      var u = this.css2cag(obj.width,1.0);
-      obj.unitsPmm[0] = 1 / (u  / obj.viewW);
+    // calculate a scaling from width and viewW
+      var s = obj.width / obj.viewW;
+    // scale the default units
+      obj.unitsPmm[0] = obj.unitsPmm[0] * s;
     } else {
     // scale the default units by the width (%)
       var u = obj.unitsPmm[0] * (parseFloat(obj.width) / 100.0);
       obj.unitsPmm[0] = u;
     }
     if (obj.height.indexOf('%') < 0) {
-    // calculate units per mm of the view box
-      var u = this.css2cag(obj.height,1.0);
-      obj.unitsPmm[1] = 1 / (u  / obj.viewH);
+    // calculate a scaling from height and viewH
+      var s = obj.height / obj.viewH;
+    // scale the default units
+      obj.unitsPmm[1] = obj.unitsPmm[1] * s;
     } else {
     // scale the default units by the width (%)
       var u = obj.unitsPmm[1] * (parseFloat(obj.height) / 100.0);
@@ -768,7 +765,7 @@ sax.SAXParser.prototype.svgObjects  = [];    // named objects
 sax.SAXParser.prototype.svgGroups   = [];    // groups of objects
 sax.SAXParser.prototype.svgInDefs   = false; // svg DEFS element in process
 sax.SAXParser.prototype.svgObj      = null;  // svg in object form
-sax.SAXParser.prototype.svgUnitsPmm = [];
+sax.SAXParser.prototype.svgUnitsPmm = [1,1];
 sax.SAXParser.prototype.svgUnitsPer = 0;
 
 sax.SAXParser.prototype.reflect = function(x,y,px,py) {
