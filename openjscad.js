@@ -523,8 +523,13 @@ OpenJsCad.Viewer.csgToMeshes = function(initial_csg) {
 
     var indices = polygon.vertices.map(function(vertex) {
       var vertextag = vertex.getTag();
-      var vertexindex;
-      if(smoothlighting && (vertextag in vertexTag2Index)) {
+      var vertexindex = vertexTag2Index[vertextag];
+      var prevcolor = colors[vertexindex];
+      if(smoothlighting && (vertextag in vertexTag2Index) &&
+        (prevcolor[0] == color[0]) &&
+        (prevcolor[1] == color[1]) &&
+        (prevcolor[2] == color[2])
+      ) {
         vertexindex = vertexTag2Index[vertextag];
       } else {
         vertexindex = vertices.length;
