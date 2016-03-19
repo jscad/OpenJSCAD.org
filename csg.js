@@ -5437,7 +5437,7 @@ for solid CAD anyway.
     CSG.addCenteringToPrototype = function(prot, axes) {
         prot.center = function(cAxes) {
             cAxes = Array.prototype.map.call(arguments, function(a) {
-                return a.toLowerCase();
+                return a; //.toLowerCase();
             });
             // no args: center on all axes
             if (!cAxes.length) {
