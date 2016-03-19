@@ -28,12 +28,10 @@ OpenJsCad.log = function(txt) {
   else throw new Error("Cannot log");
 };
 
+// See Processor.setStatus()
+// Note: leave for compatibility
 OpenJsCad.status = function(s) {
-  if(typeof document !== 'undefined') {
-    document.getElementById('statusspan').innerHTML = s;
-  } else {
-    OpenJsCad.log(s);
-  }
+  OpenJsCad.log(s);
 }
 
 OpenJsCad.env = function() {
@@ -52,57 +50,69 @@ OpenJsCad.env = function() {
 
 // A viewer is a WebGL canvas that lets the user view a mesh. The user can
 // tumble it around by dragging the mouse.
-OpenJsCad.Viewer = function(containerelement, initialdepth) {
-  var gl = GL.create();
-  this.gl = gl;
-  this.angleX = -60;
-  this.angleY = 0;
-  this.angleZ = -45;
-  this.viewpointX = 0;
-  this.viewpointY = -5;
-  this.viewpointZ = initialdepth;
-  this.onZoomChanged = null;
-  this.plate = true;  // render plate
-
-  // state of view
-  // 0 - initialized, no object
-  // 1 - cleared, no object
-  // 2 - showing, object
-  this.state = 0;
-
-  this.touch = {
-    lastX: 0,
-    lastY: 0,
-    scale: 0,
-    ctrl: 0,
-    shiftTimer: null,
-    shiftControl: null,
-    cur: null //current state
+OpenJsCad.Viewer = function(containerelement) {
+// see the various methods below on how to change these
+  this.camera = {
+    fov: 45,                           // field of view
+    angle:    {x: -60,y:  0,z:  -45},  // view angle about XYZ axis
+    position: {x:   0,y:  0,z:  100},  // initial position at XYZ
+    clip:     {min: 0.5,  max: 1000},  // rendering outside this range is clipped
+  };
+  this.plate = {
+    draw: true,                // draw or not
+    size: 200,                 // plate size (X and Y)
+  // minor grid settings
+    m: {
+      i:  1, // number of units between minor grid lines
+      r: .8, g: .8, b: .8, a: .5, // color
+    },
+  // major grid settings
+    M: {
+      i: 10, // number of units between major grid lines
+      r: .5, g: .5, b: .5, a: .5, // color
+    },
+  };
+  this.axis = {
+    draw: false,                // draw or not
+    x: {
+      neg: {r: 1, g: .5, b: .5, a: .5}, // color in negative direction
+      pos: {r: 1, g:  0, b:  0, a: .8}, // color in positive direction
+    },
+    y: {
+      neg: {r: .5, g: 1, b: .5, a: .5}, // color in negative direction
+      pos: {r:  0, g: 1, b:  0, a: .8}, // color in positive direction
+    },
+    z: {
+      neg: {r: .5, g: .5, b: 1, a: .5}, // color in negative direction
+      pos: {r:  0, g:  0, b: 1, a: .8}, // color in positive direction
+    },
+  };
+  this.solid = {
+    draw:    true,              // draw or not
+    lines:   false,             // draw outlines or not
+    overlay: false,             // use overlay when drawing lines or not
+    smooth:  false,             // use smoothing or not
+    color:   [1,.4,1,1],        // default color
   };
 
-
-  // Draw axes flag:
-  this.drawAxes = true;
-  // Draw triangle lines:
-  this.drawLines = false;
-  // Set to true so lines don't use the depth buffer
-  this.lineOverlay = false;
+  // Set up WebGL state
+  var gl = GL.create();
+  this.gl = gl;
+  this.gl.lineWidth(1); // don't let the library choose
 
   // Set up the viewport
   this.gl.canvas.width  = $(containerelement).width();
   this.gl.canvas.height = $(containerelement).height();
-  this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
+  this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height); // pixels
   this.gl.matrixMode(this.gl.PROJECTION);
   this.gl.loadIdentity();
-  this.gl.perspective(45, this.gl.canvas.width / this.gl.canvas.height, 0.5, 1000);
+  this.gl.perspective(this.camera.fov, this.gl.canvas.width / this.gl.canvas.height, this.camera.clip.min, this.camera.clip.max);
   this.gl.matrixMode(this.gl.MODELVIEW);
 
-  // Set up WebGL state
   this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
   this.gl.clearColor(0.93, 0.93, 0.93, 1);
   this.gl.enable(this.gl.DEPTH_TEST);
   this.gl.enable(this.gl.CULL_FACE);
-  this.gl.polygonOffset(1, 1);
 
   // Black shader for wireframe
   this.blackShader = new GL.Shader('\
@@ -147,7 +157,6 @@ OpenJsCad.Viewer = function(containerelement, initialdepth) {
     <div class="arrow arrow-right" />\
     <div class="arrow arrow-top" />\
     <div class="arrow arrow-bottom" /></div>');
-  this.touch.shiftControl = shiftControl;
 
   $(containerelement).append(this.gl.canvas)
     .append(shiftControl)
@@ -223,7 +232,7 @@ OpenJsCad.Viewer = function(containerelement, initialdepth) {
       _this.gl.viewport(0, 0, _this.gl.canvas.width, _this.gl.canvas.height);
       _this.gl.matrixMode( _this.gl.PROJECTION );
       _this.gl.loadIdentity();
-      _this.gl.perspective(45, _this.gl.canvas.width / _this.gl.canvas.height, 0.5, 1000 );
+      _this.gl.perspective(_this.camera.fov, _this.gl.canvas.width / _this.gl.canvas.height, _this.camera.clip.min, _this.camera.clip.max );
       _this.gl.matrixMode( _this.gl.MODELVIEW );
       _this.onDraw();
     }
@@ -247,23 +256,66 @@ OpenJsCad.Viewer = function(containerelement, initialdepth) {
     }
   };
 
-  this.clear();
+// state variables, i.e. used for storing values, etc
+
+  // state of viewer
+  // 0 - initialized, no object
+  // 1 - cleared, no object
+  // 2 - showing, object
+  this.state = 0;
+
+  // state of perpective (camera)
+  this.angleX = this.camera.angle.x;
+  this.angleY = this.camera.angle.y;
+  this.angleZ = this.camera.angle.z;
+  this.viewpointX = this.camera.position.x;
+  this.viewpointY = this.camera.position.y;
+  this.viewpointZ = this.camera.position.z;
+
+  this.onZoomChanged = null;
+
+  this.touch = {
+    lastX: 0,
+    lastY: 0,
+    scale: 0,
+    ctrl: 0,
+    shiftTimer: null,
+    shiftControl: shiftControl,
+    cur: null //current state
+  };
+
+  this.meshes = [];
+
+  this.clear(); // and draw the inital viewer
 };
 
 OpenJsCad.Viewer.prototype = {
   setCsg: function(csg) {
     if(0&&csg.length) {                            // preparing multiple CSG's (not union-ed), not yet working
       for(var i=0; i<csg.length; i++)
-        this.meshes.concat(OpenJsCad.Viewer.csgToMeshes(csg[i]));
+        this.meshes.concat(this.csgToMeshes(csg[i]));
     } else {
-      this.meshes = OpenJsCad.Viewer.csgToMeshes(csg);
+      this.meshes = this.csgToMeshes(csg);
     }
+    this.state = 2; // showing, object
     this.onDraw();
   },
 
   clear: function() {
     // empty mesh list:
     this.meshes = [];
+    this.state = 1; // cleared, no object
+    this.onDraw();
+  },
+
+  reset: function() {
+    // reset camera to initial settings
+    this.angleX = this.camera.angle.x;
+    this.angleY = this.camera.angle.y;
+    this.angleZ = this.camera.angle.z;
+    this.viewpointX = this.camera.position.x;
+    this.viewpointY = this.camera.position.y;
+    this.viewpointZ = this.camera.position.z;
     this.onDraw();
   },
 
@@ -271,13 +323,42 @@ OpenJsCad.Viewer.prototype = {
     return !!this.gl;
   },
 
-  ZOOM_MAX: 1000,
-  ZOOM_MIN: 10,
+  setCameraOptions: function(options) {
+    options = options || {};
+  // apply all options found
+    for (var x in this.camera) {
+      if (x in options) this.camera[x] = options[x];
+    }
+  },
+
+  setPlateOptions: function(options) {
+    options = options || {};
+  // apply all options found
+    for (var x in this.plate) {
+      if (x in options) this.plate[x] = options[x];
+    }
+  },
+
+  setAxisOptions: function(options) {
+    options = options || {};
+  // apply all options found
+    for (var x in this.axis) {
+      if (x in options) this.axis[x] = options[x];
+    }
+  },
+
+  setSolidOptions: function(options) {
+    options = options || {};
+  // apply all options found
+    for (var x in this.solid) {
+      if (x in options) this.solid[x] = options[x];
+    }
+  },
 
   setZoom: function(coeff) { //0...1
     coeff=Math.max(coeff, 0);
     coeff=Math.min(coeff, 1);
-    this.viewpointZ = this.ZOOM_MIN + coeff * (this.ZOOM_MAX - this.ZOOM_MIN);
+    this.viewpointZ = this.camera.clip.min + coeff * (this.camera.clip.max - this.camera.clip.min);
     if(this.onZoomChanged) {
       this.onZoomChanged();
     }
@@ -285,7 +366,7 @@ OpenJsCad.Viewer.prototype = {
   },
 
   getZoom: function() {
-    var coeff = (this.viewpointZ-this.ZOOM_MIN) / (this.ZOOM_MAX - this.ZOOM_MIN);
+    var coeff = (this.viewpointZ-this.camera.clip.min) / (this.camera.clip.max - this.camera.clip.min);
     return coeff;
   },
 
@@ -305,7 +386,7 @@ OpenJsCad.Viewer.prototype = {
         var factor = 5e-3;
         this.viewpointX += factor * e.deltaX * this.viewpointZ;
         this.viewpointY -= factor * e.deltaY * this.viewpointZ;
-      } else if(e.ctrlKey) {                   // ZOOM IN/OU
+      } else if(e.ctrlKey||e.metaKey) {                   // ZOOM IN/OU
         var factor = Math.pow(1.006, e.deltaX+e.deltaY);
         var coeff = this.getZoom();
         coeff *= factor;
@@ -394,83 +475,94 @@ OpenJsCad.Viewer.prototype = {
 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.loadIdentity();
+  // set the perspective based on the camera postion
     gl.translate(this.viewpointX, this.viewpointY, -this.viewpointZ);
     gl.rotate(this.angleX, 1, 0, 0);
     gl.rotate(this.angleY, 0, 1, 0);
     gl.rotate(this.angleZ, 0, 0, 1);
-
-    gl.enable(gl.BLEND);
-    //gl.disable(gl.DEPTH_TEST);
-    if (!this.lineOverlay) gl.enable(gl.POLYGON_OFFSET_FILL);
-    for (var i = 0; i < this.meshes.length; i++) {
-      var mesh = this.meshes[i];
-      this.lightingShader.draw(mesh, gl.TRIANGLES);
-    }
-    if (!this.lineOverlay) gl.disable(gl.POLYGON_OFFSET_FILL);
-    gl.disable(gl.BLEND);
-    //gl.enable(gl.DEPTH_TEST);
-
-    if(this.drawLines) {
-      if (this.lineOverlay) gl.disable(gl.DEPTH_TEST);
+  // draw the solid (meshes)
+    if(this.solid.draw) {
       gl.enable(gl.BLEND);
+      if (!this.solid.overlay) gl.enable(gl.POLYGON_OFFSET_FILL);
       for (var i = 0; i < this.meshes.length; i++) {
         var mesh = this.meshes[i];
-        this.blackShader.draw(mesh, gl.LINES);
+        this.lightingShader.draw(mesh, gl.TRIANGLES);
       }
+      if (!this.solid.overlay) gl.disable(gl.POLYGON_OFFSET_FILL);
       gl.disable(gl.BLEND);
-      if (this.lineOverlay) gl.enable(gl.DEPTH_TEST);
+
+      if(this.solid.lines) {
+        if (this.solid.overlay) gl.disable(gl.DEPTH_TEST);
+        gl.enable(gl.BLEND);
+        for (var i = 0; i < this.meshes.length; i++) {
+          var mesh = this.meshes[i];
+          this.blackShader.draw(mesh, gl.LINES);
+        }
+        gl.disable(gl.BLEND);
+        if (this.solid.overlay) gl.enable(gl.DEPTH_TEST);
+      }
     }
-    //EDW: axes
-    if (this.drawAxes) {
-      gl.enable(gl.BLEND);
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-      gl.begin(gl.LINES);
-      var plate = 200;
-      if(this.plate) {
-        gl.color(.8,.8,.8,.5); // -- minor grid
-        for(var x=-plate/2; x<=plate/2; x++) {
-          if(x%10) {
-            gl.vertex(-plate/2, x, 0);
-            gl.vertex(plate/2, x, 0);
-            gl.vertex(x, -plate/2, 0);
-            gl.vertex(x, plate/2, 0);
-          }
-        }
-        gl.color(.5,.5,.5,.5); // -- major grid
-        for(var x=-plate/2; x<=plate/2; x+=10) {
-          gl.vertex(-plate/2, x, 0);
-          gl.vertex(plate/2, x, 0);
-          gl.vertex(x, -plate/2, 0);
-          gl.vertex(x, plate/2, 0);
+  // draw the plate and the axis 
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.begin(gl.LINES);
+
+    if(this.plate.draw) {
+      var m = this.plate.m; // short cut
+      var M = this.plate.M; // short cut
+      var size = this.plate.size/2;
+    // -- minor grid
+      gl.color(m.r,m.g,m.b,m.a);
+      var mg = m.i;
+      var MG = M.i;
+      for(var x=-size; x<=size; x+=mg) {
+        if(x%MG) { // draw only minor grid line
+          gl.vertex(-size, x, 0);
+          gl.vertex(size, x, 0);
+          gl.vertex(x, -size, 0);
+          gl.vertex(x, size, 0);
         }
       }
-      if(0) {
-        //X - red
-        gl.color(1, 0.5, 0.5, 0.2); //negative direction is lighter
-        gl.vertex(-100, 0, 0);
-        gl.vertex(0, 0, 0);
-
-        gl.color(1, 0, 0, 0.8); //positive direction
-        gl.vertex(0, 0, 0);
-        gl.vertex(100, 0, 0);
-        //Y - green
-        gl.color(0.5, 1, 0.5, 0.2); //negative direction is lighter
-        gl.vertex(0, -100, 0);
-        gl.vertex(0, 0, 0);
-
-        gl.color(0, 1, 0, 0.8); //positive direction
-        gl.vertex(0, 0, 0);
-        gl.vertex(0, 100, 0);
-         //Z - black
-        gl.color(0.5, 0.5, 0.5, 0.2); //negative direction is lighter
-        gl.vertex(0, 0, -100);
-        gl.vertex(0, 0, 0);
-
-        gl.color(0.2, 0.2, 0.2, 0.8); //positive direction
-        gl.vertex(0, 0, 0);
-        gl.vertex(0, 0, 100);
+    // -- major grid
+      gl.color(M.r,M.g,M.b,M.a);
+      for(var x=-size; x<=size; x+=MG) {
+        gl.vertex(-size, x, 0);
+        gl.vertex(size, x, 0);
+        gl.vertex(x, -size, 0);
+        gl.vertex(x, size, 0);
       }
-      if(0) {
+    }
+    if (this.axis.draw) {
+      var size = this.plate.size/2;
+    // X axis
+      var c = this.axis.x.neg;
+      gl.color(c.r, c.g, c.b, c.a); //negative direction is lighter
+      gl.vertex(-size, 0, 0);
+      gl.vertex(0, 0, 0);
+      c = this.axis.x.pos;
+      gl.color(c.r, c.g, c.b, c.a); //positive direction is lighter
+      gl.vertex(0, 0, 0);
+      gl.vertex(size, 0, 0);
+    // Y axis
+      c = this.axis.y.neg;
+      gl.color(c.r, c.g, c.b, c.a); //negative direction is lighter
+      gl.vertex(0, -size, 0);
+      gl.vertex(0, 0, 0);
+      c = this.axis.y.pos;
+      gl.color(c.r, c.g, c.b, c.a); //positive direction is lighter
+      gl.vertex(0, 0, 0);
+      gl.vertex(0, size, 0);
+    // Z axis
+      c = this.axis.z.neg;
+      gl.color(c.r, c.g, c.b, c.a); //negative direction is lighter
+      gl.vertex(0, 0, -size);
+      gl.vertex(0, 0, 0);
+      c = this.axis.z.pos;
+      gl.color(c.r, c.g, c.b, c.a); //positive direction is lighter
+      gl.vertex(0, 0, 0);
+      gl.vertex(0, 0, size);
+    }
+      if(0) { // WHAT IS THIS FOR?
         gl.triangle();
         gl.color(0.6, 0.2, 0.6, 0.2); //positive direction
         gl.vertex(-plate,-plate,0);
@@ -484,91 +576,94 @@ OpenJsCad.Viewer.prototype = {
         gl.vertex(-plate,-plate,0);
         gl.end();
       }
-      gl.end();
-      gl.disable(gl.BLEND);
-      // GL.Mesh.plane({ detailX: 20, detailY: 40 });
-    }
-  }
-};
+    gl.end();
+    gl.disable(gl.BLEND);
+  },
 
-// Convert from CSG solid to an array of GL.Mesh objects
-// limiting the number of vertices per mesh to less than 2^16
-OpenJsCad.Viewer.csgToMeshes = function(initial_csg) {
-  var csg = initial_csg.canonicalized();
-  var mesh = new GL.Mesh({ normals: true, colors: true });
-  var meshes = [ mesh ];
-  var vertexTag2Index = {};
-  var vertices = [];
-  var colors = [];
-  var triangles = [];
-  // set to true if we want to use interpolated vertex normals
-  // this creates nice round spheres but does not represent the shape of
-  // the actual model
-  var smoothlighting = false;
-  var polygons = csg.toPolygons();
-  var numpolygons = polygons.length;
-  for(var j = 0; j < numpolygons; j++) {
-    var polygon = polygons[j];
-    var color = [1,.4,1,1];      // -- default color
-
-    if(polygon.shared && polygon.shared.color) {
-      color = polygon.shared.color;
-    }
-    if(polygon.color) {
-      color = polygon.color;
-    }
-
-    if (color.length < 4)
-      color.push(1.); //opaque
-
-    var indices = polygon.vertices.map(function(vertex) {
-      var vertextag = vertex.getTag();
-      var vertexindex;
-      if(smoothlighting && (vertextag in vertexTag2Index)) {
-        vertexindex = vertexTag2Index[vertextag];
-      } else {
-        vertexindex = vertices.length;
-        vertexTag2Index[vertextag] = vertexindex;
-        vertices.push([vertex.pos.x, vertex.pos.y, vertex.pos.z]);
-        colors.push(color);
+  // Convert from CSG solid to an array of GL.Mesh objects
+  // limiting the number of vertices per mesh to less than 2^16
+  csgToMeshes: function(initial_csg) {
+    var csg = initial_csg.canonicalized();
+    var mesh = new GL.Mesh({ normals: true, colors: true });
+    var meshes = [ mesh ];
+    var vertexTag2Index = {};
+    var vertices = [];
+    var colors = [];
+    var triangles = [];
+    // set to true if we want to use interpolated vertex normals
+    // this creates nice round spheres but does not represent the shape of
+    // the actual model
+    var smoothlighting = this.solid.smooth;
+    var polygons = csg.toPolygons();
+    var numpolygons = polygons.length;
+    for(var j = 0; j < numpolygons; j++) {
+      var polygon = polygons[j];
+      var color = this.solid.color;  // default color
+  
+      if(polygon.shared && polygon.shared.color) {
+        color = polygon.shared.color;
       }
-      return vertexindex;
-    });
-    for (var i = 2; i < indices.length; i++) {
-      triangles.push([indices[0], indices[i - 1], indices[i]]);
-    }
-    // if too many vertices, start a new mesh;
-    if (vertices.length > 65000) {
-      // finalize the old mesh
-      mesh.triangles = triangles;
-      mesh.vertices = vertices;
-      mesh.colors = colors;
-      mesh.computeWireframe();
-      mesh.computeNormals();
-
-      if ( mesh.vertices.length ) {
-        meshes.push(mesh);
+      if(polygon.color) {
+        color = polygon.color;
       }
 
-      // start a new mesh
-      mesh = new GL.Mesh({ normals: true, colors: true });
-      triangles = [];
-      colors = [];
-      vertices = [];
+      if (color.length < 4)
+        color.push(1.); //opaque
+
+      var indices = polygon.vertices.map(function(vertex) {
+        var vertextag = vertex.getTag();
+        var vertexindex = vertexTag2Index[vertextag];
+        var prevcolor = colors[vertexindex];
+        if(smoothlighting && (vertextag in vertexTag2Index) &&
+          (prevcolor[0] == color[0]) &&
+          (prevcolor[1] == color[1]) &&
+          (prevcolor[2] == color[2])
+        ) {
+          vertexindex = vertexTag2Index[vertextag];
+        } else {
+          vertexindex = vertices.length;
+          vertexTag2Index[vertextag] = vertexindex;
+          vertices.push([vertex.pos.x, vertex.pos.y, vertex.pos.z]);
+          colors.push(color);
+        }
+        return vertexindex;
+      });
+      for (var i = 2; i < indices.length; i++) {
+        triangles.push([indices[0], indices[i - 1], indices[i]]);
+      }
+      // if too many vertices, start a new mesh;
+      if (vertices.length > 65000) {
+        // finalize the old mesh
+        mesh.triangles = triangles;
+        mesh.vertices = vertices;
+        mesh.colors = colors;
+        mesh.computeWireframe();
+        mesh.computeNormals();
+
+        if ( mesh.vertices.length ) {
+          meshes.push(mesh);
+        }
+
+        // start a new mesh
+        mesh = new GL.Mesh({ normals: true, colors: true });
+        triangles = [];
+        colors = [];
+        vertices = [];
+      }
     }
-  }
-  // finalize last mesh
-  mesh.triangles = triangles;
-  mesh.vertices = vertices;
-  mesh.colors = colors;
-  mesh.computeWireframe();
-  mesh.computeNormals();
+    // finalize last mesh
+    mesh.triangles = triangles;
+    mesh.vertices = vertices;
+    mesh.colors = colors;
+    mesh.computeWireframe();
+    mesh.computeNormals();
 
-  if ( mesh.vertices.length ) {
-    meshes.push(mesh);
-  }
+    if ( mesh.vertices.length ) {
+      meshes.push(mesh);
+    }
 
-  return meshes;
+    return meshes;
+  },
 };
 
 // this is a bit of a hack; doesn't properly supports urls that start with '/'
@@ -607,255 +702,6 @@ OpenJsCad.isChrome = function() {
 OpenJsCad.isSafari = function() {
   return /Version\/[\d\.]+.*Safari/.test(window.navigator.userAgent); // FIXME WWW says don't use this
 }
-
-// This is called from within the web worker. Execute the main() function of the supplied script
-// and post a message to the calling thread when finished
-OpenJsCad.runMainInWorker = function(mainParameters) {
-  try {
-    if(typeof(main) != 'function') throw new Error('Your jscad file should contain a function main() which returns a CSG solid or a CAG area.');
-    OpenJsCad.log.prevLogTime = Date.now();
-    var result = main(mainParameters);
-    if( (typeof(result) != "object") || ((!(result instanceof CSG)) && (!(result instanceof CAG)))) {
-      //throw new Error("Your main() function should return a CSG solid or a CAG area.");
-    }
-    if(result.length) {                   // main() return an array, we consider it a bunch of CSG not intersecting
-      var o = result[0];
-      if(o instanceof CAG) {
-        o = o.extrude({offset: [0,0,0.1]});
-      }
-      for(var i=1; i<result.length; i++) {
-        var c = result[i];
-        if(c instanceof CAG) {
-          c = c.extrude({offset: [0,0,0.1]});
-        }
-        o = o.unionForNonIntersecting(c);
-      }
-      result = o;
-    }
-    var result_compact = result.toCompactBinary();
-    result = null; // not needed anymore
-    self.postMessage({cmd: 'rendered', result: result_compact});
-  }
-  catch(e) {
-    var errtxt = e.toString();
-    if(e.stack) {
-      errtxt += '\nStack trace:\n'+e.stack;
-    }
-    self.postMessage({cmd: 'error', err: errtxt});
-  }
-};
-
-OpenJsCad.parseJsCadScriptSync = function(script, mainParameters, debugging) {
-  var workerscript = "//SYNC\n";
-  workerscript += "var _includePath = "+JSON.stringify(_includePath)+";\n";
-  workerscript += script;
-  if(debugging) {
-    workerscript += "\n\n\n\n\n\n\n/* -------------------------------------------------------------------------\n";
-    workerscript += "OpenJsCad debugging\n\nAssuming you are running Chrome:\nF10 steps over an instruction\nF11 steps into an instruction\n";
-    workerscript += "F8  continues running\nPress the (||) button at the bottom to enable pausing whenever an error occurs\n";
-    workerscript += "Click on a line number to set or clear a breakpoint\n";
-    workerscript += "For more information see: http://code.google.com/chrome/devtools/docs/overview.html\n\n";
-    workerscript += "------------------------------------------------------------------------- */\n";
-    workerscript += "\n\n// Now press F11 twice to enter your main() function:\n\n";
-    workerscript += "debugger;\n";
-  }
-  workerscript += "return main("+JSON.stringify(mainParameters)+");";
-// trying to get include() somewhere:
-// 1) XHR works for SYNC <---
-// 2) importScripts() does not work in SYNC
-// 3) _csg_libraries.push(fn) provides only 1 level include()
-
-  workerscript += "function include(fn) {\
-    if(0) {\
-      _csg_libraries.push(fn);\
-    } else if(0) {\
-      var url = _includePath!=='undefined'?_includePath:'./';\
-      var index = url.indexOf('index.html');\
-      if(index!=-1) {\
-        url = url.substring(0,index);\
-      }\
-      importScripts(url+fn);\
-    } else {\
-      if(gMemFs[fn]) {\
-        eval(gMemFs[fn].source); return;\
-      }\
-      var xhr = new XMLHttpRequest();\
-      xhr.open('GET',_includePath+fn,false);\
-      xhr.onload = function() {\
-        var src = this.responseText;\
-        eval(src);\
-      };\
-      xhr.onerror = function() {\
-      };\
-      xhr.send();\
-    }\
-  }\
-  ";
-  //workerscript += "function includePath(p) { _includePath = p; }\n";
-
-  if(0) {
-    OpenJsCad.log.prevLogTime = Date.now();
-    return eval(workerscript);      // old fashion-way
-
-  } else {
-    var f = new Function(workerscript);
-    OpenJsCad.log.prevLogTime = Date.now();
-    return f();                     // execute the actual code
-  }
-};
-
-// callback: should be function(error, csg)
-OpenJsCad.parseJsCadScriptASync = function(script, mainParameters, options, callback) {
-  var baselibraries = [
-    "csg.js",
-    "formats.js",
-    "openjscad.js",
-    "openscad.js"
-    //"jquery/jquery-1.9.1.js",
-    //"jquery/jquery-ui.js"
-  ];
-
-  var baseurl = document.location.href.replace(/\?.*$/, '');
-  baseurl = baseurl.replace(/#.*$/,'');        // remove remote URL
-  var openjscadurl = baseurl;
-  if (options['openJsCadPath'] != null) {
-    openjscadurl = OpenJsCad.makeAbsoluteUrl( options['openJsCadPath'], baseurl );
-  }
-
-  var libraries = [];
-  if (options['libraries'] != null) {
-    libraries = options['libraries'];
-  }
-  for(var i in gMemFs) {            // let's test all files and check syntax before we do anything
-    var src = gMemFs[i].source+"\nfunction include() { }\n";
-    var f;
-    try {
-      f = new Function(src);
-    } catch(e) {
-      throw new Error(i+':'+e.message);
-    }
-  }
-  var workerscript = "//ASYNC\n";
-  workerscript += "var _csg_baseurl=" + JSON.stringify(baseurl)+";\n";        // -- we need it early for include()
-  workerscript += "var _includePath=" + JSON.stringify(_includePath)+";\n";    //        ''            ''
-  workerscript += "var gMemFs = [];\n";
-  var ignoreInclude = false;
-  //console.log("SCRIPT ["+workerscript+"]");
-  var mainFile;
-  for(var fn in gMemFs) {
-    workerscript += "// "+gMemFs[fn].name+":\n";
-    //workerscript += gMemFs[i].source+"\n";
-    if(!mainFile)
-      mainFile = fn;
-    if(fn=='main.jscad'||fn.match(/\/main.jscad$/))
-      mainFile = fn;
-    workerscript += "gMemFs[\""+gMemFs[fn].name+"\"] = "+JSON.stringify(gMemFs[fn].source)+";\n";
-    ignoreInclude = true;
-  }
-  if(ignoreInclude) {
-    workerscript += "eval(gMemFs['"+mainFile+"']);\n";
-  } else {
-    workerscript += script;
-  }
-  workerscript += "\n\n\n\n//// The following code is added by OpenJsCad + OpenJSCAD.org:\n";
-
-  workerscript += "var _csg_baselibraries=" + JSON.stringify(baselibraries)+";\n";
-  workerscript += "var _csg_libraries=" + JSON.stringify(libraries)+";\n";
-  workerscript += "var _csg_openjscadurl=" + JSON.stringify(openjscadurl)+";\n";
-  workerscript += "var _csg_makeAbsoluteURL=" + OpenJsCad.makeAbsoluteUrl.toString()+";\n";
-//  workerscript += "if(typeof(libs) == 'function') _csg_libraries = _csg_libraries.concat(libs());\n";
-  workerscript += "_csg_baselibraries = _csg_baselibraries.map(function(l){return _csg_makeAbsoluteURL(l,_csg_openjscadurl);});\n";
-  workerscript += "_csg_libraries = _csg_libraries.map(function(l){return _csg_makeAbsoluteURL(l,_csg_baseurl);});\n";
-  workerscript += "_csg_baselibraries.map(function(l){importScripts(l)});\n";
-  workerscript += "_csg_libraries.map(function(l){importScripts(l)});\n";
-  workerscript += "self.addEventListener('message', function(e) {if(e.data && e.data.cmd == 'render'){";
-  workerscript += "  OpenJsCad.runMainInWorker("+JSON.stringify(mainParameters)+");";
-//  workerscript += "  if(typeof(main) != 'function') throw new Error('Your jscad file should contain a function main() which returns a CSG solid.');\n";
-//  workerscript += "  var csg; try {csg = main("+JSON.stringify(mainParameters)+"); self.postMessage({cmd: 'rendered', csg: csg});}";
-//  workerscript += "  catch(e) {var errtxt = e.stack; self.postMessage({cmd: 'error', err: errtxt});}";
-  workerscript += "}},false);\n";
-
-// trying to get include() somewhere:
-// 1) XHR fails: not allowed in blobs
-// 2) importScripts() works for ASYNC <----
-// 3) _csg_libraries.push(fn) provides only 1 level include()
-
-  if(!ignoreInclude) {
-    workerscript += "function include(fn) {\
-      if(0) {\
-        _csg_libraries.push(fn);\
-      } else if(1) {\
-        if(gMemFs[fn]) {\
-          eval(gMemFs[fn]); return;\
-        }\
-        var url = _csg_baseurl+_includePath;\
-        var index = url.indexOf('index.html');\
-        if(index!=-1) {\
-          url = url.substring(0,index);\
-        }\
-        importScripts(url+fn);\
-      } else {\
-        var xhr = new XMLHttpRequest();\
-        xhr.open('GET', _includePath+fn, true);\
-        xhr.onload = function() {\
-          return eval(this.responseText);\
-        };\
-        xhr.onerror = function() {\
-        };\
-        xhr.send();\
-      }\
-    }\
-  ";
-  } else {
-    //workerscript += "function include() {}\n";
-    workerscript += "function include(fn) { eval(gMemFs[fn]); }\n";
-  }
-  //workerscript += "function includePath(p) { _includePath = p; }\n";
-  //console.log("SCRIPT ["+workerscript+"]");
-  var blobURL = OpenJsCad.textToBlobUrl(workerscript);
-
-  if(!window.Worker) throw new Error("Your browser doesn't support Web Workers. Please try the Chrome or Firefox browser instead.");
-  var worker = new Worker(blobURL);
-  worker.onmessage = function(e) {
-    if(e.data)
-    {
-      if(e.data.cmd == 'rendered')
-      {
-        var resulttype = e.data.result.class;
-        var result;
-        if(resulttype == "CSG")
-        {
-          result = CSG.fromCompactBinary(e.data.result);
-        }
-        else if(resulttype == "CAG")
-        {
-          result = CAG.fromCompactBinary(e.data.result);
-        }
-        else
-        {
-          throw new Error("Cannot parse result");
-        }
-        callback(null, result);
-      }
-      else if(e.data.cmd == "error")
-      {
-        callback(e.data.err, null);
-      }
-      else if(e.data.cmd == "log")
-      {
-        console.log(e.data.txt);
-      }
-    }
-  };
-  worker.onerror = function(e) {
-    var errtxt = "Error in line "+e.lineno+": "+e.message;
-    callback(errtxt, null);
-  };
-  worker.postMessage({
-    cmd: "render"
-  }); // Start the worker.
-  return worker;
-};
 
 OpenJsCad.getWindowURL = function() {
   if(window.URL) return window.URL;
@@ -968,23 +814,38 @@ OpenJsCad.getParamDefinitions = function(script) {
   return params;
 };
 
-OpenJsCad.Processor = function(containerdiv, onchange) {
+OpenJsCad.Processor = function(containerdiv, options) {
+  if (options === undefined) options = {};
+// the default options
+  this.opts = {
+    debug: false,
+    libraries: ['csg.js','formats.js','openjscad.js','openscad.js'],
+    openJsCadPath: '',
+    useAsync: true,
+    useSync:  true,
+  };
+// apply all options found
+  for (var x in this.opts) {
+    if (x in options) this.opts[x] = options[x];
+  }
+
   this.containerdiv = containerdiv;
-  this.onchange = onchange;
 
   this.viewer = null;
+  this.worker = null;
   this.zoomControl = null;
-  this.initialViewerDistance = 100;
+
+// callbacks
+  this.onchange = null;   // function(Processor) for callback
+  this.ondownload = null; // function(Processor) for callback
+
   this.currentObject = null;
   this.hasOutputFile = false;
-  this.worker = null;
+  this.hasError = false;
   this.paramDefinitions = [];
   this.paramControls = [];
   this.script = null;
-  this.hasError = false;
-  this.debugging = false;
-  this.options = {};
-  this.createElements();
+
   this.baseurl = document.location.href;
   this.baseurl = this.baseurl.replace(/#.*$/,''); // remove remote URL
   this.baseurl = this.baseurl.replace(/\?.*$/,''); // remove parameters
@@ -998,6 +859,8 @@ OpenJsCad.Processor = function(containerdiv, onchange) {
 // 2 - complete    - completed processing
 // 3 - incomplete  - incompleted due to errors in processing
   this.state = 0; // initialized
+
+  this.createElements();
 };
 
 OpenJsCad.Processor.convertToSolid = function(objs) {
@@ -1039,7 +902,7 @@ OpenJsCad.Processor.prototype = {
     viewerdiv.style.height = '100%';
     this.containerdiv.appendChild(viewerdiv);
     try {
-      this.viewer = new OpenJsCad.Viewer(viewerdiv, this.initialViewerDistance);
+      this.viewer = new OpenJsCad.Viewer(viewerdiv);
     } catch(e) {
       viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad currently requires Google Chrome or Firefox with WebGL enabled";
     }
@@ -1071,8 +934,7 @@ OpenJsCad.Processor.prototype = {
       };
 
       this.containerdiv.appendChild(this.zoomControl);
-      //this.zoomControl.scrollLeft = this.viewer.viewpointZ / this.viewer.ZOOM_MAX * this.zoomControl.offsetWidth;
-      this.zoomControl.scrollLeft = this.viewer.viewpointZ / this.viewer.ZOOM_MAX *
+      this.zoomControl.scrollLeft = this.viewer.viewpointZ / this.viewer.camera.clip.max *
          (this.zoomControl.scrollWidth - this.zoomControl.offsetWidth);
 
       //end of zoom control
@@ -1084,7 +946,6 @@ OpenJsCad.Processor.prototype = {
     //this.statusdiv = document.createElement("div");
     this.statusdiv = document.getElementById("statusdiv");
     this.statusdiv.className = "statusdiv";
-    //this.statusdiv.style.width = this.viewerwidth + "px";
     this.statusspan = document.createElement("span");
     this.statusspan.id = 'statusspan';
     this.statusspan.style.marginRight = '2em';
@@ -1171,7 +1032,6 @@ OpenJsCad.Processor.prototype = {
 
     if(this.viewer) {
       this.viewer.setCsg(csg);
-      this.viewer.state = 2;
     }
 
     while(this.formatDropdown.options.length > 0)
@@ -1186,6 +1046,8 @@ OpenJsCad.Processor.prototype = {
     });
 
     this.updateDownloadLink();
+
+    if(this.onchange) this.onchange(this);
   },
 
   selectedFormat: function() {
@@ -1204,10 +1066,10 @@ OpenJsCad.Processor.prototype = {
   clearViewer: function() {
     this.clearOutputFile();
     if (this.currentObject) {
-      this.setCurrentObject(new CSG());
+      this.viewer.clear();
       this.currentObject = null;
+      if(this.onchange) this.onchange(this);
     }
-    this.viewer.state = 1; // cleared
     this.enableItems();
   },
 
@@ -1220,7 +1082,7 @@ OpenJsCad.Processor.prototype = {
       this.worker.terminate();
       this.state = 3; // incomplete
       this.enableItems();
-      if(this.onchange) this.onchange();
+      if(this.onchange) this.onchange(this);
     }
   },
 
@@ -1234,15 +1096,16 @@ OpenJsCad.Processor.prototype = {
     this.statusdiv.style.display = this.hasError? "none":"block";
   },
 
-  setOpenJsCadPath: function(path) {
-    this.options[ 'openJsCadPath' ] = path;
+  setDebugging: function(debugging) {
+    this.opts.debug = debugging;
   },
 
   addLibrary: function(lib) {
-    if( this.options[ 'libraries' ] == null ) {
-      this.options[ 'libraries' ] = [];
-    }
-    this.options[ 'libraries' ].push( lib );
+    this.opts['libraries'].push(lib);
+  },
+
+  setOpenJsCadPath: function(path) {
+    this.opts[ 'openJsCadPath' ] = path;
   },
 
   setError: function(txt) {
@@ -1252,11 +1115,11 @@ OpenJsCad.Processor.prototype = {
   },
 
   setStatus: function(txt) {
-    OpenJsCad.status(txt);
-  },
-
-  setDebugging: function(debugging) {
-    this.debugging = debugging;
+    if(typeof document !== 'undefined') {
+      this.statusspan.innerHTML = txt;
+    } else {
+      OpenJsCad.log(txt);
+    }
   },
 
   // script: javascript code
@@ -1289,7 +1152,6 @@ OpenJsCad.Processor.prototype = {
     else
     {
       this.enableItems();
-      if(this.onchange) this.onchange();
     }
   },
 
@@ -1381,16 +1243,12 @@ OpenJsCad.Processor.prototype = {
           that.state = 2; // complete
         }
         that.enableItems();
-        if(that.onchange) that.onchange();
       }
     );
-  // FIXME this list should come from the Processor
-    var libraries = [
-      this.baseurl+"csg.js",
-      this.baseurl+"formats.js",
-      this.baseurl+"openjscad.js",
-      this.baseurl+"openscad.js"
-    ];
+  // pass the libraries to the worker for import
+    var libraries = this.opts.libraries.map( function(l) {
+                      return this.baseurl+this.opts.openJsCadPath+l;
+                    }, this);
   // start the worker
     that.worker.postMessage({cmd: "render", parameters: parameters, libraries: libraries});
   },
@@ -1401,8 +1259,8 @@ OpenJsCad.Processor.prototype = {
     try {
       this.state = 1; // processing
       var func = OpenJsCad.createJscadFunction(this.baseurl+this.filename, this.script);
-      var obj = func(parameters);
-      this.setCurrentObject(obj);
+      var objs = func(parameters);
+      this.setCurrentObject(objs);
       this.setStatus("Ready.");
       this.state = 2; // complete
     }
@@ -1417,7 +1275,6 @@ OpenJsCad.Processor.prototype = {
       this.state = 3; // incomplete
     }
     this.enableItems();
-    if(this.onchange) this.onchange();
   },
 
   rebuildSolid: function()
@@ -1434,75 +1291,6 @@ OpenJsCad.Processor.prototype = {
     } catch(e) {
       //console.log("async failed, try sync compute, error: "+e.message);
       this.rebuildSolidSync();
-    }
-  },
-
-  rebuildSolidOld: function()
-  {
-    this.abort();
-    this.setError("");
-    this.clearViewer();
-    this.setStatus("Rendering. Please wait <img id=busy src='imgs/busy.gif'>");
-    this.enableItems();
-    var that = this;
-    var paramValues = this.getParamValues();
-    var useSync = this.debugging;
-
-    //useSync = true;
-    if(!useSync)
-    {
-      try
-      {
-        console.log("trying async compute");
-        that.state = 1; // processing
-        this.worker = OpenJsCad.parseJsCadScriptASync(this.script, paramValues, this.options, function(err, obj) {
-          that.worker = null;
-          if(err)
-          {
-            that.setError(err);
-            that.setStatus("Error.");
-            that.state = 3; // incomplete
-          }
-          else
-          {
-            that.setCurrentObject(obj);
-            that.setStatus("Ready.");
-            that.state = 2; // complete
-          }
-          that.enableItems();
-          if(that.onchange) that.onchange();
-        });
-      }
-      catch(e)
-      {
-        console.log("async failed, try sync compute, error: "+e.message);
-        useSync = true;
-      }
-    }
-
-    if(useSync)
-    {
-      try
-      {
-        that.state = 1; // processing
-        that.setStatus("Rendering. Please wait <img id=busy src='imgs/busy.gif'>");
-        var obj = OpenJsCad.parseJsCadScriptSync(this.script, paramValues, this.debugging);
-        that.setCurrentObject(obj);
-        that.setStatus("Ready.");
-        that.state = 2; // complete
-      }
-      catch(e)
-      {
-        var errtxt = e.toString();
-        if(e.stack) {
-          errtxt += '\nStack trace:\n'+e.stack;
-        }
-        that.setError(errtxt);
-        that.setStatus("Error.");
-        that.state = 3; // incomplete
-      }
-      that.enableItems();
-      if(that.onchange) that.onchange();
     }
   },
 
@@ -1525,7 +1313,6 @@ OpenJsCad.Processor.prototype = {
         this.outputFileBlobUrl = null;
       }
       this.enableItems();
-      if(this.onchange) this.onchange();
     }
   },
 
@@ -1541,6 +1328,7 @@ OpenJsCad.Processor.prototype = {
       {
         this.generateOutputFileBlobUrl();
       }
+      if(this.ondownload) this.ondownload(this);
     }
   },
 
@@ -1646,7 +1434,6 @@ OpenJsCad.Processor.prototype = {
           that.downloadOutputFileLink.setAttribute("download","openjscad."+ext);
           that.downloadOutputFileLink.setAttribute("target", "_blank");
           that.enableItems();
-          if(that.onchange) that.onchange();
         }
       };
       reader.readAsDataURL(blob);
@@ -1663,7 +1450,6 @@ OpenJsCad.Processor.prototype = {
       var ext = this.selectedFormatInfo().extension;
       this.downloadOutputFileLink.setAttribute("download", "openjscad."+ext);
       this.enableItems();
-      if(this.onchange) this.onchange();
     }
   },
 
@@ -1690,7 +1476,6 @@ OpenJsCad.Processor.prototype = {
                       that.downloadOutputFileLink.innerHTML = that.downloadLinkTextForCurrentObject();
                       that.downloadOutputFileLink.setAttribute("download", fileEntry.name);
                       that.enableItems();
-                      if(that.onchange) that.onchange();
                     };
                     fileWriter.onerror = function(e) {
                       throw new Error('Write failed: ' + e.toString());
