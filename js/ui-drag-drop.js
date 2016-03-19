@@ -313,7 +313,7 @@ function parseFile(f, onlyifchanged) {
       putSourceInEditor(source,fn);
       gProcessor.setJsCad(source,fn);
     } else {
-      OpenJsCad.status("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
+      gProcessor.setStatus("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
       var worker = OpenJsCad.createConversionWorker();
       var u = gProcessor.baseurl;
     // NOTE: cache: true is very important to control the evaluation of all cached files (code)
