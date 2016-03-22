@@ -2,7 +2,7 @@
 /// Created by Michael S. Scherotter
 /// Forked from OpenJSCAD.org
 /// Source available on https://github.com/mscherotter/OpenJSCAD.org 
-/// Updated 2015-12-03
+/// Updated 2016-02-06
 /// Features
 /// - Windows 10 November Update (TH2)
 /// - Direct 3D Printing
@@ -552,17 +552,27 @@ var Windows3DPrinting = {};
         ///<summary>Activate a file and return a promise when the file was activated</summary>
 
         if (document.location.search.indexOf("?token=") === 0) {
-            var token = document.location.search.substr(7),
-                futureAccessList = Windows.Storage.AccessCache.StorageApplicationPermissions.futureAccessList;
+            var token = document.location.search.substr(7);
+            var storage = Windows.Storage;
+            var futureAccessList = storage.AccessCache.StorageApplicationPermissions.futureAccessList;
 
-            console.log("Activated file token ", token);
+            if (token.indexOf("ms-appx:///") === 0) {
+                var uri = new Windows.Foundation.Uri(token);
 
-            return futureAccessList.getItemAsync(token).then(function (file) {
-                console.log("Activating file ", file.path);
-                futureAccessList.remove(token);
+                return storage.StorageFile.getFileFromApplicationUriAsync(uri).then(function(file) {
+                    return loadFileAsync(file);
+                });
+            } else {
 
-                return loadFileAsync(file);
-            });
+                console.log("Activated file token ", token);
+
+                return futureAccessList.getItemAsync(token).then(function(file) {
+                    console.log("Activating file ", file.path);
+                    futureAccessList.remove(token);
+
+                    return loadFileAsync(file);
+                });
+            }
         }
     }
 
@@ -579,7 +589,13 @@ var Windows3DPrinting = {};
             return;
         }
 
-        MSApp.clearTemporaryWebDataAsync();
+        try {
+            if (MSApp.clearTemporaryWebDataAsync) {
+                MSApp.clearTemporaryWebDataAsync();
+            }
+        } catch (error) {
+            // this fails when hosted in a C# WebView
+        }
 
         cadProcessor = processor;
 

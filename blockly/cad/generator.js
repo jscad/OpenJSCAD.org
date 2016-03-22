@@ -2,6 +2,7 @@
 /// Author: Michael S. Scherotter mischero@microsoft.com
 /// Revision History
 /// 2015-12-09 MSS - Fixed cad_scale default values
+/// 2016-03-22 MSS - Fixed cad_cylinder code generation
 
 Blockly.JavaScript['cad_model'] = function (block) {
     var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME').trim();
@@ -86,12 +87,10 @@ Blockly.JavaScript['cad_union'] = function (block) {
 };
 
 Blockly.JavaScript['cad_cylinder'] = function (block) {
-    var text_radius = block.getFieldValue('radius');
     var value_radius = Blockly.JavaScript.valueToCode(block, 'Radius', Blockly.JavaScript.ORDER_ATOMIC);
-    var text_height = block.getFieldValue('Height');
     var value_height = Blockly.JavaScript.valueToCode(block, 'Height', Blockly.JavaScript.ORDER_ATOMIC);
 
-    var code = "cylinder({r:" + text_radius + ", h:" + text_height + "})";
+    var code = "cylinder({r:" + value_radius + ", h:" + value_height + "})";
 
     return code;
 };

@@ -54,7 +54,7 @@
     <link rel="prerender" href="blockly/index.html"/>
 </head>
 <body onload="onload()">
-    <script src="Scripts/jquery-2.1.4.js"></script>
+    <script src="Scripts/jquery-2.2.1.js"></script>
     <script src="Scripts/jquery-ui-1.11.4.js"></script>
     <script src="jquery/jquery.hammer.js"></script>
     <script src="lightgl.js"></script>
@@ -603,6 +603,8 @@ document.write("Drop your jscad, scad, amf, stl file or multiple jscad files " +
                         putSourceInEditor(args.source, args.filename);
 
                         gProcessor.setJsCad(args.source, args.filename);
+
+                        gProcessor.viewer.setZoom(0.20);
                     });
                 } else {
                     fetchExample('examples/' + ex[0].file);
