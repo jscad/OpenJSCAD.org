@@ -16,7 +16,7 @@
 //   (KIND OF LAME but that keeps the scope of variables and functions clean)
 // Upon receiving the message, the callback routine is called with the results
 //
-function createJscadWorker(fullurl, script, callback) {
+OpenJsCad.createJscadWorker = function(fullurl, script, callback) {
   var source = buildJscadWorkerScript(fullurl, script);
   var blobURL = OpenJsCad.textToBlobUrl(source);
   var w = new Worker(blobURL);

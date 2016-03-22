@@ -54,25 +54,32 @@ function setUpEditor(divname) {
   //gEditor.setTheme("ace/theme/xcode");
 
 // enable special keystrokes
-  ['Shift-Return'].forEach(function(key) {
-    gEditor.commands.addCommand({
-         name: 'myCommand',
-         bindKey: { win: key, mac: key },
-         exec: function(editor) {
-            var src = editor.getValue();
-            if(src.match(/^\/\/\!OpenSCAD/i)) {
-               editor.getSession().setMode("ace/mode/scad");
-            // FIXME test for the global function first
-               src = openscadOpenJscadParser.parse(src);
-            } else {
-               editor.getSession().setMode("ace/mode/javascript");
-            }
-            if (gProcessor !== null) {
-              gProcessor.setJsCad(src);
-            }
-         },
-      });
-  });
+  gEditor.commands.addCommand({
+       name: 'setJSCAD',
+       bindKey: { win: 'Shift-Return', mac: 'Shift-Return' },
+       exec: function(editor) {
+          var src = editor.getValue();
+          if(src.match(/^\/\/\!OpenSCAD/i)) {
+             editor.getSession().setMode("ace/mode/scad");
+          // FIXME test for the global function first
+             src = openscadOpenJscadParser.parse(src);
+          } else {
+             editor.getSession().setMode("ace/mode/javascript");
+          }
+          if (gProcessor !== null) {
+            gProcessor.setJsCad(src);
+          }
+       },
+    });
+  gEditor.commands.addCommand({
+       name: 'viewerReset',
+       bindKey: { win: 'Ctrl-Return', mac: 'Command-Return' },
+       exec: function(editor) {
+          if (gProcessor !== null) {
+            gProcessor.viewer.reset();
+          }
+       },
+    });
 }
 
 function putSourceInEditor(src,fn) {
