@@ -12,12 +12,15 @@
 	"REMOVE_COMMENT": "Bemierkunge ewechhuelen",
 	"DELETE_BLOCK": "Block läschen",
 	"DELETE_X_BLOCKS": "%1 Bléck läschen",
+	"CLEAN_UP": "Bléck opraumen",
 	"COLLAPSE_BLOCK": "Block zesummeklappen",
 	"EXPAND_BLOCK": "Block opklappen",
 	"EXPAND_ALL": "Bléck opklappen",
 	"DISABLE_BLOCK": "Block desaktivéieren",
 	"ENABLE_BLOCK": "Block aktivéieren",
 	"HELP": "Hëllef",
+	"UNDO": "Réckgängeg maachen",
+	"REDO": "Widderhuelen",
 	"CHAT": "Mat ärem Mataarbechter chatten an deem Dir an dës Këscht tippt!",
 	"ME": "Mech",
 	"CHANGE_VALUE_TITLE": "Wäert änneren:",
@@ -110,5 +113,6 @@
 	"PROCEDURES_DEFNORETURN_PROCEDURE": "eppes maachen",
 	"PROCEDURES_BEFORE_PARAMS": "mat:",
 	"PROCEDURES_CALL_BEFORE_PARAMS": "mat:",
+	"PROCEDURES_DEFNORETURN_COMMENT": "Dës Funktioun beschreiwen...",
 	"PROCEDURES_DEFRETURN_RETURN": "zréck"
 }
