@@ -1,8 +1,9 @@
 // openscad.js, a few functions to simplify coding OpenSCAD-like
 //
-// Copyright (c) 2013-2015 by Rene K. Mueller <spiritdude@gmail.com>
+// Copyright (c) 2013-2016 by Rene K. Mueller <spiritdude@gmail.com>
 //
-// Version: 0.3.0
+// Version: 0.4.0
+//
 // License: MIT License
 //
 // Description:
@@ -14,6 +15,7 @@
 //     http://openjscad.org/
 //
 // History:
+// 2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
 // 2015/05/20: 0.2.4: renumbering to 0.024 -> 0.2.4
 // 2015/02/15: 0.023: change license from GPL to MIT license, for sake of simpleness, pull request for mirror() fix (github issue #65) included
 // 2015/01/07: 0.022: cylinder() supports d, d1 & d2 to be OpenSCAD-like (github issue #61)
@@ -75,7 +77,7 @@
 // }
 
 function version() {
-  return [0,3,0];
+  return [0,4,0];
 }
 
 function JStoMeta(src) {
@@ -2006,7 +2008,7 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
    for(var k in meta) {
       src += "// AMF."+k+": "+meta[k]+"\n";
    }
-   src += "// producer: OpenJSCAD Compatibilty ("+version()+") AMF Importer\n";
+   src += "// producer: OpenJSCAD Compatibility ("+version().join('.')+") AMF Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -2056,7 +2058,7 @@ function parseOBJ(obj,fn) {   // http://en.wikipedia.org/wiki/Wavefront_.obj_fil
       }
    }
    var src = ""; 
-   src += "// producer: OpenJSCAD Compatibility ("+version()+") Wavefront OBJ Importer\n";
+   src += "// producer: OpenJSCAD Compatibility ("+version().join('.')+") Wavefront OBJ Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -2172,7 +2174,7 @@ function parseBinarySTL(stl,fn) {
         converted++;
     }
    var src = "";
-   src += "// producer: OpenSCAD Compatibility ("+version()+") STL Binary Importer\n";
+   src += "// producer: OpenJSCAD Compatibility ("+version().join('.')+") STL Binary Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -2190,7 +2192,7 @@ function parseAsciiSTL(stl,fn) {
    var converted = 0;
    var o;
      
-   src += "// producer: OpenSCAD Compatibility ("+version()+") STL ASCII Importer\n";
+   src += "// producer: OpenJSCAD Compatibility ("+version().join('.')+") STL ASCII Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -2514,7 +2516,7 @@ function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code
    }
    
    var src = "";
-   src += "// producer: OpenSCAD Compatibility ("+version()+") GCode Importer\n";
+   src += "// producer: OpenJSCAD Compatibility ("+version().join('.')+") GCode Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -2761,6 +2763,8 @@ if(typeof module !== 'undefined') {    // we are used as module in nodejs requir
     version: version,
     parseSTL: parseSTL,
     parseAMF: parseAMF,
+    parseOBJ: parseOBJ,
+    parseGCode: parseGCode,
     color:color, group:group, union:union, 
     difference:difference, 
     intersection:intersection,
@@ -2769,8 +2773,9 @@ if(typeof module !== 'undefined') {    // we are used as module in nodejs requir
     vector_char: vector_char,
     hsv2rgb: hsv2rgb, rgb2hsv: rgb2hsv,
     hsl2rgb: hsl2rgb, rgb2hsl: rgb2hsl,
+    html2rgb: html2rgb, rgb2html: rgb2html,
     pow: pow, sign: sign,
-    sqrt: sqrt, round:round, log:log,
+    sqrt: sqrt, round:round, log:log, echo:echo,
     lookup: lookup, rands: rands, atan: atan,
     atan2: atan2, ceil:ceil, floor:floor,
     abs:abs, min:min, max:max, tan:tan,

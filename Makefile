@@ -1,4 +1,4 @@
-VERSION = 0.3.1
+VERSION = 0.4.0
 LIB = /usr/local/lib/openjscad/
 NODE_MODULES = /usr/local/lib/node_modules/
 
@@ -58,6 +58,18 @@ push-dev::
 pull::
 	git remote set-url origin git@github.com:Spiritdude/OpenJSCAD.org.git
 	git pull -u origin master
+
+dev-to-master::
+	git checkout dev
+	git merge -s ours master
+	git checkout master
+	git merge dev
+
+master-to-dev::
+	git checkout master
+	git merge -s ours dev
+	git checkout dev
+	git merge master
 
 dist::	
 	cd ..; tar cfz Backup/openjscad.org-${VERSION}.tar.gz "--exclude=*.git/*" OpenJSCAD.org/

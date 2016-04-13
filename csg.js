@@ -5300,6 +5300,7 @@ for solid CAD anyway.
          http://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
          */
         appendArc: function(endpoint, options) {
+            var decimals = 100000;
             if (arguments.length < 2) {
                 options = {};
             }
@@ -5327,6 +5328,10 @@ for solid CAD anyway.
             var largearc = CSG.parseOptionAsBool(options, "large", false);
             var startpoint = this.points[this.points.length - 1];
             endpoint = new CSG.Vector2D(endpoint);
+            // round to precision in order to have determinate calculations
+            xradius = Math.round(xradius*decimals)/decimals;
+            yradius = Math.round(yradius*decimals)/decimals;
+            endpoint = new CSG.Vector2D(Math.round(endpoint.x*decimals)/decimals,Math.round(endpoint.y*decimals)/decimals);
 
             var sweep_flag = !clockwise;
             var newpoints = [];
@@ -5344,14 +5349,20 @@ for solid CAD anyway.
                 var sinphi = Math.sin(phi);
                 var minushalfdistance = startpoint.minus(endpoint).times(0.5);
                 // F.6.5.1:
-                var start_translated = new CSG.Vector2D(cosphi * minushalfdistance.x + sinphi * minushalfdistance.y, -sinphi * minushalfdistance.x + cosphi * minushalfdistance.y);
+                // round to precision in order to have determinate calculations
+                var x = Math.round((cosphi * minushalfdistance.x + sinphi * minushalfdistance.y)*decimals)/decimals;
+                var y = Math.round((-sinphi * minushalfdistance.x + cosphi * minushalfdistance.y)*decimals)/decimals;
+                var start_translated = new CSG.Vector2D(x,y);
                 // F.6.6.2:
-                var biglambda = start_translated.x * start_translated.x / (xradius * xradius) + start_translated.y * start_translated.y / (yradius * yradius);
-                if (biglambda > 1) {
+                var biglambda = (start_translated.x * start_translated.x) / (xradius * xradius) + (start_translated.y * start_translated.y) / (yradius * yradius);
+                if (biglambda > 1.0) {
                     // F.6.6.3:
                     var sqrtbiglambda = Math.sqrt(biglambda);
                     xradius *= sqrtbiglambda;
                     yradius *= sqrtbiglambda;
+                    // round to precision in order to have determinate calculations
+                    xradius = Math.round(xradius*decimals)/decimals;
+                    yradius = Math.round(yradius*decimals)/decimals;
                 }
                 // F.6.5.2:
                 var multiplier1 = Math.sqrt((xradius * xradius * yradius * yradius - xradius * xradius * start_translated.y * start_translated.y - yradius * yradius * start_translated.x * start_translated.x) / (xradius * xradius * start_translated.y * start_translated.y + yradius * yradius * start_translated.x * start_translated.x));
@@ -5582,6 +5593,41 @@ for solid CAD anyway.
             prevvertex = vertex;
         }
         return CAG.fromSides(sides);
+    };
+
+    /* Construct an ellispe
+    options:
+      center: a 2D center point
+      radius: a 2D vector with width and height
+      resolution: number of sides per 360 degree rotation
+    returns a CAG object
+    */
+    CAG.ellipse = function(options) {
+        options = options || {};
+        var c = CSG.parseOptionAs2DVector(options, "center", [0, 0]);
+        var r = CSG.parseOptionAs2DVector(options, "radius", [1, 1]);
+        r = r.abs(); // negative radii make no sense
+        var res = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution2D);
+
+        var e2 = new CSG.Path2D([[c.x,c.y + r.y]]);
+        e2 = e2.appendArc([c.x,c.y - r.y], {
+            xradius: r.x,
+            yradius: r.y,
+            xaxisrotation: 0,
+            resolution: res,
+            clockwise: true,
+            large: false,
+        });
+        e2 = e2.appendArc([c.x,c.y + r.y], {
+            xradius: r.x,
+            yradius: r.y,
+            xaxisrotation: 0,
+            resolution: res,
+            clockwise: true,
+            large: false,
+        });
+        e2 = e2.close();
+        return e2.innerToCAG();
     };
 
     /* Construct a rectangle

@@ -90,11 +90,6 @@ canvas {
   border: none;
 }
 
-#parametersdiv .parameterheader {
-   font-weight: bold;
-   font-size: 0.9em;
-}
-
 #parametersdiv .caption {
    text-align: right;
 }

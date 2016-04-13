@@ -1,0 +1,107 @@
+/*
+ * min.css for OpenJSCAD.org viewer
+ */
+
+.jscad-container {
+  margin: 5px 15px 5px 5px; /* not inherited */
+  padding: 20px; /* not inherited */
+  color: Black;
+  font-weight: bold;
+  font-family: Helvetica, Arial, Sans;
+  border: thin solid black;
+  min-width: 410px;
+}
+
+#header {
+  margin: 5px; /* not inherited */
+}
+
+#viewerContext {
+  margin: 5px; /* not inherited */
+  border: thin solid gray; /* not inherited */
+  padding: 0px; /* not inherited */
+
+  background: white;
+  width: 400px;
+  height: 300px;
+
+  top: 0px;
+  bottom: 0px;
+}
+
+canvas { 
+  margin: 0px; /* not inherited */
+  border: 0px none gray; /* not inherited */
+  padding: 0px; /* not inherited */
+
+  width: 100%;
+  height: 100%;
+
+  cursor: move; 
+}
+
+#parametersdiv {
+  margin: 5px; /* not inherited */
+  border: thin solid rgb(200,200,200);
+  border-radius: 1em;     
+  padding: 10px;
+
+  background: white;
+  opacity: 0.8;
+}
+
+#parametersdiv table {
+  margin-bottom: 5px;
+
+  text-align: left;
+  font-size: 0.8em;
+  font-weight: normal;
+}
+
+#parametersdiv th {
+  margin:  0px; /* not inherited */
+  border:  0px none gray; /* not inherited */
+  padding: 5px; /* not inherited */
+
+  font-weight: bold;
+}
+
+#parametersdiv th.caption {
+  text-decoration: underline;
+}
+
+#parametersdiv td.caption {
+  text-align: right;
+  font-weight: bold;
+}
+
+#parametersdiv td {
+  margin:  0px; /* not inherited */
+  border:  0px none gray; /* not inherited */
+  padding: 0px; /* not inherited */
+}
+
+#parametersdiv input, #parametersdiv textarea, #parametersdiv select {
+  font-size: 0.9em;
+  background: #fea;
+  border: none;
+}
+
+#updateButton {
+  margin:  5px; /* not inherited */
+  border:  thin solid Black; /* not inherited */
+  padding: 2px; /* not inherited */
+  border-radius: 4px;
+  background: white;
+
+  margin-left: 1em;
+}
+
+#tail { 
+  margin: 5px; /* not inherited */
+}
+
+#busy {
+  vertical-align: middle;
+}
+
