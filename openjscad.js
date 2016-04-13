@@ -1340,11 +1340,11 @@ OpenJsCad.Processor.prototype = {
     var blob = null;
     switch(format) {
       case 'stla':
-        blob = object.toStlString();
+        blob = object.fixTJunctions().toStlString();
         break;
       case 'stlb':
         //blob = this.currentObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now (fixTJunctions() needs debugging)
-        blob = object.toStlBinary({webBlob: true});
+        blob = object.fixTJunctions().toStlBinary({webBlob: true});
         break;
       case 'amf':
         blob = object.toAMFString({

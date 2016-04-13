@@ -1312,6 +1312,31 @@ for solid CAD anyway.
                                                 var newvertices = polygon.vertices.slice(0);
                                                 newvertices.splice(insertionvertextagindex, 0, endvertex);
                                                 var newpolygon = new CSG.Polygon(newvertices, polygon.shared /*polygon.plane*/ );
+
+
+                                                //calculate plane with differents point
+                                                if(isNaN(newpolygon.plane.w)){
+
+                                                    var found = false,
+                                                        loop = function(callback){
+                                                            newpolygon.vertices.forEach(function(item){
+                                                                if(found) return;
+                                                                callback(item);
+                                                            })
+                                                        };
+
+                                                    loop(function(a){
+                                                        loop(function(b) {
+                                                            loop(function (c) {
+                                                                newpolygon.plane = CSG.Plane.fromPoints(a.pos, b.pos, c.pos)
+                                                                if(!isNaN(newpolygon.plane.w)) {
+                                                                    found = true;
+                                                                }
+                                                            })
+                                                        })
+                                                    })
+                                                }
+
                                                 polygons[polygonindex] = newpolygon;
 
                                                 // remove the original sides from our maps:
