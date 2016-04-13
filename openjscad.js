@@ -896,6 +896,7 @@ OpenJsCad.Processor.prototype = {
     {
       this.containerdiv.removeChild(0);
     }
+
     var viewerdiv = document.createElement("div");
     viewerdiv.className = "viewer";
     viewerdiv.style.width = '100%';
@@ -939,18 +940,26 @@ OpenJsCad.Processor.prototype = {
 
       //end of zoom control
     }
-    //this.errordiv = document.createElement("div");
-    this.errordiv = document.getElementById("errordiv");
+
+    this.errordiv = this.containerdiv.parentElement.querySelector("div#errordiv");
+    if (!this.errordiv) {
+      this.errordiv = document.createElement("div");
+      this.errordiv.id = 'errordiv';
+      this.containerdiv.parentElement.appendChild(this.errordiv);
+    }
     this.errorpre = document.createElement("pre");
     this.errordiv.appendChild(this.errorpre);
-    //this.statusdiv = document.createElement("div");
-    this.statusdiv = document.getElementById("statusdiv");
-    this.statusdiv.className = "statusdiv";
+
+    this.statusdiv = this.containerdiv.parentElement.querySelector("div#statusdiv");
+    if (!this.statusdiv) {
+      this.statusdiv = document.createElement("div");
+      this.statusdiv.id = "statusdiv";
+      this.containerdiv.parentElement.appendChild(this.statusdiv);
+    }
     this.statusspan = document.createElement("span");
     this.statusspan.id = 'statusspan';
-    this.statusspan.style.marginRight = '2em';
     this.statusbuttons = document.createElement("span");
-    this.statusbuttons.style.float = "right";
+    this.statusbuttons.id = 'statusbuttons';
     this.statusdiv.appendChild(this.statusspan);
     this.statusdiv.appendChild(this.statusbuttons);
     this.abortbutton = document.createElement("button");
@@ -974,16 +983,17 @@ OpenJsCad.Processor.prototype = {
     this.downloadOutputFileLink.className = "downloadOutputFileLink"; // so we can css it
     this.statusbuttons.appendChild(this.downloadOutputFileLink);
 
-    //this.parametersdiv = document.createElement("div");            // already created
-    this.parametersdiv = document.getElementById("parametersdiv");   // get the info
-    this.parametersdiv.id = "parametersdiv";
-    // this.parametersdiv.className = "ui-draggable";                   // via jQuery draggable() but it screws up
-
+    this.parametersdiv = this.containerdiv.parentElement.querySelector("div#parametersdiv");
+    if (!this.parametersdiv) {
+      this.parametersdiv = document.createElement("div");
+      this.parametersdiv.id = "parametersdiv";
+      this.containerdiv.parentElement.appendChild(this.parametersdiv);
+    }
     this.parameterstable = document.createElement("table");
     this.parameterstable.className = "parameterstable";
     this.parametersdiv.appendChild(this.parameterstable);
 
-    var element = document.getElementById("updateButton");
+    var element = this.parametersdiv.querySelector("button#updateButton");
     if (element === null) {
       element = document.createElement("button");
       element.innerHTML = "Update";
@@ -1010,11 +1020,6 @@ OpenJsCad.Processor.prototype = {
     this.parametersdiv.appendChild(element);
 
     this.enableItems();
-
-    // they exist already, so no appendChild anymore (remains here)
-    //this.containerdiv.appendChild(this.statusdiv);
-    //this.containerdiv.appendChild(this.errordiv);
-    //this.containerdiv.appendChild(this.parametersdiv);
 
     this.clearViewer();
   },
