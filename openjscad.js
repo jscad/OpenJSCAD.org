@@ -602,8 +602,7 @@ OpenJsCad.Viewer.prototype = {
   
       if(polygon.shared && polygon.shared.color) {
         color = polygon.shared.color;
-      }
-      if(polygon.color) {
+      } else if(polygon.color) {
         color = polygon.color;
       }
 
@@ -905,7 +904,7 @@ OpenJsCad.Processor.prototype = {
     try {
       this.viewer = new OpenJsCad.Viewer(viewerdiv);
     } catch(e) {
-      viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad currently requires Google Chrome or Firefox with WebGL enabled";
+      viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>A browser with support for WebGL is required";
     }
     //Zoom control
     if(0) {
@@ -1032,15 +1031,17 @@ OpenJsCad.Processor.prototype = {
     }
 
     var csg = OpenJsCad.Processor.convertToSolid(objs);         // enforce CSG to display
-    if(objs.length)             // if it was an array (multiple CSG is now one CSG), we have to reassign currentObject
+    if(objs.length) {  // if it was an array (multiple CSG is now one CSG), we have to reassign currentObject
        this.currentObject = csg;
+    }
 
     if(this.viewer) {
       this.viewer.setCsg(csg);
     }
 
-    while(this.formatDropdown.options.length > 0)
+    while(this.formatDropdown.options.length > 0) {
       this.formatDropdown.options.remove(0);
+    }
 
     var that = this;
     this.supportedFormatsForCurrentObject().forEach(function(format) {
@@ -1110,7 +1111,7 @@ OpenJsCad.Processor.prototype = {
   },
 
   setOpenJsCadPath: function(path) {
-    this.opts[ 'openJsCadPath' ] = path;
+    this.opts['openJsCadPath'] = path;
   },
 
   setError: function(txt) {
@@ -1234,7 +1235,7 @@ OpenJsCad.Processor.prototype = {
   // create the worker
     var that = this;
     that.state = 1; // processing
-    that.worker = createJscadWorker( this.baseurl+this.filename, script,
+    that.worker = OpenJsCad.createJscadWorker( this.baseurl+this.filename, script,
     // handle the results
       function(err, objs) {
         that.worker = null;
@@ -1291,10 +1292,24 @@ OpenJsCad.Processor.prototype = {
     this.enableItems();
     this.setStatus("Rendering. Please wait <img id=busy src='imgs/busy.gif'>");
   // rebuild the solid
-    try {
-      this.rebuildSolidAsync();
-    } catch(e) {
-      //console.log("async failed, try sync compute, error: "+e.message);
+    if (this.opts.useAsync) {
+      try {
+        this.rebuildSolidAsync();
+        return;
+      } catch(err) {
+        if (! this.opts.useSync) {
+          var errtxt = err.toString();
+          if(err.stack) {
+            errtxt += '\nStack trace:\n'+err.stack;
+          }
+          this.setError(errtxt);
+          this.setStatus("Error.");
+          this.state = 3; // incomplete
+          this.enableItems();
+        }
+      }
+    }
+    if (this.opts.useSync) {
       this.rebuildSolidSync();
     }
   },
@@ -1323,8 +1338,7 @@ OpenJsCad.Processor.prototype = {
 
   generateOutputFile: function() {
     this.clearOutputFile();
-    if(this.currentObject)
-    {
+    if(this.currentObject) {
       try
       {
         this.generateOutputFileFileSystem();
@@ -1346,6 +1360,7 @@ OpenJsCad.Processor.prototype = {
     switch(format) {
       case 'stla':
         blob = object.toStlString();
+        //blob = object.fixTJunctions().toStlString();
         break;
       case 'stlb':
         //blob = this.currentObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now (fixTJunctions() needs debugging)
@@ -1466,7 +1481,7 @@ OpenJsCad.Processor.prototype = {
     //console.log("Trying download via FileSystem API");
     // create a random directory name:
     var extension = this.selectedFormatInfo().extension;
-    var dirname = "OpenJsCadOutput1_"+parseInt(Math.random()*1000000000, 10)+"."+extension;
+    var dirname = "OpenJsCadOutput1_"+parseInt(Math.random()*1000000000, 10)+"_"+extension;
     var filename = "output."+extension; // FIXME this should come from this.filename
     var that = this;
     request(TEMPORARY, 20*1024*1024, function(fs){
