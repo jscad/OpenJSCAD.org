@@ -81,7 +81,13 @@ canvas {
   
   /* cursor: move;     moveable now */
 }
+#parametersdiv th {
+  text-align: left;
+  font-size: 1em;
+  font-weight: bold;
+}
 #parametersdiv td {
+  text-align: right;
   font-size: 0.8em;
 }
 #parametersdiv input, #parametersdiv textarea, #parametersdiv select {
@@ -90,17 +96,18 @@ canvas {
   border: none;
 }
 
-#parametersdiv .caption {
-   text-align: right;
-}
-
 #instantUpdate {
    margin-left: 1em;
 }
-
 #instantUpdateLabel {
    font-size: 0.9em;
 }
 
-.statusdiv {
+#statusdiv {
+}
+#statusspan {
+   margin-right: 2em;
+}
+#statusbuttons {
+   float: right;
 }

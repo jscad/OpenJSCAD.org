@@ -602,8 +602,7 @@ OpenJsCad.Viewer.prototype = {
   
       if(polygon.shared && polygon.shared.color) {
         color = polygon.shared.color;
-      }
-      if(polygon.color) {
+      } else if(polygon.color) {
         color = polygon.color;
       }
 
@@ -896,6 +895,7 @@ OpenJsCad.Processor.prototype = {
     {
       this.containerdiv.removeChild(0);
     }
+
     var viewerdiv = document.createElement("div");
     viewerdiv.className = "viewer";
     viewerdiv.style.width = '100%';
@@ -904,7 +904,7 @@ OpenJsCad.Processor.prototype = {
     try {
       this.viewer = new OpenJsCad.Viewer(viewerdiv);
     } catch(e) {
-      viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>OpenJsCad currently requires Google Chrome or Firefox with WebGL enabled";
+      viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>A browser with support for WebGL is required";
     }
     //Zoom control
     if(0) {
@@ -939,18 +939,26 @@ OpenJsCad.Processor.prototype = {
 
       //end of zoom control
     }
-    //this.errordiv = document.createElement("div");
-    this.errordiv = document.getElementById("errordiv");
+
+    this.errordiv = this.containerdiv.parentElement.querySelector("div#errordiv");
+    if (!this.errordiv) {
+      this.errordiv = document.createElement("div");
+      this.errordiv.id = 'errordiv';
+      this.containerdiv.parentElement.appendChild(this.errordiv);
+    }
     this.errorpre = document.createElement("pre");
     this.errordiv.appendChild(this.errorpre);
-    //this.statusdiv = document.createElement("div");
-    this.statusdiv = document.getElementById("statusdiv");
-    this.statusdiv.className = "statusdiv";
+
+    this.statusdiv = this.containerdiv.parentElement.querySelector("div#statusdiv");
+    if (!this.statusdiv) {
+      this.statusdiv = document.createElement("div");
+      this.statusdiv.id = "statusdiv";
+      this.containerdiv.parentElement.appendChild(this.statusdiv);
+    }
     this.statusspan = document.createElement("span");
     this.statusspan.id = 'statusspan';
-    this.statusspan.style.marginRight = '2em';
     this.statusbuttons = document.createElement("span");
-    this.statusbuttons.style.float = "right";
+    this.statusbuttons.id = 'statusbuttons';
     this.statusdiv.appendChild(this.statusspan);
     this.statusdiv.appendChild(this.statusbuttons);
     this.abortbutton = document.createElement("button");
@@ -974,16 +982,17 @@ OpenJsCad.Processor.prototype = {
     this.downloadOutputFileLink.className = "downloadOutputFileLink"; // so we can css it
     this.statusbuttons.appendChild(this.downloadOutputFileLink);
 
-    //this.parametersdiv = document.createElement("div");            // already created
-    this.parametersdiv = document.getElementById("parametersdiv");   // get the info
-    this.parametersdiv.id = "parametersdiv";
-    // this.parametersdiv.className = "ui-draggable";                   // via jQuery draggable() but it screws up
-
+    this.parametersdiv = this.containerdiv.parentElement.querySelector("div#parametersdiv");
+    if (!this.parametersdiv) {
+      this.parametersdiv = document.createElement("div");
+      this.parametersdiv.id = "parametersdiv";
+      this.containerdiv.parentElement.appendChild(this.parametersdiv);
+    }
     this.parameterstable = document.createElement("table");
     this.parameterstable.className = "parameterstable";
     this.parametersdiv.appendChild(this.parameterstable);
 
-    var element = document.getElementById("updateButton");
+    var element = this.parametersdiv.querySelector("button#updateButton");
     if (element === null) {
       element = document.createElement("button");
       element.innerHTML = "Update";
@@ -1011,11 +1020,6 @@ OpenJsCad.Processor.prototype = {
 
     this.enableItems();
 
-    // they exist already, so no appendChild anymore (remains here)
-    //this.containerdiv.appendChild(this.statusdiv);
-    //this.containerdiv.appendChild(this.errordiv);
-    //this.containerdiv.appendChild(this.parametersdiv);
-
     this.clearViewer();
   },
 
@@ -1027,15 +1031,17 @@ OpenJsCad.Processor.prototype = {
     }
 
     var csg = OpenJsCad.Processor.convertToSolid(objs);         // enforce CSG to display
-    if(objs.length)             // if it was an array (multiple CSG is now one CSG), we have to reassign currentObject
+    if(objs.length) {  // if it was an array (multiple CSG is now one CSG), we have to reassign currentObject
        this.currentObject = csg;
+    }
 
     if(this.viewer) {
       this.viewer.setCsg(csg);
     }
 
-    while(this.formatDropdown.options.length > 0)
+    while(this.formatDropdown.options.length > 0) {
       this.formatDropdown.options.remove(0);
+    }
 
     var that = this;
     this.supportedFormatsForCurrentObject().forEach(function(format) {
@@ -1105,7 +1111,7 @@ OpenJsCad.Processor.prototype = {
   },
 
   setOpenJsCadPath: function(path) {
-    this.opts[ 'openJsCadPath' ] = path;
+    this.opts['openJsCadPath'] = path;
   },
 
   setError: function(txt) {
@@ -1229,7 +1235,7 @@ OpenJsCad.Processor.prototype = {
   // create the worker
     var that = this;
     that.state = 1; // processing
-    that.worker = createJscadWorker( this.baseurl+this.filename, script,
+    that.worker = OpenJsCad.createJscadWorker( this.baseurl+this.filename, script,
     // handle the results
       function(err, objs) {
         that.worker = null;
@@ -1286,10 +1292,24 @@ OpenJsCad.Processor.prototype = {
     this.enableItems();
     this.setStatus("Rendering. Please wait <img id=busy src='imgs/busy.gif'>");
   // rebuild the solid
-    try {
-      this.rebuildSolidAsync();
-    } catch(e) {
-      //console.log("async failed, try sync compute, error: "+e.message);
+    if (this.opts.useAsync) {
+      try {
+        this.rebuildSolidAsync();
+        return;
+      } catch(err) {
+        if (! this.opts.useSync) {
+          var errtxt = err.toString();
+          if(err.stack) {
+            errtxt += '\nStack trace:\n'+err.stack;
+          }
+          this.setError(errtxt);
+          this.setStatus("Error.");
+          this.state = 3; // incomplete
+          this.enableItems();
+        }
+      }
+    }
+    if (this.opts.useSync) {
       this.rebuildSolidSync();
     }
   },
@@ -1318,8 +1338,7 @@ OpenJsCad.Processor.prototype = {
 
   generateOutputFile: function() {
     this.clearOutputFile();
-    if(this.currentObject)
-    {
+    if(this.currentObject) {
       try
       {
         this.generateOutputFileFileSystem();
@@ -1341,6 +1360,7 @@ OpenJsCad.Processor.prototype = {
     switch(format) {
       case 'stla':
         blob = object.toStlString();
+        //blob = object.fixTJunctions().toStlString();
         break;
       case 'stlb':
         //blob = this.currentObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now (fixTJunctions() needs debugging)
@@ -1461,7 +1481,7 @@ OpenJsCad.Processor.prototype = {
     //console.log("Trying download via FileSystem API");
     // create a random directory name:
     var extension = this.selectedFormatInfo().extension;
-    var dirname = "OpenJsCadOutput1_"+parseInt(Math.random()*1000000000, 10)+"."+extension;
+    var dirname = "OpenJsCadOutput1_"+parseInt(Math.random()*1000000000, 10)+"_"+extension;
     var filename = "output."+extension; // FIXME this should come from this.filename
     var that = this;
     request(TEMPORARY, 20*1024*1024, function(fs){
