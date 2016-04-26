@@ -27,19 +27,31 @@ var gMemFs = [];              // associated array, contains file content in sour
 
 function setupDragDrop() {
   //console.log("setupDragDrop()");
+
+  var dropZone = document.getElementById('filedropzone');
+  var fileInput = document.getElementById('files-input');
+
   // Check for the various File API support.
   if (window.File && window.FileReader && window.FileList) {
-    // Great success! All the File APIs are supported.
+    // All the File APIs are supported.
+    if ('createTouch' in document) {
+      // This device is TOUCH sensitive so assume MOBILE, i.e. no drag and drop
+      document.getElementById("filedropzone_empty").style.display = "none";
+      document.getElementById("filedropzone_input").style.display = "block";
+    } else {
+      document.getElementById("filedropzone_empty").style.display = "block";
+      document.getElementById("filedropzone_input").style.display = "none";
+    }
   } else {
     throw new Error("Error: Your browser does not support the HTML File API");
   }
-  var dropZone = document.getElementById('filedropzone');
   dropZone.addEventListener('dragover', function(evt) {
     evt.stopPropagation();
     evt.preventDefault();
     evt.dataTransfer.dropEffect = 'copy';
   }, false);
   dropZone.addEventListener('drop', handleFileSelect, false);
+  fileInput.addEventListener('change', handleInputFiles, false);
 };
 
 function reloadAllFiles() {
@@ -69,6 +81,26 @@ var gRootFs = [];             // root(s) of folders
 var gMailFile = null;         // file entry containing main()
 
 // --- Private API
+
+function handleInputFiles(evt) {
+  //console.log("handleInputFiles()");
+  if (evt.target.files) {
+    if(evt.target.files.length > 0) {
+      gCurrentFiles = [];
+      for(var i=0; i<evt.target.files.length; i++) {
+        var file = evt.target.files[i];
+        var e = file.name.toLowerCase().match(/\.(\w+)$/i);
+        e = RegExp.$1;
+        if(OpenJsCad.conversionFormats.indexOf(e) >= 0) {
+          gCurrentFiles.push(evt.target.files[i]);  // -- need to transfer the single elements
+        }
+      }
+      loadLocalFiles();
+      return;
+    }
+  }
+  throw new Error("Please drop and drop one or more files");
+}
 
 function handleFileSelect(evt) {
   //console.log("handleFileSelect()");
@@ -236,7 +268,6 @@ function readFileAsync(f) {
 // update the dropzone visual & call the main parser
 function fileChanged(f) {
   //console.log("fileChanged()");
-  var dropZone = document.getElementById('filedropzone');
   if(f) {
     var txt;
     if(gMemFsTotal>1) {
@@ -247,9 +278,17 @@ function fileChanged(f) {
     document.getElementById("currentfile").innerHTML = txt;
     document.getElementById("filedropzone_filled").style.display = "block";
     document.getElementById("filedropzone_empty").style.display = "none";
+    document.getElementById("filedropzone_input").style.display = "none";
   } else {
     document.getElementById("filedropzone_filled").style.display = "none";
-    document.getElementById("filedropzone_empty").style.display = "block";
+    if ('createTouch' in document) {
+      // This device is TOUCH sensitive so assume MOBILE, i.e. no drag and drop
+      document.getElementById("filedropzone_empty").style.display = "none";
+      document.getElementById("filedropzone_input").style.display = "block";
+    } else {
+      document.getElementById("filedropzone_empty").style.display = "block";
+      document.getElementById("filedropzone_input").style.display = "none";
+    }
   }
   parseFile(f,false);
 };
