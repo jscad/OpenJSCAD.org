@@ -60,6 +60,8 @@ Todo:
     <script src="js/jscad-worker.js?0.4.0" charset="utf-8"></script>
     <script src="js/jscad-function.js?0.4.0" charset="utf-8"></script>
     <script src="openscad.js?0.4.0"></script>
+    <script src="underscore.js"></script>
+    <script src="openscad-openjscad-translator.js"></script>
     <script src="ace/ace.js?0.4.0" charset="utf-8"></script>
     <script src="js/ui-drag-drop.js?0.4.0" charset="utf-8"></script>
     <script src="js/ui-editor.js?0.4.0" charset="utf-8"></script>
@@ -189,16 +191,21 @@ function main() {
      " here (see <a style='font-weight: normal' href='https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#support-of-include' target=_blank>details</a>) "+
      "<br>or directly edit OpenJSCAD or OpenSCAD code using the editor.");
 </script>
-       </div>
-       <div id="filedropzone_filled">
-         <span id="currentfile">...</span>
-         <div id="filebuttons">
-           <button id="getstlbutton" style="display:none" onclick="getStl();">Get STL</button>
-           <button onclick="reloadAllFiles();">Reload</button>
+        </div>
+        <div id="filedropzone_input">
+          <p>
+            <label class="input-control">Add Supported Files: <input type="file" id="files-input" accept="*/*" multiple="1"></input></label>
+          </p>
+        </div>
+        <div id="filedropzone_filled">
+          <span id="currentfile">...</span>
+          <div id="filebuttons">
+            <button id="getstlbutton" style="display:none" onclick="getStl();">Get STL</button>
+            <button onclick="reloadAllFiles();">Reload</button>
            <!--button onclick="parseFile(gCurrentFile,true,false);">Debug (see below)</button-->
-           <label for="autoreload">Auto Reload</label><input type="checkbox" name="autoreload" value="" id="autoreload" onclick="toggleAutoReload();">
-         </div>
-       </div>
+            <label for="autoreload">Auto Reload</label><input type="checkbox" name="autoreload" value="" id="autoreload" onclick="toggleAutoReload();">
+          </div>
+        </div>
       </div>
     </div> <!-- tail -->
 
