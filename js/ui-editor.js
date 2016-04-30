@@ -22,7 +22,6 @@ function setUpEditor(divname) {
   gEditor = ace.edit(divname);
   gEditor.$blockScrolling = Infinity;
   gEditor.getSession().setMode("ace/mode/javascript");
-  gEditor.getSession().on('change', function(e) { ; });
   //gEditor.setTheme("ace/theme/ambiance");
   //gEditor.setTheme("ace/theme/chaos");
   gEditor.setTheme("ace/theme/chrome");
@@ -84,10 +83,8 @@ function setUpEditor(divname) {
 
 function putSourceInEditor(src,fn) {
   if (gEditor !== null) {
-    gEditor.setValue(src);
-    gEditor.clearSelection();
-    gEditor.navigateFileStart();
-    if(!src.match(/^\/\/!OpenSCAD/i)) {
+    gEditor.setValue(src, -1);
+    if(src.match(/^\/\/!OpenSCAD/i)) {
       gEditor.getSession().setMode("ace/mode/scad");
     } else {
       gEditor.getSession().setMode("ace/mode/javascript");
