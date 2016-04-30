@@ -1,7 +1,7 @@
 /*
 ## License
 
-Copyright (c) 2015 Z3 Development https://github.com/z3dev
+Copyright (c) 2016 Z3 Development https://github.com/z3dev
 
 All code released under MIT license
 
