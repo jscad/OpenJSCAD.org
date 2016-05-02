@@ -7,6 +7,7 @@
 // Drag'n'Drop Functionality
 //
 // History:
+//   2016/05/01: 0.5.0: Enhanced drag and drop for “mobile” devices, adding a File selection button if necessary
 //   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
 //   2013/04/02: massively upgraded to support multiple-files (chrome & firefox) and entire directory drag'n'drop (chrome only)
 
