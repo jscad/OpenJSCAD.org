@@ -2197,6 +2197,7 @@ function parseBinarySTL(stl,fn) {
           } else {
             color = mcolor;
           }
+          colors.push(color);
         }
 
         // -- Add 3 vertices for every triangle
@@ -2223,7 +2224,6 @@ function parseBinarySTL(stl,fn) {
         vertices.push(v3);
         triangles.push(triangle);
         normals.push(no);
-        colors.push(color);
         converted++;
     }
    var src = "";
@@ -2361,10 +2361,12 @@ function vt2jscad(v,t,n,c) {     // vertices, triangles, normals and colors
       if(j++) src += ",\n\t";
       src += "["+t[i]+"]"; //.join(', ');
    }
-   src += "],\n\tcolors: [\n\t";
-   for(var i=0,j=0; i<c.length; i++) {
-      if(j++) src += ",\n\t";
-      src += "["+c[i]+"]"; //.join(', ');
+   if (c && t.length == c.length) {
+     src += "],\n\tcolors: [\n\t";
+     for(var i=0,j=0; i<c.length; i++) {
+        if(j++) src += ",\n\t";
+        src += "["+c[i]+"]"; //.join(', ');
+     }
    }
    src += "] })\n";
    return src;
