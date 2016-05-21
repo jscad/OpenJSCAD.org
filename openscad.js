@@ -590,9 +590,9 @@ function torus(p) {
 }
 
 function polyhedron(p) { 
-   //console.log("polyhedron() not yet implemented"); 
    var pgs = [];
    var ref = p.triangles||p.polygons;
+   var colors = p.colors||null;
    
    for(var i=0; i<ref.length; i++) {
       var pp = []; 
@@ -602,15 +602,15 @@ function polyhedron(p) {
 
       var v = [];
       for(j=ref[i].length-1; j>=0; j--) {       // --- we reverse order for examples of OpenSCAD work
-      //for(var j=0; j<ref[i].length-1; j++) {
          v.push(new CSG.Vertex(new CSG.Vector3D(pp[j][0],pp[j][1],pp[j][2])));
       }
-      pgs.push(new CSG.Polygon(v));
+      var s = CSG.Polygon.defaultShared;
+      if (colors && colors[i]) {
+         s = CSG.Polygon.Shared.fromColor(colors[i]);
+      }
+      pgs.push(new CSG.Polygon(v,s));
    }
    var r = CSG.fromPolygons(pgs);
-   //r.properties.polyhedron = new CSG.Properties();
-   //r.properties.polyhedron.center = new CSG.Vector3D(center);
-   //r.properties.sphere.facepoint = center.plus(xvector);
    return r;   
 }
    
@@ -2101,14 +2101,54 @@ function parseBinarySTL(stl,fn) {
     var vertices = [];
     var triangles = [];
     var normals = [];
+    var colors = [];
     var vertexIndex = 0;
     var converted = 0;
     var err = 0;
+    var mcolor = null;
+    var umask = parseInt('01000000000000000',2);
+    var rmask = parseInt('00000000000011111',2);
+    var gmask = parseInt('00000001111100000',2);
+    var bmask = parseInt('00111110000000000',2);
     var br = new BinaryReader(stl);
-    
-    br.seek(80); //Skip header
-    //for(var i=0; i<80; i++) 
-    //   br.readInt8();
+
+    var m=0,c=0,r=0,g=0,b=0,a=0;
+    for(var i=0; i<80; i++) {
+        switch (m) {
+        case 6:
+            r = br.readUInt8();
+            m +=1;
+            continue;
+        case 7:
+            g = br.readUInt8();
+            m +=1;
+        continue;
+             case 8:
+            b = br.readUInt8();
+            m +=1;
+            continue;
+        case 9:
+            a = br.readUInt8();
+            m +=1;
+            continue;
+        default:
+            c = br.readChar();
+            switch (c) {
+            case 'C':
+            case 'O':
+            case 'L':
+            case 'R':
+            case '=':
+                m += 1;
+            default:
+                break;
+            }
+            break;
+        }
+    }
+    if (m == 10) { // create the default color
+        mcolor = [r/255,g/255,b/255,a/255];
+    }
       
     var totalTriangles = br.readUInt32(); //Read # triangles
 
@@ -2144,7 +2184,20 @@ function parseBinarySTL(stl,fn) {
         // -- every 3 vertices create a triangle.
         var triangle = []; triangle.push(vertexIndex++); triangle.push(vertexIndex++); triangle.push(vertexIndex++);
 
-        br.readUInt16();
+        var abc = br.readUInt16();
+        var color = null;
+        if (m == 10) {
+          var u = (abc & umask); // 0 if color is unique for this triangle
+          var r = (abc & rmask) / 31;
+          var g = ((abc & gmask) >>> 5) / 31;
+          var b = ((abc & bmask) >>> 10) / 31;
+          var a = 255;
+          if (u == 0) {
+            color = [r,g,b,a];
+          } else {
+            color = mcolor;
+          }
+        }
 
         // -- Add 3 vertices for every triangle
         // -- TODO: OPTIMIZE: Check if the vertex is already in the array, if it is just reuse the index
@@ -2170,6 +2223,7 @@ function parseBinarySTL(stl,fn) {
         vertices.push(v3);
         triangles.push(triangle);
         normals.push(no);
+        colors.push(color);
         converted++;
     }
    var src = "";
@@ -2180,7 +2234,7 @@ function parseBinarySTL(stl,fn) {
    if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
    src += "// objects: 1\n// object #1: triangles: "+totalTriangles+"\n\n";
    src += "function main() { return "; 
-   src += vt2jscad(vertices,triangles,normals);
+   src += vt2jscad(vertices,triangles,normals,colors);
    src += "; }";
    return src;
 }
@@ -2307,9 +2361,13 @@ function vt2jscad(v,t,n,c) {     // vertices, triangles, normals and colors
       if(j++) src += ",\n\t";
       src += "["+t[i]+"]"; //.join(', ');
    }
+   src += "],\n\tcolors: [\n\t";
+   for(var i=0,j=0; i<c.length; i++) {
+      if(j++) src += ",\n\t";
+      src += "["+c[i]+"]"; //.join(', ');
+   }
    src += "] })\n";
    return src;
-   //return polyhedron({points:vertices, triangles: triangles});
 }
 
 // BinaryReader
