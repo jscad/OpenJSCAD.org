@@ -385,20 +385,11 @@ function fetchExample(fn,url) {
 
         _includePath = path.replace(/\/[^\/]+$/,'/');
 
-        var e = fn.toLowerCase().match(/\.(\w+)$/i);
-        e = RegExp.$1;
-        if(e == 'amf') {
-        // FIXME remove this branch once JQUERY is no longer needed for AMF
-          source = parseAMF(source,fn);
-          putSourceInEditor(source,fn);
-          gProcessor.setJsCad(source,fn);
-        } else {
-           gProcessor.setStatus("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-           var worker = OpenJsCad.createConversionWorker();
-           var u = gProcessor.baseurl;
-        // NOTE: cache: false is set to allow evaluation of 'include' statements
-           worker.postMessage({baseurl: u, source: source, filename: fn, cache: false});
-        }
+         gProcessor.setStatus("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
+         var worker = OpenJsCad.createConversionWorker();
+         var u = gProcessor.baseurl;
+      // NOTE: cache: false is set to allow evaluation of 'include' statements
+         worker.postMessage({baseurl: u, source: source, filename: fn, cache: false});
       };
       xhr.send();
   }
