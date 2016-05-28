@@ -40,9 +40,8 @@ onmessage = function (e) {
         e = RegExp.$1;
         switch (e) {
           case 'amf':
-          // FIXME correct the importScripts once JQUERY is not required
-            importScripts(r.baseurl+'csg.js',r.baseurl+'openjscad.js',r.baseurl+'openscad.js');
-            r.source = r.converted = parseAMF(data.source,data.filename);
+            importScripts(r.baseurl+'csg.js',r.baseurl+'openjscad.js',r.baseurl+'js/lib/sax-js-1.1.5/lib/sax.js',r.baseurl+'js/jscad-parseAMF.js');
+            r.source = r.converted = OpenJsCad.parseAMF(data.source,data.filename);
             break;
           case 'gcode':
             importScripts(r.baseurl+'csg.js',r.baseurl+'openjscad.js',r.baseurl+'openscad.js');
