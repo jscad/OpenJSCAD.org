@@ -345,20 +345,11 @@ function parseFile(f, onlyifchanged) {
 
     saveScript(fn,source);
 
-    var e = fn.toLowerCase().match(/\.(w+)$/i);
-    e = RegExp.$1;
-    if(e == 'amf') {
-    // FIXME remove this branch once JQUERY is no longer needed for AMF
-      source = parseAMF(source,fn);
-      putSourceInEditor(source,fn);
-      gProcessor.setJsCad(source,fn);
-    } else {
-      gProcessor.setStatus("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
-      var worker = OpenJsCad.createConversionWorker();
-      var u = gProcessor.baseurl;
-    // NOTE: cache: true is very important to control the evaluation of all cached files (code)
-      worker.postMessage({baseurl: u, source: source, filename: fn, cache: true});
-    }
+    gProcessor.setStatus("Converting "+fn+" <img id=busy src='imgs/busy.gif'>");
+    var worker = OpenJsCad.createConversionWorker();
+    var u = gProcessor.baseurl;
+  // NOTE: cache: true is very important to control the evaluation of all cached files (code)
+    worker.postMessage({baseurl: u, source: source, filename: fn, cache: true});
   }
 };
 
