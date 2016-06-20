@@ -55,7 +55,7 @@ function setUpEditor(divname) {
 // enable special keystrokes
   gEditor.commands.addCommand({
        name: 'setJSCAD',
-       bindKey: { win: 'Shift-Return', mac: 'Shift-Return' },
+       bindKey: { win: 'F5|Shift-Return', mac: 'F5|Shift-Return' },
        exec: function(editor) {
           var src = editor.getValue();
           if(src.match(/^\/\/\!OpenSCAD/i)) {
@@ -68,7 +68,7 @@ function setUpEditor(divname) {
           if (gProcessor !== null) {
             gProcessor.setJsCad(src);
           }
-       },
+       }
     });
   gEditor.commands.addCommand({
        name: 'viewerReset',
@@ -77,7 +77,43 @@ function setUpEditor(divname) {
           if (gProcessor !== null) {
             gProcessor.viewer.reset();
           }
-       },
+       }
+    });
+  gEditor.commands.addCommand({
+       name: 'saveSource',
+       bindKey: { win: 'Ctrl-S', mac: 'Command-S' },
+       exec: function(editor) {
+          var src = editor.getValue();
+          localStorage.editorContent = src;
+          gProcessor.setStatus('Saved source to browser storage');
+       }
+    });
+  gEditor.commands.addCommand({
+       name: 'loadSource',
+       bindKey: { win: 'Ctrl-L', mac: 'Command-L' },
+       exec: function(editor) {
+          var src = localStorage.editorContent;
+          src && src.length ? editor.setValue(src, 1) : null;
+          gEditor.commands.exec('setJSCAD', editor);
+          gProcessor.setStatus('Loaded source from browser storage');
+       }
+    });
+  gEditor.commands.addCommand({
+       name: 'downloadSource',
+       bindKey: { win: 'Ctrl-Shift-S', mac: 'Command-Shift-S' },
+       exec: function(editor) {
+          var src = editor.getValue();
+          setTimeout(function(){
+            var blob = new Blob([src], {type : 'text/plain'});
+            var object_url = URL.createObjectURL(blob);
+            var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a");
+            save_link.href = object_url;
+            save_link.download = 'MyDesign.jscad';
+            
+            var event = new MouseEvent('click');
+            save_link.dispatchEvent(event);
+          },0);
+       }
     });
 }
 

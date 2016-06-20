@@ -295,7 +295,12 @@ $(document).ready(function() {
     setupDragDrop();
 
     //gProcessor.setDebugging(debugging);
-    if(me=='web-online') {    // we are online, fetch first example
+    if (me !== 'cli' && localStorage.editorContent && localStorage.editorContent.length) {
+      putSourceInEditor(localStorage.editorContent, "MyDesign.jscad");
+      gProcessor.setJsCad(localStorage.editorContent, "MyDesign.jscad");
+      gProcessor.setStatus('Loaded source from browser storage');
+    } 
+    else if (me=='web-online') {    // we are online, fetch first example
       docUrl = document.URL;
       params = {};
       docTitle = '';
