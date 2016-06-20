@@ -55,7 +55,7 @@ function setUpEditor(divname) {
 // enable special keystrokes
   gEditor.commands.addCommand({
        name: 'setJSCAD',
-       bindKey: { win: 'F5', mac: 'F5' },
+       bindKey: { win: 'F5|Shift-Return', mac: 'F5|Shift-Return' },
        exec: function(editor) {
           var src = editor.getValue();
           if(src.match(/^\/\/\!OpenSCAD/i)) {
