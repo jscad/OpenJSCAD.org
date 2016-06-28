@@ -21,6 +21,8 @@
 //   openjscad name_plate.jscad --name "Just Me" --title "CEO" -o amf test.amf
 //
 // History:
+// 2016/06/27: 0.5.1: refactored AMF import and export by Z3 Dev
+//                    enhanced STL import, adding support for MM colors by Z3 Dev
 // 2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
 // 2015/07/02: 0.3.0: node 0.10.x support, /usr/bin/nodejs, new files involved: formats.js (Stefan Baumann) and Blob.js (Z3 Dev)
 // 2014/12/09: 0.019: support of DXF output for 2D objects (laser cutter)

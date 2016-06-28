@@ -8,7 +8,7 @@ Copyright (c) 2016 by Z3D Development
 All code released under MIT license
 
 History:
-  2016/05/20: 0.018: rewrote using SAX XML parser, enhanced for multiple objects, materials, units
+  2016/06/27: 0.5.1: rewrote using SAX XML parser, enhanced for multiple objects, materials, units by Z3Dev
   2013/04/11: 0.018: added alpha support to AMF export
 
 Notes:

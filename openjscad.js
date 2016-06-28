@@ -2,6 +2,7 @@
 //   few adjustments by Rene K. Mueller <spiritdude@gmail.com> for OpenJSCAD.org
 //
 // History:
+// 2016/06/27: 0.5.1: incrementing version number for release
 // 2016/05/01: 0.5.0: added SVG import and export, added options to Processor and View classes, allow more flexibility in HTML by Z3 Dev
 // 2016/02/25: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
 // 2013/03/12: reenable webgui parameters to fit in current design
@@ -11,7 +12,7 @@
 
 var OpenJsCad = function() { };
 
-OpenJsCad.version = '0.5.0 (2016/05/01)';
+OpenJsCad.version = '0.5.1 (2016/06/27)';
 
 OpenJsCad.log = function(txt) {
   var timeInMs = Date.now();

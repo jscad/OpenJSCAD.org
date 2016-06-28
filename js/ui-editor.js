@@ -5,6 +5,7 @@
 // Editor Functionality
 //
 // History:
+//   2016/06/27: 0.5.1: added local storage by Robert Starkey
 //   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
 
 // --- Dependencies
