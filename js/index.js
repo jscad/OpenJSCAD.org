@@ -6,6 +6,8 @@
 //   Page Specific Functionality: index.html
 //
 // History:
+//   2016/06/27: 0.5.1: enhanced STL import, adding support for MM colors by Z3 Dev
+//                      added local storage by AA
 //   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
 
 // --- Dependencies
@@ -151,9 +153,9 @@ var ex = [
   { file:'iphone4-case.jscad', title: 'Interactive Params: iPhone4 Case' },
   { file:'name_plate.jscad', title: 'Interactive Params: Name Plate' },
   { file:'balloons.jscad', title: 'Interactive Params: Balloons', new: true },
-  { file:'globe.jscad', title: 'Globe' },
 
-  { file:'platonics/', title: 'Recursive Include(): Platonics', spacing: true },
+  { file:'globe.jscad', title: 'Include(): Globe', spacing: true },
+  { file:'platonics/', title: 'Recursive Include(): Platonics' },
 
   { file:'babypanda2.svg', title: 'SVG Image: Baby Panda', spacing: true, new: true },
 

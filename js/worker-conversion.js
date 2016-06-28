@@ -5,6 +5,7 @@
 // Implementation of Conversion Worker Thread
 //
 // History:
+//   2016/06/27: 0.5.1: refactored AMF import and export by Z3 Dev
 //   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
 
 // See ui-workers.js for helper functions

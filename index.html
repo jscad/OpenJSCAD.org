@@ -11,6 +11,9 @@ Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
+- 2016/27/01: 0.5.1: refactored AMF import and export by Z3 Dev
+-                    enhanced STL import, adding support for MM colors by Z3 Dev
+-                    added local storage by Robert Starkey
 - 2016/05/01: 0.5.0: added options to Processor and View classes, allow more flexibility in HTML by Z3 Dev
 - 2016/02/02: 0.4.0: refactored, functionality split up into more files, mostly done by Z3 Dev
 - 2015/10/23: 0.3.1: including new parameter options by Z3 Dev
@@ -47,28 +50,28 @@ Todo:
     <title>OpenJSCAD.org</title>
     <link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
     <link rel="stylesheet" href="jquery/themes/base/jquery-ui.css" />
-    <link rel="stylesheet" href="style.css?0.5.0" type="text/css">
-    <link rel="stylesheet" href="openjscad.css?0.5.0" type="text/css">
+    <link rel="stylesheet" href="style.css?0.5.1" type="text/css">
+    <link rel="stylesheet" href="openjscad.css?0.5.1" type="text/css">
   </head>
   <body>
     <script src="jquery/jquery-1.9.1.js"></script>
     <script src="jquery/jquery-ui.js"></script>
     <script src="jquery/jquery.hammer.js"></script>
     <script src="lightgl.js"></script>
-    <script src="csg.js?0.5.0"></script>
-    <script src="formats.js?0.5.0"></script>
-    <script src="openjscad.js?0.5.0"></script>
-    <script src="js/jscad-worker.js?0.5.0" charset="utf-8"></script>
-    <script src="js/jscad-function.js?0.5.0" charset="utf-8"></script>
-    <script src="openscad.js?0.5.0"></script>
+    <script src="csg.js?0.5.1"></script>
+    <script src="formats.js?0.5.1"></script>
+    <script src="openjscad.js?0.5.1"></script>
+    <script src="js/jscad-worker.js?0.5.1" charset="utf-8"></script>
+    <script src="js/jscad-function.js?0.5.1" charset="utf-8"></script>
+    <script src="openscad.js?0.5.1"></script>
     <script src="underscore.js"></script>
     <script src="openscad-openjscad-translator.js"></script>
-    <script src="ace/ace.js?0.5.0" charset="utf-8"></script>
-    <script src="js/ui-drag-drop.js?0.5.0" charset="utf-8"></script>
-    <script src="js/ui-editor.js?0.5.0" charset="utf-8"></script>
-    <script src="js/ui-cookies.js?0.5.0" charset="utf-8"></script>
-    <script src="js/ui-worker.js?0.5.0" charset="utf-8"></script>
-    <script src="js/index.js?0.5.0" charset="utf-8"></script>
+    <script src="ace/ace.js?0.5.1" charset="utf-8"></script>
+    <script src="js/ui-drag-drop.js?0.5.1" charset="utf-8"></script>
+    <script src="js/ui-editor.js?0.5.1" charset="utf-8"></script>
+    <script src="js/ui-cookies.js?0.5.1" charset="utf-8"></script>
+    <script src="js/ui-worker.js?0.5.1" charset="utf-8"></script>
+    <script src="js/index.js?0.5.1" charset="utf-8"></script>
 
 <!-- top left header (logo and error message) -->
     <div id="header">
@@ -83,11 +86,11 @@ Todo:
         <div id="menuVersion">Version <script>document.write(OpenJsCad.version);</script></div>
         <p/>
         <table class="info">
-          <tr><td align="right" class="infoOperation">Render Code</td><td class="infoKey">F5 or Shift + Return (Within Editor)</td></tr>
+          <tr><td align="right" class="infoOperation">Render Code</td><td class="infoKey">F5 or SHIFT + Return (Within Editor)</td></tr>
           <tr><td align="right" class="infoOperation">Save To Cache</td><td class="infoKey">CTRL + S (Within Editor)</td></tr>
           <tr><td align="right" class="infoOperation">Load From Cache</td><td class="infoKey">CTRL + L (Within Editor)</td></tr>
           <tr><td align="right" class="infoOperation">Download Code</td><td class="infoKey">CTRL + SHIFT + S (Within Editor)</td></tr>
-          <tr><td align="right" class="infoOperation">Reset View</td><td class="infoKey">CRTL + RETURN</td></tr>
+          <tr><td align="right" class="infoOperation">Reset View</td><td class="infoKey">CRTL + Return</td></tr>
           <tr><td align="right" class="infoOperation">Rotate XZ</td><td class="infoKey">Left Mouse</td></tr>
           <tr><td align="right" class="infoOperation">Pan</td><td class="infoKey">Middle Mouse or SHIFT + Left Mouse</td></tr>
           <tr><td align="right" class="infoOperation">Rotate XY</td><td class="infoKey">Right Mouse or ALT + Left Mouse</td></tr>

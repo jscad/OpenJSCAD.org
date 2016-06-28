@@ -1,7 +1,7 @@
 <img src="doc/logo.png" width=256 align=right>
 <h1>OpenJSCAD.org</h1>
 
-<b>Version 0.5.0</b> (ALPHA)
+<b>Version 0.5.1</b> (ALPHA)
 
 <b>OpenJSCAD.org</b> is a more up-to-date <a href="http://joostn.github.com/OpenJsCad/">OpenJsCAD</a> frontend where you can edit .jscad files either locally or online via JS editor (built-in).
 A few functions are available to make the transition from <a href="http://openscad.org/">OpenSCAD</a> to OpenJSCAD easier (<a href="https://github.com/Spiritdude/OpenSCAD.jscad">OpenSCAD.jscad</a> built-in),
@@ -36,6 +36,7 @@ For CLI (command-line interface) rendering install <a href="http://nodejs.org/">
 
 <h2>History</h2>
 <ul>
+<li>2016/06/27: 0.5.1: refactored AMF import and export, enhanced STL import by adding support for MM colors by Z3 Dev,added local storage by Robert Starkey
 <li>2016/05/01: 0.5.0: added SVG import and export, added options to Processor and View classes, allow more flexibility in HTML by Z3 Dev
 <li>2016/02/25: 0.4.0: refactored, functionality split up into more files, mostly done by Z3 Dev
 <li>2015/10/23: 0.3.1: including new parameter options by Z3 Dev
