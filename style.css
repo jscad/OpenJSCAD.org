@@ -246,6 +246,13 @@ canvas {
    font-size: 0.6em;
 }
 
+.info .infoView {
+   text-align: center;
+   font-weight: bold;
+   color: #444;
+   background: rgba(0,0,0,0.1);
+}
+
 .info .infoOperation {
    font-weight: bold;
    color: #602080;
