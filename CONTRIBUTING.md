@@ -6,7 +6,7 @@ OpenJSCAD.org is a volunteer effort. We welcome and encourage anyone to pitch in
 
 * We only accept bug reports and pull requests on GitHub*.
 
-* If you want to contribute to OpenJSCAD.org documentation, please read the [Contributing to OpenJSCAD.org Documentation](https://github.com/Spiritdude/OpenJSCAD.org/wiki/Contributing-to-OpenJSCAD.org-Documentation) guide. New contributions are accepted on GitHub via the online [Wiki pages](https://github.com/Spiritdude/OpenJSCAD.org/wiki/).
+* If you want to contribute to OpenJSCAD.org documentation, please read the [Contributing to OpenJSCAD.org Documentation](https://github.com/Spiritdude/OpenJSCAD.org/wiki/Contributing-to-OpenJSCAD.org-Documentation) guide. New contributions are accepted on Wikibooks via the online [OpenJSCAD User Guide](https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide).
 
 * If you have a question about how to use OpenJSCAD.org, please start a conversation at the [OpenJSCAD.org User Group](https://plus.google.com/communities/114958480887231067224). Please read the [OpenJSCAD.org User Guide](https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide) beforehand.
 
