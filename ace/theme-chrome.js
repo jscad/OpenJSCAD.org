@@ -3,6 +3,7 @@ ace.define("ace/theme/chrome",["require","exports","module","ace/lib/dom"], func
 exports.isDark = false;
 exports.cssClass = "ace-chrome";
 exports.cssText = ".ace-chrome .ace_gutter {\
+background: #ebebeb;\
 color: #333;\
 overflow : hidden;\
 }\

@@ -55,7 +55,7 @@ var VHDLHighlightRules = function() {
             regex : "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b"
         }, {
             token : "keyword", // pre-compiler directives
-            regex : "\\s*(?:library|package|use)\\b",
+            regex : "\\s*(?:library|package|use)\\b"
         }, {
             token : keywordMapper,
             regex : "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"
@@ -74,7 +74,7 @@ var VHDLHighlightRules = function() {
         }, {
             token : "text",
             regex : "\\s+"
-        } ],
+        } ]
 
        
     };

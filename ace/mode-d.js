@@ -130,7 +130,7 @@ var DHighlightRules = function() {
                 next : "star-comment"
             }, {
                 token: "comment.shebang",
-                regex: "^\s*#!.*"
+                regex: "^\\s*#!.*"
             }, {
                 token : "comment",
                 regex : "\\/\\+",

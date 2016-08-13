@@ -610,7 +610,6 @@ oop.inherits(Mode, TextMode);
 
 (function() {
 
-    this.lineCommentStart = "#";
 
     this.getNextLineIndent = function(state, line, tab) {
         var indent = this.$getIndent(line);
@@ -623,7 +622,7 @@ oop.inherits(Mode, TextMode);
         }
 
         if (state == "start") {
-            var match = line.match(/^.*[\{\(\[\:]\s*$/);
+            var match = line.match(/^.*[\{\(\[:]\s*$/);
             if (match) {
                 indent += tab;
             }
