@@ -9,9 +9,12 @@ Copyright (c) 2011 Evan Wallace (http://evanw.github.com/csg.js/)
 Copyright (c) 2012 Alexandre Girard (https://github.com/alx)
 
 Exporting CSG into various formats:
-   - STL (ASCII & Binary)
-   - DXF
    - AMF 
+   - X3D
+   - STL (ASCII & Binary)
+Exporting CAG into various formats:
+   - DXF
+   - SVG
 
 License: MIT license
 
@@ -311,21 +314,16 @@ CSG.prototype.toAMFString = function(m) {
         result += "<volume>\n";
         if(p.vertices.length<3)
             return;
-        var r = 1, g = 0.4, b = 1, a = 1, colorSet = false;
+        var color = null;
         if(p.shared && p.shared.color) {
-            r = p.shared.color[0];
-            g = p.shared.color[1];
-            b = p.shared.color[2];
-            a = p.shared.color[3];
-            colorSet = true;
+            color = p.shared.color;
         } else if(p.color) {
-            r = p.color[0];
-            g = p.color[1];
-            b = p.color[2];
-            if(p.color.length()>3) a = p.color[3];
-                colorSet = true;
+            color = p.color;
         }
-        result += "<color><r>"+r+"</r><g>"+g+"</g><b>"+b+"</b>"+(a!==undefined?"<a>"+a+"</a>":"")+"</color>";
+        if (color != null) {
+          if(color.length < 4) color.push(1.);
+          result += "<color><r>"+color[0]+"</r><g>"+color[1]+"</g><b>"+color[2]+"</b><a>"+color[3]+"</a></color>";
+        }
 
         for(var i=0; i<p.vertices.length-2; i++) {      // making sure they are all triangles (triangular polygons)
             result += "<triangle>";
@@ -350,6 +348,136 @@ CSG.Vector3D.prototype.toAMFString = function() {
 
 CSG.Vertex.prototype.toAMFString = function() {
    return "<vertex><coordinates>" + this.pos.toAMFString() + "</coordinates></vertex>\n";
+};
+
+
+////////////////////////////////////////////
+// JSON Conversions
+////////////////////////////////////////////
+
+CSG.prototype.toJSON = function() {
+    var str = '{ "type": "csg","polygons": [';
+    var comma = '';
+    this.polygons.map(
+      function(polygon) {
+        str += comma;
+        str += JSON.stringify(polygon);
+        comma = ',';
+      }
+    );
+    str += '],';
+    str += '"isCanonicalized": ' + JSON.stringify(this.isCanonicalized)+',';
+    str += '"isRetesselated": '+JSON.stringify(this.isRetesselated);
+    str += '}';
+    return new Blob([str], {
+        type: "application/json"
+    });
+};
+
+// convert the given (anonymous JSON) object into CSG
+// Note: Any issues during conversion will result in exceptions
+CSG.prototype.fromJSON = function(o) {
+// verify the object IS convertable
+  if (o.type == 'csg') {
+    Object.setPrototypeOf(o, CSG.prototype);
+    o.polygons.map( function(p) {
+        Object.setPrototypeOf(p, CSG.Polygon.prototype);
+        p.vertices.map(function(v) {
+            Object.setPrototypeOf(v, CSG.Vertex.prototype);
+            Object.setPrototypeOf(v.pos, CSG.Vector3D.prototype);
+        });
+        Object.setPrototypeOf(p.shared, CSG.Polygon.Shared.prototype);
+        Object.setPrototypeOf(p.plane, CSG.Plane.prototype);
+        Object.setPrototypeOf(p.plane.normal, CSG.Vector3D.prototype);
+    });
+    o.properties = new CSG.Properties();
+  }
+  return o;
+};
+
+CAG.prototype.toJSON = function() {
+    var str = '{ "type": "cag","sides": [';
+    var comma = '';
+    this.sides.map(
+      function(side) {
+        str += comma;
+        str += JSON.stringify(side);
+        comma = ',';
+      }
+    );
+    str += '] }';
+    return new Blob([str], {
+        type: "application/json"
+    });
+};
+
+// convert the given (anonymous JSON) object into CAG
+// Note: Any issues during conversion will result in exceptions
+CAG.prototype.fromJSON = function(o) {
+// verify the object IS convertable
+  if (o.type == 'cag') {
+    Object.setPrototypeOf(o, CAG.prototype);
+    o.sides.map( function(side) {
+        Object.setPrototypeOf(side, CAG.Side.prototype);
+        Object.setPrototypeOf(side.vertex0, CAG.Vertex.prototype);
+        Object.setPrototypeOf(side.vertex1, CAG.Vertex.prototype);
+        Object.setPrototypeOf(side.vertex0.pos, CSG.Vector2D.prototype);
+        Object.setPrototypeOf(side.vertex1.pos, CSG.Vector2D.prototype);
+        }
+    );
+  }
+  return o;
+};
+
+////////////////////////////////////////////
+// SVG Export
+////////////////////////////////////////////
+
+CAG.PathsToSvg = function(paths,bounds) {
+// calculate offsets in order to create paths orientated from the 0,0 axis
+    var xoffset = 0 - bounds[0].x;
+    var yoffset = 0 - bounds[0].y;
+    var str = '<g>\n';
+    paths.map(function(path) {
+        str += '<path d="';
+// FIXME add fill color when CAG has support for colors
+        var numpoints_closed = path.points.length + (path.closed ? 1 : 0);
+        for (var pointindex = 0; pointindex < numpoints_closed; pointindex++) {
+            var pointindexwrapped = pointindex;
+            if (pointindexwrapped >= path.points.length) pointindexwrapped -= path.points.length;
+            var point = path.points[pointindexwrapped];
+            if (pointindex > 0 ) {
+              str += 'L'+(point.x+xoffset)+' '+(point.y+yoffset);
+            } else {
+              str += 'M'+(point.x+xoffset)+' '+(point.y+yoffset);
+            }
+        }
+        str += '"/>\n';
+    });
+    str += '</g>\n';
+    return str;
+};
+
+CAG.prototype.toSvg = function() {
+    var decimals = 1000;
+
+// mirror the CAG about the X axis in order to generate paths into the POSITIVE direction
+    var plane = new CSG.Plane(CSG.Vector3D.Create(0, 1, 0), 0);
+    var cag = this.transform(CSG.Matrix4x4.mirroring(plane));
+
+    var bounds = cag.getBounds();
+    var paths = cag.getOutlinePaths();
+    var width  = Math.round((bounds[1].x - bounds[0].x)*decimals)/decimals;
+    var height = Math.round((bounds[1].y - bounds[0].y)*decimals)/decimals;
+    var svg = '<?xml version="1.0" encoding="UTF-8"?>\n';
+    svg += '<!-- Generated by OpenJSCAD.org -->\n';
+    svg += '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">\n';
+    svg += '<svg width="'+width+'mm" height="'+height+'mm" viewBox="0 0 '+width+' '+height+'" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n';
+    svg += CAG.PathsToSvg(paths,bounds);
+    svg += '</svg>';
+    return new Blob([svg], {
+        type: "image/svg+xml"
+    });
 };
 
 // re-export CSG and CAG with the extended prototypes
