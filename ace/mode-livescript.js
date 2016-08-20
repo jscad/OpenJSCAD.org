@@ -38,7 +38,7 @@ var MatchingBraceOutdent = function() {};
 exports.MatchingBraceOutdent = MatchingBraceOutdent;
 });
 
-ace.define("ace/mode/livescript",["require","exports","module","ace/tokenizer","ace/mode/matching_brace_outdent","ace/range","ace/mode/text"], function(require, exports, module){
+ace.define("ace/mode/livescript",["require","exports","module","ace/tokenizer","ace/mode/matching_brace_outdent","ace/mode/text"], function(require, exports, module){
   var identifier, LiveScriptMode, keywordend, stringfill;
   identifier = '(?![\\d\\s])[$\\w\\xAA-\\uFFDC](?:(?!\\s)[$\\w\\xAA-\\uFFDC]|-[A-Za-z])*';
   exports.Mode = LiveScriptMode = (function(superclass){
@@ -63,23 +63,8 @@ ace.define("ace/mode/livescript",["require","exports","module","ace/tokenizer","
       }
       return indent;
     };
-    prototype.toggleCommentLines = function(state, doc, startRow, endRow){
-      var comment, range, i$, i, out, line;
-      comment = /^(\s*)#/;
-      range = new (require('../range')).Range(0, 0, 0, 0);
-      for (i$ = startRow; i$ <= endRow; ++i$) {
-        i = i$;
-        if (out = comment.test(line = doc.getLine(i))) {
-          line = line.replace(comment, '$1');
-        } else {
-          line = line.replace(/^\s*/, '$&#');
-        }
-        range.end.row = range.start.row = i;
-        range.end.column = line.length + 1;
-        doc.replace(range, line);
-      }
-      return 1 - out * 2;
-    };
+    prototype.lineCommentStart = "#";
+    prototype.blockComment = {start: "###", end: "###"};
     prototype.checkOutdent = function(state, line, input){
       var ref$;
       return (ref$ = this.$outdent) != null ? ref$.checkOutdent(line, input) : void 8;

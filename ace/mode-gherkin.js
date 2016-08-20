@@ -5,17 +5,32 @@ var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 var stringEscape =  "\\\\(x[0-9A-Fa-f]{2}|[0-7]{3}|[\\\\abfnrtv'\"]|U[0-9A-Fa-f]{8}|u[0-9A-Fa-f]{4})";
 
 var GherkinHighlightRules = function() {
+    var languages = [{
+        name: "en",
+        labels: "Feature|Background|Scenario(?: Outline)?|Examples",
+        keywords: "Given|When|Then|And|But"
+    }];
+    
+    var labels = languages.map(function(l) {
+        return l.labels;
+    }).join("|");
+    var keywords = languages.map(function(l) {
+        return l.keywords;
+    }).join("|");
     this.$rules = {
-    	start : [{
-            token: 'constant.numeric',
+        start : [{
+            token: "constant.numeric",
             regex: "(?:(?:[1-9]\\d*)|(?:0))"
- 		}, {
-    		token : "comment",
-    		regex : "#.*$"
-    	}, {
-    		token : "keyword",
-    		regex : "Feature:|Background:|Scenario:|Scenario\ Outline:|Examples:|Given|When|Then|And|But|\\*",
-    	}, {
+        }, {
+            token : "comment",
+            regex : "#.*$"
+        }, {
+            token : "keyword",
+            regex : "(?:" + labels + "):|(?:" + keywords + ")\\b"
+        }, {
+            token : "keyword",
+            regex : "\\*"
+        }, {
             token : "string",           // multi line """ string start
             regex : '"{3}',
             next : "qqstring3"
@@ -24,22 +39,32 @@ var GherkinHighlightRules = function() {
             regex : '"',
             next : "qqstring"
         }, {
-        	token : "comment",
-        	regex : "@[A-Za-z0-9]+",
-        	next : "start"
+            token : "text",
+            regex : "^\\s*(?=@[\\w])",
+            next : [{
+                token : "text",
+                regex : "\\s+"
+            }, {
+                token : "variable.parameter",
+                regex : "@[\\w]+"
+            }, {
+                token : "empty",
+                regex : "",
+                next : "start"
+            }]
         }, {
-        	token : "comment",
-        	regex : "<.+>"
+            token : "comment",
+            regex : "<[^>]+>"
         }, {
-        	token : "comment",
-        	regex : "\\| ",
-        	next : "table-item"
+            token : "comment",
+            regex : "\\|(?=.)",
+            next : "table-item"
         }, {
-        	token : "comment",
-        	regex : "\\|$",
-        	next : "start"
+            token : "comment",
+            regex : "\\|$",
+            next : "start"
         }],
-    	"qqstring3" : [ {
+        "qqstring3" : [ {
             token : "constant.language.escape",
             regex : stringEscape
         }, {
@@ -49,7 +74,7 @@ var GherkinHighlightRules = function() {
         }, {
             defaultToken : "string"
         }],
-    	"qqstring" : [{
+        "qqstring" : [{
             token : "constant.language.escape",
             regex : stringEscape
         }, {
@@ -64,12 +89,20 @@ var GherkinHighlightRules = function() {
             defaultToken: "string"
         }],
         "table-item" : [{
+            token : "comment",
+            regex : /$/,
+            next : "start"
+        }, {
+            token : "comment",
+            regex : /\|/
+        }, {
             token : "string",
-            regex : "[A-Za-z0-9 ]*",
-            next  : "start"
-        }],
+            regex : /\\./
+        }, {
+            defaultToken : "string"
+        }]
     };
-    
+    this.normalizeRules();
 }
 
 oop.inherits(GherkinHighlightRules, TextHighlightRules);
@@ -111,12 +144,12 @@ oop.inherits(Mode, TextMode);
         
 
         if (state == "start") {
-            if (line.match("Scenario:|Feature:|Scenario\ Outline:|Background:")) {
+            if (line.match("Scenario:|Feature:|Scenario Outline:|Background:")) {
                 indent += space2;
             } else if(line.match("(Given|Then).+(:)$|Examples:")) {
-            	indent += space2;
+                indent += space2;
             } else if(line.match("\\*.+")) {
-            	indent += "* ";
+                indent += "* ";
             } 
         }
         

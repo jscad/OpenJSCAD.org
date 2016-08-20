@@ -98,7 +98,6 @@ background: rgb(181, 213, 255);\
 }\
 .ace-tm.ace_multiselect .ace_selection.ace_start {\
 box-shadow: 0 0 3px 0px white;\
-border-radius: 2px;\
 }\
 .ace-tm .ace_marker-layer .ace_step {\
 background: rgb(252, 255, 0);\
@@ -127,78 +126,6 @@ background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZ
 
 var dom = require("../lib/dom");
 dom.importCssString(exports.cssText, exports.cssClass);
-});
-
-ace.define("ace/ace",["require","exports","module","ace/lib/fixoldbrowsers","ace/lib/dom","ace/lib/event","ace/editor","ace/edit_session","ace/undomanager","ace/virtual_renderer","ace/worker/worker_client","ace/keyboard/hash_handler","ace/placeholder","ace/multi_select","ace/mode/folding/fold_mode","ace/theme/textmate","ace/ext/error_marker","ace/config"], function(require, exports, module) {
-"use strict";
-
-require("./lib/fixoldbrowsers");
-
-var dom = require("./lib/dom");
-var event = require("./lib/event");
-
-var Editor = require("./editor").Editor;
-var EditSession = require("./edit_session").EditSession;
-var UndoManager = require("./undomanager").UndoManager;
-var Renderer = require("./virtual_renderer").VirtualRenderer;
-require("./worker/worker_client");
-require("./keyboard/hash_handler");
-require("./placeholder");
-require("./multi_select");
-require("./mode/folding/fold_mode");
-require("./theme/textmate");
-require("./ext/error_marker");
-
-exports.config = require("./config");
-exports.require = require;
-exports.edit = function(el) {
-    if (typeof(el) == "string") {
-        var _id = el;
-        el = document.getElementById(_id);
-        if (!el)
-            throw new Error("ace.edit can't find div #" + _id);
-    }
-
-    if (el && el.env && el.env.editor instanceof Editor)
-        return el.env.editor;
-
-    var value = "";
-    if (el && /input|textarea/i.test(el.tagName)) {
-        var oldNode = el;
-        value = oldNode.value;
-        el = dom.createElement("pre");
-        oldNode.parentNode.replaceChild(el, oldNode);
-    } else {
-        value = dom.getInnerText(el);
-        el.innerHTML = '';
-    }
-
-    var doc = exports.createEditSession(value);
-
-    var editor = new Editor(new Renderer(el));
-    editor.setSession(doc);
-
-    var env = {
-        document: doc,
-        editor: editor,
-        onResize: editor.resize.bind(editor, null)
-    };
-    if (oldNode) env.textarea = oldNode;
-    event.addListener(window, "resize", env.onResize);
-    editor.on("destroy", function() {
-        event.removeListener(window, "resize", env.onResize);
-        env.editor.container.env = null; // prevent memory leak on old ie
-    });
-    editor.container.env = editor.env = env;
-    return editor;
-};
-exports.createEditSession = function(text, mode) {
-    var doc = new EditSession(text, mode);
-    doc.setUndoManager(new UndoManager());
-    return doc;
-}
-exports.EditSession = EditSession;
-exports.UndoManager = UndoManager;
 });
 
 ace.define("ace/ext/textarea",["require","exports","module","ace/lib/event","ace/lib/useragent","ace/lib/net","ace/ace","ace/theme/textmate"], function(require, exports, module) {

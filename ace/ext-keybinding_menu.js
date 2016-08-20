@@ -149,7 +149,7 @@ ace.define("ace/ext/keybinding_menu",["require","exports","module","ace/editor",
             el.innerHTML = '<h1>Keyboard Shortcuts</h1>' + commands + '</div>';
             overlayPage(editor, el, '0', '0', '0', null);
         }
-    };
+    }
     module.exports.init = function(editor) {
         Editor.prototype.showKeyboardShortcuts = function() {
             showKeyboardShortcuts(this);
