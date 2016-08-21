@@ -86,7 +86,8 @@ See for more details <a href="https://plus.google.com/115007999023701819645">G+ 
 
 <h2>Documentation</h2>
 <ul>
-<li><b><a href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">OpenJSCAD User & Programming Guide</a></b>
+<li><b><a href="https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide">OpenJSCAD User & Programming Guide</a></b>
+<li><b><a href="https://en.wikibooks.org/wiki/OpenJSCAD_Quick_Reference">OpenJSCAD Quick Reference</a></b>
 </ul>
 
 <h2>Screenshots</h2>
