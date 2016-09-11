@@ -52,7 +52,8 @@ OpenJsCad.env = function() {
 
 // A viewer is a WebGL canvas that lets the user view a mesh. The user can
 // tumble it around by dragging the mouse.
-OpenJsCad.Viewer = function(containerelement) {
+OpenJsCad.Viewer = function(containerelement,options) {
+  if (options === undefined) options = {};
 // see the various methods below on how to change these
   this.camera = {
     fov: 45,                           // field of view
@@ -96,6 +97,11 @@ OpenJsCad.Viewer = function(containerelement) {
     smooth:  false,             // use smoothing or not
     color:   [1,.4,1,1],        // default color
   };
+// apply all options found
+  if ("camera" in options) { this.setCameraOptions(options["camera"]); }
+  if ("plate"  in options) { this.setPlateOptions(options["plate"]); }
+  if ("axis"   in options) { this.setAxisOptions(options["axis"]); }
+  if ("solid"  in options) { this.setSolidOptions(options["solid"]); }
 
   // Set up WebGL state
   var gl = GL.create();
@@ -329,7 +335,7 @@ OpenJsCad.Viewer.prototype = {
     options = options || {};
   // apply all options found
     for (var x in this.camera) {
-      if (x in options) this.camera[x] = options[x];
+      if (x in options) { this.camera[x] = options[x]; }
     }
   },
 
@@ -337,7 +343,7 @@ OpenJsCad.Viewer.prototype = {
     options = options || {};
   // apply all options found
     for (var x in this.plate) {
-      if (x in options) this.plate[x] = options[x];
+      if (x in options) { this.plate[x] = options[x]; }
     }
   },
 
@@ -564,20 +570,6 @@ OpenJsCad.Viewer.prototype = {
       gl.vertex(0, 0, 0);
       gl.vertex(0, 0, size);
     }
-      if(0) { // WHAT IS THIS FOR?
-        gl.triangle();
-        gl.color(0.6, 0.2, 0.6, 0.2); //positive direction
-        gl.vertex(-plate,-plate,0);
-        gl.vertex(plate,-plate,0);
-        gl.vertex(plate,plate,0);
-        gl.end();
-        gl.triangle();
-        gl.color(0.6, 0.2, 0.6, 0.2); //positive direction
-        gl.vertex(plate,plate,0);
-        gl.vertex(-plate,plate,0);
-        gl.vertex(-plate,-plate,0);
-        gl.end();
-      }
     gl.end();
     gl.disable(gl.BLEND);
   },
@@ -824,6 +816,7 @@ OpenJsCad.Processor = function(containerdiv, options) {
     openJsCadPath: '',
     useAsync: true,
     useSync:  true,
+    viewer: {},
   };
 // apply all options found
   for (var x in this.opts) {
@@ -841,6 +834,7 @@ OpenJsCad.Processor = function(containerdiv, options) {
   this.ondownload = null; // function(Processor) for callback
 
   this.currentObject = null;
+
   this.hasOutputFile = false;
   this.hasError = false;
   this.paramDefinitions = [];
@@ -904,7 +898,7 @@ OpenJsCad.Processor.prototype = {
     viewerdiv.style.height = '100%';
     this.containerdiv.appendChild(viewerdiv);
     try {
-      this.viewer = new OpenJsCad.Viewer(viewerdiv);
+      this.viewer = new OpenJsCad.Viewer(viewerdiv,this.opts.viewer);
     } catch(e) {
       viewerdiv.innerHTML = "<b><br><br>Error: " + e.toString() + "</b><br><br>A browser with support for WebGL is required";
     }
@@ -1025,7 +1019,7 @@ OpenJsCad.Processor.prototype = {
     this.clearViewer();
   },
 
-  setCurrentObject: function(objs) {
+  setCurrentObjects: function(objs) {
     this.currentObject = objs;                                  // CAG or CSG
     if (length in objs && objs.length == 1) {
       this.currentObject = objs[0];                             // CAG or CSG
@@ -1246,7 +1240,7 @@ OpenJsCad.Processor.prototype = {
           that.setStatus("Error.");
           that.state = 3; // incomplete
         } else {
-          that.setCurrentObject(objs);
+          that.setCurrentObjects(objs);
           that.setStatus("Ready.");
           that.state = 2; // complete
         }
@@ -1268,7 +1262,7 @@ OpenJsCad.Processor.prototype = {
       this.state = 1; // processing
       var func = OpenJsCad.createJscadFunction(this.baseurl+this.filename, this.script);
       var objs = func(parameters);
-      this.setCurrentObject(objs);
+      this.setCurrentObjects(objs);
       this.setStatus("Ready.");
       this.state = 2; // complete
     }
