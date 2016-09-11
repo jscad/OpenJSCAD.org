@@ -67,6 +67,7 @@ a:visited {
 
 .ace_gutter {
    border-left: 1px solid #ccc;
+   background: transparent !important;
 }
 
 #editor {
