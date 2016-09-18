@@ -1428,7 +1428,25 @@ OpenJsCad.Processor.prototype = {
 
   convertToBlob: function(objs,format) {
   // TODO based on the format, objects can be converted one by one or converted together (union)
-    var object = OpenJsCad.Processor.convertToSolid(objs);
+    var i;
+    var foundCSG = false;
+    var foundCAG = false;
+    for (i = 0; i < objs.length; i++ ) {
+      if (objs[i] instanceof CSG) { foundCSG = true; }
+      if (objs[i] instanceof CAG) { foundCAG = true; }
+    }
+    var object = new CSG();
+    if ( foundCSG == false ) { object = new CAG(); }
+    for (i = 0; i < objs.length; i++ ) {
+      if (foundCSG == true && objs[i] instanceof CAG) {
+        object = object.union(objs[i].extrude({offset: [0,0,0.1]})); // convert CAG to a thin solid CSG
+      } else {
+        object = object.union(objs[i]);
+        //object = object.unionForNonIntersecting(objs[i]);
+      }
+    }
+
+    //var object = OpenJsCad.Processor.convertToSolid(objs);
     var blob = null;
     switch(format) {
       case 'stla':
@@ -1454,6 +1472,12 @@ OpenJsCad.Processor.prototype = {
         break;
       case 'svg':
         blob = object.toSvg();
+        break;
+      case 'jscad':
+        blob = new Blob([this.script], {type: this.formatInfo(format).mimetype });
+        break;
+      case 'json':
+        blob = object.toJSON();
         break;
       default:
         throw new Error("Not supported");
