@@ -1,7 +1,7 @@
 // title      : Axis Coupler
 // author     : Joost Nieuwenhuijse
 // license    : MIT License
-// version    : 0.02
+// revision   : 0.02
 // description: a simple axis coupler
 // file       : axis-coupler.jscad
 
