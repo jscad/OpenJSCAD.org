@@ -28,5 +28,5 @@ function main() {
       )
    ).translate([0,0,150]);
 
-   return [small,large];
+   return small.union(large);
 }
