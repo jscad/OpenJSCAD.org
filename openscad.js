@@ -340,9 +340,13 @@ function union() {
 function difference() { 
    var o,i=0,a=arguments; 
    if(a[0].length) a = a[0]; 
-   for(o=a[i++]; i<a.length; i++) { 
-      o = o.subtract(a[i].setColor(1,1,0));     // -- color the cuts
-   } 
+   for(o=a[i++]; i<a.length; i++) {
+      if (a[i] instanceof CAG) {
+         o = o.subtract(a[i]);
+      } else {
+         o = o.subtract(a[i].setColor(1,1,0));     // -- color the cuts
+      }
+   }
    return o; 
 }
 
@@ -350,8 +354,12 @@ function intersection() {
    var o,i=0,a=arguments; 
    if(a[0].length) a = a[0]; 
    for(o=a[i++]; i<a.length; i++) { 
-      o = o.intersect(a[i].setColor(1,1,0));    // -- color the cuts
-   } 
+      if (a[i] instanceof CAG) {
+         o = o.intersect(a[i]);
+      } else {
+         o = o.intersect(a[i].setColor(1,1,0));     // -- color the cuts
+      }
+   }
    return o; 
 }
 
