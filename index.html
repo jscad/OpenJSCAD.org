@@ -11,7 +11,15 @@ Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
-- 2016/27/01: 0.5.1: refactored AMF import and export by Z3 Dev
+- 2016/10/01: 0.5.2: updated documentation links by Z3 Dev
+-                    updated Ace editor to 1.2.4
+-                    added support for JSON export and import
+-                    fixed AMF export to set colors only when provided
+-                    enhanced Processor constructor to support Viewer options
+-                    added big.html to provide an example of using Processor and Viewer options
+-                    enhanced Processor to allow a selection from multiple returned objects
+-                    fixed difference() and intersection() functions for CAG by fischman
+- 2016/07/01: 0.5.1: refactored AMF import and export by Z3 Dev
 -                    enhanced STL import, adding support for MM colors by Z3 Dev
 -                    added local storage by Robert Starkey
 - 2016/05/01: 0.5.0: added options to Processor and View classes, allow more flexibility in HTML by Z3 Dev
@@ -50,28 +58,28 @@ Todo:
     <title>OpenJSCAD.org</title>
     <link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
     <link rel="stylesheet" href="jquery/themes/base/jquery-ui.css" />
-    <link rel="stylesheet" href="style.css?0.5.1" type="text/css">
-    <link rel="stylesheet" href="openjscad.css?0.5.1" type="text/css">
+    <link rel="stylesheet" href="style.css?0.5.2" type="text/css">
+    <link rel="stylesheet" href="openjscad.css?0.5.2" type="text/css">
   </head>
   <body>
     <script src="jquery/jquery-1.9.1.js"></script>
     <script src="jquery/jquery-ui.js"></script>
     <script src="jquery/jquery.hammer.js"></script>
     <script src="lightgl.js"></script>
-    <script src="csg.js?0.5.1"></script>
-    <script src="formats.js?0.5.1"></script>
-    <script src="openjscad.js?0.5.1"></script>
-    <script src="js/jscad-worker.js?0.5.1" charset="utf-8"></script>
-    <script src="js/jscad-function.js?0.5.1" charset="utf-8"></script>
-    <script src="openscad.js?0.5.1"></script>
+    <script src="csg.js?0.5.2"></script>
+    <script src="formats.js?0.5.2"></script>
+    <script src="openjscad.js?0.5.2"></script>
+    <script src="js/jscad-worker.js?0.5.2" charset="utf-8"></script>
+    <script src="js/jscad-function.js?0.5.2" charset="utf-8"></script>
+    <script src="openscad.js?0.5.2"></script>
     <script src="underscore.js"></script>
     <script src="openscad-openjscad-translator.js"></script>
-    <script src="ace/ace.js?0.5.1" charset="utf-8"></script>
-    <script src="js/ui-drag-drop.js?0.5.1" charset="utf-8"></script>
-    <script src="js/ui-editor.js?0.5.1" charset="utf-8"></script>
-    <script src="js/ui-cookies.js?0.5.1" charset="utf-8"></script>
-    <script src="js/ui-worker.js?0.5.1" charset="utf-8"></script>
-    <script src="js/index.js?0.5.1" charset="utf-8"></script>
+    <script src="ace/ace.js?0.5.2" charset="utf-8"></script>
+    <script src="js/ui-drag-drop.js?0.5.2" charset="utf-8"></script>
+    <script src="js/ui-editor.js?0.5.2" charset="utf-8"></script>
+    <script src="js/ui-cookies.js?0.5.2" charset="utf-8"></script>
+    <script src="js/ui-worker.js?0.5.2" charset="utf-8"></script>
+    <script src="js/index.js?0.5.2" charset="utf-8"></script>
 
 <!-- top left header (logo and error message) -->
     <div id="header">
