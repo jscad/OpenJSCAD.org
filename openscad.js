@@ -13,6 +13,7 @@
 //     http://openjscad.org/
 //
 // History:
+// 2016/10/01: 0.5.2: fixed difference() and intersection() functions for CAG by fischman
 // 2016/06/27: 0.5.1: incrementing version number for release
 // 2016/05/01: 0.5.0: added options to Processor and View classes, allow more flexibility in HTML by Z3 Dev
 // 2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
@@ -77,7 +78,7 @@
 // }
 
 function version() {
-  return [0,5,1];
+  return [0,5,2];
 }
 
 function JStoMeta(src) {

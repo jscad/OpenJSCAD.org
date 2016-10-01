@@ -2,8 +2,6 @@
 
 // == OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License
 //
-// Version: 0.4.0
-//
 // Description:
 //   openjscad <file> [-of <format>] [-o <output>]
 // e.g.
@@ -21,6 +19,7 @@
 //   openjscad name_plate.jscad --name "Just Me" --title "CEO" -o amf test.amf
 //
 // History:
+// 2016/10/01: 0.5.2: changes for libraries
 // 2016/06/27: 0.5.1: refactored AMF import and export by Z3 Dev
 //                    enhanced STL import, adding support for MM colors by Z3 Dev
 // 2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev

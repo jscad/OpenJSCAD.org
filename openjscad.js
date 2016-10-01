@@ -2,6 +2,9 @@
 //   few adjustments by Rene K. Mueller <spiritdude@gmail.com> for OpenJSCAD.org
 //
 // History:
+// 2016/10/01: 0.5.2: added support for JSON export and import
+//                    enhanced Processor constructor to support Viewer options
+//                    enhanced Processor to allow a selection from multiple returned objects
 // 2016/06/27: 0.5.1: incrementing version number for release
 // 2016/05/01: 0.5.0: added SVG import and export, added options to Processor and View classes, allow more flexibility in HTML by Z3 Dev
 // 2016/02/25: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
@@ -12,7 +15,7 @@
 
 var OpenJsCad = function() { };
 
-OpenJsCad.version = '0.5.1 (2016/06/27)';
+OpenJsCad.version = '0.5.2 (2016/10/01)';
 
 OpenJsCad.log = function(txt) {
   var timeInMs = Date.now();
@@ -953,7 +956,7 @@ OpenJsCad.Processor.prototype = {
     element.min = 0;
     element.max = 100;
     element.step = 1;
-    element.onchange = function(e) {
+    element.oninput = function(e) {
       if( that.state == 2 ) {
         that.updateView();
         that.updateFormats();
@@ -967,7 +970,7 @@ OpenJsCad.Processor.prototype = {
     element.min = 0;
     element.max = 100;
     element.step = 1;
-    element.onchange = function(e) {
+    element.oninput = function(e) {
       if( that.state == 2 ) {
         that.updateView();
         that.updateFormats();
