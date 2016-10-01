@@ -1,6 +1,7 @@
 // title      : Axis Coupler
 // author     : Joost Nieuwenhuijse
 // license    : MIT License
+// revision   : 0.02
 // description: a simple axis coupler
 // file       : axis-coupler.jscad
 
@@ -60,9 +61,10 @@ function main(params)
   part1=part1.rotateX(180).translate([0,0,params.outerlength1+params.spiderlength]);
   part2=part2.rotateX(180).translate([0,0,params.outerlength2+params.spiderlength]);
   
-  var result=part1.translate([-outerdiameter-5,0,0]);
-  result=result.union(part2.translate([0,0,0]));
-  result=result.union(spider.translate([outerdiameter+5,0,-params.spidermargin]));
+  var result = [];
+  result.push(part1.translate([-outerdiameter-5,0,0]));
+  result.push(part2.translate([0,0,0]));
+  result.push(spider.translate([outerdiameter+5,0,-params.spidermargin]));
   return result;
 }
 

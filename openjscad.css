@@ -73,6 +73,7 @@ canvas {
   -moz-border-radius: 5px;    /* css mess */
   -webkit-border-radius: 5px;
 
+  margin: 5px 0px 5px 0px;
   padding: 10px;
   background: #fff; /* rgba(255,255,255,0.7); */
   opacity: 0.8;
@@ -111,3 +112,24 @@ canvas {
 #statusbuttons {
    float: right;
 }
+
+#selectdiv {
+  position: fixed;
+  top: 0.5em;
+  right: 0.5em;
+
+  z-index: 4;
+  background: transparent;
+  opacity: 0.8;
+  border: none;
+  display: inline;
+}
+#startRange {
+  margin: 2px;
+  padding: 2px;
+}
+#endRange {
+  margin: 2px;
+  padding: 2px;
+}
+
