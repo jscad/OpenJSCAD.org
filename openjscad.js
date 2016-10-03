@@ -478,10 +478,11 @@ OpenJsCad.Viewer.prototype = {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.loadIdentity();
   // set the perspective based on the camera postion
-    gl.translate(this.viewpointX, this.viewpointY, -this.viewpointZ);
+    gl.translate(0, 0, -this.viewpointZ);
     gl.rotate(this.angleX, 1, 0, 0);
     gl.rotate(this.angleY, 0, 1, 0);
     gl.rotate(this.angleZ, 0, 0, 1);
+    gl.translate(this.viewpointX, this.viewpointY, 0);
   // draw the solid (meshes)
     if(this.solid.draw) {
       gl.enable(gl.BLEND);
