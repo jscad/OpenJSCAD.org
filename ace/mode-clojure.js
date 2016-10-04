@@ -141,16 +141,16 @@ var ClojureHighlightRules = function() {
                 regex : /:[^()\[\]{}'"\^%`,;\s]+/
             }, {
                 token : "string.regexp", //Regular Expressions
-                regex : '/#"(?:\\.|(?:\\\")|[^\""\n])*"/g'
+                regex : '/#"(?:\\.|(?:\\")|[^""\n])*"/g'
             }
 
         ],
         "string" : [
             {
-                token : "constant.language.escape",                
+                token : "constant.language.escape",
                 regex : "\\\\.|\\\\$"
             }, {
-                token : "string",                
+                token : "string",
                 regex : '[^"\\\\]+'
             }, {
                 token : "string",

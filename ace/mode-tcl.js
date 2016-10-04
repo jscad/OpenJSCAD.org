@@ -161,7 +161,7 @@ var TclHighlightRules = function() {
                 next  : "splitlineStart"
             }, {
                 token : "text",
-                regex : '[\\\\](?:["]|[{]|[}]|[[]|[]]|[$]|[\])'
+                regex : /\\(?:["{}\[\]$\\])/
             }, {
                 token : "text", // last value before command
                 regex : '^|[^{][;][^}]|[/\r/]',

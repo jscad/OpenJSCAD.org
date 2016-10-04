@@ -195,28 +195,36 @@ snippet llAcos\n\
 	llAcos(${1:float val})\n\
 snippet llAddToLandBanList\n\
 	llAddToLandBanList(${1:key agent}, ${2:float hours});\n\
+	$0\n\
 snippet llAddToLandPassList\n\
 	llAddToLandPassList(${1:key agent}, ${2:float hours});\n\
+	$0\n\
 snippet llAdjustSoundVolume\n\
 	llAdjustSoundVolume(${1:float volume});\n\
+	$0\n\
 snippet llAgentInExperience\n\
 	llAgentInExperience(${1:key agent})\n\
 snippet llAllowInventoryDrop\n\
 	llAllowInventoryDrop(${1:integer add});\n\
+	$0\n\
 snippet llAngleBetween\n\
 	llAngleBetween(${1:rotation a}, ${2:rotation b})\n\
 snippet llApplyImpulse\n\
 	llApplyImpulse(${1:vector force}, ${2:integer local});\n\
+	$0\n\
 snippet llApplyRotationalImpulse\n\
 	llApplyRotationalImpulse(${1:vector force}, ${2:integer local});\n\
+	$0\n\
 snippet llAsin\n\
 	llAsin(${1:float val})\n\
 snippet llAtan2\n\
 	llAtan2(${1:float y}, ${2:float x})\n\
 snippet llAttachToAvatar\n\
 	llAttachToAvatar(${1:integer attach_point});\n\
+	$0\n\
 snippet llAttachToAvatarTemp\n\
 	llAttachToAvatarTemp(${1:integer attach_point});\n\
+	$0\n\
 snippet llAvatarOnLinkSitTarget\n\
 	llAvatarOnLinkSitTarget(${1:integer link})\n\
 snippet llAvatarOnSitTarget\n\
@@ -231,38 +239,50 @@ snippet llBase64ToString\n\
 	llBase64ToString(${1:string str})\n\
 snippet llBreakAllLinks\n\
 	llBreakAllLinks();\n\
+	$0\n\
 snippet llBreakLink\n\
 	llBreakLink(${1:integer link});\n\
+	$0\n\
 snippet llCastRay\n\
 	llCastRay(${1:vector start}, ${2:vector end}, ${3:list options});\n\
+	$0\n\
 snippet llCeil\n\
 	llCeil(${1:float val})\n\
 snippet llClearCameraParams\n\
 	llClearCameraParams();\n\
+	$0\n\
 snippet llClearLinkMedia\n\
 	llClearLinkMedia(${1:integer link}, ${2:integer face});\n\
+	$0\n\
 snippet llClearPrimMedia\n\
 	llClearPrimMedia(${1:integer face});\n\
+	$0\n\
 snippet llCloseRemoteDataChannel\n\
 	llCloseRemoteDataChannel(${1:key channel});\n\
+	$0\n\
 snippet llCollisionFilter\n\
 	llCollisionFilter(${1:string name}, ${2:key id}, ${3:integer accept});\n\
+	$0\n\
 snippet llCollisionSound\n\
 	llCollisionSound(${1:string impact_sound}, ${2:float impact_volume});\n\
+	$0\n\
 snippet llCos\n\
 	llCos(${1:float theta})\n\
 snippet llCreateCharacter\n\
 	llCreateCharacter(${1:list options});\n\
+	$0\n\
 snippet llCreateKeyValue\n\
 	llCreateKeyValue(${1:string k})\n\
 snippet llCreateLink\n\
 	llCreateLink(${1:key target}, ${2:integer parent});\n\
+	$0\n\
 snippet llCSV2List\n\
 	llCSV2List(${1:string src})\n\
 snippet llDataSizeKeyValue\n\
 	llDataSizeKeyValue()\n\
 snippet llDeleteCharacter\n\
 	llDeleteCharacter();\n\
+	$0\n\
 snippet llDeleteKeyValue\n\
 	llDeleteKeyValue(${1:string k})\n\
 snippet llDeleteSubList\n\
@@ -271,6 +291,7 @@ snippet llDeleteSubString\n\
 	llDeleteSubString(${1:string src}, ${2:integer start}, ${3:integer end})\n\
 snippet llDetachFromAvatar\n\
 	llDetachFromAvatar();\n\
+	$0\n\
 snippet llDetectedGrab\n\
 	llDetectedGrab(${1:integer number})\n\
 snippet llDetectedGroup\n\
@@ -305,32 +326,40 @@ snippet llDetectedVel\n\
 	llDetectedVel(${1:integer number})\n\
 snippet llDialog\n\
 	llDialog(${1:key agent}, ${2:string message}, ${3:list buttons}, ${4:integer channel});\n\
+	$0\n\
 snippet llDie\n\
 	llDie();\n\
+	$0\n\
 snippet llDumpList2String\n\
 	llDumpList2String(${1:list src}, ${2:string separator})\n\
 snippet llEdgeOfWorld\n\
 	llEdgeOfWorld(${1:vector pos}, ${2:vector dir})\n\
 snippet llEjectFromLand\n\
 	llEjectFromLand(${1:key agent});\n\
+	$0\n\
 snippet llEmail\n\
 	llEmail(${1:string address}, ${2:string subject}, ${3:string message});\n\
+	$0\n\
 snippet llEscapeURL\n\
 	llEscapeURL(${1:string url})\n\
 snippet llEuler2Rot\n\
 	llEuler2Rot(${1:vector v})\n\
 snippet llExecCharacterCmd\n\
 	llExecCharacterCmd(${1:integer command}, ${2:list options});\n\
+	$0\n\
 snippet llEvade\n\
 	llEvade(${1:key target}, ${2:list options});\n\
+	$0\n\
 snippet llFabs\n\
 	llFabs(${1:float val})\n\
 snippet llFleeFrom\n\
 	llFleeFrom(${1:vector position}, ${2:float distance}, ${3:list options});\n\
+	$0\n\
 snippet llFloor\n\
 	llFloor(${1:float val})\n\
 snippet llForceMouselook\n\
 	llForceMouselook(${1:integer mouselook});\n\
+	$0\n\
 snippet llFrand\n\
 	llFrand(${1:float mag})\n\
 snippet llGenerateKey\n\
@@ -357,6 +386,8 @@ snippet llGetAnimationOverride\n\
 	llGetAnimationOverride(${1:string anim_state})\n\
 snippet llGetAttached\n\
 	llGetAttached()\n\
+snippet llGetAttachedList\n\
+	llGetAttachedList(${1:key id})\n\
 snippet llGetBoundingBox\n\
 	llGetBoundingBox(${1:key object})\n\
 snippet llGetCameraPos\n\
@@ -443,6 +474,7 @@ snippet llGetMinScaleFactor\n\
 	llGetMinScaleFactor()\n\
 snippet llGetNextEmail\n\
 	llGetNextEmail(${1:string address}, ${2:string subject});\n\
+	$0\n\
 snippet llGetNotecardLine\n\
 	llGetNotecardLine(${1:string name}, ${2:integer line})\n\
 snippet llGetNumberOfNotecardLines\n\
@@ -561,8 +593,10 @@ snippet llGetWallclock\n\
 	llGetWallclock()\n\
 snippet llGiveInventory\n\
 	llGiveInventory(${1:key destination}, ${2:string inventory});\n\
+	$0\n\
 snippet llGiveInventoryList\n\
 	llGiveInventoryList(${1:key target}, ${2:string folder}, ${3:list inventory});\n\
+	$0\n\
 snippet llGiveMoney\n\
 	llGiveMoney(${1:key destination}, ${2:integer amount})\n\
 snippet llGround\n\
@@ -573,16 +607,19 @@ snippet llGroundNormal\n\
 	llGroundNormal(${1:vector offset})\n\
 snippet llGroundRepel\n\
 	llGroundRepel(${1:float height}, ${2:integer water}, ${3:float tau});\n\
+	$0\n\
 snippet llGroundSlope\n\
 	llGroundSlope(${1:vector offset})\n\
 snippet llHTTPRequest\n\
 	llHTTPRequest(${1:string url}, ${2:list parameters}, ${3:string body})\n\
 snippet llHTTPResponse\n\
 	llHTTPResponse(${1:key request_id}, ${2:integer status}, ${3:string body});\n\
+	$0\n\
 snippet llInsertString\n\
 	llInsertString(${1:string dst}, ${2:integer pos}, ${3:string src})\n\
 snippet llInstantMessage\n\
 	llInstantMessage(${1:key user}, ${2:string message});\n\
+	$0\n\
 snippet llIntegerToBase64\n\
 	llIntegerToBase64(${1:integer number})\n\
 snippet llJson2List\n\
@@ -601,8 +638,10 @@ snippet llKeysKeyValue\n\
 	llKeysKeyValue(${1:integer first}, ${2:integer count})\n\
 snippet llLinkParticleSystem\n\
 	llLinkParticleSystem(${1:integer link}, ${2:list rules});\n\
+	$0\n\
 snippet llLinkSitTarget\n\
 	llLinkSitTarget(${1:integer link}, ${2:vector offset}, ${3:rotation rot});\n\
+	$0\n\
 snippet llList2CSV\n\
 	llList2CSV(${1:list src})\n\
 snippet llList2Float\n\
@@ -627,8 +666,10 @@ snippet llListen\n\
 	llListen(${1:integer channel}, ${2:string name}, ${3:key id}, ${4:string msg})\n\
 snippet llListenControl\n\
 	llListenControl(${1:integer handle}, ${2:integer active});\n\
+	$0\n\
 snippet llListenRemove\n\
 	llListenRemove(${1:integer handle});\n\
+	$0\n\
 snippet llListFindList\n\
 	llListFindList(${1:list src}, ${2:list test})\n\
 snippet llListInsertList\n\
@@ -643,46 +684,61 @@ snippet llListStatistics\n\
 	llListStatistics(${1:integer operation}, ${2:list src})\n\
 snippet llLoadURL\n\
 	llLoadURL(${1:key agent}, ${2:string message}, ${3:string url});\n\
+	$0\n\
 snippet llLog\n\
 	llLog(${1:float val})\n\
 snippet llLog10\n\
 	llLog10(${1:float val})\n\
 snippet llLookAt\n\
 	llLookAt(${1:vector target}, ${2:float strength}, ${3:float damping});\n\
+	$0\n\
 snippet llLoopSound\n\
 	llLoopSound(${1:string sound}, ${2:float volume});\n\
+	$0\n\
 snippet llLoopSoundMaster\n\
 	llLoopSoundMaster(${1:string sound}, ${2:float volume});\n\
+	$0\n\
 snippet llLoopSoundSlave\n\
 	llLoopSoundSlave(${1:string sound}, ${2:float volume});\n\
+	$0\n\
 snippet llManageEstateAccess\n\
 	llManageEstateAccess(${1:integer action}, ${2:key agent})\n\
 snippet llMapDestination\n\
 	llMapDestination(${1:string simname}, ${2:vector pos}, ${3:vector look_at});\n\
+	$0\n\
 snippet llMD5String\n\
 	llMD5String(${1:string src}, ${2:integer nonce})\n\
 snippet llMessageLinked\n\
 	llMessageLinked(${1:integer link}, ${2:integer num}, ${3:string str}, ${4:key id});\n\
+	$0\n\
 snippet llMinEventDelay\n\
 	llMinEventDelay(${1:float delay});\n\
+	$0\n\
 snippet llModifyLand\n\
 	llModifyLand(${1:integer action}, ${2:integer brush});\n\
+	$0\n\
 snippet llModPow\n\
 	llModPow(${1:integer a}, ${2:integer b}, ${3:integer c})\n\
 snippet llMoveToTarget\n\
 	llMoveToTarget(${1:vector target}, ${2:float tau});\n\
+	$0\n\
 snippet llNavigateTo\n\
 	llNavigateTo(${1:vector pos}, ${2:list options});\n\
+	$0\n\
 snippet llOffsetTexture\n\
 	llOffsetTexture(${1:float u}, ${2:float v}, ${3:integer face});\n\
+	$0\n\
 snippet llOpenRemoteDataChannel\n\
 	llOpenRemoteDataChannel();\n\
+	$0\n\
 snippet llOverMyLand\n\
 	llOverMyLand(${1:key id})\n\
 snippet llOwnerSay\n\
 	llOwnerSay(${1:string msg});\n\
+	$0\n\
 snippet llParcelMediaCommandList\n\
 	llParcelMediaCommandList(${1:list commandList});\n\
+	$0\n\
 snippet llParcelMediaQuery\n\
 	llParcelMediaQuery(${1:list query})\n\
 snippet llParseString2List\n\
@@ -691,46 +747,65 @@ snippet llParseStringKeepNulls\n\
 	llParseStringKeepNulls(${1:string src}, ${2:list separators}, ${3:list spacers})\n\
 snippet llParticleSystem\n\
 	llParticleSystem(${1:list rules});\n\
+	$0\n\
 snippet llPassCollisions\n\
 	llPassCollisions(${1:integer pass});\n\
+	$0\n\
 snippet llPassTouches\n\
 	llPassTouches(${1:integer pass});\n\
+	$0\n\
 snippet llPatrolPoints\n\
 	llPatrolPoints(${1:list patrolPoints}, ${2:list options});\n\
+	$0\n\
 snippet llPlaySound\n\
 	llPlaySound(${1:string sound}, ${2:float volume});\n\
+	$0\n\
 snippet llPlaySoundSlave\n\
 	llPlaySoundSlave(${1:string sound}, ${2:float volume});\n\
+	$0\n\
 snippet llPow\n\
 	llPow(${1:float base}, ${2:float exponent})\n\
 snippet llPreloadSound\n\
 	llPreloadSound(${1:string sound});\n\
+	$0\n\
 snippet llPursue\n\
 	llPursue(${1:key target}, ${2:list options});\n\
+	$0\n\
 snippet llPushObject\n\
 	llPushObject(${1:key target}, ${2:vector impulse}, ${3:vector ang_impulse}, ${4:integer local});\n\
+	$0\n\
 snippet llReadKeyValue\n\
 	llReadKeyValue(${1:string k})\n\
 snippet llRegionSay\n\
 	llRegionSay(${1:integer channel}, ${2:string msg});\n\
+	$0\n\
 snippet llRegionSayTo\n\
 	llRegionSayTo(${1:key target}, ${2:integer channel}, ${3:string msg});\n\
+	$0\n\
 snippet llReleaseControls\n\
 	llReleaseControls();\n\
+	$0\n\
 snippet llReleaseURL\n\
 	llReleaseURL(${1:string url});\n\
+	$0\n\
 snippet llRemoteDataReply\n\
 	llRemoteDataReply(${1:key channel}, ${2:key message_id}, ${3:string sdata}, ${4:integer idata});\n\
+	$0\n\
 snippet llRemoteLoadScriptPin\n\
 	llRemoteLoadScriptPin(${1:key target}, ${2:string name}, ${3:integer pin}, ${4:integer running}, ${5:integer start_param});\n\
+	$0\n\
 snippet llRemoveFromLandBanList\n\
 	llRemoveFromLandBanList(${1:key agent});\n\
+	$0\n\
 snippet llRemoveFromLandPassList\n\
 	llRemoveFromLandPassList(${1:key agent});\n\
+	$0\n\
 snippet llRemoveInventory\n\
 	llRemoveInventory(${1:string item});\n\
+	$0\n\
 snippet llRemoveVehicleFlags\n\
 	llRemoveVehicleFlags(${1:integer flags});\n\
+	$0\n\
 snippet llRequestAgentData\n\
 	llRequestAgentData(${1:key id}, ${2:integer data})\n\
 snippet llRequestDisplayName\n\
@@ -751,24 +826,32 @@ snippet llRequestUsername\n\
 	llRequestUsername(${1:key id})\n\
 snippet llResetAnimationOverride\n\
 	llResetAnimationOverride(${1:string anim_state});\n\
+	$0\n\
 snippet llResetLandBanList\n\
 	llResetLandBanList();\n\
+	$0\n\
 snippet llResetLandPassList\n\
 	llResetLandPassList();\n\
+	$0\n\
 snippet llResetOtherScript\n\
 	llResetOtherScript(${1:string name});\n\
+	$0\n\
 snippet llResetScript\n\
 	llResetScript();\n\
+	$0\n\
 snippet llResetTime\n\
 	llResetTime();\n\
+	$0\n\
 snippet llReturnObjectsByID\n\
 	llReturnObjectsByID(${1:list objects})\n\
 snippet llReturnObjectsByOwner\n\
 	llReturnObjectsByOwner(${1:key owner}, ${2:integer scope})\n\
 snippet llRezAtRoot\n\
 	llRezAtRoot(${1:string inventory}, ${2:vector position}, ${3:vector velocity}, ${4:rotation rot}, ${5:integer param});\n\
+	$0\n\
 snippet llRezObject\n\
 	llRezObject(${1:string inventory}, ${2:vector pos}, ${3:vector vel}, ${4:rotation rot}, ${5:integer param});\n\
+	$0\n\
 snippet llRot2Angle\n\
 	llRot2Angle(${1:rotation rot})\n\
 snippet llRot2Axis\n\
@@ -783,166 +866,234 @@ snippet llRot2Up\n\
 	llRot2Up(${1:rotation q})\n\
 snippet llRotateTexture\n\
 	llRotateTexture(${1:float angle}, ${2:integer face});\n\
+	$0\n\
 snippet llRotBetween\n\
 	llRotBetween(${1:vector start}, ${2:vector end})\n\
 snippet llRotLookAt\n\
 	llRotLookAt(${1:rotation target_direction}, ${2:float strength}, ${3:float damping});\n\
+	$0\n\
 snippet llRotTarget\n\
 	llRotTarget(${1:rotation rot}, ${2:float error})\n\
 snippet llRotTargetRemove\n\
 	llRotTargetRemove(${1:integer handle});\n\
+	$0\n\
 snippet llRound\n\
 	llRound(${1:float val})\n\
 snippet llSameGroup\n\
 	llSameGroup(${1:key group})\n\
 snippet llSay\n\
 	llSay(${1:integer channel}, ${2:string msg});\n\
+	$0\n\
 snippet llScaleByFactor\n\
 	llScaleByFactor(${1:float scaling_factor})\n\
 snippet llScaleTexture\n\
 	llScaleTexture(${1:float u}, ${2:float v}, ${3:integer face});\n\
+	$0\n\
 snippet llScriptDanger\n\
 	llScriptDanger(${1:vector pos})\n\
 snippet llScriptProfiler\n\
 	llScriptProfiler(${1:integer flags});\n\
+	$0\n\
 snippet llSendRemoteData\n\
 	llSendRemoteData(${1:key channel}, ${2:string dest}, ${3:integer idata}, ${4:string sdata})\n\
 snippet llSensor\n\
 	llSensor(${1:string name}, ${2:key id}, ${3:integer type}, ${4:float range}, ${5:float arc});\n\
+	$0\n\
 snippet llSensorRepeat\n\
 	llSensorRepeat(${1:string name}, ${2:key id}, ${3:integer type}, ${4:float range}, ${5:float arc}, ${6:float rate});\n\
+	$0\n\
 snippet llSetAlpha\n\
 	llSetAlpha(${1:float alpha}, ${2:integer face});\n\
+	$0\n\
 snippet llSetAngularVelocity\n\
 	llSetAngularVelocity(${1:vector force}, ${2:integer local});\n\
+	$0\n\
 snippet llSetAnimationOverride\n\
 	llSetAnimationOverride(${1:string anim_state}, ${2:string anim})\n\
 snippet llSetBuoyancy\n\
 	llSetBuoyancy(${1:float buoyancy});\n\
+	$0\n\
 snippet llSetCameraAtOffset\n\
 	llSetCameraAtOffset(${1:vector offset});\n\
+	$0\n\
 snippet llSetCameraEyeOffset\n\
 	llSetCameraEyeOffset(${1:vector offset});\n\
+	$0\n\
 snippet llSetCameraParams\n\
 	llSetCameraParams(${1:list rules});\n\
+	$0\n\
 snippet llSetClickAction\n\
 	llSetClickAction(${1:integer action});\n\
+	$0\n\
 snippet llSetColor\n\
 	llSetColor(${1:vector color}, ${2:integer face});\n\
+	$0\n\
 snippet llSetContentType\n\
 	llSetContentType(${1:key request_id}, ${2:integer content_type});\n\
+	$0\n\
 snippet llSetDamage\n\
 	llSetDamage(${1:float damage});\n\
+	$0\n\
 snippet llSetForce\n\
 	llSetForce(${1:vector force}, ${2:integer local});\n\
+	$0\n\
 snippet llSetForceAndTorque\n\
 	llSetForceAndTorque(${1:vector force}, ${2:vector torque}, ${3:integer local});\n\
+	$0\n\
 snippet llSetHoverHeight\n\
 	llSetHoverHeight(${1:float height}, ${2:integer water}, ${3:float tau});\n\
+	$0\n\
 snippet llSetKeyframedMotion\n\
 	llSetKeyframedMotion(${1:list keyframes}, ${2:list options});\n\
+	$0\n\
 snippet llSetLinkAlpha\n\
 	llSetLinkAlpha(${1:integer link}, ${2:float alpha}, ${3:integer face});\n\
+	$0\n\
 snippet llSetLinkCamera\n\
 	llSetLinkCamera(${1:integer link}, ${2:vector eye}, ${3:vector at});\n\
+	$0\n\
 snippet llSetLinkColor\n\
 	llSetLinkColor(${1:integer link}, ${2:vector color}, ${3:integer face});\n\
+	$0\n\
 snippet llSetLinkMedia\n\
 	llSetLinkMedia(${1:integer link}, ${2:integer face}, ${3:list params});\n\
+	$0\n\
 snippet llSetLinkPrimitiveParams\n\
 	llSetLinkPrimitiveParams(${1:integer link}, ${2:list rules});\n\
+	$0\n\
 snippet llSetLinkPrimitiveParamsFast\n\
 	llSetLinkPrimitiveParamsFast(${1:integer link}, ${2:list rules});\n\
+	$0\n\
 snippet llSetLinkTexture\n\
 	llSetLinkTexture(${1:integer link}, ${2:string texture}, ${3:integer face});\n\
+	$0\n\
 snippet llSetLinkTextureAnim\n\
 	llSetLinkTextureAnim(${1:integer link}, ${2:integer mode}, ${3:integer face}, ${4:integer sizex}, ${5:integer sizey}, ${6:float start}, ${7:float length}, ${8:float rate});\n\
+	$0\n\
 snippet llSetLocalRot\n\
 	llSetLocalRot(${1:rotation rot});\n\
+	$0\n\
 snippet llSetMemoryLimit\n\
 	llSetMemoryLimit(${1:integer limit})\n\
 snippet llSetObjectDesc\n\
 	llSetObjectDesc(${1:string description});\n\
+	$0\n\
 snippet llSetObjectName\n\
 	llSetObjectName(${1:string name});\n\
+	$0\n\
 snippet llSetParcelMusicURL\n\
 	llSetParcelMusicURL(${1:string url});\n\
+	$0\n\
 snippet llSetPayPrice\n\
 	llSetPayPrice(${1:integer price}, [${2:integer price_button_a}, ${3:integer price_button_b}, ${4:integer price_button_c}, ${5:integer price_button_d}]);\n\
+	$0\n\
 snippet llSetPhysicsMaterial\n\
 	llSetPhysicsMaterial(${1:integer mask}, ${2:float gravity_multiplier}, ${3:float restitution}, ${4:float friction}, ${5:float density});\n\
+	$0\n\
 snippet llSetPos\n\
 	llSetPos(${1:vector pos});\n\
+	$0\n\
 snippet llSetPrimitiveParams\n\
 	llSetPrimitiveParams(${1:list rules});\n\
+	$0\n\
 snippet llSetPrimMediaParams\n\
 	llSetPrimMediaParams(${1:integer face}, ${2:list params});\n\
+	$0\n\
 snippet llSetRegionPos\n\
 	llSetRegionPos(${1:vector position})\n\
 snippet llSetRemoteScriptAccessPin\n\
 	llSetRemoteScriptAccessPin(${1:integer pin});\n\
+	$0\n\
 snippet llSetRot\n\
 	llSetRot(${1:rotation rot});\n\
+	$0\n\
 snippet llSetScale\n\
 	llSetScale(${1:vector size});\n\
+	$0\n\
 snippet llSetScriptState\n\
 	llSetScriptState(${1:string name}, ${2:integer run});\n\
+	$0\n\
 snippet llSetSitText\n\
 	llSetSitText(${1:string text});\n\
+	$0\n\
 snippet llSetSoundQueueing\n\
 	llSetSoundQueueing(${1:integer queue});\n\
+	$0\n\
 snippet llSetSoundRadius\n\
 	llSetSoundRadius(${1:float radius});\n\
+	$0\n\
 snippet llSetStatus\n\
 	llSetStatus(${1:integer status}, ${2:integer value});\n\
+	$0\n\
 snippet llSetText\n\
 	llSetText(${1:string text}, ${2:vector color}, ${3:float alpha});\n\
+	$0\n\
 snippet llSetTexture\n\
 	llSetTexture(${1:string texture}, ${2:integer face});\n\
+	$0\n\
 snippet llSetTextureAnim\n\
 	llSetTextureAnim(${1:integer mode}, ${2:integer face}, ${3:integer sizex}, ${4:integer sizey}, ${5:float start}, ${6:float length}, ${7:float rate});\n\
+	$0\n\
 snippet llSetTimerEvent\n\
 	llSetTimerEvent(${1:float sec});\n\
+	$0\n\
 snippet llSetTorque\n\
 	llSetTorque(${1:vector torque}, ${2:integer local});\n\
+	$0\n\
 snippet llSetTouchText\n\
 	llSetTouchText(${1:string text});\n\
+	$0\n\
 snippet llSetVehicleFlags\n\
 	llSetVehicleFlags(${1:integer flags});\n\
+	$0\n\
 snippet llSetVehicleFloatParam\n\
 	llSetVehicleFloatParam(${1:integer param}, ${2:float value});\n\
+	$0\n\
 snippet llSetVehicleRotationParam\n\
 	llSetVehicleRotationParam(${1:integer param}, ${2:rotation rot});\n\
+	$0\n\
 snippet llSetVehicleType\n\
 	llSetVehicleType(${1:integer type});\n\
+	$0\n\
 snippet llSetVehicleVectorParam\n\
 	llSetVehicleVectorParam(${1:integer param}, ${2:vector vec});\n\
+	$0\n\
 snippet llSetVelocity\n\
 	llSetVelocity(${1:vector force}, ${2:integer local});\n\
+	$0\n\
 snippet llSHA1String\n\
 	llSHA1String(${1:string src})\n\
 snippet llShout\n\
 	llShout(${1:integer channel}, ${2:string msg});\n\
+	$0\n\
 snippet llSin\n\
 	llSin(${1:float theta})\n\
 snippet llSitTarget\n\
 	llSitTarget(${1:vector offset}, ${2:rotation rot});\n\
+	$0\n\
 snippet llSleep\n\
 	llSleep(${1:float sec});\n\
+	$0\n\
 snippet llSqrt\n\
 	llSqrt(${1:float val})\n\
 snippet llStartAnimation\n\
 	llStartAnimation(${1:string anim});\n\
+	$0\n\
 snippet llStopAnimation\n\
 	llStopAnimation(${1:string anim});\n\
+	$0\n\
 snippet llStopHover\n\
 	llStopHover();\n\
+	$0\n\
 snippet llStopLookAt\n\
 	llStopLookAt();\n\
+	$0\n\
 snippet llStopMoveToTarget\n\
 	llStopMoveToTarget();\n\
+	$0\n\
 snippet llStopSound\n\
 	llStopSound();\n\
+	$0\n\
 snippet llStringLength\n\
 	llStringLength(${1:string str})\n\
 snippet llStringToBase64\n\
@@ -953,22 +1104,29 @@ snippet llSubStringIndex\n\
 	llSubStringIndex(${1:string source}, ${2:string pattern})\n\
 snippet llTakeControls\n\
 	llTakeControls(${1:integer controls}, ${2:integer accept}, ${3:integer pass_on});\n\
+	$0\n\
 snippet llTan\n\
 	llTan(${1:float theta})\n\
 snippet llTarget\n\
 	llTarget(${1:vector position}, ${2:float range})\n\
 snippet llTargetOmega\n\
 	llTargetOmega(${1:vector axis}, ${2:float spinrate}, ${3:float gain});\n\
+	$0\n\
 snippet llTargetRemove\n\
 	llTargetRemove(${1:integer handle});\n\
+	$0\n\
 snippet llTeleportAgent\n\
 	llTeleportAgent(${1:key agent}, ${2:string landmark}, ${3:vector position}, ${4:vector look_at});\n\
+	$0\n\
 snippet llTeleportAgentGlobalCoords\n\
 	llTeleportAgentGlobalCoords(${1:key agent}, ${2:vector global_coordinates}, ${3:vector region_coordinates}, ${4:vector look_at});\n\
+	$0\n\
 snippet llTeleportAgentHome\n\
 	llTeleportAgentHome(${1:key agent});\n\
+	$0\n\
 snippet llTextBox\n\
 	llTextBox(${1:key agent}, ${2:string message}, ${3:integer channel});\n\
+	$0\n\
 snippet llToLower\n\
 	llToLower(${1:string src})\n\
 snippet llToUpper\n\
@@ -977,12 +1135,15 @@ snippet llTransferLindenDollars\n\
 	llTransferLindenDollars(${1:key destination}, ${2:integer amount})\n\
 snippet llTriggerSound\n\
 	llTriggerSound(${1:string sound}, ${2:float volume});\n\
+	$0\n\
 snippet llTriggerSoundLimited\n\
 	llTriggerSoundLimited(${1:string sound}, ${2:float volume}, ${3:vector top_north_east}, ${4:vector bottom_south_west});\n\
+	$0\n\
 snippet llUnescapeURL\n\
 	llUnescapeURL(${1:string url})\n\
 snippet llUnSit\n\
 	llUnSit(${1:key id});\n\
+	$0\n\
 snippet llUpdateCharacter\n\
 	llUpdateCharacter(${1:list options})\n\
 snippet llUpdateKeyValue\n\
@@ -995,14 +1156,19 @@ snippet llVecNorm\n\
 	llVecNorm(${1:vector vec})\n\
 snippet llVolumeDetect\n\
 	llVolumeDetect(${1:integer detect});\n\
+	$0\n\
 snippet llWanderWithin\n\
 	llWanderWithin(${1:vector origin}, ${2:vector dist}, ${3:list options});\n\
+	$0\n\
 snippet llWater\n\
 	llWater(${1:vector offset});\n\
+	$0\n\
 snippet llWhisper\n\
 	llWhisper(${1:integer channel}, ${2:string msg});\n\
+	$0\n\
 snippet llWind\n\
 	llWind(${1:vector offset});\n\
+	$0\n\
 snippet llXorBase64\n\
 	llXorBase64(${1:string str1}, ${2:string str2})\n\
 snippet money\n\

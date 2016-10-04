@@ -97,7 +97,7 @@ var SqlServerHighlightRules = function() {
         "storage.type": dataTypes,
         "support.function": builtinFunctions,
         "support.storedprocedure": builtInStoredProcedures,
-        "keyword": keywords,
+        "keyword": keywords
     }, "identifier", true);
     var setStatements = "SET ANSI_DEFAULTS|SET ANSI_NULLS|SET ANSI_NULL_DFLT_OFF|SET ANSI_NULL_DFLT_ON|SET ANSI_PADDING|SET ANSI_WARNINGS|SET ARITHABORT|SET ARITHIGNORE|SET CONCAT_NULL_YIELDS_NULL|SET CURSOR_CLOSE_ON_COMMIT|SET DATEFIRST|SET DATEFORMAT|SET DEADLOCK_PRIORITY|SET FIPS_FLAGGER|SET FMTONLY|SET FORCEPLAN|SET IDENTITY_INSERT|SET IMPLICIT_TRANSACTIONS|SET LANGUAGE|SET LOCK_TIMEOUT|SET NOCOUNT|SET NOEXEC|SET NUMERIC_ROUNDABORT|SET OFFSETS|SET PARSEONLY|SET QUERY_GOVERNOR_COST_LIMIT|SET QUOTED_IDENTIFIER|SET REMOTE_PROC_TRANSACTIONS|SET ROWCOUNT|SET SHOWPLAN_ALL|SET SHOWPLAN_TEXT|SET SHOWPLAN_XML|SET STATISTICS IO|SET STATISTICS PROFILE|SET STATISTICS TIME|SET STATISTICS XML|SET TEXTSIZE|SET XACT_ABORT".split('|');
     var isolationLevels = "READ UNCOMMITTED|READ COMMITTED|REPEATABLE READ|SNAPSHOP|SERIALIZABLE".split('|');
@@ -161,7 +161,7 @@ var SqlServerHighlightRules = function() {
         }, {
             defaultToken: "comment",
             caseInsensitive: true
-        }],
+        }]
     };
     for (var i = 0; i < setStatements.length; i++) {
         this.$rules.start.unshift({
@@ -179,7 +179,7 @@ var SqlServerHighlightRules = function() {
                 name: v,
                 value: v,
                 score: 0,
-                meta: meta,
+                meta: meta
             });
         });
     };

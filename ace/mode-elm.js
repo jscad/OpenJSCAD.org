@@ -15,7 +15,7 @@ var ElmHighlightRules = function() {
     
     var smallRe = /[a-z_]/.source;
     var largeRe = /[A-Z]/.source;
-    var idRe = /[a-z_A-Z0-9\']/.source;
+    var idRe = /[a-z_A-Z0-9']/.source;
 
     this.$rules = {
         start: [{
@@ -29,8 +29,11 @@ var ElmHighlightRules = function() {
             regex: /0(?:[xX][0-9A-Fa-f]+|[oO][0-7]+)|\d+(\.\d+)?([eE][-+]?\d*)?/,
             token: "constant.numeric"
         }, {
+            token: "comment",
+            regex: "--.*"
+        }, {
             token : "keyword",
-            regex : /\.\.|\||:|=|\\|\"|->|<-|\u2192/
+            regex : /\.\.|\||:|=|\\|"|->|<-|\u2192/
         }, {
             token : "keyword.operator",
             regex : /[-!#$%&*+.\/<=>?@\\^|~:\u03BB\u2192]+/
@@ -69,7 +72,7 @@ var ElmHighlightRules = function() {
         }, {
             token: "paren.rparen",
             regex: /[\])}]/
-        }, ],
+        } ],
         markdown: [{
             regex: /\|\]/,
             next: "start"
@@ -100,7 +103,7 @@ var ElmHighlightRules = function() {
         }],
         string: [{
             token: "constant.language.escape",
-            regex: escapeRe,
+            regex: escapeRe
         }, {
             token: "text",
             regex: /\\(\s|$)/,
@@ -118,7 +121,7 @@ var ElmHighlightRules = function() {
             token: "error",
             regex: "",
             next: "start"
-        }],
+        }]
     };
     
     this.normalizeRules();
@@ -285,7 +288,7 @@ oop.inherits(Mode, TextMode);
 
 (function() {
     this.lineCommentStart = "--";
-    this.blockComment = {start: "{-", end: "-}"};
+    this.blockComment = {start: "{-", end: "-}", nestable: true};
     this.$id = "ace/mode/elm";
 }).call(Mode.prototype);
 

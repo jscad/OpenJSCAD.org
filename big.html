@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<!--
+
+== OpenJSCAD.org, Copyright (c) 2016, Licensed under MIT License ==
+   in conjunction with other libraries by various authors (see the individual files)
+
+Purpose:
+  This application provides an example of how to rescale Process and Viers for BIG JSCAD designs
+
+History:
+  2016/10/01: 0.5.2: First version by Z3 Dev
+
+-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+  <title>OpenJSCAD.org Logo</title>
+  <script src="jquery/jquery-1.9.1.js?0.5.2"></script>
+  <script src="jquery/jquery.hammer.js?0.5.2"></script>
+  <script src="lightgl.js"></script>
+  <script src="csg.js?0.5.2"></script>
+  <script src="formats.js?0.5.2"></script>
+  <script src="openjscad.js?0.5.2"></script>
+  <script src="openscad.js?0.5.2"></script>
+  <script src="js/jscad-worker.js?0.5.2" charset="utf-8"></script>
+  <script src="js/jscad-function.js?0.5.2" charset="utf-8"></script>
+  <link rel="stylesheet" href="big.css?0.5.2" type="text/css">
+</head>
+
+<body onload="loadProcessor()">
+<!-- setup display of the errors as required by OpenJSCAD.js -->
+  <div class="jscad-container">
+    <div id="header">
+      <div id="errordiv">hello</div>
+    </div>
+
+<!-- setup display of the viewer, i.e. canvas -->
+    <div oncontextmenu="return false;" id="viewerContext"></div>
+
+<!-- setup display of the design parameters, as required by OpenJSCAD.js -->
+<!-- set display: block to display this -->
+    <div id="parametersdiv" style="display: none;"></div>
+
+<!-- setup display of the status, as required by OpenJSCAD.js -->
+<!-- set display: block to display this -->
+    <div id="tail" style="display: none;">
+      <div id="statusdiv"></div>
+    </div>
+  </div>
+
+<!-- define the design and the parameters -->
+  <script type="text/javascript">
+    var gProcessor = null;        // required by OpenJScad.org
+
+    var gComponents = [ { file: 'examples/logo_big.jscad' } ];
+
+    function loadProcessor() {
+      gProcessor = new OpenJsCad.Processor(document.getElementById("viewerContext"),
+                                           {
+                                             viewer: {
+                                                      plate: {size: 1000,
+                                                              m: {i:   1,r: .8, g: .8, b: .8, a: .5},
+                                                              M: {i: 100,r: .5, g: .5, b: .5, a: .5}
+                                                             },
+                                                      camera: {position: {x:   0,y:  0,z:  1000},
+                                                               clip:     {min: 0.5,  max: 3000}
+                                                              },
+                                                      axis: {draw: true},
+                                                     }
+                                           });
+      //gProcessor.viewer.setCameraOptions({position: {x:   0,y:  0,z:  1000},
+      //                                    clip:     {min: 0.5,  max: 3000}});
+
+      loadJSCAD(0);
+    }
+
+    function loadJSCAD(choice) {
+      var filepath = gComponents[choice].file;
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", filepath, true);
+      gProcessor.setStatus("Loading "+filepath+" <img id=busy src='imgs/busy.gif'>");
+
+      xhr.onload = function() {
+        var source = this.responseText;
+        //console.log(source);
+
+        if(filepath.match(/\.jscad$/i)||filepath.match(/\.js$/i)) {
+          gProcessor.setStatus("Processing "+filepath+" <img id=busy src='imgs/busy.gif'>");
+          gProcessor.setJsCad(source,filepath);
+        }
+      }
+      xhr.send();
+    }
+  </script>
+
+</body>
+
+</html> 

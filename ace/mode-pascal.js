@@ -59,7 +59,7 @@ var PascalHighlightRules = function() {
               { token: 'punctuation.definition.string.end.pascal',
                 regex: '"',
                 next: 'pop' },
-              { defaultToken: 'string.quoted.double.pascal' } ],
+              { defaultToken: 'string.quoted.double.pascal' } ]
             },
          { token: 'punctuation.definition.string.begin.pascal',
            regex: '\'',
