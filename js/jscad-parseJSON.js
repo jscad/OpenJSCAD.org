@@ -66,7 +66,7 @@ OpenJsCad.toSourceSide = function(side) {
 OpenJsCad.toSourceCAG = function(cag) {
   var code = '  var sides = [];\n';
   cag.sides.map(function(s) {
-    code += '  sides.push('+OpenJsCad.toSourceSide(s)+')\n';
+    code += '  sides.push('+OpenJsCad.toSourceSide(s)+');\n';
   });
   code += '  return CAG.fromSides(sides);\n'
   return code;
