@@ -84,13 +84,14 @@ var formatName = {
    gcode: "G Programming Language File Format",
    dxf: "AutoCAD Drawing Exchange Format",
    svg: "Scalable Vector Graphics Format",
+   json: "JavaScript Object Notation Format",
 };
 
 if(args.length < 1) {
    console.log("USAGE:\n\nopenjscad [-v] <file> [-of <format>] [-o <output>]");
-   console.log("\t<file>  :\tinput file (Supported types: .jscad, .js, .scad, .stl, .amf, .obj, .gcode, .svg)");
-   console.log("\t<output>:\toutput file (Supported types: .jscad, .stl, .amf, .dxf, .svg)");
-   console.log("\t<format>:\t'jscad', 'stla' (STL ASCII, default), 'stlb' (STL Binary), 'amf', 'dxf', 'svg'");
+   console.log("\t<file>  :\tinput file (Supported types: .jscad, .js, .scad, .stl, .amf, .obj, .gcode, .svg, .json)");
+   console.log("\t<output>:\toutput file (Supported types: .jscad, .stl, .amf, .dxf, .svg, .json)");
+   console.log("\t<format>:\t'jscad', 'stla' (STL ASCII, default), 'stlb' (STL Binary), 'amf', 'dxf', 'svg', 'json'");
    process.exit(1);
 }
 
@@ -119,7 +120,7 @@ for(var i=0; i<args.length; i++) {
    } else if(args[i].match(/^--(\w+)$/)) {      // params for main()
       gMainParam[RegExp.$1] = args[++i];
 
-   } else if(args[i].match(/.+\.(jscad|js|scad|stl|amf|obj|gcode|svg)$/i)) {
+   } else if(args[i].match(/.+\.(jscad|js|scad|stl|amf|obj|gcode|svg|json)$/i)) {
       inf = args[i];
       inFormat = RegExp.$1;
       if(!fs.statSync(inf).isFile()) {
@@ -183,9 +184,7 @@ if(inFormat=='scad') {
 
 } else if(inFormat=='stl') {
    //console.log("converting "+inf+" to jscad");
-   //var openscad = require(lib+'openscad.js');
    src = openscad.parseSTL(src,inf);
-   //src = "// "+outf+" created by openjscad-"+OpenJsCad.version+" from "+inf+"\n\n"+src;
 
 } else if(inFormat=='amf') {
    OpenJsCad = require(lib+'./js/jscad-parseAMF.js').OpenJsCad;
@@ -200,6 +199,10 @@ if(inFormat=='scad') {
 } else if(inFormat=='svg') {
    OpenJsCad = require(lib+'./js/jscad-parseSVG.js').OpenJsCad;
    src = OpenJsCad.parseSVG(src,inf);
+
+} else if(inFormat=='json') {
+   OpenJsCad = require(lib+'./js/jscad-parseJSON.js').OpenJsCad;
+   src = OpenJsCad.parseJSON(src,inf);
 
 } else {
    // jscad or js
@@ -250,8 +253,11 @@ if(outFormat=='jscad'||outFormat=='js') {
    } else if(outFormat=='svg') {
       out = csg.toSvg(); // CAG to SVG
 
+   } else if(outFormat=='json') {
+      out = csg.toJSON(); // CSG or CAG to JSON
+
    } else {
-      console.log("ERROR: only jscad, stl, amf, dxf or svg as output format");
+      console.log("ERROR: only jscad, stl, amf, dxf, svg or json as output format");
       process.exit(1);
    }
 }
