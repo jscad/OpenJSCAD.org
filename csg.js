@@ -1312,6 +1312,32 @@ for solid CAD anyway.
                                                 var newvertices = polygon.vertices.slice(0);
                                                 newvertices.splice(insertionvertextagindex, 0, endvertex);
                                                 var newpolygon = new CSG.Polygon(newvertices, polygon.shared /*polygon.plane*/ );
+
+// FIX
+                                               //calculate plane with differents point
+                                                if(isNaN(newpolygon.plane.w)){
+
+                                                    var found = false,
+                                                        loop = function(callback){
+                                                            newpolygon.vertices.forEach(function(item){
+                                                                if(found) return;
+                                                                callback(item);
+                                                            })
+                                                        };
+
+                                                    loop(function(a){
+                                                        loop(function(b) {
+                                                            loop(function (c) {
+                                                                newpolygon.plane = CSG.Plane.fromPoints(a.pos, b.pos, c.pos)
+                                                                if(!isNaN(newpolygon.plane.w)) {
+                                                                    found = true;
+                                                                }
+                                                            })
+                                                        })
+                                                    })
+                                                }
+// FIX
+
                                                 polygons[polygonindex] = newpolygon;
 
                                                 // remove the original sides from our maps:
@@ -1957,11 +1983,11 @@ for solid CAD anyway.
                                 this._z = 0;
                             }
                         }
-                    } else if (('x' in x) && ('y' in x)) {
-                        this._x = parseFloat(x.x);
-                        this._y = parseFloat(x.y);
-                        if ('z' in x) {
-                            this._z = parseFloat(x.z);
+                    } else if (('_x' in x) && ('_y' in x)) {
+                        this._x = parseFloat(x._x);
+                        this._y = parseFloat(x._y);
+                        if ('_z' in x) {
+                            this._z = parseFloat(x._z);
                         } else {
                             this._z = 0;
                         }
@@ -5459,6 +5485,15 @@ for solid CAD anyway.
         this.sides = [];
     };
 
+    // create from an untyped object with identical property names:
+    CAG.fromObject = function(obj) {
+        var sides = obj.sides.map(function(s) {
+            return CAG.Side.fromObject(s);
+        });
+        var cag = CAG.fromSides(sides);
+        return cag;
+    }
+
     // Construct a CAG from a list of `CAG.Side` instances.
     CAG.fromSides = function(sides) {
         var cag = new CAG();
@@ -6381,6 +6416,10 @@ for solid CAD anyway.
         this.pos = pos;
     };
 
+    CAG.Vertex.fromObject = function(obj) {
+        return new CAG.Vertex(new CSG.Vector2D(obj.pos._x,obj.pos._y));
+    };
+
     CAG.Vertex.prototype = {
         toString: function() {
             return "(" + this.pos.x.toFixed(2) + "," + this.pos.y.toFixed(2) + ")";
@@ -6400,6 +6439,12 @@ for solid CAD anyway.
         if (!(vertex1 instanceof CAG.Vertex)) throw new Error("Assertion failed");
         this.vertex0 = vertex0;
         this.vertex1 = vertex1;
+    };
+
+    CAG.Side.fromObject = function(obj) {
+        var vertex0 = CAG.Vertex.fromObject(obj.vertex0);
+        var vertex1 = CAG.Vertex.fromObject(obj.vertex1);
+        return new CAG.Side(vertex0,vertex1);
     };
 
     CAG.Side._fromFakePolygon = function(polygon) {
