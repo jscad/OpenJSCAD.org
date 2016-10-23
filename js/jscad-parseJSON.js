@@ -41,15 +41,15 @@ OpenJsCad.toSourceCSG = function(csg) {
   csg.polygons.map(function(p) {
     code += '  poly = new CSG.Polygon([\n';
     for(var i=0; i<p.vertices.length; i++) {
-      code += '                                 '+OpenJsCad.toSourceCSGVertex(p.vertices[i].pos)+',\n';
+      code += '                         '+OpenJsCad.toSourceCSGVertex(p.vertices[i].pos)+',\n';
     }
-    code += '                                ])';
+    code += '                         ])';
     if (p.shared && p.shared.color && p.shared.color.length) {
       code += '.setColor('+JSON.stringify(p.shared.color)+');\n';
     } else {
       code += ';\n';
     }
-    code += '  polygons.push(poly)\n';
+    code += '  polygons.push(poly);\n';
   });
   code += '  return CSG.fromPolygons(polygons);\n'
   return code;
