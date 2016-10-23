@@ -139,7 +139,8 @@ for solid CAD anyway.
             return CSG.Polygon.fromObject(p);
         });
         var csg = CSG.fromPolygons(polygons);
-        csg = csg.canonicalized();
+        csg.isCanonicalized = obj.isCanonicalized;
+        csg.isRetesselated  = obj.isRetesselated;
         return csg;
     };
 
@@ -957,7 +958,8 @@ for solid CAD anyway.
         // So that it is in an orientation suitable for CNC milling
         getTransformationAndInverseTransformationToFlatLying: function() {
             if (this.polygons.length === 0) {
-                return new CSG.Matrix4x4(); // unity
+                var m = new CSG.Matrix4x4(); // unity
+                return [m,m];
             } else {
                 // get a list of unique planes in the CSG:
                 var csg = this.canonicalized();
@@ -5483,6 +5485,7 @@ for solid CAD anyway.
     // Each side is a line between 2 points
     var CAG = function() {
         this.sides = [];
+        this.isCanonicalized = false;
     };
 
     // create from an untyped object with identical property names:
