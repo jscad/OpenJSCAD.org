@@ -152,7 +152,7 @@ var ex = [
   { file:'stepper-motor.jscad', title: 'Interactive Params: Stepper Motor' },
   { file:'iphone4-case.jscad', title: 'Interactive Params: iPhone4 Case' },
   { file:'name_plate.jscad', title: 'Interactive Params: Name Plate' },
-  { file:'balloons.jscad', title: 'Interactive Params: Balloons', new: true },
+  { file:'balloons.jscad', title: 'Interactive Params: Balloons' },
 
   { file:'globe.jscad', title: 'Include(): Globe', spacing: true },
   { file:'platonics/', title: 'Recursive Include(): Platonics' },
@@ -162,12 +162,11 @@ var ex = [
   { file:'3d_sculpture-VernonBussler.stl', title: '3D Model: 3D Sculpture (Vernon Bussler)', type: 'STL', spacing: true },
   { file:'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' },
   { file:'thing_7-Zomboe.stl', title: '3D Model: Thing 7 / Flower (Zomboe)', type: 'STL' },
-  // { file:'organic_flower-Bogoboy23.stl', title: '3D Model: Organic Flower (Bogoboy23)', type: 'STL' }, // all wrong normals!!
   { file:'yoda-RichRap.stl', title: '3D Model: Yoda (RichRap)', type: 'STL' },
   { file:'feathers_mcgraw.stl', title: '3D Model: Feathers Mcgraw (q1g0ng)', type: 'STL', new: true },
-  // { url:'http://pastebin.com/raw.php?i=wJLctyAQ', title: 'OpenJSCAD.org Logo', type:'Remote JSCAD' }
-  // { file:'treefrog-Jerrill.stl', title: '3D Model: Treefrog (Jerrill)', type: 'STL' },    // nice frog, yet slow
-  // { file:'klein_bottle-DizingOf.stl', title: '3D Model: Klein Bottle (DizingOf)', type: 'STL' } // too slow, over 400k triangles, huge memory consumption
+
+  { file:'json_logo.json', title: '2D Object: JSON Logo', spacing: true, new: true },
+  { file:'voxel.json', title: '3D Object: Voxels (Gilber Duval)', new: true },
 ];
 
 function createExamples() {

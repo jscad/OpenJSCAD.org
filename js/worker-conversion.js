@@ -5,6 +5,7 @@
 // Implementation of Conversion Worker Thread
 //
 // History:
+//   2016/10/15: 0.5.2: added conversion of JSON by Z3 Dev
 //   2016/06/27: 0.5.1: refactored AMF import and export by Z3 Dev
 //   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
 
@@ -73,6 +74,10 @@ onmessage = function (e) {
           case 'svg':
             importScripts(r.baseurl+'csg.js',r.baseurl+'openjscad.js',r.baseurl+'js/lib/sax-js-1.1.5/lib/sax.js',r.baseurl+'js/jscad-parseSVG.js');
             r.source = r.converted = OpenJsCad.parseSVG(data.source,data.filename);
+            break;
+          case 'json':
+            importScripts(r.baseurl+'csg.js',r.baseurl+'openjscad.js',r.baseurl+'js/jscad-parseJSON.js');
+            r.source = r.converted = OpenJsCad.parseJSON(data.source,data.filename);
             break;
           default:
             r.source = r.converted = '// Invalid file type in conversion ('+e+')';
