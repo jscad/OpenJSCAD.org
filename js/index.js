@@ -17,7 +17,7 @@
 
 // --- Global Functions
 
-var me = document.location.toString().match(/^file:/)?'web-offline':'web-online'; // me: {cli, web-offline, web-online}
+var me = document.location.toString().match(/^file:/)?'web-offline':'web-online';
 
 var browser = 'unknown';
 if(navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)/i))
@@ -288,6 +288,8 @@ function createOptions() {
 var gProcessor = null;
 
 $(document).ready(function() {
+    docUrl = document.URL;
+
     // Show all exceptions to the user:
     OpenJsCad.AlertUserOfUncaughtExceptions();
 
@@ -295,14 +297,7 @@ $(document).ready(function() {
     setUpEditor();
     setupDragDrop();
 
-    //gProcessor.setDebugging(debugging);
-    if (me !== 'cli' && localStorage.editorContent && localStorage.editorContent.length) {
-      putSourceInEditor(localStorage.editorContent, "MyDesign.jscad");
-      gProcessor.setJsCad(localStorage.editorContent, "MyDesign.jscad");
-      gProcessor.setStatus('Loaded source from browser storage');
-    } 
-    else if (me=='web-online') {    // we are online, fetch first example
-      docUrl = document.URL;
+    if (me=='web-online') {    // we are online, fetch first example
       params = {};
       docTitle = '';
       if((!docUrl.match(/#(https?:\/\/\S+)$/)) && (!docUrl.match(/#(examples\/\S+)$/))) {
@@ -353,10 +348,22 @@ $(document).ready(function() {
         fetchExample(fn);
         document.location = docUrl.replace(/#.*$/,'#');
       } else {
-        fetchExample('examples/'+ex[0].file);
+      // load content from local storage if found
+        if (localStorage.editorContent && localStorage.editorContent.length) {
+          putSourceInEditor(localStorage.editorContent, "MyDesign.jscad");
+          gProcessor.setJsCad(localStorage.editorContent, "MyDesign.jscad");
+        } else {
+          fetchExample('examples/'+ex[0].file);
+        }
       }
     } else {
-      gProcessor.setJsCad(getSourceFromEditor(),"example.jscad");
+    // load content from local storage if found
+      if (localStorage.editorContent && localStorage.editorContent.length) {
+        putSourceInEditor(localStorage.editorContent, "MyDesign.jscad");
+        gProcessor.setJsCad(localStorage.editorContent, "MyDesign.jscad");
+      } else {
+        gProcessor.setJsCad(getSourceFromEditor(),"example.jscad");
+      }
     }
   });
 
