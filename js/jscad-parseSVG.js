@@ -451,9 +451,11 @@ sax.SAXParser.prototype.svgSvg = function(element) {
   // apply the viewbox
     if (obj.width.indexOf('%') < 0) {
     // calculate a scaling from width and viewW
-      var s = obj.width / obj.viewW;
+      var s = this.css2cag(obj.width,this.pxPmm); // width in millimeters
+      s = obj.viewW / s;
     // scale the default units
-      obj.unitsPmm[0] = obj.unitsPmm[0] * s;
+      //obj.unitsPmm[0] = obj.unitsPmm[0] * s;
+      obj.unitsPmm[0] = s;
     } else {
     // scale the default units by the width (%)
       var u = obj.unitsPmm[0] * (parseFloat(obj.width) / 100.0);
@@ -461,9 +463,11 @@ sax.SAXParser.prototype.svgSvg = function(element) {
     }
     if (obj.height.indexOf('%') < 0) {
     // calculate a scaling from height and viewH
-      var s = obj.height / obj.viewH;
+      var s = this.css2cag(obj.height,this.pxPmm) // height in millimeters
+      s = obj.viewH / s;
     // scale the default units
-      obj.unitsPmm[1] = obj.unitsPmm[1] * s;
+      //obj.unitsPmm[1] = obj.unitsPmm[1] * s;
+      obj.unitsPmm[1] = s;
     } else {
     // scale the default units by the width (%)
       var u = obj.unitsPmm[1] * (parseFloat(obj.height) / 100.0);
