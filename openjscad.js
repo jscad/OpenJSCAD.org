@@ -1430,7 +1430,8 @@ OpenJsCad.Processor.prototype = {
   },
 
   convertToBlob: function(objs,format) {
-  // TODO based on the format, objects can be converted one by one or converted together (union)
+    var formatInfo = this.formatInfo(format);
+  // review the given objects
     var i;
     var foundCSG = false;
     var foundCAG = false;
@@ -1438,18 +1439,24 @@ OpenJsCad.Processor.prototype = {
       if (objs[i] instanceof CSG) { foundCSG = true; }
       if (objs[i] instanceof CAG) { foundCAG = true; }
     }
+  // convert based on the given format
+    foundCSG = foundCSG && formatInfo.convertCSG;
+    foundCAG = foundCAG && formatInfo.convertCAG;
+    if (foundCSG && foundCAG) { foundCAG = false; } // use 3D conversion
+
     var object = new CSG();
     if ( foundCSG == false ) { object = new CAG(); }
     for (i = 0; i < objs.length; i++ ) {
       if (foundCSG == true && objs[i] instanceof CAG) {
         object = object.union(objs[i].extrude({offset: [0,0,0.1]})); // convert CAG to a thin solid CSG
-      } else {
-        object = object.union(objs[i]);
-        //object = object.unionForNonIntersecting(objs[i]);
+        continue;
       }
+      if (foundCAG == true && objs[i] instanceof CSG) {
+        continue;
+      }
+      object = object.union(objs[i]);
     }
 
-    //var object = OpenJsCad.Processor.convertToSolid(objs);
     var blob = null;
     switch(format) {
       case 'stla':
@@ -1465,7 +1472,7 @@ OpenJsCad.Processor.prototype = {
           producer: "OpenJSCAD.org "+OpenJsCad.version,
           date: new Date()
         });
-        blob = new Blob([blob],{ type: this.formatInfo(format).mimetype });
+        blob = new Blob([blob],{ type: formatInfo.mimetype });
         break;
       case 'x3d':
         blob = object.fixTJunctions().toX3D();
@@ -1477,7 +1484,7 @@ OpenJsCad.Processor.prototype = {
         blob = object.toSvg();
         break;
       case 'jscad':
-        blob = new Blob([this.script], {type: this.formatInfo(format).mimetype });
+        blob = new Blob([this.script], {type: formatInfo.mimetype });
         break;
       case 'json':
         blob = object.toJSON();
@@ -1507,14 +1514,9 @@ OpenJsCad.Processor.prototype = {
       if (objs[i] instanceof CAG) { foundCAG = true; }
     }
     for (format in this.formats) {
-      if (foundCSG && foundCAG) {
-        if (this.formats[format].convertCSG == true && this.formats[format].convertCAG == true ) {
-          objectFormats[objectFormats.length] = format;
-        }
-        continue;
-      }
       if (foundCSG && this.formats[format].convertCSG == true ) {
           objectFormats[objectFormats.length] = format;
+          continue; // only add once
       }
       if (foundCAG && this.formats[format].convertCAG == true ) {
           objectFormats[objectFormats.length] = format;
@@ -1531,7 +1533,7 @@ OpenJsCad.Processor.prototype = {
           amf:   { displayName: "AMF (experimental)", extension: "amf", mimetype: "application/amf+xml", convertCSG: true, convertCAG: false },
           x3d:   { displayName: "X3D", extension: "x3d", mimetype: "model/x3d+xml", convertCSG: true, convertCAG: false },
           dxf:   { displayName: "DXF", extension: "dxf", mimetype: "application/dxf", convertCSG: false, convertCAG: true },
-          jscad: { displayName: "JSCAD", extension: "jscad", mimetype: "application/javascript", convertCSG: true, convertCAG: false },
+          jscad: { displayName: "JSCAD", extension: "jscad", mimetype: "application/javascript", convertCSG: true, convertCAG: true },
           json: { displayName: "JSON", extension: "json", mimetype: "application/json", convertCSG: true, convertCAG: true },
           svg:   { displayName: "SVG", extension: "svg", mimetype: "image/svg+xml", convertCSG: false, convertCAG: true },
         };
