@@ -1167,7 +1167,7 @@ OpenJsCad.Processor.prototype = {
     this.parametersdiv.style.display = (this.paramControls.length > 0)? "inline-block":"none";     // was 'block'
     this.errordiv.style.display = this.hasError? "block":"none";
     this.statusdiv.style.display = this.hasError? "none":"block";
-    this.selectdiv.style.display = (this.currentObjects.length > 1) ? "block":"none";
+    this.selectdiv.style.display = (this.currentObjects.length > 1) ? "none":"none"; // FIXME once there's a data model
   },
 
   setDebugging: function(debugging) {
