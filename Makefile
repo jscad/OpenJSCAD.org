@@ -14,8 +14,9 @@ install::
 	mkdir -p cache; chmod a+rw cache
                                 
 deinstall::
-	sudo rm -rf ${NODE_MODULES}/openscad-openjscad-translator
-	sudo rm -f ${LIB}/*.js 
+	sudo rm -rf ${NODE_MODULES}openscad-openjscad-translator
+	sudo rm /usr/local/bin/openjscad
+	sudo rm -rf ${LIB}
 
 tests::
 	openjscad examples/logo.jscad
