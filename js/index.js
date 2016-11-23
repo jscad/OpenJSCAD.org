@@ -164,9 +164,6 @@ var ex = [
   { file:'thing_7-Zomboe.stl', title: '3D Model: Thing 7 / Flower (Zomboe)', type: 'STL' },
   { file:'yoda-RichRap.stl', title: '3D Model: Yoda (RichRap)', type: 'STL' },
   { file:'feathers_mcgraw.stl', title: '3D Model: Feathers Mcgraw (q1g0ng)', type: 'STL', new: true },
-
-  { file:'json_logo.json', title: '2D Object: JSON Logo', spacing: true, new: true },
-  { file:'voxel.json', title: '3D Object: Voxels (Gilber Duval)', new: true },
 ];
 
 function createExamples() {
