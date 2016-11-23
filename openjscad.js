@@ -2,8 +2,7 @@
 //   few adjustments by Rene K. Mueller <spiritdude@gmail.com> for OpenJSCAD.org
 //
 // History:
-// 2016/10/01: 0.5.2: added support for JSON export and import
-//                    enhanced Processor constructor to support Viewer options
+// 2016/10/01: 0.5.2: enhanced Processor constructor to support Viewer options
 //                    enhanced Processor to allow a selection from multiple returned objects
 // 2016/06/27: 0.5.1: incrementing version number for release
 // 2016/05/01: 0.5.0: added SVG import and export, added options to Processor and View classes, allow more flexibility in HTML by Z3 Dev
@@ -1534,7 +1533,6 @@ OpenJsCad.Processor.prototype = {
           x3d:   { displayName: "X3D", extension: "x3d", mimetype: "model/x3d+xml", convertCSG: true, convertCAG: false },
           dxf:   { displayName: "DXF", extension: "dxf", mimetype: "application/dxf", convertCSG: false, convertCAG: true },
           jscad: { displayName: "JSCAD", extension: "jscad", mimetype: "application/javascript", convertCSG: true, convertCAG: true },
-          json: { displayName: "JSON", extension: "json", mimetype: "application/json", convertCSG: true, convertCAG: true },
           svg:   { displayName: "SVG", extension: "svg", mimetype: "image/svg+xml", convertCSG: false, convertCAG: true },
         };
     }
