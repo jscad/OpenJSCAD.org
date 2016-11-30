@@ -1,0 +1,39 @@
+{
+  "name": "openjscad",
+  "version": "0.5.2",
+  "description": "",
+  "repository":"https://github.com/Spiritdude/OpenJSCAD.org",
+  "main": "js/index.js",
+  "scripts": {
+    "test": "ava './js/**/*.test.js' --require babel-register --verbose",
+    "build": "browserify src/index.js -o dist/index.js -t [babelify browserify minifyify]",
+    "start-dev": "budo src/index.js:dist/index.js --port=8080 --live -- -t babelify",
+    "release-patch": "git checkout master; npm version patch && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
+    "release-minor": "git checkout master; npm version minor && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
+    "release-major": "git checkout master; npm version major && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
+  },
+  "contributors": [
+    {
+      "name":"Rene K. Mueller",
+      "url":"http://renekmueller.com"
+    },
+    {
+      "name":"z3dev",
+      "url":"http://www.z3d.jp"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "ava": "^0.15.2",
+    "babel-cli": "^6.6.5",
+    "babel-core": "^6.2.1",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-register": "^6.16.3",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0",
+    "budo": "^8.3.0",
+    "minifyify": "^7.3.3"
+  }
+}
