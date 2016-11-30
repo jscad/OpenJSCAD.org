@@ -1,7 +1,8 @@
 //FIXME: tests are basic 'is the output file there' for now, actual checks are needed !!
 import test from 'ava'
 import path from 'path'
-const fs = require('fs')
+import {execSync} from 'child_process'
+import fs from 'fs'
 
 test.afterEach.always(t => {
     // this runs after each test and other test hooks, even if they failed
@@ -18,14 +19,14 @@ test.beforeEach(t => {
   }
 })
 
-test('jscad (basic)', t => {
+test('jscad (basic, input file only)', t => {
   const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
   const jscadPath = t.context.jscadPath
   const expPath = path.resolve(__dirname, '../examples/logo.stl')
   t.context = {outputPath: expPath}
 
   const cmd = `node ${jscadPath} ${inputPath}`
-  require('child_process').execSync(cmd, {stdio: [0, 1, 2]})
+  execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
 })
 
@@ -37,7 +38,7 @@ test('jscad with parameters', t => {
   t.context = {outputPath}
 
   const cmd = `node ${jscadPath} ${inputPath} --name "Just Me" --title "Geek" -o ${outputPath} `
-  require('child_process').execSync(cmd, {stdio: [0, 1, 2]})
+  execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
 })
 
@@ -49,7 +50,7 @@ test('jscad to stl (ascii)', t => {
   t.context = {outputPath}
 
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} `
-  require('child_process').execSync(cmd, {stdio: [0, 1, 2]})
+  execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
 })
 
@@ -61,7 +62,7 @@ test('jscad to stl(binary)', t => {
   t.context = {outputPath}
 
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of stlb`
-  require('child_process').execSync(cmd, {stdio: [0, 1, 2]})
+  execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(outputPath))
   //t.deepEqual(fs.readFileSync(expPath), fs.readFileSync(outputPath))
 })
@@ -74,7 +75,7 @@ test('jscad to amf', t => {
   t.context = {outputPath}
 
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of amf`
-  require('child_process').execSync(cmd, {stdio: [0, 1, 2]})
+  execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
 })
 
@@ -86,7 +87,7 @@ test('jscad to amf(with transparency)', t => {
   t.context = {outputPath}
 
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of amf`
-  require('child_process').execSync(cmd, {stdio: [0, 1, 2]})
+  execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
 })
 
@@ -99,7 +100,7 @@ test('jscad to amf(with transparency)', t => {
   t.context = {outputPath}
 
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of dxf`
-  require('child_process').execSync(cmd, {stdio: [0, 1, 2]})
+  execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
 })
 
@@ -112,7 +113,7 @@ test('jscad to svg', t => {
   t.context = {outputPath}
 
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of svg`
-  require('child_process').execSync(cmd, {stdio: [0, 1, 2]})
+  execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
 })*/
 
@@ -124,7 +125,7 @@ test('openscad to stl (ascii)', t => {
   t.context = {outputPath}
 
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} `
-  require('child_process').execSync(cmd, {stdio: [0, 1, 2]})
+  execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
 })
 
@@ -136,7 +137,7 @@ test('openscad to stl(binary)', t => {
   t.context = {outputPath}
 
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of stlb`
-  require('child_process').execSync(cmd, {stdio: [0, 1, 2]})
+  execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(outputPath))
   //t.deepEqual(fs.readFileSync(expPath), fs.readFileSync(outputPath))
 })
@@ -149,7 +150,7 @@ test('openscad to amf', t => {
   t.context = {outputPath}
 
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of amf`
-  require('child_process').execSync(cmd, {stdio: [0, 1, 2]})
+  execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
 })
 
@@ -161,6 +162,6 @@ test('openscad to openjscad', t => {
   t.context = {outputPath}
 
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of jscad`
-  require('child_process').execSync(cmd, {stdio: [0, 1, 2]})
+  execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
 })
