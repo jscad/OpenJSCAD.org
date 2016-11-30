@@ -2,7 +2,7 @@
   "name": "openjscad",
   "version": "0.5.2",
   "description": "",
-  "repository":"https://github.com/Spiritdude/OpenJSCAD.org",
+  "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "main": "js/index.js",
   "scripts": {
     "test": "ava './js/**/*.test.js' --require babel-register --verbose",
@@ -14,16 +14,17 @@
   },
   "contributors": [
     {
-      "name":"Rene K. Mueller",
-      "url":"http://renekmueller.com"
+      "name": "Rene K. Mueller",
+      "url": "http://renekmueller.com"
     },
     {
-      "name":"z3dev",
-      "url":"http://www.z3d.jp"
+      "name": "z3dev",
+      "url": "http://www.z3d.jp"
     }
   ],
   "license": "MIT",
   "dependencies": {
+    "openscad-openjscad-translator": "0.0.7"
   },
   "devDependencies": {
     "ava": "^0.15.2",
