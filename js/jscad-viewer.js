@@ -229,8 +229,8 @@ OpenJsCad.Viewer.prototype = {
     this.onDraw();
   },
 
-  reset: function() {
-    // reset camera to initial settings
+  resetCamera: function() {
+    // reset perpective (camera) to initial settings
     this.angleX = this.options.camera.angle.x;
     this.angleY = this.options.camera.angle.y;
     this.angleZ = this.options.camera.angle.z;
@@ -278,119 +278,33 @@ OpenJsCad.Viewer.prototype = {
 };
 
 /**
- * A viewer is a WebGL canvas that lets the user view a mesh.
- * The user can tumble it around by dragging the mouse.
+ * lightgl.js renderer for jscad viewer
  * @param {DOMElement} containerelement container element
  * @param {object}     options    options for renderer
  */
-
 OpenJsCad.Viewer.LightGLEngine = function(containerelement, options) {
 
   this.options = options;
 
   this.containerEl = containerelement;
 
-  // Set up WebGL state
-  var gl = GL.create();
-  this.gl = gl;
-  this.gl.lineWidth(1); // don't let the library choose
+  this.parseSizeParams();
 
-  this.meshes = [];
-
-  this.containerEl.appendChild (this.gl.canvas);
-
+  this.createRenderer(options.noWebGL);
   this.handleResize();
   this.gl.resizeCanvas = this.handleResize.bind (this);
   // only window resize is available, so add an event callback for the canvas
   // window.addEventListener( 'resize', this.handleResize.bind (this) );
 
-  this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
-  this.gl.clearColor.apply(this.gl, colorBytes(this.options.background.color));
-  this.gl.enable(this.gl.DEPTH_TEST);
-  this.gl.enable(this.gl.CULL_FACE);
+  this.animate();
 
-  var outlineColor = this.options.solid.outlineColor;
-
-  // Black shader for wireframe
-  this.blackShader = new GL.Shader('\
-    void main() {\
-      gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\
-    }', '\
-    void main() {\
-      gl_FragColor = vec4(' + colorBytes(outlineColor).join(', ') + ');\
-    }'
-  );
-
-  // Shader with diffuse and specular lighting
-  this.lightingShader = new GL.Shader('\
-    varying vec3 color;\
-    varying float alpha;\
-    varying vec3 normal;\
-    varying vec3 light;\
-    void main() {\
-      const vec3 lightDir = vec3(1.0, 2.0, 3.0) / 3.741657386773941;\
-      light = lightDir;\
-      color = gl_Color.rgb;\
-      alpha = gl_Color.a;\
-      normal = gl_NormalMatrix * gl_Normal;\
-      gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\
-    }',
-    '\
-    varying vec3 color;\
-    varying float alpha;\
-    varying vec3 normal;\
-    varying vec3 light;\
-    void main() {\
-      vec3 n = normalize(normal);\
-      float diffuse = max(0.0, dot(light, n));\
-      float specular = pow(max(0.0, -reflect(light, n).z), 10.0) * sqrt(diffuse);\
-      gl_FragColor = vec4(mix(color * (0.3 + 0.7 * diffuse), vec3(1.0), specular), alpha);\
-    }'
-  );
-
-  var _this=this;
-
-  var shiftControl = this.createControls (this.gl.canvas);
-
-  this.gl.ondraw = function() {
-    _this.onDraw();
-  };
-
-  // state variables, i.e. used for storing values, etc
-
-  // state of viewer
-  // 0 - initialized, no object
-  // 1 - cleared, no object
-  // 2 - showing, object
-  this.state = 0;
-
-  // state of perpective (camera)
-  this.angleX = this.options.camera.angle.x;
-  this.angleY = this.options.camera.angle.y;
-  this.angleZ = this.options.camera.angle.z;
-  this.viewpointX = this.options.camera.position.x;
-  this.viewpointY = this.options.camera.position.y;
-  this.viewpointZ = this.options.camera.position.z;
-
-  this.onZoomChanged = null;
-
-  this.touch = {
-    lastX: 0,
-    lastY: 0,
-    scale: 0,
-    ctrl: 0,
-    shiftTimer: null,
-    shiftControl: shiftControl,
-    cur: null //current state
-  };
-
-  this.meshes = [];
-
-  this.clear(); // and draw the inital viewer
 };
 
 OpenJsCad.Viewer.LightGLEngine.prototype = {
   init: function () {
+
+  },
+  animate: function () {
 
   },
   handleResize: function () {
@@ -407,6 +321,83 @@ OpenJsCad.Viewer.LightGLEngine.prototype = {
     this.gl.matrixMode(this.gl.MODELVIEW);
 
     this.onDraw();
+  },
+  createRenderer: function (noWebGL) {
+    // Set up WebGL state
+    var gl = GL.create();
+    this.gl = gl;
+    this.gl.lineWidth(1); // don't let the library choose
+
+    this.meshes = [];
+
+    this.containerEl.appendChild (this.gl.canvas);
+
+    this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
+    this.gl.clearColor.apply(this.gl, colorBytes(this.options.background.color));
+    this.gl.enable(this.gl.DEPTH_TEST);
+    this.gl.enable(this.gl.CULL_FACE);
+
+    var outlineColor = this.options.solid.outlineColor;
+
+    // Black shader for wireframe
+    this.blackShader = new GL.Shader('\
+      void main() {\
+        gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\
+      }', '\
+      void main() {\
+        gl_FragColor = vec4(' + colorBytes(outlineColor).join(', ') + ');\
+      }'
+    );
+
+    // Shader with diffuse and specular lighting
+    this.lightingShader = new GL.Shader('\
+      varying vec3 color;\
+      varying float alpha;\
+      varying vec3 normal;\
+      varying vec3 light;\
+      void main() {\
+        const vec3 lightDir = vec3(1.0, 2.0, 3.0) / 3.741657386773941;\
+        light = lightDir;\
+        color = gl_Color.rgb;\
+        alpha = gl_Color.a;\
+        normal = gl_NormalMatrix * gl_Normal;\
+        gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\
+      }',
+      '\
+      varying vec3 color;\
+      varying float alpha;\
+      varying vec3 normal;\
+      varying vec3 light;\
+      void main() {\
+        vec3 n = normalize(normal);\
+        float diffuse = max(0.0, dot(light, n));\
+        float specular = pow(max(0.0, -reflect(light, n).z), 10.0) * sqrt(diffuse);\
+        gl_FragColor = vec4(mix(color * (0.3 + 0.7 * diffuse), vec3(1.0), specular), alpha);\
+      }'
+    );
+
+    var _this=this;
+
+    var shiftControl = this.createControls(this.gl.canvas);
+
+    this.resetCamera();
+
+    this.gl.ondraw = function() {
+      _this.onDraw();
+    };
+
+    // state variables, i.e. used for storing values, etc
+
+    // state of viewer
+    // 0 - initialized, no object
+    // 1 - cleared, no object
+    // 2 - showing, object
+    this.state = 0;
+
+    this.meshes = [];
+
+    this.clear(); // and draw the inital viewer
+
   },
   createControls: function () {
     var _this = this;
@@ -489,6 +480,18 @@ OpenJsCad.Viewer.LightGLEngine.prototype = {
         coeff *= factor;
         _this.setZoom(coeff);
       }
+    };
+
+    this.onZoomChanged = null;
+
+    this.touch = {
+      lastX: 0,
+      lastY: 0,
+      scale: 0,
+      ctrl: 0,
+      shiftTimer: null,
+      shiftControl: shiftControl,
+      cur: null //current state
     };
 
     return shiftControl;
