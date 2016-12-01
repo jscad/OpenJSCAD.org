@@ -185,6 +185,23 @@ OpenJsCad.Viewer.defaults = function () {
 };
 
 OpenJsCad.Viewer.prototype = {
+  parseSizeParams: function() {
+    // essentially, allow all relative + px. Not cm and such.
+    var winResizeUnits = ['%', 'vh', 'vw', 'vmax', 'vmin'];
+    var width, height;
+    var containerStyle = this.containerEl.style;
+    var wUnit = containerStyle.width.match(/^(\d+(?:\.\d+)?)(.*)$/)[2];
+    var hUnit = typeof containerStyle.height == 'string'
+    ? containerStyle.height.match(/^(\d+(?:\.\d+)?)(.*)$/)[2]
+    : '';
+    // whether unit scales on win resize
+    var isDynUnit = winResizeUnits.indexOf(wUnit) != -1
+    || winResizeUnits.indexOf(hUnit) != -1;
+    // e.g if units are %, need to keep resizing canvas with dom
+    if (isDynUnit) {
+      window.addEventListener('resize', this.handleResize.bind(this))
+    }
+  },
   resizeCanvas: function () {
 
     var canvas = this.gl.canvas;
@@ -285,7 +302,7 @@ OpenJsCad.Viewer.LightGLEngine = function(containerelement, options) {
   this.handleResize();
   this.gl.resizeCanvas = this.handleResize.bind (this);
   // only window resize is available, so add an event callback for the canvas
-  window.addEventListener( 'resize', this.handleResize.bind (this) );
+  // window.addEventListener( 'resize', this.handleResize.bind (this) );
 
   this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
   this.gl.clearColor.apply(this.gl, colorBytes(this.options.background.color));
