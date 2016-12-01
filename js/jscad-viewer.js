@@ -1,55 +1,104 @@
-// A viewer is a WebGL canvas that lets the user view a mesh. The user can
-// tumble it around by dragging the mouse.
-OpenJsCad.Viewer = function(containerelement,options) {
-  if (options === undefined) options = {};
-// see the various methods below on how to change these
-  this.camera = {
-    fov: 45,                           // field of view
-    angle:    {x: -60,y:  0,z:  -45},  // view angle about XYZ axis
-    position: {x:   0,y:  0,z:  100},  // initial position at XYZ
-    clip:     {min: 0.5,  max: 1000},  // rendering outside this range is clipped
-  };
-  this.plate = {
-    draw: true,                // draw or not
-    size: 200,                 // plate size (X and Y)
-  // minor grid settings
-    m: {
-      i:  1, // number of units between minor grid lines
-      r: .8, g: .8, b: .8, a: .5, // color
-    },
-  // major grid settings
-    M: {
-      i: 10, // number of units between major grid lines
-      r: .5, g: .5, b: .5, a: .5, // color
-    },
-  };
-  this.axis = {
-    draw: false,                // draw or not
-    x: {
-      neg: {r: 1, g: .5, b: .5, a: .5}, // color in negative direction
-      pos: {r: 1, g:  0, b:  0, a: .8}, // color in positive direction
-    },
-    y: {
-      neg: {r: .5, g: 1, b: .5, a: .5}, // color in negative direction
-      pos: {r:  0, g: 1, b:  0, a: .8}, // color in positive direction
-    },
-    z: {
-      neg: {r: .5, g: .5, b: 1, a: .5}, // color in negative direction
-      pos: {r:  0, g:  0, b: 1, a: .8}, // color in positive direction
-    },
-  };
-  this.solid = {
-    draw:    true,              // draw or not
-    lines:   false,             // draw outlines or not
-    overlay: false,             // use overlay when drawing lines or not
-    smooth:  false,             // use smoothing or not
-    color:   [1,.4,1,1],        // default color
-  };
-// apply all options found
-  if ("camera" in options) { this.setCameraOptions(options["camera"]); }
-  if ("plate"  in options) { this.setPlateOptions(options["plate"]); }
-  if ("axis"   in options) { this.setAxisOptions(options["axis"]); }
-  if ("solid"  in options) { this.setSolidOptions(options["solid"]); }
+/**
+ * convert color from rgba object to the array of bytes
+ * @param   {object} color `{r: r, g: g, b: b, a: a}`
+ * @returns {Array}  `[r, g, b, a]`
+ */
+function colorBytes (color) {
+  var result = [color.r, color.g, color.b];
+  if (color.a !== undefined) result.push (color.a);
+  return result;
+}
+
+function parseColor (color) {
+  // hsl, hsv, rgba, and #xxyyzz is supported
+  var rx = {
+    'html': /^#(?:([a-f0-9]{3})|([a-f0-9]{6}))$/i,
+    'fn': /^(rgb|hsl|hsv)a?\s*\(([^\)]+)\)$/i,
+  }
+  var rgba;
+  var match;
+  if (match = color.match (rx.html)) {
+    rgba = [parseInt (match[1], 16), parseInt (match[2], 16), parseInt (match[3], 16), 1];
+  } else if (match = color.match (rx.fn)) {
+    rgba = [match[1], match[2], match[3], match[4]];
+  }
+
+  // console.log (match);
+
+  return rgba;
+}
+
+/**
+ * Merge deep two objects, simplified version for config
+ * @param   {object} dst destionation object
+ * @param   {object} src source object
+ * @returns {object} modified destination object
+ */
+function deepMerge (dst, patch) {
+  for (var key in patch) {
+    // special check for color strings, we'll parse those strings and put into rgba object
+    if (
+      patch[key] !== undefined && patch[key].constructor && patch[key].constructor === String
+      && dst[key] !== undefined && patch[key].constructor && patch[key].constructor === Object
+      && 'r' in dst[key] && 'g' in dst[key] && 'b' in dst[key]
+    ) {
+
+    } else if (patch[key] !== undefined && patch[key].constructor && patch[key].constructor === Object) {
+      dst[key] = dst[key] || {};
+      arguments.callee(dst[key], patch[key]);
+    } else {
+      dst[key] = patch[key];
+    }
+  }
+  return dst;
+}
+
+/**
+ * Convert legacy options `drawLines`, `drawFaces`, `color` and `bgColor`
+ * @param {object} options modern options object
+ * @param {object} custom  legacy options object
+ */
+function applyLegacyOptions (options, custom) {
+  if ('drawLines' in custom) {
+    options.solid.lines = custom.drawLines;
+  }
+  if ('drawFaces' in custom) {
+    options.solid.faces = custom.drawFaces;
+  }
+  if ('color' in custom) {
+    options.solid.faceColor = {
+      r: custom.color[0],
+      g: custom.color[1],
+      b: custom.color[2],
+      a: custom.color[3] || 1,
+    };
+  }
+  if ('bgColor' in custom) {
+    options.background.color = {
+      r: custom.bgColor[0],
+      g: custom.bgColor[1],
+      b: custom.bgColor[2],
+      a: custom.bgColor[3] || 1,
+    };
+  }
+}
+
+/**
+ * A viewer is a WebGL canvas that lets the user view a mesh.
+ * The user can tumble it around by dragging the mouse.
+ * @param {DOMElement} containerelement container element
+ * @param {object}     customization    options for renderer
+ */
+OpenJsCad.Viewer = function(containerelement, customization) {
+
+  // see the various methods below on how to change these
+  var options = OpenJsCad.Viewer.defaults();
+
+  deepMerge (options, customization || {});
+
+  applyLegacyOptions (options, customization || {});
+
+  this.options = options;
 
   // Set up WebGL state
   var gl = GL.create();
@@ -62,13 +111,15 @@ OpenJsCad.Viewer = function(containerelement,options) {
   this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height); // pixels
   this.gl.matrixMode(this.gl.PROJECTION);
   this.gl.loadIdentity();
-  this.gl.perspective(this.camera.fov, this.gl.canvas.width / this.gl.canvas.height, this.camera.clip.min, this.camera.clip.max);
+  this.gl.perspective(this.options.camera.fov, this.gl.canvas.width / this.gl.canvas.height, this.options.camera.clip.min, this.options.camera.clip.max);
   this.gl.matrixMode(this.gl.MODELVIEW);
 
   this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
-  this.gl.clearColor(0.93, 0.93, 0.93, 1);
+  this.gl.clearColor.apply(this.gl, colorBytes(this.options.background.color));
   this.gl.enable(this.gl.DEPTH_TEST);
   this.gl.enable(this.gl.CULL_FACE);
+
+  var outlineColor = this.options.solid.outlineColor;
 
   // Black shader for wireframe
   this.blackShader = new GL.Shader('\
@@ -76,7 +127,7 @@ OpenJsCad.Viewer = function(containerelement,options) {
       gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\
     }', '\
     void main() {\
-      gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);\
+      gl_FragColor = vec4(' + colorBytes(outlineColor).join(', ') + ');\
     }'
   );
 
@@ -188,7 +239,7 @@ OpenJsCad.Viewer = function(containerelement,options) {
       _this.gl.viewport(0, 0, _this.gl.canvas.width, _this.gl.canvas.height);
       _this.gl.matrixMode( _this.gl.PROJECTION );
       _this.gl.loadIdentity();
-      _this.gl.perspective(_this.camera.fov, _this.gl.canvas.width / _this.gl.canvas.height, _this.camera.clip.min, _this.camera.clip.max );
+      _this.gl.perspective(_this.options.camera.fov, _this.gl.canvas.width / _this.gl.canvas.height, _this.options.camera.clip.min, _this.options.camera.clip.max );
       _this.gl.matrixMode( _this.gl.MODELVIEW );
       _this.onDraw();
     }
@@ -221,12 +272,12 @@ OpenJsCad.Viewer = function(containerelement,options) {
   this.state = 0;
 
   // state of perpective (camera)
-  this.angleX = this.camera.angle.x;
-  this.angleY = this.camera.angle.y;
-  this.angleZ = this.camera.angle.z;
-  this.viewpointX = this.camera.position.x;
-  this.viewpointY = this.camera.position.y;
-  this.viewpointZ = this.camera.position.z;
+  this.angleX = this.options.camera.angle.x;
+  this.angleY = this.options.camera.angle.y;
+  this.angleZ = this.options.camera.angle.z;
+  this.viewpointX = this.options.camera.position.x;
+  this.viewpointY = this.options.camera.position.y;
+  this.viewpointZ = this.options.camera.position.z;
 
   this.onZoomChanged = null;
 
@@ -243,6 +294,62 @@ OpenJsCad.Viewer = function(containerelement,options) {
   this.meshes = [];
 
   this.clear(); // and draw the inital viewer
+};
+
+/**
+ * return defaults which can be customized later
+ * @returns {object} [[Description]]
+ */
+OpenJsCad.Viewer.defaults = function () {
+  return {
+    camera: {
+      fov: 45,                           // field of view
+      angle:    {x: -60,y:  0,z:  -45},  // view angle about XYZ axis
+      position: {x:   0,y:  0,z:  100},  // initial position at XYZ
+      clip:     {min: 0.5,  max: 1000},  // rendering outside this range is clipped
+    },
+    plate: {
+      draw: true,                // draw or not
+      size: 200,                 // plate size (X and Y)
+      // minor grid settings
+      m: {
+        i:  1, // number of units between minor grid lines
+        color: {r: .8, g: .8, b: .8, a: .5}, // color
+      },
+      // major grid settings
+      M: {
+        i: 10, // number of units between major grid lines
+        color: {r: .5, g: .5, b: .5, a: .5}, // color
+      },
+    },
+    axis: {
+      draw: false,                // draw or not
+      x: {
+        neg: {r: 1., g: .5, b: .5, a: .5}, // color in negative direction
+        pos: {r: 1., g:  0, b:  0, a: .8}, // color in positive direction
+      },
+      y: {
+        neg: {r: .5, g: 1., b: .5, a: .5}, // color in negative direction
+        pos: {r:  0, g: 1., b:  0, a: .8}, // color in positive direction
+      },
+      z: {
+        neg: {r: .5, g: .5, b: 1., a: .5}, // color in negative direction
+        pos: {r:  0, g:  0, b: 1., a: .8}, // color in positive direction
+      },
+    },
+    solid: {
+      draw:    true,              // draw or not
+      lines:   false,             // draw outlines or not
+      faces:   true,
+      overlay: false,             // use overlay when drawing lines or not
+      smooth:  false,             // use smoothing or not
+      faceColor:    {r: 1., g: .4, b: 1., a: 1.},        // default face color
+      outlineColor: {r: .0, g: .0, b: .0, a: .1},        // default outline color
+    },
+    background: {
+      color: {r: .93, g: .93, b: .93, a: 1.}
+    }
+  };
 };
 
 OpenJsCad.Viewer.prototype = {
@@ -266,12 +373,12 @@ OpenJsCad.Viewer.prototype = {
 
   reset: function() {
     // reset camera to initial settings
-    this.angleX = this.camera.angle.x;
-    this.angleY = this.camera.angle.y;
-    this.angleZ = this.camera.angle.z;
-    this.viewpointX = this.camera.position.x;
-    this.viewpointY = this.camera.position.y;
-    this.viewpointZ = this.camera.position.z;
+    this.angleX = this.options.camera.angle.x;
+    this.angleY = this.options.camera.angle.y;
+    this.angleZ = this.options.camera.angle.z;
+    this.viewpointX = this.options.camera.position.x;
+    this.viewpointY = this.options.camera.position.y;
+    this.viewpointZ = this.options.camera.position.z;
     this.onDraw();
   },
 
@@ -282,39 +389,39 @@ OpenJsCad.Viewer.prototype = {
   setCameraOptions: function(options) {
     options = options || {};
   // apply all options found
-    for (var x in this.camera) {
-      if (x in options) { this.camera[x] = options[x]; }
+    for (var x in this.options.camera) {
+      if (x in options) { this.options.camera[x] = options[x]; }
     }
   },
 
   setPlateOptions: function(options) {
     options = options || {};
   // apply all options found
-    for (var x in this.plate) {
-      if (x in options) { this.plate[x] = options[x]; }
+    for (var x in this.options.plate) {
+      if (x in options) { this.options.plate[x] = options[x]; }
     }
   },
 
   setAxisOptions: function(options) {
     options = options || {};
   // apply all options found
-    for (var x in this.axis) {
-      if (x in options) this.axis[x] = options[x];
+    for (var x in this.options.axis) {
+      if (x in options) this.options.axis[x] = options[x];
     }
   },
 
   setSolidOptions: function(options) {
     options = options || {};
   // apply all options found
-    for (var x in this.solid) {
-      if (x in options) this.solid[x] = options[x];
+    for (var x in this.options.solid) {
+      if (x in options) this.options.solid[x] = options[x];
     }
   },
 
   setZoom: function(coeff) { //0...1
     coeff=Math.max(coeff, 0);
     coeff=Math.min(coeff, 1);
-    this.viewpointZ = this.camera.clip.min + coeff * (this.camera.clip.max - this.camera.clip.min);
+    this.viewpointZ = this.options.camera.clip.min + coeff * (this.options.camera.clip.max - this.options.camera.clip.min);
     if(this.onZoomChanged) {
       this.onZoomChanged();
     }
@@ -322,7 +429,7 @@ OpenJsCad.Viewer.prototype = {
   },
 
   getZoom: function() {
-    var coeff = (this.viewpointZ-this.camera.clip.min) / (this.camera.clip.max - this.camera.clip.min);
+    var coeff = (this.viewpointZ-this.options.camera.clip.min) / (this.options.camera.clip.max - this.options.camera.clip.min);
     return coeff;
   },
 
@@ -437,38 +544,38 @@ OpenJsCad.Viewer.prototype = {
     gl.rotate(this.angleY, 0, 1, 0);
     gl.rotate(this.angleZ, 0, 0, 1);
   // draw the solid (meshes)
-    if(this.solid.draw) {
+    if(this.options.solid.draw) {
       gl.enable(gl.BLEND);
-      if (!this.solid.overlay) gl.enable(gl.POLYGON_OFFSET_FILL);
+      if (!this.options.solid.overlay) gl.enable(gl.POLYGON_OFFSET_FILL);
       for (var i = 0; i < this.meshes.length; i++) {
         var mesh = this.meshes[i];
         this.lightingShader.draw(mesh, gl.TRIANGLES);
       }
-      if (!this.solid.overlay) gl.disable(gl.POLYGON_OFFSET_FILL);
+      if (!this.options.solid.overlay) gl.disable(gl.POLYGON_OFFSET_FILL);
       gl.disable(gl.BLEND);
 
-      if(this.solid.lines) {
-        if (this.solid.overlay) gl.disable(gl.DEPTH_TEST);
+      if(this.options.solid.lines) {
+        if (this.options.solid.overlay) gl.disable(gl.DEPTH_TEST);
         gl.enable(gl.BLEND);
         for (var i = 0; i < this.meshes.length; i++) {
           var mesh = this.meshes[i];
           this.blackShader.draw(mesh, gl.LINES);
         }
         gl.disable(gl.BLEND);
-        if (this.solid.overlay) gl.enable(gl.DEPTH_TEST);
+        if (this.options.solid.overlay) gl.enable(gl.DEPTH_TEST);
       }
     }
-  // draw the plate and the axis 
+  // draw the plate and the axis
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     gl.begin(gl.LINES);
 
-    if(this.plate.draw) {
-      var m = this.plate.m; // short cut
-      var M = this.plate.M; // short cut
-      var size = this.plate.size/2;
+    if(this.options.plate.draw) {
+      var m = this.options.plate.m; // short cut
+      var M = this.options.plate.M; // short cut
+      var size = this.options.plate.size/2;
     // -- minor grid
-      gl.color(m.r,m.g,m.b,m.a);
+      gl.color.apply(gl, colorBytes (m.color));
       var mg = m.i;
       var MG = M.i;
       for(var x=-size; x<=size; x+=mg) {
@@ -480,7 +587,7 @@ OpenJsCad.Viewer.prototype = {
         }
       }
     // -- major grid
-      gl.color(M.r,M.g,M.b,M.a);
+      gl.color.apply(gl, colorBytes (M.color));
       for(var x=-size; x<=size; x+=MG) {
         gl.vertex(-size, x, 0);
         gl.vertex(size, x, 0);
@@ -488,32 +595,32 @@ OpenJsCad.Viewer.prototype = {
         gl.vertex(x, size, 0);
       }
     }
-    if (this.axis.draw) {
-      var size = this.plate.size/2;
+    if (this.options.axis.draw) {
+      var size = this.options.plate.size/2;
     // X axis
-      var c = this.axis.x.neg;
+      var c = this.options.axis.x.neg;
       gl.color(c.r, c.g, c.b, c.a); //negative direction is lighter
       gl.vertex(-size, 0, 0);
       gl.vertex(0, 0, 0);
-      c = this.axis.x.pos;
+      c = this.options.axis.x.pos;
       gl.color(c.r, c.g, c.b, c.a); //positive direction is lighter
       gl.vertex(0, 0, 0);
       gl.vertex(size, 0, 0);
     // Y axis
-      c = this.axis.y.neg;
+      c = this.options.axis.y.neg;
       gl.color(c.r, c.g, c.b, c.a); //negative direction is lighter
       gl.vertex(0, -size, 0);
       gl.vertex(0, 0, 0);
-      c = this.axis.y.pos;
+      c = this.options.axis.y.pos;
       gl.color(c.r, c.g, c.b, c.a); //positive direction is lighter
       gl.vertex(0, 0, 0);
       gl.vertex(0, size, 0);
     // Z axis
-      c = this.axis.z.neg;
+      c = this.options.axis.z.neg;
       gl.color(c.r, c.g, c.b, c.a); //negative direction is lighter
       gl.vertex(0, 0, -size);
       gl.vertex(0, 0, 0);
-      c = this.axis.z.pos;
+      c = this.options.axis.z.pos;
       gl.color(c.r, c.g, c.b, c.a); //positive direction is lighter
       gl.vertex(0, 0, 0);
       gl.vertex(0, 0, size);
@@ -535,13 +642,13 @@ OpenJsCad.Viewer.prototype = {
     // set to true if we want to use interpolated vertex normals
     // this creates nice round spheres but does not represent the shape of
     // the actual model
-    var smoothlighting = this.solid.smooth;
+    var smoothlighting = this.options.solid.smooth;
     var polygons = csg.toPolygons();
     var numpolygons = polygons.length;
     for(var j = 0; j < numpolygons; j++) {
       var polygon = polygons[j];
-      var color = this.solid.color;  // default color
-  
+      var color = colorBytes(this.options.solid.faceColor);  // default color
+
       if(polygon.shared && polygon.shared.color) {
         color = polygon.shared.color;
       } else if(polygon.color) {
