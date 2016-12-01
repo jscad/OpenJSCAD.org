@@ -215,11 +215,14 @@ OpenJsCad.Viewer.prototype = {
     var containerStyle = this.containerEl.style;
     var wUnit = containerStyle.width.match(/^(\d+(?:\.\d+)?)(.*)$/)[2];
     var hUnit = typeof containerStyle.height == 'string'
-    ? containerStyle.height.match(/^(\d+(?:\.\d+)?)(.*)$/)[2]
-    : '';
+      ? containerStyle.height.match(/^(\d+(?:\.\d+)?)(.*)$/)[2]
+      : '';
     // whether unit scales on win resize
-    var isDynUnit = winResizeUnits.indexOf(wUnit) != -1
-    || winResizeUnits.indexOf(hUnit) != -1;
+    var isDynUnit
+      = containerStyle.width.match(/^calc\(/)
+      || containerStyle.height.match(/^calc\(/)
+      || winResizeUnits.indexOf(wUnit) != -1
+      || winResizeUnits.indexOf(hUnit) != -1;
     // e.g if units are %, need to keep resizing canvas with dom
     if (isDynUnit) {
       window.addEventListener('resize', this.handleResize.bind(this))
