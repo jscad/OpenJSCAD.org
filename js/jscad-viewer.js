@@ -3,24 +3,47 @@
  * @param   {object} color `{r: r, g: g, b: b, a: a}`
  * @returns {Array}  `[r, g, b, a]`
  */
-function colorBytes (color) {
-  var result = [color.r, color.g, color.b];
-  if (color.a !== undefined) result.push (color.a);
+function colorBytes (colorRGBA) {
+  var result = [colorRGBA.r, colorRGBA.g, colorRGBA.b];
+  if (colorRGBA.a !== undefined) result.push (colorRGBA.a);
   return result;
+}
+
+function colorRGBA (colorBytes) {
+  var result = {r: colorBytes[0], g: colorBytes[1], b: colorBytes[2]};
+  if (colorBytes[3] !== undefined) result.a = colorBytes[3];
+  return result;
+}
+
+function cssFnSingleColor (str) {
+  if (str[str.length-1] === '%') {
+    return parseInt(str, 10)/100;
+  } else {
+    return parseInt(str, 10)/255;
+  }
 }
 
 function parseColor (color) {
   // hsl, hsv, rgba, and #xxyyzz is supported
   var rx = {
-    'html': /^#(?:([a-f0-9]{3})|([a-f0-9]{6}))$/i,
+    'html3': /^#([a-f0-9]{3})$/i,
+    'html6': /^#([a-f0-9]{6})$/i,
     'fn': /^(rgb|hsl|hsv)a?\s*\(([^\)]+)\)$/i,
   }
   var rgba;
   var match;
-  if (match = color.match (rx.html)) {
+  if (match = color.match (rx.html6)) {
     rgba = [parseInt (match[1], 16), parseInt (match[2], 16), parseInt (match[3], 16), 1];
+  } else if (match = color.match (rx.html3)) {
+    rgba = [parseInt (match[1]+match[1], 16), parseInt (match[2]+match[2], 16), parseInt (match[3]+match[3], 16), 1];
   } else if (match = color.match (rx.fn)) {
-    rgba = [match[1], match[2], match[3], match[4]];
+    if (match[1] === 'rgb' || match[1] === 'rgba') {
+      // 0-255 or percentage allowed
+      var digits = match[2].split(/\s*,\s*/);
+      rgba = [cssFnSingleColor(digits[0]), cssFnSingleColor(digits[1]), cssFnSingleColor(digits[2]), parseFloat(digits[3])]
+    }
+    // rgba = [match[1], match[2], match[3], match[4]];
+    // console.log (rgba);
   }
 
   // console.log (match);
@@ -39,10 +62,10 @@ function deepMerge (dst, patch) {
     // special check for color strings, we'll parse those strings and put into rgba object
     if (
       patch[key] !== undefined && patch[key].constructor && patch[key].constructor === String
-      && dst[key] !== undefined && patch[key].constructor && patch[key].constructor === Object
+      && dst[key] !== undefined && dst[key].constructor && dst[key].constructor === Object
       && 'r' in dst[key] && 'g' in dst[key] && 'b' in dst[key]
     ) {
-
+      dst[key] = colorRGBA(parseColor(patch[key]));
     } else if (patch[key] !== undefined && patch[key].constructor && patch[key].constructor === Object) {
       dst[key] = dst[key] || {};
       arguments.callee(dst[key], patch[key]);
