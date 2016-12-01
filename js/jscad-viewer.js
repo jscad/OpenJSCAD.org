@@ -100,200 +100,32 @@ OpenJsCad.Viewer = function(containerelement, customization) {
 
   this.options = options;
 
-  // Set up WebGL state
-  var gl = GL.create();
-  this.gl = gl;
-  this.gl.lineWidth(1); // don't let the library choose
+  var engine;
 
-  // Set up the viewport
-  this.gl.canvas.width  = $(containerelement).width();
-  this.gl.canvas.height = $(containerelement).height();
-  this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height); // pixels
-  this.gl.matrixMode(this.gl.PROJECTION);
-  this.gl.loadIdentity();
-  this.gl.perspective(this.options.camera.fov, this.gl.canvas.width / this.gl.canvas.height, this.options.camera.clip.min, this.options.camera.clip.max);
-  this.gl.matrixMode(this.gl.MODELVIEW);
+  // select drawing engine from options
+  if (options.engine && OpenJsCad.Viewer[options.engine]) {
+    engine = OpenJsCad.Viewer[options.engine];
+  }
 
-  this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
-  this.gl.clearColor.apply(this.gl, colorBytes(this.options.background.color));
-  this.gl.enable(this.gl.DEPTH_TEST);
-  this.gl.enable(this.gl.CULL_FACE);
+  // get one of two exising
+  if (!engine) {
+    engine = OpenJsCad.Viewer.LightGLEngine || OpenJsCad.Viewer.ThreeEngine
+  }
 
-  var outlineColor = this.options.solid.outlineColor;
+  if (!engine) {
+    throw new Error ('Cannot find drawing engine, please define one via "engine" option');
+  }
 
-  // Black shader for wireframe
-  this.blackShader = new GL.Shader('\
-    void main() {\
-      gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\
-    }', '\
-    void main() {\
-      gl_FragColor = vec4(' + colorBytes(outlineColor).join(', ') + ');\
-    }'
-  );
-
-  // Shader with diffuse and specular lighting
-  this.lightingShader = new GL.Shader('\
-      varying vec3 color;\
-      varying float alpha;\
-      varying vec3 normal;\
-      varying vec3 light;\
-      void main() {\
-        const vec3 lightDir = vec3(1.0, 2.0, 3.0) / 3.741657386773941;\
-        light = lightDir;\
-        color = gl_Color.rgb;\
-        alpha = gl_Color.a;\
-        normal = gl_NormalMatrix * gl_Normal;\
-        gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\
-      }',
-     '\
-      varying vec3 color;\
-      varying float alpha;\
-      varying vec3 normal;\
-      varying vec3 light;\
-      void main() {\
-        vec3 n = normalize(normal);\
-        float diffuse = max(0.0, dot(light, n));\
-        float specular = pow(max(0.0, -reflect(light, n).z), 10.0) * sqrt(diffuse);\
-        gl_FragColor = vec4(mix(color * (0.3 + 0.7 * diffuse), vec3(1.0), specular), alpha);\
-      }'
-  );
-
-  var _this=this;
-
-  var shiftControl = $('<div class="shift-scene"><div class="arrow arrow-left" />\
-    <div class="arrow arrow-right" />\
-    <div class="arrow arrow-top" />\
-    <div class="arrow arrow-bottom" /></div>');
-
-  $(containerelement).append(this.gl.canvas)
-    .append(shiftControl)
-    .hammer({//touch screen control
-      drag_lock_to_axis: true
-    }).on("transform", function(e){
-      if (e.gesture.touches.length >= 2) {
-          _this.clearShift();
-          _this.onTransform(e);
-          e.preventDefault();
-      }
-    }).on("touch", function(e) {
-      if (e.gesture.pointerType != 'touch'){
-        e.preventDefault();
-        return;
-      }
-
-      if (e.gesture.touches.length == 1) {
-        var point = e.gesture.center;
-        _this.touch.shiftTimer = setTimeout(function(){
-              shiftControl.addClass('active').css({
-                  left: point.pageX + 'px',
-                  top: point.pageY + 'px'
-              });
-              _this.touch.shiftTimer = null;
-              _this.touch.cur = 'shifting';
-              }, 500);
-      } else {
-        _this.clearShift();
-      }
-    }).on("drag", function(e) {
-      if (e.gesture.pointerType != 'touch') {
-        e.preventDefault();
-        return;
-      }
-
-      if (!_this.touch.cur || _this.touch.cur == 'dragging') {
-        _this.clearShift();
-        _this.onPanTilt(e);
-      } else if (_this.touch.cur == 'shifting') {
-        _this.onShift(e);
-      }
-    }).on("touchend", function(e) {
-      _this.clearShift();
-      if (_this.touch.cur) {
-        shiftControl.removeClass('active shift-horizontal shift-vertical');
-      }
-    }).on("transformend dragstart dragend", function(e) {
-      if ((e.type == 'transformend' && _this.touch.cur == 'transforming') ||
-          (e.type == 'dragend' && _this.touch.cur == 'shifting') ||
-          (e.type == 'dragend' && _this.touch.cur == 'dragging'))
-        _this.touch.cur = null;
-      _this.touch.lastX = 0;
-      _this.touch.lastY = 0;
-      _this.touch.scale = 0;
-    });
-
-  this.gl.onmousemove = function(e) {
-    _this.onMouseMove(e);
-  };
-
-  this.gl.ondraw = function() {
-    _this.onDraw();
-  };
-
-  this.gl.resizeCanvas = function() {
-    var canvasWidth  = _this.gl.canvas.clientWidth;
-    var canvasHeight = _this.gl.canvas.clientHeight;
-    if (_this.gl.canvas.width  != canvasWidth ||
-        _this.gl.canvas.height != canvasHeight) {
-      _this.gl.canvas.width  = canvasWidth;
-      _this.gl.canvas.height = canvasHeight;
-      _this.gl.viewport(0, 0, _this.gl.canvas.width, _this.gl.canvas.height);
-      _this.gl.matrixMode( _this.gl.PROJECTION );
-      _this.gl.loadIdentity();
-      _this.gl.perspective(_this.options.camera.fov, _this.gl.canvas.width / _this.gl.canvas.height, _this.options.camera.clip.min, _this.options.camera.clip.max );
-      _this.gl.matrixMode( _this.gl.MODELVIEW );
-      _this.onDraw();
+  // mixin methods
+  for (var method in OpenJsCad.Viewer.prototype) {
+    if (!(method in engine.prototype)) {
+      engine.prototype[method] = OpenJsCad.Viewer.prototype[method];
     }
-  };
-  // only window resize is available, so add an event callback for the canvas
-  window.addEventListener( 'resize', this.gl.resizeCanvas );
+  }
 
-  this.gl.onmousewheel = function(e) {
-    var wheelDelta = 0;
-    if (e.wheelDelta) {
-      wheelDelta = e.wheelDelta;
-    } else if (e.detail) {
-      // for firefox, see http://stackoverflow.com/questions/8886281/event-wheeldelta-returns-undefined
-      wheelDelta = e.detail * -40;
-    }
-    if(wheelDelta) {
-      var factor = Math.pow(1.003, -wheelDelta);
-      var coeff = _this.getZoom();
-      coeff *= factor;
-      _this.setZoom(coeff);
-    }
-  };
-
-// state variables, i.e. used for storing values, etc
-
-  // state of viewer
-  // 0 - initialized, no object
-  // 1 - cleared, no object
-  // 2 - showing, object
-  this.state = 0;
-
-  // state of perpective (camera)
-  this.angleX = this.options.camera.angle.x;
-  this.angleY = this.options.camera.angle.y;
-  this.angleZ = this.options.camera.angle.z;
-  this.viewpointX = this.options.camera.position.x;
-  this.viewpointY = this.options.camera.position.y;
-  this.viewpointZ = this.options.camera.position.z;
-
-  this.onZoomChanged = null;
-
-  this.touch = {
-    lastX: 0,
-    lastY: 0,
-    scale: 0,
-    ctrl: 0,
-    shiftTimer: null,
-    shiftControl: shiftControl,
-    cur: null //current state
-  };
-
-  this.meshes = [];
-
-  this.clear(); // and draw the inital viewer
+  var e = new engine (containerelement, options);
+  e.init();
+  return e;
 };
 
 /**
@@ -416,8 +248,220 @@ OpenJsCad.Viewer.prototype = {
     for (var x in this.options.solid) {
       if (x in options) this.options.solid[x] = options[x];
     }
-  },
+  }
+};
 
+/**
+ * A viewer is a WebGL canvas that lets the user view a mesh.
+ * The user can tumble it around by dragging the mouse.
+ * @param {DOMElement} containerelement container element
+ * @param {object}     options    options for renderer
+ */
+
+OpenJsCad.Viewer.LightGLEngine = function(containerelement, options) {
+
+  this.options = options;
+
+  // Set up WebGL state
+  var gl = GL.create();
+  this.gl = gl;
+  this.gl.lineWidth(1); // don't let the library choose
+
+  // Set up the viewport
+  this.gl.canvas.width  = $(containerelement).width();
+  this.gl.canvas.height = $(containerelement).height();
+  this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height); // pixels
+  this.gl.matrixMode(this.gl.PROJECTION);
+  this.gl.loadIdentity();
+  this.gl.perspective(this.options.camera.fov, this.gl.canvas.width / this.gl.canvas.height, this.options.camera.clip.min, this.options.camera.clip.max);
+  this.gl.matrixMode(this.gl.MODELVIEW);
+
+  this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
+  this.gl.clearColor.apply(this.gl, colorBytes(this.options.background.color));
+  this.gl.enable(this.gl.DEPTH_TEST);
+  this.gl.enable(this.gl.CULL_FACE);
+
+  var outlineColor = this.options.solid.outlineColor;
+
+  // Black shader for wireframe
+  this.blackShader = new GL.Shader('\
+    void main() {\
+      gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\
+    }', '\
+    void main() {\
+      gl_FragColor = vec4(' + colorBytes(outlineColor).join(', ') + ');\
+    }'
+  );
+
+  // Shader with diffuse and specular lighting
+  this.lightingShader = new GL.Shader('\
+    varying vec3 color;\
+    varying float alpha;\
+    varying vec3 normal;\
+    varying vec3 light;\
+    void main() {\
+      const vec3 lightDir = vec3(1.0, 2.0, 3.0) / 3.741657386773941;\
+      light = lightDir;\
+      color = gl_Color.rgb;\
+      alpha = gl_Color.a;\
+      normal = gl_NormalMatrix * gl_Normal;\
+      gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\
+    }',
+    '\
+    varying vec3 color;\
+    varying float alpha;\
+    varying vec3 normal;\
+    varying vec3 light;\
+    void main() {\
+      vec3 n = normalize(normal);\
+      float diffuse = max(0.0, dot(light, n));\
+      float specular = pow(max(0.0, -reflect(light, n).z), 10.0) * sqrt(diffuse);\
+      gl_FragColor = vec4(mix(color * (0.3 + 0.7 * diffuse), vec3(1.0), specular), alpha);\
+    }'
+  );
+
+  var _this=this;
+
+  var shiftControl = $('<div class="shift-scene"><div class="arrow arrow-left" />\
+<div class="arrow arrow-right" />\
+<div class="arrow arrow-top" />\
+<div class="arrow arrow-bottom" /></div>');
+
+  $(containerelement).append(this.gl.canvas)
+    .append(shiftControl)
+    .hammer({//touch screen control
+    drag_lock_to_axis: true
+  }).on("transform", function(e){
+    if (e.gesture.touches.length >= 2) {
+      _this.clearShift();
+      _this.onTransform(e);
+      e.preventDefault();
+    }
+  }).on("touch", function(e) {
+    if (e.gesture.pointerType != 'touch'){
+      e.preventDefault();
+      return;
+    }
+
+    if (e.gesture.touches.length == 1) {
+      var point = e.gesture.center;
+      _this.touch.shiftTimer = setTimeout(function(){
+        shiftControl.addClass('active').css({
+          left: point.pageX + 'px',
+          top: point.pageY + 'px'
+        });
+        _this.touch.shiftTimer = null;
+        _this.touch.cur = 'shifting';
+      }, 500);
+    } else {
+      _this.clearShift();
+    }
+  }).on("drag", function(e) {
+    if (e.gesture.pointerType != 'touch') {
+      e.preventDefault();
+      return;
+    }
+
+    if (!_this.touch.cur || _this.touch.cur == 'dragging') {
+      _this.clearShift();
+      _this.onPanTilt(e);
+    } else if (_this.touch.cur == 'shifting') {
+      _this.onShift(e);
+    }
+  }).on("touchend", function(e) {
+    _this.clearShift();
+    if (_this.touch.cur) {
+      shiftControl.removeClass('active shift-horizontal shift-vertical');
+    }
+  }).on("transformend dragstart dragend", function(e) {
+    if ((e.type == 'transformend' && _this.touch.cur == 'transforming') ||
+        (e.type == 'dragend' && _this.touch.cur == 'shifting') ||
+        (e.type == 'dragend' && _this.touch.cur == 'dragging'))
+      _this.touch.cur = null;
+    _this.touch.lastX = 0;
+    _this.touch.lastY = 0;
+    _this.touch.scale = 0;
+  });
+
+  this.gl.onmousemove = function(e) {
+    _this.onMouseMove(e);
+  };
+
+  this.gl.ondraw = function() {
+    _this.onDraw();
+  };
+
+  this.gl.resizeCanvas = function() {
+    var canvasWidth  = _this.gl.canvas.clientWidth;
+    var canvasHeight = _this.gl.canvas.clientHeight;
+    if (_this.gl.canvas.width  != canvasWidth ||
+        _this.gl.canvas.height != canvasHeight) {
+      _this.gl.canvas.width  = canvasWidth;
+      _this.gl.canvas.height = canvasHeight;
+      _this.gl.viewport(0, 0, _this.gl.canvas.width, _this.gl.canvas.height);
+      _this.gl.matrixMode( _this.gl.PROJECTION );
+      _this.gl.loadIdentity();
+      _this.gl.perspective(_this.options.camera.fov, _this.gl.canvas.width / _this.gl.canvas.height, _this.options.camera.clip.min, _this.options.camera.clip.max );
+      _this.gl.matrixMode( _this.gl.MODELVIEW );
+      _this.onDraw();
+    }
+  };
+  // only window resize is available, so add an event callback for the canvas
+  window.addEventListener( 'resize', this.gl.resizeCanvas );
+
+  this.gl.onmousewheel = function(e) {
+    var wheelDelta = 0;
+    if (e.wheelDelta) {
+      wheelDelta = e.wheelDelta;
+    } else if (e.detail) {
+      // for firefox, see http://stackoverflow.com/questions/8886281/event-wheeldelta-returns-undefined
+      wheelDelta = e.detail * -40;
+    }
+    if(wheelDelta) {
+      var factor = Math.pow(1.003, -wheelDelta);
+      var coeff = _this.getZoom();
+      coeff *= factor;
+      _this.setZoom(coeff);
+    }
+  };
+
+  // state variables, i.e. used for storing values, etc
+
+  // state of viewer
+  // 0 - initialized, no object
+  // 1 - cleared, no object
+  // 2 - showing, object
+  this.state = 0;
+
+  // state of perpective (camera)
+  this.angleX = this.options.camera.angle.x;
+  this.angleY = this.options.camera.angle.y;
+  this.angleZ = this.options.camera.angle.z;
+  this.viewpointX = this.options.camera.position.x;
+  this.viewpointY = this.options.camera.position.y;
+  this.viewpointZ = this.options.camera.position.z;
+
+  this.onZoomChanged = null;
+
+  this.touch = {
+    lastX: 0,
+    lastY: 0,
+    scale: 0,
+    ctrl: 0,
+    shiftTimer: null,
+    shiftControl: shiftControl,
+    cur: null //current state
+  };
+
+  this.meshes = [];
+
+  this.clear(); // and draw the inital viewer
+};
+
+OpenJsCad.Viewer.LightGLEngine.prototype = {
+  init: function () {
+
+  },
   setZoom: function(coeff) { //0...1
     coeff=Math.max(coeff, 0);
     coeff=Math.min(coeff, 1);
@@ -538,12 +582,12 @@ OpenJsCad.Viewer.prototype = {
 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.loadIdentity();
-  // set the perspective based on the camera postion
+    // set the perspective based on the camera postion
     gl.translate(this.viewpointX, this.viewpointY, -this.viewpointZ);
     gl.rotate(this.angleX, 1, 0, 0);
     gl.rotate(this.angleY, 0, 1, 0);
     gl.rotate(this.angleZ, 0, 0, 1);
-  // draw the solid (meshes)
+    // draw the solid (meshes)
     if(this.options.solid.draw) {
       gl.enable(gl.BLEND);
       if (!this.options.solid.overlay) gl.enable(gl.POLYGON_OFFSET_FILL);
@@ -565,7 +609,7 @@ OpenJsCad.Viewer.prototype = {
         if (this.options.solid.overlay) gl.enable(gl.DEPTH_TEST);
       }
     }
-  // draw the plate and the axis
+    // draw the plate and the axis
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     gl.begin(gl.LINES);
@@ -574,7 +618,7 @@ OpenJsCad.Viewer.prototype = {
       var m = this.options.plate.m; // short cut
       var M = this.options.plate.M; // short cut
       var size = this.options.plate.size/2;
-    // -- minor grid
+      // -- minor grid
       gl.color.apply(gl, colorBytes (m.color));
       var mg = m.i;
       var MG = M.i;
@@ -586,7 +630,7 @@ OpenJsCad.Viewer.prototype = {
           gl.vertex(x, size, 0);
         }
       }
-    // -- major grid
+      // -- major grid
       gl.color.apply(gl, colorBytes (M.color));
       for(var x=-size; x<=size; x+=MG) {
         gl.vertex(-size, x, 0);
@@ -597,7 +641,7 @@ OpenJsCad.Viewer.prototype = {
     }
     if (this.options.axis.draw) {
       var size = this.options.plate.size/2;
-    // X axis
+      // X axis
       var c = this.options.axis.x.neg;
       gl.color(c.r, c.g, c.b, c.a); //negative direction is lighter
       gl.vertex(-size, 0, 0);
@@ -606,7 +650,7 @@ OpenJsCad.Viewer.prototype = {
       gl.color(c.r, c.g, c.b, c.a); //positive direction is lighter
       gl.vertex(0, 0, 0);
       gl.vertex(size, 0, 0);
-    // Y axis
+      // Y axis
       c = this.options.axis.y.neg;
       gl.color(c.r, c.g, c.b, c.a); //negative direction is lighter
       gl.vertex(0, -size, 0);
@@ -615,7 +659,7 @@ OpenJsCad.Viewer.prototype = {
       gl.color(c.r, c.g, c.b, c.a); //positive direction is lighter
       gl.vertex(0, 0, 0);
       gl.vertex(0, size, 0);
-    // Z axis
+      // Z axis
       c = this.options.axis.z.neg;
       gl.color(c.r, c.g, c.b, c.a); //negative direction is lighter
       gl.vertex(0, 0, -size);
@@ -713,4 +757,3 @@ OpenJsCad.Viewer.prototype = {
     return meshes;
   }
 };
-
