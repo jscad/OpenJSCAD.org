@@ -396,12 +396,14 @@ OpenJsCad.Viewer.LightGLEngine.prototype = {
   handleResize: function () {
     // Set up the viewport
 
-    this.resizeCanvas (this.gl.canvas);
+    var canvas = this.gl.canvas;
 
-    this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height); // pixels
+    this.resizeCanvas (canvas);
+
+    this.gl.viewport(0, 0, canvas.width, canvas.height); // pixels
     this.gl.matrixMode(this.gl.PROJECTION);
     this.gl.loadIdentity();
-    this.gl.perspective(this.options.camera.fov, this.gl.canvas.width / this.gl.canvas.height, this.options.camera.clip.min, this.options.camera.clip.max);
+    this.gl.perspective(this.options.camera.fov, canvas.width / canvas.height, this.options.camera.clip.min, this.options.camera.clip.max);
     this.gl.matrixMode(this.gl.MODELVIEW);
 
     this.onDraw();
