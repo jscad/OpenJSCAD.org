@@ -185,6 +185,15 @@ OpenJsCad.Viewer.defaults = function () {
 };
 
 OpenJsCad.Viewer.prototype = {
+  resizeCanvas: function () {
+
+    var canvas = this.gl.canvas;
+
+    var devicePixelRatio = window.devicePixelRatio || 1;
+    canvas.width  = this.containerEl.clientWidth  * devicePixelRatio;
+    canvas.height = this.containerEl.clientHeight * devicePixelRatio;
+
+  },
   setCsg: function(csg) {
     if(0&&csg.length) {                            // preparing multiple CSG's (not union-ed), not yet working
       for(var i=0; i<csg.length; i++)
@@ -366,10 +375,6 @@ OpenJsCad.Viewer.LightGLEngine = function(containerelement, options) {
 OpenJsCad.Viewer.LightGLEngine.prototype = {
   init: function () {
 
-  },
-  resizeCanvas: function () {
-    this.gl.canvas.width  = $(this.containerEl).width();
-    this.gl.canvas.height = $(this.containerEl).height();
   },
   handleResize: function () {
     // Set up the viewport
