@@ -227,7 +227,7 @@ OpenJsCad.Viewer.prototype = {
   },
   resizeCanvas: function () {
 
-    var canvas = this.gl.canvas;
+    var canvas = this.canvas;
 
     var devicePixelRatio = window.devicePixelRatio || 1;
     canvas.width  = this.containerEl.clientWidth  * devicePixelRatio;
@@ -333,9 +333,9 @@ OpenJsCad.Viewer.LightGLEngine.prototype = {
   handleResize: function () {
     // Set up the viewport
 
-    var canvas = this.gl.canvas;
+    var canvas = this.canvas;
 
-    this.resizeCanvas (canvas);
+    this.resizeCanvas ();
 
     this.gl.viewport(0, 0, canvas.width, canvas.height); // pixels
     this.gl.matrixMode(this.gl.PROJECTION);
@@ -350,6 +350,8 @@ OpenJsCad.Viewer.LightGLEngine.prototype = {
     var gl = GL.create();
     this.gl = gl;
     this.gl.lineWidth(1); // don't let the library choose
+
+    this.canvas = this.gl.canvas;
 
     this.meshes = [];
 
@@ -401,7 +403,7 @@ OpenJsCad.Viewer.LightGLEngine.prototype = {
 
     var _this=this;
 
-    var shiftControl = this.createControls(this.gl.canvas);
+    var shiftControl = this.createControls();
 
     this.resetCamera();
 
