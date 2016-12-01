@@ -262,19 +262,21 @@ OpenJsCad.Viewer.LightGLEngine = function(containerelement, options) {
 
   this.options = options;
 
+  this.containerEl = containerelement;
+
   // Set up WebGL state
   var gl = GL.create();
   this.gl = gl;
   this.gl.lineWidth(1); // don't let the library choose
 
-  // Set up the viewport
-  this.gl.canvas.width  = $(containerelement).width();
-  this.gl.canvas.height = $(containerelement).height();
-  this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height); // pixels
-  this.gl.matrixMode(this.gl.PROJECTION);
-  this.gl.loadIdentity();
-  this.gl.perspective(this.options.camera.fov, this.gl.canvas.width / this.gl.canvas.height, this.options.camera.clip.min, this.options.camera.clip.max);
-  this.gl.matrixMode(this.gl.MODELVIEW);
+  this.meshes = [];
+
+  this.containerEl.appendChild (this.gl.canvas);
+
+  this.handleResize();
+  this.gl.resizeCanvas = this.handleResize.bind (this);
+  // only window resize is available, so add an event callback for the canvas
+  window.addEventListener( 'resize', this.handleResize.bind (this) );
 
   this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
   this.gl.clearColor.apply(this.gl, colorBytes(this.options.background.color));
@@ -322,107 +324,10 @@ OpenJsCad.Viewer.LightGLEngine = function(containerelement, options) {
 
   var _this=this;
 
-  var shiftControl = $('<div class="shift-scene"><div class="arrow arrow-left" />\
-<div class="arrow arrow-right" />\
-<div class="arrow arrow-top" />\
-<div class="arrow arrow-bottom" /></div>');
-
-  $(containerelement).append(this.gl.canvas)
-    .append(shiftControl)
-    .hammer({//touch screen control
-    drag_lock_to_axis: true
-  }).on("transform", function(e){
-    if (e.gesture.touches.length >= 2) {
-      _this.clearShift();
-      _this.onTransform(e);
-      e.preventDefault();
-    }
-  }).on("touch", function(e) {
-    if (e.gesture.pointerType != 'touch'){
-      e.preventDefault();
-      return;
-    }
-
-    if (e.gesture.touches.length == 1) {
-      var point = e.gesture.center;
-      _this.touch.shiftTimer = setTimeout(function(){
-        shiftControl.addClass('active').css({
-          left: point.pageX + 'px',
-          top: point.pageY + 'px'
-        });
-        _this.touch.shiftTimer = null;
-        _this.touch.cur = 'shifting';
-      }, 500);
-    } else {
-      _this.clearShift();
-    }
-  }).on("drag", function(e) {
-    if (e.gesture.pointerType != 'touch') {
-      e.preventDefault();
-      return;
-    }
-
-    if (!_this.touch.cur || _this.touch.cur == 'dragging') {
-      _this.clearShift();
-      _this.onPanTilt(e);
-    } else if (_this.touch.cur == 'shifting') {
-      _this.onShift(e);
-    }
-  }).on("touchend", function(e) {
-    _this.clearShift();
-    if (_this.touch.cur) {
-      shiftControl.removeClass('active shift-horizontal shift-vertical');
-    }
-  }).on("transformend dragstart dragend", function(e) {
-    if ((e.type == 'transformend' && _this.touch.cur == 'transforming') ||
-        (e.type == 'dragend' && _this.touch.cur == 'shifting') ||
-        (e.type == 'dragend' && _this.touch.cur == 'dragging'))
-      _this.touch.cur = null;
-    _this.touch.lastX = 0;
-    _this.touch.lastY = 0;
-    _this.touch.scale = 0;
-  });
-
-  this.gl.onmousemove = function(e) {
-    _this.onMouseMove(e);
-  };
+  var shiftControl = this.createControls (this.gl.canvas);
 
   this.gl.ondraw = function() {
     _this.onDraw();
-  };
-
-  this.gl.resizeCanvas = function() {
-    var canvasWidth  = _this.gl.canvas.clientWidth;
-    var canvasHeight = _this.gl.canvas.clientHeight;
-    if (_this.gl.canvas.width  != canvasWidth ||
-        _this.gl.canvas.height != canvasHeight) {
-      _this.gl.canvas.width  = canvasWidth;
-      _this.gl.canvas.height = canvasHeight;
-      _this.gl.viewport(0, 0, _this.gl.canvas.width, _this.gl.canvas.height);
-      _this.gl.matrixMode( _this.gl.PROJECTION );
-      _this.gl.loadIdentity();
-      _this.gl.perspective(_this.options.camera.fov, _this.gl.canvas.width / _this.gl.canvas.height, _this.options.camera.clip.min, _this.options.camera.clip.max );
-      _this.gl.matrixMode( _this.gl.MODELVIEW );
-      _this.onDraw();
-    }
-  };
-  // only window resize is available, so add an event callback for the canvas
-  window.addEventListener( 'resize', this.gl.resizeCanvas );
-
-  this.gl.onmousewheel = function(e) {
-    var wheelDelta = 0;
-    if (e.wheelDelta) {
-      wheelDelta = e.wheelDelta;
-    } else if (e.detail) {
-      // for firefox, see http://stackoverflow.com/questions/8886281/event-wheeldelta-returns-undefined
-      wheelDelta = e.detail * -40;
-    }
-    if(wheelDelta) {
-      var factor = Math.pow(1.003, -wheelDelta);
-      var coeff = _this.getZoom();
-      coeff *= factor;
-      _this.setZoom(coeff);
-    }
   };
 
   // state variables, i.e. used for storing values, etc
@@ -461,6 +366,108 @@ OpenJsCad.Viewer.LightGLEngine = function(containerelement, options) {
 OpenJsCad.Viewer.LightGLEngine.prototype = {
   init: function () {
 
+  },
+  resizeCanvas: function () {
+    this.gl.canvas.width  = $(this.containerEl).width();
+    this.gl.canvas.height = $(this.containerEl).height();
+  },
+  handleResize: function () {
+    // Set up the viewport
+
+    this.resizeCanvas (this.gl.canvas);
+
+    this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height); // pixels
+    this.gl.matrixMode(this.gl.PROJECTION);
+    this.gl.loadIdentity();
+    this.gl.perspective(this.options.camera.fov, this.gl.canvas.width / this.gl.canvas.height, this.options.camera.clip.min, this.options.camera.clip.max);
+    this.gl.matrixMode(this.gl.MODELVIEW);
+
+    this.onDraw();
+  },
+  createControls: function () {
+    var _this = this;
+    var shiftControl = $('<div class="shift-scene"><div class="arrow arrow-left" />\
+<div class="arrow arrow-right" />\
+<div class="arrow arrow-top" />\
+<div class="arrow arrow-bottom" /></div>');
+
+    $(this.containerEl)
+      .append(shiftControl)
+      .hammer({//touch screen control
+      drag_lock_to_axis: true
+    }).on("transform", function(e){
+      if (e.gesture.touches.length >= 2) {
+        _this.clearShift();
+        _this.onTransform(e);
+        e.preventDefault();
+      }
+    }).on("touch", function(e) {
+      if (e.gesture.pointerType != 'touch'){
+        e.preventDefault();
+        return;
+      }
+
+      if (e.gesture.touches.length == 1) {
+        var point = e.gesture.center;
+        _this.touch.shiftTimer = setTimeout(function(){
+          shiftControl.addClass('active').css({
+            left: point.pageX + 'px',
+            top: point.pageY + 'px'
+          });
+          _this.touch.shiftTimer = null;
+          _this.touch.cur = 'shifting';
+        }, 500);
+      } else {
+        _this.clearShift();
+      }
+    }).on("drag", function(e) {
+      if (e.gesture.pointerType != 'touch') {
+        e.preventDefault();
+        return;
+      }
+
+      if (!_this.touch.cur || _this.touch.cur == 'dragging') {
+        _this.clearShift();
+        _this.onPanTilt(e);
+      } else if (_this.touch.cur == 'shifting') {
+        _this.onShift(e);
+      }
+    }).on("touchend", function(e) {
+      _this.clearShift();
+      if (_this.touch.cur) {
+        shiftControl.removeClass('active shift-horizontal shift-vertical');
+      }
+    }).on("transformend dragstart dragend", function(e) {
+      if ((e.type == 'transformend' && _this.touch.cur == 'transforming') ||
+          (e.type == 'dragend' && _this.touch.cur == 'shifting') ||
+          (e.type == 'dragend' && _this.touch.cur == 'dragging'))
+        _this.touch.cur = null;
+      _this.touch.lastX = 0;
+      _this.touch.lastY = 0;
+      _this.touch.scale = 0;
+    });
+
+    this.gl.onmousemove = function(e) {
+      _this.onMouseMove(e);
+    };
+
+    this.gl.onmousewheel = function(e) {
+      var wheelDelta = 0;
+      if (e.wheelDelta) {
+        wheelDelta = e.wheelDelta;
+      } else if (e.detail) {
+        // for firefox, see http://stackoverflow.com/questions/8886281/event-wheeldelta-returns-undefined
+        wheelDelta = e.detail * -40;
+      }
+      if(wheelDelta) {
+        var factor = Math.pow(1.003, -wheelDelta);
+        var coeff = _this.getZoom();
+        coeff *= factor;
+        _this.setZoom(coeff);
+      }
+    };
+
+    return shiftControl;
   },
   setZoom: function(coeff) { //0...1
     coeff=Math.max(coeff, 0);
