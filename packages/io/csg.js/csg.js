@@ -5462,6 +5462,16 @@ for solid CAD anyway.
         this.isCanonicalized = false;
     };
 
+    // create from an untyped object with identical property names.
+    CAG.fromObject = function(obj) {
+        var sides = obj.sides.map(function(s) {
+            return CAG.Side.fromObject(s);
+        });
+        var cag = CAG.fromSides(sides);
+        cag.isCanonicalized = obj.isCanonicalized;
+        return cag;
+    };
+
     // Construct a CAG from a list of `CAG.Side` instances.
     CAG.fromSides = function(sides) {
         var cag = new CAG();
@@ -6357,6 +6367,10 @@ for solid CAD anyway.
         this.pos = pos;
     };
 
+    CAG.Vertex.fromObject = function(obj) {
+        return new CAG.Vertex(new CSG.Vector2D(obj.pos._x,obj.pos._y));
+    };
+
     CAG.Vertex.prototype = {
         toString: function() {
             return "(" + this.pos.x.toFixed(2) + "," + this.pos.y.toFixed(2) + ")";
@@ -6376,6 +6390,12 @@ for solid CAD anyway.
         if (!(vertex1 instanceof CAG.Vertex)) throw new Error("Assertion failed");
         this.vertex0 = vertex0;
         this.vertex1 = vertex1;
+    };
+
+    CAG.Side.fromObject = function(obj) {
+        var vertex0 = CAG.Vertex.fromObject(obj.vertex0);
+        var vertex1 = CAG.Vertex.fromObject(obj.vertex1);
+        return new CAG.Side(vertex0,vertex1);
     };
 
     CAG.Side._fromFakePolygon = function(polygon) {
