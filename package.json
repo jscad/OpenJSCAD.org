@@ -4,6 +4,9 @@
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "main": "js/index.js",
+  "bin": {
+    "openjscad": "./openjscad"
+  },
   "scripts": {
     "test": "ava './js/**/*.test.js' --require babel-register --verbose",
     "build": "browserify src/index.js -o dist/index.js -t [babelify browserify minifyify]",
