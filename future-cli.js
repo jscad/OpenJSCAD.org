@@ -45,10 +45,10 @@ global.lib = !fs.existsSync(global.lib) ? __dirname+'/' : '/usr/local/lib/openjs
 
 const lib = global.lib
 const openjscadPath = path.resolve(lib, './openjscad.js')
-const openscadPath = path.resolve(lib, './openscad.js')
+const modelingHelpersPath = path.resolve(lib, './openscad.js')
 
 const OpenJsCad = require(openjscadPath).OpenJsCad
-const openscad = require(openscadPath)
+const modelingHelpers = require(modelingHelpersPath)
 
 const makeInputFormatHandlers = require('./js/utils/inputFormatHandlers')
 const generateOutputData = require('./js/utils/generateOutputData')
@@ -80,7 +80,7 @@ const args = process.argv.splice(2)
 // handle arguments
 // inputs, outputs
 let {inputFile, inputFormat, outputFile, outputFormat, gMainParam} = parseArgs(args)
-const inputFormatHandlers = makeInputFormatHandlers(OpenJsCad, openscad, lib)
+const inputFormatHandlers = makeInputFormatHandlers(OpenJsCad, modelingHelpers, lib)
 
 // outputs
 const output = determineOutputNameAndFormat(outputFormat, outputFile)
@@ -94,8 +94,8 @@ let src = fs.readFileSync(inputFile, inputFile.match(/\.stl$/i) ? 'binary' : 'UT
 src = inputFormatHandlers[inputFormat](src, inputFile, outputFile)
 
 // -- convert from JSCAD script into the desired output format
-const modelingHelpers = fs.readFileSync(path.resolve(lib, './openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
-const outputData = generateOutputData(modelingHelpers, meta, gMainParam, outputFormat, src)
+const modelingHelpersAsData = fs.readFileSync(path.resolve(lib, './openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
+const outputData = generateOutputData(modelingHelpersAsData, meta, gMainParam, outputFormat, src)
 
 // -- and write it to disk
 writeOutputDataToFile(outputFile, outputData)
