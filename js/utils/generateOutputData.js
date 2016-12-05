@@ -7,8 +7,8 @@ function generateOutputData (outputFormat, src, mainParams, meta, CSG, CAG, lib,
   if (outputFormat === 'jscad' || outputFormat === 'js') {
     data = new Blob([src], { type: 'application/javascript' })
   } else {
-    const helperFunctions = fs.readFileSync(path.resolve(lib, './openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
-    const csgObject = evaluateSource(helperFunctions, CAG, mainParams, src)
+    const modelingHelpers = fs.readFileSync(path.resolve(lib, './openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
+    const csgObject = evaluateSource(modelingHelpers, CAG, mainParams, src)
     const outputFormatHandlers = {
       'amf': () => csgObject.toAMFString(meta), // CSG to AMF
       'stlb': () => csgObject.toStlBinary(), // CSG to STL BINARY
