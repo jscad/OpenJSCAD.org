@@ -1,4 +1,4 @@
-function evaluateSource (helperFunctions, CAG, mainParams, src) {
+function evaluateSource (modelingHelpers, CAG, mainParams, src) {
   /*
   //FIXME : should we be using this one instead ?
     var processor = new OpenJsCad.Processor();
@@ -22,7 +22,9 @@ function evaluateSource (helperFunctions, CAG, mainParams, src) {
   */
   // console.log("render jscad to "+outputFormat)
   // console.log(JSON.stringify(gMainParam))
-  const fullSrc = `${src}\n${helperFunctions}\nmain(_getParameterDefinitions(${JSON.stringify(mainParams)}))\n`
+  const mainFunction = `main(_getParameterDefinitions(${JSON.stringify(mainParams)}))`
+  const fullSrc = `${src}\n${modelingHelpers}\n${mainFunction}\n`
+  //console.log('mainFunction', mainFunction)
   let csgObject = eval(fullSrc)
   //auto extrude CAG
   if (csgObject.length) {
