@@ -13,15 +13,15 @@ test.afterEach.always(t => {
 })
 
 test.beforeEach(t => {
-  let jscadPath = '../openjscad'
+  let jscadPath = '../openjscad'//future-cli.js
   t.context = {
     jscadPath : path.resolve(__dirname, jscadPath)
   }
 })
 
 test('jscad (basic, input file only)', t => {
-  const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
   const jscadPath = t.context.jscadPath
+  const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
   const expPath = path.resolve(__dirname, '../examples/logo.stl')
   t.context = {outputPath: expPath}
 
@@ -31,9 +31,9 @@ test('jscad (basic, input file only)', t => {
 })
 
 test('jscad with parameters', t => {
+  const jscadPath = t.context.jscadPath
   const inputPath = path.resolve(__dirname, '../examples/name_plate.jscad')
   const outputPath = 'JustMe_Geek_name_plate.amf'
-  const jscadPath = t.context.jscadPath
   const expPath = outputPath
   t.context = {outputPath}
 
@@ -43,9 +43,9 @@ test('jscad with parameters', t => {
 })
 
 test('jscad to stl (ascii)', t => {
+  const jscadPath = t.context.jscadPath
   const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
   const outputPath = 'test.stl'
-  const jscadPath = t.context.jscadPath
   const expPath = 'test.stl'
   t.context = {outputPath}
 
@@ -55,9 +55,9 @@ test('jscad to stl (ascii)', t => {
 })
 
 test('jscad to stl(binary)', t => {
+  const jscadPath = t.context.jscadPath
   const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
   const outputPath = 'test.stl'
-  const jscadPath = t.context.jscadPath
   const expPath = path.resolve(__dirname, '../examples/logo-binary.stl')
   t.context = {outputPath}
 
@@ -68,9 +68,9 @@ test('jscad to stl(binary)', t => {
 })
 
 test('jscad to amf', t => {
+  const jscadPath = t.context.jscadPath
   const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
   const outputPath = 'test.amf'
-  const jscadPath = t.context.jscadPath
   const expPath = outputPath
   t.context = {outputPath}
 
@@ -80,9 +80,9 @@ test('jscad to amf', t => {
 })
 
 test('jscad to amf(with transparency)', t => {
+  const jscadPath = t.context.jscadPath
   const inputPath = path.resolve(__dirname, '../examples/transparency.jscad')
   const outputPath = 'test.amf'
-  const jscadPath = t.context.jscadPath
   const expPath = outputPath
   t.context = {outputPath}
 
@@ -118,9 +118,9 @@ test('jscad to svg', t => {
 })*/
 
 test('openscad to stl (ascii)', t => {
+  const jscadPath = t.context.jscadPath
   const inputPath = path.resolve(__dirname, '../examples/example001.scad')
   const outputPath = 'test.stl'
-  const jscadPath = t.context.jscadPath
   const expPath = 'test.stl'
   t.context = {outputPath}
 
@@ -130,9 +130,9 @@ test('openscad to stl (ascii)', t => {
 })
 
 test('openscad to stl(binary)', t => {
+  const jscadPath = t.context.jscadPath
   const inputPath = path.resolve(__dirname, '../examples/example001.scad')
   const outputPath = 'test.stl'
-  const jscadPath = t.context.jscadPath
   //const expPath = path.resolve(__dirname, '../examples/logo-binary.stl')
   t.context = {outputPath}
 
@@ -143,9 +143,9 @@ test('openscad to stl(binary)', t => {
 })
 
 test('openscad to amf', t => {
+  const jscadPath = t.context.jscadPath
   const inputPath = path.resolve(__dirname, '../examples/example001.scad')
   const outputPath = 'test.amf'
-  const jscadPath = t.context.jscadPath
   const expPath = outputPath
   t.context = {outputPath}
 
@@ -155,9 +155,9 @@ test('openscad to amf', t => {
 })
 
 test('openscad to openjscad', t => {
+  const jscadPath = t.context.jscadPath
   const inputPath = path.resolve(__dirname, '../examples/example001.scad')
   const outputPath = 'test.jscad'
-  const jscadPath = t.context.jscadPath
   const expPath = outputPath
   t.context = {outputPath}
 
