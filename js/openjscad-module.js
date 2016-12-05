@@ -14,12 +14,9 @@ const Blob = require('../Blob').Blob
 
 const OpenJsCad = require(openjscadPath).OpenJsCad
 const openscad = require('../openscad.js')
-const evaluateSource = require('./utils/evaluateSource')
 
-const meta = {
-  producer: `OpenJSCAD ${OpenJsCad.version}`,
-  date: new Date()
-}
+const evaluateSource = require('./utils/evaluateSource')
+//const generateOutputData = require('./utils/generateOutputData')
 
 /**
  * compile openjscad code and generates intermediate representation
@@ -34,10 +31,31 @@ function compile (params = {}, source) {
 
 /**
  * generate output file from intermediate representation
- * @param  {Object} ir the openjscad intermediate representation
  * @param  {String} outputFormat the output file format
+ * @param  {Object} ir the openjscad intermediate representation
  */
-function generateOutput (ir, outputFormat) {
+function generateOutput (outputFormat, ir) {
+  const meta = {
+    producer: `OpenJSCAD ${OpenJsCad.version}`,
+    date: new Date()
+  }
+  // FIXME : partial code duplication with utils/generateOutputData
+  const csgObject = ir
+  const outputFormatHandlers = {
+    'amf': () => csgObject.toAMFString(meta), // CSG to AMF
+    'stlb': () => csgObject.toStlBinary(), // CSG to STL BINARY
+    'stl': () => csgObject.toStlString(), // CSG to STL ASCII
+    'stla': () => csgObject.toStlString(), // CSG to STL ASCII
+    'dxf': () => csgObject.toDxf(), // CAG to DXF
+    'svg': () => csgObject.toSvg(), // CAG to SVG
+    'x3d': () => csgObject.toX3D(), // CSG to X3D Only possible via browsers
+    'json': () => csgObject.toJSON(), // CSG or CAG to JSON
+    undefined: () => {
+      throw new Error('ERROR: only jscad, stl, amf, dxf, svg or json as output format')
+    }
+  }
+  const data = outputFormatHandlers[outputFormat]()
+  return data
 }
 
 /**
