@@ -1,13 +1,34 @@
-const fs = require('fs')
-const path = require('path')
+/*const path = require('path')
+const lib = global.lib //FIXME: EEEK !! horrible
+const formatsPath = path.resolve(lib, './formats.js')
+const CSG = require(formatsPath).CSG // use the CSG with extended prototypes
+const CAG = require(formatsPath).CAG // use the CAG with extended prototypes
+const blobPath = path.resolve(lib, './Blob.js')
+const Blob = require(blobPath).Blob*/
+
+//these should be use instead, double check for CLI use
+const CSG = require('../../formats').CSG // use the CSG with extended prototypes
+const CAG = require('../../formats').CAG // use the CAG with extended prototypes
+const Blob = require('../../Blob').Blob
+
+
 const evaluateSource = require('./evaluateSource')
 
-function generateOutputData (outputFormat, src, mainParams, meta, CSG, CAG, lib, Blob) {
+/**
+ * generate output data from source
+ * @param {Object} modelingHelpers the modeling helpers module loaded as string
+ * @param {Object} meta optional metadata (AMF only)
+ * @param {Object} mainParams hash of parameters to pass to main function
+ * @param {String} outputFormat
+ * @param {String} src the original source
+ * @return the output data
+ */
+function generateOutputData (modelingHelpers, meta, mainParams, outputFormat, src)
+{
   let data
   if (outputFormat === 'jscad' || outputFormat === 'js') {
     data = new Blob([src], { type: 'application/javascript' })
   } else {
-    const modelingHelpers = fs.readFileSync(path.resolve(lib, './openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
     const csgObject = evaluateSource(modelingHelpers, CAG, mainParams, src)
     const outputFormatHandlers = {
       'amf': () => csgObject.toAMFString(meta), // CSG to AMF
