@@ -191,43 +191,6 @@ function determineOutputNameAndFormat (outputFormat, outputFile) {
   return {outputFormat, outputFile}
 }
 
-function evaluateSource (src, helperFunctions, mainParams) {
-  /*
-  //FIXME : should we be using this one instead ?
-    var processor = new OpenJsCad.Processor();
-  processor.setStatus("Initialized.");
-
-  // convert the file list
-  var src = fs.readFileSync(inPath,"UTF8");
-
-  // process the script
-  processor.setJsCad(src, inPath);
-
-  var objects = processor.currentObject;
-
-  // UNION the objects if necessary
-
-  // convert to the requested format
-  var object = objects;
-  var outPath = './junk.stl';
-  var outFormat = 'stla';
-  var out = processor.convertToBlob(object,outFormat);
-  */
-
-  const fullSrc = `${src}\n${helperFunctions}\nmain(_getParameterDefinitions(${JSON.stringify(mainParams)}))\n`
-  let csg = eval(fullSrc)
-  //auto extrude CAG
-  if (csg.length) {
-    let ouput = csg[0] instanceof CAG ? csg[0].extrude({offset: [0, 0, 0.1]}) : csg[0]
-
-    for (let i = 1; i < csg.length; i++) {
-      let current = csg[i] instanceof CAG ? csg[i].extrude({offset: [0, 0, 0.1]}) : csg[i]
-      ouput = ouput.unionForNonIntersecting(current)
-    }
-    csg = ouput
-  }
-}
-
 function writeOutputDataToFile (outputFile, outputData) {
   fs.writeFile(outputFile, outputData.asBuffer(), 0,
     function (err) {
