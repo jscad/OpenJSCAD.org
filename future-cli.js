@@ -44,14 +44,8 @@ global.lib = !fs.existsSync(global.lib) ? __dirname+'/' : '/usr/local/lib/openjs
 //global.nodeModules = '/usr/local/lib/node_modules/' // for now hard-coded too
 
 const lib = global.lib
-const formatsPath = path.resolve(lib, './formats.js')
-const blobPath = path.resolve(lib, './Blob.js')
 const openjscadPath = path.resolve(lib, './openjscad.js')
 const openscadPath = path.resolve(lib, './openscad.js')
-
-const CSG = require(formatsPath).CSG // use the CSG with extended prototypes
-const CAG = require(formatsPath).CAG // use the CAG with extended prototypes
-const Blob = require(blobPath).Blob
 
 const OpenJsCad = require(openjscadPath).OpenJsCad
 const openscad = require(openscadPath)
@@ -100,7 +94,9 @@ let src = fs.readFileSync(inputFile, inputFile.match(/\.stl$/i) ? 'binary' : 'UT
 src = inputFormatHandlers[inputFormat](src, inputFile, outputFile)
 
 // -- convert from JSCAD script into the desired output format
-const outputData = generateOutputData(outputFormat, src, gMainParam, meta, CSG, CAG, lib, Blob)
+const modelingHelpers = fs.readFileSync(path.resolve(lib, './openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
+const outputData = generateOutputData(modelingHelpers, meta, gMainParam, outputFormat, src)
+
 // -- and write it to disk
 writeOutputDataToFile(outputFile, outputData)
 
