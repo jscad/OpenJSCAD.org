@@ -1,21 +1,19 @@
 const fs = require('fs')
 const path = require('path')
 
+//FIXME: EEEK !!! horrible hack
 global.time = new Date()
 global.lib = !fs.existsSync(global.lib) ? path.resolve(__dirname + '/', '..') + '/' : '/usr/local/lib/openjscad/' // for now hard-coded
-
 const lib = global.lib
-const formatsPath = path.resolve(lib, './formats.js')
-const blobPath = path.resolve(lib, './Blob.js')
 const openjscadPath = path.resolve(lib, './openjscad.js')
-const openscadPath = path.resolve(lib, './openscad.js')
+//const openscadPath = path.resolve(lib, './openscad.js')
 
-const CSG = require(formatsPath).CSG // use the CSG with extended prototypes
-const CAG = require(formatsPath).CAG // use the CAG with extended prototypes
-const Blob = require(blobPath).Blob
+const CSG = require('../formats').CSG // use the CSG with extended prototypes
+const CAG = require('../formats').CAG // use the CAG with extended prototypes
+const Blob = require('../Blob').Blob
 
 const OpenJsCad = require(openjscadPath).OpenJsCad
-const openscad = require(openscadPath)
+const openscad = require('../openscad.js')
 const evaluateSource = require('./utils/evaluateSource')
 
 const meta = {
