@@ -4,6 +4,9 @@ import fs from 'fs'
 
 const openjscad = require('./openjscad-module')
 
+test.beforeEach(t => {
+})
+
 // FIXME: this goes perhaps into too much implementation detail ?
 test('compile', t => {
   const {compile} = openjscad
@@ -128,14 +131,60 @@ test('compile', t => {
   t.deepEqual(ir.isRetesselated, true)
 })
 
-
-test('generateOutput', t => {
+test('generateOutput(stl)', t => {
   const {generateOutput} = openjscad
-  const input = {}
+  //FIXME : create a fake csgObject rather than using output from another function
+  const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
+  const script = fs.readFileSync(inputPath, 'UTF8')
+  const input = openjscad.compile({}, script)
 
-  const output = generateOutput(input)
-  const expOutput = ''
-  t.deepEqual(output, expOutput)
+  const output = generateOutput('stl', input)
+  const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
+  t.is(type, 'application/sla')
+  t.is(encoding, 'utf8')
+  t.is(size, 326185)
+})
+
+test('generateOutput(stla)', t => {
+  const {generateOutput} = openjscad
+  //FIXME : create a fake csgObject rather than using output from another function
+  const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
+  const script = fs.readFileSync(inputPath, 'UTF8')
+  const input = openjscad.compile({}, script)
+
+  const output = generateOutput('stla', input)
+  const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
+  t.is(type, 'application/sla')
+  t.is(encoding, 'utf8')
+  t.is(size, 326185)
+})
+
+test('generateOutput(stlb)', t => {
+  const {generateOutput} = openjscad
+  //FIXME : create a fake csgObject rather than using output from another function
+  const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
+  const script = fs.readFileSync(inputPath, 'UTF8')
+  const input = openjscad.compile({}, script)
+
+  const output = generateOutput('stlb', input)
+  const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
+  t.is(type, 'application/sla')
+  t.is(encoding, 'utf8')
+  t.is(size, 70284)
+})
+
+test('generateOutput(amf)', t => {
+  const {generateOutput} = openjscad
+  //FIXME : create a fake csgObject rather than using output from another function
+  const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
+  const script = fs.readFileSync(inputPath, 'UTF8')
+  const input = openjscad.compile({}, script)
+
+  const output = generateOutput('amf', input)
+  const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
+  t.is(type, 'application/amf+xml')
+  t.is(encoding, 'utf8')
+  t.is(size, 385255)
 })
 
 test('convert', t => {
