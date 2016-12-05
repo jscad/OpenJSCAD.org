@@ -1,7 +1,7 @@
 const path = require('path')
 
 // -- input format handlers: helpers for cli & more
-function makeInputFormatHandlers (OpenJsCad, openscad, libPath) {
+function makeInputFormatHandlers (OpenJsCad, modelingHelpers, libPath) {
   const lib = libPath
   function inputScadHandler (src, inputFile, outputFile) {
     var scadParser = require('openscad-openjscad-translator') // hardcoded is bad, but works
@@ -12,7 +12,7 @@ function makeInputFormatHandlers (OpenJsCad, openscad, libPath) {
   }
 
   function inputStlHandler (src, inputFile) {
-    src = openscad.parseSTL(src, inputFile)
+    src = modelingHelpers.parseSTL(src, inputFile)
     return src
   }
 
@@ -23,12 +23,12 @@ function makeInputFormatHandlers (OpenJsCad, openscad, libPath) {
   }
 
   function inputObjHandler (src, inputFile) {
-    src = openscad.parseOBJ(src, inputFile)
+    src = modelingHelpers.parseOBJ(src, inputFile)
     return src
   }
 
   function inputGcodeHandler (src, inputFile) {
-    src = openscad.parseGCode(src, inputFile)
+    src = modelingHelpers.parseGCode(src, inputFile)
     return src
   }
 
