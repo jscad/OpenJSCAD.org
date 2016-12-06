@@ -8,7 +8,7 @@
     "openjscad": "./openjscad"
   },
   "scripts": {
-    "test": "ava './js/**/*.test.js' --require babel-register --verbose --timeout 2000",
+    "test": "ava './js/**/*.test.js' --require babel-register --verbose --timeout 5000",
     "build": "browserify src/index.js -o dist/index.js -t [babelify browserify minifyify]",
     "start-dev": "budo src/index.js:dist/index.js --port=8080 --live -- -t babelify",
     "release-patch": "git checkout master; npm version patch && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
