@@ -1,5 +1,7 @@
 #!/usr/local/bin/node --log_all
 
+// NOTE: this will only run on Node > 6 or needs to be transpiled
+
 // == OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License
 //
 // Description:
@@ -40,8 +42,7 @@ const path = require('path')
 const vm = require('vm')
 
 global.time = new Date()
-global.lib = !fs.existsSync(global.lib) ? __dirname+'/' : '/usr/local/lib/openjscad/' // for now hard-coded
-//global.nodeModules = '/usr/local/lib/node_modules/' // for now hard-coded too
+global.lib = !fs.existsSync(global.lib) ? path.resolve(__dirname + '/', '..') + '/' : '/usr/local/lib/openjscad/' // for now hard-coded
 
 const lib = global.lib
 const openjscadPath = path.resolve(lib, './openjscad.js')
@@ -50,8 +51,8 @@ const modelingHelpersPath = path.resolve(lib, './openscad.js')
 const OpenJsCad = require(openjscadPath).OpenJsCad
 const modelingHelpers = require(modelingHelpersPath)
 
-const makeInputFormatHandlers = require('./js/utils/inputFormatHandlers')
-const generateOutputData = require('./js/utils/generateOutputData')
+const makeInputFormatHandlers = require('./utils/inputFormatHandlers')
+const generateOutputData = require('./utils/generateOutputData')
 
 const meta = {
   producer: `OpenJSCAD ${OpenJsCad.version}`,
