@@ -186,15 +186,3 @@ test('generateOutput(amf)', t => {
   t.is(encoding, 'utf8')
   t.is(size, 385255)
 })
-
-test('convert', t => {
-  const {convert} = openjscad
-  const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
-  const inputData = fs.readFileSync(inputPath)
-  const expOutputData = ''
-  const inputFormat = 'stl'
-  const outputFormat = 'jscad'
-
-  const outputData = convert(inputData, inputFormat, outputFormat)
-  t.deepEqual(outputData, expOutputData)
-})

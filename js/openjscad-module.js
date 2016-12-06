@@ -58,12 +58,4 @@ function generateOutput (outputFormat, ir) {
   return data
 }
 
-/**
- * converts from input file to output file
- * @param  {Object} ir the openjscad intermediate representation
- * @param  {String} outputFormat the output file format
- */
-function convert (inputData, inputFormat, outputFormat) {
-}
-
-module.exports = { compile, generateOutput, convert}
+module.exports = { compile, generateOutput }
