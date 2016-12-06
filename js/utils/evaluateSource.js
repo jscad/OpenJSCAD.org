@@ -1,3 +1,4 @@
+'use strict'
 function evaluateSource (modelingHelpers, CAG, mainParams, src) {
   /*
   //FIXME : should we be using this one instead ?
@@ -25,13 +26,13 @@ function evaluateSource (modelingHelpers, CAG, mainParams, src) {
   const mainFunction = `main(_getParameterDefinitions(${JSON.stringify(mainParams)}))`
   const fullSrc = `${src}\n${modelingHelpers}\n${mainFunction}\n`
   //console.log('mainFunction', mainFunction)
-  let csgObject = eval(fullSrc)
+  var csgObject = eval(fullSrc)
   //auto extrude CAG
   if (csgObject.length) {
-    let ouput = csgObject[0] instanceof CAG ? csgObject[0].extrude({offset: [0, 0, 0.1]}) : csgObject[0]
+    var ouput = csgObject[0] instanceof CAG ? csgObject[0].extrude({offset: [0, 0, 0.1]}) : csgObject[0]
 
-    for (let i = 1; i < csgObject.length; i++) {
-      let current = csgObject[i] instanceof CAG ? csgObject[i].extrude({offset: [0, 0, 0.1]}) : csgObject[i]
+    for (var i = 1; i < csgObject.length; i++) {
+      const current = csgObject[i] instanceof CAG ? csgObject[i].extrude({offset: [0, 0, 0.1]}) : csgObject[i]
       ouput = ouput.unionForNonIntersecting(current)
     }
     csgObject = ouput

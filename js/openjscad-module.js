@@ -1,3 +1,4 @@
+'use strict'// only needed in node 4 & co , not in node > 6
 const fs = require('fs')
 const path = require('path')
 
@@ -24,7 +25,8 @@ const evaluateSource = require('./utils/evaluateSource')
  * @param  {Object} params the set of parameters to use
  * @param  {String} source the openjscad script we want to compile
  */
-function compile (params = {}, source) {
+function compile (params, source) {
+  params = params || {}
   const modelingHelpers = fs.readFileSync(path.resolve(lib, './openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
   return evaluateSource(modelingHelpers, CAG, params, source)
 }

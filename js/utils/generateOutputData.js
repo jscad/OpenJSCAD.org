@@ -10,8 +10,6 @@ const Blob = require(blobPath).Blob*/
 const CSG = require('../../formats').CSG // use the CSG with extended prototypes
 const CAG = require('../../formats').CAG // use the CAG with extended prototypes
 const Blob = require('../../Blob').Blob
-
-
 const evaluateSource = require('./evaluateSource')
 
 /**
@@ -25,9 +23,9 @@ const evaluateSource = require('./evaluateSource')
  */
 function generateOutputData (modelingHelpers, meta, mainParams, outputFormat, src)
 {
-  let data
   if (outputFormat === 'jscad' || outputFormat === 'js') {
-    data = new Blob([src], { type: 'application/javascript' })
+    //  console.log(`Blob: type [${data.type}] size [${data.size}]`)
+    return new Blob([src], { type: 'application/javascript' })
   } else {
     const csgObject = evaluateSource(modelingHelpers, CAG, mainParams, src)
     const outputFormatHandlers = {
@@ -44,10 +42,7 @@ function generateOutputData (modelingHelpers, meta, mainParams, outputFormat, sr
         process.exit(1)
       }
     }
-    data = outputFormatHandlers[outputFormat]()
-    return data
+    return outputFormatHandlers[outputFormat]()
   }
-  console.log(`Blob: type [${data.type}] size [${data.size}]`)
-  return data
 }
 module.exports = generateOutputData
