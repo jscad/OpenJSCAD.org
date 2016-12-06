@@ -13,7 +13,7 @@ test.afterEach.always(t => {
 })
 
 test.beforeEach(t => {
-  let jscadPath = '../openjscad'//future-cli.js
+  let jscadPath = '../openjscad'//'./future-cli'
   t.context = {
     jscadPath : path.resolve(__dirname, jscadPath)
   }
