@@ -13,7 +13,7 @@ test('compile', t => {
   const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
   const script = fs.readFileSync(inputPath, 'UTF8')
 
-  const ir = compile({}, script)
+  const ir = compile(script, {})
   const expProperties = {
     cube: { center: { _x: 0, _y: 0, _z: 15 },
       facecenters: [
@@ -136,7 +136,7 @@ test('generateOutput(stl)', t => {
   //FIXME : create a fake csgObject rather than using output from another function
   const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
   const script = fs.readFileSync(inputPath, 'UTF8')
-  const input = openjscad.compile({}, script)
+  const input = openjscad.compile(script, {})
 
   const output = generateOutput('stl', input)
   const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
@@ -150,7 +150,7 @@ test('generateOutput(stla)', t => {
   //FIXME : create a fake csgObject rather than using output from another function
   const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
   const script = fs.readFileSync(inputPath, 'UTF8')
-  const input = openjscad.compile({}, script)
+  const input = openjscad.compile(script, {})
 
   const output = generateOutput('stla', input)
   const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
@@ -164,7 +164,7 @@ test('generateOutput(stlb)', t => {
   //FIXME : create a fake csgObject rather than using output from another function
   const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
   const script = fs.readFileSync(inputPath, 'UTF8')
-  const input = openjscad.compile({}, script)
+  const input = openjscad.compile(script, {})
 
   const output = generateOutput('stlb', input)
   const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
@@ -178,7 +178,7 @@ test('generateOutput(amf)', t => {
   //FIXME : create a fake csgObject rather than using output from another function
   const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
   const script = fs.readFileSync(inputPath, 'UTF8')
-  const input = openjscad.compile({}, script)
+  const input = openjscad.compile(script, {})
 
   const output = generateOutput('amf', input)
   const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
