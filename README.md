@@ -60,15 +60,49 @@ For CLI (command-line interface) rendering install
 ```
 
 ### Node module use
+
+>Note: Please try to use a recent , LTS version of Node.js ie Node.js 6.x.x,
+node V4.x.X is also supported but not earlier versions (they are not maintained anymore)
+(see [here for more details](https://github.com/nodejs/LTS))
+
 ```
 npm install openjscad
 ```
 
-and then simply require() openjscad:
+and then simply import and use openjscad:
 
 ```
-const jscad = require('openjscad')
+var jscad = require('openjscad')
+var fs = require('fs')
+
+var script = `function main() {
+   return [
+      torus()
+  ]
+}`
+
+// generate compiled version
+var params = {}
+var compiled = jscad.compile(script, params)
+// generate final output data, choosing your prefered format
+var outputData = jscad.generateOutput('stlb', compiled)
+
+// hurray ,we can now write an stl file from our OpenJsCad script!
+fs.writeFileSync('torus.stl', outputData.asBuffer())
 ```
+
+#### Module api
+
+*compile(params, source)*
+ compile openjscad code and generates intermediate representation
+ ordering of parameters created with curying in mind
+ *params* the set of parameters to use
+ *source* the openjscad script we want to compile
+
+*generateOutput(outputFormat, ir)*
+ generate output file from intermediate representation
+ *outputFormat* the output file format
+ *ir* the openjscad intermediate representation object
 
 ## History
 
