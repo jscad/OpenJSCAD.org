@@ -1,8 +1,11 @@
 'use strict'
+const path = require('path')
+
 function evaluateSource (modelingHelpers, CAG, mainParams, src) {
   /*
   //FIXME : should we be using this one instead ?
-    var processor = new OpenJsCad.Processor();
+    var processor = new OpenJsCad.Processor(); //FIXME  : cannot be used , refers to browser only things like 'document etc'
+    /
   processor.setStatus("Initialized.");
 
   // convert the file list
@@ -23,10 +26,11 @@ function evaluateSource (modelingHelpers, CAG, mainParams, src) {
   */
   // console.log("render jscad to "+outputFormat)
   // console.log(JSON.stringify(gMainParam))
+
   const mainFunction = `main(_getParameterDefinitions(${JSON.stringify(mainParams)}))`
   const fullSrc = `${src}\n${modelingHelpers}\n${mainFunction}\n`
   //console.log('mainFunction', mainFunction)
-  var csgObject = eval(fullSrc)
+  var csgObject = eval(fullSrc) // FIXME : this needs to be gone ASAP !! hence need to change OpenjScad.processor
   //auto extrude CAG
   if (csgObject.length) {
     var ouput = csgObject[0] instanceof CAG ? csgObject[0].extrude({offset: [0, 0, 0.1]}) : csgObject[0]
