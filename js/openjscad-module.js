@@ -22,10 +22,10 @@ const evaluateSource = require('./utils/evaluateSource')
 /**
  * compile openjscad code and generates intermediate representation
  * ordering of parameters created with curying in mind
- * @param  {Object} params the set of parameters to use
  * @param  {String} source the openjscad script we want to compile
+ * @param  {Object} params the set of parameters to use  (optional)
  */
-function compile (params, source) {
+function compile (source, params) {
   params = params || {}
   const modelingHelpers = fs.readFileSync(path.resolve(lib, './openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
   return evaluateSource(modelingHelpers, CAG, params, source)
