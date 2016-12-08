@@ -9,7 +9,7 @@ Copyright (c) 2011 Evan Wallace (http://evanw.github.com/csg.js/)
 Copyright (c) 2012 Alexandre Girard (https://github.com/alx)
 
 Exporting CSG into various formats:
-   - AMF 
+   - AMF
    - X3D
    - STL (ASCII & Binary)
 Exporting CAG into various formats:
@@ -23,9 +23,9 @@ License: MIT license
 // import the required modules if necessary
 
 if(typeof module !== 'undefined') {    // used via nodejs
-    CSG = require(lib+'csg.js').CSG;
-    CAG = require(lib+'csg.js').CAG;
-    Blob = require(lib+'Blob.js').Blob;
+    CSG = require(lib+'/js/lib/csg.js').CSG;
+    CAG = require(lib+'/js/lib/csg.js').CAG;
+    Blob = require(lib+'/js/Blob.js').Blob;
 }
 
 ////////////////////////////////////////////
@@ -484,4 +484,3 @@ CAG.prototype.toSvg = function() {
     module.CSG = CSG;
     module.CAG = CAG;
 })(this);
-

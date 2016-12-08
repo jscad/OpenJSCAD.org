@@ -6,15 +6,15 @@ const path = require('path')
 global.time = new Date()
 global.lib = !fs.existsSync(global.lib) ? path.resolve(__dirname + '/', '..') + '/' : '/usr/local/lib/openjscad/' // for now hard-coded
 const lib = global.lib
-const openjscadPath = path.resolve(lib, './openjscad.js')
+const openjscadPath = path.resolve(lib, './js/openjscad.js')
 //const openscadPath = path.resolve(lib, './openscad.js')
 
-const CSG = require('../formats').CSG // use the CSG with extended prototypes
-const CAG = require('../formats').CAG // use the CAG with extended prototypes
-const Blob = require('../Blob').Blob
+const CSG = require('./formats').CSG // use the CSG with extended prototypes
+const CAG = require('./formats').CAG // use the CAG with extended prototypes
+const Blob = require('./Blob').Blob
 
 const OpenJsCad = require(openjscadPath).OpenJsCad
-const openscad = require('../openscad.js')
+const openscad = require('./openscad.js')
 
 const evaluateSource = require('./utils/evaluateSource')
 //const generateOutputData = require('./utils/generateOutputData')
@@ -27,7 +27,7 @@ const evaluateSource = require('./utils/evaluateSource')
  */
 function compile (source, params) {
   params = params || {}
-  const modelingHelpers = fs.readFileSync(path.resolve(lib, './openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
+  const modelingHelpers = fs.readFileSync(path.resolve('./openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
   return evaluateSource(modelingHelpers, CAG, params, source)
 }
 

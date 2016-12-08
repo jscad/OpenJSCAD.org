@@ -206,7 +206,7 @@ OpenJsCad.Processor = function(containerdiv, options) {
 // the default options
   this.opts = {
     debug: false,
-    libraries: ['csg.js','formats.js','openjscad.js','openscad.js'],
+    libraries: ['js/lib/csg.js','js/formats.js','js/openjscad.js','js/openscad.js'],
     openJsCadPath: '',
     useAsync: true,
     useSync:  true,
@@ -712,8 +712,8 @@ OpenJsCad.Processor.prototype = {
     );
   // pass the libraries to the worker for import
     var libraries = this.opts.libraries.map( function(l) {
-                      return this.baseurl+this.opts.openJsCadPath+l;
-                    }, this);
+        return this.baseurl+this.opts.openJsCadPath+l;
+      }, this);
   // start the worker
     that.worker.postMessage({cmd: "render", parameters: parameters, libraries: libraries});
   },

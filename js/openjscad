@@ -41,24 +41,21 @@ gMainParam = {};
 
 var fs = require('fs');
 var vm = require('vm');
+var path = require('path');
 //var os = require('os');
 
 //include('./openscad.js');         // later
 
-global.lib = '/usr/local/lib/openjscad/';             // for now hard-coded
+//global.lib = '/usr/local/lib/openjscad/';             // for now hard-coded
+global.lib = !fs.existsSync(global.lib) ? path.resolve(__dirname + '/', '..') + '/' : '/usr/local/lib/openjscad/' // for now hard-coded
 global.nodeModules = '/usr/local/lib/node_modules/';  // for now hard-coded too
 
-if (!fs.existsSync(global.lib))           // requires node 0.10.1 
-   global.lib = './';
-//if(!fs.statSync(global.lib).isDirectory())  // same but works with 0.6.1+
-//   global.lib = './';
+var CSG  = require(lib+'/js/formats.js').CSG; // use the CSG with extended prototypes
+var CAG  = require(lib+'/js/formats.js').CAG; // use the CAG with extended prototypes
+var Blob = require(lib+'/js/Blob.js').Blob;
 
-var CSG  = require(lib+'./formats.js').CSG; // use the CSG with extended prototypes
-var CAG  = require(lib+'./formats.js').CAG; // use the CAG with extended prototypes
-var Blob = require(lib+'./Blob.js').Blob;
-
-var OpenJsCad = require(lib+'./openjscad.js').OpenJsCad;
-var openscad  = require(lib+'./openscad.js');
+var OpenJsCad = require(lib+'/js/openjscad.js').OpenJsCad;
+var openscad  = require(lib+'/js/openscad.js');
 
 // hint: https://github.com/substack/node-optimist
 //       https://github.com/visionmedia/commander.js
@@ -107,7 +104,7 @@ for(var i=0; i<args.length; i++) {
    } else if(args[i].match(/^-o(\S.+)/)) {      // -o<output>
       outf = args[i];
       outf = outf.replace(/^\-o(\S+)$/,'$1');
-      
+
    } else if(args[i]=='-o') {                   // -o <output>
       outf = args[++i];
 
@@ -147,7 +144,7 @@ if(!outFormat&&!outf) {
 
 //console.log("reading "+inf);
 var src = fs.readFileSync(inf,inf.match(/\.stl$/i)?"binary":"UTF8");
-var scad = fs.readFileSync(lib+'./openscad.js');
+var scad = fs.readFileSync(lib+'/js/openscad.js');
 var inc = [];
 
 //var csg = sphere(1);          // -- basic test
@@ -167,7 +164,7 @@ if(!outFormat&&outf&&outf.length&&outf.match(/\.(jscad|js|stl|amf|dxf|svg)$/)) {
       outf = inf;
       outf = outf.replace(/\.([^\.]+)$/,"."+ext);              // compose output filename
    }
-   
+
 } else {
    console.log("ERROR: invalid output format <"+outFormat+">");
    process.exit(1);
@@ -275,7 +272,7 @@ fs.writeFile(outf,out.asBuffer(),0,
 
 // -- helper functions ---------------------------------------------------------------------------------------
 
-function include(fn) {    
+function include(fn) {
    //console.log(arguments.callee.caller,"include:"+fn);
    if(0) {
       //var script = vm.createScript(fs.readFileSync(fn),fn);
@@ -284,7 +281,7 @@ function include(fn) {
       return script;
    } else if(0) {
       inc.push(fn);
-      
+
    } else {
       var src = fs.readFileSync(fn, {encoding: 'utf8'});
       //console.log("include: ",src);
@@ -300,4 +297,3 @@ function include(fn) {
       return r;
    }
 }
-
