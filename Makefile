@@ -10,7 +10,7 @@ install::
 	#test -d ${NODE_MODULES}/jquery || sudo npm -g install jquery
 	sudo scp openjscad /usr/local/bin/
 	sudo mkdir -p ${LIB}
-	sudo scp *.js ${LIB}
+	sudo scp js/*.js ${LIB}
 	mkdir -p cache; chmod a+rw cache
 
 deinstall::
