@@ -7,9 +7,9 @@ const blobPath = path.resolve(lib, './Blob.js')
 const Blob = require(blobPath).Blob*/
 
 //these should be use instead, double check for CLI use
-const CSG = require('../../formats').CSG // use the CSG with extended prototypes
-const CAG = require('../../formats').CAG // use the CAG with extended prototypes
-const Blob = require('../../Blob').Blob
+const CSG = require('../formats').CSG // use the CSG with extended prototypes
+const CAG = require('../formats').CAG // use the CAG with extended prototypes
+const Blob = require('../Blob').Blob
 const evaluateSource = require('./evaluateSource')
 
 /**

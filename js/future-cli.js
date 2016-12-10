@@ -45,8 +45,8 @@ global.time = new Date()
 global.lib = !fs.existsSync(global.lib) ? path.resolve(__dirname + '/', '..') + '/' : '/usr/local/lib/openjscad/' // for now hard-coded
 
 const lib = global.lib
-const openjscadPath = path.resolve(lib, './openjscad.js')
-const modelingHelpersPath = path.resolve(lib, './openscad.js')
+const openjscadPath = path.resolve('./openjscad.js')
+const modelingHelpersPath = path.resolve('./openscad.js')
 
 const OpenJsCad = require(openjscadPath).OpenJsCad
 const modelingHelpers = require(modelingHelpersPath)
@@ -95,7 +95,7 @@ let src = fs.readFileSync(inputFile, inputFile.match(/\.stl$/i) ? 'binary' : 'UT
 src = inputFormatHandlers[inputFormat](src, inputFile, outputFile)
 
 // -- convert from JSCAD script into the desired output format
-const modelingHelpersAsData = fs.readFileSync(path.resolve(lib, './openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
+const modelingHelpersAsData = fs.readFileSync(path.resolve(lib, 'js/openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
 const outputData = generateOutputData(modelingHelpersAsData, meta, gMainParam, outputFormat, src)
 
 // -- and write it to disk

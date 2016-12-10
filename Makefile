@@ -3,16 +3,23 @@ LIB = /usr/local/lib/openjscad/
 NODE_MODULES = /usr/local/lib/node_modules/
 
 all::
-	@echo "make install deinstall tests clean" 
+	@echo "make install deinstall tests clean"
 
 install::
 	test -d ${NODE_MODULES}/openscad-openjscad-translator || sudo npm -g install openscad-openjscad-translator
 	#test -d ${NODE_MODULES}/jquery || sudo npm -g install jquery
-	sudo scp openjscad /usr/local/bin/
+	sudo scp js/openjscad /usr/local/bin/
 	sudo mkdir -p ${LIB}
-	sudo scp *.js ${LIB}
+	sudo scp js/openjscad.js ${LIB}
+	sudo scp js/openscad.js ${LIB}
+	sudo scp js/Blob.js ${LIB}
+	sudo scp js/formats.js ${LIB}
+	sudo scp js/lib/lightgl.js ${LIB}
+	sudo scp js/lib/csg.js ${LIB}
+	sudo scp js/lib/openscad-openjscad-translator.js ${LIB}
+	sudo scp js/lib/underscore.js ${LIB}
 	mkdir -p cache; chmod a+rw cache
-                                
+
 deinstall::
 	sudo rm -rf ${NODE_MODULES}openscad-openjscad-translator
 	sudo rm /usr/local/bin/openjscad
@@ -43,7 +50,7 @@ clean::
 	cd examples/platonics && make clean
 	cd examples/include-test && make clean
 
-# TODO:                                        
+# TODO:
 # - locally submodule of openscad-openjscad-translator, see http://git-scm.com/book/en/Git-Tools-Submodules
 
 # --- developers only below
@@ -72,10 +79,10 @@ master-to-dev::
 	git checkout dev
 	git merge master
 
-dist::	
+dist::
 	cd ..; tar cfz Backup/openjscad.org-${VERSION}.tar.gz "--exclude=*.git/*" OpenJSCAD.org/
 
-backup::	
+backup::
 	scp ../Backup/openjscad.org-${VERSION}.tar.gz the-labs.com:Backup/
 
 edit::
@@ -83,4 +90,4 @@ edit::
 
 live::
 	# -- do not enable --delete as it will destroy stats folder
-	rsync -av --exclude=.git --exclude=cache/ ./ delta:Sites/openjscad.org/ 
+	rsync -av --exclude=.git --exclude=cache/ ./ delta:Sites/openjscad.org/

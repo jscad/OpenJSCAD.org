@@ -2694,7 +2694,7 @@ _getParameterDefinitions = function(param) {         // used for openjscad CLI o
 // -------------------------------------------------------------------------------------------------
 
 if(typeof module !== 'undefined') {    // we are used as module in nodejs require()
-   var CSG = require(global.lib+'./csg.js').CSG;
+   var CSG = require(global.lib+'./js/lib/csg.js').CSG;
    //console.log("lib="+global.lib);
 
   module.exports = { 

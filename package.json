@@ -5,7 +5,7 @@
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "main": "js/openjscad-module.js",
   "bin": {
-    "openjscad": "./openjscad"
+    "openjscad": "./js/openjscad"
   },
   "scripts": {
     "test": "ava './js/**/*.test.js' --require babel-register --verbose --timeout 10000",
