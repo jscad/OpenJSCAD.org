@@ -106,7 +106,7 @@ fs.writeFileSync('torus.stl', outputData.asBuffer())
 
 ## History
 
-- 2016/10/01: 0.5.2: updated documentation links by Z3 Dev, updated Ace editor to 1.2.4, added support for JSON export and import, fixed AMF export to set colors only when provided, enhanced Processor constructor to support Viewer options, added big.html to provide an example of using Processor and Viewer options, enhanced Processor to retain multiple returned objects, fixed difference() and intersection() functions for CAG by fischman
+- 2016/10/01: 0.5.2: updated documentation links by Z3 Dev, updated Ace editor to 1.2.4, fixed AMF export to set colors only when provided, enhanced Processor constructor to support Viewer options, added big.html to provide an example of using Processor and Viewer options, enhanced Processor to retain multiple returned objects, fixed difference() and intersection() functions for CAG by fischman
 - 2016/06/27: 0.5.1: refactored AMF import and export, enhanced STL import by adding support for MM colors by Z3 Dev,added local storage by Robert Starkey
 - 2016/05/01: 0.5.0: added SVG import and export, added options to Processor and View classes, allow more flexibility in HTML by Z3 Dev
 - 2016/02/25: 0.4.0: refactored, functionality split up into more files, mostly done by Z3 Dev
