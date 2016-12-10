@@ -27,7 +27,13 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "openscad-openjscad-translator": "0.0.7"
+    "ace-code-editor": "^1.2.3",
+    "jquery": "^3.1.1",
+    "jquery-hammerjs": "^2.0.0",
+    "jquery-ui": "^1.12.1",
+    "openscad-openjscad-translator": "0.0.7",
+    "sax": "^1.2.1",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "ava": "^0.15.2",
