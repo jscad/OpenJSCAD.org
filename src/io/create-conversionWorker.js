@@ -9,8 +9,8 @@
 //
 // See worker-conversion.js for the conversion process
 //
-OpenJsCad.createConversionWorker = function() {
-  var w = new Worker('js/worker-conversion.js');
+export default function createConversionWorker() {
+  var w = new Worker('src/io/worker-conversion.js') // FIXME: update this to WebWorkify
 // when the worker finishes
 // - put the converted source into the editor
 // - save the converted source into the cache (gMemFs)
@@ -50,4 +50,3 @@ OpenJsCad.conversionFormats = [
 // 2D file formats
   'svg',
 ];
-
