@@ -22,26 +22,25 @@ if(typeof module !== 'undefined') {    // used via nodejs
   }
 }
 
-(function(module) {
-
+var CSG = require('csg.js').CSG
 ////////////////////////////////////////////
 //
-// JSON (JavaScript Object Notation) is a lightweight data-interchange format 
+// JSON (JavaScript Object Notation) is a lightweight data-interchange format
 // See http://json.org/
 //
 ////////////////////////////////////////////
 
-OpenJsCad.toSourceCSGVertex = function(ver) {
-    return 'new CSG.Vertex(new CSG.Vector3D(' + ver._x + ',' + ver._y + ',' + ver._z + '))';
-};
+function toSourceCSGVertex (ver) {
+  return 'new CSG.Vertex(new CSG.Vector3D(' + ver._x + ',' + ver._y + ',' + ver._z + '))';
+}
 
 // convert the give CSG object to JSCAD source
-OpenJsCad.toSourceCSG = function(csg) {
+function toSourceCSG (csg) {
   var code = '  var polygons = [];\n';
   csg.polygons.map(function(p) {
     code += '  poly = new CSG.Polygon([\n';
     for(var i=0; i<p.vertices.length; i++) {
-      code += '                         '+OpenJsCad.toSourceCSGVertex(p.vertices[i].pos)+',\n';
+      code += '                         '+toSourceCSGVertex(p.vertices[i].pos)+',\n';
     }
     code += '                         ])';
     if (p.shared && p.shared.color && p.shared.color.length) {
@@ -55,32 +54,32 @@ OpenJsCad.toSourceCSG = function(csg) {
   return code;
 };
 
-OpenJsCad.toSourceCAGVertex = function(ver) {
+function toSourceCAGVertex(ver) {
     return 'new CAG.Vertex(new CSG.Vector2D('+ver.pos._x+','+ver.pos._y+'))';
 };
-OpenJsCad.toSourceSide = function(side) {
-    return 'new CAG.Side('+OpenJsCad.toSourceCAGVertex(side.vertex0)+','+OpenJsCad.toSourceCAGVertex(side.vertex1)+')';
+function toSourceSide(side) {
+    return 'new CAG.Side('+toSourceCAGVertex(side.vertex0)+','+toSourceCAGVertex(side.vertex1)+')';
 };
 
 // convert the give CAG object to JSCAD source
-OpenJsCad.toSourceCAG = function(cag) {
+function toSourceCAG(cag) {
   var code = '  var sides = [];\n';
   cag.sides.map(function(s) {
-    code += '  sides.push('+OpenJsCad.toSourceSide(s)+');\n';
+    code += '  sides.push('+toSourceSide(s)+');\n';
   });
   code += '  return CAG.fromSides(sides);\n'
   return code;
 }
 
 // convert an anonymous CSG/CAG object to JSCAD source
-OpenJsCad.toSource = function(obj) {
+function toSource(obj) {
   if (obj.type && obj.type == 'csg') {
     var csg = CSG.fromObject(obj);
-    return OpenJsCad.toSourceCSG(csg);
+    return toSourceCSG(csg);
   }
   if (obj.type && obj.type == 'cag') {
     var cag = CAG.fromObject(obj);
-    return OpenJsCad.toSourceCAG(cag);
+    return toSourceCAG(cag);
   }
   return '';
 };
@@ -90,26 +89,24 @@ OpenJsCad.toSource = function(obj) {
 //
 // fn (optional) original filename of JSON source
 //
-OpenJsCad.parseJSON = function(src, fn, options) {
+function parseJSON(src, fn, options) {
   var fn = fn || 'amf';
   var options = options || {};
 
 // convert the JSON into an anonymous object
   var obj = JSON.parse(src);
-// convert the internal objects to JSCAD code 
+// convert the internal objects to JSCAD code
   var code = '';
   code += '//\n';
   code += "// producer: OpenJSCAD.org "+OpenJsCad.version+" JSON Importer\n";
   code += "// date: "+(new Date())+"\n";
   code += "// source: "+fn+"\n";
   code += '//\n';
-  code += "function main() {\n"; 
-  code += OpenJsCad.toSource(obj);
+  code += "function main() {\n";
+  code += toSource(obj);
   code += '};\n';
   return code;
 };
 
 // export the extended prototypes
-  module.CAG = CAG;
-  module.OpenJsCad = OpenJsCad;
-})(this);
+//module.CAG = CAG;

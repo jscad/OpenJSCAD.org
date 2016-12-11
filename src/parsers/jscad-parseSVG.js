@@ -9,18 +9,8 @@ Notes:
 1) All functions extend other objects in order to maintain namespaces.
 */
 
-// import the required modules if necessary
-if(typeof module !== 'undefined') {    // used via nodejs
-  if (typeof module.CAG === 'undefined') {
-    CAG = require(lib+'../csg.js').CAG;
-  }
-  if (typeof module.OpenJsCad === 'undefined') {
-    OpenJsCad = require(lib+'../openjscad.js').OpenJsCad;
-  }
-  var sax = require(lib+"lib/sax-js-1.1.5/lib/sax");
-}
-
-(function(module) {
+var CAG = require('csg.js').CAG
+var sax = require('sax')
 
 ////////////////////////////////////////////
 //
@@ -1208,7 +1198,7 @@ sax.SAXParser.prototype.codify = function(group) {
   return code;
 }
 
-OpenJsCad.createSvgParser = function(src, pxPmm) {
+function createSvgParser (src, pxPmm) {
 // create a parser for the XML
   var parser = sax.parser(false, {trim: true, lowercase: false, position: true});
   if (pxPmm !== undefined) {
@@ -1357,14 +1347,14 @@ OpenJsCad.createSvgParser = function(src, pxPmm) {
 // options (optional) anonymous object with:
 //   pxPmm: pixels per milimeter for calcuations
 //
-OpenJsCad.parseSVG = function(src, fn, options) {
+function parseSVG (src, fn, options) {
   var fn = fn || 'svg';
   var options = options || {};
   var pxPmm;
   if ('pxPmm' in options) { pxPmm = options.pxPmm; }
 // parse the SVG source
-  var parser = OpenJsCad.createSvgParser(src, pxPmm);
-// convert the internal objects to JSCAD code 
+  var parser = createSvgParser(src, pxPmm);
+// convert the internal objects to JSCAD code
   var code = '';
   code += '//\n';
   code += "// producer: OpenJSCAD.org "+OpenJsCad.version+" SVG Importer\n";
@@ -1404,7 +1394,5 @@ CAG.fromSVG = function(src, options) {
 };
 
 // export the extended prototypes
-  module.CAG = CAG;
-  module.OpenJsCad = OpenJsCad;
-})(this);
-
+  //module.CAG = CAG;
+  //module.OpenJsCad = OpenJsCad;
