@@ -1,11 +1,12 @@
 import $ from 'jquery'
-import { setUpEditor } from './ui-editor'
+import { setUpEditor } from './editor'
 import { detectBrowser } from './detectBrowser'
 import { createExamples } from './examples'
 import { createOptions, getOptions } from './options'
 import AlertUserOfUncaughtExceptions from './errorDispatcher'
 
 import { version } from '../jscad/version'
+import Processor from '../jscad/processor'
 
 const me = document.location.toString().match(/^file:/) ? 'web-offline' : 'web-online'
 const browser = detectBrowser()
@@ -22,7 +23,7 @@ function init () {
   docUrl = document.URL
   // Show all exceptions to the user:
   AlertUserOfUncaughtExceptions()
-  // gProcessor = new OpenJsCad.Processor(document.getElementById("viewerContext"))
+  gProcessor = new Processor(document.getElementById('viewerContext'))
   gEditor = setUpEditor()
   // setupDragDrop()
   createExamples(me, {gMemFs, showEditor, gProcessor})
@@ -120,7 +121,6 @@ function init () {
   const versionText = `Version ${version}`
   document.querySelector('#menuVersion').innerHTML = versionText
   document.querySelector('#aboutVersion').innerHTML = versionText
-
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {
