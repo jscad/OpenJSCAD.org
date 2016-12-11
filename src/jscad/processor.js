@@ -1,15 +1,15 @@
 import log from './log' // logging helper
 import getParamDefinitions from './getParamDefinitions'
-// import createJscadWorker from ''
 import createJscadFunction from './jscad-function'
+import convertToSolid from './convertToSolid'
+// import createJscadWorker from ''
+
 import { revokeBlobUrl } from '../utils/Blob'
 import { version } from '../jscad/version'
+
 import { isSafari } from '../ui/detectBrowser'
 import { getWindowURL } from '../ui/urlHelpers'
 import FileSystemApiErrorHandler from '../ui/fileSystemApiErrorHandler'
-
-import convertToSolid from './convertToSolid'
-
 import Viewer from '../ui/viewer/jscad-viewer'
 
 export default function Processor (containerdiv, options) {
