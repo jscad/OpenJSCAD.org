@@ -96,7 +96,7 @@ function init () {
   })
 
   // about/ licence section
-  $('.navlink').click(function (e) {
+  $('.navlink.about').click(function (e) {
     $('#about').show()
     return false
   })
