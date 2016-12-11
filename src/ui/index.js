@@ -5,6 +5,7 @@ import { createExamples } from './examples'
 import { createOptions, getOptions } from './options'
 import AlertUserOfUncaughtExceptions from './errorDispatcher'
 
+import { version } from '../jscad/version'
 
 const me = document.location.toString().match(/^file:/) ? 'web-offline' : 'web-online'
 const browser = detectBrowser()
@@ -23,7 +24,7 @@ function init () {
   AlertUserOfUncaughtExceptions()
   // gProcessor = new OpenJsCad.Processor(document.getElementById("viewerContext"))
   gEditor = setUpEditor()
-// setupDragDrop()
+  // setupDragDrop()
   createExamples(me, {gMemFs, showEditor, gProcessor})
   createOptions()
   getOptions()
@@ -100,8 +101,26 @@ function init () {
     return false
   })
   $('.okButton').click(function (e) {
-    $('#about').hide(); return false;
+    $('#about').hide(); return false
   })
+
+  // dropzone
+  const dropZoneText = browser === 'chrome' && me === 'web-online' ? ', or folder with jscad files ' : ''
+  document.querySelector('#filedropzone_empty')
+    .innerHTML =
+    `Drop one or more supported files
+       ${dropZoneText}
+       here (see <a style='font-weight: normal' href='https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#support-of-include' target=_blank>details</a>)
+       <br>or directly edit OpenJSCAD or OpenSCAD code using the editor.`
+
+  // version number displays
+  const footerContent = `OpenJSCAD.org ${version}, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>`
+  document.querySelector('#footer').innerHTML = footerContent
+
+  const versionText = `Version ${version}`
+  document.querySelector('#menuVersion').innerHTML = versionText
+  document.querySelector('#aboutVersion').innerHTML = versionText
+
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {

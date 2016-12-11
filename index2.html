@@ -71,7 +71,7 @@ Todo:
     <div id="menu">
       <img id="menuHandle" src="imgs/menuHandleVL.png">
       <nav>
-        <div id="menuVersion">Version <script>document.write(OpenJsCad.version);</script></div>
+        <div id="menuVersion"></div>
         <p/>
         <table class="info">
           <tr><td class="infoView" colspan=2>Editor</td></tr>
@@ -125,7 +125,8 @@ Todo:
 <!-- about dialog -->
     <div id="about">
       <img src="imgs/title.png">
-      <br/>Version <script>document.write(OpenJsCad.version)</script>
+      <div id="aboutVersion" ></div>
+
       <p>
 by
 Joost Nieuwenhuijse (core),
@@ -185,11 +186,6 @@ function main() {
       <div id="statusdiv"></div>
       <div id="filedropzone">
         <div id="filedropzone_empty">
-<script>document.write("Drop one or more supported files"+
-     (browser=='chrome'&&me=='web-online'?", or folder with jscad files ":"")+
-     " here (see <a style='font-weight: normal' href='https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#support-of-include' target=_blank>details</a>) "+
-     "<br>or directly edit OpenJSCAD or OpenSCAD code using the editor.");
-</script>
         </div>
         <div id="filedropzone_input">
           <p>
@@ -210,7 +206,6 @@ function main() {
 
 <!-- footer (version, copyright) -->
     <div id="footer">
-      OpenJSCAD.org <script>document.write(OpenJsCad.version);</script>, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>
     </div>
   </body>
 </html>
