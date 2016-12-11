@@ -93,6 +93,15 @@ function init () {
       $('#customPlate').hide()
     }
   })
+
+  // about/ licence section
+  $('.navlink').click(function (e) {
+    $('#about').show()
+    return false
+  })
+  $('.okButton').click(function (e) {
+    $('#about').hide(); return false;
+  })
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {
