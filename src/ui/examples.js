@@ -1,6 +1,7 @@
 import $ from 'jquery'
+import createConversionWorker from '../io/createConversionWorker'
 
-const ex = [
+const examples = [
   { file: 'logo.jscad', title: 'OpenJSCAD.org Logo' },
   { file: 'logo.amf', title: 'OpenJSCAD.org Logo', type: 'AMF' },
 
@@ -66,17 +67,16 @@ const ex = [
 export function createExamples (me, fetchExampleParams) {
   if (me === 'web-online') {
     var wrap = 26
-    var colp = 100 / Math.floor(ex.length / wrap + 1) + '%'
+    var colp = 100 / Math.floor(examples.length / wrap + 1) + '%'
     var src = '<table width=100%><tr><td widthx=' + colp + ' valign=top>'
-    for (var i = 0; i < ex.length; i++) {
-      if (ex[i].wrap) {
+    for (var i = 0; i < examples.length; i++) {
+      if (examples[i].wrap) {
         src += '</td><td class="examplesSeparator" widthx=' + colp + ' valign=top>'
       }
-      if (ex[i].spacing) src += '<p/>'
-      //src += '<li><a href=\'#\' onclick=\'fetchExample("examples/' + ex[i].file + '"); return false;\'>' + ex[i].title + '</a>\n'
-        src += `<li><a class='example' data-path=${'examples/' + ex[i].file} href='#'> + ${ex[i].title} </a>\n`
-      if (ex[i].type) src += ' <span class=type>(' + ex[i].type + ')</span></a>'
-      if (ex[i].new) src += ' <span class=newExample>new</span></a>'
+      if (examples[i].spacing) src += '<p/>'
+        src += `<li><a class='example' data-path=${'examples/' + examples[i].file} href='#'> + ${examples[i].title} </a>\n`
+      if (examples[i].type) src += ' <span class=type>(' + examples[i].type + ')</span></a>'
+      if (examples[i].new) src += ' <span class=newExample>new</span></a>'
     }
     src += '</td></tr></table>'
     $('#examples').html(src)
@@ -127,7 +127,7 @@ export function fetchExample (filename, url, {gMemFs, showEditor, gProcessor}) {
 
       //FIXME: refactor : same code as ui/drag-drop
       gProcessor.setStatus('Converting ' + filename + " <img id=busy src='imgs/busy.gif'>")
-      const worker = OpenJsCad.createConversionWorker()
+      const worker = createConversionWorker()
       const baseurl = gProcessor.baseurl
       // NOTE: cache: false is set to allow evaluation of 'include' statements
       worker.postMessage({baseurl, source, filename, cache: false})
@@ -194,7 +194,7 @@ function loadExample (me) {
         putSourceInEditor(localStorage.editorContent, 'MyDesign.jscad')
         gProcessor.setJsCad(localStorage.editorContent, 'MyDesign.jscad')
       } else {
-        fetchExample('examples/' + ex[0].file)
+        fetchExample('examples/' + examples[0].file)
       }
     }
   } else {

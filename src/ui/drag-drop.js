@@ -22,6 +22,7 @@
 // * #currentfile element
 
 import { conversionFormats } from '../jscad/conversionFormats'
+import createConversionWorker from '../io/createConversionWorker'
 
 // --- Global Variables
 var gCurrentFiles = []; // linear array, contains files (to read)
@@ -350,7 +351,7 @@ function parseFile (f, onlyifchanged) {
 
     //FIXME: refactor : same code as ui/examples
     gProcessor.setStatus('Converting ' + filename + " <img id=busy src='imgs/busy.gif'>")
-    const worker = OpenJsCad.createConversionWorker()
+    const worker = createConversionWorker()
     const baseurl = gProcessor.baseurl
     // NOTE: cache: true is very important to control the evaluation of all cached files (code)
     worker.postMessage({baseurl, source, filename, cache: true})
