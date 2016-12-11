@@ -1,5 +1,8 @@
 import $ from 'jquery'
+
 import { setUpEditor } from './editor'
+import { setupDragDrop } from './drag-drop'
+
 import { detectBrowser } from './detectBrowser'
 import { createExamples } from './examples'
 import { createOptions, getOptions } from './options'
@@ -17,15 +20,16 @@ var remoteUrl = './remote.pl?url='
 // var remoteUrl = './remote.php?url='
 var gProcessor = null
 var gEditor = null
-var gMemFs
+var gMemFs = []
+var gCurrentFiles = []
 
 function init () {
   docUrl = document.URL
-  // Show all exceptions to the user:
+  // Show all exceptions to the user: // WARNING !! this is not practical at dev time
   AlertUserOfUncaughtExceptions()
   gProcessor = new Processor(document.getElementById('viewerContext'))
   gEditor = setUpEditor()
-  // setupDragDrop()
+  setupDragDrop()
   createExamples(me, {gMemFs, showEditor, gProcessor})
   createOptions()
   getOptions()
