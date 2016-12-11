@@ -81,9 +81,9 @@ export function createExamples (me, fetchExampleParams) {
     src += '</td></tr></table>'
     $('#examples').html(src)
 
-    $('.example').click(function (ev) {
+    $('.example').click(function (e) {
       //console.log('example clicked',)
-      const examplePath = ev.currentTarget.dataset.path
+      const examplePath = e.currentTarget.dataset.path
       fetchExample(examplePath, undefined, fetchExampleParams)
     })
   } else {
@@ -123,11 +123,11 @@ export function fetchExample (filename, url, {gMemFs, showEditor, gProcessor}) {
       var editorSource = source
       var path = filename
 
-      _includePath = path.replace(/\/[^\/]+$/, '/')
+      const _includePath = path.replace(/\/[^\/]+$/, '/')
 
+      //FIXME: refactor : same code as ui/drag-drop
       gProcessor.setStatus('Converting ' + filename + " <img id=busy src='imgs/busy.gif'>")
-
-      var worker = OpenJsCad.createConversionWorker()
+      const worker = OpenJsCad.createConversionWorker()
       const baseurl = gProcessor.baseurl
       // NOTE: cache: false is set to allow evaluation of 'include' statements
       worker.postMessage({baseurl, source, filename, cache: false})
@@ -185,8 +185,8 @@ function loadExample (me) {
       xhr.send()
     }
     else if (docUrl.match(/#(examples\/\S+)$/)) { // local example, e.g. http://openjscad.org/#examples/example001.jscad
-      var fn = RegExp.$1
-      fetchExample(fn)
+      var filename = RegExp.$1
+      fetchExample(filename)
       document.location = docUrl.replace(/#.*$/, '#')
     } else {
       // load content from local storage if found
