@@ -1,55 +1,5 @@
-/**
- * convert color from rgba object to the array of bytes
- * @param   {object} color `{r: r, g: g, b: b, a: a}`
- * @returns {Array}  `[r, g, b, a]`
- */
-function colorBytes (colorRGBA) {
-  var result = [colorRGBA.r, colorRGBA.g, colorRGBA.b];
-  if (colorRGBA.a !== undefined) result.push (colorRGBA.a);
-  return result;
-}
-
-function colorRGBA (colorBytes) {
-  var result = {r: colorBytes[0], g: colorBytes[1], b: colorBytes[2]};
-  if (colorBytes[3] !== undefined) result.a = colorBytes[3];
-  return result;
-}
-
-function cssFnSingleColor (str) {
-  if (str[str.length-1] === '%') {
-    return parseInt(str, 10)/100;
-  } else {
-    return parseInt(str, 10)/255;
-  }
-}
-
-function parseColor (color) {
-  // hsl, hsv, rgba, and #xxyyzz is supported
-  var rx = {
-    'html3': /^#([a-f0-9]{3})$/i,
-    'html6': /^#([a-f0-9]{6})$/i,
-    'fn': /^(rgb|hsl|hsv)a?\s*\(([^\)]+)\)$/i,
-  }
-  var rgba;
-  var match;
-  if (match = color.match (rx.html6)) {
-    rgba = [parseInt (match[1], 16), parseInt (match[2], 16), parseInt (match[3], 16), 1];
-  } else if (match = color.match (rx.html3)) {
-    rgba = [parseInt (match[1]+match[1], 16), parseInt (match[2]+match[2], 16), parseInt (match[3]+match[3], 16), 1];
-  } else if (match = color.match (rx.fn)) {
-    if (match[1] === 'rgb' || match[1] === 'rgba') {
-      // 0-255 or percentage allowed
-      var digits = match[2].split(/\s*,\s*/);
-      rgba = [cssFnSingleColor(digits[0]), cssFnSingleColor(digits[1]), cssFnSingleColor(digits[2]), parseFloat(digits[3])]
-    }
-    // rgba = [match[1], match[2], match[3], match[4]];
-    // console.log (rgba);
-  }
-
-  // console.log (match);
-
-  return rgba;
-}
+import LightGLEngine from './jscad-viewer-lightgl'
+import {colorRGBA, parseColor} from './jscad-viewer-helpers'
 
 /**
  * Merge deep two objects, simplified version for config
@@ -112,10 +62,10 @@ function applyLegacyOptions (options, custom) {
  * @param {DOMElement} containerelement container element
  * @param {object}     customization    options for renderer
  */
-OpenJsCad.Viewer = function(containerelement, customization) {
+export default function Viewer(containerelement, customization) {
 
   // see the various methods below on how to change these
-  var options = OpenJsCad.Viewer.defaults();
+  var options = Viewer.defaults();
 
   deepMerge (options, customization || {});
 
@@ -126,13 +76,13 @@ OpenJsCad.Viewer = function(containerelement, customization) {
   var engine;
 
   // select drawing engine from options
-  if (options.engine && OpenJsCad.Viewer[options.engine]) {
-    engine = OpenJsCad.Viewer[options.engine];
+  if (options.engine && Viewer[options.engine]) {
+    engine = Viewer[options.engine];
   }
 
   // get one of two exising
   if (!engine) {
-    engine = OpenJsCad.Viewer.LightGLEngine || OpenJsCad.Viewer.ThreeEngine
+    engine = LightGLEngine //|| Viewer.ThreeEngine
   }
 
   if (!engine) {
@@ -140,9 +90,9 @@ OpenJsCad.Viewer = function(containerelement, customization) {
   }
 
   // mixin methods
-  for (var method in OpenJsCad.Viewer.prototype) {
+  for (var method in Viewer.prototype) {
     if (!(method in engine.prototype)) {
-      engine.prototype[method] = OpenJsCad.Viewer.prototype[method];
+      engine.prototype[method] = Viewer.prototype[method];
     }
   }
 
@@ -155,7 +105,7 @@ OpenJsCad.Viewer = function(containerelement, customization) {
  * return defaults which can be customized later
  * @returns {object} [[Description]]
  */
-OpenJsCad.Viewer.defaults = function () {
+Viewer.defaults = function () {
   return {
     camera: {
       fov: 45,                           // field of view
@@ -207,7 +157,7 @@ OpenJsCad.Viewer.defaults = function () {
   };
 };
 
-OpenJsCad.Viewer.prototype = {
+Viewer.prototype = {
   parseSizeParams: function() {
     // essentially, allow all relative + px. Not cm and such.
     var winResizeUnits = ['%', 'vh', 'vw', 'vmax', 'vmin'];

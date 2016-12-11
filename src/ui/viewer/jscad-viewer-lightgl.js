@@ -1,9 +1,18 @@
+
+var $ = require('jquery')
+//require('jquery-hammerjs')// FIXME: err ?
+//require('jquery-ui') // FIXME: err again , jquery is seriously outdated
+//import $ from 'jquery' // EEK!
+import GL from './lightgl'
+import {colorBytes} from './jscad-viewer-helpers'
+
+
 /**
  * lightgl.js renderer for jscad viewer
  * @param {DOMElement} containerelement container element
  * @param {object}     options    options for renderer
  */
-OpenJsCad.Viewer.LightGLEngine = function(containerelement, options) {
+ export default function LightGLEngine(containerelement, options) {
 
   this.options = options;
 
@@ -21,7 +30,7 @@ OpenJsCad.Viewer.LightGLEngine = function(containerelement, options) {
 
 };
 
-OpenJsCad.Viewer.LightGLEngine.prototype = {
+LightGLEngine.prototype = {
   init: function () {
 
   },
@@ -129,6 +138,8 @@ OpenJsCad.Viewer.LightGLEngine.prototype = {
 <div class="arrow arrow-top" />\
 <div class="arrow arrow-bottom" /></div>');
 
+
+/*FIXME: disabled for now because of the JQUERY mess
     $(this.containerEl)
       .append(shiftControl)
       .hammer({//touch screen control
@@ -183,7 +194,8 @@ OpenJsCad.Viewer.LightGLEngine.prototype = {
       _this.touch.lastX = 0;
       _this.touch.lastY = 0;
       _this.touch.scale = 0;
-    });
+    });*/
+
 
     this.gl.onmousemove = function(e) {
       _this.onMouseMove(e);

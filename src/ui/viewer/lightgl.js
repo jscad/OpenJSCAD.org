@@ -2254,3 +2254,5 @@ var GL = (function() {
 
 	return GL;
 })();
+
+module.exports  = GL
