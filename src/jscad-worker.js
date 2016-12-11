@@ -16,9 +16,11 @@
 //   (KIND OF LAME but that keeps the scope of variables and functions clean)
 // Upon receiving the message, the callback routine is called with the results
 //
-OpenJsCad.createJscadWorker = function(fullurl, script, callback) {
+import { textToBlobUrl } from './ui/urlHelpers'
+
+export default function createJscadWorker(fullurl, script, callback) {
   var source = buildJscadWorkerScript(fullurl, script);
-  var blobURL = OpenJsCad.textToBlobUrl(source);
+  var blobURL = textToBlobUrl(source);
   var w = new Worker(blobURL);
 
   //console.log("createJscadWorker: "+source);
@@ -159,4 +161,3 @@ function runJscadWorker(e) {
   }
   postMessage(r);
 };
-
