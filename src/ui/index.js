@@ -1,11 +1,12 @@
 import $ from 'jquery'
 import { setUpEditor } from './ui-editor'
 import { detectBrowser } from './detectBrowser'
-import AlertUserOfUncaughtExceptions from './errorDispatcher'
 import { createExamples } from './examples'
+import { createOptions, getOptions } from './options'
+import AlertUserOfUncaughtExceptions from './errorDispatcher'
+
 
 const me = document.location.toString().match(/^file:/) ? 'web-offline' : 'web-online'
-
 const browser = detectBrowser()
 
 var docUrl = undefined
@@ -23,11 +24,9 @@ function init () {
   // gProcessor = new OpenJsCad.Processor(document.getElementById("viewerContext"))
   gEditor = setUpEditor()
 // setupDragDrop()
-
   createExamples(me, {gMemFs, showEditor, gProcessor})
-  //createOptions()
-  //getOptions()
-
+  createOptions()
+  getOptions()
 
   $('#menu').height($(window).height()) // initial height
 
