@@ -21,13 +21,15 @@
 // * #filedropzone_empty element
 // * #currentfile element
 
+import { conversionFormats } from '../jscad/conversionFormats'
+
 // --- Global Variables
 var gCurrentFiles = []; // linear array, contains files (to read)
 var gMemFs = []; // associated array, contains file content in source gMemFs[i].{name,source}
 
 // --- Public API
 
-function setupDragDrop () {
+export function setupDragDrop () {
   // console.log("setupDragDrop()")
 
   var dropZone = document.getElementById('filedropzone')
@@ -76,11 +78,11 @@ function toggleAutoReload () {
 // --- Private Variables
 var autoReloadTimer = null
 
-var gMemFsCount = 0; // async reading: count of already read files
-var gMemFsTotal = 0; // async reading: total files to read (Count==Total => all files read)
+var gMemFsCount = 0 // async reading: count of already read files
+var gMemFsTotal = 0 // async reading: total files to read (Count==Total => all files read)
 var gMemFsChanged = 0 // how many files have changed
-var gRootFs = []; // root(s) of folders
-var gMailFile = null; // file entry containing main()
+var gRootFs = [] // root(s) of folders
+var gMailFile = null // file entry containing main()
 
 // --- Private API
 
@@ -93,7 +95,7 @@ function handleInputFiles (evt) {
         var file = evt.target.files[i]
         var e = file.name.toLowerCase().match(/\.(\w+)$/i)
         e = RegExp.$1
-        if (OpenJsCad.conversionFormats.indexOf(e) >= 0) {
+        if (conversionFormats.indexOf(e) >= 0) {
           gCurrentFiles.push(evt.target.files[i]); // -- need to transfer the single elements
         }
       }
@@ -158,7 +160,7 @@ function walkFileTree (item, path) {
     item.file(function (file) { // this is also asynchronous ... (making everything complicate)
       var e = file.name.toLowerCase().match(/\.(\w+)$/i)
       e = RegExp.$1
-      if (OpenJsCad.conversionFormats.indexOf(e) >= 0) {
+      if (conversionFormats.indexOf(e) >= 0) {
         gMemFsTotal++
         gCurrentFiles.push(file)
         readFileAsync(file)
@@ -197,7 +199,7 @@ function setCurrentFile (file) {
   // console.log("setCurrentFile("+file.name+":"+file.source+")")
   var e = file.name.toLowerCase().match(/\.(\w+)$/i)
   e = RegExp.$1
-  if (OpenJsCad.conversionFormats.indexOf(e) < 0) {
+  if (conversionFormats.indexOf(e) < 0) {
     throw new Error('Please drag and drop a compatible file')
   }
   if (file.size == 0) {
@@ -229,17 +231,17 @@ function readFileAsync (f) {
         // console.log("readFileAsync: "+gMemFsTotal+" files read")
 
         if (gMemFsTotal > 1) {
-          for (var fn in gMemFs) {
-            if (gMemFs[fn].name.match(/main.(jscad|js)$/)) {
-              gMainFile = gMemFs[fn]
+          for (var filename in gMemFs) {
+            if (gMemFs[filename].name.match(/main.(jscad|js)$/)) {
+              gMainFile = gMemFs[filename]
               break
             }
           }
           if (!gMailFile) {
             // try again but search for the function declaration of main()
-            for (var fn in gMemFs) {
-              if (gMemFs[fn].source.search(/function\s+main\s*\(/) >= 0) {
-                gMainFile = gMemFs[fn]
+            for (var filename in gMemFs) {
+              if (gMemFs[filename].source.search(/function\s+main\s*\(/) >= 0) {
+                gMainFile = gMemFs[filename]
                 break
               }
             }
@@ -339,17 +341,18 @@ function parseFile (f, onlyifchanged) {
     throw new Error('Could not read file.')
   }
 
-  if (previousScript == source) return
+  if (previousScript === source) return
 
   if (gProcessor && (!onlyifchanged)) {
-    var fn = f.name
+    var filename = f.name
 
-    saveScript(fn, source)
+    saveScript(filename, source)
 
-    gProcessor.setStatus('Converting ' + fn + " <img id=busy src='imgs/busy.gif'>")
-    var worker = OpenJsCad.createConversionWorker()
-    var u = gProcessor.baseurl
+    //FIXME: refactor : same code as ui/examples
+    gProcessor.setStatus('Converting ' + filename + " <img id=busy src='imgs/busy.gif'>")
+    const worker = OpenJsCad.createConversionWorker()
+    const baseurl = gProcessor.baseurl
     // NOTE: cache: true is very important to control the evaluation of all cached files (code)
-    worker.postMessage({baseurl: u, source: source, filename: fn, cache: true})
+    worker.postMessage({baseurl, source, filename, cache: true})
   }
 }
