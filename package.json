@@ -10,7 +10,7 @@
   "scripts": {
     "test": "ava './js/**/*.test.js' --require babel-register --verbose --timeout 10000",
     "build": "browserify src/index.js -o dist/index.js -t [babelify browserify minifyify]",
-    "start-dev": "budo src/index.js:dist/index.js --port=8080 --live -- -t babelify",
+    "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -t babelify",
     "release-patch": "git checkout master; npm version patch && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-minor": "git checkout master; npm version minor && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-major": "git checkout master; npm version major && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
@@ -27,7 +27,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "ace-code-editor": "^1.2.3",
+    "brace": "^0.9.0",
     "jquery": "^3.1.1",
     "jquery-hammerjs": "^2.0.0",
     "jquery-ui": "^1.12.1",
