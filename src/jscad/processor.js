@@ -24,6 +24,8 @@ import * as extrusion from '../modeling/extrusion'
 import * as color from '../modeling/color'
 import * as maths from '../modeling/maths'
 import * as csg from '../csg'
+import * as text from '../modeling/text'
+
 //for backwards compatibility
 const OpenJsCad = {
   log
@@ -47,6 +49,7 @@ exposeAPI(transformations)
 exposeAPI(extrusion)
 exposeAPI(color)
 exposeAPI(maths)
+exposeAPI(text)
 exposeAPI(csg)
 
 export default function Processor (containerdiv, options) {

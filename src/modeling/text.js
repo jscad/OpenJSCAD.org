@@ -1,5 +1,5 @@
 
-function vector_char(x,y,c) {
+export function vector_char(x,y,c) {
    c = c.charCodeAt(0);
    c -= 32;
    if(c<0||c>=95) return { width: 0, segments: [] };
@@ -23,7 +23,7 @@ function vector_char(x,y,c) {
    return { width: w, segments: segs };
 }
 
-function vector_text(x,y,s) {
+export function vector_text(x,y,s) {
    var o = [];
    var x0 = x;
    for(var i=0; i<s.length; i++) {
