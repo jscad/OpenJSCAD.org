@@ -1,6 +1,6 @@
 // this is a bit of a hack; doesn't properly supports urls that start with '/'
 // but does handle relative urls containing ../
-function makeAbsoluteUrl (url, baseurl) {
+export function makeAbsoluteUrl (url, baseurl) {
   if (!url.match(/^[a-z]+\:/i)) {
     var basecomps = baseurl.split('/')
     if (basecomps.length > 0) {
