@@ -1,5 +1,5 @@
 function FileSystemApiErrorHandler (fileError, operation) {
-  var errormap = {
+  const errormap = {
     1: 'NOT_FOUND_ERR',
     2: 'SECURITY_ERR',
     3: 'ABORT_ERR',
@@ -19,6 +19,6 @@ function FileSystemApiErrorHandler (fileError, operation) {
   } else {
     errname = 'Error #' + fileError.code
   }
-  var errtxt = 'FileSystem API error: ' + operation + ' returned error ' + errname
+  const errtxt = 'FileSystem API error: ' + operation + ' returned error ' + errname
   throw new Error(errtxt)
 }
