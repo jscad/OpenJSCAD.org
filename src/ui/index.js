@@ -28,7 +28,7 @@ function init () {
   // Show all exceptions to the user: // WARNING !! this is not practical at dev time
   AlertUserOfUncaughtExceptions()
   gProcessor = new Processor(document.getElementById('viewerContext'))
-  gEditor = setUpEditor()
+  gEditor = setUpEditor(undefined, gProcessor)
   setupDragDrop()
   createExamples(me, {gMemFs, showEditor, gProcessor})
   createOptions()

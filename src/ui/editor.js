@@ -18,7 +18,7 @@ require('brace/mode/javascript')
 require('brace/theme/chrome')
 
 // See http://ace.ajax.org/#nav=howto
-export function setUpEditor (divname) {
+export function setUpEditor (divname, gProcessor) {
   var gEditor = null
   if (divname === undefined) { divname = 'editor' }
   if (document.getElementById(divname) === null) return
