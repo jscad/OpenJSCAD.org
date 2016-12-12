@@ -12,6 +12,19 @@ import { getWindowURL } from '../ui/urlHelpers'
 import FileSystemApiErrorHandler from '../ui/fileSystemApiErrorHandler'
 import Viewer from '../ui/viewer/jscad-viewer'
 
+//FIXME: hack for now
+import {cube, sphere} from '../modeling/primitives'
+import {union, intersection, difference} from '../modeling/ops-booleans'
+import {CSG, CAG} from '../csg'
+window.cube = cube
+window.sphere = sphere
+window.union = union
+window.intersection = intersection
+window.difference = difference
+window.CSG = CSG
+window.CAG = CAG
+
+
 export default function Processor (containerdiv, options) {
   if (options === undefined) options = {}
   // the default options
@@ -91,7 +104,7 @@ Processor.prototype = {
       viewerdiv.innerHTML = '<b><br><br>Error: ' + e.toString() + '</b><br><br>A browser with support for WebGL is required'
     }
     // Zoom control
-    if (0) {
+    if (0) { // FIXME: what the heck ?
       var div = document.createElement('div')
       this.zoomControl = div.cloneNode(false)
       this.zoomControl.style.width = this.viewerwidth + 'px'
@@ -376,12 +389,15 @@ Processor.prototype = {
   // script: javascript code
   // filename: optional, the name of the .jscad file
   setJsCad: function (script, filename) {
+    console.log('setJsCad',script, filename)
     if (!filename) filename = 'openjscad.jscad'
+
     this.abort()
     this.paramDefinitions = []
     this.paramControls = []
     this.script = null
     this.setError('')
+
     var scripthaserrors = false
     try {
       this.paramDefinitions = getParamDefinitions(script)
@@ -491,7 +507,7 @@ Processor.prototype = {
       return this.baseurl + this.opts.openJsCadPath + l
     }, this)
     // start the worker
-    that.worker.postMessage({cmd: 'render', parameters: parameters, libraries: libraries})
+    that.worker.postMessage({cmd: 'render', parameters, libraries})
   },
 
   rebuildSolidSync: function () {
