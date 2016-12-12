@@ -1,5 +1,6 @@
 import log from './log' // logging helper
 import getParamDefinitions from './getParamDefinitions'
+import getParamValues from './getParamValues'
 import createJscadFunction from './jscad-function'
 import convertToSolid from './convertToSolid'
 // import createJscadWorker from ''
@@ -18,15 +19,15 @@ import {formats} from '../io/formats'
 import * as primitives3d from '../modeling/primitives3d'
 import * as primitives2d from '../modeling/primitives2d'
 import * as booleanOps from '../modeling/ops-booleans'
+import * as transformations from '../modeling/transformations'
+import * as extrusion from '../modeling/extrusion'
+import * as color from '../modeling/color'
+import * as maths from '../modeling/maths'
 import * as csg from '../csg'
-/*window.cube = cube
-window.sphere = sphere
-window.union = union
-window.intersection = intersection
-window.difference = difference
-window.CSG = CSG
-window.CAG = CAG*/
-
+//for backwards compatibility
+const OpenJsCad = {
+  log
+}
 /*
  * exposes the properties of an object to the given scope object (for example WINDOW etc)
  * this is the same as {foo, bar} = baz
@@ -38,10 +39,14 @@ function exposeAPI (object, scope = window) {
     scope[key] = object[key]
   })
 }
-
+exposeAPI({OpenJsCad})// for backwards compatibility only
 exposeAPI(primitives2d)
 exposeAPI(primitives3d)
 exposeAPI(booleanOps)
+exposeAPI(transformations)
+exposeAPI(extrusion)
+exposeAPI(color)
+exposeAPI(maths)
 exposeAPI(csg)
 
 export default function Processor (containerdiv, options) {
@@ -373,10 +378,10 @@ Processor.prototype = {
     this.formatDropdown.style.display = ((!this.hasOutputFile) && (this.viewedObject)) ? 'inline' : 'none'
     this.generateOutputFileButton.style.display = ((!this.hasOutputFile) && (this.viewedObject)) ? 'inline' : 'none'
     this.downloadOutputFileLink.style.display = this.hasOutputFile ? 'inline' : 'none'
-    this.parametersdiv.style.display = (this.paramControls.length > 0) ? 'inline-block' : 'none'; // was 'block'
+    this.parametersdiv.style.display = (this.paramControls.length > 0) ? 'inline-block' : 'none' // was 'block'
     this.errordiv.style.display = this.hasError ? 'block' : 'none'
     this.statusdiv.style.display = this.hasError ? 'none' : 'block'
-    this.selectdiv.style.display = (this.currentObjects.length > 1) ? 'none' : 'none'; // FIXME once there's a data model
+    this.selectdiv.style.display = (this.currentObjects.length > 1) ? 'none' : 'none' // FIXME once there's a data model
   },
 
   setDebugging: function (debugging) {
@@ -435,48 +440,6 @@ Processor.prototype = {
     }
   },
 
-  getParamValues: function () {
-    var paramValues = {}
-    for (var i = 0; i < this.paramControls.length; i++) {
-      var control = this.paramControls[i]
-      switch (control.paramType) {
-        case 'choice':
-          paramValues[control.paramName] = control.options[control.selectedIndex].value
-          break
-        case 'float':
-        case 'number':
-          var value = control.value
-          if (!isNaN(parseFloat(value)) && isFinite(value)) {
-            paramValues[control.paramName] = parseFloat(value)
-          } else {
-            throw new Error('Parameter (' + control.paramName + ') is not a valid number (' + value + ')')
-          }
-          break
-        case 'int':
-          var value = control.value
-          if (!isNaN(parseFloat(value)) && isFinite(value)) {
-            paramValues[control.paramName] = parseInt(value)
-          } else {
-            throw new Error('Parameter (' + control.paramName + ') is not a valid number (' + value + ')')
-          }
-          break
-        case 'checkbox':
-        case 'radio':
-          if (control.checked === true && control.value.length > 0) {
-            paramValues[control.paramName] = control.value
-          } else {
-            paramValues[control.paramName] = control.checked
-          }
-          break
-        default:
-          paramValues[control.paramName] = control.value
-          break
-      }
-    // console.log(control.paramName+":"+paramValues[control.paramName])
-    }
-    return paramValues
-  },
-
   getFullScript: function () {
     var script = ''
     // add the file cache
@@ -497,7 +460,7 @@ Processor.prototype = {
   },
 
   rebuildSolidAsync: function () {
-    var parameters = this.getParamValues()
+    var parameters = getParamValues(this.paramControls)
     var script = this.getFullScript()
 
     if (!window.Worker) throw new Error('Worker threads are unsupported.')
@@ -530,7 +493,7 @@ Processor.prototype = {
   },
 
   rebuildSolidSync: function () {
-    var parameters = this.getParamValues()
+    var parameters = getParamValues(this.paramControls)
     try {
       this.state = 1 // processing
       var func = createJscadFunction(this.baseurl + this.filename, this.script)
