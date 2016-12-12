@@ -53,23 +53,10 @@ const modelingHelpers = require(modelingHelpersPath)
 
 const makeInputFormatHandlers = require('./utils/inputFormatHandlers')
 const generateOutputData = require('./utils/generateOutputData')
-
+const formats = require('./io/formats')
 const meta = {
   producer: `OpenJSCAD ${OpenJsCad.version}`,
   date: new Date()
-}
-const formatNames = {
-  jscad: 'OpenJSCAD.org Source',
-  js: 'JavaScript Source',
-  stl: 'STereoLithography, ASCII',
-  stla: 'STereoLithography, ASCII',
-  stlb: 'STereoLithography, Binary',
-  amf: 'Additive Manufacturing File Format',
-  x3d: 'X3D File Format',
-  gcode: 'G Programming Language File Format',
-  dxf: 'AutoCAD Drawing Exchange Format',
-  svg: 'Scalable Vector Graphics Format',
-  json: 'JavaScript Object Notation Format'
 }
 // var csg = sphere(1);          // -- basic test
 // var csg = require(file).main; // -- treating .jscad as module? later perhaps
@@ -88,7 +75,7 @@ const output = determineOutputNameAndFormat(outputFormat, outputFile)
 outputFormat = output.outputFormat
 outputFile = output.outputFile
 
-console.log(`converting ${inputFile} -> ${outputFile} (${formatNames[outputFormat]})`)
+console.log(`converting ${inputFile} -> ${outputFile} (${formats[outputFormat].description})`)
 
 let src = fs.readFileSync(inputFile, inputFile.match(/\.stl$/i) ? 'binary' : 'UTF8')
 // -- include input, and convert into JSCAD source
