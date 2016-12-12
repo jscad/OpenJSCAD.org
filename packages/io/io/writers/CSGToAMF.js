@@ -1,4 +1,4 @@
-function toAMFString (m, CSG) {
+export default function toAMFString (CSG, m) {
   var result = '<?xml version="1.0" encoding="UTF-8"?>\n<amf' + (m && m.unit ? ' unit="+m.unit"' : '') + '>\n'
   for (var k in m) {
     result += '<metadata type="' + k + '">' + m[k] + '</metadata>\n'
@@ -7,7 +7,7 @@ function toAMFString (m, CSG) {
 
   CSG.polygons.map(function (p) { // first we dump all vertices of all polygons
     for (var i = 0; i < p.vertices.length; i++) {
-      result += p.vertices[i].toAMFString()
+      result += CSGVertextoAMFString(p.vertices[i])
     }
   })
   result += '</vertices>\n'
