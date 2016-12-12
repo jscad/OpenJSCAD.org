@@ -12,6 +12,10 @@ import { getWindowURL } from '../ui/urlHelpers'
 import FileSystemApiErrorHandler from '../ui/fileSystemApiErrorHandler'
 import Viewer from '../ui/viewer/jscad-viewer'
 
+// output handling
+import convertToBlob from './convertToBlob'
+
+
 // FIXME: hack for now
 import * as primitives3d from '../modeling/primitives3d'
 import * as primitives2d from '../modeling/primitives2d'
@@ -616,73 +620,9 @@ Processor.prototype = {
 
     var objs = this.currentObjects.slice(startpoint, endpoint + 1)
 
-    return this.convertToBlob(objs, this.selectedFormat())
-  },
-
-  convertToBlob: function (objs, format) {
-    var formatInfo = this.formatInfo(format)
-    // review the given objects
-    var i
-    var foundCSG = false
-    var foundCAG = false
-    for (i = 0; i < objs.length; i++) {
-      if (objs[i] instanceof CSG) { foundCSG = true; }
-      if (objs[i] instanceof CAG) { foundCAG = true; }
-    }
-    // convert based on the given format
-    foundCSG = foundCSG && formatInfo.convertCSG
-    foundCAG = foundCAG && formatInfo.convertCAG
-    if (foundCSG && foundCAG) { foundCAG = false; } // use 3D conversion
-
-    var object = new CSG()
-    if (foundCSG === false) { object = new CAG(); }
-    for (i = 0; i < objs.length; i++) {
-      if (foundCSG === true && objs[i] instanceof CAG) {
-        object = object.union(objs[i].extrude({offset: [0, 0, 0.1]})) // convert CAG to a thin solid CSG
-        continue
-      }
-      if (foundCAG === true && objs[i] instanceof CSG) {
-        continue
-      }
-      object = object.union(objs[i])
-    }
-
-    var blob = null
-    switch (format) {
-      case 'stla':
-        blob = object.toStlString()
-        // blob = object.fixTJunctions().toStlString()
-        break
-      case 'stlb':
-        // blob = this.viewedObject.fixTJunctions().toStlBinary();   // gives normal errors, but we keep it for now (fixTJunctions() needs debugging)
-        blob = object.toStlBinary({webBlob: true})
-        break
-      case 'amf':
-        blob = object.toAMFString({
-          producer: 'OpenJSCAD.org ' + version,
-          date: new Date()
-        })
-        blob = new Blob([blob], { type: formatInfo.mimetype })
-        break
-      case 'x3d':
-        blob = object.fixTJunctions().toX3D()
-        break
-      case 'dxf':
-        blob = object.toDxf()
-        break
-      case 'svg':
-        blob = object.toSvg()
-        break
-      case 'jscad':
-        blob = new Blob([this.script], {type: formatInfo.mimetype })
-        break
-      case 'json':
-        blob = object.toJSON()
-        break
-      default:
-        throw new Error('Not supported')
-    }
-    return blob
+    const format = this.selectedFormat()
+    const formatInfo = this.formatInfo(format)
+    return convertToBlob(objs, format, formatInfo, this.script)
   },
 
   supportedFormatsForCurrentObjects: function () {
