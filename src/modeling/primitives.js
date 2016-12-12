@@ -1,6 +1,6 @@
 // -- 3D primitives (OpenSCAD like notion)
 
-function cube(p) {
+export function cube(p) {
    var s = 1, v = null, off = [0,0,0], round = false, r = 0, fn = 8;
    if(p&&p.length) v = p;
    if(p&&p.size&&p.size.length) v = p.size;        // { size: [1,2,3] }
@@ -31,7 +31,7 @@ function cube(p) {
    return o;
 }
 
-function sphere(p) {
+export function sphere(p) {
    var r = 1;
    var fn = 32;
    var off = [0,0,0];
@@ -62,7 +62,7 @@ function sphere(p) {
    return o;
 }
 
-function geodesicSphere(p) {
+export function geodesicSphere(p) {
    var r = 1, fn = 5;
 
    var ci = [              // hard-coded data of icosahedron (20 faces, all triangles)
@@ -170,7 +170,7 @@ function geodesicSphere(p) {
    return polyhedron({points: c, triangles: f}).scale(r);
 }
 
-function cylinder(p) {
+export function cylinder(p) {
    var r1 = 1, r2 = 1, h = 1, fn = 32, round = false; var a = arguments;
    var off = [0,0,0];
    if(p&&p.d) {
@@ -217,7 +217,7 @@ function cylinder(p) {
    return o;
 }
 
-function torus(p) {
+export function torus(p) {
    var ri = 1, ro = 4, fni = 16, fno = 32, roti = 0;
    if(p) {
       if(p.ri) ri = p.ri;
@@ -233,7 +233,7 @@ function torus(p) {
    return rotate_extrude({fn:fno},c.translate([ro,0,0]));
 }
 
-function polyhedron(p) {
+export function polyhedron(p) {
    var pgs = [];
    var ref = p.triangles||p.polygons;
    var colors = p.colors||null;

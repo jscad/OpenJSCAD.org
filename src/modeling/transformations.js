@@ -1,6 +1,6 @@
 // -- 3D transformations (OpenSCAD like notion)
 
-function translate() {      // v, obj or array
+export function translate() {      // v, obj or array
    var a = arguments, v = a[0], o, i = 1;
    if(a[1].length) { a = a[1]; i = 0; }
    for(o=a[i++]; i<a.length; i++) {
@@ -9,7 +9,7 @@ function translate() {      // v, obj or array
    return o.translate(v);
 }
 
-function center() { // v, obj or array
+export function center() { // v, obj or array
    var a = arguments, v = a[0], o, i = 1;
    if(a[1].length) { a = a[1]; i = 0; }
    for(o=a[i++]; i<a.length; i++) {
@@ -18,7 +18,7 @@ function center() { // v, obj or array
    return o.center(v);
 }
 
-function scale() {         // v, obj or array
+export function scale() {         // v, obj or array
    var a = arguments, v = a[0], o, i = 1;
    if(a[1].length) { a = a[1]; i = 0; }
    for(o=a[i++]; i<a.length; i++) {
@@ -27,7 +27,7 @@ function scale() {         // v, obj or array
    return o.scale(v);
 }
 
-function rotate() {
+export function rotate() {
    var o,i,v, r = 1, a = arguments;
    if(!a[0].length) {        // rotate(r,[x,y,z],o)
       r = a[0];
@@ -49,7 +49,7 @@ function rotate() {
    }
 }
 
-function mirror(v,o) {
+export function mirror(v,o) {
    var a = Array.prototype.slice.call(arguments, 1, arguments.length),
        o = a[0];
 
@@ -60,22 +60,23 @@ function mirror(v,o) {
    return o.mirrored(plane);
 }
 
-function expand(r,n,o) {
+export function expand(r,n,o) {
    return o.expand(r,n);
 }
-function contract(r,n,o) {
+
+export function contract(r,n,o) {
    return o.contract(r,n);
 }
 
-function multmatrix() {
+export function multmatrix() {
    console.log("multmatrix() not yet implemented");
 }
 
-function minkowski() {
+export function minkowski() {
    console.log("minkowski() not yet implemented");
 }
 
-function hull() {
+export function hull() {
    var pts = [];
 
    var a = arguments;
@@ -237,7 +238,7 @@ function hull() {
 // "Whosa whatsis" suggested "Chain Hull" as described at https://plus.google.com/u/0/105535247347788377245/posts/aZGXKFX1ACN
 // essentially hull A+B, B+C, C+D and then union those
 
-function chain_hull() {
+export function chain_hull() {
    var a = arguments;
    var j = 0, closed = false;
 

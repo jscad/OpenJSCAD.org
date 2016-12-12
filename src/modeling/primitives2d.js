@@ -1,6 +1,6 @@
 // -- 2D primitives (OpenSCAD like notion)
 
-function square() {
+export function square() {
    var v = [1,1], off; var a = arguments, p = a[0];
    if(p&&!p.size) v = [p,p];
    if(p&&p.length) v = a[0], p = a[1];
@@ -14,7 +14,7 @@ function square() {
    return o;
 }
 
-function circle() {
+export function circle() {
    var r = 1, off, fn = 32; var a = arguments, p = a[0];
    if(p&&p.r) r = p.r;
    if(p&&p.fn) fn = p.fn;
@@ -25,7 +25,7 @@ function circle() {
    return o;
 }
 
-function polygon(p) {  // array of po(ints) and pa(ths)
+export function polygon(p) {  // array of po(ints) and pa(ths)
    var points = new Array();
    if(p.paths&&p.paths.length&&p.paths[0].length) {          // pa(th): [[0,1,2],[2,3,1]] (two paths)
       for(var j=0; j<p.paths.length; j++) {
@@ -47,7 +47,7 @@ function polygon(p) {  // array of po(ints) and pa(ths)
    return CAG.fromPoints(points);
 }
 
-function triangle() {         // -- new addition
+export function triangle() {         // -- new addition
    var a = arguments;
    if(a[0]&&a[0].length) a = a[0];
    var o = CAG.fromPoints(a);

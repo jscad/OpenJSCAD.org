@@ -1,6 +1,6 @@
 // -- 2D to 3D primitives (OpenSCAD like notion)
 
-function linear_extrude(p,s) {
+export function linear_extrude(p,s) {
    //console.log("linear_extrude() not yet implemented");
    //return;
    var h = 1, off = 0, /* convexity = 10,*/ twist = 0, slices = 10;
@@ -19,7 +19,7 @@ function linear_extrude(p,s) {
    return o;
 }
 
-function rotate_extrude(p,o) {
+export function rotate_extrude(p,o) {
    var fn = 32;
    if(arguments.length<2) {
       o = p;      // no switches, just an object
@@ -68,7 +68,7 @@ function rotate_extrude(p,o) {
    return CSG.fromPolygons(ps);
 }
 
-function rectangular_extrude(pa,p) {
+export function rectangular_extrude(pa,p) {
    var w = 1, h = 1, fn = 8, closed = false, round = true;
    if(p) {
       if(p.w) w = p.w;
