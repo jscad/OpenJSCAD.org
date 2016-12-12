@@ -3,18 +3,16 @@ import getParamDefinitions from './getParamDefinitions'
 import createJscadFunction from './jscad-function'
 import convertToSolid from './convertToSolid'
 // import createJscadWorker from ''
-
 import { revokeBlobUrl } from '../utils/Blob'
-import { version } from '../jscad/version'
-
-import { isSafari } from '../ui/detectBrowser'
-import { getWindowURL } from '../ui/urlHelpers'
-import FileSystemApiErrorHandler from '../ui/fileSystemApiErrorHandler'
 import Viewer from '../ui/viewer/jscad-viewer'
 
 // output handling
 import convertToBlob from './convertToBlob'
+import generateOutputFileBlobUrl from './generateOutputFileBlobUrl'
+import generateOutputFileFileSystem from './generateOutputFileFileSystem'
 
+//formats
+import {formats} from '../io/formats'
 
 // FIXME: hack for now
 import * as primitives3d from '../modeling/primitives3d'
@@ -603,11 +601,36 @@ Processor.prototype = {
 
   generateOutputFile: function () {
     this.clearOutputFile()
+    const blob = this.currentObjectsToBlob()
+    const extension = this.selectedFormatInfo().extension
+    console.log('generateOutputFile')
+
+    function onDone(data, downloadAttribute, blobMode, noData){
+      this.hasOutputFile = true
+      this.downloadOutputFileLink.href = data
+      if(blobMode){
+        this.outputFileBlobUrl = data
+      }else{
+        //FIXME: what to do with this one ?
+        //that.outputFileDirEntry = dirEntry // save for later removal
+      }
+      //this.downloadOutputFileLink.type = this.selectedFormatInfo().mimetype
+
+      this.downloadOutputFileLink.innerHTML = this.downloadLinkTextForCurrentObject()
+      this.downloadOutputFileLink.setAttribute('download', downloadAttribute)
+      if(noData){
+        this.downloadOutputFileLink.setAttribute('target', '_blank')
+      }
+      this.enableItems()
+    }
+
     if (this.viewedObject) {
       try {
-        this.generateOutputFileFileSystem()
+        //this.generateOutputFileFileSystem()
+        generateOutputFileFileSystem(extension, blob, onDone.bind(this))
       } catch(e) {
-        this.generateOutputFileBlobUrl()
+        //this.generateOutputFileBlobUrl()
+        generateOutputFileBlobUrl(extension, blob, onDone.bind(this))
       }
       if (this.ondownload) this.ondownload(this)
     }
@@ -657,15 +680,7 @@ Processor.prototype = {
 
   formatInfo: function (format) {
     if (this.formats === null) {
-      this.formats = {
-        stla: { displayName: 'STL (ASCII)', extension: 'stl', mimetype: 'application/sla', convertCSG: true, convertCAG: false },
-        stlb: { displayName: 'STL (Binary)', extension: 'stl', mimetype: 'application/sla', convertCSG: true, convertCAG: false },
-        amf: { displayName: 'AMF (experimental)', extension: 'amf', mimetype: 'application/amf+xml', convertCSG: true, convertCAG: false },
-        x3d: { displayName: 'X3D', extension: 'x3d', mimetype: 'model/x3d+xml', convertCSG: true, convertCAG: false },
-        dxf: { displayName: 'DXF', extension: 'dxf', mimetype: 'application/dxf', convertCSG: false, convertCAG: true },
-        jscad: { displayName: 'JSCAD', extension: 'jscad', mimetype: 'application/javascript', convertCSG: true, convertCAG: true },
-        svg: { displayName: 'SVG', extension: 'svg', mimetype: 'image/svg+xml', convertCSG: false, convertCAG: true },
-      }
+      this.formats = formats
     }
     return this.formats[format]
   },
@@ -673,84 +688,6 @@ Processor.prototype = {
   downloadLinkTextForCurrentObject: function () {
     var ext = this.selectedFormatInfo().extension
     return 'Download ' + ext.toUpperCase()
-  },
-
-  generateOutputFileBlobUrl: function () {
-    if (isSafari()) {
-      // console.log("Trying download via DATA URI")
-      // convert BLOB to DATA URI
-      var blob = this.currentObjectsToBlob()
-      var that = this
-      var reader = new FileReader()
-      reader.onloadend = function () {
-        if (reader.result) {
-          that.hasOutputFile = true
-          that.downloadOutputFileLink.href = reader.result
-          that.downloadOutputFileLink.innerHTML = that.downloadLinkTextForCurrentObject()
-          var ext = that.selectedFormatInfo().extension
-          that.downloadOutputFileLink.setAttribute('download', 'openjscad.' + ext)
-          that.downloadOutputFileLink.setAttribute('target', '_blank')
-          that.enableItems()
-        }
-      }
-      reader.readAsDataURL(blob)
-    } else {
-      // console.log("Trying download via BLOB URL")
-      // convert BLOB to BLOB URL (HTML5 Standard)
-      var blob = this.currentObjectsToBlob()
-      var windowURL = getWindowURL()
-      this.outputFileBlobUrl = windowURL.createObjectURL(blob)
-      if (!this.outputFileBlobUrl) throw new Error('createObjectURL() failed')
-      this.hasOutputFile = true
-      this.downloadOutputFileLink.href = this.outputFileBlobUrl
-      this.downloadOutputFileLink.innerHTML = this.downloadLinkTextForCurrentObject()
-      var ext = this.selectedFormatInfo().extension
-      this.downloadOutputFileLink.setAttribute('download', 'openjscad.' + ext)
-      this.enableItems()
-    }
-  },
-
-  generateOutputFileFileSystem: function () {
-    var request = window.requestFileSystem || window.webkitRequestFileSystem
-    if (!request) {
-      throw new Error('Your browser does not support the HTML5 FileSystem API. Please try the Chrome browser instead.')
-    }
-    // console.log("Trying download via FileSystem API")
-    // create a random directory name:
-    var extension = this.selectedFormatInfo().extension
-    var dirname = 'OpenJsCadOutput1_' + parseInt(Math.random() * 1000000000, 10) + '_' + extension
-    var filename = 'output.' + extension; // FIXME this should come from this.filename
-    var that = this
-    request(TEMPORARY, 20 * 1024 * 1024, function (fs) {
-      fs.root.getDirectory(dirname, {create: true, exclusive: true}, function (dirEntry) {
-        that.outputFileDirEntry = dirEntry // save for later removal
-        dirEntry.getFile(filename, {create: true, exclusive: true}, function (fileEntry) {
-          fileEntry.createWriter(function (fileWriter) {
-            fileWriter.onwriteend = function (e) {
-              that.hasOutputFile = true
-              that.downloadOutputFileLink.href = fileEntry.toURL()
-              that.downloadOutputFileLink.type = that.selectedFormatInfo().mimetype
-              that.downloadOutputFileLink.innerHTML = that.downloadLinkTextForCurrentObject()
-              that.downloadOutputFileLink.setAttribute('download', fileEntry.name)
-              that.enableItems()
-            }
-            fileWriter.onerror = function (e) {
-              throw new Error('Write failed: ' + e.toString())
-            }
-            var blob = that.currentObjectsToBlob()
-            fileWriter.write(blob)
-          },
-            function (fileerror) {FileSystemApiErrorHandler(fileerror, 'createWriter');}
-          )
-        },
-          function (fileerror) {FileSystemApiErrorHandler(fileerror, "getFile('" + filename + "')");}
-        )
-      },
-        function (fileerror) {FileSystemApiErrorHandler(fileerror, "getDirectory('" + dirname + "')");}
-      )
-    },
-      function (fileerror) {FileSystemApiErrorHandler(fileerror, 'requestFileSystem');}
-    )
   },
 
   createGroupControl: function (definition) {
