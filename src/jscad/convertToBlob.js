@@ -6,6 +6,7 @@ import toAMFString from '../io/writers/CSGToAMF'
 import toX3D from '../io/writers/CSGToX3D'
 import CAGtoSvg from '../io/writers/CAGtoSvg'
 import CAGToJson from '../io/writers/CAGToJson'
+import CAGtoDxf from '../io/writers/CAGtoDxf'
 
 export default function convertToBlob (objs, format, formatInfo, script) {
   console.log('convertToBlob', objs, format)
@@ -35,6 +36,8 @@ export default function convertToBlob (objs, format, formatInfo, script) {
     object = object.union(objs[i])
   }
 
+  //FIXME : WAAY to much overlap with src/utils/generateOutputData : REFACTOR
+
   var blob = null
   switch (format) {
     case 'stla':
@@ -56,7 +59,7 @@ export default function convertToBlob (objs, format, formatInfo, script) {
       blob = toX3D(object.fixTJunctions())
       break
     case 'dxf':
-      blob = object.toDxf()
+      blob = CAGtoDxf(object)
       break
     case 'svg':
       blob = CAGtoSvg(object)
@@ -65,7 +68,7 @@ export default function convertToBlob (objs, format, formatInfo, script) {
       blob = new Blob([script], {type: formatInfo.mimetype })
       break
     case 'json':
-      blob = CAGToJson(toJSON)
+      blob = CAGToJson(object)
       break
     default:
       throw new Error('Not supported')
