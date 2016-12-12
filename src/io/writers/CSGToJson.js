@@ -1,4 +1,4 @@
-function toJSON () {
+export function toJSON () {
   var str = '{ "type": "csg","polygons": ['
   var comma = ''
   CSG.polygons.map(

@@ -1,5 +1,5 @@
 // see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
-function CSGToStlBinary (CSG) {
+export default function toStlBinary (CSG) {
   // first check if the host is little-endian:
   var buffer = new ArrayBuffer(4)
   var int32buffer = new Int32Array(buffer, 0, 1)

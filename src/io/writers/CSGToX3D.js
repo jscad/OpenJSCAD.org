@@ -1,4 +1,4 @@
-function toX3D () {
+export default function toX3D (CSG) {
   // materialPolygonLists
   // key: a color string (e.g. "0 1 1" for yellow)
   // value: an array of strings specifying polygons of this color

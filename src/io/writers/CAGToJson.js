@@ -1,4 +1,4 @@
-function CAGToJSON (CAG) {
+export default function CAGToJson (CAG) {
   var str = '{ "type": "cag","sides": ['
   var comma = ''
   CAG.sides.map(
