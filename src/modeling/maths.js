@@ -1,42 +1,42 @@
 // -- Math functions (360 deg based vs 2pi)
 
-function sin(a) {
+export function sin(a) {
    return Math.sin(a/360*Math.PI*2);
 }
-function cos(a) {
+export function cos(a) {
    return Math.cos(a/360*Math.PI*2);
 }
-function asin(a) {
+export function asin(a) {
    return Math.asin(a)/(Math.PI*2)*360;
 }
-function acos(a) {
+export function acos(a) {
    return Math.acos(a)/(Math.PI*2)*360;
 }
-function tan(a) {
+export function tan(a) {
    return Math.tan(a/360*Math.PI*2);
 }
-function atan(a) {
+export function atan(a) {
    return Math.atan(a)/(Math.PI*2)*360;
 }
-function atan2(a,b) {
+export function atan2(a,b) {
    return Math.atan2(a,b)/(Math.PI*2)*360;
 }
-function ceil(a) {
+export function ceil(a) {
    return Math.ceil(a);
 }
-function floor(a) {
+export function floor(a) {
    return Math.floor(a);
 }
-function abs(a) {
+export function abs(a) {
    return Math.abs(a);
 }
-function min(a,b) {
+export function min(a,b) {
    return a<b?a:b;
 }
-function max(a,b) {
+export function max(a,b) {
    return a>b?a:b;
 }
-function rands(min,max,vn,seed) {
+export function rands(min,max,vn,seed) {
    // -- seed is ignored for now, FIX IT (requires reimplementation of random())
    //    see http://stackoverflow.com/questions/424292/how-to-create-my-own-javascript-random-number-generator-that-i-can-also-set-the
    var v = new Array(vn);
@@ -44,10 +44,10 @@ function rands(min,max,vn,seed) {
       v[i] = Math.random()*(max-min)+min;
    }
 }
-function log(a) {
+export function log(a) {
    return Math.log(a);
 }
-function lookup(ix,v) {
+export function lookup(ix,v) {
    var r = 0;
    for(var i=0; i<v.length; i++) {
       var a0 = v[i];
@@ -70,15 +70,19 @@ function lookup(ix,v) {
    }
    return r;
 }
-function pow(a,b) {
+
+export function pow(a,b) {
    return Math.pow(a,b);
 }
-function sign(a) {
+
+export function sign(a) {
    return a<0?-1:(a>1?1:0);
 }
-function sqrt(a) {
+
+export function sqrt(a) {
    return Math.sqrt(a);
 }
-function round(a) {
+
+export function round(a) {
    return floor(a+0.5);
 }

@@ -1,6 +1,6 @@
 // color table from http://www.w3.org/TR/css3-color/
 
-function color () {
+export function color () {
   var map = {
     'black': [ 0 / 255, 0 / 255, 0 / 255 ],
     'silver': [ 192 / 255, 192 / 255, 192 / 255 ],
@@ -225,7 +225,7 @@ function rgb2hsl(r, g, b){
  * @param   Number  l       The lightness
  * @return  Array           The RGB representation
  */
-function hsl2rgb(h, s, l){
+export function hsl2rgb(h, s, l){
     if(h.length) { l = h[2], s = h[1], h = h[0]; }
     var r, g, b;
 
@@ -262,7 +262,8 @@ function hsl2rgb(h, s, l){
  * @param   Number  b       The blue color value
  * @return  Array           The HSV representation
  */
-function rgb2hsv(r, g, b){
+
+export function rgb2hsv(r, g, b){
     if(r.length) { b = r[2], g = r[1], r = r[0]; }
     var max = Math.max(r, g, b), min = Math.min(r, g, b);
     var h, s, v = max;
@@ -295,7 +296,7 @@ function rgb2hsv(r, g, b){
  * @param   Number  v       The value
  * @return  Array           The RGB representation
  */
-function hsv2rgb(h, s, v){
+export function hsv2rgb(h, s, v){
     if(h.length) { v = h[2], s = h[1], h = h[0]; }
     var r, g, b;
 
@@ -324,7 +325,7 @@ function hsv2rgb(h, s, v){
  * - split the string; "#RRGGBB" into RGB components
  * - convert the HEX value into RGB values
  */
-function html2rgb(s) {
+export function html2rgb(s) {
     var r = 0;
     var g = 0;
     var b = 0;
@@ -342,7 +343,7 @@ function html2rgb(s) {
  * - convert R, G, B into HEX strings
  * - return HTML formatted string "#RRGGBB"
  */
-function rgb2html(r, g, b){
+export function rgb2html(r, g, b){
     if(r.length) { b = r[2], g = r[1], r = r[0]; }
     var s = '#' +
       Number(0x1000000+r*255*0x10000+g*255*0x100+b*255).toString(16).substring(1);
