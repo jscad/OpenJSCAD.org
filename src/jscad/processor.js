@@ -12,18 +12,35 @@ import { getWindowURL } from '../ui/urlHelpers'
 import FileSystemApiErrorHandler from '../ui/fileSystemApiErrorHandler'
 import Viewer from '../ui/viewer/jscad-viewer'
 
-//FIXME: hack for now
-import {cube, sphere} from '../modeling/primitives'
-import {union, intersection, difference} from '../modeling/ops-booleans'
-import {CSG, CAG} from '../csg'
-window.cube = cube
+// FIXME: hack for now
+import * as primitives3d from '../modeling/primitives3d'
+import * as primitives2d from '../modeling/primitives2d'
+import * as booleanOps from '../modeling/ops-booleans'
+import * as csg from '../csg'
+/*window.cube = cube
 window.sphere = sphere
 window.union = union
 window.intersection = intersection
 window.difference = difference
 window.CSG = CSG
-window.CAG = CAG
+window.CAG = CAG*/
 
+/*
+ * exposes the properties of an object to the given scope object (for example WINDOW etc)
+ * this is the same as {foo, bar} = baz
+ * window.bar = bar
+ * window.foo = foo
+*/
+function exposeAPI (object, scope = window) {
+  Object.keys(object).forEach(function (key) {
+    scope[key] = object[key]
+  })
+}
+
+exposeAPI(primitives2d)
+exposeAPI(primitives3d)
+exposeAPI(booleanOps)
+exposeAPI(csg)
 
 export default function Processor (containerdiv, options) {
   if (options === undefined) options = {}
@@ -78,7 +95,7 @@ export default function Processor (containerdiv, options) {
   // 3 - incomplete  - incompleted due to errors in processing
   this.state = 0 // initialized
 
-  //FIXME: UI only, seperate
+  // FIXME: UI only, seperate
   this.createElements()
 }
 
@@ -389,7 +406,7 @@ Processor.prototype = {
   // script: javascript code
   // filename: optional, the name of the .jscad file
   setJsCad: function (script, filename) {
-    console.log('setJsCad',script, filename)
+    console.log('setJsCad', script, filename)
     if (!filename) filename = 'openjscad.jscad'
 
     this.abort()
