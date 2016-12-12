@@ -136,8 +136,7 @@ export function fetchExample (filename, url, {gMemFs, showEditor, gProcessor}) {
   }
 }
 
-
-function loadExample (me) {
+export function loadInitialExample (me) {
   if (me === 'web-online') { // we are online, fetch first example
     params = {}
     docTitle = ''
