@@ -6595,12 +6595,11 @@ for solid CAD anyway.
     But we'll keep CSG.Polygon2D as a stub for backwards compatibility
     */
     
-    /* FIXME: TEMPORARY REMOVAL, some issues, needs fixing !!!
     CSG.Polygon2D = function(points) {
         var cag = CAG.fromPoints(points);
         this.sides = cag.sides;
     };
-    CSG.Polygon2D.prototype = CAG.prototype;*/
+    CSG.Polygon2D.prototype = CAG.prototype;
 
 
     //console.log('module', module)
