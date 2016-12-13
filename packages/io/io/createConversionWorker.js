@@ -7,29 +7,36 @@
 
 // Create an worker (thread) for converting various formats to JSCAD
 //
-// See worker-conversion.js for the conversion process
+// See conversion-worker.js for the conversion process
 //
-export default function createConversionWorker () {
-  var w = new Worker('src/io/worker-conversion.js') // FIXME: update this to WebWorkify
+import WebWorkify from 'webWorkify'
+import { putSourceInEditor } from '../ui/editor' //FIXME : eeek! dependency on ui
+
+export default function createConversionWorker (gProcessor, gEditor) {
+  // const worker = new Worker('./stlStreamWorker.src.js')
+  const worker = WebWorkify(require('./conversionWorker.js'))
+
+  // var w = new Worker('src/io/conversion-worker.js') // FIXME: update this to WebWorkify
   // when the worker finishes
   // - put the converted source into the editor
   // - save the converted source into the cache (gMemFs)
   // - set the converted source into the processor (viewer)
-  w.onmessage = function (e) {
+  worker.onmessage = function (e) {
+    console.log('got response from conversionWorker', e)
     if (e.data instanceof Object) {
       var data = e.data
       if ('filename' in data && 'source' in data) {
         // console.log("editor"+data.source+']')
-        putSourceInEditor(data.source, data.filename)
+        putSourceInEditor(gEditor, data.source, data.filename)
       }
       if ('filename' in data && 'converted' in data) {
         // console.log("processor: "+data.filename+" ["+data.converted+']')
-        if ('cache' in data && data.cache == true) {
+        if ('cache' in data && data.cache === true) {
           saveScript(data.filename, data.converted)
         }
         gProcessor.setJsCad(data.converted, data.filename)
       }
     }
   }
-  return w
+  return worker
 }
