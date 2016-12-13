@@ -1,4 +1,4 @@
-// worker-conversion.js
+// conversion worker.js
 //
 // == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
 //
