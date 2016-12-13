@@ -40,3 +40,39 @@ export function textToBlobUrl (txt) {
   if (!blobURL) throw new Error('createObjectURL() failed')
   return blobURL
 }
+
+export function getUrlParams (url) {
+  let match
+  let params = {}
+  let docTitle
+  let showEditor
+  let fetchUrl
+
+  const paramsCandidates = url.split('&')
+  paramsCandidates.map(function (param) {
+    if (match = param.match(/^.*#?param\[([^\]]+)\]=(.*)$/i)) {
+      // console.log("matched parameter: key="+decodeURIComponent(match[1])+", val="+decodeURIComponent(match[2])+"")
+      params[decodeURIComponent(match[1])] = decodeURIComponent(match[2])
+    }
+    else if (match = param.match(/^.*#?showEditor=false$/i)) {
+      showEditor = false
+    }
+    else if (match = param.match(/^.*#?fetchUrl=(.*)$/i)) {
+      // console.log("matched fetchUrl="+match[1])
+      const urlParts = url.match(/^([^#]+)#/)
+      // derive an old-style URL for compatibility's sake
+      fetchUrl = urlParts[1] + '#' + decodeURIComponent(match[1])
+    }
+    else if (match = param.match(/^.*#?title=(.*)$/i)) {
+      // console.log("matched title="+decodeURIComponent(match[1]))
+      docTitle = decodeURIComponent(match[1])
+    }
+  })
+
+  return {
+    params,
+    docTitle,
+    showEditor,
+    fetchUrl
+  }
+}
