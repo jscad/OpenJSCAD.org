@@ -119,9 +119,11 @@ export function setUpEditor (divname, gProcessor) {
       }, 0)
     }
   })
+
+  return gEditor
 }
 
-function putSourceInEditor (gEditor, src, fn) {
+export function putSourceInEditor (gEditor, src, fn) {
   if (gEditor !== null) {
     gEditor.setValue(src, -1)
     if (src.match(/^\/\/!OpenSCAD/i)) {
@@ -132,7 +134,7 @@ function putSourceInEditor (gEditor, src, fn) {
   }
 }
 
-function getSourceFromEditor (gEditor) {
+export function getSourceFromEditor (gEditor) {
   if (gEditor !== null) {
     return gEditor.getValue()
   }
