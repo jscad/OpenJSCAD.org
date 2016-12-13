@@ -4,7 +4,7 @@ import { setUpEditor } from './editor'
 import { setupDragDrop } from './drag-drop'
 
 import { detectBrowser } from './detectBrowser'
-import { createExamples } from './examples'
+import { createExamples, fetchExample } from './examples'
 import { createOptions, getOptions } from './options'
 import AlertUserOfUncaughtExceptions from './errorDispatcher'
 
@@ -30,7 +30,7 @@ function init () {
   gProcessor = new Processor(document.getElementById('viewerContext'))
   gEditor = setUpEditor(undefined, gProcessor)
   setupDragDrop()
-  createExamples(me, {gMemFs, showEditor, gProcessor})
+  createExamples(me)
   createOptions()
   getOptions()
 
@@ -70,6 +70,20 @@ function init () {
     $('#examples').css('height', 0)
     $('#examples').hide()
   })
+
+  function onLoadExampleClicked (e) {
+    if (showEditor) { // FIXME test for the element
+      $('#editor').show()
+    } else {
+      $('#editor').hide()
+    }
+    const examplePath = e.currentTarget.dataset.path
+    fetchExample(examplePath, undefined, {gMemFs, gProcessor, gEditor})
+  }
+  document.querySelectorAll('.example')
+    .forEach(function (element) {
+      element.addEventListener('click', onLoadExampleClicked)
+    })
 
   // -- Options
   $('#optionsTitle').click(function () {

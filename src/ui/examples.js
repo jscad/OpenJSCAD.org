@@ -64,7 +64,7 @@ const examples = [
   { file: 'feathers_mcgraw.stl', title: '3D Model: Feathers Mcgraw (q1g0ng)', type: 'STL', new: true },
 ]
 
-export function createExamples (me, fetchExampleParams) {
+export function createExamples (me) {
   if (me === 'web-online') {
     var wrap = 26
     var colp = 100 / Math.floor(examples.length / wrap + 1) + '%'
@@ -74,33 +74,22 @@ export function createExamples (me, fetchExampleParams) {
         src += '</td><td class="examplesSeparator" widthx=' + colp + ' valign=top>'
       }
       if (examples[i].spacing) src += '<p/>'
-        src += `<li><a class='example' data-path=${'examples/' + examples[i].file} href='#'> + ${examples[i].title} </a>\n`
+      src += `<li><a class='example' data-path=${'examples/' + examples[i].file} href='#'> + ${examples[i].title} </a>
+`
       if (examples[i].type) src += ' <span class=type>(' + examples[i].type + ')</span></a>'
       if (examples[i].new) src += ' <span class=newExample>new</span></a>'
     }
     src += '</td></tr></table>'
-    $('#examples').html(src)
-
-    $('.example').click(function (e) {
-      //console.log('example clicked',)
-      const examplePath = e.currentTarget.dataset.path
-      fetchExample(examplePath, undefined, fetchExampleParams)
-    })
+    document.querySelector('#examples').innerHTML = src
   } else {
     // examples off-line won't work yet as XHR is used
-    $('#examples').html("You are offline, drag'n'drop the examples from your installation")
+    document.querySelector('#examples').innerHTML = "You are offline, drag'n'drop the examples from your installation"
   }
 }
 
-export function fetchExample (filename, url, {gMemFs, showEditor, gProcessor}) {
+export function fetchExample (filename, url, {gMemFs, gProcessor, gEditor}) {
   console.log('fetchExample')
   gMemFs = []
-
-  if (showEditor) { // FIXME test for the element
-    $('#editor').show()
-  } else {
-    $('#editor').hide()
-  }
 
   if (filename.match(/\.[^\/]+$/)) { // -- has extension
     // -- we could already check if valid extension (later)
@@ -125,9 +114,9 @@ export function fetchExample (filename, url, {gMemFs, showEditor, gProcessor}) {
 
       const _includePath = path.replace(/\/[^\/]+$/, '/')
 
-      //FIXME: refactor : same code as ui/drag-drop
+      // FIXME: refactor : same code as ui/drag-drop
       gProcessor.setStatus('Converting ' + filename + " <img id=busy src='imgs/busy.gif'>")
-      const worker = createConversionWorker()
+      const worker = createConversionWorker(gProcessor, gEditor)
       const baseurl = gProcessor.baseurl
       // NOTE: cache: false is set to allow evaluation of 'include' statements
       worker.postMessage({baseurl, source, filename, cache: false})
