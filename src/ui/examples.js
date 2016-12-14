@@ -1,4 +1,5 @@
 import createConversionWorker from '../io/createConversionWorker'
+import { putSourceInEditor } from './editor' // FIXME : eeek! dependency on ui
 
 const examples = [
   { file: 'logo.jscad', title: 'OpenJSCAD.org Logo' },
@@ -60,7 +61,7 @@ const examples = [
   { file: 'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' },
   { file: 'thing_7-Zomboe.stl', title: '3D Model: Thing 7 / Flower (Zomboe)', type: 'STL' },
   { file: 'yoda-RichRap.stl', title: '3D Model: Yoda (RichRap)', type: 'STL' },
-  { file: 'feathers_mcgraw.stl', title: '3D Model: Feathers Mcgraw (q1g0ng)', type: 'STL', new: true },
+  { file: 'feathers_mcgraw.stl', title: '3D Model: Feathers Mcgraw (q1g0ng)', type: 'STL', new: true }
 ]
 
 export function createExamples (me) {
@@ -90,12 +91,30 @@ export function fetchExample (filename, url, {gMemFs, gProcessor, gEditor}) {
   console.log('fetchExample')
   gMemFs = []
 
-  if (filename.match(/\.[^\/]+$/)) { // -- has extension
-    // -- we could already check if valid extension (later)
-  } else { // -- folder referenced
+  const hasExtension = filename.match(/\.[^\/]+$/)
+  if (!hasExtension) // -- has no extension, ie folder referenced
+  {
     if (!filename.match(/\/$/))
+    {
       filename += '/' // add tailing /
+    }
     filename += 'main.jscad'
+  }
+
+  //FIXME: same as in drag-drop !!
+  function onConversionDone(data){
+    if ('filename' in data && 'source' in data) {
+      // console.log("editor"+data.source+']')
+      putSourceInEditor(gEditor, data.source, data.filename)
+    }
+    if ('filename' in data && 'converted' in data) {
+      // console.log("processor: "+data.filename+" ["+data.converted+']')
+      if ('cache' in data && data.cache === true) {
+        //FIXME: cannot do it from here, bloody globals
+        //saveScript(data.filename, data.converted)
+      }
+      gProcessor.setJsCad(data.converted, data.filename)
+    }
   }
 
   if (1) { // doesn't work off-line yet
@@ -107,15 +126,13 @@ export function fetchExample (filename, url, {gMemFs, gProcessor, gEditor}) {
     gProcessor.setStatus('Loading ' + filename + " <img id=busy src='imgs/busy.gif'>")
 
     xhr.onload = function () {
-      var source = this.responseText
-      var editorSource = source
-      var path = filename
-
+      const source = this.responseText
+      const path = filename
       const _includePath = path.replace(/\/[^\/]+$/, '/')
 
       // FIXME: refactor : same code as ui/drag-drop
       gProcessor.setStatus('Converting ' + filename + " <img id=busy src='imgs/busy.gif'>")
-      const worker = createConversionWorker(gProcessor, gEditor)
+      const worker = createConversionWorker(onConversionDone)
       const baseurl = gProcessor.baseurl
       // NOTE: cache: false is set to allow evaluation of 'include' statements
       worker.postMessage({baseurl, source, filename, cache: false})
@@ -138,7 +155,7 @@ export function loadInitialExample (me, params) {
         putSourceInEditor(content, 'MyDesign.jscad')
         gProcessor.setJsCad(content, 'MyDesign.jscad')
       } else {
-        gProcessor.setJsCad(getSourceFromEditor(), 'example.jscad')
+        //gProcessor.setJsCad(getSourceFromEditor(), 'example.jscad')
       }
     }
 

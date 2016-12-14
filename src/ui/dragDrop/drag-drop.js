@@ -66,9 +66,9 @@ export function setupDragDrop () {
   fileInput.addEventListener('change', handleInputFiles, false)
 }
 
-export function toggleAutoReload () {
+export function toggleAutoReload (toggle) {
   // console.log("toggleAutoReload()")
-  if (document.getElementById('autoreload').checked) {
+  if (toggle) {
     state.autoReloadTimer = setInterval(function () {superviseAllFiles()}, 1000)
   } else {
     if (state.autoReloadTimer !== null) {
@@ -105,8 +105,8 @@ export function superviseAllFiles (params, {me, gMemFsCount, gMemFsTotal, gMemFs
 //    1) walk the tree
 //    2) read the files (readFileAsync)
 //    3) re-render if there was a change (via readFileAsync)
-function walkFileTree (item, path, {gMemFsTotal, gCurrentFiles}) {
-  // console.log("walkFileTree()")
+function walkFileTree (item, path) {
+  console.log("walkFileTree")
   path = path || ''
   if (item.isFile) {
     // console.log("walkFileTree File: "+item.name)
@@ -114,8 +114,8 @@ function walkFileTree (item, path, {gMemFsTotal, gCurrentFiles}) {
       var e = file.name.toLowerCase().match(/\.(\w+)$/i)
       e = RegExp.$1
       if (conversionFormats.indexOf(e) >= 0) {
-        gMemFsTotal++
-        gCurrentFiles.push(file)
+        state.gMemFsTotal++
+        state.gCurrentFiles.push(file)
         readFileAsync(file)
       }
     }, errorHandler)
@@ -224,31 +224,35 @@ function handleFileSelect (evt) {
   if (!evt.dataTransfer) throw new Error('Event is not a datatransfer (1)')
   if (!evt.dataTransfer.files) throw new Error('Event is not a datatransfer (2)')
 
-  gMemFs = []
-  gMainFile = null
+  state.gMemFs = []
+  state.gMainFile = null
 
   if (evt.dataTransfer.items && evt.dataTransfer.items.length) { // full directories, let's try
     var items = evt.dataTransfer.items
-    gCurrentFiles = []
-    gMemFsCount = 0
-    gMemFsTotal = 0
-    gMemFsChanged = 0
-    gRootFs = []
+    state.gCurrentFiles = []
+    state.gMemFsCount = 0
+    state.gMemFsTotal = 0
+    state.gMemFsChanged = 0
+    state.gRootFs = []
     for (var i = 0; i < items.length; i++) {
       var item = items[i]
       walkFileTree(items[i].webkitGetAsEntry())
-      gRootFs.push(items[i].webkitGetAsEntry())
+      state.gRootFs.push(items[i].webkitGetAsEntry())
     }
   }
   // use the files list if not already processed above
-  if (!evt.dataTransfer.items && evt.dataTransfer.files.length > 0) {
-    gCurrentFiles = [] // -- be aware: gCurrentFiles = evt.dataTransfer.files won't work, as rewriting file will mess up the array
-    for (var i = 0; i < evt.dataTransfer.files.length; i++) {
-      gCurrentFiles.push(evt.dataTransfer.files[i]); // -- need to transfer the single elements
+  if (!evt.dataTransfer.items)
+  {
+    if(evt.dataTransfer.files.length > 0)
+    {
+      state.gCurrentFiles = [] // -- be aware: gCurrentFiles = evt.dataTransfer.files won't work, as rewriting file will mess up the array
+      for (var i = 0; i < evt.dataTransfer.files.length; i++) {
+        state.gCurrentFiles.push(evt.dataTransfer.files[i]) // -- need to transfer the single elements
+      }
+      loadLocalFiles(state.gCurrentFiles)
+    } else {
+      throw new Error('Please drop and drop one or more files')
     }
-    loadLocalFiles(gCurrentFiles)
-  } else {
-    throw new Error('Please drop and drop one or more files')
   }
 }
 

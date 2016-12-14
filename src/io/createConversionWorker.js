@@ -10,9 +10,8 @@
 // See conversion-worker.js for the conversion process
 //
 import WebWorkify from 'webWorkify'
-import { putSourceInEditor } from '../ui/editor' //FIXME : eeek! dependency on ui
 
-export default function createConversionWorker (gProcessor, gEditor) {
+export default function createConversionWorker (onDone) {
   // const worker = new Worker('./stlStreamWorker.src.js')
   const worker = WebWorkify(require('./conversionWorker.js'))
 
@@ -25,17 +24,7 @@ export default function createConversionWorker (gProcessor, gEditor) {
     console.log('got response from conversionWorker', e)
     if (e.data instanceof Object) {
       var data = e.data
-      if ('filename' in data && 'source' in data) {
-        // console.log("editor"+data.source+']')
-        putSourceInEditor(gEditor, data.source, data.filename)
-      }
-      if ('filename' in data && 'converted' in data) {
-        // console.log("processor: "+data.filename+" ["+data.converted+']')
-        if ('cache' in data && data.cache === true) {
-          saveScript(data.filename, data.converted)
-        }
-        gProcessor.setJsCad(data.converted, data.filename)
-      }
+      onDone(data)
     }
   }
   return worker

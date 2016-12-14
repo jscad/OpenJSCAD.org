@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 import { setUpEditor } from './editor'
-import { setupDragDrop } from './drag-drop'
+import { setupDragDrop } from './dragDrop/ui-drag-drop' //toggleAutoReload
 
 import { detectBrowser } from './detectBrowser'
 import { getUrlParams } from './urlHelpers'
@@ -24,6 +24,14 @@ var gEditor = null
 var gMemFs = [] // associated array, contains file content in source gMemFs[i].{name,source}
 var gCurrentFiles = [] // linear array, contains files (to read)
 
+let state = {
+  memFs: [],
+  currentFiles: []
+}
+
+let toggleAutoReload
+let reloadAllFiles
+
 function init () {
   // Show all exceptions to the user: // WARNING !! this is not practical at dev time
   AlertUserOfUncaughtExceptions()
@@ -32,7 +40,8 @@ function init () {
 
   gProcessor = new Processor(document.getElementById('viewerContext'))
   gEditor = setUpEditor(undefined, gProcessor)
-  setupDragDrop()
+  //FIXME: temporary hack
+  let {toggleAutoReload, reloadAllFiles} = setupDragDrop(me, {gMemFs, gProcessor, gEditor})
   createExamples(me)
   createOptions()
   getOptions()
@@ -128,24 +137,28 @@ function init () {
     $('#about').hide(); return false
   })
 
-  // dropzone
+  // dropzone section
   const dropZoneText = browser === 'chrome' && me === 'web-online' ? ', or folder with jscad files ' : ''
-  document.querySelector('#filedropzone_empty')
+  document.getElementById('filedropzone_empty')
     .innerHTML =
     `Drop one or more supported files
        ${dropZoneText}
        here (see <a style='font-weight: normal' href='https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#support-of-include' target=_blank>details</a>)
        <br>or directly edit OpenJSCAD or OpenSCAD code using the editor.`
 
-  document.querySelector('#reloadAllFiles').onclick = reloadAllFiles
+  document.getElementById('reloadAllFiles').onclick = reloadAllFiles
+  document.getElementById('autoreload').onclick = function(e){
+    const toggle = document.getElementById('autoreload').checked
+    toggleAutoReload(toggle)
+  }
 
   // version number displays
   const footerContent = `OpenJSCAD.org ${version}, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>`
-  document.querySelector('#footer').innerHTML = footerContent
+  document.getElementById('footer').innerHTML = footerContent
 
   const versionText = `Version ${version}`
-  document.querySelector('#menuVersion').innerHTML = versionText
-  document.querySelector('#aboutVersion').innerHTML = versionText
+  document.getElementById('menuVersion').innerHTML = versionText
+  document.getElementById('aboutVersion').innerHTML = versionText
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {
