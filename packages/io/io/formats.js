@@ -6,7 +6,7 @@ export const formats = {
   dxf: { displayName: 'DXF', description: 'AutoCAD Drawing Exchange Format', extension: 'dxf', mimetype: 'application/dxf', convertCSG: false, convertCAG: true },
   jscad: { displayName: 'JSCAD', description: 'OpenJSCAD.org Source', extension: 'jscad', mimetype: 'application/javascript', convertCSG: true, convertCAG: true },
   svg: { displayName: 'SVG', description: 'Scalable Vector Graphics Format', extension: 'svg', mimetype: 'image/svg+xml', convertCSG: false, convertCAG: true },
-  js: { displayName: 'js', description: 'JavaScript Source'},
-  gcode: {displayName: 'gcode', description: 'G Programming Language File Format'},
-  json: {displayName: 'json', description: 'JavaScript Object Notation Format'}
+  js: { displayName: 'js', description: 'JavaScript Source' },
+  gcode: { displayName: 'gcode', description: 'G Programming Language File Format' },
+  json: { displayName: 'json', description: 'JavaScript Object Notation Format' }
 }
