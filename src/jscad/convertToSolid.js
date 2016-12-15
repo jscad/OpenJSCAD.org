@@ -1,4 +1,7 @@
-export default function convertToSolid(objs) {
+import { CSG, CAG } from '../csg'
+
+// FIXME: is there not too much overlap with convertToBlob ?
+export default function convertToSolid (objs) {
   if (objs.length === undefined) {
     if ((objs instanceof CAG) || (objs instanceof CSG)) {
       var obj = objs
