@@ -3,17 +3,16 @@ import getParamDefinitions from './getParamDefinitions'
 import getParamValues from './getParamValues'
 import createJscadFunction from './jscad-function'
 import convertToSolid from './convertToSolid'
-// import createJscadWorker from ''
+//import createJscadWorker from './jscad-worker'
 import { revokeBlobUrl } from '../utils/Blob'
 import Viewer from '../ui/viewer/jscad-viewer'
 
 // output handling
-import convertToBlob from './convertToBlob'
+import convertToBlob from '../io/convertToBlob'
+import {formats} from '../io/formats'
+
 import generateOutputFileBlobUrl from './generateOutputFileBlobUrl'
 import generateOutputFileFileSystem from './generateOutputFileFileSystem'
-
-//formats
-import {formats} from '../io/formats'
 
 // FIXME: hack for now
 import * as primitives3d from '../modeling/primitives3d'
@@ -89,7 +88,7 @@ export default function Processor (containerdiv, options) {
   this.paramDefinitions = []
   this.paramControls = []
   this.script = null
-  this.formats = null
+  this.formats = formats
 
   this.baseurl = document.location.href
   this.baseurl = this.baseurl.replace(/#.*$/, '') // remove remote URL
@@ -462,9 +461,7 @@ Processor.prototype = {
     return script
   },
 
-  rebuildSolidAsync: function () {
-    var parameters = getParamValues(this.paramControls)
-    var script = this.getFullScript()
+  rebuildSolidAsync: function (script, parameters) {
 
     if (!window.Worker) throw new Error('Worker threads are unsupported.')
 
@@ -495,11 +492,10 @@ Processor.prototype = {
     that.worker.postMessage({cmd: 'render', parameters, libraries})
   },
 
-  rebuildSolidSync: function () {
-    var parameters = getParamValues(this.paramControls)
+  rebuildSolidSync: function (script, parameters) {
     try {
       this.state = 1 // processing
-      var func = createJscadFunction(this.baseurl + this.filename, this.script)
+      var func = createJscadFunction(this.baseurl + this.filename, script)
       var objs = func(parameters)
       this.setCurrentObjects(objs)
       this.setStatus('Ready.')
@@ -524,9 +520,12 @@ Processor.prototype = {
     this.enableItems()
     this.setStatus("Rendering. Please wait <img id=busy src='imgs/busy.gif'>")
     // rebuild the solid
+    const parameters = getParamValues(this.paramControls)
+    const script = this.getFullScript()
+
     if (this.opts.useAsync) {
       try {
-        this.rebuildSolidAsync()
+        this.rebuildSolidAsync(script, parameters)
         return
       } catch(err) {
         if (! this.opts.useSync) {
@@ -542,7 +541,7 @@ Processor.prototype = {
       }
     }
     if (this.opts.useSync) {
-      this.rebuildSolidSync()
+      this.rebuildSolidSync(script, parameters)
     }
   },
 
@@ -605,13 +604,15 @@ Processor.prototype = {
   currentObjectsToBlob: function () {
     var startpoint = this.selectStartPoint
     var endpoint = this.selectEndPoint
-    if (startpoint > endpoint) { startpoint = this.selectEndPoint; endpoint = this.selectStartPoint; }
-
-    var objs = this.currentObjects.slice(startpoint, endpoint + 1)
+    if (startpoint > endpoint) { startpoint = this.selectEndPoint; endpoint = this.selectStartPoint }
 
     const format = this.selectedFormat()
     const formatInfo = this.formatInfo(format)
-    return convertToBlob(objs, format, formatInfo, this.script)
+
+    // if output format is jscad , use that, otherwise use currentObjects
+    const objects = format === 'jscad' ? this.script : this.currentObjects.slice(startpoint, endpoint + 1)
+
+    return convertToBlob(objects, {format, formatInfo})
   },
 
   supportedFormatsForCurrentObjects: function () {
@@ -645,9 +646,6 @@ Processor.prototype = {
   },
 
   formatInfo: function (format) {
-    if (this.formats === null) {
-      this.formats = formats
-    }
     return this.formats[format]
   },
 
