@@ -1,3 +1,30 @@
+// conversion worker.js
+//
+// == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
+//
+// Implementation of Conversion Worker Thread
+//
+// History:
+//   2016/10/15: 0.5.2: added conversion of JSON by Z3 Dev
+//   2016/06/27: 0.5.1: refactored AMF import and export by Z3 Dev
+//   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
+
+// See ui-workers.js for helper functions
+// See index.js for how to create and start this thread
+
+// Handle the onmessage event which starts the thread
+// The "event" (message) is expected to have:
+//   data - an anonymous object for passing data
+//   data.url      - url of the page
+//   data.filename - name of the source file
+//   data.source   - contents of the source file
+//
+// A message is posted back to the main thread with:
+//   source    - source code for the editor (See logic below)
+//   converted - converted code for the processor (See logic below)
+// Depending on what's being converted, the two are different or the same.
+//
+// NOTE: Additional scripts (libraries) are imported only if necessary
 module.exports = function (self) {
   self.onmessage = function (e) {
     var r = { source: '', converted: '', filename: '', baseurl: '', cache: false }

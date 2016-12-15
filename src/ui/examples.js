@@ -94,15 +94,14 @@ export function fetchExample (filename, url, {gMemFs, gProcessor, gEditor}) {
   const hasExtension = filename.match(/\.[^\/]+$/)
   if (!hasExtension) // -- has no extension, ie folder referenced
   {
-    if (!filename.match(/\/$/))
-    {
+    if (!filename.match(/\/$/)) {
       filename += '/' // add tailing /
     }
     filename += 'main.jscad'
   }
 
-  //FIXME: same as in drag-drop !!
-  function onConversionDone(data){
+  // FIXME: same as in drag-drop !!
+  function onConversionDone (data) {
     if ('filename' in data && 'source' in data) {
       // console.log("editor"+data.source+']')
       putSourceInEditor(gEditor, data.source, data.filename)
@@ -110,8 +109,8 @@ export function fetchExample (filename, url, {gMemFs, gProcessor, gEditor}) {
     if ('filename' in data && 'converted' in data) {
       // console.log("processor: "+data.filename+" ["+data.converted+']')
       if ('cache' in data && data.cache === true) {
-        //FIXME: cannot do it from here, bloody globals
-        //saveScript(data.filename, data.converted)
+        // FIXME: cannot do it from here, bloody globals
+        // saveScript(data.filename, data.converted)
       }
       gProcessor.setJsCad(data.converted, data.filename)
     }
@@ -155,7 +154,7 @@ export function loadInitialExample (me, params) {
         putSourceInEditor(content, 'MyDesign.jscad')
         gProcessor.setJsCad(content, 'MyDesign.jscad')
       } else {
-        //gProcessor.setJsCad(getSourceFromEditor(), 'example.jscad')
+        // gProcessor.setJsCad(getSourceFromEditor(), 'example.jscad')
       }
     }
 
@@ -165,7 +164,7 @@ export function loadInitialExample (me, params) {
       document.location = docUrl.replace(/#.*$/, '#')
     }
 
-    function loadRemote (u,  {gMemFs, gProcessor, gEditor}) {
+    function loadRemote (u, {gMemFs, gProcessor, gEditor}) {
       console.log('loadRemote')
       var xhr = new XMLHttpRequest()
       xhr.open('GET', remoteUrl + u, true)
@@ -183,7 +182,7 @@ export function loadInitialExample (me, params) {
 
     if (isRemote) // remote file referenced, e.g. http://openjscad.org/#http://somewhere/something.ext
     {
-      const u = isRemote[1]//RegExp.$1
+      const u = isRemote[1] // RegExp.$1
       loadRemote(u, params)
     }
     else if (isLocal) { // local example, e.g. http://openjscad.org/#examples/example001.jscad

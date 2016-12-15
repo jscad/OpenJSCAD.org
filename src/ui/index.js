@@ -1,7 +1,9 @@
+// == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
+
 import $ from 'jquery'
 
 import { setUpEditor } from './editor'
-import { setupDragDrop } from './dragDrop/ui-drag-drop' //toggleAutoReload
+import { setupDragDrop } from './dragDrop/ui-drag-drop' // toggleAutoReload
 
 import { detectBrowser } from './detectBrowser'
 import { getUrlParams } from './urlHelpers'
@@ -28,9 +30,6 @@ let state = {
   memFs: [],
   currentFiles: []
 }
-
-let toggleAutoReload
-let reloadAllFiles
 
 function init () {
   // Show all exceptions to the user: // WARNING !! this is not practical at dev time

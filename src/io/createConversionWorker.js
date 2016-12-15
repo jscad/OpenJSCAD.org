@@ -12,7 +12,7 @@
 import WebWorkify from 'webWorkify'
 
 export default function createConversionWorker (onDone) {
-  // const worker = new Worker('./stlStreamWorker.src.js')
+  //this spawns web workers that can do 'require()' calls
   const worker = WebWorkify(require('./conversionWorker.js'))
 
   // var w = new Worker('src/io/conversion-worker.js') // FIXME: update this to WebWorkify
