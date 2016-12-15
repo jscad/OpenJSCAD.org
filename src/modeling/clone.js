@@ -1,4 +1,4 @@
-function clone (obj) {
+export function clone (obj) {
   if (null == obj || 'object' != typeof obj) return obj
   var copy = obj.constructor()
   for (var attr in obj) {

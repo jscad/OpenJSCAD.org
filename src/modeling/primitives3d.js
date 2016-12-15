@@ -1,4 +1,7 @@
 // -- 3D primitives (OpenSCAD like notion)
+import { CSG, CAG } from '../csg'
+import { circle } from './primitives2d'
+import { rotate_extrude } from './extrusion'
 
 export function cube(p) {
    var s = 1, v = null, off = [0,0,0], round = false, r = 0, fn = 8;

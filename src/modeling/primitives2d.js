@@ -1,3 +1,5 @@
+import {CAG} from '../csg'
+
 // -- 2D primitives (OpenSCAD like notion)
 
 export function square() {

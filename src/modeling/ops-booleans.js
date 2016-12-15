@@ -1,3 +1,5 @@
+import {CAG, CSG} from '../csg'
+
 // -- 3D operations (OpenSCAD like notion)
 export function union () {
   var o,i = 0,a = arguments

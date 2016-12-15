@@ -1,3 +1,5 @@
+import {CAG} from '../csg'
+
 export default function group () { // experimental
   var o
   var i = 0
