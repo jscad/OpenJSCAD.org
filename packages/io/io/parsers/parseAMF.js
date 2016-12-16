@@ -37,8 +37,8 @@ if(typeof module !== 'undefined') {    // used via nodejs
 //
 ////////////////////////////////////////////
 var sax = require('sax')
-import {echo} from '../../modeling/debug'
-import $ from 'jquery' // FIXME: you gotta be kidding me : depends on jquery ???
+import { echo } from '../../modeling/debug'
+import { version } from '../../jscad/version'
 
 sax.SAXParser.prototype.inchMM = (1/0.039370);       // used for scaling AMF (inch) to CAG coordinates(MM)
 
@@ -525,13 +525,15 @@ function createAmfParser(src, pxPmm) {
 sax.SAXParser.prototype.codify = function(amf) {
   if (amf.type != 'amf' || (!amf.objects)) throw new Error("AMF malformed");
 
+let code = ''
+
 // hack due to lack of this in array map()
   var objects = amf.objects;
   var materials = this.amfMaterials;
   var lastmaterial = null;
   function findMaterial(id) {
     if (lastmaterial && lastmaterial.id == id) return lastmaterial;
-    for (i = 0; i < materials.length; i++) {
+    for (let i = 0; i < materials.length; i++) {
       if (materials[i].id && materials[i].id == id) {
         lastmaterial = materials[i];
         return lastmaterial;
@@ -540,13 +542,13 @@ sax.SAXParser.prototype.codify = function(amf) {
     return null;
   }
   function getValue(objects,type) {
-    for (i = 0; i < objects.length; i++) {
+    for (let i = 0; i < objects.length; i++) {
       if (objects[i].type == type) return objects[i].value;
     }
     return null;
   }
   function getColor(objects) {
-    for (i = 0; i < objects.length; i++) {
+    for (let i = 0; i < objects.length; i++) {
       var obj = objects[i];
       if (obj.type == 'color') {
         var r = parseFloat(getValue(obj.objects,'r'));
@@ -701,7 +703,7 @@ sax.SAXParser.prototype.codify = function(amf) {
   code += '\n';
   code += 'function main() {\n';
   code += '  var csgs = [];\n';
-  for (i = 0; i < objects.length; i++) {
+  for (let i = 0; i < objects.length; i++) {
     var obj = objects[i];
     if (obj.type == 'object') {
       code += '  csgs.push(createObject'+obj.id+'());\n';
@@ -723,7 +725,7 @@ sax.SAXParser.prototype.codify = function(amf) {
 // options (optional) anonymous object with:
 //   pxPmm: pixels per milimeter for calcuations
 // FIXME: add openjscad version in a cleaner manner ?
- function parseAMF(src, fn, options) {
+ export function parseAMF(src, fn, options) {
   var fn = fn || 'amf';
   var options = options || {}
   // parse the AMF source
@@ -748,7 +750,7 @@ sax.SAXParser.prototype.codify = function(amf) {
 
 // --------------------------------------------------------------------------------------------
 
-export function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format
+function _old_parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format
    var xml, err = '';            // http://api.jquery.com/category/traversing/
 // unzip if necessary TBD
 // a stream starting without <?xml is considered ZIP compresssed

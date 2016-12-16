@@ -43,15 +43,15 @@ module.exports = function (self) {
           e = RegExp.$1
           switch (e) {
             case 'amf':
-              const parseAMF = require('./parsers/jscad-parseAMF').parseAMF
+              const parseAMF = require('./parsers/parseAMF').parseAMF
               r.source = r.converted = parseAMF(data.source, data.filename)
               break
             case 'gcode':
-              importScripts(r.baseurl + 'js/lib/csg.js', r.baseurl + 'js/openjscad.js', r.baseurl + 'js/openscad.js')
+              const parseGcode = require('./parsers/parseGCode').parseGcode
               r.source = r.converted = parseGCode(data.source, data.filename)
               break
             case 'obj':
-              importScripts(r.baseurl + 'js/lib/csg.js', r.baseurl + 'js/openjscad.js', r.baseurl + 'js/openscad.js')
+              const parseOBJ = require('./parsers/parseObj').parseOBJ
               r.source = r.converted = parseOBJ(data.source, data.filename)
               break
             case 'scad':
@@ -60,10 +60,12 @@ module.exports = function (self) {
               if (!r.source.match(/^\/\/!OpenSCAD/i)) {
                 r.source = '//!OpenSCAD\n' + data.source
               }
+              //FIXME : does not work
+              //const translator = require('openscad-openjscad-translator')
               r.converted = openscadOpenJscadParser.parse(r.source)
               break
             case 'stl':
-              const parseSTL = require('../modeling/parseStl').parseSTL
+              const parseSTL = require('./parsers/parseStl').parseSTL
               r.source = r.converted = parseSTL(data.source, data.filename)
               break
             case 'js':
@@ -73,12 +75,12 @@ module.exports = function (self) {
               r.source = r.converted = data.source
               break
             case 'svg':
-              importScripts(r.baseurl + 'js/lib/csg.js', r.baseurl + 'js/openjscad.js', r.baseurl + 'js/lib/sax-js-1.1.5/lib/sax.js', r.baseurl + 'js/jscad-parseSVG.js')
-              r.source = r.converted = OpenJsCad.parseSVG(data.source, data.filename)
+              const parseSVG = require('./parsers/parseSVG').parseSVG
+              r.source = r.converted = parseSVG(data.source, data.filename)
               break
             case 'json':
-              importScripts(r.baseurl + 'js/lib/csg.js', r.baseurl + 'js/openjscad.js', r.baseurl + 'js/jscad-parseJSON.js')
-              r.source = r.converted = OpenJsCad.parseJSON(data.source, data.filename)
+              const parseJSON = require('./parsers/parseJSON').parseJSON
+              r.source = r.converted = parseJSON(data.source, data.filename)
               break
             default:
               r.source = r.converted = '// Invalid file type in conversion (' + e + ')'
