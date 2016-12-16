@@ -1,18 +1,26 @@
-import log from './log' // logging helper
+import log from './log'
 import getParamDefinitions from './getParamDefinitions'
 import getParamValues from './getParamValues'
 import createJscadFunction from './jscad-function'
 import convertToSolid from './convertToSolid'
-//import createJscadWorker from './jscad-worker'
+import includeJscadSync from './includeJscadSync'
+import {rebuildSolidSync, rebuildSolidAsync} from './rebuildSolid'
+
+
+import createJscadWorker from './jscad-worker'
 import { revokeBlobUrl } from '../utils/Blob'
-import Viewer from '../ui/viewer/jscad-viewer'
 
 // output handling
 import convertToBlob from '../io/convertToBlob'
-import {formats} from '../io/formats'
+import { formats } from '../io/formats'
 
 import generateOutputFileBlobUrl from './generateOutputFileBlobUrl'
 import generateOutputFileFileSystem from './generateOutputFileFileSystem'
+
+import { CAG, CSG } from '../csg'
+
+import Viewer from '../ui/viewer/jscad-viewer'
+
 
 // FIXME: hack for now
 import * as primitives3d from '../modeling/primitives3d'
@@ -25,10 +33,8 @@ import * as maths from '../modeling/maths'
 import * as csg from '../csg'
 import * as text from '../modeling/text'
 
-//for backwards compatibility
-const OpenJsCad = {
-  log
-}
+// for backwards compatibility
+const OpenJsCad = {log}
 /*
  * exposes the properties of an object to the given scope object (for example WINDOW etc)
  * this is the same as {foo, bar} = baz
@@ -40,7 +46,8 @@ function exposeAPI (object, scope = window) {
     scope[key] = object[key]
   })
 }
-exposeAPI({OpenJsCad})// for backwards compatibility only
+
+/*exposeAPI({OpenJsCad})// for backwards compatibility only
 exposeAPI(primitives2d)
 exposeAPI(primitives3d)
 exposeAPI(booleanOps)
@@ -49,7 +56,7 @@ exposeAPI(extrusion)
 exposeAPI(color)
 exposeAPI(maths)
 exposeAPI(text)
-exposeAPI(csg)
+exposeAPI(csg)*/
 
 export default function Processor (containerdiv, options) {
   if (options === undefined) options = {}
@@ -58,7 +65,7 @@ export default function Processor (containerdiv, options) {
     debug: false,
     libraries: ['js/lib/csg.js', 'js/formats.js', 'js/js', 'js/openscad.js'],
     openJsCadPath: '',
-    useAsync: true,
+    useAsync: false,
     useSync: true,
     viewer: {}
   }
@@ -415,7 +422,7 @@ Processor.prototype = {
   // script: javascript code
   // filename: optional, the name of the .jscad file
   setJsCad: function (script, filename) {
-    console.log('setJsCad', script, filename)
+    // console.log('setJsCad', script, filename)
     if (!filename) filename = 'openjscad.jscad'
 
     this.abort()
@@ -461,57 +468,6 @@ Processor.prototype = {
     return script
   },
 
-  rebuildSolidAsync: function (script, parameters) {
-
-    if (!window.Worker) throw new Error('Worker threads are unsupported.')
-
-    // create the worker
-    var that = this
-    that.state = 1 // processing
-    that.worker = createJscadWorker(this.baseurl + this.filename, script,
-      // handle the results
-      function (err, objs) {
-        that.worker = null
-        if (err) {
-          that.setError(err)
-          that.setStatus('Error.')
-          that.state = 3 // incomplete
-        } else {
-          that.setCurrentObjects(objs)
-          that.setStatus('Ready.')
-          that.state = 2 // complete
-        }
-        that.enableItems()
-      }
-    )
-    // pass the libraries to the worker for import
-    var libraries = this.opts.libraries.map(function (l) {
-      return this.baseurl + this.opts.openJsCadPath + l
-    }, this)
-    // start the worker
-    that.worker.postMessage({cmd: 'render', parameters, libraries})
-  },
-
-  rebuildSolidSync: function (script, parameters) {
-    try {
-      this.state = 1 // processing
-      var func = createJscadFunction(this.baseurl + this.filename, script)
-      var objs = func(parameters)
-      this.setCurrentObjects(objs)
-      this.setStatus('Ready.')
-      this.state = 2 // complete
-    } catch(err) {
-      var errtxt = err.toString()
-      if (err.stack) {
-        errtxt += '\nStack trace:\n' + err.stack
-      }
-      this.setError(errtxt)
-      this.setStatus('Error.')
-      this.state = 3 // incomplete
-    }
-    this.enableItems()
-  },
-
   rebuildSolid: function () {
     // clear previous solid and settings
     this.abort()
@@ -519,29 +475,56 @@ Processor.prototype = {
     this.clearViewer()
     this.enableItems()
     this.setStatus("Rendering. Please wait <img id=busy src='imgs/busy.gif'>")
+
     // rebuild the solid
+
+    //prepare all parameters
     const parameters = getParamValues(this.paramControls)
     const script = this.getFullScript()
-
-    if (this.opts.useAsync) {
-      try {
-        this.rebuildSolidAsync(script, parameters)
-        return
-      } catch(err) {
-        if (! this.opts.useSync) {
-          var errtxt = err.toString()
-          if (err.stack) {
-            errtxt += '\nStack trace:\n' + err.stack
-          }
-          this.setError(errtxt)
-          this.setStatus('Error.')
-          this.state = 3 // incomplete
-          this.enableItems()
-        }
+    const fullurl = this.baseurl + this.filename
+    const implicitGlobals = {
+      oscad: {
+        csg: {CAG: csg.CAG, CSG: csg.CSG},
+        primitives2d,
+        primitives3d,
+        booleanOps,
+        transformations,
+        extrusion,
+        color,
+        maths,
+        text,
+        OpenJsCad: {OpenJsCad}
       }
     }
-    if (this.opts.useSync) {
-      this.rebuildSolidSync(script, parameters)
+
+    this.state = 1 // processing
+    let that = this
+    function callback (err, objects) {
+      console.log('all done')
+      if (err) {
+        if (err.stack) {
+          errtxt += '\nStack trace:\n' + err.stack
+          //    var errtxt = err.toString()
+        }
+        that.setError(err)
+        that.setStatus('Error.')
+        that.state = 3 // incomplete
+      } else {
+        that.setCurrentObjects(objects)
+        that.setStatus('Ready.')
+        that.state = 2 // complete
+      }
+      that.enableItems()
+    }
+
+    if (this.opts.useAsync) {
+      rebuildSolidAsync(script, fullurl, parameters, implicitGlobals, (err, objects) => {
+        if(err & that.opts.useSync) {
+          rebuildSolidSync(script, fullurl, parameters, implicitGlobals, callback)
+        }
+      })
+    }else if (this.opts.useSync) {
+      rebuildSolidSync(script, fullurl, parameters, implicitGlobals, callback)
     }
   },
 
@@ -570,20 +553,20 @@ Processor.prototype = {
     const extension = this.selectedFormatInfo().extension
     console.log('generateOutputFile')
 
-    function onDone(data, downloadAttribute, blobMode, noData){
+    function onDone (data, downloadAttribute, blobMode, noData) {
       this.hasOutputFile = true
       this.downloadOutputFileLink.href = data
-      if(blobMode){
+      if (blobMode) {
         this.outputFileBlobUrl = data
-      }else{
-        //FIXME: what to do with this one ?
-        //that.outputFileDirEntry = dirEntry // save for later removal
+      } else {
+        // FIXME: what to do with this one ?
+        // that.outputFileDirEntry = dirEntry // save for later removal
       }
-      //this.downloadOutputFileLink.type = this.selectedFormatInfo().mimetype
+      // this.downloadOutputFileLink.type = this.selectedFormatInfo().mimetype
 
       this.downloadOutputFileLink.innerHTML = this.downloadLinkTextForCurrentObject()
       this.downloadOutputFileLink.setAttribute('download', downloadAttribute)
-      if(noData){
+      if (noData) {
         this.downloadOutputFileLink.setAttribute('target', '_blank')
       }
       this.enableItems()
@@ -591,10 +574,10 @@ Processor.prototype = {
 
     if (this.viewedObject) {
       try {
-        //this.generateOutputFileFileSystem()
+        // this.generateOutputFileFileSystem()
         generateOutputFileFileSystem(extension, blob, onDone.bind(this))
       } catch(e) {
-        //this.generateOutputFileBlobUrl()
+        // this.generateOutputFileBlobUrl()
         generateOutputFileBlobUrl(extension, blob, onDone.bind(this))
       }
       if (this.ondownload) this.ondownload(this)
@@ -630,8 +613,8 @@ Processor.prototype = {
     var foundCSG = false
     var foundCAG = false
     for (i = 0; i < objs.length; i++) {
-      if (objs[i] instanceof CSG) { foundCSG = true; }
-      if (objs[i] instanceof CAG) { foundCAG = true; }
+      if (objs[i] instanceof CSG) { foundCSG = true }
+      if (objs[i] instanceof CAG) { foundCAG = true }
     }
     for (format in this.formats) {
       if (foundCSG && this.formats[format].convertCSG === true) {
