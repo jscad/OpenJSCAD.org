@@ -16,7 +16,7 @@ export default function getParamDefinitions (script) {
     script1 += script
     const f = new Function(script1)
     params = f()
-    if ((typeof (params) != 'object') || (typeof (params.length) != 'number')) {
+    if ((typeof (params) !== 'object') || (typeof (params.length) !== 'number')) {
       throw new Error('The getParameterDefinitions() function should return an array with the parameter definitions')
     }
   }

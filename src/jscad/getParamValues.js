@@ -1,4 +1,4 @@
-export default function getParamValues(paramControls) {
+export default function getParamValues (paramControls) {
   var paramValues = {}
   for (var i = 0; i < paramControls.length; i++) {
     var control = paramControls[i]

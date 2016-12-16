@@ -30,7 +30,7 @@ export default function includeJscadSync (relpath, fn) {
     xhr.onload = function () {
       var src = this.responseText
       console.log('src',src)
-      //eval(src)
+      //eval(src) // UGH ???
       resolve(src)
     }
     xhr.onerror = function () {}
