@@ -1,5 +1,5 @@
-import { CSG, CAG } from '../csg'
-import {version} from '../jscad/version'
+import { CSG } from '../../csg'
+import { version } from '../../jscad/version'
 
 // STL function from http://jsfiddle.net/Riham/yzvGD/35/
 // CC BY-SA by Riham

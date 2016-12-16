@@ -8,8 +8,8 @@ All code released under MIT license
 Notes:
 1) All functions extend other objects in order to maintain namespaces.
 */
-
-var CAG = require('csg.js').CAG
+import { CSG, CAG } from '../../csg'
+import { version } from '../../jscad/version'
 var sax = require('sax')
 
 ////////////////////////////////////////////
@@ -1347,7 +1347,7 @@ function createSvgParser (src, pxPmm) {
 // options (optional) anonymous object with:
 //   pxPmm: pixels per milimeter for calcuations
 //
-function parseSVG (src, fn, options) {
+export function parseSVG (src, fn, options) {
   var fn = fn || 'svg';
   var options = options || {};
   var pxPmm;
@@ -1357,7 +1357,7 @@ function parseSVG (src, fn, options) {
 // convert the internal objects to JSCAD code
   var code = '';
   code += '//\n';
-  code += "// producer: OpenJSCAD.org "+OpenJsCad.version+" SVG Importer\n";
+  code += "// producer: OpenJSCAD.org "+version+" SVG Importer\n";
   code += "// date: "+(new Date())+"\n";
   code += "// source: "+fn+"\n";
   code += '//\n';
@@ -1376,12 +1376,12 @@ function parseSVG (src, fn, options) {
 // options (optional) anonymous object with:
 //   pxPmm: pixels per milimeter for calcuations
 //
-CAG.fromSVG = function(src, options) {
+function fromSVG(src, options) {
   var options = options || {};
   var pxPmm;
   if ('pxPmm' in options) { pxPmm = options.pxPmm; }
 // parse the SVG source
-  var parser = OpenJsCad.createSvgParser(src, pxPmm);
+  var parser = createSvgParser(src, pxPmm);
 // convert the internal objects to CAG
   var cag = new CAG();
   if (parser.svgObj !== null) {

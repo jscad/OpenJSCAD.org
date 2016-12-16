@@ -12,17 +12,9 @@ Notes:
 1) All functions extend other objects in order to maintain namespaces.
 */
 
-// import the required modules if necessary
-if(typeof module !== 'undefined') {    // used via nodejs
-  if (typeof module.CAG === 'undefined') {
-    CSG = require(lib+'../csg.js').CSG;
-  }
-  if (typeof module.OpenJsCad === 'undefined') {
-    OpenJsCad = require(lib+'../openjscad.js').OpenJsCad;
-  }
-}
+import { CSG } from '../../csg'
+import { version } from '../../jscad/version'
 
-var CSG = require('csg.js').CSG
 ////////////////////////////////////////////
 //
 // JSON (JavaScript Object Notation) is a lightweight data-interchange format
@@ -89,7 +81,7 @@ function toSource(obj) {
 //
 // fn (optional) original filename of JSON source
 //
-function parseJSON(src, fn, options) {
+export function parseJSON(src, fn, options) {
   var fn = fn || 'amf';
   var options = options || {};
 
@@ -98,7 +90,7 @@ function parseJSON(src, fn, options) {
 // convert the internal objects to JSCAD code
   var code = '';
   code += '//\n';
-  code += "// producer: OpenJSCAD.org "+OpenJsCad.version+" JSON Importer\n";
+  code += "// producer: OpenJSCAD.org "+version+" JSON Importer\n";
   code += "// date: "+(new Date())+"\n";
   code += "// source: "+fn+"\n";
   code += '//\n';

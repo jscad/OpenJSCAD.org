@@ -1,5 +1,6 @@
+import { version } from '../../jscad/version'
 
-function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code
+export function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code
                                   // just as experiment ...
    var l = gcode.split(/[\n]/);   // for now just GCODE ASCII
    var srci = '';
@@ -76,7 +77,7 @@ function parseGCode(gcode,fn) {   // http://reprap.org/wiki/G-code
    }
 
    var src = "";
-   src += "// producer: OpenJSCAD Compatibility ("+version().join('.')+") GCode Importer\n";
+   src += "// producer: OpenJSCAD Compatibility ("+version+") GCode Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";

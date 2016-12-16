@@ -1,4 +1,6 @@
-function parseOBJ(obj,fn) {   // http://en.wikipedia.org/wiki/Wavefront_.obj_file
+import { version } from '../../jscad/version'
+
+export function parseOBJ(obj,fn) {   // http://en.wikipedia.org/wiki/Wavefront_.obj_file
    var l = obj.split(/\n/);
    var v = [], f = [];
 
@@ -31,7 +33,7 @@ function parseOBJ(obj,fn) {   // http://en.wikipedia.org/wiki/Wavefront_.obj_fil
       }
    }
    var src = "";
-   src += "// producer: OpenJSCAD Compatibility ("+version().join('.')+") Wavefront OBJ Importer\n";
+   src += "// producer: OpenJSCAD Compatibility ("+version+") Wavefront OBJ Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
