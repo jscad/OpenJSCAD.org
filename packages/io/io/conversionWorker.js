@@ -9,9 +9,6 @@
 //   2016/06/27: 0.5.1: refactored AMF import and export by Z3 Dev
 //   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
 
-// See ui-workers.js for helper functions
-// See index.js for how to create and start this thread
-
 // Handle the onmessage event which starts the thread
 // The "event" (message) is expected to have:
 //   data - an anonymous object for passing data
@@ -47,7 +44,7 @@ module.exports = function (self) {
               r.source = r.converted = parseAMF(data.source, data.filename)
               break
             case 'gcode':
-              const parseGcode = require('./parsers/parseGCode').parseGcode
+              const parseGCode = require('./parsers/parseGCode').parseGCode
               r.source = r.converted = parseGCode(data.source, data.filename)
               break
             case 'obj':
