@@ -1,3 +1,6 @@
+import { CSG, CAG } from '../csg'
+import {version} from '../jscad/version'
+
 // STL function from http://jsfiddle.net/Riham/yzvGD/35/
 // CC BY-SA by Riham
 // changes by Rene K. Mueller <spiritdude@gmail.com>
@@ -5,7 +8,7 @@
 // 2013/03/28: lot of rework and debugging included, and error handling
 // 2013/03/18: renamed functions, creating .jscad source direct via polyhedron()
 
-function parseSTL(stl,fn) {
+export function parseSTL(stl,fn) {
    var isAscii = true;
 
    for(var i=0; i<stl.length; i++) {
@@ -25,7 +28,7 @@ function parseSTL(stl,fn) {
    return src;
 }
 
-function parseBinarySTL(stl,fn) {
+export function parseBinarySTL(stl,fn) {
     // -- This makes more sense if you read http://en.wikipedia.org/wiki/STL_(file_format)#Binary_STL
     var vertices = [];
     var triangles = [];
@@ -156,7 +159,7 @@ function parseBinarySTL(stl,fn) {
         converted++;
     }
    var src = "";
-   src += "// producer: OpenJSCAD Compatibility ("+version().join('.')+") STL Binary Importer\n";
+   src += "// producer: OpenJSCAD Compatibility ("+version+") STL Binary Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -168,13 +171,13 @@ function parseBinarySTL(stl,fn) {
    return src;
 }
 
-function parseAsciiSTL(stl,fn) {
+export function parseAsciiSTL(stl,fn) {
    var src = "";
    var n = 0;
    var converted = 0;
    var o;
 
-   src += "// producer: OpenJSCAD Compatibility ("+version().join('.')+") STL ASCII Importer\n";
+   src += "// producer: OpenJSCAD Compatibility ("+version+") STL ASCII Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
@@ -309,7 +312,7 @@ function vt2jscad(v,t,n,c) {     // vertices, triangles, normals and colors
 //+ Jonas Raoni Soares Silva
 //@ http://jsfromhell.com/classes/binary-parser [rev. #1]
 
-BinaryReader = function (data) {
+function BinaryReader(data) {
    this._buffer = data;
    this._pos = 0;
 };

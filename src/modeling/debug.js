@@ -1,4 +1,4 @@
-function echo() {
+export function echo() {
    var s = "", a = arguments;
    for(var i=0; i<a.length; i++) {
       if(i) s += ", ";
@@ -70,7 +70,7 @@ Changelog:
  - initial release
 **/
 
-sprintf = (function() {
+let sprintf = (function() {
 	function get_type(variable) {
 		return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase();
 	}
@@ -189,7 +189,7 @@ sprintf = (function() {
 	return str_format;
 })();
 
-vsprintf = function(fmt, argv) {
-	argv.unshift(fmt);
-	return sprintf.apply(null, argv);
-};
+function vsprintf(fmt, argv) {
+	argv.unshift(fmt)
+	return sprintf.apply(null, argv)
+}

@@ -37,6 +37,8 @@ if(typeof module !== 'undefined') {    // used via nodejs
 //
 ////////////////////////////////////////////
 var sax = require('sax')
+import {echo} from '../../modeling/debug'
+import $ from 'jquery' // FIXME: you gotta be kidding me : depends on jquery ???
 
 sax.SAXParser.prototype.inchMM = (1/0.039370);       // used for scaling AMF (inch) to CAG coordinates(MM)
 
@@ -721,7 +723,7 @@ sax.SAXParser.prototype.codify = function(amf) {
 // options (optional) anonymous object with:
 //   pxPmm: pixels per milimeter for calcuations
 // FIXME: add openjscad version in a cleaner manner ?
- function parseAMF(src, fn, options, OpenJsCad) {
+ function parseAMF(src, fn, options) {
   var fn = fn || 'amf';
   var options = options || {}
   // parse the AMF source
@@ -729,7 +731,7 @@ sax.SAXParser.prototype.codify = function(amf) {
   // convert the internal objects to JSCAD code
   var code = '';
   code += '//\n';
-  code += "// producer: OpenJSCAD.org "+OpenJsCad.version+" AMF Importer\n";
+  code += "// producer: OpenJSCAD.org "+version+" AMF Importer\n";
   code += "// date: "+(new Date())+"\n";
   code += "// source: "+fn+"\n";
   code += '//\n';
@@ -746,7 +748,7 @@ sax.SAXParser.prototype.codify = function(amf) {
 
 // --------------------------------------------------------------------------------------------
 
-function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format
+export function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format
    var xml, err = '';            // http://api.jquery.com/category/traversing/
 // unzip if necessary TBD
 // a stream starting without <?xml is considered ZIP compresssed
@@ -857,7 +859,7 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
    for(var k in meta) {
       src += "// AMF."+k+": "+meta[k]+"\n";
    }
-   src += "// producer: OpenJSCAD Compatibility ("+version().join('.')+") AMF Importer\n";
+   src += "// producer: OpenJSCAD Compatibility ("+version+") AMF Importer\n";
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
