@@ -14,7 +14,7 @@
 // This function creates an anonymous Function, which is invoked to execute the thread.
 // The function executes in the GLOBAL context, so all necessary parameters are provided.
 //
-export default function createJscadFunction (fullurl, script, callback) {
+export default function createJscadFunction (fullurl, fullscript, implicitGlobals, callback) {
   // console.log("createJscadFunction()")
 
   // determine the relative base path for include(<relativepath>)
@@ -23,36 +23,56 @@ export default function createJscadFunction (fullurl, script, callback) {
     relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1)
   }
 
-  var source = '// SYNC WORKER\n'
-  source += '  var relpath = "' + relpath + '";\n'
-  source += '  var include = includeJscadSync;\n'
-  source += '\n'
-  source += includeJscadSync.toString() + '\n'
-  source += '\n'
-  source += script + '\n'
-  source += '\n'
-  source += 'return main(params);\n'
+  // not a fan of this, we have way too many explicit api elements
+  let globalsList = ''
+  // each top key is a library ie : openscad helpers etc
+  // one level below that is the list of libs
+  Object.keys(implicitGlobals).forEach(function (libKey) {
+    const lib = implicitGlobals[libKey]
+    // console.log(`lib:${libKey}: ${lib}`)
+    Object.keys(lib).forEach(function (libItemKey) {
+      const libItems = lib[libItemKey]
+      // console.log('libItems', libItems)
+      Object.keys(libItems).forEach(function (toExposeKey) {
+        const toExpose = libItems[toExposeKey]
+        // console.log('toExpose',toExpose )
+        const text = `const ${toExposeKey} = implicitGlobals['${libKey}']['${libItemKey}']['${toExposeKey}']\n`
+        globalsList += text
+      })
+    })
+  })
+//
+//
+//  ${includeJscadSync.toString()}
+  const source = `// SYNC WORKER
+    var relpath = '${relpath}'
+    //var include = includeJscadSync
 
-  console.log("SOURCE: "+source)
-  var f = new Function('params', source)
+    ${globalsList}
+
+    //user defined script(s)
+    ${fullscript}
+
+    return resolver.then(function(includes){
+      console.log('includes', includes)
+      return main(params)
+    })
+
+  `
+
+  //console.log("SOURCE: "+source)
+  var f = new Function('params', 'include', 'resolver','implicitGlobals', source)
+  //console.log('function', f)
   return f
 }
 
-//
-// THESE FUNCTIONS ARE SERIALIZED FOR INCLUSION IN THE FULL SCRIPT
-//
-// TODO It might be possible to cache the serialized versions
-//
 
-// Include the requested script via MemFs (if available) or HTTP Request
-//
-// (Note: This function is appended together with the JSCAD script)
-//
 function includeJscadSync (fn) {
+  //console.log('include', relpath, fn)
   // include the requested script via MemFs if possible
-  if (typeof (gMemFs) == 'object') {
+  if (typeof (gMemFs) === 'object') {
     for (var fs in gMemFs) {
-      if (gMemFs[fs].name == fn) {
+      if (gMemFs[fs].name === fn) {
         eval(gMemFs[fs].source)
         return
       }
