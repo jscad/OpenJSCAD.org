@@ -1392,7 +1392,3 @@ function fromSVG(src, options) {
   }
   return cag;
 };
-
-// export the extended prototypes
-  //module.CAG = CAG;
-  //module.OpenJsCad = OpenJsCad;
