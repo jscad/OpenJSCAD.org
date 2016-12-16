@@ -13,7 +13,7 @@ export default function convertToSolid (objs) {
 
   var solid = null
   for (var i = 0; i < objs.length; i++) {
-    var obj = objs[i]
+    let obj = objs[i]
     if (obj instanceof CAG) {
       obj = obj.extrude({offset: [0, 0, 0.1]}) // convert CAG to a thin solid CSG
     }
