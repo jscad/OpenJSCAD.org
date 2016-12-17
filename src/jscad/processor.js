@@ -1,13 +1,9 @@
 import log from './log'
 import getParamDefinitions from './getParamDefinitions'
 import getParamValues from './getParamValues'
-import createJscadFunction from './jscad-function'
 import convertToSolid from './convertToSolid'
-import includeJscadSync from './includeJscadSync'
 import {rebuildSolidSync, rebuildSolidAsync} from './rebuildSolid'
 
-
-import createJscadWorker from './jscad-worker'
 import { revokeBlobUrl } from '../utils/Blob'
 
 // output handling
@@ -503,6 +499,7 @@ Processor.prototype = {
       console.log('all done')
       if (err) {
         if (err.stack) {
+          let errtxt = ''
           errtxt += '\nStack trace:\n' + err.stack
           //    var errtxt = err.toString()
         }

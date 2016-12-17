@@ -29,7 +29,7 @@ export default function includeJscadSync (relpath, fn) {
     xhr.open('GET', url, false)
     xhr.onload = function () {
       var src = this.responseText
-      console.log('src',src)
+      //console.log('src',src)
       //eval(src) // UGH ???
       resolve(src)
     }
