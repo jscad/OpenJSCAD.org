@@ -27,7 +27,7 @@ function replaceIncludes (text, relpath) {
     let tmpPromises = foundIncludes.map(function (uri, index) {
       const promise = includeJscadSync(relpath, uri)
       return promise.then(function (includedScript) {
-        return findIncludes(includedScript, relpath).then(function (substring) {
+        return replaceIncludes(includedScript, relpath).then(function (substring) {
           let currentItem = foundIncludesFull[index]
           scriptWithIncludes = scriptWithIncludes.replace(currentItem, substring)
           return scriptWithIncludes
@@ -38,6 +38,14 @@ function replaceIncludes (text, relpath) {
   })
 }
 
+/**
+ * evaluate script & rebuild solids, in main thread
+ * @param {String} script the script
+ * @param {String} fullurl full url of current script
+ * @param {Object} parameters the parameters to use with the script
+ * @param {Object} globals the globals to use when evaluating the script
+ * @param {Object} callback the callback to call once evaluation is done /failed
+ */
 export function rebuildSolidSync (script, fullurl, parameters, globals, callback) {
   let relpath = fullurl
   if (relpath.lastIndexOf('/') >= 0) {
@@ -45,9 +53,8 @@ export function rebuildSolidSync (script, fullurl, parameters, globals, callback
   }
 
   replaceIncludes(script, relpath).then(function (fullScript) {
-    console.log('WE HAVE RESULT !!', fullScript)
     var func = createJscadFunction(fullurl, fullScript, globals)
-
+    //stand-in for the include function
     const include = (x) => x
     func(parameters, include, Promise.all([]), globals)
       .then(function (objects) {
@@ -59,6 +66,14 @@ export function rebuildSolidSync (script, fullurl, parameters, globals, callback
   })
 }
 
+/**
+ * evaluate script & rebuild solids, in seperate thread
+ * @param {String} script the script
+ * @param {String} fullurl full url of current script
+ * @param {Object} parameters the parameters to use with the script
+ * @param {Object} globals the globals to use when evaluating the script
+ * @param {Object} callback the callback to call once evaluation is done /failed
+ */
 export function rebuildSolidAsync (script, fullurl, parameters, globals, callback) {
   if (!window.Worker) throw new Error('Worker threads are unsupported.')
 
