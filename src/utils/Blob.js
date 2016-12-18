@@ -50,6 +50,8 @@ export default function Blob (contents, options) {
     this.length = options.length
   }
 
+  let wbytes
+  let object
   // convert the contents (String, ArrayBufferView, ArrayBuffer, Blob)
   this.buffer = new Buffer(this.length)
   var index = 0
