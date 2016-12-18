@@ -53,15 +53,11 @@ export default function createJscadFunction (fullurl, fullscript, implicitGlobal
     //user defined script(s)
     ${fullscript}
 
-    return resolver.then(function(includes){
-      console.log('includes', includes)
-      return main(params)
-    })
-
+    return main(params)
   `
 
   //console.log("SOURCE: "+source)
-  var f = new Function('params', 'include', 'resolver','implicitGlobals', source)
+  var f = new Function('params', 'include', 'implicitGlobals', source)
   //console.log('function', f)
   return f
 }

@@ -54,15 +54,14 @@ export function rebuildSolidSync (script, fullurl, parameters, globals, callback
 
   replaceIncludes(script, relpath).then(function (fullScript) {
     var func = createJscadFunction(fullurl, fullScript, globals)
-    //stand-in for the include function
+    // stand-in for the include function(no-op)
     const include = (x) => x
-    func(parameters, include, Promise.all([]), globals)
-      .then(function (objects) {
-        callback(undefined, objects)
-      })
-      .catch(function (err) {
-        callback(err, undefined)
-      })
+    try {
+      const objects = func(parameters, include, globals)
+      callback(undefined, objects)
+    }catch(error) {
+      callback(error, undefined)
+    }
   })
 }
 
