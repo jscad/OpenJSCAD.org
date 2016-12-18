@@ -1,3 +1,5 @@
+const Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default
+
 // see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
 export default function toStlBinary (CSG) {
   // first check if the host is little-endian:

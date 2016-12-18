@@ -1,5 +1,6 @@
 import { CSG } from '../../csg'
-//import Blob from '../utils/BLob'
+const Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default
+
 export default function CAGtoSvg (cagObject) {
   var decimals = 1000
 
