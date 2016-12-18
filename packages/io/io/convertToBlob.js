@@ -8,9 +8,15 @@ import CAGtoSvg from '../io/writers/CAGtoSvg'
 import CAGToJson from '../io/writers/CAGToJson'
 import CAGtoDxf from '../io/writers/CAGtoDxf'
 
+import {toArray} from '../utils/misc'
+const Blob = typeof window !== 'undefined' ? window.Blob : require('../utils/Blob').default
+
 export default function convertToBlob (objects, params) {
   const {format, formatInfo} = params
-  console.log('convertToBlob', objects, format)
+  objects = toArray(objects)
+  //console.log('convertToBlob', objects, format)
+  //console.log('object', objects[0], objects[0] instanceof CSG)
+
   // review the given objects
   let foundCSG = false
   let foundCAG = false
@@ -63,7 +69,7 @@ export default function convertToBlob (objects, params) {
 
   let blob = outputFormatHandlers[format](object)
 
-  if (format === 'amf' || format === 'jscad') {
+  if (format === 'jscad') {
     blob = new Blob([blob], { type: formatInfo.mimetype })
   }
   return blob

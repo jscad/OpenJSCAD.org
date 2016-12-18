@@ -1,3 +1,5 @@
+const Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default
+
 export function toJSON () {
   var str = '{ "type": "csg","polygons": ['
   var comma = ''

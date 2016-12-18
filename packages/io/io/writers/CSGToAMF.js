@@ -1,3 +1,5 @@
+const Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default
+
 export default function toAMFString (CSG, m) {
   var result = '<?xml version="1.0" encoding="UTF-8"?>\n<amf' + (m && m.unit ? ' unit="+m.unit"' : '') + '>\n'
   for (var k in m) {
@@ -40,6 +42,7 @@ export default function toAMFString (CSG, m) {
   })
   result += '</mesh>\n</object>\n'
   result += '</amf>\n'
+
   return new Blob([result], {
     type: 'application/amf+xml'
   })

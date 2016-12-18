@@ -1,3 +1,5 @@
+const Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default
+
 export default function toStlString (CSG) {
   var result = 'solid csg.js\n'
   CSG.polygons.map(function (p) {
@@ -23,7 +25,7 @@ function CSGPolygontoStlString (polygon) {
   {
     // STL requires triangular polygons. If our polygon has more vertices, create
     // multiple triangles:
-    var firstVertexStl = CSGVertextoStlString( polygon.vertices[0] )
+    var firstVertexStl = CSGVertextoStlString(polygon.vertices[0])
     for (var i = 0; i < polygon.vertices.length - 2; i++) {
       result += 'facet normal ' + CSGVector3DtoStlString(polygon.plane.normal) + '\nouter loop\n'
       result += firstVertexStl

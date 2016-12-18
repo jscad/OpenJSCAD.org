@@ -1,3 +1,5 @@
+const Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default
+
 export default function toX3D (CSG) {
   // materialPolygonLists
   // key: a color string (e.g. "0 1 1" for yellow)

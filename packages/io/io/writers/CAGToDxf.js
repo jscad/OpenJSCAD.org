@@ -1,3 +1,5 @@
+const Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default
+
 export default function CAGtoDxf (cagObject) {
   var paths = cagObject.getOutlinePaths()
   return PathsToDxf(paths)
