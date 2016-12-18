@@ -5,7 +5,7 @@ const path = require('path')
 const CAG = require('./csg').CAG
 
 const evaluateSource = require('./utils/evaluateSource')
-const convertToBlob = require('./io/convertToBlob')
+const convertToBlob = require('./io/convertToBlob').default
 
 /**
  * compile openjscad code and generates intermediate representation
@@ -13,10 +13,30 @@ const convertToBlob = require('./io/convertToBlob')
  * @param  {String} source the openjscad script we want to compile
  * @param  {Object} params the set of parameters to use  (optional)
  */
-function compile (source, params) {
+function compile (source, params, options) {
   params = params || {}
-  const modelingHelpers = fs.readFileSync(path.resolve('./openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
-  return evaluateSource(modelingHelpers, CAG, params, source)
+  // const modelingHelpers = fs.readFileSync(path.resolve('./openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
+  const defaults = {
+    implicitGlobals: true
+  }
+  options = Object.assign({}, defaults, options)
+  const {implicitGlobals} = options
+
+  let globals
+  if (implicitGlobals) {
+    globals = {
+      oscad: require('./modeling/index').default
+    }
+  }
+  const rebuildSolidSync = require('./jscad/rebuildSolid').rebuildSolidSync
+
+  return new Promise(function (resolve, reject) {
+    const callback = (err, result) => {
+      if (!err) { return resolve(result) }
+      reject(err)
+    }
+    rebuildSolidSync(source, '', params, globals, callback)
+  })
 }
 
 /**
@@ -28,4 +48,4 @@ function generateOutput (outputFormat, objects) {
   return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})
 }
 
-module.exports = { compile, generateOutput }
+module.exports = { compile, generateOutput}
