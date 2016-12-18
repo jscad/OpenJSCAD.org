@@ -1,9 +1,6 @@
 'use strict' // only needed in node 4 & co , not in node > 6
 const fs = require('fs')
 const path = require('path')
-
-const CAG = require('./csg').CAG
-
 const evaluateSource = require('./utils/evaluateSource')
 const convertToBlob = require('./io/convertToBlob').default
 
