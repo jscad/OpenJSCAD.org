@@ -1,24 +1,54 @@
-const CAG = require('../csg').CAG
-const evaluateSource = require('./evaluateSource')
-const convertToBlob = require('../io/convertToBlob')
+const convertToBlob = require('../io/convertToBlob').default
+const rebuildSolidSync = require('../jscad/rebuildSolid').rebuildSolidSync
+const getParameterDefinitionsCLI = require('./getParameterDefinitionsCLI').default
 
 /**
  * generate output data from source
- * @param {Object} modelingHelpers the modeling helpers module loaded as string
- * @param {Object} meta optional metadata (AMF only)
- * @param {Object} mainParams hash of parameters to pass to main function
- * @param {String} outputFormat
- * @param {String} src the original source
- * @return the output data
+ * @param {String} source the original source
+ * @param {Object} params hash of parameters to pass to main function
+ * @param {String} options
+ * @return a Promise with the output data
  */
-function generateOutputData (modelingHelpers, mainParams, outputFormat, src)
-{
-  let objects
-  if (outputFormat === 'jscad' || outputFormat === 'js') {
+function generateOutputData (source, params, options) {
+  // let objects
+  /* if (outputFormat === 'jscad' || outputFormat === 'js') {
     objects = src
-  } else {
-    objects = evaluateSource(modelingHelpers, CAG, mainParams, src)
+  }*/
+  const defaults = {
+    implicitGlobals: true,
+    outputFormat: 'stl'
   }
-  return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})
+  options = Object.assign({}, defaults, options)
+  const {implicitGlobals, outputFormat} = options
+
+  let globals = {}
+  if (implicitGlobals) {
+    globals.oscad = require('../modeling/index').default
+  }
+  globals.extras = {cli: {getParameterDefinitionsCLI}}
+
+  // modify main to adapt parameters
+  const mainFunction = `var wrappedMain = main;
+  main = function(){
+    var paramsDefinition = (typeof getParameterDefinitions !== 'undefined') ? getParameterDefinitions : undefined
+    return wrappedMain(getParameterDefinitionsCLI(paramsDefinition, ${JSON.stringify(params)}))
+  }`
+  source = `${source}\n${mainFunction}\n`
+
+  // objects = rebuildSolidSync(source, '', params, globals, callback)
+  return new Promise(function (resolve, reject) {
+    const callback = (err, result) => {
+      if (!err) {
+        return resolve(result)
+      }
+      return reject(err)
+    }
+    rebuildSolidSync(source, '', params, globals, callback)
+  })
+  .then(function (objects) {
+    return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})
+  })
+
+// return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})
 }
 module.exports = generateOutputData

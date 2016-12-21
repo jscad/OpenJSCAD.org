@@ -4,6 +4,7 @@ import path from 'path'
 import {execSync} from 'child_process'
 import fs from 'fs'
 
+// NOTE : use   // --inspect --debug-brk to debug node commands in chrome
 test.afterEach.always(t => {
     // this runs after each test and other test hooks, even if they failed
     //remove created file
@@ -13,7 +14,7 @@ test.afterEach.always(t => {
 })
 
 test.beforeEach(t => {
-  let jscadPath = './openjscad'//'./future-cli'//
+  let jscadPath = '../dist/cli'
   t.context = {
     jscadPath : path.resolve(__dirname, jscadPath)
   }
@@ -36,7 +37,6 @@ test('jscad with parameters', t => {
   const outputPath = 'JustMe_Geek_name_plate.amf'
   const expPath = outputPath
   t.context = {outputPath}
-
   const cmd = `node ${jscadPath} ${inputPath} --name "Just Me" --title "Geek" -o ${outputPath} `
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
@@ -78,6 +78,7 @@ test('jscad to amf', t => {
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
 })
+
 
 test('jscad to amf(with transparency)', t => {
   const jscadPath = t.context.jscadPath

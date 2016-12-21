@@ -1,4 +1,4 @@
-export function getParameterDefinitionsCLI (param) { // used for openjscad CLI only
+export default function getParameterDefinitionsCLI (getParameterDefinitions, param) { // used for openjscad CLI only
   if (typeof getParameterDefinitions !== 'undefined') {
     var p = {}
     var pa = getParameterDefinitions()

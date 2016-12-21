@@ -38,26 +38,11 @@
 // 2013/03/01: 0.001: initial version, with base function from openscad.jscad
 //
 const fs = require('fs')
-const path = require('path')
-const vm = require('vm')
-
-global.time = new Date()
-global.lib = !fs.existsSync(global.lib) ? path.resolve(__dirname + '/', '..') + '/' : '/usr/local/lib/openjscad/' // for now hard-coded
-
-const lib = global.lib
-const openjscadPath = path.resolve('./openjscad.js')
-const modelingHelpersPath = path.resolve('./openscad.js')
-
-const OpenJsCad = require(openjscadPath).OpenJsCad
-const modelingHelpers = require(modelingHelpersPath)
 
 const makeInputFormatHandlers = require('./utils/inputFormatHandlers')
 const generateOutputData = require('./utils/generateOutputData')
-const formats = require('./io/formats')
-const meta = {
-  producer: `OpenJSCAD ${OpenJsCad.version}`,
-  date: new Date()
-}
+const formats = require('./io/formats').formats
+
 // var csg = sphere(1);          // -- basic test
 // var csg = require(file).main; // -- treating .jscad as module? later perhaps
 
@@ -67,8 +52,7 @@ const args = process.argv.splice(2)
 
 // handle arguments
 // inputs, outputs
-let {inputFile, inputFormat, outputFile, outputFormat, gMainParam} = parseArgs(args)
-const inputFormatHandlers = makeInputFormatHandlers(OpenJsCad, modelingHelpers, lib)
+let {inputFile, inputFormat, outputFile, outputFormat, params} = parseArgs(args)
 
 // outputs
 const output = determineOutputNameAndFormat(outputFormat, outputFile)
@@ -79,14 +63,16 @@ console.log(`converting ${inputFile} -> ${outputFile} (${formats[outputFormat].d
 
 let src = fs.readFileSync(inputFile, inputFile.match(/\.stl$/i) ? 'binary' : 'UTF8')
 // -- include input, and convert into JSCAD source
-src = inputFormatHandlers[inputFormat](src, inputFile, outputFile)
+// src = inputFormatHandlers[inputFormat](src, inputFile, outputFile)
 
 // -- convert from JSCAD script into the desired output format
-const modelingHelpersAsData = fs.readFileSync(path.resolve(lib, 'js/openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
-const outputData = generateOutputData(modelingHelpersAsData, meta, gMainParam, outputFormat, src)
-
+// const outputData = generateOutputData(src, params, {outputFormat})
 // -- and write it to disk
-writeOutputDataToFile(outputFile, outputData)
+// writeOutputDataToFile(outputFile, outputData)
+generateOutputData(src, params, {outputFormat})
+  .then(function (outputData) {
+    writeOutputDataToFile(outputFile, outputData)
+  }).catch(error=>console.error(error))
 
 // -- helper functions ---------------------------------------------------------------------------------------
 function parseArgs (args) {
@@ -108,7 +94,7 @@ function parseArgs (args) {
   let inputFormat
   let outputFile
   let outputFormat
-  let gMainParam = {}
+  let params = {}
 
   for (var i = 0; i < args.length; i++) {
     if (args[i] === '-of') { // -of <format>
@@ -119,11 +105,11 @@ function parseArgs (args) {
     } else if (args[i] === '-o') { // -o <output>
       outputFile = args[++i]
     } else if (args[i].match(/^--(\w+)=(.*)/)) { // params for main()
-      gMainParam[RegExp.$1] = RegExp.$2
+      params[RegExp.$1] = RegExp.$2
     } else if (args[i].match(/^--(\w+)$/)) { // params for main()
-      gMainParam[RegExp.$1] = args[++i]
+      params[RegExp.$1] = args[++i]
     } else if (args[i].match(/^--(\w+)$/)) { // params for main()
-      gMainParam[RegExp.$1] = args[++i]
+      params[RegExp.$1] = args[++i]
     } else if (args[i].match(/.+\.(jscad|js|scad|stl|amf|obj|gcode|svg|json)$/i)) {
       inputFile = args[i]
       inputFormat = RegExp.$1
@@ -152,7 +138,7 @@ function parseArgs (args) {
     inputFormat,
     outputFile,
     outputFormat,
-  gMainParam}
+  params}
 }
 
 function determineOutputNameAndFormat (outputFormat, outputFile) {
@@ -181,34 +167,8 @@ function writeOutputDataToFile (outputFile, outputData) {
       if (err) {
         console.log('err', err)
       } else {
-        console.log('success')
+        //console.log('success')
       }
     }
   )
-}
-
-function include (scad, fn) {
-  let includes = []
-  // console.log(arguments.callee.caller,"include:"+fn)
-  if (0) {
-    // var script = vm.createScript(fs.readFileSync(fn),fn)
-    // script.runInThisContext()
-    var script = vm.runInThisContext(fs.readFileSync(fn), fn)
-    return script
-  } else if (0) {
-    includes.push(fn)
-  } else {
-    var src = fs.readFileSync(fn, {encoding: 'utf8'})
-    // console.log("include: ",src)
-    var r
-    try {
-      r = eval(src + scad)
-    } catch(e) {
-      if (e instanceof SyntaxError) {
-        console.log(e.message)
-      }
-    }
-    // echo("result:",r)
-    return r
-  }
 }
