@@ -29,6 +29,7 @@ test('jscad (basic, input file only)', t => {
   const cmd = `node ${jscadPath} ${inputPath}`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
+  t.deepEqual(fs.statSync(expPath).size, 326185)// is this cross platform ?
 })
 
 test('jscad with parameters', t => {
@@ -40,6 +41,7 @@ test('jscad with parameters', t => {
   const cmd = `node ${jscadPath} ${inputPath} --name "Just Me" --title "Geek" -o ${outputPath} `
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
+  t.deepEqual(fs.statSync(expPath).size, 575987)// is this cross platform ?
 })
 
 test('jscad to stl (ascii)', t => {
@@ -52,6 +54,7 @@ test('jscad to stl (ascii)', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} `
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
+  t.deepEqual(fs.statSync(expPath).size, 326185)// is this cross platform ?
 })
 
 test('jscad to stl(binary)', t => {
@@ -65,6 +68,7 @@ test('jscad to stl(binary)', t => {
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(outputPath))
   //t.deepEqual(fs.readFileSync(expPath), fs.readFileSync(outputPath))
+  t.deepEqual(fs.statSync(outputPath).size, 70284)// is this cross platform ?
 })
 
 test('jscad to amf', t => {
@@ -76,7 +80,8 @@ test('jscad to amf', t => {
 
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of amf`
   execSync(cmd, {stdio: [0, 1, 2]})
-  t.deepEqual(true, fs.existsSync(expPath))
+  t.deepEqual(true, fs.existsSync(outputPath))
+  t.deepEqual(fs.statSync(outputPath).size, 385246)// is this cross platform ?
 })
 
 
@@ -90,6 +95,7 @@ test('jscad to amf(with transparency)', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of amf`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
+  t.deepEqual(fs.statSync(outputPath).size, 240108)// is this cross platform ?
 })
 
 //FIXME: DXF not working
@@ -128,6 +134,7 @@ test('openscad to stl (ascii)', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} `
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
+  t.deepEqual(fs.statSync(outputPath).size, 515270)// is this cross platform ?
 })
 
 test('openscad to stl(binary)', t => {
@@ -141,6 +148,7 @@ test('openscad to stl(binary)', t => {
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(outputPath))
   //t.deepEqual(fs.readFileSync(expPath), fs.readFileSync(outputPath))
+  t.deepEqual(fs.statSync(outputPath).size, 91884)// is this cross platform ?
 })
 
 test('openscad to amf', t => {
@@ -153,6 +161,7 @@ test('openscad to amf', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of amf`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
+  t.deepEqual(fs.statSync(outputPath).size, 554865)// is this cross platform ?
 })
 
 test('openscad to openjscad', t => {
@@ -165,4 +174,5 @@ test('openscad to openjscad', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of jscad`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
+  t.deepEqual(fs.statSync(outputPath).size, 876)// is this cross platform ?
 })
