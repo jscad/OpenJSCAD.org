@@ -134,7 +134,7 @@ test('openscad to stl (ascii)', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} `
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  t.deepEqual(fs.statSync(outputPath).size, 515270)// is this cross platform ?
+  t.deepEqual(fs.statSync(outputPath).size, 515365)// is this cross platform ?
 })
 
 test('openscad to stl(binary)', t => {
@@ -161,7 +161,7 @@ test('openscad to amf', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of amf`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  t.deepEqual(fs.statSync(outputPath).size, 554865)// is this cross platform ?
+  t.deepEqual(fs.statSync(outputPath).size, 554920)// is this cross platform ?
 })
 
 test('openscad to openjscad', t => {

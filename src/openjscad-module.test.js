@@ -125,6 +125,7 @@ test('compile', t => {
 
   return compile(script, {})
     .then(function (ir) {
+      ir = ir[0]
       t.deepEqual(Object.keys(ir).sort(), ['polygons', 'properties', 'isCanonicalized', 'isRetesselated'].sort())
       t.deepEqual(ir.polygons.length, 610)
       t.deepEqual(ir.properties, expProperties)
