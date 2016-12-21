@@ -8,9 +8,10 @@
     "openjscad": "./js/openjscad"
   },
   "scripts": {
-    "test": "ava './js/**/*.test.js' --require babel-register --verbose --timeout 10000",
+    "test": "ava './src/**/*.test.js' --require babel-register --verbose --timeout 10000",
     "build": "browserify src/index.js -o dist/index.js -t [babelify browserify minifyify]",
-    "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -t babelify",
+    "build-cli": "babel src/ -d dist --copy-files",
+    "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
     "release-patch": "git checkout master; npm version patch && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-minor": "git checkout master; npm version minor && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-major": "git checkout master; npm version major && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
@@ -29,11 +30,12 @@
   "dependencies": {
     "brace": "^0.9.0",
     "jquery": "^3.1.1",
-    "jquery-hammerjs": "^2.0.0",
+    "jquery-hammerjs": "github:mciparelli/jquery.hammer.js",
     "jquery-ui": "^1.12.1",
     "openscad-openjscad-translator": "0.0.7",
     "sax": "^1.2.1",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "webworkify": "^1.4.0"
   },
   "devDependencies": {
     "ava": "^0.15.2",
@@ -43,7 +45,14 @@
     "babel-register": "^6.16.3",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
+    "browserify-shim": "^3.8.12",
     "budo": "^8.3.0",
     "minifyify": "^7.3.3"
-  }
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {}
 }
