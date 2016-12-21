@@ -65,6 +65,14 @@ let src = fs.readFileSync(inputFile, inputFile.match(/\.stl$/i) ? 'binary' : 'UT
 // -- include input, and convert into JSCAD source
 // src = inputFormatHandlers[inputFormat](src, inputFile, outputFile)
 
+if(inputFormat === 'scad')
+{
+  var scadParser = require('openscad-openjscad-translator') // hardcoded is bad, but works
+  src = scadParser.parse(src) //    doing the magick
+  src = '// producer: OpenJSCAD ' + require('./jscad/version').version + '\n' + src
+  src = '// source: ' + outputFile + '\n\n' + src
+}
+
 // -- convert from JSCAD script into the desired output format
 // const outputData = generateOutputData(src, params, {outputFormat})
 // -- and write it to disk
