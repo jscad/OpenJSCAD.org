@@ -13,27 +13,30 @@ const Blob = typeof window !== 'undefined' ? window.Blob : require('../utils/Blo
 
 export default function convertToBlob (objects, params) {
   const {format, formatInfo} = params
-  objects = toArray(objects)
-  //console.log('convertToBlob', objects, format)
-  //console.log('object', objects[0], objects[0] instanceof CSG)
 
-  // review the given objects
-  let foundCSG = false
-  let foundCAG = false
-  for (let i = 0; i < objects.length; i++) {
-    if (objects[i] instanceof CSG) { foundCSG = true }
-    if (objects[i] instanceof CAG) { foundCAG = true }
-  }
-  // convert based on the given format
-  foundCSG = foundCSG && formatInfo.convertCSG
-  foundCAG = foundCAG && formatInfo.convertCAG
-  if (foundCSG && foundCAG) { foundCAG = false } // use 3D conversion
-
-  let object = !foundCSG ? new CAG() : new CSG()
+  let object
 
   if (format === 'jscad') {
     object = objects
   } else {
+    objects = toArray(objects)
+    //console.log('convertToBlob', objects, format)
+    //console.log('object', objects[0], objects[0] instanceof CSG)
+
+    // review the given objects
+    let foundCSG = false
+    let foundCAG = false
+    for (let i = 0; i < objects.length; i++) {
+      if (objects[i] instanceof CSG) { foundCSG = true }
+      if (objects[i] instanceof CAG) { foundCAG = true }
+    }
+    // convert based on the given format
+    foundCSG = foundCSG && formatInfo.convertCSG
+    foundCAG = foundCAG && formatInfo.convertCAG
+    if (foundCSG && foundCAG) { foundCAG = false } // use 3D conversion
+
+    object = !foundCSG ? new CAG() : new CSG()
+
     for (let i = 0; i < objects.length; i++) {
       if (foundCSG === true && objects[i] instanceof CAG) {
         object = object.union(objects[i].extrude({offset: [0, 0, 0.1]})) // convert CAG to a thin solid CSG

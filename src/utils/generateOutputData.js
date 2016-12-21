@@ -1,7 +1,7 @@
 const convertToBlob = require('../io/convertToBlob').default
 const rebuildSolidSync = require('../jscad/rebuildSolid').rebuildSolidSync
 const getParameterDefinitionsCLI = require('./getParameterDefinitionsCLI').default
-
+const formats = require('../io/formats').formats
 /**
  * generate output data from source
  * @param {String} source the original source
@@ -10,10 +10,6 @@ const getParameterDefinitionsCLI = require('./getParameterDefinitionsCLI').defau
  * @return a Promise with the output data
  */
 function generateOutputData (source, params, options) {
-  // let objects
-  /* if (outputFormat === 'jscad' || outputFormat === 'js') {
-    objects = src
-  }*/
   const defaults = {
     implicitGlobals: true,
     outputFormat: 'stl'
@@ -28,12 +24,14 @@ function generateOutputData (source, params, options) {
   globals.extras = {cli: {getParameterDefinitionsCLI}}
 
   // modify main to adapt parameters
-  const mainFunction = `var wrappedMain = main;
+  const mainFunction = `var wrappedMain = main
   main = function(){
     var paramsDefinition = (typeof getParameterDefinitions !== 'undefined') ? getParameterDefinitions : undefined
     return wrappedMain(getParameterDefinitionsCLI(paramsDefinition, ${JSON.stringify(params)}))
   }`
-  source = `${source}\n${mainFunction}\n`
+  source = `${source}
+  ${mainFunction}
+  `
 
   // objects = rebuildSolidSync(source, '', params, globals, callback)
   return new Promise(function (resolve, reject) {
@@ -43,11 +41,19 @@ function generateOutputData (source, params, options) {
       }
       return reject(err)
     }
-    rebuildSolidSync(source, '', params, globals, callback)
+
+    if (outputFormat === 'jscad' || outputFormat === 'js') {
+      resolve(source)
+    } else {
+      rebuildSolidSync(source, '', params, globals, callback)
+    }
   })
-  .then(function (objects) {
-    return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})
-  })
+    .then(function (objects) {
+      const formatInfo = {
+        convertCAG: true, convertCSG: true, mimetype: formats[outputFormat].mimetype
+      }
+      return convertToBlob(objects, {format: outputFormat, formatInfo})
+    })
 
 // return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})
 }
