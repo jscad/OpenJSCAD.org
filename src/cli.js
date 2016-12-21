@@ -170,7 +170,7 @@ function determineOutputNameAndFormat (outputFormat, outputFile) {
 }
 
 function writeOutputDataToFile (outputFile, outputData) {
-  fs.writeFile(outputFile, outputData.asBuffer(), 0,
+  fs.writeFile(outputFile, outputData.asBuffer(),
     function (err) {
       if (err) {
         console.log('err', err)
