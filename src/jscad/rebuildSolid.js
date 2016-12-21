@@ -1,6 +1,9 @@
 import createJscadWorker from './jscad-worker'
 import createJscadFunction from './jscad-function'
 import includeJscadSync from './includeJscadSync'
+import WebWorkify from 'webWorkify'
+import { CAG, CSG } from '../csg'
+import { toArray } from '../utils/misc'
 
 /**
  * helper function that finds include() statements in files,
@@ -53,20 +56,24 @@ export function rebuildSolidSync (script, fullurl, parameters, globals, callback
   }
 
   replaceIncludes(script, relpath).then(function (fullScript) {
-    var func = createJscadFunction(fullurl, fullScript, globals)
+    const func = createJscadFunction(fullScript, globals)
     // stand-in for the include function(no-op)
     const include = (x) => x
     try {
-      const objects = func(parameters, include, globals)
+      let objects = func(parameters, include, globals)
+      objects = toArray(objects)
+      if (objects.length === 0) {
+        throw new Error('The JSCAD script must return one or more CSG or CAG solids.')
+      }
       callback(undefined, objects)
-    }catch(error) {
+    } catch(error) {
       callback(error, undefined)
     }
   }).catch(error => callback(error, undefined))
 }
 
 /**
- * evaluate script & rebuild solids, in seperate thread
+ * evaluate script & rebuild solids, in seperate thread/webworker
  * @param {String} script the script
  * @param {String} fullurl full url of current script
  * @param {Object} parameters the parameters to use with the script
@@ -74,18 +81,28 @@ export function rebuildSolidSync (script, fullurl, parameters, globals, callback
  * @param {Object} callback the callback to call once evaluation is done /failed
  */
 export function rebuildSolidAsync (script, fullurl, parameters, globals, callback) {
+  if (!parameters) { throw new Error("JSCAD: missing 'parameters'") }
   if (!window.Worker) throw new Error('Worker threads are unsupported.')
 
-  // create the worker
-  var that = this
-  that.worker = createJscadWorker(this.baseurl + this.filename, [], script,
-    // handle the results
-    callback
-  )
-  // pass the libraries to the worker for import
-  var libraries = this.opts.libraries.map(function (l) {
-    return this.baseurl + this.opts.openJsCadPath + l
-  }, this)
-  // start the worker
-  that.worker.postMessage({cmd: 'render', parameters, libraries})
+  let relpath = fullurl
+  if (relpath.lastIndexOf('/') >= 0) {
+    relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1)
+  }
+
+  replaceIncludes(script, relpath).then(function (fullScript) {
+    const worker = WebWorkify(require('./jscad-worker.js'))
+    worker.onmessage = function (e) {
+      if (e.data instanceof Object) {
+        const data = e.data.objects.map(function (object) {
+          if (object['class'] === 'CSG') { return CSG.fromCompactBinary(object) }
+          if (object['class'] === 'CAG') { return CAG.fromCompactBinary(object) }
+        })
+        callback(undefined, data)
+      }
+    }
+    worker.onerror = function (e) {
+      callback(`Error in line ${e.lineno} : ${e.message}`, undefined)
+    }
+    worker.postMessage({cmd: 'render', fullurl, script, parameters})
+  }).catch(error => callback(error, undefined))
 }

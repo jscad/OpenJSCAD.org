@@ -2,7 +2,7 @@ import log from './log'
 import getParamDefinitions from './getParamDefinitions'
 import getParamValues from './getParamValues'
 import convertToSolid from './convertToSolid'
-import {rebuildSolidSync, rebuildSolidAsync} from './rebuildSolid'
+import { rebuildSolidSync, rebuildSolidAsync } from './rebuildSolid'
 
 import { revokeBlobUrl } from '../utils/Blob'
 
@@ -16,7 +16,6 @@ import generateOutputFileFileSystem from './generateOutputFileFileSystem'
 import { CAG, CSG } from '../csg'
 
 import Viewer from '../ui/viewer/jscad-viewer'
-
 
 // FIXME: hack for now
 import * as primitives3d from '../modeling/primitives3d'
@@ -61,7 +60,7 @@ export default function Processor (containerdiv, options) {
     debug: false,
     libraries: ['js/lib/csg.js', 'js/formats.js', 'js/js', 'js/openscad.js'],
     openJsCadPath: '',
-    useAsync: false,
+    useAsync: true,
     useSync: true,
     viewer: {}
   }
@@ -474,7 +473,7 @@ Processor.prototype = {
 
     // rebuild the solid
 
-    //prepare all parameters
+    // prepare all parameters
     const parameters = getParamValues(this.paramControls)
     const script = this.getFullScript()
     const fullurl = this.baseurl + this.filename
@@ -501,7 +500,7 @@ Processor.prototype = {
         if (err.stack) {
           let errtxt = ''
           errtxt += '\nStack trace:\n' + err.stack
-          //    var errtxt = err.toString()
+        //    var errtxt = err.toString()
         }
         that.setError(err)
         that.setStatus('Error.')
@@ -516,9 +515,9 @@ Processor.prototype = {
 
     if (this.opts.useAsync) {
       rebuildSolidAsync(script, fullurl, parameters, implicitGlobals, (err, objects) => {
-        if(err & that.opts.useSync) {
+        if (err && that.opts.useSync) {
           rebuildSolidSync(script, fullurl, parameters, implicitGlobals, callback)
-        }
+        }else (callback(undefined, objects))
       })
     }else if (this.opts.useSync) {
       rebuildSolidSync(script, fullurl, parameters, implicitGlobals, callback)
