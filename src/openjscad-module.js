@@ -12,7 +12,6 @@ const convertToBlob = require('./io/convertToBlob').default
  */
 function compile (source, params, options) {
   params = params || {}
-  // const modelingHelpers = fs.readFileSync(path.resolve('./openscad.js')) // FIXME : UGHH these are helper functions, rename & handle better
   const defaults = {
     implicitGlobals: true
   }
