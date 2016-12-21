@@ -62,7 +62,7 @@ export function rebuildSolidSync (script, fullurl, parameters, globals, callback
     }catch(error) {
       callback(error, undefined)
     }
-  })
+  }).catch(error => callback(error, undefined))
 }
 
 /**
@@ -89,29 +89,3 @@ export function rebuildSolidAsync (script, fullurl, parameters, globals, callbac
   // start the worker
   that.worker.postMessage({cmd: 'render', parameters, libraries})
 }
-
-/*
-this.state = 1 // processing
-
-function (err, objs) {
-  that.worker = null
-  if (err) {
-    if (err.stack) {
-      errtxt += '\nStack trace:\n' + err.stack
-      //    var errtxt = err.toString()
-    }
-    that.setError(err)
-    that.setStatus('Error.')
-    that.state = 3 // incomplete
-  } else {
-    that.setCurrentObjects(objs)
-    that.setStatus('Ready.')
-    that.state = 2 // complete
-  }
-  that.enableItems()
-}
-*/
-/*  //var objects =
-  that.setCurrentObjects(objects)
-  that.setStatus('Ready.')
-  that.state = 2 // complete*/

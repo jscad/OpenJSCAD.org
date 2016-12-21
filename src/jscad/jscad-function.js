@@ -23,6 +23,7 @@ export default function createJscadFunction (fullurl, fullscript, implicitGlobal
     relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1)
   }
 
+  //console.log('implicitGlobals', implicitGlobals)
   // not a fan of this, we have way too many explicit api elements
   let globalsList = ''
   // each top key is a library ie : openscad helpers etc
@@ -58,33 +59,5 @@ export default function createJscadFunction (fullurl, fullscript, implicitGlobal
 
   //console.log("SOURCE: "+source)
   var f = new Function('params', 'include', 'implicitGlobals', source)
-  //console.log('function', f)
   return f
-}
-
-
-function includeJscadSync (fn) {
-  //console.log('include', relpath, fn)
-  // include the requested script via MemFs if possible
-  if (typeof (gMemFs) === 'object') {
-    for (var fs in gMemFs) {
-      if (gMemFs[fs].name === fn) {
-        eval(gMemFs[fs].source)
-        return
-      }
-    }
-  }
-  // include the requested script via webserver access
-  var xhr = new XMLHttpRequest()
-  var url = relpath + fn
-  if (fn.match(/^(https:|http:)/i)) {
-    url = fn
-  }
-  xhr.open('GET', url, false)
-  xhr.onload = function () {
-    var src = this.responseText
-    eval(src)
-  }
-  xhr.onerror = function () {}
-  xhr.send()
 }
