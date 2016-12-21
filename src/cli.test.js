@@ -14,7 +14,7 @@ test.afterEach.always(t => {
 })
 
 test.beforeEach(t => {
-  let jscadPath = '../dist/cli'
+  let jscadPath = './launch-cli'
   t.context = {
     jscadPath : path.resolve(__dirname, jscadPath)
   }
