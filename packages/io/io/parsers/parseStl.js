@@ -1,6 +1,6 @@
 import { CSG } from '../../csg'
 import { version } from '../../jscad/version'
-
+import vt2jscad from '../vt2jscad'
 // STL function from http://jsfiddle.net/Riham/yzvGD/35/
 // CC BY-SA by Riham
 // changes by Rene K. Mueller <spiritdude@gmail.com>
@@ -281,28 +281,6 @@ export function parseAsciiSTL(stl,fn) {
     return src;
 }
 
-function vt2jscad(v,t,n,c) {     // vertices, triangles, normals and colors
-   var src = '';
-   src += "polyhedron({ points: [\n\t";
-   for(var i=0,j=0; i<v.length; i++) {
-      if(j++) src += ",\n\t";
-      src += "["+v[i]+"]"; //.join(", ");
-   }
-   src += "],\n\tpolygons: [\n\t";
-   for(var i=0,j=0; i<t.length; i++) {
-      if(j++) src += ",\n\t";
-      src += "["+t[i]+"]"; //.join(', ');
-   }
-   if (c && t.length == c.length) {
-     src += "],\n\tcolors: [\n\t";
-     for(var i=0,j=0; i<c.length; i++) {
-        if(j++) src += ",\n\t";
-        src += "["+c[i]+"]"; //.join(', ');
-     }
-   }
-   src += "] })\n";
-   return src;
-}
 
 // BinaryReader
 // Refactored by Vjeux <vjeuxx@gmail.com>

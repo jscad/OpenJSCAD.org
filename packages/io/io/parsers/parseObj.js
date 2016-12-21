@@ -1,4 +1,5 @@
 import { version } from '../../jscad/version'
+import vt2jscad from '../vt2jscad'
 
 export function parseOBJ(obj,fn) {   // http://en.wikipedia.org/wiki/Wavefront_.obj_file
    var l = obj.split(/\n/);
