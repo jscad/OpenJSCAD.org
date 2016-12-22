@@ -5,7 +5,7 @@
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "main": "src/launch-module.js",
   "bin": {
-    "openjscad": "./src/launch-cli"
+    "openjscad": "./src/launch-cli.js"
   },
   "scripts": {
     "test": "ava './src/**/*.test.js' --require babel-register --verbose --timeout 10000",
