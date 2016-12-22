@@ -3,13 +3,13 @@
   "version": "0.5.2",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
-  "main": "src/openjscad-module.js",
+  "main": "src/launch-module.js",
   "bin": {
     "openjscad": "./src/launch-cli"
   },
   "scripts": {
     "test": "ava './src/**/*.test.js' --require babel-register --verbose --timeout 10000",
-    "build": "browserify src/index.js -o dist/index.js -t [babelify browserify minifyify]",
+    "build-web": "browserify src/index.js -o dist/index.js -t [babelify browserify minifyify]",
     "build-cli": "babel src/ -d dist --copy-files",
     "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
     "release-patch": "git checkout master; npm version patch && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
