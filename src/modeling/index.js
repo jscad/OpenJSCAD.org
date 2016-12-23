@@ -7,7 +7,7 @@ import * as color from './color'
 import * as maths from './maths'
 import { CAG, CSG } from '../csg'
 import * as text from './text'
-import log from '../jscad/log'
+import {log} from '../jscad/log'
 
 const exportedApi = {
   csg: {CAG, CSG},
