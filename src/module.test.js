@@ -1,8 +1,7 @@
 import test from 'ava'
 import path from 'path'
 import fs from 'fs'
-
-const openjscad = require('./openjscad-module')
+import openjscad from '../dist/module'
 
 test.beforeEach(t => {
 })
@@ -122,7 +121,6 @@ test('compile', t => {
     },
     sphere: { center: { _x: 0, _y: 0, _z: 15 },
   facepoint: { _x: 20, _y: 0, _z: 15 } } }
-
   return compile(script, {})
     .then(function (ir) {
       ir = ir[0]

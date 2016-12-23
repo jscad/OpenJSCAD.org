@@ -1,8 +1,6 @@
-'use strict' // only needed in node 4 & co , not in node > 6
-const fs = require('fs')
-const path = require('path')
-const evaluateSource = require('./utils/evaluateSource')
-const convertToBlob = require('./io/convertToBlob').default
+import convertToBlob from './io/convertToBlob'
+import oscad from './modeling/index'
+import { rebuildSolidSync } from './jscad/rebuildSolid'
 
 /**
  * compile openjscad code and generates intermediate representation
@@ -21,10 +19,9 @@ function compile (source, params, options) {
   let globals
   if (implicitGlobals) {
     globals = {
-      oscad: require('./modeling/index').default
+      oscad
     }
   }
-  const rebuildSolidSync = require('./jscad/rebuildSolid').rebuildSolidSync
 
   return new Promise(function (resolve, reject) {
     const callback = (err, result) => {
@@ -44,4 +41,4 @@ function generateOutput (outputFormat, objects) {
   return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})
 }
 
-module.exports = { compile, generateOutput}
+module.exports = {generateOutput, compile}
