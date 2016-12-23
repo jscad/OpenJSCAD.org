@@ -1,4 +1,5 @@
-#!/usr/local/bin/node --log_all
+#!/usr/bin/env node
+//--log_all
 
 // NOTE: this will only run on Node > 6 or needs to be transpiled, or launched via launch-cli
 
@@ -37,11 +38,12 @@
 // 2013/03/02: 0.002: proper installation of the dependencies (csg.js & openscad.js) so openjscad can be used properly
 // 2013/03/01: 0.001: initial version, with base function from openscad.jscad
 //
-const fs = require('fs')
+import {version} from './jscad/version'
+import env from './jscad/env'
+import fs from 'fs'
 
-const makeInputFormatHandlers = require('./utils/inputFormatHandlers')
-const generateOutputData = require('./utils/generateOutputData')
-const formats = require('./io/formats').formats
+import generateOutputData from './utils/generateOutputData'
+import {formats} from './io/formats'
 
 // var csg = sphere(1);          // -- basic test
 // var csg = require(file).main; // -- treating .jscad as module? later perhaps
@@ -126,8 +128,8 @@ function parseArgs (args) {
         process.exit(1)
       }
     } else if (args[i].match(/^-v$/)) { // show the version and the environment information
-      OpenJsCad.env()
-      console.log('OpenSCAD Compatibility (' + openscad.version() + ')')
+      env()
+      console.log('OpenSCAD Compatibility (' + version + ')')
     } else {
       console.log('ERROR: invalid file name or argument <' + args[i] + '>')
       console.log("Type 'openjscad' for help")
