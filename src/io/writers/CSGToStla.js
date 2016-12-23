@@ -1,4 +1,5 @@
-const Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default
+import makeBlob from '../../utils/Blob'
+const Blob = makeBlob()
 
 export default function toStlString (CSG) {
   var result = 'solid csg.js\n'

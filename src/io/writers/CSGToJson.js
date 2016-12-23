@@ -1,4 +1,5 @@
-const Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default
+import makeBlob from '../../utils/Blob'
+const Blob = makeBlob()
 
 export function toJSON () {
   var str = '{ "type": "csg","polygons": ['
