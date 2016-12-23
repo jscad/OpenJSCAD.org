@@ -1,4 +1,4 @@
-//FIXME: tests are basic 'is the output file there' for now, actual checks are needed !!
+//FIXME: tests are basic 'is the output file there, how  big is it' for now, actual checks are needed !!
 import test from 'ava'
 import path from 'path'
 import {execSync} from 'child_process'
@@ -14,7 +14,7 @@ test.afterEach.always(t => {
 })
 
 test.beforeEach(t => {
-  let jscadPath = './launch-cli'
+  let jscadPath = '../dist/cli'
   t.context = {
     jscadPath : path.resolve(__dirname, jscadPath)
   }
