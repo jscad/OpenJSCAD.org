@@ -1,7 +1,7 @@
-const convertToBlob = require('../io/convertToBlob').default
-const rebuildSolidSync = require('../jscad/rebuildSolid').rebuildSolidSync
-const getParameterDefinitionsCLI = require('./getParameterDefinitionsCLI').default
-const formats = require('../io/formats').formats
+import convertToBlob from '../io/convertToBlob'
+import {rebuildSolidSync} from '../jscad/rebuildSolid'
+import getParameterDefinitionsCLI from './getParameterDefinitionsCLI'
+import {formats} from '../io/formats'
 /**
  * generate output data from source
  * @param {String} source the original source
@@ -9,7 +9,7 @@ const formats = require('../io/formats').formats
  * @param {String} options
  * @return a Promise with the output data
  */
-function generateOutputData (source, params, options) {
+export default function generateOutputData (source, params, options) {
   const defaults = {
     implicitGlobals: true,
     outputFormat: 'stl'
@@ -57,4 +57,3 @@ function generateOutputData (source, params, options) {
 
 // return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})
 }
-module.exports = generateOutputData
