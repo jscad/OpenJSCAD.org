@@ -9,7 +9,8 @@ import CAGToJson from '../io/writers/CAGToJson'
 import CAGtoDxf from '../io/writers/CAGtoDxf'
 
 import {toArray} from '../utils/misc'
-const Blob = typeof window !== 'undefined' ? window.Blob : require('../utils/Blob').default
+import makeBlob from '../utils/Blob'
+const Blob = makeBlob()
 
 export default function convertToBlob (objects, params) {
   const {format, formatInfo} = params

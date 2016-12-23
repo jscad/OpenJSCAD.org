@@ -1,4 +1,5 @@
-const Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default
+import makeBlob from '../../utils/Blob'
+const Blob = makeBlob()
 
 // see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
 export default function toStlBinary (CSG) {
