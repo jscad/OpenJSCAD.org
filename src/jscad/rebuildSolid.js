@@ -1,4 +1,3 @@
-import createJscadWorker from './jscad-worker'
 import createJscadFunction from './jscad-function'
 import includeJscadSync from './includeJscadSync'
 import WebWorkify from 'webWorkify'
