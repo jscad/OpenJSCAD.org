@@ -2,6 +2,8 @@ import convertToBlob from '../io/convertToBlob'
 import {rebuildSolidSync} from '../jscad/rebuildSolid'
 import getParameterDefinitionsCLI from './getParameterDefinitionsCLI'
 import {formats} from '../io/formats'
+import oscad from '../modeling/index'
+
 /**
  * generate output data from source
  * @param {String} source the original source
@@ -19,7 +21,7 @@ export default function generateOutputData (source, params, options) {
 
   let globals = {}
   if (implicitGlobals) {
-    globals.oscad = require('../modeling/index').default
+    globals.oscad = oscad
   }
   globals.extras = {cli: {getParameterDefinitionsCLI}}
 
