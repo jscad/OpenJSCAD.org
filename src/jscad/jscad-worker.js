@@ -11,6 +11,8 @@ import createJscadFunction from './jscad-function'
 import { CAG, CSG } from '../csg'
 import { toArray } from '../utils/misc'
 
+import oscad from '../modeling/index'
+
 module.exports = function (self) {
   self.onmessage = function (e) {
     var r = {cmd: 'error', txt: 'try again'}
@@ -20,7 +22,7 @@ module.exports = function (self) {
         const {fullurl, script, parameters} = e.data
 
         const globals = {
-          oscad: require('../modeling/index').default
+          oscad
         }
         const func = createJscadFunction(script, globals)
         let objects = func(parameters, x => x, globals)
