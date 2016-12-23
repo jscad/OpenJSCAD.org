@@ -3,14 +3,16 @@
   "version": "0.5.2",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
-  "main": "src/launch-module.js",
+  "main": "dist/openjscad-module.js",
   "bin": {
-    "openjscad": "./src/launch-cli.js"
+    "openjscad": "dist/cli.js"
   },
   "scripts": {
     "test": "ava './src/**/*.test.js' --require babel-register --verbose --timeout 10000",
     "build-web": "browserify src/index.js -o dist/index.js -t [babelify browserify minifyify]",
-    "build-cli": "babel src/ -d dist --copy-files",
+    "build": "babel src/ -d dist",
+    "build-dist-module": "rollup -c && rollup -c rollup.config.js",
+    "build-dist-cli": "rollup -c && rollup -c rollup.config.js",
     "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
     "release-patch": "git checkout master; npm version patch && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-minor": "git checkout master; npm version minor && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
@@ -24,6 +26,10 @@
     {
       "name": "z3dev",
       "url": "http://www.z3d.jp"
+    },
+    {
+      "name": "Mark 'kaosat-dev' Moissette",
+      "url": "http://kaosat.net"
     }
   ],
   "license": "MIT",
