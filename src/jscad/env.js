@@ -1,10 +1,12 @@
-function env() {
+import { version } from './version'
+
+export default function env () {
   var env = 'OpenJSCAD ' + version
   if (typeof document !== 'undefined') {
     var w = document.defaultView
     env = env + ' [' + w.navigator.userAgent + ']'
   } else {
-    if (typeof require == 'function') {
+    if (typeof require === 'function') {
       var os = require('os')
       env = env + ' [' + os.type() + ':' + os.release() + ',' + os.platform() + ':' + os.arch() + ']'
     }
