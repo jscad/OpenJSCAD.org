@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "ava './src/**/*.test.js' --require babel-register --verbose --timeout 10000",
-    "build-web": "browserify src/index.js -o dist/index.js -t [babelify browserify minifyify]",
+    "build-web": "browserify src/ui/index.js -o dist/index.js -t [babelify browserify minifyify]",
     "build": "babel src/ -d dist",
     "build-dist-module": "rollup -c && rollup -c rollup.config.js",
     "build-dist-cli": "rollup -c && rollup -c rollup.config.js",
