@@ -37030,7 +37030,7 @@ module.exports={
   "version": "0.5.2",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
-  "main": "dist/openjscad-module.js",
+  "main": "dist/module.js",
   "bin": {
     "openjscad": "dist/cli.js"
   },
@@ -37038,8 +37038,9 @@ module.exports={
     "test": "ava './src/**/*.test.js' --require babel-register --verbose --timeout 10000",
     "build-web": "browserify src/ui/index.js -o dist/index.js -t [babelify browserify minifyify]",
     "build": "babel src/ -d dist",
-    "build-dist-module": "rollup -c && rollup -c rollup.config.js",
-    "build-dist-cli": "rollup -c && rollup -c rollup.config.js",
+    "build-dist-module": "rollup -c rollup.config.module.js",
+    "build-dist-cli": "rollup -c rollup.config.cli.js",
+    "build-all": "npm run build-dist-cli && npm run build-dist-module && npm run build-web",
     "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
     "release-patch": "git checkout master; npm version patch && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-minor": "git checkout master; npm version minor && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
@@ -37079,7 +37080,12 @@ module.exports={
     "browserify": "^13.0.0",
     "browserify-shim": "^3.8.12",
     "budo": "^8.3.0",
-    "minifyify": "^7.3.3"
+    "minifyify": "^7.3.3",
+    "rollup": "^0.38.0",
+    "rollup-plugin-buble": "^0.15.0",
+    "rollup-plugin-commonjs": "^6.0.1",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-post-replace": "^1.0.0"
   },
   "browserify": {
     "transform": [
@@ -43757,9 +43763,13 @@ var _CAGtoDxf2 = _interopRequireDefault(_CAGtoDxf);
 
 var _misc = require('../utils/misc');
 
+var _Blob = require('../utils/Blob');
+
+var _Blob2 = _interopRequireDefault(_Blob);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Blob = typeof window !== 'undefined' ? window.Blob : require('../utils/Blob').default;
+var Blob = (0, _Blob2.default)();
 
 function convertToBlob(objects, params) {
   var format = params.format,
@@ -47097,7 +47107,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = CAGToJson;
-var Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default;
+
+var _Blob = require('../../utils/Blob');
+
+var _Blob2 = _interopRequireDefault(_Blob);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Blob = (0, _Blob2.default)();
 
 function CAGToJson(CAG) {
   var str = '{ "type": "cag","sides": [';
@@ -47120,7 +47137,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = CAGtoDxf;
-var Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default;
+
+var _Blob = require('../../utils/Blob');
+
+var _Blob2 = _interopRequireDefault(_Blob);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Blob = (0, _Blob2.default)();
 
 function CAGtoDxf(cagObject) {
   var paths = cagObject.getOutlinePaths();
@@ -47170,7 +47194,13 @@ exports.default = CAGtoSvg;
 
 var _csg = require('../../csg');
 
-var Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default;
+var _Blob = require('../../utils/Blob');
+
+var _Blob2 = _interopRequireDefault(_Blob);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Blob = (0, _Blob2.default)();
 
 function CAGtoSvg(cagObject) {
   var decimals = 1000;
@@ -47226,7 +47256,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = toAMFString;
-var Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default;
+
+var _Blob = require('../../utils/Blob');
+
+var _Blob2 = _interopRequireDefault(_Blob);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Blob = (0, _Blob2.default)();
 
 function toAMFString(CSG, m) {
   var result = '<?xml version="1.0" encoding="UTF-8"?>\n<amf' + (m && m.unit ? ' unit="+m.unit"' : '') + '>\n';
@@ -47301,7 +47338,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = toStlString;
-var Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default;
+
+var _Blob = require('../../utils/Blob');
+
+var _Blob2 = _interopRequireDefault(_Blob);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Blob = (0, _Blob2.default)();
 
 function toStlString(CSG) {
   var result = 'solid csg.js\n';
@@ -47347,7 +47391,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = toStlBinary;
-var Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default;
+
+var _Blob = require('../../utils/Blob');
+
+var _Blob2 = _interopRequireDefault(_Blob);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Blob = (0, _Blob2.default)();
 
 // see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
 function toStlBinary(CSG) {
@@ -47418,7 +47469,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = toX3D;
-var Blob = typeof window !== 'undefined' ? window.Blob : require('../../utils/Blob').default;
+
+var _Blob = require('../../utils/Blob');
+
+var _Blob2 = _interopRequireDefault(_Blob);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Blob = (0, _Blob2.default)();
 
 function toX3D(CSG) {
   // materialPolygonLists
@@ -47846,7 +47904,20 @@ var _csg = require('../csg');
 
 var _misc = require('../utils/misc');
 
+var _index = require('../modeling/index');
+
+var _index2 = _interopRequireDefault(_index);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// jscad-worker.js
+//
+// == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
+//
+// History:
+//   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
+
+// Create an worker (thread) for processing the JSCAD script into CSG/CAG objects
 
 module.exports = function (self) {
   self.onmessage = function (e) {
@@ -47861,7 +47932,7 @@ module.exports = function (self) {
 
 
         var globals = {
-          oscad: require('../modeling/index').default
+          oscad: _index2.default
         };
         var func = (0, _jscadFunction2.default)(script, globals);
         var objects = func(parameters, function (x) {
@@ -47880,14 +47951,7 @@ module.exports = function (self) {
       }
     }
   };
-}; // jscad-worker.js
-//
-// == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
-//
-// History:
-//   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
-
-// Create an worker (thread) for processing the JSCAD script into CSG/CAG objects
+};
 
 },{"../csg":36,"../modeling/index":71,"../utils/misc":93,"./jscad-function":62}],64:[function(require,module,exports){
 'use strict';
@@ -49581,10 +49645,6 @@ var text = _interopRequireWildcard(_text);
 
 var _log = require('../jscad/log');
 
-var _log2 = _interopRequireDefault(_log);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var exportedApi = {
@@ -49597,7 +49657,7 @@ var exportedApi = {
   color: color,
   maths: maths,
   text: text,
-  OpenJsCad: { Openjscad: { log: _log2.default } }
+  OpenJsCad: { Openjscad: { log: _log.log } }
 };
 
 exports.default = exportedApi;
@@ -54952,7 +55012,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-exports.default = Blob;
+exports.default = makeBlob;
 exports.revokeBlobUrl = revokeBlobUrl;
 /*
  * Blob.js
@@ -54971,6 +55031,11 @@ exports.revokeBlobUrl = revokeBlobUrl;
  * History:
  * 2015/07/02: 0.0.1: contributed to OpenJSCAD.org CLI openjscad
  */
+
+function makeBlob(contents, options) {
+  var blob = typeof window !== 'undefined' ? window.Blob : Blob;
+  return blob;
+}
 
 function Blob(contents, options) {
   // make the optional options non-optional
