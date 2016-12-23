@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+// shebang gets auto added here
 //--log_all
 
 // NOTE: this will only run on Node > 6 or needs to be transpiled, or launched via launch-cli
@@ -38,12 +38,13 @@
 // 2013/03/02: 0.002: proper installation of the dependencies (csg.js & openscad.js) so openjscad can be used properly
 // 2013/03/01: 0.001: initial version, with base function from openscad.jscad
 //
-import {version} from './jscad/version'
-import env from './jscad/env'
 import fs from 'fs'
 
+import {version} from './jscad/version'
+import env from './jscad/env'
+
 import generateOutputData from './utils/generateOutputData'
-import {formats} from './io/formats'
+import { formats } from './io/formats'
 
 // var csg = sphere(1);          // -- basic test
 // var csg = require(file).main; // -- treating .jscad as module? later perhaps
@@ -71,7 +72,7 @@ if(inputFormat === 'scad')
 {
   var scadParser = require('openscad-openjscad-translator') // hardcoded is bad, but works
   src = scadParser.parse(src) //    doing the magick
-  src = '// producer: OpenJSCAD ' + require('./jscad/version').version + '\n' + src
+  src = '// producer: OpenJSCAD ' + version + '\n' + src
   src = '// source: ' + outputFile + '\n\n' + src
 }
 
