@@ -108,6 +108,21 @@ fs.writeFileSync('torus.stl', outputData.asBuffer())
  *outputFormat* the output file format
  *ir* the openjscad intermediate representation object
 
+
+### Development
+
+to start the live-reload development version (auto reloads the web page when you change things)
+type:
+
+to install the dependencies
+```
+npm install
+```
+
+to run the dev server
+```
+npm run start-dev
+```
 ## History
 
 - 2016/10/01: 0.5.2: updated documentation links by Z3 Dev, updated Ace editor to 1.2.4, fixed AMF export to set colors only when provided, enhanced Processor constructor to support Viewer options, added big.html to provide an example of using Processor and Viewer options, enhanced Processor to retain multiple returned objects, fixed difference() and intersection() functions for CAG by fischman
