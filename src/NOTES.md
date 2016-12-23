@@ -8,8 +8,9 @@ slowly put into browsers & node above 94 % in most browsers (https://kangax.gith
      * the web  ,via workerify : we generate one single bundle (either 'live': ie regenerated as you change the code or pre bundled) :
        * => OUTPUT IS A SINGLE file (index.js) see package.json 'build-web' or 'start-dev' commands
      * node.js either CLI or modules : the 'dist' folder contains the transpiled version of the source code
-       * => OUTPUT IS A FOLDER : there are also ways to create a single file bundle for server side use , but they are more complex to set up
-
+       * => OUTPUT IS A FOLDER (dist): there are also ways to create a single file bundle for server side use , but they are more complex to set up
+       * do not be scared of this folder, just consider it like a 'binary' for the server side
+       * working on ways to reduce it to a single file
 
 #jquery: eeek !
 Old crutch, not needed in most cases these days...ideally would need to go
