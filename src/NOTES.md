@@ -1,4 +1,27 @@
-#transpiling: ie convert from one flavor of JS to another:
+#what works and what does not
+
+##what does not :
+
+- killing web workers in progress : just needs a bit of refactoring
+- global file cache:  gMemFs : still trying to refactor it into a reuseable system, this is the last actual remain of the "globals"
+- jquery hammer is broken as node module, so controls are semi broken : fix is relatively easy, but postponed for now (not essential), perhaps just getting rid of
+jquery-hammerjs & use hammer.js directly (makes more sense)
+- openscad-openjscad-translator: works on CLI & module, but cannot be browserified correctly, and seems to have weird internals
+- not entirely sure about the "REMOTE" functionality: should work , but needs testing
+
+##What does :
+- everything else !
+  - UI
+  - examples
+  - all format handling in & out
+  - background & main worker
+  - new CLI & use as a node module
+    - installation of OpenJSCAD globally to enable using the openjscad command line tool IN A CLEAN manner
+  (no more need to hacks and manual install via make file)
+    - installation locally to use as module
+  - code sharing between web & module & CLI is complete
+
+#note on transpiling: ie convert from one flavor of JS to another:
 
 - the code now uses a lot of es6/es2015 features (NO fancy/ uncertain ones), which are getting
 slowly put into browsers & node above 94 % in most browsers (https://kangax.github.io/compat-table/es6/)
@@ -9,6 +32,7 @@ slowly put into browsers & node above 94 % in most browsers (https://kangax.gith
        * => OUTPUT IS A SINGLE file (index.js) see package.json 'build-web' or 'start-dev' commands
      * node.js either CLI or modules : the 'dist' folder contains the transpiled version of the source code
        * => OUTPUT IS a single file bundle for server side use : one for the CLI & one for the use as 'module'
+
 
 #jquery: eeek !
 Old crutch, not needed in most cases these days...ideally would need to go
@@ -27,7 +51,7 @@ Old crutch, not needed in most cases these days...ideally would need to go
 - better fix:  get rid of jquery-hammerjs just use hammer.js !
 
 
-#file managment
+#file managment mind map
 
 On startup
   urlParams => loadSomething
