@@ -8,7 +8,7 @@ export default {
   dest: 'dist/module.js',
   format: 'cjs',
   moduleName: 'openjscad',
-  sourceMap: 'inline',
+  sourceMap: true,
   plugins: [
     buble(),
     nodeResolve({
