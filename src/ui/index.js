@@ -64,7 +64,7 @@ function init () {
   createOptions()
   getOptions()
 
-  loadInitialExample(me, {gMemFs, gProcessor, gEditor})
+  loadInitialExample(me, {gMemFs, gProcessor, gEditor, remoteUrl})
 
   let menu = document.getElementById('menu')
   let editFrame = document.getElementById('editFrame')

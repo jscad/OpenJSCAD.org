@@ -147,6 +147,7 @@ export function loadInitialExample (me, params) {
     const docUrl = document.URL
     const isRemote = docUrl.match(/#(https?:\/\/\S+)$/)
     const isLocal = docUrl.match(/#(examples\/\S+)$/)
+    const isInLocalStorage = localStorage.editorContent && localStorage.editorContent.length
 
     function loadLocalStorage (content, {gProcessor, gEditor}) {
       // load content from local storage if found
@@ -164,7 +165,7 @@ export function loadInitialExample (me, params) {
       document.location = docUrl.replace(/#.*$/, '#')
     }
 
-    function loadRemote (u, {gMemFs, gProcessor, gEditor}) {
+    function loadRemote (u, {gMemFs, gProcessor, gEditor, remoteUrl}) {
       console.log('loadRemote')
       var xhr = new XMLHttpRequest()
       xhr.open('GET', remoteUrl + u, true)
@@ -188,8 +189,10 @@ export function loadInitialExample (me, params) {
     else if (isLocal) { // local example, e.g. http://openjscad.org/#examples/example001.jscad
       const filename = isLocal[1] // RegExp.$1
       loadLocal(filename, params)
-    } else {
+    } else if (isInLocalStorage) {
       loadLocalStorage(localStorage.editorContent, params)
+    } else {
+      fetchExample('examples/' + examples[0].file, undefined, params)
     }
   }
 }
