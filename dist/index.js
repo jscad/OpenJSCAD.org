@@ -37038,9 +37038,9 @@ module.exports={
     "test": "ava './src/**/*.test.js' --require babel-register --verbose --timeout 10000",
     "build-web": "browserify src/ui/index.js -o dist/index.js -t [babelify browserify minifyify]",
     "build": "babel src/ -d dist",
-    "build-dist-module": "rollup -c rollup.config.module.js",
-    "build-dist-cli": "rollup -c rollup.config.cli.js",
-    "build-all": "npm run build-dist-cli && npm run build-dist-module && npm run build-web",
+    "build-module": "rollup -c rollup.config.module.js",
+    "build-cli": "rollup -c rollup.config.cli.js",
+    "build-all": "npm run build-cli && npm run build-module && npm run build-web",
     "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
     "release-patch": "git checkout master; npm version patch && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-minor": "git checkout master; npm version minor && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
@@ -47926,14 +47926,12 @@ module.exports = function (self) {
       var data = e.data;
       if (data.cmd === 'render') {
         var _e$data = e.data,
-            fullurl = _e$data.fullurl,
             script = _e$data.script,
-            parameters = _e$data.parameters;
+            parameters = _e$data.parameters,
+            options = _e$data.options;
 
 
-        var globals = {
-          oscad: _index2.default
-        };
+        var globals = options.implicitGlobals ? { oscad: _index2.default } : {};
         var func = (0, _jscadFunction2.default)(script, globals);
         var objects = func(parameters, function (x) {
           return x;
@@ -47966,7 +47964,7 @@ exports.log = log;
 exports.status = status;
 function log(txt) {
   var timeInMs = Date.now();
-  var prevtime = OpenJsCad.log.prevLogTime;
+  var prevtime = undefined; //OpenJsCad.log.prevLogTime
   if (!prevtime) prevtime = timeInMs;
   var deltatime = timeInMs - prevtime;
   log.prevLogTime = timeInMs;
@@ -48126,7 +48124,7 @@ function Processor(containerdiv, options) {
   this.containerdiv = containerdiv;
 
   this.viewer = null;
-  this.worker = null;
+  this.builder = null;
   this.zoomControl = null;
 
   // callbacks
@@ -48428,7 +48426,7 @@ Processor.prototype = {
     if (this.state === 1) {
       // todo: abort
       this.setStatus('Aborted.');
-      this.worker.terminate();
+      this.builder.cancel();
       this.state = 3; // incomplete
       this.enableItems();
       if (this.onchange) this.onchange(this);
@@ -48522,6 +48520,8 @@ Processor.prototype = {
   },
 
   rebuildSolid: function rebuildSolid() {
+    var _this = this;
+
     // clear previous solid and settings
     this.abort();
     this.setError('');
@@ -48535,20 +48535,6 @@ Processor.prototype = {
     var parameters = (0, _getParamValues2.default)(this.paramControls);
     var script = this.getFullScript();
     var fullurl = this.baseurl + this.filename;
-    var implicitGlobals = {
-      oscad: {
-        csg: { CAG: csg.CAG, CSG: csg.CSG },
-        primitives2d: primitives2d,
-        primitives3d: primitives3d,
-        booleanOps: booleanOps,
-        transformations: transformations,
-        extrusion: extrusion,
-        color: color,
-        maths: maths,
-        text: text,
-        OpenJsCad: { OpenJsCad: OpenJsCad }
-      }
-    };
 
     this.state = 1; // processing
     var that = this;
@@ -48572,13 +48558,13 @@ Processor.prototype = {
     }
 
     if (this.opts.useAsync) {
-      (0, _rebuildSolid.rebuildSolidAsync)(script, fullurl, parameters, implicitGlobals, function (err, objects) {
+      this.builder = (0, _rebuildSolid.rebuildSolidAsync)(script, fullurl, parameters, function (err, objects) {
         if (err && that.opts.useSync) {
-          (0, _rebuildSolid.rebuildSolidSync)(script, fullurl, parameters, implicitGlobals, callback);
+          _this.builder = (0, _rebuildSolid.rebuildSolidSync)(script, fullurl, parameters, callback);
         } else callback(undefined, objects);
       });
     } else if (this.opts.useSync) {
-      (0, _rebuildSolid.rebuildSolidSync)(script, fullurl, parameters, implicitGlobals, callback);
+      this.builder = (0, _rebuildSolid.rebuildSolidSync)(script, fullurl, parameters, callback);
     }
   },
 
@@ -48901,6 +48887,10 @@ var _csg = require('../csg');
 
 var _misc = require('../utils/misc');
 
+var _index = require('../modeling/index');
+
+var _index2 = _interopRequireDefault(_index);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -48946,16 +48936,21 @@ function replaceIncludes(text, relpath) {
  * @param {String} script the script
  * @param {String} fullurl full url of current script
  * @param {Object} parameters the parameters to use with the script
- * @param {Object} globals the globals to use when evaluating the script
  * @param {Object} callback the callback to call once evaluation is done /failed
+ * @param {Object} options the settings to use when rebuilding the solid
  */
-function rebuildSolidSync(script, fullurl, parameters, globals, callback) {
+function rebuildSolidSync(script, fullurl, parameters, callback, options) {
   var relpath = fullurl;
   if (relpath.lastIndexOf('/') >= 0) {
     relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1);
   }
+  var defaults = {
+    implicitGlobals: true
+  };
+  options = Object.assign({}, defaults, options);
 
   replaceIncludes(script, relpath).then(function (fullScript) {
+    var globals = options.implicitGlobals ? options.globals ? options.globals : { oscad: _index2.default } : {};
     var func = (0, _jscadFunction2.default)(fullScript, globals);
     // stand-in for the include function(no-op)
     var include = function include(x) {
@@ -48974,6 +48969,13 @@ function rebuildSolidSync(script, fullurl, parameters, globals, callback) {
   }).catch(function (error) {
     return callback(error, undefined);
   });
+
+  // have we been asked to stop our work?
+  return {
+    cancel: function cancel() {
+      console.log('cannot stop work in main thread, sorry');
+    }
+  };
 }
 
 /**
@@ -48981,22 +48983,27 @@ function rebuildSolidSync(script, fullurl, parameters, globals, callback) {
  * @param {String} script the script
  * @param {String} fullurl full url of current script
  * @param {Object} parameters the parameters to use with the script
- * @param {Object} globals the globals to use when evaluating the script
  * @param {Object} callback the callback to call once evaluation is done /failed
+ * @param {Object} options the settings to use when rebuilding the solid
  */
-function rebuildSolidAsync(script, fullurl, parameters, globals, callback) {
+function rebuildSolidAsync(script, fullurl, parameters, callback, options) {
   if (!parameters) {
     throw new Error("JSCAD: missing 'parameters'");
   }
   if (!window.Worker) throw new Error('Worker threads are unsupported.');
+  var defaults = {
+    implicitGlobals: true
+  };
+  options = Object.assign({}, defaults, options);
 
   var relpath = fullurl;
   if (relpath.lastIndexOf('/') >= 0) {
     relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1);
   }
 
-  replaceIncludes(script, relpath).then(function (fullScript) {
-    var worker = (0, _webWorkify2.default)(require('./jscad-worker.js'));
+  var worker = void 0;
+  replaceIncludes(script, relpath).then(function (script) {
+    worker = (0, _webWorkify2.default)(require('./jscad-worker.js'));
     worker.onmessage = function (e) {
       if (e.data instanceof Object) {
         var data = e.data.objects.map(function (object) {
@@ -49013,13 +49020,20 @@ function rebuildSolidAsync(script, fullurl, parameters, globals, callback) {
     worker.onerror = function (e) {
       callback('Error in line ' + e.lineno + ' : ' + e.message, undefined);
     };
-    worker.postMessage({ cmd: 'render', fullurl: fullurl, script: script, parameters: parameters });
+    worker.postMessage({ cmd: 'render', fullurl: fullurl, script: script, parameters: parameters, options: options });
   }).catch(function (error) {
     return callback(error, undefined);
   });
+
+  // have we been asked to stop our work?
+  return {
+    cancel: function cancel() {
+      worker.terminate();
+    }
+  };
 }
 
-},{"../csg":36,"../utils/misc":93,"./includeJscadSync":61,"./jscad-function":62,"./jscad-worker.js":63,"webWorkify":34}],67:[function(require,module,exports){
+},{"../csg":36,"../modeling/index":71,"../utils/misc":93,"./includeJscadSync":61,"./jscad-function":62,"./jscad-worker.js":63,"webWorkify":34}],67:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -49657,7 +49671,7 @@ var exportedApi = {
   color: color,
   maths: maths,
   text: text,
-  OpenJsCad: { Openjscad: { log: _log.log } }
+  OpenJsCad: { OpenJsCad: { log: _log.log } }
 };
 
 exports.default = exportedApi;

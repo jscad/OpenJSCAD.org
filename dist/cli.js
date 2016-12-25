@@ -7321,118 +7321,6 @@ function includeJscadSync (relpath, fn) {
   })
 }
 
-/**
- * helper function that finds include() statements in files,
- * fetches their code & returns it (recursively) returning the whole code with
- * inlined includes
- * this is more reliable than async xhr + eval()
- * @param {String} text the original script (with include statements)
- * @param {String} relpath relative path, for xhr resolution
- * @returns {String} the full script, with inlined
- */
-function replaceIncludes (text, relpath) {
-  return new Promise(function (resolve, reject) {
-    var scriptWithIncludes = text;
-    var includesPattern = /(?:include)\s?\("([\w\/.\s]*)"\);?/gm;
-
-    var foundIncludes = [];
-    var foundIncludesFull = [];
-    var match;
-    while(match = includesPattern.exec(text)) {
-      foundIncludes.push(match[1]);
-      foundIncludesFull.push(match[0]);
-    }
-
-    var tmpPromises = foundIncludes.map(function (uri, index$$1) {
-      var promise = includeJscadSync(relpath, uri);
-      return promise.then(function (includedScript) {
-        return replaceIncludes(includedScript, relpath).then(function (substring) {
-          var currentItem = foundIncludesFull[index$$1];
-          scriptWithIncludes = scriptWithIncludes.replace(currentItem, substring);
-          return scriptWithIncludes
-        })
-      })
-    });
-    Promise.all(tmpPromises).then(function (x) { return resolve(scriptWithIncludes); });
-  })
-}
-
-/**
- * evaluate script & rebuild solids, in main thread
- * @param {String} script the script
- * @param {String} fullurl full url of current script
- * @param {Object} parameters the parameters to use with the script
- * @param {Object} globals the globals to use when evaluating the script
- * @param {Object} callback the callback to call once evaluation is done /failed
- */
-function rebuildSolidSync (script, fullurl, parameters, globals, callback) {
-  var relpath = fullurl;
-  if (relpath.lastIndexOf('/') >= 0) {
-    relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1);
-  }
-
-  replaceIncludes(script, relpath).then(function (fullScript) {
-    var func = createJscadFunction(fullScript, globals);
-    // stand-in for the include function(no-op)
-    var include = function (x) { return x; };
-    try {
-      var objects = func(parameters, include, globals);
-      objects = toArray(objects);
-      if (objects.length === 0) {
-        throw new Error('The JSCAD script must return one or more CSG or CAG solids.')
-      }
-      callback(undefined, objects);
-    } catch(error) {
-      callback(error, undefined);
-    }
-  }).catch(function (error) { return callback(error, undefined); });
-}
-
-/**
- * evaluate script & rebuild solids, in seperate thread/webworker
- * @param {String} script the script
- * @param {String} fullurl full url of current script
- * @param {Object} parameters the parameters to use with the script
- * @param {Object} globals the globals to use when evaluating the script
- * @param {Object} callback the callback to call once evaluation is done /failed
- */
-
-function getParameterDefinitionsCLI (getParameterDefinitions, param) { // used for openjscad CLI only
-  if (typeof getParameterDefinitions !== 'undefined') {
-    var p = {};
-    var pa = getParameterDefinitions();
-    for (var a in pa) { // defaults, given by getParameterDefinitions()
-      var x = pa[a];
-      if ('default' in x) {
-        p[pa[a].name] = pa[a].default;
-      } else if ('initial' in x) {
-        p[pa[a].name] = pa[a].initial;
-      } else if ('checked' in x) {
-        p[pa[a].name] = pa[a].checked;
-      }
-    }
-    for (var a in param) { // given by command-line
-      p[a] = param[a];
-    }
-    return p
-  } else
-    { return param }
-}
-
-var formats = {
-  stl: { displayName: 'STL (ASCII)', description: 'STereoLithography, ASCII', extension: 'stl', mimetype: 'application/sla', convertCSG: true, convertCAG: false },
-  stla: { displayName: 'STL (ASCII)', description: 'STereoLithography, ASCII', extension: 'stl', mimetype: 'application/sla', convertCSG: true, convertCAG: false },
-  stlb: { displayName: 'STL (Binary)', description: 'STereoLithography, Binary', extension: 'stl', mimetype: 'application/sla', convertCSG: true, convertCAG: false },
-  amf: { displayName: 'AMF (experimental)', description: 'Additive Manufacturing File Format', extension: 'amf', mimetype: 'application/amf+xml', convertCSG: true, convertCAG: false },
-  x3d: { displayName: 'X3D', description: 'X3D File Format', extension: 'x3d', mimetype: 'model/x3d+xml', convertCSG: true, convertCAG: false },
-  dxf: { displayName: 'DXF', description: 'AutoCAD Drawing Exchange Format', extension: 'dxf', mimetype: 'application/dxf', convertCSG: false, convertCAG: true },
-  jscad: { displayName: 'JSCAD', description: 'OpenJSCAD.org Source', extension: 'jscad', mimetype: 'application/javascript', convertCSG: true, convertCAG: true },
-  svg: { displayName: 'SVG', description: 'Scalable Vector Graphics Format', extension: 'svg', mimetype: 'image/svg+xml', convertCSG: false, convertCAG: true },
-  js: { displayName: 'js', description: 'JavaScript Source' },
-  gcode: { displayName: 'gcode', description: 'G Programming Language File Format' },
-  json: { displayName: 'json', description: 'JavaScript Object Notation Format' }
-};
-
 // -- 2D primitives (OpenSCAD like notion)
 
 function square() {
@@ -9242,7 +9130,7 @@ var text = Object.freeze({
 
 function log$1 (txt) {
   var timeInMs = Date.now();
-  var prevtime = OpenJsCad.log.prevLogTime;
+  var prevtime = undefined;//OpenJsCad.log.prevLogTime
   if (!prevtime) { prevtime = timeInMs; }
   var deltatime = timeInMs - prevtime;
   log$1.prevLogTime = timeInMs;
@@ -9269,7 +9157,131 @@ var exportedApi = {
   color: color$1,
   maths: maths,
   text: text,
-  OpenJsCad: {Openjscad: {log: log$1}}
+  OpenJsCad: {OpenJsCad: {log: log$1}}
+};
+
+/**
+ * helper function that finds include() statements in files,
+ * fetches their code & returns it (recursively) returning the whole code with
+ * inlined includes
+ * this is more reliable than async xhr + eval()
+ * @param {String} text the original script (with include statements)
+ * @param {String} relpath relative path, for xhr resolution
+ * @returns {String} the full script, with inlined
+ */
+function replaceIncludes (text, relpath) {
+  return new Promise(function (resolve, reject) {
+    var scriptWithIncludes = text;
+    var includesPattern = /(?:include)\s?\("([\w\/.\s]*)"\);?/gm;
+
+    var foundIncludes = [];
+    var foundIncludesFull = [];
+    var match;
+    while(match = includesPattern.exec(text)) {
+      foundIncludes.push(match[1]);
+      foundIncludesFull.push(match[0]);
+    }
+
+    var tmpPromises = foundIncludes.map(function (uri, index$$1) {
+      var promise = includeJscadSync(relpath, uri);
+      return promise.then(function (includedScript) {
+        return replaceIncludes(includedScript, relpath).then(function (substring) {
+          var currentItem = foundIncludesFull[index$$1];
+          scriptWithIncludes = scriptWithIncludes.replace(currentItem, substring);
+          return scriptWithIncludes
+        })
+      })
+    });
+    Promise.all(tmpPromises).then(function (x) { return resolve(scriptWithIncludes); });
+  })
+}
+
+/**
+ * evaluate script & rebuild solids, in main thread
+ * @param {String} script the script
+ * @param {String} fullurl full url of current script
+ * @param {Object} parameters the parameters to use with the script
+ * @param {Object} callback the callback to call once evaluation is done /failed
+ * @param {Object} options the settings to use when rebuilding the solid
+ */
+function rebuildSolidSync (script, fullurl, parameters, callback, options) {
+  var relpath = fullurl;
+  if (relpath.lastIndexOf('/') >= 0) {
+    relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1);
+  }
+  var defaults = {
+    implicitGlobals: true
+  };
+  options = Object.assign({}, defaults, options);
+
+  replaceIncludes(script, relpath).then(function (fullScript) {
+    var globals = options.implicitGlobals ? (options.globals ? options.globals : {oscad: exportedApi}) : {};
+    var func = createJscadFunction(fullScript, globals);
+    // stand-in for the include function(no-op)
+    var include = function (x) { return x; };
+    try {
+      var objects = func(parameters, include, globals);
+      objects = toArray(objects);
+      if (objects.length === 0) {
+        throw new Error('The JSCAD script must return one or more CSG or CAG solids.')
+      }
+      callback(undefined, objects);
+    } catch(error) {
+      callback(error, undefined);
+    }
+  }).catch(function (error) { return callback(error, undefined); });
+
+  // have we been asked to stop our work?
+  return {
+    cancel: function () {
+      console.log('cannot stop work in main thread, sorry');
+    }
+  }
+}
+
+/**
+ * evaluate script & rebuild solids, in seperate thread/webworker
+ * @param {String} script the script
+ * @param {String} fullurl full url of current script
+ * @param {Object} parameters the parameters to use with the script
+ * @param {Object} callback the callback to call once evaluation is done /failed
+ * @param {Object} options the settings to use when rebuilding the solid
+ */
+
+function getParameterDefinitionsCLI (getParameterDefinitions, param) { // used for openjscad CLI only
+  if (typeof getParameterDefinitions !== 'undefined') {
+    var p = {};
+    var pa = getParameterDefinitions();
+    for (var a in pa) { // defaults, given by getParameterDefinitions()
+      var x = pa[a];
+      if ('default' in x) {
+        p[pa[a].name] = pa[a].default;
+      } else if ('initial' in x) {
+        p[pa[a].name] = pa[a].initial;
+      } else if ('checked' in x) {
+        p[pa[a].name] = pa[a].checked;
+      }
+    }
+    for (var a in param) { // given by command-line
+      p[a] = param[a];
+    }
+    return p
+  } else
+    { return param }
+}
+
+var formats = {
+  stl: { displayName: 'STL (ASCII)', description: 'STereoLithography, ASCII', extension: 'stl', mimetype: 'application/sla', convertCSG: true, convertCAG: false },
+  stla: { displayName: 'STL (ASCII)', description: 'STereoLithography, ASCII', extension: 'stl', mimetype: 'application/sla', convertCSG: true, convertCAG: false },
+  stlb: { displayName: 'STL (Binary)', description: 'STereoLithography, Binary', extension: 'stl', mimetype: 'application/sla', convertCSG: true, convertCAG: false },
+  amf: { displayName: 'AMF (experimental)', description: 'Additive Manufacturing File Format', extension: 'amf', mimetype: 'application/amf+xml', convertCSG: true, convertCAG: false },
+  x3d: { displayName: 'X3D', description: 'X3D File Format', extension: 'x3d', mimetype: 'model/x3d+xml', convertCSG: true, convertCAG: false },
+  dxf: { displayName: 'DXF', description: 'AutoCAD Drawing Exchange Format', extension: 'dxf', mimetype: 'application/dxf', convertCSG: false, convertCAG: true },
+  jscad: { displayName: 'JSCAD', description: 'OpenJSCAD.org Source', extension: 'jscad', mimetype: 'application/javascript', convertCSG: true, convertCAG: true },
+  svg: { displayName: 'SVG', description: 'Scalable Vector Graphics Format', extension: 'svg', mimetype: 'image/svg+xml', convertCSG: false, convertCAG: true },
+  js: { displayName: 'js', description: 'JavaScript Source' },
+  gcode: { displayName: 'gcode', description: 'G Programming Language File Format' },
+  json: { displayName: 'json', description: 'JavaScript Object Notation Format' }
 };
 
 /**
@@ -9310,7 +9322,7 @@ function generateOutputData (source, params, options) {
     if (outputFormat === 'jscad' || outputFormat === 'js') {
       resolve(source);
     } else {
-      rebuildSolidSync(source, '', params, globals, callback);
+      rebuildSolidSync(source, '', params, callback, {implicitGlobals: implicitGlobals, globals: globals});
     }
   })
     .then(function (objects) {

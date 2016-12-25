@@ -7224,6 +7224,84 @@ function convertToBlob (objects, params) {
   return blob
 }
 
+// == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
+//
+// History:
+//   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
+
+/**
+ * Create an function for processing the JSCAD script into CSG/CAG objects
+ * @param {String} script the script
+ * @param {Object} globals the globals to use when evaluating the script: these are not ..
+ * ...ACTUAL globals, merely functions/ variable accessible AS IF they were globals !
+ */
+function createJscadFunction (script, globals) {
+  // console.log('globals', globals)
+  // not a fan of this, we have way too many explicit api elements
+  var globalsList = '';
+  // each top key is a library ie : openscad helpers etc
+  // one level below that is the list of libs
+  // last level is the actual function we want to export to 'local' scope
+  Object.keys(globals).forEach(function (libKey) {
+    var lib = globals[libKey];
+    // console.log(`lib:${libKey}: ${lib}`)
+    Object.keys(lib).forEach(function (libItemKey) {
+      var libItems = lib[libItemKey];
+      // console.log('libItems', libItems)
+      Object.keys(libItems).forEach(function (toExposeKey) {
+        // console.log('toExpose',toExpose )
+        var text = "const " + toExposeKey + " = globals['" + libKey + "']['" + libItemKey + "']['" + toExposeKey + "']\n";
+        globalsList += text;
+      });
+    });
+  });
+
+  var source = "// SYNC WORKER\n    " + globalsList + "\n\n    //user defined script(s)\n    " + script + "\n\n    if (typeof (main) !== 'function') {\n      throw new Error('The JSCAD script must contain a function main() which returns one or more CSG or CAG solids.')\n    }\n\n    return main(params)\n  ";
+
+  var f = new Function('params', 'include', 'globals', source);
+  return f
+}
+
+//
+// THESE FUNCTIONS ARE SERIALIZED FOR INCLUSION IN THE FULL SCRIPT
+//
+// TODO It might be possible to cache the serialized versions
+//
+
+// Include the requested script via MemFs (if available) or HTTP Request
+//
+// (Note: This function is appended together with the JSCAD script)
+//
+function includeJscadSync (relpath, fn) {
+  //console.log('include', relpath, fn)
+  // include the requested script via MemFs if possible
+  return new Promise(function (resolve, reject) {
+    if (typeof (gMemFs) === 'object') {
+      for (var fs in gMemFs) {
+        if (gMemFs[fs].name === fn) {
+          //eval(gMemFs[fs].source)
+          resolve(gMemFs[fs].source);
+        }
+      }
+    }
+    // include the requested script via webserver access
+    var xhr = new XMLHttpRequest();
+    var url = relpath + fn;
+    if (fn.match(/^(https:|http:)/i)) {
+      url = fn;
+    }
+    xhr.open('GET', url, false);
+    xhr.onload = function () {
+      var src = this.responseText;
+      //console.log('src',src)
+      //eval(src) // UGH ???
+      resolve(src);
+    };
+    xhr.onerror = function () {};
+    xhr.send();
+  })
+}
+
 // -- 2D primitives (OpenSCAD like notion)
 
 function square() {
@@ -9033,7 +9111,7 @@ var text = Object.freeze({
 
 function log$1 (txt) {
   var timeInMs = Date.now();
-  var prevtime = OpenJsCad.log.prevLogTime;
+  var prevtime = undefined;//OpenJsCad.log.prevLogTime
   if (!prevtime) { prevtime = timeInMs; }
   var deltatime = timeInMs - prevtime;
   log$1.prevLogTime = timeInMs;
@@ -9060,86 +9138,8 @@ var exportedApi = {
   color: color$1,
   maths: maths,
   text: text,
-  OpenJsCad: {Openjscad: {log: log$1}}
+  OpenJsCad: {OpenJsCad: {log: log$1}}
 };
-
-// == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
-//
-// History:
-//   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
-
-/**
- * Create an function for processing the JSCAD script into CSG/CAG objects
- * @param {String} script the script
- * @param {Object} globals the globals to use when evaluating the script: these are not ..
- * ...ACTUAL globals, merely functions/ variable accessible AS IF they were globals !
- */
-function createJscadFunction (script, globals) {
-  // console.log('globals', globals)
-  // not a fan of this, we have way too many explicit api elements
-  var globalsList = '';
-  // each top key is a library ie : openscad helpers etc
-  // one level below that is the list of libs
-  // last level is the actual function we want to export to 'local' scope
-  Object.keys(globals).forEach(function (libKey) {
-    var lib = globals[libKey];
-    // console.log(`lib:${libKey}: ${lib}`)
-    Object.keys(lib).forEach(function (libItemKey) {
-      var libItems = lib[libItemKey];
-      // console.log('libItems', libItems)
-      Object.keys(libItems).forEach(function (toExposeKey) {
-        // console.log('toExpose',toExpose )
-        var text = "const " + toExposeKey + " = globals['" + libKey + "']['" + libItemKey + "']['" + toExposeKey + "']\n";
-        globalsList += text;
-      });
-    });
-  });
-
-  var source = "// SYNC WORKER\n    " + globalsList + "\n\n    //user defined script(s)\n    " + script + "\n\n    if (typeof (main) !== 'function') {\n      throw new Error('The JSCAD script must contain a function main() which returns one or more CSG or CAG solids.')\n    }\n\n    return main(params)\n  ";
-
-  var f = new Function('params', 'include', 'globals', source);
-  return f
-}
-
-//
-// THESE FUNCTIONS ARE SERIALIZED FOR INCLUSION IN THE FULL SCRIPT
-//
-// TODO It might be possible to cache the serialized versions
-//
-
-// Include the requested script via MemFs (if available) or HTTP Request
-//
-// (Note: This function is appended together with the JSCAD script)
-//
-function includeJscadSync (relpath, fn) {
-  //console.log('include', relpath, fn)
-  // include the requested script via MemFs if possible
-  return new Promise(function (resolve, reject) {
-    if (typeof (gMemFs) === 'object') {
-      for (var fs in gMemFs) {
-        if (gMemFs[fs].name === fn) {
-          //eval(gMemFs[fs].source)
-          resolve(gMemFs[fs].source);
-        }
-      }
-    }
-    // include the requested script via webserver access
-    var xhr = new XMLHttpRequest();
-    var url = relpath + fn;
-    if (fn.match(/^(https:|http:)/i)) {
-      url = fn;
-    }
-    xhr.open('GET', url, false);
-    xhr.onload = function () {
-      var src = this.responseText;
-      //console.log('src',src)
-      //eval(src) // UGH ???
-      resolve(src);
-    };
-    xhr.onerror = function () {};
-    xhr.send();
-  })
-}
 
 /**
  * helper function that finds include() statements in files,
@@ -9182,16 +9182,21 @@ function replaceIncludes (text, relpath) {
  * @param {String} script the script
  * @param {String} fullurl full url of current script
  * @param {Object} parameters the parameters to use with the script
- * @param {Object} globals the globals to use when evaluating the script
  * @param {Object} callback the callback to call once evaluation is done /failed
+ * @param {Object} options the settings to use when rebuilding the solid
  */
-function rebuildSolidSync (script, fullurl, parameters, globals, callback) {
+function rebuildSolidSync (script, fullurl, parameters, callback, options) {
   var relpath = fullurl;
   if (relpath.lastIndexOf('/') >= 0) {
     relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1);
   }
+  var defaults = {
+    implicitGlobals: true
+  };
+  options = Object.assign({}, defaults, options);
 
   replaceIncludes(script, relpath).then(function (fullScript) {
+    var globals = options.implicitGlobals ? (options.globals ? options.globals : {oscad: exportedApi}) : {};
     var func = createJscadFunction(fullScript, globals);
     // stand-in for the include function(no-op)
     var include = function (x) { return x; };
@@ -9206,6 +9211,13 @@ function rebuildSolidSync (script, fullurl, parameters, globals, callback) {
       callback(error, undefined);
     }
   }).catch(function (error) { return callback(error, undefined); });
+
+  // have we been asked to stop our work?
+  return {
+    cancel: function () {
+      console.log('cannot stop work in main thread, sorry');
+    }
+  }
 }
 
 /**
@@ -9213,15 +9225,17 @@ function rebuildSolidSync (script, fullurl, parameters, globals, callback) {
  * @param {String} script the script
  * @param {String} fullurl full url of current script
  * @param {Object} parameters the parameters to use with the script
- * @param {Object} globals the globals to use when evaluating the script
  * @param {Object} callback the callback to call once evaluation is done /failed
+ * @param {Object} options the settings to use when rebuilding the solid
  */
 
 /**
  * compile openjscad code and generates intermediate representation
  * ordering of parameters created with curying in mind
  * @param  {String} source the openjscad script we want to compile
- * @param  {Object} params the set of parameters to use  (optional)
+ * @param  {Object} params the set of parameters to use for the script  (optional)
+ * @param  {Object} options the set of options to use (optional)
+
  */
 function compile (source, params, options) {
   params = params || {};
@@ -9230,12 +9244,9 @@ function compile (source, params, options) {
   };
   options = Object.assign({}, defaults, options);
   var implicitGlobals = options.implicitGlobals;
-
-  var globals;
+  var globals = {};
   if (implicitGlobals) {
-    globals = {
-      oscad: exportedApi
-    };
+    globals.oscad = exportedApi;
   }
 
   return new Promise(function (resolve, reject) {
@@ -9243,7 +9254,7 @@ function compile (source, params, options) {
       if (!err) { return resolve(result) }
       reject(err);
     };
-    rebuildSolidSync(source, '', params, globals, callback);
+    rebuildSolidSync(source, '', params, callback, {implicitGlobals: implicitGlobals, globals: globals});
   })
 }
 
