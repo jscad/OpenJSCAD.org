@@ -19,7 +19,7 @@ module.exports = function (self) {
     if (e.data instanceof Object) {
       var data = e.data
       if (data.cmd === 'render') {
-        const {fullurl, script, parameters} = e.data
+        const {script, parameters} = e.data
 
         const globals = {
           oscad
