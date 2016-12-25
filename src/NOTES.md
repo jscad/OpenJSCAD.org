@@ -2,10 +2,7 @@
 
 ##what does not :
 
-- killing web workers in progress : just needs a bit of refactoring
 - global file cache:  gMemFs : still trying to refactor it into a reuseable system, this is the last actual remain of the "globals"
-- jquery hammer is broken as node module, so controls are semi broken : fix is relatively easy, but postponed for now (not essential), perhaps just getting rid of
-jquery-hammerjs & use hammer.js directly (makes more sense)
 - openscad-openjscad-translator: works on CLI & module, but cannot be browserified correctly, and seems to have weird internals
 - not entirely sure about the "REMOTE" functionality: should work , but needs testing
 
