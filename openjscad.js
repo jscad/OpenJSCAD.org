@@ -866,10 +866,9 @@ OpenJsCad.Processor = function(containerdiv, options) {
 };
 
 OpenJsCad.Processor.convertToSolid = function(objs) {
-  if (objs.length === undefined) {
+  if (!Array.isArray(objs)) {
     if ((objs instanceof CAG) || (objs instanceof CSG)) {
-      var obj = objs;
-      objs = [obj];
+      objs = [objs];
     } else {
       throw new Error("Cannot convert object ("+typeof(objs)+") to solid");
     }
@@ -1062,7 +1061,7 @@ OpenJsCad.Processor.prototype = {
   },
 
   setCurrentObjects: function(objs) {
-    if (!(length in objs)) {
+    if (!Array.isArray(objs)) {
       objs = [objs]; // create a list
     }
     this.currentObjects = objs;                                   // list of CAG or CSG objects
