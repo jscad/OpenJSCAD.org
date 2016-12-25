@@ -14,8 +14,6 @@ import WebWorkify from 'webWorkify'
 export default function createConversionWorker (onDone) {
   //this spawns web workers that can do 'require()' calls
   const worker = WebWorkify(require('./conversionWorker.js'))
-
-  // var w = new Worker('src/io/conversion-worker.js') // FIXME: update this to WebWorkify
   // when the worker finishes
   // - put the converted source into the editor
   // - save the converted source into the cache (gMemFs)
