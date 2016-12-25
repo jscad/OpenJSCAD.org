@@ -1,7 +1,4 @@
 // == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
-
-import $ from 'jquery'
-
 import { setUpEditor } from './editor'
 import { setupDragDrop } from './dragDrop/ui-drag-drop' // toggleAutoReload
 
@@ -31,6 +28,28 @@ let state = {
   currentFiles: []
 }
 
+function getElementHeight (element) {
+  return parseInt(getComputedStyle(element).height)
+}
+
+function getElementWidth (element) {
+  return parseInt(getComputedStyle(element).width)
+}
+
+function setElementHeight (element, height) {
+  element.style.height = `${height}`
+}
+
+function setElementWidth (element, width) {
+  element.style.width = `${width}`
+}
+
+function addEventListenerList (list, event, callback) {
+  Array
+    .from(list)
+    .forEach(element => element.addEventListener(event, callback))
+}
+
 function init () {
   // Show all exceptions to the user: // WARNING !! this is not practical at dev time
   AlertUserOfUncaughtExceptions()
@@ -39,7 +58,7 @@ function init () {
 
   gProcessor = new Processor(document.getElementById('viewerContext'))
   gEditor = setUpEditor(undefined, gProcessor)
-  //FIXME: temporary hack
+  // FIXME: temporary hack
   let {toggleAutoReload, reloadAllFiles} = setupDragDrop(me, {gMemFs, gProcessor, gEditor})
   createExamples(me)
   createOptions()
@@ -47,48 +66,59 @@ function init () {
 
   loadInitialExample(me, {gMemFs, gProcessor, gEditor})
 
-  $('#menu').height($(window).height()) // initial height
+  let menu = document.getElementById('menu')
+  let editFrame = document.getElementById('editFrame')
+  let examples = document.getElementById('examples')
+  let examplesTitle = document.getElementById('examplesTitle')
+  let options = document.getElementById('options')
+  let optionsTitle = document.getElementById('optionsTitle')
+  let editHandle = document.getElementById('editHandle')
+  let plate = document.getElementById('plate')
 
-  $('#editFrame').height($(window).height())
-  $(window).resize(function () { // adjust the relevant divs
-    $('#menu').height($(window).height())
-    $('#menuHandle').css({top: '45%'})
-    $('#editFrame').height($(window).height())
+  setElementHeight(menu, window.innerHeight + 'px')
+  setElementHeight(editFrame, window.innerHeight + 'px')
+
+  window.addEventListener('resize', function () { // adjust the relevant divs
+    setElementHeight(menu, window.innerHeight + 'px')
+    menuHandle.style.top = '45%'
+    setElementHeight(editFrame, window.innerHeight + 'px')
   })
-  setTimeout(function () {$('#menu').css('left', '-280px')}, 3000) // -- hide slide-menu after 3secs
 
-  $('#menu').mouseleave(function () {
-    $('#examples').css('height', 0); $('#examples').hide()
-    $('#options').css('height', 0); $('#options').hide()
+  setTimeout(function () {
+    menu.style.left = '-280px'
+  }, 3000) // -- hide slide-menu after 3secs
+
+  // mouseleave
+  menu.addEventListener('mouseleave', function (e) {
+    setElementHeight(examples, '0px')
+    examples.style.display = 'none'
+  // setElementHeight(options, 0)
+  // options.style.display = 'none'
   })
 
-  $('#editHandle').click(function () {
-    if ($('#editFrame').width() === 0) {
-      $('#editFrame').css('width', '40%')
-      $('#editHandle').attr('src', 'imgs/editHandleIn.png')
+  editHandle.addEventListener('click', function (e) {
+    if (getElementWidth(editFrame) === 0) {
+      setElementWidth(editFrame, '40%')
+      editHandle.src = 'imgs/editHandleIn.png'
     } else {
-      $('#editFrame').css('width', '0px')
-      $('#editHandle').attr('src', 'imgs/editHandleOut.png')
+      setElementWidth(editFrame, '0px')
+      editFrame.src = 'imgs/editHandleOut.png'
     }
   })
 
   // -- Examples
-  $('#examplesTitle').click(function () {
-    $('#examples').css('height', 'auto')
-    $('#examples').show()
-    $('#options').css('height', 0)
-    $('#options').hide()
-  })
-  $('#examples').mouseleave(function () {
-    $('#examples').css('height', 0)
-    $('#examples').hide()
+  examplesTitle.addEventListener('click', function (e) {
+    setElementHeight(examples, 'auto')
+    examples.style.display = 'inline'
+  // setElementHeight(options, 0)
+  // options.style.display = 'none'
   })
 
   function onLoadExampleClicked (e) {
     if (showEditor) { // FIXME test for the element
-      $('#editor').show()
+      editor.style.display = 'inline'
     } else {
-      $('#editor').hide()
+      editor.style.display = 'none'
     }
     const examplePath = e.currentTarget.dataset.path
     fetchExample(examplePath, undefined, {gMemFs, gProcessor, gEditor})
@@ -99,41 +129,37 @@ function init () {
     })
 
   // -- Options
-  $('#optionsTitle').click(function () {
-    $('#options').css('height', 'auto')
-    $('#options').show()
-    $('#examples').css('height', 0)
-    $('#examples').hide()
-  })
-  $('#options').mouseleave(function () {
-    $('#options').css('height', 0)
-    $('#options').hide()
-  })
-  // $('#optionsForm').submit(function() {
-  //   // save to cookie
-  //   $('#optionsForm').hide()
-  //   return false
-  // })
-  $('#optionsForm').change(function () {
-    // save to cookie
-    saveOptions()
-  })
+    // FIXME: these don't exist ??? where are options handled in the first place ?
+    /*optionsTitle.addEventListener('click', function (e) {
+      setElementHeight(options, 'auto')
+      editor.style.display = 'inline'
+      setElementHeight(examples, '0px')
+      editor.style.display = 'none'
+    })
 
-  $('#plate').change(function () {
-    if ($('#plate').val() == 'custom') {
-      $('#customPlate').show()
-    } else {
-      $('#customPlate').hide()
-    }
-  })
+    options.addEventListener('mouseleave', function (e) {
+      setElementHeight(options, 0)
+      options.style.display = 'none'
+    })
+
+    optionsForm.addEventListener('change', saveOptions())
+    plate.addEventListener('change', function () {
+      if (plate.value === 'custom') {
+        plate.style.display = 'inline'
+      } else {
+        plate.style.display = 'none'
+      }
+    })*/
 
   // about/ licence section
-  $('.navlink.about').click(function (e) {
-    $('#about').show()
+  addEventListenerList(document.getElementsByClassName('navlink about'), 'click', function () {
+    about.style.display = 'inline'
     return false
   })
-  $('.okButton').click(function (e) {
-    $('#about').hide(); return false
+
+  document.querySelector('.okButton').addEventListener('click', function () {
+    about.style.display = 'none'
+    return false
   })
 
   // dropzone section
@@ -146,7 +172,7 @@ function init () {
        <br>or directly edit OpenJSCAD or OpenSCAD code using the editor.`
 
   document.getElementById('reloadAllFiles').onclick = reloadAllFiles
-  document.getElementById('autoreload').onclick = function(e){
+  document.getElementById('autoreload').onclick = function (e) {
     const toggle = document.getElementById('autoreload').checked
     toggleAutoReload(toggle)
   }

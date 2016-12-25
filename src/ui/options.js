@@ -1,14 +1,23 @@
-import $ from 'jquery'
-
-import {getCookie} from './cookies'
+import { getCookie } from './cookies'
 
 var options = [ 'renderCode', 'author', 'license' ]
 var metakeys = [ 'author', 'license' ]
 
+//small helper function
+function getOrCreateElementById (id) {
+  let elt = document.getElementById(id)
+  if (!elt) {
+    elt = document.createElement('div')
+    elt.id = id
+  }
+  return elt
+}
+
+
 export function saveOptions (metadata) {
   for (var k in options) {
     k = options[k]
-    setCookie(k, $('#' + k).val())
+    setCookie(k, document.getElementById(k).value)
     if (metakeys[k]) metadata[k] = options[k]
   }
 }
@@ -16,7 +25,9 @@ export function saveOptions (metadata) {
 export function getOptions () {
   for (var k in options) {
     k = options[k]
-    if (getCookie(k)) $('#' + k).val(getCookie(k))
+    if (getCookie(k)) {
+      document.getElementById(k).value = getCookie(k)
+    }
   }
 }
 
@@ -93,5 +104,7 @@ export function createOptions () {
   }
 
   src += '</form>'
-  $('#options').html(src)
+  let elt = getOrCreateElementById('options')
+  elt.innerHTML = src
+  return elt
 }

@@ -1,8 +1,5 @@
 
-var $ = require('jquery')
-//require('jquery-hammerjs')// FIXME: err ?
-//require('jquery-ui') // FIXME: err again , jquery is seriously outdated
-//import $ from 'jquery' // EEK!
+import Hammer from 'hammerjs'
 import GL from './lightgl'
 import {colorBytes} from './jscad-viewer-helpers'
 
@@ -132,69 +129,85 @@ LightGLEngine.prototype = {
 
   },
   createControls: function () {
-    var _this = this;
-    var shiftControl = $('<div class="shift-scene"><div class="arrow arrow-left" />\
-<div class="arrow arrow-right" />\
-<div class="arrow arrow-top" />\
-<div class="arrow arrow-bottom" /></div>');
+    var _this = this
 
+    var shiftControl = document.createElement('div')
+    shiftControl.className = 'shift-scene'
 
-/*FIXME: disabled for now because of the JQUERY mess
-    $(this.containerEl)
-      .append(shiftControl)
-      .hammer({//touch screen control
-      drag_lock_to_axis: true
-    }).on("transform", function(e){
-      if (e.gesture.touches.length >= 2) {
-        _this.clearShift();
-        _this.onTransform(e);
-        e.preventDefault();
-      }
-    }).on("touch", function(e) {
-      if (e.gesture.pointerType != 'touch'){
-        e.preventDefault();
-        return;
-      }
+    var leftArrow = document.createElement('div')
+    leftArrow.classList.add('arrow')
+    leftArrow.classList.add('arrow-left')
 
-      if (e.gesture.touches.length == 1) {
-        var point = e.gesture.center;
-        _this.touch.shiftTimer = setTimeout(function(){
-          shiftControl.addClass('active').css({
-            left: point.pageX + 'px',
-            top: point.pageY + 'px'
-          });
-          _this.touch.shiftTimer = null;
-          _this.touch.cur = 'shifting';
-        }, 500);
-      } else {
-        _this.clearShift();
-      }
-    }).on("drag", function(e) {
-      if (e.gesture.pointerType != 'touch') {
-        e.preventDefault();
-        return;
-      }
+    var rightArrow = document.createElement('div')
+    rightArrow.classList.add('arrow')
+    rightArrow.classList.add('arrow-right')
 
-      if (!_this.touch.cur || _this.touch.cur == 'dragging') {
-        _this.clearShift();
-        _this.onPanTilt(e);
-      } else if (_this.touch.cur == 'shifting') {
-        _this.onShift(e);
-      }
-    }).on("touchend", function(e) {
+    var topArrow = document.createElement('div')
+    topArrow.classList.add('arrow')
+    topArrow.classList.add('arrow-top')
+
+    var bottomArrow = document.createElement('div')
+    topArrow.classList.add('arrow')
+    topArrow.classList.add('arrow-bottom')
+
+    shiftControl.appendChild(leftArrow)
+    shiftControl.appendChild(rightArrow)
+    shiftControl.appendChild(topArrow)
+    shiftControl.appendChild(bottomArrow)
+    this.containerEl.appendChild(shiftControl)
+
+  var hammerElt = new Hammer(this.containerEl, {drag_lock_to_axis: true})
+  hammerElt.on("transform", function(e){
+    if (e.gesture.touches.length >= 2) {
       _this.clearShift();
-      if (_this.touch.cur) {
-        shiftControl.removeClass('active shift-horizontal shift-vertical');
-      }
-    }).on("transformend dragstart dragend", function(e) {
-      if ((e.type == 'transformend' && _this.touch.cur == 'transforming') ||
-          (e.type == 'dragend' && _this.touch.cur == 'shifting') ||
-          (e.type == 'dragend' && _this.touch.cur == 'dragging'))
-        _this.touch.cur = null;
-      _this.touch.lastX = 0;
-      _this.touch.lastY = 0;
-      _this.touch.scale = 0;
-    });*/
+      _this.onTransform(e);
+      e.preventDefault();
+    }
+  }).on("touch", function(e) {
+    if (e.gesture.pointerType != 'touch'){
+      e.preventDefault();
+      return;
+    }
+
+    if (e.gesture.touches.length == 1) {
+      var point = e.gesture.center;
+      _this.touch.shiftTimer = setTimeout(function(){
+        shiftControl.addClass('active').css({
+          left: point.pageX + 'px',
+          top: point.pageY + 'px'
+        });
+        _this.touch.shiftTimer = null;
+        _this.touch.cur = 'shifting';
+      }, 500);
+    } else {
+      _this.clearShift();
+    }
+  }).on("drag", function(e) {
+    if (e.gesture.pointerType != 'touch') {
+      e.preventDefault();
+      return;
+    }
+
+    if (!_this.touch.cur || _this.touch.cur == 'dragging') {
+      _this.clearShift();
+      _this.onPanTilt(e);
+    } else if (_this.touch.cur == 'shifting') {
+      _this.onShift(e);
+    }
+  }).on("touchend", function(e) {
+    _this.clearShift();
+    if (_this.touch.cur) {
+      shiftControl.removeClass('active shift-horizontal shift-vertical');
+    }
+  }).on("transformend dragstart dragend", function(e) {
+    if ((e.type == 'transformend' && _this.touch.cur == 'transforming') ||
+        (e.type == 'dragend' && _this.touch.cur == 'shifting') ||
+        (e.type == 'dragend' && _this.touch.cur == 'dragging'))
+      _this.touch.cur = null;
+    _this.touch.lastX = 0;
+    _this.touch.lastY = 0;
+    _this.touch.scale = 0;
+  });
 
 
     this.gl.onmousemove = function(e) {
