@@ -1,6 +1,6 @@
 export function log (txt) {
   var timeInMs = Date.now()
-  var prevtime = OpenJsCad.log.prevLogTime
+  var prevtime = undefined//OpenJsCad.log.prevLogTime
   if (!prevtime) prevtime = timeInMs
   var deltatime = timeInMs - prevtime
   log.prevLogTime = timeInMs
