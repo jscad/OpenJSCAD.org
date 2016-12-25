@@ -19,11 +19,9 @@ module.exports = function (self) {
     if (e.data instanceof Object) {
       var data = e.data
       if (data.cmd === 'render') {
-        const {script, parameters} = e.data
+        const {script, parameters, options} = e.data
 
-        const globals = {
-          oscad
-        }
+        const globals = options.implicitGlobals ? { oscad } : {}
         const func = createJscadFunction(script, globals)
         let objects = func(parameters, x => x, globals)
         objects = toArray(objects)

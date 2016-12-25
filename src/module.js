@@ -1,12 +1,14 @@
 import convertToBlob from './io/convertToBlob'
-import oscad from './modeling/index'
 import { rebuildSolidSync } from './jscad/rebuildSolid'
+import oscad from './modeling/index'
 
 /**
  * compile openjscad code and generates intermediate representation
  * ordering of parameters created with curying in mind
  * @param  {String} source the openjscad script we want to compile
- * @param  {Object} params the set of parameters to use  (optional)
+ * @param  {Object} params the set of parameters to use for the script  (optional)
+ * @param  {Object} options the set of options to use (optional)
+
  */
 function compile (source, params, options) {
   params = params || {}
@@ -15,12 +17,9 @@ function compile (source, params, options) {
   }
   options = Object.assign({}, defaults, options)
   const {implicitGlobals} = options
-
-  let globals
+  let globals = {}
   if (implicitGlobals) {
-    globals = {
-      oscad
-    }
+    globals.oscad = oscad
   }
 
   return new Promise(function (resolve, reject) {
@@ -28,7 +27,7 @@ function compile (source, params, options) {
       if (!err) { return resolve(result) }
       reject(err)
     }
-    rebuildSolidSync(source, '', params, globals, callback)
+    rebuildSolidSync(source, '', params, callback, {implicitGlobals, globals})
   })
 }
 

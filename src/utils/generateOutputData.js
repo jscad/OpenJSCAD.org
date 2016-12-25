@@ -47,7 +47,7 @@ export default function generateOutputData (source, params, options) {
     if (outputFormat === 'jscad' || outputFormat === 'js') {
       resolve(source)
     } else {
-      rebuildSolidSync(source, '', params, globals, callback)
+      rebuildSolidSync(source, '', params, callback, {implicitGlobals, globals})
     }
   })
     .then(function (objects) {
