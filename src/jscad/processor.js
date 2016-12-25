@@ -72,7 +72,7 @@ export default function Processor (containerdiv, options) {
   this.containerdiv = containerdiv
 
   this.viewer = null
-  this.worker = null
+  this.builder = null
   this.zoomControl = null
 
   // callbacks
@@ -370,7 +370,7 @@ Processor.prototype = {
     if (this.state === 1) {
       // todo: abort
       this.setStatus('Aborted.')
-      this.worker.terminate()
+      this.builder.cancel()
       this.state = 3 // incomplete
       this.enableItems()
       if (this.onchange) this.onchange(this)
@@ -477,20 +477,6 @@ Processor.prototype = {
     const parameters = getParamValues(this.paramControls)
     const script = this.getFullScript()
     const fullurl = this.baseurl + this.filename
-    const implicitGlobals = {
-      oscad: {
-        csg: {CAG: csg.CAG, CSG: csg.CSG},
-        primitives2d,
-        primitives3d,
-        booleanOps,
-        transformations,
-        extrusion,
-        color,
-        maths,
-        text,
-        OpenJsCad: {OpenJsCad}
-      }
-    }
 
     this.state = 1 // processing
     let that = this
@@ -514,13 +500,13 @@ Processor.prototype = {
     }
 
     if (this.opts.useAsync) {
-      rebuildSolidAsync(script, fullurl, parameters, implicitGlobals, (err, objects) => {
+      this.builder = rebuildSolidAsync(script, fullurl, parameters, (err, objects) => {
         if (err && that.opts.useSync) {
-          rebuildSolidSync(script, fullurl, parameters, implicitGlobals, callback)
+          this.builder = rebuildSolidSync(script, fullurl, parameters, callback)
         }else (callback(undefined, objects))
       })
     }else if (this.opts.useSync) {
-      rebuildSolidSync(script, fullurl, parameters, implicitGlobals, callback)
+      this.builder = rebuildSolidSync(script, fullurl, parameters, callback)
     }
   },
 

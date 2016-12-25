@@ -3,6 +3,7 @@ import includeJscadSync from './includeJscadSync'
 import WebWorkify from 'webWorkify'
 import { CAG, CSG } from '../csg'
 import { toArray } from '../utils/misc'
+import oscad from '../modeling/index'
 
 /**
  * helper function that finds include() statements in files,
@@ -45,16 +46,18 @@ function replaceIncludes (text, relpath) {
  * @param {String} script the script
  * @param {String} fullurl full url of current script
  * @param {Object} parameters the parameters to use with the script
- * @param {Object} globals the globals to use when evaluating the script
  * @param {Object} callback the callback to call once evaluation is done /failed
  */
-export function rebuildSolidSync (script, fullurl, parameters, globals, callback) {
+export function rebuildSolidSync (script, fullurl, parameters, callback) {
   let relpath = fullurl
   if (relpath.lastIndexOf('/') >= 0) {
     relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1)
   }
 
   replaceIncludes(script, relpath).then(function (fullScript) {
+    const globals = {
+      oscad
+    }
     const func = createJscadFunction(fullScript, globals)
     // stand-in for the include function(no-op)
     const include = (x) => x
@@ -69,6 +72,13 @@ export function rebuildSolidSync (script, fullurl, parameters, globals, callback
       callback(error, undefined)
     }
   }).catch(error => callback(error, undefined))
+
+  // have we been asked to stop our work?
+  return {
+    cancel: () => {
+      console.log('cannot stop work in main thread, sorry')
+    }
+  }
 }
 
 /**
@@ -76,10 +86,9 @@ export function rebuildSolidSync (script, fullurl, parameters, globals, callback
  * @param {String} script the script
  * @param {String} fullurl full url of current script
  * @param {Object} parameters the parameters to use with the script
- * @param {Object} globals the globals to use when evaluating the script
  * @param {Object} callback the callback to call once evaluation is done /failed
  */
-export function rebuildSolidAsync (script, fullurl, parameters, globals, callback) {
+export function rebuildSolidAsync (script, fullurl, parameters, callback) {
   if (!parameters) { throw new Error("JSCAD: missing 'parameters'") }
   if (!window.Worker) throw new Error('Worker threads are unsupported.')
 
@@ -88,8 +97,9 @@ export function rebuildSolidAsync (script, fullurl, parameters, globals, callbac
     relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1)
   }
 
-  replaceIncludes(script, relpath).then(function (fullScript) {
-    const worker = WebWorkify(require('./jscad-worker.js'))
+  let worker
+  replaceIncludes(script, relpath).then(function (script) {
+    worker = WebWorkify(require('./jscad-worker.js'))
     worker.onmessage = function (e) {
       if (e.data instanceof Object) {
         const data = e.data.objects.map(function (object) {
@@ -103,5 +113,13 @@ export function rebuildSolidAsync (script, fullurl, parameters, globals, callbac
       callback(`Error in line ${e.lineno} : ${e.message}`, undefined)
     }
     worker.postMessage({cmd: 'render', fullurl, script, parameters})
+
   }).catch(error => callback(error, undefined))
+
+  // have we been asked to stop our work?
+  return {
+    cancel: () => {
+      worker.terminate()
+    }
+  }
 }
