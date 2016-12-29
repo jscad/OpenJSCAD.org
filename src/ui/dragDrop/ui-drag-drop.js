@@ -32,11 +32,7 @@ var autoReloadTimer = null
 
 // --- Public API
 
-
 export function setupDragDrop (me, {gProcessor, gEditor}) {
-  //Variables
-  var gProcessor = gProcessor
-  var gEditor = gEditor
   // --- Private Variables
 
   var gMemFsCount = 0 // async reading: count of already read files
@@ -72,13 +68,11 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
   dropZone.addEventListener('drop', handleFileSelect, false)
   fileInput.addEventListener('change', handleInputFiles, false)
 
-  ////
+  // ---------
   function reloadAllFiles () {
     console.log("reloadAllFiles()")
     superviseAllFiles({forceReload: true})
   }
-
-
 
   // --- Private API
 
@@ -129,7 +123,7 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     // use the files list if not already processed above
     if (!evt.dataTransfer.items) {
       if (evt.dataTransfer.files.length > 0) {
-        gCurrentFiles = []; // -- be aware: gCurrentFiles = evt.dataTransfer.files won't work, as rewriting file will mess up the array
+        gCurrentFiles = [] // -- be aware: gCurrentFiles = evt.dataTransfer.files won't work, as rewriting file will mess up the array
         for (var i = 0; i < evt.dataTransfer.files.length; i++) {
           gCurrentFiles.push(evt.dataTransfer.files[i]); // -- need to transfer the single elements
         }
