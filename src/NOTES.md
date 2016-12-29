@@ -30,24 +30,6 @@ slowly put into browsers & node above 94 % in most browsers (https://kangax.gith
      * node.js either CLI or modules : the 'dist' folder contains the transpiled version of the source code
        * => OUTPUT IS a single file bundle for server side use : one for the CLI & one for the use as 'module'
 
-
-#jquery: eeek !
-Old crutch, not needed in most cases these days...ideally would need to go
-
-## issues:
- - increases bundle size by A LOT although almost none of it is actually used
- - "jquery-hammerjs": "^2.0.0" => npm package is broken ,see repo
-  // possible fixes with browserify-shim
-  "browser": {
-    "jquery": "./node_modules/jquery/dist/jquery.js",
-    "jquery-ui": "./node_modules/jquery-ui/jquery-ui.js"
-  },
-  "browserify-shim": {
-    "jquery": "$"
-  }
-- better fix:  get rid of jquery-hammerjs just use hammer.js !
-
-
 #file managment mind map
 
 On startup
@@ -55,7 +37,7 @@ On startup
   localStorage => loadSomething OR current code ???
 
 Drag & drop:
-  => chrome ?
+  => chrome only?
     Observe file changes => reload
     Observe folder changes
   => display ui with reload & autoreload button & toggle
