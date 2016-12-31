@@ -42,5 +42,43 @@ Drag & drop:
     Observe folder changes
   => display ui with reload & autoreload button & toggle
 
+  => saveScript :caches file name & source (BEFORE conversion)
+
+  => walkFileTree
+      core of the drag'n'drop:
+        1) walk the tree
+        2) read the files (readFileAsync)
+        3) re-render if there was a change (via readFileAsync)
+
+  => parseFile
+      => saveScript (original name & source)
+      => uses conversionWorker
+      => after conversion
+        => putSourceInEditor
+        => saveScript
+        => gProcessor.setJsCad
+
+
+   => readFileAsync
+    => setCurrentFile: USED ONCE (set one file (the one dragged) or main.jscad)
+      => fileChanged: USED ONCE (update the dropzone visual & call the main parser)
+        => parseFile: USED ONCE
+
+   => loadLocalFiles (when folders are not supported)
+    => readFileAsync
+
+   => superviseAllFiles (file/folder watcher)
+    => readFileAsync OR walkFileTree
+
+   => handleInputFiles
+    => loadLocalFiles
+
+   => handleFileSelect
+    => walkFileTree OR loadLocalFiles
+
 conversionWorker
   => DONE
+
+#imports thoughts
+
+importGeometry needs access to 'memFs' / local fs

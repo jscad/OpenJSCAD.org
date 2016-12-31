@@ -21,3 +21,8 @@ export function findMainFile (memFsTotal, memFs, file) {
   }
   return mainFile
 }
+
+//FIXME : this could be usefull overall , we should reuse
+export function isLocalMode(){
+  return document.location.toString().match(/^file\:\//i)
+}
