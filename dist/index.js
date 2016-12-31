@@ -41726,6 +41726,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.echo = echo;
 function echo() {
+	//console.warn('echo() will be deprecated in the near future: please use console.log/warn/error directly')
 	var s = "",
 	    a = arguments;
 	for (var i = 0; i < a.length; i++) {
@@ -42070,16 +42071,19 @@ var _maths = require('./maths');
 
 var maths = _interopRequireWildcard(_maths);
 
-var _csg = require('../csg');
-
 var _text = require('./text');
 
 var text = _interopRequireWildcard(_text);
+
+var _debug = require('./debug');
+
+var _csg = require('../csg');
 
 var _log = require('../jscad/log');
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
+// these are 'external' to this folder ...needs to be reviewed
 var exportedApi = {
   csg: { CAG: _csg.CAG, CSG: _csg.CSG },
   primitives2d: primitives2d,
@@ -42090,12 +42094,13 @@ var exportedApi = {
   color: color,
   maths: maths,
   text: text,
-  OpenJsCad: { OpenJsCad: { log: _log.log } }
+  OpenJsCad: { OpenJsCad: { log: _log.log } },
+  debug: { echo: _debug.echo }
 };
 
 exports.default = exportedApi;
 
-},{"../csg":36,"../jscad/log":64,"./color":68,"./extrusion":70,"./maths":72,"./ops-booleans":73,"./primitives2d":74,"./primitives3d":75,"./text":76,"./transformations":77}],72:[function(require,module,exports){
+},{"../csg":36,"../jscad/log":64,"./color":68,"./debug":69,"./extrusion":70,"./maths":72,"./ops-booleans":73,"./primitives2d":74,"./primitives3d":75,"./text":76,"./transformations":77}],72:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -43917,7 +43922,8 @@ function loadInitialExample(me, params) {
       var loadRemote = function loadRemote(u, _ref4) {
         var gMemFs = _ref4.gMemFs,
             gProcessor = _ref4.gProcessor,
-            gEditor = _ref4.gEditor;
+            gEditor = _ref4.gEditor,
+            remoteUrl = _ref4.remoteUrl;
 
         console.log('loadRemote');
         var xhr = new XMLHttpRequest();
@@ -43939,6 +43945,7 @@ function loadInitialExample(me, params) {
       var docUrl = document.URL;
       var isRemote = docUrl.match(/#(https?:\/\/\S+)$/);
       var isLocal = docUrl.match(/#(examples\/\S+)$/);
+      var isInLocalStorage = localStorage.editorContent && localStorage.editorContent.length;
 
       if (isRemote) // remote file referenced, e.g. http://openjscad.org/#http://somewhere/something.ext
         {
@@ -43948,8 +43955,10 @@ function loadInitialExample(me, params) {
         // local example, e.g. http://openjscad.org/#examples/example001.jscad
         var filename = isLocal[1]; // RegExp.$1
         loadLocal(filename, params);
-      } else {
+      } else if (isInLocalStorage) {
         loadLocalStorage(localStorage.editorContent, params);
+      } else {
+        fetchExample('examples/' + examples[0].file, undefined, params);
       }
     })();
   }
@@ -44070,7 +44079,7 @@ function init() {
   (0, _options.createOptions)();
   (0, _options.getOptions)();
 
-  (0, _examples.loadInitialExample)(me, { gMemFs: gMemFs, gProcessor: gProcessor, gEditor: gEditor });
+  (0, _examples.loadInitialExample)(me, { gMemFs: gMemFs, gProcessor: gProcessor, gEditor: gEditor, remoteUrl: remoteUrl });
 
   var menu = document.getElementById('menu');
   var editFrame = document.getElementById('editFrame');

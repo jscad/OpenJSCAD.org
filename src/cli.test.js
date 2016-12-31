@@ -176,3 +176,17 @@ test('openscad to openjscad', t => {
   t.deepEqual(true, fs.existsSync(expPath))
   t.deepEqual(fs.statSync(outputPath).size, 876)// is this cross platform ?
 })
+
+// NOTE : echo() will likely be deprecated soon, but keeping this around for now
+test('echo() support', t => {
+  const jscadPath = t.context.jscadPath
+  const inputPath = path.resolve(__dirname, '../examples/echo.jscad')
+  const outputPath = 'test.jscad'
+  const expPath = outputPath
+  t.context = {outputPath}
+
+  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of jscad`
+  execSync(cmd, {stdio: [0, 1, 2]})
+  t.deepEqual(true, fs.existsSync(expPath))
+  t.deepEqual(fs.statSync(outputPath).size, 454)// is this cross platform ?
+})
