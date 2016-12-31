@@ -9129,7 +9129,7 @@ var text = Object.freeze({
 });
 
 function echo() {
-  //console.warn('echo() will be deprecated in the near future: please use console.log/warn/error directly')
+   console.warn('echo() will be deprecated in the near future: please use console.log/warn/error instead');
    var s = "", a = arguments;
    for(var i=0; i<a.length; i++) {
       if(i) { s += ", "; }
