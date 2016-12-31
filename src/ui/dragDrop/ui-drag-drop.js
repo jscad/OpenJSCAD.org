@@ -25,21 +25,31 @@ import createConversionWorker from '../../io/createConversionWorker'
 import { putSourceInEditor } from '../editor' // FIXME : eeek! dependency on ui
 
 // --- Global Variables
-var gCurrentFiles = []// linear array, contains files (to read)
-var gMemFs = []// associated array, contains file content in source gMemFs[i].{name,source}
+var gCurrentFiles = [] // linear array, contains files (to read)
+var gMemFs = [] // associated array, contains file content in source gMemFs[i].{name,source}
 var gMainFile
 var autoReloadTimer = null
 
-// --- Public API
+let state = {
+  memFs: {
+    count: 0,
+    total: 0,
+    changed: 0,
+
+    currentFiles: [],
+    rootFs: [],
+    mainFile: null
+  }
+}
 
 export function setupDragDrop (me, {gProcessor, gEditor}) {
   // --- Private Variables
 
   var gMemFsCount = 0 // async reading: count of already read files
-  var gMemFsTotal = 0// async reading: total files to read (Count==Total => all files read)
+  var gMemFsTotal = 0 // async reading: total files to read (Count==Total => all files read)
   var gMemFsChanged = 0 // how many files have changed
-  var gRootFs = []// root(s) of folders
-  var gMailFile = null// file entry containing main()
+  var gRootFs = [] // root(s) of folders
+  var gMainFile = null // file entry containing main()
 
   // console.log("setupDragDrop()")
 
@@ -70,14 +80,14 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
 
   // ---------
   function reloadAllFiles () {
-    console.log("reloadAllFiles()")
+    console.log('reloadAllFiles()')
     superviseAllFiles({forceReload: true})
   }
 
   // --- Private API
 
   function handleInputFiles (evt) {
-    // console.log("handleInputFiles()")
+    console.log('handleInputFiles()')
     if (evt.target.files) {
       if (evt.target.files.length > 0) {
         gCurrentFiles = []
@@ -90,6 +100,7 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
           }
         }
         loadLocalFiles()
+        console.log('gCurrentFiles', gCurrentFiles)
         return
       }
     }
@@ -215,7 +226,8 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
         if (!gMemFs[f.name] || gMemFs[f.name].source != source)
           gMemFsChanged++
 
-        saveScript(f.name, source)
+        //FIXME : THIRD time the SAME data is cached
+        saveScript(gMemFs, f.name, source)
 
         if (gMemFsCount == gMemFsTotal) { // -- are we done reading all?
           // console.log("readFileAsync: "+gMemFsTotal+" files read")
@@ -227,7 +239,7 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
                 break
               }
             }
-            if (!gMailFile) {
+            if (!gMainFile) {
               // try again but search for the function declaration of main()
               for (var fn in gMemFs) {
                 if (gMemFs[fn].source.search(/function\s+main\s*\(/) >= 0) {
@@ -312,13 +324,13 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
 
   var previousScript = null
 
-  function saveScript (filename, source) {
+  function saveScript (gMemFs, filename, source) {
     // console.log("saveScript("+filename+","+source+")")
     var f = {name: filename, source: source}
     gMemFs[filename] = f
   }
 
-  function onConversionDone(data){
+  function onConversionDone (data) {
     if ('filename' in data && 'source' in data) {
       // console.log("editor"+data.source+']')
       putSourceInEditor(gEditor, data.source, data.filename)
@@ -326,7 +338,7 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     if ('filename' in data && 'converted' in data) {
       // console.log("processor: "+data.filename+" ["+data.converted+']')
       if ('cache' in data && data.cache === true) {
-        saveScript(data.filename, data.converted)
+        saveScript(gMemFs, data.filename, data.converted)
       }
       gProcessor.setJsCad(data.converted, data.filename)
     }
@@ -343,8 +355,8 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     }
     if (previousScript === source) return
 
-    if(gProcessor && !onlyifchanged)
-    {
+    if (gProcessor && !onlyifchanged) {
+      // FIXME: why do we cache data if it is overwritten in 'onConversionDone'
       saveScript(gMemFs, name, source)
       // FIXME: refactor : same code as ui/examples
       gProcessor.setStatus('Converting ' + name + " <img id=busy src='imgs/busy.gif'>")
@@ -355,11 +367,11 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     }
   }
 
-  //FIXME: horrid hack
+  // FIXME: horrid hack
   function toggleAutoReload (toggled) {
     // console.log("toggleAutoReload()")
     if (toggled) {
-      autoReloadTimer = setInterval(function () {superviseAllFiles()}, 1000)
+      autoReloadTimer = setInterval(function () { superviseAllFiles() }, 1000)
     } else {
       if (autoReloadTimer !== null) {
         clearInterval(autoReloadTimer)
@@ -369,6 +381,5 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
   }
   return {
     toggleAutoReload,
-    reloadAllFiles
-  }
+  reloadAllFiles}
 }

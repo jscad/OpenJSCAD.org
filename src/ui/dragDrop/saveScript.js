@@ -1,4 +1,5 @@
-export function saveScript (gMemFs, filename, source) {
+export function saveScript (memFs, filename, source) {
   // console.log("saveScript("+filename+","+source+")")
-  gMemFs[filename] = {name: filename, source}
+  memFs[filename] = {name: filename, source}
+  return memFs
 }
