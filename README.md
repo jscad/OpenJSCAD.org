@@ -46,7 +46,11 @@ and then access the files via local web-site and your web-browser.
 
 For CLI (command-line interface) rendering install
 
-[NodeJS](http://nodejs.org/) as well, e.g. <tt>apt-get install nodejs</tt> (be aware *NodeJS > 0.8.1 or newer is required* ) and then test it
+```
+ npm install -g Spiritdude/OpenJSCAD.org
+```
+
+[NodeJS](http://nodejs.org/) as well, e.g. <tt>apt-get install nodejs</tt> (be aware *NodeJS > 4.x or newer is required* ) and then test it
 
 >*Note:* on some systems the NodeJS executable is <tt>node</tt> (default) or <tt>nodejs</tt>, edit <tt>openjscad</tt> first line to reflect this.
 
@@ -66,7 +70,7 @@ node V4.x.X is also supported but not earlier versions (they are not maintained 
 (see [here for more details](https://github.com/nodejs/LTS))
 
 ```
-npm install openjscad
+npm install --save Spiritdude/OpenJSCAD.org
 ```
 
 and then simply import and use openjscad:
@@ -104,6 +108,21 @@ fs.writeFileSync('torus.stl', outputData.asBuffer())
  *outputFormat* the output file format
  *ir* the openjscad intermediate representation object
 
+
+### Development
+
+to start the live-reload development version (auto reloads the web page when you change things)
+type:
+
+to install the dependencies
+```
+npm install
+```
+
+to run the dev server
+```
+npm run start-dev
+```
 ## History
 
 - 2016/10/01: 0.5.2: updated documentation links by Z3 Dev, updated Ace editor to 1.2.4, fixed AMF export to set colors only when provided, enhanced Processor constructor to support Viewer options, added big.html to provide an example of using Processor and Viewer options, enhanced Processor to retain multiple returned objects, fixed difference() and intersection() functions for CAG by fischman
