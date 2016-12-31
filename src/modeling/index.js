@@ -5,8 +5,11 @@ import * as transformations from './transformations'
 import * as extrusion from './extrusion'
 import * as color from './color'
 import * as maths from './maths'
-import { CAG, CSG } from '../csg'
 import * as text from './text'
+import { echo } from './debug'
+
+// these are 'external' to this folder ...needs to be reviewed
+import { CAG, CSG } from '../csg'
 import { log } from '../jscad/log'
 
 const exportedApi = {
@@ -19,7 +22,8 @@ const exportedApi = {
   color,
   maths,
   text,
-  OpenJsCad: {OpenJsCad: {log}}
+  OpenJsCad: {OpenJsCad: {log}},
+  debug: {echo}
 }
 
 export default exportedApi

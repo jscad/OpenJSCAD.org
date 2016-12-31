@@ -1,4 +1,5 @@
 export function echo() {
+  //console.warn('echo() will be deprecated: please use console.log/warn/error directly')
    var s = "", a = arguments;
    for(var i=0; i<a.length; i++) {
       if(i) s += ", ";
