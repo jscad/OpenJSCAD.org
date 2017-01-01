@@ -123,10 +123,10 @@ function init () {
     const examplePath = e.currentTarget.dataset.path
     fetchExample(examplePath, undefined, {gMemFs, gProcessor, gEditor})
   }
-  document.querySelectorAll('.example')
-    .forEach(function (element) {
-      element.addEventListener('click', onLoadExampleClicked)
-    })
+  var list = examples.querySelectorAll('.example')
+  for (var i = 0; i < list.length; i++) {
+      list[i].addEventListener('click', onLoadExampleClicked)
+  }
 
   // -- Options
     // FIXME: these don't exist ??? where are options handled in the first place ?
