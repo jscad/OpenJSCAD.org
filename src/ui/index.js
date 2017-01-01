@@ -168,7 +168,7 @@ function init () {
     .innerHTML =
     `Drop one or more supported files
        ${dropZoneText}
-       here (see <a style='font-weight: normal' href='https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#support-of-include' target=_blank>details</a>)
+       here (see <a style='font-weight: normal' href='https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide#Maintaining_Larger_Projects' target=_blank>details</a>)
        <br>or directly edit OpenJSCAD or OpenSCAD code using the editor.`
 
   document.getElementById('reloadAllFiles').onclick = reloadAllFiles
