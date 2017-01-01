@@ -22,7 +22,6 @@ export default function include (scad, fn) {
         console.log(e.message)
       }
     }
-    // echo("result:",r)
     return r
   }
 }
