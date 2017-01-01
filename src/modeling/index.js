@@ -2,7 +2,7 @@ import * as primitives3d from './primitives3d'
 import * as primitives2d from './primitives2d'
 import * as booleanOps from './ops-booleans'
 import * as transformations from './ops-transformations'
-import * as extrusion from './extrusion'
+import * as extrusions from './ops-extrusions'
 import * as color from './color'
 import * as maths from './maths'
 import * as text from './text'
@@ -18,7 +18,7 @@ const exportedApi = {
   primitives3d,
   booleanOps,
   transformations,
-  extrusion,
+  extrusions,
   color,
   maths,
   text,
