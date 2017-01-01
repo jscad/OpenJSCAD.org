@@ -141,7 +141,7 @@ export function fetchExample (filename, url, {gMemFs, gProcessor, gEditor}) {
 }
 
 export function loadInitialExample (me, params) {
-  console.log('loadInitialExample')
+  console.log('loadInitialExample: '+params)
   if (me === 'web-online') { // we are online, fetch first example
     console.log('here')
     const docUrl = document.URL
@@ -152,7 +152,7 @@ export function loadInitialExample (me, params) {
     function loadLocalStorage (content, {gProcessor, gEditor}) {
       // load content from local storage if found
       if (content && content.length) {
-        putSourceInEditor(content, 'MyDesign.jscad')
+        putSourceInEditor(gEditor, content, 'MyDesign.jscad')
         gProcessor.setJsCad(content, 'MyDesign.jscad')
       } else {
         // gProcessor.setJsCad(getSourceFromEditor(), 'example.jscad')
