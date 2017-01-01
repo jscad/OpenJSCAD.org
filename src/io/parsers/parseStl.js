@@ -195,7 +195,7 @@ export function parseAsciiSTL(stl,fn) {
         var vertexIndex = 0;
         var err = 0;
 
-        match = stl.match(patt);
+        var match = stl.match(patt);
         if (match == null) continue;
         for (var i = 0; i < match.length; i++) {
             //if(converted%100==0) status('stl to jscad: converted '+converted+' out of '+match.length+ ' facets');
