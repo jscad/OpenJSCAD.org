@@ -1,7 +1,5 @@
 VERSION = 0.5.2
-INSTALLDIR = /usr/local/
-BIN = ${INSTALLDIR}/bin/
-LIB = ${INSTALLDIR}/lib/openjscad/
+LIB = /usr/local/lib/openjscad/
 NODE_MODULES = /usr/local/lib/node_modules/
 
 all::
@@ -10,7 +8,7 @@ all::
 install::
 	test -d ${NODE_MODULES}/openscad-openjscad-translator || sudo npm -g install openscad-openjscad-translator
 	#test -d ${NODE_MODULES}/jquery || sudo npm -g install jquery
-	sudo scp js/openjscad ${BIN}
+	sudo scp js/openjscad /usr/local/bin/
 	sudo mkdir -p ${LIB}
 	sudo scp js/openjscad.js ${LIB}
 	sudo scp js/openscad.js ${LIB}
@@ -24,7 +22,7 @@ install::
 
 deinstall::
 	sudo rm -rf ${NODE_MODULES}openscad-openjscad-translator
-	sudo rm ${BIN}/openjscad
+	sudo rm /usr/local/bin/openjscad
 	sudo rm -rf ${LIB}
 
 tests::
