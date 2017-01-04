@@ -163,4 +163,27 @@ test('cube (standard size, rounded)', t => {
   t.deepEqual(obs.polygons[5], expPoly5)
 })
 
-// console.log(obs.polygons[5])
+test('sphere (defaults)', t => {
+  const obs = sphere()
+  const expPoly0 = {
+    vertices: [ { pos: { _x: 0, _y: 0, _z: 0 } },
+      { pos: { _x: 0, _y: 0, _z: 1 } },
+      { pos: { _x: 0, _y: 1, _z: 1 } },
+      { pos: { _x: 0, _y: 1, _z: 0 } } ],
+    shared: { color: null },
+    plane: { normal: { _x: -1, _y: -0, _z: -0 }, w: -0 }
+  }
+
+  const expPoly5 = { vertices: [ { pos: { _x: 0, _y: 0, _z: 1 } },
+      { pos: { _x: 1, _y: 0, _z: 1 } },
+      { pos: { _x: 1, _y: 1, _z: 1 } },
+      { pos: { _x: 0, _y: 1, _z: 1 } } ],
+    shared: { color: null },
+  plane: { normal: { _x: 0, _y: -0, _z: 1 }, w: 1 } }
+
+  console.log(obs)
+  t.deepEqual(obs.properties.sphere.center, {_x: 0, _y: 0, _z: 0})
+  t.deepEqual(obs.polygons.length, 512)
+  t.deepEqual(obs.polygons[0], expPoly0)
+  t.deepEqual(obs.polygons[5], expPoly5)
+})
