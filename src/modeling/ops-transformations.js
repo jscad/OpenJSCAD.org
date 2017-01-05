@@ -71,7 +71,7 @@ export function contract(r,n,o) {
    return o.contract(r,n);
 }
 
-export function multmatrix() {
+export function multmatrix(mat, obj) {
    console.log("multmatrix() not yet implemented");
 }
 
