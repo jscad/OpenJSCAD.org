@@ -109,6 +109,7 @@ test('contract (multiple items)', t => {
   t.deepEqual(obs.properties.sphere.center, {_x: 0, _y: 0, _z: 0})
 })
 
+// TODO: after this point these are all temp tests, implementation & tests need to be created
 test('multmatrix (single item)', t => {
   const op1 = cube()
   const obs = multmatrix([1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1], op1)
