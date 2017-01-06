@@ -164,7 +164,7 @@ export function color () {
     'white': [ 255 / 255, 255 / 255, 255 / 255 ],
     'whitesmoke': [ 245 / 255, 245 / 255, 245 / 255 ],
     'yellow': [ 255 / 255, 255 / 255, 0 / 255 ],
-    'yellowgreen': [ 154 / 255, 205 / 255, 50 / 255 ] }
+  'yellowgreen': [ 154 / 255, 205 / 255, 50 / 255 ] }
 
   var o, i = 1, a = arguments, c = a[0], alpha
 
@@ -180,7 +180,6 @@ export function color () {
   return o.setColor(c)
 }
 
-
 // from http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
 /**
  * Converts an RGB color value to HSL. Conversion formula
@@ -193,25 +192,31 @@ export function color () {
  * @param   Number  b       The blue color value
  * @return  Array           The HSL representation
  */
-function rgb2hsl(r, g, b){
-    if(r.length) { b = r[2], g = r[1], r = r[0]; }
-    var max = Math.max(r, g, b), min = Math.min(r, g, b);
-    var h, s, l = (max + min) / 2;
+export function rgb2hsl (r, g, b) {
+  if (r.length) { b = r[2], g = r[1], r = r[0]; }
+  var max = Math.max(r, g, b), min = Math.min(r, g, b)
+  var h, s, l = (max + min) / 2
 
-    if(max == min){
-        h = s = 0; // achromatic
-    }else{
-        var d = max - min;
-        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-        switch(max){
-            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-            case g: h = (b - r) / d + 2; break;
-            case b: h = (r - g) / d + 4; break;
-        }
-        h /= 6;
+  if (max == min) {
+    h = s = 0 // achromatic
+  } else {
+    var d = max - min
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0)
+        break
+      case g:
+        h = (b - r) / d + 2
+        break
+      case b:
+        h = (r - g) / d + 4
+        break
     }
+    h /= 6
+  }
 
-    return [h, s, l];
+  return [h, s, l]
 }
 
 /**
@@ -225,30 +230,30 @@ function rgb2hsl(r, g, b){
  * @param   Number  l       The lightness
  * @return  Array           The RGB representation
  */
-export function hsl2rgb(h, s, l){
-    if(h.length) { l = h[2], s = h[1], h = h[0]; }
-    var r, g, b;
+export function hsl2rgb (h, s, l) {
+  if (h.length) { l = h[2], s = h[1], h = h[0]; }
+  var r, g, b
 
-    if(s == 0){
-        r = g = b = l; // achromatic
-    }else{
-        function hue2rgb(p, q, t){
-            if(t < 0) t += 1;
-            if(t > 1) t -= 1;
-            if(t < 1/6) return p + (q - p) * 6 * t;
-            if(t < 1/2) return q;
-            if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-            return p;
-        }
-
-        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-        var p = 2 * l - q;
-        r = hue2rgb(p, q, h + 1/3);
-        g = hue2rgb(p, q, h);
-        b = hue2rgb(p, q, h - 1/3);
+  if (s == 0) {
+    r = g = b = l // achromatic
+  } else {
+    function hue2rgb (p, q, t) {
+      if (t < 0) t += 1
+      if (t > 1) t -= 1
+      if (t < 1 / 6) return p + (q - p) * 6 * t
+      if (t < 1 / 2) return q
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6
+      return p
     }
 
-    return [r, g, b];
+    var q = l < 0.5 ? l * (1 + s) : l + s - l * s
+    var p = 2 * l - q
+    r = hue2rgb(p, q, h + 1 / 3)
+    g = hue2rgb(p, q, h)
+    b = hue2rgb(p, q, h - 1 / 3)
+  }
+
+  return [r, g, b]
 }
 
 /**
@@ -263,26 +268,32 @@ export function hsl2rgb(h, s, l){
  * @return  Array           The HSV representation
  */
 
-export function rgb2hsv(r, g, b){
-    if(r.length) { b = r[2], g = r[1], r = r[0]; }
-    var max = Math.max(r, g, b), min = Math.min(r, g, b);
-    var h, s, v = max;
+export function rgb2hsv (r, g, b) {
+  if (r.length) { b = r[2], g = r[1], r = r[0]; }
+  var max = Math.max(r, g, b), min = Math.min(r, g, b)
+  var h, s, v = max
 
-    var d = max - min;
-    s = max == 0 ? 0 : d / max;
+  var d = max - min
+  s = max == 0 ? 0 : d / max
 
-    if(max == min){
-        h = 0; // achromatic
-    }else{
-        switch(max){
-            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-            case g: h = (b - r) / d + 2; break;
-            case b: h = (r - g) / d + 4; break;
-        }
-        h /= 6;
+  if (max == min) {
+    h = 0 // achromatic
+  } else {
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0)
+        break
+      case g:
+        h = (b - r) / d + 2
+        break
+      case b:
+        h = (r - g) / d + 4
+        break
     }
+    h /= 6
+  }
 
-    return [h, s, v];
+  return [h, s, v]
 }
 
 /**
@@ -296,26 +307,38 @@ export function rgb2hsv(r, g, b){
  * @param   Number  v       The value
  * @return  Array           The RGB representation
  */
-export function hsv2rgb(h, s, v){
-    if(h.length) { v = h[2], s = h[1], h = h[0]; }
-    var r, g, b;
+export function hsv2rgb (h, s, v) {
+  if (h.length) { v = h[2], s = h[1], h = h[0]; }
+  var r, g, b
 
-    var i = Math.floor(h * 6);
-    var f = h * 6 - i;
-    var p = v * (1 - s);
-    var q = v * (1 - f * s);
-    var t = v * (1 - (1 - f) * s);
+  var i = Math.floor(h * 6)
+  var f = h * 6 - i
+  var p = v * (1 - s)
+  var q = v * (1 - f * s)
+  var t = v * (1 - (1 - f) * s)
 
-    switch(i % 6){
-        case 0: r = v, g = t, b = p; break;
-        case 1: r = q, g = v, b = p; break;
-        case 2: r = p, g = v, b = t; break;
-        case 3: r = p, g = q, b = v; break;
-        case 4: r = t, g = p, b = v; break;
-        case 5: r = v, g = p, b = q; break;
-    }
+  switch (i % 6) {
+    case 0:
+      r = v, g = t, b = p
+      break
+    case 1:
+      r = q, g = v, b = p
+      break
+    case 2:
+      r = p, g = v, b = t
+      break
+    case 3:
+      r = p, g = q, b = v
+      break
+    case 4:
+      r = t, g = p, b = v
+      break
+    case 5:
+      r = v, g = p, b = q
+      break
+  }
 
-    return [r, g, b];
+  return [r, g, b]
 }
 
 /**
@@ -325,16 +348,16 @@ export function hsv2rgb(h, s, v){
  * - split the string; "#RRGGBB" into RGB components
  * - convert the HEX value into RGB values
  */
-export function html2rgb(s) {
-    var r = 0;
-    var g = 0;
-    var b = 0;
-    if(s.length == 7) {
-      r = parseInt('0x'+s.slice(1,3))/255;
-      g = parseInt('0x'+s.slice(3,5))/255;
-      b = parseInt('0x'+s.slice(5,7))/255;
-    }
-    return [r,g,b];
+export function html2rgb (s) {
+  var r = 0
+  var g = 0
+  var b = 0
+  if (s.length == 7) {
+    r = parseInt('0x' + s.slice(1, 3)) / 255
+    g = parseInt('0x' + s.slice(3, 5)) / 255
+    b = parseInt('0x' + s.slice(5, 7)) / 255
+  }
+  return [r, g, b]
 }
 
 /**
@@ -343,9 +366,9 @@ export function html2rgb(s) {
  * - convert R, G, B into HEX strings
  * - return HTML formatted string "#RRGGBB"
  */
-export function rgb2html(r, g, b){
-    if(r.length) { b = r[2], g = r[1], r = r[0]; }
-    var s = '#' +
-      Number(0x1000000+r*255*0x10000+g*255*0x100+b*255).toString(16).substring(1);
-    return s;
+export function rgb2html (r, g, b) {
+  if (r.length) { b = r[2], g = r[1], r = r[0]; }
+  var s = '#' +
+  Number(0x1000000 + r * 255 * 0x10000 + g * 255 * 0x100 + b * 255).toString(16).substring(1)
+  return s
 }
