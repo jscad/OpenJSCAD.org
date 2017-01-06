@@ -105,10 +105,9 @@ test('square (custom size, centered)', t => {
   [ [ 1, -1.5 ], [ 1, 1.5 ] ],
   [ [ 1, 1.5 ], [ -1, 1.5 ] ] ]
 
-  const gla = obs.sides.map(function (side) {
+  /*const gla = obs.sides.map(function (side) {
     return [[side.vertex0.pos._x, side.vertex0.pos._y], [side.vertex1.pos._x, side.vertex1.pos._y]]
-  })
-  console.log(gla)
+  })*/
 
   t.deepEqual(obs.sides.length, 4)
   t.truthy(comparePositonVertices(obs.sides, expSides))
