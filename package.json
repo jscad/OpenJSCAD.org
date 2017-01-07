@@ -8,7 +8,7 @@
     "openjscad": "dist/cli.js"
   },
   "scripts": {
-    "test": "ava './src/**/module.test.js' --require babel-register --verbose --timeout 10000",
+    "test": "ava './src/**/*.test.js' --require babel-register --verbose --timeout 10000",
     "build-web": "browserify src/ui/index.js -o dist/index.js -t [babelify browserify minifyify]",
     "build": "babel src/ -d dist",
     "build-module": "rollup -c rollup.config.module.js",
