@@ -1,7 +1,7 @@
 import createJscadFunction from './jscad-function'
 import includeJscadSync from './includeJscadSync'
 import WebWorkify from 'webWorkify'
-import { CAG, CSG } from '../csg'
+import { CAG, CSG } from 'csg'
 import { toArray } from '../utils/misc'
 import oscad from '../modeling/index'
 

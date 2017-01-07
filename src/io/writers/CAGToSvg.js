@@ -1,4 +1,4 @@
-import { CSG } from '../../csg'
+import { CSG } from 'csg'
 import makeBlob from '../../utils/Blob'
 const Blob = makeBlob()
 

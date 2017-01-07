@@ -9,7 +9,7 @@ import * as text from './text'
 import { echo } from './debug'
 
 // these are 'external' to this folder ...needs to be reviewed
-import { CAG, CSG } from '../csg'
+import { CAG, CSG } from 'csg'
 import { log } from '../jscad/log'
 
 const exportedApi = {

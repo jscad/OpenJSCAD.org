@@ -1,7 +1,7 @@
 import test from 'ava'
 import path from 'path'
 import fs from 'fs'
-import openjscad from '../dist/module'
+import openjscad from './module'//'../dist/module'
 
 test.beforeEach(t => {
 })
