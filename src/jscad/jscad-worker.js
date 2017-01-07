@@ -8,7 +8,7 @@
 // Create an worker (thread) for processing the JSCAD script into CSG/CAG objects
 
 import createJscadFunction from './jscad-function'
-import { CAG, CSG } from '../csg'
+import { CAG, CSG } from 'csg'
 import { toArray } from '../utils/misc'
 
 import oscad from '../modeling/index'

@@ -1,4 +1,4 @@
-import {CAG} from '../csg'
+import {CAG} from 'csg'
 // FIXME : is this used anywhere ?
 export default function group () { // experimental
   var o

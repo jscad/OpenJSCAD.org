@@ -13,7 +13,7 @@ import { formats } from '../io/formats'
 import generateOutputFileBlobUrl from './generateOutputFileBlobUrl'
 import generateOutputFileFileSystem from './generateOutputFileFileSystem'
 
-import { CAG, CSG } from '../csg'
+import { CAG, CSG } from 'csg'
 import Viewer from '../ui/viewer/jscad-viewer'
 
 /*
