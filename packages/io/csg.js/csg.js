@@ -92,8 +92,6 @@ for solid CAD anyway.
 
 */
 
-(function(module) {
-
     var _CSGDEBUG = false;
 
     function fnNumberSort(a, b) {
@@ -1314,6 +1312,32 @@ for solid CAD anyway.
                                                 var newvertices = polygon.vertices.slice(0);
                                                 newvertices.splice(insertionvertextagindex, 0, endvertex);
                                                 var newpolygon = new CSG.Polygon(newvertices, polygon.shared /*polygon.plane*/ );
+
+// FIX
+                                               //calculate plane with differents point
+                                                if(isNaN(newpolygon.plane.w)){
+
+                                                    var found = false,
+                                                        loop = function(callback){
+                                                            newpolygon.vertices.forEach(function(item){
+                                                                if(found) return;
+                                                                callback(item);
+                                                            })
+                                                        };
+
+                                                    loop(function(a){
+                                                        loop(function(b) {
+                                                            loop(function (c) {
+                                                                newpolygon.plane = CSG.Plane.fromPoints(a.pos, b.pos, c.pos)
+                                                                if(!isNaN(newpolygon.plane.w)) {
+                                                                    found = true;
+                                                                }
+                                                            })
+                                                        })
+                                                    })
+                                                }
+// FIX
+
                                                 polygons[polygonindex] = newpolygon;
 
                                                 // remove the original sides from our maps:
@@ -1959,11 +1983,11 @@ for solid CAD anyway.
                                 this._z = 0;
                             }
                         }
-                    } else if (('x' in x) && ('y' in x)) {
-                        this._x = parseFloat(x.x);
-                        this._y = parseFloat(x.y);
-                        if ('z' in x) {
-                            this._z = parseFloat(x.z);
+                    } else if (('_x' in x) && ('_y' in x)) {
+                        this._x = parseFloat(x._x);
+                        this._y = parseFloat(x._y);
+                        if ('_z' in x) {
+                            this._z = parseFloat(x._z);
                         } else {
                             this._z = 0;
                         }
@@ -5439,7 +5463,7 @@ for solid CAD anyway.
     CSG.addCenteringToPrototype = function(prot, axes) {
         prot.center = function(cAxes) {
             cAxes = Array.prototype.map.call(arguments, function(a) {
-                return a.toLowerCase();
+                return a; //.toLowerCase();
             });
             // no args: center on all axes
             if (!cAxes.length) {
@@ -5462,15 +5486,14 @@ for solid CAD anyway.
         this.isCanonicalized = false;
     };
 
-    // create from an untyped object with identical property names.
+    // create from an untyped object with identical property names:
     CAG.fromObject = function(obj) {
         var sides = obj.sides.map(function(s) {
             return CAG.Side.fromObject(s);
         });
         var cag = CAG.fromSides(sides);
-        cag.isCanonicalized = obj.isCanonicalized;
         return cag;
-    };
+    }
 
     // Construct a CAG from a list of `CAG.Side` instances.
     CAG.fromSides = function(sides) {
@@ -5581,6 +5604,41 @@ for solid CAD anyway.
             prevvertex = vertex;
         }
         return CAG.fromSides(sides);
+    };
+
+    /* Construct an ellispe
+    options:
+      center: a 2D center point
+      radius: a 2D vector with width and height
+      resolution: number of sides per 360 degree rotation
+    returns a CAG object
+    */
+    CAG.ellipse = function(options) {
+        options = options || {};
+        var c = CSG.parseOptionAs2DVector(options, "center", [0, 0]);
+        var r = CSG.parseOptionAs2DVector(options, "radius", [1, 1]);
+        r = r.abs(); // negative radii make no sense
+        var res = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution2D);
+
+        var e2 = new CSG.Path2D([[c.x,c.y + r.y]]);
+        e2 = e2.appendArc([c.x,c.y - r.y], {
+            xradius: r.x,
+            yradius: r.y,
+            xaxisrotation: 0,
+            resolution: res,
+            clockwise: true,
+            large: false,
+        });
+        e2 = e2.appendArc([c.x,c.y + r.y], {
+            xradius: r.x,
+            yradius: r.y,
+            xaxisrotation: 0,
+            resolution: res,
+            clockwise: true,
+            large: false,
+        });
+        e2 = e2.close();
+        return e2.innerToCAG();
     };
 
     /* Construct a rectangle
@@ -6022,12 +6080,8 @@ for solid CAD anyway.
         // by rotating around the plane's origin. An additional right-hand vector should be specified as well,
         // and this is exactly a CSG.OrthoNormalBasis.
         // orthonormalbasis: characterizes the plane in which to extrude
-        // depth: thickness of the extruded shape. Extrusion is done from the plane towards above (unless 
-        // symmetrical option is set, see below)
-        //
-        // options:
-        //   {symmetrical: true}  // extrude symmetrically in two directions about the plane
-        extrudeInOrthonormalBasis: function(orthonormalbasis, depth, options) {
+        // depth: thickness of the extruded shape. Extrusion is done symmetrically above and below the plane.
+        extrudeInOrthonormalBasis: function(orthonormalbasis, depth) {
             // first extrude in the regular Z plane:
             if (!(orthonormalbasis instanceof CSG.OrthoNormalBasis)) {
                 throw new Error("extrudeInPlane: the first parameter should be a CSG.OrthoNormalBasis");
@@ -6035,10 +6089,6 @@ for solid CAD anyway.
             var extruded = this.extrude({
                 offset: [0, 0, depth]
             });
-            if(CSG.parseOptionAsBool(options, "symmetrical", false))
-            {
-                extruded = extruded.translate([0,0,-depth/2]);
-            }
             var matrix = orthonormalbasis.getInverseProjectionMatrix();
             extruded = extruded.transform(matrix);
             return extruded;
@@ -6048,8 +6098,8 @@ for solid CAD anyway.
         // one of ["X","Y","Z","-X","-Y","-Z"]
         // The 2d x axis will map to the first given 3D axis, the 2d y axis will map to the second.
         // See CSG.OrthoNormalBasis.GetCartesian for details.
-        extrudeInPlane: function(axis1, axis2, depth, options) {
-            return this.extrudeInOrthonormalBasis(CSG.OrthoNormalBasis.GetCartesian(axis1, axis2), depth, options);
+        extrudeInPlane: function(axis1, axis2, depth) {
+            return this.extrudeInOrthonormalBasis(CSG.OrthoNormalBasis.GetCartesian(axis1, axis2), depth);
         },
 
         // extruded=cag.extrude({offset: [0,0,10], twistangle: 360, twiststeps: 100});
@@ -6544,6 +6594,7 @@ for solid CAD anyway.
 
     But we'll keep CSG.Polygon2D as a stub for backwards compatibility
     */
+    
     CSG.Polygon2D = function(points) {
         var cag = CAG.fromPoints(points);
         this.sides = cag.sides;
@@ -6551,7 +6602,9 @@ for solid CAD anyway.
     CSG.Polygon2D.prototype = CAG.prototype;
 
 
+    //console.log('module', module)
+    //module.CSG = CSG;
+    //module.CAG = CAG;
+//})(this); //module to export to
 
-    module.CSG = CSG;
-    module.CAG = CAG;
-})(this); //module to export to
+module.exports = {CSG,CAG}//({})(module)
