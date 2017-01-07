@@ -11719,7 +11719,9 @@ function getParameterDefinitionsCLI (getParameterDefinitions, param) { // used f
     for (var a in param) { // given by command-line
       p[a] = param[a];
     }
-    return p
+    var a;
+
+return p
   } else
     { return param }
 }
