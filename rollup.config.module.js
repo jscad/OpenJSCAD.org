@@ -17,7 +17,7 @@ export default {
     }),
     commonjs({
       namedExports: {
-        'src/csg.js': [ 'CSG', 'CAG' ]
+        'node_modules/csg/csg.js': [ 'CSG', 'CAG' ]
       }
     }),
     replace({
