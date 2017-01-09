@@ -75,7 +75,7 @@ npm install --save Spiritdude/OpenJSCAD.org
 
 and then simply import and use openjscad:
 
-```
+```javascript
 var jscad = require('openjscad')
 var fs = require('fs')
 
@@ -95,6 +95,19 @@ var outputData = jscad.generateOutput('stlb', compiled)
 fs.writeFileSync('torus.stl', outputData.asBuffer())
 ```
 
+you can also use the 'generateOutput' function directly with CSG/CAG objects ie :
+
+```javascript
+const csg = require('csg').CSG
+const input = csg.cube([1, 1, 1]) // one of many ways to create a CSG object
+
+const outputData = jscad.generateOutput('stlb', input)
+
+// hurray ,we can now write an stl file from our raw CSG objects
+fs.writeFileSync('torus.stl', outputData.asBuffer())
+```
+
+
 #### Module api
 
 *compile(params, source)*
@@ -103,10 +116,10 @@ fs.writeFileSync('torus.stl', outputData.asBuffer())
  *params* the set of parameters to use
  *source* the openjscad script we want to compile
 
-*generateOutput(outputFormat, ir)*
- generate output file from intermediate representation
+*generateOutput(outputFormat, csgs)*
+generate output file from a CSG/CAG object or array of CSG/CAG objects
  *outputFormat* the output file format
- *ir* the openjscad intermediate representation object
+ *csgs* the CSG/CAG object or array of CSG/CAG objects
 
 
 ### Development
