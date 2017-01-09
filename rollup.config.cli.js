@@ -9,6 +9,9 @@ export default {
   format: 'cjs',
   moduleName: 'openjscad',
   sourceMap: true,
+  external: [
+    'csg'
+  ],
   plugins: [
     buble(),
     nodeResolve({
