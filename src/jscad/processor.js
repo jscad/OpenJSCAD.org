@@ -14,22 +14,8 @@ import generateOutputFileBlobUrl from './generateOutputFileBlobUrl'
 import generateOutputFileFileSystem from './generateOutputFileFileSystem'
 
 import { CAG, CSG } from '../csg'
-
 import Viewer from '../ui/viewer/jscad-viewer'
 
-// FIXME: hack for now
-import * as primitives3d from '../modeling/primitives3d'
-import * as primitives2d from '../modeling/primitives2d'
-import * as booleanOps from '../modeling/ops-booleans'
-import * as transformations from '../modeling/transformations'
-import * as extrusion from '../modeling/extrusion'
-import * as color from '../modeling/color'
-import * as maths from '../modeling/maths'
-import * as csg from '../csg'
-import * as text from '../modeling/text'
-
-// for backwards compatibility
-const OpenJsCad = {log}
 /*
  * exposes the properties of an object to the given scope object (for example WINDOW etc)
  * this is the same as {foo, bar} = baz

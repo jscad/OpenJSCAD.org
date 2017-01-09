@@ -2,6 +2,7 @@ import { CSG, CAG } from '../csg'
 import { union } from './ops-booleans'
 // -- 3D transformations (OpenSCAD like notion)
 
+
 export function translate() {      // v, obj or array
    var a = arguments, v = a[0], o, i = 1;
    if(a[1].length) { a = a[1]; i = 0; }
@@ -70,7 +71,7 @@ export function contract(r,n,o) {
    return o.contract(r,n);
 }
 
-export function multmatrix() {
+export function multmatrix(mat, obj) {
    console.log("multmatrix() not yet implemented");
 }
 
