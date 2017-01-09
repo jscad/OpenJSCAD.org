@@ -221,10 +221,6 @@ test('generateOutput(stl, from csg object)', t => {
   const csg = require('csg').CSG
   const input = csg.cube([1, 1, 1])
 
-  const script = `function main(){
-    return CSG.cube([1,1,1])
-  }`
-
   const output = generateOutput('stl', input)
   const {type, encoding, size} = output
   t.is(type, 'application/sla')
