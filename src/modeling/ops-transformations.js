@@ -1,4 +1,4 @@
-import { CSG, CAG } from '../csg'
+import { CSG, CAG } from 'csg'
 import { union } from './ops-booleans'
 // -- 3D transformations (OpenSCAD like notion)
 

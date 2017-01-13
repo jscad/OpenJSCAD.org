@@ -1,5 +1,5 @@
 // -- 3D primitives (OpenSCAD like notion)
-import { CSG } from '../csg'
+import { CSG } from 'csg'
 import { circle } from './primitives2d'
 import { rotate_extrude } from './ops-extrusions'
 

@@ -1,4 +1,4 @@
-import { CSG, CAG } from '../csg'
+import { CSG, CAG } from 'csg'
 
 // FIXME: is there not too much overlap with convertToBlob ?
 export default function convertToSolid (objects) {

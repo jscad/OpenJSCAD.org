@@ -9,6 +9,9 @@ export default {
   format: 'cjs',
   moduleName: 'openjscad',
   sourceMap: true,
+  external: [
+    'csg'
+  ],
   plugins: [
     buble(),
     nodeResolve({
@@ -17,7 +20,7 @@ export default {
     }),
     commonjs({
       namedExports: {
-        'src/csg.js': [ 'CSG', 'CAG' ]
+        'node_modules/csg/csg.js': [ 'CSG', 'CAG' ]
       }
     }),
     replace({

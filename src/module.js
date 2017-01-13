@@ -32,9 +32,9 @@ function compile (source, params, options) {
 }
 
 /**
- * generate output file from intermediate representation
+ * generate output file from a CSG/CAG object or array of CSG/CAG objects
  * @param  {String} outputFormat the output file format
- * @param  {Object} objects the openjscad intermediate representation
+ * @param  {Object} objects the CSG/CAG object or array of CSG/CAG objects
  */
 function generateOutput (outputFormat, objects) {
   return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})

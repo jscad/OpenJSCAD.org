@@ -1,4 +1,4 @@
-import { CSG } from '../csg'
+import { CSG } from 'csg'
 // -- 2D to 3D primitives (OpenSCAD like notion)
 
 export function linear_extrude (p, s) {
