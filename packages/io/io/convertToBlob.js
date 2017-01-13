@@ -1,5 +1,5 @@
 import { version } from '../jscad/version'
-import { CSG, CAG } from '../csg'
+import { CSG, CAG } from 'csg'
 import toStlString from '../io/writers/CSGToStla'
 import toStlBinary from '../io/writers/CSGToStlb'
 import toAMFString from '../io/writers/CSGToAMF'
