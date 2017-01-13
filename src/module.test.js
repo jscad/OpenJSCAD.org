@@ -198,3 +198,19 @@ test('generateOutput(amf)', t => {
       t.is(size, 385246)// FIXME: verify: original value was 385255
     })
 })
+
+test('generateOutput(x3d)', t => {
+  const {generateOutput} = openjscad
+  // FIXME : create a fake csgObject rather than using output from another function
+  const inputPath = path.resolve(__dirname, '../examples/logo.jscad')
+  const script = fs.readFileSync(inputPath, 'UTF8')
+
+  return openjscad.compile(script, {})
+    .then(function (input) {
+      const output = generateOutput('x3d', input)
+      const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
+      t.is(type, 'model/x3d+xml')
+      t.is(encoding, 'utf8')
+      t.is(size, 44384)
+    })
+})

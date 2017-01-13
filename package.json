@@ -40,7 +40,8 @@
     "openscad-openjscad-translator": "0.0.7",
     "sax": "^1.2.1",
     "underscore": "^1.8.3",
-    "webworkify": "^1.4.0"
+    "webworkify": "^1.4.0",
+    "xmldom": "^0.1.27"
   },
   "devDependencies": {
     "ava": "^0.15.2",
