@@ -1533,7 +1533,7 @@ var GL = (function() {
 
 		// We can keep mouse and touch events enabled at the same time,
 		// because Google Chrome will apparently never fire both of them.
-		on(gl.canvas, 'mousedown', mousedown);
+		/*on(gl.canvas, 'mousedown', mousedown);
 		on(gl.canvas, 'mousemove', mousemove);
 		on(gl.canvas, 'mouseup', mouseup);
 		on(gl.canvas, 'mousewheel', mousewheel);
@@ -1542,7 +1542,7 @@ var GL = (function() {
 		on(gl.canvas, 'mouseout', reset);
 		on(gl.canvas, 'touchstart', touchstart);
 		on(gl.canvas, 'touchmove', touchmove);
-		on(gl.canvas, 'touchend', touchend);
+		on(gl.canvas, 'touchend', touchend);*/
 		on(document, 'contextmenu', resetAll);
 	}
 

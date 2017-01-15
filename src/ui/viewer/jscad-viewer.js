@@ -25,6 +25,7 @@ export default function Viewer(containerelement, options) {
 
   // instantiate the rendering engine
   if (!engine) {
+    console.log('here')
     engine = LightGLEngine //|| Viewer.ThreeEngine
   }
 

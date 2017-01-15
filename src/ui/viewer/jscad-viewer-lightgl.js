@@ -116,12 +116,9 @@ LightGLEngine.prototype = {
     // 0 - initialized, no object
     // 1 - cleared, no object
     // 2 - showing, object
-    this.state = 0;
-
-    this.meshes = [];
-
-    this.clear(); // and draw the inital viewer
-
+    this.state = 0
+    this.meshes = []
+    this.clear() // and draw the inital viewer
   },
   createControls: function () {
     var _this = this
@@ -151,8 +148,111 @@ LightGLEngine.prototype = {
     shiftControl.appendChild(bottomArrow)
     this.containerEl.appendChild(shiftControl)
 
-  var hammerElt = new Hammer(this.containerEl, {drag_lock_to_axis: true})
+
+/*var options = {
+  preventDefault: true
+};
+var hammertime = new Hammer(this.containerEl, options);
+hammertime.on("transform", function(ev){
+console.log('transform')})
+
+hammertime.on('tap', function(ev) {
+  console.log('tap')
+})
+hammertime.on('touch', function(ev) {
+  console.log('touch')
+})
+hammertime.get('pinch').set({ enable: true });
+hammertime.get('rotate').set({ enable: true });
+
+hammertime.on('pinch', function(ev) {
+  console.log('pinch')
+})
+hammertime.on('rotate', function(ev) {
+  console.log('rotate')
+})*/
+
+  //let hammerElt = new Hammer(this.containerEl, {drag_lock_to_axis: true})
+  //hammerElt.get('press').set({ time:500 })
+
+  let hammerElt = new Hammer.Manager(this.containerEl, {drag_lock_to_axis: true})
+  hammerElt.add(new Hammer.Pan({ threshold: 0, pointers: 0 }))
+  hammerElt.add(new Hammer.Press({ time: 500 }))
+
+  function startGesture(){
+    console.log('startGesture')
+      _this.touch.lastX = 0
+      _this.touch.lastY = 0
+  }
+  this.containerEl.addEventListener('mousedown',startGesture)
+  this.containerEl.addEventListener('touchstart',startGesture)
+
+
+  hammerElt.on('transform', function (e) {
+    console.log('transform')
+    if (e.gesture.touches.length >= 2) {
+      _this.clearShift()
+      _this.onTransform(e)
+      e.preventDefault()
+    }
+  })
+  hammerElt.on("transformend dragstart dragend", function(e) { //not really applicable, since dragstart & dragend are not supported anymore by hammer
+    if ((e.type == 'transformend' && _this.touch.cur == 'transforming') ||
+        (e.type == 'dragend' && _this.touch.cur == 'shifting') ||
+        (e.type == 'dragend' && _this.touch.cur == 'dragging'))
+
+    _this.touch.cur = null
+    _this.touch.lastX = 0
+    _this.touch.lastY = 0
+    _this.touch.scale = 0
+  })
+
+  hammerElt.on('pan panleft panright panup panleft panright pandown', function (e) {
+    //console.log('pan',e)
+    if (e.pointerType !== 'touch') {
+      e.preventDefault()
+      return
+    }
+    if (!_this.touch.cur || _this.touch.cur === 'dragging') {
+      _this.clearShift()
+      _this.onPanTilt(e)
+    } else if (_this.touch.cur === 'shifting') {
+      _this.onShift(e)
+    }
+  })
+
+
+  hammerElt.on('press', function (e) {
+    console.log('touch',e)
+    if (e.pointerType !== 'touch') {
+      e.preventDefault()
+      return
+    }
+
+    if (e.pointers.length == 1) {
+      var point = e.center
+      shiftControl.classList.add('active')
+      shiftControl.style.left = point.pageX + 'px'
+      shiftControl.style.top =  point.pageY + 'px'
+      _this.touch.cur = 'shifting'
+    } else {
+      _this.clearShift()
+    }
+  })
+
+  hammerElt.on('pressup', function (e) {
+    console.log('pressup')
+    _this.clearShift()
+    if (_this.touch.cur) {
+      shiftControl.classList.remove('active')
+      shiftControl.classList.remove('shift-horizontal')
+      shiftControl.classList.remove('shift-vertical')
+    }
+  })
+
+  /*
   hammerElt.on("transform", function(e){
+    console.log('transform')
     if (e.gesture.touches.length >= 2) {
       _this.clearShift();
       _this.onTransform(e);
@@ -177,23 +277,8 @@ LightGLEngine.prototype = {
     } else {
       _this.clearShift();
     }
-  }).on("drag", function(e) {
-    if (e.gesture.pointerType != 'touch') {
-      e.preventDefault();
-      return;
-    }
-
-    if (!_this.touch.cur || _this.touch.cur == 'dragging') {
-      _this.clearShift();
-      _this.onPanTilt(e);
-    } else if (_this.touch.cur == 'shifting') {
-      _this.onShift(e);
-    }
   }).on("touchend", function(e) {
-    _this.clearShift();
-    if (_this.touch.cur) {
-      shiftControl.removeClass('active shift-horizontal shift-vertical');
-    }
+
   }).on("transformend dragstart dragend", function(e) {
     if ((e.type == 'transformend' && _this.touch.cur == 'transforming') ||
         (e.type == 'dragend' && _this.touch.cur == 'shifting') ||
@@ -202,14 +287,16 @@ LightGLEngine.prototype = {
     _this.touch.lastX = 0;
     _this.touch.lastY = 0;
     _this.touch.scale = 0;
-  });
+  });*/
 
 
-    this.gl.onmousemove = function(e) {
-      _this.onMouseMove(e);
-    };
+    /*this.gl.onmousemove = function(e) {
+      console.log('onmousemove')
+      _this.onMouseMove(e)
+    };*/
 
     this.gl.onmousewheel = function(e) {
+      console.log('mouseWheel')
       var wheelDelta = 0;
       if (e.wheelDelta) {
         wheelDelta = e.wheelDelta;
@@ -239,6 +326,7 @@ LightGLEngine.prototype = {
 
     return shiftControl;
   },
+  
   setZoom: function(coeff) { //0...1
     coeff=Math.max(coeff, 0);
     coeff=Math.min(coeff, 1);
@@ -282,61 +370,68 @@ LightGLEngine.prototype = {
     }
   },
 
-  clearShift: function() {
+  clearShift: function () {
     if(this.touch.shiftTimer) {
-      clearTimeout(this.touch.shiftTimer);
-      this.touch.shiftTimer = null;
+      clearTimeout(this.touch.shiftTimer)
+      this.touch.shiftTimer = null
     }
-    return this;
+    return this
   },
 
-  //pan & tilt with one finger
-  onPanTilt: function(e) {
-    this.touch.cur = 'dragging';
-    var delta = 0;
-    if (this.touch.lastY && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
-      //tilt
-      delta = e.gesture.deltaY - this.touch.lastY;
-      this.angleX += delta;
-    } else if (this.touch.lastX && (e.gesture.direction == 'left' || e.gesture.direction == 'right')) {
-      //pan
-      delta = e.gesture.deltaX - this.touch.lastX;
-      this.angleZ += delta;
+  // pan & tilt with one finger
+  onPanTilt: function (e) {
+    this.touch.cur = 'dragging'
+    let deltaX = 0
+    let deltaY = 0
+    console.log(this.touch.lastY)
+    if (this.touch.lastY !== undefined)// && (e.type === 'panup' || e.type === 'pandown')) {
+    {  //tilt
+      deltaX = e.deltaY - this.touch.lastY
+      this.angleX += deltaX * 0.1
+      this.touch.lastY = e.deltaY
     }
-    if (delta)
-      this.onDraw();
-    this.touch.lastX = e.gesture.deltaX;
-    this.touch.lastY = e.gesture.deltaY;
+    if (this.touch.lastX !== undefined )//&& (e.type === 'panleft' || e.type === 'panright')) {
+    {  //pan
+      deltaY = e.deltaX - this.touch.lastX
+      this.angleZ += deltaY * 0.1
+      this.touch.lastX = e.deltaX
+    }
+    //console.log(delta)
+    if (deltaX || deltaY) {
+      this.onDraw()
+    }
   },
 
   //shift after 0.5s touch&hold
   onShift: function(e) {
-    this.touch.cur = 'shifting';
-    var factor = 5e-3;
-    var delta = 0;
+    console.log('onShift')
+    this.touch.cur = 'shifting'
+    var factor = 5e-3
+    var delta = 0
 
-    if (this.touch.lastY && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
+    if (this.touch.lastY && (e.direction == 'up' || e.direction == 'down')) {
       this.touch.shiftControl
         .removeClass('shift-horizontal')
         .addClass('shift-vertical')
-        .css('top', e.gesture.center.pageY + 'px');
-      delta = e.gesture.deltaY - this.touch.lastY;
-      this.viewpointY -= factor * delta * this.viewpointZ;
-      this.angleX += delta;
+        .css('top', e.center.pageY + 'px')
+      delta = e.deltaY - this.touch.lastY
+      this.viewpointY -= factor * delta * this.viewpointZ
+      this.angleX += delta
     }
-    if (this.touch.lastX && (e.gesture.direction == 'left' || e.gesture.direction == 'right')) {
+    if (this.touch.lastX && (e.direction == 'left' || e.direction == 'right')) {
       this.touch.shiftControl
         .removeClass('shift-vertical')
         .addClass('shift-horizontal')
-        .css('left', e.gesture.center.pageX + 'px');
-      delta = e.gesture.deltaX - this.touch.lastX;
-      this.viewpointX += factor * delta * this.viewpointZ;
-      this.angleZ += delta;
+        .css('left', e.center.pageX + 'px')
+      delta = e.deltaX - this.touch.lastX
+      this.viewpointX += factor * delta * this.viewpointZ
+      this.angleZ += delta
     }
-    if (delta)
-      this.onDraw();
-    this.touch.lastX = e.gesture.deltaX;
-    this.touch.lastY = e.gesture.deltaY;
+    if (delta){
+      this.onDraw()
+    }
+    this.touch.lastX = e.deltaX
+    this.touch.lastY = e.deltaY
   },
 
   //zooming
