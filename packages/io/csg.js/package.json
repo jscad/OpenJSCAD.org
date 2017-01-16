@@ -1,6 +1,6 @@
 {
   "name": "csg",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "",
   "repository": "https://github.com/jscad/csg.js",
   "main": "csg.js",
@@ -12,23 +12,23 @@
   "contributors": [
     {
       "name": "Alexandre Girard",
-      "url":"https://github.com/alx"
+      "url": "https://github.com/alx"
     },
     {
       "name": "Evan Wallace",
-      "url":"http://evanw.github.com/csg.js/"
+      "url": "http://evanw.github.com/csg.js/"
     },
     {
       "name": "Joost Nieuwenhuijse",
-      "email" : "joost@newhouse.nl"
+      "email": "joost@newhouse.nl"
     },
     {
       "name": "Eduard Bespalov",
-      "url":"http://evanw.github.com/csg.js/"
+      "url": "http://evanw.github.com/csg.js/"
     },
     {
-      "name":"bebbi",
-      "email" : "elghatta@gmail.com"
+      "name": "bebbi",
+      "email": "elghatta@gmail.com"
     },
     {
       "name": "Spiritdude Rene K Mueller",
