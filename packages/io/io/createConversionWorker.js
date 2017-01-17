@@ -9,7 +9,7 @@
 //
 // See conversion-worker.js for the conversion process
 //
-import WebWorkify from 'webWorkify'
+import WebWorkify from 'webworkify'
 
 export default function createConversionWorker (onDone) {
   //this spawns web workers that can do 'require()' calls
