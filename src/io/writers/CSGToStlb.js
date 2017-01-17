@@ -2,7 +2,7 @@ import makeBlob from '../../utils/Blob'
 const Blob = makeBlob()
 
 // see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
-export default function toStlBinary (CSG) {
+export default function CSGToStlb (CSG) {
   // first check if the host is little-endian:
   var buffer = new ArrayBuffer(4)
   var int32buffer = new Int32Array(buffer, 0, 1)
