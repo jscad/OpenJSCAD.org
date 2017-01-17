@@ -1,7 +1,7 @@
 import makeBlob from '../../utils/Blob'
 const Blob = makeBlob()
 
-export default function CAGtoDxf (cagObject) {
+export default function CAGToDxf (cagObject) {
   var paths = cagObject.getOutlinePaths()
   return PathsToDxf(paths)
 }
