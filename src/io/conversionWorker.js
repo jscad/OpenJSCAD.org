@@ -57,8 +57,7 @@ module.exports = function (self) {
               if (!r.source.match(/^\/\/!OpenSCAD/i)) {
                 r.source = '//!OpenSCAD\n' + data.source
               }
-              //FIXME : does not work
-              //const translator = require('openscad-openjscad-translator')
+              const openscadOpenJscadParser = require('openscad-openjscad-translator')
               r.converted = openscadOpenJscadParser.parse(r.source)
               break
             case 'stl':

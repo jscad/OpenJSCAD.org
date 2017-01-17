@@ -15,7 +15,11 @@
 // --- Global Variables
 import ace from 'brace'
 require('brace/mode/javascript')
+require('brace/mode/scad')
 require('brace/theme/chrome')
+
+import openscadOpenJscadParser from 'openscad-openjscad-translator'
+
 
 // See http://ace.ajax.org/#nav=howto
 export function setUpEditor (divname, gProcessor) {
