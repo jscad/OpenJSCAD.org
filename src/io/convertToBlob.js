@@ -1,12 +1,12 @@
 import { version } from '../jscad/version'
 import { CSG, CAG } from 'csg'
-import toStlString from '../io/writers/CSGToStla'
-import toStlBinary from '../io/writers/CSGToStlb'
-import toAMFString from '../io/writers/CSGToAMF'
-import toX3D from '../io/writers/CSGToX3D'
-import CAGtoSvg from '../io/writers/CAGtoSvg'
+import CSGToStla from '../io/writers/CSGToStla'
+import CSGToStlb from '../io/writers/CSGToStlb'
+import CSGToAMF from '../io/writers/CSGToAMF'
+import CSGToX3D from '../io/writers/CSGToX3D'
+import CAGToSvg from '../io/writers/CAGToSvg'
 import CAGToJson from '../io/writers/CAGToJson'
-import CAGtoDxf from '../io/writers/CAGtoDxf'
+import CAGToDxf from '../io/writers/CAGToDxf'
 
 import {toArray} from '../utils/misc'
 import makeBlob from '../utils/Blob'
@@ -56,13 +56,13 @@ export default function convertToBlob (objects, params) {
   }
 
   const outputFormatHandlers = {
-    amf: (object) => toAMFString(object, meta), // CSG to AMF
-    stl: (object) => toStlString(object), // CSG to STL ASCII
-    stla: (object) => toStlString(object), // CSG to STL ASCII
-    stlb: (object) => toStlBinary(object, {webBlob: true}), // CSG to STL BINARY
-    dxf: (object) => CAGtoDxf(object), // CAG to DXF
-    svg: (object) => CAGtoSvg(object), // CAG to SVG
-    x3d: (object) => toX3D(object.fixTJunctions()), // CSG to X3D Only possible via browsers
+    amf: (object) => CSGToAMF(object, meta), // CSG to AMF
+    stl: (object) => CSGToStla(object), // CSG to STL ASCII
+    stla: (object) => CSGToStla(object), // CSG to STL ASCII
+    stlb: (object) => CSGToStlb(object, {webBlob: true}), // CSG to STL BINARY
+    dxf: (object) => CAGToDxf(object), // CAG to DXF
+    svg: (object) => CAGToSvg(object), // CAG to SVG
+    x3d: (object) => CSGToX3D(object.fixTJunctions()),
     json: (object) => CAGToJson(object), // CSG or CAG to JSON
     js: (object) => object, // js , pass through
     jscad: (object) => object, // jscad, pass through

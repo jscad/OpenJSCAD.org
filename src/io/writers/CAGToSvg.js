@@ -2,7 +2,7 @@ import { CSG } from 'csg'
 import makeBlob from '../../utils/Blob'
 const Blob = makeBlob()
 
-export default function CAGtoSvg (cagObject) {
+export default function CAGToSvg (cagObject) {
   var decimals = 1000
 
   // mirror the CAG about the X axis in order to generate paths into the POSITIVE direction

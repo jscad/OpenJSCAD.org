@@ -1,7 +1,7 @@
 import makeBlob from '../../utils/Blob'
 const Blob = makeBlob()
 
-export default function toAMFString (CSG, m) {
+export default function CSGToAMF (CSG, m) {
   var result = '<?xml version="1.0" encoding="UTF-8"?>\n<amf' + (m && m.unit ? ' unit="+m.unit"' : '') + '>\n'
   for (var k in m) {
     result += '<metadata type="' + k + '">' + m[k] + '</metadata>\n'

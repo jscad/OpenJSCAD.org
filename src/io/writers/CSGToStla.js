@@ -1,7 +1,7 @@
 import makeBlob from '../../utils/Blob'
 const Blob = makeBlob()
 
-export default function toStlString (CSG) {
+export default function CSGToStla (CSG) {
   var result = 'solid csg.js\n'
   CSG.polygons.map(function (p) {
     result += CSGPolygontoStlString(p)
