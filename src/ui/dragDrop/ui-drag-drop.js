@@ -25,8 +25,8 @@ import createConversionWorker from '../../io/createConversionWorker'
 import { putSourceInEditor } from '../editor' // FIXME : eeek! dependency on ui
 
 // --- Global Variables
-var gCurrentFiles = [] // linear array, contains files (to read)
-var gMemFs = [] // associated array, contains file content in source gMemFs[i].{name,source}
+var currentFiles = [] // linear array, contains files (to read)
+var memFs = [] // associated array, contains file content in source memFs[i].{name,source}
 var gMainFile
 var autoReloadTimer = null
 
@@ -45,10 +45,10 @@ let state = {
 export function setupDragDrop (me, {gProcessor, gEditor}) {
   // --- Private Variables
 
-  var gMemFsCount = 0 // async reading: count of already read files
-  var gMemFsTotal = 0 // async reading: total files to read (Count==Total => all files read)
-  var gMemFsChanged = 0 // how many files have changed
-  var gRootFs = [] // root(s) of folders
+  var memFsCount = 0 // async reading: count of already read files
+  var memFsTotal = 0 // async reading: total files to read (Count==Total => all files read)
+  var memFsChanged = 0 // how many files have changed
+  var rootFs = [] // root(s) of folders
   var gMainFile = null // file entry containing main()
 
   // console.log("setupDragDrop()")
@@ -84,23 +84,21 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     superviseAllFiles({forceReload: true})
   }
 
-  // --- Private API
-
   function handleInputFiles (evt) {
     console.log('handleInputFiles()')
     if (evt.target.files) {
       if (evt.target.files.length > 0) {
-        gCurrentFiles = []
+        currentFiles = []
         for (var i = 0; i < evt.target.files.length; i++) {
           var file = evt.target.files[i]
           var e = file.name.toLowerCase().match(/\.(\w+)$/i)
           e = RegExp.$1
           if (conversionFormats.indexOf(e) >= 0) {
-            gCurrentFiles.push(evt.target.files[i]); // -- need to transfer the single elements
+            currentFiles.push(evt.target.files[i]); // -- need to transfer the single elements
           }
         }
         loadLocalFiles()
-        console.log('gCurrentFiles', gCurrentFiles)
+        console.log('currentFiles', currentFiles)
         return
       }
     }
@@ -108,35 +106,34 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
   }
 
   function handleFileSelect (evt) {
-    // console.log("handleFileSelect()")
     evt.stopPropagation()
     evt.preventDefault()
 
     if (!evt.dataTransfer) throw new Error('Event is not a datatransfer (1)')
     if (!evt.dataTransfer.files) throw new Error('Event is not a datatransfer (2)')
 
-    gMemFs = []
+    memFs = []
     gMainFile = null
 
     if (evt.dataTransfer.items && evt.dataTransfer.items.length) { // full directories, let's try
       var items = evt.dataTransfer.items
-      gCurrentFiles = []
-      gMemFsCount = 0
-      gMemFsTotal = 0
-      gMemFsChanged = 0
-      gRootFs = []
+      currentFiles = []
+      memFsCount = 0
+      memFsTotal = 0
+      memFsChanged = 0
+      rootFs = []
       for (var i = 0; i < items.length; i++) {
         var item = items[i]
         walkFileTree(items[i].webkitGetAsEntry())
-        gRootFs.push(items[i].webkitGetAsEntry())
+        rootFs.push(items[i].webkitGetAsEntry())
       }
     }
     // use the files list if not already processed above
     if (!evt.dataTransfer.items) {
       if (evt.dataTransfer.files.length > 0) {
-        gCurrentFiles = [] // -- be aware: gCurrentFiles = evt.dataTransfer.files won't work, as rewriting file will mess up the array
+        currentFiles = [] // -- be aware: currentFiles = evt.dataTransfer.files won't work, as rewriting file will mess up the array
         for (var i = 0; i < evt.dataTransfer.files.length; i++) {
-          gCurrentFiles.push(evt.dataTransfer.files[i]); // -- need to transfer the single elements
+          currentFiles.push(evt.dataTransfer.files[i]); // -- need to transfer the single elements
         }
         loadLocalFiles()
       } else {
@@ -162,8 +159,8 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
         var e = file.name.toLowerCase().match(/\.(\w+)$/i)
         e = RegExp.$1
         if (conversionFormats.indexOf(e) >= 0) {
-          gMemFsTotal++
-          gCurrentFiles.push(file)
+          memFsTotal++
+          currentFiles.push(file)
           readFileAsync(file)
         }
       }, errorHandler)
@@ -182,11 +179,11 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
 
   // this is the linear drag'n'drop, a list of files to read (when folders aren't supported)
   function loadLocalFiles () {
-    // console.log("loadLocalFiles: ",gCurrentFiles.length)
-    var items = gCurrentFiles
-    gMemFsCount = 0
-    gMemFsTotal = items.length
-    gMemFsChanged = 0
+    // console.log("loadLocalFiles: ",currentFiles.length)
+    var items = currentFiles
+    memFsCount = 0
+    memFsTotal = items.length
+    memFsChanged = 0
 
     for (var i = 0; i < items.length; i++) {
       var f = items[i]
@@ -220,38 +217,38 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
         var source = evt.target.result
 
         // console.log("done reading: "+f.name,source?source.length:0);   // it could have been vanished while fetching (race condition)
-        gMemFsCount++
+        memFsCount++
 
-        // note: assigning f.source = source too make gMemFs[].source the same, therefore as next
-        if (!gMemFs[f.name] || gMemFs[f.name].source != source)
-          gMemFsChanged++
+        // note: assigning f.source = source too make memFs[].source the same, therefore as next
+        if (!memFs[f.name] || memFs[f.name].source != source)
+          memFsChanged++
 
-        //FIXME : THIRD time the SAME data is cached
-        saveScript(gMemFs, f.name, source)
+        // FIXME : THIRD time the SAME data is cached
+        saveScript(memFs, f.name, source)
 
-        if (gMemFsCount == gMemFsTotal) { // -- are we done reading all?
-          // console.log("readFileAsync: "+gMemFsTotal+" files read")
+        if (memFsCount == memFsTotal) { // -- are we done reading all?
+          // console.log("readFileAsync: "+memFsTotal+" files read")
 
-          if (gMemFsTotal > 1) {
-            for (var fn in gMemFs) {
-              if (gMemFs[fn].name.match(/main.(jscad|js)$/)) {
-                gMainFile = gMemFs[fn]
+          if (memFsTotal > 1) {
+            for (var fn in memFs) {
+              if (memFs[fn].name.match(/main.(jscad|js)$/)) {
+                gMainFile = memFs[fn]
                 break
               }
             }
             if (!gMainFile) {
               // try again but search for the function declaration of main()
-              for (var fn in gMemFs) {
-                if (gMemFs[fn].source.search(/function\s+main\s*\(/) >= 0) {
-                  gMainFile = gMemFs[fn]
+              for (var fn in memFs) {
+                if (memFs[fn].source.search(/function\s+main\s*\(/) >= 0) {
+                  gMainFile = memFs[fn]
                   break
                 }
               }
             }
           } else {
-            gMainFile = gMemFs[f.name]
+            gMainFile = memFs[f.name]
           }
-          if (gMemFsChanged > 0) {
+          if (memFsChanged > 0) {
             if (!gMainFile) throw('No main.jscad found')
             // console.log("update & redraw "+gMainFile.name)
             setCurrentFile(gMainFile)
@@ -276,8 +273,8 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     // console.log("fileChanged()")
     if (f) {
       var txt
-      if (gMemFsTotal > 1) {
-        txt = 'Current file: ' + f.name + ' (+ ' + (gMemFsTotal - 1) + ' more files)'
+      if (memFsTotal > 1) {
+        txt = 'Current file: ' + f.name + ' (+ ' + (memFsTotal - 1) + ' more files)'
       } else {
         txt = 'Current file: ' + f.name
       }
@@ -296,38 +293,38 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
         document.getElementById('filedropzone_input').style.display = 'none'
       }
     }
-    parseFile(f, false)
+    parseFile(f)
   }
 
   // check if there were changes: (re-)load all files and check if content was changed
   function superviseAllFiles (p) {
-    // console.log("superviseAllFiles()")
+    console.log('superviseAllFiles', p)
 
-    gMemFsCount = gMemFsTotal = 0
-    gMemFsChanged = 0
+    memFsCount = memFsTotal = 0
+    memFsChanged = 0
 
     if (p && p.forceReload)
-      gMemFsChanged++
+      memFsChanged++
 
-    if (!gRootFs || gRootFs.length == 0 || me == 'web-offline') { // walkFileTree won't work with file:// (regardless of chrome|firefox)
-      for (var i = 0; i < gCurrentFiles.length; i++) {
-        // console.log("[offline] checking "+gCurrentFiles[i].name)
-        gMemFsTotal++
-        readFileAsync(gCurrentFiles[i])
+    if (!rootFs || rootFs.length == 0 || me == 'web-offline') { // walkFileTree won't work with file:// (regardless of chrome|firefox)
+      for (var i = 0; i < currentFiles.length; i++) {
+        // console.log("[offline] checking "+currentFiles[i].name)
+        memFsTotal++
+        readFileAsync(currentFiles[i])
       }
     } else {
-      for (var i = 0; i < gRootFs.length; i++) {
-        walkFileTree(gRootFs[i])
+      for (var i = 0; i < rootFs.length; i++) {
+        walkFileTree(rootFs[i])
       }
     }
   }
 
   var previousScript = null
 
-  function saveScript (gMemFs, filename, source) {
+  function saveScript (memFs, filename, source) {
     // console.log("saveScript("+filename+","+source+")")
     var f = {name: filename, source: source}
-    gMemFs[filename] = f
+    memFs[filename] = f
   }
 
   function onConversionDone (data) {
@@ -338,14 +335,14 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     if ('filename' in data && 'converted' in data) {
       // console.log("processor: "+data.filename+" ["+data.converted+']')
       if ('cache' in data && data.cache === true) {
-        saveScript(gMemFs, data.filename, data.converted)
+        saveScript(memFs, data.filename, data.converted)
       }
       gProcessor.setJsCad(data.converted, data.filename)
     }
   }
 
   // parse the file (and convert) to a renderable source (jscad)
-  function parseFile (file, onlyifchanged) {
+  function parseFile (file) {
     const {source, name} = file
     if (source === '') {
       if (document.location.toString().match(/^file\:\//i)) {
@@ -355,9 +352,9 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     }
     if (previousScript === source) return
 
-    if (gProcessor && !onlyifchanged) {
+    if (gProcessor) {
       // FIXME: why do we cache data if it is overwritten in 'onConversionDone'
-      saveScript(gMemFs, name, source)
+      saveScript(memFs, name, source)
       // FIXME: refactor : same code as ui/examples
       gProcessor.setStatus('Converting ' + name + " <img id=busy src='imgs/busy.gif'>")
       const worker = createConversionWorker(onConversionDone)

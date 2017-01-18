@@ -3,7 +3,7 @@ import saveScript from './saveScript'
 import { isLocalMode } from './helpers'
 
 // parse the file (and convert) to a renderable source (jscad)
-export default function parseFile (file, onlyifchanged, previousScript, conversionCallback, {gProcessor, gMemFs}) {
+export default function parseFile (file, previousScript, conversionCallback, {processor, memFs}) {
   const {source, name} = file
 
   if (source === '') {
@@ -14,12 +14,13 @@ export default function parseFile (file, onlyifchanged, previousScript, conversi
   }
   if (previousScript === source) return
 
-  if (gProcessor && !onlyifchanged) {
+  if (processor) {
     saveScript(gMemFs, name, source)
     // FIXME: refactor : same code as ui/examples
-    gProcessor.setStatus('Converting ' + name + " <img id=busy src='imgs/busy.gif'>")
+    processor.setStatus2('busy', `Converting ${name}`)
+
     const worker = createConversionWorker(conversionCallback)
-    const baseurl = gProcessor.baseurl
+    const baseurl = processor.baseurl
     // NOTE: cache: true is very important to control the evaluation of all cached files (code)
     worker.postMessage({baseurl, source, filename: name, cache: true})
   }
