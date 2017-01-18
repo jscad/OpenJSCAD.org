@@ -400,6 +400,18 @@ Processor.prototype = {
     }
   },
 
+  // set status and text to display
+  setStatus2: function (status, text) {
+    if (typeof document !== 'undefined') {
+      const statusMap = {
+        busy: " <img id=busy src='imgs/busy.gif'>"
+      }
+      this.statusspan.innerHTML = text + statusMap[status]
+    } else {
+      log(text)
+    }
+  },
+
   // script: javascript code
   // filename: optional, the name of the .jscad file
   setJsCad: function (script, filename) {
