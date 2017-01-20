@@ -3,8 +3,8 @@
 ##what does not :
 
 - global file cache:  gMemFs : still trying to refactor it into a reuseable system, this is the last actual remain of the "globals"
-- openscad-openjscad-translator: works on CLI & module, but cannot be browserified correctly, and seems to have weird internals
 - not entirely sure about the "REMOTE" functionality: should work , but needs testing
+- some parts of drag & drop
 
 ##What does :
 - everything else !
@@ -17,6 +17,7 @@
   (no more need to hacks and manual install via make file)
     - installation locally to use as module
   - code sharing between web & module & CLI is complete
+  - openscad-openjscad-translator: updated & browserified
 
 #note on transpiling: ie convert from one flavor of JS to another:
 
@@ -39,8 +40,7 @@ On startup
 Drag & drop:
   => chrome only?
     Observe file changes => reload
-    Observe folder changes
-  => display ui with reload & autoreload button & toggle
+    Observe folder changes => display ui with reload & autoreload button & toggle
 
   => saveScript :caches file name & source (BEFORE conversion)
 
@@ -75,6 +75,16 @@ Drag & drop:
 
    => handleFileSelect
     => walkFileTree OR loadLocalFiles
+
+
+
+DRAG & DROP entry points :
+  dropZone =>
+  fileInput =>
+
+
+memFsCount ONLY incremented and compared and use in readFileAsync
+memFsChanged ONLY used in readFileAsync AND superviseAllFiles
 
 conversionWorker
   => DONE
