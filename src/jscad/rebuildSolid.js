@@ -12,9 +12,10 @@ import oscad from '../modeling/index'
  * this is more reliable than async xhr + eval()
  * @param {String} text the original script (with include statements)
  * @param {String} relpath relative path, for xhr resolution
+ * @param {String} memFs memFs cache object
  * @returns {String} the full script, with inlined
  */
-function replaceIncludes (text, relpath) {
+function replaceIncludes (text, relpath, memFs) {
   return new Promise(function (resolve, reject) {
     let scriptWithIncludes = text
     const includesPattern = /(?:include)\s?\("([\w\/.\s]*)"\);?/gm
@@ -28,9 +29,9 @@ function replaceIncludes (text, relpath) {
     }
 
     let tmpPromises = foundIncludes.map(function (uri, index) {
-      const promise = includeJscadSync(relpath, uri)
+      const promise = includeJscadSync(relpath, uri, memFs)
       return promise.then(function (includedScript) {
-        return replaceIncludes(includedScript, relpath).then(function (substring) {
+        return replaceIncludes(includedScript, relpath, memFs).then(function (substring) {
           let currentItem = foundIncludesFull[index]
           scriptWithIncludes = scriptWithIncludes.replace(currentItem, substring)
           return scriptWithIncludes
@@ -55,11 +56,12 @@ export function rebuildSolidSync (script, fullurl, parameters, callback, options
     relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1)
   }
   const defaults = {
-    implicitGlobals: true
+    implicitGlobals: true,
+    memFs: undefined
   }
   options = Object.assign({}, defaults, options)
 
-  replaceIncludes(script, relpath).then(function (fullScript) {
+  replaceIncludes(script, relpath, options.memFs).then(function (fullScript) {
     const globals = options.implicitGlobals ? (options.globals ? options.globals : {oscad}) : {}
     const func = createJscadFunction(fullScript, globals)
     // stand-in for the include function(no-op)
@@ -96,7 +98,8 @@ export function rebuildSolidAsync (script, fullurl, parameters, callback, option
   if (!parameters) { throw new Error("JSCAD: missing 'parameters'") }
   if (!window.Worker) throw new Error('Worker threads are unsupported.')
   const defaults = {
-    implicitGlobals: true
+    implicitGlobals: true,
+    memFs: undefined
   }
   options = Object.assign({}, defaults, options)
 
@@ -106,7 +109,7 @@ export function rebuildSolidAsync (script, fullurl, parameters, callback, option
   }
 
   let worker
-  replaceIncludes(script, relpath).then(function (script) {
+  replaceIncludes(script, relpath, options.memFs).then(function (script) {
     worker = WebWorkify(require('./jscad-worker.js'))
     worker.onmessage = function (e) {
       if (e.data instanceof Object) {
