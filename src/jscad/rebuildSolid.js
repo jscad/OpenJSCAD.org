@@ -3,7 +3,7 @@ import includeJscadSync from './includeJscadSync'
 import WebWorkify from 'webworkify'
 import { CAG, CSG } from 'csg'
 import { toArray } from '../utils/misc'
-import oscad from '../modeling/index'
+import oscad from 'jscad-scad-api'
 
 /**
  * helper function that finds include() statements in files,

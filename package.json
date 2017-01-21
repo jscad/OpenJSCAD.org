@@ -35,8 +35,9 @@
   "license": "MIT",
   "dependencies": {
     "brace": "^0.9.0",
-    "csg": "github:jscad/csg.js",
+    "csg": "github:jscad/csg.js#v0.1.0",
     "hammerjs": "^2.0.8",
+    "jscad-scad-api": "github:jscad/jscad-scad-api#v0.1.0",
     "openscad-openjscad-translator": "github:jscad/openscad-openjscad-translator",
     "sax": "^1.2.1",
     "webworkify": "^1.4.0",
