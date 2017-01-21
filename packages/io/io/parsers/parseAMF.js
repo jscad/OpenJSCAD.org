@@ -37,8 +37,9 @@ if(typeof module !== 'undefined') {    // used via nodejs
 //
 ////////////////////////////////////////////
 var sax = require('sax')
-import { echo } from '../../modeling/debug'
 import { version } from '../../jscad/version'
+import oscad from 'jscad-scad-api'
+const { echo } = oscad.debug
 
 sax.SAXParser.prototype.inchMM = (1/0.039370);       // used for scaling AMF (inch) to CAG coordinates(MM)
 
