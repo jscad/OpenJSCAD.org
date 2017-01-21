@@ -140,7 +140,7 @@ Blob$3.prototype = {
 
 var Blob$2 = makeBlob();
 
-function toStlString (CSG$$1) {
+function CSGToStla (CSG$$1) {
   var result = 'solid csg.js\n';
   CSG$$1.polygons.map(function (p) {
     result += CSGPolygontoStlString(p);
@@ -180,7 +180,7 @@ function CSGPolygontoStlString (polygon) {
 var Blob$4 = makeBlob();
 
 // see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
-function toStlBinary (CSG$$1) {
+function CSGToStlb (CSG$$1) {
   // first check if the host is little-endian:
   var buffer = new ArrayBuffer(4);
   var int32buffer = new Int32Array(buffer, 0, 1);
@@ -243,7 +243,7 @@ function toStlBinary (CSG$$1) {
 
 var Blob$5 = makeBlob();
 
-function toAMFString (CSG$$1, m) {
+function CSGToAMF (CSG$$1, m) {
   var result = '<?xml version="1.0" encoding="UTF-8"?>\n<amf' + (m && m.unit ? ' unit="+m.unit"' : '') + '>\n';
   for (var k in m) {
     result += '<metadata type="' + k + '">' + m[k] + '</metadata>\n';
@@ -2471,7 +2471,7 @@ var Blob$6 = makeBlob();
 var XMLSerializer$$1 = domParser.XMLSerializer;
 // NOTE: might be useful :https://github.com/jindw/xmldom/pull/152/commits/be5176ece6fa1591daef96a5f361aaacaa445175
 
-function toX3D (CSG$$1) {
+function CSGToX3D (CSG$$1) {
   var DOMImplementation$$1 = typeof document !== 'undefined' ? document.implementation : new domParser.DOMImplementation();
   // materialPolygonLists
   // key: a color string (e.g. "0 1 1" for yellow)
@@ -2581,7 +2581,7 @@ function toX3D (CSG$$1) {
 
 var Blob$7 = makeBlob();
 
-function CAGtoSvg (cagObject) {
+function CAGToSvg (cagObject) {
   var decimals = 1000;
 
   // mirror the CAG about the X axis in order to generate paths into the POSITIVE direction
@@ -2648,7 +2648,7 @@ function CAGToJson (CAG$$1) {
 
 var Blob$9 = makeBlob();
 
-function CAGtoDxf (cagObject) {
+function CAGToDxf (cagObject) {
   var paths = cagObject.getOutlinePaths();
   return PathsToDxf(paths)
 }
@@ -2740,13 +2740,13 @@ function convertToBlob (objects, params) {
   };
 
   var outputFormatHandlers = {
-    amf: function (object) { return toAMFString(object, meta); }, // CSG to AMF
-    stl: function (object) { return toStlString(object); }, // CSG to STL ASCII
-    stla: function (object) { return toStlString(object); }, // CSG to STL ASCII
-    stlb: function (object) { return toStlBinary(object, {webBlob: true}); }, // CSG to STL BINARY
-    dxf: function (object) { return CAGtoDxf(object); }, // CAG to DXF
-    svg: function (object) { return CAGtoSvg(object); }, // CAG to SVG
-    x3d: function (object) { return toX3D(object.fixTJunctions()); }, // CSG to X3D Only possible via browsers
+    amf: function (object) { return CSGToAMF(object, meta); }, // CSG to AMF
+    stl: function (object) { return CSGToStla(object); }, // CSG to STL ASCII
+    stla: function (object) { return CSGToStla(object); }, // CSG to STL ASCII
+    stlb: function (object) { return CSGToStlb(object, {webBlob: true}); }, // CSG to STL BINARY
+    dxf: function (object) { return CAGToDxf(object); }, // CAG to DXF
+    svg: function (object) { return CAGToSvg(object); }, // CAG to SVG
+    x3d: function (object) { return CSGToX3D(object.fixTJunctions()); },
     json: function (object) { return CAGToJson(object); }, // CSG or CAG to JSON
     js: function (object) { return object; }, // js , pass through
     jscad: function (object) { return object; }, // jscad, pass through
@@ -4945,9 +4945,9 @@ function log$1 (txt) {
   log$1.prevLogTime = timeInMs;
   var timefmt = (deltatime * 0.001).toFixed(3);
   txt = '[' + timefmt + '] ' + txt;
-  if ((typeof (console) == 'object') && (typeof (console.log) == 'function')) {
+  if ((typeof (console) === 'object') && (typeof (console.log) === 'function')) {
     console.log(txt);
-  } else if ((typeof (self) == 'object') && (typeof (self.postMessage) == 'function')) {
+  } else if ((typeof (self) === 'object') && (typeof (self.postMessage) === 'function')) {
     self.postMessage({cmd: 'log', txt: txt});
   }
   else { throw new Error('Cannot log') }
@@ -4957,6 +4957,9 @@ function log$1 (txt) {
 // Note: leave for compatibility
 
 // these are 'external' to this folder ...needs to be reviewed
+// mostly likely needs to be removed since it is in the OpenJsCad namespace anyway, leaving here
+// for now
+
 var exportedApi = {
   csg: {CAG: csg.CAG, CSG: csg.CSG},
   primitives2d: primitives2d,
