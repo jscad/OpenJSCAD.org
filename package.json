@@ -10,7 +10,6 @@
   "scripts": {
     "test": "ava './src/**/*.test.js' --require babel-register --verbose --timeout 10000",
     "build-web": "browserify src/ui/index.js -o dist/index.js -t [babelify browserify minifyify]",
-    "build": "babel src/ -d dist",
     "build-module": "rollup -c rollup.config.module.js",
     "build-cli": "rollup -c rollup.config.cli.js",
     "build-all": "npm run build-cli && npm run build-module && npm run build-web",
@@ -38,7 +37,7 @@
     "brace": "^0.9.0",
     "csg": "github:jscad/csg.js",
     "hammerjs": "^2.0.8",
-    "openscad-openjscad-translator": "github:jscad/openscad-openjscad-translator#update",
+    "openscad-openjscad-translator": "github:jscad/openscad-openjscad-translator",
     "sax": "^1.2.1",
     "webworkify": "^1.4.0",
     "xmldom": "^0.1.27"
