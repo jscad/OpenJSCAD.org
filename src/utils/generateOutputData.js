@@ -2,7 +2,7 @@ import convertToBlob from '../io/convertToBlob'
 import {rebuildSolidSync} from '../jscad/rebuildSolid'
 import getParameterDefinitionsCLI from './getParameterDefinitionsCLI'
 import {formats} from '../io/formats'
-import oscad from '../modeling/index'
+import oscad from 'jscad-scad-api'
 
 /**
  * generate output data from source
