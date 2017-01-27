@@ -406,6 +406,10 @@ Processor.prototype = {
     // console.log('setJsCad', script, filename)
     if (!filename) filename = 'openjscad.jscad'
 
+    var prevParamValues = {}
+    // this will fail without existing form
+    try {prevParamValues = getParamValues(this.paramControls)} catch (e) {}
+    
     this.abort()
     this.paramDefinitions = []
     this.paramControls = []
@@ -415,7 +419,7 @@ Processor.prototype = {
     var scripthaserrors = false
     try {
       this.paramDefinitions = getParamDefinitions(script)
-      this.createParamControls()
+      this.createParamControls(prevParamValues)
     } catch(e) {
       this.setError(e.toString())
       this.setStatus('Error.')
@@ -618,7 +622,7 @@ Processor.prototype = {
     return control
   },
 
-  createChoiceControl: function (definition) {
+  createChoiceControl: function (definition, prevValue) {
     if (!('values' in definition)) {
       throw new Error('Definition of choice parameter (' + definition.name + ") should include a 'values' parameter")
     }
@@ -641,7 +645,12 @@ Processor.prototype = {
       option.value = values[valueindex]
       option.text = captions[valueindex]
       control.add(option)
-      if ('default' in definition) {
+      if (prevValue !== undefined) {
+        if (prevValue === values[valueIndex]) {
+          selectedindex = valueindex
+        }
+      }
+      else if ('default' in definition) {
         if (definition['default'] === values[valueindex]) {
           selectedindex = valueindex
         }
@@ -658,7 +667,7 @@ Processor.prototype = {
     return control
   },
 
-  createControl: function (definition) {
+  createControl: function (definition, prevValue) {
     var control_list = [
       {type: 'text',     control: 'text',     required: ['index', 'type', 'name'], initial: ''},
       {type: 'int',      control: 'number',   required: ['index', 'type', 'name'], initial: 0},
@@ -708,7 +717,9 @@ Processor.prototype = {
     control.paramName = definition.name
     control.paramType = definition.type
     // determine initial value of control
-    if ('initial' in definition) {
+    if (prevValue !== undefined) {
+      control.value = prevValue
+    } else if ('initial' in definition) {
       control.value = definition.initial
     } else if ('default' in definition) {
       control.value = definition.default
@@ -731,7 +742,7 @@ Processor.prototype = {
     return control
   },
 
-  createParamControls: function () {
+  createParamControls: function (prevParamValues) {
     this.parameterstable.innerHTML = ''
     this.paramControls = []
 
@@ -743,13 +754,13 @@ Processor.prototype = {
       var type = paramdef.type.toLowerCase()
       switch (type) {
         case 'choice':
-          control = this.createChoiceControl(paramdef)
+          control = this.createChoiceControl(paramdef, prevParamValues[paramdef.name])
           break
         case 'group':
           control = this.createGroupControl(paramdef)
           break
         default:
-          control = this.createControl(paramdef)
+          control = this.createControl(paramdef, prevParamValues[paramdef.name])
           break
       }
       // add the appropriate element to the table
