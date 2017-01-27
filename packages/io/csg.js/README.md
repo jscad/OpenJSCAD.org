@@ -42,6 +42,9 @@ PRs accepted.
 
 Small note: If editing the Readme, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
+## Copyrights
+
+Some copyrights apply. Copyright (c) 2012 Joost Nieuwenhuijse (joost@newhouse.nl), under the MIT license. Copyright (c) 2011 Evan Wallace (http://madebyevan.com/)
 
 ## License
 

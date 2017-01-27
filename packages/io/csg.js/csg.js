@@ -1983,11 +1983,11 @@ for solid CAD anyway.
                                 this._z = 0;
                             }
                         }
-                    } else if (('_x' in x) && ('_y' in x)) {
-                        this._x = parseFloat(x._x);
-                        this._y = parseFloat(x._y);
-                        if ('_z' in x) {
-                            this._z = parseFloat(x._z);
+                    } else if (('x' in x) && ('y' in x)) {
+                        this._x = parseFloat(x.x);
+                        this._y = parseFloat(x.y);
+                        if ('z' in x) {
+                            this._z = parseFloat(x.z);
                         } else {
                             this._z = 0;
                         }
@@ -5483,17 +5483,18 @@ for solid CAD anyway.
     // Each side is a line between 2 points
     var CAG = function() {
         this.sides = [];
-        this.isCanonicalized = false;
+        this.isCanonicalized = true;
     };
 
-    // create from an untyped object with identical property names:
+    // create from an untyped object with identical property names.
     CAG.fromObject = function(obj) {
         var sides = obj.sides.map(function(s) {
             return CAG.Side.fromObject(s);
         });
         var cag = CAG.fromSides(sides);
+        cag.isCanonicalized = obj.isCanonicalized;
         return cag;
-    }
+    };
 
     // Construct a CAG from a list of `CAG.Side` instances.
     CAG.fromSides = function(sides) {
@@ -5654,8 +5655,8 @@ for solid CAD anyway.
             if (('center' in options) || ('radius' in options)) {
                 throw new Error("rectangle: should either give a radius and center parameter, or a corner1 and corner2 parameter")
             }
-            corner1 = CSG.parseOptionAs2DVector(options, "corner1", [0, 0]);
-            corner2 = CSG.parseOptionAs2DVector(options, "corner2", [1, 1]);
+            var corner1 = CSG.parseOptionAs2DVector(options, "corner1", [0, 0]);
+            var corner2 = CSG.parseOptionAs2DVector(options, "corner2", [1, 1]);
             c = corner1.plus(corner2).times(0.5);
             r = corner2.minus(corner1).times(0.5);
         } else {
@@ -5683,8 +5684,8 @@ for solid CAD anyway.
             if (('center' in options) || ('radius' in options)) {
                 throw new Error("roundedRectangle: should either give a radius and center parameter, or a corner1 and corner2 parameter")
             }
-            corner1 = CSG.parseOptionAs2DVector(options, "corner1", [0, 0]);
-            corner2 = CSG.parseOptionAs2DVector(options, "corner2", [1, 1]);
+            var corner1 = CSG.parseOptionAs2DVector(options, "corner1", [0, 0]);
+            var corner2 = CSG.parseOptionAs2DVector(options, "corner2", [1, 1]);
             center = corner1.plus(corner2).times(0.5);
             radius = corner2.minus(corner1).times(0.5);
         } else {
