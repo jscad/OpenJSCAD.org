@@ -1,5 +1,5 @@
 {
-  "name": "csg",
+  "name": "@scad/csg",
   "version": "0.1.1",
   "description": "",
   "repository": "https://github.com/jscad/csg.js",
