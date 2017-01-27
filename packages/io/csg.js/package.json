@@ -40,6 +40,13 @@
       "url": "http://www.z3d.jp"
     }
   ],
+  "keywords": [
+    "csg",
+    "parametric",
+    "modeling",
+    "openjscad",
+    "jscad"
+  ],
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
