@@ -4,6 +4,9 @@
 [![GitHub version](https://badge.fury.io/gh/jscad%2Fcsg.js.svg)](https://badge.fury.io/gh/jscad%2Fcsg.js)
 [![Build Status](https://travis-ci.org/jscad/csg.js.svg)](https://travis-ci.org/jscad/csg.js)
 
+> Solid modeling library (2d & 3d)
+
+
 Extraction of the csg.js lib from https://github.com/joostn/OpenJsCad, being itself a fork of https://github.com/evanw/csg.js
 
 ## Table of Contents
