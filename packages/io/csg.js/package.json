@@ -1,6 +1,6 @@
 {
   "name": "csg",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "repository": "https://github.com/jscad/csg.js",
   "main": "csg.js",
