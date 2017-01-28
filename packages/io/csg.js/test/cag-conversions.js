@@ -96,5 +96,3 @@ test("CAG should convert to and from paths", t => {
   t.deepEqual(c4,f4);
 });
 
-test("CAG should extrude to 3D properly", t => {
-});

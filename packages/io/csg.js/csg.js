@@ -6080,9 +6080,13 @@ for solid CAD anyway.
         // Giving just a plane is not enough, multiple different extrusions in the same plane would be possible
         // by rotating around the plane's origin. An additional right-hand vector should be specified as well,
         // and this is exactly a CSG.OrthoNormalBasis.
+        //
         // orthonormalbasis: characterizes the plane in which to extrude
-        // depth: thickness of the extruded shape. Extrusion is done symmetrically above and below the plane.
-        extrudeInOrthonormalBasis: function(orthonormalbasis, depth) {
+        // depth: thickness of the extruded shape. Extrusion is done upwards from the plane
+        //        (unless symmetrical option is set, see below)
+        // options:
+        //   {symmetrical: true}  // extrude symmetrically in two directions about the plane
+        extrudeInOrthonormalBasis: function(orthonormalbasis, depth, options) {
             // first extrude in the regular Z plane:
             if (!(orthonormalbasis instanceof CSG.OrthoNormalBasis)) {
                 throw new Error("extrudeInPlane: the first parameter should be a CSG.OrthoNormalBasis");
@@ -6090,6 +6094,9 @@ for solid CAD anyway.
             var extruded = this.extrude({
                 offset: [0, 0, depth]
             });
+            if(CSG.parseOptionAsBool(options, "symmetrical", false)) {
+                extruded = extruded.translate([0,0,-depth/2]);
+            }
             var matrix = orthonormalbasis.getInverseProjectionMatrix();
             extruded = extruded.transform(matrix);
             return extruded;
@@ -6099,8 +6106,10 @@ for solid CAD anyway.
         // one of ["X","Y","Z","-X","-Y","-Z"]
         // The 2d x axis will map to the first given 3D axis, the 2d y axis will map to the second.
         // See CSG.OrthoNormalBasis.GetCartesian for details.
-        extrudeInPlane: function(axis1, axis2, depth) {
-            return this.extrudeInOrthonormalBasis(CSG.OrthoNormalBasis.GetCartesian(axis1, axis2), depth);
+        // options:
+        //   {symmetrical: true}  // extrude symmetrically in two directions about the plane
+        extrudeInPlane: function(axis1, axis2, depth, options) {
+            return this.extrudeInOrthonormalBasis(CSG.OrthoNormalBasis.GetCartesian(axis1, axis2), depth, options);
         },
 
         // extruded=cag.extrude({offset: [0,0,10], twistangle: 360, twiststeps: 100});
