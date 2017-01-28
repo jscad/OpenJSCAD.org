@@ -72,6 +72,7 @@ test("CAG should convert to and from sides", t => {
 test("CAG should convert to and from points", t => {
   //fromPoints()
   //fromPointsNoCheck()
+  t.fail('TODO: add tests') // non implemented tests should fail so we see the changes when we actually add them!!
 });
 
 test("CAG should convert to and from paths", t => {
@@ -95,4 +96,3 @@ test("CAG should convert to and from paths", t => {
   var f4 = p4[0].innerToCAG();
   t.deepEqual(c4,f4);
 });
-
