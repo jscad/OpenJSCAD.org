@@ -408,7 +408,7 @@ Processor.prototype = {
 
     var prevParamValues = {}
     // this will fail without existing form
-    try {prevParamValues = getParamValues(this.paramControls)} catch (e) {}
+    try {prevParamValues = getParamValues(this.paramControls, /*onlyChanged*/true)} catch (e) {}
     
     this.abort()
     this.paramDefinitions = []
