@@ -18,19 +18,11 @@ History:
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
   <title>OpenJSCAD.org Logo</title>
-  <script src="js/lib/jquery/jquery-1.9.1.js?0.5.2"></script>
-  <script src="js/lib/jquery/jquery.hammer.js?0.5.2"></script>
-  <script src="js/lib/lightgl.js"></script>
-  <script src="js/lib/csg.js?0.5.2"></script>
-  <script src="js/formats.js?0.5.2"></script>
-  <script src="js/openjscad.js?0.5.2"></script>
-  <script src="js/openscad.js?0.5.2"></script>
-  <script src="js/jscad-worker.js?0.5.2" charset="utf-8"></script>
-  <script src="js/jscad-function.js?0.5.2" charset="utf-8"></script>
   <link rel="stylesheet" href="min.css?0.5.2" type="text/css">
 </head>
 
-<body onload="loadProcessor()">
+<body onload="loadJSCAD()">
+  <script src="dist/index.js"></script>
 <!-- setup display of the errors as required by OpenJSCAD.js -->
   <div class="jscad-container">
     <div id="header">
@@ -49,33 +41,25 @@ History:
     <div id="tail" style="display: none;">
       <div id="statusdiv"></div>
     </div>
+    <div id="footer" style="display: none;">
+    </div>
   </div>
 
 <!-- define the design and the parameters -->
   <script type="text/javascript">
-    var gProcessor = null;        // required by OpenJScad.org
-
-    var gComponents = [ { file: 'examples/logo.jscad' } ];
-
-    function loadProcessor() {
-      gProcessor = new OpenJsCad.Processor(document.getElementById("viewerContext"));
-
-      loadJSCAD(0);
-    }
-
-    function loadJSCAD(choice) {
-      var filepath = gComponents[choice].file;
+    function loadJSCAD() {
+      var filepath = 'examples/logo.jscad';
       var xhr = new XMLHttpRequest();
       xhr.open("GET", filepath, true);
-      gProcessor.setStatus("Loading "+filepath+" <img id=busy src='imgs/busy.gif'>");
+      //gProcessor.setStatus("Loading "+filepath+" <img id=busy src='imgs/busy.gif'>");
 
       xhr.onload = function() {
         var source = this.responseText;
-        //console.log(source);
+        console.log(source);
 
         if(filepath.match(/\.jscad$/i)||filepath.match(/\.js$/i)) {
-          gProcessor.setStatus("Processing "+filepath+" <img id=busy src='imgs/busy.gif'>");
-          gProcessor.setJsCad(source,filepath);
+        //  gProcessor.setStatus("Processing "+filepath+" <img id=busy src='imgs/busy.gif'>");
+        //  gProcessor.setJsCad(source,filepath);
         }
       }
       xhr.send();
