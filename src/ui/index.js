@@ -59,73 +59,89 @@ function init () {
   gProcessor = new Processor(document.getElementById('viewerContext'))
   gEditor = setUpEditor(undefined, gProcessor)
   // FIXME: temporary hack
-  let {toggleAutoReload, reloadAllFiles} = setupDragDrop(me, {gMemFs, gProcessor, gEditor})
-  createExamples(me)
-  createOptions()
-  getOptions()
 
-  loadInitialExample(me, {gMemFs, gProcessor, gEditor, remoteUrl})
+// major DIVs expected
+  let about = document.getElementById('about');
+  let header = document.getElementById('header');
+  let menu = document.getElementById('menu');
+  let tail = document.getElementById('tail');
+  let footer = document.getElementById('footer');
+  let editFrame = document.getElementById('editFrame');
 
-  let menu = document.getElementById('menu')
-  let editFrame = document.getElementById('editFrame')
-  let examples = document.getElementById('examples')
-  let examplesTitle = document.getElementById('examplesTitle')
+  //createOptions()
+  //getOptions()
+
   let options = document.getElementById('options')
   let optionsTitle = document.getElementById('optionsTitle')
-  let editHandle = document.getElementById('editHandle')
   let plate = document.getElementById('plate')
 
-  setElementHeight(menu, window.innerHeight + 'px')
-  setElementHeight(editFrame, window.innerHeight + 'px')
-
-  window.addEventListener('resize', function () { // adjust the relevant divs
-    setElementHeight(menu, window.innerHeight + 'px')
-    menuHandle.style.top = '45%'
-    setElementHeight(editFrame, window.innerHeight + 'px')
-  })
-
-  setTimeout(function () {
-    menu.style.left = '-280px'
-  }, 3000) // -- hide slide-menu after 3secs
-
-  // mouseleave
-  menu.addEventListener('mouseleave', function (e) {
-    setElementHeight(examples, '0px')
-    examples.style.display = 'none'
-  // setElementHeight(options, 0)
-  // options.style.display = 'none'
-  })
-
-  editHandle.addEventListener('click', function (e) {
-    if (getElementWidth(editFrame) === 0) {
-      setElementWidth(editFrame, '40%')
-      editHandle.src = 'imgs/editHandleIn.png'
-    } else {
-      setElementWidth(editFrame, '0px')
-      editFrame.src = 'imgs/editHandleOut.png'
+  window.addEventListener('resize', function () {
+  // adjust the relevant divs
+    if (menu) {
+      setElementHeight(menu, window.innerHeight + 'px')
+      menuHandle.style.top = '45%'
+    }
+    if (editFrame) {
+      setElementHeight(editFrame, window.innerHeight + 'px')
     }
   })
 
-  // -- Examples
-  examplesTitle.addEventListener('click', function (e) {
-    setElementHeight(examples, 'auto')
-    examples.style.display = 'inline'
-  // setElementHeight(options, 0)
-  // options.style.display = 'none'
-  })
+  if (menu) {
+    const versionText = `Version ${version}`
+    document.getElementById('menuVersion').innerHTML = versionText
 
-  function onLoadExampleClicked (e) {
-    if (showEditor) { // FIXME test for the element
-      editor.style.display = 'inline'
-    } else {
-      editor.style.display = 'none'
+    setTimeout(function () {
+      menu.style.left = '-280px'
+    }, 3000) // -- hide slide-menu after 3secs
+
+    // mouseleave
+    menu.addEventListener('mouseleave', function (e) {
+      setElementHeight(examples, '0px')
+      examples.style.display = 'none'
+    // setElementHeight(options, 0)
+    // options.style.display = 'none'
+    })
+
+    let examples = document.getElementById('examples');
+    if (examples) {
+      createExamples(me)
+      loadInitialExample(me, {gMemFs, gProcessor, gEditor, remoteUrl})
+
+      // -- Examples
+      examplesTitle.addEventListener('click', function (e) {
+        setElementHeight(examples, 'auto')
+        examples.style.display = 'inline'
+      // setElementHeight(options, 0)
+      // options.style.display = 'none'
+      })
+
+      function onLoadExampleClicked (e) {
+        if (showEditor) { // FIXME test for the element
+          editor.style.display = 'inline'
+        } else {
+          editor.style.display = 'none'
+        }
+        const examplePath = e.currentTarget.dataset.path
+        fetchExample(examplePath, undefined, {gMemFs, gProcessor, gEditor})
+      }
+      var list = examples.querySelectorAll('.example')
+      for (var i = 0; i < list.length; i++) {
+          list[i].addEventListener('click', onLoadExampleClicked)
+      }
     }
-    const examplePath = e.currentTarget.dataset.path
-    fetchExample(examplePath, undefined, {gMemFs, gProcessor, gEditor})
   }
-  var list = examples.querySelectorAll('.example')
-  for (var i = 0; i < list.length; i++) {
-      list[i].addEventListener('click', onLoadExampleClicked)
+
+  if (editFrame) {
+    let editHandle = document.getElementById('editHandle')
+    editHandle.addEventListener('click', function (e) {
+      if (getElementWidth(editFrame) === 0) {
+        setElementWidth(editFrame, '40%')
+        editHandle.src = 'imgs/editHandleIn.png'
+      } else {
+        setElementWidth(editFrame, '0px')
+        editFrame.src = 'imgs/editHandleOut.png'
+      }
+    })
   }
 
   // -- Options
@@ -152,38 +168,47 @@ function init () {
     })*/
 
   // about/ licence section
-  addEventListenerList(document.getElementsByClassName('navlink about'), 'click', function () {
-    about.style.display = 'inline'
-    return false
-  })
+  if (about) {
+    const versionText = `Version ${version}`
+    document.getElementById('aboutVersion').innerHTML = versionText
 
-  document.querySelector('.okButton').addEventListener('click', function () {
-    about.style.display = 'none'
-    return false
-  })
+    addEventListenerList(document.getElementsByClassName('navlink about'), 'click', function () {
+      about.style.display = 'inline'
+      return false
+    })
+
+    document.querySelector('.okButton').addEventListener('click', function () {
+      about.style.display = 'none'
+      return false
+    })
+  }
 
   // dropzone section
-  const dropZoneText = browser === 'chrome' && me === 'web-online' ? ', or folder with jscad files ' : ''
-  document.getElementById('filedropzone_empty')
-    .innerHTML =
-    `Drop one or more supported files
-       ${dropZoneText}
-       here (see <a style='font-weight: normal' href='https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide#Maintaining_Larger_Projects' target=_blank>details</a>)
-       <br>or directly edit OpenJSCAD or OpenSCAD code using the editor.`
+  if (tail) {
+    let dropZone = document.getElementById('filedropzone')
+    if (dropZone) {
+      const dropZoneText = browser === 'chrome' && me === 'web-online' ? ', or folder with jscad files ' : ''
+      document.getElementById('filedropzone_empty')
+        .innerHTML =
+        `Drop one or more supported files
+           ${dropZoneText}
+           here (see <a style='font-weight: normal' href='https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide#Maintaining_Larger_Projects' target=_blank>details</a>)
+           <br>or directly edit OpenJSCAD or OpenSCAD code using the editor.`
 
-  document.getElementById('reloadAllFiles').onclick = reloadAllFiles
-  document.getElementById('autoreload').onclick = function (e) {
-    const toggle = document.getElementById('autoreload').checked
-    toggleAutoReload(toggle)
+      let {toggleAutoReload, reloadAllFiles} = setupDragDrop(me, {gMemFs, gProcessor, gEditor})
+      document.getElementById('reloadAllFiles').onclick = reloadAllFiles
+      document.getElementById('autoreload').onclick = function (e) {
+        const toggle = document.getElementById('autoreload').checked
+        toggleAutoReload(toggle)
+      }
+    }
   }
 
   // version number displays
-  const footerContent = `OpenJSCAD.org ${version}, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>`
-  document.getElementById('footer').innerHTML = footerContent
-
-  const versionText = `Version ${version}`
-  document.getElementById('menuVersion').innerHTML = versionText
-  document.getElementById('aboutVersion').innerHTML = versionText
+  if (footer) {
+    const footerContent = `OpenJSCAD.org ${version}, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>`
+    document.getElementById('footer').innerHTML = footerContent
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {
