@@ -178,6 +178,7 @@ canvas {
    -moz-opacity: 0.8;
 
    border-right: 1px solid black;
+   height: inherit;
    width: 250px;
    padding-left: 20px;
    padding-right: 10px;
