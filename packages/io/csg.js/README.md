@@ -5,6 +5,8 @@
 [![GitHub version](https://badge.fury.io/gh/jscad%2Fcsg.js.svg)](https://badge.fury.io/gh/jscad%2Fcsg.js)
 [![Build Status](https://travis-ci.org/jscad/csg.js.svg)](https://travis-ci.org/jscad/csg.js)
 
+> Solid modeling library (2d & 3d)
+
 ## Overview
 
 Constructive Solid Geometry (CSG) is a modeling technique that uses Boolean operations like union and intersection to combine 3D solids. This library implements CSG operations on meshes elegantly and concisely using BSP trees, and is meant to serve as an easily understandable implementation of the algorithm.
