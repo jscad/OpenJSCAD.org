@@ -5,6 +5,7 @@
   "repository": "https://github.com/jscad/csg.js",
   "main": "csg.js",
   "scripts": {
+    "build-docs": "./node_modules/.bin/jsdoc -c jsdoc.json",
     "release-patch": "git checkout master; npm version patch; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-minor": "git checkout master; npm version minor; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-major": "git checkout master; npm version major; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",

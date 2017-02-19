@@ -1,0 +1,27 @@
+{
+  "opts": { // command line options
+    "template": "templates/default",
+    "encoding": "utf8",
+    "destination": "./out/",
+    "recurse": true,
+    "readme": "README.md"
+    //"tutorials": "path/to/tutorials", // same as -u path/to/tutorials
+  },
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc","closure"]
+  },
+  "source": {
+    "include"       : "csg.js",
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "plugins": [],
+  "templates": {
+    "default": {
+      "useLongnameInNav": true
+    },
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}

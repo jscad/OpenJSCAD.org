@@ -1,13 +1,13 @@
-# csg.js
+## csg.js
 
+## Constructive Solid Geometry (CSG) Library
 
 [![GitHub version](https://badge.fury.io/gh/jscad%2Fcsg.js.svg)](https://badge.fury.io/gh/jscad%2Fcsg.js)
 [![Build Status](https://travis-ci.org/jscad/csg.js.svg)](https://travis-ci.org/jscad/csg.js)
 
-> Solid modeling library (2d & 3d)
+## Overview
 
-
-Extraction of the csg.js lib from https://github.com/joostn/OpenJsCad, being itself a fork of https://github.com/evanw/csg.js
+Constructive Solid Geometry (CSG) is a modeling technique that uses Boolean operations like union and intersection to combine 3D solids. This library implements CSG operations on meshes elegantly and concisely using BSP trees, and is meant to serve as an easily understandable implementation of the algorithm.
 
 ## Table of Contents
 
@@ -26,7 +26,7 @@ npm install @jscad/csg.js
 
 ## Usage
 
-- as node module :
+- as Node module :
 
 ```
 const csg = require('csg')
@@ -38,9 +38,11 @@ TODO
 
 ## Contribute
 
+For questions about the API, please contact the [User Group](https://plus.google.com/communities/114958480887231067224)
+
 PRs accepted.
 
-Small note: If editing the Readme, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
+Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## Copyrights
 
