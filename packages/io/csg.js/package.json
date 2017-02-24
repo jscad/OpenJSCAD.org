@@ -52,9 +52,6 @@
   "dependencies": {},
   "devDependencies": {
     "ava": "^0.15.2",
-    "babel": "^6.5.2",
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.21.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-register": "^6.22.0"
   },

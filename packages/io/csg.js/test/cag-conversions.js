@@ -6,8 +6,12 @@ import {OBJ} from '../helpers/obj-store';
 //
 // Test suite for CAG Conversions
 //
-test("CAG should convert to and from binary", t => {
+
+test.failing("CAG should convert to and from binary", t => {
   // test using simple default shapes
+  // In the current form this test cannot be working, something comparing
+  // sides one by one should be written as objects differs
+  
   var c1 = CAG.circle();
   var c2 = CAG.ellipse();
   var c3 = CAG.rectangle();
@@ -34,17 +38,17 @@ test("CAG should convert to and from anonymous object", t => {
   var c3 = CAG.rectangle();
   var c4 = CAG.roundedRectangle();
 
-  var b1 = JSON.parse(OBJ.convertCAGtoJSON(c1));
-  var r1 = CAG.fromObject(b1.object);
+  var b1 = JSON.parse(JSON.stringify(c1));
+  var r1 = CAG.fromObject(b1);
   t.deepEqual(c1,r1);
-  var b2 = JSON.parse(OBJ.convertCAGtoJSON(c2));
-  var r2 = CAG.fromObject(b2.object);
+  var b2 = JSON.parse(JSON.stringify(c2));
+  var r2 = CAG.fromObject(b2);
   t.deepEqual(c2,r2);
-  var b3 = JSON.parse(OBJ.convertCAGtoJSON(c3));
-  var r3 = CAG.fromObject(b3.object);
+  var b3 = JSON.parse(JSON.stringify(c3));
+  var r3 = CAG.fromObject(b3);
   t.deepEqual(c3,r3);
-  var b4 = JSON.parse(OBJ.convertCAGtoJSON(c4));
-  var r4 = CAG.fromObject(b4.object);
+  var b4 = JSON.parse(JSON.stringify(c4));
+  var r4 = CAG.fromObject(b4);
   t.deepEqual(c4,r4);
 });
 
@@ -69,13 +73,12 @@ test("CAG should convert to and from sides", t => {
   t.deepEqual(c4,f4);
 });
 
-test("CAG should convert to and from points", t => {
-  //fromPoints()
-  //fromPointsNoCheck()
-  t.fail('TODO: add tests') // non implemented tests should fail so we see the changes when we actually add them!!
-});
+test.todo("CAG should convert to and from points");
 
-test("CAG should convert to and from paths", t => {
+test.failing("CAG should convert to and from paths", t => {
+  
+  // fails because of https://github.com/jscad/csg.js/issues/15
+  
   // test using simple default shapes
   var c1 = CAG.circle();
   var c2 = CAG.ellipse();

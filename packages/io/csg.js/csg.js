@@ -1428,10 +1428,8 @@ for solid CAD anyway.
     // If the option is not present, return the default value
     CSG.parseOption = function(options, optionname, defaultvalue) {
         var result = defaultvalue;
-        if (options) {
-            if (optionname in options) {
-                result = options[optionname];
-            }
+        if (options && optionname in options) {
+              result = options[optionname];
         }
         return result;
     };
@@ -1503,7 +1501,7 @@ for solid CAD anyway.
      * });
      */
     CSG.cube = function(options) {
-        var c, r;
+        var c, r, corner1, corner2;
         options = options || {};
         if (('corner1' in options) || ('corner2' in options)) {
             if (('center' in options) || ('radius' in options)) {
@@ -2085,6 +2083,14 @@ for solid CAD anyway.
                         } else {
                             this._z = 0;
                         }
+                    } else if (('_x' in x) && ('_y' in x)) {
+                        this._x = parseFloat(x._x);
+                        this._y = parseFloat(x._y);
+                        if ('_z' in x) {
+                            this._z = parseFloat(x._z);
+                        } else {
+                            this._z = 0;
+                        }
                     } else ok = false;
                 } else {
                     var v = parseFloat(x);
@@ -2095,8 +2101,7 @@ for solid CAD anyway.
             } else ok = false;
             if (ok) {
                 if ((!CSG.IsFloat(this._x)) || (!CSG.IsFloat(this._y)) || (!CSG.IsFloat(this._z))) ok = false;
-            }
-            if (!ok) {
+            } else {
                 throw new Error("wrong arguments");
             }
         }

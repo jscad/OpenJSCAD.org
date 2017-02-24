@@ -61,18 +61,7 @@ test('CAG should intersect properly', t => {
   t.deepEqual(compactCagSide(lastSide), {pos: [[0.30901699437494723, -0.9510565162951536], [1, 0]]})
 })
 
-test('CAG should transform properly', t => {
-  t.fail('TODO: add tests') // non implemented tests should fail so we see the changes when we actually add them!!
-})
-
-test('CAG should flip properly', t => {
-  t.fail('TODO: add tests') // non implemented tests should fail so we see the changes when we actually add them!!
-})
-
-test('CAG should expand properly', t => {
-  t.fail('TODO: add tests') // non implemented tests should fail so we see the changes when we actually add them!!
-})
-
-test('CAG should contract properly', t => {
-  t.fail('TODO: add tests') // non implemented tests should fail so we see the changes when we actually add them!!
-})
+test.todo('CAG should transform properly');
+test.todo('CAG should flip properly');
+test.todo('CAG should expand properly');
+test.todo('CAG should contract properly');
