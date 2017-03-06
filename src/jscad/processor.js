@@ -646,7 +646,7 @@ Processor.prototype = {
       option.text = captions[valueindex]
       control.add(option)
       if (prevValue !== undefined) {
-        if (prevValue === values[valueIndex]) {
+        if (prevValue === values[valueindex]) {
           selectedindex = valueindex
         }
       }
