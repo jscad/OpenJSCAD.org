@@ -408,17 +408,21 @@ Processor.prototype = {
 
     var prevParamValues = {}
     // this will fail without existing form
-    try {prevParamValues = getParamValues(this.paramControls, /*onlyChanged*/true)} catch (e) {}
+    try {
+      if (!this.hasError)
+        prevParamValues = getParamValues(this.paramControls, /*onlyChanged*/true)
+    } catch (e) {}
     
     this.abort()
     this.paramDefinitions = []
-    this.paramControls = []
+    
     this.script = null
     this.setError('')
 
     var scripthaserrors = false
     try {
       this.paramDefinitions = getParamDefinitions(script)
+      this.paramControls = []
       this.createParamControls(prevParamValues)
     } catch(e) {
       this.setError(e.toString())
