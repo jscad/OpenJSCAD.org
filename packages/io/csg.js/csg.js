@@ -1827,83 +1827,84 @@ for solid CAD anyway.
         result.properties.roundedCylinder.facepoint = p1.plus(xvector);
         return result;
     };
-	
-	// Construct a elliptic cylinder.
-    //
-    // Parameters:
-    //   start: start point of cylinder (default [0, -1, 0])
-    //   end: end point of cylinder (default [0, 1, 0])
-    //   radius: radius of cylinder (default [1,1]), must be two dimensional array
-	//	 radiusStart: can be used instead of radius with combination with radiousEnd
-	//	 radiusEnd: can be used instead of radius with combination with radiusStart
-    //   resolution: determines the number of polygons per 360 degree revolution (default 12)
-    //
-    // Example usage:
-    //
-    //     var cylinder = CSG.cylinderElliptic({
-    //       start: [0, -1, 0],
-    //       end: [0, 1, 0],
-    //       radiusStart: [10, 5],
-	//       radiusStart: [8, 3],
-    //       resolution: 16
-    //     });
-	CSG.cylinderElliptic = function(options) {
-		var s = CSG.parseOptionAs3DVector(options, "start", [0, -1, 0]);
-		var e = CSG.parseOptionAs3DVector(options, "end", [0, 1, 0]);
-		var r = CSG.parseOptionAs2DVector(options, "radius", [1,1]);
-		var rEnd = CSG.parseOptionAs2DVector(options, "radiusEnd", r);
-		var rStart = CSG.parseOptionAs2DVector(options, "radiusStart", r);
 
-		if((rEnd._x < 0) || (rStart._x < 0) || (rEnd._y < 0) || (rStart._y < 0) ) {
-			throw new Error("Radius should be non-negative");
-		}
-		if((rEnd._x === 0 || rEnd._y === 0) && (rStart._x === 0 || rStart._y === 0)) {
-			throw new Error("Either radiusStart or radiusEnd should be positive");
-		}
+    /** Construct an elliptic cylinder.
+     * @param {Object} [options] - options for construction
+     * @param {Vector3D} [options.start=[0,-1,0]] - start point of cylinder
+     * @param {Vector3D} [options.end=[0,1,0]] - end point of cylinder
+     * @param {Vector2D} [options.radius=[1,1]] - radius of rounded ends, must be two dimensional array
+     * @param {Vector2D} [options.radiusStart=[1,1]] - OPTIONAL radius of rounded start, must be two dimensional array
+     * @param {Vector2D} [options.radiusEnd=[1,1]] - OPTIONAL radius of rounded end, must be two dimensional array
+     * @param {Number} [options.resolution=CSG.defaultResolution2D] - number of polygons per 360 degree revolution
+     * @returns {CSG} new 3D solid
+     *
+     * @example
+     *     var cylinder = CSG.cylinderElliptic({
+     *       start: [0, -10, 0],
+     *       end: [0, 10, 0],
+     *       radiusStart: [10,5],
+     *       radiusEnd: [8,3],
+     *       resolution: 16
+     *     });
+     */
 
-		var slices = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution2D);
-		var ray = e.minus(s);
-		var axisZ = ray.unit(); //, isY = (Math.abs(axisZ.y) > 0.5);
-		var axisX = axisZ.randomNonParallelVector().unit();
+    CSG.cylinderElliptic = function(options) {
+        var s = CSG.parseOptionAs3DVector(options, "start", [0, -1, 0]);
+        var e = CSG.parseOptionAs3DVector(options, "end", [0, 1, 0]);
+        var r = CSG.parseOptionAs2DVector(options, "radius", [1,1]);
+        var rEnd = CSG.parseOptionAs2DVector(options, "radiusEnd", r);
+        var rStart = CSG.parseOptionAs2DVector(options, "radiusStart", r);
 
-		//  var axisX = new CSG.Vector3D(isY, !isY, 0).cross(axisZ).unit();
-		var axisY = axisX.cross(axisZ).unit();
-		var start = new CSG.Vertex(s);
-		var end = new CSG.Vertex(e);
-		var polygons = [];
+        if((rEnd._x < 0) || (rStart._x < 0) || (rEnd._y < 0) || (rStart._y < 0) ) {
+            throw new Error("Radius should be non-negative");
+        }
+        if((rEnd._x === 0 || rEnd._y === 0) && (rStart._x === 0 || rStart._y === 0)) {
+            throw new Error("Either radiusStart or radiusEnd should be positive");
+        }
 
-		function point(stack, slice, radius) {
-			var angle = slice * Math.PI * 2;
-			var out = axisX.times(radius._x * Math.cos(angle)).plus(axisY.times(radius._y * Math.sin(angle)));
-			var pos = s.plus(ray.times(stack)).plus(out);
-			return new CSG.Vertex(pos);
-		}
-		for(var i = 0; i < slices; i++) {
-			var t0 = i / slices,
-				t1 = (i + 1) / slices;
-			
-			if(rEnd._x == rStart._x && rEnd._y == rStart._y) {
-				polygons.push(new CSG.Polygon([start, point(0, t0, rEnd), point(0, t1, rEnd)]));
-				polygons.push(new CSG.Polygon([point(0, t1, rEnd), point(0, t0, rEnd), point(1, t0, rEnd), point(1, t1, rEnd)]));
-				polygons.push(new CSG.Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]));
-			} else {
-				if(rStart._x > 0) {
-					polygons.push(new CSG.Polygon([start, point(0, t0, rStart), point(0, t1, rStart)]));
-					polygons.push(new CSG.Polygon([point(0, t0, rStart), point(1, t0, rEnd), point(0, t1, rStart)]));
-				}
-				if(rEnd._x > 0) {
-					polygons.push(new CSG.Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]));
-					polygons.push(new CSG.Polygon([point(1, t0, rEnd), point(1, t1, rEnd), point(0, t1, rStart)]));
-				}
-			}
-		}
-		var result = CSG.fromPolygons(polygons);
-		result.properties.cylinder = new CSG.Properties();
-		result.properties.cylinder.start = new CSG.Connector(s, axisZ.negated(), axisX);
-		result.properties.cylinder.end = new CSG.Connector(e, axisZ, axisX);
-		result.properties.cylinder.facepoint = s.plus(axisX.times(rStart));
-		return result;
-	};
+        var slices = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution2D); // FIXME is this correct?
+        var ray = e.minus(s);
+        var axisZ = ray.unit(); //, isY = (Math.abs(axisZ.y) > 0.5);
+        var axisX = axisZ.randomNonParallelVector().unit();
+
+        //  var axisX = new CSG.Vector3D(isY, !isY, 0).cross(axisZ).unit();
+        var axisY = axisX.cross(axisZ).unit();
+        var start = new CSG.Vertex(s);
+        var end = new CSG.Vertex(e);
+        var polygons = [];
+
+        function point(stack, slice, radius) {
+            var angle = slice * Math.PI * 2;
+            var out = axisX.times(radius._x * Math.cos(angle)).plus(axisY.times(radius._y * Math.sin(angle)));
+            var pos = s.plus(ray.times(stack)).plus(out);
+            return new CSG.Vertex(pos);
+        }
+        for(var i = 0; i < slices; i++) {
+            var t0 = i / slices,
+            t1 = (i + 1) / slices;
+
+            if(rEnd._x == rStart._x && rEnd._y == rStart._y) {
+                polygons.push(new CSG.Polygon([start, point(0, t0, rEnd), point(0, t1, rEnd)]));
+                polygons.push(new CSG.Polygon([point(0, t1, rEnd), point(0, t0, rEnd), point(1, t0, rEnd), point(1, t1, rEnd)]));
+                polygons.push(new CSG.Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]));
+            } else {
+                if(rStart._x > 0) {
+                    polygons.push(new CSG.Polygon([start, point(0, t0, rStart), point(0, t1, rStart)]));
+                    polygons.push(new CSG.Polygon([point(0, t0, rStart), point(1, t0, rEnd), point(0, t1, rStart)]));
+                }
+                if(rEnd._x > 0) {
+                    polygons.push(new CSG.Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]));
+                    polygons.push(new CSG.Polygon([point(1, t0, rEnd), point(1, t1, rEnd), point(0, t1, rStart)]));
+                }
+            }
+        }
+        var result = CSG.fromPolygons(polygons);
+        result.properties.cylinder = new CSG.Properties();
+        result.properties.cylinder.start = new CSG.Connector(s, axisZ.negated(), axisX);
+        result.properties.cylinder.end = new CSG.Connector(e, axisZ, axisX);
+        result.properties.cylinder.facepoint = s.plus(axisX.times(rStart));
+        return result;
+    };
 
     /** Construct an axis-aligned solid rounded cuboid.
      * @param {Object} [options] - options for construction

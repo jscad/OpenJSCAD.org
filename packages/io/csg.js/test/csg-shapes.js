@@ -36,6 +36,7 @@ test("CSG.cylinder creates a cylinder", t => {
 });
 
 test.todo("CSG should produce proper rounded cylinders");
+test.todo("CSG should produce proper elliptic cylinders");
 test.todo("CSG should produce proper rounded cube");
 test.todo("CSG should produce proper polyhedrons");
 
