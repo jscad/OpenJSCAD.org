@@ -2,9 +2,10 @@
 
 # -- Fetch Remote File into Cache, written by Rene K. Mueller <spiritdude@gmail.com>
 #
-$VERSION = '0.003';
+$VERSION = '0.004';
 #
 # History:
+# 2017/03/20: 0.004: allows insecure ssl connections (invalid/outdated ssl)
 # 2013/04/08: 0.003: support of amf
 # 2013/03/31: 0.002: checking content, enforcing jscad, scad or stl
 # 2013/03/30: 0.001: first version
@@ -46,6 +47,7 @@ sub cacheLocal {
    
    if(fork()==0) {
       exec('curl',
+         '-k',                         # -- allow insecure ssl connections (invalid certs)
          '-L',                         # -- follow redirects (e.g. thingiverse.com)
          '--max-filesize',$maxSize,    # -- max file size
          '--max-time',$maxTime,        # -- max time of download
