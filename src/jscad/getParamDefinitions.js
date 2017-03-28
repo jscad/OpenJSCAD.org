@@ -9,6 +9,7 @@ export default function getParamDefinitions (script) {
     (new Function(script))()
   } catch(e) {
     scriptisvalid = false
+    throw e
   }
   var params = []
   if (scriptisvalid) {
