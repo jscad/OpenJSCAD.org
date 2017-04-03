@@ -374,6 +374,10 @@ Processor.prototype = {
     this.selectdiv.style.display = (this.currentObjects.length > 1) ? 'none' : 'none' // FIXME once there's a data model
   },
 
+  setMemfs : function(memFs){
+    this.memFs = memFs
+  },
+
   setDebugging: function (debugging) {
     this.opts.debug = debugging
   },
@@ -450,6 +454,7 @@ Processor.prototype = {
   },
 
   getFullScript: function () {
+    console.log('getting full script')
     var script = ''
     // add the file cache
     script += 'var gMemFs = ['
@@ -482,6 +487,7 @@ Processor.prototype = {
     const parameters = getParamValues(this.paramControls)
     const script = this.getFullScript()
     const fullurl = this.baseurl + this.filename
+    const options = {memFs: this.memFs}
 
     this.state = 1 // processing
     let that = this
@@ -507,11 +513,11 @@ Processor.prototype = {
     if (this.opts.useAsync) {
       this.builder = rebuildSolidAsync(script, fullurl, parameters, (err, objects) => {
         if (err && that.opts.useSync) {
-          this.builder = rebuildSolidSync(script, fullurl, parameters, callback)
+          this.builder = rebuildSolidSync(script, fullurl, parameters, callback, options)
         }else (callback(undefined, objects))
-      })
+      }, options)
     }else if (this.opts.useSync) {
-      this.builder = rebuildSolidSync(script, fullurl, parameters, callback)
+      this.builder = rebuildSolidSync(script, fullurl, parameters, callback, options)
     }
   },
 
