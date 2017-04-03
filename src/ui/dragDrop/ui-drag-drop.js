@@ -79,8 +79,8 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     memFsCount = files.length
     memFsTotal = files.length
 
-    //console.log('afterFilesRead', memFs, memFsTotal, files, 'changed',)
-    //NOTE: order is important, if you cache new data first, it will fail
+    // console.log('afterFilesRead', memFs, memFsTotal, files, 'changed',)
+    // NOTE: order is important, if you cache new data first, it will fail
     const changedFilesCount = changedFiles(memFs, files).length
     // FIXME : THIRD time the SAME data is cached
     files.forEach(file => saveScript(memFs, file.name, file.source))
@@ -92,21 +92,24 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     }
   }
 
+  // this handles all type of data from drag'n'drop, a list of files to read files, folders, etc
+  function handleFilesAndFolders (items) {
+    const files = walkFileTree2(items)
+    files.catch(function (error) {
+      console.log('failed to fetch files')
+    })
+    files.then(function (files) {
+      console.log('results yeah', files)
+      afterFilesRead({memFs, memFsCount, memFsTotal, memFsChanged}, files)
+    })
+  }
+
   function handleInputFiles (evt) {
     console.log('handleInputFiles()')
     if (evt.target.files) {
       if (evt.target.files.length > 0) {
         currentFiles = []
-        for (var i = 0; i < evt.target.files.length; i++) {
-          var file = evt.target.files[i]
-          var e = file.name.toLowerCase().match(/\.(\w+)$/i)
-          e = RegExp.$1
-          if (conversionFormats.indexOf(e) >= 0) {
-            currentFiles.push(evt.target.files[i]) // -- need to transfer the single elements
-          }
-        }
-        loadLocalFiles(currentFiles)
-        console.log('currentFiles', currentFiles)
+        handleFilesAndFolders(evt.target.files)
         return
       }
     }
@@ -126,7 +129,7 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
 
     if (evt.dataTransfer.items && evt.dataTransfer.items.length) { // full directories, let's try
       console.log('I RECIEVED SOME DATA HERE')
-      var items = evt.dataTransfer.items
+      const items = pseudoArraytoArray(evt.dataTransfer.items)
       currentFiles = []
       rootFs = []
       memFsCount = 0
@@ -136,31 +139,14 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
       rootFs = items
       currentFiles = items
 
-      const files = walkFileTree2(items)
-      files.catch(function (error) {
-        console.log('failed to fetch files')
-      })
-      files.then(function (files) {
-        console.log('results yeah', files)
-        afterFilesRead({memFs, memFsCount, memFsTotal, memFsChanged}, files)
-      })
+      handleFilesAndFolders(items)
     }
     // use the files list if not already processed above
     if (!evt.dataTransfer.items) {
       if (evt.dataTransfer.files.length > 0) {
+        // -- be aware: currentFiles = evt.dataTransfer.files won't work, as rewriting file will mess up the array
         console.log('here here here', evt.dataTransfer.files)
-        //currentFiles = pseudoArraytoArray(evt.dataTransfer.files) // -- be aware: currentFiles = evt.dataTransfer.files won't work, as rewriting file will mess up the array
-        //loadLocalFiles(currentFiles)
-        const files = walkFileTree2(evt.dataTransfer.files)
-        files.catch(function (error) {
-          console.log('failed to fetch files')
-        })
-        files.then(function (files) {
-          console.log('results yeah', files)
-          afterFilesRead({memFs, memFsCount, memFsTotal, memFsChanged}, files)
-        })
-
-
+        handleFilesAndFolders(evt.dataTransfer.files)
       } else {
         throw new Error('Please drop and drop one or more files')
       }
@@ -171,29 +157,17 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     console.log('File Error: [' + e.name + '] Please check permissions')
   }
 
-  // this is the linear drag'n'drop, a list of files to read (when folders aren't supported)
-  function loadLocalFiles (items) {
-    memFsCount = 0
-    memFsTotal = items.length
-    memFsChanged = 0
-
-    for (var i = 0; i < items.length; i++) {
-      var f = items[i]
-      // console.log(f)
-      readFileAsync(f)
-    }
-  }
-
   // set one file (the one dragged) or main.jscad
   function setCurrentFile (file) {
-    //console.log(`setCurrentFile: ${file.name}: ${file.source}`)
-    if(!isSupportedFormat(file)){
+    // console.log(`setCurrentFile: ${file.name}: ${file.source}`)
+    if (!isSupportedFormat(file)) {
       throw new Error('Please drag and drop a compatible file')
     }
     if (file.size === 0) {
       throw new Error('You have dropped an empty file')
     }
     fileChanged(file)
+    parseFile(file)
   }
 
   // update the dropzone visual & call the main parser
@@ -221,7 +195,6 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
         document.getElementById('filedropzone_input').style.display = 'none'
       }
     }
-    parseFile(f)
   }
 
   // check if there were changes: (re-)load all files and check if content was changed
@@ -237,15 +210,7 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
 
     // walkFileTree won't work the same way with file:// (regardless of chrome|firefox) , use alternative
     const rawData = (!rootFs || rootFs.length === 0 || me === 'web-offline') ? currentFiles : rootFs
-    const files = walkFileTree2(rawData)
-    files.catch(function (error) {
-      console.log('failed to fetch files')
-    })
-    files.then(function (files) {
-      console.log('results yeah', files)
-      afterFilesRead({memFs, memFsCount, memFsTotal, memFsChanged}, files)
-    })
-
+    handleFilesAndFolders(rawData)
   }
 
   var previousScript = null
@@ -265,6 +230,7 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
       if ('cache' in data && data.cache === true) {
         saveScript(memFs, data.filename, data.converted)
       }
+      gProcessor.setMemfs(memFs)
       gProcessor.setJsCad(data.converted, data.filename)
     }
   }
@@ -306,5 +272,6 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
   }
   return {
     toggleAutoReload,
-    reloadAllFiles}
+    reloadAllFiles
+  }
 }
