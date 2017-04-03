@@ -30,25 +30,27 @@ export function isSupportedFormat (file) {
 export function pseudoArraytoArray (pseudoArray) {
   let array = []
   for (var i = 0; i < pseudoArray.length; i++) {
-    array.push(pseudoArray[i])
+    const item = pseudoArray[i]
+    array.push(item.webkitGetAsEntry ? item.webkitGetAsEntry() : item)
   }
-  console.log('fooarray', array)
   return array
 }
 
 function processItems (items) {
-  let results = pseudoArraytoArray(items).reduce((result, item) => {
-    item = item.webkitGetAsEntry ? item.webkitGetAsEntry() : item
-    if (item.isFile) {
-      result.push(processFile(item))
-    } else if (item.isDirectory) {
-      result.push(processDirectory(item))
-    } else if (item instanceof File) {
-      const file = isSupportedFormat(item) ? readFileAsync(item, {fullPath:undefined}) : undefined
-      result.push(file)
-    }
-    return result
-  }, [])
+  let results = pseudoArraytoArray(items)
+    .filter(x => x !== null && x !== undefined)// skip empty items
+    .reduce((result, item) => {
+      item = item.webkitGetAsEntry ? item.webkitGetAsEntry() : item
+      if (item.isFile) {
+        result.push(processFile(item))
+      } else if (item.isDirectory) {
+        result.push(processDirectory(item))
+      } else if (item instanceof File) {
+        const file = isSupportedFormat(item) ? readFileAsync(item, {fullPath: undefined}) : undefined
+        result.push(file)
+      }
+      return result
+    }, [])
 
   return Promise.all(results).then(flatten)
 }
