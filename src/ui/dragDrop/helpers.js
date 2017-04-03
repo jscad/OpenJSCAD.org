@@ -1,4 +1,15 @@
-export function findMainFile (memFsTotal, memFs, file) {
+export function changedFiles (memFs, files) {
+  return files.filter(file => (!memFs[file.name] || memFs[file.name].source !== file.source))
+  /*return files.reduce(function (changed, file) {
+    // note: assigning f.source = source to make memFs[].source the same, therefore as next
+    if (!memFs[file.name] || memFs[file.name].source !== file.source) {
+      changed++
+    }
+    return changed
+  }, 0)*/
+}
+
+export function findMainFile ({memFs, memFsTotal}, files) {
   let mainFile
   if (memFsTotal > 1) {
     for (let filename in memFs) {
@@ -17,7 +28,7 @@ export function findMainFile (memFsTotal, memFs, file) {
       }
     }
   } else {
-    mainFile = memFs[file.name]
+    mainFile = memFs[files[0].name]
   }
   return mainFile
 }
