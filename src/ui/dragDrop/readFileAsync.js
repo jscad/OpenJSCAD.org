@@ -1,4 +1,4 @@
-function readFileAsync (file) {
+export function readFileAsync (file) {
   const isBinaryFile = file.name.match(/\.(stl|gcode)$/) // FIXME how to determine?
   const reader$ = isBinaryFile ? readAsBinaryString(file, 'UTF-8') : readAsText(file, 'UTF-8')
 
@@ -31,44 +31,64 @@ function doStuffOnceFilesAreRead (file$, memFs) {
 }
 
 // RANT: JavaScript at its finest: 50 lines code to read a SINGLE file
-//       this code looks complicate and it is complicated.
-function readFileAsync (file, {memFs, memFsCount, memFsTotal, memFsChanged}) {
+//       this code looks complicate and it is complicate.
+function readFileAsync (f) {
   // console.log("readFileAsync: "+f.name)
-  const reader = new FileReader()
-  return new Promise(function (resolve, reject) {
-    if (file.name.match(/\.(stl|gcode)$/)) { // FIXME how to determine?
-      reader.readAsBinaryString(file, 'UTF-8')
-    } else {
-      reader.readAsText(file, 'UTF-8')
-    }
 
-    reader.onloadend = function (evt) {
-      if (evt.target.readyState === FileReader.DONE) {
-        var source = evt.target.result
-        // console.log("done reading: "+f.name,source?source.length:0);   // it could have been vanished while fetching (race condition)
-        memFsCount++
-        // note: assigning f.source = source too make memFs[].source the same, therefore as next
-        if (!memFs[file.name] || memFs[file.name].source !== source)
-          memFsChanged++
+  var reader = new FileReader()
+  reader.onloadend = function (evt) {
+    if (evt.target.readyState == FileReader.DONE) {
+      var source = evt.target.result
 
-        saveScript(memFs, file.name, source)
+      // console.log("done reading: "+f.name,source?source.length:0);   // it could have been vanished while fetching (race condition)
+      memFsCount++
 
-        if (memFsCount === memFsTotal) { // -- are we done reading all?
-          // console.log("readFileAsync: "+memFsTotal+" files read")
-          const gMainFile = findMainFile(memFsTotal, memFs, file)
+      // note: assigning f.source = source too make memFs[].source the same, therefore as next
+      if (!memFs[f.name] || memFs[f.name].source != source) {
+        memFsChanged++
+      }
 
-          if (memFsChanged > 0) {
-            if (!gMainFile) {
-              reject('No main.jscad found')
-            } else {
-              resolve(gMainFile)
-            // console.log("update & redraw "+gMainFile.name)
+      // FIXME : THIRD time the SAME data is cached
+      saveScript(memFs, f.name, source)
+
+      if (memFsCount == memFsTotal) { // -- are we done reading all?
+        // console.log("readFileAsync: "+memFsTotal+" files read")
+
+        if (memFsTotal > 1) {
+          for (var fn in memFs) {
+            if (memFs[fn].name.match(/main.(jscad|js)$/)) {
+              gMainFile = memFs[fn]
+              break
             }
           }
+          if (!gMainFile) {
+            // try again but search for the function declaration of main()
+            for (var fn in memFs) {
+              if (memFs[fn].source.search(/function\s+main\s*\(/) >= 0) {
+                gMainFile = memFs[fn]
+                break
+              }
+            }
+          }
+        } else {
+          gMainFile = memFs[f.name]
         }
-      } else {
-        reject('Failed to read file')
+        if (memFsChanged > 0) {
+          if (!gMainFile) throw ('No main.jscad found')
+          // console.log("update & redraw "+gMainFile.name)
+          setCurrentFile(gMainFile)
+        }
       }
+    } else {
+      throw new Error('Failed to read file')
+      if (gProcessor) gProcessor.clearViewer()
+      previousScript = null
     }
-  })
+  }
+
+  if (f.name.match(/\.(stl|gcode)$/)) { // FIXME how to determine?
+    reader.readAsBinaryString(f, 'UTF-8')
+  } else {
+    reader.readAsText(f, 'UTF-8')
+  }
 }
