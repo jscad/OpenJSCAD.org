@@ -30,7 +30,6 @@ import {findMainFile, changedFiles} from './helpers'
 // --- Global Variables
 var currentFiles = [] // linear array, contains files (to read)
 var memFs = [] // associated array, contains file content in source memFs[i].{name,source}
-var gMainFile
 var autoReloadTimer = null
 
 export function setupDragDrop (me, {gProcessor, gEditor}) {
@@ -40,9 +39,7 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
   var memFsTotal = 0 // async reading: total files to read (Count==Total => all files read)
   var memFsChanged = 0 // how many files have changed
   var rootFs = [] // root(s) of folders
-  var gMainFile = null // file entry containing main()
-
-  // console.log("setupDragDrop()")
+  var previousScript = null
 
   var dropZone = document.getElementById('filedropzone')
   var fileInput = document.getElementById('files-input')
@@ -106,12 +103,8 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
 
   function handleInputFiles (evt) {
     console.log('handleInputFiles()')
-    if (evt.target.files) {
-      if (evt.target.files.length > 0) {
-        currentFiles = []
-        handleFilesAndFolders(evt.target.files)
-        return
-      }
+    if (evt.target.files && evt.target.files.length > 0) {
+      handleFilesAndFolders(evt.target.files)
     }
     throw new Error('Please drop and drop one or more files')
   }
@@ -125,10 +118,8 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     if (!evt.dataTransfer.files) throw new Error('Event is not a datatransfer (2)')
 
     memFs = []
-    gMainFile = null
 
     if (evt.dataTransfer.items && evt.dataTransfer.items.length) { // full directories, let's try
-      console.log('I RECIEVED SOME DATA HERE')
       const items = pseudoArraytoArray(evt.dataTransfer.items)
       currentFiles = []
       rootFs = []
@@ -144,17 +135,11 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     // use the files list if not already processed above
     if (!evt.dataTransfer.items) {
       if (evt.dataTransfer.files.length > 0) {
-        // -- be aware: currentFiles = evt.dataTransfer.files won't work, as rewriting file will mess up the array
-        console.log('here here here', evt.dataTransfer.files)
         handleFilesAndFolders(evt.dataTransfer.files)
       } else {
         throw new Error('Please drop and drop one or more files')
       }
     }
-  }
-
-  function errorHandler (e) {
-    console.log('File Error: [' + e.name + '] Please check permissions')
   }
 
   // set one file (the one dragged) or main.jscad
@@ -166,21 +151,17 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     if (file.size === 0) {
       throw new Error('You have dropped an empty file')
     }
-    fileChanged(file)
+    updateDropZoneVisual(file, memFsTotal)
     parseFile(file)
   }
 
-  // update the dropzone visual & call the main parser
-  function fileChanged (f) {
+  // update the dropzone visual
+  function updateDropZoneVisual (file, memFsTotal) {
     console.log('fileChanged()')
-    if (f) {
-      var txt
-      if (memFsTotal > 1) {
-        txt = 'Current file: ' + f.name + ' (+ ' + (memFsTotal - 1) + ' more files)'
-      } else {
-        txt = 'Current file: ' + f.name
-      }
-      document.getElementById('currentfile').innerHTML = txt
+    if (file) {
+      const text = memFsTotal > 1 ? `Current file: ${file.name} (${memFsTotal - 1} more files)` : `Current file: ${file.name}`
+
+      document.getElementById('currentfile').innerHTML = text
       document.getElementById('filedropzone_filled').style.display = 'block'
       document.getElementById('filedropzone_empty').style.display = 'none'
       document.getElementById('filedropzone_input').style.display = 'none'
@@ -199,8 +180,7 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
 
   // check if there were changes: (re-)load all files and check if content was changed
   function superviseAllFiles (p) {
-    console.log('superviseAllFiles', p)
-
+    //console.log('superviseAllFiles', p)
     memFsCount = memFsTotal = 0
     memFsChanged = 0
 
@@ -212,8 +192,6 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     const rawData = (!rootFs || rootFs.length === 0 || me === 'web-offline') ? currentFiles : rootFs
     handleFilesAndFolders(rawData)
   }
-
-  var previousScript = null
 
   function saveScript (memFs, filename, source) {
     var f = {name: filename, source: source}
@@ -230,6 +208,7 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
       if ('cache' in data && data.cache === true) {
         saveScript(memFs, data.filename, data.converted)
       }
+      // set the processor's active memFs
       gProcessor.setMemfs(memFs)
       gProcessor.setJsCad(data.converted, data.filename)
     }
