@@ -1,14 +1,22 @@
+/**
+ * returns list of files whose source has changed compared to the file with the same
+ * name in memFs
+ * @param {Object} memFs - The reference hash of files, organized by name.
+ * @param {Array} files - The list of files : need to have a source & name field.
+ * @return array of files that changed
+ */
 export function changedFiles (memFs, files) {
   return files.filter(file => (!memFs[file.name] || memFs[file.name].source !== file.source))
-  /*return files.reduce(function (changed, file) {
-    // note: assigning f.source = source to make memFs[].source the same, therefore as next
-    if (!memFs[file.name] || memFs[file.name].source !== file.source) {
-      changed++
-    }
-    return changed
-  }, 0)*/
 }
 
+/**
+ * finds the 'main file' in a list of files either a file called main.jscad/js OR a file containing
+ * a function called main()
+ * name in memFs
+ * @param {Object} memFs,memFsTotal - The reference hash of files, organized by name and the total count.
+ * @param {Array} files - The list of files : need to have a source & name field.
+ * @return the main file, or undefined
+ */
 export function findMainFile ({memFs, memFsTotal}, files) {
   let mainFile
   if (memFsTotal > 1) {
