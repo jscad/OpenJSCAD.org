@@ -25,8 +25,6 @@ export default function includeJscadSync (relpath, fn, memFs) {
     xhr.open('GET', url, false)
     xhr.onload = function () {
       var src = this.responseText
-      //console.log('src',src)
-      //eval(src) // UGH ???
       resolve(src)
     }
     xhr.onerror = (err) => reject(err)
