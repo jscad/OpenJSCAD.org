@@ -1,16 +1,17 @@
-export default function getParamValues (paramControls) {
+export default function getParamValues (paramControls, onlyChanged) {
   var paramValues = {}
+  var value
   for (var i = 0; i < paramControls.length; i++) {
     var control = paramControls[i]
     switch (control.paramType) {
       case 'choice':
-        paramValues[control.paramName] = control.options[control.selectedIndex].value
+        value = control.options[control.selectedIndex].value
         break
       case 'float':
       case 'number':
         var value = control.value
         if (!isNaN(parseFloat(value)) && isFinite(value)) {
-          paramValues[control.paramName] = parseFloat(value)
+          value = parseFloat(value)
         } else {
           throw new Error('Parameter (' + control.paramName + ') is not a valid number (' + value + ')')
         }
@@ -18,7 +19,7 @@ export default function getParamValues (paramControls) {
       case 'int':
         var value = control.value
         if (!isNaN(parseFloat(value)) && isFinite(value)) {
-          paramValues[control.paramName] = parseInt(value)
+          value = parseInt(value)
         } else {
           throw new Error('Parameter (' + control.paramName + ') is not a valid number (' + value + ')')
         }
@@ -26,15 +27,23 @@ export default function getParamValues (paramControls) {
       case 'checkbox':
       case 'radio':
         if (control.checked === true && control.value.length > 0) {
-          paramValues[control.paramName] = control.value
+          value = control.value
         } else {
-          paramValues[control.paramName] = control.checked
+          value = control.checked
         }
         break
       default:
-        paramValues[control.paramName] = control.value
+        value = control.value
         break
     }
+    if (onlyChanged) {
+      if ('initial' in control && control.initial == value) {
+        continue
+      } else if ('default' in control && control.default == value) {
+        continue
+      }
+    }
+    paramValues[control.paramName] = value
   // console.log(control.paramName+":"+paramValues[control.paramName])
   }
   return paramValues
