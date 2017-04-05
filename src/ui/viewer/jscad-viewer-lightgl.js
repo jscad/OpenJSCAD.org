@@ -15,21 +15,22 @@ import {colorBytes} from './jscad-viewer-helpers'
 
   this.containerEl = containerelement;
 
-  this.parseSizeParams();
+  this.createRenderer();
 
-  this.createRenderer(options.noWebGL);
-  this.handleResize();
   this.gl.resizeCanvas = this.handleResize.bind (this);
-  // only window resize is available, so add an event callback for the canvas
-  // window.addEventListener( 'resize', this.handleResize.bind (this) );
 
   this.animate();
-
 };
 
 LightGLEngine.prototype = {
   init: function () {
+  // set initial canvas size
+    this.gl.canvas.width  = this.containerEl.width;
+    this.gl.canvas.height = this.containerEl.height;
 
+    this.handleResize();
+  // only window resize is available, so add an event callback for the canvas
+  // window.addEventListener( 'resize', this.handleResize.bind (this) );
   },
   animate: function () {
 
@@ -49,7 +50,7 @@ LightGLEngine.prototype = {
 
     this.onDraw();
   },
-  createRenderer: function (noWebGL) {
+  createRenderer: function () {
     // Set up WebGL state
     var gl = GL.create();
     this.gl = gl;
@@ -261,7 +262,6 @@ LightGLEngine.prototype = {
 
   onMouseMove: function(e) {
     if (e.dragging) {
-      //console.log(e.which,e.button);
       var b = e.button;
       if(e.which) {                            // RANT: not even the mouse buttons are coherent among the brand (chrome,firefox,etc)
         b = e.which;
