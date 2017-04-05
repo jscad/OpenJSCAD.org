@@ -20,7 +20,7 @@ var remoteUrl = './remote.pl?url='
 var gProcessor = null
 var gEditor = null
 
-var gMemFs = [] // associated array, contains file content in source gMemFs[i].{name,source}
+var memFs = [] // associated array, contains file content in source memFs[i].{name,source}
 var gCurrentFiles = [] // linear array, contains files (to read)
 
 let state = {
@@ -105,7 +105,7 @@ function init () {
     let examples = document.getElementById('examples');
     if (examples) {
       createExamples(me)
-      loadInitialExample(me, {gMemFs, gProcessor, gEditor, remoteUrl})
+      loadInitialExample(me, {memFs, gProcessor, gEditor, remoteUrl})
 
       // -- Examples
       examplesTitle.addEventListener('click', function (e) {
