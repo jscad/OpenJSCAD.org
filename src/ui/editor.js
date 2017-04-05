@@ -93,7 +93,7 @@ export function setUpEditor (divname, gProcessor) {
     exec: function (editor) {
       var src = editor.getValue()
       localStorage.editorContent = src
-      gProcessor.setStatus('Saved source to browser storage')
+      gProcessor.setStatus2('Saved source to browser storage')
     }
   })
   gEditor.commands.addCommand({
@@ -103,7 +103,7 @@ export function setUpEditor (divname, gProcessor) {
       var src = localStorage.editorContent
       src && src.length ? editor.setValue(src, 1) : null
       gEditor.commands.exec('setJSCAD', editor)
-      gProcessor.setStatus('Loaded source from browser storage')
+      gProcessor.setStatu2('Loaded source from browser storage')
     }
   })
   gEditor.commands.addCommand({
