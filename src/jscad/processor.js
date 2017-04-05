@@ -374,7 +374,7 @@ Processor.prototype = {
     this.selectdiv.style.display = (this.currentObjects.length > 1) ? 'none' : 'none' // FIXME once there's a data model
   },
 
-  setMemfs : function(memFs){
+  setMemfs: function(memFs){
     this.memFs = memFs
   },
 
@@ -404,15 +404,22 @@ Processor.prototype = {
     }
   },
 
-  // set status and text to display
-  setStatus2: function (status, text) {
+  // set status and data to display
+  setStatus2: function (data, status) {
     if (typeof document !== 'undefined') {
       const statusMap = {
-        busy: " <img id=busy src='imgs/busy.gif'>"
+        error: data,
+        busy: `${data} <img id=busy src='imgs/busy.gif'>`,
+        loading: `Loading ${data} <img id=busy src='imgs/busy.gif'>`,
+        converting: `Converting ${data} <img id=busy src='imgs/busy.gif'>`,
+        fetching : `Fetching ${data} <img id=busy src='imgs/busy.gif'>`,
+        rendering: `Rendering. Please wait <img id=busy src='imgs/busy.gif'>`
       }
-      this.statusspan.innerHTML = text + statusMap[status]
+      const content = statusMap[status] ? statusMap[status] : data
+
+      this.statusspan.innerHTML = content
     } else {
-      log(text)
+      log(data)
     }
   },
 
@@ -453,21 +460,22 @@ Processor.prototype = {
     }
   },
 
+  //FIXME: not needed anymore
   getFullScript: function () {
     console.log('getting full script')
     var script = ''
     // add the file cache
-    script += 'var gMemFs = ['
-    if (typeof (gMemFs) === 'object') {
+    /*script += 'var gMemFs = ['
+    if (typeof (this.memFs) === 'object') {
       var comma = ''
-      for (var fn in gMemFs) {
+      for (var fn in this.memFs) {
         script += comma
-        script += JSON.stringify(gMemFs[fn])
+        script += JSON.stringify(this.memFs[fn])
         comma = ','
       }
     }
     script += '];\n'
-    script += '\n'
+    script += '\n'*/
     // add the main script
     script += this.script
     return script
@@ -479,7 +487,7 @@ Processor.prototype = {
     this.setError('')
     this.clearViewer()
     this.enableItems()
-    this.setStatus("Rendering. Please wait <img id=busy src='imgs/busy.gif'>")
+    this.setStatus2(null, 'rendering')
 
     // rebuild the solid
 
