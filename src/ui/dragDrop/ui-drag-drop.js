@@ -24,8 +24,8 @@ import { conversionFormats } from '../../jscad/conversionFormats'
 import createConversionWorker from '../../io/createConversionWorker'
 import { putSourceInEditor } from '../editor' // FIXME : eeek! dependency on ui
 
-import {walkFileTree as walkFileTree2, pseudoArraytoArray, isSupportedFormat} from './walkFileTree'
-import {findMainFile, changedFiles} from './helpers'
+import {walkFileTree, pseudoArraytoArray, isSupportedFormat} from './walkFileTree'
+import {findMainFile, changedFiles, isLocalMode} from './helpers'
 
 // --- Global Variables
 var currentFiles = [] // linear array, contains files (to read)
@@ -68,10 +68,10 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
 
   // ---------
   function reloadAllFiles () {
-    console.log('reloadAllFiles()')
     superviseAllFiles({forceReload: true})
   }
 
+  // function is called once ALL files have been read (not evaluated/compiled)
   function afterFilesRead ({memFs, memFsCount, memFsTotal, memFsChanged}, files) {
     memFsCount = files.length
     memFsTotal = files.length
@@ -80,36 +80,49 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     // NOTE: order is important, if you cache new data first, it will fail
     const changedFilesCount = changedFiles(memFs, files).length
     // FIXME : THIRD time the SAME data is cached
-    files.forEach(file => saveScript(memFs, file.name, file.source))
+    files.forEach(file => saveScript(memFs, file.name, file.source, file.fullpath))
     const mainFile = findMainFile({memFs, memFsTotal}, files)
 
     if (changedFilesCount > 0) {
       if (!mainFile) throw new Error('No main.jscad found')
-      setCurrentFile(mainFile)
+      setCurrentFile(mainFile, memFsTotal)
     }
   }
 
   // this handles all type of data from drag'n'drop, a list of files to read files, folders, etc
   function handleFilesAndFolders (items) {
-    const files = walkFileTree2(items)
+    const files = walkFileTree(items)
     files.catch(function (error) {
-      console.log('failed to fetch files')
+      console.error('failed to read files', error)
+      if (gProcessor) gProcessor.clearViewer()
+      previousScript = null
     })
     files.then(function (files) {
-      console.log('results yeah', files)
+      console.log('processed files & folders', files)
       afterFilesRead({memFs, memFsCount, memFsTotal, memFsChanged}, files)
     })
   }
 
   function handleInputFiles (evt) {
-    console.log('handleInputFiles()')
+    console.log('handleInputFiles')
     if (evt.target.files && evt.target.files.length > 0) {
-      handleFilesAndFolders(evt.target.files)
+      const items = pseudoArraytoArray(evt.target.files)
+      memFsCount = 0
+      memFsTotal = 0
+      memFsChanged = 0
+
+      rootFs = items
+      currentFiles = items
+      handleFilesAndFolders(items)
+    } else {
+      throw new Error('Please drop and drop one or more files')
     }
-    throw new Error('Please drop and drop one or more files')
   }
 
   function handleFileSelect (evt) {
+    // FIXME: imperative, ugly, temporary
+    document.getElementById('reloadAllFiles').disabled = false
+    document.getElementById('autoreload').disabled = false
     console.log('handleFileSelect')
     evt.stopPropagation()
     evt.preventDefault()
@@ -121,21 +134,30 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
 
     if (evt.dataTransfer.items && evt.dataTransfer.items.length) { // full directories, let's try
       const items = pseudoArraytoArray(evt.dataTransfer.items)
-      currentFiles = []
-      rootFs = []
       memFsCount = 0
       memFsTotal = 0
       memFsChanged = 0
 
       rootFs = items
       currentFiles = items
-
       handleFilesAndFolders(items)
     }
-    // use the files list if not already processed above
+    // use the files list if not already processed above, this means you CANNOT use reload/autoreload
+    // TODO: reuse this to set UI , ideally using observables
     if (!evt.dataTransfer.items) {
       if (evt.dataTransfer.files.length > 0) {
-        handleFilesAndFolders(evt.dataTransfer.files)
+        const items = pseudoArraytoArray(evt.dataTransfer.files)
+        memFsCount = 0
+        memFsTotal = 0
+        memFsChanged = 0
+
+        rootFs = items
+        currentFiles = items
+        handleFilesAndFolders(items)
+
+        // FIXME: imperative, ugly, temporary
+        document.getElementById('reloadAllFiles').disabled = true
+        document.getElementById('autoreload').disabled = true
       } else {
         throw new Error('Please drop and drop one or more files')
       }
@@ -143,7 +165,7 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
   }
 
   // set one file (the one dragged) or main.jscad
-  function setCurrentFile (file) {
+  function setCurrentFile (file, memFsTotal) {
     // console.log(`setCurrentFile: ${file.name}: ${file.source}`)
     if (!isSupportedFormat(file)) {
       throw new Error('Please drag and drop a compatible file')
@@ -180,22 +202,20 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
 
   // check if there were changes: (re-)load all files and check if content was changed
   function superviseAllFiles (p) {
-    //console.log('superviseAllFiles', p)
+    // console.log('superviseAllFiles', p)
     memFsCount = memFsTotal = 0
     memFsChanged = 0
 
     if (p && p.forceReload) {
       memFsChanged++
     }
-
     // walkFileTree won't work the same way with file:// (regardless of chrome|firefox) , use alternative
     const rawData = (!rootFs || rootFs.length === 0 || me === 'web-offline') ? currentFiles : rootFs
     handleFilesAndFolders(rawData)
   }
 
-  function saveScript (memFs, filename, source) {
-    var f = {name: filename, source: source}
-    memFs[filename] = f
+  function saveScript (memFs, name, source, fullpath = '') {
+    memFs[name] = {name, source, fullpath}
   }
 
   function onConversionDone (data) {
@@ -204,11 +224,11 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
       putSourceInEditor(gEditor, data.source, data.filename)
     }
     if ('filename' in data && 'converted' in data) {
-      // console.log("processor: "+data.filename+" ["+data.converted+']')
+      // console.log("gProcessor: "+data.filename+" ["+data.converted+']')
       if ('cache' in data && data.cache === true) {
         saveScript(memFs, data.filename, data.converted)
       }
-      // set the processor's active memFs
+      // set the gProcessor's active memFs
       gProcessor.setMemfs(memFs)
       gProcessor.setJsCad(data.converted, data.filename)
     }
@@ -218,7 +238,7 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
   function parseFile (file) {
     const {source, name} = file
     if (source === '') {
-      if (document.location.toString().match(/^file\:\//i)) {
+      if (isLocalMode()) {
         throw new Error('Could not read file. You are using a local copy of OpenJSCAD.org; if you are using Chrome, you need to launch it with the following command line option:\n\n--allow-file-access-from-files\n\notherwise the browser will not have access to uploaded files due to security restrictions.')
       }
       throw new Error('Could not read file.')
@@ -226,10 +246,9 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     if (previousScript === source) return
 
     if (gProcessor) {
-      // FIXME: why do we cache data if it is overwritten in 'onConversionDone'
-      saveScript(memFs, name, source)
       // FIXME: refactor : same code as ui/examples
-      gProcessor.setStatus('Converting ' + name + " <img id=busy src='imgs/busy.gif'>")
+      //TODO: don't set these status manually, use something like
+      gProcessor.setStatus2(name, 'converting')
       const worker = createConversionWorker(onConversionDone)
       const baseurl = gProcessor.baseurl
       // NOTE: cache: true is very important to control the evaluation of all cached files (code)

@@ -12,9 +12,12 @@ const readFileAsync = function (file, fileMeta) {
   return new Promise(function (resolve, reject) {
     isBinaryFile ? reader.readAsBinaryString(file, 'UTF-8') : reader.readAsText(file, 'UTF-8')
 
+    // remove rootfolder since all files are within it
+    const fullpath = fileMeta && fileMeta.fullPath ? fileMeta.fullPath.split('/').slice(2).join('/') : ''
+
     reader.onloadend = event => {
       event.target.readyState === FileReader.DONE
-        ? resolve({name: file.name, fullpath: fileMeta.fullPath, source: event.target.result})
+        ? resolve({name: file.name, fullpath: fullpath, source: event.target.result})
         : reject('Failed to load file')
     }
   })
@@ -24,7 +27,7 @@ export function isSupportedFormat (file) {
   var e = file.name.toLowerCase().match(/\.(\w+)$/i)
   e = RegExp.$1
   return conversionFormats.indexOf(e) >= 0
-  // NOTE: was incrementing memFsTotal++ ONLY if format is valid
+  // NOTE: was incrementing memFsTotal++ ONLY if format is valid, not needed anymore as far as I know
 }
 
 export function pseudoArraytoArray (pseudoArray) {
@@ -40,19 +43,22 @@ function processItems (items) {
   let results = pseudoArraytoArray(items)
     .filter(x => x !== null && x !== undefined)// skip empty items
     .reduce((result, item) => {
-      item = item.webkitGetAsEntry ? item.webkitGetAsEntry() : item
       if (item.isFile) {
         result.push(processFile(item))
       } else if (item.isDirectory) {
         result.push(processDirectory(item))
       } else if (item instanceof File) {
         const file = isSupportedFormat(item) ? readFileAsync(item, {fullPath: undefined}) : undefined
+        if (!file) {
+          throw new Error('Unsuported format (or folder in Safari)!')
+        }
         result.push(file)
       }
       return result
     }, [])
 
-  return Promise.all(results).then(flatten)
+  // console.warn(`ignoring Unsuported file ${fileData.name}`): this is for cases like .DSSTORE etc on mac
+  return Promise.all(results).then(x => x.filter(x => x !== null && x !== undefined)).then(flatten)
 }
 
 function processFile (fileItem) {
@@ -76,7 +82,7 @@ function processDirectory (directory) {
 // this is the core of the drag'n'drop:
 //    1) walk the tree
 //    2) read the files (readFileAsync)
-//    3) re-render if there was a change (via readFileAsync)
+//    3) return a flattened list of promises containing all file entries
 export function walkFileTree (items) {
   return processItems(items)
 }
@@ -93,10 +99,4 @@ export function afterFilesRead ({memFs, memFsCount, memFsTotal, memFsChanged}, f
     if (!mainFile) throw new Error('No main.jscad found')
     setCurrentFile(mainFile) // ARGH , cannot do this here
   }
-}
-
-function afterReadFileASyncError () {
-  throw new Error('Failed to read file')
-  if (gProcessor) gProcessor.clearViewer()
-  previousScript = null
 }
