@@ -2,85 +2,28 @@ import LightGLEngine from './jscad-viewer-lightgl'
 import {colorRGBA, parseColor} from './jscad-viewer-helpers'
 
 /**
- * Merge deep two objects, simplified version for config
- * @param   {object} dst destionation object
- * @param   {object} src source object
- * @returns {object} modified destination object
- */
-function deepMerge (dst, patch) {
-  for (var key in patch) {
-    // special check for color strings, we'll parse those strings and put into rgba object
-    if (
-      patch[key] !== undefined && patch[key].constructor && patch[key].constructor === String
-      && dst[key] !== undefined && dst[key].constructor && dst[key].constructor === Object
-      && 'r' in dst[key] && 'g' in dst[key] && 'b' in dst[key]
-    ) {
-      dst[key] = colorRGBA(parseColor(patch[key]));
-    } else if (patch[key] !== undefined && patch[key].constructor && patch[key].constructor === Object) {
-      dst[key] = dst[key] || {};
-      arguments.callee(dst[key], patch[key]);
-    } else {
-      dst[key] = patch[key];
-    }
-  }
-  return dst;
-}
-
-/**
- * Convert legacy options `drawLines`, `drawFaces`, `color` and `bgColor`
- * @param {object} options modern options object
- * @param {object} custom  legacy options object
- */
-function applyLegacyOptions (options, custom) {
-  if ('drawLines' in custom) {
-    options.solid.lines = custom.drawLines;
-  }
-  if ('drawFaces' in custom) {
-    options.solid.faces = custom.drawFaces;
-  }
-  if ('color' in custom) {
-    options.solid.faceColor = {
-      r: custom.color[0],
-      g: custom.color[1],
-      b: custom.color[2],
-      a: custom.color[3] || 1,
-    };
-  }
-  if ('bgColor' in custom) {
-    options.background.color = {
-      r: custom.bgColor[0],
-      g: custom.bgColor[1],
-      b: custom.bgColor[2],
-      a: custom.bgColor[3] || 1,
-    };
-  }
-}
-
-/**
  * A viewer is a WebGL canvas that lets the user view a mesh.
  * The user can tumble it around by dragging the mouse.
  * @param {DOMElement} containerelement container element
- * @param {object}     customization    options for renderer
+ * @param {object}     options          options for renderer
  */
-export default function Viewer(containerelement, customization) {
-
-  // see the various methods below on how to change these
-  var options = Viewer.defaults();
-
-  deepMerge (options, customization || {});
-
-  applyLegacyOptions (options, customization || {});
-
-  this.options = options;
+export default function Viewer(containerelement, options) {
+  // see the defaults method on how to change these
+  this.options = Viewer.defaults();
+  // apply all options found
+  if ("camera" in options) { this.setCameraOptions(options["camera"]); }
+  if ("plate"  in options) { this.setPlateOptions(options["plate"]); }
+  if ("axis"   in options) { this.setAxisOptions(options["axis"]); }
+  if ("solid"  in options) { this.setSolidOptions(options["solid"]); }
 
   var engine;
 
   // select drawing engine from options
-  if (options.engine && Viewer[options.engine]) {
-    engine = Viewer[options.engine];
+  if (this.options.engine && Viewer[this.options.engine]) {
+    engine = Viewer[this.options.engine];
   }
 
-  // get one of two exising
+  // instantiate the rendering engine
   if (!engine) {
     engine = LightGLEngine //|| Viewer.ThreeEngine
   }
@@ -96,7 +39,7 @@ export default function Viewer(containerelement, customization) {
     }
   }
 
-  var e = new engine (containerelement, options);
+  var e = new engine (containerelement, this.options);
   e.init();
   return e;
 };
