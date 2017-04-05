@@ -4,23 +4,23 @@
 // Include the requested script via MemFs (if available) or HTTP Request
 // (Note: This function is appended together with the JSCAD script)
 
-export default function includeJscadSync (relpath, fn, memFs) {
-  //console.log('include', relpath, fn)
+export default function includeJscadSync (relpath, scriptPath, memFs) {
+  // console.log('include', relpath, scriptPath)
   // include the requested script via MemFs if possible
   return new Promise(function (resolve, reject) {
     if (typeof (memFs) === 'object') {
       for (var fs in memFs) {
-        if (memFs[fs].name === fn) {
-          //eval(gMemFs[fs].source)
+        if (memFs[fs].fullpath === scriptPath || './' + memFs[fs].fullpath === scriptPath || memFs[fs].name === scriptPath) {
           resolve(memFs[fs].source)
+          return
         }
       }
     }
     // include the requested script via webserver access
     var xhr = new XMLHttpRequest()
-    var url = relpath + fn
-    if (fn.match(/^(https:|http:)/i)) {
-      url = fn
+    var url = relpath + scriptPath
+    if (scriptPath.match(/^(https:|http:)/i)) {
+      url = scriptPath
     }
     xhr.open('GET', url, false)
     xhr.onload = function () {
