@@ -19,7 +19,7 @@ export default function createConversionWorker (onDone) {
   // - save the converted source into the cache (gMemFs)
   // - set the converted source into the processor (viewer)
   worker.onmessage = function (e) {
-    console.log('got response from conversionWorker', e)
+    //console.log('got response from conversionWorker', e)
     if (e.data instanceof Object) {
       var data = e.data
       onDone(data)
