@@ -10,6 +10,8 @@
   "scripts": {
     "test": "ava './src/**/*.test.js' --require babel-register --verbose --timeout 10000",
     "build-web": "browserify src/ui/index.js -o dist/index.js -t [babelify browserify minifyify]",
+    "build-min": "browserify src/ui/min.js -o dist/min.js -t [babelify browserify minifyify]",
+    "build-opt": "browserify src/ui/opt.js -o dist/opt.js -t [babelify browserify minifyify]",
     "build-module": "rollup -c rollup.config.module.js",
     "build-cli": "rollup -c rollup.config.cli.js",
     "build-all": "npm run build-cli && npm run build-module && npm run build-web",
