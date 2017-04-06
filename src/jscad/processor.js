@@ -100,7 +100,6 @@ Processor.convertToSolid = convertToSolid
 
 Processor.prototype = {
   createElements: function () {
-    console.log('createElements')
     var that = this // for event handlers
 
     while (this.containerdiv.children.length > 0) {
@@ -434,10 +433,10 @@ Processor.prototype = {
     try {
       prevParamValues = getParamValues(this.paramControls, /*onlyChanged*/true)
     } catch (e) {}
-    
+
     this.abort()
     this.paramDefinitions = []
-    
+
     this.script = null
     this.setError('')
 
@@ -459,12 +458,12 @@ Processor.prototype = {
     }
   },
 
-  // FIXME: not needed anymore
+  // FIXME: not needed anymore, file cache is handled elsewhere
   getFullScript: function () {
-    console.log('getting full script')
-    var script = ''
+    return this.script
+    /*var script = ''
     // add the file cache
-    /* script += 'var gMemFs = ['
+     script += 'var gMemFs = ['
     if (typeof (this.memFs) === 'object') {
       var comma = ''
       for (var fn in this.memFs) {
@@ -474,10 +473,10 @@ Processor.prototype = {
       }
     }
     script += '];\n'
-    script += '\n' */
+    script += '\n'
     // add the main script
     script += this.script
-    return script
+    return script*/
   },
 
   rebuildSolid: function () {
@@ -499,7 +498,6 @@ Processor.prototype = {
     this.state = 1 // processing
     let that = this
     function callback (err, objects) {
-      console.log('all done')
       if (err) {
         if (err.stack) {
           let errtxt = ''

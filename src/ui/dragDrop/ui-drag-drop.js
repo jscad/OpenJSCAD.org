@@ -29,12 +29,10 @@ import {findMainFile, changedFiles, isLocalMode} from './helpers'
 
 // --- Global Variables
 var currentFiles = [] // linear array, contains files (to read)
-var memFs = [] // associated array, contains file content in source memFs[i].{name,source}
 var autoReloadTimer = null
 
-export function setupDragDrop (me, {gProcessor, gEditor}) {
-  console.log('setupDragDrop')
-
+export function setupDragDrop (me, {memFs, gProcessor, gEditor}) {
+  //memFs : // associated array, contains file content in source memFs[i].{name,source, fullpath}
   var memFsCount = 0 // async reading: count of already read files
   var memFsTotal = 0 // async reading: total files to read (Count==Total => all files read)
   var memFsChanged = 0 // how many files have changed
@@ -98,7 +96,7 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
       previousScript = null
     })
     files.then(function (files) {
-      console.log('processed files & folders', files)
+      //console.log('processed files & folders', files)
       afterFilesRead({memFs, memFsCount, memFsTotal, memFsChanged}, files)
     })
   }
@@ -120,10 +118,11 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
   }
 
   function handleFileSelect (evt) {
+    //console.log('handleFileSelect')
     // FIXME: imperative, ugly, temporary
     document.getElementById('reloadAllFiles').disabled = false
     document.getElementById('autoreload').disabled = false
-    console.log('handleFileSelect')
+
     evt.stopPropagation()
     evt.preventDefault()
 
@@ -179,7 +178,6 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
 
   // update the dropzone visual
   function updateDropZoneVisual (file, memFsTotal) {
-    console.log('fileChanged()')
     if (file) {
       const text = memFsTotal > 1 ? `Current file: ${file.name} (${memFsTotal - 1} more files)` : `Current file: ${file.name}`
 

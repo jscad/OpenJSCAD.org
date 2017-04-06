@@ -21,12 +21,8 @@ var gProcessor = null
 var gEditor = null
 
 var memFs = [] // associated array, contains file content in source memFs[i].{name,source}
-var gCurrentFiles = [] // linear array, contains files (to read)
+var currentFiles = [] // linear array, contains files (to read)
 
-let state = {
-  memFs: [],
-  currentFiles: []
-}
 
 function getElementHeight (element) {
   return parseInt(getComputedStyle(element).height)
@@ -122,7 +118,7 @@ function init () {
           editor.style.display = 'none'
         }
         const examplePath = e.currentTarget.dataset.path
-        fetchExample(examplePath, undefined, {gMemFs, gProcessor, gEditor})
+        fetchExample(examplePath, undefined, {memFs, gProcessor, gEditor})
       }
       var list = examples.querySelectorAll('.example')
       for (var i = 0; i < list.length; i++) {
@@ -195,7 +191,7 @@ function init () {
            here (see <a style='font-weight: normal' href='https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide#Maintaining_Larger_Projects' target=_blank>details</a>)
            <br>or directly edit OpenJSCAD or OpenSCAD code using the editor.`
 
-      let {toggleAutoReload, reloadAllFiles} = setupDragDrop(me, {gMemFs, gProcessor, gEditor})
+      let {toggleAutoReload, reloadAllFiles} = setupDragDrop(me, {memFs, gProcessor, gEditor})
       document.getElementById('reloadAllFiles').onclick = reloadAllFiles
       document.getElementById('autoreload').onclick = function (e) {
         const toggle = document.getElementById('autoreload').checked

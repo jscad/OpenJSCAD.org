@@ -141,7 +141,6 @@ export function fetchExample (filename, url, {memFs, gProcessor, gEditor}) {
 }
 
 export function loadInitialExample (me, params) {
-  console.log('loadInitialExample: ' + params)
   if (me === 'web-online') { // we are online, fetch first example
     const docUrl = document.URL
     const isRemote = docUrl.match(/#(https?:\/\/\S+)$/)
