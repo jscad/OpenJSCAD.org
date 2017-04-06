@@ -248,7 +248,7 @@ export function setupDragDrop (me, {gProcessor, gEditor}) {
     if (gProcessor) {
       // FIXME: refactor : same code as ui/examples
       //TODO: don't set these status manually, use something like
-      gProcessor.setStatus2(name, 'converting')
+      gProcessor.setStatus('converting', name)
       const worker = createConversionWorker(onConversionDone)
       const baseurl = gProcessor.baseurl
       // NOTE: cache: true is very important to control the evaluation of all cached files (code)

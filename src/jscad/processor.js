@@ -28,7 +28,7 @@ function exposeAPI (object, scope = window) {
   })
 }
 
-/*exposeAPI({OpenJsCad})// for backwards compatibility only
+/* exposeAPI({OpenJsCad})// for backwards compatibility only
 exposeAPI(primitives2d)
 exposeAPI(primitives3d)
 exposeAPI(booleanOps)
@@ -37,7 +37,7 @@ exposeAPI(extrusion)
 exposeAPI(color)
 exposeAPI(maths)
 exposeAPI(text)
-exposeAPI(csg)*/
+exposeAPI(csg) */
 
 export default function Processor (containerdiv, options) {
   if (options === undefined) options = {}
@@ -103,7 +103,7 @@ Processor.prototype = {
     console.log('createElements')
     var that = this // for event handlers
 
-    while(this.containerdiv.children.length > 0){
+    while (this.containerdiv.children.length > 0) {
       this.containerdiv.removeChild(0)
     }
 
@@ -114,7 +114,7 @@ Processor.prototype = {
     this.containerdiv.appendChild(viewerdiv)
     try {
       this.viewer = new Viewer(viewerdiv, this.opts.viewer)
-    } catch(e) {
+    } catch (e) {
       viewerdiv.innerHTML = '<b><br><br>Error: ' + e.toString() + '</b><br><br>A browser with support for WebGL is required'
     }
     // Zoom control
@@ -315,7 +315,7 @@ Processor.prototype = {
     // build a list of objects to view
     this.selectStartPoint = startpoint
     this.selectEndPoint = endpoint
-    if (startpoint > endpoint) { startpoint = this.selectEndPoint; endpoint = this.selectStartPoint; }
+    if (startpoint > endpoint) { startpoint = this.selectEndPoint; endpoint = this.selectStartPoint }
 
     var objs = this.currentObjects.slice(startpoint, endpoint + 1)
     this.viewedObject = convertToSolid(objs) // enforce CSG to display
@@ -326,7 +326,7 @@ Processor.prototype = {
   },
 
   updateFormats: function () {
-    while(this.formatDropdown.options.length > 0) {
+    while (this.formatDropdown.options.length > 0) {
       this.formatDropdown.options.remove(0)
     }
 
@@ -355,7 +355,7 @@ Processor.prototype = {
     // abort if state is processing
     if (this.state === 1) {
       // todo: abort
-      this.setStatus('Aborted.')
+      this.setStatus('aborted')
       this.builder.cancel()
       this.state = 3 // incomplete
       this.enableItems()
@@ -374,7 +374,7 @@ Processor.prototype = {
     this.selectdiv.style.display = (this.currentObjects.length > 1) ? 'none' : 'none' // FIXME once there's a data model
   },
 
-  setMemfs: function(memFs){
+  setMemfs: function (memFs) {
     this.memFs = memFs
   },
 
@@ -396,26 +396,26 @@ Processor.prototype = {
     this.enableItems()
   },
 
-  setStatus: function (txt) {
-    if (typeof document !== 'undefined') {
-      this.statusspan.innerHTML = txt
-    } else {
-      log(txt)
-    }
-  },
-
   // set status and data to display
-  setStatus2: function (data, status) {
+  setStatus: function (status, data) {
     if (typeof document !== 'undefined') {
       const statusMap = {
         error: data,
+        ready: 'Ready',
+        aborted: 'Aborted.',
         busy: `${data} <img id=busy src='imgs/busy.gif'>`,
         loading: `Loading ${data} <img id=busy src='imgs/busy.gif'>`,
+        loaded: data,
+        saving: data,
+        saved: data,
         converting: `Converting ${data} <img id=busy src='imgs/busy.gif'>`,
-        fetching : `Fetching ${data} <img id=busy src='imgs/busy.gif'>`,
+        fetching: `Fetching ${data} <img id=busy src='imgs/busy.gif'>`,
         rendering: `Rendering. Please wait <img id=busy src='imgs/busy.gif'>`
       }
       const content = statusMap[status] ? statusMap[status] : data
+      if (status === 'error') {
+        this.setError(data)
+      }
 
       this.statusspan.innerHTML = content
     } else {
@@ -447,8 +447,7 @@ Processor.prototype = {
       this.paramControls = []
       this.createParamControls(prevParamValues)
     } catch(e) {
-      this.setError(e.toString())
-      this.setStatus('Error.')
+      this.setStatus('error', e.toString())
       scripthaserrors = true
     }
     if (!scripthaserrors) {
@@ -460,12 +459,12 @@ Processor.prototype = {
     }
   },
 
-  //FIXME: not needed anymore
+  // FIXME: not needed anymore
   getFullScript: function () {
     console.log('getting full script')
     var script = ''
     // add the file cache
-    /*script += 'var gMemFs = ['
+    /* script += 'var gMemFs = ['
     if (typeof (this.memFs) === 'object') {
       var comma = ''
       for (var fn in this.memFs) {
@@ -475,7 +474,7 @@ Processor.prototype = {
       }
     }
     script += '];\n'
-    script += '\n'*/
+    script += '\n' */
     // add the main script
     script += this.script
     return script
@@ -487,7 +486,7 @@ Processor.prototype = {
     this.setError('')
     this.clearViewer()
     this.enableItems()
-    this.setStatus2(null, 'rendering')
+    this.setStatus('rendering')
 
     // rebuild the solid
 
@@ -507,12 +506,11 @@ Processor.prototype = {
           errtxt += '\nStack trace:\n' + err.stack
         //    var errtxt = err.toString()
         }
-        that.setError(err)
-        that.setStatus('Error.')
+        that.setStatus('error', err)// 'Error.'
         that.state = 3 // incomplete
       } else {
         that.setCurrentObjects(objects)
-        that.setStatus('Ready.')
+        that.setStatus('ready')
         that.state = 2 // complete
       }
       that.enableItems()
@@ -522,9 +520,9 @@ Processor.prototype = {
       this.builder = rebuildSolidAsync(script, fullurl, parameters, (err, objects) => {
         if (err && that.opts.useSync) {
           this.builder = rebuildSolidSync(script, fullurl, parameters, callback, options)
-        }else (callback(undefined, objects))
+        } else (callback(undefined, objects))
       }, options)
-    }else if (this.opts.useSync) {
+    } else if (this.opts.useSync) {
       this.builder = rebuildSolidSync(script, fullurl, parameters, callback, options)
     }
   },
@@ -577,7 +575,7 @@ Processor.prototype = {
       try {
         // this.generateOutputFileFileSystem()
         generateOutputFileFileSystem(extension, blob, onDone.bind(this))
-      } catch(e) {
+      } catch (e) {
         // this.generateOutputFileBlobUrl()
         generateOutputFileBlobUrl(extension, blob, onDone.bind(this))
       }
@@ -602,7 +600,7 @@ Processor.prototype = {
   supportedFormatsForCurrentObjects: function () {
     var startpoint = this.selectStartPoint
     var endpoint = this.selectEndPoint
-    if (startpoint > endpoint) { startpoint = this.selectEndPoint; endpoint = this.selectStartPoint; }
+    if (startpoint > endpoint) { startpoint = this.selectEndPoint; endpoint = this.selectStartPoint }
 
     var objs = this.currentObjects.slice(startpoint, endpoint + 1)
 
@@ -683,8 +681,7 @@ Processor.prototype = {
         if (definition['default'] === values[valueindex]) {
           selectedindex = valueindex
         }
-      }
-      else if ('initial' in definition) {
+      } else if ('initial' in definition) {
         if (definition.initial === values[valueindex]) {
           selectedindex = valueindex
         }
@@ -698,25 +695,25 @@ Processor.prototype = {
 
   createControl: function (definition, prevValue) {
     var control_list = [
-      {type: 'text',     control: 'text',     required: ['index', 'type', 'name'], initial: ''},
-      {type: 'int',      control: 'number',   required: ['index', 'type', 'name'], initial: 0},
-      {type: 'float',    control: 'number',   required: ['index', 'type', 'name'], initial: 0.0},
-      {type: 'number',   control: 'number',   required: ['index', 'type', 'name'], initial: 0.0},
+      {type: 'text', control: 'text', required: ['index', 'type', 'name'], initial: ''},
+      {type: 'int', control: 'number', required: ['index', 'type', 'name'], initial: 0},
+      {type: 'float', control: 'number', required: ['index', 'type', 'name'], initial: 0.0},
+      {type: 'number', control: 'number', required: ['index', 'type', 'name'], initial: 0.0},
       {type: 'checkbox', control: 'checkbox', required: ['index', 'type', 'name', 'checked'], initial: ''},
-      {type: 'radio',    control: 'radio',    required: ['index', 'type', 'name', 'checked'], initial: ''},
-      {type: 'color',    control: 'color',    required: ['index', 'type', 'name'], initial: '#000000'},
-      {type: 'date',     control: 'date',     required: ['index', 'type', 'name'], initial: ''},
-      {type: 'email',    control: 'email',    required: ['index', 'type', 'name'], initial: ''},
+      {type: 'radio', control: 'radio', required: ['index', 'type', 'name', 'checked'], initial: ''},
+      {type: 'color', control: 'color', required: ['index', 'type', 'name'], initial: '#000000'},
+      {type: 'date', control: 'date', required: ['index', 'type', 'name'], initial: ''},
+      {type: 'email', control: 'email', required: ['index', 'type', 'name'], initial: ''},
       {type: 'password', control: 'password', required: ['index', 'type', 'name'], initial: ''},
-      {type: 'url',      control: 'url',      required: ['index', 'type', 'name'], initial: ''},
-      {type: 'slider',   control: 'range',    required: ['index', 'type', 'name', 'min', 'max'], initial: 0, label: true},
+      {type: 'url', control: 'url', required: ['index', 'type', 'name'], initial: ''},
+      {type: 'slider', control: 'range', required: ['index', 'type', 'name', 'min', 'max'], initial: 0, label: true}
     ]
     // check for required parameters
     if (!('type' in definition)) {
       throw new Error('Parameter definition (' + definition.index + ") must include a 'type' parameter")
     }
     var control = document.createElement('input')
-    var i,j,c_type,p_name
+    var i, j, c_type, p_name
     for (i = 0; i < control_list.length; i++) {
       c_type = control_list[i]
       if (c_type.type === definition.type) {

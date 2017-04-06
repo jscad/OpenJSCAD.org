@@ -122,7 +122,7 @@ export function fetchExample (filename, url, {memFs, gProcessor, gEditor}) {
     if (filename.match(/\.(stl|gcode)$/i)) {
       xhr.overrideMimeType('text/plain; charset=x-user-defined') // our pseudo binary retrieval (works with Chrome)
     }
-    gProcessor.setStatus2(filename, 'loading')
+    gProcessor.setStatus('loading', filename)
 
     xhr.onload = function () {
       const source = this.responseText
@@ -130,7 +130,7 @@ export function fetchExample (filename, url, {memFs, gProcessor, gEditor}) {
       const _includePath = path.replace(/\/[^\/]+$/, '/')
 
       // FIXME: refactor : same code as ui/drag-drop
-      gProcessor.setStatus2(filename, 'converting')
+      gProcessor.setStatus('converting', filename)
       const worker = createConversionWorker(onConversionDone)
       const baseurl = gProcessor.baseurl
       // NOTE: cache: false is set to allow evaluation of 'include' statements
@@ -171,7 +171,7 @@ export function loadInitialExample (me, params) {
       if (u.match(/\.(stl|gcode)$/i)) {
         xhr.overrideMimeType('text/plain; charset=x-user-defined') // our pseudo binary retrieval (works with Chrome)
       }
-      gProcessor.setStatus2(u, 'fetching')
+      gProcessor.setStatus('loading', u)
       xhr.onload = function () {
         var data = JSON.parse(this.responseText)
         fetchExample(data.file, data.url, {memFs, gProcessor, gEditor})
