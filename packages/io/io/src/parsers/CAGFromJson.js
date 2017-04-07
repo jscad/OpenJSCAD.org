@@ -1,6 +1,6 @@
 // convert the given (anonymous JSON) object into CAG
 // Note: Any issues during conversion will result in exceptions
-function CAGfromJSON  (o) {
+function CAGfromJSON (o) {
   // verify the object IS convertable
   if (o.type == 'cag') {
     Object.setPrototypeOf(o, CAG.prototype)

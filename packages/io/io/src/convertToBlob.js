@@ -1,15 +1,15 @@
 import { version } from '../jscad/version'
 import { CSG, CAG } from 'csg'
-import CSGToStla from '../io/writers/CSGToStla'
-import CSGToStlb from '../io/writers/CSGToStlb'
-import CSGToAMF from '../io/writers/CSGToAMF'
-import CSGToX3D from '../io/writers/CSGToX3D'
-import CAGToSvg from '../io/writers/CAGToSvg'
-import CAGToJson from '../io/writers/CAGToJson'
-import CAGToDxf from '../io/writers/CAGToDxf'
+import CSGToStla from './writers/CSGToStla'
+import CSGToStlb from './writers/CSGToStlb'
+import CSGToAMF from './writers/CSGToAMF'
+import CSGToX3D from './writers/CSGToX3D'
+import CAGToSvg from './writers/CAGToSvg'
+import CAGToJson from './writers/CAGToJson'
+import CAGToDxf from './writers/CAGToDxf'
 
 import {toArray} from '../utils/misc'
-import makeBlob from '../utils/Blob'
+import makeBlob from './utils/Blob'
 const Blob = makeBlob()
 
 export default function convertToBlob (objects, params) {
