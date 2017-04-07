@@ -7,7 +7,7 @@ import CAGToSvg from './writers/CAGToSvg'
 import CAGToJson from './writers/CAGToJson'
 import CAGToDxf from './writers/CAGToDxf'
 
-import {toArray} from '../utils/misc'
+import {toArray} from './utils/misc'
 import makeBlob from './utils/Blob'
 const Blob = makeBlob()
 
