@@ -21,3 +21,18 @@ export function findMainFile (memFsTotal, memFs, file) {
   }
   return mainFile
 }
+
+// FIXME : this could be usefull overall , we should reuse
+export function isLocalMode () {
+  return document.location.toString().match(/^file\:\//i)
+}
+
+// FIXME: SAME
+export function isMobile () {
+  return 'createTouch' in document
+}
+
+// FIXME: SAME
+export function hasDragDropSupport () {
+  return window.File && window.FileReader && window.FileList
+}
