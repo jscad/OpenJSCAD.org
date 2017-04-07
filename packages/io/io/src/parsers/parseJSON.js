@@ -12,7 +12,7 @@ Notes:
 1) All functions extend other objects in order to maintain namespaces.
 */
 
-import { CSG } from '../../csg'
+import { CSG } from '@jscad/csg'
 import { version } from '../../jscad/version'
 
 ////////////////////////////////////////////

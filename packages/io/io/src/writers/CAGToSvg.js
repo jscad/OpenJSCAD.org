@@ -1,5 +1,5 @@
-import { CSG } from 'csg'
-import makeBlob from '../../utils/Blob'
+import { CSG } from '@jscad/csg'
+import makeBlob from '../utils/Blob'
 const Blob = makeBlob()
 
 export default function CAGToSvg (cagObject) {

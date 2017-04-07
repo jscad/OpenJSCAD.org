@@ -1,3 +1,5 @@
+import { CAG } from '@jscad/csg'
+
 // convert the given (anonymous JSON) object into CAG
 // Note: Any issues during conversion will result in exceptions
 function CAGfromJSON (o) {

@@ -8,7 +8,7 @@ All code released under MIT license
 Notes:
 1) All functions extend other objects in order to maintain namespaces.
 */
-import { CSG, CAG } from '../../csg'
+import { CSG, CAG } from '@jscad/csg'
 import { version } from '../../jscad/version'
 var sax = require('sax')
 
