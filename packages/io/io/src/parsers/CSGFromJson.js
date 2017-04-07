@@ -2,9 +2,9 @@ import { CSG } from '@jscad/csg'
 
 // convert the given (anonymous JSON) object into CSG
 // Note: Any issues during conversion will result in exceptions
-function CSGfromJSON (o) {
+export function CSGfromJSON (o) {
   // verify the object IS convertable
-  if (o.type == 'csg') {
+  if (o.type === 'csg') {
     Object.setPrototypeOf(o, CSG.prototype)
     o.polygons.map(function (p) {
       Object.setPrototypeOf(p, CSG.Polygon.prototype)

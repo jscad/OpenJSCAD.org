@@ -1,10 +1,10 @@
-import { CAG } from '@jscad/csg'
+import { CSG, CAG } from '@jscad/csg'
 
 // convert the given (anonymous JSON) object into CAG
 // Note: Any issues during conversion will result in exceptions
-function CAGfromJSON (o) {
+export function CAGfromJSON (o) {
   // verify the object IS convertable
-  if (o.type == 'cag') {
+  if (o.type === 'cag') {
     Object.setPrototypeOf(o, CAG.prototype)
     o.sides.map(function (side) {
       Object.setPrototypeOf(side, CAG.Side.prototype)
