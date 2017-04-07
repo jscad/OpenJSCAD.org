@@ -5,25 +5,7 @@ function evaluateSource (modelingHelpers, CAG, mainParams, src) {
   /*
   //FIXME : should we be using this one instead ?
     var processor = new OpenJsCad.Processor(); //FIXME  : cannot be used , refers to browser only things like 'document etc'
-    /
-  // convert the file list
-  var src = fs.readFileSync(inPath,"UTF8");
-
-  // process the script
-  processor.setJsCad(src, inPath);
-
-  var objects = processor.currentObject;
-
-  // UNION the objects if necessary
-
-  // convert to the requested format
-  var object = objects;
-  var outPath = './junk.stl';
-  var outFormat = 'stla';
-  var out = processor.convertToBlob(object,outFormat);
   */
-  // console.log("render jscad to "+outputFormat)
-  // console.log(JSON.stringify(gMainParam))
 
   const mainFunction = `main(_getParameterDefinitions(${JSON.stringify(mainParams)}))`
   const fullSrc = `${src}\n${modelingHelpers}\n${mainFunction}\n`

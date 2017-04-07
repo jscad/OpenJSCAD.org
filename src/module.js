@@ -1,4 +1,4 @@
-import convertToBlob from './io/convertToBlob'
+import { convertToBlob } from '@jscad/io'
 import { rebuildSolidSync } from './jscad/rebuildSolid'
 import oscad from 'jscad-scad-api'
 

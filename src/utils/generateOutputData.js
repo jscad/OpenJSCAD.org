@@ -1,7 +1,6 @@
-import convertToBlob from '../io/convertToBlob'
+import {convertToBlob, formats} from '@jscad/io'
 import {rebuildSolidSync} from '../jscad/rebuildSolid'
 import getParameterDefinitionsCLI from './getParameterDefinitionsCLI'
-import {formats} from '../io/formats'
 import oscad from 'jscad-scad-api'
 
 /**

@@ -7,8 +7,7 @@ import { rebuildSolidSync, rebuildSolidAsync } from './rebuildSolid'
 import { revokeBlobUrl } from '../utils/Blob'
 
 // output handling
-import convertToBlob from '../io/convertToBlob'
-import { formats } from '../io/formats'
+import {convertToBlob, formats} from '@jscad/io'
 
 import generateOutputFileBlobUrl from './generateOutputFileBlobUrl'
 import generateOutputFileFileSystem from './generateOutputFileFileSystem'
