@@ -1,6 +1,8 @@
-import { version } from '../../jscad/version'
 
-export function parseGCode (gcode, fn) {   // http://reprap.org/wiki/G-code
+export function parseGCode (gcode, fn, options) {   // http://reprap.org/wiki/G-code
+  const defaults = {version: '0.0.0'}
+  options = Object.assign({}, defaults, options)
+  const {version} = options
                                   // just as experiment ...
   var l = gcode.split(/[\n]/)   // for now just GCODE ASCII
   var srci = ''

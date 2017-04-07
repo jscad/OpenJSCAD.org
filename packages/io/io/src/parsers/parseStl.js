@@ -1,5 +1,4 @@
 import { CSG } from '@jscad/csg'
-import { version } from '../../jscad/version'
 import { vt2jscad } from '../utils/vt2jscad'
 // STL function from http://jsfiddle.net/Riham/yzvGD/35/
 // CC BY-SA by Riham
@@ -8,7 +7,11 @@ import { vt2jscad } from '../utils/vt2jscad'
 // 2013/03/28: lot of rework and debugging included, and error handling
 // 2013/03/18: renamed functions, creating .jscad source direct via polyhedron()
 
-export function parseSTL (stl, fn) {
+export function parseSTL (stl, fn, options) {
+  const defaults = {version: '0.0.0'}
+  options = Object.assign({}, defaults, options)
+  const {version} = options
+
   var isAscii = true
 
   for (var i = 0; i < stl.length; i++) {
@@ -20,15 +23,15 @@ export function parseSTL (stl, fn) {
    // echo("STL:"+fn,isAscii?"ascii":"binary");
   var src
   if (!isAscii) {
-    src = parseBinarySTL(stl, fn)
+    src = parseBinarySTL(stl, fn, version)
   } else {
-    src = parseAsciiSTL(stl, fn)
+    src = parseAsciiSTL(stl, fn, version)
   }
    // echo("STL converted JSCAD",src);
   return src
 }
 
-export function parseBinarySTL (stl, fn) {
+export function parseBinarySTL (stl, fn, version) {
     // -- This makes more sense if you read http://en.wikipedia.org/wiki/STL_(file_format)#Binary_STL
   var vertices = []
   var triangles = []
@@ -171,7 +174,7 @@ export function parseBinarySTL (stl, fn) {
   return src
 }
 
-export function parseAsciiSTL (stl, fn) {
+export function parseAsciiSTL (stl, fn, version) {
   var src = ''
   var n = 0
   var converted = 0

@@ -1,5 +1,4 @@
-import { version } from '../jscad/version'
-import { CSG, CAG } from 'csg'
+import { CSG, CAG } from '@jscad/csg'
 import CSGToStla from './writers/CSGToStla'
 import CSGToStlb from './writers/CSGToStlb'
 import CSGToAMF from './writers/CSGToAMF'
@@ -13,7 +12,7 @@ import makeBlob from './utils/Blob'
 const Blob = makeBlob()
 
 export default function convertToBlob (objects, params) {
-  const {format, formatInfo} = params
+  const {format, formatInfo, version = '0.0.0'} = params
 
   let object
 
@@ -21,8 +20,8 @@ export default function convertToBlob (objects, params) {
     object = objects
   } else {
     objects = toArray(objects)
-    //console.log('convertToBlob', objects, format)
-    //console.log('object', objects[0], objects[0] instanceof CSG)
+    // console.log('convertToBlob', objects, format)
+    // console.log('object', objects[0], objects[0] instanceof CSG)
 
     // review the given objects
     let foundCSG = false
@@ -57,13 +56,13 @@ export default function convertToBlob (objects, params) {
 
   const outputFormatHandlers = {
     amf: (object) => CSGToAMF(object, meta), // CSG to AMF
-    stl: (object) => CSGToStla(object), // CSG to STL ASCII
-    stla: (object) => CSGToStla(object), // CSG to STL ASCII
-    stlb: (object) => CSGToStlb(object, {webBlob: true}), // CSG to STL BINARY
-    dxf: (object) => CAGToDxf(object), // CAG to DXF
-    svg: (object) => CAGToSvg(object), // CAG to SVG
-    x3d: (object) => CSGToX3D(object.fixTJunctions()),
-    json: (object) => CAGToJson(object), // CSG or CAG to JSON
+    stl: (object) => CSGToStla(object, {version}), // CSG to STL ASCII
+    stla: (object) => CSGToStla(object, {version}), // CSG to STL ASCII
+    stlb: (object) => CSGToStlb(object, {webBlob: true, version}), // CSG to STL BINARY
+    dxf: (object) => CAGToDxf(object, {version}), // CAG to DXF
+    svg: (object) => CAGToSvg(object, {version}), // CAG to SVG
+    x3d: (object) => CSGToX3D(object.fixTJunctions(), {version}),
+    json: (object) => CAGToJson(object, {version}), // CSG or CAG to JSON
     js: (object) => object, // js , pass through
     jscad: (object) => object, // jscad, pass through
     undefined: () => {

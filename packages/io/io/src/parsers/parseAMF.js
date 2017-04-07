@@ -37,7 +37,6 @@ if(typeof module !== 'undefined') {    // used via nodejs
 //
 ////////////////////////////////////////////
 var sax = require('sax')
-import { version } from '../../jscad/version'
 import oscad from 'jscad-scad-api'
 const { echo } = oscad.debug
 
@@ -727,8 +726,11 @@ let code = ''
 //   pxPmm: pixels per milimeter for calcuations
 // FIXME: add openjscad version in a cleaner manner ?
  export function parseAMF(src, fn, options) {
-  var fn = fn || 'amf';
-  var options = options || {}
+  var fn = fn || 'amf'
+  const defaults = {version: '0.0.0'}
+  var options = Object.assign({}, defaults, options)
+  const {version} = options
+
   // parse the AMF source
   var parser = createAmfParser(src);
   // convert the internal objects to JSCAD code

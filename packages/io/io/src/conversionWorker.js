@@ -38,18 +38,19 @@ module.exports = function (self) {
         if ('source' in data) {
           var e = data.filename.toLowerCase().match(/\.(\w+)$/i)
           e = RegExp.$1
+          const options = {version: e.data.version}//{version: '0.0.0'}
           switch (e) {
             case 'amf':
               const parseAMF = require('./parsers/parseAMF').parseAMF
-              r.source = r.converted = parseAMF(data.source, data.filename)
+              r.source = r.converted = parseAMF(data.source, data.filename, options)
               break
             case 'gcode':
               const parseGCode = require('./parsers/parseGCode').parseGCode
-              r.source = r.converted = parseGCode(data.source, data.filename)
+              r.source = r.converted = parseGCode(data.source, data.filename, options)
               break
             case 'obj':
               const parseOBJ = require('./parsers/parseObj').parseOBJ
-              r.source = r.converted = parseOBJ(data.source, data.filename)
+              r.source = r.converted = parseOBJ(data.source, data.filename, options)
               break
             case 'scad':
               //importScripts(r.baseurl + 'js/lib/csg.js', r.baseurl + 'js/openjscad.js', r.baseurl + 'js/openscad.js', r.baseurl + 'js/lib/underscore.js', r.baseurl + 'js/lib/openscad-openjscad-translator.js')
@@ -62,7 +63,7 @@ module.exports = function (self) {
               break
             case 'stl':
               const parseSTL = require('./parsers/parseStl').parseSTL
-              r.source = r.converted = parseSTL(data.source, data.filename)
+              r.source = r.converted = parseSTL(data.source, data.filename, options)
               break
             case 'js':
               r.source = r.converted = data.source
@@ -72,11 +73,11 @@ module.exports = function (self) {
               break
             case 'svg':
               const parseSVG = require('./parsers/parseSVG').parseSVG
-              r.source = r.converted = parseSVG(data.source, data.filename)
+              r.source = r.converted = parseSVG(data.source, data.filename, options)
               break
             case 'json':
               const parseJSON = require('./parsers/parseJSON').parseJSON
-              r.source = r.converted = parseJSON(data.source, data.filename)
+              r.source = r.converted = parseJSON(data.source, data.filename, options)
               break
             default:
               r.source = r.converted = '// Invalid file type in conversion (' + e + ')'

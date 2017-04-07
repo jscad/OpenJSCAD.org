@@ -9,7 +9,6 @@ Notes:
 1) All functions extend other objects in order to maintain namespaces.
 */
 import { CSG, CAG } from '@jscad/csg'
-import { version } from '../../jscad/version'
 var sax = require('sax')
 
 ////////////////////////////////////////////
@@ -1348,12 +1347,13 @@ function createSvgParser (src, pxPmm) {
 //   pxPmm: pixels per milimeter for calcuations
 //
 export function parseSVG (src, fn, options) {
-  var fn = fn || 'svg';
-  var options = options || {};
-  var pxPmm;
-  if ('pxPmm' in options) { pxPmm = options.pxPmm; }
+  var fn = fn || 'svg'
+  const defaults = {pxPmm: undefined, version: '0.0.0'}
+  options = Object.assign({}, defaults, options)
+  const {version} = options
+
 // parse the SVG source
-  var parser = createSvgParser(src, pxPmm);
+  var parser = createSvgParser(src, pxPmm)
 // convert the internal objects to JSCAD code
   var code = '';
   code += '//\n';
