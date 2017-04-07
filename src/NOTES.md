@@ -3,8 +3,8 @@
 ##what does not :
 
 - global file cache:  gMemFs : still trying to refactor it into a reuseable system, this is the last actual remain of the "globals"
-- openscad-openjscad-translator: works on CLI & module, but cannot be browserified correctly, and seems to have weird internals
 - not entirely sure about the "REMOTE" functionality: should work , but needs testing
+- some parts of drag & drop
 
 ##What does :
 - everything else !
@@ -17,6 +17,7 @@
   (no more need to hacks and manual install via make file)
     - installation locally to use as module
   - code sharing between web & module & CLI is complete
+  - openscad-openjscad-translator: updated & browserified
 
 #note on transpiling: ie convert from one flavor of JS to another:
 
@@ -30,24 +31,6 @@ slowly put into browsers & node above 94 % in most browsers (https://kangax.gith
      * node.js either CLI or modules : the 'dist' folder contains the transpiled version of the source code
        * => OUTPUT IS a single file bundle for server side use : one for the CLI & one for the use as 'module'
 
-
-#jquery: eeek !
-Old crutch, not needed in most cases these days...ideally would need to go
-
-## issues:
- - increases bundle size by A LOT although almost none of it is actually used
- - "jquery-hammerjs": "^2.0.0" => npm package is broken ,see repo
-  // possible fixes with browserify-shim
-  "browser": {
-    "jquery": "./node_modules/jquery/dist/jquery.js",
-    "jquery-ui": "./node_modules/jquery-ui/jquery-ui.js"
-  },
-  "browserify-shim": {
-    "jquery": "$"
-  }
-- better fix:  get rid of jquery-hammerjs just use hammer.js !
-
-
 #file managment mind map
 
 On startup
@@ -55,10 +38,57 @@ On startup
   localStorage => loadSomething OR current code ???
 
 Drag & drop:
-  => chrome ?
+  => chrome only?
     Observe file changes => reload
-    Observe folder changes
-  => display ui with reload & autoreload button & toggle
+    Observe folder changes => display ui with reload & autoreload button & toggle
+
+  => saveScript :caches file name & source (BEFORE conversion)
+
+  => walkFileTree
+      core of the drag'n'drop:
+        1) walk the tree
+        2) read the files (readFileAsync)
+        3) re-render if there was a change (via readFileAsync)
+
+  => parseFile
+      => saveScript (original name & source)
+      => uses conversionWorker
+      => after conversion
+        => putSourceInEditor
+        => saveScript
+        => gProcessor.setJsCad
+
+
+   => readFileAsync
+    => setCurrentFile: USED ONCE (set one file (the one dragged) or main.jscad)
+      => fileChanged: USED ONCE (update the dropzone visual & call the main parser)
+        => parseFile: USED ONCE
+
+   => loadLocalFiles (when folders are not supported)
+    => readFileAsync
+
+   => superviseAllFiles (file/folder watcher)
+    => readFileAsync OR walkFileTree
+
+   => handleInputFiles
+    => loadLocalFiles
+
+   => handleFileSelect
+    => walkFileTree OR loadLocalFiles
+
+
+
+DRAG & DROP entry points :
+  dropZone =>
+  fileInput =>
+
+
+memFsCount ONLY incremented and compared and use in readFileAsync
+memFsChanged ONLY used in readFileAsync AND superviseAllFiles
 
 conversionWorker
   => DONE
+
+#imports thoughts
+
+importGeometry needs access to 'memFs' / local fs

@@ -87,9 +87,9 @@ export function createExamples (me) {
   }
 }
 
-export function fetchExample (filename, url, {gMemFs, gProcessor, gEditor}) {
+export function fetchExample (filename, url, {memFs, gProcessor, gEditor}) {
   console.log('fetchExample')
-  gMemFs = []
+  memFs = []
 
   const hasExtension = filename.match(/\.[^\/]+$/)
   if (!hasExtension) // -- has no extension, ie folder referenced
@@ -122,7 +122,7 @@ export function fetchExample (filename, url, {gMemFs, gProcessor, gEditor}) {
     if (filename.match(/\.(stl|gcode)$/i)) {
       xhr.overrideMimeType('text/plain; charset=x-user-defined') // our pseudo binary retrieval (works with Chrome)
     }
-    gProcessor.setStatus('Loading ' + filename + " <img id=busy src='imgs/busy.gif'>")
+    gProcessor.setStatus('loading', filename)
 
     xhr.onload = function () {
       const source = this.responseText
@@ -130,7 +130,7 @@ export function fetchExample (filename, url, {gMemFs, gProcessor, gEditor}) {
       const _includePath = path.replace(/\/[^\/]+$/, '/')
 
       // FIXME: refactor : same code as ui/drag-drop
-      gProcessor.setStatus('Converting ' + filename + " <img id=busy src='imgs/busy.gif'>")
+      gProcessor.setStatus('converting', filename)
       const worker = createConversionWorker(onConversionDone)
       const baseurl = gProcessor.baseurl
       // NOTE: cache: false is set to allow evaluation of 'include' statements
@@ -141,9 +141,7 @@ export function fetchExample (filename, url, {gMemFs, gProcessor, gEditor}) {
 }
 
 export function loadInitialExample (me, params) {
-  console.log('loadInitialExample: '+params)
   if (me === 'web-online') { // we are online, fetch first example
-    console.log('here')
     const docUrl = document.URL
     const isRemote = docUrl.match(/#(https?:\/\/\S+)$/)
     const isLocal = docUrl.match(/#(examples\/\S+)$/)
@@ -159,23 +157,23 @@ export function loadInitialExample (me, params) {
       }
     }
 
-    function loadLocal (filename, {gMemFs, gProcessor, gEditor}) {
+    function loadLocal (filename, {memFs, gProcessor, gEditor}) {
       console.log('loadLocal')
-      fetchExample(filename, undefined, {gMemFs, gProcessor, gEditor})
+      fetchExample(filename, undefined, {memFs, gProcessor, gEditor})
       document.location = docUrl.replace(/#.*$/, '#')
     }
 
-    function loadRemote (u, {gMemFs, gProcessor, gEditor, remoteUrl}) {
+    function loadRemote (u, {memFs, gProcessor, gEditor, remoteUrl}) {
       console.log('loadRemote')
       var xhr = new XMLHttpRequest()
       xhr.open('GET', remoteUrl + u, true)
       if (u.match(/\.(stl|gcode)$/i)) {
         xhr.overrideMimeType('text/plain; charset=x-user-defined') // our pseudo binary retrieval (works with Chrome)
       }
-      gProcessor.setStatus('Fetching ' + u + " <img id=busy src='imgs/busy.gif'>")
+      gProcessor.setStatus('loading', u)
       xhr.onload = function () {
         var data = JSON.parse(this.responseText)
-        fetchExample(data.file, data.url, {gMemFs, gProcessor, gEditor})
+        fetchExample(data.file, data.url, {memFs, gProcessor, gEditor})
         document.location = docUrl.replace(/#.*$/, '#') // this won't reload the entire web-page
       }
       xhr.send()
@@ -185,8 +183,7 @@ export function loadInitialExample (me, params) {
     {
       const u = isRemote[1] // RegExp.$1
       loadRemote(u, params)
-    }
-    else if (isLocal) { // local example, e.g. http://openjscad.org/#examples/example001.jscad
+    } else if (isLocal) { // local example, e.g. http://openjscad.org/#examples/example001.jscad
       const filename = isLocal[1] // RegExp.$1
       loadLocal(filename, params)
     } else if (isInLocalStorage) {

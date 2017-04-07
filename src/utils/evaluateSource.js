@@ -6,8 +6,6 @@ function evaluateSource (modelingHelpers, CAG, mainParams, src) {
   //FIXME : should we be using this one instead ?
     var processor = new OpenJsCad.Processor(); //FIXME  : cannot be used , refers to browser only things like 'document etc'
     /
-  processor.setStatus("Initialized.");
-
   // convert the file list
   var src = fs.readFileSync(inPath,"UTF8");
 
