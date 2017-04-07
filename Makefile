@@ -1,29 +1,31 @@
 VERSION = 0.5.2
-LIB = /usr/local/lib/openjscad/
-NODE_MODULES = /usr/local/lib/node_modules/
+PREFIX = /usr/local
+BIN = $(PREFIX)/bin/
+LIB = $(PREFIX)/lib/openjscad/
+NODE_MODULES = $(PREFIX)/lib/node_modules/
 
 all::
 	@echo "make install deinstall tests clean"
 
 install::
-	test -d ${NODE_MODULES}/openscad-openjscad-translator || sudo npm -g install openscad-openjscad-translator
-	#test -d ${NODE_MODULES}/jquery || sudo npm -g install jquery
-	sudo scp js/openjscad /usr/local/bin/
-	sudo mkdir -p ${LIB}
-	sudo scp js/openjscad.js ${LIB}
-	sudo scp js/openscad.js ${LIB}
-	sudo scp js/Blob.js ${LIB}
-	sudo scp js/formats.js ${LIB}
-	sudo scp js/lib/lightgl.js ${LIB}
-	sudo scp js/lib/csg.js ${LIB}
-	sudo scp js/lib/openscad-openjscad-translator.js ${LIB}
-	sudo scp js/lib/underscore.js ${LIB}
+	test -d ${NODE_MODULES}/openscad-openjscad-translator || npm -g install openscad-openjscad-translator
+	#test -d ${NODE_MODULES}/jquery || npm -g install jquery
+	scp openjscad $(BIN)
+	mkdir -p ${LIB}
+	scp openjscad.js ${LIB}
+	scp openscad.js ${LIB}
+	scp Blob.js ${LIB}
+	scp formats.js ${LIB}
+	scp lightgl.js ${LIB}
+	scp csg.js ${LIB}
+	scp openscad-openjscad-translator.js ${LIB}
+	scp underscore.js ${LIB}
 	mkdir -p cache; chmod a+rw cache
 
 deinstall::
-	sudo rm -rf ${NODE_MODULES}openscad-openjscad-translator
-	sudo rm /usr/local/bin/openjscad
-	sudo rm -rf ${LIB}
+	rm -rf ${NODE_MODULES}openscad-openjscad-translator
+	rm $(BIN)/openjscad
+	rm -rf ${LIB}
 
 tests::
 	openjscad examples/logo.jscad
