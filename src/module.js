@@ -1,6 +1,7 @@
 import { convertToBlob } from '@jscad/io'
+import oscad from '@jscad/scad-api'
+
 import { rebuildSolidSync } from './jscad/rebuildSolid'
-import oscad from 'jscad-scad-api'
 
 /**
  * compile openjscad code and generates intermediate representation

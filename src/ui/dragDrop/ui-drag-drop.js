@@ -26,7 +26,7 @@ import { putSourceInEditor } from '../editor' // FIXME : eeek! dependency on ui
 import {walkFileTree, pseudoArraytoArray, isSupportedFormat} from './walkFileTree'
 import {findMainFile, changedFiles, isLocalMode} from './helpers'
 
-import {version} from '../jscad/version'
+import {version} from '../../jscad/version'
 
 // --- Global Variables
 var currentFiles = [] // linear array, contains files (to read)
