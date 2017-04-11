@@ -703,7 +703,6 @@ export function parseAMF (src, fn, options) {
   options = Object.assign({}, defaults, options)
   const {version} = options
 
-  console.log('version', version)
   // parse the AMF source
   const parser = createAmfParser(src)
   // convert the internal objects to JSCAD code
