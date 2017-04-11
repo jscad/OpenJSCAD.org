@@ -6,6 +6,7 @@ import { vt2jscad } from './vt2jscad'
 //
 // 2013/03/28: lot of rework and debugging included, and error handling
 // 2013/03/18: renamed functions, creating .jscad source direct via polyhedron()
+const echo = console.info
 
 export function parseSTL (stl, fn, options) {
   const defaults = {version: '0.0.0'}
@@ -20,14 +21,12 @@ export function parseSTL (stl, fn, options) {
       break
     }
   }
-   // echo("STL:"+fn,isAscii?"ascii":"binary");
   var src
   if (!isAscii) {
     src = parseBinarySTL(stl, fn, version)
   } else {
     src = parseAsciiSTL(stl, fn, version)
   }
-   // echo("STL converted JSCAD",src);
   return src
 }
 
