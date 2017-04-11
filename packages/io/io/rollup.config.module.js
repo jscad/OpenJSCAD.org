@@ -9,7 +9,7 @@ export default {
   moduleName: '@jscad/io',
   sourceMap: true,
   external: [
-    '@jscad/csg'
+    //'@jscad/csg'
   ],
   plugins: [
     buble(),
