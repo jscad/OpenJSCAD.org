@@ -1,10 +1,10 @@
-import { vt2jscad } from '../utils/vt2jscad'
+import { vt2jscad } from './vt2jscad'
 
 export function parseOBJ (obj, fn, options) {   // http://en.wikipedia.org/wiki/Wavefront_.obj_file
   const defaults = {version: '0.0.0'}
   options = Object.assign({}, defaults, options)
   const {version} = options
-  
+
   var l = obj.split(/\n/)
   var v = [], f = []
 

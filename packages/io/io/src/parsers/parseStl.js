@@ -1,5 +1,5 @@
 import { CSG } from '@jscad/csg'
-import { vt2jscad } from '../utils/vt2jscad'
+import { vt2jscad } from './vt2jscad'
 // STL function from http://jsfiddle.net/Riham/yzvGD/35/
 // CC BY-SA by Riham
 // changes by Rene K. Mueller <spiritdude@gmail.com>
