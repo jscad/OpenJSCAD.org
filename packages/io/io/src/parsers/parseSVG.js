@@ -19,16 +19,16 @@ var sax = require('sax')
 // //////////////////////////////////////////
 
 // standard pixel size at arms length on 90dpi screens
-sax.SAXParser.prototype.cssPxUnit = 0.2822222
+const cssPxUnit = 0.2822222
 
 // units for converting CSS2 points/length, i.e. CSS2 value / pxPmm
 sax.SAXParser.prototype.pxPmm = 1 / 0.2822222         // used for scaling SVG coordinates(PX) to CAG coordinates(MM)
-sax.SAXParser.prototype.inchMM = 1 / (1 / 0.039370)     // used for scaling SVG coordinates(IN) to CAG coordinates(MM)
-sax.SAXParser.prototype.ptMM = 1 / (1 / 0.039370 / 72)    // used for scaling SVG coordinates(IN) to CAG coordinates(MM)
-sax.SAXParser.prototype.pcMM = 1 / (1 / 0.039370 / 72 * 12) // used for scaling SVG coordinates(PC) to CAG coordinates(MM)
+const inchMM = 1 / (1 / 0.039370)     // used for scaling SVG coordinates(IN) to CAG coordinates(MM)
+const ptMM = 1 / (1 / 0.039370 / 72)    // used for scaling SVG coordinates(IN) to CAG coordinates(MM)
+const pcMM = 1 / (1 / 0.039370 / 72 * 12) // used for scaling SVG coordinates(PC) to CAG coordinates(MM)
 
 // standard SVG named colors (sRGB values)
-sax.SAXParser.prototype.svgColors = {
+const svgColors = {
   'aliceblue': [240, 248, 255],
   'antiquewhite': [250, 235, 215],
   'aqua': [ 0, 255, 255],
@@ -250,13 +250,13 @@ sax.SAXParser.prototype.css2cag = function (css, unit) {
     v = (v * 10) // absolute centimeters > millimeters
   } else
   if (css.search(/IN/i) > 0) {
-    v = (v / this.inchMM) // absolute inches > millimeters
+    v = (v / inchMM) // absolute inches > millimeters
   } else
   if (css.search(/PT/i) > 0) {
-    v = (v / this.ptMM)   // absolute points > millimeters
+    v = (v / ptMM)   // absolute points > millimeters
   } else
   if (css.search(/PC/i) > 0) {
-    v = (v / this.pcMM)   // absolute picas > millimeters
+    v = (v / pcMM)   // absolute picas > millimeters
   } else {
     v = (v / unit)        // absolute pixels(units) > millimeters
   }
@@ -269,8 +269,8 @@ sax.SAXParser.prototype.cagColor = function (value) {
 //  var rgb = [0,0,0]; // default is black
   var rgb = null
   value = value.toLowerCase()
-  if (value in this.svgColors) {
-    rgb = this.svgColors[value]
+  if (value in svgColors) {
+    rgb = svgColors[value]
     rgb = [rgb[0] / 255, rgb[1] / 255, rgb[2] / 255] // converted to 0.0-1.0 values
   } else {
     if (value[0] == '#') {
@@ -848,7 +848,7 @@ sax.SAXParser.prototype.codify = function (group) {
         var y1 = (0 - this.cagLengthY(obj.y1))
         var x2 = this.cagLengthX(obj.x2)
         var y2 = (0 - this.cagLengthY(obj.y2))
-        var r = this.cssPxUnit // default
+        var r = cssPxUnit // default
         if ('strokeWidth' in obj) {
           r = this.cagLengthP(obj.strokeWidth) / 2
         } else {
@@ -875,7 +875,7 @@ sax.SAXParser.prototype.codify = function (group) {
         code += indent + on + ' = ' + on + '.innerToCAG();\n'
         break
       case 'polyline':
-        var r = this.cssPxUnit // default
+        var r = cssPxUnit // default
         if ('strokeWidth' in obj) {
           r = this.cagLengthP(obj.strokeWidth) / 2
         } else {
@@ -900,7 +900,7 @@ sax.SAXParser.prototype.codify = function (group) {
       case 'path':
         code += indent + 'var ' + on + ' = new CAG();\n'
 
-        var r = this.cssPxUnit // default
+        var r = cssPxUnit // default
         if ('strokeWidth' in obj) {
           r = this.cagLengthP(obj.strokeWidth) / 2
         } else {
