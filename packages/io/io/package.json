@@ -29,7 +29,6 @@
   "dependencies": {
     "@jscad/csg": "^0.1.4",
     "sax": "^1.2.1",
-    "webworkify": "^1.4.0",
     "xmldom": "^0.1.27"
   },
   "devDependencies": {
