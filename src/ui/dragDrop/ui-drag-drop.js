@@ -20,7 +20,7 @@
 // * #filedropzone_filled element
 // * #filedropzone_empty element
 // * #currentfile element
-import {createConversionWorker} from '@jscad/io'
+import { createConversionWorker } from '../../io/createConversionWorker'
 import { putSourceInEditor } from '../editor' // FIXME : eeek! dependency on ui
 
 import {walkFileTree, pseudoArraytoArray, isSupportedFormat} from './walkFileTree'

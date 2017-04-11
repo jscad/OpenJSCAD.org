@@ -1,4 +1,4 @@
-import { createConversionWorker } from '@jscad/io'
+import { createConversionWorker } from '../io/createConversionWorker'
 import { putSourceInEditor } from './editor' // FIXME : eeek! dependency on ui
 import { version } from '../jscad/version'
 

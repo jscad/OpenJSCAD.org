@@ -1,4 +1,4 @@
-import {convertToBlob, formats, revokeBlobUrl} from '@jscad/io'
+import { revokeBlobUrl } from '@jscad/io'
 import { CAG, CSG } from '@jscad/csg'
 
 import log from './log'
@@ -12,6 +12,9 @@ import generateOutputFileBlobUrl from './generateOutputFileBlobUrl'
 import generateOutputFileFileSystem from './generateOutputFileFileSystem'
 
 import Viewer from '../ui/viewer/jscad-viewer'
+
+import {convertToBlob} from '../io/convertToBlob'
+import {formats} from '../io/formats'
 
 /*
  * exposes the properties of an object to the given scope object (for example WINDOW etc)
