@@ -43,9 +43,6 @@
     "rollup-plugin-node-resolve": "^2.0.0"
   },
   "browserify": {
-    "transform": [
-      "browserify-shim"
-    ]
-  },
-  "browserify-shim": {}
+    "transform": [["babelify", { "presets": ["es2015"] }]]
+  }
 }
