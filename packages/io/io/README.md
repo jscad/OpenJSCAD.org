@@ -17,8 +17,8 @@ Following formats are supported as inputs
  - [AMF](https://github.com/jscad/io/blob/master/src/parsers/parseAMF.js)
  - [gcode](https://github.com/jscad/io/blob/master/src/parsers/parseGCode.js)
  - [JSON](https://github.com/jscad/io/blob/master/src/parsers/parseJSON.js)
- - [OBJ](https://github.com/jscad/io/blob/master/src/parsers/parseObj.js)
- - [STL (binary, ASCII)](https://github.com/jscad/io/blob/master/src/parsers/parseStl.js)
+ - [OBJ](https://github.com/jscad/io/blob/master/src/parsers/parseOBJ.js)
+ - [STL (binary, ASCII)](https://github.com/jscad/io/blob/master/src/parsers/parseSTL.js)
  - [SVG](https://github.com/jscad/io/blob/master/src/parsers/parseSVG.js)
 
 ### Outputs
