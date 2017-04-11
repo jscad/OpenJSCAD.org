@@ -1,7 +1,7 @@
 import { makeBlob } from '../utils/Blob'
 const Blob = makeBlob()
 
-export function toJSON () {
+export default function CSGToJson () {
   var str = '{ "type": "csg","polygons": ['
   var comma = ''
   CSG.polygons.map(
