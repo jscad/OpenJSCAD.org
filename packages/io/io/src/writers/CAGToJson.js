@@ -1,4 +1,4 @@
-import makeBlob from '../utils/Blob'
+import { makeBlob } from '../utils/Blob'
 const Blob = makeBlob()
 
 export default function CAGToJson (CAG) {
