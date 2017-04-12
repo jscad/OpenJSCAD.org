@@ -195,7 +195,7 @@ test('generateOutput(amf)', t => {
       const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
       t.is(type, 'application/amf+xml')
       t.is(encoding, 'utf8')
-      t.is(size, 385246) // FIXME: verify: original value was 385255
+      t.is(size, 385247) // FIXME: verify: original value was 385255
     })
 })
 
@@ -218,7 +218,7 @@ test('generateOutput(x3d)', t => {
 test('generateOutput(stl, from csg object)', t => {
   const {generateOutput} = openjscad
 
-  const csg = require('csg').CSG
+  const csg = require('@jscad/csg').CSG
   const input = csg.cube([1, 1, 1])
 
   const output = generateOutput('stl', input)
