@@ -12,6 +12,7 @@ export default {
   external: [
     '@jscad/csg'
   ],
+  banner: '#!/usr/bin/env node\n',
   plugins: [
     buble(),
     nodeResolve({
@@ -24,8 +25,8 @@ export default {
       }
     }),
     replace({
-      '../../package.json': '../package.json',// fix path issues
-      "'use strict';": "#!/usr/bin/env node\n'use strict';"// add shebang at start of file
+      '../../package.json': '../package.json', // fix path issues
+      //"'use strict';": "#!/usr/bin/env node\n'use strict';"// add shebang at start of file
     })
   ]
 }
