@@ -20,12 +20,13 @@
 // * #filedropzone_filled element
 // * #filedropzone_empty element
 // * #currentfile element
-import { conversionFormats } from '../../jscad/conversionFormats'
-import createConversionWorker from '../../io/createConversionWorker'
+import { createConversionWorker } from '../../io/createConversionWorker'
 import { putSourceInEditor } from '../editor' // FIXME : eeek! dependency on ui
 
 import {walkFileTree, pseudoArraytoArray, isSupportedFormat} from './walkFileTree'
 import {findMainFile, changedFiles, isLocalMode} from './helpers'
+
+import {version} from '../../jscad/version'
 
 // --- Global Variables
 var currentFiles = [] // linear array, contains files (to read)
@@ -250,7 +251,7 @@ export function setupDragDrop (me, {memFs, gProcessor, gEditor}) {
       const worker = createConversionWorker(onConversionDone)
       const baseurl = gProcessor.baseurl
       // NOTE: cache: true is very important to control the evaluation of all cached files (code)
-      worker.postMessage({baseurl, source, filename: name, cache: true})
+      worker.postMessage({version, baseurl, source, filename: name, cache: true})
     }
   }
 

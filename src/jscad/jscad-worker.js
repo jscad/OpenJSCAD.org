@@ -7,11 +7,12 @@
 
 // Create an worker (thread) for processing the JSCAD script into CSG/CAG objects
 
+import { CAG, CSG } from '@jscad/csg'
+import oscad from '@jscad/scad-api'
+
 import createJscadFunction from './jscad-function'
-import { CAG, CSG } from 'csg'
 import { toArray } from '../utils/misc'
 
-import oscad from 'jscad-scad-api'
 
 module.exports = function (self) {
   self.onmessage = function (e) {

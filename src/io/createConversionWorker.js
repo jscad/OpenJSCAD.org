@@ -11,7 +11,7 @@
 //
 import WebWorkify from 'webworkify'
 
-export default function createConversionWorker (onDone) {
+export function createConversionWorker (onDone) {
   //this spawns web workers that can do 'require()' calls
   const worker = WebWorkify(require('./conversionWorker.js'))
   // when the worker finishes

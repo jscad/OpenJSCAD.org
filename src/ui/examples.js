@@ -1,5 +1,6 @@
-import createConversionWorker from '../io/createConversionWorker'
+import { createConversionWorker } from '../io/createConversionWorker'
 import { putSourceInEditor } from './editor' // FIXME : eeek! dependency on ui
+import { version } from '../jscad/version'
 
 const examples = [
   { file: 'logo.jscad', title: 'OpenJSCAD.org Logo' },
@@ -134,7 +135,7 @@ export function fetchExample (filename, url, {memFs, gProcessor, gEditor}) {
       const worker = createConversionWorker(onConversionDone)
       const baseurl = gProcessor.baseurl
       // NOTE: cache: false is set to allow evaluation of 'include' statements
-      worker.postMessage({baseurl, source, filename, cache: false})
+      worker.postMessage({version, baseurl, source, filename, cache: false})
     }
     xhr.send()
   }

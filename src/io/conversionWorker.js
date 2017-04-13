@@ -22,6 +22,9 @@
 // Depending on what's being converted, the two are different or the same.
 //
 // NOTE: Additional scripts (libraries) are imported only if necessary
+
+
+
 module.exports = function (self) {
   self.onmessage = function (e) {
     var r = { source: '', converted: '', filename: '', baseurl: '', cache: false }
@@ -38,21 +41,22 @@ module.exports = function (self) {
         if ('source' in data) {
           var e = data.filename.toLowerCase().match(/\.(\w+)$/i)
           e = RegExp.$1
+          const options = {version: data.version}
           switch (e) {
             case 'amf':
-              const parseAMF = require('./parsers/parseAMF').parseAMF
-              r.source = r.converted = parseAMF(data.source, data.filename)
+              const parseAMF = require('@jscad/io').parseAMF
+              r.source = r.converted = parseAMF(data.source, data.filename, options)
               break
             case 'gcode':
-              const parseGCode = require('./parsers/parseGCode').parseGCode
-              r.source = r.converted = parseGCode(data.source, data.filename)
+              const parseGCode = require('@jscad/io').parseGCode
+              r.source = r.converted = parseGCode(data.source, data.filename, options)
               break
             case 'obj':
-              const parseOBJ = require('./parsers/parseObj').parseOBJ
-              r.source = r.converted = parseOBJ(data.source, data.filename)
+              const parseOBJ = require('@jscad/io').parseOBJ
+              r.source = r.converted = parseOBJ(data.source, data.filename, options)
               break
             case 'scad':
-              //importScripts(r.baseurl + 'js/lib/csg.js', r.baseurl + 'js/openjscad.js', r.baseurl + 'js/openscad.js', r.baseurl + 'js/lib/underscore.js', r.baseurl + 'js/lib/openscad-openjscad-translator.js')
+              // importScripts(r.baseurl + 'js/lib/csg.js', r.baseurl + 'js/openjscad.js', r.baseurl + 'js/openscad.js', r.baseurl + 'js/lib/underscore.js', r.baseurl + 'js/lib/openscad-openjscad-translator.js')
               r.source = data.source
               if (!r.source.match(/^\/\/!OpenSCAD/i)) {
                 r.source = '//!OpenSCAD\n' + data.source
@@ -61,8 +65,8 @@ module.exports = function (self) {
               r.converted = openscadOpenJscadParser.parse(r.source)
               break
             case 'stl':
-              const parseSTL = require('./parsers/parseStl').parseSTL
-              r.source = r.converted = parseSTL(data.source, data.filename)
+              const parseSTL = require('@jscad/io').parseSTL
+              r.source = r.converted = parseSTL(data.source, data.filename, options)
               break
             case 'js':
               r.source = r.converted = data.source
@@ -71,12 +75,12 @@ module.exports = function (self) {
               r.source = r.converted = data.source
               break
             case 'svg':
-              const parseSVG = require('./parsers/parseSVG').parseSVG
-              r.source = r.converted = parseSVG(data.source, data.filename)
+              const parseSVG = require('@jscad/io').parseSVG
+              r.source = r.converted = parseSVG(data.source, data.filename, options)
               break
             case 'json':
-              const parseJSON = require('./parsers/parseJSON').parseJSON
-              r.source = r.converted = parseJSON(data.source, data.filename)
+              const parseJSON = require('@jscad/io').parseJSON
+              r.source = r.converted = parseJSON(data.source, data.filename, options)
               break
             default:
               r.source = r.converted = '// Invalid file type in conversion (' + e + ')'

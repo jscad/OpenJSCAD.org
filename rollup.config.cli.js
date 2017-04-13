@@ -10,8 +10,9 @@ export default {
   moduleName: 'openjscad',
   sourceMap: true,
   external: [
-    'csg'
+    '@jscad/csg'
   ],
+  banner: '#!/usr/bin/env node\n',
   plugins: [
     buble(),
     nodeResolve({
@@ -20,12 +21,12 @@ export default {
     }),
     commonjs({
       namedExports: {
-        'node_modules/csg/csg.js': [ 'CSG', 'CAG' ]
+        'node_modules/@jscad/csg/csg.js': [ 'CSG', 'CAG' ]
       }
     }),
     replace({
-      '../../package.json': '../package.json',// fix path issues
-      "'use strict';": "#!/usr/bin/env node\n'use strict';"// add shebang at start of file
+      '../../package.json': '../package.json', // fix path issues
+      //"'use strict';": "#!/usr/bin/env node\n'use strict';"// add shebang at start of file
     })
   ]
 }
