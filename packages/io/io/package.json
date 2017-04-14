@@ -1,6 +1,6 @@
 {
   "name": "@jscad/io",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Input , output and formats handling for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "dist/index.js",
@@ -25,7 +25,7 @@
       "url": "http://kaosat.net"
     }
   ],
-  "keywords":[
+  "keywords": [
     "openscad",
     "openjscad",
     "jscad",
@@ -54,6 +54,15 @@
     "rollup-plugin-node-resolve": "^2.0.0"
   },
   "browserify": {
-    "transform": [["babelify", { "presets": ["es2015"] }]]
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015"
+          ]
+        }
+      ]
+    ]
   }
 }
