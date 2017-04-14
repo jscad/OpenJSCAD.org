@@ -109,6 +109,22 @@ for solid CAD anyway.
      */
     CSG.defaultResolution3D = 12;
 
+    /** Epsilon used during determination of near zero distances.
+     * @default
+     */
+    CSG.EPS = 1e-5;
+
+    /** Epsilon used during determination of near zero areas.
+     * @default
+     */
+    CSG.angleEPS = 0.10;
+
+    /** Epsilon used during determination of near zero areas.
+     *  This is the minimal area of a minimal polygon.
+     * @default
+     */
+    CSG.areaEPS = 0.50*CSG.EPS*CSG.EPS*Math.sin(CSG.angleEPS);
+
     /** Construct a CSG solid from a list of `CSG.Polygon` instances.
      * @param {CSG.Polygon[]} polygons - list of polygons
      * @returns {CSG} new CSG object
@@ -587,7 +603,7 @@ for solid CAD anyway.
                         p2 = endpoint.plus(p),
                         skip = false;
                     if (i >= 0) {
-                        if (p1.distanceTo(prevp1) < 1e-5) {
+                        if (p1.distanceTo(prevp1) < CSG.EPS) {
                             skip = true;
                         }
                     }
@@ -1051,11 +1067,10 @@ for solid CAD anyway.
         // This returns a 2D CAG with the 'shadow' shape of the 3D solid when projected onto the
         // plane represented by the orthonormal basis
         projectToOrthoNormalBasis: function(orthobasis) {
-            var EPS = 1e-5;
             var cags = [];
             this.polygons.filter(function(p) {
                     // only return polys in plane, others may disturb result
-                    return p.plane.normal.minus(orthobasis.plane.normal).lengthSquared() < EPS*EPS;
+                    return p.plane.normal.minus(orthobasis.plane.normal).lengthSquared() < (CSG.EPS*CSG.EPS);
                 })
                 .map(function(polygon) {
                     var cag = polygon.projectToOrthoNormalBasis(orthobasis);
@@ -1068,11 +1083,10 @@ for solid CAD anyway.
         },
 
         sectionCut: function(orthobasis) {
-            var EPS = 1e-5;
             var plane1 = orthobasis.plane;
             var plane2 = orthobasis.plane.flipped();
             plane1 = new CSG.Plane(plane1.normal, plane1.w);
-            plane2 = new CSG.Plane(plane2.normal, plane2.w + 5*EPS);
+            plane2 = new CSG.Plane(plane2.normal, plane2.w + (5*CSG.EPS));
             var cut3d = this.cutByPlane(plane1);
             cut3d = cut3d.cutByPlane(plane2);
             return cut3d.projectToOrthoNormalBasis(orthobasis);
@@ -1305,7 +1319,7 @@ for solid CAD anyway.
                                         if ((t > 0) && (t < 1)) {
                                             var closestpoint = startpos.plus(direction.times(t));
                                             var distancesquared = closestpoint.distanceToSquared(endpos);
-                                            if (distancesquared < 1e-10) {
+                                            if (distancesquared < (CSG.EPS*CSG.EPS)) {
                                                 // Yes it's a t-junction! We need to split matchingside in two:
                                                 var polygonindex = matchingside.polygonindex;
                                                 var polygon = polygons[polygonindex];
@@ -1765,7 +1779,7 @@ for solid CAD anyway.
         var polygons = [];
         var qresolution = Math.floor(0.25 * resolution);
         var length = direction.length();
-        if (length < 1e-10) {
+        if (length < CSG.EPS) {
             return CSG.sphere({
                 center: p1,
                 radius: radius,
@@ -1923,7 +1937,6 @@ for solid CAD anyway.
      * });
      */
     CSG.roundedCube = function(options) {
-        var EPS = 1e-5;
         var minRR = 1e-2; //minroundradius 1e-3 gives rounding errors already
         var center, cuberadius;
         options = options || {};
@@ -1952,9 +1965,9 @@ for solid CAD anyway.
         }
         var res = CSG.sphere({radius:1, resolution:resolution});
         res = res.scale(roundradius);
-        innerradius.x > EPS && (res = res.stretchAtPlane([1, 0, 0], [0, 0, 0], 2*innerradius.x));
-        innerradius.y > EPS && (res = res.stretchAtPlane([0, 1, 0], [0, 0, 0], 2*innerradius.y));
-        innerradius.z > EPS && (res = res.stretchAtPlane([0, 0, 1], [0, 0, 0], 2*innerradius.z));
+        innerradius.x > CSG.EPS && (res = res.stretchAtPlane([1, 0, 0], [0, 0, 0], 2*innerradius.x));
+        innerradius.y > CSG.EPS && (res = res.stretchAtPlane([0, 1, 0], [0, 0, 0], 2*innerradius.y));
+        innerradius.z > CSG.EPS && (res = res.stretchAtPlane([0, 0, 1], [0, 0, 0], 2*innerradius.z));
         res = res.translate([-innerradius.x+center.x, -innerradius.y+center.y, -innerradius.z+center.z]);
         res = res.reTesselated();
         res.properties.roundedCube = new CSG.Properties();
@@ -2306,10 +2319,6 @@ for solid CAD anyway.
         return new CSG.Plane(normal, w);
     };
 
-    // `CSG.Plane.EPSILON` is the tolerance used by `splitPolygon()` to decide if a
-    // point is on the plane.
-    CSG.Plane.EPSILON = 1e-5;
-
     CSG.Plane.fromVector3Ds = function(a, b, c) {
         var n = b.minus(a).cross(c.minus(a)).unit();
         return new CSG.Plane(n, n.dot(a));
@@ -2320,14 +2329,14 @@ for solid CAD anyway.
     CSG.Plane.anyPlaneFromVector3Ds = function(a, b, c) {
         var v1 = b.minus(a);
         var v2 = c.minus(a);
-        if (v1.length() < 1e-5) {
+        if (v1.length() < CSG.EPS) {
             v1 = v2.randomNonParallelVector();
         }
-        if (v2.length() < 1e-5) {
+        if (v2.length() < CSG.EPS) {
             v2 = v1.randomNonParallelVector();
         }
         var normal = v1.cross(v2);
-        if (normal.length() < 1e-5) {
+        if (normal.length() < CSG.EPS) {
             // this would mean that v1 == v2.negated()
             v2 = v1.randomNonParallelVector();
             normal = v1.cross(v2);
@@ -2416,17 +2425,16 @@ for solid CAD anyway.
             if (polygon.plane.equals(this)) {
                 result.type = 0;
             } else {
-                var EPS = CSG.Plane.EPSILON;
                 var thisw = this.w;
                 var hasfront = false;
                 var hasback = false;
                 var vertexIsBack = [];
-                var MINEPS = -EPS;
+                var MINEPS = -CSG.EPS;
                 for (var i = 0; i < numvertices; i++) {
                     var t = planenormal.dot(vertices[i].pos) - thisw;
                     var isback = (t < 0);
                     vertexIsBack.push(isback);
-                    if (t > EPS) hasfront = true;
+                    if (t > CSG.EPS) hasfront = true;
                     if (t < MINEPS) hasback = true;
                 }
                 if ((!hasfront) && (!hasback)) {
@@ -2474,7 +2482,7 @@ for solid CAD anyway.
                         isback = nextisback;
                     } // for vertexindex
                     // remove duplicate vertices:
-                    var EPS_SQUARED = CSG.Plane.EPSILON * CSG.Plane.EPSILON;
+                    var EPS_SQUARED = CSG.EPS * CSG.EPS;
                     if (backvertices.length >= 3) {
                         var prevvertex = backvertices[backvertices.length - 1];
                         for (var vertexindex = 0; vertexindex < backvertices.length; vertexindex++) {
@@ -2742,7 +2750,7 @@ for solid CAD anyway.
             });
             var result = CAG.fromPointsNoCheck(points2d);
             var area = result.area();
-            if (Math.abs(area) < 1e-5) {
+            if (Math.abs(area) < CSG.areaEPS) {
                 // the polygon was perpendicular to the orthnormal plane. The resulting 2D polygon would be degenerate
                 // return an empty area instead:
                 result = new CAG();
@@ -3013,7 +3021,7 @@ for solid CAD anyway.
     CSG.Polygon.isStrictlyConvexPoint = function(prevpoint, point, nextpoint, normal) {
         var crossproduct = point.minus(prevpoint).cross(nextpoint.minus(point));
         var crossdotnormal = crossproduct.dot(normal);
-        return (crossdotnormal >= 1e-5);
+        return (crossdotnormal >= CSG.EPS);
     };
 
     // # class CSG.Polygon.Shared
@@ -3196,7 +3204,7 @@ for solid CAD anyway.
             var polygon = this.polygon;
             if (polygon) {
                 var bound = polygon.boundingSphere();
-                var sphereradius = bound[1] + 1e-4;
+                var sphereradius = bound[1] + CSG.EPS; // FIXME Why add imprecision?
                 var planenormal = plane.normal;
                 var spherecenter = bound[0];
                 var d = planenormal.dot(spherecenter) - plane.w;
@@ -4030,7 +4038,7 @@ for solid CAD anyway.
     CSG.Line3D.fromPlanes = function(p1, p2) {
         var direction = p1.normal.cross(p2.normal);
         var l = direction.length();
-        if (l < 1e-10) {
+        if (l < CSG.EPS) {
             throw new Error("Parallel planes");
         }
         direction = direction.times(1.0 / l);
@@ -4100,7 +4108,7 @@ for solid CAD anyway.
         equals: function(line3d) {
             if (!this.direction.equals(line3d.direction)) return false;
             var distance = this.distanceToPoint(line3d.point);
-            if (distance > 1e-8) return false;
+            if (distance > CSG.EPS) return false;
             return true;
         }
     };
@@ -4331,7 +4339,7 @@ for solid CAD anyway.
             t = 0.0;
         } else if (f1 >= f2) {
             t = 1.0;
-        } else if (f2 < 1e-10) {
+        } else if (f2 < 1e-10) { // FIXME Should this be CSG.EPS?
             t = 0.5;
         } else {
             t = f1 / f2;
@@ -4343,8 +4351,6 @@ for solid CAD anyway.
     // Retesselation function for a set of coplanar polygons. See the introduction at the top of
     // this file.
     CSG.reTesselateCoplanarPolygons = function(sourcepolygons, destpolygons) {
-        var EPS = 1e-5;
-
         var numpolygons = sourcepolygons.length;
         if (numpolygons > 0) {
             var plane = sourcepolygons[0].plane;
@@ -4361,7 +4367,7 @@ for solid CAD anyway.
             // convert all polygon vertices to 2D
             // Make a list of all encountered y coordinates
             // And build a map of all polygons that have a vertex at a certain y coordinate:
-            var ycoordinateBinningFactor = 1.0 / EPS * 10;
+            var ycoordinateBinningFactor = 1.0 / CSG.EPS * 10;
             for (var polygonindex = 0; polygonindex < numpolygons; polygonindex++) {
                 var poly3d = sourcepolygons[polygonindex];
                 var vertices2d = [];
@@ -4575,7 +4581,7 @@ for solid CAD anyway.
                             var prevoutpolygon = newoutpolygonrow[newoutpolygonrow.length - 1];
                             var d1 = outpolygon.topleft.distanceTo(prevoutpolygon.topright);
                             var d2 = outpolygon.bottomleft.distanceTo(prevoutpolygon.bottomright);
-                            if ((d1 < EPS) && (d2 < EPS)) {
+                            if ((d1 < CSG.EPS) && (d2 < CSG.EPS)) {
                                 // we can join this polygon with the one to the left:
                                 outpolygon.topleft = prevoutpolygon.topleft;
                                 outpolygon.leftline = prevoutpolygon.leftline;
@@ -4597,15 +4603,15 @@ for solid CAD anyway.
                                     // We have a match if the sidelines are equal or if the top coordinates
                                     // are on the sidelines of the previous polygon
                                     var prevpolygon = prevoutpolygonrow[ii];
-                                    if (prevpolygon.bottomleft.distanceTo(thispolygon.topleft) < EPS) {
-                                        if (prevpolygon.bottomright.distanceTo(thispolygon.topright) < EPS) {
+                                    if (prevpolygon.bottomleft.distanceTo(thispolygon.topleft) < CSG.EPS) {
+                                        if (prevpolygon.bottomright.distanceTo(thispolygon.topright) < CSG.EPS) {
                                             // Yes, the top of this polygon matches the bottom of the previous:
                                             matchedindexes[ii] = true;
                                             // Now check if the joined polygon would remain convex:
                                             var d1 = thispolygon.leftline.direction().x - prevpolygon.leftline.direction().x;
                                             var d2 = thispolygon.rightline.direction().x - prevpolygon.rightline.direction().x;
-                                            var leftlinecontinues = Math.abs(d1) < EPS;
-                                            var rightlinecontinues = Math.abs(d2) < EPS;
+                                            var leftlinecontinues = Math.abs(d1) < CSG.EPS;
+                                            var rightlinecontinues = Math.abs(d2) < CSG.EPS;
                                             var leftlineisconvex = leftlinecontinues || (d1 >= 0);
                                             var rightlineisconvex = rightlinecontinues || (d2 >= 0);
                                             if (leftlineisconvex && rightlineisconvex) {
@@ -4628,7 +4634,7 @@ for solid CAD anyway.
                                 // Finish the polygon with the last point(s):
                                 var prevpolygon = prevoutpolygonrow[ii];
                                 prevpolygon.outpolygon.rightpoints.push(prevpolygon.bottomright);
-                                if (prevpolygon.bottomright.distanceTo(prevpolygon.bottomleft) > EPS) {
+                                if (prevpolygon.bottomright.distanceTo(prevpolygon.bottomleft) > CSG.EPS) {
                                     // polygon ends with a horizontal line:
                                     prevpolygon.outpolygon.leftpoints.push(prevpolygon.bottomleft);
                                 }
@@ -4655,7 +4661,7 @@ for solid CAD anyway.
                                 rightpoints: []
                             };
                             thispolygon.outpolygon.leftpoints.push(thispolygon.topleft);
-                            if (thispolygon.topleft.distanceTo(thispolygon.topright) > EPS) {
+                            if (thispolygon.topleft.distanceTo(thispolygon.topright) > CSG.EPS) {
                                 // we have a horizontal line at the top:
                                 thispolygon.outpolygon.rightpoints.push(thispolygon.topright);
                             }
@@ -4733,8 +4739,8 @@ for solid CAD anyway.
 
     //////////////////////////////////////
     CSG.fuzzyCSGFactory = function() {
-        this.vertexfactory = new CSG.fuzzyFactory(3, 1e-5);
-        this.planefactory = new CSG.fuzzyFactory(4, 1e-5);
+        this.vertexfactory = new CSG.fuzzyFactory(3, CSG.EPS);
+        this.planefactory = new CSG.fuzzyFactory(4, CSG.EPS);
         this.polygonsharedfactory = {};
     };
 
@@ -5125,7 +5131,7 @@ for solid CAD anyway.
             var skip = false;
             if (prevpoint !== null) {
                 var distance = point.distanceTo(prevpoint);
-                skip = distance < 1e-5;
+                skip = distance < CSG.EPS;
             }
             if (!skip) newpoints.push(point);
             prevpoint = point;
@@ -5166,7 +5172,7 @@ for solid CAD anyway.
         var points = [],
             point;
         var absangledif = Math.abs(endangle - startangle);
-        if (absangledif < 1e-5) {
+        if (absangledif < CSG.angleEPS) {
             point = CSG.Vector2D.fromAngle(startangle / 180.0 * Math.PI).times(radius);
             points.push(point.plus(center));
         } else {
@@ -5637,7 +5643,7 @@ for solid CAD anyway.
             throw new Error("Polygon is self intersecting!");
         }
         var area = result.area();
-        if (Math.abs(area) < 1e-5) {
+        if (Math.abs(area) < CSG.areaEPS) {
             throw new Error("Degenerate polygon!");
         }
         if (area < 0) {
@@ -5680,12 +5686,13 @@ for solid CAD anyway.
     CAG.linesIntersect = function(p0start, p0end, p1start, p1end) {
         if (p0end.equals(p1start) || p1end.equals(p0start)) {
             var d = p1end.minus(p1start).unit().plus(p0end.minus(p0start).unit()).length();
-            if (d < 1e-5) {
+            if (d < CSG.EPS) {
                 return true;
             }
         } else {
             var d0 = p0end.minus(p0start);
             var d1 = p1end.minus(p1start);
+            // FIXME These epsilons need review and testing
             if (Math.abs(d0.cross(d1)) < 1e-9) return false; // lines are parallel
             var alphas = CSG.solve2Linear(-d0.x, d1.x, -d0.y, d1.y, p0start.x - p1start.x, p0start.y - p1start.y);
             if ((alphas[0] > 1e-6) && (alphas[0] < 0.999999) && (alphas[1] > 1e-5) && (alphas[1] < 0.999999)) return true;
@@ -6119,7 +6126,7 @@ for solid CAD anyway.
             cag.sides.map(function(side) {
                 var d = side.vertex1.pos.minus(side.vertex0.pos);
                 var dl = d.length();
-                if (dl > 1e-5) {
+                if (dl > CSG.EPS) {
                     d = d.times(1.0 / dl);
                     var normal = d.normal().times(radius);
                     var shellpoints = [
@@ -6172,7 +6179,7 @@ for solid CAD anyway.
                     angle1 = 0;
                     angle2 = 360;
                 }
-                if (angle2 > (angle1 + 1e-5)) {
+                if (angle2 > (angle1 + CSG.angleEPS)) {
                     var points = [];
                     if (!fullcircle) {
                         points.push(pcenter);
@@ -6293,8 +6300,6 @@ for solid CAD anyway.
             var alpha = CSG.parseOptionAsFloat(options, "angle", 360);
             var resolution = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution3D);
 
-            var EPS = 1e-5;
-
             alpha = alpha > 360 ? alpha % 360 : alpha;
             var origin = [0, 0, 0];
             var axisV = CSG.Vector3D.Create(0, 1, 0);
@@ -6313,7 +6318,7 @@ for solid CAD anyway.
             }
             var connT1 = connS, connT2;
             var step = alpha/resolution;
-            for (var a = step; a <= alpha + EPS; a += step) {
+            for (var a = step; a <= alpha + CSG.EPS; a += step) { // FIXME Should this be CSG.angelEPS?
                 connT2 = new CSG.Connector(origin, axisV.rotateZ(-a), normalV);
                 polygons = polygons.concat(this._toWallPolygons(
                     {toConnector1: connT1, toConnector2: connT2}));
@@ -6325,7 +6330,6 @@ for solid CAD anyway.
         // check if we are a valid CAG (for debugging)
         // NOTE(bebbi) uneven side count doesn't work because rounding with EPS isn't taken into account
         check: function() {
-            var EPS = 1e-5;
             var errors = [];
             if (this.isSelfIntersecting(true)) {
                 errors.push("Self intersects");
@@ -6347,7 +6351,7 @@ for solid CAD anyway.
                 }
             }
             var area = this.area();
-            if (area < EPS*EPS) {
+            if (area < CSG.areaEPS) {
                 errors.push("Area is " + area);
             }
             if (errors.length > 0) {
@@ -6682,7 +6686,7 @@ for solid CAD anyway.
 
     //////////////////////////////////////
     CAG.fuzzyCAGFactory = function() {
-        this.vertexfactory = new CSG.fuzzyFactory(2, 1e-5);
+        this.vertexfactory = new CSG.fuzzyFactory(2, CSG.EPS);
     };
 
     CAG.fuzzyCAGFactory.prototype = {
@@ -6707,7 +6711,7 @@ for solid CAD anyway.
             })
             // remove bad sides (mostly a user input issue)
             .filter(function(side) {
-                return side.length() > 1e-5;
+                return side.length() > CSG.EPS;
             });
             return CAG.fromSides(newsides);
         }
