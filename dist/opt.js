@@ -25978,7 +25978,21 @@ function init() {
   var viewer = document.getElementById('viewerContext');
   var design = viewer.getAttribute("design-url");
 
-  gProcessor = new _processor2.default(viewer);
+  gProcessor = new _processor2.default(viewer, { viewer: { plate: { size: 1000,
+        m: { i: 1,
+          color: { r: .8, g: .8, b: .8, a: .5 }
+        },
+        M: { i: 100,
+          color: { r: .5, g: .5, b: .5, a: .5 }
+        }
+      },
+      camera: { position: { x: 0, y: 0, z: 1000 },
+        clip: { min: 0.5, max: 3000 }
+      },
+      axis: { draw: true
+      }
+    }
+  });
 
   // load the given design
   if (design) {
