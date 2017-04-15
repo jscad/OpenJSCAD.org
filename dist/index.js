@@ -68976,11 +68976,11 @@ module.exports={
     "build-opt": "browserify src/ui/opt.js -o dist/opt.js -t [babelify browserify minifyify]",
     "build-module": "rollup -c rollup.config.module.js",
     "build-cli": "rollup -c rollup.config.cli.js",
-    "build-all": "npm run build-cli && npm run build-module && npm run build-web",
+    "build-all": "npm run build-cli && npm run build-module && npm run build-web && npm run build-min && npm run build-opt",
     "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
-    "release-patch": "git checkout master; npm version patch && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
-    "release-minor": "git checkout master; npm version minor && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
-    "release-major": "git checkout master; npm version major && npm run build; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
+    "release-patch": "git checkout master; npm run build-all && npm version patch && npm run build-all; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
+    "release-minor": "git checkout master; npm run build-all && npm version minor && npm run build-all; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
+    "release-major": "git checkout master; npm run build-all && npm version major && npm run build-all; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
   },
   "contributors": [
     {
@@ -68999,11 +68999,10 @@ module.exports={
   "license": "MIT",
   "dependencies": {
     "@jscad/csg": "^0.1.4",
-    "@jscad/io": "github:jscad/io",
-    "@jscad/scad-api": "^0.1.0",
+    "@jscad/io": "^0.1.0",
+    "@jscad/scad-api": "^0.2.0",
     "brace": "^0.9.0",
     "hammerjs": "^2.0.8",
-    "jscad-scad-api": "github:jscad/jscad-scad-api#v0.1.0",
     "openscad-openjscad-translator": "github:jscad/openscad-openjscad-translator",
     "webworkify": "^1.4.0"
   },
