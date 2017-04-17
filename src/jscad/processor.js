@@ -424,7 +424,7 @@ Processor.prototype = {
 
   // script: javascript code
   // filename: optional, the name of the .jscad file
-  setJsCad: function (script, filename) {
+  setJsCad: function (script, filename, includePathBaseUrl) {
     // console.log('setJsCad', script, filename)
     if (!filename) filename = 'openjscad.jscad'
 
@@ -452,6 +452,7 @@ Processor.prototype = {
     if (!scripthaserrors) {
       this.script = script
       this.filename = filename
+      this.includePathBaseUrl = includePathBaseUrl
       this.rebuildSolid()
     } else {
       this.enableItems()
@@ -492,7 +493,7 @@ Processor.prototype = {
     // prepare all parameters
     const parameters = getParamValues(this.paramControls)
     const script = this.getFullScript()
-    const fullurl = this.baseurl + this.filename
+    const fullurl = this.includePathBaseUrl + this.filename
     const options = {memFs: this.memFs}
 
     this.state = 1 // processing

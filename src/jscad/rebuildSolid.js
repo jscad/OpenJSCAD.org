@@ -15,9 +15,25 @@ import { toArray } from '../utils/misc'
  * @param {String} memFs memFs cache object
  * @returns {String} the full script, with inlined
  */
-function replaceIncludes (text, relpath, memFs) {
+function replaceIncludes (text, relpath, memFs, prefixes=[]) {
   return new Promise(function (resolve, reject) {
-    let scriptWithIncludes = text
+    if (prefixes.length == 0) {
+      const globalsPrefix = `
+globals['includedFiles'] || (globals['includedFiles'] = {})
+globals['includesSource'] || (globals['includesSource'] = {})
+if (!globals['originalIncludeFunction']) {
+  globals['originalIncludeFunction'] = include
+  include = function(file) {
+    if (!globals['includedFiles'][file]) {
+      globals['includesSource'][file]()
+      globals['includedFiles'][file] = true
+    }
+  }
+}
+`
+      prefixes = [globalsPrefix]
+    }
+
     const includesPattern = /(?:include)\s?\("([\w\/.\s]*)"\);?/gm
 
     let foundIncludes = []
@@ -31,14 +47,17 @@ function replaceIncludes (text, relpath, memFs) {
     let tmpPromises = foundIncludes.map(function (uri, index) {
       const promise = includeJscadSync(relpath, uri, memFs)
       return promise.then(function (includedScript) {
-        return replaceIncludes(includedScript, relpath, memFs).then(function (substring) {
-          let currentItem = foundIncludesFull[index]
-          scriptWithIncludes = scriptWithIncludes.replace(currentItem, substring)
-          return scriptWithIncludes
+        return replaceIncludes(includedScript, relpath, memFs, prefixes).then(function (substring) {
+          const includedScriptPrefix = `
+globals['includesSource']['${uri}'] = function() {
+${includedScript}
+}
+`
+          prefixes.push(includedScriptPrefix)
         })
       })
     })
-    Promise.all(tmpPromises).then(x => resolve(scriptWithIncludes))
+    Promise.all(tmpPromises).then(x => resolve(prefixes.join("\n") + text))
   })
 }
 
