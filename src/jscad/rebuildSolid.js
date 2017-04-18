@@ -2,45 +2,8 @@ import WebWorkify from 'webworkify'
 import { CAG, CSG } from '@jscad/csg'
 import oscad from '@jscad/scad-api'
 import createJscadFunction from './jscad-function'
-import includeJscadSync from './includeJscadSync'
+import { replaceIncludes } from './replaceIncludes'
 import { toArray } from '../utils/misc'
-
-/**
- * helper function that finds include() statements in files,
- * fetches their code & returns it (recursively) returning the whole code with
- * inlined includes
- * this is more reliable than async xhr + eval()
- * @param {String} text the original script (with include statements)
- * @param {String} relpath relative path, for xhr resolution
- * @param {String} memFs memFs cache object
- * @returns {String} the full script, with inlined
- */
-function replaceIncludes (text, relpath, memFs) {
-  return new Promise(function (resolve, reject) {
-    let scriptWithIncludes = text
-    const includesPattern = /(?:include)\s?\("([\w\/.\s]*)"\);?/gm
-
-    let foundIncludes = []
-    let foundIncludesFull = []
-    let match
-    while(match = includesPattern.exec(text)) {
-      foundIncludes.push(match[1])
-      foundIncludesFull.push(match[0])
-    }
-
-    let tmpPromises = foundIncludes.map(function (uri, index) {
-      const promise = includeJscadSync(relpath, uri, memFs)
-      return promise.then(function (includedScript) {
-        return replaceIncludes(includedScript, relpath, memFs).then(function (substring) {
-          let currentItem = foundIncludesFull[index]
-          scriptWithIncludes = scriptWithIncludes.replace(currentItem, substring)
-          return scriptWithIncludes
-        })
-      })
-    })
-    Promise.all(tmpPromises).then(x => resolve(scriptWithIncludes))
-  })
-}
 
 /**
  * evaluate script & rebuild solids, in main thread
@@ -60,6 +23,7 @@ export function rebuildSolidSync (script, fullurl, parameters, callback, options
     memFs: undefined
   }
   options = Object.assign({}, defaults, options)
+  console.log('here')
 
   replaceIncludes(script, relpath, options.memFs).then(function (fullScript) {
     const globals = options.implicitGlobals ? (options.globals ? options.globals : {oscad}) : {}
