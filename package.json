@@ -39,7 +39,10 @@
     "@jscad/csg": "^0.1.4",
     "@jscad/io": "^0.1.0",
     "@jscad/scad-api": "^0.2.0",
+    "astring": "^1.0.2",
     "brace": "^0.9.0",
+    "esprima": "^3.1.3",
+    "estraverse": "^4.2.0",
     "hammerjs": "^2.0.8",
     "openscad-openjscad-translator": "github:jscad/openscad-openjscad-translator",
     "webworkify": "^1.4.0"
