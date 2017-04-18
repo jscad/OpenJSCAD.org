@@ -17,17 +17,21 @@ export default function includeJscadSync (relpath, scriptPath, memFs) {
       }
     }
     // include the requested script via webserver access
-    var xhr = new XMLHttpRequest()
-    var url = relpath + scriptPath
+    const xhr = new XMLHttpRequest()
+    let url = relpath + scriptPath
     if (scriptPath.match(/^(https:|http:)/i)) {
       url = scriptPath
     }
-    xhr.open('GET', url, false)
-    xhr.onload = function () {
-      var src = this.responseText
-      resolve(src)
+    xhr.open('GET', url, true)
+    xhr.onload = function (event) {
+      const status = '' + event.currentTarget.status
+      if (status.length === 2 && status[0] === '2') {
+        resolve(this.responseText)
+      } else {
+        reject(this.responseText)
+      }
     }
-    xhr.onerror = (err) => reject(err)
+    xhr.onerror = err => { reject(err) }
     xhr.send()
   })
 }
