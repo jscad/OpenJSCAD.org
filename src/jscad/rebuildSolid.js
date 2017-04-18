@@ -93,7 +93,7 @@ export function rebuildSolidAsync (script, fullurl, parameters, callback, option
   // have we been asked to stop our work?
   return {
     cancel: () => {
-      worker.terminate()
+      if(worker) worker.terminate()
     }
   }
 }
