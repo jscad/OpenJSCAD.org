@@ -25,7 +25,7 @@ export default function includeJscadSync (relpath, scriptPath, memFs) {
     xhr.open('GET', url, true)
     xhr.onload = function (event) {
       const status = '' + event.currentTarget.status
-      if (status.length === 2 && status[0] === '2') {
+      if (status.length >0 && status[0] === '2') {
         resolve(this.responseText)
       } else {
         reject(this.responseText)
