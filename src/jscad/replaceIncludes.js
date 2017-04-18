@@ -21,10 +21,10 @@ export function replaceIncludes (text, relpath, memFs) {
     const withoutIncludes = replaceIncludesInAst(moduleAst)
 
     const modulePromises = foundIncludes.map(function (uri, index) {
-      const promise = includeJscadSync(relpath, uri, memFs)
-      return promise.then(function (includedScript) {
-        return replaceIncludes(includedScript, relpath, memFs)
-      })
+      return includeJscadSync(relpath, uri, memFs)
+        .then(
+          includedScript => replaceIncludes(includedScript, relpath, memFs),
+          err => console.error('fail', err))
     })
     Promise.all(modulePromises).then(function (resolvedModules) {
       const resolvedScript = resolvedModules.concat(withoutIncludes).join('\n')
