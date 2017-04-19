@@ -2,19 +2,18 @@ import { revokeBlobUrl } from '@jscad/io'
 import { CAG, CSG } from '@jscad/csg'
 
 import log from './log'
-import getParamDefinitions from './getParamDefinitions'
-import getParamValues from './getParamValues'
+import getParamDefinitions from '../core/getParamDefinitions'
+import getParamValues from '../core/getParamValues'
+import { rebuildSolid, rebuildSolidInWorker } from '../core/rebuildSolid'
 import convertToSolid from './convertToSolid'
-import { rebuildSolid, rebuildSolidInWorker } from './rebuildSolid'
 
 // output handling
-import generateOutputFileBlobUrl from './generateOutputFileBlobUrl'
-import generateOutputFileFileSystem from './generateOutputFileFileSystem'
-
-import Viewer from '../ui/viewer/jscad-viewer'
-
+import generateOutputFileBlobUrl from '../io/generateOutputFileBlobUrl'
+import generateOutputFileFileSystem from '../io/generateOutputFileFileSystem'
 import {convertToBlob} from '../io/convertToBlob'
 import {formats} from '../io/formats'
+
+import Viewer from '../ui/viewer/jscad-viewer'
 
 /*
  * exposes the properties of an object to the given scope object (for example WINDOW etc)

@@ -1,6 +1,6 @@
 import oscad from '@jscad/scad-api'
 import { convertToBlob } from './io/convertToBlob'
-import { rebuildSolid } from './jscad/rebuildSolid'
+import { rebuildSolid } from './core/rebuildSolid'
 import { resolveIncludesFs } from './utils/resolveIncludesFs'
 /**
  * compile openjscad code and generates intermediate representation
@@ -20,7 +20,7 @@ function compile (source, params, options) {
   }
   options = Object.assign({}, defaults, options)
   const {implicitGlobals, rootPath} = options
-  
+
   let globals = {}
   if (implicitGlobals) {
     globals.oscad = oscad
