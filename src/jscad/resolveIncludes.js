@@ -1,11 +1,12 @@
-// THESE FUNCTIONS ARE SERIALIZED FOR INCLUSION IN THE FULL SCRIPT
-// TODO It might be possible to cache the serialized versions
-
-// Include the requested script via MemFs (if available) or HTTP Request
-// (Note: This function is appended together with the JSCAD script)
-
-export default function includeJscadSync (relpath, scriptPath, memFs) {
-  // console.log('include', relpath, scriptPath)
+/**
+ * fetch the requested script either via MemFs or HTTP Request
+ * (Note: The resolved modules are prepepended in front of the calling script
+ * @param {String} relpath the relative path
+ * @param {String} scriptPath the path to the script
+ * @param {Object} memFs local cache (optional)
+ * @param {Function} includeResolver : function to use to actually retrieve the module/include content
+ */
+export default function resolveIncludes (relpath, scriptPath, memFs, includeResolver) {
   // include the requested script via MemFs if possible
   return new Promise(function (resolve, reject) {
     if (typeof (memFs) === 'object') {
@@ -25,7 +26,7 @@ export default function includeJscadSync (relpath, scriptPath, memFs) {
     xhr.open('GET', url, true)
     xhr.onload = function (event) {
       const status = '' + event.currentTarget.status
-      if (status.length >0 && status[0] === '2') {
+      if (status.length > 0 && status[0] === '2') {
         resolve(this.responseText)
       } else {
         reject(this.responseText)

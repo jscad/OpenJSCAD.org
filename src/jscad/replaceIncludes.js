@@ -1,4 +1,3 @@
-import includeJscadSync from './includeJscadSync'
 const esprima = require('esprima')
 const estraverse = require('estraverse')
 const astring = require('astring')
@@ -14,16 +13,16 @@ const astring = require('astring')
  * @param {String} memFs memFs cache object
  * @returns {String} the full script, with inlined
  */
-export function replaceIncludes (text, relpath, memFs) {
+export function replaceIncludes (text, relpath, memFs, includeResolver) {
   return new Promise(function (resolve, reject) {
     const moduleAst = astFromSource(text)
     const foundIncludes = findIncludes(moduleAst).map(x => x.value)
     const withoutIncludes = replaceIncludesInAst(moduleAst)
 
     const modulePromises = foundIncludes.map(function (uri, index) {
-      return includeJscadSync(relpath, uri, memFs)
+      return includeResolver(relpath, uri, memFs)
         .then(
-          includedScript => replaceIncludes(includedScript, relpath, memFs),
+          includedScript => replaceIncludes(includedScript, relpath, memFs, includeResolver),
           err => console.error('fail', err))
     })
     Promise.all(modulePromises).then(function (resolvedModules) {

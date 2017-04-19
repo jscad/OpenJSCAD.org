@@ -3,6 +3,7 @@ import { CAG, CSG } from '@jscad/csg'
 import oscad from '@jscad/scad-api'
 import createJscadFunction from './jscad-function'
 import { replaceIncludes } from './replaceIncludes'
+import resolveIncludes from './resolveIncludes'
 import { toArray } from '../utils/misc'
 
 /**
@@ -20,12 +21,12 @@ export function rebuildSolidSync (script, fullurl, parameters, callback, options
   }
   const defaults = {
     implicitGlobals: true,
-    memFs: undefined
+    memFs: undefined,
+    includeResolver: resolveIncludes // default function to retrieve 'includes'
   }
   options = Object.assign({}, defaults, options)
-  console.log('here')
 
-  replaceIncludes(script, relpath, options.memFs).then(function (fullScript) {
+  replaceIncludes(script, relpath, options.memFs, options.includeResolver).then(function (fullScript) {
     const globals = options.implicitGlobals ? (options.globals ? options.globals : {oscad}) : {}
     const func = createJscadFunction(fullScript, globals)
     // stand-in for the include function(no-op)
