@@ -2,7 +2,7 @@ import oscad from '@jscad/scad-api'
 import { convertToBlob } from '../io/convertToBlob'
 import { formats } from '../io/formats'
 import { rebuildSolid } from '../core/rebuildSolid'
-import { resolveIncludesFs } from './resolveIncludesFs'
+import { resolveIncludesFs } from '../utils/resolveIncludesFs'
 import getParameterDefinitionsCLI from './getParameterDefinitionsCLI'
 
 /**

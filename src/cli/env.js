@@ -1,4 +1,4 @@
-import { version } from './version'
+import { version } from '../jscad/version'
 
 export default function env () {
   var env = 'OpenJSCAD ' + version
