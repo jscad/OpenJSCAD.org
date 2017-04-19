@@ -1,7 +1,7 @@
 /**
  * parse the jscad script to get the parameter definitions
  * @param {String} script the script
- * @return params : the parsed parameters
+ * @return {Object} params : the parsed parameters
  */
 export default function getParamDefinitions (script) {
   var scriptisvalid = true

@@ -41,9 +41,8 @@
 import fs from 'fs'
 
 import {version} from './jscad/version'
-import env from './jscad/env'
-
-import generateOutputData from './utils/generateOutputData'
+import env from './cli/env'
+import generateOutputData from './cli/generateOutputData'
 import { formats } from './io/formats'
 
 // var csg = sphere(1);          // -- basic test

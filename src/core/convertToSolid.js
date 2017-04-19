@@ -1,6 +1,11 @@
 import { CSG, CAG } from '@jscad/csg'
 
 // FIXME: is there not too much overlap with convertToBlob ?
+/**
+ * convert objects to a single solid
+ * @param {Array} objects the list of objects
+ * @return {Object} solid : the single CSG object
+ */
 export default function convertToSolid (objects) {
   if (objects.length === undefined) {
     if ((objects instanceof CAG) || (objects instanceof CSG)) {

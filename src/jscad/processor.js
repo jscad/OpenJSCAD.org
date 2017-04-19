@@ -5,7 +5,7 @@ import log from './log'
 import getParamDefinitions from '../core/getParamDefinitions'
 import getParamValues from '../core/getParamValues'
 import { rebuildSolid, rebuildSolidInWorker } from '../core/rebuildSolid'
-import convertToSolid from './convertToSolid'
+import convertToSolid from '../core/convertToSolid'
 
 // output handling
 import generateOutputFileBlobUrl from '../io/generateOutputFileBlobUrl'
@@ -14,29 +14,6 @@ import {convertToBlob} from '../io/convertToBlob'
 import {formats} from '../io/formats'
 
 import Viewer from '../ui/viewer/jscad-viewer'
-
-/*
- * exposes the properties of an object to the given scope object (for example WINDOW etc)
- * this is the same as {foo, bar} = baz
- * window.bar = bar
- * window.foo = foo
-*/
-function exposeAPI (object, scope = window) {
-  Object.keys(object).forEach(function (key) {
-    scope[key] = object[key]
-  })
-}
-
-/* exposeAPI({OpenJsCad})// for backwards compatibility only
-exposeAPI(primitives2d)
-exposeAPI(primitives3d)
-exposeAPI(booleanOps)
-exposeAPI(transformations)
-exposeAPI(extrusion)
-exposeAPI(color)
-exposeAPI(maths)
-exposeAPI(text)
-exposeAPI(csg) */
 
 export default function Processor (containerdiv, options) {
   if (options === undefined) options = {}
@@ -424,7 +401,6 @@ Processor.prototype = {
   // script: javascript code
   // filename: optional, the name of the .jscad file
   setJsCad: function (script, filename) {
-    // console.log('setJsCad', script, filename)
     if (!filename) filename = 'openjscad.jscad'
 
     var prevParamValues = {}
@@ -547,7 +523,6 @@ Processor.prototype = {
     this.clearOutputFile()
     const blob = this.currentObjectsToBlob()
     const extension = this.selectedFormatInfo().extension
-    console.log('generateOutputFile')
 
     function onDone (data, downloadAttribute, blobMode, noData) {
       this.hasOutputFile = true
