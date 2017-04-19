@@ -32641,6 +32641,538 @@ module.exports={
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.default = convertToSolid;
+
+var _csg = require('@jscad/csg');
+
+// FIXME: is there not too much overlap with convertToBlob ?
+/**
+ * convert objects to a single solid
+ * @param {Array} objects the list of objects
+ * @return {Object} solid : the single CSG object
+ */
+function convertToSolid(objects) {
+  if (objects.length === undefined) {
+    if (objects instanceof _csg.CAG || objects instanceof _csg.CSG) {
+      var obj = objects;
+      objects = [obj];
+    } else {
+      throw new Error('Cannot convert object (' + (typeof objects === 'undefined' ? 'undefined' : _typeof(objects)) + ') to solid');
+    }
+  }
+
+  var solid = null;
+  for (var i = 0; i < objects.length; i++) {
+    var _obj = objects[i];
+    if (_obj instanceof _csg.CAG) {
+      _obj = _obj.extrude({ offset: [0, 0, 0.1] }); // convert CAG to a thin solid CSG
+    }
+    if (solid !== null) {
+      solid = solid.unionForNonIntersecting(_obj);
+    } else {
+      solid = _obj;
+    }
+  }
+  return solid;
+}
+
+},{"@jscad/csg":1}],41:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.default = getParamDefinitions;
+/**
+ * parse the jscad script to get the parameter definitions
+ * @param {String} script the script
+ * @return {Object} params : the parsed parameters
+ */
+function getParamDefinitions(script) {
+  var scriptisvalid = true;
+  script += '\nfunction include() {}'; // at least make it not throw an error so early
+  try {
+    // first try to execute the script itself
+    // this will catch any syntax errors
+    //    BUT we can't introduce any new function!!!
+    new Function(script)();
+  } catch (e) {
+    scriptisvalid = false;
+    throw e;
+  }
+  var params = [];
+  if (scriptisvalid) {
+    var script1 = "if(typeof(getParameterDefinitions) == 'function') {return getParameterDefinitions();} else {return [];} ";
+    script1 += script;
+    var f = new Function(script1);
+    params = f();
+    if ((typeof params === 'undefined' ? 'undefined' : _typeof(params)) !== 'object' || typeof params.length !== 'number') {
+      throw new Error('The getParameterDefinitions() function should return an array with the parameter definitions');
+    }
+  }
+  return params;
+}
+
+},{}],42:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getParamValues;
+/**
+ * extracts the parameter
+ * @param {Array} paramControls
+ * @param {Boolean} onlyChanged
+ * @returns {Object} the parameter values, as an object
+ */
+function getParamValues(paramControls, onlyChanged) {
+  var paramValues = {};
+  var value = void 0;
+  for (var i = 0; i < paramControls.length; i++) {
+    var control = paramControls[i];
+    switch (control.paramType) {
+      case 'choice':
+        value = control.options[control.selectedIndex].value;
+        break;
+      case 'float':
+      case 'number':
+        value = control.value;
+        if (!isNaN(parseFloat(value)) && isFinite(value)) {
+          value = parseFloat(value);
+        } else {
+          throw new Error('Parameter (' + control.paramName + ') is not a valid number (' + value + ')');
+        }
+        break;
+      case 'int':
+        value = control.value;
+        if (!isNaN(parseFloat(value)) && isFinite(value)) {
+          value = parseInt(value);
+        } else {
+          throw new Error('Parameter (' + control.paramName + ') is not a valid number (' + value + ')');
+        }
+        break;
+      case 'checkbox':
+      case 'radio':
+        if (control.checked === true && control.value.length > 0) {
+          value = control.value;
+        } else {
+          value = control.checked;
+        }
+        break;
+      default:
+        value = control.value;
+        break;
+    }
+    if (onlyChanged) {
+      if ('initial' in control && control.initial === value) {
+        continue;
+      } else if ('default' in control && control.default === value) {
+        continue;
+      }
+    }
+    paramValues[control.paramName] = value;
+    // console.log(control.paramName+":"+paramValues[control.paramName])
+  }
+  return paramValues;
+}
+
+},{}],43:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = createJscadFunction;
+/**
+ * Create an function for processing the JSCAD script into CSG/CAG objects
+ * @param {String} script the script
+ * @param {Object} globals the globals to use when evaluating the script: these are not ..
+ * ...ACTUAL globals, merely functions/ variable accessible AS IF they were globals !
+ */
+function createJscadFunction(script, globals) {
+  // console.log('globals', globals)
+  // not a fan of this, we have way too many explicit api elements
+  var globalsList = '';
+  // each top key is a library ie : openscad helpers etc
+  // one level below that is the list of libs
+  // last level is the actual function we want to export to 'local' scope
+  Object.keys(globals).forEach(function (libKey) {
+    var lib = globals[libKey];
+    // console.log(`lib:${libKey}: ${lib}`)
+    Object.keys(lib).forEach(function (libItemKey) {
+      var libItems = lib[libItemKey];
+      // console.log('libItems', libItems)
+      Object.keys(libItems).forEach(function (toExposeKey) {
+        // console.log('toExpose',toExpose )
+        var text = 'const ' + toExposeKey + ' = globals[\'' + libKey + '\'][\'' + libItemKey + '\'][\'' + toExposeKey + '\']\n';
+        globalsList += text;
+      });
+    });
+  });
+
+  var source = '// SYNC WORKER\n    ' + globalsList + '\n\n    //user defined script(s)\n    ' + script + '\n\n    if (typeof (main) !== \'function\') {\n      throw new Error(\'The JSCAD script must contain a function main() which returns one or more CSG or CAG solids.\')\n    }\n\n    return main(params)\n  ';
+
+  var f = new Function('params', 'include', 'globals', source);
+  return f;
+}
+
+},{}],44:[function(require,module,exports){
+'use strict';
+
+var _csg = require('@jscad/csg');
+
+var _scadApi = require('@jscad/scad-api');
+
+var _scadApi2 = _interopRequireDefault(_scadApi);
+
+var _jscadFunction = require('./jscad-function');
+
+var _jscadFunction2 = _interopRequireDefault(_jscadFunction);
+
+var _misc = require('../utils/misc');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Create an worker (thread) for processing the JSCAD script into CSG/CAG objects
+ */
+// jscad-worker.js
+//
+// == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
+
+module.exports = function (self) {
+  self.onmessage = function (e) {
+    var r = { cmd: 'error', txt: 'try again' };
+    if (e.data instanceof Object) {
+      var data = e.data;
+      if (data.cmd === 'render') {
+        var _e$data = e.data,
+            script = _e$data.script,
+            parameters = _e$data.parameters,
+            options = _e$data.options;
+
+
+        var globals = options.implicitGlobals ? { oscad: _scadApi2.default } : {};
+        var func = (0, _jscadFunction2.default)(script, globals);
+        var objects = func(parameters, function (x) {
+          return x;
+        }, globals);
+        objects = (0, _misc.toArray)(objects).map(function (object) {
+          if (object instanceof _csg.CAG || object instanceof _csg.CSG) {
+            return object.toCompactBinary();
+          }
+        });
+
+        if (objects.length === 0) {
+          throw new Error('The JSCAD script must return one or more CSG or CAG solids.');
+        }
+        self.postMessage({ cmd: 'rendered', objects: objects });
+      }
+    }
+  };
+};
+
+},{"../utils/misc":64,"./jscad-function":43,"@jscad/csg":1,"@jscad/scad-api":3}],45:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.rebuildSolid = rebuildSolid;
+exports.rebuildSolidInWorker = rebuildSolidInWorker;
+
+var _webworkify = require('webworkify');
+
+var _webworkify2 = _interopRequireDefault(_webworkify);
+
+var _csg = require('@jscad/csg');
+
+var _scadApi = require('@jscad/scad-api');
+
+var _scadApi2 = _interopRequireDefault(_scadApi);
+
+var _jscadFunction = require('./jscad-function');
+
+var _jscadFunction2 = _interopRequireDefault(_jscadFunction);
+
+var _replaceIncludes = require('./replaceIncludes');
+
+var _resolveIncludes = require('./resolveIncludes');
+
+var _misc = require('../utils/misc');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * evaluate script & rebuild solids, in main thread
+ * @param {String} script the script
+ * @param {String} fullurl full url of current script
+ * @param {Object} parameters the parameters to use with the script
+ * @param {Object} callback the callback to call once evaluation is done /failed
+ * @param {Object} options the settings to use when rebuilding the solid
+ */
+function rebuildSolid(script, fullurl, parameters, callback, options) {
+  var relpath = fullurl;
+  if (relpath.lastIndexOf('/') >= 0) {
+    relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1);
+  }
+  var defaults = {
+    implicitGlobals: true,
+    memFs: undefined,
+    includeResolver: _resolveIncludes.resolveIncludes // default function to retrieve 'includes'
+  };
+  options = Object.assign({}, defaults, options);
+
+  (0, _replaceIncludes.replaceIncludes)(script, relpath, options.memFs, options.includeResolver).then(function (fullScript) {
+    var globals = options.implicitGlobals ? options.globals ? options.globals : { oscad: _scadApi2.default } : {};
+    var func = (0, _jscadFunction2.default)(fullScript, globals);
+    // stand-in for the include function(no-op)
+    var include = function include(x) {
+      return x;
+    };
+    try {
+      var objects = func(parameters, include, globals);
+      objects = (0, _misc.toArray)(objects);
+      if (objects.length === 0) {
+        throw new Error('The JSCAD script must return one or more CSG or CAG solids.');
+      }
+      callback(undefined, objects);
+    } catch (error) {
+      callback(error, undefined);
+    }
+  }).catch(function (error) {
+    return callback(error, undefined);
+  });
+
+  // have we been asked to stop our work?
+  return {
+    cancel: function cancel() {
+      console.log('cannot stop work in main thread, sorry');
+    }
+  };
+}
+
+/**
+ * evaluate script & rebuild solids, in seperate thread/webworker
+ * @param {String} script the script
+ * @param {String} fullurl full url of current script
+ * @param {Object} parameters the parameters to use with the script
+ * @param {Object} callback the callback to call once evaluation is done /failed
+ * @param {Object} options the settings to use when rebuilding the solid
+ */
+function rebuildSolidInWorker(script, fullurl, parameters, callback, options) {
+  if (!parameters) {
+    throw new Error("JSCAD: missing 'parameters'");
+  }
+  if (!window.Worker) throw new Error('Worker threads are unsupported.');
+  var defaults = {
+    implicitGlobals: true,
+    memFs: undefined,
+    includeResolver: _resolveIncludes.resolveIncludes // default function to retrieve 'includes'
+  };
+  options = Object.assign({}, defaults, options);
+
+  var relpath = fullurl;
+  if (relpath.lastIndexOf('/') >= 0) {
+    relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1);
+  }
+
+  var worker = void 0;
+  (0, _replaceIncludes.replaceIncludes)(script, relpath, options.memFs, options.includeResolver).then(function (script) {
+    worker = (0, _webworkify2.default)(require('./jscad-worker.js'));
+    worker.onmessage = function (e) {
+      if (e.data instanceof Object) {
+        var data = e.data.objects.map(function (object) {
+          if (object['class'] === 'CSG') {
+            return _csg.CSG.fromCompactBinary(object);
+          }
+          if (object['class'] === 'CAG') {
+            return _csg.CAG.fromCompactBinary(object);
+          }
+        });
+        callback(undefined, data);
+      }
+    };
+    worker.onerror = function (e) {
+      callback('Error in line ' + e.lineno + ' : ' + e.message, undefined);
+    };
+    worker.postMessage({ cmd: 'render', fullurl: fullurl, script: script, parameters: parameters, options: options });
+  }).catch(function (error) {
+    return callback(error, undefined);
+  });
+
+  // have we been asked to stop our work?
+  return {
+    cancel: function cancel() {
+      if (worker) worker.terminate();
+    }
+  };
+}
+
+},{"../utils/misc":64,"./jscad-function":43,"./jscad-worker.js":44,"./replaceIncludes":46,"./resolveIncludes":47,"@jscad/csg":1,"@jscad/scad-api":3,"webworkify":38}],46:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.replaceIncludes = replaceIncludes;
+var esprima = require('esprima');
+var estraverse = require('estraverse');
+var astring = require('astring');
+
+/**
+ * helper function that finds include() statements in files,
+ * fetches their code & returns it (recursively) returning the whole code with
+ * inlined includes
+ * this is more reliable than async xhr + eval()
+ * but is still just a temporary solution until using actual modules & loaders (commonjs , es6 etc)
+ * @param {String} source the original script (with include statements)
+ * @param {String} relpath relative path, for xhr resolution
+ * @param {String} memFs memFs cache object
+ * @returns {String} the full script, with inlined
+ */
+function replaceIncludes(source, relpath, memFs, includeResolver) {
+  return new Promise(function (resolve, reject) {
+    var moduleAst = astFromSource(source);
+    var foundIncludes = findIncludes(moduleAst).map(function (x) {
+      return x.value;
+    });
+    var withoutIncludes = replaceIncludesInAst(moduleAst);
+
+    var modulePromises = foundIncludes.map(function (uri, index) {
+      return includeResolver(relpath, uri, memFs).then(function (includedScript) {
+        return replaceIncludes(includedScript, relpath, memFs, includeResolver);
+      }, function (err) {
+        return console.error('fail', err);
+      });
+    });
+    Promise.all(modulePromises).then(function (resolvedModules) {
+      var resolvedScript = resolvedModules.concat(withoutIncludes).join('\n');
+      resolve(resolvedScript);
+    });
+  });
+}
+
+function isInclude(node) {
+  return node.type === 'CallExpression' && node.callee && node.callee.name && node.callee.name === 'include';
+}
+
+function astFromSource(source, options) {
+  var defaults = {
+    loc: true, range: true, tolerant: true
+  };
+  options = Object.assign({}, defaults, options);
+
+  var ast = void 0;
+  try {
+    ast = esprima.parse(source, options);
+    // console.log("ast",ast,"scope", scope);
+  } catch (error) {
+    console.error('failed to generate ast:', error);
+    ast = {};
+  }
+  return ast;
+}
+
+function findIncludes(ast) {
+  var includes = [];
+  estraverse.traverse(ast, {
+    enter: function enter(node, parent) {
+      if (isInclude(node)) {
+        if (node.arguments && arguments.length > 0) {
+          var includePath = node.arguments[0];
+          var raw = includePath.raw,
+              value = includePath.value;
+
+          includes.push({ raw: raw, value: value });
+        }
+        return estraverse.VisitorOption.Skip;
+      }
+    }
+  });
+  return includes;
+}
+
+function replaceIncludesInAst(ast) {
+  var replacement = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
+  var result = estraverse.replace(ast, {
+    enter: function enter(node, parent) {
+      if (isInclude(node)) {
+        if (node.arguments && arguments.length > 0) {
+          return { type: 'Literal', value: replacement };
+        }
+        return estraverse.VisitorOption.Skip;
+      }
+    }
+  });
+
+  return astring.generate(result, { indent: '  ', lineEnd: '\n' });
+}
+
+},{"astring":4,"esprima":11,"estraverse":12}],47:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.resolveIncludes = resolveIncludes;
+/**
+ * fetch the requested script either via MemFs or HTTP Request
+ * (Note: The resolved modules are prepepended in front of the calling script
+ * @param {String} relpath the relative path
+ * @param {String} scriptPath the path to the script
+ * @param {Object} memFs local cache (optional)
+ */
+function resolveIncludes(relpath, scriptPath, memFs) {
+  // include the requested script via MemFs if possible
+  return new Promise(function (resolve, reject) {
+    if ((typeof memFs === 'undefined' ? 'undefined' : _typeof(memFs)) === 'object') {
+      for (var fs in memFs) {
+        if (memFs[fs].fullpath === scriptPath || './' + memFs[fs].fullpath === scriptPath || memFs[fs].name === scriptPath) {
+          resolve(memFs[fs].source);
+          return;
+        }
+      }
+    }
+    // include the requested script via webserver access
+    var xhr = new XMLHttpRequest();
+    var url = relpath + scriptPath;
+    if (scriptPath.match(/^(https:|http:)/i)) {
+      url = scriptPath;
+    }
+    xhr.open('GET', url, true);
+    xhr.onload = function (event) {
+      var status = '' + event.currentTarget.status;
+      if (status.length > 0 && status[0] === '2') {
+        resolve(this.responseText);
+      } else {
+        reject(this.responseText);
+      }
+    };
+    xhr.onerror = function (err) {
+      reject(err);
+    };
+    xhr.send();
+  });
+}
+
+},{}],48:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.convertToBlob = convertToBlob;
 
 var _csg = require('@jscad/csg');
@@ -32755,66 +33287,122 @@ function convertToBlob(objects, params) {
   return blob;
 }
 
-},{"../utils/misc":64,"@jscad/csg":1,"@jscad/io":2}],41:[function(require,module,exports){
+},{"../utils/misc":64,"@jscad/csg":1,"@jscad/io":2}],49:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var formats = exports.formats = {
-  stl: { displayName: 'STL (ASCII)', description: 'STereoLithography, ASCII', extension: 'stl', mimetype: 'application/sla', convertCSG: true, convertCAG: false },
-  stla: { displayName: 'STL (ASCII)', description: 'STereoLithography, ASCII', extension: 'stl', mimetype: 'application/sla', convertCSG: true, convertCAG: false },
-  stlb: { displayName: 'STL (Binary)', description: 'STereoLithography, Binary', extension: 'stl', mimetype: 'application/sla', convertCSG: true, convertCAG: false },
-  amf: { displayName: 'AMF (experimental)', description: 'Additive Manufacturing File Format', extension: 'amf', mimetype: 'application/amf+xml', convertCSG: true, convertCAG: false },
-  x3d: { displayName: 'X3D', description: 'X3D File Format', extension: 'x3d', mimetype: 'model/x3d+xml', convertCSG: true, convertCAG: false },
-  dxf: { displayName: 'DXF', description: 'AutoCAD Drawing Exchange Format', extension: 'dxf', mimetype: 'application/dxf', convertCSG: false, convertCAG: true },
-  jscad: { displayName: 'JSCAD', description: 'OpenJSCAD.org Source', extension: 'jscad', mimetype: 'application/javascript', convertCSG: true, convertCAG: true },
-  svg: { displayName: 'SVG', description: 'Scalable Vector Graphics Format', extension: 'svg', mimetype: 'image/svg+xml', convertCSG: false, convertCAG: true },
-  js: { displayName: 'js', description: 'JavaScript Source' },
-  gcode: { displayName: 'gcode', description: 'G Programming Language File Format' },
-  json: { displayName: 'json', description: 'JavaScript Object Notation Format' }
-};
-
-},{}],42:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.default = convertToSolid;
+exports.conversionFormats = exports.formats = undefined;
+exports.supportedFormatsForObjects = supportedFormatsForObjects;
 
 var _csg = require('@jscad/csg');
 
-// FIXME: is there not too much overlap with convertToBlob ?
-function convertToSolid(objects) {
-  if (objects.length === undefined) {
-    if (objects instanceof _csg.CAG || objects instanceof _csg.CSG) {
-      var obj = objects;
-      objects = [obj];
-    } else {
-      throw new Error('Cannot convert object (' + (typeof objects === 'undefined' ? 'undefined' : _typeof(objects)) + ') to solid');
-    }
-  }
+// handled format descriptions
+var formats = exports.formats = {
+  stl: {
+    displayName: 'STL (ASCII)',
+    description: 'STereoLithography, ASCII',
+    extension: 'stl',
+    mimetype: 'application/sla',
+    convertCSG: true,
+    convertCAG: false
+  },
+  stla: {
+    displayName: 'STL (ASCII)',
+    description: 'STereoLithography, ASCII',
+    extension: 'stl',
+    mimetype: 'application/sla',
+    convertCSG: true,
+    convertCAG: false
+  },
+  stlb: {
+    displayName: 'STL (Binary)',
+    description: 'STereoLithography, Binary',
+    extension: 'stl',
+    mimetype: 'application/sla',
+    convertCSG: true,
+    convertCAG: false
+  },
 
-  var solid = null;
+  amf: {
+    displayName: 'AMF (experimental)',
+    description: 'Additive Manufacturing File Format',
+    extension: 'amf',
+    mimetype: 'application/amf+xml',
+    convertCSG: true,
+    convertCAG: false },
+  x3d: {
+    displayName: 'X3D',
+    description: 'X3D File Format',
+    extension: 'x3d',
+    mimetype: 'model/x3d+xml',
+    convertCSG: true,
+    convertCAG: false },
+  dxf: {
+    displayName: 'DXF',
+    description: 'AutoCAD Drawing Exchange Format',
+    extension: 'dxf',
+    mimetype: 'application/dxf',
+    convertCSG: false,
+    convertCAG: true },
+  jscad: {
+    displayName: 'JSCAD',
+    description: 'OpenJSCAD.org Source',
+    extension: 'jscad',
+    mimetype: 'application/javascript',
+    convertCSG: true,
+    convertCAG: true },
+  svg: {
+    displayName: 'SVG',
+    description: 'Scalable Vector Graphics Format',
+    extension: 'svg',
+    mimetype: 'image/svg+xml',
+    convertCSG: false,
+    convertCAG: true },
+  js: {
+    displayName: 'js',
+    description: 'JavaScript Source' },
+  gcode: {
+    displayName: 'gcode',
+    description: 'G Programming Language File Format' },
+  json: {
+    displayName: 'json',
+    description: 'JavaScript Object Notation Format' }
+};
+
+// handled input formats
+var conversionFormats = exports.conversionFormats = [
+// 3D file formats
+'amf', 'gcode', 'js', 'jscad', 'obj', 'scad', 'stl',
+// 2D file formats
+'svg'];
+
+function supportedFormatsForObjects(objects) {
+  var objectFormats = [];
+  var foundCSG = false;
+  var foundCAG = false;
   for (var i = 0; i < objects.length; i++) {
-    var _obj = objects[i];
-    if (_obj instanceof _csg.CAG) {
-      _obj = _obj.extrude({ offset: [0, 0, 0.1] }); // convert CAG to a thin solid CSG
+    if (objects[i] instanceof _csg.CSG) {
+      foundCSG = true;
     }
-    if (solid !== null) {
-      solid = solid.unionForNonIntersecting(_obj);
-    } else {
-      solid = _obj;
+    if (objects[i] instanceof _csg.CAG) {
+      foundCAG = true;
     }
   }
-  return solid;
+  for (var format in formats) {
+    if (foundCSG && formats[format].convertCSG === true) {
+      objectFormats[objectFormats.length] = format;
+      continue; // only add once
+    }
+    if (foundCAG && formats[format].convertCAG === true) {
+      objectFormats[objectFormats.length] = format;
+    }
+  }
+  return objectFormats;
 }
 
-},{"@jscad/csg":1}],43:[function(require,module,exports){
+},{"@jscad/csg":1}],50:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32847,7 +33435,7 @@ function generateOutputFileBlobUrl(extension, blob, callback) {
   }
 }
 
-},{"../ui/detectBrowser":55,"../ui/urlHelpers":59}],44:[function(require,module,exports){
+},{"../ui/detectBrowser":55,"../ui/urlHelpers":59}],51:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32895,204 +33483,7 @@ function generateOutputFileFileSystem(extension, blob, callback) {
   });
 }
 
-},{"../ui/fileSystemApiErrorHandler":57}],45:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.default = getParamDefinitions;
-// parse the jscad script to get the parameter definitions
-function getParamDefinitions(script) {
-  var scriptisvalid = true;
-  script += '\nfunction include() {}'; // at least make it not throw an error so early
-  try {
-    // first try to execute the script itself
-    // this will catch any syntax errors
-    //    BUT we can't introduce any new function!!!
-    new Function(script)();
-  } catch (e) {
-    scriptisvalid = false;
-    throw e;
-  }
-  var params = [];
-  if (scriptisvalid) {
-    var script1 = "if(typeof(getParameterDefinitions) == 'function') {return getParameterDefinitions();} else {return [];} ";
-    script1 += script;
-    var f = new Function(script1);
-    params = f();
-    if ((typeof params === 'undefined' ? 'undefined' : _typeof(params)) !== 'object' || typeof params.length !== 'number') {
-      throw new Error('The getParameterDefinitions() function should return an array with the parameter definitions');
-    }
-  }
-  return params;
-}
-
-},{}],46:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = getParamValues;
-function getParamValues(paramControls, onlyChanged) {
-  var paramValues = {};
-  var value;
-  for (var i = 0; i < paramControls.length; i++) {
-    var control = paramControls[i];
-    switch (control.paramType) {
-      case 'choice':
-        value = control.options[control.selectedIndex].value;
-        break;
-      case 'float':
-      case 'number':
-        var value = control.value;
-        if (!isNaN(parseFloat(value)) && isFinite(value)) {
-          value = parseFloat(value);
-        } else {
-          throw new Error('Parameter (' + control.paramName + ') is not a valid number (' + value + ')');
-        }
-        break;
-      case 'int':
-        var value = control.value;
-        if (!isNaN(parseFloat(value)) && isFinite(value)) {
-          value = parseInt(value);
-        } else {
-          throw new Error('Parameter (' + control.paramName + ') is not a valid number (' + value + ')');
-        }
-        break;
-      case 'checkbox':
-      case 'radio':
-        if (control.checked === true && control.value.length > 0) {
-          value = control.value;
-        } else {
-          value = control.checked;
-        }
-        break;
-      default:
-        value = control.value;
-        break;
-    }
-    if (onlyChanged) {
-      if ('initial' in control && control.initial == value) {
-        continue;
-      } else if ('default' in control && control.default == value) {
-        continue;
-      }
-    }
-    paramValues[control.paramName] = value;
-    // console.log(control.paramName+":"+paramValues[control.paramName])
-  }
-  return paramValues;
-}
-
-},{}],47:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = createJscadFunction;
-// == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
-//
-// History:
-//   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
-
-/**
- * Create an function for processing the JSCAD script into CSG/CAG objects
- * @param {String} script the script
- * @param {Object} globals the globals to use when evaluating the script: these are not ..
- * ...ACTUAL globals, merely functions/ variable accessible AS IF they were globals !
- */
-function createJscadFunction(script, globals) {
-  // console.log('globals', globals)
-  // not a fan of this, we have way too many explicit api elements
-  var globalsList = '';
-  // each top key is a library ie : openscad helpers etc
-  // one level below that is the list of libs
-  // last level is the actual function we want to export to 'local' scope
-  Object.keys(globals).forEach(function (libKey) {
-    var lib = globals[libKey];
-    // console.log(`lib:${libKey}: ${lib}`)
-    Object.keys(lib).forEach(function (libItemKey) {
-      var libItems = lib[libItemKey];
-      // console.log('libItems', libItems)
-      Object.keys(libItems).forEach(function (toExposeKey) {
-        // console.log('toExpose',toExpose )
-        var text = 'const ' + toExposeKey + ' = globals[\'' + libKey + '\'][\'' + libItemKey + '\'][\'' + toExposeKey + '\']\n';
-        globalsList += text;
-      });
-    });
-  });
-
-  var source = '// SYNC WORKER\n    ' + globalsList + '\n\n    //user defined script(s)\n    ' + script + '\n\n    if (typeof (main) !== \'function\') {\n      throw new Error(\'The JSCAD script must contain a function main() which returns one or more CSG or CAG solids.\')\n    }\n\n    return main(params)\n  ';
-
-  var f = new Function('params', 'include', 'globals', source);
-  return f;
-}
-
-},{}],48:[function(require,module,exports){
-'use strict';
-
-var _csg = require('@jscad/csg');
-
-var _scadApi = require('@jscad/scad-api');
-
-var _scadApi2 = _interopRequireDefault(_scadApi);
-
-var _jscadFunction = require('./jscad-function');
-
-var _jscadFunction2 = _interopRequireDefault(_jscadFunction);
-
-var _misc = require('../utils/misc');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// jscad-worker.js
-//
-// == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
-//
-// History:
-//   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
-
-// Create an worker (thread) for processing the JSCAD script into CSG/CAG objects
-
-module.exports = function (self) {
-  self.onmessage = function (e) {
-    var r = { cmd: 'error', txt: 'try again' };
-    if (e.data instanceof Object) {
-      var data = e.data;
-      if (data.cmd === 'render') {
-        var _e$data = e.data,
-            script = _e$data.script,
-            parameters = _e$data.parameters,
-            options = _e$data.options;
-
-
-        var globals = options.implicitGlobals ? { oscad: _scadApi2.default } : {};
-        var func = (0, _jscadFunction2.default)(script, globals);
-        var objects = func(parameters, function (x) {
-          return x;
-        }, globals);
-        objects = (0, _misc.toArray)(objects).map(function (object) {
-          if (object instanceof _csg.CAG || object instanceof _csg.CSG) {
-            return object.toCompactBinary();
-          }
-        });
-
-        if (objects.length === 0) {
-          throw new Error('The JSCAD script must return one or more CSG or CAG solids.');
-        }
-        self.postMessage({ cmd: 'rendered', objects: objects });
-      }
-    }
-  };
-};
-
-},{"../utils/misc":64,"./jscad-function":47,"@jscad/csg":1,"@jscad/scad-api":3}],49:[function(require,module,exports){
+},{"../ui/fileSystemApiErrorHandler":57}],52:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33124,7 +33515,7 @@ function status(s) {
   log(s);
 }
 
-},{}],50:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33140,70 +33531,44 @@ var _log = require('./log');
 
 var _log2 = _interopRequireDefault(_log);
 
-var _getParamDefinitions = require('./getParamDefinitions');
+var _getParamDefinitions = require('../core/getParamDefinitions');
 
 var _getParamDefinitions2 = _interopRequireDefault(_getParamDefinitions);
 
-var _getParamValues = require('./getParamValues');
+var _getParamValues = require('../core/getParamValues');
 
 var _getParamValues2 = _interopRequireDefault(_getParamValues);
 
-var _convertToSolid = require('./convertToSolid');
+var _rebuildSolid2 = require('../core/rebuildSolid');
+
+var _convertToSolid = require('../core/convertToSolid');
 
 var _convertToSolid2 = _interopRequireDefault(_convertToSolid);
 
-var _rebuildSolid2 = require('./rebuildSolid');
-
-var _generateOutputFileBlobUrl = require('./generateOutputFileBlobUrl');
+var _generateOutputFileBlobUrl = require('../io/generateOutputFileBlobUrl');
 
 var _generateOutputFileBlobUrl2 = _interopRequireDefault(_generateOutputFileBlobUrl);
 
-var _generateOutputFileFileSystem = require('./generateOutputFileFileSystem');
+var _generateOutputFileFileSystem = require('../io/generateOutputFileFileSystem');
 
 var _generateOutputFileFileSystem2 = _interopRequireDefault(_generateOutputFileFileSystem);
-
-var _jscadViewer = require('../ui/viewer/jscad-viewer');
-
-var _jscadViewer2 = _interopRequireDefault(_jscadViewer);
 
 var _convertToBlob = require('../io/convertToBlob');
 
 var _formats = require('../io/formats');
 
+var _jscadViewer = require('../ui/viewer/jscad-viewer');
+
+var _jscadViewer2 = _interopRequireDefault(_jscadViewer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/*
- * exposes the properties of an object to the given scope object (for example WINDOW etc)
- * this is the same as {foo, bar} = baz
- * window.bar = bar
- * window.foo = foo
-*/
-function exposeAPI(object) {
-  var scope = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window;
-
-  Object.keys(object).forEach(function (key) {
-    scope[key] = object[key];
-  });
-}
-
-/* exposeAPI({OpenJsCad})// for backwards compatibility only
-exposeAPI(primitives2d)
-exposeAPI(primitives3d)
-exposeAPI(booleanOps)
-exposeAPI(transformations)
-exposeAPI(extrusion)
-exposeAPI(color)
-exposeAPI(maths)
-exposeAPI(text)
-exposeAPI(csg) */
-
-// output handling
 function Processor(containerdiv, options) {
   if (options === undefined) options = {};
   // the default options
   this.opts = {
     debug: false,
-    libraries: ['js/lib/csg.js', 'js/formats.js', 'js/js', 'js/openscad.js'],
+    libraries: [],
     openJsCadPath: '',
     useAsync: true,
     useSync: true,
@@ -33254,6 +33619,9 @@ function Processor(containerdiv, options) {
   // FIXME: UI only, seperate
   this.createElements();
 }
+
+// output handling
+
 
 Processor.convertToSolid = _convertToSolid2.default;
 
@@ -33323,7 +33691,7 @@ Processor.prototype = {
     element.oninput = function (e) {
       if (that.state === 2) {
         that.updateView();
-        that.updateFormats();
+        that.updateFormatsDropdown();
         that.updateDownloadLink();
       }
     };
@@ -33337,7 +33705,7 @@ Processor.prototype = {
     element.oninput = function (e) {
       if (that.state === 2) {
         that.updateView();
-        that.updateFormats();
+        that.updateFormatsDropdown();
         that.updateDownloadLink();
       }
     };
@@ -33426,15 +33794,12 @@ Processor.prototype = {
   },
 
   setCurrentObjects: function setCurrentObjects(objs) {
-    if (!(length in objs)) {
-      objs = [objs]; // create a list
-    }
     this.currentObjects = objs; // list of CAG or CSG objects
 
     this.updateSelection();
     this.selectStartPoint = -1; // force view update
     this.updateView();
-    this.updateFormats();
+    this.updateFormatsDropdown();
     this.updateDownloadLink();
 
     if (this.onchange) this.onchange(this);
@@ -33487,13 +33852,21 @@ Processor.prototype = {
     }
   },
 
-  updateFormats: function updateFormats() {
+  updateFormatsDropdown: function updateFormatsDropdown() {
     while (this.formatDropdown.options.length > 0) {
       this.formatDropdown.options.remove(0);
     }
 
     var that = this;
-    var formats = this.supportedFormatsForCurrentObjects();
+    var startpoint = this.selectStartPoint;
+    var endpoint = this.selectEndPoint;
+    if (startpoint > endpoint) {
+      startpoint = this.selectEndPoint;endpoint = this.selectStartPoint;
+    }
+    var objects = this.currentObjects.slice(startpoint, endpoint + 1);
+
+    this.formatInfo('stla'); // make sure the formats are initialized
+    var formats = (0, _formats.supportedFormatsForObjects)(objects);
     formats.forEach(function (format) {
       var option = document.createElement('option');
       var info = that.formatInfo(format);
@@ -33588,7 +33961,6 @@ Processor.prototype = {
   // script: javascript code
   // filename: optional, the name of the .jscad file
   setJsCad: function setJsCad(script, filename) {
-    // console.log('setJsCad', script, filename)
     if (!filename) filename = 'openjscad.jscad';
 
     var prevParamValues = {};
@@ -33713,7 +34085,6 @@ Processor.prototype = {
     this.clearOutputFile();
     var blob = this.currentObjectsToBlob();
     var extension = this.selectedFormatInfo().extension;
-    console.log('generateOutputFile');
 
     function onDone(data, downloadAttribute, blobMode, noData) {
       this.hasOutputFile = true;
@@ -33736,10 +34107,8 @@ Processor.prototype = {
 
     if (this.viewedObject) {
       try {
-        // this.generateOutputFileFileSystem()
         (0, _generateOutputFileFileSystem2.default)(extension, blob, onDone.bind(this));
       } catch (e) {
-        // this.generateOutputFileBlobUrl()
         (0, _generateOutputFileBlobUrl2.default)(extension, blob, onDone.bind(this));
       }
       if (this.ondownload) this.ondownload(this);
@@ -33760,42 +34129,6 @@ Processor.prototype = {
     var objects = format === 'jscad' ? this.script : this.currentObjects.slice(startpoint, endpoint + 1);
 
     return (0, _convertToBlob.convertToBlob)(objects, { format: format, formatInfo: formatInfo });
-  },
-
-  supportedFormatsForCurrentObjects: function supportedFormatsForCurrentObjects() {
-    var startpoint = this.selectStartPoint;
-    var endpoint = this.selectEndPoint;
-    if (startpoint > endpoint) {
-      startpoint = this.selectEndPoint;endpoint = this.selectStartPoint;
-    }
-
-    var objs = this.currentObjects.slice(startpoint, endpoint + 1);
-
-    this.formatInfo('stla'); // make sure the formats are initialized
-
-    var objectFormats = [];
-    var i;
-    var format;
-    var foundCSG = false;
-    var foundCAG = false;
-    for (i = 0; i < objs.length; i++) {
-      if (objs[i] instanceof _csg.CSG) {
-        foundCSG = true;
-      }
-      if (objs[i] instanceof _csg.CAG) {
-        foundCAG = true;
-      }
-    }
-    for (format in this.formats) {
-      if (foundCSG && this.formats[format].convertCSG === true) {
-        objectFormats[objectFormats.length] = format;
-        continue; // only add once
-      }
-      if (foundCAG && this.formats[format].convertCAG === true) {
-        objectFormats[objectFormats.length] = format;
-      }
-    }
-    return objectFormats;
   },
 
   formatInfo: function formatInfo(format) {
@@ -33990,295 +34323,7 @@ Processor.prototype = {
   }
 };
 
-},{"../io/convertToBlob":40,"../io/formats":41,"../ui/viewer/jscad-viewer":62,"./convertToSolid":42,"./generateOutputFileBlobUrl":43,"./generateOutputFileFileSystem":44,"./getParamDefinitions":45,"./getParamValues":46,"./log":49,"./rebuildSolid":51,"@jscad/csg":1,"@jscad/io":2}],51:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.rebuildSolid = rebuildSolid;
-exports.rebuildSolidInWorker = rebuildSolidInWorker;
-
-var _webworkify = require('webworkify');
-
-var _webworkify2 = _interopRequireDefault(_webworkify);
-
-var _csg = require('@jscad/csg');
-
-var _scadApi = require('@jscad/scad-api');
-
-var _scadApi2 = _interopRequireDefault(_scadApi);
-
-var _jscadFunction = require('./jscad-function');
-
-var _jscadFunction2 = _interopRequireDefault(_jscadFunction);
-
-var _replaceIncludes = require('./replaceIncludes');
-
-var _resolveIncludes = require('./resolveIncludes');
-
-var _misc = require('../utils/misc');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * evaluate script & rebuild solids, in main thread
- * @param {String} script the script
- * @param {String} fullurl full url of current script
- * @param {Object} parameters the parameters to use with the script
- * @param {Object} callback the callback to call once evaluation is done /failed
- * @param {Object} options the settings to use when rebuilding the solid
- */
-function rebuildSolid(script, fullurl, parameters, callback, options) {
-  var relpath = fullurl;
-  if (relpath.lastIndexOf('/') >= 0) {
-    relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1);
-  }
-  var defaults = {
-    implicitGlobals: true,
-    memFs: undefined,
-    includeResolver: _resolveIncludes.resolveIncludes // default function to retrieve 'includes'
-  };
-  options = Object.assign({}, defaults, options);
-
-  (0, _replaceIncludes.replaceIncludes)(script, relpath, options.memFs, options.includeResolver).then(function (fullScript) {
-    var globals = options.implicitGlobals ? options.globals ? options.globals : { oscad: _scadApi2.default } : {};
-    var func = (0, _jscadFunction2.default)(fullScript, globals);
-    // stand-in for the include function(no-op)
-    var include = function include(x) {
-      return x;
-    };
-    try {
-      var objects = func(parameters, include, globals);
-      objects = (0, _misc.toArray)(objects);
-      if (objects.length === 0) {
-        throw new Error('The JSCAD script must return one or more CSG or CAG solids.');
-      }
-      callback(undefined, objects);
-    } catch (error) {
-      callback(error, undefined);
-    }
-  }).catch(function (error) {
-    return callback(error, undefined);
-  });
-
-  // have we been asked to stop our work?
-  return {
-    cancel: function cancel() {
-      console.log('cannot stop work in main thread, sorry');
-    }
-  };
-}
-
-/**
- * evaluate script & rebuild solids, in seperate thread/webworker
- * @param {String} script the script
- * @param {String} fullurl full url of current script
- * @param {Object} parameters the parameters to use with the script
- * @param {Object} callback the callback to call once evaluation is done /failed
- * @param {Object} options the settings to use when rebuilding the solid
- */
-function rebuildSolidInWorker(script, fullurl, parameters, callback, options) {
-  if (!parameters) {
-    throw new Error("JSCAD: missing 'parameters'");
-  }
-  if (!window.Worker) throw new Error('Worker threads are unsupported.');
-  var defaults = {
-    implicitGlobals: true,
-    memFs: undefined,
-    includeResolver: _resolveIncludes.resolveIncludes // default function to retrieve 'includes'
-  };
-  options = Object.assign({}, defaults, options);
-
-  var relpath = fullurl;
-  if (relpath.lastIndexOf('/') >= 0) {
-    relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1);
-  }
-
-  var worker = void 0;
-  (0, _replaceIncludes.replaceIncludes)(script, relpath, options.memFs, options.includeResolver).then(function (script) {
-    worker = (0, _webworkify2.default)(require('./jscad-worker.js'));
-    worker.onmessage = function (e) {
-      if (e.data instanceof Object) {
-        var data = e.data.objects.map(function (object) {
-          if (object['class'] === 'CSG') {
-            return _csg.CSG.fromCompactBinary(object);
-          }
-          if (object['class'] === 'CAG') {
-            return _csg.CAG.fromCompactBinary(object);
-          }
-        });
-        callback(undefined, data);
-      }
-    };
-    worker.onerror = function (e) {
-      callback('Error in line ' + e.lineno + ' : ' + e.message, undefined);
-    };
-    worker.postMessage({ cmd: 'render', fullurl: fullurl, script: script, parameters: parameters, options: options });
-  }).catch(function (error) {
-    return callback(error, undefined);
-  });
-
-  // have we been asked to stop our work?
-  return {
-    cancel: function cancel() {
-      if (worker) worker.terminate();
-    }
-  };
-}
-
-},{"../utils/misc":64,"./jscad-function":47,"./jscad-worker.js":48,"./replaceIncludes":52,"./resolveIncludes":53,"@jscad/csg":1,"@jscad/scad-api":3,"webworkify":38}],52:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.replaceIncludes = replaceIncludes;
-var esprima = require('esprima');
-var estraverse = require('estraverse');
-var astring = require('astring');
-
-/**
- * helper function that finds include() statements in files,
- * fetches their code & returns it (recursively) returning the whole code with
- * inlined includes
- * this is more reliable than async xhr + eval()
- * but is still just a temporary solution until using actual modules & loaders (commonjs , es6 etc)
- * @param {String} source the original script (with include statements)
- * @param {String} relpath relative path, for xhr resolution
- * @param {String} memFs memFs cache object
- * @returns {String} the full script, with inlined
- */
-function replaceIncludes(source, relpath, memFs, includeResolver) {
-  return new Promise(function (resolve, reject) {
-    var moduleAst = astFromSource(source);
-    var foundIncludes = findIncludes(moduleAst).map(function (x) {
-      return x.value;
-    });
-    var withoutIncludes = replaceIncludesInAst(moduleAst);
-
-    var modulePromises = foundIncludes.map(function (uri, index) {
-      return includeResolver(relpath, uri, memFs).then(function (includedScript) {
-        return replaceIncludes(includedScript, relpath, memFs, includeResolver);
-      }, function (err) {
-        return console.error('fail', err);
-      });
-    });
-    Promise.all(modulePromises).then(function (resolvedModules) {
-      var resolvedScript = resolvedModules.concat(withoutIncludes).join('\n');
-      resolve(resolvedScript);
-    });
-  });
-}
-
-function isInclude(node) {
-  return node.type === 'CallExpression' && node.callee && node.callee.name && node.callee.name === 'include';
-}
-
-function astFromSource(source, options) {
-  var defaults = {
-    loc: true, range: true, tolerant: true
-  };
-  options = Object.assign({}, defaults, options);
-
-  var ast = void 0;
-  try {
-    ast = esprima.parse(source, options);
-    // console.log("ast",ast,"scope", scope);
-  } catch (error) {
-    console.error('failed to generate ast:', error);
-    ast = {};
-  }
-  return ast;
-}
-
-function findIncludes(ast) {
-  var includes = [];
-  estraverse.traverse(ast, {
-    enter: function enter(node, parent) {
-      if (isInclude(node)) {
-        if (node.arguments && arguments.length > 0) {
-          var includePath = node.arguments[0];
-          var raw = includePath.raw,
-              value = includePath.value;
-
-          includes.push({ raw: raw, value: value });
-        }
-        return estraverse.VisitorOption.Skip;
-      }
-    }
-  });
-  return includes;
-}
-
-function replaceIncludesInAst(ast) {
-  var replacement = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-  var result = estraverse.replace(ast, {
-    enter: function enter(node, parent) {
-      if (isInclude(node)) {
-        if (node.arguments && arguments.length > 0) {
-          return { type: 'Literal', value: replacement };
-        }
-        return estraverse.VisitorOption.Skip;
-      }
-    }
-  });
-
-  return astring.generate(result, { indent: '  ', lineEnd: '\n' });
-}
-
-},{"astring":4,"esprima":11,"estraverse":12}],53:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.resolveIncludes = resolveIncludes;
-/**
- * fetch the requested script either via MemFs or HTTP Request
- * (Note: The resolved modules are prepepended in front of the calling script
- * @param {String} relpath the relative path
- * @param {String} scriptPath the path to the script
- * @param {Object} memFs local cache (optional)
- */
-function resolveIncludes(relpath, scriptPath, memFs) {
-  // include the requested script via MemFs if possible
-  return new Promise(function (resolve, reject) {
-    if ((typeof memFs === 'undefined' ? 'undefined' : _typeof(memFs)) === 'object') {
-      for (var fs in memFs) {
-        if (memFs[fs].fullpath === scriptPath || './' + memFs[fs].fullpath === scriptPath || memFs[fs].name === scriptPath) {
-          resolve(memFs[fs].source);
-          return;
-        }
-      }
-    }
-    // include the requested script via webserver access
-    var xhr = new XMLHttpRequest();
-    var url = relpath + scriptPath;
-    if (scriptPath.match(/^(https:|http:)/i)) {
-      url = scriptPath;
-    }
-    xhr.open('GET', url, true);
-    xhr.onload = function (event) {
-      var status = '' + event.currentTarget.status;
-      if (status.length > 0 && status[0] === '2') {
-        resolve(this.responseText);
-      } else {
-        reject(this.responseText);
-      }
-    };
-    xhr.onerror = function (err) {
-      reject(err);
-    };
-    xhr.send();
-  });
-}
-
-},{}],54:[function(require,module,exports){
+},{"../core/convertToSolid":40,"../core/getParamDefinitions":41,"../core/getParamValues":42,"../core/rebuildSolid":45,"../io/convertToBlob":48,"../io/formats":49,"../io/generateOutputFileBlobUrl":50,"../io/generateOutputFileFileSystem":51,"../ui/viewer/jscad-viewer":62,"./log":52,"@jscad/csg":1,"@jscad/io":2}],54:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34442,7 +34487,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
   init();
 });
 
-},{"../jscad/processor":50,"../jscad/version":54,"./errorDispatcher":56}],59:[function(require,module,exports){
+},{"../jscad/processor":53,"../jscad/version":54,"./errorDispatcher":56}],59:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
