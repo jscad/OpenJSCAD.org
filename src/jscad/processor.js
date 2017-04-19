@@ -571,10 +571,8 @@ Processor.prototype = {
 
     if (this.viewedObject) {
       try {
-        // this.generateOutputFileFileSystem()
         generateOutputFileFileSystem(extension, blob, onDone.bind(this))
       } catch (e) {
-        // this.generateOutputFileBlobUrl()
         generateOutputFileBlobUrl(extension, blob, onDone.bind(this))
       }
       if (this.ondownload) this.ondownload(this)

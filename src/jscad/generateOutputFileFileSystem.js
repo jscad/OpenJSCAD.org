@@ -21,15 +21,15 @@ export default function generateOutputFileFileSystem (extension, blob, callback)
           }
           fileWriter.write(blob)
         },
-          function (fileerror) {FileSystemApiErrorHandler(fileerror, 'createWriter');}
+          function (fileerror) { FileSystemApiErrorHandler(fileerror, 'createWriter') }
         )
       },
-        function (fileerror) {FileSystemApiErrorHandler(fileerror, "getFile('" + filename + "')")}
+        function (fileerror) { FileSystemApiErrorHandler(fileerror, "getFile('" + filename + "')") }
       )
     },
-      function (fileerror) {FileSystemApiErrorHandler(fileerror, "getDirectory('" + dirname + "')")}
+      function (fileerror) { FileSystemApiErrorHandler(fileerror, "getDirectory('" + dirname + "')") }
     )
   },
-    function (fileerror) {FileSystemApiErrorHandler(fileerror, 'requestFileSystem');}
+    function (fileerror) { FileSystemApiErrorHandler(fileerror, 'requestFileSystem') }
   )
 }
