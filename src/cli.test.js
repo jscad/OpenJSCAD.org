@@ -4,7 +4,7 @@ import path from 'path'
 import {execSync} from 'child_process'
 import fs from 'fs'
 
-function almostEquals (t, observed, expected, precision ) {
+function almostEquals (t, observed, expected, precision) {
   t.is(Math.abs(expected - observed) < precision, true)
 }
 
@@ -192,4 +192,17 @@ test('echo() support', t => {
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
   almostEquals(t, fs.statSync(outputPath).size, 454, 2)
+})
+
+test('include support', t => {
+  const jscadPath = t.context.jscadPath
+  const inputPath = path.resolve(__dirname, '../examples/platonics/main.jscad')
+  const outputPath = 'test.stl'
+  const expPath = outputPath
+  t.context = {outputPath}
+
+  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of stl`
+  execSync(cmd, {stdio: [0, 1, 2]})
+  t.deepEqual(true, fs.existsSync(expPath))
+  almostEquals(t, fs.statSync(outputPath).size, 19681, 2)
 })

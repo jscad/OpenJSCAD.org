@@ -65,8 +65,6 @@ outputFile = output.outputFile
 console.log(`converting ${inputFile} -> ${outputFile} (${formats[outputFormat].description})`)
 
 let src = fs.readFileSync(inputFile, inputFile.match(/\.stl$/i) ? 'binary' : 'UTF8')
-// -- include input, and convert into JSCAD source
-// src = inputFormatHandlers[inputFormat](src, inputFile, outputFile)
 
 if(inputFormat === 'scad')
 {
@@ -80,7 +78,7 @@ if(inputFormat === 'scad')
 // const outputData = generateOutputData(src, params, {outputFormat})
 // -- and write it to disk
 // writeOutputDataToFile(outputFile, outputData)
-generateOutputData(src, params, {outputFormat})
+generateOutputData(src, params, {outputFormat, inputFile})
   .then(function (outputData) {
     writeOutputDataToFile(outputFile, outputData)
   }).catch(error=>console.error(error))

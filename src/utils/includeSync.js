@@ -17,7 +17,7 @@ export default function include (scad, fn) {
     var r
     try {
       r = eval(src + scad)
-    } catch(e) {
+    } catch (e) {
       if (e instanceof SyntaxError) {
         console.log(e.message)
       }

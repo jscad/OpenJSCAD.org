@@ -1,7 +1,8 @@
 import oscad from '@jscad/scad-api'
-import {convertToBlob} from '../io/convertToBlob'
-import {formats} from '../io/formats'
-import {rebuildSolidSync} from '../jscad/rebuildSolid'
+import { convertToBlob } from '../io/convertToBlob'
+import { formats } from '../io/formats'
+import { rebuildSolid } from '../jscad/rebuildSolid'
+import { resolveIncludesFs } from './resolveIncludesFs'
 import getParameterDefinitionsCLI from './getParameterDefinitionsCLI'
 
 /**
@@ -14,10 +15,14 @@ import getParameterDefinitionsCLI from './getParameterDefinitionsCLI'
 export default function generateOutputData (source, params, options) {
   const defaults = {
     implicitGlobals: true,
-    outputFormat: 'stl'
+    outputFormat: 'stl',
+    inputFile: ''
   }
   options = Object.assign({}, defaults, options)
-  const {implicitGlobals, outputFormat} = options
+  const {implicitGlobals, outputFormat, inputFile} = options
+
+  const inputPath = inputFile//path.dirname(inputFile)
+  console.log('inputPath', inputPath)
 
   let globals = {}
   if (implicitGlobals) {
@@ -35,7 +40,7 @@ export default function generateOutputData (source, params, options) {
   ${mainFunction}
   `
 
-  // objects = rebuildSolidSync(source, '', params, globals, callback)
+  // objects = rebuildSolid(source, '', params, globals, callback)
   return new Promise(function (resolve, reject) {
     const callback = (err, result) => {
       if (!err) {
@@ -47,7 +52,7 @@ export default function generateOutputData (source, params, options) {
     if (outputFormat === 'jscad' || outputFormat === 'js') {
       resolve(source)
     } else {
-      rebuildSolidSync(source, '', params, callback, {implicitGlobals, globals})
+      rebuildSolid(source, inputPath, params, callback, {implicitGlobals, globals, includeResolver: resolveIncludesFs})
     }
   })
     .then(function (objects) {
