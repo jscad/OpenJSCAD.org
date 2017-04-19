@@ -21,8 +21,7 @@ export default function generateOutputData (source, params, options) {
   options = Object.assign({}, defaults, options)
   const {implicitGlobals, outputFormat, inputFile} = options
 
-  const inputPath = inputFile//path.dirname(inputFile)
-  console.log('inputPath', inputPath)
+  const inputPath = inputFile // path.dirname(inputFile)
 
   let globals = {}
   if (implicitGlobals) {

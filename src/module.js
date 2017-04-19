@@ -1,22 +1,26 @@
 import oscad from '@jscad/scad-api'
 import { convertToBlob } from './io/convertToBlob'
-import { rebuildSolidSync } from './jscad/rebuildSolid'
-
+import { rebuildSolid } from './jscad/rebuildSolid'
+import { resolveIncludesFs } from './utils/resolveIncludesFs'
 /**
  * compile openjscad code and generates intermediate representation
  * ordering of parameters created with curying in mind
  * @param  {String} source the openjscad script we want to compile
  * @param  {Object} params the set of parameters to use for the script  (optional)
  * @param  {Object} options the set of options to use (optional)
-
+ * @param options.implicitGlobals whether to use implicit globals or not : this exports the CSG functions to the 'global' scope
+ * @param options.rootPath when dealing with source which uses 'include' statements, where is the root directory
+ @return a promise that gets resolved with the CSG /CAG ojbect(s)
  */
 function compile (source, params, options) {
   params = params || {}
   const defaults = {
-    implicitGlobals: true
+    implicitGlobals: true,
+    rootPath: ''
   }
   options = Object.assign({}, defaults, options)
-  const {implicitGlobals} = options
+  const {implicitGlobals, rootPath} = options
+  
   let globals = {}
   if (implicitGlobals) {
     globals.oscad = oscad
@@ -27,7 +31,7 @@ function compile (source, params, options) {
       if (!err) { return resolve(result) }
       reject(err)
     }
-    rebuildSolidSync(source, '', params, callback, {implicitGlobals, globals})
+    rebuildSolid(source, rootPath, params, callback, {implicitGlobals, globals, includeResolver: resolveIncludesFs})
   })
 }
 

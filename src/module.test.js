@@ -122,13 +122,27 @@ test('compile', t => {
     sphere: { center: { _x: 0, _y: 0, _z: 15 },
   facepoint: { _x: 20, _y: 0, _z: 15 } } }
   return compile(script, {})
-    .then(function (ir) {
-      ir = ir[0]
-      t.deepEqual(Object.keys(ir).sort(), ['polygons', 'properties', 'isCanonicalized', 'isRetesselated'].sort())
-      t.deepEqual(ir.polygons.length, 610)
-      t.deepEqual(ir.properties, expProperties)
-      t.deepEqual(ir.isCanonicalized, true)
-      t.deepEqual(ir.isRetesselated, true)
+    .then(function (objects) {
+      const object = objects[0]
+      t.deepEqual(Object.keys(object).sort(), ['polygons', 'properties', 'isCanonicalized', 'isRetesselated'].sort())
+      t.deepEqual(object.polygons.length, 610)
+      t.deepEqual(object.properties, expProperties)
+      t.deepEqual(object.isCanonicalized, true)
+      t.deepEqual(object.isRetesselated, true)
+    })
+})
+
+
+test('compile, with include() support', t => {
+  const {compile} = openjscad
+  const inputPath = path.resolve(__dirname, '../examples/platonics/main.jscad')
+  const script = fs.readFileSync(inputPath, 'UTF8')
+
+  return compile(script, {}, {rootPath: inputPath})
+    .then(function (objects) {
+      const object = objects[0]
+      t.deepEqual(Object.keys(object).sort(), ['polygons', 'properties', 'isCanonicalized', 'isRetesselated'].sort())
+      t.deepEqual(object.polygons.length, 4)
     })
 })
 

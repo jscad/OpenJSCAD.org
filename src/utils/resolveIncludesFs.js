@@ -10,12 +10,7 @@ import path from 'path'
 export function resolveIncludesFs (relpath, scriptPath, memFs) {
   // include the requested script via MemFs if possible
   return new Promise(function (resolve, reject) {
-    console.log('we are here', relpath, scriptPath)
     const fullPath = path.resolve(relpath, scriptPath)
-    console.log('fullPath', fullPath)
     fs.readFile(fullPath, 'UTF8', (err, data) => err ? reject(err) : resolve(data))
-    //const data = fs.readFileSync(fullPath)
-    //console.log('data', data)
-    //resolve(data)
   })
 }
