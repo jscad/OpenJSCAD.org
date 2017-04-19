@@ -3,7 +3,7 @@ import { CAG, CSG } from '@jscad/csg'
 import oscad from '@jscad/scad-api'
 import createJscadFunction from './jscad-function'
 import { replaceIncludes } from './replaceIncludes'
-import resolveIncludes from './resolveIncludes'
+import { resolveIncludes } from './resolveIncludes'
 import { toArray } from '../utils/misc'
 
 /**
@@ -14,7 +14,7 @@ import { toArray } from '../utils/misc'
  * @param {Object} callback the callback to call once evaluation is done /failed
  * @param {Object} options the settings to use when rebuilding the solid
  */
-export function rebuildSolidSync (script, fullurl, parameters, callback, options) {
+export function rebuildSolid (script, fullurl, parameters, callback, options) {
   let relpath = fullurl
   if (relpath.lastIndexOf('/') >= 0) {
     relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1)
@@ -59,12 +59,13 @@ export function rebuildSolidSync (script, fullurl, parameters, callback, options
  * @param {Object} callback the callback to call once evaluation is done /failed
  * @param {Object} options the settings to use when rebuilding the solid
  */
-export function rebuildSolidAsync (script, fullurl, parameters, callback, options) {
+export function rebuildSolidInWorker (script, fullurl, parameters, callback, options) {
   if (!parameters) { throw new Error("JSCAD: missing 'parameters'") }
   if (!window.Worker) throw new Error('Worker threads are unsupported.')
   const defaults = {
     implicitGlobals: true,
-    memFs: undefined
+    memFs: undefined,
+    includeResolver: resolveIncludes // default function to retrieve 'includes'
   }
   options = Object.assign({}, defaults, options)
 
@@ -74,7 +75,7 @@ export function rebuildSolidAsync (script, fullurl, parameters, callback, option
   }
 
   let worker
-  replaceIncludes(script, relpath, options.memFs).then(function (script) {
+  replaceIncludes(script, relpath, options.memFs, options.includeResolver).then(function (script) {
     worker = WebWorkify(require('./jscad-worker.js'))
     worker.onmessage = function (e) {
       if (e.data instanceof Object) {

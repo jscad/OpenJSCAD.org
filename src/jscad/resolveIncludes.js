@@ -4,9 +4,8 @@
  * @param {String} relpath the relative path
  * @param {String} scriptPath the path to the script
  * @param {Object} memFs local cache (optional)
- * @param {Function} includeResolver : function to use to actually retrieve the module/include content
  */
-export default function resolveIncludes (relpath, scriptPath, memFs, includeResolver) {
+export function resolveIncludes (relpath, scriptPath, memFs) {
   // include the requested script via MemFs if possible
   return new Promise(function (resolve, reject) {
     if (typeof (memFs) === 'object') {

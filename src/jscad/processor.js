@@ -5,7 +5,7 @@ import log from './log'
 import getParamDefinitions from './getParamDefinitions'
 import getParamValues from './getParamValues'
 import convertToSolid from './convertToSolid'
-import { rebuildSolidSync, rebuildSolidAsync } from './rebuildSolid'
+import { rebuildSolid, rebuildSolidInWorker } from './rebuildSolid'
 
 // output handling
 import generateOutputFileBlobUrl from './generateOutputFileBlobUrl'
@@ -515,13 +515,13 @@ Processor.prototype = {
     }
 
     if (this.opts.useAsync) {
-      this.builder = rebuildSolidAsync(script, fullurl, parameters, (err, objects) => {
+      this.builder = rebuildSolidInWorker(script, fullurl, parameters, (err, objects) => {
         if (err && that.opts.useSync) {
-          this.builder = rebuildSolidSync(script, fullurl, parameters, callback, options)
+          this.builder = rebuildSolid(script, fullurl, parameters, callback, options)
         } else (callback(undefined, objects))
       }, options)
     } else if (this.opts.useSync) {
-      this.builder = rebuildSolidSync(script, fullurl, parameters, callback, options)
+      this.builder = rebuildSolid(script, fullurl, parameters, callback, options)
     }
   },
 
