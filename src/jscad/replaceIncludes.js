@@ -8,14 +8,14 @@ const astring = require('astring')
  * inlined includes
  * this is more reliable than async xhr + eval()
  * but is still just a temporary solution until using actual modules & loaders (commonjs , es6 etc)
- * @param {String} text the original script (with include statements)
+ * @param {String} source the original script (with include statements)
  * @param {String} relpath relative path, for xhr resolution
  * @param {String} memFs memFs cache object
  * @returns {String} the full script, with inlined
  */
-export function replaceIncludes (text, relpath, memFs, includeResolver) {
+export function replaceIncludes (source, relpath, memFs, includeResolver) {
   return new Promise(function (resolve, reject) {
-    const moduleAst = astFromSource(text)
+    const moduleAst = astFromSource(source)
     const foundIncludes = findIncludes(moduleAst).map(x => x.value)
     const withoutIncludes = replaceIncludesInAst(moduleAst)
 
