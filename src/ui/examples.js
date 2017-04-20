@@ -89,7 +89,6 @@ export function createExamples (me) {
 }
 
 export function fetchExample (filename, url, {memFs, gProcessor, gEditor}) {
-  console.log('fetchExample')
   memFs = []
 
   const hasExtension = filename.match(/\.[^\/]+$/)
@@ -124,11 +123,10 @@ export function fetchExample (filename, url, {memFs, gProcessor, gEditor}) {
       xhr.overrideMimeType('text/plain; charset=x-user-defined') // our pseudo binary retrieval (works with Chrome)
     }
     gProcessor.setStatus('loading', filename)
-
     xhr.onload = function () {
       const source = this.responseText
       const baseurl = url ? url.replace(/\/[^\/]+$/, '/') : gProcessor.baseurl
-      const filename = url ? url.replace(/^.+\//, '') : filename
+      filename = url ? url.replace(/^.+\//, '') : filename
 
       // FIXME: refactor : same code as ui/drag-drop
       gProcessor.setStatus('converting', filename)
