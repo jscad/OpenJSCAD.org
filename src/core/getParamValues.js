@@ -1,6 +1,12 @@
+/**
+ * extracts the parameter
+ * @param {Array} paramControls
+ * @param {Boolean} onlyChanged
+ * @returns {Object} the parameter values, as an object
+ */
 export default function getParamValues (paramControls, onlyChanged) {
-  var paramValues = {}
-  var value
+  let paramValues = {}
+  let value
   for (var i = 0; i < paramControls.length; i++) {
     var control = paramControls[i]
     switch (control.paramType) {
@@ -9,7 +15,7 @@ export default function getParamValues (paramControls, onlyChanged) {
         break
       case 'float':
       case 'number':
-        var value = control.value
+        value = control.value
         if (!isNaN(parseFloat(value)) && isFinite(value)) {
           value = parseFloat(value)
         } else {
@@ -17,7 +23,7 @@ export default function getParamValues (paramControls, onlyChanged) {
         }
         break
       case 'int':
-        var value = control.value
+        value = control.value
         if (!isNaN(parseFloat(value)) && isFinite(value)) {
           value = parseInt(value)
         } else {
@@ -37,9 +43,9 @@ export default function getParamValues (paramControls, onlyChanged) {
         break
     }
     if (onlyChanged) {
-      if ('initial' in control && control.initial == value) {
+      if ('initial' in control && control.initial === value) {
         continue
-      } else if ('default' in control && control.default == value) {
+      } else if ('default' in control && control.default === value) {
         continue
       }
     }

@@ -1,11 +1,6 @@
 // jscad-worker.js
 //
 // == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
-//
-// History:
-//   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
-
-// Create an worker (thread) for processing the JSCAD script into CSG/CAG objects
 
 import { CAG, CSG } from '@jscad/csg'
 import oscad from '@jscad/scad-api'
@@ -13,7 +8,9 @@ import oscad from '@jscad/scad-api'
 import createJscadFunction from './jscad-function'
 import { toArray } from '../utils/misc'
 
-
+/**
+ * Create an worker (thread) for processing the JSCAD script into CSG/CAG objects
+ */
 module.exports = function (self) {
   self.onmessage = function (e) {
     var r = {cmd: 'error', txt: 'try again'}

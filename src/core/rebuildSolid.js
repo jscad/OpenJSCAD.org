@@ -2,45 +2,9 @@ import WebWorkify from 'webworkify'
 import { CAG, CSG } from '@jscad/csg'
 import oscad from '@jscad/scad-api'
 import createJscadFunction from './jscad-function'
-import includeJscadSync from './includeJscadSync'
+import { replaceIncludes } from './replaceIncludes'
+import { resolveIncludes } from './resolveIncludes'
 import { toArray } from '../utils/misc'
-
-/**
- * helper function that finds include() statements in files,
- * fetches their code & returns it (recursively) returning the whole code with
- * inlined includes
- * this is more reliable than async xhr + eval()
- * @param {String} text the original script (with include statements)
- * @param {String} relpath relative path, for xhr resolution
- * @param {String} memFs memFs cache object
- * @returns {String} the full script, with inlined
- */
-function replaceIncludes (text, relpath, memFs) {
-  return new Promise(function (resolve, reject) {
-    let scriptWithIncludes = text
-    const includesPattern = /(?:include)\s?\("([\w\/.\s]*)"\);?/gm
-
-    let foundIncludes = []
-    let foundIncludesFull = []
-    let match
-    while(match = includesPattern.exec(text)) {
-      foundIncludes.push(match[1])
-      foundIncludesFull.push(match[0])
-    }
-
-    let tmpPromises = foundIncludes.map(function (uri, index) {
-      const promise = includeJscadSync(relpath, uri, memFs)
-      return promise.then(function (includedScript) {
-        return replaceIncludes(includedScript, relpath, memFs).then(function (substring) {
-          let currentItem = foundIncludesFull[index]
-          scriptWithIncludes = scriptWithIncludes.replace(currentItem, substring)
-          return scriptWithIncludes
-        })
-      })
-    })
-    Promise.all(tmpPromises).then(x => resolve(scriptWithIncludes))
-  })
-}
 
 /**
  * evaluate script & rebuild solids, in main thread
@@ -50,18 +14,19 @@ function replaceIncludes (text, relpath, memFs) {
  * @param {Object} callback the callback to call once evaluation is done /failed
  * @param {Object} options the settings to use when rebuilding the solid
  */
-export function rebuildSolidSync (script, fullurl, parameters, callback, options) {
+export function rebuildSolid (script, fullurl, parameters, callback, options) {
   let relpath = fullurl
   if (relpath.lastIndexOf('/') >= 0) {
     relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1)
   }
   const defaults = {
     implicitGlobals: true,
-    memFs: undefined
+    memFs: undefined,
+    includeResolver: resolveIncludes // default function to retrieve 'includes'
   }
   options = Object.assign({}, defaults, options)
 
-  replaceIncludes(script, relpath, options.memFs).then(function (fullScript) {
+  replaceIncludes(script, relpath, options.memFs, options.includeResolver).then(function (fullScript) {
     const globals = options.implicitGlobals ? (options.globals ? options.globals : {oscad}) : {}
     const func = createJscadFunction(fullScript, globals)
     // stand-in for the include function(no-op)
@@ -94,12 +59,13 @@ export function rebuildSolidSync (script, fullurl, parameters, callback, options
  * @param {Object} callback the callback to call once evaluation is done /failed
  * @param {Object} options the settings to use when rebuilding the solid
  */
-export function rebuildSolidAsync (script, fullurl, parameters, callback, options) {
+export function rebuildSolidInWorker (script, fullurl, parameters, callback, options) {
   if (!parameters) { throw new Error("JSCAD: missing 'parameters'") }
   if (!window.Worker) throw new Error('Worker threads are unsupported.')
   const defaults = {
     implicitGlobals: true,
-    memFs: undefined
+    memFs: undefined,
+    includeResolver: resolveIncludes // default function to retrieve 'includes'
   }
   options = Object.assign({}, defaults, options)
 
@@ -109,7 +75,7 @@ export function rebuildSolidAsync (script, fullurl, parameters, callback, option
   }
 
   let worker
-  replaceIncludes(script, relpath, options.memFs).then(function (script) {
+  replaceIncludes(script, relpath, options.memFs, options.includeResolver).then(function (script) {
     worker = WebWorkify(require('./jscad-worker.js'))
     worker.onmessage = function (e) {
       if (e.data instanceof Object) {
@@ -129,7 +95,7 @@ export function rebuildSolidAsync (script, fullurl, parameters, callback, option
   // have we been asked to stop our work?
   return {
     cancel: () => {
-      worker.terminate()
+      if(worker) worker.terminate()
     }
   }
 }

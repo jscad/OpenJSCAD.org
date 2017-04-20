@@ -2,6 +2,7 @@ import buble from 'rollup-plugin-buble'
 import nodeResolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import replace from 'rollup-plugin-post-replace'
+import uglify from 'rollup-plugin-uglify'
 
 export default {
   entry: 'src/module.js',
@@ -25,6 +26,7 @@ export default {
     }),
     replace({
       '../../package.json': '../package.json'
-    })
+    }),
+    uglify()
   ]
 }

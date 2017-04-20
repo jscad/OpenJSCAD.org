@@ -1,4 +1,4 @@
-import { conversionFormats } from '../../jscad/conversionFormats'
+import { conversionFormats } from '../../io/formats'
 import {findMainFile, changedFiles} from './helpers'
 
 function flatten (array) {

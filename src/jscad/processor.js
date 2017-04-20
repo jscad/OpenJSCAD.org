@@ -2,49 +2,25 @@ import { revokeBlobUrl } from '@jscad/io'
 import { CAG, CSG } from '@jscad/csg'
 
 import log from './log'
-import getParamDefinitions from './getParamDefinitions'
-import getParamValues from './getParamValues'
-import convertToSolid from './convertToSolid'
-import { rebuildSolidSync, rebuildSolidAsync } from './rebuildSolid'
+import getParamDefinitions from '../core/getParamDefinitions'
+import getParamValues from '../core/getParamValues'
+import { rebuildSolid, rebuildSolidInWorker } from '../core/rebuildSolid'
+import convertToSolid from '../core/convertToSolid'
 
 // output handling
-import generateOutputFileBlobUrl from './generateOutputFileBlobUrl'
-import generateOutputFileFileSystem from './generateOutputFileFileSystem'
+import generateOutputFileBlobUrl from '../io/generateOutputFileBlobUrl'
+import generateOutputFileFileSystem from '../io/generateOutputFileFileSystem'
+import {convertToBlob} from '../io/convertToBlob'
+import {formats, supportedFormatsForObjects} from '../io/formats'
 
 import Viewer from '../ui/viewer/jscad-viewer'
-
-import {convertToBlob} from '../io/convertToBlob'
-import {formats} from '../io/formats'
-
-/*
- * exposes the properties of an object to the given scope object (for example WINDOW etc)
- * this is the same as {foo, bar} = baz
- * window.bar = bar
- * window.foo = foo
-*/
-function exposeAPI (object, scope = window) {
-  Object.keys(object).forEach(function (key) {
-    scope[key] = object[key]
-  })
-}
-
-/* exposeAPI({OpenJsCad})// for backwards compatibility only
-exposeAPI(primitives2d)
-exposeAPI(primitives3d)
-exposeAPI(booleanOps)
-exposeAPI(transformations)
-exposeAPI(extrusion)
-exposeAPI(color)
-exposeAPI(maths)
-exposeAPI(text)
-exposeAPI(csg) */
 
 export default function Processor (containerdiv, options) {
   if (options === undefined) options = {}
   // the default options
   this.opts = {
     debug: false,
-    libraries: ['js/lib/csg.js', 'js/formats.js', 'js/js', 'js/openscad.js'],
+    libraries: [],
     openJsCadPath: '',
     useAsync: true,
     useSync: true,
@@ -164,7 +140,7 @@ Processor.prototype = {
     element.oninput = function (e) {
       if (that.state === 2) {
         that.updateView()
-        that.updateFormats()
+        that.updateFormatsDropdown()
         that.updateDownloadLink()
       }
     }
@@ -178,7 +154,7 @@ Processor.prototype = {
     element.oninput = function (e) {
       if (that.state === 2) {
         that.updateView()
-        that.updateFormats()
+        that.updateFormatsDropdown()
         that.updateDownloadLink()
       }
     }
@@ -267,15 +243,12 @@ Processor.prototype = {
   },
 
   setCurrentObjects: function (objs) {
-    if (!(length in objs)) {
-      objs = [objs] // create a list
-    }
     this.currentObjects = objs // list of CAG or CSG objects
 
     this.updateSelection()
     this.selectStartPoint = -1 // force view update
     this.updateView()
-    this.updateFormats()
+    this.updateFormatsDropdown()
     this.updateDownloadLink()
 
     if (this.onchange) this.onchange(this)
@@ -324,13 +297,19 @@ Processor.prototype = {
     }
   },
 
-  updateFormats: function () {
+  updateFormatsDropdown: function () {
     while (this.formatDropdown.options.length > 0) {
       this.formatDropdown.options.remove(0)
     }
 
     var that = this
-    var formats = this.supportedFormatsForCurrentObjects()
+    var startpoint = this.selectStartPoint
+    var endpoint = this.selectEndPoint
+    if (startpoint > endpoint) { startpoint = this.selectEndPoint; endpoint = this.selectStartPoint }
+    const objects = this.currentObjects.slice(startpoint, endpoint + 1)
+
+    this.formatInfo('stla') // make sure the formats are initialized
+    const formats = supportedFormatsForObjects(objects)
     formats.forEach(function (format) {
       var option = document.createElement('option')
       var info = that.formatInfo(format)
@@ -425,7 +404,6 @@ Processor.prototype = {
   // script: javascript code
   // filename: optional, the name of the .jscad file
   setJsCad: function (script, filename) {
-    // console.log('setJsCad', script, filename)
     if (!filename) filename = 'openjscad.jscad'
 
     var prevParamValues = {}
@@ -515,13 +493,13 @@ Processor.prototype = {
     }
 
     if (this.opts.useAsync) {
-      this.builder = rebuildSolidAsync(script, fullurl, parameters, (err, objects) => {
+      this.builder = rebuildSolidInWorker(script, fullurl, parameters, (err, objects) => {
         if (err && that.opts.useSync) {
-          this.builder = rebuildSolidSync(script, fullurl, parameters, callback, options)
+          this.builder = rebuildSolid(script, fullurl, parameters, callback, options)
         } else (callback(undefined, objects))
       }, options)
     } else if (this.opts.useSync) {
-      this.builder = rebuildSolidSync(script, fullurl, parameters, callback, options)
+      this.builder = rebuildSolid(script, fullurl, parameters, callback, options)
     }
   },
 
@@ -548,7 +526,6 @@ Processor.prototype = {
     this.clearOutputFile()
     const blob = this.currentObjectsToBlob()
     const extension = this.selectedFormatInfo().extension
-    console.log('generateOutputFile')
 
     function onDone (data, downloadAttribute, blobMode, noData) {
       this.hasOutputFile = true
@@ -571,10 +548,8 @@ Processor.prototype = {
 
     if (this.viewedObject) {
       try {
-        // this.generateOutputFileFileSystem()
         generateOutputFileFileSystem(extension, blob, onDone.bind(this))
       } catch (e) {
-        // this.generateOutputFileBlobUrl()
         generateOutputFileBlobUrl(extension, blob, onDone.bind(this))
       }
       if (this.ondownload) this.ondownload(this)
@@ -593,36 +568,6 @@ Processor.prototype = {
     const objects = format === 'jscad' ? this.script : this.currentObjects.slice(startpoint, endpoint + 1)
 
     return convertToBlob(objects, {format, formatInfo})
-  },
-
-  supportedFormatsForCurrentObjects: function () {
-    var startpoint = this.selectStartPoint
-    var endpoint = this.selectEndPoint
-    if (startpoint > endpoint) { startpoint = this.selectEndPoint; endpoint = this.selectStartPoint }
-
-    var objs = this.currentObjects.slice(startpoint, endpoint + 1)
-
-    this.formatInfo('stla') // make sure the formats are initialized
-
-    var objectFormats = []
-    var i
-    var format
-    var foundCSG = false
-    var foundCAG = false
-    for (i = 0; i < objs.length; i++) {
-      if (objs[i] instanceof CSG) { foundCSG = true }
-      if (objs[i] instanceof CAG) { foundCAG = true }
-    }
-    for (format in this.formats) {
-      if (foundCSG && this.formats[format].convertCSG === true) {
-        objectFormats[objectFormats.length] = format
-        continue // only add once
-      }
-      if (foundCAG && this.formats[format].convertCAG === true) {
-        objectFormats[objectFormats.length] = format
-      }
-    }
-    return objectFormats
   },
 
   formatInfo: function (format) {

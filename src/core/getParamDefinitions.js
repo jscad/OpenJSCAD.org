@@ -1,4 +1,8 @@
-// parse the jscad script to get the parameter definitions
+/**
+ * parse the jscad script to get the parameter definitions
+ * @param {String} script the script
+ * @return {Object} params : the parsed parameters
+ */
 export default function getParamDefinitions (script) {
   var scriptisvalid = true
   script += '\nfunction include() {}' // at least make it not throw an error so early
