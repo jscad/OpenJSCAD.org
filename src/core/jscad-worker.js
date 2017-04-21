@@ -17,11 +17,12 @@ module.exports = function (self) {
     if (e.data instanceof Object) {
       var data = e.data
       if (data.cmd === 'render') {
-        const {script, parameters, options} = e.data
-
+        const {source, parameters, options} = e.data
+        const include = x => x
         const globals = options.implicitGlobals ? { oscad } : {}
-        const func = createJscadFunction(script, globals)
-        let objects = func(parameters, x => x, globals)
+        const func = createJscadFunction(source, globals)
+
+        let objects = func(parameters, include, globals)
         objects = toArray(objects)
           .map(function (object) {
             if (object instanceof CAG || object instanceof CSG) {

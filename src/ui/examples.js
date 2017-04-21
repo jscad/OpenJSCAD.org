@@ -89,7 +89,6 @@ export function createExamples (me) {
 }
 
 export function fetchExample (filename, url, {memFs, gProcessor, gEditor}) {
-  console.log('fetchExample')
   memFs = []
 
   const hasExtension = filename.match(/\.[^\/]+$/)
@@ -113,27 +112,25 @@ export function fetchExample (filename, url, {memFs, gProcessor, gEditor}) {
         // FIXME: cannot do it from here, bloody globals
         // saveScript(data.filename, data.converted)
       }
-      gProcessor.setJsCad(data.converted, data.filename)
+      gProcessor.setJsCad(data.converted, data.filename, data.baseurl)
     }
   }
 
   if (1) { // doesn't work off-line yet
     var xhr = new XMLHttpRequest()
-    xhr.open('GET', filename, true)
+    xhr.open('GET', url || filename, true)
     if (filename.match(/\.(stl|gcode)$/i)) {
       xhr.overrideMimeType('text/plain; charset=x-user-defined') // our pseudo binary retrieval (works with Chrome)
     }
     gProcessor.setStatus('loading', filename)
-
     xhr.onload = function () {
       const source = this.responseText
-      const path = filename
-      const _includePath = path.replace(/\/[^\/]+$/, '/')
+      const baseurl = url ? url.replace(/\/[^\/]+$/, '/') : gProcessor.baseurl
+      filename = url ? url.replace(/^.+\//, '') : filename
 
       // FIXME: refactor : same code as ui/drag-drop
       gProcessor.setStatus('converting', filename)
       const worker = createConversionWorker(onConversionDone)
-      const baseurl = gProcessor.baseurl
       // NOTE: cache: false is set to allow evaluation of 'include' statements
       worker.postMessage({version, baseurl, source, filename, cache: false})
     }
@@ -166,18 +163,9 @@ export function loadInitialExample (me, params) {
 
     function loadRemote (u, {memFs, gProcessor, gEditor, remoteUrl}) {
       console.log('loadRemote')
-      var xhr = new XMLHttpRequest()
-      xhr.open('GET', remoteUrl + u, true)
-      if (u.match(/\.(stl|gcode)$/i)) {
-        xhr.overrideMimeType('text/plain; charset=x-user-defined') // our pseudo binary retrieval (works with Chrome)
-      }
       gProcessor.setStatus('loading', u)
-      xhr.onload = function () {
-        var data = JSON.parse(this.responseText)
-        fetchExample(data.file, data.url, {memFs, gProcessor, gEditor})
-        document.location = docUrl.replace(/#.*$/, '#') // this won't reload the entire web-page
-      }
-      xhr.send()
+      fetchExample(u.replace(/^.+\//, ''), u, {memFs, gProcessor, gEditor})
+      document.location = docUrl.replace(/#.*$/, '#') // this won't reload the entire web-page
     }
 
     if (isRemote) // remote file referenced, e.g. http://openjscad.org/#http://somewhere/something.ext

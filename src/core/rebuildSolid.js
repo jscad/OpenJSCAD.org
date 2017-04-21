@@ -15,9 +15,9 @@ import { toArray } from '../utils/misc'
  * @param {Object} options the settings to use when rebuilding the solid
  */
 export function rebuildSolid (script, fullurl, parameters, callback, options) {
-  let relpath = fullurl
-  if (relpath.lastIndexOf('/') >= 0) {
-    relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1)
+  let basePath = fullurl
+  if (basePath.lastIndexOf('/') >= 0) {
+    basePath = basePath.substring(0, basePath.lastIndexOf('/') + 1)
   }
   const defaults = {
     implicitGlobals: true,
@@ -26,22 +26,23 @@ export function rebuildSolid (script, fullurl, parameters, callback, options) {
   }
   options = Object.assign({}, defaults, options)
 
-  replaceIncludes(script, relpath, options.memFs, options.includeResolver).then(function (fullScript) {
-    const globals = options.implicitGlobals ? (options.globals ? options.globals : {oscad}) : {}
-    const func = createJscadFunction(fullScript, globals)
+  replaceIncludes(script, basePath, '', {includeResolver: options.includeResolver, memFs: options.memFs})
+    .then(function ({source}) {
+      const globals = options.implicitGlobals ? (options.globals ? options.globals : {oscad}) : {}
+      const func = createJscadFunction(source, globals)
     // stand-in for the include function(no-op)
-    const include = (x) => x
-    try {
-      let objects = func(parameters, include, globals)
-      objects = toArray(objects)
-      if (objects.length === 0) {
-        throw new Error('The JSCAD script must return one or more CSG or CAG solids.')
+      const include = x => x
+      try {
+        let objects = func(parameters, include, globals)
+        objects = toArray(objects)
+        if (objects.length === 0) {
+          throw new Error('The JSCAD script must return one or more CSG or CAG solids.')
+        }
+        callback(undefined, objects)
+      } catch (error) {
+        callback(error, undefined)
       }
-      callback(undefined, objects)
-    } catch(error) {
-      callback(error, undefined)
-    }
-  }).catch(error => callback(error, undefined))
+    }).catch(error => callback(error, undefined))
 
   // have we been asked to stop our work?
   return {
@@ -69,33 +70,36 @@ export function rebuildSolidInWorker (script, fullurl, parameters, callback, opt
   }
   options = Object.assign({}, defaults, options)
 
-  let relpath = fullurl
-  if (relpath.lastIndexOf('/') >= 0) {
-    relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1)
+  let basePath = fullurl
+  if (basePath.lastIndexOf('/') >= 0) {
+    basePath = basePath.substring(0, basePath.lastIndexOf('/') + 1)
   }
 
   let worker
-  replaceIncludes(script, relpath, options.memFs, options.includeResolver).then(function (script) {
-    worker = WebWorkify(require('./jscad-worker.js'))
-    worker.onmessage = function (e) {
-      if (e.data instanceof Object) {
-        const data = e.data.objects.map(function (object) {
-          if (object['class'] === 'CSG') { return CSG.fromCompactBinary(object) }
-          if (object['class'] === 'CAG') { return CAG.fromCompactBinary(object) }
-        })
-        callback(undefined, data)
+  replaceIncludes(script, basePath, '', {includeResolver: options.includeResolver, memFs: options.memFs})
+    .then(function ({source}) {
+      worker = WebWorkify(require('./jscad-worker.js'))
+    // we need to create special options as you cannot send functions to webworkers
+      const workerOptions = {implicitGlobals: options.implicitGlobals}
+      worker.onmessage = function (e) {
+        if (e.data instanceof Object) {
+          const data = e.data.objects.map(function (object) {
+            if (object['class'] === 'CSG') { return CSG.fromCompactBinary(object) }
+            if (object['class'] === 'CAG') { return CAG.fromCompactBinary(object) }
+          })
+          callback(undefined, data)
+        }
       }
-    }
-    worker.onerror = function (e) {
-      callback(`Error in line ${e.lineno} : ${e.message}`, undefined)
-    }
-    worker.postMessage({cmd: 'render', fullurl, script, parameters, options})
-  }).catch(error => callback(error, undefined))
+      worker.onerror = function (e) {
+        callback(`Error in line ${e.lineno} : ${e.message}`, undefined)
+      }
+      worker.postMessage({cmd: 'render', fullurl, source, parameters, options: workerOptions})
+    }).catch(error => callback(error, undefined))
 
   // have we been asked to stop our work?
   return {
     cancel: () => {
-      if(worker) worker.terminate()
+      if (worker) worker.terminate()
     }
   }
 }

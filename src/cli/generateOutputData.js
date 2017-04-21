@@ -1,3 +1,4 @@
+const {isAbsolute, resolve} = require('path')
 import oscad from '@jscad/scad-api'
 import { convertToBlob } from '../io/convertToBlob'
 import { formats } from '../io/formats'
@@ -21,7 +22,7 @@ export default function generateOutputData (source, params, options) {
   options = Object.assign({}, defaults, options)
   const {implicitGlobals, outputFormat, inputFile} = options
 
-  const inputPath = inputFile // path.dirname(inputFile)
+  const inputPath = isAbsolute(inputFile) ? inputFile : resolve(process.cwd(), inputFile)  // path.dirname(inputFile)
 
   let globals = {}
   if (implicitGlobals) {
