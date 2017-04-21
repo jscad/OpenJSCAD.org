@@ -206,3 +206,16 @@ test('include support', t => {
   t.deepEqual(true, fs.existsSync(expPath))
   almostEquals(t, fs.statSync(outputPath).size, 19681, 2)
 })
+
+test('include support, with sub folders', t => {
+  const jscadPath = t.context.jscadPath
+  const inputPath = path.resolve(__dirname, '../examples/include-subfolder/main.jscad')
+  const outputPath = 'test.stl'
+  const expPath = outputPath
+  t.context = {outputPath}
+
+  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of stl`
+  execSync(cmd, {stdio: [0, 1, 2]})
+  t.deepEqual(true, fs.existsSync(expPath))
+  almostEquals(t, fs.statSync(outputPath).size, 281479, 2)
+})
