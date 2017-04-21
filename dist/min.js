@@ -32854,16 +32854,17 @@ module.exports = function (self) {
       var data = e.data;
       if (data.cmd === 'render') {
         var _e$data = e.data,
-            script = _e$data.script,
+            source = _e$data.source,
             parameters = _e$data.parameters,
             options = _e$data.options;
 
-
-        var globals = options.implicitGlobals ? { oscad: _scadApi2.default } : {};
-        var func = (0, _jscadFunction2.default)(script, globals);
-        var objects = func(parameters, function (x) {
+        var include = function include(x) {
           return x;
-        }, globals);
+        };
+        var globals = options.implicitGlobals ? { oscad: _scadApi2.default } : {};
+        var func = (0, _jscadFunction2.default)(source, globals);
+
+        var objects = func(parameters, include, globals);
         objects = (0, _misc.toArray)(objects).map(function (object) {
           if (object instanceof _csg.CAG || object instanceof _csg.CSG) {
             return object.toCompactBinary();
@@ -32919,9 +32920,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {Object} options the settings to use when rebuilding the solid
  */
 function rebuildSolid(script, fullurl, parameters, callback, options) {
-  var relpath = fullurl;
-  if (relpath.lastIndexOf('/') >= 0) {
-    relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1);
+  var basePath = fullurl;
+  if (basePath.lastIndexOf('/') >= 0) {
+    basePath = basePath.substring(0, basePath.lastIndexOf('/') + 1);
   }
   var defaults = {
     implicitGlobals: true,
@@ -32930,9 +32931,11 @@ function rebuildSolid(script, fullurl, parameters, callback, options) {
   };
   options = Object.assign({}, defaults, options);
 
-  (0, _replaceIncludes.replaceIncludes)(script, relpath, options.memFs, options.includeResolver).then(function (fullScript) {
+  (0, _replaceIncludes.replaceIncludes)(script, basePath, '', { includeResolver: options.includeResolver, memFs: options.memFs }).then(function (_ref) {
+    var source = _ref.source;
+
     var globals = options.implicitGlobals ? options.globals ? options.globals : { oscad: _scadApi2.default } : {};
-    var func = (0, _jscadFunction2.default)(fullScript, globals);
+    var func = (0, _jscadFunction2.default)(source, globals);
     // stand-in for the include function(no-op)
     var include = function include(x) {
       return x;
@@ -32979,14 +32982,18 @@ function rebuildSolidInWorker(script, fullurl, parameters, callback, options) {
   };
   options = Object.assign({}, defaults, options);
 
-  var relpath = fullurl;
-  if (relpath.lastIndexOf('/') >= 0) {
-    relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1);
+  var basePath = fullurl;
+  if (basePath.lastIndexOf('/') >= 0) {
+    basePath = basePath.substring(0, basePath.lastIndexOf('/') + 1);
   }
 
   var worker = void 0;
-  (0, _replaceIncludes.replaceIncludes)(script, relpath, options.memFs, options.includeResolver).then(function (script) {
+  (0, _replaceIncludes.replaceIncludes)(script, basePath, '', { includeResolver: options.includeResolver, memFs: options.memFs }).then(function (_ref2) {
+    var source = _ref2.source;
+
     worker = (0, _webworkify2.default)(require('./jscad-worker.js'));
+    // we need to create special options as you cannot send functions to webworkers
+    var workerOptions = { implicitGlobals: options.implicitGlobals };
     worker.onmessage = function (e) {
       if (e.data instanceof Object) {
         var data = e.data.objects.map(function (object) {
@@ -33003,7 +33010,7 @@ function rebuildSolidInWorker(script, fullurl, parameters, callback, options) {
     worker.onerror = function (e) {
       callback('Error in line ' + e.lineno + ' : ' + e.message, undefined);
     };
-    worker.postMessage({ cmd: 'render', fullurl: fullurl, script: script, parameters: parameters, options: options });
+    worker.postMessage({ cmd: 'render', fullurl: fullurl, source: source, parameters: parameters, options: workerOptions });
   }).catch(function (error) {
     return callback(error, undefined);
   });
@@ -33034,29 +33041,47 @@ var astring = require('astring');
  * this is more reliable than async xhr + eval()
  * but is still just a temporary solution until using actual modules & loaders (commonjs , es6 etc)
  * @param {String} source the original script (with include statements)
- * @param {String} relpath relative path, for xhr resolution
+ * @param {String} basePath base path, for xhr resolution
+ * @param {String} relPath relative path for include hierarchies
  * @param {String} memFs memFs cache object
  * @returns {String} the full script, with inlined
  */
-function replaceIncludes(source, relpath, memFs, includeResolver) {
+function replaceIncludes(source, basePath, relPath, _ref) {
+  var memFs = _ref.memFs,
+      includeResolver = _ref.includeResolver;
+
   return new Promise(function (resolve, reject) {
     var moduleAst = astFromSource(source);
     var foundIncludes = findIncludes(moduleAst).map(function (x) {
       return x.value;
     });
-    var withoutIncludes = replaceIncludesInAst(moduleAst);
 
     var modulePromises = foundIncludes.map(function (uri, index) {
-      return includeResolver(relpath, uri, memFs).then(function (includedScript) {
-        return replaceIncludes(includedScript, relpath, memFs, includeResolver);
-      }, function (err) {
-        return console.error('fail', err);
+      return includeResolver(basePath, uri, memFs).then(function (includedScript) {
+        return replaceIncludes(includedScript, basePath, relPath + '/' + uri, { memFs: memFs, includeResolver: includeResolver });
+      }).then(function (data) {
+        data.moduleCache[uri] = data.source;
+        return data;
       });
     });
     Promise.all(modulePromises).then(function (resolvedModules) {
-      var resolvedScript = resolvedModules.concat(withoutIncludes).join('\n');
-      resolve(resolvedScript);
-    });
+      var resolvedScript = source;
+      var moduleCache = resolvedModules.reduce(function (acc, cur) {
+        Object.keys(cur.moduleCache).forEach(function (key) {
+          acc[key] = cur.moduleCache[key];
+        });
+        return acc;
+      }, {});
+      // we are the root level
+      if (relPath === '') {
+        var moduleSources = Object.keys(moduleCache).map(function (uri) {
+          return 'globals[\'includesSource\'][\'' + uri + '\'] = function() {' + moduleCache[uri] + '}';
+        }).join('\n');
+
+        resolvedScript = 'globals[\'includedFiles\'] || (globals[\'includedFiles\'] = {})\nglobals[\'includesSource\'] || (globals[\'includesSource\'] = {})\nif (!globals[\'originalIncludeFunction\']) {\n  globals[\'originalIncludeFunction\'] = include\n  include = function(file) {\n    if (!globals[\'includedFiles\'][file]) {\n      globals[\'includesSource\'][file]()\n      globals[\'includedFiles\'][file] = true\n    }\n  }\n}\n' + moduleSources + '\n' + resolvedScript + '\n';
+      }
+      resolve({ source: resolvedScript, moduleCache: moduleCache });
+    }).catch(reject);
   });
 }
 
@@ -33960,7 +33985,8 @@ Processor.prototype = {
 
   // script: javascript code
   // filename: optional, the name of the .jscad file
-  setJsCad: function setJsCad(script, filename) {
+  setJsCad: function setJsCad(script, filename, includePathBaseUrl) {
+    // console.log('setJsCad', script, filename)
     if (!filename) filename = 'openjscad.jscad';
 
     var prevParamValues = {};
@@ -33987,6 +34013,7 @@ Processor.prototype = {
     if (!scripthaserrors) {
       this.script = script;
       this.filename = filename;
+      this.includePathBaseUrl = includePathBaseUrl;
       this.rebuildSolid();
     } else {
       this.enableItems();
@@ -34029,7 +34056,7 @@ Processor.prototype = {
     // prepare all parameters
     var parameters = (0, _getParamValues2.default)(this.paramControls);
     var script = this.getFullScript();
-    var fullurl = this.baseurl + this.filename;
+    var fullurl = this.includePathBaseUrl ? this.includePathBaseUrl + this.filename : this.filename;
     var options = { memFs: this.memFs };
 
     this.state = 1; // processing
