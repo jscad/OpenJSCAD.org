@@ -9,26 +9,57 @@ const astring = require('astring')
  * this is more reliable than async xhr + eval()
  * but is still just a temporary solution until using actual modules & loaders (commonjs , es6 etc)
  * @param {String} source the original script (with include statements)
- * @param {String} relpath relative path, for xhr resolution
+ * @param {String} basePath base path, for xhr resolution
+ * @param {String} relPath relative path for include hierarchies
  * @param {String} memFs memFs cache object
  * @returns {String} the full script, with inlined
  */
-export function replaceIncludes (source, relpath, memFs, includeResolver) {
+export function replaceIncludes (source, basePath, relPath, {memFs, includeResolver}) {
   return new Promise(function (resolve, reject) {
     const moduleAst = astFromSource(source)
     const foundIncludes = findIncludes(moduleAst).map(x => x.value)
-    const withoutIncludes = replaceIncludesInAst(moduleAst)
 
     const modulePromises = foundIncludes.map(function (uri, index) {
-      return includeResolver(relpath, uri, memFs)
+      return includeResolver(basePath, uri, memFs)
         .then(
-          includedScript => replaceIncludes(includedScript, relpath, memFs, includeResolver),
-          err => console.error('fail', err))
+          includedScript => replaceIncludes(includedScript, basePath, `${relPath}/${uri}`, {memFs, includeResolver})
+        )
+        .then(data => {
+          data.moduleCache[uri] = data.source
+          return data
+        })
+
     })
     Promise.all(modulePromises).then(function (resolvedModules) {
-      const resolvedScript = resolvedModules.concat(withoutIncludes).join('\n')
-      resolve(resolvedScript)
+      let resolvedScript = source
+      const moduleCache = resolvedModules.reduce((acc, cur) => {
+        Object.keys(cur.moduleCache).forEach(key => { acc[key] = cur.moduleCache[key] })
+        return acc
+      }, {})
+      // we are the root level
+      if (relPath === '') {
+        const moduleSources = Object.keys(moduleCache).map(function (uri) {
+          return `globals['includesSource']['${uri}'] = function() {${moduleCache[uri]}}`
+        }).join('\n')
+
+        resolvedScript = `globals['includedFiles'] || (globals['includedFiles'] = {})
+globals['includesSource'] || (globals['includesSource'] = {})
+if (!globals['originalIncludeFunction']) {
+  globals['originalIncludeFunction'] = include
+  include = function(file) {
+    if (!globals['includedFiles'][file]) {
+      globals['includesSource'][file]()
+      globals['includedFiles'][file] = true
+    }
+  }
+}
+${moduleSources}
+${resolvedScript}
+`
+      }
+      resolve({source: resolvedScript, moduleCache})
     })
+    .catch(reject)
   })
 }
 

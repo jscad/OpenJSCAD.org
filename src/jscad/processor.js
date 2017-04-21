@@ -472,7 +472,7 @@ Processor.prototype = {
     // prepare all parameters
     const parameters = getParamValues(this.paramControls)
     const script = this.getFullScript()
-    const fullurl = this.includePathBaseUrl + this.filename
+    const fullurl = this.includePathBaseUrl ? this.includePathBaseUrl + this.filename : this.filename
     const options = {memFs: this.memFs}
 
     this.state = 1 // processing

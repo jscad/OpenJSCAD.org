@@ -7,62 +7,6 @@ import { resolveIncludes } from './resolveIncludes'
 import { toArray } from '../utils/misc'
 
 /**
- * helper function that finds include() statements in files,
- * fetches their code & returns it (recursively) returning the whole code with
- * inlined includes
- * this is more reliable than async xhr + eval()
- * @param {String} text the original script (with include statements)
- * @param {String} relpath relative path, for xhr resolution
- * @param {String} memFs memFs cache object
- * @returns {String} the full script, with inlined
- */
-function replaceIncludes (text, relpath, memFs, prefixes=[]) {
-  return new Promise(function (resolve, reject) {
-    if (prefixes.length == 0) {
-      const globalsPrefix = `
-globals['includedFiles'] || (globals['includedFiles'] = {})
-globals['includesSource'] || (globals['includesSource'] = {})
-if (!globals['originalIncludeFunction']) {
-  globals['originalIncludeFunction'] = include
-  include = function(file) {
-    if (!globals['includedFiles'][file]) {
-      globals['includesSource'][file]()
-      globals['includedFiles'][file] = true
-    }
-  }
-}
-`
-      prefixes = [globalsPrefix]
-    }
-
-    const includesPattern = /(?:include)\s?\("([\w\/.\s]*)"\);?/gm
-
-    let foundIncludes = []
-    let foundIncludesFull = []
-    let match
-    while(match = includesPattern.exec(text)) {
-      foundIncludes.push(match[1])
-      foundIncludesFull.push(match[0])
-    }
-
-    let tmpPromises = foundIncludes.map(function (uri, index) {
-      const promise = includeJscadSync(relpath, uri, memFs)
-      return promise.then(function (includedScript) {
-        return replaceIncludes(includedScript, relpath, memFs, prefixes).then(function (substring) {
-          const includedScriptPrefix = `
-globals['includesSource']['${uri}'] = function() {
-${includedScript}
-}
-`
-          prefixes.push(includedScriptPrefix)
-        })
-      })
-    })
-    Promise.all(tmpPromises).then(x => resolve(prefixes.join("\n") + text))
-  })
-}
-
-/**
  * evaluate script & rebuild solids, in main thread
  * @param {String} script the script
  * @param {String} fullurl full url of current script
@@ -71,9 +15,9 @@ ${includedScript}
  * @param {Object} options the settings to use when rebuilding the solid
  */
 export function rebuildSolid (script, fullurl, parameters, callback, options) {
-  let relpath = fullurl
-  if (relpath.lastIndexOf('/') >= 0) {
-    relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1)
+  let basePath = fullurl
+  if (basePath.lastIndexOf('/') >= 0) {
+    basePath = basePath.substring(0, basePath.lastIndexOf('/') + 1)
   }
   const defaults = {
     implicitGlobals: true,
@@ -82,22 +26,23 @@ export function rebuildSolid (script, fullurl, parameters, callback, options) {
   }
   options = Object.assign({}, defaults, options)
 
-  replaceIncludes(script, relpath, options.memFs, options.includeResolver).then(function (fullScript) {
-    const globals = options.implicitGlobals ? (options.globals ? options.globals : {oscad}) : {}
-    const func = createJscadFunction(fullScript, globals)
+  replaceIncludes(script, basePath, '', {includeResolver: options.includeResolver, memFs: options.memFs})
+    .then(function ({source}) {
+      const globals = options.implicitGlobals ? (options.globals ? options.globals : {oscad}) : {}
+      const func = createJscadFunction(source, globals)
     // stand-in for the include function(no-op)
-    const include = (x) => x
-    try {
-      let objects = func(parameters, include, globals)
-      objects = toArray(objects)
-      if (objects.length === 0) {
-        throw new Error('The JSCAD script must return one or more CSG or CAG solids.')
+      const include = x => x
+      try {
+        let objects = func(parameters, include, globals)
+        objects = toArray(objects)
+        if (objects.length === 0) {
+          throw new Error('The JSCAD script must return one or more CSG or CAG solids.')
+        }
+        callback(undefined, objects)
+      } catch (error) {
+        callback(error, undefined)
       }
-      callback(undefined, objects)
-    } catch(error) {
-      callback(error, undefined)
-    }
-  }).catch(error => callback(error, undefined))
+    }).catch(error => callback(error, undefined))
 
   // have we been asked to stop our work?
   return {
@@ -125,33 +70,36 @@ export function rebuildSolidInWorker (script, fullurl, parameters, callback, opt
   }
   options = Object.assign({}, defaults, options)
 
-  let relpath = fullurl
-  if (relpath.lastIndexOf('/') >= 0) {
-    relpath = relpath.substring(0, relpath.lastIndexOf('/') + 1)
+  let basePath = fullurl
+  if (basePath.lastIndexOf('/') >= 0) {
+    basePath = basePath.substring(0, basePath.lastIndexOf('/') + 1)
   }
 
   let worker
-  replaceIncludes(script, relpath, options.memFs, options.includeResolver).then(function (script) {
-    worker = WebWorkify(require('./jscad-worker.js'))
-    worker.onmessage = function (e) {
-      if (e.data instanceof Object) {
-        const data = e.data.objects.map(function (object) {
-          if (object['class'] === 'CSG') { return CSG.fromCompactBinary(object) }
-          if (object['class'] === 'CAG') { return CAG.fromCompactBinary(object) }
-        })
-        callback(undefined, data)
+  replaceIncludes(script, basePath, '', {includeResolver: options.includeResolver, memFs: options.memFs})
+    .then(function ({source}) {
+      worker = WebWorkify(require('./jscad-worker.js'))
+    // we need to create special options as you cannot send functions to webworkers
+      const workerOptions = {implicitGlobals: options.implicitGlobals}
+      worker.onmessage = function (e) {
+        if (e.data instanceof Object) {
+          const data = e.data.objects.map(function (object) {
+            if (object['class'] === 'CSG') { return CSG.fromCompactBinary(object) }
+            if (object['class'] === 'CAG') { return CAG.fromCompactBinary(object) }
+          })
+          callback(undefined, data)
+        }
       }
-    }
-    worker.onerror = function (e) {
-      callback(`Error in line ${e.lineno} : ${e.message}`, undefined)
-    }
-    worker.postMessage({cmd: 'render', fullurl, script, parameters, options})
-  }).catch(error => callback(error, undefined))
+      worker.onerror = function (e) {
+        callback(`Error in line ${e.lineno} : ${e.message}`, undefined)
+      }
+      worker.postMessage({cmd: 'render', fullurl, source, parameters, options: workerOptions})
+    }).catch(error => callback(error, undefined))
 
   // have we been asked to stop our work?
   return {
     cancel: () => {
-      if(worker) worker.terminate()
+      if (worker) worker.terminate()
     }
   }
 }
