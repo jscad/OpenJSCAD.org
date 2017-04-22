@@ -1,5 +1,6 @@
 
-import Hammer from 'hammerjs'
+import {baseInteractionsFromEvents, pointerGestures} from 'most-gestures'
+
 import GL from './lightgl'
 import {colorBytes} from './jscad-viewer-helpers'
 
@@ -143,41 +144,64 @@ LightGLEngine.prototype = {
     shiftControl.appendChild(bottomArrow)
     this.containerEl.appendChild(shiftControl)
 
-    var options = {
-      preventDefault: true
+    const element = this.containerEl// document.getElementById("foo")
+    const baseInteractions = baseInteractionsFromEvents(element)
+    const gestures = pointerGestures(baseInteractions)
+
+    const rotateFactor = 0.6
+    const panFactor = 0.005
+    const zoomFactor = 0.05
+    console.log('gestures', gestures)
+
+    gestures.drags
+      .throttle(20)
+      .forEach(function (data) {
+        const {delta, originalEvents} = data
+
+        const {altKey, shiftKey, ctrlKey, metaKey} = originalEvents[0]
+        const button = originalEvents[0].which
+
+        if (shiftKey || button === 2) {            // PAN  (SHIFT or middle mouse button)
+          _this.viewpointX -= panFactor * delta.x * _this.viewpointZ
+          _this.viewpointY -= panFactor * delta.y * _this.viewpointZ
+        } else {
+          _this.angleZ -= delta.x * rotateFactor
+          _this.angleX += delta.y * rotateFactor
+        }
+
+        _this.onDraw()
+      })
+
+    gestures.zooms
+      .throttle(20)
+      .forEach(function (zoom) {
+        zoom *= zoomFactor
+        _this.viewpointZ -= zoom
+        _this.viewpointZ = Math.min(Math.max(_this.viewpointZ, _this.options.camera.clip.min), _this.options.camera.clip.max)
+        _this.onDraw()
+        // _this.setZoom(zoom)//_this.getZoom() * zoom)
+      })
+
+
+    this.touch = {
+      angleX: 0,
+      angleY: 0,
+      angleZ: 0,
+      lastX: 0,
+      lastY: 0,
+      scale: 0,
+      ctrl: 0,
+      shiftTimer: null,
+      shiftControl: shiftControl,
+      cur: null // current state
+
     }
-    var hammertime = new Hammer(this.containerEl, options)
-    hammertime.on('transform', function (ev) {
-      console.log('transform')
-    })
-
-    hammertime.on('tap', function (ev) {
-      console.log('tap')
-    })
-    hammertime.on('touch', function (ev) {
-      console.log('touch')
-    })
-    hammertime.get('pinch').set({ enable: true })
-    hammertime.get('rotate').set({ enable: true })
-
-    hammertime.on('pinch', function (ev) {
-      console.log('pinch')
-    })
-    hammertime.on('rotate', function (ev) {
-      console.log('rotate')
-    })
-
-    hammertime.on('pan', function (ev) {
-      console.log('pan')
-    })
-
-    hammertime.on('press', function (ev) {
-      console.log('press')
-    })
 
     /* let hammerElt = new Hammer.Manager(this.containerEl, {drag_lock_to_axis: true})
     hammerElt.add(new Hammer.Pan({ threshold: 0, pointers: 0 }))
     hammerElt.add(new Hammer.Press({ time: 500 }))
+    hammerElt.add(new Hammer.Pinch())
+    // javascript hammertime.get('pinch').set({ enable: true })
 
     function startGesture () {
       console.log('startGesture')
@@ -187,32 +211,48 @@ LightGLEngine.prototype = {
     this.containerEl.addEventListener('mousedown', startGesture)
     this.containerEl.addEventListener('touchstart', startGesture)
 
-    hammerElt.on('transform', function (e) {
-      console.log('transform')
-      if (e.gesture.touches.length >= 2) {
-        _this.clearShift()
-        _this.onTransform(e)
-        e.preventDefault()
+    hammerElt.on('pinch', function (e) {
+      console.log('mouseWheel pinch')
+      var wheelDelta = 0
+      if (e.wheelDelta) {
+        wheelDelta = e.wheelDelta
+      } else if (e.detail) {
+        // for firefox, see http://stackoverflow.com/questions/8886281/event-wheeldelta-returns-undefined
+        wheelDelta = e.detail * -40
       }
-    })
-    hammerElt.on('transformend dragstart dragend', function (e) { // not really applicable, since dragstart & dragend are not supported anymore by hammer
-      console.log('drag', _this.touch)
-      if ((e.type === 'transformend' && _this.touch.cur === 'transforming') ||
-        (e.type === 'dragend' && _this.touch.cur === 'shifting') ||
-        (e.type === 'dragend' && _this.touch.cur === 'dragging')) {
-        _this.touch.cur = null
+      if (wheelDelta) {
+        var factor = Math.pow(1.003, -wheelDelta)
+        var coeff = _this.getZoom()
+        coeff *= factor
+        _this.setZoom(coeff)
       }
-      _this.touch.lastX = 0
-      _this.touch.lastY = 0
-      _this.touch.scale = 0
     })
 
     hammerElt.on('pan panleft panright panup panleft panright pandown', function (e) {
-      console.log('pan', _this.touch.cur)
-      if (e.pointerType !== 'touch') {
-        e.preventDefault()
-        return
+      console.log('pan', e)
+      const {altKey, shiftKey, ctrlKey, metaKey} = e.changedPointers[0]
+      const button = e.which
+      if (altKey || button === 3) {                     // ROTATE X,Y (ALT or right mouse button)
+        _this.angleY += e.deltaX
+        _this.angleX += e.deltaY
+        // this.angleX = Math.max(-180, Math.min(180, this.angleX));
+      } else if (shiftKey || button === 2) {            // PAN  (SHIFT or middle mouse button)
+        var factor = 5e-3*0.001
+        _this.viewpointX += factor * e.deltaX * _this.viewpointZ
+        _this.viewpointY -= factor * e.deltaY * _this.viewpointZ
+      } else if (ctrlKey || metaKey) {                   // ZOOM IN/OU
+        var factor = Math.pow(1.006, e.deltaX + e.deltaY)*0.1
+        var coeff = _this.getZoom() * factor
+        _this.setZoom(coeff)
+      } else {                                 // ROTATE X,Z  left mouse button
+        //var factor = 0.001
+        //_this.angleZ += e.deltaX * factor
+        //_this.angleX += e.deltaY * factor
+        //console.log('angle', _this.angleX, _this.angleZ)
+        _this.onPanTilt(e)
       }
+      _this.onDraw()
+
       if (!_this.touch.cur || _this.touch.cur === 'dragging') {
         _this.clearShift()
         _this.onPanTilt(e)
@@ -222,13 +262,8 @@ LightGLEngine.prototype = {
     })
 
     hammerElt.on('press', function (e) {
-      console.log('touch', e)
-      if (e.pointerType !== 'touch') {
-        e.preventDefault()
-        return
-      }
-
-      if (e.pointers.length == 1) {
+      console.log('press', e.pointers, e.pointerType)
+      if (e.pointers.length === 1) {
         var point = e.center
         shiftControl.classList.add('active')
         shiftControl.style.left = point.pageX + 'px'
@@ -249,86 +284,22 @@ LightGLEngine.prototype = {
       }
     })
 
-    hammerElt.on('transform', function (e) {
-      console.log('transform')
-      if (e.gesture.touches.length >= 2) {
-        _this.clearShift()
-        _this.onTransform(e)
-        e.preventDefault()
-      }
-    }).on('touch', function (e) {
-      if (e.gesture.pointerType !== 'touch') {
-        e.preventDefault()
-        return
-      }
-
-      if (e.gesture.touches.length === 1) {
-        var point = e.gesture.center
-        _this.touch.shiftTimer = setTimeout(function () {
-          shiftControl.addClass('active').css({
-            left: point.pageX + 'px',
-            top: point.pageY + 'px'
-          })
-          _this.touch.shiftTimer = null
-          _this.touch.cur = 'shifting'
-        }, 500)
-      } else {
-        _this.clearShift()
-      }
-    }).on('touchend', function (e) {
-
-    }).on('transformend dragstart dragend', function (e) {
-      if ((e.type == 'transformend' && _this.touch.cur == 'transforming') ||
-        (e.type == 'dragend' && _this.touch.cur == 'shifting') ||
-        (e.type == 'dragend' && _this.touch.cur == 'dragging')) {
-        _this.touch.cur = null
-      }
-      _this.touch.lastX = 0
-      _this.touch.lastY = 0
-      _this.touch.scale = 0
-    }) */
-
+    this.onZoomChanged = null
+    return shiftControl */
     this.gl.onmousemove = function (e) {
-      console.log('onmousemove')
       _this.onMouseMove(e)
     }
 
-    this.gl.onmousewheel = function (e) {
-      console.log('mouseWheel')
-      var wheelDelta = 0
-      if (e.wheelDelta) {
-        wheelDelta = e.wheelDelta
-      } else if (e.detail) {
-        // for firefox, see http://stackoverflow.com/questions/8886281/event-wheeldelta-returns-undefined
-        wheelDelta = e.detail * -40
-      }
-      if (wheelDelta) {
-        var factor = Math.pow(1.003, -wheelDelta)
-        var coeff = _this.getZoom()
-        coeff *= factor
-        _this.setZoom(coeff)
-      }
+    this.gl.ondraw = function () {
+      _this.onDraw()
     }
-
-    this.onZoomChanged = null
-
-    this.touch = {
-      lastX: 0,
-      lastY: 0,
-      scale: 0,
-      ctrl: 0,
-      shiftTimer: null,
-      shiftControl: shiftControl,
-      cur: null // current state
-    }
-
-    return shiftControl
   },
 
   setZoom: function (coeff) { // 0...1
     coeff = Math.max(coeff, 0)
     coeff = Math.min(coeff, 1)
     this.viewpointZ = this.options.camera.clip.min + coeff * (this.options.camera.clip.max - this.options.camera.clip.min)
+    console.log('dsdffsd', this.viewpointZ)
     if (this.onZoomChanged) {
       this.onZoomChanged()
     }
@@ -341,7 +312,6 @@ LightGLEngine.prototype = {
   },
 
   onMouseMove: function (e) {
-    alert('mousemove')
     if (e.dragging) {
       var b = e.button
       if (e.which) {                            // RANT: not even the mouse buttons are coherent among the brand (chrome,firefox,etc)
@@ -358,8 +328,7 @@ LightGLEngine.prototype = {
         this.viewpointY -= factor * e.deltaY * this.viewpointZ
       } else if (e.ctrlKey || e.metaKey) {                   // ZOOM IN/OU
         var factor = Math.pow(1.006, e.deltaX + e.deltaY)
-        var coeff = this.getZoom()
-        coeff *= factor
+        var coeff = this.getZoom() * factor
         this.setZoom(coeff)
       } else {                                 // ROTATE X,Z  left mouse button
         this.angleZ += e.deltaX
@@ -379,20 +348,19 @@ LightGLEngine.prototype = {
 
   // pan & tilt with one finger
   onPanTilt: function (e) {
+    // console.log('onPanTilt')
     this.touch.cur = 'dragging'
     let deltaX = 0
     let deltaY = 0
-    console.log(this.touch.lastY)
-    if (this.touch.lastY !== undefined)// && (e.type === 'panup' || e.type === 'pandown')) {
-    {  // tilt
+    const factor = 0.3
+    if (this.touch.lastY !== undefined) {  // tilt
       deltaX = e.deltaY - this.touch.lastY
-      this.angleX += deltaX * 0.1
+      this.angleX += deltaX * factor
       this.touch.lastY = e.deltaY
     }
-    if (this.touch.lastX !== undefined)// && (e.type === 'panleft' || e.type === 'panright')) {
-    {  // pan
+    if (this.touch.lastX !== undefined) {  // pan
       deltaY = e.deltaX - this.touch.lastX
-      this.angleZ += deltaY * 0.1
+      this.angleZ += deltaY * factor
       this.touch.lastX = e.deltaX
     }
     // console.log(delta)
