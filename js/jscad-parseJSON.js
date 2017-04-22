@@ -26,7 +26,7 @@ if(typeof module !== 'undefined') {    // used via nodejs
 
 ////////////////////////////////////////////
 //
-// JSON (JavaScript Object Notation) is a lightweight data-interchange format 
+// JSON (JavaScript Object Notation) is a lightweight data-interchange format
 // See http://json.org/
 //
 ////////////////////////////////////////////
@@ -74,11 +74,11 @@ OpenJsCad.toSourceCAG = function(cag) {
 
 // convert an anonymous CSG/CAG object to JSCAD source
 OpenJsCad.toSource = function(obj) {
-  if (obj.type && obj.type == 'csg') {
+  if (obj.type && obj.type === 'csg') {
     var csg = CSG.fromObject(obj);
     return OpenJsCad.toSourceCSG(csg);
   }
-  if (obj.type && obj.type == 'cag') {
+  if (obj.type && obj.type === 'cag') {
     var cag = CAG.fromObject(obj);
     return OpenJsCad.toSourceCAG(cag);
   }
@@ -96,14 +96,14 @@ OpenJsCad.parseJSON = function(src, fn, options) {
 
 // convert the JSON into an anonymous object
   var obj = JSON.parse(src);
-// convert the internal objects to JSCAD code 
+// convert the internal objects to JSCAD code
   var code = '';
   code += '//\n';
   code += "// producer: OpenJSCAD.org "+OpenJsCad.version+" JSON Importer\n";
   code += "// date: "+(new Date())+"\n";
   code += "// source: "+fn+"\n";
   code += '//\n';
-  code += "function main() {\n"; 
+  code += "function main() {\n";
   code += OpenJsCad.toSource(obj);
   code += '};\n';
   return code;
