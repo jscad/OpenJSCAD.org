@@ -9,7 +9,7 @@ import {colorBytes} from './jscad-viewer-helpers'
  * @param {DOMElement} containerelement container element
  * @param {object}     options    options for renderer
  */
- export default function LightGLEngine(containerelement, options) {
+export default function LightGLEngine(containerelement, options) {
 
   this.options = options;
 
@@ -17,9 +17,8 @@ import {colorBytes} from './jscad-viewer-helpers'
 
   this.createRenderer();
 
-  this.gl.resizeCanvas = this.handleResize.bind (this);
-
-  this.animate();
+// only window resize is available, so add an event callback for the canvas
+  window.addEventListener( 'resize', this.handleResize.bind (this) );
 };
 
 LightGLEngine.prototype = {
@@ -29,11 +28,6 @@ LightGLEngine.prototype = {
     this.gl.canvas.height = this.containerEl.height;
 
     this.handleResize();
-  // only window resize is available, so add an event callback for the canvas
-  // window.addEventListener( 'resize', this.handleResize.bind (this) );
-  },
-  animate: function () {
-
   },
   handleResize: function () {
     // Set up the viewport

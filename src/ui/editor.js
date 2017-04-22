@@ -83,7 +83,7 @@ export function setUpEditor (divname, gProcessor) {
     bindKey: { win: 'Ctrl-Return', mac: 'Command-Return' },
     exec: function (editor) {
       if (gProcessor !== null) {
-        gProcessor.viewer.reset()
+        gProcessor.viewer.resetCamera()
       }
     }
   })
