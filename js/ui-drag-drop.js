@@ -200,7 +200,7 @@ function setCurrentFile(file) {
   if(OpenJsCad.conversionFormats.indexOf(e) < 0) {
     throw new Error("Please drag and drop a compatible file");
   }
-  if(file.size == 0) {
+  if(file.size === 0) {
     throw new Error("You have dropped an empty file");
   }
   fileChanged(file);
@@ -213,7 +213,7 @@ function readFileAsync(f) {
 
   var reader = new FileReader();
   reader.onloadend = function(evt) {
-    if(evt.target.readyState == FileReader.DONE) {
+    if(evt.target.readyState === FileReader.DONE) {
       var source = evt.target.result;
 
       //console.log("done reading: "+f.name,source?source.length:0);   // it could have been vanished while fetching (race condition)
@@ -332,14 +332,14 @@ function parseFile(f, onlyifchanged) {
   var source = f.source;
   var editorSource = source;
 
-  if(source == "") {
+  if(source === "") {
     if(document.location.toString().match(/^file\:\//i)) {
       throw new Error("Could not read file. You are using a local copy of OpenJSCAD.org; if you are using Chrome, you need to launch it with the following command line option:\n\n--allow-file-access-from-files\n\notherwise the browser will not have access to uploaded files due to security restrictions.");
     }
     throw new Error("Could not read file.");
   }
 
-  if(previousScript == source) return;
+  if(previousScript === source) return;
 
   if(gProcessor && (!onlyifchanged)) {
     var fn = f.name;

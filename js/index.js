@@ -50,7 +50,7 @@ $(document).ready(function() {
       });
 
     $("#editHandle").click(function() {
-        if ($("#editFrame").width() == 0) {
+        if ($("#editFrame").width() === 0) {
           $("#editFrame").css("width",'40%');
           $("#editHandle").attr('src',"imgs/editHandleIn.png");
         } else {

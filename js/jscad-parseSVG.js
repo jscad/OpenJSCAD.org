@@ -207,7 +207,7 @@ sax.SAXParser.prototype.cagLengthX = function(css) {
 // calculate the units as a percentage of the width
   var v = parseFloat(css); // number part
   if (isNaN(v)) { return 0.0; }
-  if (v == 0) return v;
+  if (v === 0) return v;
   v = (v / 100) * this.svgUnitsX;
 // convert the units to mm
   v = v / this.svgUnitsPmm[0];
@@ -222,7 +222,7 @@ sax.SAXParser.prototype.cagLengthY = function(css) {
 // calculate the units as a percentage of the width
   var v = parseFloat(css); // number part
   if (isNaN(v)) { return 0.0; }
-  if (v == 0) return v;
+  if (v === 0) return v;
   v = (v / 100) * this.svgUnitsY;
 // convert the units to mm
   v = v / this.svgUnitsPmm[1];
@@ -237,7 +237,7 @@ sax.SAXParser.prototype.cagLengthP = function(css) {
 // calculate the units as a percentage of the viewport
   var v = parseFloat(css); // number part
   if (isNaN(v)) { return 0.0; }
-  if (v == 0) return v;
+  if (v === 0) return v;
   v = (v / 100) * this.svgUnitsV;
 // convert the units to mm
   v = v / this.svgUnitsPmm[0]; // FIXME should this use X units?
@@ -248,7 +248,7 @@ sax.SAXParser.prototype.css2cag = function(css,unit) {
 //console.log('css2cag('+css+','+unit+')');
   var v = parseFloat(css); // number part
   if (isNaN(v)) { return 0.0; }
-  if (v == 0) return v;
+  if (v === 0) return v;
   if (css.search(/EM/i) > 0) {
     v = v; // font size
   } else
@@ -285,12 +285,12 @@ sax.SAXParser.prototype.cagColor = function(value) {
     rgb = this.svgColors[value];
     rgb = [rgb[0]/255,rgb[1]/255,rgb[2]/255]; // converted to 0.0-1.0 values
   } else {
-    if (value[0] == '#') {
-      if (value.length == 4) {
+    if (value[0] === '#') {
+      if (value.length === 4) {
       // short HEX specification
         value = '#'+value[1]+value[1]+value[2]+value[2]+value[3]+value[3];
       }
-      if (value.length == 7) {
+      if (value.length === 7) {
       // HEX specification
         rgb = [ parseInt('0x'+value.slice(1,3))/255,
                 parseInt('0x'+value.slice(3,5))/255,
@@ -403,7 +403,7 @@ sax.SAXParser.prototype.svgTransforms = function(cag,element) {
           cag.transforms.push(o);
           break;
         case 'scale':
-          if (a.length == 1) a.push(a[0]); // as per SVG
+          if (a.length === 1) a.push(a[0]); // as per SVG
           var o = {scale: [a[0], a[1]]};
           cag.transforms.push(o);
           break;
@@ -720,7 +720,7 @@ sax.SAXParser.prototype.svgPath = function(element) {
       }
       i++;
     }
-    if (i == l && co !== null) {
+    if (i === l && co !== null) {
       if (bf.length > 0) {
         co.p.push(bf);
       }
@@ -754,7 +754,7 @@ sax.SAXParser.prototype.svgUse = function(element) {
   if ('XLINK:HREF' in element) {
   // lookup the named object
     var ref = element['XLINK:HREF'];
-    if (ref[0] == '#') { ref = ref.slice(1,ref.length); }
+    if (ref[0] === '#') { ref = ref.slice(1,ref.length); }
     if (this.svgObjects[ref] !== undefined) {
       ref = this.svgObjects[ref];
       ref = JSON.parse(JSON.stringify(ref));
@@ -775,9 +775,9 @@ sax.SAXParser.prototype.svgUnitsPer = 0;
 sax.SAXParser.prototype.reflect = function(x,y,px,py) {
   var ox = x-px;
   var oy = y-py;
-  if (x == px && y == px) return [x,y];
-  if (x == px) return [x,py+(-oy)];
-  if (y == py) return [px+(-ox),y];
+  if (x === px && y === px) return [x,y];
+  if (x === px) return [x,py+(-oy)];
+  if (y === py) return [px+(-ox),y];
   return [px+(-ox),py+(-oy)];
 }
 
@@ -807,7 +807,7 @@ sax.SAXParser.prototype.codify = function(group) {
   }
 // pre-code
   var code = '';
-  if (level == 0) {
+  if (level === 0) {
     code += 'function main(params) {\n';
   }
   var ln = 'cag'+level;
@@ -831,7 +831,7 @@ sax.SAXParser.prototype.codify = function(group) {
         if (w > 0 && h > 0) {
           x = (x+(w/2)).toFixed(4);  // position the object via the center
           y = (y-(h/2)).toFixed(4);  // position the object via the center
-          if (rx == 0) {
+          if (rx === 0) {
             code += indent+'var '+on+' = CAG.rectangle({center: ['+x+','+y+'], radius: ['+w/2+','+h/2+']});\n';
           } else {
             code += indent+'var '+on+' = CAG.roundedRectangle({center: ['+x+','+y+'], radius: ['+w/2+','+h/2+'], roundradius: '+rx+'});\n';
@@ -941,7 +941,7 @@ sax.SAXParser.prototype.codify = function(group) {
           switch (co.c) {
             case 'm': // relative move to X,Y
             // special case, if at beginning of path then treat like absolute M
-              if (j == 0) {
+              if (j === 0) {
                 cx = 0; cy = 0;
               }
             // close the previous path
@@ -981,8 +981,8 @@ sax.SAXParser.prototype.codify = function(group) {
                 var rx = parseFloat(pts.shift());
                 var ry = parseFloat(pts.shift());
                 var ro = 0-parseFloat(pts.shift());
-                var lf = (pts.shift() == '1');
-                var sf = (pts.shift() == '1');
+                var lf = (pts.shift() === '1');
+                var sf = (pts.shift() === '1');
                 cx = cx+parseFloat(pts.shift());
                 cy = cy+parseFloat(pts.shift());
                 code += indent+pn+' = '+pn+'.appendArc(['+this.svg2cagX(cx)+','+this.svg2cagY(cy)+'],{xradius: '+this.svg2cagX(rx)+',yradius: '+this.svg2cagY(ry)+',xaxisrotation: '+ro+',clockwise: '+sf+',large: '+lf+'});\n';
@@ -993,8 +993,8 @@ sax.SAXParser.prototype.codify = function(group) {
                 var rx = parseFloat(pts.shift());
                 var ry = parseFloat(pts.shift());
                 var ro = 0-parseFloat(pts.shift());
-                var lf = (pts.shift() == '1');
-                var sf = (pts.shift() == '1');
+                var lf = (pts.shift() === '1');
+                var sf = (pts.shift() === '1');
                 cx = parseFloat(pts.shift());
                 cy = parseFloat(pts.shift());
                 code += indent+pn+' = '+pn+'.appendArc(['+this.svg2cagX(cx)+','+this.svg2cagY(cy)+'],{xradius: '+this.svg2cagX(rx)+',yradius: '+this.svg2cagY(ry)+',xaxisrotation: '+ro+',clockwise: '+sf+',large: '+lf+'});\n';
@@ -1198,7 +1198,7 @@ sax.SAXParser.prototype.codify = function(group) {
     code += indent + ln +' = '+ln+'.union('+on+');\n';
   }
 // post-code
-  if (level == 0) {
+  if (level === 0) {
     code += indent+'return '+ln+';\n';
     code += '}\n';
   }
@@ -1283,7 +1283,7 @@ OpenJsCad.createSvgParser = function(src, pxPmm) {
         this.svgObjects[obj.id] = obj;
         //console.log('saved object ['+obj.id+','+obj.type+']');
       }
-      if (obj.type == 'svg') {
+      if (obj.type === 'svg') {
       // initial SVG (group)
         this.svgGroups.push(obj);
         this.svgUnitsPmm = obj.unitsPmm;
@@ -1292,7 +1292,7 @@ OpenJsCad.createSvgParser = function(src, pxPmm) {
         this.svgUnitsV = obj.viewP;
       } else {
       // add the object to the active group if necessary
-        if (this.svgGroups.length > 0 && this.svgInDefs == false) {
+        if (this.svgGroups.length > 0 && this.svgInDefs === false) {
           var group = this.svgGroups.pop();
           if ('objects' in group) {
             //console.log('push object ['+obj.type+']');
@@ -1302,7 +1302,7 @@ OpenJsCad.createSvgParser = function(src, pxPmm) {
           }
           this.svgGroups.push(group);
         }
-        if (obj.type == 'group') {
+        if (obj.type === 'group') {
         // add GROUPs to the stack
           this.svgGroups.push(obj);
         }
@@ -1364,7 +1364,7 @@ OpenJsCad.parseSVG = function(src, fn, options) {
   if ('pxPmm' in options) { pxPmm = options.pxPmm; }
 // parse the SVG source
   var parser = OpenJsCad.createSvgParser(src, pxPmm);
-// convert the internal objects to JSCAD code 
+// convert the internal objects to JSCAD code
   var code = '';
   code += '//\n';
   code += "// producer: OpenJSCAD.org "+OpenJsCad.version+" SVG Importer\n";

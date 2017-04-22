@@ -51,9 +51,9 @@ OpenJsCad.createJscadFunction = function(fullurl, script, callback) {
 //
 function includeJscadSync(fn) {
 // include the requested script via MemFs if possible
-  if (typeof(gMemFs) == 'object') {
+  if (typeof(gMemFs) === 'object') {
     for(var fs in gMemFs) {
-      if (gMemFs[fs].name == fn) {
+      if (gMemFs[fs].name === fn) {
         eval(gMemFs[fs].source);
         return;
       }

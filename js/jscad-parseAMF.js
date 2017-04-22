@@ -246,7 +246,7 @@ OpenJsCad.createAmfParser = function(src, pxPmm) {
         break;
       case 'OBJECT':
         obj = this.amfObject(node.attributes);
-        if (this.amfDefinition == 0) this.amfDefinition = 1; // OBJECT processing
+        if (this.amfDefinition === 0) this.amfDefinition = 1; // OBJECT processing
         break;
       case 'MESH':
         obj = this.amfMesh(node.attributes);
@@ -265,19 +265,19 @@ OpenJsCad.createAmfParser = function(src, pxPmm) {
         break;
       case 'MATERIAL':
         obj = this.amfMaterial(node.attributes);
-        if (this.amfDefinition == 0) this.amfDefinition = 2; // MATERIAL processing
+        if (this.amfDefinition === 0) this.amfDefinition = 2; // MATERIAL processing
         break;
       case 'COMPOSITE':
         break;
       case 'TEXTURE':
-        if (this.amfDefinition == 0) this.amfDefinition = 3; // TEXTURE processing
+        if (this.amfDefinition === 0) this.amfDefinition = 3; // TEXTURE processing
         break;
       case 'CONSTELLATION':
-        if (this.amfDefinition == 0) this.amfDefinition = 4; // CONSTELLATION processing
+        if (this.amfDefinition === 0) this.amfDefinition = 4; // CONSTELLATION processing
         break;
       case 'METADATA':
         obj = this.amfMetadata(node.attributes);
-        if (this.amfDefinition == 0) this.amfDefinition = 5; // METADATA processing
+        if (this.amfDefinition === 0) this.amfDefinition = 5; // METADATA processing
         break;
     // coordinate elements
       case 'COORDINATES':
@@ -385,7 +385,7 @@ OpenJsCad.createAmfParser = function(src, pxPmm) {
           }
           break;
         case 2: // definition of MATERIAL
-          if (obj.type == 'material') {
+          if (obj.type === 'material') {
             //console.log('push material ['+obj.type+']');
             this.amfMaterials.push(obj);
           } else {
@@ -440,13 +440,13 @@ OpenJsCad.createAmfParser = function(src, pxPmm) {
       case 'TEXMAP':
         break;
       case 'TEXTURE':
-        if (this.amfDefinition == 3) { this.amfDefinition = 0; } // resume processing
+        if (this.amfDefinition === 3) { this.amfDefinition = 0; } // resume processing
         return;
       case 'CONSTELLATION':
-        if (this.amfDefinition == 4) { this.amfDefinition = 0; } // resume processing
+        if (this.amfDefinition === 4) { this.amfDefinition = 0; } // resume processing
         return;
       case 'METADATA':
-        if (this.amfDefinition == 5) { this.amfDefinition = 0; } // resume processing
+        if (this.amfDefinition === 5) { this.amfDefinition = 0; } // resume processing
         return;
       default:
         //console.log('closetag: '+node);
@@ -460,7 +460,7 @@ OpenJsCad.createAmfParser = function(src, pxPmm) {
         if (this.amfObjects.length > 0) {
           obj = this.amfObjects.pop();
           //console.log('pop object ['+obj.type+']');
-          if (obj.type == 'object') {
+          if (obj.type === 'object') {
             this.amfDefinition = 0; // AMF processing
           }
         }
@@ -473,7 +473,7 @@ OpenJsCad.createAmfParser = function(src, pxPmm) {
         if (this.amfMaterials.length > 0) {
           obj = this.amfMaterials.pop();
           //console.log('pop material ['+obj.type+']');
-          if (obj.type == 'material') {
+          if (obj.type === 'material') {
             this.amfMaterials.push(obj); // keep a list of materials
             this.amfDefinition = 0; // AMF processing
           }
@@ -526,9 +526,9 @@ sax.SAXParser.prototype.codify = function(amf) {
   var materials = this.amfMaterials;
   var lastmaterial = null;
   function findMaterial(id) {
-    if (lastmaterial && lastmaterial.id == id) return lastmaterial;
+    if (lastmaterial && lastmaterial.id === id) return lastmaterial;
     for (i = 0; i < materials.length; i++) {
-      if (materials[i].id && materials[i].id == id) {
+      if (materials[i].id && materials[i].id === id) {
         lastmaterial = materials[i];
         return lastmaterial;
       }
@@ -537,14 +537,14 @@ sax.SAXParser.prototype.codify = function(amf) {
   }
   function getValue(objects,type) {
     for (i = 0; i < objects.length; i++) {
-      if (objects[i].type == type) return objects[i].value;
+      if (objects[i].type === type) return objects[i].value;
     }
     return null;
   }
   function getColor(objects) {
     for (i = 0; i < objects.length; i++) {
       var obj = objects[i];
-      if (obj.type == 'color') {
+      if (obj.type === 'color') {
         var r = parseFloat(getValue(obj.objects,'r'));
         var g = parseFloat(getValue(obj.objects,'g'));
         var b = parseFloat(getValue(obj.objects,'b'));
@@ -589,7 +589,7 @@ sax.SAXParser.prototype.codify = function(amf) {
     var colors   = [];    // [r,g,b,a]
 
     function addCoord(coord,cidx) {
-      if (coord.type == 'coordinates') {
+      if (coord.type === 'coordinates') {
         var x = parseFloat(getValue(coord.objects,'x'));
         var y = parseFloat(getValue(coord.objects,'y'));
         var z = parseFloat(getValue(coord.objects,'z'));
@@ -600,13 +600,13 @@ sax.SAXParser.prototype.codify = function(amf) {
     }
     function addVertex(vertex,vidx) {
 //console.log(vertex.type);
-      if (vertex.type == 'vertex') {
+      if (vertex.type === 'vertex') {
         vertex.objects.map(addCoord);
       }
     // edge is possible
     }
     function addTriangle(tri,tidx) {
-      if (tri.type == 'triangle') {
+      if (tri.type === 'triangle') {
         var v1 = parseInt(getValue(tri.objects,'v1'));
         var v2 = parseInt(getValue(tri.objects,'v2'));
         var v3 = parseInt(getValue(tri.objects,'v3'));
@@ -641,7 +641,7 @@ sax.SAXParser.prototype.codify = function(amf) {
     }
     function addMesh(mesh,midx) {
 //console.log(mesh.type);
-      if (mesh.type == 'mesh') {
+      if (mesh.type === 'mesh') {
         mesh.objects.map(addPart, this);
       }
     }
@@ -678,7 +678,7 @@ sax.SAXParser.prototype.codify = function(amf) {
          code += ');\n';
       }
       code += '  return CSG.fromPolygons(polys);\n';
-      code += '}\n'; 
+      code += '}\n';
     }
   }
 
@@ -695,16 +695,16 @@ sax.SAXParser.prototype.codify = function(amf) {
   }
   code += 'var PP = function(a) { return new CSG.Polygon(a); };\n';
   code += '\n';
-  code += 'function main() {\n'; 
-  code += '  var csgs = [];\n'; 
+  code += 'function main() {\n';
+  code += '  var csgs = [];\n';
   for (i = 0; i < objects.length; i++) {
     var obj = objects[i];
-    if (obj.type == 'object') {
+    if (obj.type === 'object') {
       code += '  csgs.push(createObject'+obj.id+'());\n';
     }
   }
-  code += '  return union(csgs);\n'; 
-  code += '}\n'; 
+  code += '  return union(csgs);\n';
+  code += '}\n';
   code += '\n';
 
   objects.map(createDefinition, this);
@@ -724,7 +724,7 @@ OpenJsCad.parseAMF = function(src, fn, options) {
   var options = options || {};
 // parse the AMF source
   var parser = OpenJsCad.createAmfParser(src);
-// convert the internal objects to JSCAD code 
+// convert the internal objects to JSCAD code
   var code = '';
   code += '//\n';
   code += "// producer: OpenJSCAD.org "+OpenJsCad.version+" AMF Importer\n";
@@ -768,7 +768,7 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
       var el = $(this);
       meta[el.attr('type')] = el.text();
    });
-   
+
    var obj = $(xml).find('object');
    obj.each(function() {
       var el = $(this);
@@ -783,7 +783,7 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
             if(co.find('a').length) rgbm = rgbm.concat(co.find('a').first().text());
          }
          v = []; f = []; nv = 0;        // we create each individual polygon
-         
+
          var vertices = el.find('vertices');
          var sn = nv;
          vertices.each(function() {
@@ -817,7 +817,7 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
                var v1 = parseInt(el.find('v1').first().text()); // -- why: v1 might occur <v1>1</v1><map><v1>0</v1></map> -> find('v1') return '1'+'0' = '10'
                var v2 = parseInt(el.find('v2').first().text());
                var v3 = parseInt(el.find('v3').first().text());
-               if(rgbm.length||rgbv.length||rgbt.length) 
+               if(rgbm.length||rgbv.length||rgbt.length)
                   c[f.length] = rgbt.length?rgbt:(rgbv.length?rgbv:rgbm);
                f.push([v1+sn,v2+sn,v3+sn]);        // HINT: reverse order for polyhedron()
 
@@ -831,7 +831,7 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
          textures.each(function() {
             ; // not yet
          });
-         
+
          // v[] has the vertices
          // f[] has the faces
          for(var i=0; i<f.length; i++) {
@@ -859,17 +859,17 @@ function parseAMF(amf,fn) {      // http://en.wikipedia.org/wiki/Additive_Manufa
    src += "// date: "+(new Date())+"\n";
    src += "// source: "+fn+"\n";
    src += "\n";
-   
+
    if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
    src += "// objects: 1\n// object #1: polygons: "+np+"\n\n";
-   src += "function main() {\n"; 
-   src += "\tvar PP = function(a) { return new CSG.Polygon(a); };\n"; 
+   src += "function main() {\n";
+   src += "\tvar PP = function(a) { return new CSG.Polygon(a); };\n";
    src += "\tvar VV = function(x,y,z) { return new CSG.Vertex(new CSG.Vector3D(x,y,z)); };\n";
    src += srci;
    src += "\treturn CSG.fromPolygons(pgs);\n}\n";
    return src;
 }
-   
+
 
 // export the extended prototypes
   module.CAG = CAG;

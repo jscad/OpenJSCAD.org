@@ -24,7 +24,7 @@ OpenJsCad.createConversionWorker = function() {
         }
         if ('filename' in data && 'converted' in data) {
           //console.log("processor: "+data.filename+" ["+data.converted+']');
-          if ('cache' in data && data.cache == true) {
+          if ('cache' in data && data.cache === true) {
             saveScript(data.filename,data.converted);
           }
           gProcessor.setJsCad(data.converted,data.filename);

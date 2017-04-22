@@ -28,22 +28,22 @@ OpenJsCad.createJscadWorker = function(fullurl, script, callback) {
   w.onmessage = function(e) {
     if (e.data instanceof Object) {
       var data = e.data;
-      if(data.cmd == 'rendered') {
+      if(data.cmd === 'rendered') {
         if (data.objects && data.objects.length) {
         // convert the compact formats back to CSG/CAG form
           var objects = [];
           for(var i=0; i<data.objects.length; i++) {
             var o = data.objects[i];
-            if (o['class'] == 'CSG') { objects.push(CSG.fromCompactBinary(o)); }
-            if (o['class'] == 'CAG') { objects.push(CAG.fromCompactBinary(o)); }
+            if (o['class'] === 'CSG') { objects.push(CSG.fromCompactBinary(o)); }
+            if (o['class'] === 'CAG') { objects.push(CAG.fromCompactBinary(o)); }
           }
           callback(null, objects);
         } else {
           throw new Error("JSCAD Worker: missing 'objects'");
         }
-      } else if(data.cmd == "error") {
+      } else if(data.cmd === "error") {
         callback(data.err, null);
-      } else if(data.cmd == "log") {
+      } else if(data.cmd === "log") {
         callback(data.txt, null);
       }
     }
@@ -93,9 +93,9 @@ function buildJscadWorkerScript(fullpath, fullscript) {
 //
 function includeJscad(fn) {
 // include the requested script via MemFs if possible
-  if (typeof(gMemFs) == 'object') {
+  if (typeof(gMemFs) === 'object') {
     for (var i = 0; i < gMemFs.length; i++) {
-      if (gMemFs[i].name == fn) {
+      if (gMemFs[i].name === fn) {
         eval(gMemFs[i].source);
         return;
       }
@@ -124,7 +124,7 @@ function runJscadWorker(e) {
   var r = {cmd: "error", txt: "try again"};
   if (e.data instanceof Object) {
     var data = e.data;
-    if(data.cmd == 'render') {
+    if(data.cmd === 'render') {
     // verify the command contents
       if(!data.parameters) { throw new Error("JSCAD Processor: missing 'parameters'"); }
     // setup the environment
@@ -132,7 +132,7 @@ function runJscadWorker(e) {
         data.libraries.map( function(l) { importScripts(l); } );
       }
     // setup the script
-      if (typeof(main) == 'function') {
+      if (typeof(main) === 'function') {
         var results = main( data.parameters );
         if (!results.length) { results = [results]; }
       // convert the results to a compact format for transfer back
