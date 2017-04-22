@@ -3,65 +3,61 @@ import Hammer from 'hammerjs'
 import GL from './lightgl'
 import {colorBytes} from './jscad-viewer-helpers'
 
-
 /**
  * lightgl.js renderer for jscad viewer
  * @param {DOMElement} containerelement container element
  * @param {object}     options    options for renderer
  */
-export default function LightGLEngine(containerelement, options) {
+export default function LightGLEngine (containerelement, options) {
+  this.options = options
 
-  this.options = options;
+  this.containerEl = containerelement
 
-  this.containerEl = containerelement;
-
-  this.createRenderer();
+  this.createRenderer()
 
 // only window resize is available, so add an event callback for the canvas
-  window.addEventListener( 'resize', this.handleResize.bind (this) );
+  window.addEventListener('resize', this.handleResize.bind(this))
 };
 
 LightGLEngine.prototype = {
   init: function () {
   // set initial canvas size
-    this.gl.canvas.width  = this.containerEl.width;
-    this.gl.canvas.height = this.containerEl.height;
+    this.gl.canvas.width = this.containerEl.width
+    this.gl.canvas.height = this.containerEl.height
 
-    this.handleResize();
+    this.handleResize()
   },
   handleResize: function () {
     // Set up the viewport
 
-    var canvas = this.canvas;
+    var canvas = this.canvas
 
-    this.resizeCanvas ();
+    this.resizeCanvas()
 
-    this.gl.viewport(0, 0, canvas.width, canvas.height); // pixels
-    this.gl.matrixMode(this.gl.PROJECTION);
-    this.gl.loadIdentity();
-    this.gl.perspective(this.options.camera.fov, canvas.width / canvas.height, this.options.camera.clip.min, this.options.camera.clip.max);
-    this.gl.matrixMode(this.gl.MODELVIEW);
+    this.gl.viewport(0, 0, canvas.width, canvas.height) // pixels
+    this.gl.matrixMode(this.gl.PROJECTION)
+    this.gl.loadIdentity()
+    this.gl.perspective(this.options.camera.fov, canvas.width / canvas.height, this.options.camera.clip.min, this.options.camera.clip.max)
+    this.gl.matrixMode(this.gl.MODELVIEW)
 
-    this.onDraw();
+    this.onDraw()
   },
   createRenderer: function () {
     // Set up WebGL state
-    var gl = GL.create();
-    this.gl = gl;
-    this.gl.lineWidth(1); // don't let the library choose
+    var gl = GL.create()
+    this.gl = gl
+    this.gl.lineWidth(1) // don't let the library choose
 
-    this.canvas = this.gl.canvas;
+    this.canvas = this.gl.canvas
+    this.meshes = []
+    this.containerEl.appendChild(this.gl.canvas)
 
-    this.meshes = [];
+    this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA)
+    this.gl.clearColor.apply(this.gl, colorBytes(this.options.background.color))
+    this.gl.enable(this.gl.DEPTH_TEST)
+    this.gl.enable(this.gl.CULL_FACE)
 
-    this.containerEl.appendChild (this.gl.canvas);
-
-    this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
-    this.gl.clearColor.apply(this.gl, colorBytes(this.options.background.color));
-    this.gl.enable(this.gl.DEPTH_TEST);
-    this.gl.enable(this.gl.CULL_FACE);
-
-    var outlineColor = this.options.solid.outlineColor;
+    var outlineColor = this.options.solid.outlineColor
 
     // Black shader for wireframe
     this.blackShader = new GL.Shader('\
@@ -71,7 +67,7 @@ LightGLEngine.prototype = {
       void main() {\
         gl_FragColor = vec4(' + colorBytes(outlineColor).join(', ') + ');\
       }'
-    );
+    )
 
     // Shader with diffuse and specular lighting
     this.lightingShader = new GL.Shader('\
@@ -98,17 +94,16 @@ LightGLEngine.prototype = {
         float specular = pow(max(0.0, -reflect(light, n).z), 10.0) * sqrt(diffuse);\
         gl_FragColor = vec4(mix(color * (0.3 + 0.7 * diffuse), vec3(1.0), specular), alpha);\
       }'
-   );
+   )
 
-    var _this=this;
+    var _this = this
 
-    var shiftControl = this.createControls();
+    this.createControls()
+    this.resetCamera()
 
-    this.resetCamera();
-
-    this.gl.ondraw = function() {
-      _this.onDraw();
-    };
+    this.gl.ondraw = function () {
+      _this.onDraw()
+    }
 
     // state variables, i.e. used for storing values, etc
 
@@ -148,171 +143,174 @@ LightGLEngine.prototype = {
     shiftControl.appendChild(bottomArrow)
     this.containerEl.appendChild(shiftControl)
 
+    var options = {
+      preventDefault: true
+    }
+    var hammertime = new Hammer(this.containerEl, options)
+    hammertime.on('transform', function (ev) {
+      console.log('transform')
+    })
 
-/*var options = {
-  preventDefault: true
-};
-var hammertime = new Hammer(this.containerEl, options);
-hammertime.on("transform", function(ev){
-console.log('transform')})
+    hammertime.on('tap', function (ev) {
+      console.log('tap')
+    })
+    hammertime.on('touch', function (ev) {
+      console.log('touch')
+    })
+    hammertime.get('pinch').set({ enable: true })
+    hammertime.get('rotate').set({ enable: true })
 
-hammertime.on('tap', function(ev) {
-  console.log('tap')
-})
-hammertime.on('touch', function(ev) {
-  console.log('touch')
-})
-hammertime.get('pinch').set({ enable: true });
-hammertime.get('rotate').set({ enable: true });
+    hammertime.on('pinch', function (ev) {
+      console.log('pinch')
+    })
+    hammertime.on('rotate', function (ev) {
+      console.log('rotate')
+    })
 
-hammertime.on('pinch', function(ev) {
-  console.log('pinch')
-})
-hammertime.on('rotate', function(ev) {
-  console.log('rotate')
-})*/
+    hammertime.on('pan', function (ev) {
+      console.log('pan')
+    })
 
-  //let hammerElt = new Hammer(this.containerEl, {drag_lock_to_axis: true})
-  //hammerElt.get('press').set({ time:500 })
+    hammertime.on('press', function (ev) {
+      console.log('press')
+    })
 
-  let hammerElt = new Hammer.Manager(this.containerEl, {drag_lock_to_axis: true})
-  hammerElt.add(new Hammer.Pan({ threshold: 0, pointers: 0 }))
-  hammerElt.add(new Hammer.Press({ time: 500 }))
+    /* let hammerElt = new Hammer.Manager(this.containerEl, {drag_lock_to_axis: true})
+    hammerElt.add(new Hammer.Pan({ threshold: 0, pointers: 0 }))
+    hammerElt.add(new Hammer.Press({ time: 500 }))
 
-  function startGesture(){
-    console.log('startGesture')
+    function startGesture () {
+      console.log('startGesture')
       _this.touch.lastX = 0
       _this.touch.lastY = 0
-  }
-  this.containerEl.addEventListener('mousedown',startGesture)
-  this.containerEl.addEventListener('touchstart',startGesture)
-
-
-  hammerElt.on('transform', function (e) {
-    console.log('transform')
-    if (e.gesture.touches.length >= 2) {
-      _this.clearShift()
-      _this.onTransform(e)
-      e.preventDefault()
     }
-  })
-  hammerElt.on("transformend dragstart dragend", function(e) { //not really applicable, since dragstart & dragend are not supported anymore by hammer
-    if ((e.type == 'transformend' && _this.touch.cur == 'transforming') ||
+    this.containerEl.addEventListener('mousedown', startGesture)
+    this.containerEl.addEventListener('touchstart', startGesture)
+
+    hammerElt.on('transform', function (e) {
+      console.log('transform')
+      if (e.gesture.touches.length >= 2) {
+        _this.clearShift()
+        _this.onTransform(e)
+        e.preventDefault()
+      }
+    })
+    hammerElt.on('transformend dragstart dragend', function (e) { // not really applicable, since dragstart & dragend are not supported anymore by hammer
+      console.log('drag', _this.touch)
+      if ((e.type === 'transformend' && _this.touch.cur === 'transforming') ||
+        (e.type === 'dragend' && _this.touch.cur === 'shifting') ||
+        (e.type === 'dragend' && _this.touch.cur === 'dragging')) {
+        _this.touch.cur = null
+      }
+      _this.touch.lastX = 0
+      _this.touch.lastY = 0
+      _this.touch.scale = 0
+    })
+
+    hammerElt.on('pan panleft panright panup panleft panright pandown', function (e) {
+      console.log('pan', _this.touch.cur)
+      if (e.pointerType !== 'touch') {
+        e.preventDefault()
+        return
+      }
+      if (!_this.touch.cur || _this.touch.cur === 'dragging') {
+        _this.clearShift()
+        _this.onPanTilt(e)
+      } else if (_this.touch.cur === 'shifting') {
+        _this.onShift(e)
+      }
+    })
+
+    hammerElt.on('press', function (e) {
+      console.log('touch', e)
+      if (e.pointerType !== 'touch') {
+        e.preventDefault()
+        return
+      }
+
+      if (e.pointers.length == 1) {
+        var point = e.center
+        shiftControl.classList.add('active')
+        shiftControl.style.left = point.pageX + 'px'
+        shiftControl.style.top = point.pageY + 'px'
+        _this.touch.cur = 'shifting'
+      } else {
+        _this.clearShift()
+      }
+    })
+
+    hammerElt.on('pressup', function (e) {
+      console.log('pressup')
+      _this.clearShift()
+      if (_this.touch.cur) {
+        shiftControl.classList.remove('active')
+        shiftControl.classList.remove('shift-horizontal')
+        shiftControl.classList.remove('shift-vertical')
+      }
+    })
+
+    hammerElt.on('transform', function (e) {
+      console.log('transform')
+      if (e.gesture.touches.length >= 2) {
+        _this.clearShift()
+        _this.onTransform(e)
+        e.preventDefault()
+      }
+    }).on('touch', function (e) {
+      if (e.gesture.pointerType !== 'touch') {
+        e.preventDefault()
+        return
+      }
+
+      if (e.gesture.touches.length === 1) {
+        var point = e.gesture.center
+        _this.touch.shiftTimer = setTimeout(function () {
+          shiftControl.addClass('active').css({
+            left: point.pageX + 'px',
+            top: point.pageY + 'px'
+          })
+          _this.touch.shiftTimer = null
+          _this.touch.cur = 'shifting'
+        }, 500)
+      } else {
+        _this.clearShift()
+      }
+    }).on('touchend', function (e) {
+
+    }).on('transformend dragstart dragend', function (e) {
+      if ((e.type == 'transformend' && _this.touch.cur == 'transforming') ||
         (e.type == 'dragend' && _this.touch.cur == 'shifting') ||
-        (e.type == 'dragend' && _this.touch.cur == 'dragging'))
+        (e.type == 'dragend' && _this.touch.cur == 'dragging')) {
+        _this.touch.cur = null
+      }
+      _this.touch.lastX = 0
+      _this.touch.lastY = 0
+      _this.touch.scale = 0
+    }) */
 
-    _this.touch.cur = null
-    _this.touch.lastX = 0
-    _this.touch.lastY = 0
-    _this.touch.scale = 0
-  })
-
-  hammerElt.on('pan panleft panright panup panleft panright pandown', function (e) {
-    //console.log('pan',e)
-    if (e.pointerType !== 'touch') {
-      e.preventDefault()
-      return
-    }
-    if (!_this.touch.cur || _this.touch.cur === 'dragging') {
-      _this.clearShift()
-      _this.onPanTilt(e)
-    } else if (_this.touch.cur === 'shifting') {
-      _this.onShift(e)
-    }
-  })
-
-
-  hammerElt.on('press', function (e) {
-    console.log('touch',e)
-    if (e.pointerType !== 'touch') {
-      e.preventDefault()
-      return
-    }
-
-    if (e.pointers.length == 1) {
-      var point = e.center
-      shiftControl.classList.add('active')
-      shiftControl.style.left = point.pageX + 'px'
-      shiftControl.style.top =  point.pageY + 'px'
-      _this.touch.cur = 'shifting'
-    } else {
-      _this.clearShift()
-    }
-  })
-
-  hammerElt.on('pressup', function (e) {
-    console.log('pressup')
-    _this.clearShift()
-    if (_this.touch.cur) {
-      shiftControl.classList.remove('active')
-      shiftControl.classList.remove('shift-horizontal')
-      shiftControl.classList.remove('shift-vertical')
-    }
-  })
-
-  /*
-  hammerElt.on("transform", function(e){
-    console.log('transform')
-    if (e.gesture.touches.length >= 2) {
-      _this.clearShift();
-      _this.onTransform(e);
-      e.preventDefault();
-    }
-  }).on("touch", function(e) {
-    if (e.gesture.pointerType != 'touch'){
-      e.preventDefault();
-      return;
-    }
-
-    if (e.gesture.touches.length == 1) {
-      var point = e.gesture.center;
-      _this.touch.shiftTimer = setTimeout(function(){
-        shiftControl.addClass('active').css({
-          left: point.pageX + 'px',
-          top: point.pageY + 'px'
-        });
-        _this.touch.shiftTimer = null;
-        _this.touch.cur = 'shifting';
-      }, 500);
-    } else {
-      _this.clearShift();
-    }
-  }).on("touchend", function(e) {
-
-  }).on("transformend dragstart dragend", function(e) {
-    if ((e.type == 'transformend' && _this.touch.cur == 'transforming') ||
-        (e.type == 'dragend' && _this.touch.cur == 'shifting') ||
-        (e.type == 'dragend' && _this.touch.cur == 'dragging'))
-      _this.touch.cur = null;
-    _this.touch.lastX = 0;
-    _this.touch.lastY = 0;
-    _this.touch.scale = 0;
-  });*/
-
-
-    /*this.gl.onmousemove = function(e) {
+    this.gl.onmousemove = function (e) {
       console.log('onmousemove')
       _this.onMouseMove(e)
-    };*/
+    }
 
-    this.gl.onmousewheel = function(e) {
+    this.gl.onmousewheel = function (e) {
       console.log('mouseWheel')
-      var wheelDelta = 0;
+      var wheelDelta = 0
       if (e.wheelDelta) {
-        wheelDelta = e.wheelDelta;
+        wheelDelta = e.wheelDelta
       } else if (e.detail) {
         // for firefox, see http://stackoverflow.com/questions/8886281/event-wheeldelta-returns-undefined
-        wheelDelta = e.detail * -40;
+        wheelDelta = e.detail * -40
       }
-      if(wheelDelta) {
-        var factor = Math.pow(1.003, -wheelDelta);
-        var coeff = _this.getZoom();
-        coeff *= factor;
-        _this.setZoom(coeff);
+      if (wheelDelta) {
+        var factor = Math.pow(1.003, -wheelDelta)
+        var coeff = _this.getZoom()
+        coeff *= factor
+        _this.setZoom(coeff)
       }
-    };
+    }
 
-    this.onZoomChanged = null;
+    this.onZoomChanged = null
 
     this.touch = {
       lastX: 0,
@@ -321,57 +319,58 @@ hammertime.on('rotate', function(ev) {
       ctrl: 0,
       shiftTimer: null,
       shiftControl: shiftControl,
-      cur: null //current state
-    };
-
-    return shiftControl;
-  },
-  
-  setZoom: function(coeff) { //0...1
-    coeff=Math.max(coeff, 0);
-    coeff=Math.min(coeff, 1);
-    this.viewpointZ = this.options.camera.clip.min + coeff * (this.options.camera.clip.max - this.options.camera.clip.min);
-    if(this.onZoomChanged) {
-      this.onZoomChanged();
+      cur: null // current state
     }
-    this.onDraw();
+
+    return shiftControl
   },
 
-  getZoom: function() {
-    var coeff = (this.viewpointZ-this.options.camera.clip.min) / (this.options.camera.clip.max - this.options.camera.clip.min);
-    return coeff;
+  setZoom: function (coeff) { // 0...1
+    coeff = Math.max(coeff, 0)
+    coeff = Math.min(coeff, 1)
+    this.viewpointZ = this.options.camera.clip.min + coeff * (this.options.camera.clip.max - this.options.camera.clip.min)
+    if (this.onZoomChanged) {
+      this.onZoomChanged()
+    }
+    this.onDraw()
   },
 
-  onMouseMove: function(e) {
+  getZoom: function () {
+    var coeff = (this.viewpointZ - this.options.camera.clip.min) / (this.options.camera.clip.max - this.options.camera.clip.min)
+    return coeff
+  },
+
+  onMouseMove: function (e) {
+    alert('mousemove')
     if (e.dragging) {
-      var b = e.button;
-      if(e.which) {                            // RANT: not even the mouse buttons are coherent among the brand (chrome,firefox,etc)
-        b = e.which;
+      var b = e.button
+      if (e.which) {                            // RANT: not even the mouse buttons are coherent among the brand (chrome,firefox,etc)
+        b = e.which
       }
-      e.preventDefault();
-      if(e.altKey||b==3) {                     // ROTATE X,Y (ALT or right mouse button)
-        this.angleY += e.deltaX;
-        this.angleX += e.deltaY;
-        //this.angleX = Math.max(-180, Math.min(180, this.angleX));
-      } else if(e.shiftKey||b==2) {            // PAN  (SHIFT or middle mouse button)
-        var factor = 5e-3;
-        this.viewpointX += factor * e.deltaX * this.viewpointZ;
-        this.viewpointY -= factor * e.deltaY * this.viewpointZ;
-      } else if(e.ctrlKey||e.metaKey) {                   // ZOOM IN/OU
-        var factor = Math.pow(1.006, e.deltaX+e.deltaY);
-        var coeff = this.getZoom();
-        coeff *= factor;
-        this.setZoom(coeff);
+      e.preventDefault()
+      if (e.altKey || b == 3) {                     // ROTATE X,Y (ALT or right mouse button)
+        this.angleY += e.deltaX
+        this.angleX += e.deltaY
+        // this.angleX = Math.max(-180, Math.min(180, this.angleX));
+      } else if (e.shiftKey || b == 2) {            // PAN  (SHIFT or middle mouse button)
+        var factor = 5e-3
+        this.viewpointX += factor * e.deltaX * this.viewpointZ
+        this.viewpointY -= factor * e.deltaY * this.viewpointZ
+      } else if (e.ctrlKey || e.metaKey) {                   // ZOOM IN/OU
+        var factor = Math.pow(1.006, e.deltaX + e.deltaY)
+        var coeff = this.getZoom()
+        coeff *= factor
+        this.setZoom(coeff)
       } else {                                 // ROTATE X,Z  left mouse button
-        this.angleZ += e.deltaX;
-        this.angleX += e.deltaY;
+        this.angleZ += e.deltaX
+        this.angleX += e.deltaY
       }
-      this.onDraw();
+      this.onDraw()
     }
   },
 
   clearShift: function () {
-    if(this.touch.shiftTimer) {
+    if (this.touch.shiftTimer) {
       clearTimeout(this.touch.shiftTimer)
       this.touch.shiftTimer = null
     }
@@ -385,25 +384,25 @@ hammertime.on('rotate', function(ev) {
     let deltaY = 0
     console.log(this.touch.lastY)
     if (this.touch.lastY !== undefined)// && (e.type === 'panup' || e.type === 'pandown')) {
-    {  //tilt
+    {  // tilt
       deltaX = e.deltaY - this.touch.lastY
       this.angleX += deltaX * 0.1
       this.touch.lastY = e.deltaY
     }
-    if (this.touch.lastX !== undefined )//&& (e.type === 'panleft' || e.type === 'panright')) {
-    {  //pan
+    if (this.touch.lastX !== undefined)// && (e.type === 'panleft' || e.type === 'panright')) {
+    {  // pan
       deltaY = e.deltaX - this.touch.lastX
       this.angleZ += deltaY * 0.1
       this.touch.lastX = e.deltaX
     }
-    //console.log(delta)
+    // console.log(delta)
     if (deltaX || deltaY) {
       this.onDraw()
     }
   },
 
-  //shift after 0.5s touch&hold
-  onShift: function(e) {
+  // shift after 0.5s touch&hold
+  onShift: function (e) {
     console.log('onShift')
     this.touch.cur = 'shifting'
     var factor = 5e-3
@@ -427,204 +426,205 @@ hammertime.on('rotate', function(ev) {
       this.viewpointX += factor * delta * this.viewpointZ
       this.angleZ += delta
     }
-    if (delta){
+    if (delta) {
       this.onDraw()
     }
     this.touch.lastX = e.deltaX
     this.touch.lastY = e.deltaY
   },
 
-  //zooming
-  onTransform: function(e) {
-    this.touch.cur = 'transforming';
+  // zooming
+  onTransform: function (e) {
+    this.touch.cur = 'transforming'
     if (this.touch.scale) {
-      var factor = 1 / (1 + e.gesture.scale - this.touch.scale);
-      var coeff = this.getZoom();
-      coeff *= factor;
-      this.setZoom( coeff);
+      var factor = 1 / (1 + e.gesture.scale - this.touch.scale)
+      var coeff = this.getZoom()
+      coeff *= factor
+      this.setZoom(coeff)
     }
-    this.touch.scale = e.gesture.scale;
-    return this;
+    this.touch.scale = e.gesture.scale
+    return this
   },
 
-  onDraw: function(e) {
-    var gl = this.gl;
-    gl.makeCurrent();
+  onDraw: function (e) {
+    var gl = this.gl
+    gl.makeCurrent()
 
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.loadIdentity();
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    gl.loadIdentity()
     // set the perspective based on the camera postion
-    gl.translate(this.viewpointX, this.viewpointY, -this.viewpointZ);
-    gl.rotate(this.angleX, 1, 0, 0);
-    gl.rotate(this.angleY, 0, 1, 0);
-    gl.rotate(this.angleZ, 0, 0, 1);
+    gl.translate(this.viewpointX, this.viewpointY, -this.viewpointZ)
+    gl.rotate(this.angleX, 1, 0, 0)
+    gl.rotate(this.angleY, 0, 1, 0)
+    gl.rotate(this.angleZ, 0, 0, 1)
     // draw the solid (meshes)
-    if(this.options.solid.draw) {
-      gl.enable(gl.BLEND);
-      if (!this.options.solid.overlay) gl.enable(gl.POLYGON_OFFSET_FILL);
+    if (this.options.solid.draw) {
+      gl.enable(gl.BLEND)
+      if (!this.options.solid.overlay) gl.enable(gl.POLYGON_OFFSET_FILL)
       for (var i = 0; i < this.meshes.length; i++) {
-        var mesh = this.meshes[i];
-        this.lightingShader.draw(mesh, gl.TRIANGLES);
+        var mesh = this.meshes[i]
+        this.lightingShader.draw(mesh, gl.TRIANGLES)
       }
-      if (!this.options.solid.overlay) gl.disable(gl.POLYGON_OFFSET_FILL);
-      gl.disable(gl.BLEND);
+      if (!this.options.solid.overlay) gl.disable(gl.POLYGON_OFFSET_FILL)
+      gl.disable(gl.BLEND)
 
-      if(this.options.solid.lines) {
-        if (this.options.solid.overlay) gl.disable(gl.DEPTH_TEST);
-        gl.enable(gl.BLEND);
+      if (this.options.solid.lines) {
+        if (this.options.solid.overlay) gl.disable(gl.DEPTH_TEST)
+        gl.enable(gl.BLEND)
         for (var i = 0; i < this.meshes.length; i++) {
-          var mesh = this.meshes[i];
-          this.blackShader.draw(mesh, gl.LINES);
+          var mesh = this.meshes[i]
+          this.blackShader.draw(mesh, gl.LINES)
         }
-        gl.disable(gl.BLEND);
-        if (this.options.solid.overlay) gl.enable(gl.DEPTH_TEST);
+        gl.disable(gl.BLEND)
+        if (this.options.solid.overlay) gl.enable(gl.DEPTH_TEST)
       }
     }
     // draw the plate and the axis
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    gl.begin(gl.LINES);
+    gl.enable(gl.BLEND)
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+    gl.begin(gl.LINES)
 
-    if(this.options.plate.draw) {
-      var m = this.options.plate.m; // short cut
-      var M = this.options.plate.M; // short cut
-      var size = this.options.plate.size/2;
+    if (this.options.plate.draw) {
+      var m = this.options.plate.m // short cut
+      var M = this.options.plate.M // short cut
+      var size = this.options.plate.size / 2
       // -- minor grid
-      gl.color.apply(gl, colorBytes (m.color));
-      var mg = m.i;
-      var MG = M.i;
-      for(var x=-size; x<=size; x+=mg) {
-        if(x%MG) { // draw only minor grid line
-          gl.vertex(-size, x, 0);
-          gl.vertex(size, x, 0);
-          gl.vertex(x, -size, 0);
-          gl.vertex(x, size, 0);
+      gl.color.apply(gl, colorBytes(m.color))
+      var mg = m.i
+      var MG = M.i
+      for (var x = -size; x <= size; x += mg) {
+        if (x % MG) { // draw only minor grid line
+          gl.vertex(-size, x, 0)
+          gl.vertex(size, x, 0)
+          gl.vertex(x, -size, 0)
+          gl.vertex(x, size, 0)
         }
       }
       // -- major grid
-      gl.color.apply(gl, colorBytes (M.color));
-      for(var x=-size; x<=size; x+=MG) {
-        gl.vertex(-size, x, 0);
-        gl.vertex(size, x, 0);
-        gl.vertex(x, -size, 0);
-        gl.vertex(x, size, 0);
+      gl.color.apply(gl, colorBytes(M.color))
+      for (var x = -size; x <= size; x += MG) {
+        gl.vertex(-size, x, 0)
+        gl.vertex(size, x, 0)
+        gl.vertex(x, -size, 0)
+        gl.vertex(x, size, 0)
       }
     }
     if (this.options.axis.draw) {
-      var size = this.options.plate.size/2;
+      var size = this.options.plate.size / 2
       // X axis
-      var c = this.options.axis.x.neg;
-      gl.color(c.r, c.g, c.b, c.a); //negative direction is lighter
-      gl.vertex(-size, 0, 0);
-      gl.vertex(0, 0, 0);
-      c = this.options.axis.x.pos;
-      gl.color(c.r, c.g, c.b, c.a); //positive direction is lighter
-      gl.vertex(0, 0, 0);
-      gl.vertex(size, 0, 0);
+      var c = this.options.axis.x.neg
+      gl.color(c.r, c.g, c.b, c.a) // negative direction is lighter
+      gl.vertex(-size, 0, 0)
+      gl.vertex(0, 0, 0)
+      c = this.options.axis.x.pos
+      gl.color(c.r, c.g, c.b, c.a) // positive direction is lighter
+      gl.vertex(0, 0, 0)
+      gl.vertex(size, 0, 0)
       // Y axis
-      c = this.options.axis.y.neg;
-      gl.color(c.r, c.g, c.b, c.a); //negative direction is lighter
-      gl.vertex(0, -size, 0);
-      gl.vertex(0, 0, 0);
-      c = this.options.axis.y.pos;
-      gl.color(c.r, c.g, c.b, c.a); //positive direction is lighter
-      gl.vertex(0, 0, 0);
-      gl.vertex(0, size, 0);
+      c = this.options.axis.y.neg
+      gl.color(c.r, c.g, c.b, c.a) // negative direction is lighter
+      gl.vertex(0, -size, 0)
+      gl.vertex(0, 0, 0)
+      c = this.options.axis.y.pos
+      gl.color(c.r, c.g, c.b, c.a) // positive direction is lighter
+      gl.vertex(0, 0, 0)
+      gl.vertex(0, size, 0)
       // Z axis
-      c = this.options.axis.z.neg;
-      gl.color(c.r, c.g, c.b, c.a); //negative direction is lighter
-      gl.vertex(0, 0, -size);
-      gl.vertex(0, 0, 0);
-      c = this.options.axis.z.pos;
-      gl.color(c.r, c.g, c.b, c.a); //positive direction is lighter
-      gl.vertex(0, 0, 0);
-      gl.vertex(0, 0, size);
+      c = this.options.axis.z.neg
+      gl.color(c.r, c.g, c.b, c.a) // negative direction is lighter
+      gl.vertex(0, 0, -size)
+      gl.vertex(0, 0, 0)
+      c = this.options.axis.z.pos
+      gl.color(c.r, c.g, c.b, c.a) // positive direction is lighter
+      gl.vertex(0, 0, 0)
+      gl.vertex(0, 0, size)
     }
-    gl.end();
-    gl.disable(gl.BLEND);
+    gl.end()
+    gl.disable(gl.BLEND)
   },
 
   // Convert from CSG solid to an array of GL.Mesh objects
   // limiting the number of vertices per mesh to less than 2^16
-  csgToMeshes: function(initial_csg) {
-    var csg = initial_csg.canonicalized();
-    var mesh = new GL.Mesh({ normals: true, colors: true });
-    var meshes = [ mesh ];
-    var vertexTag2Index = {};
-    var vertices = [];
-    var colors = [];
-    var triangles = [];
+  csgToMeshes: function (initial_csg) {
+    var csg = initial_csg.canonicalized()
+    var mesh = new GL.Mesh({ normals: true, colors: true })
+    var meshes = [ mesh ]
+    var vertexTag2Index = {}
+    var vertices = []
+    var colors = []
+    var triangles = []
     // set to true if we want to use interpolated vertex normals
     // this creates nice round spheres but does not represent the shape of
     // the actual model
-    var smoothlighting = this.options.solid.smooth;
-    var polygons = csg.toPolygons();
-    var numpolygons = polygons.length;
-    for(var j = 0; j < numpolygons; j++) {
-      var polygon = polygons[j];
-      var color = colorBytes(this.options.solid.faceColor);  // default color
+    var smoothlighting = this.options.solid.smooth
+    var polygons = csg.toPolygons()
+    var numpolygons = polygons.length
+    for (var j = 0; j < numpolygons; j++) {
+      var polygon = polygons[j]
+      var color = colorBytes(this.options.solid.faceColor)  // default color
 
-      if(polygon.shared && polygon.shared.color) {
-        color = polygon.shared.color;
-      } else if(polygon.color) {
-        color = polygon.color;
+      if (polygon.shared && polygon.shared.color) {
+        color = polygon.shared.color
+      } else if (polygon.color) {
+        color = polygon.color
       }
 
-      if (color.length < 4)
-        color.push(1.); //opaque
+      if (color.length < 4) {
+        color.push(1.0)
+      } // opaque
 
-      var indices = polygon.vertices.map(function(vertex) {
-        var vertextag = vertex.getTag();
-        var vertexindex = vertexTag2Index[vertextag];
-        var prevcolor = colors[vertexindex];
-        if(smoothlighting && (vertextag in vertexTag2Index) &&
+      var indices = polygon.vertices.map(function (vertex) {
+        var vertextag = vertex.getTag()
+        var vertexindex = vertexTag2Index[vertextag]
+        var prevcolor = colors[vertexindex]
+        if (smoothlighting && (vertextag in vertexTag2Index) &&
            (prevcolor[0] == color[0]) &&
            (prevcolor[1] == color[1]) &&
            (prevcolor[2] == color[2])
           ) {
-          vertexindex = vertexTag2Index[vertextag];
+          vertexindex = vertexTag2Index[vertextag]
         } else {
-          vertexindex = vertices.length;
-          vertexTag2Index[vertextag] = vertexindex;
-          vertices.push([vertex.pos.x, vertex.pos.y, vertex.pos.z]);
-          colors.push(color);
+          vertexindex = vertices.length
+          vertexTag2Index[vertextag] = vertexindex
+          vertices.push([vertex.pos.x, vertex.pos.y, vertex.pos.z])
+          colors.push(color)
         }
-        return vertexindex;
-      });
+        return vertexindex
+      })
       for (var i = 2; i < indices.length; i++) {
-        triangles.push([indices[0], indices[i - 1], indices[i]]);
+        triangles.push([indices[0], indices[i - 1], indices[i]])
       }
       // if too many vertices, start a new mesh;
       if (vertices.length > 65000) {
         // finalize the old mesh
-        mesh.triangles = triangles;
-        mesh.vertices = vertices;
-        mesh.colors = colors;
-        mesh.computeWireframe();
-        mesh.computeNormals();
+        mesh.triangles = triangles
+        mesh.vertices = vertices
+        mesh.colors = colors
+        mesh.computeWireframe()
+        mesh.computeNormals()
 
-        if ( mesh.vertices.length ) {
-          meshes.push(mesh);
+        if (mesh.vertices.length) {
+          meshes.push(mesh)
         }
 
         // start a new mesh
-        mesh = new GL.Mesh({ normals: true, colors: true });
-        triangles = [];
-        colors = [];
-        vertices = [];
+        mesh = new GL.Mesh({ normals: true, colors: true })
+        triangles = []
+        colors = []
+        vertices = []
       }
     }
     // finalize last mesh
-    mesh.triangles = triangles;
-    mesh.vertices = vertices;
-    mesh.colors = colors;
-    mesh.computeWireframe();
-    mesh.computeNormals();
+    mesh.triangles = triangles
+    mesh.vertices = vertices
+    mesh.colors = colors
+    mesh.computeWireframe()
+    mesh.computeNormals()
 
-    if ( mesh.vertices.length ) {
-      meshes.push(mesh);
+    if (mesh.vertices.length) {
+      meshes.push(mesh)
     }
 
-    return meshes;
+    return meshes
   }
-};
+}
