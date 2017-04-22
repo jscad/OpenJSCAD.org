@@ -59,10 +59,10 @@ a:visited {
 }
 
 #editFrame {
-  transition: width 0.4s;
-  -o-transition: width 0.4s;
-  -moz-transition: width 0.4s;
-  -webkit-transition: width 0.4s;
+  transition: width 0.4s cubic-bezier(.2, .8, .4, 1);
+  -o-transition: width 0.4s cubic-bezier(.2, .8, .4, 1);
+  -moz-transition: width 0.4s cubic-bezier(.2, .8, .4, 1);
+  -webkit-transition: width 0.4s cubic-bezier(.2, .8, .4, 1);
 }
 
 .ace_gutter {
@@ -165,10 +165,10 @@ canvas {
 }
 
 #menu, #menu nav a {
-   transition: all 0.4s;
-   -o-transition: all 0.4s;
-   -moz-transition: all 0.4s;
-   -webkit-transition: all 0.4s;
+   transition: all 0.4s cubic-bezier(.2, .8, .4, 1);
+   -o-transition: all 0.4s cubic-bezier(.2, .8, .4, 1);
+   -moz-transition: all 0.4s cubic-bezier(.2, .8, .4, 1);
+   -webkit-transition: all 0.4s cubic-bezier(.2, .8, .4, 1);
 }
 
 #menu {

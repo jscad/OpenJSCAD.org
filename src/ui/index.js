@@ -56,7 +56,7 @@ function init () {
   gEditor = setUpEditor(undefined, gProcessor)
   // FIXME: temporary hack
 
-// major DIVs expected
+  // major DIVs expected
   let about = document.getElementById('about');
   let header = document.getElementById('header');
   let menu = document.getElementById('menu');
