@@ -1,8 +1,5 @@
-
 import Hammer from 'hammerjs'
 import GL from './lightgl'
-import {colorBytes} from './jscad-viewer-helpers'
-
 
 /**
  * lightgl.js renderer for jscad viewer
@@ -533,3 +530,14 @@ LightGLEngine.prototype = {
     return meshes;
   }
 };
+
+/**
+ * convert color from rgba object to the array of bytes
+ * @param   {object} color `{r: r, g: g, b: b, a: a}`
+ * @returns {Array}  `[r, g, b, a]`
+ */
+function colorBytes (colorRGBA) {
+  var result = [colorRGBA.r, colorRGBA.g, colorRGBA.b];
+  if (colorRGBA.a !== undefined) result.push (colorRGBA.a);
+  return result;
+}

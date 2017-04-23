@@ -48,7 +48,6 @@ export default function Processor (containerdiv, options) {
   this.selectEndPoint = 0
 
   this.hasOutputFile = false
-  this.hasError = false
   this.paramDefinitions = []
   this.paramControls = []
   this.script = null
@@ -159,15 +158,6 @@ Processor.prototype = {
       }
     }
     this.selectdiv.appendChild(element)
-
-    this.errordiv = this.containerdiv.parentElement.querySelector('div#errordiv')
-    if (!this.errordiv) {
-      this.errordiv = document.createElement('div')
-      this.errordiv.id = 'errordiv'
-      this.containerdiv.parentElement.appendChild(this.errordiv)
-    }
-    this.errorpre = document.createElement('pre')
-    this.errordiv.appendChild(this.errorpre)
 
     this.statusdiv = this.containerdiv.parentElement.querySelector('div#statusdiv')
     if (!this.statusdiv) {
@@ -347,8 +337,7 @@ Processor.prototype = {
     this.generateOutputFileButton.style.display = ((!this.hasOutputFile) && (this.viewedObject)) ? 'inline' : 'none'
     this.downloadOutputFileLink.style.display = this.hasOutputFile ? 'inline' : 'none'
     this.parametersdiv.style.display = (this.paramControls.length > 0) ? 'inline-block' : 'none' // was 'block'
-    this.errordiv.style.display = this.hasError ? 'block' : 'none'
-    this.statusdiv.style.display = this.hasError ? 'none' : 'block'
+    this.statusdiv.style.display = 'block'
     this.selectdiv.style.display = (this.currentObjects.length > 1) ? 'none' : 'none' // FIXME once there's a data model
   },
 
@@ -366,12 +355,6 @@ Processor.prototype = {
 
   setOpenJsCadPath: function (path) {
     this.opts['openJsCadPath'] = path
-  },
-
-  setError: function (txt) {
-    this.hasError = (txt != '')
-    this.errorpre.textContent = txt
-    this.enableItems()
   },
 
   // set status and data to display
@@ -392,7 +375,7 @@ Processor.prototype = {
       }
       const content = statusMap[status] ? statusMap[status] : data
       if (status === 'error') {
-        this.setError(data)
+        throw new Error(data)
       }
 
       this.statusspan.innerHTML = content
@@ -410,14 +393,14 @@ Processor.prototype = {
     var prevParamValues = {}
     // this will fail without existing form
     try {
-      prevParamValues = getParamValues(this.paramControls, /*onlyChanged*/true)
+      const onlyChanged = true
+      prevParamValues = getParamValues(this.paramControls, onlyChanged)
     } catch (e) {}
 
     this.abort()
     this.paramDefinitions = []
 
     this.script = null
-    this.setError('')
 
     var scripthaserrors = false
     try {
@@ -462,7 +445,6 @@ Processor.prototype = {
   rebuildSolid: function () {
     // clear previous solid and settings
     this.abort()
-    this.setError('')
     this.clearViewer()
     this.enableItems()
     this.setStatus('rendering')

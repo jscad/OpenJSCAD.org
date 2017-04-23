@@ -1,86 +1,64 @@
 import { createConversionWorker } from '../io/createConversionWorker'
 import { putSourceInEditor } from './editor' // FIXME : eeek! dependency on ui
-import { version } from '../jscad/version'
 
 const examples = [
-  { file: 'logo.jscad', title: 'OpenJSCAD.org Logo' },
-  { file: 'logo.amf', title: 'OpenJSCAD.org Logo', type: 'AMF' },
-
-  { file: 'example001.jscad', title: 'Sphere with cutouts', spacing: true },
+  { file: 'gear.jscad', title: 'Interactive Params: Gear' },
+  { file: '3d_sculpture-VernonBussler.stl', title: '3D Model: 3D Sculpture (Vernon Bussler)', type: 'STL' },
+  { file: 'axis-coupler.jscad', title: 'Interactive Params: Axis Coupler' },
+  { file: 'babypanda2.svg', title: 'SVG Image: Baby Panda' },
+  { file: 'balloons.jscad', title: 'Interactive Params: Balloons' },
+  { file: 'bunch-cubes.jscad', title: 'Bunch of Cubes' },
+  { file: 'celtic-knot-ring.jscad', title: 'Interactive Params: Celtic Knot Ring' },
+  { file: 'chain_hull.jscad', title: 'Chain_hull()' },
+  { file: 'example001.jscad', title: 'Sphere with cutouts' },
   { file: 'example001.scad', title: 'Sphere with cutouts', type: 'OpenSCAD' },
   { file: 'example002.jscad', title: 'Cone with cutouts' },
   { file: 'example002.scad', title: 'Cone with cutouts', type: 'OpenSCAD' },
   { file: 'example003.jscad', title: 'Cube with cutouts' },
   { file: 'example003.scad', title: 'Cube with cutouts', type: 'OpenSCAD' },
-  // { file:'example004.jscad', title: 'Cube minus sphere' },
+  { file: 'example004.jscad', title: 'Cube minus sphere' },
   { file: 'example005.jscad', title: 'Pavillon' },
-
-  // { file:'cnc-cutout.jscad', title: 'CNC Corner Cutouts', new: true, spacing: true },
-
-  // { file:'bunch-cubes.jscad', title: 'Bunch of Cubes', new: true },
-  { file: 'lookup.jscad', title: 'Lookup()', spacing: true },
   { file: 'expand.jscad', title: 'Expand()' },
-  { file: 'rectangular_extrude.jscad', title: 'Rectangular_extrude()' },
-  { file: 'linear_extrude.jscad', title: 'Linear_extrude()' },
-  { file: 'rotate_extrude.jscad', title: 'Rotate_extrude()' },
-  { file: 'polyhedron.jscad', title: 'Polyhedron()' },
+  { file: 'feathers_mcgraw.stl', title: '3D Model: Feathers Mcgraw (q1g0ng)', type: 'STL' },
+  { file: 'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' },
+  { file: 'globe.jscad', title: 'Include(): Globe' },
+  { file: 'grille.jscad', title: 'Interactive Params: Grille' },
   { file: 'hull.jscad', title: 'Hull()' },
-  { file: 'chain_hull.jscad', title: 'Chain_hull()' },
-  { file: 'torus.jscad', title: 'Torus()' },
-
-  { file: 'text.jscad', title: 'Vector_text()', spacing: true },
-
-  { file: 'transparency.jscad', title: 'Transparency', spacing: true },
-  { file: 'transparency.amf', title: 'Transparency', type: 'AMF' },
-  { file: 'transparency2.jscad', title: 'Transparency 2' },
-
-  { file: 'slices/double-screw.jscad', title: 'SolidFromSlices(): Double Screw', spacing: true },
-  { file: 'slices/four2three.jscad', title: 'SolidFromSlices(): 4 to 3' },
+  { file: 'iphone4-case.jscad', title: 'Interactive Params: iPhone4 Case' },
+  { file: 'lamp-shade.jscad', title: 'Interactive Params: Lamp Shade' },
+  { file: 'linear_extrude.jscad', title: 'Linear_extrude()' },
+  { file: 'logo.amf', title: 'OpenJSCAD.org Logo', type: 'AMF' },
+  { file: 'logo.jscad', title: 'OpenJSCAD.org Logo' },
+  { file: 'lookup.jscad', title: 'Lookup()' },
+  { file: 'name_plate.jscad', title: 'Interactive Params: Name Plate' },
+  { file: 'platonics/', title: 'Recursive Include(): Platonics' },
+  { file: 'polyhedron.jscad', title: 'Polyhedron()' },
+  { file: 'rectangular_extrude.jscad', title: 'Rectangular_extrude()' },
+  { file: 'rotate_extrude.jscad', title: 'Rotate_extrude()' },
+  { file: 's-hook.jscad', title: 'Interactive Params: S Hook' },
+  { file: 'servo.jscad', title: 'Interactive Params: Servo Motor' },
+  { file: 'slices/double-screw.jscad', title: 'SolidFromSlices(): Double Screw' },
   { file: 'slices/four2three-round.jscad', title: 'SolidFromSlices(): 4 to 3 round' },
+  { file: 'slices/four2three.jscad', title: 'SolidFromSlices(): 4 to 3' },
+  { file: 'slices/rose.jscad', title: 'SolidFromSlices(): Rose Curve' },
   { file: 'slices/spring.jscad', title: 'SolidFromSlices(): Spring' },
   { file: 'slices/tor.jscad', title: 'SolidFromSlices(): Tor (multi-color)' },
-  { file: 'slices/rose.jscad', title: 'SolidFromSlices(): Rose Curve' },
-
-  { file: 'servo.jscad', title: 'Interactive Params: Servo Motor', wrap: true },
-  { file: 'gear.jscad', title: 'Interactive Params: Gear' },
-  { file: 's-hook.jscad', title: 'Interactive Params: S Hook' },
-  { file: 'grille.jscad', title: 'Interactive Params: Grille' },
-  { file: 'axis-coupler.jscad', title: 'Interactive Params: Axis Coupler' },
-  { file: 'lamp-shade.jscad', title: 'Interactive Params: Lamp Shade' },
-  { file: 'celtic-knot-ring.jscad', title: 'Interactive Params: Celtic Knot Ring' },
   { file: 'stepper-motor.jscad', title: 'Interactive Params: Stepper Motor' },
-  { file: 'iphone4-case.jscad', title: 'Interactive Params: iPhone4 Case' },
-  { file: 'name_plate.jscad', title: 'Interactive Params: Name Plate' },
-  { file: 'balloons.jscad', title: 'Interactive Params: Balloons' },
-
-  { file: 'globe.jscad', title: 'Include(): Globe', spacing: true },
-  { file: 'platonics/', title: 'Recursive Include(): Platonics' },
-
-  { file: 'babypanda2.svg', title: 'SVG Image: Baby Panda', spacing: true, new: true },
-
-  { file: '3d_sculpture-VernonBussler.stl', title: '3D Model: 3D Sculpture (Vernon Bussler)', type: 'STL', spacing: true },
-  { file: 'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' },
+  { file: 'text.jscad', title: 'Vector_text()' },
   { file: 'thing_7-Zomboe.stl', title: '3D Model: Thing 7 / Flower (Zomboe)', type: 'STL' },
-  { file: 'yoda-RichRap.stl', title: '3D Model: Yoda (RichRap)', type: 'STL' },
-  { file: 'feathers_mcgraw.stl', title: '3D Model: Feathers Mcgraw (q1g0ng)', type: 'STL', new: true }
+  { file: 'torus.jscad', title: 'Torus()' },
+  { file: 'transparency.amf', title: 'Transparency', type: 'AMF' },
+  { file: 'transparency.jscad', title: 'Transparency' },
+  { file: 'transparency2.jscad', title: 'Transparency 2' },
+  { file: 'yoda-RichRap.stl', title: '3D Model: Yoda (RichRap)', type: 'STL'}
 ]
 
-export function createExamples (me) {
+export function appendExampleList (me) {
   if (me === 'web-online') {
-    var wrap = 26
-    var colp = 100 / Math.floor(examples.length / wrap + 1) + '%'
-    var src = '<table width=100%><tr><td widthx=' + colp + ' valign=top>'
-    for (var i = 0; i < examples.length; i++) {
-      if (examples[i].wrap) {
-        src += '</td><td class="examplesSeparator" widthx=' + colp + ' valign=top>'
-      }
-      if (examples[i].spacing) src += '<p/>'
-      src += `<li><a class='example' data-path=${'examples/' + examples[i].file} href='#'> + ${examples[i].title} </a>
-`
-      if (examples[i].type) src += ' <span class=type>(' + examples[i].type + ')</span></a>'
-      if (examples[i].new) src += ' <span class=newExample>new</span></a>'
-    }
-    src += '</td></tr></table>'
+    var src = ''
+    examples.forEach((example, i) =>
+      src += `<a class='example' data-path=${'examples/' + examples[i].file} href='#'>${examples[i].title}</br>`
+    )
     document.querySelector('#examples').innerHTML = src
   } else {
     // examples off-line won't work yet as XHR is used
@@ -132,7 +110,7 @@ export function fetchExample (filename, url, {memFs, gProcessor, gEditor}) {
       gProcessor.setStatus('converting', filename)
       const worker = createConversionWorker(onConversionDone)
       // NOTE: cache: false is set to allow evaluation of 'include' statements
-      worker.postMessage({version, baseurl, source, filename, cache: false})
+      worker.postMessage({baseurl, source, filename, cache: false})
     }
     xhr.send()
   }
