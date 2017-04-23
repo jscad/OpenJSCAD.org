@@ -5,19 +5,11 @@
     <meta http-equiv=Pragma content=no-cache>
     <meta http-equiv=Expires content=-1>
     <meta http-equiv=CACHE-CONTROL content=NO-CACHE>
-
-    <title>OpenJSCAD.org</title>
-    <link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
-    <link rel="stylesheet" href="style.css?0.5.2" type="text/css">
-    <link rel="stylesheet" href="openjscad.css?0.5.2" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="openjscad.css" type="text/css">
   </head>
   <body>
     <script src="dist/index.js"></script>
-<!-- top left header (logo and error message) -->
-    <div id="header">
-      <div id="errordiv"></div>
-    </div>
-
 <!-- sliding tab (help, links, examples, options, etc) -->
     <div id="menu">
       <div id="examples"></div>
@@ -50,27 +42,8 @@ function main() {
     <div id="parametersdiv"></div>
     <div id="selectdiv"></div>
 
-<!-- design information (status message, download buttons, drag and drop area, etc) -->
     <div id="tail">
       <div id="statusdiv"></div>
-      <div id="filedropzone">
-        <div id="filedropzone_empty">
-        </div>
-        <div id="filedropzone_input">
-          <p>
-            <label class="input-control">Add Supported Files: <input type="file" id="files-input" accept="*/*" multiple="1"></input></label>
-          </p>
-        </div>
-        <div id="filedropzone_filled">
-          <span id="currentfile">...</span>
-          <div id="filebuttons">
-            <button id="getstlbutton" style="display:none" onclick="getStl();">Get STL</button>
-            <button id="reloadAllFiles">Reload</button>
-           <!--button onclick="parseFile(gCurrentFile,true,false);">Debug (see below)</button-->
-            <label for="autoreload">Auto Reload</label><input type="checkbox" name="autoreload" value="" id="autoreload"">
-          </div>
-        </div>
-      </div>
-    </div> <!-- tail -->
+    </div>
   </body>
 </html>

@@ -40,7 +40,6 @@
 //
 import fs from 'fs'
 
-import {version} from './jscad/version'
 import generateOutputData from './cli/generateOutputData'
 import { formats } from './io/formats'
 
@@ -68,7 +67,7 @@ if(inputFormat === 'scad')
 {
   var scadParser = require('openscad-openjscad-translator') // hardcoded is bad, but works
   src = scadParser.parse(src) //    doing the magick
-  src = '// producer: OpenJSCAD ' + version + '\n' + src
+  src = '// producer: OpenJSCAD ' '\n' + src
   src = '// source: ' + outputFile + '\n\n' + src
 }
 

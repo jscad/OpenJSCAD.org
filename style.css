@@ -19,13 +19,6 @@ html, body {
   overflow: hidden;
 }
 
-#header {
-  position: absolute;
-  top: 1em;
-  left: 1em;
-  z-index: 20;
-}
-
 #editFrame {
   bottom: 0;
   font-weight: normal;
@@ -76,13 +69,6 @@ canvas {
   width: 100%;
 
   cursor: move;        /* show that we can change orientation of view */
-}
-
-#tail {
-  z-index: 4;
-  position: absolute;
-  bottom: 1em;
-  margin: 1em;
 }
 
 #busy {
