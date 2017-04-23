@@ -151,9 +151,9 @@ LightGLEngine.prototype = {
     const baseInteractions = baseInteractionsFromEvents(element)
     const gestures = pointerGestures(baseInteractions)
 
-    const rotateFactor = 0.6
+    const rotateFactor = 0.4
     const panFactor = 0.005
-    const zoomFactor = 0.085
+    const zoomFactor = 1.085
 
     gestures.drags
       .throttle(20)
@@ -171,8 +171,10 @@ LightGLEngine.prototype = {
           _this.viewpointX -= panFactor * delta.x * _this.viewpointZ
           _this.viewpointY -= panFactor * delta.y * _this.viewpointZ
         } else if (ctrlKey || metaKey) {                   // ZOOM IN/OUT
-          const zoom = delta.x + delta.y
-          _this.viewpointZ -= zoom
+          let zoom = (-delta.x + delta.y) * 10 * zoomFactor // arbitrary
+          const coeff = (_this.viewpointZ - _this.options.camera.clip.min) / (_this.options.camera.clip.max - _this.options.camera.clip.min)
+          zoom *= coeff
+          _this.viewpointZ += zoom
           _this.viewpointZ = Math.min(Math.max(_this.viewpointZ, _this.options.camera.clip.min), _this.options.camera.clip.max)
         } else {
           _this.angleZ -= delta.x * rotateFactor
@@ -185,13 +187,14 @@ LightGLEngine.prototype = {
     gestures.zooms
       .throttle(20)
       .forEach(function (zoom) {
-        zoom *= zoomFactor
-        _this.viewpointZ -= zoom
+        const coeff = (_this.viewpointZ - _this.options.camera.clip.min) / (_this.options.camera.clip.max - _this.options.camera.clip.min)
+        zoom *= zoomFactor * coeff
+        _this.viewpointZ -= zoom //* (this.options.camera.clip.max - this.options.camera.clip.min)
         _this.viewpointZ = Math.min(Math.max(_this.viewpointZ, _this.options.camera.clip.min), _this.options.camera.clip.max)
         _this.onDraw()
       })
 
-    this.touch = {
+    /*this.touch = {
       angleX: 0,
       angleY: 0,
       angleZ: 0,
@@ -203,7 +206,7 @@ LightGLEngine.prototype = {
       shiftControl: shiftControl,
       cur: null // current state
 
-    }
+    }*/
 
     /*
     hammerElt.on('press', function (e) {
@@ -230,58 +233,11 @@ LightGLEngine.prototype = {
     })
 
     */
-    this.gl.onmousemove = function (e) {
-      _this.onMouseMove(e)
-    }
 
     this.gl.ondraw = function () {
       _this.onDraw()
     }
   },
-
-  setZoom: function (coeff) { // 0...1
-    coeff = Math.max(coeff, 0)
-    coeff = Math.min(coeff, 1)
-    this.viewpointZ = this.options.camera.clip.min + coeff * (this.options.camera.clip.max - this.options.camera.clip.min)
-    console.log('dsdffsd', this.viewpointZ)
-    if (this.onZoomChanged) {
-      this.onZoomChanged()
-    }
-    this.onDraw()
-  },
-
-  getZoom: function () {
-    var coeff = (this.viewpointZ - this.options.camera.clip.min) / (this.options.camera.clip.max - this.options.camera.clip.min)
-    return coeff
-  },
-
-  onMouseMove: function (e) {
-    if (e.dragging) {
-      var b = e.button
-      if (e.which) {                            // RANT: not even the mouse buttons are coherent among the brand (chrome,firefox,etc)
-        b = e.which
-      }
-      e.preventDefault()
-      if (e.altKey || b == 3) {                     // ROTATE X,Y (ALT or right mouse button)
-        this.angleY += e.deltaX
-        this.angleX += e.deltaY
-        // this.angleX = Math.max(-180, Math.min(180, this.angleX));
-      } else if (e.shiftKey || b == 2) {            // PAN  (SHIFT or middle mouse button)
-        var factor = 5e-3
-        this.viewpointX += factor * e.deltaX * this.viewpointZ
-        this.viewpointY -= factor * e.deltaY * this.viewpointZ
-      } else if (e.ctrlKey || e.metaKey) {                   // ZOOM IN/OU
-        var factor = Math.pow(1.006, e.deltaX + e.deltaY)
-        var coeff = this.getZoom() * factor
-        this.setZoom(coeff)
-      } else {                                 // ROTATE X,Z  left mouse button
-        this.angleZ += e.deltaX
-        this.angleX += e.deltaY
-      }
-      this.onDraw()
-    }
-  },
-
   clearShift: function () {
     if (this.touch.shiftTimer) {
       clearTimeout(this.touch.shiftTimer)
@@ -343,19 +299,6 @@ LightGLEngine.prototype = {
     }
     this.touch.lastX = e.deltaX
     this.touch.lastY = e.deltaY
-  },
-
-  // zooming
-  onTransform: function (e) {
-    this.touch.cur = 'transforming'
-    if (this.touch.scale) {
-      var factor = 1 / (1 + e.gesture.scale - this.touch.scale)
-      var coeff = this.getZoom()
-      coeff *= factor
-      this.setZoom(coeff)
-    }
-    this.touch.scale = e.gesture.scale
-    return this
   },
 
   onDraw: function (e) {
@@ -490,9 +433,9 @@ LightGLEngine.prototype = {
         var vertexindex = vertexTag2Index[vertextag]
         var prevcolor = colors[vertexindex]
         if (smoothlighting && (vertextag in vertexTag2Index) &&
-           (prevcolor[0] == color[0]) &&
-           (prevcolor[1] == color[1]) &&
-           (prevcolor[2] == color[2])
+           (prevcolor[0] === color[0]) &&
+           (prevcolor[1] === color[1]) &&
+           (prevcolor[2] === color[2])
           ) {
           vertexindex = vertexTag2Index[vertextag]
         } else {
