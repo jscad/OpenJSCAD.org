@@ -1,5 +1,4 @@
 import LightGLEngine from './jscad-viewer-lightgl'
-import {colorRGBA, parseColor} from './jscad-viewer-helpers'
 
 /**
  * A viewer is a WebGL canvas that lets the user view a mesh.

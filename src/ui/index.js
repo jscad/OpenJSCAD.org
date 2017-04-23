@@ -1,14 +1,11 @@
 // == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
 import { setUpEditor } from './editor'
 
-import { detectBrowser } from './detectBrowser'
-import { getUrlParams } from './urlHelpers'
 import { appendExampleList, fetchExample, loadInitialExample } from './examples'
 
 import Processor from '../jscad/processor'
 
 const me = document.location.toString().match(/^file:/) ? 'web-offline' : 'web-online'
-const browser = detectBrowser()
 
 var showEditor = true
 var remoteUrl = './remote.pl?url='
@@ -30,8 +27,6 @@ function addEventListenerList (list, event, callback) {
 }
 
 function init () {
-  getUrlParams(document.URL)
-
   gProcessor = new Processor(document.getElementById('viewerContext'))
   gEditor = setUpEditor(undefined, gProcessor)
   // FIXME: temporary hack
