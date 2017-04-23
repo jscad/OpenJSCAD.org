@@ -41,7 +41,6 @@
 import fs from 'fs'
 
 import {version} from './jscad/version'
-import env from './cli/env'
 import generateOutputData from './cli/generateOutputData'
 import { formats } from './io/formats'
 
@@ -125,9 +124,6 @@ function parseArgs (args) {
         console.log('ERROR: cannot open file <' + inputFile + '>')
         process.exit(1)
       }
-    } else if (args[i].match(/^-v$/)) { // show the version and the environment information
-      env()
-      console.log('OpenSCAD Compatibility (' + version + ')')
     } else {
       console.log('ERROR: invalid file name or argument <' + args[i] + '>')
       console.log("Type 'openjscad' for help")

@@ -1,15 +1,11 @@
 // == OpenJSCAD.org, Copyright (c) 2017, Licensed under MIT License
 import AlertUserOfUncaughtExceptions from './errorDispatcher'
 
-import { version } from '../jscad/version'
 import Processor from '../jscad/processor'
 
 var gProcessor = null
 
 function init () {
-  const versionText = 'OpenJSCAD.org Version ' + version
-  console.log(versionText);
-
   // Show all exceptions to the user: // WARNING !! this is not practical at dev time
   AlertUserOfUncaughtExceptions()
 
