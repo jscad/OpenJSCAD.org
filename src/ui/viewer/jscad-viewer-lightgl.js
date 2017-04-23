@@ -144,14 +144,16 @@ LightGLEngine.prototype = {
     shiftControl.appendChild(bottomArrow)
     this.containerEl.appendChild(shiftControl)
 
-    const element = this.containerEl// document.getElementById("foo")
+    // we need mobile detection to change the target element of controls:
+    // otherwise we have to disable the build in html zoom on mobile , which is not always ideal
+    const isMobile = typeof window.orientation !== 'undefined'
+    const element = isMobile ? this.containerEl : document
     const baseInteractions = baseInteractionsFromEvents(element)
     const gestures = pointerGestures(baseInteractions)
 
     const rotateFactor = 0.6
     const panFactor = 0.005
-    const zoomFactor = 0.05
-    console.log('gestures', gestures)
+    const zoomFactor = 0.085
 
     gestures.drags
       .throttle(20)
@@ -161,9 +163,17 @@ LightGLEngine.prototype = {
         const {altKey, shiftKey, ctrlKey, metaKey} = originalEvents[0]
         const button = originalEvents[0].which
 
-        if (shiftKey || button === 2) {            // PAN  (SHIFT or middle mouse button)
+        if (altKey || button === 3)                     // ROTATE X,Y (ALT or right mouse button)
+        {
+          _this.angleY += delta.x * rotateFactor
+          _this.angleX += delta.y * rotateFactor
+        } else if (shiftKey || button === 2) {            // PAN  (SHIFT or middle mouse button)
           _this.viewpointX -= panFactor * delta.x * _this.viewpointZ
           _this.viewpointY -= panFactor * delta.y * _this.viewpointZ
+        } else if (ctrlKey || metaKey) {                   // ZOOM IN/OUT
+          const zoom = delta.x + delta.y
+          _this.viewpointZ -= zoom
+          _this.viewpointZ = Math.min(Math.max(_this.viewpointZ, _this.options.camera.clip.min), _this.options.camera.clip.max)
         } else {
           _this.angleZ -= delta.x * rotateFactor
           _this.angleX += delta.y * rotateFactor
@@ -179,9 +189,7 @@ LightGLEngine.prototype = {
         _this.viewpointZ -= zoom
         _this.viewpointZ = Math.min(Math.max(_this.viewpointZ, _this.options.camera.clip.min), _this.options.camera.clip.max)
         _this.onDraw()
-        // _this.setZoom(zoom)//_this.getZoom() * zoom)
       })
-
 
     this.touch = {
       angleX: 0,
@@ -197,70 +205,7 @@ LightGLEngine.prototype = {
 
     }
 
-    /* let hammerElt = new Hammer.Manager(this.containerEl, {drag_lock_to_axis: true})
-    hammerElt.add(new Hammer.Pan({ threshold: 0, pointers: 0 }))
-    hammerElt.add(new Hammer.Press({ time: 500 }))
-    hammerElt.add(new Hammer.Pinch())
-    // javascript hammertime.get('pinch').set({ enable: true })
-
-    function startGesture () {
-      console.log('startGesture')
-      _this.touch.lastX = 0
-      _this.touch.lastY = 0
-    }
-    this.containerEl.addEventListener('mousedown', startGesture)
-    this.containerEl.addEventListener('touchstart', startGesture)
-
-    hammerElt.on('pinch', function (e) {
-      console.log('mouseWheel pinch')
-      var wheelDelta = 0
-      if (e.wheelDelta) {
-        wheelDelta = e.wheelDelta
-      } else if (e.detail) {
-        // for firefox, see http://stackoverflow.com/questions/8886281/event-wheeldelta-returns-undefined
-        wheelDelta = e.detail * -40
-      }
-      if (wheelDelta) {
-        var factor = Math.pow(1.003, -wheelDelta)
-        var coeff = _this.getZoom()
-        coeff *= factor
-        _this.setZoom(coeff)
-      }
-    })
-
-    hammerElt.on('pan panleft panright panup panleft panright pandown', function (e) {
-      console.log('pan', e)
-      const {altKey, shiftKey, ctrlKey, metaKey} = e.changedPointers[0]
-      const button = e.which
-      if (altKey || button === 3) {                     // ROTATE X,Y (ALT or right mouse button)
-        _this.angleY += e.deltaX
-        _this.angleX += e.deltaY
-        // this.angleX = Math.max(-180, Math.min(180, this.angleX));
-      } else if (shiftKey || button === 2) {            // PAN  (SHIFT or middle mouse button)
-        var factor = 5e-3*0.001
-        _this.viewpointX += factor * e.deltaX * _this.viewpointZ
-        _this.viewpointY -= factor * e.deltaY * _this.viewpointZ
-      } else if (ctrlKey || metaKey) {                   // ZOOM IN/OU
-        var factor = Math.pow(1.006, e.deltaX + e.deltaY)*0.1
-        var coeff = _this.getZoom() * factor
-        _this.setZoom(coeff)
-      } else {                                 // ROTATE X,Z  left mouse button
-        //var factor = 0.001
-        //_this.angleZ += e.deltaX * factor
-        //_this.angleX += e.deltaY * factor
-        //console.log('angle', _this.angleX, _this.angleZ)
-        _this.onPanTilt(e)
-      }
-      _this.onDraw()
-
-      if (!_this.touch.cur || _this.touch.cur === 'dragging') {
-        _this.clearShift()
-        _this.onPanTilt(e)
-      } else if (_this.touch.cur === 'shifting') {
-        _this.onShift(e)
-      }
-    })
-
+    /*
     hammerElt.on('press', function (e) {
       console.log('press', e.pointers, e.pointerType)
       if (e.pointers.length === 1) {
@@ -284,8 +229,7 @@ LightGLEngine.prototype = {
       }
     })
 
-    this.onZoomChanged = null
-    return shiftControl */
+    */
     this.gl.onmousemove = function (e) {
       _this.onMouseMove(e)
     }
