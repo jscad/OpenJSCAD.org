@@ -158,6 +158,7 @@ canvas {
    position: absolute;
    bottom: 1em;
    margin: 1em;
+   user-select: none;
 }
 
 #busy {

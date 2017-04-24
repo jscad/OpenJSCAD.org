@@ -1142,7 +1142,7 @@ var GL = (function() {
 			if(!gl) throw 'WebGL not supported';
 			addMatrixStack();
 			addImmediateMode();
-			addEventListeners();
+			//addEventListeners();
 			addOtherMethods();
 			return gl;
 		},
@@ -1337,6 +1337,7 @@ var GL = (function() {
 
 
 	function addEventListeners() {
+		console.log('adding event listeners')
 
 		var context = gl,
 			oldX = 0,
@@ -1459,6 +1460,7 @@ var GL = (function() {
 		}
 
 		function mousemove(e) {
+			console.log('mousemove', e)
 			gl = context;
 			e = augment(e);
 			if(gl.onmousemove) gl.onmousemove(e);
