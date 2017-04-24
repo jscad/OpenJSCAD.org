@@ -8,8 +8,7 @@ import { rebuildSolid, rebuildSolidInWorker } from '../core/rebuildSolid'
 import convertToSolid from '../core/convertToSolid'
 
 // output handling
-import generateOutputFileBlobUrl from '../io/generateOutputFileBlobUrl'
-import generateOutputFileFileSystem from '../io/generateOutputFileFileSystem'
+import {generateOutputFile} from '../io/generateOutputFile'
 import {convertToBlob} from '../io/convertToBlob'
 import {formats, supportedFormatsForObjects} from '../io/formats'
 
@@ -538,8 +537,6 @@ Processor.prototype = {
         // FIXME: what to do with this one ?
         // that.outputFileDirEntry = dirEntry // save for later removal
       }
-      // this.downloadOutputFileLink.type = this.selectedFormatInfo().mimetype
-
       this.downloadOutputFileLink.innerHTML = this.downloadLinkTextForCurrentObject()
       this.downloadOutputFileLink.setAttribute('download', downloadAttribute)
       if (noData) {
@@ -549,11 +546,7 @@ Processor.prototype = {
     }
 
     if (this.viewedObject) {
-      try {
-        generateOutputFileFileSystem(extension, blob, onDone.bind(this))
-      } catch (e) {
-        generateOutputFileBlobUrl(extension, blob, onDone.bind(this))
-      }
+      generateOutputFile(extension, blob, onDone, this)
       if (this.ondownload) this.ondownload(this)
     }
   },

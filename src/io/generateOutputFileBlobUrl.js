@@ -1,5 +1,4 @@
-import { isSafari } from '../ui/detectBrowser'
-import { getWindowURL } from '../ui/urlHelpers'
+import { isSafari, getWindowURL } from './utils'
 
 export default function generateOutputFileBlobUrl (extension, blob, callback) {
   if (isSafari()) {

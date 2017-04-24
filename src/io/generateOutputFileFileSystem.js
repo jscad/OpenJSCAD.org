@@ -1,4 +1,4 @@
-import FileSystemApiErrorHandler from '../ui/fileSystemApiErrorHandler'
+import FileSystemApiErrorHandler from './utils'
 
 export default function generateOutputFileFileSystem (extension, blob, callback) {
   var request = window.requestFileSystem || window.webkitRequestFileSystem

@@ -27,12 +27,6 @@ export function makeAbsoluteUrl (url, baseurl) {
   return url
 }
 
-export function getWindowURL () {
-  if (window.URL) return window.URL
-  else if (window.webkitURL) return window.webkitURL
-  else throw new Error("Your browser doesn't support window.URL")
-}
-
 export function textToBlobUrl (txt) {
   var windowURL = getWindowURL()
   var blob = new Blob([txt], { type: 'application/javascript' })
