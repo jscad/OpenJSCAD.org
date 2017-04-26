@@ -56,19 +56,21 @@ export const formats = {
     convertCSG: true,
     convertCAG: true
   },
+  js: {
+    displayName: 'js',
+    description: 'JavaScript Source',
+    extension: 'js',
+    mimetype: 'application/javascript',
+    convertCSG: true,
+    convertCAG: true
+  },
   svg: {
     displayName: 'SVG',
     description: 'Scalable Vector Graphics Format',
     extension: 'svg',
     mimetype: 'image/svg+xml',
     convertCSG: false,
-    convertCAG: true },
-  js: {
-    displayName: 'js',
-    description: 'JavaScript Source',
-    mimetype: 'application/javascript',
-    convertCSG: true,
-    convertCAG: true 
+    convertCAG: true
   },
   gcode: {
     displayName: 'gcode',

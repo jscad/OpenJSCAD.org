@@ -9,6 +9,7 @@ import convertToSolid from '../core/convertToSolid'
 
 // output handling
 import {generateOutputFile} from '../io/generateOutputFile'
+import {prepareOutput} from '../io/prepareOutput'
 import {convertToBlob} from '../io/convertToBlob'
 import {formats, supportedFormatsForObjects} from '../io/formats'
 
@@ -557,12 +558,11 @@ Processor.prototype = {
     if (startpoint > endpoint) { startpoint = this.selectEndPoint; endpoint = this.selectStartPoint }
 
     const format = this.selectedFormat()
-    const formatInfo = this.formatInfo(format)
 
     // if output format is jscad , use that, otherwise use currentObjects
     const objects = format === 'jscad' ? this.script : this.currentObjects.slice(startpoint, endpoint + 1)
 
-    return convertToBlob(objects, {format, formatInfo})
+    return convertToBlob(prepareOutput(objects, {format}))
   },
 
   formatInfo: function (format) {
