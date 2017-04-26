@@ -6,7 +6,7 @@ import { CSG, CAG } from '@jscad/csg'
  * @param {Array} objects the list of objects
  * @return {Object} solid : the single CSG object
  */
-export default function convertToSolid (objects) {
+export default function convertToSolid (objects, params) {
   if (objects.length === undefined) {
     if ((objects instanceof CAG) || (objects instanceof CSG)) {
       var obj = objects

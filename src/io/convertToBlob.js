@@ -1,5 +1,6 @@
 import { CSG, CAG } from '@jscad/csg'
 import { makeBlob } from '@jscad/io'
+import { formats } from './formats'
 
 /*import CSGToStla from '@jscad/io/writers/CSGToStla'
 import CSGToStlb from '@jscad/io/writers/CSGToStlb'
@@ -20,7 +21,7 @@ import {toArray} from '../utils/misc'
 const Blob = makeBlob()
 
 export function convertToBlob (objects, params) {
-  const {format, formatInfo, version = '0.0.0'} = params
+  const {format, version = '0.0.0'} = params
 
   let object
 
@@ -28,9 +29,7 @@ export function convertToBlob (objects, params) {
     object = objects
   } else {
     objects = toArray(objects)
-    // console.log('convertToBlob', objects, format)
-    // console.log('object', objects[0], objects[0] instanceof CSG)
-
+    const formatInfo = formats[format]
     // review the given objects
     let foundCSG = false
     let foundCAG = false
@@ -59,43 +58,29 @@ export function convertToBlob (objects, params) {
 
   const metaData = {
     producer: 'OpenJSCAD.org ' + version,
-    date: new Date()
+    date: new Date(),
+    version
   }
 
+  // helpers for jscad & js formats to align them with the other writers
   const CSGToJscad = {
-    mimeType: formatInfo.mimetype,
+    mimeType: formats['jscad'].mimetype,
     write: object => [object] // js , pass through
   }
 
   const CSGToJs = {
-    mimeType: formatInfo.mimetype,
+    mimeType: formats['js'].mimetype,
     write: object => [object] // jscad , pass through
   }
 
-  const outputFormatHandlers_old = {
-    amf: (object) => CSGToAMF(object, meta), // CSG to AMF
-    stl: (object) => CSGToStla(object, {version}), // CSG to STL ASCII
-    stla: (object) => CSGToStla(object, {version}), // CSG to STL ASCII
-    stlb: (object) => CSGToStlb(object, {version}), // CSG to STL BINARY
-    dxf: (object) => CAGToDxf(object, {version}), // CAG to DXF
-    svg: (object) => CAGToSvg(object, {version}), // CAG to SVG
-    x3d: (object) => CSGToX3D(object, {version}), //  .fixTJunctions()
-    json: (object) => CAGToJson(object, {version}), // CSG or CAG to JSON
-    js: (object) => object, // js , pass through
-    jscad: (object) => object, // jscad, pass through
-    undefined: () => {
-      throw new Error('Not supported : only jscad, stl, amf, dxf, svg or json as output format')
-    }
-  }
-
   const outputFormatHandlers = {
-    amf: CSGToAMF,
+    amf: CSGToAMF, // CSG to AMF
     stl: CSGToStla, // CSG to STL ASCII
     stla: CSGToStla, // CSG to STL ASCII
     stlb: CSGToStlb, // CSG to STL BINARY
     dxf: CAGToDxf, // CAG to DXF
     svg: CAGToSvg, // CAG to SVG
-    x3d: CSGToX3D, //  .fixTJunctions()
+    x3d: CSGToX3D, // CSG to X3D
     json: CAGToJson, // CSG or CAG to JSON
     js: CSGToJs, // js , pass through
     jscad: CSGToJscad, // jscad, pass through
@@ -103,7 +88,6 @@ export function convertToBlob (objects, params) {
       throw new Error('Not supported : only jscad, stl, amf, dxf, svg or json as output format')
     }
   }
-
   const blob = new Blob(outputFormatHandlers[format].write(object, metaData), { type: outputFormatHandlers[format].mimeType })
 
   return blob

@@ -54,7 +54,8 @@ export const formats = {
     extension: 'jscad',
     mimetype: 'application/javascript',
     convertCSG: true,
-    convertCAG: true },
+    convertCAG: true
+  },
   svg: {
     displayName: 'SVG',
     description: 'Scalable Vector Graphics Format',
@@ -64,7 +65,11 @@ export const formats = {
     convertCAG: true },
   js: {
     displayName: 'js',
-    description: 'JavaScript Source' },
+    description: 'JavaScript Source',
+    mimetype: 'application/javascript',
+    convertCSG: true,
+    convertCAG: true 
+  },
   gcode: {
     displayName: 'gcode',
     description: 'G Programming Language File Format' },

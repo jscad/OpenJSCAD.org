@@ -1,7 +1,6 @@
 const {isAbsolute, resolve} = require('path')
 import oscad from '@jscad/scad-api'
 import { convertToBlob } from '../io/convertToBlob'
-import { formats } from '../io/formats'
 import { rebuildSolid } from '../core/rebuildSolid'
 import { resolveIncludesFs } from '../utils/resolveIncludesFs'
 import getParameterDefinitionsCLI from './getParameterDefinitionsCLI'
@@ -56,10 +55,7 @@ export default function generateOutputData (source, params, options) {
     }
   })
     .then(function (objects) {
-      const formatInfo = {
-        convertCAG: true, convertCSG: true, mimetype: formats[outputFormat].mimetype
-      }
-      return convertToBlob(objects, {format: outputFormat, formatInfo})
+      return convertToBlob(objects, {format: outputFormat})
     })
 
 // return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})
