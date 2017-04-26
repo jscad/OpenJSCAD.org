@@ -57,12 +57,22 @@ export function convertToBlob (objects, params) {
     }
   }
 
-  const meta = {
+  const metaData = {
     producer: 'OpenJSCAD.org ' + version,
     date: new Date()
   }
 
-  const outputFormatHandlers = {
+  const CSGToJscad = {
+    mimeType: formatInfo.mimetype,
+    write: object => [object] // js , pass through
+  }
+
+  const CSGToJs = {
+    mimeType: formatInfo.mimetype,
+    write: object => [object] // jscad , pass through
+  }
+
+  const outputFormatHandlers_old = {
     amf: (object) => CSGToAMF(object, meta), // CSG to AMF
     stl: (object) => CSGToStla(object, {version}), // CSG to STL ASCII
     stla: (object) => CSGToStla(object, {version}), // CSG to STL ASCII
@@ -78,10 +88,23 @@ export function convertToBlob (objects, params) {
     }
   }
 
-  let blob = outputFormatHandlers[format](object)
-
-  if (format === 'jscad') {
-    blob = new Blob([blob], { type: formatInfo.mimetype })
+  const outputFormatHandlers = {
+    amf: CSGToAMF,
+    stl: CSGToStla, // CSG to STL ASCII
+    stla: CSGToStla, // CSG to STL ASCII
+    stlb: CSGToStlb, // CSG to STL BINARY
+    dxf: CAGToDxf, // CAG to DXF
+    svg: CAGToSvg, // CAG to SVG
+    x3d: CSGToX3D, //  .fixTJunctions()
+    json: CAGToJson, // CSG or CAG to JSON
+    js: CSGToJs, // js , pass through
+    jscad: CSGToJscad, // jscad, pass through
+    undefined: () => {
+      throw new Error('Not supported : only jscad, stl, amf, dxf, svg or json as output format')
+    }
   }
+
+  const blob = new Blob(outputFormatHandlers[format].write(object, metaData), { type: outputFormatHandlers[format].mimeType })
+
   return blob
 }
