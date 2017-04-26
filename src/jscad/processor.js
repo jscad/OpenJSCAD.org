@@ -1,4 +1,3 @@
-import { revokeBlobUrl } from '@jscad/io'
 import { CAG, CSG } from '@jscad/csg'
 
 import log from './log'
@@ -8,10 +7,11 @@ import { rebuildSolid, rebuildSolidInWorker } from '../core/rebuildSolid'
 import convertToSolid from '../core/convertToSolid'
 
 // output handling
-import {generateOutputFile} from '../io/generateOutputFile'
-import {prepareOutput} from '../io/prepareOutput'
-import {convertToBlob} from '../io/convertToBlob'
-import {formats, supportedFormatsForObjects} from '../io/formats'
+import { generateOutputFile } from '../io/generateOutputFile'
+import { prepareOutput } from '../io/prepareOutput'
+import { convertToBlob } from '../io/convertToBlob'
+import { formats, supportedFormatsForObjects } from '../io/formats'
+import { revokeBlobUrl } from '../io/utils'
 
 import Viewer from '../ui/viewer/jscad-viewer'
 
