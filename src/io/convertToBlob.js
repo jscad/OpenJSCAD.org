@@ -66,10 +66,10 @@ export function convertToBlob (objects, params) {
     amf: (object) => CSGToAMF(object, meta), // CSG to AMF
     stl: (object) => CSGToStla(object, {version}), // CSG to STL ASCII
     stla: (object) => CSGToStla(object, {version}), // CSG to STL ASCII
-    stlb: (object) => CSGToStlb(object, {webBlob: true, version}), // CSG to STL BINARY
+    stlb: (object) => CSGToStlb(object, {version}), // CSG to STL BINARY
     dxf: (object) => CAGToDxf(object, {version}), // CAG to DXF
     svg: (object) => CAGToSvg(object, {version}), // CAG to SVG
-    x3d: (object) => CSGToX3D(object.fixTJunctions(), {version}),
+    x3d: (object) => CSGToX3D(object, {version}), //  .fixTJunctions()
     json: (object) => CAGToJson(object, {version}), // CSG or CAG to JSON
     js: (object) => object, // js , pass through
     jscad: (object) => object, // jscad, pass through
