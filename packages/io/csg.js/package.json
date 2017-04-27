@@ -1,6 +1,6 @@
 {
   "name": "@jscad/csg",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "repository": "https://github.com/jscad/csg.js",
   "main": "csg.js",
@@ -60,5 +60,4 @@
       "babel-register"
     ]
   }
-
 }
