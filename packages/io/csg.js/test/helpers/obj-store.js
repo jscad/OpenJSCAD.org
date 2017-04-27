@@ -1,5 +1,5 @@
 import fs from 'fs';
-import {CSG,CAG} from '../csg';
+import {CSG,CAG} from '../../csg';
 
 
 // import the required modules if necessary

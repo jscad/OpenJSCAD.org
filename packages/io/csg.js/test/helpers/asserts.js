@@ -14,7 +14,7 @@ function comparePolygons(a, b){
     let start = a.vertices[0];
     let index = b.vertices.findIndex(v => {
         if (!v) {return false;}
-        
+
         return v._x === start._x && v._y === start._y && v._z === start._z;
     });
     if (index === -1) {
@@ -38,7 +38,7 @@ function assertSameGeometry(t, a, b, failMessage) {
   if (!containsCSG(a, b) || !containsCSG(b, a)) {
     failMessage = failMessage == undefined ? 'CSG do not have the same geometry' : failMessage;
     t.fail(failMessage);
-  }
+  }else{ t.pass()}
 }
 
 // a contains b if b polygons are also found in a

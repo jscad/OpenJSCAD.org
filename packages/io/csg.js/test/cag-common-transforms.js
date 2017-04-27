@@ -1,7 +1,5 @@
 import test from 'ava'
-import { CSG } from '../csg'
 import { CAG } from '../csg'
-import { OBJ } from '../helpers/obj-store'
 
 // helper function, gives a much more compact variant of the the side data
 // hint : this could also be used to streamline the cag implementation in the future
