@@ -110,9 +110,3 @@ Blob.prototype = {
     return 'blob blob blob'
   }
 }
-
-export function revokeBlobUrl (url) {
-  if (window.URL) window.URL.revokeObjectURL(url)
-  else if (window.webkitURL) window.webkitURL.revokeObjectURL(url)
-  else throw new Error("Your browser doesn't support window.URL")
-}

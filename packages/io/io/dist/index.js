@@ -119,15 +119,9 @@ Blob.prototype = {
   }
 };
 
-function revokeBlobUrl (url) {
-  if (window.URL) { window.URL.revokeObjectURL(url); }
-  else if (window.webkitURL) { window.webkitURL.revokeObjectURL(url); }
-  else { throw new Error("Your browser doesn't support window.URL") }
-}
+var mimeType = 'application/dxf';
 
-var Blob$1 = makeBlob();
-
-function CAGToDxf (cagObject) {
+function write (cagObject) {
   var paths = cagObject.getOutlinePaths();
   return PathsToDxf(paths)
 }
@@ -160,14 +154,17 @@ function PathsToDxf (paths) {
     }
   });
   str += '  0\nENDSEC\n  0\nEOF\n';
-  return new Blob$1([str], {
-    type: 'application/dxf'
-  })
+  return [str]
 }
 
-var Blob$2 = makeBlob();
 
-function CAGToJson (CAG) {
+var CAGToDxf = Object.freeze({
+	mimeType: mimeType,
+	write: write
+});
+
+var mimeType$1 = 'application/json';
+function write$1 (CAG) {
   var str = '{ "type": "cag","sides": [';
   var comma = '';
   CAG.sides.map(
@@ -178,14 +175,18 @@ function CAGToJson (CAG) {
     }
   );
   str += '] }';
-  return new Blob$2([str], {
-    type: 'application/json'
-  })
+  return [str]
 }
 
-var Blob$3 = makeBlob();
 
-function CAGToSvg (cagObject) {
+var CAGToJson = Object.freeze({
+	mimeType: mimeType$1,
+	write: write$1
+});
+
+var mimeType$2 = 'image/svg+xml';
+
+function write$2 (cagObject) {
   var decimals = 1000;
 
   // mirror the CAG about the X axis in order to generate paths into the POSITIVE direction
@@ -202,9 +203,7 @@ function CAGToSvg (cagObject) {
   svg += '<svg width="' + width + 'mm" height="' + height + 'mm" viewBox="0 0 ' + width + ' ' + height + '" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n';
   svg += PathsToSvg(paths, bounds);
   svg += '</svg>';
-  return new Blob$3([svg], {
-    type: 'image/svg+xml'
-  })
+  return [svg]
 }
 
 function PathsToSvg (paths, bounds) {
@@ -232,9 +231,15 @@ function PathsToSvg (paths, bounds) {
   return str
 }
 
-var Blob$4 = makeBlob();
 
-function CSGToAMF (CSG, m) {
+var CAGToSvg = Object.freeze({
+	mimeType: mimeType$2,
+	write: write$2
+});
+
+var mimeType$3 = 'application/amf+xml';
+
+function write$3 (CSG, m) {
   var result = '<?xml version="1.0" encoding="UTF-8"?>\n<amf' + (m && m.unit ? ' unit="+m.unit"' : '') + '>\n';
   for (var k in m) {
     result += '<metadata type="' + k + '">' + m[k] + '</metadata>\n';
@@ -251,8 +256,9 @@ function CSGToAMF (CSG, m) {
   var n = 0;
   CSG.polygons.map(function (p) { // then we dump all polygons
     result += '<volume>\n';
-    if (p.vertices.length < 3)
-      { return }
+    if (p.vertices.length < 3) {
+      return
+    }
     var color = null;
     if (p.shared && p.shared.color) {
       color = p.shared.color;
@@ -260,7 +266,7 @@ function CSGToAMF (CSG, m) {
       color = p.color;
     }
     if (color != null) {
-      if (color.length < 4) { color.push(1.); }
+      if (color.length < 4) { color.push(1.0); }
       result += '<color><r>' + color[0] + '</r><g>' + color[1] + '</g><b>' + color[2] + '</b><a>' + color[3] + '</a></color>';
     }
 
@@ -276,17 +282,14 @@ function CSGToAMF (CSG, m) {
   });
   result += '</mesh>\n</object>\n';
   result += '</amf>\n';
-
-  return new Blob$4([result], {
-    type: 'application/amf+xml'
-  })
+  return [result]
 }
 
-function CSGVectortoAMFString(v){
+function CSGVectortoAMFString (v) {
   return '<x>' + v._x + '</x><y>' + v._y + '</y><z>' + v._z + '</z>'
 }
 
-function CSGVertextoAMFString(vertex){
+function CSGVertextoAMFString (vertex) {
   return '<vertex><coordinates>' + CSGVectortoAMFString(vertex.pos) + '</coordinates></vertex>\n'
 }
 /*
@@ -296,11 +299,17 @@ CSG.Vector3D.prototype.toAMFString = function () {
 
 CSG.Vertex.prototype.toAMFString = function () {
   return '<vertex><coordinates>' + this.pos.toAMFString() + '</coordinates></vertex>\n'
-}*/
+} */
 
-var Blob$5 = makeBlob();
 
-function CSGToJson () {
+var CSGToAMF = Object.freeze({
+	mimeType: mimeType$3,
+	write: write$3
+});
+
+var mimeType$4 = 'application/json';
+
+function write$4 () {
   var str = '{ "type": "csg","polygons": [';
   var comma = '';
   CSG.polygons.map(
@@ -314,22 +323,24 @@ function CSGToJson () {
   str += '"isCanonicalized": ' + JSON.stringify(this.isCanonicalized) + ',';
   str += '"isRetesselated": ' + JSON.stringify(this.isRetesselated);
   str += '}';
-  return new Blob$5([str], {
-    type: 'application/json'
-  })
+  return [str]
 }
 
-var Blob$6 = makeBlob();
 
-function CSGToStla (CSG) {
+var CSGToJson = Object.freeze({
+	mimeType: mimeType$4,
+	write: write$4
+});
+
+var mimeType$5 = 'application/sla';
+
+function write$5 (CSG) {
   var result = 'solid csg.js\n';
   CSG.polygons.map(function (p) {
     result += CSGPolygontoStlString(p);
   });
   result += 'endsolid csg.js\n';
-  return new Blob$6([result], {
-    type: 'application/sla'
-  })
+  return [result]
 }
 
 function CSGVector3DtoStlString (v) {
@@ -358,10 +369,16 @@ function CSGPolygontoStlString (polygon) {
   return result
 }
 
-var Blob$7 = makeBlob();
+
+var CSGToStla = Object.freeze({
+	mimeType: mimeType$5,
+	write: write$5
+});
+
+var mimeType$6 = 'application/sla';
 
 // see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
-function CSGToStlb (CSG) {
+function write$6 (CSG) {
   // first check if the host is little-endian:
   var buffer = new ArrayBuffer(4);
   var int32buffer = new Int32Array(buffer, 0, 1);
@@ -417,10 +434,17 @@ function CSGToStlb (CSG) {
       byteoffset += 50;
     }
   });
-  return new Blob$7([headerarray.buffer, ar1.buffer, allTrianglesBuffer], {
-    type: 'application/sla'
-  })
+  return [headerarray.buffer, ar1.buffer, allTrianglesBuffer]//'blobable array'
+  /*return new Blob([headerarray.buffer, ar1.buffer, allTrianglesBuffer], {
+    type: mimeType
+  })*/
 }
+
+
+var CSGToStlb = Object.freeze({
+	mimeType: mimeType$6,
+	write: write$6
+});
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -2581,12 +2605,12 @@ function appendElement (hander,node) {
 //}
 });
 
-var Blob$8 = makeBlob();
+var mimeType$7 = 'model/x3d+xml';
 
 var XMLSerializer$$1 = domParser.XMLSerializer;
 // NOTE: might be useful :https://github.com/jindw/xmldom/pull/152/commits/be5176ece6fa1591daef96a5f361aaacaa445175
 
-function CSGToX3D (CSG) {
+function write$7 (CSG) {
   var DOMImplementation$$1 = typeof document !== 'undefined' ? document.implementation : new domParser.DOMImplementation();
   // materialPolygonLists
   // key: a color string (e.g. "0 1 1" for yellow)
@@ -2689,10 +2713,14 @@ function CSGToX3D (CSG) {
   }
 
   var x3dstring = (new XMLSerializer$$1()).serializeToString(exportDoc);
-  return new Blob$8([x3dstring], {
-    type: 'model/x3d+xml'
-  })
+  return [x3dstring]
 }
+
+
+var CSGToX3D = Object.freeze({
+	mimeType: mimeType$7,
+	write: write$7
+});
 
 /*
 ## License
@@ -5471,8 +5499,6 @@ function parseSVG (src, fn, options) {
   return code
 }
 
-exports.makeBlob = makeBlob;
-exports.revokeBlobUrl = revokeBlobUrl;
 exports.CAGToDxf = CAGToDxf;
 exports.CAGToJson = CAGToJson;
 exports.CAGToSvg = CAGToSvg;
@@ -5481,6 +5507,7 @@ exports.CSGToJson = CSGToJson;
 exports.CSGToStla = CSGToStla;
 exports.CSGToStlb = CSGToStlb;
 exports.CSGToX3D = CSGToX3D;
+exports.makeBlob = makeBlob;
 exports.parseAMF = parseAMF;
 exports.parseGCode = parseGCode;
 exports.parseJSON = parseJSON;

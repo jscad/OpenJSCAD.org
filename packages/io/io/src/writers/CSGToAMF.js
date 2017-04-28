@@ -1,7 +1,6 @@
-import { makeBlob } from '../utils/Blob'
-const Blob = makeBlob()
+export const mimeType = 'application/amf+xml'
 
-export default function CSGToAMF (CSG, m) {
+export function write (CSG, m) {
   var result = '<?xml version="1.0" encoding="UTF-8"?>\n<amf' + (m && m.unit ? ' unit="+m.unit"' : '') + '>\n'
   for (var k in m) {
     result += '<metadata type="' + k + '">' + m[k] + '</metadata>\n'
@@ -18,8 +17,9 @@ export default function CSGToAMF (CSG, m) {
   var n = 0
   CSG.polygons.map(function (p) { // then we dump all polygons
     result += '<volume>\n'
-    if (p.vertices.length < 3)
+    if (p.vertices.length < 3) {
       return
+    }
     var color = null
     if (p.shared && p.shared.color) {
       color = p.shared.color
@@ -27,7 +27,7 @@ export default function CSGToAMF (CSG, m) {
       color = p.color
     }
     if (color != null) {
-      if (color.length < 4) color.push(1.)
+      if (color.length < 4) color.push(1.0)
       result += '<color><r>' + color[0] + '</r><g>' + color[1] + '</g><b>' + color[2] + '</b><a>' + color[3] + '</a></color>'
     }
 
@@ -43,17 +43,14 @@ export default function CSGToAMF (CSG, m) {
   })
   result += '</mesh>\n</object>\n'
   result += '</amf>\n'
-
-  return new Blob([result], {
-    type: 'application/amf+xml'
-  })
+  return [result]
 }
 
-function CSGVectortoAMFString(v){
+function CSGVectortoAMFString (v) {
   return '<x>' + v._x + '</x><y>' + v._y + '</y><z>' + v._z + '</z>'
 }
 
-function CSGVertextoAMFString(vertex){
+function CSGVertextoAMFString (vertex) {
   return '<vertex><coordinates>' + CSGVectortoAMFString(vertex.pos) + '</coordinates></vertex>\n'
 }
 /*
@@ -63,4 +60,4 @@ CSG.Vector3D.prototype.toAMFString = function () {
 
 CSG.Vertex.prototype.toAMFString = function () {
   return '<vertex><coordinates>' + this.pos.toAMFString() + '</coordinates></vertex>\n'
-}*/
+} */

@@ -1,14 +1,15 @@
-import {revokeBlobUrl, makeBlob} from './utils/Blob'
-export {makeBlob, revokeBlobUrl}
+export {makeBlob} from './utils/Blob'
 
-export {default as CAGToDxf} from './writers/CAGToDxf'
-export {default as CAGToJson} from './writers/CAGToJson'
-export {default as CAGToSvg} from './writers/CAGToSvg'
-export {default as CSGToAMF} from './writers/CSGToAMF'
-export {default as CSGToJson} from './writers/CSGToJson'
-export {default as CSGToStla} from './writers/CSGToStla'
-export {default as CSGToStlb} from './writers/CSGToStlb'
-export {default as CSGToX3D} from './writers/CSGToX3D'
+import * as CAGToDxf from './writers/CAGToDxf'
+import * as CAGToJson from './writers/CAGToJson'
+import * as CAGToSvg from './writers/CAGToSvg'
+import * as CSGToAMF from './writers/CSGToAMF'
+import * as CSGToJson from './writers/CSGToJson'
+import * as CSGToStla from './writers/CSGToStla'
+import * as CSGToStlb from './writers/CSGToStlb'
+import * as CSGToX3D from './writers/CSGToX3D'
+
+export {CAGToDxf, CAGToJson, CAGToSvg, CSGToAMF, CSGToJson, CSGToStla, CSGToStlb, CSGToX3D}
 
 export {parseAMF} from './parsers/parseAMF'
 export {parseGCode} from './parsers/parseGCode'

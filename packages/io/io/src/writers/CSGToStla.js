@@ -1,15 +1,12 @@
-import { makeBlob } from '../utils/Blob'
-const Blob = makeBlob()
+export const mimeType = 'application/sla'
 
-export default function CSGToStla (CSG) {
+export function write (CSG) {
   var result = 'solid csg.js\n'
   CSG.polygons.map(function (p) {
     result += CSGPolygontoStlString(p)
   })
   result += 'endsolid csg.js\n'
-  return new Blob([result], {
-    type: 'application/sla'
-  })
+  return [result]
 }
 
 function CSGVector3DtoStlString (v) {

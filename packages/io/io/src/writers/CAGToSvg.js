@@ -1,8 +1,8 @@
 import { CSG } from '@jscad/csg'
-import { makeBlob } from '../utils/Blob'
-const Blob = makeBlob()
 
-export default function CAGToSvg (cagObject) {
+export const mimeType = 'image/svg+xml'
+
+export function write (cagObject) {
   var decimals = 1000
 
   // mirror the CAG about the X axis in order to generate paths into the POSITIVE direction
@@ -19,9 +19,7 @@ export default function CAGToSvg (cagObject) {
   svg += '<svg width="' + width + 'mm" height="' + height + 'mm" viewBox="0 0 ' + width + ' ' + height + '" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n'
   svg += PathsToSvg(paths, bounds)
   svg += '</svg>'
-  return new Blob([svg], {
-    type: 'image/svg+xml'
-  })
+  return [svg]
 }
 
 function PathsToSvg (paths, bounds) {

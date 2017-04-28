@@ -1,11 +1,11 @@
-import { makeBlob } from '../utils/Blob'
-const Blob = makeBlob()
-
 import xmldom from 'xmldom'
+
+export const mimeType = 'model/x3d+xml'
+
 const XMLSerializer = xmldom.XMLSerializer
 // NOTE: might be useful :https://github.com/jindw/xmldom/pull/152/commits/be5176ece6fa1591daef96a5f361aaacaa445175
 
-export default function CSGToX3D (CSG) {
+export function write (CSG) {
   const DOMImplementation = typeof document !== 'undefined' ? document.implementation : new xmldom.DOMImplementation()
   // materialPolygonLists
   // key: a color string (e.g. "0 1 1" for yellow)
@@ -107,8 +107,6 @@ export default function CSGToX3D (CSG) {
     }
   }
 
-  var x3dstring = (new XMLSerializer()).serializeToString(exportDoc)
-  return new Blob([x3dstring], {
-    type: 'model/x3d+xml'
-  })
+  const x3dstring = (new XMLSerializer()).serializeToString(exportDoc)
+  return [x3dstring]
 }
