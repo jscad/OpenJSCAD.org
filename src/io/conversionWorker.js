@@ -44,16 +44,16 @@ module.exports = function (self) {
           const options = {version: data.version}
           switch (e) {
             case 'amf':
-              const parseAMF = require('@jscad/io').parseAMF
-              r.source = r.converted = parseAMF(data.source, data.filename, options)
+              const deserializeAmf = require('@jscad/io').amfDeSerializer
+              r.source = r.converted = deserializeAmf(data.source, data.filename, options)
               break
             case 'gcode':
-              const parseGCode = require('@jscad/io').parseGCode
-              r.source = r.converted = parseGCode(data.source, data.filename, options)
+              const deserializeGcode = require('@jscad/io').gcodeDeSerializer
+              r.source = r.converted = deserializeGcode(data.source, data.filename, options)
               break
             case 'obj':
-              const parseOBJ = require('@jscad/io').parseOBJ
-              r.source = r.converted = parseOBJ(data.source, data.filename, options)
+              const deserializeObj = require('@jscad/io').objDeSerializer
+              r.source = r.converted = deserializeObj(data.source, data.filename, options)
               break
             case 'scad':
               // importScripts(r.baseurl + 'js/lib/csg.js', r.baseurl + 'js/openjscad.js', r.baseurl + 'js/openscad.js', r.baseurl + 'js/lib/underscore.js', r.baseurl + 'js/lib/openscad-openjscad-translator.js')
@@ -65,8 +65,8 @@ module.exports = function (self) {
               r.converted = openscadOpenJscadParser.parse(r.source)
               break
             case 'stl':
-              const parseSTL = require('@jscad/io').parseSTL
-              r.source = r.converted = parseSTL(data.source, data.filename, options)
+              const deserializeStl = require('@jscad/io').stlDeSerializer
+              r.source = r.converted = deserializeStl(data.source, data.filename, options)
               break
             case 'js':
               r.source = r.converted = data.source
@@ -75,12 +75,12 @@ module.exports = function (self) {
               r.source = r.converted = data.source
               break
             case 'svg':
-              const parseSVG = require('@jscad/io').parseSVG
-              r.source = r.converted = parseSVG(data.source, data.filename, options)
+              const deserializeSvg = require('@jscad/io').svgDeSerializer
+              r.source = r.converted = deserializeSvg(data.source, data.filename, options)
               break
             case 'json':
-              const parseJSON = require('@jscad/io').parseJSON
-              r.source = r.converted = parseJSON(data.source, data.filename, options)
+              const deserializeJson = require('@jscad/io').jsonDeSerializer
+              r.source = r.converted = deserializeJson(data.source, data.filename, options)
               break
             default:
               r.source = r.converted = '// Invalid file type in conversion (' + e + ')'
