@@ -8,13 +8,12 @@ import CSGToX3D from '@jscad/io/writers/CSGToX3D'
 import CAGToSvg from '@jscad/io/writers/CAGToSvg'
 import CAGToJson from '@jscad/io/writers/CAGToJson'
 import CAGToDxf from '@jscad/io/writers/CAGToDxf'*/
-import {CSGToStla} from '@jscad/io'
-import {CSGToStlb} from '@jscad/io'
-import {CSGToAMF} from '@jscad/io'
-import {CSGToX3D} from '@jscad/io'
-import {CAGToSvg} from '@jscad/io'
-import {CAGToJson} from '@jscad/io'
-import {CAGToDxf} from '@jscad/io'
+import {stlSerializer} from '@jscad/io'
+import {amfSerializer} from '@jscad/io'
+import {x3dSerializer} from '@jscad/io'
+import {svgSerializer} from '@jscad/io'
+import {jsonSerializer} from '@jscad/io'
+import {dxfSerializer} from '@jscad/io'
 
 export function prepareOutput (objects, params) {
   const {format, version = '0.0.0'} = params
@@ -34,33 +33,33 @@ export function prepareOutput (objects, params) {
     version
   }
 
-  // helpers for jscad & js formats to align them with the other writers
-  const CSGToJscad = {
-    mimeType: formats['jscad'].mimetype,
-    write: object => [object] // js , pass through
-  }
 
-  const CSGToJs = {
-    mimeType: formats['js'].mimetype,
-    write: object => [object] // jscad , pass through
-  }
 
   const outputFormatHandlers = {
-    amf: CSGToAMF, // CSG to AMF
-    stl: CSGToStla, // CSG to STL ASCII
-    stla: CSGToStla, // CSG to STL ASCII
-    stlb: CSGToStlb, // CSG to STL BINARY
-    dxf: CAGToDxf, // CAG to DXF
-    svg: CAGToSvg, // CAG to SVG
-    x3d: CSGToX3D, // CSG to X3D
-    json: CAGToJson, // CSG or CAG to JSON
-    js: CSGToJs, // js , pass through
-    jscad: CSGToJscad, // jscad, pass through
+    amf: amfSerializer, // CSG to AMF
+    stl: stlSerializer, // CSG to STL ASCII // NOTE: now using binary output by default !!
+    stla: {
+      mimeType: stlSerializer.mimeType,
+      serialize: data => stlSerializer.serialize(data, {binary: false})
+    }, // CSG to STL ASCII
+    stlb: stlSerializer, // CSG to STL BINARY
+    dxf: dxfSerializer, // CAG to DXF
+    svg: svgSerializer, // CAG to SVG
+    x3d: x3dSerializer, // CSG to X3D
+    json: jsonSerializer, // CSG or CAG to JSON
+    js: {
+      mimeType: formats['js'].mimetype,
+      serialize: object => [object] // jscad , pass through
+    },
+    jscad: {
+      mimeType: formats['jscad'].mimetype,
+      serialize: object => [object] // js , pass through
+    },
     undefined: () => {
       throw new Error('Not supported : only jscad, stl, amf, dxf, svg or json as output format')
     }
   }
-  const data = outputFormatHandlers[format].write(object, metaData)
+  const data = outputFormatHandlers[format].serialize(object, metaData)
   const mimeType = outputFormatHandlers[format].mimeType
   return {data, mimeType}
 }
