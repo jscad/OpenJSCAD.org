@@ -6,7 +6,7 @@
 
 ## Overview
 
-This repository includes all the input/output format handling for the jscad projects, and can also be used seperatly.
+This package is a metapackage and includes all the input/output format handling for the jscad projects, and can also be used separately.
 
 ### Inputs / deserializers
 

@@ -1,0 +1,58 @@
+{
+  "name": "@jscad/io",
+  "version": "0.1.0",
+  "description": "Meta package for input , output and formats handling for jscad project",
+  "repository": "https://github.com/jscad/io",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava './**/*.test.js' --require babel-register --verbose --timeout 10000",
+    "release-patch": "git checkout master && npm version patch ; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
+    "release-minor": "git checkout master && npm version minor ; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
+    "release-major": "git checkout master && npm version major ; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
+  },
+  "contributors": [
+    {
+      "name": "Rene K. Mueller",
+      "url": "http://renekmueller.com"
+    },
+    {
+      "name": "z3dev",
+      "url": "http://www.z3d.jp"
+    },
+    {
+      "name": "Mark 'kaosat-dev' Moissette",
+      "url": "http://kaosat.net"
+    }
+  ],
+  "keywords": [
+    "openscad",
+    "openjscad",
+    "jscad",
+    "parametric",
+    "modeling",
+    "cad",
+    "io",
+    "formats",
+    "parser",
+    "writer",
+    "serializer",
+    "deserializer"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@jscad/amf-deserializer": "latest",
+    "@jscad/amf-serializer": "latest",
+    "@jscad/dxf-serializer": "latest",
+    "@jscad/gcode-deserializer": "latest",
+    "@jscad/json-deserializer": "latest",
+    "@jscad/json-serializer": "latest",
+    "@jscad/obj-deserializer": "latest",
+    "@jscad/stl-deserializer": "latest",
+    "@jscad/stl-serializer": "latest",
+    "@jscad/svg-serializer": "latest",
+    "@jscad/svg-deserializer": "latest",
+    "@jscad/x3d-serializer": "latest"
+  },
+  "devDependencies": {
+  }
+}
