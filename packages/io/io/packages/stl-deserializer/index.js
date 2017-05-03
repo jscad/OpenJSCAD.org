@@ -176,7 +176,7 @@ function deserializeBinarySTL (stl, fn, version) {
   return src
 }
 
-export function deserializeAsciiSTL (stl, fn, version) {
+function deserializeAsciiSTL (stl, fn, version) {
   var src = ''
   var n = 0
   var converted = 0

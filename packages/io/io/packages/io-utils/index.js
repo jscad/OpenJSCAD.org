@@ -111,4 +111,4 @@ Blob.prototype = {
   }
 }
 
-module.exports = makeBlob
+module.exports = {makeBlob}

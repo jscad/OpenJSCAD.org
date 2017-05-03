@@ -1,5 +1,5 @@
-const binarySerializer = require('./CSGToStlb')
-const asciiSerializer = require('./CSGToStla')
+const binarySerializer = require('./CSGToStlb').serialize
+const asciiSerializer = require('./CSGToStla').serialize
 
 const mimeType = 'application/sla'
 

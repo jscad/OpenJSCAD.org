@@ -6,7 +6,7 @@ const mimeType = 'model/x3d+xml'
 const XMLSerializer = xmldom.XMLSerializer
 // NOTE: might be useful :https://github.com/jindw/xmldom/pull/152/commits/be5176ece6fa1591daef96a5f361aaacaa445175
 
-function write (CSG) {
+function serialize (CSG) {
   const DOMImplementation = typeof document !== 'undefined' ? document.implementation : new xmldom.DOMImplementation()
   // materialPolygonLists
   // key: a color string (e.g. "0 1 1" for yellow)
@@ -113,6 +113,6 @@ function write (CSG) {
 }
 
 module.exports = {
-  write,
+  serialize,
   mimeType
 }
