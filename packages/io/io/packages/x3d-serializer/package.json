@@ -1,5 +1,5 @@
 {
-  "name": "@jscad/amf-serializer",
+  "name": "@jscad/x3d-serializer",
   "version": "0.0.1",
   "description": "X3d serializer for jscad project",
   "repository": "https://github.com/jscad/io",
