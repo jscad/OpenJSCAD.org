@@ -1,11 +1,10 @@
 {
-  "opts": { // command line options
+  "opts": {
     "template": "templates/default",
     "encoding": "utf8",
-    "destination": "./out/",
+    "destination": "./doc/",
     "recurse": true,
     "readme": "README.md"
-    //"tutorials": "path/to/tutorials", // same as -u path/to/tutorials
   },
   "tags": {
     "allowUnknownTags": true,
