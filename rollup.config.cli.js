@@ -22,12 +22,13 @@ export default {
     }),
     commonjs({
       namedExports: {
-        'node_modules/@jscad/csg/csg.js': [ 'CSG', 'CAG' ]
+        'node_modules/@jscad/csg/csg.js': [ 'CSG', 'CAG' ],
+        '@jscad/io': ['amfSerializer', 'stlSerializer', 'dxfSerializer', 'svgSerializer', 'x3dSerializer', 'jsonSerializer', 'makeBlob']
       }
     }),
     replace({
-      '../../package.json': '../package.json', // fix path issues
-      //"'use strict';": "#!/usr/bin/env node\n'use strict';"// add shebang at start of file
+      '../../package.json': '../package.json' // fix path issues
+      // "'use strict';": "#!/usr/bin/env node\n'use strict';"// add shebang at start of file
     }),
     uglify()
   ]

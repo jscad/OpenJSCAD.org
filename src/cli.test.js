@@ -55,7 +55,7 @@ test('jscad to stl (ascii)', t => {
   const expPath = 'test.stl'
   t.context = {outputPath}
 
-  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} `
+  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of stla`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
   almostEquals(t, fs.statSync(expPath).size, 326185, 2)
@@ -134,7 +134,7 @@ test('openscad to stl (ascii)', t => {
   const expPath = 'test.stl'
   t.context = {outputPath}
 
-  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} `
+  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of stla`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
   almostEquals(t, fs.statSync(outputPath).size, 515365, 2)
@@ -201,7 +201,7 @@ test('include support', t => {
   const expPath = outputPath
   t.context = {outputPath}
 
-  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of stl`
+  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of stla`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
   almostEquals(t, fs.statSync(outputPath).size, 19681, 2)
@@ -214,7 +214,7 @@ test('include support, with sub folders', t => {
   const expPath = outputPath
   t.context = {outputPath}
 
-  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of stl`
+  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of stla`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
   almostEquals(t, fs.statSync(outputPath).size, 281479, 2)

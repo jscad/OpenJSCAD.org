@@ -1,7 +1,8 @@
-import test from 'ava'
-import path from 'path'
-import fs from 'fs'
-import openjscad from '../dist/module'
+const test = require('ava')
+const path = require('path')
+const fs = require('fs')
+const openjscad = require('../dist/module')
+//import openjscad from '../dist/module'
 
 function almostEquals (t, observed, expected, precision) {
   t.is(Math.abs(expected - observed) < precision, true)
@@ -163,7 +164,7 @@ test('generateOutput(stl)', t => {
       const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
       t.is(type, 'application/sla')
       t.is(encoding, 'utf8')
-      t.is(size, 326185)
+      t.is(size, 70284)
     })
 })
 
@@ -243,5 +244,5 @@ test('generateOutput(stl, from csg object)', t => {
   const {type, encoding, size} = output
   t.is(type, 'application/sla')
   t.is(encoding, 'utf8')
-  almostEquals(t, size, 1121, 50)
+  almostEquals(t, size, 684, 50)
 })

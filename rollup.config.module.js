@@ -21,7 +21,8 @@ export default {
     }),
     commonjs({
       namedExports: {
-        'node_modules/@jscad/csg/csg.js': [ 'CSG', 'CAG' ]
+        'node_modules/@jscad/csg/csg.js': [ 'CSG', 'CAG' ],
+        '@jscad/io': ['amfSerializer', 'stlSerializer', 'dxfSerializer', 'svgSerializer',  'x3dSerializer', 'jsonSerializer', 'makeBlob']
       }
     }),
     replace({
