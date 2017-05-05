@@ -15,6 +15,7 @@ import {svgSerializer} from '@jscad/io'
 import {jsonSerializer} from '@jscad/io'
 import {dxfSerializer} from '@jscad/io'
 
+
 export function prepareOutput (objects, params) {
   const {format, version = '0.0.0'} = params
 
@@ -33,6 +34,7 @@ export function prepareOutput (objects, params) {
     version
   }
 
+  const foo = require('@jscad/io')
 
 
   const outputFormatHandlers = {

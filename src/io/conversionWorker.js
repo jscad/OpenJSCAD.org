@@ -44,15 +44,15 @@ module.exports = function (self) {
           const options = {version: data.version}
           switch (e) {
             case 'amf':
-              const deserializeAmf = require('@jscad/io').amfDeSerializer
+              const deserializeAmf = require('@jscad/io').amfDeSerializer.deserialize
               r.source = r.converted = deserializeAmf(data.source, data.filename, options)
               break
             case 'gcode':
-              const deserializeGcode = require('@jscad/io').gcodeDeSerializer
+              const deserializeGcode = require('@jscad/io').gcodeDeSerializer.deserialize
               r.source = r.converted = deserializeGcode(data.source, data.filename, options)
               break
             case 'obj':
-              const deserializeObj = require('@jscad/io').objDeSerializer
+              const deserializeObj = require('@jscad/io').objDeSerializer.deserialize
               r.source = r.converted = deserializeObj(data.source, data.filename, options)
               break
             case 'scad':
@@ -65,7 +65,7 @@ module.exports = function (self) {
               r.converted = openscadOpenJscadParser.parse(r.source)
               break
             case 'stl':
-              const deserializeStl = require('@jscad/io').stlDeSerializer
+              const deserializeStl = require('@jscad/io').stlDeSerializer.deserialize
               r.source = r.converted = deserializeStl(data.source, data.filename, options)
               break
             case 'js':
@@ -75,11 +75,11 @@ module.exports = function (self) {
               r.source = r.converted = data.source
               break
             case 'svg':
-              const deserializeSvg = require('@jscad/io').svgDeSerializer
+              const deserializeSvg = require('@jscad/io').svgDeSerializer.deserialize
               r.source = r.converted = deserializeSvg(data.source, data.filename, options)
               break
             case 'json':
-              const deserializeJson = require('@jscad/io').jsonDeSerializer
+              const deserializeJson = require('@jscad/io').jsonDeSerializer.deserialize
               r.source = r.converted = deserializeJson(data.source, data.filename, options)
               break
             default:
