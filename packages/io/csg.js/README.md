@@ -35,7 +35,7 @@ const csg = require('csg')
 
 ## API
 
-And open doc/index.html using a browser.
+The API documentation can be found [here](https://jscad.github.io/csg.js/ ).
 
 Also see the [OpenJsCad User Guide](https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide).
 
