@@ -1,6 +1,6 @@
-import { version } from '../jscad/version'
+const { version } = require('../jscad/version')
 
-export default function env () {
+function env () {
   var env = 'OpenJSCAD ' + version
   if (typeof document !== 'undefined') {
     var w = document.defaultView
@@ -13,3 +13,5 @@ export default function env () {
   }
   console.log(env)
 }
+
+module.exports = env

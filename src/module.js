@@ -1,8 +1,8 @@
-import oscad from '@jscad/scad-api'
-import { prepareOutput } from './io/prepareOutput'
-import { convertToBlob } from './io/convertToBlob'
-import { rebuildSolid } from './core/rebuildSolid'
-import { resolveIncludesFs } from './utils/resolveIncludesFs'
+const oscad = require('@jscad/scad-api')
+const { prepareOutput } = require('./io/prepareOutput')
+const { convertToBlob } = require('./io/convertToBlob')
+const { rebuildSolid } = require('./core/rebuildSolid')
+const { resolveIncludesFs } = require('./utils/resolveIncludesFs')
 /**
  * compile openjscad code and generates intermediate representation
  * ordering of parameters created with curying in mind

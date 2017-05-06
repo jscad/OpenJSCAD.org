@@ -1,10 +1,10 @@
-import WebWorkify from 'webworkify'
-import { CAG, CSG } from '@jscad/csg'
-import oscad from '@jscad/scad-api'
-import createJscadFunction from './jscad-function'
-import { replaceIncludes } from './replaceIncludes'
-import { resolveIncludes } from './resolveIncludes'
-import { toArray } from '../utils/misc'
+const WebWorkify = require('webworkify')
+const { CAG, CSG } = require('@jscad/csg')
+const oscad = require('@jscad/scad-api')
+const createJscadFunction = require('./jscad-function')
+const { replaceIncludes } = require('./replaceIncludes')
+const { resolveIncludes } = require('./resolveIncludes')
+const { toArray } = require('../utils/misc')
 
 /**
  * evaluate script & rebuild solids, in main thread
@@ -14,7 +14,7 @@ import { toArray } from '../utils/misc'
  * @param {Object} callback the callback to call once evaluation is done /failed
  * @param {Object} options the settings to use when rebuilding the solid
  */
-export function rebuildSolid (script, fullurl, parameters, callback, options) {
+function rebuildSolid (script, fullurl, parameters, callback, options) {
   let basePath = fullurl
   if (basePath.lastIndexOf('/') >= 0) {
     basePath = basePath.substring(0, basePath.lastIndexOf('/') + 1)
@@ -60,7 +60,7 @@ export function rebuildSolid (script, fullurl, parameters, callback, options) {
  * @param {Object} callback the callback to call once evaluation is done /failed
  * @param {Object} options the settings to use when rebuilding the solid
  */
-export function rebuildSolidInWorker (script, fullurl, parameters, callback, options) {
+function rebuildSolidInWorker (script, fullurl, parameters, callback, options) {
   if (!parameters) { throw new Error("JSCAD: missing 'parameters'") }
   if (!window.Worker) throw new Error('Worker threads are unsupported.')
   const defaults = {
@@ -102,4 +102,9 @@ export function rebuildSolidInWorker (script, fullurl, parameters, callback, opt
       if (worker) worker.terminate()
     }
   }
+}
+
+module.exports = {
+  rebuildSolid,
+  rebuildSolidInWorker
 }

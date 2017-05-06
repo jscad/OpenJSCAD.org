@@ -3,18 +3,16 @@
   "version": "0.5.2",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
-  "main": "dist/module.js",
+  "main": "src/module.js",
   "bin": {
-    "openjscad": "dist/cli.js"
+    "openjscad": "src/cli.js"
   },
   "scripts": {
     "test": "ava './src/**/*.test.js' --require babel-register --verbose --timeout 10000",
     "build-web": "browserify src/ui/index.js -o dist/index.js -t [babelify browserify minifyify]",
     "build-min": "browserify src/ui/min.js -o dist/min.js -t [babelify browserify minifyify]",
     "build-opt": "browserify src/ui/opt.js -o dist/opt.js -t [babelify browserify minifyify]",
-    "build-module": "rollup -c rollup.config.module.js",
-    "build-cli": "rollup -c rollup.config.cli.js",
-    "build-all": "npm run build-cli && npm run build-module && npm run build-web && npm run build-min && npm run build-opt",
+    "build-all": "npm run build-web && npm run build-min && npm run build-opt",
     "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
     "release-patch": "git checkout master; npm run build-all && npm version patch && npm run build-all; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-minor": "git checkout master; npm run build-all && npm version minor && npm run build-all; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
@@ -56,13 +54,7 @@
     "browserify": "^13.0.0",
     "browserify-shim": "^3.8.12",
     "budo": "^8.3.0",
-    "minifyify": "^7.3.3",
-    "rollup": "^0.38.0",
-    "rollup-plugin-buble": "^0.15.0",
-    "rollup-plugin-commonjs": "^6.0.1",
-    "rollup-plugin-node-resolve": "^2.0.0",
-    "rollup-plugin-post-replace": "^1.0.0",
-    "rollup-plugin-uglify": "^1.0.1"
+    "minifyify": "^7.3.3"
   },
   "browserify": {
     "transform": [

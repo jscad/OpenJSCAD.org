@@ -1,4 +1,4 @@
-export function log (txt) {
+function log (txt) {
   var timeInMs = Date.now()
   var prevtime = undefined//OpenJsCad.log.prevLogTime
   if (!prevtime) prevtime = timeInMs
@@ -16,6 +16,11 @@ export function log (txt) {
 
 // See Processor.setStatus()
 // Note: leave for compatibility
-export function status (s) {
+function status (s) {
   log(s)
+}
+
+module.exports = {
+  log,
+  status
 }

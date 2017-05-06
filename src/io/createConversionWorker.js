@@ -9,9 +9,9 @@
 //
 // See conversion-worker.js for the conversion process
 //
-import WebWorkify from 'webworkify'
+const WebWorkify = require('webworkify')
 
-export function createConversionWorker (onDone) {
+function createConversionWorker (onDone) {
   //this spawns web workers that can do 'require()' calls
   const worker = WebWorkify(require('./conversionWorker.js'))
   // when the worker finishes
@@ -27,3 +27,5 @@ export function createConversionWorker (onDone) {
   }
   return worker
 }
+
+module.exports = {createConversionWorker}

@@ -1,5 +1,5 @@
-import LightGLEngine from './jscad-viewer-lightgl'
-import {colorRGBA, parseColor} from './jscad-viewer-helpers'
+const LightGLEngine = require('./jscad-viewer-lightgl')
+const {colorRGBA, parseColor} = require('./jscad-viewer-helpers')
 
 /**
  * A viewer is a WebGL canvas that lets the user view a mesh.
@@ -7,7 +7,7 @@ import {colorRGBA, parseColor} from './jscad-viewer-helpers'
  * @param {DOMElement} containerelement container element
  * @param {object}     options          options for renderer
  */
-export default function Viewer (containerelement, options) {
+function Viewer (containerelement, options) {
   // see the defaults method on how to change these
   this.options = Viewer.defaults()
   // apply all options found
@@ -194,3 +194,5 @@ Viewer.prototype = {
     }
   }
 }
+
+module.exports = Viewer

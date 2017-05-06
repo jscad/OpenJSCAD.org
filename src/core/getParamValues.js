@@ -4,7 +4,7 @@
  * @param {Boolean} onlyChanged
  * @returns {Object} the parameter values, as an object
  */
-export default function getParamValues (paramControls, onlyChanged) {
+module.exports = function getParamValues (paramControls, onlyChanged) {
   let paramValues = {}
   let value
   for (var i = 0; i < paramControls.length; i++) {

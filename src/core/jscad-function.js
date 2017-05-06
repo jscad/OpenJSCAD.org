@@ -4,7 +4,7 @@
  * @param {Object} globals the globals to use when evaluating the script: these are not ..
  * ...ACTUAL globals, merely functions/ variable accessible AS IF they were globals !
  */
-export default function createJscadFunction (script, globals) {
+function createJscadFunction (script, globals) {
   // console.log('globals', globals)
   // not a fan of this, we have way too many explicit api elements
   let globalsList = ''
@@ -42,3 +42,5 @@ export default function createJscadFunction (script, globals) {
   var f = new Function('params', 'include', 'globals', source)
   return f
 }
+
+module.exports = createJscadFunction

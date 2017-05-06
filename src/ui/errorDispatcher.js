@@ -1,5 +1,5 @@
 // Call this routine to install a handler for uncaught exceptions
-export default function AlertUserOfUncaughtExceptions () {
+function AlertUserOfUncaughtExceptions () {
   window.onerror = function (message, url, line) {
     var msg = 'uncaught exception'
     switch (arguments.length) {
@@ -31,3 +31,5 @@ export default function AlertUserOfUncaughtExceptions () {
     return false
   }
 }
+
+module.exports = AlertUserOfUncaughtExceptions

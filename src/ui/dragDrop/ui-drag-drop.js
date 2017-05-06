@@ -7,7 +7,7 @@
 // Drag'n'Drop Functionality
 //
 // History:
-//   2016/06/27: 0.5.1: refactored AMF import and export by Z3 Dev
+//   2016/06/27: 0.5.1: refactored AMF const and export by Z3 Dev
 //   2016/05/01: 0.5.0: Enhanced drag and drop for “mobile” devices, adding a File selection button if necessary
 //   2016/02/02: 0.4.0: GUI refactored, functionality split up into more files, mostly done by Z3 Dev
 //   2013/04/02: massively upgraded to support multiple-files (chrome & firefox) and entire directory drag'n'drop (chrome only)
@@ -20,19 +20,19 @@
 // * #filedropzone_filled element
 // * #filedropzone_empty element
 // * #currentfile element
-import { createConversionWorker } from '../../io/createConversionWorker'
-import { putSourceInEditor } from '../editor' // FIXME : eeek! dependency on ui
+const { createConversionWorker } = require('../../io/createConversionWorker')
+const { putSourceInEditor } = require('../editor') // FIXME : eeek! dependency on ui
 
-import {walkFileTree, pseudoArraytoArray, isSupportedFormat} from './walkFileTree'
-import {findMainFile, changedFiles, isLocalMode} from './helpers'
+const {walkFileTree, pseudoArraytoArray, isSupportedFormat} = require('./walkFileTree')
+const {findMainFile, changedFiles, isLocalMode} = require('./helpers')
 
-import {version} from '../../jscad/version'
+const {version} = require('../../jscad/version')
 
 // --- Global Variables
 var currentFiles = [] // linear array, contains files (to read)
 var autoReloadTimer = null
 
-export function setupDragDrop (me, {memFs, gProcessor, gEditor}) {
+function setupDragDrop (me, {memFs, gProcessor, gEditor}) {
   //memFs : // associated array, contains file content in source memFs[i].{name,source, fullpath}
   var memFsCount = 0 // async reading: count of already read files
   var memFsTotal = 0 // async reading: total files to read (Count==Total => all files read)
@@ -271,4 +271,8 @@ export function setupDragDrop (me, {memFs, gProcessor, gEditor}) {
     toggleAutoReload,
     reloadAllFiles
   }
+}
+
+module.exports = {
+  setupDragDrop
 }

@@ -1,6 +1,6 @@
-import { createConversionWorker } from '../io/createConversionWorker'
-import { putSourceInEditor } from './editor' // FIXME : eeek! dependency on ui
-import { version } from '../jscad/version'
+const { createConversionWorker } = require('../io/createConversionWorker')
+const { putSourceInEditor } = require('./editor') // FIXME : eeek! dependency on ui
+const { version } = require('../jscad/version')
 
 const examples = [
   { file: 'logo.jscad', title: 'OpenJSCAD.org Logo' },
@@ -65,7 +65,7 @@ const examples = [
   { file: 'feathers_mcgraw.stl', title: '3D Model: Feathers Mcgraw (q1g0ng)', type: 'STL', new: true }
 ]
 
-export function createExamples (me) {
+function createExamples (me) {
   if (me === 'web-online') {
     var wrap = 26
     var colp = 100 / Math.floor(examples.length / wrap + 1) + '%'
@@ -88,7 +88,7 @@ export function createExamples (me) {
   }
 }
 
-export function fetchExample (filename, url, {memFs, gProcessor, gEditor}) {
+function fetchExample (filename, url, {memFs, gProcessor, gEditor}) {
   memFs = []
 
   const hasExtension = filename.match(/\.[^\/]+$/)
@@ -138,7 +138,7 @@ export function fetchExample (filename, url, {memFs, gProcessor, gEditor}) {
   }
 }
 
-export function loadInitialExample (me, params) {
+function loadInitialExample (me, params) {
   if (me === 'web-online') { // we are online, fetch first example
     const docUrl = document.URL
     const isRemote = docUrl.match(/#(https?:\/\/\S+)$/)
@@ -181,4 +181,10 @@ export function loadInitialExample (me, params) {
       fetchExample('examples/' + examples[0].file, undefined, params)
     }
   }
+}
+
+module.exports = {
+  createExamples,
+  fetchExample,
+  loadInitialExample
 }

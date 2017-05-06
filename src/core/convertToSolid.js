@@ -1,5 +1,5 @@
-import { CSG, CAG } from '@jscad/csg'
-import {toArray} from '../utils/misc'
+const { CSG, CAG } = require('@jscad/csg')
+const {toArray} = require('../utils/misc')
 
 // FIXME: is there not too much overlap with convertToBlob ?
 /**
@@ -7,7 +7,7 @@ import {toArray} from '../utils/misc'
  * @param {Array} objects the list of objects
  * @return {Object} solid : the single CSG object
  */
-export default function convertToSolid (objects, params) {
+function convertToSolid (objects, params) {
   if (objects.length === undefined) {
     if ((objects instanceof CAG) || (objects instanceof CSG)) {
       var obj = objects
@@ -32,7 +32,7 @@ export default function convertToSolid (objects, params) {
   return solid
 }
 
-export function convertToSolid2 (objects, params) {
+function convertToSolid2 (objects, params) {
   const {convertCSG, convertCAG} = params
 
   let object
@@ -63,4 +63,9 @@ export function convertToSolid2 (objects, params) {
   }
 
   return object
+}
+
+module.exports = {
+  convertToSolid,
+  convertToSolid2
 }

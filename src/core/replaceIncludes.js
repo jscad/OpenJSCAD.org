@@ -14,7 +14,7 @@ const astring = require('astring')
  * @param {String} memFs memFs cache object
  * @returns {String} the full script, with inlined
  */
-export function replaceIncludes (source, basePath, relPath, {memFs, includeResolver}) {
+function replaceIncludes (source, basePath, relPath, {memFs, includeResolver}) {
   return new Promise(function (resolve, reject) {
     const moduleAst = astFromSource(source)
     const foundIncludes = findIncludes(moduleAst).map(x => x.value)
@@ -114,4 +114,8 @@ function replaceIncludesInAst (ast, replacement = '') {
   })
 
   return astring.generate(result, {indent: '  ', lineEnd: '\n'})
+}
+
+module.exports = {
+  replaceIncludes
 }

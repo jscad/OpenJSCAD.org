@@ -38,12 +38,11 @@
 // 2013/03/02: 0.002: proper installation of the dependencies (csg.js & openscad.js) so openjscad can be used properly
 // 2013/03/01: 0.001: initial version, with base function from openscad.jscad
 //
-import fs from 'fs'
-
-import {version} from './jscad/version'
-import env from './cli/env'
-import generateOutputData from './cli/generateOutputData'
-import { formats } from './io/formats'
+const fs = require('fs')
+const {version} = require('./jscad/version')
+const env = require('./cli/env')
+const generateOutputData = require('./cli/generateOutputData')
+const { formats } = require('./io/formats')
 
 // var csg = sphere(1);          // -- basic test
 // var csg = require(file).main; // -- treating .jscad as module? later perhaps

@@ -1,8 +1,7 @@
 const test = require('ava')
 const path = require('path')
 const fs = require('fs')
-const openjscad = require('../dist/module')
-//import openjscad from '../dist/module'
+const openjscad = require('./module')
 
 function almostEquals (t, observed, expected, precision) {
   t.is(Math.abs(expected - observed) < precision, true)
