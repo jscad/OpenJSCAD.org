@@ -1,21 +1,19 @@
-import { CAG, CSG } from '@jscad/csg'
-
-import log from './log'
-import getParamDefinitions from '../core/getParamDefinitions'
-import getParamValues from '../core/getParamValues'
-import { rebuildSolid, rebuildSolidInWorker } from '../core/rebuildSolid'
-import convertToSolid from '../core/convertToSolid'
+const log = require('./log')
+const getParamDefinitions = require('../core/getParamDefinitions')
+const getParamValues = require('../core/getParamValues')
+const { rebuildSolid, rebuildSolidInWorker } = require('../core/rebuildSolid')
+const { convertToSolid } = require('../core/convertToSolid')
 
 // output handling
-import { generateOutputFile } from '../io/generateOutputFile'
-import { prepareOutput } from '../io/prepareOutput'
-import { convertToBlob } from '../io/convertToBlob'
-import { formats, supportedFormatsForObjects } from '../io/formats'
-import { revokeBlobUrl } from '../io/utils'
+const { generateOutputFile } = require('../io/generateOutputFile')
+const { prepareOutput } = require('../io/prepareOutput')
+const { convertToBlob } = require('../io/convertToBlob')
+const { formats, supportedFormatsForObjects } = require('../io/formats')
+const { revokeBlobUrl } = require('../io/utils')
 
-import Viewer from '../ui/viewer/jscad-viewer'
+const Viewer = require('../ui/viewer/jscad-viewer')
 
-export default function Processor (containerdiv, options) {
+function Processor (containerdiv, options) {
   if (options === undefined) options = {}
   // the default options
   this.opts = {
@@ -769,3 +767,5 @@ Processor.prototype = {
     }
   }
 }
+
+module.exports = Processor

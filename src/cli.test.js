@@ -1,8 +1,8 @@
 // FIXME: tests are basic 'is the output file there, how  big is it' for now, actual checks are needed !!
-import test from 'ava'
-import path from 'path'
-import {execSync} from 'child_process'
-import fs from 'fs'
+const test = require('ava')
+const path = require('path')
+const {execSync} = require('child_process')
+const fs = require('fs')
 
 function almostEquals (t, observed, expected, precision) {
   t.is(Math.abs(expected - observed) < precision, true)
@@ -18,7 +18,7 @@ test.afterEach.always(t => {
 })
 
 test.beforeEach(t => {
-  let jscadPath = '../dist/cli'
+  let jscadPath = './cli'
   t.context = {
     jscadPath: path.resolve(__dirname, jscadPath)
   }
@@ -101,31 +101,7 @@ test('jscad to amf(with transparency)', t => {
   almostEquals(t, fs.statSync(outputPath).size, 240108, 50)
 })
 
-// FIXME: DXF not working
-/* test('jscad to dxf', t => {
-  const inputPath = path.resolve(__dirname, '../examples/cnc-cutout.jscad')
-  const outputPath = 'test.dxf'
-  const jscadPath = t.context.jscadPath
-  const expPath = outputPath
-  t.context = {outputPath}
 
-  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of dxf`
-  execSync(cmd, {stdio: [0, 1, 2]})
-  t.deepEqual(true, fs.existsSync(expPath))
-})
-
-//FIXME: svg not working
-test('jscad to svg', t => {
-  const inputPath = path.resolve(__dirname, '../examples/example001.jscad')
-  const outputPath = 'test.svg'
-  const jscadPath = t.context.jscadPath
-  const expPath = outputPath
-  t.context = {outputPath}
-
-  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of svg`
-  execSync(cmd, {stdio: [0, 1, 2]})
-  t.deepEqual(true, fs.existsSync(expPath))
-}) */
 
 test('openscad to stl (ascii)', t => {
   const jscadPath = t.context.jscadPath
@@ -219,3 +195,29 @@ test('include support, with sub folders', t => {
   t.deepEqual(true, fs.existsSync(expPath))
   almostEquals(t, fs.statSync(outputPath).size, 281479, 2)
 })
+
+// FIXME: DXF not working
+/* test('jscad to dxf', t => {
+  const inputPath = path.resolve(__dirname, '../examples/cnc-cutout.jscad')
+  const outputPath = 'test.dxf'
+  const jscadPath = t.context.jscadPath
+  const expPath = outputPath
+  t.context = {outputPath}
+
+  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of dxf`
+  execSync(cmd, {stdio: [0, 1, 2]})
+  t.deepEqual(true, fs.existsSync(expPath))
+})
+
+//FIXME: svg not working
+test('jscad to svg', t => {
+  const inputPath = path.resolve(__dirname, '../examples/example001.jscad')
+  const outputPath = 'test.svg'
+  const jscadPath = t.context.jscadPath
+  const expPath = outputPath
+  t.context = {outputPath}
+
+  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of svg`
+  execSync(cmd, {stdio: [0, 1, 2]})
+  t.deepEqual(true, fs.existsSync(expPath))
+}) */

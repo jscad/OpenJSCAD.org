@@ -5,7 +5,7 @@
  * @param {String} scriptPath the path to the script
  * @param {Object} memFs local cache (optional)
  */
-export function resolveIncludes (relpath, scriptPath, memFs) {
+function resolveIncludes (relpath, scriptPath, memFs) {
   // include the requested script via MemFs if possible
   return new Promise(function (resolve, reject) {
     if (typeof (memFs) === 'object') {
@@ -34,4 +34,8 @@ export function resolveIncludes (relpath, scriptPath, memFs) {
     xhr.onerror = err => { reject(err) }
     xhr.send()
   })
+}
+
+module.exports = {
+  resolveIncludes
 }

@@ -3,19 +3,19 @@
  * @param   {object} color `{r: r, g: g, b: b, a: a}`
  * @returns {Array}  `[r, g, b, a]`
  */
-export function colorBytes (colorRGBA) {
+function colorBytes (colorRGBA) {
   var result = [colorRGBA.r, colorRGBA.g, colorRGBA.b]
   if (colorRGBA.a !== undefined) result.push(colorRGBA.a)
   return result
 }
 
-export function colorRGBA (colorBytes) {
+function colorRGBA (colorBytes) {
   var result = {r: colorBytes[0], g: colorBytes[1], b: colorBytes[2]}
   if (colorBytes[3] !== undefined) result.a = colorBytes[3]
   return result
 }
 
-export function cssFnSingleColor (str) {
+function cssFnSingleColor (str) {
   if (str[str.length - 1] === '%') {
     return parseInt(str, 10) / 100
   } else {
@@ -23,7 +23,7 @@ export function cssFnSingleColor (str) {
   }
 }
 
-export function parseColor (color) {
+function parseColor (color) {
   // hsl, hsv, rgba, and #xxyyzz is supported
   var rx = {
     'html3': /^#([a-f0-9]{3})$/i,
@@ -45,8 +45,12 @@ export function parseColor (color) {
   // rgba = [match[1], match[2], match[3], match[4]]
   // console.log (rgba)
   }
-
-  // console.log (match)
-
   return rgba
+}
+
+module.exports = {
+  colorBytes,
+  colorRGBA,
+  cssFnSingleColor,
+  parseColor
 }

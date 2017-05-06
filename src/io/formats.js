@@ -1,7 +1,7 @@
-import { CSG, CAG } from '@jscad/csg'
+const { CSG, CAG } = require('@jscad/csg')
 
 // handled format descriptions
-export const formats = {
+const formats = {
   stl: {
     displayName: 'STL (ASCII)',
     description: 'STereoLithography, ASCII',
@@ -81,7 +81,7 @@ export const formats = {
 }
 
 // handled input formats
-export const conversionFormats = [
+const conversionFormats = [
 // 3D file formats
   'amf',
   'gcode',
@@ -94,7 +94,7 @@ export const conversionFormats = [
   'svg'
 ]
 
-export function supportedFormatsForObjects (objects) {
+function supportedFormatsForObjects (objects) {
   let objectFormats = []
   let foundCSG = false
   let foundCAG = false
@@ -112,4 +112,10 @@ export function supportedFormatsForObjects (objects) {
     }
   }
   return objectFormats
+}
+
+module.exports = {
+  formats,
+  conversionFormats,
+  supportedFormatsForObjects
 }

@@ -1,14 +1,14 @@
-export function isSafari () {
+function isSafari () {
   return /Version\/[\d\.]+.*Safari/.test(window.navigator.userAgent) // FIXME WWW says don't use this
 }
 
-export function getWindowURL () {
+function getWindowURL () {
   if (window.URL) return window.URL
   else if (window.webkitURL) return window.webkitURL
   else throw new Error("Your browser doesn't support window.URL")
 }
 
-export function FileSystemApiErrorHandler (fileError, operation) {
+function FileSystemApiErrorHandler (fileError, operation) {
   const errormap = {
     1: 'NOT_FOUND_ERR',
     2: 'SECURITY_ERR',
@@ -33,8 +33,15 @@ export function FileSystemApiErrorHandler (fileError, operation) {
   throw new Error(errtxt)
 }
 
-export function revokeBlobUrl (url) {
+function revokeBlobUrl (url) {
   if (window.URL) window.URL.revokeObjectURL(url)
   else if (window.webkitURL) window.webkitURL.revokeObjectURL(url)
   else throw new Error("Your browser doesn't support window.URL")
+}
+
+module.exports = {
+  isSafari,
+  getWindowURL,
+  revokeBlobUrl,
+  FileSystemApiErrorHandler
 }

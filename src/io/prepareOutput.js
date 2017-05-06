@@ -1,22 +1,14 @@
-import { formats } from './formats'
-import {convertToSolid2} from '../core/convertToSolid'
+const { formats } = require('./formats')
+const {convertToSolid2} = require('../core/convertToSolid')
 
-/*import CSGToStla from '@jscad/io/writers/CSGToStla'
-import CSGToStlb from '@jscad/io/writers/CSGToStlb'
-import CSGToAMF from '@jscad/io/writers/CSGToAMF'
-import CSGToX3D from '@jscad/io/writers/CSGToX3D'
-import CAGToSvg from '@jscad/io/writers/CAGToSvg'
-import CAGToJson from '@jscad/io/writers/CAGToJson'
-import CAGToDxf from '@jscad/io/writers/CAGToDxf'*/
-import {stlSerializer} from '@jscad/io'
-import {amfSerializer} from '@jscad/io'
-import {x3dSerializer} from '@jscad/io'
-import {svgSerializer} from '@jscad/io'
-import {jsonSerializer} from '@jscad/io'
-import {dxfSerializer} from '@jscad/io'
+const {stlSerializer} = require('@jscad/io')
+const {amfSerializer} = require('@jscad/io')
+const {x3dSerializer} = require('@jscad/io')
+const {svgSerializer} = require('@jscad/io')
+const {jsonSerializer} = require('@jscad/io')
+const {dxfSerializer} = require('@jscad/io')
 
-
-export function prepareOutput (objects, params) {
+function prepareOutput (objects, params) {
   const {format, version = '0.0.0'} = params
 
   let object
@@ -35,7 +27,6 @@ export function prepareOutput (objects, params) {
   }
 
   const foo = require('@jscad/io')
-
 
   const outputFormatHandlers = {
     amf: amfSerializer, // CSG to AMF
@@ -64,4 +55,8 @@ export function prepareOutput (objects, params) {
   const data = outputFormatHandlers[format].serialize(object, metaData)
   const mimeType = outputFormatHandlers[format].mimeType
   return {data, mimeType}
+}
+
+module.exports = {
+  prepareOutput
 }

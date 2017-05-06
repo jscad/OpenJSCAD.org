@@ -1,10 +1,10 @@
 const {isAbsolute, resolve} = require('path')
-import oscad from '@jscad/scad-api'
-import { prepareOutput } from '../io/prepareOutput'
-import { convertToBlob } from '../io/convertToBlob'
-import { rebuildSolid } from '../core/rebuildSolid'
-import { resolveIncludesFs } from '../utils/resolveIncludesFs'
-import getParameterDefinitionsCLI from './getParameterDefinitionsCLI'
+const oscad = require('@jscad/scad-api')
+const { prepareOutput } = require('../io/prepareOutput')
+const { convertToBlob } = require('../io/convertToBlob')
+const { rebuildSolid } = require('../core/rebuildSolid')
+const { resolveIncludesFs } = require('../utils/resolveIncludesFs')
+const getParameterDefinitionsCLI = require('./getParameterDefinitionsCLI')
 
 /**
  * generate output data from source
@@ -13,7 +13,7 @@ import getParameterDefinitionsCLI from './getParameterDefinitionsCLI'
  * @param {String} options
  * @return a Promise with the output data
  */
-export default function generateOutputData (source, params, options) {
+function generateOutputData (source, params, options) {
   const defaults = {
     implicitGlobals: true,
     outputFormat: 'stl',
@@ -62,3 +62,5 @@ export default function generateOutputData (source, params, options) {
 
 // return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})
 }
+
+module.exports = generateOutputData

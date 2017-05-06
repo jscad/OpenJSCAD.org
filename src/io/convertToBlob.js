@@ -1,9 +1,13 @@
-import { makeBlob } from '@jscad/io'
+const { makeBlob } = require('@jscad/io')
 
 const Blob = makeBlob()
 
-export function convertToBlob (input) {
+function convertToBlob (input) {
   const {data, mimeType} = input
   const blob = new Blob(data, { type: mimeType })
   return blob
+}
+
+module.exports = {
+  convertToBlob
 }

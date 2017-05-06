@@ -5,7 +5,7 @@
  * @param {Array} files - The list of files : need to have a source & name field.
  * @return array of files that changed
  */
-export function changedFiles (memFs, files) {
+function changedFiles (memFs, files) {
   return files.filter(file => (!memFs[file.name] || memFs[file.name].source !== file.source))
 }
 
@@ -17,7 +17,7 @@ export function changedFiles (memFs, files) {
  * @param {Array} files - The list of files : need to have a source & name field.
  * @return the main file, or undefined
  */
-export function findMainFile ({memFs, memFsTotal}, files) {
+function findMainFile ({memFs, memFsTotal}, files) {
   let mainFile
   if (memFsTotal > 1) {
     for (let filename in memFs) {
@@ -42,16 +42,24 @@ export function findMainFile ({memFs, memFsTotal}, files) {
 }
 
 // FIXME : this could be usefull overall , we should reuse
-export function isLocalMode () {
+function isLocalMode () {
   return document.location.toString().match(/^file\:\//i)
 }
 
 // FIXME: SAME
-export function isMobile () {
+function isMobile () {
   return 'createTouch' in document
 }
 
 // FIXME: SAME
-export function hasDragDropSupport () {
+function hasDragDropSupport () {
   return window.File && window.FileReader && window.FileList
+}
+
+module.exports = {
+  changedFiles,
+  findMainFile,
+  isLocalMode,
+  isMobile,
+  hasDragDropSupport
 }

@@ -1,15 +1,13 @@
-
-import {baseInteractionsFromEvents, pointerGestures} from 'most-gestures'
-
-import GL from './lightgl'
-import {colorBytes} from './jscad-viewer-helpers'
+const {baseInteractionsFromEvents, pointerGestures} = require('most-gestures')
+const GL = require('./lightgl')
+const {colorBytes} = require('./jscad-viewer-helpers')
 
 /**
  * lightgl.js renderer for jscad viewer
  * @param {DOMElement} containerelement container element
  * @param {object}     options    options for renderer
  */
-export default function LightGLEngine (containerelement, options) {
+function LightGLEngine (containerelement, options) {
   this.options = options
 
   this.containerEl = containerelement
@@ -483,3 +481,5 @@ LightGLEngine.prototype = {
     return meshes
   }
 }
+
+module.exports = LightGLEngine

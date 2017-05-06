@@ -1,6 +1,6 @@
-import { isSafari, getWindowURL } from './utils'
+const { isSafari, getWindowURL } = require('./utils')
 
-export default function generateOutputFileBlobUrl (extension, blob, callback) {
+module.exports = function generateOutputFileBlobUrl (extension, blob, callback) {
   if (isSafari()) {
     // console.log("Trying download via DATA URI")
     // convert BLOB to DATA URI

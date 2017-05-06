@@ -2,11 +2,11 @@
 //
 // == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
 
-import { CAG, CSG } from '@jscad/csg'
-import oscad from '@jscad/scad-api'
+const { CAG, CSG } = require('@jscad/csg')
+const oscad = require('@jscad/scad-api')
 
-import createJscadFunction from './jscad-function'
-import { toArray } from '../utils/misc'
+const createJscadFunction = require('./jscad-function')
+const { toArray } = require('../utils/misc')
 
 /**
  * Create an worker (thread) for processing the JSCAD script into CSG/CAG objects

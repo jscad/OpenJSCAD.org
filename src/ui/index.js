@@ -1,15 +1,15 @@
 // == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
-import { setUpEditor } from './editor'
-import { setupDragDrop } from './dragDrop/ui-drag-drop' // toggleAutoReload
+const { setUpEditor } = require('./editor')
+const { setupDragDrop } = require('./dragDrop/ui-drag-drop') // toggleAutoReload
 
-import { detectBrowser } from './detectBrowser'
-import { getUrlParams } from './urlHelpers'
-import { createExamples, fetchExample, loadInitialExample } from './examples'
-import { createOptions, getOptions } from './options'
-import AlertUserOfUncaughtExceptions from './errorDispatcher'
+const { detectBrowser } = require('./detectBrowser')
+const { getUrlParams } = require('./urlHelpers')
+const { createExamples, fetchExample, loadInitialExample } = require('./examples')
+const { createOptions, getOptions } = require('./options')
+const AlertUserOfUncaughtExceptions = require('./errorDispatcher')
 
-import { version } from '../jscad/version'
-import Processor from '../jscad/processor'
+const { version } = require('../jscad/version')
+const Processor = require('../jscad/processor')
 
 const me = document.location.toString().match(/^file:/) ? 'web-offline' : 'web-online'
 const browser = detectBrowser()

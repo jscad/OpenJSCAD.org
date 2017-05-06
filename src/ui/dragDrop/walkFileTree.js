@@ -1,5 +1,5 @@
-import { conversionFormats } from '../../io/formats'
-import {findMainFile, changedFiles} from './helpers'
+const { conversionFormats } = require('../../io/formats')
+const {findMainFile, changedFiles} = require('./helpers')
 
 function flatten (array) {
   return [].concat(...array)

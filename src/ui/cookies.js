@@ -14,7 +14,7 @@
 
 // --- Global Functions
 
-export function setCookie (name, value, days) {
+function setCookie (name, value, days) {
   var expires = ''
   if (days) {
     var date = new Date()
@@ -24,7 +24,7 @@ export function setCookie (name, value, days) {
   document.cookie = escape(name) + '=' + escape(value) + expires + '; path=/'
 }
 
-export function getCookie (name) {
+function getCookie (name) {
   var nameEQ = escape(name) + '='
   var ca = document.cookie.split(';')
   for (var i = 0; i < ca.length; i++) {
@@ -35,6 +35,12 @@ export function getCookie (name) {
   return null
 }
 
-export function deleteCookie (name) {
+function deleteCookie (name) {
   setCookie(name, '', -1)
+}
+
+module.exports = {
+  setCookie,
+  getCookie,
+  deleteCookie
 }

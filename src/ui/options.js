@@ -1,4 +1,4 @@
-import { getCookie } from './cookies'
+const { getCookie } = require('./cookies')
 
 var options = [ 'renderCode', 'author', 'license' ]
 var metakeys = [ 'author', 'license' ]
@@ -14,7 +14,7 @@ function getOrCreateElementById (id) {
 }
 
 
-export function saveOptions (metadata) {
+function saveOptions (metadata) {
   for (var k in options) {
     k = options[k]
     setCookie(k, document.getElementById(k).value)
@@ -22,7 +22,7 @@ export function saveOptions (metadata) {
   }
 }
 
-export function getOptions () {
+function getOptions () {
   for (var k in options) {
     k = options[k]
     if (getCookie(k)) {
@@ -31,7 +31,7 @@ export function getOptions () {
   }
 }
 
-export function createOptions () {
+function createOptions () {
   var src = ''
   src += "<form id=optionsForm onsubmit='saveOptions(); return false'>"
   src += '<div class=optionGroup><b>Your Identity / Full Name & Email</b><br/>'
@@ -107,4 +107,10 @@ export function createOptions () {
   let elt = getOrCreateElementById('options')
   elt.innerHTML = src
   return elt
+}
+
+module.exports = {
+  saveOptions,
+  getOptions,
+  createOptions
 }

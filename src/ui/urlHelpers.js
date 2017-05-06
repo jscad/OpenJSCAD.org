@@ -1,6 +1,6 @@
 // this is a bit of a hack; doesn't properly supports urls that start with '/'
 // but does handle relative urls containing ../
-export function makeAbsoluteUrl (url, baseurl) {
+function makeAbsoluteUrl (url, baseurl) {
   if (!url.match(/^[a-z]+\:/i)) {
     var basecomps = baseurl.split('/')
     if (basecomps.length > 0) {
@@ -27,7 +27,7 @@ export function makeAbsoluteUrl (url, baseurl) {
   return url
 }
 
-export function textToBlobUrl (txt) {
+function textToBlobUrl (txt) {
   var windowURL = getWindowURL()
   var blob = new Blob([txt], { type: 'application/javascript' })
   var blobURL = windowURL.createObjectURL(blob)
@@ -35,7 +35,7 @@ export function textToBlobUrl (txt) {
   return blobURL
 }
 
-export function getUrlParams (url) {
+function getUrlParams (url) {
   let match
   let params = {}
   let docTitle
@@ -69,4 +69,10 @@ export function getUrlParams (url) {
     showEditor,
     fetchUrl
   }
+}
+
+module.exports = {
+  makeAbsoluteUrl,
+  textToBlobUrl,
+  getUrlParams
 }

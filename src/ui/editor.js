@@ -13,16 +13,15 @@
 // #editor element
 
 // --- Global Variables
-import ace from 'brace'
+const ace = require('brace')
 require('brace/mode/javascript')
 require('brace/mode/scad')
 require('brace/theme/chrome')
 
-import openscadOpenJscadParser from 'openscad-openjscad-translator'
-
+const openscadOpenJscadParser = require('openscad-openjscad-translator')
 
 // See http://ace.ajax.org/#nav=howto
-export function setUpEditor (divname, gProcessor) {
+function setUpEditor (divname, gProcessor) {
   var gEditor = null
   if (divname === undefined) { divname = 'editor' }
   if (document.getElementById(divname) === null) return
@@ -127,7 +126,7 @@ export function setUpEditor (divname, gProcessor) {
   return gEditor
 }
 
-export function putSourceInEditor (gEditor, src, fn) {
+function putSourceInEditor (gEditor, src, fn) {
   if (gEditor !== null) {
     gEditor.setValue(src, -1)
     if (src.match(/^\/\/!OpenSCAD/i)) {
@@ -138,9 +137,15 @@ export function putSourceInEditor (gEditor, src, fn) {
   }
 }
 
-export function getSourceFromEditor (gEditor) {
+function getSourceFromEditor (gEditor) {
   if (gEditor !== null) {
     return gEditor.getValue()
   }
   return ''
+}
+
+module.exports = {
+  setUpEditor,
+  putSourceInEditor,
+  getSourceFromEditor
 }
