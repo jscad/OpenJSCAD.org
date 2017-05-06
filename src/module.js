@@ -1,4 +1,5 @@
 import oscad from '@jscad/scad-api'
+import { prepareOutput } from './io/prepareOutput'
 import { convertToBlob } from './io/convertToBlob'
 import { rebuildSolid } from './core/rebuildSolid'
 import { resolveIncludesFs } from './utils/resolveIncludesFs'
@@ -41,7 +42,7 @@ function compile (source, params, options) {
  * @param  {Object} objects the CSG/CAG object or array of CSG/CAG objects
  */
 function generateOutput (outputFormat, objects) {
-  return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})
+  return convertToBlob(prepareOutput(objects, {format: outputFormat}))
 }
 
 module.exports = {generateOutput, compile}

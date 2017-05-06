@@ -21,6 +21,7 @@ export default function getParameterDefinitionsCLI (getParameterDefinitions, par
       }
     }
     return p
-  } else
+  } else {
     return param
+  }
 }

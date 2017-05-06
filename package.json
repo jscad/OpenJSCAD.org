@@ -36,15 +36,15 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/csg": "^0.1.4",
-    "@jscad/io": "^0.1.0",
-    "@jscad/scad-api": "^0.2.0",
+    "@jscad/csg": "latest",
+    "@jscad/io": "latest",
+    "@jscad/scad-api": "latest",
+    "@jscad/openscad-openjscad-translator": "latest",
     "astring": "^1.0.2",
     "brace": "^0.9.0",
     "esprima": "^3.1.3",
     "estraverse": "^4.2.0",
     "most-gestures": "^0.2.0",
-    "openscad-openjscad-translator": "github:jscad/openscad-openjscad-translator",
     "webworkify": "^1.4.0"
   },
   "devDependencies": {

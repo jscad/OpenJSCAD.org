@@ -1,4 +1,3 @@
-import { revokeBlobUrl } from '@jscad/io'
 import { CAG, CSG } from '@jscad/csg'
 
 import log from './log'
@@ -8,10 +7,11 @@ import { rebuildSolid, rebuildSolidInWorker } from '../core/rebuildSolid'
 import convertToSolid from '../core/convertToSolid'
 
 // output handling
-import generateOutputFileBlobUrl from '../io/generateOutputFileBlobUrl'
-import generateOutputFileFileSystem from '../io/generateOutputFileFileSystem'
-import {convertToBlob} from '../io/convertToBlob'
-import {formats, supportedFormatsForObjects} from '../io/formats'
+import { generateOutputFile } from '../io/generateOutputFile'
+import { prepareOutput } from '../io/prepareOutput'
+import { convertToBlob } from '../io/convertToBlob'
+import { formats, supportedFormatsForObjects } from '../io/formats'
+import { revokeBlobUrl } from '../io/utils'
 
 import Viewer from '../ui/viewer/jscad-viewer'
 
@@ -538,8 +538,6 @@ Processor.prototype = {
         // FIXME: what to do with this one ?
         // that.outputFileDirEntry = dirEntry // save for later removal
       }
-      // this.downloadOutputFileLink.type = this.selectedFormatInfo().mimetype
-
       this.downloadOutputFileLink.innerHTML = this.downloadLinkTextForCurrentObject()
       this.downloadOutputFileLink.setAttribute('download', downloadAttribute)
       if (noData) {
@@ -549,11 +547,7 @@ Processor.prototype = {
     }
 
     if (this.viewedObject) {
-      try {
-        generateOutputFileFileSystem(extension, blob, onDone.bind(this))
-      } catch (e) {
-        generateOutputFileBlobUrl(extension, blob, onDone.bind(this))
-      }
+      generateOutputFile(extension, blob, onDone, this)
       if (this.ondownload) this.ondownload(this)
     }
   },
@@ -564,12 +558,11 @@ Processor.prototype = {
     if (startpoint > endpoint) { startpoint = this.selectEndPoint; endpoint = this.selectStartPoint }
 
     const format = this.selectedFormat()
-    const formatInfo = this.formatInfo(format)
 
     // if output format is jscad , use that, otherwise use currentObjects
     const objects = format === 'jscad' ? this.script : this.currentObjects.slice(startpoint, endpoint + 1)
 
-    return convertToBlob(objects, {format, formatInfo})
+    return convertToBlob(prepareOutput(objects, {format}))
   },
 
   formatInfo: function (format) {

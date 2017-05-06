@@ -1,4 +1,5 @@
 import { CSG, CAG } from '@jscad/csg'
+import {toArray} from '../utils/misc'
 
 // FIXME: is there not too much overlap with convertToBlob ?
 /**
@@ -6,7 +7,7 @@ import { CSG, CAG } from '@jscad/csg'
  * @param {Array} objects the list of objects
  * @return {Object} solid : the single CSG object
  */
-export default function convertToSolid (objects) {
+export default function convertToSolid (objects, params) {
   if (objects.length === undefined) {
     if ((objects instanceof CAG) || (objects instanceof CSG)) {
       var obj = objects
@@ -29,4 +30,37 @@ export default function convertToSolid (objects) {
     }
   }
   return solid
+}
+
+export function convertToSolid2 (objects, params) {
+  const {convertCSG, convertCAG} = params
+
+  let object
+  objects = toArray(objects)
+  // review the given objects
+  let foundCSG = false
+  let foundCAG = false
+  for (let i = 0; i < objects.length; i++) {
+    if (objects[i] instanceof CSG) { foundCSG = true }
+    if (objects[i] instanceof CAG) { foundCAG = true }
+  }
+  // convert based on the given format
+  foundCSG = foundCSG && convertCSG
+  foundCAG = foundCAG && convertCAG
+  if (foundCSG && foundCAG) { foundCAG = false } // use 3D conversion
+
+  object = !foundCSG ? new CAG() : new CSG()
+
+  for (let i = 0; i < objects.length; i++) {
+    if (foundCSG === true && objects[i] instanceof CAG) {
+      object = object.union(objects[i].extrude({offset: [0, 0, 0.1]})) // convert CAG to a thin solid CSG
+      continue
+    }
+    if (foundCAG === true && objects[i] instanceof CSG) {
+      continue
+    }
+    object = object.union(objects[i])
+  }
+
+  return object
 }
