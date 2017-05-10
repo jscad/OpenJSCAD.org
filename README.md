@@ -105,7 +105,6 @@ const outputData = jscad.generateOutput('stlb', input)
 fs.writeFileSync('torus.stl', outputData.asBuffer())
 ```
 
-
 #### Module api
 
 *compile(params, source)*
@@ -118,7 +117,6 @@ fs.writeFileSync('torus.stl', outputData.asBuffer())
 generate output file from a CSG/CAG object or array of CSG/CAG objects
  *outputFormat* the output file format
  *csgs* the CSG/CAG object or array of CSG/CAG objects
-
 
 ### Development
 
@@ -134,6 +132,27 @@ to run the dev server
 ```
 npm run start-dev
 ```
+
+## Contribute
+
+OpenJSCAD.org is part of the JSCAD Organization, and is maintained by a group of volunteers. We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
+
+* If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
+
+* If you want to submit a change or a patch, please see the [Contributing guidelines](https://github.com/jscad/OpenJSCAD.org/blob/master/CONTRIBUTING.md). New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
+
+* We only accept bug reports and pull requests on **GitHub**.
+
+* If you have a question about how to use the IO library, then please start a conversation at the [OpenJSCAD.org User Group](https://plus.google.com/communities/114958480887231067224). You might find the answer in the [OpenJSCAD.org User Guide](https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide).
+
+* If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://plus.google.com/communities/114958480887231067224) and start contributing changes.
+
+Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
+
+PRs accepted. Please see the guidelines [here](https://github.com/jscad/OpenJSCAD.org/blob/master/CONTRIBUTING.md)
+
+Small note: If editing the Readme, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
+
 ## History
 
 - 2016/04/29: 0.6.0: total rework of application and library structure
@@ -210,13 +229,6 @@ Drag & drop a local file:
 
 Drag & drop multiple files (Chrome & Firefox) or a folder (Chrome):
 <img src="doc/sshot-06-illu.png">
-
-## Contribute
-
-PRs accepted. Please see the guidelines [here](https://github.com/jscad/OpenJSCAD.org/blob/master/CONTRIBUTING.md)
-
-
-Small note: If editing the Readme, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 
 ## License
