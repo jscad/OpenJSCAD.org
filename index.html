@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 <!--
-== OpenJSCAD.org, Copyright (c) 2013-2016 by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License ==
+== OpenJSCAD.org, Copyright (c) 2013-2017 by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License ==
    with some code from OpenJsCad processfile.html by Joost Nieuwenhuijse
    in conjunction with csg.js, openjscad.js, lightgl.js by various authors (see them listed in the individual files)
 
@@ -11,6 +11,7 @@ Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
 
 History:
+  2017/04/29: 0.6.0: reworked to use new bar library; index.js
 - 2016/10/01: 0.5.2: updated documentation links by Z3 Dev
                      updated Ace editor to 1.2.4
                      fixed AMF export to set colors only when provided
@@ -45,8 +46,7 @@ History:
 - 2013/03/10: 0.001: first version, integrating ACE editor, for now pulled from 3rd party web-site
 
 Todo:
-- saving source code edited in ACE locally, perhaps 'SaveAs' (.JSCAD, .STL, .AMF)
-- DONE: include(); support of multiple files, see http://jsfiddle.net/yybRu/
+- DONE saving source code edited in ACE locally (See menu bar hot keys)
 
 -->
     <meta http-equiv=Pragma content=no-cache>
@@ -55,8 +55,8 @@ Todo:
 
     <title>OpenJSCAD.org</title>
     <link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
-    <link rel="stylesheet" href="style.css?0.5.2" type="text/css">
-    <link rel="stylesheet" href="openjscad.css?0.5.2" type="text/css">
+    <link rel="stylesheet" href="style.css?0.6.0" type="text/css">
+    <link rel="stylesheet" href="openjscad.css?0.6.0" type="text/css">
   </head>
   <body>
     <script src="dist/index.js"></script>
