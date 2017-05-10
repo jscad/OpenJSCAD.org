@@ -2,16 +2,14 @@
 <img src="doc/logo.png" width=256 align=right>
 
 >*OpenJsCad.org* is a more up-to-date [OpenJsCAD](http://joostn.github.com/OpenJsCad/) frontend where you can edit .jscad files either locally or online via JS editor (built-in).
-A few functions are available to make the transition from [OpenSCAD](http://openscad.org/) to OpenJSCAD easier ([OpenSCAD.jscad](https://github.com/Spiritdude/OpenSCAD.jscad) built-in),
+A few functions are available to make the transition from [OpenSCAD](http://openscad.org/) to OpenJSCAD easier ([OpenSCAD.jscad](https://github.com/jscad/OpenSCAD.jscad) built-in),
 as well CLI (command-line interface) for server-side computations with NodeJS.
 
-[![GitHub version](https://badge.fury.io/gh/Spiritdude%2FOpenJSCAD.org.svg)](https://badge.fury.io/gh/Spiritdude%2FOpenJSCAD.org)
+[![GitHub version](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org.svg)](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org)
 [![experimental](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
-[![Build Status](https://travis-ci.org/Spiritdude/OpenJSCAD.org.svg)](https://travis-ci.org/Spiritdude/OpenJSCAD.org)
-[![Dependency Status](https://david-dm.org/Spiritdude/OpenJSCAD.org.svg)](https://david-dm.org/Spiritdude/OpenJSCAD.org)
-[![devDependency Status](https://david-dm.org/Spiritdude/OpenJSCAD.org/dev-status.svg)](https://david-dm.org/Spiritdude/OpenJSCAD.org#info=devDependencies)
-
-
+[![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg)](https://travis-ci.org/jscad/OpenJSCAD.org)
+[![Dependency Status](https://david-dm.org/jscad/OpenJSCAD.org.svg)](https://david-dm.org/jscad/OpenJSCAD.org)
+[![devDependency Status](https://david-dm.org/jscad/OpenJSCAD.org/dev-status.svg)](https://david-dm.org/jscad/OpenJSCAD.org#info=devDependencies)
 
 ## Table of Contents
 
@@ -35,7 +33,7 @@ Go to *[OpenJSCAD.org](http://openjscad.org)* (Tested browsers include Chrome, F
 
 ```
 cd base-directory-of-website
-git clone https://github.com/Spiritdude/OpenJSCAD.org
+git clone https://github.com/jscad/OpenJSCAD.org
 cd OpenJSCAD.org
 NPM install
 ```
@@ -47,7 +45,7 @@ NOTE: The web-site may need configuration changes to allow access to the content
 
 For CLI (command-line interface) rendering install
 ```
- npm install -g Spiritdude/OpenJSCAD.org
+ npm install -g @jscad/OpenJSCAD.org
 ```
 
 [NodeJS](http://nodejs.org/) as well, e.g. <tt>apt-get install nodejs</tt> (be aware *NodeJS > 4.x or newer is required* ) and then test it
@@ -70,7 +68,7 @@ node V4.x.X is also supported but not earlier versions (they are not maintained 
 (see [here for more details](https://github.com/nodejs/LTS))
 
 ```
-npm install --save Spiritdude/OpenJSCAD.org
+npm install --save @jscad/OpenJSCAD.org
 ```
 
 and then simply import and use openjscad:
@@ -215,7 +213,7 @@ Drag & drop multiple files (Chrome & Firefox) or a folder (Chrome):
 
 ## Contribute
 
-PRs accepted. Please see the guidelines [here](https://github.com/Spiritdude/OpenJSCAD.org/blob/master/CONTRIBUTING.md)
+PRs accepted. Please see the guidelines [here](https://github.com/jscad/OpenJSCAD.org/blob/master/CONTRIBUTING.md)
 
 
 Small note: If editing the Readme, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
@@ -223,7 +221,7 @@ Small note: If editing the Readme, please conform to the [standard-readme](https
 
 ## License
 
-[The MIT License (MIT)](https://github.com/Spiritdude/OpenJSCAD.org/blob/master/LICENSE)
+[The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 (unless specified otherwise)
 
 ## See Also
