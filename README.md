@@ -29,23 +29,23 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 
 ### Immediate Use (no installation)
 
-go to *[OpenJSCAD.org](http://openjscad.org)* (Google Chrome, Firefox)
+Go to *[OpenJSCAD.org](http://openjscad.org)* (Tested browsers include Chrome, Firefox, Opera, Safari)
 
-### Local Web Use
+### Use within a Web Site
 
 ```
-% git clone https://github.com/Spiritdude/OpenJSCAD.org
-% cd OpenJSCAD.org
-% make install
+cd base-directory-of-website
+git clone https://github.com/Spiritdude/OpenJSCAD.org
+cd OpenJSCAD.org
+NPM install
 ```
+And then access the contents via the URL of the web-site.
 
-and then access the files via local web-site and your web-browser.
+NOTE: The web-site may need configuration changes to allow access to the contents.
 
-
-### Local CLI Use
+### Use as Command Line Interface (CLI)
 
 For CLI (command-line interface) rendering install
-
 ```
  npm install -g Spiritdude/OpenJSCAD.org
 ```
@@ -63,7 +63,7 @@ For CLI (command-line interface) rendering install
 % openjscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf
 ```
 
-### Node module use
+### Use with Node Modules
 
 >Note: Please try to use a recent , LTS version of Node.js ie Node.js 6.x.x,
 node V4.x.X is also supported but not earlier versions (they are not maintained anymore)
@@ -138,6 +138,7 @@ npm run start-dev
 ```
 ## History
 
+- 2016/04/29: 0.6.0: total rework of application and library structure
 - 2016/10/01: 0.5.2: updated documentation links by Z3 Dev, updated Ace editor to 1.2.4, fixed AMF export to set colors only when provided, enhanced Processor constructor to support Viewer options, added big.html to provide an example of using Processor and Viewer options, enhanced Processor to retain multiple returned objects, fixed difference() and intersection() functions for CAG by fischman
 - 2016/06/27: 0.5.1: refactored AMF import and export, enhanced STL import by adding support for MM colors by Z3 Dev,added local storage by Robert Starkey
 - 2016/05/01: 0.5.0: added SVG import and export, added options to Processor and View classes, allow more flexibility in HTML by Z3 Dev
