@@ -118,21 +118,6 @@ generate output file from a CSG/CAG object or array of CSG/CAG objects
  *outputFormat* the output file format
  *csgs* the CSG/CAG object or array of CSG/CAG objects
 
-### Development
-
-to start the live-reload development version (auto reloads the web page when you change things)
-type:
-
-to install the dependencies
-```
-npm install
-```
-
-to run the dev server
-```
-npm run start-dev
-```
-
 ## Contribute
 
 OpenJSCAD.org is part of the JSCAD Organization, and is maintained by a group of volunteers. We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
