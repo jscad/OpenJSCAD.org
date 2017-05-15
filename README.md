@@ -43,14 +43,13 @@ NOTE: The web-site may need configuration changes to allow access to the content
 
 ### Use as Command Line Interface (CLI)
 
-For CLI (command-line interface) rendering install
+For CLI(command-line interface) use
 ```
  npm install -g @jscad/OpenJSCAD.org
 ```
 
-[NodeJS](http://nodejs.org/) as well, e.g. <tt>apt-get install nodejs</tt> (be aware *NodeJS > 4.x or newer is required* ) and then test it
-
->*Note:* on some systems the NodeJS executable is <tt>node</tt> (default) or <tt>nodejs</tt>, edit <tt>openjscad</tt> first line to reflect this.
+> Note: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x,
+An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
 
 ```
 % cd examples/
@@ -63,8 +62,7 @@ For CLI (command-line interface) rendering install
 
 ### Use with Node Modules
 
->Note: Please try to use a recent , LTS version of Node.js ie Node.js 6.x.x,
-node V4.x.X is also supported but not earlier versions (they are not maintained anymore)
+> Note: you need a recent , LTS version of Node.js > 6.x.x,
 (see [here for more details](https://github.com/nodejs/LTS))
 
 ```
