@@ -13,7 +13,7 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 
 ## Table of Contents
 
-- [Installation](#installation & use)
+- [Usage](#usage)
 - [Documentation](#documentation)
 - [Contribute](#contribute)
 - [Community](#community)
@@ -21,7 +21,7 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 - [Screenshots](#screenshots)
 - [See also](#also)
 
-## Installation & use
+## Usage
 
 ### Immediate Use (no installation)
 
