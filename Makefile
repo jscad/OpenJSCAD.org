@@ -1,4 +1,4 @@
-VERSION = 0.5.2
+VERSION = 0.6.0
 PREFIX = /usr/local
 BIN = $(PREFIX)/bin/
 LIB = $(PREFIX)/lib/openjscad/

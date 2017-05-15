@@ -2,57 +2,54 @@
 <img src="doc/logo.png" width=256 align=right>
 
 >*OpenJsCad.org* is a more up-to-date [OpenJsCAD](http://joostn.github.com/OpenJsCad/) frontend where you can edit .jscad files either locally or online via JS editor (built-in).
-A few functions are available to make the transition from [OpenSCAD](http://openscad.org/) to OpenJSCAD easier ([OpenSCAD.jscad](https://github.com/Spiritdude/OpenSCAD.jscad) built-in),
+A few functions are available to make the transition from [OpenSCAD](http://openscad.org/) to OpenJSCAD easier ([OpenSCAD.jscad](https://github.com/jscad/OpenSCAD.jscad) built-in),
 as well CLI (command-line interface) for server-side computations with NodeJS.
 
-[![GitHub version](https://badge.fury.io/gh/Spiritdude%2FOpenJSCAD.org.svg)](https://badge.fury.io/gh/Spiritdude%2FOpenJSCAD.org)
+[![GitHub version](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org.svg)](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org)
 [![experimental](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
-[![Build Status](https://travis-ci.org/Spiritdude/OpenJSCAD.org.svg)](https://travis-ci.org/Spiritdude/OpenJSCAD.org)
-[![Dependency Status](https://david-dm.org/Spiritdude/OpenJSCAD.org.svg)](https://david-dm.org/Spiritdude/OpenJSCAD.org)
-[![devDependency Status](https://david-dm.org/Spiritdude/OpenJSCAD.org/dev-status.svg)](https://david-dm.org/Spiritdude/OpenJSCAD.org#info=devDependencies)
-
-
+[![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg)](https://travis-ci.org/jscad/OpenJSCAD.org)
+[![Dependency Status](https://david-dm.org/jscad/OpenJSCAD.org.svg)](https://david-dm.org/jscad/OpenJSCAD.org)
+[![devDependency Status](https://david-dm.org/jscad/OpenJSCAD.org/dev-status.svg)](https://david-dm.org/jscad/OpenJSCAD.org#info=devDependencies)
 
 ## Table of Contents
 
 - [Installation](#installation)
-- [History](#History)
-- [Community](#Community)
-- [Todo](#todo)
-- [Documentation](#Documentation)
-- [Screenshots](#Screenshots)
 - [Contribute](#contribute)
+- [Documentation](#Documentation)
+- [Community](#Community)
 - [License](#license)
+- [Todo](#todo)
+- [History](#History)
+- [Screenshots](#Screenshots)
 - [See also](#Also)
 
 ## Installation
 
 ### Immediate Use (no installation)
 
-go to *[OpenJSCAD.org](http://openjscad.org)* (Google Chrome, Firefox)
+Go to *[OpenJSCAD.org](http://openjscad.org)* (Tested browsers include Chrome, Firefox, Opera, Safari)
 
-### Local Web Use
-
-```
-% git clone https://github.com/Spiritdude/OpenJSCAD.org
-% cd OpenJSCAD.org
-% make install
-```
-
-and then access the files via local web-site and your web-browser.
-
-
-### Local CLI Use
-
-For CLI (command-line interface) rendering install
+### Use within a Web Site
 
 ```
- npm install -g Spiritdude/OpenJSCAD.org
+cd base-directory-of-website
+git clone https://github.com/jscad/OpenJSCAD.org
+cd OpenJSCAD.org
+NPM install
+```
+And then access the contents via the URL of the web-site.
+
+NOTE: The web-site may need configuration changes to allow access to the contents.
+
+### Use as Command Line Interface (CLI)
+
+For CLI(command-line interface) use
+```
+ npm install -g @jscad/OpenJSCAD.org
 ```
 
-[NodeJS](http://nodejs.org/) as well, e.g. <tt>apt-get install nodejs</tt> (be aware *NodeJS > 4.x or newer is required* ) and then test it
-
->*Note:* on some systems the NodeJS executable is <tt>node</tt> (default) or <tt>nodejs</tt>, edit <tt>openjscad</tt> first line to reflect this.
+> Note: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x,
+An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
 
 ```
 % cd examples/
@@ -63,14 +60,13 @@ For CLI (command-line interface) rendering install
 % openjscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf
 ```
 
-### Node module use
+### Use with Node Modules
 
->Note: Please try to use a recent , LTS version of Node.js ie Node.js 6.x.x,
-node V4.x.X is also supported but not earlier versions (they are not maintained anymore)
+> Note: you need a recent , LTS version of Node.js > 6.x.x,
 (see [here for more details](https://github.com/nodejs/LTS))
 
 ```
-npm install --save Spiritdude/OpenJSCAD.org
+npm install --save @jscad/OpenJSCAD.org
 ```
 
 and then simply import and use openjscad:
@@ -107,7 +103,6 @@ const outputData = jscad.generateOutput('stlb', input)
 fs.writeFileSync('torus.stl', outputData.asBuffer())
 ```
 
-
 #### Module api
 
 *compile(params, source)*
@@ -121,23 +116,57 @@ generate output file from a CSG/CAG object or array of CSG/CAG objects
  *outputFormat* the output file format
  *csgs* the CSG/CAG object or array of CSG/CAG objects
 
+## Contribute
 
-### Development
+OpenJSCAD.org is part of the JSCAD Organization, and is maintained by a group of volunteers. We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
 
-to start the live-reload development version (auto reloads the web page when you change things)
-type:
+* If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
 
-to install the dependencies
-```
-npm install
-```
+* If you want to submit a change or a patch, please see the [Contributing guidelines](https://github.com/jscad/OpenJSCAD.org/blob/master/CONTRIBUTING.md). New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
 
-to run the dev server
-```
-npm run start-dev
-```
+* We only accept bug reports and pull requests on **GitHub**.
+
+* If you have a question about how to use the OpenJSCAD.org, then please start a conversation at the [OpenJSCAD.org User Group](https://plus.google.com/communities/114958480887231067224). You might find the answer in the [OpenJSCAD.org User Guide](https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide).
+
+* If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://plus.google.com/communities/114958480887231067224) and start contributing changes.
+
+Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
+
+## Documentation
+
+- [OpenJSCAD User & Programming Guide](https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide)
+- [OpenJSCAD Quick Reference](https://en.wikibooks.org/wiki/OpenJSCAD_Quick_Reference)
+
+## Community
+
+See for more details
+* [G+ OpenJSCAD.org Announcements](https://plus.google.com/115007999023701819645)
+* [G+ OpenJSCAD Community](https://plus.google.com/communities/114958480887231067224)
+to discuss with other user and developers.
+
+## License
+
+[The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
+(unless specified otherwise)
+
+## Todo
+
+-  <del>3d primitive: <b>torus()</b></del> (done)
+-  <del>OpenSCAD .scad support for both Web-GUI and CLI</del> (done)
+-  <del><b>include()</b> for Web-GUI and CLI to include libraries and modules, support of multiple .jscad drag & drop with include()</del> (done)
+-  <del>save from built-in editor to local</del> (done)
+-  <del>complete 2D primitives and transformations</del> (done)
+-  <del>implementation of <b>linear_extrude()</b> <b>rotate_extrude()</b>, parameter compatible to OpenSCAD</del> (done)
+-  <del>example of platonic solids (in progress, requires include())</del> (done)
+-  <del>simple 2D/3D text</del> (done)
+-  <del>2d operation: hull()</del> (done)
+-  processing/progress bar (0..100%), perhaps even visual progress seen in the model direct
+-  <del>STL importer</del> (done) & AMF importer / exporter
+-  integration into (RepRapCloud)[https://github.com/Spiritdude/RepRapCloud] as first stage of the workflow
+
 ## History
 
+- 2016/04/29: 0.6.0: total rework of application and library structure
 - 2016/10/01: 0.5.2: updated documentation links by Z3 Dev, updated Ace editor to 1.2.4, fixed AMF export to set colors only when provided, enhanced Processor constructor to support Viewer options, added big.html to provide an example of using Processor and Viewer options, enhanced Processor to retain multiple returned objects, fixed difference() and intersection() functions for CAG by fischman
 - 2016/06/27: 0.5.1: refactored AMF import and export, enhanced STL import by adding support for MM colors by Z3 Dev,added local storage by Robert Starkey
 - 2016/05/01: 0.5.0: added SVG import and export, added options to Processor and View classes, allow more flexibility in HTML by Z3 Dev
@@ -167,34 +196,6 @@ npm run start-dev
 - 2013/03/10: 0.003: solidify the functionality (few bug fixes)
 - 2013/03/10: 0.001: initial version
 
-
-## Community
-
-See for more details
-- [G+ OpenJSCAD.org Announcements](https://plus.google.com/115007999023701819645) and
-- [G+ OpenJSCAD Community](https://plus.google.com/communities/114958480887231067224)
-to discuss with other user and developers.
-
-## Todo
-
--  <del>3d primitive: <b>torus()</b></del> (done)
--  <del>OpenSCAD .scad support for both Web-GUI and CLI</del> (done)
--  <del><b>include()</b> for Web-GUI and CLI to include libraries and modules, support of multiple .jscad drag & drop with include()</del> (done)
--  <del>save from built-in editor to local</del> (done)
--  <del>complete 2D primitives and transformations</del> (done)
--  <del>implementation of <b>linear_extrude()</b> <b>rotate_extrude()</b>, parameter compatible to OpenSCAD</del> (done)
--  <del>example of platonic solids (in progress, requires include())</del> (done)
--  <del>simple 2D/3D text</del> (done)
--  <del>2d operation: hull()</del> (done)
--  processing/progress bar (0..100%), perhaps even visual progress seen in the model direct
--  <del>STL importer</del> (done) & AMF importer / exporter
--  integration into (RepRapCloud)[https://github.com/Spiritdude/RepRapCloud] as first stage of the workflow
-
-## Documentation
-
-- [OpenJSCAD User & Programming Guide](https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide)
-- [OpenJSCAD Quick Reference](https://en.wikibooks.org/wiki/OpenJSCAD_Quick_Reference)
-
 ## Screenshots
 
 Simple JSCAD example (example000.jscad):
@@ -212,19 +213,6 @@ Drag & drop a local file:
 Drag & drop multiple files (Chrome & Firefox) or a folder (Chrome):
 <img src="doc/sshot-06-illu.png">
 
-## Contribute
-
-PRs accepted. Please see the guidelines [here](https://github.com/Spiritdude/OpenJSCAD.org/blob/master/CONTRIBUTING.md)
-
-
-Small note: If editing the Readme, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
-
-
-## License
-
-[The MIT License (MIT)](https://github.com/Spiritdude/OpenJSCAD.org/blob/master/LICENSE)
-(unless specified otherwise)
-
 ## See Also
 
 - [OpenJsCAD](http://joostn.github.com/OpenJsCad/), starting point of OpenJSCAD.org
@@ -233,7 +221,6 @@ Small note: If editing the Readme, please conform to the [standard-readme](https
 - [stl2pov](http://rsmith.home.xs4all.nl/software/py-stl-stl2pov.htmltool) to convert .stl to .pov, and then render via [PovRay.org](http://povray.org)
 - [P3D](https://github.com/D1plo1d/p3d) STL/AMF/OBJ viewer
 
-
 That's all for now,
 
-Rene K. Mueller & contributors
+Rene K. Mueller & JSCAD Organization

@@ -3,51 +3,12 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 <!--
-== OpenJSCAD.org, Copyright (c) 2013-2016 by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License ==
+== OpenJSCAD.org, Copyright (c) 2013-2017 by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License ==
    with some code from OpenJsCad processfile.html by Joost Nieuwenhuijse
    in conjunction with csg.js, openjscad.js, lightgl.js by various authors (see them listed in the individual files)
 
 Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
-
-History:
-- 2016/10/01: 0.5.2: updated documentation links by Z3 Dev
-                     updated Ace editor to 1.2.4
-                     fixed AMF export to set colors only when provided
-                     enhanced Processor constructor to support Viewer options
-                     added big.html to provide an example of using Processor and Viewer options
-                     fixed difference() and intersection() functions for CAG by fischman
-- 2016/07/01: 0.5.1: refactored AMF import and export by Z3 Dev
-                     enhanced STL import, adding support for MM colors by Z3 Dev
-                     added local storage by Robert Starkey
-- 2016/05/01: 0.5.0: added options to Processor and View classes, allow more flexibility in HTML by Z3 Dev
-- 2016/02/02: 0.4.0: refactored, functionality split up into more files, mostly done by Z3 Dev
-- 2015/10/23: 0.3.1: including new parameter options by Z3 Dev
-- 2015/07/02: 0.3.0: format.js (Stefan Baumann), and Blob.js/openjscad improved by Z3 Dev
-- 2015/05/20: 0.2.4: renumbering, latest csg.js from http://joostn.github.com/OpenJsCad/ adapted
-- 2015/04/08: 0.024: dev branch opened
-- 2015/02/14: 0.023: bumping version based on openscad.js
-- 2015/02/04; 0.020: browser window resizing done properly, thanks to Z3 devs via pull request
-- 2015/01/07: 0.019: various pull requests from github merged again
-- 2014/10/05: 0.018: various pull requests from github merged
-- 2013/04/11: 0.017: alpha channel supported in color() and .setColor()
-- 2013/04/07: 0.016: csg.js: solidFromSlices() and .setColor() on polygon level, and examples by Eduard Bespalov
-- 2013/04/05: 0.015: rudimentary AMF export and import, web and cli
-- 2013/04/03: 0.014: multiple files via drag'n'drop, developing locally
-- 2013/04/01: 0.013: include() on web-online & drag'n'drop (but not off-line) and cli (server-side)
-- 2013/03/20: 0.012: improved UI (slider from the left)
-- 2013/03/28: 0.011: rectangular_extrude(), rotate_extrude() added, and torus()
-- 2013/03/22: 0.010: leave .scad file intact, and translate on-the-fly
-- 2013/03/20: 0.009: OpenSCAD .scad (via openscad-openjscad-translator) and .stl experimental import support integrated
-- 2013/03/15: 0.008: minor changes, parameter window smaller, css changes
-- 2013/03/14: 0.007: including jQuery to make UI changes easier, e.g. hint window moveable now
-- 2013/03/11: 0.005: resize of browser fixed by fixing canvas size to full screen, and avoid scrollbars
-- 2013/03/10: 0.001: first version, integrating ACE editor, for now pulled from 3rd party web-site
-
-Todo:
-- saving source code edited in ACE locally, perhaps 'SaveAs' (.JSCAD, .STL, .AMF)
-- DONE: include(); support of multiple files, see http://jsfiddle.net/yybRu/
-
 -->
     <meta http-equiv=Pragma content=no-cache>
     <meta http-equiv=Expires content=-1>
@@ -55,8 +16,8 @@ Todo:
 
     <title>OpenJSCAD.org</title>
     <link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
-    <link rel="stylesheet" href="style.css?0.5.2" type="text/css">
-    <link rel="stylesheet" href="openjscad.css?0.5.2" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="openjscad.css" type="text/css">
   </head>
   <body>
     <script src="dist/index.js"></script>
