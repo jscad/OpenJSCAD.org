@@ -18,7 +18,6 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 - [Documentation](#Documentation)
 - [Community](#Community)
 - [License](#license)
-- [Todo](#todo)
 - [Screenshots](#Screenshots)
 - [See also](#Also)
 
@@ -28,28 +27,33 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 
 Go to *[OpenJSCAD.org](http://openjscad.org)* (Tested browsers include Chrome, Firefox, Opera, Safari)
 
-### Use within a Web Site
+### Use within a Web Site (pre built files)
 
 ```
 cd base-directory-of-website
 git clone https://github.com/jscad/OpenJSCAD.org
 cd OpenJSCAD.org
-NPM install
+<start a web server here>
 ```
 And then access the contents via the URL of the web-site.
+  * index.html for the standard version
+  * viewer-minimal.html for the barebones viewer
+  * viewer-options.html for the 'all options' variant of the above
 
 NOTE: The web-site may need configuration changes to allow access to the contents.
 
 ### Use as Command Line Interface (CLI)
 
 For CLI(command-line interface) use
+
 ```
  npm install -g @jscad/OpenJSCAD.org
 ```
 
-> Note: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x,
-An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
+> Note: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x
+> An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
 
+you can now turn the examples (or your own designs) into stl etc files as follows :
 ```
 % cd examples/
 % openjscad example005.jscad                         # -- creates example005.stl as default
@@ -62,7 +66,7 @@ An easy way to install any Node.js version is to use [NVM](https://github.com/cr
 ### Use with Node Modules
 
 > Note: you need a recent , LTS version of Node.js > 6.x.x,
-(see [here for more details](https://github.com/nodejs/LTS))
+[see here for more details](https://github.com/nodejs/LTS))
 
 ```
 npm install --save @jscad/OpenJSCAD.org
@@ -71,8 +75,8 @@ npm install --save @jscad/OpenJSCAD.org
 and then simply import and use openjscad:
 
 ```javascript
-var jscad = require('openjscad')
-var fs = require('fs')
+const jscad = require('@jscad/openjscad')
+const fs = require('fs')
 
 var script = `function main() {
    return [
@@ -105,15 +109,37 @@ fs.writeFileSync('torus.stl', outputData.asBuffer())
 #### Module api
 
 *compile(params, source)*
- compile openjscad code and generates intermediate representation
- ordering of parameters created with curying in mind
+ compile OpenJsCad code and generates CSG representation
+ this returns a promise that gets resolved with the CSG object.
+ (the ordering of parameters created with curying in mind)
  *params* the set of parameters to use
  *source* the openjscad script we want to compile
 
 *generateOutput(outputFormat, csgs)*
-generate output file from a CSG/CAG object or array of CSG/CAG objects
+generate output data from a CSG/CAG object or array of CSG/CAG objects
  *outputFormat* the output file format
  *csgs* the CSG/CAG object or array of CSG/CAG objects
+
+>Note: for now you need to use outputData.asBuffer() to get a Node.js buffer for
+writing to disk
+
+
+### Use of the different modular components directly
+
+From version 0.6.0 onwards, almost all the individual parts of this project are available
+directly as scoped NPM modules , and can be used independently from this repo.
+The full list of these is available here: https://www.npmjs.com/org/jscad
+
+One example of what can be achieved with this can be found [here](https://esnextb.in/?gist=0a2ac2c4e189e27692ea964956a3a2e5)
+This means you can :
+- easilly create your own renderer for the CSG/Cag datastructures
+- create custom UIs
+- use the different parts in Node.js or the Browser
+- cherry pick what formats you want to use for input/output without needing the
+dependencies of **all** packages
+- lots more !
+
+This will be expanded upon in the future, and is the backbone of the newer, modular Jscad
 
 ## Contribute
 
@@ -148,21 +174,6 @@ to discuss with other user and developers.
 [The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 (unless specified otherwise)
 
-## Todo
-
--  <del>3d primitive: <b>torus()</b></del> (done)
--  <del>OpenSCAD .scad support for both Web-GUI and CLI</del> (done)
--  <del><b>include()</b> for Web-GUI and CLI to include libraries and modules, support of multiple .jscad drag & drop with include()</del> (done)
--  <del>save from built-in editor to local</del> (done)
--  <del>complete 2D primitives and transformations</del> (done)
--  <del>implementation of <b>linear_extrude()</b> <b>rotate_extrude()</b>, parameter compatible to OpenSCAD</del> (done)
--  <del>example of platonic solids (in progress, requires include())</del> (done)
--  <del>simple 2D/3D text</del> (done)
--  <del>2d operation: hull()</del> (done)
--  processing/progress bar (0..100%), perhaps even visual progress seen in the model direct
--  <del>STL importer</del> (done) & AMF importer / exporter
--  integration into (RepRapCloud)[https://github.com/Spiritdude/RepRapCloud] as first stage of the workflow
-
 ## Screenshots
 
 Simple JSCAD example (example000.jscad):
@@ -184,7 +195,7 @@ Drag & drop multiple files (Chrome & Firefox) or a folder (Chrome):
 
 - [OpenJsCAD](http://joostn.github.com/OpenJsCad/), starting point of OpenJSCAD.org
 - [OpenSCAD.net](http://garyhodgson.github.com/openscad.net/), another place of inspiration, where the OpenSCAD translator was adapted from
-- [CoffeeSCad](http://kaosat-dev.github.com/CoffeeSCad/), JavaScript simplified (no more {}), very active development
+- [CoffeeSCad](http://kaosat-dev.github.com/CoffeeSCad/), JavaScript simplified (no more {}) (defunct)
 - [stl2pov](http://rsmith.home.xs4all.nl/software/py-stl-stl2pov.htmltool) to convert .stl to .pov, and then render via [PovRay.org](http://povray.org)
 - [P3D](https://github.com/D1plo1d/p3d) STL/AMF/OBJ viewer
 
