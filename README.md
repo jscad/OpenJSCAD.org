@@ -13,15 +13,15 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 
 ## Table of Contents
 
-- [Installation](#installation)
+- [Installation](#installation & use)
+- [Documentation](#documentation)
 - [Contribute](#contribute)
-- [Documentation](#Documentation)
-- [Community](#Community)
+- [Community](#community)
 - [License](#license)
-- [Screenshots](#Screenshots)
-- [See also](#Also)
+- [Screenshots](#screenshots)
+- [See also](#also)
 
-## Installation
+## Installation & use
 
 ### Immediate Use (no installation)
 
@@ -40,7 +40,7 @@ And then access the contents via the URL of the web-site.
   * viewer-minimal.html for the barebones viewer
   * viewer-options.html for the 'all options' variant of the above
 
-NOTE: The web-site may need configuration changes to allow access to the contents.
+>NOTE: You might need configuration changes to allow access to the some of the contents (examples etc).
 
 ### Use as Command Line Interface (CLI)
 
@@ -108,20 +108,26 @@ fs.writeFileSync('torus.stl', outputData.asBuffer())
 
 #### Module api
 
-*compile(params, source)*
+**compile(params, source)**
+
  compile OpenJsCad code and generates CSG representation
  this returns a promise that gets resolved with the CSG object.
- (the ordering of parameters created with curying in mind)
- *params* the set of parameters to use
- *source* the openjscad script we want to compile
 
-*generateOutput(outputFormat, csgs)*
+ (the ordering of parameters was created with currying in mind)
+
+ *params* the set of parameters to use
+ *source* the OpenJsCad script we want to compile
+
+
+**generateOutput(outputFormat, csgs)**
+
 generate output data from a CSG/CAG object or array of CSG/CAG objects
+
  *outputFormat* the output file format
  *csgs* the CSG/CAG object or array of CSG/CAG objects
 
 >Note: for now you need to use outputData.asBuffer() to get a Node.js buffer for
-writing to disk
+writing to disk etc
 
 
 ### Use of the different modular components directly
