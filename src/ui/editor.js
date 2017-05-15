@@ -18,7 +18,7 @@ require('brace/mode/javascript')
 require('brace/mode/scad')
 require('brace/theme/chrome')
 
-const openscadOpenJscadParser = require('openscad-openjscad-translator')
+const openscadOpenJscadParser = require('@jscad/openscad-openjscad-translator')
 
 // See http://ace.ajax.org/#nav=howto
 function setUpEditor (divname, gProcessor) {
