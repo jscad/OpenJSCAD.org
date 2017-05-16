@@ -207,4 +207,4 @@ Drag & drop multiple files (Chrome & Firefox) or a folder (Chrome):
 
 That's all for now,
 
-Rene K. Mueller & JSCAD Organization
+Rene K. Mueller, Jeff Gay, Mark Moissette & JSCAD Organization
