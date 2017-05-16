@@ -19,7 +19,7 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 - [Community](#community)
 - [License](#license)
 - [Screenshots](#screenshots)
-- [See also](#seealso)
+- [See also](#see-also)
 
 ## Usage
 
@@ -188,7 +188,7 @@ Simple JSCAD example ([logo.jscad](examples/logo.jscad)) [try it](http://openjsc
 More sophisticated JSCAD example, with functions dedicated to object generation and with interactive parameters ([gear.jscad](examples/gear.jscad)) [try it](http://openjscad.org/#examples/gear.jscad) :
 <img src="doc/sshot-03-illu.png">
 
-Import of STL models ([gear.jscad](examples/frog-OwenCollins.stl)) [try it](http://openjscad.org/#examples/frog-OwenCollins.stl): 
+Import of STL models ([frog-OwenCollins.stl](examples/frog-OwenCollins.stl)) [try it](http://openjscad.org/#examples/frog-OwenCollins.stl):
 <img src="doc/sshot-04.png">
 
 Drag & drop a local file:
