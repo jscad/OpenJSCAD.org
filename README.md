@@ -47,7 +47,7 @@ And then access the contents via the URL of the web-site.
 For CLI(command-line interface) use
 
 ```
- npm install -g @jscad/OpenJSCAD.org
+ npm install -g @jscad/openjscad
 ```
 
 > Note: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x
@@ -69,7 +69,7 @@ you can now turn the examples (or your own designs) into stl etc files as follow
 [see here for more details](https://github.com/nodejs/LTS))
 
 ```
-npm install --save @jscad/OpenJSCAD.org
+npm install --save @jscad/openjscad
 ```
 
 and then simply import and use openjscad:
