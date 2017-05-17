@@ -3,7 +3,14 @@
 All notable changes to this project will be documented in this file.
 
 ## 0.6.0 (2017-05-xx)
-total rework of application and library structure
+total rework of application and library structure:
+- modular, smaller codebase (node.js modules) instead of monolithic files
+- actual npm package, dependency managment now done correctly via package.json
+- shared browser/Node.js code base
+- split out CSG.js scad-api, formats handling etc to seperate repositories
+- moved all repositories to the [jscad organization](https://github.com/jscad)
+- default stl output is now in binary format (more efficient)
+- lots more internal changes and improvements
 
 ## 0.5.2 (2017-10-01)
 updated documentation links by Z3 Dev, updated Ace editor to 1.2.4, fixed AMF export to set colors only when provided, enhanced Processor constructor to support Viewer options, added big.html to provide an example of using Processor and Viewer options, enhanced Processor to retain multiple returned objects, fixed difference() and intersection() functions for CAG by fischman
