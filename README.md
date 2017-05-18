@@ -13,44 +13,47 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 
 ## Table of Contents
 
-- [Installation](#installation)
+- [Usage](#usage)
+- [Documentation](#documentation)
 - [Contribute](#contribute)
-- [Documentation](#Documentation)
-- [Community](#Community)
+- [Community](#community)
 - [License](#license)
-- [Todo](#todo)
-- [History](#History)
-- [Screenshots](#Screenshots)
-- [See also](#Also)
+- [Screenshots](#screenshots)
+- [See also](#see-also)
 
-## Installation
+## Usage
 
 ### Immediate Use (no installation)
 
 Go to *[OpenJSCAD.org](http://openjscad.org)* (Tested browsers include Chrome, Firefox, Opera, Safari)
 
-### Use within a Web Site
+### Use within a Web Site (pre built files)
 
 ```
 cd base-directory-of-website
 git clone https://github.com/jscad/OpenJSCAD.org
 cd OpenJSCAD.org
-NPM install
+<start a web server here>
 ```
 And then access the contents via the URL of the web-site.
+  * index.html for the standard version
+  * viewer-minimal.html for the barebones viewer
+  * viewer-options.html for the 'all options' variant of the above
 
-NOTE: The web-site may need configuration changes to allow access to the contents.
+>NOTE: You might need configuration changes to allow access to the some of the contents (examples etc).
 
 ### Use as Command Line Interface (CLI)
 
 For CLI(command-line interface) use
+
 ```
- npm install -g @jscad/OpenJSCAD.org
+ npm install -g @jscad/openjscad
 ```
 
-> Note: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x,
-An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
+> Note: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x
+> An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
 
+you can now turn the examples (or your own designs) into stl etc files as follows :
 ```
 % cd examples/
 % openjscad example005.jscad                         # -- creates example005.stl as default
@@ -63,17 +66,17 @@ An easy way to install any Node.js version is to use [NVM](https://github.com/cr
 ### Use with Node Modules
 
 > Note: you need a recent , LTS version of Node.js > 6.x.x,
-(see [here for more details](https://github.com/nodejs/LTS))
+[see here for more details](https://github.com/nodejs/LTS))
 
 ```
-npm install --save @jscad/OpenJSCAD.org
+npm install --save @jscad/openjscad
 ```
 
 and then simply import and use openjscad:
 
 ```javascript
-var jscad = require('openjscad')
-var fs = require('fs')
+const jscad = require('@jscad/openjscad')
+const fs = require('fs')
 
 var script = `function main() {
    return [
@@ -105,16 +108,44 @@ fs.writeFileSync('torus.stl', outputData.asBuffer())
 
 #### Module api
 
-*compile(params, source)*
- compile openjscad code and generates intermediate representation
- ordering of parameters created with curying in mind
- *params* the set of parameters to use
- *source* the openjscad script we want to compile
+**compile(params, source)**
 
-*generateOutput(outputFormat, csgs)*
-generate output file from a CSG/CAG object or array of CSG/CAG objects
+ compile OpenJsCad code and generates CSG representation
+ this returns a promise that gets resolved with the CSG object.
+
+ (the ordering of parameters was created with currying in mind)
+
+ *params* the set of parameters to use
+ *source* the OpenJsCad script we want to compile
+
+
+**generateOutput(outputFormat, csgs)**
+
+generate output data from a CSG/CAG object or array of CSG/CAG objects
+
  *outputFormat* the output file format
  *csgs* the CSG/CAG object or array of CSG/CAG objects
+
+>Note: for now you need to use outputData.asBuffer() to get a Node.js buffer for
+writing to disk etc
+
+
+### Use of the different modular components directly
+
+From version 0.6.0 onwards, almost all the individual parts of this project are available
+directly as scoped NPM modules , and can be used independently from this repo.
+The full list of these is available here: https://www.npmjs.com/org/jscad
+
+One example of what can be achieved with this can be found [here](https://esnextb.in/?gist=0a2ac2c4e189e27692ea964956a3a2e5)
+This means you can :
+- easilly create your own renderer for the CSG/Cag datastructures
+- create custom UIs
+- use the different parts in Node.js or the Browser
+- cherry pick what formats you want to use for input/output without needing the
+dependencies of **all** packages
+- lots more !
+
+This will be expanded upon in the future, and is the backbone of the newer, modular Jscad
 
 ## Contribute
 
@@ -149,62 +180,15 @@ to discuss with other user and developers.
 [The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 (unless specified otherwise)
 
-## Todo
-
--  <del>3d primitive: <b>torus()</b></del> (done)
--  <del>OpenSCAD .scad support for both Web-GUI and CLI</del> (done)
--  <del><b>include()</b> for Web-GUI and CLI to include libraries and modules, support of multiple .jscad drag & drop with include()</del> (done)
--  <del>save from built-in editor to local</del> (done)
--  <del>complete 2D primitives and transformations</del> (done)
--  <del>implementation of <b>linear_extrude()</b> <b>rotate_extrude()</b>, parameter compatible to OpenSCAD</del> (done)
--  <del>example of platonic solids (in progress, requires include())</del> (done)
--  <del>simple 2D/3D text</del> (done)
--  <del>2d operation: hull()</del> (done)
--  processing/progress bar (0..100%), perhaps even visual progress seen in the model direct
--  <del>STL importer</del> (done) & AMF importer / exporter
--  integration into (RepRapCloud)[https://github.com/Spiritdude/RepRapCloud] as first stage of the workflow
-
-## History
-
-- 2016/04/29: 0.6.0: total rework of application and library structure
-- 2016/10/01: 0.5.2: updated documentation links by Z3 Dev, updated Ace editor to 1.2.4, fixed AMF export to set colors only when provided, enhanced Processor constructor to support Viewer options, added big.html to provide an example of using Processor and Viewer options, enhanced Processor to retain multiple returned objects, fixed difference() and intersection() functions for CAG by fischman
-- 2016/06/27: 0.5.1: refactored AMF import and export, enhanced STL import by adding support for MM colors by Z3 Dev,added local storage by Robert Starkey
-- 2016/05/01: 0.5.0: added SVG import and export, added options to Processor and View classes, allow more flexibility in HTML by Z3 Dev
-- 2016/02/25: 0.4.0: refactored, functionality split up into more files, mostly done by Z3 Dev
-- 2015/10/23: 0.3.1: including new parameter options by Z3 Dev
-- 2015/07/02: 0.3.0: format.js (Stefan Baumann), and Blob.js/openjscad improved by Z3 Dev
-- 2015/05/20: 0.2.4: renumbering, latest csg.js from http://joostn.github.com/OpenJsCad/ adapted
-- 2015/04/08: 0.024: dev branch opened
-- 2015/02/14: 0.023: bumping version based on openscad.js
-- 2015/02/04; 0.020: browser window resizing done properly, thanks to Z3 devs via pull request
-- 2015/01/07: 0.019: various pull requests from github merged again
-- 2014/10/05: 0.018: various pull requests from github merged
-- 2013/04/11: 0.017: alpha channel supported in color() and .setColor()
-- 2013/04/07: 0.016: csg.js: solidFromSlices() and .setColor() on polygon level, and examples by Eduard Bespalov
-- 2013/04/05: 0.015: rudimentary AMF export and import, web and cli
-- 2013/04/03: 0.014: multiple files via drag & drop, developing locally
-- 2013/04/01: 0.013: include() on web-online & drag & drop (but not off-line) and cli (server-side)
-- 2013/03/20: 0.012: improved UI (slider from the left)
-- 2013/03/28: 0.011: added support for rectangular_extrude(), rotate_extrude() and torus()
-- 2013/03/22: 0.010: leave .scad file intact, and translate on-the-fly
-- 2013/03/20: 0.009: OpenSCAD .scad syntax support included via [openscad-openjscad-translator](https://github.com/garyhodgson/openscad-openjscad-translator) module, on web and cli; and experimental .stl import support (binary & ascii)
-- 2013/03/15: 0.008: circle(), square(), polygon() partially and linear_extrude() implemented (openscad-like)
-- 2013/03/14: 0.007: integrating jQuery for new features; draggable hint window
-- 2013/03/12: 0.006: included examples available in the web-frontend direct
-- 2013/03/12: 0.005: supporting webgui parameters as of original OpenJsCad (see examples/example030.jscad)
-- 2013/03/11: 0.004: openscad.js: many improvements, more OpenSCAD-like functions
-- 2013/03/10: 0.003: solidify the functionality (few bug fixes)
-- 2013/03/10: 0.001: initial version
-
 ## Screenshots
 
-Simple JSCAD example (example000.jscad):
+Simple JSCAD example ([logo.jscad](examples/logo.jscad)) [try it](http://openjscad.org/#examples/logo.jscad):
 <img src="doc/sshot-01.png">
 
-More sophisticated JSCAD example, fully object-oriented (OO) programmed with interactive parameters (example031.jscad):
+More sophisticated JSCAD example, with functions dedicated to object generation and with interactive parameters ([gear.jscad](examples/gear.jscad)) [try it](http://openjscad.org/#examples/gear.jscad) :
 <img src="doc/sshot-03-illu.png">
 
-Import of STL models:
+Import of STL models ([frog-OwenCollins.stl](examples/frog-OwenCollins.stl)) [try it](http://openjscad.org/#examples/frog-OwenCollins.stl):
 <img src="doc/sshot-04.png">
 
 Drag & drop a local file:
@@ -217,10 +201,10 @@ Drag & drop multiple files (Chrome & Firefox) or a folder (Chrome):
 
 - [OpenJsCAD](http://joostn.github.com/OpenJsCad/), starting point of OpenJSCAD.org
 - [OpenSCAD.net](http://garyhodgson.github.com/openscad.net/), another place of inspiration, where the OpenSCAD translator was adapted from
-- [CoffeeSCad](http://kaosat-dev.github.com/CoffeeSCad/), JavaScript simplified (no more {}), very active development
+- [CoffeeSCad](http://kaosat-dev.github.com/CoffeeSCad/), JavaScript simplified (no more {}) (defunct)
 - [stl2pov](http://rsmith.home.xs4all.nl/software/py-stl-stl2pov.htmltool) to convert .stl to .pov, and then render via [PovRay.org](http://povray.org)
 - [P3D](https://github.com/D1plo1d/p3d) STL/AMF/OBJ viewer
 
 That's all for now,
 
-Rene K. Mueller & JSCAD Organization
+Rene K. Mueller, Jeff Gay, Mark Moissette & JSCAD Organization
