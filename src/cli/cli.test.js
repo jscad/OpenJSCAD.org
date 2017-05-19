@@ -153,7 +153,7 @@ test('openscad to openjscad', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of jscad`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(outputPath).size, 876, 2)
+  almostEquals(t, fs.statSync(outputPath).size, 1058, 2)
 })
 
 test('openscad to openjscad to stl', t => {
@@ -171,7 +171,7 @@ test('openscad to openjscad to stl', t => {
   execSync(cmd2, {stdio: [0, 1, 2]})
 
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(outputPath).size, 876, 2)
+  almostEquals(t, fs.statSync(outputPath).size, 91884, 2)
 })
 
 // NOTE : echo() will likely be deprecated soon, but keeping this around for now
@@ -185,7 +185,7 @@ test('echo() support', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of jscad`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(outputPath).size, 454, 2)
+  almostEquals(t, fs.statSync(outputPath).size, 636, 2)
 })
 
 test('include support', t => {

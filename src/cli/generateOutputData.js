@@ -31,11 +31,17 @@ function generateOutputData (source, params, options) {
   globals.extras = {cli: {getParameterDefinitionsCLI}}
 
   // modify main to adapt parameters
-  const mainFunction = `var wrappedMain = main
+  const mainFunction = `
+//only add this wrapper if not already present & we are not in command-line mode
+if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== 'undefined'){
+  const wrappedMain = main
   main = function(){
     var paramsDefinition = (typeof getParameterDefinitions !== 'undefined') ? getParameterDefinitions : undefined
     return wrappedMain(getParameterDefinitionsCLI(paramsDefinition, ${JSON.stringify(params)}))
-  }`
+  }
+}
+`
+
   source = `${source}
   ${mainFunction}
   `
