@@ -22,7 +22,7 @@ Constructive Solid Geometry (CSG) is a modelling technique that uses Boolean ope
 ## Installation
 
 ```
-npm install @jscad/csg.js
+npm install @jscad/csg
 ```
 
 ## Usage
@@ -30,7 +30,7 @@ npm install @jscad/csg.js
 - as Node module :
 
 ```
-const csg = require('csg')
+const csg = require('@jscad/csg')
 ```
 
 ## API
