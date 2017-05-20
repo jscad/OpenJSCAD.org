@@ -61,13 +61,13 @@ test('CAG should convert to and from sides', t => {
   var f1 = CAG.fromSides(s1)
   t.deepEqual(c1, f1)
   var s2 = c2.sides
-  var f2 = CAG.fromSides(s2)
+  var f2 = CAG.fromSides(s2).canonicalized()
   t.deepEqual(c2, f2)
   var s3 = c3.sides
-  var f3 = CAG.fromSides(s3)
+  var f3 = CAG.fromSides(s3).canonicalized()
   t.deepEqual(c3, f3)
   var s4 = c4.sides
-  var f4 = CAG.fromSides(s4)
+  var f4 = CAG.fromSides(s4).canonicalized()
   t.deepEqual(c4, f4)
 })
 

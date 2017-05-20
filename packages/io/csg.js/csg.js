@@ -5592,7 +5592,7 @@ for solid CAD anyway.
      */
     var CAG = function() {
         this.sides = [];
-        this.isCanonicalized = true;
+        this.isCanonicalized = false;
     };
 
     /** Reconstruct a CAG from an object with identical property names.
@@ -5617,7 +5617,7 @@ for solid CAD anyway.
         cag.sides = sides;
         return cag;
     };
-
+    
     /** Construct a CAG from a list of points (a polygon).
      * The rotation direction of the points is not relevant.
      * The points can define a convex or a concave polygon.
@@ -6751,10 +6751,5 @@ for solid CAD anyway.
     };
     CSG.Polygon2D.prototype = CAG.prototype;
 
+module.exports = {CSG, CAG}
 
-    //console.log('module', module)
-    //module.CSG = CSG;
-    //module.CAG = CAG;
-//})(this); //module to export to
-
-module.exports = {CSG,CAG}//({})(module)
