@@ -26,8 +26,6 @@ function prepareOutput (objects, params) {
     version
   }
 
-  const foo = require('@jscad/io')
-
   const outputFormatHandlers = {
     amf: amfSerializer, // CSG to AMF
     stl: stlSerializer, // CSG to STL ASCII // NOTE: now using binary output by default !!
@@ -42,11 +40,11 @@ function prepareOutput (objects, params) {
     json: jsonSerializer, // CSG or CAG to JSON
     js: {
       mimeType: formats['js'].mimetype,
-      serialize: object => [object] // jscad , pass through
+      serialize: object => [object] // js , pass through
     },
     jscad: {
       mimeType: formats['jscad'].mimetype,
-      serialize: object => [object] // js , pass through
+      serialize: object => [object] // jscad , pass through
     },
     undefined: () => {
       throw new Error('Not supported : only jscad, stl, amf, dxf, svg or json as output format')
