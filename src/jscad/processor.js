@@ -308,6 +308,7 @@ Processor.prototype = {
 
     this.formatInfo('stla') // make sure the formats are initialized
     const formats = supportedFormatsForObjects(objects)
+      .filter(x => x !== 'stl')// exclude 'stl' since it is an alias for stl(ascii) or stl(binary)
     formats.forEach(function (format) {
       var option = document.createElement('option')
       var info = that.formatInfo(format)
@@ -408,7 +409,7 @@ Processor.prototype = {
     var prevParamValues = {}
     // this will fail without existing form
     try {
-      prevParamValues = getParamValues(this.paramControls, /*onlyChanged*/true)
+      prevParamValues = getParamValues(this.paramControls, /* onlyChanged */true)
     } catch (e) {}
 
     this.abort()
@@ -422,7 +423,7 @@ Processor.prototype = {
       this.paramDefinitions = getParamDefinitions(script)
       this.paramControls = []
       this.createParamControls(prevParamValues)
-    } catch(e) {
+    } catch (e) {
       this.setStatus('error', e.toString())
       scripthaserrors = true
     }
@@ -439,7 +440,7 @@ Processor.prototype = {
   // FIXME: not needed anymore, file cache is handled elsewhere
   getFullScript: function () {
     return this.script
-    /*var script = ''
+    /* var script = ''
     // add the file cache
      script += 'var gMemFs = ['
     if (typeof (this.memFs) === 'object') {
@@ -454,7 +455,7 @@ Processor.prototype = {
     script += '\n'
     // add the main script
     script += this.script
-    return script*/
+    return script */
   },
 
   rebuildSolid: function () {
@@ -526,6 +527,7 @@ Processor.prototype = {
     this.clearOutputFile()
     const blob = this.currentObjectsToBlob()
     const extension = this.selectedFormatInfo().extension
+    console.log('generateOutputFile', extension)
 
     function onDone (data, downloadAttribute, blobMode, noData) {
       this.hasOutputFile = true
@@ -557,8 +559,8 @@ Processor.prototype = {
 
     const format = this.selectedFormat()
 
-    // if output format is jscad , use that, otherwise use currentObjects
-    const objects = format === 'jscad' ? this.script : this.currentObjects.slice(startpoint, endpoint + 1)
+    // if output format is jscad or js , use that, otherwise use currentObjects
+    const objects = (format === 'jscad' || format === 'js') ? this.script : this.currentObjects.slice(startpoint, endpoint + 1)
 
     return convertToBlob(prepareOutput(objects, {format}))
   },
@@ -612,8 +614,7 @@ Processor.prototype = {
         if (prevValue === values[valueindex]) {
           selectedindex = valueindex
         }
-      }
-      else if ('default' in definition) {
+      } else if ('default' in definition) {
         if (definition['default'] === values[valueindex]) {
           selectedindex = valueindex
         }
