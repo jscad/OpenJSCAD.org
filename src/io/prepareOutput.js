@@ -13,7 +13,7 @@ function prepareOutput (objects, params) {
 
   let object
 
-  if (format === 'jscad') {
+  if (format === 'jscad' || format === 'js') {
     object = objects
   } else {
     const formatInfo = formats[format]

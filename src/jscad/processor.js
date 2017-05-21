@@ -527,6 +527,7 @@ Processor.prototype = {
     this.clearOutputFile()
     const blob = this.currentObjectsToBlob()
     const extension = this.selectedFormatInfo().extension
+    console.log('generateOutputFile', extension)
 
     function onDone (data, downloadAttribute, blobMode, noData) {
       this.hasOutputFile = true
@@ -558,8 +559,8 @@ Processor.prototype = {
 
     const format = this.selectedFormat()
 
-    // if output format is jscad , use that, otherwise use currentObjects
-    const objects = format === 'jscad' ? this.script : this.currentObjects.slice(startpoint, endpoint + 1)
+    // if output format is jscad or js , use that, otherwise use currentObjects
+    const objects = (format === 'jscad' || format === 'js') ? this.script : this.currentObjects.slice(startpoint, endpoint + 1)
 
     return convertToBlob(prepareOutput(objects, {format}))
   },
