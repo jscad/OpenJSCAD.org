@@ -56,13 +56,13 @@ const examples = [
   { file: 'globe.jscad', title: 'Include(): Globe', spacing: true },
   { file: 'platonics/', title: 'Recursive Include(): Platonics' },
 
-  { file: 'babypanda2.svg', title: 'SVG Image: Baby Panda', spacing: true, new: true },
+  { file: 'babypanda2.svg', title: 'SVG Image: Baby Panda', spacing: true},
 
   { file: '3d_sculpture-VernonBussler.stl', title: '3D Model: 3D Sculpture (Vernon Bussler)', type: 'STL', spacing: true },
   { file: 'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' },
   { file: 'thing_7-Zomboe.stl', title: '3D Model: Thing 7 / Flower (Zomboe)', type: 'STL' },
   { file: 'yoda-RichRap.stl', title: '3D Model: Yoda (RichRap)', type: 'STL' },
-  { file: 'feathers_mcgraw.stl', title: '3D Model: Feathers Mcgraw (q1g0ng)', type: 'STL', new: true }
+  { file: 'feathers_mcgraw.stl', title: '3D Model: Feathers Mcgraw (q1g0ng)', type: 'STL'}
 ]
 
 function createExamples (me) {
