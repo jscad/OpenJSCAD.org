@@ -3,51 +3,12 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 <!--
-== OpenJSCAD.org, Copyright (c) 2013-2016 by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License ==
+== OpenJSCAD.org, Copyright (c) 2013-2017 by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License ==
    with some code from OpenJsCad processfile.html by Joost Nieuwenhuijse
    in conjunction with csg.js, openjscad.js, lightgl.js by various authors (see them listed in the individual files)
 
 Purpose:
    More modern interface for OpenJsCad as published at http://joostn.github.com/OpenJsCad/
-
-History:
-- 2016/10/01: 0.5.2: updated documentation links by Z3 Dev
-                     updated Ace editor to 1.2.4
-                     fixed AMF export to set colors only when provided
-                     enhanced Processor constructor to support Viewer options
-                     added big.html to provide an example of using Processor and Viewer options
-                     fixed difference() and intersection() functions for CAG by fischman
-- 2016/07/01: 0.5.1: refactored AMF import and export by Z3 Dev
-                     enhanced STL import, adding support for MM colors by Z3 Dev
-                     added local storage by Robert Starkey
-- 2016/05/01: 0.5.0: added options to Processor and View classes, allow more flexibility in HTML by Z3 Dev
-- 2016/02/02: 0.4.0: refactored, functionality split up into more files, mostly done by Z3 Dev
-- 2015/10/23: 0.3.1: including new parameter options by Z3 Dev
-- 2015/07/02: 0.3.0: format.js (Stefan Baumann), and Blob.js/openjscad improved by Z3 Dev
-- 2015/05/20: 0.2.4: renumbering, latest csg.js from http://joostn.github.com/OpenJsCad/ adapted
-- 2015/04/08: 0.024: dev branch opened
-- 2015/02/14: 0.023: bumping version based on openscad.js
-- 2015/02/04; 0.020: browser window resizing done properly, thanks to Z3 devs via pull request
-- 2015/01/07: 0.019: various pull requests from github merged again
-- 2014/10/05: 0.018: various pull requests from github merged
-- 2013/04/11: 0.017: alpha channel supported in color() and .setColor()
-- 2013/04/07: 0.016: csg.js: solidFromSlices() and .setColor() on polygon level, and examples by Eduard Bespalov
-- 2013/04/05: 0.015: rudimentary AMF export and import, web and cli
-- 2013/04/03: 0.014: multiple files via drag'n'drop, developing locally
-- 2013/04/01: 0.013: include() on web-online & drag'n'drop (but not off-line) and cli (server-side)
-- 2013/03/20: 0.012: improved UI (slider from the left)
-- 2013/03/28: 0.011: rectangular_extrude(), rotate_extrude() added, and torus()
-- 2013/03/22: 0.010: leave .scad file intact, and translate on-the-fly
-- 2013/03/20: 0.009: OpenSCAD .scad (via openscad-openjscad-translator) and .stl experimental import support integrated
-- 2013/03/15: 0.008: minor changes, parameter window smaller, css changes
-- 2013/03/14: 0.007: including jQuery to make UI changes easier, e.g. hint window moveable now
-- 2013/03/11: 0.005: resize of browser fixed by fixing canvas size to full screen, and avoid scrollbars
-- 2013/03/10: 0.001: first version, integrating ACE editor, for now pulled from 3rd party web-site
-
-Todo:
-- saving source code edited in ACE locally, perhaps 'SaveAs' (.JSCAD, .STL, .AMF)
-- DONE: include(); support of multiple files, see http://jsfiddle.net/yybRu/
-
 -->
     <meta http-equiv=Pragma content=no-cache>
     <meta http-equiv=Expires content=-1>
@@ -55,30 +16,11 @@ Todo:
 
     <title>OpenJSCAD.org</title>
     <link rel="shortcut icon" href="imgs/favicon.png" type="image/x-png">
-    <link rel="stylesheet" href="jquery/themes/base/jquery-ui.css" />
-    <link rel="stylesheet" href="style.css?0.5.2" type="text/css">
-    <link rel="stylesheet" href="openjscad.css?0.5.2" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="openjscad.css" type="text/css">
   </head>
   <body>
-    <script src="jquery/jquery-1.9.1.js"></script>
-    <script src="jquery/jquery-ui.js"></script>
-    <script src="jquery/jquery.hammer.js"></script>
-    <script src="lightgl.js"></script>
-    <script src="csg.js?0.5.2"></script>
-    <script src="formats.js?0.5.2"></script>
-    <script src="openjscad.js?0.5.2"></script>
-    <script src="js/jscad-worker.js?0.5.2" charset="utf-8"></script>
-    <script src="js/jscad-function.js?0.5.2" charset="utf-8"></script>
-    <script src="openscad.js?0.5.2"></script>
-    <script src="underscore.js"></script>
-    <script src="openscad-openjscad-translator.js"></script>
-    <script src="ace/ace.js?0.5.2" charset="utf-8"></script>
-    <script src="js/ui-drag-drop.js?0.5.2" charset="utf-8"></script>
-    <script src="js/ui-editor.js?0.5.2" charset="utf-8"></script>
-    <script src="js/ui-cookies.js?0.5.2" charset="utf-8"></script>
-    <script src="js/ui-worker.js?0.5.2" charset="utf-8"></script>
-    <script src="js/index.js?0.5.2" charset="utf-8"></script>
-
+    <script src="dist/index.js"></script>
 <!-- top left header (logo and error message) -->
     <div id="header">
       <img src="imgs/title.png">
@@ -89,7 +31,7 @@ Todo:
     <div id="menu">
       <img id="menuHandle" src="imgs/menuHandleVL.png">
       <nav>
-        <div id="menuVersion">Version <script>document.write(OpenJsCad.version);</script></div>
+        <div id="menuVersion"></div>
         <p/>
         <table class="info">
           <tr><td class="infoView" colspan=2>Editor</td></tr>
@@ -120,7 +62,7 @@ Todo:
         <div id="examples"></div>
         <span class="menuSubInfo">Dozens of examples to learn from</span>
         <p/>
-<!-- 
+<!--
         <div id="optionsTitle" class="navlink"><a href='#' onclick='return false'>Options</a></div>
         <div id="options"></div>
         <span class="menuSubInfo">Your personal settings</span></p>
@@ -128,43 +70,52 @@ Todo:
         <p/>
         <b>Supported Formats</b>
         <table class="info">
-          <tr><td align="right"><b>jscad</b></td><td><a target="_blank" href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide">OpenJSCAD</a> (native, import/export)</td></tr>
-          <tr><td align="right"><b>scad</b></td><td><a target="_blank" href="http://openscad.org">OpenSCAD</a> (<a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#direct-openscad-scad-import">experimental</a>, import)</td></tr>
+          <tr><td align="right"><b>jscad</b></td><td><a target="_blank" href="https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide">OpenJSCAD</a> (native, import/export)</td></tr>
+          <tr><td align="right"><b>scad</b></td><td><a target="_blank" href="http://openscad.org">OpenSCAD</a> (<a target=_blank href="https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide#Direct_OpenSCAD_Source_Import">experimental</a>, import)</td></tr>
           <tr><td align="right"><b>stl</b></td><td><a target="_blank" href="http://en.wikipedia.org/wiki/STL_(file_format)">STL format</a> (experimental, import/export)</td></tr>
           <tr><td align="right"><b>amf</b></td><td><a target="_blank" href="http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format">AMF format</a> (experimental, import/export)</td></tr>
           <tr><td align="right"><b>dxf</b></td><td><a target="_blank" href="https://en.wikipedia.org/wiki/AutoCAD_DXF">DXF format</a> (experimental, import/export)</td></tr>
           <tr><td align="right"><b>x3d</b></td><td><a target="_blank" href="https://en.wikipedia.org/wiki/X3D">X3D format</a> (experimental, export)</td></tr>
           <tr><td align="right"><b>svg</b></td><td><a target="_blank" href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG format</a> (experimental, import/export)</td></tr>
         </table>
-        <p><a class="navlink" href="#" onclick="$('#about').show(); return false;">About</a></p>
+        <p><a class="navlink about" href="#" >About</a></p>
       </nav>
     </div> <!-- /menu -->
 
 <!-- about dialog -->
     <div id="about">
       <img src="imgs/title.png">
-      <br/>Version <script>document.write(OpenJsCad.version);</script>
+      <div id="aboutVersion" ></div>
+
       <p>
-by
-Joost Nieuwenhuijse (core),
-Ren&eacute; K. M&uuml;ller (UI & CLI),
-Stefan Baumann (core),
-Z3 Dev (CLI & GUI),
-Eduard Bespalov (core),
-Gary Hogdson (OpenSCAD translator)
-      </p>
-      <p>csg.js core &amp; improvements by
-Evan Wallace,
-Eduard Bespalov,
-Joost Nieuwenhuijse,
-Alexandre Girard
-      </p>
-      <p>
+<h4>OpenJsCad by</h4>
+- Joost Nieuwenhuijse (core),</br>
+- Ren&eacute; K. M&uuml;ller (core, CLI & GUI),</br>
+- Stefan Baumann (core),</br>
+- Z3 Dev (core, CLI & GUI),</br>
+- Mark Moissette (core, CLI & GUI),</br>
+- Eduard Bespalov (core),</br>
+- Gary Hogdson (OpenSCAD translator)
+
+<h4>csg.js core &amp; improvements by</h4>
+- Evan Wallace</br>
+- Eduard Bespalov</br>
+- Joost Nieuwenhuijse</br>
+- Alexandre Girard
+
+<h4>Additional libraries & tools</h4>
+- xmldom</br>
+- sax </br>
+- browserify </br>
+- babel </br>
+</p>
+
+<p>
 License: MIT License<br>
 Get your copy/clone/fork from <a href="https://github.com/Spiritdude/OpenJSCAD.org" target=_blank>GitHub: OpenJSCAD</a>
       </p>
       <p>
-        <br/><a class="okButton" href='#' onclick="$('#about').hide(); return false;"> OK </a>
+        <br/><a class="okButton" href='#'> OK </a>
       </p>
     </div> <!-- about -->
 
@@ -203,11 +154,6 @@ function main() {
       <div id="statusdiv"></div>
       <div id="filedropzone">
         <div id="filedropzone_empty">
-<script>document.write("Drop one or more supported files"+
-     (browser=='chrome'&&me=='web-online'?", or folder with jscad files ":"")+
-     " here (see <a style='font-weight: normal' href='https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide#support-of-include' target=_blank>details</a>) "+
-     "<br>or directly edit OpenJSCAD or OpenSCAD code using the editor.");
-</script>
         </div>
         <div id="filedropzone_input">
           <p>
@@ -218,9 +164,9 @@ function main() {
           <span id="currentfile">...</span>
           <div id="filebuttons">
             <button id="getstlbutton" style="display:none" onclick="getStl();">Get STL</button>
-            <button onclick="reloadAllFiles();">Reload</button>
+            <button id="reloadAllFiles">Reload</button>
            <!--button onclick="parseFile(gCurrentFile,true,false);">Debug (see below)</button-->
-            <label for="autoreload">Auto Reload</label><input type="checkbox" name="autoreload" value="" id="autoreload" onclick="toggleAutoReload();">
+            <label for="autoreload">Auto Reload</label><input type="checkbox" name="autoreload" value="" id="autoreload"">
           </div>
         </div>
       </div>
@@ -228,7 +174,6 @@ function main() {
 
 <!-- footer (version, copyright) -->
     <div id="footer">
-      OpenJSCAD.org <script>document.write(OpenJsCad.version);</script>, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>
     </div>
   </body>
 </html>
