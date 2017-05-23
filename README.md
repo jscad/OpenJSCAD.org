@@ -17,6 +17,7 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 - [Documentation](#documentation)
 - [Contribute](#contribute)
 - [Community](#community)
+- [Acknowledgements](#acknowledgements)
 - [License](#license)
 - [Screenshots](#screenshots)
 - [See also](#see-also)
@@ -132,13 +133,13 @@ writing to disk etc
 
 ### Use of the different modular components directly
 
-From version 0.6.0 onwards, almost all the individual parts of this project are available
+From version 1.0.0 onwards, almost all the individual parts of this project are available
 directly as scoped NPM modules , and can be used independently from this repo.
 The full list of these is available here: https://www.npmjs.com/org/jscad
 
 One example of what can be achieved with this can be found [here](https://esnextb.in/?gist=0a2ac2c4e189e27692ea964956a3a2e5)
 This means you can :
-- easilly create your own renderer for the CSG/Cag datastructures
+- easily create your own renderer for the CSG/Cag data structures
 - create custom UIs
 - use the different parts in Node.js or the Browser
 - cherry pick what formats you want to use for input/output without needing the
@@ -174,6 +175,25 @@ See for more details
 * [G+ OpenJSCAD.org Announcements](https://plus.google.com/115007999023701819645)
 * [G+ OpenJSCAD Community](https://plus.google.com/communities/114958480887231067224)
 to discuss with other user and developers.
+
+## Acknowledgements
+
+OpenJSCAD and its sub components are built upon great open source work, contribution & modules
+- [csg.js](https://github.com/jscad/csg.js) core & improvements by
+Evan Wallace,
+Eduard Bespalov,
+Joost Nieuwenhuijse,
+Alexandre Girard
+
+For input/output
+- [xmldom](https://github.com/jindw/xmldom)
+- [sax](https://github.com/isaacs/sax-js)
+
+Tooling:
+- [browserify](http://browserify.org/)
+- [babel](https://babeljs.io/)
+
+and many more!
 
 ## License
 
