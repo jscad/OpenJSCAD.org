@@ -36,7 +36,7 @@
   "dependencies": {
     "@jscad/csg": "0.2.4",
     "@jscad/io": "0.2.0",
-    "@jscad/scad-api": "0.3.2",
+    "@jscad/scad-api": "0.3.4",
     "@jscad/openscad-openjscad-translator": "0.0.10",
     "astring": "^1.0.2",
     "brace": "^0.9.0",
