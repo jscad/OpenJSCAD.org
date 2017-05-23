@@ -1,21 +1,31 @@
-VERSION = 0.5.2
-LIB = /usr/local/lib/openjscad/
-NODE_MODULES = /usr/local/lib/node_modules/
+VERSION = 0.6.0
+PREFIX = /usr/local
+BIN = $(PREFIX)/bin/
+LIB = $(PREFIX)/lib/openjscad/
+NODE_MODULES = $(PREFIX)/lib/node_modules/
 
 all::
-	@echo "make install deinstall tests clean" 
+	@echo "make install deinstall tests clean"
 
 install::
-	test -d ${NODE_MODULES}/openscad-openjscad-translator || sudo npm -g install openscad-openjscad-translator
-	#test -d ${NODE_MODULES}/jquery || sudo npm -g install jquery
-	sudo scp openjscad /usr/local/bin/
-	sudo mkdir -p ${LIB}
-	sudo scp *.js ${LIB}
+	test -d ${NODE_MODULES}/openscad-openjscad-translator || npm -g install openscad-openjscad-translator
+	#test -d ${NODE_MODULES}/jquery || npm -g install jquery
+	scp openjscad $(BIN)
+	mkdir -p ${LIB}
+	scp openjscad.js ${LIB}
+	scp openscad.js ${LIB}
+	scp Blob.js ${LIB}
+	scp formats.js ${LIB}
+	scp lightgl.js ${LIB}
+	scp csg.js ${LIB}
+	scp openscad-openjscad-translator.js ${LIB}
+	scp underscore.js ${LIB}
 	mkdir -p cache; chmod a+rw cache
-                                
+
 deinstall::
-	sudo rm -rf ${NODE_MODULES}/openscad-openjscad-translator
-	sudo rm -f ${LIB}/*.js 
+	rm -rf ${NODE_MODULES}openscad-openjscad-translator
+	rm $(BIN)/openjscad
+	rm -rf ${LIB}
 
 tests::
 	openjscad examples/logo.jscad
@@ -42,7 +52,7 @@ clean::
 	cd examples/platonics && make clean
 	cd examples/include-test && make clean
 
-# TODO:                                        
+# TODO:
 # - locally submodule of openscad-openjscad-translator, see http://git-scm.com/book/en/Git-Tools-Submodules
 
 # --- developers only below
@@ -71,10 +81,10 @@ master-to-dev::
 	git checkout dev
 	git merge master
 
-dist::	
+dist::
 	cd ..; tar cfz Backup/openjscad.org-${VERSION}.tar.gz "--exclude=*.git/*" OpenJSCAD.org/
 
-backup::	
+backup::
 	scp ../Backup/openjscad.org-${VERSION}.tar.gz the-labs.com:Backup/
 
 edit::
@@ -82,4 +92,4 @@ edit::
 
 live::
 	# -- do not enable --delete as it will destroy stats folder
-	rsync -av --exclude=.git --exclude=cache/ ./ delta:Sites/openjscad.org/ 
+	rsync -av --exclude=.git --exclude=cache/ ./ delta:Sites/openjscad.org/

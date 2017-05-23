@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<!--
+
+== OpenJSCAD.org, Copyright (c) 2016-2017, Licensed under MIT License ==
+   in conjunction with other libraries by various authors (see the individual files)
+
+Purpose:
+  This application provides an example of how to set Viewer options for BIG JSCAD designs
+-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+  <title>OpenJSCAD.org Logo</title>
+  <link rel="stylesheet" href="big.css" type="text/css">
+</head>
+
+<body>
+  <script src="dist/opt.js"></script>
+<!-- setup display of the errors as required by OpenJSCAD.js -->
+  <div class="jscad-container">
+    <div id="header">
+      <div id="errordiv">hello</div>
+    </div>
+
+<!-- setup display of the viewer, i.e. canvas -->
+    <div oncontextmenu="return false;" id="viewerContext" design-url="examples/logo_big.jscad"></div>
+
+<!-- setup display of the status, as required by OpenJSCAD.js -->
+<!-- set display: block to display this -->
+    <div id="tail" style="display: none;">
+      <div id="statusdiv"></div>
+    </div>
+  </div>
+</body>
+
+</html>
