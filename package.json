@@ -14,9 +14,9 @@
     "build-opt": "browserify src/ui/opt.js -o dist/opt.js -t [babelify browserify minifyify]",
     "build-all": "npm run build-web && npm run build-min && npm run build-opt",
     "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
-    "release-patch": "git checkout master; npm run build-all && npm version patch && npm run build-all; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
-    "release-minor": "git checkout master; npm run build-all && npm version minor && npm run build-all; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
-    "release-major": "git checkout master; npm run build-all && npm version major && npm run build-all; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
+    "release-patch": "git checkout master; npm run build-all && npm version patch && npm run build-all; git commit -a -m 'chore(release): created patch release/'; git push origin master --tags ",
+    "release-minor": "git checkout master; npm run build-all && npm version minor && npm run build-all; git commit -a -m 'chore(release): created minor release/'; git push origin master --tags ",
+    "release-major": "git checkout master; npm run build-all && npm version major && npm run build-all; git commit -a -m 'chore(release): created major release/'; git push origin master --tags "
   },
   "contributors": [
     {
@@ -34,10 +34,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/csg": "latest",
-    "@jscad/io": "latest",
-    "@jscad/scad-api": "latest",
-    "@jscad/openscad-openjscad-translator": "latest",
+    "@jscad/csg": "0.2.4",
+    "@jscad/io": "0.2.0",
+    "@jscad/scad-api": "0.3.4",
+    "@jscad/openscad-openjscad-translator": "0.0.10",
     "astring": "^1.0.2",
     "brace": "^0.9.0",
     "esprima": "^3.1.3",
