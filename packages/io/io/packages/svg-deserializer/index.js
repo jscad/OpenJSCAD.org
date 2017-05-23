@@ -1198,20 +1198,20 @@ sax.SAXParser.prototype.codify = function (group) {
 }
 
 function createSvgParser (src, pxPmm) {
-// create a deserializer for the XML
-  var deserializer = sax.deserializer(false, {trim: true, lowercase: false, position: true})
+// create a parser for the XML
+  var parser = sax.parser(false, {trim: true, lowercase: false, position: true})
   if (pxPmm !== undefined) {
-    if (pxPmm > deserializer.pxPmm) deserializer.pxPmm = pxPmm
+    if (pxPmm > parser.pxPmm) parser.pxPmm = pxPmm
   }
-// extend the deserializer with functions
-  deserializer.onerror = function (e) {
+// extend the parser with functions
+  parser.onerror = function (e) {
     console.log('error: line ' + e.line + ', column ' + e.column + ', bad character [' + e.c + ']')
   }
 
-  // deserializer.ontext = function (t) {
+  // parser.ontext = function (t) {
   // };
 
-  deserializer.onopentag = function (node) {
+  parser.onopentag = function (node) {
     // console.log('opentag: '+node.name+' at line '+this.line+' position '+this.column);
     // for (x in node.attributes) {
     //  console.log('    '+x+'='+node.attributes[x]);
@@ -1299,7 +1299,7 @@ function createSvgParser (src, pxPmm) {
     }
   }
 
-  deserializer.onclosetag = function (node) {
+  parser.onclosetag = function (node) {
     // console.log('closetag: '+node);
     var obj = null
     switch (node) {
@@ -1327,16 +1327,16 @@ function createSvgParser (src, pxPmm) {
     }
   }
 
-  // deserializer.onattribute = function (attr) {
+  // parser.onattribute = function (attr) {
   // };
 
-  deserializer.onend = function () {
+  parser.onend = function () {
   //  console.log('SVG parsing completed');
   }
-// start the deserializer
-  deserializer.write(src).close()
+// start the parser
+  parser.write(src).close()
 
-  return deserializer
+  return parser
 };
 
 //
@@ -1353,7 +1353,7 @@ function deserialize (src, fn, options) {
   const {version, pxPmm} = options
 
   // parse the SVG source
-  var deserializer = createSvgParser(src, pxPmm)
+  var parser = createSvgParser(src, pxPmm)
   // convert the internal objects to JSCAD code
   var code = ''
   code += '//\n'
@@ -1361,9 +1361,9 @@ function deserialize (src, fn, options) {
   code += '// date: ' + (new Date()) + '\n'
   code += '// source: ' + fn + '\n'
   code += '//\n'
-  if (deserializer.svgObj !== null) {
-    // console.log(JSON.stringify(deserializer.svgObj));
-    code += deserializer.codify(deserializer.svgObj)
+  if (parser.svgObj !== null) {
+    // console.log(JSON.stringify(parser.svgObj));
+    code += parser.codify(parser.svgObj)
   } else {
     console.log('Warning: SVG parsing failed')
   }
@@ -1381,12 +1381,12 @@ function fromSVG (src, options) {
   var pxPmm
   if ('pxPmm' in options) { pxPmm = options.pxPmm }
 // parse the SVG source
-  var deserializer = createSvgParser(src, pxPmm)
+  var parser = createSvgParser(src, pxPmm)
 // convert the internal objects to CAG
   var cag = new CAG()
-  if (deserializer.svgObj !== null) {
-    console.log(JSON.stringify(deserializer.svgObj))
-    // tbw cag = deserializer.objectfy(deserializer.svgObj);
+  if (parser.svgObj !== null) {
+    console.log(JSON.stringify(parser.svgObj))
+    // tbw cag = parser.objectfy(parser.svgObj);
   } else {
     console.log('Warning: SVG parsing failed')
   }
