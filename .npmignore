@@ -1,0 +1,7 @@
+#various
+doc
+imgs
+*.css
+
+#build tools
+.travis.yml
