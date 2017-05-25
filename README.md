@@ -2,7 +2,7 @@
 <img src="doc/logo.png" width=256 align=right>
 
 >*OpenJsCad.org* is a more up-to-date [OpenJsCAD](http://joostn.github.com/OpenJsCad/) frontend where you can edit .jscad files either locally or online via JS editor (built-in).
-A few functions are available to make the transition from [OpenSCAD](http://openscad.org/) to OpenJSCAD easier ([OpenSCAD.jscad](https://github.com/jscad/OpenSCAD.jscad) built-in),
+A few functions are available to make the transition from [OpenSCAD](http://openscad.org/) to OpenJSCAD easier ([scad-api](https://github.com/jscad/scad-api) built-in),
 as well CLI (command-line interface) for server-side computations with NodeJS.
 
 [![GitHub version](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org.svg)](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org)
