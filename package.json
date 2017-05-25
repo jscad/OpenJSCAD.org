@@ -15,7 +15,7 @@
     "build-all": "npm run build-web && npm run build-min && npm run build-opt",
     "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
     "preversion": "npm test",
-    "version": "npm run build && git add -A ",
+    "version": "npm run build-all && git add -A ",
     "postversion": "git push origin master && git push origin master --tags",
     "release-patch": "git checkout master; npm version patch",
     "release-minor": "git checkout master; npm version minor",
