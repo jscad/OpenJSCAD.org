@@ -138,11 +138,43 @@ function fetchExample (filename, url, {memFs, gProcessor, gEditor}) {
   }
 }
 
+const url = require('url')
+
+function fetchUriParams (uri, paramName, defaultValue = undefined) {
+  let params = url.parse(uri, true)
+  let result = params.query
+  if (paramName in result) return result[paramName]
+  return defaultValue
+}
+
+function loadViaProxy (url, proxyPath='remote.pl', {memFs, gProcessor, gEditor, remoteUrl}) {
+  var xhr = new XMLHttpRequest()
+  xhr.open('GET', remoteUrl + url, true)
+  if (url.match(/\.(stl|gcode)$/i)) {
+    xhr.overrideMimeType('text/plain; charset=x-user-defined') // our pseudo binary retrieval (works with Chrome)
+  }
+  gProcessor.setStatus('loading', url)
+  xhr.onload = function () {
+    var data = JSON.parse(this.responseText)
+    fetchExample(data.file, data.url, {memFs, gProcessor, gEditor})
+    // document.location = docUrl.replace(/#.*$/, '#') // this won't reload the entire web-page
+  }
+  xhr.send()
+}
+
 function loadInitialExample (me, params) {
-  if (me === 'web-online') { // we are online, fetch first example
-    const docUrl = document.URL
-    const isRemote = docUrl.match(/#(https?:\/\/\S+)$/)
-    const isLocal = docUrl.match(/#(examples\/\S+)$/)
+  if (me === 'web-online') {
+    const url = location.href
+
+    const proxyPath = fetchUriParams(url, 'proxyPath', undefined)
+    const useProxy = proxyPath !== undefined
+    const documentUri = fetchUriParams(url, 'documentUri', undefined)
+    const baseUrl = location.protocol + '//' + location.host + location.pathname
+
+    console.log(useProxy, proxyPath, documentUri, baseUrl)
+
+    const isRemote = documentUri ? documentUri.match(/(https?:\/\/\S+)$/) : false
+    const isLocal = documentUri ? documentUri.match(/(examples\/\S+)$/) : false
     const isInLocalStorage = localStorage.editorContent && localStorage.editorContent.length
 
     function loadLocalStorage (content, {gProcessor, gEditor}) {
@@ -158,23 +190,27 @@ function loadInitialExample (me, params) {
     function loadLocal (filename, {memFs, gProcessor, gEditor}) {
       console.log('loadLocal')
       fetchExample(filename, undefined, {memFs, gProcessor, gEditor})
-      document.location = docUrl.replace(/#.*$/, '#')
+      // document.location = docUrl.replace(/#.*$/, '#')
     }
 
-    function loadRemote (u, {memFs, gProcessor, gEditor, remoteUrl}) {
-      console.log('loadRemote')
-      gProcessor.setStatus('loading', u)
-      fetchExample(u.replace(/^.+\//, ''), u, {memFs, gProcessor, gEditor})
-      document.location = docUrl.replace(/#.*$/, '#') // this won't reload the entire web-page
+    function loadRemote (url, {memFs, gProcessor, gEditor, remoteUrl}) {
+      console.log('loadRemote',url, proxyPath)
+      gProcessor.setStatus('loading', url)
+      if (useProxy) {
+        loadViaProxy(url, proxyPath, {memFs, gProcessor, gEditor, remoteUrl})
+      } else {
+        fetchExample(url.replace(/^.+\//, ''), url, {memFs, gProcessor, gEditor})
+      }
+      // document.location = baseUrl// docUrl.replace(/#.*$/, '#') // this won't reload the entire web-page
     }
 
     if (isRemote) // remote file referenced, e.g. http://openjscad.org/#http://somewhere/something.ext
     {
-      const u = isRemote[1] // RegExp.$1
-      loadRemote(u, params)
+      // const url = isRemote[1] // RegExp.$1
+      loadRemote(documentUri, params)
     } else if (isLocal) { // local example, e.g. http://openjscad.org/#examples/example001.jscad
-      const filename = isLocal[1] // RegExp.$1
-      loadLocal(filename, params)
+      // const filename = isLocal[1] // RegExp.$1
+      loadLocal(documentUri, params)
     } else if (isInLocalStorage) {
       loadLocalStorage(localStorage.editorContent, params)
     } else {
