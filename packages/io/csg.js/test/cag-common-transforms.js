@@ -43,7 +43,7 @@ test('CAG should subtract properly', t => {
 
   t.deepEqual(result.sides.length, 9)
   t.deepEqual(compactCagSide(firstSide), {pos: [[-3, 3], [-3, -3]]})
-  t.deepEqual(compactCagSide(lastSide), {pos: [[1, 0], [0.30901699437494723, -0.9510565162951536]]})
+  t.deepEqual(compactCagSide(lastSide), {pos: [[0.30901699437494723, -0.9510565162951536], [-0.8090169943749475, -0.587785252292473]]})
 })
 
 test('CAG should intersect properly', t => {
@@ -55,8 +55,8 @@ test('CAG should intersect properly', t => {
   const lastSide = result.sides[result.sides.length - 1]
 
   t.deepEqual(result.sides.length, 5)
-  t.deepEqual(compactCagSide(firstSide), {pos: [[1, 0], [0.30901699437494745, 0.9510565162951535]]})
-  t.deepEqual(compactCagSide(lastSide), {pos: [[0.30901699437494723, -0.9510565162951536], [1, 0]]})
+  t.deepEqual(compactCagSide(firstSide), {pos: [[0.30901699437494723, -0.9510565162951536], [1, 0]]})
+  t.deepEqual(compactCagSide(lastSide), {pos: [[-0.8090169943749475, -0.587785252292473], [0.30901699437494723, -0.9510565162951536]]})
 })
 
 test.todo('CAG should transform properly');

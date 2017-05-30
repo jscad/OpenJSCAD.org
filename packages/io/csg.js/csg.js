@@ -2228,7 +2228,7 @@ for solid CAD anyway.
         },
 
         toString: function() {
-            return "(" + this._x.toFixed(2) + ", " + this._y.toFixed(2) + ", " + this._z.toFixed(2) + ")";
+            return "(" + this._x.toFixed(5) + ", " + this._y.toFixed(5) + ", " + this._z.toFixed(5) + ")";
         },
 
         // find a vector that is somewhat perpendicular to this one
@@ -3924,7 +3924,7 @@ for solid CAD anyway.
         },
 
         toString: function() {
-            return "(" + this._x.toFixed(2) + ", " + this._y.toFixed(2) + ")";
+            return "(" + this._x.toFixed(5) + ", " + this._y.toFixed(5) + ")";
         },
 
         abs: function() {
@@ -5653,8 +5653,14 @@ for solid CAD anyway.
         return result;
     };
 
-    // Like CAG.fromPoints but does not check if it's a valid polygon.
-    // Points should rotate counter clockwise
+    /** Construct a CAG from a list of points (a polygon).
+     * Like fromPoints() but does not check if the result is a valid polygon.
+     * The points MUST rotate counter clockwise.
+     * The points can define a convex or a concave polygon.
+     * The polygon must not self intersect.
+     * @param {points[]} points - list of points in 2D space
+     * @returns {CAG} new CAG object
+     */
     CAG.fromPointsNoCheck = function(points) {
         var sides = [];
         var prevpoint = new CSG.Vector2D(points[points.length - 1]);
@@ -5677,7 +5683,7 @@ for solid CAD anyway.
             })
             .filter(function(s) {
                 return s !== null;
-        });
+            });
         return CAG.fromSides(sides);
     };
 
@@ -5713,21 +5719,17 @@ for solid CAD anyway.
         var center = CSG.parseOptionAs2DVector(options, "center", [0, 0]);
         var radius = CSG.parseOptionAsFloat(options, "radius", 1);
         var resolution = CSG.parseOptionAsInt(options, "resolution", CSG.defaultResolution2D);
-        var sides = [];
+        var points = [];
         var prevvertex;
-        for (var i = 0; i <= resolution; i++) {
+        for (var i = 0; i < resolution; i++) {
             var radians = 2 * Math.PI * i / resolution;
             var point = CSG.Vector2D.fromAngleRadians(radians).times(radius).plus(center);
-            var vertex = new CAG.Vertex(point);
-            if (i > 0) {
-                sides.push(new CAG.Side(prevvertex, vertex));
-            }
-            prevvertex = vertex;
+            points.push(point);
         }
-        return CAG.fromSides(sides);
+        return CAG.fromPoints(points);
     };
 
-    /** Construct a ellispe.
+    /** Construct an ellispe.
      * @param {Object} [options] - options for construction
      * @param {Vector2D} [options.center=[0,0]] - center of ellipse
      * @param {Vector2D} [options.radius=[1,1]] - radius of ellipse, width and height
@@ -6002,6 +6004,24 @@ for solid CAD anyway.
             return polygons;
         },
 
+        /**
+         * Convert to a list of points.
+         * @return {points[]} list of points in 2D space
+         */
+        toPoints: function() {
+            var points = this.sides.map(function(side) {
+                var v0 = side.vertex0;
+                var v1 = side.vertex1;
+                return v0.pos;
+            });
+        // due to the logic of CAG.fromPoints()
+        // move the first point to the last
+            if (points.length > 0) {
+                points.push(points.shift());
+            }
+            return points;
+        },
+
         union: function(cag) {
             var cags;
             if (cag instanceof Array) {
@@ -6109,7 +6129,7 @@ for solid CAD anyway.
                 for (var ii = i + 1; ii < numsides; ii++) {
                     var side1 = this.sides[ii];
                     if (CAG.linesIntersect(side0.vertex0.pos, side0.vertex1.pos, side1.vertex0.pos, side1.vertex1.pos)) {
-                        if (debug) { OpenJsCad.log(side0); OpenJsCad.log(side1);}
+                        if (debug) { console.log("side "+i+": "+side0); console.log("side "+ii+": "+side1);}
                         return true;
                     }
                 }
@@ -6481,6 +6501,11 @@ for solid CAD anyway.
                     }
                     thisside = sideTagToSideMap[nextsidetag];
                 } // inner loop
+                // due to the logic of CAG.fromPoints()
+                // move the first point to the last
+                if (connectedVertexPoints.length > 0) {
+                    connectedVertexPoints.push(connectedVertexPoints.shift());
+                }
                 var path = new CSG.Path2D(connectedVertexPoints, true);
                 paths.push(path);
             } // outer loop
@@ -6573,7 +6598,7 @@ for solid CAD anyway.
 
     CAG.Vertex.prototype = {
         toString: function() {
-            return "(" + this.pos.x.toFixed(2) + "," + this.pos.y.toFixed(2) + ")";
+            return "(" + this.pos.x.toFixed(5) + "," + this.pos.y.toFixed(5) + ")";
         },
         getTag: function() {
             var result = this.tag;
@@ -6599,23 +6624,18 @@ for solid CAD anyway.
     };
 
     CAG.Side._fromFakePolygon = function(polygon) {
-        polygon.vertices.forEach(function(v) {
-            if (!((v.pos.z >= -1.001) && (v.pos.z < -0.999)) && !((v.pos.z >= 0.999) && (v.pos.z < 1.001))) {
-                throw("Assertion failed: _fromFakePolygon expects abs z values of 1");
-            }
-        })
         // this can happen based on union, seems to be residuals -
         // return null and handle in caller
         if (polygon.vertices.length < 4) {
             return null;
         }
-        var reverse = false;
         var vert1Indices = [];
         var pts2d = polygon.vertices.filter(function(v, i) {
             if (v.pos.z > 0) {
                 vert1Indices.push(i);
                 return true;
             }
+            return false;
         })
         .map(function(v) {
             return new CSG.Vector2D(v.pos.x, v.pos.y);
