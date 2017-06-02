@@ -7,9 +7,9 @@ import {assertSameGeometry} from './helpers/asserts'
 // with previously human validated shapes. It would be trivially
 // rewriting the generation code to test it with code instead.
 
-function isValid (t, name, csg) {
-  var expected = OBJ.loadPrevious('csg-shapes.' + name, csg)
-  assertSameGeometry(t, csg, expected)
+function isValid (t, name, observed) {
+  const expected = OBJ.loadPrevious('csg-shapes.' + name, observed)
+  assertSameGeometry(t, observed, expected)
 }
 
 test('CSG.cube creates a cube', t => {
@@ -39,3 +39,36 @@ test.todo('CSG should produce proper rounded cylinders')
 test.todo('CSG should produce proper elliptic cylinders')
 test.todo('CSG should produce proper rounded cube')
 test.todo('CSG should produce proper polyhedrons')
+
+test('CSG should produce solids from slices', t => {
+  const hex = CSG.Polygon.createFromPoints([
+    [0, 0, 0],
+    [0, 10, 0],
+    [10,10, 0],
+  ])
+
+  const observed = hex.solidFromSlices({
+    numslices: 3,
+    callback: function (t, slice) {
+      return this.rotateZ(5 * slice)
+    }
+  })
+
+  t.deepEqual(observed.polygons.length, 14)
+})
+
+function getSimpleSides (cag) {
+  return cag.sides.map(function (side) {
+    return [side.vertex0.pos._x, side.vertex0.pos._y]
+  }).reduce((acc, cur) => {
+    acc.positions.push(cur)
+    return acc
+  }, {positions: []})
+}
+
+test('Polygon2D can create ...2D polygons', t => {
+  const points = [new CSG.Vector2D(0, 0), new CSG.Vector2D(0, 10), new CSG.Vector2D(10, 10)]
+  const observed = getSimpleSides(new CSG.Polygon2D(points))
+  const expected = { positions: [ [ 10, 10 ], [ 0, 10 ], [ 0, 0 ] ] }
+  t.deepEqual(observed, expected)
+})

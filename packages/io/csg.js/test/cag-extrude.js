@@ -28,6 +28,12 @@ test('CAG should extrude', t => {
   t.is(s3.toPolygons().length, 82)
   s4 = c4.extrude({offset: [0, 10, -100], twistangle: 5, twiststeps: 100})
   t.is(s4.toPolygons().length, 7202)
+
+  /*
+  return  linear_extrude({height: 1, slices: 2 },
+           translate([2,0,0], circle({r: 1, fn: 8}))
+        )
+*/
 })
 
 test('CAG should extrudeInPlane', t => {

@@ -2,3 +2,5 @@ node_modules/
 .DS_Store
 objects
 doc
+.nyc_output
+coverage

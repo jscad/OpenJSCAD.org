@@ -9,7 +9,7 @@
     "release-patch": "git checkout master; npm version patch; git commit -a -m 'chore(dist): created release'; git push origin master --tags ",
     "release-minor": "git checkout master; npm version minor; git commit -a -m 'chore(dist): created release'; git push origin master --tags ",
     "release-major": "git checkout master; npm version major; git commit -a -m 'chore(dist): created release'; git push origin master --tags ",
-    "test": "ava 'test' --concurrency 3  --verbose --timeout 40000"
+    "test": "nyc ava 'test' --concurrency 3  --verbose --timeout 40000"
   },
   "contributors": [
     {
@@ -54,7 +54,8 @@
     "ava": "^0.19.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.24.1",
-    "jsdoc": "^3.4.3"
+    "jsdoc": "^3.4.3",
+    "nyc": "^10.3.2"
   },
   "ava": {
     "require": [
