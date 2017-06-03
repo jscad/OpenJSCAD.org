@@ -14,15 +14,15 @@ const Processor = require('../jscad/processor')
 const me = document.location.toString().match(/^file:/) ? 'web-offline' : 'web-online'
 const browser = detectBrowser()
 
-var showEditor = true
-var remoteUrl = './remote.pl?url='
-// var remoteUrl = './remote.php?url='
+const showEditor = true
+const proxyUrl = './remote.pl?url='
+// const proxyUrl = './remote.php?url='
+
 var gProcessor = null
 var gEditor = null
 
 var memFs = [] // associated array, contains file content in source memFs[i].{name,source}
 var currentFiles = [] // linear array, contains files (to read)
-
 
 function getElementHeight (element) {
   return parseInt(getComputedStyle(element).height)
@@ -101,7 +101,7 @@ function init () {
     let examples = document.getElementById('examples');
     if (examples) {
       createExamples(me)
-      loadInitialExample(me, {memFs, gProcessor, gEditor, remoteUrl})
+      loadInitialExample(me, {memFs, gProcessor, gEditor, proxyUrl})
 
       // -- Examples
       examplesTitle.addEventListener('click', function (e) {
