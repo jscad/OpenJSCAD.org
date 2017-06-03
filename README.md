@@ -14,6 +14,7 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 ## Table of Contents
 
 - [Usage](#usage)
+- [Development](#development)
 - [Documentation](#documentation)
 - [Contribute](#contribute)
 - [Community](#community)
@@ -148,6 +149,42 @@ dependencies of **all** packages
 
 This will be expanded upon in the future, and is the backbone of the newer, modular Jscad
 
+## Development
+
+We offer pre-built versions of OpenJSCAD to be uses directly here :
+- [standard](./dist/index.js)
+- [minimalist](./dist/min.js)
+- [with options](./dist/options.js)
+
+but you can also rebuild them manually if you need :
+
+- standard: ```npm run build-web```
+- minimalist: ```npm run build-min```
+- with options: ```npm run build-opt```
+
+### Adding new features in CSG.js or other modules:
+Since OpenJSCAD is made up of multiple dependent modules (csg.js, openscad-openjscad-translator etc),
+the easiest method is to use ```npm link``` to have a 'live' updating development version of OpenJSCAD:
+
+For example for CSG.js
+- create a base directory
+- clone this repository ```git clone git@github.com:jscad/OpenJSCAD.org.git```
+- go into OpenJSCAD.org folder ```cd OpenJSCAD.org```
+- install dependencies ```npm install```
+- start dev server : ```npm run start-dev```
+- go back to base directory ```cd ..```
+- clone CSG.js ```git clone git@github.com:jscad/csg.js.git```
+- go into OpenJSCAD.org folder again ```cd OpenJSCAD.org```
+- now type ```npm link ../csg.js/ @jscad/csg```
+
+You can now make changes to the CSG.js code and see it impact your locally running
+copy of OpenJSCAD live.
+
+## Documentation
+
+- [OpenJSCAD User & Programming Guide](https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide)
+- [OpenJSCAD Quick Reference](https://en.wikibooks.org/wiki/OpenJSCAD_Quick_Reference)
+
 ## Contribute
 
 OpenJSCAD.org is part of the JSCAD Organization, and is maintained by a group of volunteers. We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
@@ -163,11 +200,6 @@ OpenJSCAD.org is part of the JSCAD Organization, and is maintained by a group of
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://plus.google.com/communities/114958480887231067224) and start contributing changes.
 
 Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
-
-## Documentation
-
-- [OpenJSCAD User & Programming Guide](https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide)
-- [OpenJSCAD Quick Reference](https://en.wikibooks.org/wiki/OpenJSCAD_Quick_Reference)
 
 ## Community
 
