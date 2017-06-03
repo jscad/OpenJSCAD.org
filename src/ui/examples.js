@@ -148,6 +148,7 @@ function fetchUriParams (uri, paramName, defaultValue = undefined) {
 }
 
 function loadViaProxy (url, proxyPath='remote.pl', {memFs, gProcessor, gEditor, remoteUrl}) {
+  console.log('loadViaProxy', url, proxyPath)
   var xhr = new XMLHttpRequest()
   xhr.open('GET', remoteUrl + url, true)
   if (url.match(/\.(stl|gcode)$/i)) {
@@ -156,6 +157,7 @@ function loadViaProxy (url, proxyPath='remote.pl', {memFs, gProcessor, gEditor, 
   gProcessor.setStatus('loading', url)
   xhr.onload = function () {
     var data = JSON.parse(this.responseText)
+    console.log('data from proxy', data)
     fetchExample(data.file, data.url, {memFs, gProcessor, gEditor})
     // document.location = docUrl.replace(/#.*$/, '#') // this won't reload the entire web-page
   }
