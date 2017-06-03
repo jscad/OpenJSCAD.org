@@ -44,6 +44,29 @@ And then access the contents via the URL of the web-site.
 
 >NOTE: You might need configuration changes to allow access to the some of the contents (examples etc).
 
+#### Use of proxies for remote file loading:
+
+if you want the capability , just like the official OpenJSCAD.org site, to load remote projects/files directly
+from the web based user interface, but without the hassle with CORS issues,
+you can use a proxy file (see [remote.pl](./remote.pl) & [remote.php](./remote.php)):
+this is a server side script that does the following
+- caches the remote file locally on the server
+- returns the local path to the downloaded file for OpenJSCAD to use
+
+use and path of the proxy can be set by:
+- changing the `proxyUrl` value in [src/ui/index.js](src/ui/index.js)
+- since this is hardcoded , if you do not use the provided dev server,
+ rebuild your main file (npm run build-web etc, see [Development](#development))
+
+
+then you can use it like so:
+https://<YOURSITE>/?uri=http://www.thingiverse.com/download:164128
+or
+https://<YOURSITE>/#http://www.thingiverse.com/download:164128
+
+>Note: a PR with a node.js based proxy would be a welcome addition :)
+
+
 ### Use as Command Line Interface (CLI)
 
 For CLI(command-line interface) use
