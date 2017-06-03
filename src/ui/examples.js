@@ -183,7 +183,7 @@ function loadInitialExample (me, params) {
 
     // const proxyPath = fetchUriParams(url, 'proxyPath', undefined)
     const useProxy = params.proxyUrl !== undefined || document.URL.match(/#(https?:\/\/\S+)$/) !== null
-    const documentUri = fetchUriParams(url, 'documentUri', undefined) || nth(1, document.URL.match(/#(https?:\/\/\S+)$/)) || nth(1, document.URL.match(/#(examples\/\S+)$/))
+    const documentUri = fetchUriParams(url, 'uri', undefined) || nth(1, document.URL.match(/#(https?:\/\/\S+)$/)) || nth(1, document.URL.match(/#(examples\/\S+)$/))
     const baseUrl = location.protocol + '//' + location.host + location.pathname
 
     const isRemote = documentUri ? documentUri.match(/(https?:\/\/\S+)$/) !== null : false
