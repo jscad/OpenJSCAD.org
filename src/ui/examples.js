@@ -156,9 +156,10 @@ function loadViaProxy (url, proxyPath='remote.pl', {memFs, gProcessor, gEditor, 
   }
   gProcessor.setStatus('loading', url)
   xhr.onload = function () {
-    var data = JSON.parse(this.responseText)
+    const data = JSON.parse(this.responseText)
     console.log('data from proxy', data)
-    fetchExample(data.file, data.url, {memFs, gProcessor, gEditor})
+    const url = `${location.href}/${data.file}`
+    fetchExample(data.file, url, {memFs, gProcessor, gEditor})
     // document.location = docUrl.replace(/#.*$/, '#') // this won't reload the entire web-page
   }
   xhr.send()
