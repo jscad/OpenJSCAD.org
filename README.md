@@ -181,7 +181,8 @@ dependencies of **all** packages
 
 This will be expanded upon in the future, and is the backbone of the newer, modular Jscad
 
-## Development
+
+## Development
 
 We offer pre-built versions of OpenJSCAD to be uses directly here :
 - [standard](./dist/index.js)
@@ -193,6 +194,7 @@ but you can also rebuild them manually if you need :
 - standard: ```npm run build-web```
 - minimalist: ```npm run build-min```
 - with options: ```npm run build-opt```
+
 
 ### Adding new features in CSG.js or other modules:
 Since OpenJSCAD is made up of multiple dependent modules (csg.js, openscad-openjscad-translator etc),
