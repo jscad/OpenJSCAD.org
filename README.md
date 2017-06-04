@@ -76,7 +76,9 @@ An easy way to install any Node.js version is to use [NVM](https://github.com/cr
 - after installing nvm type ```nvm install v6``` (recomended)
 - then ```nvm use v6```
 
-For CLI(command-line interface) use
+#### Install OpenJSCAD CLI:
+
+CLI(command-line interface) use
 
 ```
  npm install -g @jscad/openjscad
