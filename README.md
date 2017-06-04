@@ -6,10 +6,10 @@ A few functions are available to make the transition from [OpenSCAD](http://open
 as well CLI (command-line interface) for server-side computations with NodeJS.
 
 [![GitHub version](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org.svg)](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org)
-[![experimental](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg)](https://travis-ci.org/jscad/OpenJSCAD.org)
 [![Dependency Status](https://david-dm.org/jscad/OpenJSCAD.org.svg)](https://david-dm.org/jscad/OpenJSCAD.org)
 [![devDependency Status](https://david-dm.org/jscad/OpenJSCAD.org/dev-status.svg)](https://david-dm.org/jscad/OpenJSCAD.org#info=devDependencies)
+[![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
 ## Table of Contents
 
@@ -69,14 +69,22 @@ https://<YOURSITE>/#http://www.thingiverse.com/download:164128
 
 ### Use as Command Line Interface (CLI)
 
-For CLI(command-line interface) use
+### Install node.js
+
+> IMPORTANT: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x
+> we test OpenJSCAD on node.js version **6.x.x** & **7.x.x** all other versions are not guaranteed to work !
+
+An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
+- after installing nvm type ```nvm install v6``` (recomended)
+- then ```nvm use v6```
+
+#### Install OpenJSCAD CLI:
+
+CLI(command-line interface) use
 
 ```
  npm install -g @jscad/openjscad
 ```
-
-> Note: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x
-> An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
 
 you can now turn the examples (or your own designs) into stl etc files as follows :
 ```
@@ -92,6 +100,7 @@ you can now turn the examples (or your own designs) into stl etc files as follow
 
 > Note: you need a recent , LTS version of Node.js > 6.x.x,
 [see here for more details](https://github.com/nodejs/LTS))
+all the same installation & version recomendation as for the use as command-line also apply
 
 ```
 npm install --save @jscad/openjscad
@@ -172,7 +181,8 @@ dependencies of **all** packages
 
 This will be expanded upon in the future, and is the backbone of the newer, modular Jscad
 
-## Development
+
+## Development
 
 We offer pre-built versions of OpenJSCAD to be uses directly here :
 - [standard](./dist/index.js)
@@ -184,6 +194,7 @@ but you can also rebuild them manually if you need :
 - standard: ```npm run build-web```
 - minimalist: ```npm run build-min```
 - with options: ```npm run build-opt```
+
 
 ### Adding new features in CSG.js or other modules:
 Since OpenJSCAD is made up of multiple dependent modules (csg.js, openscad-openjscad-translator etc),
