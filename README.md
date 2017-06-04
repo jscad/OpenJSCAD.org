@@ -6,10 +6,10 @@ A few functions are available to make the transition from [OpenSCAD](http://open
 as well CLI (command-line interface) for server-side computations with NodeJS.
 
 [![GitHub version](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org.svg)](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org)
-[![experimental](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg)](https://travis-ci.org/jscad/OpenJSCAD.org)
 [![Dependency Status](https://david-dm.org/jscad/OpenJSCAD.org.svg)](https://david-dm.org/jscad/OpenJSCAD.org)
 [![devDependency Status](https://david-dm.org/jscad/OpenJSCAD.org/dev-status.svg)](https://david-dm.org/jscad/OpenJSCAD.org#info=devDependencies)
+[![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
 ## Table of Contents
 
@@ -68,6 +68,8 @@ https://<YOURSITE>/#http://www.thingiverse.com/download:164128
 
 
 ### Use as Command Line Interface (CLI)
+
+### Install node.js
 
 > IMPORTANT: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x
 > we test OpenJSCAD on node.js version **6.x.x** & **7.x.x** all other versions are not guaranteed to work !
