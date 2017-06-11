@@ -198,7 +198,7 @@ Polygon.prototype = {
     // project the 3D polygon onto a plane
   projectToOrthoNormalBasis: function (orthobasis) {
     const CAG = require('../CAG')
-    const {fromPointsNoCheck} = require('../CAGMakers') // circular dependencies
+    const {fromPointsNoCheck} = require('../CAGFactories') // circular dependencies
     let points2d = this.vertices.map(function (vertex) {
       return orthobasis.to2D(vertex.pos)
     })

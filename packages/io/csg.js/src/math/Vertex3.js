@@ -6,6 +6,7 @@ const {getTag} = require('../constants')
 // one to provide additional features like texture coordinates and vertex
 // colors. Custom vertex classes need to provide a `pos` property
 // `flipped()`, and `interpolate()` methods that behave analogous to the ones
+// FIXME: And a lot MORE (see plane.fromVector3Ds for ex) ! This is fragile code
 // defined by `Vertex`.
 const Vertex = function (pos) {
   this.pos = pos
