@@ -35,20 +35,23 @@ CSG.prototype = {
     return this.polygons
   },
 
-    // Return a new CSG solid representing space in either this solid or in the
-    // solid `csg`. Neither this solid nor the solid `csg` are modified.
-    //
-    //     A.union(B)
-    //
-    //     +-------+            +-------+
-    //     |       |            |       |
-    //     |   A   |            |       |
-    //     |    +--+----+   =   |       +----+
-    //     +----+--+    |       +----+       |
-    //          |   B   |            |       |
-    //          |       |            |       |
-    //          +-------+            +-------+
-    //
+  /**
+   * Return a new CSG solid representing the space in either this solid or
+   * in the given solids. Neither this solid nor the given solids are modified.
+   * @param {CSG[]} csg - list of CSG objects
+   * @returns {CSG} new CSG object
+   * @example
+   * let C = A.union(B)
+   * @example
+   * +-------+            +-------+
+   * |       |            |       |
+   * |   A   |            |       |
+   * |    +--+----+   =   |       +----+
+   * +----+--+    |       +----+       |
+   *      |   B   |            |       |
+   *      |       |            |       |
+   *      +-------+            +-------+
+   */
   union: function (csg) {
     let csgs
     if (csg instanceof Array) {
@@ -100,20 +103,23 @@ CSG.prototype = {
     return result
   },
 
-    // Return a new CSG solid representing space in this solid but not in the
-    // solid `csg`. Neither this solid nor the solid `csg` are modified.
-    //
-    //     A.subtract(B)
-    //
-    //     +-------+            +-------+
-    //     |       |            |       |
-    //     |   A   |            |       |
-    //     |    +--+----+   =   |    +--+
-    //     +----+--+    |       +----+
-    //          |   B   |
-    //          |       |
-    //          +-------+
-    //
+  /**
+   * Return a new CSG solid representing space in this solid but
+   * not in the given solids. Neither this solid nor the given solids are modified.
+   * @param {CSG[]} csg - list of CSG objects
+   * @returns {CSG} new CSG object
+   * @example
+   * let C = A.subtract(B)
+   * @example
+   * +-------+            +-------+
+   * |       |            |       |
+   * |   A   |            |       |
+   * |    +--+----+   =   |    +--+
+   * +----+--+    |       +----+
+   *      |   B   |
+   *      |       |
+   *      +-------+
+   */
   subtract: function (csg) {
     let csgs
     if (csg instanceof Array) {
@@ -144,20 +150,23 @@ CSG.prototype = {
     return result
   },
 
-    // Return a new CSG solid representing space both this solid and in the
-    // solid `csg`. Neither this solid nor the solid `csg` are modified.
-    //
-    //     A.intersect(B)
-    //
-    //     +-------+
-    //     |       |
-    //     |   A   |
-    //     |    +--+----+   =   +--+
-    //     +----+--+    |       +--+
-    //          |   B   |
-    //          |       |
-    //          +-------+
-    //
+  /**
+   * Return a new CSG solid representing space in both this solid and
+   * in the given solids. Neither this solid nor the given solids are modified.
+   * @param {CSG[]} csg - list of CSG objects
+   * @returns {CSG} new CSG object
+   * @example
+   * let C = A.intersect(B)
+   * @example
+   * +-------+
+   * |       |
+   * |   A   |
+   * |    +--+----+   =   +--+
+   * +----+--+    |       +--+
+   *      |   B   |
+   *      |       |
+   *      +-------+
+   */
   intersect: function (csg) {
     let csgs
     if (csg instanceof Array) {
@@ -190,8 +199,13 @@ CSG.prototype = {
     return result
   },
 
-    // Return a new CSG solid with solid and empty space switched. This solid is
-    // not modified.
+  /**
+   * Return a new CSG solid with solid and empty space switched.
+   * This solid is not modified.
+   * @returns {CSG} new CSG object
+   * @example
+   * let B = A.invert()
+   */
   invert: function () {
     let flippedpolygons = this.polygons.map(function (p) {
       return p.flipped()
@@ -211,6 +225,17 @@ CSG.prototype = {
     return result
   },
 
+  /**
+   * Return a new CSG solid that is transformed using the given Matrix.
+   * Several matrix transformations can be combined before transforming this solid.
+   * @param {CSG.Matrix4x4} matrix4x4 - matrix to be applied
+   * @returns {CSG} new CSG object
+   * @example
+   * var m = new CSG.Matrix4x4()
+   * m = m.multiply(CSG.Matrix4x4.rotationX(40))
+   * m = m.multiply(CSG.Matrix4x4.translation([-.5, 0, 0]))
+   * let B = A.transform(m)
+   */
   transform: function (matrix4x4) {
     let ismirror = matrix4x4.isMirroring()
     let transformedvertices = {}
@@ -293,7 +318,7 @@ CSG.prototype = {
     //   the result is a true expansion of the solid
     //   If false, returns only the shell
   expandedShell: function (radius, resolution, unionWithThis) {
-    const {sphere} = require('./primitives3d') // FIXME: circular dependency !
+    //const {sphere} = require('./primitives3d') // FIXME: circular dependency !
     let csg = this.reTesselated()
     let result
     if (unionWithThis) {
@@ -478,7 +503,7 @@ CSG.prototype = {
       }
       let yaxis = xaxis.cross(bestzaxis).unit()
       let zaxis = yaxis.cross(xaxis)
-      let _sphere = sphere({
+      let _sphere = CSG.sphere({
         center: vertexobj.pos,
         radius: radius,
         resolution: resolution,
@@ -546,7 +571,14 @@ CSG.prototype = {
     }
   },
 
-    // returns an array of two Vector3Ds (minimum coordinates and maximum coordinates)
+  /**
+   * Returns an array of Vector3D, providing minimum coordinates and maximum coordinates
+   * of this solid.
+   * @returns {Vector3D[]}
+   * @example
+   * let bounds = A.getBounds()
+   * let minX = bounds[0].x
+   */
   getBounds: function () {
     if (!this.cachedBoundingBox) {
       let minpoint = new Vector3D(0, 0, 0)
@@ -1191,8 +1223,15 @@ CSG.prototype = {
     return polygons
   },
 
-    // features: string, or array containing 1 or more strings of: 'volume', 'area'
-    // more could be added here (Fourier coeff, moments)
+  /**
+   * Returns an array of values for the requested features of this solid.
+   * Supported Features: 'volume', 'area'
+   * @param {String[]} features - list of features to calculate
+   * @returns {Float[]} values
+   * @example
+   * let volume = A.getFeatures('volume')
+   * let values = A.getFeatures('area','volume')
+   */
   getFeatures: function (features) {
     if (!(features instanceof Array)) {
       features = [features]
