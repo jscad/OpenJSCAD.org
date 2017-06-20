@@ -120,12 +120,13 @@ var script = `function main() {
 
 // generate compiled version
 var params = {}
-var compiled = jscad.compile(script, params)
-// generate final output data, choosing your prefered format
-var outputData = jscad.generateOutput('stlb', compiled)
+jscad.compile(script, params).then(function(compiled) {
+  // generate final output data, choosing your prefered format
+  var outputData = jscad.generateOutput('stlb', compiled)
+  // hurray ,we can now write an stl file from our OpenJsCad script!
+  fs.writeFileSync('torus.stl', outputData.asBuffer())
+})
 
-// hurray ,we can now write an stl file from our OpenJsCad script!
-fs.writeFileSync('torus.stl', outputData.asBuffer())
 ```
 
 you can also use the 'generateOutput' function directly with CSG/CAG objects ie :
