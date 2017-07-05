@@ -113,19 +113,19 @@ test('CAG should convert to and from paths', t => {
   // convert to array of CSG.Path2D
   var s1 = c1.getOutlinePaths()
   var p1 = s1[0] // use first path from list of paths
-  var f1 = p1.innerToCAG()
+  var f1 = CAG.fromPath2(p1)
   t.deepEqual(c1.toPoints(), f1.toPoints())
   var s2 = c2.getOutlinePaths()
   var p2 = s2[0] // use first path from list of paths
-  var f2 = p2.innerToCAG()
+  var f2 = CAG.fromPath2(p2)
   t.deepEqual(c2.toPoints(), f2.toPoints())
   var s3 = c3.getOutlinePaths()
   var p3 = s3[0] // use first path from list of paths
-  var f3 = p3.innerToCAG()
+  var f3 = CAG.fromPath2(p3)
   t.deepEqual(c3.toPoints(), f3.toPoints())
   var s4 = c4.getOutlinePaths()
   var p4 = s4[0] // use first path from list of paths
-  var f4 = p4.innerToCAG()
+  var f4 = CAG.fromPath2(p4)
   // Order of points is wrong, see Issue #35
   // t.deepEqual(c4.toPoints(), f4.toPoints())
 })

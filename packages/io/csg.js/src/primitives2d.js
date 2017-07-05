@@ -58,7 +58,7 @@ const ellipse = function (options) {
     large: false
   })
   e2 = e2.close()
-  return e2.innerToCAG()
+  return CAG.fromPath2(e2)
 }
 
 /** Construct a rectangle.

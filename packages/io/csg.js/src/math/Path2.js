@@ -95,6 +95,15 @@ Path2D.prototype = {
     return new Path2D(newpoints)
   },
 
+  /**
+   * get the array of Vector2 points that make up the path
+   * note that this is current internal list of points, not an immutable copy.
+   * @returns {Vector2[]} array of points the make up the path
+   */
+  getPoints: function() {
+    return this.points;
+  },
+
   appendPoint: function (point) {
     if (this.closed) {
       throw new Error('Path must not be closed')
@@ -117,6 +126,14 @@ Path2D.prototype = {
 
   close: function () {
     return new Path2D(this.points, true)
+  },
+
+  /**
+   * Tell whether the path is a closed path or not
+   * @returns {boolean} true when the path is closed. false otherwise.
+   */
+  isClosed: function() {
+    return this.closed
   },
 
     // Extrude the path by following it with a rectangle (upright, perpendicular to the path direction)
@@ -155,12 +172,6 @@ Path2D.prototype = {
     let shellcag = CAG.fromSides(sides)
     let expanded = shellcag.expandedShell(pathradius, resolution)
     return expanded
-  },
-
-  innerToCAG: function () {
-    const CAG = require('../CAG') // FIXME: cyclic dependencies CAG => PATH2 => CAG
-    if (!this.closed) throw new Error('The path should be closed!')
-    return CAG.fromPoints(this.points)
   },
 
   transform: function (matrix4x4) {

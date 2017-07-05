@@ -163,6 +163,7 @@ CSG.toPointCloud = require('./src/debugHelpers').toPointCloud
 const CAGMakers = require('./src/CAGFactories')
 CAG.fromObject = CAGMakers.fromObject
 CAG.fromPointsNoCheck = CAGMakers.fromPointsNoCheck
+CAG.fromPath2 = CAGMakers.fromPath2
 
 // ////////////////////////////////////
 addTransformationMethodsToPrototype(CSG.prototype)
