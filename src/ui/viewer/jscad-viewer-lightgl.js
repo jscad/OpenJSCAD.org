@@ -145,7 +145,7 @@ LightGLEngine.prototype = {
     // we need mobile detection to change the target element of controls:
     // otherwise we have to disable the build in html zoom on mobile , which is not always ideal
     const isMobile = typeof window.orientation !== 'undefined'
-    const element = isMobile ? this.containerEl : document
+    const element = this.containerEl // for now only use the canvas isMobile ? this.containerEl : document
     const baseInteractions = baseInteractionsFromEvents(element)
     const gestures = pointerGestures(baseInteractions)
 
