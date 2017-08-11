@@ -48,6 +48,7 @@ Polygon.fromObject = function (obj) {
 
 Polygon.prototype = {
     // check whether the polygon is convex (it should be, otherwise we will get unexpected results)
+  // FIXME why throw here? it should be throw at the appropriate place and time
   checkIfConvex: function () {
     if (!Polygon.verticesConvex(this.vertices, this.plane.normal)) {
       Polygon.verticesConvex(this.vertices, this.plane.normal)
@@ -55,6 +56,8 @@ Polygon.prototype = {
     }
   },
 
+  // FIXME what? why does this return this, and not a new polygon?
+  // FIXME is this used?
   setColor: function (args) {
     let newshared = Polygon.Shared.fromColor.apply(this, arguments)
     this.shared = newshared
@@ -445,13 +448,6 @@ Polygon.verticesConvex = function (vertices, planenormal) {
 
 // Create a polygon from the given points
 Polygon.createFromPoints = function (points, shared, plane) {
-  let normal
-  if (arguments.length < 3) {
-        // initially set a dummy vertex normal:
-    normal = new Vector3D(0, 0, 0)
-  } else {
-    normal = plane.normal
-  }
   let vertices = []
   points.map(function (p) {
     let vec = new Vector3D(p)
