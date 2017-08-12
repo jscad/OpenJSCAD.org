@@ -223,6 +223,8 @@ copy of OpenJSCAD live.
 
 ## Known Issues
 
+There are a few known issues, please be sure to check this out before submitting additional bug reports/issues.
+
 - Q: issues running certain npm commands like ```npm run build-web``` with [cnpm](https://github.com/cnpm/cnpm)
 - A: this is a [know issue in cnpm](https://github.com/cnpm/cnpm/issues/214) , see #283 for more information
 
