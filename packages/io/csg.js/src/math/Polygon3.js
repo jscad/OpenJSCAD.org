@@ -4,19 +4,32 @@ const Matrix4x4 = require('./Matrix4')
 const {_CSGDEBUG, EPS, getTag, areaEPS} = require('../constants')
 const {fnSortByIndex} = require('../utils')
 
-// # class Polygon
-// Represents a convex polygon. The vertices used to initialize a polygon must
-// be coplanar and form a convex loop. They do not have to be `Vertex`
-// instances but they must behave similarly (duck typing can be used for
-// customization).
-//
-// Each convex polygon has a `shared` property, which is shared between all
-// polygons that are clones of each other or were split from the same polygon.
-// This can be used to define per-polygon properties (such as surface color).
-//
-// The plane of the polygon is calculated from the vertex coordinates
-// To avoid unnecessary recalculation, the plane can alternatively be
-// passed as the third argument
+/** Class Polygon
+ * Represents a convex polygon. The vertices used to initialize a polygon must
+ *   be coplanar and form a convex loop. They do not have to be `Vertex`
+ *   instances but they must behave similarly (duck typing can be used for
+ *   customization).
+ * <br>
+ * Each convex polygon has a `shared` property, which is shared between all
+ *   polygons that are clones of each other or were split from the same polygon.
+ *   This can be used to define per-polygon properties (such as surface color).
+ * <br>
+ * The plane of the polygon is calculated from the vertex coordinates if not provided.
+ *   The plane can alternatively be passed as the third argument to avoid calculations.
+ *
+ * @constructor
+ * @param {Vertex[]} vertices - list of vertices
+ * @param {Polygon.Shared} [shared=defaultShared] - shared property to apply
+ * @param {Plane} [plane] - plane of the polygon
+ *
+ * @example
+ * const vertices = [
+ *   new CSG.Vertex(new CSG.Vector3D([0, 0, 0])),
+ *   new CSG.Vertex(new CSG.Vector3D([0, 10, 0])),
+ *   new CSG.Vertex(new CSG.Vector3D([0, 10, 10]))
+ * ]
+ * let observed = new Polygon(vertices)
+ */
 let Polygon = function (vertices, shared, plane) {
   this.vertices = vertices
   if (!shared) shared = Polygon.defaultShared
@@ -31,7 +44,9 @@ let Polygon = function (vertices, shared, plane) {
   }
 
   if (_CSGDEBUG) {
-    this.checkIfConvex()
+    if (!this.checkIfConvex()) {
+      throw new Error('Not convex!')
+    }
   }
 }
 
@@ -47,13 +62,11 @@ Polygon.fromObject = function (obj) {
 }
 
 Polygon.prototype = {
-    // check whether the polygon is convex (it should be, otherwise we will get unexpected results)
-  // FIXME why throw here? it should be throw at the appropriate place and time
+  /** Check whether the polygon is convex. (it should be, otherwise we will get unexpected results)
+   * @returns {boolean}
+   */
   checkIfConvex: function () {
-    if (!Polygon.verticesConvex(this.vertices, this.plane.normal)) {
-      Polygon.verticesConvex(this.vertices, this.plane.normal)
-      throw new Error('Not convex!')
-    }
+    return Polygon.verticesConvex(this.vertices, this.plane.normal)
   },
 
   // FIXME what? why does this return this, and not a new polygon?
@@ -446,7 +459,20 @@ Polygon.verticesConvex = function (vertices, planenormal) {
   return true
 }
 
-// Create a polygon from the given points
+/** Create a polygon from the given points.
+ *
+ * @param {Array[]} points - list of points
+ * @param {Polygon.Shared} [shared=defaultShared] - shared property to apply
+ * @param {Plane} [plane] - plane of the polygon
+ *
+ * @example
+ * const points = [
+ *   [0,  0, 0],
+ *   [0, 10, 0],
+ *   [0, 10, 10]
+ * ]
+ * let observed = CSG.Polygon.createFromPoints(points)
+ */
 Polygon.createFromPoints = function (points, shared, plane) {
   let vertices = []
   points.map(function (p) {
@@ -478,9 +504,14 @@ Polygon.isStrictlyConvexPoint = function (prevpoint, point, nextpoint, normal) {
   return (crossdotnormal >= EPS)
 }
 
-// # class Polygon.Shared
-// Holds the shared properties for each polygon (currently only color)
-// Constructor expects a 4 element array [r,g,b,a], values from 0 to 1, or null
+/** Class Polygon.Shared
+ * Holds the shared properties for each polygon (Currently only color).
+ * @constructor
+ * @param {Array[]} color - array containing RGBA values, or null
+ *
+ * @example
+ *   let shared = new CSG.Polygon.Shared([0, 0, 0, 1])
+ */
 Polygon.Shared = function (color) {
   if (color !== null) {
     if (color.length !== 4) {
@@ -494,9 +525,17 @@ Polygon.Shared.fromObject = function (obj) {
   return new Polygon.Shared(obj.color)
 }
 
-// Create Polygon.Shared from a color, can be called as follows:
-// let s = Polygon.Shared.fromColor(r,g,b [,a])
-// let s = Polygon.Shared.fromColor([r,g,b [,a]])
+/** Create Polygon.Shared from color values.
+ * @param {number} r - value of RED component
+ * @param {number} g - value of GREEN component
+ * @param {number} b - value of BLUE component
+ * @param {number} [a] - value of ALPHA component
+ * @param {Array[]} [color] - OR array containing RGB values (optional Alpha)
+ *
+ * @example
+ * let s1 = Polygon.Shared.fromColor(0,0,0)
+ * let s2 = Polygon.Shared.fromColor([0,0,0,1])
+ */
 Polygon.Shared.fromColor = function (args) {
   let color
   if (arguments.length === 1) {
