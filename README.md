@@ -16,6 +16,7 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 - [Usage](#usage)
 - [Development](#development)
 - [Documentation](#documentation)
+- [Known issues](#known-issues)
 - [Contribute](#contribute)
 - [Community](#community)
 - [Acknowledgements](#acknowledgements)
@@ -219,6 +220,13 @@ copy of OpenJSCAD live.
 
 - [OpenJSCAD User & Programming Guide](https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide)
 - [OpenJSCAD Quick Reference](https://en.wikibooks.org/wiki/OpenJSCAD_Quick_Reference)
+
+## Known Issues
+
+There are a few known issues, please be sure to check this out before submitting additional bug reports/issues.
+
+- Q: issues running certain npm commands like ```npm run build-web``` with [cnpm](https://github.com/cnpm/cnpm)
+- A: this is a [know issue in cnpm](https://github.com/cnpm/cnpm/issues/214) , see [issue #283](https://github.com/jscad/OpenJSCAD.org/issues/283) for more information
 
 ## Contribute
 
