@@ -727,7 +727,7 @@ module.exports = {
   deserialize
 }
 
-},{"sax":136}],2:[function(require,module,exports){
+},{"sax":125}],2:[function(require,module,exports){
 const mimeType = 'application/amf+xml'
 
 function serialize (CSG, m) {
@@ -1054,7 +1054,7 @@ Blob.prototype = {
 module.exports = {makeBlob}
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":39}],6:[function(require,module,exports){
+},{"buffer":28}],6:[function(require,module,exports){
 const {makeBlob} = require('@jscad/io-utils')
 
 const amfSerializer = require('@jscad/amf-serializer')
@@ -1107,7 +1107,7 @@ export {parseOBJ} from './deserializers/parseOBJ'
 export {parseSTL} from './deserializers/parseSTL'
 export {parseSVG} from './deserializers/parseSVG'*/
 
-},{"@jscad/amf-deserializer":1,"@jscad/amf-serializer":2,"@jscad/dxf-serializer":3,"@jscad/gcode-deserializer":4,"@jscad/io-utils":5,"@jscad/json-deserializer":7,"@jscad/json-serializer":8,"@jscad/obj-deserializer":10,"@jscad/stl-deserializer":23,"@jscad/stl-serializer":27,"@jscad/svg-deserializer":28,"@jscad/svg-serializer":29,"@jscad/x3d-serializer":31}],7:[function(require,module,exports){
+},{"@jscad/amf-deserializer":1,"@jscad/amf-serializer":2,"@jscad/dxf-serializer":3,"@jscad/gcode-deserializer":4,"@jscad/io-utils":5,"@jscad/json-deserializer":7,"@jscad/json-serializer":8,"@jscad/obj-deserializer":10,"@jscad/stl-deserializer":12,"@jscad/stl-serializer":16,"@jscad/svg-deserializer":17,"@jscad/svg-serializer":18,"@jscad/x3d-serializer":20}],7:[function(require,module,exports){
 /*
 ## License
 
@@ -1216,7 +1216,7 @@ module.exports = {
   deserialize
 }
 
-},{"@jscad/csg":173}],8:[function(require,module,exports){
+},{"@jscad/csg":162}],8:[function(require,module,exports){
 const {CSG} = require('@jscad/csg')
 
 const mimeType = 'application/json'
@@ -8105,2230 +8105,6 @@ module.exports = {
 }
 
 },{}],12:[function(require,module,exports){
-// color table from http://www.w3.org/TR/css3-color/
-var cssColors = {
-// basic color keywords
-  'black': [ 0 / 255, 0 / 255, 0 / 255 ],
-  'silver': [ 192 / 255, 192 / 255, 192 / 255 ],
-  'gray': [ 128 / 255, 128 / 255, 128 / 255 ],
-  'white': [ 255 / 255, 255 / 255, 255 / 255 ],
-  'maroon': [ 128 / 255, 0 / 255, 0 / 255 ],
-  'red': [ 255 / 255, 0 / 255, 0 / 255 ],
-  'purple': [ 128 / 255, 0 / 255, 128 / 255 ],
-  'fuchsia': [ 255 / 255, 0 / 255, 255 / 255 ],
-  'green': [ 0 / 255, 128 / 255, 0 / 255 ],
-  'lime': [ 0 / 255, 255 / 255, 0 / 255 ],
-  'olive': [ 128 / 255, 128 / 255, 0 / 255 ],
-  'yellow': [ 255 / 255, 255 / 255, 0 / 255 ],
-  'navy': [ 0 / 255, 0 / 255, 128 / 255 ],
-  'blue': [ 0 / 255, 0 / 255, 255 / 255 ],
-  'teal': [ 0 / 255, 128 / 255, 128 / 255 ],
-  'aqua': [ 0 / 255, 255 / 255, 255 / 255 ],
-// extended color keywords
-  'aliceblue': [ 240 / 255, 248 / 255, 255 / 255 ],
-  'antiquewhite': [ 250 / 255, 235 / 255, 215 / 255 ],
-  //'aqua': [ 0 / 255, 255 / 255, 255 / 255 ],
-  'aquamarine': [ 127 / 255, 255 / 255, 212 / 255 ],
-  'azure': [ 240 / 255, 255 / 255, 255 / 255 ],
-  'beige': [ 245 / 255, 245 / 255, 220 / 255 ],
-  'bisque': [ 255 / 255, 228 / 255, 196 / 255 ],
-  //'black': [ 0 / 255, 0 / 255, 0 / 255 ],
-  'blanchedalmond': [ 255 / 255, 235 / 255, 205 / 255 ],
-  //'blue': [ 0 / 255, 0 / 255, 255 / 255 ],
-  'blueviolet': [ 138 / 255, 43 / 255, 226 / 255 ],
-  'brown': [ 165 / 255, 42 / 255, 42 / 255 ],
-  'burlywood': [ 222 / 255, 184 / 255, 135 / 255 ],
-  'cadetblue': [ 95 / 255, 158 / 255, 160 / 255 ],
-  'chartreuse': [ 127 / 255, 255 / 255, 0 / 255 ],
-  'chocolate': [ 210 / 255, 105 / 255, 30 / 255 ],
-  'coral': [ 255 / 255, 127 / 255, 80 / 255 ],
-  'cornflowerblue': [ 100 / 255, 149 / 255, 237 / 255 ],
-  'cornsilk': [ 255 / 255, 248 / 255, 220 / 255 ],
-  'crimson': [ 220 / 255, 20 / 255, 60 / 255 ],
-  'cyan': [ 0 / 255, 255 / 255, 255 / 255 ],
-  'darkblue': [ 0 / 255, 0 / 255, 139 / 255 ],
-  'darkcyan': [ 0 / 255, 139 / 255, 139 / 255 ],
-  'darkgoldenrod': [ 184 / 255, 134 / 255, 11 / 255 ],
-  'darkgray': [ 169 / 255, 169 / 255, 169 / 255 ],
-  'darkgreen': [ 0 / 255, 100 / 255, 0 / 255 ],
-  'darkgrey': [ 169 / 255, 169 / 255, 169 / 255 ],
-  'darkkhaki': [ 189 / 255, 183 / 255, 107 / 255 ],
-  'darkmagenta': [ 139 / 255, 0 / 255, 139 / 255 ],
-  'darkolivegreen': [ 85 / 255, 107 / 255, 47 / 255 ],
-  'darkorange': [ 255 / 255, 140 / 255, 0 / 255 ],
-  'darkorchid': [ 153 / 255, 50 / 255, 204 / 255 ],
-  'darkred': [ 139 / 255, 0 / 255, 0 / 255 ],
-  'darksalmon': [ 233 / 255, 150 / 255, 122 / 255 ],
-  'darkseagreen': [ 143 / 255, 188 / 255, 143 / 255 ],
-  'darkslateblue': [ 72 / 255, 61 / 255, 139 / 255 ],
-  'darkslategray': [ 47 / 255, 79 / 255, 79 / 255 ],
-  'darkslategrey': [ 47 / 255, 79 / 255, 79 / 255 ],
-  'darkturquoise': [ 0 / 255, 206 / 255, 209 / 255 ],
-  'darkviolet': [ 148 / 255, 0 / 255, 211 / 255 ],
-  'deeppink': [ 255 / 255, 20 / 255, 147 / 255 ],
-  'deepskyblue': [ 0 / 255, 191 / 255, 255 / 255 ],
-  'dimgray': [ 105 / 255, 105 / 255, 105 / 255 ],
-  'dimgrey': [ 105 / 255, 105 / 255, 105 / 255 ],
-  'dodgerblue': [ 30 / 255, 144 / 255, 255 / 255 ],
-  'firebrick': [ 178 / 255, 34 / 255, 34 / 255 ],
-  'floralwhite': [ 255 / 255, 250 / 255, 240 / 255 ],
-  'forestgreen': [ 34 / 255, 139 / 255, 34 / 255 ],
-  //'fuchsia': [ 255 / 255, 0 / 255, 255 / 255 ],
-  'gainsboro': [ 220 / 255, 220 / 255, 220 / 255 ],
-  'ghostwhite': [ 248 / 255, 248 / 255, 255 / 255 ],
-  'gold': [ 255 / 255, 215 / 255, 0 / 255 ],
-  'goldenrod': [ 218 / 255, 165 / 255, 32 / 255 ],
-  //'gray': [ 128 / 255, 128 / 255, 128 / 255 ],
-  //'green': [ 0 / 255, 128 / 255, 0 / 255 ],
-  'greenyellow': [ 173 / 255, 255 / 255, 47 / 255 ],
-  'grey': [ 128 / 255, 128 / 255, 128 / 255 ],
-  'honeydew': [ 240 / 255, 255 / 255, 240 / 255 ],
-  'hotpink': [ 255 / 255, 105 / 255, 180 / 255 ],
-  'indianred': [ 205 / 255, 92 / 255, 92 / 255 ],
-  'indigo': [ 75 / 255, 0 / 255, 130 / 255 ],
-  'ivory': [ 255 / 255, 255 / 255, 240 / 255 ],
-  'khaki': [ 240 / 255, 230 / 255, 140 / 255 ],
-  'lavender': [ 230 / 255, 230 / 255, 250 / 255 ],
-  'lavenderblush': [ 255 / 255, 240 / 255, 245 / 255 ],
-  'lawngreen': [ 124 / 255, 252 / 255, 0 / 255 ],
-  'lemonchiffon': [ 255 / 255, 250 / 255, 205 / 255 ],
-  'lightblue': [ 173 / 255, 216 / 255, 230 / 255 ],
-  'lightcoral': [ 240 / 255, 128 / 255, 128 / 255 ],
-  'lightcyan': [ 224 / 255, 255 / 255, 255 / 255 ],
-  'lightgoldenrodyellow': [ 250 / 255, 250 / 255, 210 / 255 ],
-  'lightgray': [ 211 / 255, 211 / 255, 211 / 255 ],
-  'lightgreen': [ 144 / 255, 238 / 255, 144 / 255 ],
-  'lightgrey': [ 211 / 255, 211 / 255, 211 / 255 ],
-  'lightpink': [ 255 / 255, 182 / 255, 193 / 255 ],
-  'lightsalmon': [ 255 / 255, 160 / 255, 122 / 255 ],
-  'lightseagreen': [ 32 / 255, 178 / 255, 170 / 255 ],
-  'lightskyblue': [ 135 / 255, 206 / 255, 250 / 255 ],
-  'lightslategray': [ 119 / 255, 136 / 255, 153 / 255 ],
-  'lightslategrey': [ 119 / 255, 136 / 255, 153 / 255 ],
-  'lightsteelblue': [ 176 / 255, 196 / 255, 222 / 255 ],
-  'lightyellow': [ 255 / 255, 255 / 255, 224 / 255 ],
-  //'lime': [ 0 / 255, 255 / 255, 0 / 255 ],
-  'limegreen': [ 50 / 255, 205 / 255, 50 / 255 ],
-  'linen': [ 250 / 255, 240 / 255, 230 / 255 ],
-  'magenta': [ 255 / 255, 0 / 255, 255 / 255 ],
-  //'maroon': [ 128 / 255, 0 / 255, 0 / 255 ],
-  'mediumaquamarine': [ 102 / 255, 205 / 255, 170 / 255 ],
-  'mediumblue': [ 0 / 255, 0 / 255, 205 / 255 ],
-  'mediumorchid': [ 186 / 255, 85 / 255, 211 / 255 ],
-  'mediumpurple': [ 147 / 255, 112 / 255, 219 / 255 ],
-  'mediumseagreen': [ 60 / 255, 179 / 255, 113 / 255 ],
-  'mediumslateblue': [ 123 / 255, 104 / 255, 238 / 255 ],
-  'mediumspringgreen': [ 0 / 255, 250 / 255, 154 / 255 ],
-  'mediumturquoise': [ 72 / 255, 209 / 255, 204 / 255 ],
-  'mediumvioletred': [ 199 / 255, 21 / 255, 133 / 255 ],
-  'midnightblue': [ 25 / 255, 25 / 255, 112 / 255 ],
-  'mintcream': [ 245 / 255, 255 / 255, 250 / 255 ],
-  'mistyrose': [ 255 / 255, 228 / 255, 225 / 255 ],
-  'moccasin': [ 255 / 255, 228 / 255, 181 / 255 ],
-  'navajowhite': [ 255 / 255, 222 / 255, 173 / 255 ],
-  //'navy': [ 0 / 255, 0 / 255, 128 / 255 ],
-  'oldlace': [ 253 / 255, 245 / 255, 230 / 255 ],
-  //'olive': [ 128 / 255, 128 / 255, 0 / 255 ],
-  'olivedrab': [ 107 / 255, 142 / 255, 35 / 255 ],
-  'orange': [ 255 / 255, 165 / 255, 0 / 255 ],
-  'orangered': [ 255 / 255, 69 / 255, 0 / 255 ],
-  'orchid': [ 218 / 255, 112 / 255, 214 / 255 ],
-  'palegoldenrod': [ 238 / 255, 232 / 255, 170 / 255 ],
-  'palegreen': [ 152 / 255, 251 / 255, 152 / 255 ],
-  'paleturquoise': [ 175 / 255, 238 / 255, 238 / 255 ],
-  'palevioletred': [ 219 / 255, 112 / 255, 147 / 255 ],
-  'papayawhip': [ 255 / 255, 239 / 255, 213 / 255 ],
-  'peachpuff': [ 255 / 255, 218 / 255, 185 / 255 ],
-  'peru': [ 205 / 255, 133 / 255, 63 / 255 ],
-  'pink': [ 255 / 255, 192 / 255, 203 / 255 ],
-  'plum': [ 221 / 255, 160 / 255, 221 / 255 ],
-  'powderblue': [ 176 / 255, 224 / 255, 230 / 255 ],
-  //'purple': [ 128 / 255, 0 / 255, 128 / 255 ],
-  //'red': [ 255 / 255, 0 / 255, 0 / 255 ],
-  'rosybrown': [ 188 / 255, 143 / 255, 143 / 255 ],
-  'royalblue': [ 65 / 255, 105 / 255, 225 / 255 ],
-  'saddlebrown': [ 139 / 255, 69 / 255, 19 / 255 ],
-  'salmon': [ 250 / 255, 128 / 255, 114 / 255 ],
-  'sandybrown': [ 244 / 255, 164 / 255, 96 / 255 ],
-  'seagreen': [ 46 / 255, 139 / 255, 87 / 255 ],
-  'seashell': [ 255 / 255, 245 / 255, 238 / 255 ],
-  'sienna': [ 160 / 255, 82 / 255, 45 / 255 ],
-  //'silver': [ 192 / 255, 192 / 255, 192 / 255 ],
-  'skyblue': [ 135 / 255, 206 / 255, 235 / 255 ],
-  'slateblue': [ 106 / 255, 90 / 255, 205 / 255 ],
-  'slategray': [ 112 / 255, 128 / 255, 144 / 255 ],
-  'slategrey': [ 112 / 255, 128 / 255, 144 / 255 ],
-  'snow': [ 255 / 255, 250 / 255, 250 / 255 ],
-  'springgreen': [ 0 / 255, 255 / 255, 127 / 255 ],
-  'steelblue': [ 70 / 255, 130 / 255, 180 / 255 ],
-  'tan': [ 210 / 255, 180 / 255, 140 / 255 ],
-  //'teal': [ 0 / 255, 128 / 255, 128 / 255 ],
-  'thistle': [ 216 / 255, 191 / 255, 216 / 255 ],
-  'tomato': [ 255 / 255, 99 / 255, 71 / 255 ],
-  'turquoise': [ 64 / 255, 224 / 255, 208 / 255 ],
-  'violet': [ 238 / 255, 130 / 255, 238 / 255 ],
-  'wheat': [ 245 / 255, 222 / 255, 179 / 255 ],
-  //'white': [ 255 / 255, 255 / 255, 255 / 255 ],
-  'whitesmoke': [ 245 / 255, 245 / 255, 245 / 255 ],
-  //'yellow': [ 255 / 255, 255 / 255, 0 / 255 ],
-  'yellowgreen': [ 154 / 255, 205 / 255, 50 / 255 ],
-};
-
-
-/**
- * Converts an CSS color name to RGB color.
- *
- * @param   String  s       The CSS color name
- * @return  Array           The RGB representation, or [0,0,0] default
- */
-function css2rgb(s) {
-  return cssColors[s.toLowerCase()]
-}
-
-// color( (array[r,g,b] | css-string) [,alpha] (,array[objects] | list of objects) )
-function color () {
-  var o, i = 1, a = arguments, c = a[0], alpha
-
-  // assume first argument is RGB array
-  // but check if first argument is CSS string
-  if (typeof c == 'string') {
-    c = css2rgb(c)
-  }
-  // check if second argument is alpha
-  if (Number.isFinite(a[i])) {
-    c = c.concat(a[i])
-    i++
-  }
-  // check if next argument is an an array
-  if (Array.isArray(a[i])) { a = a[i], i = 0; } // use this as the list of objects
-  for (o = a[i++]; i < a.length; i++) {
-    o = o.union(a[i])
-  }
-  return o.setColor(c)
-}
-
-// from http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
-/**
- * Converts an RGB color value to HSL. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
- * Assumes r, g, and b are contained in the set [0, 1] and
- * returns h, s, and l in the set [0, 1].
- *
- * @param   Number  r       The red color value
- * @param   Number  g       The green color value
- * @param   Number  b       The blue color value
- * @return  Array           The HSL representation
- */
-function rgb2hsl (r, g, b) {
-  if (r.length) { b = r[2], g = r[1], r = r[0]; }
-  var max = Math.max(r, g, b), min = Math.min(r, g, b)
-  var h, s, l = (max + min) / 2
-
-  if (max == min) {
-    h = s = 0 // achromatic
-  } else {
-    var d = max - min
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
-    switch (max) {
-      case r:
-        h = (g - b) / d + (g < b ? 6 : 0)
-        break
-      case g:
-        h = (b - r) / d + 2
-        break
-      case b:
-        h = (r - g) / d + 4
-        break
-    }
-    h /= 6
-  }
-
-  return [h, s, l]
-}
-
-/**
- * Converts an HSL color value to RGB. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
- * Assumes h, s, and l are contained in the set [0, 1] and
- * returns r, g, and b in the set [0, 1].
- *
- * @param   Number  h       The hue
- * @param   Number  s       The saturation
- * @param   Number  l       The lightness
- * @return  Array           The RGB representation
- */
-function hsl2rgb (h, s, l) {
-  if (h.length) { l = h[2], s = h[1], h = h[0]; }
-  var r, g, b
-
-  if (s == 0) {
-    r = g = b = l // achromatic
-  } else {
-    var q = l < 0.5 ? l * (1 + s) : l + s - l * s
-    var p = 2 * l - q
-    r = hue2rgb(p, q, h + 1 / 3)
-    g = hue2rgb(p, q, h)
-    b = hue2rgb(p, q, h - 1 / 3)
-  }
-
-  return [r, g, b]
-}
-
-function hue2rgb (p, q, t) {
-  if (t < 0) t += 1
-  if (t > 1) t -= 1
-  if (t < 1 / 6) return p + (q - p) * 6 * t
-  if (t < 1 / 2) return q
-  if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6
-  return p
-}
-
-/**
- * Converts an RGB color value to HSV. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
- * Assumes r, g, and b are contained in the set [0, 1] and
- * returns h, s, and v in the set [0, 1].
- *
- * @param   Number  r       The red color value
- * @param   Number  g       The green color value
- * @param   Number  b       The blue color value
- * @return  Array           The HSV representation
- */
-
-function rgb2hsv (r, g, b) {
-  if (r.length) { b = r[2], g = r[1], r = r[0]; }
-  var max = Math.max(r, g, b), min = Math.min(r, g, b)
-  var h, s, v = max
-
-  var d = max - min
-  s = max == 0 ? 0 : d / max
-
-  if (max == min) {
-    h = 0 // achromatic
-  } else {
-    switch (max) {
-      case r:
-        h = (g - b) / d + (g < b ? 6 : 0)
-        break
-      case g:
-        h = (b - r) / d + 2
-        break
-      case b:
-        h = (r - g) / d + 4
-        break
-    }
-    h /= 6
-  }
-
-  return [h, s, v]
-}
-
-/**
- * Converts an HSV color value to RGB. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
- * Assumes h, s, and v are contained in the set [0, 1] and
- * returns r, g, and b in the set [0, 1].
- *
- * @param   Number  h       The hue
- * @param   Number  s       The saturation
- * @param   Number  v       The value
- * @return  Array           The RGB representation
- */
-function hsv2rgb (h, s, v) {
-  if (h.length) { v = h[2], s = h[1], h = h[0]; }
-  var r, g, b
-
-  var i = Math.floor(h * 6)
-  var f = h * 6 - i
-  var p = v * (1 - s)
-  var q = v * (1 - f * s)
-  var t = v * (1 - (1 - f) * s)
-
-  switch (i % 6) {
-    case 0:
-      r = v, g = t, b = p
-      break
-    case 1:
-      r = q, g = v, b = p
-      break
-    case 2:
-      r = p, g = v, b = t
-      break
-    case 3:
-      r = p, g = q, b = v
-      break
-    case 4:
-      r = t, g = p, b = v
-      break
-    case 5:
-      r = v, g = p, b = q
-      break
-  }
-
-  return [r, g, b]
-}
-
-/**
- * Converts a HTML5 color value (string) to RGB values
- * See the color input type of HTML5 forms
- * Conversion formula:
- * - split the string; "#RRGGBB" into RGB components
- * - convert the HEX value into RGB values
- */
-function html2rgb (s) {
-  var r = 0
-  var g = 0
-  var b = 0
-  if (s.length == 7) {
-    r = parseInt('0x' + s.slice(1, 3)) / 255
-    g = parseInt('0x' + s.slice(3, 5)) / 255
-    b = parseInt('0x' + s.slice(5, 7)) / 255
-  }
-  return [r, g, b]
-}
-
-/**
- * Converts RGB color value to HTML5 color value (string)
- * Conversion forumla:
- * - convert R, G, B into HEX strings
- * - return HTML formatted string "#RRGGBB"
- */
-function rgb2html (r, g, b) {
-  if (r.length) { b = r[2], g = r[1], r = r[0]; }
-  var s = '#' +
-  Number(0x1000000 + r * 255 * 0x10000 + g * 255 * 0x100 + b * 255).toString(16).substring(1,7)
-  return s
-}
-
- module.exports = {
-   css2rgb,
-   color,
-   rgb2hsl,
-   hsl2rgb,
-   rgb2hsv,
-   hsv2rgb,
-   html2rgb,
-   rgb2html
- }
-
-},{}],13:[function(require,module,exports){
-function echo () {
-  console.warn('echo() will be deprecated in the near future: please use console.log/warn/error instead')
-  var s = '', a = arguments
-  for (var i = 0; i < a.length; i++) {
-    if (i) s += ', '
-    s += a[i]
-  }
-  // var t = (new Date()-global.time)/1000
-  // console.log(t,s)
-  console.log(s)
-}
-
-/**
-sprintf() for JavaScript 0.7-beta1
-http://www.diveintojavascript.com/projects/javascript-sprintf
-
-Copyright (c) Alexandru Marasteanu <alexaholic [at) gmail (dot] com>
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of sprintf() for JavaScript nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL Alexandru Marasteanu BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-Changelog:
-2010.09.06 - 0.7-beta1
-  - features: vsprintf, support for named placeholders
-  - enhancements: format cache, reduced global namespace pollution
-
-2010.05.22 - 0.6:
- - reverted to 0.4 and fixed the bug regarding the sign of the number 0
- Note:
- Thanks to Raphael Pigulla <raph (at] n3rd [dot) org> (http://www.n3rd.org/)
- who warned me about a bug in 0.5, I discovered that the last update was
- a regress. I appologize for that.
-
-2010.05.09 - 0.5:
- - bug fix: 0 is now preceeded with a + sign
- - bug fix: the sign was not at the right position on padded results (Kamal Abdali)
- - switched from GPL to BSD license
-
-2007.10.21 - 0.4:
- - unit test and patch (David Baird)
-
-2007.09.17 - 0.3:
- - bug fix: no longer throws exception on empty paramenters (Hans Pufal)
-
-2007.09.11 - 0.2:
- - feature: added argument swapping
-
-2007.04.03 - 0.1:
- - initial release
-**/
-
-let sprintf = (function () {
-  function get_type (variable) {
-    return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase()
-  }
-  function str_repeat (input, multiplier) {
-    for (var output = []; multiplier > 0; output[--multiplier] = input) { /* do nothing */}
-    return output.join('')
-  }
-
-  var str_format = function () {
-    if (!str_format.cache.hasOwnProperty(arguments[0])) {
-      str_format.cache[arguments[0]] = str_format.parse(arguments[0])
-    }
-    return str_format.format.call(null, str_format.cache[arguments[0]], arguments)
-  }
-
-  str_format.format = function (parse_tree, argv) {
-    var cursor = 1, tree_length = parse_tree.length, node_type = '', arg, output = [], i, k, match, pad, pad_character, pad_length
-    for (i = 0; i < tree_length; i++) {
-      node_type = get_type(parse_tree[i])
-      if (node_type === 'string') {
-        output.push(parse_tree[i])
-      }
-      else if (node_type === 'array') {
-        match = parse_tree[i] // convenience purposes only
-        if (match[2]) { // keyword argument
-          arg = argv[cursor]
-          for (k = 0; k < match[2].length; k++) {
-            if (!arg.hasOwnProperty(match[2][k])) {
-              throw(sprintf('[sprintf] property "%s" does not exist', match[2][k]))
-            }
-            arg = arg[match[2][k]]
-          }
-        }
-        else if (match[1]) { // positional argument (explicit)
-          arg = argv[match[1]]
-        } else { // positional argument (implicit)
-          arg = argv[cursor++]
-        }
-
-        if (/[^s]/.test(match[8]) && (get_type(arg) != 'number')) {
-          throw(sprintf('[sprintf] expecting number but found %s', get_type(arg)))
-        }
-        switch (match[8]) {
-          case 'b':
-            arg = arg.toString(2)
-            break
-          case 'c':
-            arg = String.fromCharCode(arg)
-            break
-          case 'd':
-            arg = parseInt(arg, 10)
-            break
-          case 'e':
-            arg = match[7] ? arg.toExponential(match[7]) : arg.toExponential()
-            break
-          case 'f':
-            arg = match[7] ? parseFloat(arg).toFixed(match[7]) : parseFloat(arg)
-            break
-          case 'o':
-            arg = arg.toString(8)
-            break
-          case 's':
-            arg = ((arg = String(arg)) && match[7] ? arg.substring(0, match[7]) : arg)
-            break
-          case 'u':
-            arg = Math.abs(arg)
-            break
-          case 'x':
-            arg = arg.toString(16)
-            break
-          case 'X':
-            arg = arg.toString(16).toUpperCase()
-            break
-        }
-        arg = (/[def]/.test(match[8]) && match[3] && arg >= 0 ? '+' + arg : arg)
-        pad_character = match[4] ? match[4] == '0' ? '0' : match[4].charAt(1) : ' '
-        pad_length = match[6] - String(arg).length
-        pad = match[6] ? str_repeat(pad_character, pad_length) : ''
-        output.push(match[5] ? arg + pad : pad + arg)
-      }
-    }
-    return output.join('')
-  }
-
-  str_format.cache = {}
-
-  str_format.parse = function (fmt) {
-    var _fmt = fmt, match = [], parse_tree = [], arg_names = 0
-    while (_fmt) {
-      if ((match = /^[^\x25]+/.exec(_fmt)) !== null) {
-        parse_tree.push(match[0])
-      }
-      else if ((match = /^\x25{2}/.exec(_fmt)) !== null) {
-        parse_tree.push('%')
-      }
-      else if ((match = /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fosuxX])/.exec(_fmt)) !== null) {
-        if (match[2]) {
-          arg_names |= 1
-          var field_list = [], replacement_field = match[2], field_match = []
-          if ((field_match = /^([a-z_][a-z_\d]*)/i.exec(replacement_field)) !== null) {
-            field_list.push(field_match[1])
-            while ((replacement_field = replacement_field.substring(field_match[0].length)) !== '') {
-              if ((field_match = /^\.([a-z_][a-z_\d]*)/i.exec(replacement_field)) !== null) {
-                field_list.push(field_match[1])
-              }
-              else if ((field_match = /^\[(\d+)\]/.exec(replacement_field)) !== null) {
-                field_list.push(field_match[1])
-              } else {
-                throw('[sprintf] huh?')
-              }
-            }
-          } else {
-            throw('[sprintf] huh?')
-          }
-          match[2] = field_list
-        } else {
-          arg_names |= 2
-        }
-        if (arg_names === 3) {
-          throw('[sprintf] mixing positional and named placeholders is not (yet) supported')
-        }
-        parse_tree.push(match)
-      } else {
-        throw('[sprintf] huh?')
-      }
-      _fmt = _fmt.substring(match[0].length)
-    }
-    return parse_tree
-  }
-
-  return str_format
-})()
-
-function vsprintf (fmt, argv) {
-  argv.unshift(fmt)
-  return sprintf.apply(null, argv)
-}
-
-module.exports = {
-  echo
-}
-
-},{}],14:[function(require,module,exports){
-
-const primitives3d = require('./primitives3d')
-const primitives2d = require('./primitives2d')
-const booleanOps = require('./ops-booleans')
-const transformations = require('./ops-transformations')
-const extrusions = require('./ops-extrusions')
-const color = require('./color')
-const maths = require('./maths')
-const text = require('./text')
-const { echo } = require('./debug')
-
-// these are 'external' to this api and we basically just re-export for old api compatibility
-// ...needs to be reviewed
-const { CAG, CSG } = require('@jscad/csg')
-const { log } = require('./log') // FIXME: this is a duplicate of the one in openjscad itself,*/
-
-// mostly likely needs to be removed since it is in the OpenJsCad namespace anyway, leaving here
-// for now
-
-const exportedApi = {
-  csg: {CAG, CSG},
-  primitives2d,
-  primitives3d,
-  booleanOps,
-  transformations,
-  extrusions,
-  color,
-  maths,
-  text,
-  OpenJsCad: {OpenJsCad: {log}},
-  debug: {echo}
-}
-
-module.exports = exportedApi
-
-},{"./color":12,"./debug":13,"./log":15,"./maths":16,"./ops-booleans":17,"./ops-extrusions":18,"./ops-transformations":19,"./primitives2d":20,"./primitives3d":21,"./text":22,"@jscad/csg":173}],15:[function(require,module,exports){
-function log (txt) {
-  var timeInMs = Date.now()
-  var prevtime// OpenJsCad.log.prevLogTime
-  if (!prevtime) prevtime = timeInMs
-  var deltatime = timeInMs - prevtime
-  log.prevLogTime = timeInMs
-  var timefmt = (deltatime * 0.001).toFixed(3)
-  txt = '[' + timefmt + '] ' + txt
-  if ((typeof (console) === 'object') && (typeof (console.log) === 'function')) {
-    console.log(txt)
-  } else if ((typeof (self) === 'object') && (typeof (self.postMessage) === 'function')) {
-    self.postMessage({cmd: 'log', txt: txt})
-  } else throw new Error('Cannot log')
-}
-
-// See Processor.setStatus()
-// Note: leave for compatibility
-function status (s) {
-  log(s)
-}
-
-module.exports = {
-  log,
-  status
-}
-
-},{}],16:[function(require,module,exports){
-// -- Math functions (360 deg based vs 2pi)
-function sin (a) {
-  return Math.sin(a / 360 * Math.PI * 2)
-}
-function cos (a) {
-  return Math.cos(a / 360 * Math.PI * 2)
-}
-function asin (a) {
-  return Math.asin(a) / (Math.PI * 2) * 360
-}
-function acos (a) {
-  return Math.acos(a) / (Math.PI * 2) * 360
-}
-function tan (a) {
-  return Math.tan(a / 360 * Math.PI * 2)
-}
-function atan (a) {
-  return Math.atan(a) / (Math.PI * 2) * 360
-}
-function atan2 (a, b) {
-  return Math.atan2(a, b) / (Math.PI * 2) * 360
-}
-function ceil (a) {
-  return Math.ceil(a)
-}
-function floor (a) {
-  return Math.floor(a)
-}
-function abs (a) {
-  return Math.abs(a)
-}
-function min (a, b) {
-  return a < b ? a : b
-}
-function max (a, b) {
-  return a > b ? a : b
-}
-function rands (min, max, vn, seed) {
-  // -- seed is ignored for now, FIX IT (requires reimplementation of random())
-  //    see http://stackoverflow.com/questions/424292/how-to-create-my-own-javascript-random-number-generator-that-i-can-also-set-the
-  var v = new Array(vn)
-  for (var i = 0; i < vn; i++) {
-    v[i] = Math.random() * (max - min) + min
-  }
-}
-function log (a) {
-  return Math.log(a)
-}
-function lookup (ix, v) {
-  var r = 0
-  for (var i = 0; i < v.length; i++) {
-    var a0 = v[i]
-    if (a0[0] >= ix) {
-      i--
-      a0 = v[i]
-      var a1 = v[i + 1]
-      var m = 0
-      if (a0[0] !== a1[0]) {
-        m = abs((ix - a0[0]) / (a1[0] - a0[0]))
-      }
-      // echo(">>",i,ix,a0[0],a1[0],";",m,a0[1],a1[1])
-      if (m > 0) {
-        r = a0[1] * (1 - m) + a1[1] * m
-      } else {
-        r = a0[1]
-      }
-      return r
-    }
-  }
-  return r
-}
-
-function pow (a, b) {
-  return Math.pow(a, b)
-}
-
-function sign (a) {
-  return a < 0 ? -1 : (a > 1 ? 1 : 0)
-}
-
-function sqrt (a) {
-  return Math.sqrt(a)
-}
-
-function round (a) {
-  return floor(a + 0.5)
-}
-
-module.exports = {
-  sin,
-  cos,
-  asin,
-  acos,
-  tan,
-  atan,
-  atan2,
-  ceil,
-  floor,
-  abs,
-  min,
-  max,
-  rands,
-  log,
-  lookup,
-  pow,
-  sign,
-  sqrt,
-  round
-}
-
-},{}],17:[function(require,module,exports){
-const { CAG } = require('@jscad/csg')
-
-// -- 3D operations (OpenSCAD like notion)
-// FIXME should this be lazy ? in which case, how do we deal with 2D/3D combined
-// TODO we should have an option to set behaviour as first parameter
-function union () {
-  let options = {}
-  const defaults = {
-    extrude2d: false
-  }
-  var o, i = 0, a = arguments
-  if (a[0].length) a = a[0]
-  if ('extrude2d' in a[0]) { // first parameter is options
-    options = Object.assign({}, defaults, a[0])
-    o = a[i++]
-  }
-
-  o = a[i++]
-
-  // TODO: add option to be able to set this?
-  if ((typeof (a[i]) === 'object') && a[i] instanceof CAG && options.extrude2d) {
-    o = a[i].extrude({offset: [0, 0, 0.1]}) // -- convert a 2D shape to a thin solid, note: do not a[i] = a[i].extrude()
-  }
-  for (; i < a.length; i++) {
-    var obj = a[i]
-
-    if ((typeof (a[i]) === 'object') && a[i] instanceof CAG && options.extrude2d) {
-      obj = a[i].extrude({offset: [0, 0, 0.1]}) // -- convert a 2D shape to a thin solid:
-    }
-    o = o.union(obj)
-  }
-  return o
-}
-
-function difference () {
-  var o, i = 0, a = arguments
-  if (a[0].length) a = a[0]
-  for (o = a[i++]; i < a.length; i++) {
-    if (a[i] instanceof CAG) {
-      o = o.subtract(a[i])
-    } else {
-      o = o.subtract(a[i].setColor(1, 1, 0)) // -- color the cuts
-    }
-  }
-  return o
-}
-
-function intersection () {
-  var o, i = 0, a = arguments
-  if (a[0].length) a = a[0]
-  for (o = a[i++]; i < a.length; i++) {
-    if (a[i] instanceof CAG) {
-      o = o.intersect(a[i])
-    } else {
-      o = o.intersect(a[i].setColor(1, 1, 0)) // -- color the cuts
-    }
-  }
-  return o
-}
-
-module.exports = {
-  union,
-  difference,
-  intersection
-}
-
-},{"@jscad/csg":173}],18:[function(require,module,exports){
-const { CSG } = require('@jscad/csg')
-// -- 2D to 3D primitives (OpenSCAD like notion)
-
-function linear_extrude (p, s) {
-  // console.log("linear_extrude() not yet implemented")
-  // return
-  let h = 1
-  let off = 0
-  let twist = 0
-  let slices = 10
-  /* convexity = 10, */
-
-  if (p.height) h = p.height
-  // if(p.convexity) convexity = p.convexity      // abandoned
-  if (p.twist) twist = p.twist
-  if (p.slices) slices = p.slices
-  var o = s.extrude({offset: [0, 0, h], twistangle: twist, twiststeps: slices})
-  if (p.center === true) {
-    var b = [ ]
-    b = o.getBounds() // b[0] = min, b[1] = max
-    off = b[1].plus(b[0])
-    off = off.times(-0.5)
-    o = o.translate(off)
-  }
-  return o
-}
-
-function rotate_extrude (p, o) {
-  var fn = 32
-  if (arguments.length < 2) {
-    o = p // no switches, just an object
-  } else if (p !== undefined) {
-    fn = p.fn
-  }
-  if (fn < 3) fn = 3
-  var ps = []
-  for (var i = 0; i < fn; i++) {
-    // o.{x,y} -> rotate([0,0,i:0..360], obj->{o.x,0,o.y})
-    for (var j = 0; j < o.sides.length; j++) {
-      // has o.sides[j].vertex{0,1}.pos (only x,y)
-      var p = []
-      var m
-
-      m = new CSG.Matrix4x4.rotationZ(i / fn * 360)
-      p[0] = new CSG.Vector3D(o.sides[j].vertex0.pos.x, 0, o.sides[j].vertex0.pos.y)
-      p[0] = m.rightMultiply1x3Vector(p[0])
-
-      p[1] = new CSG.Vector3D(o.sides[j].vertex1.pos.x, 0, o.sides[j].vertex1.pos.y)
-      p[1] = m.rightMultiply1x3Vector(p[1])
-
-      m = new CSG.Matrix4x4.rotationZ((i + 1) / fn * 360)
-      p[2] = new CSG.Vector3D(o.sides[j].vertex1.pos.x, 0, o.sides[j].vertex1.pos.y)
-      p[2] = m.rightMultiply1x3Vector(p[2])
-
-      p[3] = new CSG.Vector3D(o.sides[j].vertex0.pos.x, 0, o.sides[j].vertex0.pos.y)
-      p[3] = m.rightMultiply1x3Vector(p[3])
-
-      var p1 = new CSG.Polygon([
-        new CSG.Vertex(p[0]),
-        new CSG.Vertex(p[1]),
-        new CSG.Vertex(p[2]),
-        new CSG.Vertex(p[3]) // we make a square polygon (instead of 2 triangles)
-      ])
-      // var p2 = new CSG.Polygon([
-      //   new CSG.Vertex(p[0]),
-      //   new CSG.Vertex(p[2]),
-      //   new CSG.Vertex(p[3]),
-      // ])
-      ps.push(p1)
-    // ps.push(p2)
-    // echo("i="+i,i/fn*360,"j="+j)
-    }
-  }
-  return CSG.fromPolygons(ps)
-}
-
-function rectangular_extrude (pa, p) {
-  let w = 1
-  let h = 1
-  let fn = 8
-  let closed = false
-  let round = true
-  if (p) {
-    if (p.w) w = p.w
-    if (p.h) h = p.h
-    if (p.fn) fn = p.fn
-    if (p.closed !== undefined) closed = p.closed
-    if (p.round !== undefined) round = p.round
-  }
-  return new CSG.Path2D(pa, closed).rectangularExtrude(w, h, fn, round)
-}
-
-module.exports = {
-  linear_extrude,
-  rotate_extrude,
-  rectangular_extrude
-}
-
-},{"@jscad/csg":173}],19:[function(require,module,exports){
-const { CSG, CAG } = require('@jscad/csg')
-const { union } = require('./ops-booleans')
-// -- 3D transformations (OpenSCAD like notion)
-
-function translate () {      // v, obj or array
-  var a = arguments, v = a[0], o, i = 1
-  if (a[1].length) { a = a[1]; i = 0 }
-  for (o = a[i++]; i < a.length; i++) {
-    o = o.union(a[i])
-  }
-  return o.translate(v)
-}
-
-function center () { // v, obj or array
-  var a = arguments, v = a[0], o, i = 1
-  if (a[1].length) { a = a[1]; i = 0 }
-  for (o = a[i++]; i < a.length; i++) {
-    o = o.union(a[i])
-  }
-  return o.center(v)
-}
-
-function scale () {         // v, obj or array
-  var a = arguments, v = a[0], o, i = 1
-  if (a[1].length) { a = a[1]; i = 0 }
-  for (o = a[i++]; i < a.length; i++) {
-    o = o.union(a[i])
-  }
-  return o.scale(v)
-}
-
-function rotate () {
-  var o, i, v, r = 1, a = arguments
-  if (!a[0].length) {        // rotate(r,[x,y,z],o)
-    r = a[0]
-    v = a[1]
-    i = 2
-    if (a[2].length) { a = a[2]; i = 0 }
-  } else {                   // rotate([x,y,z],o)
-    v = a[0]
-    i = 1
-    if (a[1].length) { a = a[1]; i = 0 }
-  }
-  for (o = a[i++]; i < a.length; i++) {
-    o = o.union(a[i])
-  }
-  if (r != 1) {
-    return o.rotateX(v[0] * r).rotateY(v[1] * r).rotateZ(v[2] * r)
-  } else {
-    return o.rotateX(v[0]).rotateY(v[1]).rotateZ(v[2])
-  }
-}
-
-function mirror (v, o) {
-  var a = Array.prototype.slice.call(arguments, 1, arguments.length),
-    o = a[0]
-
-  for (var i = 1; i < a.length; i++) {
-    o = o.union(a[i])
-  }
-  var plane = new CSG.Plane(new CSG.Vector3D(v[0], v[1], v[2]).unit(), 0)
-  return o.mirrored(plane)
-}
-
-function expand (r, n, o) {
-  return o.expand(r, n)
-}
-
-function contract (r, n, o) {
-  return o.contract(r, n)
-}
-
-function multmatrix (mat, obj) {
-  console.log('multmatrix() not yet implemented')
-}
-
-function minkowski () {
-  console.log('minkowski() not yet implemented')
-}
-
-function hull () {
-  var pts = []
-
-  var a = arguments
-  if (a[0].length) a = a[0]
-  var done = []
-
-  for (var i = 0; i < a.length; i++) {              // extract all points of the CAG in the argument list
-    var cag = a[i]
-    if (!(cag instanceof CAG)) {
-      throw ('ERROR: hull() accepts only 2D forms / CAG')
-      return
-    }
-    for (var j = 0; j < cag.sides.length; j++) {
-      var x = cag.sides[j].vertex0.pos.x
-      var y = cag.sides[j].vertex0.pos.y
-      if (done['' + x + ',' + y])  // avoid some coord to appear multiple times
-           {
-        continue
-      }
-      pts.push({ x: x, y: y })
-      done['' + x + ',' + y]++
-         // echo(x,y);
-    }
-  }
-   // echo(pts.length+" points in",pts);
-
-   // from http://www.psychedelicdevelopment.com/grahamscan/
-   //    see also at https://github.com/bkiers/GrahamScan/blob/master/src/main/cg/GrahamScan.java
-  var ConvexHullPoint = function (i, a, d) {
-    this.index = i
-    this.angle = a
-    this.distance = d
-
-    this.compare = function (p) {
-      if (this.angle < p.angle) {
-        return -1
-      } else if (this.angle > p.angle) {
-        return 1
-      } else {
-        if (this.distance < p.distance) {
-          return -1
-        } else if (this.distance > p.distance) {
-          return 1
-        }
-      }
-      return 0
-    }
-  }
-
-  var ConvexHull = function () {
-    this.points = null
-    this.indices = null
-
-    this.getIndices = function () {
-      return this.indices
-    }
-
-    this.clear = function () {
-      this.indices = null
-      this.points = null
-    }
-
-    this.ccw = function (p1, p2, p3) {
-      var ccw = (this.points[p2].x - this.points[p1].x) * (this.points[p3].y - this.points[p1].y) -
-                   (this.points[p2].y - this.points[p1].y) * (this.points[p3].x - this.points[p1].x)
-      if (ccw < 1e-5)      // we need this, otherwise sorting never ends, see https://github.com/Spiritdude/OpenJSCAD.org/issues/18
-            {
-        return 0
-      }
-      return ccw
-    }
-
-    this.angle = function (o, a) {
-         // return Math.atan((this.points[a].y-this.points[o].y) / (this.points[a].x - this.points[o].x));
-      return Math.atan2((this.points[a].y - this.points[o].y), (this.points[a].x - this.points[o].x))
-    }
-
-    this.distance = function (a, b) {
-      return ((this.points[b].x - this.points[a].x) * (this.points[b].x - this.points[a].x) +
-                 (this.points[b].y - this.points[a].y) * (this.points[b].y - this.points[a].y))
-    }
-
-    this.compute = function (_points) {
-      this.indices = null
-      if (_points.length < 3) {
-        return
-      }
-      this.points = _points
-
-         // Find the lowest point
-      var min = 0
-      for (var i = 1; i < this.points.length; i++) {
-        if (this.points[i].y == this.points[min].y) {
-          if (this.points[i].x < this.points[min].x) {
-            min = i
-          }
-        } else if (this.points[i].y < this.points[min].y) {
-          min = i
-        }
-      }
-
-         // Calculate angle and distance from base
-      var al = new Array()
-      var ang = 0.0
-      var dist = 0.0
-      for (i = 0; i < this.points.length; i++) {
-        if (i == min) {
-          continue
-        }
-        ang = this.angle(min, i)
-        if (ang < 0) {
-          ang += Math.PI
-        }
-        dist = this.distance(min, i)
-        al.push(new ConvexHullPoint(i, ang, dist))
-      }
-
-      al.sort(function (a, b) { return a.compare(b) })
-
-         // Create stack
-      var stack = new Array(this.points.length + 1)
-      var j = 2
-      for (i = 0; i < this.points.length; i++) {
-        if (i == min) {
-          continue
-        }
-        stack[j] = al[j - 2].index
-        j++
-      }
-      stack[0] = stack[this.points.length]
-      stack[1] = min
-
-      var tmp
-      var M = 2
-      for (i = 3; i <= this.points.length; i++) {
-        while (this.ccw(stack[M - 1], stack[M], stack[i]) <= 0) {
-          M--
-        }
-        M++
-        tmp = stack[i]
-        stack[i] = stack[M]
-        stack[M] = tmp
-      }
-
-      this.indices = new Array(M)
-      for (i = 0; i < M; i++) {
-        this.indices[i] = stack[i + 1]
-      }
-    }
-  }
-
-  var hull = new ConvexHull()
-
-  hull.compute(pts)
-  var indices = hull.getIndices()
-
-  if (indices && indices.length > 0) {
-    var ch = []
-    for (var i = 0; i < indices.length; i++) {
-      ch.push(pts[indices[i]])
-         // echo(pts[indices[i]]);
-    }
-      // echo(ch.length+" points out",ch);
-    return CAG.fromPoints(ch)
-      // return CAG.fromPointsNoCheck(ch);
-  }
-}
-
-// "Whosa whatsis" suggested "Chain Hull" as described at https://plus.google.com/u/0/105535247347788377245/posts/aZGXKFX1ACN
-// essentially hull A+B, B+C, C+D and then union those
-
-function chain_hull () {
-  var a = arguments
-  var j = 0, closed = false
-
-  if (a[j].closed !== undefined) {
-    closed = a[j++].closed
-  }
-
-  if (a[j].length) { a = a[j] }
-
-  var h = []; var n = a.length - (closed ? 0 : 1)
-  for (var i = 0; i < n; i++) {
-    h.push(hull(a[i], a[(i + 1) % a.length]))
-  }
-  return union(h)
-}
-
-module.exports = {
-  translate,
-  center,
-  scale,
-  rotate,
-  mirror,
-  expand,
-  contract,
-  multmatrix,
-  minkowski,
-  hull,
-  chain_hull
-}
-
-},{"./ops-booleans":17,"@jscad/csg":173}],20:[function(require,module,exports){
-const { CAG } = require('@jscad/csg')
-
-// -- 2D primitives (OpenSCAD like notion)
-
-function square () {
-  let v = [1, 1]
-  let off
-  let a = arguments
-  let p = a[0]
-
-  if (p && Number.isFinite(p)) v = [p, p]
-  if (p && p.length) v = a[0], p = a[1]
-  if (p && p.size && p.size.length) v = p.size
-
-  off = [v[0] / 2, v[1] / 2]
-  if (p && p.center === true) off = [0, 0]
-
-  var o = CAG.rectangle({center: off, radius: [v[0] / 2, v[1] / 2]})
-
-  return o
-}
-
-function circle () {
-  let r = 1
-  let off
-  let fn = 32
-  let a = arguments
-  let p = a[0]
-  if (p && p.r) r = p.r
-  if (p && p.fn) fn = p.fn
-  if (p && !p.r && !p.fn && !p.center) r = p
-  off = [r, r]
-  if (p && p.center === true) { off = [0, 0] }
-  var o = CAG.circle({center: off, radius: r, resolution: fn})
-  return o
-}
-
-function polygon (p) { // array of po(ints) and pa(ths)
-  var points = [ ]
-  if (p.paths && p.paths.length && p.paths[0].length) { // pa(th): [[0,1,2],[2,3,1]] (two paths)
-    for (var j = 0; j < p.paths.length; j++) {
-      for (var i = 0; i < p.paths[j].length; i++) {
-        points[i] = p.points[p.paths[j][i]]
-      }
-    }
-  } else if (p.paths && p.paths.length) { // pa(th): [0,1,2,3,4] (single path)
-    for (var i = 0; i < p.paths.length; i++) {
-      points[i] = p.points[p.paths[i]]
-    }
-  } else { // pa(th) = po(ints)
-    if (p.length) {
-      points = p
-    } else {
-      points = p.points
-    }
-  }
-  return CAG.fromPoints(points)
-}
-
-function triangle () { // -- new addition
-  var a = arguments
-  if (a[0] && a[0].length) a = a[0]
-  var o = CAG.fromPoints(a)
-  return o
-}
-
-module.exports = {
-  square,
-  circle,
-  polygon,
-  triangle
-}
-
-},{"@jscad/csg":173}],21:[function(require,module,exports){
-// -- 3D primitives (OpenSCAD like notion)
-const { CSG } = require('@jscad/csg')
-const { circle } = require('./primitives2d')
-const { rotate_extrude } = require('./ops-extrusions')
-
-function cube (p) {
-  var s = 1, v = null, off = [0, 0, 0], round = false, r = 0, fn = 8
-  if (p && p.length) v = p
-  if (p && p.size && p.size.length) v = p.size // { size: [1,2,3] }
-  if (p && p.size && !p.size.length) s = p.size // { size: 1 }
-  // if(p&&!p.size&&!p.length&&p.center===undefined&&!p.round&&!p.radius) s = p      // (2)
-  if (p && (typeof p !== 'object')) s = p// (2)
-  if (p && p.round === true) { round = true, r = v && v.length ? (v[0] + v[1] + v[2]) / 30 : s / 10}
-  if (p && p.radius) { round = true, r = p.radius }
-  if (p && p.fn) fn = p.fn // applies in case of round: true
-
-  var x = s, y = s, z = s
-  if (v && v.length) {
-    x = v[0], y = v[1], z = v[2]
-  }
-  off = [x / 2, y / 2, z / 2] // center: false default
-  var o = round ?
-    CSG.roundedCube({radius: [x / 2, y / 2, z / 2], roundradius: r, resolution: fn}) :
-    CSG.cube({radius: [x / 2, y / 2, z / 2]})
-  if (p && p.center && p.center.length) {
-    off = [p.center[0] ? 0 : x / 2, p.center[1] ? 0 : y / 2, p.center[2] ? 0 : z / 2]
-  } else if (p && p.center == true) {
-    off = [0, 0, 0]
-  } else if (p && p.center == false) {
-    off = [x / 2, y / 2, z / 2]
-  }
-  if (off[0] || off[1] || off[2]) o = o.translate(off)
-  // if(v&&v.length) o = o.scale(v)      // we don't scale afterwards, we already created box with the correct size
-  return o
-}
-
-function sphere (p) {
-  var r = 1
-  var fn = 32
-  var off = [0, 0, 0]
-  var type = 'normal'
-
-  // var zoff = 0 // sphere() in openscad has no center:true|false
-  if (p && p.r) r = p.r
-  if (p && p.fn) fn = p.fn
-  if (p && p.type) type = p.type
-  // if(p&&!p.r&&!p.fn&&!p.type) r = p
-  if (p && (typeof p !== 'object')) r = p
-  off = [0, 0, 0] // center: false (default)
-
-  var o
-  if (type === 'geodesic')
-    o = geodesicSphere(p)
-  else
-    o = CSG.sphere({radius: r, resolution: fn})
-
-  if (p && p.center && p.center.length) { // preparing individual x,y,z center
-    off = [p.center[0] ? 0 : r, p.center[1] ? 0 : r, p.center[2] ? 0 : r]
-  } else if (p && p.center === true) {
-    off = [0, 0, 0]
-  } else if (p && p.center === false) {
-    off = [r, r, r]
-  }
-  if (off[0] || off[1] || off[2]) o = o.translate(off)
-  return o
-}
-
-function geodesicSphere (p) {
-  var r = 1, fn = 5
-
-  var ci = [ // hard-coded data of icosahedron (20 faces, all triangles)
-    [0.850651, 0.000000, -0.525731],
-    [0.850651, -0.000000, 0.525731],
-    [-0.850651, -0.000000, 0.525731],
-    [-0.850651, 0.000000, -0.525731],
-    [0.000000, -0.525731, 0.850651],
-    [0.000000, 0.525731, 0.850651],
-    [0.000000, 0.525731, -0.850651],
-    [0.000000, -0.525731, -0.850651],
-    [-0.525731, -0.850651, -0.000000],
-    [0.525731, -0.850651, -0.000000],
-    [0.525731, 0.850651, 0.000000],
-    [-0.525731, 0.850651, 0.000000]]
-
-  var ti = [ [0, 9, 1], [1, 10, 0], [6, 7, 0], [10, 6, 0], [7, 9, 0], [5, 1, 4], [4, 1, 9], [5, 10, 1], [2, 8, 3], [3, 11, 2], [2, 5, 4],
-    [4, 8, 2], [2, 11, 5], [3, 7, 6], [6, 11, 3], [8, 7, 3], [9, 8, 4], [11, 10, 5], [10, 11, 6], [8, 9, 7]]
-
-  var geodesicSubDivide = function (p, fn, off) {
-    var p1 = p[0], p2 = p[1], p3 = p[2]
-    var n = off
-    var c = []
-    var f = []
-
-    //           p3
-    //           /\
-    //          /__\     fn = 3
-    //      i  /\  /\
-    //        /__\/__\       total triangles = 9 (fn*fn)
-    //       /\  /\  /\
-    //     0/__\/__\/__\
-    //    p1 0   j      p2
-
-    for (var i = 0; i < fn; i++) {
-      for (var j = 0; j < fn - i; j++) {
-        var t0 = i / fn
-        var t1 = (i + 1) / fn
-        var s0 = j / (fn - i)
-        var s1 = (j + 1) / (fn - i)
-        var s2 = fn - i - 1 ? j / (fn - i - 1) : 1
-        var q = []
-
-        q[0] = mix3(mix3(p1, p2, s0), p3, t0)
-        q[1] = mix3(mix3(p1, p2, s1), p3, t0)
-        q[2] = mix3(mix3(p1, p2, s2), p3, t1)
-
-        // -- normalize
-        for (var k = 0; k < 3; k++) {
-          var r = Math.sqrt(q[k][0] * q[k][0] + q[k][1] * q[k][1] + q[k][2] * q[k][2])
-          for (var l = 0; l < 3; l++) {
-            q[k][l] /= r
-          }
-        }
-        c.push(q[0], q[1], q[2])
-        f.push([n, n + 1, n + 2]); n += 3
-
-        if (j < fn - i - 1) {
-          var s3 = fn - i - 1 ? (j + 1) / (fn - i - 1) : 1
-          q[0] = mix3(mix3(p1, p2, s1), p3, t0)
-          q[1] = mix3(mix3(p1, p2, s3), p3, t1)
-          q[2] = mix3(mix3(p1, p2, s2), p3, t1)
-
-          // -- normalize
-          for (var k = 0; k < 3; k++) {
-            var r = Math.sqrt(q[k][0] * q[k][0] + q[k][1] * q[k][1] + q[k][2] * q[k][2])
-            for (var l = 0; l < 3; l++) {
-              q[k][l] /= r
-            }
-          }
-          c.push(q[0], q[1], q[2])
-          f.push([n, n + 1, n + 2]); n += 3
-        }
-      }
-    }
-    return { points: c, triangles: f, off: n }
-  }
-
-  var mix3 = function (a, b, f) {
-    var _f = 1 - f
-    var c = []
-    for (var i = 0; i < 3; i++) {
-      c[i] = a[i] * _f + b[i] * f
-    }
-    return c
-  }
-
-  if (p) {
-    if (p.fn) fn = Math.floor(p.fn / 6)
-    if (p.r) r = p.r
-  }
-
-  if (fn <= 0) fn = 1
-
-  var q = []
-  var c = [], f = []
-  var off = 0
-
-  for (var i = 0; i < ti.length; i++) {
-    var g = geodesicSubDivide([ ci[ti[i][0]], ci[ti[i][1]], ci[ti[i][2]]], fn, off)
-    c = c.concat(g.points)
-    f = f.concat(g.triangles)
-    off = g.off
-  }
-  return polyhedron({points: c, triangles: f}).scale(r)
-}
-
-function cylinder (p) {
-  var r1 = 1, r2 = 1, h = 1, fn = 32, round = false
-  var a = arguments
-  var off = [0, 0, 0]
-  if (p && p.d) {
-    r1 = r2 = p.d / 2
-  }
-  if (p && p.r) {
-    r1 = p.r
-    r2 = p.r
-  }
-  if (p && p.h) {
-    h = p.h
-  }
-  if (p && (p.r1 || p.r2)) {
-    r1 = p.r1
-    r2 = p.r2
-    if (p.h) h = p.h
-  }
-  if (p && (p.d1 || p.d2)) {
-    r1 = p.d1 / 2
-    r2 = p.d2 / 2
-  }
-
-  if (a && a[0] && a[0].length) {
-    a = a[0]
-    r1 = a[0]
-    r2 = a[1]
-    h = a[2]
-    if (a.length === 4) fn = a[3]
-  }
-  if (p && p.fn) fn = p.fn
-  // if(p&&p.center==true) zoff = -h/2
-  if (p && p.round === true) round = true
-  var o
-  if (p && (p.start && p.end)) {
-    o = round ?
-      CSG.roundedCylinder({start: p.start, end: p.end, radiusStart: r1, radiusEnd: r2, resolution: fn}) :
-      CSG.cylinder({start: p.start, end: p.end, radiusStart: r1, radiusEnd: r2, resolution: fn})
-  } else {
-    o = round ?
-      CSG.roundedCylinder({start: [0, 0, 0], end: [0, 0, h], radiusStart: r1, radiusEnd: r2, resolution: fn}) :
-      CSG.cylinder({start: [0, 0, 0], end: [0, 0, h], radiusStart: r1, radiusEnd: r2, resolution: fn})
-    var r = r1 > r2 ? r1 : r2
-    if (p && p.center && p.center.length) { // preparing individual x,y,z center
-      off = [p.center[0] ? 0 : r, p.center[1] ? 0 : r, p.center[2] ? -h / 2 : 0]
-    } else if (p && p.center === true) {
-      off = [0, 0, -h / 2]
-    } else if (p && p.center === false) {
-      off = [0, 0, 0]
-    }
-    if (off[0] || off[1] || off[2]) o = o.translate(off)
-  }
-  return o
-}
-
-function torus (p) {
-  var ri = 1, ro = 4, fni = 16, fno = 32, roti = 0
-  if (p) {
-    if (p.ri) ri = p.ri
-    if (p.fni) fni = p.fni
-    if (p.roti) roti = p.roti
-    if (p.ro) ro = p.ro
-    if (p.fno) fno = p.fno
-  }
-  if (fni < 3) fni = 3
-  if (fno < 3) fno = 3
-  var c = circle({r: ri, fn: fni, center: true})
-  if (roti) c = c.rotateZ(roti)
-  return rotate_extrude({fn: fno}, c.translate([ro, 0, 0]))
-}
-
-function polyhedron (p) {
-  var pgs = []
-  var ref = p.triangles || p.polygons
-  var colors = p.colors || null
-
-  for (var i = 0; i < ref.length; i++) {
-    var pp = []
-    for (var j = 0; j < ref[i].length; j++) {
-      pp[j] = p.points[ref[i][j]]
-    }
-
-    var v = []
-    for (j = ref[i].length - 1; j >= 0; j--) { // --- we reverse order for examples of OpenSCAD work
-      v.push(new CSG.Vertex(new CSG.Vector3D(pp[j][0], pp[j][1], pp[j][2])))
-    }
-    var s = CSG.Polygon.defaultShared
-    if (colors && colors[i]) {
-      s = CSG.Polygon.Shared.fromColor(colors[i])
-    }
-    pgs.push(new CSG.Polygon(v, s))
-  }
-  var r = CSG.fromPolygons(pgs)
-  return r
-}
-
-module.exports = {
-  cube,
-  sphere,
-  geodesicSphere,
-  cylinder,
-  torus,
-  polyhedron
-}
-
-},{"./ops-extrusions":18,"./primitives2d":20,"@jscad/csg":173}],22:[function(require,module,exports){
-
-function vector_char(x,y,c) {
-   c = c.charCodeAt(0);
-   c -= 32;
-   if(c<0||c>=95) return { width: 0, segments: [] };
-
-   var off = c*112;
-   var n = simplexFont[off++];
-   var w = simplexFont[off++];
-   var l = [];
-   var segs = [];
-
-   for(var i=0; i<n; i++) {
-      var xp = simplexFont[off+i*2];
-      var yp = simplexFont[off+i*2+1];
-      if(xp==-1&&yp==-1) {
-         segs.push(l); l = [];
-      } else {
-         l.push([xp+x,yp+y]);
-      }
-   }
-   if(l.length) segs.push(l);
-   return { width: w, segments: segs };
-}
-
-function vector_text(x,y,s) {
-   var o = [];
-   var x0 = x;
-   for(var i=0; i<s.length; i++) {
-      var c = s.charAt(i);
-      if(c=='\n') {
-         x = x0; y -= 30;
-      } else {
-         var d = vector_char(x,y,c);
-         x += d.width;
-         o = o.concat(d.segments);
-      }
-   }
-   return o;
-}
-
-// -- data below from http://paulbourke.net/dataformats/hershey/
-
-var simplexFont = [
-    0,16, /* Ascii 32 */
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,10, /* Ascii 33 */
-    5,21, 5, 7,-1,-1, 5, 2, 4, 1, 5, 0, 6, 1, 5, 2,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,16, /* Ascii 34 */
-    4,21, 4,14,-1,-1,12,21,12,14,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,21, /* Ascii 35 */
-   11,25, 4,-7,-1,-1,17,25,10,-7,-1,-1, 4,12,18,12,-1,-1, 3, 6,17, 6,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   26,20, /* Ascii 36 */
-    8,25, 8,-4,-1,-1,12,25,12,-4,-1,-1,17,18,15,20,12,21, 8,21, 5,20, 3,
-   18, 3,16, 4,14, 5,13, 7,12,13,10,15, 9,16, 8,17, 6,17, 3,15, 1,12, 0,
-    8, 0, 5, 1, 3, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   31,24, /* Ascii 37 */
-   21,21, 3, 0,-1,-1, 8,21,10,19,10,17, 9,15, 7,14, 5,14, 3,16, 3,18, 4,
-   20, 6,21, 8,21,10,20,13,19,16,19,19,20,21,21,-1,-1,17, 7,15, 6,14, 4,
-   14, 2,16, 0,18, 0,20, 1,21, 3,21, 5,19, 7,17, 7,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   34,26, /* Ascii 38 */
-   23,12,23,13,22,14,21,14,20,13,19,11,17, 6,15, 3,13, 1,11, 0, 7, 0, 5,
-    1, 4, 2, 3, 4, 3, 6, 4, 8, 5, 9,12,13,13,14,14,16,14,18,13,20,11,21,
-    9,20, 8,18, 8,16, 9,13,11,10,16, 3,18, 1,20, 0,22, 0,23, 1,23, 2,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    7,10, /* Ascii 39 */
-    5,19, 4,20, 5,21, 6,20, 6,18, 5,16, 4,15,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,14, /* Ascii 40 */
-   11,25, 9,23, 7,20, 5,16, 4,11, 4, 7, 5, 2, 7,-2, 9,-5,11,-7,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,14, /* Ascii 41 */
-    3,25, 5,23, 7,20, 9,16,10,11,10, 7, 9, 2, 7,-2, 5,-5, 3,-7,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,16, /* Ascii 42 */
-    8,21, 8, 9,-1,-1, 3,18,13,12,-1,-1,13,18, 3,12,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,26, /* Ascii 43 */
-   13,18,13, 0,-1,-1, 4, 9,22, 9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,10, /* Ascii 44 */
-    6, 1, 5, 0, 4, 1, 5, 2, 6, 1, 6,-1, 5,-3, 4,-4,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    2,26, /* Ascii 45 */
-    4, 9,22, 9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,10, /* Ascii 46 */
-    5, 2, 4, 1, 5, 0, 6, 1, 5, 2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    2,22, /* Ascii 47 */
-   20,25, 2,-7,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,20, /* Ascii 48 */
-    9,21, 6,20, 4,17, 3,12, 3, 9, 4, 4, 6, 1, 9, 0,11, 0,14, 1,16, 4,17,
-    9,17,12,16,17,14,20,11,21, 9,21,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    4,20, /* Ascii 49 */
-    6,17, 8,18,11,21,11, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   14,20, /* Ascii 50 */
-    4,16, 4,17, 5,19, 6,20, 8,21,12,21,14,20,15,19,16,17,16,15,15,13,13,
-   10, 3, 0,17, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   15,20, /* Ascii 51 */
-    5,21,16,21,10,13,13,13,15,12,16,11,17, 8,17, 6,16, 3,14, 1,11, 0, 8,
-    0, 5, 1, 4, 2, 3, 4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    6,20, /* Ascii 52 */
-   13,21, 3, 7,18, 7,-1,-1,13,21,13, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,20, /* Ascii 53 */
-   15,21, 5,21, 4,12, 5,13, 8,14,11,14,14,13,16,11,17, 8,17, 6,16, 3,14,
-    1,11, 0, 8, 0, 5, 1, 4, 2, 3, 4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   23,20, /* Ascii 54 */
-   16,18,15,20,12,21,10,21, 7,20, 5,17, 4,12, 4, 7, 5, 3, 7, 1,10, 0,11,
-    0,14, 1,16, 3,17, 6,17, 7,16,10,14,12,11,13,10,13, 7,12, 5,10, 4, 7,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,20, /* Ascii 55 */
-   17,21, 7, 0,-1,-1, 3,21,17,21,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   29,20, /* Ascii 56 */
-    8,21, 5,20, 4,18, 4,16, 5,14, 7,13,11,12,14,11,16, 9,17, 7,17, 4,16,
-    2,15, 1,12, 0, 8, 0, 5, 1, 4, 2, 3, 4, 3, 7, 4, 9, 6,11, 9,12,13,13,
-   15,14,16,16,16,18,15,20,12,21, 8,21,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   23,20, /* Ascii 57 */
-   16,14,15,11,13, 9,10, 8, 9, 8, 6, 9, 4,11, 3,14, 3,15, 4,18, 6,20, 9,
-   21,10,21,13,20,15,18,16,14,16, 9,15, 4,13, 1,10, 0, 8, 0, 5, 1, 4, 3,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,10, /* Ascii 58 */
-    5,14, 4,13, 5,12, 6,13, 5,14,-1,-1, 5, 2, 4, 1, 5, 0, 6, 1, 5, 2,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   14,10, /* Ascii 59 */
-    5,14, 4,13, 5,12, 6,13, 5,14,-1,-1, 6, 1, 5, 0, 4, 1, 5, 2, 6, 1, 6,
-   -1, 5,-3, 4,-4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    3,24, /* Ascii 60 */
-   20,18, 4, 9,20, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,26, /* Ascii 61 */
-    4,12,22,12,-1,-1, 4, 6,22, 6,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    3,24, /* Ascii 62 */
-    4,18,20, 9, 4, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   20,18, /* Ascii 63 */
-    3,16, 3,17, 4,19, 5,20, 7,21,11,21,13,20,14,19,15,17,15,15,14,13,13,
-   12, 9,10, 9, 7,-1,-1, 9, 2, 8, 1, 9, 0,10, 1, 9, 2,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   55,27, /* Ascii 64 */
-   18,13,17,15,15,16,12,16,10,15, 9,14, 8,11, 8, 8, 9, 6,11, 5,14, 5,16,
-    6,17, 8,-1,-1,12,16,10,14, 9,11, 9, 8,10, 6,11, 5,-1,-1,18,16,17, 8,
-   17, 6,19, 5,21, 5,23, 7,24,10,24,12,23,15,22,17,20,19,18,20,15,21,12,
-   21, 9,20, 7,19, 5,17, 4,15, 3,12, 3, 9, 4, 6, 5, 4, 7, 2, 9, 1,12, 0,
-   15, 0,18, 1,20, 2,21, 3,-1,-1,19,16,18, 8,18, 6,19, 5,
-    8,18, /* Ascii 65 */
-    9,21, 1, 0,-1,-1, 9,21,17, 0,-1,-1, 4, 7,14, 7,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   23,21, /* Ascii 66 */
-    4,21, 4, 0,-1,-1, 4,21,13,21,16,20,17,19,18,17,18,15,17,13,16,12,13,
-   11,-1,-1, 4,11,13,11,16,10,17, 9,18, 7,18, 4,17, 2,16, 1,13, 0, 4, 0,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   18,21, /* Ascii 67 */
-   18,16,17,18,15,20,13,21, 9,21, 7,20, 5,18, 4,16, 3,13, 3, 8, 4, 5, 5,
-    3, 7, 1, 9, 0,13, 0,15, 1,17, 3,18, 5,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   15,21, /* Ascii 68 */
-    4,21, 4, 0,-1,-1, 4,21,11,21,14,20,16,18,17,16,18,13,18, 8,17, 5,16,
-    3,14, 1,11, 0, 4, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,19, /* Ascii 69 */
-    4,21, 4, 0,-1,-1, 4,21,17,21,-1,-1, 4,11,12,11,-1,-1, 4, 0,17, 0,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,18, /* Ascii 70 */
-    4,21, 4, 0,-1,-1, 4,21,17,21,-1,-1, 4,11,12,11,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   22,21, /* Ascii 71 */
-   18,16,17,18,15,20,13,21, 9,21, 7,20, 5,18, 4,16, 3,13, 3, 8, 4, 5, 5,
-    3, 7, 1, 9, 0,13, 0,15, 1,17, 3,18, 5,18, 8,-1,-1,13, 8,18, 8,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,22, /* Ascii 72 */
-    4,21, 4, 0,-1,-1,18,21,18, 0,-1,-1, 4,11,18,11,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    2, 8, /* Ascii 73 */
-    4,21, 4, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,16, /* Ascii 74 */
-   12,21,12, 5,11, 2,10, 1, 8, 0, 6, 0, 4, 1, 3, 2, 2, 5, 2, 7,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,21, /* Ascii 75 */
-    4,21, 4, 0,-1,-1,18,21, 4, 7,-1,-1, 9,12,18, 0,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,17, /* Ascii 76 */
-    4,21, 4, 0,-1,-1, 4, 0,16, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,24, /* Ascii 77 */
-    4,21, 4, 0,-1,-1, 4,21,12, 0,-1,-1,20,21,12, 0,-1,-1,20,21,20, 0,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,22, /* Ascii 78 */
-    4,21, 4, 0,-1,-1, 4,21,18, 0,-1,-1,18,21,18, 0,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   21,22, /* Ascii 79 */
-    9,21, 7,20, 5,18, 4,16, 3,13, 3, 8, 4, 5, 5, 3, 7, 1, 9, 0,13, 0,15,
-    1,17, 3,18, 5,19, 8,19,13,18,16,17,18,15,20,13,21, 9,21,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   13,21, /* Ascii 80 */
-    4,21, 4, 0,-1,-1, 4,21,13,21,16,20,17,19,18,17,18,14,17,12,16,11,13,
-   10, 4,10,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   24,22, /* Ascii 81 */
-    9,21, 7,20, 5,18, 4,16, 3,13, 3, 8, 4, 5, 5, 3, 7, 1, 9, 0,13, 0,15,
-    1,17, 3,18, 5,19, 8,19,13,18,16,17,18,15,20,13,21, 9,21,-1,-1,12, 4,
-   18,-2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   16,21, /* Ascii 82 */
-    4,21, 4, 0,-1,-1, 4,21,13,21,16,20,17,19,18,17,18,15,17,13,16,12,13,
-   11, 4,11,-1,-1,11,11,18, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   20,20, /* Ascii 83 */
-   17,18,15,20,12,21, 8,21, 5,20, 3,18, 3,16, 4,14, 5,13, 7,12,13,10,15,
-    9,16, 8,17, 6,17, 3,15, 1,12, 0, 8, 0, 5, 1, 3, 3,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,16, /* Ascii 84 */
-    8,21, 8, 0,-1,-1, 1,21,15,21,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,22, /* Ascii 85 */
-    4,21, 4, 6, 5, 3, 7, 1,10, 0,12, 0,15, 1,17, 3,18, 6,18,21,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,18, /* Ascii 86 */
-    1,21, 9, 0,-1,-1,17,21, 9, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,24, /* Ascii 87 */
-    2,21, 7, 0,-1,-1,12,21, 7, 0,-1,-1,12,21,17, 0,-1,-1,22,21,17, 0,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,20, /* Ascii 88 */
-    3,21,17, 0,-1,-1,17,21, 3, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    6,18, /* Ascii 89 */
-    1,21, 9,11, 9, 0,-1,-1,17,21, 9,11,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,20, /* Ascii 90 */
-   17,21, 3, 0,-1,-1, 3,21,17,21,-1,-1, 3, 0,17, 0,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,14, /* Ascii 91 */
-    4,25, 4,-7,-1,-1, 5,25, 5,-7,-1,-1, 4,25,11,25,-1,-1, 4,-7,11,-7,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    2,14, /* Ascii 92 */
-    0,21,14,-3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,14, /* Ascii 93 */
-    9,25, 9,-7,-1,-1,10,25,10,-7,-1,-1, 3,25,10,25,-1,-1, 3,-7,10,-7,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,16, /* Ascii 94 */
-    6,15, 8,18,10,15,-1,-1, 3,12, 8,17,13,12,-1,-1, 8,17, 8, 0,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    2,16, /* Ascii 95 */
-    0,-2,16,-2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    7,10, /* Ascii 96 */
-    6,21, 5,20, 4,18, 4,16, 5,15, 6,16, 5,17,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,19, /* Ascii 97 */
-   15,14,15, 0,-1,-1,15,11,13,13,11,14, 8,14, 6,13, 4,11, 3, 8, 3, 6, 4,
-    3, 6, 1, 8, 0,11, 0,13, 1,15, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,19, /* Ascii 98 */
-    4,21, 4, 0,-1,-1, 4,11, 6,13, 8,14,11,14,13,13,15,11,16, 8,16, 6,15,
-    3,13, 1,11, 0, 8, 0, 6, 1, 4, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   14,18, /* Ascii 99 */
-   15,11,13,13,11,14, 8,14, 6,13, 4,11, 3, 8, 3, 6, 4, 3, 6, 1, 8, 0,11,
-    0,13, 1,15, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,19, /* Ascii 100 */
-   15,21,15, 0,-1,-1,15,11,13,13,11,14, 8,14, 6,13, 4,11, 3, 8, 3, 6, 4,
-    3, 6, 1, 8, 0,11, 0,13, 1,15, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,18, /* Ascii 101 */
-    3, 8,15, 8,15,10,14,12,13,13,11,14, 8,14, 6,13, 4,11, 3, 8, 3, 6, 4,
-    3, 6, 1, 8, 0,11, 0,13, 1,15, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,12, /* Ascii 102 */
-   10,21, 8,21, 6,20, 5,17, 5, 0,-1,-1, 2,14, 9,14,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   22,19, /* Ascii 103 */
-   15,14,15,-2,14,-5,13,-6,11,-7, 8,-7, 6,-6,-1,-1,15,11,13,13,11,14, 8,
-   14, 6,13, 4,11, 3, 8, 3, 6, 4, 3, 6, 1, 8, 0,11, 0,13, 1,15, 3,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,19, /* Ascii 104 */
-    4,21, 4, 0,-1,-1, 4,10, 7,13, 9,14,12,14,14,13,15,10,15, 0,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8, 8, /* Ascii 105 */
-    3,21, 4,20, 5,21, 4,22, 3,21,-1,-1, 4,14, 4, 0,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,10, /* Ascii 106 */
-    5,21, 6,20, 7,21, 6,22, 5,21,-1,-1, 6,14, 6,-3, 5,-6, 3,-7, 1,-7,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,17, /* Ascii 107 */
-    4,21, 4, 0,-1,-1,14,14, 4, 4,-1,-1, 8, 8,15, 0,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    2, 8, /* Ascii 108 */
-    4,21, 4, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   18,30, /* Ascii 109 */
-    4,14, 4, 0,-1,-1, 4,10, 7,13, 9,14,12,14,14,13,15,10,15, 0,-1,-1,15,
-   10,18,13,20,14,23,14,25,13,26,10,26, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,19, /* Ascii 110 */
-    4,14, 4, 0,-1,-1, 4,10, 7,13, 9,14,12,14,14,13,15,10,15, 0,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,19, /* Ascii 111 */
-    8,14, 6,13, 4,11, 3, 8, 3, 6, 4, 3, 6, 1, 8, 0,11, 0,13, 1,15, 3,16,
-    6,16, 8,15,11,13,13,11,14, 8,14,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,19, /* Ascii 112 */
-    4,14, 4,-7,-1,-1, 4,11, 6,13, 8,14,11,14,13,13,15,11,16, 8,16, 6,15,
-    3,13, 1,11, 0, 8, 0, 6, 1, 4, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,19, /* Ascii 113 */
-   15,14,15,-7,-1,-1,15,11,13,13,11,14, 8,14, 6,13, 4,11, 3, 8, 3, 6, 4,
-    3, 6, 1, 8, 0,11, 0,13, 1,15, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,13, /* Ascii 114 */
-    4,14, 4, 0,-1,-1, 4, 8, 5,11, 7,13, 9,14,12,14,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,17, /* Ascii 115 */
-   14,11,13,13,10,14, 7,14, 4,13, 3,11, 4, 9, 6, 8,11, 7,13, 6,14, 4,14,
-    3,13, 1,10, 0, 7, 0, 4, 1, 3, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,12, /* Ascii 116 */
-    5,21, 5, 4, 6, 1, 8, 0,10, 0,-1,-1, 2,14, 9,14,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,19, /* Ascii 117 */
-    4,14, 4, 4, 5, 1, 7, 0,10, 0,12, 1,15, 4,-1,-1,15,14,15, 0,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,16, /* Ascii 118 */
-    2,14, 8, 0,-1,-1,14,14, 8, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,22, /* Ascii 119 */
-    3,14, 7, 0,-1,-1,11,14, 7, 0,-1,-1,11,14,15, 0,-1,-1,19,14,15, 0,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,17, /* Ascii 120 */
-    3,14,14, 0,-1,-1,14,14, 3, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    9,16, /* Ascii 121 */
-    2,14, 8, 0,-1,-1,14,14, 8, 0, 6,-4, 4,-6, 2,-7, 1,-7,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,17, /* Ascii 122 */
-   14,14, 3, 0,-1,-1, 3,14,14,14,-1,-1, 3, 0,14, 0,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   39,14, /* Ascii 123 */
-    9,25, 7,24, 6,23, 5,21, 5,19, 6,17, 7,16, 8,14, 8,12, 6,10,-1,-1, 7,
-   24, 6,22, 6,20, 7,18, 8,17, 9,15, 9,13, 8,11, 4, 9, 8, 7, 9, 5, 9, 3,
-    8, 1, 7, 0, 6,-2, 6,-4, 7,-6,-1,-1, 6, 8, 8, 6, 8, 4, 7, 2, 6, 1, 5,
-   -1, 5,-3, 6,-5, 7,-6, 9,-7,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    2, 8, /* Ascii 124 */
-    4,25, 4,-7,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   39,14, /* Ascii 125 */
-    5,25, 7,24, 8,23, 9,21, 9,19, 8,17, 7,16, 6,14, 6,12, 8,10,-1,-1, 7,
-   24, 8,22, 8,20, 7,18, 6,17, 5,15, 5,13, 6,11,10, 9, 6, 7, 5, 5, 5, 3,
-    6, 1, 7, 0, 8,-2, 8,-4, 7,-6,-1,-1, 8, 8, 6, 6, 6, 4, 7, 2, 8, 1, 9,
-   -1, 9,-3, 8,-5, 7,-6, 5,-7,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   23,24, /* Ascii 126 */
-    3, 6, 3, 8, 4,11, 6,12, 8,12,10,11,14, 8,16, 7,18, 7,20, 8,21,10,-1,
-   -1, 3, 8, 4,10, 6,11, 8,11,10,10,14, 7,16, 6,18, 6,20, 7,21,10,21,12,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-];
-
-module.exports = {
-  vector_char,
-  vector_text
-}
-
-},{}],23:[function(require,module,exports){
 // import { CSG } from '@jscad/csg'
 // import { vt2jscad } from './vt2jscad'
 const { CSG } = require('@jscad/csg')
@@ -10746,9 +8522,9 @@ module.exports = {
   deserialize
 }
 
-},{"./vt2jscad":24,"@jscad/csg":173}],24:[function(require,module,exports){
+},{"./vt2jscad":13,"@jscad/csg":162}],13:[function(require,module,exports){
 arguments[4][11][0].apply(exports,arguments)
-},{"dup":11}],25:[function(require,module,exports){
+},{"dup":11}],14:[function(require,module,exports){
 
 function serialize (CSG) {
   var result = 'solid csg.js\n'
@@ -10789,7 +8565,7 @@ module.exports = {
   serialize
 }
 
-},{}],26:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 
 // see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
 function serialize (CSG) {
@@ -10858,7 +8634,7 @@ module.exports = {
   serialize
 }
 
-},{}],27:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 const binarySerializer = require('./CSGToStlb').serialize
 const asciiSerializer = require('./CSGToStla').serialize
 
@@ -10878,7 +8654,7 @@ module.exports = {
   serialize
 }
 
-},{"./CSGToStla":25,"./CSGToStlb":26}],28:[function(require,module,exports){
+},{"./CSGToStla":14,"./CSGToStlb":15}],17:[function(require,module,exports){
 /*
 ## License
 
@@ -12278,7 +10054,7 @@ module.exports = {
   deserialize
 }
 
-},{"@jscad/csg":173,"sax":136}],29:[function(require,module,exports){
+},{"@jscad/csg":162,"sax":125}],18:[function(require,module,exports){
 // import { CSG } from '@jscad/csg'
 const {CSG} = require('@jscad/csg')
 
@@ -12334,9 +10110,9 @@ module.exports = {
   mimeType
 }
 
-},{"@jscad/csg":30}],30:[function(require,module,exports){
+},{"@jscad/csg":19}],19:[function(require,module,exports){
 arguments[4][9][0].apply(exports,arguments)
-},{"dup":9}],31:[function(require,module,exports){
+},{"dup":9}],20:[function(require,module,exports){
 // import xmldom from 'xmldom'
 const xmldom = require('xmldom')
 
@@ -12456,7 +10232,7 @@ module.exports = {
   mimeType
 }
 
-},{"xmldom":144}],32:[function(require,module,exports){
+},{"xmldom":133}],21:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@most/prelude')) :
   typeof define === 'function' && define.amd ? define(['exports', '@most/prelude'], factory) :
@@ -12574,7 +10350,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })));
 
 
-},{"@most/prelude":33}],33:[function(require,module,exports){
+},{"@most/prelude":22}],22:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -12835,7 +10611,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })));
 
 
-},{}],34:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 (function (global, factory) {
 	if (typeof define === "function" && define.amd) {
 		define(['exports'], factory);
@@ -13837,7 +11613,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 });
 
 
-},{}],35:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -13953,9 +11729,9 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],36:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 
-},{}],37:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -14178,7 +11954,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":39}],38:[function(require,module,exports){
+},{"buffer":28}],27:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -14290,7 +12066,7 @@ exports.allocUnsafeSlow = function allocUnsafeSlow(size) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"buffer":39}],39:[function(require,module,exports){
+},{"buffer":28}],28:[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -15998,7 +13774,7 @@ function numberIsNaN (obj) {
   return obj !== obj // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":35,"ieee754":45}],40:[function(require,module,exports){
+},{"base64-js":24,"ieee754":34}],29:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -16109,7 +13885,7 @@ function objectToString(o) {
 }
 
 }).call(this,{"isBuffer":require("../../is-buffer/index.js")})
-},{"../../is-buffer/index.js":47}],41:[function(require,module,exports){
+},{"../../is-buffer/index.js":36}],30:[function(require,module,exports){
 (function webpackUniversalModuleDefinition(root, factory) {
 /* istanbul ignore next */
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -22511,7 +20287,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
-},{}],42:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 /*
   Copyright (C) 2012-2013 Yusuke Suzuki <utatane.tea@gmail.com>
   Copyright (C) 2012 Ariya Hidayat <ariya.hidayat@gmail.com>
@@ -23362,7 +21138,7 @@ return /******/ (function(modules) { // webpackBootstrap
 }(exports));
 /* vim: set sw=4 ts=4 et tw=80 : */
 
-},{"./package.json":43}],43:[function(require,module,exports){
+},{"./package.json":32}],32:[function(require,module,exports){
 module.exports={
   "_args": [
     [
@@ -23471,7 +21247,7 @@ module.exports={
   "version": "4.2.0"
 }
 
-},{}],44:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -23775,7 +21551,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],45:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -23861,7 +21637,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],46:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -23886,7 +21662,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],47:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 /*!
  * Determine if an object is a Buffer
  *
@@ -23909,14 +21685,14 @@ function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
-},{}],48:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],49:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24012,7 +21788,7 @@ function drags(_ref, settings) {
 
   return drags$;
 }
-},{"most":91}],50:[function(require,module,exports){
+},{"most":80}],39:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24122,7 +21898,7 @@ function pointerGestures(baseInteractions, options) {
     zooms: zooms$
   };
 }
-},{"./drags":49,"./presses":51,"./taps":52,"./utils":53,"./zooms":54,"most":91}],51:[function(require,module,exports){
+},{"./drags":38,"./presses":40,"./taps":41,"./utils":42,"./zooms":43,"most":80}],40:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24218,7 +21994,7 @@ function presses(baseInteractions, settings) {
 
   return presses$;
 }
-},{"./utils":53,"most":91}],52:[function(require,module,exports){
+},{"./utils":42,"most":80}],41:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24271,7 +22047,7 @@ function taps(presses$, settings) {
 
   return taps$;
 }
-},{"./utils":53}],53:[function(require,module,exports){
+},{"./utils":42}],42:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24357,7 +22133,7 @@ function bufferUntil(obsToBuffer, obsEnd) {
   return baseBuffer$
     .until(obsEnd) */
 }
-},{"most":91}],54:[function(require,module,exports){
+},{"most":80}],43:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24463,7 +22239,7 @@ function zooms(_ref2, settings) {
   });
   return zooms$;
 }
-},{"most":91}],55:[function(require,module,exports){
+},{"most":80}],44:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -24545,7 +22321,7 @@ LinkedList.prototype.dispose = function () {
 
   return Promise.all(promises);
 };
-},{}],56:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24559,7 +22335,7 @@ exports.isPromise = isPromise;
 function isPromise(p) {
   return p !== null && typeof p === 'object' && typeof p.then === 'function';
 }
-},{}],57:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -24628,7 +22404,7 @@ function copy(src, srcIndex, dst, dstIndex, len) {
     src[j + srcIndex] = void 0;
   }
 }
-},{}],58:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -24646,7 +22422,7 @@ function Stream(source) {
 Stream.prototype.run = function (sink, scheduler) {
   return this.source.run(sink, scheduler);
 };
-},{}],59:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24758,7 +22534,7 @@ ReduceSink.prototype.error = _Pipe2.default.prototype.error;
 ReduceSink.prototype.end = function (t) {
   this.sink.end(t, this.value);
 };
-},{"../Stream":58,"../disposable/dispose":86,"../runSource":97,"../scheduler/PropagateTask":99,"../sink/Pipe":106}],60:[function(require,module,exports){
+},{"../Stream":47,"../disposable/dispose":75,"../runSource":86,"../scheduler/PropagateTask":88,"../sink/Pipe":95}],49:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24787,7 +22563,7 @@ var _prelude = require('@most/prelude');
 function ap(fs, xs) {
   return (0, _combine.combine)(_prelude.apply, fs, xs);
 }
-},{"./combine":62,"@most/prelude":33}],61:[function(require,module,exports){
+},{"./combine":51,"@most/prelude":22}],50:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24824,7 +22600,7 @@ function concat(left, right) {
     return right;
   }, left);
 }
-},{"../source/core":110,"./continueWith":64}],62:[function(require,module,exports){
+},{"../source/core":99,"./continueWith":53}],51:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24975,7 +22751,7 @@ CombineSink.prototype.end = function (t, indexedValue) {
     this.sink.end(t, indexedValue.value);
   }
 };
-},{"../Stream":58,"../disposable/dispose":86,"../invoke":92,"../sink/IndexSink":105,"../sink/Pipe":106,"../source/core":110,"./transform":82,"@most/prelude":33}],63:[function(require,module,exports){
+},{"../Stream":47,"../disposable/dispose":75,"../invoke":81,"../sink/IndexSink":94,"../sink/Pipe":95,"../source/core":99,"./transform":71,"@most/prelude":22}],52:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25001,7 +22777,7 @@ function concatMap(f, stream) {
 } /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
-},{"./mergeConcurrently":72}],64:[function(require,module,exports){
+},{"./mergeConcurrently":61}],53:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25082,7 +22858,7 @@ ContinueWithSink.prototype.dispose = function () {
   this.active = false;
   return this.disposable.dispose();
 };
-},{"../Stream":58,"../disposable/dispose":86,"../sink/Pipe":106}],65:[function(require,module,exports){
+},{"../Stream":47,"../disposable/dispose":75,"../sink/Pipe":95}],54:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25155,7 +22931,7 @@ DelaySink.prototype.end = function (t, x) {
 };
 
 DelaySink.prototype.error = _Pipe2.default.prototype.error;
-},{"../Stream":58,"../disposable/dispose":86,"../scheduler/PropagateTask":99,"../sink/Pipe":106}],66:[function(require,module,exports){
+},{"../Stream":47,"../disposable/dispose":75,"../scheduler/PropagateTask":88,"../sink/Pipe":95}],55:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25272,7 +23048,7 @@ RecoverWithSink.prototype._continue = function (f, x, sink) {
 RecoverWithSink.prototype.dispose = function () {
   return this.disposable.dispose();
 };
-},{"../Stream":58,"../disposable/dispose":86,"../scheduler/PropagateTask":99,"../sink/SafeSink":107,"../source/tryEvent":118}],67:[function(require,module,exports){
+},{"../Stream":47,"../disposable/dispose":75,"../scheduler/PropagateTask":88,"../sink/SafeSink":96,"../source/tryEvent":107}],56:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25362,7 +23138,7 @@ SkipRepeatsSink.prototype.event = function (t, x) {
 function same(a, b) {
   return a === b;
 }
-},{"../Stream":58,"../fusion/Filter":88,"../sink/Pipe":106}],68:[function(require,module,exports){
+},{"../Stream":47,"../fusion/Filter":77,"../sink/Pipe":95}],57:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25397,7 +23173,7 @@ function flatMap(f, stream) {
 function join(stream) {
   return (0, _mergeConcurrently.mergeConcurrently)(Infinity, stream);
 }
-},{"./mergeConcurrently":72}],69:[function(require,module,exports){
+},{"./mergeConcurrently":61}],58:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25542,7 +23318,7 @@ DebounceSink.prototype._clearTimer = function () {
   this.timer = null;
   return true;
 };
-},{"../Stream":58,"../disposable/dispose":86,"../fusion/Map":90,"../scheduler/PropagateTask":99,"../sink/Pipe":106}],70:[function(require,module,exports){
+},{"../Stream":47,"../disposable/dispose":75,"../fusion/Map":79,"../scheduler/PropagateTask":88,"../sink/Pipe":95}],59:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25606,7 +23382,7 @@ LoopSink.prototype.event = function (t, x) {
 LoopSink.prototype.end = function (t) {
   this.sink.end(t, this.seed);
 };
-},{"../Stream":58,"../sink/Pipe":106}],71:[function(require,module,exports){
+},{"../Stream":47,"../sink/Pipe":95}],60:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25725,7 +23501,7 @@ MergeSink.prototype.end = function (t, indexedValue) {
     this.sink.end(t, indexedValue.value);
   }
 };
-},{"../Stream":58,"../disposable/dispose":86,"../sink/IndexSink":105,"../sink/Pipe":106,"../source/core":110,"@most/prelude":33}],72:[function(require,module,exports){
+},{"../Stream":47,"../disposable/dispose":75,"../sink/IndexSink":94,"../sink/Pipe":95,"../source/core":99,"@most/prelude":22}],61:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25872,7 +23648,7 @@ Inner.prototype.error = function (t, e) {
 Inner.prototype.dispose = function () {
   return this.disposable.dispose();
 };
-},{"../LinkedList":55,"../Stream":58,"../disposable/dispose":86,"@most/prelude":33}],73:[function(require,module,exports){
+},{"../LinkedList":44,"../Stream":47,"../disposable/dispose":75,"@most/prelude":22}],62:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25910,7 +23686,7 @@ function observe(f, stream) {
 function drain(stream) {
   return (0, _runSource.withDefaultScheduler)(stream.source);
 }
-},{"../runSource":97,"./transform":82}],74:[function(require,module,exports){
+},{"../runSource":86,"./transform":71}],63:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26014,7 +23790,7 @@ AwaitSink.prototype._event = function (promise) {
 AwaitSink.prototype._end = function (x) {
   return Promise.resolve(x).then(this._endBound);
 };
-},{"../Stream":58,"../fatalError":87,"../source/core":110}],75:[function(require,module,exports){
+},{"../Stream":47,"../fatalError":76,"../source/core":99}],64:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26151,7 +23927,7 @@ function hasValue(hold) {
 function getValue(hold) {
   return hold.value;
 }
-},{"../Stream":58,"../disposable/dispose":86,"../invoke":92,"../sink/Pipe":106,"@most/prelude":33}],76:[function(require,module,exports){
+},{"../Stream":47,"../disposable/dispose":75,"../invoke":81,"../sink/Pipe":95,"@most/prelude":22}],65:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26373,7 +24149,7 @@ SkipAfterSink.prototype.event = function event(t, x) {
 
 SkipAfterSink.prototype.end = _Pipe2.default.prototype.end;
 SkipAfterSink.prototype.error = _Pipe2.default.prototype.error;
-},{"../Stream":58,"../fusion/Map":90,"../sink/Pipe":106,"../source/core":110}],77:[function(require,module,exports){
+},{"../Stream":47,"../fusion/Map":79,"../sink/Pipe":95,"../source/core":99}],66:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26502,7 +24278,7 @@ Segment.prototype._dispose = function (t) {
   this.max = t;
   dispose.tryDispose(t, this.disposable, this.sink);
 };
-},{"../Stream":58,"../disposable/dispose":86}],78:[function(require,module,exports){
+},{"../Stream":47,"../disposable/dispose":75}],67:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -26516,7 +24292,7 @@ exports.thru = thru;
 function thru(f, stream) {
   return f(stream);
 }
-},{}],79:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26651,7 +24427,7 @@ UpperBound.prototype.dispose = function () {
 };
 
 function noop() {}
-},{"../Stream":58,"../combinator/flatMap":68,"../disposable/dispose":86,"../sink/Pipe":106}],80:[function(require,module,exports){
+},{"../Stream":47,"../combinator/flatMap":57,"../disposable/dispose":75,"../sink/Pipe":95}],69:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26695,7 +24471,7 @@ TimestampSink.prototype.error = _Pipe2.default.prototype.error;
 TimestampSink.prototype.event = function (t, x) {
   this.sink.event(t, { time: t, value: x });
 };
-},{"../Stream":58,"../sink/Pipe":106}],81:[function(require,module,exports){
+},{"../Stream":47,"../sink/Pipe":95}],70:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26822,7 +24598,7 @@ LegacyTxAdapter.prototype.isReduced = function (x) {
 LegacyTxAdapter.prototype.getResult = function (x) {
   return x.value;
 };
-},{"../Stream":58}],82:[function(require,module,exports){
+},{"../Stream":47}],71:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26905,7 +24681,7 @@ TapSink.prototype.event = function (t, x) {
   f(x);
   this.sink.event(t, x);
 };
-},{"../Stream":58,"../fusion/Map":90,"../sink/Pipe":106}],83:[function(require,module,exports){
+},{"../Stream":47,"../fusion/Map":79,"../sink/Pipe":95}],72:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27074,7 +24850,7 @@ function ready(buffers) {
   }
   return true;
 }
-},{"../Queue":57,"../Stream":58,"../disposable/dispose":86,"../invoke":92,"../sink/IndexSink":105,"../sink/Pipe":106,"../source/core":110,"./transform":82,"@most/prelude":33}],84:[function(require,module,exports){
+},{"../Queue":46,"../Stream":47,"../disposable/dispose":75,"../invoke":81,"../sink/IndexSink":94,"../sink/Pipe":95,"../source/core":99,"./transform":71,"@most/prelude":22}],73:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27099,7 +24875,7 @@ function Disposable(dispose, data) {
 Disposable.prototype.dispose = function () {
   return this._dispose(this._data);
 };
-},{}],85:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27146,7 +24922,7 @@ SettableDisposable.prototype.dispose = function () {
 
   return this.result;
 };
-},{}],86:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27289,7 +25065,7 @@ function disposeMemoized(memoized) {
 function memoized(disposable) {
   return { disposed: false, disposable: disposable, value: void 0 };
 }
-},{"../Promise":56,"./Disposable":84,"./SettableDisposable":85,"@most/prelude":33}],87:[function(require,module,exports){
+},{"../Promise":45,"./Disposable":73,"./SettableDisposable":74,"@most/prelude":22}],76:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27305,7 +25081,7 @@ function fatalError(e) {
     throw e;
   }, 0);
 }
-},{}],88:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27364,7 +25140,7 @@ function and(p, q) {
     return p(x) && q(x);
   };
 }
-},{"../sink/Pipe":106}],89:[function(require,module,exports){
+},{"../sink/Pipe":95}],78:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27404,7 +25180,7 @@ FilterMapSink.prototype.event = function (t, x) {
 
 FilterMapSink.prototype.end = _Pipe2.default.prototype.end;
 FilterMapSink.prototype.error = _Pipe2.default.prototype.error;
-},{"../sink/Pipe":106}],90:[function(require,module,exports){
+},{"../sink/Pipe":95}],79:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27477,7 +25253,7 @@ MapSink.prototype.event = function (t, x) {
   var f = this.f;
   this.sink.event(t, f(x));
 };
-},{"../sink/Pipe":106,"./Filter":88,"./FilterMap":89,"@most/prelude":33}],91:[function(require,module,exports){
+},{"../sink/Pipe":95,"./Filter":77,"./FilterMap":78,"@most/prelude":22}],80:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28311,7 +26087,7 @@ exports.defaultScheduler = _defaultScheduler2.default;
 // export an implementation of Task used internally for third-party libraries
 
 exports.PropagateTask = _PropagateTask2.default;
-},{"./Stream":58,"./combinator/accumulate":59,"./combinator/applicative":60,"./combinator/build":61,"./combinator/combine":62,"./combinator/concatMap":63,"./combinator/continueWith":64,"./combinator/delay":65,"./combinator/errors":66,"./combinator/filter":67,"./combinator/flatMap":68,"./combinator/limit":69,"./combinator/loop":70,"./combinator/merge":71,"./combinator/mergeConcurrently":72,"./combinator/observe":73,"./combinator/promises":74,"./combinator/sample":75,"./combinator/slice":76,"./combinator/switch":77,"./combinator/thru":78,"./combinator/timeslice":79,"./combinator/timestamp":80,"./combinator/transduce":81,"./combinator/transform":82,"./combinator/zip":83,"./observable/subscribe":96,"./scheduler/PropagateTask":99,"./scheduler/defaultScheduler":103,"./source/core":110,"./source/from":111,"./source/fromEvent":113,"./source/generate":115,"./source/iterate":116,"./source/periodic":117,"./source/unfold":119,"@most/multicast":32,"@most/prelude":33,"symbol-observable":139}],92:[function(require,module,exports){
+},{"./Stream":47,"./combinator/accumulate":48,"./combinator/applicative":49,"./combinator/build":50,"./combinator/combine":51,"./combinator/concatMap":52,"./combinator/continueWith":53,"./combinator/delay":54,"./combinator/errors":55,"./combinator/filter":56,"./combinator/flatMap":57,"./combinator/limit":58,"./combinator/loop":59,"./combinator/merge":60,"./combinator/mergeConcurrently":61,"./combinator/observe":62,"./combinator/promises":63,"./combinator/sample":64,"./combinator/slice":65,"./combinator/switch":66,"./combinator/thru":67,"./combinator/timeslice":68,"./combinator/timestamp":69,"./combinator/transduce":70,"./combinator/transform":71,"./combinator/zip":72,"./observable/subscribe":85,"./scheduler/PropagateTask":88,"./scheduler/defaultScheduler":92,"./source/core":99,"./source/from":100,"./source/fromEvent":102,"./source/generate":104,"./source/iterate":105,"./source/periodic":106,"./source/unfold":108,"@most/multicast":21,"@most/prelude":22,"symbol-observable":128}],81:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28341,7 +26117,7 @@ function invoke(f, args) {
       return f.apply(void 0, args);
   }
 }
-},{}],93:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28376,7 +26152,7 @@ function makeIterable(f, o) {
   o[iteratorSymbol] = f;
   return o;
 }
-},{}],94:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28441,7 +26217,7 @@ SubscriberSink.prototype.error = function (e) {
 function unsubscribe(subscription) {
   return subscription.unsubscribe();
 }
-},{"../Stream":58,"../disposable/dispose":86,"../source/tryEvent":118}],95:[function(require,module,exports){
+},{"../Stream":47,"../disposable/dispose":75,"../source/tryEvent":107}],84:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28473,7 +26249,7 @@ function getObservable(o) {
 } /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
-},{"symbol-observable":139}],96:[function(require,module,exports){
+},{"symbol-observable":128}],85:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28557,7 +26333,7 @@ function doDispose(fatal, subscriber, complete, error, disposable, x) {
     }
   }).catch(fatal);
 }
-},{"../disposable/dispose":86,"../fatalError":87,"../scheduler/defaultScheduler":103}],97:[function(require,module,exports){
+},{"../disposable/dispose":75,"../fatalError":76,"../scheduler/defaultScheduler":92}],86:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28626,7 +26402,7 @@ function disposeThen(end, error, disposable, x) {
     end(x);
   }, error);
 }
-},{"./disposable/dispose":86,"./scheduler/defaultScheduler":103}],98:[function(require,module,exports){
+},{"./disposable/dispose":75,"./scheduler/defaultScheduler":92}],87:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28674,7 +26450,7 @@ function runAsap(f) {
   (0, _task.defer)(task);
   return task;
 }
-},{"../task":120}],99:[function(require,module,exports){
+},{"../task":109}],88:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28738,7 +26514,7 @@ function emit(t, x, sink) {
 function end(t, x, sink) {
   sink.end(t, x);
 }
-},{"../fatalError":87}],100:[function(require,module,exports){
+},{"../fatalError":76}],89:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28769,7 +26545,7 @@ ScheduledTask.prototype.dispose = function () {
   this.scheduler.cancel(this);
   return this.task.dispose();
 };
-},{}],101:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28879,7 +26655,7 @@ Scheduler.prototype._runReadyTasks = function (now) {
   this.timeline.runTasks(now, _task.runTask);
   this._scheduleNextRun(this.now());
 };
-},{"../task":120,"./ScheduledTask":100}],102:[function(require,module,exports){
+},{"../task":109,"./ScheduledTask":89}],91:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29021,7 +26797,7 @@ function binarySearch(t, sortedArray) {
 function newTimeslot(t, events) {
   return { time: t, events: events };
 }
-},{"@most/prelude":33}],103:[function(require,module,exports){
+},{"@most/prelude":22}],92:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29047,7 +26823,7 @@ var defaultScheduler = new _Scheduler2.default(new _ClockTimer2.default(), new _
 /** @author John Hann */
 
 exports.default = defaultScheduler;
-},{"./ClockTimer":98,"./Scheduler":101,"./Timeline":102}],104:[function(require,module,exports){
+},{"./ClockTimer":87,"./Scheduler":90,"./Timeline":91}],93:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29147,7 +26923,7 @@ ErrorTask.prototype.run = function () {
 ErrorTask.prototype.error = function (e) {
   throw e;
 };
-},{"../task":120}],105:[function(require,module,exports){
+},{"../task":109}],94:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29187,7 +26963,7 @@ IndexSink.prototype.end = function (t, x) {
 };
 
 IndexSink.prototype.error = _Pipe2.default.prototype.error;
-},{"./Pipe":106}],106:[function(require,module,exports){
+},{"./Pipe":95}],95:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29219,7 +26995,7 @@ Pipe.prototype.end = function (t, x) {
 Pipe.prototype.error = function (t, e) {
   return this.sink.error(t, e);
 };
-},{}],107:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29259,7 +27035,7 @@ SafeSink.prototype.disable = function () {
   this.active = false;
   return this.sink;
 };
-},{}],108:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29322,7 +27098,7 @@ function disposeEventEmitter(info) {
   var target = info.target;
   target.source.removeListener(target.event, info.addEvent);
 }
-},{"../disposable/dispose":86,"../sink/DeferredSink":104,"./tryEvent":118}],109:[function(require,module,exports){
+},{"../disposable/dispose":75,"../sink/DeferredSink":93,"./tryEvent":107}],98:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29364,7 +27140,7 @@ function disposeEventTarget(info) {
   var target = info.target;
   target.source.removeEventListener(target.event, info.addEvent, target.capture);
 }
-},{"../disposable/dispose":86,"./tryEvent":118}],110:[function(require,module,exports){
+},{"../disposable/dispose":75,"./tryEvent":107}],99:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29452,7 +27228,7 @@ NeverSource.prototype.run = function () {
 };
 
 var NEVER = new _Stream2.default(new NeverSource());
-},{"../Stream":58,"../disposable/dispose":86,"../scheduler/PropagateTask":99}],111:[function(require,module,exports){
+},{"../Stream":47,"../disposable/dispose":75,"../scheduler/PropagateTask":88}],100:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29503,7 +27279,7 @@ function from(a) {
 } /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
-},{"../Stream":58,"../iterable":93,"../observable/fromObservable":94,"../observable/getObservable":95,"./fromArray":112,"./fromIterable":114,"@most/prelude":33}],112:[function(require,module,exports){
+},{"../Stream":47,"../iterable":82,"../observable/fromObservable":83,"../observable/getObservable":84,"./fromArray":101,"./fromIterable":103,"@most/prelude":22}],101:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29544,7 +27320,7 @@ function runProducer(t, array, sink) {
 
   this.active && sink.end(t);
 }
-},{"../Stream":58,"../scheduler/PropagateTask":99}],113:[function(require,module,exports){
+},{"../Stream":47,"../scheduler/PropagateTask":88}],102:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29595,7 +27371,7 @@ function fromEvent(event, source, capture) {
 } /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
-},{"../Stream":58,"./EventEmitterSource":108,"./EventTargetSource":109}],114:[function(require,module,exports){
+},{"../Stream":47,"./EventEmitterSource":97,"./EventTargetSource":98}],103:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29639,7 +27415,7 @@ function runProducer(t, iterator, sink) {
 
   sink.end(t, r.value);
 }
-},{"../Stream":58,"../iterable":93,"../scheduler/PropagateTask":99}],115:[function(require,module,exports){
+},{"../Stream":47,"../iterable":82,"../scheduler/PropagateTask":88}],104:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29724,7 +27500,7 @@ function error(generate, e) {
 Generate.prototype.dispose = function () {
   this.active = false;
 };
-},{"../Stream":58,"@most/prelude":33}],116:[function(require,module,exports){
+},{"../Stream":47,"@most/prelude":22}],105:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29800,7 +27576,7 @@ function stepIterate(iterate, x) {
 function continueIterate(iterate, x) {
   return !iterate.active ? iterate.value : stepIterate(iterate, x);
 }
-},{"../Stream":58}],117:[function(require,module,exports){
+},{"../Stream":47}],106:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29840,7 +27616,7 @@ function Periodic(period, value) {
 Periodic.prototype.run = function (sink, scheduler) {
   return scheduler.periodic(this.period, _PropagateTask2.default.event(this.value, sink));
 };
-},{"../Stream":58,"../scheduler/PropagateTask":99}],118:[function(require,module,exports){
+},{"../Stream":47,"../scheduler/PropagateTask":88}],107:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29867,7 +27643,7 @@ function tryEnd(t, x, sink) {
     sink.error(t, e);
   }
 }
-},{}],119:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29948,7 +27724,7 @@ function continueUnfold(unfold, tuple) {
   }
   return stepUnfold(unfold, tuple.seed);
 }
-},{"../Stream":58}],120:[function(require,module,exports){
+},{"../Stream":47}],109:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29971,7 +27747,7 @@ function runTask(task) {
     return task.error(e);
   }
 }
-},{}],121:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -30018,7 +27794,7 @@ function nextTick(fn, arg1, arg2, arg3) {
 }
 
 }).call(this,require('_process'))
-},{"_process":122}],122:[function(require,module,exports){
+},{"_process":111}],111:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -30204,10 +27980,10 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],123:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 module.exports = require('./lib/_stream_duplex.js');
 
-},{"./lib/_stream_duplex.js":124}],124:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":113}],113:[function(require,module,exports){
 // a duplex stream is just a stream that is both readable and writable.
 // Since JS doesn't have multiple prototypal inheritance, this class
 // prototypally inherits from Readable, and then parasitically from
@@ -30283,7 +28059,7 @@ function forEach(xs, f) {
     f(xs[i], i);
   }
 }
-},{"./_stream_readable":126,"./_stream_writable":128,"core-util-is":40,"inherits":46,"process-nextick-args":121}],125:[function(require,module,exports){
+},{"./_stream_readable":115,"./_stream_writable":117,"core-util-is":29,"inherits":35,"process-nextick-args":110}],114:[function(require,module,exports){
 // a passthrough stream.
 // basically just the most minimal sort of Transform stream.
 // Every written chunk gets output as-is.
@@ -30310,7 +28086,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":127,"core-util-is":40,"inherits":46}],126:[function(require,module,exports){
+},{"./_stream_transform":116,"core-util-is":29,"inherits":35}],115:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -31248,7 +29024,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":124,"./internal/streams/BufferList":129,"./internal/streams/stream":130,"_process":122,"buffer":39,"buffer-shims":38,"core-util-is":40,"events":44,"inherits":46,"isarray":48,"process-nextick-args":121,"string_decoder/":138,"util":36}],127:[function(require,module,exports){
+},{"./_stream_duplex":113,"./internal/streams/BufferList":118,"./internal/streams/stream":119,"_process":111,"buffer":28,"buffer-shims":27,"core-util-is":29,"events":33,"inherits":35,"isarray":37,"process-nextick-args":110,"string_decoder/":127,"util":25}],116:[function(require,module,exports){
 // a transform stream is a readable/writable stream where you do
 // something with the data.  Sometimes it's called a "filter",
 // but that's not a great name for it, since that implies a thing where
@@ -31431,7 +29207,7 @@ function done(stream, er, data) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":124,"core-util-is":40,"inherits":46}],128:[function(require,module,exports){
+},{"./_stream_duplex":113,"core-util-is":29,"inherits":35}],117:[function(require,module,exports){
 (function (process){
 // A bit simpler than readable streams.
 // Implement an async ._write(chunk, encoding, cb), and it'll handle all
@@ -31978,7 +29754,7 @@ function CorkedRequest(state) {
   };
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":124,"./internal/streams/stream":130,"_process":122,"buffer":39,"buffer-shims":38,"core-util-is":40,"inherits":46,"process-nextick-args":121,"util-deprecate":142}],129:[function(require,module,exports){
+},{"./_stream_duplex":113,"./internal/streams/stream":119,"_process":111,"buffer":28,"buffer-shims":27,"core-util-is":29,"inherits":35,"process-nextick-args":110,"util-deprecate":131}],118:[function(require,module,exports){
 'use strict';
 
 var Buffer = require('buffer').Buffer;
@@ -32043,13 +29819,13 @@ BufferList.prototype.concat = function (n) {
   }
   return ret;
 };
-},{"buffer":39,"buffer-shims":38}],130:[function(require,module,exports){
+},{"buffer":28,"buffer-shims":27}],119:[function(require,module,exports){
 module.exports = require('events').EventEmitter;
 
-},{"events":44}],131:[function(require,module,exports){
+},{"events":33}],120:[function(require,module,exports){
 module.exports = require('./readable').PassThrough
 
-},{"./readable":132}],132:[function(require,module,exports){
+},{"./readable":121}],121:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = exports;
 exports.Readable = exports;
@@ -32058,16 +29834,16 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":124,"./lib/_stream_passthrough.js":125,"./lib/_stream_readable.js":126,"./lib/_stream_transform.js":127,"./lib/_stream_writable.js":128}],133:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":113,"./lib/_stream_passthrough.js":114,"./lib/_stream_readable.js":115,"./lib/_stream_transform.js":116,"./lib/_stream_writable.js":117}],122:[function(require,module,exports){
 module.exports = require('./readable').Transform
 
-},{"./readable":132}],134:[function(require,module,exports){
+},{"./readable":121}],123:[function(require,module,exports){
 module.exports = require('./lib/_stream_writable.js');
 
-},{"./lib/_stream_writable.js":128}],135:[function(require,module,exports){
+},{"./lib/_stream_writable.js":117}],124:[function(require,module,exports){
 module.exports = require('buffer')
 
-},{"buffer":39}],136:[function(require,module,exports){
+},{"buffer":28}],125:[function(require,module,exports){
 (function (Buffer){
 ;(function (sax) { // wrapper for non-node envs
   sax.parser = function (strict, opt) { return new SAXParser(strict, opt) }
@@ -33652,7 +31428,7 @@ module.exports = require('buffer')
 })(typeof exports === 'undefined' ? this.sax = {} : exports)
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":39,"stream":137,"string_decoder":37}],137:[function(require,module,exports){
+},{"buffer":28,"stream":126,"string_decoder":26}],126:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -33781,7 +31557,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":44,"inherits":46,"readable-stream/duplex.js":123,"readable-stream/passthrough.js":131,"readable-stream/readable.js":132,"readable-stream/transform.js":133,"readable-stream/writable.js":134}],138:[function(require,module,exports){
+},{"events":33,"inherits":35,"readable-stream/duplex.js":112,"readable-stream/passthrough.js":120,"readable-stream/readable.js":121,"readable-stream/transform.js":122,"readable-stream/writable.js":123}],127:[function(require,module,exports){
 'use strict';
 
 var Buffer = require('safe-buffer').Buffer;
@@ -34054,10 +31830,10 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
-},{"safe-buffer":135}],139:[function(require,module,exports){
+},{"safe-buffer":124}],128:[function(require,module,exports){
 module.exports = require('./lib/index');
 
-},{"./lib/index":140}],140:[function(require,module,exports){
+},{"./lib/index":129}],129:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -34089,7 +31865,7 @@ if (typeof self !== 'undefined') {
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ponyfill":141}],141:[function(require,module,exports){
+},{"./ponyfill":130}],130:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34113,7 +31889,7 @@ function symbolObservablePonyfill(root) {
 
 	return result;
 };
-},{}],142:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 (function (global){
 
 /**
@@ -34184,7 +31960,7 @@ function config (name) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],143:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 var bundleFn = arguments[3];
 var sources = arguments[4];
 var cache = arguments[5];
@@ -34267,7 +32043,7 @@ module.exports = function (fn, options) {
     return worker;
 };
 
-},{}],144:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 function DOMParser(options){
 	this.options = options ||{locator:{}};
 	
@@ -34520,7 +32296,7 @@ function appendElement (hander,node) {
 	exports.DOMParser = DOMParser;
 //}
 
-},{"./dom":145,"./sax":146}],145:[function(require,module,exports){
+},{"./dom":134,"./sax":135}],134:[function(require,module,exports){
 /*
  * DOM Level 2
  * Object DOMException
@@ -35766,7 +33542,7 @@ try{
 	exports.XMLSerializer = XMLSerializer;
 //}
 
-},{}],146:[function(require,module,exports){
+},{}],135:[function(require,module,exports){
 //[4]   	NameStartChar	   ::=   	":" | [A-Z] | "_" | [a-z] | [#xC0-#xD6] | [#xD8-#xF6] | [#xF8-#x2FF] | [#x370-#x37D] | [#x37F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] | [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]
 //[4a]   	NameChar	   ::=   	NameStartChar | "-" | "." | [0-9] | #xB7 | [#x0300-#x036F] | [#x203F-#x2040]
 //[5]   	Name	   ::=   	NameStartChar (NameChar)*
@@ -36401,10 +34177,10 @@ function split(source,start){
 exports.XMLReader = XMLReader;
 
 
-},{}],147:[function(require,module,exports){
+},{}],136:[function(require,module,exports){
 module.exports={
   "name": "@jscad/openjscad",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "main": "src/module.js",
@@ -36471,7 +34247,7 @@ module.exports={
   "browserify-shim": {}
 }
 
-},{}],148:[function(require,module,exports){
+},{}],137:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -36562,7 +34338,7 @@ module.exports = {
   convertToSolid2: convertToSolid2
 };
 
-},{"../utils/misc":172,"@jscad/csg":173}],149:[function(require,module,exports){
+},{"../utils/misc":161,"@jscad/csg":162}],138:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -36597,7 +34373,7 @@ module.exports = function getParamDefinitions(script) {
   return params;
 };
 
-},{}],150:[function(require,module,exports){
+},{}],139:[function(require,module,exports){
 'use strict';
 
 /**
@@ -36657,7 +34433,7 @@ module.exports = function getParamValues(paramControls, onlyChanged) {
   return paramValues;
 };
 
-},{}],151:[function(require,module,exports){
+},{}],140:[function(require,module,exports){
 'use strict';
 
 /**
@@ -36695,7 +34471,7 @@ function createJscadFunction(script, globals) {
 
 module.exports = createJscadFunction;
 
-},{}],152:[function(require,module,exports){
+},{}],141:[function(require,module,exports){
 'use strict';
 
 // jscad-worker.js
@@ -36751,7 +34527,7 @@ module.exports = function (self) {
   };
 };
 
-},{"../utils/misc":172,"./jscad-function":151,"@jscad/csg":173,"@jscad/scad-api":14}],153:[function(require,module,exports){
+},{"../utils/misc":161,"./jscad-function":140,"@jscad/csg":162,"@jscad/scad-api":197}],142:[function(require,module,exports){
 'use strict';
 
 var WebWorkify = require('webworkify');
@@ -36891,7 +34667,7 @@ module.exports = {
   rebuildSolidInWorker: rebuildSolidInWorker
 };
 
-},{"../utils/misc":172,"./jscad-function":151,"./jscad-worker.js":152,"./replaceIncludes":154,"./resolveIncludes":155,"@jscad/csg":173,"@jscad/scad-api":14,"webworkify":143}],154:[function(require,module,exports){
+},{"../utils/misc":161,"./jscad-function":140,"./jscad-worker.js":141,"./replaceIncludes":143,"./resolveIncludes":144,"@jscad/csg":162,"@jscad/scad-api":197,"webworkify":132}],143:[function(require,module,exports){
 'use strict';
 
 var esprima = require('esprima');
@@ -37010,7 +34786,7 @@ module.exports = {
   replaceIncludes: replaceIncludes
 };
 
-},{"astring":34,"esprima":41,"estraverse":42}],155:[function(require,module,exports){
+},{"astring":23,"esprima":30,"estraverse":31}],144:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -37059,7 +34835,7 @@ module.exports = {
   resolveIncludes: resolveIncludes
 };
 
-},{}],156:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
 'use strict';
 
 var _require = require('@jscad/io'),
@@ -37079,7 +34855,7 @@ module.exports = {
   convertToBlob: convertToBlob
 };
 
-},{"@jscad/io":6}],157:[function(require,module,exports){
+},{"@jscad/io":6}],146:[function(require,module,exports){
 'use strict';
 
 var _require = require('@jscad/csg'),
@@ -37205,7 +34981,7 @@ module.exports = {
   supportedFormatsForObjects: supportedFormatsForObjects
 };
 
-},{"@jscad/csg":173}],158:[function(require,module,exports){
+},{"@jscad/csg":162}],147:[function(require,module,exports){
 'use strict';
 
 var generateOutputFileBlobUrl = require('../io/generateOutputFileBlobUrl');
@@ -37223,7 +34999,7 @@ module.exports = {
   generateOutputFile: generateOutputFile
 };
 
-},{"../io/generateOutputFileBlobUrl":159,"../io/generateOutputFileFileSystem":160}],159:[function(require,module,exports){
+},{"../io/generateOutputFileBlobUrl":148,"../io/generateOutputFileFileSystem":149}],148:[function(require,module,exports){
 'use strict';
 
 var _require = require('./utils'),
@@ -37251,7 +35027,7 @@ module.exports = function generateOutputFileBlobUrl(extension, blob, callback) {
   }
 };
 
-},{"./utils":162}],160:[function(require,module,exports){
+},{"./utils":151}],149:[function(require,module,exports){
 'use strict';
 
 var FileSystemApiErrorHandler = require('./utils');
@@ -37290,7 +35066,7 @@ module.exports = function generateOutputFileFileSystem(extension, blob, callback
   });
 };
 
-},{"./utils":162}],161:[function(require,module,exports){
+},{"./utils":151}],150:[function(require,module,exports){
 'use strict';
 
 var _require = require('./formats'),
@@ -37377,7 +35153,7 @@ module.exports = {
   prepareOutput: prepareOutput
 };
 
-},{"../core/convertToSolid":148,"./formats":157,"@jscad/io":6}],162:[function(require,module,exports){
+},{"../core/convertToSolid":137,"./formats":146,"@jscad/io":6}],151:[function(require,module,exports){
 'use strict';
 
 function isSafari() {
@@ -37425,7 +35201,7 @@ module.exports = {
   FileSystemApiErrorHandler: FileSystemApiErrorHandler
 };
 
-},{}],163:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -37456,7 +35232,7 @@ module.exports = {
   status: status
 };
 
-},{}],164:[function(require,module,exports){
+},{}],153:[function(require,module,exports){
 'use strict';
 
 var log = require('./log');
@@ -38248,14 +36024,14 @@ Processor.prototype = {
 
 module.exports = Processor;
 
-},{"../core/convertToSolid":148,"../core/getParamDefinitions":149,"../core/getParamValues":150,"../core/rebuildSolid":153,"../io/convertToBlob":156,"../io/formats":157,"../io/generateOutputFile":158,"../io/prepareOutput":161,"../io/utils":162,"../ui/viewer/jscad-viewer":170,"./log":163}],165:[function(require,module,exports){
+},{"../core/convertToSolid":137,"../core/getParamDefinitions":138,"../core/getParamValues":139,"../core/rebuildSolid":142,"../io/convertToBlob":145,"../io/formats":146,"../io/generateOutputFile":147,"../io/prepareOutput":150,"../io/utils":151,"../ui/viewer/jscad-viewer":159,"./log":152}],154:[function(require,module,exports){
 'use strict';
 
 var json = require('../../package.json');
 var version = json.version; // TODO/ add version date ?
 module.exports = { version: version };
 
-},{"../../package.json":147}],166:[function(require,module,exports){
+},{"../../package.json":136}],155:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -38300,7 +36076,7 @@ function AlertUserOfUncaughtExceptions() {
 
 module.exports = AlertUserOfUncaughtExceptions;
 
-},{}],167:[function(require,module,exports){
+},{}],156:[function(require,module,exports){
 'use strict';
 
 // == OpenJSCAD.org, Copyright (c) 2017, Licensed under MIT License
@@ -38362,7 +36138,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
   init();
 });
 
-},{"../jscad/processor":164,"../jscad/version":165,"./errorDispatcher":166}],168:[function(require,module,exports){
+},{"../jscad/processor":153,"../jscad/version":154,"./errorDispatcher":155}],157:[function(require,module,exports){
 'use strict';
 
 /**
@@ -38422,7 +36198,7 @@ module.exports = {
   parseColor: parseColor
 };
 
-},{}],169:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 'use strict';
 
 var _require = require('most-gestures'),
@@ -38576,7 +36352,7 @@ LightGLEngine.prototype = {
     // we need mobile detection to change the target element of controls:
     // otherwise we have to disable the build in html zoom on mobile , which is not always ideal
     var isMobile = typeof window.orientation !== 'undefined';
-    var element = isMobile ? this.containerEl : document;
+    var element = this.containerEl; // for now only use the canvas isMobile ? this.containerEl : document
     var baseInteractions = baseInteractionsFromEvents(element);
     var gestures = pointerGestures(baseInteractions);
 
@@ -38908,7 +36684,7 @@ LightGLEngine.prototype = {
 
 module.exports = LightGLEngine;
 
-},{"./jscad-viewer-helpers":168,"./lightgl":171,"most-gestures":50}],170:[function(require,module,exports){
+},{"./jscad-viewer-helpers":157,"./lightgl":160,"most-gestures":39}],159:[function(require,module,exports){
 'use strict';
 
 var LightGLEngine = require('./jscad-viewer-lightgl');
@@ -39122,7 +36898,7 @@ Viewer.prototype = {
 
 module.exports = Viewer;
 
-},{"./jscad-viewer-helpers":168,"./jscad-viewer-lightgl":169}],171:[function(require,module,exports){
+},{"./jscad-viewer-helpers":157,"./jscad-viewer-lightgl":158}],160:[function(require,module,exports){
 'use strict';
 
 /*
@@ -41350,7 +39126,7 @@ var GL = function () {
 
 module.exports = GL;
 
-},{}],172:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 "use strict";
 
 /* converts input data to array if it is not already an array */
@@ -41362,7 +39138,7 @@ function toArray(data) {
 
 module.exports = { toArray: toArray };
 
-},{}],173:[function(require,module,exports){
+},{}],162:[function(require,module,exports){
 /*
 ## License
 
@@ -41528,6 +39304,7 @@ CSG.toPointCloud = require('./src/debugHelpers').toPointCloud
 const CAGMakers = require('./src/CAGFactories')
 CAG.fromObject = CAGMakers.fromObject
 CAG.fromPointsNoCheck = CAGMakers.fromPointsNoCheck
+CAG.fromPath2 = CAGMakers.fromPath2
 
 // ////////////////////////////////////
 addTransformationMethodsToPrototype(CSG.prototype)
@@ -41551,7 +39328,7 @@ addCenteringToPrototype(CAG.prototype, ['x', 'y'])
 
 module.exports = {CSG, CAG}
 
-},{"./src/CAG":174,"./src/CAGFactories":175,"./src/CSG":176,"./src/CSGFactories":177,"./src/Properties":181,"./src/connectors":182,"./src/constants":183,"./src/debugHelpers":184,"./src/math/Line2":185,"./src/math/Line3":186,"./src/math/Matrix4":187,"./src/math/OrthoNormalBasis":188,"./src/math/Path2":189,"./src/math/Plane":190,"./src/math/Polygon2":191,"./src/math/Polygon3":192,"./src/math/Side":193,"./src/math/Vector2":194,"./src/math/Vector3":195,"./src/math/Vertex2":196,"./src/math/Vertex3":197,"./src/mutators":200,"./src/primitives2d":202,"./src/primitives3d":203}],174:[function(require,module,exports){
+},{"./src/CAG":163,"./src/CAGFactories":164,"./src/CSG":165,"./src/CSGFactories":166,"./src/Properties":170,"./src/connectors":171,"./src/constants":172,"./src/debugHelpers":173,"./src/math/Line2":174,"./src/math/Line3":175,"./src/math/Matrix4":176,"./src/math/OrthoNormalBasis":177,"./src/math/Path2":178,"./src/math/Plane":179,"./src/math/Polygon2":180,"./src/math/Polygon3":181,"./src/math/Side":182,"./src/math/Vector2":183,"./src/math/Vector3":184,"./src/math/Vertex2":185,"./src/math/Vertex3":186,"./src/mutators":189,"./src/primitives2d":191,"./src/primitives3d":192}],163:[function(require,module,exports){
 const {EPS, angleEPS, areaEPS, defaultResolution3D} = require('./constants')
 const Connector = require('./connectors')
 const OrthoNormalBasis = require('./math/OrthoNormalBasis')
@@ -42369,11 +40146,12 @@ CAG.prototype = {
 
 module.exports = CAG
 
-},{"./CSG":176,"./FuzzyFactory2d":179,"./connectors":182,"./constants":183,"./math/OrthoNormalBasis":188,"./math/Path2":189,"./math/Polygon3":192,"./math/Side":193,"./math/Vector2":194,"./math/Vector3":195,"./math/Vertex2":196,"./math/Vertex3":197,"./math/lineUtils":198,"./optionParsers":201}],175:[function(require,module,exports){
+},{"./CSG":165,"./FuzzyFactory2d":168,"./connectors":171,"./constants":172,"./math/OrthoNormalBasis":177,"./math/Path2":178,"./math/Polygon3":181,"./math/Side":182,"./math/Vector2":183,"./math/Vector3":184,"./math/Vertex2":185,"./math/Vertex3":186,"./math/lineUtils":187,"./optionParsers":190}],164:[function(require,module,exports){
 const CAG = require('./CAG')
 const Side = require('./math/Side')
 const Vector2D = require('./math/Vector2')
 const Vertex = require('./math/Vertex2')
+const Path2 = require('./math/Path2')
 
 /** Reconstruct a CAG from an object with identical property names.
  * @param {Object} obj - anonymous object, typically from JSON
@@ -42410,13 +40188,25 @@ const fromPointsNoCheck = function (points) {
   return CAG.fromSides(sides)
 }
 
+/** Construct a CAG from a 2d-path (a closed sequence of points).
+ * Like fromPoints() but does not check if the result is a valid polygon.
+ * @param {path} Path2 - a Path2 path
+ * @returns {CAG} new CAG object
+ */
+const fromPath2 = function (path) {
+  if (!path.isClosed()) throw new Error('The path should be closed!')
+  return CAG.fromPoints(path.getPoints())
+}
+
+
 module.exports = {
   fromObject,
   fromPointsNoCheck,
+  fromPath2
   //fromFakeCSG
 }
 
-},{"./CAG":174,"./math/Side":193,"./math/Vector2":194,"./math/Vertex2":196}],176:[function(require,module,exports){
+},{"./CAG":163,"./math/Path2":178,"./math/Side":182,"./math/Vector2":183,"./math/Vertex2":185}],165:[function(require,module,exports){
 const {fnNumberSort} = require('./utils')
 const FuzzyCSGFactory = require('./FuzzyFactory3d')
 const Tree = require('./trees')
@@ -42454,20 +40244,23 @@ CSG.prototype = {
     return this.polygons
   },
 
-    // Return a new CSG solid representing space in either this solid or in the
-    // solid `csg`. Neither this solid nor the solid `csg` are modified.
-    //
-    //     A.union(B)
-    //
-    //     +-------+            +-------+
-    //     |       |            |       |
-    //     |   A   |            |       |
-    //     |    +--+----+   =   |       +----+
-    //     +----+--+    |       +----+       |
-    //          |   B   |            |       |
-    //          |       |            |       |
-    //          +-------+            +-------+
-    //
+  /**
+   * Return a new CSG solid representing the space in either this solid or
+   * in the given solids. Neither this solid nor the given solids are modified.
+   * @param {CSG[]} csg - list of CSG objects
+   * @returns {CSG} new CSG object
+   * @example
+   * let C = A.union(B)
+   * @example
+   * +-------+            +-------+
+   * |       |            |       |
+   * |   A   |            |       |
+   * |    +--+----+   =   |       +----+
+   * +----+--+    |       +----+       |
+   *      |   B   |            |       |
+   *      |       |            |       |
+   *      +-------+            +-------+
+   */
   union: function (csg) {
     let csgs
     if (csg instanceof Array) {
@@ -42519,20 +40312,23 @@ CSG.prototype = {
     return result
   },
 
-    // Return a new CSG solid representing space in this solid but not in the
-    // solid `csg`. Neither this solid nor the solid `csg` are modified.
-    //
-    //     A.subtract(B)
-    //
-    //     +-------+            +-------+
-    //     |       |            |       |
-    //     |   A   |            |       |
-    //     |    +--+----+   =   |    +--+
-    //     +----+--+    |       +----+
-    //          |   B   |
-    //          |       |
-    //          +-------+
-    //
+  /**
+   * Return a new CSG solid representing space in this solid but
+   * not in the given solids. Neither this solid nor the given solids are modified.
+   * @param {CSG[]} csg - list of CSG objects
+   * @returns {CSG} new CSG object
+   * @example
+   * let C = A.subtract(B)
+   * @example
+   * +-------+            +-------+
+   * |       |            |       |
+   * |   A   |            |       |
+   * |    +--+----+   =   |    +--+
+   * +----+--+    |       +----+
+   *      |   B   |
+   *      |       |
+   *      +-------+
+   */
   subtract: function (csg) {
     let csgs
     if (csg instanceof Array) {
@@ -42563,20 +40359,23 @@ CSG.prototype = {
     return result
   },
 
-    // Return a new CSG solid representing space both this solid and in the
-    // solid `csg`. Neither this solid nor the solid `csg` are modified.
-    //
-    //     A.intersect(B)
-    //
-    //     +-------+
-    //     |       |
-    //     |   A   |
-    //     |    +--+----+   =   +--+
-    //     +----+--+    |       +--+
-    //          |   B   |
-    //          |       |
-    //          +-------+
-    //
+  /**
+   * Return a new CSG solid representing space in both this solid and
+   * in the given solids. Neither this solid nor the given solids are modified.
+   * @param {CSG[]} csg - list of CSG objects
+   * @returns {CSG} new CSG object
+   * @example
+   * let C = A.intersect(B)
+   * @example
+   * +-------+
+   * |       |
+   * |   A   |
+   * |    +--+----+   =   +--+
+   * +----+--+    |       +--+
+   *      |   B   |
+   *      |       |
+   *      +-------+
+   */
   intersect: function (csg) {
     let csgs
     if (csg instanceof Array) {
@@ -42609,8 +40408,13 @@ CSG.prototype = {
     return result
   },
 
-    // Return a new CSG solid with solid and empty space switched. This solid is
-    // not modified.
+  /**
+   * Return a new CSG solid with solid and empty space switched.
+   * This solid is not modified.
+   * @returns {CSG} new CSG object
+   * @example
+   * let B = A.invert()
+   */
   invert: function () {
     let flippedpolygons = this.polygons.map(function (p) {
       return p.flipped()
@@ -42630,6 +40434,17 @@ CSG.prototype = {
     return result
   },
 
+  /**
+   * Return a new CSG solid that is transformed using the given Matrix.
+   * Several matrix transformations can be combined before transforming this solid.
+   * @param {CSG.Matrix4x4} matrix4x4 - matrix to be applied
+   * @returns {CSG} new CSG object
+   * @example
+   * var m = new CSG.Matrix4x4()
+   * m = m.multiply(CSG.Matrix4x4.rotationX(40))
+   * m = m.multiply(CSG.Matrix4x4.translation([-.5, 0, 0]))
+   * let B = A.transform(m)
+   */
   transform: function (matrix4x4) {
     let ismirror = matrix4x4.isMirroring()
     let transformedvertices = {}
@@ -42712,7 +40527,7 @@ CSG.prototype = {
     //   the result is a true expansion of the solid
     //   If false, returns only the shell
   expandedShell: function (radius, resolution, unionWithThis) {
-    const {sphere} = require('./primitives3d') // FIXME: circular dependency !
+    //const {sphere} = require('./primitives3d') // FIXME: circular dependency !
     let csg = this.reTesselated()
     let result
     if (unionWithThis) {
@@ -42897,7 +40712,7 @@ CSG.prototype = {
       }
       let yaxis = xaxis.cross(bestzaxis).unit()
       let zaxis = yaxis.cross(xaxis)
-      let _sphere = sphere({
+      let _sphere = CSG.sphere({
         center: vertexobj.pos,
         radius: radius,
         resolution: resolution,
@@ -42965,7 +40780,14 @@ CSG.prototype = {
     }
   },
 
-    // returns an array of two Vector3Ds (minimum coordinates and maximum coordinates)
+  /**
+   * Returns an array of Vector3D, providing minimum coordinates and maximum coordinates
+   * of this solid.
+   * @returns {Vector3D[]}
+   * @example
+   * let bounds = A.getBounds()
+   * let minX = bounds[0].x
+   */
   getBounds: function () {
     if (!this.cachedBoundingBox) {
       let minpoint = new Vector3D(0, 0, 0)
@@ -43610,8 +41432,15 @@ CSG.prototype = {
     return polygons
   },
 
-    // features: string, or array containing 1 or more strings of: 'volume', 'area'
-    // more could be added here (Fourier coeff, moments)
+  /**
+   * Returns an array of values for the requested features of this solid.
+   * Supported Features: 'volume', 'area'
+   * @param {String[]} features - list of features to calculate
+   * @returns {Float[]} values
+   * @example
+   * let volume = A.getFeatures('volume')
+   * let values = A.getFeatures('area','volume')
+   */
   getFeatures: function (features) {
     if (!(features instanceof Array)) {
       features = [features]
@@ -43656,7 +41485,7 @@ const CSGFromCSGFuzzyFactory = function (factory, sourcecsg) {
 
 module.exports = CSG
 
-},{"./CAG":174,"./FuzzyFactory3d":180,"./Properties":181,"./connectors":182,"./constants":183,"./math/Matrix4":187,"./math/OrthoNormalBasis":188,"./math/Plane":190,"./math/Polygon3":192,"./math/Vector2":194,"./math/Vector3":195,"./math/Vertex3":197,"./math/polygonUtils":199,"./primitives3d":203,"./trees":204,"./utils":205}],177:[function(require,module,exports){
+},{"./CAG":163,"./FuzzyFactory3d":169,"./Properties":170,"./connectors":171,"./constants":172,"./math/Matrix4":176,"./math/OrthoNormalBasis":177,"./math/Plane":179,"./math/Polygon3":181,"./math/Vector2":183,"./math/Vector3":184,"./math/Vertex3":186,"./math/polygonUtils":188,"./trees":193,"./utils":194}],166:[function(require,module,exports){
 const Vector3D = require('./math/Vector3')
 const Vertex = require('./math/Vertex3')
 const Plane = require('./math/Plane')
@@ -43769,7 +41598,7 @@ module.exports = {
   fromCompactBinary
 }
 
-},{"./CSG":176,"./math/Plane":190,"./math/Polygon2":191,"./math/Polygon3":192,"./math/Vector3":195,"./math/Vertex3":197}],178:[function(require,module,exports){
+},{"./CSG":165,"./math/Plane":179,"./math/Polygon2":180,"./math/Polygon3":181,"./math/Vector3":184,"./math/Vertex3":186}],167:[function(require,module,exports){
 // //////////////////////////////
 // ## class fuzzyFactory
 // This class acts as a factory for objects. We can search for an object with approximately
@@ -43827,7 +41656,7 @@ FuzzyFactory.prototype = {
 
 module.exports = FuzzyFactory
 
-},{}],179:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 const FuzzyFactory = require('./FuzzyFactory')
 const {EPS} = require('./constants')
 const Side = require('./math/Side')
@@ -43854,7 +41683,7 @@ FuzzyCAGFactory.prototype = {
 
 module.exports = FuzzyCAGFactory
 
-},{"./FuzzyFactory":178,"./constants":183,"./math/Side":193}],180:[function(require,module,exports){
+},{"./FuzzyFactory":167,"./constants":172,"./math/Side":182}],169:[function(require,module,exports){
 const {EPS} = require('./constants')
 const Polygon = require('./math/Polygon3')
 const FuzzyFactory = require('./FuzzyFactory')
@@ -43924,7 +41753,7 @@ FuzzyCSGFactory.prototype = {
 
 module.exports = FuzzyCSGFactory
 
-},{"./FuzzyFactory":178,"./constants":183,"./math/Polygon3":192}],181:[function(require,module,exports){
+},{"./FuzzyFactory":167,"./constants":172,"./math/Polygon3":181}],170:[function(require,module,exports){
 // ////////////////////////////////////
 // # Class Properties
 // This class is used to store properties of a solid
@@ -44008,7 +41837,7 @@ Properties.addFrom = function (result, otherproperties) {
 
 module.exports = Properties
 
-},{}],182:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 const Vector3D = require('./math/Vector3')
 const Line3D = require('./math/Line3')
 const Matrix4x4 = require('./math/Matrix4')
@@ -44228,7 +42057,7 @@ ConnectorList.prototype = {
 
 module.exports = Connector
 
-},{"./CSG":176,"./math/Line3":186,"./math/Matrix4":187,"./math/OrthoNormalBasis":188,"./math/Plane":190,"./math/Vector3":195}],183:[function(require,module,exports){
+},{"./CSG":165,"./math/Line3":175,"./math/Matrix4":176,"./math/OrthoNormalBasis":177,"./math/Plane":179,"./math/Vector3":184}],172:[function(require,module,exports){
 const _CSGDEBUG = false
 
 /** Number of polygons per 360 degree revolution for 2D objects.
@@ -44285,7 +42114,7 @@ module.exports = {
   getTag
 }
 
-},{}],184:[function(require,module,exports){
+},{}],173:[function(require,module,exports){
 const CSG = require('./CSG')
 const {cube} = require('./primitives3d')
 
@@ -44320,7 +42149,7 @@ const toPointCloud = function (csg, cuberadius) {
 
 module.exports = {toPointCloud}
 
-},{"./CSG":176,"./primitives3d":203}],185:[function(require,module,exports){
+},{"./CSG":165,"./primitives3d":192}],174:[function(require,module,exports){
 const Vector2D = require('./Vector2')
 const {solve2Linear} = require('../utils')
 
@@ -44412,7 +42241,7 @@ Line2D.prototype = {
 
 module.exports = Line2D
 
-},{"../utils":205,"./Vector2":194}],186:[function(require,module,exports){
+},{"../utils":194,"./Vector2":183}],175:[function(require,module,exports){
 const Vector3D = require('./Vector3')
 const {EPS} = require('../constants')
 const {solve2Linear} = require('../utils')
@@ -44514,7 +42343,7 @@ Line3D.prototype = {
 
 module.exports = Line3D
 
-},{"../constants":183,"../utils":205,"./Vector3":195}],187:[function(require,module,exports){
+},{"../constants":172,"../utils":194,"./Vector3":184}],176:[function(require,module,exports){
 const Vector3D = require('./Vector3')
 const Vector2D = require('./Vector2')
 const OrthoNormalBasis = require('./OrthoNormalBasis')
@@ -44800,7 +42629,7 @@ Matrix4x4.scaling = function (v) {
 
 module.exports = Matrix4x4
 
-},{"./OrthoNormalBasis":188,"./Plane":190,"./Vector2":194,"./Vector3":195}],188:[function(require,module,exports){
+},{"./OrthoNormalBasis":177,"./Plane":179,"./Vector2":183,"./Vector3":184}],177:[function(require,module,exports){
 const Vector2D = require('./Vector2')
 const Vector3D = require('./Vector3')
 const Line2D = require('./Line2')
@@ -45004,7 +42833,7 @@ OrthoNormalBasis.prototype = {
 
 module.exports = OrthoNormalBasis
 
-},{"./Line2":185,"./Line3":186,"./Matrix4":187,"./Plane":190,"./Vector2":194,"./Vector3":195}],189:[function(require,module,exports){
+},{"./Line2":174,"./Line3":175,"./Matrix4":176,"./Plane":179,"./Vector2":183,"./Vector3":184}],178:[function(require,module,exports){
 const Vector2D = require('./Vector2')
 const {EPS, angleEPS} = require('../constants')
 const {parseOptionAs2DVector, parseOptionAsFloat, parseOptionAsInt, parseOptionAsBool} = require('../optionParsers')
@@ -45102,6 +42931,15 @@ Path2D.prototype = {
     return new Path2D(newpoints)
   },
 
+  /**
+   * get the array of Vector2 points that make up the path
+   * note that this is current internal list of points, not an immutable copy.
+   * @returns {Vector2[]} array of points the make up the path
+   */
+  getPoints: function() {
+    return this.points;
+  },
+
   appendPoint: function (point) {
     if (this.closed) {
       throw new Error('Path must not be closed')
@@ -45124,6 +42962,14 @@ Path2D.prototype = {
 
   close: function () {
     return new Path2D(this.points, true)
+  },
+
+  /**
+   * Tell whether the path is a closed path or not
+   * @returns {boolean} true when the path is closed. false otherwise.
+   */
+  isClosed: function() {
+    return this.closed
   },
 
     // Extrude the path by following it with a rectangle (upright, perpendicular to the path direction)
@@ -45162,12 +43008,6 @@ Path2D.prototype = {
     let shellcag = CAG.fromSides(sides)
     let expanded = shellcag.expandedShell(pathradius, resolution)
     return expanded
-  },
-
-  innerToCAG: function () {
-    const CAG = require('../CAG') // FIXME: cyclic dependencies CAG => PATH2 => CAG
-    if (!this.closed) throw new Error('The path should be closed!')
-    return CAG.fromPoints(this.points)
   },
 
   transform: function (matrix4x4) {
@@ -45410,7 +43250,7 @@ Path2D.prototype = {
 
 module.exports = Path2D
 
-},{"../CAG":174,"../constants":183,"../optionParsers":201,"./Side":193,"./Vector2":194,"./Vertex2":196}],190:[function(require,module,exports){
+},{"../CAG":163,"../constants":172,"../optionParsers":190,"./Side":182,"./Vector2":183,"./Vertex2":185}],179:[function(require,module,exports){
 const Vector3D = require('./Vector3')
 const Line3D = require('./Line3')
 const {EPS, getTag} = require('../constants')
@@ -45552,7 +43392,7 @@ Plane.prototype = {
 
 module.exports = Plane
 
-},{"../constants":183,"./Line3":186,"./Vector3":195}],191:[function(require,module,exports){
+},{"../constants":172,"./Line3":175,"./Vector3":184}],180:[function(require,module,exports){
 const CAG = require('../CAG')
 
 /*
@@ -45573,7 +43413,7 @@ Polygon2D.prototype = CAG.prototype
 
 module.exports = Polygon2D
 
-},{"../CAG":174}],192:[function(require,module,exports){
+},{"../CAG":163}],181:[function(require,module,exports){
 const Vector3D = require('./Vector3')
 const Vertex = require('./Vertex3')
 const Matrix4x4 = require('./Matrix4')
@@ -46115,7 +43955,7 @@ Polygon.defaultShared = new Polygon.Shared(null)
 
 module.exports = Polygon
 
-},{"../CAG":174,"../CAGFactories":175,"../CSG":176,"../constants":183,"../utils":205,"./Matrix4":187,"./Plane":190,"./Vector3":195,"./Vertex3":197}],193:[function(require,module,exports){
+},{"../CAG":163,"../CAGFactories":164,"../CSG":165,"../constants":172,"../utils":194,"./Matrix4":176,"./Plane":179,"./Vector3":184,"./Vertex3":186}],182:[function(require,module,exports){
 const Vector2D = require('./Vector2')
 const Vertex = require('./Vertex2')
 const Vertex3 = require('./Vertex3')
@@ -46219,7 +44059,7 @@ Side.prototype = {
 
 module.exports = Side
 
-},{"../constants":183,"./Polygon3":192,"./Vector2":194,"./Vertex2":196,"./Vertex3":197}],194:[function(require,module,exports){
+},{"../constants":172,"./Polygon3":181,"./Vector2":183,"./Vertex2":185,"./Vertex3":186}],183:[function(require,module,exports){
 const {IsFloat} = require('../utils')
 
 /** Class Vector2D
@@ -46417,7 +44257,7 @@ Vector2D.prototype = {
 
 module.exports = Vector2D
 
-},{"../utils":205,"./Vector3":195}],195:[function(require,module,exports){
+},{"../utils":194,"./Vector3":184}],184:[function(require,module,exports){
 const {IsFloat} = require('../utils')
 const Vector2D = require('./Vector2')
 
@@ -46632,7 +44472,7 @@ Vector3D.prototype = {
 
 module.exports = Vector3D
 
-},{"../utils":205,"./Vector2":194}],196:[function(require,module,exports){
+},{"../utils":194,"./Vector2":183}],185:[function(require,module,exports){
 const Vector2D = require('./Vector2')
 const {getTag} = require('../constants')
 
@@ -46660,7 +44500,7 @@ Vertex.prototype = {
 
 module.exports = Vertex
 
-},{"../constants":183,"./Vector2":194}],197:[function(require,module,exports){
+},{"../constants":172,"./Vector2":183}],186:[function(require,module,exports){
 const Vector3D = require('./Vector3')
 const {getTag} = require('../constants')
 
@@ -46669,6 +44509,7 @@ const {getTag} = require('../constants')
 // one to provide additional features like texture coordinates and vertex
 // colors. Custom vertex classes need to provide a `pos` property
 // `flipped()`, and `interpolate()` methods that behave analogous to the ones
+// FIXME: And a lot MORE (see plane.fromVector3Ds for ex) ! This is fragile code
 // defined by `Vertex`.
 const Vertex = function (pos) {
   this.pos = pos
@@ -46717,7 +44558,7 @@ Vertex.prototype = {
 
 module.exports = Vertex
 
-},{"../constants":183,"./Vector3":195}],198:[function(require,module,exports){
+},{"../constants":172,"./Vector3":184}],187:[function(require,module,exports){
 const {EPS} = require('../constants')
 const {solve2Linear} = require('../utils')
 
@@ -46744,7 +44585,7 @@ const linesIntersect = function (p0start, p0end, p1start, p1end) {
 
 module.exports = {linesIntersect}
 
-},{"../constants":183,"../utils":205}],199:[function(require,module,exports){
+},{"../constants":172,"../utils":194}],188:[function(require,module,exports){
 const {EPS} = require('../constants')
 const OrthoNormalBasis = require('./OrthoNormalBasis')
 const {interpolateBetween2DPointsForY, insertSorted, fnNumberSort} = require('../utils')
@@ -47088,7 +44929,7 @@ const reTesselateCoplanarPolygons = function (sourcepolygons, destpolygons) {
 
 module.exports = {reTesselateCoplanarPolygons}
 
-},{"../constants":183,"../utils":205,"./Line2":185,"./OrthoNormalBasis":188,"./Polygon3":192,"./Vector2":194,"./Vertex3":197}],200:[function(require,module,exports){
+},{"../constants":172,"../utils":194,"./Line2":174,"./OrthoNormalBasis":177,"./Polygon3":181,"./Vector2":183,"./Vertex3":186}],189:[function(require,module,exports){
 const Matrix4x4 = require('./math/Matrix4')
 const Vector3D = require('./math/Vector3')
 const Plane = require('./math/Plane')
@@ -47171,7 +45012,7 @@ module.exports = {
   addCenteringToPrototype
 }
 
-},{"./math/Matrix4":187,"./math/Plane":190,"./math/Vector3":195}],201:[function(require,module,exports){
+},{"./math/Matrix4":176,"./math/Plane":179,"./math/Vector3":184}],190:[function(require,module,exports){
 const Vector3D = require('./math/Vector3')
 const Vector2D = require('./math/Vector2')
 
@@ -47249,7 +45090,7 @@ module.exports = {
   parseOptionAs3DVectorList
 }
 
-},{"./math/Vector2":194,"./math/Vector3":195}],202:[function(require,module,exports){
+},{"./math/Vector2":183,"./math/Vector3":184}],191:[function(require,module,exports){
 const CAG = require('./CAG')
 const {parseOptionAs2DVector, parseOptionAsFloat, parseOptionAsInt} = require('./optionParsers')
 const {defaultResolution2D} = require('./constants')
@@ -47310,7 +45151,7 @@ const ellipse = function (options) {
     large: false
   })
   e2 = e2.close()
-  return e2.innerToCAG()
+  return CAG.fromPath2(e2)
 }
 
 /** Construct a rectangle.
@@ -47435,7 +45276,7 @@ module.exports = {
   fromCompactBinary
 }
 
-},{"./CAG":174,"./CAGFactories":175,"./constants":183,"./math/Path2":189,"./math/Vector2":194,"./optionParsers":201}],203:[function(require,module,exports){
+},{"./CAG":163,"./CAGFactories":164,"./constants":172,"./math/Path2":178,"./math/Vector2":183,"./optionParsers":190}],192:[function(require,module,exports){
 const CSG = require('./CSG')
 const {parseOption, parseOptionAs3DVector, parseOptionAs2DVector, parseOptionAs3DVectorList, parseOptionAsFloat, parseOptionAsInt} = require('./optionParsers')
 const {defaultResolution3D, defaultResolution2D, EPS} = require('./constants')
@@ -47689,6 +45530,31 @@ const cylinder = function (options) {
   return result
 }
 
+
+/*
+possible rounded cylinder with different radii at start/end
+
+
+function main() {
+
+   function halfSphere(radius=1, flip=false){
+       const hs =  difference(
+         sphere(radius),
+         translate([0,0,0], cube({size:radius*4, center:[true, true, false]}))
+       )
+      return flip ? hs.mirroredZ(): hs
+   }
+   return union(
+       cylinder({r1:10, r2:20, h:20}),
+       sphere(10),
+       translate([0,0,20], halfSphere(20, true))
+       )
+
+//return CSG.roundedCylinder({start:[0,0,0],end:[0,0,10], radius: 5})
+
+
+}*/
+
 /** Construct a cylinder with rounded ends.
  * @param {Object} [options] - options for construction
  * @param {Vector3D} [options.start=[0,-1,0]] - start point of cylinder
@@ -47710,6 +45576,9 @@ const roundedCylinder = function (options) {
   let p1 = parseOptionAs3DVector(options, 'start', [0, -1, 0])
   let p2 = parseOptionAs3DVector(options, 'end', [0, 1, 0])
   let radius = parseOptionAsFloat(options, 'radius', 1)
+  let radiusStart = parseOptionAsFloat(options, 'radiusStart', radius)
+  let radiusEnd = parseOptionAsFloat(options, 'radiusEnd', radius)
+
   let direction = p2.minus(p1)
   let defaultnormal
   if (Math.abs(direction.x) > Math.abs(direction.y)) {
@@ -47738,7 +45607,7 @@ const roundedCylinder = function (options) {
     let angle = Math.PI * 2.0 * slice1 / resolution
     let cylinderpoint = xvector.times(Math.cos(angle)).plus(yvector.times(Math.sin(angle)))
     if (slice1 > 0) {
-            // cylinder vertices:
+      // cylinder vertices:
       let vertices = []
       vertices.push(new Vertex(p1.plus(cylinderpoint)))
       vertices.push(new Vertex(p1.plus(prevcylinderpoint)))
@@ -47985,7 +45854,7 @@ module.exports = {
   polyhedron
 }
 
-},{"./CSG":176,"./Properties":181,"./connectors":182,"./constants":183,"./math/Polygon3":192,"./math/Vector3":195,"./math/Vertex3":197,"./optionParsers":201}],204:[function(require,module,exports){
+},{"./CSG":165,"./Properties":170,"./connectors":171,"./constants":172,"./math/Polygon3":181,"./math/Vector3":184,"./math/Vertex3":186,"./optionParsers":190}],193:[function(require,module,exports){
 const {_CSGDEBUG, EPS} = require('./constants')
 const Vertex = require('./math/Vertex3')
 const Polygon = require('./math/Polygon3')
@@ -48497,7 +46366,7 @@ Node.prototype = {
 
 module.exports = Tree
 
-},{"./constants":183,"./math/Polygon3":192,"./math/Vertex3":197}],205:[function(require,module,exports){
+},{"./constants":172,"./math/Polygon3":181,"./math/Vertex3":186}],194:[function(require,module,exports){
 function fnNumberSort (a, b) {
   return a - b
 }
@@ -48570,4 +46439,2229 @@ module.exports = {
   interpolateBetween2DPointsForY
 }
 
-},{}]},{},[167]);
+},{}],195:[function(require,module,exports){
+// color table from http://www.w3.org/TR/css3-color/
+var cssColors = {
+// basic color keywords
+  'black': [ 0 / 255, 0 / 255, 0 / 255 ],
+  'silver': [ 192 / 255, 192 / 255, 192 / 255 ],
+  'gray': [ 128 / 255, 128 / 255, 128 / 255 ],
+  'white': [ 255 / 255, 255 / 255, 255 / 255 ],
+  'maroon': [ 128 / 255, 0 / 255, 0 / 255 ],
+  'red': [ 255 / 255, 0 / 255, 0 / 255 ],
+  'purple': [ 128 / 255, 0 / 255, 128 / 255 ],
+  'fuchsia': [ 255 / 255, 0 / 255, 255 / 255 ],
+  'green': [ 0 / 255, 128 / 255, 0 / 255 ],
+  'lime': [ 0 / 255, 255 / 255, 0 / 255 ],
+  'olive': [ 128 / 255, 128 / 255, 0 / 255 ],
+  'yellow': [ 255 / 255, 255 / 255, 0 / 255 ],
+  'navy': [ 0 / 255, 0 / 255, 128 / 255 ],
+  'blue': [ 0 / 255, 0 / 255, 255 / 255 ],
+  'teal': [ 0 / 255, 128 / 255, 128 / 255 ],
+  'aqua': [ 0 / 255, 255 / 255, 255 / 255 ],
+// extended color keywords
+  'aliceblue': [ 240 / 255, 248 / 255, 255 / 255 ],
+  'antiquewhite': [ 250 / 255, 235 / 255, 215 / 255 ],
+  //'aqua': [ 0 / 255, 255 / 255, 255 / 255 ],
+  'aquamarine': [ 127 / 255, 255 / 255, 212 / 255 ],
+  'azure': [ 240 / 255, 255 / 255, 255 / 255 ],
+  'beige': [ 245 / 255, 245 / 255, 220 / 255 ],
+  'bisque': [ 255 / 255, 228 / 255, 196 / 255 ],
+  //'black': [ 0 / 255, 0 / 255, 0 / 255 ],
+  'blanchedalmond': [ 255 / 255, 235 / 255, 205 / 255 ],
+  //'blue': [ 0 / 255, 0 / 255, 255 / 255 ],
+  'blueviolet': [ 138 / 255, 43 / 255, 226 / 255 ],
+  'brown': [ 165 / 255, 42 / 255, 42 / 255 ],
+  'burlywood': [ 222 / 255, 184 / 255, 135 / 255 ],
+  'cadetblue': [ 95 / 255, 158 / 255, 160 / 255 ],
+  'chartreuse': [ 127 / 255, 255 / 255, 0 / 255 ],
+  'chocolate': [ 210 / 255, 105 / 255, 30 / 255 ],
+  'coral': [ 255 / 255, 127 / 255, 80 / 255 ],
+  'cornflowerblue': [ 100 / 255, 149 / 255, 237 / 255 ],
+  'cornsilk': [ 255 / 255, 248 / 255, 220 / 255 ],
+  'crimson': [ 220 / 255, 20 / 255, 60 / 255 ],
+  'cyan': [ 0 / 255, 255 / 255, 255 / 255 ],
+  'darkblue': [ 0 / 255, 0 / 255, 139 / 255 ],
+  'darkcyan': [ 0 / 255, 139 / 255, 139 / 255 ],
+  'darkgoldenrod': [ 184 / 255, 134 / 255, 11 / 255 ],
+  'darkgray': [ 169 / 255, 169 / 255, 169 / 255 ],
+  'darkgreen': [ 0 / 255, 100 / 255, 0 / 255 ],
+  'darkgrey': [ 169 / 255, 169 / 255, 169 / 255 ],
+  'darkkhaki': [ 189 / 255, 183 / 255, 107 / 255 ],
+  'darkmagenta': [ 139 / 255, 0 / 255, 139 / 255 ],
+  'darkolivegreen': [ 85 / 255, 107 / 255, 47 / 255 ],
+  'darkorange': [ 255 / 255, 140 / 255, 0 / 255 ],
+  'darkorchid': [ 153 / 255, 50 / 255, 204 / 255 ],
+  'darkred': [ 139 / 255, 0 / 255, 0 / 255 ],
+  'darksalmon': [ 233 / 255, 150 / 255, 122 / 255 ],
+  'darkseagreen': [ 143 / 255, 188 / 255, 143 / 255 ],
+  'darkslateblue': [ 72 / 255, 61 / 255, 139 / 255 ],
+  'darkslategray': [ 47 / 255, 79 / 255, 79 / 255 ],
+  'darkslategrey': [ 47 / 255, 79 / 255, 79 / 255 ],
+  'darkturquoise': [ 0 / 255, 206 / 255, 209 / 255 ],
+  'darkviolet': [ 148 / 255, 0 / 255, 211 / 255 ],
+  'deeppink': [ 255 / 255, 20 / 255, 147 / 255 ],
+  'deepskyblue': [ 0 / 255, 191 / 255, 255 / 255 ],
+  'dimgray': [ 105 / 255, 105 / 255, 105 / 255 ],
+  'dimgrey': [ 105 / 255, 105 / 255, 105 / 255 ],
+  'dodgerblue': [ 30 / 255, 144 / 255, 255 / 255 ],
+  'firebrick': [ 178 / 255, 34 / 255, 34 / 255 ],
+  'floralwhite': [ 255 / 255, 250 / 255, 240 / 255 ],
+  'forestgreen': [ 34 / 255, 139 / 255, 34 / 255 ],
+  //'fuchsia': [ 255 / 255, 0 / 255, 255 / 255 ],
+  'gainsboro': [ 220 / 255, 220 / 255, 220 / 255 ],
+  'ghostwhite': [ 248 / 255, 248 / 255, 255 / 255 ],
+  'gold': [ 255 / 255, 215 / 255, 0 / 255 ],
+  'goldenrod': [ 218 / 255, 165 / 255, 32 / 255 ],
+  //'gray': [ 128 / 255, 128 / 255, 128 / 255 ],
+  //'green': [ 0 / 255, 128 / 255, 0 / 255 ],
+  'greenyellow': [ 173 / 255, 255 / 255, 47 / 255 ],
+  'grey': [ 128 / 255, 128 / 255, 128 / 255 ],
+  'honeydew': [ 240 / 255, 255 / 255, 240 / 255 ],
+  'hotpink': [ 255 / 255, 105 / 255, 180 / 255 ],
+  'indianred': [ 205 / 255, 92 / 255, 92 / 255 ],
+  'indigo': [ 75 / 255, 0 / 255, 130 / 255 ],
+  'ivory': [ 255 / 255, 255 / 255, 240 / 255 ],
+  'khaki': [ 240 / 255, 230 / 255, 140 / 255 ],
+  'lavender': [ 230 / 255, 230 / 255, 250 / 255 ],
+  'lavenderblush': [ 255 / 255, 240 / 255, 245 / 255 ],
+  'lawngreen': [ 124 / 255, 252 / 255, 0 / 255 ],
+  'lemonchiffon': [ 255 / 255, 250 / 255, 205 / 255 ],
+  'lightblue': [ 173 / 255, 216 / 255, 230 / 255 ],
+  'lightcoral': [ 240 / 255, 128 / 255, 128 / 255 ],
+  'lightcyan': [ 224 / 255, 255 / 255, 255 / 255 ],
+  'lightgoldenrodyellow': [ 250 / 255, 250 / 255, 210 / 255 ],
+  'lightgray': [ 211 / 255, 211 / 255, 211 / 255 ],
+  'lightgreen': [ 144 / 255, 238 / 255, 144 / 255 ],
+  'lightgrey': [ 211 / 255, 211 / 255, 211 / 255 ],
+  'lightpink': [ 255 / 255, 182 / 255, 193 / 255 ],
+  'lightsalmon': [ 255 / 255, 160 / 255, 122 / 255 ],
+  'lightseagreen': [ 32 / 255, 178 / 255, 170 / 255 ],
+  'lightskyblue': [ 135 / 255, 206 / 255, 250 / 255 ],
+  'lightslategray': [ 119 / 255, 136 / 255, 153 / 255 ],
+  'lightslategrey': [ 119 / 255, 136 / 255, 153 / 255 ],
+  'lightsteelblue': [ 176 / 255, 196 / 255, 222 / 255 ],
+  'lightyellow': [ 255 / 255, 255 / 255, 224 / 255 ],
+  //'lime': [ 0 / 255, 255 / 255, 0 / 255 ],
+  'limegreen': [ 50 / 255, 205 / 255, 50 / 255 ],
+  'linen': [ 250 / 255, 240 / 255, 230 / 255 ],
+  'magenta': [ 255 / 255, 0 / 255, 255 / 255 ],
+  //'maroon': [ 128 / 255, 0 / 255, 0 / 255 ],
+  'mediumaquamarine': [ 102 / 255, 205 / 255, 170 / 255 ],
+  'mediumblue': [ 0 / 255, 0 / 255, 205 / 255 ],
+  'mediumorchid': [ 186 / 255, 85 / 255, 211 / 255 ],
+  'mediumpurple': [ 147 / 255, 112 / 255, 219 / 255 ],
+  'mediumseagreen': [ 60 / 255, 179 / 255, 113 / 255 ],
+  'mediumslateblue': [ 123 / 255, 104 / 255, 238 / 255 ],
+  'mediumspringgreen': [ 0 / 255, 250 / 255, 154 / 255 ],
+  'mediumturquoise': [ 72 / 255, 209 / 255, 204 / 255 ],
+  'mediumvioletred': [ 199 / 255, 21 / 255, 133 / 255 ],
+  'midnightblue': [ 25 / 255, 25 / 255, 112 / 255 ],
+  'mintcream': [ 245 / 255, 255 / 255, 250 / 255 ],
+  'mistyrose': [ 255 / 255, 228 / 255, 225 / 255 ],
+  'moccasin': [ 255 / 255, 228 / 255, 181 / 255 ],
+  'navajowhite': [ 255 / 255, 222 / 255, 173 / 255 ],
+  //'navy': [ 0 / 255, 0 / 255, 128 / 255 ],
+  'oldlace': [ 253 / 255, 245 / 255, 230 / 255 ],
+  //'olive': [ 128 / 255, 128 / 255, 0 / 255 ],
+  'olivedrab': [ 107 / 255, 142 / 255, 35 / 255 ],
+  'orange': [ 255 / 255, 165 / 255, 0 / 255 ],
+  'orangered': [ 255 / 255, 69 / 255, 0 / 255 ],
+  'orchid': [ 218 / 255, 112 / 255, 214 / 255 ],
+  'palegoldenrod': [ 238 / 255, 232 / 255, 170 / 255 ],
+  'palegreen': [ 152 / 255, 251 / 255, 152 / 255 ],
+  'paleturquoise': [ 175 / 255, 238 / 255, 238 / 255 ],
+  'palevioletred': [ 219 / 255, 112 / 255, 147 / 255 ],
+  'papayawhip': [ 255 / 255, 239 / 255, 213 / 255 ],
+  'peachpuff': [ 255 / 255, 218 / 255, 185 / 255 ],
+  'peru': [ 205 / 255, 133 / 255, 63 / 255 ],
+  'pink': [ 255 / 255, 192 / 255, 203 / 255 ],
+  'plum': [ 221 / 255, 160 / 255, 221 / 255 ],
+  'powderblue': [ 176 / 255, 224 / 255, 230 / 255 ],
+  //'purple': [ 128 / 255, 0 / 255, 128 / 255 ],
+  //'red': [ 255 / 255, 0 / 255, 0 / 255 ],
+  'rosybrown': [ 188 / 255, 143 / 255, 143 / 255 ],
+  'royalblue': [ 65 / 255, 105 / 255, 225 / 255 ],
+  'saddlebrown': [ 139 / 255, 69 / 255, 19 / 255 ],
+  'salmon': [ 250 / 255, 128 / 255, 114 / 255 ],
+  'sandybrown': [ 244 / 255, 164 / 255, 96 / 255 ],
+  'seagreen': [ 46 / 255, 139 / 255, 87 / 255 ],
+  'seashell': [ 255 / 255, 245 / 255, 238 / 255 ],
+  'sienna': [ 160 / 255, 82 / 255, 45 / 255 ],
+  //'silver': [ 192 / 255, 192 / 255, 192 / 255 ],
+  'skyblue': [ 135 / 255, 206 / 255, 235 / 255 ],
+  'slateblue': [ 106 / 255, 90 / 255, 205 / 255 ],
+  'slategray': [ 112 / 255, 128 / 255, 144 / 255 ],
+  'slategrey': [ 112 / 255, 128 / 255, 144 / 255 ],
+  'snow': [ 255 / 255, 250 / 255, 250 / 255 ],
+  'springgreen': [ 0 / 255, 255 / 255, 127 / 255 ],
+  'steelblue': [ 70 / 255, 130 / 255, 180 / 255 ],
+  'tan': [ 210 / 255, 180 / 255, 140 / 255 ],
+  //'teal': [ 0 / 255, 128 / 255, 128 / 255 ],
+  'thistle': [ 216 / 255, 191 / 255, 216 / 255 ],
+  'tomato': [ 255 / 255, 99 / 255, 71 / 255 ],
+  'turquoise': [ 64 / 255, 224 / 255, 208 / 255 ],
+  'violet': [ 238 / 255, 130 / 255, 238 / 255 ],
+  'wheat': [ 245 / 255, 222 / 255, 179 / 255 ],
+  //'white': [ 255 / 255, 255 / 255, 255 / 255 ],
+  'whitesmoke': [ 245 / 255, 245 / 255, 245 / 255 ],
+  //'yellow': [ 255 / 255, 255 / 255, 0 / 255 ],
+  'yellowgreen': [ 154 / 255, 205 / 255, 50 / 255 ],
+};
+
+
+/**
+ * Converts an CSS color name to RGB color.
+ *
+ * @param   String  s       The CSS color name
+ * @return  Array           The RGB representation, or [0,0,0] default
+ */
+function css2rgb(s) {
+  return cssColors[s.toLowerCase()]
+}
+
+// color( (array[r,g,b] | css-string) [,alpha] (,array[objects] | list of objects) )
+function color () {
+  var o, i = 1, a = arguments, c = a[0], alpha
+
+  // assume first argument is RGB array
+  // but check if first argument is CSS string
+  if (typeof c == 'string') {
+    c = css2rgb(c)
+  }
+  // check if second argument is alpha
+  if (Number.isFinite(a[i])) {
+    c = c.concat(a[i])
+    i++
+  }
+  // check if next argument is an an array
+  if (Array.isArray(a[i])) { a = a[i], i = 0; } // use this as the list of objects
+  for (o = a[i++]; i < a.length; i++) {
+    o = o.union(a[i])
+  }
+  return o.setColor(c)
+}
+
+// from http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
+/**
+ * Converts an RGB color value to HSL. Conversion formula
+ * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
+ * Assumes r, g, and b are contained in the set [0, 1] and
+ * returns h, s, and l in the set [0, 1].
+ *
+ * @param   Number  r       The red color value
+ * @param   Number  g       The green color value
+ * @param   Number  b       The blue color value
+ * @return  Array           The HSL representation
+ */
+function rgb2hsl (r, g, b) {
+  if (r.length) { b = r[2], g = r[1], r = r[0]; }
+  var max = Math.max(r, g, b), min = Math.min(r, g, b)
+  var h, s, l = (max + min) / 2
+
+  if (max == min) {
+    h = s = 0 // achromatic
+  } else {
+    var d = max - min
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0)
+        break
+      case g:
+        h = (b - r) / d + 2
+        break
+      case b:
+        h = (r - g) / d + 4
+        break
+    }
+    h /= 6
+  }
+
+  return [h, s, l]
+}
+
+/**
+ * Converts an HSL color value to RGB. Conversion formula
+ * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
+ * Assumes h, s, and l are contained in the set [0, 1] and
+ * returns r, g, and b in the set [0, 1].
+ *
+ * @param   Number  h       The hue
+ * @param   Number  s       The saturation
+ * @param   Number  l       The lightness
+ * @return  Array           The RGB representation
+ */
+function hsl2rgb (h, s, l) {
+  if (h.length) { l = h[2], s = h[1], h = h[0]; }
+  var r, g, b
+
+  if (s == 0) {
+    r = g = b = l // achromatic
+  } else {
+    var q = l < 0.5 ? l * (1 + s) : l + s - l * s
+    var p = 2 * l - q
+    r = hue2rgb(p, q, h + 1 / 3)
+    g = hue2rgb(p, q, h)
+    b = hue2rgb(p, q, h - 1 / 3)
+  }
+
+  return [r, g, b]
+}
+
+function hue2rgb (p, q, t) {
+  if (t < 0) t += 1
+  if (t > 1) t -= 1
+  if (t < 1 / 6) return p + (q - p) * 6 * t
+  if (t < 1 / 2) return q
+  if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6
+  return p
+}
+
+/**
+ * Converts an RGB color value to HSV. Conversion formula
+ * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
+ * Assumes r, g, and b are contained in the set [0, 1] and
+ * returns h, s, and v in the set [0, 1].
+ *
+ * @param   Number  r       The red color value
+ * @param   Number  g       The green color value
+ * @param   Number  b       The blue color value
+ * @return  Array           The HSV representation
+ */
+
+function rgb2hsv (r, g, b) {
+  if (r.length) { b = r[2], g = r[1], r = r[0]; }
+  var max = Math.max(r, g, b), min = Math.min(r, g, b)
+  var h, s, v = max
+
+  var d = max - min
+  s = max == 0 ? 0 : d / max
+
+  if (max == min) {
+    h = 0 // achromatic
+  } else {
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0)
+        break
+      case g:
+        h = (b - r) / d + 2
+        break
+      case b:
+        h = (r - g) / d + 4
+        break
+    }
+    h /= 6
+  }
+
+  return [h, s, v]
+}
+
+/**
+ * Converts an HSV color value to RGB. Conversion formula
+ * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
+ * Assumes h, s, and v are contained in the set [0, 1] and
+ * returns r, g, and b in the set [0, 1].
+ *
+ * @param   Number  h       The hue
+ * @param   Number  s       The saturation
+ * @param   Number  v       The value
+ * @return  Array           The RGB representation
+ */
+function hsv2rgb (h, s, v) {
+  if (h.length) { v = h[2], s = h[1], h = h[0]; }
+  var r, g, b
+
+  var i = Math.floor(h * 6)
+  var f = h * 6 - i
+  var p = v * (1 - s)
+  var q = v * (1 - f * s)
+  var t = v * (1 - (1 - f) * s)
+
+  switch (i % 6) {
+    case 0:
+      r = v, g = t, b = p
+      break
+    case 1:
+      r = q, g = v, b = p
+      break
+    case 2:
+      r = p, g = v, b = t
+      break
+    case 3:
+      r = p, g = q, b = v
+      break
+    case 4:
+      r = t, g = p, b = v
+      break
+    case 5:
+      r = v, g = p, b = q
+      break
+  }
+
+  return [r, g, b]
+}
+
+/**
+ * Converts a HTML5 color value (string) to RGB values
+ * See the color input type of HTML5 forms
+ * Conversion formula:
+ * - split the string; "#RRGGBB" into RGB components
+ * - convert the HEX value into RGB values
+ */
+function html2rgb (s) {
+  var r = 0
+  var g = 0
+  var b = 0
+  if (s.length == 7) {
+    r = parseInt('0x' + s.slice(1, 3)) / 255
+    g = parseInt('0x' + s.slice(3, 5)) / 255
+    b = parseInt('0x' + s.slice(5, 7)) / 255
+  }
+  return [r, g, b]
+}
+
+/**
+ * Converts RGB color value to HTML5 color value (string)
+ * Conversion forumla:
+ * - convert R, G, B into HEX strings
+ * - return HTML formatted string "#RRGGBB"
+ */
+function rgb2html (r, g, b) {
+  if (r.length) { b = r[2], g = r[1], r = r[0]; }
+  var s = '#' +
+  Number(0x1000000 + r * 255 * 0x10000 + g * 255 * 0x100 + b * 255).toString(16).substring(1,7)
+  return s
+}
+
+ module.exports = {
+   css2rgb,
+   color,
+   rgb2hsl,
+   hsl2rgb,
+   rgb2hsv,
+   hsv2rgb,
+   html2rgb,
+   rgb2html
+ }
+
+},{}],196:[function(require,module,exports){
+function echo () {
+  console.warn('echo() will be deprecated in the near future: please use console.log/warn/error instead')
+  var s = '', a = arguments
+  for (var i = 0; i < a.length; i++) {
+    if (i) s += ', '
+    s += a[i]
+  }
+  // var t = (new Date()-global.time)/1000
+  // console.log(t,s)
+  console.log(s)
+}
+
+/**
+sprintf() for JavaScript 0.7-beta1
+http://www.diveintojavascript.com/projects/javascript-sprintf
+
+Copyright (c) Alexandru Marasteanu <alexaholic [at) gmail (dot] com>
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of sprintf() for JavaScript nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL Alexandru Marasteanu BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Changelog:
+2010.09.06 - 0.7-beta1
+  - features: vsprintf, support for named placeholders
+  - enhancements: format cache, reduced global namespace pollution
+
+2010.05.22 - 0.6:
+ - reverted to 0.4 and fixed the bug regarding the sign of the number 0
+ Note:
+ Thanks to Raphael Pigulla <raph (at] n3rd [dot) org> (http://www.n3rd.org/)
+ who warned me about a bug in 0.5, I discovered that the last update was
+ a regress. I appologize for that.
+
+2010.05.09 - 0.5:
+ - bug fix: 0 is now preceeded with a + sign
+ - bug fix: the sign was not at the right position on padded results (Kamal Abdali)
+ - switched from GPL to BSD license
+
+2007.10.21 - 0.4:
+ - unit test and patch (David Baird)
+
+2007.09.17 - 0.3:
+ - bug fix: no longer throws exception on empty paramenters (Hans Pufal)
+
+2007.09.11 - 0.2:
+ - feature: added argument swapping
+
+2007.04.03 - 0.1:
+ - initial release
+**/
+
+let sprintf = (function () {
+  function get_type (variable) {
+    return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase()
+  }
+  function str_repeat (input, multiplier) {
+    for (var output = []; multiplier > 0; output[--multiplier] = input) { /* do nothing */}
+    return output.join('')
+  }
+
+  var str_format = function () {
+    if (!str_format.cache.hasOwnProperty(arguments[0])) {
+      str_format.cache[arguments[0]] = str_format.parse(arguments[0])
+    }
+    return str_format.format.call(null, str_format.cache[arguments[0]], arguments)
+  }
+
+  str_format.format = function (parse_tree, argv) {
+    var cursor = 1, tree_length = parse_tree.length, node_type = '', arg, output = [], i, k, match, pad, pad_character, pad_length
+    for (i = 0; i < tree_length; i++) {
+      node_type = get_type(parse_tree[i])
+      if (node_type === 'string') {
+        output.push(parse_tree[i])
+      }
+      else if (node_type === 'array') {
+        match = parse_tree[i] // convenience purposes only
+        if (match[2]) { // keyword argument
+          arg = argv[cursor]
+          for (k = 0; k < match[2].length; k++) {
+            if (!arg.hasOwnProperty(match[2][k])) {
+              throw(sprintf('[sprintf] property "%s" does not exist', match[2][k]))
+            }
+            arg = arg[match[2][k]]
+          }
+        }
+        else if (match[1]) { // positional argument (explicit)
+          arg = argv[match[1]]
+        } else { // positional argument (implicit)
+          arg = argv[cursor++]
+        }
+
+        if (/[^s]/.test(match[8]) && (get_type(arg) != 'number')) {
+          throw(sprintf('[sprintf] expecting number but found %s', get_type(arg)))
+        }
+        switch (match[8]) {
+          case 'b':
+            arg = arg.toString(2)
+            break
+          case 'c':
+            arg = String.fromCharCode(arg)
+            break
+          case 'd':
+            arg = parseInt(arg, 10)
+            break
+          case 'e':
+            arg = match[7] ? arg.toExponential(match[7]) : arg.toExponential()
+            break
+          case 'f':
+            arg = match[7] ? parseFloat(arg).toFixed(match[7]) : parseFloat(arg)
+            break
+          case 'o':
+            arg = arg.toString(8)
+            break
+          case 's':
+            arg = ((arg = String(arg)) && match[7] ? arg.substring(0, match[7]) : arg)
+            break
+          case 'u':
+            arg = Math.abs(arg)
+            break
+          case 'x':
+            arg = arg.toString(16)
+            break
+          case 'X':
+            arg = arg.toString(16).toUpperCase()
+            break
+        }
+        arg = (/[def]/.test(match[8]) && match[3] && arg >= 0 ? '+' + arg : arg)
+        pad_character = match[4] ? match[4] == '0' ? '0' : match[4].charAt(1) : ' '
+        pad_length = match[6] - String(arg).length
+        pad = match[6] ? str_repeat(pad_character, pad_length) : ''
+        output.push(match[5] ? arg + pad : pad + arg)
+      }
+    }
+    return output.join('')
+  }
+
+  str_format.cache = {}
+
+  str_format.parse = function (fmt) {
+    var _fmt = fmt, match = [], parse_tree = [], arg_names = 0
+    while (_fmt) {
+      if ((match = /^[^\x25]+/.exec(_fmt)) !== null) {
+        parse_tree.push(match[0])
+      }
+      else if ((match = /^\x25{2}/.exec(_fmt)) !== null) {
+        parse_tree.push('%')
+      }
+      else if ((match = /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fosuxX])/.exec(_fmt)) !== null) {
+        if (match[2]) {
+          arg_names |= 1
+          var field_list = [], replacement_field = match[2], field_match = []
+          if ((field_match = /^([a-z_][a-z_\d]*)/i.exec(replacement_field)) !== null) {
+            field_list.push(field_match[1])
+            while ((replacement_field = replacement_field.substring(field_match[0].length)) !== '') {
+              if ((field_match = /^\.([a-z_][a-z_\d]*)/i.exec(replacement_field)) !== null) {
+                field_list.push(field_match[1])
+              }
+              else if ((field_match = /^\[(\d+)\]/.exec(replacement_field)) !== null) {
+                field_list.push(field_match[1])
+              } else {
+                throw('[sprintf] huh?')
+              }
+            }
+          } else {
+            throw('[sprintf] huh?')
+          }
+          match[2] = field_list
+        } else {
+          arg_names |= 2
+        }
+        if (arg_names === 3) {
+          throw('[sprintf] mixing positional and named placeholders is not (yet) supported')
+        }
+        parse_tree.push(match)
+      } else {
+        throw('[sprintf] huh?')
+      }
+      _fmt = _fmt.substring(match[0].length)
+    }
+    return parse_tree
+  }
+
+  return str_format
+})()
+
+function vsprintf (fmt, argv) {
+  argv.unshift(fmt)
+  return sprintf.apply(null, argv)
+}
+
+module.exports = {
+  echo
+}
+
+},{}],197:[function(require,module,exports){
+
+const primitives3d = require('./primitives3d')
+const primitives2d = require('./primitives2d')
+const booleanOps = require('./ops-booleans')
+const transformations = require('./ops-transformations')
+const extrusions = require('./ops-extrusions')
+const color = require('./color')
+const maths = require('./maths')
+const text = require('./text')
+const { echo } = require('./debug')
+
+// these are 'external' to this api and we basically just re-export for old api compatibility
+// ...needs to be reviewed
+const { CAG, CSG } = require('@jscad/csg')
+const { log } = require('./log') // FIXME: this is a duplicate of the one in openjscad itself,*/
+
+// mostly likely needs to be removed since it is in the OpenJsCad namespace anyway, leaving here
+// for now
+
+const exportedApi = {
+  csg: {CAG, CSG},
+  primitives2d,
+  primitives3d,
+  booleanOps,
+  transformations,
+  extrusions,
+  color,
+  maths,
+  text,
+  OpenJsCad: {OpenJsCad: {log}},
+  debug: {echo}
+}
+
+module.exports = exportedApi
+
+},{"./color":195,"./debug":196,"./log":198,"./maths":199,"./ops-booleans":200,"./ops-extrusions":201,"./ops-transformations":202,"./primitives2d":203,"./primitives3d":204,"./text":205,"@jscad/csg":162}],198:[function(require,module,exports){
+function log (txt) {
+  var timeInMs = Date.now()
+  var prevtime// OpenJsCad.log.prevLogTime
+  if (!prevtime) prevtime = timeInMs
+  var deltatime = timeInMs - prevtime
+  log.prevLogTime = timeInMs
+  var timefmt = (deltatime * 0.001).toFixed(3)
+  txt = '[' + timefmt + '] ' + txt
+  if ((typeof (console) === 'object') && (typeof (console.log) === 'function')) {
+    console.log(txt)
+  } else if ((typeof (self) === 'object') && (typeof (self.postMessage) === 'function')) {
+    self.postMessage({cmd: 'log', txt: txt})
+  } else throw new Error('Cannot log')
+}
+
+// See Processor.setStatus()
+// Note: leave for compatibility
+function status (s) {
+  log(s)
+}
+
+module.exports = {
+  log,
+  status
+}
+
+},{}],199:[function(require,module,exports){
+// -- Math functions (360 deg based vs 2pi)
+function sin (a) {
+  return Math.sin(a / 360 * Math.PI * 2)
+}
+function cos (a) {
+  return Math.cos(a / 360 * Math.PI * 2)
+}
+function asin (a) {
+  return Math.asin(a) / (Math.PI * 2) * 360
+}
+function acos (a) {
+  return Math.acos(a) / (Math.PI * 2) * 360
+}
+function tan (a) {
+  return Math.tan(a / 360 * Math.PI * 2)
+}
+function atan (a) {
+  return Math.atan(a) / (Math.PI * 2) * 360
+}
+function atan2 (a, b) {
+  return Math.atan2(a, b) / (Math.PI * 2) * 360
+}
+function ceil (a) {
+  return Math.ceil(a)
+}
+function floor (a) {
+  return Math.floor(a)
+}
+function abs (a) {
+  return Math.abs(a)
+}
+function min (a, b) {
+  return a < b ? a : b
+}
+function max (a, b) {
+  return a > b ? a : b
+}
+function rands (min, max, vn, seed) {
+  // -- seed is ignored for now, FIX IT (requires reimplementation of random())
+  //    see http://stackoverflow.com/questions/424292/how-to-create-my-own-javascript-random-number-generator-that-i-can-also-set-the
+  var v = new Array(vn)
+  for (var i = 0; i < vn; i++) {
+    v[i] = Math.random() * (max - min) + min
+  }
+}
+function log (a) {
+  return Math.log(a)
+}
+function lookup (ix, v) {
+  var r = 0
+  for (var i = 0; i < v.length; i++) {
+    var a0 = v[i]
+    if (a0[0] >= ix) {
+      i--
+      a0 = v[i]
+      var a1 = v[i + 1]
+      var m = 0
+      if (a0[0] !== a1[0]) {
+        m = abs((ix - a0[0]) / (a1[0] - a0[0]))
+      }
+      // echo(">>",i,ix,a0[0],a1[0],";",m,a0[1],a1[1])
+      if (m > 0) {
+        r = a0[1] * (1 - m) + a1[1] * m
+      } else {
+        r = a0[1]
+      }
+      return r
+    }
+  }
+  return r
+}
+
+function pow (a, b) {
+  return Math.pow(a, b)
+}
+
+function sign (a) {
+  return a < 0 ? -1 : (a > 1 ? 1 : 0)
+}
+
+function sqrt (a) {
+  return Math.sqrt(a)
+}
+
+function round (a) {
+  return floor(a + 0.5)
+}
+
+module.exports = {
+  sin,
+  cos,
+  asin,
+  acos,
+  tan,
+  atan,
+  atan2,
+  ceil,
+  floor,
+  abs,
+  min,
+  max,
+  rands,
+  log,
+  lookup,
+  pow,
+  sign,
+  sqrt,
+  round
+}
+
+},{}],200:[function(require,module,exports){
+const { CAG } = require('@jscad/csg')
+
+// -- 3D operations (OpenSCAD like notion)
+// FIXME should this be lazy ? in which case, how do we deal with 2D/3D combined
+// TODO we should have an option to set behaviour as first parameter
+function union () {
+  let options = {}
+  const defaults = {
+    extrude2d: false
+  }
+  var o, i = 0, a = arguments
+  if (a[0].length) a = a[0]
+  if ('extrude2d' in a[0]) { // first parameter is options
+    options = Object.assign({}, defaults, a[0])
+    o = a[i++]
+  }
+
+  o = a[i++]
+
+  // TODO: add option to be able to set this?
+  if ((typeof (a[i]) === 'object') && a[i] instanceof CAG && options.extrude2d) {
+    o = a[i].extrude({offset: [0, 0, 0.1]}) // -- convert a 2D shape to a thin solid, note: do not a[i] = a[i].extrude()
+  }
+  for (; i < a.length; i++) {
+    var obj = a[i]
+
+    if ((typeof (a[i]) === 'object') && a[i] instanceof CAG && options.extrude2d) {
+      obj = a[i].extrude({offset: [0, 0, 0.1]}) // -- convert a 2D shape to a thin solid:
+    }
+    o = o.union(obj)
+  }
+  return o
+}
+
+function difference () {
+  var o, i = 0, a = arguments
+  if (a[0].length) a = a[0]
+  for (o = a[i++]; i < a.length; i++) {
+    if (a[i] instanceof CAG) {
+      o = o.subtract(a[i])
+    } else {
+      o = o.subtract(a[i].setColor(1, 1, 0)) // -- color the cuts
+    }
+  }
+  return o
+}
+
+function intersection () {
+  var o, i = 0, a = arguments
+  if (a[0].length) a = a[0]
+  for (o = a[i++]; i < a.length; i++) {
+    if (a[i] instanceof CAG) {
+      o = o.intersect(a[i])
+    } else {
+      o = o.intersect(a[i].setColor(1, 1, 0)) // -- color the cuts
+    }
+  }
+  return o
+}
+
+module.exports = {
+  union,
+  difference,
+  intersection
+}
+
+},{"@jscad/csg":162}],201:[function(require,module,exports){
+const { CSG } = require('@jscad/csg')
+// -- 2D to 3D primitives (OpenSCAD like notion)
+
+function linear_extrude (p, s) {
+  // console.log("linear_extrude() not yet implemented")
+  // return
+  let h = 1
+  let off = 0
+  let twist = 0
+  let slices = 10
+  /* convexity = 10, */
+
+  if (p.height) h = p.height
+  // if(p.convexity) convexity = p.convexity      // abandoned
+  if (p.twist) twist = p.twist
+  if (p.slices) slices = p.slices
+  var o = s.extrude({offset: [0, 0, h], twistangle: twist, twiststeps: slices})
+  if (p.center === true) {
+    var b = [ ]
+    b = o.getBounds() // b[0] = min, b[1] = max
+    off = b[1].plus(b[0])
+    off = off.times(-0.5)
+    o = o.translate(off)
+  }
+  return o
+}
+
+function rotate_extrude (p, o) {
+  const revAngle = 45
+  var fn = 32
+  if (arguments.length < 2) {
+    o = p // no switches, just an object
+  } else if (p !== undefined) {
+    fn = p.fn
+  }
+  if (fn < 3) fn = 3
+  var ps = []
+  for (var i = 0; i < fn; i++) {
+    // o.{x,y} -> rotate([0,0,i:0..360], obj->{o.x,0,o.y})
+    for (var j = 0; j < o.sides.length; j++) {
+      // has o.sides[j].vertex{0,1}.pos (only x,y)
+      var p = []
+      var m
+
+      m = new CSG.Matrix4x4.rotationZ(i / fn * revAngle)
+      p[0] = new CSG.Vector3D(o.sides[j].vertex0.pos.x, 0, o.sides[j].vertex0.pos.y)
+      p[0] = m.rightMultiply1x3Vector(p[0])
+
+      p[1] = new CSG.Vector3D(o.sides[j].vertex1.pos.x, 0, o.sides[j].vertex1.pos.y)
+      p[1] = m.rightMultiply1x3Vector(p[1])
+
+      m = new CSG.Matrix4x4.rotationZ((i + 1) / fn * revAngle)
+      p[2] = new CSG.Vector3D(o.sides[j].vertex1.pos.x, 0, o.sides[j].vertex1.pos.y)
+      p[2] = m.rightMultiply1x3Vector(p[2])
+
+      p[3] = new CSG.Vector3D(o.sides[j].vertex0.pos.x, 0, o.sides[j].vertex0.pos.y)
+      p[3] = m.rightMultiply1x3Vector(p[3])
+
+      var p1 = new CSG.Polygon([
+        new CSG.Vertex(p[0]),
+        new CSG.Vertex(p[1]),
+        new CSG.Vertex(p[2]),
+        new CSG.Vertex(p[3]) // we make a square polygon (instead of 2 triangles)
+      ])
+      // var p2 = new CSG.Polygon([
+      //   new CSG.Vertex(p[0]),
+      //   new CSG.Vertex(p[2]),
+      //   new CSG.Vertex(p[3]),
+      // ])
+      ps.push(p1)
+    // ps.push(p2)
+    // echo("i="+i,i/fn*360,"j="+j)
+    }
+  }
+  return CSG.fromPolygons(ps)
+}
+
+function rectangular_extrude (pa, p) {
+  let w = 1
+  let h = 1
+  let fn = 8
+  let closed = false
+  let round = true
+  if (p) {
+    if (p.w) w = p.w
+    if (p.h) h = p.h
+    if (p.fn) fn = p.fn
+    if (p.closed !== undefined) closed = p.closed
+    if (p.round !== undefined) round = p.round
+  }
+  return new CSG.Path2D(pa, closed).rectangularExtrude(w, h, fn, round)
+}
+
+module.exports = {
+  linear_extrude,
+  rotate_extrude,
+  rectangular_extrude
+}
+
+},{"@jscad/csg":162}],202:[function(require,module,exports){
+const { CSG, CAG } = require('@jscad/csg')
+const { union } = require('./ops-booleans')
+// -- 3D transformations (OpenSCAD like notion)
+
+function translate () {      // v, obj or array
+  var a = arguments, v = a[0], o, i = 1
+  if (a[1].length) { a = a[1]; i = 0 }
+  for (o = a[i++]; i < a.length; i++) {
+    o = o.union(a[i])
+  }
+  return o.translate(v)
+}
+
+function center () { // v, obj or array
+  var a = arguments, v = a[0], o, i = 1
+  if (a[1].length) { a = a[1]; i = 0 }
+  for (o = a[i++]; i < a.length; i++) {
+    o = o.union(a[i])
+  }
+  return o.center(v)
+}
+
+function scale () {         // v, obj or array
+  var a = arguments, v = a[0], o, i = 1
+  if (a[1].length) { a = a[1]; i = 0 }
+  for (o = a[i++]; i < a.length; i++) {
+    o = o.union(a[i])
+  }
+  return o.scale(v)
+}
+
+function rotate () {
+  var o, i, v, r = 1, a = arguments
+  if (!a[0].length) {        // rotate(r,[x,y,z],o)
+    r = a[0]
+    v = a[1]
+    i = 2
+    if (a[2].length) { a = a[2]; i = 0 }
+  } else {                   // rotate([x,y,z],o)
+    v = a[0]
+    i = 1
+    if (a[1].length) { a = a[1]; i = 0 }
+  }
+  for (o = a[i++]; i < a.length; i++) {
+    o = o.union(a[i])
+  }
+  if (r != 1) {
+    return o.rotateX(v[0] * r).rotateY(v[1] * r).rotateZ(v[2] * r)
+  } else {
+    return o.rotateX(v[0]).rotateY(v[1]).rotateZ(v[2])
+  }
+}
+
+function mirror (v, o) {
+  var a = Array.prototype.slice.call(arguments, 1, arguments.length),
+    o = a[0]
+
+  for (var i = 1; i < a.length; i++) {
+    o = o.union(a[i])
+  }
+  var plane = new CSG.Plane(new CSG.Vector3D(v[0], v[1], v[2]).unit(), 0)
+  return o.mirrored(plane)
+}
+
+function expand (r, n, o) {
+  return o.expand(r, n)
+}
+
+function contract (r, n, o) {
+  return o.contract(r, n)
+}
+
+function multmatrix (mat, obj) {
+  console.log('multmatrix() not yet implemented')
+}
+
+function minkowski () {
+  console.log('minkowski() not yet implemented')
+}
+
+function hull () {
+  var pts = []
+
+  var a = arguments
+  if (a[0].length) a = a[0]
+  var done = []
+
+  for (var i = 0; i < a.length; i++) {              // extract all points of the CAG in the argument list
+    var cag = a[i]
+    if (!(cag instanceof CAG)) {
+      throw ('ERROR: hull() accepts only 2D forms / CAG')
+      return
+    }
+    for (var j = 0; j < cag.sides.length; j++) {
+      var x = cag.sides[j].vertex0.pos.x
+      var y = cag.sides[j].vertex0.pos.y
+      if (done['' + x + ',' + y])  // avoid some coord to appear multiple times
+           {
+        continue
+      }
+      pts.push({ x: x, y: y })
+      done['' + x + ',' + y]++
+         // echo(x,y);
+    }
+  }
+   // echo(pts.length+" points in",pts);
+
+   // from http://www.psychedelicdevelopment.com/grahamscan/
+   //    see also at https://github.com/bkiers/GrahamScan/blob/master/src/main/cg/GrahamScan.java
+  var ConvexHullPoint = function (i, a, d) {
+    this.index = i
+    this.angle = a
+    this.distance = d
+
+    this.compare = function (p) {
+      if (this.angle < p.angle) {
+        return -1
+      } else if (this.angle > p.angle) {
+        return 1
+      } else {
+        if (this.distance < p.distance) {
+          return -1
+        } else if (this.distance > p.distance) {
+          return 1
+        }
+      }
+      return 0
+    }
+  }
+
+  var ConvexHull = function () {
+    this.points = null
+    this.indices = null
+
+    this.getIndices = function () {
+      return this.indices
+    }
+
+    this.clear = function () {
+      this.indices = null
+      this.points = null
+    }
+
+    this.ccw = function (p1, p2, p3) {
+      var ccw = (this.points[p2].x - this.points[p1].x) * (this.points[p3].y - this.points[p1].y) -
+                   (this.points[p2].y - this.points[p1].y) * (this.points[p3].x - this.points[p1].x)
+      if (ccw < 1e-5)      // we need this, otherwise sorting never ends, see https://github.com/Spiritdude/OpenJSCAD.org/issues/18
+            {
+        return 0
+      }
+      return ccw
+    }
+
+    this.angle = function (o, a) {
+         // return Math.atan((this.points[a].y-this.points[o].y) / (this.points[a].x - this.points[o].x));
+      return Math.atan2((this.points[a].y - this.points[o].y), (this.points[a].x - this.points[o].x))
+    }
+
+    this.distance = function (a, b) {
+      return ((this.points[b].x - this.points[a].x) * (this.points[b].x - this.points[a].x) +
+                 (this.points[b].y - this.points[a].y) * (this.points[b].y - this.points[a].y))
+    }
+
+    this.compute = function (_points) {
+      this.indices = null
+      if (_points.length < 3) {
+        return
+      }
+      this.points = _points
+
+         // Find the lowest point
+      var min = 0
+      for (var i = 1; i < this.points.length; i++) {
+        if (this.points[i].y == this.points[min].y) {
+          if (this.points[i].x < this.points[min].x) {
+            min = i
+          }
+        } else if (this.points[i].y < this.points[min].y) {
+          min = i
+        }
+      }
+
+         // Calculate angle and distance from base
+      var al = new Array()
+      var ang = 0.0
+      var dist = 0.0
+      for (i = 0; i < this.points.length; i++) {
+        if (i == min) {
+          continue
+        }
+        ang = this.angle(min, i)
+        if (ang < 0) {
+          ang += Math.PI
+        }
+        dist = this.distance(min, i)
+        al.push(new ConvexHullPoint(i, ang, dist))
+      }
+
+      al.sort(function (a, b) { return a.compare(b) })
+
+         // Create stack
+      var stack = new Array(this.points.length + 1)
+      var j = 2
+      for (i = 0; i < this.points.length; i++) {
+        if (i == min) {
+          continue
+        }
+        stack[j] = al[j - 2].index
+        j++
+      }
+      stack[0] = stack[this.points.length]
+      stack[1] = min
+
+      var tmp
+      var M = 2
+      for (i = 3; i <= this.points.length; i++) {
+        while (this.ccw(stack[M - 1], stack[M], stack[i]) <= 0) {
+          M--
+        }
+        M++
+        tmp = stack[i]
+        stack[i] = stack[M]
+        stack[M] = tmp
+      }
+
+      this.indices = new Array(M)
+      for (i = 0; i < M; i++) {
+        this.indices[i] = stack[i + 1]
+      }
+    }
+  }
+
+  var hull = new ConvexHull()
+
+  hull.compute(pts)
+  var indices = hull.getIndices()
+
+  if (indices && indices.length > 0) {
+    var ch = []
+    for (var i = 0; i < indices.length; i++) {
+      ch.push(pts[indices[i]])
+         // echo(pts[indices[i]]);
+    }
+      // echo(ch.length+" points out",ch);
+    return CAG.fromPoints(ch)
+      // return CAG.fromPointsNoCheck(ch);
+  }
+}
+
+// "Whosa whatsis" suggested "Chain Hull" as described at https://plus.google.com/u/0/105535247347788377245/posts/aZGXKFX1ACN
+// essentially hull A+B, B+C, C+D and then union those
+
+function chain_hull () {
+  var a = arguments
+  var j = 0, closed = false
+
+  if (a[j].closed !== undefined) {
+    closed = a[j++].closed
+  }
+
+  if (a[j].length) { a = a[j] }
+
+  var h = []; var n = a.length - (closed ? 0 : 1)
+  for (var i = 0; i < n; i++) {
+    h.push(hull(a[i], a[(i + 1) % a.length]))
+  }
+  return union(h)
+}
+
+module.exports = {
+  translate,
+  center,
+  scale,
+  rotate,
+  mirror,
+  expand,
+  contract,
+  multmatrix,
+  minkowski,
+  hull,
+  chain_hull
+}
+
+},{"./ops-booleans":200,"@jscad/csg":162}],203:[function(require,module,exports){
+const { CAG } = require('@jscad/csg')
+
+// -- 2D primitives (OpenSCAD like notion)
+
+function square () {
+  let v = [1, 1]
+  let off
+  let a = arguments
+  let p = a[0]
+
+  if (p && Number.isFinite(p)) v = [p, p]
+  if (p && p.length) v = a[0], p = a[1]
+  if (p && p.size && p.size.length) v = p.size
+
+  off = [v[0] / 2, v[1] / 2]
+  if (p && p.center === true) off = [0, 0]
+
+  var o = CAG.rectangle({center: off, radius: [v[0] / 2, v[1] / 2]})
+
+  return o
+}
+
+function circle () {
+  let r = 1
+  let off
+  let fn = 32
+  let a = arguments
+  let p = a[0]
+  if (p && p.r) r = p.r
+  if (p && p.fn) fn = p.fn
+  if (p && !p.r && !p.fn && !p.center) r = p
+  off = [r, r]
+  if (p && p.center === true) { off = [0, 0] }
+  var o = CAG.circle({center: off, radius: r, resolution: fn})
+  return o
+}
+
+function polygon (p) { // array of po(ints) and pa(ths)
+  var points = [ ]
+  if (p.paths && p.paths.length && p.paths[0].length) { // pa(th): [[0,1,2],[2,3,1]] (two paths)
+    for (var j = 0; j < p.paths.length; j++) {
+      for (var i = 0; i < p.paths[j].length; i++) {
+        points[i] = p.points[p.paths[j][i]]
+      }
+    }
+  } else if (p.paths && p.paths.length) { // pa(th): [0,1,2,3,4] (single path)
+    for (var i = 0; i < p.paths.length; i++) {
+      points[i] = p.points[p.paths[i]]
+    }
+  } else { // pa(th) = po(ints)
+    if (p.length) {
+      points = p
+    } else {
+      points = p.points
+    }
+  }
+  return CAG.fromPoints(points)
+}
+
+function triangle () { // -- new addition
+  var a = arguments
+  if (a[0] && a[0].length) a = a[0]
+  var o = CAG.fromPoints(a)
+  return o
+}
+
+module.exports = {
+  square,
+  circle,
+  polygon,
+  triangle
+}
+
+},{"@jscad/csg":162}],204:[function(require,module,exports){
+// -- 3D primitives (OpenSCAD like notion)
+const { CSG } = require('@jscad/csg')
+const { circle } = require('./primitives2d')
+const { rotate_extrude } = require('./ops-extrusions')
+
+function cube (p) {
+  var s = 1, v = null, off = [0, 0, 0], round = false, r = 0, fn = 8
+  if (p && p.length) v = p
+  if (p && p.size && p.size.length) v = p.size // { size: [1,2,3] }
+  if (p && p.size && !p.size.length) s = p.size // { size: 1 }
+  // if(p&&!p.size&&!p.length&&p.center===undefined&&!p.round&&!p.radius) s = p      // (2)
+  if (p && (typeof p !== 'object')) s = p// (2)
+  if (p && p.round === true) { round = true, r = v && v.length ? (v[0] + v[1] + v[2]) / 30 : s / 10}
+  if (p && p.radius) { round = true, r = p.radius }
+  if (p && p.fn) fn = p.fn // applies in case of round: true
+
+  var x = s, y = s, z = s
+  if (v && v.length) {
+    x = v[0], y = v[1], z = v[2]
+  }
+  off = [x / 2, y / 2, z / 2] // center: false default
+  var o = round ?
+    CSG.roundedCube({radius: [x / 2, y / 2, z / 2], roundradius: r, resolution: fn}) :
+    CSG.cube({radius: [x / 2, y / 2, z / 2]})
+  if (p && p.center && p.center.length) {
+    off = [p.center[0] ? 0 : x / 2, p.center[1] ? 0 : y / 2, p.center[2] ? 0 : z / 2]
+  } else if (p && p.center == true) {
+    off = [0, 0, 0]
+  } else if (p && p.center == false) {
+    off = [x / 2, y / 2, z / 2]
+  }
+  if (off[0] || off[1] || off[2]) o = o.translate(off)
+  // if(v&&v.length) o = o.scale(v)      // we don't scale afterwards, we already created box with the correct size
+  return o
+}
+
+function sphere (p) {
+  var r = 1
+  var fn = 32
+  var off = [0, 0, 0]
+  var type = 'normal'
+
+  // var zoff = 0 // sphere() in openscad has no center:true|false
+  if (p && p.r) r = p.r
+  if (p && p.fn) fn = p.fn
+  if (p && p.type) type = p.type
+  // if(p&&!p.r&&!p.fn&&!p.type) r = p
+  if (p && (typeof p !== 'object')) r = p
+  off = [0, 0, 0] // center: false (default)
+
+  var o
+  if (type === 'geodesic')
+    o = geodesicSphere(p)
+  else
+    o = CSG.sphere({radius: r, resolution: fn})
+
+  if (p && p.center && p.center.length) { // preparing individual x,y,z center
+    off = [p.center[0] ? 0 : r, p.center[1] ? 0 : r, p.center[2] ? 0 : r]
+  } else if (p && p.center === true) {
+    off = [0, 0, 0]
+  } else if (p && p.center === false) {
+    off = [r, r, r]
+  }
+  if (off[0] || off[1] || off[2]) o = o.translate(off)
+  return o
+}
+
+function geodesicSphere (p) {
+  var r = 1, fn = 5
+
+  var ci = [ // hard-coded data of icosahedron (20 faces, all triangles)
+    [0.850651, 0.000000, -0.525731],
+    [0.850651, -0.000000, 0.525731],
+    [-0.850651, -0.000000, 0.525731],
+    [-0.850651, 0.000000, -0.525731],
+    [0.000000, -0.525731, 0.850651],
+    [0.000000, 0.525731, 0.850651],
+    [0.000000, 0.525731, -0.850651],
+    [0.000000, -0.525731, -0.850651],
+    [-0.525731, -0.850651, -0.000000],
+    [0.525731, -0.850651, -0.000000],
+    [0.525731, 0.850651, 0.000000],
+    [-0.525731, 0.850651, 0.000000]]
+
+  var ti = [ [0, 9, 1], [1, 10, 0], [6, 7, 0], [10, 6, 0], [7, 9, 0], [5, 1, 4], [4, 1, 9], [5, 10, 1], [2, 8, 3], [3, 11, 2], [2, 5, 4],
+    [4, 8, 2], [2, 11, 5], [3, 7, 6], [6, 11, 3], [8, 7, 3], [9, 8, 4], [11, 10, 5], [10, 11, 6], [8, 9, 7]]
+
+  var geodesicSubDivide = function (p, fn, off) {
+    var p1 = p[0], p2 = p[1], p3 = p[2]
+    var n = off
+    var c = []
+    var f = []
+
+    //           p3
+    //           /\
+    //          /__\     fn = 3
+    //      i  /\  /\
+    //        /__\/__\       total triangles = 9 (fn*fn)
+    //       /\  /\  /\
+    //     0/__\/__\/__\
+    //    p1 0   j      p2
+
+    for (var i = 0; i < fn; i++) {
+      for (var j = 0; j < fn - i; j++) {
+        var t0 = i / fn
+        var t1 = (i + 1) / fn
+        var s0 = j / (fn - i)
+        var s1 = (j + 1) / (fn - i)
+        var s2 = fn - i - 1 ? j / (fn - i - 1) : 1
+        var q = []
+
+        q[0] = mix3(mix3(p1, p2, s0), p3, t0)
+        q[1] = mix3(mix3(p1, p2, s1), p3, t0)
+        q[2] = mix3(mix3(p1, p2, s2), p3, t1)
+
+        // -- normalize
+        for (var k = 0; k < 3; k++) {
+          var r = Math.sqrt(q[k][0] * q[k][0] + q[k][1] * q[k][1] + q[k][2] * q[k][2])
+          for (var l = 0; l < 3; l++) {
+            q[k][l] /= r
+          }
+        }
+        c.push(q[0], q[1], q[2])
+        f.push([n, n + 1, n + 2]); n += 3
+
+        if (j < fn - i - 1) {
+          var s3 = fn - i - 1 ? (j + 1) / (fn - i - 1) : 1
+          q[0] = mix3(mix3(p1, p2, s1), p3, t0)
+          q[1] = mix3(mix3(p1, p2, s3), p3, t1)
+          q[2] = mix3(mix3(p1, p2, s2), p3, t1)
+
+          // -- normalize
+          for (var k = 0; k < 3; k++) {
+            var r = Math.sqrt(q[k][0] * q[k][0] + q[k][1] * q[k][1] + q[k][2] * q[k][2])
+            for (var l = 0; l < 3; l++) {
+              q[k][l] /= r
+            }
+          }
+          c.push(q[0], q[1], q[2])
+          f.push([n, n + 1, n + 2]); n += 3
+        }
+      }
+    }
+    return { points: c, triangles: f, off: n }
+  }
+
+  var mix3 = function (a, b, f) {
+    var _f = 1 - f
+    var c = []
+    for (var i = 0; i < 3; i++) {
+      c[i] = a[i] * _f + b[i] * f
+    }
+    return c
+  }
+
+  if (p) {
+    if (p.fn) fn = Math.floor(p.fn / 6)
+    if (p.r) r = p.r
+  }
+
+  if (fn <= 0) fn = 1
+
+  var q = []
+  var c = [], f = []
+  var off = 0
+
+  for (var i = 0; i < ti.length; i++) {
+    var g = geodesicSubDivide([ ci[ti[i][0]], ci[ti[i][1]], ci[ti[i][2]]], fn, off)
+    c = c.concat(g.points)
+    f = f.concat(g.triangles)
+    off = g.off
+  }
+  return polyhedron({points: c, triangles: f}).scale(r)
+}
+
+function cylinder (p) {
+  var r1 = 1, r2 = 1, h = 1, fn = 32, round = false
+  var a = arguments
+  var off = [0, 0, 0]
+  if (p && p.d) {
+    r1 = r2 = p.d / 2
+  }
+  if (p && p.r) {
+    r1 = p.r
+    r2 = p.r
+  }
+  if (p && p.h) {
+    h = p.h
+  }
+  if (p && (p.r1 || p.r2)) {
+    r1 = p.r1
+    r2 = p.r2
+    if (p.h) h = p.h
+  }
+  if (p && (p.d1 || p.d2)) {
+    r1 = p.d1 / 2
+    r2 = p.d2 / 2
+  }
+
+  if (a && a[0] && a[0].length) {
+    a = a[0]
+    r1 = a[0]
+    r2 = a[1]
+    h = a[2]
+    if (a.length === 4) fn = a[3]
+  }
+  if (p && p.fn) fn = p.fn
+  // if(p&&p.center==true) zoff = -h/2
+  if (p && p.round === true) round = true
+  var o
+  if (p && (p.start && p.end)) {
+    o = round ?
+      CSG.roundedCylinder({start: p.start, end: p.end, radiusStart: r1, radiusEnd: r2, resolution: fn}) :
+      CSG.cylinder({start: p.start, end: p.end, radiusStart: r1, radiusEnd: r2, resolution: fn})
+  } else {
+    o = round ?
+      CSG.roundedCylinder({start: [0, 0, 0], end: [0, 0, h], radiusStart: r1, radiusEnd: r2, resolution: fn}) :
+      CSG.cylinder({start: [0, 0, 0], end: [0, 0, h], radiusStart: r1, radiusEnd: r2, resolution: fn})
+    var r = r1 > r2 ? r1 : r2
+    if (p && p.center && p.center.length) { // preparing individual x,y,z center
+      off = [p.center[0] ? 0 : r, p.center[1] ? 0 : r, p.center[2] ? -h / 2 : 0]
+    } else if (p && p.center === true) {
+      off = [0, 0, -h / 2]
+    } else if (p && p.center === false) {
+      off = [0, 0, 0]
+    }
+    if (off[0] || off[1] || off[2]) o = o.translate(off)
+  }
+  return o
+}
+
+function torus (p) {
+  var ri = 1, ro = 4, fni = 16, fno = 32, roti = 0
+  if (p) {
+    if (p.ri) ri = p.ri
+    if (p.fni) fni = p.fni
+    if (p.roti) roti = p.roti
+    if (p.ro) ro = p.ro
+    if (p.fno) fno = p.fno
+  }
+  if (fni < 3) fni = 3
+  if (fno < 3) fno = 3
+  var c = circle({r: ri, fn: fni, center: true})
+  if (roti) c = c.rotateZ(roti)
+  return rotate_extrude({fn: fno}, c.translate([ro, 0, 0]))
+}
+
+function polyhedron (p) {
+  var pgs = []
+  var ref = p.triangles || p.polygons
+  var colors = p.colors || null
+
+  for (var i = 0; i < ref.length; i++) {
+    var pp = []
+    for (var j = 0; j < ref[i].length; j++) {
+      pp[j] = p.points[ref[i][j]]
+    }
+
+    var v = []
+    for (j = ref[i].length - 1; j >= 0; j--) { // --- we reverse order for examples of OpenSCAD work
+      v.push(new CSG.Vertex(new CSG.Vector3D(pp[j][0], pp[j][1], pp[j][2])))
+    }
+    var s = CSG.Polygon.defaultShared
+    if (colors && colors[i]) {
+      s = CSG.Polygon.Shared.fromColor(colors[i])
+    }
+    pgs.push(new CSG.Polygon(v, s))
+  }
+  var r = CSG.fromPolygons(pgs)
+  return r
+}
+
+module.exports = {
+  cube,
+  sphere,
+  geodesicSphere,
+  cylinder,
+  torus,
+  polyhedron
+}
+
+},{"./ops-extrusions":201,"./primitives2d":203,"@jscad/csg":162}],205:[function(require,module,exports){
+
+function vector_char(x,y,c) {
+   c = c.charCodeAt(0);
+   c -= 32;
+   if(c<0||c>=95) return { width: 0, segments: [] };
+
+   var off = c*112;
+   var n = simplexFont[off++];
+   var w = simplexFont[off++];
+   var l = [];
+   var segs = [];
+
+   for(var i=0; i<n; i++) {
+      var xp = simplexFont[off+i*2];
+      var yp = simplexFont[off+i*2+1];
+      if(xp==-1&&yp==-1) {
+         segs.push(l); l = [];
+      } else {
+         l.push([xp+x,yp+y]);
+      }
+   }
+   if(l.length) segs.push(l);
+   return { width: w, segments: segs };
+}
+
+function vector_text(x,y,s) {
+   var o = [];
+   var x0 = x;
+   for(var i=0; i<s.length; i++) {
+      var c = s.charAt(i);
+      if(c=='\n') {
+         x = x0; y -= 30;
+      } else {
+         var d = vector_char(x,y,c);
+         x += d.width;
+         o = o.concat(d.segments);
+      }
+   }
+   return o;
+}
+
+// -- data below from http://paulbourke.net/dataformats/hershey/
+
+var simplexFont = [
+    0,16, /* Ascii 32 */
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    8,10, /* Ascii 33 */
+    5,21, 5, 7,-1,-1, 5, 2, 4, 1, 5, 0, 6, 1, 5, 2,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    5,16, /* Ascii 34 */
+    4,21, 4,14,-1,-1,12,21,12,14,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   11,21, /* Ascii 35 */
+   11,25, 4,-7,-1,-1,17,25,10,-7,-1,-1, 4,12,18,12,-1,-1, 3, 6,17, 6,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   26,20, /* Ascii 36 */
+    8,25, 8,-4,-1,-1,12,25,12,-4,-1,-1,17,18,15,20,12,21, 8,21, 5,20, 3,
+   18, 3,16, 4,14, 5,13, 7,12,13,10,15, 9,16, 8,17, 6,17, 3,15, 1,12, 0,
+    8, 0, 5, 1, 3, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   31,24, /* Ascii 37 */
+   21,21, 3, 0,-1,-1, 8,21,10,19,10,17, 9,15, 7,14, 5,14, 3,16, 3,18, 4,
+   20, 6,21, 8,21,10,20,13,19,16,19,19,20,21,21,-1,-1,17, 7,15, 6,14, 4,
+   14, 2,16, 0,18, 0,20, 1,21, 3,21, 5,19, 7,17, 7,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   34,26, /* Ascii 38 */
+   23,12,23,13,22,14,21,14,20,13,19,11,17, 6,15, 3,13, 1,11, 0, 7, 0, 5,
+    1, 4, 2, 3, 4, 3, 6, 4, 8, 5, 9,12,13,13,14,14,16,14,18,13,20,11,21,
+    9,20, 8,18, 8,16, 9,13,11,10,16, 3,18, 1,20, 0,22, 0,23, 1,23, 2,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    7,10, /* Ascii 39 */
+    5,19, 4,20, 5,21, 6,20, 6,18, 5,16, 4,15,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   10,14, /* Ascii 40 */
+   11,25, 9,23, 7,20, 5,16, 4,11, 4, 7, 5, 2, 7,-2, 9,-5,11,-7,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   10,14, /* Ascii 41 */
+    3,25, 5,23, 7,20, 9,16,10,11,10, 7, 9, 2, 7,-2, 5,-5, 3,-7,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    8,16, /* Ascii 42 */
+    8,21, 8, 9,-1,-1, 3,18,13,12,-1,-1,13,18, 3,12,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    5,26, /* Ascii 43 */
+   13,18,13, 0,-1,-1, 4, 9,22, 9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    8,10, /* Ascii 44 */
+    6, 1, 5, 0, 4, 1, 5, 2, 6, 1, 6,-1, 5,-3, 4,-4,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    2,26, /* Ascii 45 */
+    4, 9,22, 9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    5,10, /* Ascii 46 */
+    5, 2, 4, 1, 5, 0, 6, 1, 5, 2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    2,22, /* Ascii 47 */
+   20,25, 2,-7,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   17,20, /* Ascii 48 */
+    9,21, 6,20, 4,17, 3,12, 3, 9, 4, 4, 6, 1, 9, 0,11, 0,14, 1,16, 4,17,
+    9,17,12,16,17,14,20,11,21, 9,21,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    4,20, /* Ascii 49 */
+    6,17, 8,18,11,21,11, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   14,20, /* Ascii 50 */
+    4,16, 4,17, 5,19, 6,20, 8,21,12,21,14,20,15,19,16,17,16,15,15,13,13,
+   10, 3, 0,17, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   15,20, /* Ascii 51 */
+    5,21,16,21,10,13,13,13,15,12,16,11,17, 8,17, 6,16, 3,14, 1,11, 0, 8,
+    0, 5, 1, 4, 2, 3, 4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    6,20, /* Ascii 52 */
+   13,21, 3, 7,18, 7,-1,-1,13,21,13, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   17,20, /* Ascii 53 */
+   15,21, 5,21, 4,12, 5,13, 8,14,11,14,14,13,16,11,17, 8,17, 6,16, 3,14,
+    1,11, 0, 8, 0, 5, 1, 4, 2, 3, 4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   23,20, /* Ascii 54 */
+   16,18,15,20,12,21,10,21, 7,20, 5,17, 4,12, 4, 7, 5, 3, 7, 1,10, 0,11,
+    0,14, 1,16, 3,17, 6,17, 7,16,10,14,12,11,13,10,13, 7,12, 5,10, 4, 7,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    5,20, /* Ascii 55 */
+   17,21, 7, 0,-1,-1, 3,21,17,21,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   29,20, /* Ascii 56 */
+    8,21, 5,20, 4,18, 4,16, 5,14, 7,13,11,12,14,11,16, 9,17, 7,17, 4,16,
+    2,15, 1,12, 0, 8, 0, 5, 1, 4, 2, 3, 4, 3, 7, 4, 9, 6,11, 9,12,13,13,
+   15,14,16,16,16,18,15,20,12,21, 8,21,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   23,20, /* Ascii 57 */
+   16,14,15,11,13, 9,10, 8, 9, 8, 6, 9, 4,11, 3,14, 3,15, 4,18, 6,20, 9,
+   21,10,21,13,20,15,18,16,14,16, 9,15, 4,13, 1,10, 0, 8, 0, 5, 1, 4, 3,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   11,10, /* Ascii 58 */
+    5,14, 4,13, 5,12, 6,13, 5,14,-1,-1, 5, 2, 4, 1, 5, 0, 6, 1, 5, 2,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   14,10, /* Ascii 59 */
+    5,14, 4,13, 5,12, 6,13, 5,14,-1,-1, 6, 1, 5, 0, 4, 1, 5, 2, 6, 1, 6,
+   -1, 5,-3, 4,-4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    3,24, /* Ascii 60 */
+   20,18, 4, 9,20, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    5,26, /* Ascii 61 */
+    4,12,22,12,-1,-1, 4, 6,22, 6,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    3,24, /* Ascii 62 */
+    4,18,20, 9, 4, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   20,18, /* Ascii 63 */
+    3,16, 3,17, 4,19, 5,20, 7,21,11,21,13,20,14,19,15,17,15,15,14,13,13,
+   12, 9,10, 9, 7,-1,-1, 9, 2, 8, 1, 9, 0,10, 1, 9, 2,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   55,27, /* Ascii 64 */
+   18,13,17,15,15,16,12,16,10,15, 9,14, 8,11, 8, 8, 9, 6,11, 5,14, 5,16,
+    6,17, 8,-1,-1,12,16,10,14, 9,11, 9, 8,10, 6,11, 5,-1,-1,18,16,17, 8,
+   17, 6,19, 5,21, 5,23, 7,24,10,24,12,23,15,22,17,20,19,18,20,15,21,12,
+   21, 9,20, 7,19, 5,17, 4,15, 3,12, 3, 9, 4, 6, 5, 4, 7, 2, 9, 1,12, 0,
+   15, 0,18, 1,20, 2,21, 3,-1,-1,19,16,18, 8,18, 6,19, 5,
+    8,18, /* Ascii 65 */
+    9,21, 1, 0,-1,-1, 9,21,17, 0,-1,-1, 4, 7,14, 7,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   23,21, /* Ascii 66 */
+    4,21, 4, 0,-1,-1, 4,21,13,21,16,20,17,19,18,17,18,15,17,13,16,12,13,
+   11,-1,-1, 4,11,13,11,16,10,17, 9,18, 7,18, 4,17, 2,16, 1,13, 0, 4, 0,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   18,21, /* Ascii 67 */
+   18,16,17,18,15,20,13,21, 9,21, 7,20, 5,18, 4,16, 3,13, 3, 8, 4, 5, 5,
+    3, 7, 1, 9, 0,13, 0,15, 1,17, 3,18, 5,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   15,21, /* Ascii 68 */
+    4,21, 4, 0,-1,-1, 4,21,11,21,14,20,16,18,17,16,18,13,18, 8,17, 5,16,
+    3,14, 1,11, 0, 4, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   11,19, /* Ascii 69 */
+    4,21, 4, 0,-1,-1, 4,21,17,21,-1,-1, 4,11,12,11,-1,-1, 4, 0,17, 0,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    8,18, /* Ascii 70 */
+    4,21, 4, 0,-1,-1, 4,21,17,21,-1,-1, 4,11,12,11,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   22,21, /* Ascii 71 */
+   18,16,17,18,15,20,13,21, 9,21, 7,20, 5,18, 4,16, 3,13, 3, 8, 4, 5, 5,
+    3, 7, 1, 9, 0,13, 0,15, 1,17, 3,18, 5,18, 8,-1,-1,13, 8,18, 8,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    8,22, /* Ascii 72 */
+    4,21, 4, 0,-1,-1,18,21,18, 0,-1,-1, 4,11,18,11,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    2, 8, /* Ascii 73 */
+    4,21, 4, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   10,16, /* Ascii 74 */
+   12,21,12, 5,11, 2,10, 1, 8, 0, 6, 0, 4, 1, 3, 2, 2, 5, 2, 7,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    8,21, /* Ascii 75 */
+    4,21, 4, 0,-1,-1,18,21, 4, 7,-1,-1, 9,12,18, 0,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    5,17, /* Ascii 76 */
+    4,21, 4, 0,-1,-1, 4, 0,16, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   11,24, /* Ascii 77 */
+    4,21, 4, 0,-1,-1, 4,21,12, 0,-1,-1,20,21,12, 0,-1,-1,20,21,20, 0,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    8,22, /* Ascii 78 */
+    4,21, 4, 0,-1,-1, 4,21,18, 0,-1,-1,18,21,18, 0,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   21,22, /* Ascii 79 */
+    9,21, 7,20, 5,18, 4,16, 3,13, 3, 8, 4, 5, 5, 3, 7, 1, 9, 0,13, 0,15,
+    1,17, 3,18, 5,19, 8,19,13,18,16,17,18,15,20,13,21, 9,21,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   13,21, /* Ascii 80 */
+    4,21, 4, 0,-1,-1, 4,21,13,21,16,20,17,19,18,17,18,14,17,12,16,11,13,
+   10, 4,10,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   24,22, /* Ascii 81 */
+    9,21, 7,20, 5,18, 4,16, 3,13, 3, 8, 4, 5, 5, 3, 7, 1, 9, 0,13, 0,15,
+    1,17, 3,18, 5,19, 8,19,13,18,16,17,18,15,20,13,21, 9,21,-1,-1,12, 4,
+   18,-2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   16,21, /* Ascii 82 */
+    4,21, 4, 0,-1,-1, 4,21,13,21,16,20,17,19,18,17,18,15,17,13,16,12,13,
+   11, 4,11,-1,-1,11,11,18, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   20,20, /* Ascii 83 */
+   17,18,15,20,12,21, 8,21, 5,20, 3,18, 3,16, 4,14, 5,13, 7,12,13,10,15,
+    9,16, 8,17, 6,17, 3,15, 1,12, 0, 8, 0, 5, 1, 3, 3,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    5,16, /* Ascii 84 */
+    8,21, 8, 0,-1,-1, 1,21,15,21,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   10,22, /* Ascii 85 */
+    4,21, 4, 6, 5, 3, 7, 1,10, 0,12, 0,15, 1,17, 3,18, 6,18,21,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    5,18, /* Ascii 86 */
+    1,21, 9, 0,-1,-1,17,21, 9, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   11,24, /* Ascii 87 */
+    2,21, 7, 0,-1,-1,12,21, 7, 0,-1,-1,12,21,17, 0,-1,-1,22,21,17, 0,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    5,20, /* Ascii 88 */
+    3,21,17, 0,-1,-1,17,21, 3, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    6,18, /* Ascii 89 */
+    1,21, 9,11, 9, 0,-1,-1,17,21, 9,11,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    8,20, /* Ascii 90 */
+   17,21, 3, 0,-1,-1, 3,21,17,21,-1,-1, 3, 0,17, 0,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   11,14, /* Ascii 91 */
+    4,25, 4,-7,-1,-1, 5,25, 5,-7,-1,-1, 4,25,11,25,-1,-1, 4,-7,11,-7,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    2,14, /* Ascii 92 */
+    0,21,14,-3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   11,14, /* Ascii 93 */
+    9,25, 9,-7,-1,-1,10,25,10,-7,-1,-1, 3,25,10,25,-1,-1, 3,-7,10,-7,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   10,16, /* Ascii 94 */
+    6,15, 8,18,10,15,-1,-1, 3,12, 8,17,13,12,-1,-1, 8,17, 8, 0,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    2,16, /* Ascii 95 */
+    0,-2,16,-2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    7,10, /* Ascii 96 */
+    6,21, 5,20, 4,18, 4,16, 5,15, 6,16, 5,17,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   17,19, /* Ascii 97 */
+   15,14,15, 0,-1,-1,15,11,13,13,11,14, 8,14, 6,13, 4,11, 3, 8, 3, 6, 4,
+    3, 6, 1, 8, 0,11, 0,13, 1,15, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   17,19, /* Ascii 98 */
+    4,21, 4, 0,-1,-1, 4,11, 6,13, 8,14,11,14,13,13,15,11,16, 8,16, 6,15,
+    3,13, 1,11, 0, 8, 0, 6, 1, 4, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   14,18, /* Ascii 99 */
+   15,11,13,13,11,14, 8,14, 6,13, 4,11, 3, 8, 3, 6, 4, 3, 6, 1, 8, 0,11,
+    0,13, 1,15, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   17,19, /* Ascii 100 */
+   15,21,15, 0,-1,-1,15,11,13,13,11,14, 8,14, 6,13, 4,11, 3, 8, 3, 6, 4,
+    3, 6, 1, 8, 0,11, 0,13, 1,15, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   17,18, /* Ascii 101 */
+    3, 8,15, 8,15,10,14,12,13,13,11,14, 8,14, 6,13, 4,11, 3, 8, 3, 6, 4,
+    3, 6, 1, 8, 0,11, 0,13, 1,15, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    8,12, /* Ascii 102 */
+   10,21, 8,21, 6,20, 5,17, 5, 0,-1,-1, 2,14, 9,14,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   22,19, /* Ascii 103 */
+   15,14,15,-2,14,-5,13,-6,11,-7, 8,-7, 6,-6,-1,-1,15,11,13,13,11,14, 8,
+   14, 6,13, 4,11, 3, 8, 3, 6, 4, 3, 6, 1, 8, 0,11, 0,13, 1,15, 3,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   10,19, /* Ascii 104 */
+    4,21, 4, 0,-1,-1, 4,10, 7,13, 9,14,12,14,14,13,15,10,15, 0,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    8, 8, /* Ascii 105 */
+    3,21, 4,20, 5,21, 4,22, 3,21,-1,-1, 4,14, 4, 0,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   11,10, /* Ascii 106 */
+    5,21, 6,20, 7,21, 6,22, 5,21,-1,-1, 6,14, 6,-3, 5,-6, 3,-7, 1,-7,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    8,17, /* Ascii 107 */
+    4,21, 4, 0,-1,-1,14,14, 4, 4,-1,-1, 8, 8,15, 0,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    2, 8, /* Ascii 108 */
+    4,21, 4, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   18,30, /* Ascii 109 */
+    4,14, 4, 0,-1,-1, 4,10, 7,13, 9,14,12,14,14,13,15,10,15, 0,-1,-1,15,
+   10,18,13,20,14,23,14,25,13,26,10,26, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   10,19, /* Ascii 110 */
+    4,14, 4, 0,-1,-1, 4,10, 7,13, 9,14,12,14,14,13,15,10,15, 0,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   17,19, /* Ascii 111 */
+    8,14, 6,13, 4,11, 3, 8, 3, 6, 4, 3, 6, 1, 8, 0,11, 0,13, 1,15, 3,16,
+    6,16, 8,15,11,13,13,11,14, 8,14,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   17,19, /* Ascii 112 */
+    4,14, 4,-7,-1,-1, 4,11, 6,13, 8,14,11,14,13,13,15,11,16, 8,16, 6,15,
+    3,13, 1,11, 0, 8, 0, 6, 1, 4, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   17,19, /* Ascii 113 */
+   15,14,15,-7,-1,-1,15,11,13,13,11,14, 8,14, 6,13, 4,11, 3, 8, 3, 6, 4,
+    3, 6, 1, 8, 0,11, 0,13, 1,15, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    8,13, /* Ascii 114 */
+    4,14, 4, 0,-1,-1, 4, 8, 5,11, 7,13, 9,14,12,14,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   17,17, /* Ascii 115 */
+   14,11,13,13,10,14, 7,14, 4,13, 3,11, 4, 9, 6, 8,11, 7,13, 6,14, 4,14,
+    3,13, 1,10, 0, 7, 0, 4, 1, 3, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    8,12, /* Ascii 116 */
+    5,21, 5, 4, 6, 1, 8, 0,10, 0,-1,-1, 2,14, 9,14,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   10,19, /* Ascii 117 */
+    4,14, 4, 4, 5, 1, 7, 0,10, 0,12, 1,15, 4,-1,-1,15,14,15, 0,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    5,16, /* Ascii 118 */
+    2,14, 8, 0,-1,-1,14,14, 8, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   11,22, /* Ascii 119 */
+    3,14, 7, 0,-1,-1,11,14, 7, 0,-1,-1,11,14,15, 0,-1,-1,19,14,15, 0,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    5,17, /* Ascii 120 */
+    3,14,14, 0,-1,-1,14,14, 3, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    9,16, /* Ascii 121 */
+    2,14, 8, 0,-1,-1,14,14, 8, 0, 6,-4, 4,-6, 2,-7, 1,-7,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    8,17, /* Ascii 122 */
+   14,14, 3, 0,-1,-1, 3,14,14,14,-1,-1, 3, 0,14, 0,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   39,14, /* Ascii 123 */
+    9,25, 7,24, 6,23, 5,21, 5,19, 6,17, 7,16, 8,14, 8,12, 6,10,-1,-1, 7,
+   24, 6,22, 6,20, 7,18, 8,17, 9,15, 9,13, 8,11, 4, 9, 8, 7, 9, 5, 9, 3,
+    8, 1, 7, 0, 6,-2, 6,-4, 7,-6,-1,-1, 6, 8, 8, 6, 8, 4, 7, 2, 6, 1, 5,
+   -1, 5,-3, 6,-5, 7,-6, 9,-7,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    2, 8, /* Ascii 124 */
+    4,25, 4,-7,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   39,14, /* Ascii 125 */
+    5,25, 7,24, 8,23, 9,21, 9,19, 8,17, 7,16, 6,14, 6,12, 8,10,-1,-1, 7,
+   24, 8,22, 8,20, 7,18, 6,17, 5,15, 5,13, 6,11,10, 9, 6, 7, 5, 5, 5, 3,
+    6, 1, 7, 0, 8,-2, 8,-4, 7,-6,-1,-1, 8, 8, 6, 6, 6, 4, 7, 2, 8, 1, 9,
+   -1, 9,-3, 8,-5, 7,-6, 5,-7,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   23,24, /* Ascii 126 */
+    3, 6, 3, 8, 4,11, 6,12, 8,12,10,11,14, 8,16, 7,18, 7,20, 8,21,10,-1,
+   -1, 3, 8, 4,10, 6,11, 8,11,10,10,14, 7,16, 6,18, 6,20, 7,21,10,21,12,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+];
+
+module.exports = {
+  vector_char,
+  vector_text
+}
+
+},{}]},{},[156]);
