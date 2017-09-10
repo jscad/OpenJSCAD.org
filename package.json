@@ -19,7 +19,8 @@
     "postversion": "git push origin master && git push origin master --tags",
     "release-patch": "git checkout master; npm version patch",
     "release-minor": "git checkout master; npm version minor",
-    "release-major": "git checkout master; npm version major"
+    "release-major": "git checkout master; npm version major",
+    "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove OpenJSCAD? You can now donate to our open collective:\\u001b[22m\\u001b[39m\\n > \\u001b[34mhttps://opencollective.com/openjscad/donate\\u001b[0m')\""
   },
   "contributors": [
     {
@@ -39,12 +40,12 @@
   "dependencies": {
     "@jscad/csg": "0.2.4",
     "@jscad/io": "0.2.0",
-    "@jscad/scad-api": "0.3.4",
     "@jscad/openscad-openjscad-translator": "0.0.10",
+    "@jscad/scad-api": "0.3.4",
     "astring": "^1.0.2",
+    "brace": "0.10.0",
     "esprima": "^3.1.3",
     "estraverse": "^4.2.0",
-    "brace": "0.10.0",
     "most-gestures": "^0.2.0",
     "webworkify": "^1.4.0"
   },
@@ -64,5 +65,10 @@
       "browserify-shim"
     ]
   },
-  "browserify-shim": {}
+  "browserify-shim": {},
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/openjscad",
+    "logo": "https://opencollective.com/openjscad/logo.txt"
+  }
 }
