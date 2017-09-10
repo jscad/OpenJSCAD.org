@@ -4,9 +4,19 @@ const {parseOptionAs2DVector, parseOptionAsFloat, parseOptionAsInt, parseOptionA
 const {defaultResolution2D} = require('../constants')
 const Vertex = require('./Vertex2')
 const Side = require('./Side')
-// const {fromSides, fromPoints} = require('../CAGMakers')
 
-// # Class Path2D
+/** Class Path2D
+ * Represents a series of points, connected by infinitely thin lines.
+ * A path can be open or closed, i.e. additional line between first and last points. 
+ * The difference between Path2D and CAG is that a path is a 'thin' line, whereas a CAG is an enclosed area. 
+ * @constructor
+ * @param {Vector2D[]} [points=[]] - list of points
+ * @param {boolean} [closed=false] - closer of path
+ *
+ * @example
+ * new CSG.Path2D()
+ * new CSG.Path2D([[10,10], [-10,10], [-10,-10], [10,-10]], true) // closed
+ */
 const Path2D = function (points, closed) {
   closed = !!closed
   points = points || []
@@ -31,21 +41,26 @@ const Path2D = function (points, closed) {
   this.closed = closed
 }
 
-/*
-Construct a (part of a) circle. Parameters:
-  options.center: the center point of the arc (Vector2D or array [x,y])
-  options.radius: the circle radius (float)
-  options.startangle: the starting angle of the arc, in degrees
-    0 degrees corresponds to [1,0]
-    90 degrees to [0,1]
-    and so on
-  options.endangle: the ending angle of the arc, in degrees
-  options.resolution: number of points per 360 degree of rotation
-  options.maketangent: adds two extra tiny line segments at both ends of the circle
-    this ensures that the gradients at the edges are tangent to the circle
-Returns a Path2D. The path is not closed (even if it is a 360 degree arc).
-close() the resulting path if you want to create a true circle.
-*/
+/** Construct an arc.
+ * @param {Object} [options] - options for construction
+ * @param {Vector2D} [options.center=[0,0]] - center of circle
+ * @param {Number} [options.radius=1] - radius of circle
+ * @param {Number} [options.startangle=0] - starting angle of the arc, in degrees
+ * @param {Number} [options.endangle=360] - ending angle of the arc, in degrees
+ * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
+ * @param {Boolean} [options.maketangent=false] - adds line segments at both ends of the arc to ensure that the gradients at the edges are tangent
+ * @returns {Path2D} new Path2D object (not closed)
+ *
+ * @example
+ * let path = CSG.Path2D.arc({
+ *   center: [5, 5],
+ *   radius: 10,
+ *   startangle: 90,
+ *   endangle: 180,
+ *   resolution: 36,
+ *   maketangent: true
+ * });
+ */
 Path2D.arc = function (options) {
   let center = parseOptionAs2DVector(options, 'center', 0)
   let radius = parseOptionAsFloat(options, 'radius', 1)
@@ -96,7 +111,7 @@ Path2D.prototype = {
   },
 
   /**
-   * get the array of Vector2 points that make up the path
+   * Get the points that make up the path.
    * note that this is current internal list of points, not an immutable copy.
    * @returns {Vector2[]} array of points the make up the path
    */
@@ -104,6 +119,11 @@ Path2D.prototype = {
     return this.points;
   },
 
+  /**
+   * Append an point to the end of the path.
+   * @param {Vector2D} point - point to append
+   * @returns {Path2D} new Path2D object (not closed)
+   */
   appendPoint: function (point) {
     if (this.closed) {
       throw new Error('Path must not be closed')
@@ -113,6 +133,11 @@ Path2D.prototype = {
     return new Path2D(newpoints)
   },
 
+  /**
+   * Append a list of points to the end of the path.
+   * @param {Vector2D[]} points - points to append
+   * @returns {Path2D} new Path2D object (not closed)
+   */
   appendPoints: function (points) {
     if (this.closed) {
       throw new Error('Path must not be closed')
@@ -129,8 +154,8 @@ Path2D.prototype = {
   },
 
   /**
-   * Tell whether the path is a closed path or not
-   * @returns {boolean} true when the path is closed. false otherwise.
+   * Determine if the path is a closed or not.
+   * @returns {Boolean} true when the path is closed, otherwise false
    */
   isClosed: function() {
     return this.closed
@@ -174,6 +199,12 @@ Path2D.prototype = {
     return expanded
   },
 
+  innerToCAG: function() {
+    const CAG = require('../CAG') // FIXME: cyclic dependencies CAG => PATH2 => CAG
+    if (!this.closed) throw new Error("The path should be closed!");
+    return CAG.fromPoints(this.points);
+  },
+
   transform: function (matrix4x4) {
     let newpoints = this.points.map(function (point) {
       return point.multiply4x4(matrix4x4)
@@ -181,6 +212,25 @@ Path2D.prototype = {
     return new Path2D(newpoints, this.closed)
   },
 
+  /**
+   * Append a Bezier curve to the end of the path, using the control points to transition the curve through start and end points.
+   * <br>
+   * The Bézier curve starts at the last point in the path,
+   * and ends at the last given control point. Other control points are intermediate control points.
+   * <br>
+   * The first control point may be null to ensure a smooth transition occurs. In this case,  
+   * the second to last control point of the path is mirrored into the control points of the Bezier curve.
+   * In other words, the trailing gradient of the path matches the new gradient of the curve. 
+   * @param {Vector2D[]} controlpoints - list of control points
+   * @param {Object} [options] - options for construction
+   * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
+   * @returns {Path2D} new Path2D object (not closed)
+   *
+   * @example
+   * let p5 = new CSG.Path2D([[10,-20]],false);
+   * p5 = p5.appendBezier([[10,-10],[25,-10],[25,-20]]);
+   * p5 = p5.appendBezier([[25,-30],[40,-30],[40,-20]]);
+   */
   appendBezier: function (controlpoints, options) {
     if (arguments.length < 2) {
       options = {}
@@ -295,21 +345,28 @@ Path2D.prototype = {
     return result
   },
 
-    /*
-     options:
-     .resolution // smoothness of the arc (number of segments per 360 degree of rotation)
-     // to create a circular arc:
-     .radius
-     // to create an elliptical arc:
-     .xradius
-     .yradius
-     .xaxisrotation  // the rotation (in degrees) of the x axis of the ellipse with respect to the x axis of our coordinate system
-     // this still leaves 4 possible arcs between the two given points. The following two flags select which one we draw:
-     .clockwise // = true | false (default is false). Two of the 4 solutions draw clockwise with respect to the center point, the other 2 counterclockwise
-     .large     // = true | false (default is false). Two of the 4 solutions are an arc longer than 180 degrees, the other two are <= 180 degrees
-     This implementation follows the SVG arc specs. For the details see
-     http://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
-     */
+
+  /**
+   * Append an arc to the end of the path.
+   * This implementation follows the SVG arc specs. For the details see
+   * http://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
+   * @param {Vector2D} endpoint - end point of arc
+   * @param {Object} [options] - options for construction
+   * @param {Number} [options.radius=0] - radius of arc (X and Y), see also xradius and yradius
+   * @param {Number} [options.xradius=0] - X radius of arc, see also radius
+   * @param {Number} [options.yradius=0] - Y radius of arc, see also radius
+   * @param {Number} [options.xaxisrotation=0] -  rotation (in degrees) of the X axis of the arc with respect to the X axis of the coordinate system
+   * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
+   * @param {Boolean} [options.clockwise=false] - draw an arc clockwise with respect to the center point
+   * @param {Boolean} [options.large=false] - draw an arc longer than 180 degrees
+   * @returns {Path2D} new Path2D object (not closed)
+   *
+   * @example
+   * let p1 = new CSG.Path2D([[27.5,-22.96875]],false);
+   * p1 = p1.appendPoint([27.5,-3.28125]);
+   * p1 = p1.appendArc([12.5,-22.96875],{xradius: 15,yradius: -19.6875,xaxisrotation: 0,clockwise: false,large: false});
+   * p1 = p1.close();
+   */
   appendArc: function (endpoint, options) {
     let decimals = 100000
     if (arguments.length < 2) {
