@@ -947,7 +947,12 @@ sax.SAXParser.prototype.codify = function (group) {
                 code += indent + 'var ' + pn + ' = new CSG.Path2D([[' + this.svg2cagX(cx) + ',' + this.svg2cagY(cy) + ']],false);\n'
                 sx = cx; sy = cy
               }
-              break
+            // optional implicit relative lineTo (cf SVG spec 8.3.2)
+              while (pts.length >= 2) {
+                cx = cx + parseFloat(pts.shift())
+                cy = cy + parseFloat(pts.shift())
+                code += indent + pn + ' = ' + pn + '.appendPoint([' + this.svg2cagX(cx) + ',' + this.svg2cagY(cy) + ']);\n'
+              }
               break
             case 'M': // absolute move to X,Y
             // close the previous path
@@ -964,6 +969,12 @@ sax.SAXParser.prototype.codify = function (group) {
                 code += indent + 'var ' + pn + ' = new CSG.Path2D([[' + this.svg2cagX(cx) + ',' + this.svg2cagY(cy) + ']],false);\n'
                 sx = cx; sy = cy
               }
+            // optional implicit absolute lineTo (cf SVG spec 8.3.2)
+              while (pts.length >= 2) {
+                cx = parseFloat(pts.shift())
+                cy = parseFloat(pts.shift())
+                code += indent + pn + ' = ' + pn + '.appendPoint([' + this.svg2cagX(cx) + ',' + this.svg2cagY(cy) + ']);\n'
+              }              
               break
             case 'a': // relative elliptical arc
               while (pts.length >= 7) {
