@@ -80414,7 +80414,7 @@ exports.XMLReader = XMLReader;
 },{}],181:[function(require,module,exports){
 module.exports={
   "name": "@jscad/openjscad",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "main": "src/module.js",
@@ -80433,7 +80433,8 @@ module.exports={
     "postversion": "git push origin master && git push origin master --tags",
     "release-patch": "git checkout master; npm version patch",
     "release-minor": "git checkout master; npm version minor",
-    "release-major": "git checkout master; npm version major"
+    "release-major": "git checkout master; npm version major",
+    "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove OpenJSCAD? You can now donate to our open collective:\\u001b[22m\\u001b[39m\\n > \\u001b[34mhttps://opencollective.com/openjscad/donate\\u001b[0m')\""
   },
   "contributors": [
     {
@@ -80453,12 +80454,12 @@ module.exports={
   "dependencies": {
     "@jscad/csg": "0.2.4",
     "@jscad/io": "0.2.0",
-    "@jscad/scad-api": "0.3.4",
     "@jscad/openscad-openjscad-translator": "0.0.10",
+    "@jscad/scad-api": "0.3.4",
     "astring": "^1.0.2",
+    "brace": "0.10.0",
     "esprima": "^3.1.3",
     "estraverse": "^4.2.0",
-    "brace": "0.10.0",
     "most-gestures": "^0.2.0",
     "webworkify": "^1.4.0"
   },
@@ -80478,7 +80479,12 @@ module.exports={
       "browserify-shim"
     ]
   },
-  "browserify-shim": {}
+  "browserify-shim": {},
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/openjscad",
+    "logo": "https://opencollective.com/openjscad/logo.txt"
+  }
 }
 
 },{}],182:[function(require,module,exports){
@@ -87402,7 +87408,7 @@ CAG.prototype = {
           side.vertex0.pos.minus(normal),
           side.vertex0.pos.plus(normal)
         ]
-                //      let newcag = CAG.fromPointsNoCheck(shellpoints);
+        // let newcag = CAG.fromPointsNoCheck(shellpoints);
         let newcag = CAG.fromPoints(shellpoints)
         cags.push(newcag)
         for (let step = 0; step < 2; step++) {
@@ -87849,8 +87855,56 @@ module.exports = CAG
 const CAG = require('./CAG')
 const Side = require('./math/Side')
 const Vector2D = require('./math/Vector2')
+const Vertex2D = require('./math/Vertex2')
 const Vertex = require('./math/Vertex2')
 const Path2 = require('./math/Path2')
+
+const {EPS, angleEPS, areaEPS, defaultResolution3D} = require('./constants')
+
+/** Construct a CAG from a list of `Side` instances.
+ * @param {Side[]} sides - list of sides
+ * @returns {CAG} new CAG object
+ */
+const fromSides = function (sides) {
+  let cag = new CAG()
+  cag.sides = sides
+  return cag
+}
+
+/** Construct a CAG from a list of points (a polygon).
+ * The rotation direction of the points is not relevant.
+ * The points can define a convex or a concave polygon.
+ * The polygon must not self intersect.
+ * @param {points[]} points - list of points in 2D space
+ * @returns {CAG} new CAG object
+ */
+const fromPoints = function (points) {
+  let numpoints = points.length
+  if (numpoints < 3) throw new Error('CAG shape needs at least 3 points')
+  let sides = []
+  let prevpoint = new Vector2D(points[numpoints - 1])
+  let prevvertex = new Vertex2D(prevpoint)
+  points.map(function (p) {
+    let point = new Vector2D(p)
+    let vertex = new Vertex2D(point)
+    let side = new Side(prevvertex, vertex)
+    sides.push(side)
+    prevvertex = vertex
+  })
+  let result = fromSides(sides)
+  if (result.isSelfIntersecting()) {
+    throw new Error('Polygon is self intersecting!')
+  }
+  let area = result.area()
+  if (Math.abs(area) < areaEPS) {
+    throw new Error('Degenerate polygon!')
+  }
+  if (area < 0) {
+    result = result.flipped()
+  }
+  result = result.canonicalized()
+  return result
+}
 
 /** Reconstruct a CAG from an object with identical property names.
  * @param {Object} obj - anonymous object, typically from JSON
@@ -87864,6 +87918,8 @@ const fromObject = function (obj) {
   cag.isCanonicalized = obj.isCanonicalized
   return cag
 }
+
+
 
 /** Construct a CAG from a list of points (a polygon).
  * Like fromPoints() but does not check if the result is a valid polygon.
@@ -87901,11 +87957,14 @@ const fromPath2 = function (path) {
 module.exports = {
   fromObject,
   fromPointsNoCheck,
-  fromPath2
+  fromPath2,
+
+  fromPoints,
+  fromSides
   //fromFakeCSG
 }
 
-},{"./CAG":219,"./math/Path2":234,"./math/Side":238,"./math/Vector2":239,"./math/Vertex2":241}],221:[function(require,module,exports){
+},{"./CAG":219,"./constants":228,"./math/Path2":234,"./math/Side":238,"./math/Vector2":239,"./math/Vertex2":241}],221:[function(require,module,exports){
 const {fnNumberSort} = require('./utils')
 const FuzzyCSGFactory = require('./FuzzyFactory3d')
 const Tree = require('./trees')
@@ -90539,9 +90598,19 @@ const {parseOptionAs2DVector, parseOptionAsFloat, parseOptionAsInt, parseOptionA
 const {defaultResolution2D} = require('../constants')
 const Vertex = require('./Vertex2')
 const Side = require('./Side')
-// const {fromSides, fromPoints} = require('../CAGMakers')
 
-// # Class Path2D
+/** Class Path2D
+ * Represents a series of points, connected by infinitely thin lines.
+ * A path can be open or closed, i.e. additional line between first and last points.
+ * The difference between Path2D and CAG is that a path is a 'thin' line, whereas a CAG is an enclosed area.
+ * @constructor
+ * @param {Vector2D[]} [points=[]] - list of points
+ * @param {boolean} [closed=false] - closer of path
+ *
+ * @example
+ * new CSG.Path2D()
+ * new CSG.Path2D([[10,10], [-10,10], [-10,-10], [10,-10]], true) // closed
+ */
 const Path2D = function (points, closed) {
   closed = !!closed
   points = points || []
@@ -90566,21 +90635,26 @@ const Path2D = function (points, closed) {
   this.closed = closed
 }
 
-/*
-Construct a (part of a) circle. Parameters:
-  options.center: the center point of the arc (Vector2D or array [x,y])
-  options.radius: the circle radius (float)
-  options.startangle: the starting angle of the arc, in degrees
-    0 degrees corresponds to [1,0]
-    90 degrees to [0,1]
-    and so on
-  options.endangle: the ending angle of the arc, in degrees
-  options.resolution: number of points per 360 degree of rotation
-  options.maketangent: adds two extra tiny line segments at both ends of the circle
-    this ensures that the gradients at the edges are tangent to the circle
-Returns a Path2D. The path is not closed (even if it is a 360 degree arc).
-close() the resulting path if you want to create a true circle.
-*/
+/** Construct an arc.
+ * @param {Object} [options] - options for construction
+ * @param {Vector2D} [options.center=[0,0]] - center of circle
+ * @param {Number} [options.radius=1] - radius of circle
+ * @param {Number} [options.startangle=0] - starting angle of the arc, in degrees
+ * @param {Number} [options.endangle=360] - ending angle of the arc, in degrees
+ * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
+ * @param {Boolean} [options.maketangent=false] - adds line segments at both ends of the arc to ensure that the gradients at the edges are tangent
+ * @returns {Path2D} new Path2D object (not closed)
+ *
+ * @example
+ * let path = CSG.Path2D.arc({
+ *   center: [5, 5],
+ *   radius: 10,
+ *   startangle: 90,
+ *   endangle: 180,
+ *   resolution: 36,
+ *   maketangent: true
+ * });
+ */
 Path2D.arc = function (options) {
   let center = parseOptionAs2DVector(options, 'center', 0)
   let radius = parseOptionAsFloat(options, 'radius', 1)
@@ -90631,14 +90705,19 @@ Path2D.prototype = {
   },
 
   /**
-   * get the array of Vector2 points that make up the path
+   * Get the points that make up the path.
    * note that this is current internal list of points, not an immutable copy.
    * @returns {Vector2[]} array of points the make up the path
    */
-  getPoints: function() {
-    return this.points;
+  getPoints: function () {
+    return this.points
   },
 
+  /**
+   * Append an point to the end of the path.
+   * @param {Vector2D} point - point to append
+   * @returns {Path2D} new Path2D object (not closed)
+   */
   appendPoint: function (point) {
     if (this.closed) {
       throw new Error('Path must not be closed')
@@ -90648,6 +90727,11 @@ Path2D.prototype = {
     return new Path2D(newpoints)
   },
 
+  /**
+   * Append a list of points to the end of the path.
+   * @param {Vector2D[]} points - points to append
+   * @returns {Path2D} new Path2D object (not closed)
+   */
   appendPoints: function (points) {
     if (this.closed) {
       throw new Error('Path must not be closed')
@@ -90664,10 +90748,10 @@ Path2D.prototype = {
   },
 
   /**
-   * Tell whether the path is a closed path or not
-   * @returns {boolean} true when the path is closed. false otherwise.
+   * Determine if the path is a closed or not.
+   * @returns {Boolean} true when the path is closed, otherwise false
    */
-  isClosed: function() {
+  isClosed: function () {
     return this.closed
   },
 
@@ -90709,6 +90793,12 @@ Path2D.prototype = {
     return expanded
   },
 
+  innerToCAG: function () {
+    const CAG = require('../CAG') // FIXME: cyclic dependencies CAG => PATH2 => CAG
+    if (!this.closed) throw new Error('The path should be closed!')
+    return CAG.fromPoints(this.points)
+  },
+
   transform: function (matrix4x4) {
     let newpoints = this.points.map(function (point) {
       return point.multiply4x4(matrix4x4)
@@ -90716,6 +90806,25 @@ Path2D.prototype = {
     return new Path2D(newpoints, this.closed)
   },
 
+  /**
+   * Append a Bezier curve to the end of the path, using the control points to transition the curve through start and end points.
+   * <br>
+   * The Bézier curve starts at the last point in the path,
+   * and ends at the last given control point. Other control points are intermediate control points.
+   * <br>
+   * The first control point may be null to ensure a smooth transition occurs. In this case,
+   * the second to last control point of the path is mirrored into the control points of the Bezier curve.
+   * In other words, the trailing gradient of the path matches the new gradient of the curve.
+   * @param {Vector2D[]} controlpoints - list of control points
+   * @param {Object} [options] - options for construction
+   * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
+   * @returns {Path2D} new Path2D object (not closed)
+   *
+   * @example
+   * let p5 = new CSG.Path2D([[10,-20]],false);
+   * p5 = p5.appendBezier([[10,-10],[25,-10],[25,-20]]);
+   * p5 = p5.appendBezier([[25,-30],[40,-30],[40,-20]]);
+   */
   appendBezier: function (controlpoints, options) {
     if (arguments.length < 2) {
       options = {}
@@ -90830,21 +90939,27 @@ Path2D.prototype = {
     return result
   },
 
-    /*
-     options:
-     .resolution // smoothness of the arc (number of segments per 360 degree of rotation)
-     // to create a circular arc:
-     .radius
-     // to create an elliptical arc:
-     .xradius
-     .yradius
-     .xaxisrotation  // the rotation (in degrees) of the x axis of the ellipse with respect to the x axis of our coordinate system
-     // this still leaves 4 possible arcs between the two given points. The following two flags select which one we draw:
-     .clockwise // = true | false (default is false). Two of the 4 solutions draw clockwise with respect to the center point, the other 2 counterclockwise
-     .large     // = true | false (default is false). Two of the 4 solutions are an arc longer than 180 degrees, the other two are <= 180 degrees
-     This implementation follows the SVG arc specs. For the details see
-     http://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
-     */
+  /**
+   * Append an arc to the end of the path.
+   * This implementation follows the SVG arc specs. For the details see
+   * http://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
+   * @param {Vector2D} endpoint - end point of arc
+   * @param {Object} [options] - options for construction
+   * @param {Number} [options.radius=0] - radius of arc (X and Y), see also xradius and yradius
+   * @param {Number} [options.xradius=0] - X radius of arc, see also radius
+   * @param {Number} [options.yradius=0] - Y radius of arc, see also radius
+   * @param {Number} [options.xaxisrotation=0] -  rotation (in degrees) of the X axis of the arc with respect to the X axis of the coordinate system
+   * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
+   * @param {Boolean} [options.clockwise=false] - draw an arc clockwise with respect to the center point
+   * @param {Boolean} [options.large=false] - draw an arc longer than 180 degrees
+   * @returns {Path2D} new Path2D object (not closed)
+   *
+   * @example
+   * let p1 = new CSG.Path2D([[27.5,-22.96875]],false);
+   * p1 = p1.appendPoint([27.5,-3.28125]);
+   * p1 = p1.appendArc([12.5,-22.96875],{xradius: 15,yradius: -19.6875,xaxisrotation: 0,clockwise: false,large: false});
+   * p1 = p1.close();
+   */
   appendArc: function (endpoint, options) {
     let decimals = 100000
     if (arguments.length < 2) {
@@ -91119,19 +91234,32 @@ const Matrix4x4 = require('./Matrix4')
 const {_CSGDEBUG, EPS, getTag, areaEPS} = require('../constants')
 const {fnSortByIndex} = require('../utils')
 
-// # class Polygon
-// Represents a convex polygon. The vertices used to initialize a polygon must
-// be coplanar and form a convex loop. They do not have to be `Vertex`
-// instances but they must behave similarly (duck typing can be used for
-// customization).
-//
-// Each convex polygon has a `shared` property, which is shared between all
-// polygons that are clones of each other or were split from the same polygon.
-// This can be used to define per-polygon properties (such as surface color).
-//
-// The plane of the polygon is calculated from the vertex coordinates
-// To avoid unnecessary recalculation, the plane can alternatively be
-// passed as the third argument
+/** Class Polygon
+ * Represents a convex polygon. The vertices used to initialize a polygon must
+ *   be coplanar and form a convex loop. They do not have to be `Vertex`
+ *   instances but they must behave similarly (duck typing can be used for
+ *   customization).
+ * <br>
+ * Each convex polygon has a `shared` property, which is shared between all
+ *   polygons that are clones of each other or were split from the same polygon.
+ *   This can be used to define per-polygon properties (such as surface color).
+ * <br>
+ * The plane of the polygon is calculated from the vertex coordinates if not provided.
+ *   The plane can alternatively be passed as the third argument to avoid calculations.
+ *
+ * @constructor
+ * @param {Vertex[]} vertices - list of vertices
+ * @param {Polygon.Shared} [shared=defaultShared] - shared property to apply
+ * @param {Plane} [plane] - plane of the polygon
+ *
+ * @example
+ * const vertices = [
+ *   new CSG.Vertex(new CSG.Vector3D([0, 0, 0])),
+ *   new CSG.Vertex(new CSG.Vector3D([0, 10, 0])),
+ *   new CSG.Vertex(new CSG.Vector3D([0, 10, 10]))
+ * ]
+ * let observed = new Polygon(vertices)
+ */
 let Polygon = function (vertices, shared, plane) {
   this.vertices = vertices
   if (!shared) shared = Polygon.defaultShared
@@ -91146,7 +91274,9 @@ let Polygon = function (vertices, shared, plane) {
   }
 
   if (_CSGDEBUG) {
-    this.checkIfConvex()
+    if (!this.checkIfConvex()) {
+      throw new Error('Not convex!')
+    }
   }
 }
 
@@ -91162,14 +91292,15 @@ Polygon.fromObject = function (obj) {
 }
 
 Polygon.prototype = {
-    // check whether the polygon is convex (it should be, otherwise we will get unexpected results)
+  /** Check whether the polygon is convex. (it should be, otherwise we will get unexpected results)
+   * @returns {boolean}
+   */
   checkIfConvex: function () {
-    if (!Polygon.verticesConvex(this.vertices, this.plane.normal)) {
-      Polygon.verticesConvex(this.vertices, this.plane.normal)
-      throw new Error('Not convex!')
-    }
+    return Polygon.verticesConvex(this.vertices, this.plane.normal)
   },
 
+  // FIXME what? why does this return this, and not a new polygon?
+  // FIXME is this used?
   setColor: function (args) {
     let newshared = Polygon.Shared.fromColor.apply(this, arguments)
     this.shared = newshared
@@ -91558,15 +91689,21 @@ Polygon.verticesConvex = function (vertices, planenormal) {
   return true
 }
 
-// Create a polygon from the given points
+/** Create a polygon from the given points.
+ *
+ * @param {Array[]} points - list of points
+ * @param {Polygon.Shared} [shared=defaultShared] - shared property to apply
+ * @param {Plane} [plane] - plane of the polygon
+ *
+ * @example
+ * const points = [
+ *   [0,  0, 0],
+ *   [0, 10, 0],
+ *   [0, 10, 10]
+ * ]
+ * let observed = CSG.Polygon.createFromPoints(points)
+ */
 Polygon.createFromPoints = function (points, shared, plane) {
-  let normal
-  if (arguments.length < 3) {
-        // initially set a dummy vertex normal:
-    normal = new Vector3D(0, 0, 0)
-  } else {
-    normal = plane.normal
-  }
   let vertices = []
   points.map(function (p) {
     let vec = new Vector3D(p)
@@ -91597,9 +91734,14 @@ Polygon.isStrictlyConvexPoint = function (prevpoint, point, nextpoint, normal) {
   return (crossdotnormal >= EPS)
 }
 
-// # class Polygon.Shared
-// Holds the shared properties for each polygon (currently only color)
-// Constructor expects a 4 element array [r,g,b,a], values from 0 to 1, or null
+/** Class Polygon.Shared
+ * Holds the shared properties for each polygon (Currently only color).
+ * @constructor
+ * @param {Array[]} color - array containing RGBA values, or null
+ *
+ * @example
+ *   let shared = new CSG.Polygon.Shared([0, 0, 0, 1])
+ */
 Polygon.Shared = function (color) {
   if (color !== null) {
     if (color.length !== 4) {
@@ -91613,9 +91755,17 @@ Polygon.Shared.fromObject = function (obj) {
   return new Polygon.Shared(obj.color)
 }
 
-// Create Polygon.Shared from a color, can be called as follows:
-// let s = Polygon.Shared.fromColor(r,g,b [,a])
-// let s = Polygon.Shared.fromColor([r,g,b [,a]])
+/** Create Polygon.Shared from color values.
+ * @param {number} r - value of RED component
+ * @param {number} g - value of GREEN component
+ * @param {number} b - value of BLUE component
+ * @param {number} [a] - value of ALPHA component
+ * @param {Array[]} [color] - OR array containing RGB values (optional Alpha)
+ *
+ * @example
+ * let s1 = Polygon.Shared.fromColor(0,0,0)
+ * let s2 = Polygon.Shared.fromColor([0,0,0,1])
+ */
 Polygon.Shared.fromColor = function (args) {
   let color
   if (arguments.length === 1) {
@@ -93229,31 +93379,6 @@ const cylinder = function (options) {
   return result
 }
 
-
-/*
-possible rounded cylinder with different radii at start/end
-
-
-function main() {
-
-   function halfSphere(radius=1, flip=false){
-       const hs =  difference(
-         sphere(radius),
-         translate([0,0,0], cube({size:radius*4, center:[true, true, false]}))
-       )
-      return flip ? hs.mirroredZ(): hs
-   }
-   return union(
-       cylinder({r1:10, r2:20, h:20}),
-       sphere(10),
-       translate([0,0,20], halfSphere(20, true))
-       )
-
-//return CSG.roundedCylinder({start:[0,0,0],end:[0,0,10], radius: 5})
-
-
-}*/
-
 /** Construct a cylinder with rounded ends.
  * @param {Object} [options] - options for construction
  * @param {Vector3D} [options.start=[0,-1,0]] - start point of cylinder
@@ -93275,9 +93400,6 @@ const roundedCylinder = function (options) {
   let p1 = parseOptionAs3DVector(options, 'start', [0, -1, 0])
   let p2 = parseOptionAs3DVector(options, 'end', [0, 1, 0])
   let radius = parseOptionAsFloat(options, 'radius', 1)
-  let radiusStart = parseOptionAsFloat(options, 'radiusStart', radius)
-  let radiusEnd = parseOptionAsFloat(options, 'radiusEnd', radius)
-
   let direction = p2.minus(p1)
   let defaultnormal
   if (Math.abs(direction.x) > Math.abs(direction.y)) {
@@ -93306,7 +93428,7 @@ const roundedCylinder = function (options) {
     let angle = Math.PI * 2.0 * slice1 / resolution
     let cylinderpoint = xvector.times(Math.cos(angle)).plus(yvector.times(Math.sin(angle)))
     if (slice1 > 0) {
-      // cylinder vertices:
+            // cylinder vertices:
       let vertices = []
       vertices.push(new Vertex(p1.plus(cylinderpoint)))
       vertices.push(new Vertex(p1.plus(prevcylinderpoint)))
