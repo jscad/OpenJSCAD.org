@@ -20,7 +20,7 @@ test('CSG.cube creates a cube', t => {
 
 test('CSG.sphere creates a sphere', t => {
   isValid(t, 's1', CSG.sphere(/* center:[0,0,0],radius:1,resolution:CSG.defaultResolution2D */))
-  // var s2 = CSG.sphere({center:[5,5,5],radius:10});
+  isValid(t, 's2', CSG.sphere({center:[5,5,5],radius:10}))
   // var s3 = CSG.sphere({center:[0,0,0],radius:10,resolution:36});
   // var xv = new CSG.Vector3D([1, 0, 0]);
   // var yv = new CSG.Vector3D([0,-1, 0]);
@@ -35,10 +35,26 @@ test('CSG.cylinder creates a cylinder', t => {
   isValid(t, 'cy4', CSG.cylinder({start: [0, 0, -50], end: [0, 0, 50], radius: 10, sectorAngle: 360}))
 })
 
-test.todo('CSG should produce proper rounded cylinders')
-test.todo('CSG should produce proper elliptic cylinders')
-test.todo('CSG should produce proper rounded cube')
-test.todo('CSG should produce proper polyhedrons')
+test('CSG should produce proper rounded cylinders', t => {
+  isValid(t, 'rcy1', CSG.roundedCylinder() )
+  isValid(t, 'rcy2', CSG.roundedCylinder({start: [-5, -5, -5], end: [5, 5, 5], radius: 5, resolution: 36}))
+})
+
+test('CSG should produce proper rounded cube', t => {
+  isValid(t, 'rc1', CSG.roundedCube() )
+  isValid(t, 'rc2', CSG.cube({center: [5, 5, 5], radius: 10, roundradius: 1.5, resolution: 36}))
+  isValid(t, 'rc3', CSG.cube({'corner1': [-5, -5, -5], 'corner2': [5, 5, 5], roundradius: 0.5}))
+})
+
+test('CSG should produce proper polyhedrons', t => {
+  let points = [ [10,10,0],[10,-10,0],[-10,-10,0],[-10,10,0],[0,0,10]]
+  let faces  = [ [0,1,4]  ,[1,2,4]   ,[2,3,4]    ,[3,0,4], [1,0,3], [2,1,3] ]
+  isValid(t, 'pol1', CSG.polyhedron({points: points, faces: faces}))
+})
+
+test('CSG should produce proper elliptic cylinders', t => {
+  isValid(t, 'ecy1', CSG.cylinderElliptic() )
+})
 
 test('CSG should produce solids from slices', t => {
   const hex = CSG.Polygon.createFromPoints([
