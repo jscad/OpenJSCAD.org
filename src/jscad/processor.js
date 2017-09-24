@@ -461,8 +461,10 @@ Processor.prototype = {
   rebuildSolid: function () {
     // clear previous solid and settings
     this.abort()
+    //this clears output file cache
+    this.clearOutputFile()
+    this.enableItems()
     this.setError('')
-    this.clearViewer()
     this.enableItems()
     this.setStatus('rendering')
 
@@ -478,6 +480,8 @@ Processor.prototype = {
     let that = this
     function callback (err, objects) {
       if (err) {
+        that.clearViewer()
+
         if (err.stack) {
           let errtxt = ''
           errtxt += '\nStack trace:\n' + err.stack
@@ -485,6 +489,7 @@ Processor.prototype = {
         }
         that.setStatus('error', err)// 'Error.'
         that.state = 3 // incomplete
+
       } else {
         that.setCurrentObjects(objects)
         that.setStatus('ready')
@@ -527,7 +532,6 @@ Processor.prototype = {
     this.clearOutputFile()
     const blob = this.currentObjectsToBlob()
     const extension = this.selectedFormatInfo().extension
-    console.log('generateOutputFile', extension)
 
     function onDone (data, downloadAttribute, blobMode, noData) {
       this.hasOutputFile = true
