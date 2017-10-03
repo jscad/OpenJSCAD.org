@@ -2,9 +2,10 @@
 
 # -- Fetch Remote File into Cache, written by Rene K. Mueller <spiritdude@gmail.com>
 #
-$VERSION = '0.004';
+$VERSION = '0.005';
 #
 # History:
+# 2017/09/23: 0.005: fix vulnerability: disallow file://
 # 2017/03/20: 0.004: allows insecure ssl connections (invalid/outdated ssl)
 # 2013/04/08: 0.003: support of amf
 # 2013/03/31: 0.002: checking content, enforcing jscad, scad or stl
@@ -30,6 +31,9 @@ closedir(D);
 
 sub cacheLocal {
    my($u) = @_;
+
+   return unless($u=~/^https?:\/\//i);                # -- must be http:// or https://
+
    my($fn) = ($u=~/\/([^\/]+)$/);
    my($local) = time()."-".sprintf("%05d",rand()*10_000);
    my($ext) = ($fn=~/\.([^\.]+)$/);
