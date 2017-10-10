@@ -1,6 +1,6 @@
 {
   "name": "@jscad/amf-serializer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Amf serializer for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",
@@ -35,7 +35,5 @@
   "dependencies": {
     "sax": "^1.2.1",
     "xmldom": "^0.1.27"
-  },
-  "devDependencies": {
   }
 }
