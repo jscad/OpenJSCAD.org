@@ -1,0 +1,12 @@
+{
+  "lerna": "2.1.2",
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent",
+  "command": {
+    "init": {
+      "exact": true
+    }
+  }
+}

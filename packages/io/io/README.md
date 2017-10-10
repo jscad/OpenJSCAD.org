@@ -2,7 +2,7 @@
 
 ## Input Output format handling for the JSCAD projects
 
-[![GitHub version](https://badge.fury.io/gh/jscad%2Fio.svg)](https://badge.fury.io/gh/jscad%2Fio)
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
 ## Overview
 
@@ -11,8 +11,18 @@ This repository includes all the input/output format handling for the JSCAD proj
 ### Input Format Handling (deserializers)
 
 ie: file data => jscad code (that can be evaluated to CSG/CAG)
+
 > note : currently serializers & deserializers are NOT symetrical as deserializers
-do not generate CSG/CAG objects
+do not generate CSG/CAG objects: there is however work done to enable CSG/CAG output directly
+
+deserializers with optional CSG/CAG output:
+
+[ ] amf-deserializer
+[ ] gcode-deserializer
+[ ] json-deserializer
+[ ] obj-deserializer
+[ ] stl-deserializer
+[x] svg-deserializer
 
 Following formats are supported as inputs:
  - [AMF](https://github.com/jscad/io/blob/master/packages/amf-deserializer)
@@ -40,6 +50,7 @@ Following formats are supported as outputs:
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contribute](#contribute)
+- [Publishing](#Publishing)
 - [License](#license)
 
 
@@ -73,6 +84,32 @@ This library is part of the JSCAD Organization, and is maintained by a group of 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://plus.google.com/communities/114958480887231067224) and start contributing changes.
 
 Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
+
+## Publishing
+
+This is for owners/ managers of the repo only, obviously :)
+
+It is done in semi-automated manner with Lerna & conventional-commits (semantic release)
+
+In case of doubt, please ask @kaosat-dev for help
+
+>you need to have npm & git authorization setup beforehand
+
+- Do a dry run first !!
+
+```shell
+npm run publish-dryrun
+```
+
+then answer 'no' to avoid publishing to either git or npm
+
+- when you are **SURE** everything is ok and you want to publish
+
+npm run publish
+
+>Note: DO NOT publish the packages individually and manually , unless you have very good
+reasons to, and have discussed it with the rest of the team
+
 
 ## License
 

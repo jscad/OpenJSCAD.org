@@ -1,13 +1,13 @@
 {
   "name": "@jscad/io",
-  "private":"true",
+  "private": "true",
   "version": "0.1.0",
   "description": "Input , output and formats handling for jscad project",
   "repository": "https://github.com/jscad/io",
   "scripts": {
-    "release-patch": "git checkout master && npm version patch && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
-    "release-minor": "git checkout master && npm version minor && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
-    "release-major": "git checkout master && npm version major && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
+    "test": "lerna bootstrap && lerna run test",
+    "publish" : "npm t && lerna publish --conventional-commits",
+    "publish-dryrun" : "npm t && lerna publish --conventional-commits --skip-git --skip-npm"
   },
   "contributors": [
     {
@@ -38,8 +38,8 @@
     "deserializer"
   ],
   "license": "MIT",
-  "dependencies": {
-  },
   "devDependencies": {
+    "ava": "^0.22.0",
+    "lerna": "2.1.2"
   }
 }
