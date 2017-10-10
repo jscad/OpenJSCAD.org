@@ -2,12 +2,12 @@
 
 > obj deserializer for the jscad project
 
-[![GitHub version](https://badge.fury.io/gh/jscad%40jscad%2Fobj-deserializer.svg)](https://badge.fury.io/gh/jscad%40jscad%2Fobj-deserializer)
+[![npm version](https://badge.fury.io/js/%40jscad%2Fobj-deserializer.svg)](https://badge.fury.io/js/%40jscad%2Fobj-deserializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/obj-deserializer)
 
 ## Overview
 
-This deserializer converts raw obj data to jscad code (that can be evaluated to CSG/CAG). 
+This deserializer converts raw obj data to jscad code (that can be evaluated to CSG/CAG).
 
 ## Table of Contents
 

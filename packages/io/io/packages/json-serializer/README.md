@@ -2,7 +2,7 @@
 
 > json serializer for the jscad project (from CSG)
 
-[![GitHub version](https://badge.fury.io/gh/jscad%40jscad%2Fjson-serializer.svg)](https://badge.fury.io/gh/jscad%40jscad%2Fjson-serializer)
+[![npm version](https://badge.fury.io/js/%40jscad%2Fjson-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fjson-serializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/json-serializer)
 
 ## Overview

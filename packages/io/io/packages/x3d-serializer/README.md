@@ -2,7 +2,7 @@
 
 > x3d serializer for the jscad project (from CSG)
 
-[![GitHub version](https://badge.fury.io/gh/jscad%40jscad%2Fx3d-serializer.svg)](https://badge.fury.io/gh/jscad%40jscad%2Fx3d-serializer)
+[![npm version](https://badge.fury.io/js/%40jscad%2Fx3d-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fx3d-serializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/x3d-serializer)
 
 ## Overview

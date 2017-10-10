@@ -2,7 +2,7 @@
 
 ## input output formats handling for the jscad project
 
-[![GitHub version](https://badge.fury.io/gh/jscad%2Fio.svg)](https://badge.fury.io/gh/jscad%2Fio)
+[![npm version](https://badge.fury.io/js/%40jscad%2Fio.svg)](https://badge.fury.io/js/%40jscad%2Fio)
 
 ## Overview
 
