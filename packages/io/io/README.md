@@ -17,12 +17,12 @@ do not generate CSG/CAG objects: there is however work done to enable CSG/CAG ou
 
 deserializers with optional CSG/CAG output:
 
-[ ] amf-deserializer
-[ ] gcode-deserializer
-[ ] json-deserializer
-[ ] obj-deserializer
-[ ] stl-deserializer
-[x] svg-deserializer
+- [ ] amf-deserializer
+- [ ] gcode-deserializer
+- [ ] json-deserializer
+- [ ] obj-deserializer
+- [ ] stl-deserializer
+- [x] svg-deserializer
 
 Following formats are supported as inputs:
  - [AMF](https://github.com/jscad/io/blob/master/packages/amf-deserializer)
@@ -85,7 +85,8 @@ This library is part of the JSCAD Organization, and is maintained by a group of 
 
 Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
-## Publishing
+
+## Publishing
 
 This is for owners/ managers of the repo only, obviously :)
 
