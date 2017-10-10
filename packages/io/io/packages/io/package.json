@@ -50,8 +50,8 @@
     "@jscad/obj-deserializer": "0.0.1",
     "@jscad/stl-deserializer": "0.0.3",
     "@jscad/stl-serializer": "0.0.2",
-    "@jscad/svg-serializer": "0.1.0",
-    "@jscad/svg-deserializer": "0.0.1",
+    "@jscad/svg-serializer": "0.0.1",
+    "@jscad/svg-deserializer": "0.1.0",
     "@jscad/x3d-serializer": "0.0.2"
   },
   "devDependencies": {
