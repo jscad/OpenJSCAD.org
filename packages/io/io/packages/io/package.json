@@ -1,6 +1,6 @@
 {
   "name": "@jscad/io",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Meta package for input , output and formats handling for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",
@@ -40,19 +40,19 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/io-utils":"latest",
-    "@jscad/amf-deserializer": "latest",
-    "@jscad/amf-serializer": "latest",
-    "@jscad/dxf-serializer": "latest",
-    "@jscad/gcode-deserializer": "latest",
-    "@jscad/json-deserializer": "latest",
-    "@jscad/json-serializer": "latest",
-    "@jscad/obj-deserializer": "latest",
-    "@jscad/stl-deserializer": "latest",
-    "@jscad/stl-serializer": "latest",
-    "@jscad/svg-serializer": "latest",
-    "@jscad/svg-deserializer": "latest",
-    "@jscad/x3d-serializer": "latest"
+    "@jscad/io-utils":"0.0.2",
+    "@jscad/amf-deserializer": "0.0.1",
+    "@jscad/amf-serializer": "0.0.1",
+    "@jscad/dxf-serializer": "0.0.1",
+    "@jscad/gcode-deserializer": "0.0.1",
+    "@jscad/json-deserializer": "0.0.1",
+    "@jscad/json-serializer": "0.0.1",
+    "@jscad/obj-deserializer": "0.0.1",
+    "@jscad/stl-deserializer": "0.0.3",
+    "@jscad/stl-serializer": "0.0.2",
+    "@jscad/svg-serializer": "0.1.0",
+    "@jscad/svg-deserializer": "0.0.1",
+    "@jscad/x3d-serializer": "0.0.2"
   },
   "devDependencies": {
   }
