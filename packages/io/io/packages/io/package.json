@@ -1,6 +1,6 @@
 {
   "name": "@jscad/io",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Meta package for input , output and formats handling for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",
