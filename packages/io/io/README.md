@@ -91,6 +91,7 @@ Small Note: If editing this README, please conform to the [standard-readme](http
 This is for owners/ managers of the repo only, obviously :)
 
 It is done in semi-automated manner with Lerna & conventional-commits (semantic release)
+It automatically checks out the `master` branch and pulls the latest version from the remote repo
 
 In case of doubt, please ask @kaosat-dev for help
 

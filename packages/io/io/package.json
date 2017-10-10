@@ -6,8 +6,8 @@
   "repository": "https://github.com/jscad/io",
   "scripts": {
     "test": "lerna bootstrap && lerna run test",
-    "publish" : "npm t && lerna publish --conventional-commits",
-    "publish-dryrun" : "npm t && lerna publish --conventional-commits --skip-git --skip-npm"
+    "publish" : "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits",
+    "publish-dryrun" : "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits --skip-git --skip-npm"
   },
   "contributors": [
     {
