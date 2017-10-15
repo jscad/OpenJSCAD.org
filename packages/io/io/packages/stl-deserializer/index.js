@@ -1,56 +1,116 @@
-// import { CSG } from '@jscad/csg'
-// import { vt2jscad } from './vt2jscad'
 const { CSG } = require('@jscad/csg')
 const { vt2jscad } = require('./vt2jscad')
+const { BinaryReader } = require('@jscad/io-utils')
 
 // STL function from http://jsfiddle.net/Riham/yzvGD/35/
 // CC BY-SA by Riham
 // changes by Rene K. Mueller <spiritdude@gmail.com>
-//
+// changes by Mark 'kaosat-dev' Moissette
+// 2017/10/14: refactoring, added support for CSG output etc
 // 2013/03/28: lot of rework and debugging included, and error handling
 // 2013/03/18: renamed functions, creating .jscad source direct via polyhedron()
 const echo = console.info
 
-function deserialize (stl, fn, options) {
-  const defaults = {version: '0.0.0'}
+function deserialize (stl, filename, options) {
+  const defaults = {version: '0.0.0', addMetaData: true, output: 'jscad'}
   options = Object.assign({}, defaults, options)
-  const {version} = options
+  const {version, output, addMetaData} = options
 
-  var isAscii = true
+  const isBinary = isDataBinaryRobust(stl)
 
-  for (var i = 0; i < stl.length; i++) {
-    if (stl[i].charCodeAt(0) === 0) {
-      isAscii = false
-      break
-    }
-  }
-  var src
-  if (!isAscii) {
-    src = deserializeBinarySTL(stl, fn, version)
-  } else {
-    src = deserializeAsciiSTL(stl, fn, version)
-  }
-  return src
+  stl = isBinary && isBuffer(stl) ? bufferToBinaryString(stl) : stl
+
+  const elementFormatterJscad = ({vertices, triangles, normals, colors, index}) => `// object #${index}: triangles: ${triangles.length}\n${vt2jscad(vertices, triangles, null)}`
+  const elementFormatterCSG = ({vertices, triangles, normals, colors}) => polyhedron({ points: vertices, polygons: triangles })
+
+  const deserializer = isBinary ? deserializeBinarySTL : deserializeAsciiSTL
+  const elementFormatter = output === 'jscad' ? elementFormatterJscad : elementFormatterCSG
+  const outputFormatter = output === 'jscad' ? formatAsJscad : formatAsCsg
+
+  return outputFormatter(deserializer(stl, filename, version, elementFormatter), addMetaData, version, filename)
+
+  /*
+  if (err) src += '// WARNING: import errors: ' + err + ' (some triangles might be misaligned or missing)\n'
+  src += '// objects: 1\n// object #1: triangles: ' + totalTriangles + '\n\n'
+  src += 'function main() { return '
+  src += vt2jscad(vertices, triangles, normals, colors)
+  src += '; }' */
 }
 
-function deserializeBinarySTL (stl, fn, version) {
-    // -- This makes more sense if you read http://en.wikipedia.org/wiki/STL_(file_format)#Binary_STL
-  var vertices = []
-  var triangles = []
-  var normals = []
-  var colors = []
-  let converted = 0
-  var vertexIndex = 0
-  var err = 0
-  var mcolor = null
-  var umask = parseInt('01000000000000000', 2)
-  var rmask = parseInt('00000000000011111', 2)
-  var gmask = parseInt('00000001111100000', 2)
-  var bmask = parseInt('00111110000000000', 2)
-  var br = new BinaryReader(stl)
+function bufferToBinaryString (buffer) {
+  let binary = ''
+  const bytes = new Uint8Array(buffer)
+  let length = bytes.byteLength
+  for (let i = 0; i < length; i++) {
+    binary += String.fromCharCode(bytes[i])
+  }
+  return binary
+}
 
-  var m = 0, c = 0, r = 0, g = 0, b = 0, a = 0
-  for (var i = 0; i < 80; i++) {
+// taken from https://github.com/feross/is-buffer if we need it more than once, add as dep
+function isBuffer (obj) {
+  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+// transforms input to string if it was not already the case
+function ensureString (buf) {
+  if (typeof buf !== 'string') {
+    let arrayBuffer = new Uint8Array(buf)
+    let str = ''
+    for (let i = 0; i < buf.byteLength; i++) {
+      str += String.fromCharCode(arrayBuffer[i]) // implicitly assumes little-endian
+    }
+    return str
+  } else {
+    return buf
+  }
+}
+
+// reliable binary detection
+function isDataBinaryRobust (data) {
+  // console.log('data is binary ?')
+  const patternVertex = /vertex[\s]+([\-+]?[0-9]+\.?[0-9]*([eE][\-+]?[0-9]+)?)+[\s]+([\-+]?[0-9]*\.?[0-9]+([eE][\-+]?[0-9]+)?)+[\s]+([\-+]?[0-9]*\.?[0-9]+([eE][\-+]?[0-9]+)?)+/g
+  const text = ensureString(data)
+  const isBinary = patternVertex.exec(text) === null
+  return isBinary
+}
+
+function formatAsJscad (data, addMetaData, version, filename) {
+  let code = addMetaData ? `//
+  // producer: OpenJSCAD.org Compatibility${version} STL Binary Importer
+  // date: ${new Date()}
+  // source: ${filename}
+  //
+  ` : ''
+
+  return code + `function main() { return union(
+// objects: ${data.length}
+${data.join('\n')}); }
+`
+}
+
+function formatAsCsg (data) {
+  return new CSG().union(data)
+}
+
+function deserializeBinarySTL (stl, filename, version, elementFormatter) {
+    // -- This makes more sense if you read http://en.wikipedia.org/wiki/STL_(file_format)#Binary_STL
+  let vertices = []
+  let triangles = []
+  let normals = []
+  let colors = []
+  let converted = 0
+  let vertexIndex = 0
+  let err = 0
+  let mcolor = null
+  let umask = parseInt('01000000000000000', 2)
+  let rmask = parseInt('00000000000011111', 2)
+  let gmask = parseInt('00000001111100000', 2)
+  let bmask = parseInt('00111110000000000', 2)
+  let br = new BinaryReader(stl)
+
+  let m = 0, c = 0, r = 0, g = 0, b = 0, a = 0
+  for (let i = 0; i < 80; i++) {
     switch (m) {
       case 6:
         r = br.readUInt8()
@@ -87,9 +147,9 @@ function deserializeBinarySTL (stl, fn, version) {
     mcolor = [r / 255, g / 255, b / 255, a / 255]
   }
 
-  var totalTriangles = br.readUInt32() // Read # triangles
+  let totalTriangles = br.readUInt32() // Read # triangles
 
-  for (var tr = 0; tr < totalTriangles; tr++) {
+  for (let tr = 0; tr < totalTriangles; tr++) {
         // if(tr%100==0) status('stl importer: converted '+converted+' out of '+totalTriangles+' triangles');
         /*
              REAL32[3] . Normal vector
@@ -98,14 +158,14 @@ function deserializeBinarySTL (stl, fn, version) {
              REAL32[3] . Vertex 3
                 UINT16 . Attribute byte count */
         // -- Parse normal
-    var no = []; no.push(br.readFloat()); no.push(br.readFloat()); no.push(br.readFloat())
+    let no = []; no.push(br.readFloat()); no.push(br.readFloat()); no.push(br.readFloat())
 
         // -- Parse every 3 subsequent floats as a vertex
-    var v1 = []; v1.push(br.readFloat()); v1.push(br.readFloat()); v1.push(br.readFloat())
-    var v2 = []; v2.push(br.readFloat()); v2.push(br.readFloat()); v2.push(br.readFloat())
-    var v3 = []; v3.push(br.readFloat()); v3.push(br.readFloat()); v3.push(br.readFloat())
+    let v1 = []; v1.push(br.readFloat()); v1.push(br.readFloat()); v1.push(br.readFloat())
+    let v2 = []; v2.push(br.readFloat()); v2.push(br.readFloat()); v2.push(br.readFloat())
+    let v3 = []; v3.push(br.readFloat()); v3.push(br.readFloat()); v3.push(br.readFloat())
 
-    var skip = 0
+    let skip = 0
     if (1) {
       for (let i = 0; i < 3; i++) {
         if (isNaN(v1[i])) skip++
@@ -119,12 +179,12 @@ function deserializeBinarySTL (stl, fn, version) {
     }
     err += skip
         // -- every 3 vertices create a triangle.
-    var triangle = []; triangle.push(vertexIndex++); triangle.push(vertexIndex++); triangle.push(vertexIndex++)
+    let triangle = []; triangle.push(vertexIndex++); triangle.push(vertexIndex++); triangle.push(vertexIndex++)
 
-    var abc = br.readUInt16()
-    var color = null
+    let abc = br.readUInt16()
+    let color = null
     if (m === 10) {
-      var u = (abc & umask) // 0 if color is unique for this triangle
+      let u = (abc & umask) // 0 if color is unique for this triangle
       let r = (abc & rmask) / 31
       let g = ((abc & gmask) >>> 5) / 31
       let b = ((abc & bmask) >>> 10) / 31
@@ -144,14 +204,14 @@ function deserializeBinarySTL (stl, fn, version) {
            // E2 = C - A
            // test = dot( Normal, cross( E1, E2 ) )
            // test > 0: cw, test < 0 : ccw
-      var w1 = new CSG.Vector3D(v1)
-      var w2 = new CSG.Vector3D(v2)
-      var w3 = new CSG.Vector3D(v3)
-      var e1 = w2.minus(w1)
-      var e2 = w3.minus(w1)
-      var t = new CSG.Vector3D(no).dot(e1.cross(e2))
+      let w1 = new CSG.Vector3D(v1)
+      let w2 = new CSG.Vector3D(v2)
+      let w3 = new CSG.Vector3D(v3)
+      let e1 = w2.minus(w1)
+      let e2 = w3.minus(w1)
+      let t = new CSG.Vector3D(no).dot(e1.cross(e2))
       if (t > 0) {    // 1,2,3 -> 3,2,1
-        var tmp = v3
+        let tmp = v3
         v3 = v1
         v1 = tmp
       }
@@ -163,60 +223,45 @@ function deserializeBinarySTL (stl, fn, version) {
     normals.push(no)
     converted++
   }
-  var src = ''
-  src += '// producer: OpenJSCAD Compatibility (' + version + ') STL Binary Importer\n'
-  src += '// date: ' + (new Date()) + '\n'
-  src += '// source: ' + fn + '\n'
-  src += '\n'
-  if (err) src += '// WARNING: import errors: ' + err + ' (some triangles might be misaligned or missing)\n'
-  src += '// objects: 1\n// object #1: triangles: ' + totalTriangles + '\n\n'
-  src += 'function main() { return '
-  src += vt2jscad(vertices, triangles, normals, colors)
-  src += '; }'
-  return src
+
+  return [elementFormatter({vertices, triangles, normals, colors})]
 }
 
-function deserializeAsciiSTL (stl, fn, version) {
-  var src = ''
-  var n = 0
-  var converted = 0
-  var o
+function deserializeAsciiSTL (stl, filename, version, elementFormatter) {
+  let n = 0
+  let converted = 0
+  let o
 
-  src += '// producer: OpenJSCAD Compatibility (' + version + ') STL ASCII Importer\n'
-  src += '// date: ' + (new Date()) + '\n'
-  src += '// source: ' + fn + '\n'
-  src += '\n'
-  src += 'function main() { return union(\n'
-    // -- Find all models
-  var objects = stl.split('endsolid')
-  src += '// objects: ' + (objects.length - 1) + '\n'
-
+  // -- Find all models
+  const objects = stl.split('endsolid')
+  // src += '// objects: ' + (objects.length - 1) + '\n'
+  let elements = []
   for (o = 1; o < objects.length; o++) {
         // -- Translation: a non-greedy regex for facet {...} endloop pattern
-    var patt = /\bfacet[\s\S]*?endloop/mgi
-    var vertices = []
-    var triangles = []
-    var normals = []
-    var vertexIndex = 0
-    var err = 0
+    let patt = /\bfacet[\s\S]*?endloop/mgi
+    let vertices = []
+    let triangles = []
+    let normals = []
+    let vertexIndex = 0
+    let err = 0
 
-    var match = stl.match(patt)
+    let match = stl.match(patt)
     if (match == null) continue
-    for (var i = 0; i < match.length; i++) {
+    for (let i = 0; i < match.length; i++) {
             // if(converted%100==0) status('stl to jscad: converted '+converted+' out of '+match.length+ ' facets');
             // -- 1 normal with 3 numbers, 3 different vertex objects each with 3 numbers:
-            // var vpatt = /\bfacet\s+normal\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s*outer\s+loop\s+vertex\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s*vertex\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s*vertex\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)/mgi;
+            // let vpatt = /\bfacet\s+normal\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s*outer\s+loop\s+vertex\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s*vertex\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s*vertex\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)/mgi;
                                          // (-?\d+\.?\d*) -1.21223
                                          // (-?\d+\.?\d*[Ee]?[-+]?\d*)
-      var vpatt = /\bfacet\s+normal\s+(\S+)\s+(\S+)\s+(\S+)\s+outer\s+loop\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s*/mgi
-      var v = vpatt.exec(match[i])
+      let vpatt = /\bfacet\s+normal\s+(\S+)\s+(\S+)\s+(\S+)\s+outer\s+loop\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s*/mgi
+      let v = vpatt.exec(match[i])
       if (v == null) continue
       if (v.length !== 13) {
         echo('Failed to parse ' + match[i])
         break
       }
-      var skip = 0
-      for (var k = 0; k < v.length; k++) {
+      let skip = 0
+      for (let k = 0; k < v.length; k++) {
         if (v[k] === 'NaN') {
           echo('bad normal or triangle vertice #' + converted + ' ' + k + ": '" + v[k] + "', skipped")
           skip++
@@ -232,12 +277,12 @@ function deserializeAsciiSTL (stl, fn, version) {
         let v2 = []; v2.push(parseFloat(v[j++])); v2.push(parseFloat(v[j++])); v2.push(parseFloat(v[j++]))
         let v3 = []; v3.push(parseFloat(v[j++])); v3.push(parseFloat(v[j++])); v3.push(parseFloat(v[j++]))
         echo('recalculate norm', v1, v2, v3)
-        var w1 = new CSG.Vector3D(v1)
-        var w2 = new CSG.Vector3D(v2)
-        var w3 = new CSG.Vector3D(v3)
-        var _u = w1.minus(w3)
-        var _v = w1.minus(w2)
-        var norm = _u.cross(_v).unit()
+        let w1 = new CSG.Vector3D(v1)
+        let w2 = new CSG.Vector3D(v2)
+        let w3 = new CSG.Vector3D(v3)
+        let _u = w1.minus(w3)
+        let _v = w1.minus(w2)
+        let norm = _u.cross(_v).unit()
         j = 1
         v[j++] = norm._x
         v[j++] = norm._y
@@ -247,9 +292,9 @@ function deserializeAsciiSTL (stl, fn, version) {
       let j = 1
       let no = []; no.push(parseFloat(v[j++])); no.push(parseFloat(v[j++])); no.push(parseFloat(v[j++]))
       let v1 = []; v1.push(parseFloat(v[j++])); v1.push(parseFloat(v[j++])); v1.push(parseFloat(v[j++]))
-      var v2 = []; v2.push(parseFloat(v[j++])); v2.push(parseFloat(v[j++])); v2.push(parseFloat(v[j++]))
-      var v3 = []; v3.push(parseFloat(v[j++])); v3.push(parseFloat(v[j++])); v3.push(parseFloat(v[j++]))
-      var triangle = []; triangle.push(vertexIndex++); triangle.push(vertexIndex++); triangle.push(vertexIndex++)
+      let v2 = []; v2.push(parseFloat(v[j++])); v2.push(parseFloat(v[j++])); v2.push(parseFloat(v[j++]))
+      let v3 = []; v3.push(parseFloat(v[j++])); v3.push(parseFloat(v[j++])); v3.push(parseFloat(v[j++]))
+      let triangle = []; triangle.push(vertexIndex++); triangle.push(vertexIndex++); triangle.push(vertexIndex++)
 
             // -- Add 3 vertices for every triangle
             //    TODO: OPTIMIZE: Check if the vertex is already in the array, if it is just reuse the index
@@ -258,14 +303,14 @@ function deserializeAsciiSTL (stl, fn, version) {
                // E2 = C - A
                // test = dot( Normal, cross( E1, E2 ) )
                // test > 0: cw, test < 0: ccw
-        var w1 = new CSG.Vector3D(v1)
-        var w2 = new CSG.Vector3D(v2)
-        var w3 = new CSG.Vector3D(v3)
-        var e1 = w2.minus(w1)
-        var e2 = w3.minus(w1)
-        var t = new CSG.Vector3D(no).dot(e1.cross(e2))
+        let w1 = new CSG.Vector3D(v1)
+        let w2 = new CSG.Vector3D(v2)
+        let w3 = new CSG.Vector3D(v3)
+        let e1 = w2.minus(w1)
+        let e2 = w3.minus(w1)
+        let t = new CSG.Vector3D(no).dot(e1.cross(e2))
         if (t > 0) {      // 1,2,3 -> 3,2,1
-          var tmp = v3
+          let tmp = v3
           v3 = v1
           v1 = tmp
         }
@@ -277,138 +322,41 @@ function deserializeAsciiSTL (stl, fn, version) {
       triangles.push(triangle)
       converted++
     }
-    if (n++) src += ','
-    if (err) src += '// WARNING: import errors: ' + err + ' (some triangles might be misaligned or missing)\n'
+    /* if (err) src += '// WARNING: import errors: ' + err + ' (some triangles might be misaligned or missing)\n'
     src += '// object #' + (o) + ': triangles: ' + match.length + '\n'
-    src += vt2jscad(vertices, triangles, normals)
+    */
+    elements.push(
+      elementFormatter({vertices, triangles, index: o})
+    )
   }
-  src += '); }\n'
-  return src
+
+  return elements
 }
 
-// BinaryReader
-// Refactored by Vjeux <vjeuxx@gmail.com>
-// http://blog.vjeux.com/2010/javascript/javascript-binary-reader.html
+// FIXME : just a stand in for now from scad-api, not sure if we should rely on scad-api from here ?
+function polyhedron (p) {
+  let pgs = []
+  let ref = p.triangles || p.polygons
+  let colors = p.colors || null
 
-// Original
-// + Jonas Raoni Soares Silva
-// @ http://jsfromhell.com/classes/binary-deserializer [rev. #1]
-
-function BinaryReader (data) {
-  this._buffer = data
-  this._pos = 0
-};
-
-BinaryReader.prototype = {
-
-   /* Public */
-
-  readInt8: function () { return this._decodeInt(8, true) },
-  readUInt8: function () { return this._decodeInt(8, false) },
-  readInt16: function () { return this._decodeInt(16, true) },
-  readUInt16: function () { return this._decodeInt(16, false) },
-  readInt32: function () { return this._decodeInt(32, true) },
-  readUInt32: function () { return this._decodeInt(32, false) },
-
-  readFloat: function () { return this._decodeFloat(23, 8) },
-  readDouble: function () { return this._decodeFloat(52, 11) },
-
-  readChar: function () { return this.readString(1) },
-  readString: function (length) {
-    this._checkSize(length * 8)
-    var result = this._buffer.substr(this._pos, length)
-    this._pos += length
-    return result
-  },
-
-  seek: function (pos) {
-    this._pos = pos
-    this._checkSize(0)
-  },
-
-  getPosition: function () {
-    return this._pos
-  },
-
-  getSize: function () {
-    return this._buffer.length
-  },
-
-   /* Private */
-
-  _decodeFloat: function (precisionBits, exponentBits) {
-    var length = precisionBits + exponentBits + 1
-    var size = length >> 3
-    this._checkSize(length)
-
-    var bias = Math.pow(2, exponentBits - 1) - 1
-    var signal = this._readBits(precisionBits + exponentBits, 1, size)
-    var exponent = this._readBits(precisionBits, exponentBits, size)
-    var significand = 0
-    var divisor = 2
-    var curByte = 0 // length + (-precisionBits >> 3) - 1;
-    do {
-      var byteValue = this._readByte(++curByte, size)
-      var startBit = precisionBits % 8 || 8
-      var mask = 1 << startBit
-      while (mask >>= 1) {
-        if (byteValue & mask) {
-          significand += 1 / divisor
-        }
-        divisor *= 2
-      }
-    } while (precisionBits -= startBit)
-
-    this._pos += size
-
-    return exponent == (bias << 1) + 1 ? significand ? NaN : signal ? -Infinity : +Infinity
-         : (1 + signal * -2) * (exponent || significand ? !exponent ? Math.pow(2, -bias + 1) * significand
-         : Math.pow(2, exponent - bias) * (1 + significand) : 0)
-  },
-
-  _decodeInt: function (bits, signed) {
-    var x = this._readBits(0, bits, bits / 8), max = Math.pow(2, bits)
-    var result = signed && x >= max / 2 ? x - max : x
-
-    this._pos += bits / 8
-    return result
-  },
-
-   // shl fix: Henri Torgemane ~1996 (compressed by Jonas Raoni)
-  _shl: function (a, b) {
-    for (++b; --b; a = ((a %= 0x7fffffff + 1) & 0x40000000) == 0x40000000 ? a * 2 : (a - 0x40000000) * 2 + 0x7fffffff + 1);
-    return a
-  },
-
-  _readByte: function (i, size) {
-    return this._buffer.charCodeAt(this._pos + size - i - 1) & 0xff
-  },
-
-  _readBits: function (start, length, size) {
-    var offsetLeft = (start + length) % 8
-    var offsetRight = start % 8
-    var curByte = size - (start >> 3) - 1
-    var lastByte = size + (-(start + length) >> 3)
-    var diff = curByte - lastByte
-
-    var sum = (this._readByte(curByte, size) >> offsetRight) & ((1 << (diff ? 8 - offsetRight : length)) - 1)
-
-    if (diff && offsetLeft) {
-      sum += (this._readByte(lastByte++, size) & ((1 << offsetLeft) - 1)) << (diff-- << 3) - offsetRight
+  for (let i = 0; i < ref.length; i++) {
+    let pp = []
+    for (let j = 0; j < ref[i].length; j++) {
+      pp[j] = p.points[ref[i][j]]
     }
 
-    while (diff) {
-      sum += this._shl(this._readByte(lastByte++, size), (diff-- << 3) - offsetRight)
+    let v = []
+    for (let j = ref[i].length - 1; j >= 0; j--) { // --- we reverse order for examples of OpenSCAD work
+      v.push(new CSG.Vertex(new CSG.Vector3D(pp[j][0], pp[j][1], pp[j][2])))
     }
-
-    return sum
-  },
-
-  _checkSize: function (neededBits) {
-    if (!(this._pos + Math.ceil(neededBits / 8) < this._buffer.length)) {
-         // throw new Error("Index out of bound");
+    let s = CSG.Polygon.defaultShared
+    if (colors && colors[i]) {
+      s = CSG.Polygon.Shared.fromColor(colors[i])
     }
+    pgs.push(new CSG.Polygon(v, s))
   }
+  let r = CSG.fromPolygons(pgs)
+  return r
 }
 
 module.exports = {
