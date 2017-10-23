@@ -6,6 +6,7 @@
   "repository": "https://github.com/jscad/io",
   "scripts": {
     "test": "lerna bootstrap && lerna run test",
+    "eslint": "eslint packages/**/*.js",
     "publish": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits",
     "publish-dryrun": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits --skip-git --skip-npm"
   },
@@ -41,6 +42,15 @@
   "devDependencies": {
     "@jscad/sample-files": "github:jscad/sample-files",
     "ava": "^0.22.0",
+    "eslint": "^4.9.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
     "lerna": "2.1.2"
+  },
+  "eslintConfig": {
+    "extends": "standard"
   }
 }
