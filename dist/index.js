@@ -93772,7 +93772,7 @@ function setUpEditor(divname, gProcessor) {
     exec: function exec(editor) {
       var src = editor.getValue();
       localStorage.clear();
-      gProcessor.setStatus('cleared', 'Cleared localstorage');
+      gProcessor.setStatus('cleared', 'Cleared browser storage');
     }
   });
 
