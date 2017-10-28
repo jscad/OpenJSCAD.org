@@ -88,6 +88,7 @@ test('CSG.Polygon3 createsFromPoints a 3D polygon', t => {
   vertexEquals(t, observed.vertices[0], [0, 0, 0])
   vertexEquals(t, observed.vertices[1], [0, 10, 0])
   vertexEquals(t, observed.vertices[2], [0, 10, 10])
+  t.is(observed.checkIfConvex(),true)
 
 // and excercise features
   const volume   = observed.getSignedVolume()
@@ -101,6 +102,32 @@ test('CSG.Polygon3 createsFromPoints a 3D polygon', t => {
   t.deepEqual(features,[0,50])
   t.deepEqual(bsphere,[new Vector3([0,5,5]),7.0710678118654755])
   t.deepEqual(bbox,[new Vector3([0,0,0]),new Vector3([0,10,10])])
+
+// create a non-convex polygon and test
+// Note: points are created CCW about the Z (normal)
+  const points2ccw = [
+    [  0,  0,  3],
+    [ 10, 10,  3],
+    [  0,  5,  3],
+    [-10, 10,  3],
+  ]
+  const points2cw = [
+    [  0,  0,  3],
+    [-10, 10,  3],
+    [  0,  5,  3],
+    [ 10, 10,  3],
+  ]
+  observed = Polygon.createFromPoints(points2ccw)
+
+  t.deepEqual(observed.vertices.length, 4)
+  t.is(observed.checkIfConvex(),false)
+
+  let p = observed.vertices[1].pos
+  let c = observed.vertices[2].pos
+  let n = observed.vertices[3].pos
+  let m = observed.plane.normal
+  t.is(Polygon.isConvexPoint(p,c,n,m),false)
+  t.is(Polygon.isStrictlyConvexPoint(p,c,n,m),false)
 })
 
 test('CSG.Polygon3 transformations', t => {
@@ -203,6 +230,10 @@ test('CSG.Polygon.Shared construction', t => {
   let s4 = CSG.Polygon.Shared.fromColor([6,7,8,9])
 
   t.deepEqual(s4.color,[6,7,8,9])
+
+  let s6 = CSG.Polygon.Shared.fromColor([4,3,2])
+
+  t.deepEqual(s6.color,[4,3,2,1])
 
 // check that generic objects are possible via JSON
   let o5 = JSON.parse(JSON.stringify(s4))

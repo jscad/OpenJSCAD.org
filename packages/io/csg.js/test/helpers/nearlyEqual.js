@@ -13,13 +13,13 @@ function nearlyEqual (t, a, b, epsilon, failMessage) {
   // relative error is less meaningful here
     if (diff > (epsilon * Number.EPSILON)) {
       failMessage = failMessage === undefined ? 'near zero Numbers outside of epsilon' : failMessage
-      t.fail(failMessage)
+      t.fail(failMessage+"("+a+","+b+")")
     }
   }
   // use relative error
   if ((diff / Math.min((absA + absB), Number.MAX_VALUE)) > epsilon) {
     failMessage = failMessage === undefined ? 'Numbers outside of epsilon' : failMessage
-    t.fail(failMessage)
+    t.fail(failMessage+"("+a+","+b+")")
   }
 }
 
