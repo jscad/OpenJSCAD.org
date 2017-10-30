@@ -33,7 +33,11 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@jscad/io-utils": "^0.1.0",
     "sax": "^1.2.1",
     "xmldom": "^0.1.27"
+  },
+  "devDependencies": {
+    "@jscad/csg": "^0.3.1"
   }
 }

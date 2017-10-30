@@ -1,10 +1,11 @@
 const {CSG} = require('@jscad/csg')
+const { ensureManifoldness } = require('@jscad/io-utils')
 
 const mimeType = 'application/json'
 
 function fromCAG (CAG) {
-  var str = '{ "type": "cag","sides": ['
-  var comma = ''
+  let str = '{ "type": "cag","sides": ['
+  let comma = ''
   CAG.sides.map(
     function (side) {
       str += comma
@@ -17,8 +18,8 @@ function fromCAG (CAG) {
 }
 
 function fromCSG (CSG) {
-  var str = '{ "type": "csg","polygons": ['
-  var comma = ''
+  let str = '{ "type": "csg","polygons": ['
+  let comma = ''
   CSG.polygons.map(
     function (polygon) {
       str += comma
@@ -27,14 +28,14 @@ function fromCSG (CSG) {
     }
   )
   str += '],'
-  str += '"isCanonicalized": ' + JSON.stringify(this.isCanonicalized) + ','
-  str += '"isRetesselated": ' + JSON.stringify(this.isRetesselated)
+  str += '"isCanonicalized": ' + JSON.stringify(CSG.isCanonicalized) + ','
+  str += '"isRetesselated": ' + JSON.stringify(CSG.isRetesselated)
   str += '}'
   return [str]
 }
 
 function serialize (data, options) {
-  return typeof data === CSG ? fromCSG(data) : fromCAG(data)
+  return 'sides' in data ? fromCAG(data) : fromCSG(ensureManifoldness(data))
 }
 
 module.exports = {
