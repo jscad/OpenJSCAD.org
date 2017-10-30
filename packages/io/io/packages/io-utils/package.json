@@ -1,6 +1,6 @@
 {
   "name": "@jscad/io-utils",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Utilities for input , output and formats handling for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",
@@ -35,8 +35,6 @@
     "deserializer"
   ],
   "license": "MIT",
-  "dependencies": {
-  },
   "devDependencies": {
     "@jscad/csg": "^0.3.1"
   }
