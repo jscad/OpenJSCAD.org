@@ -1,6 +1,7 @@
 node_modules/
-.DS_Store
 objects
-doc
-.nyc_output
 coverage
+.DS_Store
+.nyc_output
+*.log
+package-lock.json

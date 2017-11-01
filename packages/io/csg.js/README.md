@@ -35,7 +35,7 @@ const csg = require('@jscad/csg')
 
 ## API
 
-The API documentation can be found [here](https://jscad.github.io/csg.js/ ).
+The API documentation can be found [here](./docs/api.md).
 
 Also see the [OpenJsCad User Guide](https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide).
 
