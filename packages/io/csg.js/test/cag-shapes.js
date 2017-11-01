@@ -1,6 +1,7 @@
 import test from 'ava'
 import {CAG} from '../csg'
 import {OBJ} from './helpers/obj-store'
+import {CAGNearlyEquals} from './helpers/asserts'
 
 //
 // Test suite for CAG Common Shapes
@@ -30,10 +31,10 @@ test('CAG should produce proper ellipses', t => {
   var e4 = CAG.ellipse({resolution: 4})
 
 // verify that object structures do not change
-  t.deepEqual(e1, OBJ.loadPrevious('cag.e1', e1))
-  t.deepEqual(e2, OBJ.loadPrevious('cag.e2', e2))
-  t.deepEqual(e3, OBJ.loadPrevious('cag.e3', e3))
-  t.deepEqual(e4, OBJ.loadPrevious('cag.e4', e4))
+  t.true(CAGNearlyEquals(e1, OBJ.loadPrevious('cag.e1', e1)))
+  t.true(CAGNearlyEquals(e2, OBJ.loadPrevious('cag.e2', e2)))
+  t.true(CAGNearlyEquals(e3, OBJ.loadPrevious('cag.e3', e3)))
+  t.true(CAGNearlyEquals(e4, OBJ.loadPrevious('cag.e4', e4)))
 })
 
 test('CAG should produce proper rectangles', t => {

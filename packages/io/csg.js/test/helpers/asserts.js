@@ -43,8 +43,8 @@ function assertSameGeometry (t, observed, expected, failMessage) {
 
 // a contains b if b polygons are also found in a
 function containsCSG (observed, expected) {
-  //console.log('Observed: ', observed)
-  //console.log('Expected: ', expected)
+  // console.log('Observed: ', observed)
+  // console.log('Expected: ', expected)
 
   return observed.toPolygons().map(p => {
     let found = false
@@ -59,7 +59,64 @@ function containsCSG (observed, expected) {
   }).reduce((observed, expected) => observed && expected)
 };
 
+function simplifiedPolygon (polygon) {
+  const vertices = polygon.vertices.map(vertex => [vertex.pos._x, vertex.pos._y, vertex.pos._z])
+  const plane = {normal: [polygon.plane.normal._x, polygon.plane.normal._y, polygon.plane.normal._z], w: polygon.plane.w}
+  return {positions: vertices, plane, shared: polygon.shared}
+}
+
+function simplifieSides (cag) {
+  const sides = cag.sides.map(side => [side.vertex0.pos._x, side.vertex0.pos._y, side.vertex1.pos._x, side.vertex1.pos._y])
+  return sides.sort()
+}
+
+function nearlyEquals (a, b, epsilon = 1) {
+  if (a === b) { // shortcut, also handles infinities and NaNs
+    return true
+  }
+
+  var absA = Math.abs(a)
+  var absB = Math.abs(b)
+  var diff = Math.abs(a - b)
+  if (a === 0 || b === 0 || diff < Number.EPSILON) {
+  // a or b is zero or both are extremely close to it
+  // relative error is less meaningful here
+    if (diff > (epsilon * Number.EPSILON)) {
+      return false
+    }
+  }
+  // use relative error
+  if ((diff / Math.min((absA + absB), Number.MAX_VALUE)) > epsilon) {
+    return false
+  }
+  return true
+}
+
+function CAGNearlyEquals (observed, expected, precision) {
+  if (observed.sides.length !== expected.sides.length) {
+    return false
+  }
+  if (observed.isCanonicalized !== expected.isCanonicalized) {
+    return false
+  }
+  const obsSides = simplifieSides(observed)
+  const expSides = simplifieSides(expected)
+
+  for (let i = 0; i < obsSides.length; i++) {
+    for (let j = 0; j < obsSides[i].length; j++) {
+      if (!nearlyEquals(obsSides[i][j], expSides[i][j], precision)) {
+        return false
+      }
+    }
+  }
+
+  return true
+}
+
 module.exports = {
-  assertSameGeometry: assertSameGeometry,
-  comparePolygons: comparePolygons
+  assertSameGeometry,
+  comparePolygons,
+  simplifiedPolygon,
+  simplifieSides,
+  CAGNearlyEquals
 }
