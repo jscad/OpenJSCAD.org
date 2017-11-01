@@ -148,7 +148,7 @@ ConnectorList._fromPath2DExplicit = function (path2D, angleIsh) {
 }
 
 ConnectorList.prototype = {
-  setClosed: function (bool) {
+  setClosed: function (closed) {
     this.closed = !!closed // FIXME: what the hell ?
   },
   appendConnector: function (conn) {
@@ -202,17 +202,19 @@ ConnectorList.prototype = {
      * TODO: add a check that 2 follow-on CAGs are not intersecting
      */
   verify: function () {
-    let connI, connI1, dPosToAxis, axisToNextAxis
+    let connI
+    let connI1
     for (let i = 0; i < this.connectors_.length - 1; i++) {
-      connI = this.connectors_[i], connI1 = this.connectors_[i + 1]
+      connI = this.connectors_[i]
+      connI1 = this.connectors_[i + 1]
       if (connI1.point.minus(connI.point).dot(connI.axisvector) <= 0) {
-        throw ('Invalid ConnectorList. Each connectors position needs to be within a <90deg range of previous connectors axisvector')
+        throw new Error('Invalid ConnectorList. Each connectors position needs to be within a <90deg range of previous connectors axisvector')
       }
       if (connI.axisvector.dot(connI1.axisvector) <= 0) {
-        throw ('invalid ConnectorList. No neighboring connectors axisvectors may span a >=90deg angle')
+        throw new Error('invalid ConnectorList. No neighboring connectors axisvectors may span a >=90deg angle')
       }
     }
   }
 }
 
-module.exports = Connector
+module.exports = {Connector, ConnectorList}

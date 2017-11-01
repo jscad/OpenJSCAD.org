@@ -4,7 +4,7 @@ const {defaultResolution3D, defaultResolution2D, EPS} = require('./constants')
 const Vector3D = require('./math/Vector3')
 const Vertex = require('./math/Vertex3')
 const Polygon = require('./math/Polygon3')
-const Connector = require('./connectors')
+const {Connector} = require('./connectors')
 const Properties = require('./Properties')
 
 /** Construct an axis-aligned solid cuboid.

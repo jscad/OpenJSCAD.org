@@ -1,5 +1,5 @@
 const {EPS, angleEPS, areaEPS, defaultResolution3D} = require('./constants')
-const Connector = require('./connectors')
+const {Connector} = require('./connectors')
 const OrthoNormalBasis = require('./math/OrthoNormalBasis')
 const Vertex2D = require('./math/Vertex2')
 const Vertex3D = require('./math/Vertex3')

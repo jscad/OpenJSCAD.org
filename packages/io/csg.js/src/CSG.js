@@ -14,8 +14,8 @@ const OrthoNormalBasis = require('./math/OrthoNormalBasis')
 const CAG = require('./CAG') // FIXME: circular dependency !
 
 const Properties = require('./Properties')
-const Connector = require('./connectors')
-//let {fromPolygons} = require('./CSGMakers') // FIXME: circular dependency !
+const {Connector} = require('./connectors')
+// let {fromPolygons} = require('./CSGMakers') // FIXME: circular dependency !
 
 /** Class CSG
  * Holds a binary space partition tree representing a 3D solid. Two solids can
