@@ -8,13 +8,13 @@
     "build-docs": "./node_modules/.bin/jsdoc -c jsdoc.json",
     "docs": "jsdoc2md --files 'src/**/*.js' > docs/api.md",
     "test": "nyc ava 'test' --concurrency 3  --verbose --timeout 40000",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "preversion": "npm test",
     "version": "npm run changelog && npm run docs && git add -A ",
     "postversion": "git push origin master && git push origin master --tags",
-    "release-patch": "git checkout master; npm version patch",
-    "release-minor": "git checkout master; npm version minor",
-    "release-major": "git checkout master; npm version major",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+    "release-patch": "git checkout master && git pull origin master && npm version patch",
+    "release-minor": "git checkout master && git pull origin master && npm version minor",
+    "release-major": "git checkout master && git pull origin master && npm version major"
   },
   "contributors": [
     {
