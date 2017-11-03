@@ -15,6 +15,7 @@ const CAG = require('./CAG') // FIXME: circular dependency !
 
 const Properties = require('./Properties')
 const {Connector} = require('./connectors')
+const fixTJunctions = require('./utils/fixTJunctions')
 // let {fromPolygons} = require('./CSGMakers') // FIXME: circular dependency !
 
 /** Class CSG
@@ -318,7 +319,7 @@ CSG.prototype = {
     //   the result is a true expansion of the solid
     //   If false, returns only the shell
   expandedShell: function (radius, resolution, unionWithThis) {
-    //const {sphere} = require('./primitives3d') // FIXME: circular dependency !
+    // const {sphere} = require('./primitives3d') // FIXME: circular dependency !
     let csg = this.reTesselated()
     let result
     if (unionWithThis) {
@@ -732,13 +733,13 @@ CSG.prototype = {
         shareds.push(p.shared)
       }
     })
-    let numVerticesPerPolygon = new Uint32Array(numpolygons),
-      polygonSharedIndexes = new Uint32Array(numpolygons),
-      polygonVertices = new Uint32Array(numpolygonvertices),
-      polygonPlaneIndexes = new Uint32Array(numpolygons),
-      vertexData = new Float64Array(numvertices * 3),
-      planeData = new Float64Array(numplanes * 4),
-      polygonVerticesIndex = 0
+    let numVerticesPerPolygon = new Uint32Array(numpolygons)
+    let polygonSharedIndexes = new Uint32Array(numpolygons)
+    let polygonVertices = new Uint32Array(numpolygonvertices)
+    let polygonPlaneIndexes = new Uint32Array(numpolygons)
+    let vertexData = new Float64Array(numvertices * 3)
+    let planeData = new Float64Array(numplanes * 4)
+    let polygonVerticesIndex = 0
     for (let polygonindex = 0; polygonindex < numpolygons; ++polygonindex) {
       let p = csg.polygons[polygonindex]
       numVerticesPerPolygon[polygonindex] = p.vertices.length
@@ -897,316 +898,8 @@ CSG.prototype = {
     return cut3d.projectToOrthoNormalBasis(orthobasis)
   },
 
-    /*
-     fixTJunctions:
-
-     Suppose we have two polygons ACDB and EDGF:
-
-      A-----B
-      |     |
-      |     E--F
-      |     |  |
-      C-----D--G
-
-     Note that vertex E forms a T-junction on the side BD. In this case some STL slicers will complain
-     that the solid is not watertight. This is because the watertightness check is done by checking if
-     each side DE is matched by another side ED.
-
-     This function will return a new solid with ACDB replaced by ACDEB
-
-     Note that this can create polygons that are slightly non-convex (due to rounding errors). Therefore the result should
-     not be used for further CSG operations!
-     */
   fixTJunctions: function () {
-    let csg = this.canonicalized()
-    let sidemap = {}
-    for (let polygonindex = 0; polygonindex < csg.polygons.length; polygonindex++) {
-      let polygon = csg.polygons[polygonindex]
-      let numvertices = polygon.vertices.length
-      if (numvertices >= 3) // should be true
-      {
-        let vertex = polygon.vertices[0]
-        let vertextag = vertex.getTag()
-        for (let vertexindex = 0; vertexindex < numvertices; vertexindex++) {
-          let nextvertexindex = vertexindex + 1
-          if (nextvertexindex === numvertices) nextvertexindex = 0
-          let nextvertex = polygon.vertices[nextvertexindex]
-          let nextvertextag = nextvertex.getTag()
-          let sidetag = vertextag + '/' + nextvertextag
-          let reversesidetag = nextvertextag + '/' + vertextag
-          if (reversesidetag in sidemap) {
-                        // this side matches the same side in another polygon. Remove from sidemap:
-            let ar = sidemap[reversesidetag]
-            ar.splice(-1, 1)
-            if (ar.length === 0) {
-              delete sidemap[reversesidetag]
-            }
-          } else {
-            let sideobj = {
-              vertex0: vertex,
-              vertex1: nextvertex,
-              polygonindex: polygonindex
-            }
-            if (!(sidetag in sidemap)) {
-              sidemap[sidetag] = [sideobj]
-            } else {
-              sidemap[sidetag].push(sideobj)
-            }
-          }
-          vertex = nextvertex
-          vertextag = nextvertextag
-        }
-      }
-    }
-        // now sidemap contains 'unmatched' sides
-        // i.e. side AB in one polygon does not have a matching side BA in another polygon
-    let vertextag2sidestart = {}
-    let vertextag2sideend = {}
-    let sidestocheck = {}
-    let sidemapisempty = true
-    for (let sidetag in sidemap) {
-      sidemapisempty = false
-      sidestocheck[sidetag] = true
-      sidemap[sidetag].map(function (sideobj) {
-        let starttag = sideobj.vertex0.getTag()
-        let endtag = sideobj.vertex1.getTag()
-        if (starttag in vertextag2sidestart) {
-          vertextag2sidestart[starttag].push(sidetag)
-        } else {
-          vertextag2sidestart[starttag] = [sidetag]
-        }
-        if (endtag in vertextag2sideend) {
-          vertextag2sideend[endtag].push(sidetag)
-        } else {
-          vertextag2sideend[endtag] = [sidetag]
-        }
-      })
-    }
-
-    if (!sidemapisempty) {
-            // make a copy of the polygons array, since we are going to modify it:
-      let polygons = csg.polygons.slice(0)
-
-      function addSide (vertex0, vertex1, polygonindex) {
-        let starttag = vertex0.getTag()
-        let endtag = vertex1.getTag()
-        if (starttag === endtag) throw new Error('Assertion failed')
-        let newsidetag = starttag + '/' + endtag
-        let reversesidetag = endtag + '/' + starttag
-        if (reversesidetag in sidemap) {
-                    // we have a matching reverse oriented side.
-                    // Instead of adding the new side, cancel out the reverse side:
-                    // console.log("addSide("+newsidetag+") has reverse side:");
-          deleteSide(vertex1, vertex0, null)
-          return null
-        }
-                //  console.log("addSide("+newsidetag+")");
-        let newsideobj = {
-          vertex0: vertex0,
-          vertex1: vertex1,
-          polygonindex: polygonindex
-        }
-        if (!(newsidetag in sidemap)) {
-          sidemap[newsidetag] = [newsideobj]
-        } else {
-          sidemap[newsidetag].push(newsideobj)
-        }
-        if (starttag in vertextag2sidestart) {
-          vertextag2sidestart[starttag].push(newsidetag)
-        } else {
-          vertextag2sidestart[starttag] = [newsidetag]
-        }
-        if (endtag in vertextag2sideend) {
-          vertextag2sideend[endtag].push(newsidetag)
-        } else {
-          vertextag2sideend[endtag] = [newsidetag]
-        }
-        return newsidetag
-      }
-
-      function deleteSide (vertex0, vertex1, polygonindex) {
-        let starttag = vertex0.getTag()
-        let endtag = vertex1.getTag()
-        let sidetag = starttag + '/' + endtag
-                // console.log("deleteSide("+sidetag+")");
-        if (!(sidetag in sidemap)) throw new Error('Assertion failed')
-        let idx = -1
-        let sideobjs = sidemap[sidetag]
-        for (let i = 0; i < sideobjs.length; i++) {
-          let sideobj = sideobjs[i]
-          if (sideobj.vertex0 !== vertex0) continue
-          if (sideobj.vertex1 !== vertex1) continue
-          if (polygonindex !== null) {
-            if (sideobj.polygonindex !== polygonindex) continue
-          }
-          idx = i
-          break
-        }
-        if (idx < 0) throw new Error('Assertion failed')
-        sideobjs.splice(idx, 1)
-        if (sideobjs.length === 0) {
-          delete sidemap[sidetag]
-        }
-        idx = vertextag2sidestart[starttag].indexOf(sidetag)
-        if (idx < 0) throw new Error('Assertion failed')
-        vertextag2sidestart[starttag].splice(idx, 1)
-        if (vertextag2sidestart[starttag].length === 0) {
-          delete vertextag2sidestart[starttag]
-        }
-
-        idx = vertextag2sideend[endtag].indexOf(sidetag)
-        if (idx < 0) throw new Error('Assertion failed')
-        vertextag2sideend[endtag].splice(idx, 1)
-        if (vertextag2sideend[endtag].length === 0) {
-          delete vertextag2sideend[endtag]
-        }
-      }
-
-      while (true) {
-        let sidemapisempty = true
-        for (let sidetag in sidemap) {
-          sidemapisempty = false
-          sidestocheck[sidetag] = true
-        }
-        if (sidemapisempty) break
-        let donesomething = false
-        while (true) {
-          let sidetagtocheck = null
-          for (let sidetag in sidestocheck) {
-            sidetagtocheck = sidetag
-            break
-          }
-          if (sidetagtocheck === null) break // sidestocheck is empty, we're done!
-          let donewithside = true
-          if (sidetagtocheck in sidemap) {
-            let sideobjs = sidemap[sidetagtocheck]
-            if (sideobjs.length === 0) throw new Error('Assertion failed')
-            let sideobj = sideobjs[0]
-            for (let directionindex = 0; directionindex < 2; directionindex++) {
-              let startvertex = (directionindex === 0) ? sideobj.vertex0 : sideobj.vertex1
-              let endvertex = (directionindex === 0) ? sideobj.vertex1 : sideobj.vertex0
-              let startvertextag = startvertex.getTag()
-              let endvertextag = endvertex.getTag()
-              let matchingsides = []
-              if (directionindex === 0) {
-                if (startvertextag in vertextag2sideend) {
-                  matchingsides = vertextag2sideend[startvertextag]
-                }
-              } else {
-                if (startvertextag in vertextag2sidestart) {
-                  matchingsides = vertextag2sidestart[startvertextag]
-                }
-              }
-              for (let matchingsideindex = 0; matchingsideindex < matchingsides.length; matchingsideindex++) {
-                let matchingsidetag = matchingsides[matchingsideindex]
-                let matchingside = sidemap[matchingsidetag][0]
-                let matchingsidestartvertex = (directionindex === 0) ? matchingside.vertex0 : matchingside.vertex1
-                let matchingsideendvertex = (directionindex === 0) ? matchingside.vertex1 : matchingside.vertex0
-                let matchingsidestartvertextag = matchingsidestartvertex.getTag()
-                let matchingsideendvertextag = matchingsideendvertex.getTag()
-                if (matchingsideendvertextag !== startvertextag) throw new Error('Assertion failed')
-                if (matchingsidestartvertextag === endvertextag) {
-                                    // matchingside cancels sidetagtocheck
-                  deleteSide(startvertex, endvertex, null)
-                  deleteSide(endvertex, startvertex, null)
-                  donewithside = false
-                  directionindex = 2 // skip reverse direction check
-                  donesomething = true
-                  break
-                } else {
-                  let startpos = startvertex.pos
-                  let endpos = endvertex.pos
-                  let checkpos = matchingsidestartvertex.pos
-                  let direction = checkpos.minus(startpos)
-                                    // Now we need to check if endpos is on the line startpos-checkpos:
-                  let t = endpos.minus(startpos).dot(direction) / direction.dot(direction)
-                  if ((t > 0) && (t < 1)) {
-                    let closestpoint = startpos.plus(direction.times(t))
-                    let distancesquared = closestpoint.distanceToSquared(endpos)
-                    if (distancesquared < (EPS * EPS)) {
-                                            // Yes it's a t-junction! We need to split matchingside in two:
-                      let polygonindex = matchingside.polygonindex
-                      let polygon = polygons[polygonindex]
-                                            // find the index of startvertextag in polygon:
-                      let insertionvertextag = matchingside.vertex1.getTag()
-                      let insertionvertextagindex = -1
-                      for (let i = 0; i < polygon.vertices.length; i++) {
-                        if (polygon.vertices[i].getTag() === insertionvertextag) {
-                          insertionvertextagindex = i
-                          break
-                        }
-                      }
-                      if (insertionvertextagindex < 0) throw new Error('Assertion failed')
-                                            // split the side by inserting the vertex:
-                      let newvertices = polygon.vertices.slice(0)
-                      newvertices.splice(insertionvertextagindex, 0, endvertex)
-                      let newpolygon = new Polygon(newvertices, polygon.shared /* polygon.plane */)
-
-// FIX
-                                           // calculate plane with differents point
-                      if (isNaN(newpolygon.plane.w)) {
-                        let found = false,
-                          loop = function (callback) {
-                            newpolygon.vertices.forEach(function (item) {
-                              if (found) return
-                              callback(item)
-                            })
-                          }
-
-                        loop(function (a) {
-                          loop(function (b) {
-                            loop(function (c) {
-                              newpolygon.plane = Plane.fromPoints(a.pos, b.pos, c.pos)
-                              if (!isNaN(newpolygon.plane.w)) {
-                                found = true
-                              }
-                            })
-                          })
-                        })
-                      }
-// FIX
-
-                      polygons[polygonindex] = newpolygon
-
-                                            // remove the original sides from our maps:
-                                            // deleteSide(sideobj.vertex0, sideobj.vertex1, null);
-                      deleteSide(matchingside.vertex0, matchingside.vertex1, polygonindex)
-                      let newsidetag1 = addSide(matchingside.vertex0, endvertex, polygonindex)
-                      let newsidetag2 = addSide(endvertex, matchingside.vertex1, polygonindex)
-                      if (newsidetag1 !== null) sidestocheck[newsidetag1] = true
-                      if (newsidetag2 !== null) sidestocheck[newsidetag2] = true
-                      donewithside = false
-                      directionindex = 2 // skip reverse direction check
-                      donesomething = true
-                      break
-                    } // if(distancesquared < 1e-10)
-                  } // if( (t > 0) && (t < 1) )
-                } // if(endingstidestartvertextag === endvertextag)
-              } // for matchingsideindex
-            } // for directionindex
-          } // if(sidetagtocheck in sidemap)
-          if (donewithside) {
-            delete sidestocheck[sidetag]
-          }
-        }
-        if (!donesomething) break
-      }
-      let newcsg = CSG.fromPolygons(polygons)
-      newcsg.properties = csg.properties
-      newcsg.isCanonicalized = true
-      newcsg.isRetesselated = true
-      csg = newcsg
-    } // if(!sidemapisempty)
-    sidemapisempty = true
-    for (let sidetag in sidemap) {
-      sidemapisempty = false
-      break
-    }
-    if (!sidemapisempty) {
-      // throw new Error("!sidemapisempty");
-      console.log('!sidemapisempty')
-    }
-    return csg
+    return fixTJunctions(CSG.fromPolygons, this)
   },
 
   toTriangles: function () {
@@ -1247,7 +940,6 @@ CSG.prototype = {
     return (result.length === 1) ? result[0] : result
   }
 }
-
 
 /** Construct a CSG solid from a list of `Polygon` instances.
  * @param {Polygon[]} polygons - list of polygons
