@@ -1,3 +1,13 @@
+<a name="0.3.5"></a>
+## [0.3.5](https://github.com/jscad/csg.js/compare/v0.3.4...v0.3.5) (2017-11-03)
+
+
+### Bug Fixes
+
+* **fixTJunctions:** fixes issues with fixTJunctions ([#63](https://github.com/jscad/csg.js/issues/63)) ([78c5102](https://github.com/jscad/csg.js/commit/78c5102))
+
+
+
 <a name="0.3.4"></a>
 ## [0.3.4](https://github.com/jscad/csg.js/compare/v0.3.3...v0.3.4) (2017-11-01)
 
