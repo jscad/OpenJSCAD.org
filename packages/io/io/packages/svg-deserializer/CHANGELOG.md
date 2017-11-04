@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.3"></a>
+## [0.2.3](https://github.com/jscad/io/compare/@jscad/svg-deserializer@0.2.2...@jscad/svg-deserializer@0.2.3) (2017-11-04)
+
+
+### Bug Fixes
+
+* **svg transforms:** fixes weird new issue with undefined vs null transforms ([#46](https://github.com/jscad/io/issues/46)) ([4a47f00](https://github.com/jscad/io/commit/4a47f00))
+
+
+
+
 <a name="0.2.2"></a>
 ## [0.2.2](https://github.com/jscad/io/compare/@jscad/svg-deserializer@0.2.1...@jscad/svg-deserializer@0.2.2) (2017-11-04)
 
