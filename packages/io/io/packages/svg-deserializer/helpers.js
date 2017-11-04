@@ -29,12 +29,12 @@ const cagLengthY = function (css, svgUnitsPmm, svgUnitsY) {
   if (css.indexOf('%') < 0) {
     return css2cag(css, svgUnitsPmm[1])
   }
-// calculate the units as a percentage of the width
+  // calculate the units as a percentage of the width
   var v = parseFloat(css) // number part
   if (isNaN(v)) { return 0.0 }
   if (v === 0) return v
   v = (v / 100) * svgUnitsY
-// convert the units to mm
+  // convert the units to mm
   v = v / svgUnitsPmm[1]
   // return v;
   return Math.round(v / -100000) * -100000
@@ -44,12 +44,12 @@ const cagLengthP = function (css, svgUnitsPmm, svgUnitsV) {
   if (css.indexOf('%') < 0) {
     return css2cag(css, svgUnitsPmm[1])
   }
-// calculate the units as a percentage of the viewport
+  // calculate the units as a percentage of the viewport
   var v = parseFloat(css) // number part
   if (isNaN(v)) { return 0.0 }
   if (v === 0) return v
   v = (v / 100) * svgUnitsV
-// convert the units to mm
+  // convert the units to mm
   v = v / svgUnitsPmm[0] // FIXME should this use X units?
   return v
 }
@@ -59,14 +59,14 @@ const css2cag = function (css, unit) {
   var v = parseFloat(css) // number part
   if (isNaN(v)) { return 0.0 }
   if (v === 0) return v
-  if (css.search(/EM/i) > 0) {
-    v = v // font size
+  if (css.search(/EM/i) > 0) { // FIXME self assignment , useless ?
+    // v = v // font size
   } else
-  if (css.search(/EX/i) > 0) {
-    v = v // x-height of font
+  if (css.search(/EX/i) > 0) { // FIXME self assignment , useless ?
+    // v = v // x-height of font
   } else
-  if (css.search(/MM/i) > 0) {
-    v = v // absolute millimeters
+  if (css.search(/MM/i) > 0) { // FIXME self assignment , useless ?
+    // v = v // absolute millimeters
   } else
   if (css.search(/CM/i) > 0) {
     v = (v * 10) // absolute centimeters > millimeters
@@ -75,20 +75,20 @@ const css2cag = function (css, unit) {
     v = (v / inchMM) // absolute inches > millimeters
   } else
   if (css.search(/PT/i) > 0) {
-    v = (v / ptMM)   // absolute points > millimeters
+    v = (v / ptMM) // absolute points > millimeters
   } else
   if (css.search(/PC/i) > 0) {
-    v = (v / pcMM)   // absolute picas > millimeters
+    v = (v / pcMM) // absolute picas > millimeters
   } else {
-    v = (v / unit)        // absolute pixels(units) > millimeters
+    v = (v / unit) // absolute pixels(units) > millimeters
   }
-// console.log('v ('+v+')');
+  // console.log('v ('+v+')');
   return v
 }
 
 // convert the SVG color specification to CAG RGB
 const cagColor = function (value) {
-//  var rgb = [0,0,0]; // default is black
+  // var rgb = [0,0,0]; // default is black
   var rgb = null
   value = value.toLowerCase()
   if (value in svgColors) {

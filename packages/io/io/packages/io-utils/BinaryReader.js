@@ -9,12 +9,10 @@
 function BinaryReader (data) {
   this._buffer = data
   this._pos = 0
-};
+}
 
 BinaryReader.prototype = {
-
-   /* Public */
-
+  /* Public */
   readInt8: function () { return this._decodeInt(8, true) },
   readUInt8: function () { return this._decodeInt(8, false) },
   readInt16: function () { return this._decodeInt(16, true) },
@@ -46,8 +44,7 @@ BinaryReader.prototype = {
     return this._buffer.length
   },
 
-   /* Private */
-
+  /* Private */
   _decodeFloat: function (precisionBits, exponentBits) {
     var length = precisionBits + exponentBits + 1
     var size = length >> 3
@@ -73,22 +70,23 @@ BinaryReader.prototype = {
 
     this._pos += size
 
-    return exponent == (bias << 1) + 1 ? significand ? NaN : signal ? -Infinity : +Infinity
-         : (1 + signal * -2) * (exponent || significand ? !exponent ? Math.pow(2, -bias + 1) * significand
-         : Math.pow(2, exponent - bias) * (1 + significand) : 0)
+    return exponent === (bias << 1) + 1 ? significand ? NaN : signal ? -Infinity : +Infinity
+      : (1 + signal * -2) * (exponent || significand ? !exponent ? Math.pow(2, -bias + 1) * significand
+        : Math.pow(2, exponent - bias) * (1 + significand) : 0)
   },
 
   _decodeInt: function (bits, signed) {
-    var x = this._readBits(0, bits, bits / 8), max = Math.pow(2, bits)
+    var x = this._readBits(0, bits, bits / 8)
+    var max = Math.pow(2, bits)
     var result = signed && x >= max / 2 ? x - max : x
 
     this._pos += bits / 8
     return result
   },
 
-   // shl fix: Henri Torgemane ~1996 (compressed by Jonas Raoni)
+  // shl fix: Henri Torgemane ~1996 (compressed by Jonas Raoni)
   _shl: function (a, b) {
-    for (++b; --b; a = ((a %= 0x7fffffff + 1) & 0x40000000) == 0x40000000 ? a * 2 : (a - 0x40000000) * 2 + 0x7fffffff + 1);
+    for (++b; --b; a = ((a %= 0x7fffffff + 1) & 0x40000000) === 0x40000000 ? a * 2 : (a - 0x40000000) * 2 + 0x7fffffff + 1);
     return a
   },
 
@@ -118,7 +116,7 @@ BinaryReader.prototype = {
 
   _checkSize: function (neededBits) {
     if (!(this._pos + Math.ceil(neededBits / 8) < this._buffer.length)) {
-         // throw new Error("Index out of bound");
+      // throw new Error("Index out of bound");
     }
   }
 }

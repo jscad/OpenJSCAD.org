@@ -23,9 +23,9 @@ function PathsToDxf (paths) {
   str += '  0\nENDSEC\n'
   str += '  0\nSECTION\n  2\nENTITIES\n'
   paths.map(function (path) {
-    var numpoints_closed = path.points.length + (path.closed ? 1 : 0)
-    str += '  0\nLWPOLYLINE\n  8\nOpenJsCad\n  90\n' + numpoints_closed + '\n  70\n' + (path.closed ? 1 : 0) + '\n'
-    for (var pointindex = 0; pointindex < numpoints_closed; pointindex++) {
+    var numpointsClosed = path.points.length + (path.closed ? 1 : 0)
+    str += '  0\nLWPOLYLINE\n  8\nOpenJsCad\n  90\n' + numpointsClosed + '\n  70\n' + (path.closed ? 1 : 0) + '\n'
+    for (var pointindex = 0; pointindex < numpointsClosed; pointindex++) {
       var pointindexwrapped = pointindex
       if (pointindexwrapped >= path.points.length) pointindexwrapped -= path.points.length
       var point = path.points[pointindexwrapped]

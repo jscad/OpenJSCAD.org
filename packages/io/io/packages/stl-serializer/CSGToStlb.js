@@ -6,7 +6,7 @@ function serialize (CSG) {
   var int32buffer = new Int32Array(buffer, 0, 1)
   var int8buffer = new Int8Array(buffer, 0, 4)
   int32buffer[0] = 0x11223344
-  if (int8buffer[0] != 0x44) {
+  if (int8buffer[0] !== 0x44) {
     throw new Error('Binary STL output is currently only supported on little-endian (Intel) processors')
   }
 

@@ -83,7 +83,7 @@ const svgTransforms = function (cag, element) {
         default:
           break
       }
-    // shorten the list and continue
+      // shorten the list and continue
       list = list.slice(e, list.length)
       v = exp.exec(list)
     }
@@ -123,19 +123,19 @@ const svgSvg = function (element, {customPxPmm}) {
       // obj.unitsPmm[0] = obj.unitsPmm[0] * s;
       obj.unitsPmm[0] = s
     } else {
-    // scale the default units by the width (%)
+      // scale the default units by the width (%)
       const u = obj.unitsPmm[0] * (parseFloat(obj.width) / 100.0)
       obj.unitsPmm[0] = u
     }
     if (obj.height.indexOf('%') < 0) {
-    // calculate a scaling from height and viewH
+      // calculate a scaling from height and viewH
       let s = css2cag(obj.height, pxPmm) // height in millimeters
       s = obj.viewH / s
-    // scale the default units
+      // scale the default units
       // obj.unitsPmm[1] = obj.unitsPmm[1] * s;
       obj.unitsPmm[1] = s
     } else {
-    // scale the default units by the width (%)
+      // scale the default units by the width (%)
       const u = obj.unitsPmm[1] * (parseFloat(obj.height) / 100.0)
       obj.unitsPmm[1] = u
     }

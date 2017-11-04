@@ -1,4 +1,5 @@
-function vt2jscad (vertices, triangles, normals, colors) {     // vertices, triangles, normals and colors
+// vertices, triangles, normals and colors
+function vt2jscad (vertices, triangles, normals, colors) {
   let src = ''
   src += 'polyhedron({ points: [\n\t'
   for (let i = 0, j = 0; i < vertices.length; i++) {

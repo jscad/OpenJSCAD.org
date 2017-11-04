@@ -31,8 +31,8 @@ function PathsToSvg (paths, bounds) {
   paths.map(function (path) {
     str += '<path d="'
     // FIXME add fill color when CAG has support for colors
-    var numpoints_closed = path.points.length + (path.closed ? 1 : 0)
-    for (var pointindex = 0; pointindex < numpoints_closed; pointindex++) {
+    var numpointsClosed = path.points.length + (path.closed ? 1 : 0)
+    for (var pointindex = 0; pointindex < numpointsClosed; pointindex++) {
       var pointindexwrapped = pointindex
       if (pointindexwrapped >= path.points.length) pointindexwrapped -= path.points.length
       var point = path.points[pointindexwrapped]

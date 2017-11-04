@@ -1,4 +1,3 @@
-const {CSG} = require('@jscad/csg')
 const { ensureManifoldness } = require('@jscad/io-utils')
 
 const mimeType = 'application/json'

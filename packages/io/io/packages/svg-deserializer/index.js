@@ -22,10 +22,10 @@ let svgUnitsX
 let svgUnitsY
 let svgUnitsV
 // processing controls
-let svgObjects = []    // named objects
-let svgGroups = []    // groups of objects
+let svgObjects = [] // named objects
+let svgGroups = [] // groups of objects
 let svgInDefs = false // svg DEFS element in process
-let svgObj = null  // svg in object form
+let svgObj = null // svg in object form
 let svgUnitsPmm = [1, 1]
 
 const objectify = function (group) {
@@ -105,7 +105,7 @@ const codify = function (group) {
     indent += '  '
     i--
   }
-// pre-code
+  // pre-code
   var code = ''
   if (level === 0) {
     code += 'function main(params) {\n'
@@ -292,17 +292,10 @@ function deserializeToCSG (src, filename, options) {
   filename = filename || 'svg'
   const defaults = {pxPmm: require('./constants').pxPmm, version: '0.0.0', addMetaData: true}
   options = Object.assign({}, defaults, options)
-  const {version, pxPmm, addMetaData} = options
+  const {pxPmm} = options
 
   // parse the SVG source
-  const parser = createSvgParser(src, pxPmm)
-  // convert the internal objects to JSCAD code
-  const metadata = {
-    producer: `OpenJSCAD.org ${version} SVG Importer`,
-    date: new Date(),
-    source: filename
-  }
-
+  createSvgParser(src, pxPmm)
   if (!svgObj) {
     throw new Error('SVG parsing failed, no valid svg data retrieved')
   }
@@ -328,7 +321,7 @@ function translate (src, filename, options) {
   const {version, pxPmm, addMetaData} = options
 
   // parse the SVG source
-  const parser = createSvgParser(src, pxPmm)
+  createSvgParser(src, pxPmm)
   // convert the internal objects to JSCAD code
   let code = addMetaData ? `//
   // producer: OpenJSCAD.org ${version} SVG Importer

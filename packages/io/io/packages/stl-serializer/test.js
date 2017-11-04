@@ -4,7 +4,6 @@ const serializer = require('./index.js')
 
 test('serialize csg to stl (binary)', function (t) {
   const input = new CSG.cube()
-  const expected = []
   const observed = serializer.serialize(input, {binary: true})
 
   // TODO: VERY shallow testing ... improve

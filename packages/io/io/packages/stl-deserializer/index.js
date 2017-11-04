@@ -69,7 +69,7 @@ function ensureString (buf) {
 // reliable binary detection
 function isDataBinaryRobust (data) {
   // console.log('data is binary ?')
-  const patternVertex = /vertex[\s]+([\-+]?[0-9]+\.?[0-9]*([eE][\-+]?[0-9]+)?)+[\s]+([\-+]?[0-9]*\.?[0-9]+([eE][\-+]?[0-9]+)?)+[\s]+([\-+]?[0-9]*\.?[0-9]+([eE][\-+]?[0-9]+)?)+/g
+  const patternVertex = /vertex[\s]+([-+]?[0-9]+\.?[0-9]*([eE][-+]?[0-9]+)?)+[\s]+([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)+[\s]+([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)+/g
   const text = ensureString(data)
   const isBinary = patternVertex.exec(text) === null
   return isBinary
@@ -93,8 +93,8 @@ function formatAsCsg (data) {
   return new CSG().union(data)
 }
 
-function deserializeBinarySTL (stl, filename, version, elementFormatter) {
-    // -- This makes more sense if you read http://en.wikipedia.org/wiki/STL_(file_format)#Binary_STL
+function deserializeBinarySTL (stl, filename, version, elementFormatter, debug = false) {
+  // -- This makes more sense if you read http://en.wikipedia.org/wiki/STL_(file_format)#Binary_STL
   let vertices = []
   let triangles = []
   let normals = []
@@ -109,7 +109,12 @@ function deserializeBinarySTL (stl, filename, version, elementFormatter) {
   let bmask = parseInt('00111110000000000', 2)
   let br = new BinaryReader(stl)
 
-  let m = 0, c = 0, r = 0, g = 0, b = 0, a = 0
+  let m = 0
+  let c = 0
+  let r = 0
+  let g = 0
+  let b = 0
+  let a = 0
   for (let i = 0; i < 80; i++) {
     switch (m) {
       case 6:
@@ -137,6 +142,7 @@ function deserializeBinarySTL (stl, filename, version, elementFormatter) {
           case 'R':
           case '=':
             m += 1
+            break
           default:
             break
         }
@@ -150,35 +156,37 @@ function deserializeBinarySTL (stl, filename, version, elementFormatter) {
   let totalTriangles = br.readUInt32() // Read # triangles
 
   for (let tr = 0; tr < totalTriangles; tr++) {
-        // if(tr%100==0) status('stl importer: converted '+converted+' out of '+totalTriangles+' triangles');
-        /*
-             REAL32[3] . Normal vector
-             REAL32[3] . Vertex 1
-             REAL32[3] . Vertex 2
-             REAL32[3] . Vertex 3
-                UINT16 . Attribute byte count */
-        // -- Parse normal
+    if (debug) {
+      if (tr % 100 === 0) console.info(`stl importer: converted ${converted} out of ${totalTriangles} triangles`)
+    }
+    /*
+      REAL32[3] . Normal vector
+      REAL32[3] . Vertex 1
+      REAL32[3] . Vertex 2
+      REAL32[3] . Vertex 3
+      UINT16 . Attribute byte count */
+    // -- Parse normal
     let no = []; no.push(br.readFloat()); no.push(br.readFloat()); no.push(br.readFloat())
 
-        // -- Parse every 3 subsequent floats as a vertex
+    // -- Parse every 3 subsequent floats as a vertex
     let v1 = []; v1.push(br.readFloat()); v1.push(br.readFloat()); v1.push(br.readFloat())
     let v2 = []; v2.push(br.readFloat()); v2.push(br.readFloat()); v2.push(br.readFloat())
     let v3 = []; v3.push(br.readFloat()); v3.push(br.readFloat()); v3.push(br.readFloat())
 
     let skip = 0
-    if (1) {
-      for (let i = 0; i < 3; i++) {
-        if (isNaN(v1[i])) skip++
-        if (isNaN(v2[i])) skip++
-        if (isNaN(v3[i])) skip++
-        if (isNaN(no[i])) skip++
-      }
-      if (skip > 0) {
-        echo('bad triangle vertice coords/normal: ', skip)
-      }
+
+    for (let i = 0; i < 3; i++) {
+      if (isNaN(v1[i])) skip++
+      if (isNaN(v2[i])) skip++
+      if (isNaN(v3[i])) skip++
+      if (isNaN(no[i])) skip++
     }
+    if (skip > 0) {
+      echo('bad triangle vertice coords/normal: ', skip)
+    }
+
     err += skip
-        // -- every 3 vertices create a triangle.
+    // -- every 3 vertices create a triangle.
     let triangle = []; triangle.push(vertexIndex++); triangle.push(vertexIndex++); triangle.push(vertexIndex++)
 
     let abc = br.readUInt16()
@@ -197,20 +205,20 @@ function deserializeBinarySTL (stl, filename, version, elementFormatter) {
       colors.push(color)
     }
 
-        // -- Add 3 vertices for every triangle
-        // -- TODO: OPTIMIZE: Check if the vertex is already in the array, if it is just reuse the index
-    if (skip === 0) {  // checking cw vs ccw, given all normal/vertice are valid
-           // E1 = B - A
-           // E2 = C - A
-           // test = dot( Normal, cross( E1, E2 ) )
-           // test > 0: cw, test < 0 : ccw
+    // -- Add 3 vertices for every triangle
+    // -- TODO: OPTIMIZE: Check if the vertex is already in the array, if it is just reuse the index
+    if (skip === 0) { // checking cw vs ccw, given all normal/vertice are valid
+      // E1 = B - A
+      // E2 = C - A
+      // test = dot( Normal, cross( E1, E2 ) )
+      // test > 0: cw, test < 0 : ccw
       let w1 = new CSG.Vector3D(v1)
       let w2 = new CSG.Vector3D(v2)
       let w3 = new CSG.Vector3D(v3)
       let e1 = w2.minus(w1)
       let e2 = w3.minus(w1)
       let t = new CSG.Vector3D(no).dot(e1.cross(e2))
-      if (t > 0) {    // 1,2,3 -> 3,2,1
+      if (t > 0) { // 1,2,3 -> 3,2,1
         let tmp = v3
         v3 = v1
         v1 = tmp
@@ -224,11 +232,15 @@ function deserializeBinarySTL (stl, filename, version, elementFormatter) {
     converted++
   }
 
+  if (err) {
+    console.warn(`WARNING: import errors: ${err} (some triangles might be misaligned or missing)`)
+    // FIXME: this used to be added to the output script, which makes more sense
+  }
+
   return [elementFormatter({vertices, triangles, normals, colors})]
 }
 
 function deserializeAsciiSTL (stl, filename, version, elementFormatter) {
-  let n = 0
   let converted = 0
   let o
 
@@ -237,7 +249,7 @@ function deserializeAsciiSTL (stl, filename, version, elementFormatter) {
   // src += '// objects: ' + (objects.length - 1) + '\n'
   let elements = []
   for (o = 1; o < objects.length; o++) {
-        // -- Translation: a non-greedy regex for facet {...} endloop pattern
+    // -- Translation: a non-greedy regex for facet {...} endloop pattern
     let patt = /\bfacet[\s\S]*?endloop/mgi
     let vertices = []
     let triangles = []
@@ -248,11 +260,11 @@ function deserializeAsciiSTL (stl, filename, version, elementFormatter) {
     let match = stl.match(patt)
     if (match == null) continue
     for (let i = 0; i < match.length; i++) {
-            // if(converted%100==0) status('stl to jscad: converted '+converted+' out of '+match.length+ ' facets');
-            // -- 1 normal with 3 numbers, 3 different vertex objects each with 3 numbers:
-            // let vpatt = /\bfacet\s+normal\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s*outer\s+loop\s+vertex\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s*vertex\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s*vertex\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)/mgi;
-                                         // (-?\d+\.?\d*) -1.21223
-                                         // (-?\d+\.?\d*[Ee]?[-+]?\d*)
+      // if(converted%100==0) status('stl to jscad: converted '+converted+' out of '+match.length+ ' facets');
+      // -- 1 normal with 3 numbers, 3 different vertex objects each with 3 numbers:
+      // let vpatt = /\bfacet\s+normal\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s*outer\s+loop\s+vertex\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s*vertex\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s*vertex\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)/mgi;
+      // (-?\d+\.?\d*) -1.21223
+      // (-?\d+\.?\d*[Ee]?[-+]?\d*)
       let vpatt = /\bfacet\s+normal\s+(\S+)\s+(\S+)\s+(\S+)\s+outer\s+loop\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s*/mgi
       let v = vpatt.exec(match[i])
       if (v == null) continue
@@ -296,20 +308,20 @@ function deserializeAsciiSTL (stl, filename, version, elementFormatter) {
       let v3 = []; v3.push(parseFloat(v[j++])); v3.push(parseFloat(v[j++])); v3.push(parseFloat(v[j++]))
       let triangle = []; triangle.push(vertexIndex++); triangle.push(vertexIndex++); triangle.push(vertexIndex++)
 
-            // -- Add 3 vertices for every triangle
-            //    TODO: OPTIMIZE: Check if the vertex is already in the array, if it is just reuse the index
+      // -- Add 3 vertices for every triangle
+      // TODO: OPTIMIZE: Check if the vertex is already in the array, if it is just reuse the index
       if (skip === 0) {  // checking cw vs ccw
-               // E1 = B - A
-               // E2 = C - A
-               // test = dot( Normal, cross( E1, E2 ) )
-               // test > 0: cw, test < 0: ccw
+        // E1 = B - A
+        // E2 = C - A
+        // test = dot( Normal, cross( E1, E2 ) )
+        // test > 0: cw, test < 0: ccw
         let w1 = new CSG.Vector3D(v1)
         let w2 = new CSG.Vector3D(v2)
         let w3 = new CSG.Vector3D(v3)
         let e1 = w2.minus(w1)
         let e2 = w3.minus(w1)
         let t = new CSG.Vector3D(no).dot(e1.cross(e2))
-        if (t > 0) {      // 1,2,3 -> 3,2,1
+        if (t > 0) { // 1,2,3 -> 3,2,1
           let tmp = v3
           v3 = v1
           v1 = tmp
@@ -322,9 +334,11 @@ function deserializeAsciiSTL (stl, filename, version, elementFormatter) {
       triangles.push(triangle)
       converted++
     }
-    /* if (err) src += '// WARNING: import errors: ' + err + ' (some triangles might be misaligned or missing)\n'
-    src += '// object #' + (o) + ': triangles: ' + match.length + '\n'
-    */
+    if (err) {
+      console.warn(`WARNING: import errors: ${err} (some triangles might be misaligned or missing)`)
+      // FIXME: this used to be added to the output script, which makes more sense
+    }
+
     elements.push(
       elementFormatter({vertices, triangles, index: o})
     )

@@ -1,4 +1,3 @@
-//import { CSG } from '@jscad/csg'
 const {CSG} = require('@jscad/csg')
 
 // convert the given (anonymous JSON) object into CSG

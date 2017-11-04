@@ -30,7 +30,7 @@ module.exports = {
   stlDeSerializer,
   svgDeSerializer
 }
-/*export {makeBlob} from './utils/Blob'
+/* export {makeBlob} from './utils/Blob'
 
 import * as CAGToDxf from './serializers/CAGToDxf'
 import * as CAGToJson from './serializers/CAGToJson'
@@ -48,4 +48,4 @@ export {parseGCode} from './deserializers/parseGCode'
 export {parseJSON} from './deserializers/parseJSON'
 export {parseOBJ} from './deserializers/parseOBJ'
 export {parseSTL} from './deserializers/parseSTL'
-export {parseSVG} from './deserializers/parseSVG'*/
+export {parseSVG} from './deserializers/parseSVG' */

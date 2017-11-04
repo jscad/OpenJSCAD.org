@@ -58,7 +58,7 @@ function Blob (contents, options) {
   let wbytes
   let object
   // convert the contents (String, ArrayBufferView, ArrayBuffer, Blob)
-  this.buffer = new Buffer(this.length)
+  this.buffer = Buffer.alloc(this.length) // new Buffer(this.length)
   var index = 0
   for (index = 0; index < contents.length; index++) {
     switch (typeof (contents[index])) {

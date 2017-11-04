@@ -18,8 +18,7 @@ function CSGVertextoStlString (vertex) {
 
 function CSGPolygontoStlString (polygon) {
   var result = ''
-  if (polygon.vertices.length >= 3) // should be!
-  {
+  if (polygon.vertices.length >= 3) {
     // STL requires triangular polygons. If our polygon has more vertices, create
     // multiple triangles:
     var firstVertexStl = CSGVertextoStlString(polygon.vertices[0])

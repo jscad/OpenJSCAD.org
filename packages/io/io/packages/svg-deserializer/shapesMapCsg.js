@@ -19,8 +19,8 @@ const shapesMap = function (obj, codify, params) {
       const rx = cagLengthX(obj.rx, svgUnitsPmm, svgUnitsX)
       // const ry = cagLengthY(obj.ry, svgUnitsPmm, svgUnitsY)
       if (w > 0 && h > 0) {
-        x = (x + (w / 2)).toFixed(4)  // position the object via the center
-        y = (y - (h / 2)).toFixed(4)  // position the object via the center
+        x = (x + (w / 2)).toFixed(4) // position the object via the center
+        y = (y - (h / 2)).toFixed(4) // position the object via the center
         if (rx === 0) {
           return CAG.rectangle({center: [x, y], radius: [w / 2, h / 2]})
         } else {
@@ -64,7 +64,7 @@ const shapesMap = function (obj, codify, params) {
         }
       }
       const tmpObj = new CSG.Path2D([[x1, y1], [x2, y2]], false)
-      .expandToCAG(r, CSG.defaultResolution2D)
+        .expandToCAG(r, CSG.defaultResolution2D)
       return tmpObj
     },
 
@@ -96,8 +96,8 @@ const shapesMap = function (obj, codify, params) {
       for (let j = 0; j < obj.points.length; j++) {
         const p = obj.points[j]
         if ('x' in p && 'y' in p) {
-          var x = cagLengthX(p.x, svgUnitsPmm, svgUnitsX)
-          var y = (0 - cagLengthY(p.y, svgUnitsPmm, svgUnitsY))
+          let x = cagLengthX(p.x, svgUnitsPmm, svgUnitsX)
+          let y = (0 - cagLengthY(p.y, svgUnitsPmm, svgUnitsY))
           points.push([x, y])
         }
       }
@@ -127,34 +127,34 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
     }
   }
   // Note: All values are SVG values
-  let sx = 0     // starting position
+  let sx = 0 // starting position
   let sy = 0
-  let cx = 0     // current position
+  let cx = 0 // current position
   let cy = 0
-  let pi = 0     // current path index
+  let pi = 0 // current path index
   let pathName = on + pi // current path name
   let pc = false // current path closed
-  let bx = 0     // 2nd control point from previous C command
-  let by = 0     // 2nd control point from previous C command
-  let qx = 0     // 2nd control point from previous Q command
-  let qy = 0     // 2nd control point from previous Q command
+  let bx = 0 // 2nd control point from previous C command
+  let by = 0 // 2nd control point from previous C command
+  let qx = 0 // 2nd control point from previous Q command
+  let qy = 0 // 2nd control point from previous Q command
 
   for (let j = 0; j < obj.commands.length; j++) {
-    var co = obj.commands[j]
-    var pts = co.p
+    let co = obj.commands[j]
+    let pts = co.p
     // console.log('postion: ['+cx+','+cy+'] before '+co.c);
     switch (co.c) {
       case 'm': // relative move to X,Y
-      // special case, if at beginning of path then treat like absolute M
+        // special case, if at beginning of path then treat like absolute M
         if (j === 0) {
           cx = 0; cy = 0
         }
-      // close the previous path
+        // close the previous path
         if (pi > 0 && pc === false) {
           paths[pathName].expandToCAG(CSG.defaultResolution2D)
           // code += indent + pathName + ' = ' + pathName + '.expandToCAG(' + r + ',CSG.defaultResolution2D);\n'
         }
-      // open a new path
+        // open a new path
         if (pts.length >= 2) {
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
@@ -164,7 +164,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
           paths[pathName] = new CSG.Path2D([[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]], false)
           sx = cx; sy = cy
         }
-      // optional implicit relative lineTo (cf SVG spec 8.3.2)
+        // optional implicit relative lineTo (cf SVG spec 8.3.2)
         while (pts.length >= 2) {
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
@@ -172,11 +172,11 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
         }
         break
       case 'M': // absolute move to X,Y
-      // close the previous path
+        // close the previous path
         if (pi > 0 && pc === false) {
           paths[pathName] = paths[pathName].expandToCAG(CSG.defaultResolution2D)
         }
-      // open a new path
+        // open a new path
         if (pts.length >= 2) {
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
@@ -186,7 +186,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
           paths[pathName] = new CSG.Path2D([[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]], false)
           sx = cx; sy = cy
         }
-      // optional implicit absolute lineTo (cf SVG spec 8.3.2)
+        // optional implicit absolute lineTo (cf SVG spec 8.3.2)
         while (pts.length >= 2) {
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
@@ -195,11 +195,11 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
         break
       case 'a': // relative elliptical arc
         while (pts.length >= 7) {
-          var rx = parseFloat(pts.shift())
-          var ry = parseFloat(pts.shift())
-          var ro = 0 - parseFloat(pts.shift())
-          var lf = (pts.shift() === '1')
-          var sf = (pts.shift() === '1')
+          let rx = parseFloat(pts.shift())
+          let ry = parseFloat(pts.shift())
+          let ro = 0 - parseFloat(pts.shift())
+          let lf = (pts.shift() === '1')
+          let sf = (pts.shift() === '1')
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
           paths[pathName].appendArc([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)], {xradius: svg2cagX(rx, svgUnitsPmm), yradius: svg2cagY(ry, svgUnitsPmm), xaxisrotation: ro, clockwise: sf, large: lf})
@@ -207,11 +207,11 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
         break
       case 'A': // absolute elliptical arc
         while (pts.length >= 7) {
-          var rx = parseFloat(pts.shift())
-          var ry = parseFloat(pts.shift())
-          var ro = 0 - parseFloat(pts.shift())
-          var lf = (pts.shift() === '1')
-          var sf = (pts.shift() === '1')
+          let rx = parseFloat(pts.shift())
+          let ry = parseFloat(pts.shift())
+          let ro = 0 - parseFloat(pts.shift())
+          let lf = (pts.shift() === '1')
+          let sf = (pts.shift() === '1')
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
           paths[pathName].appendArc([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)], {xradius: svg2cagX(rx, svgUnitsPmm), yradius: svg2cagY(ry, svgUnitsPmm), xaxisrotation: ro, clockwise: sf, large: lf})
@@ -219,28 +219,28 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
         break
       case 'c': // relative cubic Bézier
         while (pts.length >= 6) {
-          var x1 = cx + parseFloat(pts.shift())
-          var y1 = cy + parseFloat(pts.shift())
+          let x1 = cx + parseFloat(pts.shift())
+          let y1 = cy + parseFloat(pts.shift())
           bx = cx + parseFloat(pts.shift())
           by = cy + parseFloat(pts.shift())
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
           paths[pathName] = paths[pathName].appendBezier([[svg2cagX(x1, svgUnitsPmm), svg2cagY(y1, svgUnitsPmm)], [svg2cagX(bx, svgUnitsPmm), svg2cagY(by, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
-          var rf = reflect(bx, by, cx, cy)
+          let rf = reflect(bx, by, cx, cy)
           bx = rf[0]
           by = rf[1]
         }
         break
       case 'C': // absolute cubic Bézier
         while (pts.length >= 6) {
-          var x1 = parseFloat(pts.shift())
-          var y1 = parseFloat(pts.shift())
+          let x1 = parseFloat(pts.shift())
+          let y1 = parseFloat(pts.shift())
           bx = parseFloat(pts.shift())
           by = parseFloat(pts.shift())
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
           paths[pathName] = paths[pathName].appendBezier([[svg2cagX(x1, svgUnitsPmm), svg2cagY(y1, svgUnitsPmm)], [svg2cagX(bx, svgUnitsPmm), svg2cagY(by, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
-          var rf = reflect(bx, by, cx, cy)
+          let rf = reflect(bx, by, cx, cy)
           bx = rf[0]
           by = rf[1]
         }
@@ -252,7 +252,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
           paths[pathName] = paths[pathName].appendBezier([[svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
-          var rf = reflect(qx, qy, cx, cy)
+          let rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
           qy = rf[1]
         }
@@ -264,7 +264,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
           paths[pathName] = paths[pathName].appendBezier([[svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
-          var rf = reflect(qx, qy, cx, cy)
+          let rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
           qy = rf[1]
         }
@@ -274,7 +274,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
           paths[pathName] = paths[pathName].appendBezier([[svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [cx, cy]])
-          var rf = reflect(qx, qy, cx, cy)
+          let rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
           qy = rf[1]
         }
@@ -284,35 +284,35 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
           paths[pathName] = paths[pathName].appendBezier([[svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
-          var rf = reflect(qx, qy, cx, cy)
+          let rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
           qy = rf[1]
         }
         break
       case 's': // relative cubic Bézier shorthand
         while (pts.length >= 4) {
-          var x1 = bx // reflection of 2nd control point from previous C
-          var y1 = by // reflection of 2nd control point from previous C
+          let x1 = bx // reflection of 2nd control point from previous C
+          let y1 = by // reflection of 2nd control point from previous C
           bx = cx + parseFloat(pts.shift())
           by = cy + parseFloat(pts.shift())
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
           paths[pathName] = paths[pathName].appendBezier([[svg2cagX(x1, svgUnitsPmm), svg2cagY(y1, svgUnitsPmm)], [svg2cagX(bx, svgUnitsPmm), svg2cagY(by, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
-          var rf = reflect(bx, by, cx, cy)
+          let rf = reflect(bx, by, cx, cy)
           bx = rf[0]
           by = rf[1]
         }
         break
       case 'S': // absolute cubic Bézier shorthand
         while (pts.length >= 4) {
-          var x1 = bx // reflection of 2nd control point from previous C
-          var y1 = by // reflection of 2nd control point from previous C
+          let x1 = bx // reflection of 2nd control point from previous C
+          let y1 = by // reflection of 2nd control point from previous C
           bx = parseFloat(pts.shift())
           by = parseFloat(pts.shift())
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
           paths[pathName] = paths[pathName].appendBezier([[svg2cagX(x1, svgUnitsPmm), svg2cagY(y1, svgUnitsPmm)], [svg2cagX(bx, svgUnitsPmm), svg2cagY(by, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
-          var rf = reflect(bx, by, cx, cy)
+          let rf = reflect(bx, by, cx, cy)
           bx = rf[0]
           by = rf[1]
         }
