@@ -37,6 +37,6 @@
     "xmldom": "^0.1.27"
   },
   "devDependencies": {
-    "@jscad/csg": "^0.3.1"
+    "@jscad/csg": "0.3.6"
   }
 }
