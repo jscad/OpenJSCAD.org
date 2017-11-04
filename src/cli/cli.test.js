@@ -136,6 +136,7 @@ test('openscad to amf', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of amf`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
+  console.log('obssize', fs.statSync(outputPath).size, 'expsize', 626177)
   almostEquals(t, fs.statSync(outputPath).size, 626177, 60)
 })
 
