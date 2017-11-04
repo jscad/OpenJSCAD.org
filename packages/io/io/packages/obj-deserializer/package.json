@@ -1,6 +1,6 @@
 {
   "name": "@jscad/obj-deserializer",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Obj deserializer for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",

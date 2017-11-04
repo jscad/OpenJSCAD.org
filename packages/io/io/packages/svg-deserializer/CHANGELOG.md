@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/jscad/io/compare/@jscad/svg-deserializer@0.2.1...@jscad/svg-deserializer@0.2.2) (2017-11-04)
+
+
+
+
+**Note:** Version bump only for package @jscad/svg-deserializer
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/jscad/io/compare/@jscad/svg-deserializer@0.2.0...@jscad/svg-deserializer@0.2.1) (2017-10-10)
 

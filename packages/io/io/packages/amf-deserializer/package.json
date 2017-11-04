@@ -1,6 +1,6 @@
 {
   "name": "@jscad/amf-deserializer",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Amf deserializer for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",
