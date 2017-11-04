@@ -32,6 +32,35 @@ function convertToSolid (objects, params) {
   return solid
 }
 
+function isCAG (object) {
+  // objects[i] instanceof CAG => NOT RELIABLE
+  // 'instanceof' causes huge issues when using objects from
+  // two different versions of CSG.js as they are not reckonized as one and the same
+  // so DO NOT use instanceof to detect matching types for CSG/CAG
+  if (!('sides' in object)) {
+    return false
+  }
+  if (!object.sides.length) {
+    return false
+  }
+
+  return true
+}
+
+function isCSG (object) {
+  // objects[i] instanceof CSG => NOT RELIABLE
+  // 'instanceof' causes huge issues when using objects from
+  // two different versions of CSG.js as they are not reckonized as one and the same
+  // so DO NOT use instanceof to detect matching types for CSG/CAG
+  if (!('polygons' in object)) {
+    return false
+  }
+  if (!object.polygons.length) {
+    return false
+  }
+  return true
+}
+
 function convertToSolid2 (objects, params) {
   const {convertCSG, convertCAG} = params
 
@@ -41,12 +70,14 @@ function convertToSolid2 (objects, params) {
   let foundCSG = false
   let foundCAG = false
   for (let i = 0; i < objects.length; i++) {
-    if (objects[i] instanceof CSG) { foundCSG = true }
-    if (objects[i] instanceof CAG) { foundCAG = true }
+    if (isCSG(objects[i])) { foundCSG = true }
+    if (isCAG(objects[i])) { foundCAG = true }
   }
+
   // convert based on the given format
   foundCSG = foundCSG && convertCSG
   foundCAG = foundCAG && convertCAG
+
   if (foundCSG && foundCAG) { foundCAG = false } // use 3D conversion
 
   object = !foundCSG ? new CAG() : new CSG()
