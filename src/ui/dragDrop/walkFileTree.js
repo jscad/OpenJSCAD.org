@@ -10,15 +10,25 @@ const readFileAsync = function (file, fileMeta) {
   const reader = new FileReader()
 
   return new Promise(function (resolve, reject) {
-    isBinaryFile ? reader.readAsBinaryString(file, 'UTF-8') : reader.readAsText(file, 'UTF-8')
-
+    reader.readAsArrayBuffer(file)
     // remove rootfolder since all files are within it
     const fullpath = fileMeta && fileMeta.fullPath ? fileMeta.fullPath.split('/').slice(2).join('/') : ''
 
+    // convert binary to text
+    function convert (buffer) {
+      let binary = ''
+      const bytes = new Uint8Array(buffer)
+      let length = bytes.byteLength
+      for (let i = 0; i < length; i++) {
+        binary += String.fromCharCode(bytes[i])
+      }
+      return binary
+    }
+
     reader.onloadend = event => {
       event.target.readyState === FileReader.DONE
-        ? resolve({name: file.name, fullpath: fullpath, source: event.target.result})
-        : reject('Failed to load file')
+        ? resolve({name: file.name, fullpath: fullpath, source: convert(event.target.result)})
+        : reject(new Error('Failed to load file'))
     }
   })
 }
@@ -85,18 +95,4 @@ function processDirectory (directory) {
 //    3) return a flattened list of promises containing all file entries
 export function walkFileTree (items) {
   return processItems(items)
-}
-
-export function afterFilesRead ({memFs, memFsCount, memFsTotal, memFsChanged}, files) {
-  memFsCount = files.length
-  memFsTotal = files.length
-
-  // FIXME : THIRD time the SAME data is cached
-  // saveScript(memFs, file.name, file.source)
-  const mainFile = findMainFile({memFs, memFsTotal}, files)
-
-  if (changedFiles(memFs, files).length > 0) {
-    if (!mainFile) throw new Error('No main.jscad found')
-    setCurrentFile(mainFile) // ARGH , cannot do this here
-  }
 }
