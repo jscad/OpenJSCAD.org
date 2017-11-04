@@ -33,6 +33,7 @@ test('jscad (basic, input file only)', t => {
   const cmd = `node ${jscadPath} ${inputPath}`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
+  console.log('obssize', fs.statSync(expPath).size, 'expsize', 326185)
   almostEquals(t, fs.statSync(expPath).size, 326185, 2)
 })
 
