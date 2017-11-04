@@ -150,16 +150,17 @@ const codify = function (group) {
         if ('scale' in t) { ts = t }
         if ('translate' in t) { tt = t }
       }
-      if (ts !== null) {
+      if (ts !== null && ts !== undefined) {
         const x = ts.scale[0]
         const y = ts.scale[1]
         code += indent + on + ' = ' + on + '.scale([' + x + ',' + y + ']);\n'
       }
-      if (tr !== null) {
+      if (tr !== null && tr !== undefined) {
+        console.log('tr', tr)
         const z = 0 - tr.rotate
         code += indent + on + ' = ' + on + '.rotateZ(' + z + ');\n'
       }
-      if (tt !== null) {
+      if (tt !== null && tt !== undefined) {
         const x = cagLengthX(tt.translate[0], svgUnitsPmm, svgUnitsX)
         const y = (0 - cagLengthY(tt.translate[1], svgUnitsPmm, svgUnitsY))
         code += indent + on + ' = ' + on + '.translate([' + x + ',' + y + ']);\n'
