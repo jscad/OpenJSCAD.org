@@ -149,7 +149,7 @@ test('openscad to openjscad', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of jscad`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(outputPath).size, 1058, 2)
+  almostEquals(t, fs.statSync(outputPath).size, 646, 2)
 })
 
 test('openscad to openjscad to stl', t => {
@@ -208,6 +208,34 @@ test('include support, with sub folders', t => {
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
   almostEquals(t, fs.statSync(outputPath).size, 281479, 2)
+})
+
+test('stl to openjscad', t => {
+  const jscadPath = t.context.jscadPath
+  const inputPath = path.resolve(__dirname, '../../examples/thing_7-Zomboe.stl')
+  const outputPath = 'test.jscad'
+  const expPath = outputPath
+  t.context = {outputPath}
+
+  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath}`
+  execSync(cmd, {stdio: [0, 1, 2]})
+
+  t.deepEqual(true, fs.existsSync(expPath))
+  almostEquals(t, fs.statSync(outputPath).size, 3707734, 2)
+})
+
+test('amf to openjscad', t => {
+  const jscadPath = t.context.jscadPath
+  const inputPath = path.resolve(__dirname, '../../examples/amf/Amf_Cube.amf')
+  const outputPath = 'test.jscad'
+  const expPath = outputPath
+  t.context = {outputPath}
+
+  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath}`
+  execSync(cmd, {stdio: [0, 1, 2]})
+
+  t.deepEqual(true, fs.existsSync(expPath))
+  almostEquals(t, fs.statSync(outputPath).size, 1870, 2)
 })
 
 // FIXME: DXF not working
