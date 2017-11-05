@@ -84303,7 +84303,7 @@ exports.XMLReader = XMLReader;
 },{}],402:[function(require,module,exports){
 module.exports={
   "name": "@jscad/openjscad",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "main": "src/module.js",
@@ -85169,8 +85169,8 @@ var _require = require('@jscad/csg'),
 
 var formats = {
   stl: {
-    displayName: 'STL (ASCII)',
-    description: 'STereoLithography, ASCII',
+    displayName: 'STL (Binary)',
+    description: 'STereoLithography, Binary',
     extension: 'stl',
     mimetype: 'application/sla',
     convertCSG: true,
