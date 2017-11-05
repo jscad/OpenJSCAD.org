@@ -84303,7 +84303,7 @@ exports.XMLReader = XMLReader;
 },{}],402:[function(require,module,exports){
 module.exports={
   "name": "@jscad/openjscad",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "main": "src/module.js",
@@ -86978,22 +86978,30 @@ function setUpEditor(divname, gProcessor) {
   // gEditor.setTheme("ace/theme/vibrant_ink")
   // gEditor.setTheme("ace/theme/xcode")
 
+  function runExec(editor) {
+    var src = editor.getValue();
+    if (src.match(/^\/\/\!OpenSCAD/i)) {
+      editor.getSession().setMode('ace/mode/scad');
+      // FIXME test for the global function first
+      src = openscadOpenJscadParser.parse(src);
+    } else {
+      editor.getSession().setMode('ace/mode/javascript');
+    }
+    if (gProcessor !== null) {
+      gProcessor.setJsCad(src);
+    }
+  }
   // enable special keystrokes
   gEditor.commands.addCommand({
     name: 'setJSCAD',
     bindKey: { win: 'F5|Shift-Return', mac: 'F5|Shift-Return' },
-    exec: function exec(editor) {
-      var src = editor.getValue();
-      if (src.match(/^\/\/\!OpenSCAD/i)) {
-        editor.getSession().setMode('ace/mode/scad');
-        // FIXME test for the global function first
-        src = openscadOpenJscadParser.parse(src);
-      } else {
-        editor.getSession().setMode('ace/mode/javascript');
-      }
-      if (gProcessor !== null) {
-        gProcessor.setJsCad(src);
-      }
+    exec: runExec
+  });
+  document.body.addEventListener('keydown', function (evt) {
+    if (evt.key === 'F5') {
+      evt.preventDefault();
+      //console.log('no accidental reloading!')
+      runExec(gEditor);
     }
   });
   gEditor.commands.addCommand({
