@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// --log_all
+//--log_all
 
 // NOTE: this will only run on Node > 6 or needs to be transpiled, or launched via launch-cli
 
