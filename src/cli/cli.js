@@ -44,12 +44,16 @@ const env = require('./env')
 const generateOutputData = require('./generateOutputData')
 const { formats } = require('../io/formats')
 
+/*
+const getExtension = filename => {
+  const ext = extname(filename || '').split('.')
+  return ext[ext.length - 1]
+} */
+
 // var csg = sphere(1);          // -- basic test
 // var csg = require(file).main; // -- treating .jscad as module? later perhaps
 
 const args = process.argv.splice(2)
-
-// -- main code
 
 // handle arguments
 // inputs, outputs
@@ -64,22 +68,14 @@ console.log(`converting ${inputFile} -> ${outputFile} (${formats[outputFormat].d
 
 let src = fs.readFileSync(inputFile, inputFile.match(/\.stl$/i) ? 'binary' : 'UTF8')
 
-if(inputFormat === 'scad')
-{
-  var scadParser = require('@jscad/openscad-openjscad-translator') // hardcoded is bad, but works
-  src = scadParser.parse(src) //    doing the magick
-  src = '// producer: OpenJSCAD ' + version + '\n' + src
-  src = '// source: ' + outputFile + '\n\n' + src
-}
-
 // -- convert from JSCAD script into the desired output format
 // const outputData = generateOutputData(src, params, {outputFormat})
 // -- and write it to disk
 // writeOutputDataToFile(outputFile, outputData)
-generateOutputData(src, params, {outputFormat, inputFile})
+generateOutputData(src, params, {outputFile, outputFormat, inputFile, inputFormat, version})
   .then(function (outputData) {
     writeOutputDataToFile(outputFile, outputData)
-  }).catch(error=>console.error(error))
+  }).catch(error => console.error(error))
 
 // -- helper functions ---------------------------------------------------------------------------------------
 function parseArgs (args) {
@@ -103,7 +99,7 @@ function parseArgs (args) {
   let outputFormat
   let params = {}
 
-  for (var i = 0; i < args.length; i++) {
+  for (let i = 0; i < args.length; i++) {
     if (args[i] === '-of') { // -of <format>
       outputFormat = args[++i]
     } else if (args[i].match(/^-o(\S.+)/)) { // -o<output>
@@ -145,7 +141,7 @@ function parseArgs (args) {
     inputFormat,
     outputFile,
     outputFormat,
-  params}
+    params}
 }
 
 function determineOutputNameAndFormat (outputFormat, outputFile) {
@@ -155,7 +151,7 @@ function determineOutputNameAndFormat (outputFormat, outputFile) {
     console.log('ERROR: invalid output file <' + outputFile + '>')
     process.exit(1)
   } else if (outputFormat.match(/(jscad|js|stl|stla|stlb|amf|dxf|svg)/i)) { // output format defined?
-    var ext = RegExp.$1
+    let ext = RegExp.$1
     if (!outputFile) { // unless output filename not set, compose it
       ext = ext.replace(/stl[ab]/, 'stl') // drop [ab] from stl
       outputFile = inputFile
@@ -174,7 +170,7 @@ function writeOutputDataToFile (outputFile, outputData) {
       if (err) {
         console.log('err', err)
       } else {
-        //console.log('success')
+        // console.log('success')
       }
     }
   )

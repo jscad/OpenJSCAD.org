@@ -3,8 +3,8 @@ const { CSG, CAG } = require('@jscad/csg')
 // handled format descriptions
 const formats = {
   stl: {
-    displayName: 'STL (ASCII)',
-    description: 'STereoLithography, ASCII',
+    displayName: 'STL (Binary)',
+    description: 'STereoLithography, Binary',
     extension: 'stl',
     mimetype: 'application/sla',
     convertCSG: true,
