@@ -33,7 +33,7 @@ test('jscad (basic, input file only)', t => {
   const cmd = `node ${jscadPath} ${inputPath}`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(expPath).size, 326185, 2)
+  almostEquals(t, fs.statSync(expPath).size, 338371, 2) // this has to be set this large because of the cross platform differences
 })
 
 test('jscad with parameters', t => {
@@ -45,7 +45,7 @@ test('jscad with parameters', t => {
   const cmd = `node ${jscadPath} ${inputPath} --name "Just Me" --title "Geek" -o ${outputPath} `
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(expPath).size, 575987, 50)
+  almostEquals(t, fs.statSync(expPath).size, 655732, 50)
 })
 
 test('jscad to stl (ascii)', t => {
@@ -58,34 +58,32 @@ test('jscad to stl (ascii)', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of stla`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(expPath).size, 326185, 2)
+  almostEquals(t, fs.statSync(expPath).size, 338371, 2)
 })
 
 test('jscad to stl(binary)', t => {
   const jscadPath = t.context.jscadPath
   const inputPath = path.resolve(__dirname, '../../examples/logo.jscad')
   const outputPath = 'test.stl'
-  const expPath = path.resolve(__dirname, '../../examples/logo-binary.stl')
   t.context = {outputPath}
 
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of stlb`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(outputPath))
   // t.deepEqual(fs.readFileSync(expPath), fs.readFileSync(outputPath))
-  almostEquals(t, fs.statSync(outputPath).size, 70284, 2)
+  almostEquals(t, fs.statSync(outputPath).size, 74284, 2)
 })
 
 test('jscad to amf', t => {
   const jscadPath = t.context.jscadPath
   const inputPath = path.resolve(__dirname, '../../examples/logo.jscad')
   const outputPath = 'test.amf'
-  const expPath = outputPath
   t.context = {outputPath}
 
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of amf`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(outputPath))
-  almostEquals(t, fs.statSync(outputPath).size, 385246, 50)
+  almostEquals(t, fs.statSync(outputPath).size, 397341, 50)
 })
 
 test('jscad to amf(with transparency)', t => {
@@ -101,8 +99,6 @@ test('jscad to amf(with transparency)', t => {
   almostEquals(t, fs.statSync(outputPath).size, 240108, 50)
 })
 
-
-
 test('openscad to stl (ascii)', t => {
   const jscadPath = t.context.jscadPath
   const inputPath = path.resolve(__dirname, '../../examples/example001.scad')
@@ -113,7 +109,7 @@ test('openscad to stl (ascii)', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of stla`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(outputPath).size, 515365, 100)
+  almostEquals(t, fs.statSync(outputPath).size, 629242, 100)
 })
 
 test('openscad to stl(binary)', t => {
@@ -127,7 +123,7 @@ test('openscad to stl(binary)', t => {
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(outputPath))
   // t.deepEqual(fs.readFileSync(expPath), fs.readFileSync(outputPath))
-  almostEquals(t, fs.statSync(outputPath).size, 91884, 2)
+  almostEquals(t, fs.statSync(outputPath).size, 111684, 2)
 })
 
 test('openscad to amf', t => {
@@ -140,7 +136,7 @@ test('openscad to amf', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of amf`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(outputPath).size, 554963, 60)
+  almostEquals(t, fs.statSync(outputPath).size, 626177, 120)
 })
 
 test('openscad to openjscad', t => {
@@ -153,7 +149,7 @@ test('openscad to openjscad', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of jscad`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(outputPath).size, 1058, 2)
+  almostEquals(t, fs.statSync(outputPath).size, 646, 2)
 })
 
 test('openscad to openjscad to stl', t => {
@@ -171,7 +167,7 @@ test('openscad to openjscad to stl', t => {
   execSync(cmd2, {stdio: [0, 1, 2]})
 
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(outputPath).size, 91884, 2)
+  almostEquals(t, fs.statSync(outputPath).size, 111684, 2)
 })
 
 // NOTE : echo() will likely be deprecated soon, but keeping this around for now
@@ -212,6 +208,34 @@ test('include support, with sub folders', t => {
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
   almostEquals(t, fs.statSync(outputPath).size, 281479, 2)
+})
+
+test('stl to openjscad', t => {
+  const jscadPath = t.context.jscadPath
+  const inputPath = path.resolve(__dirname, '../../examples/thing_7-Zomboe.stl')
+  const outputPath = 'test.jscad'
+  const expPath = outputPath
+  t.context = {outputPath}
+
+  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath}`
+  execSync(cmd, {stdio: [0, 1, 2]})
+
+  t.deepEqual(true, fs.existsSync(expPath))
+  almostEquals(t, fs.statSync(outputPath).size, 3707734, 2)
+})
+
+test('amf to openjscad', t => {
+  const jscadPath = t.context.jscadPath
+  const inputPath = path.resolve(__dirname, '../../examples/amf/Amf_Cube.amf')
+  const outputPath = 'test.jscad'
+  const expPath = outputPath
+  t.context = {outputPath}
+
+  const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath}`
+  execSync(cmd, {stdio: [0, 1, 2]})
+
+  t.deepEqual(true, fs.existsSync(expPath))
+  almostEquals(t, fs.statSync(outputPath).size, 1870, 2)
 })
 
 // FIXME: DXF not working

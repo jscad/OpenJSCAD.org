@@ -1,5 +1,6 @@
 const { CSG, CAG } = require('@jscad/csg')
 const {toArray} = require('../utils/misc')
+const {isCSG, isCAG} = require('./utils')
 
 // FIXME: is there not too much overlap with convertToBlob ?
 /**
@@ -41,12 +42,14 @@ function convertToSolid2 (objects, params) {
   let foundCSG = false
   let foundCAG = false
   for (let i = 0; i < objects.length; i++) {
-    if (objects[i] instanceof CSG) { foundCSG = true }
-    if (objects[i] instanceof CAG) { foundCAG = true }
+    if (isCSG(objects[i])) { foundCSG = true }
+    if (isCAG(objects[i])) { foundCAG = true }
   }
+
   // convert based on the given format
   foundCSG = foundCSG && convertCSG
   foundCAG = foundCAG && convertCAG
+
   if (foundCSG && foundCAG) { foundCAG = false } // use 3D conversion
 
   object = !foundCSG ? new CAG() : new CSG()

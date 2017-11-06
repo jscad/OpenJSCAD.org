@@ -16,11 +16,13 @@ const getParameterDefinitionsCLI = require('./getParameterDefinitionsCLI')
 function generateOutputData (source, params, options) {
   const defaults = {
     implicitGlobals: true,
+    outputFile: undefined,
     outputFormat: 'stl',
-    inputFile: ''
+    inputFile: '',
+    version: ''
   }
   options = Object.assign({}, defaults, options)
-  const {implicitGlobals, outputFormat, inputFile} = options
+  const {implicitGlobals, outputFile, outputFormat, inputFile, inputFormat, version} = options
 
   const inputPath = isAbsolute(inputFile) ? inputFile : resolve(process.cwd(), inputFile)  // path.dirname(inputFile)
 
@@ -41,11 +43,6 @@ if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== '
   }
 }
 `
-
-  source = `${source}
-  ${mainFunction}
-  `
-
   // objects = rebuildSolid(source, '', params, globals, callback)
   return new Promise(function (resolve, reject) {
     const callback = (err, result) => {
@@ -54,6 +51,30 @@ if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== '
       }
       return reject(err)
     }
+    source = inputFormat === 'scad' ? source : `${source}
+    ${mainFunction}`
+
+    // FIXME: technically almost 100% same as src/io/conversionWorker, refactor ?
+    const conversionTable = {
+      amf: data => require('@jscad/io').amfDeSerializer.deserialize(data.source, data.inputFile, options),
+      obj: data => require('@jscad/io').objDeSerializer.deserialize(data.source, data.inputFile, options),
+      gcode: data => require('@jscad/io').gcodeDeSerializer.deserialize(data.source, data.inputFile, options),
+      stl: data => require('@jscad/io').stlDeSerializer.deserialize(data.source, data.inputFile, options),
+      svg: data => require('@jscad/io').svgDeSerializer.deserialize(data.source, data.inputFile, options),
+      json: data => require('@jscad/io').jsonDeSerializer.deserialize(data.source, data.inputFile, options),
+      jscad: data => data.source,
+      js: data => data.source,
+      scad: data => {
+        const source = !data.source.match(/^\/\/!OpenSCAD/i) ? '//!OpenSCAD\n' + data.source : data.source
+        const parsed = require('@jscad/openscad-openjscad-translator').parse(source)
+        return `//producer: OpenJSCAD ${version}
+      // source: ${outputFile}
+      ${parsed}`
+      },
+      undefined: data => reject(new Error(`unsuported input format ${inputFormat}`))
+    }
+    // convert any inputs
+    source = conversionTable[inputFormat]({source, params, options})
 
     if (outputFormat === 'jscad' || outputFormat === 'js') {
       resolve(source)
@@ -62,7 +83,7 @@ if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== '
     }
   })
     .then(function (objects) {
-      //Buffer.from(outputData.data),{encoding: outputData.mimeType},
+      // Buffer.from(outputData.data),{encoding: outputData.mimeType},
       return convertToBlob(prepareOutput(objects, {format: outputFormat}))
     })
 
