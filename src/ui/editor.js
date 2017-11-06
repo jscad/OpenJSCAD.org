@@ -130,6 +130,15 @@ function setUpEditor (divname, gProcessor) {
       }, 0)
     }
   })
+  gEditor.commands.addCommand({
+    name: 'clearStorage',
+    bindKey: { win: 'Ctrl-Shift-\\', mac: 'Command-Shift-\\' },
+    exec: function (editor) {
+      var src = editor.getValue()
+      localStorage.clear()
+      gProcessor.setStatus('cleared', 'Cleared browser storage')
+    }
+  })
 
   return gEditor
 }
