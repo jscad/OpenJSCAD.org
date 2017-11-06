@@ -84303,7 +84303,7 @@ exports.XMLReader = XMLReader;
 },{}],402:[function(require,module,exports){
 module.exports={
   "name": "@jscad/openjscad",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "main": "src/module.js",
@@ -87047,6 +87047,15 @@ function setUpEditor(divname, gProcessor) {
         var event = new MouseEvent('click');
         save_link.dispatchEvent(event);
       }, 0);
+    }
+  });
+  gEditor.commands.addCommand({
+    name: 'clearStorage',
+    bindKey: { win: 'Ctrl-Shift-\\', mac: 'Command-Shift-\\' },
+    exec: function exec(editor) {
+      var src = editor.getValue();
+      localStorage.clear();
+      gProcessor.setStatus('cleared', 'Cleared browser storage');
     }
   });
 
