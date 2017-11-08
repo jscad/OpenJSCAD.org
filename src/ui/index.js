@@ -86,17 +86,15 @@ function init () {
     const versionText = `Version ${version}`
     document.getElementById('menuVersion').innerHTML = versionText
 
-    setTimeout(function () {
+    let initialMenuHidingTimeoutID = setTimeout(function () {
+      initialMenuHidingTimeoutID = null;
       menu.style.left = '-280px'
+      menuHandle.src = 'imgs/menuHandleVLOut.png'
+      if (examples) {
+        setElementHeight(examples, '0px')
+        examples.style.display = 'none'
+      }
     }, 3000) // -- hide slide-menu after 3secs
-
-    // mouseleave
-    menu.addEventListener('mouseleave', function (e) {
-      setElementHeight(examples, '0px')
-      examples.style.display = 'none'
-    // setElementHeight(options, 0)
-    // options.style.display = 'none'
-    })
 
     let examples = document.getElementById('examples');
     if (examples) {
@@ -105,13 +103,25 @@ function init () {
 
       // -- Examples
       examplesTitle.addEventListener('click', function (e) {
-        setElementHeight(examples, 'auto')
-        examples.style.display = 'inline'
-      // setElementHeight(options, 0)
-      // options.style.display = 'none'
+        if (initialMenuHidingTimeoutID !== null) {
+          clearTimeout(initialMenuHidingTimeoutID);
+          initialMenuHidingTimeoutID = null;
+        }
+        // When closed, examples.style.display may be '' or 'none'.
+        // When open, it's reliably 'inline', so test against that.
+        if (examples.style.display === 'inline') {
+          setElementHeight(examples, '0px')
+          examples.style.display = 'none'
+        } else {
+          setElementHeight(examples, 'auto')
+          examples.style.display = 'inline'
+        }
       })
 
       function onLoadExampleClicked (e) {
+        // Don't need to cancel initial menu-hiding timeout, because in order
+        // to get here, user must have clicked on Examples which canceled it
+        // already.
         if (showEditor) { // FIXME test for the element
           editor.style.display = 'inline'
         } else {
@@ -125,6 +135,29 @@ function init () {
           list[i].addEventListener('click', onLoadExampleClicked)
       }
     }
+
+    let menuHandle = document.getElementById('menuHandle')
+    menuHandle.addEventListener('click', function (e) {
+      if (initialMenuHidingTimeoutID !== null) {
+        clearTimeout(initialMenuHidingTimeoutID);
+        initialMenuHidingTimeoutID = null;
+      }
+      // When open, left may be '' or '0' or '0px'.  When closed, it's reliably
+      // '-280px', so test against that.
+      if (menu.style.left === '-280px') {
+        // It's closed; open it.
+        menu.style.left = '0'
+        menuHandle.src = 'imgs/menuHandleVLIn.png'
+      } else {
+        // It's open; close it, and close Examples with it.
+        menu.style.left = '-280px'
+        menuHandle.src = 'imgs/menuHandleVLOut.png'
+        if (examples) {
+          setElementHeight(examples, '0px')
+          examples.style.display = 'none'
+        }
+      }
+    })
   }
 
   if (editFrame) {
@@ -135,7 +168,7 @@ function init () {
         editHandle.src = 'imgs/editHandleIn.png'
       } else {
         setElementWidth(editFrame, '0px')
-        editFrame.src = 'imgs/editHandleOut.png'
+        editHandle.src = 'imgs/editHandleOut.png'
       }
     })
   }
