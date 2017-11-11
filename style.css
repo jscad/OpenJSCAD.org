@@ -197,10 +197,6 @@ canvas {
    left: 0;
 }
 
-#menu:hover, #menu:focus ~ #menuHandle:hover, #menuHandle:focus {
-   left: 0 !important;  /* slide out */
-}
-
 #menuHandle {
    right: -25px;
    top: 45%;
