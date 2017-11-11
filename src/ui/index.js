@@ -87,7 +87,7 @@ function init () {
     document.getElementById('menuVersion').innerHTML = versionText
 
     let initialMenuHidingTimeoutID = setTimeout(function () {
-      initialMenuHidingTimeoutID = null;
+      initialMenuHidingTimeoutID = null
       menu.style.left = '-280px'
       menuHandle.src = 'imgs/menuHandleVLOut.png'
       if (examples) {
@@ -104,8 +104,8 @@ function init () {
       // -- Examples
       examplesTitle.addEventListener('click', function (e) {
         if (initialMenuHidingTimeoutID !== null) {
-          clearTimeout(initialMenuHidingTimeoutID);
-          initialMenuHidingTimeoutID = null;
+          clearTimeout(initialMenuHidingTimeoutID)
+          initialMenuHidingTimeoutID = null
         }
         // When closed, examples.style.display may be '' or 'none'.
         // When open, it's reliably 'inline', so test against that.
@@ -139,8 +139,8 @@ function init () {
     let menuHandle = document.getElementById('menuHandle')
     menuHandle.addEventListener('click', function (e) {
       if (initialMenuHidingTimeoutID !== null) {
-        clearTimeout(initialMenuHidingTimeoutID);
-        initialMenuHidingTimeoutID = null;
+        clearTimeout(initialMenuHidingTimeoutID)
+        initialMenuHidingTimeoutID = null
       }
       // When open, left may be '' or '0' or '0px'.  When closed, it's reliably
       // '-280px', so test against that.
