@@ -84303,7 +84303,7 @@ exports.XMLReader = XMLReader;
 },{}],402:[function(require,module,exports){
 module.exports={
   "name": "@jscad/openjscad",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "main": "src/module.js",
@@ -87459,21 +87459,22 @@ function init() {
     var versionText = 'Version ' + version;
     document.getElementById('menuVersion').innerHTML = versionText;
 
-    setTimeout(function () {
+    var initialMenuHidingTimeoutID = setTimeout(function () {
+      initialMenuHidingTimeoutID = null;
       menu.style.left = '-280px';
+      _menuHandle.src = 'imgs/menuHandleVLOut.png';
+      if (examples) {
+        setElementHeight(examples, '0px');
+        examples.style.display = 'none';
+      }
     }, 3000); // -- hide slide-menu after 3secs
-
-    // mouseleave
-    menu.addEventListener('mouseleave', function (e) {
-      setElementHeight(examples, '0px');
-      examples.style.display = 'none';
-      // setElementHeight(options, 0)
-      // options.style.display = 'none'
-    });
 
     var examples = document.getElementById('examples');
     if (examples) {
       var onLoadExampleClicked = function onLoadExampleClicked(e) {
+        // Don't need to cancel initial menu-hiding timeout, because in order
+        // to get here, user must have clicked on Examples which canceled it
+        // already.
         if (showEditor) {
           // FIXME test for the element
           editor.style.display = 'inline';
@@ -87489,10 +87490,19 @@ function init() {
 
       // -- Examples
       examplesTitle.addEventListener('click', function (e) {
-        setElementHeight(examples, 'auto');
-        examples.style.display = 'inline';
-        // setElementHeight(options, 0)
-        // options.style.display = 'none'
+        if (initialMenuHidingTimeoutID !== null) {
+          clearTimeout(initialMenuHidingTimeoutID);
+          initialMenuHidingTimeoutID = null;
+        }
+        // When closed, examples.style.display may be '' or 'none'.
+        // When open, it's reliably 'inline', so test against that.
+        if (examples.style.display === 'inline') {
+          setElementHeight(examples, '0px');
+          examples.style.display = 'none';
+        } else {
+          setElementHeight(examples, 'auto');
+          examples.style.display = 'inline';
+        }
       });
 
       var list = examples.querySelectorAll('.example');
@@ -87500,6 +87510,29 @@ function init() {
         list[i].addEventListener('click', onLoadExampleClicked);
       }
     }
+
+    var _menuHandle = document.getElementById('menuHandle');
+    _menuHandle.addEventListener('click', function (e) {
+      if (initialMenuHidingTimeoutID !== null) {
+        clearTimeout(initialMenuHidingTimeoutID);
+        initialMenuHidingTimeoutID = null;
+      }
+      // When open, left may be '' or '0' or '0px'.  When closed, it's reliably
+      // '-280px', so test against that.
+      if (menu.style.left === '-280px') {
+        // It's closed; open it.
+        menu.style.left = '0';
+        _menuHandle.src = 'imgs/menuHandleVLIn.png';
+      } else {
+        // It's open; close it, and close Examples with it.
+        menu.style.left = '-280px';
+        _menuHandle.src = 'imgs/menuHandleVLOut.png';
+        if (examples) {
+          setElementHeight(examples, '0px');
+          examples.style.display = 'none';
+        }
+      }
+    });
   }
 
   if (editFrame) {
@@ -87510,7 +87543,7 @@ function init() {
         editHandle.src = 'imgs/editHandleIn.png';
       } else {
         setElementWidth(editFrame, '0px');
-        editFrame.src = 'imgs/editHandleOut.png';
+        editHandle.src = 'imgs/editHandleOut.png';
       }
     });
   }
