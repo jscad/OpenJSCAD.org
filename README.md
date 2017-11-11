@@ -205,8 +205,8 @@ the easiest method is to use ```npm link``` to have a 'live' updating developmen
 - clone this repository ```git clone https://github.com/jscad/OpenJSCAD.org.git```
 - go into OpenJSCAD.org folder ```cd OpenJSCAD.org```
 - install dependencies ```npm install```
-- start dev server if desired: ```npm run start-dev```
-- make it so global ```openjscad``` refers to local code: ```npm link```
+- if desired, make the ```openjscad``` command refer to the code in this folder: ```npm link```
+- if desired, start dev server: ```npm run start-dev```
 
 Then, for example for CSG.js:
 - go back to base directory ```cd ..```
