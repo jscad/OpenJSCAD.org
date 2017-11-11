@@ -201,17 +201,18 @@ but you can also rebuild them manually if you need :
 ### Adding new features in CSG.js or other modules:
 Since OpenJSCAD is made up of multiple dependent modules (csg.js, openscad-openjscad-translator etc),
 the easiest method is to use ```npm link``` to have a 'live' updating development version of OpenJSCAD:
-
-For example for CSG.js
 - create a base directory
-- clone this repository ```git clone git@github.com:jscad/OpenJSCAD.org.git```
+- clone this repository ```git clone https://github.com/jscad/OpenJSCAD.org.git```
 - go into OpenJSCAD.org folder ```cd OpenJSCAD.org```
 - install dependencies ```npm install```
-- start dev server : ```npm run start-dev```
+- if desired, make the ```openjscad``` command refer to the code in this folder: ```npm link```
+- if desired, start dev server: ```npm run start-dev```
+
+Then, for example for CSG.js:
 - go back to base directory ```cd ..```
-- clone CSG.js ```git clone git@github.com:jscad/csg.js.git```
+- clone CSG.js ```git clone https://github.com/jscad/csg.js.git```
 - go into OpenJSCAD.org folder again ```cd OpenJSCAD.org```
-- now type ```npm link ../csg.js/ @jscad/csg```
+- now type ```npm link ../csg.js``` to make @jscad/csg refer to local ../csg.js.
 
 You can now make changes to the CSG.js code and see it impact your locally running
 copy of OpenJSCAD live.

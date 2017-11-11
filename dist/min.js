@@ -38125,7 +38125,7 @@ exports.XMLReader = XMLReader;
 },{}],357:[function(require,module,exports){
 module.exports={
   "name": "@jscad/openjscad",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "main": "src/module.js",
