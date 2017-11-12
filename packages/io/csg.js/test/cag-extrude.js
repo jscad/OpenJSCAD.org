@@ -47,9 +47,9 @@ test('CAG should extrudeInPlane', t => {
   t.is(s1.toPolygons().length, 66)
   var s2 = c2.extrudeInPlane('-X', 'Z', 10, {symmetrical: true})
   t.is(s2.toPolygons().length, 70)
-  var s3 = c3.extrudeInPlane('-Y', '-Z', 100, {symmetrical: false})
+  var s3 = c3.extrudeInPlane('-Y', '-Z', 100, {symmetrical: 'false'})
   t.is(s3.toPolygons().length, 10)
-  var s4 = c4.extrudeInPlane('Y', '-Z', 20, {symmetrical: true})
+  var s4 = c4.extrudeInPlane('Y', '-Z', 20, {symmetrical: 'true'})
   t.is(s4.toPolygons().length, 74)
 })
 

@@ -16,6 +16,15 @@ test('CSG.cube creates a cube', t => {
   isValid(t, 'c1', CSG.cube(/* center:[0,0,0],radius:[1,1,1] */))
   isValid(t, 'c2', CSG.cube({center: [5, 5, 5], radius: 10}))
   isValid(t, 'c3', CSG.cube({'corner1': [-5, -5, -5], 'corner2': [5, 5, 5]}))
+
+  let c4 = CSG.cube({center: [5,5,5],radius: [5,10,20]})
+  let f1 = c4.getFeatures('volume')
+  t.is(f1,8000)
+  let f2 = c4.getFeatures('area')
+  t.is(f2,2800)
+  let f3 = c4.getFeatures(['volume','area'])
+  t.is(f3[0],8000)
+  t.is(f3[1],2800)
 })
 
 test('CSG.sphere creates a sphere', t => {
