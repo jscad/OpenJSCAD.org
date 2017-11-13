@@ -1,3 +1,8 @@
+<a name="0.3.7"></a>
+## [0.3.7](https://github.com/jscad/csg.js/compare/v0.3.6...v0.3.7) (2017-11-13)
+
+
+
 <a name="0.3.6"></a>
 ## [0.3.6](https://github.com/jscad/csg.js/compare/v0.3.5...v0.3.6) (2017-11-03)
 
