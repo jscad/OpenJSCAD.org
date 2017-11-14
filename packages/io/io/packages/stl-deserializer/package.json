@@ -1,6 +1,6 @@
 {
   "name": "@jscad/stl-deserializer",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Stl deserializer for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",
