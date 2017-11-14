@@ -1,9 +1,9 @@
 
-function deserialize (gcode, fn, options) {
+function deserialize (gcode, filename, options) {
   // http://reprap.org/wiki/G-code
-  const defaults = {version: '0.0.0'}
+  const defaults = {version: '0.0.0', addMetaData: true, output: 'jscad'}
   options = Object.assign({}, defaults, options)
-  const {version} = options
+  const {version, output, addMetaData} = options
   // just as experiment ...
   var l = gcode.split(/[\n]/) // for now just GCODE ASCII
   var srci = ''
@@ -85,17 +85,21 @@ function deserialize (gcode, fn, options) {
     ld = d
   }
 
-  var src = ''
-  src += '// producer: OpenJSCAD Compatibility (' + version + ') GCode Importer\n'
-  src += '// date: ' + (new Date()) + '\n'
-  src += '// source: ' + fn + '\n'
-  src += '\n'
+  let code = addMetaData ? `//
+  // producer: OpenJSCAD.org Compatibility${version} GCode deserializer
+  // date: ${new Date()}
+  // source: ${filename}
+  //
+  ` : ''
+  code += `// layers: ${layers}
+  function main() {\n\tvar EX = function(p,opt) { return rectangular_extrude(p,opt); }\n\treturn [
+    ${srci}
+  }
+}
+  `
   // if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
-  src += '// layers: ' + layers + '\n'
-  src += 'function main() {\n\tvar EX = function(p,opt) { return rectangular_extrude(p,opt); }\n\treturn ['
-  src += srci
-  src += '\n\t];\n}\n'
-  return src
+
+  return code
 }
 
 module.exports = {

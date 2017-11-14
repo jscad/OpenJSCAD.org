@@ -11,6 +11,16 @@ const { BinaryReader } = require('@jscad/io-utils')
 // 2013/03/18: renamed functions, creating .jscad source direct via polyhedron()
 const echo = console.info
 
+/**
+* Parse the given stl data and return either a JSCAD script or a CSG/CAG object
+* @param {string} input stl data
+* @param {string} filename (optional) original filename of AMF source
+* @param {object} options options (optional) anonymous object with:
+* @param {string} [options.version='0.0.0'] version number to add to the metadata
+* @param {boolean} [options.addMetadata=true] toggle injection of metadata (producer, date, source) at the start of the file
+* @param {string} [options.output='jscad'] {String} either jscad or csg to set desired output
+* @return {CSG/string} either a CAG/CSG object or a string (jscad script)
+*/
 function deserialize (stl, filename, options) {
   const defaults = {version: '0.0.0', addMetaData: true, output: 'jscad'}
   options = Object.assign({}, defaults, options)

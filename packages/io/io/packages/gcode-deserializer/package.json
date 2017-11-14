@@ -31,5 +31,8 @@
     "deserializer",
     "gcode"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^0.23.0"
+  }
 }
