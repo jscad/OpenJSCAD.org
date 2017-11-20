@@ -1,6 +1,6 @@
 {
   "name": "@jscad/io",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "Meta package for input , output and formats handling for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",
@@ -50,7 +50,7 @@
     "@jscad/stl-deserializer": "^0.2.0",
     "@jscad/stl-serializer": "^0.0.6",
     "@jscad/svg-deserializer": "^0.3.0",
-    "@jscad/svg-serializer": "^0.0.4",
+    "@jscad/svg-serializer": "^0.0.5",
     "@jscad/x3d-serializer": "^0.0.6"
   }
 }

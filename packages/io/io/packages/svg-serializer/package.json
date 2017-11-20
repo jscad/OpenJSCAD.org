@@ -1,6 +1,6 @@
 {
   "name": "@jscad/svg-serializer",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Svg serializer for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",
