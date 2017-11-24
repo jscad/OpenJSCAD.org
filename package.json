@@ -38,10 +38,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/csg": "^0.3.6",
-    "@jscad/io": "^0.3.7",
+    "@jscad/csg": "0.3.6",
+    "@jscad/io": "0.3.7",
     "@jscad/openscad-openjscad-translator": "0.0.10",
-    "@jscad/scad-api": "^0.3.6",
+    "@jscad/scad-api": "0.4.1",
     "astring": "^1.0.2",
     "brace": "0.10.0",
     "esprima": "^3.1.3",
