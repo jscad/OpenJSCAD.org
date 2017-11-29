@@ -1,6 +1,7 @@
 
 // see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
-function serialize (CSG) {
+function serialize (CSG, options) {
+  options && options.statusCallback && options.statusCallback({progress: 0})  
   // first check if the host is little-endian:
   var buffer = new ArrayBuffer(4)
   var int32buffer = new Int32Array(buffer, 0, 1)
@@ -35,7 +36,7 @@ function serialize (CSG) {
   // and one uint16:
   var triangleUint16array = new Uint16Array(triangleBuffer, 48, 1)
   var byteoffset = 0
-  CSG.polygons.map(function (p) {
+  CSG.polygons.map(function (p, i) {
     var numvertices = p.vertices.length
     for (var i = 0; i < numvertices - 2; i++) {
       var normal = p.plane.normal
@@ -55,7 +56,9 @@ function serialize (CSG) {
       allTrianglesBufferAsInt8.set(triangleBufferAsInt8, byteoffset)
       byteoffset += 50
     }
+    options && options.statusCallback && options.statusCallback({progress: 100 * i / CSG.polygons.length})
   })
+  options && options.statusCallback && options.statusCallback({progress: 100})
   return [headerarray.buffer, ar1.buffer, allTrianglesBuffer]// 'blobable array'
   /* return new Blob([headerarray.buffer, ar1.buffer, allTrianglesBuffer], {
     type: mimeType

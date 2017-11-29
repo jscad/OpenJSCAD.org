@@ -5,7 +5,7 @@ const serializer = require('./index.js')
 test('serialize csg to stl (binary)', function (t) {
   const input = new CSG.cube()
   const observed = serializer.serialize(input, {binary: true})
-
+  
   // TODO: VERY shallow testing ... improve
   t.deepEqual(observed[0].byteLength, 80)
   t.deepEqual(observed[1].byteLength, 4)
@@ -17,4 +17,16 @@ test('serialize csg to stl (ascii)', function (t) {
   const expected = [ 'solid csg.js\nfacet normal -1 0 0\nouter loop\nvertex -1 -1 -1\nvertex -1 -1 1\nvertex -1 1 1\nendloop\nendfacet\nfacet normal -1 0 0\nouter loop\nvertex -1 -1 -1\nvertex -1 1 1\nvertex -1 1 -1\nendloop\nendfacet\nfacet normal 1 0 0\nouter loop\nvertex 1 -1 -1\nvertex 1 1 -1\nvertex 1 1 1\nendloop\nendfacet\nfacet normal 1 0 0\nouter loop\nvertex 1 -1 -1\nvertex 1 1 1\nvertex 1 -1 1\nendloop\nendfacet\nfacet normal 0 -1 0\nouter loop\nvertex -1 -1 -1\nvertex 1 -1 -1\nvertex 1 -1 1\nendloop\nendfacet\nfacet normal 0 -1 0\nouter loop\nvertex -1 -1 -1\nvertex 1 -1 1\nvertex -1 -1 1\nendloop\nendfacet\nfacet normal 0 1 0\nouter loop\nvertex -1 1 -1\nvertex -1 1 1\nvertex 1 1 1\nendloop\nendfacet\nfacet normal 0 1 0\nouter loop\nvertex -1 1 -1\nvertex 1 1 1\nvertex 1 1 -1\nendloop\nendfacet\nfacet normal 0 0 -1\nouter loop\nvertex -1 -1 -1\nvertex -1 1 -1\nvertex 1 1 -1\nendloop\nendfacet\nfacet normal 0 0 -1\nouter loop\nvertex -1 -1 -1\nvertex 1 1 -1\nvertex 1 -1 -1\nendloop\nendfacet\nfacet normal 0 0 1\nouter loop\nvertex -1 -1 1\nvertex 1 -1 1\nvertex 1 1 1\nendloop\nendfacet\nfacet normal 0 0 1\nouter loop\nvertex -1 -1 1\nvertex 1 1 1\nvertex -1 1 1\nendloop\nendfacet\nendsolid csg.js\n' ]
   const observed = serializer.serialize(input, {binary: false})
   t.deepEqual(observed, expected)
+})
+
+test('progress status callback', function (t) {
+  const input = new CSG.cube()
+  const progresses = [];
+  const statusCallback = function (statusObj) {
+    progresses.push(statusObj.progress);
+  };
+  const observed = serializer.serialize(input, {statusCallback: statusCallback})
+  
+  t.deepEqual(0, progresses[0]);
+  t.deepEqual(100, progresses[progresses.length - 1]);
 })

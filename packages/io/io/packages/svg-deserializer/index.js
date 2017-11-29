@@ -49,6 +49,7 @@ const deserialize = function (input, filename, options) {
  * @return a CAG (2D CSG) object
  */
 function deserializeToCSG (src, filename, options) {
+  options && options.statusCallback && options.statusCallback({progress: 0})
   filename = filename || 'svg'
   const defaults = {pxPmm: require('./constants').pxPmm, version: '0.0.0', addMetaData: true}
   options = Object.assign({}, defaults, options)
@@ -60,7 +61,12 @@ function deserializeToCSG (src, filename, options) {
     throw new Error('SVG parsing failed, no valid svg data retrieved')
   }
 
-  return objectify(svgObj)
+  options && options.statusCallback && options.statusCallback({progress: 50})
+  
+  const result = objectify(svgObj)
+
+  options && options.statusCallback && options.statusCallback({progress: 100})
+  return result
 }
 
 /**
@@ -75,6 +81,7 @@ function deserializeToCSG (src, filename, options) {
  * @return a CAG (2D CSG) object
  */
 function translate (src, filename, options) {
+  options && options.statusCallback && options.statusCallback({progress: 0})
   filename = filename || 'svg'
   const defaults = {pxPmm: require('./constants').pxPmm, version: '0.0.0', addMetaData: true}
   options = Object.assign({}, defaults, options)
@@ -94,9 +101,12 @@ function translate (src, filename, options) {
     throw new Error('SVG parsing failed, no valid svg data retrieved')
   }
 
+  options && options.statusCallback && options.statusCallback({progress: 50})
+  
   const scadCode = codify(svgObj)
   code += scadCode
 
+  options && options.statusCallback && options.statusCallback({progress: 100})
   return code
 }
 

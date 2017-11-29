@@ -7,7 +7,8 @@ const mimeType = 'model/x3d+xml'
 const XMLSerializer = xmldom.XMLSerializer
 // NOTE: might be useful :https://github.com/jindw/xmldom/pull/152/commits/be5176ece6fa1591daef96a5f361aaacaa445175
 
-function serialize (CSG) {
+function serialize (CSG, options) {
+  options && options.statusCallback && options.statusCallback({progress: 0})
   CSG = ensureManifoldness(CSG)
   const DOMImplementation = typeof document !== 'undefined' ? document.implementation : new xmldom.DOMImplementation()
   // materialPolygonLists
@@ -20,7 +21,7 @@ function serialize (CSG) {
   // map to look up the index in vertexCoords of a given vertex
   var vertexTagToCoordIndexMap = {}
 
-  CSG.polygons.map(function (p) {
+  CSG.polygons.map(function (p, i) {
     var red = 0
     var green = 0
     var blue = 1 // default color is blue
@@ -53,6 +54,7 @@ function serialize (CSG) {
     }
     // add this polygonString to the list of colorString-colored polygons
     materialPolygonLists[colorString].push(polygonString)
+    options && options.statusCallback && options.statusCallback({progress: 100 * i / CSG.polygons.length})
   })
 
   // create output document
@@ -111,6 +113,7 @@ function serialize (CSG) {
   }
 
   const x3dstring = (new XMLSerializer()).serializeToString(exportDoc)
+  options && options.statusCallback && options.statusCallback({progress: 100})
   return [x3dstring]
 }
 

@@ -82,6 +82,7 @@ function toSource (obj) {
 // fn (optional) original filename of JSON source
 //
 function deserialize (src, fn, options) {
+  options && options.statusCallback && options.statusCallback({progress: 0})
   fn = fn || 'amf'
   const defaults = {version: '0.0.0'}
   options = Object.assign({}, defaults, options)
@@ -89,6 +90,7 @@ function deserialize (src, fn, options) {
 
   // convert the JSON into an anonymous object
   var obj = JSON.parse(src)
+  options && options.statusCallback && options.statusCallback({progress: 50})
   // convert the internal objects to JSCAD code
   var code = ''
   code += '//\n'
@@ -99,6 +101,7 @@ function deserialize (src, fn, options) {
   code += 'function main() {\n'
   code += toSource(obj)
   code += '};\n'
+  options && options.statusCallback && options.statusCallback({progress: 100})
   return code
 };
 

@@ -1,5 +1,6 @@
 
 function deserialize (gcode, filename, options) {
+  options && options.statusCallback && options.statusCallback({progress: 0})
   // http://reprap.org/wiki/G-code
   const defaults = {version: '0.0.0', addMetaData: true, output: 'jscad'}
   options = Object.assign({}, defaults, options)
@@ -83,6 +84,7 @@ function deserialize (gcode, filename, options) {
       lpos.E = pos.E
     }
     ld = d
+    options && options.statusCallback && options.statusCallback({progress: 100 * i / l.length})
   }
 
   let code = addMetaData ? `//
@@ -99,6 +101,8 @@ function deserialize (gcode, filename, options) {
   `
   // if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
 
+  options && options.statusCallback && options.statusCallback({progress: 100})
+  
   return code
 }
 

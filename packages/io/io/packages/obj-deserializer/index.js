@@ -12,15 +12,18 @@ const {CSG} = require('@jscad/csg')
  * @return {CSG/string} either a CAG/CSG object or a string (jscad script)
  */
 function deserialize (input, filename, options) { // http://en.wikipedia.org/wiki/Wavefront_.obj_file
+  options && options.statusCallback && options.statusCallback({progress: 0})
   const defaults = {version: '0.0.0', addMetaData: true, output: 'jscad'}
   options = Object.assign({}, defaults, options)
   const {output} = options
 
-  const {positions, faces} = getPositionsAndFaces(input)
-  return output === 'jscad' ? stringify({positions, faces, options}) : objectify({positions, faces, options})
+  const {positions, faces} = getPositionsAndFaces(input, options)
+  const result = output === 'jscad' ? stringify({positions, faces, options}) : objectify({positions, faces, options})
+  options && options.statusCallback && options.statusCallback({progress: 100})
+  return result
 }
 
-const getPositionsAndFaces = data => {
+const getPositionsAndFaces = (data, options) => {
   let lines = data.split(/\n/)
   let positions = []
   let faces = []
@@ -53,6 +56,7 @@ const getPositionsAndFaces = data => {
     } else {
       // vn vt and all others disregarded
     }
+    options && options.statusCallback && options.statusCallback({progress: 90 * i / lines.length})  //getPositionsAndFaces is 90% of total
   }
   return {positions, faces}
 }

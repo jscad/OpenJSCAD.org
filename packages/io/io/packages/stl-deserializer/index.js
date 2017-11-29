@@ -22,6 +22,7 @@ const echo = console.info
 * @return {CSG/string} either a CAG/CSG object or a string (jscad script)
 */
 function deserialize (stl, filename, options) {
+  options && options.statusCallback && options.statusCallback({progress: 0})
   const defaults = {version: '0.0.0', addMetaData: true, output: 'jscad'}
   options = Object.assign({}, defaults, options)
   const {version, output, addMetaData} = options
@@ -30,14 +31,21 @@ function deserialize (stl, filename, options) {
 
   stl = isBinary && isBuffer(stl) ? bufferToBinaryString(stl) : stl
 
+  options && options.statusCallback && options.statusCallback({progress: 33})
+
   const elementFormatterJscad = ({vertices, triangles, normals, colors, index}) => `// object #${index}: triangles: ${triangles.length}\n${vt2jscad(vertices, triangles, null)}`
   const elementFormatterCSG = ({vertices, triangles, normals, colors}) => polyhedron({ points: vertices, polygons: triangles })
 
+  options && options.statusCallback && options.statusCallback({progress: 66})
+  
   const deserializer = isBinary ? deserializeBinarySTL : deserializeAsciiSTL
   const elementFormatter = output === 'jscad' ? elementFormatterJscad : elementFormatterCSG
   const outputFormatter = output === 'jscad' ? formatAsJscad : formatAsCsg
 
-  return outputFormatter(deserializer(stl, filename, version, elementFormatter), addMetaData, version, filename)
+  const result = outputFormatter(deserializer(stl, filename, version, elementFormatter), addMetaData, version, filename)
+  
+  options && options.statusCallback && options.statusCallback({progress: 100})
+  return result
 
   /*
   if (err) src += '// WARNING: import errors: ' + err + ' (some triangles might be misaligned or missing)\n'

@@ -1,7 +1,8 @@
 const { ensureManifoldness } = require('@jscad/io-utils')
 const mimeType = 'application/amf+xml'
 
-function serialize (CSG, m) {
+function serialize (CSG, m, options) {
+  options && options.statusCallback && options.statusCallback({progress: 0})
   CSG = ensureManifoldness(CSG)
   var result = '<?xml version="1.0" encoding="UTF-8"?>\n<amf' + (m && m.unit ? ' unit="+m.unit"' : '') + '>\n'
   for (var k in m) {
@@ -17,7 +18,7 @@ function serialize (CSG, m) {
   result += '</vertices>\n'
 
   var n = 0
-  CSG.polygons.map(function (p) { // then we dump all polygons
+  CSG.polygons.map(function (p, i) { // then we dump all polygons
     result += '<volume>\n'
     if (p.vertices.length < 3) {
       return
@@ -42,9 +43,13 @@ function serialize (CSG, m) {
     }
     n += p.vertices.length
     result += '</volume>\n'
+    options && options.statusCallback && options.statusCallback({progress: 100 * i / CSG.polygons.length})
   })
   result += '</mesh>\n</object>\n'
   result += '</amf>\n'
+
+  options && options.statusCallback && options.statusCallback({progress: 100})
+
   return [result]
 }
 

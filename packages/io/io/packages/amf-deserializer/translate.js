@@ -2,6 +2,7 @@ const createObject = require('./objectBuilder')
 const parse = require('./parse')
 
 const translate = function (src, filename, options) {
+  options && options.statusCallback && options.statusCallback({progress: 0})
   filename = filename || 'amf'
   const defaults = {pxPmm: require('./constants').pxPmm, version: '0.0.0', addMetaData: true}
   options = Object.assign({}, defaults, options)
@@ -20,8 +21,13 @@ const translate = function (src, filename, options) {
   if (!amfObj) {
     throw new Error('AMF parsing failed, no valid AMF data retrieved')
   }
+
+  options && options.statusCallback && options.statusCallback({progress: 50})
+  
   const scadCode = codify(amfObj, {amfMaterials, amfTextures, amfConstels})
   code += scadCode
+  
+  options && options.statusCallback && options.statusCallback({progress: 100})
   return code
 }
 
