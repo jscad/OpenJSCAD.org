@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/jscad/io/compare/@jscad/obj-deserializer@0.1.0...@jscad/obj-deserializer@0.2.0) (2017-11-29)
+
+
+### Features
+
+* add support for a status callback for de/serialization progress ([#49](https://github.com/jscad/io/issues/49)) ([f457cdb](https://github.com/jscad/io/commit/f457cdb))
+
+
+
+
 <a name="0.1.0"></a>
 # [0.1.0](https://github.com/jscad/io/compare/@jscad/obj-deserializer@0.0.4...@jscad/obj-deserializer@0.1.0) (2017-11-14)
 

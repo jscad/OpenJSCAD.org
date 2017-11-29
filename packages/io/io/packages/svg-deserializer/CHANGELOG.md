@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/jscad/io/compare/@jscad/svg-deserializer@0.3.0...@jscad/svg-deserializer@0.4.0) (2017-11-29)
+
+
+### Features
+
+* add support for a status callback for de/serialization progress ([#49](https://github.com/jscad/io/issues/49)) ([f457cdb](https://github.com/jscad/io/commit/f457cdb))
+
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/jscad/io/compare/@jscad/svg-deserializer@0.2.3...@jscad/svg-deserializer@0.3.0) (2017-11-14)
 

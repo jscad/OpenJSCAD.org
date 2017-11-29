@@ -1,6 +1,6 @@
 {
   "name": "@jscad/json-serializer",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "json serializer for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",
