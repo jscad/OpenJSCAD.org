@@ -15,10 +15,12 @@
 
 ## Installation
 
-```
-npm install jscad/desktop
-```
+just clone / manually install this repo from github
 
 ## Usage
 
-
+For now , dev mode only : 
+to start the app, in the root folder , type
+```
+node node_modules/.bin/electron .
+```
