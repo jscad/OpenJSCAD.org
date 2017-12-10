@@ -8,7 +8,7 @@ const viewerOptions = {
   gridColor: [1, 1, 1, 0.1],
   singleton: true, // ensures that no matter how many times you call the creator function, you still only get a single instance
   lighting: {
-    smooth: true,
+    smooth: true
   },
   camera: {
     position: [450, 550, 700],
@@ -55,33 +55,58 @@ function getParameterDefinitionsCLI (getParameterDefinitions, param) {
     for (var a in param) { // given by command-line
       p[a] = param[a]
     }
-    if (0) {
-      for (var a in p) {
-        echo('param=', a, p[a])
-      }
-    }
     return p
   } else {
     return param
   }
 }
 
+function requireFromString (src, filename) {
+  var Module = module.constructor
+  var m = new Module()
+  m._compile(src, filename)
+  return m.exports
+}
 
 document.getElementById('fileLoader').addEventListener('click', function () {
   dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']}, function (fileNames) {
     console.log('loading', fileNames)
-    const jscadScript = require(fileNames[0])
-    console.log(jscadScript.getParameterDefinitions)
-    let params = {}
-    if(jscadScript && 'getParameterDefinitions' in jscadScript){
-      console.log('getParamDefinitions provided')
-      params = getParameterDefinitionsCLI(jscadScript.getParameterDefinitions())//jscadScript.getParameterDefinitions()
+    if (!fileNames || fileNames.length === 0) {
+      return
     }
+    const scriptAsText = fs.readFileSync(fileNames[0], 'utf8')
+    let jscadScript
+    if (!scriptAsText.includes('module.exports') && scriptAsText.includes('main')) {
+      const commonJsScriptText = `
+      const {CSG, CAG} = require('../../core/csg.js/csg')
+      const {square, circle} = require('../../core/scad-api/').primitives2d
+      const {cube, cylinder, sphere} = require('../../core/scad-api/').primitives3d
+      const {color} = require('../../core/scad-api/').color
+      const {hull} = require('../../core/scad-api/').transformations
+      const {rectangular_extrude, linear_extrude, rotate_extrude} = require('../../core/scad-api/').extrusions
+      const {rotate, translate} = require('../../core/scad-api/').transformations
+      const {union, difference, intersection} = require('../../core/scad-api/').booleanOps
+      const {sin, cos, tan, lookup} = require('../../core/scad-api/').maths
+      const {hsl2rgb} = require('../../core/scad-api').color
+      ${scriptAsText}
+      module.exports = main
+      `
+      jscadScript = requireFromString(commonJsScriptText, fileNames[0])
+    }else{
+      jscadScript = require(fileNames[0])      
+    }
+    console.log(typeof jscadScript)
+    let params = {}
+    if (jscadScript && 'getParameterDefinitions' in jscadScript) {
+      console.log('getParamDefinitions provided')
+      params = getParameterDefinitionsCLI(jscadScript.getParameterDefinitions)// jscadScript.getParameterDefinitions()
+    }
+    console.log('params', params)
 
     console.log('script fetched')
     const start = performance.now()
     csg = jscadScript(params)
-    const time = ( performance.now() - start) /1000
+    const time = (performance.now() - start) / 1000
     console.log(`jscad script executed in ${time} s, putting data into viewer`)
     csgViewer({}, {csg})
   })
