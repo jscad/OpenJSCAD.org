@@ -1,0 +1,25 @@
+{
+  "name": "jscad-desktop",
+  "version": "0.0.1",
+  "description": "jscad desktop application",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "Mark 'kaosat-dev' Moissette",
+  "license": "MIT",
+  "devdependencies": {
+    "@jscad/scad-api": "^0.4.2",
+    "browserify": "^14.5.0",
+    "electron": "^1.7.9",
+    "electron-builder": "^19.46.9"
+  },
+  "build": {
+    "appId": "jscad.id",
+    "mac": {
+      "category": "jscad.3dmodeling.type"
+    }
+  }
+}
