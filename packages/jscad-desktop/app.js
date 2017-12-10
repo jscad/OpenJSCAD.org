@@ -77,19 +77,22 @@ document.getElementById('fileLoader').addEventListener('click', function () {
     const scriptAsText = fs.readFileSync(fileNames[0], 'utf8')
     let jscadScript
     if (!scriptAsText.includes('module.exports') && scriptAsText.includes('main')) {
+      const getParamsString = scriptAsText.includes('getParameterDefinitions') ? 
+        'module.exports.getParameterDefinitions = getParameterDefinitions' : ''
       const commonJsScriptText = `
       const {CSG, CAG} = require('../../core/csg.js/csg')
-      const {square, circle} = require('../../core/scad-api/').primitives2d
-      const {cube, cylinder, sphere} = require('../../core/scad-api/').primitives3d
+      const {square, circle, polygon} = require('../../core/scad-api/').primitives2d
+      const {cube, cylinder, sphere, polyhedron, torus} = require('../../core/scad-api/').primitives3d
       const {color} = require('../../core/scad-api/').color
-      const {hull} = require('../../core/scad-api/').transformations
       const {rectangular_extrude, linear_extrude, rotate_extrude} = require('../../core/scad-api/').extrusions
-      const {rotate, translate} = require('../../core/scad-api/').transformations
+      const {rotate, translate, scale, hull} = require('../../core/scad-api/').transformations
       const {union, difference, intersection} = require('../../core/scad-api/').booleanOps
-      const {sin, cos, tan, lookup} = require('../../core/scad-api/').maths
+      const {sin, cos, tan, sqrt, lookup} = require('../../core/scad-api/').maths
       const {hsl2rgb} = require('../../core/scad-api').color
+      const {vector_text} = require('../../core/scad-api').text
       ${scriptAsText}
       module.exports = main
+      ${getParamsString}
       `
       jscadScript = requireFromString(commonJsScriptText, fileNames[0])
     }else{
