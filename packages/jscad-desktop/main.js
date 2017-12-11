@@ -36,24 +36,6 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
-
-  /*const {dialog} = require('electron').remote
-  dialog.showOpenDialog((fileNames) => {
-    if (fileNames === undefined) {
-      console.log('No file selected')
-      return
-    }
-    const fs = require('fs')
-    fs.readFile(filepath, 'utf-8', (err, data) => {
-      if (err) {
-        alert('An error ocurred reading the file :' + err.message)
-        return
-      }
-
-      // Change how to handle the file content
-      console.log('The file content is : ' + data)
-    })
-  })*/
 }
 
 // This method will be called when Electron has finished
@@ -65,9 +47,9 @@ app.on('ready', createWindow)
 app.on('window-all-closed', function () {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
-  //if (process.platform !== 'darwin') {
-    app.quit()
-  //}
+  // if (process.platform !== 'darwin') {
+  app.quit()
+  // }
 })
 
 app.on('activate', function () {
