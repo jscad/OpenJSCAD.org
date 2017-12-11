@@ -29,15 +29,25 @@
             right: 0;
             top: 0;
             bottom: 0;
+            z-index: 0;
           }
           #fileLoader{
             z-index: 1;
-    position: absolute;
+    
+          }
+          .controls {
+            position: absolute;
+            z-index: 1;
+            color: white;
           }
         </style>
     </head>
     <body>
-        <input type="button" value="load jscad (.js or .jscad) file" id="fileLoader"/>
+        <div class='controls'>
+          <input type="button" value="load jscad (.js or .jscad) file" id="fileLoader"/>
+          <label for="autoReload">Auto reload</label><input type="checkbox" id="autoReload"/>
+          <span id='currentFile'></span>
+        </div>
         <div id='renderTarget' style="position:absolute;width:100%;height:100%"> </div>
         <script>
           require('./app') 

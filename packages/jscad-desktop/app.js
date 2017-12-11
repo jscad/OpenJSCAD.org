@@ -24,8 +24,12 @@ const viewerOptions = {
   }
 }
 
+let options = {
+  autoReload: true
+}
+
 const initializeData = function () {
-  return color([1, 0, 0, 1], cube({size: 100}))
+  return cube({size: 100})
 }
 
 let csg = initializeData()
@@ -68,49 +72,82 @@ function requireFromString (src, filename) {
   return m.exports
 }
 
+function watchScript (filePath) {
+  fs.watch(filePath, { encoding: 'utf8' }, (eventType, filename) => {
+    if (filename) {
+      console.log(filename, eventType)
+      requireUncached(filePath)
+      loadAndDisplay(filePath)
+    }
+  })
+}
+
+// from https://stackoverflow.com/questions/9210542/node-js-require-cache-possible-to-invalidate/16060619#16060619
+function requireUncached (module) {
+  delete require.cache[require.resolve(module)]
+  return require(module)
+}
+
+function loadScript (filePath) {
+  const scriptAsText = fs.readFileSync(filePath, 'utf8')
+  let jscadScript
+  if (!scriptAsText.includes('module.exports') && scriptAsText.includes('main')) {
+    const getParamsString = scriptAsText.includes('getParameterDefinitions')
+      ? 'module.exports.getParameterDefinitions = getParameterDefinitions' : ''
+    const commonJsScriptText = `
+    const {CSG, CAG} = require('../../core/csg.js/csg')
+    const {square, circle, polygon} = require('@jscad/scad-api').primitives2d
+    const {cube, cylinder, sphere, polyhedron, torus} = require('@jscad/scad-api').primitives3d
+    const {color} = require('@jscad/scad-api').color
+    const {rectangular_extrude, linear_extrude, rotate_extrude} = require('@jscad/scad-api').extrusions
+    const {rotate, translate, scale, hull} = require('@jscad/scad-api').transformations
+    const {union, difference, intersection} = require('@jscad/scad-api').booleanOps
+    const {sin, cos, tan, sqrt, lookup} = require('@jscad/scad-api').maths
+    const {hsl2rgb} = require('@jscad/scad-api').color
+    const {vector_text} = require('@jscad/scad-api').text
+    ${scriptAsText}
+    module.exports = main
+    ${getParamsString}
+    `
+    jscadScript = requireFromString(commonJsScriptText, filePath)
+  } else {
+    jscadScript = require(filePath)
+  }
+  console.log(typeof jscadScript)
+  let params = {}
+  if (jscadScript && 'getParameterDefinitions' in jscadScript) {
+    console.log('getParamDefinitions provided')
+    params = getParameterDefinitionsCLI(jscadScript.getParameterDefinitions)// jscadScript.getParameterDefinitions()
+  }
+  console.log('params', params)
+  return {params, jscadScript}
+}
+function loadAndDisplay (filePath) {
+  const {jscadScript, params} = loadScript(filePath)
+  const start = performance.now()
+  csg = jscadScript(params)
+  const time = (performance.now() - start) / 1000
+  console.log(`jscad script executed in ${time} s, putting data into viewer`)
+  csgViewer({}, {csg})
+}
+
+document.getElementById('autoReload').checked = options.autoReload
+
+document.getElementById('autoReload').addEventListener('click', function () {
+  options.autoReload = !options.autoReload
+  document.getElementById('autoReload').checked = options.autoReload
+})
+
 document.getElementById('fileLoader').addEventListener('click', function () {
   dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']}, function (fileNames) {
     console.log('loading', fileNames)
     if (!fileNames || fileNames.length === 0) {
       return
     }
-    const scriptAsText = fs.readFileSync(fileNames[0], 'utf8')
-    let jscadScript
-    if (!scriptAsText.includes('module.exports') && scriptAsText.includes('main')) {
-      const getParamsString = scriptAsText.includes('getParameterDefinitions') ? 
-        'module.exports.getParameterDefinitions = getParameterDefinitions' : ''
-      const commonJsScriptText = `
-      const {CSG, CAG} = require('../../core/csg.js/csg')
-      const {square, circle, polygon} = require('../../core/scad-api/').primitives2d
-      const {cube, cylinder, sphere, polyhedron, torus} = require('../../core/scad-api/').primitives3d
-      const {color} = require('../../core/scad-api/').color
-      const {rectangular_extrude, linear_extrude, rotate_extrude} = require('../../core/scad-api/').extrusions
-      const {rotate, translate, scale, hull} = require('../../core/scad-api/').transformations
-      const {union, difference, intersection} = require('../../core/scad-api/').booleanOps
-      const {sin, cos, tan, sqrt, lookup} = require('../../core/scad-api/').maths
-      const {hsl2rgb} = require('../../core/scad-api').color
-      const {vector_text} = require('../../core/scad-api').text
-      ${scriptAsText}
-      module.exports = main
-      ${getParamsString}
-      `
-      jscadScript = requireFromString(commonJsScriptText, fileNames[0])
-    }else{
-      jscadScript = require(fileNames[0])      
+    if (options.autoReload) {
+      watchScript(fileNames[0])
     }
-    console.log(typeof jscadScript)
-    let params = {}
-    if (jscadScript && 'getParameterDefinitions' in jscadScript) {
-      console.log('getParamDefinitions provided')
-      params = getParameterDefinitionsCLI(jscadScript.getParameterDefinitions)// jscadScript.getParameterDefinitions()
-    }
-    console.log('params', params)
-
-    console.log('script fetched')
-    const start = performance.now()
-    csg = jscadScript(params)
-    const time = (performance.now() - start) / 1000
-    console.log(`jscad script executed in ${time} s, putting data into viewer`)
-    csgViewer({}, {csg})
+    document.getElementById('currentFile').innerText = fileNames[0]
+    loadAndDisplay(fileNames[0])
   })
 })
