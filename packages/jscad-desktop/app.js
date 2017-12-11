@@ -1,6 +1,5 @@
 const makeCsgViewer = require('../csg-viewer/src/index')
 const {cube} = require('@jscad/scad-api').primitives3d
-const {color} = require('@jscad/scad-api').color
 
 const viewerOptions = {
   background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
@@ -88,7 +87,7 @@ function requireUncached (module) {
   return require(module)
 }
 
-function loadScript (filePath) {
+function loadScript (filePath, csgBasePath = './node_modules/@jscad/scad-api') {
   const scriptAsText = fs.readFileSync(filePath, 'utf8')
   let jscadScript
   if (!scriptAsText.includes('module.exports') && scriptAsText.includes('main')) {
@@ -96,15 +95,15 @@ function loadScript (filePath) {
       ? 'module.exports.getParameterDefinitions = getParameterDefinitions' : ''
     const commonJsScriptText = `
     const {CSG, CAG} = require('../../core/csg.js/csg')
-    const {square, circle, polygon} = require('@jscad/scad-api').primitives2d
-    const {cube, cylinder, sphere, polyhedron, torus} = require('@jscad/scad-api').primitives3d
-    const {color} = require('@jscad/scad-api').color
-    const {rectangular_extrude, linear_extrude, rotate_extrude} = require('@jscad/scad-api').extrusions
-    const {rotate, translate, scale, hull} = require('@jscad/scad-api').transformations
-    const {union, difference, intersection} = require('@jscad/scad-api').booleanOps
-    const {sin, cos, tan, sqrt, lookup} = require('@jscad/scad-api').maths
-    const {hsl2rgb} = require('@jscad/scad-api').color
-    const {vector_text} = require('@jscad/scad-api').text
+    const {square, circle, polygon} = require('${csgBasePath}').primitives2d
+    const {cube, cylinder, sphere, polyhedron, torus} = require('${csgBasePath}').primitives3d
+    const {color} = require('${csgBasePath}').color
+    const {rectangular_extrude, linear_extrude, rotate_extrude} = require('${csgBasePath}').extrusions
+    const {rotate, translate, scale, hull, chain_hull} = require('${csgBasePath}').transformations
+    const {union, difference, intersection} = require('${csgBasePath}').booleanOps
+    const {sin, cos, tan, sqrt, lookup} = require('${csgBasePath}').maths
+    const {hsl2rgb} = require('${csgBasePath}').color
+    const {vector_text} = require('${csgBasePath}').text
     ${scriptAsText}
     module.exports = main
     ${getParamsString}
