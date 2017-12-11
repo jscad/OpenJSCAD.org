@@ -10,8 +10,10 @@
   },
   "author": "Mark 'kaosat-dev' Moissette",
   "license": "MIT",
-  "devdependencies": {
-    "@jscad/scad-api": "^0.4.2",
+  "dependencies": {
+    "@jscad/scad-api": "^0.4.2"    
+  },
+  "devDependencies": {
     "browserify": "^14.5.0",
     "electron": "^1.7.9",
     "electron-builder": "^19.46.9"
