@@ -1,28 +1,9 @@
 const fs = require('fs')
-
-function getParameterDefinitionsCLI (getParameterDefinitions, param) {
-  if (typeof getParameterDefinitions !== 'undefined') {
-    var p = {}
-    var pa = getParameterDefinitions()
-    for (var a in pa) { // defaults, given by getParameterDefinitions()
-      var x = pa[a]
-      if ('default' in x) {
-        p[pa[a].name] = pa[a].default
-      } else if ('initial' in x) {
-        p[pa[a].name] = pa[a].initial
-      } else if ('checked' in x) {
-        p[pa[a].name] = pa[a].checked
-      }
-    }
-    for (var a in param) { // given by command-line
-      p[a] = param[a]
-    }
-    return p
-  } else {
-    return param
-  }
-}
-
+const getParameterDefinitionsCLI = require('./getParameterDefinitionsCLI')
+/** load an npm module from a string
+ * @param  {String} src the source code of the module
+ * @param  {String} filename the filename of the module
+ */
 function requireFromString (src, filename) {
   var Module = module.constructor
   var m = new Module()
@@ -36,23 +17,32 @@ function requireUncached (module) {
   return require(module)
 }
 
-function loadScript (filePath, csgBasePath = './node_modules/@jscad') {
+const hasScriptGotParameters = scriptSrc => {
+  return scriptSrc && 'getParameterDefinitions' in scriptSrc
+}
+
+function loadScript (filePath, csgBasePath = '../../../core/') { // './node_modules/@jscad') {
+  console.log('loading script')
   const scriptAsText = fs.readFileSync(filePath, 'utf8')
   let jscadScript
   if (!scriptAsText.includes('module.exports') && scriptAsText.includes('main')) {
     const getParamsString = scriptAsText.includes('getParameterDefinitions')
       ? 'module.exports.getParameterDefinitions = getParameterDefinitions' : ''
     const commonJsScriptText = `
-    const {CSG, CAG} = require('${csgBasePath}/csg')
+    //const {CSG, CAG} = require('${csgBasePath}/csg')
+    const {CSG, CAG} = require('./node_modules/@jscad/csg')
     const {square, circle, polygon} = require('${csgBasePath}/scad-api').primitives2d
     const {cube, cylinder, sphere, polyhedron, torus} = require('${csgBasePath}/scad-api').primitives3d
     const {color} = require('${csgBasePath}/scad-api').color
     const {rectangular_extrude, linear_extrude, rotate_extrude} = require('${csgBasePath}/scad-api').extrusions
-    const {rotate, translate, scale, hull, chain_hull} = require('${csgBasePath}/scad-api').transformations
+    const {rotate, translate, scale, hull, chain_hull, expand, contract} = require('${csgBasePath}/scad-api').transformations
     const {union, difference, intersection} = require('${csgBasePath}/scad-api').booleanOps
     const {sin, cos, tan, sqrt, lookup} = require('${csgBasePath}/scad-api').maths
     const {hsl2rgb} = require('${csgBasePath}/scad-api').color
     const {vector_text} = require('${csgBasePath}/scad-api').text
+    const {OpenJsCad} = require('${csgBasePath}/scad-api').OpenJsCad
+    const {echo} = require('${csgBasePath}/scad-api').debug
+    
     ${scriptAsText}
     module.exports = main
     ${getParamsString}
@@ -63,12 +53,12 @@ function loadScript (filePath, csgBasePath = './node_modules/@jscad') {
   }
   console.log(typeof jscadScript)
   let params = {}
-  if (jscadScript && 'getParameterDefinitions' in jscadScript) {
-    console.log('getParamDefinitions provided')
+  let paramDefinitions = []
+  if (hasScriptGotParameters(jscadScript)) {
+    paramDefinitions = jscadScript.getParameterDefinitions()
     params = getParameterDefinitionsCLI(jscadScript.getParameterDefinitions)// jscadScript.getParameterDefinitions()
   }
-  console.log('params', params)
-  return {params, jscadScript}
+  return {params, paramDefinitions, jscadScript}
 }
 
 module.exports = {loadScript, requireUncached}

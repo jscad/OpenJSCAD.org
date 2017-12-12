@@ -40,6 +40,13 @@
             z-index: 1;
             color: white;
           }
+          #params {
+            position: absolute;
+            z-index: 1;
+            color:white;
+            bottom:40px;
+            left: 40px;
+          }
         </style>
     </head>
     <body>
@@ -47,7 +54,9 @@
           <input type="button" value="load jscad (.js or .jscad) file" id="fileLoader"/>
           <label for="autoReload">Auto reload</label><input type="checkbox" id="autoReload"/>
           <span id='currentFile'></span>
+          <span id='stats'></span>
         </div>
+        <span id='params'></span>
         <div id='renderTarget' style="position:absolute;width:100%;height:100%"> </div>
         <script>
           require('./src/app') 

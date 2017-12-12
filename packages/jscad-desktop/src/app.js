@@ -4,7 +4,16 @@ const {remote} = require('electron')
 const {dialog} = remote
 const {requireUncached, loadScript} = require('./scripLoading')
 const makeCsgViewer = require('../../csg-viewer/src/index')
+const {createParamControls} = require('./ui/createParamsControls')
+const getParamValues = require('./getParamValues')
+
 const {cube} = require('@jscad/scad-api').primitives3d
+
+function toArray (data) {
+  if (data === undefined || data === null) { return [] }
+  if (data.constructor !== Array) { return [data] }
+  return data
+}
 
 const packageMetadata = require('../package.json')
 document.title = `${packageMetadata.name} v ${packageMetadata.version}`
@@ -45,10 +54,10 @@ const initializeData = function () {
   return cube({size: 100})
 }
 
-let csg = initializeData()
+let csgs = toArray(initializeData())
 const element = document.getElementById('renderTarget')
 const csgViewer = makeCsgViewer(element, viewerOptions)
-csgViewer(viewerOptions, {csg})
+csgViewer(viewerOptions, {csg: csgs})
 
 function watchScript (filePath) {
   fs.watch(filePath, { encoding: 'utf8' }, (eventType, filename) => {
@@ -62,12 +71,48 @@ function watchScript (filePath) {
 
 function loadAndDisplay (filePath) {
   document.title = `${packageMetadata.name} v ${packageMetadata.version}: ${path.basename(filePath)}`
-  const {jscadScript, params} = loadScript(filePath)
+  const {jscadScript, paramDefinitions, params} = loadScript(filePath)
   const start = performance.now()
-  csg = jscadScript(params)
+  csgs = toArray(jscadScript(params))
   const time = (performance.now() - start) / 1000
   console.log(`jscad script executed in ${time} s, putting data into viewer`)
-  csgViewer({}, {csg})
+  csgViewer({}, {csg: csgs})
+
+  /* const volume = csgs.reduce((acc, csg) => acc + csg.getFeatures('volume'), 0)
+  const polygons = csgs.reduce((acc, csg) => acc + csg.polygons.length, 0)
+
+  document.getElementById('stats').innerText = `
+  Script eval : ${time.toFixed(2)} s
+  Volume      : ${volume.toFixed(2)} mm2
+  Polygons    : ${polygons}
+  ` */
+
+  let paramControls
+  const rebuildSolid = () => {
+    let newParams = getParamValues(paramControls)
+    previousParams = newParams
+    csgs = toArray(jscadScript(newParams))
+    csgViewer({}, {csg: csgs})
+  }
+  let previousParams = params
+  paramControls = createParamControls(document.getElementById('params'), previousParams, paramDefinitions, rebuildSolid)
+  if (paramDefinitions.length > 0) {
+    const button = document.createElement('input')
+    button.type = 'button'
+    button.value = 'update'
+    button.onclick = function(){
+      console.log('update')
+      rebuildSolid()
+    }
+
+    const checkbox = document.createElement('input')
+    checkbox.type = 'checkbox'
+    checkbox.id = 'instantUpdate'
+    checkbox.checked = true
+
+    document.getElementById('params').appendChild(button)
+    document.getElementById('params').appendChild(checkbox)
+  }
 }
 
 document.getElementById('autoReload').checked = options.autoReload
