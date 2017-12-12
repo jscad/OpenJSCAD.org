@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require('path')
 const {remote} = require('electron')
 const {dialog} = remote
 const {requireUncached, loadScript} = require('./scripLoading')
@@ -8,6 +9,7 @@ const {cube} = require('@jscad/scad-api').primitives3d
 const packageMetadata = require('../package.json')
 document.title = `${packageMetadata.name} v ${packageMetadata.version}`
 
+// very nice color for the cuts [0, 0.6, 1] to go with the orange
 const viewerOptions = {
   background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
   meshColor: [0.4, 0.6, 0.5, 1],
@@ -29,7 +31,9 @@ const viewerOptions = {
     far: 18000
   },
   controls: {
-    zoomToFit: 'all'
+    zoomToFit: {
+      targets: 'all'
+    }
   }
 }
 
@@ -57,7 +61,7 @@ function watchScript (filePath) {
 }
 
 function loadAndDisplay (filePath) {
-  document.title = `${packageMetadata.name} v ${packageMetadata.version}: ${filePath}`
+  document.title = `${packageMetadata.name} v ${packageMetadata.version}: ${path.basename(filePath)}`
   const {jscadScript, params} = loadScript(filePath)
   const start = performance.now()
   csg = jscadScript(params)
@@ -82,7 +86,7 @@ document.getElementById('fileLoader').addEventListener('click', function () {
     if (options.autoReload) {
       watchScript(fileNames[0])
     }
-    document.getElementById('currentFile').innerText = fileNames[0]
+    // document.getElementById('currentFile').innerText = fileNames[0]
     loadAndDisplay(fileNames[0])
   })
 })
