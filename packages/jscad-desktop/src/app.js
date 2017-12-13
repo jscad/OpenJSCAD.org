@@ -100,7 +100,7 @@ function loadAndDisplay (filePath) {
     const button = document.createElement('input')
     button.type = 'button'
     button.value = 'update'
-    button.onclick = function(){
+    button.onclick = function () {
       console.log('update')
       rebuildSolid()
     }
@@ -134,4 +134,37 @@ document.getElementById('fileLoader').addEventListener('click', function () {
     // document.getElementById('currentFile').innerText = fileNames[0]
     loadAndDisplay(fileNames[0])
   })
+})
+
+const themes = {
+  light: {
+    background: [1, 1, 1, 1],
+    meshColor: [0, 0.6, 1, 1],
+    grid: {
+      show: true,
+      color: [0.1, 0.1, 0.1, 0.7]
+    }
+  },
+  dark: {
+    background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
+    meshColor: [0.4, 0.6, 0.5, 1],
+    grid: {
+      show: true,
+      color: [1, 1, 1, 0.1]
+    }
+  }
+}
+
+document.getElementById('themeSwitcher').addEventListener('change', function ({target}) {
+  console.log('theme change', target.value)
+  const themeName = target.value
+  const themedViewerOptions = themes[themeName] // Object.assign({}, viewerOptions, themes[themeName])
+  csgViewer(themedViewerOptions)
+
+  // const background = themedViewerOptions.grid.color//.map(x => x * 255)
+  // const bgColorRgba = `rgba(${[...background.map(x => x * 255)].join(', ')})`
+  // console.log(bgColorRgba)
+  const bgColorRgba = themeName === 'light' ? 'black' : 'white'
+  document.getElementById('controls').style.color = bgColorRgba
+  document.getElementById('params').style.color = bgColorRgba
 })

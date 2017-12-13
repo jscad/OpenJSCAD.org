@@ -35,7 +35,7 @@
             z-index: 1;
     
           }
-          .controls {
+          #controls {
             position: absolute;
             z-index: 1;
             color: white;
@@ -50,11 +50,15 @@
         </style>
     </head>
     <body>
-        <div class='controls'>
+        <div id='controls'>
           <input type="button" value="load jscad (.js or .jscad) file" id="fileLoader"/>
           <label for="autoReload">Auto reload</label><input type="checkbox" id="autoReload"/>
           <span id='currentFile'></span>
           <span id='stats'></span>
+          <select id='themeSwitcher'>
+            <option value='dark'>Dark Theme</option>
+            <option value='light'>Light Theme</option>
+          </select>
         </div>
         <span id='params'></span>
         <div id='renderTarget' style="position:absolute;width:100%;height:100%"> </div>
