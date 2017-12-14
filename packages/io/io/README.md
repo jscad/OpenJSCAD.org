@@ -17,11 +17,10 @@ do not generate CSG/CAG objects: there is however work done to enable CSG/CAG ou
 
 deserializers with optional CSG/CAG output:
 
-- [ ] amf-deserializer
-- [ ] gcode-deserializer
+- [x] amf-deserializer
 - [ ] json-deserializer
-- [ ] obj-deserializer
-- [ ] stl-deserializer
+- [x] obj-deserializer
+- [x] stl-deserializer
 - [x] svg-deserializer
 
 Following formats are supported as inputs:
