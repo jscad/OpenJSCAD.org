@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.3.11"></a>
+## [0.3.11](https://github.com/jscad/io/compare/@jscad/io@0.3.10...@jscad/io@0.3.11) (2017-12-14)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
 <a name="0.3.10"></a>
 ## [0.3.10](https://github.com/jscad/io/compare/@jscad/io@0.3.9...@jscad/io@0.3.10) (2017-11-29)
 

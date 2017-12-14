@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.1.1"></a>
+## [0.1.1](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.1.0...@jscad/dxf-serializer@0.1.1) (2017-12-14)
+
+
+
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
 <a name="0.1.0"></a>
 # [0.1.0](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.0.4...@jscad/dxf-serializer@0.1.0) (2017-11-29)
 
