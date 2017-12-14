@@ -30,7 +30,7 @@ npm install @jscad/obj-deserializer
 const objDeSerializer = require('@jscad/obj-deserializer')
 
 const rawData = fs.readFileSync('PATH/TO/file.obj')
-const csgData = objDeSerializer(rawData)
+const csgData = objDeSerializer.deserialize(rawData, undefined, {output: 'csg'})
 
 ```
 

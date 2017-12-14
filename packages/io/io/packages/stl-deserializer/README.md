@@ -30,7 +30,7 @@ npm install @jscad/stl-deserializer
 const stlDeSerializer = require('@jscad/stl-deserializer')
 
 const rawData = fs.readFileSync('PATH/TO/file.stl')
-const csgData = stlDeSerializer(rawData)
+const csgData = stlDeSerializer.deserialize(rawData, undefined, {output: 'csg'})
 
 ```
 

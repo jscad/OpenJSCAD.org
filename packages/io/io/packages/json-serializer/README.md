@@ -31,7 +31,7 @@ npm install @jscad/json-serializer
 ```javascript
 const jsonSerializer = require('@jscad/json-serializer')
 
-const rawData = jsonSerializer(CSGObject)
+const rawData = jsonSerializer.serialize(CSGObject)
 
 //in browser (with browserify etc)
 const blob = new Blob(rawData)

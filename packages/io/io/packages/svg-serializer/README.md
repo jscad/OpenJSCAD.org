@@ -32,7 +32,7 @@ npm install @jscad/svg-serializer
 ```javascript
 const svgSerializer = require('@jscad/svg-serializer')
 
-const rawData = svgSerializer(CAGObject)
+const rawData = svgSerializer.serialize(CAGObject)
 
 //in browser (with browserify etc)
 const blob = new Blob(rawData)

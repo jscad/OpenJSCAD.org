@@ -30,8 +30,7 @@ npm install @jscad/amf-deserializer
 const amfDeSerializer = require('@jscad/amf-deserializer')
 
 const rawData = fs.readFileSync('PATH/TO/file.amf')
-const csgData = amfDeSerializer(rawData)
-
+const csgData = amfDeSerializer.deserialize(rawData, undefined, {output: 'csg'})
 ```
 
 

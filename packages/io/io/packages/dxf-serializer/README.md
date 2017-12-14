@@ -29,9 +29,9 @@ npm install @jscad/dxf-serializer
 
 
 ```javascript
-const dxfSerializer = require('@jscad/dxf-serializer').serialize
+const dxfSerializer = require('@jscad/dxf-serializer')
 
-const rawData = dxfSerializer(CSGObject)
+const rawData = dxfSerializer.serialize(CSGObject)
 
 //in browser (with browserify etc)
 const blob = new Blob(rawData)

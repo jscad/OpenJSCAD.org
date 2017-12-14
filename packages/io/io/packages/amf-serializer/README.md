@@ -31,7 +31,7 @@ npm install @jscad/amf-serializer
 ```javascript
 const amfSerializer = require('@jscad/amf-serializer')
 
-const rawData = amfSerializer(CSGObject)
+const rawData = amfSerializer.serialize(CSGObject)
 
 //in browser (with browserify etc)
 const blob = new Blob(rawData)

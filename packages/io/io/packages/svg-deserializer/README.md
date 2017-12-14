@@ -32,7 +32,7 @@ npm install @jscad/svg-deserializer
 const svgDeSerializer = require('@jscad/svg-deserializer').deserialize
 
 const rawData = fs.readFileSync('PATH/TO/file.svg')
-const csgData = svgDeSerializer(rawData)
+const cagData = svgDeSerializer.deserialize(rawData, undefined, {output: 'csg'})
 
 ```
 

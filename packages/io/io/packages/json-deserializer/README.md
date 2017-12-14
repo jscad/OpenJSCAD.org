@@ -30,7 +30,7 @@ npm install @jscad/json-deserializer
 const jsonDeSerializer = require('@jscad/json-deserializer')
 
 const rawData = fs.readFileSync('PATH/TO/file.json')
-const csgData = jsonDeSerializer(rawData)
+const csgData = jsonDeSerializer.deserialize(rawData, undefined, {output: 'csg'})
 
 ```
 

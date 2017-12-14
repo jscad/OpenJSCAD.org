@@ -31,7 +31,7 @@ npm install @jscad/x3d-serializer
 ```javascript
 const x3dSerializer = require('@jscad/x3d-serializer')
 
-const rawData = x3dSerializer(CSGObject)
+const rawData = x3dSerializer.serialize(CSGObject)
 
 //in browser (with browserify etc)
 const blob = new Blob(rawData)
