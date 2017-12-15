@@ -41,13 +41,58 @@ const viewerOptions = {
   },
   controls: {
     zoomToFit: {
-      targets: 'all'
+      targets: 'none'
+    }
+  }
+}
+
+const themes = {
+  light: {
+    background: [1, 1, 1, 1],
+    meshColor: [0, 0.6, 1, 1],
+    grid: {
+      show: true,
+      color: [0.1, 0.1, 0.1, 0.7]
+    },
+    controls: {
+      zoomToFit: {
+        targets: 'all'
+      }
+    }
+  },
+  dark: {
+    background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
+    meshColor: [0.4, 0.6, 0.5, 1],
+    grid: {
+      show: true,
+      color: [1, 1, 1, 0.1]
+    },
+    controls: {
+      zoomToFit: {
+        targets: 'all'
+      }
     }
   }
 }
 
 let options = {
   autoReload: true
+}
+let themeName = 'dark'
+let designName
+let designPath
+
+let paramControls
+let previousParams
+
+const rebuildSolid = (jscadScript, paramControls) => {
+  console.log('rebuilding')
+  let newParams = getParamValues(paramControls)
+  previousParams = newParams
+  csgs = toArray(jscadScript(newParams))
+  csgViewer({}, {csg: csgs})
+
+  updateAvailableExports(csgs, designName, designPath)
 }
 
 const initializeData = function () {
@@ -57,8 +102,9 @@ const initializeData = function () {
 let csgs = toArray(initializeData())
 const element = document.getElementById('renderTarget')
 const csgViewer = makeCsgViewer(element, viewerOptions)
-csgViewer(viewerOptions, {csg: csgs})
+csgViewer({}, {csg: csgs})
 
+/// ///////////
 function watchScript (filePath) {
   fs.watch(filePath, { encoding: 'utf8' }, (eventType, filename) => {
     if (filename) {
@@ -69,14 +115,74 @@ function watchScript (filePath) {
   })
 }
 
+function updateAvailableExports (outputData, designName, designPath) {
+  console.log('updating list of available exports')
+  const {supportedFormatsForObjects, formats} = require('./io/formats')
+  const availableformatsForData = supportedFormatsForObjects(outputData)
+
+  // const formatsUiElements = formats.map()
+  const formatSelector = document.getElementById('exportFormats')
+  const formatButton = document.getElementById('exportBtn')
+
+  let format = availableformatsForData[0]
+  formatButton.value = `export to ${format}`
+  console.log('sdfsdf', availableformatsForData)
+  formatSelector.innerHTML = undefined
+  formatSelector.onchange = event => {
+    format = event.target.value
+    const exportText = `export to ${format}`
+    formatButton.value = exportText
+  }
+
+  formatButton.onclick = event => {
+    console.log('exporting data to', event.target.value)
+    const extension = formats[format].extension
+    const defaultFileName = `${designName}.${extension}`
+    const defaultFilePath = path.join(designPath, defaultFileName)
+    const defaultPath = defaultFilePath
+    dialog.showSaveDialog({properties: ['saveFile'], title: 'export design to', defaultPath}, function (filePath) {
+      console.log('saving', filePath)
+      if (filePath !== undefined) {
+        const {prepareOutput} = require('./io/prepareOutput')
+        const {convertToBlob} = require('./io/convertToBlob')
+        const blob = convertToBlob(prepareOutput(outputData, {format}))
+        const toBuffer = require('blob-to-buffer')
+        toBuffer(blob, function (err, buffer) {
+          if (err) {
+            throw new Error(err)
+          }
+          fs.writeFileSync(filePath, buffer)
+        })
+        // const buffers = data.map(blob => Buffer.from(blob))
+        // let rawData = Buffer.concat(buffers)
+      }
+    })
+  }
+
+  const formatsToIgnore = ['jscad', 'js']
+  availableformatsForData
+    .filter(formatName => !formatsToIgnore.includes(formatName))
+    .forEach(function (formatName) {
+    const formatDescription = formats[formatName].displayName
+
+    const option = document.createElement('option')
+    option.value = formatName
+    option.text = formatDescription
+
+    formatSelector.add(option)
+  })
+}
+
 function loadAndDisplay (filePath) {
-  document.title = `${packageMetadata.name} v ${packageMetadata.version}: ${path.basename(filePath)}`
+  designName = path.parse(path.basename(filePath)).name
+  designPath = path.dirname(filePath)
+  document.title = `${packageMetadata.name} v ${packageMetadata.version}: ${designName}`
   const {jscadScript, paramDefinitions, params} = loadScript(filePath)
-  const start = performance.now()
+  /* const start = performance.now()
   csgs = toArray(jscadScript(params))
   const time = (performance.now() - start) / 1000
   console.log(`jscad script executed in ${time} s, putting data into viewer`)
-  csgViewer({}, {csg: csgs})
+  csgViewer({}, {csg: csgs}) */
 
   /* const volume = csgs.reduce((acc, csg) => acc + csg.getFeatures('volume'), 0)
   const polygons = csgs.reduce((acc, csg) => acc + csg.polygons.length, 0)
@@ -86,23 +192,13 @@ function loadAndDisplay (filePath) {
   Volume      : ${volume.toFixed(2)} mm2
   Polygons    : ${polygons}
   ` */
-
-  let paramControls
-  const rebuildSolid = () => {
-    let newParams = getParamValues(paramControls)
-    previousParams = newParams
-    csgs = toArray(jscadScript(newParams))
-    csgViewer({}, {csg: csgs})
-  }
-  let previousParams = params
-  paramControls = createParamControls(document.getElementById('params'), previousParams, paramDefinitions, rebuildSolid)
+  paramControls = createParamControls(document.getElementById('params'), previousParams, paramDefinitions, rebuildSolid.bind(null, jscadScript))
   if (paramDefinitions.length > 0) {
     const button = document.createElement('input')
     button.type = 'button'
     button.value = 'update'
     button.onclick = function () {
-      console.log('update')
-      rebuildSolid()
+      rebuildSolid(jscadScript, paramControls)
     }
 
     const checkbox = document.createElement('input')
@@ -113,6 +209,8 @@ function loadAndDisplay (filePath) {
     document.getElementById('params').appendChild(button)
     document.getElementById('params').appendChild(checkbox)
   }
+
+  rebuildSolid(jscadScript, paramControls)
 }
 
 document.getElementById('autoReload').checked = options.autoReload
@@ -136,29 +234,11 @@ document.getElementById('fileLoader').addEventListener('click', function () {
   })
 })
 
-const themes = {
-  light: {
-    background: [1, 1, 1, 1],
-    meshColor: [0, 0.6, 1, 1],
-    grid: {
-      show: true,
-      color: [0.1, 0.1, 0.1, 0.7]
-    }
-  },
-  dark: {
-    background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
-    meshColor: [0.4, 0.6, 0.5, 1],
-    grid: {
-      show: true,
-      color: [1, 1, 1, 0.1]
-    }
-  }
-}
-
 document.getElementById('themeSwitcher').addEventListener('change', function ({target}) {
   console.log('theme change', target.value)
-  const themeName = target.value
+  themeName = target.value
   const themedViewerOptions = themes[themeName] // Object.assign({}, viewerOptions, themes[themeName])
+  console.log('params in app', themedViewerOptions.background)
   csgViewer(themedViewerOptions)
 
   // const background = themedViewerOptions.grid.color//.map(x => x * 255)
@@ -168,3 +248,9 @@ document.getElementById('themeSwitcher').addEventListener('change', function ({t
   document.getElementById('controls').style.color = bgColorRgba
   document.getElementById('params').style.color = bgColorRgba
 })
+
+/* setTimeout(function () {
+  console.log('after timeout')
+  csgViewer({camera: {position: [-100, 0, 0]}})
+}, 4000)
+*/

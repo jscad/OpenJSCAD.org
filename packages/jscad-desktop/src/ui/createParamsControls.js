@@ -37,7 +37,7 @@ const createParamControls = (targetEl, prevParamValues = {}, paramDefinitions, r
           l.innerHTML = e.currentTarget.value
         }
         if (document.getElementById('instantUpdate').checked === true) {
-          rebuildSolid()
+          rebuildSolid(paramControls)
         }
       }
       paramControls.push(control)
