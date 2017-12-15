@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require('path')
 const getParameterDefinitionsCLI = require('./getParameterDefinitionsCLI')
 /** load an npm module from a string
  * @param  {String} src the source code of the module
@@ -19,6 +20,44 @@ function requireUncached (module) {
 
 const hasScriptGotParameters = scriptSrc => {
   return scriptSrc && 'getParameterDefinitions' in scriptSrc
+}
+
+const getScriptFile = paths => {
+  if (!paths) {
+    return
+  }
+  let mainPath = paths[0]
+  let filePath
+  const stats = fs.statSync(mainPath)
+  if (stats.isFile()) {
+    return mainPath
+  } else if (stats.isDirectory()) {
+    // first try to use package.json to find main
+    const packageFile = path.join(mainPath, 'package.json')
+    if (fs.existsSync(packageFile)) {
+      const rMain = require(packageFile).main
+      if(rMain){
+        return path.join(mainPath, rMain) 
+      }
+      //filePath = rMain ? path.join(mainPath, rMain) : undefined
+    }
+    
+    // if all else fails try to look for index.js/jscad, main.js/jscad or a file with same name 
+    // as the folder 
+    const entries = fs.readdirSync(mainPath)
+    const acceptableMainFiles = ['main', 'index', path.parse(path.basename(mainPath)).name]
+    const jsMainFiles = acceptableMainFiles.map(x => x + '.js')
+    const jscadMainFiles = acceptableMainFiles.map(x => x + '.jscad')
+
+    const candidates = entries
+      .filter(entry => {
+        return jsMainFiles.concat(jscadMainFiles).includes(entry)
+      })
+    if (candidates.length > 0) {
+      filePath = path.join(mainPath, candidates[0])
+    }
+    return filePath
+  }
 }
 
 function loadScript (filePath, csgBasePath = '../../../core/') { // './node_modules/@jscad') {
@@ -70,4 +109,4 @@ function watchScript (filePath, callback) {
   })
 }
 
-module.exports = {loadScript, requireUncached, watchScript}
+module.exports = {loadScript, requireUncached, watchScript, getScriptFile}
