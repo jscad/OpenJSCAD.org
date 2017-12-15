@@ -61,4 +61,13 @@ function loadScript (filePath, csgBasePath = '../../../core/') { // './node_modu
   return {params, paramDefinitions, jscadScript}
 }
 
-module.exports = {loadScript, requireUncached}
+function watchScript (filePath, callback) {
+  fs.watch(filePath, { encoding: 'utf8' }, (eventType, filename) => {
+    if (filename) {
+      requireUncached(filePath)
+      callback(filePath)
+    }
+  })
+}
+
+module.exports = {loadScript, requireUncached, watchScript}
