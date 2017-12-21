@@ -29,18 +29,24 @@ const initializeData = function () {
   return cube({size: 100})
 }
 
-let csgs = toArray(initializeData())
+let solids = toArray(initializeData())
 const element = document.getElementById('renderTarget')
 const csgViewer = makeCsgViewer(element, settings.viewer)
-csgViewer({}, {csg: csgs})
+csgViewer({}, {solids})
 
 /// ///////////
 
 document.getElementById('autoReload').checked = settings.autoReload
-
 document.getElementById('autoReload').addEventListener('click', function () {
   settings.autoReload = !settings.autoReload
   document.getElementById('autoReload').checked = settings.autoReload
+})
+
+document.getElementById('grid').checked = settings.viewer.grid.show
+document.getElementById('grid').addEventListener('click', function () {
+  settings.viewer.grid.show = !settings.viewer.grid.show
+  document.getElementById('grid').checked = settings.viewer.grid.show
+  csgViewer({grid: {show: settings.viewer.grid.show}})
 })
 
 document.getElementById('fileLoader').addEventListener('click', function () {
@@ -61,6 +67,7 @@ document.getElementById('fileLoader').addEventListener('click', function () {
 document.getElementById('themeSwitcher').addEventListener('change', function ({target}) {
   const name = target.value
   const themedViewerOptions = setTheme(name, settings.themes)
+  console.log('themedViewerOptions', themedViewerOptions)
   store.set('ui.theme.name', name)
   csgViewer(themedViewerOptions)
 })
@@ -71,8 +78,17 @@ if (designPath !== undefined) {
   loadAndDisplay(csgViewer, designPath)
 }
 
-/* setTimeout(function () {
-  console.log('after timeout')
-  csgViewer({camera: {position: [-100, 0, 0]}})
+setTimeout(function () {
+  console.log('after timeout1')
+  csgViewer({controls: {autoRotate: {enabled: true}}})
 }, 4000)
-*/
+
+setTimeout(function () {
+  console.log('after timeout2')
+  csgViewer({camera: {position: [-100, 0, 0]}})
+}, 10000)
+
+/* setTimeout(function () {
+  console.log('after timeout1')
+  csgViewer({controls: {autoRotate: {enabled: false}}})
+}, 20000) */

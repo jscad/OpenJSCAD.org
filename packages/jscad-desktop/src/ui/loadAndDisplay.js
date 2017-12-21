@@ -51,9 +51,9 @@ function loadAndDisplay (viewer, filePath) {
 }
 
 function updateUI (viewer, jscadScript, designName, designPath, paramControls) {
-  const csgs = rebuildSolid(jscadScript, paramControls)
-  viewer({}, {csg: csgs})
-  updateAvailableExports(csgs, designName, designPath)
+  const solids = rebuildSolid(jscadScript, paramControls)
+  viewer({}, {solids})
+  updateAvailableExports(solids, designName, designPath)
 }
 
 module.exports = loadAndDisplay

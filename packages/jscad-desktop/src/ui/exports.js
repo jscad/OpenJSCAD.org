@@ -8,7 +8,7 @@ const {prepareOutput} = require('../io/prepareOutput')
 const {convertToBlob} = require('../io/convertToBlob')
 
 function updateAvailableExports (outputData, designName, designPath) {
-  console.log('updating list of available exports')
+  //console.log('updating list of available exports')
   const availableformatsForData = supportedFormatsForObjects(outputData)
 
   // const formatsUiElements = formats.map()
@@ -17,7 +17,6 @@ function updateAvailableExports (outputData, designName, designPath) {
 
   let format = availableformatsForData[0]
   formatButton.value = `export to ${format}`
-  console.log('sdfsdf', availableformatsForData)
   formatSelector.innerHTML = undefined
   formatSelector.onchange = event => {
     format = event.target.value
