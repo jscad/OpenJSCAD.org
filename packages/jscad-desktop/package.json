@@ -20,8 +20,11 @@
     "@jscad/stl-serializer": "^0.1.1",
     "@jscad/svg-serializer": "^0.1.1",
     "@jscad/x3d-serializer": "^0.1.1",
+    "bel": "^5.1.5",
     "blob-to-buffer": "^1.2.6",
-    "electron-store": "^1.3.0"
+    "electron-store": "^1.3.0",
+    "most": "^1.7.2",
+    "strip-bom": "^3.0.0"
   },
   "devDependencies": {
     "browserify": "^14.5.0",

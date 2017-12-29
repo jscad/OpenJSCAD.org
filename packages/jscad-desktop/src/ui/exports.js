@@ -2,27 +2,41 @@ const fs = require('fs')
 const path = require('path')
 const {remote} = require('electron')
 const {dialog} = remote
+const html = require('bel')
 
 const {supportedFormatsForObjects, formats} = require('../io/formats')
 const {prepareOutput} = require('../io/prepareOutput')
 const {convertToBlob} = require('../io/convertToBlob')
 
 function updateAvailableExports (outputData, designName, designPath) {
-  //console.log('updating list of available exports')
+  console.log('updating list of available exports')
   const availableformatsForData = supportedFormatsForObjects(outputData)
-
-  // const formatsUiElements = formats.map()
-  const formatSelector = document.getElementById('exportFormats')
-  const formatButton = document.getElementById('exportBtn')
-
   let format = availableformatsForData[0]
-  formatButton.value = `export to ${format}`
-  formatSelector.innerHTML = undefined
-  formatSelector.onchange = event => {
-    format = event.target.value
-    const exportText = `export to ${format}`
-    formatButton.value = exportText
+
+  const formatsToIgnore = ['jscad', 'js']
+  const formatsListUI = availableformatsForData
+    .filter(formatName => !formatsToIgnore.includes(formatName))
+    .map(function (formatName) {
+      const formatDescription = formats[formatName].displayName
+      return html`<option value=${formatName}>${formatDescription}</option>`
+    })
+
+  let formatsUI = html`<span>
+    <select id='exportFormats'>
+      ${formatsListUI}
+    </select>
+    <input type='button' value="export to ${format}" id="exportBtn"/>
+  </span>`
+
+  const exportsNode = document.getElementById('exports')
+  if (exportsNode) {
+    while (exportsNode.firstChild) {
+      exportsNode.removeChild(exportsNode.firstChild)
+    }
   }
+  exportsNode.appendChild(formatsUI)
+
+  const formatButton = document.getElementById('exportBtn')
 
   formatButton.onclick = event => {
     console.log('exporting data to', event.target.value)
@@ -47,18 +61,7 @@ function updateAvailableExports (outputData, designName, designPath) {
     })
   }
 
-  const formatsToIgnore = ['jscad', 'js']
-  availableformatsForData
-    .filter(formatName => !formatsToIgnore.includes(formatName))
-    .forEach(function (formatName) {
-      const formatDescription = formats[formatName].displayName
-
-      const option = document.createElement('option')
-      option.value = formatName
-      option.text = formatDescription
-
-      formatSelector.add(option)
-    })
+  return formatsUI
 }
 
 module.exports = {updateAvailableExports}

@@ -1,6 +1,13 @@
 const fs = require('fs')
 const path = require('path')
 const getParameterDefinitionsCLI = require('./getParameterDefinitionsCLI')
+const stripBom = require('strip-bom')
+
+require.extensions['.jscad'] = function (module, filename) {
+  const content = fs.readFileSync(filename, 'utf8')
+  module._compile(stripBom(content), filename)
+}
+
 /** load an npm module from a string
  * @param  {String} src the source code of the module
  * @param  {String} filename the filename of the module
@@ -36,14 +43,14 @@ const getScriptFile = paths => {
     const packageFile = path.join(mainPath, 'package.json')
     if (fs.existsSync(packageFile)) {
       const rMain = require(packageFile).main
-      if(rMain){
-        return path.join(mainPath, rMain) 
+      if (rMain) {
+        return path.join(mainPath, rMain)
       }
-      //filePath = rMain ? path.join(mainPath, rMain) : undefined
+      // filePath = rMain ? path.join(mainPath, rMain) : undefined
     }
-    
-    // if all else fails try to look for index.js/jscad, main.js/jscad or a file with same name 
-    // as the folder 
+
+    // if all else fails try to look for index.js/jscad, main.js/jscad or a file with same name
+    // as the folder
     const entries = fs.readdirSync(mainPath)
     const acceptableMainFiles = ['main', 'index', path.parse(path.basename(mainPath)).name]
     const jsMainFiles = acceptableMainFiles.map(x => x + '.js')
@@ -64,7 +71,8 @@ function loadScript (filePath, csgBasePath = '../../../core/') { // './node_modu
   console.log('loading script')
   const scriptAsText = fs.readFileSync(filePath, 'utf8')
   let jscadScript
-  if (!scriptAsText.includes('module.exports') && scriptAsText.includes('main')) {
+  // && !scriptAsText.includes('require(')
+  if ((!scriptAsText.includes('module.exports')) && scriptAsText.includes('main')) {
     const getParamsString = scriptAsText.includes('getParameterDefinitions')
       ? 'module.exports.getParameterDefinitions = getParameterDefinitions' : ''
     const commonJsScriptText = `
@@ -90,12 +98,11 @@ function loadScript (filePath, csgBasePath = '../../../core/') { // './node_modu
   } else {
     jscadScript = require(filePath)
   }
-  console.log(typeof jscadScript)
   let params = {}
   let paramDefinitions = []
   if (hasScriptGotParameters(jscadScript)) {
     paramDefinitions = jscadScript.getParameterDefinitions()
-    params = getParameterDefinitionsCLI(jscadScript.getParameterDefinitions)// jscadScript.getParameterDefinitions()
+    params = getParameterDefinitionsCLI(jscadScript.getParameterDefinitions)
   }
   return {params, paramDefinitions, jscadScript}
 }

@@ -1,8 +1,10 @@
 const path = require('path')
 const {loadScript} = require('../core/scripLoading')
 const {rebuildSolid} = require('../core/rebuildSolid')
-const {createParamControls} = require('./createParamsControls')
 const {updateAvailableExports} = require('./exports')
+
+const {createParamControls} = require('./createParamsControls')
+// const {createParamControls} = require('./paramControls2')
 
 function loadAndDisplay (viewer, filePath) {
   const designName = path.parse(path.basename(filePath)).name

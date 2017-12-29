@@ -7,7 +7,7 @@ const viewer = {
     color: [1, 1, 1, 0.1]
   },
   axes: {
-    show: false
+    show: true
   },
   lighting: {
     smooth: true
@@ -19,14 +19,14 @@ const themes = {
     background: [1, 1, 1, 1],
     meshColor: [0, 0.6, 1, 1],
     grid: {
-      color: [0.1, 0.1, 0.1, 0.4]
+      color: [0.1, 0.1, 0.1, 0.5]
     }
   },
   dark: {
     background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
     meshColor: [0.4, 0.6, 0.5, 1],
     grid: {
-      color: [1, 1, 1, 0.1]
+      color: [1, 1, 1, 0.5]
     }
   }
 }
