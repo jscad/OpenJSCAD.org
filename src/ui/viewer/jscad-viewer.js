@@ -15,7 +15,8 @@ function Viewer (containerelement, options) {
   if ('plate' in options) { this.setPlateOptions(options['plate']) }
   if ('axis' in options) { this.setAxisOptions(options['axis']) }
   if ('solid' in options) { this.setSolidOptions(options['solid']) }
-
+  if ('glOptions' in options) { this.options.glOptions = options.glOptions }
+  
   var engine
 
   // select drawing engine from options

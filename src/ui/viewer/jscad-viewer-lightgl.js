@@ -43,7 +43,7 @@ LightGLEngine.prototype = {
   },
   createRenderer: function () {
     // Set up WebGL state
-    var gl = GL.create()
+    var gl = GL.create(this.options.glOptions)
     this.gl = gl
     this.gl.lineWidth(1) // don't let the library choose
 
