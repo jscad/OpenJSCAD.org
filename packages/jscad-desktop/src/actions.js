@@ -9,6 +9,10 @@ const makeActions = (sources) => {
       console.log('storedData', storeData)
     }) */
 
+  sources.drops.forEach(function (data) {
+    console.log('drop', data)
+  })
+
   const toggleGrid$ = most.mergeArray([
     most.fromEvent('click', document.getElementById('grid')).map(e => e.target.checked),
     sources.store.map(data => data.viewer.grid.show)
@@ -67,26 +71,29 @@ const makeActions = (sources) => {
     sources.store// .tap(x => console.log('gnagna', x))
       .map(data => data.design.mainPath)
       .filter(data => data !== '')
-      .map(data => [data])
+      .map(data => [data]),
+    sources.drops
+      .filter(drop => drop.type === 'fileOrFolder' && drop.data.length > 0)
+      .map(drop => drop.data.map(fileOrFolder => fileOrFolder.path))
   ])
     .filter(data => data !== undefined)
     .map(data => ({type: 'setDesignPath', data}))
 
-  const updateDesignFromParams$ = most.never()
-  //most.fromEvent('click', document.getElementById('updateDesignFromParams'))
+  const updateDesignFromParams$ = most.fromEvent('click', document.getElementById('updateDesignFromParams'))
+    .map(function () {
+      const controls = Array.from(document.getElementById('paramsMain').getElementsByTagName('input'))
+      const paramValues = controls.reduce(function (acc, control) {
+        // TODO : reuse in one way or the other getParamValues
+        // console.log('control', control.name, control.value, control.paramType)
+        const value = control.type === 'number' ? parseFloat(control.value) : control.value
+        acc[control.name] = value
+        return acc
+      }, {})
+      return paramValues
+    })
     .map(data => ({type: 'updateDesignFromParams', data}))
 
-/*  format = event.target.value
-  const exportText = `export to ${format}`
-  formatButton.value = exportText
-} */
-/* toggleGrid$.forEach(x => console.log('grid', x))
-toggleAutoReload$.forEach(x => console.log('autoReload', x))
-changeExportFormat$.forEach(x => console.log('changeExportFormat$', x))
-exportRequested$.forEach(x => console.log('export requested'))
-changeTheme$.forEach(x => console.log('changeTheme requested', x)) */
-
-  return actions = [
+  return [
     toggleGrid$,
     toggleAutoReload$,
     changeExportFormat$,

@@ -39,9 +39,11 @@ Object.keys(viewerDefaults)
 // document.getElementById('controls').appendChild(tree)
 const {electronStoreSink, electronStoreSource} = require('./sideEffects/electronStore')
 const {titleBarSink} = require('./sideEffects/titleBar')
+const makeDragDropSource = require('./sideEffects/dragDrop')
 const storeSource$ = electronStoreSource()
+const dragAndDropSource$ = makeDragDropSource(document)
 
-const actions$ = require('./actions')({store: storeSource$})
+const actions$ = require('./actions')({store: storeSource$, drops: dragAndDropSource$})
 const state$ = require('./state')(actions$)
 state$.forEach(function (state) {
   console.log('state', state)
@@ -82,12 +84,12 @@ electronStoreSink(state$
 // bla
 state$
   .filter(state => state.design.mainPath !== '')
-  .skipRepeatsWith((a, b) => {
+  /*.skipRepeatsWith((a, b) => {
     // console.log('FOObar', a, b)
-    return a.design.mainPath === b.design.mainPath
-  })
+    return a.design.mainPath === b.design.mainPath //&& b.design.solids
+  })*/
   .forEach(state => {
-    console.log('LOADING SCRIPT')
+    console.log('changing solids')
     if (settings.autoReload) {
       // watchScript(mainPath, loadAndDisplay.bind(null, csgViewer))
     }
@@ -130,7 +132,7 @@ state$
 
 // ui updates, params
 state$
-.filter(state => state.design.paramDefinitions.length > 0)
+// .filter(state => state.design.paramDefinitions.length > 0)
 /* .skipRepeatsWith(function (a, b) {
   return a.design.par === b.exportFormat && a.availableExportFormats === b.availableExportFormats
 }) */
@@ -139,7 +141,7 @@ state$
   const html = require('bel')
 
   const {createParamControls} = require('./ui/paramControls2')
-  const controls = createParamControls(paramValues, paramDefinitions, x => x) /*paramDefinitions.map(function (paramDefinition, index) {
+  const {controls} = createParamControls(paramValues, paramDefinitions, x => x) /*paramDefinitions.map(function (paramDefinition, index) {
     console.log('paramDefinition', paramDefinition)
     paramDefinition.index = index + 1
     return createControl(paramDefinition)
@@ -156,11 +158,17 @@ state$
     </span>
   </span>`
 
-  const node = document.getElementById('params')
+  const fooUi = html` <table>
+  ${controls}
+    </table>`
+  // params
+  //paramsMain
+  console.log('fooUi', fooUi)
+  const node = document.getElementById('paramsMain')
   if (node) {
     while (node.firstChild) {
       node.removeChild(node.firstChild)
     }
   }
-  node.appendChild(paramsUI)
+  node.appendChild(fooUi)
 })

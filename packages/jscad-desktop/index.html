@@ -71,7 +71,14 @@
             <input type='button' value="export" id="exportBtn"/>
           </span>
         </div>
-        <span id='params'></span>
+        <span id='params'>
+            <span id='paramsMain'>
+            </span>
+          <span id='paramsControls'>
+            <input type='checkbox' checked=true id='instantUpdate'> </input>
+            <button id='updateDesignFromParams'>Update</button>
+          </span>
+        </span>
         <script>
           require('./src/app') 
         </script>

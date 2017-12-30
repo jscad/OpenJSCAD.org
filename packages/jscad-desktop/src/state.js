@@ -35,7 +35,7 @@ const initialState = {
     mainPath: '',
     script: '',
     paramDefinitions: [],
-    paramsValues: {},
+    paramValues: {},
     previousParams: {},
     solids: []
   },
@@ -97,25 +97,20 @@ function makeState (actions) {
       const designPath = path.dirname(filePath)
 
       // load script
-      const {jscadScript, paramDefinitions, params} = loadScript(filePath)
+      const {jscadScript, paramDefinitions, params} = loadScript(mainPath)
       console.log('paramDefinitions', paramDefinitions, 'params', params)
-      const {rebuildSolid} = require('./core/rebuildSolid')
-      const paramControls = []
-      //const solids = rebuildSolid(jscadScript, paramControls)
-      //let params = getParamValues(paramControls)
       const solids = toArray(jscadScript(params))
       /*
         func(paramDefinitions) => paramsUI
         func(paramsUI + interaction) => params
       */
-
       const design = {
         name: designName,
         path: designPath,
         mainPath,
         script: jscadScript,
         paramDefinitions,
-        paramsValues: params,
+        paramValues: params,
         solids
       }
 
@@ -140,7 +135,11 @@ function makeState (actions) {
     },
     updateDesignFromParams: (state, paramValues) => {
       console.log('updateDesignFromParams')
-      return state
+      let originalDesign = state.design
+      const {script} = originalDesign
+      const solids = toArray(script(paramValues))
+      const design = Object.assign({}, originalDesign, {solids, paramValues})
+      return Object.assign({}, state, {design})
     }
   }
 

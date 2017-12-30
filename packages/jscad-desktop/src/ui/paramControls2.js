@@ -59,7 +59,7 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, rebuildSoli
 
     results.push(tr)
   }
-  return results
+  return {controls: results, paramControls}
 }
 
 const createGroupControl = definition => {
