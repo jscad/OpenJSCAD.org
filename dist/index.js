@@ -84488,7 +84488,7 @@ exports.XMLReader = XMLReader;
 },{}],403:[function(require,module,exports){
 module.exports={
   "name": "@jscad/openjscad",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "main": "src/module.js",
@@ -88114,7 +88114,7 @@ LightGLEngine.prototype = {
   },
   createRenderer: function createRenderer() {
     // Set up WebGL state
-    var gl = GL.create();
+    var gl = GL.create(this.options.glOptions);
     this.gl = gl;
     this.gl.lineWidth(1); // don't let the library choose
 
@@ -88577,6 +88577,9 @@ function Viewer(containerelement, options) {
   }
   if ('solid' in options) {
     this.setSolidOptions(options['solid']);
+  }
+  if ('glOptions' in options) {
+    this.options.glOptions = options.glOptions;
   }
 
   var engine;
