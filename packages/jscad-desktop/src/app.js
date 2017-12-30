@@ -1,20 +1,11 @@
-const {toArray} = require('./utils')
 const makeCsgViewer = require('../../csg-viewer/src/index')
 
 // base settings
 let settings = require('./settings')
-
-const initializeData = function () {
-  const {cube} = require('@jscad/scad-api').primitives3d
-  return cube({size: 100})
-}
-
-let solids = toArray(initializeData())
 const element = document.getElementById('renderTarget')
 const {csgViewer, viewerDefaults, viewerState$} = makeCsgViewer(element, settings.viewer)
 
-/// initialize stuff
-csgViewer({}, {solids})
+csgViewer()
 /*
 setTimeout(function () {
   console.log('after timeout1')
@@ -46,9 +37,12 @@ Object.keys(viewerDefaults)
   })
 
 // document.getElementById('controls').appendChild(tree)
-const actions$ = require('./actions')
+const {electronStoreSink, electronStoreSource} = require('./sideEffects/electronStore')
+const {titleBarSink} = require('./sideEffects/titleBar')
+const storeSource$ = electronStoreSource()
+
+const actions$ = require('./actions')({store: storeSource$})
 const state$ = require('./state')(actions$)
-const titleBarSideEffect = require('./sideEffects/titleBar')
 state$.forEach(function (state) {
   console.log('state', state)
 })
@@ -60,17 +54,36 @@ state$
     return JSON.parse(JSON.stringify(a)) === JSON.parse(JSON.stringify(b))
   })
   .forEach(params => {
+    console.log('viewer refresh', params)
     csgViewer(params)
   })
 
-// titlebar
-titleBarSideEffect(state$.map(state => state.appTitle).skipRepeats())
+// titlebar & store side effects
+titleBarSink(state$.map(state => state.appTitle).skipRepeats())
+electronStoreSink(state$
+  .map(function (state) {
+    const {themeName, design} = state
+    const {name, mainPath} = design
+    return {
+      themeName,
+      design: {
+        name,
+        mainPath
+      },
+      viewer: {
+        axes: {show: state.viewer.axes.show},
+        grid: {show: state.viewer.grid.show}
+      },
+      autoReload: state.autoReload
+    }
+  })
+)
 
 // bla
 state$
   .filter(state => state.design.mainPath !== '')
   .skipRepeatsWith((a, b) => {
-    console.log('FOObar', a, b)
+    // console.log('FOObar', a, b)
     return a.design.mainPath === b.design.mainPath
   })
   .forEach(state => {
@@ -93,20 +106,18 @@ state$
   })
   .forEach(state => {
     const html = require('bel')
-    const {formats} = require('./io/formats')
 
     const formatsListUI = state.availableExportFormats
-      .map(function (formatName) {
-        const formatDescription = formats[formatName].displayName
-        return html`<option value=${formatName}>${formatDescription}</option>`
+      .map(function ({name, displayName}) {
+        return html`<option value=${name}>${displayName}</option>`
       })
 
     let formatsUI = html`<span>
-    <select id='exportFormats'>
-      ${formatsListUI}
-    </select>
-    <input type='button' value="export to ${state.exportFormat}" id="exportBtn"/>
-  </span>`
+      <select id='exportFormats'>
+        ${formatsListUI}
+      </select>
+      <input type='button' value="export to ${state.exportFormat}" id="exportBtn"/>
+    </span>`
 
     const exportsNode = document.getElementById('exports')
     if (exportsNode) {
@@ -118,3 +129,38 @@ state$
   })
 
 // ui updates, params
+state$
+.filter(state => state.design.paramDefinitions.length > 0)
+/* .skipRepeatsWith(function (a, b) {
+  return a.design.par === b.exportFormat && a.availableExportFormats === b.availableExportFormats
+}) */
+.forEach(state => {
+  const {paramDefinitions, paramValues} = state.design
+  const html = require('bel')
+
+  const {createParamControls} = require('./ui/paramControls2')
+  const controls = createParamControls(paramValues, paramDefinitions, x => x) /*paramDefinitions.map(function (paramDefinition, index) {
+    console.log('paramDefinition', paramDefinition)
+    paramDefinition.index = index + 1
+    return createControl(paramDefinition)
+  }) */
+
+  const paramsUI = html`
+  <span>
+    <table>
+      ${controls}
+    </table>
+    <span>
+      <input type='checkbox' checked=${state.instantUpdate} id='instantUpdate'> </input>
+      <button id='updateDesignFromParams'>Update</button>
+    </span>
+  </span>`
+
+  const node = document.getElementById('params')
+  if (node) {
+    while (node.firstChild) {
+      node.removeChild(node.firstChild)
+    }
+  }
+  node.appendChild(paramsUI)
+})

@@ -1,13 +1,36 @@
 const Store = require('electron-store')
 const store = new Store()
+const most = require('most')
+
+store.delete('lastDesign')
+store.delete('ui')
 
 function electronStoreSideEffect (outToStore$) {
-  outToStore$.forEach(function (outToStore) {
-    store.set(outToStore)
-  })
+  if (outToStore$) {
+    outToStore$.forEach(function (outToStore) {
+      console.log('outToStore', outToStore)
+      store.set(outToStore)
+    })
+  }
+
   // store.get('ui.theme.name'
   // store.get('ui.theme.name')
-  // return storeIn$
+  return most.just(store.store).multicast()
+}
+function electronStoreSink (outToStore$) {
+  if (outToStore$) {
+    outToStore$.forEach(function (outToStore) {
+      console.log('outToStore', outToStore)
+      store.set(outToStore)
+    })
+  }
 }
 
-module.exports = electronStoreSideEffect
+function electronStoreSource () {
+  return most.just(store.store).multicast()
+}
+
+module.exports = {
+  electronStoreSource,
+  electronStoreSink
+}

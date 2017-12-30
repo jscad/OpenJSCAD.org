@@ -1,8 +1,8 @@
-function titleBarSideEffect (outToTitle$) {
+function titleBarSink (outToTitle$) {
 
   outToTitle$.forEach(title => {
     document.title = title
   })
 }
 
-module.exports = titleBarSideEffect
+module.exports = {titleBarSink}

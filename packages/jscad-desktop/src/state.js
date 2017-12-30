@@ -1,6 +1,6 @@
 const {mergeArray} = require('most')
 const packageMetadata = require('../package.json')
-const {merge} = require('./utils')
+const {merge, toArray} = require('./utils')
 const {getScriptFile, loadScript} = require('./core/scripLoading')
 /*
 let settings = require('./settings')
@@ -33,12 +33,16 @@ const initialState = {
     name: '',
     path: '',
     mainPath: '',
-    previousParams: {}
+    script: '',
+    paramDefinitions: [],
+    paramsValues: {},
+    previousParams: {},
+    solids: []
   },
   exportFormat: '',
   availableExportFormats: [],
   autoReload: true,
-
+  instantUpdate: true,
   viewer: {
     background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
     meshColor: [0.4, 0.6, 0.5, 1], // nice orange : [1, 0.4, 0, 1]
@@ -72,7 +76,8 @@ function makeState (actions) {
       return Object.assign({}, state, {viewer})
     },
     changeTheme: (state, themeName) => {
-      const viewer = merge({}, state, themes[themeName])
+      console.log('changeTheme')
+      const viewer = merge({}, state.viewer, themes[themeName])
       // TODO: move some of this to side effects
       // console.log('params in app', themedViewerOptions.background)
       // const background = themedViewerOptions.grid.color//.map(x => x * 255)
@@ -81,7 +86,7 @@ function makeState (actions) {
       const bgColorRgba = themeName === 'light' ? 'black' : 'white'
       document.getElementById('controls').style.color = bgColorRgba
       document.getElementById('params').style.color = bgColorRgba
-      return Object.assign({}, state, {viewer})
+      return Object.assign({}, state, {viewer, themeName})
     },
     setDesignPath: (state, paths) => {
       console.log('setDesignPath')
@@ -93,9 +98,16 @@ function makeState (actions) {
 
       // load script
       const {jscadScript, paramDefinitions, params} = loadScript(filePath)
+      console.log('paramDefinitions', paramDefinitions, 'params', params)
       const {rebuildSolid} = require('./core/rebuildSolid')
       const paramControls = []
-      const solids = rebuildSolid(jscadScript, paramControls)
+      //const solids = rebuildSolid(jscadScript, paramControls)
+      //let params = getParamValues(paramControls)
+      const solids = toArray(jscadScript(params))
+      /*
+        func(paramDefinitions) => paramsUI
+        func(paramsUI + interaction) => params
+      */
 
       const design = {
         name: designName,
@@ -103,16 +115,32 @@ function makeState (actions) {
         mainPath,
         script: jscadScript,
         paramDefinitions,
+        paramsValues: params,
         solids
       }
 
-      const {supportedFormatsForObjects} = require('./io/formats')
+      const {supportedFormatsForObjects, formats} = require('./io/formats')
       const formatsToIgnore = ['jscad', 'js']
       const availableExportFormats = supportedFormatsForObjects(solids)
         .filter(formatName => !formatsToIgnore.includes(formatName))
-      let exportFormat = availableExportFormats[0]
+        .map(function (formatName) {
+          console.log('formatName')
+          return {name: formatName, displayName: formats[formatName].displayName}
+        })
+      let exportFormat = availableExportFormats[0].name
 
       return Object.assign({}, state, {design}, {availableExportFormats, exportFormat})
+    },
+    updateDesignParamValues: (state, paramValues) => {
+      let originalDesign = state.design
+      const {script} = originalDesign
+      const solids = toArray(script(paramValues))
+      const design = Object.assign({}, originalDesign, {solids, paramValues})
+      return Object.assign({}, state, {design})
+    },
+    updateDesignFromParams: (state, paramValues) => {
+      console.log('updateDesignFromParams')
+      return state
     }
   }
 
