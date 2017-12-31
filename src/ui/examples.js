@@ -18,7 +18,8 @@ const examples = [
   // { file:'cnc-cutout.jscad', title: 'CNC Corner Cutouts', new: true, spacing: true },
 
   // { file:'bunch-cubes.jscad', title: 'Bunch of Cubes', new: true },
-  { file: 'lookup.jscad', title: 'Lookup()', spacing: true },
+  { file: 'transformations.jscad', title: 'Transformations', spacing: true },
+  { file: 'lookup.jscad', title: 'Lookup()'},
   { file: 'expand.jscad', title: 'Expand()' },
   { file: 'rectangular_extrude.jscad', title: 'Rectangular_extrude()' },
   { file: 'linear_extrude.jscad', title: 'Linear_extrude()' },
