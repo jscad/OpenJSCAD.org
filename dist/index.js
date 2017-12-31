@@ -12781,7 +12781,7 @@ arguments[4][35][0].apply(exports,arguments)
 arguments[4][36][0].apply(exports,arguments)
 },{"../constants":116,"../math/Plane":123,"../math/Polygon3":125,"dup":36}],140:[function(require,module,exports){
 // color table from http://www.w3.org/TR/css3-color/
-var cssColors = {
+const cssColors = {
 // basic color keywords
   'black': [ 0 / 255, 0 / 255, 0 / 255 ],
   'silver': [ 192 / 255, 192 / 255, 192 / 255 ],
@@ -12799,17 +12799,17 @@ var cssColors = {
   'blue': [ 0 / 255, 0 / 255, 255 / 255 ],
   'teal': [ 0 / 255, 128 / 255, 128 / 255 ],
   'aqua': [ 0 / 255, 255 / 255, 255 / 255 ],
-// extended color keywords
+  // extended color keywords
   'aliceblue': [ 240 / 255, 248 / 255, 255 / 255 ],
   'antiquewhite': [ 250 / 255, 235 / 255, 215 / 255 ],
-  //'aqua': [ 0 / 255, 255 / 255, 255 / 255 ],
+  // 'aqua': [ 0 / 255, 255 / 255, 255 / 255 ],
   'aquamarine': [ 127 / 255, 255 / 255, 212 / 255 ],
   'azure': [ 240 / 255, 255 / 255, 255 / 255 ],
   'beige': [ 245 / 255, 245 / 255, 220 / 255 ],
   'bisque': [ 255 / 255, 228 / 255, 196 / 255 ],
-  //'black': [ 0 / 255, 0 / 255, 0 / 255 ],
+  // 'black': [ 0 / 255, 0 / 255, 0 / 255 ],
   'blanchedalmond': [ 255 / 255, 235 / 255, 205 / 255 ],
-  //'blue': [ 0 / 255, 0 / 255, 255 / 255 ],
+  // 'blue': [ 0 / 255, 0 / 255, 255 / 255 ],
   'blueviolet': [ 138 / 255, 43 / 255, 226 / 255 ],
   'brown': [ 165 / 255, 42 / 255, 42 / 255 ],
   'burlywood': [ 222 / 255, 184 / 255, 135 / 255 ],
@@ -12848,13 +12848,13 @@ var cssColors = {
   'firebrick': [ 178 / 255, 34 / 255, 34 / 255 ],
   'floralwhite': [ 255 / 255, 250 / 255, 240 / 255 ],
   'forestgreen': [ 34 / 255, 139 / 255, 34 / 255 ],
-  //'fuchsia': [ 255 / 255, 0 / 255, 255 / 255 ],
+  // 'fuchsia': [ 255 / 255, 0 / 255, 255 / 255 ],
   'gainsboro': [ 220 / 255, 220 / 255, 220 / 255 ],
   'ghostwhite': [ 248 / 255, 248 / 255, 255 / 255 ],
   'gold': [ 255 / 255, 215 / 255, 0 / 255 ],
   'goldenrod': [ 218 / 255, 165 / 255, 32 / 255 ],
-  //'gray': [ 128 / 255, 128 / 255, 128 / 255 ],
-  //'green': [ 0 / 255, 128 / 255, 0 / 255 ],
+  // 'gray': [ 128 / 255, 128 / 255, 128 / 255 ],
+  // 'green': [ 0 / 255, 128 / 255, 0 / 255 ],
   'greenyellow': [ 173 / 255, 255 / 255, 47 / 255 ],
   'grey': [ 128 / 255, 128 / 255, 128 / 255 ],
   'honeydew': [ 240 / 255, 255 / 255, 240 / 255 ],
@@ -12882,11 +12882,11 @@ var cssColors = {
   'lightslategrey': [ 119 / 255, 136 / 255, 153 / 255 ],
   'lightsteelblue': [ 176 / 255, 196 / 255, 222 / 255 ],
   'lightyellow': [ 255 / 255, 255 / 255, 224 / 255 ],
-  //'lime': [ 0 / 255, 255 / 255, 0 / 255 ],
+  // 'lime': [ 0 / 255, 255 / 255, 0 / 255 ],
   'limegreen': [ 50 / 255, 205 / 255, 50 / 255 ],
   'linen': [ 250 / 255, 240 / 255, 230 / 255 ],
   'magenta': [ 255 / 255, 0 / 255, 255 / 255 ],
-  //'maroon': [ 128 / 255, 0 / 255, 0 / 255 ],
+  // 'maroon': [ 128 / 255, 0 / 255, 0 / 255 ],
   'mediumaquamarine': [ 102 / 255, 205 / 255, 170 / 255 ],
   'mediumblue': [ 0 / 255, 0 / 255, 205 / 255 ],
   'mediumorchid': [ 186 / 255, 85 / 255, 211 / 255 ],
@@ -12901,9 +12901,9 @@ var cssColors = {
   'mistyrose': [ 255 / 255, 228 / 255, 225 / 255 ],
   'moccasin': [ 255 / 255, 228 / 255, 181 / 255 ],
   'navajowhite': [ 255 / 255, 222 / 255, 173 / 255 ],
-  //'navy': [ 0 / 255, 0 / 255, 128 / 255 ],
+  // 'navy': [ 0 / 255, 0 / 255, 128 / 255 ],
   'oldlace': [ 253 / 255, 245 / 255, 230 / 255 ],
-  //'olive': [ 128 / 255, 128 / 255, 0 / 255 ],
+  // 'olive': [ 128 / 255, 128 / 255, 0 / 255 ],
   'olivedrab': [ 107 / 255, 142 / 255, 35 / 255 ],
   'orange': [ 255 / 255, 165 / 255, 0 / 255 ],
   'orangered': [ 255 / 255, 69 / 255, 0 / 255 ],
@@ -12918,8 +12918,8 @@ var cssColors = {
   'pink': [ 255 / 255, 192 / 255, 203 / 255 ],
   'plum': [ 221 / 255, 160 / 255, 221 / 255 ],
   'powderblue': [ 176 / 255, 224 / 255, 230 / 255 ],
-  //'purple': [ 128 / 255, 0 / 255, 128 / 255 ],
-  //'red': [ 255 / 255, 0 / 255, 0 / 255 ],
+  // 'purple': [ 128 / 255, 0 / 255, 128 / 255 ],
+  // 'red': [ 255 / 255, 0 / 255, 0 / 255 ],
   'rosybrown': [ 188 / 255, 143 / 255, 143 / 255 ],
   'royalblue': [ 65 / 255, 105 / 255, 225 / 255 ],
   'saddlebrown': [ 139 / 255, 69 / 255, 19 / 255 ],
@@ -12928,7 +12928,7 @@ var cssColors = {
   'seagreen': [ 46 / 255, 139 / 255, 87 / 255 ],
   'seashell': [ 255 / 255, 245 / 255, 238 / 255 ],
   'sienna': [ 160 / 255, 82 / 255, 45 / 255 ],
-  //'silver': [ 192 / 255, 192 / 255, 192 / 255 ],
+  // 'silver': [ 192 / 255, 192 / 255, 192 / 255 ],
   'skyblue': [ 135 / 255, 206 / 255, 235 / 255 ],
   'slateblue': [ 106 / 255, 90 / 255, 205 / 255 ],
   'slategray': [ 112 / 255, 128 / 255, 144 / 255 ],
@@ -12937,18 +12937,17 @@ var cssColors = {
   'springgreen': [ 0 / 255, 255 / 255, 127 / 255 ],
   'steelblue': [ 70 / 255, 130 / 255, 180 / 255 ],
   'tan': [ 210 / 255, 180 / 255, 140 / 255 ],
-  //'teal': [ 0 / 255, 128 / 255, 128 / 255 ],
+  // 'teal': [ 0 / 255, 128 / 255, 128 / 255 ],
   'thistle': [ 216 / 255, 191 / 255, 216 / 255 ],
   'tomato': [ 255 / 255, 99 / 255, 71 / 255 ],
   'turquoise': [ 64 / 255, 224 / 255, 208 / 255 ],
   'violet': [ 238 / 255, 130 / 255, 238 / 255 ],
   'wheat': [ 245 / 255, 222 / 255, 179 / 255 ],
-  //'white': [ 255 / 255, 255 / 255, 255 / 255 ],
+  // 'white': [ 255 / 255, 255 / 255, 255 / 255 ],
   'whitesmoke': [ 245 / 255, 245 / 255, 245 / 255 ],
-  //'yellow': [ 255 / 255, 255 / 255, 0 / 255 ],
-  'yellowgreen': [ 154 / 255, 205 / 255, 50 / 255 ],
-};
-
+  // 'yellow': [ 255 / 255, 255 / 255, 0 / 255 ],
+  'yellowgreen': [ 154 / 255, 205 / 255, 50 / 255 ]
+}
 
 /**
  * Converts an CSS color name to RGB color.
@@ -12956,30 +12955,43 @@ var cssColors = {
  * @param   String  s       The CSS color name
  * @return  Array           The RGB representation, or [0,0,0] default
  */
-function css2rgb(s) {
+function css2rgb (s) {
   return cssColors[s.toLowerCase()]
 }
 
 // color( (array[r,g,b] | css-string) [,alpha] (,array[objects] | list of objects) )
-function color () {
-  var o, i = 1, a = arguments, c = a[0], alpha
+/** apply the given color to the input object(s)
+ * @param {Object} color - either an array or a hex string of color values
+ * @param {Object|Array} objects either a single or multiple CSG/CAG objects to color
+ * @returns {CSG} new CSG object , with the given color
+ *
+ * @example
+ * let redSphere = color([1,0,0,1], sphere())
+ */
+function color (color) {
+  let object
+  let i = 1
+  let a = arguments
 
   // assume first argument is RGB array
   // but check if first argument is CSS string
-  if (typeof c == 'string') {
-    c = css2rgb(c)
+  if (typeof color === 'string') {
+    color = css2rgb(color)
   }
   // check if second argument is alpha
   if (Number.isFinite(a[i])) {
-    c = c.concat(a[i])
+    color = color.concat(a[i])
     i++
   }
   // check if next argument is an an array
-  if (Array.isArray(a[i])) { a = a[i], i = 0; } // use this as the list of objects
-  for (o = a[i++]; i < a.length; i++) {
-    o = o.union(a[i])
+  if (Array.isArray(a[i])) {
+    a = a[i]
+    i = 0
+  } // use this as the list of objects
+  for (object = a[i++]; i < a.length; i++) {
+    object = object.union(a[i])
   }
-  return o.setColor(c)
+  return object.setColor(color)
 }
 
 // from http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
@@ -12995,14 +13007,21 @@ function color () {
  * @return  Array           The HSL representation
  */
 function rgb2hsl (r, g, b) {
-  if (r.length) { b = r[2], g = r[1], r = r[0]; }
-  var max = Math.max(r, g, b), min = Math.min(r, g, b)
-  var h, s, l = (max + min) / 2
+  if (r.length) {
+    b = r[2]
+    g = r[1]
+    r = r[0]
+  }
+  let max = Math.max(r, g, b)
+  let min = Math.min(r, g, b)
+  let h
+  let s
+  let l = (max + min) / 2
 
-  if (max == min) {
+  if (max === min) {
     h = s = 0 // achromatic
   } else {
-    var d = max - min
+    let d = max - min
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
     switch (max) {
       case r:
@@ -13033,14 +13052,20 @@ function rgb2hsl (r, g, b) {
  * @return  Array           The RGB representation
  */
 function hsl2rgb (h, s, l) {
-  if (h.length) { l = h[2], s = h[1], h = h[0]; }
-  var r, g, b
+  if (h.length) {
+    h = h[0]
+    s = h[1]
+    l = h[2]
+  }
+  let r
+  let g
+  let b
 
-  if (s == 0) {
+  if (s === 0) {
     r = g = b = l // achromatic
   } else {
-    var q = l < 0.5 ? l * (1 + s) : l + s - l * s
-    var p = 2 * l - q
+    let q = l < 0.5 ? l * (1 + s) : l + s - l * s
+    let p = 2 * l - q
     r = hue2rgb(p, q, h + 1 / 3)
     g = hue2rgb(p, q, h)
     b = hue2rgb(p, q, h - 1 / 3)
@@ -13071,14 +13096,21 @@ function hue2rgb (p, q, t) {
  */
 
 function rgb2hsv (r, g, b) {
-  if (r.length) { b = r[2], g = r[1], r = r[0]; }
-  var max = Math.max(r, g, b), min = Math.min(r, g, b)
-  var h, s, v = max
+  if (r.length) {
+    r = r[0]
+    g = r[1]
+    b = r[2]
+  }
+  let max = Math.max(r, g, b)
+  let min = Math.min(r, g, b)
+  let h
+  let s
+  let v = max
 
-  var d = max - min
-  s = max == 0 ? 0 : d / max
+  let d = max - min
+  s = max === 0 ? 0 : d / max
 
-  if (max == min) {
+  if (max === min) {
     h = 0 // achromatic
   } else {
     switch (max) {
@@ -13110,14 +13142,18 @@ function rgb2hsv (r, g, b) {
  * @return  Array           The RGB representation
  */
 function hsv2rgb (h, s, v) {
-  if (h.length) { v = h[2], s = h[1], h = h[0]; }
-  var r, g, b
+  if (h.length) {
+    h = h[0]
+    s = h[1]
+    v = h[2]
+  }
+  let r, g, b
 
-  var i = Math.floor(h * 6)
-  var f = h * 6 - i
-  var p = v * (1 - s)
-  var q = v * (1 - f * s)
-  var t = v * (1 - (1 - f) * s)
+  let i = Math.floor(h * 6)
+  let f = h * 6 - i
+  let p = v * (1 - s)
+  let q = v * (1 - f * s)
+  let t = v * (1 - (1 - f) * s)
 
   switch (i % 6) {
     case 0:
@@ -13151,10 +13187,10 @@ function hsv2rgb (h, s, v) {
  * - convert the HEX value into RGB values
  */
 function html2rgb (s) {
-  var r = 0
-  var g = 0
-  var b = 0
-  if (s.length == 7) {
+  let r = 0
+  let g = 0
+  let b = 0
+  if (s.length === 7) {
     r = parseInt('0x' + s.slice(1, 3)) / 255
     g = parseInt('0x' + s.slice(3, 5)) / 255
     b = parseInt('0x' + s.slice(5, 7)) / 255
@@ -13169,22 +13205,26 @@ function html2rgb (s) {
  * - return HTML formatted string "#RRGGBB"
  */
 function rgb2html (r, g, b) {
-  if (r.length) { b = r[2], g = r[1], r = r[0]; }
-  var s = '#' +
-  Number(0x1000000 + r * 255 * 0x10000 + g * 255 * 0x100 + b * 255).toString(16).substring(1,7)
+  if (r.length) {
+    r = r[0]
+    g = r[1]
+    b = r[2]
+  }
+  let s = '#' +
+  Number(0x1000000 + r * 255 * 0x10000 + g * 255 * 0x100 + b * 255).toString(16).substring(1, 7)
   return s
 }
 
- module.exports = {
-   css2rgb,
-   color,
-   rgb2hsl,
-   hsl2rgb,
-   rgb2hsv,
-   hsv2rgb,
-   html2rgb,
-   rgb2html
- }
+module.exports = {
+  css2rgb,
+  color,
+  rgb2hsl,
+  hsl2rgb,
+  rgb2hsv,
+  hsv2rgb,
+  html2rgb,
+  rgb2html
+}
 
 },{}],141:[function(require,module,exports){
 function echo () {
@@ -13442,15 +13482,27 @@ module.exports = {
 },{}],146:[function(require,module,exports){
 const { CAG } = require('@jscad/csg')
 
-// -- 3D operations (OpenSCAD like notion)
+// -- 3D boolean operations
+
 // FIXME should this be lazy ? in which case, how do we deal with 2D/3D combined
 // TODO we should have an option to set behaviour as first parameter
+/** union/ combine the given shapes
+ * @param {Object(s)|Array} objects - objects to combine : can be given
+ * - one by one: union(a,b,c) or
+ * - as an array: union([a,b,c])
+ * @returns {CSG} new CSG object, the union of all input shapes
+ *
+ * @example
+ * let unionOfSpherAndCube = union(sphere(), cube())
+ */
 function union () {
   let options = {}
   const defaults = {
     extrude2d: false
   }
-  var o, i = 0, a = arguments
+  let o
+  let i = 0
+  let a = arguments
   if (a[0].length) a = a[0]
   if ('extrude2d' in a[0]) { // first parameter is options
     options = Object.assign({}, defaults, a[0])
@@ -13464,7 +13516,7 @@ function union () {
     o = a[i].extrude({offset: [0, 0, 0.1]}) // -- convert a 2D shape to a thin solid, note: do not a[i] = a[i].extrude()
   }
   for (; i < a.length; i++) {
-    var obj = a[i]
+    let obj = a[i]
 
     if ((typeof (a[i]) === 'object') && a[i] instanceof CAG && options.extrude2d) {
       obj = a[i].extrude({offset: [0, 0, 0.1]}) // -- convert a 2D shape to a thin solid:
@@ -13474,30 +13526,55 @@ function union () {
   return o
 }
 
+/** difference/ subtraction of the given shapes ie:
+ * cut out C From B From A ie : a - b - c etc
+ * @param {Object(s)|Array} objects - objects to subtract
+ * can be given
+ * - one by one: difference(a,b,c) or
+ * - as an array: difference([a,b,c])
+ * @returns {CSG} new CSG object, the difference of all input shapes
+ *
+ * @example
+ * let differenceOfSpherAndCube = difference(sphere(), cube())
+ */
 function difference () {
-  var o, i = 0, a = arguments
+  let object
+  let i = 0
+  let a = arguments
   if (a[0].length) a = a[0]
-  for (o = a[i++]; i < a.length; i++) {
+  for (object = a[i++]; i < a.length; i++) {
     if (a[i] instanceof CAG) {
-      o = o.subtract(a[i])
+      object = object.subtract(a[i])
     } else {
-      o = o.subtract(a[i].setColor(1, 1, 0)) // -- color the cuts
+      object = object.subtract(a[i].setColor(1, 1, 0)) // -- color the cuts
     }
   }
-  return o
+  return object
 }
 
+/** intersection of the given shapes: ie keep only the common parts between the given shapes
+ * @param {Object(s)|Array} objects - objects to intersect
+ * can be given
+ * - one by one: intersection(a,b,c) or
+ * - as an array: intersection([a,b,c])
+ * @returns {CSG} new CSG object, the intersection of all input shapes
+ *
+ * @example
+ * let intersectionOfSpherAndCube = intersection(sphere(), cube())
+ */
 function intersection () {
-  var o, i = 0, a = arguments
+  let object
+  let i = 0
+  let a = arguments
   if (a[0].length) a = a[0]
-  for (o = a[i++]; i < a.length; i++) {
+  for (object = a[i++]; i < a.length; i++) {
     if (a[i] instanceof CAG) {
-      o = o.intersect(a[i])
+      object = object.intersect(a[i])
     } else {
-      o = o.intersect(a[i].setColor(1, 1, 0)) // -- color the cuts
+      object = object.intersect(a[i].setColor(1, 1, 0)) // -- color the cuts
     }
   }
-  return o
+  return object
 }
 
 module.exports = {
@@ -13511,30 +13588,42 @@ const { CSG, CAG } = require('@jscad/csg')
 const {cagToPointsArray, clamp, rightMultiply1x3VectorToArray, polygonFromPoints} = require('./helpers')
 // -- 2D to 3D primitives
 
-function linear_extrude (p, s) {
-  // return
-  let h = 1
-  let off = 0
-  let twist = 0
-  let slices = 10
-  /* convexity = 10, */
+// FIXME: right now linear & rotate extrude take params first, while rectangular_extrude
+// takes params second ! confusing and incoherent ! needs to be changed (BREAKING CHANGE !)
 
-  if (p.height) h = p.height
-  // if(p.convexity) convexity = p.convexity      // abandoned
-  if (p.twist) twist = p.twist
-  if (p.slices) slices = p.slices
-  var o = s.extrude({offset: [0, 0, h], twistangle: twist, twiststeps: slices})
-  if (p.center === true) {
-    var b = [ ]
-    b = o.getBounds() // b[0] = min, b[1] = max
-    off = b[1].plus(b[0])
-    off = off.times(-0.5)
-    o = o.translate(off)
+/** linear extrusion of the input 2d shape
+ * @param {Object} [options] - options for construction
+ * @param {Float} [options.height=1] - height of the extruded shape
+ * @param {Integer} [options.slices=10] - number of intermediary steps/slices
+ * @param {Integer} [options.twist=0] - angle (in degrees to twist the extusion by)
+ * @param {Boolean} [options.center=false] - whether to center extrusion or not
+ * @param {CAG} baseShape input 2d shape
+ * @returns {CSG} new extruded shape
+ *
+ * @example
+ * let revolved = linear_extrude({height: 10}, square())
+ */
+function linear_extrude (params, baseShape) {
+  const defaults = {
+    height: 1,
+    slices: 10,
+    twist: 0,
+    center: false
   }
-  return o
+  /* convexity = 10, */
+  const {height, twist, slices, center} = Object.assign({}, defaults, params)
+
+  // if(params.convexity) convexity = params.convexity      // abandoned
+  let output = baseShape.extrude({offset: [0, 0, height], twistangle: twist, twiststeps: slices})
+  if (center === true) {
+    const b = output.getBounds() // b[0] = min, b[1] = max
+    const offset = (b[1].plus(b[0])).times(-0.5)
+    output = output.translate(offset)
+  }
+  return output
 }
 
-/** rotate extrude / revolve
+/** rotate extrusion / revolve of the given 2d shape
  * @param {Object} [options] - options for construction
  * @param {Integer} [options.fn=1] - resolution/number of segments of the extrusion
  * @param {Float} [options.startAngle=1] - start angle of the extrusion, in degrees
@@ -13678,20 +13767,30 @@ function rotate_extrude (params, baseShape) {
   return CSG.fromPolygons(polygons).reTesselated().canonicalized()
 }
 
-function rectangular_extrude (pa, p) {
-  let w = 1
-  let h = 1
-  let fn = 8
-  let closed = false
-  let round = true
-  if (p) {
-    if (p.w) w = p.w
-    if (p.h) h = p.h
-    if (p.fn) fn = p.fn
-    if (p.closed !== undefined) closed = p.closed
-    if (p.round !== undefined) round = p.round
+/** rectangular extrusion of the given array of points
+ * @param {Array} basePoints array of points (nested) to extrude from
+ * layed out like [ [0,0], [10,0], [5,10], [0,10] ]
+ * @param {Object} [options] - options for construction
+ * @param {Float} [options.h=1] - height of the extruded shape
+ * @param {Float} [options.w=10] - width of the extruded shape
+ * @param {Integer} [options.fn=1] - resolution/number of segments of the extrusion
+ * @param {Boolean} [options.closed=false] - whether to close the input path for the extrusion or not
+ * @param {Boolean} [options.round=true] - whether to round the extrusion or not
+ * @returns {CSG} new extruded shape
+ *
+ * @example
+ * let revolved = rectangular_extrude({height: 10}, square())
+ */
+function rectangular_extrude (basePoints, params) {
+  const defaults = {
+    w: 1,
+    h: 1,
+    fn: 8,
+    closed: false,
+    round: true
   }
-  return new CSG.Path2D(pa, closed).rectangularExtrude(w, h, fn, round)
+  const {w, h, fn, closed, round} = Object.assign({}, defaults, params)
+  return new CSG.Path2D(basePoints, closed).rectangularExtrude(w, h, fn, round)
 }
 
 module.exports = {
@@ -13705,35 +13804,61 @@ const { CSG, CAG } = require('@jscad/csg')
 const { union } = require('./ops-booleans')
 // -- 3D transformations (OpenSCAD like notion)
 
-function translate () {      // v, obj or array
-  var a = arguments, v = a[0], o, i = 1
-  if (a[1].length) { a = a[1]; i = 0 }
-  for (o = a[i++]; i < a.length; i++) {
-    o = o.union(a[i])
+/** translate an object in 2D/3D space
+ * @param {Object} vector - 3D vector to translate the given object(s) by
+ * @param {Object(s)|Array} objects either a single or multiple CSG/CAG objects to translate
+ * @returns {CSG} new CSG object , translated by the given amount
+ *
+ * @example
+ * let movedSphere = translate([10,2,0], sphere())
+ */
+function translate (vector, ...objects) {      // v, obj or array
+  // workaround needed to determine if we are dealing with an array of objects
+  const _objects = (objects.length >= 1 && objects[0].length) ? objects[0] : objects
+  let object = _objects[0]
+
+  if (_objects.length > 1) {
+    for (let i = 1; i < _objects.length; i++) { // FIXME/ why is union really needed ??
+      object = object.union(_objects[i])
+    }
   }
-  return o.translate(v)
+  return object.translate(vector)
 }
 
-function center () { // v, obj or array
-  var a = arguments, v = a[0], o, i = 1
-  if (a[1].length) { a = a[1]; i = 0 }
-  for (o = a[i++]; i < a.length; i++) {
-    o = o.union(a[i])
+/** scale an object in 2D/3D space
+ * @param {Float|Array} scale - either an array or simple number to scale object(s) by
+ * @param {Object(s)|Array} objects either a single or multiple CSG/CAG objects to scale
+ * @returns {CSG} new CSG object , scaled by the given amount
+ *
+ * @example
+ * let scaledSphere = scale([0.2,15,1], sphere())
+ */
+function scale (scale, ...objects) {         // v, obj or array
+  const _objects = (objects.length >= 1 && objects[0].length) ? objects[0] : objects
+  let object = _objects[0]
+
+  if (_objects.length > 1) {
+    for (let i = 1; i < _objects.length; i++) { // FIXME/ why is union really needed ??
+      object = object.union(_objects[i])
+    }
   }
-  return o.center(v)
+  return object.scale(scale)
 }
 
-function scale () {         // v, obj or array
-  var a = arguments, v = a[0], o, i = 1
-  if (a[1].length) { a = a[1]; i = 0 }
-  for (o = a[i++]; i < a.length; i++) {
-    o = o.union(a[i])
-  }
-  return o.scale(v)
-}
-
+/** rotate an object in 2D/3D space
+ * @param {Float|Array} rotation - either an array or simple number to rotate object(s) by
+ * @param {Object(s)|Array} objects either a single or multiple CSG/CAG objects to rotate
+ * @returns {CSG} new CSG object , rotated by the given amount
+ *
+ * @example
+ * let rotatedSphere = rotate([0.2,15,1], sphere())
+ */
 function rotate () {
-  var o, i, v, r = 1, a = arguments
+  let o
+  let i
+  let v
+  let r = 1
+  let a = arguments
   if (!a[0].length) {        // rotate(r,[x,y,z],o)
     r = a[0]
     v = a[1]
@@ -13747,58 +13872,150 @@ function rotate () {
   for (o = a[i++]; i < a.length; i++) {
     o = o.union(a[i])
   }
-  if (r != 1) {
+  if (r !== 1) {
     return o.rotateX(v[0] * r).rotateY(v[1] * r).rotateZ(v[2] * r)
   } else {
     return o.rotateX(v[0]).rotateY(v[1]).rotateZ(v[2])
   }
 }
 
-function mirror (v, o) {
-  var a = Array.prototype.slice.call(arguments, 1, arguments.length),
-    o = a[0]
+/** apply the given matrix transform to the given objects
+ * @param {Array} matrix - the 4x4 matrix to apply, as a simple 1d array of 16 elements
+ * @param {Object(s)|Array} objects either a single or multiple CSG/CAG objects to transform
+ * @returns {CSG} new CSG object , transformed
+ *
+ * @example
+ * const angle = 45
+ * let transformedShape = transform([
+ * cos(angle), -sin(angle), 0, 10,
+ * sin(angle),  cos(angle), 0, 20,
+ * 0         ,           0, 1, 30,
+ * 0,           0, 0,  1
+ * ], sphere())
+ */
+function transform (matrix, ...objects) { // v, obj or array
+  const _objects = (objects.length >= 1 && objects[0].length) ? objects[0] : objects
+  let object = _objects[0]
 
-  for (var i = 1; i < a.length; i++) {
-    o = o.union(a[i])
+  if (_objects.length > 1) {
+    for (let i = 1; i < _objects.length; i++) { // FIXME/ why is union really needed ??
+      object = object.union(_objects[i])
+    }
   }
-  var plane = new CSG.Plane(new CSG.Vector3D(v[0], v[1], v[2]).unit(), 0)
-  return o.mirrored(plane)
+
+  let transformationMatrix
+  if (!Array.isArray(matrix)) {
+    throw new Error('Matrix needs to be an array')
+  }
+  matrix.forEach(element => {
+    if (!Number.isFinite(element)) {
+      throw new Error('you can only use a flat array of valid, finite numbers (float and integers)')
+    }
+  })
+  transformationMatrix = new CSG.Matrix4x4(matrix)
+  return object.transform(transformationMatrix)
 }
 
-function expand (r, n, o) {
-  return o.expand(r, n)
+/** center an object in 2D/3D space
+ * @param {Boolean|Array} axis - either an array or single boolean to indicate which axis you want to center on
+ * @param {Object(s)|Array} objects either a single or multiple CSG/CAG objects to translate
+ * @returns {CSG} new CSG object , translated by the given amount
+ *
+ * @example
+ * let movedSphere = center(false, sphere())
+ */
+function center (axis, ...objects) { // v, obj or array
+  const _objects = (objects.length >= 1 && objects[0].length) ? objects[0] : objects
+  let object = _objects[0]
+
+  if (_objects.length > 1) {
+    for (let i = 1; i < _objects.length; i++) { // FIXME/ why is union really needed ??
+      object = object.union(_objects[i])
+    }
+  }
+  return object.center(axis)
 }
 
-function contract (r, n, o) {
-  return o.contract(r, n)
+/** mirror an object in 2D/3D space
+ * @param {Array} vector - the axes to mirror the object(s) by
+ * @param {Object(s)|Array} objects either a single or multiple CSG/CAG objects to mirror
+ * @returns {CSG} new CSG object , mirrored
+ *
+ * @example
+ * let rotatedSphere = mirror([0.2,15,1], sphere())
+ */
+function mirror (vector, ...objects) {
+  const _objects = (objects.length >= 1 && objects[0].length) ? objects[0] : objects
+  let object = _objects[0]
+
+  if (_objects.length > 1) {
+    for (let i = 1; i < _objects.length; i++) { // FIXME/ why is union really needed ??
+      object = object.union(_objects[i])
+    }
+  }
+  const plane = new CSG.Plane(new CSG.Vector3D(vector[0], vector[1], vector[2]).unit(), 0)
+  return object.mirrored(plane)
 }
 
-function multmatrix (mat, obj) {
-  console.log('multmatrix() not yet implemented')
+/** expand an object in 2D/3D space
+ * @param {float} radius - the radius to expand by
+ * @param {Object} object a CSG/CAG objects to expand
+ * @returns {CSG/CAG} new CSG/CAG object , expanded
+ *
+ * @example
+ * let expanededShape = expand([0.2,15,1], sphere())
+ */
+function expand (radius, n, object) {
+  return object.expand(radius, n)
 }
 
+/** contract an object(s) in 2D/3D space
+ * @param {float} radius - the radius to contract by
+ * @param {Object} object a CSG/CAG objects to contract
+ * @returns {CSG/CAG} new CSG/CAG object , contracted
+ *
+ * @example
+ * let contractedShape = contract([0.2,15,1], sphere())
+ */
+function contract (radius, n, object) {
+  return object.contract(radius, n)
+}
+
+/** create a minkowski sum of the given shapes
+ * @param {Object(s)|Array} objects either a single or multiple CSG/CAG objects to create a hull around
+ * @returns {CSG} new CSG object , mirrored
+ *
+ * @example
+ * let hulled = hull(rect(), circle())
+ */
 function minkowski () {
   console.log('minkowski() not yet implemented')
 }
 
+/** create a convex hull of the given shapes
+ * @param {Object(s)|Array} objects either a single or multiple CSG/CAG objects to create a hull around
+ * @returns {CSG} new CSG object , a hull around the given shapes
+ *
+ * @example
+ * let hulled = hull(rect(), circle())
+ */
 function hull () {
-  var pts = []
+  let pts = []
 
-  var a = arguments
+  let a = arguments
   if (a[0].length) a = a[0]
-  var done = []
+  let done = []
 
-  for (var i = 0; i < a.length; i++) {              // extract all points of the CAG in the argument list
-    var cag = a[i]
+  for (let i = 0; i < a.length; i++) {              // extract all points of the CAG in the argument list
+    let cag = a[i]
     if (!(cag instanceof CAG)) {
-      throw ('ERROR: hull() accepts only 2D forms / CAG')
-      return
+      throw new Error('ERROR: hull() accepts only 2D forms / CAG')
     }
-    for (var j = 0; j < cag.sides.length; j++) {
-      var x = cag.sides[j].vertex0.pos.x
-      var y = cag.sides[j].vertex0.pos.y
-      if (done['' + x + ',' + y])  // avoid some coord to appear multiple times
-           {
+    for (let j = 0; j < cag.sides.length; j++) {
+      let x = cag.sides[j].vertex0.pos.x
+      let y = cag.sides[j].vertex0.pos.y
+      // avoid some coord to appear multiple times
+      if (done['' + x + ',' + y]) {
         continue
       }
       pts.push({ x: x, y: y })
@@ -13810,7 +14027,7 @@ function hull () {
 
    // from http://www.psychedelicdevelopment.com/grahamscan/
    //    see also at https://github.com/bkiers/GrahamScan/blob/master/src/main/cg/GrahamScan.java
-  var ConvexHullPoint = function (i, a, d) {
+  let ConvexHullPoint = function (i, a, d) {
     this.index = i
     this.angle = a
     this.distance = d
@@ -13831,7 +14048,7 @@ function hull () {
     }
   }
 
-  var ConvexHull = function () {
+  let ConvexHull = function () {
     this.points = null
     this.indices = null
 
@@ -13845,10 +14062,10 @@ function hull () {
     }
 
     this.ccw = function (p1, p2, p3) {
-      var ccw = (this.points[p2].x - this.points[p1].x) * (this.points[p3].y - this.points[p1].y) -
+      let ccw = (this.points[p2].x - this.points[p1].x) * (this.points[p3].y - this.points[p1].y) -
                    (this.points[p2].y - this.points[p1].y) * (this.points[p3].x - this.points[p1].x)
-      if (ccw < 1e-5)      // we need this, otherwise sorting never ends, see https://github.com/Spiritdude/OpenJSCAD.org/issues/18
-            {
+      // we need this, otherwise sorting never ends, see https://github.com/Spiritdude/OpenJSCAD.org/issues/18
+      if (ccw < 1e-5) {
         return 0
       }
       return ccw
@@ -13872,9 +14089,9 @@ function hull () {
       this.points = _points
 
          // Find the lowest point
-      var min = 0
-      for (var i = 1; i < this.points.length; i++) {
-        if (this.points[i].y == this.points[min].y) {
+      let min = 0
+      for (let i = 1; i < this.points.length; i++) {
+        if (this.points[i].y === this.points[min].y) {
           if (this.points[i].x < this.points[min].x) {
             min = i
           }
@@ -13884,11 +14101,11 @@ function hull () {
       }
 
          // Calculate angle and distance from base
-      var al = new Array()
-      var ang = 0.0
-      var dist = 0.0
-      for (i = 0; i < this.points.length; i++) {
-        if (i == min) {
+      let al = []
+      let ang = 0.0
+      let dist = 0.0
+      for (let i = 0; i < this.points.length; i++) {
+        if (i === min) {
           continue
         }
         ang = this.angle(min, i)
@@ -13902,10 +14119,10 @@ function hull () {
       al.sort(function (a, b) { return a.compare(b) })
 
          // Create stack
-      var stack = new Array(this.points.length + 1)
-      var j = 2
-      for (i = 0; i < this.points.length; i++) {
-        if (i == min) {
+      let stack = new Array(this.points.length + 1)
+      let j = 2
+      for (let i = 0; i < this.points.length; i++) {
+        if (i === min) {
           continue
         }
         stack[j] = al[j - 2].index
@@ -13914,9 +14131,9 @@ function hull () {
       stack[0] = stack[this.points.length]
       stack[1] = min
 
-      var tmp
-      var M = 2
-      for (i = 3; i <= this.points.length; i++) {
+      let tmp
+      let M = 2
+      for (let i = 3; i <= this.points.length; i++) {
         while (this.ccw(stack[M - 1], stack[M], stack[i]) <= 0) {
           M--
         }
@@ -13927,35 +14144,45 @@ function hull () {
       }
 
       this.indices = new Array(M)
-      for (i = 0; i < M; i++) {
+      for (let i = 0; i < M; i++) {
         this.indices[i] = stack[i + 1]
       }
     }
   }
 
-  var hull = new ConvexHull()
+  let hull = new ConvexHull()
 
   hull.compute(pts)
-  var indices = hull.getIndices()
+  let indices = hull.getIndices()
 
   if (indices && indices.length > 0) {
-    var ch = []
-    for (var i = 0; i < indices.length; i++) {
+    let ch = []
+    for (let i = 0; i < indices.length; i++) {
       ch.push(pts[indices[i]])
-         // echo(pts[indices[i]]);
     }
-      // echo(ch.length+" points out",ch);
     return CAG.fromPoints(ch)
-      // return CAG.fromPointsNoCheck(ch);
   }
 }
 
-// "Whosa whatsis" suggested "Chain Hull" as described at https://plus.google.com/u/0/105535247347788377245/posts/aZGXKFX1ACN
-// essentially hull A+B, B+C, C+D and then union those
-
-function chain_hull () {
-  var a = arguments
-  var j = 0, closed = false
+/** create a chain hull of the given shapes
+ * Originally "Whosa whatsis" suggested "Chain Hull" ,
+ * as described at https://plus.google.com/u/0/105535247347788377245/posts/aZGXKFX1ACN
+ * essentially hull A+B, B+C, C+D and then union those
+ * @param {Object(s)|Array} objects either a single or multiple CSG/CAG objects to create a chain hull around
+ * @returns {CSG} new CSG object ,which a chain hull of the inputs
+ *
+ * @example
+ * let hulled = chain_hull(rect(), circle())
+ */
+function chain_hull (params, objects) {
+  /*
+  const defaults = {
+    closed: false
+  }
+  const closed = Object.assign({}, defaults, params) */
+  let a = arguments
+  let closed = false
+  let j = 0
 
   if (a[j].closed !== undefined) {
     closed = a[j++].closed
@@ -13963,11 +14190,12 @@ function chain_hull () {
 
   if (a[j].length) { a = a[j] }
 
-  var h = []; var n = a.length - (closed ? 0 : 1)
-  for (var i = 0; i < n; i++) {
-    h.push(hull(a[i], a[(i + 1) % a.length]))
+  let hulls = []
+  let hullsAmount = a.length - (closed ? 0 : 1)
+  for (let i = 0; i < hullsAmount; i++) {
+    hulls.push(hull(a[i], a[(i + 1) % a.length]))
   }
-  return union(h)
+  return union(hulls)
 }
 
 module.exports = {
@@ -13975,10 +14203,10 @@ module.exports = {
   center,
   scale,
   rotate,
+  transform,
   mirror,
   expand,
   contract,
-  multmatrix,
   minkowski,
   hull,
   chain_hull
@@ -13989,66 +14217,109 @@ const { CAG } = require('@jscad/csg')
 
 // -- 2D primitives (OpenSCAD like notion)
 
+/** Construct a square/rectangle
+ * @param {Object} [options] - options for construction
+ * @param {Float} [options.size=1] - size of the square, either as array or scalar
+ * @param {Boolean} [options.center=true] - wether to center the square/rectangle or not
+ * @returns {CAG} new square
+ *
+ * @example
+ * let square1 = square({
+ *   size: 10
+ * })
+ */
 function square () {
   let v = [1, 1]
   let off
   let a = arguments
-  let p = a[0]
+  let params = a[0]
 
-  if (p && Number.isFinite(p)) v = [p, p]
-  if (p && p.length) v = a[0], p = a[1]
-  if (p && p.size && p.size.length) v = p.size
+  if (params && Number.isFinite(params)) v = [params, params]
+  if (params && params.length) {
+    v = a[0]
+    params = a[1]
+  }
+  if (params && params.size && params.size.length) v = params.size
 
   off = [v[0] / 2, v[1] / 2]
-  if (p && p.center === true) off = [0, 0]
+  if (params && params.center === true) off = [0, 0]
 
-  var o = CAG.rectangle({center: off, radius: [v[0] / 2, v[1] / 2]})
-
-  return o
+  return CAG.rectangle({center: off, radius: [v[0] / 2, v[1] / 2]})
 }
 
-function circle () {
-  let r = 1
-  let off
-  let fn = 32
-  let a = arguments
-  let p = a[0]
-  if (p && p.r) r = p.r
-  if (p && p.fn) fn = p.fn
-  if (p && !p.r && !p.fn && !p.center) r = p
-  off = [r, r]
-  if (p && p.center === true) { off = [0, 0] }
-  var o = CAG.circle({center: off, radius: r, resolution: fn})
-  return o
+/** Construct a circle
+ * @param {Object} [options] - options for construction
+ * @param {Float} [options.r=1] - radius of the circle
+ * @param {Integer} [options.fn=32] - segments of circle (ie quality/ resolution)
+ * @param {Boolean} [options.center=true] - wether to center the circle or not
+ * @returns {CAG} new circle
+ *
+ * @example
+ * let circle1 = circle({
+ *   r: 10
+ * })
+ */
+function circle (params) {
+  const defaults = {
+    r: 1,
+    fn: 32,
+    center: false
+  }
+  let {r, fn, center} = Object.assign({}, defaults, params)
+  if (params && !params.r && !params.fn && !params.center) r = params
+  let offset = center === true ? [0, 0] : [r, r]
+  return CAG.circle({center: offset, radius: r, resolution: fn})
 }
 
-function polygon (p) { // array of po(ints) and pa(ths)
-  var points = [ ]
-  if (p.paths && p.paths.length && p.paths[0].length) { // pa(th): [[0,1,2],[2,3,1]] (two paths)
-    for (var j = 0; j < p.paths.length; j++) {
-      for (var i = 0; i < p.paths[j].length; i++) {
-        points[i] = p.points[p.paths[j][i]]
+/** Construct a polygon either from arrays of paths and points, or just arrays of points
+ * nested paths (multiple paths) and flat paths are supported
+ * @param {Object} [options] - options for construction
+ * @param {Array} [options.paths] - paths of the polygon : either flat or nested array
+ * @param {Array} [options.points] - points of the polygon : either flat or nested array
+ * @returns {CAG} new polygon
+ *
+ * @example
+ * let poly = polygon([0,1,2,3,4])
+ * or 
+ * let poly = polygon({path: [0,1,2,3,4]})
+ * or 
+ * let poly = polygon({path: [0,1,2,3,4], points: [2,1,3]})
+ */
+function polygon (params) { // array of po(ints) and pa(ths)
+  let points = [ ]
+  if (params.paths && params.paths.length && params.paths[0].length) { // pa(th): [[0,1,2],[2,3,1]] (two paths)
+    for (let j = 0; j < params.paths.length; j++) {
+      for (let i = 0; i < params.paths[j].length; i++) {
+        points[i] = params.points[params.paths[j][i]]
       }
     }
-  } else if (p.paths && p.paths.length) { // pa(th): [0,1,2,3,4] (single path)
-    for (var i = 0; i < p.paths.length; i++) {
-      points[i] = p.points[p.paths[i]]
+  } else if (params.paths && params.paths.length) { // pa(th): [0,1,2,3,4] (single path)
+    for (let i = 0; i < params.paths.length; i++) {
+      points[i] = params.points[params.paths[i]]
     }
   } else { // pa(th) = po(ints)
-    if (p.length) {
-      points = p
+    if (params.length) {
+      points = params
     } else {
-      points = p.points
+      points = params.points
     }
   }
   return CAG.fromPoints(points)
 }
 
-function triangle () { // -- new addition
-  var a = arguments
+// FIXME: errr this is kinda just a special case of a polygon , why do we need it ?
+/** Construct a triangle
+ * @returns {CAG} new triangle
+ *
+ * @example
+ * let triangle = trangle({
+ *   length: 10
+ * })
+ */
+function triangle () {
+  let a = arguments
   if (a[0] && a[0].length) a = a[0]
-  var o = CAG.fromPoints(a)
-  return o
+  return CAG.fromPoints(a)
 }
 
 module.exports = {
@@ -14063,75 +14334,118 @@ module.exports = {
 const { CSG } = require('@jscad/csg')
 const { circle } = require('./primitives2d')
 const { rotate_extrude } = require('./ops-extrusions')
-const { translate } = require('./ops-transformations')
+const { translate, scale } = require('./ops-transformations')
 
-function cube (p) {
-  var s = 1, v = null, off = [0, 0, 0], round = false, r = 0, fn = 8
-  if (p && p.length) v = p
-  if (p && p.size && p.size.length) v = p.size // { size: [1,2,3] }
-  if (p && p.size && !p.size.length) s = p.size // { size: 1 }
-  // if(p&&!p.size&&!p.length&&p.center===undefined&&!p.round&&!p.radius) s = p      // (2)
-  if (p && (typeof p !== 'object')) s = p// (2)
-  if (p && p.round === true) { round = true, r = v && v.length ? (v[0] + v[1] + v[2]) / 30 : s / 10 }
-  if (p && p.radius) { round = true, r = p.radius }
-  if (p && p.fn) fn = p.fn // applies in case of round: true
+/** Construct a cuboid
+ * @param {Object} [options] - options for construction
+ * @param {Float} [options.size=1] - size of the side of the cuboid : can be either:
+ * - a scalar : ie a single float, in which case all dimensions will be the same
+ * - or an array: to specify different dimensions along x/y/z
+ * @param {Integer} [options.fn=32] - segments of the sphere (ie quality/resolution)
+ * @param {Integer} [options.fno=32] - segments of extrusion (ie quality)
+ * @param {String} [options.type='normal'] - type of sphere : either 'normal' or 'geodesic'
+ * @returns {CSG} new sphere
+ *
+ * @example
+ * let cube1 = cube({
+ *   r: 10,
+ *   fn: 20
+ * })
+ */
+function cube(params) {
+  const defaults = {
+    size: 1,
+    offset: [0, 0, 0],
+    round: false,
+    radius: 0,
+    fn: 8
+  }
 
-  var x = s, y = s, z = s
+  let {round, radius, fn, size} = Object.assign({}, defaults, params)
+  let offset = [0, 0, 0]
+  let v = null
+  if (params && params.length) v = params
+  if (params && params.size && params.size.length) v = params.size // { size: [1,2,3] }
+  if (params && params.size && !params.size.length) size = params.size // { size: 1 }
+  if (params && (typeof params !== 'object')) size = params// (2)
+  if (params && params.round === true) {
+    round = true
+    radius = v && v.length ? (v[0] + v[1] + v[2]) / 30 : size / 10
+  }
+  if (params && params.radius) {
+    round = true
+    radius = params.radius
+  }
+
+  let x = size
+  let y = size
+  let z = size
   if (v && v.length) {
-    x = v[0], y = v[1], z = v[2]
+    [x, y, z] = v
   }
-  off = [x / 2, y / 2, z / 2] // center: false default
-  var o = round
-    ? CSG.roundedCube({radius: [x / 2, y / 2, z / 2], roundradius: r, resolution: fn})
+  offset = [x / 2, y / 2, z / 2] // center: false default
+  let object = round
+    ? CSG.roundedCube({radius: [x / 2, y / 2, z / 2], roundradius: radius, resolution: fn})
     : CSG.cube({radius: [x / 2, y / 2, z / 2]})
-  if (p && p.center && p.center.length) {
-    off = [p.center[0] ? 0 : x / 2, p.center[1] ? 0 : y / 2, p.center[2] ? 0 : z / 2]
-  } else if (p && p.center == true) {
-    off = [0, 0, 0]
-  } else if (p && p.center == false) {
-    off = [x / 2, y / 2, z / 2]
+  if (params && params.center && params.center.length) {
+    offset = [params.center[0] ? 0 : x / 2, params.center[1] ? 0 : y / 2, params.center[2] ? 0 : z / 2]
+  } else if (params && params.center === true) {
+    offset = [0, 0, 0]
+  } else if (params && params.center === false) {
+    offset = [x / 2, y / 2, z / 2]
   }
-  if (off[0] || off[1] || off[2]) o = o.translate(off)
-  // if(v&&v.length) o = o.scale(v)      // we don't scale afterwards, we already created box with the correct size
-  return o
+  return (offset[0] || offset[1] || offset[2]) ? translate(offset, object) : object
 }
 
-function sphere (p) {
-  var r = 1
-  var fn = 32
-  var off = [0, 0, 0]
-  var type = 'normal'
-
-  // var zoff = 0 // sphere() in openscad has no center:true|false
-  if (p && p.r) r = p.r
-  if (p && p.fn) fn = p.fn
-  if (p && p.type) type = p.type
-  // if(p&&!p.r&&!p.fn&&!p.type) r = p
-  if (p && (typeof p !== 'object')) r = p
-  off = [0, 0, 0] // center: false (default)
-
-  var o
-  if (type === 'geodesic') {
-    o = geodesicSphere(p)
-  } else {
-    o = CSG.sphere({radius: r, resolution: fn})
+/** Construct a sphere
+ * @param {Object} [options] - options for construction
+ * @param {Float} [options.r=1] - radius of the sphere
+ * @param {Integer} [options.fn=32] - segments of the sphere (ie quality/resolution)
+ * @param {Integer} [options.fno=32] - segments of extrusion (ie quality)
+ * @param {String} [options.type='normal'] - type of sphere : either 'normal' or 'geodesic'
+ * @returns {CSG} new sphere
+ *
+ * @example
+ * let sphere1 = sphere({
+ *   r: 10,
+ *   fn: 20
+ * })
+ */
+function sphere (params) {
+  const defaults = {
+    r: 1,
+    fn: 32,
+    type: 'normal'
   }
 
-  if (p && p.center && p.center.length) { // preparing individual x,y,z center
-    off = [p.center[0] ? 0 : r, p.center[1] ? 0 : r, p.center[2] ? 0 : r]
-  } else if (p && p.center === true) {
-    off = [0, 0, 0]
-  } else if (p && p.center === false) {
-    off = [r, r, r]
+  let {r, fn, type} = Object.assign({}, defaults, params)
+  let offset = [0, 0, 0] // center: false (default)
+  if (params && (typeof params !== 'object')) {
+    r = params
+  } 
+  // let zoffset = 0 // sphere() in openscad has no center:true|false
+
+  let output = type === 'geodesic' ? geodesicSphere(params) : CSG.sphere({radius: r, resolution: fn})
+
+  // preparing individual x,y,z center
+  if (params && params.center && params.center.length) {
+    offset = [params.center[0] ? 0 : r, params.center[1] ? 0 : r, params.center[2] ? 0 : r]
+  } else if (params && params.center === true) {
+    offset = [0, 0, 0]
+  } else if (params && params.center === false) {
+    offset = [r, r, r]
   }
-  if (off[0] || off[1] || off[2]) o = o.translate(off)
-  return o
+  return (offset[0] || offset[1] || offset[2]) ? translate(offset, output) : output 
 }
 
-function geodesicSphere (p) {
-  var r = 1, fn = 5
+function geodesicSphere (params) {
+  const defaults = {
+    r: 1,
+    fn: 5
+  }
+  let {r, fn} = Object.assign({}, defaults, params)
 
-  var ci = [ // hard-coded data of icosahedron (20 faces, all triangles)
+  let ci = [ // hard-coded data of icosahedron (20 faces, all triangles)
     [0.850651, 0.000000, -0.525731],
     [0.850651, -0.000000, 0.525731],
     [-0.850651, -0.000000, 0.525731],
@@ -14145,14 +14459,16 @@ function geodesicSphere (p) {
     [0.525731, 0.850651, 0.000000],
     [-0.525731, 0.850651, 0.000000]]
 
-  var ti = [ [0, 9, 1], [1, 10, 0], [6, 7, 0], [10, 6, 0], [7, 9, 0], [5, 1, 4], [4, 1, 9], [5, 10, 1], [2, 8, 3], [3, 11, 2], [2, 5, 4],
+  let ti = [ [0, 9, 1], [1, 10, 0], [6, 7, 0], [10, 6, 0], [7, 9, 0], [5, 1, 4], [4, 1, 9], [5, 10, 1], [2, 8, 3], [3, 11, 2], [2, 5, 4],
     [4, 8, 2], [2, 11, 5], [3, 7, 6], [6, 11, 3], [8, 7, 3], [9, 8, 4], [11, 10, 5], [10, 11, 6], [8, 9, 7]]
 
-  var geodesicSubDivide = function (p, fn, off) {
-    var p1 = p[0], p2 = p[1], p3 = p[2]
-    var n = off
-    var c = []
-    var f = []
+  let geodesicSubDivide = function (p, fn, offset) {
+    let p1 = p[0]
+    let p2 = p[1]
+    let p3 = p[2]
+    let n = offset
+    let c = []
+    let f = []
 
     //           p3
     //           /\
@@ -14163,23 +14479,23 @@ function geodesicSphere (p) {
     //     0/__\/__\/__\
     //    p1 0   j      p2
 
-    for (var i = 0; i < fn; i++) {
-      for (var j = 0; j < fn - i; j++) {
-        var t0 = i / fn
-        var t1 = (i + 1) / fn
-        var s0 = j / (fn - i)
-        var s1 = (j + 1) / (fn - i)
-        var s2 = fn - i - 1 ? j / (fn - i - 1) : 1
-        var q = []
+    for (let i = 0; i < fn; i++) {
+      for (let j = 0; j < fn - i; j++) {
+        let t0 = i / fn
+        let t1 = (i + 1) / fn
+        let s0 = j / (fn - i)
+        let s1 = (j + 1) / (fn - i)
+        let s2 = fn - i - 1 ? j / (fn - i - 1) : 1
+        let q = []
 
         q[0] = mix3(mix3(p1, p2, s0), p3, t0)
         q[1] = mix3(mix3(p1, p2, s1), p3, t0)
         q[2] = mix3(mix3(p1, p2, s2), p3, t1)
 
         // -- normalize
-        for (var k = 0; k < 3; k++) {
-          var r = Math.sqrt(q[k][0] * q[k][0] + q[k][1] * q[k][1] + q[k][2] * q[k][2])
-          for (var l = 0; l < 3; l++) {
+        for (let k = 0; k < 3; k++) {
+          let r = Math.sqrt(q[k][0] * q[k][0] + q[k][1] * q[k][1] + q[k][2] * q[k][2])
+          for (let l = 0; l < 3; l++) {
             q[k][l] /= r
           }
         }
@@ -14187,15 +14503,15 @@ function geodesicSphere (p) {
         f.push([n, n + 1, n + 2]); n += 3
 
         if (j < fn - i - 1) {
-          var s3 = fn - i - 1 ? (j + 1) / (fn - i - 1) : 1
+          let s3 = fn - i - 1 ? (j + 1) / (fn - i - 1) : 1
           q[0] = mix3(mix3(p1, p2, s1), p3, t0)
           q[1] = mix3(mix3(p1, p2, s3), p3, t1)
           q[2] = mix3(mix3(p1, p2, s2), p3, t1)
 
           // -- normalize
-          for (var k = 0; k < 3; k++) {
-            var r = Math.sqrt(q[k][0] * q[k][0] + q[k][1] * q[k][1] + q[k][2] * q[k][2])
-            for (var l = 0; l < 3; l++) {
+          for (let k = 0; k < 3; k++) {
+            let r = Math.sqrt(q[k][0] * q[k][0] + q[k][1] * q[k][1] + q[k][2] * q[k][2])
+            for (let l = 0; l < 3; l++) {
               q[k][l] /= r
             }
           }
@@ -14204,60 +14520,84 @@ function geodesicSphere (p) {
         }
       }
     }
-    return { points: c, triangles: f, off: n }
+    return { points: c, triangles: f, offset: n }
   }
 
-  var mix3 = function (a, b, f) {
-    var _f = 1 - f
-    var c = []
-    for (var i = 0; i < 3; i++) {
+  const mix3 = function (a, b, f) {
+    let _f = 1 - f
+    let c = []
+    for (let i = 0; i < 3; i++) {
       c[i] = a[i] * _f + b[i] * f
     }
     return c
   }
 
-  if (p) {
-    if (p.fn) fn = Math.floor(p.fn / 6)
-    if (p.r) r = p.r
+  if (params) {
+    if (params.fn) fn = Math.floor(params.fn / 6)
   }
 
   if (fn <= 0) fn = 1
 
-  var q = []
-  var c = [], f = []
-  var off = 0
+  let c = []
+  let f = []
+  let offset = 0
 
-  for (var i = 0; i < ti.length; i++) {
-    var g = geodesicSubDivide([ ci[ti[i][0]], ci[ti[i][1]], ci[ti[i][2]]], fn, off)
+  for (let i = 0; i < ti.length; i++) {
+    let g = geodesicSubDivide([ ci[ti[i][0]], ci[ti[i][1]], ci[ti[i][2]]], fn, offset)
     c = c.concat(g.points)
     f = f.concat(g.triangles)
-    off = g.off
+    offset = g.offset
   }
-  return polyhedron({points: c, triangles: f}).scale(r)
+  return scale(r, polyhedron({points: c, triangles: f}))
 }
 
-function cylinder (p) {
-  var r1 = 1, r2 = 1, h = 1, fn = 32, round = false
-  var a = arguments
-  var off = [0, 0, 0]
-  if (p && p.d) {
-    r1 = r2 = p.d / 2
+/** Construct a cylinder
+ * @param {Object} [options] - options for construction
+ * @param {Float} [options.r=1] - radius of the cylinder
+ * @param {Float} [options.r1=1] - radius of the top of the cylinder
+ * @param {Float} [options.r2=1] - radius of the bottom of the cylinder
+ * @param {Float} [options.d=1] - diameter of the cylinder
+ * @param {Float} [options.d1=1] - diameter of the top of the cylinder
+ * @param {Float} [options.d2=1] - diameter of the bottom of the cylinder
+ * @param {Integer} [options.fn=32] - number of sides of the cylinder (ie quality/resolution)
+ * @returns {CSG} new cylinder
+ *
+ * @example
+ * let cylinder = cylinder({
+ *   d: 10,
+ *   fn: 20
+ * })
+ */
+function cylinder (params) {
+  const defaults = {
+    r: 1,
+    r1: 1,
+    r2: 1,
+    h: 1,
+    fn: 32,
+    round: false
   }
-  if (p && p.r) {
-    r1 = p.r
-    r2 = p.r
+  let {r1, r2, h, fn, round} = Object.assign({}, defaults, params)
+  let offset = [0, 0, 0]
+  let a = arguments
+  if (params && params.d) {
+    r1 = r2 = params.d / 2
   }
-  if (p && p.h) {
-    h = p.h
+  if (params && params.r) {
+    r1 = params.r
+    r2 = params.r
   }
-  if (p && (p.r1 || p.r2)) {
-    r1 = p.r1
-    r2 = p.r2
-    if (p.h) h = p.h
+  if (params && params.h) {
+    h = params.h
   }
-  if (p && (p.d1 || p.d2)) {
-    r1 = p.d1 / 2
-    r2 = p.d2 / 2
+  if (params && (params.r1 || params.r2)) {
+    r1 = params.r1
+    r2 = params.r2
+    if (params.h) h = params.h
+  }
+  if (params && (params.d1 || params.d2)) {
+    r1 = params.d1 / 2
+    r2 = params.d2 / 2
   }
 
   if (a && a[0] && a[0].length) {
@@ -14267,29 +14607,27 @@ function cylinder (p) {
     h = a[2]
     if (a.length === 4) fn = a[3]
   }
-  if (p && p.fn) fn = p.fn
-  // if(p&&p.center==true) zoff = -h/2
-  if (p && p.round === true) round = true
-  var o
-  if (p && (p.start && p.end)) {
-    o = round
-      ? CSG.roundedCylinder({start: p.start, end: p.end, radiusStart: r1, radiusEnd: r2, resolution: fn})
-      : CSG.cylinder({start: p.start, end: p.end, radiusStart: r1, radiusEnd: r2, resolution: fn})
+
+  let object
+  if (params && (params.start && params.end)) {
+    object = round
+      ? CSG.roundedCylinder({start: params.start, end: params.end, radiusStart: r1, radiusEnd: r2, resolution: fn})
+      : CSG.cylinder({start: params.start, end: params.end, radiusStart: r1, radiusEnd: r2, resolution: fn})
   } else {
-    o = round
+    object = round
       ? CSG.roundedCylinder({start: [0, 0, 0], end: [0, 0, h], radiusStart: r1, radiusEnd: r2, resolution: fn})
       : CSG.cylinder({start: [0, 0, 0], end: [0, 0, h], radiusStart: r1, radiusEnd: r2, resolution: fn})
-    var r = r1 > r2 ? r1 : r2
-    if (p && p.center && p.center.length) { // preparing individual x,y,z center
-      off = [p.center[0] ? 0 : r, p.center[1] ? 0 : r, p.center[2] ? -h / 2 : 0]
-    } else if (p && p.center === true) {
-      off = [0, 0, -h / 2]
-    } else if (p && p.center === false) {
-      off = [0, 0, 0]
+    let r = r1 > r2 ? r1 : r2
+    if (params && params.center && params.center.length) { // preparing individual x,y,z center
+      offset = [params.center[0] ? 0 : r, params.center[1] ? 0 : r, params.center[2] ? -h / 2 : 0]
+    } else if (params && params.center === true) {
+      offset = [0, 0, -h / 2]
+    } else if (params && params.center === false) {
+      offset = [0, 0, 0]
     }
-    if (off[0] || off[1] || off[2]) o = o.translate(off)
+    object = (offset[0] || offset[1] || offset[2]) ? translate(offset, object) : object
   }
-  return o
+  return object
 }
 
 /** Construct a torus
@@ -14316,10 +14654,11 @@ function torus (params) {
   }
   params = Object.assign({}, defaults, params)
 
+  /* possible enhancements ? declarative limits
   const limits = {
     fni: {min: 3},
     fno: {min: 3}
-  }
+  }*/
 
   let {ri, ro, fni, fno, roti} = params
 
@@ -14334,29 +14673,42 @@ function torus (params) {
   return result
 }
 
-function polyhedron (p) {
-  var pgs = []
-  var ref = p.triangles || p.polygons
-  var colors = p.colors || null
+/** Construct a polyhedron from the given triangles/ polygons/points
+ * @param {Object} [options] - options for construction
+ * @param {Array} [options.triangles] - triangles to build the polyhedron from
+ * @param {Array} [options.polygons] - polygons to build the polyhedron from
+ * @param {Array} [options.points] - points to build the polyhedron from
+ * @param {Array} [options.colors] - colors to apply to the polyhedron
+ * @returns {CSG} new polyhedron
+ *
+ * @example
+ * let torus1 = polyhedron({
+ *   points: [...]
+ * })
+ */
+function polyhedron (params) {
+  let pgs = []
+  let ref = params.triangles || params.polygons
+  let colors = params.colors || null
 
-  for (var i = 0; i < ref.length; i++) {
-    var pp = []
-    for (var j = 0; j < ref[i].length; j++) {
-      pp[j] = p.points[ref[i][j]]
+  for (let i = 0; i < ref.length; i++) {
+    let pp = []
+    for (let j = 0; j < ref[i].length; j++) {
+      pp[j] = params.points[ref[i][j]]
     }
 
-    var v = []
-    for (j = ref[i].length - 1; j >= 0; j--) { // --- we reverse order for examples of OpenSCAD work
+    let v = []
+    for (let j = ref[i].length - 1; j >= 0; j--) { // --- we reverse order for examples of OpenSCAD work
       v.push(new CSG.Vertex(new CSG.Vector3D(pp[j][0], pp[j][1], pp[j][2])))
     }
-    var s = CSG.Polygon.defaultShared
+    let s = CSG.Polygon.defaultShared
     if (colors && colors[i]) {
       s = CSG.Polygon.Shared.fromColor(colors[i])
     }
     pgs.push(new CSG.Polygon(v, s))
   }
-  var r = CSG.fromPolygons(pgs)
-  return r
+
+  return CSG.fromPolygons(pgs)
 }
 
 module.exports = {
@@ -14370,620 +14722,637 @@ module.exports = {
 
 },{"./ops-extrusions":147,"./ops-transformations":148,"./primitives2d":149,"@jscad/csg":106}],151:[function(require,module,exports){
 
-function vector_char(x,y,c) {
-   c = c.charCodeAt(0);
-   c -= 32;
-   if(c<0||c>=95) return { width: 0, segments: [] };
+/** Construct a with, segments tupple from a character
+ * @param {Float} x - x offset
+ * @param {Float} y - y offset
+ * @param {Float} char - character
+ * @returns {Object} { width: X, segments: [...] }
+ *
+ * @example
+ * let charData = vector_char(0, 12.2, 'b')
+ */
+function vector_char (x, y, char) {
+  char = char.charCodeAt(0)
+  char -= 32
+  if (char < 0 || char >= 95) return { width: 0, segments: [] }
 
-   var off = c*112;
-   var n = simplexFont[off++];
-   var w = simplexFont[off++];
-   var l = [];
-   var segs = [];
+  let off = char * 112
+  let n = simplexFont[off++]
+  let w = simplexFont[off++]
+  let l = []
+  let segs = []
 
-   for(var i=0; i<n; i++) {
-      var xp = simplexFont[off+i*2];
-      var yp = simplexFont[off+i*2+1];
-      if(xp==-1&&yp==-1) {
-         segs.push(l); l = [];
-      } else {
-         l.push([xp+x,yp+y]);
-      }
-   }
-   if(l.length) segs.push(l);
-   return { width: w, segments: segs };
+  for (let i = 0; i < n; i++) {
+    let xp = simplexFont[off + i * 2]
+    let yp = simplexFont[off + i * 2 + 1]
+    if (xp === -1 && yp === -1) {
+      segs.push(l); l = []
+    } else {
+      l.push([xp + x, yp + y])
+    }
+  }
+  if (l.length) segs.push(l)
+  return { width: w, segments: segs }
 }
 
-function vector_text(x,y,s) {
-   var o = [];
-   var x0 = x;
-   for(var i=0; i<s.length; i++) {
-      var c = s.charAt(i);
-      if(c=='\n') {
-         x = x0; y -= 30;
-      } else {
-         var d = vector_char(x,y,c);
-         x += d.width;
-         o = o.concat(d.segments);
-      }
-   }
-   return o;
+/** Construct an array of with, segments tupple from a string
+ * @param {Float} x - x offset
+ * @param {Float} y - y offset
+ * @param {Float} string - string
+ * @returns {Array} [{ width: X, segments: [...] }]
+ *
+ * @example
+ * let stringData = vector_text(0, 12.2, 'b')
+ */
+function vector_text (x, y, string) {
+  let output = []
+  let x0 = x
+  for (let i = 0; i < string.length; i++) {
+    let char = string.charAt(i)
+    if (char === '\n') {
+      x = x0; y -= 30
+    } else {
+      let d = vector_char(x, y, char)
+      x += d.width
+      output = output.concat(d.segments)
+    }
+  }
+  return output
 }
 
 // -- data below from http://paulbourke.net/dataformats/hershey/
-
-var simplexFont = [
-    0,16, /* Ascii 32 */
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,10, /* Ascii 33 */
-    5,21, 5, 7,-1,-1, 5, 2, 4, 1, 5, 0, 6, 1, 5, 2,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,16, /* Ascii 34 */
-    4,21, 4,14,-1,-1,12,21,12,14,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,21, /* Ascii 35 */
-   11,25, 4,-7,-1,-1,17,25,10,-7,-1,-1, 4,12,18,12,-1,-1, 3, 6,17, 6,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   26,20, /* Ascii 36 */
-    8,25, 8,-4,-1,-1,12,25,12,-4,-1,-1,17,18,15,20,12,21, 8,21, 5,20, 3,
-   18, 3,16, 4,14, 5,13, 7,12,13,10,15, 9,16, 8,17, 6,17, 3,15, 1,12, 0,
-    8, 0, 5, 1, 3, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   31,24, /* Ascii 37 */
-   21,21, 3, 0,-1,-1, 8,21,10,19,10,17, 9,15, 7,14, 5,14, 3,16, 3,18, 4,
-   20, 6,21, 8,21,10,20,13,19,16,19,19,20,21,21,-1,-1,17, 7,15, 6,14, 4,
-   14, 2,16, 0,18, 0,20, 1,21, 3,21, 5,19, 7,17, 7,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   34,26, /* Ascii 38 */
-   23,12,23,13,22,14,21,14,20,13,19,11,17, 6,15, 3,13, 1,11, 0, 7, 0, 5,
-    1, 4, 2, 3, 4, 3, 6, 4, 8, 5, 9,12,13,13,14,14,16,14,18,13,20,11,21,
-    9,20, 8,18, 8,16, 9,13,11,10,16, 3,18, 1,20, 0,22, 0,23, 1,23, 2,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    7,10, /* Ascii 39 */
-    5,19, 4,20, 5,21, 6,20, 6,18, 5,16, 4,15,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,14, /* Ascii 40 */
-   11,25, 9,23, 7,20, 5,16, 4,11, 4, 7, 5, 2, 7,-2, 9,-5,11,-7,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,14, /* Ascii 41 */
-    3,25, 5,23, 7,20, 9,16,10,11,10, 7, 9, 2, 7,-2, 5,-5, 3,-7,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,16, /* Ascii 42 */
-    8,21, 8, 9,-1,-1, 3,18,13,12,-1,-1,13,18, 3,12,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,26, /* Ascii 43 */
-   13,18,13, 0,-1,-1, 4, 9,22, 9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,10, /* Ascii 44 */
-    6, 1, 5, 0, 4, 1, 5, 2, 6, 1, 6,-1, 5,-3, 4,-4,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    2,26, /* Ascii 45 */
-    4, 9,22, 9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,10, /* Ascii 46 */
-    5, 2, 4, 1, 5, 0, 6, 1, 5, 2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    2,22, /* Ascii 47 */
-   20,25, 2,-7,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,20, /* Ascii 48 */
-    9,21, 6,20, 4,17, 3,12, 3, 9, 4, 4, 6, 1, 9, 0,11, 0,14, 1,16, 4,17,
-    9,17,12,16,17,14,20,11,21, 9,21,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    4,20, /* Ascii 49 */
-    6,17, 8,18,11,21,11, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   14,20, /* Ascii 50 */
-    4,16, 4,17, 5,19, 6,20, 8,21,12,21,14,20,15,19,16,17,16,15,15,13,13,
-   10, 3, 0,17, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   15,20, /* Ascii 51 */
-    5,21,16,21,10,13,13,13,15,12,16,11,17, 8,17, 6,16, 3,14, 1,11, 0, 8,
-    0, 5, 1, 4, 2, 3, 4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    6,20, /* Ascii 52 */
-   13,21, 3, 7,18, 7,-1,-1,13,21,13, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,20, /* Ascii 53 */
-   15,21, 5,21, 4,12, 5,13, 8,14,11,14,14,13,16,11,17, 8,17, 6,16, 3,14,
-    1,11, 0, 8, 0, 5, 1, 4, 2, 3, 4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   23,20, /* Ascii 54 */
-   16,18,15,20,12,21,10,21, 7,20, 5,17, 4,12, 4, 7, 5, 3, 7, 1,10, 0,11,
-    0,14, 1,16, 3,17, 6,17, 7,16,10,14,12,11,13,10,13, 7,12, 5,10, 4, 7,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,20, /* Ascii 55 */
-   17,21, 7, 0,-1,-1, 3,21,17,21,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   29,20, /* Ascii 56 */
-    8,21, 5,20, 4,18, 4,16, 5,14, 7,13,11,12,14,11,16, 9,17, 7,17, 4,16,
-    2,15, 1,12, 0, 8, 0, 5, 1, 4, 2, 3, 4, 3, 7, 4, 9, 6,11, 9,12,13,13,
-   15,14,16,16,16,18,15,20,12,21, 8,21,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   23,20, /* Ascii 57 */
-   16,14,15,11,13, 9,10, 8, 9, 8, 6, 9, 4,11, 3,14, 3,15, 4,18, 6,20, 9,
-   21,10,21,13,20,15,18,16,14,16, 9,15, 4,13, 1,10, 0, 8, 0, 5, 1, 4, 3,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,10, /* Ascii 58 */
-    5,14, 4,13, 5,12, 6,13, 5,14,-1,-1, 5, 2, 4, 1, 5, 0, 6, 1, 5, 2,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   14,10, /* Ascii 59 */
-    5,14, 4,13, 5,12, 6,13, 5,14,-1,-1, 6, 1, 5, 0, 4, 1, 5, 2, 6, 1, 6,
-   -1, 5,-3, 4,-4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    3,24, /* Ascii 60 */
-   20,18, 4, 9,20, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,26, /* Ascii 61 */
-    4,12,22,12,-1,-1, 4, 6,22, 6,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    3,24, /* Ascii 62 */
-    4,18,20, 9, 4, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   20,18, /* Ascii 63 */
-    3,16, 3,17, 4,19, 5,20, 7,21,11,21,13,20,14,19,15,17,15,15,14,13,13,
-   12, 9,10, 9, 7,-1,-1, 9, 2, 8, 1, 9, 0,10, 1, 9, 2,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   55,27, /* Ascii 64 */
-   18,13,17,15,15,16,12,16,10,15, 9,14, 8,11, 8, 8, 9, 6,11, 5,14, 5,16,
-    6,17, 8,-1,-1,12,16,10,14, 9,11, 9, 8,10, 6,11, 5,-1,-1,18,16,17, 8,
-   17, 6,19, 5,21, 5,23, 7,24,10,24,12,23,15,22,17,20,19,18,20,15,21,12,
-   21, 9,20, 7,19, 5,17, 4,15, 3,12, 3, 9, 4, 6, 5, 4, 7, 2, 9, 1,12, 0,
-   15, 0,18, 1,20, 2,21, 3,-1,-1,19,16,18, 8,18, 6,19, 5,
-    8,18, /* Ascii 65 */
-    9,21, 1, 0,-1,-1, 9,21,17, 0,-1,-1, 4, 7,14, 7,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   23,21, /* Ascii 66 */
-    4,21, 4, 0,-1,-1, 4,21,13,21,16,20,17,19,18,17,18,15,17,13,16,12,13,
-   11,-1,-1, 4,11,13,11,16,10,17, 9,18, 7,18, 4,17, 2,16, 1,13, 0, 4, 0,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   18,21, /* Ascii 67 */
-   18,16,17,18,15,20,13,21, 9,21, 7,20, 5,18, 4,16, 3,13, 3, 8, 4, 5, 5,
-    3, 7, 1, 9, 0,13, 0,15, 1,17, 3,18, 5,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   15,21, /* Ascii 68 */
-    4,21, 4, 0,-1,-1, 4,21,11,21,14,20,16,18,17,16,18,13,18, 8,17, 5,16,
-    3,14, 1,11, 0, 4, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,19, /* Ascii 69 */
-    4,21, 4, 0,-1,-1, 4,21,17,21,-1,-1, 4,11,12,11,-1,-1, 4, 0,17, 0,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,18, /* Ascii 70 */
-    4,21, 4, 0,-1,-1, 4,21,17,21,-1,-1, 4,11,12,11,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   22,21, /* Ascii 71 */
-   18,16,17,18,15,20,13,21, 9,21, 7,20, 5,18, 4,16, 3,13, 3, 8, 4, 5, 5,
-    3, 7, 1, 9, 0,13, 0,15, 1,17, 3,18, 5,18, 8,-1,-1,13, 8,18, 8,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,22, /* Ascii 72 */
-    4,21, 4, 0,-1,-1,18,21,18, 0,-1,-1, 4,11,18,11,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    2, 8, /* Ascii 73 */
-    4,21, 4, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,16, /* Ascii 74 */
-   12,21,12, 5,11, 2,10, 1, 8, 0, 6, 0, 4, 1, 3, 2, 2, 5, 2, 7,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,21, /* Ascii 75 */
-    4,21, 4, 0,-1,-1,18,21, 4, 7,-1,-1, 9,12,18, 0,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,17, /* Ascii 76 */
-    4,21, 4, 0,-1,-1, 4, 0,16, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,24, /* Ascii 77 */
-    4,21, 4, 0,-1,-1, 4,21,12, 0,-1,-1,20,21,12, 0,-1,-1,20,21,20, 0,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,22, /* Ascii 78 */
-    4,21, 4, 0,-1,-1, 4,21,18, 0,-1,-1,18,21,18, 0,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   21,22, /* Ascii 79 */
-    9,21, 7,20, 5,18, 4,16, 3,13, 3, 8, 4, 5, 5, 3, 7, 1, 9, 0,13, 0,15,
-    1,17, 3,18, 5,19, 8,19,13,18,16,17,18,15,20,13,21, 9,21,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   13,21, /* Ascii 80 */
-    4,21, 4, 0,-1,-1, 4,21,13,21,16,20,17,19,18,17,18,14,17,12,16,11,13,
-   10, 4,10,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   24,22, /* Ascii 81 */
-    9,21, 7,20, 5,18, 4,16, 3,13, 3, 8, 4, 5, 5, 3, 7, 1, 9, 0,13, 0,15,
-    1,17, 3,18, 5,19, 8,19,13,18,16,17,18,15,20,13,21, 9,21,-1,-1,12, 4,
-   18,-2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   16,21, /* Ascii 82 */
-    4,21, 4, 0,-1,-1, 4,21,13,21,16,20,17,19,18,17,18,15,17,13,16,12,13,
-   11, 4,11,-1,-1,11,11,18, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   20,20, /* Ascii 83 */
-   17,18,15,20,12,21, 8,21, 5,20, 3,18, 3,16, 4,14, 5,13, 7,12,13,10,15,
-    9,16, 8,17, 6,17, 3,15, 1,12, 0, 8, 0, 5, 1, 3, 3,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,16, /* Ascii 84 */
-    8,21, 8, 0,-1,-1, 1,21,15,21,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,22, /* Ascii 85 */
-    4,21, 4, 6, 5, 3, 7, 1,10, 0,12, 0,15, 1,17, 3,18, 6,18,21,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,18, /* Ascii 86 */
-    1,21, 9, 0,-1,-1,17,21, 9, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,24, /* Ascii 87 */
-    2,21, 7, 0,-1,-1,12,21, 7, 0,-1,-1,12,21,17, 0,-1,-1,22,21,17, 0,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,20, /* Ascii 88 */
-    3,21,17, 0,-1,-1,17,21, 3, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    6,18, /* Ascii 89 */
-    1,21, 9,11, 9, 0,-1,-1,17,21, 9,11,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,20, /* Ascii 90 */
-   17,21, 3, 0,-1,-1, 3,21,17,21,-1,-1, 3, 0,17, 0,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,14, /* Ascii 91 */
-    4,25, 4,-7,-1,-1, 5,25, 5,-7,-1,-1, 4,25,11,25,-1,-1, 4,-7,11,-7,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    2,14, /* Ascii 92 */
-    0,21,14,-3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,14, /* Ascii 93 */
-    9,25, 9,-7,-1,-1,10,25,10,-7,-1,-1, 3,25,10,25,-1,-1, 3,-7,10,-7,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,16, /* Ascii 94 */
-    6,15, 8,18,10,15,-1,-1, 3,12, 8,17,13,12,-1,-1, 8,17, 8, 0,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    2,16, /* Ascii 95 */
-    0,-2,16,-2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    7,10, /* Ascii 96 */
-    6,21, 5,20, 4,18, 4,16, 5,15, 6,16, 5,17,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,19, /* Ascii 97 */
-   15,14,15, 0,-1,-1,15,11,13,13,11,14, 8,14, 6,13, 4,11, 3, 8, 3, 6, 4,
-    3, 6, 1, 8, 0,11, 0,13, 1,15, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,19, /* Ascii 98 */
-    4,21, 4, 0,-1,-1, 4,11, 6,13, 8,14,11,14,13,13,15,11,16, 8,16, 6,15,
-    3,13, 1,11, 0, 8, 0, 6, 1, 4, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   14,18, /* Ascii 99 */
-   15,11,13,13,11,14, 8,14, 6,13, 4,11, 3, 8, 3, 6, 4, 3, 6, 1, 8, 0,11,
-    0,13, 1,15, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,19, /* Ascii 100 */
-   15,21,15, 0,-1,-1,15,11,13,13,11,14, 8,14, 6,13, 4,11, 3, 8, 3, 6, 4,
-    3, 6, 1, 8, 0,11, 0,13, 1,15, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,18, /* Ascii 101 */
-    3, 8,15, 8,15,10,14,12,13,13,11,14, 8,14, 6,13, 4,11, 3, 8, 3, 6, 4,
-    3, 6, 1, 8, 0,11, 0,13, 1,15, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,12, /* Ascii 102 */
-   10,21, 8,21, 6,20, 5,17, 5, 0,-1,-1, 2,14, 9,14,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   22,19, /* Ascii 103 */
-   15,14,15,-2,14,-5,13,-6,11,-7, 8,-7, 6,-6,-1,-1,15,11,13,13,11,14, 8,
-   14, 6,13, 4,11, 3, 8, 3, 6, 4, 3, 6, 1, 8, 0,11, 0,13, 1,15, 3,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,19, /* Ascii 104 */
-    4,21, 4, 0,-1,-1, 4,10, 7,13, 9,14,12,14,14,13,15,10,15, 0,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8, 8, /* Ascii 105 */
-    3,21, 4,20, 5,21, 4,22, 3,21,-1,-1, 4,14, 4, 0,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,10, /* Ascii 106 */
-    5,21, 6,20, 7,21, 6,22, 5,21,-1,-1, 6,14, 6,-3, 5,-6, 3,-7, 1,-7,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,17, /* Ascii 107 */
-    4,21, 4, 0,-1,-1,14,14, 4, 4,-1,-1, 8, 8,15, 0,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    2, 8, /* Ascii 108 */
-    4,21, 4, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   18,30, /* Ascii 109 */
-    4,14, 4, 0,-1,-1, 4,10, 7,13, 9,14,12,14,14,13,15,10,15, 0,-1,-1,15,
-   10,18,13,20,14,23,14,25,13,26,10,26, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,19, /* Ascii 110 */
-    4,14, 4, 0,-1,-1, 4,10, 7,13, 9,14,12,14,14,13,15,10,15, 0,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,19, /* Ascii 111 */
-    8,14, 6,13, 4,11, 3, 8, 3, 6, 4, 3, 6, 1, 8, 0,11, 0,13, 1,15, 3,16,
-    6,16, 8,15,11,13,13,11,14, 8,14,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,19, /* Ascii 112 */
-    4,14, 4,-7,-1,-1, 4,11, 6,13, 8,14,11,14,13,13,15,11,16, 8,16, 6,15,
-    3,13, 1,11, 0, 8, 0, 6, 1, 4, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,19, /* Ascii 113 */
-   15,14,15,-7,-1,-1,15,11,13,13,11,14, 8,14, 6,13, 4,11, 3, 8, 3, 6, 4,
-    3, 6, 1, 8, 0,11, 0,13, 1,15, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,13, /* Ascii 114 */
-    4,14, 4, 0,-1,-1, 4, 8, 5,11, 7,13, 9,14,12,14,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   17,17, /* Ascii 115 */
-   14,11,13,13,10,14, 7,14, 4,13, 3,11, 4, 9, 6, 8,11, 7,13, 6,14, 4,14,
-    3,13, 1,10, 0, 7, 0, 4, 1, 3, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,12, /* Ascii 116 */
-    5,21, 5, 4, 6, 1, 8, 0,10, 0,-1,-1, 2,14, 9,14,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   10,19, /* Ascii 117 */
-    4,14, 4, 4, 5, 1, 7, 0,10, 0,12, 1,15, 4,-1,-1,15,14,15, 0,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,16, /* Ascii 118 */
-    2,14, 8, 0,-1,-1,14,14, 8, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   11,22, /* Ascii 119 */
-    3,14, 7, 0,-1,-1,11,14, 7, 0,-1,-1,11,14,15, 0,-1,-1,19,14,15, 0,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5,17, /* Ascii 120 */
-    3,14,14, 0,-1,-1,14,14, 3, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    9,16, /* Ascii 121 */
-    2,14, 8, 0,-1,-1,14,14, 8, 0, 6,-4, 4,-6, 2,-7, 1,-7,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    8,17, /* Ascii 122 */
-   14,14, 3, 0,-1,-1, 3,14,14,14,-1,-1, 3, 0,14, 0,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   39,14, /* Ascii 123 */
-    9,25, 7,24, 6,23, 5,21, 5,19, 6,17, 7,16, 8,14, 8,12, 6,10,-1,-1, 7,
-   24, 6,22, 6,20, 7,18, 8,17, 9,15, 9,13, 8,11, 4, 9, 8, 7, 9, 5, 9, 3,
-    8, 1, 7, 0, 6,-2, 6,-4, 7,-6,-1,-1, 6, 8, 8, 6, 8, 4, 7, 2, 6, 1, 5,
-   -1, 5,-3, 6,-5, 7,-6, 9,-7,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    2, 8, /* Ascii 124 */
-    4,25, 4,-7,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   39,14, /* Ascii 125 */
-    5,25, 7,24, 8,23, 9,21, 9,19, 8,17, 7,16, 6,14, 6,12, 8,10,-1,-1, 7,
-   24, 8,22, 8,20, 7,18, 6,17, 5,15, 5,13, 6,11,10, 9, 6, 7, 5, 5, 5, 3,
-    6, 1, 7, 0, 8,-2, 8,-4, 7,-6,-1,-1, 8, 8, 6, 6, 6, 4, 7, 2, 8, 1, 9,
-   -1, 9,-3, 8,-5, 7,-6, 5,-7,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   23,24, /* Ascii 126 */
-    3, 6, 3, 8, 4,11, 6,12, 8,12,10,11,14, 8,16, 7,18, 7,20, 8,21,10,-1,
-   -1, 3, 8, 4,10, 6,11, 8,11,10,10,14, 7,16, 6,18, 6,20, 7,21,10,21,12,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-];
+const simplexFont = [
+  0, 16, /* Ascii 32 */
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  8, 10, /* Ascii 33 */
+  5, 21, 5, 7, -1, -1, 5, 2, 4, 1, 5, 0, 6, 1, 5, 2, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  5, 16, /* Ascii 34 */
+  4, 21, 4, 14, -1, -1, 12, 21, 12, 14, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  11, 21, /* Ascii 35 */
+  11, 25, 4, -7, -1, -1, 17, 25, 10, -7, -1, -1, 4, 12, 18, 12, -1, -1, 3, 6, 17, 6, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  26, 20, /* Ascii 36 */
+  8, 25, 8, -4, -1, -1, 12, 25, 12, -4, -1, -1, 17, 18, 15, 20, 12, 21, 8, 21, 5, 20, 3,
+  18, 3, 16, 4, 14, 5, 13, 7, 12, 13, 10, 15, 9, 16, 8, 17, 6, 17, 3, 15, 1, 12, 0,
+  8, 0, 5, 1, 3, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  31, 24, /* Ascii 37 */
+  21, 21, 3, 0, -1, -1, 8, 21, 10, 19, 10, 17, 9, 15, 7, 14, 5, 14, 3, 16, 3, 18, 4,
+  20, 6, 21, 8, 21, 10, 20, 13, 19, 16, 19, 19, 20, 21, 21, -1, -1, 17, 7, 15, 6, 14, 4,
+  14, 2, 16, 0, 18, 0, 20, 1, 21, 3, 21, 5, 19, 7, 17, 7, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  34, 26, /* Ascii 38 */
+  23, 12, 23, 13, 22, 14, 21, 14, 20, 13, 19, 11, 17, 6, 15, 3, 13, 1, 11, 0, 7, 0, 5,
+  1, 4, 2, 3, 4, 3, 6, 4, 8, 5, 9, 12, 13, 13, 14, 14, 16, 14, 18, 13, 20, 11, 21,
+  9, 20, 8, 18, 8, 16, 9, 13, 11, 10, 16, 3, 18, 1, 20, 0, 22, 0, 23, 1, 23, 2, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  7, 10, /* Ascii 39 */
+  5, 19, 4, 20, 5, 21, 6, 20, 6, 18, 5, 16, 4, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  10, 14, /* Ascii 40 */
+  11, 25, 9, 23, 7, 20, 5, 16, 4, 11, 4, 7, 5, 2, 7, -2, 9, -5, 11, -7, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  10, 14, /* Ascii 41 */
+  3, 25, 5, 23, 7, 20, 9, 16, 10, 11, 10, 7, 9, 2, 7, -2, 5, -5, 3, -7, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  8, 16, /* Ascii 42 */
+  8, 21, 8, 9, -1, -1, 3, 18, 13, 12, -1, -1, 13, 18, 3, 12, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  5, 26, /* Ascii 43 */
+  13, 18, 13, 0, -1, -1, 4, 9, 22, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  8, 10, /* Ascii 44 */
+  6, 1, 5, 0, 4, 1, 5, 2, 6, 1, 6, -1, 5, -3, 4, -4, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  2, 26, /* Ascii 45 */
+  4, 9, 22, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  5, 10, /* Ascii 46 */
+  5, 2, 4, 1, 5, 0, 6, 1, 5, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  2, 22, /* Ascii 47 */
+  20, 25, 2, -7, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  17, 20, /* Ascii 48 */
+  9, 21, 6, 20, 4, 17, 3, 12, 3, 9, 4, 4, 6, 1, 9, 0, 11, 0, 14, 1, 16, 4, 17,
+  9, 17, 12, 16, 17, 14, 20, 11, 21, 9, 21, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  4, 20, /* Ascii 49 */
+  6, 17, 8, 18, 11, 21, 11, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  14, 20, /* Ascii 50 */
+  4, 16, 4, 17, 5, 19, 6, 20, 8, 21, 12, 21, 14, 20, 15, 19, 16, 17, 16, 15, 15, 13, 13,
+  10, 3, 0, 17, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  15, 20, /* Ascii 51 */
+  5, 21, 16, 21, 10, 13, 13, 13, 15, 12, 16, 11, 17, 8, 17, 6, 16, 3, 14, 1, 11, 0, 8,
+  0, 5, 1, 4, 2, 3, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  6, 20, /* Ascii 52 */
+  13, 21, 3, 7, 18, 7, -1, -1, 13, 21, 13, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  17, 20, /* Ascii 53 */
+  15, 21, 5, 21, 4, 12, 5, 13, 8, 14, 11, 14, 14, 13, 16, 11, 17, 8, 17, 6, 16, 3, 14,
+  1, 11, 0, 8, 0, 5, 1, 4, 2, 3, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  23, 20, /* Ascii 54 */
+  16, 18, 15, 20, 12, 21, 10, 21, 7, 20, 5, 17, 4, 12, 4, 7, 5, 3, 7, 1, 10, 0, 11,
+  0, 14, 1, 16, 3, 17, 6, 17, 7, 16, 10, 14, 12, 11, 13, 10, 13, 7, 12, 5, 10, 4, 7,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  5, 20, /* Ascii 55 */
+  17, 21, 7, 0, -1, -1, 3, 21, 17, 21, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  29, 20, /* Ascii 56 */
+  8, 21, 5, 20, 4, 18, 4, 16, 5, 14, 7, 13, 11, 12, 14, 11, 16, 9, 17, 7, 17, 4, 16,
+  2, 15, 1, 12, 0, 8, 0, 5, 1, 4, 2, 3, 4, 3, 7, 4, 9, 6, 11, 9, 12, 13, 13,
+  15, 14, 16, 16, 16, 18, 15, 20, 12, 21, 8, 21, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  23, 20, /* Ascii 57 */
+  16, 14, 15, 11, 13, 9, 10, 8, 9, 8, 6, 9, 4, 11, 3, 14, 3, 15, 4, 18, 6, 20, 9,
+  21, 10, 21, 13, 20, 15, 18, 16, 14, 16, 9, 15, 4, 13, 1, 10, 0, 8, 0, 5, 1, 4, 3,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  11, 10, /* Ascii 58 */
+  5, 14, 4, 13, 5, 12, 6, 13, 5, 14, -1, -1, 5, 2, 4, 1, 5, 0, 6, 1, 5, 2, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  14, 10, /* Ascii 59 */
+  5, 14, 4, 13, 5, 12, 6, 13, 5, 14, -1, -1, 6, 1, 5, 0, 4, 1, 5, 2, 6, 1, 6,
+  -1, 5, -3, 4, -4, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  3, 24, /* Ascii 60 */
+  20, 18, 4, 9, 20, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  5, 26, /* Ascii 61 */
+  4, 12, 22, 12, -1, -1, 4, 6, 22, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  3, 24, /* Ascii 62 */
+  4, 18, 20, 9, 4, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  20, 18, /* Ascii 63 */
+  3, 16, 3, 17, 4, 19, 5, 20, 7, 21, 11, 21, 13, 20, 14, 19, 15, 17, 15, 15, 14, 13, 13,
+  12, 9, 10, 9, 7, -1, -1, 9, 2, 8, 1, 9, 0, 10, 1, 9, 2, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  55, 27, /* Ascii 64 */
+  18, 13, 17, 15, 15, 16, 12, 16, 10, 15, 9, 14, 8, 11, 8, 8, 9, 6, 11, 5, 14, 5, 16,
+  6, 17, 8, -1, -1, 12, 16, 10, 14, 9, 11, 9, 8, 10, 6, 11, 5, -1, -1, 18, 16, 17, 8,
+  17, 6, 19, 5, 21, 5, 23, 7, 24, 10, 24, 12, 23, 15, 22, 17, 20, 19, 18, 20, 15, 21, 12,
+  21, 9, 20, 7, 19, 5, 17, 4, 15, 3, 12, 3, 9, 4, 6, 5, 4, 7, 2, 9, 1, 12, 0,
+  15, 0, 18, 1, 20, 2, 21, 3, -1, -1, 19, 16, 18, 8, 18, 6, 19, 5,
+  8, 18, /* Ascii 65 */
+  9, 21, 1, 0, -1, -1, 9, 21, 17, 0, -1, -1, 4, 7, 14, 7, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  23, 21, /* Ascii 66 */
+  4, 21, 4, 0, -1, -1, 4, 21, 13, 21, 16, 20, 17, 19, 18, 17, 18, 15, 17, 13, 16, 12, 13,
+  11, -1, -1, 4, 11, 13, 11, 16, 10, 17, 9, 18, 7, 18, 4, 17, 2, 16, 1, 13, 0, 4, 0,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  18, 21, /* Ascii 67 */
+  18, 16, 17, 18, 15, 20, 13, 21, 9, 21, 7, 20, 5, 18, 4, 16, 3, 13, 3, 8, 4, 5, 5,
+  3, 7, 1, 9, 0, 13, 0, 15, 1, 17, 3, 18, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  15, 21, /* Ascii 68 */
+  4, 21, 4, 0, -1, -1, 4, 21, 11, 21, 14, 20, 16, 18, 17, 16, 18, 13, 18, 8, 17, 5, 16,
+  3, 14, 1, 11, 0, 4, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  11, 19, /* Ascii 69 */
+  4, 21, 4, 0, -1, -1, 4, 21, 17, 21, -1, -1, 4, 11, 12, 11, -1, -1, 4, 0, 17, 0, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  8, 18, /* Ascii 70 */
+  4, 21, 4, 0, -1, -1, 4, 21, 17, 21, -1, -1, 4, 11, 12, 11, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  22, 21, /* Ascii 71 */
+  18, 16, 17, 18, 15, 20, 13, 21, 9, 21, 7, 20, 5, 18, 4, 16, 3, 13, 3, 8, 4, 5, 5,
+  3, 7, 1, 9, 0, 13, 0, 15, 1, 17, 3, 18, 5, 18, 8, -1, -1, 13, 8, 18, 8, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  8, 22, /* Ascii 72 */
+  4, 21, 4, 0, -1, -1, 18, 21, 18, 0, -1, -1, 4, 11, 18, 11, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  2, 8, /* Ascii 73 */
+  4, 21, 4, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  10, 16, /* Ascii 74 */
+  12, 21, 12, 5, 11, 2, 10, 1, 8, 0, 6, 0, 4, 1, 3, 2, 2, 5, 2, 7, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  8, 21, /* Ascii 75 */
+  4, 21, 4, 0, -1, -1, 18, 21, 4, 7, -1, -1, 9, 12, 18, 0, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  5, 17, /* Ascii 76 */
+  4, 21, 4, 0, -1, -1, 4, 0, 16, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  11, 24, /* Ascii 77 */
+  4, 21, 4, 0, -1, -1, 4, 21, 12, 0, -1, -1, 20, 21, 12, 0, -1, -1, 20, 21, 20, 0, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  8, 22, /* Ascii 78 */
+  4, 21, 4, 0, -1, -1, 4, 21, 18, 0, -1, -1, 18, 21, 18, 0, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  21, 22, /* Ascii 79 */
+  9, 21, 7, 20, 5, 18, 4, 16, 3, 13, 3, 8, 4, 5, 5, 3, 7, 1, 9, 0, 13, 0, 15,
+  1, 17, 3, 18, 5, 19, 8, 19, 13, 18, 16, 17, 18, 15, 20, 13, 21, 9, 21, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  13, 21, /* Ascii 80 */
+  4, 21, 4, 0, -1, -1, 4, 21, 13, 21, 16, 20, 17, 19, 18, 17, 18, 14, 17, 12, 16, 11, 13,
+  10, 4, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  24, 22, /* Ascii 81 */
+  9, 21, 7, 20, 5, 18, 4, 16, 3, 13, 3, 8, 4, 5, 5, 3, 7, 1, 9, 0, 13, 0, 15,
+  1, 17, 3, 18, 5, 19, 8, 19, 13, 18, 16, 17, 18, 15, 20, 13, 21, 9, 21, -1, -1, 12, 4,
+  18, -2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  16, 21, /* Ascii 82 */
+  4, 21, 4, 0, -1, -1, 4, 21, 13, 21, 16, 20, 17, 19, 18, 17, 18, 15, 17, 13, 16, 12, 13,
+  11, 4, 11, -1, -1, 11, 11, 18, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  20, 20, /* Ascii 83 */
+  17, 18, 15, 20, 12, 21, 8, 21, 5, 20, 3, 18, 3, 16, 4, 14, 5, 13, 7, 12, 13, 10, 15,
+  9, 16, 8, 17, 6, 17, 3, 15, 1, 12, 0, 8, 0, 5, 1, 3, 3, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  5, 16, /* Ascii 84 */
+  8, 21, 8, 0, -1, -1, 1, 21, 15, 21, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  10, 22, /* Ascii 85 */
+  4, 21, 4, 6, 5, 3, 7, 1, 10, 0, 12, 0, 15, 1, 17, 3, 18, 6, 18, 21, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  5, 18, /* Ascii 86 */
+  1, 21, 9, 0, -1, -1, 17, 21, 9, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  11, 24, /* Ascii 87 */
+  2, 21, 7, 0, -1, -1, 12, 21, 7, 0, -1, -1, 12, 21, 17, 0, -1, -1, 22, 21, 17, 0, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  5, 20, /* Ascii 88 */
+  3, 21, 17, 0, -1, -1, 17, 21, 3, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  6, 18, /* Ascii 89 */
+  1, 21, 9, 11, 9, 0, -1, -1, 17, 21, 9, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  8, 20, /* Ascii 90 */
+  17, 21, 3, 0, -1, -1, 3, 21, 17, 21, -1, -1, 3, 0, 17, 0, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  11, 14, /* Ascii 91 */
+  4, 25, 4, -7, -1, -1, 5, 25, 5, -7, -1, -1, 4, 25, 11, 25, -1, -1, 4, -7, 11, -7, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  2, 14, /* Ascii 92 */
+  0, 21, 14, -3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  11, 14, /* Ascii 93 */
+  9, 25, 9, -7, -1, -1, 10, 25, 10, -7, -1, -1, 3, 25, 10, 25, -1, -1, 3, -7, 10, -7, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  10, 16, /* Ascii 94 */
+  6, 15, 8, 18, 10, 15, -1, -1, 3, 12, 8, 17, 13, 12, -1, -1, 8, 17, 8, 0, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  2, 16, /* Ascii 95 */
+  0, -2, 16, -2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  7, 10, /* Ascii 96 */
+  6, 21, 5, 20, 4, 18, 4, 16, 5, 15, 6, 16, 5, 17, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  17, 19, /* Ascii 97 */
+  15, 14, 15, 0, -1, -1, 15, 11, 13, 13, 11, 14, 8, 14, 6, 13, 4, 11, 3, 8, 3, 6, 4,
+  3, 6, 1, 8, 0, 11, 0, 13, 1, 15, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  17, 19, /* Ascii 98 */
+  4, 21, 4, 0, -1, -1, 4, 11, 6, 13, 8, 14, 11, 14, 13, 13, 15, 11, 16, 8, 16, 6, 15,
+  3, 13, 1, 11, 0, 8, 0, 6, 1, 4, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  14, 18, /* Ascii 99 */
+  15, 11, 13, 13, 11, 14, 8, 14, 6, 13, 4, 11, 3, 8, 3, 6, 4, 3, 6, 1, 8, 0, 11,
+  0, 13, 1, 15, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  17, 19, /* Ascii 100 */
+  15, 21, 15, 0, -1, -1, 15, 11, 13, 13, 11, 14, 8, 14, 6, 13, 4, 11, 3, 8, 3, 6, 4,
+  3, 6, 1, 8, 0, 11, 0, 13, 1, 15, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  17, 18, /* Ascii 101 */
+  3, 8, 15, 8, 15, 10, 14, 12, 13, 13, 11, 14, 8, 14, 6, 13, 4, 11, 3, 8, 3, 6, 4,
+  3, 6, 1, 8, 0, 11, 0, 13, 1, 15, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  8, 12, /* Ascii 102 */
+  10, 21, 8, 21, 6, 20, 5, 17, 5, 0, -1, -1, 2, 14, 9, 14, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  22, 19, /* Ascii 103 */
+  15, 14, 15, -2, 14, -5, 13, -6, 11, -7, 8, -7, 6, -6, -1, -1, 15, 11, 13, 13, 11, 14, 8,
+  14, 6, 13, 4, 11, 3, 8, 3, 6, 4, 3, 6, 1, 8, 0, 11, 0, 13, 1, 15, 3, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  10, 19, /* Ascii 104 */
+  4, 21, 4, 0, -1, -1, 4, 10, 7, 13, 9, 14, 12, 14, 14, 13, 15, 10, 15, 0, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  8, 8, /* Ascii 105 */
+  3, 21, 4, 20, 5, 21, 4, 22, 3, 21, -1, -1, 4, 14, 4, 0, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  11, 10, /* Ascii 106 */
+  5, 21, 6, 20, 7, 21, 6, 22, 5, 21, -1, -1, 6, 14, 6, -3, 5, -6, 3, -7, 1, -7, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  8, 17, /* Ascii 107 */
+  4, 21, 4, 0, -1, -1, 14, 14, 4, 4, -1, -1, 8, 8, 15, 0, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  2, 8, /* Ascii 108 */
+  4, 21, 4, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  18, 30, /* Ascii 109 */
+  4, 14, 4, 0, -1, -1, 4, 10, 7, 13, 9, 14, 12, 14, 14, 13, 15, 10, 15, 0, -1, -1, 15,
+  10, 18, 13, 20, 14, 23, 14, 25, 13, 26, 10, 26, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  10, 19, /* Ascii 110 */
+  4, 14, 4, 0, -1, -1, 4, 10, 7, 13, 9, 14, 12, 14, 14, 13, 15, 10, 15, 0, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  17, 19, /* Ascii 111 */
+  8, 14, 6, 13, 4, 11, 3, 8, 3, 6, 4, 3, 6, 1, 8, 0, 11, 0, 13, 1, 15, 3, 16,
+  6, 16, 8, 15, 11, 13, 13, 11, 14, 8, 14, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  17, 19, /* Ascii 112 */
+  4, 14, 4, -7, -1, -1, 4, 11, 6, 13, 8, 14, 11, 14, 13, 13, 15, 11, 16, 8, 16, 6, 15,
+  3, 13, 1, 11, 0, 8, 0, 6, 1, 4, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  17, 19, /* Ascii 113 */
+  15, 14, 15, -7, -1, -1, 15, 11, 13, 13, 11, 14, 8, 14, 6, 13, 4, 11, 3, 8, 3, 6, 4,
+  3, 6, 1, 8, 0, 11, 0, 13, 1, 15, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  8, 13, /* Ascii 114 */
+  4, 14, 4, 0, -1, -1, 4, 8, 5, 11, 7, 13, 9, 14, 12, 14, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  17, 17, /* Ascii 115 */
+  14, 11, 13, 13, 10, 14, 7, 14, 4, 13, 3, 11, 4, 9, 6, 8, 11, 7, 13, 6, 14, 4, 14,
+  3, 13, 1, 10, 0, 7, 0, 4, 1, 3, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  8, 12, /* Ascii 116 */
+  5, 21, 5, 4, 6, 1, 8, 0, 10, 0, -1, -1, 2, 14, 9, 14, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  10, 19, /* Ascii 117 */
+  4, 14, 4, 4, 5, 1, 7, 0, 10, 0, 12, 1, 15, 4, -1, -1, 15, 14, 15, 0, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  5, 16, /* Ascii 118 */
+  2, 14, 8, 0, -1, -1, 14, 14, 8, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  11, 22, /* Ascii 119 */
+  3, 14, 7, 0, -1, -1, 11, 14, 7, 0, -1, -1, 11, 14, 15, 0, -1, -1, 19, 14, 15, 0, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  5, 17, /* Ascii 120 */
+  3, 14, 14, 0, -1, -1, 14, 14, 3, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  9, 16, /* Ascii 121 */
+  2, 14, 8, 0, -1, -1, 14, 14, 8, 0, 6, -4, 4, -6, 2, -7, 1, -7, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  8, 17, /* Ascii 122 */
+  14, 14, 3, 0, -1, -1, 3, 14, 14, 14, -1, -1, 3, 0, 14, 0, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  39, 14, /* Ascii 123 */
+  9, 25, 7, 24, 6, 23, 5, 21, 5, 19, 6, 17, 7, 16, 8, 14, 8, 12, 6, 10, -1, -1, 7,
+  24, 6, 22, 6, 20, 7, 18, 8, 17, 9, 15, 9, 13, 8, 11, 4, 9, 8, 7, 9, 5, 9, 3,
+  8, 1, 7, 0, 6, -2, 6, -4, 7, -6, -1, -1, 6, 8, 8, 6, 8, 4, 7, 2, 6, 1, 5,
+  -1, 5, -3, 6, -5, 7, -6, 9, -7, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  2, 8, /* Ascii 124 */
+  4, 25, 4, -7, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  39, 14, /* Ascii 125 */
+  5, 25, 7, 24, 8, 23, 9, 21, 9, 19, 8, 17, 7, 16, 6, 14, 6, 12, 8, 10, -1, -1, 7,
+  24, 8, 22, 8, 20, 7, 18, 6, 17, 5, 15, 5, 13, 6, 11, 10, 9, 6, 7, 5, 5, 5, 3,
+  6, 1, 7, 0, 8, -2, 8, -4, 7, -6, -1, -1, 8, 8, 6, 6, 6, 4, 7, 2, 8, 1, 9,
+  -1, 9, -3, 8, -5, 7, -6, 5, -7, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  23, 24, /* Ascii 126 */
+  3, 6, 3, 8, 4, 11, 6, 12, 8, 12, 10, 11, 14, 8, 16, 7, 18, 7, 20, 8, 21, 10, -1,
+  -1, 3, 8, 4, 10, 6, 11, 8, 11, 10, 10, 14, 7, 16, 6, 18, 6, 20, 7, 21, 10, 21, 12,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+]
 
 module.exports = {
   vector_char,
@@ -84488,7 +84857,7 @@ exports.XMLReader = XMLReader;
 },{}],403:[function(require,module,exports){
 module.exports={
   "name": "@jscad/openjscad",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "main": "src/module.js",
@@ -84529,7 +84898,7 @@ module.exports={
     "@jscad/csg": "0.3.6",
     "@jscad/io": "0.3.7",
     "@jscad/openscad-openjscad-translator": "0.0.10",
-    "@jscad/scad-api": "0.4.1",
+    "@jscad/scad-api": "^0.5.1",
     "astring": "^1.0.2",
     "brace": "0.10.0",
     "esprima": "^3.1.3",
@@ -87336,7 +87705,7 @@ var examples = [{ file: 'logo.jscad', title: 'OpenJSCAD.org Logo' }, { file: 'lo
 // { file:'cnc-cutout.jscad', title: 'CNC Corner Cutouts', new: true, spacing: true },
 
 // { file:'bunch-cubes.jscad', title: 'Bunch of Cubes', new: true },
-{ file: 'lookup.jscad', title: 'Lookup()', spacing: true }, { file: 'expand.jscad', title: 'Expand()' }, { file: 'rectangular_extrude.jscad', title: 'Rectangular_extrude()' }, { file: 'linear_extrude.jscad', title: 'Linear_extrude()' }, { file: 'rotate_extrude.jscad', title: 'Rotate_extrude()' }, { file: 'polyhedron.jscad', title: 'Polyhedron()' }, { file: 'hull.jscad', title: 'Hull()' }, { file: 'chain_hull.jscad', title: 'Chain_hull()' }, { file: 'torus.jscad', title: 'Torus()' }, { file: 'text.jscad', title: 'Vector_text()', spacing: true }, { file: 'transparency.jscad', title: 'Transparency', spacing: true }, { file: 'transparency.amf', title: 'Transparency', type: 'AMF' }, { file: 'transparency2.jscad', title: 'Transparency 2' }, { file: 'slices/double-screw.jscad', title: 'SolidFromSlices(): Double Screw', spacing: true }, { file: 'slices/four2three.jscad', title: 'SolidFromSlices(): 4 to 3' }, { file: 'slices/four2three-round.jscad', title: 'SolidFromSlices(): 4 to 3 round' }, { file: 'slices/spring.jscad', title: 'SolidFromSlices(): Spring' }, { file: 'slices/tor.jscad', title: 'SolidFromSlices(): Tor (multi-color)' }, { file: 'slices/rose.jscad', title: 'SolidFromSlices(): Rose Curve' }, { file: 'servo.jscad', title: 'Interactive Params: Servo Motor', wrap: true }, { file: 'gear.jscad', title: 'Interactive Params: Gear' }, { file: 's-hook.jscad', title: 'Interactive Params: S Hook' }, { file: 'grille.jscad', title: 'Interactive Params: Grille' }, { file: 'axis-coupler.jscad', title: 'Interactive Params: Axis Coupler' }, { file: 'lamp-shade.jscad', title: 'Interactive Params: Lamp Shade' }, { file: 'celtic-knot-ring.jscad', title: 'Interactive Params: Celtic Knot Ring' }, { file: 'stepper-motor.jscad', title: 'Interactive Params: Stepper Motor' }, { file: 'iphone4-case.jscad', title: 'Interactive Params: iPhone4 Case' }, { file: 'name_plate.jscad', title: 'Interactive Params: Name Plate' }, { file: 'balloons.jscad', title: 'Interactive Params: Balloons' }, { file: 'globe.jscad', title: 'Include(): Globe', spacing: true }, { file: 'platonics/', title: 'Recursive Include(): Platonics' }, { file: 'babypanda2.svg', title: 'SVG Image: Baby Panda', spacing: true }, { file: '3d_sculpture-VernonBussler.stl', title: '3D Model: 3D Sculpture (Vernon Bussler)', type: 'STL', spacing: true }, { file: 'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' }, { file: 'thing_7-Zomboe.stl', title: '3D Model: Thing 7 / Flower (Zomboe)', type: 'STL' }, { file: 'yoda-RichRap.stl', title: '3D Model: Yoda (RichRap)', type: 'STL' }, { file: 'feathers_mcgraw.stl', title: '3D Model: Feathers Mcgraw (q1g0ng)', type: 'STL' }];
+{ file: 'transformations.jscad', title: 'Transformations', spacing: true }, { file: 'lookup.jscad', title: 'Lookup()' }, { file: 'expand.jscad', title: 'Expand()' }, { file: 'rectangular_extrude.jscad', title: 'Rectangular_extrude()' }, { file: 'linear_extrude.jscad', title: 'Linear_extrude()' }, { file: 'rotate_extrude.jscad', title: 'Rotate_extrude()' }, { file: 'polyhedron.jscad', title: 'Polyhedron()' }, { file: 'hull.jscad', title: 'Hull()' }, { file: 'chain_hull.jscad', title: 'Chain_hull()' }, { file: 'torus.jscad', title: 'Torus()' }, { file: 'text.jscad', title: 'Vector_text()', spacing: true }, { file: 'transparency.jscad', title: 'Transparency', spacing: true }, { file: 'transparency.amf', title: 'Transparency', type: 'AMF' }, { file: 'transparency2.jscad', title: 'Transparency 2' }, { file: 'slices/double-screw.jscad', title: 'SolidFromSlices(): Double Screw', spacing: true }, { file: 'slices/four2three.jscad', title: 'SolidFromSlices(): 4 to 3' }, { file: 'slices/four2three-round.jscad', title: 'SolidFromSlices(): 4 to 3 round' }, { file: 'slices/spring.jscad', title: 'SolidFromSlices(): Spring' }, { file: 'slices/tor.jscad', title: 'SolidFromSlices(): Tor (multi-color)' }, { file: 'slices/rose.jscad', title: 'SolidFromSlices(): Rose Curve' }, { file: 'servo.jscad', title: 'Interactive Params: Servo Motor', wrap: true }, { file: 'gear.jscad', title: 'Interactive Params: Gear' }, { file: 's-hook.jscad', title: 'Interactive Params: S Hook' }, { file: 'grille.jscad', title: 'Interactive Params: Grille' }, { file: 'axis-coupler.jscad', title: 'Interactive Params: Axis Coupler' }, { file: 'lamp-shade.jscad', title: 'Interactive Params: Lamp Shade' }, { file: 'celtic-knot-ring.jscad', title: 'Interactive Params: Celtic Knot Ring' }, { file: 'stepper-motor.jscad', title: 'Interactive Params: Stepper Motor' }, { file: 'iphone4-case.jscad', title: 'Interactive Params: iPhone4 Case' }, { file: 'name_plate.jscad', title: 'Interactive Params: Name Plate' }, { file: 'balloons.jscad', title: 'Interactive Params: Balloons' }, { file: 'globe.jscad', title: 'Include(): Globe', spacing: true }, { file: 'platonics/', title: 'Recursive Include(): Platonics' }, { file: 'babypanda2.svg', title: 'SVG Image: Baby Panda', spacing: true }, { file: '3d_sculpture-VernonBussler.stl', title: '3D Model: 3D Sculpture (Vernon Bussler)', type: 'STL', spacing: true }, { file: 'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' }, { file: 'thing_7-Zomboe.stl', title: '3D Model: Thing 7 / Flower (Zomboe)', type: 'STL' }, { file: 'yoda-RichRap.stl', title: '3D Model: Yoda (RichRap)', type: 'STL' }, { file: 'feathers_mcgraw.stl', title: '3D Model: Feathers Mcgraw (q1g0ng)', type: 'STL' }];
 
 function createExamples(me) {
   if (me === 'web-online') {
