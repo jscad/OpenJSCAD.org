@@ -513,7 +513,7 @@ Polygon.isStrictlyConvexPoint = function (prevpoint, point, nextpoint, normal) {
  *   let shared = new CSG.Polygon.Shared([0, 0, 0, 1])
  */
 Polygon.Shared = function (color) {
-  if (color !== null) {
+  if (color !== null && color !== undefined) {
     if (color.length !== 4) {
       throw new Error('Expecting 4 element array')
     }

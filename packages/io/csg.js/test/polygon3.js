@@ -231,15 +231,21 @@ test('CSG.Polygon.Shared construction', t => {
 
   t.deepEqual(s4.color,[6,7,8,9])
 
-  let s6 = CSG.Polygon.Shared.fromColor([4,3,2])
-
-  t.deepEqual(s6.color,[4,3,2,1])
-
 // check that generic objects are possible via JSON
   let o5 = JSON.parse(JSON.stringify(s4))
   let s5 = CSG.Polygon.Shared.fromObject(o5)
 
   t.deepEqual(o5,JSON.parse(JSON.stringify(s5)))
+
+  let s6 = CSG.Polygon.Shared.fromColor([4,3,2])
+
+  t.deepEqual(s6.color,[4,3,2,1])
+
+// check that fromObject works without a color
+  let o7 = new CSG.Polygon.Shared()
+  let s7 = CSG.Polygon.Shared.fromObject(o7)
+
+  t.deepEqual(o7, s7)
 
 // check member functions
   let h1 = s1.getHash()
