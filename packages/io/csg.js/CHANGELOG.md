@@ -1,3 +1,13 @@
+<a name="0.3.8"></a>
+## [0.3.8](https://github.com/jscad/csg.js/compare/v0.3.7...v0.3.8) (2018-01-04)
+
+
+### Bug Fixes
+
+* **shared object:**  support shared objects without color ([#74](https://github.com/jscad/csg.js/issues/74)) ([f90ad50](https://github.com/jscad/csg.js/commit/f90ad50))
+
+
+
 <a name="0.3.7"></a>
 ## [0.3.7](https://github.com/jscad/csg.js/compare/v0.3.6...v0.3.7) (2017-11-13)
 
