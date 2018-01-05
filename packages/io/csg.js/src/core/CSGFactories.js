@@ -4,18 +4,31 @@ const Plane = require('./math/Plane')
 const Polygon2D = require('./math/Polygon2')
 const Polygon3D = require('./math/Polygon3')
 
+/** Construct a CSG solid from a list of `Polygon` instances.
+ * @param {Polygon[]} polygons - list of polygons
+ * @returns {CSG} new CSG object
+ */
+const fromPolygons = function (polygons) {
+  const CSG = require('./CSG')
+  let csg = new CSG()
+  csg.polygons = polygons
+  csg.isCanonicalized = false
+  csg.isRetesselated = false
+  return csg
+}
+
 /** Construct a CSG solid from a list of pre-generated slices.
  * See Polygon.prototype.solidFromSlices() for details.
  * @param {Object} options - options passed to solidFromSlices()
  * @returns {CSG} new CSG object
  */
 function fromSlices (options) {
-  return (new Polygon2D.createFromPoints([
+  return Polygon2D.createFromPoints([
         [0, 0, 0],
         [1, 0, 0],
         [1, 1, 0],
         [0, 1, 0]
-  ])).solidFromSlices(options)
+  ]).solidFromSlices(options)
 }
 
 /** Reconstruct a CSG solid from an object with identical property names.
@@ -23,11 +36,10 @@ function fromSlices (options) {
  * @returns {CSG} new CSG object
  */
 function fromObject (obj) {
-  const CSG = require('./CSG')
   let polygons = obj.polygons.map(function (p) {
     return Polygon3D.fromObject(p)
   })
-  let csg = CSG.fromPolygons(polygons)
+  let csg = fromPolygons(polygons)
   csg.isCanonicalized = obj.isCanonicalized
   csg.isRetesselated = obj.isRetesselated
   return csg
@@ -38,8 +50,6 @@ function fromObject (obj) {
  * @returns {CSG} new CSG object
  */
 function fromCompactBinary (bin) {
-  const CSG = require('./CSG') // FIXME: circular dependency ??
-
   if (bin['class'] !== 'CSG') throw new Error('Not a CSG')
   let planes = []
   let planeData = bin.planeData
@@ -97,14 +107,14 @@ function fromCompactBinary (bin) {
     polygon = new Polygon3D(polygonvertices, shared, plane)
     polygons.push(polygon)
   }
-  let csg = CSG.fromPolygons(polygons)
+  let csg = fromPolygons(polygons)
   csg.isCanonicalized = true
   csg.isRetesselated = true
   return csg
 }
 
 module.exports = {
-  //fromPolygons,
+  fromPolygons,
   fromSlices,
   fromObject,
   fromCompactBinary

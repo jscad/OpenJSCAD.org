@@ -140,9 +140,8 @@ PolygonTreeNode.prototype = {
     // fill the tree with polygons. Should be called on the root node only; child nodes must
     // always be a derivate (split) of the parent node.
   addPolygons: function (polygons) {
-    if (!this.isRootNode())
-        // new polygons can only be added to root node; children can only be splitted polygons
-          {
+    // new polygons can only be added to root node; children can only be splitted polygons
+    if (!this.isRootNode()) {
       throw new Error('Assertion failed')
     }
     let _this = this
@@ -352,7 +351,7 @@ Tree.prototype = {
     // Remove all polygons in this BSP tree that are inside the other BSP tree
     // `tree`.
   clipTo: function (tree, alsoRemovecoplanarFront) {
-    alsoRemovecoplanarFront = alsoRemovecoplanarFront ? true : false
+    alsoRemovecoplanarFront = !!alsoRemovecoplanarFront
     this.rootnode.clipTo(tree, alsoRemovecoplanarFront)
   },
 

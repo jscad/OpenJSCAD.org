@@ -1,14 +1,14 @@
 const Vector2D = require('./Vector2')
 const {EPS, angleEPS} = require('../constants')
-const {parseOptionAs2DVector, parseOptionAsFloat, parseOptionAsInt, parseOptionAsBool} = require('../optionParsers')
+const {parseOptionAs2DVector, parseOptionAsFloat, parseOptionAsInt, parseOptionAsBool} = require('../../api/optionParsers')
 const {defaultResolution2D} = require('../constants')
 const Vertex = require('./Vertex2')
 const Side = require('./Side')
 
 /** Class Path2D
  * Represents a series of points, connected by infinitely thin lines.
- * A path can be open or closed, i.e. additional line between first and last points. 
- * The difference between Path2D and CAG is that a path is a 'thin' line, whereas a CAG is an enclosed area. 
+ * A path can be open or closed, i.e. additional line between first and last points.
+ * The difference between Path2D and CAG is that a path is a 'thin' line, whereas a CAG is an enclosed area.
  * @constructor
  * @param {Vector2D[]} [points=[]] - list of points
  * @param {boolean} [closed=false] - closer of path
@@ -115,8 +115,8 @@ Path2D.prototype = {
    * note that this is current internal list of points, not an immutable copy.
    * @returns {Vector2[]} array of points the make up the path
    */
-  getPoints: function() {
-    return this.points;
+  getPoints: function () {
+    return this.points
   },
 
   /**
@@ -157,7 +157,7 @@ Path2D.prototype = {
    * Determine if the path is a closed or not.
    * @returns {Boolean} true when the path is closed, otherwise false
    */
-  isClosed: function() {
+  isClosed: function () {
     return this.closed
   },
 
@@ -199,10 +199,10 @@ Path2D.prototype = {
     return expanded
   },
 
-  innerToCAG: function() {
+  innerToCAG: function () {
     const CAG = require('../CAG') // FIXME: cyclic dependencies CAG => PATH2 => CAG
-    if (!this.closed) throw new Error("The path should be closed!");
-    return CAG.fromPoints(this.points);
+    if (!this.closed) throw new Error('The path should be closed!')
+    return CAG.fromPoints(this.points)
   },
 
   transform: function (matrix4x4) {
@@ -218,9 +218,9 @@ Path2D.prototype = {
    * The Bézier curve starts at the last point in the path,
    * and ends at the last given control point. Other control points are intermediate control points.
    * <br>
-   * The first control point may be null to ensure a smooth transition occurs. In this case,  
+   * The first control point may be null to ensure a smooth transition occurs. In this case,
    * the second to last control point of the path is mirrored into the control points of the Bezier curve.
-   * In other words, the trailing gradient of the path matches the new gradient of the curve. 
+   * In other words, the trailing gradient of the path matches the new gradient of the curve.
    * @param {Vector2D[]} controlpoints - list of control points
    * @param {Object} [options] - options for construction
    * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
@@ -344,7 +344,6 @@ Path2D.prototype = {
     result.lastBezierControlPoint = controlpointsParsed[controlpointsParsed.length - 2]
     return result
   },
-
 
   /**
    * Append an arc to the end of the path.

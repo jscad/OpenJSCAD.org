@@ -1,4 +1,4 @@
-const CSG = require('./CSG')
+const CSG = require('../core/CSG')
 const {cube} = require('./primitives3d')
 
 // For debugging

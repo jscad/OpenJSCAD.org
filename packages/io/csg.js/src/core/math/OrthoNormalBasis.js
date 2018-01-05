@@ -4,12 +4,15 @@ const Line2D = require('./Line2')
 const Line3D = require('./Line3')
 const Plane = require('./Plane')
 
-// # class OrthoNormalBasis
-// Reprojects points on a 3D plane onto a 2D plane
-// or from a 2D plane back onto the 3D plane
+/** class OrthoNormalBasis
+ * Reprojects points on a 3D plane onto a 2D plane
+ * or from a 2D plane back onto the 3D plane
+ * @param  {Plane} plane
+ * @param  {Vector3D|Vector2D} rightvector
+ */
 const OrthoNormalBasis = function (plane, rightvector) {
   if (arguments.length < 2) {
-        // choose an arbitrary right hand vector, making sure it is somewhat orthogonal to the plane normal:
+    // choose an arbitrary right hand vector, making sure it is somewhat orthogonal to the plane normal:
     rightvector = plane.normal.randomNonParallelVector()
   } else {
     rightvector = new Vector3D(rightvector)
@@ -189,7 +192,7 @@ OrthoNormalBasis.prototype = {
   },
 
   transform: function (matrix4x4) {
-        // todo: this may not work properly in case of mirroring
+    // todo: this may not work properly in case of mirroring
     let newplane = this.plane.transform(matrix4x4)
     let rightpointTransformed = this.u.transform(matrix4x4)
     let originTransformed = new Vector3D(0, 0, 0).transform(matrix4x4)

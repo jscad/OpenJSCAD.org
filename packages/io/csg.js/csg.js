@@ -80,9 +80,9 @@ for solid CAD anyway.
 
 */
 
-const {addTransformationMethodsToPrototype, addCenteringToPrototype} = require('./src/mutators')
-let CSG = require('./src/CSG')
-let CAG = require('./src/CAG')
+const {addTransformationMethodsToPrototype, addCenteringToPrototype} = require('./src/core/mutators')
+let CSG = require('./src/core/CSG')
+let CAG = require('./src/core/CAG')
 
 // FIXME: how many are actual usefull to be exposed as API ?? looks like a code smell
 const { _CSGDEBUG,
@@ -99,7 +99,7 @@ const { _CSGDEBUG,
   front,
   back,
   staticTag,
-  getTag} = require('./src/constants')
+  getTag} = require('./src/core/constants')
 
 CSG._CSGDEBUG = _CSGDEBUG
 CSG.defaultResolution2D = defaultResolution2D
@@ -118,27 +118,27 @@ CSG.staticTag = staticTag
 CSG.getTag = getTag
 
 // eek ! all this is kept for backwards compatibility...for now
-CSG.Vector2D = require('./src/math/Vector2')
-CSG.Vector3D = require('./src/math/Vector3')
-CSG.Vertex = require('./src/math/Vertex3')
-CAG.Vertex = require('./src/math/Vertex2')
-CSG.Plane = require('./src/math/Plane')
-CSG.Polygon = require('./src/math/Polygon3')
-CSG.Polygon2D = require('./src/math/Polygon2')
-CSG.Line2D = require('./src/math/Line2')
-CSG.Line3D = require('./src/math/Line3')
-CSG.Path2D = require('./src/math/Path2')
-CSG.OrthoNormalBasis = require('./src/math/OrthoNormalBasis')
-CSG.Matrix4x4 = require('./src/math/Matrix4')
+CSG.Vector2D = require('./src/core/math/Vector2')
+CSG.Vector3D = require('./src/core/math/Vector3')
+CSG.Vertex = require('./src/core/math/Vertex3')
+CAG.Vertex = require('./src/core/math/Vertex2')
+CSG.Plane = require('./src/core/math/Plane')
+CSG.Polygon = require('./src/core/math/Polygon3')
+CSG.Polygon2D = require('./src/core/math/Polygon2')
+CSG.Line2D = require('./src/core/math/Line2')
+CSG.Line3D = require('./src/core/math/Line3')
+CSG.Path2D = require('./src/core/math/Path2')
+CSG.OrthoNormalBasis = require('./src/core/math/OrthoNormalBasis')
+CSG.Matrix4x4 = require('./src/core/math/Matrix4')
 
-CAG.Side = require('./src/math/Side')
+CAG.Side = require('./src/core/math/Side')
 
-CSG.Connector = require('./src/connectors').Connector
-CSG.ConnectorList = require('./src/connectors').ConnectorList
-CSG.Properties = require('./src/Properties')
+CSG.Connector = require('./src/core/connectors').Connector
+CSG.ConnectorList = require('./src/core/connectors').ConnectorList
+CSG.Properties = require('./src/core/Properties')
 
-const {circle, ellipse, rectangle, roundedRectangle} = require('./src/primitives2d')
-const {sphere, cube, roundedCube, cylinder, roundedCylinder, cylinderElliptic, polyhedron} = require('./src/primitives3d')
+const {circle, ellipse, rectangle, roundedRectangle} = require('./src/api/primitives2d')
+const {sphere, cube, roundedCube, cylinder, roundedCylinder, cylinderElliptic, polyhedron} = require('./src/api/primitives3d')
 
 CSG.sphere = sphere
 CSG.cube = cube
@@ -153,18 +153,26 @@ CAG.ellipse = ellipse
 CAG.rectangle = rectangle
 CAG.roundedRectangle = roundedRectangle
 
-//
-const {fromCompactBinary, fromObject, fromSlices} = require('./src/CSGFactories')
+// injecting factories
+const {fromPolygons, fromCompactBinary, fromObject, fromSlices} = require('./src/core/CSGFactories')
 CSG.fromCompactBinary = fromCompactBinary
 CSG.fromObject = fromObject
 CSG.fromSlices = fromSlices
+CSG.fromPolygons = fromPolygons
 
-CSG.toPointCloud = require('./src/debugHelpers').toPointCloud
+CSG.toPointCloud = require('./src/api/debugHelpers').toPointCloud
 
-const CAGMakers = require('./src/CAGFactories')
+const CAGMakers = require('./src/core/CAGFactories')
+CAG.fromSides = CAGMakers.fromSides
 CAG.fromObject = CAGMakers.fromObject
+CAG.fromPoints = CAGMakers.fromPoints
 CAG.fromPointsNoCheck = CAGMakers.fromPointsNoCheck
 CAG.fromPath2 = CAGMakers.fromPath2
+CAG.fromFakeCSG = CAGMakers.fromFakeCSG
+
+/// ////////////////////////////////////
+// option parsers
+const optionsParsers = require('./src/api/optionParsers')
 
 // ////////////////////////////////////
 addTransformationMethodsToPrototype(CSG.prototype)
@@ -186,4 +194,18 @@ addTransformationMethodsToPrototype(CAG.Vertex.prototype)
 addCenteringToPrototype(CSG.prototype, ['x', 'y', 'z'])
 addCenteringToPrototype(CAG.prototype, ['x', 'y'])
 
-module.exports = {CSG, CAG}
+CSG.parseOptionAs2DVector = optionsParsers.parseOptionAs3DVector
+CSG.parseOptionAs3DVector = optionsParsers.parseOptionAs3DVector
+CSG.parseOptionAs3DVectorList = optionsParsers.parseOptionAs3DVectorList
+CSG.parseOptionAsBool = optionsParsers.parseOptionAsBool
+CSG.parseOptionAsFloat = optionsParsers.parseOptionAsFloat
+CSG.parseOptionAsInt = optionsParsers.parseOptionAsInt
+// this is needed for now, otherwise there are missing features in Polygon2D
+CSG.Polygon2D.prototype = CAG.prototype
+
+// utilities
+const {isCAG, isCSG} = require('./src/core/utils')
+
+const globalApi = Object.assign({}, {CSG, CAG}, optionsParsers, {isCAG, isCSG})
+
+module.exports = globalApi

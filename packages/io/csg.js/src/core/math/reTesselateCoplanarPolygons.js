@@ -211,8 +211,8 @@ const reTesselateCoplanarPolygons = function (sourcepolygons, destpolygons) {
       } //  yindex < ycoordinates.length-1
             // if( (yindex === ycoordinates.length-1) || (nextycoordinate - ycoordinate > EPS) )
       if (true) {
-                // Now activepolygons is up to date
-                // Build the output polygons for the next row in newoutpolygonrow:
+        // Now activepolygons is up to date
+        // Build the output polygons for the next row in newoutpolygonrow:
         for (let activepolygonKey in activepolygons) {
           let activepolygon = activepolygons[activepolygonKey]
           let polygonindex = activepolygon.polygonindex
@@ -339,4 +339,4 @@ const reTesselateCoplanarPolygons = function (sourcepolygons, destpolygons) {
   } // if(numpolygons > 0)
 }
 
-module.exports = {reTesselateCoplanarPolygons}
+module.exports = reTesselateCoplanarPolygons

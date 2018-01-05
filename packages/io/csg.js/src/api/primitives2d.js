@@ -1,9 +1,9 @@
-const CAG = require('./CAG')
+const CAG = require('../core/CAG')
 const {parseOptionAs2DVector, parseOptionAsFloat, parseOptionAsInt} = require('./optionParsers')
-const {defaultResolution2D} = require('./constants')
-const Vector2D = require('./math/Vector2')
-const Path2D = require('./math/Path2')
-const {fromCompactBinary} = require('./CAGFactories')
+const {defaultResolution2D} = require('../core/constants')
+const Vector2D = require('../core/math/Vector2')
+const Path2D = require('../core/math/Path2')
+const {fromCompactBinary, fromPoints, fromPath2, fromSides} = require('../core/CAGFactories')
 
 /** Construct a circle.
  * @param {Object} [options] - options for construction
@@ -23,7 +23,7 @@ const circle = function (options) {
     let point = Vector2D.fromAngleRadians(radians).times(radius).plus(center)
     points.push(point)
   }
-  return CAG.fromPoints(points)
+  return fromPoints(points)
 }
 
 /** Construct an ellispe.
@@ -58,7 +58,7 @@ const ellipse = function (options) {
     large: false
   })
   e2 = e2.close()
-  return CAG.fromPath2(e2)
+  return fromPath2(e2)
 }
 
 /** Construct a rectangle.
@@ -89,7 +89,7 @@ const rectangle = function (options) {
   let points = [
     c.plus(r), c.plus(rswap), c.minus(r), c.minus(rswap)
   ]
-  return CAG.fromPoints(points)
+  return fromPoints(points)
 }
 
 /** Construct a rounded rectangle.
@@ -170,7 +170,7 @@ CAG.fromCompactBinary = function (bin) {
     let side = new CAG.Side(vertices[vertexindex0], vertices[vertexindex1])
     sides.push(side)
   }
-  let cag = CAG.fromSides(sides)
+  let cag = fromSides(sides)
   cag.isCanonicalized = true
   return cag
 }

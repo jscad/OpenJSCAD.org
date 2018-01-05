@@ -149,7 +149,7 @@ ConnectorList._fromPath2DExplicit = function (path2D, angleIsh) {
 
 ConnectorList.prototype = {
   setClosed: function (closed) {
-    this.closed = !!closed // FIXME: what the hell ?
+    this.closed = !!closed
   },
   appendConnector: function (conn) {
     this.connectors_.push(conn)
