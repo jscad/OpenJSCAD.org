@@ -33,22 +33,6 @@ function generateOutputData (source, params, options) {
   }
   globals.extras = {cli: {getParameterDefinitionsCLI}}
 
-  // extract the array of parameter definitions
-  const parameterDefinitions = getParameterDefinitionsForReal(source)
-  // get the actual parameters, correctly cast to the right types etc based on the definitions above
-  params = getParameterValues(params, parameterDefinitions)
-  // modify main to adapt parameters
-  const mainFunction = `
-//only add this wrapper if not already present & we are not in command-line mode
-if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== 'undefined'){
-  const wrappedMain = main
-  main = function(){
-    var paramsDefinition = (typeof getParameterDefinitions !== 'undefined') ? getParameterDefinitions : undefined
-    console.log('gna')
-    return wrappedMain(getParameterDefinitionsCLI(paramsDefinition, ${JSON.stringify(params)}))
-  }
-}
-`
   // objects = rebuildSolid(source, '', params, globals, callback)
   return new Promise(function (resolve, reject) {
     const callback = (err, result) => {
@@ -57,8 +41,6 @@ if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== '
       }
       return reject(err)
     }
-    source = inputFormat === 'scad' ? source : `${source}
-    ${mainFunction}`
 
     // FIXME: technically almost 100% same as src/io/conversionWorker, refactor ?
     const conversionTable = {
@@ -81,6 +63,25 @@ if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== '
     }
     // convert any inputs
     source = conversionTable[inputFormat]({source, params, options})
+
+    // extract the array of parameter definitions
+    const parameterDefinitions = getParameterDefinitionsForReal(source)
+    // get the actual parameters, correctly cast to the right types etc based on the definitions above
+    params = getParameterValues(params, parameterDefinitions)
+    // console.log('params', params, parameterDefinitions)
+    // modify main to adapt parameters
+    const mainFunction = `
+    //only add this wrapper if not already present & we are not in command-line mode
+    if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== 'undefined'){
+      const wrappedMain = main
+      main = function(){
+        var paramsDefinition = (typeof getParameterDefinitions !== 'undefined') ? getParameterDefinitions : undefined
+        return wrappedMain(getParameterDefinitionsCLI(paramsDefinition, ${JSON.stringify(params)}))
+      }
+    }
+    `
+    source = inputFormat === 'jscad' ? `${source}
+    ${mainFunction}` : source
 
     if (outputFormat === 'jscad' || outputFormat === 'js') {
       resolve(source)

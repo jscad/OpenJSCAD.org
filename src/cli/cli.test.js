@@ -13,7 +13,7 @@ test.afterEach.always(t => {
     // this runs after each test and other test hooks, even if they failed
     // remove created file
   try {
-    fs.unlinkSync(t.context.outputPath)
+    // fs.unlinkSync(t.context.outputPath)
   } catch (err) {}
 })
 
@@ -46,6 +46,18 @@ test('jscad with parameters', t => {
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
   almostEquals(t, fs.statSync(expPath).size, 655732, 50)
+})
+
+test('jscad with complex/ multiple type of parameters', t => {
+  const jscadPath = t.context.jscadPath
+  const inputPath = path.resolve(__dirname, '../../examples/grille.jscad')
+  const outputPath = 'grille.stl'
+  const expPath = outputPath
+  t.context = {outputPath}
+  const cmd = `node ${jscadPath} ${inputPath} --outerwidth 176.25 --outerdepth 15.2 --numdividers 4 --addlooseners 1 --show "grille"  --quality 0 -o ${outputPath} `
+  execSync(cmd, {stdio: [0, 1, 2]})
+  t.deepEqual(true, fs.existsSync(expPath))
+  almostEquals(t, fs.statSync(expPath).size, 298084, 50)
 })
 
 test('jscad to stl (ascii)', t => {
@@ -181,7 +193,7 @@ test('echo() support', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of jscad`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(outputPath).size, 636, 2)
+  almostEquals(t, fs.statSync(outputPath).size, 671, 2)
 })
 
 test('include support', t => {
