@@ -7,7 +7,7 @@ const {fromSides} = require('../CAGFactories')
 /**
    * Returns a cannoicalized version of the input csg/cag : ie every very close
    * points get deduplicated
-   * @returns {CSG CAG}
+   * @returns {CSG|CAG}
    * @example
    * let rawInput = someCSGORCAGMakingFunction()
    * let canonicalized= canonicalize(rawInput)

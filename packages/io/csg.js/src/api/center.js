@@ -1,8 +1,8 @@
 const toArray = require('../core/utils/toArray')
 
-/**
+/** NOTE: this is not functional YET !!
  * centers the given object(s) on the given axis
- * @param {[Object]} object(s) the shapes to center
+ * @param {Object|Array} object(s) the shapes to center
  * @param {Object} options
  */
 const center = (objects, options) => {
