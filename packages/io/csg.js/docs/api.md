@@ -39,36 +39,50 @@
 ## Functions
 
 <dl>
-<dt><a href="#fromObject">fromObject(obj)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
-<dd><p>Reconstruct a CAG from an object with identical property names.</p>
+<dt><a href="#center">center(object(s), options)</a></dt>
+<dd><p>NOTE: this is not functional YET !!
+centers the given object(s) on the given axis</p>
 </dd>
-<dt><a href="#fromPointsNoCheck">fromPointsNoCheck(points)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
-<dd><p>Construct a CAG from a list of points (a polygon).
-Like fromPoints() but does not check if the result is a valid polygon.
-The points MUST rotate counter clockwise.
-The points can define a convex or a concave polygon.
-The polygon must not self intersect.</p>
+<dt><a href="#overCutInsideCorners">overCutInsideCorners(_cag, cutterradius)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dd><p>cag = cag.overCutInsideCorners(cutterradius);
+Using a CNC router it&#39;s impossible to cut out a true sharp inside corner. The inside corner
+will be rounded due to the radius of the cutter. This function compensates for this by creating
+an extra cutout at each inner corner so that the actual cut out shape will be at least as large
+as needed.</p>
 </dd>
-<dt><a href="#fromPath2">fromPath2(Path2)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
-<dd><p>Construct a CAG from a 2d-path (a closed sequence of points).
-Like fromPoints() but does not check if the result is a valid polygon.</p>
+<dt><a href="#sectionCut">sectionCut(csg, orthobasis)</a></dt>
+<dd><p>cuts a csg along a orthobasis</p>
 </dd>
-<dt><a href="#fromSlices">fromSlices(options)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
-<dd><p>Construct a CSG solid from a list of pre-generated slices.
-See Polygon.prototype.solidFromSlices() for details.</p>
+<dt><a href="#cutByPlane">cutByPlane(plane)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
+<dd><p>Cut the solid by a plane. Returns the solid on the back side of the plane</p>
 </dd>
-<dt><a href="#fromObject">fromObject(obj)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
-<dd><p>Reconstruct a CSG solid from an object with identical property names.</p>
+<dt><a href="#expandedShellOfCCSG">expandedShellOfCCSG(radius, resolution, unionWithThis)</a></dt>
+<dd><p>Create the expanded shell of the solid:
+All faces are extruded to get a thickness of 2*radius
+Cylinders are constructed around every side
+Spheres are placed on every vertex
+unionWithThis: if true, the resulting solid will be united with &#39;this&#39; solid;
+the result is a true expansion of the solid
+If false, returns only the shell</p>
 </dd>
-<dt><a href="#fromCompactBinary">fromCompactBinary(bin)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
-<dd><p>Reconstruct a CSG from the output of toCompactBinary().</p>
+<dt><a href="#extrudeInOrthonormalBasis">extrudeInOrthonormalBasis(cag, orthonormalbasis, depth, [options])</a></dt>
+<dd><p>extrude the CAG in a certain plane.
+Giving just a plane is not enough, multiple different extrusions in the same plane would be possible
+by rotating around the plane&#39;s origin. An additional right-hand vector should be specified as well,
+and this is exactly a OrthoNormalBasis.</p>
 </dd>
-<dt><a href="#Line2D">Line2D(normal)</a> ⇒ <code><a href="#Line2D">Line2D</a></code></dt>
-<dd><p>class Line2D
-Represents a directional line in 2D space
-A line is parametrized by its normal vector (perpendicular to the line, rotated 90 degrees counter clockwise)
-and w. The line passes through the point <normal>.times(w).
-Equation: p is on line if normal.dot(p)==w</p>
+<dt><a href="#extrudeInPlane">extrudeInPlane(cag, axis1, axis2, depth, [options])</a></dt>
+<dd><p>Extrude in a standard cartesian plane, specified by two axis identifiers. Each identifier can be
+one of [&quot;X&quot;,&quot;Y&quot;,&quot;Z&quot;,&quot;-X&quot;,&quot;-Y&quot;,&quot;-Z&quot;]
+The 2d x axis will map to the first given 3D axis, the 2d y axis will map to the second.
+See OrthoNormalBasis.GetCartesian for details.</p>
+</dd>
+<dt><a href="#extrude">extrude(cag, [options])</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
+<dd><p>linear extrusion of 2D shape, with optional twist</p>
+</dd>
+<dt><a href="#rotateExtrude">rotateExtrude(options)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
+<dd><p>Extrude to into a 3D solid by rotating the origin around the Y axis.
+(and turning everything into XY plane)</p>
 </dd>
 <dt><a href="#circle">circle([options])</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Construct a circle.</p>
@@ -104,6 +118,74 @@ Equation: p is on line if normal.dot(p)==w</p>
 <dd><p>Create a polyhedron using Openscad style arguments.
 Define face vertices clockwise looking from outside.</p>
 </dd>
+<dt><a href="#solidFromSlices">solidFromSlices(options)</a></dt>
+<dd><p>Creates solid from slices (Polygon) by generating walls</p>
+</dd>
+<dt><a href="#_addWalls">_addWalls(walls, bottom, top)</a></dt>
+<dd></dd>
+<dt><a href="#fromSides">fromSides(sides)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dd><p>Construct a CAG from a list of <code>Side</code> instances.</p>
+</dd>
+<dt><a href="#fromPoints">fromPoints(points)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dd><p>Construct a CAG from a list of points (a polygon).
+The rotation direction of the points is not relevant.
+The points can define a convex or a concave polygon.
+The polygon must not self intersect.</p>
+</dd>
+<dt><a href="#fromObject">fromObject(obj)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dd><p>Reconstruct a CAG from an object with identical property names.</p>
+</dd>
+<dt><a href="#fromPointsNoCheck">fromPointsNoCheck(points)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dd><p>Construct a CAG from a list of points (a polygon).
+Like fromPoints() but does not check if the result is a valid polygon.
+The points MUST rotate counter clockwise.
+The points can define a convex or a concave polygon.
+The polygon must not self intersect.</p>
+</dd>
+<dt><a href="#fromPath2">fromPath2(Path2)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dd><p>Construct a CAG from a 2d-path (a closed sequence of points).
+Like fromPoints() but does not check if the result is a valid polygon.</p>
+</dd>
+<dt><a href="#fromPolygons">fromPolygons(polygons)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
+<dd><p>Construct a CSG solid from a list of <code>Polygon</code> instances.</p>
+</dd>
+<dt><a href="#fromSlices">fromSlices(options)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
+<dd><p>Construct a CSG solid from a list of pre-generated slices.
+See Polygon.prototype.solidFromSlices() for details.</p>
+</dd>
+<dt><a href="#fromObject">fromObject(obj)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
+<dd><p>Reconstruct a CSG solid from an object with identical property names.</p>
+</dd>
+<dt><a href="#fromCompactBinary">fromCompactBinary(bin)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
+<dd><p>Reconstruct a CSG from the output of toCompactBinary().</p>
+</dd>
+<dt><a href="#Line2D">Line2D(normal)</a> ⇒ <code><a href="#Line2D">Line2D</a></code></dt>
+<dd><p>class Line2D
+Represents a directional line in 2D space
+A line is parametrized by its normal vector (perpendicular to the line, rotated 90 degrees counter clockwise)
+and w. The line passes through the point <normal>.times(w).
+Equation: p is on line if normal.dot(p)==w</p>
+</dd>
+<dt><a href="#OrthoNormalBasis">OrthoNormalBasis(plane, rightvector)</a></dt>
+<dd><p>class OrthoNormalBasis
+Reprojects points on a 3D plane onto a 2D plane
+or from a 2D plane back onto the 3D plane</p>
+</dd>
+<dt><a href="#fromPoints">fromPoints(points, [shared], [plane])</a></dt>
+<dd><p>Create a polygon from the given points.</p>
+</dd>
+<dt><a href="#canonicalize">canonicalize()</a> ⇒ <code><a href="#CSG">CSG</a></code> | <code><a href="#CAG">CAG</a></code></dt>
+<dd><p>Returns a cannoicalized version of the input csg/cag : ie every very close
+points get deduplicated</p>
+</dd>
+<dt><a href="#canonicalizeCSG">canonicalizeCSG()</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
+<dd><p>Returns a cannoicalized version of the input csg : ie every very close
+points get deduplicated</p>
+</dd>
+<dt><a href="#bounds">bounds()</a> ⇒ <code><a href="#Vector3D">Array.&lt;Vector3D&gt;</a></code></dt>
+<dd><p>Returns an array of Vector3D, providing minimum coordinates and maximum coordinates
+of this solid.</p>
+</dd>
 </dl>
 
 <a name="CAG"></a>
@@ -115,11 +197,8 @@ Define face vertices clockwise looking from outside.</p>
     * [new CAG()](#new_CAG_new)
     * _instance_
         * [.toPoints()](#CAG+toPoints) ⇒ <code>Array.&lt;points&gt;</code>
-        * [.rotateExtrude(options)](#CAG+rotateExtrude) ⇒ [<code>CSG</code>](#CSG)
         * [.toCompactBinary()](#CAG+toCompactBinary) ⇒ <code>CompactBinary</code>
     * _static_
-        * [.fromSides(sides)](#CAG.fromSides) ⇒ [<code>CAG</code>](#CAG)
-        * [.fromPoints(points)](#CAG.fromPoints) ⇒ [<code>CAG</code>](#CAG)
         * [.fromCompactBinary(bin)](#CAG.fromCompactBinary) ⇒ [<code>CAG</code>](#CAG)
 
 <a name="new_CAG_new"></a>
@@ -137,55 +216,13 @@ Convert to a list of points.
 
 **Kind**: instance method of [<code>CAG</code>](#CAG)  
 **Returns**: <code>Array.&lt;points&gt;</code> - list of points in 2D space  
-<a name="CAG+rotateExtrude"></a>
-
-### caG.rotateExtrude(options) ⇒ [<code>CSG</code>](#CSG)
-Extrude to into a 3D solid by rotating the origin around the Y axis.
-(and turning everything into XY plane)
-
-**Kind**: instance method of [<code>CAG</code>](#CAG)  
-**Returns**: [<code>CSG</code>](#CSG) - new 3D solid  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| options | <code>Object</code> |  | options for construction |
-| [options.angle] | <code>Number</code> | <code>360</code> | angle of rotation |
-| [options.resolution] | <code>Number</code> | <code>defaultResolution3D</code> | number of polygons per 360 degree revolution |
-
 <a name="CAG+toCompactBinary"></a>
 
 ### caG.toCompactBinary() ⇒ <code>CompactBinary</code>
 Convert to compact binary form.
-See CAG.fromCompactBinary.
+See fromCompactBinary.
 
 **Kind**: instance method of [<code>CAG</code>](#CAG)  
-<a name="CAG.fromSides"></a>
-
-### CAG.fromSides(sides) ⇒ [<code>CAG</code>](#CAG)
-Construct a CAG from a list of `Side` instances.
-
-**Kind**: static method of [<code>CAG</code>](#CAG)  
-**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| sides | <code>Array.&lt;Side&gt;</code> | list of sides |
-
-<a name="CAG.fromPoints"></a>
-
-### CAG.fromPoints(points) ⇒ [<code>CAG</code>](#CAG)
-Construct a CAG from a list of points (a polygon).
-The rotation direction of the points is not relevant.
-The points can define a convex or a concave polygon.
-The polygon must not self intersect.
-
-**Kind**: static method of [<code>CAG</code>](#CAG)  
-**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| points | <code>Array.&lt;points&gt;</code> | list of points in 2D space |
-
 <a name="CAG.fromCompactBinary"></a>
 
 ### CAG.fromCompactBinary(bin) ⇒ [<code>CAG</code>](#CAG)
@@ -205,17 +242,19 @@ Reconstruct a CAG from the output of toCompactBinary().
 
 * [CSG](#CSG)
     * [new CSG()](#new_CSG_new)
-    * _instance_
-        * [.toPolygons()](#CSG+toPolygons) ⇒ [<code>Array.&lt;Polygon&gt;</code>](#Polygon)
-        * [.union(csg)](#CSG+union) ⇒ [<code>CSG</code>](#CSG)
-        * [.subtract(csg)](#CSG+subtract) ⇒ [<code>CSG</code>](#CSG)
-        * [.intersect(csg)](#CSG+intersect) ⇒ [<code>CSG</code>](#CSG)
-        * [.invert()](#CSG+invert) ⇒ [<code>CSG</code>](#CSG)
-        * [.transform(matrix4x4)](#CSG+transform) ⇒ [<code>CSG</code>](#CSG)
-        * [.getBounds()](#CSG+getBounds) ⇒ [<code>Array.&lt;Vector3D&gt;</code>](#Vector3D)
-        * [.getFeatures(features)](#CSG+getFeatures) ⇒ <code>Array.&lt;Float&gt;</code>
-    * _static_
-        * [.fromPolygons(polygons)](#CSG.fromPolygons) ⇒ [<code>CSG</code>](#CSG)
+    * [.union(csg)](#CSG+union) ⇒ [<code>CSG</code>](#CSG)
+    * [.subtract(csg)](#CSG+subtract) ⇒ [<code>CSG</code>](#CSG)
+    * [.intersect(csg)](#CSG+intersect) ⇒ [<code>CSG</code>](#CSG)
+    * [.invert()](#CSG+invert) ⇒ [<code>CSG</code>](#CSG)
+    * [.transform(matrix4x4)](#CSG+transform) ⇒ [<code>CSG</code>](#CSG)
+    * [.mayOverlap(csg)](#CSG+mayOverlap)
+    * [.connectTo(myConnector, otherConnector, mirror, normalrotation)](#CSG+connectTo) ⇒ [<code>CSG</code>](#CSG)
+    * [.setShared(shared)](#CSG+setShared) ⇒ [<code>CSG</code>](#CSG)
+    * [.setColor(args)](#CSG+setColor) ⇒ [<code>CSG</code>](#CSG)
+    * [.getFeatures(features)](#CSG+getFeatures) ⇒ <code>Array.&lt;Float&gt;</code>
+    * [.toPolygons()](#CSG+toPolygons) ⇒ [<code>Array.&lt;Polygon&gt;</code>](#Polygon)
+    * [.toCompactBinary()](#CSG+toCompactBinary) ⇒ <code>Object</code>
+    * [.toTriangles()](#CSG+toTriangles) ⇒ <code>Polygons</code>
 
 <a name="new_CSG_new"></a>
 
@@ -224,11 +263,6 @@ Class CSG
 Holds a binary space partition tree representing a 3D solid. Two solids can
 be combined using the `union()`, `subtract()`, and `intersect()` methods.
 
-<a name="CSG+toPolygons"></a>
-
-### csG.toPolygons() ⇒ [<code>Array.&lt;Polygon&gt;</code>](#Polygon)
-**Kind**: instance method of [<code>CSG</code>](#CSG)  
-**Returns**: [<code>Array.&lt;Polygon&gt;</code>](#Polygon) - The list of polygons.  
 <a name="CSG+union"></a>
 
 ### csG.union(csg) ⇒ [<code>CSG</code>](#CSG)
@@ -345,18 +379,58 @@ m = m.multiply(CSG.Matrix4x4.rotationX(40))
 m = m.multiply(CSG.Matrix4x4.translation([-.5, 0, 0]))
 let B = A.transform(m)
 ```
-<a name="CSG+getBounds"></a>
+<a name="CSG+mayOverlap"></a>
 
-### csG.getBounds() ⇒ [<code>Array.&lt;Vector3D&gt;</code>](#Vector3D)
-Returns an array of Vector3D, providing minimum coordinates and maximum coordinates
-of this solid.
+### csG.mayOverlap(csg)
+returns true if there is a possibility that the two solids overlap
+returns false if we can be sure that they do not overlap
+NOTE: this is critical as it is used in UNIONs
 
 **Kind**: instance method of [<code>CSG</code>](#CSG)  
-**Example**  
-```js
-let bounds = A.getBounds()
-let minX = bounds[0].x
-```
+
+| Param | Type |
+| --- | --- |
+| csg | [<code>CSG</code>](#CSG) | 
+
+<a name="CSG+connectTo"></a>
+
+### csG.connectTo(myConnector, otherConnector, mirror, normalrotation) ⇒ [<code>CSG</code>](#CSG)
+Connect a solid to another solid, such that two Connectors become connected
+
+**Kind**: instance method of [<code>CSG</code>](#CSG)  
+**Returns**: [<code>CSG</code>](#CSG) - this csg, tranformed accordingly  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| myConnector | <code>Connector</code> | a Connector of this solid |
+| otherConnector | <code>Connector</code> | a Connector to which myConnector should be connected |
+| mirror | <code>Boolean</code> | false: the 'axis' vectors of the connectors should point in the same direction true: the 'axis' vectors of the connectors should point in opposite direction |
+| normalrotation | <code>Float</code> | degrees of rotation between the 'normal' vectors of the two connectors |
+
+<a name="CSG+setShared"></a>
+
+### csG.setShared(shared) ⇒ [<code>CSG</code>](#CSG)
+set the .shared property of all polygons
+
+**Kind**: instance method of [<code>CSG</code>](#CSG)  
+**Returns**: [<code>CSG</code>](#CSG) - Returns a new CSG solid, the original is unmodified!  
+
+| Param | Type |
+| --- | --- |
+| shared | <code>Object</code> | 
+
+<a name="CSG+setColor"></a>
+
+### csG.setColor(args) ⇒ [<code>CSG</code>](#CSG)
+sets the color of this csg: non mutating, returns a new CSG
+
+**Kind**: instance method of [<code>CSG</code>](#CSG)  
+**Returns**: [<code>CSG</code>](#CSG) - a copy of this CSG, with the given color  
+
+| Param | Type |
+| --- | --- |
+| args | <code>Object</code> | 
+
 <a name="CSG+getFeatures"></a>
 
 ### csG.getFeatures(features) ⇒ <code>Array.&lt;Float&gt;</code>
@@ -375,18 +449,27 @@ Supported Features: 'volume', 'area'
 let volume = A.getFeatures('volume')
 let values = A.getFeatures('area','volume')
 ```
-<a name="CSG.fromPolygons"></a>
+<a name="CSG+toPolygons"></a>
 
-### CSG.fromPolygons(polygons) ⇒ [<code>CSG</code>](#CSG)
-Construct a CSG solid from a list of `Polygon` instances.
+### csG.toPolygons() ⇒ [<code>Array.&lt;Polygon&gt;</code>](#Polygon)
+**Kind**: instance method of [<code>CSG</code>](#CSG)  
+**Returns**: [<code>Array.&lt;Polygon&gt;</code>](#Polygon) - The list of polygons.  
+<a name="CSG+toCompactBinary"></a>
 
-**Kind**: static method of [<code>CSG</code>](#CSG)  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
+### csG.toCompactBinary() ⇒ <code>Object</code>
+returns a compact binary representation of this csg
+usually used to transfer CSG objects to/from webworkes
+NOTE: very interesting compact format, with a lot of reusable ideas
 
-| Param | Type | Description |
-| --- | --- | --- |
-| polygons | [<code>Array.&lt;Polygon&gt;</code>](#Polygon) | list of polygons |
+**Kind**: instance method of [<code>CSG</code>](#CSG)  
+**Returns**: <code>Object</code> - compact binary representation of a CSG  
+<a name="CSG+toTriangles"></a>
 
+### csG.toTriangles() ⇒ <code>Polygons</code>
+returns the triangles of this csg
+
+**Kind**: instance method of [<code>CSG</code>](#CSG)  
+**Returns**: <code>Polygons</code> - triangulated polygons  
 <a name="Path2D"></a>
 
 ## Path2D
@@ -409,7 +492,7 @@ Construct a CSG solid from a list of `Polygon` instances.
 ### new Path2D([points], [closed])
 Class Path2D
 Represents a series of points, connected by infinitely thin lines.
-A path can be open or closed, i.e. additional line between first and last points. 
+A path can be open or closed, i.e. additional line between first and last points.
 The difference between Path2D and CAG is that a path is a 'thin' line, whereas a CAG is an enclosed area.
 
 
@@ -470,7 +553,7 @@ Append a Bezier curve to the end of the path, using the control points to transi
 The Bézier curve starts at the last point in the path,
 and ends at the last given control point. Other control points are intermediate control points.
 <br>
-The first control point may be null to ensure a smooth transition occurs. In this case,  
+The first control point may be null to ensure a smooth transition occurs. In this case,
 the second to last control point of the path is mirrored into the control points of the Bezier curve.
 In other words, the trailing gradient of the path matches the new gradient of the curve.
 
@@ -556,8 +639,6 @@ let path = CSG.Path2D.arc({
     * [new Polygon(vertices, [shared], [plane])](#new_Polygon_new)
     * _instance_
         * [.checkIfConvex()](#Polygon+checkIfConvex) ⇒ <code>boolean</code>
-        * [.solidFromSlices(options)](#Polygon+solidFromSlices)
-        * [._addWalls(walls, bottom, top)](#Polygon+_addWalls)
     * _static_
         * [.Shared](#Polygon.Shared)
             * [new Polygon.Shared(color)](#new_Polygon.Shared_new)
@@ -602,28 +683,6 @@ let observed = new Polygon(vertices)
 Check whether the polygon is convex. (it should be, otherwise we will get unexpected results)
 
 **Kind**: instance method of [<code>Polygon</code>](#Polygon)  
-<a name="Polygon+solidFromSlices"></a>
-
-### polygon.solidFromSlices(options)
-Creates solid from slices (Polygon) by generating walls
-
-**Kind**: instance method of [<code>Polygon</code>](#Polygon)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>Object</code> | Solid generating options  - numslices {Number} Number of slices to be generated  - callback(t, slice) {Function} Callback function generating slices.          arguments: t = [0..1], slice = [0..numslices - 1]          return: Polygon or null to skip  - loop {Boolean} no flats, only walls, it's used to generate solids like a tor |
-
-<a name="Polygon+_addWalls"></a>
-
-### polygon._addWalls(walls, bottom, top)
-**Kind**: instance method of [<code>Polygon</code>](#Polygon)  
-
-| Param | Description |
-| --- | --- |
-| walls | Array of wall polygons |
-| bottom | Bottom polygon |
-| top | Top polygon |
-
 <a name="Polygon.Shared"></a>
 
 ### Polygon.Shared
@@ -759,98 +818,150 @@ Epsilon used during determination of near zero areas.
  This is the minimal area of a minimal polygon.
 
 **Kind**: global constant  
-<a name="fromObject"></a>
+<a name="center"></a>
 
-## fromObject(obj) ⇒ [<code>CAG</code>](#CAG)
-Reconstruct a CAG from an object with identical property names.
-
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| obj | <code>Object</code> | anonymous object, typically from JSON |
-
-<a name="fromPointsNoCheck"></a>
-
-## fromPointsNoCheck(points) ⇒ [<code>CAG</code>](#CAG)
-Construct a CAG from a list of points (a polygon).
-Like fromPoints() but does not check if the result is a valid polygon.
-The points MUST rotate counter clockwise.
-The points can define a convex or a concave polygon.
-The polygon must not self intersect.
-
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| points | <code>Array.&lt;points&gt;</code> | list of points in 2D space |
-
-<a name="fromPath2"></a>
-
-## fromPath2(Path2) ⇒ [<code>CAG</code>](#CAG)
-Construct a CAG from a 2d-path (a closed sequence of points).
-Like fromPoints() but does not check if the result is a valid polygon.
-
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| Path2 | <code>path</code> | a Path2 path |
-
-<a name="fromSlices"></a>
-
-## fromSlices(options) ⇒ [<code>CSG</code>](#CSG)
-Construct a CSG solid from a list of pre-generated slices.
-See Polygon.prototype.solidFromSlices() for details.
-
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>Object</code> | options passed to solidFromSlices() |
-
-<a name="fromObject"></a>
-
-## fromObject(obj) ⇒ [<code>CSG</code>](#CSG)
-Reconstruct a CSG solid from an object with identical property names.
-
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| obj | <code>Object</code> | anonymous object, typically from JSON |
-
-<a name="fromCompactBinary"></a>
-
-## fromCompactBinary(bin) ⇒ [<code>CSG</code>](#CSG)
-Reconstruct a CSG from the output of toCompactBinary().
-
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| bin | <code>CompactBinary</code> | see toCompactBinary(). |
-
-<a name="Line2D"></a>
-
-## Line2D(normal) ⇒ [<code>Line2D</code>](#Line2D)
-class Line2D
-Represents a directional line in 2D space
-A line is parametrized by its normal vector (perpendicular to the line, rotated 90 degrees counter clockwise)
-and w. The line passes through the point <normal>.times(w).
-Equation: p is on line if normal.dot(p)==w
+## center(object(s), options)
+NOTE: this is not functional YET !!
+centers the given object(s) on the given axis
 
 **Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| normal | [<code>Vector2D</code>](#Vector2D) | normal must be a unit vector! |
+| object(s) | <code>Object</code> \| <code>Array</code> | the shapes to center |
+| options | <code>Object</code> |  |
+
+<a name="overCutInsideCorners"></a>
+
+## overCutInsideCorners(_cag, cutterradius) ⇒ [<code>CAG</code>](#CAG)
+cag = cag.overCutInsideCorners(cutterradius);
+Using a CNC router it's impossible to cut out a true sharp inside corner. The inside corner
+will be rounded due to the radius of the cutter. This function compensates for this by creating
+an extra cutout at each inner corner so that the actual cut out shape will be at least as large
+as needed.
+
+**Kind**: global function  
+**Returns**: [<code>CAG</code>](#CAG) - cag with overcutInsideCorners  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| _cag | <code>Object</code> | input cag |
+| cutterradius | <code>Float</code> | radius to cut inside corners by |
+
+<a name="sectionCut"></a>
+
+## sectionCut(csg, orthobasis)
+cuts a csg along a orthobasis
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| csg | [<code>CSG</code>](#CSG) | the csg object to cut |
+| orthobasis | <code>Orthobasis</code> | the orthobasis to cut along |
+
+<a name="cutByPlane"></a>
+
+## cutByPlane(plane) ⇒ [<code>CSG</code>](#CSG)
+Cut the solid by a plane. Returns the solid on the back side of the plane
+
+**Kind**: global function  
+**Returns**: [<code>CSG</code>](#CSG) - the solid on the back side of the plane  
+
+| Param | Type |
+| --- | --- |
+| plane | <code>Plane</code> | 
+
+<a name="expandedShellOfCCSG"></a>
+
+## expandedShellOfCCSG(radius, resolution, unionWithThis)
+Create the expanded shell of the solid:
+All faces are extruded to get a thickness of 2*radius
+Cylinders are constructed around every side
+Spheres are placed on every vertex
+unionWithThis: if true, the resulting solid will be united with 'this' solid;
+the result is a true expansion of the solid
+If false, returns only the shell
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| radius | <code>Float</code> | 
+| resolution | <code>Integer</code> | 
+| unionWithThis | <code>Boolean</code> | 
+
+<a name="extrudeInOrthonormalBasis"></a>
+
+## extrudeInOrthonormalBasis(cag, orthonormalbasis, depth, [options])
+extrude the CAG in a certain plane.
+Giving just a plane is not enough, multiple different extrusions in the same plane would be possible
+by rotating around the plane's origin. An additional right-hand vector should be specified as well,
+and this is exactly a OrthoNormalBasis.
+
+**Kind**: global function  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| cag | [<code>CAG</code>](#CAG) |  | the cag to extrude |
+| orthonormalbasis | <code>Orthonormalbasis</code> |  | characterizes the plane in which to extrude |
+| depth | <code>Float</code> |  | thickness of the extruded shape. Extrusion is done upwards from the plane  (unless symmetrical option is set, see below) |
+| [options] | <code>Object</code> |  | options for construction |
+| [options.symmetrical] | <code>Boolean</code> | <code>true</code> | extrude symmetrically in two directions about the plane |
+
+<a name="extrudeInPlane"></a>
+
+## extrudeInPlane(cag, axis1, axis2, depth, [options])
+Extrude in a standard cartesian plane, specified by two axis identifiers. Each identifier can be
+one of ["X","Y","Z","-X","-Y","-Z"]
+The 2d x axis will map to the first given 3D axis, the 2d y axis will map to the second.
+See OrthoNormalBasis.GetCartesian for details.
+
+**Kind**: global function  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| cag | [<code>CAG</code>](#CAG) |  | the cag to extrude |
+| axis1 | <code>String</code> |  | the first axis |
+| axis2 | <code>String</code> |  | the second axis |
+| depth | <code>Float</code> |  | thickness of the extruded shape. Extrusion is done upwards from the plane |
+| [options] | <code>Object</code> |  | options for construction |
+| [options.symmetrical] | <code>Boolean</code> | <code>true</code> | extrude symmetrically in two directions about the plane |
+
+<a name="extrude"></a>
+
+## extrude(cag, [options]) ⇒ [<code>CSG</code>](#CSG)
+linear extrusion of 2D shape, with optional twist
+
+**Kind**: global function  
+**Returns**: [<code>CSG</code>](#CSG) - the extrude shape, as a CSG object  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| cag | [<code>CAG</code>](#CAG) |  | the cag to extrude |
+| [options] | <code>Object</code> |  | options for construction |
+| [options.offset] | <code>Array</code> | <code>[0,0,1]</code> | The 2d shape is placed in in z=0 plane and extruded into direction <offset>  (a 3D vector as a 3 component array) |
+| [options.twiststeps] | <code>Boolean</code> | <code>defaultResolution3D</code> | twiststeps determines the resolution of the twist (should be >= 1) |
+| [options.twistangle] | <code>Boolean</code> | <code>0</code> | twistangle The final face is rotated <twistangle> degrees. Rotation is done around the origin of the 2d shape (i.e. x=0, y=0) |
+
+**Example**  
+```js
+extruded=cag.extrude({offset: [0,0,10], twistangle: 360, twiststeps: 100});
+```
+<a name="rotateExtrude"></a>
+
+## rotateExtrude(options) ⇒ [<code>CSG</code>](#CSG)
+Extrude to into a 3D solid by rotating the origin around the Y axis.
+(and turning everything into XY plane)
+
+**Kind**: global function  
+**Returns**: [<code>CSG</code>](#CSG) - new 3D solid  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| options | <code>Object</code> |  | options for construction |
+| [options.angle] | <code>Number</code> | <code>360</code> | angle of rotation |
+| [options.resolution] | <code>Number</code> | <code>defaultResolution3D</code> | number of polygons per 360 degree revolution |
 
 <a name="circle"></a>
 
@@ -1087,3 +1198,229 @@ Define face vertices clockwise looking from outside.
 | --- | --- | --- |
 | [options] | <code>Object</code> | options for construction |
 
+<a name="solidFromSlices"></a>
+
+## solidFromSlices(options)
+Creates solid from slices (Polygon) by generating walls
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>Object</code> | Solid generating options  - numslices {Number} Number of slices to be generated  - callback(t, slice) {Function} Callback function generating slices.          arguments: t = [0..1], slice = [0..numslices - 1]          return: Polygon or null to skip  - loop {Boolean} no flats, only walls, it's used to generate solids like a tor |
+
+<a name="_addWalls"></a>
+
+## _addWalls(walls, bottom, top)
+**Kind**: global function  
+
+| Param | Description |
+| --- | --- |
+| walls | Array of wall polygons |
+| bottom | Bottom polygon |
+| top | Top polygon |
+
+<a name="fromSides"></a>
+
+## fromSides(sides) ⇒ [<code>CAG</code>](#CAG)
+Construct a CAG from a list of `Side` instances.
+
+**Kind**: global function  
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sides | <code>Array.&lt;Side&gt;</code> | list of sides |
+
+<a name="fromPoints"></a>
+
+## fromPoints(points) ⇒ [<code>CAG</code>](#CAG)
+Construct a CAG from a list of points (a polygon).
+The rotation direction of the points is not relevant.
+The points can define a convex or a concave polygon.
+The polygon must not self intersect.
+
+**Kind**: global function  
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| points | <code>Array.&lt;points&gt;</code> | list of points in 2D space |
+
+<a name="fromObject"></a>
+
+## fromObject(obj) ⇒ [<code>CAG</code>](#CAG)
+Reconstruct a CAG from an object with identical property names.
+
+**Kind**: global function  
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| obj | <code>Object</code> | anonymous object, typically from JSON |
+
+<a name="fromPointsNoCheck"></a>
+
+## fromPointsNoCheck(points) ⇒ [<code>CAG</code>](#CAG)
+Construct a CAG from a list of points (a polygon).
+Like fromPoints() but does not check if the result is a valid polygon.
+The points MUST rotate counter clockwise.
+The points can define a convex or a concave polygon.
+The polygon must not self intersect.
+
+**Kind**: global function  
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| points | <code>Array.&lt;points&gt;</code> | list of points in 2D space |
+
+<a name="fromPath2"></a>
+
+## fromPath2(Path2) ⇒ [<code>CAG</code>](#CAG)
+Construct a CAG from a 2d-path (a closed sequence of points).
+Like fromPoints() but does not check if the result is a valid polygon.
+
+**Kind**: global function  
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Path2 | <code>path</code> | a Path2 path |
+
+<a name="fromPolygons"></a>
+
+## fromPolygons(polygons) ⇒ [<code>CSG</code>](#CSG)
+Construct a CSG solid from a list of `Polygon` instances.
+
+**Kind**: global function  
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| polygons | [<code>Array.&lt;Polygon&gt;</code>](#Polygon) | list of polygons |
+
+<a name="fromSlices"></a>
+
+## fromSlices(options) ⇒ [<code>CSG</code>](#CSG)
+Construct a CSG solid from a list of pre-generated slices.
+See Polygon.prototype.solidFromSlices() for details.
+
+**Kind**: global function  
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>Object</code> | options passed to solidFromSlices() |
+
+<a name="fromObject"></a>
+
+## fromObject(obj) ⇒ [<code>CSG</code>](#CSG)
+Reconstruct a CSG solid from an object with identical property names.
+
+**Kind**: global function  
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| obj | <code>Object</code> | anonymous object, typically from JSON |
+
+<a name="fromCompactBinary"></a>
+
+## fromCompactBinary(bin) ⇒ [<code>CSG</code>](#CSG)
+Reconstruct a CSG from the output of toCompactBinary().
+
+**Kind**: global function  
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| bin | <code>CompactBinary</code> | see toCompactBinary(). |
+
+<a name="Line2D"></a>
+
+## Line2D(normal) ⇒ [<code>Line2D</code>](#Line2D)
+class Line2D
+Represents a directional line in 2D space
+A line is parametrized by its normal vector (perpendicular to the line, rotated 90 degrees counter clockwise)
+and w. The line passes through the point <normal>.times(w).
+Equation: p is on line if normal.dot(p)==w
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| normal | [<code>Vector2D</code>](#Vector2D) | normal must be a unit vector! |
+
+<a name="OrthoNormalBasis"></a>
+
+## OrthoNormalBasis(plane, rightvector)
+class OrthoNormalBasis
+Reprojects points on a 3D plane onto a 2D plane
+or from a 2D plane back onto the 3D plane
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| plane | <code>Plane</code> | 
+| rightvector | [<code>Vector3D</code>](#Vector3D) \| [<code>Vector2D</code>](#Vector2D) | 
+
+<a name="fromPoints"></a>
+
+## fromPoints(points, [shared], [plane])
+Create a polygon from the given points.
+
+**Kind**: global function  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| points | <code>Array.&lt;Array&gt;</code> |  | list of points |
+| [shared] | [<code>Shared</code>](#Polygon.Shared) | <code>defaultShared</code> | shared property to apply |
+| [plane] | <code>Plane</code> |  | plane of the polygon |
+
+**Example**  
+```js
+const points = [
+  [0,  0, 0],
+  [0, 10, 0],
+  [0, 10, 10]
+]
+let polygon = CSG.Polygon.createFromPoints(points)
+```
+<a name="canonicalize"></a>
+
+## canonicalize() ⇒ [<code>CSG</code>](#CSG) \| [<code>CAG</code>](#CAG)
+Returns a cannoicalized version of the input csg/cag : ie every very close
+points get deduplicated
+
+**Kind**: global function  
+**Example**  
+```js
+let rawInput = someCSGORCAGMakingFunction()
+let canonicalized= canonicalize(rawInput)
+```
+<a name="canonicalizeCSG"></a>
+
+## canonicalizeCSG() ⇒ [<code>CSG</code>](#CSG)
+Returns a cannoicalized version of the input csg : ie every very close
+points get deduplicated
+
+**Kind**: global function  
+**Example**  
+```js
+let rawCSG = someCSGMakingFunction()
+let canonicalizedCSG = canonicalize(rawCSG)
+```
+<a name="bounds"></a>
+
+## bounds() ⇒ [<code>Array.&lt;Vector3D&gt;</code>](#Vector3D)
+Returns an array of Vector3D, providing minimum coordinates and maximum coordinates
+of this solid.
+
+**Kind**: global function  
+**Example**  
+```js
+let bounds = A.getBounds()
+let minX = bounds[0].x
+```

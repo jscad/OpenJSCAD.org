@@ -1,3 +1,13 @@
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/jscad/csg.js/compare/v0.3.8...v0.4.0) (2018-01-05)
+
+
+### Bug Fixes
+
+* **docstring:** fixed a few bad docstrings which prevented docs from being generated ([#76](https://github.com/jscad/csg.js/issues/76)) ([441fd18](https://github.com/jscad/csg.js/commit/441fd18))
+
+
+
 <a name="0.3.8"></a>
 ## [0.3.8](https://github.com/jscad/csg.js/compare/v0.3.7...v0.3.8) (2018-01-04)
 
