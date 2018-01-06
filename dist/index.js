@@ -84857,7 +84857,7 @@ exports.XMLReader = XMLReader;
 },{}],403:[function(require,module,exports){
 module.exports={
   "name": "@jscad/openjscad",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "main": "src/module.js",
@@ -85099,6 +85099,7 @@ module.exports = function getParamValues(paramControls, onlyChanged) {
         break;
       case 'checkbox':
       case 'radio':
+        // FIXME: the way checbox/radios work does NOT make sense : so an arbitrary value OR a boolean is returned ??
         if (control.checked === true && control.value.length > 0) {
           value = control.value;
         } else {
