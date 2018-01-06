@@ -12,9 +12,19 @@ module.exports = function getParameterValues (rawParameters, parameterDefinition
     let value = rawParameters[paramName]
     let definition = parameterDefinitions.filter(definition => definition.name === paramName)
     definition = definition.length > 0 ? definition[0] : undefined
-
+    if (definition === undefined) {
+      throw new Error(`Parameter (${paramName}) has no matching definition`)
+    }
     switch (definition.type) {
       case 'choice':
+        // we try to match values against captions, then parse as numbers if applicable, then fallback to original value
+        const valueIndex = definition.captions.indexOf(value)
+        const valueInDefinition = valueIndex > -1
+        const valueInDefintionCaptionsAndValue = valueInDefinition && definition.values.length >= valueIndex
+
+        value = valueInDefintionCaptionsAndValue ? definition.values[valueIndex] : value
+        value = definition.values.length > 0 && isNumber(definition.values[0]) ? parseFloat(value) : value
+        value = definition.values.length > 0 && typeof value === 'boolean' ? !!value : value
         break
       case 'float':
       case 'number':
@@ -33,9 +43,19 @@ module.exports = function getParameterValues (rawParameters, parameterDefinition
         break
       case 'checkbox':
       case 'radio':
+        // FIXME: the way checbox/radios work does NOT make sense : so an arbitrary value OR a boolean is returned ??
+        if (definition.value.length > 0) {
+          value = definition.value
+        } else {
+          value = !!value
+        }
         break
     }
     paramValues[paramName] = value
   })
   return paramValues
+}
+
+function isNumber (value) {
+  return (!isNaN(parseFloat(value)) && isFinite(value))
 }

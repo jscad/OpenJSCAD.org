@@ -13,7 +13,7 @@ test.afterEach.always(t => {
     // this runs after each test and other test hooks, even if they failed
     // remove created file
   try {
-    // fs.unlinkSync(t.context.outputPath)
+    fs.unlinkSync(t.context.outputPath)
   } catch (err) {}
 })
 
@@ -54,10 +54,10 @@ test('jscad with complex/ multiple type of parameters', t => {
   const outputPath = 'grille.stl'
   const expPath = outputPath
   t.context = {outputPath}
-  const cmd = `node ${jscadPath} ${inputPath} --outerwidth 176.25 --outerdepth 15.2 --numdividers 4 --addlooseners 1 --show "grille"  --quality 0 -o ${outputPath} `
+  const cmd = `node ${jscadPath} ${inputPath} --outerwidth 176.25 --outerdepth 15.2 --numdividers 4 --addlooseners "Yes" --show "grille" --mouseears 0 --quality 0 -o ${outputPath} `
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(expPath).size, 298084, 50)
+  almostEquals(t, fs.statSync(expPath).size, 216484, 50)
 })
 
 test('jscad to stl (ascii)', t => {

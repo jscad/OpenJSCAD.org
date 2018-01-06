@@ -32,6 +32,7 @@ module.exports = function getParamValues (paramControls, onlyChanged) {
         break
       case 'checkbox':
       case 'radio':
+        // FIXME: the way checbox/radios work does NOT make sense : so an arbitrary value OR a boolean is returned ??
         if (control.checked === true && control.value.length > 0) {
           value = control.value
         } else {
