@@ -1,27 +1,10 @@
+const {makeState, initialState} = require('./state')
 const makeCsgViewer = require('../../csg-viewer/src/index')
 
-// base settings
-let settings = require('./settings')
 const element = document.getElementById('renderTarget')
-const {csgViewer, viewerDefaults, viewerState$} = makeCsgViewer(element, settings.viewer)
+const {csgViewer, viewerDefaults, viewerState$} = makeCsgViewer(element, initialState.viewer)
 
 csgViewer()
-/*
-setTimeout(function () {
-  console.log('after timeout1')
-  csgViewer({controls: {autoRotate: {enabled: true}}})
-}, 4000)
-
-setTimeout(function () {
-  console.log('after timeout2')
-  csgViewer({camera: {position: [-100, 0, 0]}})
-}, 10000) */
-
-/* setTimeout(function () {
-  console.log('after timeout1')
-  csgViewer({controls: {autoRotate: {enabled: false}}})
-}, 20000) */
-
 // document.getElementById('controls').appendChild(tree)
 const {electronStoreSink, electronStoreSource} = require('./sideEffects/electronStore')
 const {titleBarSink} = require('./sideEffects/titleBar')
@@ -35,7 +18,7 @@ const actions$ = require('./actions')({
   drops: dragAndDropSource$,
   watcher: watcherSource()
 })
-const state$ = require('./state')(actions$)
+const state$ = makeState(actions$)
 state$.forEach(function (state) {
   // console.log('state', state)
 })
@@ -72,10 +55,11 @@ electronStoreSink(state$
   })
 )
 // data out to file watcher
-watcherSink(state$
-  .filter(state => state.design.mainPath !== '')
-  .map(state => state.design.mainPath)
-  .skipRepeats()
+watcherSink(
+  state$
+    .filter(state => state.design.mainPath !== '' && state.autoReload === true) // FIXME: disable watch if autoreload is set to false
+    .map(state => state.design.mainPath)
+    .skipRepeats()
 )
 
 // bla
