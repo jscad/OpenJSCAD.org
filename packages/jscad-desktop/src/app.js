@@ -22,31 +22,22 @@ setTimeout(function () {
   csgViewer({controls: {autoRotate: {enabled: false}}})
 }, 20000) */
 
-const accessibleOptions = [
-  'background',
-  'meshColor',
-  'grid',
-  'axes'
-]
-Object.keys(viewerDefaults)
-  .filter(key => accessibleOptions.includes(key))
-  .forEach(function (key) {
-    const value = viewerDefaults[key]
-    const isArray = Array.isArray(value)
-    return value
-  })
-
 // document.getElementById('controls').appendChild(tree)
 const {electronStoreSink, electronStoreSource} = require('./sideEffects/electronStore')
 const {titleBarSink} = require('./sideEffects/titleBar')
 const makeDragDropSource = require('./sideEffects/dragDrop')
 const storeSource$ = electronStoreSource()
 const dragAndDropSource$ = makeDragDropSource(document)
+const {watcherSink, watcherSource} = require('./sideEffects/fileWatcher')
 
-const actions$ = require('./actions')({store: storeSource$, drops: dragAndDropSource$})
+const actions$ = require('./actions')({
+  store: storeSource$,
+  drops: dragAndDropSource$,
+  watcher: watcherSource()
+})
 const state$ = require('./state')(actions$)
 state$.forEach(function (state) {
-  console.log('state', state)
+  // console.log('state', state)
 })
 
 // for viewer
@@ -56,7 +47,7 @@ state$
     return JSON.parse(JSON.stringify(a)) === JSON.parse(JSON.stringify(b))
   })
   .forEach(params => {
-    console.log('viewer refresh', params)
+    // console.log('viewer refresh', params)
     csgViewer(params)
   })
 
@@ -80,25 +71,23 @@ electronStoreSink(state$
     }
   })
 )
+// data out to file watcher
+watcherSink(state$
+  .filter(state => state.design.mainPath !== '')
+  .map(state => state.design.mainPath)
+  .skipRepeats()
+)
 
 // bla
 state$
   .filter(state => state.design.mainPath !== '')
-  /*.skipRepeatsWith((a, b) => {
+  /* .skipRepeatsWith((a, b) => {
     // console.log('FOObar', a, b)
     return a.design.mainPath === b.design.mainPath //&& b.design.solids
-  })*/
+  }) */
   .forEach(state => {
     console.log('changing solids')
-    if (settings.autoReload) {
-      // watchScript(mainPath, loadAndDisplay.bind(null, csgViewer))
-    }
     csgViewer(undefined, {solids: state.design.solids})
-    // loadAndDisplay(csgViewer, mainPath)
-
-     // persist data
-     // store.set('lastDesign.name', designName)
-     // store.set('lastDesign.path', designMainFilePath)
   })
 
 // ui updates, exports
@@ -141,7 +130,7 @@ state$
   const html = require('bel')
 
   const {createParamControls} = require('./ui/paramControls2')
-  const {controls} = createParamControls(paramValues, paramDefinitions, x => x) /*paramDefinitions.map(function (paramDefinition, index) {
+  const {controls} = createParamControls(paramValues, paramDefinitions, x => x) /* paramDefinitions.map(function (paramDefinition, index) {
     console.log('paramDefinition', paramDefinition)
     paramDefinition.index = index + 1
     return createControl(paramDefinition)
@@ -162,8 +151,8 @@ state$
   ${controls}
     </table>`
   // params
-  //paramsMain
-  console.log('fooUi', fooUi)
+  // paramsMain
+  // console.log('fooUi', fooUi)
   const node = document.getElementById('paramsMain')
   if (node) {
     while (node.firstChild) {
