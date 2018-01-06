@@ -2,11 +2,6 @@ const {mergeArray} = require('most')
 const packageMetadata = require('../package.json')
 const {merge, toArray} = require('./utils')
 const {getScriptFile, loadScript} = require('./core/scripLoading')
-/*
-let settings = require('./settings')
-let themeName = store.get('ui.theme.name', settings.theme)
-let designName = store.get('lastDesign.name', undefined)
-let designPath = store.get('lastDesign.path', undefined) */
 
 // very nice color for the cuts [0, 0.6, 1] to go with the orange
 const themes = {
@@ -72,6 +67,11 @@ function makeState (actions) {
     toggleAutoReload: (state, autoReload) => {
       return Object.assign({}, state, {autoReload})
     },
+    toggleAutorotate: (state, autoRotate) => {
+      const controls = Object.assign({}, state.viewer.controls, {autoRotate: {enabled: autoRotate}})
+      const viewer = Object.assign({}, state.viewer, {controls})
+      return Object.assign({}, state, {viewer})
+    },
     changeExportFormat: (state, exportFormat) => {
       console.log('changeExportFormat')
       return Object.assign({}, state, {exportFormat})
@@ -125,7 +125,6 @@ function makeState (actions) {
       const availableExportFormats = supportedFormatsForObjects(solids)
         .filter(formatName => !formatsToIgnore.includes(formatName))
         .map(function (formatName) {
-          console.log('formatName')
           return {name: formatName, displayName: formats[formatName].displayName}
         })
       let exportFormat = availableExportFormats[0].name
@@ -169,4 +168,4 @@ function makeState (actions) {
   return state$
 }
 
-module.exports = makeState
+module.exports = {makeState, initialState}
