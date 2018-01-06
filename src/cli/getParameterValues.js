@@ -21,10 +21,11 @@ module.exports = function getParameterValues (rawParameters, parameterDefinition
         const valueIndex = definition.captions.indexOf(value)
         const valueInDefinition = valueIndex > -1
         const valueInDefintionCaptionsAndValue = valueInDefinition && definition.values.length >= valueIndex
-
+        // because the whole 'choice' parameter is broken, we have to CAST TO A STRING!
         value = valueInDefintionCaptionsAndValue ? definition.values[valueIndex] : value
-        value = definition.values.length > 0 && isNumber(definition.values[0]) ? parseFloat(value) : value
-        value = definition.values.length > 0 && typeof value === 'boolean' ? !!value : value
+        value = `${value}`
+        // value = definition.values.length > 0 && isNumber(definition.values[0]) ? parseFloat(value) : value
+        // value = definition.values.length > 0 && typeof value === 'boolean' ? !!value : value
         break
       case 'float':
       case 'number':

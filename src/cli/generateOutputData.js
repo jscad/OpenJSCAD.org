@@ -68,7 +68,9 @@ function generateOutputData (source, params, options) {
     const parameterDefinitions = getParameterDefinitionsForReal(source)
     // get the actual parameters, correctly cast to the right types etc based on the definitions above
     params = getParameterValues(params, parameterDefinitions)
-    // modify main to adapt parameters
+
+    // modify main to adapt parameters 
+    // NOTE: this (getParameterDefinitionsCLI) also combines specified params with defaults
     const mainFunction = `
     //only add this wrapper if not already present & we are not in command-line mode
     if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== 'undefined'){
