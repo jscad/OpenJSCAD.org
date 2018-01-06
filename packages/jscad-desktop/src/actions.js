@@ -1,6 +1,8 @@
+const path = require('path')
 const most = require('most')
 const {remote} = require('electron')
 const {dialog} = remote
+const {getScriptFile} = require('./core/scripLoading')
 
 const makeActions = (sources) => {
   /* sources.store
@@ -21,6 +23,12 @@ const makeActions = (sources) => {
     sources.store.map(data => data.viewer.grid.show)
   ])
     .map(data => ({type: 'toggleGrid', data}))
+
+  const toggleAutorotate$ = most.mergeArray([
+    most.fromEvent('click', document.getElementById('autoRotate')).map(e => e.target.checked)
+      // sources.store.map(data => data.viewer.grid.show)
+  ])
+    .map(data => ({type: 'toggleAutorotate', data}))
 
   const toggleAutoReload$ = most.mergeArray([
     most.fromEvent('click', document.getElementById('autoReload'))
@@ -82,6 +90,19 @@ const makeActions = (sources) => {
       .map(path => [path])
   ])
     .filter(data => data !== undefined)
+    /* .map(function (paths) {
+      const mainPath = getScriptFile(paths)
+      const filePath = paths[0]
+      const designName = path.parse(path.basename(filePath)).name
+      const designPath = path.dirname(filePath)
+
+      const design = {
+        name: designName,
+        path: designPath,
+        mainPath
+      }
+      return design
+    }) */
     .map(data => ({type: 'setDesignPath', data}))
 
   const updateDesignFromParams$ = most.fromEvent('click', document.getElementById('updateDesignFromParams'))
@@ -100,6 +121,7 @@ const makeActions = (sources) => {
 
   return [
     toggleGrid$,
+    toggleAutorotate$,
     toggleAutoReload$,
     changeExportFormat$,
     exportRequested$,
