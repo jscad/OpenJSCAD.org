@@ -5,6 +5,7 @@ const { convertToBlob } = require('../io/convertToBlob')
 const { rebuildSolid } = require('../core/rebuildSolid')
 const { resolveIncludesFs } = require('../utils/resolveIncludesFs')
 const getParameterDefinitionsCLI = require('./getParameterDefinitionsCLI')
+const getParameterValues = require('./getParameterValues')
 
 /**
  * generate output data from source
@@ -32,17 +33,6 @@ function generateOutputData (source, params, options) {
   }
   globals.extras = {cli: {getParameterDefinitionsCLI}}
 
-  // modify main to adapt parameters
-  const mainFunction = `
-//only add this wrapper if not already present & we are not in command-line mode
-if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== 'undefined'){
-  const wrappedMain = main
-  main = function(){
-    var paramsDefinition = (typeof getParameterDefinitions !== 'undefined') ? getParameterDefinitions : undefined
-    return wrappedMain(getParameterDefinitionsCLI(paramsDefinition, ${JSON.stringify(params)}))
-  }
-}
-`
   // objects = rebuildSolid(source, '', params, globals, callback)
   return new Promise(function (resolve, reject) {
     const callback = (err, result) => {
@@ -51,8 +41,6 @@ if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== '
       }
       return reject(err)
     }
-    source = inputFormat === 'scad' ? source : `${source}
-    ${mainFunction}`
 
     // FIXME: technically almost 100% same as src/io/conversionWorker, refactor ?
     const conversionTable = {
@@ -76,6 +64,26 @@ if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== '
     // convert any inputs
     source = conversionTable[inputFormat]({source, params, options})
 
+    // extract the array of parameter definitions
+    const parameterDefinitions = getParameterDefinitionsForReal(source)
+    // get the actual parameters, correctly cast to the right types etc based on the definitions above
+    params = getParameterValues(params, parameterDefinitions)
+
+    // modify main to adapt parameters 
+    // NOTE: this (getParameterDefinitionsCLI) also combines specified params with defaults
+    const mainFunction = `
+    //only add this wrapper if not already present & we are not in command-line mode
+    if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== 'undefined'){
+      const wrappedMain = main
+      main = function(){
+        var paramsDefinition = (typeof getParameterDefinitions !== 'undefined') ? getParameterDefinitions : undefined
+        return wrappedMain(getParameterDefinitionsCLI(paramsDefinition, ${JSON.stringify(params)}))
+      }
+    }
+    `
+    source = inputFormat === 'jscad' ? `${source}
+    ${mainFunction}` : source
+
     if (outputFormat === 'jscad' || outputFormat === 'js') {
       resolve(source)
     } else {
@@ -88,6 +96,16 @@ if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== '
     })
 
 // return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})
+}
+
+// actually get parameter definitions
+function getParameterDefinitionsForReal (script) {
+  let script1 = "if(typeof(getParameterDefinitions) == 'function') {return getParameterDefinitions();} else {return [];} "
+  script1 += script
+  const f = new Function(script1)
+  const parameterDefinitions = f()
+  // console.log('parameterDefinitions', parameterDefinitions)
+  return parameterDefinitions
 }
 
 module.exports = generateOutputData

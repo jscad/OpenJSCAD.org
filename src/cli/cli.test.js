@@ -48,6 +48,18 @@ test('jscad with parameters', t => {
   almostEquals(t, fs.statSync(expPath).size, 655732, 50)
 })
 
+test('jscad with complex/ multiple type of parameters', t => {
+  const jscadPath = t.context.jscadPath
+  const inputPath = path.resolve(__dirname, '../../examples/grille.jscad')
+  const outputPath = 'grille.stl'
+  const expPath = outputPath
+  t.context = {outputPath}
+  const cmd = `node ${jscadPath} ${inputPath} --outerwidth 176.25 --outerdepth 15.2 --numdividers 4 --addlooseners "Yes" --show "grille" --mouseears 0 --quality 0 -o ${outputPath} `
+  execSync(cmd, {stdio: [0, 1, 2]})
+  t.deepEqual(true, fs.existsSync(expPath))
+  almostEquals(t, fs.statSync(expPath).size, 216484, 50)
+})
+
 test('jscad to stl (ascii)', t => {
   const jscadPath = t.context.jscadPath
   const inputPath = path.resolve(__dirname, '../../examples/logo.jscad')
@@ -181,7 +193,7 @@ test('echo() support', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of jscad`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(outputPath).size, 636, 2)
+  almostEquals(t, fs.statSync(outputPath).size, 671, 2)
 })
 
 test('include support', t => {
