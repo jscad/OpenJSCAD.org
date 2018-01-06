@@ -11,15 +11,19 @@ let designPath = store.get('lastDesign.path', undefined) */
 // very nice color for the cuts [0, 0.6, 1] to go with the orange
 const themes = {
   light: {
-    background: [1, 1, 1, 1],
-    meshColor: [0, 0.6, 1, 1],
+    rendering: {
+      background: [1, 1, 1, 1],
+      meshColor: [0, 0.6, 1, 1]
+    },
     grid: {
       color: [0.1, 0.1, 0.1, 0.5]
     }
   },
   dark: {
-    background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
-    meshColor: [0.4, 0.6, 0.5, 1],
+    rendering: {
+      background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
+      meshColor: [0.4, 0.6, 0.5, 1]
+    },
     grid: {
       color: [1, 1, 1, 0.5]
     }
@@ -44,8 +48,10 @@ const initialState = {
   autoReload: true,
   instantUpdate: true,
   viewer: {
-    background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
-    meshColor: [0.4, 0.6, 0.5, 1], // nice orange : [1, 0.4, 0, 1]
+    rendering: {
+      background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
+      meshColor: [0.4, 0.6, 0.5, 1] // nice orange : [1, 0.4, 0, 1]
+    },
     grid: {
       show: false,
       color: [1, 1, 1, 0.1]
@@ -99,7 +105,7 @@ function makeState (actions) {
       // load script
       const {jscadScript, paramDefinitions, params} = loadScript(mainPath)
       console.log('paramDefinitions', paramDefinitions, 'params', params)
-      const solids = toArray(jscadScript(params))
+      let solids = toArray(jscadScript(params))
       /*
         func(paramDefinitions) => paramsUI
         func(paramsUI + interaction) => params
@@ -137,6 +143,7 @@ function makeState (actions) {
       console.log('updateDesignFromParams')
       let originalDesign = state.design
       const {script} = originalDesign
+
       const solids = toArray(script(paramValues))
       const design = Object.assign({}, originalDesign, {solids, paramValues})
       return Object.assign({}, state, {design})
@@ -146,10 +153,15 @@ function makeState (actions) {
   const state$ = actions
     .scan(function (state, action) {
       const reducer = reducers[action.type] ? reducers[action.type] : (state) => state
-      const newState = reducer(state, action.data, initialState)
+      try {
+        const newState = reducer(state, action.data, initialState)
+        return newState
+      } catch (error) {
+        console.error('caught error', error)
+        return merge({}, state, {error})
+      }
       // const newState = merge({}, state, updatedData)
       // console.log('SCAAAN', action, newState)
-      return newState
     }, initialState)
     .filter(x => x !== undefined)// just in case ...
     .multicast()
