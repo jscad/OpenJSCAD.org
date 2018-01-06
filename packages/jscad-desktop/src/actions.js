@@ -8,6 +8,9 @@ const makeActions = (sources) => {
     .forEach(function (storeData) {
       console.log('storedData', storeData)
     }) */
+  sources.watcher.forEach(function (data) {
+    console.log('watchedFile', data)
+  })
 
   sources.drops.forEach(function (data) {
     console.log('drop', data)
@@ -74,7 +77,9 @@ const makeActions = (sources) => {
       .map(data => [data]),
     sources.drops
       .filter(drop => drop.type === 'fileOrFolder' && drop.data.length > 0)
-      .map(drop => drop.data.map(fileOrFolder => fileOrFolder.path))
+      .map(drop => drop.data.map(fileOrFolder => fileOrFolder.path)),
+    sources.watcher
+      .map(path => [path])
   ])
     .filter(data => data !== undefined)
     .map(data => ({type: 'setDesignPath', data}))
