@@ -8,7 +8,7 @@ store.delete('ui')
 function electronStoreSideEffect (outToStore$) {
   if (outToStore$) {
     outToStore$.forEach(function (outToStore) {
-      console.log('outToStore', outToStore)
+      //console.log('outToStore', outToStore)
       store.set(outToStore)
     })
   }
@@ -20,7 +20,7 @@ function electronStoreSideEffect (outToStore$) {
 function electronStoreSink (outToStore$) {
   if (outToStore$) {
     outToStore$.forEach(function (outToStore) {
-      console.log('outToStore', outToStore)
+      //console.log('outToStore', outToStore)
       store.set(outToStore)
     })
   }
