@@ -1,0 +1,12 @@
+[
+  {"key": "f", "command": "toFrontView"},
+  {"key": "b", "command": "toBackView"},
+  {"key": "t", "command": "toTopView"},
+
+  {"key": "b", "command": "toBottomView"},
+  {"key": "l", "command": "toLeftView"},
+  {"key": "r", "command": "toRightView"},
+
+  {"key": "p", "command": "toPerspectiveView"},
+  {"key": "o", "command": "toOrthoView"}
+]
