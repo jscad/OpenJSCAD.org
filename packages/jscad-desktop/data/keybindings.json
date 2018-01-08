@@ -8,5 +8,6 @@
   {"key": "r", "command": "toRightView"},
 
   {"key": "p", "command": "toPerspectiveView"},
-  {"key": "o", "command": "toOrthoView"}
+  {"key": "o", "command": "toOrthoView"},
+  {"key": "v", "command": "switchProjectionType"}
 ]
