@@ -25,6 +25,7 @@
     "blob-to-buffer": "^1.2.6",
     "electron-store": "^1.3.0",
     "most": "^1.7.2",
+    "most-proxy": "^3.3.0",
     "strip-bom": "^3.0.0"
   },
   "devDependencies": {

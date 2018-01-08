@@ -5,29 +5,13 @@ const {getScriptFile, loadScript} = require('./core/scripLoading')
 
 // very nice color for the cuts [0, 0.6, 1] to go with the orange
 const themes = {
-  light: {
-    rendering: {
-      background: [1, 1, 1, 1],
-      meshColor: [0, 0.6, 1, 1]
-    },
-    grid: {
-      color: [0.1, 0.1, 0.1, 0.5]
-    }
-  },
-  dark: {
-    rendering: {
-      background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
-      meshColor: [0.4, 0.6, 0.5, 1]
-    },
-    grid: {
-      color: [1, 1, 1, 0.5]
-    }
-  }
+  light: require('../data/theme.light'),
+  dark: require('../data/theme.dark')
 }
 
 const initialState = {
   appTitle: `${packageMetadata.name} v ${packageMetadata.version}`,
-  themeName: 'light',
+  // design data
   design: {
     name: '',
     path: '',
@@ -38,11 +22,17 @@ const initialState = {
     previousParams: {},
     solids: []
   },
+  // export
   exportFormat: '',
+  exportFilePath: '', // default export file path
   availableExportFormats: [],
+  // status/toggles
   autoReload: true,
   instantUpdate: true,
-  viewer: {
+  busy: false,
+  // visuals
+  themeName: 'light',
+  viewer: {// ridiculous shadowing of viewer state ?? or actually logical
     rendering: {
       background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
       meshColor: [0.4, 0.6, 0.5, 1] // nice orange : [1, 0.4, 0, 1]
@@ -56,6 +46,10 @@ const initialState = {
     },
     lighting: {
       smooth: true
+    },
+    // UGH
+    behaviours: {
+      resetViewOn: []
     }
   }
 }
@@ -64,17 +58,10 @@ function makeState (actions) {
   // const reducers = //Object.assign({}, dataParamsReducers, cameraControlsReducers)
   actions = mergeArray(actions)
   const reducers = {
-    toggleAutoReload: (state, autoReload) => {
-      return Object.assign({}, state, {autoReload})
-    },
     toggleAutorotate: (state, autoRotate) => {
       const controls = Object.assign({}, state.viewer.controls, {autoRotate: {enabled: autoRotate}})
       const viewer = Object.assign({}, state.viewer, {controls})
       return Object.assign({}, state, {viewer})
-    },
-    changeExportFormat: (state, exportFormat) => {
-      console.log('changeExportFormat')
-      return Object.assign({}, state, {exportFormat})
     },
     toggleGrid: (state, show) => {
       const grid = Object.assign({}, state.viewer.grid, {show})
@@ -93,6 +80,32 @@ function makeState (actions) {
       document.getElementById('controls').style.color = bgColorRgba
       document.getElementById('params').style.color = bgColorRgba
       return Object.assign({}, state, {viewer, themeName})
+    },
+    toggleAutoReload: (state, autoReload) => {
+      return Object.assign({}, state, {autoReload})
+    },
+    toggleInstantUpdate: (state, instantUpdate) => {
+      console.log('toggleInstantUpdate', instantUpdate)
+      return Object.assign({}, state, {instantUpdate})
+    },
+    changeExportFormat: (state, exportFormat) => {
+      console.log('changeExportFormat', exportFormat)
+      const path = require('path')
+      const {formats} = require('./io/formats')
+      const design = state.design
+
+      const extension = formats[exportFormat].extension
+      const defaultFileName = `${design.name}.${extension}`
+      const exportFilePath = path.join(design.path, defaultFileName)
+
+      return Object.assign({}, state, {exportFormat, exportFilePath})
+    },
+    designLoadRequested: (state, _) => {
+      console.log('designLoadRequested')
+      // FIXME: UGHH so goddam verbose !
+      // we want the viewer to focus on new entities for our 'session' (until design change)
+      const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: ['new-entities']}})
+      return Object.assign({}, state, {busy: true, viewer})
     },
     setDesignPath: (state, paths) => {
       console.log('setDesignPath')
@@ -129,14 +142,10 @@ function makeState (actions) {
         })
       let exportFormat = availableExportFormats[0].name
 
-      return Object.assign({}, state, {design}, {availableExportFormats, exportFormat})
-    },
-    updateDesignParamValues: (state, paramValues) => {
-      let originalDesign = state.design
-      const {script} = originalDesign
-      const solids = toArray(script(paramValues))
-      const design = Object.assign({}, originalDesign, {solids, paramValues})
-      return Object.assign({}, state, {design})
+      console.log('done updating design from path')
+      // FIXME: UGHH so goddam verbose !
+      const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']}})
+      return Object.assign({}, state, {design, viewer}, {availableExportFormats, exportFormat, busy: false})
     },
     updateDesignFromParams: (state, paramValues) => {
       console.log('updateDesignFromParams')

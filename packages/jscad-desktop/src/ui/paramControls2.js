@@ -1,5 +1,5 @@
 // getParamDefinitions(script)
-const createParamControls = (prevParamValues = {}, paramDefinitions, rebuildSolid) => {
+const createParamControls = (prevParamValues = {}, paramDefinitions, instantUpdate = true, rebuildSolid) => {
   let paramControls = []
   let results = []
   for (let i = 0; i < paramDefinitions.length; i++) {
@@ -30,15 +30,16 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, rebuildSoli
       tr.appendChild(th)
     } else {
       // implementing instantUpdate
-      /*control.onchange = function (e) {
+      control.onchange = function (e) {
         let l = e.currentTarget.nextElementSibling
         if (l !== null && l.nodeName === 'LABEL') {
           l.innerHTML = e.currentTarget.value
         }
-        if (document.getElementById('instantUpdate').checked === true) {
+        //document.getElementById('instantUpdate').checked 
+        if (instantUpdate === true && rebuildSolid) {
           rebuildSolid(paramControls)
         }
-      }*/
+      }
       paramControls.push(control)
 
       let td = document.createElement('td')

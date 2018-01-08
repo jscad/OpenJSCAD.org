@@ -5,17 +5,20 @@ const {dialog} = remote
 const {getScriptFile} = require('./core/scripLoading')
 
 const makeActions = (sources) => {
-  /* sources.store
-    // .map(data => ({type: 'setStatePartial', data}))
-    .forEach(function (storeData) {
-      console.log('storedData', storeData)
-    }) */
   sources.watcher.forEach(function (data) {
     console.log('watchedFile', data)
   })
 
   sources.drops.forEach(function (data) {
     console.log('drop', data)
+  })
+
+  sources.fs.forEach(function (data) {
+    console.log('fs operations', data)
+  })
+
+  sources.paramChanges.forEach(function (data) {
+    console.log('param changes', data)
   })
 
   const toggleGrid$ = most.mergeArray([
@@ -38,34 +41,29 @@ const makeActions = (sources) => {
   .map(data => ({type: 'toggleAutoReload', data}))
 
   const changeExportFormat$ = most.fromEvent('change', document.getElementById('exportFormats'))
-  .map(e => e.target.value)
-  .map(data => ({type: 'changeExportFormat', data}))
+    .map(e => e.target.value)
+    .map(data => ({type: 'changeExportFormat', data}))
 
   const exportRequested$ = most.fromEvent('click', document.getElementById('exportBtn'))
-  .map(function (event) {
-    console.log('exporting data to', event.target.value)
-    /* const extension = formats[format].extension
-    const defaultFileName = `${designName}.${extension}`
-    const defaultFilePath = path.join(designPath, defaultFileName)
-    const defaultPath = defaultFilePath */
-    const filePath = dialog.showSaveDialog({properties: ['saveFile'], title: 'export design to'})// defaultPath})//, function (filePath) {
-    console.log('saving', filePath)
-      /* if (filePath !== undefined) {
-        const blob = convertToBlob(prepareOutput(outputData, {format}))
-        const toBuffer = require('blob-to-buffer')
-        toBuffer(blob, function (err, buffer) {
-          if (err) {
-            throw new Error(err)
-          }
-          fs.writeFileSync(filePath, buffer)
-        })
-        // const buffers = data.map(blob => Buffer.from(blob))
-        // let rawData = Buffer.concat(buffers)
-      } */
-    // })
-  })
-  // .map(x => true)
-  .map(data => ({type: 'exportRequested', data}))
+    .sample(function (state, event) {
+      console.log('state stuff', state, event)
+      const defaultExportFilePath = state.exportFilePath
+      return {defaultExportFilePath, exportFormat: state.exportFormat, data: state.design.solids}
+    }, sources.state$)
+    .map(function ({defaultExportFilePath, exportFormat, data}) {
+      console.log('exporting data to', defaultExportFilePath)
+      /* const extension = formats[format].extension
+      const defaultExportFileName = `${designName}.${extension}`
+      const defaultExportFilePath = path.join(designPath, defaultFileName)
+      const defaultPath = defaultExportFilePath */
+      const filePath = dialog.showSaveDialog({properties: ['saveFile'], title: 'export design to', defaultPath: defaultExportFilePath})//, function (filePath) {
+      console.log('saving', filePath)
+      if (filePath !== undefined) {
+        const saveDataToFs = require('./io/saveDataToFs')
+        saveDataToFs(data, exportFormat, filePath)
+      }
+    })
+    .map(data => ({type: 'exportRequested', data}))
 
   const changeTheme$ = most.mergeArray([
     most.fromEvent('change', document.getElementById('themeSwitcher')).map(e => e.target.value),
@@ -73,13 +71,17 @@ const makeActions = (sources) => {
   ])
   .map(data => ({type: 'changeTheme', data}))
 
-  const setDesignPath$ = most.mergeArray([
+  // non visual related actions
+  const toggleInstantUpdate$ = most.fromEvent('click', document.getElementById('instantUpdate'))
+    .map(event => ({type: 'toggleInstantUpdate', data: event.target.checked}))
+
+  const designPath$ = most.mergeArray([
     most.fromEvent('click', document.getElementById('fileLoader'))
       .map(function () {
         const paths = dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
         return paths
       }),
-    sources.store// .tap(x => console.log('gnagna', x))
+    sources.store
       .map(data => data.design.mainPath)
       .filter(data => data !== '')
       .map(data => [data]),
@@ -90,45 +92,47 @@ const makeActions = (sources) => {
       .map(path => [path])
   ])
     .filter(data => data !== undefined)
-    /* .map(function (paths) {
-      const mainPath = getScriptFile(paths)
-      const filePath = paths[0]
-      const designName = path.parse(path.basename(filePath)).name
-      const designPath = path.dirname(filePath)
+    .multicast()
 
-      const design = {
-        name: designName,
-        path: designPath,
-        mainPath
-      }
-      return design
-    }) */
+  const designLoadRequested$ = designPath$
+    .map(data => ({type: 'designLoadRequested', data}))
+
+  const setDesignPath$ = designPath$
     .map(data => ({type: 'setDesignPath', data}))
+    .delay(1)
 
-  const updateDesignFromParams$ = most.fromEvent('click', document.getElementById('updateDesignFromParams'))
-    .map(function () {
-      const controls = Array.from(document.getElementById('paramsMain').getElementsByTagName('input'))
-      const paramValues = controls.reduce(function (acc, control) {
-        // TODO : reuse in one way or the other getParamValues
-        // console.log('control', control.name, control.value, control.paramType)
-        const value = control.type === 'number' ? parseFloat(control.value) : control.value
-        acc[control.name] = value
-        return acc
-      }, {})
+  const setDesignScriptContent$ = most.mergeArray([
+    sources.fs.filter()
+  ])
+    .map(data => ({type: 'setDesignScriptContent', data}))
+
+  const updateDesignFromParams$ = most.mergeArray([
+    most.fromEvent('click', document.getElementById('updateDesignFromParams'))
+      .map(function () {
+        const controls = Array.from(document.getElementById('paramsMain').getElementsByTagName('input'))
+        const paramValues = require('./core/getParamValues')(controls)
+        return paramValues
+      }),
+    sources.paramChanges.map(function (controls) {
+      const paramValues = require('./core/getParamValues')(controls)
+      console.log('paramValues', paramValues)
       return paramValues
     })
+  ])
     .map(data => ({type: 'updateDesignFromParams', data}))
 
-  return [
+  return {
     toggleGrid$,
     toggleAutorotate$,
     toggleAutoReload$,
+    toggleInstantUpdate$,
     changeExportFormat$,
     exportRequested$,
     changeTheme$,
     setDesignPath$,
+    designLoadRequested$,
     updateDesignFromParams$
-  ]
+  }
 }
 
 module.exports = makeActions

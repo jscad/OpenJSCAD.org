@@ -1,24 +1,33 @@
+const {proxy} = require('most-proxy')
 const {makeState, initialState} = require('./state')
 const makeCsgViewer = require('../../csg-viewer/src/index')
 
 const element = document.getElementById('renderTarget')
 const {csgViewer, viewerDefaults, viewerState$} = makeCsgViewer(element, initialState.viewer)
 
-csgViewer()
-// document.getElementById('controls').appendChild(tree)
 const {electronStoreSink, electronStoreSource} = require('./sideEffects/electronStore')
 const {titleBarSink} = require('./sideEffects/titleBar')
 const makeDragDropSource = require('./sideEffects/dragDrop')
 const storeSource$ = electronStoreSource()
 const dragAndDropSource$ = makeDragDropSource(document)
 const {watcherSink, watcherSource} = require('./sideEffects/fileWatcher')
+const {fsSink, fsSource} = require('./sideEffects/fsWrapper')
+const paramsCallbacktoStream = require('./observable-utils/callbackToObservable')()
 
+// proxy state stream to be able to access & manipulate it before it is actually available
+const { attach, stream } = proxy()
+const state$ = stream
+//
 const actions$ = require('./actions')({
   store: storeSource$,
   drops: dragAndDropSource$,
-  watcher: watcherSource()
+  watcher: watcherSource(),
+  fs: fsSource(),
+  paramChanges: paramsCallbacktoStream.stream,
+  state$
 })
-const state$ = makeState(actions$)
+
+attach(makeState(Object.values(actions$)))
 state$.forEach(function (state) {
   // console.log('state', state)
 })
@@ -29,13 +38,22 @@ state$
   .skipRepeatsWith(function (a, b) {
     return JSON.parse(JSON.stringify(a)) === JSON.parse(JSON.stringify(b))
   })
+/* require('most').mergeArray(
+  [
+    actions$.toggleGrid$.map(x => ({grid: {show: x.data}})),
+    // actions$.toggleAutorotate$,
+    // actions$.changeTheme$.map(x=>x)
+  ]
+) */
   .forEach(params => {
-    // console.log('viewer refresh', params)
+    console.log('change viewer params', params)
     csgViewer(params)
   })
 
 // titlebar & store side effects
-titleBarSink(state$.map(state => state.appTitle).skipRepeats())
+titleBarSink(
+  state$.map(state => state.appTitle).skipRepeats()
+)
 electronStoreSink(state$
   .map(function (state) {
     const {themeName, design} = state
@@ -61,6 +79,12 @@ watcherSink(
     .map(state => state.design.mainPath)
     .skipRepeats()
 )
+/* fsSink(
+  state$
+    .filter(state => state.design.mainPath !== '')
+    .map(state => ({operation: 'read', id: 'loadScript', path: state.design.mainPath}))
+    .skipRepeats()
+) */
 
 // bla
 state$
@@ -86,8 +110,22 @@ state$
       .map(function ({name, displayName}) {
         return html`<option value=${name}>${displayName}</option>`
       })
+    console.log('sdfsdff')
 
-    let formatsUI = html`<span>
+    document.getElementById('exportBtn').value = `export to ${state.exportFormat}`
+    const formatsListEl = document.getElementById('exportFormats')
+    if (formatsListEl) {
+      while (formatsListEl.firstChild) {
+        formatsListEl.removeChild(formatsListEl.firstChild)
+      }
+    }
+    if (formatsListUI.length > 0) {
+      formatsListUI.forEach(function (gna) {
+        formatsListEl.appendChild(gna)
+        gna.selected = state.exportFormat === gna.value
+      })
+    }
+    /* let formatsUI = html`<span>
       <select id='exportFormats'>
         ${formatsListUI}
       </select>
@@ -100,21 +138,31 @@ state$
         exportsNode.removeChild(exportsNode.firstChild)
       }
     }
-    exportsNode.appendChild(formatsUI)
+    exportsNode.appendChild(formatsUI) */
+  })
+
+// ui updates, busy
+state$
+  .map(state => state.busy)
+  .skipRepeats()
+  .forEach(function (busy) {
+    const ui = document.getElementById('busy')
+    ui.innerText = busy ? 'processing, please wait' : ''
   })
 
 // ui updates, params
 state$
 // .filter(state => state.design.paramDefinitions.length > 0)
-/* .skipRepeatsWith(function (a, b) {
-  return a.design.par === b.exportFormat && a.availableExportFormats === b.availableExportFormats
-}) */
+.skipRepeatsWith(function (a, b) {
+  return JSON.stringify(a.design.paramDefinitions) === JSON.stringify(b.design.paramDefinitions)
+})
 .forEach(state => {
   const {paramDefinitions, paramValues} = state.design
   const html = require('bel')
 
   const {createParamControls} = require('./ui/paramControls2')
-  const {controls} = createParamControls(paramValues, paramDefinitions, x => x) /* paramDefinitions.map(function (paramDefinition, index) {
+  console.log('instantUpdate', state.instantUpdate)
+  const {controls} = createParamControls(paramValues, paramDefinitions, state.instantUpdate, paramsCallbacktoStream.callback) /* paramDefinitions.map(function (paramDefinition, index) {
     console.log('paramDefinition', paramDefinition)
     paramDefinition.index = index + 1
     return createControl(paramDefinition)
@@ -134,14 +182,14 @@ state$
   const fooUi = html` <table>
   ${controls}
     </table>`
-  // params
-  // paramsMain
-  // console.log('fooUi', fooUi)
+
   const node = document.getElementById('paramsMain')
   if (node) {
     while (node.firstChild) {
       node.removeChild(node.firstChild)
     }
   }
+  // yet another hack/shorthand
+  document.getElementById('params').style.visibility = controls.length === 0 ? 'hidden' : ''
   node.appendChild(fooUi)
 })

@@ -49,6 +49,11 @@
             left: 40px;
             user-select: none;
           }
+          #busy{
+            position: absolute;
+            color: red;
+            top: 50px;
+          }
         </style>
     </head>
     <body>
@@ -71,12 +76,14 @@
             <input type='button' value="export" id="exportBtn"/>
           </span>
         </div>
+        <span id='busy'>BUSYY</span>
         <span id='params'>
             <span id='paramsMain'>
             </span>
           <span id='paramsControls'>
-            <input type='checkbox' checked=true id='instantUpdate'> </input>
-            <button id='updateDesignFromParams'>Update</button>
+              <button id='updateDesignFromParams'>Update</button>
+              <label for="instantUpdate">Instant Update</label>
+              <input type='checkbox' checked=true id='instantUpdate'> </input> 
           </span>
         </span>
         <script>
