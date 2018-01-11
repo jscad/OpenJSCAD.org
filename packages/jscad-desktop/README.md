@@ -9,7 +9,9 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 
 ## Overview
 
-- this app works similarly then the web based OpenJSCAD.org
+- this app works pretty much like the web based OpenJSCAD.org
+(but does not included a text editor, see below)
+
 ### what is supported:
  * almost all of the features of OpenJSCAD EXCEPT 
 
