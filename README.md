@@ -229,6 +229,10 @@ There are a few known issues, please be sure to check this out before submitting
 - Q: issues running certain npm commands like ```npm run build-web``` with [cnpm](https://github.com/cnpm/cnpm)
 - A: this is a [know issue in cnpm](https://github.com/cnpm/cnpm/issues/214) , see [issue #283](https://github.com/jscad/OpenJSCAD.org/issues/283) for more information
 
+- Q: Attempting to use OpenJSCAD from file:// in Chrome results in errors like
+"File Error: [EncodingError] Please check permissions error."
+- A: This is a permissions issue in Chrome :  restart chrome using the "--allow-file-access-from-files" option
+
 ## Contribute
 
 OpenJSCAD.org is part of the JSCAD Organization, and is maintained by a group of volunteers. We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
