@@ -64,9 +64,20 @@ function merge (output = {}, currentState, options) {
   return output
 }
 
+const head = (array) => {
+  if (array === undefined || null) {
+    return undefined
+  }
+  if (array.length === 0) {
+    return undefined
+  }
+  return array[0]
+}
+
 module.exports = {
   isCSG,
   isCAG,
   toArray,
-  merge
+  merge,
+  head
 }

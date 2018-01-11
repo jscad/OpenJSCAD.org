@@ -9,9 +9,11 @@
           height: 100%;
           }
           body {
+            height: 100%;
           min-height: 100%;
           min-width: 100%;
           }
+          
 
           document.body {
           top: 0px;
@@ -38,13 +40,12 @@
           #controls {
             position: absolute;
             z-index: 1;
-            color: white;
+            width: 100%;
             user-select: none;
           }
           #params {
             position: absolute;
             z-index: 1;
-            color:white;
             bottom:40px;
             left: 40px;
             user-select: none;
@@ -54,40 +55,19 @@
             color: red;
             top: 50px;
           }
+          #container{
+            z-index: 100;
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+          }
         </style>
     </head>
     <body>
-        <div id='renderTarget' style="position:absolute;width:100%;height:100%"> </div>
-        
-        <div id='controls'>
-          <input type="button" value="load jscad (.js or .jscad) file" id="fileLoader"/>
-          <label for="autoReload">Auto reload</label><input type="checkbox" id="autoReload"/>
-          <label for="grid">Grid</label><input type="checkbox" id="grid"/>
-          <label for="autoRotate">Autorotate</label><input type="checkbox" id="autoRotate"/>
-          <span id='currentFile'></span>
-          <span id='stats'></span>
-          <select id='themeSwitcher'>
-            <option value='dark'>Dark Theme</option>
-            <option value='light'>Light Theme</option>
-          </select>
-          <span id='exports'>
-            <select id='exportFormats'>
-            </select>
-            <input type='button' value="export" id="exportBtn"/>
-          </span>
-        </div>
-        <span id='busy'>BUSYY</span>
-        <span id='params'>
-            <span id='paramsMain'>
-            </span>
-          <span id='paramsControls'>
-              <button id='updateDesignFromParams'>Update</button>
-              <label for="instantUpdate">Instant Update</label>
-              <input type='checkbox' checked=true id='instantUpdate'> </input> 
-          </span>
-        </span>
-        <script>
-          require('./src/app') 
-        </script>
+      <script>
+        require('./src/app') 
+      </script>
     </body>
 </html>

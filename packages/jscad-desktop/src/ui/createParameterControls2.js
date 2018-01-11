@@ -1,5 +1,5 @@
 // getParamDefinitions(script)
-const createParamControls = (prevParamValues = {}, paramDefinitions, instantUpdate = true, rebuildSolid) => {
+const createParamControls = (prevParamValues = {}, paramDefinitions, instantUpdate, rebuildSolid) => {
   let paramControls = []
   let results = []
   for (let i = 0; i < paramDefinitions.length; i++) {
@@ -35,7 +35,6 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, instantUpda
         if (l !== null && l.nodeName === 'LABEL') {
           l.innerHTML = e.currentTarget.value
         }
-        //document.getElementById('instantUpdate').checked 
         if (instantUpdate === true && rebuildSolid) {
           rebuildSolid(paramControls)
         }

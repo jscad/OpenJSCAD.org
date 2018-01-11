@@ -1,10 +1,10 @@
 const {proxy} = require('most-proxy')
-const {makeState, initialState} = require('./state')
-const makeCsgViewer = require('../../csg-viewer/src/index')
+const {makeState} = require('./state')
+// const makeCsgViewer = require('../../csg-viewer/src/index')// //
+const makeCsgViewer = require('@jscad/csg-viewer')
+let csgViewer
 
-const element = document.getElementById('renderTarget')
-const {csgViewer, viewerDefaults, viewerState$} = makeCsgViewer(element, initialState.viewer)
-
+// all the side effects : ie , input/outputs
 const {electronStoreSink, electronStoreSource} = require('./sideEffects/electronStore')
 const {titleBarSink} = require('./sideEffects/titleBar')
 const makeDragDropSource = require('./sideEffects/dragDrop')
@@ -12,6 +12,7 @@ const storeSource$ = electronStoreSource()
 const dragAndDropSource$ = makeDragDropSource(document)
 const {watcherSink, watcherSource} = require('./sideEffects/fileWatcher')
 const {fsSink, fsSource} = require('./sideEffects/fsWrapper')
+const {domSink, domSource} = require('./sideEffects/dom')
 const paramsCallbacktoStream = require('./observable-utils/callbackToObservable')()
 
 // proxy state stream to be able to access & manipulate it before it is actually available
@@ -24,31 +25,11 @@ const actions$ = require('./actions')({
   watcher: watcherSource(),
   fs: fsSource(),
   paramChanges: paramsCallbacktoStream.stream,
-  state$
+  state$,
+  dom: domSource()
 })
 
 attach(makeState(Object.values(actions$)))
-state$.forEach(function (state) {
-  // console.log('state', state)
-})
-
-// for viewer
-state$
-  .map(state => state.viewer)
-  .skipRepeatsWith(function (a, b) {
-    return JSON.parse(JSON.stringify(a)) === JSON.parse(JSON.stringify(b))
-  })
-/* require('most').mergeArray(
-  [
-    actions$.toggleGrid$.map(x => ({grid: {show: x.data}})),
-    // actions$.toggleAutorotate$,
-    // actions$.changeTheme$.map(x=>x)
-  ]
-) */
-  .forEach(params => {
-    console.log('change viewer params', params)
-    csgViewer(params)
-  })
 
 // titlebar & store side effects
 titleBarSink(
@@ -68,15 +49,16 @@ electronStoreSink(state$
         axes: {show: state.viewer.axes.show},
         grid: {show: state.viewer.grid.show}
       },
-      autoReload: state.autoReload
+      autoReload: state.autoReload,
+      instantUpdate: state.instantUpdate
     }
   })
 )
 // data out to file watcher
 watcherSink(
   state$
-    .filter(state => state.design.mainPath !== '' && state.autoReload === true) // FIXME: disable watch if autoreload is set to false
-    .map(state => state.design.mainPath)
+    .filter(state => state.design.mainPath !== '') // FIXME: disable watch if autoreload is set to false
+    .map(state => ({filePath: state.design.mainPath, enabled: state.autoReload}))
     .skipRepeats()
 )
 /* fsSink(
@@ -86,110 +68,152 @@ watcherSink(
     .skipRepeats()
 ) */
 
-// bla
+// viewer data
 state$
   .filter(state => state.design.mainPath !== '')
+  .skipRepeatsWith(function (state, previousState) {
+    // const sameParamDefinitions = JSON.stringify(state.design.paramDefinitions) === JSON.stringify(previousState.design.paramDefinitions)
+    // const sameParamValues = JSON.stringify(state.design.paramValues) === JSON.stringify(previousState.design.paramValues)
+    const sameSolids = state.design.solids.length === previousState.design.solids.length &&
+    JSON.stringify(state.design.solids) === JSON.stringify(previousState.design.solids)
+    return sameSolids
+  })
   /* .skipRepeatsWith((a, b) => {
     // console.log('FOObar', a, b)
     return a.design.mainPath === b.design.mainPath //&& b.design.solids
   }) */
   .forEach(state => {
-    console.log('changing solids')
-    csgViewer(undefined, {solids: state.design.solids})
+    // console.log('changing solids')
+    if (csgViewer !== undefined) {
+      csgViewer(undefined, {solids: state.design.solids})
+    }
   })
 
 // ui updates, exports
-state$
-  .skipRepeatsWith(function (a, b) {
-    return a.exportFormat === b.exportFormat && a.availableExportFormats === b.availableExportFormats
+const html = require('bel')
+
+function dom (state) {
+  const formatsList = state.availableExportFormats
+    .map(function ({name, displayName}) {
+      return html`<option value=${name} selected='${state.exportFormat === name}'>${displayName}</option>`
+    })
+
+  const {createParamControls} = require('./ui/createParameterControls2')
+  const {paramValues, paramDefinitions} = state.design
+  const {controls} = createParamControls(paramValues, paramDefinitions, true, paramsCallbacktoStream.callback)
+
+  const output = html`
+    <div id='container' style='color:${state.mainTextColor}'>
+      <!--Ui Controls-->
+      <div id='controls'>
+        <input type="button" value="load jscad (.js or .jscad) file" id="fileLoader"/>
+        <label for="autoReload">Auto reload</label>
+          <input type="checkbox" id="autoReload" checked=${state.autoReload}/>
+        <label for="grid">Grid</label>
+          <input type="checkbox" id="grid" checked=${state.viewer.grid.show}/>
+        <label for="toggleAxes">Axes</label>
+          <input type="checkbox" id="toggleAxes" checked=${state.viewer.axes.show}/>
+        <label for="autoRotate">Autorotate</label>
+          <input type="checkbox" id="autoRotate"/>
+        
+        <select id='themeSwitcher'>
+          <option value='dark' selected=${state.themeName === 'dark'}>Dark Theme</option>
+          <option value='light' selected=${state.themeName === 'light'}>Light Theme</option>
+        </select>
+        
+        <span id='exports'>
+          <select id='exportFormats'>
+          ${formatsList}
+          </select>
+          <input type='button' value="export to ${state.exportFormat}" id="exportBtn"/>
+        </span>
+
+        <span id='busy'>${state.busy ? 'processing, please wait' : ''}</span>
+      </div>
+      <!--Params-->
+      <span id='params'>
+        <span id='paramsMain'>
+          <table>
+            ${controls}
+          </table>
+        </span>
+        <span id='paramsControls' style='visibility:${state.design.paramDefinitions.length === 0 ? 'hidden' : 'visible'}'>
+          <button id='updateDesignFromParams'>Update</button>
+          <label for='instantUpdate'>Instant Update</label>
+          <input type='checkbox' checked='${state.instantUpdate}' id='instantUpdate'/>
+        </span>
+      </span>
+
+      <canvas id='renderTarget'> </canvas>
+      
+    </div>
+  `
+  return output
+}
+
+const outToDom$ = state$
+  .skipRepeatsWith(function (state, previousState) {
+    const sameParamDefinitions = JSON.stringify(state.design.paramDefinitions) === JSON.stringify(previousState.design.paramDefinitions)
+    const sameInstantUpdate = state.instantUpdate === previousState.instantUpdate
+
+    const sameExportFormats = state.exportFormat === previousState.exportFormat &&
+      state.availableExportFormats === previousState.availableExportFormats
+
+    const sameStatus = state.busy === previousState.busy
+    const sameStyling = state.themeName === previousState.themeName
+
+    const sameAutoreload = state.autoReload === previousState.autoReload
+    return sameParamDefinitions && sameExportFormats && sameStatus && sameStyling && sameAutoreload && sameInstantUpdate
   })
-  .forEach(state => {
-    const html = require('bel')
+  .map(state => dom(state))
 
-    const formatsListUI = state.availableExportFormats
-      .map(function ({name, displayName}) {
-        return html`<option value=${name}>${displayName}</option>`
-      })
-    console.log('sdfsdff')
+domSink(outToDom$)
 
-    document.getElementById('exportBtn').value = `export to ${state.exportFormat}`
-    const formatsListEl = document.getElementById('exportFormats')
-    if (formatsListEl) {
-      while (formatsListEl.firstChild) {
-        formatsListEl.removeChild(formatsListEl.firstChild)
-      }
+// for viewer
+state$
+  .map(state => state.viewer)
+  .skipRepeatsWith(function (state, previousState) {
+    return JSON.parse(JSON.stringify(state)) === JSON.parse(JSON.stringify(previousState))
+  })
+  /* require('most').mergeArray(
+  [
+    actions$.toggleGrid$.map(x => ({grid: {show: x.data}})),
+    // actions$.toggleAutorotate$,
+    // actions$.changeTheme$.map(x=>x)
+  ]
+  ) */
+  .forEach(params => {
+    // console.log('changing viewer params')
+    const viewerElement = document.getElementById('renderTarget')
+    setCanvasSize(viewerElement)
+    // initialize viewer if it has not been done already
+    if (viewerElement && !csgViewer) {
+      const csgViewerItems = makeCsgViewer(viewerElement, params)
+      csgViewer = csgViewerItems.csgViewer
     }
-    if (formatsListUI.length > 0) {
-      formatsListUI.forEach(function (gna) {
-        formatsListEl.appendChild(gna)
-        gna.selected = state.exportFormat === gna.value
-      })
+    if (csgViewer) {
+      csgViewer(params)
     }
-    /* let formatsUI = html`<span>
-      <select id='exportFormats'>
-        ${formatsListUI}
-      </select>
-      <input type='button' value="export to ${state.exportFormat}" id="exportBtn"/>
-    </span>`
-
-    const exportsNode = document.getElementById('exports')
-    if (exportsNode) {
-      while (exportsNode.firstChild) {
-        exportsNode.removeChild(exportsNode.firstChild)
-      }
-    }
-    exportsNode.appendChild(formatsUI) */
   })
 
-// ui updates, busy
-state$
-  .map(state => state.busy)
-  .skipRepeats()
-  .forEach(function (busy) {
-    const ui = document.getElementById('busy')
-    ui.innerText = busy ? 'processing, please wait' : ''
-  })
-
-// ui updates, params
-state$
-// .filter(state => state.design.paramDefinitions.length > 0)
-.skipRepeatsWith(function (a, b) {
-  return JSON.stringify(a.design.paramDefinitions) === JSON.stringify(b.design.paramDefinitions)
-})
-.forEach(state => {
-  const {paramDefinitions, paramValues} = state.design
-  const html = require('bel')
-
-  const {createParamControls} = require('./ui/paramControls2')
-  console.log('instantUpdate', state.instantUpdate)
-  const {controls} = createParamControls(paramValues, paramDefinitions, state.instantUpdate, paramsCallbacktoStream.callback) /* paramDefinitions.map(function (paramDefinition, index) {
-    console.log('paramDefinition', paramDefinition)
-    paramDefinition.index = index + 1
-    return createControl(paramDefinition)
-  }) */
-
-  const paramsUI = html`
-  <span>
-    <table>
-      ${controls}
-    </table>
-    <span>
-      <input type='checkbox' checked=${state.instantUpdate} id='instantUpdate'> </input>
-      <button id='updateDesignFromParams'>Update</button>
-    </span>
-  </span>`
-
-  const fooUi = html` <table>
-  ${controls}
-    </table>`
-
-  const node = document.getElementById('paramsMain')
-  if (node) {
-    while (node.firstChild) {
-      node.removeChild(node.firstChild)
-    }
+function setCanvasSize (viewerElement) {
+  let pixelRatio = window.devicePixelRatio || 1
+  let width = window.innerWidth
+  let height = window.innerHeight
+  if (viewerElement !== document.body) {
+    const bounds = viewerElement.getBoundingClientRect()
+    width = bounds.right - bounds.left
+    height = bounds.bottom - bounds.top
   }
-  // yet another hack/shorthand
-  document.getElementById('params').style.visibility = controls.length === 0 ? 'hidden' : ''
-  node.appendChild(fooUi)
-})
+  width *= pixelRatio
+  height *= pixelRatio
+  viewerElement.width = width
+  viewerElement.height = height
+  viewerElement.clientWidth = width
+  viewerElement.clientHeight = height
+  // viewerElement.style.width = width + 'px'
+  // viewerElement.style.height = height + 'px'
+}
+window.onresize = function () {
+  setCanvasSize(document.getElementById('renderTarget'))
+}

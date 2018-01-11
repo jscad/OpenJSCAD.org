@@ -3,61 +3,110 @@ const most = require('most')
 const {remote} = require('electron')
 const {dialog} = remote
 const {getScriptFile} = require('./core/scripLoading')
+const {head} = require('./utils')
+
+function compositeKeyFromKeyEvent (event) {
+  const ctrl = event.ctrlKey ? 'ctrl+' : ''
+  const shift = event.shiftKey ? 'shift+' : ''
+  const meta = event.metaKey ? 'command+' : ''
+  let key = event.key.toLowerCase()
+  if (ctrl && key === 'control') {
+    key = ''
+  }
+  if (shift && key === 'shift') {
+    key = ''
+  }
+  if (meta && key === 'meta') {
+    key = ''
+  }
+  const compositeKey = `${ctrl}${shift}${meta}${key}`
+  return compositeKey
+}
 
 const makeActions = (sources) => {
-  sources.watcher.forEach(function (data) {
+  /* sources.watcher.forEach(function (data) {
     console.log('watchedFile', data)
   })
-
   sources.drops.forEach(function (data) {
     console.log('drop', data)
   })
-
   sources.fs.forEach(function (data) {
     console.log('fs operations', data)
   })
-
   sources.paramChanges.forEach(function (data) {
     console.log('param changes', data)
-  })
+  }) */
+
+  // keyboard shortcut handling
+  const keyDowns$ = most.fromEvent('keyup', document)
+  const actionsFromKey$ = most.sample(function (event, state) {
+    const compositeKey = compositeKeyFromKeyEvent(event)
+    const matchingAction = head(state.shortcuts.filter(shortcut => shortcut.key === compositeKey))
+    if (matchingAction) {
+      const {command, args} = matchingAction
+      return {type: command, data: args}
+    }
+    return undefined
+  }, keyDowns$, keyDowns$, sources.state$)
+    .filter(x => x !== undefined)
 
   const toggleGrid$ = most.mergeArray([
-    most.fromEvent('click', document.getElementById('grid')).map(e => e.target.checked),
+    sources.dom.select('#grid').events('click')
+      .map(e => e.target.checked),
     sources.store.map(data => data.viewer.grid.show)
   ])
     .map(data => ({type: 'toggleGrid', data}))
 
+  const toggleAxes$ = most.mergeArray([
+    sources.dom.select('#toggleAxes').events('click')
+      .map(e => e.target.checked)
+    // sources.store.map(data => data.viewer.grid.show)
+  ])
+    .map(data => ({type: 'toggleAxes', data}))
+
   const toggleAutorotate$ = most.mergeArray([
-    most.fromEvent('click', document.getElementById('autoRotate')).map(e => e.target.checked)
+    sources.dom.select('#autoRotate').events('click')
+    .map(e => e.target.checked)
       // sources.store.map(data => data.viewer.grid.show)
   ])
     .map(data => ({type: 'toggleAutorotate', data}))
 
+  const changeTheme$ = most.mergeArray([
+    sources.dom.select('#themeSwitcher').events('change')
+      .map(e => e.target.value),
+    sources.store.map(data => data.themeName)
+  ])
+  .map(data => ({type: 'changeTheme', data}))
+
+  // non visual related actions
   const toggleAutoReload$ = most.mergeArray([
-    most.fromEvent('click', document.getElementById('autoReload'))
+    sources.dom.select('#autoReload').events('click')
       .map(e => e.target.checked),
-    sources.store.map(data => data.autoReload)
+    sources.store
+      .map(data => data.autoReload)
   ])
   .map(data => ({type: 'toggleAutoReload', data}))
 
-  const changeExportFormat$ = most.fromEvent('change', document.getElementById('exportFormats'))
+  const toggleInstantUpdate$ = most.mergeArray([
+    sources.dom.select('#instantUpdate').events('click').map(event => event.target.checked),
+    sources.store.map(data => data.instantUpdate)
+  ])
+    .map(data => ({type: 'toggleInstantUpdate', data}))
+
+  const changeExportFormat$ = sources.dom.select('#exportFormats').events('change')
     .map(e => e.target.value)
     .map(data => ({type: 'changeExportFormat', data}))
 
-  const exportRequested$ = most.fromEvent('click', document.getElementById('exportBtn'))
+  const exportRequested$ = sources.dom.select('#exportBtn').events('click')
     .sample(function (state, event) {
-      console.log('state stuff', state, event)
+      // console.log('state stuff', state, event)
       const defaultExportFilePath = state.exportFilePath
       return {defaultExportFilePath, exportFormat: state.exportFormat, data: state.design.solids}
     }, sources.state$)
     .map(function ({defaultExportFilePath, exportFormat, data}) {
-      console.log('exporting data to', defaultExportFilePath)
-      /* const extension = formats[format].extension
-      const defaultExportFileName = `${designName}.${extension}`
-      const defaultExportFilePath = path.join(designPath, defaultFileName)
-      const defaultPath = defaultExportFilePath */
+      // console.log('exporting data to', defaultExportFilePath)
       const filePath = dialog.showSaveDialog({properties: ['saveFile'], title: 'export design to', defaultPath: defaultExportFilePath})//, function (filePath) {
-      console.log('saving', filePath)
+      // console.log('saving', filePath)
       if (filePath !== undefined) {
         const saveDataToFs = require('./io/saveDataToFs')
         saveDataToFs(data, exportFormat, filePath)
@@ -65,18 +114,8 @@ const makeActions = (sources) => {
     })
     .map(data => ({type: 'exportRequested', data}))
 
-  const changeTheme$ = most.mergeArray([
-    most.fromEvent('change', document.getElementById('themeSwitcher')).map(e => e.target.value),
-    sources.store.map(data => data.themeName)
-  ])
-  .map(data => ({type: 'changeTheme', data}))
-
-  // non visual related actions
-  const toggleInstantUpdate$ = most.fromEvent('click', document.getElementById('instantUpdate'))
-    .map(event => ({type: 'toggleInstantUpdate', data: event.target.checked}))
-
   const designPath$ = most.mergeArray([
-    most.fromEvent('click', document.getElementById('fileLoader'))
+    sources.dom.select('#fileLoader').events('click')
       .map(function () {
         const paths = dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
         return paths
@@ -92,6 +131,7 @@ const makeActions = (sources) => {
       .map(path => [path])
   ])
     .filter(data => data !== undefined)
+    .debounce(300)
     .multicast()
 
   const designLoadRequested$ = designPath$
@@ -106,32 +146,37 @@ const makeActions = (sources) => {
   ])
     .map(data => ({type: 'setDesignScriptContent', data}))
 
+  // design parameter change actions
   const updateDesignFromParams$ = most.mergeArray([
-    most.fromEvent('click', document.getElementById('updateDesignFromParams'))
+    sources.dom.select('#updateDesignFromParams').events('click')
       .map(function () {
         const controls = Array.from(document.getElementById('paramsMain').getElementsByTagName('input'))
-        const paramValues = require('./core/getParamValues')(controls)
-        return paramValues
+        return {paramValues: require('./core/getParamValues')(controls), origin: 'manualUpdate'}
       }),
     sources.paramChanges.map(function (controls) {
-      const paramValues = require('./core/getParamValues')(controls)
-      console.log('paramValues', paramValues)
-      return paramValues
+      return {paramValues: require('./core/getParamValues')(controls), origin: 'instantUpdate'}
     })
   ])
     .map(data => ({type: 'updateDesignFromParams', data}))
 
   return {
+    // generic key shortuct handler
+    actionsFromKey$,
+    // 3d viewer
     toggleGrid$,
+    toggleAxes$,
     toggleAutorotate$,
+    // ui
+    changeTheme$,
     toggleAutoReload$,
     toggleInstantUpdate$,
-    changeExportFormat$,
-    exportRequested$,
-    changeTheme$,
+    // design
     setDesignPath$,
     designLoadRequested$,
-    updateDesignFromParams$
+    updateDesignFromParams$,
+    // exports
+    changeExportFormat$,
+    exportRequested$
   }
 }
 
