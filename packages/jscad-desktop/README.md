@@ -15,9 +15,14 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 
 - this app works pretty much like the web based OpenJSCAD.org
 (but does not included a text editor, see below)
+- it automatically saves & reloads most settings and the last design you were working on on restart
+- there is basic theming support (only two are present, you can change them but not add more at this time)
+- uses the shiny new 3D viewer based on regl
+- uses most.js observables & a declarative approach internally
+
 
 ### what is supported:
- * almost all of the features of OpenJSCAD EXCEPT 
+ * almost all of the features of OpenJSCAD EXCEPT the things in the paragraph below 
 
 ### what is not supported
   - the include() function , [since include is EVIIIL and an antipattern
@@ -63,6 +68,26 @@ to start the app, in the root folder , type
 ```
 npm run dev
 ```
+
+- drag & drop a jscad/js file to get started
+- left/right drag to rotate camera
+- shift + drag to pan 
+- double click to reset camera & controls
+- tripple click to zoomToFit on the items in the scene
+- there are also keyboard shortcuts for camera angles and orthographic/perspective you can take a look at them & change them in the data/keybindings.json file (requires restart)
+
+   * `t` : top view
+   * `b` : bottom view
+   * `l` : left view
+   * `r` : right view
+   * `f`: front view
+   * `b`: back view
+   (yes 'b' is bound to both bottom & back views, whoops)
+   * warning ! panning is broken in orthographic mode
+   * `p`: perspective projection
+   * `o`: orthographic projection
+- most of the ui options should be explicit
+
 
 ## License
 
