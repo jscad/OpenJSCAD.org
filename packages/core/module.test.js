@@ -163,7 +163,7 @@ test('generateOutput(stl)', t => {
       const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
       t.is(type, 'application/sla')
       t.is(encoding, 'utf8')
-      t.is(size, 70284)
+      t.is(size, 74284)
     })
 })
 
@@ -180,7 +180,7 @@ test('generateOutput(stla)', t => {
       const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
       t.is(type, 'application/sla')
       t.is(encoding, 'utf8')
-      t.is(size, 326185)
+      t.is(size, 338371)
     })
 })
 
@@ -197,7 +197,7 @@ test('generateOutput(stlb)', t => {
       const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
       t.is(type, 'application/sla')
       t.is(encoding, 'utf8')
-      t.is(size, 70284)
+      t.is(size, 74284)
     })
 })
 
@@ -213,7 +213,7 @@ test('generateOutput(amf)', t => {
       const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
       t.is(type, 'application/amf+xml')
       t.is(encoding, 'utf8')
-      almostEquals(t, size, 385247, 50)
+      almostEquals(t, size, 397341, 150)
     })
 })
 
@@ -228,8 +228,8 @@ test('generateOutput(x3d)', t => {
       const output = generateOutput('x3d', input)
       const {type, encoding, size} = output // FIXME for some reason this fails ?t.is(output.encoding, 'foo' when falsy)
       t.is(type, 'model/x3d+xml')
-      t.is(encoding, 'utf8')
-      almostEquals(t, size, 44066, 50)
+      t.is(encoding, 'utf8')      
+      almostEquals(t, size, 44384, 50)
     })
 })
 
