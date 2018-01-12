@@ -1,4 +1,5 @@
 const { CSG, CAG } = require('@jscad/csg')
+const { isCSG, isCAG } = require('../core/utils')
 
 // handled format descriptions
 const formats = {
@@ -99,8 +100,8 @@ function supportedFormatsForObjects (objects) {
   let foundCSG = false
   let foundCAG = false
   for (let i = 0; i < objects.length; i++) {
-    if (objects[i] instanceof CSG) { foundCSG = true }
-    if (objects[i] instanceof CAG) { foundCAG = true }
+    if (isCSG(objects[i])) { foundCSG = true }
+    if (isCAG(objects[i])) { foundCAG = true }
   }
   for (let format in formats) {
     if (foundCSG && formats[format].convertCSG === true) {
