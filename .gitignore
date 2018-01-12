@@ -1,3 +1,5 @@
 node_modules/
 components
 .DS_Store
+packages/web/examples
+*.log

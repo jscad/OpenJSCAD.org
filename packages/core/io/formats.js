@@ -1,4 +1,4 @@
-const { isCSG, isCAG } = require('../utils')
+const { isCSG, isCAG } = require('../utils/isCSGCAG')
 
 // handled format descriptions
 const formats = {

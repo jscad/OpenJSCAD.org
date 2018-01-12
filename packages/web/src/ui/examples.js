@@ -1,6 +1,6 @@
 const { createConversionWorker } = require('../io/createConversionWorker')
 const { putSourceInEditor } = require('./editor') // FIXME : eeek! dependency on ui
-const { version } = require('../jscad/version')
+const { version } = require('@jscad/core/utils/version')
 
 const examples = [
   { file: 'logo.jscad', title: 'OpenJSCAD.org Logo' },
@@ -91,7 +91,6 @@ function createExamples (me) {
 
 function fetchExample (filename, url, {memFs, gProcessor, gEditor}) {
   memFs = []
-
   const hasExtension = filename.match(/\.[^\/]+$/)
   if (!hasExtension) // -- has no extension, ie folder referenced
   {
@@ -160,7 +159,6 @@ function nth (index, data) {
 }
 
 function loadViaProxy (url, {memFs, gProcessor, gEditor, proxyUrl}) {
-  console.log('loadViaProxy', url, proxyUrl)
   var xhr = new XMLHttpRequest()
   xhr.open('GET', proxyUrl + url, true)
   if (url.match(/\.(stl|gcode)$/i)) {
@@ -169,7 +167,6 @@ function loadViaProxy (url, {memFs, gProcessor, gEditor, proxyUrl}) {
   gProcessor.setStatus('loading', url)
   xhr.onload = function () {
     const data = JSON.parse(this.responseText)
-    console.log('data from proxy', data)
     const baseUrl = location.protocol + '//' + location.host + location.pathname
     const url = `${baseUrl}/${data.file}`
     fetchExample(data.file, url, {memFs, gProcessor, gEditor})
@@ -188,11 +185,11 @@ function loadInitialExample (me, params) {
     const baseUrl = location.protocol + '//' + location.host + location.pathname
 
     const isRemote = documentUri ? documentUri.match(/(https?:\/\/\S+)$/) !== null : false
-    const isLocal = documentUri ? documentUri.match(/(examples\/\S+)$/)!== null : false
+    const isLocal = documentUri ? documentUri.match(/(examples\/\S+)$/) !== null : false
     const isInLocalStorage = localStorage.editorContent && localStorage.editorContent.length
 
-    //console.log('useProxy', useProxy, 'documentUri', documentUri, 'baseUrl', baseUrl)
-    //console.log('isRemote', isRemote, 'isLocal', isLocal)
+    // console.log('useProxy', useProxy, 'documentUri', documentUri, 'baseUrl', baseUrl)
+    // console.log('isRemote', isRemote, 'isLocal', isLocal)
 
     function loadLocalStorage (content, {gProcessor, gEditor}) {
       // load content from local storage if found
@@ -205,13 +202,13 @@ function loadInitialExample (me, params) {
     }
 
     function loadLocal (filename, {memFs, gProcessor, gEditor}) {
-      //console.log('loadLocal')
+      // console.log('loadLocal')
       fetchExample(filename, undefined, {memFs, gProcessor, gEditor})
       // document.location = docUrl.replace(/#.*$/, '#')
     }
 
     function loadRemote (url, {memFs, gProcessor, gEditor, proxyUrl}) {
-      //console.log('loadRemote', url)
+      // console.log('loadRemote', url)
       gProcessor.setStatus('loading', url)
       if (useProxy) {
         loadViaProxy(url, {memFs, gProcessor, gEditor, proxyUrl})

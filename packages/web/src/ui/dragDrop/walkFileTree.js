@@ -1,4 +1,4 @@
-const { conversionFormats } = require('../../io/formats')
+const { conversionFormats } = require('@jscad/core/io/formats')
 const {findMainFile, changedFiles} = require('./helpers')
 
 function flatten (array) {

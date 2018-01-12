@@ -4,7 +4,7 @@ const path = require('path')
 const {execSync} = require('child_process')
 const fs = require('fs')
 
-const examplesPath = path.resolve('../../node_modules/@jscad/examples')
+const examplesPath = path.resolve('./node_modules/@jscad/examples')
 
 function almostEquals (t, observed, expected, precision) {
   t.is(Math.abs(expected - observed) < precision, true)

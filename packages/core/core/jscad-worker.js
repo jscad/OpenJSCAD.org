@@ -5,7 +5,7 @@ const oscad = require('@jscad/scad-api')
 
 const createJscadFunction = require('./jscad-function')
 const { toArray } = require('../utils/misc')
-const {isCSG, isCAG} = require('./utils')
+const {isCSG, isCAG} = require('../utils/isCSGCAG')
 
 /**
  * Create an worker (thread) for processing the JSCAD script into CSG/CAG objects
