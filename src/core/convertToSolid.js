@@ -10,7 +10,7 @@ const {isCSG, isCAG} = require('./utils')
  */
 function convertToSolid (objects, params) {
   if (objects.length === undefined) {
-    if ((objects instanceof CAG) || (objects instanceof CSG)) {
+    if (isCAG(objects) || isCSG(objects)) {
       var obj = objects
       objects = [obj]
     } else {
@@ -21,7 +21,7 @@ function convertToSolid (objects, params) {
   var solid = null
   for (var i = 0; i < objects.length; i++) {
     let obj = objects[i]
-    if (obj instanceof CAG) {
+    if (isCAG(obj)) {
       obj = obj.extrude({offset: [0, 0, 0.1]}) // convert CAG to a thin solid CSG
     }
     if (solid !== null) {
@@ -55,11 +55,11 @@ function convertToSolid2 (objects, params) {
   object = !foundCSG ? new CAG() : new CSG()
 
   for (let i = 0; i < objects.length; i++) {
-    if (foundCSG === true && objects[i] instanceof CAG) {
+    if (foundCSG === true && isCAG(objects[i])) {
       object = object.union(objects[i].extrude({offset: [0, 0, 0.1]})) // convert CAG to a thin solid CSG
       continue
     }
-    if (foundCAG === true && objects[i] instanceof CSG) {
+    if (foundCAG === true && isCSG(objects[i])) {
       continue
     }
     object = object.union(objects[i])
