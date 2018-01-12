@@ -26,7 +26,7 @@ const { putSourceInEditor } = require('../editor') // FIXME : eeek! dependency o
 const {walkFileTree, pseudoArraytoArray, isSupportedFormat} = require('./walkFileTree')
 const {findMainFile, changedFiles, isLocalMode} = require('./helpers')
 
-const {version} = require('../../jscad/version')
+const {version} = require('@jscad/core/utils/version')
 
 // --- Global Variables
 var currentFiles = [] // linear array, contains files (to read)

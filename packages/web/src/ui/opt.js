@@ -1,7 +1,7 @@
 // == OpenJSCAD.org, Copyright (c) 2017, Licensed under MIT License
 const AlertUserOfUncaughtExceptions = require('./errorDispatcher')
 
-const { version } = require('../jscad/version')
+const { version } = require('@jscad/core/utils/version')
 const Processor = require('../jscad/processor')
 
 var gProcessor = null

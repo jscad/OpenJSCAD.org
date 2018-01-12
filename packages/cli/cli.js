@@ -39,10 +39,10 @@
 // 2013/03/01: 0.001: initial version, with base function from openscad.jscad
 //
 const fs = require('fs')
-const {version} = require('../jscad/version')
 const env = require('./env')
+const { version } = require('@jscad/core/utils/version')
+const { formats } = require('@jscad/core/io/formats')
 const generateOutputData = require('./generateOutputData')
-const { formats } = require('../io/formats')
 
 /*
 const getExtension = filename => {

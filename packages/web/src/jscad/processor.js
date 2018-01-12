@@ -1,14 +1,14 @@
 const log = require('./log')
-const getParamDefinitions = require('../core/getParamDefinitions')
-const getParamValues = require('../core/getParamValues')
-const { rebuildSolid, rebuildSolidInWorker } = require('../core/rebuildSolid')
-const { convertToSolid } = require('../core/convertToSolid')
+const getParamDefinitions = require('@jscad/core/getParamDefinitions')
+const getParamValues = require('@jscad/core/getParamValues')
+const { rebuildSolid, rebuildSolidInWorker } = require('@jscad/core/rebuildSolid')
+const { convertToSolid } = require('@jscad/core/convertToSolid')
 
 // output handling
 const { generateOutputFile } = require('../io/generateOutputFile')
-const { prepareOutput } = require('../io/prepareOutput')
-const { convertToBlob } = require('../io/convertToBlob')
-const { formats, supportedFormatsForObjects } = require('../io/formats')
+const { prepareOutput } = require('@jscad/core/prepareOutput')
+const { convertToBlob } = require('@jscad/core/convertToBlob')
+const { formats, supportedFormatsForObjects } = require('@jscad/core/formats')
 const { revokeBlobUrl } = require('../io/utils')
 
 const Viewer = require('../ui/viewer/jscad-viewer')

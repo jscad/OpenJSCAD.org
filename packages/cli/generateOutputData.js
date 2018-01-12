@@ -1,9 +1,9 @@
 const {isAbsolute, resolve} = require('path')
 const oscad = require('@jscad/scad-api')
-const { prepareOutput } = require('../io/prepareOutput')
-const { convertToBlob } = require('../io/convertToBlob')
-const { rebuildSolid } = require('../core/rebuildSolid')
-const { resolveIncludesFs } = require('../utils/resolveIncludesFs')
+const { prepareOutput } = require('@jscad/core/io/prepareOutput')
+const { convertToBlob } = require('@jscad/core/io/convertToBlob')
+const { rebuildSolid } = require('@jscad/core/core/rebuildSolid')
+const { resolveIncludesFs } = require('@jscad/core/utils/resolveIncludesFs')
 const getParameterDefinitionsCLI = require('./getParameterDefinitionsCLI')
 const getParameterValues = require('./getParameterValues')
 

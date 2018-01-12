@@ -1,5 +1,4 @@
-const { CSG, CAG } = require('@jscad/csg')
-const { isCSG, isCAG } = require('../core/utils')
+const { isCSG, isCAG } = require('../utils')
 
 // handled format descriptions
 const formats = {

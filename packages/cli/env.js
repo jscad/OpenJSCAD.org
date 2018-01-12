@@ -1,4 +1,4 @@
-const { version } = require('../jscad/version')
+const { version } = require('@jscad/core/utils/version')
 
 function env () {
   var env = 'OpenJSCAD ' + version

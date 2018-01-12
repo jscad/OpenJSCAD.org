@@ -1,5 +1,5 @@
 {
-  "name": "@jscad/openjscad",
+  "name": "openjscad",
   "version": "1.6.1",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
@@ -13,7 +13,7 @@
     "build-min": "browserify src/ui/min.js -o dist/min.js -t [babelify browserify minifyify]",
     "build-opt": "browserify src/ui/opt.js -o dist/opt.js -t [babelify browserify minifyify]",
     "build-all": "npm run build-web && npm run build-min && npm run build-opt",
-    "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
+    "start-dev": "budo packages/web/src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
     "preversion": "npm test",
     "version": "npm run build-all && git add -A ",
     "postversion": "git push origin master && git push origin master --tags",
@@ -58,6 +58,7 @@
     "browserify": "14.3.0",
     "browserify-shim": "^3.8.12",
     "budo": "10.0.3",
+    "lerna": "^2.7.0",
     "minifyify": "^7.3.3"
   },
   "browserify": {
