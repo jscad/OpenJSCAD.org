@@ -1,7 +1,7 @@
 {
   "name": "@jscad/openjscad",
   "version": "1.6.1",
-  "description": "",
+  "description": "Web UI for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
     "build-web": "browserify src/ui/index.js -o dist/index.js -t [babelify browserify minifyify]",

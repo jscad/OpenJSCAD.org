@@ -1,7 +1,7 @@
 {
   "name": "@jscad/examples",
   "version": "1.6.1",
-  "description": "",
+  "description": "example files for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
     "version": "git add -A ",
