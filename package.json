@@ -6,6 +6,8 @@
   "scripts": {
     "test": "lerna bootstrap && lerna run test",
     "lint": "eslint packages/**/*.js",
+    "web": "cd ./packages/web && npm run start-dev",
+    "desktop": "cd ./packages/web && npm run dev",
     "publish": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits",
     "publish-dryrun": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits --skip-git --skip-npm"
   },
