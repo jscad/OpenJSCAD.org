@@ -3,12 +3,11 @@
   "version": "1.6.1",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
-  "main": "src/module.js",
-  "bin": {
-    "openjscad": "src/cli/cli.js"
-  },
   "scripts": {
-    "test": "lerna bootstrap && lerna run test"
+    "test": "lerna bootstrap && lerna run test",
+    "lint": "eslint packages/**/*.js",
+    "publish": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits",
+    "publish-dryrun": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits --skip-git --skip-npm"
   },
   "contributors": [
     {

@@ -26,16 +26,24 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 
 ## Usage
 
+There are different 'flavors' of OpenJscad that you can use based on your needs
+- web: online (no install)
+- web: self hosted: can be found [here](./packages/web)
+- cli: command line interface : can be found [here](./packages/cli)
+- desktop app: work in progress!
+- node.js: custom mix & match of modules
+
 ### Immediate Use (no installation)
 
 Go to *[OpenJSCAD.org](http://openjscad.org)* (Tested browsers include Chrome, Firefox, Opera, Safari)
 
-### Use within a Web Site (pre built files)
+### Use within a Web Site (pre built files, from github)
 
 ```
 cd base-directory-of-website
 git clone https://github.com/jscad/OpenJSCAD.org
 cd OpenJSCAD.org
+cd packages/web . // this is where the web version is
 <start a web server here>
 ```
 And then access the contents via the URL of the web-site.
@@ -73,7 +81,7 @@ https://<YOURSITE>/#http://www.thingiverse.com/download:164128
 ### Install node.js
 
 > IMPORTANT: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x
-> we test OpenJSCAD on node.js version **6.x.x** & **7.x.x** all other versions are not guaranteed to work !
+> we test OpenJSCAD on node.js version **6.x.x** , **7.x.x**, **8.x.x** & **8.x.x** all other versions are not guaranteed to work !
 
 An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
 - after installing nvm type ```nvm install v6``` (recomended)
@@ -84,7 +92,7 @@ An easy way to install any Node.js version is to use [NVM](https://github.com/cr
 CLI(command-line interface) use
 
 ```
- npm install -g @jscad/openjscad
+ npm install -g @jscad/cli
 ```
 
 you can now turn the examples (or your own designs) into stl etc files as follows :
@@ -186,10 +194,10 @@ This will be expanded upon in the future, and is the backbone of the newer, modu
 
 ## Development
 
-We offer pre-built versions of OpenJSCAD to be uses directly here :
-- [standard](./dist/index.js)
-- [minimalist](./dist/min.js)
-- [with options](./dist/options.js)
+We offer pre-built versions of OpenJSCAD web ui to be used directly here :
+- [standard](./packages/web/dist/index.js)
+- [minimalist](./packages/web/dist/min.js)
+- [with options](./packages/web/dist/options.js)
 
 but you can also rebuild them manually if you need :
 
