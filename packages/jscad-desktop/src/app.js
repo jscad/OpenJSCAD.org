@@ -19,7 +19,7 @@ const paramsCallbacktoStream = require('./observable-utils/callbackToObservable'
 const { attach, stream } = proxy()
 const state$ = stream
 //
-const actions$ = require('./actions')({
+const actions$ = require('./actions/actions')({
   store: storeSource$,
   drops: dragAndDropSource$,
   watcher: watcherSource(),
@@ -58,15 +58,16 @@ electronStoreSink(state$
 watcherSink(
   state$
     .filter(state => state.design.mainPath !== '') // FIXME: disable watch if autoreload is set to false
-    .map(state => ({filePath: state.design.mainPath, enabled: state.autoReload}))
     .skipRepeats()
+    .map(state => ({filePath: state.design.mainPath, enabled: state.autoReload}))
 )
-/* fsSink(
+fsSink(
   state$
     .filter(state => state.design.mainPath !== '')
-    .map(state => ({operation: 'read', id: 'loadScript', path: state.design.mainPath}))
+    .map(state => state.design.mainPath)
     .skipRepeats()
-) */
+    .map(path => ({operation: 'read', id: 'loadScript', path}))
+)
 
 // viewer data
 state$
@@ -90,66 +91,6 @@ state$
   })
 
 // ui updates, exports
-const html = require('bel')
-
-function dom (state) {
-  const formatsList = state.availableExportFormats
-    .map(function ({name, displayName}) {
-      return html`<option value=${name} selected='${state.exportFormat === name}'>${displayName}</option>`
-    })
-
-  const {createParamControls} = require('./ui/createParameterControls2')
-  const {paramValues, paramDefinitions} = state.design
-  const {controls} = createParamControls(paramValues, paramDefinitions, true, paramsCallbacktoStream.callback)
-
-  const output = html`
-    <div id='container' style='color:${state.mainTextColor}'>
-      <!--Ui Controls-->
-      <div id='controls'>
-        <input type="button" value="load jscad (.js or .jscad) file" id="fileLoader"/>
-        <label for="autoReload">Auto reload</label>
-          <input type="checkbox" id="autoReload" checked=${state.autoReload}/>
-        <label for="grid">Grid</label>
-          <input type="checkbox" id="grid" checked=${state.viewer.grid.show}/>
-        <label for="toggleAxes">Axes</label>
-          <input type="checkbox" id="toggleAxes" checked=${state.viewer.axes.show}/>
-        <label for="autoRotate">Autorotate</label>
-          <input type="checkbox" id="autoRotate"/>
-        
-        <select id='themeSwitcher'>
-          <option value='dark' selected=${state.themeName === 'dark'}>Dark Theme</option>
-          <option value='light' selected=${state.themeName === 'light'}>Light Theme</option>
-        </select>
-        
-        <span id='exports'>
-          <select id='exportFormats'>
-          ${formatsList}
-          </select>
-          <input type='button' value="export to ${state.exportFormat}" id="exportBtn"/>
-        </span>
-
-        <span id='busy'>${state.busy ? 'processing, please wait' : ''}</span>
-      </div>
-      <!--Params-->
-      <span id='params'>
-        <span id='paramsMain'>
-          <table>
-            ${controls}
-          </table>
-        </span>
-        <span id='paramsControls' style='visibility:${state.design.paramDefinitions.length === 0 ? 'hidden' : 'visible'}'>
-          <button id='updateDesignFromParams'>Update</button>
-          <label for='instantUpdate'>Instant Update</label>
-          <input type='checkbox' checked='${state.instantUpdate}' id='instantUpdate'/>
-        </span>
-      </span>
-
-      <canvas id='renderTarget'> </canvas>
-      
-    </div>
-  `
-  return output
-}
 
 const outToDom$ = state$
   .skipRepeatsWith(function (state, previousState) {
@@ -159,13 +100,17 @@ const outToDom$ = state$
     const sameExportFormats = state.exportFormat === previousState.exportFormat &&
       state.availableExportFormats === previousState.availableExportFormats
 
-    const sameStatus = state.busy === previousState.busy
     const sameStyling = state.themeName === previousState.themeName
 
     const sameAutoreload = state.autoReload === previousState.autoReload
-    return sameParamDefinitions && sameExportFormats && sameStatus && sameStyling && sameAutoreload && sameInstantUpdate
+
+    const sameError = JSON.stringify(state.error) === JSON.stringify(previousState.error)
+    const sameStatus = state.busy === previousState.busy
+
+    return sameParamDefinitions && sameExportFormats && sameStatus && sameStyling &&
+      sameAutoreload && sameInstantUpdate && sameError
   })
-  .map(state => dom(state))
+  .map(state => require('./ui/main')(state, paramsCallbacktoStream))
 
 domSink(outToDom$)
 

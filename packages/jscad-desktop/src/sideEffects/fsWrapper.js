@@ -5,14 +5,14 @@ const callBackToStream = require('../observable-utils/callbackToObservable')
 const readFileToCB = callBackToStream()
 
 function fsSink (out$) {
-  out$.forEach(function ({operation, path}) {
+  out$.forEach(function ({path, operation}) {
     console.log('read/writing to', path, operation)
     if (operation === 'read') {
       fs.readFile(path, 'utf8', function (error, data) {
         if (error) {
-          readFileToCB.callback({error})
+          readFileToCB.callback({path, operation, error})
         } else {
-          readFileToCB.callback({path, data, operation})
+          readFileToCB.callback({path, operation, data})
         }
       })
     }

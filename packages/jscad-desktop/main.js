@@ -27,7 +27,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -47,9 +47,7 @@ app.on('ready', createWindow)
 app.on('window-all-closed', function () {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
-  // if (process.platform !== 'darwin') {
   app.quit()
-  // }
 })
 
 app.on('activate', function () {
@@ -62,3 +60,19 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+electron.ipcMain.on('get-file-data', function (event) {
+  let data = null
+  if (process.platform === 'win32' && process.argv.length >= 2) {
+    var openFilePath = process.argv[1]
+    data = openFilePath
+  }
+  console.log('here', data, event, process.argv)
+  event.sender.send('asynchronous-reply', {data, event, args: process.argv})
+  event.returnValue = data
+})
+console.log('foo')
+
+electron.ipcMain.on('asynchronous-message', (event, arg) => {
+  console.log(arg)  // prints "ping"
+  event.sender.send('asynchronous-reply', 'pong')
+})

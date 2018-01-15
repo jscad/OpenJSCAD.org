@@ -11,6 +11,8 @@ const themes = {
 
 const initialState = {
   appTitle: `${packageMetadata.name} v ${packageMetadata.version}`,
+  // for possible errors
+  error: undefined,
   // design data
   design: {
     name: '',
@@ -34,6 +36,7 @@ const initialState = {
   themeName: 'light',
   mainTextColor: '#FFF',
   viewer: {// ridiculous shadowing of viewer state ?? or actually logical
+    // camera: {position: [150, 150, 250]},
     rendering: {
       background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
       meshColor: [0.4, 0.6, 0.5, 1] // nice orange : [1, 0.4, 0, 1]
@@ -96,23 +99,7 @@ function makeState (actions) {
       return Object.assign({}, state, {instantUpdate})
     },
     changeExportFormat: (state, exportFormat) => {
-      // console.log('changeExportFormat', exportFormat)
-      const path = require('path')
-      const {formats} = require('./io/formats')
-      const design = state.design
-
-      const extension = formats[exportFormat].extension
-      const defaultFileName = `${design.name}.${extension}`
-      const exportFilePath = path.join(design.path, defaultFileName)
-
-      return Object.assign({}, state, {exportFormat, exportFilePath})
-    },
-    designLoadRequested: (state, _) => {
-      // console.log('designLoadRequested')
-      // FIXME: UGHH so goddam verbose !
-      // we want the viewer to focus on new entities for our 'session' (until design change)
-      const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: ['new-entities']}})
-      return Object.assign({}, state, {busy: true, viewer})
+      return Object.assign({}, state, exportFilePathFromFormatAndDesign(state.design, exportFormat))
     },
     setDesignPath: (state, paths) => {
       // console.log('setDesignPath')
@@ -122,23 +109,33 @@ function makeState (actions) {
       const designName = path.parse(path.basename(filePath)).name
       const designPath = path.dirname(filePath)
 
+      const design = Object.assign({}, state.design, {
+        name: designName,
+        path: designPath,
+        mainPath
+      })
+
+      // we want the viewer to focus on new entities for our 'session' (until design change)
+      const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: ['new-entities']}})
+      return Object.assign({}, state, {busy: true, viewer, design})
+    },
+    setDesignContent: (state, scriptAsText) => {
+      console.log('setDesignContent')
+      const {mainPath} = state.design
       // load script
-      const {jscadScript, paramDefinitions, params} = loadScript(mainPath)
+      const {jscadScript, paramDefinitions, params} = loadScript(scriptAsText, mainPath)
       // console.log('paramDefinitions', paramDefinitions, 'params', params)
       let solids = toArray(jscadScript(params))
       /*
         func(paramDefinitions) => paramsUI
         func(paramsUI + interaction) => params
       */
-      const design = {
-        name: designName,
-        path: designPath,
-        mainPath,
+      const design = Object.assign({}, state.design, {
         script: jscadScript,
         paramDefinitions,
         paramValues: params,
         solids
-      }
+      })
 
       const {supportedFormatsForObjects, formats} = require('./io/formats')
       const formatsToIgnore = ['jscad', 'js']
@@ -152,7 +149,16 @@ function makeState (actions) {
       console.log('done updating design from path')
       // FIXME: UGHH so goddam verbose !
       const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']}})
-      return Object.assign({}, state, {design, viewer}, {availableExportFormats, exportFormat, busy: false})
+      const exportInfos = exportFilePathFromFormatAndDesign(design, exportFormat)
+      const appTitle = `${packageMetadata.name} v ${packageMetadata.version}: ${state.design.path}`
+      return Object.assign({}, state, {design, viewer}, {
+        availableExportFormats,
+        exportFormat,
+        appTitle,
+        busy: false,
+        error: undefined
+      },
+      exportInfos)
     },
     updateDesignFromParams: (state, {paramValues, origin}) => {
       // console.log('updateDesignFromParams')
@@ -177,7 +183,7 @@ function makeState (actions) {
         return newState
       } catch (error) {
         console.error('caught error', error)
-        return merge({}, state, {error})
+        return Object.assign({}, state, {error})
       }
       // const newState = merge({}, state, updatedData)
       // console.log('SCAAAN', action, newState)
@@ -189,3 +195,15 @@ function makeState (actions) {
 }
 
 module.exports = {makeState, initialState}
+
+// state utilities , extract at some point
+const exportFilePathFromFormatAndDesign = (design, exportFormat) => {
+  const path = require('path')
+  const {formats} = require('./io/formats')
+
+  const extension = formats[exportFormat].extension
+  const defaultFileName = `${design.name}.${extension}`
+  const exportFilePath = path.join(design.path, defaultFileName)
+
+  return {exportFormat, exportFilePath}
+}

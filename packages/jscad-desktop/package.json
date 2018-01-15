@@ -2,15 +2,17 @@
   "name": "jscad-desktop",
   "version": "0.0.1",
   "description": "jscad desktop application",
+  "author": "jscad core team/ Mark Moissette",
+  "license": "MIT",
+  "repository": "",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node node_modules/.bin/electron .",
+    "dev-win": "node_modules/.bin/electron.cmd .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
-  "author": "Mark 'kaosat-dev' Moissette",
-  "license": "MIT",
   "dependencies": {
     "@jscad/amf-serializer": "^0.1.1",
     "@jscad/csg": "^0.3.7",
@@ -40,7 +42,15 @@
   "build": {
     "appId": "jscad.id",
     "mac": {
-      "category": "jscad.3dmodeling.type"
-    }
+      "category": "public.app-category.graphics-design"
+    },
+    "linux":{
+      "target": "AppImage",
+      "category": "Graphics"
+    },
+    "win":{
+      "target": "nsis"
+    },
+    "fileAssociations": [{"ext": "jscad", "name":"jscad","role":"editor"}] 
   }
 }

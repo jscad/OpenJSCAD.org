@@ -2,8 +2,8 @@ const path = require('path')
 const most = require('most')
 const {remote} = require('electron')
 const {dialog} = remote
-const {getScriptFile} = require('./core/scripLoading')
-const {head} = require('./utils')
+const {getScriptFile} = require('../core/scripLoading')
+const {head} = require('../utils')
 
 function compositeKeyFromKeyEvent (event) {
   const ctrl = event.ctrlKey ? 'ctrl+' : ''
@@ -108,7 +108,7 @@ const makeActions = (sources) => {
       const filePath = dialog.showSaveDialog({properties: ['saveFile'], title: 'export design to', defaultPath: defaultExportFilePath})//, function (filePath) {
       // console.log('saving', filePath)
       if (filePath !== undefined) {
-        const saveDataToFs = require('./io/saveDataToFs')
+        const saveDataToFs = require('../io/saveDataToFs')
         saveDataToFs(data, exportFormat, filePath)
       }
     })
@@ -126,35 +126,31 @@ const makeActions = (sources) => {
       .map(data => [data]),
     sources.drops
       .filter(drop => drop.type === 'fileOrFolder' && drop.data.length > 0)
-      .map(drop => drop.data.map(fileOrFolder => fileOrFolder.path)),
-    sources.watcher
-      .map(path => [path])
+      .map(drop => drop.data.map(fileOrFolder => fileOrFolder.path))
   ])
     .filter(data => data !== undefined)
-    .debounce(300)
+    .debounce(50)
     .multicast()
-
-  const designLoadRequested$ = designPath$
-    .map(data => ({type: 'designLoadRequested', data}))
 
   const setDesignPath$ = designPath$
     .map(data => ({type: 'setDesignPath', data}))
     .delay(1)
 
-  const setDesignScriptContent$ = most.mergeArray([
-    sources.fs.filter()
+  const setDesignContent$ = most.mergeArray([
+    sources.fs.filter(data => data.operation === 'read').map(raw => raw.data),
+    sources.watcher// .map(content => )
   ])
-    .map(data => ({type: 'setDesignScriptContent', data}))
+    .map(data => ({type: 'setDesignContent', data}))
 
   // design parameter change actions
   const updateDesignFromParams$ = most.mergeArray([
     sources.dom.select('#updateDesignFromParams').events('click')
       .map(function () {
         const controls = Array.from(document.getElementById('paramsMain').getElementsByTagName('input'))
-        return {paramValues: require('./core/getParamValues')(controls), origin: 'manualUpdate'}
+        return {paramValues: require('../core/getParamValues')(controls), origin: 'manualUpdate'}
       }),
     sources.paramChanges.map(function (controls) {
-      return {paramValues: require('./core/getParamValues')(controls), origin: 'instantUpdate'}
+      return {paramValues: require('../core/getParamValues')(controls), origin: 'instantUpdate'}
     })
   ])
     .map(data => ({type: 'updateDesignFromParams', data}))
@@ -172,7 +168,7 @@ const makeActions = (sources) => {
     toggleInstantUpdate$,
     // design
     setDesignPath$,
-    designLoadRequested$,
+    setDesignContent$,
     updateDesignFromParams$,
     // exports
     changeExportFormat$,

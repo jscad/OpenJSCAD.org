@@ -35,7 +35,8 @@ function watcherSink (toWatch$) {
             watched = filename
             // clear require() cache to force reload the file , otherwise it keeps reloading the cached version
             requireUncached(filePath)
-            scriptDataFromCB.callback(filePath)
+            const contents = fs.readFileSync(filePath, 'utf8')
+            scriptDataFromCB.callback(contents)
           }
         })
       }
@@ -44,7 +45,10 @@ function watcherSink (toWatch$) {
 }
 
 function watcherSource () {
-  return scriptDataFromCB.stream.multicast().debounce(1000)// debounce is very important as fs.Watch is unstable
+  return scriptDataFromCB.stream
+    .debounce(400)// debounce is very important as fs.Watch is unstable
+    .skipRepeats()
+    .multicast()
 }
 
 module.exports = {watcherSink, watcherSource}

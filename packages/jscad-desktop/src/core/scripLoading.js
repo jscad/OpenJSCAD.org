@@ -72,9 +72,8 @@ const getScriptFile = paths => {
  * @param  {} filePath
  * @param  {} csgBasePath='../../../core/' : relative path or  './node_modules/@jscad'
  */
-function loadScript (filePath, csgBasePath = './node_modules/@jscad') {
+function loadScript (scriptAsText, filePath, csgBasePath = './node_modules/@jscad') {
   console.log('loading script using jscad/csg base path at:', csgBasePath)
-  const scriptAsText = fs.readFileSync(filePath, 'utf8')
   let jscadScript
   // && !scriptAsText.includes('require(')
   if ((!scriptAsText.includes('module.exports')) && scriptAsText.includes('main')) {
