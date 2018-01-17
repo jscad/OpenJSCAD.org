@@ -6,8 +6,8 @@ const {IsFloat} = require('../utils')
  *
  * @example
  * new CSG.Vector2D(1, 2);
- * new CSG.Vector3D([1, 2]);
- * new CSG.Vector3D({ x: 1, y: 2});
+ * new CSG.Vector2D([1, 2]);
+ * new CSG.Vector2D({ x: 1, y: 2});
  */
 const Vector2D = function (x, y) {
   if (arguments.length === 2) {
