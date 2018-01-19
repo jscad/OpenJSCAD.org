@@ -49,11 +49,13 @@
             bottom:40px;
             left: 40px;
             user-select: none;
+            padding: 10px;
           }
           #busy{
             position: absolute;
             color: black;
             top: 50px;
+            z-index: 100;
           }
           #status{
             position: absolute;
@@ -69,6 +71,23 @@
             bottom: 0px;
             left: 0px;
             right: 0px;
+          }
+          header{
+            z-index: 100;
+            position: sticky;
+            padding: 5px;
+            display: inline-flex;
+          }
+          header section{
+            padding-left: 10px;
+          }
+          header h3{
+            margin-bottom: 0px;
+            margin-top: 0px;
+          }
+          header .designName{
+            color:gray;
+            text-transform: capitalize;
           }
         </style>
     </head>

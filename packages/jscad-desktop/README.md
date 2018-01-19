@@ -40,9 +40,12 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
     - if there is a package.json file, the file specified in the 'main' field is used (standard node.js)
     - if there is no package.json the program tried to look for either an index.js/jscad file or a main.js/jscad file
     - if that fails it tries to look for a js/jscad file that has the same name as the folder
- *  unlike the web based UI you can (and are encouraged to) use jscad designs defined as common.js modules, so you can use
- require() calls to include other functions etc
- * VERY IMPORTANT : if you use common.js modules you HAVE to `require()` all the OpenJSCAD modules you use (like `@jscad/csg` etc) **yourself**: if the app detects that you do not have `module.exports`, then it will inject all the OpenJSCAD api itself :see [here](https://github.com/jscad/jscad-desktop/blob/master/src/core/scripLoading.js#L75) for more details 
+ *  unlike the web based UI you can (and are **encouraged to**) use jscad designs defined as common.js modules, so you can use
+ ```require(<moduleName>)``` calls to include other functions, shapes etc
+ * in your main file, when using common.js modules please favor named exports ie :
+  ```javascript module.exports = {main, getParameterDefinitions}```
+ * VERY IMPORTANT : if you use common.js modules you HAVE to `require()` all the OpenJSCAD modules you use (like `@jscad/csg` etc) **yourself**: if the app detects that you do not have `module.exports`, then it will inject all the OpenJSCAD api itself, with a MAJOR limitation at this time:
+  you cannot make require() calls from anything but the root level file, and you do not have access to the API (this will get fixed)
 
  > there will NOT be out of the box support for es6 modules anytime soon, please use a transpiler (Babel.js etc)
 

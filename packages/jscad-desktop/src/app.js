@@ -57,9 +57,9 @@ electronStoreSink(state$
 // data out to file watcher
 watcherSink(
   state$
-    .filter(state => state.design.mainPath !== '') // FIXME: disable watch if autoreload is set to false
+    .filter(state => state.design.mainPath !== '') 
     .skipRepeats()
-    .map(state => ({filePath: state.design.mainPath, enabled: state.autoReload}))
+    .map(state => ({filePath: state.design.mainPath, enabled: state.autoReload})) // enable/disable watch if autoreload is set to false
 )
 fsSink(
   state$
