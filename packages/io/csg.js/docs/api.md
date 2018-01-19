@@ -762,8 +762,8 @@ Represents a 2D vector with X, Y coordinates
 **Example**  
 ```js
 new CSG.Vector2D(1, 2);
-new CSG.Vector3D([1, 2]);
-new CSG.Vector3D({ x: 1, y: 2});
+new CSG.Vector2D([1, 2]);
+new CSG.Vector2D({ x: 1, y: 2});
 ```
 <a name="Vector3D"></a>
 
