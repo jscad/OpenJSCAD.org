@@ -2,6 +2,7 @@ const CAG = require('../core/CAG')
 const {parseOptionAs2DVector, parseOptionAsFloat, parseOptionAsInt} = require('./optionParsers')
 const {defaultResolution2D} = require('../core/constants')
 const Vector2D = require('../core/math/Vector2')
+const Vertex2 = require('../core/math/Vertex2')
 const Path2D = require('../core/math/Path2')
 const {fromCompactBinary, fromPoints, fromPath2, fromSides} = require('../core/CAGFactories')
 
@@ -133,7 +134,7 @@ const roundedRectangle = function (options) {
   roundradius = Math.min(roundradius, maxroundradius)
   roundradius = Math.max(0, roundradius)
   radius = new Vector2D(radius.x - roundradius, radius.y - roundradius)
-  let rect = CAG.rectangle({
+  let rect = rectangle({
     center: center,
     radius: radius
   })
@@ -147,7 +148,7 @@ const roundedRectangle = function (options) {
  * @param {CompactBinary} bin - see toCompactBinary()
  * @returns {CAG} new CAG object
  */
-CAG.fromCompactBinary = function (bin) {
+/*fromCompactBinary = function (bin) {
   if (bin['class'] !== 'CAG') throw new Error('Not a CAG')
   let vertices = []
   let vertexData = bin.vertexData
@@ -157,7 +158,7 @@ CAG.fromCompactBinary = function (bin) {
     let x = vertexData[arrayindex++]
     let y = vertexData[arrayindex++]
     let pos = new Vector2D(x, y)
-    let vertex = new CAG.Vertex(pos)
+    let vertex = new Vertex2(pos)
     vertices.push(vertex)
   }
 
@@ -167,13 +168,13 @@ CAG.fromCompactBinary = function (bin) {
   for (let sideindex = 0; sideindex < numsides; sideindex++) {
     let vertexindex0 = bin.sideVertexIndices[arrayindex++]
     let vertexindex1 = bin.sideVertexIndices[arrayindex++]
-    let side = new CAG.Side(vertices[vertexindex0], vertices[vertexindex1])
+    let side = new Side(vertices[vertexindex0], vertices[vertexindex1])
     sides.push(side)
   }
   let cag = fromSides(sides)
   cag.isCanonicalized = true
   return cag
-}
+}*/
 
 module.exports = {
   circle,

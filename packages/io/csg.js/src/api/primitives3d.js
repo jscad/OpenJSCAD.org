@@ -1,16 +1,16 @@
 const {parseOption, parseOptionAs3DVector, parseOptionAs2DVector, parseOptionAs3DVectorList, parseOptionAsFloat, parseOptionAsInt} = require('./optionParsers')
 const {defaultResolution3D, defaultResolution2D, EPS} = require('../core/constants')
-const Vector3D = require('../core/math/Vector3')
-const Vertex = require('../core/math/Vertex3')
-const Polygon = require('../core/math/Polygon3')
+const Vector3 = require('../core/math/Vector3')
+const Vertex3 = require('../core/math/Vertex3')
+const Polygon3 = require('../core/math/Polygon3')
 const {Connector} = require('../core/connectors')
 const Properties = require('../core/Properties')
 const {fromPolygons} = require('../core/CSGFactories')
 
 /** Construct an axis-aligned solid cuboid.
  * @param {Object} [options] - options for construction
- * @param {Vector3D} [options.center=[0,0,0]] - center of cube
- * @param {Vector3D} [options.radius=[1,1,1]] - radius of cube, single scalar also possible
+ * @param {Vector3} [options.center=[0,0,0]] - center of cube
+ * @param {Vector3} [options.radius=[1,1,1]] - radius of cube, single scalar also possible
  * @returns {CSG} new 3D solid
  *
  * @example
@@ -65,29 +65,29 @@ const cube = function (options) {
     ]
   ].map(function (info) {
     let vertices = info[0].map(function (i) {
-      let pos = new Vector3D(
+      let pos = new Vector3(
                 c.x + r.x * (2 * !!(i & 1) - 1), c.y + r.y * (2 * !!(i & 2) - 1), c.z + r.z * (2 * !!(i & 4) - 1))
-      return new Vertex(pos)
+      return new Vertex3(pos)
     })
-    return new Polygon(vertices, null /* , plane */)
+    return new Polygon3(vertices, null /* , plane */)
   }))
   result.properties.cube = new Properties()
-  result.properties.cube.center = new Vector3D(c)
+  result.properties.cube.center = new Vector3(c)
     // add 6 connectors, at the centers of each face:
   result.properties.cube.facecenters = [
-    new Connector(new Vector3D([r.x, 0, 0]).plus(c), [1, 0, 0], [0, 0, 1]),
-    new Connector(new Vector3D([-r.x, 0, 0]).plus(c), [-1, 0, 0], [0, 0, 1]),
-    new Connector(new Vector3D([0, r.y, 0]).plus(c), [0, 1, 0], [0, 0, 1]),
-    new Connector(new Vector3D([0, -r.y, 0]).plus(c), [0, -1, 0], [0, 0, 1]),
-    new Connector(new Vector3D([0, 0, r.z]).plus(c), [0, 0, 1], [1, 0, 0]),
-    new Connector(new Vector3D([0, 0, -r.z]).plus(c), [0, 0, -1], [1, 0, 0])
+    new Connector(new Vector3([r.x, 0, 0]).plus(c), [1, 0, 0], [0, 0, 1]),
+    new Connector(new Vector3([-r.x, 0, 0]).plus(c), [-1, 0, 0], [0, 0, 1]),
+    new Connector(new Vector3([0, r.y, 0]).plus(c), [0, 1, 0], [0, 0, 1]),
+    new Connector(new Vector3([0, -r.y, 0]).plus(c), [0, -1, 0], [0, 0, 1]),
+    new Connector(new Vector3([0, 0, r.z]).plus(c), [0, 0, 1], [1, 0, 0]),
+    new Connector(new Vector3([0, 0, -r.z]).plus(c), [0, 0, -1], [1, 0, 0])
   ]
   return result
 }
 
 /** Construct a solid sphere
  * @param {Object} [options] - options for construction
- * @param {Vector3D} [options.center=[0,0,0]] - center of sphere
+ * @param {Vector3} [options.center=[0,0,0]] - center of sphere
  * @param {Number} [options.radius=1] - radius of sphere
  * @param {Number} [options.resolution=defaultResolution3D] - number of polygons per 360 degree revolution
  * @param {Array} [options.axes] -  an array with 3 vectors for the x, y and z base vectors
@@ -112,9 +112,9 @@ const sphere = function (options) {
     yvector = options.axes[1].unit().times(radius)
     zvector = options.axes[2].unit().times(radius)
   } else {
-    xvector = new Vector3D([1, 0, 0]).times(radius)
-    yvector = new Vector3D([0, -1, 0]).times(radius)
-    zvector = new Vector3D([0, 0, 1]).times(radius)
+    xvector = new Vector3([1, 0, 0]).times(radius)
+    yvector = new Vector3([0, -1, 0]).times(radius)
+    zvector = new Vector3([0, 0, 1]).times(radius)
   }
   if (resolution < 4) resolution = 4
   let qresolution = Math.round(resolution / 4)
@@ -133,22 +133,22 @@ const sphere = function (options) {
         let sinpitch = Math.sin(pitch)
         if (slice2 > 0) {
           vertices = []
-          vertices.push(new Vertex(center.plus(prevcylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
-          vertices.push(new Vertex(center.plus(cylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
+          vertices.push(new Vertex3(center.plus(prevcylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
+          vertices.push(new Vertex3(center.plus(cylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
           if (slice2 < qresolution) {
-            vertices.push(new Vertex(center.plus(cylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
+            vertices.push(new Vertex3(center.plus(cylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
           }
-          vertices.push(new Vertex(center.plus(prevcylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
-          polygons.push(new Polygon(vertices))
+          vertices.push(new Vertex3(center.plus(prevcylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
+          polygons.push(new Polygon3(vertices))
           vertices = []
-          vertices.push(new Vertex(center.plus(prevcylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
-          vertices.push(new Vertex(center.plus(cylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
+          vertices.push(new Vertex3(center.plus(prevcylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
+          vertices.push(new Vertex3(center.plus(cylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
           if (slice2 < qresolution) {
-            vertices.push(new Vertex(center.plus(cylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
+            vertices.push(new Vertex3(center.plus(cylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
           }
-          vertices.push(new Vertex(center.plus(prevcylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
+          vertices.push(new Vertex3(center.plus(prevcylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
           vertices.reverse()
-          polygons.push(new Polygon(vertices))
+          polygons.push(new Polygon3(vertices))
         }
         prevcospitch = cospitch
         prevsinpitch = sinpitch
@@ -158,7 +158,7 @@ const sphere = function (options) {
   }
   let result = fromPolygons(polygons)
   result.properties.sphere = new Properties()
-  result.properties.sphere.center = new Vector3D(center)
+  result.properties.sphere.center = new Vector3(center)
   result.properties.sphere.facepoint = center.plus(xvector)
   return result
 }
@@ -200,42 +200,42 @@ const cylinder = function (options) {
   let axisZ = ray.unit() //, isY = (Math.abs(axisZ.y) > 0.5);
   let axisX = axisZ.randomNonParallelVector().unit()
 
-    //  let axisX = new Vector3D(isY, !isY, 0).cross(axisZ).unit();
+    //  let axisX = new Vector3(isY, !isY, 0).cross(axisZ).unit();
   let axisY = axisX.cross(axisZ).unit()
-  let start = new Vertex(s)
-  let end = new Vertex(e)
+  let start = new Vertex3(s)
+  let end = new Vertex3(e)
   let polygons = []
 
   function point (stack, slice, radius) {
     let angle = slice * Math.PI * alpha / 180
     let out = axisX.times(Math.cos(angle)).plus(axisY.times(Math.sin(angle)))
     let pos = s.plus(ray.times(stack)).plus(out.times(radius))
-    return new Vertex(pos)
+    return new Vertex3(pos)
   }
   if (alpha > 0) {
     for (let i = 0; i < slices; i++) {
       let t0 = i / slices
       let t1 = (i + 1) / slices
       if (rEnd === rStart) {
-        polygons.push(new Polygon([start, point(0, t0, rEnd), point(0, t1, rEnd)]))
-        polygons.push(new Polygon([point(0, t1, rEnd), point(0, t0, rEnd), point(1, t0, rEnd), point(1, t1, rEnd)]))
-        polygons.push(new Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
+        polygons.push(new Polygon3([start, point(0, t0, rEnd), point(0, t1, rEnd)]))
+        polygons.push(new Polygon3([point(0, t1, rEnd), point(0, t0, rEnd), point(1, t0, rEnd), point(1, t1, rEnd)]))
+        polygons.push(new Polygon3([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
       } else {
         if (rStart > 0) {
-          polygons.push(new Polygon([start, point(0, t0, rStart), point(0, t1, rStart)]))
-          polygons.push(new Polygon([point(0, t0, rStart), point(1, t0, rEnd), point(0, t1, rStart)]))
+          polygons.push(new Polygon3([start, point(0, t0, rStart), point(0, t1, rStart)]))
+          polygons.push(new Polygon3([point(0, t0, rStart), point(1, t0, rEnd), point(0, t1, rStart)]))
         }
         if (rEnd > 0) {
-          polygons.push(new Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
-          polygons.push(new Polygon([point(1, t0, rEnd), point(1, t1, rEnd), point(0, t1, rStart)]))
+          polygons.push(new Polygon3([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
+          polygons.push(new Polygon3([point(1, t0, rEnd), point(1, t1, rEnd), point(0, t1, rStart)]))
         }
       }
     }
     if (alpha < 360) {
-      polygons.push(new Polygon([start, end, point(0, 0, rStart)]))
-      polygons.push(new Polygon([point(0, 0, rStart), end, point(1, 0, rEnd)]))
-      polygons.push(new Polygon([start, point(0, 1, rStart), end]))
-      polygons.push(new Polygon([point(0, 1, rStart), point(1, 1, rEnd), end]))
+      polygons.push(new Polygon3([start, end, point(0, 0, rStart)]))
+      polygons.push(new Polygon3([point(0, 0, rStart), end, point(1, 0, rEnd)]))
+      polygons.push(new Polygon3([start, point(0, 1, rStart), end]))
+      polygons.push(new Polygon3([point(0, 1, rStart), point(1, 1, rEnd), end]))
     }
   }
   let result = fromPolygons(polygons)
@@ -253,10 +253,10 @@ const cylinder = function (options) {
 
 /** Construct a cylinder with rounded ends.
  * @param {Object} [options] - options for construction
- * @param {Vector3D} [options.start=[0,-1,0]] - start point of cylinder
- * @param {Vector3D} [options.end=[0,1,0]] - end point of cylinder
+ * @param {Vector3} [options.start=[0,-1,0]] - start point of cylinder
+ * @param {Vector3} [options.end=[0,1,0]] - end point of cylinder
  * @param {Number} [options.radius=1] - radius of rounded ends, must be scalar
- * @param {Vector3D} [options.normal] - vector determining the starting angle for tesselation. Should be non-parallel to start.minus(end)
+ * @param {Vector3} [options.normal] - vector determining the starting angle for tesselation. Should be non-parallel to start.minus(end)
  * @param {Number} [options.resolution=defaultResolution3D] - number of polygons per 360 degree revolution
  * @returns {CSG} new 3D solid
  *
@@ -275,9 +275,9 @@ const roundedCylinder = function (options) {
   let direction = p2.minus(p1)
   let defaultnormal
   if (Math.abs(direction.x) > Math.abs(direction.y)) {
-    defaultnormal = new Vector3D(0, 1, 0)
+    defaultnormal = new Vector3(0, 1, 0)
   } else {
-    defaultnormal = new Vector3D(1, 0, 0)
+    defaultnormal = new Vector3(1, 0, 0)
   }
   let normal = parseOptionAs3DVector(options, 'normal', defaultnormal)
   let resolution = parseOptionAsInt(options, 'resolution', defaultResolution3D)
@@ -302,11 +302,11 @@ const roundedCylinder = function (options) {
     if (slice1 > 0) {
             // cylinder vertices:
       let vertices = []
-      vertices.push(new Vertex(p1.plus(cylinderpoint)))
-      vertices.push(new Vertex(p1.plus(prevcylinderpoint)))
-      vertices.push(new Vertex(p2.plus(prevcylinderpoint)))
-      vertices.push(new Vertex(p2.plus(cylinderpoint)))
-      polygons.push(new Polygon(vertices))
+      vertices.push(new Vertex3(p1.plus(cylinderpoint)))
+      vertices.push(new Vertex3(p1.plus(prevcylinderpoint)))
+      vertices.push(new Vertex3(p2.plus(prevcylinderpoint)))
+      vertices.push(new Vertex3(p2.plus(cylinderpoint)))
+      polygons.push(new Polygon3(vertices))
       let prevcospitch, prevsinpitch
       for (let slice2 = 0; slice2 <= qresolution; slice2++) {
         let pitch = 0.5 * Math.PI * slice2 / qresolution
@@ -315,22 +315,22 @@ const roundedCylinder = function (options) {
         let sinpitch = Math.sin(pitch)
         if (slice2 > 0) {
           vertices = []
-          vertices.push(new Vertex(p1.plus(prevcylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
-          vertices.push(new Vertex(p1.plus(cylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
+          vertices.push(new Vertex3(p1.plus(prevcylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
+          vertices.push(new Vertex3(p1.plus(cylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
           if (slice2 < qresolution) {
-            vertices.push(new Vertex(p1.plus(cylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
+            vertices.push(new Vertex3(p1.plus(cylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
           }
-          vertices.push(new Vertex(p1.plus(prevcylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
-          polygons.push(new Polygon(vertices))
+          vertices.push(new Vertex3(p1.plus(prevcylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
+          polygons.push(new Polygon3(vertices))
           vertices = []
-          vertices.push(new Vertex(p2.plus(prevcylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
-          vertices.push(new Vertex(p2.plus(cylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
+          vertices.push(new Vertex3(p2.plus(prevcylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
+          vertices.push(new Vertex3(p2.plus(cylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
           if (slice2 < qresolution) {
-            vertices.push(new Vertex(p2.plus(cylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
+            vertices.push(new Vertex3(p2.plus(cylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
           }
-          vertices.push(new Vertex(p2.plus(prevcylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
+          vertices.push(new Vertex3(p2.plus(prevcylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
           vertices.reverse()
-          polygons.push(new Polygon(vertices))
+          polygons.push(new Polygon3(vertices))
         }
         prevcospitch = cospitch
         prevsinpitch = sinpitch
@@ -350,8 +350,8 @@ const roundedCylinder = function (options) {
 
 /** Construct an elliptic cylinder.
  * @param {Object} [options] - options for construction
- * @param {Vector3D} [options.start=[0,-1,0]] - start point of cylinder
- * @param {Vector3D} [options.end=[0,1,0]] - end point of cylinder
+ * @param {Vector3} [options.start=[0,-1,0]] - start point of cylinder
+ * @param {Vector3} [options.end=[0,1,0]] - end point of cylinder
  * @param {Vector2D} [options.radius=[1,1]] - radius of rounded ends, must be two dimensional array
  * @param {Vector2D} [options.radiusStart=[1,1]] - OPTIONAL radius of rounded start, must be two dimensional array
  * @param {Vector2D} [options.radiusEnd=[1,1]] - OPTIONAL radius of rounded end, must be two dimensional array
@@ -387,34 +387,34 @@ const cylinderElliptic = function (options) {
   let axisZ = ray.unit() //, isY = (Math.abs(axisZ.y) > 0.5);
   let axisX = axisZ.randomNonParallelVector().unit()
 
-    //  let axisX = new Vector3D(isY, !isY, 0).cross(axisZ).unit();
+    //  let axisX = new Vector3(isY, !isY, 0).cross(axisZ).unit();
   let axisY = axisX.cross(axisZ).unit()
-  let start = new Vertex(s)
-  let end = new Vertex(e)
+  let start = new Vertex3(s)
+  let end = new Vertex3(e)
   let polygons = []
 
   function point (stack, slice, radius) {
     let angle = slice * Math.PI * 2
     let out = axisX.times(radius._x * Math.cos(angle)).plus(axisY.times(radius._y * Math.sin(angle)))
     let pos = s.plus(ray.times(stack)).plus(out)
-    return new Vertex(pos)
+    return new Vertex3(pos)
   }
   for (let i = 0; i < slices; i++) {
     let t0 = i / slices
     let t1 = (i + 1) / slices
 
     if (rEnd._x === rStart._x && rEnd._y === rStart._y) {
-      polygons.push(new Polygon([start, point(0, t0, rEnd), point(0, t1, rEnd)]))
-      polygons.push(new Polygon([point(0, t1, rEnd), point(0, t0, rEnd), point(1, t0, rEnd), point(1, t1, rEnd)]))
-      polygons.push(new Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
+      polygons.push(new Polygon3([start, point(0, t0, rEnd), point(0, t1, rEnd)]))
+      polygons.push(new Polygon3([point(0, t1, rEnd), point(0, t0, rEnd), point(1, t0, rEnd), point(1, t1, rEnd)]))
+      polygons.push(new Polygon3([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
     } else {
       if (rStart._x > 0) {
-        polygons.push(new Polygon([start, point(0, t0, rStart), point(0, t1, rStart)]))
-        polygons.push(new Polygon([point(0, t0, rStart), point(1, t0, rEnd), point(0, t1, rStart)]))
+        polygons.push(new Polygon3([start, point(0, t0, rStart), point(0, t1, rStart)]))
+        polygons.push(new Polygon3([point(0, t0, rStart), point(1, t0, rEnd), point(0, t1, rStart)]))
       }
       if (rEnd._x > 0) {
-        polygons.push(new Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
-        polygons.push(new Polygon([point(1, t0, rEnd), point(1, t1, rEnd), point(0, t1, rStart)]))
+        polygons.push(new Polygon3([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
+        polygons.push(new Polygon3([point(1, t0, rEnd), point(1, t1, rEnd), point(0, t1, rStart)]))
       }
     }
   }
@@ -428,8 +428,8 @@ const cylinderElliptic = function (options) {
 
 /** Construct an axis-aligned solid rounded cuboid.
  * @param {Object} [options] - options for construction
- * @param {Vector3D} [options.center=[0,0,0]] - center of rounded cube
- * @param {Vector3D} [options.radius=[1,1,1]] - radius of rounded cube, single scalar is possible
+ * @param {Vector3} [options.center=[0,0,0]] - center of rounded cube
+ * @param {Vector3} [options.radius=[1,1,1]] - radius of rounded cube, single scalar is possible
  * @param {Number} [options.roundradius=0.2] - radius of rounded edges
  * @param {Number} [options.resolution=defaultResolution3D] - number of polygons per 360 degree revolution
  * @returns {CSG} new 3D solid
@@ -467,7 +467,7 @@ const roundedCube = function (options) {
   if (resolution % 2 === 1 && resolution < 8) resolution = 8 // avoid ugly
   let roundradius = parseOptionAs3DVector(options, 'roundradius', [0.2, 0.2, 0.2])
     // slight hack for now - total radius stays ok
-  roundradius = Vector3D.Create(Math.max(roundradius.x, minRR), Math.max(roundradius.y, minRR), Math.max(roundradius.z, minRR))
+  roundradius = Vector3.Create(Math.max(roundradius.x, minRR), Math.max(roundradius.y, minRR), Math.max(roundradius.z, minRR))
   let innerradius = cuberadius.minus(roundradius)
   if (innerradius.x < 0 || innerradius.y < 0 || innerradius.z < 0) {
     throw new Error('roundradius <= radius!')
@@ -480,14 +480,14 @@ const roundedCube = function (options) {
   res = res.translate([-innerradius.x + center.x, -innerradius.y + center.y, -innerradius.z + center.z])
   res = res.reTesselated()
   res.properties.roundedCube = new Properties()
-  res.properties.roundedCube.center = new Vertex(center)
+  res.properties.roundedCube.center = new Vertex3(center)
   res.properties.roundedCube.facecenters = [
-    new Connector(new Vector3D([cuberadius.x, 0, 0]).plus(center), [1, 0, 0], [0, 0, 1]),
-    new Connector(new Vector3D([-cuberadius.x, 0, 0]).plus(center), [-1, 0, 0], [0, 0, 1]),
-    new Connector(new Vector3D([0, cuberadius.y, 0]).plus(center), [0, 1, 0], [0, 0, 1]),
-    new Connector(new Vector3D([0, -cuberadius.y, 0]).plus(center), [0, -1, 0], [0, 0, 1]),
-    new Connector(new Vector3D([0, 0, cuberadius.z]).plus(center), [0, 0, 1], [1, 0, 0]),
-    new Connector(new Vector3D([0, 0, -cuberadius.z]).plus(center), [0, 0, -1], [1, 0, 0])
+    new Connector(new Vector3([cuberadius.x, 0, 0]).plus(center), [1, 0, 0], [0, 0, 1]),
+    new Connector(new Vector3([-cuberadius.x, 0, 0]).plus(center), [-1, 0, 0], [0, 0, 1]),
+    new Connector(new Vector3([0, cuberadius.y, 0]).plus(center), [0, 1, 0], [0, 0, 1]),
+    new Connector(new Vector3([0, -cuberadius.y, 0]).plus(center), [0, -1, 0], [0, 0, 1]),
+    new Connector(new Vector3([0, 0, cuberadius.z]).plus(center), [0, 0, 1], [1, 0, 0]),
+    new Connector(new Vector3([0, 0, -cuberadius.z]).plus(center), [0, 0, -1], [1, 0, 0])
   ]
   return res
 }
@@ -510,7 +510,7 @@ const polyhedron = function (options) {
             [0, 0, 1]
   ])
         .map(function (pt) {
-          return new Vertex(pt)
+          return new Vertex3(pt)
         })
   let faces = parseOption(options, 'faces', [
             [0, 1, 4],
@@ -525,7 +525,7 @@ const polyhedron = function (options) {
     face.reverse()
   })
   let polygons = faces.map(function (face) {
-    return new Polygon(face.map(function (idx) {
+    return new Polygon3(face.map(function (idx) {
       return vertices[idx]
     }))
   })
