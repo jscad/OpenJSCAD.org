@@ -2,8 +2,8 @@
 <img src="doc/logo.png" width=256 align=right>
 
 >*OpenJsCad.org* is a more up-to-date [OpenJsCAD](http://joostn.github.com/OpenJsCad/) frontend where you can edit .jscad files either locally or online via JS editor (built-in).
-A few functions are available to make the transition from [OpenSCAD](http://openscad.org/) to OpenJSCAD easier ([scad-api](https://github.com/jscad/scad-api) built-in),
-as well CLI (command-line interface) for server-side computations with NodeJS.
+This is the Web based UI for OpenJsCAD, either to self host, or use direclt at https://openjscad.org/.
+
 
 [![Backers on Open Collective](https://opencollective.com/openjscad/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/openjscad/sponsors/badge.svg)](#sponsors) [![GitHub version](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org.svg)](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
@@ -36,12 +36,15 @@ Go to *[OpenJSCAD.org](http://openjscad.org)* (Tested browsers include Chrome, F
 cd base-directory-of-website
 git clone https://github.com/jscad/OpenJSCAD.org
 cd OpenJSCAD.org
+cd packages/web . // this is where the web version is
+cp ../examples ./examples // copy the examples here
 <start a web server here>
 ```
 And then access the contents via the URL of the web-site.
   * index.html for the standard version
   * viewer-minimal.html for the barebones viewer
   * viewer-options.html for the 'all options' variant of the above
+
 
 >NOTE: You might need configuration changes to allow access to the some of the contents (examples etc).
 
@@ -67,123 +70,6 @@ https://<YOURSITE>/#http://www.thingiverse.com/download:164128
 
 >Note: a PR with a node.js based proxy would be a welcome addition :)
 
-
-### Use as Command Line Interface (CLI)
-
-### Install node.js
-
-> IMPORTANT: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x
-> we test OpenJSCAD on node.js version **6.x.x** & **7.x.x** all other versions are not guaranteed to work !
-
-An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
-- after installing nvm type ```nvm install v6``` (recomended)
-- then ```nvm use v6```
-
-#### Install OpenJSCAD CLI:
-
-CLI(command-line interface) use
-
-```
- npm install -g @jscad/openjscad
-```
-
-you can now turn the examples (or your own designs) into stl etc files as follows :
-```
-% cd examples/
-% openjscad example005.jscad                         # -- creates example005.stl as default
-% openjscad example001.jscad -o test.stl
-% openjscad example001.scad -o example001scad.jscad  # -- convert .scad into .jscad
-% openjscad frog.stl -o test.jscad                   # -- convert .stl into .jscad
-% openjscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf
-```
-
-### Use with Node Modules
-
-> Note: you need a recent , LTS version of Node.js > 6.x.x,
-[see here for more details](https://github.com/nodejs/LTS))
-all the same installation & version recomendation as for the use as command-line also apply
-
-```
-npm install --save @jscad/openjscad
-```
-
-and then simply import and use openjscad:
-
-```javascript
-const jscad = require('@jscad/openjscad')
-const fs = require('fs')
-
-var script = `function main() {
-   return [
-      torus()
-  ]
-}`
-
-// generate compiled version
-var params = {}
-jscad.compile(script, params).then(function(compiled) {
-  // generate final output data, choosing your prefered format
-  var outputData = jscad.generateOutput('stlb', compiled)
-  // hurray ,we can now write an stl file from our OpenJsCad script!
-  fs.writeFileSync('torus.stl', outputData.asBuffer())
-})
-
-```
-
-you can also use the 'generateOutput' function directly with CSG/CAG objects ie :
-
-```javascript
-const csg = require('csg').CSG
-const input = csg.cube([1, 1, 1]) // one of many ways to create a CSG object
-
-const outputData = jscad.generateOutput('stlb', input)
-
-// hurray ,we can now write an stl file from our raw CSG objects
-fs.writeFileSync('torus.stl', outputData.asBuffer())
-```
-
-#### Module api
-
-**compile(params, source)**
-
- compile OpenJsCad code and generates CSG representation
- this returns a promise that gets resolved with the CSG object.
-
- (the ordering of parameters was created with currying in mind)
-
- *params* the set of parameters to use
- *source* the OpenJsCad script we want to compile
-
-
-**generateOutput(outputFormat, csgs)**
-
-generate output data from a CSG/CAG object or array of CSG/CAG objects
-
- *outputFormat* the output file format
- *csgs* the CSG/CAG object or array of CSG/CAG objects
-
->Note: for now you need to use outputData.asBuffer() to get a Node.js buffer for
-writing to disk etc
-
-
-### Use of the different modular components directly
-
-From version 1.0.0 onwards, almost all the individual parts of this project are available
-directly as scoped NPM modules , and can be used independently from this repo.
-The full list of these is available here: https://www.npmjs.com/org/jscad
-
-One example of what can be achieved with this can be found [here](https://esnextb.in/?gist=0a2ac2c4e189e27692ea964956a3a2e5)
-This means you can :
-- easily create your own renderer for the CSG/Cag data structures
-- create custom UIs
-- use the different parts in Node.js or the Browser
-- cherry pick what formats you want to use for input/output without needing the
-dependencies of **all** packages
-- lots more !
-
-This will be expanded upon in the future, and is the backbone of the newer, modular Jscad
-
-
 ## Development
 
 We offer pre-built versions of OpenJSCAD to be uses directly here :
@@ -198,15 +84,21 @@ but you can also rebuild them manually if you need :
 - with options: ```npm run build-opt```
 
 
-### Adding new features in CSG.js or other modules:
+### Adding new features the other modules in this repository:
 Since OpenJSCAD is made up of multiple dependent modules (csg.js, openscad-openjscad-translator etc),
 the easiest method is to use ```npm link``` to have a 'live' updating development version of OpenJSCAD:
 - create a base directory
 - clone this repository ```git clone https://github.com/jscad/OpenJSCAD.org.git```
 - go into OpenJSCAD.org folder ```cd OpenJSCAD.org```
-- install dependencies ```npm install```
-- if desired, make the ```openjscad``` command refer to the code in this folder: ```npm link```
+- install dependencies & setup inter package links ```npm run bootstrap```
+- go into the web folder : ```cd packages/web````
 - if desired, start dev server: ```npm run start-dev```
+
+> Note : you can also change the code in all the other packages/xxx folders and it will also
+impact the web ui (ie : if you make changes to packages/core in parts that are used in the Web Ui,
+you do not need to run additional commands)
+
+### Adding new features in CSG.js or other modules:
 
 Then, for example for CSG.js:
 - go back to base directory ```cd ..```

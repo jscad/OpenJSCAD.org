@@ -2,8 +2,10 @@
 <img src="doc/logo.png" width=256 align=right>
 
 >*OpenJsCad.org* is a more up-to-date [OpenJsCAD](http://joostn.github.com/OpenJsCad/) frontend where you can edit .jscad files either locally or online via JS editor (built-in).
-A few functions are available to make the transition from [OpenSCAD](http://openscad.org/) to OpenJSCAD easier ([scad-api](https://github.com/jscad/scad-api) built-in),
-as well CLI (command-line interface) for server-side computations with NodeJS.
+
+There are many ways to use OpenJSCAD! 
+Self hosteable web based ui, an online version, an experimental desktop app
+as well as CLI (command-line interface) for server-side computations with NodeJS.
 
 [![Backers on Open Collective](https://opencollective.com/openjscad/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/openjscad/sponsors/badge.svg)](#sponsors) [![GitHub version](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org.svg)](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
@@ -27,11 +29,14 @@ as well CLI (command-line interface) for server-side computations with NodeJS.
 ## Usage
 
 There are different 'flavors' of OpenJscad that you can use based on your needs
-- web: online (no install)
+- web: online (no install) simply go to [https://openjscad.org/](https://openjscad.org/)
 - web: self hosted: can be found [here](./packages/web)
 - cli: command line interface : can be found [here](./packages/cli)
-- desktop app: work in progress!
+- desktop app: pre pre alpha work in progress can be found [here](https://github.com/jscad/jscad-desktop)!
 - node.js: custom mix & match of modules
+  * all the packages are available [on npm](https://www.npmjs.com/search?q=%40jscad) under the '@jscad' name 
+  * Geometric [core & modeling api](https://github.com/jscad/csg.js)
+  * Input/output [formats handling stl, amf dxf, svg](https://github.com/jscad/io/tree/master/packages) 
 
 ### Immediate Use (no installation)
 
@@ -39,71 +44,11 @@ Go to *[OpenJSCAD.org](http://openjscad.org)* (Tested browsers include Chrome, F
 
 ### Use within a Web Site (pre built files, from github)
 
-```
-cd base-directory-of-website
-git clone https://github.com/jscad/OpenJSCAD.org
-cd OpenJSCAD.org
-cd packages/web . // this is where the web version is
-<start a web server here>
-```
-And then access the contents via the URL of the web-site.
-  * index.html for the standard version
-  * viewer-minimal.html for the barebones viewer
-  * viewer-options.html for the 'all options' variant of the above
-
->NOTE: You might need configuration changes to allow access to the some of the contents (examples etc).
-
-#### Use of proxies for remote file loading:
-
-if you want the capability , just like the official OpenJSCAD.org site, to load remote projects/files directly
-from the web based user interface, but without the hassle with CORS issues,
-you can use a proxy file (see [remote.pl](./remote.pl) & [remote.php](./remote.php)):
-this is a server side script that does the following
-- caches the remote file locally on the server
-- returns the local path to the downloaded file for OpenJSCAD to use
-
-use and path of the proxy can be set by:
-- changing the `proxyUrl` value in [src/ui/index.js](src/ui/index.js)
-- since this is hardcoded , if you do not use the provided dev server,
- rebuild your main file (npm run build-web etc, see [Development](#development))
-
-
-then you can use it like so:
-https://<YOURSITE>/?uri=http://www.thingiverse.com/download:164128
-or
-https://<YOURSITE>/#http://www.thingiverse.com/download:164128
-
->Note: a PR with a node.js based proxy would be a welcome addition :)
-
+please see [here for details](./packages/web/README.md)
 
 ### Use as Command Line Interface (CLI)
 
-### Install node.js
-
-> IMPORTANT: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x
-> we test OpenJSCAD on node.js version **6.x.x** , **7.x.x**, **8.x.x** & **8.x.x** all other versions are not guaranteed to work !
-
-An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
-- after installing nvm type ```nvm install v6``` (recomended)
-- then ```nvm use v6```
-
-#### Install OpenJSCAD CLI:
-
-CLI(command-line interface) use
-
-```
- npm install -g @jscad/cli
-```
-
-you can now turn the examples (or your own designs) into stl etc files as follows :
-```
-% cd examples/
-% openjscad example005.jscad                         # -- creates example005.stl as default
-% openjscad example001.jscad -o test.stl
-% openjscad example001.scad -o example001scad.jscad  # -- convert .scad into .jscad
-% openjscad frog.stl -o test.jscad                   # -- convert .stl into .jscad
-% openjscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf
-```
+please see [here for details](./packages/cli/README.md)
 
 ### Use with Node Modules
 

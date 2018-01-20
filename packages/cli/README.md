@@ -24,18 +24,16 @@ This is the CLI (command line interface) package for OpenJsCAD for server-side c
 
 ## Usage
 
-### Use as Command Line Interface (CLI)
-
 ### Install node.js
 
 > IMPORTANT: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x
-> we test OpenJSCAD on node.js version **6.x.x** & **7.x.x** all other versions are not guaranteed to work !
+> we test OpenJSCAD on node.js version **6.x.x** and above all other versions are not guaranteed to work !
 
 An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
-- after installing nvm type ```nvm install v6``` (recomended)
-- then ```nvm use v6```
+- after installing nvm type ```nvm install v8``` (recomended)
+- then ```nvm use v8```
 
-#### Install OpenJSCAD CLI:
+### Install OpenJSCAD CLI:
 
 CLI(command-line interface) use
 
@@ -43,7 +41,23 @@ CLI(command-line interface) use
  npm install -g @jscad/cli
 ```
 
+
 you can now turn the examples (or your own designs) into stl etc files as follows :
+get the examples
+ * via git
+ ```
+  git clone git@github.com:jscad/OpenJSCAD.org.git
+  cp -r OpenJSCAD.org/packages/examples <targetFolder> 
+
+ ```
+ * via npm 
+ ```
+  npm install @jscad/examples
+  copy the examples from the node_modules/@jscad/examples folder
+ ```
+
+
+run them through the CLI
 ```
 % cd examples/
 % openjscad example005.jscad                         # -- creates example005.stl as default
@@ -55,24 +69,17 @@ you can now turn the examples (or your own designs) into stl etc files as follow
 
 ## Development
 
-### Adding new features in CSG.js or other modules:
-Since OpenJSCAD is made up of multiple dependent modules (csg.js, openscad-openjscad-translator etc),
-the easiest method is to use ```npm link``` to have a 'live' updating development version of OpenJSCAD:
 - create a base directory
-- clone this repository ```git clone https://github.com/jscad/OpenJSCAD.org.git```
+- clone the base repository ```git clone https://github.com/jscad/OpenJSCAD.org.git```
 - go into OpenJSCAD.org folder ```cd OpenJSCAD.org```
-- install dependencies ```npm install```
-- if desired, make the ```openjscad``` command refer to the code in this folder: ```npm link```
-- if desired, start dev server: ```npm run start-dev```
+- install dependencies & setup inter package links ```npm run bootstrap```
+- go into the cli folder : ```cd packages/cli````
+- you can change the code , and run the cli again as you see fit ```node cli.js <params>```
 
-Then, for example for CSG.js:
-- go back to base directory ```cd ..```
-- clone CSG.js ```git clone https://github.com/jscad/csg.js.git```
-- go into OpenJSCAD.org folder again ```cd OpenJSCAD.org```
-- now type ```npm link ../csg.js``` to make @jscad/csg refer to local ../csg.js.
+> Note : you can also change the code in all the other packages/xxx folders and it will also
+impact the cli (ie : if you make changes to packages/core in parts that are used in the CLI,
+you do not need to run additional commands)
 
-You can now make changes to the CSG.js code and see it impact your locally running
-copy of OpenJSCAD live.
 
 ## Documentation
 
