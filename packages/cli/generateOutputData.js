@@ -1,5 +1,5 @@
 const {isAbsolute, resolve} = require('path')
-const oscad = require('@jscad/scad-api')
+const oscad = require('@jscad/csg/api')
 const { prepareOutput } = require('@jscad/core/io/prepareOutput')
 const { convertToBlob } = require('@jscad/core/io/convertToBlob')
 const { rebuildSolid } = require('@jscad/core/core/rebuildSolid')

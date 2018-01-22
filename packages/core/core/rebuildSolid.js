@@ -1,6 +1,6 @@
 const WebWorkify = require('webworkify')
 const { CAG, CSG } = require('@jscad/csg')
-const oscad = require('@jscad/scad-api')
+const oscad = require('@jscad/csg/api')
 const createJscadFunction = require('./jscad-function')
 const { replaceIncludes } = require('./replaceIncludes')
 const { resolveIncludes } = require('./resolveIncludes')

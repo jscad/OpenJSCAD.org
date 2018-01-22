@@ -1,11 +1,10 @@
 // jscad-worker.js
 //
 // == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
-const oscad = require('@jscad/scad-api')
-
+const {isCSG, isCAG} = require('@jscad/csg')
+const oscad = require('@jscad/csg/api')
 const createJscadFunction = require('./jscad-function')
 const { toArray } = require('../utils/misc')
-const {isCSG, isCAG} = require('../utils/isCSGCAG')
 
 /**
  * Create an worker (thread) for processing the JSCAD script into CSG/CAG objects

@@ -36,7 +36,7 @@
     "@jscad/core": "1.6.1",
     "@jscad/io": "0.3.7",
     "@jscad/openscad-openjscad-translator": "0.0.10",
-    "@jscad/scad-api": "^0.5.1",
+    "@jscad/csg": "0.5.0",
     "@jscad/examples": "1.6.1"
   },
   "devDependencies": {

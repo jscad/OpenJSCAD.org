@@ -9,9 +9,9 @@ module.exports = function getParamDefinitions (script) {
   try {
     // first try to execute the script itself
     // this will catch any syntax errors
-    //    BUT we can't introduce any new function!!!
+    // BUT we can't introduce any new function!!!
     (new Function(script))()
-  } catch(e) {
+  } catch (e) {
     scriptisvalid = false
     throw e
   }
