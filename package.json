@@ -1,14 +1,15 @@
 {
-  "name": "openjscad",
+  "name": "@jscad/openjscad",
   "version": "1.6.1",
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "scripts": {
     "test": "lerna bootstrap && lerna run test",
     "lint": "eslint packages/**/*.js",
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean",
     "web": "npm run bootstrap && cd ./packages/web && npm run start-dev",
     "desktop": "npm run bootstrap && cd ./packages/web && npm run dev",
-    "bootstrap": "lerna boostrap",
     "publish": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits",
     "publish-dryrun": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits --skip-git --skip-npm"
   },
