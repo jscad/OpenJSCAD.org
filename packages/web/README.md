@@ -1,10 +1,12 @@
-# OpenJSCAD.org
-<img src="doc/logo.png" width=256 align=right>
+# @jscad/web: OpenJSCAD Web UI
+>*OpenJsCad* is a more up-to-date [OpenJsCAD](http://joostn.github.com/OpenJsCad/) frontend where you can edit .jscad files either locally or online via JS editor (built-in).
 
->*OpenJsCad.org* is a more up-to-date [OpenJsCAD](http://joostn.github.com/OpenJsCad/) frontend where you can edit .jscad files either locally or online via JS editor (built-in).
-This is the Web based UI for OpenJsCAD, either to self host, or use direclt at https://openjscad.org/.
+[<img src="https://github.com/jscad/OpenJSCAD.org/raw/master/doc/logo.png" width="140" align="right">][OpenJSCAD]
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Fopenjscad.svg)](https://badge.fury.io/js/%40jscad%2Fopenjscad)
+
+This is the Web based UI for OpenJsCAD, either to host yourself, or use directly at https://openjscad.org/.
+
+[![npm version](https://badge.fury.io/js/%40jscad%2web.svg)](https://badge.fury.io/js/%40jscad%2Fweb)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
 [![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
 
@@ -50,6 +52,22 @@ And then access the contents via the URL of the web-site.
 
 
 >NOTE: You might need configuration changes to allow access to the some of the contents (examples etc).
+
+### Use within a Web Site (custom build)
+
+```
+install node.js > 6.0
+cd base-directory-of-website
+git clone https://github.com/jscad/OpenJSCAD.org
+cd OpenJSCAD.org
+npm run boostrap
+cd packages/web . // this is where the web version is
+cp ../examples ./examples // copy the examples here
+<start a web server here>
+modify the code as you see fit (see 'Adding new features the other modules in this repository' section)
+```
+
+
 
 #### Use of proxies for remote file loading:
 

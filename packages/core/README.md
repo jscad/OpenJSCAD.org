@@ -1,8 +1,10 @@
 # @jscad/core
-<img src="doc/logo.png" width=256 align=right>
 
 This is the core package (reusable crucial pieces of code) for OpenJsCAD, used in the various 'front end'
 packages like @jscad/cli , @jscad/web, @jscad/desktop
+
+[<img src="https://github.com/jscad/OpenJSCAD.org/raw/master/doc/logo.png" width="140" align="right">][OpenJSCAD]
+
 
 [![npm version](https://badge.fury.io/js/%40jscad%2Fcore.svg)](https://badge.fury.io/js/%40jscad%2Fcore)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)

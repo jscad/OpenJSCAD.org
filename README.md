@@ -1,14 +1,14 @@
 # OpenJSCAD.org
-<img src="doc/logo.png" width=256 align=right>
 
 >*OpenJsCad.org* is a more up-to-date [OpenJsCAD](http://joostn.github.com/OpenJsCad/) frontend where you can edit .jscad files either locally or online via JS editor (built-in).
 
-There are many ways to use OpenJSCAD! 
-Self hosteable web based ui, an online version, an experimental desktop app
-as well as CLI (command-line interface) for server-side computations with NodeJS.
+There are many ways to use OpenJSCAD: 
+
+An online version, self hosteable web based ui, as CLI (command-line interface) for server-side computations with Node.js, as well as an experimental desktop app or individual Node.js modules!!
 
 This repostiorty is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-the-wild-33c6eb246cb9) (container of multiple node.js packages & tools) maintaned with [Lerna](https://lernajs.io/)
 
+<img src="doc/logo.png" width=256 align=right>
 
 [![GitHub version](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org.svg)](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
