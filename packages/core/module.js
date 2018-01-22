@@ -1,4 +1,4 @@
-const oscad = require('@jscad/scad-api')
+const oscad = require('@jscad/csg/api')
 const { prepareOutput } = require('./io/prepareOutput')
 const { convertToBlob } = require('./io/convertToBlob')
 const { rebuildSolid } = require('./core/rebuildSolid')
