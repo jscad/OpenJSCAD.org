@@ -75,7 +75,7 @@ function rotate () {
     o = o.union(a[i])
   }
   if (r !== 1) {
-    return o.rotateX(v[0] * r).rotateY(v[1] * r).rotateZ(v[2] * r)
+    return o.rotate([0, 0, 0], v, r)
   } else {
     return o.rotateX(v[0]).rotateY(v[1]).rotateZ(v[2])
   }
