@@ -162,13 +162,14 @@ CSG.fromPolygons = fromPolygons
 
 CSG.toPointCloud = require('./src/api/debugHelpers').toPointCloud
 
-const CAGMakers = require('./src/core/CAGFactories')
-CAG.fromSides = CAGMakers.fromSides
-CAG.fromObject = CAGMakers.fromObject
-CAG.fromPoints = CAGMakers.fromPoints
-CAG.fromPointsNoCheck = CAGMakers.fromPointsNoCheck
-CAG.fromPath2 = CAGMakers.fromPath2
-CAG.fromFakeCSG = CAGMakers.fromFakeCSG
+const CAGFactories = require('./src/core/CAGFactories')
+CAG.fromSides = CAGFactories.fromSides
+CAG.fromObject = CAGFactories.fromObject
+CAG.fromPoints = CAGFactories.fromPoints
+CAG.fromPointsNoCheck = CAGFactories.fromPointsNoCheck
+CAG.fromPath2 = CAGFactories.fromPath2
+CAG.fromFakeCSG = CAGFactories.fromFakeCSG
+CAG.fromCompactBinary = CAGFactories.fromCompactBinary
 
 /// ////////////////////////////////////
 // option parsers
