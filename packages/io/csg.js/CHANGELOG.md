@@ -1,3 +1,13 @@
+<a name="0.5.1"></a>
+## [0.5.1](https://github.com/jscad/csg.js/compare/v0.5.0...v0.5.1) (2018-01-29)
+
+
+### Bug Fixes
+
+* **CAG:** added back missing CAG.fromCompactBinary ([#91](https://github.com/jscad/csg.js/issues/91)) ([57e8f5d](https://github.com/jscad/csg.js/commit/57e8f5d))
+
+
+
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/jscad/csg.js/compare/v0.4.1...v0.5.0) (2018-01-19)
 

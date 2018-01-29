@@ -285,6 +285,9 @@ The polygon must not self intersect.</p>
 <dd><p>Construct a CAG from a 2d-path (a closed sequence of points).
 Like fromPoints() but does not check if the result is a valid polygon.</p>
 </dd>
+<dt><a href="#fromCompactBinary">fromCompactBinary(bin)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dd><p>Reconstruct a CAG from the output of toCompactBinary().</p>
+</dd>
 <dt><a href="#fromPolygons">fromPolygons(polygons)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>Construct a CSG solid from a list of <code>Polygon</code> instances.</p>
 </dd>
@@ -2079,6 +2082,18 @@ Like fromPoints() but does not check if the result is a valid polygon.
 | Param | Type | Description |
 | --- | --- | --- |
 | Path2 | <code>path</code> | a Path2 path |
+
+<a name="fromCompactBinary"></a>
+
+## fromCompactBinary(bin) ⇒ [<code>CAG</code>](#CAG)
+Reconstruct a CAG from the output of toCompactBinary().
+
+**Kind**: global function  
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| bin | <code>CompactBinary</code> | see toCompactBinary() |
 
 <a name="fromPolygons"></a>
 
