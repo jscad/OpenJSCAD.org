@@ -1,3 +1,13 @@
+<a name="0.5.2"></a>
+## [0.5.2](https://github.com/jscad/csg.js/compare/v0.5.1...v0.5.2) (2018-01-29)
+
+
+### Bug Fixes
+
+* **rotate:** fixing angle-axis style rotation ([#90](https://github.com/jscad/csg.js/issues/90)) ([6c28c1c](https://github.com/jscad/csg.js/commit/6c28c1c))
+
+
+
 <a name="0.5.1"></a>
 ## [0.5.1](https://github.com/jscad/csg.js/compare/v0.5.0...v0.5.1) (2018-01-29)
 
