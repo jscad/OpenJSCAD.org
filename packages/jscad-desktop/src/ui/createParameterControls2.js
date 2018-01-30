@@ -4,7 +4,7 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, instantUpda
   let results = []
   for (let i = 0; i < paramDefinitions.length; i++) {
     let paramdef = paramDefinitions[i]
-    paramdef.index = i + 1
+    // paramdef.index = i + 1
 
     let control = null
     let type = paramdef.type.toLowerCase()
@@ -120,22 +120,22 @@ const createChoiceControl = (definition, prevValue) => {
 
 const createControl = (definition, prevValue) => {
   let controlList = [
-    {type: 'text', control: 'text', required: ['index', 'type', 'name'], initial: ''},
-    {type: 'int', control: 'number', required: ['index', 'type', 'name'], initial: 0},
-    {type: 'float', control: 'number', required: ['index', 'type', 'name'], initial: 0.0},
-    {type: 'number', control: 'number', required: ['index', 'type', 'name'], initial: 0.0},
-    {type: 'checkbox', control: 'checkbox', required: ['index', 'type', 'name', 'checked'], initial: ''},
-    {type: 'radio', control: 'radio', required: ['index', 'type', 'name', 'checked'], initial: ''},
-    {type: 'color', control: 'color', required: ['index', 'type', 'name'], initial: '#000000'},
-    {type: 'date', control: 'date', required: ['index', 'type', 'name'], initial: ''},
-    {type: 'email', control: 'email', required: ['index', 'type', 'name'], initial: ''},
-    {type: 'password', control: 'password', required: ['index', 'type', 'name'], initial: ''},
-    {type: 'url', control: 'url', required: ['index', 'type', 'name'], initial: ''},
-    {type: 'slider', control: 'range', required: ['index', 'type', 'name', 'min', 'max'], initial: 0, label: true}
+    {type: 'text', control: 'text', required: ['type', 'name'], initial: ''},
+    {type: 'int', control: 'number', required: ['type', 'name'], initial: 0},
+    {type: 'float', control: 'number', required: ['type', 'name'], initial: 0.0},
+    {type: 'number', control: 'number', required: ['type', 'name'], initial: 0.0},
+    {type: 'checkbox', control: 'checkbox', required: ['type', 'name', 'checked'], initial: ''},
+    {type: 'radio', control: 'radio', required: ['type', 'name', 'checked'], initial: ''},
+    {type: 'color', control: 'color', required: ['type', 'name'], initial: '#000000'},
+    {type: 'date', control: 'date', required: ['type', 'name'], initial: ''},
+    {type: 'email', control: 'email', required: ['type', 'name'], initial: ''},
+    {type: 'password', control: 'password', required: ['type', 'name'], initial: ''},
+    {type: 'url', control: 'url', required: ['type', 'name'], initial: ''},
+    {type: 'slider', control: 'range', required: ['type', 'name', 'min', 'max'], initial: 0, label: true}
   ]
   // check for required parameters
   if (!('type' in definition)) {
-    throw new Error('Parameter definition (' + definition.index + ") must include a 'type' parameter")
+    throw new Error('Parameter definition (' + definition + ") must include a 'type' parameter")
   }
   let control = document.createElement('input')
   let i, j, controlInstance, paramName
@@ -153,14 +153,14 @@ const createControl = (definition, prevValue) => {
             control.setAttribute(paramName, definition[paramName])
           }
         } else {
-          throw new Error('Parameter definition (' + definition.index + ") must include a '" + paramName + "' parameter")
+          throw new Error('Parameter definition (' + definition + ") must include a '" + paramName + "' parameter")
         }
       }
       break
     }
   }
   if (i === controlList.length) {
-    throw new Error('Parameter definition (' + definition.index + ") is not a valid 'type'")
+    throw new Error('Parameter definition (' + definition + ") is not a valid 'type'")
   }
   // set the control type
   control.setAttribute('type', controlInstance.control)

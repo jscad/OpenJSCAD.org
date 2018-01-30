@@ -32,15 +32,12 @@ function resolveDependencies (options, rootPath, depth = 0) {
   // depPath.includes('.') : path.join(mainPath, depPath), depPath)
   const scriptModulePaths = dependencies // [rootPath, ...dependencyAbsPaths]
     .filter(depPath => {
-      const foo = !options.relativeOnly || (options.relativeOnly && depPath.includes('.'))
-      // console.log('foo', foo)
-      return foo
+      const results = !options.relativeOnly || (options.relativeOnly && depPath.includes('.'))
+      return results
     })
 
   const scriptModuleAbsPaths = scriptModulePaths.map(depPath => resolve(rootPath, depPath))
-
   // console.log(`dependencies of ${rootPath}`, scriptModulePaths, scriptModuleAbsPaths, depth)
-
   const subResults = scriptModuleAbsPaths.map(function (scriptPath) {
     return resolveDependencies(undefined, scriptPath, depth)
   })
@@ -50,9 +47,7 @@ const flatten = list => list.reduce(
   (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
 )
 
-let watched
 let watchedFilePath
-let watcher
 const scriptDataFromCB = callBackToStream()
 
 function watchMultiplePaths (paths, callback) {
@@ -142,8 +137,6 @@ function watcherSink (toWatch$) {
         watchedFilePath = rootPath
 
         function stuffCallback (data) {
-          // console.log('changed', data.filePath)//, data.contents)
-          // requireUncached(data.filePath)
           requireUncached(rootPath)
           // force reload the main file
           const contents = fs.readFileSync(rootPath, 'utf8')

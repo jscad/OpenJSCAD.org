@@ -99,7 +99,6 @@ const makeActions = (sources) => {
 
   const exportRequested$ = sources.dom.select('#exportBtn').events('click')
     .sample(function (state, event) {
-      // console.log('state stuff', state, event)
       const defaultExportFilePath = state.exportFilePath
       return {defaultExportFilePath, exportFormat: state.exportFormat, data: state.design.solids}
     }, sources.state$)
@@ -147,20 +146,51 @@ const makeActions = (sources) => {
     sources.dom.select('#updateDesignFromParams').events('click')
       .map(function () {
         const controls = Array.from(document.getElementById('paramsMain').getElementsByTagName('input'))
-        return {paramValues: require('../core/getParamValues')(controls), origin: 'manualUpdate'}
-      }),
-    sources.paramChanges.multicast().map(function (controls) {
+          .concat(Array.from(document.getElementById('paramsMain').getElementsByTagName('select')))
+        const paramValues = require('../core/getParameterValues')(controls)
+        return {paramValues, origin: 'manualUpdate'}
+      })
+      .multicast(),
+    sources.paramChanges.multicast().map(function (_controls) {
       // FIXME: clunky
       try {
-        const paramValues = require('../core/getParamValues')(controls)
+        const controls = Array.from(document.getElementById('paramsMain').getElementsByTagName('input'))
+          .concat(Array.from(document.getElementById('paramsMain').getElementsByTagName('select')))
+        const paramValues = require('../core/getParameterValues')(controls)
         return {paramValues, origin: 'instantUpdate'}
       } catch (error) {
         return {error, origin: 'instantUpdate'}
       }
     })
-      .tap(x => console.log('fdfd'))
+
   ])
-    .map(data => ({type: 'updateDesignFromParams', data}))
+    // .map(data => ({type: 'updateDesignFromParams', data}))
+
+  const setDesignSolids$ = most.mergeArray([
+    sources.solidWorker
+      .filter(event => !('error' in event))
+      .map(function (event) {
+        try {
+          if (event.data instanceof Object) {
+            const { CAG, CSG } = require('@jscad/csg')
+            const solids = event.data.solids.map(function (object) {
+              if (object['class'] === 'CSG') { return CSG.fromCompactBinary(object) }
+              if (object['class'] === 'CAG') { return CAG.fromCompactBinary(object) }
+            })
+            const {paramDefaults, paramValues, paramDefinitions} = event.data
+            return {solids, paramDefaults, paramValues, paramDefinitions}
+          }
+        } catch (error) {
+          return {error}
+        }
+      })
+  ])
+    .map(data => ({type: 'setDesignSolids', data}))
+
+  const setErrors$ = most.mergeArray([
+    sources.solidWorker.filter(event => 'error' in event)
+  ])
+    .map(data => ({type: 'setErrors', data}))
 
   const clearErrors$ = most.never() /* sources.state$
     .filter(state => state.error !== undefined)
@@ -168,14 +198,20 @@ const makeActions = (sources) => {
     .skipRepeats()
     .map(x => undefined)
     .map(data => ({type: 'clearErrors', data}))
-    .delay(30000)*/
+    .delay(30000) */
     // .forEach(x => console.log('clear errors', x))
+
+  const timeOutDesignGeneration$ = designPath$
+    .delay(20000)
+    .map(data => ({type: 'timeOutDesignGeneration', data}))
+    .tap(x => console.log('timeOutDesignGeneration'))
 
   return {
     // generic key shortuct handler
     actionsFromKey$,
     // generic clear error action
     clearErrors$,
+    setErrors$,
     // 3d viewer
     toggleGrid$,
     toggleAxes$,
@@ -188,6 +224,8 @@ const makeActions = (sources) => {
     setDesignPath$,
     setDesignContent$,
     updateDesignFromParams$,
+    timeOutDesignGeneration$,
+    setDesignSolids$,
     // exports
     changeExportFormat$,
     exportRequested$

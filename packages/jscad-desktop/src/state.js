@@ -1,6 +1,6 @@
 const {mergeArray} = require('most')
 const packageMetadata = require('../package.json')
-const {merge, toArray} = require('./utils')
+const {merge, toArray, head} = require('./utils')
 const {getScriptFile, loadScript} = require('./core/scripLoading')
 
 // very nice color for the cuts [0, 0.6, 1] to go with the orange
@@ -19,8 +19,10 @@ const initialState = {
     path: '',
     mainPath: '',
     script: '',
+    source: '',
     paramDefinitions: [],
     paramValues: {},
+    paramDefaults: {},
     previousParams: {},
     solids: [],
     // list of all paths of require() calls + main
@@ -121,83 +123,42 @@ function makeState (actions) {
       const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: ['new-entities']}})
       return Object.assign({}, state, {busy: true, viewer, design})
     },
-    setDesignContent: (state, mainScriptAsText) => {
+    setDesignContent: (state, source) => {
       console.log('setDesignContent')
-      const path = require('path')
-      // experimental
-      // const {astFromSource, csgTree} = require('./core/code-analysis/index')
-      // const ast = astFromSource(mainScriptAsText)
-      // const prevAst = astFromSource(state.design.script)
-      /*console.log('ast', ast)
-
-      const differences = findByPredicate(isDifference, node => node, ast)
-      console.log('differences', differences)
-
-      const cubes = findByPredicate(isCube, node => node, ast)
-      console.log('cubes', cubes)
-
-      const spheres = findByPredicate(isSphere, node => node, ast)
-      console.log('spheres', spheres) */
-      // console.log('previous ast')
-      // csgTree(prevAst)
-      // console.log('current ast', ast)
-      // csgTree(ast)
-      //
-      // console.log('setDesignContent')
-      const detective = require('detective-cjs')
-      const rawDependencies = detective(mainScriptAsText)
-      const dependencies = Array.from(new Set(rawDependencies))
-      const {mainPath} = state.design
-
-      const dependencyAbsPaths = dependencies.map(depPath => path.join(state.design.path, depPath))
-      const scriptModulePaths = [mainPath, ...dependencyAbsPaths]
-      // console.log('all script paths', scriptModulePaths)
-      // require('./core/scripLoading').requireUncached(mainPath)
-      // load script
-      const {scriptRootModule, paramDefinitions, params} = loadScript(mainScriptAsText, mainPath)
-      // console.log('paramDefinitions', paramDefinitions, 'params', params)
-      let solids = toArray(scriptRootModule.main(params))
       /*
         func(paramDefinitions) => paramsUI
         func(paramsUI + interaction) => params
       */
-      const design = Object.assign({}, state.design, {
-        script: scriptRootModule,
-        paramDefinitions,
-        paramValues: params,
-        solids,
-        modulePaths: scriptModulePaths
-      })
-
-      const {supportedFormatsForObjects, formats} = require('./io/formats')
-      const formatsToIgnore = ['jscad', 'js']
-      const availableExportFormats = supportedFormatsForObjects(solids)
-        .filter(formatName => !formatsToIgnore.includes(formatName))
-        .map(function (formatName) {
-          return {name: formatName, displayName: formats[formatName].displayName}
-        })
-      let exportFormat = availableExportFormats[0].name
-
-      console.log('done updating design from path')
-      // FIXME: UGHH so goddam verbose !
+      const design = Object.assign({}, state.design, {source})
       const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']}})
-      const exportInfos = exportFilePathFromFormatAndDesign(design, exportFormat)
       const appTitle = `jscad v ${packageMetadata.version}: ${state.design.name}`
       return Object.assign({}, state, {design, viewer}, {
-        availableExportFormats,
-        exportFormat,
         appTitle,
-        busy: false,
+        busy: true,
         error: undefined
-      },
-      exportInfos)
+      })
+    },
+    setDesignSolids: (state, {solids, paramDefaults, paramValues, paramDefinitions}) => {
+      console.log('setDesignSolids')
+      const design = Object.assign({}, state.design, {
+        solids,
+        paramDefaults,
+        paramValues,
+        paramDefinitions
+      })
+      const {exportFormat, availableExportFormats} = availableExportFormatsFromSolids(solids)
+      const exportInfos = exportFilePathFromFormatAndDesign(design, exportFormat)
+
+      return Object.assign({}, state, {
+        design,
+        busy: false,
+        availableExportFormats,
+        exportFormat
+      }, exportInfos)
     },
     updateDesignFromParams: (state, {paramValues, origin, error}) => {
-      if (error) {
-        throw error
-        // return Object.assign({}, state, {error})
-      }
-      // console.log('updateDesignFromParams')
+      console.log('hereeee')
+      if (error) { throw error }
       // disregard live updates if not enabled
       if (state.instantUpdate === false && origin === 'instantUpdate') {
         return state
@@ -209,7 +170,16 @@ function makeState (actions) {
       const design = Object.assign({}, originalDesign, {solids, paramValues})
       return Object.assign({}, state, {design, error: undefined})
     },
-
+    timeOutDesignGeneration: (state) => {
+      const isBusy = state.busy
+      if (isBusy) {
+        return Object.assign({}, state, {
+          busy: false,
+          error: new Error('Failed to generate design within an acceptable time, bailing out')
+        })
+      }
+      return state
+    },
     clearErrors: (state, _) => {
       console.log('clear errors')
       return Object.assign({}, state, {error: undefined})
@@ -242,9 +212,21 @@ const exportFilePathFromFormatAndDesign = (design, exportFormat) => {
   const path = require('path')
   const {formats} = require('./io/formats')
 
-  const extension = formats[exportFormat].extension
+  const extension = exportFormat ? formats[exportFormat].extension : ''
   const defaultFileName = `${design.name}.${extension}`
   const exportFilePath = path.join(design.path, defaultFileName)
 
-  return {exportFormat, exportFilePath}
+  return {exportFilePath}
+}
+
+const availableExportFormatsFromSolids = (solids) => {
+  const {supportedFormatsForObjects, formats} = require('./io/formats')
+  const formatsToIgnore = ['jscad', 'js']
+  const availableExportFormats = supportedFormatsForObjects(solids)
+    .filter(formatName => !formatsToIgnore.includes(formatName))
+    .map(function (formatName) {
+      return {name: formatName, displayName: formats[formatName].displayName}
+    })
+  let exportFormat = head(availableExportFormats) ? head(availableExportFormats).name : undefined
+  return {exportFormat, availableExportFormats}
 }

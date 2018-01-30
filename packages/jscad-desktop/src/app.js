@@ -1,6 +1,5 @@
 const {proxy} = require('most-proxy')
 const {makeState} = require('./state')
-// const makeCsgViewer = require('../../csg-viewer/src/index')// //
 const makeCsgViewer = require('@jscad/csg-viewer')
 let csgViewer
 
@@ -14,20 +13,24 @@ const {watcherSink, watcherSource} = require('./sideEffects/fileWatcher')
 const {fsSink, fsSource} = require('./sideEffects/fsWrapper')
 const {domSink, domSource} = require('./sideEffects/dom')
 const paramsCallbacktoStream = require('./observable-utils/callbackToObservable')()
+const makeWorkerEffect = require('./sideEffects/worker')
+const solidWorker = makeWorkerEffect('src/worker.js')
 
 // proxy state stream to be able to access & manipulate it before it is actually available
 const { attach, stream } = proxy()
 const state$ = stream
 //
-const actions$ = require('./actions/actions')({
+const sources = {
   store: storeSource$,
   drops: dragAndDropSource$,
   watcher: watcherSource(),
   fs: fsSource(),
   paramChanges: paramsCallbacktoStream.stream,
   state$,
-  dom: domSource()
-})
+  dom: domSource(),
+  solidWorker: solidWorker.source()
+}
+const actions$ = require('./actions/actions')(sources)
 
 attach(makeState(Object.values(actions$)))
 
@@ -57,16 +60,47 @@ electronStoreSink(state$
 // data out to file watcher
 watcherSink(
   state$
-    .filter(state => state.design.mainPath !== '') 
+    .filter(state => state.design.mainPath !== '')
     .skipRepeats()
     .map(state => ({filePath: state.design.mainPath, enabled: state.autoReload})) // enable/disable watch if autoreload is set to false
 )
+// data out to file system sink
 fsSink(
   state$
     .filter(state => state.design.mainPath !== '')
     .map(state => state.design.mainPath)
     .skipRepeats()
     .map(path => ({operation: 'read', id: 'loadScript', path}))
+)
+
+const most = require('most')
+const solidWorkerBase$ = most.mergeArray([
+  actions$.setDesignContent$.map(action => ({paramValues: undefined, origin: 'designContent', error: undefined})),
+  actions$.updateDesignFromParams$
+]).multicast()
+
+solidWorker.sink(
+    most.sample(function ({origin, paramValues, error}, {design, instantUpdate}) {
+      if (error) {
+        return undefined
+      }
+      const applyParameterDefinitions = require('./core/applyParameterDefinitions')
+      paramValues = paramValues || design.paramValues // this ensures the last, manually modified params have upper hand
+      paramValues = paramValues ? applyParameterDefinitions(paramValues, design.paramDefinitions) : paramValues
+      if (!instantUpdate && origin === 'instantUpdate') {
+        return undefined
+      }
+      console.log('sending paramValues', paramValues)
+      return {source: design.source, mainPath: design.mainPath, paramValues}
+    },
+    solidWorkerBase$,
+    solidWorkerBase$,
+    state$
+      .filter(state => state.design.mainPath !== '')
+      .skipRepeats()
+  )
+    .filter(x => x !== undefined)
+    .map(({source, mainPath, paramValues}) => ({cmd: 'render', source, mainPath, parameters: paramValues}))
 )
 
 // viewer data

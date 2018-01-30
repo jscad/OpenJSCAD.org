@@ -96,7 +96,7 @@ const getScriptFile = paths => {
  * @param  {} filePath
  * @param  {} csgBasePath='../../../../core/tmp/csg.js : relative path or  '@jscad/csg'
  */
-function loadScript (scriptAsText, filePath, csgBasePath = '@jscad/scad-api') {
+function loadScript (scriptAsText, filePath, csgBasePath = '@jscad/csg/api') {
   if (csgBasePath.includes('.')) {
     csgBasePath = path.resolve(__dirname, csgBasePath)
   }
