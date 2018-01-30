@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //--log_all
 
-// NOTE: this will only run on Node > 6 or needs to be transpiled, or launched via launch-cli
+// NOTE: this will only run on Node > 6 or needs to be transpiled
 
 // == OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License
 //
