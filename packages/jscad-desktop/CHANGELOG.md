@@ -1,3 +1,13 @@
+<a name="0.1.0"></a>
+# [0.1.0](https://github.com/kaosat-dev/jscad-desktop/compare/v0.0.2...v0.1.0) (2018-01-30)
+
+
+### Features
+
+* **solids:** move processing to 'background' ([#28](https://github.com/kaosat-dev/jscad-desktop/issues/28)) ([a0e2fa0](https://github.com/kaosat-dev/jscad-desktop/commit/a0e2fa0)), closes [#9](https://github.com/kaosat-dev/jscad-desktop/issues/9) [#20](https://github.com/kaosat-dev/jscad-desktop/issues/20) [#25](https://github.com/kaosat-dev/jscad-desktop/issues/25)
+
+
+
 <a name="0.0.2"></a>
 ## 0.0.2 (2018-01-20)
 
