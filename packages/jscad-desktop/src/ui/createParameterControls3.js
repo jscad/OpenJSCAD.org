@@ -6,17 +6,20 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, rebuildSoli
 
   const controls = paramDefinitions.map(function (paramDefinition) {
     let type = paramDefinition.type.toLowerCase()
-    let control
+    let subControls
     // console.log('type', type)
     switch (type) {
       case 'choice':
-        control = createChoiceControl(paramDefinition, prevParamValues[paramDefinition.name])
+        subControls = createChoiceControl(paramDefinition, prevParamValues[paramDefinition.name])
+        break
+      case 'radio':
+        subControls = createRadioControl(paramDefinition, prevParamValues[paramDefinition.name])
         break
       case 'group':
-        control = createGroupControl(paramDefinition)
+        subControls = createGroupControl(paramDefinition)
         break
       default:
-        control = createControl(paramDefinition, prevParamValues[paramDefinition.name])
+        subControls = createControl(paramDefinition, prevParamValues[paramDefinition.name])
         break
     }
     let label = paramDefinition.name + ':'
@@ -27,22 +30,26 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, rebuildSoli
     }
 
     if (type === 'group') {
-      control = html`<th class=${control.className}> ${control.text} </th>`
+      subControls = subControls.map(control => html`<th class=${control.className}> ${control.text} </th>`)
     } else {
-      control.onchange = function (e) {
-        let l = e.currentTarget.nextElementSibling
-        if (l !== null && l.nodeName === 'LABEL') {
-          l.innerHTML = e.currentTarget.value
+      subControls.forEach(control => {
+        control.onchange = function (e) {
+          let l = e.currentTarget.nextElementSibling
+          if (l !== null && l.nodeName === 'LABEL') {
+            l.innerHTML = e.currentTarget.value
+          }
+          if (rebuildSolid) {
+            rebuildSolid(paramControls)
+          }
         }
-        if (rebuildSolid) {
-          rebuildSolid(paramControls)
-        }
-      }
+      })
     }
-
+    const subItems = subControls.map(control => {
+      return html`<div>${control} ${'label' in control ? control.label : ''}</div>`
+    })
     return html`<tr>
       <td class=${className}> ${label} </td>
-      <td> ${control} ${'label' in control ? control.label : ''}</td>
+      <td> ${subItems}</td>
     </tr>`
   })
 
@@ -55,7 +62,7 @@ const createGroupControl = definition => {
   let control = html`<title class=${className}>${text}</title>`
   control.paramName = definition.name
   control.paramType = definition.type
-  return control
+  return [control]
 }
 
 const createChoiceControl = (definition, prevValue) => {
@@ -90,7 +97,43 @@ const createChoiceControl = (definition, prevValue) => {
   control.paramName = definition.name
   control.paramType = definition.type
 
-  return control
+  return [control]
+}
+
+const createRadioControl = (definition, prevValue) => {
+  if (!('values' in definition)) {
+    throw new Error('Definition of choice parameter (' + definition.name + ") should include a 'values' parameter")
+  }
+  const values = definition.values
+  const captions = 'captions' in definition ? definition.captions : definition.values
+
+  if (captions.length !== values.length) {
+    throw new Error('Definition of choice parameter (' + definition.name + ") should have the same number of items for 'captions' and 'values'")
+  }
+
+  const controls = captions.map(function (caption, index) {
+    const value = values[index]
+    let selected = false
+    if (prevValue !== undefined) {
+      selected = (prevValue === value)
+    } else if ('default' in definition) {
+      selected = (definition['default'] === value)
+    } else if ('initial' in definition) {
+      selected = (definition.initial === value)
+    }
+
+    const control = html`<label>
+      ${caption}
+      <input type='radio' value=${value} name=${definition.name} checked=${selected}/>
+      </label>`
+    // html`<input type='radio' value=${value} checked=${selected} name='${definition.name}'/>`
+    control.children[0].paramName = definition.name
+    control.children[0].paramType = definition.type
+
+    return control
+  })
+
+  return controls
 }
 
 const createControl = (definition, prevValue) => {
@@ -118,6 +161,14 @@ const createControl = (definition, prevValue) => {
     throw new Error('Parameter definition (' + definition + ') is not known')
   }
 
+  // validate fields
+  const definitionFields = Object.keys(definition)
+  typeData.required.forEach(function (requiredField) {
+    if (!definitionFields.includes(requiredField)) {
+      throw new Error(`Parameter definition for "${definition.name}" must include a "${requiredField}" parameter`)
+    }
+  })
+
   // determine initial value of control
   let controlValue
   if (prevValue !== undefined) {
@@ -130,8 +181,9 @@ const createControl = (definition, prevValue) => {
     controlValue = typeData.initial
   }
   let control = html`<input 
-    type=${typeData.control} value=${controlValue} ${definition.checked ? 'checked=' : ''}> 
+    type=${typeData.control} value=${controlValue} checked=${'checked' in definition ? controlValue : ''}> 
   </input>`
+
   // set name and type (used later for obtaining values)
   control.paramName = definition.name
   control.paramType = definition.type
@@ -150,7 +202,7 @@ const createControl = (definition, prevValue) => {
     control.label.innerHTML = control.value
   } */
 
-  return control
+  return [control]
 
   control = document.createElement('input')
   let i, j, controlInstance, paramName

@@ -41,12 +41,13 @@ module.exports = function getParameterValues (paramControls, parameterDefinition
         }
         break
       case 'checkbox':
+        value = control.checked
+        break
       case 'radio':
-        if (control.checked === true && control.value.length > 0) {
-          value = control.value
-        } else {
-          value = control.checked
+        if (!control.checked) {
+          continue
         }
+        value = control.value
         break
       default:
         value = control.value

@@ -8,7 +8,6 @@
  * @returns {Object} the parameter values, as an object
  */
 module.exports = function applyParameterDefinitions (rawParameters, parameterDefinitions, throwOnNoDefinition = false) {
-  // let paramValues = {}
   return Object.keys(rawParameters).reduce((paramValues, paramName) => {
     let value = rawParameters[paramName]
     let definition = parameterDefinitions.filter(definition => definition.name === paramName)
@@ -21,14 +20,7 @@ module.exports = function applyParameterDefinitions (rawParameters, parameterDef
     }
     switch (definition.type) {
       case 'choice':
-        // we try to match values against captions, then parse as numbers if applicable, then fallback to original value
-        const valueIndex = definition.captions.indexOf(value)
-        const valueInDefinition = valueIndex > -1
-        const valueInDefintionCaptionsAndValue = valueInDefinition && definition.values.length >= valueIndex
-        // because the whole 'choice' parameter is broken, we have to CAST TO A STRING!
-        value = valueInDefintionCaptionsAndValue ? definition.values[valueIndex] : value
-        value = definition.values.length > 0 && isNumber(definition.values[0]) ? parseFloat(value) : value
-        value = definition.values.length > 0 && typeof value === 'boolean' ? !!value : value
+        value = valueForChoices(value, definition)
         break
       case 'float':
       case 'number':
@@ -46,12 +38,16 @@ module.exports = function applyParameterDefinitions (rawParameters, parameterDef
         }
         break
       case 'checkbox':
+        value = !!value
+        break
       case 'radio':
-        // FIXME: the way checbox/radios work does NOT make sense : so an arbitrary value OR a boolean is returned ??
-        if (definition.value.length > 0) {
-          value = definition.value
+        value = valueForChoices(value, definition)
+        break
+      case 'slider':
+        if (!isNaN(parseFloat(value)) && isFinite(value)) {
+          value = parseFloat(value)
         } else {
-          value = !!value
+          throw new Error('Parameter (' + paramName + ') is not a valid number (' + value + ')')
         }
         break
     }
@@ -60,6 +56,17 @@ module.exports = function applyParameterDefinitions (rawParameters, parameterDef
   }, {})
 }
 
-function isNumber (value) {
+const isNumber = value => {
   return (!isNaN(parseFloat(value)) && isFinite(value))
+}
+const valueForChoices = (inputValue, definition) => {
+  let value = inputValue
+  // we try to match values against captions, then parse as numbers if applicable, then fallback to original value
+  const valueIndex = definition.captions.indexOf(value)
+  const valueInDefinition = valueIndex > -1
+  const valueInDefintionCaptionsAndValue = valueInDefinition && definition.values.length >= valueIndex
+  value = valueInDefintionCaptionsAndValue ? definition.values[valueIndex] : value
+  value = definition.values.length > 0 && isNumber(definition.values[0]) ? parseFloat(value) : value
+  value = definition.values.length > 0 && typeof value === 'boolean' ? !!value : value
+  return value
 }
