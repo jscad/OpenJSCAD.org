@@ -1,3 +1,13 @@
+<a name="0.1.1"></a>
+## [0.1.1](https://github.com/kaosat-dev/jscad-desktop/compare/v0.1.0...v0.1.1) (2018-01-31)
+
+
+### Bug Fixes
+
+* **parameter:** parameter handling fixes ([#29](https://github.com/kaosat-dev/jscad-desktop/issues/29)) ([1677e92](https://github.com/kaosat-dev/jscad-desktop/commit/1677e92)), closes [#30](https://github.com/kaosat-dev/jscad-desktop/issues/30)
+
+
+
 <a name="0.1.0"></a>
 # [0.1.0](https://github.com/kaosat-dev/jscad-desktop/compare/v0.0.2...v0.1.0) (2018-01-30)
 
