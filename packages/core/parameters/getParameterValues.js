@@ -4,11 +4,12 @@
  * @param {Boolean} onlyChanged
  * @returns {Object} the parameter values, as an object
  */
-module.exports = function getParamValues (paramControls, onlyChanged) {
+module.exports = function getParameterValues (paramControls, parameterDefinitions, onlyChanged) {
   let paramValues = {}
   let value
   for (var i = 0; i < paramControls.length; i++) {
-    var control = paramControls[i]
+    const control = paramControls[i]
+
     switch (control.paramType) {
       case 'choice':
         value = control.options[control.selectedIndex].value
@@ -31,13 +32,13 @@ module.exports = function getParamValues (paramControls, onlyChanged) {
         }
         break
       case 'checkbox':
+        value = control.checked
+        break
       case 'radio':
-        // FIXME: the way checbox/radios work does NOT make sense : so an arbitrary value OR a boolean is returned ??
-        if (control.checked === true && control.value.length > 0) {
-          value = control.value
-        } else {
-          value = control.checked
+        if (!control.checked) {
+          continue
         }
+        value = control.value
         break
       default:
         value = control.value
@@ -51,7 +52,6 @@ module.exports = function getParamValues (paramControls, onlyChanged) {
       }
     }
     paramValues[control.paramName] = value
-  // console.log(control.paramName+":"+paramValues[control.paramName])
   }
   return paramValues
 }

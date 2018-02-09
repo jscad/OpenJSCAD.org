@@ -1,10 +1,10 @@
 const WebWorkify = require('webworkify')
 const { CAG, CSG } = require('@jscad/csg')
 const oscad = require('@jscad/csg/api')
-const createJscadFunction = require('./jscad-function')
-const { replaceIncludes } = require('./replaceIncludes')
-const { resolveIncludes } = require('./resolveIncludes')
-const { toArray } = require('../utils/misc')
+const createJscadFunction = require('../code-loading/jscad-function')
+const { replaceIncludes } = require('../code-loading/replaceIncludes')
+const { resolveIncludes } = require('../code-loading/resolveIncludes')
+const { toArray } = require('../utils/arrays')
 
 /**
  * evaluate script & rebuild solids, in main thread
@@ -14,7 +14,7 @@ const { toArray } = require('../utils/misc')
  * @param {Object} callback the callback to call once evaluation is done /failed
  * @param {Object} options the settings to use when rebuilding the solid
  */
-function rebuildSolid (script, fullurl, parameters, callback, options) {
+function rebuildSolids (script, fullurl, parameters, callback, options) {
   let basePath = fullurl
   if (basePath.lastIndexOf('/') >= 0) {
     basePath = basePath.substring(0, basePath.lastIndexOf('/') + 1)
@@ -60,7 +60,7 @@ function rebuildSolid (script, fullurl, parameters, callback, options) {
  * @param {Object} callback the callback to call once evaluation is done /failed
  * @param {Object} options the settings to use when rebuilding the solid
  */
-function rebuildSolidInWorker (script, fullurl, parameters, callback, options) {
+function rebuildSolidsInWorker (script, fullurl, parameters, callback, options) {
   if (!parameters) { throw new Error("JSCAD: missing 'parameters'") }
   if (!window.Worker) throw new Error('Worker threads are unsupported.')
   const defaults = {
@@ -78,7 +78,7 @@ function rebuildSolidInWorker (script, fullurl, parameters, callback, options) {
   let worker
   replaceIncludes(script, basePath, '', {includeResolver: options.includeResolver, memFs: options.memFs})
     .then(function ({source}) {
-      worker = WebWorkify(require('./jscad-worker.js'))
+      worker = WebWorkify(require('../code-loading/jscad-worker.js'))
     // we need to create special options as you cannot send functions to webworkers
       const workerOptions = {implicitGlobals: options.implicitGlobals}
       worker.onmessage = function (e) {
@@ -105,6 +105,6 @@ function rebuildSolidInWorker (script, fullurl, parameters, callback, options) {
 }
 
 module.exports = {
-  rebuildSolid,
-  rebuildSolidInWorker
+  rebuildSolids,
+  rebuildSolidsInWorker
 }

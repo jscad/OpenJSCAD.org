@@ -1,8 +1,8 @@
 const oscad = require('@jscad/csg/api')
 const { prepareOutput } = require('./io/prepareOutput')
 const { convertToBlob } = require('./io/convertToBlob')
-const { rebuildSolid } = require('./core/rebuildSolid')
-const { resolveIncludesFs } = require('./utils/resolveIncludesFs')
+const { rebuildSolids } = require('./code-evaluation/rebuildSolids')
+const { resolveIncludesFs } = require('./code-loading/resolveIncludesFs')
 /**
  * compile openjscad code and generates intermediate representation
  * ordering of parameters created with curying in mind
@@ -32,7 +32,7 @@ function compile (source, params, options) {
       if (!err) { return resolve(result) }
       reject(err)
     }
-    rebuildSolid(source, rootPath, params, callback, {implicitGlobals, globals, includeResolver: resolveIncludesFs})
+    rebuildSolids(source, rootPath, params, callback, {implicitGlobals, globals, includeResolver: resolveIncludesFs})
   })
 }
 

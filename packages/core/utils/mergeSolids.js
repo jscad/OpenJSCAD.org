@@ -1,13 +1,12 @@
 const { CSG, CAG, isCSG, isCAG } = require('@jscad/csg')
-const {toArray} = require('../utils/misc')
+const {toArray} = require('./arrays')
 
-// FIXME: is there not too much overlap with convertToBlob ?
 /**
  * convert objects to a single solid
  * @param {Array} objects the list of objects
  * @return {Object} solid : the single CSG object
  */
-function convertToSolid (objects, params) {
+function mergeSolids (objects, params) {
   if (objects.length === undefined) {
     if (isCAG(objects) || isCSG(objects)) {
       var obj = objects
@@ -31,8 +30,16 @@ function convertToSolid (objects, params) {
   }
   return solid
 }
-
-function convertToSolid2 (objects, params) {
+/** combine/ merge multiple 2d & 3D solids into
+ * a single 3d (CSG)  or CAG output:
+ * if there is even a single 3D solid in the input,
+ * all other input 2D shapes get extruded and unioned
+ * with the 3D solid
+ * @param  {Array} objects
+ * @param  {} params
+ * @returns {CSG} a single CSG/CAG object
+ */
+function mergeSolids2 (objects, params) {
   const {convertCSG, convertCAG} = params
 
   let object
@@ -68,6 +75,6 @@ function convertToSolid2 (objects, params) {
 }
 
 module.exports = {
-  convertToSolid,
-  convertToSolid2
+  mergeSolids,
+  mergeSolids2
 }

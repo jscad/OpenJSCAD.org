@@ -2,10 +2,10 @@ const {isAbsolute, resolve} = require('path')
 const oscad = require('@jscad/csg/api')
 const { prepareOutput } = require('@jscad/core/io/prepareOutput')
 const { convertToBlob } = require('@jscad/core/io/convertToBlob')
-const { rebuildSolid } = require('@jscad/core/core/rebuildSolid')
-const { resolveIncludesFs } = require('@jscad/core/utils/resolveIncludesFs')
+const { rebuildSolids } = require('@jscad/core/code-evaluation/rebuildSolids')
+const { resolveIncludesFs } = require('@jscad/core/code-loading/resolveIncludesFs')
 const getParameterDefinitionsCLI = require('./getParameterDefinitionsCLI')
-const getParameterValues = require('./getParameterValues')
+const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
 
 /**
  * generate output data from source
@@ -67,7 +67,7 @@ function generateOutputData (source, params, options) {
     // extract the array of parameter definitions
     const parameterDefinitions = getParameterDefinitionsForReal(source)
     // get the actual parameters, correctly cast to the right types etc based on the definitions above
-    params = getParameterValues(params, parameterDefinitions)
+    params = applyParameterDefinitions(params, parameterDefinitions)
 
     // modify main to adapt parameters 
     // NOTE: this (getParameterDefinitionsCLI) also combines specified params with defaults
@@ -87,7 +87,7 @@ function generateOutputData (source, params, options) {
     if (outputFormat === 'jscad' || outputFormat === 'js') {
       resolve(source)
     } else {
-      rebuildSolid(source, inputPath, params, callback, {implicitGlobals, globals, includeResolver: resolveIncludesFs})
+      rebuildSolids(source, inputPath, params, callback, {implicitGlobals, globals, includeResolver: resolveIncludesFs})
     }
   })
     .then(function (objects) {

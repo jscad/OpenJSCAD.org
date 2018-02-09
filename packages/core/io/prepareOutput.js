@@ -1,5 +1,5 @@
 const { formats } = require('./formats')
-const {convertToSolid2} = require('../core/convertToSolid')
+const {mergeSolids2} = require('../utils/mergeSolids')
 
 const {stlSerializer} = require('@jscad/io')
 const {amfSerializer} = require('@jscad/io')
@@ -17,7 +17,7 @@ function prepareOutput (objects, params) {
     object = objects
   } else {
     const formatInfo = formats[format]
-    object = convertToSolid2(objects, formatInfo)
+    object = mergeSolids2(objects, formatInfo)
   }
 
   const metaData = {

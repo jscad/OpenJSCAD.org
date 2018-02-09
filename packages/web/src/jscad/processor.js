@@ -1,8 +1,8 @@
 const log = require('./log')
-const getParamDefinitions = require('@jscad/core/core/getParamDefinitions')
-const getParamValues = require('@jscad/core/core/getParamValues')
-const { rebuildSolid, rebuildSolidInWorker } = require('@jscad/core/core/rebuildSolid')
-const { convertToSolid } = require('@jscad/core/core/convertToSolid')
+const getParameterDefinitions = require('@jscad/core/parameters/getParameterDefinitions')
+const getParameterValues = require('@jscad/core/parameters/getParameterValues')
+const { rebuildSolids, rebuildSolidsInWorker } = require('@jscad/core/code-evaluation/rebuildSolids')
+const { mergeSolids } = require('@jscad/core/utils/mergeSolids')
 
 // output handling
 const { generateOutputFile } = require('../io/generateOutputFile')
@@ -70,7 +70,7 @@ function Processor (containerdiv, options) {
   this.createElements()
 }
 
-Processor.convertToSolid = convertToSolid
+Processor.mergeSolids = mergeSolids
 
 Processor.prototype = {
   createElements: function () {
@@ -217,7 +217,7 @@ Processor.prototype = {
       element.id = 'updateButton'
     }
     element.onclick = function (e) {
-      that.rebuildSolid()
+      that.rebuildSolids()
     }
     this.parametersdiv.appendChild(element)
 
@@ -288,7 +288,7 @@ Processor.prototype = {
     if (startpoint > endpoint) { startpoint = this.selectEndPoint; endpoint = this.selectStartPoint }
 
     var objs = this.currentObjects.slice(startpoint, endpoint + 1)
-    this.viewedObject = convertToSolid(objs) // enforce CSG to display
+    this.viewedObject = mergeSolids(objs)
 
     if (this.viewer) {
       this.viewer.setCsg(this.viewedObject)
@@ -409,7 +409,7 @@ Processor.prototype = {
     var prevParamValues = {}
     // this will fail without existing form
     try {
-      prevParamValues = getParamValues(this.paramControls, /* onlyChanged */true)
+      prevParamValues = getParameterValues(this.paramControls, /* onlyChanged */true)
     } catch (e) {}
 
     this.abort()
@@ -420,7 +420,7 @@ Processor.prototype = {
 
     var scripthaserrors = false
     try {
-      this.paramDefinitions = getParamDefinitions(script)
+      this.paramDefinitions = getParameterDefinitions(script)
       this.paramControls = []
       this.createParamControls(prevParamValues)
     } catch (e) {
@@ -431,7 +431,7 @@ Processor.prototype = {
       this.script = script
       this.filename = filename
       this.includePathBaseUrl = includePathBaseUrl
-      this.rebuildSolid()
+      this.rebuildSolids()
     } else {
       this.enableItems()
     }
@@ -458,7 +458,7 @@ Processor.prototype = {
     return script */
   },
 
-  rebuildSolid: function () {
+  rebuildSolids: function () {
     // clear previous solid and settings
     this.abort()
     //this clears output file cache
@@ -471,7 +471,7 @@ Processor.prototype = {
     // rebuild the solid
 
     // prepare all parameters
-    const parameters = getParamValues(this.paramControls)
+    const parameters = getParameterValues(this.paramControls)
     const script = this.getFullScript()
     const fullurl = this.includePathBaseUrl ? this.includePathBaseUrl + this.filename : this.filename
     const options = {memFs: this.memFs}
@@ -499,13 +499,13 @@ Processor.prototype = {
     }
 
     if (this.opts.useAsync) {
-      this.builder = rebuildSolidInWorker(script, fullurl, parameters, (err, objects) => {
+      this.builder = rebuildSolidsInWorker(script, fullurl, parameters, (err, objects) => {
         if (err && that.opts.useSync) {
-          this.builder = rebuildSolid(script, fullurl, parameters, callback, options)
+          this.builder = rebuildSolids(script, fullurl, parameters, callback, options)
         } else (callback(undefined, objects))
       }, options)
     } else if (this.opts.useSync) {
-      this.builder = rebuildSolid(script, fullurl, parameters, callback, options)
+      this.builder = rebuildSolids(script, fullurl, parameters, callback, options)
     }
   },
 
@@ -748,7 +748,7 @@ Processor.prototype = {
             l.innerHTML = e.currentTarget.value
           }
           if (document.getElementById('instantUpdate').checked === true) {
-            that.rebuildSolid()
+            that.rebuildSolids()
           }
         }
         this.paramControls.push(control)
