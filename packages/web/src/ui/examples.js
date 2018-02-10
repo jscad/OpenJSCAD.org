@@ -1,6 +1,6 @@
 const { createConversionWorker } = require('../io/createConversionWorker')
 const { putSourceInEditor } = require('./editor') // FIXME : eeek! dependency on ui
-const { version } = require('@jscad/core/utils/version')
+const version = require('../../package.json').version
 
 const examples = [
   { file: 'logo.jscad', title: 'OpenJSCAD.org Logo' },

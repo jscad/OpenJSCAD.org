@@ -40,7 +40,7 @@
 //
 const fs = require('fs')
 const env = require('./env')
-const { version } = require('@jscad/core/utils/version')
+const version = require('./package.json').version
 const { formats } = require('@jscad/core/io/formats')
 const generateOutputData = require('./generateOutputData')
 

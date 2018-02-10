@@ -3,7 +3,7 @@ const { CAG, CSG } = require('@jscad/csg')
 const oscad = require('@jscad/csg/api')
 const createJscadFunction = require('../code-loading/jscad-function')
 const { replaceIncludes } = require('../code-loading/replaceIncludes')
-const { resolveIncludes } = require('../code-loading/resolveIncludes')
+const { resolveIncludesHttp } = require('../code-loading/resolveIncludesHttp')
 const { toArray } = require('../utils/arrays')
 
 /**
@@ -22,7 +22,7 @@ function rebuildSolids (script, fullurl, parameters, callback, options) {
   const defaults = {
     implicitGlobals: true,
     memFs: undefined,
-    includeResolver: resolveIncludes // default function to retrieve 'includes'
+    includeResolver: resolveIncludesHttp // default function to retrieve 'includes'
   }
   options = Object.assign({}, defaults, options)
 
@@ -66,7 +66,7 @@ function rebuildSolidsInWorker (script, fullurl, parameters, callback, options) 
   const defaults = {
     implicitGlobals: true,
     memFs: undefined,
-    includeResolver: resolveIncludes // default function to retrieve 'includes'
+    includeResolver: resolveIncludesHttp // default function to retrieve 'includes'
   }
   options = Object.assign({}, defaults, options)
 

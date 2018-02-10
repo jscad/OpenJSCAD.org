@@ -1,3 +1,3 @@
 const json = require('../package.json')
-const version = json.version // TODO/ add version date ?
-module.exports = {version}
+const version = json.version
+module.exports = { version }

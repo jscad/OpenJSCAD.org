@@ -1,6 +1,6 @@
 {
   "name": "@jscad/core",
-  "version": "1.6.1",
+  "version": "0.0.1",
   "description": "",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "module.js",

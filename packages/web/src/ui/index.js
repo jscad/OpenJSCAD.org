@@ -8,7 +8,7 @@ const { createExamples, fetchExample, loadInitialExample } = require('./examples
 const { createOptions, getOptions } = require('./options')
 const AlertUserOfUncaughtExceptions = require('./errorDispatcher')
 
-const { version } = require('@jscad/core/utils/version')
+const version = require('../../package.json').version
 const Processor = require('../jscad/processor')
 
 const me = document.location.toString().match(/^file:/) ? 'web-offline' : 'web-online'
