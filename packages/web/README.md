@@ -2,7 +2,7 @@
 
 This is the Web based UI for [OpenJsCAD](https://github.com/jscad/OpenJSCAD.org), either to host yourself, or use directly at https://openjscad.org/.
 
-[<img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right">][OpenJSCAD]
+<img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right" alt="OpenJSCAD">
 
 
 [![npm version](https://badge.fury.io/js/%40jscad%2web.svg)](https://badge.fury.io/js/%40jscad%2Fweb)

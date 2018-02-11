@@ -2,7 +2,7 @@
 
 >*OpenJsCad* is a set of modular, browser and command line tools for creating parametric 2D & 3D designs with JavaScript code.
 
-[<img src="docs/logo.png" width="140" align="right">][OpenJSCAD]
+<img src="docs/logo.png" width="140" align="right" alt="OpenJSCAD">
 
 There are many ways to use OpenJSCAD: 
 
