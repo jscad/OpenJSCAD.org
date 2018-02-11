@@ -5,7 +5,7 @@ This is the Web based UI for [OpenJsCAD](https://github.com/jscad/OpenJSCAD.org)
 <img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right" alt="OpenJSCAD">
 
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Fweb.svg))](https://badge.fury.io/js/%40jscad%2Fweb)
+[![npm version](https://badge.fury.io/js/%40jscad%2Fweb.svg)](https://badge.fury.io/js/%40jscad%2Fweb)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
 [![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
 
