@@ -87,6 +87,25 @@ Then, for example for CSG.js:
 
 You can now make changes to the CSG.js code and see it impact your locally running
 copy of OpenJSCAD live.
+## Development
+
+Please see the code and details in each [package](./packages) & their READMEs
+You can link up all the code for simple development using the following command
+
+```
+npm run bootstrap
+```
+This command
+- links up all the packages
+- installs all of their dependencies
+
+we also provide a few shortcuts for some of the specific subpackage to start development
+```
+npm run web // boostrap, go to the web UI package and start the dev server
+```
+```
+npm run cli // bootstrap, go to the cli package
+```
 
 ## Documentation
 
