@@ -1,21 +1,17 @@
-# OpenJSCAD.org
+# OpenJSCAD
 
->*OpenJsCad.org* is a more up-to-date [OpenJsCAD](http://joostn.github.com/OpenJsCad/) frontend where you can edit .jscad files either locally or online via JS editor (built-in).
+>*OpenJsCad* is a set of modular, browser and command line tools for creating parametric 2D & 3D designs with JavaScript code.
+
+[<img src="doc/logo.png" width="140" align="right">][OpenJSCAD]
 
 There are many ways to use OpenJSCAD: 
 
-An online version, self hosteable web based ui, as CLI (command-line interface) for server-side computations with Node.js, as well as an experimental desktop app or individual Node.js modules!!
+An [online version](https://openjscad.org/), [self hosteable web based ui](https://github.com/jscad/OpenJSCAD.org/raw/master/packages/web), as [CLI](https://github.com/jscad/OpenJSCAD.org/raw/master/packages/cli) (command-line interface) for server-side computations with Node.js, as well as an experimental [desktop app](https://github.com/jscad/jscad-desktop) or [individual Node.js modules](https://github.com/jscad/OpenJSCAD.org/raw/master/packages/README.md)!!
 
-This repostiorty is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-the-wild-33c6eb246cb9) (container of multiple node.js packages & tools) maintaned with [Lerna](https://lernajs.io/)
+This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-the-wild-33c6eb246cb9) (container of multiple node.js packages & tools) maintaned with [Lerna](https://lernajs.io/)
 
-<img src="doc/logo.png" width=256 align=right>
-
-[![GitHub version](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org.svg)](https://badge.fury.io/gh/jscad%2FOpenJSCAD.org)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
 [![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
-
-[![Dependency Status](https://david-dm.org/jscad/OpenJSCAD.org.svg)](https://david-dm.org/jscad/OpenJSCAD.org)
-[![devDependency Status](https://david-dm.org/jscad/OpenJSCAD.org/dev-status.svg)](https://david-dm.org/jscad/OpenJSCAD.org#info=devDependencies)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
 [![Backers on Open Collective](https://opencollective.com/openjscad/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/openjscad/sponsors/badge.svg)](#sponsors) 
@@ -25,7 +21,6 @@ This repostiorty is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-t
 - [Usage](#usage)
 - [Development](#development)
 - [Documentation](#documentation)
-- [Known issues](#known-issues)
 - [Contribute](#contribute)
 - [Community](#community)
 - [Acknowledgements](#acknowledgements)
@@ -43,7 +38,7 @@ There are different 'flavors' of OpenJscad that you can use based on your needs
 - node.js: custom mix & match of modules
   * all the packages are available [on npm](https://www.npmjs.com/search?q=%40jscad) under the '@jscad' name 
   * Geometric [core & modeling api](https://github.com/jscad/csg.js)
-  * Input/output [formats handling stl, amf dxf, svg](https://github.com/jscad/io/tree/master/packages) 
+  * Input/output [formats handling stl, amf dxf, svg, etc](https://github.com/jscad/io/tree/master/packages) 
 
 ### Immediate Use (no installation)
 
@@ -57,80 +52,11 @@ please see [here for details](./packages/web/README.md)
 
 please see [here for details](./packages/cli/README.md)
 
-### Use with Node Modules
-
-> Note: you need a recent , LTS version of Node.js > 6.x.x,
-[see here for more details](https://github.com/nodejs/LTS))
-all the same installation & version recomendation as for the use as command-line also apply
-
-```
-npm install --save @jscad/openjscad
-```
-
-and then simply import and use openjscad:
-
-```javascript
-const jscad = require('@jscad/openjscad')
-const fs = require('fs')
-
-var script = `function main() {
-   return [
-      torus()
-  ]
-}`
-
-// generate compiled version
-var params = {}
-jscad.compile(script, params).then(function(compiled) {
-  // generate final output data, choosing your prefered format
-  var outputData = jscad.generateOutput('stlb', compiled)
-  // hurray ,we can now write an stl file from our OpenJsCad script!
-  fs.writeFileSync('torus.stl', outputData.asBuffer())
-})
-
-```
-
-you can also use the 'generateOutput' function directly with CSG/CAG objects ie :
-
-```javascript
-const csg = require('csg').CSG
-const input = csg.cube([1, 1, 1]) // one of many ways to create a CSG object
-
-const outputData = jscad.generateOutput('stlb', input)
-
-// hurray ,we can now write an stl file from our raw CSG objects
-fs.writeFileSync('torus.stl', outputData.asBuffer())
-```
-
-#### Module api
-
-**compile(params, source)**
-
- compile OpenJsCad code and generates CSG representation
- this returns a promise that gets resolved with the CSG object.
-
- (the ordering of parameters was created with currying in mind)
-
- *params* the set of parameters to use
- *source* the OpenJsCad script we want to compile
-
-
-**generateOutput(outputFormat, csgs)**
-
-generate output data from a CSG/CAG object or array of CSG/CAG objects
-
- *outputFormat* the output file format
- *csgs* the CSG/CAG object or array of CSG/CAG objects
-
->Note: for now you need to use outputData.asBuffer() to get a Node.js buffer for
-writing to disk etc
-
-
 ### Use of the different modular components directly
 
 From version 1.0.0 onwards, almost all the individual parts of this project are available
 directly as scoped NPM modules , and can be used independently from this repo.
-The full list of these is available here: https://www.npmjs.com/org/jscad
+The full list of these is available [here](./packages/README.md) a here https://www.npmjs.com/org/jscad
 
 One example of what can be achieved with this can be found [here](https://esnextb.in/?gist=0a2ac2c4e189e27692ea964956a3a2e5)
 This means you can :
@@ -142,21 +68,6 @@ dependencies of **all** packages
 - lots more !
 
 This will be expanded upon in the future, and is the backbone of the newer, modular Jscad
-
-
-## Development
-
-We offer pre-built versions of OpenJSCAD web ui to be used directly here :
-- [standard](./packages/web/dist/index.js)
-- [minimalist](./packages/web/dist/min.js)
-- [with options](./packages/web/dist/options.js)
-
-but you can also rebuild them manually if you need :
-
-- standard: ```npm run build-web```
-- minimalist: ```npm run build-min```
-- with options: ```npm run build-opt```
-
 
 ### Adding new features in CSG.js or other modules:
 Since OpenJSCAD is made up of multiple dependent modules (csg.js, openscad-openjscad-translator etc),
@@ -181,17 +92,6 @@ copy of OpenJSCAD live.
 
 - [OpenJSCAD User & Programming Guide](https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide)
 - [OpenJSCAD Quick Reference](https://en.wikibooks.org/wiki/OpenJSCAD_Quick_Reference)
-
-## Known Issues
-
-There are a few known issues, please be sure to check this out before submitting additional bug reports/issues.
-
-- Q: issues running certain npm commands like ```npm run build-web``` with [cnpm](https://github.com/cnpm/cnpm)
-- A: this is a [know issue in cnpm](https://github.com/cnpm/cnpm/issues/214) , see [issue #283](https://github.com/jscad/OpenJSCAD.org/issues/283) for more information
-
-- Q: Attempting to use OpenJSCAD from file:// in Chrome results in errors like
-"File Error: [EncodingError] Please check permissions error."
-- A: This is a permissions issue in Chrome :  restart chrome using the "--allow-file-access-from-files" option
 
 ## Contribute
 

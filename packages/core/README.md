@@ -24,7 +24,6 @@ packages like @jscad/cli , @jscad/web, @jscad/desktop
 - [Community](#community)
 - [Acknowledgements](#acknowledgements)
 - [License](#license)
-- [Screenshots](#screenshots)
 - [See also](#see-also)
 
 ## Usage
@@ -130,23 +129,6 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 [The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 (unless specified otherwise)
-
-## Screenshots
-
-Simple JSCAD example ([logo.jscad](examples/logo.jscad)) [try it](http://openjscad.org/#examples/logo.jscad):
-<img src="doc/sshot-01.png">
-
-More sophisticated JSCAD example, with functions dedicated to object generation and with interactive parameters ([gear.jscad](examples/gear.jscad)) [try it](http://openjscad.org/#examples/gear.jscad) :
-<img src="doc/sshot-03-illu.png">
-
-Import of STL models ([frog-OwenCollins.stl](examples/frog-OwenCollins.stl)) [try it](http://openjscad.org/#examples/frog-OwenCollins.stl):
-<img src="doc/sshot-04.png">
-
-Drag & drop a local file:
-<img src="doc/sshot-05-illu.png">
-
-Drag & drop multiple files (Chrome & Firefox) or a folder (Chrome):
-<img src="doc/sshot-06-illu.png">
 
 ## See Also
 
