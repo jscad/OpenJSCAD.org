@@ -1,13 +1,13 @@
 {
   "name": "@jscad/core",
   "version": "0.0.1",
-  "description": "",
+  "description": "reuseable utilities for the various jscad user interfaces",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "module.js",
   "scripts": {
     "test": "ava '*.test.js' --verbose --timeout 10000",
     "preversion": "npm test",
-    "version": "npm run build-all && git add -A ",
+    "version": "git add -A ",
     "postversion": "git push origin master && git push origin master --tags",
     "release-patch": "git checkout master && git pull origin master && npm version patch",
     "release-minor": "git checkout master && git pull origin master && npm version minor",
