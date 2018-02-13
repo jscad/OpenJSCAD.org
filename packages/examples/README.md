@@ -1,25 +1,21 @@
-# @jscad/cli : OpenJSCAD Command Line Interface
+# @jscad/examples
 
-This is the CLI (command line interface) package for [OpenJsCAD](https://github.com/jscad/OpenJSCAD.org) for server-side computations with NodeJS.
+This is package containing all examples for OpenJsCAD, used in the various 'front end'
+packages like @jscad/cli , @jscad/web, @jscad/desktop
 
-<img src="https://github.com/jscad/OpenJSCAD.org/raw/master/doc/logo.png" width="140" align="right" alt="OpenJSCAD">
+<img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right" alt="OpenJSCAD">
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Fcli.svg)](https://badge.fury.io/js/%40jscad%2Fcli)
-[![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
+
+[![npm version](https://badge.fury.io/js/%40jscad%2Fexamples.svg)](https://badge.fury.io/js/%40jscad%2Fexamples)
 [![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
 
-[![Dependency Status](https://david-dm.org/jscad/OpenJSCAD.org.svg)](https://david-dm.org/jscad/OpenJSCAD.org)
-[![devDependency Status](https://david-dm.org/jscad/OpenJSCAD.org/dev-status.svg)](https://david-dm.org/jscad/OpenJSCAD.org#info=devDependencies)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
 [![Backers on Open Collective](https://opencollective.com/openjscad/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/openjscad/sponsors/badge.svg)](#sponsors) 
-
 ## Table of Contents
 
 - [Usage](#usage)
-- [Development](#development)
 - [Documentation](#documentation)
-- [Known issues](#known-issues)
 - [Contribute](#contribute)
 - [Community](#community)
 - [Acknowledgements](#acknowledgements)
@@ -28,62 +24,7 @@ This is the CLI (command line interface) package for [OpenJsCAD](https://github.
 
 ## Usage
 
-### Install node.js
-
-> IMPORTANT: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x
-> we test OpenJSCAD on node.js version **6.x.x** and above all other versions are not guaranteed to work !
-
-An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
-- after installing nvm type ```nvm install v8``` (recomended)
-- then ```nvm use v8```
-
-### Install OpenJSCAD CLI:
-
-CLI(command-line interface) use
-
-```
- npm install -g @jscad/cli
-```
-
-
-you can now turn the examples (or your own designs) into stl etc files as follows :
-get the examples
- * via git
- ```
-  git clone git@github.com:jscad/OpenJSCAD.org.git
-  cp -r OpenJSCAD.org/packages/examples . 
-
- ```
- * via npm 
- ```
-  npm install @jscad/examples
-  cp -r node_modules/@jscad/examples .
- ```
-
-
-run them through the CLI
-```
-% cd examples/
-% openjscad example005.jscad                         # -- creates example005.stl as default
-% openjscad example001.jscad -o test.stl
-% openjscad example001.scad -o example001scad.jscad  # -- convert .scad into .jscad
-% openjscad frog.stl -o test.jscad                   # -- convert .stl into .jscad
-% openjscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf
-```
-
-## Development
-
-- create a base directory
-- clone the base repository ```git clone https://github.com/jscad/OpenJSCAD.org.git```
-- go into OpenJSCAD.org folder ```cd OpenJSCAD.org```
-- install dependencies & setup inter package links ```npm run bootstrap```
-- go into the cli folder : ```cd packages/cli````
-- you can change the code , and run the cli again as you see fit ```node cli.js <params>```
-
-> Note : you can also change the code in all the other packages/xxx folders and it will also
-impact the cli (ie : if you make changes to packages/core in parts that are used in the CLI,
-you do not need to run additional commands)
-
+just install this package if you need access to the various examples 
 
 ## Documentation
 
