@@ -1,6 +1,6 @@
 {
   "name": "@jscad/examples",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "example files for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
@@ -26,10 +26,6 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {
-  },
-  "devDependencies": {
-  },
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/openjscad",
