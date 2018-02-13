@@ -1,6 +1,6 @@
 {
   "name": "@jscad/cli",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "Command Line Interface (CLI) for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "bin": {
