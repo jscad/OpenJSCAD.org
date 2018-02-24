@@ -1,0 +1,37 @@
+{
+  "name": "@jscad/dxf-deserializer",
+  "version": "0.0.1",
+  "description": "DXF deserializer for jscad project",
+  "repository": "https://github.com/jscad/io",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava './test/*.js' --verbose --timeout 20000",
+    "release-patch": "git checkout master && npm version patch && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
+    "release-minor": "git checkout master && npm version minor && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
+    "release-major": "git checkout master && npm version major && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
+  },
+  "contributors": [
+    {
+      "name": "z3dev",
+      "url": "http://www.z3d.jp"
+    },
+    {
+      "name": "Mark 'kaosat-dev' Moissette",
+      "url": "http://kaosat.net"
+    }
+  ],
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "csg",
+    "deserializer",
+    "dxf"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@jscad/csg": "^0.5.3"
+  },
+  "devDependencies": {
+    "ava": "^0.19.1"
+  }
+}

@@ -41,6 +41,7 @@
   "dependencies": {
     "@jscad/amf-deserializer": "^0.2.1",
     "@jscad/amf-serializer": "^0.1.1",
+    "@jscad/dxf-deserializer": "^0.0.1",
     "@jscad/dxf-serializer": "^0.1.2",
     "@jscad/gcode-deserializer": "^0.2.0",
     "@jscad/io-utils": "^0.1.2",

@@ -18,6 +18,7 @@ do not generate CSG/CAG objects: there is however work done to enable CSG/CAG ou
 deserializers with optional CSG/CAG output:
 
 - [x] amf-deserializer
+- [x] dxf-deserializer
 - [ ] json-deserializer
 - [x] obj-deserializer
 - [x] stl-deserializer
@@ -25,6 +26,7 @@ deserializers with optional CSG/CAG output:
 
 Following formats are supported as inputs:
  - [AMF](https://github.com/jscad/io/blob/master/packages/amf-deserializer)
+ - [DXF](https://github.com/jscad/io/blob/master/packages/dxf-deserializer)
  - [gcode](https://github.com/jscad/io/blob/master/packages/gcode-deserializer)
  - [JSON](https://github.com/jscad/io/blob/master/packages/json-deserializer)
  - [OBJ](https://github.com/jscad/io/blob/master/packages/obj-deserializer)

@@ -8,6 +8,7 @@ const svgSerializer = require('@jscad/svg-serializer')
 const x3dSerializer = require('@jscad/x3d-serializer')
 
 const amfDeSerializer = require('@jscad/amf-deserializer')
+const dxfDeSerializer = require('@jscad/dxf-deserializer')
 const gcodeDeSerializer = require('@jscad/gcode-deserializer')
 const jsonDeSerializer = require('@jscad/json-deserializer')
 const objDeSerializer = require('@jscad/obj-deserializer')
@@ -24,6 +25,7 @@ module.exports = {
   x3dSerializer,
 
   amfDeSerializer,
+  dxfDeSerializer,
   gcodeDeSerializer,
   jsonDeSerializer,
   objDeSerializer,
