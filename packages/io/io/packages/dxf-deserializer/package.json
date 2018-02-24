@@ -1,6 +1,6 @@
 {
   "name": "@jscad/dxf-deserializer",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "DXF deserializer for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",

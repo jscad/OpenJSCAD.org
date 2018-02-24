@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/jscad/io/compare/@jscad/io@0.3.12...@jscad/io@0.4.0) (2018-02-24)
+
+
+### Features
+
+* **DXF Deserializer:** Adds dxf deserializer and all associated code ([ae4a6c0](https://github.com/jscad/io/commit/ae4a6c0)), closes [#10](https://github.com/jscad/io/issues/10)
+
+
+
+
 <a name="0.3.12"></a>
 ## [0.3.12](https://github.com/jscad/io/compare/@jscad/io@0.3.11...@jscad/io@0.3.12) (2017-12-14)
 
