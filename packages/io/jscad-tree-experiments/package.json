@@ -1,0 +1,20 @@
+{
+  "name": "jscad-tree-experiment",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mark 'kaosat-dev' Moissette",
+  "license": "MIT",
+  "dependencies": {
+    "@jscad/csg": "^0.5.3",
+    "@jscad/io-utils": "^0.1.2",
+    "@jscad/stl-serializer": "^0.1.1",
+    "blob-to-buffer": "^1.2.7",
+    "just-diff": "^2.1.1",
+    "serialize-to-js": "^1.1.1",
+    "simple-diff": "^1.6.0"
+  }
+}
