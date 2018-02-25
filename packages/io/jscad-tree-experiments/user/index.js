@@ -4,8 +4,8 @@ const generateTree = require('../core/geometry-tree-generator')
 const writeOutput = require('../io/writeOutput')
 
 const runCompare = require('./runCompare')
-//runCompare('./examples/logo')
-//runCompare('./examples/basic')
+runCompare('./examples/logo')
+runCompare('./examples/basic')
 runCompare('./examples/union')
 
 
