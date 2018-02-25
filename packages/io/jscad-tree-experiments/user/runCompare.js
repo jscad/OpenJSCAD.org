@@ -1,34 +1,44 @@
 const generate = require('../core/geometry-generator')
 const generateTree = require('../core/geometry-tree-generator')
+const decache = require('decache')
 
 function runCompare (basePath) {
-  let results
+  console.log('running benchmarks for ' + basePath)
+
+  let moduleNameVanilla = basePath + '-base'
+  let moduleNameVtree = basePath + '-vtree'
+  // example user code
+
+  runPass(moduleNameVtree, runVTreeTree, 'vtree treegen ')
+  runPass(moduleNameVtree, runVTree, 'vtree gen ')
+  runPass(moduleNameVanilla, runVanilla, 'vanilla ')
+}
+
+const runPass = (moduleName, runFn, name) => {
   const precision = 3 // 3 decimal places
   let elapsed
   let start
-  // example user code
-  /* results = require(basePath + '-vtree')()
-  generate(results)
 
-  elapsed = process.hrtime(start)[1] / 1000000// nano to milli
-  console.log('vtree gen ' + process.hrtime(start)[0] + ' s, ' + elapsed.toFixed(precision) + ' ms - ') // print message + time
-
-  start = process.hrtime() */
-
-  // vtree variant 2
+  decache(moduleName)
   start = process.hrtime()
-  results = require(basePath + '-vtree')()
-  generateTree(results)
-
-  elapsed = process.hrtime(start)[1] / 1000000
-  console.log('vtree treegen ' + process.hrtime(start)[0] + ' s, ' + elapsed.toFixed(precision) + ' ms - ')
-
-  // vanilla jscad
-  start = process.hrtime()
-  results = require(basePath + '-base')()
+  runFn(moduleName)
   // measure
   elapsed = process.hrtime(start)[1] / 1000000
-  console.log('base ' + process.hrtime(start)[0] + ' s, ' + elapsed.toFixed(precision) + ' ms - ')
+  console.log(name + process.hrtime(start)[0] + ' s, ' + elapsed.toFixed(precision) + ' ms - ')
+}
+
+const runVanilla = (moduleName) => {
+  require(moduleName)()
+}
+
+const runVTreeTree = (moduleName) => {
+  let results = require(moduleName)()
+  generateTree(results)
+}
+
+const runVTree = (moduleName) => {
+  let results = require(moduleName)()
+  generate(results)
 }
 
 module.exports = runCompare

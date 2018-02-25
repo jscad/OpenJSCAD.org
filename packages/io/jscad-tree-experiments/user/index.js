@@ -4,7 +4,10 @@ const generateTree = require('../core/geometry-tree-generator')
 const writeOutput = require('../io/writeOutput')
 
 const runCompare = require('./runCompare')
-runCompare('./examples/logo')
+//runCompare('./examples/logo')
+//runCompare('./examples/basic')
+runCompare('./examples/union')
+
 
 /*writeOutput('foo.stl', generate(results))
 console.log('output written')
