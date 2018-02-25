@@ -23,18 +23,17 @@ const sphere = params => {
 
 const union = (...solids) => {
   solids = toArray(solids)
-  return {left: solids, type: 'union'}
-  // return {left: solids[0], right: solids.slice(1), type: 'union'}
+  return {children: solids, type: 'union'}
 }
 
 const difference = (...solids) => {
   solids = toArray(solids)
-  return {left: toArray(solids[0]), right: solids.slice(1), type: 'difference'}
+  return {children: solids, type: 'difference'}
 }
 
 const intersection = (...solids) => {
   solids = toArray(solids)
-  return {left: toArray(solids[0]), right: solids.slice(1), type: 'intersection'}
+  return {children: solids, type: 'intersection'}
 }
 
 const translate = (params, ...solids) => {

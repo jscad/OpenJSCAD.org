@@ -15,22 +15,20 @@ const generate = (node) => {
       result = sphere(node)
       break
     case 'union' :
-      operands = node.left.map(n => generate(n))
+      operands = node.children.map(n => generate(n).geometry)
       result = union(operands)
       break
     case 'difference' :
-      operands = node.left.map(n => generate(n))
-        .concat(node.right.map(n => generate(n)))
+      operands = node.children.map(n => generate(n).geometry)
       result = difference(operands)
       break
     case 'intersection' :
-      operands = node.left.map(n => generate(n))
-        .concat(node.right.map(n => generate(n)))
+      operands = node.children.map(n => generate(n).geometry)
       result = intersection(operands)
       break
   }
   node.geometry = result
-  return result
+  return node
 }
 
 module.exports = generate
