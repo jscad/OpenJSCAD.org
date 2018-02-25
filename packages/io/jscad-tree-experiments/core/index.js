@@ -1,5 +1,5 @@
 
-const { toArray } = require('./arrays')
+const { toArray, flatten } = require('./arrays')
 
 const cube = params => {
   const defaults = {
@@ -22,16 +22,22 @@ const sphere = params => {
 }
 
 const union = (...solids) => {
-  solids = toArray(solids)
+  // let solids = [arguments[1]].concat([arguments[2]])
+
+  solids = flatten(toArray(solids))
+  // console.log('solids union', solids)
+
   return {children: solids, type: 'union'}
 }
 
 const difference = (...solids) => {
+  // console.log('solids diff', solids)
   solids = toArray(solids)
   return {children: solids, type: 'difference'}
 }
 
 const intersection = (...solids) => {
+  // console.log('solids intersect', solids)
   solids = toArray(solids)
   return {children: solids, type: 'intersection'}
 }
