@@ -5,4 +5,10 @@ function toArray (data) {
   return data
 }
 
-module.exports = {toArray}
+const flatten = arr =>
+  arr.reduce(
+    (flat, toFlatten) => flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten),
+    []
+  )
+
+module.exports = {toArray, flatten}
