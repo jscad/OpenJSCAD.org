@@ -1,7 +1,7 @@
 const {flatten} = require('./arrays')
 
 const findDisconnectedSubGraphs = root => {
-  console.log('findDisconnectedSubGraphs')
+  // console.log('findDisconnectedSubGraphs')
   if (Array.isArray(root)) {
     root = {children: root, type: 'root'}
   }
@@ -13,12 +13,12 @@ const findDisconnectedSubGraphs = root => {
 
   // const independantSubtree = root.children
   // subTrees = flatten(subTrees)
-  console.log('results subTrees', JSON.stringify(subTrees[0]))
+  // console.log('results subTrees', JSON.stringify(subTrees[0]))
   return subTrees[0]
 }
 
 const dfs = (node, stack = [], leafs = [], subTrees, depth = 0) => {
-  console.log('visiting DOWN', node)
+  // console.log('visiting DOWN', node)
   // node.visited = true
   stack.push(node)
   if (!node.children || node.children.length === 0) {
@@ -39,7 +39,7 @@ const dfs = (node, stack = [], leafs = [], subTrees, depth = 0) => {
   }
 
   // subTrees[node.type].parent =
-  console.log('visiting UP', node)
+  // console.log('visiting UP', node)
 }
 
 module.exports = findDisconnectedSubGraphs
