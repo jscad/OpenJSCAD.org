@@ -4,12 +4,12 @@ const generateTree = require('../core/geometry-tree-generator')
 const writeOutput = require('../io/writeOutput')
 
 const runCompare = require('./runCompare')
-runCompare('./examples/logo')
-runCompare('./examples/basic')
-runCompare('./examples/union')
+// runCompare('./examples/logo')
+// runCompare('./examples/basic')
+// runCompare('./examples/union')
+runCompare('./examples/shapes-array')
 
-
-/*writeOutput('foo.stl', generate(results))
+/* writeOutput('foo.stl', generate(results))
 console.log('output written')
 
 let curTree = results

@@ -1,6 +1,7 @@
 const generate = require('../core/geometry-generator')
 const generateTree = require('../core/geometry-tree-generator')
 const decache = require('decache')
+const { toArray } = require('../core/arrays')
 
 function runCompare (basePath, runs = 10) {
   console.log('running benchmarks for ' + basePath)
@@ -8,12 +9,12 @@ function runCompare (basePath, runs = 10) {
   let moduleNameVanilla = basePath + '-base'
   let moduleNameVtree = basePath + '-vtree'
   // first verify they all have the same output
-  const baseLinePolyCount = runVanilla(moduleNameVanilla)
-  if (baseLinePolyCount !== runVTreeTree(moduleNameVtree)) {
-    throw new Error(`Mismatch of polygon count in vtree-tree mode!! should be ${baseLinePolyCount}`)
+  const baseLinePolyCounts = runVanilla(moduleNameVanilla)
+  if (!samePolygonCount(baseLinePolyCounts, runVTreeTree(moduleNameVtree))) {
+    throw new Error(`Mismatch of polygon count in vtree-tree mode!! should be ${baseLinePolyCounts}`)
   }
-  if (baseLinePolyCount !== runVTree(moduleNameVtree)) {
-    throw new Error(`Mismatch of polygon count in vtree-base mode!! should be ${baseLinePolyCount}`)
+  if (!samePolygonCount(baseLinePolyCounts, runVTree(moduleNameVtree))) {
+    throw new Error(`Mismatch of polygon count in vtree-base mode!! should be ${baseLinePolyCounts}`)
   }
 
   // run passes of each variants multiple times
@@ -43,25 +44,40 @@ const runPass = (moduleName, runFn, runs, name) => {
 }
 
 const runVanilla = (moduleName) => {
-  const resultPolys = require(moduleName)().polygons.length
+  const results = toArray(require(moduleName)())
+  const resultPolys = results.map(r => r.polygons.length)
   return resultPolys
 }
 
 const runVTreeTree = (moduleName) => {
   let results = require(moduleName)()
-  const resultPolys = generateTree(results).geometry.polygons.length
+  results = toArray(generateTree(results))
+  const resultPolys = results.map(r => r.geometry.polygons.length)
   return resultPolys
 }
 
 const runVTree = (moduleName) => {
   let results = require(moduleName)()
-  const resultPolys = generate(results).polygons.length
+  results = toArray(generate(results))
+  const resultPolys = results.map(r => r.polygons.length)
   return resultPolys
 }
 
 const median = sequence => {
   sequence.sort()  // note that direction doesn't matter
   return sequence[Math.ceil(sequence.length / 2)]
+}
+
+const samePolygonCount = (a, b) => {
+  if (a.length !== b.length) {
+    return false
+  }
+  a.forEach((polycount, index) => {
+    if (polycount !== b[index]) {
+      return false
+    }
+  })
+  return true
 }
 
 module.exports = runCompare
