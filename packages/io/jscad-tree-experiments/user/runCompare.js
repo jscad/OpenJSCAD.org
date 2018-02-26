@@ -80,4 +80,9 @@ const samePolygonCount = (a, b) => {
   return true
 }
 
-module.exports = runCompare
+module.exports = {
+  runCompare,
+  runVanilla,
+  runVTree,
+  runVTreeTree
+}
