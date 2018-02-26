@@ -1,5 +1,9 @@
 const {flatten} = require('./arrays')
 
+/** finds all the disconnected sub graphs inside of a tree: ie if
+ * the script on which the tree is based returns arrays of data will return those
+ * @param  {} root 'findDisconnectedSubGraphs'
+ */
 const findDisconnectedSubGraphs = root => {
   // console.log('findDisconnectedSubGraphs')
   if (Array.isArray(root)) {
@@ -12,7 +16,6 @@ const findDisconnectedSubGraphs = root => {
   dfs(root, stack, leafs, subTrees)
 
   // const independantSubtree = root.children
-  // subTrees = flatten(subTrees)
   // console.log('results subTrees', JSON.stringify(subTrees[0]))
   return subTrees[0]
 }
@@ -33,7 +36,7 @@ const dfs = (node, stack = [], leafs = [], subTrees, depth = 0) => {
   }
   // going up
   node.visited = true
-  // essential ! 
+  // essential !
   if (node.children && (node.type === 'root' || !node.type)) {
     subTrees.push(node.children)
   }
