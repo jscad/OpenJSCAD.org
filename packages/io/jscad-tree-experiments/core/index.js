@@ -21,19 +21,29 @@ const sphere = params => {
   return Object.assign({}, _params, {type: 'sphere'})
 }
 
+const cylinder = params => {
+  const defaults = {
+    size: 1,
+    center: [true, true, true]
+  }
+  const _params = Object.assign({}, defaults, params)
+
+  return Object.assign({}, _params, {type: 'cylinder'})
+}
+
 const union = (...solids) => {
   solids = flatten(toArray(solids))
-  return {children: solids, type: 'union'}
+  return {children: solids, type: 'union', params: undefined}
 }
 
 const difference = (...solids) => {
   solids = toArray(solids)
-  return {children: solids, type: 'difference'}
+  return {children: solids, type: 'difference', params: undefined}
 }
 
 const intersection = (...solids) => {
   solids = toArray(solids)
-  return {children: solids, type: 'intersection'}
+  return {children: solids, type: 'intersection', params: undefined}
 }
 
 const translate = (params, ...solids) => {
@@ -54,6 +64,7 @@ const scale = (params, ...solids) => {
 module.exports = {
   cube,
   sphere,
+  cylinder,
   union,
   difference,
   intersection,
