@@ -14,13 +14,13 @@ const makeBuildCachedGeometryFromTree = () => {
   // or gets pre-existing results from the cache
   const buildFinalResult = (subTrees) => {
     const finalResult = []
-    subTrees.forEach(function (indy, index) {
-      const subTreeHash = hash(indy)
+    subTrees.forEach(function (subTree, index) {
+      const subTreeHash = hash(subTree)
       const foundData = lookup[subTreeHash]
       if (foundData !== undefined) {
         finalResult.push(foundData.geom)
       } else {
-        const subTreeGeom = generate(indy)
+        const subTreeGeom = generate(subTree)
         lookup[subTreeHash] = subTreeGeom
         finalResult.push(subTreeGeom)
       }
