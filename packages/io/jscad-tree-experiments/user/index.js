@@ -34,6 +34,22 @@ buildCachedGeometryFromTree(undefined, vtree)
 
 elapsed = process.hrtime(start)[1] / 1000000
 console.log('optimised time', elapsed, 'ms')
+
+console.log('start optimised, removed a few shapes')
+start = process.hrtime()
+vtree = require('./examples/caching-test-vtree-changed2')()
+buildCachedGeometryFromTree(undefined, vtree)
+
+elapsed = process.hrtime(start)[1] / 1000000
+console.log('optimised time', elapsed, 'ms')
+
+console.log('start optimised, removed a few shapes (re-run)')
+start = process.hrtime()
+vtree = require('./examples/caching-test-vtree-changed2')()
+buildCachedGeometryFromTree(undefined, vtree)
+
+elapsed = process.hrtime(start)[1] / 1000000
+console.log('optimised time', elapsed, 'ms')
 /*
 let start = process.hrtime()
 console.log('start optimised, first iteration')
