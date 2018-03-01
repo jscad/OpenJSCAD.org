@@ -34,16 +34,16 @@ const makeCacheWithInvalidation = (passesBeforeElimination = 1) => {
 
     hashesWithNoHits.forEach(function (nodeHash, index) {
       lookupCounts[nodeHash] -= 1
-      console.log('hashesWithNoHits', nodeHash, index, lookupCounts[nodeHash])
+      // console.log('hashesWithNoHits', nodeHash, index, lookupCounts[nodeHash])
 
       if (lookupCounts[nodeHash] <= 0) {
-        console.log('killing', nodeHash)
+        // console.log('killing', nodeHash)
         delete lookup[nodeHash]
         delete lookupCounts[nodeHash]
       }
     })
-    console.log('totalHashes before', totalHashes.length)
-    console.log('totalHashes after', Object.keys(lookup).length)
+    // console.log('totalHashes before', totalHashes.length)
+    // console.log('totalHashes after', Object.keys(lookup).length)
     currentPassHits = []
   }
 

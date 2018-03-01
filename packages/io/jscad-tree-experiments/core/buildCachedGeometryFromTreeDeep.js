@@ -16,9 +16,13 @@ const makeBuildCachedGeometryFromTree = (params) => {
   // in the cache based on their hash, and either caches & adds the result
   // or gets pre-existing results from the cache
   const buildFinalResult = (subTrees, deep) => {
+    const rootNode = {children: subTrees}
     const finalResult = []
-    subTrees.forEach(function (subTree, index) {
-      /*const subTreeHash = hash(subTree)
+    if (deep) {
+      dfs(rootNode, cache)
+    }
+    // subTrees.forEach(function (subTree, index) {
+      /* const subTreeHash = hash(subTree)
       const foundData = lookup[subTreeHash]
       if (foundData !== undefined) {
         finalResult.push(foundData.geom)
@@ -26,11 +30,11 @@ const makeBuildCachedGeometryFromTree = (params) => {
         const subTreeGeom = generate(subTree, lookup)
         lookup[subTreeHash] = subTreeGeom
         finalResult.push(subTreeGeom)
-      }*/
-      if (deep) {
+      } */
+      /* if (deep) {
         dfs(subTree, cache)
-      }
-    })
+      } */
+    // })
     return finalResult
   }
 
@@ -57,8 +61,8 @@ const dfs = (node, cache) => {
   if (node.children && (node.type === 'root' || !node.type)) {
     // subTrees.push(node.children)
   }
-
-  generate(node, cache)
+  // console.log('here', node)
+  return generate(node, cache)
 }
 
 const omit = (obj, blacklist) => {
