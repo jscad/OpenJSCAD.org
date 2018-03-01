@@ -61,15 +61,65 @@ const scale = (params, ...solids) => {
   return {children: solids, type: 'scale', params}
 }
 
+const mirror = (params, ...solids) => {
+  solids = toArray(solids)
+  return {children: solids, type: 'mirror', params}
+}
+
+const hull = (...solids) => {
+  solids = toArray(solids)
+  return {children: solids, type: 'hull', params: undefined}
+}
+
+const color = (params, ...solids) => {
+  solids = toArray(solids)
+  return {children: solids, type: 'color', params}
+}
+
+const square = (params) => {
+  return {type: 'square', params}
+}
+
+const circle = (params) => {
+  return {type: 'circle', params}
+}
+
+const linear_extrude = (params, ...solids) => {
+  solids = toArray(solids)
+  return {children: solids, type: 'linear_extrude', params}
+}
+
+const rectangular_extrude = (solids, params) => {
+  solids = toArray(solids)
+  return {children: solids, type: 'rectangular_extrude', params}
+}
+// not sure about this one
+const vector_text = (...params) => {
+  return {type: 'vector_text', params}
+}
+
 module.exports = {
   cube,
   sphere,
   cylinder,
+
+  square,
+  circle,
+
   union,
   difference,
   intersection,
 
   translate,
   rotate,
-  scale
+  scale,
+  mirror,
+  hull,
+
+  linear_extrude,
+  rectangular_extrude,
+
+  vector_text,
+
+  color
 }
