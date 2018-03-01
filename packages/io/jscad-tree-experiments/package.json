@@ -18,6 +18,7 @@
     "just-diff": "^2.1.1",
     "object-hash": "^1.2.0",
     "serialize-to-js": "^1.1.1",
-    "simple-diff": "^1.6.0"
+    "simple-diff": "^1.6.0",
+    "usage": "^0.7.1"
   }
 }

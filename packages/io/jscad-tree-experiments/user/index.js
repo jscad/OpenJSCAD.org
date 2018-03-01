@@ -3,22 +3,58 @@ const generateTree = require('../core/geometry-tree-generator')
 const findDisconnectedSubGraphs = require('../core/findDisconnectedSubGraphs')
 const writeOutput = require('../io/writeOutput')
 
-
 const makeBuildCachedGeometryFromTree = require('../core/buildCachedGeometryFromTreeDeep')
 const {runCompare, runVTreeTree} = require('./runCompare')
+const {runBenchMark, spawnBenchMark} = require('./runBenchmark')
+
+spawnBenchMark('user/run-optimised.js')
+spawnBenchMark('user/run-vanilla.js')
+
+// const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree()
+// let vtree = require('./examples/caching-test-vtree')()
+// buildCachedGeometryFromTree(undefined, vtree)
+
 /* runCompare('./examples/logo')
 runCompare('./examples/basic')
 runCompare('./examples/union')
 runCompare('./examples/shapes-array') */
 
 //
-/*let fooVtree = require('./examples/transforms-vtree')()
+/* let fooVtree = require('./examples/transforms-vtree')()
 const subTrees = findDisconnectedSubGraphs(fooVtree)
 console.log('foo', JSON.stringify(subTrees))
 return */
+/*
+const runOptimisedCached = () => {
+  const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree()
+  let vtree = require('./examples/caching-test-vtree')()
+  buildCachedGeometryFromTree(undefined, vtree)
 
+  vtree = require('./examples/caching-test-vtree-changed')()
+  buildCachedGeometryFromTree(undefined, vtree)
+
+  vtree = require('./examples/caching-test-vtree-changed2')()
+  buildCachedGeometryFromTree(undefined, vtree)
+
+  vtree = require('./examples/caching-test-vtree-changed2')()
+  buildCachedGeometryFromTree(undefined, vtree)
+}
+
+const runVanilla = () => {
+  require('./examples/caching-test-vanilla')()
+
+  require('./examples/caching-test-vanilla-changed')()
+
+  require('./examples/caching-test-vanilla-changed2')()
+
+  require('./examples/caching-test-vanilla-changed2')()
+}
+
+runBenchMark(runOptimisedCached, 'OptimisedCached', 10)
+runBenchMark(runVanilla, 'Vanilla', 10)
+*/
+/*
 const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree()
-
 let start = process.hrtime()
 console.log('start optimised, first iteration')
 let vtree = require('./examples/caching-test-vtree')()
@@ -49,7 +85,7 @@ vtree = require('./examples/caching-test-vtree-changed2')()
 buildCachedGeometryFromTree(undefined, vtree)
 
 elapsed = process.hrtime(start)[1] / 1000000
-console.log('optimised time', elapsed, 'ms')
+console.log('optimised time', elapsed, 'ms') */
 /*
 let start = process.hrtime()
 console.log('start optimised, first iteration')
