@@ -7,8 +7,8 @@ const cacheTreeGeometry = (treeGeometry) => {
     fs.mkdirSync(cachePath)
   }
   const serialize = require('serialize-to-js').serialize
-  results.forEach(function (result) {
-  })
+  /* results.forEach(function (result) {
+  }) */
   const compactBinary = csg.toCompactBinary()
   const compactOutput = serialize(compactBinary)
   fs.writeFileSync('compactBinary.js', 'compactBinary=' + compactOutput)

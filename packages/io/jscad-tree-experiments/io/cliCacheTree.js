@@ -7,6 +7,7 @@ const cliCacheTree = (curTree) => {
     prevTree = fs.readFileSync(prevTreeFileName, 'utf8')
   }
   fs.writeFileSync(prevTreeFileName, JSON.stringify(curTree))
+  return prevTree
 }
 
 module.exports = cliCacheTree
