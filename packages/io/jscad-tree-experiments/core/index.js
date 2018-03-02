@@ -71,6 +71,11 @@ const hull = (...solids) => {
   return {children: solids, type: 'hull', params: undefined}
 }
 
+const chain_hull = (...solids) => {
+  solids = toArray(solids)
+  return {children: solids, type: 'chain_hull', params: undefined}
+}
+
 const color = (params, ...solids) => {
   solids = toArray(solids)
   return {children: solids, type: 'color', params}
@@ -89,16 +94,58 @@ const linear_extrude = (params, ...solids) => {
   return {children: solids, type: 'linear_extrude', params}
 }
 
+const rotate_extrude = (params, ...solids) => {
+  solids = toArray(solids)
+  return {children: solids, type: 'rotate_extrude', params}
+}
+
 const rectangular_extrude = (solids, params) => {
   solids = toArray(solids)
   return {children: solids, type: 'rectangular_extrude', params}
 }
+
 // not sure about this one
 const vector_text = (...params) => {
   return {type: 'vector_text', params}
 }
 
+// this is a convenience object, that mimicks the structure of the jscad functional api
+const apiClone = {
+  primitives3d: {
+    cube,
+    sphere,
+    cylinder
+  },
+  primitives2d: {
+    circle,
+    square
+  },
+  booleanOps: {
+    union,
+    difference,
+    intersection
+  },
+  transformations: {
+    translate,
+    rotate,
+    scale,
+    mirror,
+    hull,
+    chain_hull
+  },
+  extrusions: {
+    linear_extrude,
+    rotate_extrude,
+    rectangular_extrude
+  },
+  text: {
+    vector_text
+  }
+}
+
 module.exports = {
+  apiClone,
+
   cube,
   sphere,
   cylinder,
