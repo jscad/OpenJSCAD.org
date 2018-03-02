@@ -93,3 +93,8 @@ The 'user' folder contains all benchmarking code and jscad scripts (in user/exam
         * AFTER EACH PASS (re-evaluation of a jscad script) decrement the counter for unused hashes
             * if the counter drops to zero, remove the hash/geometry from the cache
     
+### RESULTS
+
+    Everything worked as expected : testing with a sequence of files with shared primitives , some of which
+    where removed, and correctly decached
+
