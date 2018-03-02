@@ -1,7 +1,7 @@
 const fs = require('fs')
 
-const {prepareOutput} = require('../io/prepareOutput')
-const {convertToBlob} = require('../io/convertToBlob')
+const {prepareOutput} = require('./prepareOutput')
+const {convertToBlob} = require('./convertToBlob')
 
 module.exports = function saveDataToFs (outputData, format, filePath) {
   const blob = convertToBlob(prepareOutput(outputData, {format}))

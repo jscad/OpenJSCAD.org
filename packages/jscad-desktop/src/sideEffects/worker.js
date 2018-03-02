@@ -1,4 +1,4 @@
-const callBackToStream = require('../observable-utils/callbackToObservable')
+const callBackToStream = require('../utils/observable-utils/callbackToObservable')
 
 const makeWorkerEffect = (workerPath) => {
   let _worker = new Worker(workerPath)

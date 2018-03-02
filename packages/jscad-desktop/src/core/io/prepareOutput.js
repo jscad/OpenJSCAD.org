@@ -1,5 +1,5 @@
 const { formats } = require('./formats')
-const {convertToSolid2} = require('../core/convertToSolid')
+const {convertToSolid2} = require('../code-evaluation/convertToSolid')
 
 const stlSerializer = require('@jscad/stl-serializer')
 const amfSerializer = require('@jscad/amf-serializer')

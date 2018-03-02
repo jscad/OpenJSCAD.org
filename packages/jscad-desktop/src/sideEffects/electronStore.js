@@ -2,9 +2,6 @@ const Store = require('electron-store')
 const store = new Store()
 const most = require('most')
 
-store.delete('lastDesign')
-store.delete('ui')
-
 function electronStoreSideEffect (outToStore$) {
   if (outToStore$) {
     outToStore$.forEach(function (outToStore) {

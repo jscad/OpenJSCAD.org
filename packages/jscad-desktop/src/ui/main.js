@@ -13,8 +13,6 @@ function dom (state, paramsCallbacktoStream) {
   const statusMessage = state.error !== undefined
     ? `Error: ${state.error.message} details:  ${state.error.stack}` : ''
 
-  const exportButtonText = `export design to ${state.exportFormat}`
-
   const output = html`
     <div id='container' style='color:${state.mainTextColor}'>
       <header>
@@ -34,7 +32,7 @@ function dom (state, paramsCallbacktoStream) {
             <select id='exportFormats'>
             ${formatsList}
             </select>
-            <input type='button' value="${exportButtonText}" id="exportBtn"/>
+            <input type='button' value="export" id="exportBtn"/>
         </span>
           
         </section>
@@ -58,18 +56,46 @@ function dom (state, paramsCallbacktoStream) {
       </div>
       
       <!--Params-->
-      <span id='params'>
-        <span id='paramsMain'>
+      <section id='params' style='visibility:${state.design.paramDefinitions.length === 0 ? 'hidden' : 'visible'}'>
+        <span id='paramsTable'>
           <table>
             ${controls}
           </table>
         </span>
-        <span id='paramsControls' style='visibility:${state.design.paramDefinitions.length === 0 ? 'hidden' : 'visible'}'>
+        <span id='paramsControls'>
           <button id='updateDesignFromParams'>Update</button>
           <label for='instantUpdate'>Instant Update</label>
           <input type='checkbox' checked='${state.instantUpdate}' id='instantUpdate'/>
         </span>
-      </span>
+      </section>
+
+      <!--Options-->
+      <section id='options' style='visibility:hidden'>
+        <fieldset>
+            <legend> <h3> Geometry </h3> </legend>
+            <label>Timeout for solids generation
+              <input id='solidsTimeout' type='number' min=0 max=200000 value=${state.solidsTimeOut}/>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend> <h3> 3d Viewer </h3> </legend>  
+            <label>Zoom to fit on new parameters
+              <input type='checkbox' checked=false/>
+            </label>
+            <label>Zoom to fit on design load
+              <input type='checkbox' checked=false/>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend> <h3> Storage </h3> </legend>  
+            <label>Settings Storage path (not settable)
+              <input type='text' disabled value='${state.storage.path}'/>
+            </label>
+          </fieldset>
+
+      </section>
 
       <canvas id='renderTarget'> </canvas>
       

@@ -4,17 +4,39 @@
         <title>Jscad V2.0</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <style>
+          @font-face {
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 400;
+            src: local('OpenSans'), local('OpenSans'), url(fonts/Open_Sans/OpenSans-Regular.ttf) format('truetype');
+          }
+
+          @font-face {
+            font-family: 'Open Sans';
+            font-style: italic;
+            font-weight: 400;
+            src: local('OpenSans'), local('OpenSans'), url(fonts/Open_Sans/OpenSans-Italic.ttf) format('truetype');
+          }
+
+          @font-face {
+            font-family: 'Open Sans';
+            font-style: bold;
+            src: local('OpenSans'), local('OpenSans'), url(fonts/Open_Sans/OpenSans-Bold.ttf) format('truetype');
+          }
+
           html{
-          height: 100%;
+            height: 100%;
+            font-family: 'Open Sans', sans-serif;
+            font-size: small;
           }
           body {
             height: 100%;
-          min-height: 100%;
-          min-width: 100%;
+            min-height: 100%;
+            min-width: 100%;
           }
           
-
           document.body {
           top: 0px;
           bottom: 0px;
@@ -50,7 +72,28 @@
             left: 40px;
             user-select: none;
             padding: 10px;
+            background: white;
+            box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.17)
           }
+          #paramsTable{
+            display: flex;
+            margin-bottom: 20px;
+          }
+          #paramsTable table {
+            border-collapse: collapse;
+          }
+          #paramsTable h1{
+            margin-bottom: 6px;
+            margin-top: 6px;
+            font-size: medium;
+          }
+          #paramsTable .groupTitle  {
+            border-top: 1px solid #bfbcbc;;
+          }
+          #paramsTable .controlsLine{
+            padding-top: 10px;
+          }
+
           #busy{
             position: absolute;
             color: black;
@@ -89,6 +132,72 @@
             color:gray;
             text-transform: capitalize;
           }
+
+          #options {
+            position: absolute;
+            z-index: 99;
+            top: 10px;
+            right: 10px;
+            max-width: 500px;
+            overflow: scroll;
+            
+
+            background: white;
+            box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.17)
+          }
+          #options fieldset{
+            border: none;
+            display: table;
+          }
+          #options fieldset label{
+            display: table-row;
+          }
+          #options fieldset input{
+            display: table-row;
+            align-self: flex-end;
+          }
+
+          button{
+            background: none;
+            box-shadow: none;
+            border-color: black;
+            border-radius: 0px;
+            border-width: 1px;
+            margin: 0px 5px 0px 5px;
+            background-color: white;
+            letter-spacing: .5px;
+            outline: none;
+            border: 1px solid #bfbcbc;
+          }
+
+          button:hover{
+            background-color:rgba(0, 188, 212, 0.6);;
+          }
+
+          input[type="button"]{
+            background: none;
+            box-shadow: none;
+            border-color: black;
+            border-radius: 0px;
+            border-width: 1px;
+            margin: 0px 5px 0px 5px;
+            background-color: white;
+            letter-spacing: .5px;
+            outline: none;
+            border: 1px solid #bfbcbc;
+          }  
+          input[type="button"]:hover{
+            background-color:rgba(0, 188, 212, 0.6);;
+          }
+
+          input[type="checkbox"] {
+            color:red;
+          }
+
+          input[type="checkbox"]:hover{
+            background-color:rgba(0, 188, 212, 0.6);;
+          }
+
         </style>
     </head>
     <body>

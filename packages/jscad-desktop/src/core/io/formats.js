@@ -1,5 +1,5 @@
 // this is ALMOST EXACTLY the same code as openjscad.org/src/io/formats
-const {isCSG, isCAG} = require('../utils')
+const {isCSG, isCAG} = require('@jscad/csg')
 
 // handled format descriptions
 const formats = {

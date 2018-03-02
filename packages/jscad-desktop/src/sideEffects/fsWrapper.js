@@ -1,6 +1,6 @@
 
 const fs = require('fs')
-const callBackToStream = require('../observable-utils/callbackToObservable')
+const callBackToStream = require('../utils/observable-utils/callbackToObservable')
 
 const readFileToCB = callBackToStream()
 

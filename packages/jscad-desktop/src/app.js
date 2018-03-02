@@ -12,9 +12,9 @@ const dragAndDropSource$ = makeDragDropSource(document)
 const {watcherSink, watcherSource} = require('./sideEffects/fileWatcher')
 const {fsSink, fsSource} = require('./sideEffects/fsWrapper')
 const {domSink, domSource} = require('./sideEffects/dom')
-const paramsCallbacktoStream = require('./observable-utils/callbackToObservable')()
+const paramsCallbacktoStream = require('./utils/observable-utils/callbackToObservable')()
 const makeWorkerEffect = require('./sideEffects/worker')
-const solidWorker = makeWorkerEffect('src/worker.js')
+const solidWorker = makeWorkerEffect('src/core/code-evaluation/rebuildSolidsWorker.js')
 
 // proxy state stream to be able to access & manipulate it before it is actually available
 const { attach, stream } = proxy()
@@ -30,7 +30,11 @@ const sources = {
   dom: domSource(),
   solidWorker: solidWorker.source()
 }
-const actions$ = require('./actions/actions')(sources)
+const designActions = require('./ui/design/actions')(sources)
+const ioActions = require('./ui/io/actions')(sources)
+const viewerActions = require('./ui/viewer/actions')(sources)
+const otherActions = require('./ui/actions')(sources)
+const actions$ = Object.assign({}, designActions, otherActions, ioActions, viewerActions)
 
 attach(makeState(Object.values(actions$)))
 
@@ -76,7 +80,7 @@ fsSink(
 const most = require('most')
 const solidWorkerBase$ = most.mergeArray([
   actions$.setDesignContent$.map(action => ({paramValues: undefined, origin: 'designContent', error: undefined})),
-  actions$.updateDesignFromParams$
+  actions$.updateDesignFromParams$.map(action => action.data)
 ]).multicast()
 
 solidWorker.sink(
@@ -84,7 +88,7 @@ solidWorker.sink(
       if (error) {
         return undefined
       }
-      const applyParameterDefinitions = require('./core/applyParameterDefinitions')
+      const applyParameterDefinitions = require('./core/parameters/applyParameterDefinitions')
       paramValues = paramValues || design.paramValues // this ensures the last, manually modified params have upper hand
       paramValues = paramValues ? applyParameterDefinitions(paramValues, design.paramDefinitions) : paramValues
       if (!instantUpdate && origin === 'instantUpdate') {
@@ -113,12 +117,7 @@ state$
     JSON.stringify(state.design.solids) === JSON.stringify(previousState.design.solids)
     return sameSolids
   })
-  /* .skipRepeatsWith((a, b) => {
-    // console.log('FOObar', a, b)
-    return a.design.mainPath === b.design.mainPath //&& b.design.solids
-  }) */
   .forEach(state => {
-    // console.log('changing solids')
     if (csgViewer !== undefined) {
       csgViewer(undefined, {solids: state.design.solids})
     }
@@ -149,18 +148,27 @@ const outToDom$ = state$
 domSink(outToDom$)
 
 // for viewer
+
+/*viewerActions
+  .toggleGrid$
+  .forEach(params => {
+    console.log('changing viewer params', params)
+    const viewerElement = document.getElementById('renderTarget')
+    setCanvasSize(viewerElement)
+    // initialize viewer if it has not been done already
+    if (viewerElement && !csgViewer) {
+      const csgViewerItems = makeCsgViewer(viewerElement, params)
+      csgViewer = csgViewerItems.csgViewer
+    }
+    if (csgViewer) {
+      csgViewer(params)
+    }
+  })*/
 state$
   .map(state => state.viewer)
   .skipRepeatsWith(function (state, previousState) {
     return JSON.parse(JSON.stringify(state)) === JSON.parse(JSON.stringify(previousState))
   })
-  /* require('most').mergeArray(
-  [
-    actions$.toggleGrid$.map(x => ({grid: {show: x.data}})),
-    // actions$.toggleAutorotate$,
-    // actions$.changeTheme$.map(x=>x)
-  ]
-  ) */
   .forEach(params => {
     // console.log('changing viewer params')
     const viewerElement = document.getElementById('renderTarget')

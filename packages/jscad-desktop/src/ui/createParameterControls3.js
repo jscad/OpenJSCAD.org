@@ -29,7 +29,10 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, rebuildSoli
       className = 'caption'
     }
 
+    let trClassName = 'controlsLine'
     if (type === 'group') {
+      label = html`<h1>${label}</h1>`
+      trClassName = 'groupTitle'
       subControls = subControls.map(control => html`<th class=${control.className}> ${control.text} </th>`)
     } else {
       subControls.forEach(control => {
@@ -47,7 +50,7 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, rebuildSoli
     const subItems = subControls.map(control => {
       return html`<div>${control} ${'label' in control ? control.label : ''}</div>`
     })
-    return html`<tr>
+    return html`<tr class=${trClassName}>
       <td class=${className}> ${label} </td>
       <td> ${subItems}</td>
     </tr>`
