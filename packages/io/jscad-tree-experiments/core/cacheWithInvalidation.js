@@ -8,7 +8,7 @@ const makeCacheWithInvalidation = (passesBeforeElimination = 1) => {
 
   let currentPassHits = []
 
-  const findInCache = (node) => {
+  const find = (node) => {
     const nodeHash = hash(node)
     const foundData = lookup[nodeHash]
     if (foundData) {
@@ -20,13 +20,13 @@ const makeCacheWithInvalidation = (passesBeforeElimination = 1) => {
     return foundData ? {foundData, nodeHash} : {foundData: undefined, nodeHash}
   }
 
-  const addToCache = (nodeHash, data) => {
+  const add = (nodeHash, data) => {
     lookup[nodeHash] = data
     lookupCounts[nodeHash] += 1
   }
 
   // call this after a 'pass'
-  const updateCache = () => {
+  const update = () => {
     const totalHashes = Object.keys(lookup)
     let a = new Set(totalHashes)
     let b = new Set(currentPassHits)
@@ -47,7 +47,7 @@ const makeCacheWithInvalidation = (passesBeforeElimination = 1) => {
     currentPassHits = []
   }
 
-  return {lookup, findInCache, addToCache, updateCache}
+  return {lookup, find, add, update}
 }
 
 module.exports = makeCacheWithInvalidation

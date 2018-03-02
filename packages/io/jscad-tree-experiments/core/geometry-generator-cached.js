@@ -1,3 +1,5 @@
+const {flatten} = require('./arrays')
+
 const {cube, sphere, cylinder} = require('@jscad/csg/api').primitives3d
 const {circle, square} = require('@jscad/csg/api').primitives2d
 const {union, difference, intersection} = require('@jscad/csg/api').booleanOps
@@ -9,10 +11,10 @@ const generate = (node, cache) => {
   let result
   let operands
   if (Array.isArray(node)) {
-    return node.map(n => generate(n, cache))
+    return flatten(node).map(n => generate(n, cache))
   }
 
-  const {foundData, nodeHash} = cache.findInCache(node)
+  const {foundData, nodeHash} = cache.find(node)
   if (foundData) {
     return foundData
   }
@@ -33,60 +35,61 @@ const generate = (node, cache) => {
       result = square(node)
       break
     case 'union' :
-      operands = node.children.map(n => generate(n, cache))
+      operands = flatten(node.children).map(n => generate(n, cache))
       result = union(operands)
       break
     case 'difference' :
-      operands = node.children.map(n => generate(n, cache))
+      operands = flatten(node.children).map(n => generate(n, cache))
       result = difference(operands)
       break
     case 'intersection' :
-      operands = node.children.map(n => generate(n, cache))
+      operands = flatten(node.children).map(n => generate(n, cache))
       result = intersection(operands)
       break
     case 'translate':
-      operands = node.children.map(n => generate(n, cache))
+      operands = flatten(node.children).map(n => generate(n, cache))
+      // console.log('translate::::', node.params, operands)
       result = translate(node.params, operands)
       break
     case 'rotate':
-      operands = node.children.map(n => generate(n, cache))
+      operands = flatten(node.children).map(n => generate(n, cache))
       result = rotate(node.params, operands)
       break
     case 'scale':
-      operands = node.children.map(n => generate(n, cache))
+      operands = flatten(node.children).map(n => generate(n, cache))
       result = scale(node.params, operands)
       break
     case 'mirror':
-      operands = node.children.map(n => generate(n, cache))
+      operands = flatten(node.children).map(n => generate(n, cache))
       result = mirror(node.params, operands)
       break
     case 'hull':
-      operands = node.children.map(n => generate(n, cache))
+      operands = flatten(node.children).map(n => generate(n, cache))
       result = hull(operands)
       break
     case 'chain_hull':
-      operands = node.children.map(n => generate(n, cache))
+      operands = flatten(node.children).map(n => generate(n, cache))
       result = chain_hull(operands)
       break
     case 'color':
-      operands = node.children.map(n => generate(n, cache))
+      operands = flatten(node.children).map(n => generate(n, cache))
       result = color(node.params, operands)
       break
     case 'linear_extrude':
-      operands = node.children.map(n => generate(n, cache))
+      operands = flatten(node.children).map(n => generate(n, cache))
       result = linear_extrude(node.params, operands)
       break
     case 'rotate_extrude':
-      operands = node.children.map(n => generate(n, cache))
+      operands = flatten(node.children).map(n => generate(n, cache))
       result = rotate_extrude(node.params, operands)
       break
     case 'rectangular_extrude':
-      operands = node.children.map(n => generate(n, cache))
+      operands = flatten(node.children).map(n => generate(n, cache))
       result = rectangular_extrude(operands, node.params)
       break
   }
 
-  cache.addToCache(nodeHash, result)
+  cache.add(nodeHash, result)
   // lookup[nodeHash] = result
 
   return result
