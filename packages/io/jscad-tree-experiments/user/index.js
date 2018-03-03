@@ -1,18 +1,21 @@
-const generate = require('../core/geometry-generator')
-const generateTree = require('../core/geometry-tree-generator')
-const findDisconnectedSubGraphs = require('../core/findDisconnectedSubGraphs')
 const writeOutput = require('../io/writeOutput')
+const {toArray} = require('../core/arrays')
 
-const makeBuildCachedGeometryFromTree = require('../core/buildCachedGeometryFromTreeDeep')
+const makeBuildCachedGeometryFromTree = require('../core/buildCachedGeometryFromTree')
 const {runCompare, runVTreeTree} = require('./runCompare')
 const {runBenchMark, spawnBenchMark} = require('./runBenchmark')
 
-spawnBenchMark('user/run-optimised.js')
-spawnBenchMark('user/run-vanilla.js')
+// spawnBenchMark('user/run-optimised.js')
+// spawnBenchMark('user/run-vanilla.js')
+const vanillaApi = require('@jscad/csg/api')
+const vtreeApi = require('../core/index').apiClone
 
-// const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree()
-// let vtree = require('./examples/caching-test-vtree')()
-// buildCachedGeometryFromTree(undefined, vtree)
+let result
+const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree()
+let vtree = require('./examples/complex-vtree')()
+result = buildCachedGeometryFromTree(undefined, vtree)
+// result = vtree
+console.log('result', toArray(result)[0].polygons.length)
 
 /* runCompare('./examples/logo')
 runCompare('./examples/basic')

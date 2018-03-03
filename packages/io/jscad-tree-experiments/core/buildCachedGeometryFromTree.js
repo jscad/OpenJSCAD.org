@@ -1,38 +1,41 @@
 
-const hash = require('object-hash')
-const generate = require('./geometry-generator')
-const findDisconnectedSubGraphs = require('./findDisconnectedSubGraphs')
+const generate = require('./geometry-generator-cached')
+const makeCacheWithInvalidation = require('./cacheWithInvalidation')
+const {flatten, toArray} = require('./arrays')
+
 /**
  * higher order function returning a function that can be called to generate
  * geometry from a vtree, using caching (for root elements for now)
  */
-const makeBuildCachedGeometryFromTree = () => {
-  const lookup = {}
+const makeBuildCachedGeometryFromTree = (params) => {
+  const defaults = {
+    // how many passes we allow without cache hits before eliminating hashes/geometry from cache
+    passesBeforeElimination: 1
+  }
+  const {passesBeforeElimination} = Object.assign({}, defaults, params)
+  const cache = makeCacheWithInvalidation(passesBeforeElimination)
 
-  // iterates though the array of subtrees, tried to find if they are
-  // in the cache based on their hash, and either caches & adds the result
-  // or gets pre-existing results from the cache
-  const buildFinalResult = (subTrees) => {
-    const finalResult = []
-    subTrees.forEach(function (subTree, index) {
-      const subTreeHash = hash(subTree)
-      const foundData = lookup[subTreeHash]
-      if (foundData !== undefined) {
-        finalResult.push(foundData.geom)
-      } else {
-        const subTreeGeom = generate(subTree)
-        lookup[subTreeHash] = subTreeGeom
-        finalResult.push(subTreeGeom)
-      }
-    })
-    return finalResult
+  const buildFinalResult = (tree, deep) => {
+    return toArray(dfs(tree, cache))
   }
 
-  return function (tree) {
-    const subTrees = findDisconnectedSubGraphs(tree)
-    const result = buildFinalResult(subTrees)
+  // main function, this can be called every time one needs to generate
+  // geometry from the vtree
+  return function (params, tree) {
+    const result = buildFinalResult(tree)
+    // to remove potential no-hit items
+    cache.update()
     return result
   }
+}
+
+const dfs = (node, cache) => {
+  if (node.children) {
+    flatten(node.children).forEach(function (childNode) {
+      dfs(childNode, cache)
+    })
+  }
+  return generate(node, cache)
 }
 
 module.exports = makeBuildCachedGeometryFromTree

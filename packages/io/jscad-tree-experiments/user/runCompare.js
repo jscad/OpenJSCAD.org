@@ -1,5 +1,4 @@
-const generate = require('../core/geometry-generator')
-const generateTree = require('../core/geometry-tree-generator')
+const generate = require('../core/geometry-generator-cached')
 const decache = require('decache')
 const { toArray } = require('../core/arrays')
 
@@ -18,7 +17,6 @@ function runCompare (basePath, runs = 10) {
   }
 
   // run passes of each variants multiple times
-  runPass(moduleNameVtree, runVTreeTree, runs, 'vtree treegen ')
   runPass(moduleNameVtree, runVTree, runs, 'vtree gen ')
   runPass(moduleNameVanilla, runVanilla, runs, 'vanilla ')
 }
@@ -48,14 +46,6 @@ const runVanilla = (moduleName) => {
   const resultPolys = results.map(r => r.polygons.length)
   return resultPolys
 }
-
-const runVTreeTree = (moduleName) => {
-  let results = require(moduleName)()
-  results = toArray(generateTree(results))
-  const resultPolys = results.map(r => r.geometry.polygons.length)
-  return resultPolys
-}
-
 const runVTree = (moduleName) => {
   let results = require(moduleName)()
   results = toArray(generate(results))
@@ -83,6 +73,5 @@ const samePolygonCount = (a, b) => {
 module.exports = {
   runCompare,
   runVanilla,
-  runVTree,
-  runVTreeTree
+  runVTree
 }

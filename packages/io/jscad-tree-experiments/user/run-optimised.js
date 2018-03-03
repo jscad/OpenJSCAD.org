@@ -1,5 +1,5 @@
 const {runBenchMark} = require('./runBenchmark')
-const makeBuildCachedGeometryFromTree = require('../core/buildCachedGeometryFromTreeDeep')
+const makeBuildCachedGeometryFromTree = require('../core/buildCachedGeometryFromTree')
 
 const runOptimisedCached = () => {
   const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree()
