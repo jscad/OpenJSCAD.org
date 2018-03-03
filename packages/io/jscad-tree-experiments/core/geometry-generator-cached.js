@@ -77,16 +77,26 @@ const generate = (node, cache) => {
       break
     case 'linear_extrude':
       operands = flatten(node.children).map(n => generate(n, cache))
+      // FIXME: REALLY NEEDED ???
+      operands = union(operands)
       result = linear_extrude(node.params, operands)
       break
     case 'rotate_extrude':
       operands = flatten(node.children).map(n => generate(n, cache))
+      // FIXME: REALLY NEEDED ???
+      operands = union(operands)
       result = rotate_extrude(node.params, operands)
       break
     case 'rectangular_extrude':
       operands = flatten(node.children).map(n => generate(n, cache))
+      // operands = flatten(node.children).map(n => generate(n, cache))
+      // FIXME: REALLY NEEDED ???
+      // operands = union(operands)
       result = rectangular_extrude(operands, node.params)
       break
+    default:
+    result = node
+    break
   }
 
   cache.add(nodeHash, result)

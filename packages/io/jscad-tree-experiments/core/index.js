@@ -82,11 +82,13 @@ const color = (params, ...solids) => {
 }
 
 const square = (params) => {
-  return {type: 'square', params}
+  const _params = params
+  return Object.assign({}, _params, {type: 'square'})
 }
 
 const circle = (params) => {
-  return {type: 'circle', params}
+  const _params = params
+  return Object.assign({}, _params, {type: 'circle'})
 }
 
 const linear_extrude = (params, ...solids) => {
@@ -100,14 +102,17 @@ const rotate_extrude = (params, ...solids) => {
 }
 
 const rectangular_extrude = (solids, params) => {
+  console.log('rectangular_extrude')
   solids = toArray(solids)
   return {children: solids, type: 'rectangular_extrude', params}
 }
 
 // not sure about this one
-const vector_text = (...params) => {
-  return {type: 'vector_text', params}
-}
+/*const vector_text = (...params) => {
+  console.log('vector_text',params)
+  return params
+  // return {type: 'vector_text', params}
+}*/
 
 // this is a convenience object, that mimicks the structure of the jscad functional api
 const apiClone = {
@@ -139,8 +144,12 @@ const apiClone = {
     rectangular_extrude
   },
   text: {
-    vector_text
-  }
+    vector_text: require('@jscad/csg/api').text.vector_text
+
+  },
+
+  color: {color}
+
 }
 
 module.exports = {
@@ -166,7 +175,7 @@ module.exports = {
   linear_extrude,
   rectangular_extrude,
 
-  vector_text,
+  //vector_text,
 
   color
 }
