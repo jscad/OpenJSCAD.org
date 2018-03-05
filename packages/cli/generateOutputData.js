@@ -7,6 +7,8 @@ const { resolveIncludesFs } = require('@jscad/core/code-loading/resolveIncludesF
 const getParameterDefinitionsCLI = require('./getParameterDefinitionsCLI')
 const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
 
+const isCommonJsModule = require('@jscad/core/code-loading/isCommonJsModule')
+
 /**
  * generate output data from source
  * @param {String} source the original source
@@ -64,12 +66,27 @@ function generateOutputData (source, params, options) {
     // convert any inputs
     source = conversionTable[inputFormat]({source, params, options})
 
+    // EXPERIMENTAL commonjs module support
+    const scriptIsCommonJsModule = isCommonJsModule(source)
+    if (scriptIsCommonJsModule && (inputFormat === 'jscad' || inputFormat === 'js') &&
+    outputFormat !== 'jscad' && outputFormat !== 'js') {
+      // console.log('scriptIsCommonJsModule', scriptIsCommonJsModule)
+      const {loadScript} = require('@jscad/core/code-loading/scriptLoading')
+      const design = loadScript(source, inputPath)
+      // console.log('definitions', design.parameterDefinitions, 'values', design.parameterValues, design.main, design.getParameterDefinitions)
+      let parameterValues = Object.assign({}, design.parameterValues, params)
+      parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, design.parameterDefinitions) : parameterValues
+      const value = design.main(parameterValues)
+      resolve(value)
+      return
+    }
+
     // extract the array of parameter definitions
     const parameterDefinitions = getParameterDefinitionsForReal(source)
     // get the actual parameters, correctly cast to the right types etc based on the definitions above
     params = applyParameterDefinitions(params, parameterDefinitions)
 
-    // modify main to adapt parameters 
+    // modify main to adapt parameters
     // NOTE: this (getParameterDefinitionsCLI) also combines specified params with defaults
     const mainFunction = `
     //only add this wrapper if not already present & we are not in command-line mode
@@ -81,7 +98,7 @@ function generateOutputData (source, params, options) {
       }
     }
     `
-    source = inputFormat === 'jscad' ? `${source}
+    source = (inputFormat === 'jscad' || inputFormat === 'js') ? `${source}
     ${mainFunction}` : source
 
     if (outputFormat === 'jscad' || outputFormat === 'js') {
