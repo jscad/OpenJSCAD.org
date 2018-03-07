@@ -4,7 +4,7 @@
  * @param {Boolean} onlyChanged
  * @returns {Object} the parameter values, as an object
  */
-module.exports = function getParameterValues (paramControls, parameterDefinitions, onlyChanged) {
+module.exports = function getParameterValuesFromUIControls (paramControls, parameterDefinitions, onlyChanged) {
   let paramValues = {}
   let value
   for (var i = 0; i < paramControls.length; i++) {

@@ -4,10 +4,11 @@ const { prepareOutput } = require('@jscad/core/io/prepareOutput')
 const { convertToBlob } = require('@jscad/core/io/convertToBlob')
 const { rebuildSolids } = require('@jscad/core/code-evaluation/rebuildSolids')
 const { resolveIncludesFs } = require('@jscad/core/code-loading/resolveIncludesFs')
-const getParameterDefinitionsCLI = require('./getParameterDefinitionsCLI')
+const getParameterValuesFromParameters = require('@jscad/core/parameters/getParameterValuesFromParameters')
 const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
 
 const isCommonJsModule = require('@jscad/core/code-loading/isCommonJsModule')
+const requireDesignFromModule = require('@jscad/core/code-loading/requireDesignFromModule')
 
 /**
  * generate output data from source
@@ -33,7 +34,7 @@ function generateOutputData (source, params, options) {
   if (implicitGlobals) {
     globals.oscad = oscad
   }
-  globals.extras = {cli: {getParameterDefinitionsCLI}}
+  globals.extras = {cli: {getParameterValuesFromParameters}}
 
   // objects = rebuildSolid(source, '', params, globals, callback)
   return new Promise(function (resolve, reject) {
@@ -70,12 +71,10 @@ function generateOutputData (source, params, options) {
     const scriptIsCommonJsModule = isCommonJsModule(source)
     if (scriptIsCommonJsModule && (inputFormat === 'jscad' || inputFormat === 'js') &&
     outputFormat !== 'jscad' && outputFormat !== 'js') {
-      // console.log('scriptIsCommonJsModule', scriptIsCommonJsModule)
-      const {loadScript} = require('@jscad/core/code-loading/scriptLoading')
-      const design = loadScript(source, inputPath)
+      // console.log('scriptIsCommonJsModule', scriptIsCommonJsModule)      
+      const design = requireDesignFromModule(inputPath, undefined)
       // console.log('definitions', design.parameterDefinitions, 'values', design.parameterValues, design.main, design.getParameterDefinitions)
-      let parameterValues = Object.assign({}, design.parameterValues, params)
-      parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, design.parameterDefinitions) : parameterValues
+      let {parameterValues} = require('@jscad/core/parameters/getParameterDefinitionsAndValues')(design, params)
       const value = design.main(parameterValues)
       resolve(value)
       return
@@ -87,14 +86,14 @@ function generateOutputData (source, params, options) {
     params = applyParameterDefinitions(params, parameterDefinitions)
 
     // modify main to adapt parameters
-    // NOTE: this (getParameterDefinitionsCLI) also combines specified params with defaults
+    // NOTE: this (getParameterValuesFromParameters) also combines specified params with defaults
     const mainFunction = `
     //only add this wrapper if not already present & we are not in command-line mode
-    if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== 'undefined'){
+    if(typeof wrappedMain === 'undefined' && typeof getParameterValuesFromParameters !== 'undefined'){
       const wrappedMain = main
       main = function(){
         var paramsDefinition = (typeof getParameterDefinitions !== 'undefined') ? getParameterDefinitions : undefined
-        return wrappedMain(getParameterDefinitionsCLI(paramsDefinition, ${JSON.stringify(params)}))
+        return wrappedMain(getParameterValuesFromParameters(paramsDefinition, ${JSON.stringify(params)}))
       }
     }
     `

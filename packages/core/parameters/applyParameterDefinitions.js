@@ -3,13 +3,13 @@
  * casts the parameters/ get their correct values based on the
  * raw parameters (passed into the CLI tool for example) and the
  * parameter defintions as present in the jscad script
- * @param {Object} rawParameters
+ * @param {Object} inputParameters: input parameter as an object {paramName: paramValue}
  * @param {Array} parameterDefinitions
  * @returns {Object} the parameter values, as an object
  */
-module.exports = function applyParameterDefinitions (rawParameters, parameterDefinitions, throwOnNoDefinition = false) {
-  return Object.keys(rawParameters).reduce((paramValues, paramName) => {
-    let value = rawParameters[paramName]
+module.exports = function applyParameterDefinitions (inputParameters, parameterDefinitions, throwOnNoDefinition = false) {
+  return Object.keys(inputParameters).reduce((paramValues, paramName) => {
+    let value = inputParameters[paramName]
     let definition = parameterDefinitions.filter(definition => definition.name === paramName)
     definition = definition.length > 0 ? definition[0] : undefined
     if (definition === undefined) {

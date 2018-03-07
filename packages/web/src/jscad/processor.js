@@ -1,6 +1,6 @@
 const log = require('./log')
 const getParameterDefinitions = require('@jscad/core/parameters/getParameterDefinitions')
-const getParameterValues = require('@jscad/core/parameters/getParameterValues')
+const getParameterValues = require('@jscad/core/parameters/getParameterValuesFromUIControls')
 const { rebuildSolids, rebuildSolidsInWorker } = require('@jscad/core/code-evaluation/rebuildSolids')
 const { mergeSolids } = require('@jscad/core/utils/mergeSolids')
 

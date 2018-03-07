@@ -1,19 +1,18 @@
 const path = require('path')
-const getParameterDefinitionsCLI = require('../parameters/getParameterDefinitionsCLI')
 const requireFromString = require('require-from-string')
-
-const doesModuleExportParameterDefiniitions = moduleToCheck => {
-  return moduleToCheck && 'getParameterDefinitions' in moduleToCheck
-}
+const validateDesignModule = require('./validateDesignModule')
 
 /** load a jscad script, injecting the basic dependencies if necessary
- * @param  {} filePath
- * @param  {} csgBasePath='../../../../core/tmp/csg.js : relative path or  '@jscad/csg'
+ * @param  {string} scriptAsText the string of the design
+ * @param  {string} filePath
+ * @param  {function} requireFn : the 'require' function to use: defaults to the standard 'require' under node.js
+ * @param  {string} csgBasePath='../../../../core/tmp/csg.js : relative path or  '@jscad/csg'
  */
-function loadScript (scriptAsText, filePath, csgBasePath = '@jscad/csg/api') {
+const loadDesignFromString = (scriptAsText, filePath, requireFn = require, csgBasePath = '@jscad/csg/api') => {
   if (csgBasePath.includes('.')) {
     csgBasePath = path.resolve(__dirname, csgBasePath)
   }
+
   console.log('loading script using jscad/csg base path at:', csgBasePath)
   let scriptRootModule
   // && !scriptAsText.includes('require(')
@@ -39,28 +38,13 @@ function loadScript (scriptAsText, filePath, csgBasePath = '@jscad/csg/api') {
     ${getParamsString}
     `
     scriptRootModule = requireFromString(commonJsScriptText, filePath)
-  } else {
-    scriptRootModule = require(filePath)
   }
-  if ((typeof (scriptRootModule) === 'function')) { // single export ???
-    console.warn('please use named exports for your main() function !')
-    scriptRootModule = {main: scriptRootModule}
-  }
-  let parameterValues = {}
-  let parameterDefinitions = []
-  if (doesModuleExportParameterDefiniitions(scriptRootModule)) {
-    parameterDefinitions = scriptRootModule.getParameterDefinitions() || []
-    parameterValues = getParameterDefinitionsCLI(scriptRootModule.getParameterDefinitions)
-  }
-  if (!('main' in scriptRootModule)) {
-    throw new Error('no main() function found in the input script')
-  }
+  validateDesignModule(scriptRootModule)
   const design = Object.assign(
     {getParameterDefinitions: () => []},
-    {parameterValues, parameterDefinitions}, scriptRootModule
+    scriptRootModule
   )
-
   return design
 }
 
-module.exports = {loadScript}
+module.exports = loadDesignFromString
