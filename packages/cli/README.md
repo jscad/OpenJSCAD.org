@@ -62,6 +62,7 @@ get the examples
 
 
 run them through the CLI
+
 ```
 % cd examples/
 % openjscad example005.jscad                         # -- creates example005.stl as default
@@ -70,6 +71,29 @@ run them through the CLI
 % openjscad frog.stl -o test.jscad                   # -- convert .stl into .jscad
 % openjscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf
 ```
+
+#### using the CLI on designs created as node modules
+
+You can also run JSCAD designs created as node modules/npm packages through the CLI:
+
+see examples/module-design for such a design
+
+- install the design using npm :
+
+```npm install <PATH TO DESIGN FOLDER>```
+
+
+- then just pass the folder containing your design to the CLI
+
+```openjscad <PATH TO DESIGN FOLDER> <OPTIONS>```
+
+- or run the CLI on the main file if you know which one it is
+
+```openjscad <PATH TO DESIGN FOLDER>/index.js <OPTIONS>```
+
+> Note: when passing a folder to the CLI, it will:
+> - first check if there is a package.json file in the folder and try to use its "main" field
+> - if that does not work if it will try to look for index.js/jscad, main.js/jscad or a file with same name as the folder
 
 ## Development
 
