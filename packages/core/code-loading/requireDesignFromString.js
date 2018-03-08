@@ -8,12 +8,11 @@ const validateDesignModule = require('./validateDesignModule')
  * @param  {function} requireFn : the 'require' function to use: defaults to the standard 'require' under node.js
  * @param  {string} csgBasePath='../../../../core/tmp/csg.js : relative path or  '@jscad/csg'
  */
-const loadDesignFromString = (scriptAsText, filePath, requireFn = require, csgBasePath = '@jscad/csg/api') => {
+const requireDesignFromString = (scriptAsText, filePath, requireFn = require, csgBasePath = '@jscad/csg/api') => {
   if (csgBasePath.includes('.')) {
     csgBasePath = path.resolve(__dirname, csgBasePath)
   }
-
-  console.log('loading script using jscad/csg base path at:', csgBasePath)
+  // console.log('loading script using jscad/csg base path at:', csgBasePath)
   let scriptRootModule
   // && !scriptAsText.includes('require(')
   if ((!scriptAsText.includes('module.exports')) && scriptAsText.includes('main')) {
@@ -47,4 +46,4 @@ const loadDesignFromString = (scriptAsText, filePath, requireFn = require, csgBa
   return design
 }
 
-module.exports = loadDesignFromString
+module.exports = requireDesignFromString
