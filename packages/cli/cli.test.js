@@ -42,7 +42,7 @@ test('require() support', t => {
   t.deepEqual(true, fs.existsSync(expPath))
   almostEquals(t, fs.statSync(outputPath).size, 1121, 2)
 })
-/*
+
 test('jscad (basic, input file only)', t => {
   const jscadPath = t.context.jscadPath
   const inputPath = path.join(examplesPath, '/logo.jscad')
@@ -212,7 +212,7 @@ test('echo() support', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of jscad`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(outputPath).size, 671, 2)
+  almostEquals(t, fs.statSync(outputPath).size, 683, 2)
 })
 
 test('include support', t => {
@@ -267,7 +267,7 @@ test('amf to openjscad', t => {
 
   t.deepEqual(true, fs.existsSync(expPath))
   almostEquals(t, fs.statSync(outputPath).size, 1870, 2)
-})*/
+})
 
 // FIXME: DXF not working
 /* test('jscad to dxf', t => {
