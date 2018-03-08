@@ -45,8 +45,29 @@ CLI(command-line interface) use
  npm install -g @jscad/cli
 ```
 
+### Using the CLI
 
-you can now turn the examples (or your own designs) into stl etc files as follows :
+- simply run ```openjscad <InputFile> <options> <OutputFile>```
+
+examples : 
+
+```openjscad example005.jscad                         # -- creates example005.stl as default```
+
+```openjscad example001.jscad -o test.stl```
+
+```openjscad example001.scad -o example001scad.jscad  # -- convert .scad into .jscad```
+
+```openjscad frog.stl -o test.jscad                   # -- convert .stl into .jscad```
+
+```openjscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf```
+
+- you can also provide the parameters to your script directly
+by passing --<paramName> <value> to the cli
+
+```openjscad name_plate.jscad --name "Just Me" --title "Geek" -o output.stl```
+
+### Using with the provided examples
+
 get the examples
  * via git
  ```
@@ -72,7 +93,7 @@ run them through the CLI
 % openjscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf
 ```
 
-#### using the CLI on designs created as node modules
+### Using the CLI on designs created as node modules
 
 You can also run JSCAD designs created as node modules/npm packages through the CLI:
 
@@ -81,7 +102,6 @@ see examples/module-design for such a design
 - install the design using npm :
 
 ```npm install <PATH TO DESIGN FOLDER>```
-
 
 - then just pass the folder containing your design to the CLI
 
@@ -95,13 +115,57 @@ see examples/module-design for such a design
 > - first check if there is a package.json file in the folder and try to use its "main" field
 > - if that does not work if it will try to look for index.js/jscad, main.js/jscad or a file with same name as the folder
 
+#### About designs created as node modules (recomended for the future)
+
+You have to deal with your dependencies yourself, NO code is injected 'magically' / globals
+this means you have to import the design API yourself (this will be the case for all designs in
+the future, including the in-browser playground)
+
+ie you should have things like this at the top of your design file(s) 
+
+use what you need, this is just an example :)
+
+```javascript
+const {color} = require('@jscad/csg/api').color
+const {cube, sphere, cylinder} = require('@jscad/csg/api').primitives3d
+const {square, circle} = require('@jscad/csg/api').primitives2d
+const {linear_extrude} = require('@jscad/csg/api').extrusions
+const {union, difference} = require('@jscad/csg/api').booleanOps
+const {translate} = require('@jscad/csg/api').transformations
+
+//then use the functions above
+const main = (parameters) => {
+  return [
+    union(cube(), sphere({r: 10})),
+    difference(sphere(), color([1, 0, 0], cylinder()))
+  ]
+}
+
+const getParameterDefinitions = () => {
+  return []
+}
+
+
+module.exports = {main, getParameterDefinitions}
+```
+
+The ```main``` and ```getParameterDefinitions``` functions should be exported in the following manner:
+
+```javascript
+module.exports = {main, getParameterDefinitions}
+```
+
+you can find out more on node modules in the official docs [here](https://nodejs.org/api/modules.html)
+or with this [nice presentation](https://darrenderidder.github.io/talks/ModulePatterns/) 
+
+
 ## Development
 
 - create a base directory
 - clone the base repository ```git clone https://github.com/jscad/OpenJSCAD.org.git```
 - go into OpenJSCAD.org folder ```cd OpenJSCAD.org```
 - install dependencies & setup inter package links ```npm run bootstrap```
-- go into the cli folder : ```cd packages/cli````
+- go into the cli folder: ``` cd packages/cli```
 - you can change the code , and run the cli again as you see fit ```node cli.js <params>```
 
 > Note : you can also change the code in all the other packages/xxx folders and it will also
