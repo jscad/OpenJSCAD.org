@@ -9,6 +9,7 @@ const applyParameterDefinitions = require('@jscad/core/parameters/applyParameter
 
 const isCommonJsModule = require('@jscad/core/code-loading/isCommonJsModule')
 const requireDesignFromModule = require('@jscad/core/code-loading/requireDesignFromModule')
+const registerJscadExtension = require('@jscad/core/code-loading/registerJscadExtension')
 
 /**
  * generate output data from source
@@ -71,7 +72,9 @@ function generateOutputData (source, params, options) {
     const scriptIsCommonJsModule = isCommonJsModule(source)
     if (scriptIsCommonJsModule && (inputFormat === 'jscad' || inputFormat === 'js') &&
     outputFormat !== 'jscad' && outputFormat !== 'js') {
-      // console.log('scriptIsCommonJsModule', scriptIsCommonJsModule)      
+      // setup support for require-ing files with .jscad extension
+      registerJscadExtension()
+      // console.log('scriptIsCommonJsModule', scriptIsCommonJsModule)
       const design = requireDesignFromModule(inputPath, undefined)
       // console.log('definitions', design.parameterDefinitions, 'values', design.parameterValues, design.main, design.getParameterDefinitions)
       let {parameterValues} = require('@jscad/core/parameters/getParameterDefinitionsAndValues')(design, params)

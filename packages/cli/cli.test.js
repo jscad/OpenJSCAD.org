@@ -29,15 +29,14 @@ test.beforeEach(t => {
 test('require() support', t => {
   const jscadPath = t.context.jscadPath
   const designPath = path.join(examplesPath, '/module-design')
-  const inputPath = path.join(designPath, '/index.js')
   const outputPath = 'test.stl'
   const expPath = outputPath
   t.context = {outputPath}
 
   // first install the module's dependencies, just in case
   execSync('npm install', {cwd: designPath})
-
-  const cmd = `node ${jscadPath} ${inputPath} --size 12.4 -o ${outputPath} -of stla`
+  // note that in this case, we pass a FOLDER to the CLI, not a file
+  const cmd = `node ${jscadPath} ${designPath} --size 12.4 -o ${outputPath} -of stla`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
   almostEquals(t, fs.statSync(outputPath).size, 1121, 2)

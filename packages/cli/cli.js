@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-//--log_all
+// --log_all
 
 // NOTE: this will only run on Node > 6 or needs to be transpiled
 
@@ -42,6 +42,7 @@ const fs = require('fs')
 const env = require('./env')
 const version = require('./package.json').version
 const { formats } = require('@jscad/core/io/formats')
+const { getDesignEntryPoint } = require('@jscad/core/code-loading/requireDesignUtilsFs')
 const generateOutputData = require('./generateOutputData')
 
 /*
@@ -117,16 +118,24 @@ function parseArgs (args) {
       inputFile = args[i]
       inputFormat = RegExp.$1
       if (!fs.statSync(inputFile).isFile()) {
-        console.log('ERROR: cannot open file <' + inputFile + '>')
+        console.log('ERROR: cannot open input file/directory <' + inputFile + '>')
         process.exit(1)
       }
     } else if (args[i].match(/^-v$/)) { // show the version and the environment information
       env()
       console.log('OpenSCAD Compatibility (' + version + ')')
     } else {
-      console.log('ERROR: invalid file name or argument <' + args[i] + '>')
-      console.log("Type 'openjscad' for help")
-      process.exit(1)
+      inputFile = args[i]
+      if (fs.statSync(inputFile).isDirectory()) {
+        inputFile = args[i]
+        // get actual design entry point if applicable (if passed a folder as input etc)
+        inputFile = getDesignEntryPoint(inputFile)
+        inputFormat = require('path').extname(inputFile).substring(1)
+      } else {
+        console.log('ERROR: invalid file name or argument <' + args[i] + '>')
+        console.log("Type 'openjscad' for help")
+        process.exit(1)
+      }
     }
   }
   // exit if a input file was not provided
