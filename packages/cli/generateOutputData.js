@@ -81,7 +81,7 @@ function generateOutputData (source, params, options) {
     }
 
     // extract the array of parameter definitions
-    const parameterDefinitions = getParameterDefinitionsForReal(source)
+    const parameterDefinitions = getParameterDefinitions(source)
     // get the actual parameters, correctly cast to the right types etc based on the definitions above
     params = applyParameterDefinitions(params, parameterDefinitions)
 
@@ -115,7 +115,7 @@ function generateOutputData (source, params, options) {
 }
 
 // actually get parameter definitions
-function getParameterDefinitionsForReal (script) {
+function getParameterDefinitions (script) {
   let script1 = "if(typeof(getParameterDefinitions) == 'function') {return getParameterDefinitions();} else {return [];} "
   script1 += script
   const f = new Function(script1)
