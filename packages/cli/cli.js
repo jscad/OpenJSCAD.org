@@ -41,7 +41,7 @@
 const fs = require('fs')
 const env = require('./env')
 const version = require('./package.json').version
-const { formats } = require('@jscad/core/io/formats')
+const { formats, conversionFormats } = require('@jscad/core/io/formats')
 const { getDesignEntryPoint } = require('@jscad/core/code-loading/requireDesignUtilsFs')
 const generateOutputData = require('./generateOutputData')
 
@@ -79,6 +79,7 @@ generateOutputData(src, params, {outputFile, outputFormat, inputFile, inputForma
   }).catch(error => console.error(error))
 
 // -- helper functions ---------------------------------------------------------------------------------------
+
 function parseArgs (args) {
   // hint: https://github.com/substack/node-optimist
   //       https://github.com/visionmedia/commander.js
@@ -100,6 +101,15 @@ function parseArgs (args) {
   let outputFormat
   let params = {}
 
+  // let supportedInputFormats = conversionFormats.join('|')
+  // console.log('supportedInputFormats', supportedInputFormats)
+  const isValidInputFileFormat = input => {
+    return conversionFormats.reduce(function (acc, format) {
+      return input.endsWith(format) || acc
+    }, false)
+  }
+  const getFileExtensionFromString = input => input.substring(input.lastIndexOf('.') + 1)
+
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '-of') { // -of <format>
       outputFormat = args[++i]
@@ -114,9 +124,9 @@ function parseArgs (args) {
       params[RegExp.$1] = args[++i]
     } else if (args[i].match(/^--(\w+)$/)) { // params for main()
       params[RegExp.$1] = args[++i]
-    } else if (args[i].match(/.+\.(jscad|js|scad|stl|amf|obj|gcode|svg|json)$/i)) {
+    } else if (isValidInputFileFormat(args[i])) {
       inputFile = args[i]
-      inputFormat = RegExp.$1
+      inputFormat = getFileExtensionFromString(args[i])// RegExp.$1
       if (!fs.statSync(inputFile).isFile()) {
         console.log('ERROR: cannot open input file/directory <' + inputFile + '>')
         process.exit(1)
