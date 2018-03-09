@@ -24,7 +24,8 @@ function generateOutputData (source, params, options) {
     outputFile: undefined,
     outputFormat: 'stl',
     inputFile: '',
-    version: ''
+    version: '',
+    addMetaData: true
   }
   options = Object.assign({}, defaults, options)
   const {implicitGlobals, outputFile, outputFormat, inputFile, inputFormat, version} = options
