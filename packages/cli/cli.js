@@ -108,7 +108,7 @@ function parseArgs (args) {
       return false
     }
     return conversionFormats.reduce(function (acc, format) {
-      return input.endsWith(format.toLowerCase()) || acc
+      return input.toLowerCase().endsWith(format.toLowerCase()) || acc
     }, false)
   }
   const getFileExtensionFromString = input => (input.substring(input.lastIndexOf('.') + 1)).toLowerCase()
