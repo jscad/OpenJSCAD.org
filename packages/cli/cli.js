@@ -105,10 +105,10 @@ function parseArgs (args) {
   // console.log('supportedInputFormats', supportedInputFormats)
   const isValidInputFileFormat = input => {
     return conversionFormats.reduce(function (acc, format) {
-      return input.endsWith(format) || acc
+      return input.endsWith(format.toLowerCase()) || acc
     }, false)
   }
-  const getFileExtensionFromString = input => input.substring(input.lastIndexOf('.') + 1)
+  const getFileExtensionFromString = input => (input.substring(input.lastIndexOf('.') + 1)).toLowerCase()
 
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '-of') { // -of <format>
