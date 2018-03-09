@@ -104,6 +104,9 @@ function parseArgs (args) {
   // let supportedInputFormats = conversionFormats.join('|')
   // console.log('supportedInputFormats', supportedInputFormats)
   const isValidInputFileFormat = input => {
+    if (input === undefined || input === null || !(typeof input === 'string')) {
+      return false
+    }
     return conversionFormats.reduce(function (acc, format) {
       return input.endsWith(format.toLowerCase()) || acc
     }, false)
