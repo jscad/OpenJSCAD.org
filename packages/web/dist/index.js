@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
 const WebWorkify = require('webworkify')
 const { CAG, CSG } = require('@jscad/csg')
 const oscad = require('@jscad/csg/api')
@@ -110,7 +110,7 @@ module.exports = {
   rebuildSolidsInWorker
 }
 
-},{"../code-loading/jscad-function":2,"../code-loading/jscad-worker.js":3,"../code-loading/replaceIncludes":4,"../code-loading/resolveIncludesHttp":5,"../utils/arrays":104,"@jscad/csg":12,"@jscad/csg/api":11,"webworkify":98}],2:[function(require,module,exports){
+},{"../code-loading/jscad-function":2,"../code-loading/jscad-worker.js":3,"../code-loading/replaceIncludes":4,"../code-loading/resolveIncludesHttp":5,"../utils/arrays":240,"@jscad/csg":12,"@jscad/csg/api":11,"webworkify":234}],2:[function(require,module,exports){
 /**
  * Create an function for processing the JSCAD script into CSG/CAG objects
  * @param {String} script the script
@@ -197,7 +197,7 @@ module.exports = function (self) {
   }
 }
 
-},{"../utils/arrays":104,"./jscad-function":2,"@jscad/csg":12,"@jscad/csg/api":11}],4:[function(require,module,exports){
+},{"../utils/arrays":240,"./jscad-function":2,"@jscad/csg":12,"@jscad/csg/api":11}],4:[function(require,module,exports){
 const esprima = require('esprima')
 const estraverse = require('estraverse')
 const astring = require('astring')
@@ -320,7 +320,7 @@ module.exports = {
   replaceIncludes
 }
 
-},{"astring":93,"esprima":94,"estraverse":95}],5:[function(require,module,exports){
+},{"astring":229,"esprima":230,"estraverse":231}],5:[function(require,module,exports){
 /**
  * fetch the requested script either via MemFs or HTTP Request
  * (Note: The resolved modules are prepepended in front of the calling script
@@ -563,7 +563,7 @@ module.exports = {
   prepareOutput
 }
 
-},{"../utils/mergeSolids":105,"./formats":7,"@jscad/io":75}],9:[function(require,module,exports){
+},{"../utils/mergeSolids":241,"./formats":7,"@jscad/io":75}],9:[function(require,module,exports){
 /*
 ## License
 
@@ -1293,7 +1293,7 @@ module.exports = {
   deserialize
 }
 
-},{"sax":97}],10:[function(require,module,exports){
+},{"sax":233}],10:[function(require,module,exports){
 const { ensureManifoldness } = require('@jscad/io-utils')
 const mimeType = 'application/amf+xml'
 
@@ -12192,7 +12192,7 @@ Blob.prototype = {
 module.exports = makeBlob
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":214}],75:[function(require,module,exports){
+},{"buffer":439}],75:[function(require,module,exports){
 const {makeBlob} = require('@jscad/io-utils')
 
 const amfSerializer = require('@jscad/amf-serializer')
@@ -12245,7 +12245,7 @@ export {parseOBJ} from './deserializers/parseOBJ'
 export {parseSTL} from './deserializers/parseSTL'
 export {parseSVG} from './deserializers/parseSVG' */
 
-},{"@jscad/amf-deserializer":9,"@jscad/amf-serializer":10,"@jscad/dxf-serializer":69,"@jscad/gcode-deserializer":70,"@jscad/io-utils":73,"@jscad/json-deserializer":76,"@jscad/json-serializer":77,"@jscad/obj-deserializer":78,"@jscad/stl-deserializer":80,"@jscad/stl-serializer":84,"@jscad/svg-deserializer":87,"@jscad/svg-serializer":91,"@jscad/x3d-serializer":92}],76:[function(require,module,exports){
+},{"@jscad/amf-deserializer":9,"@jscad/amf-serializer":10,"@jscad/dxf-serializer":69,"@jscad/gcode-deserializer":70,"@jscad/io-utils":73,"@jscad/json-deserializer":76,"@jscad/json-serializer":111,"@jscad/obj-deserializer":112,"@jscad/stl-deserializer":114,"@jscad/stl-serializer":152,"@jscad/svg-deserializer":155,"@jscad/svg-serializer":193,"@jscad/x3d-serializer":228}],76:[function(require,module,exports){
 /*
 ## License
 
@@ -12354,7 +12354,5793 @@ module.exports = {
   deserialize
 }
 
-},{"@jscad/csg":12}],77:[function(require,module,exports){
+},{"@jscad/csg":77}],77:[function(require,module,exports){
+/*
+## License
+
+Copyright (c) 2014 bebbi (elghatta@gmail.com)
+Copyright (c) 2013 Eduard Bespalov (edwbes@gmail.com)
+Copyright (c) 2012 Joost Nieuwenhuijse (joost@newhouse.nl)
+Copyright (c) 2011 Evan Wallace (http://evanw.github.com/csg.js/)
+Copyright (c) 2012 Alexandre Girard (https://github.com/alx)
+
+All code released under MIT license
+
+## Overview
+
+For an overview of the CSG process see the original csg.js code:
+http://evanw.github.com/csg.js/
+
+CSG operations through BSP trees suffer from one problem: heavy fragmentation
+of polygons. If two CSG solids of n polygons are unified, the resulting solid may have
+in the order of n*n polygons, because each polygon is split by the planes of all other
+polygons. After a few operations the number of polygons explodes.
+
+This version of CSG.js solves the problem in 3 ways:
+
+1. Every polygon split is recorded in a tree (CSG.PolygonTreeNode). This is a separate
+tree, not to be confused with the CSG tree. If a polygon is split into two parts but in
+the end both fragments have not been discarded by the CSG operation, we can retrieve
+the original unsplit polygon from the tree, instead of the two fragments.
+
+This does not completely solve the issue though: if a polygon is split multiple times
+the number of fragments depends on the order of subsequent splits, and we might still
+end up with unncessary splits:
+Suppose a polygon is first split into A and B, and then into A1, B1, A2, B2. Suppose B2 is
+discarded. We will end up with 2 polygons: A and B1. Depending on the actual split boundaries
+we could still have joined A and B1 into one polygon. Therefore a second approach is used as well:
+
+2. After CSG operations all coplanar polygon fragments are joined by a retesselating
+operation. See CSG.reTesselated(). Retesselation is done through a
+linear sweep over the polygon surface. The sweep line passes over the y coordinates
+of all vertices in the polygon. Polygons are split at each sweep line, and the fragments
+are joined horizontally and vertically into larger polygons (making sure that we
+will end up with convex polygons).
+This still doesn't solve the problem completely: due to floating point imprecisions
+we may end up with small gaps between polygons, and polygons may not be exactly coplanar
+anymore, and as a result the retesselation algorithm may fail to join those polygons.
+Therefore:
+
+3. A canonicalization algorithm is implemented: it looks for vertices that have
+approximately the same coordinates (with a certain tolerance, say 1e-5) and replaces
+them with the same vertex. If polygons share a vertex they will actually point to the
+same CSG.Vertex instance. The same is done for polygon planes. See CSG.canonicalized().
+
+Performance improvements to the original CSG.js:
+
+Replaced the flip() and invert() methods by flipped() and inverted() which don't
+modify the source object. This allows to get rid of all clone() calls, so that
+multiple polygons can refer to the same CSG.Plane instance etc.
+
+The original union() used an extra invert(), clipTo(), invert() sequence just to remove the
+coplanar front faces from b; this is now combined in a single b.clipTo(a, true) call.
+
+Detection whether a polygon is in front or in back of a plane: for each polygon
+we are caching the coordinates of the bounding sphere. If the bounding sphere is
+in front or in back of the plane we don't have to check the individual vertices
+anymore.
+
+Other additions to the original CSG.js:
+
+CSG.Vector class has been renamed into CSG.Vector3D
+
+Classes for 3D lines, 2D vectors, 2D lines, and methods to find the intersection of
+a line and a plane etc.
+
+Transformations: CSG.transform(), CSG.translate(), CSG.rotate(), CSG.scale()
+
+Expanding or contracting a solid: CSG.expand() and CSG.contract(). Creates nice
+smooth corners.
+
+The vertex normal has been removed since it complicates retesselation. It's not needed
+for solid CAD anyway.
+
+*/
+
+const {addTransformationMethodsToPrototype, addCenteringToPrototype} = require('./src/mutators')
+let CSG = require('./src/CSG')
+let CAG = require('./src/CAG')
+
+// FIXME: how many are actual usefull to be exposed as API ?? looks like a code smell
+const { _CSGDEBUG,
+  defaultResolution2D,
+  defaultResolution3D,
+  EPS,
+  angleEPS,
+  areaEPS,
+  all,
+  top,
+  bottom,
+  left,
+  right,
+  front,
+  back,
+  staticTag,
+  getTag} = require('./src/constants')
+
+CSG._CSGDEBUG = _CSGDEBUG
+CSG.defaultResolution2D = defaultResolution2D
+CSG.defaultResolution3D = defaultResolution3D
+CSG.EPS = EPS
+CSG.angleEPS = angleEPS
+CSG.areaEPS = areaEPS
+CSG.all = all
+CSG.top = top
+CSG.bottom = bottom
+CSG.left = left
+CSG.right = right
+CSG.front = front
+CSG.back = back
+CSG.staticTag = staticTag
+CSG.getTag = getTag
+
+// eek ! all this is kept for backwards compatibility...for now
+CSG.Vector2D = require('./src/math/Vector2')
+CSG.Vector3D = require('./src/math/Vector3')
+CSG.Vertex = require('./src/math/Vertex3')
+CAG.Vertex = require('./src/math/Vertex2')
+CSG.Plane = require('./src/math/Plane')
+CSG.Polygon = require('./src/math/Polygon3')
+CSG.Polygon2D = require('./src/math/Polygon2')
+CSG.Line2D = require('./src/math/Line2')
+CSG.Line3D = require('./src/math/Line3')
+CSG.Path2D = require('./src/math/Path2')
+CSG.OrthoNormalBasis = require('./src/math/OrthoNormalBasis')
+CSG.Matrix4x4 = require('./src/math/Matrix4')
+
+CAG.Side = require('./src/math/Side')
+
+CSG.Connector = require('./src/connectors').Connector
+CSG.ConnectorList = require('./src/connectors').ConnectorList
+CSG.Properties = require('./src/Properties')
+
+const {circle, ellipse, rectangle, roundedRectangle} = require('./src/primitives2d')
+const {sphere, cube, roundedCube, cylinder, roundedCylinder, cylinderElliptic, polyhedron} = require('./src/primitives3d')
+
+CSG.sphere = sphere
+CSG.cube = cube
+CSG.roundedCube = roundedCube
+CSG.cylinder = cylinder
+CSG.roundedCylinder = roundedCylinder
+CSG.cylinderElliptic = cylinderElliptic
+CSG.polyhedron = polyhedron
+
+CAG.circle = circle
+CAG.ellipse = ellipse
+CAG.rectangle = rectangle
+CAG.roundedRectangle = roundedRectangle
+
+//
+const {fromCompactBinary, fromObject, fromSlices} = require('./src/CSGFactories')
+CSG.fromCompactBinary = fromCompactBinary
+CSG.fromObject = fromObject
+CSG.fromSlices = fromSlices
+
+CSG.toPointCloud = require('./src/debugHelpers').toPointCloud
+
+const CAGMakers = require('./src/CAGFactories')
+CAG.fromObject = CAGMakers.fromObject
+CAG.fromPointsNoCheck = CAGMakers.fromPointsNoCheck
+CAG.fromPath2 = CAGMakers.fromPath2
+
+// ////////////////////////////////////
+addTransformationMethodsToPrototype(CSG.prototype)
+addTransformationMethodsToPrototype(CSG.Vector2D.prototype)
+addTransformationMethodsToPrototype(CSG.Vector3D.prototype)
+addTransformationMethodsToPrototype(CSG.Vertex.prototype)
+addTransformationMethodsToPrototype(CSG.Plane.prototype)
+addTransformationMethodsToPrototype(CSG.Polygon.prototype)
+addTransformationMethodsToPrototype(CSG.Line2D.prototype)
+addTransformationMethodsToPrototype(CSG.Line3D.prototype)
+addTransformationMethodsToPrototype(CSG.Path2D.prototype)
+addTransformationMethodsToPrototype(CSG.OrthoNormalBasis.prototype)
+addTransformationMethodsToPrototype(CSG.Connector.prototype)
+
+addTransformationMethodsToPrototype(CAG.prototype)
+addTransformationMethodsToPrototype(CAG.Side.prototype)
+addTransformationMethodsToPrototype(CAG.Vertex.prototype)
+
+addCenteringToPrototype(CSG.prototype, ['x', 'y', 'z'])
+addCenteringToPrototype(CAG.prototype, ['x', 'y'])
+
+module.exports = {CSG, CAG}
+
+},{"./src/CAG":78,"./src/CAGFactories":79,"./src/CSG":80,"./src/CSGFactories":81,"./src/Properties":85,"./src/connectors":86,"./src/constants":87,"./src/debugHelpers":88,"./src/math/Line2":89,"./src/math/Line3":90,"./src/math/Matrix4":91,"./src/math/OrthoNormalBasis":92,"./src/math/Path2":93,"./src/math/Plane":94,"./src/math/Polygon2":95,"./src/math/Polygon3":96,"./src/math/Side":97,"./src/math/Vector2":98,"./src/math/Vector3":99,"./src/math/Vertex2":100,"./src/math/Vertex3":101,"./src/mutators":104,"./src/primitives2d":106,"./src/primitives3d":107}],78:[function(require,module,exports){
+const {EPS, angleEPS, areaEPS, defaultResolution3D} = require('./constants')
+const {Connector} = require('./connectors')
+const OrthoNormalBasis = require('./math/OrthoNormalBasis')
+const Vertex2D = require('./math/Vertex2')
+const Vertex3D = require('./math/Vertex3')
+const Vector2D = require('./math/Vector2')
+const Vector3D = require('./math/Vector3')
+const Polygon = require('./math/Polygon3')
+const Path2D = require('./math/Path2')
+const Side = require('./math/Side')
+const {linesIntersect} = require('./math/lineUtils')
+const {parseOptionAs3DVector, parseOptionAsBool, parseOptionAsFloat, parseOptionAsInt} = require('./optionParsers')
+const FuzzyCAGFactory = require('./FuzzyFactory2d')
+/**
+ * Class CAG
+ * Holds a solid area geometry like CSG but 2D.
+ * Each area consists of a number of sides.
+ * Each side is a line between 2 points.
+ * @constructor
+ */
+let CAG = function () {
+  this.sides = []
+  this.isCanonicalized = false
+}
+
+/** Construct a CAG from a list of `Side` instances.
+ * @param {Side[]} sides - list of sides
+ * @returns {CAG} new CAG object
+ */
+CAG.fromSides = function (sides) {
+  let cag = new CAG()
+  cag.sides = sides
+  return cag
+}
+
+
+// Converts a CSG to a  The CSG must consist of polygons with only z coordinates +1 and -1
+// as constructed by _toCSGWall(-1, 1). This is so we can use the 3D union(), intersect() etc
+CAG.fromFakeCSG = function (csg) {
+  let sides = csg.polygons.map(function (p) {
+    return Side._fromFakePolygon(p)
+  })
+        .filter(function (s) {
+          return s !== null
+        })
+  return CAG.fromSides(sides)
+}
+
+/** Construct a CAG from a list of points (a polygon).
+ * The rotation direction of the points is not relevant.
+ * The points can define a convex or a concave polygon.
+ * The polygon must not self intersect.
+ * @param {points[]} points - list of points in 2D space
+ * @returns {CAG} new CAG object
+ */
+CAG.fromPoints = function (points) {
+  let numpoints = points.length
+  if (numpoints < 3) throw new Error('CAG shape needs at least 3 points')
+  let sides = []
+  let prevpoint = new Vector2D(points[numpoints - 1])
+  let prevvertex = new Vertex2D(prevpoint)
+  points.map(function (p) {
+    let point = new Vector2D(p)
+    let vertex = new Vertex2D(point)
+    let side = new Side(prevvertex, vertex)
+    sides.push(side)
+    prevvertex = vertex
+  })
+  let result = CAG.fromSides(sides)
+  if (result.isSelfIntersecting()) {
+    throw new Error('Polygon is self intersecting!')
+  }
+  let area = result.area()
+  if (Math.abs(area) < areaEPS) {
+    throw new Error('Degenerate polygon!')
+  }
+  if (area < 0) {
+    result = result.flipped()
+  }
+  result = result.canonicalized()
+  return result
+}
+
+const CAGFromCAGFuzzyFactory = function (factory, sourcecag) {
+  let _this = factory
+  let newsides = sourcecag.sides.map(function (side) {
+    return _this.getSide(side)
+  })
+      // remove bad sides (mostly a user input issue)
+      .filter(function (side) {
+        return side.length() > EPS
+      })
+  return CAG.fromSides(newsides)
+}
+
+CAG.prototype = {
+  toString: function () {
+    let result = 'CAG (' + this.sides.length + ' sides):\n'
+    this.sides.map(function (side) {
+      result += '  ' + side.toString() + '\n'
+    })
+    return result
+  },
+
+  _toCSGWall: function (z0, z1) {
+    const CSG = require('./CSG') // FIXME: circular dependencies CAG=>CSG=>CAG
+    let polygons = this.sides.map(function (side) {
+      return side.toPolygon3D(z0, z1)
+    })
+    return CSG.fromPolygons(polygons)
+  },
+
+  _toVector3DPairs: function (m) {
+        // transform m
+    let pairs = this.sides.map(function (side) {
+      let p0 = side.vertex0.pos
+      let p1 = side.vertex1.pos
+      return [Vector3D.Create(p0.x, p0.y, 0),
+        Vector3D.Create(p1.x, p1.y, 0)]
+    })
+    if (typeof m !== 'undefined') {
+      pairs = pairs.map(function (pair) {
+        return pair.map(function (v) {
+          return v.transform(m)
+        })
+      })
+    }
+    return pairs
+  },
+
+    /*
+     * transform a cag into the polygons of a corresponding 3d plane, positioned per options
+     * Accepts a connector for plane positioning, or optionally
+     * single translation, axisVector, normalVector arguments
+     * (toConnector has precedence over single arguments if provided)
+     */
+  _toPlanePolygons: function (options) {
+    const CSG = require('./CSG') // FIXME: circular dependencies CAG=>CSG=>CAG
+    let flipped = options.flipped || false
+    // reference connector for transformation
+    let origin = [0, 0, 0]
+    let defaultAxis = [0, 0, 1]
+    let defaultNormal = [0, 1, 0]
+    let thisConnector = new Connector(origin, defaultAxis, defaultNormal)
+    // translated connector per options
+    let translation = options.translation || origin
+    let axisVector = options.axisVector || defaultAxis
+    let normalVector = options.normalVector || defaultNormal
+    // will override above if options has toConnector
+    let toConnector = options.toConnector ||
+            new Connector(translation, axisVector, normalVector)
+    // resulting transform
+    let m = thisConnector.getTransformationTo(toConnector, false, 0)
+    // create plane as a (partial non-closed) CSG in XY plane
+    let bounds = this.getBounds()
+    bounds[0] = bounds[0].minus(new Vector2D(1, 1))
+    bounds[1] = bounds[1].plus(new Vector2D(1, 1))
+    let csgshell = this._toCSGWall(-1, 1)
+    let csgplane = CSG.fromPolygons([new Polygon([
+      new Vertex3D(new Vector3D(bounds[0].x, bounds[0].y, 0)),
+      new Vertex3D(new Vector3D(bounds[1].x, bounds[0].y, 0)),
+      new Vertex3D(new Vector3D(bounds[1].x, bounds[1].y, 0)),
+      new Vertex3D(new Vector3D(bounds[0].x, bounds[1].y, 0))
+    ])])
+    if (flipped) {
+      csgplane = csgplane.invert()
+    }
+    // intersectSub -> prevent premature retesselate/canonicalize
+    csgplane = csgplane.intersectSub(csgshell)
+    // only keep the polygons in the z plane:
+    let polys = csgplane.polygons.filter(function (polygon) {
+      return Math.abs(polygon.plane.normal.z) > 0.99
+    })
+    // finally, position the plane per passed transformations
+    return polys.map(function (poly) {
+      return poly.transform(m)
+    })
+  },
+
+    /*
+     * given 2 connectors, this returns all polygons of a "wall" between 2
+     * copies of this cag, positioned in 3d space as "bottom" and
+     * "top" plane per connectors toConnector1, and toConnector2, respectively
+     */
+  _toWallPolygons: function (options) {
+        // normals are going to be correct as long as toConn2.point - toConn1.point
+        // points into cag normal direction (check in caller)
+        // arguments: options.toConnector1, options.toConnector2, options.cag
+        //     walls go from toConnector1 to toConnector2
+        //     optionally, target cag to point to - cag needs to have same number of sides as this!
+    let origin = [0, 0, 0]
+    let defaultAxis = [0, 0, 1]
+    let defaultNormal = [0, 1, 0]
+    let thisConnector = new Connector(origin, defaultAxis, defaultNormal)
+        // arguments:
+    let toConnector1 = options.toConnector1
+        // let toConnector2 = new Connector([0, 0, -30], defaultAxis, defaultNormal);
+    let toConnector2 = options.toConnector2
+    if (!(toConnector1 instanceof Connector && toConnector2 instanceof Connector)) {
+      throw new Error('could not parse Connector arguments toConnector1 or toConnector2')
+    }
+    if (options.cag) {
+      if (options.cag.sides.length !== this.sides.length) {
+        throw new Error('target cag needs same sides count as start cag')
+      }
+    }
+        // target cag is same as this unless specified
+    let toCag = options.cag || this
+    let m1 = thisConnector.getTransformationTo(toConnector1, false, 0)
+    let m2 = thisConnector.getTransformationTo(toConnector2, false, 0)
+    let vps1 = this._toVector3DPairs(m1)
+    let vps2 = toCag._toVector3DPairs(m2)
+
+    let polygons = []
+    vps1.forEach(function (vp1, i) {
+      polygons.push(new Polygon([
+        new Vertex3D(vps2[i][1]), new Vertex3D(vps2[i][0]), new Vertex3D(vp1[0])]))
+      polygons.push(new Polygon([
+        new Vertex3D(vps2[i][1]), new Vertex3D(vp1[0]), new Vertex3D(vp1[1])]))
+    })
+    return polygons
+  },
+
+    /**
+     * Convert to a list of points.
+     * @return {points[]} list of points in 2D space
+     */
+  toPoints: function () {
+    let points = this.sides.map(function (side) {
+      let v0 = side.vertex0
+      // let v1 = side.vertex1
+      return v0.pos
+    })
+    // due to the logic of CAG.fromPoints()
+    // move the first point to the last
+    if (points.length > 0) {
+      points.push(points.shift())
+    }
+    return points
+  },
+
+  union: function (cag) {
+    let cags
+    if (cag instanceof Array) {
+      cags = cag
+    } else {
+      cags = [cag]
+    }
+    let r = this._toCSGWall(-1, 1)
+    r = r.union(
+            cags.map(function (cag) {
+              return cag._toCSGWall(-1, 1).reTesselated()
+            }), false, false)
+    return CAG.fromFakeCSG(r).canonicalized()
+  },
+
+  subtract: function (cag) {
+    let cags
+    if (cag instanceof Array) {
+      cags = cag
+    } else {
+      cags = [cag]
+    }
+    let r = this._toCSGWall(-1, 1)
+    cags.map(function (cag) {
+      r = r.subtractSub(cag._toCSGWall(-1, 1), false, false)
+    })
+    r = r.reTesselated()
+    r = r.canonicalized()
+    r = CAG.fromFakeCSG(r)
+    r = r.canonicalized()
+    return r
+  },
+
+  intersect: function (cag) {
+    let cags
+    if (cag instanceof Array) {
+      cags = cag
+    } else {
+      cags = [cag]
+    }
+    let r = this._toCSGWall(-1, 1)
+    cags.map(function (cag) {
+      r = r.intersectSub(cag._toCSGWall(-1, 1), false, false)
+    })
+    r = r.reTesselated()
+    r = r.canonicalized()
+    r = CAG.fromFakeCSG(r)
+    r = r.canonicalized()
+    return r
+  },
+
+  transform: function (matrix4x4) {
+    let ismirror = matrix4x4.isMirroring()
+    let newsides = this.sides.map(function (side) {
+      return side.transform(matrix4x4)
+    })
+    let result = CAG.fromSides(newsides)
+    if (ismirror) {
+      result = result.flipped()
+    }
+    return result
+  },
+
+    // see http://local.wasp.uwa.edu.au/~pbourke/geometry/polyarea/ :
+    // Area of the polygon. For a counter clockwise rotating polygon the area is positive, otherwise negative
+    // Note(bebbi): this looks wrong. See polygon getArea()
+  area: function () {
+    let polygonArea = 0
+    this.sides.map(function (side) {
+      polygonArea += side.vertex0.pos.cross(side.vertex1.pos)
+    })
+    polygonArea *= 0.5
+    return polygonArea
+  },
+
+  flipped: function () {
+    let newsides = this.sides.map(function (side) {
+      return side.flipped()
+    })
+    newsides.reverse()
+    return CAG.fromSides(newsides)
+  },
+
+  getBounds: function () {
+    let minpoint
+    if (this.sides.length === 0) {
+      minpoint = new Vector2D(0, 0)
+    } else {
+      minpoint = this.sides[0].vertex0.pos
+    }
+    let maxpoint = minpoint
+    this.sides.map(function (side) {
+      minpoint = minpoint.min(side.vertex0.pos)
+      minpoint = minpoint.min(side.vertex1.pos)
+      maxpoint = maxpoint.max(side.vertex0.pos)
+      maxpoint = maxpoint.max(side.vertex1.pos)
+    })
+    return [minpoint, maxpoint]
+  },
+
+  isSelfIntersecting: function (debug) {
+    let numsides = this.sides.length
+    for (let i = 0; i < numsides; i++) {
+      let side0 = this.sides[i]
+      for (let ii = i + 1; ii < numsides; ii++) {
+        let side1 = this.sides[ii]
+        if (linesIntersect(side0.vertex0.pos, side0.vertex1.pos, side1.vertex0.pos, side1.vertex1.pos)) {
+          if (debug) { console.log('side ' + i + ': ' + side0); console.log('side ' + ii + ': ' + side1) }
+          return true
+        }
+      }
+    }
+    return false
+  },
+
+  expandedShell: function (radius, resolution) {
+    resolution = resolution || 8
+    if (resolution < 4) resolution = 4
+    let cags = []
+    let pointmap = {}
+    let cag = this.canonicalized()
+    cag.sides.map(function (side) {
+      let d = side.vertex1.pos.minus(side.vertex0.pos)
+      let dl = d.length()
+      if (dl > EPS) {
+        d = d.times(1.0 / dl)
+        let normal = d.normal().times(radius)
+        let shellpoints = [
+          side.vertex1.pos.plus(normal),
+          side.vertex1.pos.minus(normal),
+          side.vertex0.pos.minus(normal),
+          side.vertex0.pos.plus(normal)
+        ]
+                //      let newcag = CAG.fromPointsNoCheck(shellpoints);
+        let newcag = CAG.fromPoints(shellpoints)
+        cags.push(newcag)
+        for (let step = 0; step < 2; step++) {
+          let p1 = (step === 0) ? side.vertex0.pos : side.vertex1.pos
+          let p2 = (step === 0) ? side.vertex1.pos : side.vertex0.pos
+          let tag = p1.x + ' ' + p1.y
+          if (!(tag in pointmap)) {
+            pointmap[tag] = []
+          }
+          pointmap[tag].push({
+            'p1': p1,
+            'p2': p2
+          })
+        }
+      }
+    })
+    for (let tag in pointmap) {
+      let m = pointmap[tag]
+      let angle1, angle2
+      let pcenter = m[0].p1
+      if (m.length === 2) {
+        let end1 = m[0].p2
+        let end2 = m[1].p2
+        angle1 = end1.minus(pcenter).angleDegrees()
+        angle2 = end2.minus(pcenter).angleDegrees()
+        if (angle2 < angle1) angle2 += 360
+        if (angle2 >= (angle1 + 360)) angle2 -= 360
+        if (angle2 < angle1 + 180) {
+          let t = angle2
+          angle2 = angle1 + 360
+          angle1 = t
+        }
+        angle1 += 90
+        angle2 -= 90
+      } else {
+        angle1 = 0
+        angle2 = 360
+      }
+      let fullcircle = (angle2 > angle1 + 359.999)
+      if (fullcircle) {
+        angle1 = 0
+        angle2 = 360
+      }
+      if (angle2 > (angle1 + angleEPS)) {
+        let points = []
+        if (!fullcircle) {
+          points.push(pcenter)
+        }
+        let numsteps = Math.round(resolution * (angle2 - angle1) / 360)
+        if (numsteps < 1) numsteps = 1
+        for (let step = 0; step <= numsteps; step++) {
+          let angle = angle1 + step / numsteps * (angle2 - angle1)
+          if (step === numsteps) angle = angle2 // prevent rounding errors
+          let point = pcenter.plus(Vector2D.fromAngleDegrees(angle).times(radius))
+          if ((!fullcircle) || (step > 0)) {
+            points.push(point)
+          }
+        }
+        let newcag = CAG.fromPointsNoCheck(points)
+        cags.push(newcag)
+      }
+    }
+    let result = new CAG()
+    result = result.union(cags)
+    return result
+  },
+
+  expand: function (radius, resolution) {
+    let result = this.union(this.expandedShell(radius, resolution))
+    return result
+  },
+
+  contract: function (radius, resolution) {
+    let result = this.subtract(this.expandedShell(radius, resolution))
+    return result
+  },
+
+    // extrude the CAG in a certain plane.
+    // Giving just a plane is not enough, multiple different extrusions in the same plane would be possible
+    // by rotating around the plane's origin. An additional right-hand vector should be specified as well,
+    // and this is exactly a OrthoNormalBasis.
+    //
+    // orthonormalbasis: characterizes the plane in which to extrude
+    // depth: thickness of the extruded shape. Extrusion is done upwards from the plane
+    //        (unless symmetrical option is set, see below)
+    // options:
+    //   {symmetrical: true}  // extrude symmetrically in two directions about the plane
+  extrudeInOrthonormalBasis: function (orthonormalbasis, depth, options) {
+        // first extrude in the regular Z plane:
+    if (!(orthonormalbasis instanceof OrthoNormalBasis)) {
+      throw new Error('extrudeInPlane: the first parameter should be a OrthoNormalBasis')
+    }
+    let extruded = this.extrude({
+      offset: [0, 0, depth]
+    })
+    if (parseOptionAsBool(options, 'symmetrical', false)) {
+      extruded = extruded.translate([0, 0, -depth / 2])
+    }
+    let matrix = orthonormalbasis.getInverseProjectionMatrix()
+    extruded = extruded.transform(matrix)
+    return extruded
+  },
+
+    // Extrude in a standard cartesian plane, specified by two axis identifiers. Each identifier can be
+    // one of ["X","Y","Z","-X","-Y","-Z"]
+    // The 2d x axis will map to the first given 3D axis, the 2d y axis will map to the second.
+    // See OrthoNormalBasis.GetCartesian for details.
+    // options:
+    //   {symmetrical: true}  // extrude symmetrically in two directions about the plane
+  extrudeInPlane: function (axis1, axis2, depth, options) {
+    return this.extrudeInOrthonormalBasis(OrthoNormalBasis.GetCartesian(axis1, axis2), depth, options)
+  },
+
+    // extruded=cag.extrude({offset: [0,0,10], twistangle: 360, twiststeps: 100});
+    // linear extrusion of 2D shape, with optional twist
+    // The 2d shape is placed in in z=0 plane and extruded into direction <offset> (a Vector3D)
+    // The final face is rotated <twistangle> degrees. Rotation is done around the origin of the 2d shape (i.e. x=0, y=0)
+    // twiststeps determines the resolution of the twist (should be >= 1)
+    // returns a CSG object
+  extrude: function (options) {
+    const CSG = require('./CSG') // FIXME: circular dependencies CAG=>CSG=>CAG
+    if (this.sides.length === 0) {
+            // empty!
+      return new CSG()
+    }
+    let offsetVector = parseOptionAs3DVector(options, 'offset', [0, 0, 1])
+    let twistangle = parseOptionAsFloat(options, 'twistangle', 0)
+    let twiststeps = parseOptionAsInt(options, 'twiststeps', defaultResolution3D)
+    if (offsetVector.z === 0) {
+      throw new Error('offset cannot be orthogonal to Z axis')
+    }
+    if (twistangle === 0 || twiststeps < 1) {
+      twiststeps = 1
+    }
+    let normalVector = Vector3D.Create(0, 1, 0)
+
+    let polygons = []
+        // bottom and top
+    polygons = polygons.concat(this._toPlanePolygons({
+      translation: [0, 0, 0],
+      normalVector: normalVector,
+      flipped: !(offsetVector.z < 0)}
+    ))
+    polygons = polygons.concat(this._toPlanePolygons({
+      translation: offsetVector,
+      normalVector: normalVector.rotateZ(twistangle),
+      flipped: offsetVector.z < 0}))
+        // walls
+    for (let i = 0; i < twiststeps; i++) {
+      let c1 = new Connector(offsetVector.times(i / twiststeps), [0, 0, offsetVector.z],
+                normalVector.rotateZ(i * twistangle / twiststeps))
+      let c2 = new Connector(offsetVector.times((i + 1) / twiststeps), [0, 0, offsetVector.z],
+                normalVector.rotateZ((i + 1) * twistangle / twiststeps))
+      polygons = polygons.concat(this._toWallPolygons({toConnector1: c1, toConnector2: c2}))
+    }
+
+    return CSG.fromPolygons(polygons)
+  },
+
+    /** Extrude to into a 3D solid by rotating the origin around the Y axis.
+     * (and turning everything into XY plane)
+     * @param {Object} options - options for construction
+     * @param {Number} [options.angle=360] - angle of rotation
+     * @param {Number} [options.resolution=defaultResolution3D] - number of polygons per 360 degree revolution
+     * @returns {CSG} new 3D solid
+     */
+  rotateExtrude: function (options) { // FIXME options should be optional
+    const CSG = require('./CSG') // FIXME: circular dependencies CAG=>CSG=>CAG
+    let alpha = parseOptionAsFloat(options, 'angle', 360)
+    let resolution = parseOptionAsInt(options, 'resolution', defaultResolution3D)
+
+    alpha = alpha > 360 ? alpha % 360 : alpha
+    let origin = [0, 0, 0]
+    let axisV = Vector3D.Create(0, 1, 0)
+    let normalV = [0, 0, 1]
+    let polygons = []
+        // planes only needed if alpha > 0
+    let connS = new Connector(origin, axisV, normalV)
+    if (alpha > 0 && alpha < 360) {
+            // we need to rotate negative to satisfy wall function condition of
+            // building in the direction of axis vector
+      let connE = new Connector(origin, axisV.rotateZ(-alpha), normalV)
+      polygons = polygons.concat(
+                this._toPlanePolygons({toConnector: connS, flipped: true}))
+      polygons = polygons.concat(
+                this._toPlanePolygons({toConnector: connE}))
+    }
+    let connT1 = connS
+    let connT2
+    let step = alpha / resolution
+    for (let a = step; a <= alpha + EPS; a += step) { // FIXME Should this be angelEPS?
+      connT2 = new Connector(origin, axisV.rotateZ(-a), normalV)
+      polygons = polygons.concat(this._toWallPolygons(
+                {toConnector1: connT1, toConnector2: connT2}))
+      connT1 = connT2
+    }
+    return CSG.fromPolygons(polygons).reTesselated()
+  },
+
+    // check if we are a valid CAG (for debugging)
+    // NOTE(bebbi) uneven side count doesn't work because rounding with EPS isn't taken into account
+  check: function () {
+    let errors = []
+    if (this.isSelfIntersecting(true)) {
+      errors.push('Self intersects')
+    }
+    let pointcount = {}
+    this.sides.map(function (side) {
+      function mappoint (p) {
+        let tag = p.x + ' ' + p.y
+        if (!(tag in pointcount)) pointcount[tag] = 0
+        pointcount[tag] ++
+      }
+      mappoint(side.vertex0.pos)
+      mappoint(side.vertex1.pos)
+    })
+    for (let tag in pointcount) {
+      let count = pointcount[tag]
+      if (count & 1) {
+        errors.push('Uneven number of sides (' + count + ') for point ' + tag)
+      }
+    }
+    let area = this.area()
+    if (area < areaEPS) {
+      errors.push('Area is ' + area)
+    }
+    if (errors.length > 0) {
+      let ertxt = ''
+      errors.map(function (err) {
+        ertxt += err + '\n'
+      })
+      throw new Error(ertxt)
+    }
+  },
+
+  canonicalized: function () {
+    if (this.isCanonicalized) {
+      return this
+    } else {
+      let factory = new FuzzyCAGFactory()
+      let result = CAGFromCAGFuzzyFactory(factory, this)
+      result.isCanonicalized = true
+      return result
+    }
+  },
+
+  /** Convert to compact binary form.
+   * See CAG.fromCompactBinary.
+   * @return {CompactBinary}
+   */
+  toCompactBinary: function () {
+    let cag = this.canonicalized()
+    let numsides = cag.sides.length
+    let vertexmap = {}
+    let vertices = []
+    let numvertices = 0
+    let sideVertexIndices = new Uint32Array(2 * numsides)
+    let sidevertexindicesindex = 0
+    cag.sides.map(function (side) {
+      [side.vertex0, side.vertex1].map(function (v) {
+        let vertextag = v.getTag()
+        let vertexindex
+        if (!(vertextag in vertexmap)) {
+          vertexindex = numvertices++
+          vertexmap[vertextag] = vertexindex
+          vertices.push(v)
+        } else {
+          vertexindex = vertexmap[vertextag]
+        }
+        sideVertexIndices[sidevertexindicesindex++] = vertexindex
+      })
+    })
+    let vertexData = new Float64Array(numvertices * 2)
+    let verticesArrayIndex = 0
+    vertices.map(function (v) {
+      let pos = v.pos
+      vertexData[verticesArrayIndex++] = pos._x
+      vertexData[verticesArrayIndex++] = pos._y
+    })
+    let result = {
+      'class': 'CAG',
+      sideVertexIndices: sideVertexIndices,
+      vertexData: vertexData
+    }
+    return result
+  },
+
+  getOutlinePaths: function () {
+    let cag = this.canonicalized()
+    let sideTagToSideMap = {}
+    let startVertexTagToSideTagMap = {}
+    cag.sides.map(function (side) {
+      let sidetag = side.getTag()
+      sideTagToSideMap[sidetag] = side
+      let startvertextag = side.vertex0.getTag()
+      if (!(startvertextag in startVertexTagToSideTagMap)) {
+        startVertexTagToSideTagMap[startvertextag] = []
+      }
+      startVertexTagToSideTagMap[startvertextag].push(sidetag)
+    })
+    let paths = []
+    while (true) {
+      let startsidetag = null
+      for (let aVertexTag in startVertexTagToSideTagMap) {
+        let sidesForThisVertex = startVertexTagToSideTagMap[aVertexTag]
+        startsidetag = sidesForThisVertex[0]
+        sidesForThisVertex.splice(0, 1)
+        if (sidesForThisVertex.length === 0) {
+          delete startVertexTagToSideTagMap[aVertexTag]
+        }
+        break
+      }
+      if (startsidetag === null) break // we've had all sides
+      let connectedVertexPoints = []
+      let sidetag = startsidetag
+      let thisside = sideTagToSideMap[sidetag]
+      let startvertextag = thisside.vertex0.getTag()
+      while (true) {
+        connectedVertexPoints.push(thisside.vertex0.pos)
+        let nextvertextag = thisside.vertex1.getTag()
+        if (nextvertextag === startvertextag) break // we've closed the polygon
+        if (!(nextvertextag in startVertexTagToSideTagMap)) {
+          throw new Error('Area is not closed!')
+        }
+        let nextpossiblesidetags = startVertexTagToSideTagMap[nextvertextag]
+        let nextsideindex = -1
+        if (nextpossiblesidetags.length === 1) {
+          nextsideindex = 0
+        } else {
+                    // more than one side starting at the same vertex. This means we have
+                    // two shapes touching at the same corner
+          let bestangle = null
+          let thisangle = thisside.direction().angleDegrees()
+          for (let sideindex = 0; sideindex < nextpossiblesidetags.length; sideindex++) {
+            let nextpossiblesidetag = nextpossiblesidetags[sideindex]
+            let possibleside = sideTagToSideMap[nextpossiblesidetag]
+            let angle = possibleside.direction().angleDegrees()
+            let angledif = angle - thisangle
+            if (angledif < -180) angledif += 360
+            if (angledif >= 180) angledif -= 360
+            if ((nextsideindex < 0) || (angledif > bestangle)) {
+              nextsideindex = sideindex
+              bestangle = angledif
+            }
+          }
+        }
+        let nextsidetag = nextpossiblesidetags[nextsideindex]
+        nextpossiblesidetags.splice(nextsideindex, 1)
+        if (nextpossiblesidetags.length === 0) {
+          delete startVertexTagToSideTagMap[nextvertextag]
+        }
+        thisside = sideTagToSideMap[nextsidetag]
+      } // inner loop
+            // due to the logic of CAG.fromPoints()
+            // move the first point to the last
+      if (connectedVertexPoints.length > 0) {
+        connectedVertexPoints.push(connectedVertexPoints.shift())
+      }
+      let path = new Path2D(connectedVertexPoints, true)
+      paths.push(path)
+    } // outer loop
+    return paths
+  },
+
+    /*
+    cag = cag.overCutInsideCorners(cutterradius);
+
+    Using a CNC router it's impossible to cut out a true sharp inside corner. The inside corner
+    will be rounded due to the radius of the cutter. This function compensates for this by creating
+    an extra cutout at each inner corner so that the actual cut out shape will be at least as large
+    as needed.
+    */
+  overCutInsideCorners: function (cutterradius) {
+    let cag = this.canonicalized()
+        // for each vertex determine the 'incoming' side and 'outgoing' side:
+    let pointmap = {} // tag => {pos: coord, from: [], to: []}
+    cag.sides.map(function (side) {
+      if (!(side.vertex0.getTag() in pointmap)) {
+        pointmap[side.vertex0.getTag()] = {
+          pos: side.vertex0.pos,
+          from: [],
+          to: []
+        }
+      }
+      pointmap[side.vertex0.getTag()].to.push(side.vertex1.pos)
+      if (!(side.vertex1.getTag() in pointmap)) {
+        pointmap[side.vertex1.getTag()] = {
+          pos: side.vertex1.pos,
+          from: [],
+          to: []
+        }
+      }
+      pointmap[side.vertex1.getTag()].from.push(side.vertex0.pos)
+    })
+        // overcut all sharp corners:
+    let cutouts = []
+    for (let pointtag in pointmap) {
+      let pointobj = pointmap[pointtag]
+      if ((pointobj.from.length === 1) && (pointobj.to.length === 1)) {
+                // ok, 1 incoming side and 1 outgoing side:
+        let fromcoord = pointobj.from[0]
+        let pointcoord = pointobj.pos
+        let tocoord = pointobj.to[0]
+        let v1 = pointcoord.minus(fromcoord).unit()
+        let v2 = tocoord.minus(pointcoord).unit()
+        let crossproduct = v1.cross(v2)
+        let isInnerCorner = (crossproduct < 0.001)
+        if (isInnerCorner) {
+                    // yes it's a sharp corner:
+          let alpha = v2.angleRadians() - v1.angleRadians() + Math.PI
+          if (alpha < 0) {
+            alpha += 2 * Math.PI
+          } else if (alpha >= 2 * Math.PI) {
+            alpha -= 2 * Math.PI
+          }
+          let midvector = v2.minus(v1).unit()
+          let circlesegmentangle = 30 / 180 * Math.PI // resolution of the circle: segments of 30 degrees
+                    // we need to increase the radius slightly so that our imperfect circle will contain a perfect circle of cutterradius
+          let radiuscorrected = cutterradius / Math.cos(circlesegmentangle / 2)
+          let circlecenter = pointcoord.plus(midvector.times(radiuscorrected))
+                    // we don't need to create a full circle; a pie is enough. Find the angles for the pie:
+          let startangle = alpha + midvector.angleRadians()
+          let deltaangle = 2 * (Math.PI - alpha)
+          let numsteps = 2 * Math.ceil(deltaangle / circlesegmentangle / 2) // should be even
+                    // build the pie:
+          let points = [circlecenter]
+          for (let i = 0; i <= numsteps; i++) {
+            let angle = startangle + i / numsteps * deltaangle
+            let p = Vector2D.fromAngleRadians(angle).times(radiuscorrected).plus(circlecenter)
+            points.push(p)
+          }
+          cutouts.push(CAG.fromPoints(points))
+        }
+      }
+    }
+    let result = cag.subtract(cutouts)
+    return result
+  }
+}
+
+module.exports = CAG
+
+},{"./CSG":80,"./FuzzyFactory2d":83,"./connectors":86,"./constants":87,"./math/OrthoNormalBasis":92,"./math/Path2":93,"./math/Polygon3":96,"./math/Side":97,"./math/Vector2":98,"./math/Vector3":99,"./math/Vertex2":100,"./math/Vertex3":101,"./math/lineUtils":102,"./optionParsers":105}],79:[function(require,module,exports){
+const CAG = require('./CAG')
+const Side = require('./math/Side')
+const Vector2D = require('./math/Vector2')
+const Vertex = require('./math/Vertex2')
+const Path2 = require('./math/Path2')
+
+/** Reconstruct a CAG from an object with identical property names.
+ * @param {Object} obj - anonymous object, typically from JSON
+ * @returns {CAG} new CAG object
+ */
+const fromObject = function (obj) {
+  let sides = obj.sides.map(function (s) {
+    return Side.fromObject(s)
+  })
+  let cag = CAG.fromSides(sides)
+  cag.isCanonicalized = obj.isCanonicalized
+  return cag
+}
+
+/** Construct a CAG from a list of points (a polygon).
+ * Like fromPoints() but does not check if the result is a valid polygon.
+ * The points MUST rotate counter clockwise.
+ * The points can define a convex or a concave polygon.
+ * The polygon must not self intersect.
+ * @param {points[]} points - list of points in 2D space
+ * @returns {CAG} new CAG object
+ */
+const fromPointsNoCheck = function (points) {
+  let sides = []
+  let prevpoint = new Vector2D(points[points.length - 1])
+  let prevvertex = new Vertex(prevpoint)
+  points.map(function (p) {
+    let point = new Vector2D(p)
+    let vertex = new Vertex(point)
+    let side = new Side(prevvertex, vertex)
+    sides.push(side)
+    prevvertex = vertex
+  })
+  return CAG.fromSides(sides)
+}
+
+/** Construct a CAG from a 2d-path (a closed sequence of points).
+ * Like fromPoints() but does not check if the result is a valid polygon.
+ * @param {path} Path2 - a Path2 path
+ * @returns {CAG} new CAG object
+ */
+const fromPath2 = function (path) {
+  if (!path.isClosed()) throw new Error('The path should be closed!')
+  return CAG.fromPoints(path.getPoints())
+}
+
+
+module.exports = {
+  fromObject,
+  fromPointsNoCheck,
+  fromPath2
+  //fromFakeCSG
+}
+
+},{"./CAG":78,"./math/Path2":93,"./math/Side":97,"./math/Vector2":98,"./math/Vertex2":100}],80:[function(require,module,exports){
+const {fnNumberSort} = require('./utils')
+const FuzzyCSGFactory = require('./FuzzyFactory3d')
+const Tree = require('./trees')
+const {EPS} = require('./constants')
+const {reTesselateCoplanarPolygons} = require('./math/polygonUtils')
+const Polygon = require('./math/Polygon3')
+const Plane = require('./math/Plane')
+const Vertex = require('./math/Vertex3')
+const Vector2D = require('./math/Vector2')
+const Vector3D = require('./math/Vector3')
+const Matrix4x4 = require('./math/Matrix4')
+const OrthoNormalBasis = require('./math/OrthoNormalBasis')
+
+const CAG = require('./CAG') // FIXME: circular dependency !
+
+const Properties = require('./Properties')
+const {Connector} = require('./connectors')
+const fixTJunctions = require('./utils/fixTJunctions')
+// let {fromPolygons} = require('./CSGMakers') // FIXME: circular dependency !
+
+/** Class CSG
+ * Holds a binary space partition tree representing a 3D solid. Two solids can
+ * be combined using the `union()`, `subtract()`, and `intersect()` methods.
+ * @constructor
+ */
+let CSG = function () {
+  this.polygons = []
+  this.properties = new Properties()
+  this.isCanonicalized = true
+  this.isRetesselated = true
+}
+
+CSG.prototype = {
+  /** @return {Polygon[]} The list of polygons. */
+  toPolygons: function () {
+    return this.polygons
+  },
+
+  /**
+   * Return a new CSG solid representing the space in either this solid or
+   * in the given solids. Neither this solid nor the given solids are modified.
+   * @param {CSG[]} csg - list of CSG objects
+   * @returns {CSG} new CSG object
+   * @example
+   * let C = A.union(B)
+   * @example
+   * +-------+            +-------+
+   * |       |            |       |
+   * |   A   |            |       |
+   * |    +--+----+   =   |       +----+
+   * +----+--+    |       +----+       |
+   *      |   B   |            |       |
+   *      |       |            |       |
+   *      +-------+            +-------+
+   */
+  union: function (csg) {
+    let csgs
+    if (csg instanceof Array) {
+      csgs = csg.slice(0)
+      csgs.push(this)
+    } else {
+      csgs = [this, csg]
+    }
+
+    let i
+    // combine csg pairs in a way that forms a balanced binary tree pattern
+    for (i = 1; i < csgs.length; i += 2) {
+      csgs.push(csgs[i - 1].unionSub(csgs[i]))
+    }
+    return csgs[i - 1].reTesselated().canonicalized()
+  },
+
+  unionSub: function (csg, retesselate, canonicalize) {
+    if (!this.mayOverlap(csg)) {
+      return this.unionForNonIntersecting(csg)
+    } else {
+      let a = new Tree(this.polygons)
+      let b = new Tree(csg.polygons)
+      a.clipTo(b, false)
+
+            // b.clipTo(a, true); // ERROR: this doesn't work
+      b.clipTo(a)
+      b.invert()
+      b.clipTo(a)
+      b.invert()
+
+      let newpolygons = a.allPolygons().concat(b.allPolygons())
+      let result = CSG.fromPolygons(newpolygons)
+      result.properties = this.properties._merge(csg.properties)
+      if (retesselate) result = result.reTesselated()
+      if (canonicalize) result = result.canonicalized()
+      return result
+    }
+  },
+
+    // Like union, but when we know that the two solids are not intersecting
+    // Do not use if you are not completely sure that the solids do not intersect!
+  unionForNonIntersecting: function (csg) {
+    let newpolygons = this.polygons.concat(csg.polygons)
+    let result = CSG.fromPolygons(newpolygons)
+    result.properties = this.properties._merge(csg.properties)
+    result.isCanonicalized = this.isCanonicalized && csg.isCanonicalized
+    result.isRetesselated = this.isRetesselated && csg.isRetesselated
+    return result
+  },
+
+  /**
+   * Return a new CSG solid representing space in this solid but
+   * not in the given solids. Neither this solid nor the given solids are modified.
+   * @param {CSG[]} csg - list of CSG objects
+   * @returns {CSG} new CSG object
+   * @example
+   * let C = A.subtract(B)
+   * @example
+   * +-------+            +-------+
+   * |       |            |       |
+   * |   A   |            |       |
+   * |    +--+----+   =   |    +--+
+   * +----+--+    |       +----+
+   *      |   B   |
+   *      |       |
+   *      +-------+
+   */
+  subtract: function (csg) {
+    let csgs
+    if (csg instanceof Array) {
+      csgs = csg
+    } else {
+      csgs = [csg]
+    }
+    let result = this
+    for (let i = 0; i < csgs.length; i++) {
+      let islast = (i === (csgs.length - 1))
+      result = result.subtractSub(csgs[i], islast, islast)
+    }
+    return result
+  },
+
+  subtractSub: function (csg, retesselate, canonicalize) {
+    let a = new Tree(this.polygons)
+    let b = new Tree(csg.polygons)
+    a.invert()
+    a.clipTo(b)
+    b.clipTo(a, true)
+    a.addPolygons(b.allPolygons())
+    a.invert()
+    let result = CSG.fromPolygons(a.allPolygons())
+    result.properties = this.properties._merge(csg.properties)
+    if (retesselate) result = result.reTesselated()
+    if (canonicalize) result = result.canonicalized()
+    return result
+  },
+
+  /**
+   * Return a new CSG solid representing space in both this solid and
+   * in the given solids. Neither this solid nor the given solids are modified.
+   * @param {CSG[]} csg - list of CSG objects
+   * @returns {CSG} new CSG object
+   * @example
+   * let C = A.intersect(B)
+   * @example
+   * +-------+
+   * |       |
+   * |   A   |
+   * |    +--+----+   =   +--+
+   * +----+--+    |       +--+
+   *      |   B   |
+   *      |       |
+   *      +-------+
+   */
+  intersect: function (csg) {
+    let csgs
+    if (csg instanceof Array) {
+      csgs = csg
+    } else {
+      csgs = [csg]
+    }
+    let result = this
+    for (let i = 0; i < csgs.length; i++) {
+      let islast = (i === (csgs.length - 1))
+      result = result.intersectSub(csgs[i], islast, islast)
+    }
+    return result
+  },
+
+  intersectSub: function (csg, retesselate, canonicalize) {
+    let a = new Tree(this.polygons)
+    let b = new Tree(csg.polygons)
+    a.invert()
+    b.clipTo(a)
+    b.invert()
+    a.clipTo(b)
+    b.clipTo(a)
+    a.addPolygons(b.allPolygons())
+    a.invert()
+    let result = CSG.fromPolygons(a.allPolygons())
+    result.properties = this.properties._merge(csg.properties)
+    if (retesselate) result = result.reTesselated()
+    if (canonicalize) result = result.canonicalized()
+    return result
+  },
+
+  /**
+   * Return a new CSG solid with solid and empty space switched.
+   * This solid is not modified.
+   * @returns {CSG} new CSG object
+   * @example
+   * let B = A.invert()
+   */
+  invert: function () {
+    let flippedpolygons = this.polygons.map(function (p) {
+      return p.flipped()
+    })
+    return CSG.fromPolygons(flippedpolygons)
+        // TODO: flip properties?
+  },
+
+    // Affine transformation of CSG object. Returns a new CSG object
+  transform1: function (matrix4x4) {
+    let newpolygons = this.polygons.map(function (p) {
+      return p.transform(matrix4x4)
+    })
+    let result = CSG.fromPolygons(newpolygons)
+    result.properties = this.properties._transform(matrix4x4)
+    result.isRetesselated = this.isRetesselated
+    return result
+  },
+
+  /**
+   * Return a new CSG solid that is transformed using the given Matrix.
+   * Several matrix transformations can be combined before transforming this solid.
+   * @param {CSG.Matrix4x4} matrix4x4 - matrix to be applied
+   * @returns {CSG} new CSG object
+   * @example
+   * var m = new CSG.Matrix4x4()
+   * m = m.multiply(CSG.Matrix4x4.rotationX(40))
+   * m = m.multiply(CSG.Matrix4x4.translation([-.5, 0, 0]))
+   * let B = A.transform(m)
+   */
+  transform: function (matrix4x4) {
+    let ismirror = matrix4x4.isMirroring()
+    let transformedvertices = {}
+    let transformedplanes = {}
+    let newpolygons = this.polygons.map(function (p) {
+      let newplane
+      let plane = p.plane
+      let planetag = plane.getTag()
+      if (planetag in transformedplanes) {
+        newplane = transformedplanes[planetag]
+      } else {
+        newplane = plane.transform(matrix4x4)
+        transformedplanes[planetag] = newplane
+      }
+      let newvertices = p.vertices.map(function (v) {
+        let newvertex
+        let vertextag = v.getTag()
+        if (vertextag in transformedvertices) {
+          newvertex = transformedvertices[vertextag]
+        } else {
+          newvertex = v.transform(matrix4x4)
+          transformedvertices[vertextag] = newvertex
+        }
+        return newvertex
+      })
+      if (ismirror) newvertices.reverse()
+      return new Polygon(newvertices, p.shared, newplane)
+    })
+    let result = CSG.fromPolygons(newpolygons)
+    result.properties = this.properties._transform(matrix4x4)
+    result.isRetesselated = this.isRetesselated
+    result.isCanonicalized = this.isCanonicalized
+    return result
+  },
+
+  toString: function () {
+    let result = 'CSG solid:\n'
+    this.polygons.map(function (p) {
+      result += p.toString()
+    })
+    return result
+  },
+
+    // Expand the solid
+    // resolution: number of points per 360 degree for the rounded corners
+  expand: function (radius, resolution) {
+    let result = this.expandedShell(radius, resolution, true)
+    result = result.reTesselated()
+    result.properties = this.properties // keep original properties
+    return result
+  },
+
+    // Contract the solid
+    // resolution: number of points per 360 degree for the rounded corners
+  contract: function (radius, resolution) {
+    let expandedshell = this.expandedShell(radius, resolution, false)
+    let result = this.subtract(expandedshell)
+    result = result.reTesselated()
+    result.properties = this.properties // keep original properties
+    return result
+  },
+
+    // cut the solid at a plane, and stretch the cross-section found along plane normal
+  stretchAtPlane: function (normal, point, length) {
+    let plane = Plane.fromNormalAndPoint(normal, point)
+    let onb = new OrthoNormalBasis(plane)
+    let crosssect = this.sectionCut(onb)
+    let midpiece = crosssect.extrudeInOrthonormalBasis(onb, length)
+    let piece1 = this.cutByPlane(plane)
+    let piece2 = this.cutByPlane(plane.flipped())
+    let result = piece1.union([midpiece, piece2.translate(plane.normal.times(length))])
+    return result
+  },
+
+    // Create the expanded shell of the solid:
+    // All faces are extruded to get a thickness of 2*radius
+    // Cylinders are constructed around every side
+    // Spheres are placed on every vertex
+    // unionWithThis: if true, the resulting solid will be united with 'this' solid;
+    //   the result is a true expansion of the solid
+    //   If false, returns only the shell
+  expandedShell: function (radius, resolution, unionWithThis) {
+    // const {sphere} = require('./primitives3d') // FIXME: circular dependency !
+    let csg = this.reTesselated()
+    let result
+    if (unionWithThis) {
+      result = csg
+    } else {
+      result = new CSG()
+    }
+
+        // first extrude all polygons:
+    csg.polygons.map(function (polygon) {
+      let extrudevector = polygon.plane.normal.unit().times(2 * radius)
+      let translatedpolygon = polygon.translate(extrudevector.times(-0.5))
+      let extrudedface = translatedpolygon.extrude(extrudevector)
+      result = result.unionSub(extrudedface, false, false)
+    })
+
+    // Make a list of all unique vertex pairs (i.e. all sides of the solid)
+    // For each vertex pair we collect the following:
+    //   v1: first coordinate
+    //   v2: second coordinate
+    //   planenormals: array of normal vectors of all planes touching this side
+    let vertexpairs = {} // map of 'vertex pair tag' to {v1, v2, planenormals}
+    csg.polygons.map(function (polygon) {
+      let numvertices = polygon.vertices.length
+      let prevvertex = polygon.vertices[numvertices - 1]
+      let prevvertextag = prevvertex.getTag()
+      for (let i = 0; i < numvertices; i++) {
+        let vertex = polygon.vertices[i]
+        let vertextag = vertex.getTag()
+        let vertextagpair
+        if (vertextag < prevvertextag) {
+          vertextagpair = vertextag + '-' + prevvertextag
+        } else {
+          vertextagpair = prevvertextag + '-' + vertextag
+        }
+        let obj
+        if (vertextagpair in vertexpairs) {
+          obj = vertexpairs[vertextagpair]
+        } else {
+          obj = {
+            v1: prevvertex,
+            v2: vertex,
+            planenormals: []
+          }
+          vertexpairs[vertextagpair] = obj
+        }
+        obj.planenormals.push(polygon.plane.normal)
+
+        prevvertextag = vertextag
+        prevvertex = vertex
+      }
+    })
+
+        // now construct a cylinder on every side
+        // The cylinder is always an approximation of a true cylinder: it will have <resolution> polygons
+        // around the sides. We will make sure though that the cylinder will have an edge at every
+        // face that touches this side. This ensures that we will get a smooth fill even
+        // if two edges are at, say, 10 degrees and the resolution is low.
+        // Note: the result is not retesselated yet but it really should be!
+    for (let vertextagpair in vertexpairs) {
+      let vertexpair = vertexpairs[vertextagpair]
+      let startpoint = vertexpair.v1.pos
+      let endpoint = vertexpair.v2.pos
+                // our x,y and z vectors:
+      let zbase = endpoint.minus(startpoint).unit()
+      let xbase = vertexpair.planenormals[0].unit()
+      let ybase = xbase.cross(zbase)
+
+      // make a list of angles that the cylinder should traverse:
+      let angles = []
+
+            // first of all equally spaced around the cylinder:
+      for (let i = 0; i < resolution; i++) {
+        angles.push(i * Math.PI * 2 / resolution)
+      }
+
+            // and also at every normal of all touching planes:
+      for (let i = 0, iMax = vertexpair.planenormals.length; i < iMax; i++) {
+        let planenormal = vertexpair.planenormals[i]
+        let si = ybase.dot(planenormal)
+        let co = xbase.dot(planenormal)
+        let angle = Math.atan2(si, co)
+
+        if (angle < 0) angle += Math.PI * 2
+        angles.push(angle)
+        angle = Math.atan2(-si, -co)
+        if (angle < 0) angle += Math.PI * 2
+        angles.push(angle)
+      }
+
+            // this will result in some duplicate angles but we will get rid of those later.
+            // Sort:
+      angles = angles.sort(fnNumberSort)
+
+            // Now construct the cylinder by traversing all angles:
+      let numangles = angles.length
+      let prevp1
+      let prevp2
+      let startfacevertices = []
+      let endfacevertices = []
+      let polygons = []
+      for (let i = -1; i < numangles; i++) {
+        let angle = angles[(i < 0) ? (i + numangles) : i]
+        let si = Math.sin(angle)
+        let co = Math.cos(angle)
+        let p = xbase.times(co * radius).plus(ybase.times(si * radius))
+        let p1 = startpoint.plus(p)
+        let p2 = endpoint.plus(p)
+        let skip = false
+        if (i >= 0) {
+          if (p1.distanceTo(prevp1) < EPS) {
+            skip = true
+          }
+        }
+        if (!skip) {
+          if (i >= 0) {
+            startfacevertices.push(new Vertex(p1))
+            endfacevertices.push(new Vertex(p2))
+            let polygonvertices = [
+              new Vertex(prevp2),
+              new Vertex(p2),
+              new Vertex(p1),
+              new Vertex(prevp1)
+            ]
+            let polygon = new Polygon(polygonvertices)
+            polygons.push(polygon)
+          }
+          prevp1 = p1
+          prevp2 = p2
+        }
+      }
+      endfacevertices.reverse()
+      polygons.push(new Polygon(startfacevertices))
+      polygons.push(new Polygon(endfacevertices))
+      let cylinder = CSG.fromPolygons(polygons)
+      result = result.unionSub(cylinder, false, false)
+    }
+
+        // make a list of all unique vertices
+        // For each vertex we also collect the list of normals of the planes touching the vertices
+    let vertexmap = {}
+    csg.polygons.map(function (polygon) {
+      polygon.vertices.map(function (vertex) {
+        let vertextag = vertex.getTag()
+        let obj
+        if (vertextag in vertexmap) {
+          obj = vertexmap[vertextag]
+        } else {
+          obj = {
+            pos: vertex.pos,
+            normals: []
+          }
+          vertexmap[vertextag] = obj
+        }
+        obj.normals.push(polygon.plane.normal)
+      })
+    })
+
+        // and build spheres at each vertex
+        // We will try to set the x and z axis to the normals of 2 planes
+        // This will ensure that our sphere tesselation somewhat matches 2 planes
+    for (let vertextag in vertexmap) {
+      let vertexobj = vertexmap[vertextag]
+            // use the first normal to be the x axis of our sphere:
+      let xaxis = vertexobj.normals[0].unit()
+            // and find a suitable z axis. We will use the normal which is most perpendicular to the x axis:
+      let bestzaxis = null
+      let bestzaxisorthogonality = 0
+      for (let i = 1; i < vertexobj.normals.length; i++) {
+        let normal = vertexobj.normals[i].unit()
+        let cross = xaxis.cross(normal)
+        let crosslength = cross.length()
+        if (crosslength > 0.05) {
+          if (crosslength > bestzaxisorthogonality) {
+            bestzaxisorthogonality = crosslength
+            bestzaxis = normal
+          }
+        }
+      }
+      if (!bestzaxis) {
+        bestzaxis = xaxis.randomNonParallelVector()
+      }
+      let yaxis = xaxis.cross(bestzaxis).unit()
+      let zaxis = yaxis.cross(xaxis)
+      let _sphere = CSG.sphere({
+        center: vertexobj.pos,
+        radius: radius,
+        resolution: resolution,
+        axes: [xaxis, yaxis, zaxis]
+      })
+      result = result.unionSub(_sphere, false, false)
+    }
+
+    return result
+  },
+
+  canonicalized: function () {
+    if (this.isCanonicalized) {
+      return this
+    } else {
+      let factory = new FuzzyCSGFactory()
+      let result = CSGFromCSGFuzzyFactory(factory, this)
+      result.isCanonicalized = true
+      result.isRetesselated = this.isRetesselated
+      result.properties = this.properties // keep original properties
+      return result
+    }
+  },
+
+  reTesselated: function () {
+    if (this.isRetesselated) {
+      return this
+    } else {
+      let csg = this
+      let polygonsPerPlane = {}
+      let isCanonicalized = csg.isCanonicalized
+      let fuzzyfactory = new FuzzyCSGFactory()
+      csg.polygons.map(function (polygon) {
+        let plane = polygon.plane
+        let shared = polygon.shared
+        if (!isCanonicalized) {
+          // in order to identify to polygons having the same plane, we need to canonicalize the planes
+          // We don't have to do a full canonizalization (including vertices), to save time only do the planes and the shared data:
+          plane = fuzzyfactory.getPlane(plane)
+          shared = fuzzyfactory.getPolygonShared(shared)
+        }
+        let tag = plane.getTag() + '/' + shared.getTag()
+        if (!(tag in polygonsPerPlane)) {
+          polygonsPerPlane[tag] = [polygon]
+        } else {
+          polygonsPerPlane[tag].push(polygon)
+        }
+      })
+      let destpolygons = []
+      for (let planetag in polygonsPerPlane) {
+        let sourcepolygons = polygonsPerPlane[planetag]
+        if (sourcepolygons.length < 2) {
+          destpolygons = destpolygons.concat(sourcepolygons)
+        } else {
+          let retesselayedpolygons = []
+          reTesselateCoplanarPolygons(sourcepolygons, retesselayedpolygons)
+          destpolygons = destpolygons.concat(retesselayedpolygons)
+        }
+      }
+      let result = CSG.fromPolygons(destpolygons)
+      result.isRetesselated = true
+            // result = result.canonicalized();
+      result.properties = this.properties // keep original properties
+      return result
+    }
+  },
+
+  /**
+   * Returns an array of Vector3D, providing minimum coordinates and maximum coordinates
+   * of this solid.
+   * @returns {Vector3D[]}
+   * @example
+   * let bounds = A.getBounds()
+   * let minX = bounds[0].x
+   */
+  getBounds: function () {
+    if (!this.cachedBoundingBox) {
+      let minpoint = new Vector3D(0, 0, 0)
+      let maxpoint = new Vector3D(0, 0, 0)
+      let polygons = this.polygons
+      let numpolygons = polygons.length
+      for (let i = 0; i < numpolygons; i++) {
+        let polygon = polygons[i]
+        let bounds = polygon.boundingBox()
+        if (i === 0) {
+          minpoint = bounds[0]
+          maxpoint = bounds[1]
+        } else {
+          minpoint = minpoint.min(bounds[0])
+          maxpoint = maxpoint.max(bounds[1])
+        }
+      }
+      this.cachedBoundingBox = [minpoint, maxpoint]
+    }
+    return this.cachedBoundingBox
+  },
+
+    // returns true if there is a possibility that the two solids overlap
+    // returns false if we can be sure that they do not overlap
+  mayOverlap: function (csg) {
+    if ((this.polygons.length === 0) || (csg.polygons.length === 0)) {
+      return false
+    } else {
+      let mybounds = this.getBounds()
+      let otherbounds = csg.getBounds()
+      if (mybounds[1].x < otherbounds[0].x) return false
+      if (mybounds[0].x > otherbounds[1].x) return false
+      if (mybounds[1].y < otherbounds[0].y) return false
+      if (mybounds[0].y > otherbounds[1].y) return false
+      if (mybounds[1].z < otherbounds[0].z) return false
+      if (mybounds[0].z > otherbounds[1].z) return false
+      return true
+    }
+  },
+
+    // Cut the solid by a plane. Returns the solid on the back side of the plane
+  cutByPlane: function (plane) {
+    if (this.polygons.length === 0) {
+      return new CSG()
+    }
+        // Ideally we would like to do an intersection with a polygon of inifinite size
+        // but this is not supported by our implementation. As a workaround, we will create
+        // a cube, with one face on the plane, and a size larger enough so that the entire
+        // solid fits in the cube.
+        // find the max distance of any vertex to the center of the plane:
+    let planecenter = plane.normal.times(plane.w)
+    let maxdistance = 0
+    this.polygons.map(function (polygon) {
+      polygon.vertices.map(function (vertex) {
+        let distance = vertex.pos.distanceToSquared(planecenter)
+        if (distance > maxdistance) maxdistance = distance
+      })
+    })
+    maxdistance = Math.sqrt(maxdistance)
+    maxdistance *= 1.01 // make sure it's really larger
+        // Now build a polygon on the plane, at any point farther than maxdistance from the plane center:
+    let vertices = []
+    let orthobasis = new OrthoNormalBasis(plane)
+    vertices.push(new Vertex(orthobasis.to3D(new Vector2D(maxdistance, -maxdistance))))
+    vertices.push(new Vertex(orthobasis.to3D(new Vector2D(-maxdistance, -maxdistance))))
+    vertices.push(new Vertex(orthobasis.to3D(new Vector2D(-maxdistance, maxdistance))))
+    vertices.push(new Vertex(orthobasis.to3D(new Vector2D(maxdistance, maxdistance))))
+    let polygon = new Polygon(vertices, null, plane.flipped())
+
+        // and extrude the polygon into a cube, backwards of the plane:
+    let cube = polygon.extrude(plane.normal.times(-maxdistance))
+
+        // Now we can do the intersection:
+    let result = this.intersect(cube)
+    result.properties = this.properties // keep original properties
+    return result
+  },
+
+    // Connect a solid to another solid, such that two Connectors become connected
+    //   myConnector: a Connector of this solid
+    //   otherConnector: a Connector to which myConnector should be connected
+    //   mirror: false: the 'axis' vectors of the connectors should point in the same direction
+    //           true: the 'axis' vectors of the connectors should point in opposite direction
+    //   normalrotation: degrees of rotation between the 'normal' vectors of the two
+    //                   connectors
+  connectTo: function (myConnector, otherConnector, mirror, normalrotation) {
+    let matrix = myConnector.getTransformationTo(otherConnector, mirror, normalrotation)
+    return this.transform(matrix)
+  },
+
+    // set the .shared property of all polygons
+    // Returns a new CSG solid, the original is unmodified!
+  setShared: function (shared) {
+    let polygons = this.polygons.map(function (p) {
+      return new Polygon(p.vertices, shared, p.plane)
+    })
+    let result = CSG.fromPolygons(polygons)
+    result.properties = this.properties // keep original properties
+    result.isRetesselated = this.isRetesselated
+    result.isCanonicalized = this.isCanonicalized
+    return result
+  },
+
+  setColor: function (args) {
+    let newshared = Polygon.Shared.fromColor.apply(this, arguments)
+    return this.setShared(newshared)
+  },
+
+  toCompactBinary: function () {
+    let csg = this.canonicalized(),
+      numpolygons = csg.polygons.length,
+      numpolygonvertices = 0,
+      numvertices = 0,
+      vertexmap = {},
+      vertices = [],
+      numplanes = 0,
+      planemap = {},
+      polygonindex = 0,
+      planes = [],
+      shareds = [],
+      sharedmap = {},
+      numshared = 0
+        // for (let i = 0, iMax = csg.polygons.length; i < iMax; i++) {
+        //  let p = csg.polygons[i];
+        //  for (let j = 0, jMax = p.length; j < jMax; j++) {
+        //      ++numpolygonvertices;
+        //      let vertextag = p[j].getTag();
+        //      if(!(vertextag in vertexmap)) {
+        //          vertexmap[vertextag] = numvertices++;
+        //          vertices.push(p[j]);
+        //      }
+        //  }
+    csg.polygons.map(function (p) {
+      p.vertices.map(function (v) {
+        ++numpolygonvertices
+        let vertextag = v.getTag()
+        if (!(vertextag in vertexmap)) {
+          vertexmap[vertextag] = numvertices++
+          vertices.push(v)
+        }
+      })
+
+      let planetag = p.plane.getTag()
+      if (!(planetag in planemap)) {
+        planemap[planetag] = numplanes++
+        planes.push(p.plane)
+      }
+      let sharedtag = p.shared.getTag()
+      if (!(sharedtag in sharedmap)) {
+        sharedmap[sharedtag] = numshared++
+        shareds.push(p.shared)
+      }
+    })
+    let numVerticesPerPolygon = new Uint32Array(numpolygons)
+    let polygonSharedIndexes = new Uint32Array(numpolygons)
+    let polygonVertices = new Uint32Array(numpolygonvertices)
+    let polygonPlaneIndexes = new Uint32Array(numpolygons)
+    let vertexData = new Float64Array(numvertices * 3)
+    let planeData = new Float64Array(numplanes * 4)
+    let polygonVerticesIndex = 0
+    for (let polygonindex = 0; polygonindex < numpolygons; ++polygonindex) {
+      let p = csg.polygons[polygonindex]
+      numVerticesPerPolygon[polygonindex] = p.vertices.length
+      p.vertices.map(function (v) {
+        let vertextag = v.getTag()
+        let vertexindex = vertexmap[vertextag]
+        polygonVertices[polygonVerticesIndex++] = vertexindex
+      })
+      let planetag = p.plane.getTag()
+      let planeindex = planemap[planetag]
+      polygonPlaneIndexes[polygonindex] = planeindex
+      let sharedtag = p.shared.getTag()
+      let sharedindex = sharedmap[sharedtag]
+      polygonSharedIndexes[polygonindex] = sharedindex
+    }
+    let verticesArrayIndex = 0
+    vertices.map(function (v) {
+      let pos = v.pos
+      vertexData[verticesArrayIndex++] = pos._x
+      vertexData[verticesArrayIndex++] = pos._y
+      vertexData[verticesArrayIndex++] = pos._z
+    })
+    let planesArrayIndex = 0
+    planes.map(function (p) {
+      let normal = p.normal
+      planeData[planesArrayIndex++] = normal._x
+      planeData[planesArrayIndex++] = normal._y
+      planeData[planesArrayIndex++] = normal._z
+      planeData[planesArrayIndex++] = p.w
+    })
+    let result = {
+      'class': 'CSG',
+      numPolygons: numpolygons,
+      numVerticesPerPolygon: numVerticesPerPolygon,
+      polygonPlaneIndexes: polygonPlaneIndexes,
+      polygonSharedIndexes: polygonSharedIndexes,
+      polygonVertices: polygonVertices,
+      vertexData: vertexData,
+      planeData: planeData,
+      shared: shareds
+    }
+    return result
+  },
+
+    // Get the transformation that transforms this CSG such that it is lying on the z=0 plane,
+    // as flat as possible (i.e. the least z-height).
+    // So that it is in an orientation suitable for CNC milling
+  getTransformationAndInverseTransformationToFlatLying: function () {
+    if (this.polygons.length === 0) {
+      let m = new Matrix4x4() // unity
+      return [m, m]
+    } else {
+            // get a list of unique planes in the CSG:
+      let csg = this.canonicalized()
+      let planemap = {}
+      csg.polygons.map(function (polygon) {
+        planemap[polygon.plane.getTag()] = polygon.plane
+      })
+            // try each plane in the CSG and find the plane that, when we align it flat onto z=0,
+            // gives the least height in z-direction.
+            // If two planes give the same height, pick the plane that originally had a normal closest
+            // to [0,0,-1].
+      let xvector = new Vector3D(1, 0, 0)
+      let yvector = new Vector3D(0, 1, 0)
+      let zvector = new Vector3D(0, 0, 1)
+      let z0connectorx = new Connector([0, 0, 0], [0, 0, -1], xvector)
+      let z0connectory = new Connector([0, 0, 0], [0, 0, -1], yvector)
+      let isfirst = true
+      let minheight = 0
+      let maxdotz = 0
+      let besttransformation, bestinversetransformation
+      for (let planetag in planemap) {
+        let plane = planemap[planetag]
+        let pointonplane = plane.normal.times(plane.w)
+        let transformation, inversetransformation
+                // We need a normal vecrtor for the transformation
+                // determine which is more perpendicular to the plane normal: x or y?
+                // we will align this as much as possible to the x or y axis vector
+        let xorthogonality = plane.normal.cross(xvector).length()
+        let yorthogonality = plane.normal.cross(yvector).length()
+        if (xorthogonality > yorthogonality) {
+                    // x is better:
+          let planeconnector = new Connector(pointonplane, plane.normal, xvector)
+          transformation = planeconnector.getTransformationTo(z0connectorx, false, 0)
+          inversetransformation = z0connectorx.getTransformationTo(planeconnector, false, 0)
+        } else {
+                    // y is better:
+          let planeconnector = new Connector(pointonplane, plane.normal, yvector)
+          transformation = planeconnector.getTransformationTo(z0connectory, false, 0)
+          inversetransformation = z0connectory.getTransformationTo(planeconnector, false, 0)
+        }
+        let transformedcsg = csg.transform(transformation)
+        let dotz = -plane.normal.dot(zvector)
+        let bounds = transformedcsg.getBounds()
+        let zheight = bounds[1].z - bounds[0].z
+        let isbetter = isfirst
+        if (!isbetter) {
+          if (zheight < minheight) {
+            isbetter = true
+          } else if (zheight === minheight) {
+            if (dotz > maxdotz) isbetter = true
+          }
+        }
+        if (isbetter) {
+                    // translate the transformation around the z-axis and onto the z plane:
+          let translation = new Vector3D([-0.5 * (bounds[1].x + bounds[0].x), -0.5 * (bounds[1].y + bounds[0].y), -bounds[0].z])
+          transformation = transformation.multiply(Matrix4x4.translation(translation))
+          inversetransformation = Matrix4x4.translation(translation.negated()).multiply(inversetransformation)
+          minheight = zheight
+          maxdotz = dotz
+          besttransformation = transformation
+          bestinversetransformation = inversetransformation
+        }
+        isfirst = false
+      }
+      return [besttransformation, bestinversetransformation]
+    }
+  },
+
+  getTransformationToFlatLying: function () {
+    let result = this.getTransformationAndInverseTransformationToFlatLying()
+    return result[0]
+  },
+
+  lieFlat: function () {
+    let transformation = this.getTransformationToFlatLying()
+    return this.transform(transformation)
+  },
+
+    // project the 3D CSG onto a plane
+    // This returns a 2D CAG with the 'shadow' shape of the 3D solid when projected onto the
+    // plane represented by the orthonormal basis
+  projectToOrthoNormalBasis: function (orthobasis) {
+    let cags = []
+    this.polygons.filter(function (p) {
+                // only return polys in plane, others may disturb result
+      return p.plane.normal.minus(orthobasis.plane.normal).lengthSquared() < (EPS * EPS)
+    })
+            .map(function (polygon) {
+              let cag = polygon.projectToOrthoNormalBasis(orthobasis)
+              if (cag.sides.length > 0) {
+                cags.push(cag)
+              }
+            })
+    let result = new CAG().union(cags)
+    return result
+  },
+
+  sectionCut: function (orthobasis) {
+    let plane1 = orthobasis.plane
+    let plane2 = orthobasis.plane.flipped()
+    plane1 = new Plane(plane1.normal, plane1.w)
+    plane2 = new Plane(plane2.normal, plane2.w + (5 * EPS))
+    let cut3d = this.cutByPlane(plane1)
+    cut3d = cut3d.cutByPlane(plane2)
+    return cut3d.projectToOrthoNormalBasis(orthobasis)
+  },
+
+  fixTJunctions: function () {
+    return fixTJunctions(CSG.fromPolygons, this)
+  },
+
+  toTriangles: function () {
+    let polygons = []
+    this.polygons.forEach(function (poly) {
+      let firstVertex = poly.vertices[0]
+      for (let i = poly.vertices.length - 3; i >= 0; i--) {
+        polygons.push(new Polygon([
+          firstVertex, poly.vertices[i + 1], poly.vertices[i + 2]
+        ],
+                    poly.shared, poly.plane))
+      }
+    })
+    return polygons
+  },
+
+  /**
+   * Returns an array of values for the requested features of this solid.
+   * Supported Features: 'volume', 'area'
+   * @param {String[]} features - list of features to calculate
+   * @returns {Float[]} values
+   * @example
+   * let volume = A.getFeatures('volume')
+   * let values = A.getFeatures('area','volume')
+   */
+  getFeatures: function (features) {
+    if (!(features instanceof Array)) {
+      features = [features]
+    }
+    let result = this.toTriangles().map(function (triPoly) {
+      return triPoly.getTetraFeatures(features)
+    })
+            .reduce(function (pv, v) {
+              return v.map(function (feat, i) {
+                return feat + (pv === 0 ? 0 : pv[i])
+              })
+            }, 0)
+    return (result.length === 1) ? result[0] : result
+  }
+}
+
+/** Construct a CSG solid from a list of `Polygon` instances.
+ * @param {Polygon[]} polygons - list of polygons
+ * @returns {CSG} new CSG object
+ */
+CSG.fromPolygons = function fromPolygons (polygons) {
+  let csg = new CSG()
+  csg.polygons = polygons
+  csg.isCanonicalized = false
+  csg.isRetesselated = false
+  return csg
+}
+
+const CSGFromCSGFuzzyFactory = function (factory, sourcecsg) {
+  let _this = factory
+  let newpolygons = []
+  sourcecsg.polygons.forEach(function (polygon) {
+    let newpolygon = _this.getPolygon(polygon)
+          // see getPolygon above: we may get a polygon with no vertices, discard it:
+    if (newpolygon.vertices.length >= 3) {
+      newpolygons.push(newpolygon)
+    }
+  })
+  return CSG.fromPolygons(newpolygons)
+}
+
+module.exports = CSG
+
+},{"./CAG":78,"./FuzzyFactory3d":84,"./Properties":85,"./connectors":86,"./constants":87,"./math/Matrix4":91,"./math/OrthoNormalBasis":92,"./math/Plane":94,"./math/Polygon3":96,"./math/Vector2":98,"./math/Vector3":99,"./math/Vertex3":101,"./math/polygonUtils":103,"./trees":108,"./utils":109,"./utils/fixTJunctions":110}],81:[function(require,module,exports){
+const Vector3D = require('./math/Vector3')
+const Vertex = require('./math/Vertex3')
+const Plane = require('./math/Plane')
+const Polygon2D = require('./math/Polygon2')
+const Polygon3D = require('./math/Polygon3')
+
+/** Construct a CSG solid from a list of pre-generated slices.
+ * See Polygon.prototype.solidFromSlices() for details.
+ * @param {Object} options - options passed to solidFromSlices()
+ * @returns {CSG} new CSG object
+ */
+function fromSlices (options) {
+  return (new Polygon2D.createFromPoints([
+        [0, 0, 0],
+        [1, 0, 0],
+        [1, 1, 0],
+        [0, 1, 0]
+  ])).solidFromSlices(options)
+}
+
+/** Reconstruct a CSG solid from an object with identical property names.
+ * @param {Object} obj - anonymous object, typically from JSON
+ * @returns {CSG} new CSG object
+ */
+function fromObject (obj) {
+  const CSG = require('./CSG')
+  let polygons = obj.polygons.map(function (p) {
+    return Polygon3D.fromObject(p)
+  })
+  let csg = CSG.fromPolygons(polygons)
+  csg.isCanonicalized = obj.isCanonicalized
+  csg.isRetesselated = obj.isRetesselated
+  return csg
+}
+
+/** Reconstruct a CSG from the output of toCompactBinary().
+ * @param {CompactBinary} bin - see toCompactBinary().
+ * @returns {CSG} new CSG object
+ */
+function fromCompactBinary (bin) {
+  const CSG = require('./CSG') // FIXME: circular dependency ??
+
+  if (bin['class'] !== 'CSG') throw new Error('Not a CSG')
+  let planes = []
+  let planeData = bin.planeData
+  let numplanes = planeData.length / 4
+  let arrayindex = 0
+  let x, y, z, w, normal, plane
+  for (let planeindex = 0; planeindex < numplanes; planeindex++) {
+    x = planeData[arrayindex++]
+    y = planeData[arrayindex++]
+    z = planeData[arrayindex++]
+    w = planeData[arrayindex++]
+    normal = Vector3D.Create(x, y, z)
+    plane = new Plane(normal, w)
+    planes.push(plane)
+  }
+
+  let vertices = []
+  const vertexData = bin.vertexData
+  const numvertices = vertexData.length / 3
+  let pos
+  let vertex
+  arrayindex = 0
+  for (let vertexindex = 0; vertexindex < numvertices; vertexindex++) {
+    x = vertexData[arrayindex++]
+    y = vertexData[arrayindex++]
+    z = vertexData[arrayindex++]
+    pos = Vector3D.Create(x, y, z)
+    vertex = new Vertex(pos)
+    vertices.push(vertex)
+  }
+
+  let shareds = bin.shared.map(function (shared) {
+    return Polygon3D.Shared.fromObject(shared)
+  })
+
+  let polygons = []
+  let numpolygons = bin.numPolygons
+  let numVerticesPerPolygon = bin.numVerticesPerPolygon
+  let polygonVertices = bin.polygonVertices
+  let polygonPlaneIndexes = bin.polygonPlaneIndexes
+  let polygonSharedIndexes = bin.polygonSharedIndexes
+  let numpolygonvertices
+  let polygonvertices
+  let shared
+  let polygon // already defined plane,
+  arrayindex = 0
+  for (let polygonindex = 0; polygonindex < numpolygons; polygonindex++) {
+    numpolygonvertices = numVerticesPerPolygon[polygonindex]
+    polygonvertices = []
+    for (let i = 0; i < numpolygonvertices; i++) {
+      polygonvertices.push(vertices[polygonVertices[arrayindex++]])
+    }
+    plane = planes[polygonPlaneIndexes[polygonindex]]
+    shared = shareds[polygonSharedIndexes[polygonindex]]
+    polygon = new Polygon3D(polygonvertices, shared, plane)
+    polygons.push(polygon)
+  }
+  let csg = CSG.fromPolygons(polygons)
+  csg.isCanonicalized = true
+  csg.isRetesselated = true
+  return csg
+}
+
+module.exports = {
+  //fromPolygons,
+  fromSlices,
+  fromObject,
+  fromCompactBinary
+}
+
+},{"./CSG":80,"./math/Plane":94,"./math/Polygon2":95,"./math/Polygon3":96,"./math/Vector3":99,"./math/Vertex3":101}],82:[function(require,module,exports){
+arguments[4][38][0].apply(exports,arguments)
+},{"dup":38}],83:[function(require,module,exports){
+arguments[4][39][0].apply(exports,arguments)
+},{"./FuzzyFactory":82,"./constants":87,"./math/Side":97,"dup":39}],84:[function(require,module,exports){
+arguments[4][40][0].apply(exports,arguments)
+},{"./FuzzyFactory":82,"./constants":87,"./math/Polygon3":96,"dup":40}],85:[function(require,module,exports){
+arguments[4][41][0].apply(exports,arguments)
+},{"dup":41}],86:[function(require,module,exports){
+const Vector3D = require('./math/Vector3')
+const Line3D = require('./math/Line3')
+const Matrix4x4 = require('./math/Matrix4')
+const OrthoNormalBasis = require('./math/OrthoNormalBasis')
+const Plane = require('./math/Plane')
+
+// # class Connector
+// A connector allows to attach two objects at predefined positions
+// For example a servo motor and a servo horn:
+// Both can have a Connector called 'shaft'
+// The horn can be moved and rotated such that the two connectors match
+// and the horn is attached to the servo motor at the proper position.
+// Connectors are stored in the properties of a CSG solid so they are
+// ge the same transformations applied as the solid
+const Connector = function (point, axisvector, normalvector) {
+  this.point = new Vector3D(point)
+  this.axisvector = new Vector3D(axisvector).unit()
+  this.normalvector = new Vector3D(normalvector).unit()
+}
+
+Connector.prototype = {
+  normalized: function () {
+    let axisvector = this.axisvector.unit()
+        // make the normal vector truly normal:
+    let n = this.normalvector.cross(axisvector).unit()
+    let normalvector = axisvector.cross(n)
+    return new Connector(this.point, axisvector, normalvector)
+  },
+
+  transform: function (matrix4x4) {
+    let point = this.point.multiply4x4(matrix4x4)
+    let axisvector = this.point.plus(this.axisvector).multiply4x4(matrix4x4).minus(point)
+    let normalvector = this.point.plus(this.normalvector).multiply4x4(matrix4x4).minus(point)
+    return new Connector(point, axisvector, normalvector)
+  },
+
+    // Get the transformation matrix to connect this Connector to another connector
+    //   other: a Connector to which this connector should be connected
+    //   mirror: false: the 'axis' vectors of the connectors should point in the same direction
+    //           true: the 'axis' vectors of the connectors should point in opposite direction
+    //   normalrotation: degrees of rotation between the 'normal' vectors of the two
+    //                   connectors
+  getTransformationTo: function (other, mirror, normalrotation) {
+    mirror = mirror ? true : false
+    normalrotation = normalrotation ? Number(normalrotation) : 0
+    let us = this.normalized()
+    other = other.normalized()
+        // shift to the origin:
+    let transformation = Matrix4x4.translation(this.point.negated())
+        // construct the plane crossing through the origin and the two axes:
+    let axesplane = Plane.anyPlaneFromVector3Ds(
+            new Vector3D(0, 0, 0), us.axisvector, other.axisvector)
+    let axesbasis = new OrthoNormalBasis(axesplane)
+    let angle1 = axesbasis.to2D(us.axisvector).angle()
+    let angle2 = axesbasis.to2D(other.axisvector).angle()
+    let rotation = 180.0 * (angle2 - angle1) / Math.PI
+    if (mirror) rotation += 180.0
+    transformation = transformation.multiply(axesbasis.getProjectionMatrix())
+    transformation = transformation.multiply(Matrix4x4.rotationZ(rotation))
+    transformation = transformation.multiply(axesbasis.getInverseProjectionMatrix())
+    let usAxesAligned = us.transform(transformation)
+        // Now we have done the transformation for aligning the axes.
+        // We still need to align the normals:
+    let normalsplane = Plane.fromNormalAndPoint(other.axisvector, new Vector3D(0, 0, 0))
+    let normalsbasis = new OrthoNormalBasis(normalsplane)
+    angle1 = normalsbasis.to2D(usAxesAligned.normalvector).angle()
+    angle2 = normalsbasis.to2D(other.normalvector).angle()
+    rotation = 180.0 * (angle2 - angle1) / Math.PI
+    rotation += normalrotation
+    transformation = transformation.multiply(normalsbasis.getProjectionMatrix())
+    transformation = transformation.multiply(Matrix4x4.rotationZ(rotation))
+    transformation = transformation.multiply(normalsbasis.getInverseProjectionMatrix())
+        // and translate to the destination point:
+    transformation = transformation.multiply(Matrix4x4.translation(other.point))
+        // let usAligned = us.transform(transformation);
+    return transformation
+  },
+
+  axisLine: function () {
+    return new Line3D(this.point, this.axisvector)
+  },
+
+    // creates a new Connector, with the connection point moved in the direction of the axisvector
+  extend: function (distance) {
+    let newpoint = this.point.plus(this.axisvector.unit().times(distance))
+    return new Connector(newpoint, this.axisvector, this.normalvector)
+  }
+}
+
+const ConnectorList = function (connectors) {
+  this.connectors_ = connectors ? connectors.slice() : []
+}
+
+ConnectorList.defaultNormal = [0, 0, 1]
+
+ConnectorList.fromPath2D = function (path2D, arg1, arg2) {
+  if (arguments.length === 3) {
+    return ConnectorList._fromPath2DTangents(path2D, arg1, arg2)
+  } else if (arguments.length === 2) {
+    return ConnectorList._fromPath2DExplicit(path2D, arg1)
+  } else {
+    throw new Error('call with path2D and either 2 direction vectors, or a function returning direction vectors')
+  }
+}
+
+/*
+ * calculate the connector axisvectors by calculating the "tangent" for path2D.
+ * This is undefined for start and end points, so axis for these have to be manually
+ * provided.
+ */
+ConnectorList._fromPath2DTangents = function (path2D, start, end) {
+    // path2D
+  let axis
+  let pathLen = path2D.points.length
+  let result = new ConnectorList([new Connector(path2D.points[0],
+        start, ConnectorList.defaultNormal)])
+    // middle points
+  path2D.points.slice(1, pathLen - 1).forEach(function (p2, i) {
+    axis = path2D.points[i + 2].minus(path2D.points[i]).toVector3D(0)
+    result.appendConnector(new Connector(p2.toVector3D(0), axis,
+          ConnectorList.defaultNormal))
+  }, this)
+  result.appendConnector(new Connector(path2D.points[pathLen - 1], end,
+      ConnectorList.defaultNormal))
+  result.closed = path2D.closed
+  return result
+}
+
+/*
+ * angleIsh: either a static angle, or a function(point) returning an angle
+ */
+ConnectorList._fromPath2DExplicit = function (path2D, angleIsh) {
+  function getAngle (angleIsh, pt, i) {
+    if (typeof angleIsh === 'function') {
+      angleIsh = angleIsh(pt, i)
+    }
+    return angleIsh
+  }
+  let result = new ConnectorList(
+        path2D.points.map(function (p2, i) {
+          return new Connector(p2.toVector3D(0),
+                Vector3D.Create(1, 0, 0).rotateZ(getAngle(angleIsh, p2, i)),
+                  ConnectorList.defaultNormal)
+        }, this)
+    )
+  result.closed = path2D.closed
+  return result
+}
+
+ConnectorList.prototype = {
+  setClosed: function (closed) {
+    this.closed = !!closed // FIXME: what the hell ?
+  },
+  appendConnector: function (conn) {
+    this.connectors_.push(conn)
+  },
+    /*
+     * arguments: cagish: a cag or a function(connector) returning a cag
+     *            closed: whether the 3d path defined by connectors location
+     *              should be closed or stay open
+     *              Note: don't duplicate connectors in the path
+     * TODO: consider an option "maySelfIntersect" to close & force union all single segments
+     */
+  followWith: function (cagish) {
+    const CSG = require('./CSG') // FIXME , circular dependency connectors => CSG => connectors
+
+    this.verify()
+    function getCag (cagish, connector) {
+      if (typeof cagish === 'function') {
+        cagish = cagish(connector.point, connector.axisvector, connector.normalvector)
+      }
+      return cagish
+    }
+
+    let polygons = []
+    let currCag
+    let prevConnector = this.connectors_[this.connectors_.length - 1]
+    let prevCag = getCag(cagish, prevConnector)
+        // add walls
+    this.connectors_.forEach(function (connector, notFirst) {
+      currCag = getCag(cagish, connector)
+      if (notFirst || this.closed) {
+        polygons.push.apply(polygons, prevCag._toWallPolygons({
+          toConnector1: prevConnector, toConnector2: connector, cag: currCag}))
+      } else {
+                // it is the first, and shape not closed -> build start wall
+        polygons.push.apply(polygons,
+                    currCag._toPlanePolygons({toConnector: connector, flipped: true}))
+      }
+      if (notFirst === this.connectors_.length - 1 && !this.closed) {
+                // build end wall
+        polygons.push.apply(polygons,
+                    currCag._toPlanePolygons({toConnector: connector}))
+      }
+      prevCag = currCag
+      prevConnector = connector
+    }, this)
+    return CSG.fromPolygons(polygons).reTesselated().canonicalized()
+  },
+    /*
+     * general idea behind these checks: connectors need to have smooth transition from one to another
+     * TODO: add a check that 2 follow-on CAGs are not intersecting
+     */
+  verify: function () {
+    let connI
+    let connI1
+    for (let i = 0; i < this.connectors_.length - 1; i++) {
+      connI = this.connectors_[i]
+      connI1 = this.connectors_[i + 1]
+      if (connI1.point.minus(connI.point).dot(connI.axisvector) <= 0) {
+        throw new Error('Invalid ConnectorList. Each connectors position needs to be within a <90deg range of previous connectors axisvector')
+      }
+      if (connI.axisvector.dot(connI1.axisvector) <= 0) {
+        throw new Error('invalid ConnectorList. No neighboring connectors axisvectors may span a >=90deg angle')
+      }
+    }
+  }
+}
+
+module.exports = {Connector, ConnectorList}
+
+},{"./CSG":80,"./math/Line3":90,"./math/Matrix4":91,"./math/OrthoNormalBasis":92,"./math/Plane":94,"./math/Vector3":99}],87:[function(require,module,exports){
+arguments[4][43][0].apply(exports,arguments)
+},{"dup":43}],88:[function(require,module,exports){
+const CSG = require('./CSG')
+const {cube} = require('./primitives3d')
+
+// For debugging
+// Creates a new solid with a tiny cube at every vertex of the source solid
+// this is seperated from the CSG class itself because of the dependency on cube
+const toPointCloud = function (csg, cuberadius) {
+  csg = csg.reTesselated()
+
+  let result = new CSG()
+
+    // make a list of all unique vertices
+    // For each vertex we also collect the list of normals of the planes touching the vertices
+  let vertexmap = {}
+  csg.polygons.map(function (polygon) {
+    polygon.vertices.map(function (vertex) {
+      vertexmap[vertex.getTag()] = vertex.pos
+    })
+  })
+
+  for (let vertextag in vertexmap) {
+    let pos = vertexmap[vertextag]
+    let _cube = cube({
+      center: pos,
+      radius: cuberadius
+    })
+    result = result.unionSub(_cube, false, false)
+  }
+  result = result.reTesselated()
+  return result
+}
+
+module.exports = {toPointCloud}
+
+},{"./CSG":80,"./primitives3d":107}],89:[function(require,module,exports){
+arguments[4][44][0].apply(exports,arguments)
+},{"../utils":109,"./Vector2":98,"dup":44}],90:[function(require,module,exports){
+arguments[4][45][0].apply(exports,arguments)
+},{"../constants":87,"../utils":109,"./Vector3":99,"dup":45}],91:[function(require,module,exports){
+arguments[4][46][0].apply(exports,arguments)
+},{"./OrthoNormalBasis":92,"./Plane":94,"./Vector2":98,"./Vector3":99,"dup":46}],92:[function(require,module,exports){
+const Vector2D = require('./Vector2')
+const Vector3D = require('./Vector3')
+const Line2D = require('./Line2')
+const Line3D = require('./Line3')
+const Plane = require('./Plane')
+
+// # class OrthoNormalBasis
+// Reprojects points on a 3D plane onto a 2D plane
+// or from a 2D plane back onto the 3D plane
+const OrthoNormalBasis = function (plane, rightvector) {
+  if (arguments.length < 2) {
+        // choose an arbitrary right hand vector, making sure it is somewhat orthogonal to the plane normal:
+    rightvector = plane.normal.randomNonParallelVector()
+  } else {
+    rightvector = new Vector3D(rightvector)
+  }
+  this.v = plane.normal.cross(rightvector).unit()
+  this.u = this.v.cross(plane.normal)
+  this.plane = plane
+  this.planeorigin = plane.normal.times(plane.w)
+}
+
+// Get an orthonormal basis for the standard XYZ planes.
+// Parameters: the names of two 3D axes. The 2d x axis will map to the first given 3D axis, the 2d y
+// axis will map to the second.
+// Prepend the axis with a "-" to invert the direction of this axis.
+// For example: OrthoNormalBasis.GetCartesian("-Y","Z")
+//   will return an orthonormal basis where the 2d X axis maps to the 3D inverted Y axis, and
+//   the 2d Y axis maps to the 3D Z axis.
+OrthoNormalBasis.GetCartesian = function (xaxisid, yaxisid) {
+  let axisid = xaxisid + '/' + yaxisid
+  let planenormal, rightvector
+  if (axisid === 'X/Y') {
+    planenormal = [0, 0, 1]
+    rightvector = [1, 0, 0]
+  } else if (axisid === 'Y/-X') {
+    planenormal = [0, 0, 1]
+    rightvector = [0, 1, 0]
+  } else if (axisid === '-X/-Y') {
+    planenormal = [0, 0, 1]
+    rightvector = [-1, 0, 0]
+  } else if (axisid === '-Y/X') {
+    planenormal = [0, 0, 1]
+    rightvector = [0, -1, 0]
+  } else if (axisid === '-X/Y') {
+    planenormal = [0, 0, -1]
+    rightvector = [-1, 0, 0]
+  } else if (axisid === '-Y/-X') {
+    planenormal = [0, 0, -1]
+    rightvector = [0, -1, 0]
+  } else if (axisid === 'X/-Y') {
+    planenormal = [0, 0, -1]
+    rightvector = [1, 0, 0]
+  } else if (axisid === 'Y/X') {
+    planenormal = [0, 0, -1]
+    rightvector = [0, 1, 0]
+  } else if (axisid === 'X/Z') {
+    planenormal = [0, -1, 0]
+    rightvector = [1, 0, 0]
+  } else if (axisid === 'Z/-X') {
+    planenormal = [0, -1, 0]
+    rightvector = [0, 0, 1]
+  } else if (axisid === '-X/-Z') {
+    planenormal = [0, -1, 0]
+    rightvector = [-1, 0, 0]
+  } else if (axisid === '-Z/X') {
+    planenormal = [0, -1, 0]
+    rightvector = [0, 0, -1]
+  } else if (axisid === '-X/Z') {
+    planenormal = [0, 1, 0]
+    rightvector = [-1, 0, 0]
+  } else if (axisid === '-Z/-X') {
+    planenormal = [0, 1, 0]
+    rightvector = [0, 0, -1]
+  } else if (axisid === 'X/-Z') {
+    planenormal = [0, 1, 0]
+    rightvector = [1, 0, 0]
+  } else if (axisid === 'Z/X') {
+    planenormal = [0, 1, 0]
+    rightvector = [0, 0, 1]
+  } else if (axisid === 'Y/Z') {
+    planenormal = [1, 0, 0]
+    rightvector = [0, 1, 0]
+  } else if (axisid === 'Z/-Y') {
+    planenormal = [1, 0, 0]
+    rightvector = [0, 0, 1]
+  } else if (axisid === '-Y/-Z') {
+    planenormal = [1, 0, 0]
+    rightvector = [0, -1, 0]
+  } else if (axisid === '-Z/Y') {
+    planenormal = [1, 0, 0]
+    rightvector = [0, 0, -1]
+  } else if (axisid === '-Y/Z') {
+    planenormal = [-1, 0, 0]
+    rightvector = [0, -1, 0]
+  } else if (axisid === '-Z/-Y') {
+    planenormal = [-1, 0, 0]
+    rightvector = [0, 0, -1]
+  } else if (axisid === 'Y/-Z') {
+    planenormal = [-1, 0, 0]
+    rightvector = [0, 1, 0]
+  } else if (axisid === 'Z/Y') {
+    planenormal = [-1, 0, 0]
+    rightvector = [0, 0, 1]
+  } else {
+    throw new Error('OrthoNormalBasis.GetCartesian: invalid combination of axis identifiers. Should pass two string arguments from [X,Y,Z,-X,-Y,-Z], being two different axes.')
+  }
+  return new OrthoNormalBasis(new Plane(new Vector3D(planenormal), 0), new Vector3D(rightvector))
+}
+
+/*
+// test code for OrthoNormalBasis.GetCartesian()
+OrthoNormalBasis.GetCartesian_Test=function() {
+  let axisnames=["X","Y","Z","-X","-Y","-Z"];
+  let axisvectors=[[1,0,0], [0,1,0], [0,0,1], [-1,0,0], [0,-1,0], [0,0,-1]];
+  for(let axis1=0; axis1 < 3; axis1++) {
+    for(let axis1inverted=0; axis1inverted < 2; axis1inverted++) {
+      let axis1name=axisnames[axis1+3*axis1inverted];
+      let axis1vector=axisvectors[axis1+3*axis1inverted];
+      for(let axis2=0; axis2 < 3; axis2++) {
+        if(axis2 != axis1) {
+          for(let axis2inverted=0; axis2inverted < 2; axis2inverted++) {
+            let axis2name=axisnames[axis2+3*axis2inverted];
+            let axis2vector=axisvectors[axis2+3*axis2inverted];
+            let orthobasis=OrthoNormalBasis.GetCartesian(axis1name, axis2name);
+            let test1=orthobasis.to3D(new Vector2D([1,0]));
+            let test2=orthobasis.to3D(new Vector2D([0,1]));
+            let expected1=new Vector3D(axis1vector);
+            let expected2=new Vector3D(axis2vector);
+            let d1=test1.distanceTo(expected1);
+            let d2=test2.distanceTo(expected2);
+            if( (d1 > 0.01) || (d2 > 0.01) ) {
+              throw new Error("Wrong!");
+  }}}}}}
+  throw new Error("OK");
+};
+*/
+
+// The z=0 plane, with the 3D x and y vectors mapped to the 2D x and y vector
+OrthoNormalBasis.Z0Plane = function () {
+  let plane = new Plane(new Vector3D([0, 0, 1]), 0)
+  return new OrthoNormalBasis(plane, new Vector3D([1, 0, 0]))
+}
+
+OrthoNormalBasis.prototype = {
+  getProjectionMatrix: function () {
+    const Matrix4x4 = require('./Matrix4') // FIXME: circular dependencies Matrix=>OrthoNormalBasis => Matrix
+    return new Matrix4x4([
+      this.u.x, this.v.x, this.plane.normal.x, 0,
+      this.u.y, this.v.y, this.plane.normal.y, 0,
+      this.u.z, this.v.z, this.plane.normal.z, 0,
+      0, 0, -this.plane.w, 1
+    ])
+  },
+
+  getInverseProjectionMatrix: function () {
+    const Matrix4x4 = require('./Matrix4') // FIXME: circular dependencies Matrix=>OrthoNormalBasis => Matrix
+    let p = this.plane.normal.times(this.plane.w)
+    return new Matrix4x4([
+      this.u.x, this.u.y, this.u.z, 0,
+      this.v.x, this.v.y, this.v.z, 0,
+      this.plane.normal.x, this.plane.normal.y, this.plane.normal.z, 0,
+      p.x, p.y, p.z, 1
+    ])
+  },
+
+  to2D: function (vec3) {
+    return new Vector2D(vec3.dot(this.u), vec3.dot(this.v))
+  },
+
+  to3D: function (vec2) {
+    return this.planeorigin.plus(this.u.times(vec2.x)).plus(this.v.times(vec2.y))
+  },
+
+  line3Dto2D: function (line3d) {
+    let a = line3d.point
+    let b = line3d.direction.plus(a)
+    let a2d = this.to2D(a)
+    let b2d = this.to2D(b)
+    return Line2D.fromPoints(a2d, b2d)
+  },
+
+  line2Dto3D: function (line2d) {
+    let a = line2d.origin()
+    let b = line2d.direction().plus(a)
+    let a3d = this.to3D(a)
+    let b3d = this.to3D(b)
+    return Line3D.fromPoints(a3d, b3d)
+  },
+
+  transform: function (matrix4x4) {
+        // todo: this may not work properly in case of mirroring
+    let newplane = this.plane.transform(matrix4x4)
+    let rightpointTransformed = this.u.transform(matrix4x4)
+    let originTransformed = new Vector3D(0, 0, 0).transform(matrix4x4)
+    let newrighthandvector = rightpointTransformed.minus(originTransformed)
+    let newbasis = new OrthoNormalBasis(newplane, newrighthandvector)
+    return newbasis
+  }
+}
+
+module.exports = OrthoNormalBasis
+
+},{"./Line2":89,"./Line3":90,"./Matrix4":91,"./Plane":94,"./Vector2":98,"./Vector3":99}],93:[function(require,module,exports){
+const Vector2D = require('./Vector2')
+const {EPS, angleEPS} = require('../constants')
+const {parseOptionAs2DVector, parseOptionAsFloat, parseOptionAsInt, parseOptionAsBool} = require('../optionParsers')
+const {defaultResolution2D} = require('../constants')
+const Vertex = require('./Vertex2')
+const Side = require('./Side')
+
+/** Class Path2D
+ * Represents a series of points, connected by infinitely thin lines.
+ * A path can be open or closed, i.e. additional line between first and last points. 
+ * The difference between Path2D and CAG is that a path is a 'thin' line, whereas a CAG is an enclosed area. 
+ * @constructor
+ * @param {Vector2D[]} [points=[]] - list of points
+ * @param {boolean} [closed=false] - closer of path
+ *
+ * @example
+ * new CSG.Path2D()
+ * new CSG.Path2D([[10,10], [-10,10], [-10,-10], [10,-10]], true) // closed
+ */
+const Path2D = function (points, closed) {
+  closed = !!closed
+  points = points || []
+    // re-parse the points into Vector2D
+    // and remove any duplicate points
+  let prevpoint = null
+  if (closed && (points.length > 0)) {
+    prevpoint = new Vector2D(points[points.length - 1])
+  }
+  let newpoints = []
+  points.map(function (point) {
+    point = new Vector2D(point)
+    let skip = false
+    if (prevpoint !== null) {
+      let distance = point.distanceTo(prevpoint)
+      skip = distance < EPS
+    }
+    if (!skip) newpoints.push(point)
+    prevpoint = point
+  })
+  this.points = newpoints
+  this.closed = closed
+}
+
+/** Construct an arc.
+ * @param {Object} [options] - options for construction
+ * @param {Vector2D} [options.center=[0,0]] - center of circle
+ * @param {Number} [options.radius=1] - radius of circle
+ * @param {Number} [options.startangle=0] - starting angle of the arc, in degrees
+ * @param {Number} [options.endangle=360] - ending angle of the arc, in degrees
+ * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
+ * @param {Boolean} [options.maketangent=false] - adds line segments at both ends of the arc to ensure that the gradients at the edges are tangent
+ * @returns {Path2D} new Path2D object (not closed)
+ *
+ * @example
+ * let path = CSG.Path2D.arc({
+ *   center: [5, 5],
+ *   radius: 10,
+ *   startangle: 90,
+ *   endangle: 180,
+ *   resolution: 36,
+ *   maketangent: true
+ * });
+ */
+Path2D.arc = function (options) {
+  let center = parseOptionAs2DVector(options, 'center', 0)
+  let radius = parseOptionAsFloat(options, 'radius', 1)
+  let startangle = parseOptionAsFloat(options, 'startangle', 0)
+  let endangle = parseOptionAsFloat(options, 'endangle', 360)
+  let resolution = parseOptionAsInt(options, 'resolution', defaultResolution2D)
+  let maketangent = parseOptionAsBool(options, 'maketangent', false)
+    // no need to make multiple turns:
+  while (endangle - startangle >= 720) {
+    endangle -= 360
+  }
+  while (endangle - startangle <= -720) {
+    endangle += 360
+  }
+  let points = []
+  let point
+  let absangledif = Math.abs(endangle - startangle)
+  if (absangledif < angleEPS) {
+    point = Vector2D.fromAngle(startangle / 180.0 * Math.PI).times(radius)
+    points.push(point.plus(center))
+  } else {
+    let numsteps = Math.floor(resolution * absangledif / 360) + 1
+    let edgestepsize = numsteps * 0.5 / absangledif // step size for half a degree
+    if (edgestepsize > 0.25) edgestepsize = 0.25
+    let numstepsMod = maketangent ? (numsteps + 2) : numsteps
+    for (let i = 0; i <= numstepsMod; i++) {
+      let step = i
+      if (maketangent) {
+        step = (i - 1) * (numsteps - 2 * edgestepsize) / numsteps + edgestepsize
+        if (step < 0) step = 0
+        if (step > numsteps) step = numsteps
+      }
+      let angle = startangle + step * (endangle - startangle) / numsteps
+      point = Vector2D.fromAngle(angle / 180.0 * Math.PI).times(radius)
+      points.push(point.plus(center))
+    }
+  }
+  return new Path2D(points, false)
+}
+
+Path2D.prototype = {
+  concat: function (otherpath) {
+    if (this.closed || otherpath.closed) {
+      throw new Error('Paths must not be closed')
+    }
+    let newpoints = this.points.concat(otherpath.points)
+    return new Path2D(newpoints)
+  },
+
+  /**
+   * Get the points that make up the path.
+   * note that this is current internal list of points, not an immutable copy.
+   * @returns {Vector2[]} array of points the make up the path
+   */
+  getPoints: function() {
+    return this.points;
+  },
+
+  /**
+   * Append an point to the end of the path.
+   * @param {Vector2D} point - point to append
+   * @returns {Path2D} new Path2D object (not closed)
+   */
+  appendPoint: function (point) {
+    if (this.closed) {
+      throw new Error('Path must not be closed')
+    }
+    point = new Vector2D(point) // cast to Vector2D
+    let newpoints = this.points.concat([point])
+    return new Path2D(newpoints)
+  },
+
+  /**
+   * Append a list of points to the end of the path.
+   * @param {Vector2D[]} points - points to append
+   * @returns {Path2D} new Path2D object (not closed)
+   */
+  appendPoints: function (points) {
+    if (this.closed) {
+      throw new Error('Path must not be closed')
+    }
+    let newpoints = this.points
+    points.forEach(function (point) {
+      newpoints.push(new Vector2D(point)) // cast to Vector2D
+    })
+    return new Path2D(newpoints)
+  },
+
+  close: function () {
+    return new Path2D(this.points, true)
+  },
+
+  /**
+   * Determine if the path is a closed or not.
+   * @returns {Boolean} true when the path is closed, otherwise false
+   */
+  isClosed: function() {
+    return this.closed
+  },
+
+    // Extrude the path by following it with a rectangle (upright, perpendicular to the path direction)
+    // Returns a CSG solid
+    //   width: width of the extrusion, in the z=0 plane
+    //   height: height of the extrusion in the z direction
+    //   resolution: number of segments per 360 degrees for the curve in a corner
+  rectangularExtrude: function (width, height, resolution) {
+    let cag = this.expandToCAG(width / 2, resolution)
+    let result = cag.extrude({
+      offset: [0, 0, height]
+    })
+    return result
+  },
+
+    // Expand the path to a CAG
+    // This traces the path with a circle with radius pathradius
+  expandToCAG: function (pathradius, resolution) {
+    const CAG = require('../CAG') // FIXME: cyclic dependencies CAG => PATH2 => CAG
+    let sides = []
+    let numpoints = this.points.length
+    let startindex = 0
+    if (this.closed && (numpoints > 2)) startindex = -1
+    let prevvertex
+    for (let i = startindex; i < numpoints; i++) {
+      let pointindex = i
+      if (pointindex < 0) pointindex = numpoints - 1
+      let point = this.points[pointindex]
+      let vertex = new Vertex(point)
+      if (i > startindex) {
+        let side = new Side(prevvertex, vertex)
+        sides.push(side)
+      }
+      prevvertex = vertex
+    }
+    let shellcag = CAG.fromSides(sides)
+    let expanded = shellcag.expandedShell(pathradius, resolution)
+    return expanded
+  },
+
+  innerToCAG: function() {
+    const CAG = require('../CAG') // FIXME: cyclic dependencies CAG => PATH2 => CAG
+    if (!this.closed) throw new Error("The path should be closed!");
+    return CAG.fromPoints(this.points);
+  },
+
+  transform: function (matrix4x4) {
+    let newpoints = this.points.map(function (point) {
+      return point.multiply4x4(matrix4x4)
+    })
+    return new Path2D(newpoints, this.closed)
+  },
+
+  /**
+   * Append a Bezier curve to the end of the path, using the control points to transition the curve through start and end points.
+   * <br>
+   * The Bézier curve starts at the last point in the path,
+   * and ends at the last given control point. Other control points are intermediate control points.
+   * <br>
+   * The first control point may be null to ensure a smooth transition occurs. In this case,  
+   * the second to last control point of the path is mirrored into the control points of the Bezier curve.
+   * In other words, the trailing gradient of the path matches the new gradient of the curve. 
+   * @param {Vector2D[]} controlpoints - list of control points
+   * @param {Object} [options] - options for construction
+   * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
+   * @returns {Path2D} new Path2D object (not closed)
+   *
+   * @example
+   * let p5 = new CSG.Path2D([[10,-20]],false);
+   * p5 = p5.appendBezier([[10,-10],[25,-10],[25,-20]]);
+   * p5 = p5.appendBezier([[25,-30],[40,-30],[40,-20]]);
+   */
+  appendBezier: function (controlpoints, options) {
+    if (arguments.length < 2) {
+      options = {}
+    }
+    if (this.closed) {
+      throw new Error('Path must not be closed')
+    }
+    if (!(controlpoints instanceof Array)) {
+      throw new Error('appendBezier: should pass an array of control points')
+    }
+    if (controlpoints.length < 1) {
+      throw new Error('appendBezier: need at least 1 control point')
+    }
+    if (this.points.length < 1) {
+      throw new Error('appendBezier: path must already contain a point (the endpoint of the path is used as the starting point for the bezier curve)')
+    }
+    let resolution = parseOptionAsInt(options, 'resolution', defaultResolution2D)
+    if (resolution < 4) resolution = 4
+    let factorials = []
+    let controlpointsParsed = []
+    controlpointsParsed.push(this.points[this.points.length - 1]) // start at the previous end point
+    for (let i = 0; i < controlpoints.length; ++i) {
+      let p = controlpoints[i]
+      if (p === null) {
+                // we can pass null as the first control point. In that case a smooth gradient is ensured:
+        if (i !== 0) {
+          throw new Error('appendBezier: null can only be passed as the first control point')
+        }
+        if (controlpoints.length < 2) {
+          throw new Error('appendBezier: null can only be passed if there is at least one more control point')
+        }
+        let lastBezierControlPoint
+        if ('lastBezierControlPoint' in this) {
+          lastBezierControlPoint = this.lastBezierControlPoint
+        } else {
+          if (this.points.length < 2) {
+            throw new Error('appendBezier: null is passed as a control point but this requires a previous bezier curve or at least two points in the existing path')
+          }
+          lastBezierControlPoint = this.points[this.points.length - 2]
+        }
+                // mirror the last bezier control point:
+        p = this.points[this.points.length - 1].times(2).minus(lastBezierControlPoint)
+      } else {
+        p = new Vector2D(p) // cast to Vector2D
+      }
+      controlpointsParsed.push(p)
+    }
+    let bezierOrder = controlpointsParsed.length - 1
+    let fact = 1
+    for (let i = 0; i <= bezierOrder; ++i) {
+      if (i > 0) fact *= i
+      factorials.push(fact)
+    }
+    let binomials = []
+    for (let i = 0; i <= bezierOrder; ++i) {
+      let binomial = factorials[bezierOrder] / (factorials[i] * factorials[bezierOrder - i])
+      binomials.push(binomial)
+    }
+    let getPointForT = function (t) {
+      let t_k = 1 // = pow(t,k)
+      let one_minus_t_n_minus_k = Math.pow(1 - t, bezierOrder) // = pow( 1-t, bezierOrder - k)
+      let inv_1_minus_t = (t !== 1) ? (1 / (1 - t)) : 1
+      let point = new Vector2D(0, 0)
+      for (let k = 0; k <= bezierOrder; ++k) {
+        if (k === bezierOrder) one_minus_t_n_minus_k = 1
+        let bernstein_coefficient = binomials[k] * t_k * one_minus_t_n_minus_k
+        point = point.plus(controlpointsParsed[k].times(bernstein_coefficient))
+        t_k *= t
+        one_minus_t_n_minus_k *= inv_1_minus_t
+      }
+      return point
+    }
+    let newpoints = []
+    let newpoints_t = []
+    let numsteps = bezierOrder + 1
+    for (let i = 0; i < numsteps; ++i) {
+      let t = i / (numsteps - 1)
+      let point = getPointForT(t)
+      newpoints.push(point)
+      newpoints_t.push(t)
+    }
+    // subdivide each segment until the angle at each vertex becomes small enough:
+    let subdivideBase = 1
+    let maxangle = Math.PI * 2 / resolution // segments may have differ no more in angle than this
+    let maxsinangle = Math.sin(maxangle)
+    while (subdivideBase < newpoints.length - 1) {
+      let dir1 = newpoints[subdivideBase].minus(newpoints[subdivideBase - 1]).unit()
+      let dir2 = newpoints[subdivideBase + 1].minus(newpoints[subdivideBase]).unit()
+      let sinangle = dir1.cross(dir2) // this is the sine of the angle
+      if (Math.abs(sinangle) > maxsinangle) {
+                // angle is too big, we need to subdivide
+        let t0 = newpoints_t[subdivideBase - 1]
+        let t1 = newpoints_t[subdivideBase + 1]
+        let t0_new = t0 + (t1 - t0) * 1 / 3
+        let t1_new = t0 + (t1 - t0) * 2 / 3
+        let point0_new = getPointForT(t0_new)
+        let point1_new = getPointForT(t1_new)
+                // remove the point at subdivideBase and replace with 2 new points:
+        newpoints.splice(subdivideBase, 1, point0_new, point1_new)
+        newpoints_t.splice(subdivideBase, 1, t0_new, t1_new)
+                // re - evaluate the angles, starting at the previous junction since it has changed:
+        subdivideBase--
+        if (subdivideBase < 1) subdivideBase = 1
+      } else {
+        ++subdivideBase
+      }
+    }
+        // append to the previous points, but skip the first new point because it is identical to the last point:
+    newpoints = this.points.concat(newpoints.slice(1))
+    let result = new Path2D(newpoints)
+    result.lastBezierControlPoint = controlpointsParsed[controlpointsParsed.length - 2]
+    return result
+  },
+
+
+  /**
+   * Append an arc to the end of the path.
+   * This implementation follows the SVG arc specs. For the details see
+   * http://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
+   * @param {Vector2D} endpoint - end point of arc
+   * @param {Object} [options] - options for construction
+   * @param {Number} [options.radius=0] - radius of arc (X and Y), see also xradius and yradius
+   * @param {Number} [options.xradius=0] - X radius of arc, see also radius
+   * @param {Number} [options.yradius=0] - Y radius of arc, see also radius
+   * @param {Number} [options.xaxisrotation=0] -  rotation (in degrees) of the X axis of the arc with respect to the X axis of the coordinate system
+   * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
+   * @param {Boolean} [options.clockwise=false] - draw an arc clockwise with respect to the center point
+   * @param {Boolean} [options.large=false] - draw an arc longer than 180 degrees
+   * @returns {Path2D} new Path2D object (not closed)
+   *
+   * @example
+   * let p1 = new CSG.Path2D([[27.5,-22.96875]],false);
+   * p1 = p1.appendPoint([27.5,-3.28125]);
+   * p1 = p1.appendArc([12.5,-22.96875],{xradius: 15,yradius: -19.6875,xaxisrotation: 0,clockwise: false,large: false});
+   * p1 = p1.close();
+   */
+  appendArc: function (endpoint, options) {
+    let decimals = 100000
+    if (arguments.length < 2) {
+      options = {}
+    }
+    if (this.closed) {
+      throw new Error('Path must not be closed')
+    }
+    if (this.points.length < 1) {
+      throw new Error('appendArc: path must already contain a point (the endpoint of the path is used as the starting point for the arc)')
+    }
+    let resolution = parseOptionAsInt(options, 'resolution', defaultResolution2D)
+    if (resolution < 4) resolution = 4
+    let xradius, yradius
+    if (('xradius' in options) || ('yradius' in options)) {
+      if ('radius' in options) {
+        throw new Error('Should either give an xradius and yradius parameter, or a radius parameter')
+      }
+      xradius = parseOptionAsFloat(options, 'xradius', 0)
+      yradius = parseOptionAsFloat(options, 'yradius', 0)
+    } else {
+      xradius = parseOptionAsFloat(options, 'radius', 0)
+      yradius = xradius
+    }
+    let xaxisrotation = parseOptionAsFloat(options, 'xaxisrotation', 0)
+    let clockwise = parseOptionAsBool(options, 'clockwise', false)
+    let largearc = parseOptionAsBool(options, 'large', false)
+    let startpoint = this.points[this.points.length - 1]
+    endpoint = new Vector2D(endpoint)
+        // round to precision in order to have determinate calculations
+    xradius = Math.round(xradius * decimals) / decimals
+    yradius = Math.round(yradius * decimals) / decimals
+    endpoint = new Vector2D(Math.round(endpoint.x * decimals) / decimals, Math.round(endpoint.y * decimals) / decimals)
+
+    let sweepFlag = !clockwise
+    let newpoints = []
+    if ((xradius === 0) || (yradius === 0)) {
+            // http://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes:
+            // If rx = 0 or ry = 0, then treat this as a straight line from (x1, y1) to (x2, y2) and stop
+      newpoints.push(endpoint)
+    } else {
+      xradius = Math.abs(xradius)
+      yradius = Math.abs(yradius)
+
+            // see http://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes :
+      let phi = xaxisrotation * Math.PI / 180.0
+      let cosphi = Math.cos(phi)
+      let sinphi = Math.sin(phi)
+      let minushalfdistance = startpoint.minus(endpoint).times(0.5)
+            // F.6.5.1:
+            // round to precision in order to have determinate calculations
+      let x = Math.round((cosphi * minushalfdistance.x + sinphi * minushalfdistance.y) * decimals) / decimals
+      let y = Math.round((-sinphi * minushalfdistance.x + cosphi * minushalfdistance.y) * decimals) / decimals
+      let startTranslated = new Vector2D(x, y)
+            // F.6.6.2:
+      let biglambda = (startTranslated.x * startTranslated.x) / (xradius * xradius) + (startTranslated.y * startTranslated.y) / (yradius * yradius)
+      if (biglambda > 1.0) {
+                // F.6.6.3:
+        let sqrtbiglambda = Math.sqrt(biglambda)
+        xradius *= sqrtbiglambda
+        yradius *= sqrtbiglambda
+                // round to precision in order to have determinate calculations
+        xradius = Math.round(xradius * decimals) / decimals
+        yradius = Math.round(yradius * decimals) / decimals
+      }
+            // F.6.5.2:
+      let multiplier1 = Math.sqrt((xradius * xradius * yradius * yradius - xradius * xradius * startTranslated.y * startTranslated.y - yradius * yradius * startTranslated.x * startTranslated.x) / (xradius * xradius * startTranslated.y * startTranslated.y + yradius * yradius * startTranslated.x * startTranslated.x))
+      if (sweepFlag === largearc) multiplier1 = -multiplier1
+      let centerTranslated = new Vector2D(xradius * startTranslated.y / yradius, -yradius * startTranslated.x / xradius).times(multiplier1)
+            // F.6.5.3:
+      let center = new Vector2D(cosphi * centerTranslated.x - sinphi * centerTranslated.y, sinphi * centerTranslated.x + cosphi * centerTranslated.y).plus((startpoint.plus(endpoint)).times(0.5))
+            // F.6.5.5:
+      let vec1 = new Vector2D((startTranslated.x - centerTranslated.x) / xradius, (startTranslated.y - centerTranslated.y) / yradius)
+      let vec2 = new Vector2D((-startTranslated.x - centerTranslated.x) / xradius, (-startTranslated.y - centerTranslated.y) / yradius)
+      let theta1 = vec1.angleRadians()
+      let theta2 = vec2.angleRadians()
+      let deltatheta = theta2 - theta1
+      deltatheta = deltatheta % (2 * Math.PI)
+      if ((!sweepFlag) && (deltatheta > 0)) {
+        deltatheta -= 2 * Math.PI
+      } else if ((sweepFlag) && (deltatheta < 0)) {
+        deltatheta += 2 * Math.PI
+      }
+
+            // Ok, we have the center point and angle range (from theta1, deltatheta radians) so we can create the ellipse
+      let numsteps = Math.ceil(Math.abs(deltatheta) / (2 * Math.PI) * resolution) + 1
+      if (numsteps < 1) numsteps = 1
+      for (let step = 1; step <= numsteps; step++) {
+        let theta = theta1 + step / numsteps * deltatheta
+        let costheta = Math.cos(theta)
+        let sintheta = Math.sin(theta)
+                // F.6.3.1:
+        let point = new Vector2D(cosphi * xradius * costheta - sinphi * yradius * sintheta, sinphi * xradius * costheta + cosphi * yradius * sintheta).plus(center)
+        newpoints.push(point)
+      }
+    }
+    newpoints = this.points.concat(newpoints)
+    let result = new Path2D(newpoints)
+    return result
+  }
+}
+
+module.exports = Path2D
+
+},{"../CAG":78,"../constants":87,"../optionParsers":105,"./Side":97,"./Vector2":98,"./Vertex2":100}],94:[function(require,module,exports){
+arguments[4][49][0].apply(exports,arguments)
+},{"../constants":87,"./Line3":90,"./Vector3":99,"dup":49}],95:[function(require,module,exports){
+const CAG = require('../CAG')
+
+/*
+2D polygons are now supported through the CAG class.
+With many improvements (see documentation):
+  - shapes do no longer have to be convex
+  - union/intersect/subtract is supported
+  - expand / contract are supported
+
+But we'll keep CSG.Polygon2D as a stub for backwards compatibility
+*/
+function Polygon2D (points) {
+  const cag = CAG.fromPoints(points)
+  this.sides = cag.sides
+}
+
+Polygon2D.prototype = CAG.prototype
+
+module.exports = Polygon2D
+
+},{"../CAG":78}],96:[function(require,module,exports){
+const Vector3D = require('./Vector3')
+const Vertex = require('./Vertex3')
+const Matrix4x4 = require('./Matrix4')
+const {_CSGDEBUG, EPS, getTag, areaEPS} = require('../constants')
+const {fnSortByIndex} = require('../utils')
+
+/** Class Polygon
+ * Represents a convex polygon. The vertices used to initialize a polygon must
+ *   be coplanar and form a convex loop. They do not have to be `Vertex`
+ *   instances but they must behave similarly (duck typing can be used for
+ *   customization).
+ * <br>
+ * Each convex polygon has a `shared` property, which is shared between all
+ *   polygons that are clones of each other or were split from the same polygon.
+ *   This can be used to define per-polygon properties (such as surface color).
+ * <br>
+ * The plane of the polygon is calculated from the vertex coordinates if not provided.
+ *   The plane can alternatively be passed as the third argument to avoid calculations.
+ *
+ * @constructor
+ * @param {Vertex[]} vertices - list of vertices
+ * @param {Polygon.Shared} [shared=defaultShared] - shared property to apply
+ * @param {Plane} [plane] - plane of the polygon
+ *
+ * @example
+ * const vertices = [
+ *   new CSG.Vertex(new CSG.Vector3D([0, 0, 0])),
+ *   new CSG.Vertex(new CSG.Vector3D([0, 10, 0])),
+ *   new CSG.Vertex(new CSG.Vector3D([0, 10, 10]))
+ * ]
+ * let observed = new Polygon(vertices)
+ */
+let Polygon = function (vertices, shared, plane) {
+  this.vertices = vertices
+  if (!shared) shared = Polygon.defaultShared
+  this.shared = shared
+    // let numvertices = vertices.length;
+
+  if (arguments.length >= 3) {
+    this.plane = plane
+  } else {
+    const Plane = require('./Plane') // FIXME: circular dependencies
+    this.plane = Plane.fromVector3Ds(vertices[0].pos, vertices[1].pos, vertices[2].pos)
+  }
+
+  if (_CSGDEBUG) {
+    if (!this.checkIfConvex()) {
+      throw new Error('Not convex!')
+    }
+  }
+}
+
+// create from an untyped object with identical property names:
+Polygon.fromObject = function (obj) {
+  const Plane = require('./Plane') // FIXME: circular dependencies
+  let vertices = obj.vertices.map(function (v) {
+    return Vertex.fromObject(v)
+  })
+  let shared = Polygon.Shared.fromObject(obj.shared)
+  let plane = Plane.fromObject(obj.plane)
+  return new Polygon(vertices, shared, plane)
+}
+
+Polygon.prototype = {
+  /** Check whether the polygon is convex. (it should be, otherwise we will get unexpected results)
+   * @returns {boolean}
+   */
+  checkIfConvex: function () {
+    return Polygon.verticesConvex(this.vertices, this.plane.normal)
+  },
+
+  // FIXME what? why does this return this, and not a new polygon?
+  // FIXME is this used?
+  setColor: function (args) {
+    let newshared = Polygon.Shared.fromColor.apply(this, arguments)
+    this.shared = newshared
+    return this
+  },
+
+  getSignedVolume: function () {
+    let signedVolume = 0
+    for (let i = 0; i < this.vertices.length - 2; i++) {
+      signedVolume += this.vertices[0].pos.dot(this.vertices[i + 1].pos
+                .cross(this.vertices[i + 2].pos))
+    }
+    signedVolume /= 6
+    return signedVolume
+  },
+
+    // Note: could calculate vectors only once to speed up
+  getArea: function () {
+    let polygonArea = 0
+    for (let i = 0; i < this.vertices.length - 2; i++) {
+      polygonArea += this.vertices[i + 1].pos.minus(this.vertices[0].pos)
+                .cross(this.vertices[i + 2].pos.minus(this.vertices[i + 1].pos)).length()
+    }
+    polygonArea /= 2
+    return polygonArea
+  },
+
+    // accepts array of features to calculate
+    // returns array of results
+  getTetraFeatures: function (features) {
+    let result = []
+    features.forEach(function (feature) {
+      if (feature === 'volume') {
+        result.push(this.getSignedVolume())
+      } else if (feature === 'area') {
+        result.push(this.getArea())
+      }
+    }, this)
+    return result
+  },
+
+    // Extrude a polygon into the direction offsetvector
+    // Returns a CSG object
+  extrude: function (offsetvector) {
+    const CSG = require('../CSG') // because of circular dependencies
+
+    let newpolygons = []
+
+    let polygon1 = this
+    let direction = polygon1.plane.normal.dot(offsetvector)
+    if (direction > 0) {
+      polygon1 = polygon1.flipped()
+    }
+    newpolygons.push(polygon1)
+    let polygon2 = polygon1.translate(offsetvector)
+    let numvertices = this.vertices.length
+    for (let i = 0; i < numvertices; i++) {
+      let sidefacepoints = []
+      let nexti = (i < (numvertices - 1)) ? i + 1 : 0
+      sidefacepoints.push(polygon1.vertices[i].pos)
+      sidefacepoints.push(polygon2.vertices[i].pos)
+      sidefacepoints.push(polygon2.vertices[nexti].pos)
+      sidefacepoints.push(polygon1.vertices[nexti].pos)
+      let sidefacepolygon = Polygon.createFromPoints(sidefacepoints, this.shared)
+      newpolygons.push(sidefacepolygon)
+    }
+    polygon2 = polygon2.flipped()
+    newpolygons.push(polygon2)
+    return CSG.fromPolygons(newpolygons)
+  },
+
+  translate: function (offset) {
+    return this.transform(Matrix4x4.translation(offset))
+  },
+
+    // returns an array with a Vector3D (center point) and a radius
+  boundingSphere: function () {
+    if (!this.cachedBoundingSphere) {
+      let box = this.boundingBox()
+      let middle = box[0].plus(box[1]).times(0.5)
+      let radius3 = box[1].minus(middle)
+      let radius = radius3.length()
+      this.cachedBoundingSphere = [middle, radius]
+    }
+    return this.cachedBoundingSphere
+  },
+
+    // returns an array of two Vector3Ds (minimum coordinates and maximum coordinates)
+  boundingBox: function () {
+    if (!this.cachedBoundingBox) {
+      let minpoint, maxpoint
+      let vertices = this.vertices
+      let numvertices = vertices.length
+      if (numvertices === 0) {
+        minpoint = new Vector3D(0, 0, 0)
+      } else {
+        minpoint = vertices[0].pos
+      }
+      maxpoint = minpoint
+      for (let i = 1; i < numvertices; i++) {
+        let point = vertices[i].pos
+        minpoint = minpoint.min(point)
+        maxpoint = maxpoint.max(point)
+      }
+      this.cachedBoundingBox = [minpoint, maxpoint]
+    }
+    return this.cachedBoundingBox
+  },
+
+  flipped: function () {
+    let newvertices = this.vertices.map(function (v) {
+      return v.flipped()
+    })
+    newvertices.reverse()
+    let newplane = this.plane.flipped()
+    return new Polygon(newvertices, this.shared, newplane)
+  },
+
+    // Affine transformation of polygon. Returns a new Polygon
+  transform: function (matrix4x4) {
+    let newvertices = this.vertices.map(function (v) {
+      return v.transform(matrix4x4)
+    })
+    let newplane = this.plane.transform(matrix4x4)
+    if (matrix4x4.isMirroring()) {
+            // need to reverse the vertex order
+            // in order to preserve the inside/outside orientation:
+      newvertices.reverse()
+    }
+    return new Polygon(newvertices, this.shared, newplane)
+  },
+
+  toString: function () {
+    let result = 'Polygon plane: ' + this.plane.toString() + '\n'
+    this.vertices.map(function (vertex) {
+      result += '  ' + vertex.toString() + '\n'
+    })
+    return result
+  },
+
+    // project the 3D polygon onto a plane
+  projectToOrthoNormalBasis: function (orthobasis) {
+    const CAG = require('../CAG')
+    const {fromPointsNoCheck} = require('../CAGFactories') // circular dependencies
+    let points2d = this.vertices.map(function (vertex) {
+      return orthobasis.to2D(vertex.pos)
+    })
+
+    let result = fromPointsNoCheck(points2d)
+    let area = result.area()
+    if (Math.abs(area) < areaEPS) {
+            // the polygon was perpendicular to the orthnormal plane. The resulting 2D polygon would be degenerate
+            // return an empty area instead:
+      result = new CAG()
+    } else if (area < 0) {
+      result = result.flipped()
+    }
+    return result
+  },
+
+  //FIXME: WHY is this for 3D polygons and not for 2D shapes ?
+    /**
+     * Creates solid from slices (Polygon) by generating walls
+     * @param {Object} options Solid generating options
+     *  - numslices {Number} Number of slices to be generated
+     *  - callback(t, slice) {Function} Callback function generating slices.
+     *          arguments: t = [0..1], slice = [0..numslices - 1]
+     *          return: Polygon or null to skip
+     *  - loop {Boolean} no flats, only walls, it's used to generate solids like a tor
+     */
+  solidFromSlices: function (options) {
+    const CSG = require('../CSG')
+
+    let polygons = [],
+      csg = null,
+      prev = null,
+      bottom = null,
+      top = null,
+      numSlices = 2,
+      bLoop = false,
+      fnCallback,
+      flipped = null
+
+    if (options) {
+      bLoop = Boolean(options['loop'])
+
+      if (options.numslices) { numSlices = options.numslices }
+
+      if (options.callback) {
+        fnCallback = options.callback
+      }
+    }
+    if (!fnCallback) {
+      let square = new Polygon.createFromPoints([
+                [0, 0, 0],
+                [1, 0, 0],
+                [1, 1, 0],
+                [0, 1, 0]
+      ])
+      fnCallback = function (t, slice) {
+        return t === 0 || t === 1 ? square.translate([0, 0, t]) : null
+      }
+    }
+    for (let i = 0, iMax = numSlices - 1; i <= iMax; i++) {
+      csg = fnCallback.call(this, i / iMax, i)
+      if (csg) {
+        if (!(csg instanceof Polygon)) {
+          throw new Error('Polygon.solidFromSlices callback error: Polygon expected')
+        }
+        csg.checkIfConvex()
+
+        if (prev) { // generate walls
+          if (flipped === null) { // not generated yet
+            flipped = prev.plane.signedDistanceToPoint(csg.vertices[0].pos) < 0
+          }
+          this._addWalls(polygons, prev, csg, flipped)
+        } else { // the first - will be a bottom
+          bottom = csg
+        }
+        prev = csg
+      } // callback can return null to skip that slice
+    }
+    top = csg
+
+    if (bLoop) {
+      let bSameTopBottom = bottom.vertices.length === top.vertices.length &&
+                bottom.vertices.every(function (v, index) {
+                  return v.pos.equals(top.vertices[index].pos)
+                })
+            // if top and bottom are not the same -
+            // generate walls between them
+      if (!bSameTopBottom) {
+        this._addWalls(polygons, top, bottom, flipped)
+      } // else - already generated
+    } else {
+            // save top and bottom
+            // TODO: flip if necessary
+      polygons.unshift(flipped ? bottom : bottom.flipped())
+      polygons.push(flipped ? top.flipped() : top)
+    }
+    return CSG.fromPolygons(polygons)
+  },
+    /**
+     *
+     * @param walls Array of wall polygons
+     * @param bottom Bottom polygon
+     * @param top Top polygon
+     */
+  _addWalls: function (walls, bottom, top, bFlipped) {
+    let bottomPoints = bottom.vertices.slice(0) // make a copy
+    let topPoints = top.vertices.slice(0) // make a copy
+    let color = top.shared || null
+
+        // check if bottom perimeter is closed
+    if (!bottomPoints[0].pos.equals(bottomPoints[bottomPoints.length - 1].pos)) {
+      bottomPoints.push(bottomPoints[0])
+    }
+
+        // check if top perimeter is closed
+    if (!topPoints[0].pos.equals(topPoints[topPoints.length - 1].pos)) {
+      topPoints.push(topPoints[0])
+    }
+    if (bFlipped) {
+      bottomPoints = bottomPoints.reverse()
+      topPoints = topPoints.reverse()
+    }
+
+    let iTopLen = topPoints.length - 1
+    let iBotLen = bottomPoints.length - 1
+    let iExtra = iTopLen - iBotLen// how many extra triangles we need
+    let bMoreTops = iExtra > 0
+    let bMoreBottoms = iExtra < 0
+
+    let aMin = [] // indexes to start extra triangles (polygon with minimal square)
+        // init - we need exactly /iExtra/ small triangles
+    for (let i = Math.abs(iExtra); i > 0; i--) {
+      aMin.push({
+        len: Infinity,
+        index: -1
+      })
+    }
+
+    let len
+    if (bMoreBottoms) {
+      for (let i = 0; i < iBotLen; i++) {
+        len = bottomPoints[i].pos.distanceToSquared(bottomPoints[i + 1].pos)
+                // find the element to replace
+        for (let j = aMin.length - 1; j >= 0; j--) {
+          if (aMin[j].len > len) {
+            aMin[j].len = len
+            aMin.index = j
+            break
+          }
+        } // for
+      }
+    } else if (bMoreTops) {
+      for (let i = 0; i < iTopLen; i++) {
+        len = topPoints[i].pos.distanceToSquared(topPoints[i + 1].pos)
+                // find the element to replace
+        for (let j = aMin.length - 1; j >= 0; j--) {
+          if (aMin[j].len > len) {
+            aMin[j].len = len
+            aMin.index = j
+            break
+          }
+        } // for
+      }
+    } // if
+        // sort by index
+    aMin.sort(fnSortByIndex)
+    let getTriangle = function addWallsPutTriangle (pointA, pointB, pointC, color) {
+      return new Polygon([pointA, pointB, pointC], color)
+            // return bFlipped ? triangle.flipped() : triangle;
+    }
+
+    let bpoint = bottomPoints[0]
+    let tpoint = topPoints[0]
+    let secondPoint
+    let nBotFacet
+    let nTopFacet // length of triangle facet side
+    for (let iB = 0, iT = 0, iMax = iTopLen + iBotLen; iB + iT < iMax;) {
+      if (aMin.length) {
+        if (bMoreTops && iT === aMin[0].index) { // one vertex is on the bottom, 2 - on the top
+          secondPoint = topPoints[++iT]
+                    // console.log('<<< extra top: ' + secondPoint + ', ' + tpoint + ', bottom: ' + bpoint);
+          walls.push(getTriangle(
+                        secondPoint, tpoint, bpoint, color
+                    ))
+          tpoint = secondPoint
+          aMin.shift()
+          continue
+        } else if (bMoreBottoms && iB === aMin[0].index) {
+          secondPoint = bottomPoints[++iB]
+          walls.push(getTriangle(
+                        tpoint, bpoint, secondPoint, color
+                    ))
+          bpoint = secondPoint
+          aMin.shift()
+          continue
+        }
+      }
+            // choose the shortest path
+      if (iB < iBotLen) { // one vertex is on the top, 2 - on the bottom
+        nBotFacet = tpoint.pos.distanceToSquared(bottomPoints[iB + 1].pos)
+      } else {
+        nBotFacet = Infinity
+      }
+      if (iT < iTopLen) { // one vertex is on the bottom, 2 - on the top
+        nTopFacet = bpoint.pos.distanceToSquared(topPoints[iT + 1].pos)
+      } else {
+        nTopFacet = Infinity
+      }
+      if (nBotFacet <= nTopFacet) {
+        secondPoint = bottomPoints[++iB]
+        walls.push(getTriangle(
+                    tpoint, bpoint, secondPoint, color
+                ))
+        bpoint = secondPoint
+      } else if (iT < iTopLen) { // nTopFacet < Infinity
+        secondPoint = topPoints[++iT]
+                // console.log('<<< top: ' + secondPoint + ', ' + tpoint + ', bottom: ' + bpoint);
+        walls.push(getTriangle(
+                    secondPoint, tpoint, bpoint, color
+                ))
+        tpoint = secondPoint
+      };
+    }
+    return walls
+  }
+}
+
+Polygon.verticesConvex = function (vertices, planenormal) {
+  let numvertices = vertices.length
+  if (numvertices > 2) {
+    let prevprevpos = vertices[numvertices - 2].pos
+    let prevpos = vertices[numvertices - 1].pos
+    for (let i = 0; i < numvertices; i++) {
+      let pos = vertices[i].pos
+      if (!Polygon.isConvexPoint(prevprevpos, prevpos, pos, planenormal)) {
+        return false
+      }
+      prevprevpos = prevpos
+      prevpos = pos
+    }
+  }
+  return true
+}
+
+/** Create a polygon from the given points.
+ *
+ * @param {Array[]} points - list of points
+ * @param {Polygon.Shared} [shared=defaultShared] - shared property to apply
+ * @param {Plane} [plane] - plane of the polygon
+ *
+ * @example
+ * const points = [
+ *   [0,  0, 0],
+ *   [0, 10, 0],
+ *   [0, 10, 10]
+ * ]
+ * let observed = CSG.Polygon.createFromPoints(points)
+ */
+Polygon.createFromPoints = function (points, shared, plane) {
+  let vertices = []
+  points.map(function (p) {
+    let vec = new Vector3D(p)
+    let vertex = new Vertex(vec)
+    vertices.push(vertex)
+  })
+  let polygon
+  if (arguments.length < 3) {
+    polygon = new Polygon(vertices, shared)
+  } else {
+    polygon = new Polygon(vertices, shared, plane)
+  }
+  return polygon
+}
+
+// calculate whether three points form a convex corner
+//  prevpoint, point, nextpoint: the 3 coordinates (Vector3D instances)
+//  normal: the normal vector of the plane
+Polygon.isConvexPoint = function (prevpoint, point, nextpoint, normal) {
+  let crossproduct = point.minus(prevpoint).cross(nextpoint.minus(point))
+  let crossdotnormal = crossproduct.dot(normal)
+  return (crossdotnormal >= 0)
+}
+
+Polygon.isStrictlyConvexPoint = function (prevpoint, point, nextpoint, normal) {
+  let crossproduct = point.minus(prevpoint).cross(nextpoint.minus(point))
+  let crossdotnormal = crossproduct.dot(normal)
+  return (crossdotnormal >= EPS)
+}
+
+/** Class Polygon.Shared
+ * Holds the shared properties for each polygon (Currently only color).
+ * @constructor
+ * @param {Array[]} color - array containing RGBA values, or null
+ *
+ * @example
+ *   let shared = new CSG.Polygon.Shared([0, 0, 0, 1])
+ */
+Polygon.Shared = function (color) {
+  if (color !== null) {
+    if (color.length !== 4) {
+      throw new Error('Expecting 4 element array')
+    }
+  }
+  this.color = color
+}
+
+Polygon.Shared.fromObject = function (obj) {
+  return new Polygon.Shared(obj.color)
+}
+
+/** Create Polygon.Shared from color values.
+ * @param {number} r - value of RED component
+ * @param {number} g - value of GREEN component
+ * @param {number} b - value of BLUE component
+ * @param {number} [a] - value of ALPHA component
+ * @param {Array[]} [color] - OR array containing RGB values (optional Alpha)
+ *
+ * @example
+ * let s1 = Polygon.Shared.fromColor(0,0,0)
+ * let s2 = Polygon.Shared.fromColor([0,0,0,1])
+ */
+Polygon.Shared.fromColor = function (args) {
+  let color
+  if (arguments.length === 1) {
+    color = arguments[0].slice() // make deep copy
+  } else {
+    color = []
+    for (let i = 0; i < arguments.length; i++) {
+      color.push(arguments[i])
+    }
+  }
+  if (color.length === 3) {
+    color.push(1)
+  } else if (color.length !== 4) {
+    throw new Error('setColor expects either an array with 3 or 4 elements, or 3 or 4 parameters.')
+  }
+  return new Polygon.Shared(color)
+}
+
+Polygon.Shared.prototype = {
+  getTag: function () {
+    let result = this.tag
+    if (!result) {
+      result = getTag()
+      this.tag = result
+    }
+    return result
+  },
+    // get a string uniquely identifying this object
+  getHash: function () {
+    if (!this.color) return 'null'
+    return this.color.join('/')
+  }
+}
+
+Polygon.defaultShared = new Polygon.Shared(null)
+
+module.exports = Polygon
+
+},{"../CAG":78,"../CAGFactories":79,"../CSG":80,"../constants":87,"../utils":109,"./Matrix4":91,"./Plane":94,"./Vector3":99,"./Vertex3":101}],97:[function(require,module,exports){
+const Vector2D = require('./Vector2')
+const Vertex = require('./Vertex2')
+const Vertex3 = require('./Vertex3')
+const Polygon = require('./Polygon3')
+const {getTag} = require('../constants')
+
+const Side = function (vertex0, vertex1) {
+  if (!(vertex0 instanceof Vertex)) throw new Error('Assertion failed')
+  if (!(vertex1 instanceof Vertex)) throw new Error('Assertion failed')
+  this.vertex0 = vertex0
+  this.vertex1 = vertex1
+}
+
+Side.fromObject = function (obj) {
+  var vertex0 = Vertex.fromObject(obj.vertex0)
+  var vertex1 = Vertex.fromObject(obj.vertex1)
+  return new Side(vertex0, vertex1)
+}
+
+Side._fromFakePolygon = function (polygon) {
+    // this can happen based on union, seems to be residuals -
+    // return null and handle in caller
+  if (polygon.vertices.length < 4) {
+    return null
+  }
+  var vert1Indices = []
+  var pts2d = polygon.vertices.filter(function (v, i) {
+    if (v.pos.z > 0) {
+      vert1Indices.push(i)
+      return true
+    }
+    return false
+  })
+    .map(function (v) {
+      return new Vector2D(v.pos.x, v.pos.y)
+    })
+  if (pts2d.length !== 2) {
+    throw new Error('Assertion failed: _fromFakePolygon: not enough points found')
+  }
+  var d = vert1Indices[1] - vert1Indices[0]
+  if (d === 1 || d === 3) {
+    if (d === 1) {
+      pts2d.reverse()
+    }
+  } else {
+    throw new Error('Assertion failed: _fromFakePolygon: unknown index ordering')
+  }
+  var result = new Side(new Vertex(pts2d[0]), new Vertex(pts2d[1]))
+  return result
+}
+
+Side.prototype = {
+  toString: function () {
+    return this.vertex0 + ' -> ' + this.vertex1
+  },
+
+  toPolygon3D: function (z0, z1) {
+    //console.log(this.vertex0.pos)
+    const vertices = [
+      new Vertex3(this.vertex0.pos.toVector3D(z0)),
+      new Vertex3(this.vertex1.pos.toVector3D(z0)),
+      new Vertex3(this.vertex1.pos.toVector3D(z1)),
+      new Vertex3(this.vertex0.pos.toVector3D(z1))
+    ]
+    return new Polygon(vertices)
+  },
+
+  transform: function (matrix4x4) {
+    var newp1 = this.vertex0.pos.transform(matrix4x4)
+    var newp2 = this.vertex1.pos.transform(matrix4x4)
+    return new Side(new Vertex(newp1), new Vertex(newp2))
+  },
+
+  flipped: function () {
+    return new Side(this.vertex1, this.vertex0)
+  },
+
+  direction: function () {
+    return this.vertex1.pos.minus(this.vertex0.pos)
+  },
+
+  getTag: function () {
+    var result = this.tag
+    if (!result) {
+      result = getTag()
+      this.tag = result
+    }
+    return result
+  },
+
+  lengthSquared: function () {
+    let x = this.vertex1.pos.x - this.vertex0.pos.x
+    let y = this.vertex1.pos.y - this.vertex0.pos.y
+    return x * x + y * y
+  },
+
+  length: function () {
+    return Math.sqrt(this.lengthSquared())
+  }
+}
+
+module.exports = Side
+
+},{"../constants":87,"./Polygon3":96,"./Vector2":98,"./Vertex2":100,"./Vertex3":101}],98:[function(require,module,exports){
+const {IsFloat} = require('../utils')
+
+/** Class Vector2D
+ * Represents a 2D vector with X, Y coordinates
+ * @constructor
+ *
+ * @example
+ * new CSG.Vector2D(1, 2);
+ * new CSG.Vector3D([1, 2]);
+ * new CSG.Vector3D({ x: 1, y: 2});
+ */
+const Vector2D = function (x, y) {
+  if (arguments.length === 2) {
+    this._x = parseFloat(x)
+    this._y = parseFloat(y)
+  } else {
+    var ok = true
+    if (arguments.length === 1) {
+      if (typeof (x) === 'object') {
+        if (x instanceof Vector2D) {
+          this._x = x._x
+          this._y = x._y
+        } else if (x instanceof Array) {
+          this._x = parseFloat(x[0])
+          this._y = parseFloat(x[1])
+        } else if (('x' in x) && ('y' in x)) {
+          this._x = parseFloat(x.x)
+          this._y = parseFloat(x.y)
+        } else ok = false
+      } else {
+        var v = parseFloat(x)
+        this._x = v
+        this._y = v
+      }
+    } else ok = false
+    if (ok) {
+      if ((!IsFloat(this._x)) || (!IsFloat(this._y))) ok = false
+    }
+    if (!ok) {
+      throw new Error('wrong arguments')
+    }
+  }
+}
+
+Vector2D.fromAngle = function (radians) {
+  return Vector2D.fromAngleRadians(radians)
+}
+
+Vector2D.fromAngleDegrees = function (degrees) {
+  var radians = Math.PI * degrees / 180
+  return Vector2D.fromAngleRadians(radians)
+}
+
+Vector2D.fromAngleRadians = function (radians) {
+  return Vector2D.Create(Math.cos(radians), Math.sin(radians))
+}
+
+// This does the same as new Vector2D(x,y) but it doesn't go through the constructor
+// and the parameters are not validated. Is much faster.
+Vector2D.Create = function (x, y) {
+  var result = Object.create(Vector2D.prototype)
+  result._x = x
+  result._y = y
+  return result
+}
+
+Vector2D.prototype = {
+  get x () {
+    return this._x
+  },
+  get y () {
+    return this._y
+  },
+
+  set x (v) {
+    throw new Error('Vector2D is immutable')
+  },
+  set y (v) {
+    throw new Error('Vector2D is immutable')
+  },
+
+  // extend to a 3D vector by adding a z coordinate:
+  toVector3D: function (z) {
+    const Vector3D = require('./Vector3') // FIXME: circular dependencies Vector2 => Vector3 => Vector2
+    return new Vector3D(this._x, this._y, z)
+  },
+
+  equals: function (a) {
+    return (this._x === a._x) && (this._y === a._y)
+  },
+
+  clone: function () {
+    return Vector2D.Create(this._x, this._y)
+  },
+
+  negated: function () {
+    return Vector2D.Create(-this._x, -this._y)
+  },
+
+  plus: function (a) {
+    return Vector2D.Create(this._x + a._x, this._y + a._y)
+  },
+
+  minus: function (a) {
+    return Vector2D.Create(this._x - a._x, this._y - a._y)
+  },
+
+  times: function (a) {
+    return Vector2D.Create(this._x * a, this._y * a)
+  },
+
+  dividedBy: function (a) {
+    return Vector2D.Create(this._x / a, this._y / a)
+  },
+
+  dot: function (a) {
+    return this._x * a._x + this._y * a._y
+  },
+
+  lerp: function (a, t) {
+    return this.plus(a.minus(this).times(t))
+  },
+
+  length: function () {
+    return Math.sqrt(this.dot(this))
+  },
+
+  distanceTo: function (a) {
+    return this.minus(a).length()
+  },
+
+  distanceToSquared: function (a) {
+    return this.minus(a).lengthSquared()
+  },
+
+  lengthSquared: function () {
+    return this.dot(this)
+  },
+
+  unit: function () {
+    return this.dividedBy(this.length())
+  },
+
+  cross: function (a) {
+    return this._x * a._y - this._y * a._x
+  },
+
+    // returns the vector rotated by 90 degrees clockwise
+  normal: function () {
+    return Vector2D.Create(this._y, -this._x)
+  },
+
+    // Right multiply by a 4x4 matrix (the vector is interpreted as a row vector)
+    // Returns a new Vector2D
+  multiply4x4: function (matrix4x4) {
+    return matrix4x4.leftMultiply1x2Vector(this)
+  },
+
+  transform: function (matrix4x4) {
+    return matrix4x4.leftMultiply1x2Vector(this)
+  },
+
+  angle: function () {
+    return this.angleRadians()
+  },
+
+  angleDegrees: function () {
+    var radians = this.angleRadians()
+    return 180 * radians / Math.PI
+  },
+
+  angleRadians: function () {
+        // y=sin, x=cos
+    return Math.atan2(this._y, this._x)
+  },
+
+  min: function (p) {
+    return Vector2D.Create(
+            Math.min(this._x, p._x), Math.min(this._y, p._y))
+  },
+
+  max: function (p) {
+    return Vector2D.Create(
+            Math.max(this._x, p._x), Math.max(this._y, p._y))
+  },
+
+  toString: function () {
+    return '(' + this._x.toFixed(5) + ', ' + this._y.toFixed(5) + ')'
+  },
+
+  abs: function () {
+    return Vector2D.Create(Math.abs(this._x), Math.abs(this._y))
+  }
+}
+
+module.exports = Vector2D
+
+},{"../utils":109,"./Vector3":99}],99:[function(require,module,exports){
+arguments[4][54][0].apply(exports,arguments)
+},{"../utils":109,"./Vector2":98,"dup":54}],100:[function(require,module,exports){
+arguments[4][55][0].apply(exports,arguments)
+},{"../constants":87,"./Vector2":98,"dup":55}],101:[function(require,module,exports){
+arguments[4][56][0].apply(exports,arguments)
+},{"../constants":87,"./Vector3":99,"dup":56}],102:[function(require,module,exports){
+const {EPS} = require('../constants')
+const {solve2Linear} = require('../utils')
+
+// see if the line between p0start and p0end intersects with the line between p1start and p1end
+// returns true if the lines strictly intersect, the end points are not counted!
+const linesIntersect = function (p0start, p0end, p1start, p1end) {
+  if (p0end.equals(p1start) || p1end.equals(p0start)) {
+    let d = p1end.minus(p1start).unit().plus(p0end.minus(p0start).unit()).length()
+    if (d < EPS) {
+      return true
+    }
+  } else {
+    let d0 = p0end.minus(p0start)
+    let d1 = p1end.minus(p1start)
+        // FIXME These epsilons need review and testing
+    if (Math.abs(d0.cross(d1)) < 1e-9) return false // lines are parallel
+    let alphas = solve2Linear(-d0.x, d1.x, -d0.y, d1.y, p0start.x - p1start.x, p0start.y - p1start.y)
+    if ((alphas[0] > 1e-6) && (alphas[0] < 0.999999) && (alphas[1] > 1e-5) && (alphas[1] < 0.999999)) return true
+        //    if( (alphas[0] >= 0) && (alphas[0] <= 1) && (alphas[1] >= 0) && (alphas[1] <= 1) ) return true;
+  }
+  return false
+}
+
+
+module.exports = {linesIntersect}
+
+},{"../constants":87,"../utils":109}],103:[function(require,module,exports){
+const {EPS} = require('../constants')
+const OrthoNormalBasis = require('./OrthoNormalBasis')
+const {interpolateBetween2DPointsForY, insertSorted, fnNumberSort} = require('../utils')
+const Vertex = require('./Vertex3')
+const Vector2D = require('./Vector2')
+const Line2D = require('./Line2')
+const Polygon = require('./Polygon3')
+
+// Retesselation function for a set of coplanar polygons. See the introduction at the top of
+// this file.
+const reTesselateCoplanarPolygons = function (sourcepolygons, destpolygons) {
+  let numpolygons = sourcepolygons.length
+  if (numpolygons > 0) {
+    let plane = sourcepolygons[0].plane
+    let shared = sourcepolygons[0].shared
+    let orthobasis = new OrthoNormalBasis(plane)
+    let polygonvertices2d = [] // array of array of Vector2D
+    let polygontopvertexindexes = [] // array of indexes of topmost vertex per polygon
+    let topy2polygonindexes = {}
+    let ycoordinatetopolygonindexes = {}
+
+    let xcoordinatebins = {}
+    let ycoordinatebins = {}
+
+        // convert all polygon vertices to 2D
+        // Make a list of all encountered y coordinates
+        // And build a map of all polygons that have a vertex at a certain y coordinate:
+    let ycoordinateBinningFactor = 1.0 / EPS * 10
+    for (let polygonindex = 0; polygonindex < numpolygons; polygonindex++) {
+      let poly3d = sourcepolygons[polygonindex]
+      let vertices2d = []
+      let numvertices = poly3d.vertices.length
+      let minindex = -1
+      if (numvertices > 0) {
+        let miny, maxy, maxindex
+        for (let i = 0; i < numvertices; i++) {
+          let pos2d = orthobasis.to2D(poly3d.vertices[i].pos)
+                    // perform binning of y coordinates: If we have multiple vertices very
+                    // close to each other, give them the same y coordinate:
+          let ycoordinatebin = Math.floor(pos2d.y * ycoordinateBinningFactor)
+          let newy
+          if (ycoordinatebin in ycoordinatebins) {
+            newy = ycoordinatebins[ycoordinatebin]
+          } else if (ycoordinatebin + 1 in ycoordinatebins) {
+            newy = ycoordinatebins[ycoordinatebin + 1]
+          } else if (ycoordinatebin - 1 in ycoordinatebins) {
+            newy = ycoordinatebins[ycoordinatebin - 1]
+          } else {
+            newy = pos2d.y
+            ycoordinatebins[ycoordinatebin] = pos2d.y
+          }
+          pos2d = Vector2D.Create(pos2d.x, newy)
+          vertices2d.push(pos2d)
+          let y = pos2d.y
+          if ((i === 0) || (y < miny)) {
+            miny = y
+            minindex = i
+          }
+          if ((i === 0) || (y > maxy)) {
+            maxy = y
+            maxindex = i
+          }
+          if (!(y in ycoordinatetopolygonindexes)) {
+            ycoordinatetopolygonindexes[y] = {}
+          }
+          ycoordinatetopolygonindexes[y][polygonindex] = true
+        }
+        if (miny >= maxy) {
+                    // degenerate polygon, all vertices have same y coordinate. Just ignore it from now:
+          vertices2d = []
+          numvertices = 0
+          minindex = -1
+        } else {
+          if (!(miny in topy2polygonindexes)) {
+            topy2polygonindexes[miny] = []
+          }
+          topy2polygonindexes[miny].push(polygonindex)
+        }
+      } // if(numvertices > 0)
+            // reverse the vertex order:
+      vertices2d.reverse()
+      minindex = numvertices - minindex - 1
+      polygonvertices2d.push(vertices2d)
+      polygontopvertexindexes.push(minindex)
+    }
+    let ycoordinates = []
+    for (let ycoordinate in ycoordinatetopolygonindexes) ycoordinates.push(ycoordinate)
+    ycoordinates.sort(fnNumberSort)
+
+        // Now we will iterate over all y coordinates, from lowest to highest y coordinate
+        // activepolygons: source polygons that are 'active', i.e. intersect with our y coordinate
+        //   Is sorted so the polygons are in left to right order
+        // Each element in activepolygons has these properties:
+        //        polygonindex: the index of the source polygon (i.e. an index into the sourcepolygons
+        //                      and polygonvertices2d arrays)
+        //        leftvertexindex: the index of the vertex at the left side of the polygon (lowest x)
+        //                         that is at or just above the current y coordinate
+        //        rightvertexindex: dito at right hand side of polygon
+        //        topleft, bottomleft: coordinates of the left side of the polygon crossing the current y coordinate
+        //        topright, bottomright: coordinates of the right hand side of the polygon crossing the current y coordinate
+    let activepolygons = []
+    let prevoutpolygonrow = []
+    for (let yindex = 0; yindex < ycoordinates.length; yindex++) {
+      let newoutpolygonrow = []
+      let ycoordinate_as_string = ycoordinates[yindex]
+      let ycoordinate = Number(ycoordinate_as_string)
+
+            // update activepolygons for this y coordinate:
+            // - Remove any polygons that end at this y coordinate
+            // - update leftvertexindex and rightvertexindex (which point to the current vertex index
+            //   at the the left and right side of the polygon
+            // Iterate over all polygons that have a corner at this y coordinate:
+      let polygonindexeswithcorner = ycoordinatetopolygonindexes[ycoordinate_as_string]
+      for (let activepolygonindex = 0; activepolygonindex < activepolygons.length; ++activepolygonindex) {
+        let activepolygon = activepolygons[activepolygonindex]
+        let polygonindex = activepolygon.polygonindex
+        if (polygonindexeswithcorner[polygonindex]) {
+                    // this active polygon has a corner at this y coordinate:
+          let vertices2d = polygonvertices2d[polygonindex]
+          let numvertices = vertices2d.length
+          let newleftvertexindex = activepolygon.leftvertexindex
+          let newrightvertexindex = activepolygon.rightvertexindex
+                    // See if we need to increase leftvertexindex or decrease rightvertexindex:
+          while (true) {
+            let nextleftvertexindex = newleftvertexindex + 1
+            if (nextleftvertexindex >= numvertices) nextleftvertexindex = 0
+            if (vertices2d[nextleftvertexindex].y !== ycoordinate) break
+            newleftvertexindex = nextleftvertexindex
+          }
+          let nextrightvertexindex = newrightvertexindex - 1
+          if (nextrightvertexindex < 0) nextrightvertexindex = numvertices - 1
+          if (vertices2d[nextrightvertexindex].y === ycoordinate) {
+            newrightvertexindex = nextrightvertexindex
+          }
+          if ((newleftvertexindex !== activepolygon.leftvertexindex) && (newleftvertexindex === newrightvertexindex)) {
+                        // We have increased leftvertexindex or decreased rightvertexindex, and now they point to the same vertex
+                        // This means that this is the bottom point of the polygon. We'll remove it:
+            activepolygons.splice(activepolygonindex, 1)
+            --activepolygonindex
+          } else {
+            activepolygon.leftvertexindex = newleftvertexindex
+            activepolygon.rightvertexindex = newrightvertexindex
+            activepolygon.topleft = vertices2d[newleftvertexindex]
+            activepolygon.topright = vertices2d[newrightvertexindex]
+            let nextleftvertexindex = newleftvertexindex + 1
+            if (nextleftvertexindex >= numvertices) nextleftvertexindex = 0
+            activepolygon.bottomleft = vertices2d[nextleftvertexindex]
+            let nextrightvertexindex = newrightvertexindex - 1
+            if (nextrightvertexindex < 0) nextrightvertexindex = numvertices - 1
+            activepolygon.bottomright = vertices2d[nextrightvertexindex]
+          }
+        } // if polygon has corner here
+      } // for activepolygonindex
+      let nextycoordinate
+      if (yindex >= ycoordinates.length - 1) {
+                // last row, all polygons must be finished here:
+        activepolygons = []
+        nextycoordinate = null
+      } else // yindex < ycoordinates.length-1
+            {
+        nextycoordinate = Number(ycoordinates[yindex + 1])
+        let middleycoordinate = 0.5 * (ycoordinate + nextycoordinate)
+                // update activepolygons by adding any polygons that start here:
+        let startingpolygonindexes = topy2polygonindexes[ycoordinate_as_string]
+        for (let polygonindex_key in startingpolygonindexes) {
+          let polygonindex = startingpolygonindexes[polygonindex_key]
+          let vertices2d = polygonvertices2d[polygonindex]
+          let numvertices = vertices2d.length
+          let topvertexindex = polygontopvertexindexes[polygonindex]
+                    // the top of the polygon may be a horizontal line. In that case topvertexindex can point to any point on this line.
+                    // Find the left and right topmost vertices which have the current y coordinate:
+          let topleftvertexindex = topvertexindex
+          while (true) {
+            let i = topleftvertexindex + 1
+            if (i >= numvertices) i = 0
+            if (vertices2d[i].y !== ycoordinate) break
+            if (i === topvertexindex) break // should not happen, but just to prevent endless loops
+            topleftvertexindex = i
+          }
+          let toprightvertexindex = topvertexindex
+          while (true) {
+            let i = toprightvertexindex - 1
+            if (i < 0) i = numvertices - 1
+            if (vertices2d[i].y !== ycoordinate) break
+            if (i === topleftvertexindex) break // should not happen, but just to prevent endless loops
+            toprightvertexindex = i
+          }
+          let nextleftvertexindex = topleftvertexindex + 1
+          if (nextleftvertexindex >= numvertices) nextleftvertexindex = 0
+          let nextrightvertexindex = toprightvertexindex - 1
+          if (nextrightvertexindex < 0) nextrightvertexindex = numvertices - 1
+          let newactivepolygon = {
+            polygonindex: polygonindex,
+            leftvertexindex: topleftvertexindex,
+            rightvertexindex: toprightvertexindex,
+            topleft: vertices2d[topleftvertexindex],
+            topright: vertices2d[toprightvertexindex],
+            bottomleft: vertices2d[nextleftvertexindex],
+            bottomright: vertices2d[nextrightvertexindex]
+          }
+          insertSorted(activepolygons, newactivepolygon, function (el1, el2) {
+            let x1 = interpolateBetween2DPointsForY(
+                            el1.topleft, el1.bottomleft, middleycoordinate)
+            let x2 = interpolateBetween2DPointsForY(
+                            el2.topleft, el2.bottomleft, middleycoordinate)
+            if (x1 > x2) return 1
+            if (x1 < x2) return -1
+            return 0
+          })
+        } // for(let polygonindex in startingpolygonindexes)
+      } //  yindex < ycoordinates.length-1
+            // if( (yindex === ycoordinates.length-1) || (nextycoordinate - ycoordinate > EPS) )
+      if (true) {
+                // Now activepolygons is up to date
+                // Build the output polygons for the next row in newoutpolygonrow:
+        for (let activepolygonKey in activepolygons) {
+          let activepolygon = activepolygons[activepolygonKey]
+          let polygonindex = activepolygon.polygonindex
+          let vertices2d = polygonvertices2d[polygonindex]
+          let numvertices = vertices2d.length
+
+          let x = interpolateBetween2DPointsForY(activepolygon.topleft, activepolygon.bottomleft, ycoordinate)
+          let topleft = Vector2D.Create(x, ycoordinate)
+          x = interpolateBetween2DPointsForY(activepolygon.topright, activepolygon.bottomright, ycoordinate)
+          let topright = Vector2D.Create(x, ycoordinate)
+          x = interpolateBetween2DPointsForY(activepolygon.topleft, activepolygon.bottomleft, nextycoordinate)
+          let bottomleft = Vector2D.Create(x, nextycoordinate)
+          x = interpolateBetween2DPointsForY(activepolygon.topright, activepolygon.bottomright, nextycoordinate)
+          let bottomright = Vector2D.Create(x, nextycoordinate)
+          let outpolygon = {
+            topleft: topleft,
+            topright: topright,
+            bottomleft: bottomleft,
+            bottomright: bottomright,
+            leftline: Line2D.fromPoints(topleft, bottomleft),
+            rightline: Line2D.fromPoints(bottomright, topright)
+          }
+          if (newoutpolygonrow.length > 0) {
+            let prevoutpolygon = newoutpolygonrow[newoutpolygonrow.length - 1]
+            let d1 = outpolygon.topleft.distanceTo(prevoutpolygon.topright)
+            let d2 = outpolygon.bottomleft.distanceTo(prevoutpolygon.bottomright)
+            if ((d1 < EPS) && (d2 < EPS)) {
+                            // we can join this polygon with the one to the left:
+              outpolygon.topleft = prevoutpolygon.topleft
+              outpolygon.leftline = prevoutpolygon.leftline
+              outpolygon.bottomleft = prevoutpolygon.bottomleft
+              newoutpolygonrow.splice(newoutpolygonrow.length - 1, 1)
+            }
+          }
+          newoutpolygonrow.push(outpolygon)
+        } // for(activepolygon in activepolygons)
+        if (yindex > 0) {
+                    // try to match the new polygons against the previous row:
+          let prevcontinuedindexes = {}
+          let matchedindexes = {}
+          for (let i = 0; i < newoutpolygonrow.length; i++) {
+            let thispolygon = newoutpolygonrow[i]
+            for (let ii = 0; ii < prevoutpolygonrow.length; ii++) {
+              if (!matchedindexes[ii]) // not already processed?
+                            {
+                                // We have a match if the sidelines are equal or if the top coordinates
+                                // are on the sidelines of the previous polygon
+                let prevpolygon = prevoutpolygonrow[ii]
+                if (prevpolygon.bottomleft.distanceTo(thispolygon.topleft) < EPS) {
+                  if (prevpolygon.bottomright.distanceTo(thispolygon.topright) < EPS) {
+                                        // Yes, the top of this polygon matches the bottom of the previous:
+                    matchedindexes[ii] = true
+                                        // Now check if the joined polygon would remain convex:
+                    let d1 = thispolygon.leftline.direction().x - prevpolygon.leftline.direction().x
+                    let d2 = thispolygon.rightline.direction().x - prevpolygon.rightline.direction().x
+                    let leftlinecontinues = Math.abs(d1) < EPS
+                    let rightlinecontinues = Math.abs(d2) < EPS
+                    let leftlineisconvex = leftlinecontinues || (d1 >= 0)
+                    let rightlineisconvex = rightlinecontinues || (d2 >= 0)
+                    if (leftlineisconvex && rightlineisconvex) {
+                                            // yes, both sides have convex corners:
+                                            // This polygon will continue the previous polygon
+                      thispolygon.outpolygon = prevpolygon.outpolygon
+                      thispolygon.leftlinecontinues = leftlinecontinues
+                      thispolygon.rightlinecontinues = rightlinecontinues
+                      prevcontinuedindexes[ii] = true
+                    }
+                    break
+                  }
+                }
+              } // if(!prevcontinuedindexes[ii])
+            } // for ii
+          } // for i
+          for (let ii = 0; ii < prevoutpolygonrow.length; ii++) {
+            if (!prevcontinuedindexes[ii]) {
+                            // polygon ends here
+                            // Finish the polygon with the last point(s):
+              let prevpolygon = prevoutpolygonrow[ii]
+              prevpolygon.outpolygon.rightpoints.push(prevpolygon.bottomright)
+              if (prevpolygon.bottomright.distanceTo(prevpolygon.bottomleft) > EPS) {
+                                // polygon ends with a horizontal line:
+                prevpolygon.outpolygon.leftpoints.push(prevpolygon.bottomleft)
+              }
+                            // reverse the left half so we get a counterclockwise circle:
+              prevpolygon.outpolygon.leftpoints.reverse()
+              let points2d = prevpolygon.outpolygon.rightpoints.concat(prevpolygon.outpolygon.leftpoints)
+              let vertices3d = []
+              points2d.map(function (point2d) {
+                let point3d = orthobasis.to3D(point2d)
+                let vertex3d = new Vertex(point3d)
+                vertices3d.push(vertex3d)
+              })
+              let polygon = new Polygon(vertices3d, shared, plane)
+              destpolygons.push(polygon)
+            }
+          }
+        } // if(yindex > 0)
+        for (let i = 0; i < newoutpolygonrow.length; i++) {
+          let thispolygon = newoutpolygonrow[i]
+          if (!thispolygon.outpolygon) {
+                        // polygon starts here:
+            thispolygon.outpolygon = {
+              leftpoints: [],
+              rightpoints: []
+            }
+            thispolygon.outpolygon.leftpoints.push(thispolygon.topleft)
+            if (thispolygon.topleft.distanceTo(thispolygon.topright) > EPS) {
+                            // we have a horizontal line at the top:
+              thispolygon.outpolygon.rightpoints.push(thispolygon.topright)
+            }
+          } else {
+                        // continuation of a previous row
+            if (!thispolygon.leftlinecontinues) {
+              thispolygon.outpolygon.leftpoints.push(thispolygon.topleft)
+            }
+            if (!thispolygon.rightlinecontinues) {
+              thispolygon.outpolygon.rightpoints.push(thispolygon.topright)
+            }
+          }
+        }
+        prevoutpolygonrow = newoutpolygonrow
+      }
+    } // for yindex
+  } // if(numpolygons > 0)
+}
+
+module.exports = {reTesselateCoplanarPolygons}
+
+},{"../constants":87,"../utils":109,"./Line2":89,"./OrthoNormalBasis":92,"./Polygon3":96,"./Vector2":98,"./Vertex3":101}],104:[function(require,module,exports){
+arguments[4][59][0].apply(exports,arguments)
+},{"./math/Matrix4":91,"./math/Plane":94,"./math/Vector3":99,"dup":59}],105:[function(require,module,exports){
+const Vector3D = require('./math/Vector3')
+const Vector2D = require('./math/Vector2')
+
+// Parse an option from the options object
+// If the option is not present, return the default value
+const parseOption = function (options, optionname, defaultvalue) {
+  var result = defaultvalue
+  if (options && optionname in options) {
+    result = options[optionname]
+  }
+  return result
+}
+
+  // Parse an option and force into a Vector3D. If a scalar is passed it is converted
+  // into a vector with equal x,y,z
+const parseOptionAs3DVector = function (options, optionname, defaultvalue) {
+  var result = parseOption(options, optionname, defaultvalue)
+  result = new Vector3D(result)
+  return result
+}
+
+const parseOptionAs3DVectorList = function (options, optionname, defaultvalue) {
+  var result = parseOption(options, optionname, defaultvalue)
+  return result.map(function (res) {
+    return new Vector3D(res)
+  })
+}
+
+  // Parse an option and force into a Vector2D. If a scalar is passed it is converted
+  // into a vector with equal x,y
+const parseOptionAs2DVector = function (options, optionname, defaultvalue) {
+  var result = parseOption(options, optionname, defaultvalue)
+  result = new Vector2D(result)
+  return result
+}
+
+const parseOptionAsFloat = function (options, optionname, defaultvalue) {
+  var result = parseOption(options, optionname, defaultvalue)
+  if (typeof (result) === 'string') {
+    result = Number(result)
+  }
+  if (isNaN(result) || typeof (result) !== 'number') {
+    throw new Error('Parameter ' + optionname + ' should be a number')
+  }
+  return result
+}
+
+const parseOptionAsInt = function (options, optionname, defaultvalue) {
+  var result = parseOption(options, optionname, defaultvalue)
+  result = Number(Math.floor(result))
+  if (isNaN(result)) {
+    throw new Error('Parameter ' + optionname + ' should be a number')
+  }
+  return result
+}
+
+const parseOptionAsBool = function (options, optionname, defaultvalue) {
+  var result = parseOption(options, optionname, defaultvalue)
+  if (typeof (result) === 'string') {
+    if (result === 'true') result = true
+    else if (result === 'false') result = false
+    else if (result === 0) result = false
+  }
+  result = !!result
+  return result
+}
+
+module.exports = {
+  parseOption,
+  parseOptionAsInt,
+  parseOptionAsFloat,
+  parseOptionAsBool,
+  parseOptionAs3DVector,
+  parseOptionAs2DVector,
+  parseOptionAs3DVectorList
+}
+
+},{"./math/Vector2":98,"./math/Vector3":99}],106:[function(require,module,exports){
+const CAG = require('./CAG')
+const {parseOptionAs2DVector, parseOptionAsFloat, parseOptionAsInt} = require('./optionParsers')
+const {defaultResolution2D} = require('./constants')
+const Vector2D = require('./math/Vector2')
+const Path2D = require('./math/Path2')
+const {fromCompactBinary} = require('./CAGFactories')
+
+/** Construct a circle.
+ * @param {Object} [options] - options for construction
+ * @param {Vector2D} [options.center=[0,0]] - center of circle
+ * @param {Number} [options.radius=1] - radius of circle
+ * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
+ * @returns {CAG} new CAG object
+ */
+const circle = function (options) {
+  options = options || {}
+  let center = parseOptionAs2DVector(options, 'center', [0, 0])
+  let radius = parseOptionAsFloat(options, 'radius', 1)
+  let resolution = parseOptionAsInt(options, 'resolution', defaultResolution2D)
+  let points = []
+  for (let i = 0; i < resolution; i++) {
+    let radians = 2 * Math.PI * i / resolution
+    let point = Vector2D.fromAngleRadians(radians).times(radius).plus(center)
+    points.push(point)
+  }
+  return CAG.fromPoints(points)
+}
+
+/** Construct an ellispe.
+ * @param {Object} [options] - options for construction
+ * @param {Vector2D} [options.center=[0,0]] - center of ellipse
+ * @param {Vector2D} [options.radius=[1,1]] - radius of ellipse, width and height
+ * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
+ * @returns {CAG} new CAG object
+ */
+const ellipse = function (options) {
+  options = options || {}
+  let c = parseOptionAs2DVector(options, 'center', [0, 0])
+  let r = parseOptionAs2DVector(options, 'radius', [1, 1])
+  r = r.abs() // negative radii make no sense
+  let res = parseOptionAsInt(options, 'resolution', defaultResolution2D)
+
+  let e2 = new Path2D([[c.x, c.y + r.y]])
+  e2 = e2.appendArc([c.x, c.y - r.y], {
+    xradius: r.x,
+    yradius: r.y,
+    xaxisrotation: 0,
+    resolution: res,
+    clockwise: true,
+    large: false
+  })
+  e2 = e2.appendArc([c.x, c.y + r.y], {
+    xradius: r.x,
+    yradius: r.y,
+    xaxisrotation: 0,
+    resolution: res,
+    clockwise: true,
+    large: false
+  })
+  e2 = e2.close()
+  return CAG.fromPath2(e2)
+}
+
+/** Construct a rectangle.
+ * @param {Object} [options] - options for construction
+ * @param {Vector2D} [options.center=[0,0]] - center of rectangle
+ * @param {Vector2D} [options.radius=[1,1]] - radius of rectangle, width and height
+ * @param {Vector2D} [options.corner1=[0,0]] - bottom left corner of rectangle (alternate)
+ * @param {Vector2D} [options.corner2=[0,0]] - upper right corner of rectangle (alternate)
+ * @returns {CAG} new CAG object
+ */
+const rectangle = function (options) {
+  options = options || {}
+  let c, r
+  if (('corner1' in options) || ('corner2' in options)) {
+    if (('center' in options) || ('radius' in options)) {
+      throw new Error('rectangle: should either give a radius and center parameter, or a corner1 and corner2 parameter')
+    }
+    let corner1 = parseOptionAs2DVector(options, 'corner1', [0, 0])
+    let corner2 = parseOptionAs2DVector(options, 'corner2', [1, 1])
+    c = corner1.plus(corner2).times(0.5)
+    r = corner2.minus(corner1).times(0.5)
+  } else {
+    c = parseOptionAs2DVector(options, 'center', [0, 0])
+    r = parseOptionAs2DVector(options, 'radius', [1, 1])
+  }
+  r = r.abs() // negative radii make no sense
+  let rswap = new Vector2D(r.x, -r.y)
+  let points = [
+    c.plus(r), c.plus(rswap), c.minus(r), c.minus(rswap)
+  ]
+  return CAG.fromPoints(points)
+}
+
+/** Construct a rounded rectangle.
+ * @param {Object} [options] - options for construction
+ * @param {Vector2D} [options.center=[0,0]] - center of rounded rectangle
+ * @param {Vector2D} [options.radius=[1,1]] - radius of rounded rectangle, width and height
+ * @param {Vector2D} [options.corner1=[0,0]] - bottom left corner of rounded rectangle (alternate)
+ * @param {Vector2D} [options.corner2=[0,0]] - upper right corner of rounded rectangle (alternate)
+ * @param {Number} [options.roundradius=0.2] - round radius of corners
+ * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
+ * @returns {CAG} new CAG object
+ *
+ * @example
+ * let r = roundedRectangle({
+ *   center: [0, 0],
+ *   radius: [5, 10],
+ *   roundradius: 2,
+ *   resolution: 36,
+ * });
+ */
+const roundedRectangle = function (options) {
+  options = options || {}
+  let center, radius
+  if (('corner1' in options) || ('corner2' in options)) {
+    if (('center' in options) || ('radius' in options)) {
+      throw new Error('roundedRectangle: should either give a radius and center parameter, or a corner1 and corner2 parameter')
+    }
+    let corner1 = parseOptionAs2DVector(options, 'corner1', [0, 0])
+    let corner2 = parseOptionAs2DVector(options, 'corner2', [1, 1])
+    center = corner1.plus(corner2).times(0.5)
+    radius = corner2.minus(corner1).times(0.5)
+  } else {
+    center = parseOptionAs2DVector(options, 'center', [0, 0])
+    radius = parseOptionAs2DVector(options, 'radius', [1, 1])
+  }
+  radius = radius.abs() // negative radii make no sense
+  let roundradius = parseOptionAsFloat(options, 'roundradius', 0.2)
+  let resolution = parseOptionAsInt(options, 'resolution', defaultResolution2D)
+  let maxroundradius = Math.min(radius.x, radius.y)
+  maxroundradius -= 0.1
+  roundradius = Math.min(roundradius, maxroundradius)
+  roundradius = Math.max(0, roundradius)
+  radius = new Vector2D(radius.x - roundradius, radius.y - roundradius)
+  let rect = CAG.rectangle({
+    center: center,
+    radius: radius
+  })
+  if (roundradius > 0) {
+    rect = rect.expand(roundradius, resolution)
+  }
+  return rect
+}
+
+/** Reconstruct a CAG from the output of toCompactBinary().
+ * @param {CompactBinary} bin - see toCompactBinary()
+ * @returns {CAG} new CAG object
+ */
+CAG.fromCompactBinary = function (bin) {
+  if (bin['class'] !== 'CAG') throw new Error('Not a CAG')
+  let vertices = []
+  let vertexData = bin.vertexData
+  let numvertices = vertexData.length / 2
+  let arrayindex = 0
+  for (let vertexindex = 0; vertexindex < numvertices; vertexindex++) {
+    let x = vertexData[arrayindex++]
+    let y = vertexData[arrayindex++]
+    let pos = new Vector2D(x, y)
+    let vertex = new CAG.Vertex(pos)
+    vertices.push(vertex)
+  }
+
+  let sides = []
+  let numsides = bin.sideVertexIndices.length / 2
+  arrayindex = 0
+  for (let sideindex = 0; sideindex < numsides; sideindex++) {
+    let vertexindex0 = bin.sideVertexIndices[arrayindex++]
+    let vertexindex1 = bin.sideVertexIndices[arrayindex++]
+    let side = new CAG.Side(vertices[vertexindex0], vertices[vertexindex1])
+    sides.push(side)
+  }
+  let cag = CAG.fromSides(sides)
+  cag.isCanonicalized = true
+  return cag
+}
+
+module.exports = {
+  circle,
+  ellipse,
+  rectangle,
+  roundedRectangle,
+  fromCompactBinary
+}
+
+},{"./CAG":78,"./CAGFactories":79,"./constants":87,"./math/Path2":93,"./math/Vector2":98,"./optionParsers":105}],107:[function(require,module,exports){
+const CSG = require('./CSG')
+const {parseOption, parseOptionAs3DVector, parseOptionAs2DVector, parseOptionAs3DVectorList, parseOptionAsFloat, parseOptionAsInt} = require('./optionParsers')
+const {defaultResolution3D, defaultResolution2D, EPS} = require('./constants')
+const Vector3D = require('./math/Vector3')
+const Vertex = require('./math/Vertex3')
+const Polygon = require('./math/Polygon3')
+const {Connector} = require('./connectors')
+const Properties = require('./Properties')
+
+/** Construct an axis-aligned solid cuboid.
+ * @param {Object} [options] - options for construction
+ * @param {Vector3D} [options.center=[0,0,0]] - center of cube
+ * @param {Vector3D} [options.radius=[1,1,1]] - radius of cube, single scalar also possible
+ * @returns {CSG} new 3D solid
+ *
+ * @example
+ * let cube = CSG.cube({
+ *   center: [5, 5, 5],
+ *   radius: 5, // scalar radius
+ * });
+ */
+const cube = function (options) {
+  let c
+  let r
+  let corner1
+  let corner2
+  options = options || {}
+  if (('corner1' in options) || ('corner2' in options)) {
+    if (('center' in options) || ('radius' in options)) {
+      throw new Error('cube: should either give a radius and center parameter, or a corner1 and corner2 parameter')
+    }
+    corner1 = parseOptionAs3DVector(options, 'corner1', [0, 0, 0])
+    corner2 = parseOptionAs3DVector(options, 'corner2', [1, 1, 1])
+    c = corner1.plus(corner2).times(0.5)
+    r = corner2.minus(corner1).times(0.5)
+  } else {
+    c = parseOptionAs3DVector(options, 'center', [0, 0, 0])
+    r = parseOptionAs3DVector(options, 'radius', [1, 1, 1])
+  }
+  r = r.abs() // negative radii make no sense
+  let result = CSG.fromPolygons([
+    [
+            [0, 4, 6, 2],
+            [-1, 0, 0]
+    ],
+    [
+            [1, 3, 7, 5],
+            [+1, 0, 0]
+    ],
+    [
+            [0, 1, 5, 4],
+            [0, -1, 0]
+    ],
+    [
+            [2, 6, 7, 3],
+            [0, +1, 0]
+    ],
+    [
+            [0, 2, 3, 1],
+            [0, 0, -1]
+    ],
+    [
+            [4, 5, 7, 6],
+            [0, 0, +1]
+    ]
+  ].map(function (info) {
+    let vertices = info[0].map(function (i) {
+      let pos = new Vector3D(
+                c.x + r.x * (2 * !!(i & 1) - 1), c.y + r.y * (2 * !!(i & 2) - 1), c.z + r.z * (2 * !!(i & 4) - 1))
+      return new Vertex(pos)
+    })
+    return new Polygon(vertices, null /* , plane */)
+  }))
+  result.properties.cube = new Properties()
+  result.properties.cube.center = new Vector3D(c)
+    // add 6 connectors, at the centers of each face:
+  result.properties.cube.facecenters = [
+    new Connector(new Vector3D([r.x, 0, 0]).plus(c), [1, 0, 0], [0, 0, 1]),
+    new Connector(new Vector3D([-r.x, 0, 0]).plus(c), [-1, 0, 0], [0, 0, 1]),
+    new Connector(new Vector3D([0, r.y, 0]).plus(c), [0, 1, 0], [0, 0, 1]),
+    new Connector(new Vector3D([0, -r.y, 0]).plus(c), [0, -1, 0], [0, 0, 1]),
+    new Connector(new Vector3D([0, 0, r.z]).plus(c), [0, 0, 1], [1, 0, 0]),
+    new Connector(new Vector3D([0, 0, -r.z]).plus(c), [0, 0, -1], [1, 0, 0])
+  ]
+  return result
+}
+
+/** Construct a solid sphere
+ * @param {Object} [options] - options for construction
+ * @param {Vector3D} [options.center=[0,0,0]] - center of sphere
+ * @param {Number} [options.radius=1] - radius of sphere
+ * @param {Number} [options.resolution=defaultResolution3D] - number of polygons per 360 degree revolution
+ * @param {Array} [options.axes] -  an array with 3 vectors for the x, y and z base vectors
+ * @returns {CSG} new 3D solid
+ *
+ *
+ * @example
+ * let sphere = CSG.sphere({
+ *   center: [0, 0, 0],
+ *   radius: 2,
+ *   resolution: 32,
+ * });
+*/
+const sphere = function (options) {
+  options = options || {}
+  let center = parseOptionAs3DVector(options, 'center', [0, 0, 0])
+  let radius = parseOptionAsFloat(options, 'radius', 1)
+  let resolution = parseOptionAsInt(options, 'resolution', defaultResolution3D)
+  let xvector, yvector, zvector
+  if ('axes' in options) {
+    xvector = options.axes[0].unit().times(radius)
+    yvector = options.axes[1].unit().times(radius)
+    zvector = options.axes[2].unit().times(radius)
+  } else {
+    xvector = new Vector3D([1, 0, 0]).times(radius)
+    yvector = new Vector3D([0, -1, 0]).times(radius)
+    zvector = new Vector3D([0, 0, 1]).times(radius)
+  }
+  if (resolution < 4) resolution = 4
+  let qresolution = Math.round(resolution / 4)
+  let prevcylinderpoint
+  let polygons = []
+  for (let slice1 = 0; slice1 <= resolution; slice1++) {
+    let angle = Math.PI * 2.0 * slice1 / resolution
+    let cylinderpoint = xvector.times(Math.cos(angle)).plus(yvector.times(Math.sin(angle)))
+    if (slice1 > 0) {
+            // cylinder vertices:
+      let vertices = []
+      let prevcospitch, prevsinpitch
+      for (let slice2 = 0; slice2 <= qresolution; slice2++) {
+        let pitch = 0.5 * Math.PI * slice2 / qresolution
+        let cospitch = Math.cos(pitch)
+        let sinpitch = Math.sin(pitch)
+        if (slice2 > 0) {
+          vertices = []
+          vertices.push(new Vertex(center.plus(prevcylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
+          vertices.push(new Vertex(center.plus(cylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
+          if (slice2 < qresolution) {
+            vertices.push(new Vertex(center.plus(cylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
+          }
+          vertices.push(new Vertex(center.plus(prevcylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
+          polygons.push(new Polygon(vertices))
+          vertices = []
+          vertices.push(new Vertex(center.plus(prevcylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
+          vertices.push(new Vertex(center.plus(cylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
+          if (slice2 < qresolution) {
+            vertices.push(new Vertex(center.plus(cylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
+          }
+          vertices.push(new Vertex(center.plus(prevcylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
+          vertices.reverse()
+          polygons.push(new Polygon(vertices))
+        }
+        prevcospitch = cospitch
+        prevsinpitch = sinpitch
+      }
+    }
+    prevcylinderpoint = cylinderpoint
+  }
+  let result = CSG.fromPolygons(polygons)
+  result.properties.sphere = new Properties()
+  result.properties.sphere.center = new Vector3D(center)
+  result.properties.sphere.facepoint = center.plus(xvector)
+  return result
+}
+
+/** Construct a solid cylinder.
+ * @param {Object} [options] - options for construction
+ * @param {Vector} [options.start=[0,-1,0]] - start point of cylinder
+ * @param {Vector} [options.end=[0,1,0]] - end point of cylinder
+ * @param {Number} [options.radius=1] - radius of cylinder, must be scalar
+ * @param {Number} [options.resolution=defaultResolution3D] - number of polygons per 360 degree revolution
+ * @returns {CSG} new 3D solid
+ *
+ * @example
+ * let cylinder = CSG.cylinder({
+ *   start: [0, -10, 0],
+ *   end: [0, 10, 0],
+ *   radius: 10,
+ *   resolution: 16
+ * });
+ */
+const cylinder = function (options) {
+  let s = parseOptionAs3DVector(options, 'start', [0, -1, 0])
+  let e = parseOptionAs3DVector(options, 'end', [0, 1, 0])
+  let r = parseOptionAsFloat(options, 'radius', 1)
+  let rEnd = parseOptionAsFloat(options, 'radiusEnd', r)
+  let rStart = parseOptionAsFloat(options, 'radiusStart', r)
+  let alpha = parseOptionAsFloat(options, 'sectorAngle', 360)
+  alpha = alpha > 360 ? alpha % 360 : alpha
+
+  if ((rEnd < 0) || (rStart < 0)) {
+    throw new Error('Radius should be non-negative')
+  }
+  if ((rEnd === 0) && (rStart === 0)) {
+    throw new Error('Either radiusStart or radiusEnd should be positive')
+  }
+
+  let slices = parseOptionAsInt(options, 'resolution', defaultResolution2D) // FIXME is this 3D?
+  let ray = e.minus(s)
+  let axisZ = ray.unit() //, isY = (Math.abs(axisZ.y) > 0.5);
+  let axisX = axisZ.randomNonParallelVector().unit()
+
+    //  let axisX = new Vector3D(isY, !isY, 0).cross(axisZ).unit();
+  let axisY = axisX.cross(axisZ).unit()
+  let start = new Vertex(s)
+  let end = new Vertex(e)
+  let polygons = []
+
+  function point (stack, slice, radius) {
+    let angle = slice * Math.PI * alpha / 180
+    let out = axisX.times(Math.cos(angle)).plus(axisY.times(Math.sin(angle)))
+    let pos = s.plus(ray.times(stack)).plus(out.times(radius))
+    return new Vertex(pos)
+  }
+  if (alpha > 0) {
+    for (let i = 0; i < slices; i++) {
+      let t0 = i / slices
+      let t1 = (i + 1) / slices
+      if (rEnd === rStart) {
+        polygons.push(new Polygon([start, point(0, t0, rEnd), point(0, t1, rEnd)]))
+        polygons.push(new Polygon([point(0, t1, rEnd), point(0, t0, rEnd), point(1, t0, rEnd), point(1, t1, rEnd)]))
+        polygons.push(new Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
+      } else {
+        if (rStart > 0) {
+          polygons.push(new Polygon([start, point(0, t0, rStart), point(0, t1, rStart)]))
+          polygons.push(new Polygon([point(0, t0, rStart), point(1, t0, rEnd), point(0, t1, rStart)]))
+        }
+        if (rEnd > 0) {
+          polygons.push(new Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
+          polygons.push(new Polygon([point(1, t0, rEnd), point(1, t1, rEnd), point(0, t1, rStart)]))
+        }
+      }
+    }
+    if (alpha < 360) {
+      polygons.push(new Polygon([start, end, point(0, 0, rStart)]))
+      polygons.push(new Polygon([point(0, 0, rStart), end, point(1, 0, rEnd)]))
+      polygons.push(new Polygon([start, point(0, 1, rStart), end]))
+      polygons.push(new Polygon([point(0, 1, rStart), point(1, 1, rEnd), end]))
+    }
+  }
+  let result = CSG.fromPolygons(polygons)
+  result.properties.cylinder = new Properties()
+  result.properties.cylinder.start = new Connector(s, axisZ.negated(), axisX)
+  result.properties.cylinder.end = new Connector(e, axisZ, axisX)
+  let cylCenter = s.plus(ray.times(0.5))
+  let fptVec = axisX.rotate(s, axisZ, -alpha / 2).times((rStart + rEnd) / 2)
+  let fptVec90 = fptVec.cross(axisZ)
+    // note this one is NOT a face normal for a cone. - It's horizontal from cyl perspective
+  result.properties.cylinder.facepointH = new Connector(cylCenter.plus(fptVec), fptVec, axisZ)
+  result.properties.cylinder.facepointH90 = new Connector(cylCenter.plus(fptVec90), fptVec90, axisZ)
+  return result
+}
+
+/** Construct a cylinder with rounded ends.
+ * @param {Object} [options] - options for construction
+ * @param {Vector3D} [options.start=[0,-1,0]] - start point of cylinder
+ * @param {Vector3D} [options.end=[0,1,0]] - end point of cylinder
+ * @param {Number} [options.radius=1] - radius of rounded ends, must be scalar
+ * @param {Vector3D} [options.normal] - vector determining the starting angle for tesselation. Should be non-parallel to start.minus(end)
+ * @param {Number} [options.resolution=defaultResolution3D] - number of polygons per 360 degree revolution
+ * @returns {CSG} new 3D solid
+ *
+ * @example
+ * let cylinder = CSG.roundedCylinder({
+ *   start: [0, -10, 0],
+ *   end: [0, 10, 0],
+ *   radius: 2,
+ *   resolution: 16
+ * });
+ */
+const roundedCylinder = function (options) {
+  let p1 = parseOptionAs3DVector(options, 'start', [0, -1, 0])
+  let p2 = parseOptionAs3DVector(options, 'end', [0, 1, 0])
+  let radius = parseOptionAsFloat(options, 'radius', 1)
+  let direction = p2.minus(p1)
+  let defaultnormal
+  if (Math.abs(direction.x) > Math.abs(direction.y)) {
+    defaultnormal = new Vector3D(0, 1, 0)
+  } else {
+    defaultnormal = new Vector3D(1, 0, 0)
+  }
+  let normal = parseOptionAs3DVector(options, 'normal', defaultnormal)
+  let resolution = parseOptionAsInt(options, 'resolution', defaultResolution3D)
+  if (resolution < 4) resolution = 4
+  let polygons = []
+  let qresolution = Math.floor(0.25 * resolution)
+  let length = direction.length()
+  if (length < EPS) {
+    return sphere({
+      center: p1,
+      radius: radius,
+      resolution: resolution
+    })
+  }
+  let zvector = direction.unit().times(radius)
+  let xvector = zvector.cross(normal).unit().times(radius)
+  let yvector = xvector.cross(zvector).unit().times(radius)
+  let prevcylinderpoint
+  for (let slice1 = 0; slice1 <= resolution; slice1++) {
+    let angle = Math.PI * 2.0 * slice1 / resolution
+    let cylinderpoint = xvector.times(Math.cos(angle)).plus(yvector.times(Math.sin(angle)))
+    if (slice1 > 0) {
+            // cylinder vertices:
+      let vertices = []
+      vertices.push(new Vertex(p1.plus(cylinderpoint)))
+      vertices.push(new Vertex(p1.plus(prevcylinderpoint)))
+      vertices.push(new Vertex(p2.plus(prevcylinderpoint)))
+      vertices.push(new Vertex(p2.plus(cylinderpoint)))
+      polygons.push(new Polygon(vertices))
+      let prevcospitch, prevsinpitch
+      for (let slice2 = 0; slice2 <= qresolution; slice2++) {
+        let pitch = 0.5 * Math.PI * slice2 / qresolution
+                // let pitch = Math.asin(slice2/qresolution);
+        let cospitch = Math.cos(pitch)
+        let sinpitch = Math.sin(pitch)
+        if (slice2 > 0) {
+          vertices = []
+          vertices.push(new Vertex(p1.plus(prevcylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
+          vertices.push(new Vertex(p1.plus(cylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
+          if (slice2 < qresolution) {
+            vertices.push(new Vertex(p1.plus(cylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
+          }
+          vertices.push(new Vertex(p1.plus(prevcylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
+          polygons.push(new Polygon(vertices))
+          vertices = []
+          vertices.push(new Vertex(p2.plus(prevcylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
+          vertices.push(new Vertex(p2.plus(cylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
+          if (slice2 < qresolution) {
+            vertices.push(new Vertex(p2.plus(cylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
+          }
+          vertices.push(new Vertex(p2.plus(prevcylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
+          vertices.reverse()
+          polygons.push(new Polygon(vertices))
+        }
+        prevcospitch = cospitch
+        prevsinpitch = sinpitch
+      }
+    }
+    prevcylinderpoint = cylinderpoint
+  }
+  let result = CSG.fromPolygons(polygons)
+  let ray = zvector.unit()
+  let axisX = xvector.unit()
+  result.properties.roundedCylinder = new Properties()
+  result.properties.roundedCylinder.start = new Connector(p1, ray.negated(), axisX)
+  result.properties.roundedCylinder.end = new Connector(p2, ray, axisX)
+  result.properties.roundedCylinder.facepoint = p1.plus(xvector)
+  return result
+}
+
+/** Construct an elliptic cylinder.
+ * @param {Object} [options] - options for construction
+ * @param {Vector3D} [options.start=[0,-1,0]] - start point of cylinder
+ * @param {Vector3D} [options.end=[0,1,0]] - end point of cylinder
+ * @param {Vector2D} [options.radius=[1,1]] - radius of rounded ends, must be two dimensional array
+ * @param {Vector2D} [options.radiusStart=[1,1]] - OPTIONAL radius of rounded start, must be two dimensional array
+ * @param {Vector2D} [options.radiusEnd=[1,1]] - OPTIONAL radius of rounded end, must be two dimensional array
+ * @param {Number} [options.resolution=defaultResolution2D] - number of polygons per 360 degree revolution
+ * @returns {CSG} new 3D solid
+ *
+ * @example
+ *     let cylinder = CSG.cylinderElliptic({
+ *       start: [0, -10, 0],
+ *       end: [0, 10, 0],
+ *       radiusStart: [10,5],
+ *       radiusEnd: [8,3],
+ *       resolution: 16
+ *     });
+ */
+
+const cylinderElliptic = function (options) {
+  let s = parseOptionAs3DVector(options, 'start', [0, -1, 0])
+  let e = parseOptionAs3DVector(options, 'end', [0, 1, 0])
+  let r = parseOptionAs2DVector(options, 'radius', [1, 1])
+  let rEnd = parseOptionAs2DVector(options, 'radiusEnd', r)
+  let rStart = parseOptionAs2DVector(options, 'radiusStart', r)
+
+  if ((rEnd._x < 0) || (rStart._x < 0) || (rEnd._y < 0) || (rStart._y < 0)) {
+    throw new Error('Radius should be non-negative')
+  }
+  if ((rEnd._x === 0 || rEnd._y === 0) && (rStart._x === 0 || rStart._y === 0)) {
+    throw new Error('Either radiusStart or radiusEnd should be positive')
+  }
+
+  let slices = parseOptionAsInt(options, 'resolution', defaultResolution2D) // FIXME is this correct?
+  let ray = e.minus(s)
+  let axisZ = ray.unit() //, isY = (Math.abs(axisZ.y) > 0.5);
+  let axisX = axisZ.randomNonParallelVector().unit()
+
+    //  let axisX = new Vector3D(isY, !isY, 0).cross(axisZ).unit();
+  let axisY = axisX.cross(axisZ).unit()
+  let start = new Vertex(s)
+  let end = new Vertex(e)
+  let polygons = []
+
+  function point (stack, slice, radius) {
+    let angle = slice * Math.PI * 2
+    let out = axisX.times(radius._x * Math.cos(angle)).plus(axisY.times(radius._y * Math.sin(angle)))
+    let pos = s.plus(ray.times(stack)).plus(out)
+    return new Vertex(pos)
+  }
+  for (let i = 0; i < slices; i++) {
+    let t0 = i / slices
+    let t1 = (i + 1) / slices
+
+    if (rEnd._x === rStart._x && rEnd._y === rStart._y) {
+      polygons.push(new Polygon([start, point(0, t0, rEnd), point(0, t1, rEnd)]))
+      polygons.push(new Polygon([point(0, t1, rEnd), point(0, t0, rEnd), point(1, t0, rEnd), point(1, t1, rEnd)]))
+      polygons.push(new Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
+    } else {
+      if (rStart._x > 0) {
+        polygons.push(new Polygon([start, point(0, t0, rStart), point(0, t1, rStart)]))
+        polygons.push(new Polygon([point(0, t0, rStart), point(1, t0, rEnd), point(0, t1, rStart)]))
+      }
+      if (rEnd._x > 0) {
+        polygons.push(new Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
+        polygons.push(new Polygon([point(1, t0, rEnd), point(1, t1, rEnd), point(0, t1, rStart)]))
+      }
+    }
+  }
+  let result = CSG.fromPolygons(polygons)
+  result.properties.cylinder = new Properties()
+  result.properties.cylinder.start = new Connector(s, axisZ.negated(), axisX)
+  result.properties.cylinder.end = new Connector(e, axisZ, axisX)
+  result.properties.cylinder.facepoint = s.plus(axisX.times(rStart))
+  return result
+}
+
+/** Construct an axis-aligned solid rounded cuboid.
+ * @param {Object} [options] - options for construction
+ * @param {Vector3D} [options.center=[0,0,0]] - center of rounded cube
+ * @param {Vector3D} [options.radius=[1,1,1]] - radius of rounded cube, single scalar is possible
+ * @param {Number} [options.roundradius=0.2] - radius of rounded edges
+ * @param {Number} [options.resolution=defaultResolution3D] - number of polygons per 360 degree revolution
+ * @returns {CSG} new 3D solid
+ *
+ * @example
+ * let cube = CSG.roundedCube({
+ *   center: [2, 0, 2],
+ *   radius: 15,
+ *   roundradius: 2,
+ *   resolution: 36,
+ * });
+ */
+const roundedCube = function (options) {
+  let minRR = 1e-2 // minroundradius 1e-3 gives rounding errors already
+  let center
+  let cuberadius
+  let corner1
+  let corner2
+  options = options || {}
+  if (('corner1' in options) || ('corner2' in options)) {
+    if (('center' in options) || ('radius' in options)) {
+      throw new Error('roundedCube: should either give a radius and center parameter, or a corner1 and corner2 parameter')
+    }
+    corner1 = parseOptionAs3DVector(options, 'corner1', [0, 0, 0])
+    corner2 = parseOptionAs3DVector(options, 'corner2', [1, 1, 1])
+    center = corner1.plus(corner2).times(0.5)
+    cuberadius = corner2.minus(corner1).times(0.5)
+  } else {
+    center = parseOptionAs3DVector(options, 'center', [0, 0, 0])
+    cuberadius = parseOptionAs3DVector(options, 'radius', [1, 1, 1])
+  }
+  cuberadius = cuberadius.abs() // negative radii make no sense
+  let resolution = parseOptionAsInt(options, 'resolution', defaultResolution3D)
+  if (resolution < 4) resolution = 4
+  if (resolution % 2 === 1 && resolution < 8) resolution = 8 // avoid ugly
+  let roundradius = parseOptionAs3DVector(options, 'roundradius', [0.2, 0.2, 0.2])
+    // slight hack for now - total radius stays ok
+  roundradius = Vector3D.Create(Math.max(roundradius.x, minRR), Math.max(roundradius.y, minRR), Math.max(roundradius.z, minRR))
+  let innerradius = cuberadius.minus(roundradius)
+  if (innerradius.x < 0 || innerradius.y < 0 || innerradius.z < 0) {
+    throw new Error('roundradius <= radius!')
+  }
+  let res = sphere({radius: 1, resolution: resolution})
+  res = res.scale(roundradius)
+  innerradius.x > EPS && (res = res.stretchAtPlane([1, 0, 0], [0, 0, 0], 2 * innerradius.x))
+  innerradius.y > EPS && (res = res.stretchAtPlane([0, 1, 0], [0, 0, 0], 2 * innerradius.y))
+  innerradius.z > EPS && (res = res.stretchAtPlane([0, 0, 1], [0, 0, 0], 2 * innerradius.z))
+  res = res.translate([-innerradius.x + center.x, -innerradius.y + center.y, -innerradius.z + center.z])
+  res = res.reTesselated()
+  res.properties.roundedCube = new Properties()
+  res.properties.roundedCube.center = new Vertex(center)
+  res.properties.roundedCube.facecenters = [
+    new Connector(new Vector3D([cuberadius.x, 0, 0]).plus(center), [1, 0, 0], [0, 0, 1]),
+    new Connector(new Vector3D([-cuberadius.x, 0, 0]).plus(center), [-1, 0, 0], [0, 0, 1]),
+    new Connector(new Vector3D([0, cuberadius.y, 0]).plus(center), [0, 1, 0], [0, 0, 1]),
+    new Connector(new Vector3D([0, -cuberadius.y, 0]).plus(center), [0, -1, 0], [0, 0, 1]),
+    new Connector(new Vector3D([0, 0, cuberadius.z]).plus(center), [0, 0, 1], [1, 0, 0]),
+    new Connector(new Vector3D([0, 0, -cuberadius.z]).plus(center), [0, 0, -1], [1, 0, 0])
+  ]
+  return res
+}
+
+/** Create a polyhedron using Openscad style arguments.
+ * Define face vertices clockwise looking from outside.
+ * @param {Object} [options] - options for construction
+ * @returns {CSG} new 3D solid
+ */
+const polyhedron = function (options) {
+  options = options || {}
+  if (('points' in options) !== ('faces' in options)) {
+    throw new Error("polyhedron needs 'points' and 'faces' arrays")
+  }
+  let vertices = parseOptionAs3DVectorList(options, 'points', [
+            [1, 1, 0],
+            [1, -1, 0],
+            [-1, -1, 0],
+            [-1, 1, 0],
+            [0, 0, 1]
+  ])
+        .map(function (pt) {
+          return new Vertex(pt)
+        })
+  let faces = parseOption(options, 'faces', [
+            [0, 1, 4],
+            [1, 2, 4],
+            [2, 3, 4],
+            [3, 0, 4],
+            [1, 0, 3],
+            [2, 1, 3]
+  ])
+    // Openscad convention defines inward normals - so we have to invert here
+  faces.forEach(function (face) {
+    face.reverse()
+  })
+  let polygons = faces.map(function (face) {
+    return new Polygon(face.map(function (idx) {
+      return vertices[idx]
+    }))
+  })
+
+    // TODO: facecenters as connectors? probably overkill. Maybe centroid
+    // the re-tesselation here happens because it's so easy for a user to
+    // create parametrized polyhedrons that end up with 1-2 dimensional polygons.
+    // These will create infinite loops at CSG.Tree()
+  return CSG.fromPolygons(polygons).reTesselated()
+}
+
+module.exports = {
+  cube,
+  sphere,
+  roundedCube,
+  cylinder,
+  roundedCylinder,
+  cylinderElliptic,
+  polyhedron
+}
+
+},{"./CSG":80,"./Properties":85,"./connectors":86,"./constants":87,"./math/Polygon3":96,"./math/Vector3":99,"./math/Vertex3":101,"./optionParsers":105}],108:[function(require,module,exports){
+const {_CSGDEBUG, EPS} = require('./constants')
+const Vertex = require('./math/Vertex3')
+const Polygon = require('./math/Polygon3')
+
+// Returns object:
+// .type:
+//   0: coplanar-front
+//   1: coplanar-back
+//   2: front
+//   3: back
+//   4: spanning
+// In case the polygon is spanning, returns:
+// .front: a Polygon of the front part
+// .back: a Polygon of the back part
+function splitPolygonByPlane (plane, polygon) {
+  let result = {
+    type: null,
+    front: null,
+    back: null
+  }
+      // cache in local lets (speedup):
+  let planenormal = plane.normal
+  let vertices = polygon.vertices
+  let numvertices = vertices.length
+  if (polygon.plane.equals(plane)) {
+    result.type = 0
+  } else {
+    let thisw = plane.w
+    let hasfront = false
+    let hasback = false
+    let vertexIsBack = []
+    let MINEPS = -EPS
+    for (let i = 0; i < numvertices; i++) {
+      let t = planenormal.dot(vertices[i].pos) - thisw
+      let isback = (t < 0)
+      vertexIsBack.push(isback)
+      if (t > EPS) hasfront = true
+      if (t < MINEPS) hasback = true
+    }
+    if ((!hasfront) && (!hasback)) {
+              // all points coplanar
+      let t = planenormal.dot(polygon.plane.normal)
+      result.type = (t >= 0) ? 0 : 1
+    } else if (!hasback) {
+      result.type = 2
+    } else if (!hasfront) {
+      result.type = 3
+    } else {
+              // spanning
+      result.type = 4
+      let frontvertices = []
+      let backvertices = []
+      let isback = vertexIsBack[0]
+      for (let vertexindex = 0; vertexindex < numvertices; vertexindex++) {
+        let vertex = vertices[vertexindex]
+        let nextvertexindex = vertexindex + 1
+        if (nextvertexindex >= numvertices) nextvertexindex = 0
+        let nextisback = vertexIsBack[nextvertexindex]
+        if (isback === nextisback) {
+                      // line segment is on one side of the plane:
+          if (isback) {
+            backvertices.push(vertex)
+          } else {
+            frontvertices.push(vertex)
+          }
+        } else {
+                      // line segment intersects plane:
+          let point = vertex.pos
+          let nextpoint = vertices[nextvertexindex].pos
+          let intersectionpoint = plane.splitLineBetweenPoints(point, nextpoint)
+          let intersectionvertex = new Vertex(intersectionpoint)
+          if (isback) {
+            backvertices.push(vertex)
+            backvertices.push(intersectionvertex)
+            frontvertices.push(intersectionvertex)
+          } else {
+            frontvertices.push(vertex)
+            frontvertices.push(intersectionvertex)
+            backvertices.push(intersectionvertex)
+          }
+        }
+        isback = nextisback
+      } // for vertexindex
+              // remove duplicate vertices:
+      let EPS_SQUARED = EPS * EPS
+      if (backvertices.length >= 3) {
+        let prevvertex = backvertices[backvertices.length - 1]
+        for (let vertexindex = 0; vertexindex < backvertices.length; vertexindex++) {
+          let vertex = backvertices[vertexindex]
+          if (vertex.pos.distanceToSquared(prevvertex.pos) < EPS_SQUARED) {
+            backvertices.splice(vertexindex, 1)
+            vertexindex--
+          }
+          prevvertex = vertex
+        }
+      }
+      if (frontvertices.length >= 3) {
+        let prevvertex = frontvertices[frontvertices.length - 1]
+        for (let vertexindex = 0; vertexindex < frontvertices.length; vertexindex++) {
+          let vertex = frontvertices[vertexindex]
+          if (vertex.pos.distanceToSquared(prevvertex.pos) < EPS_SQUARED) {
+            frontvertices.splice(vertexindex, 1)
+            vertexindex--
+          }
+          prevvertex = vertex
+        }
+      }
+      if (frontvertices.length >= 3) {
+        result.front = new Polygon(frontvertices, polygon.shared, polygon.plane)
+      }
+      if (backvertices.length >= 3) {
+        result.back = new Polygon(backvertices, polygon.shared, polygon.plane)
+      }
+    }
+  }
+  return result
+}
+
+// # class PolygonTreeNode
+// This class manages hierarchical splits of polygons
+// At the top is a root node which doesn hold a polygon, only child PolygonTreeNodes
+// Below that are zero or more 'top' nodes; each holds a polygon. The polygons can be in different planes
+// splitByPlane() splits a node by a plane. If the plane intersects the polygon, two new child nodes
+// are created holding the splitted polygon.
+// getPolygons() retrieves the polygon from the tree. If for PolygonTreeNode the polygon is split but
+// the two split parts (child nodes) are still intact, then the unsplit polygon is returned.
+// This ensures that we can safely split a polygon into many fragments. If the fragments are untouched,
+//  getPolygons() will return the original unsplit polygon instead of the fragments.
+// remove() removes a polygon from the tree. Once a polygon is removed, the parent polygons are invalidated
+// since they are no longer intact.
+// constructor creates the root node:
+const PolygonTreeNode = function () {
+  this.parent = null
+  this.children = []
+  this.polygon = null
+  this.removed = false
+}
+
+PolygonTreeNode.prototype = {
+    // fill the tree with polygons. Should be called on the root node only; child nodes must
+    // always be a derivate (split) of the parent node.
+  addPolygons: function (polygons) {
+    if (!this.isRootNode())
+        // new polygons can only be added to root node; children can only be splitted polygons
+          {
+      throw new Error('Assertion failed')
+    }
+    let _this = this
+    polygons.map(function (polygon) {
+      _this.addChild(polygon)
+    })
+  },
+
+    // remove a node
+    // - the siblings become toplevel nodes
+    // - the parent is removed recursively
+  remove: function () {
+    if (!this.removed) {
+      this.removed = true
+
+      if (_CSGDEBUG) {
+        if (this.isRootNode()) throw new Error('Assertion failed') // can't remove root node
+        if (this.children.length) throw new Error('Assertion failed') // we shouldn't remove nodes with children
+      }
+
+            // remove ourselves from the parent's children list:
+      let parentschildren = this.parent.children
+      let i = parentschildren.indexOf(this)
+      if (i < 0) throw new Error('Assertion failed')
+      parentschildren.splice(i, 1)
+
+            // invalidate the parent's polygon, and of all parents above it:
+      this.parent.recursivelyInvalidatePolygon()
+    }
+  },
+
+  isRemoved: function () {
+    return this.removed
+  },
+
+  isRootNode: function () {
+    return !this.parent
+  },
+
+    // invert all polygons in the tree. Call on the root node
+  invert: function () {
+    if (!this.isRootNode()) throw new Error('Assertion failed') // can only call this on the root node
+    this.invertSub()
+  },
+
+  getPolygon: function () {
+    if (!this.polygon) throw new Error('Assertion failed') // doesn't have a polygon, which means that it has been broken down
+    return this.polygon
+  },
+
+  getPolygons: function (result) {
+    let children = [this]
+    let queue = [children]
+    let i, j, l, node
+    for (i = 0; i < queue.length; ++i) { // queue size can change in loop, don't cache length
+      children = queue[i]
+      for (j = 0, l = children.length; j < l; j++) { // ok to cache length
+        node = children[j]
+        if (node.polygon) {
+                    // the polygon hasn't been broken yet. We can ignore the children and return our polygon:
+          result.push(node.polygon)
+        } else {
+                    // our polygon has been split up and broken, so gather all subpolygons from the children
+          queue.push(node.children)
+        }
+      }
+    }
+  },
+
+    // split the node by a plane; add the resulting nodes to the frontnodes and backnodes array
+    // If the plane doesn't intersect the polygon, the 'this' object is added to one of the arrays
+    // If the plane does intersect the polygon, two new child nodes are created for the front and back fragments,
+    //  and added to both arrays.
+  splitByPlane: function (plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes) {
+    if (this.children.length) {
+      let queue = [this.children]
+      let i
+      let j
+      let l
+      let node
+      let nodes
+      for (i = 0; i < queue.length; i++) { // queue.length can increase, do not cache
+        nodes = queue[i]
+        for (j = 0, l = nodes.length; j < l; j++) { // ok to cache length
+          node = nodes[j]
+          if (node.children.length) {
+            queue.push(node.children)
+          } else {
+                        // no children. Split the polygon:
+            node._splitByPlane(plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes)
+          }
+        }
+      }
+    } else {
+      this._splitByPlane(plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes)
+    }
+  },
+
+    // only to be called for nodes with no children
+  _splitByPlane: function (plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes) {
+    let polygon = this.polygon
+    if (polygon) {
+      let bound = polygon.boundingSphere()
+      let sphereradius = bound[1] + EPS // FIXME Why add imprecision?
+      let planenormal = plane.normal
+      let spherecenter = bound[0]
+      let d = planenormal.dot(spherecenter) - plane.w
+      if (d > sphereradius) {
+        frontnodes.push(this)
+      } else if (d < -sphereradius) {
+        backnodes.push(this)
+      } else {
+        let splitresult = splitPolygonByPlane(plane, polygon)
+        switch (splitresult.type) {
+          case 0:
+                        // coplanar front:
+            coplanarfrontnodes.push(this)
+            break
+
+          case 1:
+                        // coplanar back:
+            coplanarbacknodes.push(this)
+            break
+
+          case 2:
+                        // front:
+            frontnodes.push(this)
+            break
+
+          case 3:
+                        // back:
+            backnodes.push(this)
+            break
+
+          case 4:
+                        // spanning:
+            if (splitresult.front) {
+              let frontnode = this.addChild(splitresult.front)
+              frontnodes.push(frontnode)
+            }
+            if (splitresult.back) {
+              let backnode = this.addChild(splitresult.back)
+              backnodes.push(backnode)
+            }
+            break
+        }
+      }
+    }
+  },
+
+    // PRIVATE methods from here:
+    // add child to a node
+    // this should be called whenever the polygon is split
+    // a child should be created for every fragment of the split polygon
+    // returns the newly created child
+  addChild: function (polygon) {
+    let newchild = new PolygonTreeNode()
+    newchild.parent = this
+    newchild.polygon = polygon
+    this.children.push(newchild)
+    return newchild
+  },
+
+  invertSub: function () {
+    let children = [this]
+    let queue = [children]
+    let i, j, l, node
+    for (i = 0; i < queue.length; i++) {
+      children = queue[i]
+      for (j = 0, l = children.length; j < l; j++) {
+        node = children[j]
+        if (node.polygon) {
+          node.polygon = node.polygon.flipped()
+        }
+        queue.push(node.children)
+      }
+    }
+  },
+
+  recursivelyInvalidatePolygon: function () {
+    let node = this
+    while (node.polygon) {
+      node.polygon = null
+      if (node.parent) {
+        node = node.parent
+      }
+    }
+  }
+}
+
+// # class Tree
+// This is the root of a BSP tree
+// We are using this separate class for the root of the tree, to hold the PolygonTreeNode root
+// The actual tree is kept in this.rootnode
+const Tree = function (polygons) {
+  this.polygonTree = new PolygonTreeNode()
+  this.rootnode = new Node(null)
+  if (polygons) this.addPolygons(polygons)
+}
+
+Tree.prototype = {
+  invert: function () {
+    this.polygonTree.invert()
+    this.rootnode.invert()
+  },
+
+    // Remove all polygons in this BSP tree that are inside the other BSP tree
+    // `tree`.
+  clipTo: function (tree, alsoRemovecoplanarFront) {
+    alsoRemovecoplanarFront = alsoRemovecoplanarFront ? true : false
+    this.rootnode.clipTo(tree, alsoRemovecoplanarFront)
+  },
+
+  allPolygons: function () {
+    let result = []
+    this.polygonTree.getPolygons(result)
+    return result
+  },
+
+  addPolygons: function (polygons) {
+    let _this = this
+    let polygontreenodes = polygons.map(function (p) {
+      return _this.polygonTree.addChild(p)
+    })
+    this.rootnode.addPolygonTreeNodes(polygontreenodes)
+  }
+}
+
+// # class Node
+// Holds a node in a BSP tree. A BSP tree is built from a collection of polygons
+// by picking a polygon to split along.
+// Polygons are not stored directly in the tree, but in PolygonTreeNodes, stored in
+// this.polygontreenodes. Those PolygonTreeNodes are children of the owning
+// Tree.polygonTree
+// This is not a leafy BSP tree since there is
+// no distinction between internal and leaf nodes.
+const Node = function (parent) {
+  this.plane = null
+  this.front = null
+  this.back = null
+  this.polygontreenodes = []
+  this.parent = parent
+}
+
+Node.prototype = {
+    // Convert solid space to empty space and empty space to solid space.
+  invert: function () {
+    let queue = [this]
+    let node
+    for (let i = 0; i < queue.length; i++) {
+      node = queue[i]
+      if (node.plane) node.plane = node.plane.flipped()
+      if (node.front) queue.push(node.front)
+      if (node.back) queue.push(node.back)
+      let temp = node.front
+      node.front = node.back
+      node.back = temp
+    }
+  },
+
+    // clip polygontreenodes to our plane
+    // calls remove() for all clipped PolygonTreeNodes
+  clipPolygons: function (polygontreenodes, alsoRemovecoplanarFront) {
+    let args = {'node': this, 'polygontreenodes': polygontreenodes}
+    let node
+    let stack = []
+
+    do {
+      node = args.node
+      polygontreenodes = args.polygontreenodes
+
+            // begin "function"
+      if (node.plane) {
+        let backnodes = []
+        let frontnodes = []
+        let coplanarfrontnodes = alsoRemovecoplanarFront ? backnodes : frontnodes
+        let plane = node.plane
+        let numpolygontreenodes = polygontreenodes.length
+        for (let i = 0; i < numpolygontreenodes; i++) {
+          let node1 = polygontreenodes[i]
+          if (!node1.isRemoved()) {
+            node1.splitByPlane(plane, coplanarfrontnodes, backnodes, frontnodes, backnodes)
+          }
+        }
+
+        if (node.front && (frontnodes.length > 0)) {
+          stack.push({'node': node.front, 'polygontreenodes': frontnodes})
+        }
+        let numbacknodes = backnodes.length
+        if (node.back && (numbacknodes > 0)) {
+          stack.push({'node': node.back, 'polygontreenodes': backnodes})
+        } else {
+                    // there's nothing behind this plane. Delete the nodes behind this plane:
+          for (let i = 0; i < numbacknodes; i++) {
+            backnodes[i].remove()
+          }
+        }
+      }
+      args = stack.pop()
+    } while (typeof (args) !== 'undefined')
+  },
+
+    // Remove all polygons in this BSP tree that are inside the other BSP tree
+    // `tree`.
+  clipTo: function (tree, alsoRemovecoplanarFront) {
+    let node = this
+    let stack = []
+    do {
+      if (node.polygontreenodes.length > 0) {
+        tree.rootnode.clipPolygons(node.polygontreenodes, alsoRemovecoplanarFront)
+      }
+      if (node.front) stack.push(node.front)
+      if (node.back) stack.push(node.back)
+      node = stack.pop()
+    } while (typeof (node) !== 'undefined')
+  },
+
+  addPolygonTreeNodes: function (polygontreenodes) {
+    let args = {'node': this, 'polygontreenodes': polygontreenodes}
+    let node
+    let stack = []
+    do {
+      node = args.node
+      polygontreenodes = args.polygontreenodes
+
+      if (polygontreenodes.length === 0) {
+        args = stack.pop()
+        continue
+      }
+      let _this = node
+      if (!node.plane) {
+        let bestplane = polygontreenodes[0].getPolygon().plane
+        node.plane = bestplane
+      }
+      let frontnodes = []
+      let backnodes = []
+
+      for (let i = 0, n = polygontreenodes.length; i < n; ++i) {
+        polygontreenodes[i].splitByPlane(_this.plane, _this.polygontreenodes, backnodes, frontnodes, backnodes)
+      }
+
+      if (frontnodes.length > 0) {
+        if (!node.front) node.front = new Node(node)
+        stack.push({'node': node.front, 'polygontreenodes': frontnodes})
+      }
+      if (backnodes.length > 0) {
+        if (!node.back) node.back = new Node(node)
+        stack.push({'node': node.back, 'polygontreenodes': backnodes})
+      }
+
+      args = stack.pop()
+    } while (typeof (args) !== 'undefined')
+  },
+
+  getParentPlaneNormals: function (normals, maxdepth) {
+    if (maxdepth > 0) {
+      if (this.parent) {
+        normals.push(this.parent.plane.normal)
+        this.parent.getParentPlaneNormals(normals, maxdepth - 1)
+      }
+    }
+  }
+}
+
+module.exports = Tree
+
+},{"./constants":87,"./math/Polygon3":96,"./math/Vertex3":101}],109:[function(require,module,exports){
+function fnNumberSort (a, b) {
+  return a - b
+}
+
+function fnSortByIndex (a, b) {
+  return a.index - b.index
+}
+
+const IsFloat = function (n) {
+  return (!isNaN(n)) || (n === Infinity) || (n === -Infinity)
+}
+
+const solve2Linear = function (a, b, c, d, u, v) {
+  let det = a * d - b * c
+  let invdet = 1.0 / det
+  let x = u * d - b * v
+  let y = -u * c + a * v
+  x *= invdet
+  y *= invdet
+  return [x, y]
+}
+
+function insertSorted (array, element, comparefunc) {
+  let leftbound = 0
+  let rightbound = array.length
+  while (rightbound > leftbound) {
+    let testindex = Math.floor((leftbound + rightbound) / 2)
+    let testelement = array[testindex]
+    let compareresult = comparefunc(element, testelement)
+    if (compareresult > 0) // element > testelement
+    {
+      leftbound = testindex + 1
+    } else {
+      rightbound = testindex
+    }
+  }
+  array.splice(leftbound, 0, element)
+}
+
+// Get the x coordinate of a point with a certain y coordinate, interpolated between two
+// points (CSG.Vector2D).
+// Interpolation is robust even if the points have the same y coordinate
+const interpolateBetween2DPointsForY = function (point1, point2, y) {
+  let f1 = y - point1.y
+  let f2 = point2.y - point1.y
+  if (f2 < 0) {
+    f1 = -f1
+    f2 = -f2
+  }
+  let t
+  if (f1 <= 0) {
+    t = 0.0
+  } else if (f1 >= f2) {
+    t = 1.0
+  } else if (f2 < 1e-10) { // FIXME Should this be CSG.EPS?
+    t = 0.5
+  } else {
+    t = f1 / f2
+  }
+  let result = point1.x + t * (point2.x - point1.x)
+  return result
+}
+
+module.exports = {
+  fnNumberSort,
+  fnSortByIndex,
+  IsFloat,
+  solve2Linear,
+  insertSorted,
+  interpolateBetween2DPointsForY
+}
+
+},{}],110:[function(require,module,exports){
+arguments[4][67][0].apply(exports,arguments)
+},{"../constants":87,"../math/Plane":94,"../math/Polygon3":96,"dup":67}],111:[function(require,module,exports){
 const { ensureManifoldness } = require('@jscad/io-utils')
 
 const mimeType = 'application/json'
@@ -12399,7 +18185,7 @@ module.exports = {
   mimeType
 }
 
-},{"@jscad/io-utils":73}],78:[function(require,module,exports){
+},{"@jscad/io-utils":73}],112:[function(require,module,exports){
 const { vt2jscad } = require('./vt2jscad')
 
 function deserialize (obj, fn, options) { // http://en.wikipedia.org/wiki/Wavefront_.obj_file
@@ -12457,7 +18243,7 @@ module.exports = {
   deserialize
 }
 
-},{"./vt2jscad":79}],79:[function(require,module,exports){
+},{"./vt2jscad":113}],113:[function(require,module,exports){
 // vertices, triangles, normals and colors
 function vt2jscad (v, t, n, c) {
   let src = ''
@@ -12486,7 +18272,7 @@ module.exports = {
   vt2jscad
 }
 
-},{}],80:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 const { CSG } = require('@jscad/csg')
 const { vt2jscad } = require('./vt2jscad')
 const { BinaryReader } = require('@jscad/io-utils')
@@ -12866,7 +18652,75 @@ module.exports = {
   deserialize
 }
 
-},{"./vt2jscad":81,"@jscad/csg":12,"@jscad/io-utils":73}],81:[function(require,module,exports){
+},{"./vt2jscad":149,"@jscad/csg":115,"@jscad/io-utils":73}],115:[function(require,module,exports){
+arguments[4][77][0].apply(exports,arguments)
+},{"./src/CAG":116,"./src/CAGFactories":117,"./src/CSG":118,"./src/CSGFactories":119,"./src/Properties":123,"./src/connectors":124,"./src/constants":125,"./src/debugHelpers":126,"./src/math/Line2":127,"./src/math/Line3":128,"./src/math/Matrix4":129,"./src/math/OrthoNormalBasis":130,"./src/math/Path2":131,"./src/math/Plane":132,"./src/math/Polygon2":133,"./src/math/Polygon3":134,"./src/math/Side":135,"./src/math/Vector2":136,"./src/math/Vector3":137,"./src/math/Vertex2":138,"./src/math/Vertex3":139,"./src/mutators":142,"./src/primitives2d":144,"./src/primitives3d":145,"dup":77}],116:[function(require,module,exports){
+arguments[4][78][0].apply(exports,arguments)
+},{"./CSG":118,"./FuzzyFactory2d":121,"./connectors":124,"./constants":125,"./math/OrthoNormalBasis":130,"./math/Path2":131,"./math/Polygon3":134,"./math/Side":135,"./math/Vector2":136,"./math/Vector3":137,"./math/Vertex2":138,"./math/Vertex3":139,"./math/lineUtils":140,"./optionParsers":143,"dup":78}],117:[function(require,module,exports){
+arguments[4][79][0].apply(exports,arguments)
+},{"./CAG":116,"./math/Path2":131,"./math/Side":135,"./math/Vector2":136,"./math/Vertex2":138,"dup":79}],118:[function(require,module,exports){
+arguments[4][80][0].apply(exports,arguments)
+},{"./CAG":116,"./FuzzyFactory3d":122,"./Properties":123,"./connectors":124,"./constants":125,"./math/Matrix4":129,"./math/OrthoNormalBasis":130,"./math/Plane":132,"./math/Polygon3":134,"./math/Vector2":136,"./math/Vector3":137,"./math/Vertex3":139,"./math/polygonUtils":141,"./trees":146,"./utils":147,"./utils/fixTJunctions":148,"dup":80}],119:[function(require,module,exports){
+arguments[4][81][0].apply(exports,arguments)
+},{"./CSG":118,"./math/Plane":132,"./math/Polygon2":133,"./math/Polygon3":134,"./math/Vector3":137,"./math/Vertex3":139,"dup":81}],120:[function(require,module,exports){
+arguments[4][38][0].apply(exports,arguments)
+},{"dup":38}],121:[function(require,module,exports){
+arguments[4][39][0].apply(exports,arguments)
+},{"./FuzzyFactory":120,"./constants":125,"./math/Side":135,"dup":39}],122:[function(require,module,exports){
+arguments[4][40][0].apply(exports,arguments)
+},{"./FuzzyFactory":120,"./constants":125,"./math/Polygon3":134,"dup":40}],123:[function(require,module,exports){
+arguments[4][41][0].apply(exports,arguments)
+},{"dup":41}],124:[function(require,module,exports){
+arguments[4][86][0].apply(exports,arguments)
+},{"./CSG":118,"./math/Line3":128,"./math/Matrix4":129,"./math/OrthoNormalBasis":130,"./math/Plane":132,"./math/Vector3":137,"dup":86}],125:[function(require,module,exports){
+arguments[4][43][0].apply(exports,arguments)
+},{"dup":43}],126:[function(require,module,exports){
+arguments[4][88][0].apply(exports,arguments)
+},{"./CSG":118,"./primitives3d":145,"dup":88}],127:[function(require,module,exports){
+arguments[4][44][0].apply(exports,arguments)
+},{"../utils":147,"./Vector2":136,"dup":44}],128:[function(require,module,exports){
+arguments[4][45][0].apply(exports,arguments)
+},{"../constants":125,"../utils":147,"./Vector3":137,"dup":45}],129:[function(require,module,exports){
+arguments[4][46][0].apply(exports,arguments)
+},{"./OrthoNormalBasis":130,"./Plane":132,"./Vector2":136,"./Vector3":137,"dup":46}],130:[function(require,module,exports){
+arguments[4][92][0].apply(exports,arguments)
+},{"./Line2":127,"./Line3":128,"./Matrix4":129,"./Plane":132,"./Vector2":136,"./Vector3":137,"dup":92}],131:[function(require,module,exports){
+arguments[4][93][0].apply(exports,arguments)
+},{"../CAG":116,"../constants":125,"../optionParsers":143,"./Side":135,"./Vector2":136,"./Vertex2":138,"dup":93}],132:[function(require,module,exports){
+arguments[4][49][0].apply(exports,arguments)
+},{"../constants":125,"./Line3":128,"./Vector3":137,"dup":49}],133:[function(require,module,exports){
+arguments[4][95][0].apply(exports,arguments)
+},{"../CAG":116,"dup":95}],134:[function(require,module,exports){
+arguments[4][96][0].apply(exports,arguments)
+},{"../CAG":116,"../CAGFactories":117,"../CSG":118,"../constants":125,"../utils":147,"./Matrix4":129,"./Plane":132,"./Vector3":137,"./Vertex3":139,"dup":96}],135:[function(require,module,exports){
+arguments[4][97][0].apply(exports,arguments)
+},{"../constants":125,"./Polygon3":134,"./Vector2":136,"./Vertex2":138,"./Vertex3":139,"dup":97}],136:[function(require,module,exports){
+arguments[4][98][0].apply(exports,arguments)
+},{"../utils":147,"./Vector3":137,"dup":98}],137:[function(require,module,exports){
+arguments[4][54][0].apply(exports,arguments)
+},{"../utils":147,"./Vector2":136,"dup":54}],138:[function(require,module,exports){
+arguments[4][55][0].apply(exports,arguments)
+},{"../constants":125,"./Vector2":136,"dup":55}],139:[function(require,module,exports){
+arguments[4][56][0].apply(exports,arguments)
+},{"../constants":125,"./Vector3":137,"dup":56}],140:[function(require,module,exports){
+arguments[4][102][0].apply(exports,arguments)
+},{"../constants":125,"../utils":147,"dup":102}],141:[function(require,module,exports){
+arguments[4][103][0].apply(exports,arguments)
+},{"../constants":125,"../utils":147,"./Line2":127,"./OrthoNormalBasis":130,"./Polygon3":134,"./Vector2":136,"./Vertex3":139,"dup":103}],142:[function(require,module,exports){
+arguments[4][59][0].apply(exports,arguments)
+},{"./math/Matrix4":129,"./math/Plane":132,"./math/Vector3":137,"dup":59}],143:[function(require,module,exports){
+arguments[4][105][0].apply(exports,arguments)
+},{"./math/Vector2":136,"./math/Vector3":137,"dup":105}],144:[function(require,module,exports){
+arguments[4][106][0].apply(exports,arguments)
+},{"./CAG":116,"./CAGFactories":117,"./constants":125,"./math/Path2":131,"./math/Vector2":136,"./optionParsers":143,"dup":106}],145:[function(require,module,exports){
+arguments[4][107][0].apply(exports,arguments)
+},{"./CSG":118,"./Properties":123,"./connectors":124,"./constants":125,"./math/Polygon3":134,"./math/Vector3":137,"./math/Vertex3":139,"./optionParsers":143,"dup":107}],146:[function(require,module,exports){
+arguments[4][108][0].apply(exports,arguments)
+},{"./constants":125,"./math/Polygon3":134,"./math/Vertex3":139,"dup":108}],147:[function(require,module,exports){
+arguments[4][109][0].apply(exports,arguments)
+},{"dup":109}],148:[function(require,module,exports){
+arguments[4][67][0].apply(exports,arguments)
+},{"../constants":125,"../math/Plane":132,"../math/Polygon3":134,"dup":67}],149:[function(require,module,exports){
 // vertices, triangles, normals and colors
 function vt2jscad (vertices, triangles, normals, colors) {
   let src = ''
@@ -12895,7 +18749,7 @@ module.exports = {
   vt2jscad
 }
 
-},{}],82:[function(require,module,exports){
+},{}],150:[function(require,module,exports){
 
 function serialize (CSG) {
   var result = 'solid csg.js\n'
@@ -12935,7 +18789,7 @@ module.exports = {
   serialize
 }
 
-},{}],83:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 
 // see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
 function serialize (CSG) {
@@ -13004,7 +18858,7 @@ module.exports = {
   serialize
 }
 
-},{}],84:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 const binarySerializer = require('./CSGToStlb').serialize
 const asciiSerializer = require('./CSGToStla').serialize
 const { ensureManifoldness } = require('@jscad/io-utils')
@@ -13026,7 +18880,7 @@ module.exports = {
   serialize
 }
 
-},{"./CSGToStla":82,"./CSGToStlb":83,"@jscad/io-utils":73}],85:[function(require,module,exports){
+},{"./CSGToStla":150,"./CSGToStlb":151,"@jscad/io-utils":73}],153:[function(require,module,exports){
 // units for converting CSS2 points/length, i.e. CSS2 value / pxPmm
 const pxPmm = 1 / 0.2822222 // used for scaling SVG coordinates(PX) to CAG coordinates(MM)
 const inchMM = 1 / (1 / 0.039370) // used for scaling SVG coordinates(IN) to CAG coordinates(MM)
@@ -13194,7 +19048,7 @@ module.exports = {
   svgColors
 }
 
-},{}],86:[function(require,module,exports){
+},{}],154:[function(require,module,exports){
 const {inchMM, ptMM, pcMM, svgColors} = require('./constants')
 
 // Calculate the CAG length/size from the given SVG value (float)
@@ -13378,7 +19232,7 @@ module.exports = {
   groupValue
 }
 
-},{"./constants":85}],87:[function(require,module,exports){
+},{"./constants":153}],155:[function(require,module,exports){
 /*
 ## License
 
@@ -13732,7 +19586,75 @@ const deserialize = function (src, filename, options) {
 
 module.exports = {deserialize}
 
-},{"./constants":85,"./helpers":86,"./shapesMapCsg":88,"./shapesMapJscad":89,"./svgElementHelpers":90,"@jscad/csg":12,"sax":97}],88:[function(require,module,exports){
+},{"./constants":153,"./helpers":154,"./shapesMapCsg":190,"./shapesMapJscad":191,"./svgElementHelpers":192,"@jscad/csg":156,"sax":233}],156:[function(require,module,exports){
+arguments[4][77][0].apply(exports,arguments)
+},{"./src/CAG":157,"./src/CAGFactories":158,"./src/CSG":159,"./src/CSGFactories":160,"./src/Properties":164,"./src/connectors":165,"./src/constants":166,"./src/debugHelpers":167,"./src/math/Line2":168,"./src/math/Line3":169,"./src/math/Matrix4":170,"./src/math/OrthoNormalBasis":171,"./src/math/Path2":172,"./src/math/Plane":173,"./src/math/Polygon2":174,"./src/math/Polygon3":175,"./src/math/Side":176,"./src/math/Vector2":177,"./src/math/Vector3":178,"./src/math/Vertex2":179,"./src/math/Vertex3":180,"./src/mutators":183,"./src/primitives2d":185,"./src/primitives3d":186,"dup":77}],157:[function(require,module,exports){
+arguments[4][78][0].apply(exports,arguments)
+},{"./CSG":159,"./FuzzyFactory2d":162,"./connectors":165,"./constants":166,"./math/OrthoNormalBasis":171,"./math/Path2":172,"./math/Polygon3":175,"./math/Side":176,"./math/Vector2":177,"./math/Vector3":178,"./math/Vertex2":179,"./math/Vertex3":180,"./math/lineUtils":181,"./optionParsers":184,"dup":78}],158:[function(require,module,exports){
+arguments[4][79][0].apply(exports,arguments)
+},{"./CAG":157,"./math/Path2":172,"./math/Side":176,"./math/Vector2":177,"./math/Vertex2":179,"dup":79}],159:[function(require,module,exports){
+arguments[4][80][0].apply(exports,arguments)
+},{"./CAG":157,"./FuzzyFactory3d":163,"./Properties":164,"./connectors":165,"./constants":166,"./math/Matrix4":170,"./math/OrthoNormalBasis":171,"./math/Plane":173,"./math/Polygon3":175,"./math/Vector2":177,"./math/Vector3":178,"./math/Vertex3":180,"./math/polygonUtils":182,"./trees":187,"./utils":188,"./utils/fixTJunctions":189,"dup":80}],160:[function(require,module,exports){
+arguments[4][81][0].apply(exports,arguments)
+},{"./CSG":159,"./math/Plane":173,"./math/Polygon2":174,"./math/Polygon3":175,"./math/Vector3":178,"./math/Vertex3":180,"dup":81}],161:[function(require,module,exports){
+arguments[4][38][0].apply(exports,arguments)
+},{"dup":38}],162:[function(require,module,exports){
+arguments[4][39][0].apply(exports,arguments)
+},{"./FuzzyFactory":161,"./constants":166,"./math/Side":176,"dup":39}],163:[function(require,module,exports){
+arguments[4][40][0].apply(exports,arguments)
+},{"./FuzzyFactory":161,"./constants":166,"./math/Polygon3":175,"dup":40}],164:[function(require,module,exports){
+arguments[4][41][0].apply(exports,arguments)
+},{"dup":41}],165:[function(require,module,exports){
+arguments[4][86][0].apply(exports,arguments)
+},{"./CSG":159,"./math/Line3":169,"./math/Matrix4":170,"./math/OrthoNormalBasis":171,"./math/Plane":173,"./math/Vector3":178,"dup":86}],166:[function(require,module,exports){
+arguments[4][43][0].apply(exports,arguments)
+},{"dup":43}],167:[function(require,module,exports){
+arguments[4][88][0].apply(exports,arguments)
+},{"./CSG":159,"./primitives3d":186,"dup":88}],168:[function(require,module,exports){
+arguments[4][44][0].apply(exports,arguments)
+},{"../utils":188,"./Vector2":177,"dup":44}],169:[function(require,module,exports){
+arguments[4][45][0].apply(exports,arguments)
+},{"../constants":166,"../utils":188,"./Vector3":178,"dup":45}],170:[function(require,module,exports){
+arguments[4][46][0].apply(exports,arguments)
+},{"./OrthoNormalBasis":171,"./Plane":173,"./Vector2":177,"./Vector3":178,"dup":46}],171:[function(require,module,exports){
+arguments[4][92][0].apply(exports,arguments)
+},{"./Line2":168,"./Line3":169,"./Matrix4":170,"./Plane":173,"./Vector2":177,"./Vector3":178,"dup":92}],172:[function(require,module,exports){
+arguments[4][93][0].apply(exports,arguments)
+},{"../CAG":157,"../constants":166,"../optionParsers":184,"./Side":176,"./Vector2":177,"./Vertex2":179,"dup":93}],173:[function(require,module,exports){
+arguments[4][49][0].apply(exports,arguments)
+},{"../constants":166,"./Line3":169,"./Vector3":178,"dup":49}],174:[function(require,module,exports){
+arguments[4][95][0].apply(exports,arguments)
+},{"../CAG":157,"dup":95}],175:[function(require,module,exports){
+arguments[4][96][0].apply(exports,arguments)
+},{"../CAG":157,"../CAGFactories":158,"../CSG":159,"../constants":166,"../utils":188,"./Matrix4":170,"./Plane":173,"./Vector3":178,"./Vertex3":180,"dup":96}],176:[function(require,module,exports){
+arguments[4][97][0].apply(exports,arguments)
+},{"../constants":166,"./Polygon3":175,"./Vector2":177,"./Vertex2":179,"./Vertex3":180,"dup":97}],177:[function(require,module,exports){
+arguments[4][98][0].apply(exports,arguments)
+},{"../utils":188,"./Vector3":178,"dup":98}],178:[function(require,module,exports){
+arguments[4][54][0].apply(exports,arguments)
+},{"../utils":188,"./Vector2":177,"dup":54}],179:[function(require,module,exports){
+arguments[4][55][0].apply(exports,arguments)
+},{"../constants":166,"./Vector2":177,"dup":55}],180:[function(require,module,exports){
+arguments[4][56][0].apply(exports,arguments)
+},{"../constants":166,"./Vector3":178,"dup":56}],181:[function(require,module,exports){
+arguments[4][102][0].apply(exports,arguments)
+},{"../constants":166,"../utils":188,"dup":102}],182:[function(require,module,exports){
+arguments[4][103][0].apply(exports,arguments)
+},{"../constants":166,"../utils":188,"./Line2":168,"./OrthoNormalBasis":171,"./Polygon3":175,"./Vector2":177,"./Vertex3":180,"dup":103}],183:[function(require,module,exports){
+arguments[4][59][0].apply(exports,arguments)
+},{"./math/Matrix4":170,"./math/Plane":173,"./math/Vector3":178,"dup":59}],184:[function(require,module,exports){
+arguments[4][105][0].apply(exports,arguments)
+},{"./math/Vector2":177,"./math/Vector3":178,"dup":105}],185:[function(require,module,exports){
+arguments[4][106][0].apply(exports,arguments)
+},{"./CAG":157,"./CAGFactories":158,"./constants":166,"./math/Path2":172,"./math/Vector2":177,"./optionParsers":184,"dup":106}],186:[function(require,module,exports){
+arguments[4][107][0].apply(exports,arguments)
+},{"./CSG":159,"./Properties":164,"./connectors":165,"./constants":166,"./math/Polygon3":175,"./math/Vector3":178,"./math/Vertex3":180,"./optionParsers":184,"dup":107}],187:[function(require,module,exports){
+arguments[4][108][0].apply(exports,arguments)
+},{"./constants":166,"./math/Polygon3":175,"./math/Vertex3":180,"dup":108}],188:[function(require,module,exports){
+arguments[4][109][0].apply(exports,arguments)
+},{"dup":109}],189:[function(require,module,exports){
+arguments[4][67][0].apply(exports,arguments)
+},{"../constants":166,"../math/Plane":173,"../math/Polygon3":175,"dup":67}],190:[function(require,module,exports){
 const {CSG, CAG} = require('@jscad/csg')
 const {svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect, groupValue} = require('./helpers')
 const {cssPxUnit} = require('./constants')
@@ -14111,7 +20033,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
   return pathCag
 }
 
-},{"./constants":85,"./helpers":86,"@jscad/csg":12}],89:[function(require,module,exports){
+},{"./constants":153,"./helpers":154,"@jscad/csg":156}],191:[function(require,module,exports){
 const {svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect, groupValue} = require('./helpers')
 const {cssPxUnit} = require('./constants')
 
@@ -14493,7 +20415,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGro
   return tmpCode
 }
 
-},{"./constants":85,"./helpers":86}],90:[function(require,module,exports){
+},{"./constants":153,"./helpers":154}],192:[function(require,module,exports){
 const {cagColor, cssStyle, css2cag} = require('./helpers')
 const {pxPmm} = require('./constants')
 
@@ -14941,7 +20863,7 @@ module.exports = {
   svgUse
 }
 
-},{"./constants":85,"./helpers":86}],91:[function(require,module,exports){
+},{"./constants":153,"./helpers":154}],193:[function(require,module,exports){
 // import { CSG } from '@jscad/csg'
 const {CSG} = require('@jscad/csg')
 
@@ -14997,7 +20919,75 @@ module.exports = {
   mimeType
 }
 
-},{"@jscad/csg":12}],92:[function(require,module,exports){
+},{"@jscad/csg":194}],194:[function(require,module,exports){
+arguments[4][77][0].apply(exports,arguments)
+},{"./src/CAG":195,"./src/CAGFactories":196,"./src/CSG":197,"./src/CSGFactories":198,"./src/Properties":202,"./src/connectors":203,"./src/constants":204,"./src/debugHelpers":205,"./src/math/Line2":206,"./src/math/Line3":207,"./src/math/Matrix4":208,"./src/math/OrthoNormalBasis":209,"./src/math/Path2":210,"./src/math/Plane":211,"./src/math/Polygon2":212,"./src/math/Polygon3":213,"./src/math/Side":214,"./src/math/Vector2":215,"./src/math/Vector3":216,"./src/math/Vertex2":217,"./src/math/Vertex3":218,"./src/mutators":221,"./src/primitives2d":223,"./src/primitives3d":224,"dup":77}],195:[function(require,module,exports){
+arguments[4][78][0].apply(exports,arguments)
+},{"./CSG":197,"./FuzzyFactory2d":200,"./connectors":203,"./constants":204,"./math/OrthoNormalBasis":209,"./math/Path2":210,"./math/Polygon3":213,"./math/Side":214,"./math/Vector2":215,"./math/Vector3":216,"./math/Vertex2":217,"./math/Vertex3":218,"./math/lineUtils":219,"./optionParsers":222,"dup":78}],196:[function(require,module,exports){
+arguments[4][79][0].apply(exports,arguments)
+},{"./CAG":195,"./math/Path2":210,"./math/Side":214,"./math/Vector2":215,"./math/Vertex2":217,"dup":79}],197:[function(require,module,exports){
+arguments[4][80][0].apply(exports,arguments)
+},{"./CAG":195,"./FuzzyFactory3d":201,"./Properties":202,"./connectors":203,"./constants":204,"./math/Matrix4":208,"./math/OrthoNormalBasis":209,"./math/Plane":211,"./math/Polygon3":213,"./math/Vector2":215,"./math/Vector3":216,"./math/Vertex3":218,"./math/polygonUtils":220,"./trees":225,"./utils":226,"./utils/fixTJunctions":227,"dup":80}],198:[function(require,module,exports){
+arguments[4][81][0].apply(exports,arguments)
+},{"./CSG":197,"./math/Plane":211,"./math/Polygon2":212,"./math/Polygon3":213,"./math/Vector3":216,"./math/Vertex3":218,"dup":81}],199:[function(require,module,exports){
+arguments[4][38][0].apply(exports,arguments)
+},{"dup":38}],200:[function(require,module,exports){
+arguments[4][39][0].apply(exports,arguments)
+},{"./FuzzyFactory":199,"./constants":204,"./math/Side":214,"dup":39}],201:[function(require,module,exports){
+arguments[4][40][0].apply(exports,arguments)
+},{"./FuzzyFactory":199,"./constants":204,"./math/Polygon3":213,"dup":40}],202:[function(require,module,exports){
+arguments[4][41][0].apply(exports,arguments)
+},{"dup":41}],203:[function(require,module,exports){
+arguments[4][86][0].apply(exports,arguments)
+},{"./CSG":197,"./math/Line3":207,"./math/Matrix4":208,"./math/OrthoNormalBasis":209,"./math/Plane":211,"./math/Vector3":216,"dup":86}],204:[function(require,module,exports){
+arguments[4][43][0].apply(exports,arguments)
+},{"dup":43}],205:[function(require,module,exports){
+arguments[4][88][0].apply(exports,arguments)
+},{"./CSG":197,"./primitives3d":224,"dup":88}],206:[function(require,module,exports){
+arguments[4][44][0].apply(exports,arguments)
+},{"../utils":226,"./Vector2":215,"dup":44}],207:[function(require,module,exports){
+arguments[4][45][0].apply(exports,arguments)
+},{"../constants":204,"../utils":226,"./Vector3":216,"dup":45}],208:[function(require,module,exports){
+arguments[4][46][0].apply(exports,arguments)
+},{"./OrthoNormalBasis":209,"./Plane":211,"./Vector2":215,"./Vector3":216,"dup":46}],209:[function(require,module,exports){
+arguments[4][92][0].apply(exports,arguments)
+},{"./Line2":206,"./Line3":207,"./Matrix4":208,"./Plane":211,"./Vector2":215,"./Vector3":216,"dup":92}],210:[function(require,module,exports){
+arguments[4][93][0].apply(exports,arguments)
+},{"../CAG":195,"../constants":204,"../optionParsers":222,"./Side":214,"./Vector2":215,"./Vertex2":217,"dup":93}],211:[function(require,module,exports){
+arguments[4][49][0].apply(exports,arguments)
+},{"../constants":204,"./Line3":207,"./Vector3":216,"dup":49}],212:[function(require,module,exports){
+arguments[4][95][0].apply(exports,arguments)
+},{"../CAG":195,"dup":95}],213:[function(require,module,exports){
+arguments[4][96][0].apply(exports,arguments)
+},{"../CAG":195,"../CAGFactories":196,"../CSG":197,"../constants":204,"../utils":226,"./Matrix4":208,"./Plane":211,"./Vector3":216,"./Vertex3":218,"dup":96}],214:[function(require,module,exports){
+arguments[4][97][0].apply(exports,arguments)
+},{"../constants":204,"./Polygon3":213,"./Vector2":215,"./Vertex2":217,"./Vertex3":218,"dup":97}],215:[function(require,module,exports){
+arguments[4][98][0].apply(exports,arguments)
+},{"../utils":226,"./Vector3":216,"dup":98}],216:[function(require,module,exports){
+arguments[4][54][0].apply(exports,arguments)
+},{"../utils":226,"./Vector2":215,"dup":54}],217:[function(require,module,exports){
+arguments[4][55][0].apply(exports,arguments)
+},{"../constants":204,"./Vector2":215,"dup":55}],218:[function(require,module,exports){
+arguments[4][56][0].apply(exports,arguments)
+},{"../constants":204,"./Vector3":216,"dup":56}],219:[function(require,module,exports){
+arguments[4][102][0].apply(exports,arguments)
+},{"../constants":204,"../utils":226,"dup":102}],220:[function(require,module,exports){
+arguments[4][103][0].apply(exports,arguments)
+},{"../constants":204,"../utils":226,"./Line2":206,"./OrthoNormalBasis":209,"./Polygon3":213,"./Vector2":215,"./Vertex3":218,"dup":103}],221:[function(require,module,exports){
+arguments[4][59][0].apply(exports,arguments)
+},{"./math/Matrix4":208,"./math/Plane":211,"./math/Vector3":216,"dup":59}],222:[function(require,module,exports){
+arguments[4][105][0].apply(exports,arguments)
+},{"./math/Vector2":215,"./math/Vector3":216,"dup":105}],223:[function(require,module,exports){
+arguments[4][106][0].apply(exports,arguments)
+},{"./CAG":195,"./CAGFactories":196,"./constants":204,"./math/Path2":210,"./math/Vector2":215,"./optionParsers":222,"dup":106}],224:[function(require,module,exports){
+arguments[4][107][0].apply(exports,arguments)
+},{"./CSG":197,"./Properties":202,"./connectors":203,"./constants":204,"./math/Polygon3":213,"./math/Vector3":216,"./math/Vertex3":218,"./optionParsers":222,"dup":107}],225:[function(require,module,exports){
+arguments[4][108][0].apply(exports,arguments)
+},{"./constants":204,"./math/Polygon3":213,"./math/Vertex3":218,"dup":108}],226:[function(require,module,exports){
+arguments[4][109][0].apply(exports,arguments)
+},{"dup":109}],227:[function(require,module,exports){
+arguments[4][67][0].apply(exports,arguments)
+},{"../constants":204,"../math/Plane":211,"../math/Polygon3":213,"dup":67}],228:[function(require,module,exports){
 // import xmldom from 'xmldom'
 const xmldom = require('xmldom')
 const { ensureManifoldness } = require('@jscad/io-utils')
@@ -15119,7 +21109,7 @@ module.exports = {
   mimeType
 }
 
-},{"@jscad/io-utils":73,"xmldom":99}],93:[function(require,module,exports){
+},{"@jscad/io-utils":73,"xmldom":235}],229:[function(require,module,exports){
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
     define(['exports'], factory);
@@ -16175,7 +22165,7 @@ module.exports = {
 });
 
 
-},{}],94:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 (function webpackUniversalModuleDefinition(root, factory) {
 /* istanbul ignore next */
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -22577,7 +28567,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
-},{}],95:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 /*
   Copyright (C) 2012-2013 Yusuke Suzuki <utatane.tea@gmail.com>
   Copyright (C) 2012 Ariya Hidayat <ariya.hidayat@gmail.com>
@@ -23428,29 +29418,23 @@ return /******/ (function(modules) { // webpackBootstrap
 }(exports));
 /* vim: set sw=4 ts=4 et tw=80 : */
 
-},{"./package.json":96}],96:[function(require,module,exports){
+},{"./package.json":232}],232:[function(require,module,exports){
 module.exports={
-  "_args": [
-    [
-      "estraverse@4.2.0",
-      "/Users/kraftwerk-mb/dev/projects/openjscad/core/tmp/OpenJSCAD.org/packages/core"
-    ]
-  ],
-  "_from": "estraverse@4.2.0",
+  "_from": "estraverse@^4.2.0",
   "_id": "estraverse@4.2.0",
   "_inBundle": false,
   "_integrity": "sha1-De4/7TH81GlhjOc0IJn8GvoL2xM=",
   "_location": "/estraverse",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "range",
     "registry": true,
-    "raw": "estraverse@4.2.0",
+    "raw": "estraverse@^4.2.0",
     "name": "estraverse",
     "escapedName": "estraverse",
-    "rawSpec": "4.2.0",
+    "rawSpec": "^4.2.0",
     "saveSpec": null,
-    "fetchSpec": "4.2.0"
+    "fetchSpec": "^4.2.0"
   },
   "_requiredBy": [
     "/",
@@ -23458,11 +29442,14 @@ module.exports={
     "/call-matcher"
   ],
   "_resolved": "https://registry.npmjs.org/estraverse/-/estraverse-4.2.0.tgz",
-  "_spec": "4.2.0",
-  "_where": "/Users/kraftwerk-mb/dev/projects/openjscad/core/tmp/OpenJSCAD.org/packages/core",
+  "_shasum": "0dee3fed31fcd469618ce7342099fc1afa0bdb13",
+  "_spec": "estraverse@^4.2.0",
+  "_where": "/Users/kraftwerk-mb/dev/projects/openjscad/core/OpenJSCAD.org/packages/core",
   "bugs": {
     "url": "https://github.com/estools/estraverse/issues"
   },
+  "bundleDependencies": false,
+  "deprecated": false,
   "description": "ECMAScript JS AST traversal functions",
   "devDependencies": {
     "babel-preset-es2015": "^6.3.13",
@@ -23503,7 +29490,7 @@ module.exports={
   "version": "4.2.0"
 }
 
-},{}],97:[function(require,module,exports){
+},{}],233:[function(require,module,exports){
 (function (Buffer){
 ;(function (sax) { // wrapper for non-node envs
   sax.parser = function (strict, opt) { return new SAXParser(strict, opt) }
@@ -25072,7 +31059,7 @@ module.exports={
 })(typeof exports === 'undefined' ? this.sax = {} : exports)
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":214,"stream":319,"string_decoder":213}],98:[function(require,module,exports){
+},{"buffer":439,"stream":543,"string_decoder":438}],234:[function(require,module,exports){
 var bundleFn = arguments[3];
 var sources = arguments[4];
 var cache = arguments[5];
@@ -25154,7 +31141,7 @@ module.exports = function (fn, options) {
     return worker;
 };
 
-},{}],99:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 function DOMParser(options){
 	this.options = options ||{locator:{}};
 	
@@ -25407,7 +31394,7 @@ function appendElement (hander,node) {
 	exports.DOMParser = DOMParser;
 //}
 
-},{"./dom":100,"./sax":101}],100:[function(require,module,exports){
+},{"./dom":236,"./sax":237}],236:[function(require,module,exports){
 /*
  * DOM Level 2
  * Object DOMException
@@ -26653,7 +32640,7 @@ try{
 	exports.XMLSerializer = XMLSerializer;
 //}
 
-},{}],101:[function(require,module,exports){
+},{}],237:[function(require,module,exports){
 //[4]   	NameStartChar	   ::=   	":" | [A-Z] | "_" | [a-z] | [#xC0-#xD6] | [#xD8-#xF6] | [#xF8-#x2FF] | [#x370-#x37D] | [#x37F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] | [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]
 //[4a]   	NameChar	   ::=   	NameStartChar | "-" | "." | [0-9] | #xB7 | [#x0300-#x036F] | [#x203F-#x2040]
 //[5]   	Name	   ::=   	NameStartChar (NameChar)*
@@ -27288,7 +33275,7 @@ function split(source,start){
 exports.XMLReader = XMLReader;
 
 
-},{}],102:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 /**
  * parse the jscad script to get the parameter definitions
  * @param {String} script the script
@@ -27319,14 +33306,14 @@ module.exports = function getParamDefinitions (script) {
   return params
 }
 
-},{}],103:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 /**
  * extracts the parameter
  * @param {Array} paramControls
  * @param {Boolean} onlyChanged
  * @returns {Object} the parameter values, as an object
  */
-module.exports = function getParameterValues (paramControls, parameterDefinitions, onlyChanged) {
+module.exports = function getParameterValuesFromUIControls (paramControls, parameterDefinitions, onlyChanged) {
   let paramValues = {}
   let value
   for (var i = 0; i < paramControls.length; i++) {
@@ -27378,7 +33365,7 @@ module.exports = function getParameterValues (paramControls, parameterDefinition
   return paramValues
 }
 
-},{}],104:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 /* converts input data to array if it is not already an array */
 function toArray (data) {
   if (!data) return []
@@ -27388,7 +33375,7 @@ function toArray (data) {
 
 module.exports = {toArray}
 
-},{}],105:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 const { CSG, CAG, isCSG, isCAG } = require('@jscad/csg')
 const {toArray} = require('./arrays')
 
@@ -27470,139 +33457,113 @@ module.exports = {
   mergeSolids2
 }
 
-},{"./arrays":104,"@jscad/csg":12}],106:[function(require,module,exports){
+},{"./arrays":240,"@jscad/csg":12}],242:[function(require,module,exports){
 arguments[4][9][0].apply(exports,arguments)
-},{"dup":9,"sax":318}],107:[function(require,module,exports){
+},{"dup":9,"sax":542}],243:[function(require,module,exports){
 arguments[4][10][0].apply(exports,arguments)
-},{"@jscad/io-utils":159,"dup":10}],108:[function(require,module,exports){
-arguments[4][12][0].apply(exports,arguments)
-},{"./src/api/debugHelpers":110,"./src/api/optionParsers":116,"./src/api/primitives2d":117,"./src/api/primitives3d":118,"./src/core/CAG":120,"./src/core/CAGFactories":121,"./src/core/CSG":122,"./src/core/CSGFactories":123,"./src/core/Properties":127,"./src/core/connectors":128,"./src/core/constants":129,"./src/core/math/Line2":130,"./src/core/math/Line3":131,"./src/core/math/Matrix4":132,"./src/core/math/OrthoNormalBasis":133,"./src/core/math/Path2":134,"./src/core/math/Plane":135,"./src/core/math/Polygon2":136,"./src/core/math/Polygon3":137,"./src/core/math/Side":138,"./src/core/math/Vector2":139,"./src/core/math/Vector3":140,"./src/core/math/Vertex2":141,"./src/core/math/Vertex3":142,"./src/core/mutators":145,"./src/core/utils":147,"dup":12}],109:[function(require,module,exports){
-arguments[4][13][0].apply(exports,arguments)
-},{"../core/math/Path2":134,"dup":13}],110:[function(require,module,exports){
-arguments[4][16][0].apply(exports,arguments)
-},{"../core/CSG":122,"./primitives3d":118,"dup":16}],111:[function(require,module,exports){
-arguments[4][17][0].apply(exports,arguments)
-},{"../core/math/Polygon3":137,"../core/math/Vector3":140,"../core/math/Vertex3":142,"dup":17}],112:[function(require,module,exports){
-arguments[4][22][0].apply(exports,arguments)
-},{"../core/CAGFactories":121,"../core/connectors.js":128,"../core/math/Matrix4.js":132,"../core/math/Vector2":139,"../core/math/Vector3.js":140,"dup":22}],113:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"../core/CSG":122,"../core/constants":129,"../core/math/OrthoNormalBasis":133,"../core/math/Plane":135,"../core/math/Polygon3":137,"../core/math/Vector2":139,"../core/math/Vertex3":142,"dup":23}],114:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"../core/CAG":120,"../core/CAGFactories":121,"../core/CSG":122,"../core/CSGFactories":123,"../core/constants":129,"../core/math/Polygon3":137,"../core/math/Vector2":139,"../core/math/Vertex3":142,"../core/utils":147,"dup":24}],115:[function(require,module,exports){
-arguments[4][25][0].apply(exports,arguments)
-},{"../core/CAGFactories":121,"../core/CSG":122,"../core/CSGFactories":123,"../core/connectors":128,"../core/constants":129,"../core/math/Matrix4":132,"../core/math/OrthoNormalBasis":133,"../core/math/Path2":134,"../core/math/Vector3":140,"./helpers":111,"./optionParsers":116,"dup":25}],116:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"../core/math/Vector2":139,"../core/math/Vector3":140,"dup":27}],117:[function(require,module,exports){
-arguments[4][29][0].apply(exports,arguments)
-},{"../core/CAG":120,"../core/CAGFactories":121,"../core/constants":129,"../core/math/Path2":134,"../core/math/Vector2":139,"../core/math/Vertex2":141,"./optionParsers":116,"dup":29}],118:[function(require,module,exports){
-arguments[4][31][0].apply(exports,arguments)
-},{"../core/CSGFactories":123,"../core/Properties":127,"../core/connectors":128,"../core/constants":129,"../core/math/Polygon3":137,"../core/math/Vector3":140,"../core/math/Vertex3":142,"./optionParsers":116,"dup":31}],119:[function(require,module,exports){
-arguments[4][32][0].apply(exports,arguments)
-},{"../core/CSGFactories":123,"../core/math/Polygon3":137,"../core/utils":147,"dup":32}],120:[function(require,module,exports){
-arguments[4][34][0].apply(exports,arguments)
-},{"../api/cagOutlinePaths":109,"../api/ops-cnc":112,"../api/ops-expandContract":114,"../api/ops-extrusions":115,"./CAGFactories":121,"./CSGFactories":123,"./connectors":128,"./math/Polygon3":137,"./math/Vector2":139,"./math/Vector3":140,"./math/Vertex3":142,"./utils/cagMeasurements":148,"./utils/cagValidation":149,"./utils/canonicalize":150,"./utils/retesellate":154,"dup":34}],121:[function(require,module,exports){
-arguments[4][35][0].apply(exports,arguments)
-},{"./CAG":120,"./constants":129,"./math/Side":138,"./math/Vector2":139,"./math/Vertex2":141,"./utils/cagValidation":149,"dup":35}],122:[function(require,module,exports){
-arguments[4][36][0].apply(exports,arguments)
-},{"../api/ops-cnc":112,"../api/ops-cuts":113,"../api/ops-expandContract":114,"./CAG":120,"./CSGFactories":123,"./Properties":127,"./math/OrthoNormalBasis":133,"./math/Plane":135,"./math/Polygon3":137,"./trees":146,"./utils/canonicalize":150,"./utils/csgMeasurements":151,"./utils/csgProjections":152,"./utils/fixTJunctions":153,"./utils/retesellate":154,"dup":36}],123:[function(require,module,exports){
-arguments[4][37][0].apply(exports,arguments)
-},{"./CSG":122,"./math/Plane":135,"./math/Polygon2":136,"./math/Polygon3":137,"./math/Vector3":140,"./math/Vertex3":142,"dup":37}],124:[function(require,module,exports){
-arguments[4][38][0].apply(exports,arguments)
-},{"dup":38}],125:[function(require,module,exports){
-arguments[4][39][0].apply(exports,arguments)
-},{"./FuzzyFactory":124,"./constants":129,"./math/Side":138,"dup":39}],126:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"./FuzzyFactory":124,"./constants":129,"./math/Polygon3":137,"dup":40}],127:[function(require,module,exports){
-arguments[4][41][0].apply(exports,arguments)
-},{"dup":41}],128:[function(require,module,exports){
-arguments[4][42][0].apply(exports,arguments)
-},{"./CSG":122,"./math/Line3":131,"./math/Matrix4":132,"./math/OrthoNormalBasis":133,"./math/Plane":135,"./math/Vector3":140,"dup":42}],129:[function(require,module,exports){
-arguments[4][43][0].apply(exports,arguments)
-},{"dup":43}],130:[function(require,module,exports){
-arguments[4][44][0].apply(exports,arguments)
-},{"../utils":147,"./Vector2":139,"dup":44}],131:[function(require,module,exports){
-arguments[4][45][0].apply(exports,arguments)
-},{"../constants":129,"../utils":147,"./Vector3":140,"dup":45}],132:[function(require,module,exports){
-arguments[4][46][0].apply(exports,arguments)
-},{"./OrthoNormalBasis":133,"./Plane":135,"./Vector2":139,"./Vector3":140,"dup":46}],133:[function(require,module,exports){
-arguments[4][47][0].apply(exports,arguments)
-},{"./Line2":130,"./Line3":131,"./Matrix4":132,"./Plane":135,"./Vector2":139,"./Vector3":140,"dup":47}],134:[function(require,module,exports){
-arguments[4][48][0].apply(exports,arguments)
-},{"../../api/optionParsers":116,"../CAG":120,"../constants":129,"./Side":138,"./Vector2":139,"./Vertex2":141,"dup":48}],135:[function(require,module,exports){
-arguments[4][49][0].apply(exports,arguments)
-},{"../constants":129,"./Line3":131,"./Vector3":140,"dup":49}],136:[function(require,module,exports){
-arguments[4][50][0].apply(exports,arguments)
-},{"../CAG":120,"../CAGFactories":121,"dup":50}],137:[function(require,module,exports){
-arguments[4][51][0].apply(exports,arguments)
-},{"../../api/solidFromSlices":119,"../CAG":120,"../CAGFactories":121,"../CSGFactories":123,"../constants":129,"./Matrix4":132,"./Plane":135,"./Vector3":140,"./Vertex3":142,"dup":51}],138:[function(require,module,exports){
-arguments[4][52][0].apply(exports,arguments)
-},{"../constants":129,"./Polygon3":137,"./Vector2":139,"./Vertex2":141,"./Vertex3":142,"dup":52}],139:[function(require,module,exports){
-arguments[4][53][0].apply(exports,arguments)
-},{"../utils":147,"./Vector3":140,"dup":53}],140:[function(require,module,exports){
-arguments[4][54][0].apply(exports,arguments)
-},{"../utils":147,"./Vector2":139,"dup":54}],141:[function(require,module,exports){
-arguments[4][55][0].apply(exports,arguments)
-},{"../constants":129,"./Vector2":139,"dup":55}],142:[function(require,module,exports){
-arguments[4][56][0].apply(exports,arguments)
-},{"../constants":129,"./Vector3":140,"dup":56}],143:[function(require,module,exports){
-arguments[4][57][0].apply(exports,arguments)
-},{"../constants":129,"../utils":147,"dup":57}],144:[function(require,module,exports){
-arguments[4][58][0].apply(exports,arguments)
-},{"../constants":129,"../utils":147,"./Line2":130,"./OrthoNormalBasis":133,"./Polygon3":137,"./Vector2":139,"./Vertex3":142,"dup":58}],145:[function(require,module,exports){
-arguments[4][59][0].apply(exports,arguments)
-},{"./math/Matrix4":132,"./math/Plane":135,"./math/Vector3":140,"dup":59}],146:[function(require,module,exports){
-arguments[4][60][0].apply(exports,arguments)
-},{"./constants":129,"./math/Polygon3":137,"./math/Vertex3":142,"dup":60}],147:[function(require,module,exports){
-arguments[4][61][0].apply(exports,arguments)
-},{"dup":61}],148:[function(require,module,exports){
-arguments[4][62][0].apply(exports,arguments)
-},{"../math/Vector2":139,"dup":62}],149:[function(require,module,exports){
-arguments[4][63][0].apply(exports,arguments)
-},{"../constants":129,"../math/lineUtils":143,"dup":63}],150:[function(require,module,exports){
-arguments[4][64][0].apply(exports,arguments)
-},{"../CAGFactories":121,"../CSGFactories":123,"../FuzzyFactory2d":125,"../FuzzyFactory3d":126,"../constants":129,"dup":64}],151:[function(require,module,exports){
-arguments[4][65][0].apply(exports,arguments)
-},{"../math/Vector3":140,"dup":65}],152:[function(require,module,exports){
-arguments[4][66][0].apply(exports,arguments)
-},{"../CAG":120,"../constants":129,"dup":66}],153:[function(require,module,exports){
-arguments[4][67][0].apply(exports,arguments)
-},{"../constants":129,"../math/Plane":135,"../math/Polygon3":137,"dup":67}],154:[function(require,module,exports){
-arguments[4][68][0].apply(exports,arguments)
-},{"../CSGFactories":123,"../FuzzyFactory3d":126,"../math/reTesselateCoplanarPolygons":144,"dup":68}],155:[function(require,module,exports){
+},{"@jscad/io-utils":248,"dup":10}],244:[function(require,module,exports){
 arguments[4][69][0].apply(exports,arguments)
-},{"dup":69}],156:[function(require,module,exports){
+},{"dup":69}],245:[function(require,module,exports){
 arguments[4][70][0].apply(exports,arguments)
-},{"dup":70}],157:[function(require,module,exports){
+},{"dup":70}],246:[function(require,module,exports){
 arguments[4][71][0].apply(exports,arguments)
-},{"dup":71}],158:[function(require,module,exports){
+},{"dup":71}],247:[function(require,module,exports){
 arguments[4][72][0].apply(exports,arguments)
-},{"dup":72}],159:[function(require,module,exports){
+},{"dup":72}],248:[function(require,module,exports){
 arguments[4][73][0].apply(exports,arguments)
-},{"./BinaryReader":157,"./ensureManifoldness":158,"./makeBlob":160,"dup":73}],160:[function(require,module,exports){
+},{"./BinaryReader":246,"./ensureManifoldness":247,"./makeBlob":249,"dup":73}],249:[function(require,module,exports){
 arguments[4][74][0].apply(exports,arguments)
-},{"buffer":214,"dup":74}],161:[function(require,module,exports){
+},{"buffer":439,"dup":74}],250:[function(require,module,exports){
 arguments[4][75][0].apply(exports,arguments)
-},{"@jscad/amf-deserializer":106,"@jscad/amf-serializer":107,"@jscad/dxf-serializer":155,"@jscad/gcode-deserializer":156,"@jscad/io-utils":159,"@jscad/json-deserializer":162,"@jscad/json-serializer":163,"@jscad/obj-deserializer":164,"@jscad/stl-deserializer":190,"@jscad/stl-serializer":194,"@jscad/svg-deserializer":197,"@jscad/svg-serializer":201,"@jscad/x3d-serializer":202,"dup":75}],162:[function(require,module,exports){
+},{"@jscad/amf-deserializer":242,"@jscad/amf-serializer":243,"@jscad/dxf-serializer":244,"@jscad/gcode-deserializer":245,"@jscad/io-utils":248,"@jscad/json-deserializer":251,"@jscad/json-serializer":286,"@jscad/obj-deserializer":287,"@jscad/stl-deserializer":313,"@jscad/stl-serializer":351,"@jscad/svg-deserializer":354,"@jscad/svg-serializer":392,"@jscad/x3d-serializer":427,"dup":75}],251:[function(require,module,exports){
 arguments[4][76][0].apply(exports,arguments)
-},{"@jscad/csg":108,"dup":76}],163:[function(require,module,exports){
+},{"@jscad/csg":252,"dup":76}],252:[function(require,module,exports){
 arguments[4][77][0].apply(exports,arguments)
-},{"@jscad/io-utils":159,"dup":77}],164:[function(require,module,exports){
+},{"./src/CAG":253,"./src/CAGFactories":254,"./src/CSG":255,"./src/CSGFactories":256,"./src/Properties":260,"./src/connectors":261,"./src/constants":262,"./src/debugHelpers":263,"./src/math/Line2":264,"./src/math/Line3":265,"./src/math/Matrix4":266,"./src/math/OrthoNormalBasis":267,"./src/math/Path2":268,"./src/math/Plane":269,"./src/math/Polygon2":270,"./src/math/Polygon3":271,"./src/math/Side":272,"./src/math/Vector2":273,"./src/math/Vector3":274,"./src/math/Vertex2":275,"./src/math/Vertex3":276,"./src/mutators":279,"./src/primitives2d":281,"./src/primitives3d":282,"dup":77}],253:[function(require,module,exports){
 arguments[4][78][0].apply(exports,arguments)
-},{"./vt2jscad":165,"dup":78}],165:[function(require,module,exports){
+},{"./CSG":255,"./FuzzyFactory2d":258,"./connectors":261,"./constants":262,"./math/OrthoNormalBasis":267,"./math/Path2":268,"./math/Polygon3":271,"./math/Side":272,"./math/Vector2":273,"./math/Vector3":274,"./math/Vertex2":275,"./math/Vertex3":276,"./math/lineUtils":277,"./optionParsers":280,"dup":78}],254:[function(require,module,exports){
 arguments[4][79][0].apply(exports,arguments)
-},{"dup":79}],166:[function(require,module,exports){
+},{"./CAG":253,"./math/Path2":268,"./math/Side":272,"./math/Vector2":273,"./math/Vertex2":275,"dup":79}],255:[function(require,module,exports){
+arguments[4][80][0].apply(exports,arguments)
+},{"./CAG":253,"./FuzzyFactory3d":259,"./Properties":260,"./connectors":261,"./constants":262,"./math/Matrix4":266,"./math/OrthoNormalBasis":267,"./math/Plane":269,"./math/Polygon3":271,"./math/Vector2":273,"./math/Vector3":274,"./math/Vertex3":276,"./math/polygonUtils":278,"./trees":283,"./utils":284,"./utils/fixTJunctions":285,"dup":80}],256:[function(require,module,exports){
+arguments[4][81][0].apply(exports,arguments)
+},{"./CSG":255,"./math/Plane":269,"./math/Polygon2":270,"./math/Polygon3":271,"./math/Vector3":274,"./math/Vertex3":276,"dup":81}],257:[function(require,module,exports){
+arguments[4][38][0].apply(exports,arguments)
+},{"dup":38}],258:[function(require,module,exports){
+arguments[4][39][0].apply(exports,arguments)
+},{"./FuzzyFactory":257,"./constants":262,"./math/Side":272,"dup":39}],259:[function(require,module,exports){
+arguments[4][40][0].apply(exports,arguments)
+},{"./FuzzyFactory":257,"./constants":262,"./math/Polygon3":271,"dup":40}],260:[function(require,module,exports){
+arguments[4][41][0].apply(exports,arguments)
+},{"dup":41}],261:[function(require,module,exports){
+arguments[4][86][0].apply(exports,arguments)
+},{"./CSG":255,"./math/Line3":265,"./math/Matrix4":266,"./math/OrthoNormalBasis":267,"./math/Plane":269,"./math/Vector3":274,"dup":86}],262:[function(require,module,exports){
+arguments[4][43][0].apply(exports,arguments)
+},{"dup":43}],263:[function(require,module,exports){
+arguments[4][88][0].apply(exports,arguments)
+},{"./CSG":255,"./primitives3d":282,"dup":88}],264:[function(require,module,exports){
+arguments[4][44][0].apply(exports,arguments)
+},{"../utils":284,"./Vector2":273,"dup":44}],265:[function(require,module,exports){
+arguments[4][45][0].apply(exports,arguments)
+},{"../constants":262,"../utils":284,"./Vector3":274,"dup":45}],266:[function(require,module,exports){
+arguments[4][46][0].apply(exports,arguments)
+},{"./OrthoNormalBasis":267,"./Plane":269,"./Vector2":273,"./Vector3":274,"dup":46}],267:[function(require,module,exports){
+arguments[4][92][0].apply(exports,arguments)
+},{"./Line2":264,"./Line3":265,"./Matrix4":266,"./Plane":269,"./Vector2":273,"./Vector3":274,"dup":92}],268:[function(require,module,exports){
+arguments[4][93][0].apply(exports,arguments)
+},{"../CAG":253,"../constants":262,"../optionParsers":280,"./Side":272,"./Vector2":273,"./Vertex2":275,"dup":93}],269:[function(require,module,exports){
+arguments[4][49][0].apply(exports,arguments)
+},{"../constants":262,"./Line3":265,"./Vector3":274,"dup":49}],270:[function(require,module,exports){
+arguments[4][95][0].apply(exports,arguments)
+},{"../CAG":253,"dup":95}],271:[function(require,module,exports){
+arguments[4][96][0].apply(exports,arguments)
+},{"../CAG":253,"../CAGFactories":254,"../CSG":255,"../constants":262,"../utils":284,"./Matrix4":266,"./Plane":269,"./Vector3":274,"./Vertex3":276,"dup":96}],272:[function(require,module,exports){
+arguments[4][97][0].apply(exports,arguments)
+},{"../constants":262,"./Polygon3":271,"./Vector2":273,"./Vertex2":275,"./Vertex3":276,"dup":97}],273:[function(require,module,exports){
+arguments[4][98][0].apply(exports,arguments)
+},{"../utils":284,"./Vector3":274,"dup":98}],274:[function(require,module,exports){
+arguments[4][54][0].apply(exports,arguments)
+},{"../utils":284,"./Vector2":273,"dup":54}],275:[function(require,module,exports){
+arguments[4][55][0].apply(exports,arguments)
+},{"../constants":262,"./Vector2":273,"dup":55}],276:[function(require,module,exports){
+arguments[4][56][0].apply(exports,arguments)
+},{"../constants":262,"./Vector3":274,"dup":56}],277:[function(require,module,exports){
+arguments[4][102][0].apply(exports,arguments)
+},{"../constants":262,"../utils":284,"dup":102}],278:[function(require,module,exports){
+arguments[4][103][0].apply(exports,arguments)
+},{"../constants":262,"../utils":284,"./Line2":264,"./OrthoNormalBasis":267,"./Polygon3":271,"./Vector2":273,"./Vertex3":276,"dup":103}],279:[function(require,module,exports){
+arguments[4][59][0].apply(exports,arguments)
+},{"./math/Matrix4":266,"./math/Plane":269,"./math/Vector3":274,"dup":59}],280:[function(require,module,exports){
+arguments[4][105][0].apply(exports,arguments)
+},{"./math/Vector2":273,"./math/Vector3":274,"dup":105}],281:[function(require,module,exports){
+arguments[4][106][0].apply(exports,arguments)
+},{"./CAG":253,"./CAGFactories":254,"./constants":262,"./math/Path2":268,"./math/Vector2":273,"./optionParsers":280,"dup":106}],282:[function(require,module,exports){
+arguments[4][107][0].apply(exports,arguments)
+},{"./CSG":255,"./Properties":260,"./connectors":261,"./constants":262,"./math/Polygon3":271,"./math/Vector3":274,"./math/Vertex3":276,"./optionParsers":280,"dup":107}],283:[function(require,module,exports){
+arguments[4][108][0].apply(exports,arguments)
+},{"./constants":262,"./math/Polygon3":271,"./math/Vertex3":276,"dup":108}],284:[function(require,module,exports){
+arguments[4][109][0].apply(exports,arguments)
+},{"dup":109}],285:[function(require,module,exports){
+arguments[4][67][0].apply(exports,arguments)
+},{"../constants":262,"../math/Plane":269,"../math/Polygon3":271,"dup":67}],286:[function(require,module,exports){
+arguments[4][111][0].apply(exports,arguments)
+},{"@jscad/io-utils":248,"dup":111}],287:[function(require,module,exports){
+arguments[4][112][0].apply(exports,arguments)
+},{"./vt2jscad":288,"dup":112}],288:[function(require,module,exports){
+arguments[4][113][0].apply(exports,arguments)
+},{"dup":113}],289:[function(require,module,exports){
 module.exports = function () {
   this.argname
   this.argexpr
 }
 
-},{}],167:[function(require,module,exports){
+},{}],290:[function(require,module,exports){
 module.exports = function () {
   this.argnames = []
   this.argexpr = []
 }
 
-},{}],168:[function(require,module,exports){
+},{}],291:[function(require,module,exports){
 var Context = require('./Context')
 var Globals = require('./Globals')
 var _ = require('lodash')
@@ -27641,7 +33602,7 @@ CSGModule.prototype.evaluate = function(parentContext, inst){
 
 module.exports = CSGModule
 
-},{"./Context":170,"./Globals":174,"lodash":221}],169:[function(require,module,exports){
+},{"./Context":293,"./Globals":297,"lodash":446}],292:[function(require,module,exports){
 var _ = require('lodash')
 var Context = require('./Context')
 var Globals = require('./Globals')
@@ -27692,7 +33653,7 @@ Child.prototype.evaluate = function(parentContext, inst){
 
 module.exports =  Child
 
-},{"./Context":170,"./Globals":174,"lodash":221}],170:[function(require,module,exports){
+},{"./Context":293,"./Globals":297,"lodash":446}],293:[function(require,module,exports){
 var _ = require('lodash')
 var Globals = require('./Globals')
 
@@ -28006,7 +33967,7 @@ var functionNameLookup = {
 
 module.exports =  Context
 
-},{"./Globals":174,"lodash":221}],171:[function(require,module,exports){
+},{"./Globals":297,"lodash":446}],294:[function(require,module,exports){
 var _ = require('lodash')
 var Context = require('./Context')
 var Globals = require('./Globals')
@@ -28147,7 +34108,7 @@ module.exports = {
 	IfStatement: IfStatement
 }
 
-},{"./Context":170,"./Globals":174,"./Range":183,"lodash":221}],172:[function(require,module,exports){
+},{"./Context":293,"./Globals":297,"./Range":306,"lodash":446}],295:[function(require,module,exports){
 var Range = require('./Range')
 var Sylvester = require('sylvester')
 var _ = require('lodash')
@@ -28527,7 +34488,7 @@ Expression.prototype.evaluate = function(context) {
 };
 module.exports =  Expression
 
-},{"./Range":183,"lodash":221,"sylvester":321}],173:[function(require,module,exports){
+},{"./Range":306,"lodash":446,"sylvester":545}],296:[function(require,module,exports){
 var Context = require('./Context')
 
 function FunctionDef () {
@@ -28549,7 +34510,7 @@ FunctionDef.prototype.evaluate = function (parentContext, call_argnames, call_ar
 
 module.exports = FunctionDef
 
-},{"./Context":170}],174:[function(require,module,exports){
+},{"./Context":293}],297:[function(require,module,exports){
 var _ = require('lodash')
 
 var singleLineModuleRegex = /(module\s*\w*\([^\)]*\)[\w\n]*)([^{};]*);/gm;
@@ -28602,7 +34563,7 @@ module.exports =  {
   includedLibraryRegex: /include <([^>]*)>;?/gm
 }
 
-},{"lodash":221}],175:[function(require,module,exports){
+},{"lodash":446}],298:[function(require,module,exports){
 var ModuleInstantiation = require('./ModuleInstantiation')
 
 function IfElseModuleInstantiation () {
@@ -28616,7 +34577,7 @@ IfElseModuleInstantiation.prototype.constructor = IfElseModuleInstantiation
 
 module.exports = IfElseModuleInstantiation
 
-},{"./ModuleInstantiation":179}],176:[function(require,module,exports){
+},{"./ModuleInstantiation":302}],299:[function(require,module,exports){
 var Context = require('./Context')
 var Globals = require('./Globals')
 var StlDecoder = require('./StlDecoder')
@@ -28652,7 +34613,7 @@ Import.prototype.evaluate = function (parentContext, inst) {
 
 module.Exports = Import
 
-},{"./Context":170,"./Globals":174,"./StlDecoder":184}],177:[function(require,module,exports){
+},{"./Context":293,"./Globals":297,"./StlDecoder":307}],300:[function(require,module,exports){
 var _ = require('lodash')
 var Context = require('./Context')
 var Globals = require('./Globals')
@@ -28725,7 +34686,7 @@ Module.prototype.evaluate = function(parentContext, inst) {
 
 module.exports = Module
 
-},{"./Context":170,"./Globals":174,"lodash":221}],178:[function(require,module,exports){
+},{"./Context":293,"./Globals":297,"lodash":446}],301:[function(require,module,exports){
 function ModuleAdaptor () {}
 
 ModuleAdaptor.prototype.evaluate = function (parentContext, inst) {
@@ -28735,7 +34696,7 @@ ModuleAdaptor.prototype.evaluate = function (parentContext, inst) {
 
 module.exports = ModuleAdaptor
 
-},{}],179:[function(require,module,exports){
+},{}],302:[function(require,module,exports){
 var _ = require('lodash')
 var OpenjscadSolidFactorySingleton = require('./OpenjscadSolidFactorySingleton')
 
@@ -28792,7 +34753,7 @@ ModuleInstantiation.prototype.evaluateChildren = function (context) {
 
 module.exports = ModuleInstantiation
 
-},{"./OpenjscadSolidFactorySingleton":181,"lodash":221}],180:[function(require,module,exports){
+},{"./OpenjscadSolidFactorySingleton":304,"lodash":446}],303:[function(require,module,exports){
 var Context = require('./Context')
 var Globals = require('./Globals')
 var PrimitiveModules = require('./PrimitiveModules')
@@ -28865,7 +34826,7 @@ OpenjscadSolidFactory.prototype.getAdaptor = function (args) {
 
 module.exports = OpenjscadSolidFactory
 
-},{"./CSGModule":168,"./ChildModule":169,"./Context":170,"./ControlModules":171,"./Globals":174,"./ImportModule":176,"./ModuleAdaptor":178,"./PrimitiveModules":182,"./TransformModules":185}],181:[function(require,module,exports){
+},{"./CSGModule":291,"./ChildModule":292,"./Context":293,"./ControlModules":294,"./Globals":297,"./ImportModule":299,"./ModuleAdaptor":301,"./PrimitiveModules":305,"./TransformModules":308}],304:[function(require,module,exports){
 var OpenjscadSolidFactory = require('./OpenjscadSolidFactory')
 var factory = new OpenjscadSolidFactory()
 
@@ -28875,7 +34836,7 @@ module.exports = {
   }
 }
 
-},{"./OpenjscadSolidFactory":180}],182:[function(require,module,exports){
+},{"./OpenjscadSolidFactory":303}],305:[function(require,module,exports){
 var _ = require('lodash')
 var Context = require('./Context')
 var Globals = require('./Globals')
@@ -29101,7 +35062,7 @@ module.exports =  {
 	Polyhedron: Polyhedron
 }
 
-},{"./Context":170,"./Globals":174,"lodash":221}],183:[function(require,module,exports){
+},{"./Context":293,"./Globals":297,"lodash":446}],306:[function(require,module,exports){
 function Range (begin, step, end) {
   this.begin = begin
   this.step = step
@@ -29110,7 +35071,7 @@ function Range (begin, step, end) {
 
 module.exports = Range
 
-},{}],184:[function(require,module,exports){
+},{}],307:[function(require,module,exports){
 /*
   #	Module:			STL.js
   #
@@ -29549,7 +35510,7 @@ module.exports = Range
 
 	module.exports =  STL
 
-},{}],185:[function(require,module,exports){
+},{}],308:[function(require,module,exports){
 var _ = require('lodash')
 var Context = require('./Context')
 var Globals = require('./Globals')
@@ -29822,7 +35783,7 @@ module.exports = {
   Extrude: ExtrudeTransform
 }
 
-},{"./Context":170,"./Globals":174,"lodash":221}],186:[function(require,module,exports){
+},{"./Context":293,"./Globals":297,"lodash":446}],309:[function(require,module,exports){
 var _ = require('lodash')
 var Module = require('./Module')
 var Context = require('./Context')
@@ -29917,7 +35878,7 @@ module.exports = {
    addModuleFunction: addModuleFunction
 }
 
-},{"./Context":170,"./FunctionDef":173,"./Globals":174,"./Module":177,"./openscad-parser-support":187,"lodash":221}],187:[function(require,module,exports){
+},{"./Context":293,"./FunctionDef":296,"./Globals":297,"./Module":300,"./openscad-parser-support":310,"lodash":446}],310:[function(require,module,exports){
 
 // seedrandom.js version 2.0.
 // Author: David Bau 4/2/2011
@@ -30192,7 +36153,7 @@ mixkey(math.random(), pool);
   52    // significance: there are 52 significant digits in a double
 );
 
-},{}],188:[function(require,module,exports){
+},{}],311:[function(require,module,exports){
 (function (process){
 const ext = require('./openscad-parser-ext')
 const ArgContainer = require('./ArgContainer')
@@ -31326,7 +37287,7 @@ if (typeof module !== 'undefined' && require.main === module) {
 }
 }
 }).call(this,require('_process'))
-},{"./ArgContainer":166,"./ArgsContainer":167,"./Expression":172,"./IfElseModuleInstantiation":175,"./ModuleInstantiation":179,"./openscad-parser-ext":186,"_process":299,"fs":212,"path":297}],189:[function(require,module,exports){
+},{"./ArgContainer":289,"./ArgsContainer":290,"./Expression":295,"./IfElseModuleInstantiation":298,"./ModuleInstantiation":302,"./openscad-parser-ext":309,"_process":523,"fs":437,"path":521}],312:[function(require,module,exports){
 var parser = require('./parserCJS')
 var Globals = require('./Globals')
 
@@ -31342,33 +37303,237 @@ module.exports = {
   }
 }
 
-},{"./Globals":174,"./parserCJS":188}],190:[function(require,module,exports){
+},{"./Globals":297,"./parserCJS":311}],313:[function(require,module,exports){
+arguments[4][114][0].apply(exports,arguments)
+},{"./vt2jscad":348,"@jscad/csg":314,"@jscad/io-utils":248,"dup":114}],314:[function(require,module,exports){
+arguments[4][77][0].apply(exports,arguments)
+},{"./src/CAG":315,"./src/CAGFactories":316,"./src/CSG":317,"./src/CSGFactories":318,"./src/Properties":322,"./src/connectors":323,"./src/constants":324,"./src/debugHelpers":325,"./src/math/Line2":326,"./src/math/Line3":327,"./src/math/Matrix4":328,"./src/math/OrthoNormalBasis":329,"./src/math/Path2":330,"./src/math/Plane":331,"./src/math/Polygon2":332,"./src/math/Polygon3":333,"./src/math/Side":334,"./src/math/Vector2":335,"./src/math/Vector3":336,"./src/math/Vertex2":337,"./src/math/Vertex3":338,"./src/mutators":341,"./src/primitives2d":343,"./src/primitives3d":344,"dup":77}],315:[function(require,module,exports){
+arguments[4][78][0].apply(exports,arguments)
+},{"./CSG":317,"./FuzzyFactory2d":320,"./connectors":323,"./constants":324,"./math/OrthoNormalBasis":329,"./math/Path2":330,"./math/Polygon3":333,"./math/Side":334,"./math/Vector2":335,"./math/Vector3":336,"./math/Vertex2":337,"./math/Vertex3":338,"./math/lineUtils":339,"./optionParsers":342,"dup":78}],316:[function(require,module,exports){
+arguments[4][79][0].apply(exports,arguments)
+},{"./CAG":315,"./math/Path2":330,"./math/Side":334,"./math/Vector2":335,"./math/Vertex2":337,"dup":79}],317:[function(require,module,exports){
 arguments[4][80][0].apply(exports,arguments)
-},{"./vt2jscad":191,"@jscad/csg":108,"@jscad/io-utils":159,"dup":80}],191:[function(require,module,exports){
+},{"./CAG":315,"./FuzzyFactory3d":321,"./Properties":322,"./connectors":323,"./constants":324,"./math/Matrix4":328,"./math/OrthoNormalBasis":329,"./math/Plane":331,"./math/Polygon3":333,"./math/Vector2":335,"./math/Vector3":336,"./math/Vertex3":338,"./math/polygonUtils":340,"./trees":345,"./utils":346,"./utils/fixTJunctions":347,"dup":80}],318:[function(require,module,exports){
 arguments[4][81][0].apply(exports,arguments)
-},{"dup":81}],192:[function(require,module,exports){
-arguments[4][82][0].apply(exports,arguments)
-},{"dup":82}],193:[function(require,module,exports){
-arguments[4][83][0].apply(exports,arguments)
-},{"dup":83}],194:[function(require,module,exports){
-arguments[4][84][0].apply(exports,arguments)
-},{"./CSGToStla":192,"./CSGToStlb":193,"@jscad/io-utils":159,"dup":84}],195:[function(require,module,exports){
-arguments[4][85][0].apply(exports,arguments)
-},{"dup":85}],196:[function(require,module,exports){
+},{"./CSG":317,"./math/Plane":331,"./math/Polygon2":332,"./math/Polygon3":333,"./math/Vector3":336,"./math/Vertex3":338,"dup":81}],319:[function(require,module,exports){
+arguments[4][38][0].apply(exports,arguments)
+},{"dup":38}],320:[function(require,module,exports){
+arguments[4][39][0].apply(exports,arguments)
+},{"./FuzzyFactory":319,"./constants":324,"./math/Side":334,"dup":39}],321:[function(require,module,exports){
+arguments[4][40][0].apply(exports,arguments)
+},{"./FuzzyFactory":319,"./constants":324,"./math/Polygon3":333,"dup":40}],322:[function(require,module,exports){
+arguments[4][41][0].apply(exports,arguments)
+},{"dup":41}],323:[function(require,module,exports){
 arguments[4][86][0].apply(exports,arguments)
-},{"./constants":195,"dup":86}],197:[function(require,module,exports){
-arguments[4][87][0].apply(exports,arguments)
-},{"./constants":195,"./helpers":196,"./shapesMapCsg":198,"./shapesMapJscad":199,"./svgElementHelpers":200,"@jscad/csg":108,"dup":87,"sax":318}],198:[function(require,module,exports){
+},{"./CSG":317,"./math/Line3":327,"./math/Matrix4":328,"./math/OrthoNormalBasis":329,"./math/Plane":331,"./math/Vector3":336,"dup":86}],324:[function(require,module,exports){
+arguments[4][43][0].apply(exports,arguments)
+},{"dup":43}],325:[function(require,module,exports){
 arguments[4][88][0].apply(exports,arguments)
-},{"./constants":195,"./helpers":196,"@jscad/csg":108,"dup":88}],199:[function(require,module,exports){
-arguments[4][89][0].apply(exports,arguments)
-},{"./constants":195,"./helpers":196,"dup":89}],200:[function(require,module,exports){
-arguments[4][90][0].apply(exports,arguments)
-},{"./constants":195,"./helpers":196,"dup":90}],201:[function(require,module,exports){
-arguments[4][91][0].apply(exports,arguments)
-},{"@jscad/csg":108,"dup":91}],202:[function(require,module,exports){
+},{"./CSG":317,"./primitives3d":344,"dup":88}],326:[function(require,module,exports){
+arguments[4][44][0].apply(exports,arguments)
+},{"../utils":346,"./Vector2":335,"dup":44}],327:[function(require,module,exports){
+arguments[4][45][0].apply(exports,arguments)
+},{"../constants":324,"../utils":346,"./Vector3":336,"dup":45}],328:[function(require,module,exports){
+arguments[4][46][0].apply(exports,arguments)
+},{"./OrthoNormalBasis":329,"./Plane":331,"./Vector2":335,"./Vector3":336,"dup":46}],329:[function(require,module,exports){
 arguments[4][92][0].apply(exports,arguments)
-},{"@jscad/io-utils":159,"dup":92,"xmldom":332}],203:[function(require,module,exports){
+},{"./Line2":326,"./Line3":327,"./Matrix4":328,"./Plane":331,"./Vector2":335,"./Vector3":336,"dup":92}],330:[function(require,module,exports){
+arguments[4][93][0].apply(exports,arguments)
+},{"../CAG":315,"../constants":324,"../optionParsers":342,"./Side":334,"./Vector2":335,"./Vertex2":337,"dup":93}],331:[function(require,module,exports){
+arguments[4][49][0].apply(exports,arguments)
+},{"../constants":324,"./Line3":327,"./Vector3":336,"dup":49}],332:[function(require,module,exports){
+arguments[4][95][0].apply(exports,arguments)
+},{"../CAG":315,"dup":95}],333:[function(require,module,exports){
+arguments[4][96][0].apply(exports,arguments)
+},{"../CAG":315,"../CAGFactories":316,"../CSG":317,"../constants":324,"../utils":346,"./Matrix4":328,"./Plane":331,"./Vector3":336,"./Vertex3":338,"dup":96}],334:[function(require,module,exports){
+arguments[4][97][0].apply(exports,arguments)
+},{"../constants":324,"./Polygon3":333,"./Vector2":335,"./Vertex2":337,"./Vertex3":338,"dup":97}],335:[function(require,module,exports){
+arguments[4][98][0].apply(exports,arguments)
+},{"../utils":346,"./Vector3":336,"dup":98}],336:[function(require,module,exports){
+arguments[4][54][0].apply(exports,arguments)
+},{"../utils":346,"./Vector2":335,"dup":54}],337:[function(require,module,exports){
+arguments[4][55][0].apply(exports,arguments)
+},{"../constants":324,"./Vector2":335,"dup":55}],338:[function(require,module,exports){
+arguments[4][56][0].apply(exports,arguments)
+},{"../constants":324,"./Vector3":336,"dup":56}],339:[function(require,module,exports){
+arguments[4][102][0].apply(exports,arguments)
+},{"../constants":324,"../utils":346,"dup":102}],340:[function(require,module,exports){
+arguments[4][103][0].apply(exports,arguments)
+},{"../constants":324,"../utils":346,"./Line2":326,"./OrthoNormalBasis":329,"./Polygon3":333,"./Vector2":335,"./Vertex3":338,"dup":103}],341:[function(require,module,exports){
+arguments[4][59][0].apply(exports,arguments)
+},{"./math/Matrix4":328,"./math/Plane":331,"./math/Vector3":336,"dup":59}],342:[function(require,module,exports){
+arguments[4][105][0].apply(exports,arguments)
+},{"./math/Vector2":335,"./math/Vector3":336,"dup":105}],343:[function(require,module,exports){
+arguments[4][106][0].apply(exports,arguments)
+},{"./CAG":315,"./CAGFactories":316,"./constants":324,"./math/Path2":330,"./math/Vector2":335,"./optionParsers":342,"dup":106}],344:[function(require,module,exports){
+arguments[4][107][0].apply(exports,arguments)
+},{"./CSG":317,"./Properties":322,"./connectors":323,"./constants":324,"./math/Polygon3":333,"./math/Vector3":336,"./math/Vertex3":338,"./optionParsers":342,"dup":107}],345:[function(require,module,exports){
+arguments[4][108][0].apply(exports,arguments)
+},{"./constants":324,"./math/Polygon3":333,"./math/Vertex3":338,"dup":108}],346:[function(require,module,exports){
+arguments[4][109][0].apply(exports,arguments)
+},{"dup":109}],347:[function(require,module,exports){
+arguments[4][67][0].apply(exports,arguments)
+},{"../constants":324,"../math/Plane":331,"../math/Polygon3":333,"dup":67}],348:[function(require,module,exports){
+arguments[4][149][0].apply(exports,arguments)
+},{"dup":149}],349:[function(require,module,exports){
+arguments[4][150][0].apply(exports,arguments)
+},{"dup":150}],350:[function(require,module,exports){
+arguments[4][151][0].apply(exports,arguments)
+},{"dup":151}],351:[function(require,module,exports){
+arguments[4][152][0].apply(exports,arguments)
+},{"./CSGToStla":349,"./CSGToStlb":350,"@jscad/io-utils":248,"dup":152}],352:[function(require,module,exports){
+arguments[4][153][0].apply(exports,arguments)
+},{"dup":153}],353:[function(require,module,exports){
+arguments[4][154][0].apply(exports,arguments)
+},{"./constants":352,"dup":154}],354:[function(require,module,exports){
+arguments[4][155][0].apply(exports,arguments)
+},{"./constants":352,"./helpers":353,"./shapesMapCsg":389,"./shapesMapJscad":390,"./svgElementHelpers":391,"@jscad/csg":355,"dup":155,"sax":542}],355:[function(require,module,exports){
+arguments[4][77][0].apply(exports,arguments)
+},{"./src/CAG":356,"./src/CAGFactories":357,"./src/CSG":358,"./src/CSGFactories":359,"./src/Properties":363,"./src/connectors":364,"./src/constants":365,"./src/debugHelpers":366,"./src/math/Line2":367,"./src/math/Line3":368,"./src/math/Matrix4":369,"./src/math/OrthoNormalBasis":370,"./src/math/Path2":371,"./src/math/Plane":372,"./src/math/Polygon2":373,"./src/math/Polygon3":374,"./src/math/Side":375,"./src/math/Vector2":376,"./src/math/Vector3":377,"./src/math/Vertex2":378,"./src/math/Vertex3":379,"./src/mutators":382,"./src/primitives2d":384,"./src/primitives3d":385,"dup":77}],356:[function(require,module,exports){
+arguments[4][78][0].apply(exports,arguments)
+},{"./CSG":358,"./FuzzyFactory2d":361,"./connectors":364,"./constants":365,"./math/OrthoNormalBasis":370,"./math/Path2":371,"./math/Polygon3":374,"./math/Side":375,"./math/Vector2":376,"./math/Vector3":377,"./math/Vertex2":378,"./math/Vertex3":379,"./math/lineUtils":380,"./optionParsers":383,"dup":78}],357:[function(require,module,exports){
+arguments[4][79][0].apply(exports,arguments)
+},{"./CAG":356,"./math/Path2":371,"./math/Side":375,"./math/Vector2":376,"./math/Vertex2":378,"dup":79}],358:[function(require,module,exports){
+arguments[4][80][0].apply(exports,arguments)
+},{"./CAG":356,"./FuzzyFactory3d":362,"./Properties":363,"./connectors":364,"./constants":365,"./math/Matrix4":369,"./math/OrthoNormalBasis":370,"./math/Plane":372,"./math/Polygon3":374,"./math/Vector2":376,"./math/Vector3":377,"./math/Vertex3":379,"./math/polygonUtils":381,"./trees":386,"./utils":387,"./utils/fixTJunctions":388,"dup":80}],359:[function(require,module,exports){
+arguments[4][81][0].apply(exports,arguments)
+},{"./CSG":358,"./math/Plane":372,"./math/Polygon2":373,"./math/Polygon3":374,"./math/Vector3":377,"./math/Vertex3":379,"dup":81}],360:[function(require,module,exports){
+arguments[4][38][0].apply(exports,arguments)
+},{"dup":38}],361:[function(require,module,exports){
+arguments[4][39][0].apply(exports,arguments)
+},{"./FuzzyFactory":360,"./constants":365,"./math/Side":375,"dup":39}],362:[function(require,module,exports){
+arguments[4][40][0].apply(exports,arguments)
+},{"./FuzzyFactory":360,"./constants":365,"./math/Polygon3":374,"dup":40}],363:[function(require,module,exports){
+arguments[4][41][0].apply(exports,arguments)
+},{"dup":41}],364:[function(require,module,exports){
+arguments[4][86][0].apply(exports,arguments)
+},{"./CSG":358,"./math/Line3":368,"./math/Matrix4":369,"./math/OrthoNormalBasis":370,"./math/Plane":372,"./math/Vector3":377,"dup":86}],365:[function(require,module,exports){
+arguments[4][43][0].apply(exports,arguments)
+},{"dup":43}],366:[function(require,module,exports){
+arguments[4][88][0].apply(exports,arguments)
+},{"./CSG":358,"./primitives3d":385,"dup":88}],367:[function(require,module,exports){
+arguments[4][44][0].apply(exports,arguments)
+},{"../utils":387,"./Vector2":376,"dup":44}],368:[function(require,module,exports){
+arguments[4][45][0].apply(exports,arguments)
+},{"../constants":365,"../utils":387,"./Vector3":377,"dup":45}],369:[function(require,module,exports){
+arguments[4][46][0].apply(exports,arguments)
+},{"./OrthoNormalBasis":370,"./Plane":372,"./Vector2":376,"./Vector3":377,"dup":46}],370:[function(require,module,exports){
+arguments[4][92][0].apply(exports,arguments)
+},{"./Line2":367,"./Line3":368,"./Matrix4":369,"./Plane":372,"./Vector2":376,"./Vector3":377,"dup":92}],371:[function(require,module,exports){
+arguments[4][93][0].apply(exports,arguments)
+},{"../CAG":356,"../constants":365,"../optionParsers":383,"./Side":375,"./Vector2":376,"./Vertex2":378,"dup":93}],372:[function(require,module,exports){
+arguments[4][49][0].apply(exports,arguments)
+},{"../constants":365,"./Line3":368,"./Vector3":377,"dup":49}],373:[function(require,module,exports){
+arguments[4][95][0].apply(exports,arguments)
+},{"../CAG":356,"dup":95}],374:[function(require,module,exports){
+arguments[4][96][0].apply(exports,arguments)
+},{"../CAG":356,"../CAGFactories":357,"../CSG":358,"../constants":365,"../utils":387,"./Matrix4":369,"./Plane":372,"./Vector3":377,"./Vertex3":379,"dup":96}],375:[function(require,module,exports){
+arguments[4][97][0].apply(exports,arguments)
+},{"../constants":365,"./Polygon3":374,"./Vector2":376,"./Vertex2":378,"./Vertex3":379,"dup":97}],376:[function(require,module,exports){
+arguments[4][98][0].apply(exports,arguments)
+},{"../utils":387,"./Vector3":377,"dup":98}],377:[function(require,module,exports){
+arguments[4][54][0].apply(exports,arguments)
+},{"../utils":387,"./Vector2":376,"dup":54}],378:[function(require,module,exports){
+arguments[4][55][0].apply(exports,arguments)
+},{"../constants":365,"./Vector2":376,"dup":55}],379:[function(require,module,exports){
+arguments[4][56][0].apply(exports,arguments)
+},{"../constants":365,"./Vector3":377,"dup":56}],380:[function(require,module,exports){
+arguments[4][102][0].apply(exports,arguments)
+},{"../constants":365,"../utils":387,"dup":102}],381:[function(require,module,exports){
+arguments[4][103][0].apply(exports,arguments)
+},{"../constants":365,"../utils":387,"./Line2":367,"./OrthoNormalBasis":370,"./Polygon3":374,"./Vector2":376,"./Vertex3":379,"dup":103}],382:[function(require,module,exports){
+arguments[4][59][0].apply(exports,arguments)
+},{"./math/Matrix4":369,"./math/Plane":372,"./math/Vector3":377,"dup":59}],383:[function(require,module,exports){
+arguments[4][105][0].apply(exports,arguments)
+},{"./math/Vector2":376,"./math/Vector3":377,"dup":105}],384:[function(require,module,exports){
+arguments[4][106][0].apply(exports,arguments)
+},{"./CAG":356,"./CAGFactories":357,"./constants":365,"./math/Path2":371,"./math/Vector2":376,"./optionParsers":383,"dup":106}],385:[function(require,module,exports){
+arguments[4][107][0].apply(exports,arguments)
+},{"./CSG":358,"./Properties":363,"./connectors":364,"./constants":365,"./math/Polygon3":374,"./math/Vector3":377,"./math/Vertex3":379,"./optionParsers":383,"dup":107}],386:[function(require,module,exports){
+arguments[4][108][0].apply(exports,arguments)
+},{"./constants":365,"./math/Polygon3":374,"./math/Vertex3":379,"dup":108}],387:[function(require,module,exports){
+arguments[4][109][0].apply(exports,arguments)
+},{"dup":109}],388:[function(require,module,exports){
+arguments[4][67][0].apply(exports,arguments)
+},{"../constants":365,"../math/Plane":372,"../math/Polygon3":374,"dup":67}],389:[function(require,module,exports){
+arguments[4][190][0].apply(exports,arguments)
+},{"./constants":352,"./helpers":353,"@jscad/csg":355,"dup":190}],390:[function(require,module,exports){
+arguments[4][191][0].apply(exports,arguments)
+},{"./constants":352,"./helpers":353,"dup":191}],391:[function(require,module,exports){
+arguments[4][192][0].apply(exports,arguments)
+},{"./constants":352,"./helpers":353,"dup":192}],392:[function(require,module,exports){
+arguments[4][193][0].apply(exports,arguments)
+},{"@jscad/csg":393,"dup":193}],393:[function(require,module,exports){
+arguments[4][77][0].apply(exports,arguments)
+},{"./src/CAG":394,"./src/CAGFactories":395,"./src/CSG":396,"./src/CSGFactories":397,"./src/Properties":401,"./src/connectors":402,"./src/constants":403,"./src/debugHelpers":404,"./src/math/Line2":405,"./src/math/Line3":406,"./src/math/Matrix4":407,"./src/math/OrthoNormalBasis":408,"./src/math/Path2":409,"./src/math/Plane":410,"./src/math/Polygon2":411,"./src/math/Polygon3":412,"./src/math/Side":413,"./src/math/Vector2":414,"./src/math/Vector3":415,"./src/math/Vertex2":416,"./src/math/Vertex3":417,"./src/mutators":420,"./src/primitives2d":422,"./src/primitives3d":423,"dup":77}],394:[function(require,module,exports){
+arguments[4][78][0].apply(exports,arguments)
+},{"./CSG":396,"./FuzzyFactory2d":399,"./connectors":402,"./constants":403,"./math/OrthoNormalBasis":408,"./math/Path2":409,"./math/Polygon3":412,"./math/Side":413,"./math/Vector2":414,"./math/Vector3":415,"./math/Vertex2":416,"./math/Vertex3":417,"./math/lineUtils":418,"./optionParsers":421,"dup":78}],395:[function(require,module,exports){
+arguments[4][79][0].apply(exports,arguments)
+},{"./CAG":394,"./math/Path2":409,"./math/Side":413,"./math/Vector2":414,"./math/Vertex2":416,"dup":79}],396:[function(require,module,exports){
+arguments[4][80][0].apply(exports,arguments)
+},{"./CAG":394,"./FuzzyFactory3d":400,"./Properties":401,"./connectors":402,"./constants":403,"./math/Matrix4":407,"./math/OrthoNormalBasis":408,"./math/Plane":410,"./math/Polygon3":412,"./math/Vector2":414,"./math/Vector3":415,"./math/Vertex3":417,"./math/polygonUtils":419,"./trees":424,"./utils":425,"./utils/fixTJunctions":426,"dup":80}],397:[function(require,module,exports){
+arguments[4][81][0].apply(exports,arguments)
+},{"./CSG":396,"./math/Plane":410,"./math/Polygon2":411,"./math/Polygon3":412,"./math/Vector3":415,"./math/Vertex3":417,"dup":81}],398:[function(require,module,exports){
+arguments[4][38][0].apply(exports,arguments)
+},{"dup":38}],399:[function(require,module,exports){
+arguments[4][39][0].apply(exports,arguments)
+},{"./FuzzyFactory":398,"./constants":403,"./math/Side":413,"dup":39}],400:[function(require,module,exports){
+arguments[4][40][0].apply(exports,arguments)
+},{"./FuzzyFactory":398,"./constants":403,"./math/Polygon3":412,"dup":40}],401:[function(require,module,exports){
+arguments[4][41][0].apply(exports,arguments)
+},{"dup":41}],402:[function(require,module,exports){
+arguments[4][86][0].apply(exports,arguments)
+},{"./CSG":396,"./math/Line3":406,"./math/Matrix4":407,"./math/OrthoNormalBasis":408,"./math/Plane":410,"./math/Vector3":415,"dup":86}],403:[function(require,module,exports){
+arguments[4][43][0].apply(exports,arguments)
+},{"dup":43}],404:[function(require,module,exports){
+arguments[4][88][0].apply(exports,arguments)
+},{"./CSG":396,"./primitives3d":423,"dup":88}],405:[function(require,module,exports){
+arguments[4][44][0].apply(exports,arguments)
+},{"../utils":425,"./Vector2":414,"dup":44}],406:[function(require,module,exports){
+arguments[4][45][0].apply(exports,arguments)
+},{"../constants":403,"../utils":425,"./Vector3":415,"dup":45}],407:[function(require,module,exports){
+arguments[4][46][0].apply(exports,arguments)
+},{"./OrthoNormalBasis":408,"./Plane":410,"./Vector2":414,"./Vector3":415,"dup":46}],408:[function(require,module,exports){
+arguments[4][92][0].apply(exports,arguments)
+},{"./Line2":405,"./Line3":406,"./Matrix4":407,"./Plane":410,"./Vector2":414,"./Vector3":415,"dup":92}],409:[function(require,module,exports){
+arguments[4][93][0].apply(exports,arguments)
+},{"../CAG":394,"../constants":403,"../optionParsers":421,"./Side":413,"./Vector2":414,"./Vertex2":416,"dup":93}],410:[function(require,module,exports){
+arguments[4][49][0].apply(exports,arguments)
+},{"../constants":403,"./Line3":406,"./Vector3":415,"dup":49}],411:[function(require,module,exports){
+arguments[4][95][0].apply(exports,arguments)
+},{"../CAG":394,"dup":95}],412:[function(require,module,exports){
+arguments[4][96][0].apply(exports,arguments)
+},{"../CAG":394,"../CAGFactories":395,"../CSG":396,"../constants":403,"../utils":425,"./Matrix4":407,"./Plane":410,"./Vector3":415,"./Vertex3":417,"dup":96}],413:[function(require,module,exports){
+arguments[4][97][0].apply(exports,arguments)
+},{"../constants":403,"./Polygon3":412,"./Vector2":414,"./Vertex2":416,"./Vertex3":417,"dup":97}],414:[function(require,module,exports){
+arguments[4][98][0].apply(exports,arguments)
+},{"../utils":425,"./Vector3":415,"dup":98}],415:[function(require,module,exports){
+arguments[4][54][0].apply(exports,arguments)
+},{"../utils":425,"./Vector2":414,"dup":54}],416:[function(require,module,exports){
+arguments[4][55][0].apply(exports,arguments)
+},{"../constants":403,"./Vector2":414,"dup":55}],417:[function(require,module,exports){
+arguments[4][56][0].apply(exports,arguments)
+},{"../constants":403,"./Vector3":415,"dup":56}],418:[function(require,module,exports){
+arguments[4][102][0].apply(exports,arguments)
+},{"../constants":403,"../utils":425,"dup":102}],419:[function(require,module,exports){
+arguments[4][103][0].apply(exports,arguments)
+},{"../constants":403,"../utils":425,"./Line2":405,"./OrthoNormalBasis":408,"./Polygon3":412,"./Vector2":414,"./Vertex3":417,"dup":103}],420:[function(require,module,exports){
+arguments[4][59][0].apply(exports,arguments)
+},{"./math/Matrix4":407,"./math/Plane":410,"./math/Vector3":415,"dup":59}],421:[function(require,module,exports){
+arguments[4][105][0].apply(exports,arguments)
+},{"./math/Vector2":414,"./math/Vector3":415,"dup":105}],422:[function(require,module,exports){
+arguments[4][106][0].apply(exports,arguments)
+},{"./CAG":394,"./CAGFactories":395,"./constants":403,"./math/Path2":409,"./math/Vector2":414,"./optionParsers":421,"dup":106}],423:[function(require,module,exports){
+arguments[4][107][0].apply(exports,arguments)
+},{"./CSG":396,"./Properties":401,"./connectors":402,"./constants":403,"./math/Polygon3":412,"./math/Vector3":415,"./math/Vertex3":417,"./optionParsers":421,"dup":107}],424:[function(require,module,exports){
+arguments[4][108][0].apply(exports,arguments)
+},{"./constants":403,"./math/Polygon3":412,"./math/Vertex3":417,"dup":108}],425:[function(require,module,exports){
+arguments[4][109][0].apply(exports,arguments)
+},{"dup":109}],426:[function(require,module,exports){
+arguments[4][67][0].apply(exports,arguments)
+},{"../constants":403,"../math/Plane":410,"../math/Polygon3":412,"dup":67}],427:[function(require,module,exports){
+arguments[4][228][0].apply(exports,arguments)
+},{"@jscad/io-utils":248,"dup":228,"xmldom":556}],428:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@most/prelude')) :
   typeof define === 'function' && define.amd ? define(['exports', '@most/prelude'], factory) :
@@ -31486,7 +37651,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })));
 
 
-},{"@most/prelude":204}],204:[function(require,module,exports){
+},{"@most/prelude":429}],429:[function(require,module,exports){
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -31788,7 +37953,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })));
 
 
-},{}],205:[function(require,module,exports){
+},{}],430:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -31805,6 +37970,8 @@ for (var i = 0, len = code.length; i < len; ++i) {
   revLookup[code.charCodeAt(i)] = i
 }
 
+// Support decoding URL-safe base64 strings, as Node.js does.
+// See: https://en.wikipedia.org/wiki/Base64#URL_applications
 revLookup['-'.charCodeAt(0)] = 62
 revLookup['_'.charCodeAt(0)] = 63
 
@@ -31866,7 +38033,7 @@ function encodeChunk (uint8, start, end) {
   var tmp
   var output = []
   for (var i = start; i < end; i += 3) {
-    tmp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
+    tmp = ((uint8[i] << 16) & 0xFF0000) + ((uint8[i + 1] << 8) & 0xFF00) + (uint8[i + 2] & 0xFF)
     output.push(tripletToBase64(tmp))
   }
   return output.join('')
@@ -31904,7 +38071,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],206:[function(require,module,exports){
+},{}],431:[function(require,module,exports){
 /* ***** BEGIN LICENSE BLOCK *****
  * Distributed under the BSD license:
  *
@@ -50981,7 +57148,7 @@ exports.version = "1.2.6";
             })();
         
 module.exports = window.ace.acequire("ace/ace");
-},{"w3c-blob":330}],207:[function(require,module,exports){
+},{"w3c-blob":554}],432:[function(require,module,exports){
 ace.define("ace/mode/doc_comment_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
 "use strict";
 
@@ -51765,7 +57932,7 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-},{"../worker/javascript":210}],208:[function(require,module,exports){
+},{"../worker/javascript":435}],433:[function(require,module,exports){
 ace.define("ace/mode/doc_comment_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
 "use strict";
 
@@ -52175,7 +58342,7 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-},{}],209:[function(require,module,exports){
+},{}],434:[function(require,module,exports){
 ace.define("ace/theme/chrome",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
 
 exports.isDark = false;
@@ -52305,14 +58472,14 @@ var dom = acequire("../lib/dom");
 dom.importCssString(exports.cssText, exports.cssClass);
 });
 
-},{}],210:[function(require,module,exports){
+},{}],435:[function(require,module,exports){
 module.exports.id = 'ace/mode/javascript_worker';
 module.exports.src = "\"no use strict\";(function(window){function resolveModuleId(id,paths){for(var testPath=id,tail=\"\";testPath;){var alias=paths[testPath];if(\"string\"==typeof alias)return alias+tail;if(alias)return alias.location.replace(/\\/*$/,\"/\")+(tail||alias.main||alias.name);if(alias===!1)return\"\";var i=testPath.lastIndexOf(\"/\");if(-1===i)break;tail=testPath.substr(i)+tail,testPath=testPath.slice(0,i)}return id}if(!(void 0!==window.window&&window.document||window.acequire&&window.define)){window.console||(window.console=function(){var msgs=Array.prototype.slice.call(arguments,0);postMessage({type:\"log\",data:msgs})},window.console.error=window.console.warn=window.console.log=window.console.trace=window.console),window.window=window,window.ace=window,window.onerror=function(message,file,line,col,err){postMessage({type:\"error\",data:{message:message,data:err.data,file:file,line:line,col:col,stack:err.stack}})},window.normalizeModule=function(parentId,moduleName){if(-1!==moduleName.indexOf(\"!\")){var chunks=moduleName.split(\"!\");return window.normalizeModule(parentId,chunks[0])+\"!\"+window.normalizeModule(parentId,chunks[1])}if(\".\"==moduleName.charAt(0)){var base=parentId.split(\"/\").slice(0,-1).join(\"/\");for(moduleName=(base?base+\"/\":\"\")+moduleName;-1!==moduleName.indexOf(\".\")&&previous!=moduleName;){var previous=moduleName;moduleName=moduleName.replace(/^\\.\\//,\"\").replace(/\\/\\.\\//,\"/\").replace(/[^\\/]+\\/\\.\\.\\//,\"\")}}return moduleName},window.acequire=function acequire(parentId,id){if(id||(id=parentId,parentId=null),!id.charAt)throw Error(\"worker.js acequire() accepts only (parentId, id) as arguments\");id=window.normalizeModule(parentId,id);var module=window.acequire.modules[id];if(module)return module.initialized||(module.initialized=!0,module.exports=module.factory().exports),module.exports;if(!window.acequire.tlns)return console.log(\"unable to load \"+id);var path=resolveModuleId(id,window.acequire.tlns);return\".js\"!=path.slice(-3)&&(path+=\".js\"),window.acequire.id=id,window.acequire.modules[id]={},importScripts(path),window.acequire(parentId,id)},window.acequire.modules={},window.acequire.tlns={},window.define=function(id,deps,factory){if(2==arguments.length?(factory=deps,\"string\"!=typeof id&&(deps=id,id=window.acequire.id)):1==arguments.length&&(factory=id,deps=[],id=window.acequire.id),\"function\"!=typeof factory)return window.acequire.modules[id]={exports:factory,initialized:!0},void 0;deps.length||(deps=[\"require\",\"exports\",\"module\"]);var req=function(childId){return window.acequire(id,childId)};window.acequire.modules[id]={exports:{},factory:function(){var module=this,returnExports=factory.apply(this,deps.map(function(dep){switch(dep){case\"require\":return req;case\"exports\":return module.exports;case\"module\":return module;default:return req(dep)}}));return returnExports&&(module.exports=returnExports),module}}},window.define.amd={},acequire.tlns={},window.initBaseUrls=function(topLevelNamespaces){for(var i in topLevelNamespaces)acequire.tlns[i]=topLevelNamespaces[i]},window.initSender=function(){var EventEmitter=window.acequire(\"ace/lib/event_emitter\").EventEmitter,oop=window.acequire(\"ace/lib/oop\"),Sender=function(){};return function(){oop.implement(this,EventEmitter),this.callback=function(data,callbackId){postMessage({type:\"call\",id:callbackId,data:data})},this.emit=function(name,data){postMessage({type:\"event\",name:name,data:data})}}.call(Sender.prototype),new Sender};var main=window.main=null,sender=window.sender=null;window.onmessage=function(e){var msg=e.data;if(msg.event&&sender)sender._signal(msg.event,msg.data);else if(msg.command)if(main[msg.command])main[msg.command].apply(main,msg.args);else{if(!window[msg.command])throw Error(\"Unknown command:\"+msg.command);window[msg.command].apply(window,msg.args)}else if(msg.init){window.initBaseUrls(msg.tlns),acequire(\"ace/lib/es5-shim\"),sender=window.sender=window.initSender();var clazz=acequire(msg.module)[msg.classname];main=window.main=new clazz(sender)}}}})(this),ace.define(\"ace/lib/oop\",[\"require\",\"exports\",\"module\"],function(acequire,exports){\"use strict\";exports.inherits=function(ctor,superCtor){ctor.super_=superCtor,ctor.prototype=Object.create(superCtor.prototype,{constructor:{value:ctor,enumerable:!1,writable:!0,configurable:!0}})},exports.mixin=function(obj,mixin){for(var key in mixin)obj[key]=mixin[key];return obj},exports.implement=function(proto,mixin){exports.mixin(proto,mixin)}}),ace.define(\"ace/range\",[\"require\",\"exports\",\"module\"],function(acequire,exports){\"use strict\";var comparePoints=function(p1,p2){return p1.row-p2.row||p1.column-p2.column},Range=function(startRow,startColumn,endRow,endColumn){this.start={row:startRow,column:startColumn},this.end={row:endRow,column:endColumn}};(function(){this.isEqual=function(range){return this.start.row===range.start.row&&this.end.row===range.end.row&&this.start.column===range.start.column&&this.end.column===range.end.column},this.toString=function(){return\"Range: [\"+this.start.row+\"/\"+this.start.column+\"] -> [\"+this.end.row+\"/\"+this.end.column+\"]\"},this.contains=function(row,column){return 0==this.compare(row,column)},this.compareRange=function(range){var cmp,end=range.end,start=range.start;return cmp=this.compare(end.row,end.column),1==cmp?(cmp=this.compare(start.row,start.column),1==cmp?2:0==cmp?1:0):-1==cmp?-2:(cmp=this.compare(start.row,start.column),-1==cmp?-1:1==cmp?42:0)},this.comparePoint=function(p){return this.compare(p.row,p.column)},this.containsRange=function(range){return 0==this.comparePoint(range.start)&&0==this.comparePoint(range.end)},this.intersects=function(range){var cmp=this.compareRange(range);return-1==cmp||0==cmp||1==cmp},this.isEnd=function(row,column){return this.end.row==row&&this.end.column==column},this.isStart=function(row,column){return this.start.row==row&&this.start.column==column},this.setStart=function(row,column){\"object\"==typeof row?(this.start.column=row.column,this.start.row=row.row):(this.start.row=row,this.start.column=column)},this.setEnd=function(row,column){\"object\"==typeof row?(this.end.column=row.column,this.end.row=row.row):(this.end.row=row,this.end.column=column)},this.inside=function(row,column){return 0==this.compare(row,column)?this.isEnd(row,column)||this.isStart(row,column)?!1:!0:!1},this.insideStart=function(row,column){return 0==this.compare(row,column)?this.isEnd(row,column)?!1:!0:!1},this.insideEnd=function(row,column){return 0==this.compare(row,column)?this.isStart(row,column)?!1:!0:!1},this.compare=function(row,column){return this.isMultiLine()||row!==this.start.row?this.start.row>row?-1:row>this.end.row?1:this.start.row===row?column>=this.start.column?0:-1:this.end.row===row?this.end.column>=column?0:1:0:this.start.column>column?-1:column>this.end.column?1:0},this.compareStart=function(row,column){return this.start.row==row&&this.start.column==column?-1:this.compare(row,column)},this.compareEnd=function(row,column){return this.end.row==row&&this.end.column==column?1:this.compare(row,column)},this.compareInside=function(row,column){return this.end.row==row&&this.end.column==column?1:this.start.row==row&&this.start.column==column?-1:this.compare(row,column)},this.clipRows=function(firstRow,lastRow){if(this.end.row>lastRow)var end={row:lastRow+1,column:0};else if(firstRow>this.end.row)var end={row:firstRow,column:0};if(this.start.row>lastRow)var start={row:lastRow+1,column:0};else if(firstRow>this.start.row)var start={row:firstRow,column:0};return Range.fromPoints(start||this.start,end||this.end)},this.extend=function(row,column){var cmp=this.compare(row,column);if(0==cmp)return this;if(-1==cmp)var start={row:row,column:column};else var end={row:row,column:column};return Range.fromPoints(start||this.start,end||this.end)},this.isEmpty=function(){return this.start.row===this.end.row&&this.start.column===this.end.column},this.isMultiLine=function(){return this.start.row!==this.end.row},this.clone=function(){return Range.fromPoints(this.start,this.end)},this.collapseRows=function(){return 0==this.end.column?new Range(this.start.row,0,Math.max(this.start.row,this.end.row-1),0):new Range(this.start.row,0,this.end.row,0)},this.toScreenRange=function(session){var screenPosStart=session.documentToScreenPosition(this.start),screenPosEnd=session.documentToScreenPosition(this.end);return new Range(screenPosStart.row,screenPosStart.column,screenPosEnd.row,screenPosEnd.column)},this.moveBy=function(row,column){this.start.row+=row,this.start.column+=column,this.end.row+=row,this.end.column+=column}}).call(Range.prototype),Range.fromPoints=function(start,end){return new Range(start.row,start.column,end.row,end.column)},Range.comparePoints=comparePoints,Range.comparePoints=function(p1,p2){return p1.row-p2.row||p1.column-p2.column},exports.Range=Range}),ace.define(\"ace/apply_delta\",[\"require\",\"exports\",\"module\"],function(acequire,exports){\"use strict\";exports.applyDelta=function(docLines,delta){var row=delta.start.row,startColumn=delta.start.column,line=docLines[row]||\"\";switch(delta.action){case\"insert\":var lines=delta.lines;if(1===lines.length)docLines[row]=line.substring(0,startColumn)+delta.lines[0]+line.substring(startColumn);else{var args=[row,1].concat(delta.lines);docLines.splice.apply(docLines,args),docLines[row]=line.substring(0,startColumn)+docLines[row],docLines[row+delta.lines.length-1]+=line.substring(startColumn)}break;case\"remove\":var endColumn=delta.end.column,endRow=delta.end.row;row===endRow?docLines[row]=line.substring(0,startColumn)+line.substring(endColumn):docLines.splice(row,endRow-row+1,line.substring(0,startColumn)+docLines[endRow].substring(endColumn))}}}),ace.define(\"ace/lib/event_emitter\",[\"require\",\"exports\",\"module\"],function(acequire,exports){\"use strict\";var EventEmitter={},stopPropagation=function(){this.propagationStopped=!0},preventDefault=function(){this.defaultPrevented=!0};EventEmitter._emit=EventEmitter._dispatchEvent=function(eventName,e){this._eventRegistry||(this._eventRegistry={}),this._defaultHandlers||(this._defaultHandlers={});var listeners=this._eventRegistry[eventName]||[],defaultHandler=this._defaultHandlers[eventName];if(listeners.length||defaultHandler){\"object\"==typeof e&&e||(e={}),e.type||(e.type=eventName),e.stopPropagation||(e.stopPropagation=stopPropagation),e.preventDefault||(e.preventDefault=preventDefault),listeners=listeners.slice();for(var i=0;listeners.length>i&&(listeners[i](e,this),!e.propagationStopped);i++);return defaultHandler&&!e.defaultPrevented?defaultHandler(e,this):void 0}},EventEmitter._signal=function(eventName,e){var listeners=(this._eventRegistry||{})[eventName];if(listeners){listeners=listeners.slice();for(var i=0;listeners.length>i;i++)listeners[i](e,this)}},EventEmitter.once=function(eventName,callback){var _self=this;callback&&this.addEventListener(eventName,function newCallback(){_self.removeEventListener(eventName,newCallback),callback.apply(null,arguments)})},EventEmitter.setDefaultHandler=function(eventName,callback){var handlers=this._defaultHandlers;if(handlers||(handlers=this._defaultHandlers={_disabled_:{}}),handlers[eventName]){var old=handlers[eventName],disabled=handlers._disabled_[eventName];disabled||(handlers._disabled_[eventName]=disabled=[]),disabled.push(old);var i=disabled.indexOf(callback);-1!=i&&disabled.splice(i,1)}handlers[eventName]=callback},EventEmitter.removeDefaultHandler=function(eventName,callback){var handlers=this._defaultHandlers;if(handlers){var disabled=handlers._disabled_[eventName];if(handlers[eventName]==callback)handlers[eventName],disabled&&this.setDefaultHandler(eventName,disabled.pop());else if(disabled){var i=disabled.indexOf(callback);-1!=i&&disabled.splice(i,1)}}},EventEmitter.on=EventEmitter.addEventListener=function(eventName,callback,capturing){this._eventRegistry=this._eventRegistry||{};var listeners=this._eventRegistry[eventName];return listeners||(listeners=this._eventRegistry[eventName]=[]),-1==listeners.indexOf(callback)&&listeners[capturing?\"unshift\":\"push\"](callback),callback},EventEmitter.off=EventEmitter.removeListener=EventEmitter.removeEventListener=function(eventName,callback){this._eventRegistry=this._eventRegistry||{};var listeners=this._eventRegistry[eventName];if(listeners){var index=listeners.indexOf(callback);-1!==index&&listeners.splice(index,1)}},EventEmitter.removeAllListeners=function(eventName){this._eventRegistry&&(this._eventRegistry[eventName]=[])},exports.EventEmitter=EventEmitter}),ace.define(\"ace/anchor\",[\"require\",\"exports\",\"module\",\"ace/lib/oop\",\"ace/lib/event_emitter\"],function(acequire,exports){\"use strict\";var oop=acequire(\"./lib/oop\"),EventEmitter=acequire(\"./lib/event_emitter\").EventEmitter,Anchor=exports.Anchor=function(doc,row,column){this.$onChange=this.onChange.bind(this),this.attach(doc),column===void 0?this.setPosition(row.row,row.column):this.setPosition(row,column)};(function(){function $pointsInOrder(point1,point2,equalPointsInOrder){var bColIsAfter=equalPointsInOrder?point1.column<=point2.column:point1.column<point2.column;return point1.row<point2.row||point1.row==point2.row&&bColIsAfter}function $getTransformedPoint(delta,point,moveIfEqual){var deltaIsInsert=\"insert\"==delta.action,deltaRowShift=(deltaIsInsert?1:-1)*(delta.end.row-delta.start.row),deltaColShift=(deltaIsInsert?1:-1)*(delta.end.column-delta.start.column),deltaStart=delta.start,deltaEnd=deltaIsInsert?deltaStart:delta.end;return $pointsInOrder(point,deltaStart,moveIfEqual)?{row:point.row,column:point.column}:$pointsInOrder(deltaEnd,point,!moveIfEqual)?{row:point.row+deltaRowShift,column:point.column+(point.row==deltaEnd.row?deltaColShift:0)}:{row:deltaStart.row,column:deltaStart.column}}oop.implement(this,EventEmitter),this.getPosition=function(){return this.$clipPositionToDocument(this.row,this.column)},this.getDocument=function(){return this.document},this.$insertRight=!1,this.onChange=function(delta){if(!(delta.start.row==delta.end.row&&delta.start.row!=this.row||delta.start.row>this.row)){var point=$getTransformedPoint(delta,{row:this.row,column:this.column},this.$insertRight);this.setPosition(point.row,point.column,!0)}},this.setPosition=function(row,column,noClip){var pos;if(pos=noClip?{row:row,column:column}:this.$clipPositionToDocument(row,column),this.row!=pos.row||this.column!=pos.column){var old={row:this.row,column:this.column};this.row=pos.row,this.column=pos.column,this._signal(\"change\",{old:old,value:pos})}},this.detach=function(){this.document.removeEventListener(\"change\",this.$onChange)},this.attach=function(doc){this.document=doc||this.document,this.document.on(\"change\",this.$onChange)},this.$clipPositionToDocument=function(row,column){var pos={};return row>=this.document.getLength()?(pos.row=Math.max(0,this.document.getLength()-1),pos.column=this.document.getLine(pos.row).length):0>row?(pos.row=0,pos.column=0):(pos.row=row,pos.column=Math.min(this.document.getLine(pos.row).length,Math.max(0,column))),0>column&&(pos.column=0),pos}}).call(Anchor.prototype)}),ace.define(\"ace/document\",[\"require\",\"exports\",\"module\",\"ace/lib/oop\",\"ace/apply_delta\",\"ace/lib/event_emitter\",\"ace/range\",\"ace/anchor\"],function(acequire,exports){\"use strict\";var oop=acequire(\"./lib/oop\"),applyDelta=acequire(\"./apply_delta\").applyDelta,EventEmitter=acequire(\"./lib/event_emitter\").EventEmitter,Range=acequire(\"./range\").Range,Anchor=acequire(\"./anchor\").Anchor,Document=function(textOrLines){this.$lines=[\"\"],0===textOrLines.length?this.$lines=[\"\"]:Array.isArray(textOrLines)?this.insertMergedLines({row:0,column:0},textOrLines):this.insert({row:0,column:0},textOrLines)};(function(){oop.implement(this,EventEmitter),this.setValue=function(text){var len=this.getLength()-1;this.remove(new Range(0,0,len,this.getLine(len).length)),this.insert({row:0,column:0},text)},this.getValue=function(){return this.getAllLines().join(this.getNewLineCharacter())},this.createAnchor=function(row,column){return new Anchor(this,row,column)},this.$split=0===\"aaa\".split(/a/).length?function(text){return text.replace(/\\r\\n|\\r/g,\"\\n\").split(\"\\n\")}:function(text){return text.split(/\\r\\n|\\r|\\n/)},this.$detectNewLine=function(text){var match=text.match(/^.*?(\\r\\n|\\r|\\n)/m);this.$autoNewLine=match?match[1]:\"\\n\",this._signal(\"changeNewLineMode\")},this.getNewLineCharacter=function(){switch(this.$newLineMode){case\"windows\":return\"\\r\\n\";case\"unix\":return\"\\n\";default:return this.$autoNewLine||\"\\n\"}},this.$autoNewLine=\"\",this.$newLineMode=\"auto\",this.setNewLineMode=function(newLineMode){this.$newLineMode!==newLineMode&&(this.$newLineMode=newLineMode,this._signal(\"changeNewLineMode\"))},this.getNewLineMode=function(){return this.$newLineMode},this.isNewLine=function(text){return\"\\r\\n\"==text||\"\\r\"==text||\"\\n\"==text},this.getLine=function(row){return this.$lines[row]||\"\"},this.getLines=function(firstRow,lastRow){return this.$lines.slice(firstRow,lastRow+1)},this.getAllLines=function(){return this.getLines(0,this.getLength())},this.getLength=function(){return this.$lines.length},this.getTextRange=function(range){return this.getLinesForRange(range).join(this.getNewLineCharacter())},this.getLinesForRange=function(range){var lines;if(range.start.row===range.end.row)lines=[this.getLine(range.start.row).substring(range.start.column,range.end.column)];else{lines=this.getLines(range.start.row,range.end.row),lines[0]=(lines[0]||\"\").substring(range.start.column);var l=lines.length-1;range.end.row-range.start.row==l&&(lines[l]=lines[l].substring(0,range.end.column))}return lines},this.insertLines=function(row,lines){return console.warn(\"Use of document.insertLines is deprecated. Use the insertFullLines method instead.\"),this.insertFullLines(row,lines)},this.removeLines=function(firstRow,lastRow){return console.warn(\"Use of document.removeLines is deprecated. Use the removeFullLines method instead.\"),this.removeFullLines(firstRow,lastRow)},this.insertNewLine=function(position){return console.warn(\"Use of document.insertNewLine is deprecated. Use insertMergedLines(position, ['', '']) instead.\"),this.insertMergedLines(position,[\"\",\"\"])},this.insert=function(position,text){return 1>=this.getLength()&&this.$detectNewLine(text),this.insertMergedLines(position,this.$split(text))},this.insertInLine=function(position,text){var start=this.clippedPos(position.row,position.column),end=this.pos(position.row,position.column+text.length);return this.applyDelta({start:start,end:end,action:\"insert\",lines:[text]},!0),this.clonePos(end)},this.clippedPos=function(row,column){var length=this.getLength();void 0===row?row=length:0>row?row=0:row>=length&&(row=length-1,column=void 0);var line=this.getLine(row);return void 0==column&&(column=line.length),column=Math.min(Math.max(column,0),line.length),{row:row,column:column}},this.clonePos=function(pos){return{row:pos.row,column:pos.column}},this.pos=function(row,column){return{row:row,column:column}},this.$clipPosition=function(position){var length=this.getLength();return position.row>=length?(position.row=Math.max(0,length-1),position.column=this.getLine(length-1).length):(position.row=Math.max(0,position.row),position.column=Math.min(Math.max(position.column,0),this.getLine(position.row).length)),position},this.insertFullLines=function(row,lines){row=Math.min(Math.max(row,0),this.getLength());var column=0;this.getLength()>row?(lines=lines.concat([\"\"]),column=0):(lines=[\"\"].concat(lines),row--,column=this.$lines[row].length),this.insertMergedLines({row:row,column:column},lines)},this.insertMergedLines=function(position,lines){var start=this.clippedPos(position.row,position.column),end={row:start.row+lines.length-1,column:(1==lines.length?start.column:0)+lines[lines.length-1].length};return this.applyDelta({start:start,end:end,action:\"insert\",lines:lines}),this.clonePos(end)},this.remove=function(range){var start=this.clippedPos(range.start.row,range.start.column),end=this.clippedPos(range.end.row,range.end.column);return this.applyDelta({start:start,end:end,action:\"remove\",lines:this.getLinesForRange({start:start,end:end})}),this.clonePos(start)},this.removeInLine=function(row,startColumn,endColumn){var start=this.clippedPos(row,startColumn),end=this.clippedPos(row,endColumn);return this.applyDelta({start:start,end:end,action:\"remove\",lines:this.getLinesForRange({start:start,end:end})},!0),this.clonePos(start)},this.removeFullLines=function(firstRow,lastRow){firstRow=Math.min(Math.max(0,firstRow),this.getLength()-1),lastRow=Math.min(Math.max(0,lastRow),this.getLength()-1);var deleteFirstNewLine=lastRow==this.getLength()-1&&firstRow>0,deleteLastNewLine=this.getLength()-1>lastRow,startRow=deleteFirstNewLine?firstRow-1:firstRow,startCol=deleteFirstNewLine?this.getLine(startRow).length:0,endRow=deleteLastNewLine?lastRow+1:lastRow,endCol=deleteLastNewLine?0:this.getLine(endRow).length,range=new Range(startRow,startCol,endRow,endCol),deletedLines=this.$lines.slice(firstRow,lastRow+1);return this.applyDelta({start:range.start,end:range.end,action:\"remove\",lines:this.getLinesForRange(range)}),deletedLines},this.removeNewLine=function(row){this.getLength()-1>row&&row>=0&&this.applyDelta({start:this.pos(row,this.getLine(row).length),end:this.pos(row+1,0),action:\"remove\",lines:[\"\",\"\"]})},this.replace=function(range,text){if(range instanceof Range||(range=Range.fromPoints(range.start,range.end)),0===text.length&&range.isEmpty())return range.start;if(text==this.getTextRange(range))return range.end;this.remove(range);var end;return end=text?this.insert(range.start,text):range.start},this.applyDeltas=function(deltas){for(var i=0;deltas.length>i;i++)this.applyDelta(deltas[i])},this.revertDeltas=function(deltas){for(var i=deltas.length-1;i>=0;i--)this.revertDelta(deltas[i])},this.applyDelta=function(delta,doNotValidate){var isInsert=\"insert\"==delta.action;(isInsert?1>=delta.lines.length&&!delta.lines[0]:!Range.comparePoints(delta.start,delta.end))||(isInsert&&delta.lines.length>2e4&&this.$splitAndapplyLargeDelta(delta,2e4),applyDelta(this.$lines,delta,doNotValidate),this._signal(\"change\",delta))},this.$splitAndapplyLargeDelta=function(delta,MAX){for(var lines=delta.lines,l=lines.length,row=delta.start.row,column=delta.start.column,from=0,to=0;;){from=to,to+=MAX-1;var chunk=lines.slice(from,to);if(to>l){delta.lines=chunk,delta.start.row=row+from,delta.start.column=column;break}chunk.push(\"\"),this.applyDelta({start:this.pos(row+from,column),end:this.pos(row+to,column=0),action:delta.action,lines:chunk},!0)}},this.revertDelta=function(delta){this.applyDelta({start:this.clonePos(delta.start),end:this.clonePos(delta.end),action:\"insert\"==delta.action?\"remove\":\"insert\",lines:delta.lines.slice()})},this.indexToPosition=function(index,startRow){for(var lines=this.$lines||this.getAllLines(),newlineLength=this.getNewLineCharacter().length,i=startRow||0,l=lines.length;l>i;i++)if(index-=lines[i].length+newlineLength,0>index)return{row:i,column:index+lines[i].length+newlineLength};return{row:l-1,column:lines[l-1].length}},this.positionToIndex=function(pos,startRow){for(var lines=this.$lines||this.getAllLines(),newlineLength=this.getNewLineCharacter().length,index=0,row=Math.min(pos.row,lines.length),i=startRow||0;row>i;++i)index+=lines[i].length+newlineLength;return index+pos.column}}).call(Document.prototype),exports.Document=Document}),ace.define(\"ace/lib/lang\",[\"require\",\"exports\",\"module\"],function(acequire,exports){\"use strict\";exports.last=function(a){return a[a.length-1]},exports.stringReverse=function(string){return string.split(\"\").reverse().join(\"\")},exports.stringRepeat=function(string,count){for(var result=\"\";count>0;)1&count&&(result+=string),(count>>=1)&&(string+=string);return result};var trimBeginRegexp=/^\\s\\s*/,trimEndRegexp=/\\s\\s*$/;exports.stringTrimLeft=function(string){return string.replace(trimBeginRegexp,\"\")},exports.stringTrimRight=function(string){return string.replace(trimEndRegexp,\"\")},exports.copyObject=function(obj){var copy={};for(var key in obj)copy[key]=obj[key];return copy},exports.copyArray=function(array){for(var copy=[],i=0,l=array.length;l>i;i++)copy[i]=array[i]&&\"object\"==typeof array[i]?this.copyObject(array[i]):array[i];return copy},exports.deepCopy=function deepCopy(obj){if(\"object\"!=typeof obj||!obj)return obj;var copy;if(Array.isArray(obj)){copy=[];for(var key=0;obj.length>key;key++)copy[key]=deepCopy(obj[key]);return copy}if(\"[object Object]\"!==Object.prototype.toString.call(obj))return obj;copy={};for(var key in obj)copy[key]=deepCopy(obj[key]);return copy},exports.arrayToMap=function(arr){for(var map={},i=0;arr.length>i;i++)map[arr[i]]=1;return map},exports.createMap=function(props){var map=Object.create(null);for(var i in props)map[i]=props[i];return map},exports.arrayRemove=function(array,value){for(var i=0;array.length>=i;i++)value===array[i]&&array.splice(i,1)},exports.escapeRegExp=function(str){return str.replace(/([.*+?^${}()|[\\]\\/\\\\])/g,\"\\\\$1\")},exports.escapeHTML=function(str){return str.replace(/&/g,\"&#38;\").replace(/\"/g,\"&#34;\").replace(/'/g,\"&#39;\").replace(/</g,\"&#60;\")},exports.getMatchOffsets=function(string,regExp){var matches=[];return string.replace(regExp,function(str){matches.push({offset:arguments[arguments.length-2],length:str.length})}),matches},exports.deferredCall=function(fcn){var timer=null,callback=function(){timer=null,fcn()},deferred=function(timeout){return deferred.cancel(),timer=setTimeout(callback,timeout||0),deferred};return deferred.schedule=deferred,deferred.call=function(){return this.cancel(),fcn(),deferred},deferred.cancel=function(){return clearTimeout(timer),timer=null,deferred},deferred.isPending=function(){return timer},deferred},exports.delayedCall=function(fcn,defaultTimeout){var timer=null,callback=function(){timer=null,fcn()},_self=function(timeout){null==timer&&(timer=setTimeout(callback,timeout||defaultTimeout))};return _self.delay=function(timeout){timer&&clearTimeout(timer),timer=setTimeout(callback,timeout||defaultTimeout)},_self.schedule=_self,_self.call=function(){this.cancel(),fcn()},_self.cancel=function(){timer&&clearTimeout(timer),timer=null},_self.isPending=function(){return timer},_self}}),ace.define(\"ace/worker/mirror\",[\"require\",\"exports\",\"module\",\"ace/range\",\"ace/document\",\"ace/lib/lang\"],function(acequire,exports){\"use strict\";acequire(\"../range\").Range;var Document=acequire(\"../document\").Document,lang=acequire(\"../lib/lang\"),Mirror=exports.Mirror=function(sender){this.sender=sender;var doc=this.doc=new Document(\"\"),deferredUpdate=this.deferredUpdate=lang.delayedCall(this.onUpdate.bind(this)),_self=this;sender.on(\"change\",function(e){var data=e.data;if(data[0].start)doc.applyDeltas(data);else for(var i=0;data.length>i;i+=2){if(Array.isArray(data[i+1]))var d={action:\"insert\",start:data[i],lines:data[i+1]};else var d={action:\"remove\",start:data[i],end:data[i+1]};doc.applyDelta(d,!0)}return _self.$timeout?deferredUpdate.schedule(_self.$timeout):(_self.onUpdate(),void 0)})};(function(){this.$timeout=500,this.setTimeout=function(timeout){this.$timeout=timeout},this.setValue=function(value){this.doc.setValue(value),this.deferredUpdate.schedule(this.$timeout)},this.getValue=function(callbackId){this.sender.callback(this.doc.getValue(),callbackId)},this.onUpdate=function(){},this.isPending=function(){return this.deferredUpdate.isPending()}}).call(Mirror.prototype)}),ace.define(\"ace/mode/javascript/jshint\",[\"require\",\"exports\",\"module\"],function(acequire,exports,module){module.exports=function outer(modules,cache,entry){function newRequire(name,jumped){if(!cache[name]){if(!modules[name]){var currentRequire=\"function\"==typeof acequire&&acequire;if(!jumped&&currentRequire)return currentRequire(name,!0);if(previousRequire)return previousRequire(name,!0);var err=Error(\"Cannot find module '\"+name+\"'\");throw err.code=\"MODULE_NOT_FOUND\",err}var m=cache[name]={exports:{}};modules[name][0].call(m.exports,function(x){var id=modules[name][1][x];return newRequire(id?id:x)},m,m.exports,outer,modules,cache,entry)}return cache[name].exports}for(var previousRequire=\"function\"==typeof acequire&&acequire,i=0;entry.length>i;i++)newRequire(entry[i]);return newRequire(entry[0])}({\"/node_modules/browserify/node_modules/events/events.js\":[function(_dereq_,module){function EventEmitter(){this._events=this._events||{},this._maxListeners=this._maxListeners||void 0}function isFunction(arg){return\"function\"==typeof arg}function isNumber(arg){return\"number\"==typeof arg}function isObject(arg){return\"object\"==typeof arg&&null!==arg}function isUndefined(arg){return void 0===arg}module.exports=EventEmitter,EventEmitter.EventEmitter=EventEmitter,EventEmitter.prototype._events=void 0,EventEmitter.prototype._maxListeners=void 0,EventEmitter.defaultMaxListeners=10,EventEmitter.prototype.setMaxListeners=function(n){if(!isNumber(n)||0>n||isNaN(n))throw TypeError(\"n must be a positive number\");return this._maxListeners=n,this},EventEmitter.prototype.emit=function(type){var er,handler,len,args,i,listeners;if(this._events||(this._events={}),\"error\"===type&&(!this._events.error||isObject(this._events.error)&&!this._events.error.length)){if(er=arguments[1],er instanceof Error)throw er;throw TypeError('Uncaught, unspecified \"error\" event.')}if(handler=this._events[type],isUndefined(handler))return!1;if(isFunction(handler))switch(arguments.length){case 1:handler.call(this);break;case 2:handler.call(this,arguments[1]);break;case 3:handler.call(this,arguments[1],arguments[2]);break;default:for(len=arguments.length,args=Array(len-1),i=1;len>i;i++)args[i-1]=arguments[i];handler.apply(this,args)}else if(isObject(handler)){for(len=arguments.length,args=Array(len-1),i=1;len>i;i++)args[i-1]=arguments[i];for(listeners=handler.slice(),len=listeners.length,i=0;len>i;i++)listeners[i].apply(this,args)}return!0},EventEmitter.prototype.addListener=function(type,listener){var m;if(!isFunction(listener))throw TypeError(\"listener must be a function\");if(this._events||(this._events={}),this._events.newListener&&this.emit(\"newListener\",type,isFunction(listener.listener)?listener.listener:listener),this._events[type]?isObject(this._events[type])?this._events[type].push(listener):this._events[type]=[this._events[type],listener]:this._events[type]=listener,isObject(this._events[type])&&!this._events[type].warned){var m;m=isUndefined(this._maxListeners)?EventEmitter.defaultMaxListeners:this._maxListeners,m&&m>0&&this._events[type].length>m&&(this._events[type].warned=!0,console.error(\"(node) warning: possible EventEmitter memory leak detected. %d listeners added. Use emitter.setMaxListeners() to increase limit.\",this._events[type].length),\"function\"==typeof console.trace&&console.trace())}return this},EventEmitter.prototype.on=EventEmitter.prototype.addListener,EventEmitter.prototype.once=function(type,listener){function g(){this.removeListener(type,g),fired||(fired=!0,listener.apply(this,arguments))}if(!isFunction(listener))throw TypeError(\"listener must be a function\");var fired=!1;return g.listener=listener,this.on(type,g),this},EventEmitter.prototype.removeListener=function(type,listener){var list,position,length,i;if(!isFunction(listener))throw TypeError(\"listener must be a function\");if(!this._events||!this._events[type])return this;if(list=this._events[type],length=list.length,position=-1,list===listener||isFunction(list.listener)&&list.listener===listener)delete this._events[type],this._events.removeListener&&this.emit(\"removeListener\",type,listener);else if(isObject(list)){for(i=length;i-->0;)if(list[i]===listener||list[i].listener&&list[i].listener===listener){position=i;break}if(0>position)return this;1===list.length?(list.length=0,delete this._events[type]):list.splice(position,1),this._events.removeListener&&this.emit(\"removeListener\",type,listener)}return this},EventEmitter.prototype.removeAllListeners=function(type){var key,listeners;if(!this._events)return this;if(!this._events.removeListener)return 0===arguments.length?this._events={}:this._events[type]&&delete this._events[type],this;if(0===arguments.length){for(key in this._events)\"removeListener\"!==key&&this.removeAllListeners(key);return this.removeAllListeners(\"removeListener\"),this._events={},this\n}if(listeners=this._events[type],isFunction(listeners))this.removeListener(type,listeners);else for(;listeners.length;)this.removeListener(type,listeners[listeners.length-1]);return delete this._events[type],this},EventEmitter.prototype.listeners=function(type){var ret;return ret=this._events&&this._events[type]?isFunction(this._events[type])?[this._events[type]]:this._events[type].slice():[]},EventEmitter.listenerCount=function(emitter,type){var ret;return ret=emitter._events&&emitter._events[type]?isFunction(emitter._events[type])?1:emitter._events[type].length:0}},{}],\"/node_modules/jshint/data/ascii-identifier-data.js\":[function(_dereq_,module){for(var identifierStartTable=[],i=0;128>i;i++)identifierStartTable[i]=36===i||i>=65&&90>=i||95===i||i>=97&&122>=i;for(var identifierPartTable=[],i=0;128>i;i++)identifierPartTable[i]=identifierStartTable[i]||i>=48&&57>=i;module.exports={asciiIdentifierStartTable:identifierStartTable,asciiIdentifierPartTable:identifierPartTable}},{}],\"/node_modules/jshint/lodash.js\":[function(_dereq_,module,exports){(function(global){(function(){function baseFindIndex(array,predicate,fromRight){for(var length=array.length,index=fromRight?length:-1;fromRight?index--:length>++index;)if(predicate(array[index],index,array))return index;return-1}function baseIndexOf(array,value,fromIndex){if(value!==value)return indexOfNaN(array,fromIndex);for(var index=fromIndex-1,length=array.length;length>++index;)if(array[index]===value)return index;return-1}function baseIsFunction(value){return\"function\"==typeof value||!1}function baseToString(value){return\"string\"==typeof value?value:null==value?\"\":value+\"\"}function indexOfNaN(array,fromIndex,fromRight){for(var length=array.length,index=fromIndex+(fromRight?0:-1);fromRight?index--:length>++index;){var other=array[index];if(other!==other)return index}return-1}function isObjectLike(value){return!!value&&\"object\"==typeof value}function lodash(){}function arrayCopy(source,array){var index=-1,length=source.length;for(array||(array=Array(length));length>++index;)array[index]=source[index];return array}function arrayEach(array,iteratee){for(var index=-1,length=array.length;length>++index&&iteratee(array[index],index,array)!==!1;);return array}function arrayFilter(array,predicate){for(var index=-1,length=array.length,resIndex=-1,result=[];length>++index;){var value=array[index];predicate(value,index,array)&&(result[++resIndex]=value)}return result}function arrayMap(array,iteratee){for(var index=-1,length=array.length,result=Array(length);length>++index;)result[index]=iteratee(array[index],index,array);return result}function arrayMax(array){for(var index=-1,length=array.length,result=NEGATIVE_INFINITY;length>++index;){var value=array[index];value>result&&(result=value)}return result}function arraySome(array,predicate){for(var index=-1,length=array.length;length>++index;)if(predicate(array[index],index,array))return!0;return!1}function assignWith(object,source,customizer){var props=keys(source);push.apply(props,getSymbols(source));for(var index=-1,length=props.length;length>++index;){var key=props[index],value=object[key],result=customizer(value,source[key],key,object,source);(result===result?result===value:value!==value)&&(value!==undefined||key in object)||(object[key]=result)}return object}function baseCopy(source,props,object){object||(object={});for(var index=-1,length=props.length;length>++index;){var key=props[index];object[key]=source[key]}return object}function baseCallback(func,thisArg,argCount){var type=typeof func;return\"function\"==type?thisArg===undefined?func:bindCallback(func,thisArg,argCount):null==func?identity:\"object\"==type?baseMatches(func):thisArg===undefined?property(func):baseMatchesProperty(func,thisArg)}function baseClone(value,isDeep,customizer,key,object,stackA,stackB){var result;if(customizer&&(result=object?customizer(value,key,object):customizer(value)),result!==undefined)return result;if(!isObject(value))return value;var isArr=isArray(value);if(isArr){if(result=initCloneArray(value),!isDeep)return arrayCopy(value,result)}else{var tag=objToString.call(value),isFunc=tag==funcTag;if(tag!=objectTag&&tag!=argsTag&&(!isFunc||object))return cloneableTags[tag]?initCloneByTag(value,tag,isDeep):object?value:{};if(result=initCloneObject(isFunc?{}:value),!isDeep)return baseAssign(result,value)}stackA||(stackA=[]),stackB||(stackB=[]);for(var length=stackA.length;length--;)if(stackA[length]==value)return stackB[length];return stackA.push(value),stackB.push(result),(isArr?arrayEach:baseForOwn)(value,function(subValue,key){result[key]=baseClone(subValue,isDeep,customizer,key,value,stackA,stackB)}),result}function baseFilter(collection,predicate){var result=[];return baseEach(collection,function(value,index,collection){predicate(value,index,collection)&&result.push(value)}),result}function baseForIn(object,iteratee){return baseFor(object,iteratee,keysIn)}function baseForOwn(object,iteratee){return baseFor(object,iteratee,keys)}function baseGet(object,path,pathKey){if(null!=object){pathKey!==undefined&&pathKey in toObject(object)&&(path=[pathKey]);for(var index=-1,length=path.length;null!=object&&length>++index;)var result=object=object[path[index]];return result}}function baseIsEqual(value,other,customizer,isLoose,stackA,stackB){if(value===other)return 0!==value||1/value==1/other;var valType=typeof value,othType=typeof other;return\"function\"!=valType&&\"object\"!=valType&&\"function\"!=othType&&\"object\"!=othType||null==value||null==other?value!==value&&other!==other:baseIsEqualDeep(value,other,baseIsEqual,customizer,isLoose,stackA,stackB)}function baseIsEqualDeep(object,other,equalFunc,customizer,isLoose,stackA,stackB){var objIsArr=isArray(object),othIsArr=isArray(other),objTag=arrayTag,othTag=arrayTag;objIsArr||(objTag=objToString.call(object),objTag==argsTag?objTag=objectTag:objTag!=objectTag&&(objIsArr=isTypedArray(object))),othIsArr||(othTag=objToString.call(other),othTag==argsTag?othTag=objectTag:othTag!=objectTag&&(othIsArr=isTypedArray(other)));var objIsObj=objTag==objectTag,othIsObj=othTag==objectTag,isSameTag=objTag==othTag;if(isSameTag&&!objIsArr&&!objIsObj)return equalByTag(object,other,objTag);if(!isLoose){var valWrapped=objIsObj&&hasOwnProperty.call(object,\"__wrapped__\"),othWrapped=othIsObj&&hasOwnProperty.call(other,\"__wrapped__\");if(valWrapped||othWrapped)return equalFunc(valWrapped?object.value():object,othWrapped?other.value():other,customizer,isLoose,stackA,stackB)}if(!isSameTag)return!1;stackA||(stackA=[]),stackB||(stackB=[]);for(var length=stackA.length;length--;)if(stackA[length]==object)return stackB[length]==other;stackA.push(object),stackB.push(other);var result=(objIsArr?equalArrays:equalObjects)(object,other,equalFunc,customizer,isLoose,stackA,stackB);return stackA.pop(),stackB.pop(),result}function baseIsMatch(object,props,values,strictCompareFlags,customizer){for(var index=-1,length=props.length,noCustomizer=!customizer;length>++index;)if(noCustomizer&&strictCompareFlags[index]?values[index]!==object[props[index]]:!(props[index]in object))return!1;for(index=-1;length>++index;){var key=props[index],objValue=object[key],srcValue=values[index];if(noCustomizer&&strictCompareFlags[index])var result=objValue!==undefined||key in object;else result=customizer?customizer(objValue,srcValue,key):undefined,result===undefined&&(result=baseIsEqual(srcValue,objValue,customizer,!0));if(!result)return!1}return!0}function baseMatches(source){var props=keys(source),length=props.length;if(!length)return constant(!0);if(1==length){var key=props[0],value=source[key];if(isStrictComparable(value))return function(object){return null==object?!1:object[key]===value&&(value!==undefined||key in toObject(object))}}for(var values=Array(length),strictCompareFlags=Array(length);length--;)value=source[props[length]],values[length]=value,strictCompareFlags[length]=isStrictComparable(value);return function(object){return null!=object&&baseIsMatch(toObject(object),props,values,strictCompareFlags)}}function baseMatchesProperty(path,value){var isArr=isArray(path),isCommon=isKey(path)&&isStrictComparable(value),pathKey=path+\"\";return path=toPath(path),function(object){if(null==object)return!1;var key=pathKey;if(object=toObject(object),!(!isArr&&isCommon||key in object)){if(object=1==path.length?object:baseGet(object,baseSlice(path,0,-1)),null==object)return!1;key=last(path),object=toObject(object)}return object[key]===value?value!==undefined||key in object:baseIsEqual(value,object[key],null,!0)}}function baseMerge(object,source,customizer,stackA,stackB){if(!isObject(object))return object;var isSrcArr=isLength(source.length)&&(isArray(source)||isTypedArray(source));if(!isSrcArr){var props=keys(source);push.apply(props,getSymbols(source))}return arrayEach(props||source,function(srcValue,key){if(props&&(key=srcValue,srcValue=source[key]),isObjectLike(srcValue))stackA||(stackA=[]),stackB||(stackB=[]),baseMergeDeep(object,source,key,baseMerge,customizer,stackA,stackB);else{var value=object[key],result=customizer?customizer(value,srcValue,key,object,source):undefined,isCommon=result===undefined;isCommon&&(result=srcValue),!isSrcArr&&result===undefined||!isCommon&&(result===result?result===value:value!==value)||(object[key]=result)}}),object}function baseMergeDeep(object,source,key,mergeFunc,customizer,stackA,stackB){for(var length=stackA.length,srcValue=source[key];length--;)if(stackA[length]==srcValue)return object[key]=stackB[length],undefined;var value=object[key],result=customizer?customizer(value,srcValue,key,object,source):undefined,isCommon=result===undefined;isCommon&&(result=srcValue,isLength(srcValue.length)&&(isArray(srcValue)||isTypedArray(srcValue))?result=isArray(value)?value:getLength(value)?arrayCopy(value):[]:isPlainObject(srcValue)||isArguments(srcValue)?result=isArguments(value)?toPlainObject(value):isPlainObject(value)?value:{}:isCommon=!1),stackA.push(srcValue),stackB.push(result),isCommon?object[key]=mergeFunc(result,srcValue,customizer,stackA,stackB):(result===result?result!==value:value===value)&&(object[key]=result)}function baseProperty(key){return function(object){return null==object?undefined:object[key]}}function basePropertyDeep(path){var pathKey=path+\"\";return path=toPath(path),function(object){return baseGet(object,path,pathKey)}}function baseSlice(array,start,end){var index=-1,length=array.length;start=null==start?0:+start||0,0>start&&(start=-start>length?0:length+start),end=end===undefined||end>length?length:+end||0,0>end&&(end+=length),length=start>end?0:end-start>>>0,start>>>=0;for(var result=Array(length);length>++index;)result[index]=array[index+start];return result}function baseSome(collection,predicate){var result;return baseEach(collection,function(value,index,collection){return result=predicate(value,index,collection),!result}),!!result}function baseValues(object,props){for(var index=-1,length=props.length,result=Array(length);length>++index;)result[index]=object[props[index]];return result}function binaryIndex(array,value,retHighest){var low=0,high=array?array.length:low;if(\"number\"==typeof value&&value===value&&HALF_MAX_ARRAY_LENGTH>=high){for(;high>low;){var mid=low+high>>>1,computed=array[mid];(retHighest?value>=computed:value>computed)?low=mid+1:high=mid}return high}return binaryIndexBy(array,value,identity,retHighest)}function binaryIndexBy(array,value,iteratee,retHighest){value=iteratee(value);for(var low=0,high=array?array.length:0,valIsNaN=value!==value,valIsUndef=value===undefined;high>low;){var mid=floor((low+high)/2),computed=iteratee(array[mid]),isReflexive=computed===computed;if(valIsNaN)var setLow=isReflexive||retHighest;else setLow=valIsUndef?isReflexive&&(retHighest||computed!==undefined):retHighest?value>=computed:value>computed;setLow?low=mid+1:high=mid}return nativeMin(high,MAX_ARRAY_INDEX)}function bindCallback(func,thisArg,argCount){if(\"function\"!=typeof func)return identity;if(thisArg===undefined)return func;switch(argCount){case 1:return function(value){return func.call(thisArg,value)};case 3:return function(value,index,collection){return func.call(thisArg,value,index,collection)};case 4:return function(accumulator,value,index,collection){return func.call(thisArg,accumulator,value,index,collection)};case 5:return function(value,other,key,object,source){return func.call(thisArg,value,other,key,object,source)}}return function(){return func.apply(thisArg,arguments)}}function bufferClone(buffer){return bufferSlice.call(buffer,0)}function createAssigner(assigner){return restParam(function(object,sources){var index=-1,length=null==object?0:sources.length,customizer=length>2&&sources[length-2],guard=length>2&&sources[2],thisArg=length>1&&sources[length-1];for(\"function\"==typeof customizer?(customizer=bindCallback(customizer,thisArg,5),length-=2):(customizer=\"function\"==typeof thisArg?thisArg:null,length-=customizer?1:0),guard&&isIterateeCall(sources[0],sources[1],guard)&&(customizer=3>length?null:customizer,length=1);length>++index;){var source=sources[index];source&&assigner(object,source,customizer)}return object})}function createBaseEach(eachFunc,fromRight){return function(collection,iteratee){var length=collection?getLength(collection):0;if(!isLength(length))return eachFunc(collection,iteratee);for(var index=fromRight?length:-1,iterable=toObject(collection);(fromRight?index--:length>++index)&&iteratee(iterable[index],index,iterable)!==!1;);return collection}}function createBaseFor(fromRight){return function(object,iteratee,keysFunc){for(var iterable=toObject(object),props=keysFunc(object),length=props.length,index=fromRight?length:-1;fromRight?index--:length>++index;){var key=props[index];if(iteratee(iterable[key],key,iterable)===!1)break}return object}}function createFindIndex(fromRight){return function(array,predicate,thisArg){return array&&array.length?(predicate=getCallback(predicate,thisArg,3),baseFindIndex(array,predicate,fromRight)):-1}}function createForEach(arrayFunc,eachFunc){return function(collection,iteratee,thisArg){return\"function\"==typeof iteratee&&thisArg===undefined&&isArray(collection)?arrayFunc(collection,iteratee):eachFunc(collection,bindCallback(iteratee,thisArg,3))}}function equalArrays(array,other,equalFunc,customizer,isLoose,stackA,stackB){var index=-1,arrLength=array.length,othLength=other.length,result=!0;if(arrLength!=othLength&&!(isLoose&&othLength>arrLength))return!1;for(;result&&arrLength>++index;){var arrValue=array[index],othValue=other[index];if(result=undefined,customizer&&(result=isLoose?customizer(othValue,arrValue,index):customizer(arrValue,othValue,index)),result===undefined)if(isLoose)for(var othIndex=othLength;othIndex--&&(othValue=other[othIndex],!(result=arrValue&&arrValue===othValue||equalFunc(arrValue,othValue,customizer,isLoose,stackA,stackB))););else result=arrValue&&arrValue===othValue||equalFunc(arrValue,othValue,customizer,isLoose,stackA,stackB)}return!!result}function equalByTag(object,other,tag){switch(tag){case boolTag:case dateTag:return+object==+other;case errorTag:return object.name==other.name&&object.message==other.message;case numberTag:return object!=+object?other!=+other:0==object?1/object==1/other:object==+other;case regexpTag:case stringTag:return object==other+\"\"}return!1}function equalObjects(object,other,equalFunc,customizer,isLoose,stackA,stackB){var objProps=keys(object),objLength=objProps.length,othProps=keys(other),othLength=othProps.length;if(objLength!=othLength&&!isLoose)return!1;for(var skipCtor=isLoose,index=-1;objLength>++index;){var key=objProps[index],result=isLoose?key in other:hasOwnProperty.call(other,key);if(result){var objValue=object[key],othValue=other[key];result=undefined,customizer&&(result=isLoose?customizer(othValue,objValue,key):customizer(objValue,othValue,key)),result===undefined&&(result=objValue&&objValue===othValue||equalFunc(objValue,othValue,customizer,isLoose,stackA,stackB))}if(!result)return!1;skipCtor||(skipCtor=\"constructor\"==key)}if(!skipCtor){var objCtor=object.constructor,othCtor=other.constructor;if(objCtor!=othCtor&&\"constructor\"in object&&\"constructor\"in other&&!(\"function\"==typeof objCtor&&objCtor instanceof objCtor&&\"function\"==typeof othCtor&&othCtor instanceof othCtor))return!1}return!0}function getCallback(func,thisArg,argCount){var result=lodash.callback||callback;return result=result===callback?baseCallback:result,argCount?result(func,thisArg,argCount):result}function getIndexOf(collection,target,fromIndex){var result=lodash.indexOf||indexOf;return result=result===indexOf?baseIndexOf:result,collection?result(collection,target,fromIndex):result}function initCloneArray(array){var length=array.length,result=new array.constructor(length);return length&&\"string\"==typeof array[0]&&hasOwnProperty.call(array,\"index\")&&(result.index=array.index,result.input=array.input),result}function initCloneObject(object){var Ctor=object.constructor;return\"function\"==typeof Ctor&&Ctor instanceof Ctor||(Ctor=Object),new Ctor}function initCloneByTag(object,tag,isDeep){var Ctor=object.constructor;switch(tag){case arrayBufferTag:return bufferClone(object);case boolTag:case dateTag:return new Ctor(+object);case float32Tag:case float64Tag:case int8Tag:case int16Tag:case int32Tag:case uint8Tag:case uint8ClampedTag:case uint16Tag:case uint32Tag:var buffer=object.buffer;return new Ctor(isDeep?bufferClone(buffer):buffer,object.byteOffset,object.length);case numberTag:case stringTag:return new Ctor(object);case regexpTag:var result=new Ctor(object.source,reFlags.exec(object));result.lastIndex=object.lastIndex}return result}function isIndex(value,length){return value=+value,length=null==length?MAX_SAFE_INTEGER:length,value>-1&&0==value%1&&length>value}function isIterateeCall(value,index,object){if(!isObject(object))return!1;var type=typeof index;if(\"number\"==type)var length=getLength(object),prereq=isLength(length)&&isIndex(index,length);else prereq=\"string\"==type&&index in object;if(prereq){var other=object[index];return value===value?value===other:other!==other}return!1}function isKey(value,object){var type=typeof value;if(\"string\"==type&&reIsPlainProp.test(value)||\"number\"==type)return!0;if(isArray(value))return!1;var result=!reIsDeepProp.test(value);return result||null!=object&&value in toObject(object)}function isLength(value){return\"number\"==typeof value&&value>-1&&0==value%1&&MAX_SAFE_INTEGER>=value}function isStrictComparable(value){return value===value&&(0===value?1/value>0:!isObject(value))}function shimIsPlainObject(value){var Ctor;if(lodash.support,!isObjectLike(value)||objToString.call(value)!=objectTag||!hasOwnProperty.call(value,\"constructor\")&&(Ctor=value.constructor,\"function\"==typeof Ctor&&!(Ctor instanceof Ctor)))return!1;var result;return baseForIn(value,function(subValue,key){result=key}),result===undefined||hasOwnProperty.call(value,result)}function shimKeys(object){for(var props=keysIn(object),propsLength=props.length,length=propsLength&&object.length,support=lodash.support,allowIndexes=length&&isLength(length)&&(isArray(object)||support.nonEnumArgs&&isArguments(object)),index=-1,result=[];propsLength>++index;){var key=props[index];(allowIndexes&&isIndex(key,length)||hasOwnProperty.call(object,key))&&result.push(key)}return result}function toObject(value){return isObject(value)?value:Object(value)}function toPath(value){if(isArray(value))return value;var result=[];return baseToString(value).replace(rePropName,function(match,number,quote,string){result.push(quote?string.replace(reEscapeChar,\"$1\"):number||match)}),result}function indexOf(array,value,fromIndex){var length=array?array.length:0;if(!length)return-1;if(\"number\"==typeof fromIndex)fromIndex=0>fromIndex?nativeMax(length+fromIndex,0):fromIndex;else if(fromIndex){var index=binaryIndex(array,value),other=array[index];return(value===value?value===other:other!==other)?index:-1}return baseIndexOf(array,value,fromIndex||0)}function last(array){var length=array?array.length:0;return length?array[length-1]:undefined}function slice(array,start,end){var length=array?array.length:0;return length?(end&&\"number\"!=typeof end&&isIterateeCall(array,start,end)&&(start=0,end=length),baseSlice(array,start,end)):[]}function unzip(array){for(var index=-1,length=(array&&array.length&&arrayMax(arrayMap(array,getLength)))>>>0,result=Array(length);length>++index;)result[index]=arrayMap(array,baseProperty(index));return result}function includes(collection,target,fromIndex,guard){var length=collection?getLength(collection):0;return isLength(length)||(collection=values(collection),length=collection.length),length?(fromIndex=\"number\"!=typeof fromIndex||guard&&isIterateeCall(target,fromIndex,guard)?0:0>fromIndex?nativeMax(length+fromIndex,0):fromIndex||0,\"string\"==typeof collection||!isArray(collection)&&isString(collection)?length>fromIndex&&collection.indexOf(target,fromIndex)>-1:getIndexOf(collection,target,fromIndex)>-1):!1}function reject(collection,predicate,thisArg){var func=isArray(collection)?arrayFilter:baseFilter;return predicate=getCallback(predicate,thisArg,3),func(collection,function(value,index,collection){return!predicate(value,index,collection)})}function some(collection,predicate,thisArg){var func=isArray(collection)?arraySome:baseSome;return thisArg&&isIterateeCall(collection,predicate,thisArg)&&(predicate=null),(\"function\"!=typeof predicate||thisArg!==undefined)&&(predicate=getCallback(predicate,thisArg,3)),func(collection,predicate)}function restParam(func,start){if(\"function\"!=typeof func)throw new TypeError(FUNC_ERROR_TEXT);return start=nativeMax(start===undefined?func.length-1:+start||0,0),function(){for(var args=arguments,index=-1,length=nativeMax(args.length-start,0),rest=Array(length);length>++index;)rest[index]=args[start+index];switch(start){case 0:return func.call(this,rest);case 1:return func.call(this,args[0],rest);case 2:return func.call(this,args[0],args[1],rest)}var otherArgs=Array(start+1);for(index=-1;start>++index;)otherArgs[index]=args[index];return otherArgs[start]=rest,func.apply(this,otherArgs)}}function clone(value,isDeep,customizer,thisArg){return isDeep&&\"boolean\"!=typeof isDeep&&isIterateeCall(value,isDeep,customizer)?isDeep=!1:\"function\"==typeof isDeep&&(thisArg=customizer,customizer=isDeep,isDeep=!1),customizer=\"function\"==typeof customizer&&bindCallback(customizer,thisArg,1),baseClone(value,isDeep,customizer)}function isArguments(value){var length=isObjectLike(value)?value.length:undefined;return isLength(length)&&objToString.call(value)==argsTag}function isEmpty(value){if(null==value)return!0;var length=getLength(value);return isLength(length)&&(isArray(value)||isString(value)||isArguments(value)||isObjectLike(value)&&isFunction(value.splice))?!length:!keys(value).length}function isObject(value){var type=typeof value;return\"function\"==type||!!value&&\"object\"==type}function isNative(value){return null==value?!1:objToString.call(value)==funcTag?reIsNative.test(fnToString.call(value)):isObjectLike(value)&&reIsHostCtor.test(value)}function isNumber(value){return\"number\"==typeof value||isObjectLike(value)&&objToString.call(value)==numberTag}function isString(value){return\"string\"==typeof value||isObjectLike(value)&&objToString.call(value)==stringTag}function isTypedArray(value){return isObjectLike(value)&&isLength(value.length)&&!!typedArrayTags[objToString.call(value)]}function toPlainObject(value){return baseCopy(value,keysIn(value))}function has(object,path){if(null==object)return!1;var result=hasOwnProperty.call(object,path);return result||isKey(path)||(path=toPath(path),object=1==path.length?object:baseGet(object,baseSlice(path,0,-1)),path=last(path),result=null!=object&&hasOwnProperty.call(object,path)),result}function keysIn(object){if(null==object)return[];isObject(object)||(object=Object(object));var length=object.length;length=length&&isLength(length)&&(isArray(object)||support.nonEnumArgs&&isArguments(object))&&length||0;for(var Ctor=object.constructor,index=-1,isProto=\"function\"==typeof Ctor&&Ctor.prototype===object,result=Array(length),skipIndexes=length>0;length>++index;)result[index]=index+\"\";for(var key in object)skipIndexes&&isIndex(key,length)||\"constructor\"==key&&(isProto||!hasOwnProperty.call(object,key))||result.push(key);return result}function values(object){return baseValues(object,keys(object))}function escapeRegExp(string){return string=baseToString(string),string&&reHasRegExpChars.test(string)?string.replace(reRegExpChars,\"\\\\$&\"):string}function callback(func,thisArg,guard){return guard&&isIterateeCall(func,thisArg,guard)&&(thisArg=null),baseCallback(func,thisArg)}function constant(value){return function(){return value}}function identity(value){return value}function property(path){return isKey(path)?baseProperty(path):basePropertyDeep(path)}var undefined,VERSION=\"3.7.0\",FUNC_ERROR_TEXT=\"Expected a function\",argsTag=\"[object Arguments]\",arrayTag=\"[object Array]\",boolTag=\"[object Boolean]\",dateTag=\"[object Date]\",errorTag=\"[object Error]\",funcTag=\"[object Function]\",mapTag=\"[object Map]\",numberTag=\"[object Number]\",objectTag=\"[object Object]\",regexpTag=\"[object RegExp]\",setTag=\"[object Set]\",stringTag=\"[object String]\",weakMapTag=\"[object WeakMap]\",arrayBufferTag=\"[object ArrayBuffer]\",float32Tag=\"[object Float32Array]\",float64Tag=\"[object Float64Array]\",int8Tag=\"[object Int8Array]\",int16Tag=\"[object Int16Array]\",int32Tag=\"[object Int32Array]\",uint8Tag=\"[object Uint8Array]\",uint8ClampedTag=\"[object Uint8ClampedArray]\",uint16Tag=\"[object Uint16Array]\",uint32Tag=\"[object Uint32Array]\",reIsDeepProp=/\\.|\\[(?:[^[\\]]+|([\"'])(?:(?!\\1)[^\\n\\\\]|\\\\.)*?)\\1\\]/,reIsPlainProp=/^\\w*$/,rePropName=/[^.[\\]]+|\\[(?:(-?\\d+(?:\\.\\d+)?)|([\"'])((?:(?!\\2)[^\\n\\\\]|\\\\.)*?)\\2)\\]/g,reRegExpChars=/[.*+?^${}()|[\\]\\/\\\\]/g,reHasRegExpChars=RegExp(reRegExpChars.source),reEscapeChar=/\\\\(\\\\)?/g,reFlags=/\\w*$/,reIsHostCtor=/^\\[object .+?Constructor\\]$/,typedArrayTags={};typedArrayTags[float32Tag]=typedArrayTags[float64Tag]=typedArrayTags[int8Tag]=typedArrayTags[int16Tag]=typedArrayTags[int32Tag]=typedArrayTags[uint8Tag]=typedArrayTags[uint8ClampedTag]=typedArrayTags[uint16Tag]=typedArrayTags[uint32Tag]=!0,typedArrayTags[argsTag]=typedArrayTags[arrayTag]=typedArrayTags[arrayBufferTag]=typedArrayTags[boolTag]=typedArrayTags[dateTag]=typedArrayTags[errorTag]=typedArrayTags[funcTag]=typedArrayTags[mapTag]=typedArrayTags[numberTag]=typedArrayTags[objectTag]=typedArrayTags[regexpTag]=typedArrayTags[setTag]=typedArrayTags[stringTag]=typedArrayTags[weakMapTag]=!1;var cloneableTags={};cloneableTags[argsTag]=cloneableTags[arrayTag]=cloneableTags[arrayBufferTag]=cloneableTags[boolTag]=cloneableTags[dateTag]=cloneableTags[float32Tag]=cloneableTags[float64Tag]=cloneableTags[int8Tag]=cloneableTags[int16Tag]=cloneableTags[int32Tag]=cloneableTags[numberTag]=cloneableTags[objectTag]=cloneableTags[regexpTag]=cloneableTags[stringTag]=cloneableTags[uint8Tag]=cloneableTags[uint8ClampedTag]=cloneableTags[uint16Tag]=cloneableTags[uint32Tag]=!0,cloneableTags[errorTag]=cloneableTags[funcTag]=cloneableTags[mapTag]=cloneableTags[setTag]=cloneableTags[weakMapTag]=!1;var objectTypes={\"function\":!0,object:!0},freeExports=objectTypes[typeof exports]&&exports&&!exports.nodeType&&exports,freeModule=objectTypes[typeof module]&&module&&!module.nodeType&&module,freeGlobal=freeExports&&freeModule&&\"object\"==typeof global&&global&&global.Object&&global,freeSelf=objectTypes[typeof self]&&self&&self.Object&&self,freeWindow=objectTypes[typeof window]&&window&&window.Object&&window,moduleExports=freeModule&&freeModule.exports===freeExports&&freeExports,root=freeGlobal||freeWindow!==(this&&this.window)&&freeWindow||freeSelf||this,arrayProto=Array.prototype,objectProto=Object.prototype,fnToString=Function.prototype.toString,hasOwnProperty=objectProto.hasOwnProperty,objToString=objectProto.toString,reIsNative=RegExp(\"^\"+escapeRegExp(objToString).replace(/toString|(function).*?(?=\\\\\\()| for .+?(?=\\\\\\])/g,\"$1.*?\")+\"$\"),ArrayBuffer=isNative(ArrayBuffer=root.ArrayBuffer)&&ArrayBuffer,bufferSlice=isNative(bufferSlice=ArrayBuffer&&new ArrayBuffer(0).slice)&&bufferSlice,floor=Math.floor,getOwnPropertySymbols=isNative(getOwnPropertySymbols=Object.getOwnPropertySymbols)&&getOwnPropertySymbols,getPrototypeOf=isNative(getPrototypeOf=Object.getPrototypeOf)&&getPrototypeOf,push=arrayProto.push,preventExtensions=isNative(Object.preventExtensions=Object.preventExtensions)&&preventExtensions,propertyIsEnumerable=objectProto.propertyIsEnumerable,Uint8Array=isNative(Uint8Array=root.Uint8Array)&&Uint8Array,Float64Array=function(){try{var func=isNative(func=root.Float64Array)&&func,result=new func(new ArrayBuffer(10),0,1)&&func}catch(e){}return result}(),nativeAssign=function(){var object={1:0},func=preventExtensions&&isNative(func=Object.assign)&&func;try{func(preventExtensions(object),\"xo\")}catch(e){}return!object[1]&&func}(),nativeIsArray=isNative(nativeIsArray=Array.isArray)&&nativeIsArray,nativeKeys=isNative(nativeKeys=Object.keys)&&nativeKeys,nativeMax=Math.max,nativeMin=Math.min,NEGATIVE_INFINITY=Number.NEGATIVE_INFINITY,MAX_ARRAY_LENGTH=Math.pow(2,32)-1,MAX_ARRAY_INDEX=MAX_ARRAY_LENGTH-1,HALF_MAX_ARRAY_LENGTH=MAX_ARRAY_LENGTH>>>1,FLOAT64_BYTES_PER_ELEMENT=Float64Array?Float64Array.BYTES_PER_ELEMENT:0,MAX_SAFE_INTEGER=Math.pow(2,53)-1,support=lodash.support={};(function(x){var Ctor=function(){this.x=x},props=[];Ctor.prototype={valueOf:x,y:x};for(var key in new Ctor)props.push(key);support.funcDecomp=/\\bthis\\b/.test(function(){return this}),support.funcNames=\"string\"==typeof Function.name;try{support.nonEnumArgs=!propertyIsEnumerable.call(arguments,1)}catch(e){support.nonEnumArgs=!0}})(1,0);var baseAssign=nativeAssign||function(object,source){return null==source?object:baseCopy(source,getSymbols(source),baseCopy(source,keys(source),object))},baseEach=createBaseEach(baseForOwn),baseFor=createBaseFor();bufferSlice||(bufferClone=ArrayBuffer&&Uint8Array?function(buffer){var byteLength=buffer.byteLength,floatLength=Float64Array?floor(byteLength/FLOAT64_BYTES_PER_ELEMENT):0,offset=floatLength*FLOAT64_BYTES_PER_ELEMENT,result=new ArrayBuffer(byteLength);if(floatLength){var view=new Float64Array(result,0,floatLength);view.set(new Float64Array(buffer,0,floatLength))}return byteLength!=offset&&(view=new Uint8Array(result,offset),view.set(new Uint8Array(buffer,offset))),result}:constant(null));var getLength=baseProperty(\"length\"),getSymbols=getOwnPropertySymbols?function(object){return getOwnPropertySymbols(toObject(object))}:constant([]),findLastIndex=createFindIndex(!0),zip=restParam(unzip),forEach=createForEach(arrayEach,baseEach),isArray=nativeIsArray||function(value){return isObjectLike(value)&&isLength(value.length)&&objToString.call(value)==arrayTag},isFunction=baseIsFunction(/x/)||Uint8Array&&!baseIsFunction(Uint8Array)?function(value){return objToString.call(value)==funcTag}:baseIsFunction,isPlainObject=getPrototypeOf?function(value){if(!value||objToString.call(value)!=objectTag)return!1;var valueOf=value.valueOf,objProto=isNative(valueOf)&&(objProto=getPrototypeOf(valueOf))&&getPrototypeOf(objProto);return objProto?value==objProto||getPrototypeOf(value)==objProto:shimIsPlainObject(value)}:shimIsPlainObject,assign=createAssigner(function(object,source,customizer){return customizer?assignWith(object,source,customizer):baseAssign(object,source)}),keys=nativeKeys?function(object){if(object)var Ctor=object.constructor,length=object.length;return\"function\"==typeof Ctor&&Ctor.prototype===object||\"function\"!=typeof object&&isLength(length)?shimKeys(object):isObject(object)?nativeKeys(object):[]}:shimKeys,merge=createAssigner(baseMerge);lodash.assign=assign,lodash.callback=callback,lodash.constant=constant,lodash.forEach=forEach,lodash.keys=keys,lodash.keysIn=keysIn,lodash.merge=merge,lodash.property=property,lodash.reject=reject,lodash.restParam=restParam,lodash.slice=slice,lodash.toPlainObject=toPlainObject,lodash.unzip=unzip,lodash.values=values,lodash.zip=zip,lodash.each=forEach,lodash.extend=assign,lodash.iteratee=callback,lodash.clone=clone,lodash.escapeRegExp=escapeRegExp,lodash.findLastIndex=findLastIndex,lodash.has=has,lodash.identity=identity,lodash.includes=includes,lodash.indexOf=indexOf,lodash.isArguments=isArguments,lodash.isArray=isArray,lodash.isEmpty=isEmpty,lodash.isFunction=isFunction,lodash.isNative=isNative,lodash.isNumber=isNumber,lodash.isObject=isObject,lodash.isPlainObject=isPlainObject,lodash.isString=isString,lodash.isTypedArray=isTypedArray,lodash.last=last,lodash.some=some,lodash.any=some,lodash.contains=includes,lodash.include=includes,lodash.VERSION=VERSION,freeExports&&freeModule?moduleExports?(freeModule.exports=lodash)._=lodash:freeExports._=lodash:root._=lodash\n}).call(this)}).call(this,\"undefined\"!=typeof global?global:\"undefined\"!=typeof self?self:\"undefined\"!=typeof window?window:{})},{}],\"/node_modules/jshint/src/jshint.js\":[function(_dereq_,module,exports){var _=_dereq_(\"../lodash\"),events=_dereq_(\"events\"),vars=_dereq_(\"./vars.js\"),messages=_dereq_(\"./messages.js\"),Lexer=_dereq_(\"./lex.js\").Lexer,reg=_dereq_(\"./reg.js\"),state=_dereq_(\"./state.js\").state,style=_dereq_(\"./style.js\"),options=_dereq_(\"./options.js\"),scopeManager=_dereq_(\"./scope-manager.js\"),JSHINT=function(){\"use strict\";function checkOption(name,t){return name=name.trim(),/^[+-]W\\d{3}$/g.test(name)?!0:-1!==options.validNames.indexOf(name)||\"jslint\"===t.type||_.has(options.removed,name)?!0:(error(\"E001\",t,name),!1)}function isString(obj){return\"[object String]\"===Object.prototype.toString.call(obj)}function isIdentifier(tkn,value){return tkn?tkn.identifier&&tkn.value===value?!0:!1:!1}function isReserved(token){if(!token.reserved)return!1;var meta=token.meta;if(meta&&meta.isFutureReservedWord&&state.inES5()){if(!meta.es5)return!1;if(meta.strictOnly&&!state.option.strict&&!state.isStrict())return!1;if(token.isProperty)return!1}return!0}function supplant(str,data){return str.replace(/\\{([^{}]*)\\}/g,function(a,b){var r=data[b];return\"string\"==typeof r||\"number\"==typeof r?r:a})}function combine(dest,src){Object.keys(src).forEach(function(name){_.has(JSHINT.blacklist,name)||(dest[name]=src[name])})}function processenforceall(){if(state.option.enforceall){for(var enforceopt in options.bool.enforcing)void 0!==state.option[enforceopt]||options.noenforceall[enforceopt]||(state.option[enforceopt]=!0);for(var relaxopt in options.bool.relaxing)void 0===state.option[relaxopt]&&(state.option[relaxopt]=!1)}}function assume(){processenforceall(),state.option.esversion||state.option.moz||(state.option.esversion=state.option.es3?3:state.option.esnext?6:5),state.inES5()&&combine(predefined,vars.ecmaIdentifiers[5]),state.inES6()&&combine(predefined,vars.ecmaIdentifiers[6]),state.option.module&&(state.option.strict===!0&&(state.option.strict=\"global\"),state.inES6()||warning(\"W134\",state.tokens.next,\"module\",6)),state.option.couch&&combine(predefined,vars.couch),state.option.qunit&&combine(predefined,vars.qunit),state.option.rhino&&combine(predefined,vars.rhino),state.option.shelljs&&(combine(predefined,vars.shelljs),combine(predefined,vars.node)),state.option.typed&&combine(predefined,vars.typed),state.option.phantom&&(combine(predefined,vars.phantom),state.option.strict===!0&&(state.option.strict=\"global\")),state.option.prototypejs&&combine(predefined,vars.prototypejs),state.option.node&&(combine(predefined,vars.node),combine(predefined,vars.typed),state.option.strict===!0&&(state.option.strict=\"global\")),state.option.devel&&combine(predefined,vars.devel),state.option.dojo&&combine(predefined,vars.dojo),state.option.browser&&(combine(predefined,vars.browser),combine(predefined,vars.typed)),state.option.browserify&&(combine(predefined,vars.browser),combine(predefined,vars.typed),combine(predefined,vars.browserify),state.option.strict===!0&&(state.option.strict=\"global\")),state.option.nonstandard&&combine(predefined,vars.nonstandard),state.option.jasmine&&combine(predefined,vars.jasmine),state.option.jquery&&combine(predefined,vars.jquery),state.option.mootools&&combine(predefined,vars.mootools),state.option.worker&&combine(predefined,vars.worker),state.option.wsh&&combine(predefined,vars.wsh),state.option.globalstrict&&state.option.strict!==!1&&(state.option.strict=\"global\"),state.option.yui&&combine(predefined,vars.yui),state.option.mocha&&combine(predefined,vars.mocha)}function quit(code,line,chr){var percentage=Math.floor(100*(line/state.lines.length)),message=messages.errors[code].desc;throw{name:\"JSHintError\",line:line,character:chr,message:message+\" (\"+percentage+\"% scanned).\",raw:message,code:code}}function removeIgnoredMessages(){var ignored=state.ignoredLines;_.isEmpty(ignored)||(JSHINT.errors=_.reject(JSHINT.errors,function(err){return ignored[err.line]}))}function warning(code,t,a,b,c,d){var ch,l,w,msg;if(/^W\\d{3}$/.test(code)){if(state.ignored[code])return;msg=messages.warnings[code]}else/E\\d{3}/.test(code)?msg=messages.errors[code]:/I\\d{3}/.test(code)&&(msg=messages.info[code]);return t=t||state.tokens.next||{},\"(end)\"===t.id&&(t=state.tokens.curr),l=t.line||0,ch=t.from||0,w={id:\"(error)\",raw:msg.desc,code:msg.code,evidence:state.lines[l-1]||\"\",line:l,character:ch,scope:JSHINT.scope,a:a,b:b,c:c,d:d},w.reason=supplant(msg.desc,w),JSHINT.errors.push(w),removeIgnoredMessages(),JSHINT.errors.length>=state.option.maxerr&&quit(\"E043\",l,ch),w}function warningAt(m,l,ch,a,b,c,d){return warning(m,{line:l,from:ch},a,b,c,d)}function error(m,t,a,b,c,d){warning(m,t,a,b,c,d)}function errorAt(m,l,ch,a,b,c,d){return error(m,{line:l,from:ch},a,b,c,d)}function addInternalSrc(elem,src){var i;return i={id:\"(internal)\",elem:elem,value:src},JSHINT.internals.push(i),i}function doOption(){var nt=state.tokens.next,body=nt.body.match(/(-\\s+)?[^\\s,:]+(?:\\s*:\\s*(-\\s+)?[^\\s,]+)?/g)||[],predef={};if(\"globals\"===nt.type){body.forEach(function(g,idx){g=g.split(\":\");var key=(g[0]||\"\").trim(),val=(g[1]||\"\").trim();if(\"-\"===key||!key.length){if(idx>0&&idx===body.length-1)return;return error(\"E002\",nt),void 0}\"-\"===key.charAt(0)?(key=key.slice(1),val=!1,JSHINT.blacklist[key]=key,delete predefined[key]):predef[key]=\"true\"===val}),combine(predefined,predef);for(var key in predef)_.has(predef,key)&&(declared[key]=nt)}\"exported\"===nt.type&&body.forEach(function(e,idx){if(!e.length){if(idx>0&&idx===body.length-1)return;return error(\"E002\",nt),void 0}state.funct[\"(scope)\"].addExported(e)}),\"members\"===nt.type&&(membersOnly=membersOnly||{},body.forEach(function(m){var ch1=m.charAt(0),ch2=m.charAt(m.length-1);ch1!==ch2||'\"'!==ch1&&\"'\"!==ch1||(m=m.substr(1,m.length-2).replace('\\\\\"','\"')),membersOnly[m]=!1}));var numvals=[\"maxstatements\",\"maxparams\",\"maxdepth\",\"maxcomplexity\",\"maxerr\",\"maxlen\",\"indent\"];(\"jshint\"===nt.type||\"jslint\"===nt.type)&&(body.forEach(function(g){g=g.split(\":\");var key=(g[0]||\"\").trim(),val=(g[1]||\"\").trim();if(checkOption(key,nt))if(numvals.indexOf(key)>=0)if(\"false\"!==val){if(val=+val,\"number\"!=typeof val||!isFinite(val)||0>=val||Math.floor(val)!==val)return error(\"E032\",nt,g[1].trim()),void 0;state.option[key]=val}else state.option[key]=\"indent\"===key?4:!1;else{if(\"validthis\"===key)return state.funct[\"(global)\"]?void error(\"E009\"):\"true\"!==val&&\"false\"!==val?void error(\"E002\",nt):(state.option.validthis=\"true\"===val,void 0);if(\"quotmark\"!==key)if(\"shadow\"!==key)if(\"unused\"!==key)if(\"latedef\"!==key)if(\"ignore\"!==key)if(\"strict\"!==key){\"module\"===key&&(hasParsedCode(state.funct)||error(\"E055\",state.tokens.next,\"module\"));var esversions={es3:3,es5:5,esnext:6};if(!_.has(esversions,key)){if(\"esversion\"===key){switch(val){case\"5\":state.inES5(!0)&&warning(\"I003\");case\"3\":case\"6\":state.option.moz=!1,state.option.esversion=+val;break;case\"2015\":state.option.moz=!1,state.option.esversion=6;break;default:error(\"E002\",nt)}return hasParsedCode(state.funct)||error(\"E055\",state.tokens.next,\"esversion\"),void 0}var match=/^([+-])(W\\d{3})$/g.exec(key);if(match)return state.ignored[match[2]]=\"-\"===match[1],void 0;var tn;return\"true\"===val||\"false\"===val?(\"jslint\"===nt.type?(tn=options.renamed[key]||key,state.option[tn]=\"true\"===val,void 0!==options.inverted[tn]&&(state.option[tn]=!state.option[tn])):state.option[key]=\"true\"===val,\"newcap\"===key&&(state.option[\"(explicitNewcap)\"]=!0),void 0):(error(\"E002\",nt),void 0)}switch(val){case\"true\":state.option.moz=!1,state.option.esversion=esversions[key];break;case\"false\":state.option.moz||(state.option.esversion=5);break;default:error(\"E002\",nt)}}else switch(val){case\"true\":state.option.strict=!0;break;case\"false\":state.option.strict=!1;break;case\"func\":case\"global\":case\"implied\":state.option.strict=val;break;default:error(\"E002\",nt)}else switch(val){case\"line\":state.ignoredLines[nt.line]=!0,removeIgnoredMessages();break;default:error(\"E002\",nt)}else switch(val){case\"true\":state.option.latedef=!0;break;case\"false\":state.option.latedef=!1;break;case\"nofunc\":state.option.latedef=\"nofunc\";break;default:error(\"E002\",nt)}else switch(val){case\"true\":state.option.unused=!0;break;case\"false\":state.option.unused=!1;break;case\"vars\":case\"strict\":state.option.unused=val;break;default:error(\"E002\",nt)}else switch(val){case\"true\":state.option.shadow=!0;break;case\"outer\":state.option.shadow=\"outer\";break;case\"false\":case\"inner\":state.option.shadow=\"inner\";break;default:error(\"E002\",nt)}else switch(val){case\"true\":case\"false\":state.option.quotmark=\"true\"===val;break;case\"double\":case\"single\":state.option.quotmark=val;break;default:error(\"E002\",nt)}}}),assume())}function peek(p){var t,i=p||0,j=lookahead.length;if(j>i)return lookahead[i];for(;i>=j;)t=lookahead[j],t||(t=lookahead[j]=lex.token()),j+=1;return t||\"(end)\"!==state.tokens.next.id?t:state.tokens.next}function peekIgnoreEOL(){var t,i=0;do t=peek(i++);while(\"(endline)\"===t.id);return t}function advance(id,t){switch(state.tokens.curr.id){case\"(number)\":\".\"===state.tokens.next.id&&warning(\"W005\",state.tokens.curr);break;case\"-\":(\"-\"===state.tokens.next.id||\"--\"===state.tokens.next.id)&&warning(\"W006\");break;case\"+\":(\"+\"===state.tokens.next.id||\"++\"===state.tokens.next.id)&&warning(\"W007\")}for(id&&state.tokens.next.id!==id&&(t?\"(end)\"===state.tokens.next.id?error(\"E019\",t,t.id):error(\"E020\",state.tokens.next,id,t.id,t.line,state.tokens.next.value):(\"(identifier)\"!==state.tokens.next.type||state.tokens.next.value!==id)&&warning(\"W116\",state.tokens.next,id,state.tokens.next.value)),state.tokens.prev=state.tokens.curr,state.tokens.curr=state.tokens.next;;){if(state.tokens.next=lookahead.shift()||lex.token(),state.tokens.next||quit(\"E041\",state.tokens.curr.line),\"(end)\"===state.tokens.next.id||\"(error)\"===state.tokens.next.id)return;if(state.tokens.next.check&&state.tokens.next.check(),state.tokens.next.isSpecial)\"falls through\"===state.tokens.next.type?state.tokens.curr.caseFallsThrough=!0:doOption();else if(\"(endline)\"!==state.tokens.next.id)break}}function isInfix(token){return token.infix||!token.identifier&&!token.template&&!!token.led}function isEndOfExpr(){var curr=state.tokens.curr,next=state.tokens.next;return\";\"===next.id||\"}\"===next.id||\":\"===next.id?!0:isInfix(next)===isInfix(curr)||\"yield\"===curr.id&&state.inMoz()?curr.line!==startLine(next):!1}function isBeginOfExpr(prev){return!prev.left&&\"unary\"!==prev.arity}function expression(rbp,initial){var left,isArray=!1,isObject=!1,isLetExpr=!1;state.nameStack.push(),initial||\"let\"!==state.tokens.next.value||\"(\"!==peek(0).value||(state.inMoz()||warning(\"W118\",state.tokens.next,\"let expressions\"),isLetExpr=!0,state.funct[\"(scope)\"].stack(),advance(\"let\"),advance(\"(\"),state.tokens.prev.fud(),advance(\")\")),\"(end)\"===state.tokens.next.id&&error(\"E006\",state.tokens.curr);var isDangerous=state.option.asi&&state.tokens.prev.line!==startLine(state.tokens.curr)&&_.contains([\"]\",\")\"],state.tokens.prev.id)&&_.contains([\"[\",\"(\"],state.tokens.curr.id);if(isDangerous&&warning(\"W014\",state.tokens.curr,state.tokens.curr.id),advance(),initial&&(state.funct[\"(verb)\"]=state.tokens.curr.value,state.tokens.curr.beginsStmt=!0),initial===!0&&state.tokens.curr.fud)left=state.tokens.curr.fud();else for(state.tokens.curr.nud?left=state.tokens.curr.nud():error(\"E030\",state.tokens.curr,state.tokens.curr.id);(state.tokens.next.lbp>rbp||\"(template)\"===state.tokens.next.type)&&!isEndOfExpr();)isArray=\"Array\"===state.tokens.curr.value,isObject=\"Object\"===state.tokens.curr.value,left&&(left.value||left.first&&left.first.value)&&(\"new\"!==left.value||left.first&&left.first.value&&\".\"===left.first.value)&&(isArray=!1,left.value!==state.tokens.curr.value&&(isObject=!1)),advance(),isArray&&\"(\"===state.tokens.curr.id&&\")\"===state.tokens.next.id&&warning(\"W009\",state.tokens.curr),isObject&&\"(\"===state.tokens.curr.id&&\")\"===state.tokens.next.id&&warning(\"W010\",state.tokens.curr),left&&state.tokens.curr.led?left=state.tokens.curr.led(left):error(\"E033\",state.tokens.curr,state.tokens.curr.id);return isLetExpr&&state.funct[\"(scope)\"].unstack(),state.nameStack.pop(),left}function startLine(token){return token.startLine||token.line}function nobreaknonadjacent(left,right){left=left||state.tokens.curr,right=right||state.tokens.next,state.option.laxbreak||left.line===startLine(right)||warning(\"W014\",right,right.value)}function nolinebreak(t){t=t||state.tokens.curr,t.line!==startLine(state.tokens.next)&&warning(\"E022\",t,t.value)}function nobreakcomma(left,right){left.line!==startLine(right)&&(state.option.laxcomma||(comma.first&&(warning(\"I001\"),comma.first=!1),warning(\"W014\",left,right.value)))}function comma(opts){if(opts=opts||{},opts.peek?nobreakcomma(state.tokens.prev,state.tokens.curr):(nobreakcomma(state.tokens.curr,state.tokens.next),advance(\",\")),state.tokens.next.identifier&&(!opts.property||!state.inES5()))switch(state.tokens.next.value){case\"break\":case\"case\":case\"catch\":case\"continue\":case\"default\":case\"do\":case\"else\":case\"finally\":case\"for\":case\"if\":case\"in\":case\"instanceof\":case\"return\":case\"switch\":case\"throw\":case\"try\":case\"var\":case\"let\":case\"while\":case\"with\":return error(\"E024\",state.tokens.next,state.tokens.next.value),!1}if(\"(punctuator)\"===state.tokens.next.type)switch(state.tokens.next.value){case\"}\":case\"]\":case\",\":if(opts.allowTrailing)return!0;case\")\":return error(\"E024\",state.tokens.next,state.tokens.next.value),!1}return!0}function symbol(s,p){var x=state.syntax[s];return x&&\"object\"==typeof x||(state.syntax[s]=x={id:s,lbp:p,value:s}),x}function delim(s){var x=symbol(s,0);return x.delim=!0,x}function stmt(s,f){var x=delim(s);return x.identifier=x.reserved=!0,x.fud=f,x}function blockstmt(s,f){var x=stmt(s,f);return x.block=!0,x}function reserveName(x){var c=x.id.charAt(0);return(c>=\"a\"&&\"z\">=c||c>=\"A\"&&\"Z\">=c)&&(x.identifier=x.reserved=!0),x}function prefix(s,f){var x=symbol(s,150);return reserveName(x),x.nud=\"function\"==typeof f?f:function(){return this.arity=\"unary\",this.right=expression(150),(\"++\"===this.id||\"--\"===this.id)&&(state.option.plusplus?warning(\"W016\",this,this.id):!this.right||this.right.identifier&&!isReserved(this.right)||\".\"===this.right.id||\"[\"===this.right.id||warning(\"W017\",this),this.right&&this.right.isMetaProperty?error(\"E031\",this):this.right&&this.right.identifier&&state.funct[\"(scope)\"].block.modify(this.right.value,this)),this},x}function type(s,f){var x=delim(s);return x.type=s,x.nud=f,x}function reserve(name,func){var x=type(name,func);return x.identifier=!0,x.reserved=!0,x}function FutureReservedWord(name,meta){var x=type(name,meta&&meta.nud||function(){return this});return meta=meta||{},meta.isFutureReservedWord=!0,x.value=name,x.identifier=!0,x.reserved=!0,x.meta=meta,x}function reservevar(s,v){return reserve(s,function(){return\"function\"==typeof v&&v(this),this})}function infix(s,f,p,w){var x=symbol(s,p);return reserveName(x),x.infix=!0,x.led=function(left){return w||nobreaknonadjacent(state.tokens.prev,state.tokens.curr),\"in\"!==s&&\"instanceof\"!==s||\"!\"!==left.id||warning(\"W018\",left,\"!\"),\"function\"==typeof f?f(left,this):(this.left=left,this.right=expression(p),this)},x}function application(s){var x=symbol(s,42);return x.led=function(left){return nobreaknonadjacent(state.tokens.prev,state.tokens.curr),this.left=left,this.right=doFunction({type:\"arrow\",loneArg:left}),this},x}function relation(s,f){var x=symbol(s,100);return x.led=function(left){nobreaknonadjacent(state.tokens.prev,state.tokens.curr),this.left=left;var right=this.right=expression(100);return isIdentifier(left,\"NaN\")||isIdentifier(right,\"NaN\")?warning(\"W019\",this):f&&f.apply(this,[left,right]),left&&right||quit(\"E041\",state.tokens.curr.line),\"!\"===left.id&&warning(\"W018\",left,\"!\"),\"!\"===right.id&&warning(\"W018\",right,\"!\"),this},x}function isPoorRelation(node){return node&&(\"(number)\"===node.type&&0===+node.value||\"(string)\"===node.type&&\"\"===node.value||\"null\"===node.type&&!state.option.eqnull||\"true\"===node.type||\"false\"===node.type||\"undefined\"===node.type)}function isTypoTypeof(left,right,state){var values;return state.option.notypeof?!1:left&&right?(values=state.inES6()?typeofValues.es6:typeofValues.es3,\"(identifier)\"===right.type&&\"typeof\"===right.value&&\"(string)\"===left.type?!_.contains(values,left.value):!1):!1}function isGlobalEval(left,state){var isGlobal=!1;return\"this\"===left.type&&null===state.funct[\"(context)\"]?isGlobal=!0:\"(identifier)\"===left.type&&(state.option.node&&\"global\"===left.value?isGlobal=!0:!state.option.browser||\"window\"!==left.value&&\"document\"!==left.value||(isGlobal=!0)),isGlobal}function findNativePrototype(left){function walkPrototype(obj){return\"object\"==typeof obj?\"prototype\"===obj.right?obj:walkPrototype(obj.left):void 0}function walkNative(obj){for(;!obj.identifier&&\"object\"==typeof obj.left;)obj=obj.left;return obj.identifier&&natives.indexOf(obj.value)>=0?obj.value:void 0}var natives=[\"Array\",\"ArrayBuffer\",\"Boolean\",\"Collator\",\"DataView\",\"Date\",\"DateTimeFormat\",\"Error\",\"EvalError\",\"Float32Array\",\"Float64Array\",\"Function\",\"Infinity\",\"Intl\",\"Int16Array\",\"Int32Array\",\"Int8Array\",\"Iterator\",\"Number\",\"NumberFormat\",\"Object\",\"RangeError\",\"ReferenceError\",\"RegExp\",\"StopIteration\",\"String\",\"SyntaxError\",\"TypeError\",\"Uint16Array\",\"Uint32Array\",\"Uint8Array\",\"Uint8ClampedArray\",\"URIError\"],prototype=walkPrototype(left);return prototype?walkNative(prototype):void 0}function checkLeftSideAssign(left,assignToken,options){var allowDestructuring=options&&options.allowDestructuring;if(assignToken=assignToken||left,state.option.freeze){var nativeObject=findNativePrototype(left);nativeObject&&warning(\"W121\",left,nativeObject)}return left.identifier&&!left.isMetaProperty&&state.funct[\"(scope)\"].block.reassign(left.value,left),\".\"===left.id?((!left.left||\"arguments\"===left.left.value&&!state.isStrict())&&warning(\"E031\",assignToken),state.nameStack.set(state.tokens.prev),!0):\"{\"===left.id||\"[\"===left.id?(allowDestructuring&&state.tokens.curr.left.destructAssign?state.tokens.curr.left.destructAssign.forEach(function(t){t.id&&state.funct[\"(scope)\"].block.modify(t.id,t.token)}):\"{\"!==left.id&&left.left?\"arguments\"!==left.left.value||state.isStrict()||warning(\"E031\",assignToken):warning(\"E031\",assignToken),\"[\"===left.id&&state.nameStack.set(left.right),!0):left.isMetaProperty?(error(\"E031\",assignToken),!0):left.identifier&&!isReserved(left)?(\"exception\"===state.funct[\"(scope)\"].labeltype(left.value)&&warning(\"W022\",left),state.nameStack.set(left),!0):(left===state.syntax[\"function\"]&&warning(\"W023\",state.tokens.curr),!1)}function assignop(s,f,p){var x=infix(s,\"function\"==typeof f?f:function(left,that){return that.left=left,left&&checkLeftSideAssign(left,that,{allowDestructuring:!0})?(that.right=expression(10),that):(error(\"E031\",that),void 0)},p);return x.exps=!0,x.assign=!0,x}function bitwise(s,f,p){var x=symbol(s,p);return reserveName(x),x.led=\"function\"==typeof f?f:function(left){return state.option.bitwise&&warning(\"W016\",this,this.id),this.left=left,this.right=expression(p),this},x}function bitwiseassignop(s){return assignop(s,function(left,that){return state.option.bitwise&&warning(\"W016\",that,that.id),left&&checkLeftSideAssign(left,that)?(that.right=expression(10),that):(error(\"E031\",that),void 0)},20)}function suffix(s){var x=symbol(s,150);return x.led=function(left){return state.option.plusplus?warning(\"W016\",this,this.id):left.identifier&&!isReserved(left)||\".\"===left.id||\"[\"===left.id||warning(\"W017\",this),left.isMetaProperty?error(\"E031\",this):left&&left.identifier&&state.funct[\"(scope)\"].block.modify(left.value,left),this.left=left,this},x}function optionalidentifier(fnparam,prop,preserve){if(state.tokens.next.identifier){preserve||advance();var curr=state.tokens.curr,val=state.tokens.curr.value;return isReserved(curr)?prop&&state.inES5()?val:fnparam&&\"undefined\"===val?val:(warning(\"W024\",state.tokens.curr,state.tokens.curr.id),val):val}}function identifier(fnparam,prop){var i=optionalidentifier(fnparam,prop,!1);if(i)return i;if(\"...\"===state.tokens.next.value){if(state.inES6(!0)||warning(\"W119\",state.tokens.next,\"spread/rest operator\",\"6\"),advance(),checkPunctuator(state.tokens.next,\"...\"))for(warning(\"E024\",state.tokens.next,\"...\");checkPunctuator(state.tokens.next,\"...\");)advance();return state.tokens.next.identifier?identifier(fnparam,prop):(warning(\"E024\",state.tokens.curr,\"...\"),void 0)}error(\"E030\",state.tokens.next,state.tokens.next.value),\";\"!==state.tokens.next.id&&advance()}function reachable(controlToken){var t,i=0;if(\";\"===state.tokens.next.id&&!controlToken.inBracelessBlock)for(;;){do t=peek(i),i+=1;while(\"(end)\"!==t.id&&\"(comment)\"===t.id);if(t.reach)return;if(\"(endline)\"!==t.id){if(\"function\"===t.id){state.option.latedef===!0&&warning(\"W026\",t);break}warning(\"W027\",t,t.value,controlToken.value);break}}}function parseFinalSemicolon(){if(\";\"!==state.tokens.next.id){if(state.tokens.next.isUnclosed)return advance();var sameLine=startLine(state.tokens.next)===state.tokens.curr.line&&\"(end)\"!==state.tokens.next.id,blockEnd=checkPunctuator(state.tokens.next,\"}\");sameLine&&!blockEnd?errorAt(\"E058\",state.tokens.curr.line,state.tokens.curr.character):state.option.asi||(blockEnd&&!state.option.lastsemic||!sameLine)&&warningAt(\"W033\",state.tokens.curr.line,state.tokens.curr.character)}else advance(\";\")}function statement(){var r,i=indent,t=state.tokens.next,hasOwnScope=!1;if(\";\"===t.id)return advance(\";\"),void 0;var res=isReserved(t);if(res&&t.meta&&t.meta.isFutureReservedWord&&\":\"===peek().id&&(warning(\"W024\",t,t.id),res=!1),t.identifier&&!res&&\":\"===peek().id&&(advance(),advance(\":\"),hasOwnScope=!0,state.funct[\"(scope)\"].stack(),state.funct[\"(scope)\"].block.addBreakLabel(t.value,{token:state.tokens.curr}),state.tokens.next.labelled||\"{\"===state.tokens.next.value||warning(\"W028\",state.tokens.next,t.value,state.tokens.next.value),state.tokens.next.label=t.value,t=state.tokens.next),\"{\"===t.id){var iscase=\"case\"===state.funct[\"(verb)\"]&&\":\"===state.tokens.curr.value;return block(!0,!0,!1,!1,iscase),void 0}return r=expression(0,!0),!r||r.identifier&&\"function\"===r.value||\"(punctuator)\"===r.type&&r.left&&r.left.identifier&&\"function\"===r.left.value||state.isStrict()||\"global\"!==state.option.strict||warning(\"E007\"),t.block||(state.option.expr||r&&r.exps?state.option.nonew&&r&&r.left&&\"(\"===r.id&&\"new\"===r.left.id&&warning(\"W031\",t):warning(\"W030\",state.tokens.curr),parseFinalSemicolon()),indent=i,hasOwnScope&&state.funct[\"(scope)\"].unstack(),r}function statements(){for(var p,a=[];!state.tokens.next.reach&&\"(end)\"!==state.tokens.next.id;)\";\"===state.tokens.next.id?(p=peek(),(!p||\"(\"!==p.id&&\"[\"!==p.id)&&warning(\"W032\"),advance(\";\")):a.push(statement());return a}function directives(){for(var i,p,pn;\"(string)\"===state.tokens.next.id;){if(p=peek(0),\"(endline)\"===p.id){i=1;do pn=peek(i++);while(\"(endline)\"===pn.id);if(\";\"===pn.id)p=pn;else{if(\"[\"===pn.value||\".\"===pn.value)break;state.option.asi&&\"(\"!==pn.value||warning(\"W033\",state.tokens.next)}}else{if(\".\"===p.id||\"[\"===p.id)break;\";\"!==p.id&&warning(\"W033\",p)}advance();var directive=state.tokens.curr.value;(state.directive[directive]||\"use strict\"===directive&&\"implied\"===state.option.strict)&&warning(\"W034\",state.tokens.curr,directive),state.directive[directive]=!0,\";\"===p.id&&advance(\";\")}state.isStrict()&&(state.option[\"(explicitNewcap)\"]||(state.option.newcap=!0),state.option.undef=!0)}function block(ordinary,stmt,isfunc,isfatarrow,iscase){var a,m,t,line,d,b=inblock,old_indent=indent;inblock=ordinary,t=state.tokens.next;var metrics=state.funct[\"(metrics)\"];if(metrics.nestedBlockDepth+=1,metrics.verifyMaxNestedBlockDepthPerFunction(),\"{\"===state.tokens.next.id){if(advance(\"{\"),state.funct[\"(scope)\"].stack(),line=state.tokens.curr.line,\"}\"!==state.tokens.next.id){for(indent+=state.option.indent;!ordinary&&state.tokens.next.from>indent;)indent+=state.option.indent;if(isfunc){m={};for(d in state.directive)_.has(state.directive,d)&&(m[d]=state.directive[d]);directives(),state.option.strict&&state.funct[\"(context)\"][\"(global)\"]&&(m[\"use strict\"]||state.isStrict()||warning(\"E007\"))}a=statements(),metrics.statementCount+=a.length,indent-=state.option.indent}advance(\"}\",t),isfunc&&(state.funct[\"(scope)\"].validateParams(),m&&(state.directive=m)),state.funct[\"(scope)\"].unstack(),indent=old_indent}else if(ordinary)state.funct[\"(noblockscopedvar)\"]=\"for\"!==state.tokens.next.id,state.funct[\"(scope)\"].stack(),(!stmt||state.option.curly)&&warning(\"W116\",state.tokens.next,\"{\",state.tokens.next.value),state.tokens.next.inBracelessBlock=!0,indent+=state.option.indent,a=[statement()],indent-=state.option.indent,state.funct[\"(scope)\"].unstack(),delete state.funct[\"(noblockscopedvar)\"];else if(isfunc){if(state.funct[\"(scope)\"].stack(),m={},!stmt||isfatarrow||state.inMoz()||error(\"W118\",state.tokens.curr,\"function closure expressions\"),!stmt)for(d in state.directive)_.has(state.directive,d)&&(m[d]=state.directive[d]);expression(10),state.option.strict&&state.funct[\"(context)\"][\"(global)\"]&&(m[\"use strict\"]||state.isStrict()||warning(\"E007\")),state.funct[\"(scope)\"].unstack()}else error(\"E021\",state.tokens.next,\"{\",state.tokens.next.value);switch(state.funct[\"(verb)\"]){case\"break\":case\"continue\":case\"return\":case\"throw\":if(iscase)break;default:state.funct[\"(verb)\"]=null}return inblock=b,!ordinary||!state.option.noempty||a&&0!==a.length||warning(\"W035\",state.tokens.prev),metrics.nestedBlockDepth-=1,a}function countMember(m){membersOnly&&\"boolean\"!=typeof membersOnly[m]&&warning(\"W036\",state.tokens.curr,m),\"number\"==typeof member[m]?member[m]+=1:member[m]=1}function comprehensiveArrayExpression(){var res={};res.exps=!0,state.funct[\"(comparray)\"].stack();var reversed=!1;return\"for\"!==state.tokens.next.value&&(reversed=!0,state.inMoz()||warning(\"W116\",state.tokens.next,\"for\",state.tokens.next.value),state.funct[\"(comparray)\"].setState(\"use\"),res.right=expression(10)),advance(\"for\"),\"each\"===state.tokens.next.value&&(advance(\"each\"),state.inMoz()||warning(\"W118\",state.tokens.curr,\"for each\")),advance(\"(\"),state.funct[\"(comparray)\"].setState(\"define\"),res.left=expression(130),_.contains([\"in\",\"of\"],state.tokens.next.value)?advance():error(\"E045\",state.tokens.curr),state.funct[\"(comparray)\"].setState(\"generate\"),expression(10),advance(\")\"),\"if\"===state.tokens.next.value&&(advance(\"if\"),advance(\"(\"),state.funct[\"(comparray)\"].setState(\"filter\"),res.filter=expression(10),advance(\")\")),reversed||(state.funct[\"(comparray)\"].setState(\"use\"),res.right=expression(10)),advance(\"]\"),state.funct[\"(comparray)\"].unstack(),res}function isMethod(){return state.funct[\"(statement)\"]&&\"class\"===state.funct[\"(statement)\"].type||state.funct[\"(context)\"]&&\"class\"===state.funct[\"(context)\"][\"(verb)\"]}function isPropertyName(token){return token.identifier||\"(string)\"===token.id||\"(number)\"===token.id}function propertyName(preserveOrToken){var id,preserve=!0;return\"object\"==typeof preserveOrToken?id=preserveOrToken:(preserve=preserveOrToken,id=optionalidentifier(!1,!0,preserve)),id?\"object\"==typeof id&&(\"(string)\"===id.id||\"(identifier)\"===id.id?id=id.value:\"(number)\"===id.id&&(id=\"\"+id.value)):\"(string)\"===state.tokens.next.id?(id=state.tokens.next.value,preserve||advance()):\"(number)\"===state.tokens.next.id&&(id=\"\"+state.tokens.next.value,preserve||advance()),\"hasOwnProperty\"===id&&warning(\"W001\"),id}function functionparams(options){function addParam(addParamArgs){state.funct[\"(scope)\"].addParam.apply(state.funct[\"(scope)\"],addParamArgs)}var next,ident,t,paramsIds=[],tokens=[],pastDefault=!1,pastRest=!1,arity=0,loneArg=options&&options.loneArg;if(loneArg&&loneArg.identifier===!0)return state.funct[\"(scope)\"].addParam(loneArg.value,loneArg),{arity:1,params:[loneArg.value]};if(next=state.tokens.next,options&&options.parsedOpening||advance(\"(\"),\")\"===state.tokens.next.id)return advance(\")\"),void 0;for(;;){arity++;var currentParams=[];if(_.contains([\"{\",\"[\"],state.tokens.next.id)){tokens=destructuringPattern();for(t in tokens)t=tokens[t],t.id&&(paramsIds.push(t.id),currentParams.push([t.id,t.token]))}else if(checkPunctuator(state.tokens.next,\"...\")&&(pastRest=!0),ident=identifier(!0))paramsIds.push(ident),currentParams.push([ident,state.tokens.curr]);else for(;!checkPunctuators(state.tokens.next,[\",\",\")\"]);)advance();if(pastDefault&&\"=\"!==state.tokens.next.id&&error(\"W138\",state.tokens.current),\"=\"===state.tokens.next.id&&(state.inES6()||warning(\"W119\",state.tokens.next,\"default parameters\",\"6\"),advance(\"=\"),pastDefault=!0,expression(10)),currentParams.forEach(addParam),\",\"!==state.tokens.next.id)return advance(\")\",next),{arity:arity,params:paramsIds};pastRest&&warning(\"W131\",state.tokens.next),comma()}}function functor(name,token,overwrites){var funct={\"(name)\":name,\"(breakage)\":0,\"(loopage)\":0,\"(tokens)\":{},\"(properties)\":{},\"(catch)\":!1,\"(global)\":!1,\"(line)\":null,\"(character)\":null,\"(metrics)\":null,\"(statement)\":null,\"(context)\":null,\"(scope)\":null,\"(comparray)\":null,\"(generator)\":null,\"(arrow)\":null,\"(params)\":null};return token&&_.extend(funct,{\"(line)\":token.line,\"(character)\":token.character,\"(metrics)\":createMetrics(token)}),_.extend(funct,overwrites),funct[\"(context)\"]&&(funct[\"(scope)\"]=funct[\"(context)\"][\"(scope)\"],funct[\"(comparray)\"]=funct[\"(context)\"][\"(comparray)\"]),funct}function isFunctor(token){return\"(scope)\"in token}function hasParsedCode(funct){return funct[\"(global)\"]&&!funct[\"(verb)\"]}function doTemplateLiteral(left){function end(){if(state.tokens.curr.template&&state.tokens.curr.tail&&state.tokens.curr.context===ctx)return!0;var complete=state.tokens.next.template&&state.tokens.next.tail&&state.tokens.next.context===ctx;return complete&&advance(),complete||state.tokens.next.isUnclosed}var ctx=this.context,noSubst=this.noSubst,depth=this.depth;if(!noSubst)for(;!end();)!state.tokens.next.template||state.tokens.next.depth>depth?expression(0):advance();return{id:\"(template)\",type:\"(template)\",tag:left}}function doFunction(options){var f,token,name,statement,classExprBinding,isGenerator,isArrow,ignoreLoopFunc,oldOption=state.option,oldIgnored=state.ignored;options&&(name=options.name,statement=options.statement,classExprBinding=options.classExprBinding,isGenerator=\"generator\"===options.type,isArrow=\"arrow\"===options.type,ignoreLoopFunc=options.ignoreLoopFunc),state.option=Object.create(state.option),state.ignored=Object.create(state.ignored),state.funct=functor(name||state.nameStack.infer(),state.tokens.next,{\"(statement)\":statement,\"(context)\":state.funct,\"(arrow)\":isArrow,\"(generator)\":isGenerator}),f=state.funct,token=state.tokens.curr,token.funct=state.funct,functions.push(state.funct),state.funct[\"(scope)\"].stack(\"functionouter\");var internallyAccessibleName=name||classExprBinding;internallyAccessibleName&&state.funct[\"(scope)\"].block.add(internallyAccessibleName,classExprBinding?\"class\":\"function\",state.tokens.curr,!1),state.funct[\"(scope)\"].stack(\"functionparams\");var paramsInfo=functionparams(options);return paramsInfo?(state.funct[\"(params)\"]=paramsInfo.params,state.funct[\"(metrics)\"].arity=paramsInfo.arity,state.funct[\"(metrics)\"].verifyMaxParametersPerFunction()):state.funct[\"(metrics)\"].arity=0,isArrow&&(state.inES6(!0)||warning(\"W119\",state.tokens.curr,\"arrow function syntax (=>)\",\"6\"),options.loneArg||advance(\"=>\")),block(!1,!0,!0,isArrow),!state.option.noyield&&isGenerator&&\"yielded\"!==state.funct[\"(generator)\"]&&warning(\"W124\",state.tokens.curr),state.funct[\"(metrics)\"].verifyMaxStatementsPerFunction(),state.funct[\"(metrics)\"].verifyMaxComplexityPerFunction(),state.funct[\"(unusedOption)\"]=state.option.unused,state.option=oldOption,state.ignored=oldIgnored,state.funct[\"(last)\"]=state.tokens.curr.line,state.funct[\"(lastcharacter)\"]=state.tokens.curr.character,state.funct[\"(scope)\"].unstack(),state.funct[\"(scope)\"].unstack(),state.funct=state.funct[\"(context)\"],ignoreLoopFunc||state.option.loopfunc||!state.funct[\"(loopage)\"]||f[\"(isCapturing)\"]&&warning(\"W083\",token),f}function createMetrics(functionStartToken){return{statementCount:0,nestedBlockDepth:-1,ComplexityCount:1,arity:0,verifyMaxStatementsPerFunction:function(){state.option.maxstatements&&this.statementCount>state.option.maxstatements&&warning(\"W071\",functionStartToken,this.statementCount)\n},verifyMaxParametersPerFunction:function(){_.isNumber(state.option.maxparams)&&this.arity>state.option.maxparams&&warning(\"W072\",functionStartToken,this.arity)},verifyMaxNestedBlockDepthPerFunction:function(){state.option.maxdepth&&this.nestedBlockDepth>0&&this.nestedBlockDepth===state.option.maxdepth+1&&warning(\"W073\",null,this.nestedBlockDepth)},verifyMaxComplexityPerFunction:function(){var max=state.option.maxcomplexity,cc=this.ComplexityCount;max&&cc>max&&warning(\"W074\",functionStartToken,cc)}}}function increaseComplexityCount(){state.funct[\"(metrics)\"].ComplexityCount+=1}function checkCondAssignment(expr){var id,paren;switch(expr&&(id=expr.id,paren=expr.paren,\",\"===id&&(expr=expr.exprs[expr.exprs.length-1])&&(id=expr.id,paren=paren||expr.paren)),id){case\"=\":case\"+=\":case\"-=\":case\"*=\":case\"%=\":case\"&=\":case\"|=\":case\"^=\":case\"/=\":paren||state.option.boss||warning(\"W084\")}}function checkProperties(props){if(state.inES5())for(var name in props)props[name]&&props[name].setterToken&&!props[name].getterToken&&warning(\"W078\",props[name].setterToken)}function metaProperty(name,c){if(checkPunctuator(state.tokens.next,\".\")){var left=state.tokens.curr.id;advance(\".\");var id=identifier();return state.tokens.curr.isMetaProperty=!0,name!==id?error(\"E057\",state.tokens.prev,left,id):c(),state.tokens.curr}}function destructuringPattern(options){var isAssignment=options&&options.assignment;return state.inES6()||warning(\"W104\",state.tokens.curr,isAssignment?\"destructuring assignment\":\"destructuring binding\",\"6\"),destructuringPatternRecursive(options)}function destructuringPatternRecursive(options){var ids,identifiers=[],openingParsed=options&&options.openingParsed,isAssignment=options&&options.assignment,recursiveOptions=isAssignment?{assignment:isAssignment}:null,firstToken=openingParsed?state.tokens.curr:state.tokens.next,nextInnerDE=function(){var ident;if(checkPunctuators(state.tokens.next,[\"[\",\"{\"])){ids=destructuringPatternRecursive(recursiveOptions);for(var id in ids)id=ids[id],identifiers.push({id:id.id,token:id.token})}else if(checkPunctuator(state.tokens.next,\",\"))identifiers.push({id:null,token:state.tokens.curr});else{if(!checkPunctuator(state.tokens.next,\"(\")){var is_rest=checkPunctuator(state.tokens.next,\"...\");if(isAssignment){var identifierToken=is_rest?peek(0):state.tokens.next;identifierToken.identifier||warning(\"E030\",identifierToken,identifierToken.value);var assignTarget=expression(155);assignTarget&&(checkLeftSideAssign(assignTarget),assignTarget.identifier&&(ident=assignTarget.value))}else ident=identifier();return ident&&identifiers.push({id:ident,token:state.tokens.curr}),is_rest}advance(\"(\"),nextInnerDE(),advance(\")\")}return!1},assignmentProperty=function(){var id;checkPunctuator(state.tokens.next,\"[\")?(advance(\"[\"),expression(10),advance(\"]\"),advance(\":\"),nextInnerDE()):\"(string)\"===state.tokens.next.id||\"(number)\"===state.tokens.next.id?(advance(),advance(\":\"),nextInnerDE()):(id=identifier(),checkPunctuator(state.tokens.next,\":\")?(advance(\":\"),nextInnerDE()):id&&(isAssignment&&checkLeftSideAssign(state.tokens.curr),identifiers.push({id:id,token:state.tokens.curr})))};if(checkPunctuator(firstToken,\"[\")){openingParsed||advance(\"[\"),checkPunctuator(state.tokens.next,\"]\")&&warning(\"W137\",state.tokens.curr);for(var element_after_rest=!1;!checkPunctuator(state.tokens.next,\"]\");)nextInnerDE()&&!element_after_rest&&checkPunctuator(state.tokens.next,\",\")&&(warning(\"W130\",state.tokens.next),element_after_rest=!0),checkPunctuator(state.tokens.next,\"=\")&&(checkPunctuator(state.tokens.prev,\"...\")?advance(\"]\"):advance(\"=\"),\"undefined\"===state.tokens.next.id&&warning(\"W080\",state.tokens.prev,state.tokens.prev.value),expression(10)),checkPunctuator(state.tokens.next,\"]\")||advance(\",\");advance(\"]\")}else if(checkPunctuator(firstToken,\"{\")){for(openingParsed||advance(\"{\"),checkPunctuator(state.tokens.next,\"}\")&&warning(\"W137\",state.tokens.curr);!checkPunctuator(state.tokens.next,\"}\")&&(assignmentProperty(),checkPunctuator(state.tokens.next,\"=\")&&(advance(\"=\"),\"undefined\"===state.tokens.next.id&&warning(\"W080\",state.tokens.prev,state.tokens.prev.value),expression(10)),checkPunctuator(state.tokens.next,\"}\")||(advance(\",\"),!checkPunctuator(state.tokens.next,\"}\"))););advance(\"}\")}return identifiers}function destructuringPatternMatch(tokens,value){var first=value.first;first&&_.zip(tokens,Array.isArray(first)?first:[first]).forEach(function(val){var token=val[0],value=val[1];token&&value?token.first=value:token&&token.first&&!value&&warning(\"W080\",token.first,token.first.value)})}function blockVariableStatement(type,statement,context){var tokens,lone,value,letblock,prefix=context&&context.prefix,inexport=context&&context.inexport,isLet=\"let\"===type,isConst=\"const\"===type;for(state.inES6()||warning(\"W104\",state.tokens.curr,type,\"6\"),isLet&&\"(\"===state.tokens.next.value?(state.inMoz()||warning(\"W118\",state.tokens.next,\"let block\"),advance(\"(\"),state.funct[\"(scope)\"].stack(),letblock=!0):state.funct[\"(noblockscopedvar)\"]&&error(\"E048\",state.tokens.curr,isConst?\"Const\":\"Let\"),statement.first=[];;){var names=[];_.contains([\"{\",\"[\"],state.tokens.next.value)?(tokens=destructuringPattern(),lone=!1):(tokens=[{id:identifier(),token:state.tokens.curr}],lone=!0),!prefix&&isConst&&\"=\"!==state.tokens.next.id&&warning(\"E012\",state.tokens.curr,state.tokens.curr.value);for(var t in tokens)tokens.hasOwnProperty(t)&&(t=tokens[t],state.funct[\"(scope)\"].block.isGlobal()&&predefined[t.id]===!1&&warning(\"W079\",t.token,t.id),t.id&&!state.funct[\"(noblockscopedvar)\"]&&(state.funct[\"(scope)\"].addlabel(t.id,{type:type,token:t.token}),names.push(t.token),lone&&inexport&&state.funct[\"(scope)\"].setExported(t.token.value,t.token)));if(\"=\"===state.tokens.next.id&&(advance(\"=\"),prefix||\"undefined\"!==state.tokens.next.id||warning(\"W080\",state.tokens.prev,state.tokens.prev.value),!prefix&&\"=\"===peek(0).id&&state.tokens.next.identifier&&warning(\"W120\",state.tokens.next,state.tokens.next.value),value=expression(prefix?120:10),lone?tokens[0].first=value:destructuringPatternMatch(names,value)),statement.first=statement.first.concat(names),\",\"!==state.tokens.next.id)break;comma()}return letblock&&(advance(\")\"),block(!0,!0),statement.block=!0,state.funct[\"(scope)\"].unstack()),statement}function classdef(isStatement){return state.inES6()||warning(\"W104\",state.tokens.curr,\"class\",\"6\"),isStatement?(this.name=identifier(),state.funct[\"(scope)\"].addlabel(this.name,{type:\"class\",token:state.tokens.curr})):state.tokens.next.identifier&&\"extends\"!==state.tokens.next.value?(this.name=identifier(),this.namedExpr=!0):this.name=state.nameStack.infer(),classtail(this),this}function classtail(c){var wasInClassBody=state.inClassBody;\"extends\"===state.tokens.next.value&&(advance(\"extends\"),c.heritage=expression(10)),state.inClassBody=!0,advance(\"{\"),c.body=classbody(c),advance(\"}\"),state.inClassBody=wasInClassBody}function classbody(c){for(var name,isStatic,isGenerator,getset,computed,props=Object.create(null),staticProps=Object.create(null),i=0;\"}\"!==state.tokens.next.id;++i)if(name=state.tokens.next,isStatic=!1,isGenerator=!1,getset=null,\";\"!==name.id){if(\"*\"===name.id&&(isGenerator=!0,advance(\"*\"),name=state.tokens.next),\"[\"===name.id)name=computedPropertyName(),computed=!0;else{if(!isPropertyName(name)){warning(\"W052\",state.tokens.next,state.tokens.next.value||state.tokens.next.type),advance();continue}advance(),computed=!1,name.identifier&&\"static\"===name.value&&(checkPunctuator(state.tokens.next,\"*\")&&(isGenerator=!0,advance(\"*\")),(isPropertyName(state.tokens.next)||\"[\"===state.tokens.next.id)&&(computed=\"[\"===state.tokens.next.id,isStatic=!0,name=state.tokens.next,\"[\"===state.tokens.next.id?name=computedPropertyName():advance())),!name.identifier||\"get\"!==name.value&&\"set\"!==name.value||(isPropertyName(state.tokens.next)||\"[\"===state.tokens.next.id)&&(computed=\"[\"===state.tokens.next.id,getset=name,name=state.tokens.next,\"[\"===state.tokens.next.id?name=computedPropertyName():advance())}if(!checkPunctuator(state.tokens.next,\"(\")){for(error(\"E054\",state.tokens.next,state.tokens.next.value);\"}\"!==state.tokens.next.id&&!checkPunctuator(state.tokens.next,\"(\");)advance();\"(\"!==state.tokens.next.value&&doFunction({statement:c})}if(computed||(getset?saveAccessor(getset.value,isStatic?staticProps:props,name.value,name,!0,isStatic):(\"constructor\"===name.value?state.nameStack.set(c):state.nameStack.set(name),saveProperty(isStatic?staticProps:props,name.value,name,!0,isStatic))),getset&&\"constructor\"===name.value){var propDesc=\"get\"===getset.value?\"class getter method\":\"class setter method\";error(\"E049\",name,propDesc,\"constructor\")}else\"prototype\"===name.value&&error(\"E049\",name,\"class method\",\"prototype\");propertyName(name),doFunction({statement:c,type:isGenerator?\"generator\":null,classExprBinding:c.namedExpr?c.name:null})}else warning(\"W032\"),advance(\";\");checkProperties(props)}function saveProperty(props,name,tkn,isClass,isStatic){var msg=[\"key\",\"class method\",\"static class method\"];msg=msg[(isClass||!1)+(isStatic||!1)],tkn.identifier&&(name=tkn.value),props[name]&&\"__proto__\"!==name?warning(\"W075\",state.tokens.next,msg,name):props[name]=Object.create(null),props[name].basic=!0,props[name].basictkn=tkn}function saveAccessor(accessorType,props,name,tkn,isClass,isStatic){var flagName=\"get\"===accessorType?\"getterToken\":\"setterToken\",msg=\"\";isClass?(isStatic&&(msg+=\"static \"),msg+=accessorType+\"ter method\"):msg=\"key\",state.tokens.curr.accessorType=accessorType,state.nameStack.set(tkn),props[name]?(props[name].basic||props[name][flagName])&&\"__proto__\"!==name&&warning(\"W075\",state.tokens.next,msg,name):props[name]=Object.create(null),props[name][flagName]=tkn}function computedPropertyName(){advance(\"[\"),state.inES6()||warning(\"W119\",state.tokens.curr,\"computed property names\",\"6\");var value=expression(10);return advance(\"]\"),value}function checkPunctuators(token,values){return\"(punctuator)\"===token.type?_.contains(values,token.value):!1}function checkPunctuator(token,value){return\"(punctuator)\"===token.type&&token.value===value}function destructuringAssignOrJsonValue(){var block=lookupBlockType();block.notJson?(!state.inES6()&&block.isDestAssign&&warning(\"W104\",state.tokens.curr,\"destructuring assignment\",\"6\"),statements()):(state.option.laxbreak=!0,state.jsonMode=!0,jsonValue())}function jsonValue(){function jsonObject(){var o={},t=state.tokens.next;if(advance(\"{\"),\"}\"!==state.tokens.next.id)for(;;){if(\"(end)\"===state.tokens.next.id)error(\"E026\",state.tokens.next,t.line);else{if(\"}\"===state.tokens.next.id){warning(\"W094\",state.tokens.curr);break}\",\"===state.tokens.next.id?error(\"E028\",state.tokens.next):\"(string)\"!==state.tokens.next.id&&warning(\"W095\",state.tokens.next,state.tokens.next.value)}if(o[state.tokens.next.value]===!0?warning(\"W075\",state.tokens.next,\"key\",state.tokens.next.value):\"__proto__\"===state.tokens.next.value&&!state.option.proto||\"__iterator__\"===state.tokens.next.value&&!state.option.iterator?warning(\"W096\",state.tokens.next,state.tokens.next.value):o[state.tokens.next.value]=!0,advance(),advance(\":\"),jsonValue(),\",\"!==state.tokens.next.id)break;advance(\",\")}advance(\"}\")}function jsonArray(){var t=state.tokens.next;if(advance(\"[\"),\"]\"!==state.tokens.next.id)for(;;){if(\"(end)\"===state.tokens.next.id)error(\"E027\",state.tokens.next,t.line);else{if(\"]\"===state.tokens.next.id){warning(\"W094\",state.tokens.curr);break}\",\"===state.tokens.next.id&&error(\"E028\",state.tokens.next)}if(jsonValue(),\",\"!==state.tokens.next.id)break;advance(\",\")}advance(\"]\")}switch(state.tokens.next.id){case\"{\":jsonObject();break;case\"[\":jsonArray();break;case\"true\":case\"false\":case\"null\":case\"(number)\":case\"(string)\":advance();break;case\"-\":advance(\"-\"),advance(\"(number)\");break;default:error(\"E003\",state.tokens.next)}}var api,declared,functions,inblock,indent,lookahead,lex,member,membersOnly,predefined,stack,urls,bang={\"<\":!0,\"<=\":!0,\"==\":!0,\"===\":!0,\"!==\":!0,\"!=\":!0,\">\":!0,\">=\":!0,\"+\":!0,\"-\":!0,\"*\":!0,\"/\":!0,\"%\":!0},functionicity=[\"closure\",\"exception\",\"global\",\"label\",\"outer\",\"unused\",\"var\"],extraModules=[],emitter=new events.EventEmitter,typeofValues={};typeofValues.legacy=[\"xml\",\"unknown\"],typeofValues.es3=[\"undefined\",\"boolean\",\"number\",\"string\",\"function\",\"object\"],typeofValues.es3=typeofValues.es3.concat(typeofValues.legacy),typeofValues.es6=typeofValues.es3.concat(\"symbol\"),type(\"(number)\",function(){return this}),type(\"(string)\",function(){return this}),state.syntax[\"(identifier)\"]={type:\"(identifier)\",lbp:0,identifier:!0,nud:function(){var v=this.value;return\"=>\"===state.tokens.next.id?this:(state.funct[\"(comparray)\"].check(v)||state.funct[\"(scope)\"].block.use(v,state.tokens.curr),this)},led:function(){error(\"E033\",state.tokens.next,state.tokens.next.value)}};var baseTemplateSyntax={lbp:0,identifier:!1,template:!0};state.syntax[\"(template)\"]=_.extend({type:\"(template)\",nud:doTemplateLiteral,led:doTemplateLiteral,noSubst:!1},baseTemplateSyntax),state.syntax[\"(template middle)\"]=_.extend({type:\"(template middle)\",middle:!0,noSubst:!1},baseTemplateSyntax),state.syntax[\"(template tail)\"]=_.extend({type:\"(template tail)\",tail:!0,noSubst:!1},baseTemplateSyntax),state.syntax[\"(no subst template)\"]=_.extend({type:\"(template)\",nud:doTemplateLiteral,led:doTemplateLiteral,noSubst:!0,tail:!0},baseTemplateSyntax),type(\"(regexp)\",function(){return this}),delim(\"(endline)\"),delim(\"(begin)\"),delim(\"(end)\").reach=!0,delim(\"(error)\").reach=!0,delim(\"}\").reach=!0,delim(\")\"),delim(\"]\"),delim('\"').reach=!0,delim(\"'\").reach=!0,delim(\";\"),delim(\":\").reach=!0,delim(\"#\"),reserve(\"else\"),reserve(\"case\").reach=!0,reserve(\"catch\"),reserve(\"default\").reach=!0,reserve(\"finally\"),reservevar(\"arguments\",function(x){state.isStrict()&&state.funct[\"(global)\"]&&warning(\"E008\",x)}),reservevar(\"eval\"),reservevar(\"false\"),reservevar(\"Infinity\"),reservevar(\"null\"),reservevar(\"this\",function(x){state.isStrict()&&!isMethod()&&!state.option.validthis&&(state.funct[\"(statement)\"]&&state.funct[\"(name)\"].charAt(0)>\"Z\"||state.funct[\"(global)\"])&&warning(\"W040\",x)}),reservevar(\"true\"),reservevar(\"undefined\"),assignop(\"=\",\"assign\",20),assignop(\"+=\",\"assignadd\",20),assignop(\"-=\",\"assignsub\",20),assignop(\"*=\",\"assignmult\",20),assignop(\"/=\",\"assigndiv\",20).nud=function(){error(\"E014\")},assignop(\"%=\",\"assignmod\",20),bitwiseassignop(\"&=\"),bitwiseassignop(\"|=\"),bitwiseassignop(\"^=\"),bitwiseassignop(\"<<=\"),bitwiseassignop(\">>=\"),bitwiseassignop(\">>>=\"),infix(\",\",function(left,that){var expr;if(that.exprs=[left],state.option.nocomma&&warning(\"W127\"),!comma({peek:!0}))return that;for(;;){if(!(expr=expression(10)))break;if(that.exprs.push(expr),\",\"!==state.tokens.next.value||!comma())break}return that},10,!0),infix(\"?\",function(left,that){return increaseComplexityCount(),that.left=left,that.right=expression(10),advance(\":\"),that[\"else\"]=expression(10),that},30);var orPrecendence=40;infix(\"||\",function(left,that){return increaseComplexityCount(),that.left=left,that.right=expression(orPrecendence),that},orPrecendence),infix(\"&&\",\"and\",50),bitwise(\"|\",\"bitor\",70),bitwise(\"^\",\"bitxor\",80),bitwise(\"&\",\"bitand\",90),relation(\"==\",function(left,right){var eqnull=state.option.eqnull&&(\"null\"===(left&&left.value)||\"null\"===(right&&right.value));switch(!0){case!eqnull&&state.option.eqeqeq:this.from=this.character,warning(\"W116\",this,\"===\",\"==\");break;case isPoorRelation(left):warning(\"W041\",this,\"===\",left.value);break;case isPoorRelation(right):warning(\"W041\",this,\"===\",right.value);break;case isTypoTypeof(right,left,state):warning(\"W122\",this,right.value);break;case isTypoTypeof(left,right,state):warning(\"W122\",this,left.value)}return this}),relation(\"===\",function(left,right){return isTypoTypeof(right,left,state)?warning(\"W122\",this,right.value):isTypoTypeof(left,right,state)&&warning(\"W122\",this,left.value),this}),relation(\"!=\",function(left,right){var eqnull=state.option.eqnull&&(\"null\"===(left&&left.value)||\"null\"===(right&&right.value));return!eqnull&&state.option.eqeqeq?(this.from=this.character,warning(\"W116\",this,\"!==\",\"!=\")):isPoorRelation(left)?warning(\"W041\",this,\"!==\",left.value):isPoorRelation(right)?warning(\"W041\",this,\"!==\",right.value):isTypoTypeof(right,left,state)?warning(\"W122\",this,right.value):isTypoTypeof(left,right,state)&&warning(\"W122\",this,left.value),this}),relation(\"!==\",function(left,right){return isTypoTypeof(right,left,state)?warning(\"W122\",this,right.value):isTypoTypeof(left,right,state)&&warning(\"W122\",this,left.value),this}),relation(\"<\"),relation(\">\"),relation(\"<=\"),relation(\">=\"),bitwise(\"<<\",\"shiftleft\",120),bitwise(\">>\",\"shiftright\",120),bitwise(\">>>\",\"shiftrightunsigned\",120),infix(\"in\",\"in\",120),infix(\"instanceof\",\"instanceof\",120),infix(\"+\",function(left,that){var right;return that.left=left,that.right=right=expression(130),left&&right&&\"(string)\"===left.id&&\"(string)\"===right.id?(left.value+=right.value,left.character=right.character,!state.option.scripturl&&reg.javascriptURL.test(left.value)&&warning(\"W050\",left),left):that},130),prefix(\"+\",\"num\"),prefix(\"+++\",function(){return warning(\"W007\"),this.arity=\"unary\",this.right=expression(150),this}),infix(\"+++\",function(left){return warning(\"W007\"),this.left=left,this.right=expression(130),this},130),infix(\"-\",\"sub\",130),prefix(\"-\",\"neg\"),prefix(\"---\",function(){return warning(\"W006\"),this.arity=\"unary\",this.right=expression(150),this}),infix(\"---\",function(left){return warning(\"W006\"),this.left=left,this.right=expression(130),this},130),infix(\"*\",\"mult\",140),infix(\"/\",\"div\",140),infix(\"%\",\"mod\",140),suffix(\"++\"),prefix(\"++\",\"preinc\"),state.syntax[\"++\"].exps=!0,suffix(\"--\"),prefix(\"--\",\"predec\"),state.syntax[\"--\"].exps=!0,prefix(\"delete\",function(){var p=expression(10);return p?(\".\"!==p.id&&\"[\"!==p.id&&warning(\"W051\"),this.first=p,p.identifier&&!state.isStrict()&&(p.forgiveUndef=!0),this):this}).exps=!0,prefix(\"~\",function(){return state.option.bitwise&&warning(\"W016\",this,\"~\"),this.arity=\"unary\",this.right=expression(150),this}),prefix(\"...\",function(){return state.inES6(!0)||warning(\"W119\",this,\"spread/rest operator\",\"6\"),state.tokens.next.identifier||\"(string)\"===state.tokens.next.type||checkPunctuators(state.tokens.next,[\"[\",\"(\"])||error(\"E030\",state.tokens.next,state.tokens.next.value),expression(150),this}),prefix(\"!\",function(){return this.arity=\"unary\",this.right=expression(150),this.right||quit(\"E041\",this.line||0),bang[this.right.id]===!0&&warning(\"W018\",this,\"!\"),this}),prefix(\"typeof\",function(){var p=expression(150);return this.first=this.right=p,p||quit(\"E041\",this.line||0,this.character||0),p.identifier&&(p.forgiveUndef=!0),this}),prefix(\"new\",function(){var mp=metaProperty(\"target\",function(){state.inES6(!0)||warning(\"W119\",state.tokens.prev,\"new.target\",\"6\");for(var inFunction,c=state.funct;c&&(inFunction=!c[\"(global)\"],c[\"(arrow)\"]);)c=c[\"(context)\"];inFunction||warning(\"W136\",state.tokens.prev,\"new.target\")});if(mp)return mp;var i,c=expression(155);if(c&&\"function\"!==c.id)if(c.identifier)switch(c[\"new\"]=!0,c.value){case\"Number\":case\"String\":case\"Boolean\":case\"Math\":case\"JSON\":warning(\"W053\",state.tokens.prev,c.value);break;case\"Symbol\":state.inES6()&&warning(\"W053\",state.tokens.prev,c.value);break;case\"Function\":state.option.evil||warning(\"W054\");break;case\"Date\":case\"RegExp\":case\"this\":break;default:\"function\"!==c.id&&(i=c.value.substr(0,1),state.option.newcap&&(\"A\">i||i>\"Z\")&&!state.funct[\"(scope)\"].isPredefined(c.value)&&warning(\"W055\",state.tokens.curr))}else\".\"!==c.id&&\"[\"!==c.id&&\"(\"!==c.id&&warning(\"W056\",state.tokens.curr);else state.option.supernew||warning(\"W057\",this);return\"(\"===state.tokens.next.id||state.option.supernew||warning(\"W058\",state.tokens.curr,state.tokens.curr.value),this.first=this.right=c,this}),state.syntax[\"new\"].exps=!0,prefix(\"void\").exps=!0,infix(\".\",function(left,that){var m=identifier(!1,!0);return\"string\"==typeof m&&countMember(m),that.left=left,that.right=m,m&&\"hasOwnProperty\"===m&&\"=\"===state.tokens.next.value&&warning(\"W001\"),!left||\"arguments\"!==left.value||\"callee\"!==m&&\"caller\"!==m?state.option.evil||!left||\"document\"!==left.value||\"write\"!==m&&\"writeln\"!==m||warning(\"W060\",left):state.option.noarg?warning(\"W059\",left,m):state.isStrict()&&error(\"E008\"),state.option.evil||\"eval\"!==m&&\"execScript\"!==m||isGlobalEval(left,state)&&warning(\"W061\"),that},160,!0),infix(\"(\",function(left,that){state.option.immed&&left&&!left.immed&&\"function\"===left.id&&warning(\"W062\");var n=0,p=[];if(left&&\"(identifier)\"===left.type&&left.value.match(/^[A-Z]([A-Z0-9_$]*[a-z][A-Za-z0-9_$]*)?$/)&&-1===\"Array Number String Boolean Date Object Error Symbol\".indexOf(left.value)&&(\"Math\"===left.value?warning(\"W063\",left):state.option.newcap&&warning(\"W064\",left)),\")\"!==state.tokens.next.id)for(;p[p.length]=expression(10),n+=1,\",\"===state.tokens.next.id;)comma();return advance(\")\"),\"object\"==typeof left&&(state.inES5()||\"parseInt\"!==left.value||1!==n||warning(\"W065\",state.tokens.curr),state.option.evil||(\"eval\"===left.value||\"Function\"===left.value||\"execScript\"===left.value?(warning(\"W061\",left),p[0]&&\"(string)\"===[0].id&&addInternalSrc(left,p[0].value)):!p[0]||\"(string)\"!==p[0].id||\"setTimeout\"!==left.value&&\"setInterval\"!==left.value?!p[0]||\"(string)\"!==p[0].id||\".\"!==left.value||\"window\"!==left.left.value||\"setTimeout\"!==left.right&&\"setInterval\"!==left.right||(warning(\"W066\",left),addInternalSrc(left,p[0].value)):(warning(\"W066\",left),addInternalSrc(left,p[0].value))),left.identifier||\".\"===left.id||\"[\"===left.id||\"=>\"===left.id||\"(\"===left.id||\"&&\"===left.id||\"||\"===left.id||\"?\"===left.id||state.inES6()&&left[\"(name)\"]||warning(\"W067\",that)),that.left=left,that},155,!0).exps=!0,prefix(\"(\",function(){var pn1,ret,triggerFnExpr,first,last,pn=state.tokens.next,i=-1,parens=1,opening=state.tokens.curr,preceeding=state.tokens.prev,isNecessary=!state.option.singleGroups;do\"(\"===pn.value?parens+=1:\")\"===pn.value&&(parens-=1),i+=1,pn1=pn,pn=peek(i);while((0!==parens||\")\"!==pn1.value)&&\";\"!==pn.value&&\"(end)\"!==pn.type);if(\"function\"===state.tokens.next.id&&(triggerFnExpr=state.tokens.next.immed=!0),\"=>\"===pn.value)return doFunction({type:\"arrow\",parsedOpening:!0});var exprs=[];if(\")\"!==state.tokens.next.id)for(;exprs.push(expression(10)),\",\"===state.tokens.next.id;)state.option.nocomma&&warning(\"W127\"),comma();return advance(\")\",this),state.option.immed&&exprs[0]&&\"function\"===exprs[0].id&&\"(\"!==state.tokens.next.id&&\".\"!==state.tokens.next.id&&\"[\"!==state.tokens.next.id&&warning(\"W068\",this),exprs.length?(exprs.length>1?(ret=Object.create(state.syntax[\",\"]),ret.exprs=exprs,first=exprs[0],last=exprs[exprs.length-1],isNecessary||(isNecessary=preceeding.assign||preceeding.delim)):(ret=first=last=exprs[0],isNecessary||(isNecessary=opening.beginsStmt&&(\"{\"===ret.id||triggerFnExpr||isFunctor(ret))||triggerFnExpr&&(!isEndOfExpr()||\"}\"!==state.tokens.prev.id)||isFunctor(ret)&&!isEndOfExpr()||\"{\"===ret.id&&\"=>\"===preceeding.id||\"(number)\"===ret.type&&checkPunctuator(pn,\".\")&&/^\\d+$/.test(ret.value))),ret&&(!isNecessary&&(first.left||first.right||ret.exprs)&&(isNecessary=!isBeginOfExpr(preceeding)&&first.lbp<=preceeding.lbp||!isEndOfExpr()&&last.lbp<state.tokens.next.lbp),isNecessary||warning(\"W126\",opening),ret.paren=!0),ret):void 0}),application(\"=>\"),infix(\"[\",function(left,that){var s,e=expression(10);return e&&\"(string)\"===e.type&&(state.option.evil||\"eval\"!==e.value&&\"execScript\"!==e.value||isGlobalEval(left,state)&&warning(\"W061\"),countMember(e.value),!state.option.sub&&reg.identifier.test(e.value)&&(s=state.syntax[e.value],s&&isReserved(s)||warning(\"W069\",state.tokens.prev,e.value))),advance(\"]\",that),e&&\"hasOwnProperty\"===e.value&&\"=\"===state.tokens.next.value&&warning(\"W001\"),that.left=left,that.right=e,that},160,!0),prefix(\"[\",function(){var blocktype=lookupBlockType();if(blocktype.isCompArray)return state.option.esnext||state.inMoz()||warning(\"W118\",state.tokens.curr,\"array comprehension\"),comprehensiveArrayExpression();if(blocktype.isDestAssign)return this.destructAssign=destructuringPattern({openingParsed:!0,assignment:!0}),this;var b=state.tokens.curr.line!==startLine(state.tokens.next);for(this.first=[],b&&(indent+=state.option.indent,state.tokens.next.from===indent+state.option.indent&&(indent+=state.option.indent));\"(end)\"!==state.tokens.next.id;){for(;\",\"===state.tokens.next.id;){if(!state.option.elision){if(state.inES5()){warning(\"W128\");do advance(\",\");while(\",\"===state.tokens.next.id);continue}warning(\"W070\")}advance(\",\")}if(\"]\"===state.tokens.next.id)break;if(this.first.push(expression(10)),\",\"!==state.tokens.next.id)break;if(comma({allowTrailing:!0}),\"]\"===state.tokens.next.id&&!state.inES5()){warning(\"W070\",state.tokens.curr);break}}return b&&(indent-=state.option.indent),advance(\"]\",this),this}),function(x){x.nud=function(){var b,f,i,p,t,nextVal,isGeneratorMethod=!1,props=Object.create(null);b=state.tokens.curr.line!==startLine(state.tokens.next),b&&(indent+=state.option.indent,state.tokens.next.from===indent+state.option.indent&&(indent+=state.option.indent));var blocktype=lookupBlockType();if(blocktype.isDestAssign)return this.destructAssign=destructuringPattern({openingParsed:!0,assignment:!0}),this;for(;\"}\"!==state.tokens.next.id;){if(nextVal=state.tokens.next.value,!state.tokens.next.identifier||\",\"!==peekIgnoreEOL().id&&\"}\"!==peekIgnoreEOL().id)if(\":\"===peek().id||\"get\"!==nextVal&&\"set\"!==nextVal){if(\"*\"===state.tokens.next.value&&\"(punctuator)\"===state.tokens.next.type?(state.inES6()||warning(\"W104\",state.tokens.next,\"generator functions\",\"6\"),advance(\"*\"),isGeneratorMethod=!0):isGeneratorMethod=!1,\"[\"===state.tokens.next.id)i=computedPropertyName(),state.nameStack.set(i);else if(state.nameStack.set(state.tokens.next),i=propertyName(),saveProperty(props,i,state.tokens.next),\"string\"!=typeof i)break;\"(\"===state.tokens.next.value?(state.inES6()||warning(\"W104\",state.tokens.curr,\"concise methods\",\"6\"),doFunction({type:isGeneratorMethod?\"generator\":null})):(advance(\":\"),expression(10))}else advance(nextVal),state.inES5()||error(\"E034\"),i=propertyName(),i||state.inES6()||error(\"E035\"),i&&saveAccessor(nextVal,props,i,state.tokens.curr),t=state.tokens.next,f=doFunction(),p=f[\"(params)\"],\"get\"===nextVal&&i&&p?warning(\"W076\",t,p[0],i):\"set\"!==nextVal||!i||p&&1===p.length||warning(\"W077\",t,i);else state.inES6()||warning(\"W104\",state.tokens.next,\"object short notation\",\"6\"),i=propertyName(!0),saveProperty(props,i,state.tokens.next),expression(10);if(countMember(i),\",\"!==state.tokens.next.id)break;comma({allowTrailing:!0,property:!0}),\",\"===state.tokens.next.id?warning(\"W070\",state.tokens.curr):\"}\"!==state.tokens.next.id||state.inES5()||warning(\"W070\",state.tokens.curr)}return b&&(indent-=state.option.indent),advance(\"}\",this),checkProperties(props),this},x.fud=function(){error(\"E036\",state.tokens.curr)}}(delim(\"{\"));var conststatement=stmt(\"const\",function(context){return blockVariableStatement(\"const\",this,context)});conststatement.exps=!0;var letstatement=stmt(\"let\",function(context){return blockVariableStatement(\"let\",this,context)});letstatement.exps=!0;var varstatement=stmt(\"var\",function(context){var tokens,lone,value,prefix=context&&context.prefix,inexport=context&&context.inexport,implied=context&&context.implied,report=!(context&&context.ignore);for(this.first=[];;){var names=[];_.contains([\"{\",\"[\"],state.tokens.next.value)?(tokens=destructuringPattern(),lone=!1):(tokens=[{id:identifier(),token:state.tokens.curr}],lone=!0),prefix&&implied||!report||!state.option.varstmt||warning(\"W132\",this),this.first=this.first.concat(names);for(var t in tokens)tokens.hasOwnProperty(t)&&(t=tokens[t],!implied&&state.funct[\"(global)\"]&&(predefined[t.id]===!1?warning(\"W079\",t.token,t.id):state.option.futurehostile===!1&&(!state.inES5()&&vars.ecmaIdentifiers[5][t.id]===!1||!state.inES6()&&vars.ecmaIdentifiers[6][t.id]===!1)&&warning(\"W129\",t.token,t.id)),t.id&&(\"for\"===implied?(state.funct[\"(scope)\"].has(t.id)||report&&warning(\"W088\",t.token,t.id),state.funct[\"(scope)\"].block.use(t.id,t.token)):(state.funct[\"(scope)\"].addlabel(t.id,{type:\"var\",token:t.token}),lone&&inexport&&state.funct[\"(scope)\"].setExported(t.id,t.token)),names.push(t.token)));if(\"=\"===state.tokens.next.id&&(state.nameStack.set(state.tokens.curr),advance(\"=\"),prefix||!report||state.funct[\"(loopage)\"]||\"undefined\"!==state.tokens.next.id||warning(\"W080\",state.tokens.prev,state.tokens.prev.value),\"=\"===peek(0).id&&state.tokens.next.identifier&&(!prefix&&report&&!state.funct[\"(params)\"]||-1===state.funct[\"(params)\"].indexOf(state.tokens.next.value))&&warning(\"W120\",state.tokens.next,state.tokens.next.value),value=expression(prefix?120:10),lone?tokens[0].first=value:destructuringPatternMatch(names,value)),\",\"!==state.tokens.next.id)break;comma()}return this});varstatement.exps=!0,blockstmt(\"class\",function(){return classdef.call(this,!0)}),blockstmt(\"function\",function(context){var inexport=context&&context.inexport,generator=!1;\"*\"===state.tokens.next.value&&(advance(\"*\"),state.inES6({strict:!0})?generator=!0:warning(\"W119\",state.tokens.curr,\"function*\",\"6\")),inblock&&warning(\"W082\",state.tokens.curr);var i=optionalidentifier();return state.funct[\"(scope)\"].addlabel(i,{type:\"function\",token:state.tokens.curr}),void 0===i?warning(\"W025\"):inexport&&state.funct[\"(scope)\"].setExported(i,state.tokens.prev),doFunction({name:i,statement:this,type:generator?\"generator\":null,ignoreLoopFunc:inblock}),\"(\"===state.tokens.next.id&&state.tokens.next.line===state.tokens.curr.line&&error(\"E039\"),this}),prefix(\"function\",function(){var generator=!1;\"*\"===state.tokens.next.value&&(state.inES6()||warning(\"W119\",state.tokens.curr,\"function*\",\"6\"),advance(\"*\"),generator=!0);var i=optionalidentifier();return doFunction({name:i,type:generator?\"generator\":null}),this}),blockstmt(\"if\",function(){var t=state.tokens.next;increaseComplexityCount(),state.condition=!0,advance(\"(\");var expr=expression(0);checkCondAssignment(expr);var forinifcheck=null;state.option.forin&&state.forinifcheckneeded&&(state.forinifcheckneeded=!1,forinifcheck=state.forinifchecks[state.forinifchecks.length-1],forinifcheck.type=\"(punctuator)\"===expr.type&&\"!\"===expr.value?\"(negative)\":\"(positive)\"),advance(\")\",t),state.condition=!1;var s=block(!0,!0);return forinifcheck&&\"(negative)\"===forinifcheck.type&&s&&s[0]&&\"(identifier)\"===s[0].type&&\"continue\"===s[0].value&&(forinifcheck.type=\"(negative-with-continue)\"),\"else\"===state.tokens.next.id&&(advance(\"else\"),\"if\"===state.tokens.next.id||\"switch\"===state.tokens.next.id?statement():block(!0,!0)),this}),blockstmt(\"try\",function(){function doCatch(){if(advance(\"catch\"),advance(\"(\"),state.funct[\"(scope)\"].stack(\"catchparams\"),checkPunctuators(state.tokens.next,[\"[\",\"{\"])){var tokens=destructuringPattern();_.each(tokens,function(token){token.id&&state.funct[\"(scope)\"].addParam(token.id,token,\"exception\")})}else\"(identifier)\"!==state.tokens.next.type?warning(\"E030\",state.tokens.next,state.tokens.next.value):state.funct[\"(scope)\"].addParam(identifier(),state.tokens.curr,\"exception\");\"if\"===state.tokens.next.value&&(state.inMoz()||warning(\"W118\",state.tokens.curr,\"catch filter\"),advance(\"if\"),expression(0)),advance(\")\"),block(!1),state.funct[\"(scope)\"].unstack()}var b;for(block(!0);\"catch\"===state.tokens.next.id;)increaseComplexityCount(),b&&!state.inMoz()&&warning(\"W118\",state.tokens.next,\"multiple catch blocks\"),doCatch(),b=!0;return\"finally\"===state.tokens.next.id?(advance(\"finally\"),block(!0),void 0):(b||error(\"E021\",state.tokens.next,\"catch\",state.tokens.next.value),this)}),blockstmt(\"while\",function(){var t=state.tokens.next;return state.funct[\"(breakage)\"]+=1,state.funct[\"(loopage)\"]+=1,increaseComplexityCount(),advance(\"(\"),checkCondAssignment(expression(0)),advance(\")\",t),block(!0,!0),state.funct[\"(breakage)\"]-=1,state.funct[\"(loopage)\"]-=1,this}).labelled=!0,blockstmt(\"with\",function(){var t=state.tokens.next;return state.isStrict()?error(\"E010\",state.tokens.curr):state.option.withstmt||warning(\"W085\",state.tokens.curr),advance(\"(\"),expression(0),advance(\")\",t),block(!0,!0),this}),blockstmt(\"switch\",function(){var t=state.tokens.next,g=!1,noindent=!1;\nfor(state.funct[\"(breakage)\"]+=1,advance(\"(\"),checkCondAssignment(expression(0)),advance(\")\",t),t=state.tokens.next,advance(\"{\"),state.tokens.next.from===indent&&(noindent=!0),noindent||(indent+=state.option.indent),this.cases=[];;)switch(state.tokens.next.id){case\"case\":switch(state.funct[\"(verb)\"]){case\"yield\":case\"break\":case\"case\":case\"continue\":case\"return\":case\"switch\":case\"throw\":break;default:state.tokens.curr.caseFallsThrough||warning(\"W086\",state.tokens.curr,\"case\")}advance(\"case\"),this.cases.push(expression(0)),increaseComplexityCount(),g=!0,advance(\":\"),state.funct[\"(verb)\"]=\"case\";break;case\"default\":switch(state.funct[\"(verb)\"]){case\"yield\":case\"break\":case\"continue\":case\"return\":case\"throw\":break;default:this.cases.length&&(state.tokens.curr.caseFallsThrough||warning(\"W086\",state.tokens.curr,\"default\"))}advance(\"default\"),g=!0,advance(\":\");break;case\"}\":return noindent||(indent-=state.option.indent),advance(\"}\",t),state.funct[\"(breakage)\"]-=1,state.funct[\"(verb)\"]=void 0,void 0;case\"(end)\":return error(\"E023\",state.tokens.next,\"}\"),void 0;default:if(indent+=state.option.indent,g)switch(state.tokens.curr.id){case\",\":return error(\"E040\"),void 0;case\":\":g=!1,statements();break;default:return error(\"E025\",state.tokens.curr),void 0}else{if(\":\"!==state.tokens.curr.id)return error(\"E021\",state.tokens.next,\"case\",state.tokens.next.value),void 0;advance(\":\"),error(\"E024\",state.tokens.curr,\":\"),statements()}indent-=state.option.indent}return this}).labelled=!0,stmt(\"debugger\",function(){return state.option.debug||warning(\"W087\",this),this}).exps=!0,function(){var x=stmt(\"do\",function(){state.funct[\"(breakage)\"]+=1,state.funct[\"(loopage)\"]+=1,increaseComplexityCount(),this.first=block(!0,!0),advance(\"while\");var t=state.tokens.next;return advance(\"(\"),checkCondAssignment(expression(0)),advance(\")\",t),state.funct[\"(breakage)\"]-=1,state.funct[\"(loopage)\"]-=1,this});x.labelled=!0,x.exps=!0}(),blockstmt(\"for\",function(){var s,t=state.tokens.next,letscope=!1,foreachtok=null;\"each\"===t.value&&(foreachtok=t,advance(\"each\"),state.inMoz()||warning(\"W118\",state.tokens.curr,\"for each\")),increaseComplexityCount(),advance(\"(\");var nextop,comma,initializer,i=0,inof=[\"in\",\"of\"],level=0;checkPunctuators(state.tokens.next,[\"{\",\"[\"])&&++level;do{if(nextop=peek(i),++i,checkPunctuators(nextop,[\"{\",\"[\"])?++level:checkPunctuators(nextop,[\"}\",\"]\"])&&--level,0>level)break;0===level&&(!comma&&checkPunctuator(nextop,\",\")?comma=nextop:!initializer&&checkPunctuator(nextop,\"=\")&&(initializer=nextop))}while(level>0||!_.contains(inof,nextop.value)&&\";\"!==nextop.value&&\"(end)\"!==nextop.type);if(_.contains(inof,nextop.value)){state.inES6()||\"of\"!==nextop.value||warning(\"W104\",nextop,\"for of\",\"6\");var ok=!(initializer||comma);if(initializer&&error(\"W133\",comma,nextop.value,\"initializer is forbidden\"),comma&&error(\"W133\",comma,nextop.value,\"more than one ForBinding\"),\"var\"===state.tokens.next.id?(advance(\"var\"),state.tokens.curr.fud({prefix:!0})):\"let\"===state.tokens.next.id||\"const\"===state.tokens.next.id?(advance(state.tokens.next.id),letscope=!0,state.funct[\"(scope)\"].stack(),state.tokens.curr.fud({prefix:!0})):Object.create(varstatement).fud({prefix:!0,implied:\"for\",ignore:!ok}),advance(nextop.value),expression(20),advance(\")\",t),\"in\"===nextop.value&&state.option.forin&&(state.forinifcheckneeded=!0,void 0===state.forinifchecks&&(state.forinifchecks=[]),state.forinifchecks.push({type:\"(none)\"})),state.funct[\"(breakage)\"]+=1,state.funct[\"(loopage)\"]+=1,s=block(!0,!0),\"in\"===nextop.value&&state.option.forin){if(state.forinifchecks&&state.forinifchecks.length>0){var check=state.forinifchecks.pop();(s&&s.length>0&&(\"object\"!=typeof s[0]||\"if\"!==s[0].value)||\"(positive)\"===check.type&&s.length>1||\"(negative)\"===check.type)&&warning(\"W089\",this)}state.forinifcheckneeded=!1}state.funct[\"(breakage)\"]-=1,state.funct[\"(loopage)\"]-=1}else{if(foreachtok&&error(\"E045\",foreachtok),\";\"!==state.tokens.next.id)if(\"var\"===state.tokens.next.id)advance(\"var\"),state.tokens.curr.fud();else if(\"let\"===state.tokens.next.id)advance(\"let\"),letscope=!0,state.funct[\"(scope)\"].stack(),state.tokens.curr.fud();else for(;expression(0,\"for\"),\",\"===state.tokens.next.id;)comma();if(nolinebreak(state.tokens.curr),advance(\";\"),state.funct[\"(loopage)\"]+=1,\";\"!==state.tokens.next.id&&checkCondAssignment(expression(0)),nolinebreak(state.tokens.curr),advance(\";\"),\";\"===state.tokens.next.id&&error(\"E021\",state.tokens.next,\")\",\";\"),\")\"!==state.tokens.next.id)for(;expression(0,\"for\"),\",\"===state.tokens.next.id;)comma();advance(\")\",t),state.funct[\"(breakage)\"]+=1,block(!0,!0),state.funct[\"(breakage)\"]-=1,state.funct[\"(loopage)\"]-=1}return letscope&&state.funct[\"(scope)\"].unstack(),this}).labelled=!0,stmt(\"break\",function(){var v=state.tokens.next.value;return state.option.asi||nolinebreak(this),\";\"===state.tokens.next.id||state.tokens.next.reach||state.tokens.curr.line!==startLine(state.tokens.next)?0===state.funct[\"(breakage)\"]&&warning(\"W052\",state.tokens.next,this.value):(state.funct[\"(scope)\"].funct.hasBreakLabel(v)||warning(\"W090\",state.tokens.next,v),this.first=state.tokens.next,advance()),reachable(this),this}).exps=!0,stmt(\"continue\",function(){var v=state.tokens.next.value;return 0===state.funct[\"(breakage)\"]&&warning(\"W052\",state.tokens.next,this.value),state.funct[\"(loopage)\"]||warning(\"W052\",state.tokens.next,this.value),state.option.asi||nolinebreak(this),\";\"===state.tokens.next.id||state.tokens.next.reach||state.tokens.curr.line===startLine(state.tokens.next)&&(state.funct[\"(scope)\"].funct.hasBreakLabel(v)||warning(\"W090\",state.tokens.next,v),this.first=state.tokens.next,advance()),reachable(this),this}).exps=!0,stmt(\"return\",function(){return this.line===startLine(state.tokens.next)?\";\"===state.tokens.next.id||state.tokens.next.reach||(this.first=expression(0),!this.first||\"(punctuator)\"!==this.first.type||\"=\"!==this.first.value||this.first.paren||state.option.boss||warningAt(\"W093\",this.first.line,this.first.character)):\"(punctuator)\"===state.tokens.next.type&&[\"[\",\"{\",\"+\",\"-\"].indexOf(state.tokens.next.value)>-1&&nolinebreak(this),reachable(this),this}).exps=!0,function(x){x.exps=!0,x.lbp=25}(prefix(\"yield\",function(){var prev=state.tokens.prev;state.inES6(!0)&&!state.funct[\"(generator)\"]?\"(catch)\"===state.funct[\"(name)\"]&&state.funct[\"(context)\"][\"(generator)\"]||error(\"E046\",state.tokens.curr,\"yield\"):state.inES6()||warning(\"W104\",state.tokens.curr,\"yield\",\"6\"),state.funct[\"(generator)\"]=\"yielded\";var delegatingYield=!1;return\"*\"===state.tokens.next.value&&(delegatingYield=!0,advance(\"*\")),this.line!==startLine(state.tokens.next)&&state.inMoz()?state.option.asi||nolinebreak(this):((delegatingYield||\";\"!==state.tokens.next.id&&!state.option.asi&&!state.tokens.next.reach&&state.tokens.next.nud)&&(nobreaknonadjacent(state.tokens.curr,state.tokens.next),this.first=expression(10),\"(punctuator)\"!==this.first.type||\"=\"!==this.first.value||this.first.paren||state.option.boss||warningAt(\"W093\",this.first.line,this.first.character)),state.inMoz()&&\")\"!==state.tokens.next.id&&(prev.lbp>30||!prev.assign&&!isEndOfExpr()||\"yield\"===prev.id)&&error(\"E050\",this)),this})),stmt(\"throw\",function(){return nolinebreak(this),this.first=expression(20),reachable(this),this}).exps=!0,stmt(\"import\",function(){if(state.inES6()||warning(\"W119\",state.tokens.curr,\"import\",\"6\"),\"(string)\"===state.tokens.next.type)return advance(\"(string)\"),this;if(state.tokens.next.identifier){if(this.name=identifier(),state.funct[\"(scope)\"].addlabel(this.name,{type:\"const\",token:state.tokens.curr}),\",\"!==state.tokens.next.value)return advance(\"from\"),advance(\"(string)\"),this;advance(\",\")}if(\"*\"===state.tokens.next.id)advance(\"*\"),advance(\"as\"),state.tokens.next.identifier&&(this.name=identifier(),state.funct[\"(scope)\"].addlabel(this.name,{type:\"const\",token:state.tokens.curr}));else for(advance(\"{\");;){if(\"}\"===state.tokens.next.value){advance(\"}\");break}var importName;if(\"default\"===state.tokens.next.type?(importName=\"default\",advance(\"default\")):importName=identifier(),\"as\"===state.tokens.next.value&&(advance(\"as\"),importName=identifier()),state.funct[\"(scope)\"].addlabel(importName,{type:\"const\",token:state.tokens.curr}),\",\"!==state.tokens.next.value){if(\"}\"===state.tokens.next.value){advance(\"}\");break}error(\"E024\",state.tokens.next,state.tokens.next.value);break}advance(\",\")}return advance(\"from\"),advance(\"(string)\"),this}).exps=!0,stmt(\"export\",function(){var token,identifier,ok=!0;if(state.inES6()||(warning(\"W119\",state.tokens.curr,\"export\",\"6\"),ok=!1),state.funct[\"(scope)\"].block.isGlobal()||(error(\"E053\",state.tokens.curr),ok=!1),\"*\"===state.tokens.next.value)return advance(\"*\"),advance(\"from\"),advance(\"(string)\"),this;if(\"default\"===state.tokens.next.type){state.nameStack.set(state.tokens.next),advance(\"default\");var exportType=state.tokens.next.id;return(\"function\"===exportType||\"class\"===exportType)&&(this.block=!0),token=peek(),expression(10),identifier=token.value,this.block&&(state.funct[\"(scope)\"].addlabel(identifier,{type:exportType,token:token}),state.funct[\"(scope)\"].setExported(identifier,token)),this}if(\"{\"===state.tokens.next.value){advance(\"{\");for(var exportedTokens=[];;){if(state.tokens.next.identifier||error(\"E030\",state.tokens.next,state.tokens.next.value),advance(),exportedTokens.push(state.tokens.curr),\"as\"===state.tokens.next.value&&(advance(\"as\"),state.tokens.next.identifier||error(\"E030\",state.tokens.next,state.tokens.next.value),advance()),\",\"!==state.tokens.next.value){if(\"}\"===state.tokens.next.value){advance(\"}\");break}error(\"E024\",state.tokens.next,state.tokens.next.value);break}advance(\",\")}return\"from\"===state.tokens.next.value?(advance(\"from\"),advance(\"(string)\")):ok&&exportedTokens.forEach(function(token){state.funct[\"(scope)\"].setExported(token.value,token)}),this}if(\"var\"===state.tokens.next.id)advance(\"var\"),state.tokens.curr.fud({inexport:!0});else if(\"let\"===state.tokens.next.id)advance(\"let\"),state.tokens.curr.fud({inexport:!0});else if(\"const\"===state.tokens.next.id)advance(\"const\"),state.tokens.curr.fud({inexport:!0});else if(\"function\"===state.tokens.next.id)this.block=!0,advance(\"function\"),state.syntax[\"function\"].fud({inexport:!0});else if(\"class\"===state.tokens.next.id){this.block=!0,advance(\"class\");var classNameToken=state.tokens.next;state.syntax[\"class\"].fud(),state.funct[\"(scope)\"].setExported(classNameToken.value,classNameToken)}else error(\"E024\",state.tokens.next,state.tokens.next.value);return this}).exps=!0,FutureReservedWord(\"abstract\"),FutureReservedWord(\"boolean\"),FutureReservedWord(\"byte\"),FutureReservedWord(\"char\"),FutureReservedWord(\"class\",{es5:!0,nud:classdef}),FutureReservedWord(\"double\"),FutureReservedWord(\"enum\",{es5:!0}),FutureReservedWord(\"export\",{es5:!0}),FutureReservedWord(\"extends\",{es5:!0}),FutureReservedWord(\"final\"),FutureReservedWord(\"float\"),FutureReservedWord(\"goto\"),FutureReservedWord(\"implements\",{es5:!0,strictOnly:!0}),FutureReservedWord(\"import\",{es5:!0}),FutureReservedWord(\"int\"),FutureReservedWord(\"interface\",{es5:!0,strictOnly:!0}),FutureReservedWord(\"long\"),FutureReservedWord(\"native\"),FutureReservedWord(\"package\",{es5:!0,strictOnly:!0}),FutureReservedWord(\"private\",{es5:!0,strictOnly:!0}),FutureReservedWord(\"protected\",{es5:!0,strictOnly:!0}),FutureReservedWord(\"public\",{es5:!0,strictOnly:!0}),FutureReservedWord(\"short\"),FutureReservedWord(\"static\",{es5:!0,strictOnly:!0}),FutureReservedWord(\"super\",{es5:!0}),FutureReservedWord(\"synchronized\"),FutureReservedWord(\"transient\"),FutureReservedWord(\"volatile\");var lookupBlockType=function(){var pn,pn1,prev,i=-1,bracketStack=0,ret={};checkPunctuators(state.tokens.curr,[\"[\",\"{\"])&&(bracketStack+=1);do{if(prev=-1===i?state.tokens.curr:pn,pn=-1===i?state.tokens.next:peek(i),pn1=peek(i+1),i+=1,checkPunctuators(pn,[\"[\",\"{\"])?bracketStack+=1:checkPunctuators(pn,[\"]\",\"}\"])&&(bracketStack-=1),1===bracketStack&&pn.identifier&&\"for\"===pn.value&&!checkPunctuator(prev,\".\")){ret.isCompArray=!0,ret.notJson=!0;break}if(0===bracketStack&&checkPunctuators(pn,[\"}\",\"]\"])){if(\"=\"===pn1.value){ret.isDestAssign=!0,ret.notJson=!0;break}if(\".\"===pn1.value){ret.notJson=!0;break}}checkPunctuator(pn,\";\")&&(ret.isBlock=!0,ret.notJson=!0)}while(bracketStack>0&&\"(end)\"!==pn.id);return ret},arrayComprehension=function(){function declare(v){var l=_current.variables.filter(function(elt){return elt.value===v?(elt.undef=!1,v):void 0}).length;return 0!==l}function use(v){var l=_current.variables.filter(function(elt){return elt.value!==v||elt.undef?void 0:(elt.unused===!0&&(elt.unused=!1),v)}).length;return 0===l}var _current,CompArray=function(){this.mode=\"use\",this.variables=[]},_carrays=[];return{stack:function(){_current=new CompArray,_carrays.push(_current)},unstack:function(){_current.variables.filter(function(v){v.unused&&warning(\"W098\",v.token,v.raw_text||v.value),v.undef&&state.funct[\"(scope)\"].block.use(v.value,v.token)}),_carrays.splice(-1,1),_current=_carrays[_carrays.length-1]},setState:function(s){_.contains([\"use\",\"define\",\"generate\",\"filter\"],s)&&(_current.mode=s)},check:function(v){return _current?_current&&\"use\"===_current.mode?(use(v)&&_current.variables.push({funct:state.funct,token:state.tokens.curr,value:v,undef:!0,unused:!1}),!0):_current&&\"define\"===_current.mode?(declare(v)||_current.variables.push({funct:state.funct,token:state.tokens.curr,value:v,undef:!1,unused:!0}),!0):_current&&\"generate\"===_current.mode?(state.funct[\"(scope)\"].block.use(v,state.tokens.curr),!0):_current&&\"filter\"===_current.mode?(use(v)&&state.funct[\"(scope)\"].block.use(v,state.tokens.curr),!0):!1:void 0}}},escapeRegex=function(str){return str.replace(/[-\\/\\\\^$*+?.()|[\\]{}]/g,\"\\\\$&\")},itself=function(s,o,g){function each(obj,cb){obj&&(Array.isArray(obj)||\"object\"!=typeof obj||(obj=Object.keys(obj)),obj.forEach(cb))}var i,k,x,reIgnoreStr,reIgnore,optionKeys,newOptionObj={},newIgnoredObj={};o=_.clone(o),state.reset(),o&&o.scope?JSHINT.scope=o.scope:(JSHINT.errors=[],JSHINT.undefs=[],JSHINT.internals=[],JSHINT.blacklist={},JSHINT.scope=\"(main)\"),predefined=Object.create(null),combine(predefined,vars.ecmaIdentifiers[3]),combine(predefined,vars.reservedVars),combine(predefined,g||{}),declared=Object.create(null);var exported=Object.create(null);if(o)for(each(o.predef||null,function(item){var slice,prop;\"-\"===item[0]?(slice=item.slice(1),JSHINT.blacklist[slice]=slice,delete predefined[slice]):(prop=Object.getOwnPropertyDescriptor(o.predef,item),predefined[item]=prop?prop.value:!1)}),each(o.exported||null,function(item){exported[item]=!0}),delete o.predef,delete o.exported,optionKeys=Object.keys(o),x=0;optionKeys.length>x;x++)if(/^-W\\d{3}$/g.test(optionKeys[x]))newIgnoredObj[optionKeys[x].slice(1)]=!0;else{var optionKey=optionKeys[x];newOptionObj[optionKey]=o[optionKey],(\"esversion\"===optionKey&&5===o[optionKey]||\"es5\"===optionKey&&o[optionKey])&&warning(\"I003\"),\"newcap\"===optionKeys[x]&&o[optionKey]===!1&&(newOptionObj[\"(explicitNewcap)\"]=!0)}state.option=newOptionObj,state.ignored=newIgnoredObj,state.option.indent=state.option.indent||4,state.option.maxerr=state.option.maxerr||50,indent=1;var scopeManagerInst=scopeManager(state,predefined,exported,declared);if(scopeManagerInst.on(\"warning\",function(ev){warning.apply(null,[ev.code,ev.token].concat(ev.data))}),scopeManagerInst.on(\"error\",function(ev){error.apply(null,[ev.code,ev.token].concat(ev.data))}),state.funct=functor(\"(global)\",null,{\"(global)\":!0,\"(scope)\":scopeManagerInst,\"(comparray)\":arrayComprehension(),\"(metrics)\":createMetrics(state.tokens.next)}),functions=[state.funct],urls=[],stack=null,member={},membersOnly=null,inblock=!1,lookahead=[],!isString(s)&&!Array.isArray(s))return errorAt(\"E004\",0),!1;api={get isJSON(){return state.jsonMode},getOption:function(name){return state.option[name]||null},getCache:function(name){return state.cache[name]},setCache:function(name,value){state.cache[name]=value},warn:function(code,data){warningAt.apply(null,[code,data.line,data.char].concat(data.data))},on:function(names,listener){names.split(\" \").forEach(function(name){emitter.on(name,listener)}.bind(this))}},emitter.removeAllListeners(),(extraModules||[]).forEach(function(func){func(api)}),state.tokens.prev=state.tokens.curr=state.tokens.next=state.syntax[\"(begin)\"],o&&o.ignoreDelimiters&&(Array.isArray(o.ignoreDelimiters)||(o.ignoreDelimiters=[o.ignoreDelimiters]),o.ignoreDelimiters.forEach(function(delimiterPair){delimiterPair.start&&delimiterPair.end&&(reIgnoreStr=escapeRegex(delimiterPair.start)+\"[\\\\s\\\\S]*?\"+escapeRegex(delimiterPair.end),reIgnore=RegExp(reIgnoreStr,\"ig\"),s=s.replace(reIgnore,function(match){return match.replace(/./g,\" \")}))})),lex=new Lexer(s),lex.on(\"warning\",function(ev){warningAt.apply(null,[ev.code,ev.line,ev.character].concat(ev.data))}),lex.on(\"error\",function(ev){errorAt.apply(null,[ev.code,ev.line,ev.character].concat(ev.data))}),lex.on(\"fatal\",function(ev){quit(\"E041\",ev.line,ev.from)}),lex.on(\"Identifier\",function(ev){emitter.emit(\"Identifier\",ev)}),lex.on(\"String\",function(ev){emitter.emit(\"String\",ev)}),lex.on(\"Number\",function(ev){emitter.emit(\"Number\",ev)}),lex.start();for(var name in o)_.has(o,name)&&checkOption(name,state.tokens.curr);assume(),combine(predefined,g||{}),comma.first=!0;try{switch(advance(),state.tokens.next.id){case\"{\":case\"[\":destructuringAssignOrJsonValue();break;default:directives(),state.directive[\"use strict\"]&&\"global\"!==state.option.strict&&warning(\"W097\",state.tokens.prev),statements()}\"(end)\"!==state.tokens.next.id&&quit(\"E041\",state.tokens.curr.line),state.funct[\"(scope)\"].unstack()}catch(err){if(!err||\"JSHintError\"!==err.name)throw err;var nt=state.tokens.next||{};JSHINT.errors.push({scope:\"(main)\",raw:err.raw,code:err.code,reason:err.message,line:err.line||nt.line,character:err.character||nt.from},null)}if(\"(main)\"===JSHINT.scope)for(o=o||{},i=0;JSHINT.internals.length>i;i+=1)k=JSHINT.internals[i],o.scope=k.elem,itself(k.value,o,g);return 0===JSHINT.errors.length};return itself.addModule=function(func){extraModules.push(func)},itself.addModule(style.register),itself.data=function(){var fu,f,i,j,n,globals,data={functions:[],options:state.option};itself.errors.length&&(data.errors=itself.errors),state.jsonMode&&(data.json=!0);var impliedGlobals=state.funct[\"(scope)\"].getImpliedGlobals();for(impliedGlobals.length>0&&(data.implieds=impliedGlobals),urls.length>0&&(data.urls=urls),globals=state.funct[\"(scope)\"].getUsedOrDefinedGlobals(),globals.length>0&&(data.globals=globals),i=1;functions.length>i;i+=1){for(f=functions[i],fu={},j=0;functionicity.length>j;j+=1)fu[functionicity[j]]=[];for(j=0;functionicity.length>j;j+=1)0===fu[functionicity[j]].length&&delete fu[functionicity[j]];fu.name=f[\"(name)\"],fu.param=f[\"(params)\"],fu.line=f[\"(line)\"],fu.character=f[\"(character)\"],fu.last=f[\"(last)\"],fu.lastcharacter=f[\"(lastcharacter)\"],fu.metrics={complexity:f[\"(metrics)\"].ComplexityCount,parameters:f[\"(metrics)\"].arity,statements:f[\"(metrics)\"].statementCount},data.functions.push(fu)}var unuseds=state.funct[\"(scope)\"].getUnuseds();unuseds.length>0&&(data.unused=unuseds);for(n in member)if(\"number\"==typeof member[n]){data.member=member;break}return data},itself.jshint=itself,itself}();\"object\"==typeof exports&&exports&&(exports.JSHINT=JSHINT)},{\"../lodash\":\"/node_modules/jshint/lodash.js\",\"./lex.js\":\"/node_modules/jshint/src/lex.js\",\"./messages.js\":\"/node_modules/jshint/src/messages.js\",\"./options.js\":\"/node_modules/jshint/src/options.js\",\"./reg.js\":\"/node_modules/jshint/src/reg.js\",\"./scope-manager.js\":\"/node_modules/jshint/src/scope-manager.js\",\"./state.js\":\"/node_modules/jshint/src/state.js\",\"./style.js\":\"/node_modules/jshint/src/style.js\",\"./vars.js\":\"/node_modules/jshint/src/vars.js\",events:\"/node_modules/browserify/node_modules/events/events.js\"}],\"/node_modules/jshint/src/lex.js\":[function(_dereq_,module,exports){\"use strict\";function asyncTrigger(){var _checks=[];return{push:function(fn){_checks.push(fn)},check:function(){for(var check=0;_checks.length>check;++check)_checks[check]();_checks.splice(0,_checks.length)}}}function Lexer(source){var lines=source;\"string\"==typeof lines&&(lines=lines.replace(/\\r\\n/g,\"\\n\").replace(/\\r/g,\"\\n\").split(\"\\n\")),lines[0]&&\"#!\"===lines[0].substr(0,2)&&(-1!==lines[0].indexOf(\"node\")&&(state.option.node=!0),lines[0]=\"\"),this.emitter=new events.EventEmitter,this.source=source,this.setLines(lines),this.prereg=!0,this.line=0,this.char=1,this.from=1,this.input=\"\",this.inComment=!1,this.context=[],this.templateStarts=[];for(var i=0;state.option.indent>i;i+=1)state.tab+=\" \";this.ignoreLinterErrors=!1}var _=_dereq_(\"../lodash\"),events=_dereq_(\"events\"),reg=_dereq_(\"./reg.js\"),state=_dereq_(\"./state.js\").state,unicodeData=_dereq_(\"../data/ascii-identifier-data.js\"),asciiIdentifierStartTable=unicodeData.asciiIdentifierStartTable,asciiIdentifierPartTable=unicodeData.asciiIdentifierPartTable,Token={Identifier:1,Punctuator:2,NumericLiteral:3,StringLiteral:4,Comment:5,Keyword:6,NullLiteral:7,BooleanLiteral:8,RegExp:9,TemplateHead:10,TemplateMiddle:11,TemplateTail:12,NoSubstTemplate:13},Context={Block:1,Template:2};Lexer.prototype={_lines:[],inContext:function(ctxType){return this.context.length>0&&this.context[this.context.length-1].type===ctxType},pushContext:function(ctxType){this.context.push({type:ctxType})},popContext:function(){return this.context.pop()},isContext:function(context){return this.context.length>0&&this.context[this.context.length-1]===context},currentContext:function(){return this.context.length>0&&this.context[this.context.length-1]},getLines:function(){return this._lines=state.lines,this._lines},setLines:function(val){this._lines=val,state.lines=this._lines},peek:function(i){return this.input.charAt(i||0)},skip:function(i){i=i||1,this.char+=i,this.input=this.input.slice(i)},on:function(names,listener){names.split(\" \").forEach(function(name){this.emitter.on(name,listener)}.bind(this))},trigger:function(){this.emitter.emit.apply(this.emitter,Array.prototype.slice.call(arguments))},triggerAsync:function(type,args,checks,fn){checks.push(function(){fn()&&this.trigger(type,args)}.bind(this))},scanPunctuator:function(){var ch2,ch3,ch4,ch1=this.peek();switch(ch1){case\".\":if(/^[0-9]$/.test(this.peek(1)))return null;if(\".\"===this.peek(1)&&\".\"===this.peek(2))return{type:Token.Punctuator,value:\"...\"};case\"(\":case\")\":case\";\":case\",\":case\"[\":case\"]\":case\":\":case\"~\":case\"?\":return{type:Token.Punctuator,value:ch1};case\"{\":return this.pushContext(Context.Block),{type:Token.Punctuator,value:ch1};case\"}\":return this.inContext(Context.Block)&&this.popContext(),{type:Token.Punctuator,value:ch1};case\"#\":return{type:Token.Punctuator,value:ch1};case\"\":return null}return ch2=this.peek(1),ch3=this.peek(2),ch4=this.peek(3),\">\"===ch1&&\">\"===ch2&&\">\"===ch3&&\"=\"===ch4?{type:Token.Punctuator,value:\">>>=\"}:\"=\"===ch1&&\"=\"===ch2&&\"=\"===ch3?{type:Token.Punctuator,value:\"===\"}:\"!\"===ch1&&\"=\"===ch2&&\"=\"===ch3?{type:Token.Punctuator,value:\"!==\"}:\">\"===ch1&&\">\"===ch2&&\">\"===ch3?{type:Token.Punctuator,value:\">>>\"}:\"<\"===ch1&&\"<\"===ch2&&\"=\"===ch3?{type:Token.Punctuator,value:\"<<=\"}:\">\"===ch1&&\">\"===ch2&&\"=\"===ch3?{type:Token.Punctuator,value:\">>=\"}:\"=\"===ch1&&\">\"===ch2?{type:Token.Punctuator,value:ch1+ch2}:ch1===ch2&&\"+-<>&|\".indexOf(ch1)>=0?{type:Token.Punctuator,value:ch1+ch2}:\"<>=!+-*%&|^\".indexOf(ch1)>=0?\"=\"===ch2?{type:Token.Punctuator,value:ch1+ch2}:{type:Token.Punctuator,value:ch1}:\"/\"===ch1?\"=\"===ch2?{type:Token.Punctuator,value:\"/=\"}:{type:Token.Punctuator,value:\"/\"}:null},scanComments:function(){function commentToken(label,body,opt){var special=[\"jshint\",\"jslint\",\"members\",\"member\",\"globals\",\"global\",\"exported\"],isSpecial=!1,value=label+body,commentType=\"plain\";return opt=opt||{},opt.isMultiline&&(value+=\"*/\"),body=body.replace(/\\n/g,\" \"),\"/*\"===label&&reg.fallsThrough.test(body)&&(isSpecial=!0,commentType=\"falls through\"),special.forEach(function(str){if(!isSpecial&&(\"//\"!==label||\"jshint\"===str)&&(\" \"===body.charAt(str.length)&&body.substr(0,str.length)===str&&(isSpecial=!0,label+=str,body=body.substr(str.length)),isSpecial||\" \"!==body.charAt(0)||\" \"!==body.charAt(str.length+1)||body.substr(1,str.length)!==str||(isSpecial=!0,label=label+\" \"+str,body=body.substr(str.length+1)),isSpecial))switch(str){case\"member\":commentType=\"members\";break;case\"global\":commentType=\"globals\";break;default:var options=body.split(\":\").map(function(v){return v.replace(/^\\s+/,\"\").replace(/\\s+$/,\"\")});if(2===options.length)switch(options[0]){case\"ignore\":switch(options[1]){case\"start\":self.ignoringLinterErrors=!0,isSpecial=!1;break;case\"end\":self.ignoringLinterErrors=!1,isSpecial=!1}}commentType=str}}),{type:Token.Comment,commentType:commentType,value:value,body:body,isSpecial:isSpecial,isMultiline:opt.isMultiline||!1,isMalformed:opt.isMalformed||!1}}var ch1=this.peek(),ch2=this.peek(1),rest=this.input.substr(2),startLine=this.line,startChar=this.char,self=this;if(\"*\"===ch1&&\"/\"===ch2)return this.trigger(\"error\",{code:\"E018\",line:startLine,character:startChar}),this.skip(2),null;if(\"/\"!==ch1||\"*\"!==ch2&&\"/\"!==ch2)return null;if(\"/\"===ch2)return this.skip(this.input.length),commentToken(\"//\",rest);var body=\"\";if(\"*\"===ch2){for(this.inComment=!0,this.skip(2);\"*\"!==this.peek()||\"/\"!==this.peek(1);)if(\"\"===this.peek()){if(body+=\"\\n\",!this.nextLine())return this.trigger(\"error\",{code:\"E017\",line:startLine,character:startChar}),this.inComment=!1,commentToken(\"/*\",body,{isMultiline:!0,isMalformed:!0})}else body+=this.peek(),this.skip();return this.skip(2),this.inComment=!1,commentToken(\"/*\",body,{isMultiline:!0})}},scanKeyword:function(){var result=/^[a-zA-Z_$][a-zA-Z0-9_$]*/.exec(this.input),keywords=[\"if\",\"in\",\"do\",\"var\",\"for\",\"new\",\"try\",\"let\",\"this\",\"else\",\"case\",\"void\",\"with\",\"enum\",\"while\",\"break\",\"catch\",\"throw\",\"const\",\"yield\",\"class\",\"super\",\"return\",\"typeof\",\"delete\",\"switch\",\"export\",\"import\",\"default\",\"finally\",\"extends\",\"function\",\"continue\",\"debugger\",\"instanceof\"];return result&&keywords.indexOf(result[0])>=0?{type:Token.Keyword,value:result[0]}:null},scanIdentifier:function(){function isNonAsciiIdentifierStart(code){return code>256}function isNonAsciiIdentifierPart(code){return code>256}function isHexDigit(str){return/^[0-9a-fA-F]$/.test(str)}function removeEscapeSequences(id){return id.replace(/\\\\u([0-9a-fA-F]{4})/g,function(m0,codepoint){return String.fromCharCode(parseInt(codepoint,16))})}var type,char,id=\"\",index=0,readUnicodeEscapeSequence=function(){if(index+=1,\"u\"!==this.peek(index))return null;var code,ch1=this.peek(index+1),ch2=this.peek(index+2),ch3=this.peek(index+3),ch4=this.peek(index+4);return isHexDigit(ch1)&&isHexDigit(ch2)&&isHexDigit(ch3)&&isHexDigit(ch4)?(code=parseInt(ch1+ch2+ch3+ch4,16),asciiIdentifierPartTable[code]||isNonAsciiIdentifierPart(code)?(index+=5,\"\\\\u\"+ch1+ch2+ch3+ch4):null):null}.bind(this),getIdentifierStart=function(){var chr=this.peek(index),code=chr.charCodeAt(0);return 92===code?readUnicodeEscapeSequence():128>code?asciiIdentifierStartTable[code]?(index+=1,chr):null:isNonAsciiIdentifierStart(code)?(index+=1,chr):null}.bind(this),getIdentifierPart=function(){var chr=this.peek(index),code=chr.charCodeAt(0);return 92===code?readUnicodeEscapeSequence():128>code?asciiIdentifierPartTable[code]?(index+=1,chr):null:isNonAsciiIdentifierPart(code)?(index+=1,chr):null}.bind(this);if(char=getIdentifierStart(),null===char)return null;for(id=char;char=getIdentifierPart(),null!==char;)id+=char;switch(id){case\"true\":case\"false\":type=Token.BooleanLiteral;break;case\"null\":type=Token.NullLiteral;break;default:type=Token.Identifier}return{type:type,value:removeEscapeSequences(id),text:id,tokenLength:id.length}},scanNumericLiteral:function(){function isDecimalDigit(str){return/^[0-9]$/.test(str)}function isOctalDigit(str){return/^[0-7]$/.test(str)}function isBinaryDigit(str){return/^[01]$/.test(str)}function isHexDigit(str){return/^[0-9a-fA-F]$/.test(str)}function isIdentifierStart(ch){return\"$\"===ch||\"_\"===ch||\"\\\\\"===ch||ch>=\"a\"&&\"z\">=ch||ch>=\"A\"&&\"Z\">=ch}var bad,index=0,value=\"\",length=this.input.length,char=this.peek(index),isAllowedDigit=isDecimalDigit,base=10,isLegacy=!1;if(\".\"!==char&&!isDecimalDigit(char))return null;if(\".\"!==char){for(value=this.peek(index),index+=1,char=this.peek(index),\"0\"===value&&((\"x\"===char||\"X\"===char)&&(isAllowedDigit=isHexDigit,base=16,index+=1,value+=char),(\"o\"===char||\"O\"===char)&&(isAllowedDigit=isOctalDigit,base=8,state.inES6(!0)||this.trigger(\"warning\",{code:\"W119\",line:this.line,character:this.char,data:[\"Octal integer literal\",\"6\"]}),index+=1,value+=char),(\"b\"===char||\"B\"===char)&&(isAllowedDigit=isBinaryDigit,base=2,state.inES6(!0)||this.trigger(\"warning\",{code:\"W119\",line:this.line,character:this.char,data:[\"Binary integer literal\",\"6\"]}),index+=1,value+=char),isOctalDigit(char)&&(isAllowedDigit=isOctalDigit,base=8,isLegacy=!0,bad=!1,index+=1,value+=char),!isOctalDigit(char)&&isDecimalDigit(char)&&(index+=1,value+=char));length>index;){if(char=this.peek(index),isLegacy&&isDecimalDigit(char))bad=!0;else if(!isAllowedDigit(char))break;value+=char,index+=1}if(isAllowedDigit!==isDecimalDigit)return!isLegacy&&2>=value.length?{type:Token.NumericLiteral,value:value,isMalformed:!0}:length>index&&(char=this.peek(index),isIdentifierStart(char))?null:{type:Token.NumericLiteral,value:value,base:base,isLegacy:isLegacy,isMalformed:!1}}if(\".\"===char)for(value+=char,index+=1;length>index&&(char=this.peek(index),isDecimalDigit(char));)value+=char,index+=1;if(\"e\"===char||\"E\"===char){if(value+=char,index+=1,char=this.peek(index),(\"+\"===char||\"-\"===char)&&(value+=this.peek(index),index+=1),char=this.peek(index),!isDecimalDigit(char))return null;for(value+=char,index+=1;length>index&&(char=this.peek(index),isDecimalDigit(char));)value+=char,index+=1}return length>index&&(char=this.peek(index),isIdentifierStart(char))?null:{type:Token.NumericLiteral,value:value,base:base,isMalformed:!isFinite(value)}},scanEscapeSequence:function(checks){var allowNewLine=!1,jump=1;this.skip();var char=this.peek();switch(char){case\"'\":this.triggerAsync(\"warning\",{code:\"W114\",line:this.line,character:this.char,data:[\"\\\\'\"]},checks,function(){return state.jsonMode});break;case\"b\":char=\"\\\\b\";break;case\"f\":char=\"\\\\f\";break;case\"n\":char=\"\\\\n\";break;case\"r\":char=\"\\\\r\";break;case\"t\":char=\"\\\\t\";break;case\"0\":char=\"\\\\0\";var n=parseInt(this.peek(1),10);this.triggerAsync(\"warning\",{code:\"W115\",line:this.line,character:this.char},checks,function(){return n>=0&&7>=n&&state.isStrict()});break;case\"u\":var hexCode=this.input.substr(1,4),code=parseInt(hexCode,16);isNaN(code)&&this.trigger(\"warning\",{code:\"W052\",line:this.line,character:this.char,data:[\"u\"+hexCode]}),char=String.fromCharCode(code),jump=5;break;case\"v\":this.triggerAsync(\"warning\",{code:\"W114\",line:this.line,character:this.char,data:[\"\\\\v\"]},checks,function(){return state.jsonMode}),char=\"\u000b\";break;case\"x\":var x=parseInt(this.input.substr(1,2),16);this.triggerAsync(\"warning\",{code:\"W114\",line:this.line,character:this.char,data:[\"\\\\x-\"]},checks,function(){return state.jsonMode}),char=String.fromCharCode(x),jump=3;break;case\"\\\\\":char=\"\\\\\\\\\";break;case'\"':char='\\\\\"';break;case\"/\":break;case\"\":allowNewLine=!0,char=\"\"}return{\"char\":char,jump:jump,allowNewLine:allowNewLine}},scanTemplateLiteral:function(checks){var tokenType,ch,value=\"\",startLine=this.line,startChar=this.char,depth=this.templateStarts.length;if(!state.inES6(!0))return null;if(\"`\"===this.peek())tokenType=Token.TemplateHead,this.templateStarts.push({line:this.line,\"char\":this.char}),depth=this.templateStarts.length,this.skip(1),this.pushContext(Context.Template);else{if(!this.inContext(Context.Template)||\"}\"!==this.peek())return null;tokenType=Token.TemplateMiddle}for(;\"`\"!==this.peek();){for(;\"\"===(ch=this.peek());)if(value+=\"\\n\",!this.nextLine()){var startPos=this.templateStarts.pop();return this.trigger(\"error\",{code:\"E052\",line:startPos.line,character:startPos.char}),{type:tokenType,value:value,startLine:startLine,startChar:startChar,isUnclosed:!0,depth:depth,context:this.popContext()}}if(\"$\"===ch&&\"{\"===this.peek(1))return value+=\"${\",this.skip(2),{type:tokenType,value:value,startLine:startLine,startChar:startChar,isUnclosed:!1,depth:depth,context:this.currentContext()};\nif(\"\\\\\"===ch){var escape=this.scanEscapeSequence(checks);value+=escape.char,this.skip(escape.jump)}else\"`\"!==ch&&(value+=ch,this.skip(1))}return tokenType=tokenType===Token.TemplateHead?Token.NoSubstTemplate:Token.TemplateTail,this.skip(1),this.templateStarts.pop(),{type:tokenType,value:value,startLine:startLine,startChar:startChar,isUnclosed:!1,depth:depth,context:this.popContext()}},scanStringLiteral:function(checks){var quote=this.peek();if('\"'!==quote&&\"'\"!==quote)return null;this.triggerAsync(\"warning\",{code:\"W108\",line:this.line,character:this.char},checks,function(){return state.jsonMode&&'\"'!==quote});var value=\"\",startLine=this.line,startChar=this.char,allowNewLine=!1;for(this.skip();this.peek()!==quote;)if(\"\"===this.peek()){if(allowNewLine?(allowNewLine=!1,this.triggerAsync(\"warning\",{code:\"W043\",line:this.line,character:this.char},checks,function(){return!state.option.multistr}),this.triggerAsync(\"warning\",{code:\"W042\",line:this.line,character:this.char},checks,function(){return state.jsonMode&&state.option.multistr})):this.trigger(\"warning\",{code:\"W112\",line:this.line,character:this.char}),!this.nextLine())return this.trigger(\"error\",{code:\"E029\",line:startLine,character:startChar}),{type:Token.StringLiteral,value:value,startLine:startLine,startChar:startChar,isUnclosed:!0,quote:quote}}else{allowNewLine=!1;var char=this.peek(),jump=1;if(\" \">char&&this.trigger(\"warning\",{code:\"W113\",line:this.line,character:this.char,data:[\"<non-printable>\"]}),\"\\\\\"===char){var parsed=this.scanEscapeSequence(checks);char=parsed.char,jump=parsed.jump,allowNewLine=parsed.allowNewLine}value+=char,this.skip(jump)}return this.skip(),{type:Token.StringLiteral,value:value,startLine:startLine,startChar:startChar,isUnclosed:!1,quote:quote}},scanRegExp:function(){var terminated,index=0,length=this.input.length,char=this.peek(),value=char,body=\"\",flags=[],malformed=!1,isCharSet=!1,scanUnexpectedChars=function(){\" \">char&&(malformed=!0,this.trigger(\"warning\",{code:\"W048\",line:this.line,character:this.char})),\"<\"===char&&(malformed=!0,this.trigger(\"warning\",{code:\"W049\",line:this.line,character:this.char,data:[char]}))}.bind(this);if(!this.prereg||\"/\"!==char)return null;for(index+=1,terminated=!1;length>index;)if(char=this.peek(index),value+=char,body+=char,isCharSet)\"]\"===char&&(\"\\\\\"!==this.peek(index-1)||\"\\\\\"===this.peek(index-2))&&(isCharSet=!1),\"\\\\\"===char&&(index+=1,char=this.peek(index),body+=char,value+=char,scanUnexpectedChars()),index+=1;else{if(\"\\\\\"===char){if(index+=1,char=this.peek(index),body+=char,value+=char,scanUnexpectedChars(),\"/\"===char){index+=1;continue}if(\"[\"===char){index+=1;continue}}if(\"[\"!==char){if(\"/\"===char){body=body.substr(0,body.length-1),terminated=!0,index+=1;break}index+=1}else isCharSet=!0,index+=1}if(!terminated)return this.trigger(\"error\",{code:\"E015\",line:this.line,character:this.from}),void this.trigger(\"fatal\",{line:this.line,from:this.from});for(;length>index&&(char=this.peek(index),/[gim]/.test(char));)flags.push(char),value+=char,index+=1;try{RegExp(body,flags.join(\"\"))}catch(err){malformed=!0,this.trigger(\"error\",{code:\"E016\",line:this.line,character:this.char,data:[err.message]})}return{type:Token.RegExp,value:value,flags:flags,isMalformed:malformed}},scanNonBreakingSpaces:function(){return state.option.nonbsp?this.input.search(/(\\u00A0)/):-1},scanUnsafeChars:function(){return this.input.search(reg.unsafeChars)},next:function(checks){this.from=this.char;var start;if(/\\s/.test(this.peek()))for(start=this.char;/\\s/.test(this.peek());)this.from+=1,this.skip();var match=this.scanComments()||this.scanStringLiteral(checks)||this.scanTemplateLiteral(checks);return match?match:(match=this.scanRegExp()||this.scanPunctuator()||this.scanKeyword()||this.scanIdentifier()||this.scanNumericLiteral(),match?(this.skip(match.tokenLength||match.value.length),match):null)},nextLine:function(){var char;if(this.line>=this.getLines().length)return!1;this.input=this.getLines()[this.line],this.line+=1,this.char=1,this.from=1;var inputTrimmed=this.input.trim(),startsWith=function(){return _.some(arguments,function(prefix){return 0===inputTrimmed.indexOf(prefix)})},endsWith=function(){return _.some(arguments,function(suffix){return-1!==inputTrimmed.indexOf(suffix,inputTrimmed.length-suffix.length)})};if(this.ignoringLinterErrors===!0&&(startsWith(\"/*\",\"//\")||this.inComment&&endsWith(\"*/\")||(this.input=\"\")),char=this.scanNonBreakingSpaces(),char>=0&&this.trigger(\"warning\",{code:\"W125\",line:this.line,character:char+1}),this.input=this.input.replace(/\\t/g,state.tab),char=this.scanUnsafeChars(),char>=0&&this.trigger(\"warning\",{code:\"W100\",line:this.line,character:char}),!this.ignoringLinterErrors&&state.option.maxlen&&state.option.maxlen<this.input.length){var inComment=this.inComment||startsWith.call(inputTrimmed,\"//\")||startsWith.call(inputTrimmed,\"/*\"),shouldTriggerError=!inComment||!reg.maxlenException.test(inputTrimmed);shouldTriggerError&&this.trigger(\"warning\",{code:\"W101\",line:this.line,character:this.input.length})}return!0},start:function(){this.nextLine()},token:function(){function isReserved(token,isProperty){if(!token.reserved)return!1;var meta=token.meta;if(meta&&meta.isFutureReservedWord&&state.inES5()){if(!meta.es5)return!1;if(meta.strictOnly&&!state.option.strict&&!state.isStrict())return!1;if(isProperty)return!1}return!0}for(var token,checks=asyncTrigger(),create=function(type,value,isProperty,token){var obj;if(\"(endline)\"!==type&&\"(end)\"!==type&&(this.prereg=!1),\"(punctuator)\"===type){switch(value){case\".\":case\")\":case\"~\":case\"#\":case\"]\":case\"++\":case\"--\":this.prereg=!1;break;default:this.prereg=!0}obj=Object.create(state.syntax[value]||state.syntax[\"(error)\"])}return\"(identifier)\"===type&&((\"return\"===value||\"case\"===value||\"typeof\"===value)&&(this.prereg=!0),_.has(state.syntax,value)&&(obj=Object.create(state.syntax[value]||state.syntax[\"(error)\"]),isReserved(obj,isProperty&&\"(identifier)\"===type)||(obj=null))),obj||(obj=Object.create(state.syntax[type])),obj.identifier=\"(identifier)\"===type,obj.type=obj.type||type,obj.value=value,obj.line=this.line,obj.character=this.char,obj.from=this.from,obj.identifier&&token&&(obj.raw_text=token.text||token.value),token&&token.startLine&&token.startLine!==this.line&&(obj.startLine=token.startLine),token&&token.context&&(obj.context=token.context),token&&token.depth&&(obj.depth=token.depth),token&&token.isUnclosed&&(obj.isUnclosed=token.isUnclosed),isProperty&&obj.identifier&&(obj.isProperty=isProperty),obj.check=checks.check,obj}.bind(this);;){if(!this.input.length)return this.nextLine()?create(\"(endline)\",\"\"):this.exhausted?null:(this.exhausted=!0,create(\"(end)\",\"\"));if(token=this.next(checks))switch(token.type){case Token.StringLiteral:return this.triggerAsync(\"String\",{line:this.line,\"char\":this.char,from:this.from,startLine:token.startLine,startChar:token.startChar,value:token.value,quote:token.quote},checks,function(){return!0}),create(\"(string)\",token.value,null,token);case Token.TemplateHead:return this.trigger(\"TemplateHead\",{line:this.line,\"char\":this.char,from:this.from,startLine:token.startLine,startChar:token.startChar,value:token.value}),create(\"(template)\",token.value,null,token);case Token.TemplateMiddle:return this.trigger(\"TemplateMiddle\",{line:this.line,\"char\":this.char,from:this.from,startLine:token.startLine,startChar:token.startChar,value:token.value}),create(\"(template middle)\",token.value,null,token);case Token.TemplateTail:return this.trigger(\"TemplateTail\",{line:this.line,\"char\":this.char,from:this.from,startLine:token.startLine,startChar:token.startChar,value:token.value}),create(\"(template tail)\",token.value,null,token);case Token.NoSubstTemplate:return this.trigger(\"NoSubstTemplate\",{line:this.line,\"char\":this.char,from:this.from,startLine:token.startLine,startChar:token.startChar,value:token.value}),create(\"(no subst template)\",token.value,null,token);case Token.Identifier:this.triggerAsync(\"Identifier\",{line:this.line,\"char\":this.char,from:this.form,name:token.value,raw_name:token.text,isProperty:\".\"===state.tokens.curr.id},checks,function(){return!0});case Token.Keyword:case Token.NullLiteral:case Token.BooleanLiteral:return create(\"(identifier)\",token.value,\".\"===state.tokens.curr.id,token);case Token.NumericLiteral:return token.isMalformed&&this.trigger(\"warning\",{code:\"W045\",line:this.line,character:this.char,data:[token.value]}),this.triggerAsync(\"warning\",{code:\"W114\",line:this.line,character:this.char,data:[\"0x-\"]},checks,function(){return 16===token.base&&state.jsonMode}),this.triggerAsync(\"warning\",{code:\"W115\",line:this.line,character:this.char},checks,function(){return state.isStrict()&&8===token.base&&token.isLegacy}),this.trigger(\"Number\",{line:this.line,\"char\":this.char,from:this.from,value:token.value,base:token.base,isMalformed:token.malformed}),create(\"(number)\",token.value);case Token.RegExp:return create(\"(regexp)\",token.value);case Token.Comment:if(state.tokens.curr.comment=!0,token.isSpecial)return{id:\"(comment)\",value:token.value,body:token.body,type:token.commentType,isSpecial:token.isSpecial,line:this.line,character:this.char,from:this.from};break;case\"\":break;default:return create(\"(punctuator)\",token.value)}else this.input.length&&(this.trigger(\"error\",{code:\"E024\",line:this.line,character:this.char,data:[this.peek()]}),this.input=\"\")}}},exports.Lexer=Lexer,exports.Context=Context},{\"../data/ascii-identifier-data.js\":\"/node_modules/jshint/data/ascii-identifier-data.js\",\"../lodash\":\"/node_modules/jshint/lodash.js\",\"./reg.js\":\"/node_modules/jshint/src/reg.js\",\"./state.js\":\"/node_modules/jshint/src/state.js\",events:\"/node_modules/browserify/node_modules/events/events.js\"}],\"/node_modules/jshint/src/messages.js\":[function(_dereq_,module,exports){\"use strict\";var _=_dereq_(\"../lodash\"),errors={E001:\"Bad option: '{a}'.\",E002:\"Bad option value.\",E003:\"Expected a JSON value.\",E004:\"Input is neither a string nor an array of strings.\",E005:\"Input is empty.\",E006:\"Unexpected early end of program.\",E007:'Missing \"use strict\" statement.',E008:\"Strict violation.\",E009:\"Option 'validthis' can't be used in a global scope.\",E010:\"'with' is not allowed in strict mode.\",E011:\"'{a}' has already been declared.\",E012:\"const '{a}' is initialized to 'undefined'.\",E013:\"Attempting to override '{a}' which is a constant.\",E014:\"A regular expression literal can be confused with '/='.\",E015:\"Unclosed regular expression.\",E016:\"Invalid regular expression.\",E017:\"Unclosed comment.\",E018:\"Unbegun comment.\",E019:\"Unmatched '{a}'.\",E020:\"Expected '{a}' to match '{b}' from line {c} and instead saw '{d}'.\",E021:\"Expected '{a}' and instead saw '{b}'.\",E022:\"Line breaking error '{a}'.\",E023:\"Missing '{a}'.\",E024:\"Unexpected '{a}'.\",E025:\"Missing ':' on a case clause.\",E026:\"Missing '}' to match '{' from line {a}.\",E027:\"Missing ']' to match '[' from line {a}.\",E028:\"Illegal comma.\",E029:\"Unclosed string.\",E030:\"Expected an identifier and instead saw '{a}'.\",E031:\"Bad assignment.\",E032:\"Expected a small integer or 'false' and instead saw '{a}'.\",E033:\"Expected an operator and instead saw '{a}'.\",E034:\"get/set are ES5 features.\",E035:\"Missing property name.\",E036:\"Expected to see a statement and instead saw a block.\",E037:null,E038:null,E039:\"Function declarations are not invocable. Wrap the whole function invocation in parens.\",E040:\"Each value should have its own case label.\",E041:\"Unrecoverable syntax error.\",E042:\"Stopping.\",E043:\"Too many errors.\",E044:null,E045:\"Invalid for each loop.\",E046:\"A yield statement shall be within a generator function (with syntax: `function*`)\",E047:null,E048:\"{a} declaration not directly within block.\",E049:\"A {a} cannot be named '{b}'.\",E050:\"Mozilla acequires the yield expression to be parenthesized here.\",E051:null,E052:\"Unclosed template literal.\",E053:\"Export declaration must be in global scope.\",E054:\"Class properties must be methods. Expected '(' but instead saw '{a}'.\",E055:\"The '{a}' option cannot be set after any executable code.\",E056:\"'{a}' was used before it was declared, which is illegal for '{b}' variables.\",E057:\"Invalid meta property: '{a}.{b}'.\",E058:\"Missing semicolon.\"},warnings={W001:\"'hasOwnProperty' is a really bad name.\",W002:\"Value of '{a}' may be overwritten in IE 8 and earlier.\",W003:\"'{a}' was used before it was defined.\",W004:\"'{a}' is already defined.\",W005:\"A dot following a number can be confused with a decimal point.\",W006:\"Confusing minuses.\",W007:\"Confusing plusses.\",W008:\"A leading decimal point can be confused with a dot: '{a}'.\",W009:\"The array literal notation [] is preferable.\",W010:\"The object literal notation {} is preferable.\",W011:null,W012:null,W013:null,W014:\"Bad line breaking before '{a}'.\",W015:null,W016:\"Unexpected use of '{a}'.\",W017:\"Bad operand.\",W018:\"Confusing use of '{a}'.\",W019:\"Use the isNaN function to compare with NaN.\",W020:\"Read only.\",W021:\"Reassignment of '{a}', which is is a {b}. Use 'var' or 'let' to declare bindings that may change.\",W022:\"Do not assign to the exception parameter.\",W023:\"Expected an identifier in an assignment and instead saw a function invocation.\",W024:\"Expected an identifier and instead saw '{a}' (a reserved word).\",W025:\"Missing name in function declaration.\",W026:\"Inner functions should be listed at the top of the outer function.\",W027:\"Unreachable '{a}' after '{b}'.\",W028:\"Label '{a}' on {b} statement.\",W030:\"Expected an assignment or function call and instead saw an expression.\",W031:\"Do not use 'new' for side effects.\",W032:\"Unnecessary semicolon.\",W033:\"Missing semicolon.\",W034:'Unnecessary directive \"{a}\".',W035:\"Empty block.\",W036:\"Unexpected /*member '{a}'.\",W037:\"'{a}' is a statement label.\",W038:\"'{a}' used out of scope.\",W039:\"'{a}' is not allowed.\",W040:\"Possible strict violation.\",W041:\"Use '{a}' to compare with '{b}'.\",W042:\"Avoid EOL escaping.\",W043:\"Bad escaping of EOL. Use option multistr if needed.\",W044:\"Bad or unnecessary escaping.\",W045:\"Bad number '{a}'.\",W046:\"Don't use extra leading zeros '{a}'.\",W047:\"A trailing decimal point can be confused with a dot: '{a}'.\",W048:\"Unexpected control character in regular expression.\",W049:\"Unexpected escaped character '{a}' in regular expression.\",W050:\"JavaScript URL.\",W051:\"Variables should not be deleted.\",W052:\"Unexpected '{a}'.\",W053:\"Do not use {a} as a constructor.\",W054:\"The Function constructor is a form of eval.\",W055:\"A constructor name should start with an uppercase letter.\",W056:\"Bad constructor.\",W057:\"Weird construction. Is 'new' necessary?\",W058:\"Missing '()' invoking a constructor.\",W059:\"Avoid arguments.{a}.\",W060:\"document.write can be a form of eval.\",W061:\"eval can be harmful.\",W062:\"Wrap an immediate function invocation in parens to assist the reader in understanding that the expression is the result of a function, and not the function itself.\",W063:\"Math is not a function.\",W064:\"Missing 'new' prefix when invoking a constructor.\",W065:\"Missing radix parameter.\",W066:\"Implied eval. Consider passing a function instead of a string.\",W067:\"Bad invocation.\",W068:\"Wrapping non-IIFE function literals in parens is unnecessary.\",W069:\"['{a}'] is better written in dot notation.\",W070:\"Extra comma. (it breaks older versions of IE)\",W071:\"This function has too many statements. ({a})\",W072:\"This function has too many parameters. ({a})\",W073:\"Blocks are nested too deeply. ({a})\",W074:\"This function's cyclomatic complexity is too high. ({a})\",W075:\"Duplicate {a} '{b}'.\",W076:\"Unexpected parameter '{a}' in get {b} function.\",W077:\"Expected a single parameter in set {a} function.\",W078:\"Setter is defined without getter.\",W079:\"Redefinition of '{a}'.\",W080:\"It's not necessary to initialize '{a}' to 'undefined'.\",W081:null,W082:\"Function declarations should not be placed in blocks. Use a function expression or move the statement to the top of the outer function.\",W083:\"Don't make functions within a loop.\",W084:\"Assignment in conditional expression\",W085:\"Don't use 'with'.\",W086:\"Expected a 'break' statement before '{a}'.\",W087:\"Forgotten 'debugger' statement?\",W088:\"Creating global 'for' variable. Should be 'for (var {a} ...'.\",W089:\"The body of a for in should be wrapped in an if statement to filter unwanted properties from the prototype.\",W090:\"'{a}' is not a statement label.\",W091:null,W093:\"Did you mean to return a conditional instead of an assignment?\",W094:\"Unexpected comma.\",W095:\"Expected a string and instead saw {a}.\",W096:\"The '{a}' key may produce unexpected results.\",W097:'Use the function form of \"use strict\".',W098:\"'{a}' is defined but never used.\",W099:null,W100:\"This character may get silently deleted by one or more browsers.\",W101:\"Line is too long.\",W102:null,W103:\"The '{a}' property is deprecated.\",W104:\"'{a}' is available in ES{b} (use 'esversion: {b}') or Mozilla JS extensions (use moz).\",W105:\"Unexpected {a} in '{b}'.\",W106:\"Identifier '{a}' is not in camel case.\",W107:\"Script URL.\",W108:\"Strings must use doublequote.\",W109:\"Strings must use singlequote.\",W110:\"Mixed double and single quotes.\",W112:\"Unclosed string.\",W113:\"Control character in string: {a}.\",W114:\"Avoid {a}.\",W115:\"Octal literals are not allowed in strict mode.\",W116:\"Expected '{a}' and instead saw '{b}'.\",W117:\"'{a}' is not defined.\",W118:\"'{a}' is only available in Mozilla JavaScript extensions (use moz option).\",W119:\"'{a}' is only available in ES{b} (use 'esversion: {b}').\",W120:\"You might be leaking a variable ({a}) here.\",W121:\"Extending prototype of native object: '{a}'.\",W122:\"Invalid typeof value '{a}'\",W123:\"'{a}' is already defined in outer scope.\",W124:\"A generator function shall contain a yield statement.\",W125:\"This line contains non-breaking spaces: http://jshint.com/doc/options/#nonbsp\",W126:\"Unnecessary grouping operator.\",W127:\"Unexpected use of a comma operator.\",W128:\"Empty array elements acequire elision=true.\",W129:\"'{a}' is defined in a future version of JavaScript. Use a different variable name to avoid migration issues.\",W130:\"Invalid element after rest element.\",W131:\"Invalid parameter after rest parameter.\",W132:\"`var` declarations are forbidden. Use `let` or `const` instead.\",W133:\"Invalid for-{a} loop left-hand-side: {b}.\",W134:\"The '{a}' option is only available when linting ECMAScript {b} code.\",W135:\"{a} may not be supported by non-browser environments.\",W136:\"'{a}' must be in function scope.\",W137:\"Empty destructuring.\",W138:\"Regular parameters should not come after default parameters.\"},info={I001:\"Comma warnings can be turned off with 'laxcomma'.\",I002:null,I003:\"ES5 option is now set per default\"};exports.errors={},exports.warnings={},exports.info={},_.each(errors,function(desc,code){exports.errors[code]={code:code,desc:desc}}),_.each(warnings,function(desc,code){exports.warnings[code]={code:code,desc:desc}}),_.each(info,function(desc,code){exports.info[code]={code:code,desc:desc}})},{\"../lodash\":\"/node_modules/jshint/lodash.js\"}],\"/node_modules/jshint/src/name-stack.js\":[function(_dereq_,module){\"use strict\";function NameStack(){this._stack=[]}Object.defineProperty(NameStack.prototype,\"length\",{get:function(){return this._stack.length}}),NameStack.prototype.push=function(){this._stack.push(null)},NameStack.prototype.pop=function(){this._stack.pop()},NameStack.prototype.set=function(token){this._stack[this.length-1]=token},NameStack.prototype.infer=function(){var type,nameToken=this._stack[this.length-1],prefix=\"\";return nameToken&&\"class\"!==nameToken.type||(nameToken=this._stack[this.length-2]),nameToken?(type=nameToken.type,\"(string)\"!==type&&\"(number)\"!==type&&\"(identifier)\"!==type&&\"default\"!==type?\"(expression)\":(nameToken.accessorType&&(prefix=nameToken.accessorType+\" \"),prefix+nameToken.value)):\"(empty)\"},module.exports=NameStack},{}],\"/node_modules/jshint/src/options.js\":[function(_dereq_,module,exports){\"use strict\";exports.bool={enforcing:{bitwise:!0,freeze:!0,camelcase:!0,curly:!0,eqeqeq:!0,futurehostile:!0,notypeof:!0,es3:!0,es5:!0,forin:!0,funcscope:!0,immed:!0,iterator:!0,newcap:!0,noarg:!0,nocomma:!0,noempty:!0,nonbsp:!0,nonew:!0,undef:!0,singleGroups:!1,varstmt:!1,enforceall:!1},relaxing:{asi:!0,multistr:!0,debug:!0,boss:!0,evil:!0,globalstrict:!0,plusplus:!0,proto:!0,scripturl:!0,sub:!0,supernew:!0,laxbreak:!0,laxcomma:!0,validthis:!0,withstmt:!0,moz:!0,noyield:!0,eqnull:!0,lastsemic:!0,loopfunc:!0,expr:!0,esnext:!0,elision:!0},environments:{mootools:!0,couch:!0,jasmine:!0,jquery:!0,node:!0,qunit:!0,rhino:!0,shelljs:!0,prototypejs:!0,yui:!0,mocha:!0,module:!0,wsh:!0,worker:!0,nonstandard:!0,browser:!0,browserify:!0,devel:!0,dojo:!0,typed:!0,phantom:!0},obsolete:{onecase:!0,regexp:!0,regexdash:!0}},exports.val={maxlen:!1,indent:!1,maxerr:!1,predef:!1,globals:!1,quotmark:!1,scope:!1,maxstatements:!1,maxdepth:!1,maxparams:!1,maxcomplexity:!1,shadow:!1,strict:!0,unused:!0,latedef:!1,ignore:!1,ignoreDelimiters:!1,esversion:5},exports.inverted={bitwise:!0,forin:!0,newcap:!0,plusplus:!0,regexp:!0,undef:!0,eqeqeq:!0,strict:!0},exports.validNames=Object.keys(exports.val).concat(Object.keys(exports.bool.relaxing)).concat(Object.keys(exports.bool.enforcing)).concat(Object.keys(exports.bool.obsolete)).concat(Object.keys(exports.bool.environments)),exports.renamed={eqeq:\"eqeqeq\",windows:\"wsh\",sloppy:\"strict\"},exports.removed={nomen:!0,onevar:!0,passfail:!0,white:!0,gcl:!0,smarttabs:!0,trailing:!0},exports.noenforceall={varstmt:!0,strict:!0}},{}],\"/node_modules/jshint/src/reg.js\":[function(_dereq_,module,exports){\"use strict\";exports.unsafeString=/@cc|<\\/?|script|\\]\\s*\\]|<\\s*!|&lt/i,exports.unsafeChars=/[\\u0000-\\u001f\\u007f-\\u009f\\u00ad\\u0600-\\u0604\\u070f\\u17b4\\u17b5\\u200c-\\u200f\\u2028-\\u202f\\u2060-\\u206f\\ufeff\\ufff0-\\uffff]/,exports.needEsc=/[\\u0000-\\u001f&<\"\\/\\\\\\u007f-\\u009f\\u00ad\\u0600-\\u0604\\u070f\\u17b4\\u17b5\\u200c-\\u200f\\u2028-\\u202f\\u2060-\\u206f\\ufeff\\ufff0-\\uffff]/,exports.needEscGlobal=/[\\u0000-\\u001f&<\"\\/\\\\\\u007f-\\u009f\\u00ad\\u0600-\\u0604\\u070f\\u17b4\\u17b5\\u200c-\\u200f\\u2028-\\u202f\\u2060-\\u206f\\ufeff\\ufff0-\\uffff]/g,exports.starSlash=/\\*\\//,exports.identifier=/^([a-zA-Z_$][a-zA-Z0-9_$]*)$/,exports.javascriptURL=/^(?:javascript|jscript|ecmascript|vbscript|livescript)\\s*:/i,exports.fallsThrough=/^\\s*falls?\\sthrough\\s*$/,exports.maxlenException=/^(?:(?:\\/\\/|\\/\\*|\\*) ?)?[^ ]+$/},{}],\"/node_modules/jshint/src/scope-manager.js\":[function(_dereq_,module){\"use strict\";var _=_dereq_(\"../lodash\"),events=_dereq_(\"events\"),marker={},scopeManager=function(state,predefined,exported,declared){function _newScope(type){_current={\"(labels)\":Object.create(null),\"(usages)\":Object.create(null),\"(breakLabels)\":Object.create(null),\"(parent)\":_current,\"(type)\":type,\"(params)\":\"functionparams\"===type||\"catchparams\"===type?[]:null},_scopeStack.push(_current)}function warning(code,token){emitter.emit(\"warning\",{code:code,token:token,data:_.slice(arguments,2)})}function error(code,token){emitter.emit(\"warning\",{code:code,token:token,data:_.slice(arguments,2)})}function _setupUsages(labelName){_current[\"(usages)\"][labelName]||(_current[\"(usages)\"][labelName]={\"(modified)\":[],\"(reassigned)\":[],\"(tokens)\":[]})}function _checkForUnused(){if(\"functionparams\"===_current[\"(type)\"])return _checkParams(),void 0;var curentLabels=_current[\"(labels)\"];for(var labelName in curentLabels)curentLabels[labelName]&&\"exception\"!==curentLabels[labelName][\"(type)\"]&&curentLabels[labelName][\"(unused)\"]&&_warnUnused(labelName,curentLabels[labelName][\"(token)\"],\"var\")}function _checkParams(){var params=_current[\"(params)\"];if(params)for(var unused_opt,param=params.pop();param;){var label=_current[\"(labels)\"][param];if(unused_opt=_getUnusedOption(state.funct[\"(unusedOption)\"]),\"undefined\"===param)return;if(label[\"(unused)\"])_warnUnused(param,label[\"(token)\"],\"param\",state.funct[\"(unusedOption)\"]);else if(\"last-param\"===unused_opt)return;param=params.pop()}}function _getLabel(labelName){for(var i=_scopeStack.length-1;i>=0;--i){var scopeLabels=_scopeStack[i][\"(labels)\"];if(scopeLabels[labelName])return scopeLabels}}function usedSoFarInCurrentFunction(labelName){for(var i=_scopeStack.length-1;i>=0;i--){var current=_scopeStack[i];if(current[\"(usages)\"][labelName])return current[\"(usages)\"][labelName];if(current===_currentFunctBody)break}return!1}function _checkOuterShadow(labelName,token){if(\"outer\"===state.option.shadow)for(var isGlobal=\"global\"===_currentFunctBody[\"(type)\"],isNewFunction=\"functionparams\"===_current[\"(type)\"],outsideCurrentFunction=!isGlobal,i=0;_scopeStack.length>i;i++){var stackItem=_scopeStack[i];isNewFunction||_scopeStack[i+1]!==_currentFunctBody||(outsideCurrentFunction=!1),outsideCurrentFunction&&stackItem[\"(labels)\"][labelName]&&warning(\"W123\",token,labelName),stackItem[\"(breakLabels)\"][labelName]&&warning(\"W123\",token,labelName)}}function _latedefWarning(type,labelName,token){state.option.latedef&&(state.option.latedef===!0&&\"function\"===type||\"function\"!==type)&&warning(\"W003\",token,labelName)}var _current,_scopeStack=[];_newScope(\"global\"),_current[\"(predefined)\"]=predefined;var _currentFunctBody=_current,usedPredefinedAndGlobals=Object.create(null),impliedGlobals=Object.create(null),unuseds=[],emitter=new events.EventEmitter,_getUnusedOption=function(unused_opt){return void 0===unused_opt&&(unused_opt=state.option.unused),unused_opt===!0&&(unused_opt=\"last-param\"),unused_opt},_warnUnused=function(name,tkn,type,unused_opt){var line=tkn.line,chr=tkn.from,raw_name=tkn.raw_text||name;unused_opt=_getUnusedOption(unused_opt);var warnable_types={vars:[\"var\"],\"last-param\":[\"var\",\"param\"],strict:[\"var\",\"param\",\"last-param\"]};unused_opt&&warnable_types[unused_opt]&&-1!==warnable_types[unused_opt].indexOf(type)&&warning(\"W098\",{line:line,from:chr},raw_name),(unused_opt||\"var\"===type)&&unuseds.push({name:name,line:line,character:chr})},scopeManagerInst={on:function(names,listener){names.split(\" \").forEach(function(name){emitter.on(name,listener)})},isPredefined:function(labelName){return!this.has(labelName)&&_.has(_scopeStack[0][\"(predefined)\"],labelName)},stack:function(type){var previousScope=_current;_newScope(type),type||\"functionparams\"!==previousScope[\"(type)\"]||(_current[\"(isFuncBody)\"]=!0,_current[\"(context)\"]=_currentFunctBody,_currentFunctBody=_current)},unstack:function(){var i,j,subScope=_scopeStack.length>1?_scopeStack[_scopeStack.length-2]:null,isUnstackingFunctionBody=_current===_currentFunctBody,isUnstackingFunctionParams=\"functionparams\"===_current[\"(type)\"],isUnstackingFunctionOuter=\"functionouter\"===_current[\"(type)\"],currentUsages=_current[\"(usages)\"],currentLabels=_current[\"(labels)\"],usedLabelNameList=Object.keys(currentUsages);for(currentUsages.__proto__&&-1===usedLabelNameList.indexOf(\"__proto__\")&&usedLabelNameList.push(\"__proto__\"),i=0;usedLabelNameList.length>i;i++){var usedLabelName=usedLabelNameList[i],usage=currentUsages[usedLabelName],usedLabel=currentLabels[usedLabelName];if(usedLabel){var usedLabelType=usedLabel[\"(type)\"];if(usedLabel[\"(useOutsideOfScope)\"]&&!state.option.funcscope){var usedTokens=usage[\"(tokens)\"];if(usedTokens)for(j=0;usedTokens.length>j;j++)usedLabel[\"(function)\"]===usedTokens[j][\"(function)\"]&&error(\"W038\",usedTokens[j],usedLabelName)}if(_current[\"(labels)\"][usedLabelName][\"(unused)\"]=!1,\"const\"===usedLabelType&&usage[\"(modified)\"])for(j=0;usage[\"(modified)\"].length>j;j++)error(\"E013\",usage[\"(modified)\"][j],usedLabelName);if((\"function\"===usedLabelType||\"class\"===usedLabelType)&&usage[\"(reassigned)\"])for(j=0;usage[\"(reassigned)\"].length>j;j++)error(\"W021\",usage[\"(reassigned)\"][j],usedLabelName,usedLabelType)}else if(isUnstackingFunctionOuter&&(state.funct[\"(isCapturing)\"]=!0),subScope)if(subScope[\"(usages)\"][usedLabelName]){var subScopeUsage=subScope[\"(usages)\"][usedLabelName];subScopeUsage[\"(modified)\"]=subScopeUsage[\"(modified)\"].concat(usage[\"(modified)\"]),subScopeUsage[\"(tokens)\"]=subScopeUsage[\"(tokens)\"].concat(usage[\"(tokens)\"]),subScopeUsage[\"(reassigned)\"]=subScopeUsage[\"(reassigned)\"].concat(usage[\"(reassigned)\"]),subScopeUsage[\"(onlyUsedSubFunction)\"]=!1}else subScope[\"(usages)\"][usedLabelName]=usage,isUnstackingFunctionBody&&(subScope[\"(usages)\"][usedLabelName][\"(onlyUsedSubFunction)\"]=!0);else if(\"boolean\"==typeof _current[\"(predefined)\"][usedLabelName]){if(delete declared[usedLabelName],usedPredefinedAndGlobals[usedLabelName]=marker,_current[\"(predefined)\"][usedLabelName]===!1&&usage[\"(reassigned)\"])for(j=0;usage[\"(reassigned)\"].length>j;j++)warning(\"W020\",usage[\"(reassigned)\"][j])}else if(usage[\"(tokens)\"])for(j=0;usage[\"(tokens)\"].length>j;j++){var undefinedToken=usage[\"(tokens)\"][j];undefinedToken.forgiveUndef||(state.option.undef&&!undefinedToken.ignoreUndef&&warning(\"W117\",undefinedToken,usedLabelName),impliedGlobals[usedLabelName]?impliedGlobals[usedLabelName].line.push(undefinedToken.line):impliedGlobals[usedLabelName]={name:usedLabelName,line:[undefinedToken.line]})}}if(subScope||Object.keys(declared).forEach(function(labelNotUsed){_warnUnused(labelNotUsed,declared[labelNotUsed],\"var\")}),subScope&&!isUnstackingFunctionBody&&!isUnstackingFunctionParams&&!isUnstackingFunctionOuter){var labelNames=Object.keys(currentLabels);for(i=0;labelNames.length>i;i++){var defLabelName=labelNames[i];currentLabels[defLabelName][\"(blockscoped)\"]||\"exception\"===currentLabels[defLabelName][\"(type)\"]||this.funct.has(defLabelName,{excludeCurrent:!0})||(subScope[\"(labels)\"][defLabelName]=currentLabels[defLabelName],\"global\"!==_currentFunctBody[\"(type)\"]&&(subScope[\"(labels)\"][defLabelName][\"(useOutsideOfScope)\"]=!0),delete currentLabels[defLabelName])}}_checkForUnused(),_scopeStack.pop(),isUnstackingFunctionBody&&(_currentFunctBody=_scopeStack[_.findLastIndex(_scopeStack,function(scope){return scope[\"(isFuncBody)\"]||\"global\"===scope[\"(type)\"]})]),_current=subScope},addParam:function(labelName,token,type){if(type=type||\"param\",\"exception\"===type){var previouslyDefinedLabelType=this.funct.labeltype(labelName);previouslyDefinedLabelType&&\"exception\"!==previouslyDefinedLabelType&&(state.option.node||warning(\"W002\",state.tokens.next,labelName))}if(_.has(_current[\"(labels)\"],labelName)?_current[\"(labels)\"][labelName].duplicated=!0:(_checkOuterShadow(labelName,token,type),_current[\"(labels)\"][labelName]={\"(type)\":type,\"(token)\":token,\"(unused)\":!0},_current[\"(params)\"].push(labelName)),_.has(_current[\"(usages)\"],labelName)){var usage=_current[\"(usages)\"][labelName];usage[\"(onlyUsedSubFunction)\"]?_latedefWarning(type,labelName,token):warning(\"E056\",token,labelName,type)}},validateParams:function(){if(\"global\"!==_currentFunctBody[\"(type)\"]){var isStrict=state.isStrict(),currentFunctParamScope=_currentFunctBody[\"(parent)\"];currentFunctParamScope[\"(params)\"]&&currentFunctParamScope[\"(params)\"].forEach(function(labelName){var label=currentFunctParamScope[\"(labels)\"][labelName];label&&label.duplicated&&(isStrict?warning(\"E011\",label[\"(token)\"],labelName):state.option.shadow!==!0&&warning(\"W004\",label[\"(token)\"],labelName))})}},getUsedOrDefinedGlobals:function(){var list=Object.keys(usedPredefinedAndGlobals);return usedPredefinedAndGlobals.__proto__===marker&&-1===list.indexOf(\"__proto__\")&&list.push(\"__proto__\"),list},getImpliedGlobals:function(){var values=_.values(impliedGlobals),hasProto=!1;return impliedGlobals.__proto__&&(hasProto=values.some(function(value){return\"__proto__\"===value.name}),hasProto||values.push(impliedGlobals.__proto__)),values},getUnuseds:function(){return unuseds},has:function(labelName){return Boolean(_getLabel(labelName))},labeltype:function(labelName){var scopeLabels=_getLabel(labelName);return scopeLabels?scopeLabels[labelName][\"(type)\"]:null},addExported:function(labelName){var globalLabels=_scopeStack[0][\"(labels)\"];if(_.has(declared,labelName))delete declared[labelName];else if(_.has(globalLabels,labelName))globalLabels[labelName][\"(unused)\"]=!1;else{for(var i=1;_scopeStack.length>i;i++){var scope=_scopeStack[i];if(scope[\"(type)\"])break;if(_.has(scope[\"(labels)\"],labelName)&&!scope[\"(labels)\"][labelName][\"(blockscoped)\"])return scope[\"(labels)\"][labelName][\"(unused)\"]=!1,void 0}exported[labelName]=!0}},setExported:function(labelName,token){this.block.use(labelName,token)\n},addlabel:function(labelName,opts){var type=opts.type,token=opts.token,isblockscoped=\"let\"===type||\"const\"===type||\"class\"===type,isexported=\"global\"===(isblockscoped?_current:_currentFunctBody)[\"(type)\"]&&_.has(exported,labelName);if(_checkOuterShadow(labelName,token,type),isblockscoped){var declaredInCurrentScope=_current[\"(labels)\"][labelName];if(declaredInCurrentScope||_current!==_currentFunctBody||\"global\"===_current[\"(type)\"]||(declaredInCurrentScope=!!_currentFunctBody[\"(parent)\"][\"(labels)\"][labelName]),!declaredInCurrentScope&&_current[\"(usages)\"][labelName]){var usage=_current[\"(usages)\"][labelName];usage[\"(onlyUsedSubFunction)\"]?_latedefWarning(type,labelName,token):warning(\"E056\",token,labelName,type)}declaredInCurrentScope?warning(\"E011\",token,labelName):\"outer\"===state.option.shadow&&scopeManagerInst.funct.has(labelName)&&warning(\"W004\",token,labelName),scopeManagerInst.block.add(labelName,type,token,!isexported)}else{var declaredInCurrentFunctionScope=scopeManagerInst.funct.has(labelName);!declaredInCurrentFunctionScope&&usedSoFarInCurrentFunction(labelName)&&_latedefWarning(type,labelName,token),scopeManagerInst.funct.has(labelName,{onlyBlockscoped:!0})?warning(\"E011\",token,labelName):state.option.shadow!==!0&&declaredInCurrentFunctionScope&&\"__proto__\"!==labelName&&\"global\"!==_currentFunctBody[\"(type)\"]&&warning(\"W004\",token,labelName),scopeManagerInst.funct.add(labelName,type,token,!isexported),\"global\"===_currentFunctBody[\"(type)\"]&&(usedPredefinedAndGlobals[labelName]=marker)}},funct:{labeltype:function(labelName,options){for(var onlyBlockscoped=options&&options.onlyBlockscoped,excludeParams=options&&options.excludeParams,currentScopeIndex=_scopeStack.length-(options&&options.excludeCurrent?2:1),i=currentScopeIndex;i>=0;i--){var current=_scopeStack[i];if(current[\"(labels)\"][labelName]&&(!onlyBlockscoped||current[\"(labels)\"][labelName][\"(blockscoped)\"]))return current[\"(labels)\"][labelName][\"(type)\"];var scopeCheck=excludeParams?_scopeStack[i-1]:current;if(scopeCheck&&\"functionparams\"===scopeCheck[\"(type)\"])return null}return null},hasBreakLabel:function(labelName){for(var i=_scopeStack.length-1;i>=0;i--){var current=_scopeStack[i];if(current[\"(breakLabels)\"][labelName])return!0;if(\"functionparams\"===current[\"(type)\"])return!1}return!1},has:function(labelName,options){return Boolean(this.labeltype(labelName,options))},add:function(labelName,type,tok,unused){_current[\"(labels)\"][labelName]={\"(type)\":type,\"(token)\":tok,\"(blockscoped)\":!1,\"(function)\":_currentFunctBody,\"(unused)\":unused}}},block:{isGlobal:function(){return\"global\"===_current[\"(type)\"]},use:function(labelName,token){var paramScope=_currentFunctBody[\"(parent)\"];paramScope&&paramScope[\"(labels)\"][labelName]&&\"param\"===paramScope[\"(labels)\"][labelName][\"(type)\"]&&(scopeManagerInst.funct.has(labelName,{excludeParams:!0,onlyBlockscoped:!0})||(paramScope[\"(labels)\"][labelName][\"(unused)\"]=!1)),token&&(state.ignored.W117||state.option.undef===!1)&&(token.ignoreUndef=!0),_setupUsages(labelName),token&&(token[\"(function)\"]=_currentFunctBody,_current[\"(usages)\"][labelName][\"(tokens)\"].push(token))},reassign:function(labelName,token){this.modify(labelName,token),_current[\"(usages)\"][labelName][\"(reassigned)\"].push(token)},modify:function(labelName,token){_setupUsages(labelName),_current[\"(usages)\"][labelName][\"(modified)\"].push(token)},add:function(labelName,type,tok,unused){_current[\"(labels)\"][labelName]={\"(type)\":type,\"(token)\":tok,\"(blockscoped)\":!0,\"(unused)\":unused}},addBreakLabel:function(labelName,opts){var token=opts.token;scopeManagerInst.funct.hasBreakLabel(labelName)?warning(\"E011\",token,labelName):\"outer\"===state.option.shadow&&(scopeManagerInst.funct.has(labelName)?warning(\"W004\",token,labelName):_checkOuterShadow(labelName,token)),_current[\"(breakLabels)\"][labelName]=token}}};return scopeManagerInst};module.exports=scopeManager},{\"../lodash\":\"/node_modules/jshint/lodash.js\",events:\"/node_modules/browserify/node_modules/events/events.js\"}],\"/node_modules/jshint/src/state.js\":[function(_dereq_,module,exports){\"use strict\";var NameStack=_dereq_(\"./name-stack.js\"),state={syntax:{},isStrict:function(){return this.directive[\"use strict\"]||this.inClassBody||this.option.module||\"implied\"===this.option.strict},inMoz:function(){return this.option.moz},inES6:function(){return this.option.moz||this.option.esversion>=6},inES5:function(strict){return strict?!(this.option.esversion&&5!==this.option.esversion||this.option.moz):!this.option.esversion||this.option.esversion>=5||this.option.moz},reset:function(){this.tokens={prev:null,next:null,curr:null},this.option={},this.funct=null,this.ignored={},this.directive={},this.jsonMode=!1,this.jsonWarnings=[],this.lines=[],this.tab=\"\",this.cache={},this.ignoredLines={},this.forinifcheckneeded=!1,this.nameStack=new NameStack,this.inClassBody=!1}};exports.state=state},{\"./name-stack.js\":\"/node_modules/jshint/src/name-stack.js\"}],\"/node_modules/jshint/src/style.js\":[function(_dereq_,module,exports){\"use strict\";exports.register=function(linter){linter.on(\"Identifier\",function(data){linter.getOption(\"proto\")||\"__proto__\"===data.name&&linter.warn(\"W103\",{line:data.line,\"char\":data.char,data:[data.name,\"6\"]})}),linter.on(\"Identifier\",function(data){linter.getOption(\"iterator\")||\"__iterator__\"===data.name&&linter.warn(\"W103\",{line:data.line,\"char\":data.char,data:[data.name]})}),linter.on(\"Identifier\",function(data){linter.getOption(\"camelcase\")&&data.name.replace(/^_+|_+$/g,\"\").indexOf(\"_\")>-1&&!data.name.match(/^[A-Z0-9_]*$/)&&linter.warn(\"W106\",{line:data.line,\"char\":data.from,data:[data.name]})}),linter.on(\"String\",function(data){var code,quotmark=linter.getOption(\"quotmark\");quotmark&&(\"single\"===quotmark&&\"'\"!==data.quote&&(code=\"W109\"),\"double\"===quotmark&&'\"'!==data.quote&&(code=\"W108\"),quotmark===!0&&(linter.getCache(\"quotmark\")||linter.setCache(\"quotmark\",data.quote),linter.getCache(\"quotmark\")!==data.quote&&(code=\"W110\")),code&&linter.warn(code,{line:data.line,\"char\":data.char}))}),linter.on(\"Number\",function(data){\".\"===data.value.charAt(0)&&linter.warn(\"W008\",{line:data.line,\"char\":data.char,data:[data.value]}),\".\"===data.value.substr(data.value.length-1)&&linter.warn(\"W047\",{line:data.line,\"char\":data.char,data:[data.value]}),/^00+/.test(data.value)&&linter.warn(\"W046\",{line:data.line,\"char\":data.char,data:[data.value]})}),linter.on(\"String\",function(data){var re=/^(?:javascript|jscript|ecmascript|vbscript|livescript)\\s*:/i;linter.getOption(\"scripturl\")||re.test(data.value)&&linter.warn(\"W107\",{line:data.line,\"char\":data.char})})}},{}],\"/node_modules/jshint/src/vars.js\":[function(_dereq_,module,exports){\"use strict\";exports.reservedVars={arguments:!1,NaN:!1},exports.ecmaIdentifiers={3:{Array:!1,Boolean:!1,Date:!1,decodeURI:!1,decodeURIComponent:!1,encodeURI:!1,encodeURIComponent:!1,Error:!1,eval:!1,EvalError:!1,Function:!1,hasOwnProperty:!1,isFinite:!1,isNaN:!1,Math:!1,Number:!1,Object:!1,parseInt:!1,parseFloat:!1,RangeError:!1,ReferenceError:!1,RegExp:!1,String:!1,SyntaxError:!1,TypeError:!1,URIError:!1},5:{JSON:!1},6:{Map:!1,Promise:!1,Proxy:!1,Reflect:!1,Set:!1,Symbol:!1,WeakMap:!1,WeakSet:!1}},exports.browser={Audio:!1,Blob:!1,addEventListener:!1,applicationCache:!1,atob:!1,blur:!1,btoa:!1,cancelAnimationFrame:!1,CanvasGradient:!1,CanvasPattern:!1,CanvasRenderingContext2D:!1,CSS:!1,clearInterval:!1,clearTimeout:!1,close:!1,closed:!1,Comment:!1,CustomEvent:!1,DOMParser:!1,defaultStatus:!1,Document:!1,document:!1,DocumentFragment:!1,Element:!1,ElementTimeControl:!1,Event:!1,event:!1,fetch:!1,FileReader:!1,FormData:!1,focus:!1,frames:!1,getComputedStyle:!1,HTMLElement:!1,HTMLAnchorElement:!1,HTMLBaseElement:!1,HTMLBlockquoteElement:!1,HTMLBodyElement:!1,HTMLBRElement:!1,HTMLButtonElement:!1,HTMLCanvasElement:!1,HTMLCollection:!1,HTMLDirectoryElement:!1,HTMLDivElement:!1,HTMLDListElement:!1,HTMLFieldSetElement:!1,HTMLFontElement:!1,HTMLFormElement:!1,HTMLFrameElement:!1,HTMLFrameSetElement:!1,HTMLHeadElement:!1,HTMLHeadingElement:!1,HTMLHRElement:!1,HTMLHtmlElement:!1,HTMLIFrameElement:!1,HTMLImageElement:!1,HTMLInputElement:!1,HTMLIsIndexElement:!1,HTMLLabelElement:!1,HTMLLayerElement:!1,HTMLLegendElement:!1,HTMLLIElement:!1,HTMLLinkElement:!1,HTMLMapElement:!1,HTMLMenuElement:!1,HTMLMetaElement:!1,HTMLModElement:!1,HTMLObjectElement:!1,HTMLOListElement:!1,HTMLOptGroupElement:!1,HTMLOptionElement:!1,HTMLParagraphElement:!1,HTMLParamElement:!1,HTMLPreElement:!1,HTMLQuoteElement:!1,HTMLScriptElement:!1,HTMLSelectElement:!1,HTMLStyleElement:!1,HTMLTableCaptionElement:!1,HTMLTableCellElement:!1,HTMLTableColElement:!1,HTMLTableElement:!1,HTMLTableRowElement:!1,HTMLTableSectionElement:!1,HTMLTemplateElement:!1,HTMLTextAreaElement:!1,HTMLTitleElement:!1,HTMLUListElement:!1,HTMLVideoElement:!1,history:!1,Image:!1,Intl:!1,length:!1,localStorage:!1,location:!1,matchMedia:!1,MessageChannel:!1,MessageEvent:!1,MessagePort:!1,MouseEvent:!1,moveBy:!1,moveTo:!1,MutationObserver:!1,name:!1,Node:!1,NodeFilter:!1,NodeList:!1,Notification:!1,navigator:!1,onbeforeunload:!0,onblur:!0,onerror:!0,onfocus:!0,onload:!0,onresize:!0,onunload:!0,open:!1,openDatabase:!1,opener:!1,Option:!1,parent:!1,performance:!1,print:!1,Range:!1,requestAnimationFrame:!1,removeEventListener:!1,resizeBy:!1,resizeTo:!1,screen:!1,scroll:!1,scrollBy:!1,scrollTo:!1,sessionStorage:!1,setInterval:!1,setTimeout:!1,SharedWorker:!1,status:!1,SVGAElement:!1,SVGAltGlyphDefElement:!1,SVGAltGlyphElement:!1,SVGAltGlyphItemElement:!1,SVGAngle:!1,SVGAnimateColorElement:!1,SVGAnimateElement:!1,SVGAnimateMotionElement:!1,SVGAnimateTransformElement:!1,SVGAnimatedAngle:!1,SVGAnimatedBoolean:!1,SVGAnimatedEnumeration:!1,SVGAnimatedInteger:!1,SVGAnimatedLength:!1,SVGAnimatedLengthList:!1,SVGAnimatedNumber:!1,SVGAnimatedNumberList:!1,SVGAnimatedPathData:!1,SVGAnimatedPoints:!1,SVGAnimatedPreserveAspectRatio:!1,SVGAnimatedRect:!1,SVGAnimatedString:!1,SVGAnimatedTransformList:!1,SVGAnimationElement:!1,SVGCSSRule:!1,SVGCircleElement:!1,SVGClipPathElement:!1,SVGColor:!1,SVGColorProfileElement:!1,SVGColorProfileRule:!1,SVGComponentTransferFunctionElement:!1,SVGCursorElement:!1,SVGDefsElement:!1,SVGDescElement:!1,SVGDocument:!1,SVGElement:!1,SVGElementInstance:!1,SVGElementInstanceList:!1,SVGEllipseElement:!1,SVGExternalResourcesRequired:!1,SVGFEBlendElement:!1,SVGFEColorMatrixElement:!1,SVGFEComponentTransferElement:!1,SVGFECompositeElement:!1,SVGFEConvolveMatrixElement:!1,SVGFEDiffuseLightingElement:!1,SVGFEDisplacementMapElement:!1,SVGFEDistantLightElement:!1,SVGFEFloodElement:!1,SVGFEFuncAElement:!1,SVGFEFuncBElement:!1,SVGFEFuncGElement:!1,SVGFEFuncRElement:!1,SVGFEGaussianBlurElement:!1,SVGFEImageElement:!1,SVGFEMergeElement:!1,SVGFEMergeNodeElement:!1,SVGFEMorphologyElement:!1,SVGFEOffsetElement:!1,SVGFEPointLightElement:!1,SVGFESpecularLightingElement:!1,SVGFESpotLightElement:!1,SVGFETileElement:!1,SVGFETurbulenceElement:!1,SVGFilterElement:!1,SVGFilterPrimitiveStandardAttributes:!1,SVGFitToViewBox:!1,SVGFontElement:!1,SVGFontFaceElement:!1,SVGFontFaceFormatElement:!1,SVGFontFaceNameElement:!1,SVGFontFaceSrcElement:!1,SVGFontFaceUriElement:!1,SVGForeignObjectElement:!1,SVGGElement:!1,SVGGlyphElement:!1,SVGGlyphRefElement:!1,SVGGradientElement:!1,SVGHKernElement:!1,SVGICCColor:!1,SVGImageElement:!1,SVGLangSpace:!1,SVGLength:!1,SVGLengthList:!1,SVGLineElement:!1,SVGLinearGradientElement:!1,SVGLocatable:!1,SVGMPathElement:!1,SVGMarkerElement:!1,SVGMaskElement:!1,SVGMatrix:!1,SVGMetadataElement:!1,SVGMissingGlyphElement:!1,SVGNumber:!1,SVGNumberList:!1,SVGPaint:!1,SVGPathElement:!1,SVGPathSeg:!1,SVGPathSegArcAbs:!1,SVGPathSegArcRel:!1,SVGPathSegClosePath:!1,SVGPathSegCurvetoCubicAbs:!1,SVGPathSegCurvetoCubicRel:!1,SVGPathSegCurvetoCubicSmoothAbs:!1,SVGPathSegCurvetoCubicSmoothRel:!1,SVGPathSegCurvetoQuadraticAbs:!1,SVGPathSegCurvetoQuadraticRel:!1,SVGPathSegCurvetoQuadraticSmoothAbs:!1,SVGPathSegCurvetoQuadraticSmoothRel:!1,SVGPathSegLinetoAbs:!1,SVGPathSegLinetoHorizontalAbs:!1,SVGPathSegLinetoHorizontalRel:!1,SVGPathSegLinetoRel:!1,SVGPathSegLinetoVerticalAbs:!1,SVGPathSegLinetoVerticalRel:!1,SVGPathSegList:!1,SVGPathSegMovetoAbs:!1,SVGPathSegMovetoRel:!1,SVGPatternElement:!1,SVGPoint:!1,SVGPointList:!1,SVGPolygonElement:!1,SVGPolylineElement:!1,SVGPreserveAspectRatio:!1,SVGRadialGradientElement:!1,SVGRect:!1,SVGRectElement:!1,SVGRenderingIntent:!1,SVGSVGElement:!1,SVGScriptElement:!1,SVGSetElement:!1,SVGStopElement:!1,SVGStringList:!1,SVGStylable:!1,SVGStyleElement:!1,SVGSwitchElement:!1,SVGSymbolElement:!1,SVGTRefElement:!1,SVGTSpanElement:!1,SVGTests:!1,SVGTextContentElement:!1,SVGTextElement:!1,SVGTextPathElement:!1,SVGTextPositioningElement:!1,SVGTitleElement:!1,SVGTransform:!1,SVGTransformList:!1,SVGTransformable:!1,SVGURIReference:!1,SVGUnitTypes:!1,SVGUseElement:!1,SVGVKernElement:!1,SVGViewElement:!1,SVGViewSpec:!1,SVGZoomAndPan:!1,Text:!1,TextDecoder:!1,TextEncoder:!1,TimeEvent:!1,top:!1,URL:!1,WebGLActiveInfo:!1,WebGLBuffer:!1,WebGLContextEvent:!1,WebGLFramebuffer:!1,WebGLProgram:!1,WebGLRenderbuffer:!1,WebGLRenderingContext:!1,WebGLShader:!1,WebGLShaderPrecisionFormat:!1,WebGLTexture:!1,WebGLUniformLocation:!1,WebSocket:!1,window:!1,Window:!1,Worker:!1,XDomainRequest:!1,XMLHttpRequest:!1,XMLSerializer:!1,XPathEvaluator:!1,XPathException:!1,XPathExpression:!1,XPathNamespace:!1,XPathNSResolver:!1,XPathResult:!1},exports.devel={alert:!1,confirm:!1,console:!1,Debug:!1,opera:!1,prompt:!1},exports.worker={importScripts:!0,postMessage:!0,self:!0,FileReaderSync:!0},exports.nonstandard={escape:!1,unescape:!1},exports.couch={require:!1,respond:!1,getRow:!1,emit:!1,send:!1,start:!1,sum:!1,log:!1,exports:!1,module:!1,provides:!1},exports.node={__filename:!1,__dirname:!1,GLOBAL:!1,global:!1,module:!1,acequire:!1,Buffer:!0,console:!0,exports:!0,process:!0,setTimeout:!0,clearTimeout:!0,setInterval:!0,clearInterval:!0,setImmediate:!0,clearImmediate:!0},exports.browserify={__filename:!1,__dirname:!1,global:!1,module:!1,acequire:!1,Buffer:!0,exports:!0,process:!0},exports.phantom={phantom:!0,acequire:!0,WebPage:!0,console:!0,exports:!0},exports.qunit={asyncTest:!1,deepEqual:!1,equal:!1,expect:!1,module:!1,notDeepEqual:!1,notEqual:!1,notPropEqual:!1,notStrictEqual:!1,ok:!1,propEqual:!1,QUnit:!1,raises:!1,start:!1,stop:!1,strictEqual:!1,test:!1,\"throws\":!1},exports.rhino={defineClass:!1,deserialize:!1,gc:!1,help:!1,importClass:!1,importPackage:!1,java:!1,load:!1,loadClass:!1,Packages:!1,print:!1,quit:!1,readFile:!1,readUrl:!1,runCommand:!1,seal:!1,serialize:!1,spawn:!1,sync:!1,toint32:!1,version:!1},exports.shelljs={target:!1,echo:!1,exit:!1,cd:!1,pwd:!1,ls:!1,find:!1,cp:!1,rm:!1,mv:!1,mkdir:!1,test:!1,cat:!1,sed:!1,grep:!1,which:!1,dirs:!1,pushd:!1,popd:!1,env:!1,exec:!1,chmod:!1,config:!1,error:!1,tempdir:!1},exports.typed={ArrayBuffer:!1,ArrayBufferView:!1,DataView:!1,Float32Array:!1,Float64Array:!1,Int16Array:!1,Int32Array:!1,Int8Array:!1,Uint16Array:!1,Uint32Array:!1,Uint8Array:!1,Uint8ClampedArray:!1},exports.wsh={ActiveXObject:!0,Enumerator:!0,GetObject:!0,ScriptEngine:!0,ScriptEngineBuildVersion:!0,ScriptEngineMajorVersion:!0,ScriptEngineMinorVersion:!0,VBArray:!0,WSH:!0,WScript:!0,XDomainRequest:!0},exports.dojo={dojo:!1,dijit:!1,dojox:!1,define:!1,require:!1},exports.jquery={$:!1,jQuery:!1},exports.mootools={$:!1,$$:!1,Asset:!1,Browser:!1,Chain:!1,Class:!1,Color:!1,Cookie:!1,Core:!1,Document:!1,DomReady:!1,DOMEvent:!1,DOMReady:!1,Drag:!1,Element:!1,Elements:!1,Event:!1,Events:!1,Fx:!1,Group:!1,Hash:!1,HtmlTable:!1,IFrame:!1,IframeShim:!1,InputValidator:!1,instanceOf:!1,Keyboard:!1,Locale:!1,Mask:!1,MooTools:!1,Native:!1,Options:!1,OverText:!1,Request:!1,Scroller:!1,Slick:!1,Slider:!1,Sortables:!1,Spinner:!1,Swiff:!1,Tips:!1,Type:!1,typeOf:!1,URI:!1,Window:!1},exports.prototypejs={$:!1,$$:!1,$A:!1,$F:!1,$H:!1,$R:!1,$break:!1,$continue:!1,$w:!1,Abstract:!1,Ajax:!1,Class:!1,Enumerable:!1,Element:!1,Event:!1,Field:!1,Form:!1,Hash:!1,Insertion:!1,ObjectRange:!1,PeriodicalExecuter:!1,Position:!1,Prototype:!1,Selector:!1,Template:!1,Toggle:!1,Try:!1,Autocompleter:!1,Builder:!1,Control:!1,Draggable:!1,Draggables:!1,Droppables:!1,Effect:!1,Sortable:!1,SortableObserver:!1,Sound:!1,Scriptaculous:!1},exports.yui={YUI:!1,Y:!1,YUI_config:!1},exports.mocha={mocha:!1,describe:!1,xdescribe:!1,it:!1,xit:!1,context:!1,xcontext:!1,before:!1,after:!1,beforeEach:!1,afterEach:!1,suite:!1,test:!1,setup:!1,teardown:!1,suiteSetup:!1,suiteTeardown:!1},exports.jasmine={jasmine:!1,describe:!1,xdescribe:!1,it:!1,xit:!1,beforeEach:!1,afterEach:!1,setFixtures:!1,loadFixtures:!1,spyOn:!1,expect:!1,runs:!1,waitsFor:!1,waits:!1,beforeAll:!1,afterAll:!1,fail:!1,fdescribe:!1,fit:!1,pending:!1}},{}]},{},[\"/node_modules/jshint/src/jshint.js\"])}),ace.define(\"ace/mode/javascript_worker\",[\"require\",\"exports\",\"module\",\"ace/lib/oop\",\"ace/worker/mirror\",\"ace/mode/javascript/jshint\"],function(acequire,exports,module){\"use strict\";function startRegex(arr){return RegExp(\"^(\"+arr.join(\"|\")+\")\")}var oop=acequire(\"../lib/oop\"),Mirror=acequire(\"../worker/mirror\").Mirror,lint=acequire(\"./javascript/jshint\").JSHINT,disabledWarningsRe=startRegex([\"Bad for in variable '(.+)'.\",'Missing \"use strict\"']),errorsRe=startRegex([\"Unexpected\",\"Expected \",\"Confusing (plus|minus)\",\"\\\\{a\\\\} unterminated regular expression\",\"Unclosed \",\"Unmatched \",\"Unbegun comment\",\"Bad invocation\",\"Missing space after\",\"Missing operator at\"]),infoRe=startRegex([\"Expected an assignment\",\"Bad escapement of EOL\",\"Unexpected comma\",\"Unexpected space\",\"Missing radix parameter.\",\"A leading decimal point can\",\"\\\\['{a}'\\\\] is better written in dot notation.\",\"'{a}' used out of scope\"]),JavaScriptWorker=exports.JavaScriptWorker=function(sender){Mirror.call(this,sender),this.setTimeout(500),this.setOptions()};oop.inherits(JavaScriptWorker,Mirror),function(){this.setOptions=function(options){this.options=options||{esnext:!0,moz:!0,devel:!0,browser:!0,node:!0,laxcomma:!0,laxbreak:!0,lastsemic:!0,onevar:!1,passfail:!1,maxerr:100,expr:!0,multistr:!0,globalstrict:!0},this.doc.getValue()&&this.deferredUpdate.schedule(100)},this.changeOptions=function(newOptions){oop.mixin(this.options,newOptions),this.doc.getValue()&&this.deferredUpdate.schedule(100)},this.isValidJS=function(str){try{eval(\"throw 0;\"+str)}catch(e){if(0===e)return!0}return!1},this.onUpdate=function(){var value=this.doc.getValue();if(value=value.replace(/^#!.*\\n/,\"\\n\"),!value)return this.sender.emit(\"annotate\",[]);var errors=[],maxErrorLevel=this.isValidJS(value)?\"warning\":\"error\";lint(value,this.options,this.options.globals);for(var results=lint.errors,errorAdded=!1,i=0;results.length>i;i++){var error=results[i];if(error){var raw=error.raw,type=\"warning\";if(\"Missing semicolon.\"==raw){var str=error.evidence.substr(error.character);str=str.charAt(str.search(/\\S/)),\"error\"==maxErrorLevel&&str&&/[\\w\\d{(['\"]/.test(str)?(error.reason='Missing \";\" before statement',type=\"error\"):type=\"info\"}else{if(disabledWarningsRe.test(raw))continue;infoRe.test(raw)?type=\"info\":errorsRe.test(raw)?(errorAdded=!0,type=maxErrorLevel):\"'{a}' is not defined.\"==raw?type=\"warning\":\"'{a}' is defined but never used.\"==raw&&(type=\"info\")}errors.push({row:error.line-1,column:error.character-1,text:error.reason,type:type,raw:raw})}}this.sender.emit(\"annotate\",errors)}}.call(JavaScriptWorker.prototype)}),ace.define(\"ace/lib/es5-shim\",[\"require\",\"exports\",\"module\"],function(){function Empty(){}function doesDefinePropertyWork(object){try{return Object.defineProperty(object,\"sentinel\",{}),\"sentinel\"in object}catch(exception){}}function toInteger(n){return n=+n,n!==n?n=0:0!==n&&n!==1/0&&n!==-(1/0)&&(n=(n>0||-1)*Math.floor(Math.abs(n))),n}Function.prototype.bind||(Function.prototype.bind=function(that){var target=this;if(\"function\"!=typeof target)throw new TypeError(\"Function.prototype.bind called on incompatible \"+target);var args=slice.call(arguments,1),bound=function(){if(this instanceof bound){var result=target.apply(this,args.concat(slice.call(arguments)));return Object(result)===result?result:this}return target.apply(that,args.concat(slice.call(arguments)))};return target.prototype&&(Empty.prototype=target.prototype,bound.prototype=new Empty,Empty.prototype=null),bound});var defineGetter,defineSetter,lookupGetter,lookupSetter,supportsAccessors,call=Function.prototype.call,prototypeOfArray=Array.prototype,prototypeOfObject=Object.prototype,slice=prototypeOfArray.slice,_toString=call.bind(prototypeOfObject.toString),owns=call.bind(prototypeOfObject.hasOwnProperty);if((supportsAccessors=owns(prototypeOfObject,\"__defineGetter__\"))&&(defineGetter=call.bind(prototypeOfObject.__defineGetter__),defineSetter=call.bind(prototypeOfObject.__defineSetter__),lookupGetter=call.bind(prototypeOfObject.__lookupGetter__),lookupSetter=call.bind(prototypeOfObject.__lookupSetter__)),2!=[1,2].splice(0).length)if(function(){function makeArray(l){var a=Array(l+2);return a[0]=a[1]=0,a}var lengthBefore,array=[];return array.splice.apply(array,makeArray(20)),array.splice.apply(array,makeArray(26)),lengthBefore=array.length,array.splice(5,0,\"XXX\"),lengthBefore+1==array.length,lengthBefore+1==array.length?!0:void 0}()){var array_splice=Array.prototype.splice;Array.prototype.splice=function(start,deleteCount){return arguments.length?array_splice.apply(this,[void 0===start?0:start,void 0===deleteCount?this.length-start:deleteCount].concat(slice.call(arguments,2))):[]}}else Array.prototype.splice=function(pos,removeCount){var length=this.length;pos>0?pos>length&&(pos=length):void 0==pos?pos=0:0>pos&&(pos=Math.max(length+pos,0)),length>pos+removeCount||(removeCount=length-pos);var removed=this.slice(pos,pos+removeCount),insert=slice.call(arguments,2),add=insert.length;if(pos===length)add&&this.push.apply(this,insert);else{var remove=Math.min(removeCount,length-pos),tailOldPos=pos+remove,tailNewPos=tailOldPos+add-remove,tailCount=length-tailOldPos,lengthAfterRemove=length-remove;if(tailOldPos>tailNewPos)for(var i=0;tailCount>i;++i)this[tailNewPos+i]=this[tailOldPos+i];else if(tailNewPos>tailOldPos)for(i=tailCount;i--;)this[tailNewPos+i]=this[tailOldPos+i];if(add&&pos===lengthAfterRemove)this.length=lengthAfterRemove,this.push.apply(this,insert);else for(this.length=lengthAfterRemove+add,i=0;add>i;++i)this[pos+i]=insert[i]}return removed};Array.isArray||(Array.isArray=function(obj){return\"[object Array]\"==_toString(obj)});var boxedString=Object(\"a\"),splitString=\"a\"!=boxedString[0]||!(0 in boxedString);if(Array.prototype.forEach||(Array.prototype.forEach=function(fun){var object=toObject(this),self=splitString&&\"[object String]\"==_toString(this)?this.split(\"\"):object,thisp=arguments[1],i=-1,length=self.length>>>0;if(\"[object Function]\"!=_toString(fun))throw new TypeError;for(;length>++i;)i in self&&fun.call(thisp,self[i],i,object)}),Array.prototype.map||(Array.prototype.map=function(fun){var object=toObject(this),self=splitString&&\"[object String]\"==_toString(this)?this.split(\"\"):object,length=self.length>>>0,result=Array(length),thisp=arguments[1];if(\"[object Function]\"!=_toString(fun))throw new TypeError(fun+\" is not a function\");for(var i=0;length>i;i++)i in self&&(result[i]=fun.call(thisp,self[i],i,object));return result}),Array.prototype.filter||(Array.prototype.filter=function(fun){var value,object=toObject(this),self=splitString&&\"[object String]\"==_toString(this)?this.split(\"\"):object,length=self.length>>>0,result=[],thisp=arguments[1];if(\"[object Function]\"!=_toString(fun))throw new TypeError(fun+\" is not a function\");for(var i=0;length>i;i++)i in self&&(value=self[i],fun.call(thisp,value,i,object)&&result.push(value));return result}),Array.prototype.every||(Array.prototype.every=function(fun){var object=toObject(this),self=splitString&&\"[object String]\"==_toString(this)?this.split(\"\"):object,length=self.length>>>0,thisp=arguments[1];if(\"[object Function]\"!=_toString(fun))throw new TypeError(fun+\" is not a function\");for(var i=0;length>i;i++)if(i in self&&!fun.call(thisp,self[i],i,object))return!1;return!0}),Array.prototype.some||(Array.prototype.some=function(fun){var object=toObject(this),self=splitString&&\"[object String]\"==_toString(this)?this.split(\"\"):object,length=self.length>>>0,thisp=arguments[1];if(\"[object Function]\"!=_toString(fun))throw new TypeError(fun+\" is not a function\");for(var i=0;length>i;i++)if(i in self&&fun.call(thisp,self[i],i,object))return!0;return!1}),Array.prototype.reduce||(Array.prototype.reduce=function(fun){var object=toObject(this),self=splitString&&\"[object String]\"==_toString(this)?this.split(\"\"):object,length=self.length>>>0;if(\"[object Function]\"!=_toString(fun))throw new TypeError(fun+\" is not a function\");if(!length&&1==arguments.length)throw new TypeError(\"reduce of empty array with no initial value\");var result,i=0;if(arguments.length>=2)result=arguments[1];else for(;;){if(i in self){result=self[i++];break}if(++i>=length)throw new TypeError(\"reduce of empty array with no initial value\")}for(;length>i;i++)i in self&&(result=fun.call(void 0,result,self[i],i,object));return result}),Array.prototype.reduceRight||(Array.prototype.reduceRight=function(fun){var object=toObject(this),self=splitString&&\"[object String]\"==_toString(this)?this.split(\"\"):object,length=self.length>>>0;if(\"[object Function]\"!=_toString(fun))throw new TypeError(fun+\" is not a function\");if(!length&&1==arguments.length)throw new TypeError(\"reduceRight of empty array with no initial value\");var result,i=length-1;if(arguments.length>=2)result=arguments[1];else for(;;){if(i in self){result=self[i--];break}if(0>--i)throw new TypeError(\"reduceRight of empty array with no initial value\")}do i in this&&(result=fun.call(void 0,result,self[i],i,object));while(i--);return result}),Array.prototype.indexOf&&-1==[0,1].indexOf(1,2)||(Array.prototype.indexOf=function(sought){var self=splitString&&\"[object String]\"==_toString(this)?this.split(\"\"):toObject(this),length=self.length>>>0;if(!length)return-1;var i=0;for(arguments.length>1&&(i=toInteger(arguments[1])),i=i>=0?i:Math.max(0,length+i);length>i;i++)if(i in self&&self[i]===sought)return i;return-1}),Array.prototype.lastIndexOf&&-1==[0,1].lastIndexOf(0,-3)||(Array.prototype.lastIndexOf=function(sought){var self=splitString&&\"[object String]\"==_toString(this)?this.split(\"\"):toObject(this),length=self.length>>>0;if(!length)return-1;var i=length-1;for(arguments.length>1&&(i=Math.min(i,toInteger(arguments[1]))),i=i>=0?i:length-Math.abs(i);i>=0;i--)if(i in self&&sought===self[i])return i;return-1}),Object.getPrototypeOf||(Object.getPrototypeOf=function(object){return object.__proto__||(object.constructor?object.constructor.prototype:prototypeOfObject)}),!Object.getOwnPropertyDescriptor){var ERR_NON_OBJECT=\"Object.getOwnPropertyDescriptor called on a non-object: \";Object.getOwnPropertyDescriptor=function(object,property){if(\"object\"!=typeof object&&\"function\"!=typeof object||null===object)throw new TypeError(ERR_NON_OBJECT+object);if(owns(object,property)){var descriptor,getter,setter;if(descriptor={enumerable:!0,configurable:!0},supportsAccessors){var prototype=object.__proto__;object.__proto__=prototypeOfObject;var getter=lookupGetter(object,property),setter=lookupSetter(object,property);if(object.__proto__=prototype,getter||setter)return getter&&(descriptor.get=getter),setter&&(descriptor.set=setter),descriptor}return descriptor.value=object[property],descriptor}}}if(Object.getOwnPropertyNames||(Object.getOwnPropertyNames=function(object){return Object.keys(object)}),!Object.create){var createEmpty;createEmpty=null===Object.prototype.__proto__?function(){return{__proto__:null}}:function(){var empty={};for(var i in empty)empty[i]=null;return empty.constructor=empty.hasOwnProperty=empty.propertyIsEnumerable=empty.isPrototypeOf=empty.toLocaleString=empty.toString=empty.valueOf=empty.__proto__=null,empty},Object.create=function(prototype,properties){var object;if(null===prototype)object=createEmpty();else{if(\"object\"!=typeof prototype)throw new TypeError(\"typeof prototype[\"+typeof prototype+\"] != 'object'\");var Type=function(){};Type.prototype=prototype,object=new Type,object.__proto__=prototype}return void 0!==properties&&Object.defineProperties(object,properties),object}}if(Object.defineProperty){var definePropertyWorksOnObject=doesDefinePropertyWork({}),definePropertyWorksOnDom=\"undefined\"==typeof document||doesDefinePropertyWork(document.createElement(\"div\"));if(!definePropertyWorksOnObject||!definePropertyWorksOnDom)var definePropertyFallback=Object.defineProperty}if(!Object.defineProperty||definePropertyFallback){var ERR_NON_OBJECT_DESCRIPTOR=\"Property description must be an object: \",ERR_NON_OBJECT_TARGET=\"Object.defineProperty called on non-object: \",ERR_ACCESSORS_NOT_SUPPORTED=\"getters & setters can not be defined on this javascript engine\";Object.defineProperty=function(object,property,descriptor){if(\"object\"!=typeof object&&\"function\"!=typeof object||null===object)throw new TypeError(ERR_NON_OBJECT_TARGET+object);if(\"object\"!=typeof descriptor&&\"function\"!=typeof descriptor||null===descriptor)throw new TypeError(ERR_NON_OBJECT_DESCRIPTOR+descriptor);if(definePropertyFallback)try{return definePropertyFallback.call(Object,object,property,descriptor)}catch(exception){}if(owns(descriptor,\"value\"))if(supportsAccessors&&(lookupGetter(object,property)||lookupSetter(object,property))){var prototype=object.__proto__;object.__proto__=prototypeOfObject,delete object[property],object[property]=descriptor.value,object.__proto__=prototype}else object[property]=descriptor.value;else{if(!supportsAccessors)throw new TypeError(ERR_ACCESSORS_NOT_SUPPORTED);owns(descriptor,\"get\")&&defineGetter(object,property,descriptor.get),owns(descriptor,\"set\")&&defineSetter(object,property,descriptor.set)}return object}}Object.defineProperties||(Object.defineProperties=function(object,properties){for(var property in properties)owns(properties,property)&&Object.defineProperty(object,property,properties[property]);return object}),Object.seal||(Object.seal=function(object){return object}),Object.freeze||(Object.freeze=function(object){return object});try{Object.freeze(function(){})}catch(exception){Object.freeze=function(freezeObject){return function(object){return\"function\"==typeof object?object:freezeObject(object)}}(Object.freeze)}if(Object.preventExtensions||(Object.preventExtensions=function(object){return object}),Object.isSealed||(Object.isSealed=function(){return!1}),Object.isFrozen||(Object.isFrozen=function(){return!1}),Object.isExtensible||(Object.isExtensible=function(object){if(Object(object)===object)throw new TypeError;for(var name=\"\";owns(object,name);)name+=\"?\";object[name]=!0;var returnValue=owns(object,name);return delete object[name],returnValue}),!Object.keys){var hasDontEnumBug=!0,dontEnums=[\"toString\",\"toLocaleString\",\"valueOf\",\"hasOwnProperty\",\"isPrototypeOf\",\"propertyIsEnumerable\",\"constructor\"],dontEnumsLength=dontEnums.length;for(var key in{toString:null})hasDontEnumBug=!1;Object.keys=function(object){if(\"object\"!=typeof object&&\"function\"!=typeof object||null===object)throw new TypeError(\"Object.keys called on a non-object\");var keys=[];for(var name in object)owns(object,name)&&keys.push(name);if(hasDontEnumBug)for(var i=0,ii=dontEnumsLength;ii>i;i++){var dontEnum=dontEnums[i];owns(object,dontEnum)&&keys.push(dontEnum)}return keys}}Date.now||(Date.now=function(){return(new Date).getTime()});var ws=\"\t\\n\u000b\\f\\r   ᠎             　\\u2028\\u2029﻿\";if(!String.prototype.trim||ws.trim()){ws=\"[\"+ws+\"]\";var trimBeginRegexp=RegExp(\"^\"+ws+ws+\"*\"),trimEndRegexp=RegExp(ws+ws+\"*$\");String.prototype.trim=function(){return(this+\"\").replace(trimBeginRegexp,\"\").replace(trimEndRegexp,\"\")}}var toObject=function(o){if(null==o)throw new TypeError(\"can't convert \"+o+\" to object\");return Object(o)}});";
-},{}],211:[function(require,module,exports){
+},{}],436:[function(require,module,exports){
 
-},{}],212:[function(require,module,exports){
-arguments[4][211][0].apply(exports,arguments)
-},{"dup":211}],213:[function(require,module,exports){
+},{}],437:[function(require,module,exports){
+arguments[4][436][0].apply(exports,arguments)
+},{"dup":436}],438:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -52535,7 +58702,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":214}],214:[function(require,module,exports){
+},{"buffer":439}],439:[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -52591,6 +58758,24 @@ function typedArraySupport () {
   }
 }
 
+Object.defineProperty(Buffer.prototype, 'parent', {
+  get: function () {
+    if (!(this instanceof Buffer)) {
+      return undefined
+    }
+    return this.buffer
+  }
+})
+
+Object.defineProperty(Buffer.prototype, 'offset', {
+  get: function () {
+    if (!(this instanceof Buffer)) {
+      return undefined
+    }
+    return this.byteOffset
+  }
+})
+
 function createBuffer (length) {
   if (length > K_MAX_LENGTH) {
     throw new RangeError('Invalid typed array length')
@@ -52642,7 +58827,7 @@ function from (value, encodingOrOffset, length) {
     throw new TypeError('"value" argument must not be a number')
   }
 
-  if (isArrayBuffer(value)) {
+  if (isArrayBuffer(value) || (value && isArrayBuffer(value.buffer))) {
     return fromArrayBuffer(value, encodingOrOffset, length)
   }
 
@@ -52672,7 +58857,7 @@ Buffer.__proto__ = Uint8Array
 
 function assertSize (size) {
   if (typeof size !== 'number') {
-    throw new TypeError('"size" argument must be a number')
+    throw new TypeError('"size" argument must be of type number')
   } else if (size < 0) {
     throw new RangeError('"size" argument must not be negative')
   }
@@ -52726,7 +58911,7 @@ function fromString (string, encoding) {
   }
 
   if (!Buffer.isEncoding(encoding)) {
-    throw new TypeError('"encoding" must be a valid string encoding')
+    throw new TypeError('Unknown encoding: ' + encoding)
   }
 
   var length = byteLength(string, encoding) | 0
@@ -52755,11 +58940,11 @@ function fromArrayLike (array) {
 
 function fromArrayBuffer (array, byteOffset, length) {
   if (byteOffset < 0 || array.byteLength < byteOffset) {
-    throw new RangeError('\'offset\' is out of bounds')
+    throw new RangeError('"offset" is outside of buffer bounds')
   }
 
   if (array.byteLength < byteOffset + (length || 0)) {
-    throw new RangeError('\'length\' is out of bounds')
+    throw new RangeError('"length" is outside of buffer bounds')
   }
 
   var buf
@@ -52790,7 +58975,7 @@ function fromObject (obj) {
   }
 
   if (obj) {
-    if (isArrayBufferView(obj) || 'length' in obj) {
+    if (ArrayBuffer.isView(obj) || 'length' in obj) {
       if (typeof obj.length !== 'number' || numberIsNaN(obj.length)) {
         return createBuffer(0)
       }
@@ -52802,7 +58987,7 @@ function fromObject (obj) {
     }
   }
 
-  throw new TypeError('First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.')
+  throw new TypeError('The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object.')
 }
 
 function checked (length) {
@@ -52889,6 +59074,9 @@ Buffer.concat = function concat (list, length) {
   var pos = 0
   for (i = 0; i < list.length; ++i) {
     var buf = list[i]
+    if (ArrayBuffer.isView(buf)) {
+      buf = Buffer.from(buf)
+    }
     if (!Buffer.isBuffer(buf)) {
       throw new TypeError('"list" argument must be an Array of Buffers')
     }
@@ -52902,7 +59090,7 @@ function byteLength (string, encoding) {
   if (Buffer.isBuffer(string)) {
     return string.length
   }
-  if (isArrayBufferView(string) || isArrayBuffer(string)) {
+  if (ArrayBuffer.isView(string) || isArrayBuffer(string)) {
     return string.byteLength
   }
   if (typeof string !== 'string') {
@@ -53069,6 +59257,8 @@ Buffer.prototype.toString = function toString () {
   if (arguments.length === 0) return utf8Slice(this, 0, length)
   return slowToString.apply(this, arguments)
 }
+
+Buffer.prototype.toLocaleString = Buffer.prototype.toString
 
 Buffer.prototype.equals = function equals (b) {
   if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
@@ -53290,9 +59480,7 @@ function hexWrite (buf, string, offset, length) {
     }
   }
 
-  // must be an even number of digits
   var strLen = string.length
-  if (strLen % 2 !== 0) throw new TypeError('Invalid hex string')
 
   if (length > strLen / 2) {
     length = strLen / 2
@@ -53985,6 +60173,7 @@ Buffer.prototype.writeDoubleBE = function writeDoubleBE (value, offset, noAssert
 
 // copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
 Buffer.prototype.copy = function copy (target, targetStart, start, end) {
+  if (!Buffer.isBuffer(target)) throw new TypeError('argument should be a Buffer')
   if (!start) start = 0
   if (!end && end !== 0) end = this.length
   if (targetStart >= target.length) targetStart = target.length
@@ -53999,7 +60188,7 @@ Buffer.prototype.copy = function copy (target, targetStart, start, end) {
   if (targetStart < 0) {
     throw new RangeError('targetStart out of bounds')
   }
-  if (start < 0 || start >= this.length) throw new RangeError('sourceStart out of bounds')
+  if (start < 0 || start >= this.length) throw new RangeError('Index out of range')
   if (end < 0) throw new RangeError('sourceEnd out of bounds')
 
   // Are we oob?
@@ -54009,22 +60198,19 @@ Buffer.prototype.copy = function copy (target, targetStart, start, end) {
   }
 
   var len = end - start
-  var i
 
-  if (this === target && start < targetStart && targetStart < end) {
+  if (this === target && typeof Uint8Array.prototype.copyWithin === 'function') {
+    // Use built-in when available, missing from IE11
+    this.copyWithin(targetStart, start, end)
+  } else if (this === target && start < targetStart && targetStart < end) {
     // descending copy from end
-    for (i = len - 1; i >= 0; --i) {
-      target[i + targetStart] = this[i + start]
-    }
-  } else if (len < 1000) {
-    // ascending copy from start
-    for (i = 0; i < len; ++i) {
+    for (var i = len - 1; i >= 0; --i) {
       target[i + targetStart] = this[i + start]
     }
   } else {
     Uint8Array.prototype.set.call(
       target,
-      this.subarray(start, start + len),
+      this.subarray(start, end),
       targetStart
     )
   }
@@ -54047,17 +60233,19 @@ Buffer.prototype.fill = function fill (val, start, end, encoding) {
       encoding = end
       end = this.length
     }
-    if (val.length === 1) {
-      var code = val.charCodeAt(0)
-      if (code < 256) {
-        val = code
-      }
-    }
     if (encoding !== undefined && typeof encoding !== 'string') {
       throw new TypeError('encoding must be a string')
     }
     if (typeof encoding === 'string' && !Buffer.isEncoding(encoding)) {
       throw new TypeError('Unknown encoding: ' + encoding)
+    }
+    if (val.length === 1) {
+      var code = val.charCodeAt(0)
+      if ((encoding === 'utf8' && code < 128) ||
+          encoding === 'latin1') {
+        // Fast path: If `val` fits into a single byte, use that numeric value.
+        val = code
+      }
     }
   } else if (typeof val === 'number') {
     val = val & 255
@@ -54087,6 +60275,10 @@ Buffer.prototype.fill = function fill (val, start, end, encoding) {
       ? val
       : new Buffer(val, encoding)
     var len = bytes.length
+    if (len === 0) {
+      throw new TypeError('The value "' + val +
+        '" is invalid for argument "value"')
+    }
     for (i = 0; i < end - start; ++i) {
       this[i + start] = bytes[i % len]
     }
@@ -54101,6 +60293,8 @@ Buffer.prototype.fill = function fill (val, start, end, encoding) {
 var INVALID_BASE64_RE = /[^+/0-9A-Za-z-_]/g
 
 function base64clean (str) {
+  // Node takes equal signs as end of the Base64 encoding
+  str = str.split('=')[0]
   // Node strips out invalid characters like \n and \t from the string, base64-js does not
   str = str.trim().replace(INVALID_BASE64_RE, '')
   // Node converts strings with length < 2 to ''
@@ -54242,16 +60436,11 @@ function isArrayBuffer (obj) {
       typeof obj.byteLength === 'number')
 }
 
-// Node 0.10 supports `ArrayBuffer` but lacks `ArrayBuffer.isView`
-function isArrayBufferView (obj) {
-  return (typeof ArrayBuffer.isView === 'function') && ArrayBuffer.isView(obj)
-}
-
 function numberIsNaN (obj) {
   return obj !== obj // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":205,"ieee754":217}],215:[function(require,module,exports){
+},{"base64-js":430,"ieee754":442}],440:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -54362,7 +60551,7 @@ function objectToString(o) {
 }
 
 }).call(this,{"isBuffer":require("../../is-buffer/index.js")})
-},{"../../is-buffer/index.js":219}],216:[function(require,module,exports){
+},{"../../is-buffer/index.js":444}],441:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -54666,7 +60855,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],217:[function(require,module,exports){
+},{}],442:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -54752,7 +60941,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],218:[function(require,module,exports){
+},{}],443:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -54777,7 +60966,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],219:[function(require,module,exports){
+},{}],444:[function(require,module,exports){
 /*!
  * Determine if an object is a Buffer
  *
@@ -54800,14 +60989,14 @@ function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
-},{}],220:[function(require,module,exports){
+},{}],445:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],221:[function(require,module,exports){
+},{}],446:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -54823,7 +61012,7 @@ module.exports = Array.isArray || function (arr) {
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.4';
+  var VERSION = '4.17.5';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -54954,7 +61143,6 @@ module.exports = Array.isArray || function (arr) {
   /** Used to match property names within property paths. */
   var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
       reIsPlainProp = /^\w*$/,
-      reLeadingDot = /^\./,
       rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
 
   /**
@@ -55054,8 +61242,8 @@ module.exports = Array.isArray || function (arr) {
       reOptMod = rsModifier + '?',
       rsOptVar = '[' + rsVarRange + ']?',
       rsOptJoin = '(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
-      rsOrdLower = '\\d*(?:(?:1st|2nd|3rd|(?![123])\\dth)\\b)',
-      rsOrdUpper = '\\d*(?:(?:1ST|2ND|3RD|(?![123])\\dTH)\\b)',
+      rsOrdLower = '\\d*(?:1st|2nd|3rd|(?![123])\\dth)(?=\\b|[A-Z_])',
+      rsOrdUpper = '\\d*(?:1ST|2ND|3RD|(?![123])\\dTH)(?=\\b|[a-z_])',
       rsSeq = rsOptVar + reOptMod + rsOptJoin,
       rsEmoji = '(?:' + [rsDingbat, rsRegional, rsSurrPair].join('|') + ')' + rsSeq,
       rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
@@ -55261,34 +61449,6 @@ module.exports = Array.isArray || function (arr) {
       nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
 
   /*--------------------------------------------------------------------------*/
-
-  /**
-   * Adds the key-value `pair` to `map`.
-   *
-   * @private
-   * @param {Object} map The map to modify.
-   * @param {Array} pair The key-value pair to add.
-   * @returns {Object} Returns `map`.
-   */
-  function addMapEntry(map, pair) {
-    // Don't return `map.set` because it's not chainable in IE 11.
-    map.set(pair[0], pair[1]);
-    return map;
-  }
-
-  /**
-   * Adds `value` to `set`.
-   *
-   * @private
-   * @param {Object} set The set to modify.
-   * @param {*} value The value to add.
-   * @returns {Object} Returns `set`.
-   */
-  function addSetEntry(set, value) {
-    // Don't return `set.add` because it's not chainable in IE 11.
-    set.add(value);
-    return set;
-  }
 
   /**
    * A faster alternative to `Function#apply`, this function invokes `func`
@@ -56054,6 +62214,20 @@ module.exports = Array.isArray || function (arr) {
       }
     }
     return result;
+  }
+
+  /**
+   * Gets the value at `key`, unless `key` is "__proto__".
+   *
+   * @private
+   * @param {Object} object The object to query.
+   * @param {string} key The key of the property to get.
+   * @returns {*} Returns the property value.
+   */
+  function safeGet(object, key) {
+    return key == '__proto__'
+      ? undefined
+      : object[key];
   }
 
   /**
@@ -57488,7 +63662,7 @@ module.exports = Array.isArray || function (arr) {
           if (!cloneableTags[tag]) {
             return object ? value : {};
           }
-          result = initCloneByTag(value, tag, baseClone, isDeep);
+          result = initCloneByTag(value, tag, isDeep);
         }
       }
       // Check for circular references and return its corresponding clone.
@@ -57498,6 +63672,22 @@ module.exports = Array.isArray || function (arr) {
         return stacked;
       }
       stack.set(value, result);
+
+      if (isSet(value)) {
+        value.forEach(function(subValue) {
+          result.add(baseClone(subValue, bitmask, customizer, subValue, value, stack));
+        });
+
+        return result;
+      }
+
+      if (isMap(value)) {
+        value.forEach(function(subValue, key) {
+          result.set(key, baseClone(subValue, bitmask, customizer, key, value, stack));
+        });
+
+        return result;
+      }
 
       var keysFunc = isFull
         ? (isFlat ? getAllKeysIn : getAllKeys)
@@ -58426,7 +64616,7 @@ module.exports = Array.isArray || function (arr) {
         }
         else {
           var newValue = customizer
-            ? customizer(object[key], srcValue, (key + ''), object, source, stack)
+            ? customizer(safeGet(object, key), srcValue, (key + ''), object, source, stack)
             : undefined;
 
           if (newValue === undefined) {
@@ -58453,8 +64643,8 @@ module.exports = Array.isArray || function (arr) {
      *  counterparts.
      */
     function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, stack) {
-      var objValue = object[key],
-          srcValue = source[key],
+      var objValue = safeGet(object, key),
+          srcValue = safeGet(source, key),
           stacked = stack.get(srcValue);
 
       if (stacked) {
@@ -59363,20 +65553,6 @@ module.exports = Array.isArray || function (arr) {
     }
 
     /**
-     * Creates a clone of `map`.
-     *
-     * @private
-     * @param {Object} map The map to clone.
-     * @param {Function} cloneFunc The function to clone values.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the cloned map.
-     */
-    function cloneMap(map, isDeep, cloneFunc) {
-      var array = isDeep ? cloneFunc(mapToArray(map), CLONE_DEEP_FLAG) : mapToArray(map);
-      return arrayReduce(array, addMapEntry, new map.constructor);
-    }
-
-    /**
      * Creates a clone of `regexp`.
      *
      * @private
@@ -59387,20 +65563,6 @@ module.exports = Array.isArray || function (arr) {
       var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
       result.lastIndex = regexp.lastIndex;
       return result;
-    }
-
-    /**
-     * Creates a clone of `set`.
-     *
-     * @private
-     * @param {Object} set The set to clone.
-     * @param {Function} cloneFunc The function to clone values.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the cloned set.
-     */
-    function cloneSet(set, isDeep, cloneFunc) {
-      var array = isDeep ? cloneFunc(setToArray(set), CLONE_DEEP_FLAG) : setToArray(set);
-      return arrayReduce(array, addSetEntry, new set.constructor);
     }
 
     /**
@@ -60997,7 +67159,7 @@ module.exports = Array.isArray || function (arr) {
      */
     function initCloneArray(array) {
       var length = array.length,
-          result = array.constructor(length);
+          result = new array.constructor(length);
 
       // Add properties assigned by `RegExp#exec`.
       if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
@@ -61024,16 +67186,15 @@ module.exports = Array.isArray || function (arr) {
      * Initializes an object clone based on its `toStringTag`.
      *
      * **Note:** This function only supports cloning values with tags of
-     * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+     * `Boolean`, `Date`, `Error`, `Map`, `Number`, `RegExp`, `Set`, or `String`.
      *
      * @private
      * @param {Object} object The object to clone.
      * @param {string} tag The `toStringTag` of the object to clone.
-     * @param {Function} cloneFunc The function to clone values.
      * @param {boolean} [isDeep] Specify a deep clone.
      * @returns {Object} Returns the initialized clone.
      */
-    function initCloneByTag(object, tag, cloneFunc, isDeep) {
+    function initCloneByTag(object, tag, isDeep) {
       var Ctor = object.constructor;
       switch (tag) {
         case arrayBufferTag:
@@ -61052,7 +67213,7 @@ module.exports = Array.isArray || function (arr) {
           return cloneTypedArray(object, isDeep);
 
         case mapTag:
-          return cloneMap(object, isDeep, cloneFunc);
+          return new Ctor;
 
         case numberTag:
         case stringTag:
@@ -61062,7 +67223,7 @@ module.exports = Array.isArray || function (arr) {
           return cloneRegExp(object);
 
         case setTag:
-          return cloneSet(object, isDeep, cloneFunc);
+          return new Ctor;
 
         case symbolTag:
           return cloneSymbol(object);
@@ -61109,10 +67270,13 @@ module.exports = Array.isArray || function (arr) {
      * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
      */
     function isIndex(value, length) {
+      var type = typeof value;
       length = length == null ? MAX_SAFE_INTEGER : length;
+
       return !!length &&
-        (typeof value == 'number' || reIsUint.test(value)) &&
-        (value > -1 && value % 1 == 0 && value < length);
+        (type == 'number' ||
+          (type != 'symbol' && reIsUint.test(value))) &&
+            (value > -1 && value % 1 == 0 && value < length);
     }
 
     /**
@@ -61562,11 +67726,11 @@ module.exports = Array.isArray || function (arr) {
      */
     var stringToPath = memoizeCapped(function(string) {
       var result = [];
-      if (reLeadingDot.test(string)) {
+      if (string.charCodeAt(0) === 46 /* . */) {
         result.push('');
       }
-      string.replace(rePropName, function(match, number, quote, string) {
-        result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
+      string.replace(rePropName, function(match, number, quote, subString) {
+        result.push(quote ? subString.replace(reEscapeChar, '$1') : (number || match));
       });
       return result;
     });
@@ -65174,9 +71338,11 @@ module.exports = Array.isArray || function (arr) {
       function remainingWait(time) {
         var timeSinceLastCall = time - lastCallTime,
             timeSinceLastInvoke = time - lastInvokeTime,
-            result = wait - timeSinceLastCall;
+            timeWaiting = wait - timeSinceLastCall;
 
-        return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
+        return maxing
+          ? nativeMin(timeWaiting, maxWait - timeSinceLastInvoke)
+          : timeWaiting;
       }
 
       function shouldInvoke(time) {
@@ -67608,9 +73774,35 @@ module.exports = Array.isArray || function (arr) {
      * _.defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
      * // => { 'a': 1, 'b': 2 }
      */
-    var defaults = baseRest(function(args) {
-      args.push(undefined, customDefaultsAssignIn);
-      return apply(assignInWith, undefined, args);
+    var defaults = baseRest(function(object, sources) {
+      object = Object(object);
+
+      var index = -1;
+      var length = sources.length;
+      var guard = length > 2 ? sources[2] : undefined;
+
+      if (guard && isIterateeCall(sources[0], sources[1], guard)) {
+        length = 1;
+      }
+
+      while (++index < length) {
+        var source = sources[index];
+        var props = keysIn(source);
+        var propsIndex = -1;
+        var propsLength = props.length;
+
+        while (++propsIndex < propsLength) {
+          var key = props[propsIndex];
+          var value = object[key];
+
+          if (value === undefined ||
+              (eq(value, objectProto[key]) && !hasOwnProperty.call(object, key))) {
+            object[key] = source[key];
+          }
+        }
+      }
+
+      return object;
     });
 
     /**
@@ -68007,6 +74199,11 @@ module.exports = Array.isArray || function (arr) {
      * // => { '1': 'c', '2': 'b' }
      */
     var invert = createInverter(function(result, value, key) {
+      if (value != null &&
+          typeof value.toString != 'function') {
+        value = nativeObjectToString.call(value);
+      }
+
       result[value] = key;
     }, constant(identity));
 
@@ -68037,6 +74234,11 @@ module.exports = Array.isArray || function (arr) {
      * // => { 'group1': ['a', 'c'], 'group2': ['b'] }
      */
     var invertBy = createInverter(function(result, value, key) {
+      if (value != null &&
+          typeof value.toString != 'function') {
+        value = nativeObjectToString.call(value);
+      }
+
       if (hasOwnProperty.call(result, value)) {
         result[value].push(key);
       } else {
@@ -71895,7 +78097,7 @@ module.exports = Array.isArray || function (arr) {
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],222:[function(require,module,exports){
+},{}],447:[function(require,module,exports){
 const { merge } = require('most')
 
 // based on http://jsfiddle.net/mattpodwysocki/pfCqq/
@@ -71981,7 +78183,7 @@ function drags ({mouseDowns$, mouseUps$, mouseMoves$, touchStarts$, touchEnds$, 
 
 module.exports = {mouseDrags, touchDrags, drags}
 
-},{"most":264}],223:[function(require,module,exports){
+},{"most":489}],448:[function(require,module,exports){
 const { fromEvent, merge } = require('most')
 const { normalizeWheel, preventDefault } = require('./utils')
 const { presses } = require('./presses')
@@ -72082,7 +78284,7 @@ function pointerGestures (input, options) {
 
 module.exports = {baseInteractionsFromEvents, pointerGestures}
 
-},{"./drags":222,"./presses":224,"./taps":225,"./utils":226,"./zooms":227,"most":264}],224:[function(require,module,exports){
+},{"./drags":447,"./presses":449,"./taps":450,"./utils":451,"./zooms":452,"most":489}],449:[function(require,module,exports){
 const { just, merge, empty } = require('most')
 const { exists, isMoving } = require('./utils')
 /* alternative "clicks" (ie mouseDown -> mouseUp ) implementation, with more fine
@@ -72174,7 +78376,7 @@ function presses (baseInteractions, settings) {
 
 module.exports = {presses}
 
-},{"./utils":226,"most":264}],225:[function(require,module,exports){
+},{"./utils":451,"most":489}],450:[function(require,module,exports){
 const { exists } = require('./utils')
 
 /**
@@ -72212,7 +78414,7 @@ function taps (presses$, settings) {
 
 module.exports = {taps}
 
-},{"./utils":226}],226:[function(require,module,exports){
+},{"./utils":451}],451:[function(require,module,exports){
 const { empty, continueWith } = require('most')
 
 // for most.js
@@ -72282,7 +78484,7 @@ return baseBuffer$
 
 module.exports = {repeat, preventDefault, isMoving, normalizeWheel, exists}
 
-},{"most":264}],227:[function(require,module,exports){
+},{"most":489}],452:[function(require,module,exports){
 const { merge } = require('most')
 
 // this one is not reliable enough
@@ -72368,7 +78570,7 @@ function zooms ({touchStarts$, touchMoves$, touchEnds$, wheel$}, settings) {
 
 module.exports = {pinchZooms, zooms}
 
-},{"most":264}],228:[function(require,module,exports){
+},{"most":489}],453:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -72450,7 +78652,7 @@ LinkedList.prototype.dispose = function () {
 
   return Promise.all(promises);
 };
-},{}],229:[function(require,module,exports){
+},{}],454:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72464,7 +78666,7 @@ exports.isPromise = isPromise;
 function isPromise(p) {
   return p !== null && typeof p === 'object' && typeof p.then === 'function';
 }
-},{}],230:[function(require,module,exports){
+},{}],455:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -72533,7 +78735,7 @@ function copy(src, srcIndex, dst, dstIndex, len) {
     src[j + srcIndex] = void 0;
   }
 }
-},{}],231:[function(require,module,exports){
+},{}],456:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -72551,7 +78753,7 @@ function Stream(source) {
 Stream.prototype.run = function (sink, scheduler) {
   return this.source.run(sink, scheduler);
 };
-},{}],232:[function(require,module,exports){
+},{}],457:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72663,7 +78865,7 @@ ReduceSink.prototype.error = _Pipe2.default.prototype.error;
 ReduceSink.prototype.end = function (t) {
   this.sink.end(t, this.value);
 };
-},{"../Stream":231,"../disposable/dispose":259,"../runSource":270,"../scheduler/PropagateTask":272,"../sink/Pipe":279}],233:[function(require,module,exports){
+},{"../Stream":456,"../disposable/dispose":484,"../runSource":495,"../scheduler/PropagateTask":497,"../sink/Pipe":504}],458:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72692,7 +78894,7 @@ var _prelude = require('@most/prelude');
 function ap(fs, xs) {
   return (0, _combine.combine)(_prelude.apply, fs, xs);
 }
-},{"./combine":235,"@most/prelude":204}],234:[function(require,module,exports){
+},{"./combine":460,"@most/prelude":429}],459:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72729,7 +78931,7 @@ function concat(left, right) {
     return right;
   }, left);
 }
-},{"../source/core":283,"./continueWith":237}],235:[function(require,module,exports){
+},{"../source/core":508,"./continueWith":462}],460:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72880,7 +79082,7 @@ CombineSink.prototype.end = function (t, indexedValue) {
     this.sink.end(t, indexedValue.value);
   }
 };
-},{"../Stream":231,"../disposable/dispose":259,"../invoke":265,"../sink/IndexSink":278,"../sink/Pipe":279,"../source/core":283,"./transform":255,"@most/prelude":204}],236:[function(require,module,exports){
+},{"../Stream":456,"../disposable/dispose":484,"../invoke":490,"../sink/IndexSink":503,"../sink/Pipe":504,"../source/core":508,"./transform":480,"@most/prelude":429}],461:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72906,7 +79108,7 @@ function concatMap(f, stream) {
 } /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
-},{"./mergeConcurrently":245}],237:[function(require,module,exports){
+},{"./mergeConcurrently":470}],462:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72987,7 +79189,7 @@ ContinueWithSink.prototype.dispose = function () {
   this.active = false;
   return this.disposable.dispose();
 };
-},{"../Stream":231,"../disposable/dispose":259,"../sink/Pipe":279}],238:[function(require,module,exports){
+},{"../Stream":456,"../disposable/dispose":484,"../sink/Pipe":504}],463:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73060,7 +79262,7 @@ DelaySink.prototype.end = function (t, x) {
 };
 
 DelaySink.prototype.error = _Pipe2.default.prototype.error;
-},{"../Stream":231,"../disposable/dispose":259,"../scheduler/PropagateTask":272,"../sink/Pipe":279}],239:[function(require,module,exports){
+},{"../Stream":456,"../disposable/dispose":484,"../scheduler/PropagateTask":497,"../sink/Pipe":504}],464:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73177,7 +79379,7 @@ RecoverWithSink.prototype._continue = function (f, x, sink) {
 RecoverWithSink.prototype.dispose = function () {
   return this.disposable.dispose();
 };
-},{"../Stream":231,"../disposable/dispose":259,"../scheduler/PropagateTask":272,"../sink/SafeSink":280,"../source/tryEvent":291}],240:[function(require,module,exports){
+},{"../Stream":456,"../disposable/dispose":484,"../scheduler/PropagateTask":497,"../sink/SafeSink":505,"../source/tryEvent":516}],465:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73267,7 +79469,7 @@ SkipRepeatsSink.prototype.event = function (t, x) {
 function same(a, b) {
   return a === b;
 }
-},{"../Stream":231,"../fusion/Filter":261,"../sink/Pipe":279}],241:[function(require,module,exports){
+},{"../Stream":456,"../fusion/Filter":486,"../sink/Pipe":504}],466:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73302,7 +79504,7 @@ function flatMap(f, stream) {
 function join(stream) {
   return (0, _mergeConcurrently.mergeConcurrently)(Infinity, stream);
 }
-},{"./mergeConcurrently":245}],242:[function(require,module,exports){
+},{"./mergeConcurrently":470}],467:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73319,10 +79521,6 @@ var _Pipe = require('../sink/Pipe');
 
 var _Pipe2 = _interopRequireDefault(_Pipe);
 
-var _PropagateTask = require('../scheduler/PropagateTask');
-
-var _PropagateTask2 = _interopRequireDefault(_PropagateTask);
-
 var _Map = require('../fusion/Map');
 
 var _Map2 = _interopRequireDefault(_Map);
@@ -73335,13 +79533,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {Stream} stream
  * @returns {Stream}
  */
-/** @license MIT License (c) copyright 2010-2016 original author or authors */
-/** @author Brian Cavalier */
-/** @author John Hann */
-
 function throttle(period, stream) {
   return new _Stream2.default(throttleSource(period, stream.source));
-}
+} /** @license MIT License (c) copyright 2010-2016 original author or authors */
+/** @author Brian Cavalier */
+/** @author John Hann */
 
 function throttleSource(period, source) {
   return source instanceof _Map2.default ? commuteMapThrottle(period, source) : source instanceof Throttle ? fuseThrottle(period, source) : new Throttle(period, source);
@@ -73413,7 +79609,12 @@ function DebounceSink(dt, source, sink, scheduler) {
 DebounceSink.prototype.event = function (t, x) {
   this._clearTimer();
   this.value = x;
-  this.timer = this.scheduler.delay(this.dt, _PropagateTask2.default.event(x, this.sink));
+  this.timer = this.scheduler.delay(this.dt, new DebounceTask(this, x));
+};
+
+DebounceSink.prototype._event = function (t, x) {
+  this._clearTimer();
+  this.sink.event(t, x);
 };
 
 DebounceSink.prototype.end = function (t, x) {
@@ -73442,7 +79643,22 @@ DebounceSink.prototype._clearTimer = function () {
   this.timer = null;
   return true;
 };
-},{"../Stream":231,"../fusion/Map":263,"../scheduler/PropagateTask":272,"../sink/Pipe":279}],243:[function(require,module,exports){
+
+function DebounceTask(debounce, value) {
+  this.debounce = debounce;
+  this.value = value;
+}
+
+DebounceTask.prototype.run = function (t) {
+  this.debounce._event(t, this.value);
+};
+
+DebounceTask.prototype.error = function (t, e) {
+  this.debounce.error(t, e);
+};
+
+DebounceTask.prototype.dispose = function () {};
+},{"../Stream":456,"../fusion/Map":488,"../sink/Pipe":504}],468:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73506,7 +79722,7 @@ LoopSink.prototype.event = function (t, x) {
 LoopSink.prototype.end = function (t) {
   this.sink.end(t, this.seed);
 };
-},{"../Stream":231,"../sink/Pipe":279}],244:[function(require,module,exports){
+},{"../Stream":456,"../sink/Pipe":504}],469:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73553,7 +79769,7 @@ var reduce = base.reduce;
  * list in time order.  If two events are simultaneous they will be merged in
  * arbitrary order.
  */
-function merge() /* ...streams*/{
+function merge() /* ...streams */{
   return mergeArray(copy(arguments));
 }
 
@@ -73625,7 +79841,7 @@ MergeSink.prototype.end = function (t, indexedValue) {
     this.sink.end(t, indexedValue.value);
   }
 };
-},{"../Stream":231,"../disposable/dispose":259,"../sink/IndexSink":278,"../sink/Pipe":279,"../source/core":283,"@most/prelude":204}],245:[function(require,module,exports){
+},{"../Stream":456,"../disposable/dispose":484,"../sink/IndexSink":503,"../sink/Pipe":504,"../source/core":508,"@most/prelude":429}],470:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73772,7 +79988,7 @@ Inner.prototype.error = function (t, e) {
 Inner.prototype.dispose = function () {
   return this.disposable.dispose();
 };
-},{"../LinkedList":228,"../Stream":231,"../disposable/dispose":259,"@most/prelude":204}],246:[function(require,module,exports){
+},{"../LinkedList":453,"../Stream":456,"../disposable/dispose":484,"@most/prelude":429}],471:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73810,7 +80026,7 @@ function observe(f, stream) {
 function drain(stream) {
   return (0, _runSource.withDefaultScheduler)(stream.source);
 }
-},{"../runSource":270,"./transform":255}],247:[function(require,module,exports){
+},{"../runSource":495,"./transform":480}],472:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73914,7 +80130,7 @@ AwaitSink.prototype._event = function (promise) {
 AwaitSink.prototype._end = function (x) {
   return Promise.resolve(x).then(this._endBound);
 };
-},{"../Stream":231,"../fatalError":260,"../source/core":283}],248:[function(require,module,exports){
+},{"../Stream":456,"../fatalError":485,"../source/core":508}],473:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74051,7 +80267,7 @@ function hasValue(hold) {
 function getValue(hold) {
   return hold.value;
 }
-},{"../Stream":231,"../disposable/dispose":259,"../invoke":265,"../sink/Pipe":279,"@most/prelude":204}],249:[function(require,module,exports){
+},{"../Stream":456,"../disposable/dispose":484,"../invoke":490,"../sink/Pipe":504,"@most/prelude":429}],474:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74289,7 +80505,7 @@ SkipAfterSink.prototype.event = function event(t, x) {
 
 SkipAfterSink.prototype.end = _Pipe2.default.prototype.end;
 SkipAfterSink.prototype.error = _Pipe2.default.prototype.error;
-},{"../Stream":231,"../disposable/dispose":259,"../fusion/Map":263,"../sink/Pipe":279,"../source/core":283}],250:[function(require,module,exports){
+},{"../Stream":456,"../disposable/dispose":484,"../fusion/Map":488,"../sink/Pipe":504,"../source/core":508}],475:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74418,7 +80634,7 @@ Segment.prototype._dispose = function (t) {
   this.max = t;
   dispose.tryDispose(t, this.disposable, this.sink);
 };
-},{"../Stream":231,"../disposable/dispose":259}],251:[function(require,module,exports){
+},{"../Stream":456,"../disposable/dispose":484}],476:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -74432,7 +80648,7 @@ exports.thru = thru;
 function thru(f, stream) {
   return f(stream);
 }
-},{}],252:[function(require,module,exports){
+},{}],477:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74567,7 +80783,7 @@ UpperBound.prototype.dispose = function () {
 };
 
 function noop() {}
-},{"../Stream":231,"../combinator/flatMap":241,"../disposable/dispose":259,"../sink/Pipe":279}],253:[function(require,module,exports){
+},{"../Stream":456,"../combinator/flatMap":466,"../disposable/dispose":484,"../sink/Pipe":504}],478:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74611,7 +80827,7 @@ TimestampSink.prototype.error = _Pipe2.default.prototype.error;
 TimestampSink.prototype.event = function (t, x) {
   this.sink.event(t, { time: t, value: x });
 };
-},{"../Stream":231,"../sink/Pipe":279}],254:[function(require,module,exports){
+},{"../Stream":456,"../sink/Pipe":504}],479:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74738,7 +80954,7 @@ LegacyTxAdapter.prototype.isReduced = function (x) {
 LegacyTxAdapter.prototype.getResult = function (x) {
   return x.value;
 };
-},{"../Stream":231}],255:[function(require,module,exports){
+},{"../Stream":456}],480:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74821,7 +81037,7 @@ TapSink.prototype.event = function (t, x) {
   f(x);
   this.sink.event(t, x);
 };
-},{"../Stream":231,"../fusion/Map":263,"../sink/Pipe":279}],256:[function(require,module,exports){
+},{"../Stream":456,"../fusion/Map":488,"../sink/Pipe":504}],481:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74990,7 +81206,7 @@ function ready(buffers) {
   }
   return true;
 }
-},{"../Queue":230,"../Stream":231,"../disposable/dispose":259,"../invoke":265,"../sink/IndexSink":278,"../sink/Pipe":279,"../source/core":283,"./transform":255,"@most/prelude":204}],257:[function(require,module,exports){
+},{"../Queue":455,"../Stream":456,"../disposable/dispose":484,"../invoke":490,"../sink/IndexSink":503,"../sink/Pipe":504,"../source/core":508,"./transform":480,"@most/prelude":429}],482:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -75015,7 +81231,7 @@ function Disposable(dispose, data) {
 Disposable.prototype.dispose = function () {
   return this._dispose(this._data);
 };
-},{}],258:[function(require,module,exports){
+},{}],483:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -75062,7 +81278,7 @@ SettableDisposable.prototype.dispose = function () {
 
   return this.result;
 };
-},{}],259:[function(require,module,exports){
+},{}],484:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -75205,7 +81421,7 @@ function disposeMemoized(memoized) {
 function memoized(disposable) {
   return { disposed: false, disposable: disposable, value: void 0 };
 }
-},{"../Promise":229,"./Disposable":257,"./SettableDisposable":258,"@most/prelude":204}],260:[function(require,module,exports){
+},{"../Promise":454,"./Disposable":482,"./SettableDisposable":483,"@most/prelude":429}],485:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -75221,7 +81437,7 @@ function fatalError(e) {
     throw e;
   }, 0);
 }
-},{}],261:[function(require,module,exports){
+},{}],486:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -75280,7 +81496,7 @@ function and(p, q) {
     return p(x) && q(x);
   };
 }
-},{"../sink/Pipe":279}],262:[function(require,module,exports){
+},{"../sink/Pipe":504}],487:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -75320,7 +81536,7 @@ FilterMapSink.prototype.event = function (t, x) {
 
 FilterMapSink.prototype.end = _Pipe2.default.prototype.end;
 FilterMapSink.prototype.error = _Pipe2.default.prototype.error;
-},{"../sink/Pipe":279}],263:[function(require,module,exports){
+},{"../sink/Pipe":504}],488:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -75393,7 +81609,7 @@ MapSink.prototype.event = function (t, x) {
   var f = this.f;
   this.sink.event(t, f(x));
 };
-},{"../sink/Pipe":279,"./Filter":261,"./FilterMap":262,"@most/prelude":204}],264:[function(require,module,exports){
+},{"../sink/Pipe":504,"./Filter":486,"./FilterMap":487,"@most/prelude":429}],489:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -75530,6 +81746,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
+
+/* eslint import/first: 0 */
 
 exports.Stream = _Stream2.default;
 
@@ -75838,7 +82056,7 @@ exports.mergeArray = _merge.mergeArray;
  * arbitrary order.
  */
 
-_Stream2.default.prototype.merge = function () /* ...streams*/{
+_Stream2.default.prototype.merge = function () /* ...streams */{
   return (0, _merge.mergeArray)(base.cons(this, arguments));
 };
 
@@ -75855,7 +82073,7 @@ exports.combineArray = _combine.combineArray;
  *  event of each input stream, whenever a new event arrives on any stream.
  */
 
-_Stream2.default.prototype.combine = function (f /*, ...streams*/) {
+_Stream2.default.prototype.combine = function (f /*, ...streams */) {
   return (0, _combine.combineArray)(f, base.replace(this, 0, arguments));
 };
 
@@ -75901,7 +82119,7 @@ exports.zipArray = _zip.zipArray;
  * @returns {Stream} new stream containing pairs
  */
 
-_Stream2.default.prototype.zip = function (f /*, ...streams*/) {
+_Stream2.default.prototype.zip = function (f /*, ...streams */) {
   return (0, _zip.zipArray)(f, base.replace(this, 0, arguments));
 };
 
@@ -76227,7 +82445,7 @@ exports.defaultScheduler = _defaultScheduler2.default;
 // export an implementation of Task used internally for third-party libraries
 
 exports.PropagateTask = _PropagateTask2.default;
-},{"./Stream":231,"./combinator/accumulate":232,"./combinator/applicative":233,"./combinator/build":234,"./combinator/combine":235,"./combinator/concatMap":236,"./combinator/continueWith":237,"./combinator/delay":238,"./combinator/errors":239,"./combinator/filter":240,"./combinator/flatMap":241,"./combinator/limit":242,"./combinator/loop":243,"./combinator/merge":244,"./combinator/mergeConcurrently":245,"./combinator/observe":246,"./combinator/promises":247,"./combinator/sample":248,"./combinator/slice":249,"./combinator/switch":250,"./combinator/thru":251,"./combinator/timeslice":252,"./combinator/timestamp":253,"./combinator/transduce":254,"./combinator/transform":255,"./combinator/zip":256,"./observable/subscribe":269,"./scheduler/PropagateTask":272,"./scheduler/defaultScheduler":276,"./source/core":283,"./source/from":284,"./source/fromEvent":286,"./source/generate":288,"./source/iterate":289,"./source/periodic":290,"./source/unfold":292,"@most/multicast":203,"@most/prelude":204,"symbol-observable":294}],265:[function(require,module,exports){
+},{"./Stream":456,"./combinator/accumulate":457,"./combinator/applicative":458,"./combinator/build":459,"./combinator/combine":460,"./combinator/concatMap":461,"./combinator/continueWith":462,"./combinator/delay":463,"./combinator/errors":464,"./combinator/filter":465,"./combinator/flatMap":466,"./combinator/limit":467,"./combinator/loop":468,"./combinator/merge":469,"./combinator/mergeConcurrently":470,"./combinator/observe":471,"./combinator/promises":472,"./combinator/sample":473,"./combinator/slice":474,"./combinator/switch":475,"./combinator/thru":476,"./combinator/timeslice":477,"./combinator/timestamp":478,"./combinator/transduce":479,"./combinator/transform":480,"./combinator/zip":481,"./observable/subscribe":494,"./scheduler/PropagateTask":497,"./scheduler/defaultScheduler":501,"./source/core":508,"./source/from":509,"./source/fromEvent":511,"./source/generate":513,"./source/iterate":514,"./source/periodic":515,"./source/unfold":517,"@most/multicast":428,"@most/prelude":429,"symbol-observable":519}],490:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -76239,7 +82457,7 @@ exports.default = invoke;
 /** @author John Hann */
 
 function invoke(f, args) {
-  /*eslint complexity: [2,7]*/
+  /* eslint complexity: [2,7] */
   switch (args.length) {
     case 0:
       return f();
@@ -76257,7 +82475,7 @@ function invoke(f, args) {
       return f.apply(void 0, args);
   }
 }
-},{}],266:[function(require,module,exports){
+},{}],491:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76270,14 +82488,14 @@ exports.makeIterable = makeIterable;
 /** @author Brian Cavalier */
 /** @author John Hann */
 
-/*global Set, Symbol*/
+/* global Set, Symbol */
 var iteratorSymbol;
 // Firefox ships a partial implementation using the name @@iterator.
 // https://bugzilla.mozilla.org/show_bug.cgi?id=907077#c14
 if (typeof Set === 'function' && typeof new Set()['@@iterator'] === 'function') {
   iteratorSymbol = '@@iterator';
 } else {
-  iteratorSymbol = typeof Symbol === 'function' && Symbol.iterator || '_es6shim_iterator_';
+  iteratorSymbol = typeof Symbol === 'function' ? Symbol.iterator : '_es6shim_iterator_';
 }
 
 function isIterable(o) {
@@ -76292,7 +82510,7 @@ function makeIterable(f, o) {
   o[iteratorSymbol] = f;
   return o;
 }
-},{}],267:[function(require,module,exports){
+},{}],492:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76357,7 +82575,7 @@ SubscriberSink.prototype.error = function (e) {
 function unsubscribe(subscription) {
   return subscription.unsubscribe();
 }
-},{"../Stream":231,"../disposable/dispose":259,"../source/tryEvent":291}],268:[function(require,module,exports){
+},{"../Stream":456,"../disposable/dispose":484,"../source/tryEvent":516}],493:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76389,7 +82607,7 @@ function getObservable(o) {
 } /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
-},{"symbol-observable":294}],269:[function(require,module,exports){
+},{"symbol-observable":519}],494:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76483,7 +82701,7 @@ function throwError(e1, subscriber, throwError) {
     throwError(e1);
   }
 }
-},{"../disposable/dispose":259,"../fatalError":260,"../scheduler/defaultScheduler":276}],270:[function(require,module,exports){
+},{"../disposable/dispose":484,"../fatalError":485,"../scheduler/defaultScheduler":501}],495:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76552,7 +82770,7 @@ function disposeThen(end, error, disposable, x) {
     end(x);
   }, error);
 }
-},{"./disposable/dispose":259,"./scheduler/defaultScheduler":276}],271:[function(require,module,exports){
+},{"./disposable/dispose":484,"./scheduler/defaultScheduler":501}],496:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76562,7 +82780,7 @@ exports.default = ClockTimer;
 
 var _task = require('../task');
 
-/*global setTimeout, clearTimeout*/
+/* global setTimeout, clearTimeout */
 
 function ClockTimer() {} /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
@@ -76600,7 +82818,7 @@ function runAsap(f) {
   (0, _task.defer)(task);
   return task;
 }
-},{"../task":293}],272:[function(require,module,exports){
+},{"../task":518}],497:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76664,7 +82882,7 @@ function emit(t, x, sink) {
 function end(t, x, sink) {
   sink.end(t, x);
 }
-},{"../fatalError":260}],273:[function(require,module,exports){
+},{"../fatalError":485}],498:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -76695,7 +82913,7 @@ ScheduledTask.prototype.dispose = function () {
   this.scheduler.cancel(this);
   return this.task.dispose();
 };
-},{}],274:[function(require,module,exports){
+},{}],499:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76805,7 +83023,7 @@ Scheduler.prototype._runReadyTasks = function (now) {
   this.timeline.runTasks(now, _task.runTask);
   this._scheduleNextRun(this.now());
 };
-},{"../task":293,"./ScheduledTask":273}],275:[function(require,module,exports){
+},{"../task":518,"./ScheduledTask":498}],500:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76947,7 +83165,7 @@ function binarySearch(t, sortedArray) {
 function newTimeslot(t, events) {
   return { time: t, events: events };
 }
-},{"@most/prelude":204}],276:[function(require,module,exports){
+},{"@most/prelude":429}],501:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76973,7 +83191,7 @@ var defaultScheduler = new _Scheduler2.default(new _ClockTimer2.default(), new _
 /** @author John Hann */
 
 exports.default = defaultScheduler;
-},{"./ClockTimer":271,"./Scheduler":274,"./Timeline":275}],277:[function(require,module,exports){
+},{"./ClockTimer":496,"./Scheduler":499,"./Timeline":500}],502:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77073,7 +83291,7 @@ ErrorTask.prototype.run = function () {
 ErrorTask.prototype.error = function (e) {
   throw e;
 };
-},{"../task":293}],278:[function(require,module,exports){
+},{"../task":518}],503:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77113,7 +83331,7 @@ IndexSink.prototype.end = function (t, x) {
 };
 
 IndexSink.prototype.error = _Pipe2.default.prototype.error;
-},{"./Pipe":279}],279:[function(require,module,exports){
+},{"./Pipe":504}],504:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -77145,7 +83363,7 @@ Pipe.prototype.end = function (t, x) {
 Pipe.prototype.error = function (t, e) {
   return this.sink.error(t, e);
 };
-},{}],280:[function(require,module,exports){
+},{}],505:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -77185,7 +83403,7 @@ SafeSink.prototype.disable = function () {
   this.active = false;
   return this.sink;
 };
-},{}],281:[function(require,module,exports){
+},{}],506:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77248,7 +83466,7 @@ function disposeEventEmitter(info) {
   var target = info.target;
   target.source.removeListener(target.event, info.addEvent);
 }
-},{"../disposable/dispose":259,"../sink/DeferredSink":277,"./tryEvent":291}],282:[function(require,module,exports){
+},{"../disposable/dispose":484,"../sink/DeferredSink":502,"./tryEvent":516}],507:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77290,7 +83508,7 @@ function disposeEventTarget(info) {
   var target = info.target;
   target.source.removeEventListener(target.event, info.addEvent, target.capture);
 }
-},{"../disposable/dispose":259,"./tryEvent":291}],283:[function(require,module,exports){
+},{"../disposable/dispose":484,"./tryEvent":516}],508:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77378,7 +83596,7 @@ NeverSource.prototype.run = function () {
 };
 
 var NEVER = new _Stream2.default(new NeverSource());
-},{"../Stream":231,"../disposable/dispose":259,"../scheduler/PropagateTask":272}],284:[function(require,module,exports){
+},{"../Stream":456,"../disposable/dispose":484,"../scheduler/PropagateTask":497}],509:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77429,7 +83647,7 @@ function from(a) {
 } /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
-},{"../Stream":231,"../iterable":266,"../observable/fromObservable":267,"../observable/getObservable":268,"./fromArray":285,"./fromIterable":287,"@most/prelude":204}],285:[function(require,module,exports){
+},{"../Stream":456,"../iterable":491,"../observable/fromObservable":492,"../observable/getObservable":493,"./fromArray":510,"./fromIterable":512,"@most/prelude":429}],510:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77470,7 +83688,7 @@ function runProducer(t, array, sink) {
 
   this.active && sink.end(t);
 }
-},{"../Stream":231,"../scheduler/PropagateTask":272}],286:[function(require,module,exports){
+},{"../Stream":456,"../scheduler/PropagateTask":497}],511:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77521,7 +83739,7 @@ function fromEvent(event, source, capture) {
 } /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
-},{"../Stream":231,"./EventEmitterSource":281,"./EventTargetSource":282}],287:[function(require,module,exports){
+},{"../Stream":456,"./EventEmitterSource":506,"./EventTargetSource":507}],512:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77565,7 +83783,7 @@ function runProducer(t, iterator, sink) {
 
   sink.end(t, r.value);
 }
-},{"../Stream":231,"../iterable":266,"../scheduler/PropagateTask":272}],288:[function(require,module,exports){
+},{"../Stream":456,"../iterable":491,"../scheduler/PropagateTask":497}],513:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77650,7 +83868,7 @@ function error(generate, e) {
 Generate.prototype.dispose = function () {
   this.active = false;
 };
-},{"../Stream":231,"@most/prelude":204}],289:[function(require,module,exports){
+},{"../Stream":456,"@most/prelude":429}],514:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77726,7 +83944,7 @@ function stepIterate(iterate, x) {
 function continueIterate(iterate, x) {
   return !iterate.active ? iterate.value : stepIterate(iterate, x);
 }
-},{"../Stream":231}],290:[function(require,module,exports){
+},{"../Stream":456}],515:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77766,7 +83984,7 @@ function Periodic(period, value) {
 Periodic.prototype.run = function (sink, scheduler) {
   return scheduler.periodic(this.period, _PropagateTask2.default.event(this.value, sink));
 };
-},{"../Stream":231,"../scheduler/PropagateTask":272}],291:[function(require,module,exports){
+},{"../Stream":456,"../scheduler/PropagateTask":497}],516:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -77793,7 +84011,7 @@ function tryEnd(t, x, sink) {
     sink.error(t, e);
   }
 }
-},{}],292:[function(require,module,exports){
+},{}],517:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77874,7 +84092,7 @@ function continueUnfold(unfold, tuple) {
   }
   return stepUnfold(unfold, tuple.seed);
 }
-},{"../Stream":231}],293:[function(require,module,exports){
+},{"../Stream":456}],518:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -77897,10 +84115,7 @@ function runTask(task) {
     return task.error(e);
   }
 }
-},{}],294:[function(require,module,exports){
-module.exports = require('./lib/index');
-
-},{"./lib/index":295}],295:[function(require,module,exports){
+},{}],519:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -77932,7 +84147,7 @@ if (typeof self !== 'undefined') {
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ponyfill.js":296}],296:[function(require,module,exports){
+},{"./ponyfill.js":520}],520:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77956,7 +84171,7 @@ function symbolObservablePonyfill(root) {
 
 	return result;
 };
-},{}],297:[function(require,module,exports){
+},{}],521:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -78184,16 +84399,16 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":299}],298:[function(require,module,exports){
+},{"_process":523}],522:[function(require,module,exports){
 (function (process){
 'use strict';
 
 if (!process.version ||
     process.version.indexOf('v0.') === 0 ||
     process.version.indexOf('v1.') === 0 && process.version.indexOf('v1.8.') !== 0) {
-  module.exports = nextTick;
+  module.exports = { nextTick: nextTick };
 } else {
-  module.exports = process.nextTick;
+  module.exports = process
 }
 
 function nextTick(fn, arg1, arg2, arg3) {
@@ -78230,8 +84445,9 @@ function nextTick(fn, arg1, arg2, arg3) {
   }
 }
 
+
 }).call(this,require('_process'))
-},{"_process":299}],299:[function(require,module,exports){
+},{"_process":523}],523:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -78417,7 +84633,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],300:[function(require,module,exports){
+},{}],524:[function(require,module,exports){
 (function (global){
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 ;(function(root) {
@@ -78954,7 +85170,7 @@ process.umask = function() { return 0; };
 }(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],301:[function(require,module,exports){
+},{}],525:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -79040,7 +85256,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],302:[function(require,module,exports){
+},{}],526:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -79127,16 +85343,16 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],303:[function(require,module,exports){
+},{}],527:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":301,"./encode":302}],304:[function(require,module,exports){
+},{"./decode":525,"./encode":526}],528:[function(require,module,exports){
 module.exports = require('./lib/_stream_duplex.js');
 
-},{"./lib/_stream_duplex.js":305}],305:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":529}],529:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -79167,7 +85383,7 @@ module.exports = require('./lib/_stream_duplex.js');
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var processNextTick = require('process-nextick-args').nextTick;
 /*</replacement>*/
 
 /*<replacement>*/
@@ -79261,7 +85477,7 @@ function forEach(xs, f) {
     f(xs[i], i);
   }
 }
-},{"./_stream_readable":307,"./_stream_writable":309,"core-util-is":215,"inherits":218,"process-nextick-args":298}],306:[function(require,module,exports){
+},{"./_stream_readable":531,"./_stream_writable":533,"core-util-is":440,"inherits":443,"process-nextick-args":522}],530:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -79309,7 +85525,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":308,"core-util-is":215,"inherits":218}],307:[function(require,module,exports){
+},{"./_stream_transform":532,"core-util-is":440,"inherits":443}],531:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -79336,7 +85552,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var processNextTick = require('process-nextick-args').nextTick;
 /*</replacement>*/
 
 module.exports = Readable;
@@ -79363,9 +85579,8 @@ var EElistenerCount = function (emitter, type) {
 var Stream = require('./internal/streams/stream');
 /*</replacement>*/
 
-// TODO(bmeurer): Change this back to const once hole checks are
-// properly optimized away early in Ignition+TurboFan.
 /*<replacement>*/
+
 var Buffer = require('safe-buffer').Buffer;
 var OurUint8Array = global.Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
@@ -79374,6 +85589,7 @@ function _uint8ArrayToBuffer(chunk) {
 function _isUint8Array(obj) {
   return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
 }
+
 /*</replacement>*/
 
 /*<replacement>*/
@@ -79402,15 +85618,13 @@ var kProxyEvents = ['error', 'close', 'destroy', 'pause', 'resume'];
 function prependListener(emitter, event, fn) {
   // Sadly this is not cacheable as some libraries bundle their own
   // event emitter implementation with them.
-  if (typeof emitter.prependListener === 'function') {
-    return emitter.prependListener(event, fn);
-  } else {
-    // This is a hack to make sure that our error handler is attached before any
-    // userland ones.  NEVER DO THIS. This is here only because this code needs
-    // to continue to work with older versions of Node.js that do not include
-    // the prependListener() method. The goal is to eventually remove this hack.
-    if (!emitter._events || !emitter._events[event]) emitter.on(event, fn);else if (isArray(emitter._events[event])) emitter._events[event].unshift(fn);else emitter._events[event] = [fn, emitter._events[event]];
-  }
+  if (typeof emitter.prependListener === 'function') return emitter.prependListener(event, fn);
+
+  // This is a hack to make sure that our error handler is attached before any
+  // userland ones.  NEVER DO THIS. This is here only because this code needs
+  // to continue to work with older versions of Node.js that do not include
+  // the prependListener() method. The goal is to eventually remove this hack.
+  if (!emitter._events || !emitter._events[event]) emitter.on(event, fn);else if (isArray(emitter._events[event])) emitter._events[event].unshift(fn);else emitter._events[event] = [fn, emitter._events[event]];
 }
 
 function ReadableState(options, stream) {
@@ -79418,17 +85632,26 @@ function ReadableState(options, stream) {
 
   options = options || {};
 
+  // Duplex streams are both readable and writable, but share
+  // the same options object.
+  // However, some cases require setting options to different
+  // values for the readable and the writable sides of the duplex stream.
+  // These options can be provided separately as readableXXX and writableXXX.
+  var isDuplex = stream instanceof Duplex;
+
   // object stream flag. Used to make read(n) ignore n and to
   // make all the buffer merging and length checks go away
   this.objectMode = !!options.objectMode;
 
-  if (stream instanceof Duplex) this.objectMode = this.objectMode || !!options.readableObjectMode;
+  if (isDuplex) this.objectMode = this.objectMode || !!options.readableObjectMode;
 
   // the point at which it stops calling _read() to fill the buffer
   // Note: 0 is a valid value, means "don't call _read preemptively ever"
   var hwm = options.highWaterMark;
+  var readableHwm = options.readableHighWaterMark;
   var defaultHwm = this.objectMode ? 16 : 16 * 1024;
-  this.highWaterMark = hwm || hwm === 0 ? hwm : defaultHwm;
+
+  if (hwm || hwm === 0) this.highWaterMark = hwm;else if (isDuplex && (readableHwm || readableHwm === 0)) this.highWaterMark = readableHwm;else this.highWaterMark = defaultHwm;
 
   // cast to ints.
   this.highWaterMark = Math.floor(this.highWaterMark);
@@ -80123,18 +86346,19 @@ function flow(stream) {
 // This is *not* part of the readable stream interface.
 // It is an ugly unfortunate mess of history.
 Readable.prototype.wrap = function (stream) {
+  var _this = this;
+
   var state = this._readableState;
   var paused = false;
 
-  var self = this;
   stream.on('end', function () {
     debug('wrapped end');
     if (state.decoder && !state.ended) {
       var chunk = state.decoder.end();
-      if (chunk && chunk.length) self.push(chunk);
+      if (chunk && chunk.length) _this.push(chunk);
     }
 
-    self.push(null);
+    _this.push(null);
   });
 
   stream.on('data', function (chunk) {
@@ -80144,7 +86368,7 @@ Readable.prototype.wrap = function (stream) {
     // don't skip over falsy values in objectMode
     if (state.objectMode && (chunk === null || chunk === undefined)) return;else if (!state.objectMode && (!chunk || !chunk.length)) return;
 
-    var ret = self.push(chunk);
+    var ret = _this.push(chunk);
     if (!ret) {
       paused = true;
       stream.pause();
@@ -80165,12 +86389,12 @@ Readable.prototype.wrap = function (stream) {
 
   // proxy certain important events.
   for (var n = 0; n < kProxyEvents.length; n++) {
-    stream.on(kProxyEvents[n], self.emit.bind(self, kProxyEvents[n]));
+    stream.on(kProxyEvents[n], this.emit.bind(this, kProxyEvents[n]));
   }
 
   // when we try to consume some more bytes, simply unpause the
   // underlying stream.
-  self._read = function (n) {
+  this._read = function (n) {
     debug('wrapped _read', n);
     if (paused) {
       paused = false;
@@ -80178,7 +86402,7 @@ Readable.prototype.wrap = function (stream) {
     }
   };
 
-  return self;
+  return this;
 };
 
 // exposed for testing purposes only.
@@ -80319,7 +86543,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./_stream_duplex":305,"./internal/streams/BufferList":310,"./internal/streams/destroy":311,"./internal/streams/stream":312,"_process":299,"core-util-is":215,"events":216,"inherits":218,"isarray":220,"process-nextick-args":298,"safe-buffer":317,"string_decoder/":320,"util":211}],308:[function(require,module,exports){
+},{"./_stream_duplex":529,"./internal/streams/BufferList":534,"./internal/streams/destroy":535,"./internal/streams/stream":536,"_process":523,"core-util-is":440,"events":441,"inherits":443,"isarray":445,"process-nextick-args":522,"safe-buffer":541,"string_decoder/":544,"util":436}],532:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -80396,39 +86620,28 @@ util.inherits = require('inherits');
 
 util.inherits(Transform, Duplex);
 
-function TransformState(stream) {
-  this.afterTransform = function (er, data) {
-    return afterTransform(stream, er, data);
-  };
-
-  this.needTransform = false;
-  this.transforming = false;
-  this.writecb = null;
-  this.writechunk = null;
-  this.writeencoding = null;
-}
-
-function afterTransform(stream, er, data) {
-  var ts = stream._transformState;
+function afterTransform(er, data) {
+  var ts = this._transformState;
   ts.transforming = false;
 
   var cb = ts.writecb;
 
   if (!cb) {
-    return stream.emit('error', new Error('write callback called multiple times'));
+    return this.emit('error', new Error('write callback called multiple times'));
   }
 
   ts.writechunk = null;
   ts.writecb = null;
 
-  if (data !== null && data !== undefined) stream.push(data);
+  if (data != null) // single equals check for both `null` and `undefined`
+    this.push(data);
 
   cb(er);
 
-  var rs = stream._readableState;
+  var rs = this._readableState;
   rs.reading = false;
   if (rs.needReadable || rs.length < rs.highWaterMark) {
-    stream._read(rs.highWaterMark);
+    this._read(rs.highWaterMark);
   }
 }
 
@@ -80437,9 +86650,14 @@ function Transform(options) {
 
   Duplex.call(this, options);
 
-  this._transformState = new TransformState(this);
-
-  var stream = this;
+  this._transformState = {
+    afterTransform: afterTransform.bind(this),
+    needTransform: false,
+    transforming: false,
+    writecb: null,
+    writechunk: null,
+    writeencoding: null
+  };
 
   // start out asking for a readable event once data is transformed.
   this._readableState.needReadable = true;
@@ -80456,11 +86674,19 @@ function Transform(options) {
   }
 
   // When the writable side finishes, then flush out anything remaining.
-  this.once('prefinish', function () {
-    if (typeof this._flush === 'function') this._flush(function (er, data) {
-      done(stream, er, data);
-    });else done(stream);
-  });
+  this.on('prefinish', prefinish);
+}
+
+function prefinish() {
+  var _this = this;
+
+  if (typeof this._flush === 'function') {
+    this._flush(function (er, data) {
+      done(_this, er, data);
+    });
+  } else {
+    done(this, null, null);
+  }
 }
 
 Transform.prototype.push = function (chunk, encoding) {
@@ -80510,31 +86736,29 @@ Transform.prototype._read = function (n) {
 };
 
 Transform.prototype._destroy = function (err, cb) {
-  var _this = this;
+  var _this2 = this;
 
   Duplex.prototype._destroy.call(this, err, function (err2) {
     cb(err2);
-    _this.emit('close');
+    _this2.emit('close');
   });
 };
 
 function done(stream, er, data) {
   if (er) return stream.emit('error', er);
 
-  if (data !== null && data !== undefined) stream.push(data);
+  if (data != null) // single equals check for both `null` and `undefined`
+    stream.push(data);
 
   // if there's nothing in the write buffer, then that means
   // that nothing more will ever be provided
-  var ws = stream._writableState;
-  var ts = stream._transformState;
+  if (stream._writableState.length) throw new Error('Calling transform done when ws.length != 0');
 
-  if (ws.length) throw new Error('Calling transform done when ws.length != 0');
-
-  if (ts.transforming) throw new Error('Calling transform done when still transforming');
+  if (stream._transformState.transforming) throw new Error('Calling transform done when still transforming');
 
   return stream.push(null);
 }
-},{"./_stream_duplex":305,"core-util-is":215,"inherits":218}],309:[function(require,module,exports){
+},{"./_stream_duplex":529,"core-util-is":440,"inherits":443}],533:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -80565,7 +86789,7 @@ function done(stream, er, data) {
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var processNextTick = require('process-nextick-args').nextTick;
 /*</replacement>*/
 
 module.exports = Writable;
@@ -80617,6 +86841,7 @@ var Stream = require('./internal/streams/stream');
 /*</replacement>*/
 
 /*<replacement>*/
+
 var Buffer = require('safe-buffer').Buffer;
 var OurUint8Array = global.Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
@@ -80625,6 +86850,7 @@ function _uint8ArrayToBuffer(chunk) {
 function _isUint8Array(obj) {
   return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
 }
+
 /*</replacement>*/
 
 var destroyImpl = require('./internal/streams/destroy');
@@ -80638,18 +86864,27 @@ function WritableState(options, stream) {
 
   options = options || {};
 
+  // Duplex streams are both readable and writable, but share
+  // the same options object.
+  // However, some cases require setting options to different
+  // values for the readable and the writable sides of the duplex stream.
+  // These options can be provided separately as readableXXX and writableXXX.
+  var isDuplex = stream instanceof Duplex;
+
   // object stream flag to indicate whether or not this stream
   // contains buffers or objects.
   this.objectMode = !!options.objectMode;
 
-  if (stream instanceof Duplex) this.objectMode = this.objectMode || !!options.writableObjectMode;
+  if (isDuplex) this.objectMode = this.objectMode || !!options.writableObjectMode;
 
   // the point at which write() starts returning false
   // Note: 0 is a valid value, means that we always return false if
   // the entire buffer is not flushed immediately on write()
   var hwm = options.highWaterMark;
+  var writableHwm = options.writableHighWaterMark;
   var defaultHwm = this.objectMode ? 16 : 16 * 1024;
-  this.highWaterMark = hwm || hwm === 0 ? hwm : defaultHwm;
+
+  if (hwm || hwm === 0) this.highWaterMark = hwm;else if (isDuplex && (writableHwm || writableHwm === 0)) this.highWaterMark = writableHwm;else this.highWaterMark = defaultHwm;
 
   // cast to ints.
   this.highWaterMark = Math.floor(this.highWaterMark);
@@ -80763,6 +86998,7 @@ if (typeof Symbol === 'function' && Symbol.hasInstance && typeof Function.protot
   Object.defineProperty(Writable, Symbol.hasInstance, {
     value: function (object) {
       if (realHasInstance.call(this, object)) return true;
+      if (this !== Writable) return false;
 
       return object && object._writableState instanceof WritableState;
     }
@@ -80840,7 +87076,7 @@ function validChunk(stream, state, chunk, cb) {
 Writable.prototype.write = function (chunk, encoding, cb) {
   var state = this._writableState;
   var ret = false;
-  var isBuf = _isUint8Array(chunk) && !state.objectMode;
+  var isBuf = !state.objectMode && _isUint8Array(chunk);
 
   if (isBuf && !Buffer.isBuffer(chunk)) {
     chunk = _uint8ArrayToBuffer(chunk);
@@ -81052,6 +87288,7 @@ function clearBuffer(stream, state) {
     } else {
       state.corkedRequestsFree = new CorkedRequest(state);
     }
+    state.bufferedRequestCount = 0;
   } else {
     // Slow case, write chunks one-by-one
     while (entry) {
@@ -81062,6 +87299,7 @@ function clearBuffer(stream, state) {
 
       doWrite(stream, state, false, len, chunk, encoding, cb);
       entry = entry.next;
+      state.bufferedRequestCount--;
       // if we didn't call the onwrite immediately, then
       // it means that we need to wait until it does.
       // also, that means that the chunk and cb are currently
@@ -81074,7 +87312,6 @@ function clearBuffer(stream, state) {
     if (entry === null) state.lastBufferedRequest = null;
   }
 
-  state.bufferedRequestCount = 0;
   state.bufferedRequest = entry;
   state.bufferProcessing = false;
 }
@@ -81201,15 +87438,13 @@ Writable.prototype._destroy = function (err, cb) {
   cb(err);
 };
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./_stream_duplex":305,"./internal/streams/destroy":311,"./internal/streams/stream":312,"_process":299,"core-util-is":215,"inherits":218,"process-nextick-args":298,"safe-buffer":317,"util-deprecate":329}],310:[function(require,module,exports){
+},{"./_stream_duplex":529,"./internal/streams/destroy":535,"./internal/streams/stream":536,"_process":523,"core-util-is":440,"inherits":443,"process-nextick-args":522,"safe-buffer":541,"util-deprecate":553}],534:[function(require,module,exports){
 'use strict';
-
-/*<replacement>*/
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Buffer = require('safe-buffer').Buffer;
-/*</replacement>*/
+var util = require('util');
 
 function copyBuffer(src, target, offset) {
   src.copy(target, offset);
@@ -81276,12 +87511,19 @@ module.exports = function () {
 
   return BufferList;
 }();
-},{"safe-buffer":317}],311:[function(require,module,exports){
+
+if (util && util.inspect && util.inspect.custom) {
+  module.exports.prototype[util.inspect.custom] = function () {
+    var obj = util.inspect({ length: this.length });
+    return this.constructor.name + ' ' + obj;
+  };
+}
+},{"safe-buffer":541,"util":436}],535:[function(require,module,exports){
 'use strict';
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var processNextTick = require('process-nextick-args').nextTick;
 /*</replacement>*/
 
 // undocumented cb() API, needed for core, not for public API
@@ -81297,7 +87539,7 @@ function destroy(err, cb) {
     } else if (err && (!this._writableState || !this._writableState.errorEmitted)) {
       processNextTick(emitErrorNT, this, err);
     }
-    return;
+    return this;
   }
 
   // we set destroyed to true before firing error callbacks in order
@@ -81322,6 +87564,8 @@ function destroy(err, cb) {
       cb(err);
     }
   });
+
+  return this;
 }
 
 function undestroy() {
@@ -81349,13 +87593,13 @@ module.exports = {
   destroy: destroy,
   undestroy: undestroy
 };
-},{"process-nextick-args":298}],312:[function(require,module,exports){
+},{"process-nextick-args":522}],536:[function(require,module,exports){
 module.exports = require('events').EventEmitter;
 
-},{"events":216}],313:[function(require,module,exports){
+},{"events":441}],537:[function(require,module,exports){
 module.exports = require('./readable').PassThrough
 
-},{"./readable":314}],314:[function(require,module,exports){
+},{"./readable":538}],538:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = exports;
 exports.Readable = exports;
@@ -81364,13 +87608,13 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":305,"./lib/_stream_passthrough.js":306,"./lib/_stream_readable.js":307,"./lib/_stream_transform.js":308,"./lib/_stream_writable.js":309}],315:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":529,"./lib/_stream_passthrough.js":530,"./lib/_stream_readable.js":531,"./lib/_stream_transform.js":532,"./lib/_stream_writable.js":533}],539:[function(require,module,exports){
 module.exports = require('./readable').Transform
 
-},{"./readable":314}],316:[function(require,module,exports){
+},{"./readable":538}],540:[function(require,module,exports){
 module.exports = require('./lib/_stream_writable.js');
 
-},{"./lib/_stream_writable.js":309}],317:[function(require,module,exports){
+},{"./lib/_stream_writable.js":533}],541:[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
 var Buffer = buffer.Buffer
@@ -81434,9 +87678,9 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":214}],318:[function(require,module,exports){
-arguments[4][97][0].apply(exports,arguments)
-},{"buffer":214,"dup":97,"stream":319,"string_decoder":213}],319:[function(require,module,exports){
+},{"buffer":439}],542:[function(require,module,exports){
+arguments[4][233][0].apply(exports,arguments)
+},{"buffer":439,"dup":233,"stream":543,"string_decoder":438}],543:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -81565,7 +87809,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":216,"inherits":218,"readable-stream/duplex.js":304,"readable-stream/passthrough.js":313,"readable-stream/readable.js":314,"readable-stream/transform.js":315,"readable-stream/writable.js":316}],320:[function(require,module,exports){
+},{"events":441,"inherits":443,"readable-stream/duplex.js":528,"readable-stream/passthrough.js":537,"readable-stream/readable.js":538,"readable-stream/transform.js":539,"readable-stream/writable.js":540}],544:[function(require,module,exports){
 'use strict';
 
 var Buffer = require('safe-buffer').Buffer;
@@ -81838,7 +88082,7 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
-},{"safe-buffer":317}],321:[function(require,module,exports){
+},{"safe-buffer":541}],545:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -81889,7 +88133,7 @@ Object.defineProperty(exports, 'Vector', {
     return _vector.Vector;
   }
 });
-},{"./line":322,"./matrix":323,"./plane":324,"./sylvester":325,"./vector":326}],322:[function(require,module,exports){
+},{"./line":546,"./matrix":547,"./plane":548,"./sylvester":549,"./vector":550}],546:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -82443,7 +88687,7 @@ Line.X = Line.create(_vector.Vector.Zero(3), _vector.Vector.i);
 Line.Y = Line.create(_vector.Vector.Zero(3), _vector.Vector.j);
 Line.Z = Line.create(_vector.Vector.Zero(3), _vector.Vector.k);
 Line.Segment = Segment;
-},{"./matrix":323,"./plane":324,"./sylvester":325,"./vector":326}],323:[function(require,module,exports){
+},{"./matrix":547,"./plane":548,"./sylvester":549,"./vector":550}],547:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -83832,7 +90076,7 @@ var Matrix = exports.Matrix = function () {
 Matrix.prototype.svd = Matrix.prototype.svdJs;
 Matrix.prototype.qr = Matrix.prototype.qrJs;
 Matrix.prototype.lu = Matrix.prototype.luJs;
-},{"./sylvester":325,"./vector":326,"fs":212}],324:[function(require,module,exports){
+},{"./sylvester":549,"./vector":550,"fs":437}],548:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -84222,7 +90466,7 @@ var Plane = exports.Plane = function () {
 Plane.XY = Plane.YX = Plane.create(_vector.Vector.Zero(3), _vector.Vector.k);
 Plane.YZ = Plane.ZY = Plane.create(_vector.Vector.Zero(3), _vector.Vector.i);
 Plane.ZX = Plane.XZ = Plane.create(_vector.Vector.Zero(3), _vector.Vector.j);
-},{"./line":322,"./matrix":323,"./sylvester":325,"./vector":326}],325:[function(require,module,exports){
+},{"./line":546,"./matrix":547,"./sylvester":549,"./vector":550}],549:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -84260,7 +90504,7 @@ var DimensionalityMismatchError = exports.DimensionalityMismatchError = function
 
   return DimensionalityMismatchError;
 }(Error);
-},{}],326:[function(require,module,exports){
+},{}],550:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -85042,7 +91286,7 @@ Vector.prototype.dup = function () {
     return x;
   });
 };
-},{"./matrix":323,"./sylvester":325}],327:[function(require,module,exports){
+},{"./matrix":547,"./sylvester":549}],551:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -85776,7 +92020,7 @@ Url.prototype.parseHost = function() {
   if (host) this.hostname = host;
 };
 
-},{"./util":328,"punycode":300,"querystring":303}],328:[function(require,module,exports){
+},{"./util":552,"punycode":524,"querystring":527}],552:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -85794,7 +92038,7 @@ module.exports = {
   }
 };
 
-},{}],329:[function(require,module,exports){
+},{}],553:[function(require,module,exports){
 (function (global){
 
 /**
@@ -85865,7 +92109,7 @@ function config (name) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],330:[function(require,module,exports){
+},{}],554:[function(require,module,exports){
 (function (global){
 module.exports = get_blob()
 
@@ -85897,18 +92141,18 @@ function get_blob() {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],331:[function(require,module,exports){
-arguments[4][98][0].apply(exports,arguments)
-},{"dup":98}],332:[function(require,module,exports){
-arguments[4][99][0].apply(exports,arguments)
-},{"./dom":333,"./sax":334,"dup":99}],333:[function(require,module,exports){
-arguments[4][100][0].apply(exports,arguments)
-},{"dup":100}],334:[function(require,module,exports){
-arguments[4][101][0].apply(exports,arguments)
-},{"dup":101}],335:[function(require,module,exports){
+},{}],555:[function(require,module,exports){
+arguments[4][234][0].apply(exports,arguments)
+},{"dup":234}],556:[function(require,module,exports){
+arguments[4][235][0].apply(exports,arguments)
+},{"./dom":557,"./sax":558,"dup":235}],557:[function(require,module,exports){
+arguments[4][236][0].apply(exports,arguments)
+},{"dup":236}],558:[function(require,module,exports){
+arguments[4][237][0].apply(exports,arguments)
+},{"dup":237}],559:[function(require,module,exports){
 module.exports={
   "name": "@jscad/web",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "Web UI for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
@@ -85941,9 +92185,9 @@ module.exports={
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/core": "^0.0.2",
+    "@jscad/core": "^0.1.0",
     "@jscad/csg": "0.5.2",
-    "@jscad/examples": "^1.6.2",
+    "@jscad/examples": "^1.7.0",
     "@jscad/io": "0.3.7",
     "@jscad/openscad-openjscad-translator": "0.0.10",
     "astring": "^1.0.2",
@@ -85978,7 +92222,7 @@ module.exports={
   }
 }
 
-},{}],336:[function(require,module,exports){
+},{}],560:[function(require,module,exports){
 'use strict';
 
 // conversion worker.js
@@ -86075,7 +92319,7 @@ module.exports = function (self) {
   };
 };
 
-},{"@jscad/io":161,"@jscad/openscad-openjscad-translator":189}],337:[function(require,module,exports){
+},{"@jscad/io":250,"@jscad/openscad-openjscad-translator":312}],561:[function(require,module,exports){
 'use strict';
 
 // ui-worker.js
@@ -86110,7 +92354,7 @@ function createConversionWorker(onDone) {
 
 module.exports = { createConversionWorker: createConversionWorker };
 
-},{"./conversionWorker.js":336,"webworkify":331}],338:[function(require,module,exports){
+},{"./conversionWorker.js":560,"webworkify":555}],562:[function(require,module,exports){
 'use strict';
 
 var generateOutputFileBlobUrl = require('../io/generateOutputFileBlobUrl');
@@ -86128,7 +92372,7 @@ module.exports = {
   generateOutputFile: generateOutputFile
 };
 
-},{"../io/generateOutputFileBlobUrl":339,"../io/generateOutputFileFileSystem":340}],339:[function(require,module,exports){
+},{"../io/generateOutputFileBlobUrl":563,"../io/generateOutputFileFileSystem":564}],563:[function(require,module,exports){
 'use strict';
 
 var _require = require('./utils'),
@@ -86156,7 +92400,7 @@ module.exports = function generateOutputFileBlobUrl(extension, blob, callback) {
   }
 };
 
-},{"./utils":341}],340:[function(require,module,exports){
+},{"./utils":565}],564:[function(require,module,exports){
 'use strict';
 
 var FileSystemApiErrorHandler = require('./utils');
@@ -86195,7 +92439,7 @@ module.exports = function generateOutputFileFileSystem(extension, blob, callback
   });
 };
 
-},{"./utils":341}],341:[function(require,module,exports){
+},{"./utils":565}],565:[function(require,module,exports){
 'use strict';
 
 function isSafari() {
@@ -86243,7 +92487,7 @@ module.exports = {
   FileSystemApiErrorHandler: FileSystemApiErrorHandler
 };
 
-},{}],342:[function(require,module,exports){
+},{}],566:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -86274,12 +92518,12 @@ module.exports = {
   status: status
 };
 
-},{}],343:[function(require,module,exports){
+},{}],567:[function(require,module,exports){
 'use strict';
 
 var log = require('./log');
 var getParameterDefinitions = require('@jscad/core/parameters/getParameterDefinitions');
-var getParameterValues = require('@jscad/core/parameters/getParameterValues');
+var getParameterValues = require('@jscad/core/parameters/getParameterValuesFromUIControls');
 
 var _require = require('@jscad/core/code-evaluation/rebuildSolids'),
     _rebuildSolids = _require.rebuildSolids,
@@ -87068,7 +93312,7 @@ Processor.prototype = {
 
 module.exports = Processor;
 
-},{"../io/generateOutputFile":338,"../io/utils":341,"../ui/viewer/jscad-viewer":357,"./log":342,"@jscad/core/code-evaluation/rebuildSolids":1,"@jscad/core/io/convertToBlob":6,"@jscad/core/io/formats":7,"@jscad/core/io/prepareOutput":8,"@jscad/core/parameters/getParameterDefinitions":102,"@jscad/core/parameters/getParameterValues":103,"@jscad/core/utils/mergeSolids":105}],344:[function(require,module,exports){
+},{"../io/generateOutputFile":562,"../io/utils":565,"../ui/viewer/jscad-viewer":581,"./log":566,"@jscad/core/code-evaluation/rebuildSolids":1,"@jscad/core/io/convertToBlob":6,"@jscad/core/io/formats":7,"@jscad/core/io/prepareOutput":8,"@jscad/core/parameters/getParameterDefinitions":238,"@jscad/core/parameters/getParameterValuesFromUIControls":239,"@jscad/core/utils/mergeSolids":241}],568:[function(require,module,exports){
 'use strict';
 
 // ui-cookies.js
@@ -87119,7 +93363,7 @@ module.exports = {
   deleteCookie: deleteCookie
 };
 
-},{}],345:[function(require,module,exports){
+},{}],569:[function(require,module,exports){
 'use strict';
 
 function isChrome() {
@@ -87139,7 +93383,7 @@ module.exports = {
   detectBrowser: detectBrowser
 };
 
-},{}],346:[function(require,module,exports){
+},{}],570:[function(require,module,exports){
 'use strict';
 
 /**
@@ -87213,7 +93457,7 @@ module.exports = {
   hasDragDropSupport: hasDragDropSupport
 };
 
-},{}],347:[function(require,module,exports){
+},{}],571:[function(require,module,exports){
 'use strict';
 
 // ui-drag-drop.js
@@ -87523,7 +93767,7 @@ module.exports = {
   setupDragDrop: setupDragDrop
 };
 
-},{"../../../package.json":335,"../../io/createConversionWorker":337,"../editor":349,"./helpers":346,"./walkFileTree":348}],348:[function(require,module,exports){
+},{"../../../package.json":559,"../../io/createConversionWorker":561,"../editor":573,"./helpers":570,"./walkFileTree":572}],572:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -87643,7 +93887,7 @@ function walkFileTree(items) {
   return processItems(items);
 }
 
-},{"./helpers":346,"@jscad/core/io/formats":7}],349:[function(require,module,exports){
+},{"./helpers":570,"@jscad/core/io/formats":7}],573:[function(require,module,exports){
 'use strict';
 
 // ui-editor.js
@@ -87817,7 +94061,7 @@ module.exports = {
   getSourceFromEditor: getSourceFromEditor
 };
 
-},{"@jscad/openscad-openjscad-translator":189,"brace":206,"brace/mode/javascript":207,"brace/mode/scad":208,"brace/theme/chrome":209}],350:[function(require,module,exports){
+},{"@jscad/openscad-openjscad-translator":312,"brace":431,"brace/mode/javascript":432,"brace/mode/scad":433,"brace/theme/chrome":434}],574:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -87862,7 +94106,7 @@ function AlertUserOfUncaughtExceptions() {
 
 module.exports = AlertUserOfUncaughtExceptions;
 
-},{}],351:[function(require,module,exports){
+},{}],575:[function(require,module,exports){
 'use strict';
 
 var _require = require('../io/createConversionWorker'),
@@ -88079,7 +94323,7 @@ module.exports = {
   loadInitialExample: loadInitialExample
 };
 
-},{"../../package.json":335,"../io/createConversionWorker":337,"./editor":349,"url":327}],352:[function(require,module,exports){
+},{"../../package.json":559,"../io/createConversionWorker":561,"./editor":573,"url":551}],576:[function(require,module,exports){
 'use strict';
 
 // == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
@@ -88340,7 +94584,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
   init();
 });
 
-},{"../../package.json":335,"../jscad/processor":343,"./detectBrowser":345,"./dragDrop/ui-drag-drop":347,"./editor":349,"./errorDispatcher":350,"./examples":351,"./options":353,"./urlHelpers":354}],353:[function(require,module,exports){
+},{"../../package.json":559,"../jscad/processor":567,"./detectBrowser":569,"./dragDrop/ui-drag-drop":571,"./editor":573,"./errorDispatcher":574,"./examples":575,"./options":577,"./urlHelpers":578}],577:[function(require,module,exports){
 'use strict';
 
 var _require = require('./cookies'),
@@ -88460,7 +94704,7 @@ module.exports = {
   createOptions: createOptions
 };
 
-},{"./cookies":344}],354:[function(require,module,exports){
+},{"./cookies":568}],578:[function(require,module,exports){
 'use strict';
 
 // this is a bit of a hack; doesn't properly supports urls that start with '/'
@@ -88539,7 +94783,7 @@ module.exports = {
   getUrlParams: getUrlParams
 };
 
-},{}],355:[function(require,module,exports){
+},{}],579:[function(require,module,exports){
 'use strict';
 
 /**
@@ -88599,7 +94843,7 @@ module.exports = {
   parseColor: parseColor
 };
 
-},{}],356:[function(require,module,exports){
+},{}],580:[function(require,module,exports){
 'use strict';
 
 var _require = require('most-gestures'),
@@ -89085,7 +95329,7 @@ LightGLEngine.prototype = {
 
 module.exports = LightGLEngine;
 
-},{"./jscad-viewer-helpers":355,"./lightgl":358,"most-gestures":223}],357:[function(require,module,exports){
+},{"./jscad-viewer-helpers":579,"./lightgl":582,"most-gestures":448}],581:[function(require,module,exports){
 'use strict';
 
 var LightGLEngine = require('./jscad-viewer-lightgl');
@@ -89302,7 +95546,7 @@ Viewer.prototype = {
 
 module.exports = Viewer;
 
-},{"./jscad-viewer-helpers":355,"./jscad-viewer-lightgl":356}],358:[function(require,module,exports){
+},{"./jscad-viewer-helpers":579,"./jscad-viewer-lightgl":580}],582:[function(require,module,exports){
 'use strict';
 
 /*
@@ -91530,4 +97774,4 @@ var GL = function () {
 
 module.exports = GL;
 
-},{}]},{},[352]);
+},{}]},{},[576]);

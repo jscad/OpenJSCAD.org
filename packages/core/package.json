@@ -1,6 +1,6 @@
 {
   "name": "@jscad/core",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "reuseable utilities for the various jscad user interfaces",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "module.js",
