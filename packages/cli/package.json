@@ -8,7 +8,6 @@
   },
   "scripts": {
     "test": "ava './*.test.js' --verbose --timeout 10000",
-    "build-all": "npm run build-web && npm run build-min && npm run build-opt",
     "preversion": "npm test",
     "version": "git add -A ",
     "postversion": "git push origin master && git push origin master --tags",

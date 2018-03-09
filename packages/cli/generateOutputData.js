@@ -4,8 +4,12 @@ const { prepareOutput } = require('@jscad/core/io/prepareOutput')
 const { convertToBlob } = require('@jscad/core/io/convertToBlob')
 const { rebuildSolids } = require('@jscad/core/code-evaluation/rebuildSolids')
 const { resolveIncludesFs } = require('@jscad/core/code-loading/resolveIncludesFs')
-const getParameterDefinitionsCLI = require('./getParameterDefinitionsCLI')
+const getParameterValuesFromParameters = require('@jscad/core/parameters/getParameterValuesFromParameters')
 const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
+
+const isCommonJsModule = require('@jscad/core/code-loading/isCommonJsModule')
+const requireDesignFromModule = require('@jscad/core/code-loading/requireDesignFromModule')
+const registerJscadExtension = require('@jscad/core/code-loading/registerJscadExtension')
 
 /**
  * generate output data from source
@@ -31,7 +35,7 @@ function generateOutputData (source, params, options) {
   if (implicitGlobals) {
     globals.oscad = oscad
   }
-  globals.extras = {cli: {getParameterDefinitionsCLI}}
+  globals.extras = {cli: {getParameterValuesFromParameters}}
 
   // objects = rebuildSolid(source, '', params, globals, callback)
   return new Promise(function (resolve, reject) {
@@ -64,24 +68,39 @@ function generateOutputData (source, params, options) {
     // convert any inputs
     source = conversionTable[inputFormat]({source, params, options})
 
+    // EXPERIMENTAL commonjs module support
+    const scriptIsCommonJsModule = isCommonJsModule(source)
+    if (scriptIsCommonJsModule && (inputFormat === 'jscad' || inputFormat === 'js') &&
+    outputFormat !== 'jscad' && outputFormat !== 'js') {
+      // setup support for require-ing files with .jscad extension
+      registerJscadExtension()
+      // console.log('scriptIsCommonJsModule', scriptIsCommonJsModule)
+      const design = requireDesignFromModule(inputPath, undefined)
+      // console.log('definitions', design.parameterDefinitions, 'values', design.parameterValues, design.main, design.getParameterDefinitions)
+      let {parameterValues} = require('@jscad/core/parameters/getParameterDefinitionsAndValues')(design, params)
+      const value = design.main(parameterValues)
+      resolve(value)
+      return
+    }
+
     // extract the array of parameter definitions
-    const parameterDefinitions = getParameterDefinitionsForReal(source)
+    const parameterDefinitions = getParameterDefinitions(source)
     // get the actual parameters, correctly cast to the right types etc based on the definitions above
     params = applyParameterDefinitions(params, parameterDefinitions)
 
-    // modify main to adapt parameters 
-    // NOTE: this (getParameterDefinitionsCLI) also combines specified params with defaults
+    // modify main to adapt parameters
+    // NOTE: this (getParameterValuesFromParameters) also combines specified params with defaults
     const mainFunction = `
     //only add this wrapper if not already present & we are not in command-line mode
-    if(typeof wrappedMain === 'undefined' && typeof getParameterDefinitionsCLI !== 'undefined'){
+    if(typeof wrappedMain === 'undefined' && typeof getParameterValuesFromParameters !== 'undefined'){
       const wrappedMain = main
       main = function(){
         var paramsDefinition = (typeof getParameterDefinitions !== 'undefined') ? getParameterDefinitions : undefined
-        return wrappedMain(getParameterDefinitionsCLI(paramsDefinition, ${JSON.stringify(params)}))
+        return wrappedMain(getParameterValuesFromParameters(paramsDefinition, ${JSON.stringify(params)}))
       }
     }
     `
-    source = inputFormat === 'jscad' ? `${source}
+    source = (inputFormat === 'jscad' || inputFormat === 'js') ? `${source}
     ${mainFunction}` : source
 
     if (outputFormat === 'jscad' || outputFormat === 'js') {
@@ -99,7 +118,7 @@ function generateOutputData (source, params, options) {
 }
 
 // actually get parameter definitions
-function getParameterDefinitionsForReal (script) {
+function getParameterDefinitions (script) {
   let script1 = "if(typeof(getParameterDefinitions) == 'function') {return getParameterDefinitions();} else {return [];} "
   script1 += script
   const f = new Function(script1)

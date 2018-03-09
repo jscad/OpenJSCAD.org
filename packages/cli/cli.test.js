@@ -26,6 +26,22 @@ test.beforeEach(t => {
   }
 })
 
+test('require() support', t => {
+  const jscadPath = t.context.jscadPath
+  const designPath = path.join(examplesPath, '/module-design')
+  const outputPath = 'test.stl'
+  const expPath = outputPath
+  t.context = {outputPath}
+
+  // first install the module's dependencies, just in case
+  execSync('npm install', {cwd: designPath})
+  // note that in this case, we pass a FOLDER to the CLI, not a file
+  const cmd = `node ${jscadPath} ${designPath} --size 12.4 -o ${outputPath} -of stla`
+  execSync(cmd, {stdio: [0, 1, 2]})
+  t.deepEqual(true, fs.existsSync(expPath))
+  almostEquals(t, fs.statSync(outputPath).size, 1121, 2)
+})
+
 test('jscad (basic, input file only)', t => {
   const jscadPath = t.context.jscadPath
   const inputPath = path.join(examplesPath, '/logo.jscad')
@@ -195,7 +211,7 @@ test('echo() support', t => {
   const cmd = `node ${jscadPath} ${inputPath} -o ${outputPath} -of jscad`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(outputPath).size, 671, 2)
+  almostEquals(t, fs.statSync(outputPath).size, 683, 2)
 })
 
 test('include support', t => {
