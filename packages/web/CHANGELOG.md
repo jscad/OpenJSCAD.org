@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.8.0"></a>
+# [1.8.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@1.7.0...@jscad/web@1.8.0) (2018-03-10)
+
+
+### Features
+
+* **dxf input support:** add support of dxf files as inputs ([#361](https://github.com/jscad/OpenJSCAD.org/issues/361)) ([bfd2835](https://github.com/jscad/OpenJSCAD.org/commit/bfd2835))
+
+
+
+
 <a name="1.7.0"></a>
 # [1.7.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@1.6.2...@jscad/web@1.7.0) (2018-03-09)
 
