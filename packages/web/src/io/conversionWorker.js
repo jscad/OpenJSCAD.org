@@ -23,8 +23,6 @@
 //
 // NOTE: Additional scripts (libraries) are imported only if necessary
 
-
-
 module.exports = function (self) {
   self.onmessage = function (e) {
     var r = { source: '', converted: '', filename: '', baseurl: '', cache: false }
@@ -81,6 +79,10 @@ module.exports = function (self) {
             case 'json':
               const deserializeJson = require('@jscad/io').jsonDeSerializer.deserialize
               r.source = r.converted = deserializeJson(data.source, data.filename, options)
+              break
+            case 'dxf':
+              const deserializeDXF = require('@jscad/io').dxfDeSerializer.deserialize
+              r.source = r.converted = deserializeDXF(data.source, data.filename, options)
               break
             default:
               r.source = r.converted = '// Invalid file type in conversion (' + e + ')'

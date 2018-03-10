@@ -90,6 +90,7 @@ const conversionFormats = [
   'obj',
   'scad',
   'stl',
+  'dxf',
 // 2D file formats
   'svg'
 ]

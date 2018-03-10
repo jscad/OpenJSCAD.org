@@ -24,7 +24,8 @@ function generateOutputData (source, params, options) {
     outputFile: undefined,
     outputFormat: 'stl',
     inputFile: '',
-    version: ''
+    version: '',
+    addMetaData: true
   }
   options = Object.assign({}, defaults, options)
   const {implicitGlobals, outputFile, outputFormat, inputFile, inputFormat, version} = options
@@ -53,6 +54,7 @@ function generateOutputData (source, params, options) {
       gcode: data => require('@jscad/io').gcodeDeSerializer.deserialize(data.source, data.inputFile, options),
       stl: data => require('@jscad/io').stlDeSerializer.deserialize(data.source, data.inputFile, options),
       svg: data => require('@jscad/io').svgDeSerializer.deserialize(data.source, data.inputFile, options),
+      dxf: data => require('@jscad/io').dxfDeSerializer.deserialize(data.source, data.inputFile, options),
       json: data => require('@jscad/io').jsonDeSerializer.deserialize(data.source, data.inputFile, options),
       jscad: data => data.source,
       js: data => data.source,
