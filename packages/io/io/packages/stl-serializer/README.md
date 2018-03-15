@@ -32,7 +32,7 @@ npm install @jscad/stl-serializer
 ```javascript
 const stlSerializer = require('@jscad/stl-serializer')
 
-const rawData = stlSerializer.serializ(CSGObject)
+const rawData = stlSerializer.serialize(CSGObject)
 
 //in browser (with browserify etc)
 const blob = new Blob(rawData)
