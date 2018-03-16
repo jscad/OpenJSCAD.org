@@ -1,3 +1,13 @@
+<a name="0.5.4"></a>
+## [0.5.4](https://github.com/jscad/csg.js/compare/v0.5.3...v0.5.4) (2018-03-16)
+
+
+### Bug Fixes
+
+* **center:** Correcting center() functionality ([#97](https://github.com/jscad/csg.js/issues/97)) ([52e792d](https://github.com/jscad/csg.js/commit/52e792d))
+
+
+
 <a name="0.5.3"></a>
 ## [0.5.3](https://github.com/jscad/csg.js/compare/v0.5.2...v0.5.3) (2018-02-13)
 

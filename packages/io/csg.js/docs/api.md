@@ -39,9 +39,8 @@
 ## Functions
 
 <dl>
-<dt><a href="#center">center(object(s), options)</a></dt>
-<dd><p>NOTE: this is not functional YET !!
-centers the given object(s) on the given axis</p>
+<dt><a href="#center">center([options], objects)</a> ⇒ <code>Object</code> | <code>Array</code></dt>
+<dd><p>Centers the given object(s) using the given options (if any)</p>
 </dd>
 <dt><a href="#clone">clone(obj)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>clone the given object</p>
@@ -165,8 +164,8 @@ See OrthoNormalBasis.GetCartesian for details.</p>
 <dt><a href="#transform">transform(matrix, ...objects)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>apply the given matrix transform to the given objects</p>
 </dd>
-<dt><a href="#center">center(axis, ...objects)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
-<dd><p>center an object in 2D/3D space</p>
+<dt><a href="#center">center(axes, ...object)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
+<dd><p>Center the given object(s) about the given axes</p>
 </dd>
 <dt><a href="#mirror">mirror(vector, ...objects)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>mirror an object in 2D/3D space</p>
@@ -947,17 +946,23 @@ Epsilon used during determination of near zero areas.
 **Kind**: global constant  
 <a name="center"></a>
 
-## center(object(s), options)
-NOTE: this is not functional YET !!
-centers the given object(s) on the given axis
+## center([options], objects) ⇒ <code>Object</code> \| <code>Array</code>
+Centers the given object(s) using the given options (if any)
 
 **Kind**: global function  
+**Returns**: <code>Object</code> \| <code>Array</code> - objects  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| object(s) | <code>Object</code> \| <code>Array</code> | the shapes to center |
-| options | <code>Object</code> |  |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [options] | <code>Object</code> |  | options for centering |
+| [options.axes] | <code>Array</code> | <code>[true,true,true]</code> | axis of which to center, true or false |
+| [options.center] | <code>Array</code> | <code>[0,0,0]</code> | point of which to center the object upon |
+| objects | <code>Object</code> \| <code>Array</code> |  | the shape(s) to center |
 
+**Example**  
+```js
+let csg = center({axes: [true,false,false]}, sphere()) // center about the X axis
+```
 <a name="clone"></a>
 
 ## clone(obj) ⇒ [<code>CSG</code>](#CSG)
@@ -1411,20 +1416,20 @@ sin(angle),  cos(angle), 0, 20,
 ```
 <a name="center"></a>
 
-## center(axis, ...objects) ⇒ [<code>CSG</code>](#CSG)
-center an object in 2D/3D space
+## center(axes, ...object) ⇒ [<code>CSG</code>](#CSG)
+Center the given object(s) about the given axes
 
 **Kind**: global function  
 **Returns**: [<code>CSG</code>](#CSG) - new CSG object , translated by the given amount  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| axis | <code>Boolean</code> \| <code>Array</code> | either an array or single boolean to indicate which axis you want to center on |
-| ...objects | <code>Object(s)</code> \| <code>Array</code> | either a single or multiple CSG/CAG objects to translate |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| axes | <code>Array</code> \| <code>Boolean</code> | <code>[true,true,true]|true</code> | an array of boolean values that indicate the axes (X,Y,Z) to center upon. A single boolean is also allowed. |
+| ...object | <code>Object</code> |  | one or more objects to center, i.e. objects are CSG or CAG |
 
 **Example**  
 ```js
-let movedSphere = center(false, sphere())
+let csg = center([true,false,false], sphere()) // center about the X axis
 ```
 <a name="mirror"></a>
 
