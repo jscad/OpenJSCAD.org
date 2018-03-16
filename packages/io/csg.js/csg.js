@@ -192,9 +192,6 @@ addTransformationMethodsToPrototype(CAG.prototype)
 addTransformationMethodsToPrototype(CAG.Side.prototype)
 addTransformationMethodsToPrototype(CAG.Vertex.prototype)
 
-addCenteringToPrototype(CSG.prototype, ['x', 'y', 'z'])
-addCenteringToPrototype(CAG.prototype, ['x', 'y'])
-
 CSG.parseOptionAs2DVector = optionsParsers.parseOptionAs3DVector
 CSG.parseOptionAs3DVector = optionsParsers.parseOptionAs3DVector
 CSG.parseOptionAs3DVectorList = optionsParsers.parseOptionAs3DVectorList

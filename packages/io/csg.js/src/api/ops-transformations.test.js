@@ -185,7 +185,7 @@ test('transform (multiple items, 2d , translation)', t => {
 test('center (single item)', t => {
   const op1 = cube()
   const obs = center(true, op1)
-  t.deepEqual(obs.properties.cube.center, {_x: 0.5, _y: 0.5, _z: 0.5})
+  t.deepEqual(obs.properties.cube.center, {_x: 0, _y: 0, _z: 0})
 })
 
 test('center (multiple item)', t => {
@@ -201,8 +201,8 @@ test('center (multiple items, 2d)', t => {
   const op2 = circle()
   const obs = center(true, op1, op2)
 
-  sideEquals(t, obs.sides[0], [[1.9807852804032304, 0.8049096779838713], [2, 1]])
-  sideEquals(t, obs.sides[obs.sides.length - 1], [[0, 0], [0.9999999999999998, 0]])
+  sideEquals(t, obs.sides[0], [[0.9807852804032304, -0.19509032201612875], [1, 0]])
+  sideEquals(t, obs.sides[obs.sides.length - 1], [[-1, -1], [-2.220446049250313e-16, -1]])
 })
 
 test('mirror (single item)', t => {

@@ -16,6 +16,7 @@ const {area, getBounds} = require('./utils/cagMeasurements')
 const {overCutInsideCorners} = require('../api/ops-cnc')
 const {extrudeInOrthonormalBasis, extrudeInPlane, extrude, rotateExtrude} = require('../api/ops-extrusions')
 const cagoutlinePaths = require('../api/cagOutlinePaths')
+const center = require('../api/center')
 const {expand, contract, expandedShellOfCAG} = require('../api/ops-expandContract')
 /**
  * Class CAG
@@ -99,6 +100,11 @@ CAG.prototype = {
     })
     newsides.reverse()
     return fromSides(newsides)
+  },
+
+  // ALIAS !
+  center: function (axes) {
+    return center({axes: axes}, [this])
   },
 
   // ALIAS !

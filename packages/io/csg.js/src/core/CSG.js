@@ -16,6 +16,7 @@ const {projectToOrthoNormalBasis} = require('./utils/csgProjections')
 
 const {lieFlat, getTransformationToFlatLying, getTransformationAndInverseTransformationToFlatLying} = require('../api/ops-cnc')
 const {sectionCut, cutByPlane} = require('../api/ops-cuts')
+const center = require('../api/center')
 const {expand, contract, expandedShellOfCCSG} = require('../api/ops-expandContract')
 
 /** Class CSG
@@ -265,6 +266,11 @@ CSG.prototype = {
     result.isRetesselated = this.isRetesselated
     result.isCanonicalized = this.isCanonicalized
     return result
+  },
+
+  // ALIAS !
+  center: function (axes) {
+    return center({axes: axes},[this])
   },
 
   // ALIAS !

@@ -118,15 +118,17 @@ function transform (matrix, ...objects) { // v, obj or array
   return object.transform(transformationMatrix)
 }
 
-/** center an object in 2D/3D space
- * @param {Boolean|Array} axis - either an array or single boolean to indicate which axis you want to center on
- * @param {Object(s)|Array} objects either a single or multiple CSG/CAG objects to translate
+
+/**
+ * Center the given object(s) about the given axes
+ * @param {Array|Boolean} axes=[true,true,true]|true  - an array of boolean values that indicate the axes (X,Y,Z) to center upon. A single boolean is also allowed.
+ * @param {...Object} object one or more objects to center, i.e. objects are CSG or CAG
  * @returns {CSG} new CSG object , translated by the given amount
  *
  * @example
- * let movedSphere = center(false, sphere())
+ * let csg = center([true,false,false], sphere()) // center about the X axis
  */
-function center (axis, ...objects) { // v, obj or array
+function center (axes, ...objects) {
   const _objects = (objects.length >= 1 && objects[0].length) ? objects[0] : objects
   let object = _objects[0]
 
@@ -135,7 +137,10 @@ function center (axis, ...objects) { // v, obj or array
       object = object.union(_objects[i])
     }
   }
-  return object.center(axis)
+  if (! Array.isArray(axes)) {
+    axes = [axes,axes,axes]
+  }
+  return object.center(axes)
 }
 
 /** mirror an object in 2D/3D space
