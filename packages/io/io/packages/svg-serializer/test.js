@@ -27,5 +27,5 @@ test('serialize ag/csg objects to svg (path: simple)', function (t) {
 `
 
   const observed = serializer.serialize(source(), undefined, {output: 'jscad', addMetaData: false})
-  t.deepEqual(expected, observed)
+  t.deepEqual([expected], observed)
 })
