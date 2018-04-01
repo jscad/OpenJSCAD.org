@@ -5,7 +5,7 @@
   "repository": "https://github.com/jscad/io",
   "main": "index.js",
   "scripts": {
-    "test": "ava './test.js' --verbose --timeout 10000",
+    "test": "ava './tests/' --verbose --timeout 60000",
     "release-patch": "git checkout master && npm version patch && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-minor": "git checkout master && npm version minor && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-major": "git checkout master && npm version major && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
@@ -31,5 +31,11 @@
     "serializer",
     "dxf"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@jscad/csg": "^0.5.3"
+  },
+  "devDependencies": {
+    "ava": "^0.19.1"
+  }
 }

@@ -1,15 +1,19 @@
 ## @jscad/dxf-serializer
 
-> dxf serializer for the jscad project (from CSG)
+> DXF serializer for the JSCAD project (from CSG)
 
 [![npm version](https://badge.fury.io/js/%40jscad%2Fdxf-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fdxf-serializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/dxf-serializer)
 
 ## Overview
 
-This serializer outputs a 'blobable' array of data (from a CSG object)
-ie an array that can either be passed directly to a Blob (`new Blob(blobable)`)
-or converted to a Node.js buffer.
+This serializer outputs a 'blobable' array of data (from one or more CSG library objects).
+The array of data can either be used to create a Blob (`new Blob(blobable)`), or converted to a Node.js buffer.
+
+The serialization of the following objects are possible.
+- CAG serialization to DXF LWPOLYLINE or POLYLINE
+- CSG serialization to DXF 3DFACE(s)
+- CSG.Path2D serialization to DXF LWPOLYLINE or POLYINE
 
 ## Table of Contents
 
