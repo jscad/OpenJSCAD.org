@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.1.2"></a>
+## [0.1.2](https://github.com/jscad/io/compare/@jscad/svg-serializer@0.1.1...@jscad/svg-serializer@0.1.2) (2018-04-01)
+
+
+### Bug Fixes
+
+* **svg-serializer:** return array instead of single item ([#60](https://github.com/jscad/io/issues/60)) ([28570a9](https://github.com/jscad/io/commit/28570a9))
+
+
+
+
 <a name="0.1.1"></a>
 ## [0.1.1](https://github.com/jscad/io/compare/@jscad/svg-serializer@0.1.0...@jscad/svg-serializer@0.1.1) (2017-12-14)
 
