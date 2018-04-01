@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.1.2...@jscad/dxf-serializer@0.2.0) (2018-04-01)
+
+
+### Features
+
+* **dxf-serializer:** DXF Serializer updates ([#59](https://github.com/jscad/io/issues/59)) ([68c0d30](https://github.com/jscad/io/commit/68c0d30))
+
+
+
+
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.1.1...@jscad/dxf-serializer@0.1.2) (2017-12-14)
 
