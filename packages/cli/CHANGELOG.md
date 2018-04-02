@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.8.1"></a>
+## [1.8.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@1.8.0...@jscad/cli@1.8.1) (2018-04-02)
+
+
+### Bug Fixes
+
+* **svg-serializer:** updated [@jscad](https://github.com/jscad)/io for fix of broken svg export([#365](https://github.com/jscad/OpenJSCAD.org/issues/365)) ([d4ad54c](https://github.com/jscad/OpenJSCAD.org/commit/d4ad54c))
+
+
+
+
 <a name="1.8.0"></a>
 # [1.8.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@1.7.0...@jscad/cli@1.8.0) (2018-03-10)
 
