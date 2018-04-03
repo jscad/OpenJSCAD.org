@@ -12,7 +12,8 @@ const vtreeApi = require('../core/index').apiClone
 
 let result
 const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree()
-let vtree = require('./examples/complex-vtree')()
+let vtree = require('./examples/single-shape-vtree')()
+// console.log('vtree', vtree)
 result = buildCachedGeometryFromTree(undefined, vtree)
 // result = vtree
 console.log('result', toArray(result)[0].polygons.length)

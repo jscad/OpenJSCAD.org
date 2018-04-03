@@ -148,7 +148,12 @@ const apiClone = {
 
   },
 
-  color: {color}
+  color: Object.assign({}, require('@jscad/csg/api').color,{color}),
+  csg: require('@jscad/csg/api').csg,
+  // these are obsolete, but keeping the same API for now ...
+  maths: require('@jscad/csg/api').maths,
+  OpenJsCad: require('@jscad/csg/api').OpenJsCad,
+  debug: require('@jscad/csg/api').debug
 
 }
 
@@ -174,8 +179,6 @@ module.exports = {
 
   linear_extrude,
   rectangular_extrude,
-
-  //vector_text,
 
   color
 }
