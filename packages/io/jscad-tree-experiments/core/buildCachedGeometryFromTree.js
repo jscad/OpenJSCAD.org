@@ -10,10 +10,12 @@ const {flatten, toArray} = require('./arrays')
 const makeBuildCachedGeometryFromTree = (params) => {
   const defaults = {
     // how many passes we allow without cache hits before eliminating hashes/geometry from cache
-    passesBeforeElimination: 1
+    passesBeforeElimination: 1,
+    lookup: {},
+    lookupCounts: {}
   }
-  const {passesBeforeElimination} = Object.assign({}, defaults, params)
-  const cache = makeCacheWithInvalidation(passesBeforeElimination)
+  const {passesBeforeElimination, lookup, lookupCounts} = Object.assign({}, defaults, params)
+  const cache = makeCacheWithInvalidation(passesBeforeElimination, lookup, lookupCounts)
 
   const buildFinalResult = (tree, deep) => {
     return toArray(dfs(tree, cache))

@@ -2,10 +2,7 @@ const hash = require('object-hash')
 
 // all the items not found in a single 'pass' should have count decremented
 // once count reaches 0, remove the item from
-const makeCacheWithInvalidation = (passesBeforeElimination = 1) => {
-  const lookup = {}
-  const lookupCounts = {}
-
+const makeCacheWithInvalidation = (passesBeforeElimination = 1, lookup = {}, lookupCounts = {}) => {
   let currentPassHits = []
 
   const find = (node) => {
