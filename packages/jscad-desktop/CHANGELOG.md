@@ -1,3 +1,13 @@
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/kaosat-dev/jscad-desktop/compare/v0.1.1...v0.2.0) (2018-04-04)
+
+
+### Features
+
+* **geometry caching:** add geometry caching & lots more([#38](https://github.com/kaosat-dev/jscad-desktop/issues/38)) ([223602e](https://github.com/kaosat-dev/jscad-desktop/commit/223602e)), closes [#34](https://github.com/kaosat-dev/jscad-desktop/issues/34) [#35](https://github.com/kaosat-dev/jscad-desktop/issues/35) [#36](https://github.com/kaosat-dev/jscad-desktop/issues/36) [#37](https://github.com/kaosat-dev/jscad-desktop/issues/37) [#33](https://github.com/kaosat-dev/jscad-desktop/issues/33) [#39](https://github.com/kaosat-dev/jscad-desktop/issues/39)
+
+
+
 <a name="0.1.1"></a>
 ## [0.1.1](https://github.com/kaosat-dev/jscad-desktop/compare/v0.1.0...v0.1.1) (2018-01-31)
 
