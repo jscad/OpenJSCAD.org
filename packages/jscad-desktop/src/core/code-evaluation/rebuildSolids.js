@@ -1,10 +1,10 @@
 
 const {toArray} = require('../../utils/utils')
-const getParamValues = require('../parameters/getParameterValues')
+const getParameterValuesFromUIControls = require('../parameters/getParameterValuesFromUIControls')
 
 const rebuildSolids = (jscadScript, paramControls) => {
   console.log('rebuilding')
-  let params = getParamValues(paramControls)
+  let params = getParameterValuesFromUIControls(paramControls)
   const solids = toArray(jscadScript(params))
   return solids
 }

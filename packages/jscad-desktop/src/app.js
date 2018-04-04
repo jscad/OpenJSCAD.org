@@ -1,3 +1,4 @@
+const most = require('most')
 const {proxy} = require('most-proxy')
 const {makeState} = require('./state')
 const makeCsgViewer = require('@jscad/csg-viewer')
@@ -45,12 +46,18 @@ titleBarSink(
 electronStoreSink(state$
   .map(function (state) {
     const {themeName, design} = state
-    const {name, mainPath} = design
+    const {name, mainPath, vtreeMode, paramDefinitions, paramDefaults, paramValues} = design
     return {
       themeName,
       design: {
         name,
-        mainPath
+        mainPath,
+        vtreeMode,
+        parameters: {
+          paramDefinitions,
+          paramDefaults,
+          paramValues
+        }
       },
       viewer: {
         axes: {show: state.viewer.axes.show},
@@ -70,14 +77,24 @@ watcherSink(
 )
 // data out to file system sink
 fsSink(
-  state$
-    .filter(state => state.design.mainPath !== '')
-    .map(state => state.design.mainPath)
-    .skipRepeats()
-    .map(path => ({operation: 'read', id: 'loadScript', path}))
+  most.mergeArray([
+    state$
+      .filter(state => state.design.mainPath !== '')
+      .map(state => state.design.mainPath)
+      .skipRepeats()
+      .map(path => ({operation: 'read', id: 'loadScript', path})),
+    most.just()
+      .map(function () {
+        const electron = require('electron').remote
+        const userDataPath = electron.app.getPath('userData')
+        const path = require('path')
+
+        const cachePath = path.join(userDataPath, '/cache.js')
+        return {operation: 'read', id: 'loadCachedGeometry', path: cachePath}
+      })
+  ])
 )
 
-const most = require('most')
 const solidWorkerBase$ = most.mergeArray([
   actions$.setDesignContent$.map(action => ({paramValues: undefined, origin: 'designContent', error: undefined})),
   actions$.updateDesignFromParams$.map(action => action.data)
@@ -88,14 +105,16 @@ solidWorker.sink(
       if (error) {
         return undefined
       }
-      const applyParameterDefinitions = require('./core/parameters/applyParameterDefinitions')
+      console.log('design stuff', design)
+      const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
       paramValues = paramValues || design.paramValues // this ensures the last, manually modified params have upper hand
       paramValues = paramValues ? applyParameterDefinitions(paramValues, design.paramDefinitions) : paramValues
       if (!instantUpdate && origin === 'instantUpdate') {
         return undefined
       }
-      console.log('sending paramValues', paramValues)
-      return {source: design.source, mainPath: design.mainPath, paramValues}
+      // console.log('sending paramValues', paramValues, 'options', vtreeMode)
+      const options = {vtreeMode: design.vtreeMode, lookup: design.lookup, lookupCounts: design.lookupCounts}
+      return {source: design.source, mainPath: design.mainPath, paramValues, options}
     },
     solidWorkerBase$,
     solidWorkerBase$,
@@ -104,7 +123,7 @@ solidWorker.sink(
       .skipRepeats()
   )
     .filter(x => x !== undefined)
-    .map(({source, mainPath, paramValues}) => ({cmd: 'render', source, mainPath, parameters: paramValues}))
+    .map(({source, mainPath, paramValues, options}) => ({cmd: 'render', source, mainPath, parameters: paramValues, options}))
 )
 
 // viewer data
@@ -128,6 +147,8 @@ state$
 const outToDom$ = state$
   .skipRepeatsWith(function (state, previousState) {
     const sameParamDefinitions = JSON.stringify(state.design.paramDefinitions) === JSON.stringify(previousState.design.paramDefinitions)
+    const sameParamValues = JSON.stringify(state.design.paramValues) === JSON.stringify(previousState.design.paramValues)
+
     const sameInstantUpdate = state.instantUpdate === previousState.instantUpdate
 
     const sameExportFormats = state.exportFormat === previousState.exportFormat &&
@@ -140,8 +161,11 @@ const outToDom$ = state$
     const sameError = JSON.stringify(state.error) === JSON.stringify(previousState.error)
     const sameStatus = state.busy === previousState.busy
 
-    return sameParamDefinitions && sameExportFormats && sameStatus && sameStyling &&
-      sameAutoreload && sameInstantUpdate && sameError
+    const sameShowOptions = state.showOptions === previousState.showOptions
+    const samevtreeMode = state.vtreeMode === previousState.vtreeMode
+
+    return sameParamDefinitions && sameParamValues && sameExportFormats && sameStatus && sameStyling &&
+      sameAutoreload && sameInstantUpdate && sameError && sameShowOptions && samevtreeMode
   })
   .map(state => require('./ui/main')(state, paramsCallbacktoStream))
 
@@ -149,7 +173,7 @@ domSink(outToDom$)
 
 // for viewer
 
-/*viewerActions
+/* viewerActions
   .toggleGrid$
   .forEach(params => {
     console.log('changing viewer params', params)
@@ -163,7 +187,7 @@ domSink(outToDom$)
     if (csgViewer) {
       csgViewer(params)
     }
-  })*/
+  }) */
 state$
   .map(state => state.viewer)
   .skipRepeatsWith(function (state, previousState) {

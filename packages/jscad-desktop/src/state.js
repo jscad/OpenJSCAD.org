@@ -21,10 +21,11 @@ const initialState = {
   autoReload: true,
   instantUpdate: true,
   solidsTimeOut: 20000,
+  showOptions: false,
   busy: false,
   // visuals
   themeName: 'light',
-  mainTextColor: '#FFF',
+  themeSettings: {mainTextColor: '#FFF'},
   viewer: require('./ui/viewer/reducers').initialize(),
   // UI
   shortcuts: require('../data/keybindings.json'),
@@ -43,11 +44,19 @@ function makeState (actions) {
       const themeData = themes[themeName]
       // console.log('changeTheme', themeName, themeData)
       const viewer = merge({}, state.viewer, themeData.viewer)
-      return Object.assign({}, state, {viewer, themeName, mainTextColor: themeData.mainTextColor})
+      return Object.assign({}, state, {viewer, themeName, themeSettings: themeData})
+    },
+    toggleOptions: (state) => {
+      return Object.assign({}, state, {showOptions: !state.showOptions})
     },
     clearErrors: (state, _) => {
       console.log('clear errors')
       return Object.assign({}, state, {error: undefined})
+    },
+    setErrors: (state, {error}) => {
+      console.log('set Errors', error)
+      const formattedError = error// {message: error.message, lineno:}
+      return Object.assign({}, state, {error: formattedError, busy: false})
     }
   }
 

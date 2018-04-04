@@ -1,5 +1,5 @@
 const path = require('path')
-const getParameterDefinitionsCLI = require('../parameters/getParameterDefinitionsCLI')
+const getParameterValuesFromParameters = require('@jscad/core/parameters/getParameterValuesFromParameters')
 const requireFromString = require('./requireFromString')
 
 const doesModuleExportParameterDefiniitions = moduleToCheck => {
@@ -14,7 +14,7 @@ function loadScript (scriptAsText, filePath, csgBasePath = '@jscad/csg/api') {
   if (csgBasePath.includes('.')) {
     csgBasePath = path.resolve(__dirname, csgBasePath)
   }
-  console.log('loading script using jscad/csg base path at:', csgBasePath)
+  // console.log('loading script using jscad/csg base path at:', csgBasePath)
   let scriptRootModule
   // && !scriptAsText.includes('require(')
   if ((!scriptAsText.includes('module.exports')) && scriptAsText.includes('main')) {
@@ -50,7 +50,7 @@ function loadScript (scriptAsText, filePath, csgBasePath = '@jscad/csg/api') {
   let paramDefinitions = []
   if (doesModuleExportParameterDefiniitions(scriptRootModule)) {
     paramDefinitions = scriptRootModule.getParameterDefinitions() || []
-    params = getParameterDefinitionsCLI(scriptRootModule.getParameterDefinitions)
+    params = getParameterValuesFromParameters(scriptRootModule.getParameterDefinitions)
   }
   return {params, paramDefinitions, scriptRootModule: scriptRootModule}
 }

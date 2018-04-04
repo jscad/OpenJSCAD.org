@@ -4,7 +4,9 @@ const actions = (sources) => {
   const toggleGrid$ = most.mergeArray([
     sources.dom.select('#grid').events('click')
       .map(e => e.target.checked),
-    sources.store.map(data => data.viewer.grid.show)
+    sources.store
+      .filter(data => data.viewer && data.viewer.grid && data.viewer.grid.show !== undefined)
+      .map(data => data.viewer.grid.show)
   ])
     // .map(show => ({grid: {show}}))
     .map(data => ({type: 'toggleGrid', data}))
