@@ -1,3 +1,13 @@
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/kaosat-dev/jscad-desktop/compare/v0.2.0...v0.3.0) (2018-04-05)
+
+
+### Features
+
+* **releases:** add basics to create binary releases ([#41](https://github.com/kaosat-dev/jscad-desktop/issues/41)) ([2d4e729](https://github.com/kaosat-dev/jscad-desktop/commit/2d4e729)), closes [#32](https://github.com/kaosat-dev/jscad-desktop/issues/32) [#40](https://github.com/kaosat-dev/jscad-desktop/issues/40) [#24](https://github.com/kaosat-dev/jscad-desktop/issues/24)
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/kaosat-dev/jscad-desktop/compare/v0.1.1...v0.2.0) (2018-04-04)
 
