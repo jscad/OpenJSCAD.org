@@ -9,6 +9,7 @@ const themes = {
 }
 const initialState = {
   appTitle: `jscad v ${packageMetadata.version}`,
+  appUpdates: {available: false, version: undefined},
   // for possible errors
   error: undefined,
   // design data
@@ -57,6 +58,10 @@ function makeState (actions) {
       console.log('set Errors', error)
       const formattedError = error// {message: error.message, lineno:}
       return Object.assign({}, state, {error: formattedError, busy: false})
+    },
+    setAppUpdatesAvailable: (state, {version, available}) => {
+      console.log('updates available', version, available)
+      return Object.assign({}, state, {appUpdates: {version, available}})
     }
   }
 

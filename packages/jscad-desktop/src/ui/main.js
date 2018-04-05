@@ -40,9 +40,16 @@ function dom (state, paramsCallbacktoStream) {
           
         </section>
       </header>
+      
       <!--Status information/errors-->
       <span id='busy'>${state.busy ? 'processing, please wait' : ''}</span>
       <span id='status'>${statusMessage}</span>
+      <span id='appUpdates' style='visibility:${state.appUpdates.available === false ? 'hidden' : 'visible'}'> 
+        <a href='https://github.com/jscad/jscad-desktop/releases' target="_blank">
+          @jscad/desktop version ${state.appUpdates.version} is available! Please click here to view and download
+        </a>
+      </span>
+
       <!--Ui Controls-->
       <div id='controls'>
         <label for="grid">Grid</label>

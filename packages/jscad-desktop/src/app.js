@@ -13,14 +13,19 @@ const dragAndDropSource$ = makeDragDropSource(document)
 const {watcherSink, watcherSource} = require('./sideEffects/fileWatcher')
 const {fsSink, fsSource} = require('./sideEffects/fsWrapper')
 const {domSink, domSource} = require('./sideEffects/dom')
-const paramsCallbacktoStream = require('./utils/observable-utils/callbackToObservable')()
 const makeWorkerEffect = require('./sideEffects/worker')
+const {appUpdateSource} = require('./sideEffects/appUpdates')
+
 const solidWorker = makeWorkerEffect('src/core/code-evaluation/rebuildSolidsWorker.js')
+const paramsCallbacktoStream = require('./utils/observable-utils/callbackToObservable')()
 
 // proxy state stream to be able to access & manipulate it before it is actually available
 const { attach, stream } = proxy()
 const state$ = stream
 //
+
+// appUpdateSource().forEach(x => console.log('update available', x))
+
 const sources = {
   store: storeSource$,
   drops: dragAndDropSource$,
@@ -29,7 +34,8 @@ const sources = {
   paramChanges: paramsCallbacktoStream.stream,
   state$,
   dom: domSource(),
-  solidWorker: solidWorker.source()
+  solidWorker: solidWorker.source(),
+  appUpdates: appUpdateSource()
 }
 const designActions = require('./ui/design/actions')(sources)
 const ioActions = require('./ui/io/actions')(sources)
@@ -143,7 +149,7 @@ state$
   })
 
 // ui updates, exports
-
+// FIXME: this is horrible, restructure
 const outToDom$ = state$
   .skipRepeatsWith(function (state, previousState) {
     const sameParamDefinitions = JSON.stringify(state.design.paramDefinitions) === JSON.stringify(previousState.design.paramDefinitions)
@@ -164,8 +170,10 @@ const outToDom$ = state$
     const sameShowOptions = state.showOptions === previousState.showOptions
     const samevtreeMode = state.vtreeMode === previousState.vtreeMode
 
+    const sameAppUpdates = JSON.stringify(state.appUpdates) === JSON.stringify(previousState.appUpdates)
+
     return sameParamDefinitions && sameParamValues && sameExportFormats && sameStatus && sameStyling &&
-      sameAutoreload && sameInstantUpdate && sameError && sameShowOptions && samevtreeMode
+      sameAutoreload && sameInstantUpdate && sameError && sameShowOptions && samevtreeMode && sameAppUpdates
   })
   .map(state => require('./ui/main')(state, paramsCallbacktoStream))
 
@@ -228,3 +236,55 @@ function setCanvasSize (viewerElement) {
 window.onresize = function () {
   setCanvasSize(document.getElementById('renderTarget'))
 }
+
+// const { dialog } = require('electron')
+
+/*
+let updater
+autoUpdater.autoDownload = false
+
+autoUpdater.on('error', (error) => {
+  dialog.showErrorBox('Error: ', error == null ? "unknown" : (error.stack || error).toString())
+})
+
+autoUpdater.on('update-available', () => {
+  dialog.showMessageBox({
+    type: 'info',
+    title: 'Found Updates',
+    message: 'Found updates, do you want update now?',
+    buttons: ['Sure', 'No']
+  }, (buttonIndex) => {
+    if (buttonIndex === 0) {
+      autoUpdater.downloadUpdate()
+    }
+    else {
+      updater.enabled = true
+      updater = null
+    }
+  })
+})
+
+autoUpdater.on('update-not-available', () => {
+  dialog.showMessageBox({
+    title: 'No Updates',
+    message: 'Current version is up-to-date.'
+  })
+  updater.enabled = true
+  updater = null
+})
+
+autoUpdater.on('update-downloaded', () => {
+  dialog.showMessageBox({
+    title: 'Install Updates',
+    message: 'Updates downloaded, application will be quit for update...'
+  }, () => {
+    setImmediate(() => autoUpdater.quitAndInstall())
+  })
+})
+
+// export this to MenuItem click callback
+function checkForUpdates (menuItem, focusedWindow, event) {
+  updater = menuItem
+  updater.enabled = false
+  autoUpdater.checkForUpdates()
+} */

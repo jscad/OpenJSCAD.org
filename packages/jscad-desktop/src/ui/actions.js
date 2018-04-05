@@ -76,12 +76,24 @@ const makeActions = (sources) => {
     .delay(30000) */
     // .forEach(x => console.log('clear errors', x))
 
+  const setAppUpdatesAvailable$ = most.mergeArray([
+    sources
+      .appUpdates
+      .map(data => ({type: 'setAppUpdatesAvailable', data})),
+    sources
+      .appUpdates
+      .delay(15000)// hide after 30 s
+      .map(data => ({type: 'setAppUpdatesAvailable', data: {available: false}}))
+  ])
+
   return {
     // generic key shortuct handler
     actionsFromKey$,
     // generic clear error action
     clearErrors$,
     setErrors$,
+    // app updates
+    setAppUpdatesAvailable$,
     // ui
     changeTheme$,
     toggleOptions$

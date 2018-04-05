@@ -3,3 +3,5 @@ node_modules/
 .nyc_output
 coverage
 *.log
+dist
+build

@@ -24,7 +24,8 @@ function createWindow () {
     offscreen: true,
     webPreferences: {
       nodeIntegrationInWorker: true
-    }
+    },
+    icon: path.join(__dirname, 'assets/icons/icon.png')
   }
   mainWindow = new BrowserWindow(options)
 
@@ -36,7 +37,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -44,6 +45,11 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null
+  })
+
+  mainWindow.webContents.on('new-window', function (event, url) {
+    event.preventDefault()
+    require('electron').shell.openExternal(url)
   })
 }
 
