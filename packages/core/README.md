@@ -15,6 +15,7 @@ packages like @jscad/cli , @jscad/web, @jscad/desktop
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
 [![Backers on Open Collective](https://opencollective.com/openjscad/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/openjscad/sponsors/badge.svg)](#sponsors) 
+
 ## Table of Contents
 
 - [Usage](#usage)
@@ -53,8 +54,8 @@ copy of OpenJSCAD live.
 
 ## Documentation
 
-- [OpenJSCAD User & Programming Guide](https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide)
-- [OpenJSCAD Quick Reference](https://en.wikibooks.org/wiki/OpenJSCAD_Quick_Reference)
+- [OpenJSCAD User & Programming Guide](https://openjscad.org/dokuwiki/doku.php?id=start)
+- [OpenJSCAD Quick Reference](https://openjscad.org/dokuwiki/doku.php?id=jscad_quick_reference)
 
 ## Contribute
 
@@ -69,7 +70,7 @@ Thank you to all the people who have already contributed to this project:
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use the OpenJSCAD.org, then please start a conversation at the [OpenJSCAD.org User Group](https://plus.google.com/communities/114958480887231067224). You might find the answer in the [OpenJSCAD.org User Guide](https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide).
+* If you have a question about how to use the OpenJSCAD.org, then please start a conversation at the [OpenJSCAD.org User Group](https://plus.google.com/communities/114958480887231067224). You might find the answer in the [OpenJSCAD.org User Guide](https://openjscad.org/dokuwiki/doku.php?id=start).
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://plus.google.com/communities/114958480887231067224) and start contributing changes.
 
@@ -78,7 +79,7 @@ Small Note: If editing this README, please conform to the [standard-readme](http
 ## Community
 
 See for more details
-* [G+ OpenJSCAD.org Announcements](https://plus.google.com/115007999023701819645)
+* [G+ OpenJSCAD.org Announcements](https://plus.google.com/communities/114958480887231067224)
 * [G+ OpenJSCAD Community](https://plus.google.com/communities/114958480887231067224)
 to discuss with other user and developers.
 
