@@ -1,3 +1,13 @@
+<a name="0.3.2"></a>
+## [0.3.2](https://github.com/jscad/jscad-desktop/compare/v0.3.1...v0.3.2) (2018-04-07)
+
+
+### Bug Fixes
+
+* **pkg:** fixed release command after version bump ([#46](https://github.com/jscad/jscad-desktop/issues/46)) ([fd8518e](https://github.com/jscad/jscad-desktop/commit/fd8518e))
+
+
+
 <a name="0.3.1"></a>
 ## [0.3.1](https://github.com/jscad/jscad-desktop/compare/v0.3.0...v0.3.1) (2018-04-07)
 
