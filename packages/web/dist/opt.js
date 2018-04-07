@@ -54207,7 +54207,7 @@ function config (name) {
 },{}],493:[function(require,module,exports){
 module.exports={
   "name": "@jscad/web",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "Web UI for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
@@ -54240,9 +54240,9 @@ module.exports={
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/core": "^0.2.1",
+    "@jscad/core": "^0.2.2",
     "@jscad/csg": "0.5.2",
-    "@jscad/examples": "^1.7.0",
+    "@jscad/examples": "^1.7.1",
     "@jscad/io": "0.4.3",
     "@jscad/openscad-openjscad-translator": "0.0.10",
     "astring": "^1.0.2",

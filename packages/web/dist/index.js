@@ -101009,7 +101009,7 @@ arguments[4][382][0].apply(exports,arguments)
 },{"dup":382}],850:[function(require,module,exports){
 module.exports={
   "name": "@jscad/web",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "Web UI for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
@@ -101042,9 +101042,9 @@ module.exports={
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/core": "^0.2.1",
+    "@jscad/core": "^0.2.2",
     "@jscad/csg": "0.5.2",
-    "@jscad/examples": "^1.7.0",
+    "@jscad/examples": "^1.7.1",
     "@jscad/io": "0.4.3",
     "@jscad/openscad-openjscad-translator": "0.0.10",
     "astring": "^1.0.2",
@@ -103419,7 +103419,7 @@ function init() {
     var dropZone = document.getElementById('filedropzone');
     if (dropZone) {
       var dropZoneText = browser === 'chrome' && me === 'web-online' ? ', or folder with jscad files ' : '';
-      document.getElementById('filedropzone_empty').innerHTML = 'Drop one or more supported files\n           ' + dropZoneText + '\n           here (see <a style=\'font-weight: normal\' href=\'https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide#Maintaining_Larger_Projects\' target=_blank>details</a>)\n           <br>or directly edit OpenJSCAD or OpenSCAD code using the editor.';
+      document.getElementById('filedropzone_empty').innerHTML = 'Drop one or more supported files\n           ' + dropZoneText + '\n           here (see <a style=\'font-weight: normal\' href=\'https://openjscad.org/dokuwiki/doku.php\' target=_blank>details</a>)\n           <br>or directly edit OpenJSCAD or OpenSCAD code using the editor.';
 
       var _setupDragDrop = setupDragDrop(me, { memFs: memFs, gProcessor: gProcessor, gEditor: gEditor }),
           toggleAutoReload = _setupDragDrop.toggleAutoReload,
@@ -103435,7 +103435,7 @@ function init() {
 
   // version number displays
   if (footer) {
-    var footerContent = 'OpenJSCAD.org ' + version + ', MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>';
+    var footerContent = 'OpenJSCAD.org ' + version + ', MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/jscad/OpenJSCAD.org">GitHub: OpenJSCAD</a>';
     document.getElementById('footer').innerHTML = footerContent;
   }
 }
