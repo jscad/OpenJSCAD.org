@@ -221,7 +221,7 @@ function init () {
         .innerHTML =
         `Drop one or more supported files
            ${dropZoneText}
-           here (see <a style='font-weight: normal' href='https://en.wikibooks.org/wiki/OpenJSCAD_User_Guide#Maintaining_Larger_Projects' target=_blank>details</a>)
+           here (see <a style='font-weight: normal' href='https://openjscad.org/dokuwiki/doku.php' target=_blank>details</a>)
            <br>or directly edit OpenJSCAD or OpenSCAD code using the editor.`
 
       let {toggleAutoReload, reloadAllFiles} = setupDragDrop(me, {memFs, gProcessor, gEditor})
@@ -235,7 +235,7 @@ function init () {
 
   // version number displays
   if (footer) {
-    const footerContent = `OpenJSCAD.org ${version}, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>`
+    const footerContent = `OpenJSCAD.org ${version}, MIT License, get your own copy/clone/fork from <a target=_blank href="https://github.com/jscad/OpenJSCAD.org">GitHub: OpenJSCAD</a>`
     document.getElementById('footer').innerHTML = footerContent
   }
 }
