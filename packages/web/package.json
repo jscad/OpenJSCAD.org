@@ -1,6 +1,6 @@
 {
   "name": "@jscad/web",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "description": "Web UI for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
@@ -33,7 +33,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/core": "^0.2.2",
+    "@jscad/core": "^0.2.3",
     "@jscad/csg": "0.5.2",
     "@jscad/examples": "^1.7.1",
     "@jscad/io": "0.4.4",

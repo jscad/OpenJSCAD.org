@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.3"></a>
+## [0.2.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@0.2.2...@jscad/core@0.2.3) (2018-04-07)
+
+
+### Bug Fixes
+
+* **dxf-serializer:** updated [@jscad](https://github.com/jscad)/io dependency version for dxf-serializer fixes ([#369](https://github.com/jscad/OpenJSCAD.org/issues/369)) ([fadae24](https://github.com/jscad/OpenJSCAD.org/commit/fadae24))
+
+
+
+
 <a name="0.2.2"></a>
 ## [0.2.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@0.2.1...@jscad/core@0.2.2) (2018-04-07)
 
