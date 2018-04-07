@@ -1136,8 +1136,7 @@ $SHADOWPLANELOCATION
  40
 0.0
   0
-ENDSEC
-`
+ENDSEC`
   return content
 }
 
@@ -1563,8 +1562,7 @@ ObjectDBX Classes
 281
 1
   0
-ENDSEC
-`
+ENDSEC`
   return content
 }
 
@@ -2510,8 +2508,7 @@ _Open30
   0
 ENDTAB
   0
-ENDSEC
-`
+ENDSEC`
   return content
 }
 
@@ -2797,8 +2794,7 @@ AcDbEntity
 100
 AcDbBlockEnd
   0
-ENDSEC
-`
+ENDSEC`
   return content
 }
 
@@ -3234,8 +3230,7 @@ Layout1
 330
 58
   0
-ENDSEC
-`
+ENDSEC`
   return content
 }
 
