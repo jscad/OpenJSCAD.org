@@ -1,6 +1,6 @@
 {
   "name": "@jscad/dxf-serializer",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Dxf serializer for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",

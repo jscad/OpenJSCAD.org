@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.1"></a>
+## [0.2.1](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.2.0...@jscad/dxf-serializer@0.2.1) (2018-04-07)
+
+
+### Bug Fixes
+
+* **dxf-serializer:** Corrected EOF group as well as test cases ([#61](https://github.com/jscad/io/issues/61)) ([760c350](https://github.com/jscad/io/commit/760c350))
+* **dxf-serializer:** Removed extra line after ENDSEC which caused format errors in DXF ([#62](https://github.com/jscad/io/issues/62)) ([c967c4b](https://github.com/jscad/io/commit/c967c4b))
+
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.1.2...@jscad/dxf-serializer@0.2.0) (2018-04-01)
 
