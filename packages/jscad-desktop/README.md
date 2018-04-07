@@ -77,7 +77,7 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 
   1 - with explicit require() calls (prefered method)
 
-  - toggle the 'Experimental geometry caching:' setting in the options panel (turned on by default)
+  - toggle the 'Experimental geometry caching:' setting in the options panel (turned off by default)
 
   - install the following package in your design
 
@@ -129,7 +129,7 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 
   2 - For old still scripts without explicit require() calls
 
-  just toggle the 'Experimental geometry caching:' setting in the options panel (turned on by default)
+  just toggle the 'Experimental geometry caching:' setting in the options panel (turned off by default)
   be warned however that a lot of the official examples etc will not work with this out of the box
 
 

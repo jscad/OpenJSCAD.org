@@ -5,7 +5,7 @@ const initialize = () => {
       meshColor: [0.4, 0.6, 0.5, 1] // nice orange : [1, 0.4, 0, 1]
     },
     grid: {
-      show: false,
+      show: true,
       color: [1, 1, 1, 0.1]
     },
     axes: {

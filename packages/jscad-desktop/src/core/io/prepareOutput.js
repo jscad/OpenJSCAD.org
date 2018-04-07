@@ -1,12 +1,12 @@
 const { formats } = require('./formats')
 const {convertToSolid2} = require('../code-evaluation/convertToSolid')
 
-const stlSerializer = require('@jscad/stl-serializer')
-const amfSerializer = require('@jscad/amf-serializer')
-const x3dSerializer = require('@jscad/x3d-serializer')
-const svgSerializer = require('@jscad/svg-serializer')
-const jsonSerializer = require('@jscad/json-serializer')
-const dxfSerializer = require('@jscad/dxf-serializer')
+const {stlSerializer} = require('@jscad/io')
+const {amfSerializer} = require('@jscad/io')
+const {x3dSerializer} = require('@jscad/io')
+const {svgSerializer} = require('@jscad/io')
+const {jsonSerializer} = require('@jscad/io')
+const {dxfSerializer} = require('@jscad/io')
 
 function prepareOutput (objects, params) {
   const defaults = {

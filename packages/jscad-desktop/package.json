@@ -4,8 +4,11 @@
   "description": "jscad desktop application",
   "author": "jscad core team/ Mark Moissette",
   "license": "MIT",
-  "repository": "",
-  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jscad/jscad-desktop.git"
+  },
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node node_modules/.bin/electron .",
@@ -23,7 +26,7 @@
     "release:mac": "build -m",
     "release:linux": "build -l",
     "release:windows": "build -w",
-    "postversion": "git push origin master && git push origin master --tags",
+    "postversion": "git push origin master && git push origin master --tags && release:all",
     "release-patch": "git checkout master && git pull origin master && npm version patch",
     "release-minor": "git checkout master && git pull origin master && npm version minor",
     "release-major": "git checkout master && git pull origin master && npm version major"
@@ -33,12 +36,8 @@
     "@jscad/core": "0.2.0",
     "@jscad/csg": "0.5.3",
     "@jscad/csg-viewer": "github:jscad/csg-viewer",
-    "@jscad/dxf-serializer": "0.1.2",
+    "@jscad/io": "0.4.4",
     "@jscad/io-utils": "0.1.2",
-    "@jscad/json-serializer": "0.1.1",
-    "@jscad/stl-serializer": "0.1.1",
-    "@jscad/svg-serializer": "0.1.1",
-    "@jscad/x3d-serializer": "0.1.1",
     "@most/create": "^2.0.1",
     "ast-eval": "^0.8.0",
     "ast-parents": "0.0.1",

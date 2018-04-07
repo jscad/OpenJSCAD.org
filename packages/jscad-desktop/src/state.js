@@ -1,12 +1,6 @@
 const {mergeArray} = require('most')
 const packageMetadata = require('../package.json')
-const {merge} = require('./utils/utils')
 
-// very nice color for the cuts [0, 0.6, 1] to go with the orange
-const themes = {
-  light: require('../data/theme.light'),
-  dark: require('../data/theme.dark')
-}
 const initialState = {
   appTitle: `jscad v ${packageMetadata.version}`,
   appUpdates: {available: false, version: undefined},
@@ -28,7 +22,7 @@ const initialState = {
   themeName: 'light',
   themeSettings: {mainTextColor: '#FFF'},
   viewer: require('./ui/viewer/reducers').initialize(),
-  // UI
+  // interactions
   shortcuts: require('../data/keybindings.json'),
   // storage: this is not changeable, only for display
   storage: {
@@ -37,38 +31,30 @@ const initialState = {
 
 }
 
+//status infos from web ui: sort out, reuse or not
+/*
+error: data,
+ready: 'Ready',
+aborted: 'Aborted.',
+busy: `${data} <img id=busy src='imgs/busy.gif'>`,
+loading: `Loading ${data} <img id=busy src='imgs/busy.gif'>`,
+loaded: data,
+saving: data,
+saved: data,
+converting: `Converting ${data} <img id=busy src='imgs/busy.gif'>`,
+fetching: `Fetching ${data} <img id=busy src='imgs/busy.gif'>`,
+rendering: `Rendering. Please wait <img id=busy src='imgs/busy.gif'>`*/
+
 function makeState (actions) {
   // const reducers = //Object.assign({}, dataParamsReducers, cameraControlsReducers)
   actions = mergeArray(actions)
-  let reducers = {
-    changeTheme: (state, themeName) => {
-      const themeData = themes[themeName]
-      // console.log('changeTheme', themeName, themeData)
-      const viewer = merge({}, state.viewer, themeData.viewer)
-      return Object.assign({}, state, {viewer, themeName, themeSettings: themeData})
-    },
-    toggleOptions: (state) => {
-      return Object.assign({}, state, {showOptions: !state.showOptions})
-    },
-    clearErrors: (state, _) => {
-      console.log('clear errors')
-      return Object.assign({}, state, {error: undefined})
-    },
-    setErrors: (state, {error}) => {
-      console.log('set Errors', error)
-      const formattedError = error// {message: error.message, lineno:}
-      return Object.assign({}, state, {error: formattedError, busy: false})
-    },
-    setAppUpdatesAvailable: (state, {version, available}) => {
-      console.log('updates available', version, available)
-      return Object.assign({}, state, {appUpdates: {version, available}})
-    }
-  }
 
+  const rootReducers = require('./ui/reducers')
   const designReducers = require('./ui/design/reducers')
   const ioReducers = require('./ui/io/reducers')
   const viewerReducers = require('./ui/viewer/reducers')
-  reducers = Object.assign({}, reducers, designReducers, ioReducers, viewerReducers)
+
+  const reducers = Object.assign({}, rootReducers, designReducers, ioReducers, viewerReducers)
 
   const state$ = actions
     .scan(function (state, action) {

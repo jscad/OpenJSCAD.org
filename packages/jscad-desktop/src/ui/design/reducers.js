@@ -23,7 +23,7 @@ const initialize = () => {
     // solids
     solids: [],
     // geometry caching
-    vtreeMode: true,
+    vtreeMode: false,
     lookup: {},
     lookupCounts: {}
   }
