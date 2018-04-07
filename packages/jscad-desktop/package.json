@@ -26,7 +26,7 @@
     "release:mac": "build -m",
     "release:linux": "build -l",
     "release:windows": "build -w",
-    "postversion": "git push origin master && git push origin master --tags && release:all",
+    "postversion": "git push origin master && git push origin master --tags && npm run release:all",
     "release-patch": "git checkout master && git pull origin master && npm version patch",
     "release-minor": "git checkout master && git pull origin master && npm version minor",
     "release-major": "git checkout master && git pull origin master && npm version major"
