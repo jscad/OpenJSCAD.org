@@ -1,3 +1,8 @@
+<a name="0.3.1"></a>
+## [0.3.1](https://github.com/jscad/jscad-desktop/compare/v0.3.0...v0.3.1) (2018-04-07)
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/kaosat-dev/jscad-desktop/compare/v0.2.0...v0.3.0) (2018-04-05)
 
