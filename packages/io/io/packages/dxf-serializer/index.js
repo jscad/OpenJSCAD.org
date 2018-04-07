@@ -49,6 +49,7 @@ ${dxfTables(options)}
 ${dxfBlocks(options)}
 ${dxfEntities(objects, options)}
 ${dxfObjects(options)}
+  0
 EOF
 `
   return [dxfContent]

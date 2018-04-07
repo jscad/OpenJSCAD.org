@@ -50,6 +50,7 @@ ENTITIES
   0
 ENDSEC
 ${dxfObjects({})}
+  0
 EOF
 `
 
@@ -282,6 +283,7 @@ AcDbFace
   0
 ENDSEC
 ${dxfObjects({})}
+  0
 EOF
 `
 
@@ -962,6 +964,7 @@ AcDb3dPolylineVertex
   0
 ENDSEC
 ${dxfObjects({})}
+  0
 EOF
 `
 

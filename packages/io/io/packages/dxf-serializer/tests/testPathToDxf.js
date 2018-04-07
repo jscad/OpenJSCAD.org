@@ -43,6 +43,7 @@ ENTITIES
   0
 ENDSEC
 ${dxfObjects({})}
+  0
 EOF
 `
 
@@ -99,6 +100,7 @@ AcDbPolyline
   0
 ENDSEC
 ${dxfObjects({})}
+  0
 EOF
 `
 
@@ -195,6 +197,7 @@ AcDbPolyline
   0
 ENDSEC
 ${dxfObjects({})}
+  0
 EOF
 `
 
