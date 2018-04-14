@@ -74,10 +74,15 @@ const head = (array) => {
   return array[0]
 }
 
+const flatten = list => list.reduce(
+  (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
+)
+
 module.exports = {
   isCSG,
   isCAG,
   toArray,
   merge,
-  head
+  head,
+  flatten
 }

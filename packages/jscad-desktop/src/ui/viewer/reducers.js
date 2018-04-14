@@ -15,7 +15,8 @@ const initialize = () => {
     // UGH
     behaviours: {
       resetViewOn: []
-    }
+    },
+    autorotate: false
   }
 }
 const toggleAutorotate = (state, autoRotate) => {

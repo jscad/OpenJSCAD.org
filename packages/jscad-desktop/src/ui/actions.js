@@ -56,6 +56,15 @@ const makeActions = (sources) => {
   .startWith('light')
   .map(data => ({type: 'changeTheme', data}))
 
+  const changeLanguage$ = most.mergeArray([
+    sources.dom.select('#languageSwitcher').events('change')
+      .map(e => e.target.value),
+    sources.store
+      .filter(data => data && data.locale)
+      .map(data => data.locale)
+  ])
+  .map(data => ({type: 'changeLanguage', data}))
+
   const toggleOptions$ = most.mergeArray([
     sources.dom.select('#toggleOptions').events('click')
   ])
@@ -96,6 +105,7 @@ const makeActions = (sources) => {
     setAppUpdatesAvailable$,
     // ui
     changeTheme$,
+    changeLanguage$,
     toggleOptions$
   }
 }

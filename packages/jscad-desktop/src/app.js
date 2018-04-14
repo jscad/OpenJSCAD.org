@@ -5,38 +5,42 @@ const makeCsgViewer = require('@jscad/csg-viewer')
 let csgViewer
 
 // all the side effects : ie , input/outputs
-const {electronStoreSink, electronStoreSource} = require('./sideEffects/electronStore')
-const {titleBarSink} = require('./sideEffects/titleBar')
-const makeDragDropSource = require('./sideEffects/dragDrop')
-const storeSource$ = electronStoreSource()
-const dragAndDropSource$ = makeDragDropSource(document)
-const {watcherSink, watcherSource} = require('./sideEffects/fileWatcher')
-const {fsSink, fsSource} = require('./sideEffects/fsWrapper')
-const {domSink, domSource} = require('./sideEffects/dom')
+const titleBar = require('./sideEffects/titleBar')()
+// electron store side effect
+const electronStore = require('./sideEffects/electronStore')()
+// drag & drop side effect
+const dragDrop = require('./sideEffects/dragDrop')()
+// file system side effect
+const fs = require('./sideEffects/fs')()
+// dom side effect
+const dom = require('./sideEffects/dom')()
+// worker side effect
 const makeWorkerEffect = require('./sideEffects/worker')
-const {appUpdateSource} = require('./sideEffects/appUpdates')
-
+// app updates side effect
+const appUpdates = require('./sideEffects/appUpdates')()
+// internationalization side effect
+const i18n = require('./sideEffects/i18n')()
+// web workers
 const solidWorker = makeWorkerEffect('src/core/code-evaluation/rebuildSolidsWorker.js')
+// generic design parameter handling
 const paramsCallbacktoStream = require('./utils/observable-utils/callbackToObservable')()
 
 // proxy state stream to be able to access & manipulate it before it is actually available
 const { attach, stream } = proxy()
 const state$ = stream
-//
 
-// appUpdateSource().forEach(x => console.log('update available', x))
-
+// all the sources of data
 const sources = {
-  store: storeSource$,
-  drops: dragAndDropSource$,
-  watcher: watcherSource(),
-  fs: fsSource(),
-  paramChanges: paramsCallbacktoStream.stream,
   state$,
-  dom: domSource(),
+  paramChanges: paramsCallbacktoStream.stream,
+  store: electronStore.source(),
+  fs: fs.source(),
+  drops: dragDrop.source(document),
+  dom: dom.source(),
   solidWorker: solidWorker.source(),
-  appUpdates: appUpdateSource()
+  appUpdates: appUpdates.source()
 }
+// all the actions
 const designActions = require('./ui/design/actions')(sources)
 const ioActions = require('./ui/io/actions')(sources)
 const viewerActions = require('./ui/viewer/actions')(sources)
@@ -45,49 +49,66 @@ const actions$ = Object.assign({}, designActions, otherActions, ioActions, viewe
 
 attach(makeState(Object.values(actions$)))
 
+// after this point, formating of data data that goes out to the sink side effects
 // titlebar & store side effects
-titleBarSink(
+titleBar.sink(
   state$.map(state => state.appTitle).skipRepeats()
 )
-electronStoreSink(state$
-  .map(function (state) {
-    const {themeName, design} = state
-    const {name, mainPath, vtreeMode, paramDefinitions, paramDefaults, paramValues} = design
-    return {
-      themeName,
-      design: {
-        name,
-        mainPath,
-        vtreeMode,
-        parameters: {
-          paramDefinitions,
-          paramDefaults,
-          paramValues
-        }
-      },
-      viewer: {
-        axes: {show: state.viewer.axes.show},
-        grid: {show: state.viewer.grid.show}
-      },
-      autoReload: state.autoReload,
-      instantUpdate: state.instantUpdate
-    }
-  })
-)
-// data out to file watcher
-watcherSink(
+
+//
+const settingsStorage = state => {
+  const {themeName, design, locale} = state
+  const {name, mainPath, vtreeMode, paramDefinitions, paramDefaults, paramValues} = design
+  return {
+    themeName,
+    locale,
+    design: {
+      name,
+      mainPath,
+      vtreeMode,
+      parameters: {
+        paramDefinitions,
+        paramDefaults,
+        paramValues
+      }
+    },
+    viewer: {
+      axes: {show: state.viewer.axes.show},
+      grid: {show: state.viewer.grid.show}
+      // autorotate: {enabled: state.viewer.controls.autoRotate.enabled}
+    },
+    autoReload: state.autoReload,
+    instantUpdate: state.instantUpdate
+  }
+}
+electronStore.sink(
   state$
-    .filter(state => state.design.mainPath !== '')
-    .skipRepeats()
-    .map(state => ({filePath: state.design.mainPath, enabled: state.autoReload})) // enable/disable watch if autoreload is set to false
+    .map(settingsStorage)
 )
+
 // data out to file system sink
-fsSink(
+fs.sink(
   most.mergeArray([
+    // watched data
+    state$
+      .filter(state => state.design.mainPath !== '')
+      .map(state => ({path: state.design.mainPath, enabled: state.autoReload}))
+      .skipRepeatsWith((state, previousState) => {
+        return JSON.stringify(state) === JSON.stringify(previousState)
+      })
+      .map(({path, enabled}) => ({
+        operation: 'watch',
+        id: 'watchScript',
+        path,
+        options: {enabled}})// enable/disable watch if autoreload is set to false
+      ),
+    // files to read/write
     state$
       .filter(state => state.design.mainPath !== '')
       .map(state => state.design.mainPath)
-      .skipRepeats()
+      .skipRepeatsWith((state, previousState) => {
+        return JSON.stringify(state) === JSON.stringify(previousState)
+      })
       .map(path => ({operation: 'read', id: 'loadScript', path})),
     most.just()
       .map(function () {
@@ -101,6 +122,14 @@ fsSink(
   ])
 )
 
+i18n.sink(
+  state$
+    .map(state => state.locale)
+    .skipRepeats()
+    .map(data => ({operation: 'changeSettings', data}))
+)
+
+// web worker sink
 const solidWorkerBase$ = most.mergeArray([
   actions$.setDesignContent$.map(action => ({paramValues: undefined, origin: 'designContent', error: undefined})),
   actions$.updateDesignFromParams$.map(action => action.data)
@@ -172,12 +201,17 @@ const outToDom$ = state$
 
     const sameAppUpdates = JSON.stringify(state.appUpdates) === JSON.stringify(previousState.appUpdates)
 
-    return sameParamDefinitions && sameParamValues && sameExportFormats && sameStatus && sameStyling &&
-      sameAutoreload && sameInstantUpdate && sameError && sameShowOptions && samevtreeMode && sameAppUpdates
-  })
-  .map(state => require('./ui/views/main')(state, paramsCallbacktoStream))
+    const sameLocale = state.locale === previousState.locale
 
-domSink(outToDom$)
+    return sameParamDefinitions && sameParamValues && sameExportFormats && sameStatus && sameStyling &&
+      sameAutoreload && sameInstantUpdate && sameError && sameShowOptions && samevtreeMode && sameAppUpdates &&
+      sameLocale
+  })
+  .combine(function (state, i18n) {
+    return require('./ui/views/main')(state, paramsCallbacktoStream, i18n)
+  }, i18n.source())
+
+dom.sink(outToDom$)
 
 // for viewer
 
@@ -199,12 +233,11 @@ domSink(outToDom$)
 state$
   .map(state => state.viewer)
   .skipRepeatsWith(function (state, previousState) {
-    return JSON.parse(JSON.stringify(state)) === JSON.parse(JSON.stringify(previousState))
+    const sameViewerParams = JSON.stringify(state) === JSON.stringify(previousState)
+    return sameViewerParams
   })
   .forEach(params => {
-    // console.log('changing viewer params')
     const viewerElement = document.getElementById('renderTarget')
-    setCanvasSize(viewerElement)
     // initialize viewer if it has not been done already
     if (viewerElement && !csgViewer) {
       const csgViewerItems = makeCsgViewer(viewerElement, params)
@@ -214,25 +247,3 @@ state$
       csgViewer(params)
     }
   })
-
-function setCanvasSize (viewerElement) {
-  let pixelRatio = window.devicePixelRatio || 1
-  let width = window.innerWidth
-  let height = window.innerHeight
-  if (viewerElement !== document.body) {
-    const bounds = viewerElement.getBoundingClientRect()
-    width = bounds.right - bounds.left
-    height = bounds.bottom - bounds.top
-  }
-  width *= pixelRatio
-  height *= pixelRatio
-  viewerElement.width = width
-  viewerElement.height = height
-  viewerElement.clientWidth = width
-  viewerElement.clientHeight = height
-  // viewerElement.style.width = width + 'px'
-  // viewerElement.style.height = height + 'px'
-}
-window.onresize = function () {
-  setCanvasSize(document.getElementById('renderTarget'))
-}

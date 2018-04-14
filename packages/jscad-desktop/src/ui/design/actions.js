@@ -31,7 +31,9 @@ const actions = (sources) => {
     sources.fs
       .filter(data => data.operation === 'read' && data.id === 'loadScript')
       .map(raw => raw.data),
-    sources.watcher.map(({filePath, contents}) => contents)
+    sources.fs
+      .filter(data => data.operation === 'watch' && data.id === 'watchScript')
+      .map(({path, data}) => data)
   ])
     .map(data => ({type: 'setDesignContent', data}))
 

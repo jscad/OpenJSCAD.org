@@ -11,6 +11,11 @@ const changeTheme = (state, themeName) => {
   const viewer = merge({}, state.viewer, themeData.viewer)
   return Object.assign({}, state, {viewer, themeName, themeSettings: themeData})
 }
+
+const changeLanguage = (state, locale) => {
+  return Object.assign({}, state, {locale})
+}
+
 const toggleOptions = (state) => {
   return Object.assign({}, state, {showOptions: !state.showOptions})
 }
@@ -31,6 +36,7 @@ const setAppUpdatesAvailable = (state, {version, available}) => {
 
 module.exports = {
   changeTheme,
+  changeLanguage,
   toggleOptions,
   clearErrors,
   setErrors,

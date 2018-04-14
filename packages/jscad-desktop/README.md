@@ -29,8 +29,6 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 (an alternative to include() will soon be provided)](https://github.com/jscad/OpenJSCAD.org/issues/245)
   - direct loading/conversion of other formats expect for .js/jscad is not supported (yet)
   - there is no text editor included, because I am still on the fence about including one: why have something half baked when there are so many great , free & open source code editors these days ? ([Atom](https://atom.io/), [Visual Studio Code](https://code.visualstudio.com/))
-  - transitive file watching is not yes supported: ie if you change things outside of your main file, the ui will not update
-  - file watching can fire change events twice occasionaly
 
 ### script handling
  * you can either select a file (jscad or js) or folder from the load jscad menu or drag & drop a file or folder
@@ -132,6 +130,19 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
   just toggle the 'Experimental geometry caching:' setting in the options panel (turned off by default)
   be warned however that a lot of the official examples etc will not work with this out of the box
 
+
+### translations
+
+This version of Jscad has support for multiple languages (as in text for the UI, not programming languages):
+- English
+- German
+- French
+
+you can find the language files in the **locales** folder 
+* Language will default to your system's locale
+* feel free to add pull requests if you see issues with the current translations or if you want to 
+add translations for another one !
+* in the near future this will also be available for the non-desktop versions!
 
 
 pre-alpha, expect bugs! 

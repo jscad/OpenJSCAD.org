@@ -1,4 +1,5 @@
 {
+  "name":"dark",
   "viewer": {
     "rendering": {
       "background": [0.211, 0.2, 0.207, 1],

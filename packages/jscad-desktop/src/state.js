@@ -4,6 +4,7 @@ const packageMetadata = require('../package.json')
 const initialState = {
   appTitle: `jscad v ${packageMetadata.version}`,
   appUpdates: {available: false, version: undefined},
+  locale: require('electron').remote.app.getLocale().split('-')[0],
   // for possible errors
   error: undefined,
   // design data
@@ -30,6 +31,8 @@ const initialState = {
   }
 
 }
+
+console.log('initialState', initialState)
 
 //status infos from web ui: sort out, reuse or not
 /*

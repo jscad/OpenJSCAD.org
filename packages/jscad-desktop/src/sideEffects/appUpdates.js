@@ -4,7 +4,7 @@ const compareVersion = require('compare-version')
 const callBackToStream = require('../utils/observable-utils/callbackToObservable')
 const updatesFromCB = callBackToStream()
 
-function appUpdateSource () {
+const appUpdateSource = () => {
   https.get({
     host: 'api.github.com',
     path: '/repos/jscad/jscad-desktop/releases/latest',
@@ -31,4 +31,8 @@ function appUpdateSource () {
   return updatesFromCB.stream
 }
 
-module.exports = {appUpdateSource}
+const makeAppUpdateSideEffect = () => {
+  return {source: appUpdateSource}
+}
+
+module.exports = makeAppUpdateSideEffect

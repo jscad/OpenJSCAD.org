@@ -4,4 +4,6 @@ function titleBarSink (outToTitle$) {
   })
 }
 
-module.exports = {titleBarSink}
+module.exports = function makeTitleBarSideEffect () {
+  return {sink: titleBarSink}
+}

@@ -1,4 +1,5 @@
 {
+  "name":"light",
   "viewer": {
     "rendering": {
       "background": [1, 1, 1, 1],

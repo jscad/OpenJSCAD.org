@@ -51,4 +51,6 @@ function dragAndDropSource (targetEl) { // {dragOvers$, drops$}
   return mergeArray([urls$, texts$, filesOrFolders$]).multicast()
 }
 
-module.exports = dragAndDropSource
+module.exports = function makeDragAndDropSideEffect () {
+  return {source: dragAndDropSource}
+}

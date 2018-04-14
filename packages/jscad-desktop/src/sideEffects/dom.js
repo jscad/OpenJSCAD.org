@@ -29,7 +29,7 @@ function domSink (outToDom$) {
   foo$.forEach(x => x)
 }
 
-/*let storedObservables = {}
+/* let storedObservables = {}
 let waitingForListeners = []
 let eventsForListners = {} */
 let storedListeners = {
@@ -66,7 +66,7 @@ function domSource () {
       if (item) {
         const storedListener = storedListeners[query]
         if (item.length === 1 && storedListener.live === false) {
-          // console.log('HURRAY NOW I HAVE SOMETHING !!')          
+          // console.log('HURRAY NOW I HAVE SOMETHING !!')
           const realObservable = most.fromEvent(storedListener.events, item[0])
           storedListener.observable.attach(realObservable)
           storedListener.live = true
@@ -78,8 +78,6 @@ function domSource () {
   return {select}
 }
 
-function makeDomSource () {
-
+module.exports = function makeDomSource () {
+  return {source: domSource, sink: domSink}
 }
-
-module.exports = {domSource, domSink}
