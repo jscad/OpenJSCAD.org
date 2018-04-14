@@ -65,6 +65,13 @@ const makeActions = (sources) => {
   ])
   .map(data => ({type: 'changeLanguage', data}))
 
+  const setAvailableLanguages$ = most.mergeArray([
+    sources.i18n
+      .filter(rawData => rawData.operation === 'getAvailableLanguages')
+      .map(rawData => rawData.data)
+  ])
+  .map(data => ({type: 'setAvailableLanguages', data}))
+
   const toggleOptions$ = most.mergeArray([
     sources.dom.select('#toggleOptions').events('click')
   ])
@@ -103,6 +110,8 @@ const makeActions = (sources) => {
     setErrors$,
     // app updates
     setAppUpdatesAvailable$,
+    // translations
+    setAvailableLanguages$,
     // ui
     changeTheme$,
     changeLanguage$,

@@ -38,7 +38,8 @@ const sources = {
   drops: dragDrop.source(document),
   dom: dom.source(),
   solidWorker: solidWorker.source(),
-  appUpdates: appUpdates.source()
+  appUpdates: appUpdates.source(),
+  i18n: i18n.source()
 }
 // all the actions
 const designActions = require('./ui/design/actions')(sources)
@@ -123,10 +124,16 @@ fs.sink(
 )
 
 i18n.sink(
-  state$
-    .map(state => state.locale)
-    .skipRepeats()
-    .map(data => ({operation: 'changeSettings', data}))
+  most.mergeArray([
+    state$
+      .map(state => state.locale)
+      .skipRepeats()
+      .map(data => ({operation: 'changeSettings', data})),
+    // get all available translations
+    state$
+      .take(1)
+      .map(data => ({operation: 'getAvailableLanguages', data}))
+  ])
 )
 
 // web worker sink
@@ -202,14 +209,15 @@ const outToDom$ = state$
     const sameAppUpdates = JSON.stringify(state.appUpdates) === JSON.stringify(previousState.appUpdates)
 
     const sameLocale = state.locale === previousState.locale
+    const sameAvailableLanguages = state.availableLanguages === previousState.availableLanguages
 
     return sameParamDefinitions && sameParamValues && sameExportFormats && sameStatus && sameStyling &&
       sameAutoreload && sameInstantUpdate && sameError && sameShowOptions && samevtreeMode && sameAppUpdates &&
-      sameLocale
+      sameLocale && sameAvailableLanguages
   })
   .combine(function (state, i18n) {
     return require('./ui/views/main')(state, paramsCallbacktoStream, i18n)
-  }, i18n.source())
+  }, sources.i18n.filter(x => x.operation === 'changeSettings').map(x => x.data))
 
 dom.sink(outToDom$)
 

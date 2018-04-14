@@ -1,5 +1,11 @@
 const callBackToStream = require('../utils/observable-utils/callbackToObservable')
 
+const longNames = {
+  en: 'english',
+  de: 'german',
+  fr: 'french'
+}
+
 const initTranslations = () => {
   // adapted from https://gist.github.com/gmarcos87/565d57747b30e1755046002137228562
   const path = require('path')
@@ -46,30 +52,34 @@ const makei18nSideEffect = (options) => {
 
   const translations = initTranslations()
 
-  const sink = (obs$) => {
-    const changeSettings$ = obs$
+  const sink = (out$) => {
+    out$
       .filter(x => x.operation === 'changeSettings')
-      .multicast()
-
-    changeSettings$
       .forEach(x => {
         const locales = x.data
         i18nConfig({
           locales,
           translations: translations[locales]
         })
-        translationsCB.callback(i18n)
+        // setup defaults
+        // const locales = require('electron').remote.app.getLocale().split('-')[0]
+        translationsCB.callback({data: i18n, operation: 'changeSettings'})
+      })
+
+    out$
+      .filter(x => x.operation === 'getAvailableLanguages')
+      .forEach(x => {
+        const availableLanguages = Object.keys(translations)
+          .map(code => {
+            const fullName = longNames[code] ? longNames[code] : 'placeholder'
+            return {code, fullName}
+          })
+
+        translationsCB.callback({data: availableLanguages, operation: 'getAvailableLanguages'})
       })
   }
   const source = () => {
-    // setup defaults
-    const locales = require('electron').remote.app.getLocale().split('-')[0]
-    i18nConfig({
-      locales,
-      translations: translations[locales]
-    })
     return translationsCB.stream
-      .startWith(i18n)
       .multicast()
   }
   return {sink, source}

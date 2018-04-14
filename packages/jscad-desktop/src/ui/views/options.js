@@ -1,15 +1,18 @@
 const html = require('bel')
 
 module.exports = function options (state, i18n) {
+  const languages = state.availableLanguages.map(language => {
+    const selected = state.locale === language.code
+    return html`<option value='${language.code}' selected=${selected}>${i18n.translate(language.fullName)}</option>`
+  })
+
   return html`
 <section id='options' style='visibility:${state.showOptions ? 'visible' : 'hidden'}; color:${state.themeSettings.secondaryTextColor}'>   
   <br>
   <fieldset>
     <legend> <h3> ${i18n`language`}</legend>
     <select id='languageSwitcher'>
-      <option value='en' selected=${state.locale === 'en'}>${i18n`english`}</option>
-      <option value='fr' selected=${state.locale === 'fr'}>${i18n`french`}</option>
-      <option value='de' selected=${state.locale === 'de'}>${i18n`german`}</option>
+      ${languages}  
     </select>
   </fieldset>
 

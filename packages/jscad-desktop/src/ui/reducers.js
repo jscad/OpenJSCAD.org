@@ -16,6 +16,10 @@ const changeLanguage = (state, locale) => {
   return Object.assign({}, state, {locale})
 }
 
+const setAvailableLanguages = (state, availableLanguages) => {
+  return Object.assign({}, state, {availableLanguages})
+}
+
 const toggleOptions = (state) => {
   return Object.assign({}, state, {showOptions: !state.showOptions})
 }
@@ -40,5 +44,6 @@ module.exports = {
   toggleOptions,
   clearErrors,
   setErrors,
-  setAppUpdatesAvailable
+  setAppUpdatesAvailable,
+  setAvailableLanguages
 }
