@@ -4,18 +4,18 @@
 // description: multiple balloons, testing new parameters
 // file       : balloons.jscad
 
-function getParameterDefinitions() { 
-  return [ 
-    { name: 'balloon', type: 'group', caption: 'Balloons' }, 
-    { name: 'checkbox', type: 'checkbox', checked: true, initial: '20', caption: 'Big?' }, 
-    { name: 'color', type: 'color', initial: '#FFB431', caption: 'Color?' }, 
-    { name: 'count', type: 'slider', initial: 3, min: 2, max: 10, step: 1, caption: 'How many?' }, 
-    { name: 'friend', type: 'group', caption: 'Friend' }, 
-    { name: 'name', type: 'text', initial: '', size: 20, maxLength: 20, caption: 'Name?', placeholder: '20 characters' }, 
-    { name: 'date',  type: 'date', initial: '', min: '1915-01-01', max: '2015-12-31', caption: 'Birthday?', placeholder: 'YYYY-MM-DD' }, 
-    { name: 'age', type: 'int', initial: 20, min: 1, max: 100, step: 1, caption: 'Age?' }, 
-    ]; 
-} 
+function getParameterDefinitions() {
+  return [
+    { name: 'balloon', type: 'group', caption: 'Balloons' },
+    { name: 'checkbox', type: 'checkbox', initial: '20', caption: 'Big?' },
+    { name: 'color', type: 'color', initial: '#FFB431', caption: 'Color?' },
+    { name: 'count', type: 'slider', initial: 3, min: 2, max: 10, step: 1, caption: 'How many?' },
+    { name: 'friend', type: 'group', caption: 'Friend' },
+    { name: 'name', type: 'text', initial: '', size: 20, maxLength: 20, caption: 'Name?', placeholder: '20 characters' },
+    { name: 'date',  type: 'date', initial: '', min: '1915-01-01', max: '2015-12-31', caption: 'Birthday?', placeholder: 'YYYY-MM-DD' },
+    { name: 'age', type: 'int', initial: 20, min: 1, max: 100, step: 1, caption: 'Age?' },
+    ];
+}
 
 // Example of all interactive parameters
 // By Z3 Development 2015.10.13
@@ -87,8 +87,8 @@ function main( p ) {
     p.resolution = 32;
 // use the checkbox to determine the size of the sphere
     p.b_radius = 10;
-    if(p.checkbox !== false) {
-        p.b_radius = parseInt(p.checkbox);
+    if(p.checkbox === true) {
+        p.b_radius = 20;
     }
 // use the color chooser to determine the color of the sphere
     if(p.color.length == 7) {
