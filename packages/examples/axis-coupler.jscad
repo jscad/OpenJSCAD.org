@@ -10,31 +10,27 @@ var cylresolution=16;
 // Here we define the user editable parameters: 
 function getParameterDefinitions() {
   return [
-    {
-      name: 'quality', 
-      type: 'choice',
-      caption: 'Quality',
-      values: [0, 1],
-      captions: ["Draft","High"], 
-      initial: 0
-    },    
-  
-    { name: 'diameter1', caption: 'Axis diameter of first coupler:', type: 'float', initial: 12.2 },
-    { name: 'shaftlength1', caption: 'Axis depth of first coupler:', type: 'float', initial: 15 },
-    { name: 'outerlength1', caption: 'Outer length of first coupler:', type: 'float', initial: 20 },
-    { name: 'nutradius1', caption: 'Nut radius of first coupler:', type: 'float', initial: 4.65 },
-    { name: 'nutthickness1', caption: 'Nut thickness of first coupler:', type: 'float', initial: 4.2},
-    { name: 'screwdiameter1', caption: 'Screw diameter of first coupler:', type: 'float', initial: 5},
-    { name: 'diameter2', caption: 'Axis diameter of second coupler:', type: 'float', initial: 9.5 },
-    { name: 'shaftlength2', caption: 'Axis depth of second coupler:', type: 'float', initial: 10 },
-    { name: 'outerlength2', caption: 'Outer length of second coupler:', type: 'float', initial: 15 },
-    { name: 'nutradius2', caption: 'Nut radius of second coupler:', type: 'float', initial: 3.2 },
-    { name: 'nutthickness2', caption: 'Nut thickness of second coupler:', type: 'float', initial: 2.6},
-    { name: 'screwdiameter2', caption: 'Screw diameter of second coupler:', type: 'float', initial: 3},
+    { name: 'general', caption: 'General', type: 'group'},
+    { name: 'quality', type: 'choice', caption: 'Quality', values: [0, 1], captions: ["Draft","High"], initial: 0 },
     { name: 'outerdiameter', caption: 'Outer diameter:', type: 'float', initial: 30 },
-    { name: 'spiderlength', caption: 'Spider thickness:', type: 'float', initial: 12 },
-    { name: 'spidermargin', caption: 'Spider tolerance:', type: 'float', initial: 0 },
-    { name: 'numteeth', caption: 'Num teeth per coupler:', type: 'int', initial: 2}
+    { name: 'numteeth', caption: 'Num teeth per coupler:', type: 'int', initial: 2},
+    { name: 'coupler1', caption: 'First Coupler', type: 'group'},
+    { name: 'diameter1', caption: 'Axis diameter:', type: 'float', initial: 12.2, step: 0.1 },
+    { name: 'shaftlength1', caption: 'Axis depth:', type: 'float', initial: 15, step: 0.1 },
+    { name: 'outerlength1', caption: 'Outer length:', type: 'float', initial: 20, step: 0.1 },
+    { name: 'nutradius1', caption: 'Nut radius:', type: 'float', initial: 4.6, step: 0.1 },
+    { name: 'nutthickness1', caption: 'Nut thickness:', type: 'float', initial: 4.2, step: 0.1},
+    { name: 'screwdiameter1', caption: 'Screw diameter:', type: 'float', initial: 5, step: 0.1},
+    { name: 'coupler2', caption: 'Second Coupler', type: 'group'},
+    { name: 'diameter2', caption: 'Axis diameter:', type: 'float', initial: 9.5, step: 0.1 },
+    { name: 'shaftlength2', caption: 'Axis depth:', type: 'float', initial: 10, step: 0.1 },
+    { name: 'outerlength2', caption: 'Outer length:', type: 'float', initial: 15, step: 0.1 },
+    { name: 'nutradius2', caption: 'Nut radius:', type: 'float', initial: 3.2, step: 0.1 },
+    { name: 'nutthickness2', caption: 'Nut thickness:', type: 'float', initial: 2.6, step: 0.1},
+    { name: 'screwdiameter2', caption: 'Screw diameter:', type: 'float', initial: 3, step: 0.1},
+    { name: 'spider', caption: 'Spider Coupler', type: 'group'},
+    { name: 'spiderlength', caption: 'Thickness:', type: 'float', initial: 12 },
+    { name: 'spidermargin', caption: 'Tolerance:', type: 'float', initial: 0, min: 0.0, max: 1.0, step: 0.1 },
   ];
 }
 
