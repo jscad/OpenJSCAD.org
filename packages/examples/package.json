@@ -4,6 +4,7 @@
   "description": "example files for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
+    "lint": "eslint *.jscad",
     "version": "git add -A ",
     "postversion": "git push origin master && git push origin master --tags",
     "release-patch": "git checkout master && git pull origin master && npm version patch",
@@ -26,6 +27,21 @@
     }
   ],
   "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  },
+  "eslintConfig": {
+    "extends": "standard",
+    "rules": {
+        "semi": "off",
+        "no-undef": "off"
+    }
+  },
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/openjscad",
