@@ -33,12 +33,14 @@ function getParameterDefinitions() {
       name: 'iphonemargin', 
       type: 'float', 
       initial: 0.5,
+      step: 0.1,
       caption: "Margin around iphone (in mm):"
     },
     {
       name: 'plugmargin', 
       type: 'float', 
       initial: 0.25,
+      step: 0.05,
       caption: "Margin around dock connector (in mm):"
     },
     { name: 'mouseear', caption: 'Add mouse ear:', type: 'choice', values: [0, 1], initial: 1, captions: ["No", "Yes"]}

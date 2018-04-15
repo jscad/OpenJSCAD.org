@@ -7,23 +7,23 @@
 function getParameterDefinitions()
 {
   return ([
-	{ name: 'motorBody_len', type: 'float', initial: 47.5, caption: 'Motor length'},
-	{ name: 'motorBody_width', type: 'float', initial: 42.0, caption: 'Motor width'},
-	{ name: 'motorBody_chamfer', type: 'float', initial: 5.0, caption: 'Motor chamfer'},
+	{ name: 'motorBody_len', type: 'float', initial: 47.5, step: 0.5, caption: 'Motor length'},
+	{ name: 'motorBody_width', type: 'float', initial: 42.0, step: 0.5, caption: 'Motor width'},
+	{ name: 'motorBody_chamfer', type: 'float', initial: 5.0, step: 0.1, caption: 'Motor chamfer'},
 	
-	{ name: 'motorCap_len', type: 'float', initial: 8.0, caption: 'Motor cap length'},
-	{ name: 'motorCap_thickness', type: 'float', initial: 1.0, caption: 'Motor cap thickness'},
-	{ name: 'motorCap_chamfer', type: 'float', initial: 2.5, caption: 'Motor cap chamfer'},
+	{ name: 'motorCap_len', type: 'float', initial: 8.0, step: 0.1, caption: 'Motor cap length'},
+	{ name: 'motorCap_thickness', type: 'float', initial: 1.0, step: 0.1, caption: 'Motor cap thickness'},
+	{ name: 'motorCap_chamfer', type: 'float', initial: 2.5, step: 0.1, caption: 'Motor cap chamfer'},
 
-	{ name: 'shaft_len', type: 'float', initial: 22.0, caption: 'Shaft length'},
-	{ name: 'shaft_radius', type: 'float', initial: 2.5, caption: 'Shaft radius'},
+	{ name: 'shaft_len', type: 'float', initial: 22.0, step: 0.5, caption: 'Shaft length'},
+	{ name: 'shaft_radius', type: 'float', initial: 2.5, step: 0.1, caption: 'Shaft radius'},
 
-	{ name: 'motorRing_radius', type: 'float', initial: 11.0, caption: 'Ring radius'},
-	{ name: 'motorRing_height', type: 'float', initial: 2.0, caption: 'Ring height'},
+	{ name: 'motorRing_radius', type: 'float', initial: 11.0, step: 0.1, caption: 'Ring radius'},
+	{ name: 'motorRing_height', type: 'float', initial: 2.0, step: 0.1, caption: 'Ring height'},
 
-	{ name: 'mountingholes_fromcent', type: 'float', initial: 15.5, caption: 'Mounting hole offset'},
-	{ name: 'mountingholes_radius', type: 'float', initial: 1.5, caption: 'Mounting hole radius'},
-	{ name: 'mountingholes_depth', type: 'float', initial: 4.5, caption: 'Mounting hole depth'}
+	{ name: 'mountingholes_fromcent', type: 'float', initial: 15.5, step: 0.1, caption: 'Mounting hole offset'},
+	{ name: 'mountingholes_radius', type: 'float', initial: 1.5, step: 0.1, caption: 'Mounting hole radius'},
+	{ name: 'mountingholes_depth', type: 'float', initial: 4.5, step: 0.1, caption: 'Mounting hole depth'}
   ]);
 }
 

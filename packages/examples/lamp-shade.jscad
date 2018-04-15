@@ -398,7 +398,7 @@ function getParameterDefinitions()
     {name: 'numfaces', type: 'int', initial: 5, caption: "Number of faces:"},
     {name: 'thickness', type: 'float', initial: 4, caption: "Thickness of stock material:"},
     {name: 'topholediameter', type: 'float', initial: 42, caption: "Diameter of top hole:"},
-    {name: 'cutterdiameter', type: 'float', initial: 3.2, caption: "Diameter of CNC cutter / laser beam:"},
+    {name: 'cutterdiameter', type: 'float', initial: 3.2, step: 0.1, caption: "Diameter of CNC cutter / laser beam:"},
 
     {
       name: 'type',

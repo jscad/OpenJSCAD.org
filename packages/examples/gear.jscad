@@ -10,7 +10,7 @@ function getParameterDefinitions() {
     { name: 'numTeeth', caption: 'Number of teeth:', type: 'int', initial: 10, min: 5,max: 20, step: 1 },
     { name: 'circularPitch', caption: 'Circular pitch:', type: 'float', initial: 5 },
     { name: 'pressureAngle', caption: 'Pressure angle:', type: 'float', initial: 20 },
-    { name: 'clearance', caption: 'Clearance:', type: 'float', initial: 0 },
+    { name: 'clearance', caption: 'Clearance:', type: 'float', initial: 0.0, step: 0.1 },
     { name: 'thickness', caption: 'Thickness:', type: 'float', initial: 5 },
     { name: 'centerholeradius', caption: 'Radius of center hole (0 for no hole):', type: 'float', initial: 2 }
   ];
