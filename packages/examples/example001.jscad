@@ -7,7 +7,7 @@
 function r_from_dia(d) { return d / 2; }
 
 function rotcy(rot, r, h) {
-	return rotate(90, rot,
+	return rotate(rot,
 		cylinder({r: r, h: h, center: true}));
 }
 
@@ -19,9 +19,9 @@ function example001() {
 
 	return difference(
 		sphere({r: r_from_dia(size)}),
-		rotcy([0, 0, 0], cy_r, cy_h),
-		rotcy([1, 0, 0], cy_r, cy_h),
-		rotcy([0, 1, 0], cy_r, cy_h)
+		rotcy([ 0,  0, 0], cy_r, cy_h),
+		rotcy([90,  0, 0], cy_r, cy_h),
+		rotcy([ 0, 90, 0], cy_r, cy_h)
 	);
 }
 
