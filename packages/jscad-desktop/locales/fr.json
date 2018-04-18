@@ -24,5 +24,18 @@
   "STL (ASCII)":"STL (ASCII)",
   "AMF (experimental)":"AMF (experimental)",
   "update":"actualiser",
-  "instant update":"actualisation instantanée"
+  "instant update":"actualisation instantanée",
+  "keyboard shortcuts":"racourcis clavier",
+  "command":"commande",
+  "keybinding":"racourci",
+  "when":"quand",
+  "always":"toujours",
+  "front":"devant",
+  "back":"derrière",
+  "top":"dessus",
+  "bottom":"dessous",
+  "left":"gauche",
+  "right":"droite",
+  "perspective":"perspective",
+  "orthographic":"orthographique"
 }

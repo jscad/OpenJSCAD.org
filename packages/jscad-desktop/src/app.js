@@ -58,11 +58,12 @@ titleBar.sink(
 
 //
 const settingsStorage = state => {
-  const {themeName, design, locale} = state
+  const {themeName, design, locale, shortcuts} = state
   const {name, mainPath, vtreeMode, paramDefinitions, paramDefaults, paramValues} = design
   return {
     themeName,
     locale,
+    shortcuts,
     design: {
       name,
       mainPath,
@@ -211,9 +212,11 @@ const outToDom$ = state$
     const sameLocale = state.locale === previousState.locale
     const sameAvailableLanguages = state.availableLanguages === previousState.availableLanguages
 
+    const sameShortcuts = state.shortcuts === previousState.shortcuts
+
     return sameParamDefinitions && sameParamValues && sameExportFormats && sameStatus && sameStyling &&
       sameAutoreload && sameInstantUpdate && sameError && sameShowOptions && samevtreeMode && sameAppUpdates &&
-      sameLocale && sameAvailableLanguages
+      sameLocale && sameAvailableLanguages && sameShortcuts
   })
   .combine(function (state, i18n) {
     return require('./ui/views/main')(state, paramsCallbacktoStream, i18n)

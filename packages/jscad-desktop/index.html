@@ -219,6 +219,26 @@
           #appUpdates a{
             text-decoration:none;
           }
+
+          .shortcutCommand.error{
+            color:red;
+          }
+
+          input.error::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+              color: red;
+              opacity: 1; /* Firefox */
+          }
+
+          #shortcuts .error input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+              color: red;
+          }
+
+          #shortcuts .error input::-ms-input-placeholder { /* Microsoft Edge */
+              color: red;
+          }
+
+         
+
         </style>
     </head>
     <body>

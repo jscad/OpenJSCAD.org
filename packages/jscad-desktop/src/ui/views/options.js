@@ -5,7 +5,7 @@ module.exports = function options (state, i18n) {
     const selected = state.locale === language.code
     return html`<option value='${language.code}' selected=${selected}>${i18n.translate(language.fullName)}</option>`
   })
-
+  const shortcuts = require('./shortcuts')(state, i18n)
   return html`
 <section id='options' style='visibility:${state.showOptions ? 'visible' : 'hidden'}; color:${state.themeSettings.secondaryTextColor}'>   
   <br>
@@ -50,5 +50,6 @@ module.exports = function options (state, i18n) {
         <input type='text' disabled value='${state.storage.path}' disabled />
       </label>
     </fieldset>
+    ${shortcuts}
 </section>`
 }

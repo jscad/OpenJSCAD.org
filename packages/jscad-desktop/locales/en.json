@@ -24,5 +24,18 @@
   "STL (ASCII)":"",
   "AMF (experimental)":"",
   "update":"",
-  "instant update":""
+  "instant update":"",
+  "keyboard shortcuts":"",
+  "command":"",
+  "keybinding":"",
+  "when":"",
+  "always":"",
+  "front":"",
+  "back":"",
+  "top":"",
+  "bottom":"",
+  "left":"",
+  "right":"",
+  "perspective":"",
+  "orthographic":""
 }

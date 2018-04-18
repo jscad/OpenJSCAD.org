@@ -12,6 +12,43 @@ const changeTheme = (state, themeName) => {
   return Object.assign({}, state, {viewer, themeName, themeSettings: themeData})
 }
 
+// set all shortcuts
+const setShortcuts = (state, shortcuts) => {
+  return Object.assign({}, state, {shortcuts})
+}
+
+// set a specific shortcut
+const setShortcut = (state, shortcutData) => {
+  const alreadyExists = key => {
+    return state.shortcuts
+      .filter(shortcut => shortcut.key === key)
+      .length > 0
+  }
+  const shortcuts = state.shortcuts.map(shortcut => {
+    const match = shortcut.command === shortcutData.command && shortcut.args === shortcutData.args
+    if (!match) {
+      return shortcut
+    } else {
+      if ('inProgress' in shortcutData) {
+        const {inProgress, tmpKey} = shortcutData
+        if (inProgress) {
+          const error = alreadyExists(tmpKey) ? 'shortcut already exists' : undefined
+          return Object.assign({}, shortcut, {inProgress, tmpKey: tmpKey, error})
+        } else {
+          return Object.assign({}, shortcut, {inProgress, tmpKey: tmpKey})
+        }
+      }
+      if (shortcutData.done && !alreadyExists(shortcutData.key)) {
+        const { command, args } = shortcut
+        const updatedShortcut = {key: shortcutData.key, command, args}
+        return updatedShortcut
+      }
+      return shortcut
+    }
+  })
+  return Object.assign({}, state, {shortcuts})
+}
+
 const changeLanguage = (state, locale) => {
   return Object.assign({}, state, {locale})
 }
@@ -40,6 +77,8 @@ const setAppUpdatesAvailable = (state, {version, available}) => {
 
 module.exports = {
   changeTheme,
+  setShortcuts,
+  setShortcut,
   changeLanguage,
   toggleOptions,
   clearErrors,
