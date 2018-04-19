@@ -1,6 +1,12 @@
 #JSCAD: overview
 
-This document aims to help users and developpers gain a better understanding of its goals, structure, logic and parts
+This document aims to help users and developpers gain a better understanding of its goals, structure, logic and parts.
+
+## Table of Contents
+
+- [Frequently asked questions](#frequently-asked-questions)
+- [Overview](#overview)
+
 
 ## Frequently asked questions
 
@@ -23,7 +29,7 @@ A: A few reasons:
 
 
 ## Overview
-  ### How jscad works 
+  ### How jscad works (from a distance)
 
   Each 'flavor' of jscad has a different set of available **inputs & output** (called **side effects**): ie , 
   * the desktop and CLI versions obviously have access to your hard drive in an unrestrained manner
