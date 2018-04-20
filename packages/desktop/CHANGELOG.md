@@ -1,4 +1,20 @@
-<a name="0.5.0"></a>
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+       <a name="0.6.0"></a>
+# 0.6.0 (2018-04-20)
+
+
+### Features
+
+* **desktop:** Integrate desktop into monorepo ([#375](https://github.com/jscad/OpenJSCAD.org/issues/375)) ([e3f2d3e](https://github.com/jscad/OpenJSCAD.org/commit/e3f2d3e)), closes [#374](https://github.com/jscad/OpenJSCAD.org/issues/374)
+
+
+
+
+       <a name="0.5.0"></a>
 # [0.5.0](https://github.com/jscad/jscad-desktop/compare/v0.4.0...v0.5.0) (2018-04-18)
 
 
@@ -84,11 +100,11 @@
 ### Features
 
 * **various:** fixes, improvements, additions ([#17](https://github.com/kaosat-dev/jscad-desktop/issues/17)) ([4cb4263](https://github.com/kaosat-dev/jscad-desktop/commit/4cb4263))
- * experimenting with code analysis (ast based tools)
- * adds watching of the whole dependency tree of a design : fixes #6
- * adds flags & settings to ensure webgl works in some corner cases fixes #18
- * UI tweaks
- * lots of minor adjustments
+* experimenting with code analysis (ast based tools)
+* adds watching of the whole dependency tree of a design : fixes #6
+* adds flags & settings to ensure webgl works in some corner cases fixes #18
+* UI tweaks
+* lots of minor adjustments
 
 
 <a name="0.0.1"></a>
@@ -108,7 +124,3 @@
 * **theme:** added basic theme support ([e263833](https://github.com/kaosat-dev/jscad-desktop/commit/e263833))
 * **toggleAutorotate:** added toggleAutorotate reducer ([ca626b2](https://github.com/kaosat-dev/jscad-desktop/commit/ca626b2))
 * **Updates:** ([#12](https://github.com/kaosat-dev/jscad-desktop/issues/12)) ([d25c349](https://github.com/kaosat-dev/jscad-desktop/commit/d25c349)), closes [#14](https://github.com/kaosat-dev/jscad-desktop/issues/14) [#13](https://github.com/kaosat-dev/jscad-desktop/issues/13) [#11](https://github.com/kaosat-dev/jscad-desktop/issues/11) [#10](https://github.com/kaosat-dev/jscad-desktop/issues/10)
-
-
-
-
