@@ -22,7 +22,7 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "version": "npm run changelog && git add -A ",
     "release": "build",
-    "release:all": "build -mlw",
+    "release:all": "npm i && npm run prepare-build && build -mlw",
     "release:mac": "npm i && npm run prepare-build && build -m",
     "release:linux": "npm i && npm run prepare-build && build -l",
     "release:windows": "npm i && npm run prepare-build && build -w",
@@ -83,7 +83,9 @@
     },
     "linux": {
       "target": "AppImage",
-      "category": "Graphics"
+      "category": "Graphics",
+      "executableName": "jscad",
+      "artifactName": "jscad-${version}.appimage"
     },
     "win": {
       "target": "nsis"
