@@ -122,7 +122,8 @@ function makeJscad (targetElement, options) {
     return sameViewerParams
   })
   .forEach(params => {
-    const viewerElement = document.getElementById('renderTarget')
+    console.log('params', params)
+    const viewerElement = jscadEl.querySelector('#renderTarget')
     // initialize viewer if it has not been done already
     if (viewerElement && !csgViewer) {
       const csgViewerItems = makeCsgViewer(viewerElement, params)

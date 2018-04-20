@@ -1,3 +1,16 @@
+.jscad1{
+  position: relative;
+  width: 400px;
+  height: 400px;
+}
+
+.jscad2{
+  position: relative;
+  width: 400px;
+  height: 400px;
+}
+
+
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
@@ -29,23 +42,23 @@ body {
   min-width: 100%;
 }
 
-document.body {
+/*document.body {
 top: 0px;
 bottom: 0px;
 left: 0px;
 right: 0px;
 position: absolute;
-}
+}*/
 
 #renderTarget{
   width: 100%;
   height: 100%;
-  position: absolute;
+  /*position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 0;
+  z-index: 0;*/
 }
 #fileLoader{
   z-index: 1;
@@ -99,11 +112,14 @@ position: absolute;
 }
 #container{
   z-index: 100;
-  position: absolute;
+  position: relative;
+  width: 400px;
+  height: 400px;
+  /*position: absolute;
   top: 0px;
   bottom: 0px;
   left: 0px;
-  right: 0px;
+  right: 0px;*/
 }
 header{
   z-index: 100;
