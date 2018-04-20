@@ -8,7 +8,7 @@
     "build-min": "browserify src/ui/min.js -o dist/min.js -t [babelify browserify minifyify]",
     "build-opt": "browserify src/ui/opt.js -o dist/opt.js -t [babelify browserify minifyify]",
     "build-all": "npm run build-web && npm run build-min && npm run build-opt",
-    "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
+    "dev": "budo demo.js --port=8081 --css demo.css --live -- -b -t babelify",
     "preversion": "npm test",
     "version": "npm run build-all && git add -A ",
     "postversion": "git push origin master && git push origin master --tags",
@@ -35,14 +35,19 @@
   "dependencies": {
     "@jscad/core": "^0.2.3",
     "@jscad/csg": "0.5.2",
+    "@jscad/csg-viewer": "github:jscad/csg-viewer",
     "@jscad/examples": "^1.7.1",
     "@jscad/io": "0.4.4",
     "@jscad/openscad-openjscad-translator": "0.0.10",
     "astring": "^1.0.2",
+    "bel": "^6.0.0",
     "brace": "0.10.0",
     "esprima": "^3.1.3",
     "estraverse": "^4.2.0",
+    "glslify": "^6.1.1",
+    "jscad-tree-experiment": "github:kaosat-dev/jscad-tree-experiments",
     "most-gestures": "^0.3.0",
+    "most-proxy": "^3.3.0",
     "webworkify": "^1.4.0"
   },
   "devDependencies": {
@@ -55,7 +60,8 @@
     "browserify-shim": "^3.8.12",
     "budo": "10.0.3",
     "copy-dir": "^0.3.0",
-    "minifyify": "^7.3.3"
+    "minifyify": "^7.3.3",
+    "tinyify": "^2.4.0"
   },
   "browserify": {
     "transform": [

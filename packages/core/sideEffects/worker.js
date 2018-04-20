@@ -1,7 +1,9 @@
-const callBackToStream = require('../utils/observable-utils/callbackToObservable')
+const callBackToStream = require('../observable-utils/callbackToObservable')
+const WebWorkify = require('webworkify')
+
 
 const makeWorkerEffect = (workerPath) => {
-  let _worker = new Worker(workerPath)
+  let _worker = WebWorkify(workerPath)
   _worker.onerror = error => workerEventsCb.callback({error})
   _worker.onmessage = message => workerEventsCb.callback(message)
   const workerEventsCb = callBackToStream()

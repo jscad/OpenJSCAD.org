@@ -4,13 +4,14 @@ const {proxy} = require('most-proxy')
 const { attach, stream } = proxy()
 
 const out$ = stream
-function domSink (outToDom$) {
+
+function domSink (targetEl, outToDom$) {
   let tree
   const firstRender$ = outToDom$
     .take(1)
     .map(function (_tree) {
       tree = _tree
-      document.body.appendChild(tree)
+      targetEl.appendChild(tree)
     })
   const otherRenders$ = outToDom$
     .skip(1)
@@ -80,6 +81,6 @@ function domSource () {
   return {select}
 }
 
-module.exports = function makeDomSource () {
-  return {source: domSource, sink: domSink}
+module.exports = function makeDomSideEffect ({targetEl}) {
+  return {source: domSource, sink: domSink.bind(null, targetEl)}
 }

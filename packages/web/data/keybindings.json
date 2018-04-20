@@ -1,0 +1,12 @@
+[
+  {"key": "f", "command": "toPresetView", "args": "front" },
+  {"key": "b", "command": "toPresetView", "args": "back" },
+  {"key": "t", "command": "toPresetView", "args": "top" },
+
+  {"key": "b", "command": "toPresetView", "args": "bottom" },
+  {"key": "l", "command": "toPresetView", "args": "left" },
+  {"key": "r", "command": "toPresetView", "args": "right" },
+
+  {"key": "p", "command": "setProjectionType", "args": "perspective" },
+  {"key": "o", "command": "setProjectionType", "args": "orthographic" }
+]
