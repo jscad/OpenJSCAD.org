@@ -12,7 +12,7 @@ Here you can find the full list of packages of the Openjscad / Jscad organizatio
 |--------|-------|------------|
 | [`@jscad/cli`](/packages/cli) | [![npm](https://img.shields.io/npm/v/@jscad/cli.svg?maxAge=2592000)](https://www.npmjs.com/package/@jscad/cli) | [![Dependency Status](https://david-dm.org/jscad/jscad.svg?path=packages/cli)](https://david-dm.org/jscad/jscad?path=packages/cli) |
 | [`@jscad/web`](/packages/web) | [![npm](https://img.shields.io/npm/v/@jscad/web.svg?maxAge=2592000)](https://www.npmjs.com/package/@jscad/web) | [![Dependency Status](https://david-dm.org/jscad/jscad.svg?path=packages/web)](https://david-dm.org/jscad/jscad?path=packages/web) |
-| [`@jscad/desktop`](https://github.com/jscad/jscad-desktop) | [![npm](https://img.shields.io/npm/v/@jscad/desktop.svg?maxAge=2592000)](https://www.npmjs.com/package/@jscad/desktop) | [![Dependency Status](https://david-dm.org/jscad/jscad.svg?path=packages/desktop)](https://david-dm.org/jscad/jscad?path=packages/desktop) |
+| [`@jscad/desktop`](./packages/desktop) | [![npm](https://img.shields.io/npm/v/@jscad/desktop.svg?maxAge=2592000)](https://www.npmjs.com/package/@jscad/desktop) | [![Dependency Status](https://david-dm.org/jscad/jscad.svg?path=packages/desktop)](https://david-dm.org/jscad/jscad?path=packages/desktop) |
 
 ### Core Packages
 
