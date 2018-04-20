@@ -9,7 +9,7 @@ const appUpdateSource = () => {
     host: 'api.github.com',
     path: '/repos/jscad/jscad-desktop/releases/latest',
     headers: {
-      'user-agent': `jscad v${packageInfo.localVersion}`
+      'user-agent': `jscad v${packageInfo.version}`
     }
   }, function (res) {
     if (res.statusCode === 200) {
