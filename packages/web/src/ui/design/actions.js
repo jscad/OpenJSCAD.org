@@ -8,14 +8,20 @@ const actions = (sources) => {
         const paths = [] // dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
         return paths
       }),
-    /*sources.store
+    sources.store
       .filter(data => data && data.design && data.design.mainPath)
       .map(data => data.design.mainPath)
       .filter(data => data !== '')
-      .map(data => [data]), */
+      .map(data => [data]),
     sources.drops
       .filter(drop => drop.type === 'fileOrFolder' && drop.data.length > 0)
-      .map(drop => drop.data.map(fileOrFolder => fileOrFolder.path))
+      // .map(drop => drop.data.map(fileOrFolder => fileOrFolder.path))
+      .flatMap(x => {
+        console.log('here', x)
+        return sources.fs
+          .filter(data => data.operation === 'read' && data.id === 'loadScript')
+          .map(raw => raw.data)
+      })
   ])
     .filter(data => data !== undefined)
     .debounce(50)
@@ -26,12 +32,12 @@ const actions = (sources) => {
     .delay(1)
 
   const setDesignContent$ = most.mergeArray([
-    /*sources.fs
+    sources.fs
       .filter(data => data.operation === 'read' && data.id === 'loadScript')
       .map(raw => raw.data),
     sources.fs
       .filter(data => data.operation === 'watch' && data.id === 'watchScript')
-      .map(({path, data}) => data)*/
+      .map(({path, data}) => data)
   ])
     .map(data => ({type: 'setDesignContent', data}))
 
@@ -79,14 +85,14 @@ const actions = (sources) => {
         } catch (error) {
           return {error}
         }
-      }),
-    /*sources.fs
+      })
+    /* sources.fs
       .filter(res => res.operation === 'read' && res.id === 'loadCachedGeometry' && res.data)
       .map(raw => {
         const deserialize = () => {}// require('serialize-to-js').deserialize
         const lookup = deserialize(raw.data)
         return {solids: undefined, lookupCounts: undefined, lookup}
-      })*/
+      }) */
   ])
     .map(data => ({type: 'setDesignSolids', data}))
 

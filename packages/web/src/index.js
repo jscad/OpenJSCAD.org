@@ -1,5 +1,11 @@
 
 function makeJscad (targetElement, options) {
+  const defaults = {
+    name: 'jscad'
+  }
+  const {name} = Object.assign({}, defaults, options)
+
+  //
   const bel = require('bel')
 
   const jscadEl = bel`<div class='jscad'></div>`
@@ -12,44 +18,48 @@ function makeJscad (targetElement, options) {
   const makeCsgViewer = require('@jscad/csg-viewer')
   let csgViewer
 
-// all the side effects : ie , input/outputs
-  const storage = require('./sideEffects/localStorage')()
-// title bar side effect
+  // all the side effects : ie , input/outputs
+  // fake file system
+  const fs = require('./sideEffects/memFs')()
+  // storage
+  const storage = require('./sideEffects/localStorage')(name)
+  // title bar side effect
   const titleBar = require('@jscad/core/sideEffects/titleBar')()
-// drag & drop side effect
-  const dragDrop = require('@jscad/core/sideEffects/dragDrop')()
-// dom side effect
+  // drag & drop side effect // FIXME: unify with the one in core()
+  const dragDrop = require('./sideEffects/dragDrop')(jscadEl)
+  // dom side effect
   const dom = require('@jscad/core/sideEffects/dom')({targetEl: jscadEl})
-// worker side effect
+  // worker side effect
   const makeWorkerEffect = require('@jscad/core/sideEffects/worker')
 
-// internationalization side effect
+  // internationalization side effect
   const absFooHorror = '/Users/kraftwerk-mb/dev/projects/openjscad/core/tmp/OpenJSCAD.org/packages/web/web/'
   const localesPath = path.resolve(absFooHorror, path.join(absFooHorror, '..', 'locales'))
   console.log('localesPath', localesPath)
   const i18n = require('@jscad/core/sideEffects/i18n')({localesPath})
-// web workers
+  // web workers
   const foo = require('./core/code-evaluation/rebuildSolidsWorker.js')// require(workerPath)//path.resolve
   const solidWorker = makeWorkerEffect(foo)
-// generic design parameter handling
+  // generic design parameter handling
   const paramsCallbacktoStream = require('@jscad/core/observable-utils/callbackToObservable')()
 
-// proxy state stream to be able to access & manipulate it before it is actually available
+  // proxy state stream to be able to access & manipulate it before it is actually available
   const { attach, stream } = proxy()
   const state$ = stream
 
-// all the sources of data
+  // all the sources of data
   const sources = {
     state$,
     paramChanges: paramsCallbacktoStream.stream,
     store: storage.source(),
-    drops: dragDrop.source(document),
+    fs: fs.source(),
+    drops: dragDrop.source(),
     dom: dom.source(),
     solidWorker: solidWorker.source(),
     i18n: i18n.source()
   }
 
-// all the actions
+  // all the actions
   const designActions = require('./ui/design/actions')(sources)
   const ioActions = require('./ui/io/actions')(sources)
   const viewerActions = require('./ui/viewer/actions')(sources)
@@ -57,6 +67,94 @@ function makeJscad (targetElement, options) {
   const actions$ = Object.assign({}, designActions, otherActions, ioActions, viewerActions)
 
   attach(makeState(Object.values(actions$)))
+
+  // after this point, formating of data data that goes out to the sink side effects
+  // titlebar & store side effects
+  /* FIXME/ not compatible with multiple instances !!
+  titleBar.sink(
+    state$.map(state => state.appTitle).skipRepeats()
+  ) */
+
+  const settingsStorage = state => {
+    const {themeName, design, locale, shortcuts} = state
+    const {name, mainPath, vtreeMode, paramDefinitions, paramDefaults, paramValues} = design
+    return {
+      themeName,
+      locale,
+      shortcuts,
+      design: {
+        name,
+        mainPath,
+        vtreeMode,
+        parameters: {
+          paramDefinitions,
+          paramDefaults,
+          paramValues
+        }
+      },
+      viewer: {
+        axes: {show: state.viewer.axes.show},
+        grid: {show: state.viewer.grid.show}
+        // autorotate: {enabled: state.viewer.controls.autoRotate.enabled}
+      },
+      autoReload: state.autoReload,
+      instantUpdate: state.instantUpdate
+    }
+  }
+  storage.sink(
+    state$
+      .map(settingsStorage)
+  )
+
+  // data out to file system sink
+  const {walkFileTree} = require('./exp/walkFileTree')
+  // drag & drops of files/folders have DUAL meaning:
+  // * ADD this file/folder to the available ones
+  // * OPEN this file/folder
+  fs.sink(
+    most.mergeArray([
+      // injection from drag & drop
+      sources.drops
+        .flatMap(({data}) => {
+          return require('most').fromPromise(walkFileTree(data))
+        })
+        .map((data) => ({operation: 'add', data})),
+      sources.drops
+        .map(({data}) => ({operation: 'read', data, id: 'loadScript', path: data[0].fullPath}))
+        .delay(1000),
+      // watched data
+      state$
+        .filter(state => state.design.mainPath !== '')
+        .map(state => ({path: state.design.mainPath, enabled: state.autoReload}))
+        .skipRepeatsWith((state, previousState) => {
+          return JSON.stringify(state) === JSON.stringify(previousState)
+        })
+        .map(({path, enabled}) => ({
+          operation: 'watch',
+          id: 'watchScript',
+          path,
+          options: {enabled}})// enable/disable watch if autoreload is set to false
+        ),
+      // files to read/write
+      state$
+        .filter(state => state.design.mainPath !== '')
+        .map(state => state.design.mainPath)
+        .skipRepeatsWith((state, previousState) => {
+          return JSON.stringify(state) === JSON.stringify(previousState)
+        })
+        .map(path => ({operation: 'read', id: 'loadScript', path}))
+      /* most.just()
+        .map(function () {
+           const electron = require('electron').remote
+          const userDataPath = electron.app.getPath('userData')
+          const path = require('path')
+
+          const cachePath = path.join(userDataPath, '/cache.js')
+          const cachePath = 'gnagna'
+          return {operation: 'read', id: 'loadCachedGeometry', path: cachePath}
+        }) */
+    ])
+  )
 
 // viewer data
   state$
@@ -122,7 +220,6 @@ function makeJscad (targetElement, options) {
     return sameViewerParams
   })
   .forEach(params => {
-    console.log('params', params)
     const viewerElement = jscadEl.querySelector('#renderTarget')
     // initialize viewer if it has not been done already
     if (viewerElement && !csgViewer) {

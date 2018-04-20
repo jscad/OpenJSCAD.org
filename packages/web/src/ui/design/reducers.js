@@ -1,8 +1,11 @@
 
 const path = require('path')
-const {getDesignEntryPoint, getDesignName} = require('@jscad/core/code-loading/requireDesignUtilsFs')
+//const {getDesignEntryPoint, getDesignName} = require('@jscad/core/code-loading/requireDesignUtilsFs')
+const {getDesignName} = require('@jscad/core/code-loading/requireDesignUtilsFs')
 const {availableExportFormatsFromSolids, exportFilePathFromFormatAndDesign} = require('../../core/io/exportUtils')
 const packageMetadata = require('../../../package.json')
+
+const {getDesignEntryPoint} = require('../../exp/requireDesignUtilsFs')
 
 const initialize = () => {
   return {
@@ -30,7 +33,7 @@ const initialize = () => {
 }
 
 const setDesignPath = (state, paths) => {
-  // console.log('setDesignPath')
+  console.log('setDesignPath')
   const mainPath = getDesignEntryPoint(paths)
   const filePath = paths[0]
   const designName = getDesignName(paths)

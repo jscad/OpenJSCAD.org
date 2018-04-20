@@ -12,7 +12,7 @@ module.exports = function viewer (state, i18n) {
   `
   const viewerElement = el// document.querySelector('.jscad1 #renderTarget')
   if (viewerElement) {
-    console.log('here')
+    // console.log('here')
     let pixelRatio = window.devicePixelRatio || 1
     width = window.innerWidth
     height = window.innerHeight

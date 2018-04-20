@@ -63,11 +63,11 @@ const getKeyCombos = (options, keyUps$, keyDown$) => {
 
 const makeActions = (sources) => {
   // keyboard shortcut handling
-  const keyUps$ = most.fromEvent('keyup', document).multicast()
+  // FIXME: use dom source
+  const keyUps$ = most.fromEvent('keyup', document).multicast()//sources.dom.select(document).events('keyup') /
   const keyDown$ = most.fromEvent('keydown', document).multicast()
   // we get all key combos, accepting repeated key strokes
   const keyCombos$ = getKeyCombos({dropRepeats: false}, keyUps$, keyDown$)
-
   // we match key stroke combos to actions
   const actionsFromKey$ = most.sample(function ({event, compositeKey}, state) {
     const matchingAction = head(state.shortcuts.filter(shortcut => shortcut.key === compositeKey))
