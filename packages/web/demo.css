@@ -1,13 +1,13 @@
 .jscad1{
   position: relative;
-  width: 400px;
-  height: 400px;
+  width: 800px;
+  height: 600px;
 }
 
 .jscad2{
   position: relative;
-  width: 400px;
-  height: 400px;
+  width: 800px;
+  height: 600px;
 }
 
 
@@ -53,12 +53,6 @@ position: absolute;
 #renderTarget{
   width: 100%;
   height: 100%;
-  /*position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 0;*/
 }
 #fileLoader{
   z-index: 1;
