@@ -3,7 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-       <a name="0.6.0"></a>
+ <a name="0.6.1"></a>
+## [0.6.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/desktop@0.6.0...@jscad/desktop@0.6.1) (2018-04-20)
+
+
+### Bug Fixes
+
+* **desktop:** fix desktop update notifications ([#376](https://github.com/jscad/OpenJSCAD.org/issues/376)) ([0b2b6fc](https://github.com/jscad/OpenJSCAD.org/commit/0b2b6fc))
+* **desktop:** fixed reverted desktop package version ([#377](https://github.com/jscad/OpenJSCAD.org/issues/377)) ([43048b8](https://github.com/jscad/OpenJSCAD.org/commit/43048b8))
+
+
+
+
+ <a name="0.6.0"></a>
 # 0.6.0 (2018-04-20)
 
 
@@ -14,7 +26,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-       <a name="0.5.0"></a>
+<a name="0.5.0"></a>
 # [0.5.0](https://github.com/jscad/jscad-desktop/compare/v0.4.0...v0.5.0) (2018-04-18)
 
 
