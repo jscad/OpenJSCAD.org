@@ -70,9 +70,9 @@ const setErrors = (state, {error}) => {
   const formattedError = error// {message: error.message, lineno:}
   return Object.assign({}, state, {error: formattedError, busy: false})
 }
-const setAppUpdatesAvailable = (state, {version, available}) => {
-  console.log('updates available', version, available)
-  return Object.assign({}, state, {appUpdates: {version, available}})
+const setAppUpdatesAvailable = (state, appUpdates) => {
+  // console.log('updates available', appUpdates)
+  return Object.assign({}, state, {appUpdates})
 }
 
 module.exports = {
