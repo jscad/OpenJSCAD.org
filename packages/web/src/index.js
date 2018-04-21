@@ -56,9 +56,11 @@ function makeJscad (targetElement, options) {
     drops: dragDrop.source(),
     dom: dom.source(),
     solidWorker: solidWorker.source(),
-    i18n: i18n.source()
+    i18n: i18n.source(),
+    titleBar: titleBar.source()  // #http://openjscad.org/examples/slices/tor.jscad
   }
 
+  sources.titleBar.forEach(x => console.log('fooo', x))
   // all the actions
   const designActions = require('./ui/design/actions')(sources)
   const ioActions = require('./ui/io/actions')(sources)
@@ -84,8 +86,8 @@ function makeJscad (targetElement, options) {
 
   // after this point, formating of data data that goes out to the sink side effects
   // titlebar & store side effects
-  /* FIXME/ not compatible with multiple instances !!
-  titleBar.sink(
+  // FIXME/ not compatible with multiple instances !!
+  /* titleBar.sink(
     state$.map(state => state.appTitle).skipRepeats()
   ) */
 
@@ -120,10 +122,7 @@ function makeJscad (targetElement, options) {
       .map(settingsStorage)
   )
 
-  sources.fs.forEach(x => console.log('got some stuff back', x))
-
   // data out to file system sink
-  const {walkFileTree} = require('./exp/walkFileTree')
   // drag & drops of files/folders have DUAL meaning:
   // * ADD this file/folder to the available ones
   // * OPEN this file/folder
@@ -131,12 +130,9 @@ function makeJscad (targetElement, options) {
     most.mergeArray([
       // injection from drag & drop
       sources.drops
-        /* .flatMap(({data}) => {
-          return require('most').fromPromise(walkFileTree(data))
-        }) */
-        .map((data) => ({operation: 'add', data: data.data})),
+        .map((data) => ({type: 'add', data: data.data})),
       sources.drops
-        .map(({data}) => ({operation: 'read', data, id: 'loadScript', path: data[0].fullPath}))
+        .map(({data}) => ({type: 'read', data, id: 'loadScript', path: data[0].fullPath}))
         .delay(1000),
       // watched data
       state$
@@ -146,7 +142,7 @@ function makeJscad (targetElement, options) {
           return JSON.stringify(state) === JSON.stringify(previousState)
         })
         .map(({path, enabled}) => ({
-          operation: 'watch',
+          type: 'watch',
           id: 'watchScript',
           path,
           options: {enabled}})// enable/disable watch if autoreload is set to false
@@ -158,7 +154,7 @@ function makeJscad (targetElement, options) {
         .skipRepeatsWith((state, previousState) => {
           return JSON.stringify(state) === JSON.stringify(previousState)
         })
-        .map(path => ({operation: 'read', id: 'loadScript', path}))
+        .map(path => ({type: 'read', id: 'loadScript', path}))
       /* most.just()
         .map(function () {
            const electron = require('electron').remote
@@ -167,7 +163,7 @@ function makeJscad (targetElement, options) {
 
           const cachePath = path.join(userDataPath, '/cache.js')
           const cachePath = 'gnagna'
-          return {operation: 'read', id: 'loadCachedGeometry', path: cachePath}
+          return {type: 'read', id: 'loadCachedGeometry', path: cachePath}
         }) */
     ])
   )
@@ -257,7 +253,7 @@ function makeJscad (targetElement, options) {
   /* .combine(function (state, i18n) {
     console.log('here')
     return require('./ui/views/main')(state, paramsCallbacktoStream, i18n)
-  }, sources.i18n.filter(x => x.operation === 'changeSettings').map(x => x.data))
+  }, sources.i18n.filter(x => x.type === 'changeSettings').map(x => x.data))
   */
   dom.sink(outToDom$)
 
@@ -279,6 +275,25 @@ function makeJscad (targetElement, options) {
     if (csgViewer) {
       // console.log('params', params)
       csgViewer(params)
+    }
+  })
+
+  // alternative, better way for the future to set these things, but requires changes to the viewer
+  viewerActions
+  .toggleGrid$
+  .forEach(params => {
+    // console.log('changing viewer params', params)
+    // const viewerElement = document.getElementById('renderTarget')
+    // setCanvasSize(viewerElement)
+    // initialize viewer if it has not been done already
+    /* if (viewerElement && !csgViewer) {
+      const csgViewerItems = makeCsgViewer(viewerElement, params)
+      csgViewer = csgViewerItems.csgViewer
+    } */
+    params = {grid: {show: true}}
+    if (csgViewer) {
+      console.log('params', params)
+      // csgViewer(params)
     }
   })
 
