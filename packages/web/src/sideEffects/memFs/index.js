@@ -1,125 +1,37 @@
 const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
-
-const pollingWatcher = () => {
-  let autoReloadTimer = setInterval(function () { superviseAllFiles() }, 1000)
-
-  clearInterval(autoReloadTimer)
-}
+const makeFakeFs = require('./makeFakeFs')
+const {walkFileTree} = require('./walkFileTree')
+const {changedFiles} = require('./utils')
 
 function watchTree (rootPath, callback) {
-}
-
-/**
- * returns list of files whose source has changed compared to the file with the same
- * name in memFs
- * @param {Object} reference - The reference hash of files, organized by name.
- * @param {Array} files - The list of files : need to have a source & name field.
- * @return array of files that changed
- */
-function changedFiles (reference, files) {
-  return files.filter(file => {
-    const matches = reference.filter(ref => ref.fullPath === file.fullPath && ref.source !== file.source)
-    return matches.length > 0
-  })
-}
-
-// this handles all type of data from drag'n'drop, a list of files to read files, folders, etc
-function handleFilesAndFolders (items) {
-  const files = walkFileTree(items)
-  files.catch(function (error) {
-    console.error('failed to read files', error)
-    if (gProcessor) gProcessor.clearViewer()
-    previousScript = null
-  })
-  files.then(function (files) {
-    // console.log('processed files & folders', files)
-    afterFilesRead({memFs, memFsCount, memFsTotal, memFsChanged}, files)
-  })
-}
-
-const makeFakeFs = (filesAndFolders) => {
-  const findMatch = (path, inputs = filesAndFolders) => {
-    let result
-    for (let i = 0; i < inputs.length; i++) {
-      const entry = inputs[i]
-      if (path === entry.fullPath || ('/' + path) === entry.fullPath) {
-        return entry
-      }
-      if (entry.children) {
-        const res = findMatch(path, entry.children)
-        if (res !== undefined) {
-          return res
-        }
-      }
-    }
-    return undefined
-    // return filesAndFolders
-  }
-
-  const statSync = path => {
-    const entry = findMatch(path)
-    return {
-      isFile: _ => {
-        return entry && ('source' in entry && !('children' in entry))
-      },
-      isDirectory: _ => {
-        return entry && (!('source' in entry) && ('children' in entry))
-      }
-    }
-  }
-  const fakeFs = {
-    statSync,
-    existsSync: (path) => {
-      const entry = findMatch(path)
-      console.log('does ', path, 'exist ?', entry !== undefined)
-      return entry !== undefined
-    },
-    readdirSync: (path) => {
-      const entry = findMatch(path)
-      return entry.children.map(x => x.name)
-       // filesAndFolders
-    },
-    readFile: (path, encoding, callback) => {
-      const entry = findMatch(path)
-      if (!statSync(path).isFile()) {
-        callback(new Error(`${entry} is not a file, cannot read`))
-      } else {
-        console.log('readFile', path, entry)
-        callback(null, entry.source)
-      }
-    }
-  }
-  return fakeFs
 }
 
 const makeMemFsSideEffect = () => {
   const readFileToCB = callBackToStream()
   // for watchers
   const scriptDataFromCB = callBackToStream()
+  // general data
   let rawData
   let filesAndFolders = []
   let fs
   const sink = (out$) => {
-    out$.forEach(function ({path, operation, id, data, options}) {
-      console.log('read/writing to', path, operation, id, data, options)
-      if (operation === 'read') {
+    out$.forEach(function (command) {
+      const {path, type, id, data, options} = command
+      console.log('read/writing to', path, type, id, data, options)
+      if (type === 'read') {
         fs.readFile(path, 'utf8', function (error, data) {
           if (error) {
-            readFileToCB.callback({path, operation, error, id})
+            readFileToCB.callback({path, type, error, id})
           } else {
-            readFileToCB.callback({path, operation, data, id, fs})
+            readFileToCB.callback({path, type, data, id, fs})
           }
         })
-      } else if (operation === 'add') {
-        console.log('data to add', data)
-        const {walkFileTree} = require('../../exp/walkFileTree')
-        require('most').fromPromise(walkFileTree(data)).forEach(function (stuff) {
-          console.log('done', stuff)
+      } else if (type === 'add') {
+        most.fromPromise(walkFileTree(data)).forEach(function (stuff) {
           rawData = data
           filesAndFolders = stuff
           fs = makeFakeFs(filesAndFolders)
-          console.log('filesAndFolders', filesAndFolders)
         })
 
         /* const fakeRequire = makeFakeRequire({}, filesAndFolders)
@@ -130,7 +42,7 @@ const makeMemFsSideEffect = () => {
 
         const rootModule = fakeRequire._require(entryPoint)
         console.log('rootModule', rootModule) */
-      } else if (operation === 'watch') {
+      } else if (type === 'watch') {
         console.log('watching', path, options, filesAndFolders)
         let watchers = []
         let watchedFilePath
@@ -138,7 +50,6 @@ const makeMemFsSideEffect = () => {
         const rootPath = path
 
         let autoReloadTimer = setInterval(function () {
-          const {walkFileTree} = require('../../exp/walkFileTree')
           const files = walkFileTree(rawData)
           files.catch(function (error) {
             console.error('failed to read files', error)
@@ -148,7 +59,7 @@ const makeMemFsSideEffect = () => {
             // console.log('processed files & folders', files, 'changed', whatChanged)
             if (whatChanged.length > 0) {
               console.log('changed stuff', whatChanged)
-              scriptDataFromCB.callback({path, data: whatChanged[0].source, operation, id})
+              scriptDataFromCB.callback({path, data: whatChanged[0].source, type, id})
               filesAndFolders = files
             }
           })
@@ -173,8 +84,8 @@ const makeMemFsSideEffect = () => {
               // requireUncached(rootPath)
               // force reload the main file
               const contents = fs.readFileSync(rootPath, 'utf8')
-              // console.log('FOOOOO', path, contents, operation, id)
-              scriptDataFromCB.callback({path, data: contents, operation, id})
+              // console.log('FOOOOO', path, contents, type, id)
+              scriptDataFromCB.callback({path, data: contents, type, id})
             }
 
             watchers = watchTree(rootPath, stuffCallback)
@@ -195,10 +106,6 @@ const makeMemFsSideEffect = () => {
       watch$
     ])
   }
-  // console.log('dropped', filesAndFolders)
-  // const paths = filesAndFolders.map(x => x.name)
-  // const fakeFs = makeFakeFs(filesAndFolders)
-
   return {source, sink}
 }
 
