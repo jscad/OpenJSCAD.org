@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jscad V2.0</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <style>
+          @font-face {
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 400;
+            src: local('OpenSans'), local('OpenSans'), url(assets/fonts/Open_Sans/OpenSans-Regular.ttf) format('truetype');
+          }
+
+          @font-face {
+            font-family: 'Open Sans';
+            font-style: italic;
+            font-weight: 400;
+            src: local('OpenSans'), local('OpenSans'), url(assets/fonts/Open_Sans/OpenSans-Italic.ttf) format('truetype');
+          }
+
+          @font-face {
+            font-family: 'Open Sans';
+            font-style: bold;
+            src: local('OpenSans'), local('OpenSans'), url(assets/fonts/Open_Sans/OpenSans-Bold.ttf) format('truetype');
+          }
+
+          html{
+            height: 100%;
+            font-family: 'Open Sans', sans-serif;
+            font-size: small;
+          }
+          body {
+            height: 100%;
+            min-height: 100%;
+            min-width: 100%;
+          }
+          
+          document.body {
+          top: 0px;
+          bottom: 0px;
+          left: 0px;
+          right: 0px;
+          position: absolute;
+          }
+
+          #renderTarget{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 0;
+          }
+          #fileLoader{
+            z-index: 1;
+    
+          }
+          #controls {
+            position: absolute;
+            z-index: 1;
+            width: 100%;
+            user-select: none;
+          }
+          #params {
+            position: absolute;
+            z-index: 1;
+            bottom:40px;
+            left: 40px;
+            user-select: none;
+            padding: 10px;
+            background: white;
+            box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.17)
+          }
+          #paramsTable{
+            display: flex;
+            margin-bottom: 20px;
+          }
+          #paramsTable table {
+            border-collapse: collapse;
+          }
+          #paramsTable h1{
+            margin-bottom: 6px;
+            margin-top: 6px;
+            font-size: medium;
+          }
+          #paramsTable .groupTitle  {
+            border-top: 1px solid #bfbcbc;;
+          }
+          #paramsTable .controlsLine{
+            padding-top: 10px;
+          }
+
+          #busy{
+            position: absolute;
+            color: black;
+          }
+          #status{
+            position: absolute;
+            color: red;
+            top: 50px;
+            left: 100px;
+            z-index: 100;
+          }
+          #container{
+            z-index: 100;
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+          }
+          header{
+            z-index: 100;
+            position: sticky;
+            padding: 5px;
+            display: inline-flex;
+          }
+          header section{
+            padding-left: 10px;
+          }
+          header h3{
+            margin-bottom: 0px;
+            margin-top: 0px;
+          }
+          header .designName{
+            color:gray;
+            text-transform: capitalize;
+          }
+
+          #toolbar {
+            position: absolute;
+            z-index: 100;
+            top: 10px;
+            right: 10px;
+          }
+
+          #toolbar button {
+            border-color: white;
+          }
+
+          #options {
+            position: absolute;
+            z-index: 99;
+            top: 10px;
+            right: 53px;
+            max-width: 500px;
+            overflow: scroll;
+            
+
+            background: white;
+            box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.17)
+          }
+          #options fieldset{
+            border: none;
+            display: table;
+          }
+          #options fieldset label{
+            display: table-row;
+          }
+          #options fieldset input{
+            display: table-row;
+            align-self: flex-end;
+          }
+
+          button{
+            background: none;
+            box-shadow: none;
+            border-color: black;
+            border-radius: 0px;
+            border-width: 1px;
+            margin: 0px 5px 0px 5px;
+            background-color: white;
+            letter-spacing: .5px;
+            outline: none;
+            border: 1px solid #bfbcbc;
+          }
+
+          button:hover{
+            background-color:rgba(0, 188, 212, 0.6);;
+          }
+
+          input[type="button"]{
+            background: none;
+            box-shadow: none;
+            border-color: black;
+            border-radius: 0px;
+            border-width: 1px;
+            margin: 0px 5px 0px 5px;
+            background-color: white;
+            letter-spacing: .5px;
+            outline: none;
+            border: 1px solid #bfbcbc;
+          }  
+          input[type="button"]:hover{
+            background-color:rgba(0, 188, 212, 0.6);;
+          }
+
+          input[type="checkbox"] {
+            color:red;
+          }
+
+          input[type="checkbox"]:hover{
+            background-color:rgba(0, 188, 212, 0.6);;
+          }
+          /*themes ?? not sure, not used yet*/
+          .light{
+            color:black;
+          }
+          .dark{
+            color:white;
+          }
+          #appUpdates {
+            visibility: visible;
+          }
+          #appUpdates a{
+            text-decoration:none;
+          }
+
+          .shortcutCommand.error{
+            color:red;
+          }
+
+          input.error::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+              color: red;
+              opacity: 1; /* Firefox */
+          }
+
+          #shortcuts .error input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+              color: red;
+          }
+
+          #shortcuts .error input::-ms-input-placeholder { /* Microsoft Edge */
+              color: red;
+          }
+
+         
+
+        </style>
+    </head>
+    <body>
+      <script>
+        require('./src/app') 
+      </script>
+    </body>
+</html>
