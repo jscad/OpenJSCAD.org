@@ -8,7 +8,7 @@ function makeJscad (targetElement, options) {
   //
   const bel = require('bel')
 
-  const jscadEl = bel`<div class='jscad'></div>`
+  const jscadEl = bel`<div class='jscad' key=${name}></div>`
   targetElement.appendChild(jscadEl)
 
   const path = require('path')
@@ -26,6 +26,7 @@ function makeJscad (targetElement, options) {
   // title bar side effect
   const titleBar = require('@jscad/core/sideEffects/titleBar')()
   // drag & drop side effect // FIXME: unify with the one in core()
+  console.log('setup drag & drop in ', name, jscadEl)
   const dragDrop = require('./sideEffects/dragDrop')(jscadEl)
   // dom side effect
   const dom = require('@jscad/core/sideEffects/dom')({targetEl: jscadEl})
@@ -58,6 +59,8 @@ function makeJscad (targetElement, options) {
     solidWorker: solidWorker.source(),
     i18n: i18n.source()
   }
+
+  sources.drops.forEach(x => console.log('bla dropped in', name))
 
   // all the actions
   const designActions = require('./ui/design/actions')(sources)
@@ -105,6 +108,8 @@ function makeJscad (targetElement, options) {
     state$
       .map(settingsStorage)
   )
+
+  sources.fs.forEach(x => console.log('got some stuff back', x))
 
   // data out to file system sink
   const {walkFileTree} = require('./exp/walkFileTree')
@@ -155,6 +160,38 @@ function makeJscad (targetElement, options) {
         }) */
     ])
   )
+
+  // web worker sink
+  const solidWorkerBase$ = most.mergeArray([
+    actions$.setDesignContent$.map(action => ({paramValues: undefined, origin: 'designContent', error: undefined})),
+    actions$.updateDesignFromParams$.map(action => action.data)
+  ]).multicast()
+
+  solidWorker.sink(
+    most.sample(function ({origin, paramValues, error}, {design, instantUpdate}) {
+      if (error) {
+        return undefined
+      }
+      console.log('design stuff', design)
+      const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
+      paramValues = paramValues || design.paramValues // this ensures the last, manually modified params have upper hand
+      paramValues = paramValues ? applyParameterDefinitions(paramValues, design.paramDefinitions) : paramValues
+      if (!instantUpdate && origin === 'instantUpdate') {
+        return undefined
+      }
+      // console.log('sending paramValues', paramValues, 'options', vtreeMode)
+      const options = {vtreeMode: design.vtreeMode, lookup: design.lookup, lookupCounts: design.lookupCounts}
+      return {source: design.source, mainPath: design.mainPath, paramValues, options}
+    },
+    solidWorkerBase$,
+    solidWorkerBase$,
+    state$
+      .filter(state => state.design.mainPath !== '')
+      .skipRepeats()
+  )
+    .filter(x => x !== undefined)
+    .map(({source, mainPath, paramValues, options}) => ({cmd: 'render', source, mainPath, parameters: paramValues, options}))
+)
 
 // viewer data
   state$

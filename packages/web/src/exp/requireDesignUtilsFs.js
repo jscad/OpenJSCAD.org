@@ -76,4 +76,30 @@ const getDesignEntryPoint = (_fs, _require = require, paths) => {
   return mainPath
 }
 
-module.exports = { getDesignEntryPoint }
+const nameFromDir = (_fs, dirName, filePath) => {
+  const packageFile = path.join(dirName, 'package.json')
+  if (_fs.existsSync(packageFile)) {
+    const name = require(packageFile).name
+    if (name) {
+      return name
+    }
+  }
+  return filePath ? parsePath(path.basename(filePath)).name : path.basename(dirName)
+}
+
+const getDesignName = (_fs, paths) => {
+  if (!paths) {
+    return
+  }
+  let mainPath = toArray(paths)[0]
+  const stats = _fs.statSync(mainPath)
+  if (stats.isFile()) {
+    const dirName = path.dirname(mainPath)
+    return nameFromDir(_fs, dirName, mainPath)
+  } else if (stats.isDirectory()) {
+    // try to use package.json to find main
+    return nameFromDir(_fs, mainPath)
+  }
+}
+
+module.exports = { getDesignEntryPoint, getDesignName }

@@ -14,7 +14,7 @@ const readFileAsync = function (file, fileMeta) {
   return new Promise(function (resolve, reject) {
     reader.readAsArrayBuffer(file)
     // remove rootfolder since all files are within it
-    const fullPath = fileMeta && fileMeta.fullPath ? fileMeta.fullPath.split('/').slice(2).join('/') : ''
+    const fullPath = fileMeta && fileMeta.fullPath ? fileMeta.fullPath/*.split('/').slice(2).join('/')*/ : ''
 
     // convert binary to text
     function convert (buffer) {

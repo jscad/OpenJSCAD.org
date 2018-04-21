@@ -45,11 +45,11 @@ const makeFakeFs = (filesAndFolders) => {
     },
     readFile: (path, encoding, callback) => {
       const entry = findMatch(path)
-      if (!statSync(entry).isFile()) {
+      if (!statSync(path).isFile()) {
         callback(new Error(`${entry} is not a file, cannot read`))
       } else {
         console.log('readFile', path, entry)
-        callback(null, entry)
+        callback(null, entry.source)
       }
     }
   }
@@ -70,7 +70,7 @@ const makeMemFsSideEffect = () => {
           if (error) {
             readFileToCB.callback({path, operation, error, id})
           } else {
-            readFileToCB.callback({path, operation, data, id})
+            readFileToCB.callback({path, operation, data, id, fs})
           }
         })
       }
@@ -94,7 +94,15 @@ const makeMemFsSideEffect = () => {
   }
 
   const source = () => {
-    return most.just({})
+    const fs$ = readFileToCB.stream.multicast()
+    const watch$ = scriptDataFromCB.stream
+      .debounce(400)
+      .skipRepeats()
+      .multicast()
+    return most.mergeArray([
+      fs$,
+      watch$
+    ])
   }
   // console.log('dropped', filesAndFolders)
   // const paths = filesAndFolders.map(x => x.name)

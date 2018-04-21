@@ -19,8 +19,9 @@ const actions = (sources) => {
       .flatMap(x => {
         console.log('here', x)
         return sources.fs
+          .tap(x => console.log('gnagna', x))
           .filter(data => data.operation === 'read' && data.id === 'loadScript')
-          .map(raw => raw.data)
+          .map(raw => raw)
       })
   ])
     .filter(data => data !== undefined)

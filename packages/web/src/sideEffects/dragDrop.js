@@ -33,42 +33,41 @@ function extractData (event) {
   return []
 }
 
-// onst dragOvers$ = DOM.select(':root').events('dragover')
-// const drops$ = DOM.select(':root').events('drop')
-function dragEvents (targetEl) {
-  const dragOvers$ = fromEvent('dragover', targetEl)
-  const drops$ = fromEvent('drop', targetEl)
-
-  return {dragOvers$, drops$}
-}
-
-function dragAndDropSource (targetEl) { // {dragOvers$, drops$}
-  const {dragOvers$, drops$} = dragEvents(targetEl)
-  drops$.multicast()
-  drops$.forEach(preventDefault)
-  dragOvers$.forEach(preventDefault)
-
-  let urls$ = drops$
-    .map(event => event.dataTransfer.getData('url'))
-    .filter(isTextNotEmpty)
-    .map(data => formatData([data], 'url'))
-
-  let texts$ = drops$
-    .map(event => event.dataTransfer.getData('Text'))
-    .filter(isTextNotEmpty)
-    .map(data => formatData([data], 'text'))
-
-  let filesOrFolders$ = drops$
-    .map(event => extractData(event))
-    // .map(event => event.dataTransfer.files)
-    .filter(exists)
-    .map(data => [].slice.call(data))
-    .map(data => formatData(data, 'fileOrFolder'))
-
-  return mergeArray([urls$, texts$, filesOrFolders$]).multicast()
-}
-
 const makeDragAndDropSideEffect = (targetEl) => {
-  return {source: dragAndDropSource.bind(null, targetEl)}
+  // onst dragOvers$ = DOM.select(':root').events('dragover')
+  // const drops$ = DOM.select(':root').events('drop')
+  function dragEvents (targetEl) {
+    const dragOvers$ = fromEvent('dragover', targetEl)
+    const drops$ = fromEvent('drop', targetEl)
+
+    return {dragOvers$, drops$}
+  }
+
+  function dragAndDropSource () { // {dragOvers$, drops$}
+    const {dragOvers$, drops$} = dragEvents(targetEl)
+    drops$.multicast()
+    drops$.forEach(preventDefault)
+    dragOvers$.forEach(preventDefault)
+
+    let urls$ = drops$
+      .map(event => event.dataTransfer.getData('url'))
+      .filter(isTextNotEmpty)
+      .map(data => formatData([data], 'url'))
+
+    let texts$ = drops$
+      .map(event => event.dataTransfer.getData('Text'))
+      .filter(isTextNotEmpty)
+      .map(data => formatData([data], 'text'))
+
+    let filesOrFolders$ = drops$
+      .map(event => extractData(event))
+      // .map(event => event.dataTransfer.files)
+      .filter(exists)
+      .map(data => [].slice.call(data))
+      .map(data => formatData(data, 'fileOrFolder'))
+
+    return mergeArray([urls$, texts$, filesOrFolders$]).multicast()
+  }
+  return {source: dragAndDropSource}
 }
 module.exports = makeDragAndDropSideEffect
