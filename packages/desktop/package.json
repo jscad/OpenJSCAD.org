@@ -1,0 +1,93 @@
+{
+  "name": "@jscad/desktop",
+  "version": "0.6.1",
+  "description": "jscad desktop application",
+  "author": "jscad core team/ Mark Moissette",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jscad/OpenJSCAD.org.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "",
+    "dev": "node node_modules/.bin/electron .",
+    "dev-win": "node_modules/.bin/electron.cmd .",
+    "pack": "electron-builder --dir",
+    "pack:all": "build --dir -mlw",
+    "pack:mac": "build --dir -m",
+    "pack:linux": "build --dir -l",
+    "pack:windows": "build --dir -w",
+    "dist": "electron-builder",
+    "preversion": "npm test",
+    "version": "git add -A ",
+    "release": "build",
+    "release:all": "npm i && npm run prepare-build && build -mlw",
+    "release:mac": "npm i && npm run prepare-build && build -m",
+    "release:linux": "npm i && npm run prepare-build && build -l",
+    "release:windows": "npm i && npm run prepare-build && build -w",
+    "prepare-build": "cpy 'assets/icons/*.*' build",
+    "postversion": "git push origin master && git push origin master --tags && npm run release:all",
+    "release-patch": "git checkout master && git pull origin master && npm version patch",
+    "release-minor": "git checkout master && git pull origin master && npm version minor",
+    "release-major": "git checkout master && git pull origin master && npm version major"
+  },
+  "dependencies": {
+    "@jscad/amf-serializer": "0.1.1",
+    "@jscad/core": "0.2.0",
+    "@jscad/csg": "0.5.3",
+    "@jscad/csg-viewer": "github:jscad/csg-viewer",
+    "@jscad/io": "0.4.4",
+    "@jscad/io-utils": "0.1.2",
+    "@most/create": "^2.0.1",
+    "ast-eval": "^0.8.0",
+    "ast-parents": "0.0.1",
+    "astring": "^1.2.0",
+    "bel": "^5.1.5",
+    "blob-to-buffer": "^1.2.6",
+    "compare-version": "^0.1.2",
+    "decache": "^4.3.0",
+    "detective-cjs": "^2.0.0",
+    "electron-store": "^1.3.0",
+    "es2015-i18n-tag": "^1.3.1",
+    "esprima": "^4.0.0",
+    "esprima-ast-utils": "0.0.7",
+    "estraverse": "^4.2.0",
+    "jscad-tree-experiment": "github:kaosat-dev/jscad-tree-experiments",
+    "morphdom": "^2.3.3",
+    "most": "^1.7.2",
+    "most-proxy": "^3.3.0",
+    "nanomorph": "^5.1.3",
+    "static-eval": "^2.0.0",
+    "strip-bom": "^3.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^14.5.0",
+    "cpy-cli": "^1.0.1",
+    "electron": "^1.8.3",
+    "electron-builder": "^20.4.1"
+  },
+  "build": {
+    "appId": "org.jscad.desktop",
+    "productName": "jscad",
+    "mac": {
+      "category": "public.app-category.graphics-design",
+      "fileAssociations": [
+        {
+          "ext": "jscad",
+          "name": "jscad",
+          "role": "editor"
+        }
+      ]
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Graphics",
+      "executableName": "jscad",
+      "artifactName": "jscad-${version}.appimage"
+    },
+    "win": {
+      "target": "nsis"
+    }
+  }
+}

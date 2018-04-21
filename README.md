@@ -109,6 +109,7 @@ npm run cli // bootstrap, go to the cli package
 
 ## Documentation
 
+- [technical overview & Q&A](./docs/index.md)
 - [OpenJSCAD User & Programming Guide](https://openjscad.org/dokuwiki/doku.php?id=start)
 - [OpenJSCAD Quick Reference](https://openjscad.org/dokuwiki/doku.php?id=jscad_quick_reference)
 
