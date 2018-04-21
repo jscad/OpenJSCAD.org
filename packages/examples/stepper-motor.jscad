@@ -35,21 +35,21 @@ function main (parameters) {
   var depth = parameters.mountingholes_depth;
   var offset = parameters.mountingholes_fromcent;
 
-  var cube = new CSG.roundedCube({
+  var cube = CSG.roundedCube({
     center: [0, 0, 0],
     radius: [length - parameters.motorCap_len, width - parameters.motorCap_thickness, width - parameters.motorCap_thickness],
     roundradius: 0.2,
     resolution: 16
   });
   cube = cube.setColor(0.67843137254901960784313725490196, 0.70588235294117647058823529411765, 0.70588235294117647058823529411765);
-  var xcube = new CSG.cube({
+  var xcube = CSG.cube({
     center: [0, 0, 0],
     radius: [length, ch, ch]
   });
   xcube = xcube.setColor(0.67843137254901960784313725490196, 0.70588235294117647058823529411765, 0.70588235294117647058823529411765);
   cube = cube.intersect(xcube.rotateX(45));
 
-  var cube2 = new CSG.roundedCube({
+  var cube2 = CSG.roundedCube({
     center: [length - (parameters.motorCap_len / 2.0), 0, 0],
     radius: [(parameters.motorCap_len / 2.0), width, width],
     roundradius: 0.2,
@@ -57,7 +57,7 @@ function main (parameters) {
   });
   cube2 = cube2.setColor(0.87058823529411764705882352941176, 0.89803921568627450980392156862745, 0.90588235294117647058823529411765);
   var cube3 = cube2.translate([-(parameters.motorBody_len - parameters.motorCap_len), 0, 0]);
-  xcube = new CSG.cube({
+  xcube = CSG.cube({
     center: [0, 0, 0],
     radius: [length, ch2, ch2]
   });
@@ -66,7 +66,7 @@ function main (parameters) {
   cube2 = cube2.intersect(xcube);
   cube3 = cube3.intersect(xcube);
 
-  var ring = new CSG.cylinder({
+  var ring = CSG.cylinder({
     start: [length, 0, 0],
     end: [length + parameters.motorRing_height, 0, 0],
     radius: parameters.motorRing_radius,
@@ -74,7 +74,7 @@ function main (parameters) {
   });
   ring = ring.setColor(0.81176470588235294117647058823529, 0.84313725490196078431372549019608, 0.85098039215686274509803921568627);
 
-  var shaft = new CSG.cylinder({
+  var shaft = CSG.cylinder({
     start: [length + parameters.motorRing_height, 0, 0],
     end: [length + parameters.motorRing_height + parameters.shaft_len, 0, 0],
     radius: parameters.shaft_radius,
@@ -83,7 +83,7 @@ function main (parameters) {
   shaft = shaft.setColor(0.9, 0.91, 0.91);
   var motor = cube.union([cube2, cube3, ring, shaft]);
 
-  var mountinghole = new CSG.cylinder({
+  var mountinghole = CSG.cylinder({
     start: [-depth, 0, 0],
     end: [0, 0, 0],
     radius: parameters.mountingholes_radius,
