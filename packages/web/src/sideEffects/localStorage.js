@@ -4,11 +4,11 @@ module.exports = function makeStorageSideEffect (name) {
   function sink (outToStore$) {
     if (outToStore$) {
       outToStore$.forEach(function (outToStore) {
-        // console.log('operation storage', outToStore)
+        // console.log('type storage', outToStore)
         localStorage.setItem(`${name}:jscad-settings`, JSON.stringify(outToStore))
-        /* const {operation, data, target} = outToStore
+        /* const {type, data, target} = outToStore
         const storage = target === `local` ? localStorage : sessionStorage
-        storage[operation](data) */
+        storage[type](data) */
         // store.set(outToStore)
       })
     }
