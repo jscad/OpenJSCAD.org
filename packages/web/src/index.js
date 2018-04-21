@@ -59,8 +59,6 @@ function makeJscad (targetElement, options) {
     i18n: i18n.source()
   }
 
-  sources.drops.forEach(x => console.log('bla dropped in', name))
-
   // all the actions
   const designActions = require('./ui/design/actions')(sources)
   const ioActions = require('./ui/io/actions')(sources)
@@ -119,10 +117,10 @@ function makeJscad (targetElement, options) {
     most.mergeArray([
       // injection from drag & drop
       sources.drops
-        .flatMap(({data}) => {
+        /*.flatMap(({data}) => {
           return require('most').fromPromise(walkFileTree(data))
-        })
-        .map((data) => ({operation: 'add', data})),
+        }) */
+        .map((data) => ({operation: 'add', data: data.data})),
       sources.drops
         .map(({data}) => ({operation: 'read', data, id: 'loadScript', path: data[0].fullPath}))
         .delay(1000),
@@ -262,7 +260,7 @@ function makeJscad (targetElement, options) {
       const csgViewerItems = makeCsgViewer(viewerElement, params)
       csgViewer = csgViewerItems.csgViewer
 
-      //const bar = require('most-gestures').pointerGestures(jscadEl.querySelector('#renderTarget'))
+      // const bar = require('most-gestures').pointerGestures(jscadEl.querySelector('#renderTarget'))
     }
     if (csgViewer) {
       // console.log('params', params)
