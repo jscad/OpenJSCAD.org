@@ -54,28 +54,28 @@ const makei18nSideEffect = (options) => {
 
   const sink = (out$) => {
     out$
-      .filter(x => x.operation === 'changeSettings')
-      .forEach(x => {
-        const locales = x.data
+      .filter(command => command.type === 'changeSettings')
+      .forEach(command => {
+        const locales = command.data
         i18nConfig({
           locales,
           translations: translations[locales]
         })
         // setup defaults
         // const locales = require('electron').remote.app.getLocale().split('-')[0]
-        translationsCB.callback({data: i18n, operation: 'changeSettings'})
+        translationsCB.callback({data: i18n, type: 'changeSettings'})
       })
 
     out$
-      .filter(x => x.operation === 'getAvailableLanguages')
-      .forEach(x => {
+      .filter(command => command.type === 'getAvailableLanguages')
+      .forEach(command => {
         const availableLanguages = Object.keys(translations)
           .map(code => {
             const fullName = longNames[code] ? longNames[code] : 'placeholder'
             return {code, fullName}
           })
 
-        translationsCB.callback({data: availableLanguages, operation: 'getAvailableLanguages'})
+        translationsCB.callback({data: availableLanguages, type: 'getAvailableLanguages'})
       })
   }
   const source = () => {

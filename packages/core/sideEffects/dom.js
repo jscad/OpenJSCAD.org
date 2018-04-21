@@ -27,22 +27,23 @@ module.exports = function makeDomSideEffect ({targetEl}) {
     ]).multicast()
 
     attach(foo$)
-  // foo$.forEach(x => x)
+    // foo$.forEach(x => x)
   }
 
-/* let storedObservables = {}
-let waitingForListeners = []
-let eventsForListners = {} */
   let storedListeners = {
 
   }
   function domSource () {
     function getElements (query) {
+      // todo : how to deal with 'document' level queries
+      /*if (query === document) {
+        return [document] //Array.from(document.querySelectorAll(query))
+      }*/
       return Array.from(targetEl.querySelectorAll(query))
     }
 
     const select = function (query) {
-    // console.log('selecting', query)
+      // console.log('selecting', query)
       const items = getElements(query)
 
       let outputStream
