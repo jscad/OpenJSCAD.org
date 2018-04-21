@@ -1,17 +1,22 @@
 .jscad1{
   position: relative;
-  width: 800px;
-  height: 600px;
+  width: 1200px;
+  height: 700px;
 }
 
 .jscad2{
   position: relative;
-  width: 800px;
-  height: 600px;
+  width: 1200px;
+  height: 700px;
 }
 
 .wrapper {
   display: flex;
+}
+
+.jscad {
+  height: 100%;
+  width: 100%;
 }
 
 
@@ -111,8 +116,8 @@ position: absolute;
 #container{
   z-index: 100;
   position: relative;
-  width: 400px;
-  height: 400px;
+  height: 100%;
+    width: 100%;
   /*position: absolute;
   top: 0px;
   bottom: 0px;
