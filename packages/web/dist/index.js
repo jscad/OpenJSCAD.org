@@ -103129,7 +103129,7 @@ function createExamples(me) {
         src += '</td><td class="examplesSeparator" widthx=' + colp + ' valign=top>';
       }
       if (examples[i].spacing) src += '<p/>';
-      src += '<li><a class=\'example\' data-path=' + ('../examples/' + examples[i].file) + ' href=\'#\'> + ' + examples[i].title + ' </a>\n';
+      src += '<li><a class=\'example\' data-path=' + ('examples/' + examples[i].file) + ' href=\'#\'> + ' + examples[i].title + ' </a>\n';
       if (examples[i].type) src += ' <span class=type>(' + examples[i].type + ')</span></a>';
       if (examples[i].new) src += ' <span class=newExample>new</span></a>';
     }
@@ -103304,7 +103304,7 @@ function loadInitialExample(me, params) {
     } else if (isInLocalStorage) {
       loadLocalStorage(localStorage.editorContent, params);
     } else {
-      fetchExample('../examples/' + examples[0].file, undefined, params);
+      fetchExample('examples/' + examples[0].file, undefined, params);
     }
   }
 }
