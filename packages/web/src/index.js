@@ -26,7 +26,6 @@ function makeJscad (targetElement, options) {
   // title bar side effect
   const titleBar = require('@jscad/core/sideEffects/titleBar')()
   // drag & drop side effect // FIXME: unify with the one in core()
-  console.log('setup drag & drop in ', name, jscadEl)
   const dragDrop = require('./sideEffects/dragDrop')(jscadEl)
   // dom side effect
   const dom = require('@jscad/core/sideEffects/dom')({targetEl: jscadEl})
@@ -260,8 +259,12 @@ function makeJscad (targetElement, options) {
     const viewerElement = jscadEl.querySelector('#renderTarget')
     // initialize viewer if it has not been done already
     if (viewerElement && !csgViewer) {
+      console.log('viewer el', viewerElement)
       const csgViewerItems = makeCsgViewer(viewerElement, params)
       csgViewer = csgViewerItems.csgViewer
+
+      const bar = require('most-gestures').pointerGestures(jscadEl.querySelector('#renderTarget'))
+      bar.drags.forEach(x => console.log('drags in ', name, x, jscadEl))
     }
     if (csgViewer) {
       csgViewer(params)
