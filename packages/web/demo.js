@@ -2,6 +2,7 @@ const makeJscad = require('./src/index')
 
 const rootEl = document.createElement('div')
 document.body.appendChild(rootEl)
+rootEl.className = 'wrapper'
 
 //
 const el1 = document.createElement('div')

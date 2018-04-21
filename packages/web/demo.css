@@ -10,6 +10,10 @@
   height: 600px;
 }
 
+.wrapper {
+  display: flex;
+}
+
 
 @font-face {
   font-family: 'Open Sans';
