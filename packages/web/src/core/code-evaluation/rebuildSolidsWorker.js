@@ -1,7 +1,7 @@
 const doesModuleExportParameterDefiniitions = moduleToCheck => {
   return moduleToCheck && 'getParameterDefinitions' in moduleToCheck
 }
-function blabla (core, api, scriptAsText) {
+function blabla (scriptAsText, mainPath, apiMainPath) {
   const csgBasePath = '@jscad/csg/api'
 
   let modules = {
@@ -24,21 +24,19 @@ function blabla (core, api, scriptAsText) {
     const {vector_text, vector_char} = require('${csgBasePath}').text
     const {OpenJsCad} = require('${csgBasePath}').OpenJsCad
     const {echo} = require('${csgBasePath}').debug 
-
-
     ${scriptAsText}
 
     module.exports = {main}
     ${getParamsString}
   `
-  const rootModule = new Function('require', 'module', 'api', script)
+  const rootModule = new Function('require', 'module', script)
   const mockRequire = function (pathToModule) {
     //console.log('you asked for', pathToModule)
     const foundModule = modules[pathToModule]
     return foundModule.exports
   }
   let module = {}
-  rootModule(mockRequire, module, api)
+  rootModule(mockRequire, module)
   // console.log('module', module)
   const scriptRootModule = module.exports
 
@@ -71,17 +69,11 @@ module.exports = function (self) {
         const {isCAG, isCSG} = require('@jscad/csg')
         const {toArray} = require('../../utils/utils')
 
-        const {loadScript} = require('../code-loading/scriptLoading')
+        // const {loadScript} = require('../code-loading/scriptLoading')
         // const requireUncached = require('../code-loading/requireUncached')
         // TODO: only uncache when needed
         // requireUncached(mainPath)
-
-        // makeFakeRequire({fullPath: mainPath, source: source, })
-        const api = require('@jscad/csg/api')
-        const core = require('@jscad/csg/api').csg
-        const {scriptRootModule, params, paramDefinitions} = blabla(core, api, source, mainPath)
-
-        console.log('params', params)
+        const {scriptRootModule, params, paramDefinitions} = blabla(source, mainPath, apiMainPath)
         // const {scriptRootModule, params, paramDefinitions} = loadScript(source, mainPath, apiMainPath)
 
         const paramDefaults = params
