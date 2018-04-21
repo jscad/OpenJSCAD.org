@@ -20,7 +20,7 @@ const actions = (sources) => {
         console.log('here', x)
         return sources.fs
           .tap(x => console.log('gnagna', x))
-          .filter(data => data.operation === 'read' && data.id === 'loadScript')
+          .filter(data => data.type === 'read' && data.id === 'loadScript')
           .map(raw => raw)
       })
   ])
@@ -34,10 +34,10 @@ const actions = (sources) => {
 
   const setDesignContent$ = most.mergeArray([
     sources.fs
-      .filter(data => data.operation === 'read' && data.id === 'loadScript')
+      .filter(data => data.type === 'read' && data.id === 'loadScript')
       .map(raw => raw.data),
     sources.fs
-      .filter(data => data.operation === 'watch' && data.id === 'watchScript')
+      .filter(data => data.type === 'watch' && data.id === 'watchScript')
       .map(({path, data}) => data)
   ])
     .map(data => ({type: 'setDesignContent', data}))
@@ -88,7 +88,7 @@ const actions = (sources) => {
         }
       })
     /* sources.fs
-      .filter(res => res.operation === 'read' && res.id === 'loadCachedGeometry' && res.data)
+      .filter(res => res.type === 'read' && res.id === 'loadCachedGeometry' && res.data)
       .map(raw => {
         const deserialize = () => {}// require('serialize-to-js').deserialize
         const lookup = deserialize(raw.data)

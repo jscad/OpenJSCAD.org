@@ -172,8 +172,8 @@ const makeActions = (sources) => {
 
   const setAvailableLanguages$ = most.mergeArray([
     sources.i18n
-      .filter(rawData => rawData.operation === 'getAvailableLanguages')
-      .map(rawData => rawData.data)
+      .filter(command => command.type === 'getAvailableLanguages')
+      .map(command => command.data)
   ])
   .map(data => ({type: 'setAvailableLanguages', data}))
 
