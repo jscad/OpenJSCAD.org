@@ -8,11 +8,11 @@ const actions = (sources) => {
         const paths = [] // dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
         return paths
       }),
-    sources.store
+    /*sources.store
       .filter(data => data && data.design && data.design.mainPath)
       .map(data => data.design.mainPath)
       .filter(data => data !== '')
-      .map(data => [data]),
+      .map(data => [data]),*/
     sources.drops
       .filter(drop => drop.type === 'fileOrFolder' && drop.data.length > 0)
       // .map(drop => drop.data.map(fileOrFolder => fileOrFolder.path))
@@ -110,9 +110,9 @@ const actions = (sources) => {
           return {error}
         }
       }),
-    sources.store
+    /*sources.store
       .filter(data => data && data.design && data.design.parameters)
-      .map(data => data.design.parameters)
+      .map(data => data.design.parameters)*/
   ])
       .map(data => ({type: 'setDesignParams', data}))
 
