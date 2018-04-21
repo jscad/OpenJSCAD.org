@@ -113,7 +113,7 @@ const makeMemFsSideEffect = () => {
         })
       } else if (operation === 'add') {
         console.log('data to add', data)
-        const {walkFileTree} = require('../exp/walkFileTree')
+        const {walkFileTree} = require('../../exp/walkFileTree')
         require('most').fromPromise(walkFileTree(data)).forEach(function (stuff) {
           console.log('done', stuff)
           rawData = data
@@ -138,7 +138,7 @@ const makeMemFsSideEffect = () => {
         const rootPath = path
 
         let autoReloadTimer = setInterval(function () {
-          const {walkFileTree} = require('../exp/walkFileTree')
+          const {walkFileTree} = require('../../exp/walkFileTree')
           const files = walkFileTree(rawData)
           files.catch(function (error) {
             console.error('failed to read files', error)

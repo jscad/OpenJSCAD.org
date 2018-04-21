@@ -68,6 +68,20 @@ function makeJscad (targetElement, options) {
 
   attach(makeState(Object.values(actions$)))
 
+  // TODO : move to side effect
+  actions$.exportRequested$.forEach(action => {
+    console.log('export requested', action)
+    const {saveAs} = require('file-saver')
+    const {prepareOutput} = require('./core/io/prepareOutput')
+    const {convertToBlob} = require('./core/io/convertToBlob')
+
+    const outputData = action.data.data
+    const format = action.data.exportFormat
+    const blob = convertToBlob(prepareOutput(outputData, {format}))
+    // fs.writeFileSync(filePath, buffer)
+    saveAs(blob, action.data.defaultExportFilePath)
+  })
+
   // after this point, formating of data data that goes out to the sink side effects
   // titlebar & store side effects
   /* FIXME/ not compatible with multiple instances !!
@@ -117,7 +131,7 @@ function makeJscad (targetElement, options) {
     most.mergeArray([
       // injection from drag & drop
       sources.drops
-        /*.flatMap(({data}) => {
+        /* .flatMap(({data}) => {
           return require('most').fromPromise(walkFileTree(data))
         }) */
         .map((data) => ({operation: 'add', data: data.data})),
