@@ -259,14 +259,13 @@ function makeJscad (targetElement, options) {
     const viewerElement = jscadEl.querySelector('#renderTarget')
     // initialize viewer if it has not been done already
     if (viewerElement && !csgViewer) {
-      console.log('viewer el', viewerElement)
       const csgViewerItems = makeCsgViewer(viewerElement, params)
       csgViewer = csgViewerItems.csgViewer
 
-      const bar = require('most-gestures').pointerGestures(jscadEl.querySelector('#renderTarget'))
-      bar.drags.forEach(x => console.log('drags in ', name, x, jscadEl))
+      //const bar = require('most-gestures').pointerGestures(jscadEl.querySelector('#renderTarget'))
     }
     if (csgViewer) {
+      // console.log('params', params)
       csgViewer(params)
     }
   })

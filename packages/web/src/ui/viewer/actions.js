@@ -8,7 +8,6 @@ const actions = (sources) => {
       .filter(data => data.viewer && data.viewer.grid && data.viewer.grid.show !== undefined)
       .map(data => data.viewer.grid.show)
   ])
-    // .map(show => ({grid: {show}}))
     .map(data => ({type: 'toggleGrid', data}))
 
   const toggleAxes$ = most.mergeArray([
