@@ -1,17 +1,10 @@
 const {mergeArray} = require('most')
 const packageMetadata = require('../package.json')
 
-const getLocale = () => {
-  return ((navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language)
-    .split('-')[0]
-}
-// require('electron').remote.app.getLocale().split('-')[0]
-// FIXME : move to i18n
-
 const initialState = {
   appTitle: `jscad v ${packageMetadata.version}`,
   appUpdates: {available: false, version: undefined},
-  locale: getLocale(),
+  locale: '',
   availableLanguages: [],
   // for possible errors
   error: undefined,
