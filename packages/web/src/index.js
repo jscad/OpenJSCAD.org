@@ -180,10 +180,11 @@ function makeJscad (targetElement, options) {
 
   state$
   .map(state => state.viewer)
-  .skipRepeatsWith(function (state, previousState) {
+  // FIXME: not working correctly with themeing
+  /*.skipRepeatsWith(function (state, previousState) {
     const sameViewerParams = JSON.stringify(state) === JSON.stringify(previousState)
     return sameViewerParams
-  })
+  }) */
   .forEach(params => {
     const viewerElement = jscadEl.querySelector('#renderTarget')
     // initialize viewer if it has not been done already
@@ -213,7 +214,7 @@ function makeJscad (targetElement, options) {
     } */
     params = {grid: {show: true}}
     if (csgViewer) {
-      console.log('params', params)
+      // console.log('params', params)
       // csgViewer(params)
     }
   })
