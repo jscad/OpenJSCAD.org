@@ -132,6 +132,7 @@ const timeOutDesignGeneration = (state) => {
 
 // ui/toggles
 const toggleAutoReload = (state, autoReload) => {
+  // console.log('toggleAutoReload', autoReload)
   return Object.assign({}, state, {autoReload})
 }
 const toggleInstantUpdate = (state, instantUpdate) => {
@@ -140,7 +141,7 @@ const toggleInstantUpdate = (state, instantUpdate) => {
 }
 
 const toggleVtreeMode = (state, vtreeMode) => {
-  console.log('toggleVtreeMode', vtreeMode)
+  // console.log('toggleVtreeMode', vtreeMode)
   const design = Object.assign({}, state.design, {vtreeMode})
   return Object.assign({}, state, {design})
 }

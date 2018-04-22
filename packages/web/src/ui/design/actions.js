@@ -12,7 +12,7 @@ const actions = (sources) => {
       .filter(data => data && data.design && data.design.mainPath)
       .map(data => data.design.mainPath)
       .filter(data => data !== '')
-      .map(data => [data]),*/
+      .map(data => [data]), */
     sources.drops
       .filter(drop => drop.type === 'fileOrFolder' && drop.data.length > 0)
       // .map(drop => drop.data.map(fileOrFolder => fileOrFolder.path))
@@ -109,7 +109,7 @@ const actions = (sources) => {
         } catch (error) {
           return {error}
         }
-      }),
+      })
     /*sources.store
       .filter(data => data && data.design && data.design.parameters)
       .map(data => data.design.parameters)*/
@@ -128,24 +128,24 @@ const actions = (sources) => {
     sources.dom.select('#autoReload').events('click')
       .map(e => e.target.checked),
     sources.store
-      .filter(data => data && data.autoReload !== undefined)
-      .map(data => data.autoReload)
+      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.autoReload !== undefined)
+      .map(reply => reply.data.autoReload)
   ])
   .map(data => ({type: 'toggleAutoReload', data}))
 
   const toggleInstantUpdate$ = most.mergeArray([
     sources.dom.select('#instantUpdate').events('click').map(event => event.target.checked),
     sources.store
-      .filter(data => data && data.instantUpdate !== undefined)
-      .map(data => data.instantUpdate)
+      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.instantUpdate !== undefined)
+      .map(reply => reply.data.instantUpdate)
   ])
     .map(data => ({type: 'toggleInstantUpdate', data}))
 
   const toggleVTreeMode$ = most.mergeArray([
     sources.dom.select('#toggleVtreeMode').events('click').map(event => event.target.checked),
     sources.store
-      .filter(data => data && data.design && data.design.vtreeMode !== undefined)
-      .map(data => data.design.vtreeMode)
+      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.design.vtreeMode !== undefined)
+      .map(reply => reply.data.design.vtreeMode)
   ])
     .map(data => ({type: 'toggleVtreeMode', data}))
 
