@@ -6,8 +6,6 @@ const initialState = {
   appUpdates: {available: false, version: undefined},
   locale: '',
   availableLanguages: [],
-  // for possible errors
-  error: undefined,
   // design data
   design: require('./ui/design/reducers').initialize(),
   // export
@@ -20,7 +18,12 @@ const initialState = {
   solidsTimeOut: 20000,
   // to determine what ui tool is active: options, code editor etc
   activeTool: undefined,
-  busy: false,
+  // status
+  status: {
+    message: '',
+    error: undefined, // for possible errors
+    busy: false
+  },
   // visuals
   themeName: 'light',
   themeSettings: {mainTextColor: '#FFF'},
@@ -69,9 +72,9 @@ function makeState (actions) {
         return newState
       } catch (error) {
         console.error('caught error', error)
-        return Object.assign({}, state, {error})
+        const status = Object.assign({}, state.status, {error})
+        return Object.assign({}, state, {status})
       }
-      // const newState = merge({}, state, updatedData)
       // console.log('SCAAAN', action, newState)
     }, initialState)
     .filter(x => x !== undefined)// just in case ...

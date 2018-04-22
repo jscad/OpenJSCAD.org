@@ -150,8 +150,7 @@ function makeJscad (targetElement, options) {
 
     const sameAutoreload = state.autoReload === previousState.autoReload
 
-    const sameError = JSON.stringify(state.error) === JSON.stringify(previousState.error)
-    const sameStatus = state.busy === previousState.busy
+    const sameStatus = JSON.stringify(state.status) === JSON.stringify(previousState.status)
 
     const sameActiveTool = state.activeTool === previousState.activeTool
     const samevtreeMode = state.vtreeMode === previousState.vtreeMode
@@ -164,7 +163,7 @@ function makeJscad (targetElement, options) {
     const sameShortcuts = state.shortcuts === previousState.shortcuts
 
     return sameParamDefinitions && sameParamValues && sameExportFormats && sameStatus && sameStyling &&
-      sameAutoreload && sameInstantUpdate && sameError && sameActiveTool && samevtreeMode && sameAppUpdates &&
+      sameAutoreload && sameInstantUpdate && sameActiveTool && samevtreeMode && sameAppUpdates &&
       sameLocale && sameAvailableLanguages && sameShortcuts
   })
   .map(function (state) {
@@ -194,7 +193,7 @@ function makeJscad (targetElement, options) {
       // const bar = require('most-gestures').pointerGestures(jscadEl.querySelector('#renderTarget'))
     }
     if (csgViewer) {
-      console.log('params', params)
+      // console.log('params', params)
       csgViewer(params)
     }
   })

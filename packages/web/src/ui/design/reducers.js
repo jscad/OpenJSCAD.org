@@ -61,10 +61,12 @@ const setDesignContent = (state, source) => {
   const design = Object.assign({}, state.design, {source})
   const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']}})
   const appTitle = `jscad v ${packageMetadata.version}: ${state.design.name}`
+
+  // FIXME: this is the same as clear errors ?
+  const status = Object.assign({}, state.status, {busy: true, error: undefined})
   return Object.assign({}, state, {design, viewer}, {
     appTitle,
-    busy: true,
-    error: undefined
+    status
   })
 }
 
@@ -85,9 +87,11 @@ const setDesignSolids = (state, {solids, lookup, lookupCounts}) => {
     serializeGeometryCache(lookup)
   }
 
+  const status = Object.assign({}, state.status, {busy: false})
+
   return Object.assign({}, state, {
     design,
-    busy: false,
+    status,
     availableExportFormats,
     exportFormat
   }, exportInfos)
@@ -122,10 +126,11 @@ const updateDesignFromParams = (state, {paramValues, origin, error}) => {
 const timeOutDesignGeneration = (state) => {
   const isBusy = state.busy
   if (isBusy) {
-    return Object.assign({}, state, {
+    const status = Object.assign({}, state.status, {
       busy: false,
       error: new Error('Failed to generate design within an acceptable time, bailing out')
     })
+    return Object.assign({}, state, {status})
   }
   return state
 }

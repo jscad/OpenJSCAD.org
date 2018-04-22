@@ -71,12 +71,13 @@ const toggleEditor = (state) => {
 
 const clearErrors = (state, _) => {
   console.log('clear errors')
-  return Object.assign({}, state, {error: undefined})
+  const status = Object.assign({}, state.status, {error: undefined})
+  return Object.assign({}, state, {status})
 }
 const setErrors = (state, {error}) => {
   console.log('set Errors', error)
-  const formattedError = error// {message: error.message, lineno:}
-  return Object.assign({}, state, {error: formattedError, busy: false})
+  const status = Object.assign({}, state.status, {error, busy: false})
+  return Object.assign({}, state, {status})
 }
 const setAppUpdatesAvailable = (state, appUpdates) => {
   // console.log('updates available', appUpdates)
