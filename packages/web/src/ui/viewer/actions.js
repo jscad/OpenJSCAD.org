@@ -5,7 +5,7 @@ const actions = (sources) => {
     sources.dom.select('#grid').events('click')
       .map(e => e.target.checked),
     sources.store
-      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.viewer.grid && reply.data.viewer.grid.show !== undefined)
+      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.viewer && reply.data.viewer.grid && reply.data.viewer.grid.show !== undefined)
       .map(reply => reply.data.viewer.grid.show)
   ])
     .map(data => ({type: 'toggleGrid', data}))

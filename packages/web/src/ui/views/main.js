@@ -24,6 +24,7 @@ function dom (state, paramsCallbacktoStream, editorCallbackToStream, i18n) {
   const parameters = require('./designParameters')(state, paramsCallbacktoStream, i18n)
   const status = require('./status')(state, i18n)
   const viewer = require('./viewer')(state, i18n)
+  const help = require('./help')(state, i18n)
 
   const editor = require('./editor').editorWrapper(state, editorCallbackToStream, i18n)
 
@@ -79,6 +80,9 @@ function dom (state, paramsCallbacktoStream, editorCallbackToStream, i18n) {
         <button id='toggleEditor'>
           ${editorIcon}
         </button>
+        <button id='toggleHelp'>
+          ${helpIcon}
+        </button>
       </section>
 
       <!--Options-->
@@ -89,6 +93,9 @@ function dom (state, paramsCallbacktoStream, editorCallbackToStream, i18n) {
 
       <!--Editor-->
       ${editor}
+
+      <!--Help-->
+      ${help}
       
     </div>
   `

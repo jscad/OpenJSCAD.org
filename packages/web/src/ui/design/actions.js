@@ -144,7 +144,7 @@ const actions = (sources) => {
   const toggleVTreeMode$ = most.mergeArray([
     sources.dom.select('#toggleVtreeMode').events('click').map(event => event.target.checked),
     sources.store
-      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.design.vtreeMode !== undefined)
+      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.design && reply.data.design.vtreeMode !== undefined)
       .map(reply => reply.data.design.vtreeMode)
   ])
     .map(data => ({type: 'toggleVtreeMode', data}))

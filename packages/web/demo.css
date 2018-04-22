@@ -148,7 +148,7 @@ header .designName{
   position: absolute;
   z-index: 100;
   right: 10px;
-  top: 40px;
+  top: 10px;
 }
 
 #toolbar button {
@@ -158,14 +158,16 @@ header .designName{
 #options {
   position: absolute;
   z-index: 99;
-  top: 10px;
-  right: 53px;
+  top: 40px;
+  right: 15px;
   max-width: 500px;
+  height: 70%;
   overflow: scroll;
   
 
   background: white;
-  box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.17)
+  box-shadow: -1px 3px 3px 2px rgba(0, 0, 0, 0.17);
+  z-index: 100;
 }
 #options fieldset{
   border: none;
@@ -178,6 +180,35 @@ header .designName{
   display: table-row;
   align-self: flex-end;
 }
+
+#editor {
+  position: absolute;
+  top: 40px;
+  right: 15px;
+  width: 400px;
+  height: 400px;
+  box-shadow: -1px 3px 3px 2px rgba(0, 0, 0, 0.17);
+  z-index: 100;
+}
+#help{
+  padding: 20px;
+  position: absolute;
+  top: 40px;
+  right: 15px;
+  height: 50%;
+  overflow: scroll;
+  background: white;
+  box-shadow: -1px 3px 3px 2px rgba(0, 0, 0, 0.17);
+  z-index: 100;
+}
+#help::-webkit-scrollbar:vertical {
+  width: 11px;
+}
+#help a {
+  color: rgb(0, 153, 255);
+  text-decoration: none;
+}
+
 
 button{
   background: none;
@@ -192,8 +223,16 @@ button{
   border: 1px solid #bfbcbc;
 }
 
-button:hover{
-  background-color:rgba(0, 188, 212, 0.6);;
+/*button:hover{
+  background-color:rgb(0, 153, 255);
+}*/
+
+button:hover svg{
+  stroke:rgb(0, 153, 255);
+}
+
+#toolbar button:hover{
+  box-shadow: 0px -1px 5px 0.5px rgba(0, 0, 0, 0.17);
 }
 
 input[type="button"]{
@@ -248,11 +287,4 @@ input.error::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 
 #shortcuts .error input::-ms-input-placeholder { /* Microsoft Edge */
     color: red;
-}
-#editor {
-  position: absolute;
-  top: 40px;
-  right: 40px;
-  width: 400px;
-  height: 400px;
 }

@@ -57,15 +57,8 @@ const setAvailableLanguages = (state, availableLanguages) => {
   return Object.assign({}, state, {availableLanguages})
 }
 
-const toggleOptions = (state) => {
-  console.log('toggleOptions')
-  const activeTool = state.activeTool === 'options' ? undefined : 'options'
-  return Object.assign({}, state, {activeTool})
-}
-
-const toggleEditor = (state) => {
-  console.log('toggleEditor')
-  const activeTool = state.activeTool === 'editor' ? undefined : 'editor'
+const setActiveTool = (state, tool) => {
+  const activeTool = state.activeTool === tool ? undefined : tool
   return Object.assign({}, state, {activeTool})
 }
 
@@ -89,8 +82,7 @@ module.exports = {
   setShortcuts,
   setShortcut,
   changeLanguage,
-  toggleOptions,
-  toggleEditor,
+  setActiveTool,
   clearErrors,
   setErrors,
   setAppUpdatesAvailable,

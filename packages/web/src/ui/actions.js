@@ -177,15 +177,12 @@ const makeActions = (sources) => {
   ])
   .map(data => ({type: 'setAvailableLanguages', data}))
 
-  const toggleOptions$ = most.mergeArray([
-    sources.dom.select('#toggleOptions').events('click')
+  const setActiveTool$ = most.mergeArray([
+    sources.dom.select('#toggleOptions').events('click').map(event => 'options'),
+    sources.dom.select('#toggleEditor').events('click').map(event => 'editor'),
+    sources.dom.select('#toggleHelp').events('click').map(event => 'help')
   ])
-  .map(data => ({type: 'toggleOptions', data}))
-
-  const toggleEditor$ = most.mergeArray([
-    sources.dom.select('#toggleEditor').events('click')
-  ])
-  .map(data => ({type: 'toggleEditor', data}))
+    .map(data => ({type: 'setActiveTool', data}))
 
   // non visual related actions
   const setErrors$ = most.mergeArray([
@@ -198,6 +195,9 @@ const makeActions = (sources) => {
   const setAppUpdatesAvailable$ = most.mergeArray([
     most.just({type: 'setAppUpdatesAvailable', data: {available: false}})
   ])
+
+  sources.dom.select('.example').events('click')
+    .forEach(x=>console.log('clicky example',x.target.dataset.path))
 
   return {
     // generic key shortuct handler
@@ -215,8 +215,7 @@ const makeActions = (sources) => {
     // ui
     changeTheme$,
     changeLanguage$,
-    toggleOptions$,
-    toggleEditor$
+    setActiveTool$
   }
 }
 
