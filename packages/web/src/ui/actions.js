@@ -64,7 +64,7 @@ const getKeyCombos = (options, keyUps$, keyDown$) => {
 const makeActions = (sources) => {
   // keyboard shortcut handling
   // FIXME: use dom source
-  const keyUps$ = most.fromEvent('keyup', document).multicast()//sources.dom.select(document).events('keyup') /
+  const keyUps$ = most.fromEvent('keyup', document).multicast()// sources.dom.select(document).events('keyup') /
   const keyDown$ = most.fromEvent('keydown', document).multicast()
   // we get all key combos, accepting repeated key strokes
   const keyCombos$ = getKeyCombos({dropRepeats: false}, keyUps$, keyDown$)
@@ -82,8 +82,8 @@ const makeActions = (sources) => {
   // set shortcuts
   const setShortcuts$ = most.mergeArray([
     sources.store
-      .filter(data => data && data.shortcuts)
-      .map(data => data.shortcuts)
+      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.shortcuts)
+      .map(reply => reply.data.shortcuts)
   ])
   .map(data => ({type: 'setShortcuts', data}))
 
@@ -155,8 +155,8 @@ const makeActions = (sources) => {
     sources.dom.select('#themeSwitcher').events('change')
       .map(e => e.target.value),
     sources.store
-      .filter(data => data && data.themeName)
-      .map(data => data.themeName)
+      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.themeName)
+      .map(reply => reply.data.themeName)
   ])
   .startWith('light')
   .map(data => ({type: 'changeTheme', data}))
@@ -165,8 +165,8 @@ const makeActions = (sources) => {
     sources.dom.select('#languageSwitcher').events('change')
       .map(e => e.target.value),
     sources.store
-      .filter(data => data && data.locale)
-      .map(data => data.locale)
+      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.locale)
+      .map(reply => reply.data.locale)
   ])
   .map(data => ({type: 'changeLanguage', data}))
 
@@ -181,6 +181,11 @@ const makeActions = (sources) => {
     sources.dom.select('#toggleOptions').events('click')
   ])
   .map(data => ({type: 'toggleOptions', data}))
+
+  const toggleEditor$ = most.mergeArray([
+    sources.dom.select('#toggleEditor').events('click')
+  ])
+  .map(data => ({type: 'toggleEditor', data}))
 
   // non visual related actions
   const setErrors$ = most.mergeArray([
@@ -210,7 +215,8 @@ const makeActions = (sources) => {
     // ui
     changeTheme$,
     changeLanguage$,
-    toggleOptions$
+    toggleOptions$,
+    toggleEditor$
   }
 }
 

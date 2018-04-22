@@ -1,6 +1,6 @@
 const html = require('bel')
 
-function dom (state, paramsCallbacktoStream, i18n) {
+function dom (state, paramsCallbacktoStream, editorCallbackToStream, i18n) {
   const i18nFake = x => x
   i18nFake.translate = x => x
   i18n = i18n || i18nFake
@@ -20,6 +20,8 @@ function dom (state, paramsCallbacktoStream, i18n) {
   const parameters = require('./designParameters')(state, paramsCallbacktoStream, i18n)
   const status = require('./status')(state, i18n)
   const viewer = require('./viewer')(state, i18n)
+
+  const editor = require('./editor').editorWrapper(state, editorCallbackToStream, i18n)
 
   const output = html`
     <div id='container' style='color:${state.themeSettings.mainTextColor}'>
@@ -73,8 +75,13 @@ function dom (state, paramsCallbacktoStream, i18n) {
 
       <!--Viewer-->
       ${viewer}
+
+      <!--Editor-->
+      ${editor}
+      
     </div>
   `
+
   return output
 }
 

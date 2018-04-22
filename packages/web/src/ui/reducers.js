@@ -61,6 +61,10 @@ const toggleOptions = (state) => {
   return Object.assign({}, state, {showOptions: !state.showOptions})
 }
 
+const toggleEditor = (state) => {
+  return Object.assign({}, state, {showEditor: !state.showEditor})
+}
+
 const clearErrors = (state, _) => {
   console.log('clear errors')
   return Object.assign({}, state, {error: undefined})
@@ -81,6 +85,7 @@ module.exports = {
   setShortcut,
   changeLanguage,
   toggleOptions,
+  toggleEditor,
   clearErrors,
   setErrors,
   setAppUpdatesAvailable,

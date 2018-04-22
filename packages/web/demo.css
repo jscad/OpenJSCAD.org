@@ -247,3 +247,10 @@ input.error::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 #shortcuts .error input::-ms-input-placeholder { /* Microsoft Edge */
     color: red;
 }
+#editor {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  width: 400px;
+  height: 400px;
+}
