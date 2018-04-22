@@ -154,6 +154,7 @@ function makeJscad (targetElement, options) {
     const sameStatus = state.busy === previousState.busy
 
     const sameShowOptions = state.showOptions === previousState.showOptions
+    const sameShowEditor = state.showEditor === previousState.showEditor
     const samevtreeMode = state.vtreeMode === previousState.vtreeMode
 
     const sameAppUpdates = JSON.stringify(state.appUpdates) === JSON.stringify(previousState.appUpdates)
@@ -164,7 +165,7 @@ function makeJscad (targetElement, options) {
     const sameShortcuts = state.shortcuts === previousState.shortcuts
 
     return sameParamDefinitions && sameParamValues && sameExportFormats && sameStatus && sameStyling &&
-      sameAutoreload && sameInstantUpdate && sameError && sameShowOptions && samevtreeMode && sameAppUpdates &&
+      sameAutoreload && sameInstantUpdate && sameError && sameShowOptions && sameShowEditor && samevtreeMode && sameAppUpdates &&
       sameLocale && sameAvailableLanguages && sameShortcuts
   })
   .map(function (state) {

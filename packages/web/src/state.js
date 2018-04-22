@@ -19,7 +19,7 @@ const initialState = {
   instantUpdate: true,
   solidsTimeOut: 20000,
   showOptions: false,
-  showEditor: true,
+  showEditor: false,
   busy: false,
   // visuals
   themeName: 'light',

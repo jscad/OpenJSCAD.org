@@ -62,6 +62,7 @@ const toggleOptions = (state) => {
 }
 
 const toggleEditor = (state) => {
+  console.log('toggleEditor')
   return Object.assign({}, state, {showEditor: !state.showEditor})
 }
 
