@@ -8,5 +8,6 @@
   {"key": "r", "command": "toPresetView", "args": "right" },
 
   {"key": "p", "command": "setProjectionType", "args": "perspective" },
-  {"key": "o", "command": "setProjectionType", "args": "orthographic" }
+  {"key": "o", "command": "setProjectionType", "args": "orthographic" },
+  {"key": "shift+enter", "command": "reEvaluateCode", "when": "editorTextFocus"}
 ]
