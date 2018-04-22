@@ -8,7 +8,7 @@ const actions = (sources) => {
         const paths = [] // dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
         return paths
       }),
-    /*sources.store
+    /* sources.store
       .filter(data => data && data.design && data.design.mainPath)
       .map(data => data.design.mainPath)
       .filter(data => data !== '')
@@ -65,7 +65,7 @@ const actions = (sources) => {
     })
 
   ])
-  .map(data => ({type: 'updateDesignFromParams', data})).multicast()
+    .map(data => ({type: 'updateDesignFromParams', data})).multicast()
 
   const setDesignSolids$ = most.mergeArray([
     sources.solidWorker
@@ -86,14 +86,14 @@ const actions = (sources) => {
         } catch (error) {
           return {error}
         }
-      })
-    /* sources.fs
+      }),
+    sources.fs
       .filter(res => res.type === 'read' && res.id === 'loadCachedGeometry' && res.data)
       .map(raw => {
         const deserialize = () => {}// require('serialize-to-js').deserialize
         const lookup = deserialize(raw.data)
         return {solids: undefined, lookupCounts: undefined, lookup}
-      }) */
+      })
   ])
     .map(data => ({type: 'setDesignSolids', data}))
 
@@ -110,11 +110,11 @@ const actions = (sources) => {
           return {error}
         }
       })
-    /*sources.store
+    /* sources.store
       .filter(data => data && data.design && data.design.parameters)
-      .map(data => data.design.parameters)*/
+      .map(data => data.design.parameters) */
   ])
-      .map(data => ({type: 'setDesignParams', data}))
+    .map(data => ({type: 'setDesignParams', data}))
 
   const timeOutDesignGeneration$ = most.never()
     /* designPath$

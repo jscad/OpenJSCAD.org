@@ -162,13 +162,19 @@ function getSourceFromEditor (gEditor) {
 }
 const html = require('bel')
 
+let inited = false
 function editorWrapper (state, editorCallbackToStream) {
   // console.log('reRender editor ??')
   const el = html`
-  <div id='editor' key='editor' style='visibility:${state.activeTool === 'editor' ? 'visible' : 'hidden'}; >
+  <div id='editor' style='visibility:${state.activeTool === 'editor' ? 'visible' : 'hidden'};' >
   </div>`
-  const editor = setUpEditor(el)
-  putSourceInEditor(editor, state.design.source)
+  // console.log('el', el.classList.contains('ace_editor'))
+ 
+    const editor = setUpEditor(el)
+    //putSourceInEditor(editor, state.design.source)
+    inited = true
+  
+
   return el
 }
 

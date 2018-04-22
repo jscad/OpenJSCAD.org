@@ -34,7 +34,6 @@ const initialState = {
   storage: {
     path: '' // require('electron').remote.app.getPath('userData')
   }
-
 }
 
 console.log('initialState', initialState)
@@ -54,7 +53,6 @@ fetching: `Fetching ${data} <img id=busy src='imgs/busy.gif'>`,
 rendering: `Rendering. Please wait <img id=busy src='imgs/busy.gif'>` */
 
 function makeState (actions) {
-  // const reducers = //Object.assign({}, dataParamsReducers, cameraControlsReducers)
   actions = mergeArray(actions)
 
   const rootReducers = require('./ui/reducers')

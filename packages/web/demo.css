@@ -129,6 +129,8 @@ header{
   position: sticky;
   padding: 5px;
   display: inline-flex;
+  width: 100%;
+  line-height: 24px;
 }
 header section{
   padding-left: 10px;
@@ -145,8 +147,8 @@ header .designName{
 #toolbar {
   position: absolute;
   z-index: 100;
-  top: 10px;
   right: 10px;
+  top: 40px;
 }
 
 #toolbar button {

@@ -35,7 +35,6 @@ function makeJscad (targetElement, options) {
   // internationalization side effect
   const absFooHorror = '/Users/kraftwerk-mb/dev/projects/openjscad/core/tmp/OpenJSCAD.org/packages/web/web/'
   const localesPath = path.resolve(absFooHorror, path.join(absFooHorror, '..', 'locales'))
-  console.log('localesPath', localesPath)
   const i18n = require('@jscad/core/sideEffects/i18n')({localesPath})
   // web workers
   const solidWorker = makeWorkerEffect(require('./core/code-evaluation/rebuildSolidsWorker.js'))
@@ -179,7 +178,7 @@ function makeJscad (targetElement, options) {
   state$
   .map(state => state.viewer)
   // FIXME: not working correctly with themeing
-  /*.skipRepeatsWith(function (state, previousState) {
+  /* .skipRepeatsWith(function (state, previousState) {
     const sameViewerParams = JSON.stringify(state) === JSON.stringify(previousState)
     return sameViewerParams
   }) */

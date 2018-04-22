@@ -56,6 +56,34 @@ function makeReactions (state$, actions$, sinks, sources) {
     saveAs(blob, action.data.defaultExportFilePath)
   })
 
+  const serializeGeometryCache = (cache) => {
+    /*
+    const fs = require('fs')
+    const electron = require('electron').remote
+    const serialize = require('serialize-to-js').serialize
+
+    const userDataPath = electron.app.getPath('userData')
+    const path = require('path')
+
+    const cachePath = path.join(userDataPath, '/cache.js')
+    let data = {}
+    Object.keys(cache).forEach(function (key) {
+      data[key] = cache[key]// .toCompactBinary()
+    })
+    const compactBinary = data
+    const compactOutput = serialize(compactBinary)
+    const content = compactOutput // 'compactBinary=' +
+    fs.writeFileSync(cachePath, content) */
+  }
+
+  const serializeGeometryCache$ = actions$.setDesignSolids$
+    .forEach(x => {
+      console.log('set design solids', x)
+      /* if (solids) {
+        serializeGeometryCache(lookup)
+      } */
+    })
+
     // data out to file system sink
   // drag & drops of files/folders have DUAL meaning:
   // * ADD this file/folder to the available ones
