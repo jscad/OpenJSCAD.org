@@ -165,7 +165,7 @@ const html = require('bel')
 function editorWrapper (state, editorCallbackToStream) {
   // console.log('reRender editor ??')
   const el = html`
-  <div id='editor' key='editor' style='visibility:${state.showEditor ? 'visible' : 'hidden'}; >
+  <div id='editor' key='editor' style='visibility:${state.activeTool === 'editor' ? 'visible' : 'hidden'}; >
   </div>`
   const editor = setUpEditor(el)
   putSourceInEditor(editor, state.design.source)

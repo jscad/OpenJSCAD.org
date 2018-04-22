@@ -58,12 +58,15 @@ const setAvailableLanguages = (state, availableLanguages) => {
 }
 
 const toggleOptions = (state) => {
-  return Object.assign({}, state, {showOptions: !state.showOptions})
+  console.log('toggleOptions')
+  const activeTool = state.activeTool === 'options' ? undefined : 'options'
+  return Object.assign({}, state, {activeTool})
 }
 
 const toggleEditor = (state) => {
   console.log('toggleEditor')
-  return Object.assign({}, state, {showEditor: !state.showEditor})
+  const activeTool = state.activeTool === 'editor' ? undefined : 'editor'
+  return Object.assign({}, state, {activeTool})
 }
 
 const clearErrors = (state, _) => {

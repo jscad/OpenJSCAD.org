@@ -18,8 +18,8 @@ const initialState = {
   autoReload: true,
   instantUpdate: true,
   solidsTimeOut: 20000,
-  showOptions: false,
-  showEditor: false,
+  // to determine what ui tool is active: options, code editor etc
+  activeTool: undefined,
   busy: false,
   // visuals
   themeName: 'light',

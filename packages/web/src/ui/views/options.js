@@ -7,7 +7,7 @@ module.exports = function options (state, i18n) {
   })
   const shortcuts = require('./shortcuts')(state, i18n)
   return html`
-<section id='options' style='visibility:${state.showOptions ? 'visible' : 'hidden'}; color:${state.themeSettings.secondaryTextColor}'>   
+<section id='options' style='visibility:${state.activeTool === 'options' ? 'visible' : 'hidden'}; color:${state.themeSettings.secondaryTextColor}'>   
   <br>
   <fieldset>
     <legend> <h3> ${i18n`language`}</legend>
