@@ -15,7 +15,7 @@ function changedFiles (reference, files) {
 // old code
 
 // this handles all type of data from drag'n'drop, a list of files to read files, folders, etc
-function handleFilesAndFolders (items) {
+/* function handleFilesAndFolders (items) {
   const files = walkFileTree(items)
   files.catch(function (error) {
     console.error('failed to read files', error)
@@ -32,7 +32,6 @@ const pollingWatcher = () => {
   let autoReloadTimer = setInterval(function () { superviseAllFiles() }, 1000)
 
   clearInterval(autoReloadTimer)
-}
-
+} */
 
 module.exports = {changedFiles}
