@@ -62,11 +62,12 @@ function makeJscad (targetElement, options) {
     titleBar: titleBar.source()  // #http://openjscad.org/examples/slices/tor.jscad
   }
 
+  // all the destinations of data
   const sinks = {
-    store: storage.sink
+    store: storage.sink,
+    fs: fs.sink
   }
 
-  sources.titleBar.forEach(x => console.log('fooo', x))
   // all the actions
   const designActions = require('./ui/design/actions')(sources)
   const ioActions = require('./ui/io/actions')(sources)
@@ -74,76 +75,18 @@ function makeJscad (targetElement, options) {
   const otherActions = require('./ui/actions')(sources)
   const actions$ = Object.assign({}, designActions, otherActions, ioActions, viewerActions)
 
+  // loop back the state so it is circular
   attach(makeState(Object.values(actions$)))
 
-  require('./ui/reactions')(state$, actions$, sinks)
-
-  // TODO : move to side effect
-  actions$.exportRequested$.forEach(action => {
-    console.log('export requested', action)
-    const {saveAs} = require('file-saver')
-    const {prepareOutput} = require('./core/io/prepareOutput')
-    const {convertToBlob} = require('./core/io/convertToBlob')
-
-    const outputData = action.data.data
-    const format = action.data.exportFormat
-    const blob = convertToBlob(prepareOutput(outputData, {format}))
-    // fs.writeFileSync(filePath, buffer)
-    saveAs(blob, action.data.defaultExportFilePath)
-  })
-
   // after this point, formating of data data that goes out to the sink side effects
+  // setup reactions (ie outputs to sinks)
+  require('./ui/reactions')(state$, actions$, sinks, sources)
+
   // titlebar & store side effects
   // FIXME/ not compatible with multiple instances !!
   /* titleBar.sink(
     state$.map(state => state.appTitle).skipRepeats()
   ) */
-
-  // data out to file system sink
-  // drag & drops of files/folders have DUAL meaning:
-  // * ADD this file/folder to the available ones
-  // * OPEN this file/folder
-  fs.sink(
-    most.mergeArray([
-      // injection from drag & drop
-      sources.drops
-        .map((data) => ({type: 'add', data: data.data})),
-      sources.drops
-        .map(({data}) => ({type: 'read', data, id: 'loadScript', path: data[0].fullPath}))
-        .delay(1000),
-      // watched data
-      state$
-        .filter(state => state.design.mainPath !== '')
-        .map(state => ({path: state.design.mainPath, enabled: state.autoReload}))
-        .skipRepeatsWith((state, previousState) => {
-          return JSON.stringify(state) === JSON.stringify(previousState)
-        })
-        .map(({path, enabled}) => ({
-          type: 'watch',
-          id: 'watchScript',
-          path,
-          options: {enabled}})// enable/disable watch if autoreload is set to false
-        ),
-      // files to read/write
-      state$
-        .filter(state => state.design.mainPath !== '')
-        .map(state => state.design.mainPath)
-        .skipRepeatsWith((state, previousState) => {
-          return JSON.stringify(state) === JSON.stringify(previousState)
-        })
-        .map(path => ({type: 'read', id: 'loadScript', path}))
-      /* most.just()
-        .map(function () {
-           const electron = require('electron').remote
-          const userDataPath = electron.app.getPath('userData')
-          const path = require('path')
-
-          const cachePath = path.join(userDataPath, '/cache.js')
-          const cachePath = 'gnagna'
-          return {type: 'read', id: 'loadCachedGeometry', path: cachePath}
-        }) */
-    ])
-  )
 
   // web worker sink
   const solidWorkerBase$ = most.mergeArray([
