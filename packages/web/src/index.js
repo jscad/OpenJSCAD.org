@@ -38,10 +38,11 @@ function makeJscad (targetElement, options) {
   console.log('localesPath', localesPath)
   const i18n = require('@jscad/core/sideEffects/i18n')({localesPath})
   // web workers
-  const foo = require('./core/code-evaluation/rebuildSolidsWorker.js')// require(workerPath)//path.resolve
-  const solidWorker = makeWorkerEffect(foo)
+  const solidWorker = makeWorkerEffect(require('./core/code-evaluation/rebuildSolidsWorker.js'))
   // generic design parameter handling
   const paramsCallbacktoStream = require('@jscad/core/observable-utils/callbackToObservable')()
+  // generic editor events handling
+  const editorCallbackToStream = require('@jscad/core/observable-utils/callbackToObservable')()
 
   // proxy state stream to be able to access & manipulate it before it is actually available
   const { attach, stream } = proxy()
@@ -51,6 +52,7 @@ function makeJscad (targetElement, options) {
   const sources = {
     state$,
     paramChanges: paramsCallbacktoStream.stream,
+    editor: editorCallbackToStream.stream,
     store: storage.source(),
     fs: fs.source(),
     drops: dragDrop.source(),
@@ -58,6 +60,10 @@ function makeJscad (targetElement, options) {
     solidWorker: solidWorker.source(),
     i18n: i18n.source(),
     titleBar: titleBar.source()  // #http://openjscad.org/examples/slices/tor.jscad
+  }
+
+  const sinks = {
+    store: storage.sink
   }
 
   sources.titleBar.forEach(x => console.log('fooo', x))
@@ -69,6 +75,8 @@ function makeJscad (targetElement, options) {
   const actions$ = Object.assign({}, designActions, otherActions, ioActions, viewerActions)
 
   attach(makeState(Object.values(actions$)))
+
+  require('./ui/reactions')(state$, actions$, sinks)
 
   // TODO : move to side effect
   actions$.exportRequested$.forEach(action => {
@@ -90,37 +98,6 @@ function makeJscad (targetElement, options) {
   /* titleBar.sink(
     state$.map(state => state.appTitle).skipRepeats()
   ) */
-
-  const settingsStorage = state => {
-    const {themeName, design, locale, shortcuts} = state
-    const {name, mainPath, vtreeMode, paramDefinitions, paramDefaults, paramValues} = design
-    return {
-      themeName,
-      locale,
-      shortcuts,
-      design: {
-        name,
-        mainPath,
-        vtreeMode,
-        parameters: {
-          paramDefinitions,
-          paramDefaults,
-          paramValues
-        }
-      },
-      viewer: {
-        axes: {show: state.viewer.axes.show},
-        grid: {show: state.viewer.grid.show}
-        // autorotate: {enabled: state.viewer.controls.autoRotate.enabled}
-      },
-      autoReload: state.autoReload,
-      instantUpdate: state.instantUpdate
-    }
-  }
-  storage.sink(
-    state$
-      .map(settingsStorage)
-  )
 
   // data out to file system sink
   // drag & drops of files/folders have DUAL meaning:
@@ -248,7 +225,7 @@ function makeJscad (targetElement, options) {
       sameLocale && sameAvailableLanguages && sameShortcuts
   })
   .map(function (state) {
-    return require('./ui/views/main')(state, paramsCallbacktoStream)
+    return require('./ui/views/main')(state, paramsCallbacktoStream, editorCallbackToStream)
   })
   /* .combine(function (state, i18n) {
     console.log('here')
