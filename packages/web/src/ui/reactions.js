@@ -92,10 +92,11 @@ function makeReactions (state$, actions$, sinks, sources) {
     most.mergeArray([
       // injection from drag & drop
       sources.drops
-        .map((data) => ({type: 'add', data: data.data})),
-      sources.drops
-        .map(({data}) => ({type: 'read', data, id: 'loadScript', path: data[0].fullPath}))
-        .delay(1000),
+        .map((data) => ({type: 'add', data: data.data, id: 'droppedData'})),
+      // after data was added to memfs, we get an answer back
+      sources.fs
+        .filter(response => response.id === 'droppedData' && response.type === 'add')
+        .map(({data}) => ({type: 'read', data, id: 'loadDesign', path: data[0].fullPath})),
       // watched data
       state$
         .filter(state => state.design.mainPath !== '')
@@ -116,7 +117,7 @@ function makeReactions (state$, actions$, sinks, sources) {
         .skipRepeatsWith((state, previousState) => {
           return JSON.stringify(state) === JSON.stringify(previousState)
         })
-        .map(path => ({type: 'read', id: 'loadScript', path}))
+        .map(path => ({type: 'read', id: 'loadDesign', path}))
       /* most.just()
         .map(function () {
            const electron = require('electron').remote
