@@ -40,6 +40,10 @@ const makeFakeFs = (filesAndFolders) => {
       return entry.children.map(x => x.name)
        // filesAndFolders
     },
+    readDir: (path, callback) => {
+      const entry = findMatch(path)
+      callback(entry)
+    },
     readFile: (path, encoding, callback) => {
       const entry = findMatch(path)
       if (!statSync(path).isFile()) {

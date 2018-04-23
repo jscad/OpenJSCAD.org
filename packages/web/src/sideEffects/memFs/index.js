@@ -8,6 +8,7 @@ function watchTree (rootPath, callback) {
 }
 
 const makeMemFsSideEffect = () => {
+  const commandResponses = callBackToStream()
   const readFileToCB = callBackToStream()
   // for watchers
   const scriptDataFromCB = callBackToStream()
@@ -18,9 +19,10 @@ const makeMemFsSideEffect = () => {
   const sink = (out$) => {
     out$.forEach(function (command) {
       const {path, type, id, data, options} = command
-      console.log('read/writing to', path, type, id, data, options)
+      console.log(`memfs: operation: ${type} ${path} ${id} ${data} ${options}`)
       if (type === 'read') {
-        fs.readFile(path, 'utf8', function (error, data) {
+        const operator = fs.statSync(path).isFile() ? fs.readFile : fs.readDir
+        operator(path, 'utf8', function (error, data) {
           if (error) {
             readFileToCB.callback({path, type, error, id})
           } else {
@@ -28,11 +30,13 @@ const makeMemFsSideEffect = () => {
           }
         })
       } else if (type === 'add') {
-        most.fromPromise(walkFileTree(data)).forEach(function (stuff) {
-          rawData = data
-          filesAndFolders = stuff
-          fs = makeFakeFs(filesAndFolders)
-        })
+        most.fromPromise(walkFileTree(data))
+          .forEach(function (readFilesAndFolders) {
+            rawData = data
+            filesAndFolders = readFilesAndFolders
+            fs = makeFakeFs(filesAndFolders)
+            commandResponses.callback({type, id, data: filesAndFolders})
+          })
 
         /* const fakeRequire = makeFakeRequire({}, filesAndFolders)
         const fakeRequire = makeFakeRequire({}, filesAndFolders)
@@ -101,7 +105,9 @@ const makeMemFsSideEffect = () => {
       .debounce(400)
       .skipRepeats()
       .multicast()
+
     return most.mergeArray([
+      commandResponses.stream.multicast(),
       fs$,
       watch$
     ])
