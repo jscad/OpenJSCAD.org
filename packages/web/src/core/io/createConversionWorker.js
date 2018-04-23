@@ -12,14 +12,14 @@
 const WebWorkify = require('webworkify')
 
 function createConversionWorker (onDone) {
-  //this spawns web workers that can do 'require()' calls
+  // this spawns web workers that can do 'require()' calls
   const worker = WebWorkify(require('./conversionWorker.js'))
   // when the worker finishes
   // - put the converted source into the editor
   // - save the converted source into the cache (gMemFs)
   // - set the converted source into the processor (viewer)
   worker.onmessage = function (e) {
-    //console.log('got response from conversionWorker', e)
+    // console.log('got response from conversionWorker', e)
     if (e.data instanceof Object) {
       var data = e.data
       onDone(data)
