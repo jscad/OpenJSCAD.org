@@ -1,17 +1,22 @@
 const doesModuleExportParameterDefiniitions = moduleToCheck => {
   return moduleToCheck && 'getParameterDefinitions' in moduleToCheck
 }
-function blabla (scriptAsText, mainPath, apiMainPath) {
+function loadFromText (scriptAsText, mainPath, apiMainPath) {
   const csgBasePath = '@jscad/csg/api'
 
   let modules = {
     '@jscad/csg/api': {
-      exports: require('@jscad/csg/api')//{cube: () => console.log('you asked for a cube')}
+      exports: require('@jscad/csg/api')
+    },
+    '@jscad/io': {
+      exports: require('@jscad/io')
     }
   }
   const getParamsString = scriptAsText.includes('getParameterDefinitions')
       ? 'module.exports.getParameterDefinitions = getParameterDefinitions' : ''
   const script = `
+    const deserializeStl = require('@jscad/io').stlDeSerializer.deserialize
+    
     const {CSG, CAG} = require('${csgBasePath}').csg
     const {square, circle, polygon} = require('${csgBasePath}').primitives2d
     const {cube, cylinder, sphere, polyhedron, torus} = require('${csgBasePath}').primitives3d
@@ -29,6 +34,7 @@ function blabla (scriptAsText, mainPath, apiMainPath) {
     module.exports = {main}
     ${getParamsString}
   `
+  console.log('script', script)
   const rootModule = new Function('require', 'module', script)
   const mockRequire = function (pathToModule) {
     //console.log('you asked for', pathToModule)
@@ -73,7 +79,7 @@ module.exports = function (self) {
         // const requireUncached = require('../code-loading/requireUncached')
         // TODO: only uncache when needed
         // requireUncached(mainPath)
-        const {scriptRootModule, params, paramDefinitions} = blabla(source, mainPath, apiMainPath)
+        const {scriptRootModule, params, paramDefinitions} = loadFromText(source, mainPath, apiMainPath)
         // const {scriptRootModule, params, paramDefinitions} = loadScript(source, mainPath, apiMainPath)
 
         const paramDefaults = params
