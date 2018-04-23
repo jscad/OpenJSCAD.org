@@ -19,14 +19,14 @@ function dom (state, paramsCallbacktoStream, editorCallbackToStream, i18n) {
   const editorIcon = html`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"/><line x1="3" y1="22" x2="21" y2="22"/></svg>`
   const helpIcon = html`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12" y2="17"/></svg>`
   const gitIcon = html`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-pull-request"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/></svg>`
-  
+
   const options = require('./options')(state, i18n)
   const parameters = require('./designParameters')(state, paramsCallbacktoStream, i18n)
   const status = require('./status')(state, i18n)
   const viewer = require('./viewer')(state, i18n)
   const help = require('./help')(state, i18n)
 
-  const editor = require('./editor').editorWrapper(state, editorCallbackToStream, i18n)
+  const editor = require('./editor2').editorWrapper(state, editorCallbackToStream, i18n)
 
   const output = html`
     <div id='container' style='color:${state.themeSettings.mainTextColor}'>
@@ -92,9 +92,11 @@ function dom (state, paramsCallbacktoStream, editorCallbackToStream, i18n) {
       ${viewer}
 
       <!--Editor-->
-      ${editor}
+      ${state.activeTool === 'editor' ? editor : ''}
+     
 
       <!--Help-->
+      
       ${help}
       
     </div>

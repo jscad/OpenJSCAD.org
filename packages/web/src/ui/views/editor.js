@@ -14,24 +14,36 @@
 
 // --- Global Variables
 const ace = require('brace')
+require('brace/ext/language_tools.js')
+ace.acequire("ace/ext/language_tools")
 require('brace/mode/javascript')
 require('brace/mode/scad')
 require('brace/theme/chrome')
-
+require('brace/theme/monokai')
 const openscadOpenJscadParser = require('@jscad/openscad-openjscad-translator')
 
 // See http://ace.ajax.org/#nav=howto
 function setUpEditor (element, gProcessor) {
-  var gEditor = null
-  // if (divname === undefined) { divname = 'editor' }
-  // if (document.getElementById(divname) === null) return
+  const langTools = ace.acequire('ace/ext/language_tools')
+  
+  console.log('langTools', langTools)
+  var flowCompleter = {
+    getCompletions: function(editor, session, pos, prefix, callback) {
+      console.log('getCompletions')
+       // your code
+    }
+  }
+  langTools.addCompleter(flowCompleter)
 
+  var gEditor = null
   gEditor = ace.edit(element)
   gEditor.$blockScrolling = Infinity
   gEditor.getSession().setMode('ace/mode/javascript')
+  gEditor.setTheme('ace/theme/monokai')
+  //gEditor.getSession().setMode("ace/mode/javascript");
   // gEditor.setTheme("ace/theme/ambiance")
   // gEditor.setTheme("ace/theme/chaos")
-  gEditor.setTheme('ace/theme/chrome')
+  //gEditor.setTheme('ace/theme/chrome')
   // gEditor.setTheme("ace/theme/clouds")
   // gEditor.setTheme("ace/theme/cobalt")
   // gEditor.setTheme("ace/theme/dawn") // nice
@@ -164,17 +176,39 @@ const html = require('bel')
 
 let inited = false
 function editorWrapper (state, editorCallbackToStream) {
-  // console.log('reRender editor ??')
   const el = html`
-  <div id='editor' style='visibility:${state.activeTool === 'editor' ? 'visible' : 'hidden'};' >
+  <div id='editor' key='editor' style='visibility:${state.activeTool === 'editor' ? 'visible' : 'hidden'}' >
   </div>`
-  // console.log('el', el.classList.contains('ace_editor'))
- 
-    const editor = setUpEditor(el)
-    //putSourceInEditor(editor, state.design.source)
-    inited = true
-  
 
+  let editor = setUpEditor(el)
+  const snippets ='# Prototype\nsnippet proto\n	${1:class_name}.prototype.${2:method_name} = function(${3:first_argument}) {\n		${4:// body...}\n	};\n# Function\nsnippet fun\n	function ${1?:function_name}(${2:argument}) {\n		${3:// body...}\n	}\n# Anonymous Function\nregex /((=)\\s*|(:)\\s*|(\\()|\\b)/f/(\\))?/\nsnippet f\n	function${M1?: ${1:functionName}}($2) {\n		${0:$TM_SELECTED_TEXT}\n	}${M2?;}${M3?,}${M4?)}\n# Immediate function\ntrigger \\(?f\\(\nendTrigger \\)?\nsnippet f(\n	(function(${1}) {\n		${0:${TM_SELECTED_TEXT:/* code */}}\n	}(${1}));\n# if\nsnippet if\n	if (${1:true}) {\n		${0}\n	}\n# if ... else\nsnippet ife\n	if (${1:true}) {\n		${2}\n	} else {\n		${0}\n	}\n# tertiary conditional\nsnippet ter\n	${1:/* condition */} ? ${2:a} : ${3:b}\n# switch\nsnippet switch\n	switch (${1:expression}) {\n		case \'${3:case}\':\n			${4:// code}\n			break;\n		${5}\n		default:\n			${2:// code}\n	}\n# case\nsnippet case\n	case \'${1:case}\':\n		${2:// code}\n		break;\n	${3}\n\n# while (...) {...}\nsnippet wh\n	while (${1:/* condition */}) {\n		${0:/* code */}\n	}\n# try\nsnippet try\n	try {\n		${0:/* code */}\n	} catch (e) {}\n# do...while\nsnippet do\n	do {\n		${2:/* code */}\n	} while (${1:/* condition */});\n# Object Method\nsnippet :f\nregex /([,{[])|^\\s*/:f/\n	${1:method_name}: function(${2:attribute}) {\n		${0}\n	}${3:,}\n# setTimeout function\nsnippet setTimeout\nregex /\\b/st|timeout|setTimeo?u?t?/\n	setTimeout(function() {${3:$TM_SELECTED_TEXT}}, ${1:10});\n# Get Elements\nsnippet gett\n	getElementsBy${1:TagName}(\'${2}\')${3}\n# Get Element\nsnippet get\n	getElementBy${1:Id}(\'${2}\')${3}\n# console.log (Firebug)\nsnippet cl\n	console.log(${1});\n# return\nsnippet ret\n	return ${1:result}\n# for (property in object ) { ... }\nsnippet fori\n	for (var ${1:prop} in ${2:Things}) {\n		${0:$2[$1]}\n	}\n# hasOwnProperty\nsnippet has\n	hasOwnProperty(${1})\n# docstring\nsnippet /**\n	/**\n	 * ${1:description}\n	 *\n	 */\nsnippet @par\nregex /^\\s*\\*\\s*/@(para?m?)?/\n	@param {${1:type}} ${2:name} ${3:description}\nsnippet @ret\n	@return {${1:type}} ${2:description}\n# JSON.parse\nsnippet jsonp\n	JSON.parse(${1:jstr});\n# JSON.stringify\nsnippet jsons\n	JSON.stringify(${1:object});\n# self-defining function\nsnippet sdf\n	var ${1:function_name} = function(${2:argument}) {\n		${3:// initial code ...}\n\n		$1 = function($2) {\n			${4:// main code}\n		};\n	}\n# singleton\nsnippet sing\n	function ${1:Singleton} (${2:argument}) {\n		// the cached instance\n		var instance;\n\n		// rewrite the constructor\n		$1 = function $1($2) {\n			return instance;\n		};\n		\n		// carry over the prototype properties\n		$1.prototype = this;\n\n		// the instance\n		instance = new $1();\n\n		// reset the constructor pointer\n		instance.constructor = $1;\n\n		${3:// code ...}\n\n		return instance;\n	}\n# class\nsnippet class\nregex /^\\s*/clas{0,2}/\n	var ${1:class} = function(${20}) {\n		$40$0\n	};\n	\n	(function() {\n		${60:this.prop = ""}\n	}).call(${1:class}.prototype);\n	\n	exports.${1:class} = ${1:class};\n# \nsnippet for-\n	for (var ${1:i} = ${2:Things}.length; ${1:i}--; ) {\n		${0:${2:Things}[${1:i}];}\n	}\n# for (...) {...}\nsnippet for\n	for (var ${1:i} = 0; $1 < ${2:Things}.length; $1++) {\n		${3:$2[$1]}$0\n	}\n# for (...) {...} (Improved Native For-Loop)\nsnippet forr\n	for (var ${1:i} = ${2:Things}.length - 1; $1 >= 0; $1--) {\n		${3:$2[$1]}$0\n	}\n\n\n#modules\nsnippet def\n	define(function(require, exports, module) {\n	"use strict";\n	var ${1/.*\\///} = require("${1}");\n	\n	$TM_SELECTED_TEXT\n	});\nsnippet req\nguard ^\\s*\n	var ${1/.*\\///} = require("${1}");\n	$0\nsnippet requ\nguard ^\\s*\n	var ${1/.*\\/(.)/\\u$1/} = require("${1}").${1/.*\\/(.)/\\u$1/};\n	$0\n'
+
+  // editor.resize(true)
+  // editor.renderer.updateFull()
+  /*ace.config.loadModule('ace/snippets/javascript', function (ba) {
+    console.log('boo', ba)
+  })
+  ace.config.loadModule('ace/ext/language_tools', function () {
+    console.log('gna')
+    const bla = require('brace/snippets/javascript')
+    console.log('foo', bla)
+    editor.insertSnippet(bli);    
+  })*/
+  editor.setOptions({
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: false
+  })
+
+  const source = `
+  const main = (params) => {
+    
+  }
+  module.exports = {main}
+  `
+  // state.design.source
+
+  putSourceInEditor(editor, source)
   return el
 }
 
