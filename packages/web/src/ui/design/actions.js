@@ -8,21 +8,25 @@ const actions = (sources) => {
         const paths = [] // dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
         return paths
       }),
+    sources.fs
+      .filter(data => data.type === 'read' && data.id === 'loadDesign')
+      .tap(x => console.log('loadDesign', x))
+      .map(raw => raw)
     /* sources.store
       .filter(data => data && data.design && data.design.mainPath)
       .map(data => data.design.mainPath)
       .filter(data => data !== '')
       .map(data => [data]), */
-    sources.drops
+    /*sources.drops
       .filter(drop => drop.type === 'fileOrFolder' && drop.data.length > 0)
       // .map(drop => drop.data.map(fileOrFolder => fileOrFolder.path))
       .flatMap(x => {
         console.log('here', x)
         return sources.fs
           .tap(x => console.log('gnagna', x))
-          .filter(data => data.type === 'read' && data.id === 'loadScript')
+          .filter(data => data.type === 'read' && data.id === 'loadDesign')
           .map(raw => raw)
-      })
+      })*/
   ])
     .filter(data => data !== undefined)
     .debounce(50)
@@ -34,7 +38,7 @@ const actions = (sources) => {
 
   const setDesignContent$ = most.mergeArray([
     sources.fs
-      .filter(data => data.type === 'read' && data.id === 'loadScript')
+      .filter(data => data.type === 'read' && data.id === 'loadDesign')
       .map(raw => raw.data),
     sources.fs
       .filter(data => data.type === 'watch' && data.id === 'watchScript')
@@ -148,6 +152,13 @@ const actions = (sources) => {
       .map(reply => reply.data.design.vtreeMode)
   ])
     .map(data => ({type: 'toggleVtreeMode', data}))
+
+  // FIXME: this needs to be elsewhere
+  const setZoomingBehaviour$ = ''
+    //setDesignContent$.map(x=>{behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']})
+  // FIXME : same for this one, in IO ??
+  const setAvailableExportFormats = setDesignSolids$
+
 
   return {
     setDesignPath$,

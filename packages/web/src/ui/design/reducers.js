@@ -80,6 +80,8 @@ const setDesignSolids = (state, {solids, lookup, lookupCounts}) => {
     lookup,
     lookupCounts
   })
+
+  // TODO: move this to IO ??
   const {exportFormat, availableExportFormats} = availableExportFormatsFromSolids(solids)
   const exportInfos = exportFilePathFromFormatAndDesign(design, exportFormat)
 
