@@ -196,8 +196,8 @@ const makeActions = (sources) => {
     most.just({type: 'setAppUpdatesAvailable', data: {available: false}})
   ])
 
-  sources.dom.select('.example').events('click')
-    .forEach(x=>console.log('clicky example',x.target.dataset.path))
+  const requestLoadExample$ = sources.dom.select('.example').events('click')
+    .tap(x => console.log('clicky example', x.target.dataset.path))
 
   return {
     // generic key shortuct handler
@@ -212,6 +212,8 @@ const makeActions = (sources) => {
     setAppUpdatesAvailable$,
     // translations
     setAvailableLanguages$,
+    // examples
+    requestLoadExample$,
     // ui
     changeTheme$,
     changeLanguage$,
