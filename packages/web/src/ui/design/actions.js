@@ -5,7 +5,9 @@ const actions = (sources) => {
   const designPath$ = most.mergeArray([
     sources.dom.select('#fileLoader').events('click')
       .map(function () {
-        const paths = [] // dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
+        // literally an array of paths (strings)
+        // like those returned by dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
+        const paths = []
         return paths
       }),
     sources.fs
@@ -47,20 +49,20 @@ const actions = (sources) => {
     .map(data => ({type: 'setDesignContent', data}))
 
   // design parameter change actions
+  const getControls = () => Array.from(document.getElementById('paramsTable').getElementsByTagName('input'))
+    .concat(Array.from(document.getElementById('paramsTable').getElementsByTagName('select')))
+
   const updateDesignFromParams$ = most.mergeArray([
     sources.dom.select('#updateDesignFromParams').events('click')
       .map(function () {
-        const controls = Array.from(document.getElementById('paramsTable').getElementsByTagName('input'))
-          .concat(Array.from(document.getElementById('paramsTable').getElementsByTagName('select')))
+        const controls = getControls()
         const paramValues = getParameterValuesFromUIControls(controls)
         return {paramValues, origin: 'manualUpdate'}
       })
       .multicast(),
     sources.paramChanges.multicast().map(function (_controls) {
-      // FIXME: clunky
       try {
-        const controls = Array.from(document.getElementById('paramsTable').getElementsByTagName('input'))
-          .concat(Array.from(document.getElementById('paramsTable').getElementsByTagName('select')))
+        const controls = getControls()
         const paramValues = getParameterValuesFromUIControls(controls)
         return {paramValues, origin: 'instantUpdate'}
       } catch (error) {

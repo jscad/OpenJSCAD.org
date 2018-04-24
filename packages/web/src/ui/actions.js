@@ -197,7 +197,8 @@ const makeActions = (sources) => {
   ])
 
   const requestLoadExample$ = sources.dom.select('.example').events('click')
-    .tap(x => console.log('clicky example', x.target.dataset.path))
+    .map(event => event.target.dataset.path)
+    .map(data => ({type: 'loadExample', data}))
 
   return {
     // generic key shortuct handler

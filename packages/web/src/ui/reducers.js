@@ -77,6 +77,12 @@ const setAppUpdatesAvailable = (state, appUpdates) => {
   return Object.assign({}, state, {appUpdates})
 }
 
+const loadExample = (state) => {
+  // close current tool after we clicked on loading an example
+  const activeTool = state.activeTool = undefined
+  return Object.assign({}, state, {activeTool})
+}
+
 module.exports = {
   changeTheme,
   setShortcuts,
@@ -86,5 +92,6 @@ module.exports = {
   clearErrors,
   setErrors,
   setAppUpdatesAvailable,
-  setAvailableLanguages
+  setAvailableLanguages,
+  loadExample
 }

@@ -1,7 +1,7 @@
 const most = require('most')
 
 function makeReactions (state$, actions$, sinks, sources) {
-  const {store, fs} = sinks
+  const {store, fs, http} = sinks
 
   // output to storage
   const settingsStorage = state => {
@@ -40,6 +40,11 @@ function makeReactions (state$, actions$, sinks, sources) {
         .skipRepeatsWith((previousState, currentState) => JSON.stringify(previousState) === JSON.stringify(currentState))
         .delay(1000)// delay the first saving to avoir overwriting existing settings
     ])
+  )
+
+  http(
+    actions$.requestLoadExample$
+      .map(({data}) => ({url: data, id: 'loadExample', type: 'read'}))
   )
 
   // TODO : move to side effect
@@ -93,9 +98,13 @@ function makeReactions (state$, actions$, sinks, sources) {
       // injection from drag & drop
       sources.drops
         .map((data) => ({type: 'add', data: data.data, id: 'droppedData'})),
+      // data retrieved from http requests
+      sources.http
+        .filter(response => response.id === 'loadExample' && response.type === 'read')
+        .map(response => ({type: 'add', data: response.data, id: 'remoteFile', path: response.url, options: {isRawData: true}})),
       // after data was added to memfs, we get an answer back
       sources.fs
-        .filter(response => response.id === 'droppedData' && response.type === 'add')
+        .filter(response => response.type === 'add')
         .map(({data}) => ({type: 'read', data, id: 'loadDesign', path: data[0].fullPath})),
       // watched data
       state$
