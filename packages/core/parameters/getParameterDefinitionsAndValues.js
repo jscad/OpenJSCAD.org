@@ -16,7 +16,7 @@ const getRawParameterDefinitionsAndValues = (scriptRootModule) => {
   return {parameterDefinitions, parameterValues}
 }
 
-const getFinalParameterDefintionsAndValues = (design, overrides) => {
+const getAllParameterDefintionsAndValues = (design, overrides) => {
   let {parameterDefinitions, parameterValues} = getRawParameterDefinitionsAndValues(design)
   parameterValues = Object.assign({}, parameterValues, overrides)
   parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, parameterDefinitions) : parameterValues
@@ -24,4 +24,4 @@ const getFinalParameterDefintionsAndValues = (design, overrides) => {
   return {parameterValues, parameterDefinitions}
 }
 
-module.exports = getFinalParameterDefintionsAndValues
+module.exports = getAllParameterDefintionsAndValues

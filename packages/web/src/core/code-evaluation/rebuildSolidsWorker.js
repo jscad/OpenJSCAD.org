@@ -1,6 +1,5 @@
-const doesModuleExportParameterDefiniitions = moduleToCheck => {
-  return moduleToCheck && 'getParameterDefinitions' in moduleToCheck
-}
+const doExportsContainParameterDefinitions = require('@jscad/core/code-loading/doExportsContainParameterDefinitions')
+
 function loadFromText (scriptAsText, mainPath, apiMainPath) {
   const csgBasePath = '@jscad/csg/api'
 
@@ -34,7 +33,7 @@ function loadFromText (scriptAsText, mainPath, apiMainPath) {
     module.exports = {main}
     ${getParamsString}
   `
-  console.log('script', script)
+  // console.log('script', script)
   const rootModule = new Function('require', 'module', script)
   const mockRequire = function (pathToModule) {
     //console.log('you asked for', pathToModule)
@@ -44,24 +43,22 @@ function loadFromText (scriptAsText, mainPath, apiMainPath) {
   let module = {}
   rootModule(mockRequire, module)
   // console.log('module', module)
-  const scriptRootModule = module.exports
+  const designRootModule = module.exports
 
   let params = {}
   let paramDefinitions = []
-  if (doesModuleExportParameterDefiniitions(scriptRootModule)) {
+  if (doExportsContainParameterDefinitions(designRootModule)) {
     const getParameterValuesFromParameters = require('@jscad/core/parameters/getParameterValuesFromParameters')
 
-    paramDefinitions = scriptRootModule.getParameterDefinitions() || []
-    params = getParameterValuesFromParameters(scriptRootModule.getParameterDefinitions)
+    paramDefinitions = designRootModule.getParameterDefinitions() || []
+    params = getParameterValuesFromParameters(designRootModule.getParameterDefinitions)
   }
-  return {scriptRootModule, params, paramDefinitions}
+  return {designRootModule, params, paramDefinitions}
 }
 
 module.exports = function (self) {
   const makeBuildCachedGeometryFromTree = require('jscad-tree-experiment').buildCachedGeometry
   const { CAG, CSG } = require('@jscad/csg')
-
-  const defaults = {vtreeMode: true}
 
   self.onmessage = function (event) {
     if (event.data instanceof Object) {
@@ -79,8 +76,8 @@ module.exports = function (self) {
         // const requireUncached = require('../code-loading/requireUncached')
         // TODO: only uncache when needed
         // requireUncached(mainPath)
-        const {scriptRootModule, params, paramDefinitions} = loadFromText(source, mainPath, apiMainPath)
-        // const {scriptRootModule, params, paramDefinitions} = loadScript(source, mainPath, apiMainPath)
+        const {designRootModule, params, paramDefinitions} = loadFromText(source, mainPath, apiMainPath)
+        // const {designRootModule, params, paramDefinitions} = loadScript(source, mainPath, apiMainPath)
 
         const paramDefaults = params
         const paramValues = Object.assign({}, paramDefaults, parameters)
@@ -91,7 +88,7 @@ module.exports = function (self) {
 
         // deal with the actual solids generation
         let solids
-        let rawResults = toArray(scriptRootModule.main(paramValues))
+        let rawResults = toArray(designRootModule.main(paramValues))
         const isSolidResult = (rawResults.length > 0 && (isCSG(rawResults[0]) || isCAG(rawResults[0])))
         if (isSolidResult) {
           solids = rawResults

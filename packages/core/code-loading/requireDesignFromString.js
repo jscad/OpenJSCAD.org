@@ -14,7 +14,6 @@ const requireDesignFromString = (scriptAsText, filePath, requireFn = require, cs
   }
   // console.log('loading script using jscad/csg base path at:', csgBasePath)
   let scriptRootModule
-  // && !scriptAsText.includes('require(')
   if ((!scriptAsText.includes('module.exports')) && scriptAsText.includes('main')) {
     const getParamsString = scriptAsText.includes('getParameterDefinitions')
       ? 'module.exports.getParameterDefinitions = getParameterDefinitions' : ''
