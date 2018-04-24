@@ -16,10 +16,15 @@ const makeMemFsSideEffect = () => {
   let rawData
   let filesAndFolders = []
   let fs
+
   const sink = (out$) => {
     out$.forEach(function (command) {
       const {path, type, id, data, options} = command
-      console.log(`memfs: operation: ${type} ${path} ${id} ${data} ${options}`)
+      const defaults = {
+        isRawData: false
+      }
+      const {isRawData} = Object.assign({}, defaults, options)
+      // console.log(`memfs: operation: ${type} ${path} ${id} ${data} ${options}`)
       if (type === 'read') {
         const operator = fs.statSync(path).isFile() ? fs.readFile : fs.readDir
         operator(path, 'utf8', function (error, data) {
@@ -30,13 +35,20 @@ const makeMemFsSideEffect = () => {
           }
         })
       } else if (type === 'add') {
-        most.fromPromise(walkFileTree(data))
+        // we only inject raw data ie without file objects etc, typicall as a result of http requests
+        if (isRawData) {
+          filesAndFolders = [{name: 'main.js', source: data, fullPath: path}]
+          fs = makeFakeFs(filesAndFolders)
+          commandResponses.callback({type, id, data: filesAndFolders})
+        } else {
+          most.fromPromise(walkFileTree(data))
           .forEach(function (readFilesAndFolders) {
             rawData = data
             filesAndFolders = readFilesAndFolders
             fs = makeFakeFs(filesAndFolders)
             commandResponses.callback({type, id, data: filesAndFolders})
           })
+        }
 
         /* const fakeRequire = makeFakeRequire({}, filesAndFolders)
         const fakeRequire = makeFakeRequire({}, filesAndFolders)
@@ -47,6 +59,7 @@ const makeMemFsSideEffect = () => {
         const rootModule = fakeRequire._require(entryPoint)
         console.log('rootModule', rootModule) */
       } else if (type === 'watch') {
+        return
         console.log('watching', path, options, filesAndFolders)
         let watchers = []
         let watchedFilePath
