@@ -23,6 +23,9 @@ function makeJscad (targetElement, options) {
   const fs = require('./sideEffects/memFs')()
   // storage
   const storage = require('./sideEffects/localStorage')(name)
+  // http requests
+  const http = require('./sideEffects/http')()
+
   // title bar side effect
   const titleBar = require('@jscad/core/sideEffects/titleBar')()
   // drag & drop side effect // FIXME: unify with the one in core()
@@ -54,6 +57,7 @@ function makeJscad (targetElement, options) {
     editor: editorCallbackToStream.stream,
     store: storage.source(),
     fs: fs.source(),
+    http: http.source(),
     drops: dragDrop.source(),
     dom: dom.source(),
     solidWorker: solidWorker.source(),
@@ -64,8 +68,11 @@ function makeJscad (targetElement, options) {
   // all the destinations of data
   const sinks = {
     store: storage.sink,
-    fs: fs.sink
+    fs: fs.sink,
+    http: http.sink
   }
+
+  sources.http.forEach(x => console.log('reply for request', x))
 
   // all the actions
   const designActions = require('./ui/design/actions')(sources)
