@@ -1,12 +1,33 @@
+const loadDesign = require('../code-loading/loadDesign')
+const instanciateDesign = require('./instanciateDesign')
 
-const {toArray} = require('../../utils/utils')
-const getParameterValuesFromUIControls = require('../parameters/getParameterValuesFromUIControls')
+const rebuildSolids = (data, callback) => {
+  const {source, parameterValuesOverride, mainPath, options} = data
 
-const rebuildSolids = (jscadScript, paramControls) => {
-  console.log('rebuilding')
-  let params = getParameterValuesFromUIControls(paramControls)
-  const solids = toArray(jscadScript(params))
-  return solids
+  const defaults = {vtreeMode: true}
+  const {vtreeMode, lookup, lookupCounts} = Object.assign({}, defaults, options)
+  const apiMainPath = vtreeMode ? './vtreeApi' : '@jscad/csg/api'
+
+  const designData = loadDesign(source, mainPath, apiMainPath, parameterValuesOverride)
+
+  // send back parameter definitions & values
+  // in a worker this would be a postmessage
+  console.log('designData', designData)
+  callback({
+    type: 'params',
+    parameterDefaults: designData.parameterDefaults,
+    parameterValues: designData.parameterValues,
+    parameterDefinitions: designData.parameterDefinitions
+  })
+
+  const solidsData = instanciateDesign(designData.rootModule, vtreeMode, lookup, lookupCounts, designData.parameterValues)
+  // send back solids
+  callback({
+    type: 'solids',
+    solids: solidsData.solids,
+    lookup: solidsData.lookup,
+    lookupCounts: solidsData.lookupCounts
+  })
 }
 
-module.exports = {rebuildSolids}
+module.exports = rebuildSolids

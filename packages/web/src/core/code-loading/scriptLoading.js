@@ -47,12 +47,12 @@ function loadScript (scriptAsText, filePath, csgBasePath = '@jscad/csg/api') {
     scriptRootModule = {main: scriptRootModule}
   }
   let params = {}
-  let paramDefinitions = []
+  let parameterDefinitions = []
   if (doesModuleExportParameterDefiniitions(scriptRootModule)) {
-    paramDefinitions = scriptRootModule.getParameterDefinitions() || []
+    parameterDefinitions = scriptRootModule.getParameterDefinitions() || []
     params = getParameterValuesFromParameters(scriptRootModule.getParameterDefinitions)
   }
-  return {params, paramDefinitions, scriptRootModule: scriptRootModule}
+  return {params, parameterDefinitions, scriptRootModule: scriptRootModule}
 }
 
 module.exports = {loadScript}

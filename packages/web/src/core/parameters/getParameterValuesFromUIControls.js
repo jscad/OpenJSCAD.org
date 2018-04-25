@@ -6,7 +6,7 @@
  * @returns {Object} the parameter values, as an object
  */
 module.exports = function getParameterValues (paramControls, parameterDefinitions, onlyChanged) {
-  let paramValues = {}
+  let parameterValues = {}
   let value
   for (var i = 0; i < paramControls.length; i++) {
     const control = paramControls[i]
@@ -60,10 +60,10 @@ module.exports = function getParameterValues (paramControls, parameterDefinition
         continue
       }
     }
-    paramValues[control.paramName] = value
-  // console.log(control.paramName+":"+paramValues[control.paramName])
+    parameterValues[control.paramName] = value
+  // console.log(control.paramName+":"+parameterValues[control.paramName])
   }
-  return paramValues
+  return parameterValues
 }
 
 function isNumber (value) {
