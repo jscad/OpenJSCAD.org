@@ -1,6 +1,12 @@
 const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
 
+/** function to create the http side effect 
+ * sink: input of commands that generate http requests
+ * source: output of response from http requests
+ * NOTE: we could add 'adaptors' to specific API providers like github as input to this
+ * function in order to be able to read remote files without the need to proxy with a server
+ */
 const makeHttpSideEffect = () => {
   const commandResponses = callBackToStream()
 
@@ -38,7 +44,6 @@ const makeHttpSideEffect = () => {
           commandResponses.callback({type, id, url, data: result})
         }
         xhr.onerror = function (error) {
-          // console.log('error', error)
           commandResponses.callback({type, id, url, error})
         }
         xhr.open('GET', url, true)

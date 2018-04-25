@@ -2,7 +2,7 @@
 const path = require('path')
 // const {getDesignEntryPoint, getDesignName} = require('@jscad/core/code-loading/requireDesignUtilsFs')
 // const {getDesignName} = require('@jscad/core/code-loading/requireDesignUtilsFs')
-const {getDesignEntryPoint, getDesignName} = require('../../exp/requireDesignUtilsFs')
+const {getDesignEntryPoint, getDesignName} = require('../../core/code-loading/requireDesignUtilsFs')
 
 const {availableExportFormatsFromSolids, exportFilePathFromFormatAndDesign} = require('../../core/io/exportUtils')
 const packageMetadata = require('../../../package.json')
@@ -19,9 +19,9 @@ const initialize = () => {
     script: '',
     source: '',
     // parameters
-    paramDefinitions: [],
-    paramValues: {},
-    paramDefaults: {},
+    parameterDefinitions: [],
+    parameterValues: {},
+    parameterDefaults: {},
     previousParams: {},
     // solids
     solids: [],
@@ -55,7 +55,7 @@ const setDesignPath = (state, paths) => {
 
 const setDesignContent = (state, source) => {
   /*
-    func(paramDefinitions) => paramsUI
+    func(parameterDefinitions) => paramsUI
     func(paramsUI + interaction) => params
   */
   const design = Object.assign({}, state.design, {source})
@@ -95,12 +95,12 @@ const setDesignSolids = (state, {solids, lookup, lookupCounts}) => {
   }, exportInfos)
 }
 
-const setDesignParams = (state, {paramDefaults, paramValues, paramDefinitions}) => {
+const setDesignParams = (state, {parameterDefaults, parameterValues, parameterDefinitions}) => {
   console.log('setDesignParams')
   const design = Object.assign({}, state.design, {
-    paramDefaults,
-    paramValues,
-    paramDefinitions
+    parameterDefaults,
+    parameterValues,
+    parameterDefinitions
   })
   return Object.assign({}, state, {
     design

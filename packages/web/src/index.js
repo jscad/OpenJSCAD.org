@@ -72,7 +72,7 @@ function makeJscad (targetElement, options) {
     http: http.sink
   }
 
-  sources.http.forEach(x => console.log('reply for request', x))
+  // sources.http.forEach(x => console.log('reply for request', x))
 
   // all the actions
   const designActions = require('./ui/design/actions')(sources)
@@ -96,25 +96,26 @@ function makeJscad (targetElement, options) {
 
   // web worker sink
   const solidWorkerBase$ = most.mergeArray([
-    actions$.setDesignContent$.map(action => ({paramValues: undefined, origin: 'designContent', error: undefined})),
+    actions$.setDesignContent$.map(action => ({parameterValues: undefined, origin: 'designContent', error: undefined})),
     actions$.updateDesignFromParams$.map(action => action.data)
   ]).multicast()
 
   solidWorker.sink(
-    most.sample(function ({origin, paramValues, error}, {design, instantUpdate}) {
+    most.sample(function ({origin, parameterValues, error}, {design, instantUpdate}) {
       if (error) {
         return undefined
       }
       console.log('design stuff', design)
       const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
-      paramValues = paramValues || design.paramValues // this ensures the last, manually modified params have upper hand
-      paramValues = paramValues ? applyParameterDefinitions(paramValues, design.paramDefinitions) : paramValues
+      // this ensures the last, manually modified params have upper hand
+      parameterValues = parameterValues || design.parameterValues
+      parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, design.parameterDefinitions) : parameterValues
       if (!instantUpdate && origin === 'instantUpdate') {
         return undefined
       }
-      // console.log('sending paramValues', paramValues, 'options', vtreeMode)
+      // console.log('sending parameterValues', parameterValues, 'options', vtreeMode)
       const options = {vtreeMode: design.vtreeMode, lookup: design.lookup, lookupCounts: design.lookupCounts}
-      return {source: design.source, mainPath: design.mainPath, paramValues, options}
+      return {source: design.source, mainPath: design.mainPath, parameterValues, options}
     },
     solidWorkerBase$,
     solidWorkerBase$,
@@ -123,15 +124,15 @@ function makeJscad (targetElement, options) {
       .skipRepeats()
   )
     .filter(x => x !== undefined)
-    .map(({source, mainPath, paramValues, options}) => ({cmd: 'render', source, mainPath, parameters: paramValues, options}))
+    .map(({source, mainPath, parameterValues, options}) => ({cmd: 'render', source, mainPath, parameterValuesOverride: parameterValues, options}))
 )
 
 // viewer data
   state$
   .filter(state => state.design.mainPath !== '')
   .skipRepeatsWith(function (state, previousState) {
-    // const sameParamDefinitions = JSON.stringify(state.design.paramDefinitions) === JSON.stringify(previousState.design.paramDefinitions)
-    // const sameParamValues = JSON.stringify(state.design.paramValues) === JSON.stringify(previousState.design.paramValues)
+    // const sameparameterDefinitions = JSON.stringify(state.design.parameterDefinitions) === JSON.stringify(previousState.design.parameterDefinitions)
+    // const sameparameterValues = JSON.stringify(state.design.parameterValues) === JSON.stringify(previousState.design.parameterValues)
     const sameSolids = state.design.solids.length === previousState.design.solids.length &&
     JSON.stringify(state.design.solids) === JSON.stringify(previousState.design.solids)
     return sameSolids
@@ -144,8 +145,8 @@ function makeJscad (targetElement, options) {
 
   const outToDom$ = state$
   .skipRepeatsWith(function (state, previousState) {
-    const sameParamDefinitions = JSON.stringify(state.design.paramDefinitions) === JSON.stringify(previousState.design.paramDefinitions)
-    const sameParamValues = JSON.stringify(state.design.paramValues) === JSON.stringify(previousState.design.paramValues)
+    const sameparameterDefinitions = JSON.stringify(state.design.parameterDefinitions) === JSON.stringify(previousState.design.parameterDefinitions)
+    const sameparameterValues = JSON.stringify(state.design.parameterValues) === JSON.stringify(previousState.design.parameterValues)
 
     const sameInstantUpdate = state.instantUpdate === previousState.instantUpdate
 
@@ -168,7 +169,7 @@ function makeJscad (targetElement, options) {
 
     const sameShortcuts = state.shortcuts === previousState.shortcuts
 
-    return sameParamDefinitions && sameParamValues && sameExportFormats && sameStatus && sameStyling &&
+    return sameparameterDefinitions && sameparameterValues && sameExportFormats && sameStatus && sameStyling &&
       sameAutoreload && sameInstantUpdate && sameActiveTool && samevtreeMode && sameAppUpdates &&
       sameLocale && sameAvailableLanguages && sameShortcuts
   })

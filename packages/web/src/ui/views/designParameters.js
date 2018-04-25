@@ -2,11 +2,11 @@ const html = require('bel')
 const {createParamControls} = require('./createParameterControls')
 
 module.exports = function designParameters (state, paramsCallbacktoStream, i18n) {
-  const {paramValues, paramDefinitions} = state.design
-  const {controls} = createParamControls(paramValues, paramDefinitions, paramsCallbacktoStream.callback)
+  const {parameterValues, parameterDefinitions} = state.design
+  const {controls} = createParamControls(parameterValues, parameterDefinitions, paramsCallbacktoStream.callback)
 
   return html`
-  <section id='params' style='visibility:${state.design.paramDefinitions.length === 0 ? 'hidden' : 'visible'};color:${state.themeSettings.secondaryTextColor}'>
+  <section id='params' style='visibility:${state.design.parameterDefinitions.length === 0 ? 'hidden' : 'visible'};color:${state.themeSettings.secondaryTextColor}'>
         <span id='paramsTable'>
           <table>
             ${controls}

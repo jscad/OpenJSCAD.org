@@ -6,7 +6,7 @@ function makeReactions (state$, actions$, sinks, sources) {
   // output to storage
   const settingsStorage = state => {
     const {themeName, design, locale, shortcuts} = state
-    const {name, mainPath, vtreeMode, paramDefinitions, paramDefaults, paramValues} = design
+    const {name, mainPath, vtreeMode, parameterDefinitions, parameterDefaults, parameterValues} = design
     return {
       themeName,
       locale,
@@ -16,9 +16,9 @@ function makeReactions (state$, actions$, sinks, sources) {
         mainPath,
         vtreeMode,
         parameters: {
-          paramDefinitions,
-          paramDefaults,
-          paramValues
+          parameterDefinitions,
+          parameterDefaults,
+          parameterValues
         }
       },
       viewer: {

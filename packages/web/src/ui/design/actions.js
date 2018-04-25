@@ -56,15 +56,15 @@ const actions = (sources) => {
     sources.dom.select('#updateDesignFromParams').events('click')
       .map(function () {
         const controls = getControls()
-        const paramValues = getParameterValuesFromUIControls(controls)
-        return {paramValues, origin: 'manualUpdate'}
+        const parameterValues = getParameterValuesFromUIControls(controls)
+        return {parameterValues, origin: 'manualUpdate'}
       })
       .multicast(),
     sources.paramChanges.multicast().map(function (_controls) {
       try {
         const controls = getControls()
-        const paramValues = getParameterValuesFromUIControls(controls)
-        return {paramValues, origin: 'instantUpdate'}
+        const parameterValues = getParameterValuesFromUIControls(controls)
+        return {parameterValues, origin: 'instantUpdate'}
       } catch (error) {
         return {error, origin: 'instantUpdate'}
       }
@@ -110,8 +110,8 @@ const actions = (sources) => {
       .filter(event => event.data.type === 'params')
       .map(function (event) {
         try {
-          const {paramDefaults, paramValues, paramDefinitions} = event.data
-          return {paramDefaults, paramValues, paramDefinitions}
+          const {parameterDefaults, parameterValues, parameterDefinitions} = event.data
+          return {parameterDefaults, parameterValues, parameterDefinitions} 
         } catch (error) {
           return {error}
         }
@@ -160,7 +160,6 @@ const actions = (sources) => {
     //setDesignContent$.map(x=>{behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']})
   // FIXME : same for this one, in IO ??
   const setAvailableExportFormats = setDesignSolids$
-
 
   return {
     setDesignPath$,

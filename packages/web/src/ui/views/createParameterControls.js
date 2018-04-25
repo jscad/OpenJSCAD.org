@@ -1,25 +1,24 @@
-// getParamDefinitions(script)
 const html = require('bel')
 
-const createParamControls = (prevParamValues = {}, paramDefinitions, rebuildSolid) => {
+const createParamControls = (prevParameterValues = {}, parameterDefinitions, rebuildSolid) => {
   let paramControls = []
 
-  const controls = paramDefinitions.map(function (paramDefinition) {
+  const controls = parameterDefinitions.map(function (paramDefinition) {
     let type = paramDefinition.type.toLowerCase()
     let subControls
     // console.log('type', type)
     switch (type) {
       case 'choice':
-        subControls = createChoiceControl(paramDefinition, prevParamValues[paramDefinition.name])
+        subControls = createChoiceControl(paramDefinition, prevParameterValues[paramDefinition.name])
         break
       case 'radio':
-        subControls = createRadioControl(paramDefinition, prevParamValues[paramDefinition.name])
+        subControls = createRadioControl(paramDefinition, prevParameterValues[paramDefinition.name])
         break
       case 'group':
         subControls = createGroupControl(paramDefinition)
         break
       default:
-        subControls = createControl(paramDefinition, prevParamValues[paramDefinition.name])
+        subControls = createControl(paramDefinition, prevParameterValues[paramDefinition.name])
         break
     }
     let label = paramDefinition.name + ':'

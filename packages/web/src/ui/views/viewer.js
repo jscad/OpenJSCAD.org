@@ -32,6 +32,4 @@ function setCanvasSize (viewerElement) {
   viewerElement.width = width
   viewerElement.height = height
   // console.log('width', width, 'height', height, 'of', viewerElement)
-  // viewerElement.style.width = width + 'px'
-  // viewerElement.style.height = height + 'px'
 }
