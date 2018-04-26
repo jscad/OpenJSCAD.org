@@ -6,35 +6,13 @@ const getAllParameterDefintionsAndValues = require('@jscad/core/parameters/getPa
 
 // taken verbatim from https://github.com/iliakan/detect-node
 const hasRequire = () => Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]'
+const makeWebRequire = require('./webRequire')
 
-const makeFakeRequire = (rootModulePath, rootModuleSource) => {
-  let modules = {
-    '@jscad/csg/api': {
-      exports: require('@jscad/csg/api')
-    },
-    '@jscad/io': {
-      exports: require('@jscad/io')
-    }
-  }
-
-  const rootModule = new Function('require', 'module', rootModuleSource)
-  const mockRequire = function (pathToModule) {
-    const foundModule = modules[pathToModule]
-    // console.log('you asked for', pathToModule, 'and will get', foundModule, foundModule.exports)
-    return foundModule.exports
-  }
-
-  let module = {}
-  rootModule(mockRequire, module)
-  // console.log('module', module)
-  const designRootModule = module
-  modules[rootModulePath] = designRootModule
-
-  return mockRequire
-}
-
-const loadDesign = (source, mainPath, apiMainPath, parameterValuesOverride) => {
-  console.log('parameterValuesOverride', parameterValuesOverride)
+/** load a jscad script, injecting the basic dependencies if necessary
+ * @param  {} filePath
+ * @param  {} csgBasePath='../../../../core/tmp/csg.js : relative path or  '@jscad/csg'
+ */
+const loadDesign = (source, mainPath, apiMainPath, parameterValuesOverride, filesAndFolders) => {
   // the root script is the main entry point in a design
   // ie either the only file if there is only one
   // OR the file in the 'main' entry of package.js, index.js, main.js or <folderName>.js
@@ -62,8 +40,18 @@ const loadDesign = (source, mainPath, apiMainPath, parameterValuesOverride) => {
   const isDesignCommonJs = isCommonJsModule(designRoot.source)
   designRoot.source = !isDesignCommonJs ? modulifySource(designRoot.source, apiMainPath) : designRoot.source
 
+  // if we have files & folders we need to update the source for our module
+  // TODO: should these be generic transforms applied to all files ??
+  if (filesAndFolders) {
+    filesAndFolders = filesAndFolders.map(entry => {
+      if (entry.fullPath === designRoot.path) {
+        return Object.assign({}, entry, {source: designRoot.source})
+      }
+      return entry
+    })
+  }
   // now check if we need fake require or not
-  const requireFn = hasRequire() ? require : makeFakeRequire(designRoot.path, designRoot.source)
+  const requireFn = hasRequire() ? require : makeWebRequire(filesAndFolders)
   const rootModule = requireDesignFromModule(designRoot.path, requireFn)
   // const requireUncached = require('../code-loading/requireUncached')
   // TODO: only uncache when needed
@@ -76,7 +64,7 @@ const loadDesign = (source, mainPath, apiMainPath, parameterValuesOverride) => {
   const parameterDefaults = parameters.parameterValues
   const parameterValues = Object.assign({}, parameters.parameterValues, parameterValuesOverride)
 
-  console.log('parameters', parameterDefinitions, parameterValues, parameterDefaults)
+  // console.log('parameters', parameterDefinitions, parameterValues, parameterDefaults)
   return {rootModule, parameterDefaults, parameterValues, parameterDefinitions}
 }
 

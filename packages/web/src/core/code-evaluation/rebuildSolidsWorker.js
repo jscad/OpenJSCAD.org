@@ -1,6 +1,6 @@
 
 module.exports = function (self) {
-  const rebuildSolids = require('./rebuildSolids2')
+  const rebuildSolids = require('./rebuildSolids')
   self.onmessage = function (event) {
     if (event.data instanceof Object) {
       // console.log('in web worker')

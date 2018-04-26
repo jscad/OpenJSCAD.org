@@ -2,8 +2,6 @@ const modulifySource = (source, csgBasePath) => {
   const getParamsString = source.includes('getParameterDefinitions')
       ? 'module.exports.getParameterDefinitions = getParameterDefinitions' : ''
   const updatedSource = `
-    const deserializeStl = require('@jscad/io').stlDeSerializer.deserialize
-    
     const {CSG, CAG} = require('${csgBasePath}').csg
     const {square, circle, polygon} = require('${csgBasePath}').primitives2d
     const {cube, cylinder, sphere, polyhedron, torus} = require('${csgBasePath}').primitives3d

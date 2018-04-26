@@ -115,7 +115,7 @@ function makeJscad (targetElement, options) {
       }
       // console.log('sending parameterValues', parameterValues, 'options', vtreeMode)
       const options = {vtreeMode: design.vtreeMode, lookup: design.lookup, lookupCounts: design.lookupCounts}
-      return {source: design.source, mainPath: design.mainPath, parameterValues, options}
+      return {source: design.source, mainPath: design.mainPath, parameterValues, options, filesAndFolders: design.filesAndFolders}
     },
     solidWorkerBase$,
     solidWorkerBase$,
@@ -124,7 +124,7 @@ function makeJscad (targetElement, options) {
       .skipRepeats()
   )
     .filter(x => x !== undefined)
-    .map(({source, mainPath, parameterValues, options}) => ({cmd: 'render', source, mainPath, parameterValuesOverride: parameterValues, options}))
+    .map(({source, mainPath, parameterValues, options, filesAndFolders}) => ({cmd: 'render', source, mainPath, parameterValuesOverride: parameterValues, options, filesAndFolders}))
 )
 
 // viewer data

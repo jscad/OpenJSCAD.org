@@ -15,6 +15,7 @@ const initialize = () => {
     mainPath: '',
     // list of all paths of require() calls + main
     modulePaths: [],
+    filesAndFolders: [], // file tree, of sorts
     // code
     script: '',
     source: '',
@@ -33,6 +34,10 @@ const initialize = () => {
 }
 
 const setDesignPath = (state, paths) => {
+  console.log('setDesignPath', paths)
+  // FIXME:  DO NOT DO THIS HERE !!
+  const filesAndFolders = paths.filesAndFolders
+
   const foo = paths
   paths = [paths.path]
   const mainPath = getDesignEntryPoint(foo.fs, () => {}, paths)
@@ -43,7 +48,8 @@ const setDesignPath = (state, paths) => {
   const design = Object.assign({}, state.design, {
     name: designName,
     path: designPath,
-    mainPath
+    mainPath,
+    filesAndFolders
   })
 
   const status = Object.assign({}, state.status, {busy: true})

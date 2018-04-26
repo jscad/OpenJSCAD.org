@@ -31,13 +31,14 @@ const makeMemFsSideEffect = () => {
           if (error) {
             readFileToCB.callback({path, type, error, id})
           } else {
-            readFileToCB.callback({path, type, data, id, fs})
+            // FIXME: injection of fs & filesAndFolders is a huge hack
+            readFileToCB.callback({path, type, data, id, fs, filesAndFolders})
           }
         })
       } else if (type === 'add') {
         // we only inject raw data ie without file objects etc, typicall as a result of http requests
         if (isRawData) {
-          filesAndFolders = [{name: 'main.js', source: data, fullPath: path}]
+          filesAndFolders = [{name: require('path').basename(path), source: data, fullPath: path}]
           fs = makeFakeFs(filesAndFolders)
           commandResponses.callback({type, id, data: filesAndFolders})
         } else {
