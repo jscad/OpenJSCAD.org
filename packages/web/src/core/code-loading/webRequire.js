@@ -38,8 +38,8 @@ const updatePaths = (entry) => {
  * @param  {} isInNodeModules=false
  * @param  {} isScoped=false
  */
-const registerModules = (filesAndFolders, inputs, isInNodeModules = false, isScoped = false) => {
-  console.log('registerModules', filesAndFolders)
+const registerFilesAndFolders = (filesAndFolders, inputs, isInNodeModules = false, isScoped = false) => {
+  console.log('registerFilesAndFolders', filesAndFolders)
   for (let i = 0; i < inputs.length; i++) {
     const entry = inputs[i]
     if (isInNodeModules) {
@@ -48,28 +48,22 @@ const registerModules = (filesAndFolders, inputs, isInNodeModules = false, isSco
       if (!alreadyExists) {
         entry.fullPath = entry.fullPath.includes('node_modules/') ? entry.fullPath.split('node_modules/')[1] : entry.fullPath
         filesAndFolders.push(entry)
-        /* if (entry.children) {
-          entry.children.forEach(function (child) {
-            child.fullPath = child.fullPath.includes('node_modules/') ? child.fullPath.split('node_modules/')[1] : child.fullPath
-          })
-        } */
         updatePaths(entry)
       }
     } else if (entry.children && (isInNodeModules === false || entry.name.startsWith('@'))) {
       if (entry.name === 'node_modules') {
-        registerModules(entry.children, true)
+        registerFilesAndFolders(filesAndFolders, entry.children, true)
       } else if (entry.name.startsWith('@')) {
-        registerModules(entry.children, true, true)
+        registerFilesAndFolders(filesAndFolders, entry.children, true, true)
       } else {
-        registerModules(entry.children)
+        registerFilesAndFolders(filesAndFolders, entry.children)
       }
-      // console.log('here')
-      // filesAndFolders[]
     }
   }
 }
 
 const makeWebRequire = (filesAndFolders, options) => {
+  console.log('making web require', filesAndFolders)
   // preset modules
   let modules = {
     '@jscad/csg/api': {
@@ -77,34 +71,14 @@ const makeWebRequire = (filesAndFolders, options) => {
     },
     '@jscad/io': {
       exports: require('@jscad/io')
+    },
+    // ALIAS for now !!
+    '@jscad/api': {
+      exports: require('@jscad/csg/api')
     }
   }
-  registerModules(filesAndFolders, filesAndFolders)
-  console.log('making web require', filesAndFolders)
+  registerFilesAndFolders(filesAndFolders, filesAndFolders)
 
-  /* const rootModule = new Function('require', 'module', rootModuleSource)
-  const mockRequire = function (pathToModule) {
-    const foundModule = modules[pathToModule]
-    // console.log('you asked for', pathToModule, 'and will get', foundModule, foundModule.exports)
-    return foundModule.exports
-  }
-  let module = {}
-  rootModule(mockRequire, module)
-  // console.log('module', module)
-  const designRootModule = module
-  modules[rootModulePath] = designRootModule
-
-  return mockRequire
-
-  console.log('really registering module', entry)
-      const newModuleFunction = new Function('require', 'module', entry.source)
-      let newModule = {}
-      newModuleFunction(mockRequire, module)
-      // console.log('module', module)
-      const designRootModule = module
-      modules[rootModulePath] = designRootModule
-
-  */
   const _require = (curPath, reqPath) => {
     console.log('require-ing module', reqPath)
     const path = require('path')
@@ -131,7 +105,6 @@ const makeWebRequire = (filesAndFolders, options) => {
       }
     }
     if (!entry) {
-      console.log('looking directly', reqPath, filesAndFolders)
       entry = findMatch(reqPath, filesAndFolders)
     }
     // still no result, look for preset modules
@@ -146,14 +119,12 @@ const makeWebRequire = (filesAndFolders, options) => {
       throw new Error(`No file ${reqPath} found`)
     }
     const ext = getFileExtensionFromString(entry.name)
-    console.log('ext', ext)
     let result
     if (ext === 'json') {
       result = JSON.parse(entry.source)
       modules[entry.fullPath] = result
     }
     if (ext === 'jscad' || ext === 'js') {
-      console.log('foo', modules)
       if (modules[entry.fullPath]) {
         result = modules[entry.fullPath]
       } else {

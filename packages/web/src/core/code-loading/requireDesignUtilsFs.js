@@ -51,7 +51,7 @@ const getDesignEntryPoint = (_fs, _require = require, paths) => {
     // first try to use package.json to find main
     const packageFile = path.join(mainPath, 'package.json')
     if (_fs.existsSync(packageFile)) {
-      const rMain = _require(packageFile).main
+      const rMain = JSON.parse(_fs.readFileSync(packageFile)).main //_require(packageFile).main
       if (rMain) {
         return path.join(mainPath, rMain)
       }
@@ -79,7 +79,7 @@ const getDesignEntryPoint = (_fs, _require = require, paths) => {
 const nameFromDir = (_fs, dirName, filePath) => {
   const packageFile = path.join(dirName, 'package.json')
   if (_fs.existsSync(packageFile)) {
-    const name = require(packageFile).name
+    const name = JSON.parse(_fs.readFileSync(packageFile)).name
     if (name) {
       return name
     }

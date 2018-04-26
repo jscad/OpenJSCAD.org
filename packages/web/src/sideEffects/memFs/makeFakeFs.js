@@ -41,8 +41,9 @@ const makeFakeFs = (filesAndFolders) => {
        // filesAndFolders
     },
     readDir: (path, callback) => {
+      console.log('readDir', path, callback)
       const entry = findMatch(path)
-      callback(entry)
+      callback(null, entry)
     },
     readFile: (path, encoding, callback) => {
       const entry = findMatch(path)
@@ -51,6 +52,15 @@ const makeFakeFs = (filesAndFolders) => {
       } else {
         console.log('readFile', path, entry)
         callback(null, entry.source)
+      }
+    },
+    readFileSync: (path, encoding) => {
+      const entry = findMatch(path)
+      if (!statSync(path).isFile()) {
+        throw new Error(`${entry} is not a file, cannot read`)
+      } else {
+        console.log('readFile', path, entry)
+        return entry.source
       }
     }
   }

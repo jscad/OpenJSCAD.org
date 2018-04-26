@@ -26,15 +26,26 @@ const makeMemFsSideEffect = () => {
       const {isRawData} = Object.assign({}, defaults, options)
       // console.log(`memfs: operation: ${type} ${path} ${id} ${data} ${options}`)
       if (type === 'read') {
-        const operator = fs.statSync(path).isFile() ? fs.readFile : fs.readDir
-        operator(path, 'utf8', function (error, data) {
-          if (error) {
-            readFileToCB.callback({path, type, error, id})
-          } else {
-            // FIXME: injection of fs & filesAndFolders is a huge hack
-            readFileToCB.callback({path, type, data, id, fs, filesAndFolders})
-          }
-        })
+        console.log('reading in memfs', data, path, options)
+        if (fs.statSync(path).isFile()) {
+          fs.readFile(path, 'utf8', function (error, data) {
+            if (error) {
+              readFileToCB.callback({path, type, error, id})
+            } else {
+              // FIXME: injection of fs & filesAndFolders is a huge hack
+              readFileToCB.callback({path, type, data, id, fs, filesAndFolders})
+            }
+          })
+        } else {
+          fs.readDir(path, function (error, data) {
+            if (error) {
+              readFileToCB.callback({path, type, error, id})
+            } else {
+              // FIXME: injection of fs & filesAndFolders is a huge hack
+              readFileToCB.callback({path, type, data, id, fs, filesAndFolders})
+            }
+          })
+        }
       } else if (type === 'add') {
         // we only inject raw data ie without file objects etc, typicall as a result of http requests
         if (isRawData) {

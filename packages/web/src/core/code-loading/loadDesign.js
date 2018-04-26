@@ -37,17 +37,27 @@ const loadDesign = (source, mainPath, apiMainPath, parameterValuesOverride, file
   */
 
   // make sure we always deal with a commonJs module
-  const isDesignCommonJs = isCommonJsModule(designRoot.source)
-  designRoot.source = !isDesignCommonJs ? modulifySource(designRoot.source, apiMainPath) : designRoot.source
+  // const isDesignCommonJs = isCommonJsModule(designRoot.source)
+  // designRoot.source = !isDesignCommonJs ? modulifySource(designRoot.source, apiMainPath) : designRoot.source
 
   // if we have files & folders we need to update the source for our module
-  // TODO: should these be generic transforms applied to all files ??
+  function updateSource (entry) {
+    if (entry.source) {
+      const isFileCommonJs = isCommonJsModule(entry.source)
+      const source = !isFileCommonJs ? modulifySource(entry.source, apiMainPath) : entry.source
+      return Object.assign({}, entry, {source})
+    }
+    if (entry.children) {
+      entry.children = entry.children.map(function (childEntry) {
+        return updateSource(childEntry)
+      })
+    }
+    return entry
+  }
+
   if (filesAndFolders) {
     filesAndFolders = filesAndFolders.map(entry => {
-      if (entry.fullPath === designRoot.path) {
-        return Object.assign({}, entry, {source: designRoot.source})
-      }
-      return entry
+      return updateSource(entry)
     })
   }
   // now check if we need fake require or not
