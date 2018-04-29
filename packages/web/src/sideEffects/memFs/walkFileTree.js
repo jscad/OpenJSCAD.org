@@ -1,4 +1,5 @@
 const { conversionFormats } = require('@jscad/core/io/formats')
+const getFileExtensionFromString = require('../../utils/getFileExtensionFromString')
 
 function flatten (array) {
   if (array === undefined || array === null) {
@@ -29,7 +30,7 @@ const readFileAsync = function (file, fileMeta) {
 
     reader.onloadend = event => {
       event.target.readyState === FileReader.DONE
-        ? resolve({name: file.name, fullPath: fullPath, source: convert(event.target.result)})
+        ? resolve({name: file.name, ext: getFileExtensionFromString(fullPath), fullPath, source: convert(event.target.result)})
         : reject(new Error('Failed to load file'))
     }
   })
@@ -39,7 +40,6 @@ function isSupportedFormat (file) {
   var e = file.name.toLowerCase().match(/\.(\w+)$/i)
   e = RegExp.$1
   return conversionFormats.concat(['json']).indexOf(e) >= 0
-  // NOTE: was incrementing memFsTotal++ ONLY if format is valid, not needed anymore as far as I know
 }
 
 function pseudoArraytoArray (pseudoArray) {

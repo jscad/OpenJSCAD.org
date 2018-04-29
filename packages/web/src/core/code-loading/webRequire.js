@@ -124,7 +124,7 @@ const makeWebRequire = (filesAndFolders, options) => {
       result = JSON.parse(entry.source)
       modules[entry.fullPath] = result
     }
-    if (ext === 'jscad' || ext === 'js') {
+    if (ext === 'jscad' || ext === 'js' || ext === 'stl') {
       if (modules[entry.fullPath]) {
         result = modules[entry.fullPath]
       } else {

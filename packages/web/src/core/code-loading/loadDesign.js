@@ -3,7 +3,7 @@ const isCommonJsModule = require('@jscad/core/code-loading/isCommonJsModule')
 const modulifySource = require('../code-loading/modulifySource')
 const requireDesignFromModule = require('@jscad/core/code-loading/requireDesignFromModule')
 const getAllParameterDefintionsAndValues = require('@jscad/core/parameters/getParameterDefinitionsAndValues')
-
+const transformSources = require('./sourceTransforms')
 // taken verbatim from https://github.com/iliakan/detect-node
 const hasRequire = () => Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]'
 const makeWebRequire = require('./webRequire')
@@ -41,24 +41,8 @@ const loadDesign = (source, mainPath, apiMainPath, parameterValuesOverride, file
   // designRoot.source = !isDesignCommonJs ? modulifySource(designRoot.source, apiMainPath) : designRoot.source
 
   // if we have files & folders we need to update the source for our module
-  function updateSource (entry) {
-    if (entry.source) {
-      const isFileCommonJs = isCommonJsModule(entry.source)
-      const source = !isFileCommonJs ? modulifySource(entry.source, apiMainPath) : entry.source
-      return Object.assign({}, entry, {source})
-    }
-    if (entry.children) {
-      entry.children = entry.children.map(function (childEntry) {
-        return updateSource(childEntry)
-      })
-    }
-    return entry
-  }
-
   if (filesAndFolders) {
-    filesAndFolders = filesAndFolders.map(entry => {
-      return updateSource(entry)
-    })
+    filesAndFolders = transformSources({apiMainPath}, filesAndFolders)
   }
   // now check if we need fake require or not
   const requireFn = hasRequire() ? require : makeWebRequire(filesAndFolders)

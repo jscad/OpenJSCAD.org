@@ -3,6 +3,7 @@ const callBackToStream = require('@jscad/core/observable-utils/callbackToObserva
 const makeFakeFs = require('./makeFakeFs')
 const {walkFileTree} = require('./walkFileTree')
 const {changedFiles} = require('./utils')
+const getFileExtensionFromString = require('../../utils/getFileExtensionFromString')
 
 function watchTree (rootPath, callback) {
 }
@@ -49,10 +50,16 @@ const makeMemFsSideEffect = () => {
       } else if (type === 'add') {
         // we only inject raw data ie without file objects etc, typicall as a result of http requests
         if (isRawData) {
-          filesAndFolders = [{name: require('path').basename(path), source: data, fullPath: path}]
+          const name = require('path').basename(path)
+          const ext = getFileExtensionFromString(path)
+
+          filesAndFolders = [
+            {name, ext, source: data, fullPath: path}
+          ]
           fs = makeFakeFs(filesAndFolders)
           commandResponses.callback({type, id, data: filesAndFolders})
         } else {
+          // this from inputs typically like drag & drop data
           most.fromPromise(walkFileTree(data))
           .forEach(function (readFilesAndFolders) {
             rawData = data

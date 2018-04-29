@@ -50,6 +50,16 @@ module.exports = function options (state, i18n) {
         <input type='text' disabled value='${state.storage.path}' disabled />
       </label>
     </fieldset>
+
+    <section id='shortcuts'>   
+      <h3> ${i18n`file handling`} </h3>
+      <label>${i18n`convert supported types to jscad script (overwrite main())`}
+        <input type='checkbox' checked=false id='design-convertSupportedTypes' checked=${state.design.convertSupportedTypes}/>
+      </label>
+    </section>
+
     ${shortcuts}
+
+    
 </section>`
 }
