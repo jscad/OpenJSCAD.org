@@ -12,13 +12,18 @@
 - [ ] code editor autocomplete
 
 ## inputs
-- [ ] drag and drop of files
-- [ ] drag and drop of folders
+- [x] drag and drop of files
+- [x] drag and drop of folders
 - [ ] loading of remote files
 - [ ] conversion of files
+- [x] require support , injection of explicit api 
+- [x] require support relative paths
+- [ ] require support node_modules (drag & drop)
+- [ ] require support single file
+- [ ] examples
 
 ## outputs
-- [ ] save/export of files
+- [x] save/export of files
 - [ ] file watcher/autoreload
 
 ## ui
