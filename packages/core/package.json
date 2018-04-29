@@ -40,6 +40,7 @@
     "estraverse": "^4.2.0",
     "is-electron": "^2.1.0",
     "morphdom": "^2.3.3",
+    "morphdom-hooks": "0.0.2",
     "most": "^1.7.3",
     "most-proxy": "^3.3.0",
     "require-from-string": "^2.0.1",

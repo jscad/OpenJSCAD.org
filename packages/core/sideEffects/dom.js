@@ -2,6 +2,9 @@ const most = require('most')
 const morph = require('morphdom')// require('nanomorph')
 const {proxy} = require('most-proxy')
 
+const hooks = require('morphdom-hooks')
+// const morph = hooks(require('morphdom'))
+
 module.exports = function makeDomSideEffect ({targetEl}) {
   const { attach, stream } = proxy()
 
