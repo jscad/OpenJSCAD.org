@@ -1,4 +1,4 @@
-const callBackToStream = require('../observable-utils/callbackToObservable')
+const callBackToStream = require('../../observable-utils/callbackToObservable')
 const isElectron = require('is-electron')
 const longNames = {
   en: 'english',
@@ -8,8 +8,9 @@ const longNames = {
 
 const geDefaultLocale = () => {
   let localeBase
+  // console.log('is electron', isElectron())
   if (isElectron()) {
-    localeBase = require('electron').remote.app.getLocale().split('-')[0]
+    // localeBase = require('electron').remote.app.getLocale().split('-')[0]
   } else {
     localeBase = ((navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language)
   }
