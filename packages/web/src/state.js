@@ -4,7 +4,7 @@ const packageMetadata = require('../package.json')
 const initialState = {
   appTitle: `jscad v ${packageMetadata.version}`,
   appUpdates: {available: false, version: undefined},
-  locale: '',
+  locale: 'en',
   availableLanguages: [],
   // design data
   design: require('./ui/design/reducers').initialize(),

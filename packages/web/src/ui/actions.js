@@ -162,6 +162,9 @@ const makeActions = (sources) => {
   .map(data => ({type: 'changeTheme', data}))
 
   const changeLanguage$ = most.mergeArray([
+    sources.i18n
+      .filter(reply => reply.type === 'getDefaultLocale')
+      .map(reply => reply.data),
     sources.dom.select('#languageSwitcher').events('change')
       .map(e => e.target.value),
     sources.store
@@ -199,7 +202,7 @@ const makeActions = (sources) => {
   const requestLoadExample$ = sources.dom.select('.example').events('click')
     .map(event => event.target.dataset.path)
     .map(data => ({type: 'loadExample', data}))
-
+  
   return {
     // generic key shortuct handler
     actionsFromKey$,

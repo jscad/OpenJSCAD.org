@@ -10,9 +10,10 @@ module.exports = function shortcuts (state, i18n) {
     const placeholder = (tmpKey && tmpKey.length > 0) ? tmpKey : i18n.translate('type & hit enter')
     const value = binding.inProgress ? '' : key
 
+    const validArgs = args || '' // to prevent undefined args
     return html`
     <tr>
-        <td>${i18n.translate(command)}: ${i18n.translate(args)}</td>
+        <td>${i18n.translate(command)}: ${i18n.translate(validArgs)}</td>
         <td>
           <input type='text' class='shortcutCommand ${error && binding.inProgress ? 'error' : ''}'
             data-command=${command}

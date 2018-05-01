@@ -1,6 +1,6 @@
 const html = require('bel')
 
-function dom (state, paramsCallbacktoStream, editorCallbackToStream, i18n) {
+function dom (state, i18n, paramsCallbacktoStream, editorCallbackToStream) {
   const i18nFake = x => x
   i18nFake.translate = x => x
   i18n = i18n || i18nFake

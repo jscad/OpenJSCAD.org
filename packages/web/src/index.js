@@ -1,27 +1,22 @@
 
+const {proxy} = require('most-proxy')
+const {makeState} = require('./state')
+
 function makeJscad (targetElement, options) {
   const defaults = {
     name: 'jscad'
   }
   const {name} = Object.assign({}, defaults, options)
 
-  //
+  // create root dom element
   const bel = require('bel')
-
   const jscadEl = bel`<div class='jscad' key=${name}></div>`
   targetElement.appendChild(jscadEl)
 
-  const path = require('path')
-  const most = require('most')
-  const {proxy} = require('most-proxy')
-  const {makeState} = require('./state')
-  const makeCsgViewer = require('@jscad/csg-viewer')
-  let csgViewer
-
-  // all the side effects : ie , input/outputs
+  // setup all the side effects : ie , input/outputs
   // fake file system
   const fs = require('./sideEffects/memFs')()
-  // storage
+  // (local) storage
   const storage = require('./sideEffects/localStorage')(name)
   // http requests
   const http = require('./sideEffects/http')()
@@ -36,9 +31,13 @@ function makeJscad (targetElement, options) {
   const makeWorkerEffect = require('@jscad/core/sideEffects/worker')
 
   // internationalization side effect
-  const absFooHorror = '/Users/kraftwerk-mb/dev/projects/openjscad/core/tmp/OpenJSCAD.org/packages/web/web/'
-  const localesPath = path.resolve(absFooHorror, path.join(absFooHorror, '..', 'locales'))
-  const i18n = require('@jscad/core/sideEffects/i18n')({localesPath})
+  const i18n = require('@jscad/core/sideEffects/i18n')({
+    translations: {
+      en: require('../locales/en.json'),
+      fr: require('../locales/fr.json'),
+      de: require('../locales/de.json')
+    }
+  })
   // web workers
   const solidWorker = makeWorkerEffect(require('./core/code-evaluation/rebuildSolidsWorker.js'))
   // generic design parameter handling
@@ -69,10 +68,11 @@ function makeJscad (targetElement, options) {
   const sinks = {
     store: storage.sink,
     fs: fs.sink,
-    http: http.sink
+    http: http.sink,
+    i18n: i18n.sink,
+    dom: dom.sink,
+    solidWorker: solidWorker.sink
   }
-
-  // sources.http.forEach(x => console.log('reply for request', x))
 
   // all the actions
   const designActions = require('./ui/design/actions')(sources)
@@ -81,148 +81,12 @@ function makeJscad (targetElement, options) {
   const otherActions = require('./ui/actions')(sources)
   const actions$ = Object.assign({}, designActions, otherActions, ioActions, viewerActions)
 
-  // loop back the state so it is circular
+  // loop back the state stream so it is circular
   attach(makeState(Object.values(actions$)))
 
-  // after this point, formating of data data that goes out to the sink side effects
+  // formating of data data that goes out to the sink side effects
   // setup reactions (ie outputs to sinks)
-  require('./ui/reactions')(state$, actions$, sinks, sources)
-
-  // titlebar & store side effects
-  // FIXME/ not compatible with multiple instances !!
-  /* titleBar.sink(
-    state$.map(state => state.appTitle).skipRepeats()
-  ) */
-
-  // web worker sink
-  const solidWorkerBase$ = most.mergeArray([
-    actions$.setDesignContent$.map(action => ({parameterValues: undefined, origin: 'designContent', error: undefined})),
-    actions$.updateDesignFromParams$.map(action => action.data)
-  ]).multicast()
-
-  solidWorker.sink(
-    most.sample(function ({origin, parameterValues, error}, {design, instantUpdate}) {
-      if (error) {
-        return undefined
-      }
-      console.log('design stuff', design)
-      const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
-      // this ensures the last, manually modified params have upper hand
-      parameterValues = parameterValues || design.parameterValues
-      parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, design.parameterDefinitions) : parameterValues
-      if (!instantUpdate && origin === 'instantUpdate') {
-        return undefined
-      }
-      // console.log('sending parameterValues', parameterValues, 'options', vtreeMode)
-      const options = {vtreeMode: design.vtreeMode, lookup: design.lookup, lookupCounts: design.lookupCounts}
-      return {source: design.source, mainPath: design.mainPath, parameterValues, options, filesAndFolders: design.filesAndFolders}
-    },
-    solidWorkerBase$,
-    solidWorkerBase$,
-    state$
-      .filter(state => state.design.mainPath !== '')
-      .skipRepeats()
-  )
-    .filter(x => x !== undefined)
-    .map(({source, mainPath, parameterValues, options, filesAndFolders}) => ({cmd: 'render', source, mainPath, parameterValuesOverride: parameterValues, options, filesAndFolders}))
-)
-
-// viewer data
-  state$
-  .filter(state => state.design.mainPath !== '')
-  .skipRepeatsWith(function (state, previousState) {
-    // const sameparameterDefinitions = JSON.stringify(state.design.parameterDefinitions) === JSON.stringify(previousState.design.parameterDefinitions)
-    // const sameparameterValues = JSON.stringify(state.design.parameterValues) === JSON.stringify(previousState.design.parameterValues)
-    const sameSolids = state.design.solids.length === previousState.design.solids.length &&
-    JSON.stringify(state.design.solids) === JSON.stringify(previousState.design.solids)
-    return sameSolids
-  })
-  .forEach(state => {
-    if (csgViewer !== undefined) {
-      csgViewer(undefined, {solids: state.design.solids})
-    }
-  })
-
-  const outToDom$ = state$
-  .skipRepeatsWith(function (state, previousState) {
-    const sameparameterDefinitions = JSON.stringify(state.design.parameterDefinitions) === JSON.stringify(previousState.design.parameterDefinitions)
-    const sameparameterValues = JSON.stringify(state.design.parameterValues) === JSON.stringify(previousState.design.parameterValues)
-
-    const sameInstantUpdate = state.instantUpdate === previousState.instantUpdate
-
-    const sameExportFormats = state.exportFormat === previousState.exportFormat &&
-      state.availableExportFormats === previousState.availableExportFormats
-
-    const sameStyling = state.themeName === previousState.themeName
-
-    const sameAutoreload = state.autoReload === previousState.autoReload
-
-    const sameStatus = JSON.stringify(state.status) === JSON.stringify(previousState.status)
-
-    const sameActiveTool = state.activeTool === previousState.activeTool
-    const samevtreeMode = state.vtreeMode === previousState.vtreeMode
-
-    const sameAppUpdates = JSON.stringify(state.appUpdates) === JSON.stringify(previousState.appUpdates)
-
-    const sameLocale = state.locale === previousState.locale
-    const sameAvailableLanguages = state.availableLanguages === previousState.availableLanguages
-
-    const sameShortcuts = state.shortcuts === previousState.shortcuts
-
-    return sameparameterDefinitions && sameparameterValues && sameExportFormats && sameStatus && sameStyling &&
-      sameAutoreload && sameInstantUpdate && sameActiveTool && samevtreeMode && sameAppUpdates &&
-      sameLocale && sameAvailableLanguages && sameShortcuts
-  })
-  .map(function (state) {
-    return require('./ui/views/main')(state, paramsCallbacktoStream, editorCallbackToStream)
-  })
-  /* .combine(function (state, i18n) {
-    console.log('here')
-    return require('./ui/views/main')(state, paramsCallbacktoStream, i18n)
-  }, sources.i18n.filter(x => x.type === 'changeSettings').map(x => x.data))
-  */
-  dom.sink(outToDom$)
-
-  state$
-  .map(state => state.viewer)
-  // FIXME: not working correctly with themeing
-  /* .skipRepeatsWith(function (state, previousState) {
-    const sameViewerParams = JSON.stringify(state) === JSON.stringify(previousState)
-    return sameViewerParams
-  }) */
-  .forEach(params => {
-    const viewerElement = jscadEl.querySelector('#renderTarget')
-    // initialize viewer if it has not been done already
-    if (viewerElement && !csgViewer) {
-      const csgViewerItems = makeCsgViewer(viewerElement, params)
-      csgViewer = csgViewerItems.csgViewer
-
-      // const bar = require('most-gestures').pointerGestures(jscadEl.querySelector('#renderTarget'))
-    }
-    if (csgViewer) {
-      // console.log('params', params)
-      csgViewer(params)
-    }
-  })
-
-  // alternative, better way for the future to set these things, but requires changes to the viewer
-  viewerActions
-  .toggleGrid$
-  .forEach(params => {
-    // console.log('changing viewer params', params)
-    // const viewerElement = document.getElementById('renderTarget')
-    // setCanvasSize(viewerElement)
-    // initialize viewer if it has not been done already
-    /* if (viewerElement && !csgViewer) {
-      const csgViewerItems = makeCsgViewer(viewerElement, params)
-      csgViewer = csgViewerItems.csgViewer
-    } */
-    params = {grid: {show: true}}
-    if (csgViewer) {
-      // console.log('params', params)
-      // csgViewer(params)
-    }
-  })
+  require('./ui/reactions')(sinks, sources, state$, actions$, {jscadEl, paramsCallbacktoStream, editorCallbackToStream})
 
   return {}
 }
