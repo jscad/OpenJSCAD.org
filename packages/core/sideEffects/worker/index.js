@@ -1,4 +1,4 @@
-const callBackToStream = require('../observable-utils/callbackToObservable')
+const callBackToStream = require('../../observable-utils/callbackToObservable')
 const WebWorkify = require('webworkify')
 
 const makeWorkerEffect = (workerPath) => {

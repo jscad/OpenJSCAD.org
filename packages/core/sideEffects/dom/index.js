@@ -12,25 +12,26 @@ module.exports = function makeDomSideEffect ({targetEl}) {
 
   function domSink (targetEl, outToDom$) {
     let tree
-    const firstRender$ = outToDom$
-    .take(1)
-    .map(function (_tree) {
-      tree = _tree
-      targetEl.appendChild(tree)
-    })
-    const otherRenders$ = outToDom$
-    .skip(1)
-    .map(function (newTree) {
-      morph(tree, newTree)
-    })
 
-    const foo$ = most.mergeArray([
+    const firstRender$ = outToDom$
+      .take(1)
+      .map(function (_tree) {
+        tree = _tree
+        targetEl.appendChild(tree)
+      })
+    const otherRenders$ = outToDom$
+      .skip(1)
+      .map(function (newTree) {
+        morph(tree, newTree)
+      })
+
+    const domRenderRequest$ = most.mergeArray([
       firstRender$,
       otherRenders$
     ]).multicast()
 
-    attach(foo$)
-    // foo$.forEach(x => x)
+    attach(domRenderRequest$)
+    domRenderRequest$.forEach(x => x)
   }
 
   let storedListeners = {
