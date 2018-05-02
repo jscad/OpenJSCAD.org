@@ -11,15 +11,16 @@ const { deserialize } = require( '../index' )
 // Test suite for DXF deserialization (import)
 //
 test('ASCII DXF 2D Entities translated to JSCAD Scripts', t => {
-// DXF empty source, translate to main and helper functions
+// DXF empty source, translate to main and helper functions and layer0
   let dxf1 = ''
-  let src1 = deserialize(dxf1,'dxf1 test',{output: 'jscad'})
+  let src1 = deserialize(dxf1, 'dxf1 test', {output: 'jscad'})
   let ss1 = src1.split("\n")
-  t.is(ss1.length,22)
+  t.is(ss1.length, 25)
   t.true(src1.indexOf('main()') > 0)
   t.true(src1.indexOf('createVertex(') > 0)
   t.true(src1.indexOf('createPlane(') > 0)
   t.true(src1.indexOf('createPolygon(') > 0)
+  t.true(src1.indexOf('function layer0(') > 0)
 
 // DXF CIRCLE, translates to script with CAG.circle
   let dxf2 = `0
@@ -341,6 +342,59 @@ ENDSEC`
   t.true(src2.indexOf('CSG.Path2D(') > 0)
   t.true(src2.indexOf('appendPoint(') > 0)
   t.true(src2.indexOf('appendArc(') > 0)
+
+// DXF with two labels (ASCII and KANJI) with one entity (CIRCLE), translates to script with three layers
+  let dxf3 = `0
+TABLES
+0
+TABLE
+0
+LAYER
+2
+ASCII
+70
+1
+0
+ENDTAB
+0
+TABLE
+0
+LAYER
+2
+漢字
+70
+1
+0
+ENDTAB
+0
+ENDSEC
+0
+SECTION
+2
+ENTITIES
+0
+CIRCLE
+  8
+漢字
+ 10
+7.5
+ 20
+17.5
+ 30
+0.0
+ 40
+2.5
+0
+SEQEND
+0
+ENDSEC`
+  let src3 = deserialize(dxf3,'dxf3-test',{output: 'jscad'})
+  let ss3 = src3.split("\n")
+  t.is(ss3.length, 32)
+  t.true(src3.indexOf('function layer0(') > 0)
+  t.true(src3.indexOf('function layer1(') > 0)
+  t.true(src3.indexOf('function layer2(') > 0)
+  t.true(src3.indexOf('CAG.circle') > 0)
 
 })
 

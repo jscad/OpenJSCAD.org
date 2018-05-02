@@ -386,6 +386,7 @@ function findLayer0 (layers) {
   }
   // this DXF did not specify so create
   let layer = {type: 'layer'}
+  layer['lnam'] = 'layer0'
   layer['name'] = '0'
   layer['lscl'] = 1.0
   layer['visb'] = 0
@@ -677,9 +678,9 @@ function translateCurrent (obj, layers, parts, options) {
 // translate the given layer into a wrapper function for the previous translated objects
 //
 function translateLayer (layer) {
-  let name = layer['name'] || 'Unknown'
+  let name = layer['lnam'] || 'Unknown'
 
-  let script = `function layer${name}() {
+  let script = `function ${name}() {
 `
   for (let object of layer['objects']) {
     script += object['script']
@@ -718,6 +719,8 @@ const translateAsciiDxf = function (reader, options) {
   let objects = [] // the list of objects translated
   let numobjs = 0
 
+  findLayer0(layers)
+
   let p = null
   for (let obj of reader.objstack) {
     p = null
@@ -749,6 +752,7 @@ const translateAsciiDxf = function (reader, options) {
         parts = []
         // save the layer for later reference
         obj['objects'] = [] // with a list of objects
+        obj['lnam'] = 'layer' + layers.length
         layers.push(obj)
         break
       case 'variable':
@@ -855,8 +859,8 @@ const translateAsciiDxf = function (reader, options) {
   let script = 'function main() {\n  let layers = []\n  return layers.concat('
   layers.forEach(
     function (layer) {
-      let name = layer['name'] || 'Unknown'
-      script += `layer${name}(),`
+      let name = layer['lnam'] || 'Unknown'
+      script += `${name}(),`
     }
   )
   script += '[])\n}\n'
