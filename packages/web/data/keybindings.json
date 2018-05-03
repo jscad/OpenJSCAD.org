@@ -3,7 +3,7 @@
   {"key": "b", "command": "toPresetView", "args": "back" },
   {"key": "t", "command": "toPresetView", "args": "top" },
 
-  {"key": "b", "command": "toPresetView", "args": "bottom" },
+  {"key": "c", "command": "toPresetView", "args": "bottom" },
   {"key": "l", "command": "toPresetView", "args": "left" },
   {"key": "r", "command": "toPresetView", "args": "right" },
 
