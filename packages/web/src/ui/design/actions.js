@@ -1,19 +1,19 @@
 const most = require('most')
-const getParameterValuesFromUIControls = require('../../core/parameters/getParameterValuesFromUIControls')
+const getParameterValuesFromUIControls = require('@jscad/core/parameters/getParameterValuesFromUIControls')
 
 const actions = (sources) => {
   const designPath$ = most.mergeArray([
-    sources.dom.select('#fileLoader').events('click')
+    sources.fs
+      .filter(data => data.type === 'read' && data.id === 'loadDesign')
+      .tap(x => console.log('loadDesign', x))
+      .map(raw => raw)
+    /*sources.dom.select('#fileLoader').events('click')
       .map(function () {
         // literally an array of paths (strings)
         // like those returned by dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
         const paths = []
         return paths
-      }),
-    sources.fs
-      .filter(data => data.type === 'read' && data.id === 'loadDesign')
-      .tap(x => console.log('loadDesign', x))
-      .map(raw => raw)
+      }),*/
     /* sources.store
       .filter(data => data && data.design && data.design.mainPath)
       .map(data => data.design.mainPath)
@@ -46,6 +46,7 @@ const actions = (sources) => {
       .filter(data => data.type === 'watch' && data.id === 'watchScript')
       .map(({path, data}) => data)
   ])
+    .multicast()
     .map(data => ({type: 'setDesignContent', data}))
 
   // design parameter change actions
@@ -60,16 +61,16 @@ const actions = (sources) => {
         return {parameterValues, origin: 'manualUpdate'}
       })
       .multicast(),
-    sources.paramChanges.multicast().map(function (_controls) {
-      try {
-        const controls = getControls()
-        const parameterValues = getParameterValuesFromUIControls(controls)
-        return {parameterValues, origin: 'instantUpdate'}
-      } catch (error) {
-        return {error, origin: 'instantUpdate'}
-      }
-    })
-
+    sources.paramChanges.multicast()
+      .map(function () {
+        try {
+          const controls = getControls()
+          const parameterValues = getParameterValuesFromUIControls(controls)
+          return {parameterValues, origin: 'instantUpdate'}
+        } catch (error) {
+          return {error, origin: 'instantUpdate'}
+        }
+      })
   ])
     .map(data => ({type: 'updateDesignFromParams', data})).multicast()
 
