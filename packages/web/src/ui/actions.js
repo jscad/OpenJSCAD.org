@@ -63,9 +63,26 @@ const getKeyCombos = (options, keyUps$, keyDown$) => {
 
 const makeActions = (sources) => {
   // keyboard shortcut handling
+
+  const myKey = sources.dom.element.getAttribute('key')
+  const isKeyEventScopeValid = x => {
+    if (x.className && x.className === 'jscad' && x.getAttribute('key') === myKey) {
+      return true// x.parentNode
+    }
+    if (x.parentNode) {
+      return isKeyEventScopeValid(x.parentNode)
+    }
+    return false
+  }
+
   // FIXME: use dom source
-  const keyUps$ = most.fromEvent('keyup', document).multicast()// sources.dom.select(document).events('keyup') /
-  const keyDown$ = most.fromEvent('keydown', document).multicast()
+  const keyUps$ = most.fromEvent('keyup', document)
+    .filter(event => isKeyEventScopeValid(event.target))
+    .multicast()// sources.dom.select(document).events('keyup') /
+  const keyDown$ = most.fromEvent('keydown', document)
+    .filter(event => isKeyEventScopeValid(event.target))
+    .multicast()
+
   // we get all key combos, accepting repeated key strokes
   const keyCombos$ = getKeyCombos({dropRepeats: false}, keyUps$, keyDown$)
   // we match key stroke combos to actions
@@ -88,8 +105,10 @@ const makeActions = (sources) => {
   .map(data => ({type: 'setShortcuts', data}))
 
   // set a specific shortcut
-  const shortcutCommandUp$ = sources.dom.select('.shortcutCommand').events('keyup').multicast()
-  const shortcutCommandDown$ = sources.dom.select('.shortcutCommand').events('keydown').multicast()
+  const shortcutCommandUp$ = sources.dom.select('.shortcutCommand').events('keyup')
+    .multicast()
+  const shortcutCommandDown$ = sources.dom.select('.shortcutCommand').events('keydown')
+    .multicast()
   const shortcutCommandKey$ = getKeyCombos(
     {dropRepeats: true},
     shortcutCommandUp$,
@@ -202,7 +221,7 @@ const makeActions = (sources) => {
   const requestLoadExample$ = sources.dom.select('.example').events('click')
     .map(event => event.target.dataset.path)
     .map(data => ({type: 'loadExample', data}))
-  
+
   return {
     // generic key shortuct handler
     actionsFromKey$,
