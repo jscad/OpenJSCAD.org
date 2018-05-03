@@ -85,7 +85,8 @@ module.exports = function makeDomSideEffect ({targetEl}) {
       })
     })
 
-    return {select}
+    // adding element: temporary ??
+    return {select, element: targetEl}
   }
 
   return {source: domSource, sink: domSink.bind(null, targetEl)}
