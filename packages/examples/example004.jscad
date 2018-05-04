@@ -4,14 +4,13 @@
 // description: example004.scad ported to OpenJSCAD.org
 // file       : example004.jscad
 
-function example004() {
-	return difference(
-		cube({size: 30, center: true}),
-		sphere(20)
-	);
+function example004 () {
+  return difference(
+    cube({size: 30, center: true}),
+    sphere(20)
+  );
 }
 
-function main() {
-   return example004();
+function main () {
+  return example004();
 }
-
