@@ -7,19 +7,19 @@ const actions = (sources) => {
       .filter(data => data.type === 'read' && data.id === 'loadDesign')
       .tap(x => console.log('loadDesign', x))
       .map(raw => raw)
-    /*sources.dom.select('#fileLoader').events('click')
+    /* sources.dom.select('#fileLoader').events('click')
       .map(function () {
         // literally an array of paths (strings)
         // like those returned by dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
         const paths = []
         return paths
-      }),*/
+      }), */
     /* sources.store
       .filter(data => data && data.design && data.design.mainPath)
       .map(data => data.design.mainPath)
       .filter(data => data !== '')
       .map(data => [data]), */
-    /*sources.drops
+    /* sources.drops
       .filter(drop => drop.type === 'fileOrFolder' && drop.data.length > 0)
       // .map(drop => drop.data.map(fileOrFolder => fileOrFolder.path))
       .flatMap(x => {
@@ -28,7 +28,7 @@ const actions = (sources) => {
           .tap(x => console.log('gnagna', x))
           .filter(data => data.type === 'read' && data.id === 'loadDesign')
           .map(raw => raw)
-      })*/
+      }) */
   ])
     .filter(data => data !== undefined)
     .debounce(50)
@@ -104,7 +104,8 @@ const actions = (sources) => {
   ])
     .map(data => ({type: 'setDesignSolids', data}))
 
-  const setDesignParams$ = most.mergeArray([
+  const setDesignParameters$ = most.mergeArray([
+    updateDesignFromParams$.map(x => x.data),
     sources.solidWorker
       .filter(event => !('error' in event))
       .filter(event => event.data instanceof Object)
@@ -112,7 +113,7 @@ const actions = (sources) => {
       .map(function (event) {
         try {
           const {parameterDefaults, parameterValues, parameterDefinitions} = event.data
-          return {parameterDefaults, parameterValues, parameterDefinitions} 
+          return {parameterDefaults, parameterValues, parameterDefinitions, origin: 'worker'}
         } catch (error) {
           return {error}
         }
@@ -121,7 +122,7 @@ const actions = (sources) => {
       .filter(data => data && data.design && data.design.parameters)
       .map(data => data.design.parameters) */
   ])
-    .map(data => ({type: 'setDesignParams', data}))
+    .map(data => ({type: 'setDesignParameters', data}))
 
   const timeOutDesignGeneration$ = most.never()
     /* designPath$
@@ -158,22 +159,21 @@ const actions = (sources) => {
 
   // FIXME: this needs to be elsewhere
   const setZoomingBehaviour$ = ''
-    //setDesignContent$.map(x=>{behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']})
+    // setDesignContent$.map(x=>{behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']})
   // FIXME : same for this one, in IO ??
   const setAvailableExportFormats = setDesignSolids$
 
   return {
     setDesignPath$,
     setDesignContent$,
-    updateDesignFromParams$,
     timeOutDesignGeneration$,
-    setDesignParams$,
+    setDesignParameters$,
     setDesignSolids$,
+    toggleVTreeMode$,
 
     // ui
     toggleAutoReload$,
-    toggleInstantUpdate$,
-    toggleVTreeMode$
+    toggleInstantUpdate$
   }
 }
 

@@ -127,39 +127,27 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
         }) */
     ])
   )
-  
-  // web worker sink
-  const solidWorkerBase$ = most.mergeArray([
-    actions$.setDesignContent$.map(action => ({parameterValues: undefined, origin: 'designContent', error: undefined})),
-    actions$.updateDesignFromParams$.map(action => action.data)
-  ]).multicast()
 
+  // web worker sink
   solidWorker(
-    most.sample(function ({origin, parameterValues, error}, {design, instantUpdate}) {
-      if (error) {
-        return undefined
-      }
-      console.log('design stuff', design)
-      const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
-      // this ensures the last, manually modified params have upper hand
-      parameterValues = parameterValues || design.parameterValues
-      parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, design.parameterDefinitions) : parameterValues
-      if (!instantUpdate && origin === 'instantUpdate') {
-        return undefined
-      }
-      // console.log('sending parameterValues', parameterValues, 'options', vtreeMode)
-      const options = {vtreeMode: design.vtreeMode, lookup: design.lookup, lookupCounts: design.lookupCounts}
-      return {source: design.source, mainPath: design.mainPath, parameterValues, options, filesAndFolders: design.filesAndFolders}
-    },
-    solidWorkerBase$,
-    solidWorkerBase$,
     state$
       .filter(state => state.design.mainPath !== '')
-      .skipRepeats()
+      .map(state => state.design)
+      .skipRepeatsWith(function (state, previousState) {
+        const sameParameterValues = JSON.stringify(state.parameterValues) === JSON.stringify(previousState.parameterValues)
+        // FIXME: do more than just check source !! if there is a change in any file (require tree)
+        // it should recompute
+        const sameSource = JSON.stringify(state.source) === JSON.stringify(previousState.source)
+        const sameMainPath = JSON.stringify(state.mainPath) === JSON.stringify(previousState.mainPath)
+        return sameParameterValues && sameSource && sameMainPath
+      })
+      .map(function (design) {
+        const {source, mainPath, parameterValues, filesAndFolders} = design
+        const options = {vtreeMode: design.vtreeMode, lookup: design.lookup, lookupCounts: design.lookupCounts}
+
+        return {cmd: 'render', source, mainPath, parameterValuesOverride: parameterValues, options, filesAndFolders}
+      })
   )
-    .filter(x => x !== undefined)
-    .map(({source, mainPath, parameterValues, options, filesAndFolders}) => ({cmd: 'render', source, mainPath, parameterValuesOverride: parameterValues, options, filesAndFolders}))
-)
 
   // viewer data
   const makeCsgViewer = require('@jscad/csg-viewer')
@@ -196,12 +184,12 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
     }
     if (csgViewer) {
       // console.log('params', params)
-      // csgViewer(params)
+      csgViewer(params)
     }
   })
 
   // alternative, better way for the future to set these things, but requires changes to the viewer
-  /*most.mergeArray([
+  /* most.mergeArray([
     actions$.toggleGrid$.map(command => ({grid: {show: command.data}})),
     actions$.toggleAxes$.map(command => ({axes: {show: command.data}}))
   ])
@@ -212,8 +200,6 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
         csgViewer(params)
       }
     })*/
-
-
 
   // titlebar & store side effects
   // FIXME/ not compatible with multiple instances !!
