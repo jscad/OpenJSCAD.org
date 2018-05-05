@@ -1,4 +1,4 @@
-#JSCAD: overview
+# JSCAD: overview
 
 This document aims to help users and developpers gain a better understanding of its goals, structure, logic and parts.
 
