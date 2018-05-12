@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.8.4"></a>
+## [1.8.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@1.8.3...@jscad/web@1.8.4) (2018-05-12)
+
+
+### Bug Fixes
+
+* **web:** HTML syntax and performance improvement ([#383](https://github.com/jscad/OpenJSCAD.org/issues/383)) ([d5be1fb](https://github.com/jscad/OpenJSCAD.org/commit/d5be1fb))
+
+
+
+
 <a name="1.8.3"></a>
 ## [1.8.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@1.8.2...@jscad/web@1.8.3) (2018-04-07)
 

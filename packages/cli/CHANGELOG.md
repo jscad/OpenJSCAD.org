@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.8.4"></a>
+## [1.8.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@1.8.3...@jscad/cli@1.8.4) (2018-05-12)
+
+
+
+
+**Note:** Version bump only for package @jscad/cli
+
 <a name="1.8.3"></a>
 ## [1.8.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@1.8.2...@jscad/cli@1.8.3) (2018-04-07)
 
