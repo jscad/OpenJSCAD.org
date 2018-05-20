@@ -44,7 +44,7 @@ const initialize = () => {
 
 // this sets either the list of available file/folder names
 // or that AND the files & folders tree (web)
-const setAvailableData = (state, data) => {
+const prepareDesignData = (state, data) => {
   const filesAndFolders = data
 
   const design = Object.assign({}, state.design, {filesAndFolders})

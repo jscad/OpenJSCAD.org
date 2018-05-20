@@ -43,7 +43,7 @@ function dom (state, i18n, paramsCallbacktoStream, editorCallbackToStream) {
     </section>
     <section>
     </section>
-    <section>
+    <section id='io'>
       <input type="button" value="${i18n`load jscad project`}" id="fileLoader"/>
       <label for="autoReload">${i18n`auto reload`}</label>
         <input type="checkbox" id="autoReload" checked=${state.autoReload}/>
