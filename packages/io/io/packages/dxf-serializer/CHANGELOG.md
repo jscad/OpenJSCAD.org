@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.2.1...@jscad/dxf-serializer@0.2.2) (2018-05-24)
+
+
+### Bug Fixes
+
+* **dxf-serializer:** fix 3d faces output ([#67](https://github.com/jscad/io/issues/67)) ([51d316e](https://github.com/jscad/io/commit/51d316e))
+
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.2.0...@jscad/dxf-serializer@0.2.1) (2018-04-07)
 
