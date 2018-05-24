@@ -23,6 +23,7 @@ TBD
 */
 
 const {isCAG, isCSG} = require('@jscad/csg')
+const {ensureManifoldness} = require('@jscad/io-utils')
 const {dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects} = require('./autocad_AC2017')
 
 const mimeType = 'application/dxf'
@@ -71,6 +72,7 @@ const dxfEntities = function (objects, options) {
       return PathsToLwpolyine(paths, options)
     }
     if (isCSG(object)) {
+      object = ensureManifoldness(object)
       if (options.csgTo === 'polyline') {
         return PolygonsToPolyline(object, options)
       }
@@ -212,14 +214,40 @@ const PolygonsTo3DFaces = function (csg, options) {
   options.statusCallback && options.statusCallback({progress: 0})
   let str = ''
   csg.polygons.map(function (polygon, i) {
-    let corner10 = polygon.vertices[0].pos
-    let corner11 = polygon.vertices[1].pos
-    let corner12 = polygon.vertices[2].pos
-    let corner13 = polygon.vertices[2].pos
-    if (polygon.vertices.length > 3) {
-      corner13 = polygon.vertices[3].pos
-    }
-    str += `  0
+    let triangles = polygonToTriangles(polygon)
+    triangles.map(function (triangle, i) {
+      str += triangleTo3DFaces(triangle, options)
+    })
+  })
+  options.statusCallback && options.statusCallback({progress: 100})
+  return [str]
+}
+
+//
+// convert the given polygon to triangles
+//
+// NOTE: This only works for CONVEX polygons
+const polygonToTriangles = (polygon) => {
+  let length = polygon.vertices.length - 2
+  if (length <= 1) return [polygon]
+
+  let pivot = polygon.vertices[0]
+  let triangles = []
+  for (let i = 0; i < length; i++) {
+    triangles.push([pivot, polygon.vertices[i + 1], polygon.vertices[i + 2]])
+  }
+  return triangles
+}
+
+//
+// convert the given triangle to DXF 3D face entity
+//
+const triangleTo3DFaces = (triangle, options) => {
+  let corner10 = triangle[0].pos
+  let corner11 = triangle[1].pos
+  let corner12 = triangle[2].pos
+  let corner13 = triangle[2].pos // same in DXF
+  let str = `  0
 3DFACE
   5
 ${getEntityId()}
@@ -256,9 +284,7 @@ ${corner13.y}
   33
 ${corner13.z}
 `
-  })
-  options.statusCallback && options.statusCallback({progress: 100})
-  return [str]
+  return str
 }
 
 // convert the given CSG to DXF POLYLINE (polyface mesh)
