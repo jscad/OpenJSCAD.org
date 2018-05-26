@@ -93,7 +93,9 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
       // after data was added to memfs, we get an answer back
       sources.fs
         .filter(response => response.type === 'add')
-        .map(({data}) => ({type: 'read', data, id: 'loadDesign', path: data[0].fullPath})),
+        .map(({data}) => ({type: 'read', data, id: 'loadDesign', path: data[0].fullPath}))
+        .delay(1), // FIXME !! we have to add a 1 ms delay otherwise the source & the sink are fired at the same time
+        // this needs to be fixed in callBackToStream
       // watched data
       state$
         .filter(state => state.design.mainPath !== '')
@@ -157,13 +159,11 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
   state$
     .filter(state => state.design.mainPath !== '')
     .skipRepeatsWith(function (state, previousState) {
-      console.log('gnagna', JSON.stringify(state.design.solids) === JSON.stringify(previousState.design.solids))
       const sameSolids = state.design.solids.length === previousState.design.solids.length &&
       JSON.stringify(state.design.solids) === JSON.stringify(previousState.design.solids)
       return sameSolids
     })
     .forEach(state => {
-      console.log('updating solids')
       if (csgViewer !== undefined) {
         csgViewer(undefined, {solids: state.design.solids})
       }
@@ -202,7 +202,7 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
         // console.log('params', params)
         csgViewer(params)
       }
-    })*/
+    }) */
 
   // titlebar & store side effects
   // FIXME/ not compatible with multiple instances !!

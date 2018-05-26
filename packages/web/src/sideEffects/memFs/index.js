@@ -5,18 +5,14 @@ const {walkFileTree} = require('./walkFileTree')
 const {changedFiles, flattenFiles} = require('./utils')
 const getFileExtensionFromString = require('../../utils/getFileExtensionFromString')
 
-function watchTree (rootPath, callback) {
-}
-
 const makeMemFsSideEffect = () => {
   const commandResponses = callBackToStream()
-  const readFileToCB = callBackToStream()
-  // for watchers
-  const scriptDataFromCB = callBackToStream()
+
   // general data
   let rawData
   let filesAndFolders = []
   let fs
+  let watcher
 
   const sink = (out$) => {
     out$.forEach(function (command) {
@@ -25,25 +21,25 @@ const makeMemFsSideEffect = () => {
         isRawData: false
       }
       const {isRawData} = Object.assign({}, defaults, options)
-      // console.log(`memfs: operation: ${type} ${path} ${id} ${data} ${options}`)
+      console.log(`memfs: operation: ${type} ${path} ${id} ${options}`)
       if (type === 'read') {
         console.log('reading in memfs', data, path, options)
         if (fs.statSync(path).isFile()) {
           fs.readFile(path, 'utf8', function (error, data) {
             if (error) {
-              readFileToCB.callback({path, type, error, id})
+              commandResponses.callback({path, type, error, id})
             } else {
               // FIXME: injection of fs & filesAndFolders is a huge hack
-              readFileToCB.callback({path, type, data, id, fs, filesAndFolders})
+              commandResponses.callback({path, type, data, id, fs, filesAndFolders})
             }
           })
         } else {
           fs.readDir(path, function (error, data) {
             if (error) {
-              readFileToCB.callback({path, type, error, id})
+              commandResponses.callback({path, type, error, id})
             } else {
               // FIXME: injection of fs & filesAndFolders is a huge hack
-              readFileToCB.callback({path, type, data, id, fs, filesAndFolders})
+              commandResponses.callback({path, type, data, id, fs, filesAndFolders})
             }
           })
         }
@@ -78,74 +74,45 @@ const makeMemFsSideEffect = () => {
         const rootModule = fakeRequire._require(entryPoint)
         console.log('rootModule', rootModule) */
       } else if (type === 'watch') {
-        console.log('watching', path, options, filesAndFolders)
-        let watchers = []
-        let watchedFilePath
+        // if rawData is undefined, it means we cannot watch the target data
+        // ie data loaded from http etc
+        if (rawData === undefined) {
+          return
+        }
         const {enabled} = options
-        const rootPath = path
-
-        let autoReloadTimer = setInterval(function () {
-          const files = walkFileTree(rawData)
-          files.catch(function (error) {
-            console.error('failed to read files', error)
-          })
-          files.then(function (files) {
-            const flatCurrent = flattenFiles(filesAndFolders)
-            const flatNew = flattenFiles(files)
-            const whatChanged = changedFiles(flatCurrent, flatNew)
-            // console.log('processed files & folders', files, 'changed', whatChanged)
-            if (whatChanged.length > 0) {
-              console.log('changed stuff', whatChanged)
-              // scriptDataFromCB.callback({path, data: whatChanged[0].source, type, id})
-              filesAndFolders = files
-              readFileToCB.callback({path, type: 'read', data, id: 'loadDesign', fs, filesAndFolders})
-            }
-          })
-        }, 2000)
-        return
-
-        if (enabled === false) {
-          if (watchers.length > 0 && watchers[0] !== undefined) {
-            // console.log('stopping to watch', filePath, enabled)
-            // removeWatchers(watchers)
-          }
-        } else {
-          if (watchedFilePath !== rootPath) {
-            if (watchers.length > 0 && watchers[0] !== undefined) {
-              // console.log('stopping to watch', filePath, enabled)
-              // removeWatchers(watchers)
-            }
-          }
-          if (watchedFilePath !== rootPath || watchers[0] === undefined) {
-            watchedFilePath = rootPath
-
-            function stuffCallback (data) {
-              // requireUncached(rootPath)
-              // force reload the main file
-              const contents = fs.readFileSync(rootPath, 'utf8')
-              // console.log('FOOOOO', path, contents, type, id)
-              scriptDataFromCB.callback({path, data: contents, type, id})
-            }
-
-            watchers = watchTree(rootPath, stuffCallback)
-          }
+        if (watcher && !enabled) {
+          clearInterval(watcher)
+        }
+        if (enabled) {
+          watcher = setInterval(function () {
+            const files = walkFileTree(rawData)
+            files.catch(function (error) {
+              console.error('failed to read files', error)
+            })
+            files.then(function (files) {
+              const flatCurrent = flattenFiles(filesAndFolders)
+              const flatNew = flattenFiles(files)
+              const whatChanged = changedFiles(flatCurrent, flatNew)
+              if (whatChanged.length > 0) {
+                filesAndFolders = files
+                commandResponses.callback({path, type: 'read', data, id: 'loadDesign', fs, filesAndFolders})
+              }
+            })
+          }, 2000)
         }
       }
     })
   }
 
   const source = () => {
-    const fs$ = readFileToCB.stream.multicast()
-    const watch$ = scriptDataFromCB.stream
+    const commandResponses$ = commandResponses.stream.tap(x => console.log('gnagna', x)).multicast()
+
+    /* const watch$ = scriptDataFromCB.stream
       .debounce(400)
       .skipRepeats()
-      .multicast()
+      .multicast() */
 
-    return most.mergeArray([
-      commandResponses.stream.multicast(),
-      fs$,
-      watch$
-    ])
+    return commandResponses$
   }
   return {source, sink}
 }

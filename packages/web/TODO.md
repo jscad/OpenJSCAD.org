@@ -4,11 +4,11 @@
 - [x] 3d viewer basics
 - [ ] zoom to fit settable
 - [ ] no resseting of camera to previous state
-- [ ] all 3D viewer instances should behave independantly
-- [ ] improve rendering of 2d lines (no lighting)
+- [x] all 3D viewer instances should behave independantly
+- [x] improve rendering of 2d lines (no lighting)
 
 ## code editor
-- [x] code editor basics
+- [ ] code editor basics
 - [ ] code editor autocomplete
 
 ## inputs
@@ -19,12 +19,12 @@
 - [x] require support , injection of explicit api 
 - [x] require support relative paths
 - [ ] require support node_modules (drag & drop)
-- [ ] require support single file
-- [ ] examples
+- [x] require support single file
+- [x] file watcher/autoreload
+- [x] examples
 
 ## outputs
 - [x] save/export of files
-- [ ] file watcher/autoreload
 
 ## ui
 - [ ] shortcuts
@@ -34,7 +34,7 @@
 ## general
 - [x] examples jscad
 - [x] examples jscad
-- [ ] translations
+- [x] translations
 - [x] multiple instances per page
 
 ## tests
