@@ -12,6 +12,18 @@ function changedFiles (reference, files) {
   })
 }
 
+const flattenFiles = (files) => {
+  let result = []
+  files.forEach(fileOrFolder => {
+    if (fileOrFolder.children) {
+      result = result.concat(flattenFiles(fileOrFolder.children))
+    } else {
+      result.push(fileOrFolder)
+    }
+  })
+  return result
+}
+
 // old code
 
 // this handles all type of data from drag'n'drop, a list of files to read files, folders, etc
@@ -34,4 +46,4 @@ const pollingWatcher = () => {
   clearInterval(autoReloadTimer)
 } */
 
-module.exports = {changedFiles}
+module.exports = {changedFiles, flattenFiles}

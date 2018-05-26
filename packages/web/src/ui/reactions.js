@@ -139,7 +139,8 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
         // it should recompute
         const sameSource = JSON.stringify(state.source) === JSON.stringify(previousState.source)
         const sameMainPath = JSON.stringify(state.mainPath) === JSON.stringify(previousState.mainPath)
-        return sameParameterValues && sameSource && sameMainPath
+        const sameFiles = JSON.stringify(state.filesAndFolders) === JSON.stringify(previousState.filesAndFolders)
+        return sameParameterValues && sameSource && sameMainPath && sameFiles
       })
       .map(function (design) {
         const {source, mainPath, parameterValues, filesAndFolders} = design
@@ -156,11 +157,13 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
   state$
     .filter(state => state.design.mainPath !== '')
     .skipRepeatsWith(function (state, previousState) {
+      console.log('gnagna', JSON.stringify(state.design.solids) === JSON.stringify(previousState.design.solids))
       const sameSolids = state.design.solids.length === previousState.design.solids.length &&
       JSON.stringify(state.design.solids) === JSON.stringify(previousState.design.solids)
       return sameSolids
     })
     .forEach(state => {
+      console.log('updating solids')
       if (csgViewer !== undefined) {
         csgViewer(undefined, {solids: state.design.solids})
       }

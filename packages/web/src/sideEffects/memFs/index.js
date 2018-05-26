@@ -2,7 +2,7 @@ const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
 const makeFakeFs = require('./makeFakeFs')
 const {walkFileTree} = require('./walkFileTree')
-const {changedFiles} = require('./utils')
+const {changedFiles, flattenFiles} = require('./utils')
 const getFileExtensionFromString = require('../../utils/getFileExtensionFromString')
 
 function watchTree (rootPath, callback) {
@@ -78,7 +78,6 @@ const makeMemFsSideEffect = () => {
         const rootModule = fakeRequire._require(entryPoint)
         console.log('rootModule', rootModule) */
       } else if (type === 'watch') {
-        return
         console.log('watching', path, options, filesAndFolders)
         let watchers = []
         let watchedFilePath
@@ -91,15 +90,19 @@ const makeMemFsSideEffect = () => {
             console.error('failed to read files', error)
           })
           files.then(function (files) {
-            const whatChanged = changedFiles(filesAndFolders, files)
+            const flatCurrent = flattenFiles(filesAndFolders)
+            const flatNew = flattenFiles(files)
+            const whatChanged = changedFiles(flatCurrent, flatNew)
             // console.log('processed files & folders', files, 'changed', whatChanged)
             if (whatChanged.length > 0) {
               console.log('changed stuff', whatChanged)
-              scriptDataFromCB.callback({path, data: whatChanged[0].source, type, id})
+              // scriptDataFromCB.callback({path, data: whatChanged[0].source, type, id})
               filesAndFolders = files
+              readFileToCB.callback({path, type: 'read', data, id: 'loadDesign', fs, filesAndFolders})
             }
           })
         }, 2000)
+        return
 
         if (enabled === false) {
           if (watchers.length > 0 && watchers[0] !== undefined) {
