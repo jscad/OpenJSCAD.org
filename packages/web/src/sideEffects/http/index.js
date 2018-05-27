@@ -44,7 +44,8 @@ const makeHttpSideEffect = () => {
           commandResponses.callback({type, id, url, data: result})
         }
         xhr.onerror = function (error) {
-          commandResponses.callback({type, id, url, error})
+          const rError = new Error(`failed to load ${url} see console for more details`)
+          commandResponses.callback({type, id, url, error: rError})
         }
         xhr.open('GET', url, true)
         xhr.send()

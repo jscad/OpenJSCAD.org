@@ -73,8 +73,9 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
 
   // output to http
   http(
-    actions$.requestLoadExample$
-      .map(({data}) => ({url: data, id: 'loadExample', type: 'read'}))
+    most.mergeArray([
+      actions$.requestRemoteFile$
+    ])
   )
 
     // data out to file system sink
@@ -88,7 +89,7 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
         .map((data) => ({type: 'add', data: data.data, id: 'droppedData'})),
       // data retrieved from http requests
       sources.http
-        .filter(response => response.id === 'loadExample' && response.type === 'read')
+        .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response))
         .map(response => ({type: 'add', data: response.data, id: 'remoteFile', path: response.url, options: {isRawData: true}})),
       // after data was added to memfs, we get an answer back
       sources.fs
@@ -182,7 +183,6 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
     if (viewerElement && !csgViewer) {
       const csgViewerItems = makeCsgViewer(viewerElement, params)
       csgViewer = csgViewerItems.csgViewer
-
       // const bar = require('most-gestures').pointerGestures(jscadEl.querySelector('#renderTarget'))
     }
     if (csgViewer) {
