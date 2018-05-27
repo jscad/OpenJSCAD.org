@@ -105,7 +105,7 @@ const makeMemFsSideEffect = () => {
   }
 
   const source = () => {
-    const commandResponses$ = commandResponses.stream.tap(x => console.log('gnagna', x)).multicast()
+    const commandResponses$ = commandResponses.stream.multicast()
 
     /* const watch$ = scriptDataFromCB.stream
       .debounce(400)

@@ -59,7 +59,7 @@ const makeFakeFs = (filesAndFolders) => {
       if (!statSync(path).isFile()) {
         throw new Error(`${entry} is not a file, cannot read`)
       } else {
-        console.log('readFile', path, entry)
+        console.log('readFile sync', path, entry)
         return entry.source
       }
     }
