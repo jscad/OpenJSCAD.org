@@ -24,7 +24,7 @@ module.exports = function makeTitleBarSideEffect () {
 
   const source = () => {
     const _url = window.location.href
-    return most.just(_url)
+    return most.just(_url).multicast().skipRepeats()
   }
   return {sink, source}
 }
