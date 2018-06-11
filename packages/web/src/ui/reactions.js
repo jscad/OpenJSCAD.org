@@ -1,14 +1,14 @@
 const most = require('most')
 
-function makeReactions (sinks, sources, state$, actions$, extras) {
+function makeReactions (sinks, sources, actions$, extras) {
   const {store, fs, http, i18n, dom, solidWorker} = sinks
 
   // FIXME: without this we have no render !! double check
-  state$.forEach(x => x)
+  sources.state$.forEach(x => x)
 
   // output to dom
   dom(
-    state$
+    sources.state$
       .skipRepeatsWith(function (state, previousState) {
         return JSON.stringify(state) === JSON.stringify(previousState)
         // TODO: add omiting of a few complex fields like the cache , the filetree, the solids
@@ -25,7 +25,7 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
         .concat(
           most.just({type: 'getDefaultLocale'})
         ),
-      state$
+      sources.state$
         .map(state => state.locale)
         .skipRepeats()
         .map(data => ({type: 'changeSettings', data}))
@@ -64,7 +64,7 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
       // initial request for localstorage data
       most.just({type: 'read', target: 'settings'}),
       // output settings to local storage for saving everytime they change
-      state$
+      sources.state$
         .map(settingsStorage).map(data => ({type: 'write', target: 'settings', data}))
         .skipRepeatsWith((previousState, currentState) => JSON.stringify(previousState) === JSON.stringify(currentState))
         .delay(1000)// delay the first saving to avoir overwriting existing settings
@@ -98,7 +98,7 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
         .delay(1), // FIXME !! we have to add a 1 ms delay otherwise the source & the sink are fired at the same time
         // this needs to be fixed in callBackToStream
       // watched data
-      state$
+      sources.state$
         .filter(state => state.design.mainPath !== '')
         .map(state => ({path: state.design.mainPath, enabled: state.autoReload}))
         .skipRepeatsWith((state, previousState) => {
@@ -111,7 +111,7 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
           options: {enabled}})// enable/disable watch if autoreload is set to false
         ),
       // files to read/write
-      state$
+      sources.state$
         .filter(state => state.design.mainPath !== '')
         .map(state => state.design.mainPath)
         .skipRepeatsWith((state, previousState) => {
@@ -133,7 +133,7 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
 
   // web worker sink
   solidWorker(
-    state$
+    sources.state$
       .filter(state => state.design.mainPath !== '')
       .map(state => state.design)
       .skipRepeatsWith(function (state, previousState) {
@@ -157,7 +157,7 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
   const makeCsgViewer = require('@jscad/csg-viewer')
   let csgViewer
   const jscadEl = extras.jscadEl
-  state$
+  sources.state$
     .filter(state => state.design.mainPath !== '')
     .skipRepeatsWith(function (state, previousState) {
       const sameSolids = state.design.solids.length === previousState.design.solids.length &&
@@ -170,7 +170,7 @@ function makeReactions (sinks, sources, state$, actions$, extras) {
       }
     })
 
-  state$
+  sources.state$
   .map(state => state.viewer)
   // FIXME: not working correctly with themeing
   /* .skipRepeatsWith(function (state, previousState) {
