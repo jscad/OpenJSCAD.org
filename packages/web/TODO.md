@@ -27,7 +27,7 @@
 - [x] save/export of files
 
 ## ui
-- [ ] shortcuts
+- [x] shortcuts
 - [ ] theming
 - [ ] styling
 
