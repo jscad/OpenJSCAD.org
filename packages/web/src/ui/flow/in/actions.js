@@ -1,5 +1,5 @@
 const most = require('most')
-const {head} = require('../utils/utils')
+const {head} = require('@jscad/core/utils/arrays')
 
 function compositeKeyFromKeyEvent (event) {
   const ctrl = event.ctrlKey ? 'ctrl+' : ''

@@ -121,7 +121,7 @@ const setDesignContent = (state, source) => {
  * @returns {Object} the updated state
  */
 const setDesignSolids = (state, {solids, lookup, lookupCounts}) => {
-  // console.log('setDesignSolids')
+  console.log('setDesignSolids')
   solids = solids || []
   lookup = lookup || {}
   lookupCounts = lookupCounts || {}
