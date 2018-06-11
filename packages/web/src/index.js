@@ -2,6 +2,8 @@
 const {proxy} = require('most-proxy')
 const {makeState} = require('./state')
 
+let instances = 0
+
 function makeJscad (targetElement, options) {
   const defaults = {
     name: 'jscad'
@@ -10,7 +12,7 @@ function makeJscad (targetElement, options) {
 
   // create root dom element
   const bel = require('bel')
-  const jscadEl = bel`<div class='jscad' key=${name}></div>`
+  const jscadEl = bel`<div class='jscad' key=${name} tabindex=${instances}></div>`
   targetElement.appendChild(jscadEl)
 
   // setup all the side effects : ie , input/outputs
@@ -86,9 +88,17 @@ function makeJscad (targetElement, options) {
 
   // formating of data data that goes out to the sink side effects
   // setup reactions (ie outputs to sinks)
-  require('./ui/reactions')(sinks, sources, state$, actions$, {jscadEl, paramsCallbacktoStream, editorCallbackToStream})
+  require('./ui/reactions')(sinks, sources, actions$, {jscadEl, paramsCallbacktoStream, editorCallbackToStream})
 
-  return {}
+  // increase the count of jscad instances in this page
+  instances += 1
+
+  // we return a function to allow setting/modifying params
+  const mainParams = require('@jscad/core/observable-utils/callbackToObservable')()
+  mainParams.stream.forEach(x => console.log('setting params', x))
+  return (params) => {
+    mainParams.callback(params)
+  }
 }
 
 module.exports = makeJscad
