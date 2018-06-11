@@ -7,7 +7,7 @@ const modulifySource = (source, csgBasePath) => {
     const {cube, cylinder, sphere, polyhedron, torus} = require('${csgBasePath}').primitives3d
     const {color} = require('${csgBasePath}').color
     const {rectangular_extrude, linear_extrude, rotate_extrude} = require('${csgBasePath}').extrusions
-    const {rotate, translate, scale, mirror, hull, chain_hull, expand, contract} = require('${csgBasePath}').transformations
+    const {rotate, translate, scale, mirror, hull, chain_hull, expand, contract, transform} = require('${csgBasePath}').transformations
     const {union, difference, intersection} = require('${csgBasePath}').booleanOps
     const {sin, cos, tan, sqrt, lookup} = require('${csgBasePath}').maths
     const {hsl2rgb} = require('${csgBasePath}').color
