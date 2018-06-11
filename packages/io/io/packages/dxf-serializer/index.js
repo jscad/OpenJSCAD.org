@@ -229,7 +229,7 @@ const PolygonsTo3DFaces = function (csg, options) {
 // NOTE: This only works for CONVEX polygons
 const polygonToTriangles = (polygon) => {
   let length = polygon.vertices.length - 2
-  if (length <= 1) return [polygon]
+  if (length < 1) return []
 
   let pivot = polygon.vertices[0]
   let triangles = []
