@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.3"></a>
+## [0.2.3](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.2.2...@jscad/dxf-serializer@0.2.3) (2018-06-11)
+
+
+### Bug Fixes
+
+* **dxf-serializer:** corrected polygonToTriangles when polygon has less then 3 vertices ([#68](https://github.com/jscad/io/issues/68)) ([accac07](https://github.com/jscad/io/commit/accac07))
+
+
+
+
 <a name="0.2.2"></a>
 ## [0.2.2](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.2.1...@jscad/dxf-serializer@0.2.2) (2018-05-24)
 
