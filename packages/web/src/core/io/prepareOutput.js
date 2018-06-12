@@ -1,5 +1,4 @@
-const { formats } = require('./formats')
-const {convertToSolid2} = require('../code-evaluation/convertToSolid')
+const { formats } = require('@jscad/core/io/formats')
 
 const {stlSerializer} = require('@jscad/io')
 const {amfSerializer} = require('@jscad/io')
@@ -14,15 +13,6 @@ function prepareOutput (objects, params) {
     version: '0.0.0'
   }
   const {format, version} = Object.assign({}, defaults, params)
-
-  let object
-
-  if (format === 'jscad' || format === 'js') {
-    object = objects
-  } else {
-    const formatInfo = formats[format]
-    object = convertToSolid2(objects, formatInfo)
-  }
 
   const metaData = {
     producer: 'OpenJSCAD.org ' + version,
@@ -54,7 +44,7 @@ function prepareOutput (objects, params) {
       throw new Error('Not supported : only jscad, stl, amf, dxf, svg or json as output format')
     }
   }
-  const data = outputFormatHandlers[format].serialize(object, metaData)
+  const data = outputFormatHandlers[format].serialize(metaData, objects)
   const mimeType = outputFormatHandlers[format].mimeType
   return {data, mimeType}
 }
