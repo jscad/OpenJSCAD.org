@@ -6,10 +6,22 @@ const makeActions = (sources) => {
   const {setShortcuts$, setShortcut$, triggerFromShortcut$} = require('./shortcuts')({sources})
   const {setErrors$, clearErrors$} = require('./errors')({sources})
 
-  const {requestRemoteFile$} = require('./requestRemoteFile')({sources})
-  const {requestExport$} = require('./exports')({sources})
+  const {requestExport$, changeExportFormat$} = require('./exports')({sources})
 
-  const {requestReadSettings$, requestWriteSettings$} = require('../settings')({sources})
+  const {requestReadSettings$, requestWriteSettings$} = require('./settings')({sources})
+  const { setDesignPath$,
+    setDesignContent$,
+    requestGeometryRecompute$,
+    timeoutGeometryRecompute$,
+    setDesignSolids$,
+    setDesignParameters$,
+    requestLoadRemoteData$,
+    requestAddDesignData$,
+    requestLoadDesign$,
+    requestWatchDesign$,
+    toggleAutoReload$,
+    toggleInstantUpdate$,
+    toggleVTreeMode$} = require('./design')({sources})
 
   const actions = {
     // set shortcut(s)
@@ -25,13 +37,26 @@ const makeActions = (sources) => {
     requestGetDefaultLanguage$,
     setAvailableLanguages$,
     setLanguage$,
-    // examples or other http files
-    requestRemoteFile$,
     // ui
     setTheme$,
     setActiveTool$,
     // io
     requestExport$,
+    changeExportFormat$,
+    // design
+    setDesignPath$,
+    setDesignContent$,
+    requestGeometryRecompute$,
+    timeoutGeometryRecompute$,
+    setDesignSolids$,
+    setDesignParameters$,
+    requestLoadRemoteData$,
+    requestAddDesignData$,
+    requestLoadDesign$,
+    requestWatchDesign$,
+    toggleAutoReload$,
+    toggleInstantUpdate$,
+    toggleVTreeMode$,
     // settings
     requestReadSettings$,
     requestWriteSettings$

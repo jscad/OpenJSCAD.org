@@ -8,30 +8,29 @@ function makeReactions (inputs) {
   sources.state$.forEach(x => x)
 
   const foo$ = most.mergeArray(Object.values(actions$))
-  foo$.filter(x => 'sink' in x)
-    .forEach(x => console.log('put to', x.sink, x))
+  foo$.filter(x => 'sink' in x && x.sink === 'store')
+    .forEach(x => console.log('out to sinks', x))
 
   // output to dom
   dom(require('./dom')(inputs))
 
   // output to i18n
-  i18n(foo$.filter(x => 'sink' in x && x.sink === 'i18n'))// require('./i18n')(inputs))
+  i18n(foo$.filter(x => 'sink' in x && x.sink === 'i18n'))
 
   // output to storage
-  const outToStore$ = most.mergeArray([actions$.requestReadSettings$, actions$.requestWriteSettings$])
-  store(outToStore$)
+  store(foo$.filter(x => 'sink' in x && x.sink === 'store'))
 
   // output to http
-  http(require('./http')(inputs))
+  http(foo$.filter(x => 'sink' in x && x.sink === 'http'))
 
   // data out to file system sink
   // drag & drops of files/folders have DUAL meaning:
   // * ADD this file/folder to the available ones
   // * OPEN this file/folder
-  fs(require('./fs')(inputs))
+  fs(foo$.filter(x => 'sink' in x && x.sink === 'fs'))
 
   // web worker sink
-  solidWorker(require('./solidWorker')(inputs))
+  solidWorker(foo$.filter(x => 'sink' in x && x.sink === 'geometryWorker'))
 
   // viewer data
   const makeCsgViewer = require('@jscad/csg-viewer')
@@ -94,8 +93,8 @@ function makeReactions (inputs) {
   actions$.requestExport$.forEach(action => {
     console.log('export requested', action)
     const {saveAs} = require('file-saver')
-    const {prepareOutput} = require('../../../core/io/prepareOutput')
-    const {convertToBlob} = require('../../../core/io/convertToBlob')
+    const {prepareOutput} = require('../../core/io/prepareOutput')
+    const {convertToBlob} = require('../../core/io/convertToBlob')
 
     const outputData = action.data.data
     const format = action.data.exportFormat
@@ -103,34 +102,6 @@ function makeReactions (inputs) {
     // fs.writeFileSync(filePath, buffer)
     saveAs(blob, action.data.defaultExportFilePath)
   })
-
-  const serializeGeometryCache = (cache) => {
-    /*
-    const fs = require('fs')
-    const electron = require('electron').remote
-    const serialize = require('serialize-to-js').serialize
-
-    const userDataPath = electron.app.getPath('userData')
-    const path = require('path')
-
-    const cachePath = path.join(userDataPath, '/cache.js')
-    let data = {}
-    Object.keys(cache).forEach(function (key) {
-      data[key] = cache[key]// .toCompactBinary()
-    })
-    const compactBinary = data
-    const compactOutput = serialize(compactBinary)
-    const content = compactOutput // 'compactBinary=' +
-    fs.writeFileSync(cachePath, content) */
-  }
-
-  const serializeGeometryCache$ = actions$.setDesignSolids$
-    .forEach(x => {
-      console.log('set design solids', x)
-      /* if (solids) {
-        serializeGeometryCache(lookup)
-      } */
-    })
 }
 
 module.exports = makeReactions

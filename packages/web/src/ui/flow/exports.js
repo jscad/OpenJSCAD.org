@@ -23,7 +23,7 @@ const actions = ({sources}) => {
       return {defaultExportFilePath, exportFormat, data}
     })
     .map(data => ({type: 'exportRequested', data}))
-  return {requestExport$}
+  return {requestExport$, changeExportFormat$}
 }
 
 module.exports = actions

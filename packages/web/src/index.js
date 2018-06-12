@@ -77,18 +77,16 @@ function makeJscad (targetElement, options) {
   }
 
   // all the actions
-  const designActions = require('./ui/design/actions')(sources)
-  const ioActions = require('./ui/io/actions')(sources)
   const viewerActions = require('./ui/viewer/actions')(sources)
-  const otherActions = require('./ui/actions')(sources)
-  const actions$ = Object.assign({}, designActions, otherActions, ioActions, viewerActions)
+  const otherActions = require('./ui/flow/actions')(sources)
+  const actions$ = Object.assign({}, otherActions, viewerActions)
 
   // loop back the state stream so it is circular
   attach(makeState(Object.values(actions$)))
 
   // formating of data data that goes out to the sink side effects
   // setup reactions (ie outputs to sinks)
-  require('./ui/reactions')(sinks, sources, actions$, {jscadEl, paramsCallbacktoStream, editorCallbackToStream})
+  require('./ui/flow/reactions')({sinks, sources, actions$, extras: {jscadEl, paramsCallbacktoStream, editorCallbackToStream}})
 
   // increase the count of jscad instances in this page
   instances += 1

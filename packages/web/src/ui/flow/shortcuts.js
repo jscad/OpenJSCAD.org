@@ -1,5 +1,5 @@
 const most = require('most')
-const {getKeyCombos, isKeyEventScopeValid} = require('../../../utils/keys')
+const {getKeyCombos, isKeyEventScopeValid, simpleKey} = require('../../utils/keys')
 const {head} = require('@jscad/core/utils/arrays')
 
 // keyboard shortcut handling
