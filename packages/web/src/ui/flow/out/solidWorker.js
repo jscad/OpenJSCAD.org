@@ -1,5 +1,5 @@
 const makeOutput = ({sources}) => {
-  return sources.state$
+  const requestSolidRecompute$ = sources.state$
     .filter(state => state.design.mainPath !== '')
     .map(state => state.design)
     .skipRepeatsWith(function (state, previousState) {
@@ -15,8 +15,9 @@ const makeOutput = ({sources}) => {
       const {source, mainPath, parameterValues, filesAndFolders} = design
       const options = {vtreeMode: design.vtreeMode, lookup: design.lookup, lookupCounts: design.lookupCounts}
 
-      return {cmd: 'render', source, mainPath, parameterValuesOverride: parameterValues, options, filesAndFolders}
+      return {cmd: 'generate', source, mainPath, parameterValuesOverride: parameterValues, options, filesAndFolders}
     })
+  return requestSolidRecompute$
 }
 
 module.exports = makeOutput

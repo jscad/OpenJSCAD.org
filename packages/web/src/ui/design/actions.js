@@ -19,16 +19,6 @@ const actions = (sources) => {
       .map(data => data.design.mainPath)
       .filter(data => data !== '')
       .map(data => [data]), */
-    /* sources.drops
-      .filter(drop => drop.type === 'fileOrFolder' && drop.data.length > 0)
-      // .map(drop => drop.data.map(fileOrFolder => fileOrFolder.path))
-      .flatMap(x => {
-        console.log('here', x)
-        return sources.fs
-          .tap(x => console.log('gnagna', x))
-          .filter(data => data.type === 'read' && data.id === 'loadDesign')
-          .map(raw => raw)
-      }) */
   ])
     .filter(data => data !== undefined)
     .debounce(50)

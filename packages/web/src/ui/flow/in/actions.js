@@ -1,283 +1,43 @@
-const most = require('most')
-const {head} = require('@jscad/core/utils/arrays')
-
-function compositeKeyFromKeyEvent (event) {
-  const ctrl = event.ctrlKey ? 'ctrl+' : ''
-  const shift = event.shiftKey ? 'shift+' : ''
-  const meta = event.metaKey ? 'command+' : ''
-  let key = event.key.toLowerCase()
-  if (ctrl && key === 'control') {
-    key = ''
-  }
-  if (shift && key === 'shift') {
-    key = ''
-  }
-  if (meta && key === 'meta') {
-    key = ''
-  }
-  const compositeKey = `${ctrl}${shift}${meta}${key}`
-  return compositeKey
-}
-const simpleKey = (event) => {
-  return event.key ? event.key.toLowerCase() : undefined
-}
-
-const getKeyCombos = (options, keyUps$, keyDown$) => {
-  const defaults = {
-    dropRepeats: false
-  }
-  const {dropRepeats} = Object.assign({}, defaults, options)
-
-  keyDown$ = keyDown$.multicast().debounce(10)
-  if (dropRepeats) {
-    keyDown$ = keyDown$
-      .skipRepeatsWith((event, previousEvent) => {
-        return simpleKey(event) === simpleKey(previousEvent)
-      })
-  }
-
-  const keyStuffEnd$ = keyDown$.throttle(1000).delay(2000)
-  const keyCombos$ = keyDown$
-    .merge(keyUps$.map(x => 'end'))
-    .merge(keyStuffEnd$.map(x => 'end'))
-    .loop((values, event) => {
-      if (event === 'end' || simpleKey(event) === 'enter' || simpleKey(event) === 'escape') {
-        const value = {
-          event: values.length > 0 ? values[0].event : undefined,
-          compositeKey: values.map(x => x.compositeKey).join('+')
-        }
-        return {seed: [], value}
-      } else {
-        const compositeKey = simpleKey(event)
-        values.push({event, compositeKey})
-      }
-      return {seed: values}
-    }, [])
-    .filter(x => x !== undefined)
-    .filter(x => x.event !== undefined)
-    // .tap(x => console.log('key stuff', x))
-    .multicast()
-
-  return keyCombos$
-}
-
 const makeActions = (sources) => {
-  // keyboard shortcut handling
+  const {setActiveTool$} = require('./tools')({sources})
+  const {setTheme$} = require('./themes')({sources})
+  const {requestGetAvailableLanguages$,
+    requestGetDefaultLanguage$, setAvailableLanguages$, setLanguage$} = require('./languages')({sources})
+  const {setShortcuts$, setShortcut$, triggerFromShortcut$} = require('./shortcuts')({sources})
+  const {setErrors$, clearErrors$} = require('./errors')({sources})
 
-  const myKey = sources.dom.element.getAttribute('key')
-  const isKeyEventScopeValid = x => {
-    if (x.className && x.className === 'jscad' && x.getAttribute('key') === myKey) {
-      return true// x.parentNode
-    }
-    if (x.parentNode) {
-      return isKeyEventScopeValid(x.parentNode)
-    }
-    return false
-  }
+  const {requestRemoteFile$} = require('./requestRemoteFile')({sources})
+  const {requestExport$} = require('./exports')({sources})
 
-  // FIXME: use dom source
-  const keyUps$ = most.fromEvent('keyup', document)
-    .filter(event => isKeyEventScopeValid(event.target))
-    .multicast()// sources.dom.select(document).events('keyup') /
-  const keyDown$ = most.fromEvent('keydown', document)
-    .filter(event => isKeyEventScopeValid(event.target))
-    .multicast()
+  const {requestReadSettings$, requestWriteSettings$} = require('../settings')({sources})
 
-  // we get all key combos, accepting repeated key strokes
-  const keyCombos$ = getKeyCombos({dropRepeats: false}, keyUps$, keyDown$)
-  // we match key stroke combos to actions
-  const actionsFromKey$ = most.sample(function ({event, compositeKey}, state) {
-    const matchingAction = head(state.shortcuts.filter(shortcut => shortcut.key === compositeKey))
-    if (matchingAction) {
-      const {command, args} = matchingAction
-      return {type: command, data: args}
-    }
-    return undefined
-  }, keyCombos$, keyCombos$, sources.state$)
-    .filter(x => x !== undefined)
-
-  // set shortcuts
-  const setShortcuts$ = most.mergeArray([
-    sources.store
-      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.shortcuts)
-      .map(reply => reply.data.shortcuts)
-  ])
-  .map(data => ({type: 'setShortcuts', data}))
-
-  // set a specific shortcut
-  const shortcutCommandUp$ = sources.dom.select('.shortcutCommand').events('keyup')
-    .multicast()
-  const shortcutCommandDown$ = sources.dom.select('.shortcutCommand').events('keydown')
-    .multicast()
-  const shortcutCommandKey$ = getKeyCombos(
-    {dropRepeats: true},
-    shortcutCommandUp$,
-    shortcutCommandDown$
-  )
-  shortcutCommandUp$
-    .forEach((event) => {
-      event.preventDefault()
-      event.stopPropagation()
-      return false
-    })
-  shortcutCommandDown$
-    .forEach((event) => {
-      event.preventDefault()
-      event.stopPropagation()
-      return false
-    })
-
-  const setShortcut$ = most.mergeArray([
-    shortcutCommandKey$
-      .map(({event, compositeKey}) => ({event, compositeKey, inProgress: true}))
-
-    .merge(
-      sources.dom.select('.shortcutCommand').events('focus')
-        .map(event => ({event, compositeKey: '', inProgress: true}))
-    )
-    .merge(
-      sources.dom.select('.shortcutCommand').events('blur')
-        .map(event => ({event, compositeKey: '', inProgress: false}))
-    )
-    .merge(
-      shortcutCommandUp$
-        .filter(event => simpleKey(event) === 'escape')
-        .map(event => ({event, compositeKey: '', inProgress: false}))
-    )
-    .merge(
-      shortcutCommandUp$
-        .filter(event => simpleKey(event) === 'enter')
-        .map(event => ({event, done: true}))
-    )
-    .scan(function (acc, current) {
-      const {event, compositeKey, inProgress, done} = current
-      const command = event.target.dataset.command
-      const args = event.target.dataset.args
-
-      let updated = Object.assign({}, acc, {command, args, inProgress, done})
-      if (compositeKey !== undefined && compositeKey !== '') {
-        updated.key = compositeKey
-        updated.tmpKey = compositeKey
-      }
-      if ('done' in updated && updated.done) {
-        delete updated.inProgress
-        delete updated.tmpKey
-      }
-      return updated
-    }, {})
-    .filter(x => x !== undefined)
-  ])
-  .map(data => ({type: 'setShortcut', data}))
-  .multicast()
-
-  const changeTheme$ = most.mergeArray([
-    sources.dom.select('#themeSwitcher').events('change')
-      .map(e => e.target.value),
-    sources.store
-      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.themeName)
-      .map(reply => reply.data.themeName)
-  ])
-  .startWith('light')
-  .map(data => ({type: 'changeTheme', data}))
-
-  const changeLanguage$ = most.mergeArray([
-    sources.i18n
-      .filter(reply => reply.type === 'getDefaultLocale')
-      .map(reply => reply.data),
-    sources.dom.select('#languageSwitcher').events('change')
-      .map(e => e.target.value),
-    sources.store
-      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.locale)
-      .map(reply => reply.data.locale)
-  ])
-  .map(data => ({type: 'changeLanguage', data}))
-
-  const setAvailableLanguages$ = most.mergeArray([
-    sources.i18n
-      .filter(command => command.type === 'getAvailableLanguages')
-      .map(command => command.data)
-  ])
-  .map(data => ({type: 'setAvailableLanguages', data}))
-
-  const setActiveTool$ = most.mergeArray([
-    sources.dom.select('#toggleOptions').events('click').map(event => 'options'),
-    sources.dom.select('#toggleEditor').events('click').map(event => 'editor'),
-    sources.dom.select('#toggleHelp').events('click').map(event => 'help')
-  ])
-    .map(data => ({type: 'setActiveTool', data}))
-
-  // non visual related actions
-  const setErrors$ = most.mergeArray([
-    sources.solidWorker.filter(event => 'error' in event),
-    sources.http.filter(event => 'error' in event)
-  ])
-    .map(data => ({type: 'setErrors', data}))
-
-  const clearErrors$ = most.never()
-
-  const setAppUpdatesAvailable$ = most.mergeArray([
-    most.just({type: 'setAppUpdatesAvailable', data: {available: false}})
-  ])
-
-  const url = require('url')
-
-  function fetchUriParams (uri, paramName, defaultValue = undefined) {
-    let params = url.parse(uri, true)
-    let result = params.query
-    if (paramName in result) return result[paramName]
-    return defaultValue
-  }
-  // helper function to retrieve the nth element of an array
-  function nth (index, data) {
-    if (!data) {
-      return undefined
-    }
-    if (data.length < index) {
-      return undefined
-    }
-    return data[index]
-  }
-
-  const requestRemoteFile$ = most.mergeArray([
-    // examples
-    sources.dom.select('.example').events('click')
-      .map(event => event.target.dataset.path),
-    // remote, via proxy
-    sources.titleBar.map(url => {
-      // console.log('titlebar', url)
-      const params = {}
-      const useProxy = params.proxyUrl !== undefined || url.match(/#(https?:\/\/\S+)$/) !== null
-      const documentUri = fetchUriParams(url, 'uri', undefined) || nth(1, url.match(/#(https?:\/\/\S+)$/)) || nth(1, document.URL.match(/#(examples\/\S+)$/))
-      const baseUri = location.protocol + '//' + location.host + location.pathname
-      // console.log('useProxy', useProxy, documentUri, baseUri)
-      const documentUris = [documentUri]
-      return documentUri // {type: 'loadRemote', data: {documentUris}}
-    })
-  ])
-    .filter(x => x !== undefined)
-    .map(data => ({type: 'read', id: 'loadRemote', url: data}))
-    .multicast()
-
-  return {
-    // generic key shortuct handler
-    actionsFromKey$,
+  const actions = {
     // set shortcut(s)
     setShortcuts$,
     setShortcut$,
+    triggerFromShortcut$, // generic key shortuct handler
     // generic clear error action
     clearErrors$,
     setErrors$,
-    // app updates
-    setAppUpdatesAvailable$,
-    // translations
+    // translations, languages
+    requestGetAvailableLanguages$,
+    requestGetDefaultLanguage$,
     setAvailableLanguages$,
+    setLanguage$,
     // examples or other http files
     requestRemoteFile$,
     // ui
-    changeTheme$,
-    changeLanguage$,
-    setActiveTool$
+    setTheme$,
+    setActiveTool$,
+    // io
+    requestExport$,
+    // settings
+    requestReadSettings$,
+    requestWriteSettings$
   }
+
+  console.log('actions', actions)
+  return actions
 }
 
 module.exports = makeActions

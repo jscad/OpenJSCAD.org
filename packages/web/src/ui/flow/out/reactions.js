@@ -7,14 +7,19 @@ function makeReactions (inputs) {
   // FIXME: without this we have no render !! double check
   sources.state$.forEach(x => x)
 
+  const foo$ = most.mergeArray(Object.values(actions$))
+  foo$.filter(x => 'sink' in x)
+    .forEach(x => console.log('put to', x.sink, x))
+
   // output to dom
   dom(require('./dom')(inputs))
 
   // output to i18n
-  i18n(require('./i18n')(inputs))
+  i18n(foo$.filter(x => 'sink' in x && x.sink === 'i18n'))// require('./i18n')(inputs))
 
   // output to storage
-  store(require('./storage')(inputs))
+  const outToStore$ = most.mergeArray([actions$.requestReadSettings$, actions$.requestWriteSettings$])
+  store(outToStore$)
 
   // output to http
   http(require('./http')(inputs))
@@ -86,7 +91,7 @@ function makeReactions (inputs) {
   ) */
 
   // TODO : move to side effect
-  actions$.exportRequested$.forEach(action => {
+  actions$.requestExport$.forEach(action => {
     console.log('export requested', action)
     const {saveAs} = require('file-saver')
     const {prepareOutput} = require('../../../core/io/prepareOutput')
