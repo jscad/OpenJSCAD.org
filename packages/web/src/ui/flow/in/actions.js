@@ -2,7 +2,7 @@ const makeActions = (sources) => {
   const {setActiveTool$} = require('./tools')({sources})
   const {setTheme$} = require('./themes')({sources})
   const {requestGetAvailableLanguages$,
-    requestGetDefaultLanguage$, setAvailableLanguages$, setLanguage$} = require('./languages')({sources})
+    requestGetDefaultLanguage$, setAvailableLanguages$, requestGetLanguageData$, setLanguage$} = require('./languages')({sources})
   const {setShortcuts$, setShortcut$, triggerFromShortcut$} = require('./shortcuts')({sources})
   const {setErrors$, clearErrors$} = require('./errors')({sources})
 
@@ -20,6 +20,7 @@ const makeActions = (sources) => {
     clearErrors$,
     setErrors$,
     // translations, languages
+    requestGetLanguageData$,
     requestGetAvailableLanguages$,
     requestGetDefaultLanguage$,
     setAvailableLanguages$,
