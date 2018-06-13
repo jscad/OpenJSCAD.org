@@ -45,6 +45,7 @@ const initialize = () => {
 // this sets either the list of available file/folder names
 // or that AND the files & folders tree (web)
 const prepareDesignData = (state, data) => {
+  console.log('prepareDesignData', state, data);
   const filesAndFolders = data
 
   const design = Object.assign({}, state.design, {filesAndFolders})
@@ -205,6 +206,7 @@ const toggleVtreeMode = (state, vtreeMode) => {
 
 module.exports = {
   initialize,
+  prepareDesignData,
   setDesignPath,
   setDesignContent,
   setDesignParameters,

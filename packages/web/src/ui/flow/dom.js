@@ -1,5 +1,4 @@
 const makeOutput = ({sources, extras}) => {
-
   return sources.state$
     .skipRepeatsWith(function (state, previousState) {
       return JSON.stringify(state) === JSON.stringify(previousState)

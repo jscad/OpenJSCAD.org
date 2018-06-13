@@ -1,6 +1,6 @@
 const most = require('most')
 const getParameterValuesFromUIControls = require('@jscad/core/parameters/getParameterValuesFromUIControls')
-
+const {nth, toArray} = require('@jscad/core/utils/arrays')
 const url = require('url')
 
 function fetchUriParams (uri, paramName, defaultValue = undefined) {
@@ -8,16 +8,6 @@ function fetchUriParams (uri, paramName, defaultValue = undefined) {
   let result = params.query
   if (paramName in result) return result[paramName]
   return defaultValue
-}
-// helper function to retrieve the nth element of an array
-function nth (index, data) {
-  if (!data) {
-    return undefined
-  }
-  if (data.length < index) {
-    return undefined
-  }
-  return data[index]
 }
 
 const actions = ({sources}) => {
@@ -107,6 +97,15 @@ const actions = ({sources}) => {
   ])
     .map(data => ({type: 'setDesignSolids', data}))
 
+  const timeoutGeometryRecompute$ = most.mergeArray([
+    most.never()
+    /* designPath$
+    sources.state$
+    .delay(60000) */
+  ])
+    .map(data => ({type: 'timeOutDesignGeneration', data}))
+    .tap(x => console.log('timeOutDesignGeneration'))
+
   // design parameter change actions
   const getControls = () => Array.from(document.getElementById('paramsTable').getElementsByTagName('input'))
     .concat(Array.from(document.getElementById('paramsTable').getElementsByTagName('select')))
@@ -152,13 +151,6 @@ const actions = ({sources}) => {
   ])
     .map(data => ({type: 'setDesignParameters', data}))
 
-  const timeoutGeometryRecompute$ = most.never()
-    /* designPath$
-    sources.state$
-    .delay(60000) */
-    .map(data => ({type: 'timeOutDesignGeneration', data}))
-    .tap(x => console.log('timeOutDesignGeneration'))
-
   // ui/toggles
   const toggleAutoReload$ = most.mergeArray([
     sources.dom.select('#autoReload').events('click')
@@ -190,19 +182,19 @@ const actions = ({sources}) => {
     sources.dom.select('.example').events('click')
       .map(event => event.target.dataset.path),
     // remote, via proxy
-    sources.titleBar.map(url => {
+    sources.titleBar.filter(x => x !== undefined).map(url => {
       // console.log('titlebar', url)
-      const params = {}
-      const useProxy = params.proxyUrl !== undefined || url.match(/#(https?:\/\/\S+)$/) !== null
+      // const params = {}
+      // const useProxy = params.proxyUrl !== undefined || url.match(/#(https?:\/\/\S+)$/) !== null
       const documentUri = fetchUriParams(url, 'uri', undefined) || nth(1, url.match(/#(https?:\/\/\S+)$/)) || nth(1, document.URL.match(/#(examples\/\S+)$/))
-      const baseUri = location.protocol + '//' + location.host + location.pathname
+      // const baseUri = location.protocol + '//' + location.host + location.pathname
       // console.log('useProxy', useProxy, documentUri, baseUri)
-      const documentUris = [documentUri]
-      return documentUri // {type: 'loadRemote', data: {documentUris}}
+      const documentUris = documentUri ? [documentUri] : undefined
+      return documentUris
     })
   ])
     .filter(x => x !== undefined)
-    .map(data => ({type: 'read', id: 'loadRemote', url: data, sink: 'http'}))
+    .map(data => ({type: 'read', id: 'loadRemote', urls: toArray(data), sink: 'http'}))
     .multicast()
 
   const requestAddDesignData$ = most.mergeArray([
@@ -295,10 +287,10 @@ const actions = ({sources}) => {
     }) */
 
   // FIXME: this needs to be elsewhere
-  const setZoomingBehaviour$ = ''
+  // const setZoomingBehaviour$ = ''
     // setDesignContent$.map(x=>{behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']})
   // FIXME : same for this one, in IO ??
-  const setAvailableExportFormats = setDesignSolids$
+  // const setAvailableExportFormats = setDesignSolids$
 
   return {
     setDesignPath$,
