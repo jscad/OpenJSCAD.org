@@ -9,6 +9,7 @@ const rebuildSolids = (data, callback) => {
   const {vtreeMode, lookup, lookupCounts} = Object.assign({}, defaults, options)
   const apiMainPath = vtreeMode ? './vtreeApi' : '@jscad/csg/api'
 
+  console.log('foo', data.filesAndFolders)
   const designData = loadDesign(source, mainPath, apiMainPath, parameterValuesOverride, data.filesAndFolders)
 
   // send back parameter definitions & values

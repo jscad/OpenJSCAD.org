@@ -1,3 +1,7 @@
+/** transform an old type 'implicit imports' jscad script into one with explicit imports
+ * @param  {} source
+ * @param  {} csgBasePath
+ */
 const modulifySource = (source, csgBasePath) => {
   const getParamsString = source.includes('getParameterDefinitions')
       ? 'module.exports.getParameterDefinitions = getParameterDefinitions' : ''

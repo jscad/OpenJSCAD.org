@@ -80,7 +80,7 @@ const makeWebRequire = (filesAndFolders, options) => {
   registerFilesAndFolders(filesAndFolders, filesAndFolders)
 
   const _require = (curPath, reqPath) => {
-    console.log('require-ing module', reqPath)
+    // console.log('require-ing module', reqPath)
     const path = require('path')
     // relative paths
     if (curPath && reqPath.startsWith('.')) {
@@ -89,12 +89,10 @@ const makeWebRequire = (filesAndFolders, options) => {
         reqPath = reqPath.slice(1)
       }
     }
-    console.log('path', reqPath)
 
     const baseExt = getFileExtensionFromString(reqPath)
     let entry
     if (baseExt === undefined) {
-      console.log('no extension')
       const commonExtensions = ['js', 'jscad', 'json']
       entry = findMatch(reqPath + '.js', filesAndFolders)
       if (!entry) {
@@ -128,6 +126,7 @@ const makeWebRequire = (filesAndFolders, options) => {
       if (modules[entry.fullPath]) {
         result = modules[entry.fullPath]
       } else {
+        console.log('require foo', entry)
         const moduleMakerFunction = new Function('require', 'module', entry.source)
         let newModule = {}
         moduleMakerFunction(_require.bind(null, entry.fullPath), newModule)
@@ -137,7 +136,7 @@ const makeWebRequire = (filesAndFolders, options) => {
       }
     }
 
-    console.log('found entry', entry, result)
+    // console.log('found entry', entry, result)
     return result.exports ? result.exports : result
   }
 

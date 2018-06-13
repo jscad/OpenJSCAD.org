@@ -22,7 +22,6 @@ function makeJscad (targetElement, options) {
   const storage = require('./sideEffects/localStorage')(name)
   // http requests
   const http = require('./sideEffects/http')()
-
   // title bar side effect
   const titleBar = require('@jscad/core/sideEffects/titleBar')()
   // drag & drop side effect // FIXME: unify with the one in core()
@@ -41,7 +40,7 @@ function makeJscad (targetElement, options) {
     }
   })
   // web workers
-  const solidWorker = makeWorkerEffect(require('./core/code-evaluation/rebuildSolidsWorker.js'))
+  const geometryWorker = makeWorkerEffect(require('./core/code-evaluation/rebuildGeometryWorker.js'))
   // generic design parameter handling
   const paramsCallbacktoStream = require('@jscad/core/observable-utils/callbackToObservable')()
   // generic editor events handling
@@ -61,7 +60,7 @@ function makeJscad (targetElement, options) {
     http: http.source(),
     drops: dragDrop.source(),
     dom: dom.source(),
-    solidWorker: solidWorker.source(),
+    solidWorker: geometryWorker.source(),
     i18n: i18n.source(),
     titleBar: titleBar.source()  // #http://openjscad.org/examples/slices/tor.jscad
   }
@@ -73,7 +72,7 @@ function makeJscad (targetElement, options) {
     http: http.sink,
     i18n: i18n.sink,
     dom: dom.sink,
-    solidWorker: solidWorker.sink
+    solidWorker: geometryWorker.sink
   }
 
   // all the actions

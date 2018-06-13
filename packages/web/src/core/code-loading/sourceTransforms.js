@@ -19,9 +19,9 @@ const translateToJscad = (options, entry) => {
   const {apiMainPath} = options
   const deserializeStl = require('@jscad/io').stlDeSerializer.deserialize
   const source = deserializeStl(entry.source, entry.name, options)
-  const ext = 'js'
-  const name = entry.name.split('.') + ext
-  const fullPath = entry.fullPath.split('.') + ext
+  // const ext = 'js'
+  // const name = entry.name.split('.') + ext
+  // const fullPath = entry.fullPath.split('.') + ext
   return Object.assign({}, entry, {source})
 }
 

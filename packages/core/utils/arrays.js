@@ -19,4 +19,15 @@ const flatten = list => list.reduce(
   (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
 )
 
-module.exports = {toArray, head, flatten}
+// helper function to retrieve the nth element of an array
+const nth = (index, data) => {
+  if (!data) {
+    return undefined
+  }
+  if (data.length < index) {
+    return undefined
+  }
+  return data[index]
+}
+
+module.exports = {toArray, head, flatten, nth}
