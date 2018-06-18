@@ -25,7 +25,7 @@ function prepareOutput (objects, params) {
     stl: stlSerializer, // CSG to STL ASCII // NOTE: now using binary output by default !!
     stla: {
       mimeType: stlSerializer.mimeType,
-      serialize: data => stlSerializer.serialize(data, {binary: false})
+      serialize: data => stlSerializer.serialize({binary: false}, data)
     }, // CSG to STL ASCII
     stlb: stlSerializer, // CSG to STL BINARY
     dxf: dxfSerializer, // CAG to DXF

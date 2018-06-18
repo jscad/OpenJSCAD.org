@@ -15,7 +15,7 @@ const modulifyTransform = (options, entry) => {
 }
 
 const translateToJscad = (options, entry) => {
-  console.log('translateToJscad', entry)
+  // console.log('translateToJscad', entry)
   const {apiMainPath} = options
   const deserializeStl = require('@jscad/io').stlDeSerializer.deserialize
   const source = deserializeStl(entry.source, entry.name, options)
@@ -26,7 +26,7 @@ const translateToJscad = (options, entry) => {
 }
 
 const transformSources = (options, filesAndFolders) => {
-  console.log('transformSources', options, filesAndFolders)
+  // console.log('transformSources', options, filesAndFolders)
   const transformsPerFormat = {
     'js': [modulifyTransform],
     'jscad': [modulifyTransform],
@@ -37,12 +37,12 @@ const transformSources = (options, filesAndFolders) => {
   function updateEntry (entry) {
     if (entry.source) {
       const transforms = transformsPerFormat[entry.ext] ? transformsPerFormat[entry.ext] : [passThroughTransform]
-      console.log('applyingTransforms', transforms)
+      // console.log('applyingTransforms', transforms)
       const transformedEntry = transforms.reduce((entry, transform) => {
         return transform(options, entry)
       }, entry)
 
-      console.log('source after transform', transformedEntry)
+      // console.log('source after transform', transformedEntry)
       return transformedEntry// Object.assign({}, entry, {source: transformedEntry.source})
     }
     if (entry.children) {

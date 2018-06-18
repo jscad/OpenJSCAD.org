@@ -63,7 +63,7 @@ const reducers = {
 // this sets either the list of available file/folder names
 // or that AND the files & folders tree (web)
   prepareDesignData: (state, data) => {
-    console.log('prepareDesignData', state, data)
+    // console.log('prepareDesignData', state, data)
     const filesAndFolders = data
 
     const design = Object.assign({}, state.design, {filesAndFolders})
@@ -76,7 +76,7 @@ const reducers = {
  * @returns {Object} the updated state
  */
   setDesignPath: (state, paths) => {
-    console.log('setDesignPath', paths)
+    // console.log('setDesignPath', paths)
   // FIXME:  DO NOT DO THIS HERE !!
     const filesAndFolders = paths.filesAndFolders
 
@@ -108,7 +108,7 @@ const reducers = {
  * @returns {Object} the updated state
  */
   setDesignContent: (state, source) => {
-    console.log('setDesignContent')
+    // console.log('setDesignContent')
   /*
     func(parameterDefinitions) => paramsUI
     func(paramsUI + interaction) => params
@@ -140,7 +140,7 @@ const reducers = {
  * @returns {Object} the updated state
  */
   setDesignSolids: (state, {solids, lookup, lookupCounts}) => {
-    console.log('setDesignSolids', lookup)
+    // console.log('setDesignSolids', lookup)
     solids = solids || []
     lookup = lookup || {}
     lookupCounts = lookupCounts || {}
@@ -153,7 +153,7 @@ const reducers = {
   // TODO: move this to IO ??
     const {exportFormat, availableExportFormats} = availableExportFormatsFromSolids(solids)
     const exportInfos = exportFilePathFromFormatAndDesign(design, exportFormat)
-    console.log('setting export stuff')
+    // console.log('setting export stuff')
     const io = {
       exportFormat,
       exportFilePath: exportInfos.exportFilePath, // default export file path
@@ -246,7 +246,6 @@ const actions = ({sources}) => {
     .filter(data => data !== undefined)
     .debounce(50)
     .multicast()
-    .tap(x => console.log('designPath', x))
 
   const setDesignPath$ = designPath$
     .thru(withLatestFrom(reducers.setDesignPath, sources.state))
@@ -444,17 +443,18 @@ const actions = ({sources}) => {
     sources.fs
       .filter(response => response.type === 'add')
       .map(({data}) => ({data, id: 'loadDesign', path: data[0].fullPath}))
-      .delay(1), // FIXME !! we have to add a 1 ms delay otherwise the source & the sink are fired at the same time
+      .delay(1) // FIXME !! we have to add a 1 ms delay otherwise the source & the sink are fired at the same time
       // this needs to be fixed in callBackToStream
     // files to read/write
-    sources.state
+    /* sources.state
       .filter(state => state.design && state.design.mainPath !== '')
       .map(state => state.design.mainPath)
       .skipRepeatsWith((state, previousState) => {
         return JSON.stringify(state) === JSON.stringify(previousState)
       })
-      .map(path => ({id: 'loadDesign', path}))
+      .map(path => ({id: 'loadDesign', path})) */
   ])
+    .tap(x => console.log('response from file system', x))
     .map(payload => Object.assign({}, {type: 'read', sink: 'fs'}, payload))
 
   const requestWatchDesign$ = most.mergeArray([

@@ -17,9 +17,9 @@ const reducers = {
     const io = Object.assign({}, state.io, exportFilePathFromFormatAndDesign(state.design, exportFormat))
     return Object.assign({}, state, {io})
   },
-  requestExport: (state, event) => {
-    console.log('event', event)
-    const defaultExportFilePath = state.io.exportFilePath
+  requestExport: (state, _) => {
+    const {defaultExportFilePath, exportFormat} = state.io
+    const {solids} = state.design
     /* const filePath = undefined // dialog.showSaveDialog({properties: ['saveFile'], title: 'export design to', defaultPath: defaultExportFilePath})//, function (filePath) {
       console.log('saving', filePath)
       if (filePath !== undefined) {
@@ -27,8 +27,18 @@ const reducers = {
         saveDataToFs(data, exportFormat, filePath)
       } */
       // return {defaultExportFilePath, exportFormat, data}
-    const io = Object.assign({}, state.io, {defaultExportFilePath, exportFormat: state.exportFormat, data: state.design.solids})
-    return Object.assign({}, state, {io})
+    console.log('export requested', solids)
+    const {saveAs} = require('file-saver')
+    const {prepareOutput} = require('../../core/io/prepareOutput')
+    const {convertToBlob} = require('../../core/io/convertToBlob')
+
+    // saveDataToFs(data, exportFormat, filePath)
+    const format = exportFormat
+    const blob = convertToBlob(prepareOutput(solids, {format}))
+    // fs.writeFileSync(filePath, buffer)
+    saveAs(blob, defaultExportFilePath)
+    // const io = Object.assign({}, state.io, {defaultExportFilePath, exportFormat: state.exportFormat, data: state.design.solids})
+    // return Object.assign({}, state, {io})
   }
 }
 
@@ -49,19 +59,5 @@ const actions = ({sources}) => {
 
   return {initializeExports$, requestExport$, changeExportFormat$}
 }
-
- // TODO : move to side effect
- /*actions$.requestExport$.forEach(action => {
-  console.log('export requested', action)
-  const {saveAs} = require('file-saver')
-  const {prepareOutput} = require('../../core/io/prepareOutput')
-  const {convertToBlob} = require('../../core/io/convertToBlob')
-
-  const outputData = action.data.data
-  const format = action.data.exportFormat
-  const blob = convertToBlob(prepareOutput(outputData, {format}))
-  // fs.writeFileSync(filePath, buffer)
-  saveAs(blob, action.data.defaultExportFilePath)
-}) */
 
 module.exports = actions

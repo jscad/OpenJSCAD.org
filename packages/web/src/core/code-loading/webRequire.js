@@ -39,11 +39,11 @@ const updatePaths = (entry) => {
  * @param  {} isScoped=false
  */
 const registerFilesAndFolders = (filesAndFolders, inputs, isInNodeModules = false, isScoped = false) => {
-  console.log('registerFilesAndFolders', filesAndFolders)
+  // console.log('registerFilesAndFolders', filesAndFolders)
   for (let i = 0; i < inputs.length; i++) {
     const entry = inputs[i]
     if (isInNodeModules) {
-      console.log('insertingNodeModule', entry.name, entry.fullPath)
+      // console.log('insertingNodeModule', entry.name, entry.fullPath)
       const alreadyExists = filesAndFolders.filter(x => x.fullPath === entry.fullPath).length > 0
       if (!alreadyExists) {
         entry.fullPath = entry.fullPath.includes('node_modules/') ? entry.fullPath.split('node_modules/')[1] : entry.fullPath
@@ -63,7 +63,7 @@ const registerFilesAndFolders = (filesAndFolders, inputs, isInNodeModules = fals
 }
 
 const makeWebRequire = (filesAndFolders, options) => {
-  console.log('making web require', filesAndFolders)
+  // console.log('making web require', filesAndFolders)
   // preset modules
   let modules = {
     '@jscad/csg/api': {
@@ -126,13 +126,13 @@ const makeWebRequire = (filesAndFolders, options) => {
       if (modules[entry.fullPath]) {
         result = modules[entry.fullPath]
       } else {
-        console.log('require foo', entry)
+        // console.log('require foo', entry)
         const moduleMakerFunction = new Function('require', 'module', entry.source)
         let newModule = {}
         moduleMakerFunction(_require.bind(null, entry.fullPath), newModule)
         modules[entry.fullPath] = newModule.exports
         result = newModule
-        console.log('modules', modules)
+        // console.log('modules', modules)
       }
     }
 
