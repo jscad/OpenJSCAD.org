@@ -1,11 +1,19 @@
 const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
+const {head} = require('@jscad/core/utils/arrays')
 const makeFakeFs = require('./makeFakeFs')
 const {walkFileTree} = require('./walkFileTree')
 const {changedFiles, flattenFiles} = require('./utils')
 const getFileExtensionFromString = require('../../utils/getFileExtensionFromString')
+const makeLogger = require('../../utils/logger')
 
-const makeMemFsSideEffect = () => {
+const makeMemFsSideEffect = (params) => {
+  const defaults = {
+    logging: true
+  }
+  const {logging} = Object.assign({}, defaults, params)
+  const log = makeLogger({enabled: logging})
+
   const commandResponses = callBackToStream()
 
   // general data
@@ -21,9 +29,10 @@ const makeMemFsSideEffect = () => {
         isRawData: false
       }
       const {isRawData} = Object.assign({}, defaults, options)
-      console.log(`memfs: operation: ${type} ${path} ${id} ${options}`)
+      log.info(`memfs: operation: ${type} ${path} ${id} ${options}`)
+
       if (type === 'read') {
-        console.log('reading in memfs', data, path, options)
+        log.info('reading in memfs', data, path, options)
         if (fs.statSync(path).isFile()) {
           fs.readFile(path, 'utf8', function (error, data) {
             if (error) {
@@ -49,9 +58,9 @@ const makeMemFsSideEffect = () => {
           const name = require('path').basename(path)
           const ext = getFileExtensionFromString(path)
 
-          filesAndFolders = [
+          filesAndFolders = filesAndFolders.concat([
             {name, ext, source: data, fullPath: path}
-          ]
+          ])
           fs = makeFakeFs(filesAndFolders)
           commandResponses.callback({type, id, data: filesAndFolders})
         } else {
@@ -73,6 +82,18 @@ const makeMemFsSideEffect = () => {
 
         const rootModule = fakeRequire._require(entryPoint)
         console.log('rootModule', rootModule) */
+      } else if (type === 'write') {
+        log.info('write', command, filesAndFolders, path)
+        const foundEntry = head(filesAndFolders.filter(entry => entry.fullPath === path))
+        if (!foundEntry) {
+          const name = require('path').basename(path)
+          const ext = getFileExtensionFromString(path)
+
+          filesAndFolders = filesAndFolders.concat([
+            {name, ext, source: data, fullPath: path}
+          ])
+          fs = makeFakeFs(filesAndFolders)
+        }
       } else if (type === 'watch') {
         // if rawData is undefined, it means we cannot watch the target data
         // ie data loaded from http etc
@@ -87,7 +108,7 @@ const makeMemFsSideEffect = () => {
           watcher = setInterval(function () {
             const files = walkFileTree(rawData)
             files.catch(function (error) {
-              console.error('failed to read files', error)
+              log.error('failed to read files', error)
             })
             files.then(function (files) {
               const flatCurrent = flattenFiles(filesAndFolders)

@@ -1,16 +1,27 @@
 const most = require('most')
+const withLatestFrom = require('../../utils/observable-utils/withLatestFrom')
 const {getKeyCombos, isKeyEventScopeValid, simpleKey} = require('../../utils/keys')
 const {head} = require('@jscad/core/utils/arrays')
 
+const reducers = {
+  initalize: () => {
+    require('../../../data/keybindings.json')
+  },
+  setShortcut: (state, shortcuts) => Object.assign({}, state, {shortcuts})
+}
+
 // keyboard shortcut handling
 const actions = ({sources}) => {
+  const initializeShortcuts$ = most.just(reducers.initalize())
+
   // set shortcuts
   const setShortcuts$ = most.mergeArray([
     sources.store
       .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.shortcuts)
       .map(reply => reply.data.shortcuts)
   ])
-  .map(data => ({type: 'setShortcuts', data}))
+  .thru(withLatestFrom(reducers.setShortcut, sources.state))
+  .map(payload => Object.assign({}, {type: 'setShortcuts', sink: 'state'}, {state: payload}))
 
   // set a specific shortcut
   const shortcutCommandUp$ = sources.dom.select('.shortcutCommand').events('keyup')
@@ -38,7 +49,6 @@ const actions = ({sources}) => {
   const setShortcut$ = most.mergeArray([
     shortcutCommandKey$
       .map(({event, compositeKey}) => ({event, compositeKey, inProgress: true}))
-
     .merge(
       sources.dom.select('.shortcutCommand').events('focus')
         .map(event => ({event, compositeKey: '', inProgress: true}))
@@ -77,6 +87,37 @@ const actions = ({sources}) => {
   ])
   .map(data => ({type: 'setShortcut', data}))
   .multicast()
+  /*// set a specific shortcut
+const setShortcut = (state, shortcutData) => {
+  const alreadyExists = key => {
+    return state.shortcuts
+      .filter(shortcut => shortcut.key === key)
+      .length > 0
+  }
+  const shortcuts = state.shortcuts.map(shortcut => {
+    const match = shortcut.command === shortcutData.command && shortcut.args === shortcutData.args
+    if (!match) {
+      return shortcut
+    } else {
+      if ('inProgress' in shortcutData) {
+        const {inProgress, tmpKey} = shortcutData
+        if (inProgress) {
+          const error = alreadyExists(tmpKey) ? 'shortcut already exists' : undefined
+          return Object.assign({}, shortcut, {inProgress, tmpKey: tmpKey, error})
+        } else {
+          return Object.assign({}, shortcut, {inProgress, tmpKey: tmpKey})
+        }
+      }
+      if (shortcutData.done && !alreadyExists(shortcutData.key)) {
+        const { command, args } = shortcut
+        const updatedShortcut = {key: shortcutData.key, command, args}
+        return updatedShortcut
+      }
+      return shortcut
+    }
+  })
+  return Object.assign({}, state, {shortcuts})
+}*/
 
   // to make sure the key event was fired in the scope of the current jscad instance
   const myKey = sources.dom.element.getAttribute('key')
@@ -98,10 +139,10 @@ const actions = ({sources}) => {
       return {type: command, data: args}
     }
     return undefined
-  }, keyCombos$, keyCombos$, sources.state$)
+  }, keyCombos$, keyCombos$, sources.state)
     .filter(x => x !== undefined)
 
-  return {setShortcut$, setShortcuts$, triggerFromShortcut$}
+  return {initializeShortcuts$, setShortcut$, setShortcuts$, triggerFromShortcut$}
 }
 
 module.exports = actions

@@ -1,7 +1,7 @@
 const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
 
-module.exports = function makeStorageSideEffect (name) {
+module.exports = function makeStorageSideEffect ({name}) {
   const reply = callBackToStream()
 
   function sink (outToStore$) {

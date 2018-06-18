@@ -1,50 +1,33 @@
 const makeActions = (sources) => {
-  const {setActiveTool$} = require('./tools')({sources})
-  const {setTheme$} = require('./themes')({sources})
-  const {requestGetAvailableLanguages$,
-    requestGetDefaultLanguage$, setAvailableLanguages$, requestGetLanguageData$, setLanguage$} = require('./languages')({sources})
-  const {setShortcuts$, setShortcut$, triggerFromShortcut$} = require('./shortcuts')({sources})
-  const {setErrors$, clearErrors$} = require('./errors')({sources})
+  const toolActions = require('./tools')({sources})
+  const themeActions = require('./themes')({sources})
+  const languageActions = require('./languages')({sources})
+  const shortcutActions = require('./shortcuts')({sources})
+  const errorActions = require('./errors')({sources})
+  const exportActions = require('./exports')({sources})
 
-  const {requestExport$, changeExportFormat$} = require('./exports')({sources})
+  // Todo: each 'store' needs to handle its own saving to settings, independantly from the others
+  const settingsActions = require('./settings')({sources})
+  const designActions = require('./design')({sources})
 
-  const {requestReadSettings$, requestWriteSettings$} = require('./settings')({sources})
-  const { setDesignPath$,
-    setDesignContent$,
-    requestGeometryRecompute$,
-    timeoutGeometryRecompute$,
-    setDesignSolids$,
-    setDesignParameters$,
-    requestLoadRemoteData$,
-    requestAddDesignData$,
-    requestLoadDesign$,
-    requestWatchDesign$,
-    toggleAutoReload$,
-    toggleInstantUpdate$,
-    toggleVTreeMode$} = require('./design')({sources})
-
-  const actions = {
+  //const actions = {
     // set shortcut(s)
-    setShortcuts$,
+    /* setShortcuts$,
     setShortcut$,
     triggerFromShortcut$, // generic key shortuct handler
+    */
     // generic clear error action
-    clearErrors$,
-    setErrors$,
+    /* clearErrors$,
+    setErrors$, */
     // translations, languages
-    requestGetLanguageData$,
-    requestGetAvailableLanguages$,
-    requestGetDefaultLanguage$,
-    setAvailableLanguages$,
-    setLanguage$,
     // ui
-    setTheme$,
-    setActiveTool$,
+    // setActiveTool$,
     // io
+    /* initializeExports$,
     requestExport$,
-    changeExportFormat$,
+    changeExportFormat$, */
     // design
-    setDesignPath$,
+    /* setDesignPath$,
     setDesignContent$,
     requestGeometryRecompute$,
     timeoutGeometryRecompute$,
@@ -53,17 +36,27 @@ const makeActions = (sources) => {
     requestLoadRemoteData$,
     requestAddDesignData$,
     requestLoadDesign$,
+    requestWriteCachedGeometry$,
     requestWatchDesign$,
     toggleAutoReload$,
     toggleInstantUpdate$,
-    toggleVTreeMode$,
+    toggleVTreeMode$ */
     // settings
-    requestReadSettings$,
-    requestWriteSettings$
-  }
+    /* requestReadSettings$,
+    requestWriteSettings$ */
 
-  console.log('actions', actions)
-  return actions
+  return Object.assign({},
+    errorActions,
+    designActions,
+    exportActions,
+
+    settingsActions,
+
+    toolActions,
+    themeActions,
+    languageActions,
+    shortcutActions
+  )
 }
 
 module.exports = makeActions

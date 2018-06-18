@@ -33,7 +33,8 @@ const actions = ({sources}) => {
   }
 
   // output settings (app state) to local storage for saving everytime they change
-  const requestWriteSettings$ = sources.state$
+  const requestWriteSettings$ = sources.state
+      .filter(state => state.design)
       .map(settingsToStore)
       .skipRepeatsWith((previousState, currentState) => JSON.stringify(previousState) === JSON.stringify(currentState))
       .delay(1000)// delay the first saving to avoir overwriting existing settings

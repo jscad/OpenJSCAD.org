@@ -33,7 +33,7 @@ function extractData (event) {
   return []
 }
 
-const makeDragAndDropSideEffect = (targetEl) => {
+const makeDragAndDropSideEffect = ({targetEl}) => {
   // onst dragOvers$ = DOM.select(':root').events('dragover')
   // const drops$ = DOM.select(':root').events('drop')
   function dragEvents (targetEl) {

@@ -1,7 +1,7 @@
 // UI
 const SET_SHORTCUTS = 'setShortcuts'
 const SET_SHORTCUT = 'setShortcut'
-const SET_THEME = 'changeTheme'
+const SET_THEME = 'setTheme'
 const SET_LANGUAGE = 'changeLanguage'
 const SET_AVAILABLE_LANGUAGES = 'setAvailableLanguages'
 const SET_ACTIVE_TOOL = 'setActiveTool'

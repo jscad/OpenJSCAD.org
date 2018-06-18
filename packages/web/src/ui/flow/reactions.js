@@ -2,11 +2,13 @@ const most = require('most')
 
 function makeReactions (inputs) {
   const {sinks, sources, actions$, extras} = inputs
-  const {store, fs, http, i18n, dom, solidWorker} = sinks
+  const {store, fs, http, i18n, dom, solidWorker, state} = sinks
 
-  // FIXME: without this we have no render !! double check
-  sources.state$.forEach(x => x)
-  const outputs$ = most.mergeArray(Object.values(actions$))
+  const outputs$ = most.mergeArray(Object.values(actions$)).multicast()
+    .filter(x => x !== undefined)
+  outputs$
+    .filter(x => 'sink' in x && x.sink === 'state')
+    .forEach(x => console.log(' out to state', x))
 
   // output to dom
   dom(require('./dom')(inputs))
@@ -23,13 +25,15 @@ function makeReactions (inputs) {
   fs(outputs$.filter(x => 'sink' in x && x.sink === 'fs'))
   // web worker sink
   solidWorker(outputs$.filter(x => 'sink' in x && x.sink === 'geometryWorker'))
+  // state sink
+  state(outputs$.filter(x => 'sink' in x && x.sink === 'state'))
 
   // viewer data
   const makeCsgViewer = require('@jscad/csg-viewer')
   let csgViewer
   const jscadEl = extras.jscadEl
-  sources.state$
-    .filter(state => state.design.mainPath !== '')
+  sources.state
+    .filter(state => state.design && state.design.mainPath !== '')
     .skipRepeatsWith(function (state, previousState) {
       const sameSolids = state.design.solids.length === previousState.design.solids.length &&
       JSON.stringify(state.design.solids) === JSON.stringify(previousState.design.solids)
@@ -41,7 +45,7 @@ function makeReactions (inputs) {
       }
     })
 
-  sources.state$
+  sources.state
   .map(state => state.viewer)
   // FIXME: not working correctly with themeing
   /* .skipRepeatsWith(function (state, previousState) {
@@ -78,22 +82,8 @@ function makeReactions (inputs) {
   // titlebar & store side effects
   // FIXME/ not compatible with multiple instances !!
   /* titleBar.sink(
-    state$.map(state => state.appTitle).skipRepeats()
+    state.map(state => state.appTitle).skipRepeats()
   ) */
-
-  // TODO : move to side effect
-  actions$.requestExport$.forEach(action => {
-    console.log('export requested', action)
-    const {saveAs} = require('file-saver')
-    const {prepareOutput} = require('../../core/io/prepareOutput')
-    const {convertToBlob} = require('../../core/io/convertToBlob')
-
-    const outputData = action.data.data
-    const format = action.data.exportFormat
-    const blob = convertToBlob(prepareOutput(outputData, {format}))
-    // fs.writeFileSync(filePath, buffer)
-    saveAs(blob, action.data.defaultExportFilePath)
-  })
 }
 
 module.exports = makeReactions

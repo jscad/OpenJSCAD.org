@@ -30,7 +30,7 @@ module.exports = function options (state, i18n) {
       <input id='toggleVtreeMode' type='checkbox' checked=${state.design.vtreeMode}/>
     </label>
     <label>${i18n`timeout for solids generation`}
-      <input id='solidsTimeout' type='number' min=0 max=200000 value=${state.solidsTimeOut} disabled />
+      <input id='solidsTimeout' type='number' min=0 max=200000 value=${state.design.solidsTimeOut} disabled />
     </label>
   </fieldset>
 
