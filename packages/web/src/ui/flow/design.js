@@ -35,6 +35,8 @@ const reducers = {
       filesAndFolders: [], // file tree, of sorts
     // code
       source: '',
+      instantUpdate: true,
+      autoReload: true,
     // if set to true, will overwrite existing code with the converted imput
     // if set to false, will create a script with an import of the input
       convertSupportedTypes: false,
@@ -151,15 +153,20 @@ const reducers = {
   // TODO: move this to IO ??
     const {exportFormat, availableExportFormats} = availableExportFormatsFromSolids(solids)
     const exportInfos = exportFilePathFromFormatAndDesign(design, exportFormat)
+    console.log('setting export stuff')
+    const io = {
+      exportFormat,
+      exportFilePath: exportInfos.exportFilePath, // default export file path
+      availableExportFormats
+    }
 
     const status = Object.assign({}, state.status, {busy: false})
 
     return Object.assign({}, state, {
       design,
       status,
-      availableExportFormats,
-      exportFormat
-    }, exportInfos)
+      io
+    })
   },
 
 /** set the parameters of this design
@@ -176,7 +183,7 @@ const reducers = {
     parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, state.design.parameterDefinitions) : parameterValues
 
   // one of many ways of filtering out data from instantUpdates
-    if (data.origin === 'instantUpdate' && !state.instantUpdate) {
+    if (data.origin === 'instantUpdate' && !state.design.instantUpdate) {
       parameterValues = state.design.parameterValues
     }
     const parameterDefaults = data.parameterDefaults || state.design.parameterDefaults
@@ -192,18 +199,19 @@ const reducers = {
     })
   },
 
-// ui/toggles
+  // ui/toggles
   toggleAutoReload: (state, autoReload) => {
-  // console.log('toggleAutoReload', autoReload)
-    return Object.assign({}, state, {autoReload})
+    // console.log('toggleAutoReload', autoReload)
+    const design = Object.assign({}, state.design, {autoReload})
+    return Object.assign({}, state, {design})
   },
   toggleInstantUpdate: (state, instantUpdate) => {
-  // console.log('toggleInstantUpdate', instantUpdate)
-    return Object.assign({}, state, {instantUpdate})
+    // console.log('toggleInstantUpdate', instantUpdate)
+    const design = Object.assign({}, state.design, {instantUpdate})
+    return Object.assign({}, state, {design})
   },
-
   toggleVtreeMode: (state, vtreeMode) => {
-  // console.log('toggleVtreeMode', vtreeMode)
+    // console.log('toggleVtreeMode', vtreeMode)
     const design = Object.assign({}, state.design, {vtreeMode})
     return Object.assign({}, state, {design})
   }
@@ -390,7 +398,7 @@ const actions = ({sources}) => {
       .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.instantUpdate !== undefined)
       .map(reply => reply.data.instantUpdate)
   ])
-    .map(data => ({type: 'toggleInstantUpdate', data}))
+    .map(data => ({type: 'toggleInstantUpdate', state: data, sink: 'state'}))
 
   const toggleVTreeMode$ = most.mergeArray([
     sources.dom.select('#toggleVtreeMode').events('click').map(event => event.target.checked),
@@ -398,7 +406,7 @@ const actions = ({sources}) => {
       .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.design && reply.data.design.vtreeMode !== undefined)
       .map(reply => reply.data.design.vtreeMode)
   ])
-    .map(data => ({type: 'toggleVtreeMode', data}))
+    .map(data => ({type: 'toggleVtreeMode', state: data, sink: 'state'}))
 
   const requestLoadRemoteData$ = most.mergeArray([
     // examples

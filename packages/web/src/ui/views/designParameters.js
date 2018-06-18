@@ -6,7 +6,7 @@ module.exports = function designParameters (state, paramsCallbacktoStream, i18n)
   const {controls} = createParamControls(parameterValues, parameterDefinitions, paramsCallbacktoStream.callback)
 
   return html`
-  <section id='params' style='visibility:${state.design.parameterDefinitions.length === 0 ? 'hidden' : 'visible'};color:${state.themeSettings.secondaryTextColor}'>
+  <section id='params' style='visibility:${state.design.parameterDefinitions.length === 0 ? 'hidden' : 'visible'};color:${state.themes.themeSettings.secondaryTextColor}'>
         <span id='paramsTable'>
           <table>
             ${controls}
@@ -15,7 +15,7 @@ module.exports = function designParameters (state, paramsCallbacktoStream, i18n)
         <span id='paramsControls'>
           <button id='updateDesignFromParams'>${i18n`update`}</button>
           <label for='instantUpdate'>${i18n`instant update`}</label>
-          <input type='checkbox' checked='${state.instantUpdate}' id='instantUpdate'/>
+          <input type='checkbox' checked='${state.design.instantUpdate}' id='instantUpdate'/>
         </span>
       </section>
     `

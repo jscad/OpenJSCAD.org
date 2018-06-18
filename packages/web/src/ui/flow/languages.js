@@ -2,18 +2,40 @@ const most = require('most')
 const withLatestFrom = require('../../utils/observable-utils/withLatestFrom')
 
 const reducers = {
-  setLanguage: (state, locale) => Object.assign({}, state, {locale}),
-  setAvailableLanguages: (state, availableLanguages) => Object.assign({}, state, {availableLanguages})
+  initialize: state => {
+    const languages = {
+      active: undefined,
+      available: []
+    }
+    return Object.assign({}, state, {languages})
+  },
+  setLanguage: (state, active) => {
+    // console.log('setLanguage', active)
+    const languages = Object.assign({}, state.languages, {active})
+    return Object.assign({}, state, {languages})
+  },
+  setAvailableLanguages: (state, available) => {
+    // console.log('setAvailableLanguages', available)
+    const languages = Object.assign({}, state.languages, {available})
+    return Object.assign({}, state, {languages})
+  }
 }
 
 const actions = ({sources}) => {
-  // send a request to get the list of available languages
+  // setup default 'empty' state
+  const initializeLanguages$ = most.just({})
+    .thru(withLatestFrom(reducers.initialize, sources.state))
+    .map(payload => Object.assign({}, {type: 'initializeLanguages', sink: 'state'}, {state: payload}))
+
+    // send a request to get the list of available languages
   const requestGetAvailableLanguages$ = most
     .just({type: 'getAvailableLanguages', sink: 'i18n'})
+    .delay(10) // so we do not do it at the same time as the initalization
 
   // send a request to get the default language
   const requestGetDefaultLanguage$ = most
     .just({type: 'getDefaultLocale', sink: 'i18n'})
+    .delay(10)
 
   // send a request to get the translations for the specificed language
   const requestGetLanguageData$ = sources.state
@@ -23,14 +45,17 @@ const actions = ({sources}) => {
 
   // set the current language, either from defaults, previous settings or manually
   const setLanguage$ = most.mergeArray([
-    /*sources.i18n
+    sources.i18n
       .filter(reply => reply.type === 'getDefaultLocale')
-      .map(reply => reply.data),*/
+      .map(reply => reply.data)
+      .delay(10)// to get stuff after the available ones have been set
+      ,
     sources.dom.select('#languageSwitcher').events('change')
       .map(e => e.target.value),
     sources.store
       .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.locale)
       .map(reply => reply.data.locale)
+      .delay(10)// to get stuff after the default locale has been set
   ])
     .thru(withLatestFrom(reducers.setLanguage, sources.state))
     .map(payload => Object.assign({}, {type: 'setLanguage', sink: 'state'}, {state: payload}))
@@ -45,6 +70,7 @@ const actions = ({sources}) => {
     .map(payload => Object.assign({}, {type: 'setAvailableLanguages', sink: 'state'}, {state: payload}))
 
   return {
+    initializeLanguages$,
     requestGetAvailableLanguages$,
     requestGetDefaultLanguage$,
     requestGetLanguageData$,

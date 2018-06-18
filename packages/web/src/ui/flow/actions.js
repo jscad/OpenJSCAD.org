@@ -10,7 +10,7 @@ const makeActions = (sources) => {
   const settingsActions = require('./settings')({sources})
   const designActions = require('./design')({sources})
 
-  //const actions = {
+  // const actions = {
     // set shortcut(s)
     /* setShortcuts$,
     setShortcut$,

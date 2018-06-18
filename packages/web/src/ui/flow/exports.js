@@ -5,20 +5,21 @@ const withLatestFrom = require('../../utils/observable-utils/withLatestFrom')
 
 const reducers = {
   initialize: (state) => {
-    const exports = {
+    const io = {
       exportFormat: '',
       exportFilePath: '', // default export file path
       availableExportFormats: []
     }
-    return Object.assign({}, state, {io: exports})
+    return Object.assign({}, state, {io})
   },
-  setExportFormat: (exportFormat, state) => {
+  setExportFormat: (state, exportFormat) => {
     console.log('exportformat', exportFormat, state)
-    return Object.assign({}, state, exportFilePathFromFormatAndDesign(state.design, exportFormat))
+    const io = Object.assign({}, state.io, exportFilePathFromFormatAndDesign(state.design, exportFormat))
+    return Object.assign({}, state, {io})
   },
   requestExport: (state, event) => {
     console.log('event', event)
-    const defaultExportFilePath = state.exportFilePath
+    const defaultExportFilePath = state.io.exportFilePath
     /* const filePath = undefined // dialog.showSaveDialog({properties: ['saveFile'], title: 'export design to', defaultPath: defaultExportFilePath})//, function (filePath) {
       console.log('saving', filePath)
       if (filePath !== undefined) {
@@ -26,7 +27,8 @@ const reducers = {
         saveDataToFs(data, exportFormat, filePath)
       } */
       // return {defaultExportFilePath, exportFormat, data}
-    return {defaultExportFilePath, exportFormat: state.exportFormat, data: state.design.solids}
+    const io = Object.assign({}, state.io, {defaultExportFilePath, exportFormat: state.exportFormat, data: state.design.solids})
+    return Object.assign({}, state, {io})
   }
 }
 

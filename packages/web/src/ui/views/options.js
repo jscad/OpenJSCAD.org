@@ -1,13 +1,13 @@
 const html = require('bel')
 
 module.exports = function options (state, i18n) {
-  const languages = state.availableLanguages.map(language => {
-    const selected = state.locale === language.code
+  const languages = state.languages.available.map(language => {
+    const selected = state.languages.active === language.code
     return html`<option value='${language.code}' selected=${selected}>${i18n.translate(language.fullName)}</option>`
   })
   const shortcuts = require('./shortcuts')(state, i18n)
   return html`
-<section id='options' style='visibility:${state.activeTool === 'options' ? 'visible' : 'hidden'}; color:${state.themeSettings.secondaryTextColor}'>   
+<section id='options' style='visibility:${state.activeTool === 'options' ? 'visible' : 'hidden'}; color:${state.themes.themeSettings.secondaryTextColor}'>   
   <br>
   <fieldset>
     <legend> <h3> ${i18n`language`}</legend>
@@ -19,8 +19,8 @@ module.exports = function options (state, i18n) {
   <fieldset>
     <legend> <h3> ${i18n`theme`} </h3> </legend>
     <select id='themeSwitcher'>
-      <option value='dark' selected=${state.themeName === 'dark'}>dark</option>
-      <option value='light' selected=${state.themeName === 'light'}>light</option>
+      <option value='dark' selected=${state.themes.active === 'dark'}>dark</option>
+      <option value='light' selected=${state.themes.active === 'light'}>light</option>
     </select>
   </fieldset>
 

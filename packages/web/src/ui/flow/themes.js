@@ -5,21 +5,22 @@ const {merge} = require('../../utils/utils')
 const reducers = {
   initialize: state => {
     const themes = {
-      themeName: 'light',
+      active: 'light',
       themeSettings: {mainTextColor: '#FFF'}
     }
-    return Object.assign({}, state, themes)
+    return Object.assign({}, state, {themes})
   },
-  setTheme: (state, themeName) => {
+  setTheme: (state, active) => {
     // very nice color for the cuts [0, 0.6, 1] to go with the orange
-    const themes = {
+    const available = {
       light: require('../../../data/theme.light'),
       dark: require('../../../data/theme.dark')
     }
-    const themeData = themes[themeName]
-    // console.log('setTheme', themeName, themeData)
+    const themeData = available[active]
+    // console.log('setTheme', active, themeData)
     const viewer = merge({}, state.viewer, themeData.viewer)
-    return Object.assign({}, state, {viewer, themeName, themeSettings: themeData})
+    const themes = Object.assign({}, state.themes, {available, active, themeSettings: themeData})
+    return Object.assign({}, state, {viewer}, {themes})
   }
 }
 

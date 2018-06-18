@@ -8,12 +8,6 @@ const packageMetadata = require('../../../package.json')
 const initialState = {
   appTitle: `jscad v ${packageMetadata.version}`,
   appUpdates: {available: false, version: undefined},
-  locale: 'en',
-  availableLanguages: [],
-  availableExportFormats: [],
-  // status/toggles
-  autoReload: true,
-  instantUpdate: true,
   // to determine what ui tool is active: options, code editor etc
   activeTool: undefined,
   // status
@@ -23,8 +17,6 @@ const initialState = {
     busy: false
   },
   // visuals
-  themeName: 'light',
-  themeSettings: {mainTextColor: '#FFF'},
   viewer: require('../../ui/viewer/reducers').initialize(),
   // interactions
   shortcuts: require('../../../data/keybindings.json'),
@@ -48,9 +40,10 @@ const makeState = (params) => {
     // return commandResponses$
     // commandResponses$.forEach(x=>console.log('commandResponses', x))
     return most.scan((state, input) => {
-      // console.log('updating state from', state, 'to', input)
-      // state = input.state
       const foo = Object.assign({}, state, input.state)
+      // console.log('updating state from', state, 'to', foo, 'via', input.type)
+      // state = input.state
+
       return foo
     }, initialState, commandResponses$)
     .startWith(initialState)
@@ -61,7 +54,7 @@ const makeState = (params) => {
   const sink = (out$) => {
     out$.forEach(function (command) {
       let {state} = command
-      /*try {
+      /* try {
         const newState = state
       } catch (error) {
         console.error('caught error', error)
