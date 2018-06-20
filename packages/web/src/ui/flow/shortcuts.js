@@ -2,17 +2,64 @@ const most = require('most')
 const withLatestFrom = require('../../utils/observable-utils/withLatestFrom')
 const {getKeyCombos, isKeyEventScopeValid, simpleKey} = require('../../utils/keys')
 const {head} = require('@jscad/core/utils/arrays')
+const {merge} = require('../../utils/utils')
 
 const reducers = {
-  initalize: () => {
-    require('../../../data/keybindings.json')
+  initialize: (state) => {
+    return state
+    // require('../../../data/keybindings.json')
   },
-  setShortcut: (state, shortcuts) => Object.assign({}, state, {shortcuts})
+  // set all shortcuts
+  setShortcuts: (state, newShortcuts) => {
+    const shortcuts = merge([], state.shortcuts, newShortcuts)
+    return Object.assign({}, state, {shortcuts})
+  },
+  // set a specific shortcut
+  setShortcut: (state, shortcutData) => {
+    const alreadyExists = key => {
+      return state.shortcuts
+        .filter(shortcut => shortcut.key === key)
+        .length > 0
+    }
+    const shortcuts = state.shortcuts.map(shortcut => {
+      const match = shortcut.command === shortcutData.command && shortcut.args === shortcutData.args
+      if (!match) {
+        return shortcut
+      } else {
+        if ('inProgress' in shortcutData) {
+          const {inProgress, tmpKey} = shortcutData
+          if (inProgress) {
+            const error = alreadyExists(tmpKey) ? 'shortcut already exists' : undefined
+            return Object.assign({}, shortcut, {inProgress, tmpKey: tmpKey, error})
+          } else {
+            return Object.assign({}, shortcut, {inProgress, tmpKey: tmpKey})
+          }
+        }
+        if (shortcutData.done && !alreadyExists(shortcutData.key)) {
+          const { command, args } = shortcut
+          const updatedShortcut = {key: shortcutData.key, command, args}
+          return updatedShortcut
+        }
+        return shortcut
+      }
+    })
+    return Object.assign({}, state, {shortcuts})
+  },
+  triggerShortcut: (state, {event, compositeKey}) => {
+    const matchingAction = head(state.shortcuts.filter(shortcut => shortcut.key.toLowerCase() === compositeKey))
+    if (matchingAction) {
+      const {command, args} = matchingAction
+      return {type: command, data: args}
+    }
+    return undefined
+  }
 }
 
 // keyboard shortcut handling
 const actions = ({sources}) => {
-  const initializeShortcuts$ = most.just(reducers.initalize())
+  const initializeShortcuts$ = most.just({})
+    .thru(withLatestFrom(reducers.initialize, sources.state))
+    .map(payload => Object.assign({}, {type: 'initializeShortcuts', sink: 'state'}, {state: payload}))
 
   // set shortcuts
   const setShortcuts$ = most.mergeArray([
@@ -20,7 +67,7 @@ const actions = ({sources}) => {
       .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.shortcuts)
       .map(reply => reply.data.shortcuts)
   ])
-  .thru(withLatestFrom(reducers.setShortcut, sources.state))
+  .thru(withLatestFrom(reducers.setShortcuts, sources.state))
   .map(payload => Object.assign({}, {type: 'setShortcuts', sink: 'state'}, {state: payload}))
 
   // set a specific shortcut
@@ -29,7 +76,7 @@ const actions = ({sources}) => {
   const shortcutCommandDown$ = sources.dom.select('.shortcutCommand').events('keydown')
     .multicast()
   const shortcutCommandKey$ = getKeyCombos(
-    {dropRepeats: true},
+    {dropRepeats: true, endKeys: ['enter', 'escape']},
     shortcutCommandUp$,
     shortcutCommandDown$
   )
@@ -85,39 +132,9 @@ const actions = ({sources}) => {
     }, {})
     .filter(x => x !== undefined)
   ])
-  .map(data => ({type: 'setShortcut', data}))
+  .thru(withLatestFrom(reducers.setShortcut, sources.state))
+  .map(data => ({type: 'setShortcut', state: data, sink: 'state'}))
   .multicast()
-  /*// set a specific shortcut
-const setShortcut = (state, shortcutData) => {
-  const alreadyExists = key => {
-    return state.shortcuts
-      .filter(shortcut => shortcut.key === key)
-      .length > 0
-  }
-  const shortcuts = state.shortcuts.map(shortcut => {
-    const match = shortcut.command === shortcutData.command && shortcut.args === shortcutData.args
-    if (!match) {
-      return shortcut
-    } else {
-      if ('inProgress' in shortcutData) {
-        const {inProgress, tmpKey} = shortcutData
-        if (inProgress) {
-          const error = alreadyExists(tmpKey) ? 'shortcut already exists' : undefined
-          return Object.assign({}, shortcut, {inProgress, tmpKey: tmpKey, error})
-        } else {
-          return Object.assign({}, shortcut, {inProgress, tmpKey: tmpKey})
-        }
-      }
-      if (shortcutData.done && !alreadyExists(shortcutData.key)) {
-        const { command, args } = shortcut
-        const updatedShortcut = {key: shortcutData.key, command, args}
-        return updatedShortcut
-      }
-      return shortcut
-    }
-  })
-  return Object.assign({}, state, {shortcuts})
-}*/
 
   // to make sure the key event was fired in the scope of the current jscad instance
   const myKey = sources.dom.element.getAttribute('key')
@@ -131,16 +148,12 @@ const setShortcut = (state, shortcutData) => {
 
   // we get all key combos, accepting repeated key strokes
   const keyCombos$ = getKeyCombos({dropRepeats: false}, keyUps$, keyDown$)
+
   // we match key stroke combos to actions
-  const triggerFromShortcut$ = most.sample(function ({event, compositeKey}, state) {
-    const matchingAction = head(state.shortcuts.filter(shortcut => shortcut.key === compositeKey))
-    if (matchingAction) {
-      const {command, args} = matchingAction
-      return {type: command, data: args}
-    }
-    return undefined
-  }, keyCombos$, keyCombos$, sources.state)
+  const triggerFromShortcut$ = keyCombos$
+    .thru(withLatestFrom(reducers.triggerShortcut, sources.state))
     .filter(x => x !== undefined)
+    // .tap(x => console.log('triggerFromShortcut', x))
 
   return {initializeShortcuts$, setShortcut$, setShortcuts$, triggerFromShortcut$}
 }

@@ -21,9 +21,10 @@ const simpleKey = (event) => {
 
 const getKeyCombos = (options, keyUps$, keyDown$) => {
   const defaults = {
-    dropRepeats: false
+    dropRepeats: false,
+    endKeys: []
   }
-  const {dropRepeats} = Object.assign({}, defaults, options)
+  const {dropRepeats, endKeys} = Object.assign({}, defaults, options)
 
   keyDown$ = keyDown$.multicast().debounce(10)
   if (dropRepeats) {
@@ -38,7 +39,7 @@ const getKeyCombos = (options, keyUps$, keyDown$) => {
     .merge(keyUps$.map(x => 'end'))
     .merge(keyStuffEnd$.map(x => 'end'))
     .loop((values, event) => {
-      if (event === 'end' || simpleKey(event) === 'enter' || simpleKey(event) === 'escape') {
+      if (event === 'end' || endKeys.includes(simpleKey(event))) {
         const value = {
           event: values.length > 0 ? values[0].event : undefined,
           compositeKey: values.map(x => x.compositeKey).join('+')

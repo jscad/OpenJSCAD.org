@@ -1,6 +1,6 @@
 const makeOutput = ({sources, extras}) => {
   return sources.state
-    .filter(state => state.design && state.languages)
+    .filter(state => state.design && state.languages && state.viewer)
     .skipRepeatsWith(function (state, previousState) {
       return JSON.stringify(state) === JSON.stringify(previousState)
       // TODO: add omiting of a few complex fields like the cache , the filetree, the solids

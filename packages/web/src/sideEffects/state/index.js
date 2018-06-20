@@ -3,37 +3,31 @@ const callBackToStream = require('@jscad/core/observable-utils/callbackToObserva
 const {head} = require('@jscad/core/utils/arrays')
 const makeLogger = require('../../utils/logger')
 
-const packageMetadata = require('../../../package.json')
-
-const initialState = {
-  appTitle: `jscad v ${packageMetadata.version}`,
-  appUpdates: {available: false, version: undefined},
-  // to determine what ui tool is active: options, code editor etc
-  activeTool: undefined,
-  // status
-  status: {
-    message: '',
-    error: undefined, // for possible errors
-    busy: false
-  },
-  // visuals
-  viewer: require('../../ui/viewer/reducers').initialize(),
-  // interactions
-  shortcuts: require('../../../data/keybindings.json'),
-  // storage: this is not changeable, only for display
-  storage: {
-    path: '' // require('electron').remote.app.getPath('userData')
-  }
-}
-
 const makeState = (params) => {
   const defaults = {
     logging: true
   }
-  const {logging, packageMetadata} = Object.assign({}, defaults, params)
+  const {logging, packageMetadata, keyBindings} = Object.assign({}, defaults, params)
   const log = makeLogger({enabled: logging})
-
   const commandResponses = callBackToStream()
+
+  const initialState = {
+    appTitle: `jscad v ${packageMetadata.version}`,
+    // to determine what ui tool is active: options, code editor etc
+    activeTool: undefined,
+    // status
+    status: {
+      message: '',
+      error: undefined, // for possible errors
+      busy: false
+    },
+    // interactions
+    shortcuts: keyBindings,
+    // storage: this is not changeable, only for display
+    storage: {
+      path: '' // require('electron').remote.app.getPath('userData')
+    }
+  }
 
   const source = () => {
     const commandResponses$ = commandResponses.stream.multicast()

@@ -18,8 +18,9 @@ const reducers = {
     }
     const themeData = available[active]
     // console.log('setTheme', active, themeData)
-    const viewer = merge({}, state.viewer, themeData.viewer)
+    const viewer = state.viewer ? merge({}, state.viewer, themeData.viewer) : themeData.viewer
     const themes = Object.assign({}, state.themes, {available, active, themeSettings: themeData})
+    // return Object.assign({}, state, {themes})
     return Object.assign({}, state, {viewer}, {themes})
   }
 }

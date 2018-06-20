@@ -1,15 +1,14 @@
 const most = require('most')
 
 function makeReactions (inputs) {
-  const {sinks, sources, actions$, extras} = inputs
+  const {sinks, sources, outputs$, extras} = inputs
   const {store, fs, http, i18n, dom, solidWorker, state} = sinks
 
-  const outputs$ = most.mergeArray(Object.values(actions$)).multicast()
-    .filter(x => x !== undefined)
   outputs$
     .filter(x => 'sink' in x && x.sink === 'state')
     .forEach(x => console.log(' out to state', x))
 
+  sinks.fileDialog(most.just('foo').delay(5000))
   // output to dom
   dom(require('./dom')(inputs))
   // output to i18n
@@ -45,8 +44,15 @@ function makeReactions (inputs) {
       }
     })
 
+  outputs$.filter(x => 'sink' in x && x.sink === 'viewer')
+    .forEach(x => {
+      console.log('viewer', x)
+      if (csgViewer) {
+        csgViewer({camera: {projectionType: x.data}})
+      }
+    })
   sources.state
-  .map(state => state.viewer)
+    .map(state => state.viewer)
   // FIXME: not working correctly with themeing
   /* .skipRepeatsWith(function (state, previousState) {
     const sameViewerParams = JSON.stringify(state) === JSON.stringify(previousState)
@@ -65,19 +71,6 @@ function makeReactions (inputs) {
       csgViewer(params)
     }
   })
-
-  // alternative, better way for the future to set these things, but requires changes to the viewer
-  /* most.mergeArray([
-    actions$.toggleGrid$.map(command => ({grid: {show: command.data}})),
-    actions$.toggleAxes$.map(command => ({axes: {show: command.data}}))
-  ])
-    .forEach(params => {
-      console.log('changing viewer params', params)
-      if (csgViewer) {
-        // console.log('params', params)
-        csgViewer(params)
-      }
-    }) */
 
   // titlebar & store side effects
   // FIXME/ not compatible with multiple instances !!

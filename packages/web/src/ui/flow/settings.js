@@ -23,12 +23,12 @@ const actions = ({sources}) => {
           parameterDefaults,
           parameterValues
         }
-      },
-      viewer: {
+      }
+      /* viewer: {
         axes: {show: state.viewer.axes.show},
         grid: {show: state.viewer.grid.show}
         // autorotate: {enabled: state.viewer.controls.autoRotate.enabled}
-      }
+      } */
     }
   }
 
