@@ -7,19 +7,15 @@ module.exports = function makeStorageSideEffect ({name}) {
   function sink (outToStore$) {
     if (outToStore$) {
       outToStore$.forEach(function (command) {
-        const {type, target, options, data} = command
+        const {type, key, options, data} = command
         // const storage = target === `local` ? localStorage : sessionStorage
         if (type === 'write') {
-          if (target === 'settings') {
-            // console.log('writing settings', data)
-            localStorage.setItem(`jscad:${name}-${target}`, JSON.stringify(data))
-          }
+          // console.log('writing settings', data)
+          localStorage.setItem(`jscad:${name}-${key}`, JSON.stringify(data))
         } else if (type === 'read') {
-          if (target === 'settings') {
-            const settings = localStorage.getItem(`jscad:${name}-${target}`)
-            const allData = JSON.parse(settings) || {}
-            reply.callback({type, target, data: allData})
-          }
+          const settings = localStorage.getItem(`jscad:${name}-${key}`)
+          const allData = JSON.parse(settings) || {}
+          reply.callback({type, key, data: allData})
         }
       })
     }

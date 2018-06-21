@@ -21,41 +21,36 @@ const packageMetadata = require('../../../package.json')
 
 const reducers = {
 
-/** initialise the design's state
- * @returns {Object} the default state for designs
- */
+  /** initialise the design's state
+   * @returns {Object} the default state for designs
+   */
   initialize: (state) => {
     const design = {
-    // metadata
+      // metadata
       name: '',
       path: '',
       mainPath: '',
-    // list of all paths of require() calls + main
+      // list of all paths of require() calls + main
       modulePaths: [],
       filesAndFolders: [], // file tree, of sorts
-    // code
+      // code
       source: '',
       instantUpdate: true,
       autoReload: true,
-    // if set to true, will overwrite existing code with the converted imput
-    // if set to false, will create a script with an import of the input
+      // if set to true, will overwrite existing code with the converted imput
+      // if set to false, will create a script with an import of the input
       convertSupportedTypes: false,
-    // parameters
+      // parameters
       parameterDefinitions: [],
       parameterValues: {},
       parameterDefaults: {},
       // solids
       solidsTimeOut: 20000,
       solids: [],
-    // geometry caching
+      // geometry caching
       vtreeMode: false,
       lookup: {},
-      lookupCounts: {},
-
-    // to indicate intent ?
-      configurableFields: [
-        'convertSupportedTypes'
-      ]
+      lookupCounts: {}
     }
     return Object.assign({}, state, {design})
   },
@@ -70,11 +65,11 @@ const reducers = {
     return Object.assign({}, state, {design})
   },
 
-/** set the design's path
- * @param  {Object} state
- * @param  {Object} paths
- * @returns {Object} the updated state
- */
+  /** set the design's path
+   * @param  {Object} state
+   * @param  {Object} paths
+   * @returns {Object} the updated state
+   */
   setDesignPath: (state, paths) => {
     // console.log('setDesignPath', paths)
   // FIXME:  DO NOT DO THIS HERE !!
@@ -109,10 +104,10 @@ const reducers = {
  */
   setDesignContent: (state, source) => {
     // console.log('setDesignContent')
-  /*
-    func(parameterDefinitions) => paramsUI
-    func(paramsUI + interaction) => params
-  */
+    /*
+      func(parameterDefinitions) => paramsUI
+      func(paramsUI + interaction) => params
+    */
     const design = Object.assign({}, state.design, {
       source,
       parameterValues: {}
@@ -120,10 +115,9 @@ const reducers = {
     const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']}})
     const appTitle = `jscad v ${packageMetadata.version}: ${state.design.name}`
 
-  // FIXME: this is the same as clear errors ?
+    // FIXME: this is the same as clear errors ?
     const status = Object.assign({}, state.status, {busy: true, error: undefined})
-  // const parameters = Object.assign({}, state.design.parameterValues, parameterValues: {})
-
+    // const parameters = Object.assign({}, state.design.parameterValues, parameterValues: {})
     return Object.assign({}, state, {
       design,
       viewer,
@@ -132,13 +126,13 @@ const reducers = {
     })
   },
 
-/** set the solids (2d/ 3D /csg/cag data)
- * @param  {} state
- * @param  {} {solids
- * @param  {} lookup
- * @param  {} lookupCounts}
- * @returns {Object} the updated state
- */
+  /** set the solids (2d/ 3D /csg/cag data)
+   * @param  {} state
+   * @param  {} {solids
+   * @param  {} lookup
+   * @param  {} lookupCounts}
+   * @returns {Object} the updated state
+   */
   setDesignSolids: (state, {solids, lookup, lookupCounts}) => {
     // console.log('setDesignSolids', lookup)
     solids = solids || []
@@ -214,6 +208,18 @@ const reducers = {
     // console.log('toggleVtreeMode', vtreeMode)
     const design = Object.assign({}, state.design, {vtreeMode})
     return Object.assign({}, state, {design})
+  },
+  // what do we want to save ?
+  requestSaveSettings: (design) => {
+    return {
+      name: design.name,
+      parameterDefinitions: design.parameterDefinitions,
+      parameterDefaults: design.parameterDefaults,
+      parameterValues: design.parameterValues,
+      vtreeMode: design.vtreeMode,
+      autoReload: design.autoReload,
+      instantUpdate: design.instantUpdate
+    }
   }
 
 }
@@ -226,6 +232,18 @@ const actions = ({sources}) => {
   const initalizeDesign$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
     .map(data => ({type: 'initalizeDesign', state: data, sink: 'state'}))
+
+  // TODO: start emmiting after initial settings have been loaded
+  const requestSaveSettings$ = sources.state
+    .filter(state => state.design)
+    .map(state => state.design)
+    // .skipUntil(sources.store.filter(reply => reply.key === 'design' && reply.type === 'read'))
+    .map(reducers.requestSaveSettings)
+    .map(data => Object.assign({}, {data}, {sink: 'store', key: 'design', type: 'write'}))
+    .multicast()
+
+  const requestLoadSettings$ = initalizeDesign$ // this means we wait until the design has been initialized before saving
+    .map(_ => ({sink: 'store', key: 'design', type: 'read'}))
 
   const designPath$ = most.mergeArray([
     sources.fs
@@ -402,8 +420,9 @@ const actions = ({sources}) => {
   const toggleVTreeMode$ = most.mergeArray([
     sources.dom.select('#toggleVtreeMode').events('click').map(event => event.target.checked),
     sources.store
-      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.design && reply.data.design.vtreeMode !== undefined)
-      .map(reply => reply.data.design.vtreeMode)
+      .filter(reply => reply.key === 'design' && reply.type === 'read' !== undefined)
+      .map(reply => reply.data.vtreeMode)
+      .filter(vtreeMode => vtreeMode !== undefined)
   ])
     .map(data => ({type: 'toggleVtreeMode', state: data, sink: 'state'}))
 
@@ -506,8 +525,6 @@ const actions = ({sources}) => {
   .multicast()
   .map(payload => Object.assign({}, {type: 'write', sink: 'fs'}, payload))
 
-  requestWriteCachedGeometry$.forEach(x => console.log('requestWriteCachedGeometry', x))
-
   /*
     const serializeGeometryCache = (cache) => {
 
@@ -533,8 +550,6 @@ const actions = ({sources}) => {
   // FIXME: this needs to be elsewhere
   // const setZoomingBehaviour$ = ''
     // setDesignContent$.map(x=>{behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']})
-  // FIXME : same for this one, in IO ??
-  // const setAvailableExportFormats = setDesignSolids$
 
   return {
     initalizeDesign$,
@@ -550,6 +565,9 @@ const actions = ({sources}) => {
     requestLoadDesign$,
     requestWatchDesign$,
     requestWriteCachedGeometry$,
+
+    requestLoadSettings$,
+    requestSaveSettings$,
 
     toggleAutoReload$,
     toggleInstantUpdate$,

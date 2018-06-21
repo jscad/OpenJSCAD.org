@@ -52,6 +52,9 @@ const reducers = {
       return {type: command, data: args}
     }
     return undefined
+  },
+  requestSaveSettings: (state) => {
+    return {shortcuts: state.shortcuts}
   }
 }
 
@@ -155,7 +158,19 @@ const actions = ({sources}) => {
     .filter(x => x !== undefined)
     // .tap(x => console.log('triggerFromShortcut', x))
 
-  return {initializeShortcuts$, setShortcut$, setShortcuts$, triggerFromShortcut$}
+  const requestSaveSettings$ = sources.state
+    .filter(state => state.shortcuts)
+    .skipRepeatsWith((previousState, currentState) => JSON.stringify(previousState) === JSON.stringify(currentState))
+    .map(reducers.requestSaveSettings)
+    .map(data => Object.assign({}, {data}, {sink: 'store', key: 'shortcuts', type: 'write'}))
+
+  return {
+    initializeShortcuts$,
+    setShortcut$,
+    setShortcuts$,
+    triggerFromShortcut$,
+    requestSaveSettings$
+  }
 }
 
 module.exports = actions

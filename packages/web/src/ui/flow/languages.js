@@ -18,6 +18,9 @@ const reducers = {
     // console.log('setAvailableLanguages', available)
     const languages = Object.assign({}, state.languages, {available})
     return Object.assign({}, state, {languages})
+  },
+  requestSaveSettings: (languages) => {
+    return {languages: {active: languages.active}}
   }
 }
 
@@ -45,12 +48,12 @@ const actions = ({sources}) => {
     .map(data => ({type: 'changeSettings', data, sink: 'i18n'}))
     .tap(x => console.log('requestGetLanguageData', x))
 
-  // set the current language, either from defaults, previous settings or manually
+  // set the active language, either from defaults, previous settings or manually
   const setLanguage$ = most.mergeArray([
     sources.i18n
       .filter(reply => reply.type === 'getDefaultLocale')
       .map(reply => reply.data)
-      .delay(10),// to get stuff after the available ones have been set      
+      .delay(10), // to get stuff after the available ones have been set
     sources.dom.select('#languageSwitcher').events('change')
       .map(e => e.target.value),
     sources.store
@@ -70,13 +73,21 @@ const actions = ({sources}) => {
     .thru(withLatestFrom(reducers.setAvailableLanguages, sources.state))
     .map(payload => Object.assign({}, {type: 'setAvailableLanguages', sink: 'state'}, {state: payload}))
 
+  const requestSaveSettings$ = sources.state
+    .filter(state => state.languages)
+    .map(state => state.languages)
+    .skipRepeatsWith((previousState, currentState) => JSON.stringify(previousState) === JSON.stringify(currentState))
+    .map(reducers.requestSaveSettings)
+    .map(data => Object.assign({}, {data}, {sink: 'store', key: 'languages', type: 'write'}))
+
   return {
     initializeLanguages$,
     requestGetAvailableLanguages$,
     requestGetDefaultLanguage$,
     requestGetLanguageData$,
     setLanguage$,
-    setAvailableLanguages$
+    setAvailableLanguages$,
+    requestSaveSettings$
   }
 }
 

@@ -40,7 +40,7 @@ const actions = ({sources}) => {
       .delay(1000)// delay the first saving to avoir overwriting existing settings
       .map(data => ({type: 'write', target: 'settings', data, sink: 'store'}))
 
-  return {requestReadSettings$, requestWriteSettings$}
+  return {}//requestReadSettings$}//, requestWriteSettings$}
 }
 
 module.exports = actions

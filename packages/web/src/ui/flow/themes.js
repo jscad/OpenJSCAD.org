@@ -22,6 +22,9 @@ const reducers = {
     const themes = Object.assign({}, state.themes, {available, active, themeSettings: themeData})
     // return Object.assign({}, state, {themes})
     return Object.assign({}, state, {viewer}, {themes})
+  },
+  requestSaveSettings: (themes) => {
+    return {themes: {active: themes.active}}
   }
 }
 
@@ -41,7 +44,14 @@ const actions = ({sources}) => {
     .thru(withLatestFrom(reducers.setTheme, sources.state))
     .map(payload => Object.assign({}, {type: 'setTheme', sink: 'state'}, {state: payload}))
 
-  return {initalizeThemes$, setTheme$}
+  const requestSaveSettings$ = sources.state
+    .filter(state => state.themes)
+    .map(state => state.themes)
+    .skipRepeatsWith((previousState, currentState) => JSON.stringify(previousState) === JSON.stringify(currentState))
+    .map(reducers.requestSaveSettings)
+    .map(data => Object.assign({}, {data}, {sink: 'store', key: 'themes', type: 'write'}))
+
+  return {initalizeThemes$, setTheme$, requestSaveSettings$}
 }
 
 module.exports = actions
