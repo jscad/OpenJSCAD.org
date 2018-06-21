@@ -1,5 +1,6 @@
 const most = require('most')
 const withLatestFrom = require('../../utils/observable-utils/withLatestFrom')
+const holdUntil = require('../../utils/observable-utils/holdUntil')
 
 const reducers = {
   initialize: state => {
@@ -10,7 +11,7 @@ const reducers = {
     return Object.assign({}, state, {languages})
   },
   setLanguage: (state, active) => {
-    // console.log('setLanguage', active)
+    //  console.log('setLanguage', active)
     const languages = Object.assign({}, state.languages, {active})
     return Object.assign({}, state, {languages})
   },
@@ -20,17 +21,17 @@ const reducers = {
     return Object.assign({}, state, {languages})
   },
   requestSaveSettings: (languages) => {
-    return {languages: {active: languages.active}}
+    return {active: languages.active}
   }
 }
 
 const actions = ({sources}) => {
   // setup default 'empty' state
-  const initializeLanguages$ = most.just({})
+  const initialize$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
     .map(payload => Object.assign({}, {type: 'initializeLanguages', sink: 'state'}, {state: payload}))
 
-    // send a request to get the list of available languages
+  // send a request to get the list of available languages
   const requestGetAvailableLanguages$ = most
     .just({type: 'getAvailableLanguages', sink: 'i18n'})
     .delay(10) // so we do not do it at the same time as the initalization
@@ -73,20 +74,28 @@ const actions = ({sources}) => {
     .thru(withLatestFrom(reducers.setAvailableLanguages, sources.state))
     .map(payload => Object.assign({}, {type: 'setAvailableLanguages', sink: 'state'}, {state: payload}))
 
+  // this means we wait until the data here has been initialized before saving
+  const requestLoadSettings$ = initialize$
+    .map(_ => ({sink: 'store', key: 'languages', type: 'read'}))
+
+  // starts emmiting to storage only AFTER initial settings have been loaded
   const requestSaveSettings$ = sources.state
     .filter(state => state.languages)
     .map(state => state.languages)
-    .skipRepeatsWith((previousState, currentState) => JSON.stringify(previousState) === JSON.stringify(currentState))
+    .thru(holdUntil(sources.store.filter(reply => reply.key === 'languages' && reply.type === 'read')))
     .map(reducers.requestSaveSettings)
     .map(data => Object.assign({}, {data}, {sink: 'store', key: 'languages', type: 'write'}))
+    .multicast()
 
   return {
-    initializeLanguages$,
+    initialize$,
     requestGetAvailableLanguages$,
     requestGetDefaultLanguage$,
     requestGetLanguageData$,
     setLanguage$,
     setAvailableLanguages$,
+
+    requestLoadSettings$,
     requestSaveSettings$
   }
 }

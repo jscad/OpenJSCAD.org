@@ -1,5 +1,6 @@
 const most = require('most')
 const withLatestFrom = require('../../utils/observable-utils/withLatestFrom')
+const holdUntil = require('../../utils/observable-utils/holdUntil')
 const {getKeyCombos, isKeyEventScopeValid, simpleKey} = require('../../utils/keys')
 const {head} = require('@jscad/core/utils/arrays')
 const {merge} = require('../../utils/utils')
@@ -7,6 +8,7 @@ const {merge} = require('../../utils/utils')
 const reducers = {
   initialize: (state) => {
     return state
+    // what to do with this ?
     // require('../../../data/keybindings.json')
   },
   // set all shortcuts
@@ -53,21 +55,21 @@ const reducers = {
     }
     return undefined
   },
-  requestSaveSettings: (state) => {
-    return {shortcuts: state.shortcuts}
+  requestSaveSettings: (shortcuts) => {
+    return shortcuts
   }
 }
 
 // keyboard shortcut handling
 const actions = ({sources}) => {
-  const initializeShortcuts$ = most.just({})
+  const initialize$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
     .map(payload => Object.assign({}, {type: 'initializeShortcuts', sink: 'state'}, {state: payload}))
 
   // set shortcuts
   const setShortcuts$ = most.mergeArray([
     sources.store
-      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.shortcuts)
+      .filter(reply => reply.key === 'shortcuts' && reply.type === 'read' && reply.data && reply.data.shortcuts)
       .map(reply => reply.data.shortcuts)
   ])
   .thru(withLatestFrom(reducers.setShortcuts, sources.state))
@@ -158,17 +160,26 @@ const actions = ({sources}) => {
     .filter(x => x !== undefined)
     // .tap(x => console.log('triggerFromShortcut', x))
 
+  // this means we wait until the data here has been initialized before saving
+  const requestLoadSettings$ = initialize$
+    .map(_ => ({sink: 'store', key: 'shortcuts', type: 'read'}))
+
+  // starts emmiting to storage only AFTER initial settings have been loaded
   const requestSaveSettings$ = sources.state
     .filter(state => state.shortcuts)
-    .skipRepeatsWith((previousState, currentState) => JSON.stringify(previousState) === JSON.stringify(currentState))
+    .map(state => state.shortcuts)
+    .thru(holdUntil(sources.store.filter(reply => reply.key === 'shortcuts' && reply.type === 'read')))
     .map(reducers.requestSaveSettings)
     .map(data => Object.assign({}, {data}, {sink: 'store', key: 'shortcuts', type: 'write'}))
+    .multicast()
 
   return {
-    initializeShortcuts$,
+    initialize$,
     setShortcut$,
     setShortcuts$,
     triggerFromShortcut$,
+
+    requestLoadSettings$,
     requestSaveSettings$
   }
 }

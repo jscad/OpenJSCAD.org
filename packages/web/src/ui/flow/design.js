@@ -1,5 +1,6 @@
 const most = require('most')
 const withLatestFrom = require('../../utils/observable-utils/withLatestFrom')
+const holdUntil = require('../../utils/observable-utils/holdUntil')
 const getParameterValuesFromUIControls = require('@jscad/core/parameters/getParameterValuesFromUIControls')
 const {nth, toArray} = require('@jscad/core/utils/arrays')
 const url = require('url')
@@ -195,17 +196,17 @@ const reducers = {
 
   // ui/toggles
   toggleAutoReload: (state, autoReload) => {
-    // console.log('toggleAutoReload', autoReload)
+    console.log('toggleAutoReload', autoReload)
     const design = Object.assign({}, state.design, {autoReload})
     return Object.assign({}, state, {design})
   },
   toggleInstantUpdate: (state, instantUpdate) => {
-    // console.log('toggleInstantUpdate', instantUpdate)
+    console.log('toggleInstantUpdate', instantUpdate)
     const design = Object.assign({}, state.design, {instantUpdate})
     return Object.assign({}, state, {design})
   },
   toggleVtreeMode: (state, vtreeMode) => {
-    // console.log('toggleVtreeMode', vtreeMode)
+    console.log('toggleVtreeMode', vtreeMode)
     const design = Object.assign({}, state.design, {vtreeMode})
     return Object.assign({}, state, {design})
   },
@@ -229,21 +230,25 @@ const reducers = {
 // return Object.assign({}, state, {activeTool})
 
 const actions = ({sources}) => {
-  const initalizeDesign$ = most.just({})
+  sources.store.filter(reply => reply.key === 'design' && reply.type === 'read')
+    .forEach(x => console.log('from store', x))
+
+  const initalize$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
     .map(data => ({type: 'initalizeDesign', state: data, sink: 'state'}))
 
-  // TODO: start emmiting after initial settings have been loaded
+  // we wait until the data here has been initialized before loading the serialized settings
+  const requestLoadSettings$ = initalize$
+    .map(_ => ({sink: 'store', key: 'design', type: 'read'}))
+
+  // starts emmiting to storage only AFTER initial settings have been loaded
   const requestSaveSettings$ = sources.state
     .filter(state => state.design)
     .map(state => state.design)
-    // .skipUntil(sources.store.filter(reply => reply.key === 'design' && reply.type === 'read'))
+    .thru(holdUntil(sources.store.filter(reply => reply.key === 'design' && reply.type === 'read')))
     .map(reducers.requestSaveSettings)
     .map(data => Object.assign({}, {data}, {sink: 'store', key: 'design', type: 'write'}))
     .multicast()
-
-  const requestLoadSettings$ = initalizeDesign$ // this means we wait until the design has been initialized before saving
-    .map(_ => ({sink: 'store', key: 'design', type: 'read'}))
 
   const designPath$ = most.mergeArray([
     sources.fs
@@ -404,17 +409,19 @@ const actions = ({sources}) => {
     sources.dom.select('#autoReload').events('click')
       .map(e => e.target.checked),
     sources.store
-      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.autoReload !== undefined)
+      .filter(reply => reply.key === 'design' && reply.type === 'read')
       .map(reply => reply.data.autoReload)
   ])
-    .map(data => ({type: 'toggleAutoReload', data}))
+    .thru(withLatestFrom(reducers.toggleAutoReload, sources.state))
+    .map(data => ({type: 'toggleAutoReload', state: data, sink: 'state'}))
 
   const toggleInstantUpdate$ = most.mergeArray([
     sources.dom.select('#instantUpdate').events('click').map(event => event.target.checked),
     sources.store
-      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.instantUpdate !== undefined)
+      .filter(reply => reply.key === 'design' && reply.type === 'read' !== undefined)
       .map(reply => reply.data.instantUpdate)
   ])
+    .thru(withLatestFrom(reducers.toggleInstantUpdate, sources.state))
     .map(data => ({type: 'toggleInstantUpdate', state: data, sink: 'state'}))
 
   const toggleVTreeMode$ = most.mergeArray([
@@ -424,6 +431,7 @@ const actions = ({sources}) => {
       .map(reply => reply.data.vtreeMode)
       .filter(vtreeMode => vtreeMode !== undefined)
   ])
+    .thru(withLatestFrom(reducers.toggleVtreeMode, sources.state))
     .map(data => ({type: 'toggleVtreeMode', state: data, sink: 'state'}))
 
   const requestLoadRemoteData$ = most.mergeArray([
@@ -525,7 +533,7 @@ const actions = ({sources}) => {
   .multicast()
   .map(payload => Object.assign({}, {type: 'write', sink: 'fs'}, payload))
 
-  /*
+  /* ?
     const serializeGeometryCache = (cache) => {
 
     const fs = require('fs')
@@ -552,7 +560,7 @@ const actions = ({sources}) => {
     // setDesignContent$.map(x=>{behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']})
 
   return {
-    initalizeDesign$,
+    initalize$,
     setDesignPath$,
     setDesignContent$,
     requestGeometryRecompute$,

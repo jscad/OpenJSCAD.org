@@ -1,5 +1,6 @@
 const most = require('most')
 const withLatestFrom = require('../../utils/observable-utils/withLatestFrom')
+const holdUntil = require('../../utils/observable-utils/holdUntil')
 const {merge} = require('../../utils/utils')
 
 const reducers = {
@@ -24,12 +25,12 @@ const reducers = {
     return Object.assign({}, state, {viewer}, {themes})
   },
   requestSaveSettings: (themes) => {
-    return {themes: {active: themes.active}}
+    return {active: themes.active}
   }
 }
 
 const actions = ({sources}) => {
-  const initalizeThemes$ = most.just({})
+  const initialize$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
     .map(payload => Object.assign({}, {type: 'initalizeThemes', sink: 'state'}, {state: payload}))
 
@@ -37,21 +38,32 @@ const actions = ({sources}) => {
     sources.dom.select('#themeSwitcher').events('change')
       .map(e => e.target.value),
     sources.store
-      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.themeName)
+      .filter(reply => reply.key === 'themes' && reply.type === 'read' && reply.data && reply.data.themeName)
       .map(reply => reply.data.themeName)
   ])
     .startWith('light')
     .thru(withLatestFrom(reducers.setTheme, sources.state))
     .map(payload => Object.assign({}, {type: 'setTheme', sink: 'state'}, {state: payload}))
 
+  const requestLoadSettings$ = initialize$
+    .map(_ => ({sink: 'store', key: 'themes', type: 'read'}))
+
+  // starts emmiting to storage only AFTER initial settings have been loaded
   const requestSaveSettings$ = sources.state
     .filter(state => state.themes)
     .map(state => state.themes)
-    .skipRepeatsWith((previousState, currentState) => JSON.stringify(previousState) === JSON.stringify(currentState))
+    .thru(holdUntil(sources.store.filter(reply => reply.key === 'themes' && reply.type === 'read')))
     .map(reducers.requestSaveSettings)
     .map(data => Object.assign({}, {data}, {sink: 'store', key: 'themes', type: 'write'}))
+    .multicast()
 
-  return {initalizeThemes$, setTheme$, requestSaveSettings$}
+  return {
+    initialize$,
+    setTheme$,
+
+    requestLoadSettings$,
+    requestSaveSettings$
+  }
 }
 
 module.exports = actions
