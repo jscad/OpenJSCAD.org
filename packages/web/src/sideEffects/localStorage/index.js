@@ -21,9 +21,8 @@ module.exports = function makeStorageSideEffect ({name}) {
     }
   }
 
-  function source () {
+  const source = () => {
     const reply$ = reply.stream.multicast()
-
     return reply$
   }
   return {sink, source}
