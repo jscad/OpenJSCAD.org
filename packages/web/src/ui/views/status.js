@@ -1,7 +1,8 @@
 
 const html = require('bel')
 
-module.exports = function designParameters (state, paramsCallbacktoStream) {
+// status display
+module.exports = (state, paramsCallbacktoStream) => {
   const status = state.status
   const statusMessage = status.error !== undefined
   ? `Error: ${status.error.message} line: ${status.error.lineno}, filename:${status.error.filename} stack:  ${status.error.stack}` : ''
