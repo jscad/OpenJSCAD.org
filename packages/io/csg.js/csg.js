@@ -80,7 +80,7 @@ for solid CAD anyway.
 
 */
 
-const {addTransformationMethodsToPrototype, addCenteringToPrototype} = require('./src/core/mutators')
+const {addTransformationMethodsToPrototype} = require('./src/core/mutators')
 let CSG = require('./src/core/CSG')
 let CAG = require('./src/core/CAG')
 
@@ -176,7 +176,6 @@ CAG.fromCompactBinary = CAGFactories.fromCompactBinary
 const optionsParsers = require('./src/api/optionParsers')
 
 // ////////////////////////////////////
-addTransformationMethodsToPrototype(CSG.prototype)
 addTransformationMethodsToPrototype(CSG.Vector2D.prototype)
 addTransformationMethodsToPrototype(CSG.Vector3D.prototype)
 addTransformationMethodsToPrototype(CSG.Vertex.prototype)
@@ -192,14 +191,14 @@ addTransformationMethodsToPrototype(CAG.prototype)
 addTransformationMethodsToPrototype(CAG.Side.prototype)
 addTransformationMethodsToPrototype(CAG.Vertex.prototype)
 
-CSG.parseOptionAs2DVector = optionsParsers.parseOptionAs3DVector
+/*CSG.parseOptionAs2DVector = optionsParsers.parseOptionAs3DVector
 CSG.parseOptionAs3DVector = optionsParsers.parseOptionAs3DVector
 CSG.parseOptionAs3DVectorList = optionsParsers.parseOptionAs3DVectorList
 CSG.parseOptionAsBool = optionsParsers.parseOptionAsBool
 CSG.parseOptionAsFloat = optionsParsers.parseOptionAsFloat
 CSG.parseOptionAsInt = optionsParsers.parseOptionAsInt
 // this is needed for now, otherwise there are missing features in Polygon2D
-CSG.Polygon2D.prototype = CAG.prototype
+CSG.Polygon2D.prototype = CAG.prototype*/
 
 // utilities
 const {isCAG, isCSG} = require('./src/core/utils')

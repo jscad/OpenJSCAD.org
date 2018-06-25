@@ -1,7 +1,7 @@
 const test = require('ava')
 const {CAG} = require('../csg')
 const clearTags = require('./helpers/clearTags')
-
+const {toCompactBinary} = require('../src/core/CAGToOther')
 //
 // Test suite for CAG Conversions
 //
@@ -16,16 +16,16 @@ test('CAG should convert to and from binary', t => {
   const c3 = CAG.rectangle()
   const c4 = CAG.roundedRectangle()
 
-  const b1 = c1.toCompactBinary()
+  const b1 = toCompactBinary(c1)
   const r1 = CAG.fromCompactBinary(b1)
   t.deepEqual(clearTags(c1), r1)
-  const b2 = c2.toCompactBinary()
+  const b2 = toCompactBinary(c2)
   const r2 = CAG.fromCompactBinary(b2)
   t.deepEqual(clearTags(c2), r2)
-  const b3 = c3.toCompactBinary()
+  const b3 = toCompactBinary(c3)
   const r3 = CAG.fromCompactBinary(b3)
   t.deepEqual(clearTags(c3), r3)
-  const b4 = c4.toCompactBinary()
+  const b4 = toCompactBinary(c4)
   const r4 = CAG.fromCompactBinary(b4)
   t.deepEqual(clearTags(c4), r4)
 })

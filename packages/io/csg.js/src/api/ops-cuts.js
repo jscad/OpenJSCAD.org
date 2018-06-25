@@ -1,9 +1,15 @@
 const {EPS} = require('../core/constants')
+const vec4 = require('../core/math/vec4')
+const vec2 = require('../core/math/vec2')
+const poly3 = require('../core/geometry/poly3')
+const intersection = require('./ops-booleans/intersection')
+
 const Plane = require('../core/math/Plane')
-const Vector2 = require('../core/math/Vector2')
 const Vertex3 = require('../core/math/Vertex3')
-const Polygon3 = require('../core/math/Polygon3')
 const OrthoNormalBasis = require('../core/math/OrthoNormalBasis')
+
+const {projectToOrthoNormalBasis} = require('../core/utils/csgProjections')
+const {extrudePolygon3} = require('./ops-extrusions/extrusionUtils')
 
 /** cuts a csg along a orthobasis
  * @param  {CSG} csg the csg object to cut
@@ -14,9 +20,9 @@ const sectionCut = function (csg, orthobasis) {
   let plane2 = orthobasis.plane.flipped()
   plane1 = new Plane(plane1.normal, plane1.w)
   plane2 = new Plane(plane2.normal, plane2.w + (5 * EPS))
-  let cut3d = csg.cutByPlane(plane1)
-  cut3d = cut3d.cutByPlane(plane2)
-  return cut3d.projectToOrthoNormalBasis(orthobasis)
+  let cut3d = cutByPlane(csg, plane1)
+  cut3d = cutByPlane(cut3d, plane2)
+  return projectToOrthoNormalBasis(cut3d, orthobasis)
 }
 
 /** Cut the solid by a plane. Returns the solid on the back side of the plane
@@ -25,8 +31,7 @@ const sectionCut = function (csg, orthobasis) {
  */
 const cutByPlane = function (csg, plane) {
   if (csg.polygons.length === 0) {
-    const CSG = require('../core/CSG') // FIXME: circular dependency ! CSG => cutByPlane => CSG
-    return new CSG()
+    throw new Error('cannot cut empty shape3')
   }
   // Ideally we would like to do an intersection with a polygon of inifinite size
   // but this is not supported by our implementation. As a workaround, we will create
@@ -46,17 +51,17 @@ const cutByPlane = function (csg, plane) {
   // Now build a polygon on the plane, at any point farther than maxdistance from the plane center:
   let vertices = []
   let orthobasis = new OrthoNormalBasis(plane)
-  vertices.push(new Vertex3(orthobasis.to3D(new Vector2(maxdistance, -maxdistance))))
-  vertices.push(new Vertex3(orthobasis.to3D(new Vector2(-maxdistance, -maxdistance))))
-  vertices.push(new Vertex3(orthobasis.to3D(new Vector2(-maxdistance, maxdistance))))
-  vertices.push(new Vertex3(orthobasis.to3D(new Vector2(maxdistance, maxdistance))))
-  const polygon = new Polygon3(vertices, null, plane.flipped())
+  vertices.push(new Vertex3(orthobasis.to3D(vec2.fromValues(maxdistance, -maxdistance))))
+  vertices.push(new Vertex3(orthobasis.to3D(vec2.fromValues(-maxdistance, -maxdistance))))
+  vertices.push(new Vertex3(orthobasis.to3D(vec2.fromValues(-maxdistance, maxdistance))))
+  vertices.push(new Vertex3(orthobasis.to3D(vec2.fromValues(maxdistance, maxdistance))))
+  const polygon = poly3.fromData(vertices, null, plane.flipped())
 
   // and extrude the polygon into a cube, backwards of the plane:
-  const cube = polygon.extrude(plane.normal.times(-maxdistance))
+  const cube = extrudePolygon3(polygon, plane.normal.times(-maxdistance))
 
   // Now we can do the intersection:
-  let result = csg.intersect(cube)
+  let result = intersection(csg, cube)
   result.properties = csg.properties // keep original properties
   return result
 }

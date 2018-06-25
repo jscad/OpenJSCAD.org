@@ -25,6 +25,63 @@ function shape2dToNestedArray (shape2d) {
   return sides
 }
 
+// takes a 2D shape, and outputs all connected set of points
+function shape2dToOptimisedPoints (shape2d) {
+  const sides = shape2d.sides.map(function (side) {
+    return [[side.vertex0.pos._x, side.vertex0.pos._y], [side.vertex1.pos._x, side.vertex1.pos._y]]
+  })
+  const shapes = []
+  let currentThing = []
+  const hasPoint = function (point) {
+    for (let i = 0; i < currentThing.length; i++) {
+      if (currentThing[i][0] === point[0] && currentThing[i][1] === point[1]) {
+        return true
+      }
+    }
+    return false
+  }
+  const isLastPointEqual = function (point) {
+    if (currentThing.length === 0) {
+      return false
+    }
+    const lastPoint = currentThing[currentThing.length - 1]
+    if (lastPoint[0] === point[0] && lastPoint[1] === point[1]) {
+      return true
+    }
+    return false
+  }
+  const isClosed = function (points, point) {
+    if (points.length < 3) {
+      return false
+    }
+    const firstPoint = points[0]
+    if (firstPoint[0] === point[0] && firstPoint[1] === point[1]) {
+      return true
+    }
+    return false
+  }
+
+  sides.forEach(function (side) {
+    const point0 = side[0]
+    const point1 = side[1]
+    if (!isLastPointEqual(point0)) {
+      currentThing.push(point0)
+    }
+    /*const isPointSameAsFirst = isClosed(currentThing, point0)
+    if (!isLastPointEqual(point1) && !isPointSameAsFirst) {
+      currentThing.push(point1)
+    }
+    if (isPointSameAsFirst) {
+      shapes.push(currentThing)
+      currentThing = []
+    } */
+  })
+  // shape detection (by finding closed shapes where first point === last point) fails because the order
+  // of points is not reliable ...sigh
+  // console.log('found shapes', shapes.length)
+  return currentThing
+}
+
 function shape3dToNestedArray (shape3d) {
   const polygons = shape3d.polygons.map(function (polygon) {
     return polygon.vertices.map(vertex => [vertex.pos._x, vertex.pos._y, vertex.pos._z])
@@ -116,6 +173,7 @@ module.exports = {
   vector3Equals,
   sideEquals,
   shape2dToNestedArray,
+  shape2dToOptimisedPoints,
   simplifiedPolygon,
   simplifiedCSG,
 

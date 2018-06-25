@@ -1,15 +1,16 @@
 const test = require('ava')
-const { cube, torus } = require('./primitives3d-api')
-const { circle } = require('./primitives2d-api')
-const { linear_extrude } = require('./ops-extrusions')
-const { union, intersection } = require('./ops-booleans')
-
+const cube = require('./primitives/cuboid')
+const torus = require('./primitives/torus')
+const circle = require('./primitives/circle')
+const linearExtrude = require('./ops-extrusions/linearExtrude')
+const union = require('./ops-booleans/union')
+const intersection = require('./ops-booleans/intersection')
 // any tests that involve multiple operands (extrude with union translate with difference etc)
 // and are not testing a specific feature (union, difference, translate etc)
 // belong here
 
-test('linear_extrude of union of 2d shapes', t => {
-  const obs = linear_extrude({height: 0.1}, union([
+test('linearExtrude of union of 2d shapes', t => {
+  const obs = linearExtrude({height: 0.1}, union([
     circle({r: 8, center: true}).translate([0, 20, 0]),
     circle({r: 8, center: true})
   ]))

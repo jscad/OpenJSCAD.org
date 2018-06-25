@@ -1,3 +1,4 @@
+const { toPolygons } = require('../../src/core/CSGToOther')
 // Compare two polygons together.
 // They are identical if they are composed with the same vertices in the same
 // relative order
@@ -46,9 +47,9 @@ function containsCSG (observed, expected) {
   // console.log('Observed: ', observed)
   // console.log('Expected: ', expected)
 
-  return observed.toPolygons().map(p => {
+  return toPolygons(observed).map(p => {
     let found = false
-    let bp = expected.toPolygons()
+    let bp = toPolygons(expected)
     for (let i = 0; i < bp.length; i++) {
       if (comparePolygons(p, bp[i])) {
         found = true
