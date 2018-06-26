@@ -16,16 +16,12 @@ const makeActions = (sources) => {
   const errorActions = require('./errors')({sources})
   const exportActions = require('./exports')({sources})
 
-  // Todo: each 'store' needs to handle its own saving to settings, independantly from the others
-  const settingsActions = require('./settings')({sources})
   const designActions = require('./design')({sources})
 
   const actions = [
     errorActions,
     designActions,
     exportActions,
-
-    settingsActions,
 
     toolActions,
     themeActions,

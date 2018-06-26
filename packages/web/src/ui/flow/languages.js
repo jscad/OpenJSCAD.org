@@ -41,7 +41,7 @@ const actions = ({sources}) => {
     .just({type: 'getDefaultLocale', sink: 'i18n'})
     .delay(10)
 
-  // send a request to get the translations for the specificed language
+  // send a request to get the translations for the specified language
   const requestGetLanguageData$ = sources.state
     .filter(state => state.languages && state.languages.active !== undefined)
     .map(state => state.languages.active)
