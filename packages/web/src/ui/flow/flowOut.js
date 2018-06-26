@@ -8,13 +8,16 @@ function makeReactions (inputs) {
     .filter(x => 'sink' in x && x.sink === 'state')
     .forEach(x => console.log(' out to state', x))
 
-  outputs$
+  /* outputs$
     .filter(x => 'sink' in x && x.sink === 'i18n')
     .forEach(x => console.log(' out to i18n', x))
 
   outputs$
     .filter(x => 'sink' in x && x.sink === 'store')
-    .forEach(x => console.log(' out to store', x))
+    .forEach(x => console.log(' out to store', x)) */
+  outputs$
+    .filter(x => 'sink' in x && x.sink === 'fs')
+    .forEach(x => console.log(' out to fs', x))
 
   sinks.fileDialog(most.just('foo').delay(5000))
   // output to dom

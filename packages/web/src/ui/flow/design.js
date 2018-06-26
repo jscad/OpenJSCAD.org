@@ -196,19 +196,50 @@ const reducers = {
 
   // ui/toggles
   toggleAutoReload: (state, autoReload) => {
-    console.log('toggleAutoReload', autoReload)
+    // console.log('toggleAutoReload', autoReload)
     const design = Object.assign({}, state.design, {autoReload})
     return Object.assign({}, state, {design})
   },
   toggleInstantUpdate: (state, instantUpdate) => {
-    console.log('toggleInstantUpdate', instantUpdate)
+    // console.log('toggleInstantUpdate', instantUpdate)
     const design = Object.assign({}, state.design, {instantUpdate})
     return Object.assign({}, state, {design})
   },
   toggleVtreeMode: (state, vtreeMode) => {
-    console.log('toggleVtreeMode', vtreeMode)
+    // console.log('toggleVtreeMode', vtreeMode)
     const design = Object.assign({}, state.design, {vtreeMode})
     return Object.assign({}, state, {design})
+  },
+  requestWriteCachedGeometry: (cache) => {
+    console.log('cache', cache)
+    const serialize = require('serialize-to-js').serialize
+    /* ?
+    const serializeGeometryCache = (cache) => {
+
+    const fs = require('fs')
+    const electron = require('electron').remote
+    const serialize = require('serialize-to-js').serialize
+
+    const userDataPath = electron.app.getPath('userData')
+    const path = require('path')
+
+    const cachePath = path.join(userDataPath, '/cache.js')
+    let data = {}
+    Object.keys(cache).forEach(function (key) {
+      data[key] = cache[key]// .toCompactBinary()
+    })
+    const compactBinary = data
+    const compactOutput = serialize(compactBinary)
+    const content = compactOutput // 'compactBinary=' +
+    fs.writeFileSync(cachePath, content)
+  }
+  */
+    let data = {}
+    Object.keys(cache).forEach(function (key) {
+      data[key] = cache[key]// .toCompactBinary()
+    })
+    const compactBinary = serialize(data)
+    return { data: compactBinary, path: '.solidsCache', options: {isRawData: true} }
   },
   // what do we want to save ?
   requestSaveSettings: (design) => {
@@ -508,17 +539,8 @@ const actions = ({sources}) => {
       .skipRepeatsWith((state, previousState) => {
         return JSON.stringify(state) === JSON.stringify(previousState)
       })
-      .map(cache => {
-        /* const serialize = require('serialize-to-js').serialize
-        // serializeGeometryCache(lookup)
-        let data = {}
-        Object.keys(cache).forEach(function (key) {
-          data[key] = cache[key]// .toCompactBinary()
-        }) */
-        // const compactBinary = serialize(data)/
-        const compactBinary = 'foo'
-        return { data: compactBinary, path: '.solidCache', options: {isRawData: true} }
-      })
+      .map(reducers.requestWriteCachedGeometry)
+      .map(payload => Object.assign({}, {type: 'write', sink: 'fs', id: 'cachedGeometry'}, payload))
     /* most.just()
       .map(function () {
         const electron = require('electron').remote
@@ -532,28 +554,6 @@ const actions = ({sources}) => {
   ])
   .multicast()
   .map(payload => Object.assign({}, {type: 'write', sink: 'fs'}, payload))
-
-  /* ?
-    const serializeGeometryCache = (cache) => {
-
-    const fs = require('fs')
-    const electron = require('electron').remote
-    const serialize = require('serialize-to-js').serialize
-
-    const userDataPath = electron.app.getPath('userData')
-    const path = require('path')
-
-    const cachePath = path.join(userDataPath, '/cache.js')
-    let data = {}
-    Object.keys(cache).forEach(function (key) {
-      data[key] = cache[key]// .toCompactBinary()
-    })
-    const compactBinary = data
-    const compactOutput = serialize(compactBinary)
-    const content = compactOutput // 'compactBinary=' +
-    fs.writeFileSync(cachePath, content)
-  }
-  */
 
   // FIXME: this needs to be elsewhere
   // const setZoomingBehaviour$ = ''

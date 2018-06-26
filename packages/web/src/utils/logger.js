@@ -8,11 +8,13 @@ const makeLogger = (params) => {
       console.debug(...params)
     }
   }
-  const info = (...params) => {
+  const info = enabled ? console.info.bind(window.console) : () => {}
+  /* (...params) => {
     if (enabled) {
-      console.log(...params)
+      console.log('arguments', arguments.callee)
+      console.log(...params) 
     }
-  }
+  } */
   const error = (...params) => {
     if (enabled) {
       console.error(...params)
