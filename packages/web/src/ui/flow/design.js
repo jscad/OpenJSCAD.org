@@ -1,6 +1,7 @@
 const most = require('most')
 const withLatestFrom = require('../../utils/observable-utils/withLatestFrom')
 const holdUntil = require('../../utils/observable-utils/holdUntil')
+const delayFromObservable = require('../../utils/observable-utils/delayFromObservable')
 const getParameterValuesFromUIControls = require('@jscad/core/parameters/getParameterValuesFromUIControls')
 const {nth, toArray} = require('@jscad/core/utils/arrays')
 const url = require('url')
@@ -46,7 +47,7 @@ const reducers = {
       parameterValues: {},
       parameterDefaults: {},
       // solids
-      solidsTimeOut: 20000,
+      solidsTimeOut: 5000,
       solids: [],
       // geometry caching
       vtreeMode: false,
@@ -104,7 +105,7 @@ const reducers = {
  * @returns {Object} the updated state
  */
   setDesignContent: (state, source) => {
-    // console.log('setDesignContent')
+    console.log('setDesignContent')
     /*
       func(parameterDefinitions) => paramsUI
       func(paramsUI + interaction) => params
@@ -135,7 +136,7 @@ const reducers = {
    * @returns {Object} the updated state
    */
   setDesignSolids: (state, {solids, lookup, lookupCounts}) => {
-    // console.log('setDesignSolids', lookup)
+    console.log('setDesignSolids', lookup)
     solids = solids || []
     lookup = lookup || {}
     lookupCounts = lookupCounts || {}
@@ -194,6 +195,43 @@ const reducers = {
     })
   },
 
+  requestGeometryRecompute: (state, _) => {
+    const {design} = state
+    const {source, mainPath, parameterValues, filesAndFolders} = design
+    const options = {vtreeMode: design.vtreeMode, lookup: design.lookup, lookupCounts: design.lookupCounts}
+    return {source, mainPath, parameterValuesOverride: parameterValues, options, filesAndFolders}
+  },
+
+  timeoutGeometryRecompute: (state, _) => {
+    console.log('timeoutGeometryRecompute', state)
+    const isBusy = state.status.busy
+    if (isBusy) {
+      const status = Object.assign({}, state.status, {
+        busy: false,
+        error: new Error('Failed to generate design within an acceptable time, bailing out')
+      })
+      return Object.assign({}, state, {status})
+    }
+    return state
+  },
+
+  // helpers
+  // determine if a design has remained the same : does NOT include solids, as they are a result of all the other parameters
+  isDesignTheSame: (previousState, state) => {
+    if (!previousState.design) {
+      return false
+    }
+    const current = state.design
+    const previous = previousState.design
+    const sameParameterValues = JSON.stringify(current.parameterValues) === JSON.stringify(previous.parameterValues)
+    // FIXME: do more than just check source !! if there is a change in any file (require tree)
+    // it should recompute
+    const sameSource = JSON.stringify(current.source) === JSON.stringify(previous.source)
+    const sameMainPath = JSON.stringify(current.mainPath) === JSON.stringify(previous.mainPath)
+    const sameFiles = JSON.stringify(current.filesAndFolders) === JSON.stringify(previous.filesAndFolders)
+    return sameParameterValues && sameSource && sameMainPath && sameFiles
+  },
+
   // ui/toggles
   toggleAutoReload: (state, autoReload) => {
     // console.log('toggleAutoReload', autoReload)
@@ -213,21 +251,7 @@ const reducers = {
   requestWriteCachedGeometry: (cache) => {
     console.log('cache', cache)
     const serialize = require('serialize-to-js').serialize
-    /* ?
-    const serializeGeometryCache = (cache) => {
-
-    const fs = require('fs')
-    const electron = require('electron').remote
-    const serialize = require('serialize-to-js').serialize
-
-    const userDataPath = electron.app.getPath('userData')
-    const path = require('path')
-
-    const cachePath = path.join(userDataPath, '/cache.js')
-    let data = {}
-    Object.keys(cache).forEach(function (key) {
-      data[key] = cache[key]// .toCompactBinary()
-    })
+    /*
     const compactBinary = data
     const compactOutput = serialize(compactBinary)
     const content = compactOutput // 'compactBinary=' +
@@ -261,9 +285,6 @@ const reducers = {
 // return Object.assign({}, state, {activeTool})
 
 const actions = ({sources}) => {
-  sources.store.filter(reply => reply.key === 'design' && reply.type === 'read')
-    .forEach(x => console.log('from store', x))
-
   const initalize$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
     .map(data => ({type: 'initalizeDesign', state: data, sink: 'state'}))
@@ -303,6 +324,7 @@ const actions = ({sources}) => {
 
   const setDesignPath$ = designPath$
     .thru(withLatestFrom(reducers.setDesignPath, sources.state))
+    // .skipRepeatsWith(reducers.isDesignTheSame)
     .map(data => ({type: 'setDesignPath', state: data, sink: 'state'}))
     .delay(1)
 
@@ -316,6 +338,7 @@ const actions = ({sources}) => {
   ])
     .multicast()
     .thru(withLatestFrom(reducers.setDesignContent, sources.state))
+    // .skipRepeatsWith(reducers.isDesignTheSame)
     .map(data => ({type: 'setDesignContent', state: data, sink: 'state'}))
 
   const setDesignSolids$ = most.mergeArray([
@@ -349,45 +372,24 @@ const actions = ({sources}) => {
     .thru(withLatestFrom(reducers.setDesignSolids, sources.state))
     .map(data => ({type: 'setDesignSolids', state: data, sink: 'state'}))
 
+  // send out a request to recompute the geometry
   const requestGeometryRecompute$ = sources.state
     .filter(state => state.design && state.design.mainPath !== '')
-    .map(state => state.design)
-    .skipRepeatsWith(function (state, previousState) {
-      const sameParameterValues = JSON.stringify(state.parameterValues) === JSON.stringify(previousState.parameterValues)
-      // FIXME: do more than just check source !! if there is a change in any file (require tree)
-      // it should recompute
-      const sameSource = JSON.stringify(state.source) === JSON.stringify(previousState.source)
-      const sameMainPath = JSON.stringify(state.mainPath) === JSON.stringify(previousState.mainPath)
-      const sameFiles = JSON.stringify(state.filesAndFolders) === JSON.stringify(previousState.filesAndFolders)
-      return sameParameterValues && sameSource && sameMainPath && sameFiles
-    })
-    .map(function (design) {
-      const {source, mainPath, parameterValues, filesAndFolders} = design
-      const options = {vtreeMode: design.vtreeMode, lookup: design.lookup, lookupCounts: design.lookupCounts}
+    // .skipRepeatsWith(reducers.isDesignTheSame)
+    .map(reducers.requestGeometryRecompute)
+    .map(payload => Object.assign({}, payload, {sink: 'geometryWorker', cmd: 'generate'}))
 
-      return {cmd: 'generate', source, mainPath, parameterValuesOverride: parameterValues, options, filesAndFolders, sink: 'geometryWorker'}
-    })
+  // every time we send out a request to recompute geometry, we initiate a timeout
+  // we debounce these timeouts so that it reset the timeout everytime there is a new request
+  // to recompute
+  const timeoutGeometryRecompute$ = requestGeometryRecompute$
+    .thru(delayFromObservable(state => state.design.solidsTimeOut, sources.state.filter(state => state.design)))
+    .thru(withLatestFrom(reducers.timeoutGeometryRecompute, sources.state))
+    .map(payload => Object.assign({}, {state: payload}, {sink: 'state', type: 'timeOutDesignGeneration'}))
 
-  const timeoutGeometryRecompute$ = most.mergeArray([
-    most.never()
-    // sources.state,
-      .map((state, _) => {
-        const isBusy = state.busy
-        if (isBusy) {
-          const status = Object.assign({}, state.status, {
-            busy: false,
-            error: new Error('Failed to generate design within an acceptable time, bailing out')
-          })
-          return Object.assign({}, state, {status})
-        }
-        return state
-      })
-    /* designPath$
-    sources.state
-    .delay(60000) */
-  ])
-    .map(data => ({type: 'timeOutDesignGeneration', state: data, sink: 'state'}))
-    .tap(x => console.log('timeOutDesignGeneration'))
+  // we also re-use the timeout to send a signal to the worker to terminate the current geometry generation
+  const cancelGeometryRecompute$ = timeoutGeometryRecompute$
+    .map(payload => Object.assign({}, {sink: 'geometryWorker', cmd: 'cancel'}))
 
   // design parameter change actions
   const getControls = () => Array.from(document.getElementById('paramsTable').getElementsByTagName('input'))
@@ -534,7 +536,7 @@ const actions = ({sources}) => {
   const requestWriteCachedGeometry$ = most.mergeArray([
     sources.state
       .filter(state => state.design && state.design.mainPath !== '')
-      .skipRepeatsWith((state, previousState) => state.design.mainPath === previousState.design.mainPath)
+      .skipRepeatsWith((state, previousState) => state.design === previousState.design)
       .map(state => state.design.solids)
       .skipRepeatsWith((state, previousState) => {
         return JSON.stringify(state) === JSON.stringify(previousState)
@@ -565,6 +567,7 @@ const actions = ({sources}) => {
     setDesignContent$,
     requestGeometryRecompute$,
     timeoutGeometryRecompute$,
+    cancelGeometryRecompute$,
     setDesignSolids$,
     setDesignParameters$,
 
