@@ -58,10 +58,10 @@ const makeMemFsSideEffect = (params) => {
           const name = require('path').basename(path)
           const ext = getFileExtensionFromString(path)
 
-          /*filesAndFolders = filesAndFolders.concat([
+          /* filesAndFolders = filesAndFolders.concat([
             {name, ext, source: data, fullPath: path}
-          ])*/
-          filesAndFolders =[
+          ]) */
+          filesAndFolders = [
             {name, ext, source: data, fullPath: path}
           ]
           fs = makeFakeFs(filesAndFolders)
@@ -87,7 +87,8 @@ const makeMemFsSideEffect = (params) => {
         console.log('rootModule', rootModule) */
       } else if (type === 'write') {
         log.info('write', command, filesAndFolders, path)
-        const foundEntry = head(filesAndFolders.filter(entry => entry.fullPath === path))
+        // check if we already have a matching entry with the same full (absolute) path
+        const foundEntry = head(filesAndFolders.filter(entry => entry.fullPath === path))
         if (!foundEntry) {
           const name = require('path').basename(path)
           const ext = getFileExtensionFromString(path)
@@ -95,8 +96,11 @@ const makeMemFsSideEffect = (params) => {
           filesAndFolders = filesAndFolders.concat([
             {name, ext, source: data, fullPath: path}
           ])
-          fs = makeFakeFs(filesAndFolders)
+        } else {
+          // update the source with the new data
+          foundEntry.source = command.data
         }
+        fs = makeFakeFs(filesAndFolders)
       } else if (type === 'watch') {
         // if rawData is undefined, it means we cannot watch the target data
         // ie data loaded from http etc
