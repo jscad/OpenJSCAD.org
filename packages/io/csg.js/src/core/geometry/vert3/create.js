@@ -1,5 +1,5 @@
 const vec3 = require('../../math/vec3')
-const {getTag} = require('../constants')
+const {getTag} = require('../../constants')
 
 // # class Vertex
 // Represents a vertex of a polygon. Use your own vertex class instead of this
