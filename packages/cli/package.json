@@ -1,0 +1,49 @@
+{
+  "name": "@jscad/cli",
+  "version": "1.8.4",
+  "description": "Command Line Interface (CLI) for OpenJsCAD",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "bin": {
+    "openjscad": "./cli.js"
+  },
+  "scripts": {
+    "test": "ava './*.test.js' --verbose --timeout 10000",
+    "preversion": "npm test",
+    "version": "git add -A ",
+    "postversion": "git push origin master && git push origin master --tags",
+    "release-patch": "git checkout master && git pull origin master && npm version patch",
+    "release-minor": "git checkout master && git pull origin master && npm version minor",
+    "release-major": "git checkout master && git pull origin master && npm version major",
+    "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove OpenJSCAD? You can now donate to our open collective:\\u001b[22m\\u001b[39m\\n > \\u001b[34mhttps://opencollective.com/openjscad/donate\\u001b[0m')\""
+  },
+  "contributors": [
+    {
+      "name": "Rene K. Mueller",
+      "url": "http://renekmueller.com"
+    },
+    {
+      "name": "z3dev",
+      "url": "http://www.z3d.jp"
+    },
+    {
+      "name": "Mark 'kaosat-dev' Moissette",
+      "url": "http://kaosat.net"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@jscad/core": "^0.2.3",
+    "@jscad/csg": "0.5.2",
+    "@jscad/examples": "^1.7.2",
+    "@jscad/io": "0.4.4",
+    "@jscad/openscad-openjscad-translator": "0.0.10"
+  },
+  "devDependencies": {
+    "ava": "^0.23.0"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/openjscad",
+    "logo": "https://opencollective.com/openjscad/logo.txt"
+  }
+}

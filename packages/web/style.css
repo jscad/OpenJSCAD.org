@@ -1,0 +1,388 @@
+/*
+ * style.css for index.html of http://OpenJSCAD.org/
+ */
+
+html, body {
+   margin: 0px;             /* not inherited */
+   border: 0px none black;  /* not inherited */
+   padding: 0px;            /* not inherited */
+   font-family: Helvetica, Arial, Sans;
+
+   /* ensure that the document uses the whole width and height of the browser */
+   min-height: 100%;
+   height: 100%;
+   min-width: 100%;
+   width: 100%;
+
+   /* viewer/canvas is full screen so when window
+      is resized all remains intact, but we make sure no scrollbar appears */
+   overflow: hidden;
+}
+
+a {
+   text-decoration: none;
+   color: #6020a0;
+   font-weight: bold;
+}
+
+a:visited {
+   color: #6020a0;
+}
+
+#header {
+   position: absolute;
+   top: 1em;
+   left: 1em;
+   z-index: 20;
+}
+
+#editFrame {
+/*  display: none; */
+
+  margin: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+/*  left: 0; */
+  right: 0;
+
+  width: 40%;
+  font-weight: normal;
+}
+
+#editHandle {
+  left: -25px;
+  top: 45%;
+  position: absolute;
+  z-index: 6;
+  opacity: 0.9;
+}
+
+#editFrame {
+  transition: width 0.4s;
+  -o-transition: width 0.4s;
+  -moz-transition: width 0.4s;
+  -webkit-transition: width 0.4s;
+}
+
+.ace_gutter {
+   border-left: 1px solid #ccc;
+   background: transparent !important;
+}
+
+#editor {
+  margin: inherit;
+  position: inherit;
+  top:    inherit;
+  bottom: inherit;
+  left:   inherit;
+  right:  inherit;
+  width: 100%;
+  z-index: 6;
+/*
+   background: transparent;
+*/
+  background: rgba(255,255,255,0.15);
+}
+
+#viewerContext {
+   margin: 0px;             /* not inherited */
+   border: 0px none black;  /* not inherited */
+   padding: 0px;            /* not inherited */
+
+   /* ensure that the canvas uses the whole width and height of the document */
+   background: white;
+   height: 100%;
+   width: 100%;
+
+   top: 0px;
+   bottom: 0px;
+}
+
+canvas {
+   margin: 0px;            /* not inherited */
+   border: 0px none black; /* not inherited */
+   padding: 0px;           /* not inherited */
+
+   /* ensure that the canvas uses the whole width and height of the document */
+   height: 100%;
+   width: 100%;
+
+   cursor: move;        /* show that we can change orientation of view */
+}
+
+#about {
+   position: absolute;
+   width: 30%;
+   left: 30%;
+   top: 10%;
+   font-size: 0.75em;
+   box-shadow: 0px 0px 20px black;
+   color: #404040;
+   border-radius: 20px;
+   background: white;
+   display: none;
+   padding: 1.5em;
+   text-align: center;
+   z-index: 100;
+}
+
+.okButton {
+   border: 2px solid #808080;
+   border-radius: 4px;
+   padding: 0.5em;
+   padding-left: 2em;
+   padding-right: 2em;
+   margin-top: 3em;
+   background: #eee;
+}
+
+.okButton:hover {
+   background: #ccc;
+}
+
+#footer {
+   font-size: 0.7em;
+   text-align: left;
+   position: absolute;
+
+   margin-left: 1.5em;
+   bottom: 0.5em;
+
+   opacity: 0.5;
+   -moz-opacity: 0.5;      /* css mess (why do it simple, when we can do it complicate!) */
+}
+
+#tail {
+   z-index: 4;
+   position: absolute;
+   bottom: 1em;
+   margin: 1em;
+   user-select: none;
+}
+
+#busy {
+   vertical-align: middle;
+}
+
+#menu, #menu nav a {
+   transition: all 0.4s;
+   -o-transition: all 0.4s;
+   -moz-transition: all 0.4s;
+   -webkit-transition: all 0.4s;
+}
+
+#menu {
+   background: white;
+
+   opacity: 0.8;
+   -moz-opacity: 0.8;
+
+   border-right: 1px solid black;
+   height: inherit;
+   width: 250px;
+   padding-left: 20px;
+   padding-right: 10px;
+   position: fixed;
+   z-index: 5;
+
+   font-size: 0.9em;
+
+   box-shadow: 4px 0 10px rgba(0,0,0,0.25);
+   -moz-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
+   -webkit-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
+}
+
+#menu {
+   left: 0;
+}
+
+#menuHandle {
+   right: -25px;
+   top: 45%;
+   position: absolute;
+   z-index: 6;
+}
+
+#menu nav {
+   position: relative;
+   top: 50px;
+}
+
+#menu nav .navlink {
+}
+
+#menu nav .navlink:hover {
+}
+
+#menu #examples {
+   font-size: 0.6em;
+}
+
+#menu #examples .newExample {
+   border-radius: 5px;
+   background: yellow;
+   padding-left: 4px;
+   padding-right: 4px;
+}
+
+#menu #examples, #menu #examples a {
+   margin-top: 0px;
+}
+
+#menu .info {
+   border-spacing: 0;
+   border-collapse: collapse;
+   margin-bottom: 0.5em;
+}
+
+#menu .info td {
+   margin: 0px;
+   padding-left: 2px;
+   padding-right: 2px;
+   padding-top: 0px;
+   padding-bottom: 0px;
+   font-size: 0.6em;
+}
+
+.info .infoView {
+   text-align: center;
+   font-weight: bold;
+   color: #444;
+   background: rgba(0,0,0,0.1);
+}
+
+.info .infoOperation {
+   font-weight: bold;
+   color: #602080;
+}
+
+.info .infoKey {
+   font-weight: bold;
+   color: #808080;
+}
+
+#menuVersion {
+   text-align: center;
+   font-size: 0.6em;
+   color: #666;
+}
+
+.menuSubInfo {
+   font-size: 0.6em;
+   color: #666;
+}
+
+#examples {
+   /* width: 60em; */
+   width: auto;
+   z-index: 12;
+   position: absolute;
+   display: none;
+   background: #f8e8ff;
+   border: solid 1px #888;
+   padding: 1em;
+   border-radius: 5px;
+   box-shadow: 0px 0px 10px #849;
+}
+
+#examples td {
+   white-space: nowrap;
+}
+
+#examples li {
+   list-style-type: none;
+}
+
+#examplesHandle {
+   bottom: 0px;
+   left: 45%;
+   position: relative;
+   z-index: 10;
+}
+
+.examplesSeparator {
+}
+
+#options {
+   width: auto;
+   z-index: 12;
+   position: absolute;
+   display: none;
+   background: #f8e8ff;
+   border: solid 1px #888;
+   padding: 0.5em;
+   border-radius: 5px;
+   box-shadow: 0px 0px 10px #849;
+   font-size: 0.8em;
+}
+
+.optionGroup {
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   padding: 0.5em;
+   margin: 0.5em;
+   background: white;
+}
+
+.optionGroup input, .optionGroup select {
+  background: #fea;
+  border: none;
+}
+
+.optionInfo {
+   font-size: 0.8em;
+   color: #888;
+}
+
+/* arrows */
+
+.shift-scene {
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   border-radius: 50%;
+   border: 5px dotted #999;
+   width: 160px;
+   height: 160px;
+   margin-top: -80px;
+   margin-left: -80px;
+   background: transparent;
+   cursor: move;
+   opacity: 0.8;
+   display: none;
+}
+.shift-scene.active {
+   display: block;
+}
+.arrow {
+   width: 0px;
+   height: 0px;
+   border: 50px solid transparent;
+   position: absolute;
+   z-index: 100;
+   margin-left: 30px;
+   margin-top: 30px;
+}
+.arrow-left {
+   border-right-color: #666;
+   margin-left: -90px;
+}
+.arrow-right {
+   border-left-color: #666;
+   margin-left: 150px;
+}
+.arrow-top {
+   border-bottom-color: #666;
+   margin-top: -90px;
+}
+.arrow-bottom {
+   border-top-color: #666;
+   margin-top: 150px;
+}
+.shift-vertical .arrow-left,
+.shift-vertical .arrow-right,
+.shift-horizontal .arrow-top,
+.shift-horizontal .arrow-bottom {
+   display: none;
+}

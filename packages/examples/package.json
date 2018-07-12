@@ -1,0 +1,50 @@
+{
+  "name": "@jscad/examples",
+  "version": "1.7.2",
+  "description": "example files for OpenJsCAD",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "scripts": {
+    "lint": "eslint *.jscad",
+    "version": "git add -A ",
+    "postversion": "git push origin master && git push origin master --tags",
+    "release-patch": "git checkout master && git pull origin master && npm version patch",
+    "release-minor": "git checkout master && git pull origin master && npm version minor",
+    "release-major": "git checkout master && git pull origin master && npm version major",
+    "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove OpenJSCAD? You can now donate to our open collective:\\u001b[22m\\u001b[39m\\n > \\u001b[34mhttps://opencollective.com/openjscad/donate\\u001b[0m')\""
+  },
+  "contributors": [
+    {
+      "name": "Rene K. Mueller",
+      "url": "http://renekmueller.com"
+    },
+    {
+      "name": "z3dev",
+      "url": "http://www.z3d.jp"
+    },
+    {
+      "name": "Mark 'kaosat-dev' Moissette",
+      "url": "http://kaosat.net"
+    }
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  },
+  "eslintConfig": {
+    "extends": "standard",
+    "rules": {
+      "semi": "off",
+      "no-undef": "off"
+    }
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/openjscad",
+    "logo": "https://opencollective.com/openjscad/logo.txt"
+  }
+}

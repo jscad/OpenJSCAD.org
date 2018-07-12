@@ -1,0 +1,15 @@
+{
+  "name": "moduleDesign",
+  "version": "0.0.1",
+  "description": "some great jscad design",
+  "main": "index.js",
+  "keywords": [
+    "jscad",
+    "cad"
+  ],
+  "author": "Mark 'kaosat-dev' Moissette & sons",
+  "license": "MIT",
+  "dependencies": {
+    "@jscad/csg": "0.5.3"
+  }
+}
