@@ -46,7 +46,7 @@ const formats = {
     description: 'AutoCAD Drawing Exchange Format',
     extension: 'dxf',
     mimetype: 'application/dxf',
-    convertCSG: false,
+    convertCSG: true,
     convertCAG: true },
   jscad: {
     displayName: 'JSCAD',
