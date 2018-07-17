@@ -234,7 +234,7 @@ const reducers = {
 
   // ui/toggles
   toggleAutoReload: (state, autoReload) => {
-    // console.log('toggleAutoReload', autoReload)
+    console.log('toggleAutoReload', autoReload)
     const design = Object.assign({}, state.design, {autoReload})
     return Object.assign({}, state, {design})
   },
@@ -521,7 +521,9 @@ const actions = ({sources}) => {
     // watched data
     sources.state
       .filter(state => state.design && state.design.mainPath !== '')
-      .map(state => ({path: state.design.mainPath, enabled: state.autoReload}))
+      .tap(x => console.log('gnagna', x))
+
+      .map(state => ({path: state.design.mainPath, enabled: state.design.autoReload}))
       .skipRepeatsWith((state, previousState) => {
         return JSON.stringify(state) === JSON.stringify(previousState)
       })
