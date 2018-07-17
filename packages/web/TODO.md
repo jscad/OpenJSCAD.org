@@ -20,22 +20,27 @@
 - [x] require support relative paths
 - [ ] require support node_modules (drag & drop)
 - [x] require support single file
-- [x] file watcher/autoreload
+- [x] file watcher/autoreload for single file
+- [x] file watcher/autoreload for folders
 - [x] examples
 
 ## outputs
-- [x] save/export of files
+- [ ] save/export of files using v2 api
 
 ## ui
 - [x] shortcuts
 - [ ] theming
 - [ ] styling
+- [ ] variations: min
+- [ ] variations: opts ??
 
 ## general
 - [x] examples jscad
 - [x] examples jscad
 - [x] translations
 - [x] multiple instances per page
+- [ ] coherent input/outputs handling
+- [ ] correct timeout and geometry generation cancelation
 
 ## tests
 - [ ] side effects
@@ -54,3 +59,33 @@
 - [ ] works on mobile (?)
 - [ ] proxy
 
+
+
+######
+
+external file formats handling:
+single file
+# direct import
+  ie drag & drop a single, stl, amf etc
+  - create a fake 'virtual' entry point file/module (index.js)
+  - that entry point should import the data as csg directly and re-export from main
+    * file contains the following (roughly)
+      ```javascript 
+      const externalFileData = fs.readFileSync('./<pathToExternalFile>')
+      const main = () => {
+        const externalSolid = deserialize(externalFileData)
+        return externalSolid
+      }```
+    * or 
+     ```javascript 
+      const main = () => {
+        const externalSolid = deserialize({options}, './<pathToExternalFile>')
+        return externalSolid
+      }```
+
+  - run the standard script loading setup
+
+# conversion
+  - translate the external file format into jscad
+  - replace the original file contents in the file tree ?
+  - set as main file 
