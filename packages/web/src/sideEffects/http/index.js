@@ -39,12 +39,13 @@ const makeHttpSideEffect = (params) => {
         if (['read', 'get'].includes(type.toLowerCase())) {
           xhr.onload = function (event) {
             const result = this.responseText
-            // console.log('result from request', result)
+            console.log('result from request', result)
             const status = event.target.status
             if (`${status}`.startsWith('4')) {
-              commandResponses.callback({type, id, url, error: result})
+              commandResponses.callback({type, id, url, error: new Error(result)})
+            } else {
+              commandResponses.callback({type, id, url, data: result})
             }
-            commandResponses.callback({type, id, url, data: result})
           }
           xhr.onerror = function (error) {
             const rError = new Error(`failed to load ${url} see console for more details`)
