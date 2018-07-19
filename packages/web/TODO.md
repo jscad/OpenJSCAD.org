@@ -16,13 +16,20 @@
 - [x] drag and drop of folders
 - [ ] loading of remote files
 - [ ] conversion of files
-- [x] require support , injection of explicit api 
+- [x] require support , injection of explicit api
+- [ ] require support , geometry caching 
 - [x] require support relative paths
 - [ ] require support node_modules (drag & drop)
 - [x] require support single file
 - [x] file watcher/autoreload for single file
 - [x] file watcher/autoreload for folders
 - [x] examples
+
+## error handling
+- [ ] virtual fs module injection
+- [ ] fix unhandled and explicit error handling
+- [ ] make error handling from different sources coherent (web worker, http requests etc)
+- [x] fix handling of http request errors
 
 ## outputs
 - [ ] save/export of files using v2 api
@@ -35,12 +42,13 @@
 - [ ] variations: opts ??
 
 ## general
-- [x] examples jscad
-- [x] examples jscad
+- [x] examples jscad (old style)
+- [ ] examples jscad updated to new explicit import api
 - [x] translations
 - [x] multiple instances per page
-- [ ] coherent input/outputs handling
-- [ ] correct timeout and geometry generation cancelation
+- [x] coherent input/outputs handling
+- [x] correct timeout and geometry generation cancelation
+- [ ] correct error displaying
 
 ## tests
 - [ ] side effects
