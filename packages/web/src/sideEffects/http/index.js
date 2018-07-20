@@ -37,8 +37,12 @@ const makeHttpSideEffect = (params) => {
       urls.forEach(url => {
         const xhr = new XMLHttpRequest()
         if (['read', 'get'].includes(type.toLowerCase())) {
-          xhr.onload = function (event) {
-            const result = this.responseText
+          xhr.onerror = error => {
+            const rError = new Error(`failed to load ${url} see console for more details`)
+            commandResponses.callback({type, id, url, error: rError})
+          }
+          xhr.onload = event => {
+            const result = event.currentTarget.responseText
             console.log('result from request', result)
             const status = event.target.status
             if (`${status}`.startsWith('4')) {
@@ -47,10 +51,7 @@ const makeHttpSideEffect = (params) => {
               commandResponses.callback({type, id, url, data: result})
             }
           }
-          xhr.onerror = function (error) {
-            const rError = new Error(`failed to load ${url} see console for more details`)
-            commandResponses.callback({type, id, url, error: rError})
-          }
+        
           xhr.open('GET', url, true)
           xhr.send()
         }
