@@ -7,7 +7,7 @@ const modulifySource = (source, csgBasePath) => {
       ? 'module.exports.getParameterDefinitions = getParameterDefinitions' : ''
   const updatedSource = `
     const {CSG, CAG} = require('${csgBasePath}').csg
-    const {square, circle, polygon} = require('${csgBasePath}').primitives2d
+    const {square, circle, polygon, rectangle, ellipse, roundedRectangle} = require('${csgBasePath}').primitives2d
     const {cube, cylinder, sphere, polyhedron, torus} = require('${csgBasePath}').primitives3d
     const {color} = require('${csgBasePath}').color
     const {rectangular_extrude, linear_extrude, rotate_extrude} = require('${csgBasePath}').extrusions

@@ -63,18 +63,28 @@ const registerFilesAndFolders = (filesAndFolders, inputs, isInNodeModules = fals
 }
 
 const makeWebRequire = (filesAndFolders, options) => {
-  // console.log('making web require', filesAndFolders)
+  const defaults = {
+    apiMainPath: '@jscad/csg/api'
+  }
+  const {apiMainPath} = Object.assign({}, defaults, options)
+  const apiModule = apiMainPath === '@jscad/csg/api' ? require('@jscad/csg/api') : require('./vtreeApi')
+
   // preset modules
   let modules = {
     '@jscad/csg/api': {
-      exports: require('@jscad/csg/api')
+      exports: apiModule
     },
     '@jscad/io': {
       exports: require('@jscad/io')
     },
     // ALIAS for now !!
     '@jscad/api': {
-      exports: require('@jscad/csg/api')
+      exports: apiModule
+    },
+    // fake fs module ! only useable with the currently available files & folders
+    // that have been drag & dropped / created
+    'fs': {
+
     }
   }
   registerFilesAndFolders(filesAndFolders, filesAndFolders)

@@ -3,18 +3,16 @@ const instanciateDesign = require('./instanciateDesign')
 
 const rebuildSolids = (data, callback) => {
   const {source, parameterValuesOverride, mainPath, options} = data
-  console.log('rebuildSolids inputs', data)
 
   const defaults = {vtreeMode: true}
   const {vtreeMode, lookup, lookupCounts} = Object.assign({}, defaults, options)
   const apiMainPath = vtreeMode ? '../code-loading/vtreeApi' : '@jscad/csg/api'
 
-  console.log('foo', data.filesAndFolders)
   const designData = loadDesign(source, mainPath, apiMainPath, parameterValuesOverride, data.filesAndFolders)
 
   // send back parameter definitions & values
   // in a worker this would be a postmessage
-  console.log('designData', designData)
+  // console.log('designData', designData)
   callback({
     type: 'params',
     parameterDefaults: designData.parameterDefaults,

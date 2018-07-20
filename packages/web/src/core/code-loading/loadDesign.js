@@ -4,7 +4,9 @@ const modulifySource = require('../code-loading/modulifySource')
 const requireDesignFromModule = require('@jscad/core/code-loading/requireDesignFromModule')
 const getAllParameterDefintionsAndValues = require('@jscad/core/parameters/getParameterDefinitionsAndValues')
 const transformSources = require('./sourceTransforms')
+
 // taken verbatim from https://github.com/iliakan/detect-node
+// return true if we are are in node/ env that has require()
 const hasRequire = () => Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]'
 const makeWebRequire = require('./webRequire')
 
@@ -45,7 +47,7 @@ const loadDesign = (source, mainPath, apiMainPath, parameterValuesOverride, file
     filesAndFolders = transformSources({apiMainPath}, filesAndFolders)
   }
   // now check if we need fake require or not
-  const requireFn = hasRequire() ? require : makeWebRequire(filesAndFolders)
+  const requireFn = hasRequire() ? require : makeWebRequire(filesAndFolders, {apiMainPath})
   const rootModule = requireDesignFromModule(designRoot.path, requireFn)
   // const requireUncached = require('../code-loading/requireUncached')
   // TODO: only uncache when needed
