@@ -19,7 +19,6 @@ function makeReactions (inputs) {
     .filter(x => 'sink' in x && x.sink === 'fs')
     .forEach(x => console.log(' out to fs', x))
 
-  sinks.fileDialog(most.just('foo').delay(5000))
   // output to dom
   dom(require('./dom')(inputs))
   // output to i18n

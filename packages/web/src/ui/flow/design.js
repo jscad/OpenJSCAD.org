@@ -493,6 +493,7 @@ const actions = ({sources}) => {
       .map(({data}) => ({data, id: 'droppedData'})),
     // data retrieved from http requests
     sources.http
+      .tap(x=> console.log('stuff', x))
       .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response))
       .map(({data, url}) => ({data, id: 'remoteFile', path: url, options: {isRawData: true}}))
   ])

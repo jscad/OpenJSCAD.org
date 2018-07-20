@@ -2,12 +2,13 @@ const most = require('most')
 const withLatestFrom = require('../../utils/observable-utils/withLatestFrom')
 
 const reducers = {
-  setErrors: (state, {error}) => {
-    console.log('setting error', error)
+  setErrors: (state, errorPayload) => {
+    const {error} = errorPayload
     const status = Object.assign({}, state.status, {error, busy: false})
     return Object.assign({}, state, {status})
   },
   clearErrors: (state, _) => {
+    console.log('clear errors')
     const status = Object.assign({}, state.status, {error: undefined})
     return Object.assign({}, state, {status})
   }
