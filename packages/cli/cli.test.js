@@ -64,7 +64,7 @@ test('jscad with parameters', t => {
   const cmd = `node ${jscadPath} ${inputPath} --name "Just Me" --title "Geek" -o ${outputPath} -add-metadata false`
   execSync(cmd, {stdio: [0, 1, 2]})
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(expPath).size, 655732, 50)
+  almostEquals(t, fs.statSync(expPath).size, 653955, 50)
 })
 
 test('jscad with complex/ multiple type of parameters', t => {
