@@ -37,6 +37,8 @@ const readFileAsync = function (file, fileMeta) {
 }
 
 function isSupportedFormat (file) {
+  return true
+  const additionalFormats = ['json', 'txt']
   var e = file.name.toLowerCase().match(/\.(\w+)$/i)
   e = RegExp.$1
   return conversionFormats.concat(['json']).indexOf(e) >= 0

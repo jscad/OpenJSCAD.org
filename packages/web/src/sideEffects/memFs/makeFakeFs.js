@@ -47,6 +47,9 @@ const makeFakeFs = (filesAndFolders) => {
     },
     readFile: (path, encoding, callback) => {
       const entry = findMatch(path)
+      if (!entry) {
+        throw new Error(`ENOENT: no such file or directory, open '${path}'`)
+      }
       if (!statSync(path).isFile()) {
         callback(new Error(`${entry} is not a file, cannot read`))
       } else {
@@ -56,6 +59,9 @@ const makeFakeFs = (filesAndFolders) => {
     },
     readFileSync: (path, encoding) => {
       const entry = findMatch(path)
+      if (!entry) {
+        throw new Error(`ENOENT: no such file or directory, open '${path}'`)
+      }
       if (!statSync(path).isFile()) {
         throw new Error(`${entry} is not a file, cannot read`)
       } else {

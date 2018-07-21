@@ -70,6 +70,7 @@ const makeMemFsSideEffect = (params) => {
           // this from inputs typically like drag & drop data
           most.fromPromise(walkFileTree(data))
             .forEach(function (readFilesAndFolders) {
+              console.log('walkfileTree', readFilesAndFolders)
               rawData = data
               filesAndFolders = readFilesAndFolders
               fs = makeFakeFs(filesAndFolders)
