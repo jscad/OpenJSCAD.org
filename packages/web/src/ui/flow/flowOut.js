@@ -4,20 +4,20 @@ function makeReactions (inputs) {
   const {sinks, sources, outputs$, extras} = inputs
   const {store, fs, http, i18n, dom, solidWorker, state} = sinks
 
-  outputs$
+  /* outputs$
     .filter(x => 'sink' in x && x.sink === 'state')
     .forEach(x => console.log(' out to state', x))
 
-  /* outputs$
+  outputs$
     .filter(x => 'sink' in x && x.sink === 'i18n')
     .forEach(x => console.log(' out to i18n', x))
 
   outputs$
     .filter(x => 'sink' in x && x.sink === 'store')
-    .forEach(x => console.log(' out to store', x)) */
+    .forEach(x => console.log(' out to store', x))
   outputs$
     .filter(x => 'sink' in x && x.sink === 'fs')
-    .forEach(x => console.log(' out to fs', x))
+    .forEach(x => console.log(' out to fs', x)) */
 
   // output to dom
   dom(require('./dom')(inputs))

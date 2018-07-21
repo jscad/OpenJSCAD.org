@@ -39,7 +39,7 @@ const makeMemFsSideEffect = (params) => {
               commandResponses.callback({path, type, error, id})
             } else {
               // FIXME: injection of fs & filesAndFolders is a huge hack
-              commandResponses.callback({path, type, data, id, fs, filesAndFolders})
+              commandResponses.callback({path, type, data, id, filesAndFolders})
             }
           })
         } else {
@@ -48,7 +48,7 @@ const makeMemFsSideEffect = (params) => {
               commandResponses.callback({path, type, error, id})
             } else {
               // FIXME: injection of fs & filesAndFolders is a huge hack
-              commandResponses.callback({path, type, data, id, fs, filesAndFolders})
+              commandResponses.callback({path, type, data, id, filesAndFolders})
             }
           })
         }
@@ -134,14 +134,7 @@ const makeMemFsSideEffect = (params) => {
   }
 
   const source = () => {
-    const commandResponses$ = commandResponses.stream.multicast()
-
-    /* const watch$ = scriptDataFromCB.stream
-      .debounce(400)
-      .skipRepeats()
-      .multicast() */
-
-    return commandResponses$
+    return commandResponses.stream.multicast()
   }
   return {source, sink}
 }

@@ -76,12 +76,12 @@ const reducers = {
     // console.log('setDesignPath', paths)
   // FIXME:  DO NOT DO THIS HERE !!
     const filesAndFolders = paths.filesAndFolders
-
-    const foo = paths
+    const makeFakeFs = require('../../sideEffects/memFs/makeFakeFs')
+    const fakeFs = makeFakeFs(filesAndFolders) 
     paths = [paths.path]
-    const mainPath = getDesignEntryPoint(foo.fs, () => {}, paths)
+    const mainPath = getDesignEntryPoint(fakeFs, () => {}, paths)
     const filePath = paths[0]
-    const designName = getDesignName(foo.fs, paths)
+    const designName = getDesignName(fakeFs, paths)
     const designPath = path.dirname(filePath)
 
     const design = Object.assign({}, state.design, {
@@ -92,8 +92,7 @@ const reducers = {
     })
     const status = Object.assign({}, state.status, {busy: true})
 
-    console.log('filesAndFolders', filesAndFolders)
-  // we want the viewer to focus on new entities for our 'session' (until design change)
+    // we want the viewer to focus on new entities for our 'session' (until design change)
     const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: ['new-entities']}})
     return Object.assign({}, state, {status, viewer, design})
   },
