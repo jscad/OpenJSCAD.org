@@ -1,9 +1,7 @@
 const isCommonJsModule = require('@jscad/core/code-loading/isCommonJsModule')
 const modulifySource = require('../code-loading/modulifySource')
 
-const passThroughTransform = (options, entry) => {
-  return entry.source
-}
+const passThroughTransform = (options, entry) => entry
 
 /* function to turn old style jscad code with implicit imports
 into code with explicit exports/imports */
@@ -37,7 +35,6 @@ const transformSources = (options, filesAndFolders) => {
   function updateEntry (entry) {
     if (entry.source) {
       const transforms = transformsPerFormat[entry.ext] ? transformsPerFormat[entry.ext] : [passThroughTransform]
-      // console.log('applyingTransforms', transforms)
       const transformedEntry = transforms.reduce((entry, transform) => {
         return transform(options, entry)
       }, entry)
