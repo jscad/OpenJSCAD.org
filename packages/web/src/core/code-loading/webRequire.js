@@ -68,7 +68,7 @@ const makeWebRequire = (filesAndFolders, options) => {
   }
   const {apiMainPath} = Object.assign({}, defaults, options)
   const apiModule = apiMainPath === '@jscad/csg/api' ? require('@jscad/csg/api') : require('./vtreeApi')
-
+  // makeFakeFs
   // preset modules
   let modules = {
     '@jscad/csg/api': {
@@ -84,7 +84,7 @@ const makeWebRequire = (filesAndFolders, options) => {
     // fake fs module ! only useable with the currently available files & folders
     // that have been drag & dropped / created
     'fs': {
-
+      exports: require('../../sideEffects/memFs/makeFakeFs')(filesAndFolders)
     }
   }
   registerFilesAndFolders(filesAndFolders, filesAndFolders)
