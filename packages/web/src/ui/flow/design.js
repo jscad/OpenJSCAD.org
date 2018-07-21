@@ -90,9 +90,9 @@ const reducers = {
       mainPath,
       filesAndFolders
     })
-
     const status = Object.assign({}, state.status, {busy: true})
 
+    console.log('filesAndFolders', filesAndFolders)
   // we want the viewer to focus on new entities for our 'session' (until design change)
     const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: ['new-entities']}})
     return Object.assign({}, state, {status, viewer, design})
@@ -198,7 +198,11 @@ const reducers = {
   requestGeometryRecompute: (state, _) => {
     const {design} = state
     const {source, mainPath, parameterValues, filesAndFolders} = design
-    const options = {vtreeMode: design.vtreeMode, lookup: design.lookup, lookupCounts: design.lookupCounts}
+    const options = {
+      vtreeMode: design.vtreeMode,
+      lookup: design.lookup,
+      lookupCounts: design.lookupCounts
+    }
     return {source, mainPath, parameterValuesOverride: parameterValues, options, filesAndFolders}
   },
 
