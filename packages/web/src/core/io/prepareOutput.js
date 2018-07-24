@@ -44,7 +44,8 @@ function prepareOutput (objects, params) {
       throw new Error('Not supported : only jscad, stl, amf, dxf, svg or json as output format')
     }
   }
-  const data = outputFormatHandlers[format].serialize(metaData, objects)
+  const options = Object.assign({}, metaData)
+  const data = outputFormatHandlers[format].serialize(options, objects)
   const mimeType = outputFormatHandlers[format].mimeType
   return {data, mimeType}
 }

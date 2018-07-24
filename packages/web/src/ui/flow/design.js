@@ -148,7 +148,7 @@ const reducers = {
   // TODO: move this to IO ??
     const {exportFormat, availableExportFormats} = availableExportFormatsFromSolids(solids)
     const exportInfos = exportFilePathFromFormatAndDesign(design, exportFormat)
-    // console.log('setting export stuff')
+    console.log('setting export stuff', exportFormat)
     const io = {
       exportFormat,
       exportFilePath: exportInfos.exportFilePath, // default export file path
@@ -525,8 +525,6 @@ const actions = ({sources}) => {
     // watched data
     sources.state
       .filter(state => state.design && state.design.mainPath !== '')
-      .tap(x => console.log('gnagna', x))
-
       .map(state => ({path: state.design.mainPath, enabled: state.design.autoReload}))
       .skipRepeatsWith((state, previousState) => {
         return JSON.stringify(state) === JSON.stringify(previousState)

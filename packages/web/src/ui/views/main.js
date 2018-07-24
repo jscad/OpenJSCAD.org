@@ -8,7 +8,8 @@ function dom (state, i18n, paramsCallbacktoStream, editorCallbackToStream) {
   const formatsList = state.io.availableExportFormats
     .map(function ({name, displayName}) {
       displayName = i18n.translate(displayName)
-      return html`<option value=${name} selected='${state.exportFormat === name}'>
+      const selected = state.exportForma !== undefined ? state.exportFormat.toLowerCase() === name.toLowerCase() : undefined
+      return html`<option value=${name} selected='${selected}'>
         ${displayName}
       </option>`
     })

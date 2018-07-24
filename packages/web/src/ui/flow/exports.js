@@ -18,7 +18,7 @@ const reducers = {
     return Object.assign({}, state, {io})
   },
   requestExport: (state, _) => {
-    const {defaultExportFilePath, exportFormat} = state.io
+    const {exportFilePath, exportFormat} = state.io
     const {solids} = state.design
     /* const filePath = undefined // dialog.showSaveDialog({properties: ['saveFile'], title: 'export design to', defaultPath: defaultExportFilePath})//, function (filePath) {
       console.log('saving', filePath)
@@ -27,7 +27,7 @@ const reducers = {
         saveDataToFs(data, exportFormat, filePath)
       } */
       // return {defaultExportFilePath, exportFormat, data}
-    console.log('export requested', solids)
+    console.log('export requested', solids, exportFilePath)
     const {saveAs} = require('file-saver')
     const {prepareOutput} = require('../../core/io/prepareOutput')
     const {convertToBlob} = require('../../core/io/convertToBlob')
@@ -36,7 +36,7 @@ const reducers = {
     const format = exportFormat
     const blob = convertToBlob(prepareOutput(solids, {format}))
     // fs.writeFileSync(filePath, buffer)
-    saveAs(blob, defaultExportFilePath)
+    saveAs(blob, exportFilePath)
     // const io = Object.assign({}, state.io, {defaultExportFilePath, exportFormat: state.exportFormat, data: state.design.solids})
     // return Object.assign({}, state, {io})
   }
