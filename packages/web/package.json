@@ -37,7 +37,7 @@
     "@jscad/csg": "0.5.2",
     "@jscad/csg-viewer": "github:jscad/csg-viewer",
     "@jscad/examples": "^1.7.1",
-    "@jscad/io": "0.4.4",
+    "@jscad/io": "1.0.0-pre-V2.0",
     "@jscad/openscad-openjscad-translator": "0.0.10",
     "astring": "^1.0.2",
     "bel": "^6.0.0",
