@@ -1,120 +1,169 @@
-// import xmldom from 'xmldom'
-const xmldom = require('xmldom')
-const { ensureManifoldness } = require('@jscad/io-utils')
+/*
+JSCAD Object to X3D (XML) Format Serialization
+
+## License
+
+Copyright (c) 2018 JSCAD Organization https://github.com/jscad
+
+All code released under MIT license
+
+Notes:
+1) CAG conversion to:
+     none
+2) CSG conversion to:
+     IndexedTriangleSet with Coordinates and Colors
+3) Path2D conversion to:
+     none
+
+TBD
+1) gzipped is also possible; same mime type, with file extension .x3dz
+*/
+
+//const {ensureManifoldness} = require('@jscad/io-utils')
+const {isCSG} = require('@jscad/csg')
+const {ensureManifoldness} = require('@jscad/io-utils')
+const {toArray} = require('@jscad/io-utils/arrays')
+
+const stringify = require('onml/lib/stringify')
+
+// http://www.web3d.org/x3d/content/X3dTooltips.html
+// http://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Meshes
+// https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter13GeometryTrianglesQuadrilaterals/
 
 const mimeType = 'model/x3d+xml'
 
-const XMLSerializer = xmldom.XMLSerializer
-// NOTE: might be useful :https://github.com/jindw/xmldom/pull/152/commits/be5176ece6fa1591daef96a5f361aaacaa445175
+/** Serialize the give objects to X3D (xml) format.
+ * @param {Object} [options] - options for serialization
+ * @param {Object|Array} objects - objects to serialize as X3D
+ * @returns {Array} serialized contents, X3D format
+ */
+const serialize = (...params) => {
+  let options = {}
+  let objects
+  if (params.length === 0) {
+    throw new Error('no arguments supplied to serialize function !')
+  } else if (params.length === 1) {
+    // assumed to be object(s)
+    objects = Array.isArray(params[0]) ? params[0] : params
+  } else if (params.length > 1) {
+    options = params[0]
+    objects = params[1]
+  }
+  // make sure we always deal with arrays of objects as inputs
+  objects = toArray(objects)
 
-function serialize (CSG, options) {
-  options && options.statusCallback && options.statusCallback({progress: 0})
-  CSG = ensureManifoldness(CSG)
-  const DOMImplementation = typeof document !== 'undefined' ? document.implementation : new xmldom.DOMImplementation()
-  // materialPolygonLists
-  // key: a color string (e.g. "0 1 1" for yellow)
-  // value: an array of strings specifying polygons of this color
-  //        (as space-separated indices into vertexCoords)
-  var materialPolygonLists = {}
-  // list of coordinates (as "x y z" strings)
-  var vertexCoords = []
-  // map to look up the index in vertexCoords of a given vertex
-  var vertexTagToCoordIndexMap = {}
+  const defaults = {
+    statusCallback: null,
+    unit: 'millimeter', // millimeter, inch, feet, meter or micrometer
+    color: [0, 0, 1, 1.0], // default colorRGBA specification
+    decimals: 1000
+  }
+  options = Object.assign({}, defaults, options)
 
-  CSG.polygons.map(function (p, i) {
-    var red = 0
-    var green = 0
-    var blue = 1 // default color is blue
-    if (p.shared && p.shared.color) {
-      red = p.shared.color[0]
-      green = p.shared.color[1]
-      blue = p.shared.color[2]
+  options.statusCallback && options.statusCallback({progress: 0})
+
+  // construct the contents of the XML
+  var body = ['X3D',
+    {
+      profile: 'Interchange',
+      version: '3.3',
+      'xmlns:xsd': 'http://www.w3.org/2001/XMLSchema-instance',
+      'xsd:noNamespaceSchemaLocation': 'http://www.web3d.org/specifications/x3d-3.3.xsd'
+    },
+    ['head', {},
+      ['meta',{name: 'creator', content: 'Created using JSCAD'}]
+    ]
+  ]
+  body = body.concat(convertObjects(objects, options))
+
+  // convert the contents to X3D (XML) format
+  var contents = `<?xml version="1.0" encoding="UTF-8"?>
+${stringify(body)}`
+
+  options && options.statusCallback && options.statusCallback({progress: 100})
+
+  return [contents]
+}
+
+const convertObjects = (objects, options) => {
+  let scene = ['Scene', {}]
+  let shapes = []
+  objects.forEach(function (object, i) {
+    options.statusCallback && options.statusCallback({progress: 100 * i / objects.length})
+    if (isCSG(object) && object.polygons.length > 0) {
+      object = ensureManifoldness(object)
+      shapes.push(convertCSG(object, options))
     }
+  })
+  scene = scene.concat(shapes)
+  return [scene]
+}
 
-    var polygonVertexIndices = []
-    var numvertices = p.vertices.length
-    var vertex
+const convertCSG = (object, options) => {
+  var shape = ['Shape', {}, convertMesh(object, options)]
+  return shape
+}
+
+const convertMesh = (object, options) => {
+  let mesh = object.toTriangles()
+  let lists = polygons2coordinates(mesh, options)
+
+  let indexList = lists[0].join(' ')
+  let pointList = lists[1].join(' ')
+  let colorList = lists[2].join(' ')
+
+  var faceset = [
+    'IndexedTriangleSet',
+    {ccw: 'true', colorPerVertex: 'false', solid: 'false', index: indexList},
+    ['Coordinate', {point: pointList}],
+    ['Color', {color: colorList}]
+  ]
+  return faceset
+}
+
+const convertToColor = (polygon, options) => {
+  let color = options.color
+  if (polygon.shared && polygon.shared.color) {
+    color = polygon.shared.color
+  } else if (polygon.color) {
+    color = polygon.color
+  }
+  if (color.length < 4) color.push(1.0)
+  return `${color[0]} ${color[1]} ${color[2]}`
+}
+
+/**
+ * This function converts the given polygons into three lists
+ * - indexList : index of each vertex in the triangle (tuples)
+ * - pointList : coordinates of each vertex (X Y Z)
+ * - colorList : color of each triangle (R G B)
+ */
+const polygons2coordinates = (polygons, options) => {
+  var indexList = []
+  var pointList = []
+  var colorList = []
+
+  var vertexTagToCoordIndexMap = {}
+  polygons.map(function (polygon, i) {
+    let polygonVertexIndices = []
+    let numvertices = polygon.vertices.length
     for (var i = 0; i < numvertices; i++) {
-      vertex = p.vertices[i]
+      let vertex = polygon.vertices[i]
+      // add the vertex to the list of points (and index) if not found
       if (!(vertex.getTag() in vertexTagToCoordIndexMap)) {
-        vertexCoords.push(vertex.pos._x.toString() + ' ' +
-          vertex.pos._y.toString() + ' ' +
-          vertex.pos._z.toString()
-        )
-        vertexTagToCoordIndexMap[vertex.getTag()] = vertexCoords.length - 1
+        let x = Math.round(vertex.pos._x * options.decimals) / options.decimals
+        let y = Math.round(vertex.pos._y * options.decimals) / options.decimals
+        let z = Math.round(vertex.pos._z * options.decimals) / options.decimals
+        pointList.push(`${x} ${y} ${z}`)
+        vertexTagToCoordIndexMap[vertex.getTag()] = pointList.length - 1
       }
+      // add the index (of the vertext) to the list for this polygon
       polygonVertexIndices.push(vertexTagToCoordIndexMap[vertex.getTag()])
     }
-
-    var polygonString = polygonVertexIndices.join(' ')
-
-    var colorString = red.toString() + ' ' + green.toString() + ' ' + blue.toString()
-    if (!(colorString in materialPolygonLists)) {
-      materialPolygonLists[colorString] = []
-    }
-    // add this polygonString to the list of colorString-colored polygons
-    materialPolygonLists[colorString].push(polygonString)
-    options && options.statusCallback && options.statusCallback({progress: 100 * i / CSG.polygons.length})
+    indexList.push(polygonVertexIndices.join(' '))
+    colorList.push(convertToColor(polygon, options))
   })
-
-  // create output document
-  var docType = DOMImplementation.createDocumentType('X3D',
-    'ISO//Web3D//DTD X3D 3.1//EN', 'http://www.web3d.org/specifications/x3d-3.1.dtd')
-  var exportDoc = DOMImplementation.createDocument(null, 'X3D', docType)
-  exportDoc.insertBefore(
-    exportDoc.createProcessingInstruction('xml', 'version="1.0" encoding="UTF-8"'),
-    exportDoc.doctype)
-
-  var exportRoot = exportDoc.getElementsByTagName('X3D')[0]
-  exportRoot.setAttribute('profile', 'Interchange')
-  exportRoot.setAttribute('version', '3.1')
-  exportRoot.setAttribute('xsd:noNamespaceSchemaLocation', 'http://www.web3d.org/specifications/x3d-3.1.xsd')
-  exportRoot.setAttribute('xmlns:xsd', 'http://www.w3.org/2001/XMLSchema-instance')
-
-  var exportScene = exportDoc.createElement('Scene')
-  exportRoot.appendChild(exportScene)
-
-  /*
-      For each color, create a shape made of an appropriately colored
-      material which contains all polygons that are this color.
-
-      The first shape will contain the definition of all vertices,
-      (<Coordinate DEF="coords_mesh"/>), which will be referenced by
-      subsequent shapes.
-    */
-  var coordsMeshDefined = false
-  for (var colorString in materialPolygonLists) {
-    var polygonList = materialPolygonLists[colorString]
-    var shape = exportDoc.createElement('Shape')
-    exportScene.appendChild(shape)
-
-    var appearance = exportDoc.createElement('Appearance')
-    shape.appendChild(appearance)
-
-    var material = exportDoc.createElement('Material')
-    appearance.appendChild(material)
-    material.setAttribute('diffuseColor', colorString)
-    material.setAttribute('ambientIntensity', '1.0')
-
-    var ifs = exportDoc.createElement('IndexedFaceSet')
-    shape.appendChild(ifs)
-    ifs.setAttribute('solid', 'true')
-    ifs.setAttribute('coordIndex', polygonList.join(' -1 ') + ' -1')
-
-    var coordinate = exportDoc.createElement('Coordinate')
-    ifs.appendChild(coordinate)
-    if (coordsMeshDefined) {
-      coordinate.setAttribute('USE', 'coords_mesh')
-    } else {
-      coordinate.setAttribute('DEF', 'coords_mesh')
-      coordinate.setAttribute('point', vertexCoords.join(' '))
-      coordsMeshDefined = true
-    }
-  }
-
-  const x3dstring = (new XMLSerializer()).serializeToString(exportDoc)
-  options && options.statusCallback && options.statusCallback({progress: 100})
-  return [x3dstring]
+  return [indexList, pointList, colorList]
 }
 
 module.exports = {

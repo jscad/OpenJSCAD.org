@@ -7,34 +7,34 @@ const {dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects} = require('../a
 
 test('CSG to DXF 3DFACE', t => {
   const csg1 = new CSG()
-  t.is(csg1.polygons.length,0)
+  t.is(csg1.polygons.length, 0)
 
-  const obs1 = serialize(csg1)
+  const obs1 = serialize({}, csg1)
   const exp1 = [empty]
-  t.deepEqual(obs1,exp1)
+  t.deepEqual(obs1, exp1)
 
   const csg2 = CSG.cube()
-  t.is(csg2.polygons.length,6)
+  t.is(csg2.polygons.length, 6)
 
   const obs2 = serialize(csg2)
   const exp2 = [threeface1]
-  t.deepEqual(obs2,exp2)
+  t.deepEqual(obs2, exp2)
 })
 
 test('CSG to DXF POLYLINE FACES', t => {
   const csg1 = new CSG()
-  t.is(csg1.polygons.length,0)
+  t.is(csg1.polygons.length, 0)
 
-  const obs1 = serialize(csg1, {csgTo: 'polyline'})
+  const obs1 = serialize({csgTo: 'polyline'}, csg1)
   const exp1 = [empty]
-  t.deepEqual(obs1,exp1)
+  t.deepEqual(obs1, exp1)
 
   const csg2 = CSG.cube()
-  t.is(csg2.polygons.length,6)
+  t.is(csg2.polygons.length, 6)
 
-  const obs2 = serialize(csg2, {csgTo: 'polyline'})
+  const obs2 = serialize({csgTo: 'polyline'}, csg2)
   const exp2 = [polyline1]
-  t.deepEqual(obs2,exp2)
+  t.deepEqual(obs2, exp2)
 })
 
 const empty = `999
@@ -1183,4 +1183,3 @@ ${dxfObjects({})}
   0
 EOF
 `
-

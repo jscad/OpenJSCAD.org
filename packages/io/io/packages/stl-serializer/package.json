@@ -32,10 +32,11 @@
     "stl"
   ],
   "license": "MIT",
-  "devDependencies": {
-    "@jscad/csg": "0.3.6"
-  },
   "dependencies": {
+    "@jscad/csg": "^0.5.4",
     "@jscad/io-utils": "^0.1.2"
+  },
+  "devDependencies": {
+    "ava": "^0.19.1"
   }
 }
