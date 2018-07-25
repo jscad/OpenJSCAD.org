@@ -11,7 +11,7 @@ const reducers = {
     return Object.assign({}, state, {languages})
   },
   setLanguage: (state, active) => {
-    //  console.log('setLanguage', active)
+    // console.log('setLanguage', active)
     const languages = Object.assign({}, state.languages, {active})
     return Object.assign({}, state, {languages})
   },
@@ -32,14 +32,14 @@ const actions = ({sources}) => {
     .map(payload => Object.assign({}, {type: 'initializeLanguages', sink: 'state'}, {state: payload}))
 
   // send a request to get the list of available languages
-  const requestGetAvailableLanguages$ = most
-    .just({type: 'getAvailableLanguages', sink: 'i18n'})
-    .delay(10) // so we do not do it at the same time as the initalization
+  // we wait until the data here has been initialized before requesting the data
+  const requestGetAvailableLanguages$ = initialize$
+    .map(_ => ({type: 'getAvailableLanguages', sink: 'i18n'}))
 
   // send a request to get the default language
-  const requestGetDefaultLanguage$ = most
-    .just({type: 'getDefaultLocale', sink: 'i18n'})
-    .delay(10)
+  // we wait until the request for available languages has been sent
+  const requestGetDefaultLanguage$ = requestGetAvailableLanguages$
+    .map(_ => ({type: 'getDefaultLocale', sink: 'i18n'}))
 
   // send a request to get the translations for the specified language
   const requestGetLanguageData$ = sources.state
@@ -47,23 +47,6 @@ const actions = ({sources}) => {
     .map(state => state.languages.active)
     .skipRepeatsWith((state, previousState) => JSON.stringify(state) === JSON.stringify(previousState))
     .map(data => ({type: 'changeSettings', data, sink: 'i18n'}))
-    .tap(x => console.log('requestGetLanguageData', x))
-
-  // set the active language, either from defaults, previous settings or manually
-  const setLanguage$ = most.mergeArray([
-    sources.i18n
-      .filter(reply => reply.type === 'getDefaultLocale')
-      .map(reply => reply.data)
-      .delay(10), // to get stuff after the available ones have been set
-    sources.dom.select('#languageSwitcher').events('change')
-      .map(e => e.target.value),
-    sources.store
-      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.locale)
-      .map(reply => reply.data.locale)
-      .delay(10)// to get stuff after the default locale has been set
-  ])
-    .thru(withLatestFrom(reducers.setLanguage, sources.state))
-    .map(payload => Object.assign({}, {type: 'setLanguage', sink: 'state'}, {state: payload}))
 
   // set the list of available languages in the app
   const setAvailableLanguages$ = most.mergeArray([
@@ -73,10 +56,34 @@ const actions = ({sources}) => {
   ])
     .thru(withLatestFrom(reducers.setAvailableLanguages, sources.state))
     .map(payload => Object.assign({}, {type: 'setAvailableLanguages', sink: 'state'}, {state: payload}))
+    .multicast()
 
-  // this means we wait until the data here has been initialized before saving
+  // this means we wait until the data here has been initialized before loading
   const requestLoadSettings$ = initialize$
     .map(_ => ({sink: 'store', key: 'languages', type: 'read'}))
+
+  // set the active language, either from defaults, previous settings or manually
+  const setLanguage$FromDefault$ = sources.i18n
+    .thru(holdUntil(setAvailableLanguages$))
+    .filter(reply => reply.type === 'getDefaultLocale')
+    .map(reply => reply.data)
+    .multicast()
+    .delay(1) // FIXME : needed because of bug with event firing too close to another ?
+
+  // we want to get results from storage AFTER the defaults have been recieved
+  const setLanguage$FromStore$ = sources.store
+      .filter(reply => reply.key === 'languages' && reply.type === 'read')
+      .thru(holdUntil(setLanguage$FromDefault$))
+      .map(reply => reply.data.active)
+
+  const setLanguage$ = most.mergeArray([
+    setLanguage$FromDefault$,
+    sources.dom.select('#languageSwitcher').events('change')
+      .map(e => e.target.value),
+    setLanguage$FromStore$
+  ])
+    .thru(withLatestFrom(reducers.setLanguage, sources.state))
+    .map(payload => Object.assign({}, {type: 'setLanguage', sink: 'state'}, {state: payload}))
 
   // starts emmiting to storage only AFTER initial settings have been loaded
   const requestSaveSettings$ = sources.state
