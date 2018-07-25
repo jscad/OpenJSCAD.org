@@ -32,7 +32,7 @@ const reducers = {
 const actions = ({sources}) => {
   const initialize$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
-    .map(payload => Object.assign({}, {type: 'initalizeThemes', sink: 'state'}, {state: payload}))
+    .map(payload => Object.assign({}, {type: 'initializeThemes', sink: 'state'}, {state: payload}))
 
   const setTheme$ = most.mergeArray([
     sources.dom.select('#themeSwitcher').events('change')

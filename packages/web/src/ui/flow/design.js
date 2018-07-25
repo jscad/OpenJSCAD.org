@@ -148,7 +148,6 @@ const reducers = {
   // TODO: move this to IO ??
     const {exportFormat, availableExportFormats} = availableExportFormatsFromSolids(solids)
     const exportInfos = exportFilePathFromFormatAndDesign(design, exportFormat)
-    console.log('setting export stuff', exportFormat)
     const io = {
       exportFormat,
       exportFilePath: exportInfos.exportFilePath, // default export file path
@@ -173,11 +172,11 @@ const reducers = {
  */
   setDesignParameters: (state, data) => {
     const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
-  // this ensures the last, manually modified params have upper hand
+    // this ensures the last, manually modified params have upper hand
     let parameterValues = data.parameterValues || state.design.parameterValues
     parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, state.design.parameterDefinitions) : parameterValues
 
-  // one of many ways of filtering out data from instantUpdates
+    // one of many ways of filtering out data from instantUpdates
     if (data.origin === 'instantUpdate' && !state.design.instantUpdate) {
       parameterValues = state.design.parameterValues
     }
@@ -288,12 +287,12 @@ const reducers = {
 // return Object.assign({}, state, {activeTool})
 
 const actions = ({sources}) => {
-  const initalize$ = most.just({})
+  const initialize$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
-    .map(data => ({type: 'initalizeDesign', state: data, sink: 'state'}))
+    .map(data => ({type: 'initializeDesign', state: data, sink: 'state'}))
 
   // we wait until the data here has been initialized before loading the serialized settings
-  const requestLoadSettings$ = initalize$
+  const requestLoadSettings$ = initialize$
     .map(_ => ({sink: 'store', key: 'design', type: 'read'}))
 
   // starts emmiting to storage only AFTER initial settings have been loaded
@@ -474,7 +473,7 @@ const actions = ({sources}) => {
     // examples
     sources.dom.select('.example').events('click')
       .map(event => event.target.dataset.path),
-    // remote, via proxy
+    // remote, via proxy, adresses of files passed via url
     sources.titleBar.filter(x => x !== undefined).map(url => {
       // console.log('titlebar', url)
       // const params = {}
@@ -496,7 +495,6 @@ const actions = ({sources}) => {
       .map(({data}) => ({data, id: 'droppedData'})),
     // data retrieved from http requests
     sources.http
-      .tap(x=> console.log('stuff', x))
       .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response))
       .map(({data, url}) => ({data, id: 'remoteFile', path: url, options: {isRawData: true}}))
   ])
@@ -566,7 +564,7 @@ const actions = ({sources}) => {
     // setDesignContent$.map(x=>{behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']})
 
   return {
-    initalize$,
+    initialize$,
     setDesignPath$,
     setDesignContent$,
     requestGeometryRecompute$,
