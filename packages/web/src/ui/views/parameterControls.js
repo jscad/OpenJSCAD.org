@@ -3,6 +3,9 @@ const html = require('bel')
 const createParamControls = (prevParameterValues = {}, parameterDefinitions, rebuildSolid) => {
   let paramControls = []
 
+  // FIXME: rework the way groups work
+  let currentGroup
+
   const controls = parameterDefinitions.map(function (paramDefinition) {
     let type = paramDefinition.type.toLowerCase()
     let subControls
@@ -29,9 +32,13 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
     }
 
     let trClassName = 'controlsLine'
+    if (currentGroup && type !== 'group') {
+      trClassName += ' ' + currentGroup + ' open'
+    }
     if (type === 'group') {
       label = html`<h1>${label}</h1>`
-      trClassName = 'groupTitle'
+      trClassName = `groupTitle ${paramDefinition.name}`
+      currentGroup = paramDefinition.name
       subControls = subControls.map(control => html`<th class=${control.className}> ${control.text} </th>`)
     } else {
       subControls.forEach(control => {
@@ -49,10 +56,36 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
     const subItems = subControls.map(control => {
       return html`<div>${control} ${'label' in control ? control.label : ''}</div>`
     })
-    return html`<tr class=${trClassName}>
+    const element = html`<tr class=${trClassName}>
       <td class=${className}> ${label} </td>
       <td> ${subItems}</td>
     </tr>`
+
+    // this is to make groups collapsible
+    if (type === 'group') {
+      element.onclick = function (event) {
+        const className = event.target.parentNode.parentNode.className
+          .replace('groupTitle', '')
+          .replace(' ', '')
+        const groupItems = document.getElementsByClassName(className)
+        Array.from(groupItems).forEach(item => {
+          if (item.className.includes('groupTitle')) {
+            return
+          }
+          if (item.className.includes('open')) {
+            item.style.display = 'none'
+            item.classList.remove('open')
+            item.classList.add('closed')
+          } else {
+            item.style.display = ''
+            item.classList.remove('closed')
+            item.classList.add('open')
+          }
+        })
+      }
+    }
+
+    return element
   })
 
   return {controls}

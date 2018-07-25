@@ -95,7 +95,8 @@ body {
   font-size: medium;
 }
 #paramsTable .groupTitle  {
-  border-top: 1px solid #bfbcbc;;
+  border-top: 1px solid #bfbcbc;
+  cursor: pointer;
 }
 #paramsTable .controlsLine{
   padding-top: 10px;
