@@ -11,8 +11,11 @@ const hasRequire = () => Object.prototype.toString.call(typeof process !== 'unde
 const makeWebRequire = require('./webRequire')
 
 /** load a jscad script, injecting the basic dependencies if necessary
- * @param  {} filePath
- * @param  {} csgBasePath='../../../../core/tmp/csg.js : relative path or  '@jscad/csg'
+ * @param source the source code
+ * @param {String} mainPath
+ * @param {String} apiMainPath='../../../../core/tmp/csg.js : relative path or  '@jscad/csg'
+ * @param {Object} parameterValuesOverride, the values to use to override the defaults for the current design
+ * @param {Array} filesAndFolders array of files and folders to use
  */
 const loadDesign = (source, mainPath, apiMainPath, parameterValuesOverride, filesAndFolders) => {
   // the root script is the main entry point in a design

@@ -37,11 +37,11 @@ function assertPath (path) {
 /** get main entry point of a script
  * @param  {} !paths
  */
-const getDesignEntryPoint = (_fs, _require = require, paths) => {
-  if (!paths) {
+const getDesignEntryPoint = (_fs, _require = require, rootPath) => {
+  if (!rootPath) {
     return
   }
-  let mainPath = toArray(paths)[0]
+  let mainPath = toArray(rootPath)[0]
   let filePath
   const stats = _fs.statSync(mainPath)
   if (stats.isFile()) {
@@ -87,11 +87,11 @@ const nameFromDir = (_fs, dirName, filePath) => {
   return filePath ? parsePath(path.basename(filePath)).name : path.basename(dirName)
 }
 
-const getDesignName = (_fs, paths) => {
-  if (!paths) {
+const getDesignName = (_fs, rootPath) => {
+  if (!rootPath) {
     return
   }
-  let mainPath = toArray(paths)[0]
+  let mainPath = toArray(rootPath)[0]
   const stats = _fs.statSync(mainPath)
   if (stats.isFile()) {
     const dirName = path.dirname(mainPath)

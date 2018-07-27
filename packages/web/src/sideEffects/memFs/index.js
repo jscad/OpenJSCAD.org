@@ -38,7 +38,6 @@ const makeMemFsSideEffect = (params) => {
             if (error) {
               commandResponses.callback({path, type, error, id})
             } else {
-              // FIXME: injection of fs & filesAndFolders is a huge hack
               commandResponses.callback({path, type, data, id, filesAndFolders})
             }
           })
@@ -47,7 +46,6 @@ const makeMemFsSideEffect = (params) => {
             if (error) {
               commandResponses.callback({path, type, error, id})
             } else {
-              // FIXME: injection of fs & filesAndFolders is a huge hack
               commandResponses.callback({path, type, data, id, filesAndFolders})
             }
           })
@@ -70,7 +68,6 @@ const makeMemFsSideEffect = (params) => {
           // this from inputs typically like drag & drop data
           most.fromPromise(walkFileTree(data))
             .forEach(function (readFilesAndFolders) {
-              console.log('walkfileTree', readFilesAndFolders)
               rawData = data
               filesAndFolders = readFilesAndFolders
               fs = makeFakeFs(filesAndFolders)
@@ -124,7 +121,7 @@ const makeMemFsSideEffect = (params) => {
               const whatChanged = changedFiles(flatCurrent, flatNew)
               if (whatChanged.length > 0) {
                 filesAndFolders = files
-                commandResponses.callback({path, type: 'read', data, id: 'loadDesign', fs, filesAndFolders})
+                commandResponses.callback({path, type: 'watch', data, id: 'watchFiles', filesAndFolders, changed: whatChanged})
               }
             })
           }, 2000)

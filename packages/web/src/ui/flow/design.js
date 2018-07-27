@@ -57,40 +57,14 @@ const reducers = {
     return Object.assign({}, state, {design})
   },
 
-// this sets either the list of available file/folder names
-// or that AND the files & folders tree (web)
-  prepareDesignData: (state, data) => {
-    // console.log('prepareDesignData', state, data)
-    const filesAndFolders = data
-
-    const design = Object.assign({}, state.design, {filesAndFolders})
-    return Object.assign({}, state, {design})
-  },
-
   /** set the design's path
    * @param  {Object} state
    * @param  {Object} paths
    * @returns {Object} the updated state
    */
   setDesignPath: (state, paths) => {
-    // console.log('setDesignPath', paths)
+    console.log('setDesignPath', paths)
   // FIXME:  DO NOT DO THIS HERE !!
-    const filesAndFolders = paths.filesAndFolders
-    const makeFakeFs = require('../../sideEffects/memFs/makeFakeFs')
-    const fakeFs = makeFakeFs(filesAndFolders) 
-    paths = [paths.path]
-    const mainPath = getDesignEntryPoint(fakeFs, () => {}, paths)
-    const filePath = paths[0]
-    const designName = getDesignName(fakeFs, paths)
-    const designPath = path.dirname(filePath)
-
-    const design = Object.assign({}, state.design, {
-      name: designName,
-      path: designPath,
-      mainPath,
-      filesAndFolders
-    })
-    const status = Object.assign({}, state.status, {busy: true})
 
     // we want the viewer to focus on new entities for our 'session' (until design change)
     const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: ['new-entities']}})
@@ -103,22 +77,51 @@ const reducers = {
  * @param  {String} source
  * @returns {Object} the updated state
  */
-  setDesignContent: (state, source) => {
-    console.log('setDesignContent')
+  setDesignContent: (state, payload) => {
+    console.log('setDesignContent', payload)
     /*
       func(parameterDefinitions) => paramsUI
       func(paramsUI + interaction) => params
     */
-    const design = Object.assign({}, state.design, {
-      source,
-      parameterValues: {}
+   // all our available data (specific to web)
+    const {filesAndFolders, flag} = payload
+    const makeFakeFs = require('../../sideEffects/memFs/makeFakeFs')
+    const fakeFs = makeFakeFs(filesAndFolders)
+    const rootPath = payload.path
+    const mainPath = getDesignEntryPoint(fakeFs, () => {}, rootPath)
+    const designName = getDesignName(fakeFs, rootPath)
+    const designPath = path.dirname(rootPath)
+
+    let design = state.design
+    if (flag === 'reset') {
+      design = Object.assign({}, design, {
+        name: '',
+        path: '',
+        mainPath: '',
+        // list of all paths of require() calls + main
+        modulePaths: [],
+        filesAndFolders: [], // file tree, of sorts
+        // parameters
+        parameterDefinitions: [],
+        parameterValues: {},
+        parameterDefaults: {},
+        // geometry caching
+        lookup: {},
+        lookupCounts: {}
+      })
+    }
+    design = Object.assign({}, design, {
+      name: designName,
+      path: designPath,
+      mainPath,
+      filesAndFolders
     })
+
     const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']}})
     const appTitle = `jscad v ${packageMetadata.version}: ${state.design.name}`
 
     // FIXME: this is the same as clear errors ?
     const status = Object.assign({}, state.status, {busy: true, error: undefined})
-    // const parameters = Object.assign({}, state.design.parameterValues, parameterValues: {})
     return Object.assign({}, state, {
       design,
       viewer,
@@ -188,8 +191,12 @@ const reducers = {
       parameterValues,
       parameterDefinitions
     })
+
+    const status = Object.assign({}, state.status, {busy: true, error: undefined})
+
     return Object.assign({}, state, {
-      design
+      design,
+      status
     })
   },
 
@@ -226,12 +233,13 @@ const reducers = {
     const current = state.design
     const previous = previousState.design
     const sameParameterValues = JSON.stringify(current.parameterValues) === JSON.stringify(previous.parameterValues)
+    const sameParameterDefinitions = JSON.stringify(current.parameterDefinitions) === JSON.stringify(previous.parameterDefinitions)
     // FIXME: do more than just check source !! if there is a change in any file (require tree)
     // it should recompute
-    const sameSource = JSON.stringify(current.source) === JSON.stringify(previous.source)
+    // const sameSource = JSON.stringify(current.source) === JSON.stringify(previous.source)
     const sameMainPath = JSON.stringify(current.mainPath) === JSON.stringify(previous.mainPath)
     const sameFiles = JSON.stringify(current.filesAndFolders) === JSON.stringify(previous.filesAndFolders)
-    return sameParameterValues && sameSource && sameMainPath && sameFiles
+    return sameParameterDefinitions && sameParameterValues && sameMainPath && sameFiles
   },
 
   // ui/toggles
@@ -298,6 +306,8 @@ const actions = ({sources}) => {
   // starts emmiting to storage only AFTER initial settings have been loaded
   const requestSaveSettings$ = sources.state
     .filter(state => state.design)
+    .skipRepeatsWith(reducers.isDesignTheSame)
+    .skip(1) // we do not care about the first state change
     .map(state => state.design)
     .thru(holdUntil(sources.store.filter(reply => reply.key === 'design' && reply.type === 'read')))
     .map(reducers.requestSaveSettings)
@@ -307,13 +317,6 @@ const actions = ({sources}) => {
   const designPath$ = most.mergeArray([
     sources.fs
       .filter(data => data.type === 'read' && data.id === 'loadDesign')
-    /* sources.dom.select('#fileLoader').events('click')
-      .map(function () {
-        // literally an array of paths (strings)
-        // like those returned by dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
-        const paths = []
-        return paths
-      }), */
     /* sources.store
       .filter(data => data && data.design && data.design.mainPath)
       .map(data => data.design.mainPath)
@@ -324,19 +327,31 @@ const actions = ({sources}) => {
     .debounce(50)
     .multicast()
 
-  const setDesignPath$ = designPath$
+  /* const setDesignPath$ = designPath$
     .thru(withLatestFrom(reducers.setDesignPath, sources.state))
     // .skipRepeatsWith(reducers.isDesignTheSame)
     .map(data => ({type: 'setDesignPath', state: data, sink: 'state'}))
-    .delay(1)
+    .delay(1) */
+  // called whenever loading a new design
+
+  const resetWithData$ = sources.fs
+    .filter(data => data.type === 'read' && data.id === 'loadDesign')
+    .map(raw => raw.data)
+    .filter(data => data !== undefined)
+    .debounce(50)
+    .multicast()
+
+  const designDataReady$ = sources.fs
+      .filter(response => response.type === 'add')
 
   const setDesignContent$ = most.mergeArray([
+    designDataReady$
+    // sources.fs
+    //  .filter(data => data.type === 'read' && data.id === 'loadDesign')
+      .map(({data}) => ({filesAndFolders: data, path: data[0].fullPath, flag: 'reset'})),
     sources.fs
-      .filter(data => data.type === 'read' && data.id === 'loadDesign')
-      .map(raw => raw.data),
-    sources.fs
-      .filter(data => data.type === 'watch' && data.id === 'watchScript')
-      .map(({path, data}) => data)
+      .filter(data => data.type === 'watch' && data.id === 'watchFiles')
+      .map(({path, filesAndFolders}) => ({path, filesAndFolders, flag: 'update'}))
   ])
     .multicast()
     .thru(withLatestFrom(reducers.setDesignContent, sources.state))
@@ -377,7 +392,7 @@ const actions = ({sources}) => {
   // send out a request to recompute the geometry
   const requestGeometryRecompute$ = sources.state
     .filter(state => state.design && state.design.mainPath !== '')
-    // .skipRepeatsWith(reducers.isDesignTheSame)
+    .skipRepeatsWith(reducers.isDesignTheSame)
     .map(reducers.requestGeometryRecompute)
     .map(payload => Object.assign({}, payload, {sink: 'geometryWorker', cmd: 'generate'}))
 
@@ -418,6 +433,14 @@ const actions = ({sources}) => {
   ])
     .map(data => ({type: 'updateDesignFromParams', data})).multicast()
 
+  // parameter values etc retrived from local storage
+  const parametersFromStore$ = sources.store
+    .filter(reply => reply.key === 'design' && reply.type === 'read')
+    .map(({data}) => {
+      const {parameterDefinitions, parameterDefaults, parameterValues} = data
+      return {parameterDefinitions, parameterDefaults, parameterValues}
+    })
+
   const setDesignParameters$ = most.mergeArray([
     updateDesignFromParams$.map(x => x.data),
     sources.solidWorker
@@ -431,10 +454,18 @@ const actions = ({sources}) => {
         } catch (error) {
           return {error}
         }
+      }),
+    // parameter values specified via the titleBar
+    sources.titleBar
+      .filter(x => x !== undefined)
+      .map(uri => {
+        let params = url.parse(uri, true).query
+        console.log('params from titleBar ?', uri, params)
+        const parameterValues = params
+        // return {parameterValues}
       })
-    /* sources.store
-      .filter(data => data && data.design && data.design.parameters)
-      .map(data => data.design.parameters) */
+      .filter(x => x !== undefined),
+    parametersFromStore$
   ])
     .thru(withLatestFrom(reducers.setDesignParameters, sources.state))
     .map(data => ({type: 'setDesignParameters', state: data, sink: 'state'}))
@@ -489,6 +520,16 @@ const actions = ({sources}) => {
     .map(data => ({type: 'read', id: 'loadRemote', urls: toArray(data), sink: 'http'}))
     .multicast()
 
+  const requestLoadLocalData = most.mergeArray([
+     /* sources.dom.select('#fileLoader').events('click')
+      .map(function () {
+        // literally an array of paths (strings)
+        // like those returned by dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
+        const paths = []
+        return paths
+      }), */
+  ])
+
   const requestAddDesignData$ = most.mergeArray([
     // injection from drag & drop
     sources.drops
@@ -500,24 +541,17 @@ const actions = ({sources}) => {
   ])
     .map(payload => Object.assign({}, {type: 'add', sink: 'fs'}, payload))
 
-  const requestLoadDesign$ = most.mergeArray([
+  /* const requestLoadDesignData$ = most.mergeArray([
     // after data was added to memfs, we get an answer back
     sources.fs
       .filter(response => response.type === 'add')
-      .map(({data}) => ({data, id: 'loadDesign', path: data[0].fullPath}))
+      .tap(x=>console.log('fooooo',x))
+      .map(({data}) => ({data, id: 'loadDesign', path: data[0].fullPath}))// read root item (either root of folder or main file)
       .delay(1) // FIXME !! we have to add a 1 ms delay otherwise the source & the sink are fired at the same time
       // this needs to be fixed in callBackToStream
-    // files to read/write
-    /* sources.state
-      .filter(state => state.design && state.design.mainPath !== '')
-      .map(state => state.design.mainPath)
-      .skipRepeatsWith((state, previousState) => {
-        return JSON.stringify(state) === JSON.stringify(previousState)
-      })
-      .map(path => ({id: 'loadDesign', path})) */
   ])
     .tap(x => console.log('response from file system', x))
-    .map(payload => Object.assign({}, {type: 'read', sink: 'fs'}, payload))
+    .map(payload => Object.assign({}, {type: 'read', sink: 'fs'}, payload)) */
 
   const requestWatchDesign$ = most.mergeArray([
     // watched data
@@ -534,6 +568,7 @@ const actions = ({sources}) => {
       )
   ])
     .map(payload => Object.assign({}, {type: 'watch', sink: 'fs'}, payload))
+    .tap(x=>console.log('request watch'))
 
   const requestWriteCachedGeometry$ = most.mergeArray([
     sources.state
@@ -565,7 +600,7 @@ const actions = ({sources}) => {
 
   return {
     initialize$,
-    setDesignPath$,
+    // setDesignPath$,
     setDesignContent$,
     requestGeometryRecompute$,
     timeoutGeometryRecompute$,
@@ -575,7 +610,7 @@ const actions = ({sources}) => {
 
     requestLoadRemoteData$,
     requestAddDesignData$,
-    requestLoadDesign$,
+    // requestLoadDesignData$,// afther this one respons we are ready
     requestWatchDesign$,
     requestWriteCachedGeometry$,
 

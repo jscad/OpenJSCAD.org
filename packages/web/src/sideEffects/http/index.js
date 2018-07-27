@@ -43,7 +43,6 @@ const makeHttpSideEffect = (params) => {
           }
           xhr.onload = event => {
             const result = event.currentTarget.responseText
-            console.log('result from request', result)
             const status = event.target.status
             if (`${status}`.startsWith('4')) {
               commandResponses.callback({type, id, url, error: new Error(result)})
