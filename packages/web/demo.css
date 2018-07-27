@@ -110,8 +110,9 @@ body {
   position: absolute;
   color: red;
   top: 50px;
-  left: 100px;
+  left: 50%;
   z-index: 100;
+  width: 200px;
 }
 #container{
   z-index: 100;
