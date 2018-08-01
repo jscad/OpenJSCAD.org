@@ -76,6 +76,16 @@ const chain_hull = (...solids) => {
   return {children: solids, type: 'chain_hull', params: undefined}
 }
 
+const contract = (params, ...solids) => {
+  solids = toArray(solids)
+  return {children: solids, type: 'contract', params}
+}
+
+const expand = (params, ...solids) => {
+  solids = toArray(solids)
+  return {children: solids, type: 'expand', params}
+}
+
 const color = (params, ...solids) => {
   solids = toArray(solids)
   return {children: solids, type: 'color', params}
@@ -107,12 +117,18 @@ const rectangular_extrude = (solids, params) => {
   return {children: solids, type: 'rectangular_extrude', params}
 }
 
+// attempt at workaround for non tree items that need access to data before final evaluation
+let specials = []
+const measureArea = require('./api-measurements').makeMeasureArea(specials)
+const measureVolume = require('./api-measurements').makeMeasureVolume(specials)
+const measureBounds = require('./api-measurements').makeMeasureBounds(specials)
+
 // not sure about this one
 /*const vector_text = (...params) => {
   console.log('vector_text',params)
   return params
   // return {type: 'vector_text', params}
-}*/
+} */
 
 // this is a convenience object, that mimicks the structure of the jscad functional api
 const apiClone = {
@@ -148,7 +164,7 @@ const apiClone = {
 
   },
 
-  color: Object.assign({}, require('@jscad/csg/api').color,{color}),
+  color: Object.assign({}, require('@jscad/csg/api').color, {color}),
   csg: require('@jscad/csg/api').csg,
   // these are obsolete, but keeping the same API for now ...
   maths: require('@jscad/csg/api').maths,
@@ -176,9 +192,19 @@ module.exports = {
   scale,
   mirror,
   hull,
+  chain_hull,
+  contract,
+  expand,
 
   linear_extrude,
   rectangular_extrude,
 
-  color
+  color,
+
+  measureArea,
+  measureVolume,
+  measureBounds,
+
+  // seperate
+  specials
 }

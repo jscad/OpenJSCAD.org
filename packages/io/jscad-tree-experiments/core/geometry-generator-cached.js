@@ -3,7 +3,7 @@ const {flatten} = require('./arrays')
 const {cube, sphere, cylinder} = require('@jscad/csg/api').primitives3d
 const {circle, square} = require('@jscad/csg/api').primitives2d
 const {union, difference, intersection} = require('@jscad/csg/api').booleanOps
-const {translate, rotate, scale, mirror, hull, chain_hull} = require('@jscad/csg/api').transformations
+const {translate, rotate, scale, mirror, hull, chain_hull, contract, expand} = require('@jscad/csg/api').transformations
 const {color} = require('@jscad/csg/api').color
 const {linear_extrude, rectangular_extrude, rotate_extrude} = require('@jscad/csg/api').extrusions
 
@@ -18,6 +18,7 @@ const generate = (node, cache) => {
   if (foundData) {
     return foundData
   }
+  console.log('node.type', node.type)
   switch (node.type) {
     case 'cube':
       result = cube(node)
@@ -59,6 +60,10 @@ const generate = (node, cache) => {
       operands = flatten(node.children).map(n => generate(n, cache))
       result = scale(node.params, operands)
       break
+    case 'contract':
+      operands = flatten(node.children).map(n => generate(n, cache))
+      result = contract(node.params, operands)
+      break
     case 'mirror':
       operands = flatten(node.children).map(n => generate(n, cache))
       result = mirror(node.params, operands)
@@ -94,9 +99,21 @@ const generate = (node, cache) => {
       // operands = union(operands)
       result = rectangular_extrude(operands, node.params)
       break
+    case 'measureArea':
+      console.log('actual measure Area')
+      operands = flatten(node.children).map(n => generate(n, cache))
+      const area = operands.reduce((acc, csg) => {
+        let tmpArea = csg.toTriangles().reduce(function (accSub, triPoly) {
+          return accSub + triPoly.getTetraFeatures(['area'])
+        }, 0)
+        return acc + tmpArea
+      }, 0)
+      console.log('area', area)
+      result = area
+      break
     default:
-    result = node
-    break
+      result = node
+      break
   }
 
   cache.add(nodeHash, result)
