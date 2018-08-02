@@ -35,7 +35,7 @@
   "dependencies": {
     "@jscad/core": "^0.2.3",
     "@jscad/csg": "0.5.2",
-    "@jscad/csg-viewer": "github:jscad/csg-viewer",
+    "@jscad/csg-viewer": "github:jscad/csg-viewer#overhaul",
     "@jscad/examples": "^1.7.1",
     "@jscad/io": "1.0.0-pre-V2.0",
     "@jscad/openscad-openjscad-translator": "0.0.10",
