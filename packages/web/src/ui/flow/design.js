@@ -227,6 +227,13 @@ const reducers = {
     })
   },
 
+  setDesignSettings: (state, data) => {
+    const design = Object.assign({}, state.design, data)
+    return Object.assign({}, state, {
+      design
+    })
+  },
+
   requestGeometryRecompute: (state, _) => {
     const {design} = state
     const {source, mainPath, parameterValues, filesAndFolders} = design
@@ -360,32 +367,10 @@ const actions = ({sources}) => {
     .map(data => Object.assign({}, {data}, {sink: 'store', key: 'design', type: 'write'}))
     .multicast()
 
-  const designPath$ = most.mergeArray([
-    sources.fs
-      .filter(data => data.type === 'read' && data.id === 'loadDesign')
-    /* sources.store
-      .filter(data => data && data.design && data.design.mainPath)
-      .map(data => data.design.mainPath)
-      .filter(data => data !== '')
-      .map(data => [data]), */
-  ])
-    .filter(data => data !== undefined)
-    .debounce(50)
-    .multicast()
-
-  /* const setDesignPath$ = designPath$
-    .thru(withLatestFrom(reducers.setDesignPath, sources.state))
-    // .skipRepeatsWith(reducers.isDesignTheSame)
-    .map(data => ({type: 'setDesignPath', state: data, sink: 'state'}))
-    .delay(1) */
-  // called whenever loading a new design
-
-  const resetWithData$ = sources.fs
-    .filter(data => data.type === 'read' && data.id === 'loadDesign')
-    .map(raw => raw.data)
-    .filter(data => data !== undefined)
-    .debounce(50)
-    .multicast()
+  const setDesignSettings$ = sources.store
+    .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined)
+    .thru(withLatestFrom(reducers.setDesignSettings, sources.state))
+    .map(data => ({type: 'setDesignSettings', state: data, sink: 'state'}))
 
   const designDataReady$ = sources.fs
       .filter(response => response.type === 'add')
@@ -519,29 +504,29 @@ const actions = ({sources}) => {
   // ui/toggles
   const toggleAutoReload$ = most.mergeArray([
     sources.dom.select('#autoReload').events('click')
-      .map(e => e.target.checked),
-    sources.store
+      .map(e => e.target.checked)
+    /*sources.store
       .filter(reply => reply.key === 'design' && reply.type === 'read')
-      .map(reply => reply.data.autoReload)
+      .map(reply => reply.data.autoReload)*/
   ])
     .thru(withLatestFrom(reducers.toggleAutoReload, sources.state))
     .map(data => ({type: 'toggleAutoReload', state: data, sink: 'state'}))
 
   const toggleInstantUpdate$ = most.mergeArray([
-    sources.dom.select('#instantUpdate').events('click').map(event => event.target.checked),
-    sources.store
-      .filter(reply => reply.key === 'design' && reply.type === 'read' !== undefined)
-      .map(reply => reply.data.instantUpdate)
+    sources.dom.select('#instantUpdate').events('click').map(event => event.target.checked)
+    /*sources.store
+      .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined)
+      .map(reply => reply.data.instantUpdate)*/
   ])
     .thru(withLatestFrom(reducers.toggleInstantUpdate, sources.state))
     .map(data => ({type: 'toggleInstantUpdate', state: data, sink: 'state'}))
 
   const toggleVTreeMode$ = most.mergeArray([
-    sources.dom.select('#toggleVtreeMode').events('click').map(event => event.target.checked),
-    sources.store
-      .filter(reply => reply.key === 'design' && reply.type === 'read' !== undefined)
+    sources.dom.select('#toggleVtreeMode').events('click').map(event => event.target.checked)
+    /*sources.store
+      .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined)
       .map(reply => reply.data.vtreeMode)
-      .filter(vtreeMode => vtreeMode !== undefined)
+      .filter(vtreeMode => vtreeMode !== undefined)*/
   ])
     .thru(withLatestFrom(reducers.toggleVtreeMode, sources.state))
     .map(data => ({type: 'toggleVtreeMode', state: data, sink: 'state'}))
@@ -661,6 +646,7 @@ const actions = ({sources}) => {
 
     requestLoadSettings$,
     requestSaveSettings$,
+    setDesignSettings$,
 
     toggleAutoReload$,
     toggleInstantUpdate$,
