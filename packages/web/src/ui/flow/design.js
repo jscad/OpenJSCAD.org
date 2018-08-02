@@ -47,10 +47,10 @@ const reducers = {
       parameterValues: {},
       parameterDefaults: {},
       // solids
-      solidsTimeOut: 60000,
+      solidsTimeOut: 80000,
       solids: [],
       // geometry caching
-      vtreeMode: true,
+      vtreeMode: false,
       lookup: {},
       lookupCounts: {},
       debug: {
@@ -235,7 +235,12 @@ const reducers = {
 
   setDesignSettings: (state, {data}) => {
     console.log('set design settings', data)
-    const design = Object.assign({}, state.design, data)
+    const {
+      vtreeMode,
+      autoReload,
+      instantUpdate
+    } = data
+    const design = Object.assign({}, state.design, {vtreeMode, autoReload, instantUpdate})
     return {
       design
     }
@@ -510,7 +515,7 @@ const actions = ({sources}) => {
       .map(e => e.target.checked)
     /* sources.store
       .filter(reply => reply.key === 'design' && reply.type === 'read')
-      .map(reply => reply.data.autoReload)*/
+      .map(reply => reply.data.autoReload) */
   ])
     .thru(withLatestFrom(reducers.toggleAutoReload, sources.state))
     .map(data => ({type: 'toggleAutoReload', state: data, sink: 'state'}))
@@ -519,7 +524,7 @@ const actions = ({sources}) => {
     sources.dom.select('#instantUpdate').events('click').map(event => event.target.checked)
     /* sources.store
       .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined)
-      .map(reply => reply.data.instantUpdate)*/
+      .map(reply => reply.data.instantUpdate) */
   ])
     .thru(withLatestFrom(reducers.toggleInstantUpdate, sources.state))
     .map(data => ({type: 'toggleInstantUpdate', state: data, sink: 'state'}))
@@ -529,7 +534,7 @@ const actions = ({sources}) => {
     /* sources.store
       .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined)
       .map(reply => reply.data.vtreeMode)
-      .filter(vtreeMode => vtreeMode !== undefined)*/
+      .filter(vtreeMode => vtreeMode !== undefined) */
   ])
     .thru(withLatestFrom(reducers.toggleVtreeMode, sources.state))
     .map(data => ({type: 'toggleVtreeMode', state: data, sink: 'state'}))
