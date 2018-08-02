@@ -11,7 +11,6 @@ const reducers = {
     return Object.assign({}, state, {languages})
   },
   setLanguage: (state, active) => {
-    // console.log('setLanguage', active)
     const languages = Object.assign({}, state.languages, {active})
     return Object.assign({}, state, {languages})
   },
@@ -63,7 +62,7 @@ const actions = ({sources}) => {
     .map(_ => ({sink: 'store', key: 'languages', type: 'read'}))
 
   // set the active language, either from defaults, previous settings or manually
-  const setLanguage$FromDefault$ = sources.i18n
+  const setLanguageFromDefault$ = sources.i18n
     .thru(holdUntil(setAvailableLanguages$))
     .filter(reply => reply.type === 'getDefaultLocale')
     .map(reply => reply.data)
@@ -71,16 +70,17 @@ const actions = ({sources}) => {
     .delay(1) // FIXME : needed because of bug with event firing too close to another ?
 
   // we want to get results from storage AFTER the defaults have been recieved
-  const setLanguage$FromStore$ = sources.store
+  const setLanguageFromStore$ = sources.store
       .filter(reply => reply.key === 'languages' && reply.type === 'read')
-      .thru(holdUntil(setLanguage$FromDefault$))
+      .thru(holdUntil(setLanguageFromDefault$))
       .map(reply => reply.data.active)
+      .filter(active => active !== undefined)
 
   const setLanguage$ = most.mergeArray([
-    setLanguage$FromDefault$,
+    setLanguageFromDefault$,
     sources.dom.select('#languageSwitcher').events('change')
       .map(e => e.target.value),
-    setLanguage$FromStore$
+    setLanguageFromStore$
   ])
     .thru(withLatestFrom(reducers.setLanguage, sources.state))
     .map(payload => Object.assign({}, {type: 'setLanguage', sink: 'state'}, {state: payload}))
