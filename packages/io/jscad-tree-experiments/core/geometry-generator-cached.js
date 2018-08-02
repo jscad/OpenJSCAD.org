@@ -1,5 +1,5 @@
 const {flatten} = require('./arrays')
-
+const {omit} = require('./objectUtils')
 const {cube, sphere, cylinder} = require('@jscad/csg/api').primitives3d
 const {circle, square} = require('@jscad/csg/api').primitives2d
 const {union, difference, intersection} = require('@jscad/csg/api').booleanOps
@@ -18,7 +18,7 @@ const generate = (node, cache) => {
   if (foundData) {
     return foundData
   }
-  console.log('node.type', node.type)
+  // console.log('node.type', node.type, node)
   switch (node.type) {
     case 'cube':
       result = cube(node)
@@ -30,7 +30,13 @@ const generate = (node, cache) => {
       result = cylinder(node)
       break
     case 'circle':
-      result = circle(node)
+      // FIXME : circle is weird, will not accept empty object as param
+      // node keys length === 1 means only node.type is in there: ie no params
+      if (Object.keys(node).length === 1) {
+        result = circle()
+      } else {
+        result = circle(node)
+      }
       break
     case 'square':
       result = square(node)
@@ -61,8 +67,11 @@ const generate = (node, cache) => {
       result = scale(node.params, operands)
       break
     case 'contract':
+      console.log('contract', node)
       operands = flatten(node.children).map(n => generate(n, cache))
-      result = contract(node.params, operands)
+      // FIXME: REALLY NEEDED ???
+      operands = union(operands)
+      result = contract(node.radius, node.n, operands)
       break
     case 'mirror':
       operands = flatten(node.children).map(n => generate(n, cache))
@@ -100,7 +109,7 @@ const generate = (node, cache) => {
       result = rectangular_extrude(operands, node.params)
       break
     case 'measureArea':
-      console.log('actual measure Area')
+      // console.log('actual measure Area')
       operands = flatten(node.children).map(n => generate(n, cache))
       const area = operands.reduce((acc, csg) => {
         let tmpArea = csg.toTriangles().reduce(function (accSub, triPoly) {
@@ -108,7 +117,7 @@ const generate = (node, cache) => {
         }, 0)
         return acc + tmpArea
       }, 0)
-      console.log('area', area)
+      // console.log('area', area)
       result = area
       break
     default:
