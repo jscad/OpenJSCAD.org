@@ -50,9 +50,14 @@ const reducers = {
       solidsTimeOut: 60000,
       solids: [],
       // geometry caching
-      vtreeMode: false,
+      vtreeMode: true,
       lookup: {},
-      lookupCounts: {}
+      lookupCounts: {},
+      debug: {
+        startTime: 0,
+        endTime: 0,
+        totalTime: 0
+      }
     }
     return Object.assign({}, state, {design})
   },
@@ -106,14 +111,23 @@ const reducers = {
         parameterDefaults: {},
         // geometry caching
         lookup: {},
-        lookupCounts: {}
+        lookupCounts: {},
+        debug: {
+          startTime: 0,
+          endTime: 0,
+          totalTime: 0
+        }
       })
     }
+    // to track computation time
+    const debug = Object.assign({ }, state.design.debug, {startTime: new Date()})
+
     design = Object.assign({}, design, {
       name: designName,
       path: designPath,
       mainPath,
-      filesAndFolders
+      filesAndFolders,
+      debug
     })
 
     const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']}})
@@ -137,14 +151,25 @@ const reducers = {
    * @returns {Object} the updated state
    */
   setDesignSolids: (state, {solids, lookup, lookupCounts}) => {
-    console.log('setDesignSolids', lookup)
+    console.log('setDesignSolids')
     solids = solids || []
     lookup = lookup || {}
     lookupCounts = lookupCounts || {}
+
+    // should debug be part of status ?
+    const endTime = new Date()
+    const totalTime = endTime - state.design.debug.startTime
+    const debug = Object.assign({ }, state.design.debug, {
+      endTime,
+      totalTime
+    })
+    console.warn(`total time for design regeneration`, totalTime)
+
     const design = Object.assign({}, state.design, {
       solids,
-      lookup,
-      lookupCounts
+      lookup, // : Object.assign({}, state.design.lookup, lookup),
+      lookupCounts, // : Object.assign({}, state.design.lookupCounts, lookupCounts),
+      debug
     })
 
   // TODO: move this to IO ??
@@ -185,10 +210,13 @@ const reducers = {
     const parameterDefaults = data.parameterDefaults || state.design.parameterDefaults
     const parameterDefinitions = data.parameterDefinitions || state.design.parameterDefinitions
 
+    // to track computation time
+    const debug = Object.assign({ }, state.design.debug, {startTime: new Date()})
     const design = Object.assign({}, state.design, {
       parameterDefaults,
       parameterValues,
-      parameterDefinitions
+      parameterDefinitions,
+      debug
     })
 
     const status = Object.assign({}, state.status, {busy: true, error: undefined})
@@ -239,6 +267,27 @@ const reducers = {
     const sameFiles = JSON.stringify(current.filesAndFolders) === JSON.stringify(previous.filesAndFolders)
     return sameParameterDefinitions && sameParameterValues && sameMainPath && sameFiles
   },
+  // same as above but with added fields for settings
+  isDesignTheSameForSerialization: (previousState, state) => {
+    if (!previousState.design) {
+      return false
+    }
+    const current = state.design
+    const previous = previousState.design
+    const sameParameterValues = JSON.stringify(current.parameterValues) === JSON.stringify(previous.parameterValues)
+    const sameParameterDefinitions = JSON.stringify(current.parameterDefinitions) === JSON.stringify(previous.parameterDefinitions)
+    // FIXME: do more than just check source !! if there is a change in any file (require tree)
+    // it should recompute
+    // const sameSource = JSON.stringify(current.source) === JSON.stringify(previous.source)
+    const sameMainPath = JSON.stringify(current.mainPath) === JSON.stringify(previous.mainPath)
+    const sameFiles = JSON.stringify(current.filesAndFolders) === JSON.stringify(previous.filesAndFolders)
+
+    const sameInstantUpdate = JSON.stringify(current.instantUpdate) === JSON.stringify(previous.instantUpdate)
+    const sameAutoReload = JSON.stringify(current.autoReload) === JSON.stringify(previous.autoReload)
+    const sameVtreeMode = JSON.stringify(current.vtreeMode) === JSON.stringify(previous.vtreeMode)
+    return sameParameterDefinitions && sameParameterValues && sameMainPath && sameFiles &&
+      sameInstantUpdate && sameAutoReload && sameVtreeMode
+  },
 
   // ui/toggles
   toggleAutoReload: (state, autoReload) => {
@@ -285,7 +334,6 @@ const reducers = {
       instantUpdate: design.instantUpdate
     }
   }
-
 }
 
 // close current tool after we clicked on loading an example
@@ -304,7 +352,7 @@ const actions = ({sources}) => {
   // starts emmiting to storage only AFTER initial settings have been loaded
   const requestSaveSettings$ = sources.state
     .filter(state => state.design)
-    .skipRepeatsWith(reducers.isDesignTheSame)
+    .skipRepeatsWith(reducers.isDesignTheSameForSerialization)
     .skip(1) // we do not care about the first state change
     .map(state => state.design)
     .thru(holdUntil(sources.store.filter(reply => reply.key === 'design' && reply.type === 'read')))
@@ -566,7 +614,6 @@ const actions = ({sources}) => {
       )
   ])
     .map(payload => Object.assign({}, {type: 'watch', sink: 'fs'}, payload))
-    .tap(x=>console.log('request watch'))
 
   const requestWriteCachedGeometry$ = most.mergeArray([
     sources.state
