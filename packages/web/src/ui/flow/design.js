@@ -47,7 +47,7 @@ const reducers = {
       parameterValues: {},
       parameterDefaults: {},
       // solids
-      solidsTimeOut: 5000,
+      solidsTimeOut: 60000,
       solids: [],
       // geometry caching
       vtreeMode: false,
@@ -57,14 +57,13 @@ const reducers = {
     return Object.assign({}, state, {design})
   },
 
-  /** set the design's path
+  /** OBSOLETE set the design's path
    * @param  {Object} state
    * @param  {Object} paths
    * @returns {Object} the updated state
    */
   setDesignPath: (state, paths) => {
     console.log('setDesignPath', paths)
-  // FIXME:  DO NOT DO THIS HERE !!
 
     // we want the viewer to focus on new entities for our 'session' (until design change)
     const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: ['new-entities']}})
@@ -212,7 +211,6 @@ const reducers = {
   },
 
   timeoutGeometryRecompute: (state, _) => {
-    console.log('timeoutGeometryRecompute', state)
     const isBusy = state.status.busy
     if (isBusy) {
       const status = Object.assign({}, state.status, {
@@ -244,7 +242,7 @@ const reducers = {
 
   // ui/toggles
   toggleAutoReload: (state, autoReload) => {
-    console.log('toggleAutoReload', autoReload)
+    // console.log('toggleAutoReload', autoReload)
     const design = Object.assign({}, state.design, {autoReload})
     return Object.assign({}, state, {design})
   },
@@ -259,7 +257,7 @@ const reducers = {
     return Object.assign({}, state, {design})
   },
   requestWriteCachedGeometry: (cache) => {
-    console.log('cache', cache)
+    // console.log('cache', cache)
     const serialize = require('serialize-to-js').serialize
     /*
     const compactBinary = data
