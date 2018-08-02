@@ -51,9 +51,9 @@ const instanciateDesign = (rootModule, vtreeMode, inputLookup, inputLookupCounts
   if (isResultSolid(rawResults)) {
     solids = rawResults
   } else if (vtreeMode) {
-    lookup = lookupToCompactBinary(inputLookup)
     const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree({passesBeforeElimination: 3, lookup, lookupCounts})
     solids = buildCachedGeometryFromTree({}, rawResults)
+    // TODO: erturn both solids and cache instead of mutating ?
   } else {
     throw new Error('Bad output from script: expected CSG/CAG objects')
   }
