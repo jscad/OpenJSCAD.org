@@ -14,7 +14,7 @@ const reducers = {
   // set all shortcuts
   setShortcuts: (state, newShortcuts) => {
     const shortcuts = merge([], state.shortcuts, newShortcuts)
-    return Object.assign({}, state, {shortcuts})
+    return {shortcuts}
   },
   // set a specific shortcut
   setShortcut: (state, shortcutData) => {
@@ -45,7 +45,7 @@ const reducers = {
         return shortcut
       }
     })
-    return Object.assign({}, state, {shortcuts})
+    return {shortcuts}
   },
   triggerShortcut: (state, {event, compositeKey}) => {
     const matchingAction = head(state.shortcuts.filter(shortcut => shortcut.key.toLowerCase() === compositeKey))

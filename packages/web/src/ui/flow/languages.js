@@ -8,16 +8,16 @@ const reducers = {
       active: undefined,
       available: []
     }
-    return Object.assign({}, state, {languages})
+    return {languages}
   },
   setLanguage: (state, active) => {
     const languages = Object.assign({}, state.languages, {active})
-    return Object.assign({}, state, {languages})
+    return {languages}
   },
   setAvailableLanguages: (state, available) => {
     // console.log('setAvailableLanguages', available)
     const languages = Object.assign({}, state.languages, {available})
-    return Object.assign({}, state, {languages})
+    return {languages}
   },
   requestSaveSettings: (languages) => {
     return {active: languages.active}

@@ -16,7 +16,7 @@ const actions = ({sources}) => {
   ])
     .thru(withLatestFrom((state, tool) => {
       const activeTool = state.activeTool === tool ? undefined : tool
-      return Object.assign({}, state, {activeTool})
+      return {activeTool}
     }, sources.state))
     .map(payload => Object.assign({}, {type: 'setActiveTool', sink: 'state'}, {state: payload}))
 

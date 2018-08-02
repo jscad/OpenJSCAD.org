@@ -5,12 +5,11 @@ const reducers = {
   setErrors: (state, errorPayload) => {
     const {error} = errorPayload
     const status = Object.assign({}, state.status, {error, busy: false})
-    return Object.assign({}, state, {status})
+    return {status}
   },
   clearErrors: (state, _) => {
-    console.log('clear errors')
-    const status = Object.assign({}, state.status, {error: undefined})
-    return Object.assign({}, state, {status})
+    const status = Object.assign({}, state.status, {error: undefined, busy: false})
+    return {status}
   }
 }
 const actions = ({sources}) => {

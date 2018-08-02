@@ -59,7 +59,7 @@ const reducers = {
         totalTime: 0
       }
     }
-    return Object.assign({}, state, {design})
+    return {design}
   },
 
   /** OBSOLETE set the design's path
@@ -72,7 +72,7 @@ const reducers = {
 
     // we want the viewer to focus on new entities for our 'session' (until design change)
     const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: ['new-entities']}})
-    return Object.assign({}, state, {status, viewer, design})
+    return {status, viewer, design}
   },
 
 /** set the source of the root file of the design, usually the
@@ -135,12 +135,12 @@ const reducers = {
 
     // FIXME: this is the same as clear errors ?
     const status = Object.assign({}, state.status, {busy: true, error: undefined})
-    return Object.assign({}, state, {
+    return {
       design,
       viewer,
       appTitle,
       status
-    })
+    }
   },
 
   /** set the solids (2d/ 3D /csg/cag data)
@@ -183,11 +183,11 @@ const reducers = {
 
     const status = Object.assign({}, state.status, {busy: false})
 
-    return Object.assign({}, state, {
+    return {
       design,
       status,
       io
-    })
+    }
   },
 
 /** set the parameters of this design
@@ -198,6 +198,12 @@ const reducers = {
  * @returns {Object} the updated state
  */
   setDesignParameters: (state, data) => {
+    // no path for the design means we are trying to set parameters while no design is loaded
+    // (from local storage etc)
+    // so bail out
+    if (state.design.path === '') {
+      return {}
+    }
     const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
     // this ensures the last, manually modified params have upper hand
     let parameterValues = data.parameterValues || state.design.parameterValues
@@ -221,17 +227,18 @@ const reducers = {
 
     const status = Object.assign({}, state.status, {busy: true, error: undefined})
 
-    return Object.assign({}, state, {
+    return {
       design,
       status
-    })
+    }
   },
 
-  setDesignSettings: (state, data) => {
+  setDesignSettings: (state, {data}) => {
+    console.log('set design settings', data)
     const design = Object.assign({}, state.design, data)
-    return Object.assign({}, state, {
+    return {
       design
-    })
+    }
   },
 
   requestGeometryRecompute: (state, _) => {
@@ -252,9 +259,9 @@ const reducers = {
         busy: false,
         error: new Error('Failed to generate design within an acceptable time, bailing out')
       })
-      return Object.assign({}, state, {status})
+      return {status}
     }
-    return state
+    return {}
   },
 
   // helpers
@@ -300,17 +307,17 @@ const reducers = {
   toggleAutoReload: (state, autoReload) => {
     // console.log('toggleAutoReload', autoReload)
     const design = Object.assign({}, state.design, {autoReload})
-    return Object.assign({}, state, {design})
+    return {design}
   },
   toggleInstantUpdate: (state, instantUpdate) => {
     // console.log('toggleInstantUpdate', instantUpdate)
     const design = Object.assign({}, state.design, {instantUpdate})
-    return Object.assign({}, state, {design})
+    return {design}
   },
   toggleVtreeMode: (state, vtreeMode) => {
     // console.log('toggleVtreeMode', vtreeMode)
     const design = Object.assign({}, state.design, {vtreeMode})
-    return Object.assign({}, state, {design})
+    return {design}
   },
   requestWriteCachedGeometry: (cache) => {
     // console.log('cache', cache)
@@ -342,10 +349,6 @@ const reducers = {
     }
   }
 }
-
-// close current tool after we clicked on loading an example
-// const activeTool = state.activeTool = undefined
-// return Object.assign({}, state, {activeTool})
 
 const actions = ({sources}) => {
   const initialize$ = most.just({})
@@ -505,7 +508,7 @@ const actions = ({sources}) => {
   const toggleAutoReload$ = most.mergeArray([
     sources.dom.select('#autoReload').events('click')
       .map(e => e.target.checked)
-    /*sources.store
+    /* sources.store
       .filter(reply => reply.key === 'design' && reply.type === 'read')
       .map(reply => reply.data.autoReload)*/
   ])
@@ -514,7 +517,7 @@ const actions = ({sources}) => {
 
   const toggleInstantUpdate$ = most.mergeArray([
     sources.dom.select('#instantUpdate').events('click').map(event => event.target.checked)
-    /*sources.store
+    /* sources.store
       .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined)
       .map(reply => reply.data.instantUpdate)*/
   ])
@@ -523,7 +526,7 @@ const actions = ({sources}) => {
 
   const toggleVTreeMode$ = most.mergeArray([
     sources.dom.select('#toggleVtreeMode').events('click').map(event => event.target.checked)
-    /*sources.store
+    /* sources.store
       .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined)
       .map(reply => reply.data.vtreeMode)
       .filter(vtreeMode => vtreeMode !== undefined)*/

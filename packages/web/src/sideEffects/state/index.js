@@ -35,12 +35,11 @@ const makeState = (params) => {
     // commandResponses$.forEach(x=>console.log('commandResponses', x))
     return most.scan((state, input) => {
       const foo = Object.assign({}, state, input.state)
-      // console.log('updating state from', state, 'to', foo, 'via', input.type)
+      // console.log('updating state from', state.design, 'to', foo.design, 'via', input.type)
       // state = input.state
-
       return foo
     }, initialState, commandResponses$)
-    .startWith(initialState)
+    //.startWith(initialState)
     .skipRepeatsWith((state, previousState) => JSON.stringify(state) === JSON.stringify(previousState))
     .multicast()
   }

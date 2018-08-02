@@ -9,7 +9,7 @@ const reducers = {
       active: 'light',
       themeSettings: {mainTextColor: '#FFF'}
     }
-    return Object.assign({}, state, {themes})
+    return {themes}
   },
   setTheme: (state, active) => {
     // very nice color for the cuts [0, 0.6, 1] to go with the orange
@@ -21,8 +21,8 @@ const reducers = {
     // console.log('setTheme', active, themeData)
     const viewer = state.viewer ? merge({}, state.viewer, themeData.viewer) : themeData.viewer
     const themes = Object.assign({}, state.themes, {available, active, themeSettings: themeData})
-    // return Object.assign({}, state, {themes})
-    return Object.assign({}, state, {viewer}, {themes})
+    // return {themes}
+    return {viewer, themes}
   },
   requestSaveSettings: (themes) => {
     return {active: themes.active}

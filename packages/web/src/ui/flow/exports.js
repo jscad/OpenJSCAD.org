@@ -10,12 +10,12 @@ const reducers = {
       exportFilePath: '', // default export file path
       availableExportFormats: []
     }
-    return Object.assign({}, state, {io})
+    return {io}
   },
   setExportFormat: (state, exportFormat) => {
     console.log('exportformat', exportFormat, state)
     const io = Object.assign({}, state.io, exportFilePathFromFormatAndDesign(state.design, exportFormat))
-    return Object.assign({}, state, {io})
+    return {io}
   },
   requestExport: (state, _) => {
     const {exportFilePath, exportFormat} = state.io
@@ -38,7 +38,7 @@ const reducers = {
     // fs.writeFileSync(filePath, buffer)
     saveAs(blob, exportFilePath)
     // const io = Object.assign({}, state.io, {defaultExportFilePath, exportFormat: state.exportFormat, data: state.design.solids})
-    // return Object.assign({}, state, {io})
+    // return {io}
   }
 }
 
