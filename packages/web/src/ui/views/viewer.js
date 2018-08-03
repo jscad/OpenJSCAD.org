@@ -1,17 +1,17 @@
 
 const html = require('bel')
-const onload = require('on-load')
+// const onload = require('on-load')
 
 module.exports = function viewer (state, i18n) {
   const el = html`<canvas id='renderTarget' width='1280' height='800'> </canvas>`
 
   // handle injection into dom
-  onload(el, function (_el) {
+  /*onload(el, function (_el) {
     setCanvasSize(_el)
     window.onresize = function () {
       setCanvasSize(_el)
     }
-  })
+  })*/
   return el
 }
 
