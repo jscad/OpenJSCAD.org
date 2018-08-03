@@ -14,7 +14,8 @@ const getDefaultLocale = () => {
   } else {
     localeBase = ((navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language)
   }
-  return localeBase.split('-')[0]
+  // some browser (for ex Beaker ) have no languages
+  return localeBase ? localeBase.split('-')[0] : ''
 }
 
 const initTranslations = (options) => {
