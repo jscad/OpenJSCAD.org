@@ -2,31 +2,27 @@
 const { toArray, flatten } = require('./arrays')
 
 const cube = params => {
-  const defaults = {
+  /*const defaults = {
     size: [1, 1, 1],
     center: [true, true, true]
-  }
-  const _params = Object.assign({}, defaults, params)
+  }*/
+  const _params = Object.assign({}, params)
 
   return Object.assign({}, _params, {type: 'cube'})
 }
 
 const sphere = params => {
-  const defaults = {
+  /*const defaults = {
     size: 1,
     center: [true, true, true]
-  }
-  const _params = Object.assign({}, defaults, params)
+  }*/
+  const _params = Object.assign({}, params)
 
   return Object.assign({}, _params, {type: 'sphere'})
 }
 
 const cylinder = params => {
-  const defaults = {
-    size: 1,
-    center: [true, true, true]
-  }
-  const _params = Object.assign({}, defaults, params)
+  const _params = Object.assign({},params)
 
   return Object.assign({}, _params, {type: 'cylinder'})
 }
@@ -76,9 +72,9 @@ const chain_hull = (...solids) => {
   return {children: solids, type: 'chain_hull', params: undefined}
 }
 
-const contract = (params, ...solids) => {
+const contract = (radius, n, ...solids) => {
   solids = toArray(solids)
-  return {children: solids, type: 'contract', params}
+  return {children: solids, type: 'contract', radius, n}
 }
 
 const expand = (params, ...solids) => {
@@ -151,6 +147,7 @@ const apiClone = {
     rotate,
     scale,
     mirror,
+    contract,
     hull,
     chain_hull
   },
@@ -161,7 +158,12 @@ const apiClone = {
   },
   text: {
     vector_text: require('@jscad/csg/api').text.vector_text
+  },
 
+  measurements: {
+    measureArea,
+    measureVolume,
+    measureBounds
   },
 
   color: Object.assign({}, require('@jscad/csg/api').color, {color}),

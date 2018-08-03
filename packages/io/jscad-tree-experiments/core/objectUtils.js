@@ -3,3 +3,5 @@ const omit = (obj, blacklist) => {
     .filter((key) => blacklist.indexOf(key) < 0)
     .reduce((newObj, key) => Object.assign(newObj, { [key]: obj[key] }), {})
 }
+
+module.exports = {omit}
