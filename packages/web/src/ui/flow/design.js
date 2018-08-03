@@ -198,6 +198,7 @@ const reducers = {
  * @returns {Object} the updated state
  */
   setDesignParameters: (state, data) => {
+    console.log('setDesignParameters', data)
     // no path for the design means we are trying to set parameters while no design is loaded
     // (from local storage etc)
     // so bail out
@@ -234,12 +235,15 @@ const reducers = {
   },
 
   setDesignSettings: (state, {data}) => {
-    console.log('set design settings', data)
-    const {
+    let {
       vtreeMode,
       autoReload,
       instantUpdate
     } = data
+    // FIXME : clunky but needed to make sure we have no invalid settings
+    if (vtreeMode === undefined) {
+      return {design: state.design}
+    }
     const design = Object.assign({}, state.design, {vtreeMode, autoReload, instantUpdate})
     return {
       design
@@ -277,8 +281,12 @@ const reducers = {
     }
     const current = state.design
     const previous = previousState.design
+
     const sameParameterValues = JSON.stringify(current.parameterValues) === JSON.stringify(previous.parameterValues)
     const sameParameterDefinitions = JSON.stringify(current.parameterDefinitions) === JSON.stringify(previous.parameterDefinitions)
+
+    // console.log('sameParameterValues', sameParameterValues, current.parameterValues, previous.parameterValues)
+    // console.log('sameParameterDefinitions', sameParameterDefinitions, current.parameterDefinitions, previous.parameterDefinitions)
     // FIXME: do more than just check source !! if there is a change in any file (require tree)
     // it should recompute
     // const sameSource = JSON.stringify(current.source) === JSON.stringify(previous.source)
@@ -584,12 +592,10 @@ const actions = ({sources}) => {
     // after data was added to memfs, we get an answer back
     sources.fs
       .filter(response => response.type === 'add')
-      .tap(x=>console.log('fooooo',x))
       .map(({data}) => ({data, id: 'loadDesign', path: data[0].fullPath}))// read root item (either root of folder or main file)
       .delay(1) // FIXME !! we have to add a 1 ms delay otherwise the source & the sink are fired at the same time
       // this needs to be fixed in callBackToStream
   ])
-    .tap(x => console.log('response from file system', x))
     .map(payload => Object.assign({}, {type: 'read', sink: 'fs'}, payload)) */
 
   const requestWatchDesign$ = most.mergeArray([
