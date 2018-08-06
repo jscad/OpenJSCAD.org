@@ -4,6 +4,8 @@ const { CAG, CSG } = require('@jscad/csg')
 const {isCAG, isCSG} = require('@jscad/csg')
 const {toArray} = require('../../utils/utils')
 
+// const toCompactBinary = require('./toCompactTest')
+
 const isResultSolid = (rawResults) => (rawResults.length > 0 && (isCSG(rawResults[0]) || isCAG(rawResults[0])))
 
 const lookupFromCompactBinary = (compactLookup) => {
@@ -51,8 +53,10 @@ const instanciateDesign = (rootModule, vtreeMode, inputLookup, inputLookupCounts
   if (isResultSolid(rawResults)) {
     solids = rawResults
   } else if (vtreeMode) {
-    const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree({passesBeforeElimination: 3, lookup, lookupCounts})
+    const start = new Date()
+    const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree({passesBeforeElimination: 5, lookup, lookupCounts})
     solids = buildCachedGeometryFromTree({}, rawResults)
+    console.warn(`buildCachedGeometryFromTree`, new Date() - start)//, rawResults, solids)
     // TODO: erturn both solids and cache instead of mutating ?
   } else {
     throw new Error('Bad output from script: expected CSG/CAG objects')
@@ -67,7 +71,8 @@ const instanciateDesign = (rootModule, vtreeMode, inputLookup, inputLookupCounts
       }
     })
 
-  return {solids, lookup: lookupToCompactBinary(lookup), lookupCounts}
+  lookup = lookupToCompactBinary(lookup)
+  return {solids, lookup, lookupCounts}
 }
 
 module.exports = instanciateDesign

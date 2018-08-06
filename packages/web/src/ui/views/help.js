@@ -84,12 +84,14 @@ module.exports = function help (state, i18n) {
   var wrap = 26
   var colp = 100 / Math.floor(examplesData.length / wrap + 1) + '%'
 
+  const baseUrl = window.location.origin
   const exampleElems = examplesData.map((example) => {
     const type = example.type || ''
+    const exampleUrl = `${baseUrl}/examples/${example.file}`
     return html`
     <tr>
       <td class="examplesSeparator" widthx=' + colp + ' valign=top>
-        <a class='example' data-path=${'examples/' + example.file} href='#'> ${example.title} </a>
+        <a class='example' data-path=${exampleUrl} href='#'> ${example.title} </a>
         <span class=${type}>${type}</span> 
       </td>
     </tr>
