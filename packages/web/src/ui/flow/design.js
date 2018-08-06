@@ -5,18 +5,9 @@ const delayFromObservable = require('../../utils/observable-utils/delayFromObser
 const getParameterValuesFromUIControls = require('@jscad/core/parameters/getParameterValuesFromUIControls')
 const {nth, toArray} = require('@jscad/core/utils/arrays')
 const {omit, keep, atKey} = require('../../utils/object')
-const url = require('url')
-
-function fetchUriParams (uri, paramName, defaultValue = undefined) {
-  let params = url.parse(uri, true)
-  let result = params.query
-  if (paramName in result) return result[paramName]
-  return defaultValue
-}
-
+const {fetchUriParams, getAllUriParams} = require('../../utils/urlUtils')
 const path = require('path')
-// const {getDesignEntryPoint, getDesignName} = require('@jscad/core/code-loading/requireDesignUtilsFs')
-// const {getDesignName} = require('@jscad/core/code-loading/requireDesignUtilsFs')
+
 const {getDesignEntryPoint, getDesignName} = require('../../core/code-loading/requireDesignUtilsFs')
 
 const {availableExportFormatsFromSolids, exportFilePathFromFormatAndDesign} = require('../../core/io/exportUtils')
@@ -54,11 +45,11 @@ const reducers = {
       name: '',
       path: '',
       mainPath: '',
+      origin: undefined, // where the design came from : http, local etc
       // list of all paths of require() calls + main
       modulePaths: [],
       filesAndFolders: [], // file tree, of sorts
       // code
-      source: '',
       instantUpdate: true,
       autoReload: true,
       // if set to true, will overwrite existing code with the converted imput
@@ -221,7 +212,7 @@ const reducers = {
  * @returns {Object} the updated state
  */
   setDesignParameters: (state, data) => {
-    // console.log('setDesignParameters')//, data, JSON.stringify(data.parameterValues))
+    console.log('setDesignParameters', data, JSON.stringify(data.parameterValues))
     const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
     const parameterDefaults = data.parameterDefaults || state.design.parameterDefaults
     const parameterDefinitions = data.parameterDefinitions || state.design.parameterDefinitions
@@ -272,30 +263,21 @@ const reducers = {
     }
   },
 
-  requestGeometryRecompute: (state, _) => {
-    const {design} = state
-    const {source, mainPath, parameterValues, filesAndFolders} = design
-    const options = {
-      vtreeMode: design.vtreeMode,
-      lookup: design.lookup,
-      lookupCounts: design.lookupCounts
-    }
-    return {source, mainPath, parameterValuesOverride: parameterValues, options, filesAndFolders}
+  requestGeometryRecompute: ({design}, _) => {
+    return keep(['mainPath', 'parameterValues', 'filesAndFolders', 'vtreeMode', 'lookup', 'lookupCounts'], design)
   },
 
-  timeoutGeometryRecompute: (state, _) => {
-    const isBusy = state.status.busy
-    if (isBusy) {
-      const status = Object.assign({}, state.status, {
+  timeoutGeometryRecompute: ({status}, _) => {
+    if (status.isBusy) { // still computing... we can kill it
+      return Object.assign({}, status, {
         busy: false,
         error: new Error('Failed to generate design within an acceptable time, bailing out')
       })
-      return {status}
     }
-    return {}
+    // no problem, just act as a no-op
+    return {status}
   },
   requestWriteCachedGeometry: (cache) => {
-    // console.log('cache', cache)
     const serialize = require('serialize-to-js').serialize
     let data = {}
     Object.keys(cache).forEach(function (key) {
@@ -304,7 +286,7 @@ const reducers = {
     return { data: serialize(data), path: '.solidsCache', options: {isRawData: true} }
   },
   // what do we want to save , return an object containing only that data?
-  requestSaveSettings: (design) => {
+  requestSaveSettings: ({design}) => {
     return keep(serializableFields, design)
   },
   // helpers
@@ -368,7 +350,6 @@ const actions = ({sources}) => {
     .filter(state => state.design)
     .skipRepeatsWith(reducers.isDesignTheSameForSerialization)
     .skip(1) // we do not care about the first state change
-    .map(state => state.design)
     .thru(holdUntil(sources.store.filter(reply => reply.key === 'design' && reply.type === 'read')))
     .map(reducers.requestSaveSettings)
     .map(data => Object.assign({}, {data}, {sink: 'store', key: 'design', type: 'write'}))
@@ -435,7 +416,7 @@ const actions = ({sources}) => {
   // send out a request to recompute the geometry
   const requestGeometryRecompute$ = sources.state
     .filter(reducers.isDesignValid)
-    .filter(state => state.design.parametersOrigin !== 'worker')// do not recompute if we get data back from worker
+    // .filter(state => state.design.parametersOrigin !== 'worker')// do not recompute if we get data back from worker
     .skipRepeatsWith(reducers.isDesignTheSame)
     .map(reducers.requestGeometryRecompute)
     .map(payload => Object.assign({}, payload, {sink: 'geometryWorker', cmd: 'generate'}))
@@ -448,10 +429,13 @@ const actions = ({sources}) => {
     .thru(delayFromObservable(state => state.design.solidsTimeOut, sources.state.filter(state => state.design)))
     .thru(withLatestFrom(reducers.timeoutGeometryRecompute, sources.state))
     .map(payload => Object.assign({}, {state: payload}, {sink: 'state', type: 'timeOutDesignGeneration'}))
+    .multicast()
 
   // we also re-use the timeout to send a signal to the worker to terminate the current geometry generation
   const cancelGeometryRecompute$ = timeoutGeometryRecompute$
-    .map(payload => Object.assign({}, {sink: 'geometryWorker', cmd: 'cancel'}))
+    .filter(({state}) => state.status.error !== undefined)// if there was no error , the timeout is irrelevant
+    .map(_ => Object.assign({}, {sink: 'geometryWorker', cmd: 'cancel'}))
+    .multicast()
 
   // design parameter change actions
   const getControls = () => Array.from(document.getElementById('paramsTable').getElementsByTagName('input'))
@@ -508,7 +492,7 @@ const actions = ({sources}) => {
     sources.titleBar
       .filter(x => x !== undefined)
       .map(uri => {
-        let params = url.parse(uri, true).query
+        let params = getAllUriParams(uri)
         // console.log('params from titleBar ?', uri, params)
         const parameterValues = params
         return {parameterValues, origin: 'titleBar'}
@@ -563,7 +547,6 @@ const actions = ({sources}) => {
   ])
     .map(payload => Object.assign({}, {type: 'add', sink: 'fs'}, payload))
     .multicast()
-    .tap(x => console.log('requestAddDesignData', x))
 
   /* const requestLoadDesignData$ = most.mergeArray([
     // after data was added to memfs, we get an answer back

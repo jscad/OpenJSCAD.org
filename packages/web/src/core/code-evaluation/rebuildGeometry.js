@@ -2,10 +2,8 @@ const loadDesign = require('../code-loading/loadDesign')
 const instanciateDesign = require('./instanciateDesign')
 
 const rebuildSolids = (data, callback) => {
-  const {source, parameterValuesOverride, mainPath, options} = data
-
   const defaults = {vtreeMode: true}
-  const {vtreeMode, lookup, lookupCounts} = Object.assign({}, defaults, options)
+  const {source, parameterValuesOverride, mainPath, vtreeMode, lookup, lookupCounts} = Object.assign({}, defaults, data)
   const apiMainPath = vtreeMode ? '../code-loading/vtreeApi' : '@jscad/csg/api'
 
   let start = new Date()
