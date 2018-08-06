@@ -1,30 +1,45 @@
 # What needs to work correctly for this to be merged
 
-## 3D viewer
-- [x] 3d viewer basics
-- [ ] zoom to fit settable
-- [ ] no resseting of camera to previous state
-- [x] all 3D viewer instances should behave independantly
-- [x] improve rendering of 2d lines (no lighting)
-
-## code editor
-- [ ] code editor basics
-- [ ] code editor autocomplete
-
 ## inputs
 - [x] drag and drop of files
 - [x] drag and drop of folders
 - [ ] loading of remote files
 - [ ] conversion of files
+- [x] file watcher/autoreload for single file
+- [x] file watcher/autoreload for folders
+- [ ] reload last design if
+    - it was loaded from http ?
+    - it was saved to localstorage (??)
+    - NOT possible from files on the local hard drive
+## designs
+- [ ] clarify lifecycle
+  - reset
+  - 
+- [ ] fix issues with the way parameters are handled
+
+## parametric designs
+- [ ] fix multiple param groups (issues seem to increase over time?)
+- [x] make groups collapsible
+- [ ] previous values are not saved ??
+
+## modular user code
 - [x] require support , injection of explicit api
 - [x] require support , geometry caching 
 - [x] require support relative paths
-- [ ] require support node_modules (drag & drop)
+- [ ] require support node_modules (drag & drop) (issue with CSG.js circular deps)
 - [x] require support single file
-- [x] file watcher/autoreload for single file
-- [x] file watcher/autoreload for folders
-- [x] examples
-- [ ] virtual fs module injection
+- [x] virtual fs module injection ie allow const fs = require('fs') in the browser
+
+## outputs
+- [x] save/export of files using v2 api
+- [ ] persist last used format for 2D/3D format ?
+- [ ] handle mixed CAG/CSG ouput that make serializers such as stl not fail
+- [ ] add options for unioned/ array of outputs
+- [ ] allow users to rename saved files 
+
+## side effects
+- [ ] tests
+- [ ] memfs: make sure it also works in the Brave browser (walkFileTree)
 
 ## error handling
 - [ ] fix unhandled and explicit error handling
@@ -32,9 +47,17 @@
 - [x] fix handling of http request errors 4xx
 - [x] fix handling of http request errors (all)
 
+## 3D viewer
+- [x] 3d viewer basics
+- [ ] zoom to fit settable
+- [ ] no resseting of camera to previous state
+- [x] all 3D viewer instances should behave independantly
+- [x] improve rendering of 2d lines (no lighting)
+- [x] add correct transparency (basic)
 
-## outputs
-- [ ] save/export of files using v2 api
+## code editor
+- [ ] code editor basics
+- [ ] code editor autocomplete
 
 ## ui
 - [x] shortcuts
@@ -50,7 +73,8 @@
 - [x] multiple instances per page
 - [x] coherent input/outputs handling
 - [x] correct timeout and geometry generation cancelation
-- [ ] correct error displaying
+- [x] correct error displaying
+- [ ] save & load languages works
 
 ## tests
 - [ ] side effects
