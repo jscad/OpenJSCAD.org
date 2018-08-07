@@ -61,10 +61,10 @@ const loadDesign = (source, mainPath, apiMainPath, parameterValuesOverride, file
   const parameters = getAllParameterDefintionsAndValues(rootModule)
   const parameterDefinitions = parameters.parameterDefinitions
   const parameterDefaults = parameters.parameterValues
-  const parameterValues = Object.assign({}, parameters.parameterValues, parameterValuesOverride)
+  // const parameterValues = Object.assign({}, parameters.parameterValues, parameterValuesOverride)
 
   // console.log('parameters', parameterDefinitions, parameterValues, parameterDefaults)
-  return {rootModule, parameterDefaults, parameterValues, parameterDefinitions}
+  return {rootModule, parameterDefinitions, parameterDefaults}
 }
 
 module.exports = loadDesign
