@@ -25,8 +25,8 @@ const designEqualityFields = [
 // what fields we want to de/serialize
 const serializableFields = [
   'name',
-  'parameterDefinitions',
-  'parameterDefaults',
+  'mainPath',
+  'origin',
   'parameterValues',
   'vtreeMode',
   'autoReload',
@@ -35,7 +35,6 @@ const serializableFields = [
 ]
 
 const reducers = {
-
   /** initialise the design's state
    * @returns {Object} the default state for designs
    */
@@ -46,8 +45,6 @@ const reducers = {
       path: '',
       mainPath: '',
       origin: undefined, // where the design came from : http, local etc
-      // list of all paths of require() calls + main
-      modulePaths: [],
       filesAndFolders: [], // file tree, of sorts
       // code
       instantUpdate: true,
@@ -75,33 +72,40 @@ const reducers = {
     return {design}
   },
 
-  /** OBSOLETE set the design's path
+  /** reset the content of the design
    * @param  {Object} state
-   * @param  {Object} paths
+   * @param  {String} payload
    * @returns {Object} the updated state
    */
-  setDesignPath: (state, paths) => {
-    console.log('setDesignPath', paths)
-
-    // we want the viewer to focus on new entities for our 'session' (until design change)
-    const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: ['new-entities']}})
-    return {status, viewer, design}
+  resetDesign: (state, origin) => {
+    console.log('design: reset')
+    // we reset only the given fields
+    const fieldsToReset = [
+      'name', 'path', 'mainPath', 'origin', 'filesAndFolders',
+      'parameterDefinitions', 'parameterValues', 'parameterDefaults',
+      'lookup', 'lookupCounts', 'debug', 'solids'
+    ]
+    let design = Object.assign({},
+      state.design, keep(fieldsToReset, reducers.initialize().design)
+    )
+    // ugh
+    design.origin = origin
+    return {design}
   },
 
-/** set the content of the design, usually the
- * point where we reset most of the design's state
+/** set the content of the design usually after a reset
  * @param  {Object} state
  * @param  {String} payload
  * @returns {Object} the updated state
  */
   setDesignContent: (state, payload) => {
-    console.log('setDesignContent', payload)
+    console.log('design: set content', state.design, payload)
     /*
       func(parameterDefinitions) => paramsUI
       func(paramsUI + interaction) => params
     */
    // all our available data (specific to web)
-    const {filesAndFolders, flag} = payload
+    const {filesAndFolders} = payload
     const makeFakeFs = require('../../sideEffects/memFs/makeFakeFs')
     const fakeFs = makeFakeFs(filesAndFolders)
     const rootPath = payload.path
@@ -110,29 +114,6 @@ const reducers = {
     const designPath = path.dirname(rootPath)
 
     let design = state.design
-    if (flag === 'reset') {
-      console.log('reset')
-      design = Object.assign({}, design, {
-        name: '',
-        path: '',
-        mainPath: '',
-        // list of all paths of require() calls + main
-        modulePaths: [],
-        filesAndFolders: [], // file tree, of sorts
-        // parameters
-        parameterDefinitions: [],
-        parameterValues: {},
-        parameterDefaults: {},
-        // geometry caching
-        lookup: {},
-        lookupCounts: {},
-        debug: {
-          startTime: 0,
-          endTime: 0,
-          totalTime: 0
-        }
-      })
-    }
     // to track computation time
     const debug = Object.assign({ }, state.design.debug, {startTime: new Date()})
 
@@ -157,7 +138,7 @@ const reducers = {
     }
   },
 
-  /** set the solids (2d/ 3D /csg/cag data)
+  /** set the solids (2d/ 3D /csg/cag data), and the geometry cache if applicable
    * @param  {} state
    * @param  {} {solids
    * @param  {} lookup
@@ -217,7 +198,7 @@ const reducers = {
     const parameterDefaults = data.parameterDefaults || state.design.parameterDefaults
     const parameterDefinitions = data.parameterDefinitions || state.design.parameterDefinitions
     // this ensures the last, manually modified params have upper hand
-    let parameterValues = data.parameterValues || state.design.parameterValues
+    let parameterValues = data.parameterValues || parameterDefaults || state.design.parameterValues
     parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, parameterDefinitions) : parameterValues
 
     // one of many ways of filtering out data from instantUpdates
@@ -281,8 +262,9 @@ const reducers = {
     const serialize = require('serialize-to-js').serialize
     let data = {}
     Object.keys(cache).forEach(function (key) {
-      data[key] = cache[key]// .toCompactBinary()
+      data[key] = cache[key]
     })
+    // we want to save the geometry cache under '.solidsCache'
     return { data: serialize(data), path: '.solidsCache', options: {isRawData: true} }
   },
   // what do we want to save , return an object containing only that data?
@@ -359,22 +341,110 @@ const actions = ({sources}) => {
     .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined)
     .thru(withLatestFrom(reducers.setDesignSettings, sources.state))
     .map(data => ({type: 'setDesignSettings', state: data, sink: 'state'}))
+    .multicast()
 
-  const designDataReady$ = sources.fs
-      .filter(response => response.type === 'add')
+  const requestLoadRemoteData$ = most.mergeArray([
+      // load examples when clicked
+    sources.dom.select('.example').events('click')
+      .map(event => event.target.dataset.path),
+      // remote, via proxy, adresses of files passed via url
+    sources.titleBar
+      .filter(x => x !== undefined)
+      .map(url => {
+        const params = getAllUriParams(url)
+        const useProxy = params.proxyUrl !== undefined || url.match(/#(https?:\/\/\S+)$/) !== null
+        const documentUri = fetchUriParams(url, 'uri', undefined) || nth(1, url.match(/#(https?:\/\/\S+)$/)) || nth(1, document.URL.match(/#(examples\/\S+)$/))
+        const baseUri = window.location.origin // location.protocol + '//' + location.host + location.pathname
+        // console.log('useProxy', useProxy, documentUri, baseUri)
+        const documentUris = documentUri ? [documentUri] : undefined
+        return documentUris
+      })
+  ])
+    .filter(x => x !== undefined)
+    .map(data => ({type: 'read', id: 'loadRemote', urls: toArray(data), sink: 'http'}))
+    .multicast()
+
+  const requestLoadLocalData = most.mergeArray([
+    /* sources.dom.select('#fileLoader').events('click')
+    .map(function () {
+      // literally an array of paths (strings)
+      // like those returned by dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
+      const paths = []
+      return paths
+    }), */
+  ])
+
+  const requestAddDesignData$ = most.mergeArray([
+      // injection from drag & drop
+    sources.drops
+      .map(({data}) => ({data, id: 'droppedData', path: 'realFs:'})),
+      // data retrieved from http requests
+    sources.http
+      .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response))
+      .map(({data, url}) => ({data, id: 'remoteFile', path: url, options: {isRawData: true}}))
+  ])
+    .map(payload => Object.assign({}, {type: 'add', sink: 'fs'}, payload))
+    .multicast()
+
+  const requestWatchDesign$ = most.mergeArray([
+      // watched data
+    sources.state
+      .filter(state => state.design && state.design.mainPath !== '')
+      .map(state => ({path: state.design.mainPath, enabled: state.design.autoReload}))
+      .skipRepeatsWith((state, previousState) => {
+        return JSON.stringify(state) === JSON.stringify(previousState)
+      })
+      .map(({path, enabled}) => ({
+        id: 'watchScript',
+        path,
+        options: {enabled}})// enable/disable watch if autoreload is set to false
+      )
+  ])
+    .map(payload => Object.assign({}, {type: 'watch', sink: 'fs'}, payload))
+    .multicast()
+
+  const requestWriteCachedGeometry$ = most.mergeArray([
+    sources.state
+      .filter(state => state.design && state.design.mainPath !== '')
+      .skipRepeatsWith((state, previousState) => state.design === previousState.design)
+      .map(state => state.design.solids)
+      .filter(solids => solids !== undefined)
+      .skipRepeatsWith((state, previousState) => {
+        return JSON.stringify(state) === JSON.stringify(previousState)
+      })
+      .map(reducers.requestWriteCachedGeometry)
+      .map(payload => Object.assign({}, {type: 'write', sink: 'fs', id: 'cachedGeometry'}, payload))
+    /* most.just()
+      .map(function () {
+        const electron = require('electron').remote
+        const userDataPath = electron.app.getPath('userData')
+        const path = require('path')
+
+        const cachePath = path.join(userDataPath, '/cache.js')
+        // const cachePath = 'gnagna'
+        return {type: 'write', id: 'loadCachedGeometry', path: cachePath}
+      }) */
+  ])
+    .map(payload => Object.assign({}, {type: 'write', sink: 'fs'}, payload))
+    .multicast()
+
+  const resetDesign$ = most.mergeArray([
+    requestLoadRemoteData$.map(_ => 'http'),
+    sources.drops.map(_ => 'local')
+  ])
+    .thru(withLatestFrom(reducers.resetDesign, sources.state))
+    .map(data => ({type: 'setDesignSettings', state: data, sink: 'state'}))
+    .multicast()
 
   const setDesignContent$ = most.mergeArray([
-    designDataReady$
-    // sources.fs
-    //  .filter(data => data.type === 'read' && data.id === 'loadDesign')
-      .map(({data}) => ({filesAndFolders: data, path: data[0].fullPath, flag: 'reset'})),
     sources.fs
-      .filter(data => data.type === 'watch' && data.id === 'watchFiles')
+      .filter(response => response.type === 'add')
+      .map(({data}) => ({filesAndFolders: data, path: data[0].fullPath})),
+    sources.fs
+      .filter(response => response.type === 'watch' && response.id === 'watchFiles')
       .map(({path, filesAndFolders}) => ({path, filesAndFolders, flag: 'update'}))
   ])
-    .multicast()
     .thru(withLatestFrom(reducers.setDesignContent, sources.state))
-    // .skipRepeatsWith(reducers.isDesignTheSame)
     .map(data => ({type: 'setDesignContent', state: data, sink: 'state'}))
 
   const setDesignSolids$ = most.mergeArray([
@@ -403,6 +473,7 @@ const actions = ({sources}) => {
     sources.fs
       .filter(res => res.type === 'read' && res.id === 'loadCachedGeometry' && res.data)
       .map(raw => {
+        console.log('loading cached ')
         const deserialize = () => {}// require('serialize-to-js').deserialize
         const lookup = deserialize(raw.data)
         return {solids: undefined, lookupCounts: undefined, lookup}
@@ -416,8 +487,8 @@ const actions = ({sources}) => {
   // send out a request to recompute the geometry
   const requestGeometryRecompute$ = sources.state
     .filter(reducers.isDesignValid)
-    // .filter(state => state.design.parametersOrigin !== 'worker')// do not recompute if we get data back from worker
     .skipRepeatsWith(reducers.isDesignTheSame)
+    .tap(x => console.log('isDesignTheSame', x))
     .map(reducers.requestGeometryRecompute)
     .map(payload => Object.assign({}, payload, {sink: 'geometryWorker', cmd: 'generate'}))
     .multicast()
@@ -441,12 +512,12 @@ const actions = ({sources}) => {
   const getControls = () => Array.from(document.getElementById('paramsTable').getElementsByTagName('input'))
     .concat(Array.from(document.getElementById('paramsTable').getElementsByTagName('select')))
 
-  const updateDesignFromParams$ = most.mergeArray([
+  const parametersFromDom$ = most.mergeArray([
     sources.dom.select('#updateDesignFromParams').events('click')
       .map(function () {
         const controls = getControls()
         const parameterValues = getParameterValuesFromUIControls(controls)
-        return {parameterValues, origin: 'manualUpdate'}
+        return {parameterValues, origin: 'uiManualUpdate'}
       })
       .multicast(),
     sources.paramChanges.multicast()
@@ -454,149 +525,58 @@ const actions = ({sources}) => {
         try {
           const controls = getControls()
           const parameterValues = getParameterValuesFromUIControls(controls)
-          return {parameterValues, origin: 'instantUpdate'}
+          return {parameterValues, origin: 'uiInstantUpdate'}
         } catch (error) {
           return {error, origin: 'instantUpdate'}
         }
       })
   ])
-    .map(data => ({type: 'updateDesignFromParams', data}))
     .multicast()
 
   // parameter values etc retrived from local storage
   const parametersFromStore$ = sources.store
-    .filter(reply => reply.key === 'design' && reply.type === 'read')
+    .filter(reply => reply.key === 'design' && reply.type === 'read' &&
+      reply.data.parameterValues !== undefined
+    )
+    .map(({data}) => ({parameterValues: data.parameterValues, origin: 'store'}))
+    .multicast()
+
+  const parametersFromTitleBar$ = sources.titleBar
+    .filter(x => x !== undefined)
+    .map(uri => {
+      let params = getAllUriParams(uri)
+      // console.log('params from titleBar ?', uri, params)
+      const parameterValues = params
+      return {parameterValues, origin: 'titleBar'}
+    })
+
+  const parametersFromWorker$ = sources.solidWorker
+    .filter(event => !('error' in event))
+    .filter(event => event.data instanceof Object)
+    .filter(event => event.data.type === 'params')
     .map(({data}) => {
-      const {parameterDefinitions, parameterDefaults, parameterValues} = data
-      return {parameterValues, origin: 'store'}
-      // return {parameterDefinitions, parameterDefaults, parameterValues}
+      try {
+        const {parameterDefaults, parameterDefinitions} = data
+        return {parameterDefaults, parameterDefinitions, origin: 'worker'}
+      } catch (error) {
+        return {error}
+      }
     })
 
   const setDesignParameters$ = most.mergeArray([
-    // ui
-    updateDesignFromParams$.map(x => x.data),
-    // worker
-    sources.solidWorker
-      .filter(event => !('error' in event))
-      .filter(event => event.data instanceof Object)
-      .filter(event => event.data.type === 'params')
-      .map(function (event) {
-        try {
-          const {parameterDefaults, parameterValues, parameterDefinitions} = event.data
-          return {parameterDefaults, parameterValues, parameterDefinitions, origin: 'worker'}
-        } catch (error) {
-          return {error}
-        }
-      }),
+    // from ui
+    parametersFromDom$,
+    // from storage
+    parametersFromStore$,
+    // from worker
+    parametersFromWorker$,
     // parameter values specified via the titleBar
-    sources.titleBar
-      .filter(x => x !== undefined)
-      .map(uri => {
-        let params = getAllUriParams(uri)
-        // console.log('params from titleBar ?', uri, params)
-        const parameterValues = params
-        return {parameterValues, origin: 'titleBar'}
-      }),
-    parametersFromStore$
+    parametersFromTitleBar$
   ])
     .thru(holdUntil(sources.state.filter(reducers.isDesignValid)))
     .thru(withLatestFrom(reducers.setDesignParameters, sources.state))
     .map(data => ({type: 'setDesignParameters', state: data, sink: 'state'}))
     .multicast()
-
-  const requestLoadRemoteData$ = most.mergeArray([
-    // load examples when clicked
-    sources.dom.select('.example').events('click')
-      .map(event => event.target.dataset.path),
-    // remote, via proxy, adresses of files passed via url
-    sources.titleBar
-      .filter(x => x !== undefined)
-      .map(url => {
-        // console.log('titlebar', url)
-        // const params = {}
-        // const useProxy = params.proxyUrl !== undefined || url.match(/#(https?:\/\/\S+)$/) !== null
-        const documentUri = fetchUriParams(url, 'uri', undefined) || nth(1, url.match(/#(https?:\/\/\S+)$/)) || nth(1, document.URL.match(/#(examples\/\S+)$/))
-        // const baseUri = location.protocol + '//' + location.host + location.pathname
-        // console.log('useProxy', useProxy, documentUri, baseUri)
-        const documentUris = documentUri ? [documentUri] : undefined
-        return documentUris
-      })
-  ])
-    .filter(x => x !== undefined)
-    .map(data => ({type: 'read', id: 'loadRemote', urls: toArray(data), sink: 'http'}))
-    .multicast()
-
-  const requestLoadLocalData = most.mergeArray([
-     /* sources.dom.select('#fileLoader').events('click')
-      .map(function () {
-        // literally an array of paths (strings)
-        // like those returned by dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
-        const paths = []
-        return paths
-      }), */
-  ])
-
-  const requestAddDesignData$ = most.mergeArray([
-    // injection from drag & drop
-    sources.drops
-      .map(({data}) => ({data, id: 'droppedData', path: 'realFs:'})),
-    // data retrieved from http requests
-    sources.http
-      .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response))
-      .map(({data, url}) => ({data, id: 'remoteFile', path: url, options: {isRawData: true}}))
-  ])
-    .map(payload => Object.assign({}, {type: 'add', sink: 'fs'}, payload))
-    .multicast()
-
-  /* const requestLoadDesignData$ = most.mergeArray([
-    // after data was added to memfs, we get an answer back
-    sources.fs
-      .filter(response => response.type === 'add')
-      .map(({data}) => ({data, id: 'loadDesign', path: data[0].fullPath}))// read root item (either root of folder or main file)
-      .delay(1) // FIXME !! we have to add a 1 ms delay otherwise the source & the sink are fired at the same time
-      // this needs to be fixed in callBackToStream
-  ])
-    .map(payload => Object.assign({}, {type: 'read', sink: 'fs'}, payload)) */
-
-  const requestWatchDesign$ = most.mergeArray([
-    // watched data
-    sources.state
-      .filter(state => state.design && state.design.mainPath !== '')
-      .map(state => ({path: state.design.mainPath, enabled: state.design.autoReload}))
-      .skipRepeatsWith((state, previousState) => {
-        return JSON.stringify(state) === JSON.stringify(previousState)
-      })
-      .map(({path, enabled}) => ({
-        id: 'watchScript',
-        path,
-        options: {enabled}})// enable/disable watch if autoreload is set to false
-      )
-  ])
-    .map(payload => Object.assign({}, {type: 'watch', sink: 'fs'}, payload))
-
-  const requestWriteCachedGeometry$ = most.mergeArray([
-    sources.state
-      .filter(state => state.design && state.design.mainPath !== '')
-      .skipRepeatsWith((state, previousState) => state.design === previousState.design)
-      .map(state => state.design.solids)
-      .skipRepeatsWith((state, previousState) => {
-        return JSON.stringify(state) === JSON.stringify(previousState)
-      })
-      .map(reducers.requestWriteCachedGeometry)
-      .map(payload => Object.assign({}, {type: 'write', sink: 'fs', id: 'cachedGeometry'}, payload))
-    /* most.just()
-      .map(function () {
-        const electron = require('electron').remote
-        const userDataPath = electron.app.getPath('userData')
-        const path = require('path')
-
-        const cachePath = path.join(userDataPath, '/cache.js')
-        // const cachePath = 'gnagna'
-        return {type: 'write', id: 'loadCachedGeometry', path: cachePath}
-      }) */
-  ])
-  .multicast()
-  .map(payload => Object.assign({}, {type: 'write', sink: 'fs'}, payload))
 
   // FIXME: this needs to be elsewhere
   // const setZoomingBehaviour$ = ''
@@ -605,28 +585,18 @@ const actions = ({sources}) => {
   const toggleAutoReload$ = most.mergeArray([
     sources.dom.select('#autoReload').events('click')
       .map(e => e.target.checked)
-    /* sources.store
-      .filter(reply => reply.key === 'design' && reply.type === 'read')
-      .map(reply => reply.data.autoReload) */
   ])
     .thru(withLatestFrom(reducers.toggleAutoReload, sources.state))
     .map(data => ({type: 'toggleAutoReload', state: data, sink: 'state'}))
 
   const toggleInstantUpdate$ = most.mergeArray([
     sources.dom.select('#instantUpdate').events('click').map(event => event.target.checked)
-    /* sources.store
-      .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined)
-      .map(reply => reply.data.instantUpdate) */
   ])
     .thru(withLatestFrom(reducers.toggleInstantUpdate, sources.state))
     .map(data => ({type: 'toggleInstantUpdate', state: data, sink: 'state'}))
 
   const toggleVTreeMode$ = most.mergeArray([
     sources.dom.select('#toggleVtreeMode').events('click').map(event => event.target.checked)
-    /* sources.store
-      .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined)
-      .map(reply => reply.data.vtreeMode)
-      .filter(vtreeMode => vtreeMode !== undefined) */
   ])
     .thru(withLatestFrom(reducers.toggleVtreeMode, sources.state))
     .map(data => ({type: 'toggleVtreeMode', state: data, sink: 'state'}))
@@ -640,6 +610,7 @@ const actions = ({sources}) => {
 
   return {
     initialize$,
+    resetDesign$,
     setDesignContent$,
     requestGeometryRecompute$,
     timeoutGeometryRecompute$,
@@ -661,6 +632,8 @@ const actions = ({sources}) => {
     toggleInstantUpdate$,
     toggleVTreeMode$,
     setSolidsTimeout$
+
+    // setDesignOrigins$
   }
 }
 
