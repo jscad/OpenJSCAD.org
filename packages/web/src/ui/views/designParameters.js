@@ -2,9 +2,10 @@ const html = require('bel')
 const {createParamControls} = require('./parameterControls')
 
 module.exports = function designParameters (state, paramsCallbacktoStream, i18n) {
-  const {parameterValues, parameterDefinitions} = state.design
-  const {controls} = createParamControls(parameterValues, parameterDefinitions, paramsCallbacktoStream.callback)
-
+  const {parameterValues, parameterDefinitions, parameterDefaults} = state.design
+  const {controls} = createParamControls(
+    Object.assign({}, parameterDefaults, parameterValues), parameterDefinitions, paramsCallbacktoStream.callback
+  )
   return html`
   <section id='params' style='visibility:${state.design.parameterDefinitions.length === 0 ? 'hidden' : 'visible'};color:${state.themes.themeSettings.secondaryTextColor}'>
         <span id='paramsTable'>
@@ -14,6 +15,7 @@ module.exports = function designParameters (state, paramsCallbacktoStream, i18n)
         </span>
         <span id='paramsControls'>
           <button id='updateDesignFromParams'>${i18n`update`}</button>
+          <button id='resetDesignToParameterDefaults'>${i18n`reset`}</button>
           <label for='instantUpdate'>${i18n`instant update`}</label>
           <input type='checkbox' checked='${state.design.instantUpdate}' id='instantUpdate'/>
         </span>
