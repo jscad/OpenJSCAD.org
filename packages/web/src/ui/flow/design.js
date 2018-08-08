@@ -94,16 +94,13 @@ const reducers = {
   },
 
 /** set the content of the design usually after a reset
+ * bulk of the data is set here
  * @param  {Object} state
  * @param  {String} payload
  * @returns {Object} the updated state
  */
   setDesignContent: (state, payload) => {
     console.log('design: set content', state.design, payload)
-    /*
-      func(parameterDefinitions) => paramsUI
-      func(paramsUI + interaction) => params
-    */
    // all our available data (specific to web)
     const {filesAndFolders} = payload
     const makeFakeFs = require('../../sideEffects/memFs/makeFakeFs')
@@ -146,7 +143,7 @@ const reducers = {
    * @returns {Object} the updated state
    */
   setDesignSolids: (state, {solids, lookup, lookupCounts}) => {
-    // console.log('setDesignSolids')
+    console.log('setDesignSolids')
     solids = solids || []
     lookup = lookup || {}
     lookupCounts = lookupCounts || {}
@@ -162,8 +159,8 @@ const reducers = {
 
     const design = Object.assign({}, state.design, {
       solids,
-      lookup, // : Object.assign({}, state.design.lookup, lookup),
-      lookupCounts, // : Object.assign({}, state.design.lookupCounts, lookupCounts),
+      lookup,
+      lookupCounts,
       debug
     })
 
@@ -280,6 +277,8 @@ const reducers = {
     if (!previousState.design) {
       return false
     }
+    // console.log('isDesignTheSame', previousState.design, state.design)
+
     const current = JSON.stringify(keep(designEqualityFields, state.design))
     const previous = JSON.stringify(keep(designEqualityFields, previousState.design))
     return previous === current
@@ -439,7 +438,8 @@ const actions = ({sources}) => {
   const setDesignContent$ = most.mergeArray([
     sources.fs
       .filter(response => response.type === 'add')
-      .map(({data}) => ({filesAndFolders: data, path: data[0].fullPath})),
+      .map(({data}) => ({filesAndFolders: data, path: data[0].fullPath})).delay(100)
+      ,
     sources.fs
       .filter(response => response.type === 'watch' && response.id === 'watchFiles')
       .map(({path, filesAndFolders}) => ({path, filesAndFolders, flag: 'update'}))
@@ -486,9 +486,8 @@ const actions = ({sources}) => {
 
   // send out a request to recompute the geometry
   const requestGeometryRecompute$ = sources.state
-    .filter(reducers.isDesignValid)
     .skipRepeatsWith(reducers.isDesignTheSame)
-    .tap(x => console.log('isDesignTheSame', x))
+    .filter(reducers.isDesignValid)
     .map(reducers.requestGeometryRecompute)
     .map(payload => Object.assign({}, payload, {sink: 'geometryWorker', cmd: 'generate'}))
     .multicast()
@@ -541,8 +540,8 @@ const actions = ({sources}) => {
     .map(({data}) => ({parameterValues: data.parameterValues, origin: 'store'}))
     .multicast()
 
+  // parameter values retrived from titleBar
   const parametersFromTitleBar$ = sources.titleBar
-    .filter(x => x !== undefined)
     .map(uri => {
       let params = getAllUriParams(uri)
       // console.log('params from titleBar ?', uri, params)
@@ -550,6 +549,7 @@ const actions = ({sources}) => {
       return {parameterValues, origin: 'titleBar'}
     })
 
+  // parameter defaults & definitions retrieved from worker
   const parametersFromWorker$ = sources.solidWorker
     .filter(event => !('error' in event))
     .filter(event => event.data instanceof Object)
@@ -575,6 +575,13 @@ const actions = ({sources}) => {
   ])
     .thru(holdUntil(sources.state.filter(reducers.isDesignValid)))
     .thru(withLatestFrom(reducers.setDesignParameters, sources.state))
+    .skipRepeatsWith((cur, prev) => {
+      console.log('params change', cur, prev)
+      cur = cur.design
+      prev = prev.design
+      return JSON.stringify(cur.parameterValues) === JSON.stringify(prev.parameterValues)
+      && JSON.stringify(cur.parameterDefinitions) === JSON.stringify(prev.parameterDefinitions)
+    })
     .map(data => ({type: 'setDesignParameters', state: data, sink: 'state'}))
     .multicast()
 
@@ -610,18 +617,20 @@ const actions = ({sources}) => {
 
   return {
     initialize$,
-    resetDesign$,
-    setDesignContent$,
-    requestGeometryRecompute$,
-    timeoutGeometryRecompute$,
-    cancelGeometryRecompute$,
-    setDesignSolids$,
-    setDesignParameters$,
 
     requestLoadRemoteData$,
     requestAddDesignData$,
     requestWatchDesign$,
     requestWriteCachedGeometry$,
+
+    resetDesign$,
+    setDesignContent$,
+
+    requestGeometryRecompute$,
+    timeoutGeometryRecompute$,
+    cancelGeometryRecompute$,
+    setDesignSolids$,
+    setDesignParameters$,
 
     requestLoadSettings$,
     requestSaveSettings$,

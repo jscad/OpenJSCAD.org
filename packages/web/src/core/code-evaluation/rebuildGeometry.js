@@ -12,6 +12,7 @@ const rebuildSolids = (data, callback) => {
   // send back parameter definitions & values
   // in a worker this would be a postmessage
   // console.log('designData', designData)
+  console.log('parameterValues', parameterValues)
 
   callback({
     type: 'params',
@@ -19,9 +20,10 @@ const rebuildSolids = (data, callback) => {
     parameterDefinitions: designData.parameterDefinitions
   })
   console.warn(`loadDesignData`, new Date() - start)
+  const fooParameterValues = Object.assign({}, designData.parameterDefaults, parameterValues)
 
   start = new Date()
-  const solidsData = instanciateDesign(designData.rootModule, vtreeMode, lookup, lookupCounts, parameterValues)
+  const solidsData = instanciateDesign(designData.rootModule, vtreeMode, lookup, lookupCounts, fooParameterValues)
 
   console.warn(`instanciateDesign`, new Date() - start)
 
