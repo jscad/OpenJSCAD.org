@@ -1,9 +1,7 @@
+const {IsFloat} = require('../../utils/typeChecks')
 
-const {IsFloat} = require('../utils')
-
-/** Class Vector3D
+/**
  * Represents a 3D vector with X, Y, Z coordinates.
- * @constructor
  *
  * @example
  * fromVarious(1, 2, 3);
@@ -15,67 +13,67 @@ const {IsFloat} = require('../utils')
 function fromVarious (...params) {
   let out = new Float32Array(3)
   if (params.length === 3) {
-    out[0] = parseFloat(x)
-    out[1] = parseFloat(y)
-    out[2] = parseFloat(z)
+    out[0] = parseFloat(params[0])
+    out[1] = parseFloat(params[1])
+    out[2] = parseFloat(params[2])
   } else if (params.length === 2) {
-    out[0] = parseFloat(x)
-    out[1] = parseFloat(y)
+    out[0] = parseFloat(params[0])
+    out[1] = parseFloat(params[1])
     out[2] = 0
-  }else {
-    var ok = true
-    if (arguments.length === 1) {
-      if (typeof (x) === 'object') {
-        if (x instanceof Vector3D) {
-          out[0] = x._x
-          out[1] = x._y
-          out[2] = x._z
-        } else if (x instanceof Vector2D) {
-          out[0] = x._x
-          out[1] = x._y
+  } else if (params.length === 1) {
+    const x = params[0]
+    if (typeof (x) === 'object') {
+//      if (x instanceof vec3) {
+//        out[0] = x[0]
+//        out[1] = x[1]
+//        out[2] = x[2]
+//      } else if (x instanceof Vector2D) {
+//        out[0] = x[0]
+//        out[1] = x[1]
+//        out[2] = 0
+//      } else 
+      if (x instanceof Array) {
+        out[0] = parseFloat(x[0])
+        out[1] = out[0]
+        out[2] = out[0]
+        if (x.length > 1) {
+          out[1] = parseFloat(x[1])
+        }
+        if (x.length > 2) {
+          out[2] = parseFloat(x[2])
+        }
+      } else if (('x' in x) && ('y' in x)) {
+        out[0] = parseFloat(x.x)
+        out[1] = parseFloat(x.y)
+        if ('z' in x) {
+          out[2] = parseFloat(x.z)
+        } else {
           out[2] = 0
-        } else if (x instanceof Array) {
-          if ((x.length < 2) || (x.length > 3)) {
-            ok = false
-          } else {
-            out[0] = parseFloat(x[0])
-            out[1] = parseFloat(x[1])
-            if (x.length === 3) {
-              out[2] = parseFloat(x[2])
-            } else {
-              out[2] = 0
-            }
-          }
-        } else if (('x' in x) && ('y' in x)) {
-          out[0] = parseFloat(x.x)
-          out[1] = parseFloat(x.y)
-          if ('z' in x) {
-            out[2] = parseFloat(x.z)
-          } else {
-            out[2] = 0
-          }
-        } else if (('_x' in x) && ('_y' in x)) {
-          out[0] = parseFloat(x._x)
-          out[1] = parseFloat(x._y)
-          if ('_z' in x) {
-            out[2] = parseFloat(x._z)
-          } else {
-            out[2] = 0
-          }
-        } else ok = false
-      } else {
-        var v = parseFloat(x)
-        out[0] = v
-        out[1] = v
-        out[2] = v
+        }
+      } else if (('_x' in x) && ('_y' in x)) {
+        out[0] = parseFloat(x._x)
+        out[1] = parseFloat(x._y)
+        if ('_z' in x) {
+          out[2] = parseFloat(x._z)
+        } else {
+          out[2] = 0
+        }
       }
-    } else ok = false
-    if (ok) {
-      if ((!IsFloat(out[0])) || (!IsFloat(out[1])) || (!IsFloat(out[2]))) ok = false
     } else {
+      // non-object so try for primitive
+      var v = parseFloat(x)
+      out[0] = v
+      out[1] = v
+      out[2] = v
+    }
+    // check the results
+    if ((!IsFloat(out[0])) || (!IsFloat(out[1])) || (!IsFloat(out[2]))) {
       throw new Error('wrong arguments')
     }
+  } else {
+    throw new Error('missing arguments')
   }
+  return out
 }
 
 module.exports = fromVarious

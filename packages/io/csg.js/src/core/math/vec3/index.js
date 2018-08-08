@@ -32,5 +32,6 @@ module.exports = {
   subtract: require('./subtract'),
   toString: require('./toString'),
   transform: require('./transform'),
-  transformMat4: require('./transformMat4')
+  transformMat4: require('./transformMat4'),
+  unit: require('./unit')
 }
