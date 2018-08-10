@@ -38,11 +38,12 @@ const actions = ({sources}) => {
     sources.dom.select('#themeSwitcher').events('change')
       .map(e => e.target.value),
     sources.store
-      .filter(reply => reply.key === 'themes' && reply.type === 'read' && reply.data && reply.data.themeName)
-      .map(reply => reply.data.themeName)
+      .filter(reply => reply.key === 'themes' && reply.type === 'read' && reply.data && reply.data.active)
+      .map(reply => reply.data.active)
   ])
     .startWith('light')
     .thru(withLatestFrom(reducers.setTheme, sources.state))
+    // .thru(holdUntil(initialize$))
     .map(payload => Object.assign({}, {type: 'setTheme', sink: 'state'}, {state: payload}))
 
   const requestLoadSettings$ = initialize$

@@ -80,7 +80,7 @@ const reducers = {
    */
   resetDesign: (state, origin) => {
     console.log('design: reset')
-    // we reset only the given fields
+    // we reset only the given fields: mostly all except design specific things
     const fieldsToReset = [
       'name', 'path', 'mainPath', 'origin', 'filesAndFolders',
       'parameterDefinitions', 'parameterValues', 'parameterDefaults',
@@ -166,7 +166,7 @@ const reducers = {
       debug
     })
 
-  // TODO: move this to IO ??
+    // TODO: move this to IO ??
     const {exportFormat, availableExportFormats} = availableExportFormatsFromSolids(solids)
     const exportInfos = exportFilePathFromFormatAndDesign(design, exportFormat)
     const io = {
@@ -230,7 +230,8 @@ const reducers = {
     }
   },
 
-  setDesignSettings: (state, {data}) => {
+  setSettings: (state, {data}) => {
+    console.log('design: set settings', state.design)
     let {
       vtreeMode,
       autoReload,
@@ -326,8 +327,9 @@ const actions = ({sources}) => {
   const initialize$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
     .map(data => ({type: 'initializeDesign', state: data, sink: 'state'}))
+    .multicast()
 
-  // we wait until the data here has been initialized before loading the serialized settings
+  // we wait until the data here has been initialized before asking to load the serialized settings
   const requestLoadSettings$ = initialize$
     .map(_ => ({sink: 'store', key: 'design', type: 'read'}))
 
@@ -341,12 +343,17 @@ const actions = ({sources}) => {
     .map(data => Object.assign({}, {data}, {sink: 'store', key: 'design', type: 'write'}))
     .multicast()
 
+  const setDesignSettings$ = sources.store
+    .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined)
+    .thru(withLatestFrom(reducers.setSettings, sources.state))
+    .map(data => ({type: 'setDesignSettings', state: data, sink: 'state'}))
+    .multicast()
+
   const requestLoadRemoteData$ = most.mergeArray([
     // load previously loaded remote file (or example)
     sources.store
       .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined && reply.data.origin === 'http')
-      .map(({data}) => data.mainPath)
-      .tap(x=>console.log('requestLoadRemoteData', x)),
+      .map(({data}) => data.mainPath),
     // load examples when clicked
     sources.dom.select('.example').events('click')
       .map(event => event.target.dataset.path),
@@ -364,21 +371,29 @@ const actions = ({sources}) => {
       })
   ])
     .filter(x => x !== undefined)
+    .thru(holdUntil(setDesignSettings$))// only after
     .map(data => ({type: 'read', id: 'loadRemote', urls: toArray(data), sink: 'http'}))
     .multicast()
 
-  const requestLoadLocalData = most.mergeArray([
-    /* sources.dom.select('#fileLoader').events('click')
-    .map(function () {
-      // literally an array of paths (strings)
-      // like those returned by dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
-      const paths = []
-      return paths
-    }), */
+  const requestLoadLocalData$ = most.mergeArray([
+    sources.dom.select('#fileLoader').events('change')
+      .map(function (event) {
+        console.log('here', event.target.files)
+        // literally an array of paths (strings)
+        // like those returned by dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
+        // nope ...
+        //const paths = []
+        // return paths
+        return {data: event.target.files}
+      })
   ])
+    .forEach(x=>x)
 
   const requestAddDesignData$ = most.mergeArray([
-      // injection from drag & drop
+    // from file open
+    // requestLoadLocalData$
+    //  .map(({data}) => ({data, id: 'droppedData', path: 'realFs:'})),
+    // injection from drag & drop
     sources.drops
       .map(({data}) => ({data, id: 'droppedData', path: 'realFs:'})),
     // data retrieved from http requests
@@ -542,15 +557,7 @@ const actions = ({sources}) => {
     .filter(params => Object.keys(params).length > 0)
     .map(parameterValues => {
       // console.log('params from titleBar ?', params)
-      let formated = {}
-      Object.keys(parameterValues).forEach(key => {
-        let value = parameterValues[key]
-        if (value === 'true' || value === 'false') {
-          value = value.toLowerCase() === 'true'
-        }
-        formated[key] = value
-      })
-      return {parameterValues: formated, origin: 'titleBar'}
+      return {parameterValues, origin: 'titleBar'}
     })
     .multicast()
 
@@ -566,7 +573,10 @@ const actions = ({sources}) => {
       .thru(withLatestFrom((state, _) => ({parameterValues: state.design.parameterDefaults}), sources.state))
   ])
     .skipRepeatsWith(jsonCompare)
+    .tap(x=>console.log('setDesignParameterValues', x))
+
     .thru(holdUntil(sources.state.filter(reducers.isDesignValid)))
+
     .thru(holdUntil(validDesignState$.filter(
       state => {
         const hasParamDefinitions = state.design && Object.keys(state.design.parameterDefinitions).length > 0
@@ -577,13 +587,6 @@ const actions = ({sources}) => {
     .map(data => ({type: 'setDesignParameterValues', state: data, sink: 'state'}))
     .multicast()
     .delay(10)// needed , why ?
-
-  const setDesignSettings$ = sources.store
-    .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined)
-    .thru(withLatestFrom(reducers.setDesignSettings, sources.state))
-    // .thru(holdUntil(setDesignContent$))
-    .map(data => ({type: 'setDesignSettings', state: data, sink: 'state'}))
-    .multicast()
 
   // FIXME: this needs to be elsewhere
   // const setZoomingBehaviour$ = ''

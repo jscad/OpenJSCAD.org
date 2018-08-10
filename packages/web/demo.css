@@ -63,20 +63,50 @@ body {
   bottom: 0px;
 }
 #fileLoader{
-  z-index: 1;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+#fileLoader + label {
+  padding: 1px 7px 2px;
+  background: none;
+  box-shadow: none;
+  border-color: black;
+  border-radius: 0px;
+  border-width: 1px;
+  margin: 0px 5px 0px 5px;
+  background-color: white;
+  letter-spacing: .5px;
+  outline: none;
+  border: 1px solid #bfbcbc;
+  display: inline-block;
+  font-size: smaller;
+  line-height: 15px;
+  cursor: pointer;
 
 }
+
+/*#fileLoader:focus + label,*/
+#fileLoader + label:hover {
+  background-color: rgba(0, 188, 212, 0.6);
+}
+
 #controls {
   position: absolute;
   z-index: 1;
   width: 100%;
   user-select: none;
+  left: 10px;
 }
 #params {
   position: absolute;
   z-index: 1;
   bottom:40px;
-  left: 40px;
+  left: 10px;
   user-select: none;
   padding: 10px;
   background: white;
@@ -260,7 +290,7 @@ input[type="button"]{
   border: 1px solid #bfbcbc;
 }  
 input[type="button"]:hover{
-  background-color:rgba(0, 188, 212, 0.6);;
+  background-color:rgba(0, 188, 212, 0.6);
 }
 
 input[type="checkbox"] {
@@ -268,7 +298,7 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:hover{
-  background-color:rgba(0, 188, 212, 0.6);;
+  background-color:rgba(0, 188, 212, 0.6);
 }
 /*themes ?? not sure, not used yet*/
 .light{
@@ -300,3 +330,4 @@ input.error::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 #shortcuts .error input::-ms-input-placeholder { /* Microsoft Edge */
     color: red;
 }
+

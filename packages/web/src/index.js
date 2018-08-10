@@ -3,6 +3,13 @@ const packageMetadata = require('../package.json')
 const keyBindings = require('../data/keybindings.json')
 let instances = 0
 
+/** make creator function, to create new jscad instances
+ * @param  {DOM element} targetElement the dom element where you want to create your jscad instance
+ * @param {Object} options
+ * @param {String} options.name the UNIQUE name of the output instance, if you re-use the same name
+ * you might run into weird issues
+ * @param {Boolean} options.logging toggle logging on/off
+ */
 function makeJscad (targetElement, options) {
   const defaults = {
     name: 'jscad',
@@ -16,7 +23,7 @@ function makeJscad (targetElement, options) {
   targetElement.appendChild(jscadEl)
 
   // setup all the side effects : ie , input/outputs
-  // fake file system
+  // fake file system, to use in browsers/ sandbox environement
   const fs = require('./sideEffects/memFs')({logging})
   // (local) storage
   const storage = require('./sideEffects/localStorage')({name, logging})
@@ -33,7 +40,7 @@ function makeJscad (targetElement, options) {
   // state (pseudo) side effect
   const state = require('./sideEffects/state/index')({logging, packageMetadata, keyBindings})
 
-  // internationalization side effect
+  // internationalization side effect, loaded up with preset translations
   const i18n = require('@jscad/core/sideEffects/i18n')({
     translations: {
       en: require('../locales/en.json'),
@@ -44,7 +51,7 @@ function makeJscad (targetElement, options) {
   })
 
   // web workers
-  const geometryWorker = require('@jscad/core/sideEffects/worker')(require('./core/code-evaluation/rebuildGeometryWorker.js'))
+  const solidWorker = require('@jscad/core/sideEffects/worker')(require('./core/code-evaluation/rebuildGeometryWorker.js'))
   // generic design parameter handling
   const paramsCallbacktoStream = require('@jscad/core/observable-utils/callbackToObservable')()
   // generic editor events handling
@@ -52,15 +59,15 @@ function makeJscad (targetElement, options) {
 
   // all the sources of data
   const sources = {
-    state: state.source(),
     paramChanges: paramsCallbacktoStream.stream,
     editor: editorCallbackToStream.stream,
+    state: state.source(),
     store: storage.source(),
     fs: fs.source(),
     http: http.source(),
     drops: dragDrop.source(),
     dom: dom.source(),
-    solidWorker: geometryWorker.source(),
+    solidWorker: solidWorker.source(),
     i18n: i18n.source(),
     titleBar: titleBar.source(),  // #http://openjscad.org/examples/slices/tor.jscad
     fileDialog: fileDialog.source()
@@ -73,7 +80,7 @@ function makeJscad (targetElement, options) {
     http: http.sink,
     i18n: i18n.sink,
     dom: dom.sink,
-    solidWorker: geometryWorker.sink,
+    solidWorker: solidWorker.sink,
     state: state.sink,
     fileDialog: fileDialog.sink
   }
