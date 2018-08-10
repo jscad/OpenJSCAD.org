@@ -57,7 +57,7 @@ const instanciateDesign = (rootModule, vtreeMode, inputLookup, inputLookupCounts
     const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree({passesBeforeElimination: 5, lookup, lookupCounts})
     solids = buildCachedGeometryFromTree({}, rawResults)
     console.warn(`buildCachedGeometryFromTree`, new Date() - start)//, rawResults, solids)
-    // TODO: erturn both solids and cache instead of mutating ?
+    // TODO: return both solids and cache instead of mutating ?
   } else {
     throw new Error('Bad output from script: expected CSG/CAG objects')
   }

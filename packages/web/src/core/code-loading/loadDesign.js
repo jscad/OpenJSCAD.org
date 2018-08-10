@@ -14,10 +14,10 @@ const makeWebRequire = require('./webRequire')
  * @param source the source code
  * @param {String} mainPath
  * @param {String} apiMainPath='../../../../core/tmp/csg.js : relative path or  '@jscad/csg'
- * @param {Object} parameterValuesOverride, the values to use to override the defaults for the current design
  * @param {Array} filesAndFolders array of files and folders to use
+ * @param {Object} parameterValuesOverride, the values to use to override the defaults for the current design
  */
-const loadDesign = (source, mainPath, apiMainPath, parameterValuesOverride, filesAndFolders) => {
+const loadDesign = (source, mainPath, apiMainPath, filesAndFolders, parameterValuesOverride) => {
   // the root script is the main entry point in a design
   // ie either the only file if there is only one
   // OR the file in the 'main' entry of package.js, index.js, main.js or <folderName>.js
@@ -42,6 +42,7 @@ const loadDesign = (source, mainPath, apiMainPath, parameterValuesOverride, file
   */
 
   // make sure we always deal with a commonJs module
+  // FIXME: cleanup, it is always the case now
   // const isDesignCommonJs = isCommonJsModule(designRoot.source)
   // designRoot.source = !isDesignCommonJs ? modulifySource(designRoot.source, apiMainPath) : designRoot.source
 
