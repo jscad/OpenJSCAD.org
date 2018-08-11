@@ -4,18 +4,23 @@ const {EPS, getTag} = require('../constants')
 
 // # class Plane
 // Represents a plane in 3D space.
+
+// CONVERTED TO V2
 const Plane = function (normal, w) {
   this.normal = normal
   this.w = w
 }
 
 // create from an untyped object with identical property names:
+
+// CONVERTED TO V2
 Plane.fromObject = function (obj) {
   let normal = new Vector3D(obj.normal)
   let w = parseFloat(obj.w)
   return new Plane(normal, w)
 }
 
+// CONVERTED TO V2
 Plane.fromVector3Ds = function (a, b, c) {
   let n = b.minus(a).cross(c.minus(a)).unit()
   return new Plane(n, n.dot(a))
@@ -23,6 +28,8 @@ Plane.fromVector3Ds = function (a, b, c) {
 
 // like fromVector3Ds, but allow the vectors to be on one point or one line
 // in such a case a random plane through the given points is constructed
+
+// UNUSED SO REMOVE
 Plane.anyPlaneFromVector3Ds = function (a, b, c) {
   let v1 = b.minus(a)
   let v2 = c.minus(a)
@@ -42,6 +49,7 @@ Plane.anyPlaneFromVector3Ds = function (a, b, c) {
   return new Plane(normal, normal.dot(a))
 }
 
+// CONVERTED TO V2
 Plane.fromPoints = function (a, b, c) {
   a = new Vector3D(a)
   b = new Vector3D(b)
@@ -49,6 +57,7 @@ Plane.fromPoints = function (a, b, c) {
   return Plane.fromVector3Ds(a, b, c)
 }
 
+// CONVERTED TO V2
 Plane.fromNormalAndPoint = function (normal, point) {
   normal = new Vector3D(normal)
   point = new Vector3D(point)
@@ -58,6 +67,8 @@ Plane.fromNormalAndPoint = function (normal, point) {
 }
 
 Plane.prototype = {
+
+// CONVERTED TO V2
   flipped: function () {
     return new Plane(this.normal.negated(), -this.w)
   },
@@ -71,10 +82,12 @@ Plane.prototype = {
     return result
   },
 
+// CONVERTED TO V2
   equals: function (n) {
     return this.normal.equals(n.normal) && this.w === n.w
   },
 
+// CONVERTED TO V2
   transform: function (matrix4x4) {
     let ismirror = matrix4x4.isMirroring()
         // get two vectors in the plane:
@@ -101,6 +114,7 @@ Plane.prototype = {
 
     // robust splitting of a line by a plane
     // will work even if the line is parallel to the plane
+// CONVERTED TO V2
   splitLineBetweenPoints: function (p1, p2) {
     let direction = p2.minus(p1)
     let labda = (this.w - this.normal.dot(p1)) / this.normal.dot(direction)
@@ -121,15 +135,18 @@ Plane.prototype = {
     return Line3D.fromPlanes(this, plane)
   },
 
+// CONVERTED TO V2
   signedDistanceToPoint: function (point) {
     let t = this.normal.dot(point) - this.w
     return t
   },
 
+// CONVERTED TO V2
   toString: function () {
     return '[normal: ' + this.normal.toString() + ', w: ' + this.w + ']'
   },
 
+// FIXME THIS IS WORKING WITH VEC3, SHOULD THIS MOVE TO VEC3?
   mirrorPoint: function (point3d) {
     let distance = this.signedDistanceToPoint(point3d)
     let mirrored = point3d.minus(this.normal.times(distance * 2.0))

@@ -1,4 +1,7 @@
 module.exports = {
+  clone: require('./clone'),
   create: require('./create'),
-  fromValues: require('./fromValues')
+  fromScalar: require('./fromScalar'),
+  fromValues: require('./fromValues'),
+  toString: require('./toString')
 }
