@@ -5,14 +5,6 @@
 <dd></dd>
 <dt><a href="#CSG">CSG</a></dt>
 <dd></dd>
-<dt><a href="#Path2D">Path2D</a></dt>
-<dd></dd>
-<dt><a href="#Polygon">Polygon</a></dt>
-<dd></dd>
-<dt><a href="#Vector2D">Vector2D</a></dt>
-<dd></dd>
-<dt><a href="#Vector3D">Vector3D</a></dt>
-<dd></dd>
 </dl>
 
 ## Constants
@@ -195,8 +187,8 @@ essentially hull A+B, B+C, C+D and then union those</p>
 <dd><p>Construct a circle</p>
 </dd>
 <dt><a href="#polygon">polygon([options])</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
-<dd><p>Construct a polygon either from arrays of paths and points, or just arrays of points
-nested paths (multiple paths) and flat paths are supported</p>
+<dd><p>Construct a polygon either from arrays of paths and points,
+or just arrays of points nested paths (multiple paths) and flat paths are supported</p>
 </dd>
 <dt><a href="#triangle">triangle()</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Construct a triangle</p>
@@ -255,20 +247,32 @@ Define face vertices clockwise looking from outside.</p>
 </dd>
 <dt><a href="#_addWalls">_addWalls(walls, bottom, top)</a></dt>
 <dd></dd>
-<dt><a href="#vector_char">vector_char(x, y, char)</a> ⇒ <code>Object</code></dt>
-<dd><p>Construct a with, segments tupple from a character</p>
+<dt><a href="#vectorChar">vectorChar([options], [char])</a> ⇒ <code><a href="#VectorCharObject">VectorCharObject</a></code></dt>
+<dd><p>Construct a <a href="#VectorCharObject">VectorCharObject</a> from a ascii character whose code is between 31 and 127,
+if the character is not supported it is replaced by a question mark.</p>
 </dd>
-<dt><a href="#vector_text">vector_text(x, y, string)</a> ⇒ <code>Array</code></dt>
-<dd><p>Construct an array of with, segments tupple from a string</p>
+<dt><a href="#vectorText">vectorText([options], [text])</a> ⇒ <code>Array</code></dt>
+<dd><p>Construct an array of character segments from a ascii string whose characters code is between 31 and 127,
+if one character is not supported it is replaced by a question mark.</p>
+</dd>
+<dt><del><a href="#vector_char">vector_char(x, y, char)</a> ⇒ <code><a href="#VectorCharObject">VectorCharObject</a></code></del></dt>
+<dd><p>Construct a <a href="#VectorCharObject">VectorCharObject</a> from a ascii character whose code is between 31 and 127,
+if the character is not supported it is replaced by a question mark.</p>
+</dd>
+<dt><del><a href="#vector_text">vector_text(x, y, text)</a> ⇒ <code>Array</code></del></dt>
+<dd><p>Construct an array of character segments from a ascii string whose characters code is between 31 and 127,
+if one character is not supported it is replaced by a question mark.</p>
 </dd>
 <dt><a href="#fromSides">fromSides(sides)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Construct a CAG from a list of <code>Side</code> instances.</p>
 </dd>
 <dt><a href="#fromPoints">fromPoints(points)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
-<dd><p>Construct a CAG from a list of points (a polygon).
+<dd><p>Construct a CAG from a list of points (a polygon) or an nested array of points.
 The rotation direction of the points is not relevant.
 The points can define a convex or a concave polygon.
-The polygon must not self intersect.</p>
+The polygon must not self intersect.
+Hole detection follows the even/odd rule,
+which means that the order of the paths is not important.</p>
 </dd>
 <dt><a href="#fromObject">fromObject(obj)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Reconstruct a CAG from an object with identical property names.</p>
@@ -300,32 +304,13 @@ See Polygon.prototype.solidFromSlices() for details.</p>
 <dt><a href="#fromCompactBinary">fromCompactBinary(bin)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>Reconstruct a CSG from the output of toCompactBinary().</p>
 </dd>
-<dt><a href="#Line2D">Line2D(normal)</a> ⇒ <code><a href="#Line2D">Line2D</a></code></dt>
-<dd><p>class Line2D
-Represents a directional line in 2D space
-A line is parametrized by its normal vector (perpendicular to the line, rotated 90 degrees counter clockwise)
-and w. The line passes through the point <normal>.times(w).
-Equation: p is on line if normal.dot(p)==w</p>
-</dd>
-<dt><a href="#OrthoNormalBasis">OrthoNormalBasis(plane, rightvector)</a></dt>
-<dd><p>class OrthoNormalBasis
-Reprojects points on a 3D plane onto a 2D plane
-or from a 2D plane back onto the 3D plane</p>
-</dd>
-<dt><a href="#fromPoints">fromPoints(points, [shared], [plane])</a></dt>
-<dd><p>Create a polygon from the given points.</p>
-</dd>
-<dt><a href="#canonicalize">canonicalize()</a> ⇒ <code><a href="#CSG">CSG</a></code> | <code><a href="#CAG">CAG</a></code></dt>
-<dd><p>Returns a cannoicalized version of the input csg/cag : ie every very close
-points get deduplicated</p>
-</dd>
-<dt><a href="#canonicalizeCSG">canonicalizeCSG()</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
-<dd><p>Returns a cannoicalized version of the input csg : ie every very close
-points get deduplicated</p>
-</dd>
-<dt><a href="#bounds">bounds()</a> ⇒ <code><a href="#Vector3D">Array.&lt;Vector3D&gt;</a></code></dt>
-<dd><p>Returns an array of Vector3D, providing minimum coordinates and maximum coordinates
-of this solid.</p>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#VectorCharObject">VectorCharObject</a> : <code>Object</code></dt>
+<dd><p>Represents a character as segments</p>
 </dd>
 </dl>
 
@@ -378,7 +363,7 @@ See fromCompactBinary.
     * [.setShared(shared)](#CSG+setShared) ⇒ [<code>CSG</code>](#CSG)
     * [.setColor(args)](#CSG+setColor) ⇒ [<code>CSG</code>](#CSG)
     * [.getFeatures(features)](#CSG+getFeatures) ⇒ <code>Array.&lt;Float&gt;</code>
-    * [.toPolygons()](#CSG+toPolygons) ⇒ [<code>Array.&lt;Polygon&gt;</code>](#Polygon)
+    * [.toPolygons()](#CSG+toPolygons) ⇒ <code>Array.&lt;Polygon&gt;</code>
     * [.toCompactBinary()](#CSG+toCompactBinary) ⇒ <code>Object</code>
     * [.toTriangles()](#CSG+toTriangles) ⇒ <code>Polygons</code>
 
@@ -577,9 +562,9 @@ let values = A.getFeatures('area','volume')
 ```
 <a name="CSG+toPolygons"></a>
 
-### csG.toPolygons() ⇒ [<code>Array.&lt;Polygon&gt;</code>](#Polygon)
+### csG.toPolygons() ⇒ <code>Array.&lt;Polygon&gt;</code>
 **Kind**: instance method of [<code>CSG</code>](#CSG)  
-**Returns**: [<code>Array.&lt;Polygon&gt;</code>](#Polygon) - The list of polygons.  
+**Returns**: <code>Array.&lt;Polygon&gt;</code> - The list of polygons.  
 <a name="CSG+toCompactBinary"></a>
 
 ### csG.toCompactBinary() ⇒ <code>Object</code>
@@ -596,319 +581,6 @@ returns the triangles of this csg
 
 **Kind**: instance method of [<code>CSG</code>](#CSG)  
 **Returns**: <code>Polygons</code> - triangulated polygons  
-<a name="Path2D"></a>
-
-## Path2D
-**Kind**: global class  
-
-* [Path2D](#Path2D)
-    * [new Path2D([points], [closed])](#new_Path2D_new)
-    * _instance_
-        * [.getPoints()](#Path2D+getPoints) ⇒ <code>Array.&lt;Vector2&gt;</code>
-        * [.appendPoint(point)](#Path2D+appendPoint) ⇒ [<code>Path2D</code>](#Path2D)
-        * [.appendPoints(points)](#Path2D+appendPoints) ⇒ [<code>Path2D</code>](#Path2D)
-        * [.isClosed()](#Path2D+isClosed) ⇒ <code>Boolean</code>
-        * [.appendBezier(controlpoints, [options])](#Path2D+appendBezier) ⇒ [<code>Path2D</code>](#Path2D)
-        * [.appendArc(endpoint, [options])](#Path2D+appendArc) ⇒ [<code>Path2D</code>](#Path2D)
-    * _static_
-        * [.arc([options])](#Path2D.arc) ⇒ [<code>Path2D</code>](#Path2D)
-
-<a name="new_Path2D_new"></a>
-
-### new Path2D([points], [closed])
-Class Path2D
-Represents a series of points, connected by infinitely thin lines.
-A path can be open or closed, i.e. additional line between first and last points.
-The difference between Path2D and CAG is that a path is a 'thin' line, whereas a CAG is an enclosed area.
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| [points] | [<code>Array.&lt;Vector2D&gt;</code>](#Vector2D) | <code>[]</code> | list of points |
-| [closed] | <code>boolean</code> | <code>false</code> | closer of path |
-
-**Example**  
-```js
-new CSG.Path2D()
-new CSG.Path2D([[10,10], [-10,10], [-10,-10], [10,-10]], true) // closed
-```
-<a name="Path2D+getPoints"></a>
-
-### path2D.getPoints() ⇒ <code>Array.&lt;Vector2&gt;</code>
-Get the points that make up the path.
-note that this is current internal list of points, not an immutable copy.
-
-**Kind**: instance method of [<code>Path2D</code>](#Path2D)  
-**Returns**: <code>Array.&lt;Vector2&gt;</code> - array of points the make up the path  
-<a name="Path2D+appendPoint"></a>
-
-### path2D.appendPoint(point) ⇒ [<code>Path2D</code>](#Path2D)
-Append an point to the end of the path.
-
-**Kind**: instance method of [<code>Path2D</code>](#Path2D)  
-**Returns**: [<code>Path2D</code>](#Path2D) - new Path2D object (not closed)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| point | [<code>Vector2D</code>](#Vector2D) | point to append |
-
-<a name="Path2D+appendPoints"></a>
-
-### path2D.appendPoints(points) ⇒ [<code>Path2D</code>](#Path2D)
-Append a list of points to the end of the path.
-
-**Kind**: instance method of [<code>Path2D</code>](#Path2D)  
-**Returns**: [<code>Path2D</code>](#Path2D) - new Path2D object (not closed)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| points | [<code>Array.&lt;Vector2D&gt;</code>](#Vector2D) | points to append |
-
-<a name="Path2D+isClosed"></a>
-
-### path2D.isClosed() ⇒ <code>Boolean</code>
-Determine if the path is a closed or not.
-
-**Kind**: instance method of [<code>Path2D</code>](#Path2D)  
-**Returns**: <code>Boolean</code> - true when the path is closed, otherwise false  
-<a name="Path2D+appendBezier"></a>
-
-### path2D.appendBezier(controlpoints, [options]) ⇒ [<code>Path2D</code>](#Path2D)
-Append a Bezier curve to the end of the path, using the control points to transition the curve through start and end points.
-<br>
-The Bézier curve starts at the last point in the path,
-and ends at the last given control point. Other control points are intermediate control points.
-<br>
-The first control point may be null to ensure a smooth transition occurs. In this case,
-the second to last control point of the path is mirrored into the control points of the Bezier curve.
-In other words, the trailing gradient of the path matches the new gradient of the curve.
-
-**Kind**: instance method of [<code>Path2D</code>](#Path2D)  
-**Returns**: [<code>Path2D</code>](#Path2D) - new Path2D object (not closed)  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| controlpoints | [<code>Array.&lt;Vector2D&gt;</code>](#Vector2D) |  | list of control points |
-| [options] | <code>Object</code> |  | options for construction |
-| [options.resolution] | <code>Number</code> | <code>defaultResolution2D</code> | number of sides per 360 rotation |
-
-**Example**  
-```js
-let p5 = new CSG.Path2D([[10,-20]],false);
-p5 = p5.appendBezier([[10,-10],[25,-10],[25,-20]]);
-p5 = p5.appendBezier([[25,-30],[40,-30],[40,-20]]);
-```
-<a name="Path2D+appendArc"></a>
-
-### path2D.appendArc(endpoint, [options]) ⇒ [<code>Path2D</code>](#Path2D)
-Append an arc to the end of the path.
-This implementation follows the SVG arc specs. For the details see
-http://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
-
-**Kind**: instance method of [<code>Path2D</code>](#Path2D)  
-**Returns**: [<code>Path2D</code>](#Path2D) - new Path2D object (not closed)  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| endpoint | [<code>Vector2D</code>](#Vector2D) |  | end point of arc |
-| [options] | <code>Object</code> |  | options for construction |
-| [options.radius] | <code>Number</code> | <code>0</code> | radius of arc (X and Y), see also xradius and yradius |
-| [options.xradius] | <code>Number</code> | <code>0</code> | X radius of arc, see also radius |
-| [options.yradius] | <code>Number</code> | <code>0</code> | Y radius of arc, see also radius |
-| [options.xaxisrotation] | <code>Number</code> | <code>0</code> | rotation (in degrees) of the X axis of the arc with respect to the X axis of the coordinate system |
-| [options.resolution] | <code>Number</code> | <code>defaultResolution2D</code> | number of sides per 360 rotation |
-| [options.clockwise] | <code>Boolean</code> | <code>false</code> | draw an arc clockwise with respect to the center point |
-| [options.large] | <code>Boolean</code> | <code>false</code> | draw an arc longer than 180 degrees |
-
-**Example**  
-```js
-let p1 = new CSG.Path2D([[27.5,-22.96875]],false);
-p1 = p1.appendPoint([27.5,-3.28125]);
-p1 = p1.appendArc([12.5,-22.96875],{xradius: 15,yradius: -19.6875,xaxisrotation: 0,clockwise: false,large: false});
-p1 = p1.close();
-```
-<a name="Path2D.arc"></a>
-
-### Path2D.arc([options]) ⇒ [<code>Path2D</code>](#Path2D)
-Construct an arc.
-
-**Kind**: static method of [<code>Path2D</code>](#Path2D)  
-**Returns**: [<code>Path2D</code>](#Path2D) - new Path2D object (not closed)  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| [options] | <code>Object</code> |  | options for construction |
-| [options.center] | [<code>Vector2D</code>](#Vector2D) | <code>[0,0]</code> | center of circle |
-| [options.radius] | <code>Number</code> | <code>1</code> | radius of circle |
-| [options.startangle] | <code>Number</code> | <code>0</code> | starting angle of the arc, in degrees |
-| [options.endangle] | <code>Number</code> | <code>360</code> | ending angle of the arc, in degrees |
-| [options.resolution] | <code>Number</code> | <code>defaultResolution2D</code> | number of sides per 360 rotation |
-| [options.maketangent] | <code>Boolean</code> | <code>false</code> | adds line segments at both ends of the arc to ensure that the gradients at the edges are tangent |
-
-**Example**  
-```js
-let path = CSG.Path2D.arc({
-  center: [5, 5],
-  radius: 10,
-  startangle: 90,
-  endangle: 180,
-  resolution: 36,
-  maketangent: true
-});
-```
-<a name="Polygon"></a>
-
-## Polygon
-**Kind**: global class  
-
-* [Polygon](#Polygon)
-    * [new Polygon(vertices, [shared], [plane])](#new_Polygon_new)
-    * _instance_
-        * [.checkIfConvex()](#Polygon+checkIfConvex) ⇒ <code>boolean</code>
-    * _static_
-        * [.Shared](#Polygon.Shared)
-            * [new Polygon.Shared(color)](#new_Polygon.Shared_new)
-            * [.fromColor(r, g, b, [a], [color])](#Polygon.Shared.fromColor)
-        * [.createFromPoints(points, [shared], [plane])](#Polygon.createFromPoints)
-
-<a name="new_Polygon_new"></a>
-
-### new Polygon(vertices, [shared], [plane])
-Class Polygon
-Represents a convex polygon. The vertices used to initialize a polygon must
-  be coplanar and form a convex loop. They do not have to be `Vertex`
-  instances but they must behave similarly (duck typing can be used for
-  customization).
-<br>
-Each convex polygon has a `shared` property, which is shared between all
-  polygons that are clones of each other or were split from the same polygon.
-  This can be used to define per-polygon properties (such as surface color).
-<br>
-The plane of the polygon is calculated from the vertex coordinates if not provided.
-  The plane can alternatively be passed as the third argument to avoid calculations.
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| vertices | <code>Array.&lt;Vertex&gt;</code> |  | list of vertices |
-| [shared] | [<code>Shared</code>](#Polygon.Shared) | <code>defaultShared</code> | shared property to apply |
-| [plane] | <code>Plane</code> |  | plane of the polygon |
-
-**Example**  
-```js
-const vertices = [
-  new CSG.Vertex(new CSG.Vector3D([0, 0, 0])),
-  new CSG.Vertex(new CSG.Vector3D([0, 10, 0])),
-  new CSG.Vertex(new CSG.Vector3D([0, 10, 10]))
-]
-let observed = new Polygon(vertices)
-```
-<a name="Polygon+checkIfConvex"></a>
-
-### polygon.checkIfConvex() ⇒ <code>boolean</code>
-Check whether the polygon is convex. (it should be, otherwise we will get unexpected results)
-
-**Kind**: instance method of [<code>Polygon</code>](#Polygon)  
-<a name="Polygon.Shared"></a>
-
-### Polygon.Shared
-**Kind**: static class of [<code>Polygon</code>](#Polygon)  
-
-* [.Shared](#Polygon.Shared)
-    * [new Polygon.Shared(color)](#new_Polygon.Shared_new)
-    * [.fromColor(r, g, b, [a], [color])](#Polygon.Shared.fromColor)
-
-<a name="new_Polygon.Shared_new"></a>
-
-#### new Polygon.Shared(color)
-Class Polygon.Shared
-Holds the shared properties for each polygon (Currently only color).
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| color | <code>Array.&lt;Array&gt;</code> | array containing RGBA values, or null |
-
-**Example**  
-```js
-let shared = new CSG.Polygon.Shared([0, 0, 0, 1])
-```
-<a name="Polygon.Shared.fromColor"></a>
-
-#### Shared.fromColor(r, g, b, [a], [color])
-Create Polygon.Shared from color values.
-
-**Kind**: static method of [<code>Shared</code>](#Polygon.Shared)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| r | <code>number</code> | value of RED component |
-| g | <code>number</code> | value of GREEN component |
-| b | <code>number</code> | value of BLUE component |
-| [a] | <code>number</code> | value of ALPHA component |
-| [color] | <code>Array.&lt;Array&gt;</code> | OR array containing RGB values (optional Alpha) |
-
-**Example**  
-```js
-let s1 = Polygon.Shared.fromColor(0,0,0)
-let s2 = Polygon.Shared.fromColor([0,0,0,1])
-```
-<a name="Polygon.createFromPoints"></a>
-
-### Polygon.createFromPoints(points, [shared], [plane])
-Create a polygon from the given points.
-
-**Kind**: static method of [<code>Polygon</code>](#Polygon)  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| points | <code>Array.&lt;Array&gt;</code> |  | list of points |
-| [shared] | [<code>Shared</code>](#Polygon.Shared) | <code>defaultShared</code> | shared property to apply |
-| [plane] | <code>Plane</code> |  | plane of the polygon |
-
-**Example**  
-```js
-const points = [
-  [0,  0, 0],
-  [0, 10, 0],
-  [0, 10, 10]
-]
-let observed = CSG.Polygon.createFromPoints(points)
-```
-<a name="Vector2D"></a>
-
-## Vector2D
-**Kind**: global class  
-<a name="new_Vector2D_new"></a>
-
-### new Vector2D()
-Class Vector2D
-Represents a 2D vector with X, Y coordinates
-
-**Example**  
-```js
-new CSG.Vector2D(1, 2);
-new CSG.Vector2D([1, 2]);
-new CSG.Vector2D({ x: 1, y: 2});
-```
-<a name="Vector3D"></a>
-
-## Vector3D
-**Kind**: global class  
-<a name="new_Vector3D_new"></a>
-
-### new Vector3D()
-Class Vector3D
-Represents a 3D vector with X, Y, Z coordinates.
-
-**Example**  
-```js
-new CSG.Vector3D(1, 2, 3);
-new CSG.Vector3D([1, 2, 3]);
-new CSG.Vector3D({ x: 1, y: 2, z: 3 });
-new CSG.Vector3D(1, 2); // assumes z=0
-new CSG.Vector3D([1, 2]); // assumes z=0
-```
 <a name="defaultResolution2D"></a>
 
 ## defaultResolution2D
@@ -1577,25 +1249,36 @@ let circle1 = circle({
 <a name="polygon"></a>
 
 ## polygon([options]) ⇒ [<code>CAG</code>](#CAG)
-Construct a polygon either from arrays of paths and points, or just arrays of points
-nested paths (multiple paths) and flat paths are supported
+Construct a polygon either from arrays of paths and points,
+or just arrays of points nested paths (multiple paths) and flat paths are supported
 
 **Kind**: global function  
 **Returns**: [<code>CAG</code>](#CAG) - new polygon  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [options] | <code>Object</code> | options for construction |
-| [options.paths] | <code>Array</code> | paths of the polygon : either flat or nested array |
-| [options.points] | <code>Array</code> | points of the polygon : either flat or nested array |
+| [options] | <code>Object</code> | options for construction or either flat or nested array of points |
+| [options.points] | <code>Array</code> | points of the polygon : either flat or nested array of points |
+| [options.paths] | <code>Array</code> | paths of the polygon : either flat or nested array of points index |
 
 **Example**  
 ```js
-let poly = polygon([0,1,2,3,4])
+let roof = [[10,11], [0,11], [5,20]]
+let wall = [[0,0], [10,0], [10,10], [0,10]]
+
+let poly = polygon(roof)
 or
-let poly = polygon({path: [0,1,2,3,4]})
+let poly = polygon([roof, wall])
 or
-let poly = polygon({path: [0,1,2,3,4], points: [2,1,3]})
+let poly = polygon({ points: roof })
+or
+let poly = polygon({ points: [roof, wall] })
+or
+let poly = polygon({ points: roof, path: [0, 1, 2] })
+or
+let poly = polygon({ points: [roof, wall], path: [[0, 1, 2], [3, 4, 5, 6]] })
+or
+let poly = polygon({ points: roof.concat(wall), paths: [[0, 1, 2], [3, 4, 5], [3, 6, 5]] })
 ```
 <a name="triangle"></a>
 
@@ -1621,7 +1304,7 @@ Construct a circle.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [options] | <code>Object</code> |  | options for construction |
-| [options.center] | [<code>Vector2D</code>](#Vector2D) | <code>[0,0]</code> | center of circle |
+| [options.center] | <code>Vector2D</code> | <code>[0,0]</code> | center of circle |
 | [options.radius] | <code>Number</code> | <code>1</code> | radius of circle |
 | [options.resolution] | <code>Number</code> | <code>defaultResolution2D</code> | number of sides per 360 rotation |
 
@@ -1636,8 +1319,8 @@ Construct an ellispe.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [options] | <code>Object</code> |  | options for construction |
-| [options.center] | [<code>Vector2D</code>](#Vector2D) | <code>[0,0]</code> | center of ellipse |
-| [options.radius] | [<code>Vector2D</code>](#Vector2D) | <code>[1,1]</code> | radius of ellipse, width and height |
+| [options.center] | <code>Vector2D</code> | <code>[0,0]</code> | center of ellipse |
+| [options.radius] | <code>Vector2D</code> | <code>[1,1]</code> | radius of ellipse, width and height |
 | [options.resolution] | <code>Number</code> | <code>defaultResolution2D</code> | number of sides per 360 rotation |
 
 <a name="rectangle"></a>
@@ -1651,10 +1334,10 @@ Construct a rectangle.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [options] | <code>Object</code> |  | options for construction |
-| [options.center] | [<code>Vector2D</code>](#Vector2D) | <code>[0,0]</code> | center of rectangle |
-| [options.radius] | [<code>Vector2D</code>](#Vector2D) | <code>[1,1]</code> | radius of rectangle, width and height |
-| [options.corner1] | [<code>Vector2D</code>](#Vector2D) | <code>[0,0]</code> | bottom left corner of rectangle (alternate) |
-| [options.corner2] | [<code>Vector2D</code>](#Vector2D) | <code>[0,0]</code> | upper right corner of rectangle (alternate) |
+| [options.center] | <code>Vector2D</code> | <code>[0,0]</code> | center of rectangle |
+| [options.radius] | <code>Vector2D</code> | <code>[1,1]</code> | radius of rectangle, width and height |
+| [options.corner1] | <code>Vector2D</code> | <code>[0,0]</code> | bottom left corner of rectangle (alternate) |
+| [options.corner2] | <code>Vector2D</code> | <code>[0,0]</code> | upper right corner of rectangle (alternate) |
 
 <a name="roundedRectangle"></a>
 
@@ -1667,10 +1350,10 @@ Construct a rounded rectangle.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [options] | <code>Object</code> |  | options for construction |
-| [options.center] | [<code>Vector2D</code>](#Vector2D) | <code>[0,0]</code> | center of rounded rectangle |
-| [options.radius] | [<code>Vector2D</code>](#Vector2D) | <code>[1,1]</code> | radius of rounded rectangle, width and height |
-| [options.corner1] | [<code>Vector2D</code>](#Vector2D) | <code>[0,0]</code> | bottom left corner of rounded rectangle (alternate) |
-| [options.corner2] | [<code>Vector2D</code>](#Vector2D) | <code>[0,0]</code> | upper right corner of rounded rectangle (alternate) |
+| [options.center] | <code>Vector2D</code> | <code>[0,0]</code> | center of rounded rectangle |
+| [options.radius] | <code>Vector2D</code> | <code>[1,1]</code> | radius of rounded rectangle, width and height |
+| [options.corner1] | <code>Vector2D</code> | <code>[0,0]</code> | bottom left corner of rounded rectangle (alternate) |
+| [options.corner2] | <code>Vector2D</code> | <code>[0,0]</code> | upper right corner of rounded rectangle (alternate) |
 | [options.roundradius] | <code>Number</code> | <code>0.2</code> | round radius of corners |
 | [options.resolution] | <code>Number</code> | <code>defaultResolution2D</code> | number of sides per 360 rotation |
 
@@ -1909,9 +1592,9 @@ Construct an elliptic cylinder.
 | [options] | <code>Object</code> |  | options for construction |
 | [options.start] | <code>Vector3</code> | <code>[0,-1,0]</code> | start point of cylinder |
 | [options.end] | <code>Vector3</code> | <code>[0,1,0]</code> | end point of cylinder |
-| [options.radius] | [<code>Vector2D</code>](#Vector2D) | <code>[1,1]</code> | radius of rounded ends, must be two dimensional array |
-| [options.radiusStart] | [<code>Vector2D</code>](#Vector2D) | <code>[1,1]</code> | OPTIONAL radius of rounded start, must be two dimensional array |
-| [options.radiusEnd] | [<code>Vector2D</code>](#Vector2D) | <code>[1,1]</code> | OPTIONAL radius of rounded end, must be two dimensional array |
+| [options.radius] | <code>Vector2D</code> | <code>[1,1]</code> | radius of rounded ends, must be two dimensional array |
+| [options.radiusStart] | <code>Vector2D</code> | <code>[1,1]</code> | OPTIONAL radius of rounded start, must be two dimensional array |
+| [options.radiusEnd] | <code>Vector2D</code> | <code>[1,1]</code> | OPTIONAL radius of rounded end, must be two dimensional array |
 | [options.resolution] | <code>Number</code> | <code>defaultResolution2D</code> | number of polygons per 360 degree revolution |
 
 **Example**  
@@ -1984,41 +1667,106 @@ Creates solid from slices (Polygon) by generating walls
 | bottom | Bottom polygon |
 | top | Top polygon |
 
-<a name="vector_char"></a>
+<a name="vectorChar"></a>
 
-## vector_char(x, y, char) ⇒ <code>Object</code>
-Construct a with, segments tupple from a character
+## vectorChar([options], [char]) ⇒ [<code>VectorCharObject</code>](#VectorCharObject)
+Construct a [VectorCharObject](#VectorCharObject) from a ascii character whose code is between 31 and 127,
+if the character is not supported it is replaced by a question mark.
 
 **Kind**: global function  
-**Returns**: <code>Object</code> - { width: X, segments: [...] }  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [options] | <code>Object</code> \| <code>String</code> |  | options for construction or ascii character |
+| [options.xOffset] | <code>Float</code> | <code>0</code> | x offset |
+| [options.yOffset] | <code>Float</code> | <code>0</code> | y offset |
+| [options.height] | <code>Float</code> | <code>21</code> | font size (uppercase height) |
+| [options.extrudeOffset] | <code>Float</code> | <code>0</code> | width of the extrusion that will be applied (manually) after the creation of the character |
+| [options.input] | <code>String</code> | <code>&#x27;?&#x27;</code> | ascii character (ignored/overwrited if provided as seconds parameter) |
+| [char] | <code>String</code> | <code>&#x27;?&#x27;</code> | ascii character |
+
+**Example**  
+```js
+let vectorCharObject = vectorChar()
+or
+let vectorCharObject = vectorChar('A')
+or
+let vectorCharObject = vectorChar({ xOffset: 57 }, 'C')
+or
+let vectorCharObject = vectorChar({ xOffset: 78, input: '!' })
+```
+<a name="vectorText"></a>
+
+## vectorText([options], [text]) ⇒ <code>Array</code>
+Construct an array of character segments from a ascii string whose characters code is between 31 and 127,
+if one character is not supported it is replaced by a question mark.
+
+**Kind**: global function  
+**Returns**: <code>Array</code> - characters segments [[[x, y], ...], ...]  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [options] | <code>Object</code> \| <code>String</code> |  | options for construction or ascii string |
+| [options.xOffset] | <code>Float</code> | <code>0</code> | x offset |
+| [options.yOffset] | <code>Float</code> | <code>0</code> | y offset |
+| [options.height] | <code>Float</code> | <code>21</code> | font size (uppercase height) |
+| [options.lineSpacing] | <code>Float</code> | <code>1.4</code> | line spacing expressed as a percentage of font size |
+| [options.letterSpacing] | <code>Float</code> | <code>1</code> | extra letter spacing expressed as a percentage of font size |
+| [options.align] | <code>String</code> | <code>&#x27;left&#x27;</code> | multi-line text alignement: left, center or right |
+| [options.extrudeOffset] | <code>Float</code> | <code>0</code> | width of the extrusion that will be applied (manually) after the creation of the character |
+| [options.input] | <code>String</code> | <code>&#x27;?&#x27;</code> | ascii string (ignored/overwrited if provided as seconds parameter) |
+| [text] | <code>String</code> | <code>&#x27;?&#x27;</code> | ascii string |
+
+**Example**  
+```js
+let textSegments = vectorText()
+or
+let textSegments = vectorText('OpenJSCAD')
+or
+let textSegments = vectorText({ yOffset: -50 }, 'OpenJSCAD')
+or
+let textSegments = vectorText({ yOffset: -80, input: 'OpenJSCAD' })
+```
+<a name="vector_char"></a>
+
+## ~~vector_char(x, y, char) ⇒ [<code>VectorCharObject</code>](#VectorCharObject)~~
+***Deprecated***
+
+Construct a [VectorCharObject](#VectorCharObject) from a ascii character whose code is between 31 and 127,
+if the character is not supported it is replaced by a question mark.
+
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | x | <code>Float</code> | x offset |
 | y | <code>Float</code> | y offset |
-| char | <code>Float</code> | character |
+| char | <code>String</code> | ascii character |
 
 **Example**  
 ```js
-let charData = vector_char(0, 12.2, 'b')
+let vectorCharObject = vector_char(36, 0, 'B')
 ```
 <a name="vector_text"></a>
 
-## vector_text(x, y, string) ⇒ <code>Array</code>
-Construct an array of with, segments tupple from a string
+## ~~vector_text(x, y, text) ⇒ <code>Array</code>~~
+***Deprecated***
+
+Construct an array of character segments from a ascii string whose characters code is between 31 and 127,
+if one character is not supported it is replaced by a question mark.
 
 **Kind**: global function  
-**Returns**: <code>Array</code> - [{ width: X, segments: [...] }]  
+**Returns**: <code>Array</code> - characters segments [[[x, y], ...], ...]  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | x | <code>Float</code> | x offset |
 | y | <code>Float</code> | y offset |
-| string | <code>Float</code> | string |
+| text | <code>String</code> | ascii string |
 
 **Example**  
 ```js
-let stringData = vector_text(0, 12.2, 'b')
+let textSegments = vector_text(0, -20, 'OpenJSCAD')
 ```
 <a name="fromSides"></a>
 
@@ -2035,17 +1783,19 @@ Construct a CAG from a list of `Side` instances.
 <a name="fromPoints"></a>
 
 ## fromPoints(points) ⇒ [<code>CAG</code>](#CAG)
-Construct a CAG from a list of points (a polygon).
+Construct a CAG from a list of points (a polygon) or an nested array of points.
 The rotation direction of the points is not relevant.
 The points can define a convex or a concave polygon.
 The polygon must not self intersect.
+Hole detection follows the even/odd rule,
+which means that the order of the paths is not important.
 
 **Kind**: global function  
 **Returns**: [<code>CAG</code>](#CAG) - new CAG object  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| points | <code>Array.&lt;points&gt;</code> | list of points in 2D space |
+| points | <code>Array.&lt;points&gt;</code> \| <code>Array.&lt;Array.&lt;points&gt;&gt;</code> | (nested) list of points in 2D space |
 
 <a name="fromObject"></a>
 
@@ -2110,7 +1860,7 @@ Construct a CSG solid from a list of `Polygon` instances.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| polygons | [<code>Array.&lt;Polygon&gt;</code>](#Polygon) | list of polygons |
+| polygons | <code>Array.&lt;Polygon&gt;</code> | list of polygons |
 
 <a name="fromSlices"></a>
 
@@ -2149,90 +1899,17 @@ Reconstruct a CSG from the output of toCompactBinary().
 | --- | --- | --- |
 | bin | <code>CompactBinary</code> | see toCompactBinary(). |
 
-<a name="Line2D"></a>
+<a name="VectorCharObject"></a>
 
-## Line2D(normal) ⇒ [<code>Line2D</code>](#Line2D)
-class Line2D
-Represents a directional line in 2D space
-A line is parametrized by its normal vector (perpendicular to the line, rotated 90 degrees counter clockwise)
-and w. The line passes through the point <normal>.times(w).
-Equation: p is on line if normal.dot(p)==w
+## VectorCharObject : <code>Object</code>
+Represents a character as segments
 
-**Kind**: global function  
+**Kind**: global typedef  
+**Properties**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | --- | --- | --- |
-| normal | [<code>Vector2D</code>](#Vector2D) | normal must be a unit vector! |
+| width | <code>Float</code> | character width |
+| height | <code>Float</code> | character height (uppercase) |
+| segments | <code>Array</code> | character segments [[[x, y], ...], ...] |
 
-<a name="OrthoNormalBasis"></a>
-
-## OrthoNormalBasis(plane, rightvector)
-class OrthoNormalBasis
-Reprojects points on a 3D plane onto a 2D plane
-or from a 2D plane back onto the 3D plane
-
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| plane | <code>Plane</code> | 
-| rightvector | [<code>Vector3D</code>](#Vector3D) \| [<code>Vector2D</code>](#Vector2D) | 
-
-<a name="fromPoints"></a>
-
-## fromPoints(points, [shared], [plane])
-Create a polygon from the given points.
-
-**Kind**: global function  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| points | <code>Array.&lt;Array&gt;</code> |  | list of points |
-| [shared] | [<code>Shared</code>](#Polygon.Shared) | <code>defaultShared</code> | shared property to apply |
-| [plane] | <code>Plane</code> |  | plane of the polygon |
-
-**Example**  
-```js
-const points = [
-  [0,  0, 0],
-  [0, 10, 0],
-  [0, 10, 10]
-]
-let polygon = CSG.Polygon.createFromPoints(points)
-```
-<a name="canonicalize"></a>
-
-## canonicalize() ⇒ [<code>CSG</code>](#CSG) \| [<code>CAG</code>](#CAG)
-Returns a cannoicalized version of the input csg/cag : ie every very close
-points get deduplicated
-
-**Kind**: global function  
-**Example**  
-```js
-let rawInput = someCSGORCAGMakingFunction()
-let canonicalized= canonicalize(rawInput)
-```
-<a name="canonicalizeCSG"></a>
-
-## canonicalizeCSG() ⇒ [<code>CSG</code>](#CSG)
-Returns a cannoicalized version of the input csg : ie every very close
-points get deduplicated
-
-**Kind**: global function  
-**Example**  
-```js
-let rawCSG = someCSGMakingFunction()
-let canonicalizedCSG = canonicalize(rawCSG)
-```
-<a name="bounds"></a>
-
-## bounds() ⇒ [<code>Array.&lt;Vector3D&gt;</code>](#Vector3D)
-Returns an array of Vector3D, providing minimum coordinates and maximum coordinates
-of this solid.
-
-**Kind**: global function  
-**Example**  
-```js
-let bounds = A.getBounds()
-let minX = bounds[0].x
-```

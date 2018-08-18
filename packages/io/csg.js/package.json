@@ -1,14 +1,14 @@
 {
   "name": "@jscad/csg",
-  "version": "0.5.4",
+  "version": "0.6.0",
   "description": "Constructive Solid Geometry (CSG) Library",
   "repository": "https://github.com/jscad/csg.js",
   "main": "csg.js",
   "scripts": {
     "build-docs": "./node_modules/.bin/jsdoc -c jsdoc.json",
-    "docs": "jsdoc2md --files 'src/**/*.js' > docs/api.md",
-    "test-api": "nyc ava './src/**/*.test.js' --concurrency 3  --verbose --timeout 40000",
-    "test-core": "nyc ava './test' --concurrency 3  --verbose --timeout 40000",
+    "docs": "jsdoc2md --files src/**/*.js > docs/api.md",
+    "test-api": "nyc ava ./src/**/*.test.js --concurrency 3  --verbose --timeout 40000",
+    "test-core": "nyc ava ./test --concurrency 3  --verbose --timeout 40000",
     "test": "npm run test-core && npm run test-api",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "preversion": "npm test",
