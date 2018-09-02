@@ -34,9 +34,9 @@
   },
   "dependencies": {
     "@jscad/core": "^0.2.3",
-    "@jscad/csg": "0.6.0",
+    "@jscad/csg": "0.7.0",
     "@jscad/csg-viewer": "github:jscad/csg-viewer",
-    "@jscad/io": "0.4.6",
+    "@jscad/io": "0.4.7",
     "@most/create": "^2.0.1",
     "ast-eval": "^0.8.0",
     "ast-parents": "0.0.1",
