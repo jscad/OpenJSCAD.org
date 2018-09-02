@@ -3,7 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
- <a name="0.6.1"></a>
+       <a name="0.7.0"></a>
+# [0.7.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/desktop@0.6.1...@jscad/desktop@0.7.0) (2018-09-02)
+
+
+### Bug Fixes
+
+* **pkg:** attempting to fix auto-releases ([#398](https://github.com/jscad/OpenJSCAD.org/issues/398)) ([bc59fcc](https://github.com/jscad/OpenJSCAD.org/commit/bc59fcc))
+
+
+### Features
+
+* **io:** add updated dependencies: enable csg to dxf ([#394](https://github.com/jscad/OpenJSCAD.org/issues/394)) ([1144a78](https://github.com/jscad/OpenJSCAD.org/commit/1144a78))
+
+
+
+
+       <a name="0.6.1"></a>
 ## [0.6.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/desktop@0.6.0...@jscad/desktop@0.6.1) (2018-04-20)
 
 
@@ -15,7 +31,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
- <a name="0.6.0"></a>
+<a name="0.6.0"></a>
 # 0.6.0 (2018-04-20)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.9.0"></a>
+# [1.9.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@1.8.4...@jscad/cli@1.9.0) (2018-09-02)
+
+
+### Features
+
+* **io:** add updated dependencies: enable csg to dxf ([#394](https://github.com/jscad/OpenJSCAD.org/issues/394)) ([1144a78](https://github.com/jscad/OpenJSCAD.org/commit/1144a78))
+
+
+
+
 <a name="1.8.4"></a>
 ## [1.8.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@1.8.3...@jscad/cli@1.8.4) (2018-05-12)
 
