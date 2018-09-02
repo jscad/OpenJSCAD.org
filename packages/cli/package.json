@@ -7,7 +7,7 @@
     "openjscad": "./cli.js"
   },
   "scripts": {
-    "test": "ava './*.test.js' --verbose --timeout 10000",
+    "test": "ava './*.test.js' --verbose --timeout 60000",
     "preversion": "npm test",
     "version": "git add -A ",
     "postversion": "git push origin master && git push origin master --tags",
@@ -33,9 +33,9 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/core": "^0.2.3",
-    "@jscad/csg": "0.5.2",
+    "@jscad/csg": "0.6.0",
     "@jscad/examples": "^1.7.2",
-    "@jscad/io": "0.4.4",
+    "@jscad/io": "0.4.6",
     "@jscad/openscad-openjscad-translator": "0.0.10"
   },
   "devDependencies": {

@@ -5,7 +5,7 @@
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "module.js",
   "scripts": {
-    "test": "ava '*.test.js' --verbose --timeout 10000",
+    "test": "ava '*.test.js' --verbose --timeout 60000",
     "preversion": "npm test",
     "version": "git add -A ",
     "postversion": "git push origin master && git push origin master --tags",
@@ -30,10 +30,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/csg": "0.5.2",
-    "@jscad/io": "0.4.4",
+    "@jscad/csg": "0.6.0",
+    "@jscad/io": "0.4.6",
     "@jscad/openscad-openjscad-translator": "0.0.10",
-    "astring": "^1.0.2",
+    "astring": "^1.3.1",
     "esprima": "^3.1.3",
     "estraverse": "^4.2.0",
     "require-from-string": "^2.0.1",
