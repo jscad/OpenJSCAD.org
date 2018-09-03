@@ -8,7 +8,7 @@ const create = require('./create')
  * @param {vec4} vector the vector to transform
  * @returns {vec4} a new vector or the receiving vector
  */
-const transformMat4 = (...params) ==> {
+const transformMat4 = (...params) => {
   let out
   let vector
   let matrix

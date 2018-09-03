@@ -19,10 +19,10 @@ module.exports = {
   min: require('./min'),
   multiply: require('./multiply'),
   negate: require('./negate'),
-  normal: require('./normal'),
+//  normal: require('./normal'),
   normalize: require('./normalize'),
-  randomNonParallel: require('./randomNonParallel'),
-  rotate: require('./rotate'),
+  random: require('./random'),
+//  rotate: require('./rotate'),
   rotateX: require('./rotateX'),
   rotateY: require('./rotateY'),
   rotateZ: require('./rotateZ'),
@@ -31,7 +31,7 @@ module.exports = {
   squaredLength: require('./squaredLength'),
   subtract: require('./subtract'),
   toString: require('./toString'),
-  transform: require('./transform'),
+//  transform: require('./transform'),
   transformMat4: require('./transformMat4'),
   unit: require('./unit')
 }

@@ -1,5 +1,5 @@
-const vec3 = require('../../math/vec3')
-const fromData = require('./fromData')
+const vec3 = require('../vec3')
+const fromValues = require('../vec4/fromValues')
 
 /**
  * Create a new plane from the given vec3 values
@@ -14,10 +14,9 @@ const fromVector3Ds = (a, b, c) => {
   let ba = vec3.subtract(b, a)
   let ca = vec3.subtract(c, a)
   let cr = vec3.cross(ba, ca)
-  let plane = vec3.unit(cr) // normal part
-  let w = vec3.dot(plane, a)
-  plane.push(w)
-  return fromData(plane)
+  let normal = vec3.unit(cr) // normal part
+  let w = vec3.dot(normal, a)
+  return fromValues(normal[0], normal[1], normal[2], w)
 }
 
 module.exports = fromVector3Ds

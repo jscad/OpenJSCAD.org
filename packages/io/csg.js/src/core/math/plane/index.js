@@ -7,8 +7,9 @@ module.exports = {
   fromNormalAndPoint: require('./fromNormalAndPoint'),
   fromObject: require('./fromObject'),
   fromPoints: require('./fromPoints'),
+  fromValues: require('../vec4/fromValues'),
   fromVector3Ds: require('./fromVector3Ds'),
   signedDistanceToPoint: require('./signedDistanceToPoint'),
   toString: require('../vec4/toString'),
-  transform: require('./transform'),
+  transformMat4: require('./transformMat4'),
 }

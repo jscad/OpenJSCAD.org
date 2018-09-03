@@ -5,7 +5,7 @@ const create = require('./create')
  * Performs a linear interpolation between two vec3's
  *
  * @param {vec3} out the receiving vector
- * @param {Number} t interpolation amount between the two inputs
+ * @param {Number} t interpolant (0.0 to 1.0) applied between the two inputs
  * @param {vec3} a the first operand
  * @param {vec3} b the second operand
  * @returns {vec3} out
@@ -15,7 +15,7 @@ function lerp (...params) {
   let t
   let a
   let b
-  if (params.length === 2) {
+  if (params.length === 3) {
     out = create()
     t = params[0]
     a = params[1]

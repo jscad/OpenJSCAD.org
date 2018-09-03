@@ -1,14 +1,29 @@
-module.exports = unit
-const fromValues = require('./fromValues')
+const create = require('./create')
 const length = require('./length')
+const fromValues = require('./fromValues')
 
 /**
- * Calculates the unit length of a vec3
+ * Calculates the unit vector of the given vector
  *
- * @param {vec3} a vector to calculate unit length of
- * @returns {Number} unit length of a
+ * @param {vec3} [out] - the optional receiving vector
+ * @param {vec3} vector - the base vector for calculations
+ * @returns {vec3} unit vector of the given vector
  */
-function unit (a) {
-  const l = length(a)
-  return fromValues(a[0] / l, a[1] / l, a[2] / l)
+const unit = (...params) => {
+  let out
+  let vector
+  if (params.length === 1) {
+    out = create()
+    vector = params[0]
+  } else {
+    out = params[0]
+    vector = params[1]
+  }
+  let magnitude = length(vector) // calculate the magnitude
+  out[0] = vector[0] / magnitude
+  out[1] = vector[1] / magnitude
+  out[2] = vector[2] / magnitude
+  return out
 }
+
+module.exports = unit

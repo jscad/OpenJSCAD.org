@@ -5,7 +5,7 @@
  * @returns {String} representative string
  */
 const toString = (vec) => {
-  return `(${vec[0].toFixed(5)}, ${vec[1].toFixed(5)}, ${vec[2].toFixed(5)}, ${vec[3].toFixed(5)})`
+  return `(${vec[0].toFixed(9)}, ${vec[1].toFixed(9)}, ${vec[2].toFixed(9)}, ${vec[3].toFixed(9)})`
 }
 
 module.exports = toString
