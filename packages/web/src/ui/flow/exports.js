@@ -1,6 +1,6 @@
 const most = require('most')
 const {exportFilePathFromFormatAndDesign} = require('../../core/io/exportUtils')
-const withLatestFrom = require('../../utils/observable-utils/withLatestFrom')
+const withLatestFrom = require('@jscad/core/observable-utils/withLatestFrom')
 // const saveDataToFs = require('../../core/io/saveDataToFs')
 
 const reducers = {

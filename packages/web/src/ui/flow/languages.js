@@ -1,6 +1,6 @@
 const most = require('most')
-const withLatestFrom = require('../../utils/observable-utils/withLatestFrom')
-const holdUntil = require('../../utils/observable-utils/holdUntil')
+const withLatestFrom = require('@jscad/core/observable-utils/withLatestFrom')
+const holdUntil = require('@jscad/core/observable-utils/holdUntil')
 
 const reducers = {
   initialize: state => {

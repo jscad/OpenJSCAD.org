@@ -1,5 +1,5 @@
 const most = require('most')
-const withLatestFrom = require('../../utils/observable-utils/withLatestFrom')
+const withLatestFrom = require('@jscad/core/observable-utils/withLatestFrom')
 
 const actions = ({sources}) => {
   const setActiveTool$ = most.mergeArray([
