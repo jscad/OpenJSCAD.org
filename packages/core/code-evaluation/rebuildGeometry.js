@@ -1,6 +1,6 @@
 const loadDesign = require('../code-loading/loadDesign')
 const instanciateDesign = require('./instanciateDesign')
-const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
+const applyParameterDefinitions = require('../parameters/applyParameterDefinitions')
 
 const rebuildSolids = (data, callback) => {
   const defaults = {vtreeMode: true}
@@ -9,7 +9,7 @@ const rebuildSolids = (data, callback) => {
 
   // let start = new Date()
 
-  const designData = loadDesign(source, mainPath, apiMainPath, data.filesAndFolders)
+  const designData = loadDesign(source, mainPath, apiMainPath, data.filesAndFolders, data.parameterValues)
   // send back parameter definitions & values
   // in a worker this would be a postmessage, this is sent back early so that uis can update
   // the parameters editor before the solids are displayed (which takes longer)

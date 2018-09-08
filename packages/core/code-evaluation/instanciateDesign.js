@@ -2,7 +2,7 @@
 const makeBuildCachedGeometryFromTree = require('jscad-tree-experiment').buildCachedGeometry
 const { CAG, CSG } = require('@jscad/csg')
 const {isCAG, isCSG} = require('@jscad/csg')
-const {toArray} = require('../../utils/utils')
+const {toArray} = require('../utils/arrays')
 
 // const toCompactBinary = require('./toCompactTest')
 

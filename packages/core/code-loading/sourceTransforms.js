@@ -1,5 +1,5 @@
-const isCommonJsModule = require('@jscad/core/code-loading/isCommonJsModule')
-const modulifySource = require('../code-loading/modulifySource')
+const isCommonJsModule = require('./isCommonJsModule')
+const modulifySource = require('./modulifySource')
 
 const passThroughTransform = (options, entry) => entry
 

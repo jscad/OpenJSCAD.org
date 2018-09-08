@@ -4,7 +4,7 @@ const {head} = require('@jscad/core/utils/arrays')
 const makeFakeFs = require('./makeFakeFs')
 const {walkFileTree} = require('./walkFileTree')
 const {changedFiles, flattenFiles} = require('./utils')
-const getFileExtensionFromString = require('../../utils/getFileExtensionFromString')
+const getFileExtensionFromString = require('@jscad/core/utils/getFileExtensionFromString')
 const makeLogger = require('../../utils/logger')
 
 const makeMemFsSideEffect = (params) => {

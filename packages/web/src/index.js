@@ -51,7 +51,7 @@ function makeJscad (targetElement, options) {
   })
 
   // web workers
-  const solidWorker = require('@jscad/core/sideEffects/worker')(require('./core/code-evaluation/rebuildGeometryWorker.js'))
+  const solidWorker = require('@jscad/core/sideEffects/worker')(require('@jscad/core/code-evaluation/rebuildGeometryWorker.js'))
   // generic design parameter handling
   const paramsCallbacktoStream = require('@jscad/core/observable-utils/callbackToObservable')()
   // generic editor events handling

@@ -35,11 +35,19 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
     if (currentGroup && type !== 'group') {
       trClassName += ' ' + currentGroup + ' open'
     }
+
+    const groupOpenIcon = html`
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>`
+    const groupClosedIcon = html`
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg>`
+
     if (type === 'group') {
       label = html`<h1>${label}</h1>`
       trClassName = `groupTitle ${paramDefinition.name}`
       currentGroup = paramDefinition.name
-      subControls = subControls.map(control => html`<th class=${control.className}> ${control.text} </th>`)
+      subControls = subControls.map(control => html`<th class='${control.className}'  >
+        ${control.text} <span class='icon groupStatus'>${groupClosedIcon}</span>
+      </th>`)
     } else {
       subControls.forEach(control => {
         control.onchange = function (e) {
@@ -64,6 +72,15 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
     // this is to make groups collapsible
     if (type === 'group') {
       element.onclick = function (event) {
+        console.log('foo', element)
+        if (element.className.includes('open')) {
+          element.classList.remove('open')
+          element.classList.add('closed')
+        } else {
+          element.classList.remove('closed')
+          element.classList.add('open')
+        }
+
         const className = event.target.parentNode.parentNode.className
           .replace('groupTitle', '')
           .replace(' ', '')
@@ -82,6 +99,8 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
             item.classList.add('open')
           }
         })
+        // event.stopPropagation()
+        return true
       }
     }
 

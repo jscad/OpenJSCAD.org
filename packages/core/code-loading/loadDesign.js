@@ -1,8 +1,8 @@
 // loading
-const isCommonJsModule = require('@jscad/core/code-loading/isCommonJsModule')
-const modulifySource = require('../code-loading/modulifySource')
-const requireDesignFromModule = require('@jscad/core/code-loading/requireDesignFromModule')
-const getAllParameterDefintionsAndValues = require('@jscad/core/parameters/getParameterDefinitionsAndValues')
+const isCommonJsModule = require('./isCommonJsModule')
+const modulifySource = require('./modulifySource')
+const requireDesignFromModule = require('./requireDesignFromModule')
+const getAllParameterDefintionsAndValues = require('../parameters/getParameterDefinitionsAndValues')
 const transformSources = require('./sourceTransforms')
 
 // taken verbatim from https://github.com/iliakan/detect-node
@@ -52,14 +52,16 @@ const loadDesign = (source, mainPath, apiMainPath, filesAndFolders, parameterVal
   }
   // now check if we need fake require or not
   const requireFn = hasRequire() ? require : makeWebRequire(filesAndFolders, {apiMainPath})
+  // rootModule SHOULD contain a main() entry and optionally a getParameterDefinitions entrye
   const rootModule = requireDesignFromModule(designRoot.path, requireFn)
+  console.log('rootModule', rootModule, 'parameterValuesOverride', parameterValuesOverride)
   // const requireUncached = require('../code-loading/requireUncached')
   // TODO: only uncache when needed
   // requireUncached(mainPath)
 
   // the design (module tree) has been loaded at this stage
   // now we can get our usefull data
-  const parameters = getAllParameterDefintionsAndValues(rootModule)
+  const parameters = getAllParameterDefintionsAndValues(rootModule, parameterValuesOverride)
   const parameterDefinitions = parameters.parameterDefinitions
   const parameterDefaults = parameters.parameterValues
   // const parameterValues = Object.assign({}, parameters.parameterValues, parameterValuesOverride)

@@ -5,19 +5,19 @@ const doesModuleExportParameterDefiniitions = moduleToCheck => {
   return moduleToCheck && 'getParameterDefinitions' in moduleToCheck
 }
 
-const getRawParameterDefinitionsAndValues = (scriptRootModule) => {
+const getRawParameterDefinitionsAndValues = (rootModule, overrides) => {
   let parameterValues = {}
   let parameterDefinitions = []
-  if (doesModuleExportParameterDefiniitions(scriptRootModule)) {
-    parameterDefinitions = scriptRootModule.getParameterDefinitions() || []
-    parameterValues = getParameterValuesFromParameters(scriptRootModule.getParameterDefinitions)
+  if (doesModuleExportParameterDefiniitions(rootModule)) {
+    parameterDefinitions = rootModule.getParameterDefinitions(overrides) || []
+    parameterValues = getParameterValuesFromParameters(parameterDefinitions)
   }
 
   return {parameterDefinitions, parameterValues}
 }
 
-const getAllParameterDefintionsAndValues = (design, overrides) => {
-  let {parameterDefinitions, parameterValues} = getRawParameterDefinitionsAndValues(design)
+const getAllParameterDefintionsAndValues = (rootModule, overrides) => {
+  let {parameterDefinitions, parameterValues} = getRawParameterDefinitionsAndValues(rootModule, overrides)
   parameterValues = Object.assign({}, parameterValues, overrides)
   parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, parameterDefinitions) : parameterValues
 

@@ -1,11 +1,10 @@
 /**
- * @param  {} getParameterDefinitions
+ * @param  {} parameterDefinitions
  * @param  {} inputParameters
  */
-module.exports = function getParameterValuesFromParameters (getParameterDefinitions, inputParameters) {
+module.exports = function getParameterValuesFromParameters (parameterDefinitions, inputParameters) {
   if (typeof getParameterDefinitions !== 'undefined') {
     let parameterValues = {}
-    const parameterDefinitions = getParameterDefinitions()
     for (let a in parameterDefinitions) { // defaults, given by getParameterDefinitions()
       let x = parameterDefinitions[a]
       if ('default' in x) {

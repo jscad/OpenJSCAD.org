@@ -92,7 +92,9 @@ const conversionFormats = [
   'stl',
   'dxf',
   // 2D file formats
-  'svg'
+  'svg',
+  'ttf',
+  'woff'
 ]
 
 // formats that can be inported
@@ -178,7 +180,7 @@ const supportedInputFormats = [
     type: 'font',
     binary: false,
     convertableToJscad: false
-  } 
+  }
 
 ]
 
