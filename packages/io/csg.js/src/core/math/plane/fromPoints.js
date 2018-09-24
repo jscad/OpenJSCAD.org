@@ -9,10 +9,10 @@ const fromVector3Ds = require('./fromVector3Ds')
  * @returns {Array} a new plane with properly typed values
  */
 const fromPoints = (a, b, c) => {
-  a = vec3.fromVarious(a)
-  b = vec3.fromVarious(b)
-  c = vec3.fromVarious(c)
-  return fromVector3Ds(a, b, c)
+  const v1 = vec3.fromVarious(a)
+  const v2 = vec3.fromVarious(b)
+  const v3 = vec3.fromVarious(c)
+  return fromVector3Ds(v1, v2, v3)
 }
 
 module.exports = fromPoints

@@ -14,7 +14,6 @@ module.exports = {
   identity: require('./identity'),
   isMirroring: require('./isMirroring'),
   mirror: require('./mirror'),
-//  min: require('./min'),
   multiply: require('./multiply'),
   rotate: require('./rotate'),
   rotateX: require('./rotateX'),
@@ -22,6 +21,6 @@ module.exports = {
   rotateZ: require('./rotateZ'),
   scale: require('./scale'),
   subtract: require('./subtract'),
-// toString: require('./toString'),
+  toString: require('./toString'),
   translate: require('./translate')
 }

@@ -1,9 +1,9 @@
 const test = require('ava')
-const {fromScalar, fromValues, fromVec2, toString} = require('./index')
+const { fromScalar, fromVec2, toString } = require('./index')
 
-const {compareVectors} = require('../../../../test/helpers/index')
+const { compareVectors } = require('../../../../test/helpers/index')
 
-test('vec3: fromScalar() should return a new vec3 with correct values', t => {
+test('vec3: fromScalar() should return a new vec3 with correct values', (t) => {
   const obs1 = fromScalar(0)
   t.true(compareVectors(obs1, [0, 0, 0]))
 
@@ -11,7 +11,7 @@ test('vec3: fromScalar() should return a new vec3 with correct values', t => {
   t.true(compareVectors(obs2, [-5, -5, -5]))
 })
 
-test('vec3: fromVec2() should return a new vec3 with correct values', t => {
+test('vec3: fromVec2() should return a new vec3 with correct values', (t) => {
   const obs1 = fromVec2([0, 0])
   t.true(compareVectors(obs1, [0, 0, 0]))
 

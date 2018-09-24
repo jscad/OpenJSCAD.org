@@ -1,5 +1,3 @@
-module.exports = fromValues
-
 /**
  * Creates a new vec3 initialized with the given values
  *
@@ -8,10 +6,12 @@ module.exports = fromValues
  * @param {Number} z Z component
  * @returns {vec3} a new 3D vector
  */
-function fromValues (x, y, z) {
-  let out = new Float32Array(3)
+const fromValues = (x, y, z) => {
+  const out = new Float32Array(3)
   out[0] = x
   out[1] = y
   out[2] = z
   return out
 }
+
+module.exports = fromValues

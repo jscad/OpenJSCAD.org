@@ -1,5 +1,6 @@
-const {EPSILON} = require('./constants')
 const create = require('./create')
+
+const { EPSILON } = require('./constants')
 
 /**
  * Creates a matrix from a given angle around a given axis
@@ -13,7 +14,7 @@ const create = require('./create')
  * @param {vec3} axis the axis to rotate around
  * @returns {mat4} out
  */
-function fromRotation (...params) {
+const fromRotation = (...params) => {
   let out
   let rad
   let axis
@@ -29,7 +30,6 @@ function fromRotation (...params) {
   }
   let [x, y, z] = axis
   let len = Math.sqrt(x * x + y * y + z * z)
-  let s, c, t
 
   if (Math.abs(len) < EPSILON) { return null }
 
@@ -38,9 +38,9 @@ function fromRotation (...params) {
   y *= len
   z *= len
 
-  s = Math.sin(rad)
-  c = Math.cos(rad)
-  t = 1 - c
+  const s = Math.sin(rad)
+  const c = Math.cos(rad)
+  const t = 1 - c
 
   // Perform rotation-specific matrix multiplication
   out[0] = x * x * t + c

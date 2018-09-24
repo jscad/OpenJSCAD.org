@@ -11,7 +11,7 @@ const create = require('./create')
  * @param {vec3} v Translation vector
  * @returns {mat4} out
  */
-function fromTranslation (...params) {
+const fromTranslation = (...params) => {
   let out
   let v
   if (params.length === 1) {

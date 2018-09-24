@@ -1,4 +1,6 @@
-const {IsFloat} = require('../../utils/typeChecks')
+const { create } = require('./index')
+
+const { IsFloat } = require('../../utils/typeChecks')
 
 /**
  * Represents a 3D vector with X, Y, Z coordinates.
@@ -10,8 +12,8 @@ const {IsFloat} = require('../../utils/typeChecks')
  * fromVarious(1, 2); // assumes z=0
  * fromVarious([1, 2]); // assumes z=0
  */
-function fromVarious (...params) {
-  let out = new Float32Array(3)
+const fromVarious = (...params) => {
+  const out = create()
   if (params.length === 3) {
     out[0] = parseFloat(params[0])
     out[1] = parseFloat(params[1])
@@ -23,15 +25,6 @@ function fromVarious (...params) {
   } else if (params.length === 1) {
     const x = params[0]
     if (typeof (x) === 'object') {
-//      if (x instanceof vec3) {
-//        out[0] = x[0]
-//        out[1] = x[1]
-//        out[2] = x[2]
-//      } else if (x instanceof Vector2D) {
-//        out[0] = x[0]
-//        out[1] = x[1]
-//        out[2] = 0
-//      } else 
       if (x instanceof Array) {
         out[0] = parseFloat(x[0])
         out[1] = out[0]
@@ -61,7 +54,7 @@ function fromVarious (...params) {
       }
     } else {
       // non-object so try for primitive
-      var v = parseFloat(x)
+      const v = parseFloat(x)
       out[0] = v
       out[1] = v
       out[2] = v

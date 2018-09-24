@@ -1,5 +1,3 @@
-module.exports = squaredDistance
-
 /**
  * Calculates the squared euclidian distance between two vec2's
  *
@@ -7,8 +5,10 @@ module.exports = squaredDistance
  * @param {vec2} b the second operand
  * @returns {Number} squared distance between a and b
  */
-function squaredDistance (a, b) {
-  let x = b[0] - a[0]
-  let y = b[1] - a[1]
+const squaredDistance = (a, b) => {
+  const x = b[0] - a[0]
+  const y = b[1] - a[1]
   return x * x + y * y
 }
+
+module.exports = squaredDistance

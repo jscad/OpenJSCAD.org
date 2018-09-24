@@ -1,4 +1,3 @@
-module.exports = rotate
 const create = require('./create')
 
 /**
@@ -9,7 +8,7 @@ const create = require('./create')
  * @param {vec2} vector the vector to rotate
  * @returns {vec2} out
  */
-function rotate (...params) {
+const rotate = (...params) => {
   let out
   let vector
   let angle
@@ -33,3 +32,5 @@ function rotate (...params) {
 
   return out
 }
+
+module.exports = rotate

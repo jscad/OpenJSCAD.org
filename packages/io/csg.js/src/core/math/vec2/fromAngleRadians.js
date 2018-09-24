@@ -1,8 +1,7 @@
-const fromAngleRadians = radians => {
-  let out = new Float32Array(3)
-  out[0] = Math.cos(radians)
-  out[1] = Math.sin(radians)
-  return out
+const fromValues = require('./fromValues')
+
+const fromAngleRadians = (radians) => {
+  return fromValues(Math.cos(radians), Math.sin(radians))
 }
 
 module.exports = fromAngleRadians

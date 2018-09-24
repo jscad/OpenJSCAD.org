@@ -1,4 +1,5 @@
 const create = require('./create')
+
 /**
  * Creates a matrix from a vector scaling
  * This is equivalent to (but much faster than):
@@ -10,7 +11,7 @@ const create = require('./create')
  * @param {vec3} v Scaling vector
  * @returns {mat4} out
  */
-function fromScaling (...params) {
+const fromScaling = (...params) => {
   let out
   let v
   if (params.length === 1) {

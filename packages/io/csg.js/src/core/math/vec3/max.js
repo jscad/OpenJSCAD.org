@@ -1,5 +1,5 @@
-module.exports = max
 const create = require('./create')
+
 /**
  * Returns the maximum of two vec3's
  *
@@ -8,7 +8,7 @@ const create = require('./create')
  * @param {vec3} b the second operand
  * @returns {vec3} out
  */
-function max (...params) {
+const max = (...params) => {
   let out
   let a
   let b
@@ -26,3 +26,5 @@ function max (...params) {
   out[2] = Math.max(a[2], b[2])
   return out
 }
+
+module.exports = max

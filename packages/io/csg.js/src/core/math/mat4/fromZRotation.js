@@ -11,7 +11,7 @@ const create = require('./create')
  * @param {Number} rad the angle to rotate the matrix by
  * @returns {mat4} out
  */
-function fromZRotation (...params) {
+const fromZRotation = (...params) => {
   let out
   let rad
   if (params.length === 1) {
@@ -21,8 +21,8 @@ function fromZRotation (...params) {
     out = params[0]
     rad = params[1]
   }
-  let s = Math.sin(rad)
-  let c = Math.cos(rad)
+  const s = Math.sin(rad)
+  const c = Math.cos(rad)
 
   // Perform axis-specific matrix multiplication
   out[0] = c

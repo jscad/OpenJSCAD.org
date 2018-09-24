@@ -1,4 +1,3 @@
-module.exports = mirror
 const create = require('./create')
 const fromValues = require('./fromValues')
 
@@ -7,11 +6,11 @@ const fromValues = require('./fromValues')
  * create an affine matrix for mirroring into an arbitrary plane:
  *
  * @param {mat4} out the receiving matrix (optional)
- * @param {vec4} v the vec4 to mirror the matrix by
+ * @param {vec3} v the vec3 to mirror the matrix by
  * @param {mat4} a the matrix to mirror
  * @returns {mat4} out
- **/
-function mirror (...params) {
+ */
+const mirror = (...params) => {
   let out
   let a
   let v
@@ -25,9 +24,9 @@ function mirror (...params) {
     a = params[2]
   }
 
-  let x = v[0]
-  let y = v[1]
-  let z = v[2]
+  const x = v[0]
+  const y = v[1]
+  const z = v[2]
 
   out[0] = a[0] * x
   out[1] = a[1] * x
@@ -48,18 +47,16 @@ function mirror (...params) {
   return out
 }
 
-// plane = [x,y,z,w]//x,y,z are normals, w is ...w
 /**
  * m the mat4 by the dimensions in the given vec3
  * create an affine matrix for mirroring into an arbitrary plane:
-
  *
  * @param {mat4} out the receiving matrix
  * @param {mat4} a the matrix to mirror
  * @param {vec4} plane the vec4 to mirror the matrix by
  * @returns {mat4} out
- **/
-function mirroring (...params) {
+ */
+const mirroring = (...params) => {
   let out
   let a
   let plane
@@ -74,10 +71,12 @@ function mirroring (...params) {
   }
   const [nx, ny, nz, w] = plane
   const elements = [
-        (1.0 - 2.0 * nx * nx), (-2.0 * ny * nx), (-2.0 * nz * nx), 0,
-        (-2.0 * nx * ny), (1.0 - 2.0 * ny * ny), (-2.0 * nz * ny), 0,
-        (-2.0 * nx * nz), (-2.0 * ny * nz), (1.0 - 2.0 * nz * nz), 0,
-        (2.0 * nx * w), (2.0 * ny * w), (2.0 * nz * w), 1
+    (1.0 - 2.0 * nx * nx), (-2.0 * ny * nx), (-2.0 * nz * nx), 0,
+    (-2.0 * nx * ny), (1.0 - 2.0 * ny * ny), (-2.0 * nz * ny), 0,
+    (-2.0 * nx * nz), (-2.0 * ny * nz), (1.0 - 2.0 * nz * nz), 0,
+    (2.0 * nx * w), (2.0 * ny * w), (2.0 * nz * w), 1
   ]
   return fromValues(...elements)
 }
+
+module.exports = mirror

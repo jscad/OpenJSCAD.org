@@ -1,5 +1,3 @@
-module.exports = distance
-
 /**
  * Calculates the euclidian distance between two vec3's
  *
@@ -7,9 +5,11 @@ module.exports = distance
  * @param {vec3} b the second operand
  * @returns {Number} distance between a and b
  */
-function distance (a, b) {
-  let x = b[0] - a[0]
-  let y = b[1] - a[1]
-  let z = b[2] - a[2]
+const distance = (a, b) => {
+  const x = b[0] - a[0]
+  const y = b[1] - a[1]
+  const z = b[2] - a[2]
   return Math.sqrt(x * x + y * y + z * z)
 }
+
+module.exports = distance

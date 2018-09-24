@@ -1,5 +1,3 @@
-module.exports = dot
-
 /**
  * Calculates the dot product of two vec3's
  *
@@ -7,6 +5,8 @@ module.exports = dot
  * @param {vec3} b the second operand
  * @returns {Number} dot product of a and b
  */
-function dot (a, b) {
+const dot = (a, b) => {
   return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
 }
+
+module.exports = dot

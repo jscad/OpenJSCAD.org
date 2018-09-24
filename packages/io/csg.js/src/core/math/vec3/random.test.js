@@ -1,9 +1,9 @@
 const test = require('ava')
-const {random, fromValues} = require('./index')
+const { random } = require('./index')
 
-const {compareVectors} = require('../../../../test/helpers/index')
+const { compareVectors } = require('../../../../test/helpers/index')
 
-test('vec3: random() should return a vec3 with correct values', t => {
+test('vec3: random() should return a vec3 with correct values', (t) => {
   const obs1 = random([0, 0, 0])
   t.true(compareVectors(obs1, [1, 0, 0]))
 

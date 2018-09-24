@@ -1,9 +1,6 @@
-const {IsFloat} = require('../utils')
+const { IsFloat } = require('../utils')
 
-/** Class Vector2D
- * Represents a 2D vector with X, Y coordinates
- * @constructor
- *
+/**
  * @example
  * new CSG.Vector2D(1, 2);
  * new CSG.Vector2D([1, 2]);

@@ -1,12 +1,12 @@
-module.exports = identity
 const create = require('./create')
+
 /**
  * Set a mat4 to the identity matrix
  *
  * @param {mat4} out the receiving matrix
  * @returns {mat4} out
  */
-function identity (...params) {
+const identity = (...params) => {
   let out
   if (params.length === 1) {
     out = params[0]
@@ -31,3 +31,5 @@ function identity (...params) {
   out[15] = 1
   return out
 };
+
+module.exports = identity

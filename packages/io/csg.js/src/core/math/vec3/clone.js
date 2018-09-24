@@ -1,15 +1,13 @@
-module.exports = clone
+const fromValues = require('./fromValues')
 
 /**
  * Creates a new vec3 initialized with values from an existing vector
  *
  * @param {vec3} a vector to clone
- * @returns {vec3} a new 3D vector
+ * @returns {vec3} a new vector
  */
-function clone (a) {
-  var out = new Float32Array(3)
-  out[0] = a[0]
-  out[1] = a[1]
-  out[2] = a[2]
-  return out
+const clone = (vec) => {
+  return fromValues(vec[0], vec[1], vec[2])
 }
+
+module.exports = clone

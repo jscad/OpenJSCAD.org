@@ -3,7 +3,6 @@ module.exports = {
   create: require('../vec4/create'),
   equals: require('./equals'),
   flip: require('./flip'),
-  fromData: require('./fromData'),
   fromNormalAndPoint: require('./fromNormalAndPoint'),
   fromObject: require('./fromObject'),
   fromPoints: require('./fromPoints'),
@@ -11,5 +10,5 @@ module.exports = {
   fromVector3Ds: require('./fromVector3Ds'),
   signedDistanceToPoint: require('./signedDistanceToPoint'),
   toString: require('../vec4/toString'),
-  transformMat4: require('./transformMat4'),
+  transformMat4: require('./transformMat4')
 }

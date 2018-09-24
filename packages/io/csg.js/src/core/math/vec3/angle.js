@@ -1,5 +1,3 @@
-module.exports = angle
-
 const fromValues = require('./fromValues')
 const normalize = require('./normalize')
 const dot = require('./dot')
@@ -10,7 +8,7 @@ const dot = require('./dot')
  * @param {vec3} b The second operand
  * @returns {Number} The angle in radians
  */
-function angle (a, b) {
+const angle = (a, b) => {
   const tempA = fromValues(a[0], a[1], a[2])
   const tempB = fromValues(b[0], b[1], b[2])
 
@@ -20,3 +18,5 @@ function angle (a, b) {
   const cosine = dot(tempA, tempB)
   return cosine > 1.0 ? 0 : Math.acos(cosine)
 }
+
+module.exports = angle

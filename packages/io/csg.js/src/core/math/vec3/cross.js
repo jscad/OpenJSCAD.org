@@ -1,4 +1,3 @@
-module.exports = cross
 const create = require('./create')
 
 /**
@@ -9,7 +8,7 @@ const create = require('./create')
  * @param {vec3} b the second operand
  * @returns {vec3} out
  */
-function cross (...params) {
+const cross = (...params) => {
   let out
   let a
   let b
@@ -22,15 +21,17 @@ function cross (...params) {
     a = params[1]
     b = params[2]
   }
-  let ax = a[0]
-  let ay = a[1]
-  let az = a[2]
-  let bx = b[0]
-  let by = b[1]
-  let bz = b[2]
+  const ax = a[0]
+  const ay = a[1]
+  const az = a[2]
+  const bx = b[0]
+  const by = b[1]
+  const bz = b[2]
 
   out[0] = ay * bz - az * by
   out[1] = az * bx - ax * bz
   out[2] = ax * by - ay * bx
   return out
 }
+
+module.exports = cross

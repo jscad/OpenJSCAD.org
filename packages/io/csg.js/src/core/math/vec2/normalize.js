@@ -1,4 +1,3 @@
-module.exports = normalize
 const create = require('./create')
 
 /**
@@ -8,12 +7,12 @@ const create = require('./create')
  * @param {vec2} a vector to normalize
  * @returns {vec2} out
  */
-function normalize (...params) {
+const normalize = (...params) => {
   let a
   let out
   if (params.length === 1) {
-    a = params[0]
     out = create()
+    a = params[0]
   } else {
     out = params[0]
     a = params[1]
@@ -29,3 +28,5 @@ function normalize (...params) {
   }
   return out
 }
+
+module.exports = normalize

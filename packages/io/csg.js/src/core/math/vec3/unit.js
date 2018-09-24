@@ -1,6 +1,5 @@
 const create = require('./create')
 const length = require('./length')
-const fromValues = require('./fromValues')
 
 /**
  * Calculates the unit vector of the given vector
@@ -19,7 +18,7 @@ const unit = (...params) => {
     out = params[0]
     vector = params[1]
   }
-  let magnitude = length(vector) // calculate the magnitude
+  const magnitude = length(vector) // calculate the magnitude
   out[0] = vector[0] / magnitude
   out[1] = vector[1] / magnitude
   out[2] = vector[2] / magnitude

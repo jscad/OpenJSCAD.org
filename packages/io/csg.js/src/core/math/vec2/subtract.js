@@ -1,4 +1,3 @@
-module.exports = subtract
 const create = require('./create')
 
 /**
@@ -9,7 +8,7 @@ const create = require('./create')
  * @param {vec2} b the second operand
  * @returns {vec2} out
  */
-function subtract (...params) {
+const subtract = (...params) => {
   let out
   let a
   let b
@@ -26,3 +25,5 @@ function subtract (...params) {
   out[1] = a[1] - b[1]
   return out
 }
+
+module.exports = subtract

@@ -8,7 +8,7 @@ const create = require('./create')
  * @param {mat4} b the second operand
  * @returns {mat4} out
  */
-function add (...params) {
+const add = (...params) => {
   let out
   let a
   let b
@@ -39,4 +39,5 @@ function add (...params) {
   out[15] = a[15] + b[15]
   return out
 }
+
 module.exports = add

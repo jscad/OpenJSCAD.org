@@ -1,4 +1,3 @@
-module.exports = scale
 const create = require('./create')
 
 /**
@@ -9,7 +8,7 @@ const create = require('./create')
  * @param {vec3} vector the vector to scale
  * @returns {vec3} out
  */
-function scale (...params) {
+const scale = (...params) => {
   let out
   let vector
   let amount
@@ -27,3 +26,5 @@ function scale (...params) {
   out[2] = vector[2] * amount
   return out
 }
+
+module.exports = scale

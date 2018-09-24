@@ -1,4 +1,5 @@
 const create = require('./create')
+
 /**
  * Creates a matrix from the given angle around the X axis
  * This is equivalent to (but much faster than):
@@ -10,7 +11,7 @@ const create = require('./create')
  * @param {Number} rad the angle to rotate the matrix by
  * @returns {mat4} out
  */
-function fromXRotation (...params) {
+const fromXRotation = (...params) => {
   let out
   let rad
   if (params.length === 1) {
@@ -20,8 +21,8 @@ function fromXRotation (...params) {
     out = params[0]
     rad = params[1]
   }
-  let s = Math.sin(rad)
-  let c = Math.cos(rad)
+  const s = Math.sin(rad)
+  const c = Math.cos(rad)
 
   // Perform axis-specific matrix multiplication
   out[0] = 1

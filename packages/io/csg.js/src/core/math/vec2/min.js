@@ -1,5 +1,5 @@
-module.exports = min
 const create = require('./create')
+
 /**
  * Returns the minimum of two vec2's
  *
@@ -8,7 +8,7 @@ const create = require('./create')
  * @param {vec2} b the second operand
  * @returns {vec2} out
  */
-function min (...params) {
+const min = (...params) => {
   let out
   let a
   let b
@@ -25,3 +25,5 @@ function min (...params) {
   out[1] = Math.min(a[1], b[1])
   return out
 }
+
+module.exports = min

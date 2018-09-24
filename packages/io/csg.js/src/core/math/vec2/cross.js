@@ -1,20 +1,19 @@
-module.exports = cross
-const create = require('./create')
+const vec3 = require('../vec3/index')
 
 /**
- * Computes the cross product of two vec2's
+ * Computes the cross product (3D) of two vectors
  *
- * @param {vec2} out the receiving vector
+ * @param {vec3} out : the receiving vec3 (IMPORTANT)
  * @param {vec2} a the first operand
  * @param {vec2} b the second operand
- * @returns {vec2} out
+ * @returns {vec3} cross product
  */
-function cross (...params) {
+const cross = (...params) => {
   let out
   let a
   let b
   if (params.length === 2) {
-    out = create()
+    out = vec3.create()
     a = params[0]
     b = params[1]
   } else {
@@ -22,10 +21,11 @@ function cross (...params) {
     a = params[1]
     b = params[2]
   }
-  let z = a[0] * b[1] - a[1] * b[0]
-  out[0] = out[1] = 0
-  out[2] = z
+  out[0] = 0
+  out[1] = 0
+  out[2] = a[0] * b[1] - a[1] * b[0]
+  // alternative return vec3.cross(out, vec3.fromVec2(a), vec3.fromVec2(b))
   return out
 }
 
-
+module.exports = cross

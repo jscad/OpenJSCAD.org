@@ -2,7 +2,7 @@ module.exports = {
   abs: require('./abs'),
   add: require('./add'),
   angle: require('./angle'),
-  angleDegree: require('./angleDegrees'),
+  angleDegrees: require('./angleDegrees'),
   angleRadians: require('./angleRadians'),
   clone: require('./clone'),
   create: require('./create'),

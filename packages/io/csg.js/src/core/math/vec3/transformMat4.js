@@ -1,4 +1,3 @@
-module.exports = transformMat4
 const create = require('./create')
 
 /**
@@ -10,7 +9,7 @@ const create = require('./create')
  * @param {vec3} vector the vector to transform
  * @returns {vec3} out
  */
-function transformMat4 (...params) {
+const transformMat4 = (...params) => {
   let out
   let vector
   let matrix
@@ -24,9 +23,9 @@ function transformMat4 (...params) {
     vector = params[2]
   }
 
-  let x = vector[0]
-  let y = vector[1]
-  let z = vector[2]
+  const x = vector[0]
+  const y = vector[1]
+  const z = vector[2]
   let w = matrix[3] * x + matrix[7] * y + matrix[11] * z + matrix[15]
   w = w || 1.0
   out[0] = (matrix[0] * x + matrix[4] * y + matrix[8] * z + matrix[12]) / w
@@ -34,3 +33,5 @@ function transformMat4 (...params) {
   out[2] = (matrix[2] * x + matrix[6] * y + matrix[10] * z + matrix[14]) / w
   return out
 }
+
+module.exports = transformMat4

@@ -1,9 +1,9 @@
 const test = require('ava')
-const {abs, fromValues} = require('./index')
+const { abs } = require('./index')
 
-const {compareVectors} = require('../../../../test/helpers/index')
+const { compareVectors } = require('../../../../test/helpers/index')
 
-test('vec2: abs() should return a vec2 with positive values', t => {
+test('vec2: abs() should return a vec2 with positive values', (t) => {
   const obs1 = abs([0, 0])
   t.true(compareVectors(obs1, [0, 0]))
 

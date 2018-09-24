@@ -8,10 +8,10 @@ const fromValues = require('../vec4/fromValues')
  * @returns {Array} a new plane with properly typed values
  */
 const fromNormalAndPoint = (normal, point) => {
-  normal = vec3.unit(normal)
-  let w = vec3.dot(point, normal)
+  const u = vec3.unit(normal)
+  const w = vec3.dot(point, u)
 
-  return fromValues(normal[0], normal[1], normal[2], w)
+  return fromValues(u[0], u[1], u[2], w)
 }
 
 module.exports = fromNormalAndPoint

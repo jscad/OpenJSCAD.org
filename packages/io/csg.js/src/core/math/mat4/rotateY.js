@@ -1,4 +1,3 @@
-module.exports = rotateY
 const create = require('./create')
 
 /**
@@ -9,7 +8,7 @@ const create = require('./create')
  * @param {mat4} matrix the matrix to rotate
  * @returns {mat4} out
  */
-function rotateY (...params) {
+const rotateY = (...params) => {
   let out
   let angle
   let matrix
@@ -22,16 +21,16 @@ function rotateY (...params) {
     angle = params[1]
     matrix = params[2]
   }
-  let s = Math.sin(angle)
-  let c = Math.cos(angle)
-  let a00 = matrix[0]
-  let a01 = matrix[1]
-  let a02 = matrix[2]
-  let a03 = matrix[3]
-  let a20 = matrix[8]
-  let a21 = matrix[9]
-  let a22 = matrix[10]
-  let a23 = matrix[11]
+  const s = Math.sin(angle)
+  const c = Math.cos(angle)
+  const a00 = matrix[0]
+  const a01 = matrix[1]
+  const a02 = matrix[2]
+  const a03 = matrix[3]
+  const a20 = matrix[8]
+  const a21 = matrix[9]
+  const a22 = matrix[10]
+  const a23 = matrix[11]
 
   if (matrix !== out) { // If the source and destination differ, copy the unchanged rows
     out[4] = matrix[4]
@@ -44,7 +43,7 @@ function rotateY (...params) {
     out[15] = matrix[15]
   }
 
-    // Perform axis-specific matrix multiplication
+  // Perform axis-specific matrix multiplication
   out[0] = a00 * c - a20 * s
   out[1] = a01 * c - a21 * s
   out[2] = a02 * c - a22 * s
@@ -54,4 +53,6 @@ function rotateY (...params) {
   out[10] = a02 * s + a22 * c
   out[11] = a03 * s + a23 * c
   return out
-};
+}
+
+module.exports = rotateY

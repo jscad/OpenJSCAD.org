@@ -1,4 +1,3 @@
-module.exports = translate
 const create = require('./create')
 
 /**
@@ -9,7 +8,7 @@ const create = require('./create')
  * @param {mat4} matrix the matrix to translate
  * @returns {mat4} out
  */
-function translate (...params) {
+const translate = (...params) => {
   let out
   let vector
   let matrix
@@ -22,9 +21,9 @@ function translate (...params) {
     vector = params[1]
     matrix = params[2]
   }
-  let x = vector[0]
-  let y = vector[1]
-  let z = vector[2]
+  const x = vector[0]
+  const y = vector[1]
+  const z = vector[2]
   let a00
   let a01
   let a02
@@ -39,6 +38,7 @@ function translate (...params) {
   let a23
 
   if (matrix === out) {
+  // 0-11 assignments are unnecessary
     out[12] = matrix[0] * x + matrix[4] * y + matrix[8] * z + matrix[12]
     out[13] = matrix[1] * x + matrix[5] * y + matrix[9] * z + matrix[13]
     out[14] = matrix[2] * x + matrix[6] * y + matrix[10] * z + matrix[14]
@@ -60,3 +60,5 @@ function translate (...params) {
 
   return out
 }
+
+module.exports = translate

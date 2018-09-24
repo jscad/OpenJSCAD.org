@@ -22,7 +22,7 @@ const transformMat4 = (...params) => {
     vector = params[2]
   }
 
-  let [x, y, z, w] = vector
+  const [x, y, z, w] = vector
 
   out[0] = Math.fround(matrix[0] * x + matrix[4] * y + matrix[8] * z + matrix[12] * w)
   out[1] = Math.fround(matrix[1] * x + matrix[5] * y + matrix[9] * z + matrix[13] * w)

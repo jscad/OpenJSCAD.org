@@ -1,9 +1,9 @@
 const test = require('ava')
-const {fromNormalAndPoint, fromPoints, fromVector3Ds, toString} = require('./index')
+const { fromNormalAndPoint, fromVector3Ds, toString } = require('./index')
 
-const {compareVectors} = require('../../../../test/helpers/index')
+const { compareVectors } = require('../../../../test/helpers/index')
 
-test('plant: fromNormalAndPoint() should return a new plant with correct values', t => {
+test('plane: fromNormalAndPoint() should return a new plant with correct values', (t) => {
   const obs1 = fromNormalAndPoint([5, 0, 0], [0, 0, 0])
   t.true(compareVectors(obs1, [1, 0, 0, 0]))
 
@@ -11,7 +11,7 @@ test('plant: fromNormalAndPoint() should return a new plant with correct values'
   t.true(compareVectors(obs2, [0, 0, 1, 5]))
 })
 
-test('plant: fromVector3Ds() should return a new plant with correct values', t => {
+test('plane: fromVector3Ds() should return a new plant with correct values', (t) => {
   const obs1 = fromVector3Ds([0, 0, 0], [1, 0, 0], [1, 1, 0])
   t.true(compareVectors(obs1, [0, 0, 1, 0]))
 
@@ -20,7 +20,7 @@ test('plant: fromVector3Ds() should return a new plant with correct values', t =
 
   // planes created from the same points results in an invalid plane
   const obs3 = fromVector3Ds([0, 6, 0], [0, 6, 0], [0, 6, 0])
-  t.true(compareVectors(obs3, [0/0, 0/0, 0/0, 0/0]))
+  t.true(compareVectors(obs3, [0 / 0, 0 / 0, 0 / 0, 0 / 0]))
 
   const str1 = toString(obs2)
 })

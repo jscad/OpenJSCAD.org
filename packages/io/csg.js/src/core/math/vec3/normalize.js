@@ -1,5 +1,3 @@
-module.exports = normalize
-
 const create = require('./create')
 
 /**
@@ -9,7 +7,7 @@ const create = require('./create')
  * @param {vec3} a vector to normalize
  * @returns {vec3} out
  */
-function normalize (...params) {
+const normalize = (...params) => {
   let a
   let out
   if (params.length === 1) {
@@ -19,9 +17,9 @@ function normalize (...params) {
     out = params[0]
     a = params[1]
   }
-  let x = a[0]
-  let y = a[1]
-  let z = a[2]
+  const x = a[0]
+  const y = a[1]
+  const z = a[2]
   let len = x * x + y * y + z * z
   if (len > 0) {
     // TODO: evaluate use of glm_invsqrt here?
@@ -32,3 +30,5 @@ function normalize (...params) {
   }
   return out
 }
+
+module.exports = normalize

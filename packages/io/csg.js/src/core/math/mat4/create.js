@@ -1,12 +1,10 @@
-module.exports = create
-
 /**
  * Creates a new identity mat4
  *
  * @returns {mat4} a new 4x4 matrix
  */
-function create () {
-  let out = new Float32Array(16)
+const create = () => {
+  const out = new Float32Array(16)
   out[0] = 1
   out[1] = 0
   out[2] = 0
@@ -25,3 +23,5 @@ function create () {
   out[15] = 1
   return out
 }
+
+module.exports = create

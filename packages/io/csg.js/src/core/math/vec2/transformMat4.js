@@ -1,4 +1,3 @@
-module.exports = transformMat4
 const create = require('./create')
 
 /**
@@ -11,7 +10,7 @@ const create = require('./create')
  * @param {vec2} vector the vector to transform
  * @returns {vec2} out
  */
-function transformMat4 (...params) {
+const transformMat4 = (...params) => {
   let out
   let matrix
   let vector
@@ -24,11 +23,11 @@ function transformMat4 (...params) {
     matrix = params[1]
     vector = params[2]
   }
-  let x = vector[0]
-  let y = vector[1]
+  const x = vector[0]
+  const y = vector[1]
   out[0] = matrix[0] * x + matrix[4] * y + matrix[12]
   out[1] = matrix[1] * x + matrix[5] * y + matrix[13]
   return out
 }
-  // Right multiply by a 4x4 matrix (the vector is interpreted as a row vector)
-    // Returns a new Vector2D
+
+module.exports = transformMat4

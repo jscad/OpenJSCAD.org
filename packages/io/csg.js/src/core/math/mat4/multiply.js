@@ -1,4 +1,3 @@
-module.exports = multiply
 const create = require('./create')
 
 /**
@@ -9,7 +8,7 @@ const create = require('./create')
  * @param {mat4} b the second operand
  * @returns {mat4} out
  */
-function multiply (...params) {
+const multiply = (...params) => {
   let out
   let a
   let b
@@ -22,24 +21,24 @@ function multiply (...params) {
     a = params[1]
     b = params[2]
   }
-  let a00 = a[0]
-  let a01 = a[1]
-  let a02 = a[2]
-  let a03 = a[3]
-  let a10 = a[4]
-  let a11 = a[5]
-  let a12 = a[6]
-  let a13 = a[7]
-  let a20 = a[8]
-  let a21 = a[9]
-  let a22 = a[10]
-  let a23 = a[11]
-  let a30 = a[12]
-  let a31 = a[13]
-  let a32 = a[14]
-  let a33 = a[15]
+  const a00 = a[0]
+  const a01 = a[1]
+  const a02 = a[2]
+  const a03 = a[3]
+  const a10 = a[4]
+  const a11 = a[5]
+  const a12 = a[6]
+  const a13 = a[7]
+  const a20 = a[8]
+  const a21 = a[9]
+  const a22 = a[10]
+  const a23 = a[11]
+  const a30 = a[12]
+  const a31 = a[13]
+  const a32 = a[14]
+  const a33 = a[15]
 
-    // Cache only the current line of the second matrix
+  // Cache only the current line of the second matrix
   let b0 = b[0]
   let b1 = b[1]
   let b2 = b[2]
@@ -77,3 +76,5 @@ function multiply (...params) {
   out[15] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33
   return out
 }
+
+module.exports = multiply

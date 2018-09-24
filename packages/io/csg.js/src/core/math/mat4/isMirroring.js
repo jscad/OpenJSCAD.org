@@ -7,7 +7,7 @@ const dot = require('../vec3/dot')
  * @param {mat4} mat the input matrix
  * @returns {boolean} output
  */
-function isMirroring (mat) {
+const isMirroring = (mat) => {
   const u = [mat[0], mat[4], mat[8]]
   const v = [mat[1], mat[5], mat[9]]
   const w = [mat[2], mat[6], mat[10]]

@@ -8,7 +8,7 @@
  * @returns {vec4} a new vector
  */
 const fromValues = (x, y, z, w) => {
-  let out = new Float32Array(4)
+  const out = new Float32Array(4)
   out[0] = x
   out[1] = y
   out[2] = z

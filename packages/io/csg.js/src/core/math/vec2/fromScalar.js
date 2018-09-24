@@ -1,14 +1,11 @@
-/** create a vec2 from a single scalar value
- * all components of the resulting vec2 have the value of the
- * input scalar
+const fromValues = require('./fromValues')
+
+/** Create a vec2 from a single scalar value
  * @param  {Float} scalar
- * @returns {Vec2}
+ * @returns {Vec2} a new vec2
  */
 const fromScalar = (scalar) => {
-  let out = new Float32Array(2)
-  out[0] = scalar
-  out[1] = scalar
-  return out
+  return fromValues(scalar, scalar)
 }
 
 module.exports = fromScalar

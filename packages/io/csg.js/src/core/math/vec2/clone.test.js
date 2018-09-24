@@ -1,9 +1,9 @@
 const test = require('ava')
-const {clone, fromValues} = require('./index')
+const { clone, fromValues } = require('./index')
 
-const {compareVectors} = require('../../../../test/helpers/index')
+const { compareVectors } = require('../../../../test/helpers/index')
 
-test('vec2: clone() should return a new vec2 with same values', t => {
+test('vec2: clone() should return a new vec2 with same values', (t) => {
   const org1 = fromValues(0, 0)
   const obs1 = clone(org1)
   t.true(compareVectors(obs1, [0, 0]))

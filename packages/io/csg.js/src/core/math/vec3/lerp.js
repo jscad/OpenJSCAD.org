@@ -1,4 +1,3 @@
-module.exports = lerp
 const create = require('./create')
 
 /**
@@ -10,7 +9,7 @@ const create = require('./create')
  * @param {vec3} b the second operand
  * @returns {vec3} out
  */
-function lerp (...params) {
+const lerp = (...params) => {
   let out
   let t
   let a
@@ -26,11 +25,10 @@ function lerp (...params) {
     a = params[2]
     b = params[3]
   }
-  let ax = a[0]
-  let ay = a[1]
-  let az = a[2]
-  out[0] = ax + t * (b[0] - ax)
-  out[1] = ay + t * (b[1] - ay)
-  out[2] = az + t * (b[2] - az)
+  out[0] = a[0] + t * (b[0] - a[0])
+  out[1] = a[1] + t * (b[1] - a[1])
+  out[2] = a[2] + t * (b[2] - a[2])
   return out
 }
+
+module.exports = lerp

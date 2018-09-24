@@ -11,11 +11,11 @@ const fromValues = require('../vec4/fromValues')
 const fromVector3Ds = (a, b, c) => {
   // let n = b.minus(a).cross(c.minus(a)).unit()
   // FIXME optimize later
-  let ba = vec3.subtract(b, a)
-  let ca = vec3.subtract(c, a)
-  let cr = vec3.cross(ba, ca)
-  let normal = vec3.unit(cr) // normal part
-  let w = vec3.dot(normal, a)
+  const ba = vec3.subtract(b, a)
+  const ca = vec3.subtract(c, a)
+  const cr = vec3.cross(ba, ca)
+  const normal = vec3.unit(cr) // normal part
+  const w = vec3.dot(normal, a)
   return fromValues(normal[0], normal[1], normal[2], w)
 }
 

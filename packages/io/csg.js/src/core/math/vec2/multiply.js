@@ -1,4 +1,3 @@
-module.exports = multiply
 const create = require('./create')
 
 /**
@@ -9,7 +8,7 @@ const create = require('./create')
  * @param {vec2} b the second operand
  * @returns {vec2} out
  */
-function multiply (...params) {
+const multiply = (...params) => {
   let out
   let a
   let b
@@ -26,3 +25,5 @@ function multiply (...params) {
   out[1] = a[1] * b[1]
   return out
 }
+
+module.exports = multiply

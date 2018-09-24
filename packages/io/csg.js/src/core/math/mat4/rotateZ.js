@@ -1,4 +1,3 @@
-module.exports = rotateZ
 const create = require('./create')
 
 /**
@@ -9,7 +8,7 @@ const create = require('./create')
  * @param {mat4} matrix the matrix to rotate
  * @returns {mat4} out
  */
-function rotateZ (...params) {
+const rotateZ = (...params) => {
   let out
   let angle
   let matrix
@@ -22,16 +21,16 @@ function rotateZ (...params) {
     angle = params[1]
     matrix = params[2]
   }
-  let s = Math.sin(angle)
-  let c = Math.cos(angle)
-  let a00 = matrix[0]
-  let a01 = matrix[1]
-  let a02 = matrix[2]
-  let a03 = matrix[3]
-  let a10 = matrix[4]
-  let a11 = matrix[5]
-  let a12 = matrix[6]
-  let a13 = matrix[7]
+  const s = Math.sin(angle)
+  const c = Math.cos(angle)
+  const a00 = matrix[0]
+  const a01 = matrix[1]
+  const a02 = matrix[2]
+  const a03 = matrix[3]
+  const a10 = matrix[4]
+  const a11 = matrix[5]
+  const a12 = matrix[6]
+  const a13 = matrix[7]
 
   if (matrix !== out) { // If the source and destination differ, copy the unchanged last row
     out[8] = matrix[8]
@@ -44,7 +43,7 @@ function rotateZ (...params) {
     out[15] = matrix[15]
   }
 
-    // Perform axis-specific matrix multiplication
+  // Perform axis-specific matrix multiplication
   out[0] = a00 * c + a10 * s
   out[1] = a01 * c + a11 * s
   out[2] = a02 * c + a12 * s
@@ -54,4 +53,6 @@ function rotateZ (...params) {
   out[6] = a12 * c - a02 * s
   out[7] = a13 * c - a03 * s
   return out
-};
+}
+
+module.exports = rotateZ

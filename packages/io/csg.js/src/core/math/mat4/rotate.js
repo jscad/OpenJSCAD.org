@@ -1,5 +1,5 @@
-module.exports = rotate
 const create = require('./create')
+
 /**
  * Rotates a mat4 by the given angle
  *
@@ -9,7 +9,7 @@ const create = require('./create')
  * @param {mat4} matrix the matrix to rotate
  * @returns {mat4} out
  */
-function rotate (...params) {
+const rotate = (...params) => {
   let out
   let matrix
   let rad
@@ -28,30 +28,6 @@ function rotate (...params) {
 
   let [x, y, z] = axis
   let len = Math.sqrt(x * x + y * y + z * z)
-  let s
-  let c
-  let t
-  let a00
-  let a01
-  let a02
-  let a03
-  let a10
-  let a11
-  let a12
-  let a13
-  let a20
-  let a21
-  let a22
-  let a23
-  let b00
-  let b01
-  let b02
-  let b10
-  let b11
-  let b12
-  let b20
-  let b21
-  let b22
 
   if (Math.abs(len) < 0.000001) { return null }
 
@@ -60,20 +36,35 @@ function rotate (...params) {
   y *= len
   z *= len
 
-  s = Math.sin(rad)
-  c = Math.cos(rad)
-  t = 1 - c
+  const s = Math.sin(rad)
+  const c = Math.cos(rad)
+  const t = 1 - c
 
-  a00 = matrix[0]; a01 = matrix[1]; a02 = matrix[2]; a03 = matrix[3]
-  a10 = matrix[4]; a11 = matrix[5]; a12 = matrix[6]; a13 = matrix[7]
-  a20 = matrix[8]; a21 = matrix[9]; a22 = matrix[10]; a23 = matrix[11]
+  const a00 = matrix[0]
+  const a01 = matrix[1]
+  const a02 = matrix[2]
+  const a03 = matrix[3]
+  const a10 = matrix[4]
+  const a11 = matrix[5]
+  const a12 = matrix[6]
+  const a13 = matrix[7]
+  const a20 = matrix[8]
+  const a21 = matrix[9]
+  const a22 = matrix[10]
+  const a23 = matrix[11]
 
-    // Construct the elements of the rotation matrix
-  b00 = x * x * t + c; b01 = y * x * t + z * s; b02 = z * x * t - y * s
-  b10 = x * y * t - z * s; b11 = y * y * t + c; b12 = z * y * t + x * s
-  b20 = x * z * t + y * s; b21 = y * z * t - x * s; b22 = z * z * t + c
+  // Construct the elements of the rotation matrix
+  const b00 = x * x * t + c
+  const b01 = y * x * t + z * s
+  const b02 = z * x * t - y * s
+  const b10 = x * y * t - z * s
+  const b11 = y * y * t + c
+  const b12 = z * y * t + x * s
+  const b20 = x * z * t + y * s
+  const b21 = y * z * t - x * s
+  const b22 = z * z * t + c
 
-    // Perform rotation-specific matrix multiplication
+  // Perform rotation-specific matrix multiplication
   out[0] = a00 * b00 + a10 * b01 + a20 * b02
   out[1] = a01 * b00 + a11 * b01 + a21 * b02
   out[2] = a02 * b00 + a12 * b01 + a22 * b02
@@ -95,22 +86,5 @@ function rotate (...params) {
   }
   return out
 }
-/*
-const Vector3 = require('./Vector3')
-const Vector2 = require('./Vector2')
-const OrthoNormalBasis = require('./OrthoNormalBasis')
-const Plane = require('./Plane')
 
-// Matrix for rotation about arbitrary point and axis
-Matrix4x4.rotation = function (rotationCenter, rotationAxis, degrees) {
-  rotationCenter = new Vector3(rotationCenter)
-  rotationAxis = new Vector3(rotationAxis)
-  var rotationPlane = Plane.fromNormalAndPoint(rotationAxis, rotationCenter)
-  var orthobasis = new OrthoNormalBasis(rotationPlane)
-  var transformation = Matrix4x4.translation(rotationCenter.negated())
-  transformation = transformation.multiply(orthobasis.getProjectionMatrix())
-  transformation = transformation.multiply(Matrix4x4.rotationZ(degrees))
-  transformation = transformation.multiply(orthobasis.getInverseProjectionMatrix())
-  transformation = transformation.multiply(Matrix4x4.translation(rotationCenter))
-  return transformation
-} */
+module.exports = rotate
