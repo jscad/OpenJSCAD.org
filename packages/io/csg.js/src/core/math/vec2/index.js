@@ -26,6 +26,7 @@ module.exports = {
   normal: require('./normal'),
   normalize: require('./normalize'),
   rotate: require('./rotate'),
+  scale: require('./scale'),
   squaredDistance: require('./squaredDistance'),
   squaredLength: require('./squaredLength'),
   subtract: require('./subtract'),
