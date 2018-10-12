@@ -53,6 +53,15 @@ test('vec3: transformMat4() called with two paramerters should return a vec3 wit
 
   const obs5 = transformMat4(rotateZMatrix, [1, 2, 3])
   t.true(compareVectors(obs5, [2, -1, 3]))
+
+  const errorMatrix = [
+    0, 0, 0,-1,
+    0, 0, 0, 1,
+    0, 0, 0,-1,
+    1, 1, 1, 1
+  ]
+  const obs6 = transformMat4(errorMatrix, [1, 1, 1])
+  t.true(compareVectors(obs6, [1, 1, 1]))
 })
 
 test('vec3: transformMat4() called with three paramerters should update a vec3 with correct values', (t) => {

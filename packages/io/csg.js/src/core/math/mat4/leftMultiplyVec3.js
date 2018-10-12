@@ -6,7 +6,7 @@ const fromValues = require('../vec3/fromValues')
  * Fourth element is set to 1
  * @param {vec3} vector the input vector
  * @param {mat4} matrix the input matrix
- * @returns {mat4} output
+ * @returns {vec3} output
  */
 const lefttMultiplyVec3 = (vector, matrix) => {
   const [v0, v1, v2] = vector

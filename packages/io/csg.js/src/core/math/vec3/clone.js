@@ -1,13 +1,26 @@
-const fromValues = require('./fromValues')
+const create = require('./create')
 
 /**
- * Creates a new vec3 initialized with values from an existing vector
+ * Create a clone of the given vector
  *
- * @param {vec3} a vector to clone
- * @returns {vec3} a new vector
+ * @param {vec3} [out] - receiving vector
+ * @param {vec3} vec - vector to clone
+ * @returns {vec3} clone of the vector
  */
-const clone = (vec) => {
-  return fromValues(vec[0], vec[1], vec[2])
+const clone = (...params) => {
+  let out
+  let vec
+  if (params.length === 1) {
+    out = create()
+    vec = params[0]
+  } else {
+    out = params[0]
+    vec = params[1]
+  }
+  out[0] = vec[0]
+  out[1] = vec[1]
+  out[2] = vec[2]
+  return out
 }
 
 module.exports = clone

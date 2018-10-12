@@ -6,7 +6,7 @@ const fromValues = require('../vec2/fromValues')
  * Fourth element is set to 1
  * @param {vec2} vector the input vector
  * @param {mat4} matrix the input matrix
- * @returns {mat4} output
+ * @returns {vec2} output
  */
 const rightMultiplyVec2 = (vector, matrix) => {
   const [v0, v1] = vector

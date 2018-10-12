@@ -1,7 +1,7 @@
 const mat4 = require('../mat4')
 const vec3 = require('../vec3')
 
-const fromVector3Ds = require('./fromVector3Ds')
+const fromVec3s = require('./fromVec3s')
 const flip = require('./flip')
 
 /**
@@ -23,7 +23,7 @@ const transformMat4 = (matrix, plane) => {
   point2 = vec3.transformMat4(matrix, point2)
   point3 = vec3.transformMat4(matrix, point3)
   // and create a new plane from the transformed points:
-  let newplane = fromVector3Ds(point1, point2, point3)
+  let newplane = fromVec3s(point1, point2, point3)
   if (ismirror) {
     // the transform is mirroring so mirror the plane
     newplane = flip(newplane)

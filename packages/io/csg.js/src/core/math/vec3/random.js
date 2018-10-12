@@ -1,14 +1,31 @@
 const abs = require('./abs')
-const fromValues = require('./fromValues')
+const create = require('./create')
 
-const random = (input) => {
-  const vec = abs(input)
-  if ((vec[0] <= vec[1]) && (vec[0] <= vec[2])) {
-    return fromValues(1, 0, 0)
-  } else if ((vec[1] <= vec[0]) && (vec[1] <= vec[2])) {
-    return fromValues(0, 1, 0)
+const random = (...params) => {
+  let out
+  let vec
+  if (params.length === 1) {
+    out = create()
+    vec = params[0]
+  } else {
+    out = params[0]
+    vec = params[1]
   }
-  return fromValues(0, 0, 1)
+  abs(out, vec)
+  if ((out[0] <= out[1]) && (out[0] <= out[2])) {
+    out[0] = 1
+    out[1] = 0
+    out[2] = 0
+  } else if ((out[1] <= out[0]) && (out[1] <= out[2])) {
+    out[0] = 0
+    out[1] = 1
+    out[2] = 0
+  } else {
+    out[0] = 0
+    out[1] = 0
+    out[2] = 1
+  }
+  return out
 }
 
 module.exports = random

@@ -12,7 +12,8 @@ const compareVectors = (vec1, vec2) => {
           return valid
         }
       // only compare values, not types
-        return valid && (vec1[index] == vec2[index])
+        let diff = Math.abs(vec1[index] - vec2[index])
+        return valid && (diff < Number.EPSILON)
       }, true)
   }
   return false

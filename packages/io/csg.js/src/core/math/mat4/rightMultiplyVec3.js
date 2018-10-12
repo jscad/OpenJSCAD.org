@@ -1,10 +1,12 @@
+const fromValues = require('../vec3/fromValues')
+
 /**
  * Multiply the input matrix by a Vector3 (interpreted as 3 row, 1 column)
  * (result = M*v)
  * Fourth element is set to 1
  * @param {vec3} vector the input vector
  * @param {mat4} matrix the input matrix
- * @returns {mat4} output
+ * @returns {vec3} output
  */
 const rightMultiplyVec3 = (vector, matrix) => {
   const [v0, v1, v2] = vector
@@ -21,7 +23,7 @@ const rightMultiplyVec3 = (vector, matrix) => {
     y *= invw
     z *= invw
   }
-  return [x, y, z]
+  return fromValues(x, y, z)
 }
 
 module.exports = rightMultiplyVec3

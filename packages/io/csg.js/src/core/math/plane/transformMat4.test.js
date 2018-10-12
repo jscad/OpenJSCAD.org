@@ -56,7 +56,7 @@ test('plane: transformMat4() called with two paramerters should return a plane w
 
   const plane5 = fromValues(-1, 0, 0, 0)
   const obs5 = transformMat4(rotateZMatrix, plane5)
-  // t.true(compareVectors(obs5, [-0, 1, 0, 0]))
+  t.true(compareVectors(obs5, [-0, 1, 0, 0]))
 
   const mirrorMatrix = [
    -1, 0, 0, 0,
