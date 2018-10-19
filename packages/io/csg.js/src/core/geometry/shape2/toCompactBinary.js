@@ -1,6 +1,6 @@
 const canonicalize = require('./utils/canonicalize')
 
- /** Convert to compact binary form.
+/** Convert to compact binary form.
  * See fromCompactBinary.
  * @return {CompactBinary}
  */

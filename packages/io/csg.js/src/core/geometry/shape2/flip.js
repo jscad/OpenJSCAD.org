@@ -1,9 +1,7 @@
 const fromSides = require('./fromSides')
 
-function flip (shape2) {
-  let newsides = shape2.sides.map(function (side) {
-    return side.flipped()
-  }).reverse()
+const flip = shape2 => {
+  const newsides = shape2.sides.map(side => [side[1], side[0]]).reverse()
   return fromSides(newsides)
 }
 

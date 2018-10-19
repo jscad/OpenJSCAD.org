@@ -16,11 +16,11 @@ const FuzzyFactory = function (numdimensions, tolerance) {
 }
 
 FuzzyFactory.prototype = {
-    // let obj = f.lookupOrCreate([el1, el2, el3], function(elements) {/* create the new object */});
-    // Performs a fuzzy lookup of the object with the specified elements.
-    // If found, returns the existing object
-    // If not found, calls the supplied callback function which should create a new object with
-    // the specified properties. This object is inserted in the lookup database.
+  // let obj = f.lookupOrCreate([el1, el2, el3], function(elements) {/* create the new object */});
+  // Performs a fuzzy lookup of the object with the specified elements.
+  // If found, returns the existing object
+  // If not found, calls the supplied callback function which should create a new object with
+  // the specified properties. This object is inserted in the lookup database.
   lookupOrCreate: function (els, creatorCallback) {
     let hash = ''
     let multiplier = this.multiplier

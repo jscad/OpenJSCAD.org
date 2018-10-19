@@ -2,7 +2,7 @@ const bounds = require('../ops-measurements/bounds')
 const translate = require('./translate')
 
 const toArray = require('../../core/utils/toArray')
-const {flatten, isArray, isBoolean} = require('../../core/utils')
+const { flatten, isArray, isBoolean } = require('../../core/utils')
 
 /**
  * Centers the given object(s) using the given options (if any)
@@ -27,7 +27,7 @@ const center = function (options, ...objects) {
   if (isArray(options)) {
     options.axes = options
   }
-  const {axes, center} = Object.assign({}, defaults, options)
+  const { axes, center } = Object.assign({}, defaults, options)
   objects = flatten(toArray(objects))
 
   const results = objects.map(function (object) {

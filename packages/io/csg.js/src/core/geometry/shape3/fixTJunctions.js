@@ -1,4 +1,4 @@
-const {EPS} = require('../constants')
+const { EPS } = require('../constants')
 const Plane = require('../math/Plane')
 const canonicalize = require('./canonicalize')
 const poly3 = require('../poly3')

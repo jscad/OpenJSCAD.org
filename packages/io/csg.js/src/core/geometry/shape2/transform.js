@@ -1,14 +1,17 @@
-const fromSides = require('./fromSides')
-const flip = require('./flip')
+const mat4 = require('../../math/mat4')
+const clone = require('./clone')
 
-const isMirroring = require('../../math/mat4/isMirroring')
-
-function transform (matrix, shape2) {
-  let ismirror = isMirroring(matrix)
-  let newsides = shape2.sides.map(function (side) {
-    return side.transform(matrix)
-  })
-
-  return ismirror ? flip(fromSides(newsides)) : fromSides(newsides)
+/**
+ * this only updates the transformation matrix, not the geometry/points !
+ * that part is applied at a later stage to the points ie perhaps let webgl do its work ...
+ * @param  {Mat4} matrix
+ * @param  {Shape2} shape
+ * @returns {Shape2} a new shape, with updated transformation matrix
+ */
+const transform = (matrix, shape) => {
+  const newTransforms = mat4.multiply(shape.transforms, matrix)
+  const newShape = clone(shape)
+  newShape.transforms = newTransforms
+  return newShape
 }
 module.exports = transform

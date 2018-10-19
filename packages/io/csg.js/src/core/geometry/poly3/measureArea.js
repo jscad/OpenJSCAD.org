@@ -6,9 +6,9 @@ const measureArea = (poly3) => {
   let polygonArea = 0
   for (let i = 0; i < poly3.vertices.length - 2; i++) {
     polygonArea += vec3.length(
-        vec3.cross(
-          vec3.subtract(poly3.vertices[i + 1].pos, poly3.vertices[0].pos),
-          vec3.subtract(poly3.vertices[i + 2].pos, poly3.vertices[i + 1].pos)
+      vec3.cross(
+        vec3.subtract(poly3.vertices[i + 1].pos, poly3.vertices[0].pos),
+        vec3.subtract(poly3.vertices[i + 2].pos, poly3.vertices[i + 1].pos)
       )
     )
   }

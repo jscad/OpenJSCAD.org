@@ -6,7 +6,7 @@ const create = require('./create')
  * @returns {Shape2} new Shape2 object
  */
 const fromSides = function (sides) {
-  let shape2 = create()
+  const shape2 = create()
   shape2.sides = sides
   return shape2
 }

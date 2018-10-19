@@ -1,15 +1,15 @@
-const {min, create, max} = require('../../math/vec2/index')
+const { min, create, max } = require('../../math/vec2')
 
-const getBounds = function (cag) {
-  let minpoint = cag.sides.length === 0 ? create() : [cag.sides[0].vertex0.pos.x, cag.sides[0].vertex0.pos.y]
-  let maxpoint = minpoint
-  cag.sides.forEach(function (side) {
-    minpoint = min(minPoint, side.vertex0.pos)
-    minpoint = min(minpoint, side.vertex1.pos)
-    maxpoint = max(maxpoint, side.vertex0.pos)
-    maxpoint = max(maxpoint, side.vertex1.pos)
+const getBounds = shape => {
+  let minPoint = shape.sides.length === 0 ? create() : [shape.sides[0][0][0], shape.sides[0][0][1]]
+  let maxPoint = minPoint
+  shape.sides.forEach(side => {
+    minPoint = min(minPoint, side[0])
+    minPoint = min(minPoint, side[1])
+    maxPoint = max(maxPoint, side[0])
+    maxPoint = max(maxPoint, side[1])
   })
-  return [minpoint, maxpoint]
+  return [minPoint, maxPoint]
 }
 
 module.exports = getBounds

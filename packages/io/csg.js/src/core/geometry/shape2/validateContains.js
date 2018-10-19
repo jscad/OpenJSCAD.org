@@ -1,13 +1,13 @@
 const hasPointInside = require('./validateHasPointInside')
 
-/** Check if all points from one CAG stay inside another CAG
-* @param {CAG} cag1 - CAG object
-* @param {Object} cag2 - CAG object
+/** Check if all points from one Shape2 stay inside another Shape2
+* @param {Shape2} shape1 - Shape2 object
+* @param {Object} shape2 - Shape2 object
 * @returns {Boolean}
 */
-const contains = function (cag1, cag2) {
-  for (let i = 0, il = cag2.sides.length; i < il; i++) {
-    if (!hasPointInside(cag1, cag2.sides[i].vertex0.pos)) {
+const contains = function (shape1, shape2) {
+  for (let i = 0, il = shape2.sides.length; i < il; i++) {
+    if (!hasPointInside(shape1, shape2.sides[i][0])) {
       return false
     }
   }

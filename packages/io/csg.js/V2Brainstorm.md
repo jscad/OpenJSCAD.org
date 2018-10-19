@@ -16,6 +16,9 @@ better for future code splitting etc)
  * to make functions curryable
  * to accomodate for variable amount of objects passed in etc
 
+## Clear errors
+
+* nothing should fail silently!
 
 ## capabilities
 
@@ -123,6 +126,17 @@ better for future code splitting etc)
     }
     ```
 
+#### Annotations
+
+  ##### purpose
+
+  metadata for parts, possible to be displayed within the 3D view
+  somewhat related to measurements
+
+  ##### implementation
+
+  much like properties and connectors, perhaps annotations can also just be considered a special type of data that is simply added as a child of a shape/part
+
 ### 2D shapes
 
 #### Currently:
@@ -189,7 +203,7 @@ part : {
 ### Various
 
 - Eliminate 3d shapes completely ?
-  * everything can be create from 2d shapes + transforms/extrusions
+  * everything can be create from 2d shapes + transforms/extrusions?
 
 - More advanced features : 
  - holes with countersinks or special shapes ? 
@@ -212,7 +226,7 @@ part : {
   * returning arrays: returns all the assemblies that you can have ?
 
 - connectors:
-  * should be easier to define
+  * should be easier to define : addConnector({point, normal, axis}, shape)
   * should be visualized
     * points, axis, normals should be easilly viewed & understood
   * should be offsetable
@@ -223,3 +237,38 @@ part : {
  at the top/ bottom of cylinders )
  * annotations (not sure)
   * dimensions (not right now, but could be usefull, they are a special type of annotations)
+
+### Various (2)
+
+    - negative shapes:
+        - add a ‘negative’ flag at the shape (not geometry ) level, as this is signaling a higher level user intent
+        - add a ‘combine’ operator that combines subtract & union? or just use union (preferred)
+    - mirror [0,0,0] should be a no-op that does not break anything
+    - display overlaps (bounding box & more if needed) to help debug possible issues
+    - placement/ align
+    - namespaces/groups for parameters ?
+    - PARAMETER DEPENDENCIES
+        - feed the PREVIOUS value of the dependencies into the getPArameterDefinitions function
+        - reuse that to change the parameter definitions !!
+        - yay !
+    - deal with combined CAG/CSG outputs for exports
+    - hull with no params should fails clearly
+    - square/rectangle : needs to also accept a single float as size param
+    - rotate should work with 1, 2, 3 length arrays
+    - distributeAlong (pathLike, distributor, shape)
+        - pathLike: on what to distribute 
+        - distributor: even, spaced, a function to set the distribution : implies ability to get evenly spaced points regardless of input path/curve
+        - shape 
+    - distribute 
+    - throw errors when trying to do invalid operations between 2D & 3D shapes (booleans)
+    - help with 3D orientation: reuse grid numbering ?
+    - find ways to unify v-tree (decoupling of api vs implementation FOR GEOMETRY)
+    - review/refine the way v-tree deals with uncaching, and perhaps have a priority system for what to keep or not
+    - add possible DIN ids for non custom shapes
+    - user space is good ! users are numerous, smart, and know their use cases and specifics better !
+        - examples: 
+            - dimensioned drawings: (needs some very barebones core basics: non exported 2d/3d data
+    - simplify extraction of parameter definitions:
+        - why is applyParameterDefinitions called multiple times ?
+    - ways to get a list of evenly spaced out points on a path (useful a LOT OF TIMES)
+    - ways to get the outline of a 2D shape as a path

@@ -8,7 +8,8 @@ const Polygon = require('./Polygon3')
 
 // Retesselation function for a set of coplanar polygons. See the introduction at the top of
 // the main csg.js file.
-const reTesselateCoplanarPolygons = function (sourcepolygons, destpolygons) {
+const reTesselateCoplanarPolygons = function (sourcepolygons) {
+  const destpolygons = []
   let numpolygons = sourcepolygons.length
   if (numpolygons > 0) {
     let plane = sourcepolygons[0].plane
@@ -337,6 +338,7 @@ const reTesselateCoplanarPolygons = function (sourcepolygons, destpolygons) {
       }
     } // for yindex
   } // if(numpolygons > 0)
+  return destpolygons
 }
 
 module.exports = reTesselateCoplanarPolygons

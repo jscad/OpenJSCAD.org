@@ -1,25 +1,24 @@
 const FuzzyFactory = require('./FuzzyFactory')
-const {EPS} = require('../constants')
-const Side = require('../math/Side')
+const { EPS } = require('../constants')
 
-const FuzzyCAGFactory = function () {
+const FuzzyShape2Factory = function () {
   this.vertexfactory = new FuzzyFactory(2, EPS)
 }
 
-FuzzyCAGFactory.prototype = {
+FuzzyShape2Factory.prototype = {
   getVertex: function (sourcevertex) {
-    let elements = [sourcevertex.pos._x, sourcevertex.pos._y]
-    let result = this.vertexfactory.lookupOrCreate(elements, function (els) {
+    let elements = [sourcevertex[0], sourcevertex[1]]
+    // FIXME: oh blimey, this actually never did anything : returns the SOURCE VERTEX!!
+    return this.vertexfactory.lookupOrCreate(elements, function (els) {
       return sourcevertex
     })
-    return result
   },
 
   getSide: function (sourceside) {
-    let vertex0 = this.getVertex(sourceside.vertex0)
-    let vertex1 = this.getVertex(sourceside.vertex1)
-    return new Side(vertex0, vertex1)
+    const vertex0 = this.getVertex(sourceside[0])
+    const vertex1 = this.getVertex(sourceside[1])
+    return [vertex0, vertex1]
   }
 }
 
-module.exports = FuzzyCAGFactory
+module.exports = FuzzyShape2Factory

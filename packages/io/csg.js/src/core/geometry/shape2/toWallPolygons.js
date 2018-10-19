@@ -15,9 +15,9 @@ const toWallPolygons = function (shape2, options) {
   let defaultAxis = [0, 0, 1]
   let defaultNormal = [0, 1, 0]
   let thisConnector = new Connector(origin, defaultAxis, defaultNormal)
-        // arguments:
+  // arguments:
   let toConnector1 = options.toConnector1
-        // let toConnector2 = new Connector([0, 0, -30], defaultAxis, defaultNormal);
+  // let toConnector2 = new Connector([0, 0, -30], defaultAxis, defaultNormal);
   let toConnector2 = options.toConnector2
   if (!(toConnector1 instanceof Connector && toConnector2 instanceof Connector)) {
     throw new Error('could not parse Connector arguments toConnector1 or toConnector2')
@@ -27,7 +27,7 @@ const toWallPolygons = function (shape2, options) {
       throw new Error('target cag needs same sides count as start cag')
     }
   }
-        // target cag is same as this unless specified
+  // target cag is same as this unless specified
   let toCag = options.cag || shape2
   let m1 = thisConnector.getTransformationTo(toConnector1, false, 0)
   let m2 = thisConnector.getTransformationTo(toConnector2, false, 0)

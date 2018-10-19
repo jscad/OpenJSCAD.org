@@ -1,4 +1,4 @@
-const {EPS} = require('./constants')
+const { EPS } = require('./constants')
 const Polygon = require('./math/Polygon3')
 const FuzzyFactory = require('./FuzzyFactory')
 
@@ -8,13 +8,13 @@ const polygonSHaredHash = (shared) => {
 }
 
 // ////////////////////////////////////
-const FuzzyCSGFactory = function () {
+const FuzzyShape3Factory = function () {
   this.vertexfactory = new FuzzyFactory(3, EPS)
   this.planefactory = new FuzzyFactory(4, EPS)
   this.polygonsharedfactory = {}
 }
 
-FuzzyCSGFactory.prototype = {
+FuzzyShape3Factory.prototype = {
   getPolygonShared: function (sourceshared) {
     let hash = polygonSHaredHash(sourceshared)
     if (hash in this.polygonsharedfactory) {
@@ -63,7 +63,7 @@ FuzzyCSGFactory.prototype = {
         prevvertextag = vertextag
       })
     }
-        // If it's degenerate, remove all vertices:
+    // If it's degenerate, remove all vertices:
     if (newverticesDedup.length < 3) {
       newverticesDedup = []
     }
@@ -71,4 +71,4 @@ FuzzyCSGFactory.prototype = {
   }
 }
 
-module.exports = FuzzyCSGFactory
+module.exports = FuzzyShape3Factory

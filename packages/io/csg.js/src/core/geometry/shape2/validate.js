@@ -1,21 +1,23 @@
-const {areaEPS} = require('../constants')
+const { areaEPS } = require('../constants')
+const measureArea = require('./measureArea')
+const isSelfIntersecting = require('./validateIsSelfIntersecting')
 
-// check if we are a valid CAG (for debugging)
+// check if we are a valid shape2 (for debugging)
 // NOTE(bebbi) uneven side count doesn't work because rounding with EPS isn't taken into account
-const isCAGValid = function (CAG) {
+const isCAGValid = function (shape) {
   let errors = []
-  if (CAG.isSelfIntersecting(true)) {
+  if (isSelfIntersecting(shape)) {
     errors.push('Self intersects')
   }
   let pointcount = {}
-  CAG.sides.map(function (side) {
+  shape.sides.map(function (side) {
     function mappoint (p) {
-      let tag = p.x + ' ' + p.y
+      let tag = p[0] + ' ' + p[1]
       if (!(tag in pointcount)) pointcount[tag] = 0
-      pointcount[tag] ++
+      pointcount[tag]++
     }
-    mappoint(side.vertex0.pos)
-    mappoint(side.vertex1.pos)
+    mappoint(side[0])
+    mappoint(side[1])
   })
   for (let tag in pointcount) {
     let count = pointcount[tag]
@@ -23,7 +25,7 @@ const isCAGValid = function (CAG) {
       errors.push('Uneven number of sides (' + count + ') for point ' + tag)
     }
   }
-  let area = CAG.area()
+  let area = measureArea()
   if (area < areaEPS) {
     errors.push('Area is ' + area)
   }
@@ -35,20 +37,5 @@ const isCAGValid = function (CAG) {
     throw new Error(ertxt)
   }
 }
-
-/* const isSelfIntersecting = function (cag, debug) {
-  let numsides = cag.sides.length
-  for (let i = 0; i < numsides; i++) {
-    let side0 = cag.sides[i]
-    for (let ii = i + 1; ii < numsides; ii++) {
-      let side1 = cag.sides[ii]
-      if (linesIntersect(side0.vertex0.pos, side0.vertex1.pos, side1.vertex0.pos, side1.vertex1.pos)) {
-        if (debug) { console.log('side ' + i + ': ' + side0); console.log('side ' + ii + ': ' + side1) }
-        return true
-      }
-    }
-  }
-  return false
-} */
 
 module.exports = isCAGValid

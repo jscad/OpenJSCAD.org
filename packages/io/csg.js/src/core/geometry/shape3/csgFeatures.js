@@ -1,4 +1,4 @@
-const {toTriangles} = require('./CSGToOther')
+const { toTriangles } = require('./CSGToOther')
 
 /**
    * Returns an array of values for the requested features of this solid.
@@ -16,11 +16,11 @@ const getFeatures = function (csg, features) {
   let result = toTriangles(csg).map(function (triPoly) {
     return triPoly.getTetraFeatures(features)
   })
-  .reduce(function (pv, v) {
-    return v.map(function (feat, i) {
-      return feat + (pv === 0 ? 0 : pv[i])
-    })
-  }, 0)
+    .reduce(function (pv, v) {
+      return v.map(function (feat, i) {
+        return feat + (pv === 0 ? 0 : pv[i])
+      })
+    }, 0)
   return (result.length === 1) ? result[0] : result
 }
 

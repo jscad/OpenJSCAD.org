@@ -1,12 +1,12 @@
-const {linesIntersect} = require('../math/lineUtils')
+const doLinesIntersect = require('../../math/line2/doLinesIntersect')
 
-const isSelfIntersecting = function (cag, debug) {
-  let numsides = cag.sides.length
+const isSelfIntersecting = function (shape, debug) {
+  const numsides = shape.sides.length
   for (let i = 0; i < numsides; i++) {
-    let side0 = cag.sides[i]
+    const side0 = shape.sides[i]
     for (let ii = i + 1; ii < numsides; ii++) {
-      let side1 = cag.sides[ii]
-      if (linesIntersect(side0.vertex0.pos, side0.vertex1.pos, side1.vertex0.pos, side1.vertex1.pos)) {
+      let side1 = shape.sides[ii]
+      if (doLinesIntersect(side0[0], side0[1], side1[0], side1[1])) {
         if (debug) { console.log('side ' + i + ': ' + side0); console.log('side ' + ii + ': ' + side1) }
         return true
       }

@@ -14,6 +14,7 @@ module.exports = {
   fromAngle: require('./fromAngle'),
   fromAngleDegrees: require('./fromAngleDegrees'),
   fromAngleRadians: require('./fromAngleRadians'),
+  fromArray: require('./fromArray'),
   fromScalar: require('./fromScalar'),
   fromValues: require('./fromValues'),
   fromVarious: require('./fromVarious'),

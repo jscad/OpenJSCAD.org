@@ -26,7 +26,7 @@ module.exports = {
   toCompactBinary: require('./toCompactBinary'),
   toString: require('./toString'),
   toTriangles: require('./toTriangles'),
-  subtract: require('./subtract'),
+  difference: require('./difference'),
   transform: require('./transform'),
   translate: require('./translate'),
 }

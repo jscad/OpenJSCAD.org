@@ -30,56 +30,6 @@ function intersection (...inputs) {
   return shapes.length > 1 ? intersectFn(shapes[0], shapes.slice(1)) : shapes[0]
 }
 
-  /**
-   * Return a new CSG solid representing space in both this solid and
-   * in the given solids. Neither this solid nor the given solids are modified.
-   * @param {CSG[]} csg - list of CSG objects
-   * @returns {CSG} new CSG object
-   * @example
-   * let C = A.intersect(B)
-   * @example
-   * +-------+
-   * |       |
-   * |   A   |
-   * |    +--+----+   =   +--+
-   * +----+--+    |       +--+
-   *      |   B   |
-   *      |       |
-   *      +-------+
-   */
-const intersect3d = function (otherCsg, csg) {
-  let csgs
-  if (csg instanceof Array) {
-    csgs = csg
-  } else {
-    csgs = [csg]
-  }
-  let result = otherCsg
-  for (let i = 0; i < csgs.length; i++) {
-    let islast = (i === (csgs.length - 1))
-    result = intersectSub(result, csgs[i], islast, islast)
-  }
-  return result
-}
-
-const intersect2d = function (otherCag, cag) {
-  let cags
-  if (cag instanceof Array) {
-    cags = cag
-  } else {
-    cags = [cag]
-  }
-  let r = toCSGWall(otherCag, -1, 1)
-  cags.map(function (cag) {
-    r = intersectSub(r, toCSGWall(cag, -1, 1), false, false)
-  })
-  r = retesselate(r)
-  r = canonicalize(r)
-  r = fromFakeCSG(r)
-  r = canonicalize(r)
-  return r
-}
-
 const intersectSub = function (ohterCsg, csg, doRetesselate, doCanonicalize) {
   let a = new Tree(ohterCsg.polygons)
   let b = new Tree(csg.polygons)
