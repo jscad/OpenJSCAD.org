@@ -1,22 +1,16 @@
 const vec3 = require('../../math/vec3')
 
-// FIXME: MUTATES THE INPUT DATA !!!!
 // returns an array of two Vector3Ds (minimum coordinates and maximum coordinates)
-const measureBoundingBox = poly3 => {
-  if (!poly3.cachedBoundingBox) {
-    let minpoint, maxpoint
-    let vertices = poly3.vertices
-    let numvertices = vertices.length
-    minpoint = numvertices === 0 ? vec3.create() : vertices[0].pos
-    maxpoint = minpoint
-    for (let i = 1; i < numvertices; i++) {
-      const point = vertices[i].pos
-      minpoint = vec3.min(minpoint, point)
-      maxpoint = vec3.max(maxpoint, point)
-    }
-    poly3.cachedBoundingBox = [minpoint, maxpoint]
+const measureBoundingBox = (poly3) => {
+  const vertices = poly3.vertices
+  const numvertices = vertices.length
+  let min = numvertices === 0 ? vec3.create() : vertices[0]
+  let max = min
+  for (let i = 1; i < numvertices; i++) {
+    min = vec3.min(min, vertices[i])
+    max = vec3.max(max, vertices[i])
   }
-  return poly3.cachedBoundingBox
+  return [min, max]
 }
 
 module.exports = measureBoundingBox

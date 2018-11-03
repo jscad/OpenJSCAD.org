@@ -1,18 +1,21 @@
+const create = require('./create')
+
+const plane = require('../../math/plane/')
+const vec3 = require('../../math/vec3')
+
 const mat4 = require('../../math/mat4')
-const vert3 = require('')
-const plane = require('')
-const fromData = require('./fromData')
 
 // Affine transformation of polygon. Returns a new Polygon3
 const transform = (matrix, poly3) => {
-  const newvertices = poly3.vertices.map(vertex => vert3.transform(matrix, vertex))
-  const newplane = plane.transform(matrix, poly3.plane)
+  const vertices = poly3.vertices.map((vertex) => { return vec3.transformMat4(matrix, vertex) })
   if (mat4.isMirroring(matrix)) {
-        // need to reverse the vertex order
-        // in order to preserve the inside/outside orientation:
-    newvertices.reverse()
+    // reverse the order to preserve the orientation
+    vertices.reverse()
   }
-  return fromData(newvertices, poly3.shared, newplane)
+  const out = create()
+  out.vertices = vertices
+  out.plane = plane.transformMat4(matrix, poly3.plane)
+  return out
 }
 
 module.exports = transform

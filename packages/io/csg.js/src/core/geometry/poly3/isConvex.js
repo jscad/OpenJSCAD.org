@@ -4,17 +4,17 @@ const vec3 = require('../../math/vec3')
  * @returns {boolean}
  */
 const isConvex = (poly3) => {
-  return areVerticesConvex(poly3.vertices, poly3.plane.normal)
+  return areVerticesConvex(poly3.vertices, poly3.plane)
 }
 
-const areVerticesConvex = function (vertices, planenormal) {
-  let numvertices = vertices.length
+const areVerticesConvex = (vertices, plane) => {
+  const numvertices = vertices.length
   if (numvertices > 2) {
-    let prevprevpos = vertices[numvertices - 2].pos
-    let prevpos = vertices[numvertices - 1].pos
+    let prevprevpos = vertices[numvertices - 2]
+    let prevpos = vertices[numvertices - 1]
     for (let i = 0; i < numvertices; i++) {
-      let pos = vertices[i].pos
-      if (!isConvexPoint(prevprevpos, prevpos, pos, planenormal)) {
+      const pos = vertices[i]
+      if (!isConvexPoint(prevprevpos, prevpos, pos, plane)) {
         return false
       }
       prevprevpos = prevpos
@@ -27,12 +27,13 @@ const areVerticesConvex = function (vertices, planenormal) {
 // calculate whether three points form a convex corner
 //  prevpoint, point, nextpoint: the 3 coordinates (Vector3D instances)
 //  normal: the normal vector of the plane
-const isConvexPoint = function (prevpoint, point, nextpoint, normal) {
+const isConvexPoint = (prevpoint, point, nextpoint, plane) => {
   const crossproduct = vec3.cross(
     vec3.subtract(point, prevpoint),
     vec3.subtract(nextpoint, point)
   )
-  const crossdotnormal = vec3.dot(crossproduct, normal)
+  // note: plane ~= normal point
+  const crossdotnormal = vec3.dot(crossproduct, plane)
   return crossdotnormal >= 0
 }
 

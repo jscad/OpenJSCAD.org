@@ -5,8 +5,7 @@ const plane = require('')
 const fromObject = obj => {
   return {
     vertices: obj.vertices.map(vertex => vert3.fromObject(vertex)),
-    shared: Polygon3.Shared.fromObject(obj.shared),
-    plane: plane.fromObject(obj.plane)// FIXME: use plane structure, vec4, plane class?
+    plane: plane.fromObject(obj.plane)
   }
 }
 

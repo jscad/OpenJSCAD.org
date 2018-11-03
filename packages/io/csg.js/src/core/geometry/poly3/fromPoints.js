@@ -1,11 +1,13 @@
+const create = require('./create')
+
+const plane = require('../../math/plane/')
 const vec3 = require('../../math/vec3')
-const vert3 = require('')
-const fromData = require('./fromData')
-/** Create a polygon from the given points.
+
+/**
+ * Create a poly3 from the given points.
  *
  * @param {Array[]} points - list of points
- * @param {Polygon3.Shared} [shared=defaultShared] - shared property to apply
- * @param {Plane} [plane] - plane of the polygon
+ * @param {plane} [planeof] - plane of the polygon
  *
  * @example
  * const points = [
@@ -15,13 +17,12 @@ const fromData = require('./fromData')
  * ]
  * const polygon = createFromPoints(points)
  */
-const fromPoints = (points, shared, plane) => {
-  // FIXME : this circular dependency does not work !
-  // const {fromPoints} = require('./polygon3Factories')
-  // return fromPoints(points, shared, plane)
-  const vertices = points.map(point => vert3.fromVec3(vec3.fromValues(point)))
-  const polygon = fromData(vertices, shared, plane)
-  return polygon
+const fromPoints = (points, planeof) => {
+// TODO handle optional parameters; planeof
+  const out = create()
+  out.vertices = points.map((point) => { return vec3.clone(point) })
+  out.plane = plane.fromVec3s(out.vertices[0], out.vertices[1], out.vertices[2])
+  return out
 }
 
 module.exports = fromPoints
