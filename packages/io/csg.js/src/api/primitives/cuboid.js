@@ -1,17 +1,17 @@
 const Vector3 = require('../../core/math/Vector3')
 const Vertex3 = require('../../core/math/Vertex3')
-const {sectionCut, cutByPlane} = require('../ops-cuts')
-const {extrudeInOrthonormalBasis} = require('../ops-extrusions/extrusionUtils')
+const { sectionCut, cutByPlane } = require('../ops-cuts')
+const { extrudeInOrthonormalBasis } = require('../ops-extrusions/extrusionUtils')
 const translate = require('../ops-transformations/translate')
 const Polygon3 = require('../../core/math/Polygon3')
 const Plane = require('../../core/math/Plane')
 const OrthoNormalBasis = require('../../core/math/OrthoNormalBasis')
 
-const {parseOptionAs3DVector, parseOptionAsInt} = require('../optionParsers')
-const {defaultResolution3D, EPS} = require('../../core/constants')
-const {Connector} = require('../../core/connectors')
+const { parseOptionAs3DVector, parseOptionAsInt } = require('../optionParsers')
+const { defaultResolution3D, EPS } = require('../../core/constants')
+const { Connector } = require('../../core/connectors')
 const Properties = require('../../core/Properties')
-const {fromPolygons} = require('../../core/CSGFactories')
+const { fromPolygons } = require('../../core/CSGFactories')
 
 const sphere = require('./spheroid')
 
@@ -53,7 +53,7 @@ function cuboid (params) {
     fn: 8
   }
 
-  let {round, radius, fn, size} = Object.assign({}, defaults, params)
+  let { round, radius, fn, size } = Object.assign({}, defaults, params)
   let offset = [0, 0, 0]
   let v = null
   if (params && params.length) v = params
@@ -77,8 +77,8 @@ function cuboid (params) {
   }
   offset = [x / 2, y / 2, z / 2] // center: false default
   let object = round
-    ? _roundedCube({radius: [x / 2, y / 2, z / 2], roundradius: radius, resolution: fn})
-    : _cube({radius: [x / 2, y / 2, z / 2]})
+    ? _roundedCube({ radius: [x / 2, y / 2, z / 2], roundradius: radius, resolution: fn })
+    : _cube({ radius: [x / 2, y / 2, z / 2] })
   if (params && params.center && params.center.length) {
     offset = [params.center[0] ? 0 : x / 2, params.center[1] ? 0 : y / 2, params.center[2] ? 0 : z / 2]
   } else if (params && params.center === true) {
@@ -122,40 +122,40 @@ const _cube = function (options) {
   r = r.abs() // negative radii make no sense
   let result = fromPolygons([
     [
-            [0, 4, 6, 2],
-            [-1, 0, 0]
+      [0, 4, 6, 2],
+      [-1, 0, 0]
     ],
     [
-            [1, 3, 7, 5],
-            [+1, 0, 0]
+      [1, 3, 7, 5],
+      [+1, 0, 0]
     ],
     [
-            [0, 1, 5, 4],
-            [0, -1, 0]
+      [0, 1, 5, 4],
+      [0, -1, 0]
     ],
     [
-            [2, 6, 7, 3],
-            [0, +1, 0]
+      [2, 6, 7, 3],
+      [0, +1, 0]
     ],
     [
-            [0, 2, 3, 1],
-            [0, 0, -1]
+      [0, 2, 3, 1],
+      [0, 0, -1]
     ],
     [
-            [4, 5, 7, 6],
-            [0, 0, +1]
+      [4, 5, 7, 6],
+      [0, 0, +1]
     ]
   ].map(function (info) {
     let vertices = info[0].map(function (i) {
       let pos = new Vector3(
-                c.x + r.x * (2 * !!(i & 1) - 1), c.y + r.y * (2 * !!(i & 2) - 1), c.z + r.z * (2 * !!(i & 4) - 1))
+        c.x + r.x * (2 * !!(i & 1) - 1), c.y + r.y * (2 * !!(i & 2) - 1), c.z + r.z * (2 * !!(i & 4) - 1))
       return new Vertex3(pos)
     })
     return new Polygon3(vertices, null /* , plane */)
   }))
   result.properties.cube = new Properties()
   result.properties.cube.center = new Vector3(c)
-    // add 6 connectors, at the centers of each face:
+  // add 6 connectors, at the centers of each face:
   result.properties.cube.facecenters = [
     new Connector(new Vector3([r.x, 0, 0]).plus(c), [1, 0, 0], [0, 0, 1]),
     new Connector(new Vector3([-r.x, 0, 0]).plus(c), [-1, 0, 0], [0, 0, 1]),
@@ -207,13 +207,13 @@ const _roundedCube = function (options) {
   if (resolution < 4) resolution = 4
   if (resolution % 2 === 1 && resolution < 8) resolution = 8 // avoid ugly
   let roundradius = parseOptionAs3DVector(options, 'roundradius', [0.2, 0.2, 0.2])
-    // slight hack for now - total radius stays ok
+  // slight hack for now - total radius stays ok
   roundradius = Vector3.Create(Math.max(roundradius.x, minRR), Math.max(roundradius.y, minRR), Math.max(roundradius.z, minRR))
   let innerradius = cuberadius.minus(roundradius)
   if (innerradius.x < 0 || innerradius.y < 0 || innerradius.z < 0) {
     throw new Error('roundradius <= radius!')
   }
-  let res = sphere({radius: 1, resolution: resolution})
+  let res = sphere({ radius: 1, resolution: resolution })
   res = res.scale(roundradius)
   innerradius.x > EPS && (res = stretchAtPlane(res, [1, 0, 0], [0, 0, 0], 2 * innerradius.x))
   innerradius.y > EPS && (res = stretchAtPlane(res, [0, 1, 0], [0, 0, 0], 2 * innerradius.y))

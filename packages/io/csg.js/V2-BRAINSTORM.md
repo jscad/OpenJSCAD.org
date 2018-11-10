@@ -272,3 +272,10 @@ part : {
         - why is applyParameterDefinitions called multiple times ?
     - ways to get a list of evenly spaced out points on a path (useful a LOT OF TIMES)
     - ways to get the outline of a 2D shape as a path
+
+
+    ## Code Archelogy
+
+    - for 2d shapes (CAG): FuzzyShape2Factory (used every time canonicalize() is called, ie A LOT)
+    lookupOrCreate() is called FOR EACH VERTEX but the results are discarded !! lots of calls for nothing
+    - 3d shape (CSG) 3d polygons have 'planes' but a lot of geometry primitives generate planes (normals) on the fly, not 

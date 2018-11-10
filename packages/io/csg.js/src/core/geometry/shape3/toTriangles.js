@@ -14,8 +14,8 @@ const toTriangles = (shape3) => {
           poly.vertices[i + 1],
           poly.vertices[i + 2]
         ],
-          poly.shared,
-          poly.plane
+        poly.shared,
+        poly.plane
       )
       polygons.push(triangle)
     }

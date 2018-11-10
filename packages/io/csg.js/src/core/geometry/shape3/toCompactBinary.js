@@ -7,7 +7,7 @@ const canonicalize = require('./utils/canonicalize')
    */
 const toCompactBinary = (_csg) => {
   let csg = canonicalize(_csg)
-  let numpolygons = csg.polygons.length
+  let numPolygons = csg.polygons.length
   let numpolygonvertices = 0
 
   let numvertices = 0
@@ -21,19 +21,19 @@ const toCompactBinary = (_csg) => {
   let shareds = []
   let sharedmap = {}
   let numshared = 0
-          // for (let i = 0, iMax = csg.polygons.length; i < iMax; i++) {
-          //  let p = csg.polygons[i];
-          //  for (let j = 0, jMax = p.length; j < jMax; j++) {
-          //      ++numpolygonvertices;
-          //      let vertextag = p[j].getTag();
-          //      if(!(vertextag in vertexmap)) {
-          //          vertexmap[vertextag] = numvertices++;
-          //          vertices.push(p[j]);
-          //      }
-          //  }
+  // for (let i = 0, iMax = csg.polygons.length; i < iMax; i++) {
+  //  let p = csg.polygons[i];
+  //  for (let j = 0, jMax = p.length; j < jMax; j++) {
+  //      ++numpolygonvertices;
+  //      let vertextag = p[j].getTag();
+  //      if(!(vertextag in vertexmap)) {
+  //          vertexmap[vertextag] = numvertices++;
+  //          vertices.push(p[j]);
+  //      }
+  //  }
   csg.polygons.map(function (polygon) {
-        // FIXME: why use map if we do not return anything ?
-        // either for... or forEach
+    // FIXME: why use map if we do not return anything ?
+    // either for... or forEach
     polygon.vertices.map(function (vertex) {
       ++numpolygonvertices
       let vertextag = vertex.getTag()
@@ -55,17 +55,17 @@ const toCompactBinary = (_csg) => {
     }
   })
 
-  let numVerticesPerPolygon = new Uint32Array(numpolygons)
-  let polygonSharedIndexes = new Uint32Array(numpolygons)
+  let numVerticesPerPolygon = new Uint32Array(numPolygons)
+  let polygonSharedIndices = new Uint32Array(numPolygons)
   let polygonVertices = new Uint32Array(numpolygonvertices)
-  let polygonPlaneIndexes = new Uint32Array(numpolygons)
+  let polygonPlaneIndices = new Uint32Array(numPolygons)
   let vertexData = new Float64Array(numvertices * 3)
   let planeData = new Float64Array(numplanes * 4)
   let polygonVerticesIndex = 0
 
-      // FIXME: doublecheck : why does it go through the whole polygons again?
-      // can we optimise that ? (perhap due to needing size to init buffers above)
-  for (let polygonindex = 0; polygonindex < numpolygons; ++polygonindex) {
+  // FIXME: doublecheck : why does it go through the whole polygons again?
+  // can we optimise that ? (perhap due to needing size to init buffers above)
+  for (let polygonindex = 0; polygonindex < numPolygons; ++polygonindex) {
     let polygon = csg.polygons[polygonindex]
     numVerticesPerPolygon[polygonindex] = polygon.vertices.length
     polygon.vertices.map(function (vertex) {
@@ -75,10 +75,10 @@ const toCompactBinary = (_csg) => {
     })
     let planetag = polygon.plane.getTag()
     let planeindex = planemap[planetag]
-    polygonPlaneIndexes[polygonindex] = planeindex
+    polygonPlaneIndices[polygonindex] = planeindex
     let sharedtag = polygon.shared.getTag()
     let sharedindex = sharedmap[sharedtag]
-    polygonSharedIndexes[polygonindex] = sharedindex
+    polygonSharedIndices[polygonindex] = sharedindex
   }
   let verticesArrayIndex = 0
   vertices.map(function (vertex) {
@@ -98,11 +98,11 @@ const toCompactBinary = (_csg) => {
 
   let result = {
     'class': 'CSG',
-    numPolygons: numpolygons,
-    numVerticesPerPolygon: numVerticesPerPolygon,
-    polygonPlaneIndexes: polygonPlaneIndexes,
-    polygonSharedIndexes: polygonSharedIndexes,
-    polygonVertices: polygonVertices,
+    numPolygons,
+    numVerticesPerPolygon,
+    polygonPlaneIndices,
+    polygonSharedIndices,
+    polygonVertices,
     vertexData: vertexData,
     planeData: planeData,
     shared: shareds

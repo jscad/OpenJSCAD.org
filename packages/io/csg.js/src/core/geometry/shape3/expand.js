@@ -1,17 +1,18 @@
 
-const {EPS, angleEPS} = require('../../constants')
+const { EPS, angleEPS } = require('../../constants')
 const Vertex = require('../../core/math/Vertex3')
 const Vector2D = require('../../core/math/Vector2')
 const Polygon = require('../../core/math/Polygon3')
-const {fnNumberSort} = require('../../core/utils')
-const {fromPoints, fromPointsNoCheck} = require('../../core/CAGFactories')
-const {extrudePolygon3} = require('../shape2/extrusionUtils')
-const {isShape2} = require('../../utils/typeChecks')
-const {unionSub} = require('../../../api/ops-booleans/union')
+const { fnNumberSort } = require('../../core/utils')
+const { fromPoints, fromPointsNoCheck } = require('../../core/CAGFactories')
+const { extrudePolygon3 } = require('../shape2/extrusionUtils')
+const { isShape2 } = require('../../utils/typeChecks')
+const { unionSub } = require('../../../api/ops-booleans/union')
 const canonicalize = require('../../core/utils/canonicalize')
 const retesselate = require('../../core/utils/retesellate')
 const union = require('../../../api/ops-booleans/union')
 const CAG = require('../../core/CAG')
+const fromPolygons = require('./fromPolygons')
 
 /**
  * Create the expanded shell of the solid:
@@ -25,16 +26,14 @@ const CAG = require('../../core/CAG')
  * @param  {Integer} resolution
  * @param  {Boolean} unionWithThis
  */
-const expandedShellOfCCSG = function (_csg, radius, resolution, unionWithThis) {
-  const CSG = require('../core/CSG')
-  const {fromPolygons} = require('../core/CSGFactories')
+const expand = function (_csg, radius, resolution, unionWithThis) {
   // const {sphere} = require('./primitives3d') // FIXME: circular dependency !
   let csg = retesselate(_csg)
   let result
   if (unionWithThis) {
     result = csg
   } else {
-    result = new CSG()
+    result = shape3.create()
   }
 
   // first extrude all polygons:
@@ -45,11 +44,11 @@ const expandedShellOfCCSG = function (_csg, radius, resolution, unionWithThis) {
     result = unionSub(result, extrudedface, false, false)
   })
 
-    // Make a list of all unique vertex pairs (i.e. all sides of the solid)
-    // For each vertex pair we collect the following:
-    //   v1: first coordinate
-    //   v2: second coordinate
-    //   planenormals: array of normal vectors of all planes touching this side
+  // Make a list of all unique vertex pairs (i.e. all sides of the solid)
+  // For each vertex pair we collect the following:
+  //   v1: first coordinate
+  //   v2: second coordinate
+  //   planenormals: array of normal vectors of all planes touching this side
   let vertexpairs = {} // map of 'vertex pair tag' to {v1, v2, planenormals}
   csg.polygons.map(function (polygon) {
     let numvertices = polygon.vertices.length
@@ -92,12 +91,12 @@ const expandedShellOfCCSG = function (_csg, radius, resolution, unionWithThis) {
     let vertexpair = vertexpairs[vertextagpair]
     let startpoint = vertexpair.v1.pos
     let endpoint = vertexpair.v2.pos
-                // our x,y and z vectors:
+    // our x,y and z vectors:
     let zbase = endpoint.minus(startpoint).unit()
     let xbase = vertexpair.planenormals[0].unit()
     let ybase = xbase.cross(zbase)
 
-      // make a list of angles that the cylinder should traverse:
+    // make a list of angles that the cylinder should traverse:
     let angles = []
 
     // first of all equally spaced around the cylinder:
@@ -167,8 +166,8 @@ const expandedShellOfCCSG = function (_csg, radius, resolution, unionWithThis) {
     result = unionSub(result, cylinder, false, false)
   }
 
-        // make a list of all unique vertices
-        // For each vertex we also collect the list of normals of the planes touching the vertices
+  // make a list of all unique vertices
+  // For each vertex we also collect the list of normals of the planes touching the vertices
   let vertexmap = {}
   csg.polygons.map(function (polygon) {
     polygon.vertices.map(function (vertex) {
@@ -187,14 +186,14 @@ const expandedShellOfCCSG = function (_csg, radius, resolution, unionWithThis) {
     })
   })
 
-        // and build spheres at each vertex
-        // We will try to set the x and z axis to the normals of 2 planes
-        // This will ensure that our sphere tesselation somewhat matches 2 planes
+  // and build spheres at each vertex
+  // We will try to set the x and z axis to the normals of 2 planes
+  // This will ensure that our sphere tesselation somewhat matches 2 planes
   for (let vertextag in vertexmap) {
     let vertexobj = vertexmap[vertextag]
-            // use the first normal to be the x axis of our sphere:
+    // use the first normal to be the x axis of our sphere:
     let xaxis = vertexobj.normals[0].unit()
-            // and find a suitable z axis. We will use the normal which is most perpendicular to the x axis:
+    // and find a suitable z axis. We will use the normal which is most perpendicular to the x axis:
     let bestzaxis = null
     let bestzaxisorthogonality = 0
     for (let i = 1; i < vertexobj.normals.length; i++) {
@@ -225,12 +224,9 @@ const expandedShellOfCCSG = function (_csg, radius, resolution, unionWithThis) {
   return result
 }
 
+/*
 const expandedShell = (input, radius, resolution, unionWithThis) => {
-  return isShape2 ? expandedShellOfCAG(input, radius, resolution) : expandedShellOfCCSG(input, radius, resolution, unionWithThis)
-}
+  return isShape2 ? expandedShellOfCAG(input, radius, resolution) : shape3.expand(input, radius, resolution, unionWithThis)
+} */
 
-module.exports = {
-  expandedShellOfCAG,
-  expandedShellOfCCSG,
-  expandedShell
-}
+module.exports = expand

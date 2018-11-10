@@ -4,10 +4,10 @@ const Polygon3 = require('../../core/math/Polygon3')
 const Vector3 = require('../../core/math/Vector3')
 const Vertex3 = require('../../core/math/Vertex3')
 
-const {parseOptionAs3DVector, parseOptionAsFloat, parseOptionAsInt} = require('../optionParsers')
-const {defaultResolution3D} = require('../../core/constants')
+const { parseOptionAs3DVector, parseOptionAsFloat, parseOptionAsInt } = require('../optionParsers')
+const { defaultResolution3D } = require('../../core/constants')
 const Properties = require('../../core/Properties')
-const {fromPolygons} = require('../../core/CSGFactories')
+const { fromPolygons } = require('../../core/CSGFactories')
 
 const polyhedron = require('./polyhedron')
 
@@ -32,14 +32,14 @@ function sphere (params) {
     type: 'normal'
   }
 
-  let {r, fn, type} = Object.assign({}, defaults, params)
+  let { r, fn, type } = Object.assign({}, defaults, params)
   let offset = [0, 0, 0] // center: false (default)
   if (params && (typeof params !== 'object')) {
     r = params
   }
   // let zoffset = 0 // sphere() in openscad has no center:true|false
 
-  let output = type === 'geodesic' ? geodesicSphere(params) : _sphere({radius: r, resolution: fn})
+  let output = type === 'geodesic' ? geodesicSphere(params) : _sphere({ radius: r, resolution: fn })
 
   // preparing individual x,y,z center
   if (params && params.center && params.center.length) {
@@ -91,7 +91,7 @@ const _sphere = function (options) {
     let angle = Math.PI * 2.0 * slice1 / resolution
     let cylinderpoint = xvector.times(Math.cos(angle)).plus(yvector.times(Math.sin(angle)))
     if (slice1 > 0) {
-            // cylinder vertices:
+      // cylinder vertices:
       let vertices = []
       let prevcospitch, prevsinpitch
       for (let slice2 = 0; slice2 <= qresolution; slice2++) {
@@ -135,7 +135,7 @@ function geodesicSphere (params) {
     r: 1,
     fn: 5
   }
-  let {r, fn} = Object.assign({}, defaults, params)
+  let { r, fn } = Object.assign({}, defaults, params)
 
   let ci = [ // hard-coded data of icosahedron (20 faces, all triangles)
     [0.850651, 0.000000, -0.525731],
@@ -240,7 +240,7 @@ function geodesicSphere (params) {
     f = f.concat(g.triangles)
     offset = g.offset
   }
-  return scale(r, polyhedron({points: c, triangles: f}))
+  return scale(r, polyhedron({ points: c, triangles: f }))
 }
 
 module.exports = sphere

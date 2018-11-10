@@ -21,12 +21,15 @@ const projectPolygon3ToOrthoNormalBasis = function (poly3, orthobasis) {
   return result
 }
 
-// project the 3D CSG onto a plane
-// This returns a 2D CAG with the 'shadow' shape of the 3D solid when projected onto the
-// plane represented by the orthonormal basis
-const projectToOrthoNormalBasis = function (csg, orthobasis) {
+/** project the Shape3 onto a plane
+ * This returns a Shape2 with the 'shadow' shape of the 3D solid when projected onto the
+ * plane represented by the orthonormal basis
+ * @param  {Shape3} shape the shape3 object to cut
+ * @param  {Orthobasis} orthobasis the orthobasis to cut along
+ */
+const projectToOrthoNormalBasis = function (shape, orthobasis) {
   let cags = []
-  csg.polygons.filter(function (p) {
+  shape.polygons.filter(function (p) {
     // only return polys in plane, others may disturb result
     return p.plane.normal.minus(orthobasis.plane.normal).lengthSquared() < (EPS * EPS)
   })

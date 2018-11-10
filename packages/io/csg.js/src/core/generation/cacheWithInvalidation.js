@@ -14,7 +14,7 @@ const makeCacheWithInvalidation = (passesBeforeElimination = 1, lookup = {}, loo
     } else {
       lookupCounts[nodeHash] = passesBeforeElimination
     }
-    return foundData ? {foundData, nodeHash} : {foundData: undefined, nodeHash}
+    return foundData ? { foundData, nodeHash } : { foundData: undefined, nodeHash }
   }
 
   const add = (nodeHash, data) => {
@@ -44,7 +44,7 @@ const makeCacheWithInvalidation = (passesBeforeElimination = 1, lookup = {}, loo
     currentPassHits = []
   }
 
-  return {lookup, find, add, update}
+  return { lookup, find, add, update }
 }
 
 module.exports = makeCacheWithInvalidation

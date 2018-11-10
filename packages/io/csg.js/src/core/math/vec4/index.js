@@ -4,5 +4,5 @@ module.exports = {
   fromScalar: require('./fromScalar'),
   fromValues: require('./fromValues'),
   toString: require('./toString'),
-  transformMat4: require('./transformMat4')
+  transform: require('./transformMat4')
 }

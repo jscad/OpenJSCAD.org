@@ -1,8 +1,8 @@
 module.exports = {
-  canonicalize: require('./canonicalize'),
-  connectTo: require('./connectTo'),
+  /* canonicalize: require('./canonicalize'),
+  connectTo: require('./connectTo'), */
   create: require('./create'),
-  equals: require('./equals'),
+  /* equals: require('./equals'),
   fromCompactBinary: require('./fromCompactBinary'),
   fromObject: require('./fromObject'),
   fromPolygons: require('./fromPolygons'),
@@ -26,7 +26,7 @@ module.exports = {
   toCompactBinary: require('./toCompactBinary'),
   toString: require('./toString'),
   toTriangles: require('./toTriangles'),
-  difference: require('./difference'),
-  transform: require('./transform'),
-  translate: require('./translate'),
+  difference: require('./difference'), */
+  transform: require('./transform')
+  // translate: require('./translate'),
 }

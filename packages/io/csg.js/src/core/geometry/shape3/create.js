@@ -9,6 +9,7 @@ const create = function () {
   return {
     type: 'shape3',
     properties: {}, // properties are just simple objects, 'children' of the shape (ie transforms applied to the shape are applied to properties)
+    polygonData: new Float32Array(),
     geometry: {
       polygons: [],
       isCanonicalized: true,

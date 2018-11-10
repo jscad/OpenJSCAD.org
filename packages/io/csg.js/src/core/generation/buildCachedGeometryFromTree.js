@@ -1,7 +1,7 @@
 
-const generate = require('./geometry-generator-cached')
+const generate = require('./generatePolygonal')
 const makeCacheWithInvalidation = require('./cacheWithInvalidation')
-const {flatten, toArray} = require('./arrays')
+const { flatten, toArray } = require('./arrays')
 
 /**
  * higher order function returning a function that can be called to generate
@@ -14,7 +14,7 @@ const makeBuildCachedGeometryFromTree = (params) => {
     lookup: {},
     lookupCounts: {}
   }
-  const {passesBeforeElimination, lookup, lookupCounts} = Object.assign({}, defaults, params)
+  const { passesBeforeElimination, lookup, lookupCounts } = Object.assign({}, defaults, params)
   const cache = makeCacheWithInvalidation(passesBeforeElimination, lookup, lookupCounts)
 
   const buildFinalResult = (tree, deep) => {

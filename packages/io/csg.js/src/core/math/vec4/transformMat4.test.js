@@ -1,5 +1,6 @@
 const test = require('ava')
-const { transformMat4, fromValues } = require('./index')
+const { fromValues } = require('./index')
+const transformMat4 = require('./transformMat4')
 
 const { compareVectors } = require('../../../../test/helpers/index')
 

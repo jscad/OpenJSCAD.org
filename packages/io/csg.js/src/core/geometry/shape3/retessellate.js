@@ -4,11 +4,11 @@ const fromPolygons = require('./fromPolygons')
 
 /*
   After CSG operations all coplanar polygon fragments are joined by a retesselating
-  operation. See CSG.reTesselated(). Retesselation is done through a
-  linear sweep over the polygon surface. The sweep line passes over the y coordinates
-  of all vertices in the polygon. Polygons are split at each sweep line, and the fragments
-  are joined horizontally and vertically into larger polygons (making sure that we
-  will end up with convex polygons).
+  operation. shape3.reTesselate(shape).
+  Retesselation is done through a linear sweep over the polygon surface.
+  The sweep line passes over the y coordinates of all vertices in the polygon.
+  Polygons are split at each sweep line, and the fragments are joined horizontally and vertically into larger polygons
+  (making sure that we will end up with convex polygons).
 */
 const retessellate = function (csg) {
   if (csg.isRetesselated) {

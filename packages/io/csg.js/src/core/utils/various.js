@@ -2,10 +2,6 @@ function fnNumberSort (a, b) {
   return a - b
 }
 
-function fnSortByIndex (a, b) {
-  return a.index - b.index
-}
-
 function insertSorted (array, element, comparefunc) {
   let leftbound = 0
   let rightbound = array.length
@@ -59,7 +55,6 @@ const interpolateBetween2DPointsForY = function (point1, point2, y) {
 
 module.exports = {
   fnNumberSort,
-  fnSortByIndex,
   solve2Linear,
   insertSorted,
   interpolateBetween2DPointsForY
