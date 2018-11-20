@@ -24,7 +24,7 @@ const initTranslations = (options) => {
     translations: {},
     baseTranslation: 'en'
   }
-  const {localesPath, translations, baseTranslation} = Object.assign({}, defaults, options)
+  const { localesPath, translations, baseTranslation } = Object.assign({}, defaults, options)
   // adapted from https://gist.github.com/gmarcos87/565d57747b30e1755046002137228562
 
   // const genericFile = translations['en']
@@ -33,7 +33,7 @@ const initTranslations = (options) => {
 
 const i18nImport = require('es2015-i18n-tag')
 const i18n = i18nImport.default
-const {i18nConfig} = i18nImport
+const { i18nConfig } = i18nImport
 
 const makei18nSideEffect = (options) => {
   const translationsCB = callBackToStream()
@@ -46,7 +46,7 @@ const makei18nSideEffect = (options) => {
       translations = command.data
     },
     getDefaultLocale: command => {
-      translationsCB.callback({data: getDefaultLocale(), type: command.type})
+      translationsCB.callback({ data: getDefaultLocale(), type: command.type })
     },
     changeSettings: command => {
       const locales = command.data
@@ -54,15 +54,15 @@ const makei18nSideEffect = (options) => {
         locales,
         translations: translations[locales]
       })
-      translationsCB.callback({data: i18n, type: 'changeSettings'})
+      translationsCB.callback({ data: i18n, type: 'changeSettings' })
     },
     getAvailableLanguages: command => {
       const availableLanguages = Object.keys(translations)
-          .map(code => {
-            const fullName = longNames[code] ? longNames[code] : 'placeholder'
-            return {code, fullName}
-          })
-      translationsCB.callback({data: availableLanguages, type: 'getAvailableLanguages'})
+        .map(code => {
+          const fullName = longNames[code] ? longNames[code] : 'placeholder'
+          return { code, fullName }
+        })
+      translationsCB.callback({ data: availableLanguages, type: 'getAvailableLanguages' })
     }
   }
 
@@ -78,7 +78,7 @@ const makei18nSideEffect = (options) => {
     return translationsCB.stream
       .multicast()
   }
-  return {sink, source}
+  return { sink, source }
 }
 
 module.exports = makei18nSideEffect

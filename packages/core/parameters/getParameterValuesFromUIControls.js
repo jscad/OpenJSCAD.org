@@ -49,6 +49,9 @@ module.exports = function getParameterValuesFromUIControls (paramControls, param
         }
         value = control.value
         break
+      case 'group':
+        console.log('group');
+        break;
       default:
         value = control.value
         break
