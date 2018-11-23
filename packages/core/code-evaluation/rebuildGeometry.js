@@ -3,8 +3,8 @@ const instanciateDesign = require('./instanciateDesign')
 const applyParameterDefinitions = require('../parameters/applyParameterDefinitions')
 
 const rebuildSolids = (data, callback) => {
-  const defaults = {vtreeMode: true}
-  const {source, mainPath, vtreeMode, lookup, lookupCounts} = Object.assign({}, defaults, data)
+  const defaults = { vtreeMode: true }
+  const { source, mainPath, vtreeMode, lookup, lookupCounts } = Object.assign({}, defaults, data)
   const apiMainPath = vtreeMode ? '../code-loading/vtreeApi' : '@jscad/csg/api'
 
   // let start = new Date()
@@ -19,11 +19,10 @@ const rebuildSolids = (data, callback) => {
     parameterDefinitions: designData.parameterDefinitions
   })
   // console.warn(`loadDesignData`, new Date() - start)
-
   // make sure parameters are correct by applying parameter definitions
   // this might be redundant with ui-side logic, but it makes sure this core piece works regardless of ui
   let parameterValues = data.parameterValues
-  parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, designData.parameterDefinitions) : parameterValues
+  parameterValues = applyParameterDefinitions(parameterValues, designData.parameterDefinitions)
   parameterValues = Object.assign({}, designData.parameterDefaults, parameterValues)
 
   // start = new Date()

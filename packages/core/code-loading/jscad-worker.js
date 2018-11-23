@@ -1,7 +1,7 @@
 // jscad-worker.js
 //
 // == OpenJSCAD.org, Copyright (c) 2013-2016, Licensed under MIT License
-const {isCSG, isCAG} = require('@jscad/csg')
+const { isCSG, isCAG } = require('@jscad/csg')
 const oscad = require('@jscad/csg/api')
 const createJscadFunction = require('./jscad-function')
 const { toArray } = require('../utils/arrays')
@@ -14,7 +14,7 @@ module.exports = function (self) {
     if (e.data instanceof Object) {
       var data = e.data
       if (data.cmd === 'render') {
-        const {source, parameters, options} = e.data
+        const { source, parameters, options } = e.data
         const include = x => x
         const globals = options.implicitGlobals ? { oscad } : {}
         const func = createJscadFunction(source, globals)
@@ -30,7 +30,7 @@ module.exports = function (self) {
         if (objects.length === 0) {
           throw new Error('The JSCAD script must return one or more CSG or CAG solids.')
         }
-        self.postMessage({cmd: 'rendered', objects})
+        self.postMessage({ cmd: 'rendered', objects })
       }
     }
   }

@@ -1,15 +1,15 @@
 // instanciation
 const makeBuildCachedGeometryFromTree = require('jscad-tree-experiment').buildCachedGeometry
 const { CAG, CSG } = require('@jscad/csg')
-const {isCAG, isCSG} = require('@jscad/csg')
-const {toArray} = require('../utils/arrays')
+const { isCAG, isCSG } = require('@jscad/csg')
+const { toArray } = require('../utils/arrays')
 
 // const toCompactBinary = require('./toCompactTest')
 
 const isResultSolid = (rawResults) => (rawResults.length > 0 && (isCSG(rawResults[0]) || isCAG(rawResults[0])))
 
 const lookupFromCompactBinary = (compactLookup) => {
-   // TODO: optimise this !!
+  // TODO: optimise this !!
   let lookup = {}
   Object.keys(compactLookup).forEach(function (key) {
     const object = compactLookup[key]
@@ -54,7 +54,7 @@ const instanciateDesign = (rootModule, vtreeMode, inputLookup, inputLookupCounts
     solids = rawResults
   } else if (vtreeMode) {
     const start = new Date()
-    const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree({passesBeforeElimination: 5, lookup, lookupCounts})
+    const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree({ passesBeforeElimination: 5, lookup, lookupCounts })
     solids = buildCachedGeometryFromTree({}, rawResults)
     console.warn(`buildCachedGeometryFromTree`, new Date() - start)//, rawResults, solids)
     // TODO: return both solids and cache instead of mutating ?
@@ -72,7 +72,7 @@ const instanciateDesign = (rootModule, vtreeMode, inputLookup, inputLookupCounts
     })
 
   lookup = lookupToCompactBinary(lookup)
-  return {solids, lookup, lookupCounts}
+  return { solids, lookup, lookupCounts }
 }
 
 module.exports = instanciateDesign

@@ -26,11 +26,11 @@ function rebuildSolids (script, fullurl, parameters, callback, options) {
   }
   options = Object.assign({}, defaults, options)
 
-  replaceIncludes(script, basePath, '', {includeResolver: options.includeResolver, memFs: options.memFs})
-    .then(function ({source}) {
-      const globals = options.implicitGlobals ? (options.globals ? options.globals : {oscad}) : {}
+  replaceIncludes(script, basePath, '', { includeResolver: options.includeResolver, memFs: options.memFs })
+    .then(function ({ source }) {
+      const globals = options.implicitGlobals ? (options.globals ? options.globals : { oscad }) : {}
       const func = createJscadFunction(source, globals)
-    // stand-in for the include function(no-op)
+      // stand-in for the include function(no-op)
       const include = x => x
       try {
         let objects = func(parameters, include, globals)
@@ -76,11 +76,11 @@ function rebuildSolidsInWorker (script, fullurl, parameters, callback, options) 
   }
 
   let worker
-  replaceIncludes(script, basePath, '', {includeResolver: options.includeResolver, memFs: options.memFs})
-    .then(function ({source}) {
+  replaceIncludes(script, basePath, '', { includeResolver: options.includeResolver, memFs: options.memFs })
+    .then(function ({ source }) {
       worker = WebWorkify(require('../code-loading/jscad-worker.js'))
-    // we need to create special options as you cannot send functions to webworkers
-      const workerOptions = {implicitGlobals: options.implicitGlobals}
+      // we need to create special options as you cannot send functions to webworkers
+      const workerOptions = { implicitGlobals: options.implicitGlobals }
       worker.onmessage = function (e) {
         if (e.data instanceof Object) {
           const data = e.data.objects.map(function (object) {
@@ -93,7 +93,7 @@ function rebuildSolidsInWorker (script, fullurl, parameters, callback, options) 
       worker.onerror = function (e) {
         callback(`Error in line ${e.lineno} : ${e.message}`, undefined)
       }
-      worker.postMessage({cmd: 'render', fullurl, source, parameters, options: workerOptions})
+      worker.postMessage({ cmd: 'render', fullurl, source, parameters, options: workerOptions })
     }).catch(error => callback(error, undefined))
 
   // have we been asked to stop our work?

@@ -22,7 +22,7 @@ const loadDesign = (source, mainPath, apiMainPath, filesAndFolders, parameterVal
   // ie either the only file if there is only one
   // OR the file in the 'main' entry of package.js, index.js, main.js or <folderName>.js
 
-  const designRoot = {source, path: mainPath, module: undefined}
+  const designRoot = { source, path: mainPath, module: undefined }
 
   // now attempt to load the design
   /*
@@ -48,10 +48,10 @@ const loadDesign = (source, mainPath, apiMainPath, filesAndFolders, parameterVal
 
   // if we have files & folders we need to update the source for our module
   if (filesAndFolders) {
-    filesAndFolders = transformSources({apiMainPath}, filesAndFolders)
+    filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
   }
   // now check if we need fake require or not
-  const requireFn = hasRequire() ? require : makeWebRequire(filesAndFolders, {apiMainPath})
+  const requireFn = hasRequire() ? require : makeWebRequire(filesAndFolders, { apiMainPath })
   // rootModule SHOULD contain a main() entry and optionally a getParameterDefinitions entrye
   const rootModule = requireDesignFromModule(designRoot.path, requireFn)
   console.log('rootModule', rootModule, 'parameterValuesOverride', parameterValuesOverride)
@@ -67,7 +67,7 @@ const loadDesign = (source, mainPath, apiMainPath, filesAndFolders, parameterVal
   // const parameterValues = Object.assign({}, parameters.parameterValues, parameterValuesOverride)
 
   // console.log('parameters', parameterDefinitions, parameterValues, parameterDefaults)
-  return {rootModule, parameterDefinitions, parameterDefaults}
+  return { rootModule, parameterDefinitions, parameterDefaults }
 }
 
 module.exports = loadDesign
