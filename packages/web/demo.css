@@ -1,7 +1,7 @@
 .jscad1{
   position: relative;
-  width: 1350px;
-  height: 700px;
+  width: 100%;
+  height: 100%;
 }
 
 .jscad2{
@@ -12,6 +12,9 @@
 
 .wrapper {
   display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 html{
@@ -105,7 +108,7 @@ body {
 #params {
   position: absolute;
   z-index: 1;
-  bottom:40px;
+  bottom: 10px;
   left: 10px;
   user-select: none;
   padding: 10px;
@@ -128,6 +131,30 @@ body {
   border-top: 1px solid #bfbcbc;
   cursor: pointer;
 }
+#paramsTable .groupTitle:hover  {
+  background: #ff6c6c;/* #8080802b; #ff6c6c*/
+  color: white;
+}
+#paramsTable .groupTitle td:nth-child(2){
+  float: right;
+}
+#paramsTable .groupTitle.closed .icon-open{
+  display: none;
+}
+#paramsTable .groupTitle.open .icon-closed{
+  display: none;
+}
+
+
+/*#paramsTable .groupTitle:hover .icon-closed{
+  display: none;
+}
+#paramsTable .groupTitle:hover .icon-open{
+  display: block;
+}*/
+
+
+
 #paramsTable .controlsLine{
   padding-top: 10px;
 }
@@ -331,3 +358,10 @@ input.error::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: red;
 }
 
+.icon {
+  padding: 0px;
+}
+.icon svg{
+  width: 16px;
+  height: 16px;
+}
