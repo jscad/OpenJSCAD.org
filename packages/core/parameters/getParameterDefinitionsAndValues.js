@@ -12,16 +12,15 @@ const getRawParameterDefinitionsAndValues = (rootModule, overrides) => {
     parameterDefinitions = rootModule.getParameterDefinitions(overrides) || []
     parameterValues = getParameterValuesFromParameters(parameterDefinitions)
   }
-
-  return {parameterDefinitions, parameterValues}
+  return { parameterDefinitions, parameterValues }
 }
 
 const getAllParameterDefintionsAndValues = (rootModule, overrides) => {
-  let {parameterDefinitions, parameterValues} = getRawParameterDefinitionsAndValues(rootModule, overrides)
+  let { parameterDefinitions, parameterValues } = getRawParameterDefinitionsAndValues(rootModule, overrides)
   parameterValues = Object.assign({}, parameterValues, overrides)
   parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, parameterDefinitions) : parameterValues
 
-  return {parameterValues, parameterDefinitions}
+  return { parameterValues, parameterDefinitions }
 }
 
 module.exports = getAllParameterDefintionsAndValues
