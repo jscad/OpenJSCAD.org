@@ -15,7 +15,7 @@ function makeJscad (targetElement, options) {
     name: 'jscad',
     logging: false
   }
-  const {name, logging} = Object.assign({}, defaults, options)
+  const { name, logging } = Object.assign({}, defaults, options)
 
   // create root dom element
   const bel = require('bel')
@@ -24,21 +24,21 @@ function makeJscad (targetElement, options) {
 
   // setup all the side effects : ie , input/outputs
   // fake file system, to use in browsers/ sandbox environement
-  const fs = require('./sideEffects/memFs')({logging})
+  const fs = require('./sideEffects/memFs')({ logging })
   // (local) storage
-  const storage = require('./sideEffects/localStorage')({name, logging})
+  const storage = require('./sideEffects/localStorage')({ name, logging })
   // http requests
-  const http = require('./sideEffects/http')({logging})
+  const http = require('./sideEffects/http')({ logging })
   // title bar side effect
-  const titleBar = require('@jscad/core/sideEffects/titleBar')({logging})
+  const titleBar = require('@jscad/core/sideEffects/titleBar')({ logging })
   // drag & drop side effect // FIXME: unify with the one in core()
-  const dragDrop = require('./sideEffects/dragDrop')({targetEl: jscadEl, logging})
+  const dragDrop = require('./sideEffects/dragDrop')({ targetEl: jscadEl, logging })
   // fileDialog side effect
-  const fileDialog = require('./sideEffects/fileDialog')({targetEl: jscadEl, logging})
+  const fileDialog = require('./sideEffects/fileDialog')({ targetEl: jscadEl, logging })
   // dom side effect
-  const dom = require('@jscad/core/sideEffects/dom')({targetEl: jscadEl}, logging)
+  const dom = require('@jscad/core/sideEffects/dom')({ targetEl: jscadEl }, logging)
   // state (pseudo) side effect
-  const state = require('./sideEffects/state/index')({logging, packageMetadata, keyBindings})
+  const state = require('./sideEffects/state/index')({ logging, packageMetadata, keyBindings })
 
   // internationalization side effect, loaded up with preset translations
   const i18n = require('@jscad/core/sideEffects/i18n')({
@@ -69,7 +69,7 @@ function makeJscad (targetElement, options) {
     dom: dom.source(),
     solidWorker: solidWorker.source(),
     i18n: i18n.source(),
-    titleBar: titleBar.source(),  // #http://openjscad.org/examples/slices/tor.jscad
+    titleBar: titleBar.source(), // #http://openjscad.org/examples/slices/tor.jscad
     fileDialog: fileDialog.source()
   }
 
@@ -88,8 +88,8 @@ function makeJscad (targetElement, options) {
   // all the outputs (ie inputs from sources converted to outputs/actions etc)
   const outputs$ = require('./ui/flow/flowIn')(sources)
   // setup reactions (ie outputs to sinks)
-  const extras = {jscadEl, paramsCallbacktoStream, editorCallbackToStream}
-  require('./ui/flow/flowOut')({sinks, sources, outputs$, extras})
+  const extras = { jscadEl, paramsCallbacktoStream, editorCallbackToStream }
+  require('./ui/flow/flowOut')({ sinks, sources, outputs$, extras })
 
   // increase the count of jscad instances in this page
   instances += 1
