@@ -30,8 +30,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/csg": "0.5.2",
-    "@jscad/io": "0.4.4",
+    "@jscad/csg": "0.7.0",
+    "@jscad/io": "0.4.8",
     "@jscad/openscad-openjscad-translator": "0.0.10",
     "@most/create": "^2.0.1",
     "astring": "^1.0.2",
@@ -46,7 +46,7 @@
     "most-proxy": "^3.3.0",
     "require-from-string": "^2.0.1",
     "strip-bom": "^3.0.0",
-    "webworkify": "^1.4.0"
+    "webworkify": "^1.5.0"
   },
   "devDependencies": {
     "ava": "^0.23.0"
