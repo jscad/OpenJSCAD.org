@@ -1,6 +1,6 @@
 {
   "name": "@jscad/svg-deserializer",
-  "version": "0.4.2",
+  "version": "1.0.0-alpha.d0fb3056",
   "description": "Svg deserializer for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",

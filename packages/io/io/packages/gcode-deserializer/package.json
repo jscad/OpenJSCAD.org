@@ -1,6 +1,6 @@
 {
   "name": "@jscad/gcode-deserializer",
-  "version": "0.2.0",
+  "version": "1.0.0-alpha.d0fb3056",
   "description": "Gcode deserializer for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",

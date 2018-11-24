@@ -1,6 +1,6 @@
 {
   "name": "@jscad/scad-deserializer",
-  "version": "0.0.10",
+  "version": "1.0.0-alpha.d0fb3056",
   "description": "Translates OpenSCAD syntax (http://www.openscad.org/) into OpenJsCAD syntax (http://joostn.github.com/OpenJsCad/).",
   "main": "src/parserWrapper.js",
   "browser": {
