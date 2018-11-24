@@ -138,7 +138,7 @@ const cssStyle = function (element, name) {
     if (v !== null) {
       v = v[0]
       var i = v.length
-      while (v[i] !== ' ') i--
+      while (v[i] !== ' ' && i > 0) i--
       v = v.slice(i + 1, v.length - 1)
       return v
     }

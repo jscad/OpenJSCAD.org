@@ -1,0 +1,58 @@
+{
+  "name": "@jscad/scad-deserializer",
+  "version": "0.0.10",
+  "description": "Translates OpenSCAD syntax (http://www.openscad.org/) into OpenJsCAD syntax (http://joostn.github.com/OpenJsCad/).",
+  "main": "src/parserWrapper.js",
+  "browser": {
+    "lapack": false
+  },
+  "scripts": {
+    "test": "node tests/all-tests",
+    "build-old": "browserify src/parserWrapper.js --ignore lapack  --standalone openscadOpenJscadParser -o dist/web-built.js",
+    "build-min-old": "browserify src/parserWrapper.js --ignore lapack  --standalone openscadOpenJscadParser | uglifyjs -c > dist/web-built.min.js",
+    "build-all-old": "npm run build && npm run build-min",
+    "build-parser": "node src/parserMaker",
+    "release-patch": "git checkout master && npm run build-all; npm version patch ; git commit -a -m 'chore(dist): built release'; git push origin master --tags ",
+    "release-minor": "git checkout master && npm run build-all; npm version minor ; git commit -a -m 'chore(dist): built release'; git push origin master --tags ",
+    "release-major": "git checkout master && npm run build-all; npm version major ; git commit -a -m 'chore(dist): built release'; git push origin master --tags "
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "sylvester": "github:kaosat-dev/node-sylvester"
+  },
+  "devDependencies": {
+    "jison": "^0.4.17",
+    "test": "~0.6.0"
+  },
+  "repository": "https://github.com/jscad/io",
+  "bugs": {
+    "url": "https://github.com/jscad/io/issues"
+  },
+  "keywords": [
+    "openscad",
+    "openjscad",
+    "jscad",
+    "scad",
+    "deserializer",
+    "translator"
+  ],
+  "author": {
+    "name": "Gary Hodgson",
+    "email": "contact@garyhodgson.com",
+    "url": "http://garyhodgson.com"
+  },
+  "contributors": [
+    {
+      "name": "z3dev",
+      "url": "http://www.z3d.jp"
+    },
+    {
+      "name": "Mark 'kaosat-dev' Moissette",
+      "url": "http://kaosat.net"
+    }
+  ],
+  "license": "MIT"
+}

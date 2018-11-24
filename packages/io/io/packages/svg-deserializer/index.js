@@ -153,9 +153,9 @@ const objectify = function (group) {
     if ('transforms' in obj) {
       // NOTE: SVG specifications require that transforms are applied in the order given.
       // But these are applied in the order as required by CSG/CAG
-      let tr
-      let ts
-      let tt
+      let tr = null
+      let ts = null
+      let tt = null
 
       for (let j = 0; j < obj.transforms.length; j++) {
         const t = obj.transforms[j]
@@ -233,9 +233,9 @@ const codify = function (group) {
     if ('transforms' in obj) {
       // NOTE: SVG specifications require that transforms are applied in the order given.
       //       But these are applied in the order as required by CSG/CAG
-      let tr
-      let ts
-      let tt
+      let tr = null;
+      let ts = null;
+      let tt = null;
 
       for (let j = 0; j < obj.transforms.length; j++) {
         var t = obj.transforms[j]
@@ -243,17 +243,17 @@ const codify = function (group) {
         if ('scale' in t) { ts = t }
         if ('translate' in t) { tt = t }
       }
-      if (ts !== null && ts !== undefined) {
+      if (ts !== null) {
         const x = ts.scale[0]
         const y = ts.scale[1]
         code += indent + on + ' = ' + on + '.scale([' + x + ',' + y + ']);\n'
       }
-      if (tr !== null && tr !== undefined) {
+      if (tr !== null) {
         console.log('tr', tr)
         const z = 0 - tr.rotate
         code += indent + on + ' = ' + on + '.rotateZ(' + z + ');\n'
       }
-      if (tt !== null && tt !== undefined) {
+      if (tt !== null) {
         const x = cagLengthX(tt.translate[0], svgUnitsPmm, svgUnitsX)
         const y = (0 - cagLengthY(tt.translate[1], svgUnitsPmm, svgUnitsY))
         code += indent + on + ' = ' + on + '.translate([' + x + ',' + y + ']);\n'
@@ -294,7 +294,7 @@ function createSvgParser (src, pxPmm) {
       POLYGON: svgPolygon,
       PATH: svgPath,
       USE: svgUse,
-      DEFS: () => { svgInDefs = true },
+      DEFS: () => { svgInDefs = true; return null; },
       DESC: () => undefined, // ignored by design
       TITLE: () => undefined, // ignored by design
       STYLE: () => undefined, // ignored by design

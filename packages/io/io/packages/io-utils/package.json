@@ -1,6 +1,6 @@
 {
   "name": "@jscad/io-utils",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Utilities for input , output and formats handling for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",
@@ -36,6 +36,6 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@jscad/csg": "0.3.6"
+    "@jscad/csg": "0.7.0"
   }
 }

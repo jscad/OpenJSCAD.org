@@ -360,8 +360,17 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGro
       case 'z': // close current line
       case 'Z':
         tmpCode += indent + pathName + ' = ' + pathName + '.close();\n'
-        tmpCode += indent + pathName + ' = ' + pathName + '.innerToCAG();\n'
-        tmpCode += indent + on + ' = ' + on + '.union(' + pathName + ');\n'
+        tmpCode += indent + 'switch (' + pathName + '.getTurn()) {\n';
+        tmpCode += indent + '  default:\n';
+        tmpCode += indent + '  case "clockwise":\n';
+        tmpCode += indent + '  ' + pathName + ' = ' + pathName + '.innerToCAG();\n'
+        tmpCode += indent + '  ' + on + ' = ' + on + '.union(' + pathName + ');\n'
+        tmpCode += indent + '  break;\n';
+        tmpCode += indent + '  case "counter-clockwise":\n';
+        tmpCode += indent + '  ' + pathName + ' = ' + pathName + '.innerToCAG();\n'
+        tmpCode += indent + '  ' + on + ' = ' + on + '.subtract(' + pathName + ');\n'
+        tmpCode += indent + '  break;\n';
+        tmpCode += indent + '}\n';
         cx = sx
         cy = sy // return to the starting point
         pc = true

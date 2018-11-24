@@ -142,8 +142,17 @@ test('deserialize svg (path: simple) to jscad code', function (t) {
   cag001 = cag001.appendPoint([21.166665,-56.44443999999999]);
   cag001 = cag001.appendPoint([63.49999499999999,-56.44443999999999]);
   cag001 = cag001.close();
-  cag001 = cag001.innerToCAG();
-  cag00 = cag00.union(cag001);
+  switch (cag001.getTurn()) {
+    default:
+    case "clockwise":
+    cag001 = cag001.innerToCAG();
+    cag00 = cag00.union(cag001);
+    break;
+    case "counter-clockwise":
+    cag001 = cag001.innerToCAG();
+    cag00 = cag00.subtract(cag001);
+    break;
+  }
   cag0 = cag0.union(cag00);
   return cag0;
 }
@@ -171,8 +180,17 @@ test('deserialize svg (path: with bezier) to jscad code', function (t) {
   cag001 = cag001.appendArc([84.66666,-56.44443999999999],{xradius: 14.111109999999998,yradius: -7.055554999999999,xaxisrotation: 0,clockwise: false,large: false});
   cag001 = cag001.appendBezier([[98.77776999999999,-42.33333],[98.77776999999999,-42.33333],[104.42221399999998,-8.466665999999998]]);
   cag001 = cag001.close();
-  cag001 = cag001.innerToCAG();
-  cag00 = cag00.union(cag001);
+  switch (cag001.getTurn()) {
+    default:
+    case "clockwise":
+    cag001 = cag001.innerToCAG();
+    cag00 = cag00.union(cag001);
+    break;
+    case "counter-clockwise":
+    cag001 = cag001.innerToCAG();
+    cag00 = cag00.subtract(cag001);
+    break;
+  }
   cag0 = cag0.union(cag00);
   return cag0;
 }
@@ -229,8 +247,17 @@ test('deserialize svg (complex example : baby panda) to jscad code', function (t
     cag101 = cag101.appendBezier([[23.373642603999997,-10.984088024],[22.295553799999997,-9.821332559999998],[21.544842747999997,-9.234310383999999]]);
     cag101 = cag101.appendBezier([[20.452642834,-8.384821561999999],[19.95310954,-8.175977133999998],[19.049998499999997,-8.201377132]]);
     cag101 = cag101.close();
-    cag101 = cag101.innerToCAG();
-    cag10 = cag10.union(cag101);
+    switch (cag101.getTurn()) {
+      default:
+      case "clockwise":
+      cag101 = cag101.innerToCAG();
+      cag10 = cag10.union(cag101);
+      break;
+      case "counter-clockwise":
+      cag101 = cag101.innerToCAG();
+      cag10 = cag10.subtract(cag101);
+      break;
+    }
     cag1 = cag1.union(cag10);
     var cag11 = new CAG();
     var cag111 = new CSG.Path2D([[66.4633281,-9.358488151999998]],false);
@@ -254,8 +281,17 @@ test('deserialize svg (complex example : baby panda) to jscad code', function (t
     cag111 = cag111.appendBezier([[70.623283328,-10.840154701999998],[69.62421674,-10.112021425999998],[69.00332789999999,-9.832621448]]);
     cag111 = cag111.appendBezier([[68.348572396,-9.539110359999999],[67.28177248,-9.338732598],[66.4633281,-9.358488151999998]]);
     cag111 = cag111.close();
-    cag111 = cag111.innerToCAG();
-    cag11 = cag11.union(cag111);
+    switch (cag111.getTurn()) {
+      default:
+      case "clockwise":
+      cag111 = cag111.innerToCAG();
+      cag11 = cag11.union(cag111);
+      break;
+      case "counter-clockwise":
+      cag111 = cag111.innerToCAG();
+      cag11 = cag11.subtract(cag111);
+      break;
+    }
     cag1 = cag1.union(cag11);
     var cag12 = new CAG();
     var cag121 = new CSG.Path2D([[34.9955528,-33.305041822]],false);
@@ -286,8 +322,17 @@ test('deserialize svg (complex example : baby panda) to jscad code', function (t
     cag121 = cag121.appendBezier([[37.99557478599999,-35.260841668],[37.16866373999999,-34.552463945999996],[36.54777489999999,-34.103730647999996]]);
     cag121 = cag121.appendBezier([[35.926886059999994,-33.652175127999996],[35.229797225999995,-33.293752934],[34.9955528,-33.305041822]]);
     cag121 = cag121.close();
-    cag121 = cag121.innerToCAG();
-    cag12 = cag12.union(cag121);
+    switch (cag121.getTurn()) {
+      default:
+      case "clockwise":
+      cag121 = cag121.innerToCAG();
+      cag12 = cag12.union(cag121);
+      break;
+      case "counter-clockwise":
+      cag121 = cag121.innerToCAG();
+      cag12 = cag12.subtract(cag121);
+      break;
+    }
     cag1 = cag1.union(cag12);
     var cag13 = new CAG();
     var cag131 = new CSG.Path2D([[55.597773399999994,-34.151708422]],false);
@@ -313,8 +358,17 @@ test('deserialize svg (complex example : baby panda) to jscad code', function (t
     cag131 = cag131.appendBezier([[58.38612873599999,-35.430174988],[57.553573246,-34.761308373999995],[57.00888439999999,-34.538352835999994]]);
     cag131 = cag131.appendBezier([[56.467017776,-34.315397298],[55.832017826,-34.143241755999995],[55.597773399999994,-34.151708422]]);
     cag131 = cag131.close();
-    cag131 = cag131.innerToCAG();
-    cag13 = cag13.union(cag131);
+    switch (cag131.getTurn()) {
+      default:
+      case "clockwise":
+      cag131 = cag131.innerToCAG();
+      cag13 = cag13.union(cag131);
+      break;
+      case "counter-clockwise":
+      cag131 = cag131.innerToCAG();
+      cag13 = cag13.subtract(cag131);
+      break;
+    }
     cag1 = cag1.union(cag13);
     var cag14 = new CAG();
     var cag141 = new CSG.Path2D([[9.383888149999999,-48.25435175599999]],false);
@@ -436,8 +490,17 @@ test('deserialize svg (complex example : baby panda) to jscad code', function (t
     cag141 = cag141.appendBezier([[10.42811029,-49.975907176],[10.255954748,-49.244951678],[10.021710321999999,-48.89499615]]);
     cag141 = cag141.appendBezier([[9.787465895999999,-48.545040621999995],[9.499599251999998,-48.257173978],[9.383888149999999,-48.25435175599999]]);
     cag141 = cag141.close();
-    cag141 = cag141.innerToCAG();
-    cag14 = cag14.union(cag141);
+    switch (cag141.getTurn()) {
+      default:
+      case "clockwise":
+      cag141 = cag141.innerToCAG();
+      cag14 = cag14.union(cag141);
+      break;
+      case "counter-clockwise":
+      cag141 = cag141.innerToCAG();
+      cag14 = cag14.subtract(cag141);
+      break;
+    }
     cag1 = cag1.union(cag14);
     var cag15 = new CAG();
     var cag151 = new CSG.Path2D([[41.7688856,-60.166950818]],false);
@@ -473,8 +536,17 @@ test('deserialize svg (complex example : baby panda) to jscad code', function (t
     cag151 = cag151.appendBezier([[46.434018566,-60.700350776],[45.35310753999999,-60.59028411799999],[44.7322187,-60.426595242]]);
     cag151 = cag151.appendBezier([[44.11132986,-60.262906365999996],[42.77641885399999,-60.144373042],[41.7688856,-60.166950818]]);
     cag151 = cag151.close();
-    cag151 = cag151.innerToCAG();
-    cag15 = cag15.union(cag151);
+    switch (cag151.getTurn()) {
+      default:
+      case "clockwise":
+      cag151 = cag151.innerToCAG();
+      cag15 = cag15.union(cag151);
+      break;
+      case "counter-clockwise":
+      cag151 = cag151.innerToCAG();
+      cag15 = cag15.subtract(cag151);
+      break;
+    }
     cag1 = cag1.union(cag15);
   var cag00 = cag1;
   cag00 = cag00.scale([0.1,0.1]);
@@ -483,7 +555,6 @@ test('deserialize svg (complex example : baby panda) to jscad code', function (t
 }
 `
   const observed = deserializer.deserialize(sourceSvg, undefined, {output: 'jscad', addMetaData: false})
-
   t.deepEqual(observed, expected)
 })
 
@@ -583,4 +654,224 @@ test('deserialize svg (path: with bezier) to cag/csg objects', function (t) {
 
   const observed = deserializer.deserialize(sourceSvg, undefined, {output: 'csg', addMetaData: false})
   t.deepEqual(observed.sides.length, 16)
+})
+
+test('deserialize svg produced by inkscape to cag/csg objects', function (t) {
+  const sourceSvg = `
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 210 297"
+   height="297mm"
+   width="210mm">
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1">
+    <g
+       id="text838"
+       style="font-style:normal;font-weight:normal;font-size:50.79999924px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332" />
+    <g
+       id="flowRoot840"
+       style="font-style:normal;font-weight:normal;font-size:192px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,-19.469852,218.5994)"
+       aria-label="全
+">
+      <path
+         id="path856"
+         style=""
+         d="m 153.07484,126.01322 c -14.784,24.768 -46.656,55.104 -79.487996,73.152 3.072,3.072 7.104,8.064 8.832,11.328 32.255996,-18.816 63.167996,-47.232 78.527996,-70.464 17.28,24.192 50.88,52.416 80.256,69.504 2.304,-4.032 5.76,-9.024 9.408,-12.672 -29.952,-14.784 -63.36,-42.816 -83.328,-70.848 z m 15.36,125.952 h 58.176 v -12.672 h -58.176 v -29.952 h 50.88 v -12.864 h -114.048 v 12.864 h 48.576 v 29.952 H 96.626844 v 12.672 h 57.215996 v 31.296 H 81.074844 v 13.056 H 243.31484 v -13.056 h -74.88 z" />
+    </g>
+  </g>
+</svg>
+`
+
+  const observed = deserializer.deserialize(sourceSvg, undefined, {output: 'csg', addMetaData: false})
+  t.deepEqual(observed.sides.length, 39)
+})
+
+test('deserialize shape with a hole to jscad code', function (t) {
+  const sourceSvg = `
+  <svg height="297" width="210">
+  <path d="M 325.71484 233.94922 A 122.85714 108.57142 0 0 0 202.85742 342.51953 A 122.85714 108.57142 0 0 0 325.71484 451.0918 A 122.85714 108.57142 0 0 0 448.57227 342.51953 A 122.85714 108.57142 0 0 0 325.71484 233.94922 z M 328.57227 308.23438 A 54.285711 35.714286 0 0 1 382.85742 343.94727 A 54.285711 35.714286 0 0 1 328.57227 379.66211 A 54.285711 35.714286 0 0 1 274.28516 343.94727 A 54.285711 35.714286 0 0 1 328.57227 308.23438 z " style="stroke: #006666; fill: none;"/>
+  </svg>
+`
+  const expected = `function main(params) {
+  var cag0 = new CAG();
+  var cag00 = new CAG();
+  var cag001 = new CSG.Path2D([[91.92395871744799,-66.025663556684]],false);
+  cag001 = cag001.appendArc([57.250867358723994,-96.66661529956598],{xradius: 34.673012336507995,yradius: -30.641265009524,xaxisrotation: 0,clockwise: false,large: false});
+  cag001 = cag001.appendArc([91.92395871744799,-127.30812019795998],{xradius: 34.673012336507995,yradius: -30.641265009524,xaxisrotation: 0,clockwise: false,large: false});
+  cag001 = cag001.appendArc([126.59705289839398,-96.66661529956598],{xradius: 34.673012336507995,yradius: -30.641265009524,xaxisrotation: 0,clockwise: false,large: false});
+  cag001 = cag001.appendArc([91.92395871744799,-66.025663556684],{xradius: 34.673012336507995,yradius: -30.641265009524,xaxisrotation: 0,clockwise: false,large: false});
+  cag001 = cag001.close();
+  switch (cag001.getTurn()) {
+    default:
+    case "clockwise":
+    cag001 = cag001.innerToCAG();
+    cag00 = cag00.union(cag001);
+    break;
+    case "counter-clockwise":
+    cag001 = cag001.innerToCAG();
+    cag00 = cag00.subtract(cag001);
+    break;
+  }
+  var cag002 = new CSG.Path2D([[92.730388898394,-86.99058483923599]],false);
+  cag002 = cag002.appendArc([108.05086335872399,-97.06955522339399],{xradius: 15.320632786984199,yradius: -10.0793643663492,xaxisrotation: 0,clockwise: true,large: false});
+  cag002 = cag002.appendArc([92.730388898394,-107.14907594084198],{xradius: 15.320632786984199,yradius: -10.0793643663492,xaxisrotation: 0,clockwise: true,large: false});
+  cag002 = cag002.appendArc([77.409361282552,-97.06955522339399],{xradius: 15.320632786984199,yradius: -10.0793643663492,xaxisrotation: 0,clockwise: true,large: false});
+  cag002 = cag002.appendArc([92.730388898394,-86.99058483923599],{xradius: 15.320632786984199,yradius: -10.0793643663492,xaxisrotation: 0,clockwise: true,large: false});
+  cag002 = cag002.close();
+  switch (cag002.getTurn()) {
+    default:
+    case "clockwise":
+    cag002 = cag002.innerToCAG();
+    cag00 = cag00.union(cag002);
+    break;
+    case "counter-clockwise":
+    cag002 = cag002.innerToCAG();
+    cag00 = cag00.subtract(cag002);
+    break;
+  }
+  cag0 = cag0.union(cag00);
+  return cag0;
+}
+`
+
+  const observed = deserializer.deserialize(sourceSvg, undefined, {output: 'jscad', addMetaData: false})
+  t.deepEqual(observed, expected);
+})
+
+test('deserialize shape with a nested hole to jscad code', function (t) {
+  const sourceSvg = `
+  <svg height="297" width="210">
+  <path d="M 348.57031 330.26758 A 122.85714 108.57142 0 0 0 225.71289 438.83789 A 122.85714 108.57142 0 0 0 348.57031 547.41016 A 122.85714 108.57142 0 0 0 471.42773 438.83789 A 122.85714 108.57142 0 0 0 348.57031 330.26758 z M 351.42773 404.55273 A 54.285709 35.714285 0 0 1 405.71289 440.26562 A 54.285709 35.714285 0 0 1 351.42773 475.98047 A 54.285709 35.714285 0 0 1 297.14062 440.26562 A 54.285709 35.714285 0 0 1 351.42773 404.55273 z M 348.57031 482.08984 C 359.59526 482.08984 369.65221 484.91497 377.28516 489.83398 C 384.9181 494.753 390.36523 502.16809 390.36523 510.82812 C 390.36523 519.48816 384.9181 526.90325 377.28516 531.82227 C 369.65221 536.74128 359.59526 539.56641 348.57031 539.56641 C 337.54536 539.56641 327.48646 536.74128 319.85352 531.82227 C 312.22057 526.90325 306.77344 519.48816 306.77344 510.82812 C 306.77344 502.16809 312.22057 494.753 319.85352 489.83398 C 327.48646 484.91497 337.54536 482.08984 348.57031 482.08984 z M 348.57031 492.21875 C 339.30907 492.21875 331.00105 494.6974 325.33984 498.3457 C 319.67864 501.99404 316.90234 506.41485 316.90234 510.82812 C 316.90234 515.2414 319.67864 519.66224 325.33984 523.31055 C 331.00105 526.95889 339.30907 529.4375 348.57031 529.4375 C 357.83155 529.4375 366.13958 526.95889 371.80078 523.31055 C 377.46198 519.66224 380.23828 515.2414 380.23828 510.82812 C 380.23828 506.41485 377.46198 501.99404 371.80078 498.3457 C 366.13958 494.6974 357.83155 492.21875 348.57031 492.21875 z "/>
+  </svg>
+`
+  const expected = `function main(params) {
+  var cag0 = new CAG();
+  var cag00 = new CAG();
+  var cag001 = new CSG.Path2D([[98.374279742882,-93.20884301627599]],false);
+  cag001 = cag001.appendArc([63.70118838415799,-123.84979475915799],{xradius: 34.673012336507995,yradius: -30.641265009524,xaxisrotation: 0,clockwise: false,large: false});
+  cag001 = cag001.appendArc([98.374279742882,-154.491299657552],{xradius: 34.673012336507995,yradius: -30.641265009524,xaxisrotation: 0,clockwise: false,large: false});
+  cag001 = cag001.appendArc([133.047371101606,-123.84979475915799],{xradius: 34.673012336507995,yradius: -30.641265009524,xaxisrotation: 0,clockwise: false,large: false});
+  cag001 = cag001.appendArc([98.374279742882,-93.20884301627599],{xradius: 34.673012336507995,yradius: -30.641265009524,xaxisrotation: 0,clockwise: false,large: false});
+  cag001 = cag001.close();
+  switch (cag001.getTurn()) {
+    default:
+    case "clockwise":
+    cag001 = cag001.innerToCAG();
+    cag00 = cag00.union(cag001);
+    break;
+    case "counter-clockwise":
+    cag001 = cag001.innerToCAG();
+    cag00 = cag00.subtract(cag001);
+    break;
+  }
+  var cag002 = new CSG.Path2D([[99.18070710160599,-114.17376147660599]],false);
+  cag002 = cag002.appendArc([114.501184384158,-124.25273186076399],{xradius: 15.320632222539798,yradius: -10.079364084126999,xaxisrotation: 0,clockwise: true,large: false});
+  cag002 = cag002.appendArc([99.18070710160599,-134.33225540043398],{xradius: 15.320632222539798,yradius: -10.079364084126999,xaxisrotation: 0,clockwise: true,large: false});
+  cag002 = cag002.appendArc([83.85967948576399,-124.25273186076399],{xradius: 15.320632222539798,yradius: -10.079364084126999,xaxisrotation: 0,clockwise: true,large: false});
+  cag002 = cag002.appendArc([99.18070710160599,-114.17376147660599],{xradius: 15.320632222539798,yradius: -10.079364084126999,xaxisrotation: 0,clockwise: true,large: false});
+  cag002 = cag002.close();
+  switch (cag002.getTurn()) {
+    default:
+    case "clockwise":
+    cag002 = cag002.innerToCAG();
+    cag00 = cag00.union(cag002);
+    break;
+    case "counter-clockwise":
+    cag002 = cag002.innerToCAG();
+    cag00 = cag00.subtract(cag002);
+    break;
+  }
+  var cag003 = new CSG.Path2D([[98.374279742882,-136.05645524244798]],false);
+  cag003 = cag003.appendBezier([[101.48576538677199,-136.05645524244798],[104.32405994106199,-136.85376964633397],[106.478247882552,-138.24202347035597]]);
+  cag003 = cag003.appendBezier([[108.63243300181999,-139.63028011659998],[110.16973401410598,-141.722983129598],[110.16973401410598,-144.167035848264]]);
+  cag003 = cag003.appendBezier([[110.16973401410598,-146.611091389152],[108.63243300181999,-148.70379440214998],[106.478247882552,-150.09205104839398]]);
+  cag003 = cag003.appendBezier([[104.32405994106199,-151.48030487241599],[101.48576538677199,-152.27761927630198],[98.374279742882,-152.27761927630198]]);
+  cag003 = cag003.appendBezier([[95.26279409899199,-152.27761927630198],[92.423949211412,-151.48030487241599],[90.26976409214399,-150.09205104839398]]);
+  cag003 = cag003.appendBezier([[88.115576150654,-148.70379440214998],[86.57827513836799,-146.611091389152],[86.57827513836799,-144.167035848264]]);
+  cag003 = cag003.appendBezier([[86.57827513836799,-141.722983129598],[88.115576150654,-139.63028011659998],[90.26976409214399,-138.24202347035597]]);
+  cag003 = cag003.appendBezier([[92.423949211412,-136.85376964633397],[95.26279409899199,-136.05645524244798],[98.374279742882,-136.05645524244798]]);
+  cag003 = cag003.close();
+  switch (cag003.getTurn()) {
+    default:
+    case "clockwise":
+    cag003 = cag003.innerToCAG();
+    cag00 = cag00.union(cag003);
+    break;
+    case "counter-clockwise":
+    cag003 = cag003.innerToCAG();
+    cag00 = cag00.subtract(cag003);
+    break;
+  }
+  var cag004 = new CSG.Path2D([[98.374279742882,-138.91505850624998]],false);
+  cag004 = cag004.appendBezier([[95.760552215354,-138.91505850624998],[93.41584453331,-139.61458856227998],[91.81812539244798,-140.64421981453998]]);
+  cag004 = cag004.appendBezier([[90.22040907380799,-141.673862355688],[89.43687557994798,-142.92151307966998],[89.43687557994798,-144.167035848264]]);
+  cag004 = cag004.appendBezier([[89.43687557994798,-145.41256143907998],[90.22040907380799,-146.66022062972797],[91.81812539244798,-147.68985470421]]);
+  cag004 = cag004.appendBezier([[93.41584453331,-148.71949724535799],[95.760552215354,-149.41901601249998],[98.374279742882,-149.41901601249998]]);
+  cag004 = cag004.appendBezier([[100.98800727041,-149.41901601249998],[103.332717774676,-148.71949724535799],[104.93043409331598,-147.68985470421]]);
+  cag004 = cag004.appendBezier([[106.52815041195598,-146.66022062972797],[107.31168390581598,-145.41256143907998],[107.31168390581598,-144.167035848264]]);
+  cag004 = cag004.appendBezier([[107.31168390581598,-142.92151307966998],[106.52815041195598,-141.673862355688],[104.93043409331598,-140.64421981453998]]);
+  cag004 = cag004.appendBezier([[103.332717774676,-139.61458856227998],[100.98800727041,-138.91505850624998],[98.374279742882,-138.91505850624998]]);
+  cag004 = cag004.close();
+  switch (cag004.getTurn()) {
+    default:
+    case "clockwise":
+    cag004 = cag004.innerToCAG();
+    cag00 = cag00.union(cag004);
+    break;
+    case "counter-clockwise":
+    cag004 = cag004.innerToCAG();
+    cag00 = cag00.subtract(cag004);
+    break;
+  }
+  cag0 = cag0.union(cag00);
+  return cag0;
+}
+`;
+
+  const observed = deserializer.deserialize(sourceSvg, undefined, {output: 'jscad', addMetaData: false})
+  t.deepEqual(observed, expected)
+})
+
+test('deserialize shape with a hole to cag/csg objects', function (t) {
+  const sourceSvg = `
+  <svg height="297" width="210">
+  <path d="M 325.71484 233.94922 A 122.85714 108.57142 0 0 0 202.85742 342.51953 A 122.85714 108.57142 0 0 0 325.71484 451.0918 A 122.85714 108.57142 0 0 0 448.57227 342.51953 A 122.85714 108.57142 0 0 0 325.71484 233.94922 z M 328.57227 308.23438 A 54.285711 35.714286 0 0 1 382.85742 343.94727 A 54.285711 35.714286 0 0 1 328.57227 379.66211 A 54.285711 35.714286 0 0 1 274.28516 343.94727 A 54.285711 35.714286 0 0 1 328.57227 308.23438 z " style="stroke: #006666; fill: none;"/>
+  </svg>
+`
+
+  const observed = deserializer.deserialize(sourceSvg, undefined, {output: 'csg', addMetaData: false})
+  t.deepEqual(observed.sides.length, 76)
+})
+
+test('deserialize shape with a nested hole to cag/csg objects', function (t) {
+  const sourceSvg = `
+  <svg height="297" width="210">
+  <path d="M 348.57031 330.26758 A 122.85714 108.57142 0 0 0 225.71289 438.83789 A 122.85714 108.57142 0 0 0 348.57031 547.41016 A 122.85714 108.57142 0 0 0 471.42773 438.83789 A 122.85714 108.57142 0 0 0 348.57031 330.26758 z M 351.42773 404.55273 A 54.285709 35.714285 0 0 1 405.71289 440.26562 A 54.285709 35.714285 0 0 1 351.42773 475.98047 A 54.285709 35.714285 0 0 1 297.14062 440.26562 A 54.285709 35.714285 0 0 1 351.42773 404.55273 z M 348.57031 482.08984 C 359.59526 482.08984 369.65221 484.91497 377.28516 489.83398 C 384.9181 494.753 390.36523 502.16809 390.36523 510.82812 C 390.36523 519.48816 384.9181 526.90325 377.28516 531.82227 C 369.65221 536.74128 359.59526 539.56641 348.57031 539.56641 C 337.54536 539.56641 327.48646 536.74128 319.85352 531.82227 C 312.22057 526.90325 306.77344 519.48816 306.77344 510.82812 C 306.77344 502.16809 312.22057 494.753 319.85352 489.83398 C 327.48646 484.91497 337.54536 482.08984 348.57031 482.08984 z M 348.57031 492.21875 C 339.30907 492.21875 331.00105 494.6974 325.33984 498.3457 C 319.67864 501.99404 316.90234 506.41485 316.90234 510.82812 C 316.90234 515.2414 319.67864 519.66224 325.33984 523.31055 C 331.00105 526.95889 339.30907 529.4375 348.57031 529.4375 C 357.83155 529.4375 366.13958 526.95889 371.80078 523.31055 C 377.46198 519.66224 380.23828 515.2414 380.23828 510.82812 C 380.23828 506.41485 377.46198 501.99404 371.80078 498.3457 C 366.13958 494.6974 357.83155 492.21875 348.57031 492.21875 z "/>
+  </svg>
+`
+
+  const observed = deserializer.deserialize(sourceSvg, undefined, {output: 'csg', addMetaData: false})
+  t.deepEqual(observed.sides.length, 154)
 })

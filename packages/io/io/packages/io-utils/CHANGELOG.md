@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.1.3"></a>
+## [0.1.3](https://github.com/jscad/io/compare/@jscad/io-utils@0.1.2...@jscad/io-utils@0.1.3) (2018-09-02)
+
+
+### Bug Fixes
+
+* **svg deserializer:** fixed svg-deserializer to work with Inkscape files ([#72](https://github.com/jscad/io/issues/72)) ([f35ea5e](https://github.com/jscad/io/commit/f35ea5e))
+
+
+
+
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/jscad/io/compare/@jscad/io-utils@0.1.1...@jscad/io-utils@0.1.2) (2017-11-04)
 

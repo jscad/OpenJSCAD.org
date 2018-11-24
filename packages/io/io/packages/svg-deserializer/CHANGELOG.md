@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.4.2"></a>
+## [0.4.2](https://github.com/jscad/io/compare/@jscad/svg-deserializer@0.4.1...@jscad/svg-deserializer@0.4.2) (2018-09-02)
+
+
+### Bug Fixes
+
+* **svg deserializer:** fixed svg-deserializer to work with Inkscape files ([#72](https://github.com/jscad/io/issues/72)) ([f35ea5e](https://github.com/jscad/io/commit/f35ea5e))
+
+
+
+
 <a name="0.4.1"></a>
 ## [0.4.1](https://github.com/jscad/io/compare/@jscad/svg-deserializer@0.4.0...@jscad/svg-deserializer@0.4.1) (2017-12-14)
 

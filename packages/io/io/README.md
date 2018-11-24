@@ -8,6 +8,11 @@
 
 This repository includes all the input/output format handling for the JSCAD projects, and can also be used seperatly.
 
+> NOTE : as of September 1 2018, we will NOT be accepting new PRS against the V1 / master branch: we realistically
+are not able to keep adding new features/fixes to the 'old' version and work on the very different V2.
+thank you for your comprehension !
+(already open PRS at that date are exempt)
+
 ### Input Format Handling (deserializers)
 
 ie: file data => jscad code (that can be evaluated to CSG/CAG)
