@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/jscad/io/compare/@jscad/io@0.4.8...@jscad/io@0.5.0) (2018-11-25)
+
+
+### Features
+
+* **scad-deserializer:** added old openscad-openjscad-translator to the packages ([#75](https://github.com/jscad/io/issues/75)) ([0a20323](https://github.com/jscad/io/commit/0a20323))
+
+
+
+
 <a name="0.4.8"></a>
 ## [0.4.8](https://github.com/jscad/io/compare/@jscad/io@0.4.7...@jscad/io@0.4.8) (2018-11-22)
 

@@ -33,7 +33,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "ava": "^0.23.0"
+    "ava": "^0.25.0"
   },
   "dependencies": {
     "@jscad/csg": "^0.7.0"

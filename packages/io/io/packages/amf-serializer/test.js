@@ -1,5 +1,5 @@
 const test = require('ava')
-const {CSG} = require('@jscad/csg')
+const { CSG } = require('@jscad/csg')
 const serializer = require('./index.js')
 
 test('serialize csg to amf', function (t) {

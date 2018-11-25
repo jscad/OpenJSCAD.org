@@ -37,6 +37,6 @@
     "@jscad/io-utils": "^1.0.0-alpha.d0fb3056"
   },
   "devDependencies": {
-    "ava": "^0.19.1"
+    "ava": "^0.25.0"
   }
 }

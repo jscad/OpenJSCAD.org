@@ -38,6 +38,7 @@
     "onml": "^0.4.1"
   },
   "devDependencies": {
-    "ava": "^0.19.1"
+    "@jscad/csg": "0.7.0",
+    "ava": "^0.25.0"
   }
 }
