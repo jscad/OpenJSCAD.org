@@ -1,7 +1,7 @@
 const path = require('path')
-const {head} = require('../../utils/utils')
-const {formats} = require('@jscad/core/io/formats')
-const {isCSG, isCAG} = require('@jscad/csg')
+const { head } = require('../../utils/utils')
+const { formats } = require('@jscad/core/io/formats')
+const { isCSG, isCAG } = require('@jscad/csg')
 
 const supportedFormatsForObjects = objects => {
   let objectFormats = []
@@ -28,10 +28,10 @@ const availableExportFormatsFromSolids = (solids) => {
   const availableExportFormats = supportedFormatsForObjects(solids)
     .filter(formatName => !formatsToIgnore.includes(formatName))
     .map(function (formatName) {
-      return {name: formatName, displayName: formats[formatName].displayName}
+      return { name: formatName, displayName: formats[formatName].displayName }
     })
   let exportFormat = head(availableExportFormats) ? head(availableExportFormats).name : undefined
-  return {exportFormat, availableExportFormats}
+  return { exportFormat, availableExportFormats }
 }
 
 const exportFilePathFromFormatAndDesign = (design, exportFormat) => {
@@ -39,7 +39,7 @@ const exportFilePathFromFormatAndDesign = (design, exportFormat) => {
   const defaultFileName = `${design.name}.${extension}`
   const exportFilePath = path.join(design.path, defaultFileName)
 
-  return {exportFilePath}
+  return { exportFilePath }
 }
 
 module.exports = {

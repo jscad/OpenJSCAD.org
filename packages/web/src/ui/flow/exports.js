@@ -1,5 +1,7 @@
 const most = require('most')
 const { exportFilePathFromFormatAndDesign } = require('../../core/io/exportUtils')
+const { prepareOutput } = require('../../core/io/prepareOutput')
+const { convertToBlob } = require('../../core/io/convertToBlob')
 const withLatestFrom = require('@jscad/core/observable-utils/withLatestFrom')
 // const saveDataToFs = require('../../core/io/saveDataToFs')
 
@@ -29,8 +31,7 @@ const reducers = {
     // return {defaultExportFilePath, exportFormat, data}
     console.log('export requested', solids, exportFilePath)
     const { saveAs } = require('file-saver')
-    const { prepareOutput } = require('../../core/io/prepareOutput')
-    const { convertToBlob } = require('../../core/io/convertToBlob')
+
 
     // saveDataToFs(data, exportFormat, filePath)
     const format = exportFormat
