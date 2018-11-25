@@ -32,7 +32,7 @@
   "dependencies": {
   },
   "devDependencies": {
-    "ava": "^0.23.0",
+    "ava": "^0.25.0",
     "lerna": "2.7.0"
   },
   "collective": {

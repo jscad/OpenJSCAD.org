@@ -39,7 +39,7 @@
     "@jscad/openscad-openjscad-translator": "0.0.10"
   },
   "devDependencies": {
-    "ava": "^0.23.0"
+    "ava": "^0.25.0"
   },
   "collective": {
     "type": "opencollective",
