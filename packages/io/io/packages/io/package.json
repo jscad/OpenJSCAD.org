@@ -39,19 +39,19 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/amf-deserializer": "^1.0.0-alpha.d0fb3056",
-    "@jscad/amf-serializer": "^1.0.0-alpha.d0fb3056",
-    "@jscad/dxf-deserializer": "^1.0.0-alpha.d0fb3056",
-    "@jscad/dxf-serializer": "^1.0.0-alpha.d0fb3056",
-    "@jscad/gcode-deserializer": "^1.0.0-alpha.d0fb3056",
-    "@jscad/io-utils": "^1.0.0-alpha.d0fb3056",
-    "@jscad/json-deserializer": "^1.0.0-alpha.d0fb3056",
-    "@jscad/json-serializer": "^1.0.0-alpha.d0fb3056",
-    "@jscad/obj-deserializer": "^1.0.0-alpha.d0fb3056",
-    "@jscad/stl-deserializer": "^1.0.0-alpha.d0fb3056",
-    "@jscad/stl-serializer": "^1.0.0-alpha.d0fb3056",
-    "@jscad/svg-deserializer": "^1.0.0-alpha.d0fb3056",
-    "@jscad/svg-serializer": "^1.0.0-alpha.d0fb3056",
-    "@jscad/x3d-serializer": "^1.0.0-alpha.d0fb3056"
+    "@jscad/amf-deserializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/amf-serializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/dxf-deserializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/dxf-serializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/gcode-deserializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/io-utils": "1.0.0-alpha.d0fb3056",
+    "@jscad/json-deserializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/json-serializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/obj-deserializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/stl-deserializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/stl-serializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/svg-deserializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/svg-serializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/x3d-serializer": "1.0.0-alpha.d0fb3056"
   }
 }
