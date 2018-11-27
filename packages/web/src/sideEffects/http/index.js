@@ -9,9 +9,9 @@ const makeLogger = require('../../utils/logger')
  */
 const makeHttpSideEffect = (params) => {
   const commandResponses = callBackToStream()
-  const defaults = {logging: false}
-  const {logging} = Object.assign({}, defaults, params)
-  const log = makeLogger({enabled: logging})
+  const defaults = { logging: false }
+  const { logging } = Object.assign({}, defaults, params)
+  const log = makeLogger({ enabled: logging })
   /* var xhr = new XMLHttpRequest()
   xhr.open('GET', url || filename, true)
   if (filename.match(/\.(stl|gcode)$/i)) {
@@ -32,25 +32,25 @@ const makeHttpSideEffect = (params) => {
 
   const sink = (out$) => {
     out$.forEach(command => {
-      const {type, id, data, urls, options} = command
+      const { type, id, data, urls, options } = command
       log.debug('output from http', urls)
       urls.forEach(url => {
         const xhr = new XMLHttpRequest()
         if (['read', 'get'].includes(type.toLowerCase())) {
           xhr.onerror = error => {
             const rError = new Error(`failed to load ${url} see console for more details`)
-            commandResponses.callback({type, id, url, error: rError})
+            commandResponses.callback({ type, id, url, error: rError })
           }
           xhr.onload = event => {
             const result = event.currentTarget.responseText
             const status = event.target.status
             if (`${status}`.startsWith('4')) {
-              commandResponses.callback({type, id, url, error: new Error(result)})
+              commandResponses.callback({ type, id, url, error: new Error(result) })
             } else {
-              commandResponses.callback({type, id, url, data: result})
+              commandResponses.callback({ type, id, url, data: result })
             }
           }
-        
+
           xhr.open('GET', url, true)
           xhr.send()
         }
@@ -61,7 +61,7 @@ const makeHttpSideEffect = (params) => {
     return commandResponses.stream.multicast()
   }
 
-  return {source, sink}
+  return { source, sink }
 }
 
 module.exports = makeHttpSideEffect

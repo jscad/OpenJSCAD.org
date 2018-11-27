@@ -15,7 +15,7 @@ const readFileAsync = function (file, fileMeta) {
   return new Promise(function (resolve, reject) {
     reader.readAsArrayBuffer(file)
     // remove rootfolder since all files are within it
-    const fullPath = fileMeta && fileMeta.fullPath ? fileMeta.fullPath/*.split('/').slice(2).join('/')*/ : ''
+    const fullPath = fileMeta && fileMeta.fullPath ? fileMeta.fullPath/* .split('/').slice(2).join('/') */ : ''
 
     // convert binary to text
     function convert (buffer) {
@@ -30,7 +30,7 @@ const readFileAsync = function (file, fileMeta) {
 
     reader.onloadend = event => {
       event.target.readyState === FileReader.DONE
-        ? resolve({name: file.name, ext: getFileExtensionFromString(fullPath), fullPath, source: convert(event.target.result)})
+        ? resolve({ name: file.name, ext: getFileExtensionFromString(fullPath), fullPath, source: convert(event.target.result) })
         : reject(new Error('Failed to load file'))
     }
   })
@@ -65,7 +65,7 @@ function processItems (items) {
           result.push(processDirectory(item))
         }
       } else if (item instanceof File) {
-        const file = isSupportedFormat(item) ? readFileAsync(item, {fullPath: undefined}) : undefined
+        const file = isSupportedFormat(item) ? readFileAsync(item, { fullPath: undefined }) : undefined
         if (!file) {
           throw new Error('Unsuported format (or folder in Safari)!')
         }
@@ -97,19 +97,19 @@ function processDirectory (directory) {
       entries.length ? processItems(entries).then(resolve) : resolve(null)
     }, reject)
   })
-  .then(flatten)
-  .then(function (children) {
-    children = children.map(child => {
-      if (!child.fullPath.startsWith('/')) {
+    .then(flatten)
+    .then(function (children) {
+      children = children.map(child => {
+        if (!child.fullPath.startsWith('/')) {
         //      // && !child.fullPath.startsWith('@')) {
-        child.fullPath = directory.fullPath + '/' + child.name
+          child.fullPath = directory.fullPath + '/' + child.name
         // return Object.assign({})
-      }
+        }
 
-      return child
+        return child
+      })
+      return { children, fullPath: directory.fullPath, name: directory.name }
     })
-    return {children, fullPath: directory.fullPath, name: directory.name}
-  })
 }
 
 // this is the core of the drag'n'drop:

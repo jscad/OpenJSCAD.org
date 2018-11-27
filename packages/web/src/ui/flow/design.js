@@ -366,13 +366,21 @@ const actions = ({ sources }) => {
         const documentUri = fetchUriParams(url, 'uri', undefined) || nth(1, url.match(/#(https?:\/\/\S+)$/)) || nth(1, document.URL.match(/#(examples\/\S+)$/))
         const baseUri = window.location.origin // location.protocol + '//' + location.host + location.pathname
         // console.log('useProxy', useProxy, documentUri, baseUri)
+        console.log('documentURI', documentUri)
+        if (!documentUri) {
+          return undefined
+        }
+        const foo = new URL(documentUri)
+        console.log('foo', url, foo)
         const documentUris = documentUri ? [documentUri] : undefined
-        return documentUris
+        const { protocol, origin } = foo
+        return { documentUris, protocol: protocol.replace(':', ''), origin }
       })
   ])
     .filter(x => x !== undefined)
     .thru(holdUntil(setDesignSettings$))// only after
-    .map(data => ({ type: 'read', id: 'loadRemote', urls: toArray(data), sink: 'http' }))
+    .tap(x => console.log('stuff', x))
+    .map(data => ({ type: 'read', id: 'loadRemote', urls: toArray(data.documentUris), sink: data.protocol }))
     .multicast()
 
   const requestLoadLocalData$ = most.mergeArray([
@@ -389,17 +397,22 @@ const actions = ({ sources }) => {
   ])
     .forEach(x => x)
 
+  // TODO : unify these somehow ??
   const requestAddDesignData$ = most.mergeArray([
     // from file open
     // requestLoadLocalData$
     //  .map(({data}) => ({data, id: 'droppedData', path: 'realFs:'})),
     // injection from drag & drop
     sources.drops
-      .map(({ data }) => ({ data, id: 'droppedData', path: 'realFs:' })),
+      .map(({ data }) => ({ data, id: 'droppedData', path: 'realFs:', options: { isFs: true } }))
+      .tap(x => console.log('dropped', x)),
     // data retrieved from http requests
     sources.http
       .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response))
-      .map(({ data, url }) => ({ data, id: 'remoteFile', path: url, options: { isRawData: true } }))
+      .map(({ data, url }) => ({ data, id: 'remoteFile', path: url, options: { isRawData: true } })),
+    sources.dat
+      .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response))
+      .map(({ data, url }) => ({ data, id: 'remoteFolder', path: url, options: { isPreFetched: true } }))
   ])
     .map(payload => Object.assign({}, { type: 'add', sink: 'fs' }, payload))
     .multicast()
@@ -437,6 +450,7 @@ const actions = ({ sources }) => {
   const setDesignContent$ = most.mergeArray([
     sources.fs
       .filter(response => response.type === 'add')
+      .tap(x => console.log('setDesignContent$', x))
       .map(({ data }) => ({ filesAndFolders: data, path: data[0].fullPath })).delay(100),
     sources.fs
       .filter(response => response.type === 'watch' && response.id === 'watchFiles')

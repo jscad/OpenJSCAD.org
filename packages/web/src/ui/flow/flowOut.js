@@ -1,10 +1,10 @@
 const most = require('most')
 
 function makeReactions (inputs) {
-  const {sinks, sources, outputs$, extras} = inputs
-  const {store, fs, http, i18n, dom, solidWorker, state} = sinks
+  const { sinks, sources, outputs$, extras } = inputs
+  const { store, fs, http, i18n, dom, solidWorker, state, dat } = sinks
 
-  /*outputs$
+  /* outputs$
     .filter(x => 'sink' in x && x.sink === 'dom')
     .forEach(x => console.log(' out to dom', x))
   outputs$
@@ -40,6 +40,8 @@ function makeReactions (inputs) {
   // state sink
   state(outputs$.filter(x => 'sink' in x && x.sink === 'state'))
 
+  dat(outputs$.filter(x => 'sink' in x && x.sink === 'dat'))
+
   // viewer data
   const makeCsgViewer = require('@jscad/csg-viewer')
   let csgViewer
@@ -53,7 +55,7 @@ function makeReactions (inputs) {
     })
     .forEach(state => {
       if (csgViewer !== undefined) {
-        csgViewer(undefined, {solids: state.design.solids})
+        csgViewer(undefined, { solids: state.design.solids })
       }
     })
 
@@ -61,7 +63,7 @@ function makeReactions (inputs) {
     .forEach(x => {
       console.log('viewer', x)
       if (csgViewer) {
-        csgViewer({camera: {projectionType: x.data}})
+        csgViewer({ camera: { projectionType: x.data } })
       }
     })
   sources.state
@@ -71,19 +73,19 @@ function makeReactions (inputs) {
     const sameViewerParams = JSON.stringify(state) === JSON.stringify(previousState)
     return sameViewerParams
   }) */
-  .forEach(params => {
-    const viewerElement = jscadEl.querySelector('#renderTarget')
-    // initialize viewer if it has not been done already
-    if (viewerElement && !csgViewer) {
-      const csgViewerItems = makeCsgViewer(viewerElement, params)
-      csgViewer = csgViewerItems.csgViewer
+    .forEach(params => {
+      const viewerElement = jscadEl.querySelector('#renderTarget')
+      // initialize viewer if it has not been done already
+      if (viewerElement && !csgViewer) {
+        const csgViewerItems = makeCsgViewer(viewerElement, params)
+        csgViewer = csgViewerItems.csgViewer
       // const bar = require('most-gestures').pointerGestures(jscadEl.querySelector('#renderTarget'))
-    }
-    if (csgViewer) {
+      }
+      if (csgViewer) {
       // console.log('params', params)
-      csgViewer(params)
-    }
-  })
+        csgViewer(params)
+      }
+    })
 
   // titlebar & store side effects
   // FIXME/ not compatible with multiple instances !!

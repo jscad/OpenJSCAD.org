@@ -36,17 +36,12 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
       trClassName += ' ' + currentGroup + ' open'
     }
 
-    const groupOpenIcon = html`
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>`
-    const groupClosedIcon = html`
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg>`
-
     if (type === 'group') {
       label = html`<h1>${label}</h1>`
-      trClassName = `groupTitle ${paramDefinition.name}`
+      trClassName = `groupTitle ${paramDefinition.name} open`
       currentGroup = paramDefinition.name
       subControls = subControls.map(control => html`<th class='${control.className}'  >
-        ${control.text} <span class='icon groupStatus'>${groupClosedIcon}</span>
+        ${control}
       </th>`)
     } else {
       subControls.forEach(control => {
@@ -107,13 +102,27 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
     return element
   })
 
-  return {controls}
+  return { controls }
 }
 
 const createGroupControl = definition => {
+  const defaults = {
+    expanded: false,
+    caption: '',
+    className: ''
+  }
+  const { expanded, caption, className } = Object.assign({}, defaults, definition)
+  console.log('createGroupControl', expanded, caption, className)
   const text = definition.caption ? definition.caption : definition.name
-  const className = definition.caption ? 'caption' : ''
-  let control = html`<title class=${className}>${text}</title>`
+  const groupOpenIcon = html`
+      <svg  class="icon icon-open feather feather-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="6 9 12 15 18 9"/></svg>`
+  const groupClosedIcon = html`
+      <svg class="icon icon-closed feather feather-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="9 18 15 12 9 6"/></svg>`
+  const icon = expanded ? groupOpenIcon : groupClosedIcon
+  let control = html`<section class=${className}>
+    <span class='groupStatus'>${icon}</span>
+  </section> `
+  // html`<title class=${className}>${text}</title>`
   control.paramName = definition.name
   control.paramType = definition.type
   return [control]
@@ -192,18 +201,18 @@ const createRadioControl = (definition, prevValue) => {
 
 const createControl = (definition, prevValue) => {
   const controlList = [
-    {type: 'text', control: 'text', required: ['type', 'name'], initial: ''},
-    {type: 'int', control: 'number', required: ['type', 'name'], initial: 0},
-    {type: 'float', control: 'number', required: ['type', 'name'], initial: 0.0},
-    {type: 'number', control: 'number', required: ['type', 'name'], initial: 0.0},
-    {type: 'checkbox', control: 'checkbox', required: ['type', 'name', 'checked'], initial: ''},
-    {type: 'radio', control: 'radio', required: ['type', 'name', 'checked'], initial: ''},
-    {type: 'color', control: 'color', required: ['type', 'name'], initial: '#000000'},
-    {type: 'date', control: 'date', required: ['type', 'name'], initial: ''},
-    {type: 'email', control: 'email', required: ['type', 'name'], initial: ''},
-    {type: 'password', control: 'password', required: ['type', 'name'], initial: ''},
-    {type: 'url', control: 'url', required: ['type', 'name'], initial: ''},
-    {type: 'slider', control: 'range', required: ['type', 'name', 'min', 'max'], initial: 0, label: true}
+    { type: 'text', control: 'text', required: ['type', 'name'], initial: '' },
+    { type: 'int', control: 'number', required: ['type', 'name'], initial: 0 },
+    { type: 'float', control: 'number', required: ['type', 'name'], initial: 0.0 },
+    { type: 'number', control: 'number', required: ['type', 'name'], initial: 0.0 },
+    { type: 'checkbox', control: 'checkbox', required: ['type', 'name', 'checked'], initial: '' },
+    { type: 'radio', control: 'radio', required: ['type', 'name', 'checked'], initial: '' },
+    { type: 'color', control: 'color', required: ['type', 'name'], initial: '#000000' },
+    { type: 'date', control: 'date', required: ['type', 'name'], initial: '' },
+    { type: 'email', control: 'email', required: ['type', 'name'], initial: '' },
+    { type: 'password', control: 'password', required: ['type', 'name'], initial: '' },
+    { type: 'url', control: 'url', required: ['type', 'name'], initial: '' },
+    { type: 'slider', control: 'range', required: ['type', 'name', 'min', 'max'], initial: 0, label: true }
   ]
   // check for required parameters
   if (!('type' in definition)) {
@@ -287,4 +296,4 @@ const createControl = (definition, prevValue) => {
   control.setAttribute('type', controlInstance.control)
 }
 
-module.exports = {createParamControls}
+module.exports = { createParamControls }

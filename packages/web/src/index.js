@@ -10,7 +10,7 @@ let instances = 0
  * you might run into weird issues
  * @param {Boolean} options.logging toggle logging on/off
  */
-function makeJscad (targetElement, options) {
+async function makeJscad (targetElement, options) {
   const defaults = {
     name: 'jscad',
     logging: false
@@ -39,6 +39,11 @@ function makeJscad (targetElement, options) {
   const dom = require('@jscad/core/sideEffects/dom')({ targetEl: jscadEl }, logging)
   // state (pseudo) side effect
   const state = require('./sideEffects/state/index')({ logging, packageMetadata, keyBindings })
+
+  // experimental
+  // dat requests
+  const dat = await require('./sideEffects/dat')({ logging })
+
 
   // internationalization side effect, loaded up with preset translations
   const i18n = require('@jscad/core/sideEffects/i18n')({
@@ -70,7 +75,8 @@ function makeJscad (targetElement, options) {
     solidWorker: solidWorker.source(),
     i18n: i18n.source(),
     titleBar: titleBar.source(), // #http://openjscad.org/examples/slices/tor.jscad
-    fileDialog: fileDialog.source()
+    fileDialog: fileDialog.source(),
+    dat: await dat.source()
   }
 
   // all the destinations of data
@@ -82,7 +88,9 @@ function makeJscad (targetElement, options) {
     dom: dom.sink,
     solidWorker: solidWorker.sink,
     state: state.sink,
-    fileDialog: fileDialog.sink
+    fileDialog: fileDialog.sink,
+
+    dat: dat.sink
   }
 
   // all the outputs (ie inputs from sources converted to outputs/actions etc)
