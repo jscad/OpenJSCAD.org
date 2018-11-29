@@ -44,7 +44,6 @@ async function makeJscad (targetElement, options) {
   // dat requests
   const dat = await require('./sideEffects/dat')({ logging })
 
-
   // internationalization side effect, loaded up with preset translations
   const i18n = require('@jscad/core/sideEffects/i18n')({
     translations: {

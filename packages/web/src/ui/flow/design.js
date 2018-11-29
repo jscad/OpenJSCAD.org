@@ -353,10 +353,18 @@ const actions = ({ sources }) => {
     // load previously loaded remote file (or example)
     sources.store
       .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined && reply.data.origin === 'http')
-      .map(({ data }) => data.mainPath),
+      .map(({ data }) => data.mainPath)
+      .tap(x => console.log('stuff', x)),
     // load examples when clicked
     sources.dom.select('.example').events('click')
-      .map(event => event.target.dataset.path),
+      .map(event => event.target.dataset.path)
+      .map(url => {
+        const urlData = new URL(url)
+        const documentUris = url ? [url] : undefined
+        const { protocol, origin } = urlData
+        return { documentUris, protocol: protocol.replace(':', ''), origin }
+      })
+      .tap(x => console.log('stuff', x)),
     // remote, via proxy, adresses of files passed via url
     sources.titleBar
       .filter(x => x !== undefined)
@@ -366,21 +374,19 @@ const actions = ({ sources }) => {
         const documentUri = fetchUriParams(url, 'uri', undefined) || nth(1, url.match(/#(https?:\/\/\S+)$/)) || nth(1, document.URL.match(/#(examples\/\S+)$/))
         const baseUri = window.location.origin // location.protocol + '//' + location.host + location.pathname
         // console.log('useProxy', useProxy, documentUri, baseUri)
-        console.log('documentURI', documentUri)
         if (!documentUri) {
           return undefined
         }
-        const foo = new URL(documentUri)
-        console.log('foo', url, foo)
+        const urlData = new URL(documentUri)
+        console.log('urlData', urlData)
         const documentUris = documentUri ? [documentUri] : undefined
-        const { protocol, origin } = foo
-        return { documentUris, protocol: protocol.replace(':', ''), origin }
+        const { protocol, origin, pathname } = urlData
+        return { documentUris, protocol: protocol.replace(':', ''), origin, path: pathname }
       })
   ])
     .filter(x => x !== undefined)
     .thru(holdUntil(setDesignSettings$))// only after
-    .tap(x => console.log('stuff', x))
-    .map(data => ({ type: 'read', id: 'loadRemote', urls: toArray(data.documentUris), sink: data.protocol }))
+    .map(data => ({ type: 'read', id: 'loadRemote', urls: toArray(data.documentUris), sink: data.protocol, path: data.path }))
     .multicast()
 
   const requestLoadLocalData$ = most.mergeArray([

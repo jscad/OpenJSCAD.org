@@ -1,7 +1,7 @@
 const { mergeArray, fromEvent } = require('most')
 
 function formatData (data, type) {
-  return {data, type}
+  return { data, type }
 }
 
 function preventDefault (event) {
@@ -33,18 +33,17 @@ function extractData (event) {
   return []
 }
 
-const makeDragAndDropSideEffect = ({targetEl}) => {
+const makeDragAndDropSideEffect = ({ targetEl }) => {
   // onst dragOvers$ = DOM.select(':root').events('dragover')
   // const drops$ = DOM.select(':root').events('drop')
   function dragEvents (targetEl) {
     const dragOvers$ = fromEvent('dragover', targetEl)
     const drops$ = fromEvent('drop', targetEl)
-
-    return {dragOvers$, drops$}
+    return { dragOvers$, drops$ }
   }
 
   function dragAndDropSource () { // {dragOvers$, drops$}
-    const {dragOvers$, drops$} = dragEvents(targetEl)
+    const { dragOvers$, drops$ } = dragEvents(targetEl)
     drops$.multicast()
     drops$.forEach(preventDefault)
     dragOvers$.forEach(preventDefault)
@@ -68,6 +67,6 @@ const makeDragAndDropSideEffect = ({targetEl}) => {
 
     return mergeArray([urls$, texts$, filesOrFolders$]).multicast()
   }
-  return {source: dragAndDropSource}
+  return { source: dragAndDropSource }
 }
 module.exports = makeDragAndDropSideEffect

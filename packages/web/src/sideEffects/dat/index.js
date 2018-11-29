@@ -22,34 +22,60 @@ const makeDatSideEffect = async (params) => {
   const defaults = { logging: false }
   const { logging } = Object.assign({}, defaults, params)
   const log = makeLogger({ enabled: logging })
+  let enabled = true
 
   if (!window.DatArchive) {
     log.error('Dat archives not supported in this environment!')
+    enabled = false
   }
 
-  const sink = (out$) => {
-    out$.forEach(command => {
-      const { type, id, data, urls, options } = command
-      urls.map(async url => {
-        const archive = new DatArchive(url, {})
-        const filesAndFolders = await archive.readdir('/', { recursive: true, stat: true })
-        console.log('filesAndFolders', filesAndFolders)
-        const fileContents = await Promise.all(filesAndFolders.map(async f => {
-          if (f.stat.isFile() && f.name.includes('js') && !f.name.includes('json')) {
-            const content = await archive.readFile(f.name)
-            return { content, name: f.name, fullPath: f.name, isFile: true }
-            console.log(`fileContent for ${f.name} "${content}"`)
-          }
-          return undefined
-          // f.stat.isFile() ? archive.readFile(f.name)? : f
-        })
-        )// .filter(x => x !== undefined)
-        // isFile: false, isDirectory: true, name: "folderBasic", fullPath: "/folderBasic"
-        // console.log('fileContents', fileContents)
-        commandResponses.callback({ type, id, url, data: fileContents.filter(x => x !== undefined) })
-      })
+  const sink = (commands$) => {
+    if (!enabled) { // bail out if not available
+      return
+    }
+    // every time a new command is recieved (observable)
+    commands$.forEach(command => {
+      const { type, id, data, urls, options, path } = command
+      // console.log('command', command)
 
-      console.log('command', command)
+      // command handlers/ response
+      const error = () => {
+        commandResponses.callback({ type, id, error: new Error(`no handler found for command ${type}`) })
+      }
+      const read = () => {
+        urls.map(async url => {
+          const archive = new DatArchive(url, {})
+          const filesAndFolders = await archive.readdir(path, { recursive: true, stat: true })
+          // console.log('filesAndFolders', filesAndFolders)
+          const fileContents = await Promise.all(filesAndFolders.map(async f => {
+            const fullPath = `${path}/${f.name}`
+            if (f.stat.isFile() && f.name.includes('js')) {
+              const content = await archive.readFile(fullPath)
+              return { content, name: f.name, fullPath: f.name, isFile: true }
+            }
+            return undefined
+          })
+          )
+          const info = await archive.getInfo()
+          const rootFolder = info.title || 'unnamed'// rootfolder is a fake root folder !
+          const transformed = fileContents.filter(x => x !== undefined).map(f => {
+            return { name: f.name, ext: 'js', source: f.content, fullPath: `/${rootFolder}/` + f.fullPath }
+          })
+          const hiearchyRoot = [{
+            children: transformed,
+            fullPath: `/${rootFolder}`,
+            name: rootFolder
+          }]
+          commandResponses.callback({ type, id, url, data: hiearchyRoot })
+        })
+      }
+
+      const commandHandlers = {
+        read,
+        error
+      }
+      const commandHandler = commandHandlers[type] || commandHandlers['error']
+      commandHandler()
     })
   }
 

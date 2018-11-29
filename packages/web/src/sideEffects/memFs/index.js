@@ -22,8 +22,8 @@ const makeMemFsSideEffect = (params) => {
   let fs
   let watcher
 
-  const sink = (out$) => {
-    out$.forEach(function (command) {
+  const sink = (commands$) => {
+    commands$.forEach(function (command) {
       const { path, type, id, data, options } = command
       const defaults = {
         isRawData: false
@@ -31,7 +31,8 @@ const makeMemFsSideEffect = (params) => {
       const { isRawData, isFs, isPreFetched } = Object.assign({}, defaults, options)
       log.info(`memfs: operation: ${type} ${path} ${id} ${options}`)
 
-      if (type === 'read') {
+      // command handlers/ response
+      const read = () => {
         log.info('reading in memfs', data, path, options)
         if (fs.statSync(path).isFile()) {
           fs.readFile(path, 'utf8', function (error, data) {
@@ -50,15 +51,18 @@ const makeMemFsSideEffect = (params) => {
             }
           })
         }
-      } else if (type === 'add') {
+      }
+
+      const add = () => {
         // we only inject raw data ie without file objects etc, typicall as a result of http requests
         if (isRawData) {
+          console.log('rawData')
           const name = require('path').basename(path)
           const ext = getFileExtensionFromString(path)
 
           /* filesAndFolders = filesAndFolders.concat([
-            {name, ext, source: data, fullPath: path}
-          ]) */
+                    {name, ext, source: data, fullPath: path}
+                  ]) */
           filesAndFolders = [
             { name, ext, source: data, fullPath: path }
           ]
@@ -75,39 +79,22 @@ const makeMemFsSideEffect = (params) => {
               commandResponses.callback({ type, id, data: filesAndFolders })
             })
         } else if (isPreFetched) {
-          const rootFolder = '@greenbotics/gahoma'
-          const transformed = data.map(f => {
-            return { name: f.name, ext: 'js', source: f.content, fullPath: `/${rootFolder}/` + f.fullPath }
-          })
-          const filesAndFolders = [{
-            children: transformed,
-            fullPath: `/${rootFolder}`,
-            name: rootFolder
-          }]
+          filesAndFolders = data
           fs = makeFakeFs(filesAndFolders)
-          /*  children
-              :
-              (3) [{…}, {…}, {…}]
-              fullPath
-              :
-              "/folderBasic"
-              name
-              :
-              "folderBasic" */
-          // console.log('prefecthed', filesAndFolders, data)
-          console.log('root', filesAndFolders)
           commandResponses.callback({ type, id, data: filesAndFolders })
         }
 
         /* const fakeRequire = makeFakeRequire({}, filesAndFolders)
-        const fakeRequire = makeFakeRequire({}, filesAndFolders)
+                const fakeRequire = makeFakeRequire({}, filesAndFolders)
 
-        const entryPoint = getDesignEntryPoint(fakeFs, fakeRequire._require, paths)
-        console.log('design entry point', entryPoint)
+                const entryPoint = getDesignEntryPoint(fakeFs, fakeRequire._require, paths)
+                console.log('design entry point', entryPoint)
 
-        const rootModule = fakeRequire._require(entryPoint)
-        console.log('rootModule', rootModule) */
-      } else if (type === 'write') {
+                const rootModule = fakeRequire._require(entryPoint)
+                console.log('rootModule', rootModule) */
+      }
+
+      const write = () => {
         log.info('write', command, filesAndFolders, path)
         // check if we already have a matching entry with the same full (absolute) path
         const foundEntry = head(filesAndFolders.filter(entry => entry.fullPath === path))
@@ -123,7 +110,9 @@ const makeMemFsSideEffect = (params) => {
           foundEntry.source = command.data
         }
         fs = makeFakeFs(filesAndFolders)
-      } else if (type === 'watch') {
+      }
+
+      const watch = () => {
         // if rawData is undefined, it means we cannot watch the target data
         // ie data loaded from http etc
         if (rawData === undefined) {
@@ -151,6 +140,15 @@ const makeMemFsSideEffect = (params) => {
           }, 2000)
         }
       }
+
+      const commandHandlers = {
+        read,
+        add,
+        write,
+        watch
+      }
+      const commandHandler = commandHandlers[type] || commandHandlers['error']
+      commandHandler()
     })
   }
 
