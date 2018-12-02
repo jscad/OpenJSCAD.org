@@ -1,5 +1,5 @@
 const most = require('most')
-const {flatten} = require('../../utils/utils')
+const { flatten } = require('../../utils/utils')
 const { proxy } = require('most-proxy')
 
 const makeActions = (sources) => {
@@ -8,15 +8,15 @@ const makeActions = (sources) => {
     .skipRepeatsWith((state, previousState) => JSON.stringify(state) === JSON.stringify(previousState))
     .multicast()
 
-  const toolActions = require('./tools')({sources})
-  const viewerActions = require('./viewer')({sources})
-  const themeActions = require('./themes')({sources})
-  const languageActions = require('./languages')({sources})
-  const shortcutActions = require('./shortcuts')({sources})
-  const errorActions = require('./errors')({sources})
-  const exportActions = require('./exports')({sources})
+  const toolActions = require('./tools')({ sources })
+  const viewerActions = require('./viewer')({ sources })
+  const themeActions = require('./themes')({ sources })
+  const languageActions = require('./languages')({ sources })
+  const shortcutActions = require('./shortcuts')({ sources })
+  const errorActions = require('./errors')({ sources })
+  const exportActions = require('./exports')({ sources })
 
-  const designActions = require('./design')({sources})
+  const designActions = require('./design')({ sources })
 
   const actions = [
     errorActions,

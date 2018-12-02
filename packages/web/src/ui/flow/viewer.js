@@ -24,39 +24,39 @@ const reducers = {
       },
       autorotate: false
     }
-    return {viewer}
+    return { viewer }
   },
   toggleAutorotate: (state, autoRotate) => {
-    const controls = Object.assign({}, state.viewer.controls, {autoRotate: {enabled: autoRotate}})
-    const viewer = Object.assign({}, state.viewer, {controls})
-    return {viewer}
+    const controls = Object.assign({}, state.viewer.controls, { autoRotate: { enabled: autoRotate } })
+    const viewer = Object.assign({}, state.viewer, { controls })
+    return { viewer }
   },
   toggleGrid: (state, show) => {
-    const grid = Object.assign({}, state.viewer.grid, {show})
-    const viewer = Object.assign({}, state.viewer, {grid})
-    return {viewer}
+    const grid = Object.assign({}, state.viewer.grid, { show })
+    const viewer = Object.assign({}, state.viewer, { grid })
+    return { viewer }
   },
   toggleAxes: (state, show) => {
-    const axes = Object.assign({}, state.viewer.axes, {show})
-    const viewer = Object.assign({}, state.viewer, {axes})
-    return {viewer}
+    const axes = Object.assign({}, state.viewer.axes, { show })
+    const viewer = Object.assign({}, state.viewer, { axes })
+    return { viewer }
   },
   toPresetView: (state, viewName) => {
-    const viewer = Object.assign({}, state.viewer, {camera: {position: viewName}})
-    return {viewer}
+    const viewer = Object.assign({}, state.viewer, { camera: { position: viewName } })
+    return { viewer }
   },
   setProjectionType: (state, projectionType) => {
-    const viewer = Object.assign({}, state.viewer, {camera: {projectionType}})
-    return {viewer}
+    const viewer = Object.assign({}, state.viewer, { camera: { projectionType } })
+    return { viewer }
   }
 
 }
 
-const actions = ({sources}) => {
+const actions = ({ sources }) => {
   console.log('sources', sources.actions)
   const initializeViewer$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
-    .map(payload => Object.assign({}, {type: 'initializeViewer', sink: 'state'}, {state: payload}))
+    .map(payload => Object.assign({}, { type: 'initializeViewer', sink: 'state' }, { state: payload }))
 
   const toggleGrid$ = most.mergeArray([
     sources.dom.select('#grid').events('click')
@@ -66,7 +66,7 @@ const actions = ({sources}) => {
       .map(reply => reply.data.viewer.grid.show)
   ])
     .thru(withLatestFrom(reducers.toggleGrid, sources.state))
-    .map(data => ({type: 'toggleGrid', state: data, sink: 'state'}))
+    .map(data => ({ type: 'toggleGrid', state: data, sink: 'state' }))
 
   const toggleAxes$ = most.mergeArray([
     sources.dom.select('#toggleAxes').events('click')
@@ -74,7 +74,7 @@ const actions = ({sources}) => {
     // sources.store.map(data => data.viewer.grid.show)
   ])
     .thru(withLatestFrom(reducers.toggleAxes, sources.state))
-    .map(data => ({type: 'toggleAxes', data}))
+    .map(data => ({ type: 'toggleAxes', data }))
 
   const toggleAutorotate$ = most.mergeArray([
     sources.dom.select('#autoRotate').events('click')
@@ -83,19 +83,19 @@ const actions = ({sources}) => {
     // sources.actions.filter(action => action.type === 'setProjectionType')
   ])
     .thru(withLatestFrom(reducers.toggleAutorotate, sources.state))
-    .map(data => ({type: 'toggleAutorotate', state: data, sink: 'state'}))
+    .map(data => ({ type: 'toggleAutorotate', state: data, sink: 'state' }))
 
   // all other viewer actions, triggered from elsewhere, for example via shortcuts ?
   const otherViewerActions$ = sources.actions
     .filter(action => Object.keys(reducers).includes(action.type))
-    /*.thru(withLatestFrom(function (state, action) {
+    /* .thru(withLatestFrom(function (state, action) {
       return reducers[action.type](state, action.data)
     }, sources.state))*/
-    //.map(data => ({state: data, sink: 'state'}))
-    .map(payload => Object.assign({}, {sink: 'viewer'}, payload))
+    // .map(data => ({state: data, sink: 'state'}))
+    .map(payload => Object.assign({}, { sink: 'viewer' }, payload))
 
   return {
-   // 3d viewer
+    // 3d viewer
     initializeViewer$,
     toggleGrid$,
     toggleAxes$,

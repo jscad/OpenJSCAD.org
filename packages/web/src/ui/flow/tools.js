@@ -1,7 +1,7 @@
 const most = require('most')
 const withLatestFrom = require('@jscad/core/observable-utils/withLatestFrom')
 
-const actions = ({sources}) => {
+const actions = ({ sources }) => {
   const setActiveTool$ = most.mergeArray([
     sources.dom.select('#toggleOptions').events('click').map(event => 'options'),
     sources.dom.select('#toggleEditor').events('click').map(event => 'editor'),
@@ -16,11 +16,11 @@ const actions = ({sources}) => {
   ])
     .thru(withLatestFrom((state, tool) => {
       const activeTool = state.activeTool === tool ? undefined : tool
-      return {activeTool}
+      return { activeTool }
     }, sources.state))
-    .map(payload => Object.assign({}, {type: 'setActiveTool', sink: 'state'}, {state: payload}))
+    .map(payload => Object.assign({}, { type: 'setActiveTool', sink: 'state' }, { state: payload }))
 
-  return {setActiveTool$}
+  return { setActiveTool$ }
 }
 
 module.exports = actions

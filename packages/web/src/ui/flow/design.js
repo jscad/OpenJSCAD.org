@@ -353,8 +353,7 @@ const actions = ({ sources }) => {
     // load previously loaded remote file (or example)
     sources.store
       .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined && reply.data.origin === 'http')
-      .map(({ data }) => data.mainPath)
-      .tap(x => console.log('stuff', x)),
+      .map(({ data }) => data.mainPath),
     // load examples when clicked
     sources.dom.select('.example').events('click')
       .map(event => event.target.dataset.path)
@@ -378,7 +377,7 @@ const actions = ({ sources }) => {
           return undefined
         }
         const urlData = new URL(documentUri)
-        console.log('urlData', urlData)
+        console.log('urlData', urlData, params, documentUri)
         const documentUris = documentUri ? [documentUri] : undefined
         const { protocol, origin, pathname } = urlData
         return { documentUris, protocol: protocol.replace(':', ''), origin, path: pathname }
