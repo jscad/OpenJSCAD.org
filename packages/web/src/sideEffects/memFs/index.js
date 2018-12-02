@@ -53,45 +53,21 @@ const makeMemFsSideEffect = (params) => {
         }
       }
 
-      const add = () => {
+      const add = async () => {
         // we only inject raw data ie without file objects etc, typicall as a result of http requests
         if (isRawData) {
-          console.log('rawData')
           const name = require('path').basename(path)
           const ext = getFileExtensionFromString(path)
-
-          /* filesAndFolders = filesAndFolders.concat([
-                    {name, ext, source: data, fullPath: path}
-                  ]) */
-          filesAndFolders = [
-            { name, ext, source: data, fullPath: path }
-          ]
-          fs = makeFakeFs(filesAndFolders)
+          filesAndFolders = [{ name, ext, source: data, fullPath: path }] // do this to add more  filesAndFolders = filesAndFolders.concat([
           commandResponses.callback({ type, id, data: filesAndFolders })
         } else if (isFs) {
           // this from inputs typically like drag & drop data
-          most.fromPromise(walkFileTree(data))
-            .forEach(function (readFilesAndFolders) {
-              rawData = data
-              filesAndFolders = readFilesAndFolders
-              fs = makeFakeFs(filesAndFolders)
-              console.log('fs data', filesAndFolders, fs)
-              commandResponses.callback({ type, id, data: filesAndFolders })
-            })
+          filesAndFolders = await walkFileTree(data)
+          commandResponses.callback({ type, id, data: filesAndFolders })      
         } else if (isPreFetched) {
           filesAndFolders = data
-          fs = makeFakeFs(filesAndFolders)
           commandResponses.callback({ type, id, data: filesAndFolders })
         }
-
-        /* const fakeRequire = makeFakeRequire({}, filesAndFolders)
-                const fakeRequire = makeFakeRequire({}, filesAndFolders)
-
-                const entryPoint = getDesignEntryPoint(fakeFs, fakeRequire._require, paths)
-                console.log('design entry point', entryPoint)
-
-                const rootModule = fakeRequire._require(entryPoint)
-                console.log('rootModule', rootModule) */
       }
 
       const write = () => {
@@ -109,7 +85,6 @@ const makeMemFsSideEffect = (params) => {
           // update the source with the new data
           foundEntry.source = command.data
         }
-        fs = makeFakeFs(filesAndFolders)
       }
 
       const watch = () => {

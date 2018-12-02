@@ -38,7 +38,7 @@ const makeFakeFs = (filesAndFolders) => {
     readdirSync: (path) => {
       const entry = findMatch(path)
       return entry.children.map(x => x.name)
-       // filesAndFolders
+      // filesAndFolders
     },
     readDir: (path, callback) => {
       // console.log('readDir', path, callback)
