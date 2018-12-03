@@ -1,6 +1,8 @@
 // const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
 const makeLogger = require('../../utils/logger')
+const getFileExtensionFromString = require('@jscad/core/utils/getFileExtensionFromString')
+
 /** function to create the http side effect
  * sink: input of commands that generate http requests
  * source: output of response from http requests
@@ -34,12 +36,19 @@ const makeHttpSideEffect = (params) => {
     out$.forEach(command => {
       const { type, id, data, urls, options } = command
       log.debug('output from http', urls)
-      urls.forEach(url => {
-        const xhr = new XMLHttpRequest()
-        if (['read', 'get'].includes(type.toLowerCase())) {
+
+      const unhandled = () => {
+        commandResponses.callback({ type, id, error: new Error(`no handler found for command ${type}`) })
+      }
+
+      const read = () => {
+        let filesAndFolders = []
+        urls.forEach(url => {
+          const xhr = new XMLHttpRequest()
           xhr.onerror = error => {
             const rError = new Error(`failed to load ${url} see console for more details`)
             commandResponses.callback({ type, id, url, error: rError })
+            log.error(error)
           }
           xhr.onload = event => {
             const result = event.currentTarget.responseText
@@ -47,14 +56,24 @@ const makeHttpSideEffect = (params) => {
             if (`${status}`.startsWith('4')) {
               commandResponses.callback({ type, id, url, error: new Error(result) })
             } else {
-              commandResponses.callback({ type, id, url, data: result })
+              const path = url
+              const name = require('path').basename(path)
+              const ext = getFileExtensionFromString(path)
+              filesAndFolders = filesAndFolders.concat({ name, ext, source: result, fullPath: path })
+              commandResponses.callback({ type, id, url, data: filesAndFolders })
             }
           }
-
           xhr.open('GET', url, true)
           xhr.send()
-        }
-      })
+        })
+      }
+
+      const commandHandlers = {
+        read,
+        unhandled
+      }
+      const commandHandler = commandHandlers[type] || commandHandlers['unhandled']
+      commandHandler()
     })
   }
   const source = () => {

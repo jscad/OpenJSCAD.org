@@ -2,7 +2,7 @@ const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
 const { head } = require('@jscad/core/utils/arrays')
 const makeFakeFs = require('./makeFakeFs')
-const { walkFileTree } = require('./walkFileTree')
+const { walkFileTree } = require('../localFs/walkFileTree')
 const { changedFiles, flattenFiles } = require('./utils')
 const getFileExtensionFromString = require('@jscad/core/utils/getFileExtensionFromString')
 const makeLogger = require('../../utils/logger')
@@ -54,17 +54,13 @@ const makeMemFsSideEffect = (params) => {
       }
 
       const add = async () => {
-        // we only inject raw data ie without file objects etc, typicall as a result of http requests
-        if (isRawData) {
-          const name = require('path').basename(path)
-          const ext = getFileExtensionFromString(path)
-          filesAndFolders = [{ name, ext, source: data, fullPath: path }] // do this to add more  filesAndFolders = filesAndFolders.concat([
-          commandResponses.callback({ type, id, data: filesAndFolders })
-        } else if (isFs) {
+        if (isFs) {
           // this from inputs typically like drag & drop data
+          rawData = data
           filesAndFolders = await walkFileTree(data)
           commandResponses.callback({ type, id, data: filesAndFolders })      
-        } else if (isPreFetched) {
+        } else {
+          console.log('data', data)
           filesAndFolders = data
           commandResponses.callback({ type, id, data: filesAndFolders })
         }
@@ -117,7 +113,7 @@ const makeMemFsSideEffect = (params) => {
       }
 
       const commandHandlers = {
-        read,
+        // read,
         add,
         write,
         watch

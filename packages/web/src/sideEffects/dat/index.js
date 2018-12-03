@@ -26,7 +26,7 @@ const makeDatSideEffect = async (params) => {
       // console.log('command', command)
 
       // command handlers/ response
-      const error = () => {
+      const unhandled = () => {
         commandResponses.callback({ type, id, error: new Error(`no handler found for command ${type}`) })
       }
       const read = () => {
@@ -74,9 +74,9 @@ const makeDatSideEffect = async (params) => {
 
       const commandHandlers = {
         read,
-        error
+        unhandled
       }
-      const commandHandler = commandHandlers[type] || commandHandlers['error']
+      const commandHandler = commandHandlers[type] || commandHandlers['unhandled']
       commandHandler()
     })
   }
