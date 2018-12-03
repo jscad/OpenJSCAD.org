@@ -79,7 +79,7 @@ const reducers = {
    * @returns {Object} the updated state
    */
   resetDesign: (state, origin) => {
-    console.log('design: reset')
+    console.log('design: reset', origin)
     // we reset only the given fields: mostly all except design specific things
     const fieldsToReset = [
       'name', 'path', 'mainPath', 'origin', 'filesAndFolders',
@@ -105,7 +105,7 @@ const reducers = {
     console.log('design: set content', state.design, payload)
     // all our available data (specific to web)
     const { filesAndFolders } = payload
-    const makeFakeFs = require('../../sideEffects/memFs/makeFakeFs')
+    const makeFakeFs = require('../../core/makeFakeFs')
     const fakeFs = makeFakeFs(filesAndFolders)
     const rootPath = payload.path
     const mainPath = getDesignEntryPoint(fakeFs, () => {}, rootPath)
@@ -203,7 +203,7 @@ const reducers = {
    * @returns {Object} the updated state
    */
   setDesignParameterValues: (state, data) => {
-    console.log('design: set parameter values', data, JSON.stringify(data.parameterValues))
+    // console.log('design: set parameter values', data, JSON.stringify(data.parameterValues))
     let parameterValues = data.parameterValues
     // one of many ways of filtering out data from instantUpdates
     if (data.origin === 'instantUpdate' && !state.design.instantUpdate) {
@@ -349,11 +349,15 @@ const actions = ({ sources }) => {
     .map(data => ({ type: 'setDesignSettings', state: data, sink: 'state' }))
     .multicast()
 
-  const requestLoadRemoteData$ = most.mergeArray([
+  const requestLoadData$ = most.mergeArray([
     // load previously loaded remote file (or example)
-    sources.store
+    /* sources.store
       .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined && reply.data.origin === 'http')
-      .map(({ data }) => data.mainPath),
+      .map(({ data }) => data.mainPath), */
+    // injection from drag & drop
+    sources.drops
+      .map(({ data }) => ({ data, id: 'droppedData', path: 'realFs:', protocol: 'fs' }))
+      .tap(x => console.log('dropped', x)),
     // load examples when clicked
     sources.dom.select('.example').events('click')
       .map(event => event.target.dataset.path)
@@ -385,8 +389,10 @@ const actions = ({ sources }) => {
   ])
     .filter(x => x !== undefined)
     .thru(holdUntil(setDesignSettings$))// only after
-    .map(data => ({ type: 'read', id: 'loadRemote', urls: toArray(data.documentUris), sink: data.protocol, path: data.path }))
+    .map(data => ({ type: 'read', id: 'loadRemote', urls: toArray(data.documentUris), sink: data.protocol, path: data.path, data: data.data }))
+    .tap(x => console.log('requestLoadData', x))
     .multicast()
+    .skipRepeats()
 
   const requestLoadLocalData$ = most.mergeArray([
     sources.dom.select('#fileLoader').events('change')
@@ -402,24 +408,23 @@ const actions = ({ sources }) => {
   ])
     .forEach(x => x)
 
-  // TODO : unify these somehow ??
-  const requestAddDesignData$ = most.mergeArray([
+  const setDesignContent$ = most.mergeArray([
     // from file open
     // requestLoadLocalData$
     //  .map(({data}) => ({data, id: 'droppedData', path: 'realFs:'})),
-    // injection from drag & drop
-    sources.drops
-      .map(({ data }) => ({ data, id: 'droppedData', path: 'realFs:', options: { isFs: true } }))
-      .tap(x => console.log('dropped', x)),
+    // local fs
+    sources.fs
+      .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response)),
     // data retrieved from http requests
     sources.http
-      .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response))
-      .map(({ data, url }) => ({ data, id: 'remoteFile', path: url, options: { isRawData: true } })),
+      .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response)),
+    // from dat
     sources.dat
       .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response))
-      .map(({ data, url }) => ({ data, id: 'remoteFolder', path: url, options: { isPreFetched: true } }))
   ])
-    .map(payload => Object.assign({}, { type: 'add', sink: 'fs' }, payload))
+    .map(({ data }) => ({ filesAndFolders: data, path: data[0].fullPath }))
+    .thru(withLatestFrom(reducers.setDesignContent, sources.state))
+    .map(data => ({ type: 'setDesignContent', state: data, sink: 'state' }))
     .multicast()
 
   const requestWatchDesign$ = most.mergeArray([
@@ -445,25 +450,10 @@ const actions = ({ sources }) => {
     .multicast()
 
   const resetDesign$ = most.mergeArray([
-    requestLoadRemoteData$.map(_ => 'http'),
-    sources.drops.map(_ => 'local')
+    requestLoadData$.map(({ sink }) => sink)
   ])
     .thru(withLatestFrom(reducers.resetDesign, sources.state))
     .map(data => ({ type: 'resetDesign', state: data, sink: 'state' }))
-    .multicast()
-
-  const setDesignContent$ = most.mergeArray([
-    sources.fs
-      .filter(response => response.type === 'add')
-      .tap(x => console.log('setDesignContent$', x))
-      .map(({ data }) => ({ filesAndFolders: data, path: data[0].fullPath })).delay(100),
-    sources.fs
-      .filter(response => response.type === 'watch' && response.id === 'watchFiles')
-      .map(({ path, filesAndFolders }) => ({ path, filesAndFolders, flag: 'update' }))
-  ])
-    // .thru(holdUntil(resetDesign$))
-    .thru(withLatestFrom(reducers.setDesignContent, sources.state))
-    .map(data => ({ type: 'setDesignContent', state: data, sink: 'state' }))
     .multicast()
 
   const setDesignSolids$ = most.mergeArray([
@@ -592,7 +582,7 @@ const actions = ({ sources }) => {
       .thru(withLatestFrom((state, _) => ({ parameterValues: state.design.parameterDefaults }), sources.state))
   ])
     .skipRepeatsWith(jsonCompare)
-    .tap(x => console.log('setDesignParameterValues', x))
+    // .tap(x => console.log('setDesignParameterValues', x))
 
     .thru(holdUntil(sources.state.filter(reducers.isDesignValid)))
 
@@ -640,8 +630,7 @@ const actions = ({ sources }) => {
   return {
     initialize$,
 
-    requestLoadRemoteData$,
-    requestAddDesignData$,
+    requestLoadData$,
     requestWatchDesign$,
     requestWriteCachedGeometry$,
 

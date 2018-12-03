@@ -1,9 +1,8 @@
 const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
 const { head } = require('@jscad/core/utils/arrays')
-const makeFakeFs = require('./makeFakeFs')
+const makeFakeFs = require('../../core/makeFakeFs')
 const { walkFileTree } = require('../localFs/walkFileTree')
-const { changedFiles, flattenFiles } = require('./utils')
 const getFileExtensionFromString = require('@jscad/core/utils/getFileExtensionFromString')
 const makeLogger = require('../../utils/logger')
 
@@ -83,40 +82,10 @@ const makeMemFsSideEffect = (params) => {
         }
       }
 
-      const watch = () => {
-        // if rawData is undefined, it means we cannot watch the target data
-        // ie data loaded from http etc
-        if (rawData === undefined) {
-          return
-        }
-        const { enabled } = options
-        if (watcher && !enabled) {
-          clearInterval(watcher)
-        }
-        if (enabled) {
-          watcher = setInterval(function () {
-            const files = walkFileTree(rawData)
-            files.catch(function (error) {
-              log.error('failed to read files', error)
-            })
-            files.then(function (files) {
-              const flatCurrent = flattenFiles(filesAndFolders)
-              const flatNew = flattenFiles(files)
-              const whatChanged = changedFiles(flatCurrent, flatNew)
-              if (whatChanged.length > 0) {
-                filesAndFolders = files
-                commandResponses.callback({ path, type: 'watch', data, id: 'watchFiles', filesAndFolders, changed: whatChanged })
-              }
-            })
-          }, 2000)
-        }
-      }
-
       const commandHandlers = {
         // read,
         add,
-        write,
-        watch
+        write
       }
       const commandHandler = commandHandlers[type] || commandHandlers['error']
       commandHandler()

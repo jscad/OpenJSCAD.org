@@ -22,7 +22,7 @@ const makeDatSideEffect = async (params) => {
     let archive
     // every time a new command is recieved (observable)
     commands$.forEach(command => {
-      const { type, id, data, urls, options, path } = command
+      const { type, id, urls, path } = command
       // console.log('command', command)
 
       // command handlers/ response

@@ -46,4 +46,4 @@ const pollingWatcher = () => {
   clearInterval(autoReloadTimer)
 } */
 
-module.exports = {changedFiles, flattenFiles}
+module.exports = { changedFiles, flattenFiles }

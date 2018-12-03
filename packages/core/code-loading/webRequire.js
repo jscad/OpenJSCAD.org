@@ -84,7 +84,7 @@ const makeWebRequire = (filesAndFolders, options) => {
     // fake fs module ! only useable with the currently available files & folders
     // that have been drag & dropped / created
     'fs': {
-      exports: require('../../web/src/sideEffects/memFs/makeFakeFs')(filesAndFolders)
+      exports: require('../../web/src/core/makeFakeFs')(filesAndFolders)
     }
   }
   registerFilesAndFolders(filesAndFolders, filesAndFolders)

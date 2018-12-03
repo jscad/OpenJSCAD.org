@@ -34,7 +34,7 @@ const makeHttpSideEffect = (params) => {
 
   const sink = (out$) => {
     out$.forEach(command => {
-      const { type, id, data, urls, options } = command
+      const { type, id, urls, options } = command
       log.debug('output from http', urls)
 
       const unhandled = () => {

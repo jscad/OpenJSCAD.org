@@ -23,12 +23,8 @@ async function makeJscad (targetElement, options) {
   targetElement.appendChild(jscadEl)
 
   // setup all the side effects : ie , input/outputs
-  // fake file system, to use in browsers/ sandbox environement
-  const fs = require('./sideEffects/memFs')({ logging })
   // (local) storage
   const storage = require('./sideEffects/localStorage')({ name, logging })
-  // http requests
-  const http = require('./sideEffects/http')({ logging })
   // title bar side effect
   const titleBar = require('@jscad/core/sideEffects/titleBar')({ logging })
   // drag & drop side effect // FIXME: unify with the one in core()
@@ -40,8 +36,11 @@ async function makeJscad (targetElement, options) {
   // state (pseudo) side effect
   const state = require('./sideEffects/state/index')({ logging, packageMetadata, keyBindings })
 
-  // experimental
-  // dat requests
+  // local file system (from drag & drop etc)
+  const fs = await require('./sideEffects/localFs')({ logging })
+  // http requests
+  const http = require('./sideEffects/http')({ logging })
+  // dat requests (experimental)
   const dat = await require('./sideEffects/dat')({ logging })
 
   // internationalization side effect, loaded up with preset translations
