@@ -26,7 +26,7 @@ const makeLocalFsSideEffect = async (params) => {
 
       // command handlers/ response
       const unhandled = () => {
-        commandResponses.callback({ type, id, error: new Error(`no handler found for command ${type}`) })
+        commandResponses.callback({ type, id, error: new Error(`LocalFs: no handler found for command ${type}`) })
       }
 
       const read = async () => {

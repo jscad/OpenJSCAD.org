@@ -53,9 +53,11 @@ function pseudoArraytoArray (pseudoArray) {
   return array
 }
 
+const isEmtpy = x => x !== null && x !== undefined// skip empty items
+
 function processItems (items) {
-  let results = pseudoArraytoArray(items)
-    .filter(x => x !== null && x !== undefined)// skip empty items
+  let results = pseudoArraytoArray(items.filter(isEmtpy))
+    .filter(isEmtpy)// skip empty items
     .reduce((result, item) => {
       // console.log('result', result, 'item', item)
       if (item.isFile) {

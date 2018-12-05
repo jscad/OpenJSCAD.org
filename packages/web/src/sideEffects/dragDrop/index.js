@@ -1,8 +1,4 @@
-const { mergeArray, fromEvent } = require('most')
-
-function formatData (data, type) {
-  return { data, type }
-}
+const { fromEvent } = require('most')
 
 function preventDefault (event) {
   event.preventDefault()
@@ -27,10 +23,16 @@ function pseudoArraytoArray (pseudoArray) {
 }
 
 function extractData (event) {
-  if (event.dataTransfer.items && event.dataTransfer.items.length) {
-    return pseudoArraytoArray(event.dataTransfer.items)
+  if (isTextNotEmpty(event.dataTransfer.getData('url'))) {
+    return { type: 'url', data: event.dataTransfer.getData('url') }
   }
-  return []
+  if (event.dataTransfer.types.includes('text/plain')) {
+    return { type: 'text', data: event.dataTransfer.getData('text') }
+  }
+  if (event.dataTransfer.items && event.dataTransfer.items.length > 0) {
+    return { type: 'fileOrFolder', data: pseudoArraytoArray(event.dataTransfer.items) }
+  }
+  return undefined
 }
 
 const makeDragAndDropSideEffect = ({ targetEl }) => {
@@ -48,24 +50,10 @@ const makeDragAndDropSideEffect = ({ targetEl }) => {
     drops$.forEach(preventDefault)
     dragOvers$.forEach(preventDefault)
 
-    let urls$ = drops$
-      .map(event => event.dataTransfer.getData('url'))
-      .filter(isTextNotEmpty)
-      .map(data => formatData([data], 'url'))
-
-    let texts$ = drops$
-      .map(event => event.dataTransfer.getData('Text'))
-      .filter(isTextNotEmpty)
-      .map(data => formatData([data], 'text'))
-
-    let filesOrFolders$ = drops$
+    return drops$
       .map(event => extractData(event))
-      // .map(event => event.dataTransfer.files)
       .filter(exists)
-      .map(data => [].slice.call(data))
-      .map(data => formatData(data, 'fileOrFolder'))
-
-    return mergeArray([urls$, texts$, filesOrFolders$]).multicast()
+      .multicast()
   }
   return { source: dragAndDropSource }
 }

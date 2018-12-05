@@ -3,6 +3,8 @@ const callBackToStream = require('@jscad/core/observable-utils/callbackToObserva
 const makeLogger = require('../../utils/logger')
 const getFileExtensionFromString = require('@jscad/core/utils/getFileExtensionFromString')
 
+const XMLHttpRequest = window.XMLHttpRequest
+
 /** function to create the http side effect
  * sink: input of commands that generate http requests
  * source: output of response from http requests
@@ -34,11 +36,11 @@ const makeHttpSideEffect = (params) => {
 
   const sink = (out$) => {
     out$.forEach(command => {
-      const { type, id, urls, options } = command
+      const { type, id, urls } = command // { options, id, type, urls }
       log.debug('output from http', urls)
 
       const unhandled = () => {
-        commandResponses.callback({ type, id, error: new Error(`no handler found for command ${type}`) })
+        commandResponses.callback({ type, id, error: new Error(`http: no handler found for command ${type}`) })
       }
 
       const read = () => {

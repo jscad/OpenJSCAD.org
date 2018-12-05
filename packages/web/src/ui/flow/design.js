@@ -262,14 +262,15 @@ const reducers = {
     // no problem, just act as a no-op
     return { status }
   },
-  requestWriteCachedGeometry: (cache) => {
+  requestWriteCachedGeometry: ({ design }, cache) => {
+    console.log('requestWriteCachedGeometry', cache)
     const serialize = require('serialize-to-js').serialize
     let data = {}
     Object.keys(cache).forEach(function (key) {
       data[key] = cache[key]
     })
     // we want to save the geometry cache under '.solidsCache'
-    return { data: serialize(data), path: '.solidsCache', options: { isRawData: true } }
+    return { data: serialize(data), path: '.solidsCache', options: { isRawData: true }, origin: design.origin }
   },
   // what do we want to save , return an object containing only that data?
   requestSaveSettings: ({ design }) => {
@@ -354,10 +355,22 @@ const actions = ({ sources }) => {
     /* sources.store
       .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined && reply.data.origin === 'http')
       .map(({ data }) => data.mainPath), */
-    // injection from drag & drop
+    // injection from drag & drop (files or folders )
     sources.drops
-      .map(({ data }) => ({ data, id: 'droppedData', path: 'realFs:', protocol: 'fs' }))
-      .tap(x => console.log('dropped', x)),
+      .filter(d => d.type === 'fileOrFolder')
+      .tap(x => console.log('dropped file', x))
+      // url, text, "fileOrFolder"
+      .map(({ data }) => ({ data, id: 'droppedData', path: 'realFs:', protocol: 'fs' })),
+    sources.drops
+      .filter(d => d.type === 'url')
+      .tap(x => console.log('dropped url', x))
+      .map((payload) => {
+        const url = payload.data
+        const urlData = new URL(url)
+        const documentUris = url ? [url] : undefined
+        const { protocol, origin, pathname } = urlData
+        return { documentUris, protocol: protocol.replace(':', ''), origin, path: pathname }
+      }),
     // load examples when clicked
     sources.dom.select('.example').events('click')
       .map(event => event.target.dataset.path)
@@ -431,22 +444,30 @@ const actions = ({ sources }) => {
     // watched data
     sources.state
       .filter(reducers.isDesignValid)
-      .map(state => ({ path: state.design.mainPath, enabled: state.design.autoReload }))
+      .map(({ design }) => {
+        return {
+          id: 'watchScript',
+          path: design.mainPath,
+          origin: design.origin,
+          options: { enabled: design.autoReload } // enable/disable watch if autoreload is set to false
+        }
+      })
       .skipRepeatsWith(jsonCompare)
-      .map(({ path, enabled }) => ({ id: 'watchScript', path, options: { enabled } }))// enable/disable watch if autoreload is set to false
   ])
-    .map(payload => Object.assign({}, { type: 'watch', sink: 'fs' }, payload))
+    .map(payload => Object.assign({}, { type: 'watch', sink: payload.origin }, payload))
+    .tap(x=>console.log('foo',x))
     .multicast()
 
   const requestWriteCachedGeometry$ = most.mergeArray([
     sources.state
       .filter(reducers.isDesignValid)
+      .filter(state => state.design.solids !== undefined)
       .map(state => state.design.solids)
-      .filter(solids => solids !== undefined)
       .skipRepeatsWith(jsonCompare)
-      .map(reducers.requestWriteCachedGeometry)
+      // .map(reducers.requestWriteCachedGeometry)
   ])
-    .map(payload => Object.assign({}, { type: 'write', sink: 'fs', id: 'cachedGeometry' }, payload))
+    .thru(withLatestFrom(reducers.requestWriteCachedGeometry, sources.state))
+    .map(payload => Object.assign({}, { type: 'write', id: 'cachedGeometry', sink: payload.origin }, payload))
     .multicast()
 
   const resetDesign$ = most.mergeArray([

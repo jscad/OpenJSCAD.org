@@ -8,26 +8,29 @@ const makeDatSideEffect = async (params) => {
   const log = makeLogger({ enabled: logging })
   let enabled = true
 
-  if (!window.DatArchive) {
+  const DatArchive = window.DatArchive
+  if (!DatArchive) {
     // todo handle loading of package for node.js side if/ when needed
     log.error('Dat archives not supported in this environment!')
     enabled = false
   }
 
   const sink = (commands$) => {
-    if (!enabled) { // bail out if not available
-      return
-    }
 
     let archive
     // every time a new command is recieved (observable)
     commands$.forEach(command => {
       const { type, id, urls, path } = command
       // console.log('command', command)
+      if (!enabled) {
+        console.log('gah')
+        commandResponses.callback({ type, id, error: new Error(`Dat archives not supported in this environment!`) })
+        return
+      }
 
       // command handlers/ response
       const unhandled = () => {
-        commandResponses.callback({ type, id, error: new Error(`no handler found for command ${type}`) })
+        commandResponses.callback({ type, id, error: new Error(`Dat: no handler found for command ${type}`) })
       }
       const read = () => {
         urls.map(async url => {
