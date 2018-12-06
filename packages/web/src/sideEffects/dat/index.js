@@ -1,5 +1,6 @@
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
 const makeLogger = require('../../utils/logger')
+const getFileExtensionFromString = require('@jscad/core/utils/getFileExtensionFromString')
 
 const makeDatSideEffect = async (params) => {
   const commandResponses = callBackToStream()
@@ -16,14 +17,16 @@ const makeDatSideEffect = async (params) => {
   }
 
   const sink = (commands$) => {
-
     let archive
+    let hiearchyRoot = []
+    let activeUrl
+    let rootFolder
+
     // every time a new command is recieved (observable)
     commands$.forEach(command => {
       const { type, id, urls, path } = command
       // console.log('command', command)
       if (!enabled) {
-        console.log('gah')
         commandResponses.callback({ type, id, error: new Error(`Dat archives not supported in this environment!`) })
         return
       }
@@ -35,6 +38,7 @@ const makeDatSideEffect = async (params) => {
       const read = () => {
         urls.map(async url => {
           url = url.replace(' ', '+')
+          activeUrl = url
           // const decoded = unescape(url)
           // const foo = url.replace(' ', '+')
           // console.log(`url "${url}" VS "${decoded}" VS ${foo}`)
@@ -51,33 +55,54 @@ const makeDatSideEffect = async (params) => {
           })
           )
           const info = await archive.getInfo()
-          const rootFolder = info.title || 'unnamed'// rootfolder is a fake root folder !
+          rootFolder = info.title || 'unnamed'// rootfolder is a fake root folder !
           const transformed = fileContents.filter(x => x !== undefined).map(f => {
-            return { name: f.name, ext: 'js', source: f.content, fullPath: `/${rootFolder}/` + f.fullPath }
+            return { name: f.name, ext: getFileExtensionFromString(f.name), source: f.content, fullPath: `/${rootFolder}/` + f.fullPath }
           })
-          const hiearchyRoot = [{
+          hiearchyRoot = [{
             children: transformed,
             fullPath: `/${rootFolder}`,
             name: rootFolder
           }]
           commandResponses.callback({ type, id, url, data: hiearchyRoot })
-          watch()
         })
       }
 
+      const write = () => {
+        // TODO: ??
+        log.warning('writing to dat archives is not implemented yet')
+      }
+
       const watch = () => {
-        const evts = archive.watch()
         console.log('starting watch')
+        const evts = archive.watch()
         evts.addEventListener('changed', async ({ path }) => {
+          // const fullPath = `${path}/${f.name}`
+          // TODO: how about folders ?
           console.log(path, 'has been updated!')
           const content = await archive.readFile(path)
-          console.log('content', content)
+          const name = require('path').basename(path)
+          const entry = { name, ext: 'js', source: content, fullPath: `/${rootFolder}` + path }
+          // console.log('content', content)
+          // FIXME: cannot work
+          // hiearchyRoot.children = [...hiearchyRoot.children]
+          const index = hiearchyRoot[0].children.findIndex(el => {
+            // console.log('gna', el, entry)
+            return el.fullPath === entry.fullPath
+          })
+          // FIXME: eeek !
+          hiearchyRoot = JSON.parse(JSON.stringify(hiearchyRoot))
+          hiearchyRoot[0].children[index] = entry
+
+          commandResponses.callback({ type: 'read', id: 'loadRemote', url: activeUrl, data: hiearchyRoot })
         })
       }
 
       const commandHandlers = {
+        unhandled,
         read,
-        unhandled
+        write,
+        watch
       }
       const commandHandler = commandHandlers[type] || commandHandlers['unhandled']
       commandHandler()
