@@ -36,6 +36,7 @@ const makeLocalFsSideEffect = async (params) => {
       }
 
       const watch = () => {
+        
         // if rawData is undefined, it means we cannot watch the target data
         if (rawData === undefined) {
           return
@@ -45,6 +46,7 @@ const makeLocalFsSideEffect = async (params) => {
           clearInterval(watcher)
         }
         if (enabled) {
+          console.log('starting watch')
           watcher = setInterval(function () {
             const files = walkFileTree(rawData)
             files.catch(function (error) {
@@ -56,7 +58,8 @@ const makeLocalFsSideEffect = async (params) => {
               const whatChanged = changedFiles(flatCurrent, flatNew)
               if (whatChanged.length > 0) {
                 filesAndFolders = files
-                commandResponses.callback({ path, type: 'watch', data, id: 'watchFiles', filesAndFolders, changed: whatChanged })
+                // type: 'watch', data, id: 'watchFiles'
+                commandResponses.callback({ type: 'read', id: 'loadRemote', data: filesAndFolders, path, changed: whatChanged })
               }
             })
           }, 2000)
