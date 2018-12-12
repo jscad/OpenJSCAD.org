@@ -32,7 +32,6 @@ const reducers = {
     console.log('export requested', solids, exportFilePath)
     const { saveAs } = require('file-saver')
 
-
     // saveDataToFs(data, exportFormat, filePath)
     const format = exportFormat
     const blob = convertToBlob(prepareOutput(solids, { format }))

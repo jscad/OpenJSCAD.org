@@ -91,7 +91,6 @@ const reducers = {
     )
     // ugh
     design.origin = origin
-    design.foo = 42
     return { design }
   },
 
@@ -195,6 +194,7 @@ const reducers = {
     })
     return { design }
   },
+
   /** set the parameters of this design
    * @param  {Object} state
    * @param  {} {parameterDefaults
@@ -262,6 +262,7 @@ const reducers = {
     // no problem, just act as a no-op
     return { status }
   },
+
   requestWriteCachedGeometry: ({ design }, cache) => {
     console.log('requestWriteCachedGeometry', cache)
     const serialize = require('serialize-to-js').serialize
@@ -303,22 +304,18 @@ const reducers = {
 
   // ui/toggles
   toggleAutoReload: (state, autoReload) => {
-    // console.log('toggleAutoReload', autoReload)
     const design = Object.assign({}, state.design, { autoReload })
     return { design }
   },
   toggleInstantUpdate: (state, instantUpdate) => {
-    // console.log('toggleInstantUpdate', instantUpdate)
     const design = Object.assign({}, state.design, { instantUpdate })
     return { design }
   },
   toggleVtreeMode: (state, vtreeMode) => {
-    // console.log('toggleVtreeMode', vtreeMode)
     const design = Object.assign({}, state.design, { vtreeMode })
     return { design }
   },
   setSolidsTimeout: (state, solidsTimeOut) => {
-    // console.log('setSolidsTimeout', solidsTimeOut)
     const design = Object.assign({}, state.design, { solidsTimeOut })
     return { design }
   }
@@ -350,7 +347,7 @@ const actions = ({ sources }) => {
     .map(data => ({ type: 'setDesignSettings', state: data, sink: 'state' }))
     .multicast()
 
-  const requestLoadData$ = most.mergeArray([
+  const requestLoadDesignContent$ = most.mergeArray([
     // load previously loaded remote file (or example)
     /* sources.store
       .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined && reply.data.origin === 'http')
@@ -361,6 +358,7 @@ const actions = ({ sources }) => {
       .tap(x => console.log('dropped file', x))
       // url, text, "fileOrFolder"
       .map(({ data }) => ({ data, id: 'droppedData', path: 'realFs:', protocol: 'fs' })),
+
     sources.drops
       .filter(d => d.type === 'url')
       .tap(x => console.log('dropped url', x))
@@ -381,6 +379,17 @@ const actions = ({ sources }) => {
         return { documentUris, protocol: protocol.replace(':', ''), origin }
       })
       .tap(x => console.log('stuff', x)),
+    // load single file ? TODO: remove this ?
+    sources.dom.select('#fileLoader').events('change')
+      .map(function (event) {
+        console.log('here', event.target.files)
+        // literally an array of paths (strings)
+        // like those returned by dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
+        // nope ...
+        // const paths = []
+        // return paths
+        return { data: event.target.files }
+      }),
     // remote, via proxy, adresses of files passed via url
     sources.titleBar
       .filter(x => x !== undefined)
@@ -403,38 +412,15 @@ const actions = ({ sources }) => {
     .filter(x => x !== undefined)
     .thru(holdUntil(setDesignSettings$))// only after
     .map(data => ({ type: 'read', id: 'loadRemote', urls: toArray(data.documentUris), sink: data.protocol, path: data.path, data: data.data }))
-    .tap(x => console.log('requestLoadData', x))
+    .tap(x => console.log('requestLoadDesignContent', x))
     .multicast()
     .skipRepeats()
 
-  const requestLoadLocalData$ = most.mergeArray([
-    sources.dom.select('#fileLoader').events('change')
-      .map(function (event) {
-        console.log('here', event.target.files)
-        // literally an array of paths (strings)
-        // like those returned by dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
-        // nope ...
-        // const paths = []
-        // return paths
-        return { data: event.target.files }
-      })
-  ])
-    .forEach(x => x)
-
-  const setDesignContent$ = most.mergeArray([
-    // from file open
-    // requestLoadLocalData$
-    //  .map(({data}) => ({data, id: 'droppedData', path: 'realFs:'})),
-    // local fs
-    sources.fs
-      .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response)),
-    // data retrieved from http requests
-    sources.http
-      .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response)),
-    // from dat
-    sources.dat
-      .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response))
-  ])
+  const setDesignContent$ = most.mergeArray(
+    Object.values(sources)
+      .filter(x => x !== undefined && 'source' in x)
+  )
+    .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response) && !('sink' in response))
     .map(({ data }) => ({ filesAndFolders: data, path: data[0].fullPath }))
     .thru(withLatestFrom(reducers.setDesignContent, sources.state))
     .map(data => ({ type: 'setDesignContent', state: data, sink: 'state' }))
@@ -455,7 +441,7 @@ const actions = ({ sources }) => {
       .skipRepeatsWith(jsonCompare)
   ])
     .map(payload => Object.assign({}, { type: 'watch', sink: payload.origin }, payload))
-    .tap(x=>console.log('foo',x))
+    .tap(x => console.log('foo', x))
     .multicast()
 
   const requestWriteCachedGeometry$ = most.mergeArray([
@@ -471,7 +457,7 @@ const actions = ({ sources }) => {
     .multicast()
 
   const resetDesign$ = most.mergeArray([
-    requestLoadData$.map(({ sink }) => sink)
+    requestLoadDesignContent$.map(({ sink }) => sink)
   ])
     .thru(withLatestFrom(reducers.resetDesign, sources.state))
     .map(data => ({ type: 'resetDesign', state: data, sink: 'state' }))
@@ -651,7 +637,7 @@ const actions = ({ sources }) => {
   return {
     initialize$,
 
-    requestLoadData$,
+    requestLoadDesignContent$,
     requestWatchDesign$,
     requestWriteCachedGeometry$,
 
