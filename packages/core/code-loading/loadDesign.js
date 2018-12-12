@@ -1,6 +1,4 @@
 // loading
-const isCommonJsModule = require('./isCommonJsModule')
-const modulifySource = require('./modulifySource')
 const requireDesignFromModule = require('./requireDesignFromModule')
 const getAllParameterDefintionsAndValues = require('../parameters/getParameterDefinitionsAndValues')
 const transformSources = require('./sourceTransforms')
@@ -17,13 +15,12 @@ const makeWebRequire = require('./webRequire')
  * @param {Array} filesAndFolders array of files and folders to use
  * @param {Object} parameterValuesOverride, the values to use to override the defaults for the current design
  */
-const loadDesign = (source, mainPath, apiMainPath, filesAndFolders, parameterValuesOverride) => {
+const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverride) => {
   // the root script is the main entry point in a design
   // ie either the only file if there is only one
   // OR the file in the 'main' entry of package.js, index.js, main.js or <folderName>.js
 
-  const designRoot = { source, path: mainPath, module: undefined }
-
+  console.log('mainPath', mainPath)
   // now attempt to load the design
   /*
     - if the script is a common.js file already
@@ -53,7 +50,7 @@ const loadDesign = (source, mainPath, apiMainPath, filesAndFolders, parameterVal
   // now check if we need fake require or not
   const requireFn = hasRequire() ? require : makeWebRequire(filesAndFolders, { apiMainPath })
   // rootModule SHOULD contain a main() entry and optionally a getParameterDefinitions entrye
-  const rootModule = requireDesignFromModule(designRoot.path, requireFn)
+  const rootModule = requireDesignFromModule(mainPath, requireFn)
   console.log('rootModule', rootModule, 'parameterValuesOverride', parameterValuesOverride)
   // const requireUncached = require('../code-loading/requireUncached')
   // TODO: only uncache when needed
@@ -64,7 +61,6 @@ const loadDesign = (source, mainPath, apiMainPath, filesAndFolders, parameterVal
   const parameters = getAllParameterDefintionsAndValues(rootModule, parameterValuesOverride)
   const parameterDefinitions = parameters.parameterDefinitions
   const parameterDefaults = parameters.parameterValues
-  // const parameterValues = Object.assign({}, parameters.parameterValues, parameterValuesOverride)
 
   // console.log('parameters', parameterDefinitions, parameterValues, parameterDefaults)
   return { rootModule, parameterDefinitions, parameterDefaults }

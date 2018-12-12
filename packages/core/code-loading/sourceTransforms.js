@@ -6,21 +6,21 @@ const passThroughTransform = (options, entry) => entry
 /* function to turn old style jscad code with implicit imports
 into code with explicit exports/imports */
 const modulifyTransform = (options, entry) => {
-  const {apiMainPath} = options
+  const { apiMainPath } = options
   const isFileCommonJs = isCommonJsModule(entry.source)
   const source = !isFileCommonJs ? modulifySource(entry.source, apiMainPath) : entry.source
-  return Object.assign({}, entry, {source})
+  return Object.assign({}, entry, { source })
 }
 
 const translateToJscad = (options, entry) => {
   // console.log('translateToJscad', entry)
-  const {apiMainPath} = options
+  const { apiMainPath } = options
   const deserializeStl = require('@jscad/io').stlDeSerializer.deserialize
   const source = deserializeStl(entry.source, entry.name, options)
   // const ext = 'js'
   // const name = entry.name.split('.') + ext
   // const fullPath = entry.fullPath.split('.') + ext
-  return Object.assign({}, entry, {source})
+  return Object.assign({}, entry, { source })
 }
 
 const transformSources = (options, filesAndFolders) => {
