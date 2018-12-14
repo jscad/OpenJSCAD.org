@@ -1,9 +1,8 @@
-const {isAbsolute, resolve} = require('path')
+const { isAbsolute, resolve } = require('path')
 const oscad = require('@jscad/csg/api')
 const { prepareOutput } = require('@jscad/core/io/prepareOutput')
 const { convertToBlob } = require('@jscad/core/io/convertToBlob')
-const { rebuildSolids } = require('@jscad/core/code-evaluation/rebuildSolids')
-const { resolveIncludesFs } = require('@jscad/core/code-loading/resolveIncludesFs')
+const rebuildSolids = require('@jscad/core/code-evaluation/rebuildGeometry')
 const getParameterValuesFromParameters = require('@jscad/core/parameters/getParameterValuesFromParameters')
 const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
 
@@ -18,9 +17,8 @@ const registerJscadExtension = require('@jscad/core/code-loading/registerJscadEx
  * @param {String} options
  * @return a Promise with the output data
  */
-function generateOutputData (source, params, options) {
+const generateOutputData = (source, params, options) => {
   const defaults = {
-    implicitGlobals: true,
     outputFile: undefined,
     outputFormat: 'stl',
     inputFile: '',
@@ -28,16 +26,11 @@ function generateOutputData (source, params, options) {
     addMetaData: true
   }
   options = Object.assign({}, defaults, options)
-  const {implicitGlobals, outputFile, outputFormat, inputFile, inputFormat, version} = options
+  const { outputFile, outputFormat, inputFile, inputFormat, version } = options
 
-  const inputPath = isAbsolute(inputFile) ? inputFile : resolve(process.cwd(), inputFile)  // path.dirname(inputFile)
+  const inputPath = isAbsolute(inputFile) ? inputFile : resolve(process.cwd(), inputFile) // path.dirname(inputFile)
 
-  let globals = {}
-  if (implicitGlobals) {
-    globals.oscad = oscad
-  }
-  globals.extras = {cli: {getParameterValuesFromParameters}}
-
+  console.log('foo', outputFile, outputFormat, inputFile, inputFormat, version)
   // objects = rebuildSolid(source, '', params, globals, callback)
   return new Promise(function (resolve, reject) {
     const callback = (err, result) => {
@@ -67,8 +60,10 @@ function generateOutputData (source, params, options) {
       },
       undefined: data => reject(new Error(`unsuported input format ${inputFormat}`))
     }
+
+    console.log('source', source)
     // convert any inputs
-    source = conversionTable[inputFormat]({source, params, options})
+    source = conversionTable[inputFormat]({ source, params, options })
 
     // EXPERIMENTAL commonjs module support
     const scriptIsCommonJsModule = isCommonJsModule(source)
@@ -79,7 +74,7 @@ function generateOutputData (source, params, options) {
       // console.log('scriptIsCommonJsModule', scriptIsCommonJsModule)
       const design = requireDesignFromModule(inputPath, undefined)
       // console.log('definitions', design.parameterDefinitions, 'values', design.parameterValues, design.main, design.getParameterDefinitions)
-      let {parameterValues} = require('@jscad/core/parameters/getParameterDefinitionsAndValues')(design, params)
+      let { parameterValues } = require('@jscad/core/parameters/getParameterDefinitionsAndValues')(design, params)
       const value = design.main(parameterValues)
       resolve(value)
       return
@@ -108,12 +103,18 @@ function generateOutputData (source, params, options) {
     if (outputFormat === 'jscad' || outputFormat === 'js') {
       resolve(source)
     } else {
-      rebuildSolids(source, inputPath, params, callback, {implicitGlobals, globals, includeResolver: resolveIncludesFs})
+      const filesAndFolders = [{ name: inputFile, ext: inputFormat, source, fullPath: inputPath }]
+      const data = {
+        filesAndFolders,
+        parameterValues: [],
+        vtreeMode: false
+      }
+      rebuildSolids(data, callback)
     }
   })
     .then(function (objects) {
       // Buffer.from(outputData.data),{encoding: outputData.mimeType},
-      return convertToBlob(prepareOutput(objects, {format: outputFormat}))
+      return convertToBlob(prepareOutput(objects, { format: outputFormat }))
     })
 
 // return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})
