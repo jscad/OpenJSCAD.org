@@ -2,7 +2,8 @@ const loadDesign = require('../code-loading/loadDesign')
 const instanciateDesign = require('./instanciateDesign')
 const applyParameterDefinitions = require('../parameters/applyParameterDefinitions')
 
-/** core, essential function that deals with both extracting the parameters and generation the solids
+/** evaluate script & rebuild solids
+ * core, essential function that deals with both extracting the parameters and generation the solids
  * the parsed parameters (definitions & values) & solids are passed to the given 'callback'
  * Everything is together in a single function, because this is usually run in the context of a web worker
  * and transfering data back & forth is both complex (see transferables) and costly (time)
@@ -20,8 +21,8 @@ const applyParameterDefinitions = require('../parameters/applyParameterDefinitio
  * rebuildSolids()
  */
 const rebuildSolids = (data, callback) => {
-  const defaults = { vtreeMode: true }
-  const { mainPath, vtreeMode, lookup, lookupCounts } = Object.assign({}, defaults, data)
+  const defaults = { vtreeMode: true, serialize: true }
+  const { mainPath, vtreeMode, serialize, lookup, lookupCounts } = Object.assign({}, defaults, data)
   const apiMainPath = vtreeMode ? '../code-loading/vtreeApi' : '@jscad/csg/api'
 
   // let start = new Date()
@@ -30,9 +31,9 @@ const rebuildSolids = (data, callback) => {
   // send back parameter definitions & values
   // in a worker this would be a postmessage, this is sent back early so that uis can update
   // the parameters editor before the solids are displayed (which takes longer)
-  callback({
+  callback(null, {
     type: 'params',
-    parameterDefaults: designData.parameterDefaults,
+    parameterDefaults: designData.parameterValues,
     parameterDefinitions: designData.parameterDefinitions
   })
   // console.warn(`loadDesignData`, new Date() - start)
@@ -40,14 +41,20 @@ const rebuildSolids = (data, callback) => {
   // this might be redundant with ui-side logic, but it makes sure this core piece works regardless of ui
   let parameterValues = data.parameterValues
   parameterValues = applyParameterDefinitions(parameterValues, designData.parameterDefinitions)
-  parameterValues = Object.assign({}, designData.parameterDefaults, parameterValues)
+  parameterValues = Object.assign({}, designData.parameterValues, parameterValues)
 
   // start = new Date()
-  const solidsData = instanciateDesign(designData.rootModule, vtreeMode, lookup, lookupCounts, parameterValues)
+  const options = {
+    vtreeMode,
+    lookup,
+    lookupCounts,
+    serialize
+  }
+  const solidsData = instanciateDesign(designData.rootModule, parameterValues, options)
   // console.warn(`instanciateDesign`, new Date() - start)
 
   // send back solids & any other metadata
-  callback({
+  callback(null, {
     type: 'solids',
     solids: solidsData.solids,
     lookup: solidsData.lookup,

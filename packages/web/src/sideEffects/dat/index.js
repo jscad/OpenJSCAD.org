@@ -38,10 +38,9 @@ const makeDatSideEffect = async (params) => {
       const read = () => {
         urls.map(async url => {
           url = url.replace(' ', '+')
+          // set the local state
           activeUrl = url
-          // const decoded = unescape(url)
-          // const foo = url.replace(' ', '+')
-          // console.log(`url "${url}" VS "${decoded}" VS ${foo}`)
+
           archive = new DatArchive(url, {})
           const filesAndFolders = await archive.readdir(path, { recursive: true, stat: true })
           // console.log('filesAndFolders', filesAndFolders)
@@ -65,6 +64,8 @@ const makeDatSideEffect = async (params) => {
             name: rootFolder
           }]
           commandResponses.callback({ type, id, url, data: hiearchyRoot })
+          const history = await archive.history()
+          console.log('history', history)
         })
       }
 
@@ -76,6 +77,10 @@ const makeDatSideEffect = async (params) => {
       const watch = () => {
         console.log('starting watch')
         const evts = archive.watch()
+        // TODO: deal with additions & deletions
+        // ex /holder.stl has been updated!
+        // index.js:99 Uncaught (in promise) NotFoundError: File not found
+
         evts.addEventListener('changed', async ({ path }) => {
           // const fullPath = `${path}/${f.name}`
           // TODO: how about folders ?

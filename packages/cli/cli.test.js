@@ -36,7 +36,8 @@ test('jscad (basic, input file only)', t => {
   const cmd = `node ${jscadPath} ${inputPath} -add-metadata false`
   execSync(cmd, { stdio: [0, 1, 2] })
   t.deepEqual(true, fs.existsSync(expPath))
-  almostEquals(t, fs.statSync(expPath).size, 338371, 2) // this has to be set this large because of the cross platform differences
+  console.log('fs.statSync(expPath).size', fs.statSync(expPath).size)
+  almostEquals(t, fs.statSync(expPath).size, 338371, 3) // this has to be set this large because of the cross platform differences
 })
 
 /*

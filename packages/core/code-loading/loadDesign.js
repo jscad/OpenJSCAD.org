@@ -47,23 +47,25 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
   if (filesAndFolders) {
     filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
   }
+  // console.log('transformed sources', filesAndFolders)
   // now check if we need fake require or not
-  const requireFn = hasRequire() ? require : makeWebRequire(filesAndFolders, { apiMainPath })
+  // FIXME: we need to come up with a way to intercept node 'require' calls to be able to apply transformSources on the fly
+  // since we keep passing the 'mainPath' to the normal require which points to the NON TRANSFORMED source
+  const requireFn = makeWebRequire(filesAndFolders, { apiMainPath })// hasRequire() ? require : makeWebRequire(filesAndFolders, { apiMainPath })
+
   // rootModule SHOULD contain a main() entry and optionally a getParameterDefinitions entrye
   const rootModule = requireDesignFromModule(mainPath, requireFn)
-  console.log('rootModule', rootModule, 'parameterValuesOverride', parameterValuesOverride)
+  // console.log('rootModule', rootModule, 'parameterValuesOverride', parameterValuesOverride)
   // const requireUncached = require('../code-loading/requireUncached')
   // TODO: only uncache when needed
   // requireUncached(mainPath)
 
   // the design (module tree) has been loaded at this stage
-  // now we can get our usefull data
+  // now we can get our usefull data (definitions and values/defaults)
   const parameters = getAllParameterDefintionsAndValues(rootModule, parameterValuesOverride)
-  const parameterDefinitions = parameters.parameterDefinitions
-  const parameterDefaults = parameters.parameterValues
 
   // console.log('parameters', parameterDefinitions, parameterValues, parameterDefaults)
-  return { rootModule, parameterDefinitions, parameterDefaults }
+  return { rootModule, ...parameters }
 }
 
 module.exports = loadDesign

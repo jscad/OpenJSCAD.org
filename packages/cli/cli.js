@@ -55,7 +55,18 @@ const output = determineOutputNameAndFormat(outputFormat, outputFile, inputFile)
 outputFormat = output.outputFormat
 outputFile = output.outputFile
 
-console.log(`converting ${inputFile} -> ${outputFile} (${formats[outputFormat].description})`)
+const clicolors = {
+  red: '\u{1b}[31m',
+  green: '\u{1b}[32m',
+  yellow: '\u{1b}[33m',
+  blue: '\u{1b}[34m',
+  black: '\u{1b}[0m'
+}
+
+console.log(`${clicolors.blue}JSCAD: generating ${clicolors.red}
+ from: ${clicolors.green} ${inputFile} ${clicolors.red}
+ to: ${clicolors.green} ${outputFile} ${clicolors.yellow}(${formats[outputFormat].description}) ${clicolors.black}
+`)
 
 // read input data
 const src = fs.readFileSync(inputFile, inputFile.match(/\.stl$/i) ? 'binary' : 'UTF8')

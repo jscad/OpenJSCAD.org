@@ -66,9 +66,8 @@ const makeWebRequire = (filesAndFolders, options) => {
   const defaults = {
     apiMainPath: '@jscad/csg/api'
   }
-  const {apiMainPath} = Object.assign({}, defaults, options)
+  const { apiMainPath } = Object.assign({}, defaults, options)
   const apiModule = apiMainPath === '@jscad/csg/api' ? require('@jscad/csg/api') : require('./vtreeApi')
-  // makeFakeFs
   // preset modules
   let modules = {
     '@jscad/csg/api': {

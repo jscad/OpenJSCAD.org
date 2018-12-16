@@ -1,13 +1,7 @@
 const { isAbsolute, resolve } = require('path')
-const oscad = require('@jscad/csg/api')
 const { prepareOutput } = require('@jscad/core/io/prepareOutput')
 const { convertToBlob } = require('@jscad/core/io/convertToBlob')
 const rebuildSolids = require('@jscad/core/code-evaluation/rebuildGeometry')
-const getParameterValuesFromParameters = require('@jscad/core/parameters/getParameterValuesFromParameters')
-const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
-
-const isCommonJsModule = require('@jscad/core/code-loading/isCommonJsModule')
-const requireDesignFromModule = require('@jscad/core/code-loading/requireDesignFromModule')
 const registerJscadExtension = require('@jscad/core/code-loading/registerJscadExtension')
 
 /**
@@ -30,7 +24,7 @@ const generateOutputData = (source, params, options) => {
 
   const inputPath = isAbsolute(inputFile) ? inputFile : resolve(process.cwd(), inputFile) // path.dirname(inputFile)
 
-  console.log('foo', outputFile, outputFormat, inputFile, inputFormat, version)
+  // console.log('foo', outputFile, outputFormat, inputFile, inputFormat, version)
   // objects = rebuildSolid(source, '', params, globals, callback)
   return new Promise(function (resolve, reject) {
     const callback = (err, result) => {
@@ -61,27 +55,43 @@ const generateOutputData = (source, params, options) => {
       undefined: data => reject(new Error(`unsuported input format ${inputFormat}`))
     }
 
-    console.log('source', source)
+    // console.log('source', source)
     // convert any inputs
     source = conversionTable[inputFormat]({ source, params, options })
 
-    // EXPERIMENTAL commonjs module support
-    const scriptIsCommonJsModule = isCommonJsModule(source)
-    if (scriptIsCommonJsModule && (inputFormat === 'jscad' || inputFormat === 'js') &&
+    if (outputFormat === 'jscad' || outputFormat === 'js') {
+      resolve(source)
+    } else if ((inputFormat === 'jscad' || inputFormat === 'js') &&
     outputFormat !== 'jscad' && outputFormat !== 'js') {
       // setup support for require-ing files with .jscad extension
       registerJscadExtension()
-      // console.log('scriptIsCommonJsModule', scriptIsCommonJsModule)
-      const design = requireDesignFromModule(inputPath, undefined)
+      // console.log('inputFile', inputFile, 'ext', inputFormat, inputPath)
+      // const design = requireDesignFromModule(inputPath, undefined)
       // console.log('definitions', design.parameterDefinitions, 'values', design.parameterValues, design.main, design.getParameterDefinitions)
-      let { parameterValues } = require('@jscad/core/parameters/getParameterDefinitionsAndValues')(design, params)
-      const value = design.main(parameterValues)
-      resolve(value)
-      return
+      // let { parameterValues } = require('@jscad/core/parameters/getParameterDefinitionsAndValues')(design, params)
+      // const value = design.main(parameterValues)
+      // resolve(value)
+      const filesAndFolders = [{ name: inputFile, ext: inputFormat, source, fullPath: inputPath }]
+      const data = {
+        mainPath: inputFile,
+        filesAndFolders,
+        parameterValues: [],
+        vtreeMode: false,
+        serialize: false
+      }
+      rebuildSolids(data, (error, response) => {
+        // console.log('response', response)
+        if (error) {
+          reject(error)
+        }
+        if (response.type !== 'params') {
+          resolve(response.solids)
+        }
+      })
     }
 
     // extract the array of parameter definitions
-    const parameterDefinitions = getParameterDefinitions(source)
+    /* const parameterDefinitions = getParameterDefinitions(source)
     // get the actual parameters, correctly cast to the right types etc based on the definitions above
     params = applyParameterDefinitions(params, parameterDefinitions)
 
@@ -99,35 +109,15 @@ const generateOutputData = (source, params, options) => {
     `
     source = (inputFormat === 'jscad' || inputFormat === 'js') ? `${source}
     ${mainFunction}` : source
-
-    if (outputFormat === 'jscad' || outputFormat === 'js') {
-      resolve(source)
-    } else {
-      const filesAndFolders = [{ name: inputFile, ext: inputFormat, source, fullPath: inputPath }]
-      const data = {
-        filesAndFolders,
-        parameterValues: [],
-        vtreeMode: false
-      }
-      rebuildSolids(data, callback)
-    }
+    */
   })
-    .then(function (objects) {
+    .then(objects => {
+      // console.log('objects', objects, outputFormat)
       // Buffer.from(outputData.data),{encoding: outputData.mimeType},
       return convertToBlob(prepareOutput(objects, { format: outputFormat }))
     })
 
 // return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})
-}
-
-// actually get parameter definitions
-function getParameterDefinitions (script) {
-  let script1 = "if(typeof(getParameterDefinitions) == 'function') {return getParameterDefinitions();} else {return [];} "
-  script1 += script
-  const f = new Function(script1)
-  const parameterDefinitions = f()
-  // console.log('parameterDefinitions', parameterDefinitions)
-  return parameterDefinitions
 }
 
 module.exports = generateOutputData

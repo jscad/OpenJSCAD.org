@@ -33,10 +33,9 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/core": "^0.2.3",
-    "@jscad/csg": "0.5.2",
+    "@jscad/csg": "0.7.0",
     "@jscad/examples": "^1.7.1",
-    "@jscad/io": "0.4.4",
-    "@jscad/openscad-openjscad-translator": "0.0.10"
+    "@jscad/io": "pre-V2"
   },
   "devDependencies": {
     "ava": "^0.25.0"

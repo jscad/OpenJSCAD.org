@@ -25,7 +25,7 @@ const lookupFromCompactBinary = (compactLookup) => {
   return lookup
 }
 
-const lookupToCompactBinary = (lookup) => {
+const lookupToCompactBinary = lookup => {
   // FIXME: optimise this !!
   const compactLookup = {}
   Object.keys(lookup).forEach(function (key) {
@@ -42,37 +42,42 @@ const lookupToCompactBinary = (lookup) => {
   return compactLookup
 }
 
-const instanciateDesign = (rootModule, vtreeMode, inputLookup, inputLookupCounts, parameterValues) => {
-  let lookup = lookupFromCompactBinary(inputLookup)
-  let lookupCounts = inputLookupCounts
-
-  // deal with the actual solids generation
-  let solids
-  let rawResults = toArray(rootModule.main(parameterValues))
-
-  if (isResultSolid(rawResults)) {
-    solids = rawResults
-  } else if (vtreeMode) {
-    const start = new Date()
-    const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree({ passesBeforeElimination: 5, lookup, lookupCounts })
-    solids = buildCachedGeometryFromTree({}, rawResults)
-    console.warn(`buildCachedGeometryFromTree`, new Date() - start)//, rawResults, solids)
-    // TODO: return both solids and cache instead of mutating ?
-  } else {
-    throw new Error('Bad output from script: expected CSG/CAG objects')
-  }
-
+const serializeSolids = solids => {
   // prepare solids for output from worker
   // FIXME: deal with NON CAG/CSG !!
-  solids = solids
+  return solids
     .map(object => {
       if (isCSG(object) || isCAG(object)) {
         return object.toCompactBinary()
       }
     })
+}
 
-  lookup = lookupToCompactBinary(lookup)
-  return { solids, lookup, lookupCounts }
+const instanciateDesign = (rootModule, parameterValues, options) => {
+  const { vtreeMode, inputLookup, inputLookupCounts, serialize } = options
+  // deal with the actual solids generation
+  let solids
+  let rawResults = toArray(rootModule.main(parameterValues))
+
+  if (vtreeMode) {
+    let lookup = lookupFromCompactBinary(inputLookup)
+    let lookupCounts = inputLookupCounts
+    const start = new Date()
+    const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree({ passesBeforeElimination: 5, lookup, lookupCounts })
+    solids = buildCachedGeometryFromTree({}, rawResults)
+    console.warn(`buildCachedGeometryFromTree`, new Date() - start)//, rawResults, solids)
+    // TODO: return both solids and cache instead of mutating ?
+    lookup = lookupToCompactBinary(lookup)
+    solids = serialize ? serializeSolids(solids) : solids
+    return { solids, lookup, lookupCounts }
+  } else {
+    if (isResultSolid(rawResults)) {
+      solids = serialize ? serializeSolids(rawResults) : rawResults
+      return { solids }
+    } else {
+      throw new Error('Bad output from script: expected CSG/CAG objects')
+    }
+  }
 }
 
 module.exports = instanciateDesign
