@@ -35,7 +35,7 @@ const center = function (options, ...objects) {
     let offset = [0, 0, 0]
     if (axes[0]) offset[0] = center[0] - (objectBounds[0].x + ((objectBounds[1].x - objectBounds[0].x) / 2))
     if (axes[1]) offset[1] = center[1] - (objectBounds[0].y + ((objectBounds[1].y - objectBounds[0].y) / 2))
-    if (axes[2]) offset[2] = center[2] - (objectBounds[0].z + ((objectBounds[1].y - objectBounds[0].y) / 2))
+    if (axes[2]) offset[2] = center[2] - (objectBounds[0].z + ((objectBounds[1].z - objectBounds[0].z) / 2))
     return translate(offset, object)
   })
   // if there is more than one result, return them all , otherwise a single one

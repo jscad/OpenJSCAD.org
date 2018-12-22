@@ -262,6 +262,12 @@ test('center (single item)', t => {
   t.deepEqual(obs.properties.cube.center, {_x: 0, _y: 0, _z: 0})
 })
 
+test('center (single non-uniform item)', t => {
+  const op1 = cube().scale([10,20,30]);
+  const obs = center(true, op1)
+  t.deepEqual(obs.properties.cube.center, {_x: 0, _y: 0, _z: 0})
+})
+
 test('center (multiple items, 3d)', t => {
   const op1 = cube()
   const op2 = sphere()
