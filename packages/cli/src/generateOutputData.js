@@ -2,7 +2,7 @@ const { isAbsolute, resolve } = require('path')
 const { prepareOutput } = require('@jscad/core/io/prepareOutput')
 const { convertToBlob } = require('@jscad/core/io/convertToBlob')
 const rebuildSolids = require('@jscad/core/code-evaluation/rebuildGeometry')
-const registerJscadExtension = require('@jscad/core/code-loading/registerJscadExtension')
+const { registerAllExtensions } = require('@jscad/core/io/registerExtensions')
 
 /**
  * generate output data from source
@@ -34,6 +34,9 @@ const generateOutputData = (source, params, options) => {
       return reject(err)
     }
 
+    // setup support for require-ing files with .jscad, .stl etc extensions
+    registerAllExtensions()
+
     // FIXME: technically almost 100% same as src/io/conversionWorker, refactor ?
     const conversionTable = {
       amf: data => require('@jscad/io').amfDeSerializer.deserialize(data.source, data.inputFile, options),
@@ -55,6 +58,8 @@ const generateOutputData = (source, params, options) => {
       undefined: data => reject(new Error(`unsuported input format ${inputFormat}`))
     }
 
+    // const curPath = require('path').basename(__dirname)
+    // const frog = require('../node_modules/@jscad/examples/frog-OwenCollins.stl')
     // console.log('source', source)
     // convert any inputs
     source = conversionTable[inputFormat]({ source, params, options })
@@ -63,8 +68,6 @@ const generateOutputData = (source, params, options) => {
       resolve(source)
     } else if ((inputFormat === 'jscad' || inputFormat === 'js') &&
     outputFormat !== 'jscad' && outputFormat !== 'js') {
-      // setup support for require-ing files with .jscad extension
-      registerJscadExtension()
       // console.log('inputFile', inputFile, 'ext', inputFormat, inputPath)
       // const design = requireDesignFromModule(inputPath, undefined)
       // console.log('definitions', design.parameterDefinitions, 'values', design.parameterValues, design.main, design.getParameterDefinitions)
