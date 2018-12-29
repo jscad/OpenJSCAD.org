@@ -133,8 +133,8 @@ LightGLEngine.prototype = {
     topArrow.classList.add('arrow-top')
 
     var bottomArrow = document.createElement('div')
-    topArrow.classList.add('arrow')
-    topArrow.classList.add('arrow-bottom')
+    bottomArrow.classList.add('arrow')
+    bottomArrow.classList.add('arrow-bottom')
 
     shiftControl.appendChild(leftArrow)
     shiftControl.appendChild(rightArrow)

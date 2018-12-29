@@ -2,4 +2,5 @@
 const path = require('path')
 const examplesPath = path.resolve('./node_modules/@jscad/examples')
 const copydir = require('copy-dir')
-copydir.sync(examplesPath, 'examples')
+const fs = require('fs')
+if (fs.existsSync(examplesPath)) copydir.sync(examplesPath, 'examples')
