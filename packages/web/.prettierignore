@@ -1,4 +1,0 @@
-*.js
-**/*.js
-!/src/ui/umd.js
-!/src/jscad/processor-bare.js
