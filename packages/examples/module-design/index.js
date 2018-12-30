@@ -11,4 +11,4 @@ const main = params => {
   return mountPlate(params.size)
 }
 
-module.exports = {main, getParameterDefinitions}
+module.exports = { main, getParameterDefinitions }
