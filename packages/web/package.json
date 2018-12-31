@@ -39,7 +39,7 @@
     "@jscad/csg": "0.7.0",
     "@jscad/examples": "^1.7.2",
     "@jscad/io": "0.4.7",
-    "@jscad/openscad-openjscad-translator": "0.0.10",
+    "@jscad/openscad-openjscad-translator": "0.0.11",
     "astring": "^1.3.1",
     "brace": "0.10.0",
     "esprima": "^3.1.3",
