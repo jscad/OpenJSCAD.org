@@ -33,7 +33,8 @@
     }
   ],
   "license": "MIT",
-  "main": "dist/openjsad.umd.js",
+  "main": "dist/openjscad.umd.js",
+  "module": "dist/openjscad.umd.js",
   "dependencies": {
     "@jscad/core": "^0.3.0",
     "@jscad/csg": "0.7.0",
