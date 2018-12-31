@@ -1,7 +1,7 @@
 const FileSystemApiErrorHandler = require('./utils')
 
 module.exports = function generateOutputFileFileSystem (extension, blob, callback) {
-  var request = window.requestFileSystem || window.webkitRequestFileSystem
+  var request = window.requestFileSystem || window.webkitStorageInfo.requestQuota
   if (!request) {
     throw new Error('Your browser does not support the HTML5 FileSystem API. Please try the Chrome browser instead.')
   }
