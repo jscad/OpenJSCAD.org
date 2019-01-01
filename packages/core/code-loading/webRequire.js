@@ -83,7 +83,7 @@ const makeWebRequire = (filesAndFolders, options) => {
     // fake fs module ! only useable with the currently available files & folders
     // that have been drag & dropped / created
     'fs': {
-      exports: require('../../web/src/core/makeFakeFs')(filesAndFolders)
+      exports: require('./makeFakeFs')(filesAndFolders)
     }
   }
   registerFilesAndFolders(filesAndFolders, filesAndFolders)
@@ -135,24 +135,20 @@ const makeWebRequire = (filesAndFolders, options) => {
       if (modules[entry.fullPath]) {
         result = modules[entry.fullPath]
       } else {
-        // console.log('require foo', entry)
         const moduleMakerFunction = new Function('require', 'module', entry.source)
         let newModule = {}
         moduleMakerFunction(_require.bind(null, entry.fullPath), newModule)
         modules[entry.fullPath] = newModule.exports
         result = newModule
-        // console.log('modules', modules)
       }
     }
-
-    // console.log('found entry', entry, result)
     return result.exports ? result.exports : result
   }
 
   const _resolve = () => {
   }
 
-  return _require.bind(null, '') // (path)
+  return _require.bind(null, '')
 
   /* return {
     _require: _require.bind(null, '') // (path)

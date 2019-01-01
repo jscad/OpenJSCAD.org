@@ -7,6 +7,9 @@ const normalizeDesignModule = require('./normalizeDesignModule')
  * @param  {function} requireFn : the 'require' function to use: defaults to the standard 'require' under node.js
  */
 const requireDesignFromModule = (filePath, requireFn = require) => {
+  // const requireUncached = require('../code-loading/requireUncached')
+  // TODO: only uncache when needed
+  // requireUncached(mainPath)
   let designRootModule = requireFn(filePath)
   // make sure everything is ok
   validateDesignModule(designRootModule)

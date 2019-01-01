@@ -17,16 +17,14 @@ const applyParameterDefinitions = require('../parameters/applyParameterDefinitio
  * @param  {Function} callback the callback that will be called either with
  * { type: 'params', parameterDefaults, parameterDefinitions} or
  * { type: 'solids', solids, lookup, lookupCounts} lookup & counts are only if using geometry caching (optional & experimantal)
- * @example
- * rebuildSolids()
- */
+ * example rebuildSolids()
+ **/
 const rebuildSolids = (data, callback) => {
   const defaults = { vtreeMode: true, serialize: true }
   const { mainPath, vtreeMode, serialize, lookup, lookupCounts } = Object.assign({}, defaults, data)
   const apiMainPath = vtreeMode ? '../code-loading/vtreeApi' : '@jscad/csg/api'
 
   // let start = new Date()
-
   const designData = loadDesign(mainPath, apiMainPath, data.filesAndFolders, data.parameterValues)
   // send back parameter definitions & values
   // in a worker this would be a postmessage, this is sent back early so that uis can update
@@ -42,7 +40,6 @@ const rebuildSolids = (data, callback) => {
   let parameterValues = data.parameterValues
   parameterValues = applyParameterDefinitions(parameterValues, designData.parameterDefinitions)
   parameterValues = Object.assign({}, designData.parameterValues, parameterValues)
-
   // start = new Date()
   const options = {
     vtreeMode,

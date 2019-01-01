@@ -43,10 +43,20 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
   // const isDesignCommonJs = isCommonJsModule(designRoot.source)
   // designRoot.source = !isDesignCommonJs ? modulifySource(designRoot.source, apiMainPath) : designRoot.source
 
-  // if we have files & folders we need to update the source for our module
-  if (filesAndFolders) {
-    filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
-  }
+  const makeFakeFs = require('./makeFakeFs')
+  const { getDesignEntryPoint, getDesignName } = require('./requireDesignUtilsFs')
+
+  const fakeFs = makeFakeFs(filesAndFolders)
+  const rootPath = filesAndFolders[0].fullPath
+  const mainPath1 = getDesignEntryPoint(fakeFs, rootPath)
+  const designName = getDesignName(fakeFs, rootPath)
+  const designPath = require('path').dirname(rootPath)
+
+  console.log('HEEEEEERE', 'root', rootPath, 'main', mainPath1, designName, designPath, filesAndFolders)
+
+  // we need to update the source for our module
+  filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
+
   // console.log('transformed sources', filesAndFolders)
   // now check if we need fake require or not
   // FIXME: we need to come up with a way to intercept node 'require' calls to be able to apply transformSources on the fly
@@ -56,14 +66,9 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
   // rootModule SHOULD contain a main() entry and optionally a getParameterDefinitions entrye
   const rootModule = requireDesignFromModule(mainPath, requireFn)
   // console.log('rootModule', rootModule, 'parameterValuesOverride', parameterValuesOverride)
-  // const requireUncached = require('../code-loading/requireUncached')
-  // TODO: only uncache when needed
-  // requireUncached(mainPath)
-
   // the design (module tree) has been loaded at this stage
   // now we can get our usefull data (definitions and values/defaults)
   const parameters = getAllParameterDefintionsAndValues(rootModule, parameterValuesOverride)
-
   // console.log('parameters', parameterDefinitions, parameterValues, parameterDefaults)
   return { rootModule, ...parameters }
 }

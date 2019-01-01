@@ -8,7 +8,7 @@ const { omit, keep, atKey } = require('../../utils/object')
 const { fetchUriParams, getAllUriParams } = require('../../utils/urlUtils')
 const path = require('path')
 
-const { getDesignEntryPoint, getDesignName } = require('../../core/code-loading/requireDesignUtilsFs')
+const { getDesignEntryPoint, getDesignName } = require('@jscad/core/code-loading/requireDesignUtilsFs')
 const { availableExportFormatsFromSolids, exportFilePathFromFormatAndDesign } = require('../../core/io/exportUtils')
 const packageMetadata = require('../../../package.json')
 
@@ -104,12 +104,13 @@ const reducers = {
     console.log('design: set content', state.design, payload)
     // all our available data (specific to web)
     const { filesAndFolders } = payload
-    const makeFakeFs = require('../../core/makeFakeFs')
+    const makeFakeFs = require('@jscad/core/code-loading/makeFakeFs')
     const fakeFs = makeFakeFs(filesAndFolders)
-    const rootPath = payload.path
-    const mainPath = getDesignEntryPoint(fakeFs, () => {}, rootPath)
+    const rootPath = filesAndFolders[0].fullPath
+    const mainPath = getDesignEntryPoint(fakeFs, rootPath)
     const designName = getDesignName(fakeFs, rootPath)
     const designPath = path.dirname(rootPath)
+    console.log('BLAA', rootPath, designName, designPath)
 
     let design = state.design
     // to track computation time
@@ -416,12 +417,14 @@ const actions = ({ sources }) => {
     .multicast()
     .skipRepeats()
 
+  // from all sources ...
   const setDesignContent$ = most.mergeArray(
     Object.values(sources)
       .filter(x => x !== undefined && 'source' in x)
   )
+    // ... containing loadRemote responses
     .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response) && !('sink' in response))
-    .map(({ data }) => ({ filesAndFolders: data, path: data[0].fullPath }))
+    .map(({ data }) => ({ filesAndFolders: data }))
     .thru(withLatestFrom(reducers.setDesignContent, sources.state))
     .map(data => ({ type: 'setDesignContent', state: data, sink: 'state' }))
     .multicast()

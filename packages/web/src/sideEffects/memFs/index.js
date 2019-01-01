@@ -1,7 +1,6 @@
 const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
 const { head } = require('@jscad/core/utils/arrays')
-const makeFakeFs = require('../../core/makeFakeFs')
 const { walkFileTree } = require('../localFs/walkFileTree')
 const getFileExtensionFromString = require('@jscad/core/utils/getFileExtensionFromString')
 const makeLogger = require('../../utils/logger')
