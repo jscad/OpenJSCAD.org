@@ -116,7 +116,7 @@ const makeWebRequire = (filesAndFolders, options) => {
   const extensions = {}
 
   const _require = (curPath, reqPath) => {
-    console.log('require-ing module', reqPath, extensions)
+    // console.log('require-ing module', reqPath, extensions)
     // resolve to entry
     const path = require('path')
     // relative paths
@@ -136,6 +136,10 @@ const makeWebRequire = (filesAndFolders, options) => {
         if (entry) { break }
       }
     }
+    if (baseExt !== undefined && !Object.keys(extensions).includes('.' + baseExt)) {
+      throw new Error(`No require.extension for .${baseExt} format found`)
+    }
+
     if (!entry) {
       entry = findMatch(reqPath, filesAndFolders)
     }
@@ -153,61 +157,35 @@ const makeWebRequire = (filesAndFolders, options) => {
 
     // now do the actual module loading
     const ext = getFileExtensionFromString(entry.name)
-    let result
-
     const fullExt = '.' + ext
+    let matchingModule
     if (fullExt in extensions) {
-      console.log('extension found', fullExt)
-      let matchingModule
+      // console.log('extension found', fullExt)
       if (modules[entry.fullPath]) {
         matchingModule = modules[entry.fullPath]
       } else {
-        let newModule = {
+        matchingModule = {
           exports: {},
           _compile: (content, fileName) => {
-            console.log('compile', fileName)
             // setup the module
-            // entry.source
             const moduleMakerFunction = new Function('require', 'module', content)
-            moduleMakerFunction(_require.bind(null, entry.fullPath), newModule)
-            modules[entry.fullPath] = newModule.exports
-            matchingModule = newModule
-            result = matchingModule
+            moduleMakerFunction(_require.bind(null, entry.fullPath), matchingModule)
+            modules[entry.fullPath] = matchingModule.exports
           }
         }
-        extensions[fullExt](newModule, entry.fullPath)
+        extensions[fullExt](matchingModule, entry.fullPath)
       }
     }
-    /*
-    if (ext === 'jscad' || ext === 'js' || ext === 'stl') {
-      console.log('requiring from here', ext)
-      if (modules[entry.fullPath]) {
-        result = modules[entry.fullPath]
-      } else {
-        const moduleMakerFunction = new Function('require', 'module', entry.source)
-        let newModule = {}
-        moduleMakerFunction(_require.bind(null, entry.fullPath), newModule)
-        modules[entry.fullPath] = newModule.exports
-        result = newModule
-      }
-    } */
-    console.log('result', result)
-    return result.exports ? result.exports : result
-  }
-
-  const _resolve = () => {
+    return matchingModule.exports ? matchingModule.exports : matchingModule
   }
 
   const req = _require.bind(null, '')
   req.extensions = extensions
+  req._resolve = () => {}
 
   registerJsExtension(fakeFs, req)
   registerJsonExtension(fakeFs, req)
-
   return req
-  /* return {
-    _require: _require.bind(null, '') // (path)
-  } */
 }
 
 module.exports = makeWebRequire
