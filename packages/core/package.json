@@ -5,7 +5,7 @@
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "module.js",
   "scripts": {
-    "test": "ava '*.test.js' --verbose --timeout 10000",
+    "test": "ava './**/*.test.js' --verbose --timeout 10000",
     "preversion": "npm test",
     "version": "git add -A ",
     "postversion": "git push origin master && git push origin master --tags",

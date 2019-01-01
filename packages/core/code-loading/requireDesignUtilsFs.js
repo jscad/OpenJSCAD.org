@@ -3,9 +3,9 @@ const { toArray } = require('../utils/arrays')
 
 // NOTE/ path.parse is NOT included by browserify & co , hence this function ...
 // https://github.com/substack/path-browserify/pull/3
-var splitPathRe =
+const splitPathRe =
     /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/
-var splitPath = function (filename) {
+const splitPath = filename => {
   return splitPathRe.exec(filename).slice(1)
 }
 const parsePath = pathString => {
@@ -35,7 +35,8 @@ const assertPath = path => {
 }
 
 /** get main entry point of a design, given a file system instance and a list of paths
- * @param  {} fs
+ * @param  {Object} fs a file-system like object (either node's fs or some other) providing at least 
+ * statSync, existSync, readFileSync, readdirSync
  * @param  {} paths
  */
 const getDesignEntryPoint = (fs, paths) => {
@@ -91,6 +92,7 @@ const packageNameFromDir = (fs, dirName, filePath) => {
   }
   return filePath ? parsePath(path.basename(filePath)).name : path.basename(dirName)
 }
+
 /** extract the design name from
  * @param  {Object} fs a file-system like object (either node's fs or some other) providing at least statSync, existSync, readFileSync
  * @param  {Array} paths an array of paths (strings) or a single path
@@ -105,7 +107,7 @@ const getDesignName = (fs, paths) => {
     const dirName = path.dirname(mainPath)
     return packageNameFromDir(fs, dirName, mainPath)
   } else if (stats.isDirectory()) { // if main path is a folder , try to find name from package.json
-    // try to use package.json to find main
+    // try to use package.json & co to find main
     return packageNameFromDir(fs, mainPath)
   }
 }
