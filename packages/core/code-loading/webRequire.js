@@ -62,12 +62,6 @@ const registerFilesAndFolders = (filesAndFolders, inputs, isInNodeModules = fals
   }
 }
 
-function WebModule (id, parent) {
-  this.id = id
-  this.parent = parent
-  this.exports = {}
-}
-
 const registerJsExtension = (fs, _require) => {
   const stripBom = require('strip-bom')
   _require.extensions['.js'] = (module, filename) => {
@@ -181,7 +175,7 @@ const makeWebRequire = (filesAndFolders, options) => {
 
   const req = _require.bind(null, '')
   req.extensions = extensions
-  req._resolve = () => {}
+  req.resolve = () => {}
 
   registerJsExtension(fakeFs, req)
   registerJsonExtension(fakeFs, req)

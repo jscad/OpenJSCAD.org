@@ -1,78 +1,77 @@
-const fs = require('fs')
 // FIXME: the unregistering does not work, look into it
-const registerJscadExtension = () => {
+const registerJscadExtension = (fs, _require) => {
   const stripBom = require('strip-bom')
-  require.extensions['.jscad'] = (module, filename) => {
+  _require.extensions['.jscad'] = (module, filename) => {
     const content = fs.readFileSync(filename, 'utf8')
     module._compile(stripBom(content), filename)
   }
 }
-const unRegisterJscadExtension = () => {
-  delete require.extensions['.jscad']
+const unRegisterJscadExtension = (fs, _require) => {
+  delete _require.extensions['.jscad']
 }
 
-const registerStlExtension = () => {
+const registerStlExtension = (fs, _require) => {
   const deserializer = require('@jscad/io').stlDeSerializer
-  require.extensions['.stl'] = (module, filename) => {
+  _require.extensions['.stl'] = (module, filename) => {
     const content = fs.readFileSync(filename, 'utf8')
     const parsed = deserializer.deserialize(content, filename, { output: 'csg' })
     module.exports = parsed
   }
 }
-const unRegisterStlExtension = () => {
-  delete require.extensions['.stl']
+const unRegisterStlExtension = (fs, _require) => {
+  delete _require.extensions['.stl']
 }
 
-const registerAmfExtension = () => {
+const registerAmfExtension = (fs, _require) => {
   const deserializer = require('@jscad/io').amfDeSerializer
-  require.extensions['.amf'] = (module, filename) => {
+  _require.extensions['.amf'] = (module, filename) => {
     const content = fs.readFileSync(filename, 'utf8')
     const parsed = deserializer.deserialize(content, filename, { output: 'csg' })
     module.exports = parsed
   }
 }
-const unRegisterAmfExtension = () => {
-  delete require.extensions['.amf']
+const unRegisterAmfExtension = (fs, _require) => {
+  delete _require.extensions['.amf']
 }
 
-const registerDxfExtension = () => {
+const registerDxfExtension = (fs, _require) => {
   const deserializer = require('@jscad/io').dxfDeSerializer
-  require.extensions['.dxf'] = (module, filename) => {
+  _require.extensions['.dxf'] = (module, filename) => {
     const content = fs.readFileSync(filename, 'utf8')
     const parsed = deserializer.deserialize(content, filename, { output: 'csg' })
     module.exports = parsed
   }
 }
-const unRegisterDxfExtension = () => {
-  delete require.extensions['.dxf']
+const unRegisterDxfExtension = (fs, _require) => {
+  delete _require.extensions['.dxf']
 }
 
-const registerSvgExtension = () => {
+const registerSvgExtension = (fs, _require) => {
   const deserializer = require('@jscad/io').svgDeSerializer
-  require.extensions['.svg'] = (module, filename) => {
+  _require.extensions['.svg'] = (module, filename) => {
     const content = fs.readFileSync(filename, 'utf8')
     const parsed = deserializer.deserialize(content, filename, { output: 'csg' })
     module.exports = parsed
   }
 }
-const unRegisterSvgExtension = () => {
-  delete require.extensions['.svg']
+const unRegisterSvgExtension = (fs, _require) => {
+  delete _require.extensions['.svg']
 }
 
-const registerAllExtensions = () => {
-  registerJscadExtension()
-  registerStlExtension()
-  registerAmfExtension()
-  registerDxfExtension()
-  registerSvgExtension()
+const registerAllExtensions = (fs, _require) => {
+  registerJscadExtension(fs, _require)
+  registerStlExtension(fs, _require)
+  registerAmfExtension(fs, _require)
+  registerDxfExtension(fs, _require)
+  registerSvgExtension(fs, _require)
 }
 
-const unRegisterAllExtensions = () => {
-  unRegisterJscadExtension()
-  unRegisterStlExtension()
-  unRegisterAmfExtension()
-  unRegisterDxfExtension()
-  unRegisterSvgExtension()
+const unRegisterAllExtensions = (fs, _require) => {
+  unRegisterJscadExtension(fs, _require)
+  unRegisterStlExtension(fs, _require)
+  unRegisterAmfExtension(fs, _require)
+  unRegisterDxfExtension(fs, _require)
+  unRegisterSvgExtension(fs, _require)
 }
 
 module.exports = {

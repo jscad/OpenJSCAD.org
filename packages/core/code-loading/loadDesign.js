@@ -2,7 +2,7 @@
 const requireDesignFromModule = require('./requireDesignFromModule')
 const getAllParameterDefintionsAndValues = require('../parameters/getParameterDefinitionsAndValues')
 const transformSources = require('./transformSources')
-
+const { registerAllExtensions } = require('../io/registerExtensions')
 // taken verbatim from https://github.com/iliakan/detect-node
 // return true if we are are in node/ env that has require()
 const hasRequire = () => Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]'
@@ -43,6 +43,9 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
   // const isDesignCommonJs = isCommonJsModule(designRoot.source)
   // designRoot.source = !isDesignCommonJs ? modulifySource(designRoot.source, apiMainPath) : designRoot.source
 
+  // we need to update the source for our module
+  filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
+
   const makeFakeFs = require('./makeFakeFs')
   const { getDesignEntryPoint, getDesignName } = require('./requireDesignUtilsFs')
 
@@ -53,49 +56,18 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
   const designPath = require('path').dirname(rootPath)
 
   console.log('HEEEEEERE', 'root', rootPath, 'main', mainPath1, designName, designPath, filesAndFolders)
-
-  const registerJscadExtension = (fs, _require) => {
-    const stripBom = require('strip-bom')
-    _require.extensions['.jscad'] = (module, filename) => {
-      console.log('module', module)
-      const content = fs.readFileSync(filename, 'utf8')
-      module._compile(stripBom(content), filename)
-    }
-  }
-
-  const registerStlExtension = (fs, _require) => {
-    const deserializer = require('@jscad/io').stlDeSerializer
-    _require.extensions['.stl'] = (module, filename) => {
-      const content = fs.readFileSync(filename, 'utf8')
-      const parsed = deserializer.deserialize(content, filename, { output: 'csg' })
-      module.exports = parsed
-    }
-    console.log('ext', _require.extensions)
-  }
-
-  const registerAllExtensions = (fs, require) => {
-    registerJscadExtension(fs, require)
-    registerStlExtension(fs, require)
-    /* registerAmfExtension()
-    registerDxfExtension()
-    registerSvgExtension() */
-  }
-
-  // we need to update the source for our module
-  filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
-
   console.log('filesAndFolders', filesAndFolders)
   // console.log('transformed sources', filesAndFolders)
   // now check if we need fake require or not
   // FIXME: we need to come up with a way to intercept node 'require' calls to be able to apply transformSources on the fly
   // since we keep passing the 'mainPath' to the normal require which points to the NON TRANSFORMED source
-  const requireFn = makeWebRequire(filesAndFolders, { apiMainPath })// hasRequire() ? require : makeWebRequire(filesAndFolders, { apiMainPath })
+  const webRequire = makeWebRequire(filesAndFolders, { apiMainPath })// hasRequire() ? require : makeWebRequire(filesAndFolders, { apiMainPath })
 
   // register all extension formats
-  // registerAllExtensions(fakeFs, requireFn)
+  registerAllExtensions(fakeFs, webRequire)
 
   // rootModule SHOULD contain a main() entry and optionally a getParameterDefinitions entrye
-  const rootModule = requireDesignFromModule(mainPath, requireFn)
+  const rootModule = requireDesignFromModule(mainPath, webRequire)
   // console.log('rootModule', rootModule, 'parameterValuesOverride', parameterValuesOverride)
   // the design (module tree) has been loaded at this stage
   // now we can get our usefull data (definitions and values/defaults)
