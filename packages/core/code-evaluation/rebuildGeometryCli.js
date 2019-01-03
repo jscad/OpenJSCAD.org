@@ -1,17 +1,9 @@
 
 const { toArray } = require('../utils/arrays')
-const requireDesignFromModule = require('./requireDesignFromModule')
+const requireDesignFromModule = require('../code-loading/requireDesignFromModule')
 const getAllParameterDefintionsAndValues = require('../parameters/getParameterDefinitionsAndValues')
-const transformSources = require('./sourceTransforms')
-const makeWebRequire = require('./webRequire')
-
-const registerJscadExtension = (require, fs) => {
-  const stripBom = require('strip-bom')
-  require.extensions['.jscad'] = (module, filename) => {
-    const content = fs.readFileSync(filename, 'utf8')
-    module._compile(stripBom(content), filename)
-  }
-}
+const transformSources = require('../code-loading/transformSources')
+// const makeWebRequire = require('../code-loading/webRequire')
 
 const rebuildSolids = (data) => {
   const defaults = { vtreeMode: true, serialize: true }
@@ -24,7 +16,8 @@ const rebuildSolids = (data) => {
   // now check if we need fake require or not
   // FIXME: we need to come up with a way to intercept node 'require' calls to be able to apply transformSources on the fly
   // since we keep passing the 'mainPath' to the normal require which points to the NON TRANSFORMED source
-  const requireFn = makeWebRequire(filesAndFolders, { apiMainPath })// hasRequire() ? require : makeWebRequire(filesAndFolders, { apiMainPath })
+  // const requireFn = makeWebRequire(filesAndFolders, { apiMainPath })// hasRequire() ? require : makeWebRequire(filesAndFolders, { apiMainPath })
+  const requireFn = require
   // rootModule SHOULD contain a main() entry and optionally a getParameterDefinitions entry
   const rootModule = requireDesignFromModule(mainPath, requireFn)
   // the design (module tree) has been loaded at this stage
