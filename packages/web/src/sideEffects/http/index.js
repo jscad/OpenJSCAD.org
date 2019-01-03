@@ -70,8 +70,20 @@ const makeHttpSideEffect = (params) => {
         })
       }
 
+      const write = () => {
+        // TODO: ??
+        log.warning('writing to http is not implemented yet')
+      }
+
+      const watch = () => {
+        // TODO: ??
+        log.warning('watching http is not implemented yet')
+      }
+
       const commandHandlers = {
         read,
+        write,
+        watch,
         unhandled
       }
       const commandHandler = commandHandlers[type] || commandHandlers['unhandled']
