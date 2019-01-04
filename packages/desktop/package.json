@@ -63,7 +63,7 @@
     "browserify": "^14.5.0",
     "cpy-cli": "^1.0.1",
     "electron": "^1.8.3",
-    "electron-builder": "^20.21.1"
+    "electron-builder": "20.21.1"
   },
   "build": {
     "appId": "org.jscad.desktop",
