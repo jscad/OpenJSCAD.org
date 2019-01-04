@@ -4,7 +4,8 @@
   "description": "Command Line Interface (CLI) for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "bin": {
-    "openjscad": "./cli.js"
+    "openjscad": "./cli.js",
+    "jscad": "./cli.js"
   },
   "scripts": {
     "test": "ava './*.test.js' --verbose --timeout 10000",

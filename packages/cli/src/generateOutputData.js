@@ -1,7 +1,9 @@
+const fs = require('fs')
 const { isAbsolute, resolve } = require('path')
 const { prepareOutput } = require('@jscad/core/io/prepareOutput')
 const { convertToBlob } = require('@jscad/core/io/convertToBlob')
-const rebuildSolids = require('@jscad/core/code-evaluation/rebuildGeometry')
+// const rebuildSolids = require('@jscad/core/code-evaluation/rebuildGeometry')
+const rebuildSolids = require('@jscad/core/code-evaluation/rebuildGeometryCli')
 const { registerAllExtensions } = require('@jscad/core/io/registerExtensions')
 
 /**
@@ -20,7 +22,7 @@ const generateOutputData = (source, params, options) => {
     addMetaData: true
   }
   options = Object.assign({}, defaults, options)
-  const { outputFile, outputFormat, inputFile, inputFormat, version } = options
+  const { outputFile, outputFormat, inputFile, inputFormat, version, inputIsDirectory } = options
 
   const inputPath = isAbsolute(inputFile) ? inputFile : resolve(process.cwd(), inputFile) // path.dirname(inputFile)
 
@@ -35,9 +37,8 @@ const generateOutputData = (source, params, options) => {
     }
 
     // setup support for require-ing files with .jscad, .stl etc extensions
-    registerAllExtensions()
+    registerAllExtensions(fs, require)
 
-    // FIXME: technically almost 100% same as src/io/conversionWorker, refactor ?
     const conversionTable = {
       amf: data => require('@jscad/io').amfDeSerializer.deserialize(data.source, data.inputFile, options),
       obj: data => require('@jscad/io').objDeSerializer.deserialize(data.source, data.inputFile, options),
@@ -58,9 +59,6 @@ const generateOutputData = (source, params, options) => {
       undefined: data => reject(new Error(`unsuported input format ${inputFormat}`))
     }
 
-    // const curPath = require('path').basename(__dirname)
-    // const frog = require('../node_modules/@jscad/examples/frog-OwenCollins.stl')
-    // console.log('source', source)
     // convert any inputs
     source = conversionTable[inputFormat]({ source, params, options })
 
@@ -68,59 +66,18 @@ const generateOutputData = (source, params, options) => {
       resolve(source)
     } else if ((inputFormat === 'jscad' || inputFormat === 'js') &&
     outputFormat !== 'jscad' && outputFormat !== 'js') {
-      // console.log('inputFile', inputFile, 'ext', inputFormat, inputPath)
-      // const design = requireDesignFromModule(inputPath, undefined)
-      // console.log('definitions', design.parameterDefinitions, 'values', design.parameterValues, design.main, design.getParameterDefinitions)
-      // let { parameterValues } = require('@jscad/core/parameters/getParameterDefinitionsAndValues')(design, params)
-      // const value = design.main(parameterValues)
-      // resolve(value)
-      const filesAndFolders = [{ name: inputFile, ext: inputFormat, source, fullPath: inputPath }]
-      const data = {
-        mainPath: inputFile,
-        filesAndFolders,
-        parameterValues: [],
-        vtreeMode: false,
-        serialize: false
-      }
-      rebuildSolids(data, (error, response) => {
-        // console.log('response', response)
-        if (error) {
-          reject(error)
-        }
-        if (response.type !== 'params') {
-          resolve(response.solids)
-        }
-      })
-    }
-
-    // extract the array of parameter definitions
-    /* const parameterDefinitions = getParameterDefinitions(source)
-    // get the actual parameters, correctly cast to the right types etc based on the definitions above
-    params = applyParameterDefinitions(params, parameterDefinitions)
-
-    // modify main to adapt parameters
-    // NOTE: this (getParameterValuesFromParameters) also combines specified params with defaults
-    const mainFunction = `
-    //only add this wrapper if not already present & we are not in command-line mode
-    if(typeof wrappedMain === 'undefined' && typeof getParameterValuesFromParameters !== 'undefined'){
-      const wrappedMain = main
-      main = function(){
-        var paramsDefinition = (typeof getParameterDefinitions !== 'undefined') ? getParameterDefinitions : undefined
-        return wrappedMain(getParameterValuesFromParameters(paramsDefinition, ${JSON.stringify(params)}))
+      try {
+        const solids = rebuildSolids({ mainPath: inputPath, parameterValues: params, inputIsDirectory, source })
+        resolve(solids)
+      } catch (error) {
+        reject(error)
       }
     }
-    `
-    source = (inputFormat === 'jscad' || inputFormat === 'js') ? `${source}
-    ${mainFunction}` : source
-    */
   })
     .then(objects => {
-      // console.log('objects', objects, outputFormat)
       // Buffer.from(outputData.data),{encoding: outputData.mimeType},
       return convertToBlob(prepareOutput(objects, { format: outputFormat }))
     })
-
-// return convertToBlob(objects, {format: outputFormat, formatInfo: {convertCAG: true, convertCSG: true}})
 }
 
 module.exports = generateOutputData

@@ -1,12 +1,13 @@
-const { formats } = require('./formats')
-// mergeSolids2
 
-const { stlSerializer } = require('@jscad/io')
-const { amfSerializer } = require('@jscad/io')
-const { x3dSerializer } = require('@jscad/io')
-const { svgSerializer } = require('@jscad/io')
-const { jsonSerializer } = require('@jscad/io')
-const { dxfSerializer } = require('@jscad/io')
+const { toArray } = require('..//utils/arrays')
+const { formats } = require('./formats')
+const { stlSerializer,
+  amfSerializer,
+  x3dSerializer,
+  svgSerializer,
+  jsonSerializer,
+  dxfSerializer
+} = require('@jscad/io')
 
 const prepareOutput = (objects, params) => {
   const defaults = {
@@ -35,11 +36,11 @@ const prepareOutput = (objects, params) => {
     json: jsonSerializer, // CSG or CAG to JSON
     js: {
       mimeType: formats['js'].mimetype,
-      serialize: object => [object] // js , pass through
+      serialize: (options, objects) => toArray(objects) // js , pass through
     },
     jscad: {
       mimeType: formats['jscad'].mimetype,
-      serialize: object => [object] // jscad , pass through
+      serialize: (options, objects) => toArray(objects) // jscad , pass through
     },
     undefined: () => {
       throw new Error('Not supported : only jscad, stl, amf, dxf, svg or json as output format')

@@ -13,8 +13,8 @@ const parseArgs = args => {
   // })
   if (args.length < 1) {
     console.log('USAGE:\n\nopenjscad [-v] <file> [-of <format>] [-o <output>]')
-    console.log('\t<file>  :\tinput file (Supported types: .jscad, .js, .scad, .stl, .amf, .obj, .gcode, .svg, .json, .dxf)')
-    console.log('\t<output>:\toutput file (Supported types: .jscad, .stl, .amf, .dxf, .svg, .json)')
+    console.log('\t<file>  :\tinput (Supported types: folder, .jscad, .js, .scad, .stl, .amf, .obj, .gcode, .svg, .json, .dxf)')
+    console.log('\t<output>:\toutput (Supported types: folder, .jscad, .stl, .amf, .dxf, .svg, .json)')
     console.log("\t<format>:\t'jscad', 'stla' (STL ASCII, default), 'stlb' (STL Binary), 'amf', 'dxf', 'svg', 'json'")
     process.exit(1)
   }
@@ -25,6 +25,7 @@ const parseArgs = args => {
   let outputFormat
   let params = {} // parameters to feed the script if applicable
   let addMetaData = false // wether to add metadata to outputs or not : ie version info, timestamp etc
+  let inputIsDirectory = false // did we pass in a folder or a file ?
 
   // let supportedInputFormats = conversionFormats.join('|')
   // console.log('supportedInputFormats', supportedInputFormats)
@@ -69,9 +70,10 @@ const parseArgs = args => {
     } else {
       inputFile = args[i]
       if (fs.statSync(inputFile).isDirectory()) {
+        inputIsDirectory = true
         inputFile = args[i]
         // get actual design entry point if applicable (if passed a folder as input etc)
-        inputFile = getDesignEntryPoint(inputFile)
+        inputFile = getDesignEntryPoint(fs, inputFile)
         inputFormat = require('path').extname(inputFile).substring(1)
       } else {
         console.log('ERROR: invalid file name or argument <' + args[i] + '>')
@@ -93,7 +95,8 @@ const parseArgs = args => {
     outputFile,
     outputFormat,
     params,
-    addMetaData
+    addMetaData,
+    inputIsDirectory
   }
 }
 
