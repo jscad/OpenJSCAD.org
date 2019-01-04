@@ -3,7 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-       <a name="0.7.0"></a>
+ <a name="0.7.1"></a>
+## [0.7.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/desktop@0.7.0...@jscad/desktop@0.7.1) (2019-01-04)
+
+
+
+
+**Note:** Version bump only for package @jscad/desktop
+
+ <a name="0.7.0"></a>
 # [0.7.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/desktop@0.6.1...@jscad/desktop@0.7.0) (2018-09-02)
 
 
@@ -19,7 +27,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-       <a name="0.6.1"></a>
+<a name="0.6.1"></a>
 ## [0.6.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/desktop@0.6.0...@jscad/desktop@0.6.1) (2018-04-20)
 
 

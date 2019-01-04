@@ -1,6 +1,6 @@
 {
   "name": "@jscad/desktop",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "jscad desktop application",
   "author": "jscad core team/ Mark Moissette",
   "license": "MIT",
@@ -33,7 +33,7 @@
     "release-major": "git checkout master && git pull origin master && npm version major"
   },
   "dependencies": {
-    "@jscad/core": "^0.3.0",
+    "@jscad/core": "^0.4.0",
     "@jscad/csg": "0.7.0",
     "@jscad/csg-viewer": "github:jscad/csg-viewer",
     "@jscad/io": "0.4.7",

@@ -1,4 +1,4 @@
-(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.openjscad = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 const WebWorkify = require('webworkify')
 const { CAG, CSG } = require('@jscad/csg')
 const oscad = require('@jscad/csg/api')
@@ -46568,38 +46568,10 @@ module.exports = {
 },{}],233:[function(require,module,exports){
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-function log(txt) {
-  var timeInMs = Date.now();
-  var prevtime = undefined; //OpenJsCad.log.prevLogTime
-  if (!prevtime) prevtime = timeInMs;
-  var deltatime = timeInMs - prevtime;
-  log.prevLogTime = timeInMs;
-  var timefmt = (deltatime * 0.001).toFixed(3);
-  txt = '[' + timefmt + '] ' + txt;
-  if ((typeof console === 'undefined' ? 'undefined' : _typeof(console)) == 'object' && typeof console.log == 'function') {
-    console.log(txt);
-  } else if ((typeof self === 'undefined' ? 'undefined' : _typeof(self)) == 'object' && typeof self.postMessage == 'function') {
-    self.postMessage({ cmd: 'log', txt: txt });
-  } else throw new Error('Cannot log');
-}
-
-// See Processor.setStatus()
-// Note: leave for compatibility
-function status(s) {
-  log(s);
-}
-
-module.exports = {
-  log: log,
-  status: status
-};
-
-},{}],234:[function(require,module,exports){
-'use strict';
-
-var log = require('./log');
+/**
+ * @prettier
+ */
+// const log = require('./log')
 var getParameterDefinitions = require('@jscad/core/parameters/getParameterDefinitions');
 var getParameterValues = require('@jscad/core/parameters/getParameterValuesFromUIControls');
 
@@ -46659,9 +46631,6 @@ function Processor(containerdiv, options) {
   this.currentObjects = []; // list of objects returned from rebuildObject*
   this.viewedObject = null; // the object being rendered
 
-  this.selectStartPoint = 0;
-  this.selectEndPoint = 0;
-
   this.hasOutputFile = false;
   this.hasError = false;
   this.paramDefinitions = [];
@@ -46676,270 +46645,57 @@ function Processor(containerdiv, options) {
     this.baseurl = this.baseurl.substring(0, this.baseurl.lastIndexOf('/') + 1);
   }
 
-  // state of the processor
-  // 0 - initialized - no viewer, no parameters, etc
-  // 1 - processing  - processing JSCAD script
-  // 2 - complete    - completed processing
-  // 3 - incomplete  - incompleted due to errors in processing
+  /**
+   * Processor state:
+   *
+   * 0 - initialized - no viewer, no parameters, etc;
+   * 1 - processing  - processing JSCAD script;
+   * 2 - complete    - completed processing;
+   * 3 - incomplete  - incompleted due to errors in processing;
+   *
+   * @typedef {number} ProcessorState
+   */
+
+  /** @type {ProcessorState} state - the current processor state */
   this.state = 0; // initialized
 
-  // FIXME: UI only, seperate
-  this.createElements();
+  try {
+    console.log('options', options);
+    /**
+     * Copy `init` options to this if the value does not
+     * already exist.
+     */
+    for (var e in options.processor) {
+      if (!this[e]) this[e] = options.processor[e];
+    }
+
+    this.viewer = new Viewer(options.processor.viewerdiv, this.opts.viewer);
+  } catch (e) {
+    console.error('viewer error', e);
+    if (options.init.onUpdate) {
+      options.init.onUpdate('error', e);
+    } else {
+      throw e;
+    }
+  }
 }
 
 Processor.mergeSolids = mergeSolids;
 
 Processor.prototype = {
-  createElements: function createElements() {
-    var that = this; // for event handlers
-
-    while (this.containerdiv.children.length > 0) {
-      this.containerdiv.removeChild(0);
-    }
-
-    var viewerdiv = document.createElement('div');
-    viewerdiv.className = 'viewer';
-    viewerdiv.style.width = '100%';
-    viewerdiv.style.height = '100%';
-    this.containerdiv.appendChild(viewerdiv);
-    try {
-      this.viewer = new Viewer(viewerdiv, this.opts.viewer);
-    } catch (e) {
-      viewerdiv.innerHTML = '<b><br><br>Error: ' + e.toString() + '</b><br><br>A browser with support for WebGL is required';
-    }
-    // Zoom control
-    if (0) {
-      // FIXME: what the heck ?
-      var div = document.createElement('div');
-      this.zoomControl = div.cloneNode(false);
-      this.zoomControl.style.width = this.viewerwidth + 'px';
-      this.zoomControl.style.height = '20px';
-      this.zoomControl.style.backgroundColor = 'transparent';
-      this.zoomControl.style.overflowX = 'scroll';
-      div.style.width = this.viewerwidth * 11 + 'px';
-      div.style.height = '1px';
-      this.zoomControl.appendChild(div);
-      this.zoomChangedBySlider = false;
-      this.zoomControl.onscroll = function (event) {
-        var zoom = that.zoomControl;
-        var newzoom = zoom.scrollLeft / (10 * zoom.offsetWidth);
-        that.zoomChangedBySlider = true; // prevent recursion via onZoomChanged
-        that.viewer.setZoom(newzoom);
-        that.zoomChangedBySlider = false;
-      };
-      this.viewer.onZoomChanged = function () {
-        if (!that.zoomChangedBySlider) {
-          var newzoom = that.viewer.getZoom();
-          that.zoomControl.scrollLeft = newzoom * (10 * that.zoomControl.offsetWidth);
-        }
-      };
-
-      this.containerdiv.appendChild(this.zoomControl);
-      this.zoomControl.scrollLeft = this.viewer.viewpointZ / this.viewer.camera.clip.max * (this.zoomControl.scrollWidth - this.zoomControl.offsetWidth);
-
-      // end of zoom control
-    }
-
-    this.selectdiv = this.containerdiv.parentElement.querySelector('div#selectdiv');
-    if (!this.selectdiv) {
-      this.selectdiv = document.createElement('div');
-      this.selectdiv.id = 'selectdiv';
-      this.containerdiv.parentElement.appendChild(this.selectdiv);
-    }
-    var element = document.createElement('input');
-    element.setAttribute('type', 'range');
-    element.id = 'startRange';
-    element.min = 0;
-    element.max = 100;
-    element.step = 1;
-    element.oninput = function (e) {
-      if (that.state === 2) {
-        that.updateView();
-        that.updateFormatsDropdown();
-        that.updateDownloadLink();
-      }
-    };
-    this.selectdiv.appendChild(element);
-    element = document.createElement('input');
-    element.setAttribute('type', 'range');
-    element.id = 'endRange';
-    element.min = 0;
-    element.max = 100;
-    element.step = 1;
-    element.oninput = function (e) {
-      if (that.state === 2) {
-        that.updateView();
-        that.updateFormatsDropdown();
-        that.updateDownloadLink();
-      }
-    };
-    this.selectdiv.appendChild(element);
-
-    this.errordiv = this.containerdiv.parentElement.querySelector('div#errordiv');
-    if (!this.errordiv) {
-      this.errordiv = document.createElement('div');
-      this.errordiv.id = 'errordiv';
-      this.containerdiv.parentElement.appendChild(this.errordiv);
-    }
-    this.errorpre = document.createElement('pre');
-    this.errordiv.appendChild(this.errorpre);
-
-    this.statusdiv = this.containerdiv.parentElement.querySelector('div#statusdiv');
-    if (!this.statusdiv) {
-      this.statusdiv = document.createElement('div');
-      this.statusdiv.id = 'statusdiv';
-      this.containerdiv.parentElement.appendChild(this.statusdiv);
-    }
-    this.statusspan = document.createElement('span');
-    this.statusspan.id = 'statusspan';
-    this.statusbuttons = document.createElement('span');
-    this.statusbuttons.id = 'statusbuttons';
-    this.statusdiv.appendChild(this.statusspan);
-    this.statusdiv.appendChild(this.statusbuttons);
-    this.abortbutton = document.createElement('button');
-    this.abortbutton.innerHTML = 'Abort';
-    this.abortbutton.onclick = function (e) {
-      that.abort();
-    };
-    this.statusbuttons.appendChild(this.abortbutton);
-    this.formatDropdown = document.createElement('select');
-    this.formatDropdown.onchange = function (e) {
-      that.currentFormat = that.formatDropdown.options[that.formatDropdown.selectedIndex].value;
-      that.updateDownloadLink();
-    };
-    this.statusbuttons.appendChild(this.formatDropdown);
-    this.generateOutputFileButton = document.createElement('button');
-    this.generateOutputFileButton.onclick = function (e) {
-      that.generateOutputFile();
-    };
-    this.statusbuttons.appendChild(this.generateOutputFileButton);
-    this.downloadOutputFileLink = document.createElement('a');
-    this.downloadOutputFileLink.className = 'downloadOutputFileLink'; // so we can css it
-    this.statusbuttons.appendChild(this.downloadOutputFileLink);
-
-    this.parametersdiv = this.containerdiv.parentElement.querySelector('div#parametersdiv');
-    if (!this.parametersdiv) {
-      this.parametersdiv = document.createElement('div');
-      this.parametersdiv.id = 'parametersdiv';
-      this.containerdiv.parentElement.appendChild(this.parametersdiv);
-    }
-    this.parameterstable = document.createElement('table');
-    this.parameterstable.className = 'parameterstable';
-    this.parametersdiv.appendChild(this.parameterstable);
-
-    element = this.parametersdiv.querySelector('button#updateButton');
-    if (element === null) {
-      element = document.createElement('button');
-      element.innerHTML = 'Update';
-      element.id = 'updateButton';
-    }
-    element.onclick = function (e) {
-      that.rebuildSolids();
-    };
-    this.parametersdiv.appendChild(element);
-
-    // implementing instantUpdate
-    var instantUpdateCheckbox = document.createElement('input');
-    instantUpdateCheckbox.type = 'checkbox';
-    instantUpdateCheckbox.id = 'instantUpdate';
-    this.parametersdiv.appendChild(instantUpdateCheckbox);
-
-    element = document.getElementById('instantUpdateLabel');
-    if (element === null) {
-      element = document.createElement('label');
-      element.innerHTML = 'Instant Update';
-      element.id = 'instantUpdateLabel';
-    }
-    element.setAttribute('for', instantUpdateCheckbox.id);
-    this.parametersdiv.appendChild(element);
-
-    this.enableItems();
-    this.clearViewer();
-  },
-
   setCurrentObjects: function setCurrentObjects(objs) {
     this.currentObjects = objs; // list of CAG or CSG objects
-
-    this.updateSelection();
-    this.selectStartPoint = -1; // force view update
     this.updateView();
-    this.updateFormatsDropdown();
-    this.updateDownloadLink();
-
     if (this.onchange) this.onchange(this);
   },
 
-  selectedFormat: function selectedFormat() {
-    return this.formatDropdown.options[this.formatDropdown.selectedIndex].value;
-  },
-
-  selectedFormatInfo: function selectedFormatInfo() {
-    return this.formatInfo(this.selectedFormat());
-  },
-
-  updateDownloadLink: function updateDownloadLink() {
-    var info = this.selectedFormatInfo();
-    var ext = info.extension;
-    this.generateOutputFileButton.innerHTML = 'Generate ' + ext.toUpperCase();
-  },
-
-  updateSelection: function updateSelection() {
-    var range = document.getElementById('startRange');
-    range.min = 0;
-    range.max = this.currentObjects.length - 1;
-    range.value = 0;
-    range = document.getElementById('endRange');
-    range.min = 0;
-    range.max = this.currentObjects.length - 1;
-    range.value = this.currentObjects.length - 1;
-  },
-
   updateView: function updateView() {
-    var startpoint = parseInt(document.getElementById('startRange').value, 10);
-    var endpoint = parseInt(document.getElementById('endRange').value, 10);
-    if (startpoint === this.selectStartPoint && endpoint === this.selectEndPoint) {
-      return;
-    }
-
-    // build a list of objects to view
-    this.selectStartPoint = startpoint;
-    this.selectEndPoint = endpoint;
-    if (startpoint > endpoint) {
-      startpoint = this.selectEndPoint;endpoint = this.selectStartPoint;
-    }
-
-    var objs = this.currentObjects.slice(startpoint, endpoint + 1);
+    var objs = this.currentObjects.slice();
     this.viewedObject = mergeSolids(objs);
 
     if (this.viewer) {
       this.viewer.setCsg(this.viewedObject);
     }
-  },
-
-  updateFormatsDropdown: function updateFormatsDropdown() {
-    while (this.formatDropdown.options.length > 0) {
-      this.formatDropdown.options.remove(0);
-    }
-
-    var that = this;
-    var startpoint = this.selectStartPoint;
-    var endpoint = this.selectEndPoint;
-    if (startpoint > endpoint) {
-      startpoint = this.selectEndPoint;endpoint = this.selectStartPoint;
-    }
-    var objects = this.currentObjects.slice(startpoint, endpoint + 1);
-
-    this.formatInfo('stla'); // make sure the formats are initialized
-    var formats = supportedFormatsForObjects(objects).filter(function (x) {
-      return x !== 'stl';
-    }); // exclude 'stl' since it is an alias for stl(ascii) or stl(binary)
-    formats.forEach(function (format) {
-      var option = document.createElement('option');
-      var info = that.formatInfo(format);
-      option.setAttribute('value', format);
-      option.appendChild(document.createTextNode(info.displayName));
-      that.formatDropdown.options.add(option);
-    });
   },
 
   clearViewer: function clearViewer() {
@@ -46964,64 +46720,22 @@ Processor.prototype = {
     }
   },
 
+  /**
+   * enableItems is used to send an `onUpdate` with curent information
+   * like formats and the outputFile
+   */
   enableItems: function enableItems() {
-    this.abortbutton.style.display = this.state === 1 ? 'inline' : 'none';
-    this.formatDropdown.style.display = !this.hasOutputFile && this.viewedObject ? 'inline' : 'none';
-    this.generateOutputFileButton.style.display = !this.hasOutputFile && this.viewedObject ? 'inline' : 'none';
-    this.downloadOutputFileLink.style.display = this.hasOutputFile ? 'inline' : 'none';
-    this.parametersdiv.style.display = this.paramControls.length > 0 ? 'inline-block' : 'none'; // was 'block'
-    this.errordiv.style.display = this.hasError ? 'block' : 'none';
-    this.statusdiv.style.display = this.hasError ? 'none' : 'block';
-    this.selectdiv.style.display = this.currentObjects.length > 1 ? 'none' : 'none'; // FIXME once there's a data model
-  },
+    var _this = this;
 
-  setMemfs: function setMemfs(memFs) {
-    this.memFs = memFs;
-  },
-
-  setDebugging: function setDebugging(debugging) {
-    this.opts.debug = debugging;
-  },
-
-  addLibrary: function addLibrary(lib) {
-    this.opts['libraries'].push(lib);
-  },
-
-  setOpenJsCadPath: function setOpenJsCadPath(path) {
-    this.opts['openJsCadPath'] = path;
-  },
-
-  setError: function setError(txt) {
-    this.hasError = txt != '';
-    this.errorpre.textContent = txt;
-    this.enableItems();
-  },
-
-  // set status and data to display
-  setStatus: function setStatus(status, data) {
-    if (typeof document !== 'undefined') {
-      var statusMap = {
-        error: data,
-        ready: 'Ready',
-        aborted: 'Aborted.',
-        busy: data + ' <img id=busy src=\'imgs/busy.gif\'>',
-        loading: 'Loading ' + data + ' <img id=busy src=\'imgs/busy.gif\'>',
-        loaded: data,
-        saving: data,
-        saved: data,
-        converting: 'Converting ' + data + ' <img id=busy src=\'imgs/busy.gif\'>',
-        fetching: 'Fetching ' + data + ' <img id=busy src=\'imgs/busy.gif\'>',
-        rendering: 'Rendering. Please wait <img id=busy src=\'imgs/busy.gif\'>'
-      };
-      var content = statusMap[status] ? statusMap[status] : data;
-      if (status === 'error') {
-        this.setError(data);
-      }
-
-      this.statusspan.innerHTML = content;
-    } else {
-      log(data);
-    }
+    this.onUpdate({
+      formats: supportedFormatsForObjects(this.currentObjects.slice()).filter(function (x) {
+        return x !== 'stl';
+      }).reduce(function (formats, ext) {
+        formats[ext] = _this.formatInfo(ext);
+        return formats;
+      }, {}), // exclude 'stl' since it is an alias for stl(ascii) or stl(binary)
+      outputFile: this.outputFile
+    });
   },
 
   // script: javascript code
@@ -47033,14 +46747,15 @@ Processor.prototype = {
     var prevParamValues = {};
     // this will fail without existing form
     try {
-      prevParamValues = getParameterValues(this.paramControls, /* onlyChanged */true);
+      prevParamValues = getParameterValues(this.paramControls,
+      /* onlyChanged */true);
     } catch (e) {}
 
     this.abort();
     this.paramDefinitions = [];
 
     this.script = null;
-    this.setError('');
+    // this.setError('')
 
     var scripthaserrors = false;
     try {
@@ -47048,7 +46763,7 @@ Processor.prototype = {
       this.paramControls = [];
       this.createParamControls(prevParamValues);
     } catch (e) {
-      this.setStatus('error', e.toString());
+      this.setStatus('error', e);
       scripthaserrors = true;
     }
     if (!scripthaserrors) {
@@ -47061,44 +46776,21 @@ Processor.prototype = {
     }
   },
 
-  // FIXME: not needed anymore, file cache is handled elsewhere
-  getFullScript: function getFullScript() {
-    return this.script;
-    /* var script = ''
-    // add the file cache
-     script += 'var gMemFs = ['
-    if (typeof (this.memFs) === 'object') {
-      var comma = ''
-      for (var fn in this.memFs) {
-        script += comma
-        script += JSON.stringify(this.memFs[fn])
-        comma = ','
-      }
-    }
-    script += '];\n'
-    script += '\n'
-    // add the main script
-    script += this.script
-    return script */
-  },
-
   rebuildSolids: function rebuildSolids() {
-    var _this = this;
+    var _this2 = this;
 
     // clear previous solid and settings
     this.abort();
     //this clears output file cache
     this.clearOutputFile();
-    this.enableItems();
-    this.setError('');
-    this.enableItems();
+
     this.setStatus('rendering');
 
     // rebuild the solid
 
     // prepare all parameters
     var parameters = getParameterValues(this.paramControls);
-    var script = this.getFullScript();
+    var script = this.script;
     var fullurl = this.includePathBaseUrl ? this.includePathBaseUrl + this.filename : this.filename;
     var options = { memFs: this.memFs };
 
@@ -47126,7 +46818,7 @@ Processor.prototype = {
     if (this.opts.useAsync) {
       this.builder = rebuildSolidsInWorker(script, fullurl, parameters, function (err, objects) {
         if (err && that.opts.useSync) {
-          _this.builder = _rebuildSolids(script, fullurl, parameters, callback, options);
+          _this2.builder = _rebuildSolids(script, fullurl, parameters, callback, options);
         } else callback(undefined, objects);
       }, options);
     } else if (this.opts.useSync) {
@@ -47134,6 +46826,10 @@ Processor.prototype = {
     }
   },
 
+  /**
+   * Return the current processor state.
+   * @returns {ProcessorState}
+   */
   getState: function getState() {
     return this.state;
   },
@@ -47141,6 +46837,7 @@ Processor.prototype = {
   clearOutputFile: function clearOutputFile() {
     if (this.hasOutputFile) {
       this.hasOutputFile = false;
+      this.outputFile = undefined;
       if (this.outputFileDirEntry) {
         this.outputFileDirEntry.removeRecursively(function () {});
         this.outputFileDirEntry = null;
@@ -47153,57 +46850,40 @@ Processor.prototype = {
     }
   },
 
-  generateOutputFile: function generateOutputFile() {
+  /**
+   * Generate a output file.  Read the resulting OutputFile in the `onUpdate` hook.
+   * @param {FormatInfo} format
+   */
+  generateOutputFile: function generateOutputFile(format) {
     this.clearOutputFile();
-    var blob = this.currentObjectsToBlob();
-    var extension = this.selectedFormatInfo().extension;
+    var blob = this.currentObjectsToBlob(format);
 
     function onDone(data, downloadAttribute, blobMode, noData) {
       this.hasOutputFile = true;
-      this.downloadOutputFileLink.href = data;
-      if (blobMode) {
-        this.outputFileBlobUrl = data;
-      } else {
-        // FIXME: what to do with this one ?
-        // that.outputFileDirEntry = dirEntry // save for later removal
-      }
-      this.downloadOutputFileLink.innerHTML = this.downloadLinkTextForCurrentObject();
-      this.downloadOutputFileLink.setAttribute('download', downloadAttribute);
-      if (noData) {
-        this.downloadOutputFileLink.setAttribute('target', '_blank');
-      }
+      this.outputFile = { data: data, downloadAttribute: downloadAttribute, blobMode: blobMode, noData: noData };
       this.enableItems();
     }
 
     if (this.viewedObject) {
-      _generateOutputFile(extension, blob, onDone, this);
+      _generateOutputFile(format.extension, blob, onDone, this);
       if (this.ondownload) this.ondownload(this);
     }
   },
 
-  currentObjectsToBlob: function currentObjectsToBlob() {
-    var startpoint = this.selectStartPoint;
-    var endpoint = this.selectEndPoint;
-    if (startpoint > endpoint) {
-      startpoint = this.selectEndPoint;endpoint = this.selectStartPoint;
-    }
-
-    var format = this.selectedFormat();
-
+  currentObjectsToBlob: function currentObjectsToBlob(format) {
     // if output format is jscad or js , use that, otherwise use currentObjects
-    var objects = format === 'jscad' || format === 'js' ? this.script : this.currentObjects.slice(startpoint, endpoint + 1);
+    var objects = format.mimetype === 'application/javascript' ? this.script : this.currentObjects.slice();
 
-    return convertToBlob(prepareOutput(objects, { format: format }));
+    return convertToBlob(prepareOutput(objects, { format: format.name }));
   },
 
   formatInfo: function formatInfo(format) {
     return this.formats[format];
   },
 
-  downloadLinkTextForCurrentObject: function downloadLinkTextForCurrentObject() {
-    var ext = this.selectedFormatInfo().extension;
-    return 'Download ' + ext.toUpperCase();
-  },
+  /**
+   * Original control creation methods.
+   */
 
   createGroupControl: function createGroupControl(definition) {
     var control = document.createElement('title');
@@ -47262,7 +46942,68 @@ Processor.prototype = {
   },
 
   createControl: function createControl(definition, prevValue) {
-    var control_list = [{ type: 'text', control: 'text', required: ['index', 'type', 'name'], initial: '' }, { type: 'int', control: 'number', required: ['index', 'type', 'name'], initial: 0 }, { type: 'float', control: 'number', required: ['index', 'type', 'name'], initial: 0.0 }, { type: 'number', control: 'number', required: ['index', 'type', 'name'], initial: 0.0 }, { type: 'checkbox', control: 'checkbox', required: ['index', 'type', 'name', 'checked'], initial: '' }, { type: 'radio', control: 'radio', required: ['index', 'type', 'name', 'checked'], initial: '' }, { type: 'color', control: 'color', required: ['index', 'type', 'name'], initial: '#000000' }, { type: 'date', control: 'date', required: ['index', 'type', 'name'], initial: '' }, { type: 'email', control: 'email', required: ['index', 'type', 'name'], initial: '' }, { type: 'password', control: 'password', required: ['index', 'type', 'name'], initial: '' }, { type: 'url', control: 'url', required: ['index', 'type', 'name'], initial: '' }, { type: 'slider', control: 'range', required: ['index', 'type', 'name', 'min', 'max'], initial: 0, label: true }];
+    var control_list = [{
+      type: 'text',
+      control: 'text',
+      required: ['index', 'type', 'name'],
+      initial: ''
+    }, {
+      type: 'int',
+      control: 'number',
+      required: ['index', 'type', 'name'],
+      initial: 0
+    }, {
+      type: 'float',
+      control: 'number',
+      required: ['index', 'type', 'name'],
+      initial: 0.0
+    }, {
+      type: 'number',
+      control: 'number',
+      required: ['index', 'type', 'name'],
+      initial: 0.0
+    }, {
+      type: 'checkbox',
+      control: 'checkbox',
+      required: ['index', 'type', 'name', 'checked'],
+      initial: ''
+    }, {
+      type: 'radio',
+      control: 'radio',
+      required: ['index', 'type', 'name', 'checked'],
+      initial: ''
+    }, {
+      type: 'color',
+      control: 'color',
+      required: ['index', 'type', 'name'],
+      initial: '#000000'
+    }, {
+      type: 'date',
+      control: 'date',
+      required: ['index', 'type', 'name'],
+      initial: ''
+    }, {
+      type: 'email',
+      control: 'email',
+      required: ['index', 'type', 'name'],
+      initial: ''
+    }, {
+      type: 'password',
+      control: 'password',
+      required: ['index', 'type', 'name'],
+      initial: ''
+    }, {
+      type: 'url',
+      control: 'url',
+      required: ['index', 'type', 'name'],
+      initial: ''
+    }, {
+      type: 'slider',
+      control: 'range',
+      required: ['index', 'type', 'name', 'min', 'max'],
+      initial: 0,
+      label: true
+    }];
     // check for required parameters
     if (!('type' in definition)) {
       throw new Error('Parameter definition (' + definition.index + ") must include a 'type' parameter");
@@ -47362,7 +47103,8 @@ Processor.prototype = {
           if (l !== null && l.nodeName === 'LABEL') {
             l.innerHTML = e.currentTarget.value;
           }
-          if (document.getElementById('instantUpdate').checked === true) {
+          // if (document.getElementById('instantUpdate').checked === true) {
+          if (that.instantUpdate) {
             that.rebuildSolids();
           }
         };
@@ -47390,7 +47132,39 @@ Processor.prototype = {
 
 module.exports = Processor;
 
-},{"../io/generateOutputFile":229,"../io/utils":232,"../ui/viewer/jscad-viewer":239,"./log":233,"@jscad/core/code-evaluation/rebuildSolids":1,"@jscad/core/io/convertToBlob":6,"@jscad/core/io/formats":7,"@jscad/core/io/prepareOutput":8,"@jscad/core/parameters/getParameterDefinitions":118,"@jscad/core/parameters/getParameterValuesFromUIControls":119,"@jscad/core/utils/mergeSolids":121}],235:[function(require,module,exports){
+/**
+ * Object returned by `onUpdate`.
+ * @typedef {Object} updateInfo
+ * @property {Formats} formats - Object of download formats and info
+ * @property {OutputFile} outputFIle - Output file information
+ */
+
+/**
+ * @typedef {Object<string, FormatInfo} Formats
+ */
+
+/**
+ * Format information.
+ * @typedef {Object} FormatInfo
+ * @property {boolean} convertCAG
+ * @property {boolean} convertCSG
+ * @property {string} description
+ * @property {string} displayName
+ * @property {string} extension
+ * @property {string} mimetype
+ * @property {string} name - The name of the key for this format. (eg. '.stla')
+ */
+
+/**
+ * Output file informaiton object.
+ * @typedef {Object} OutputFile
+ * @property {string} data - Filesystem path to temoprary otuput file
+ * @property {string} downloadAttribute - Filename for the download, currently always 'output.{extension}'
+ * @property {boolean} noData - True if no data returned.
+ * @property {boolean} blobMode - True if blob mode was used to generate the file.
+ */
+
+},{"../io/generateOutputFile":229,"../io/utils":232,"../ui/viewer/jscad-viewer":238,"@jscad/core/code-evaluation/rebuildSolids":1,"@jscad/core/io/convertToBlob":6,"@jscad/core/io/formats":7,"@jscad/core/io/prepareOutput":8,"@jscad/core/parameters/getParameterDefinitions":118,"@jscad/core/parameters/getParameterValuesFromUIControls":119,"@jscad/core/utils/mergeSolids":121}],234:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -47435,53 +47209,176 @@ function AlertUserOfUncaughtExceptions() {
 
 module.exports = AlertUserOfUncaughtExceptions;
 
-},{}],236:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 'use strict';
 
+/**
+ * @prettier
+ */
 // == OpenJSCAD.org, Copyright (c) 2017, Licensed under MIT License
 var AlertUserOfUncaughtExceptions = require('./errorDispatcher');
 
 var version = require('../../package.json').version;
-var Processor = require('../jscad/processor');
+var Processor = require('../jscad/processor-bare');
 
 var gProcessor = null;
 
-function init() {
-  var versionText = 'OpenJSCAD.org Version ' + version;
-  console.log(versionText);
+/**
+ * Initialize a jscad viewer.  You can prevent the processor from creating
+ * a new `canvas` element by passing a canvas element on `glOptions`.
+ *
+ * If the viewer element has a `design-url` attribute, that url will be loaded
+ * with a `XMLHttpRequest`.  Otherwise load the design using `setJsCad`.
+ *
+ * @param {Object} viewer - A DOM element to use as the base element.
+ * @param {JscadViewerOptions} options - options passed to the viewer processor
+ */
+function init(viewer, options) {
+  var versionText = 'UMD OpenJSCAD.org Version ' + version;
+  console.log('umd init', versionText, options);
 
   // Show all exceptions to the user: // WARNING !! this is not practical at dev time
   AlertUserOfUncaughtExceptions();
 
-  var viewer = document.getElementById('viewerContext');
   var design = viewer.getAttribute('design-url');
 
-  gProcessor = new Processor(viewer);
+  gProcessor = new Processor(viewer, options);
 
   // load the given design
   if (design) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', design, true);
-    gProcessor.setStatus('Loading ' + design + " <img id=busy src='imgs/busy.gif'>");
+    gProcessor.setStatus('Loading ' + design);
 
     xhr.onload = function () {
       var source = this.responseText;
-      // console.log(source);
 
       if (design.match(/\.jscad$/i) || design.match(/\.js$/i)) {
-        gProcessor.setStatus('Processing ' + design + " <img id=busy src='imgs/busy.gif'>");
+        gProcessor.setStatus('Processing ' + design);
         gProcessor.setJsCad(source, design);
       }
     };
     xhr.send();
   }
+
+  return {
+    /**
+     * Start the processor on generating an output file. Once
+     * the file has been created, the `
+     * @param {FormatInfo} format
+     */
+    generateOutputFile: function generateOutputFile(format) {
+      return gProcessor.generateOutputFile(format);
+    },
+
+    clearOutputFile: function clearOutputFile() {
+      return gProcessor.clearOutputFile();
+    },
+
+    resetCamera: function resetCamera() {
+      return gProcessor.viewer.resetCamera();
+    },
+    abort: function abort() {
+      return gProcessor.abort();
+    },
+    setJsCad: function setJsCad(source, design) {
+      gProcessor.setJsCad(source, design);
+    },
+    rebuildSolids: function rebuildSolids() {
+      gProcessor.rebuildSolids();
+    }
+  };
 }
 
-document.addEventListener('DOMContentLoaded', function (event) {
-  init();
-});
+module.exports = init;
 
-},{"../../package.json":228,"../jscad/processor":234,"./errorDispatcher":235}],237:[function(require,module,exports){
+/**
+ * @typedef {Object} XYZCoord
+ * @property {number} x
+ * @property {number} y
+ * @property {number} z
+ */
+
+/**
+ * @typedef {Object} MinMax
+ * @property {number} min
+ * @property {number} max
+ */
+
+/**
+ * Camera settings
+ * @typedef {Object} CameraSettings
+ * @property {number} fov - field of view.
+ * @property {XYZCoord} angle - view angle about XYZ axis.
+ * @property {XYZCoord} position - initial position at XYZ.
+ * @property {MinMax} clip - rendering outside this range is clipped.
+ */
+
+/**
+ * @typedef {Object} RgbaColor
+ * @property {number} r - red (values 0.0 - 1.0).
+ * @property {number} g - green (values 0.0 - 1.0).
+ * @property {number} b - blue (values 0.0 - 1.0).
+ * @property {number} a - alpha (values 0.0 - 1.0).
+ */
+
+/**
+ * Grid settings
+ * @typedef {Object} GridSettings
+ * @property {number} i - number of units between grid lines.
+ * @property {RgbaColor} color - color.
+ */
+
+/**
+ * @typedef {Object} PlateSettings
+ * @property {boolean} draw draw or not (default: true).
+ * @property {number} size plate size (X and Y) (default: 200).
+ * @property {GridSettings} m minor grid settings.
+ * @property {GridSettings} M major grid settings.
+ */
+
+/**
+ *
+ * @typedef {Object} PosNegColor
+ * @property {RgbaColor} neg color in negative direction.
+ * @property {RgbaColor} pos color in positive direction.
+ */
+
+/**
+ * @typedef {Object} AxisSettings
+ * @property {boolean} draw - draw or not (default: false).
+ * @property {PosNegColor} x
+ * @property {PosNegColor} y
+ * @property {PosNegColor} z
+ */
+
+/**
+ * @typedef {Object} LightGLOptions
+ * @property {Object} canvas - Uses the HTML canvas given in 'options' or creates a new one if necessary.
+ * @property {number} width - width applied to the canvas created when `options.canvas` is not set. (default: 800).
+ * @property {number} height - height applied to the canvas created when `options.canvas` is not set. (default: 600).
+ * @property {number} alpha - The alpha channel is disabled by default because it usually causes unintended transparencies in the canvas.
+ *
+ */
+
+/**
+ * @typedef {Object} JscadViewerOptions
+ * @property {PlateSettings} plate - The grid show in the viewer.
+ * @property {CameraSettings} camera
+ * @property {AxisSettings} axis
+ * @property {LightGLOptions} glOptions - Options sent to `GL.create()`.
+ * @property {Object} processor - options used by the viewer processor.
+ */
+
+/**
+ * @typedef {Object} ProcessorOptions
+ * @property {Element} viewerContext - The main element that jscad uses.  If no canvas element is set, jscad creates one.
+ * @property {Element} viewerdiv - Jscad moves the canvas tag here, or creates one and places it here.
+ * @property {Element} parameterstable - A Table element reference.  The design parameters will be added here.
+ * @property {Element} viewerCanvas - A Canvas element reference that will be used to draw the GL canvas.
+ */
+
+},{"../../package.json":228,"../jscad/processor-bare":233,"./errorDispatcher":234}],236:[function(require,module,exports){
 'use strict';
 
 /**
@@ -47541,7 +47438,7 @@ module.exports = {
   parseColor: parseColor
 };
 
-},{}],238:[function(require,module,exports){
+},{}],237:[function(require,module,exports){
 'use strict';
 
 var _require = require('most-gestures'),
@@ -48027,7 +47924,7 @@ LightGLEngine.prototype = {
 
 module.exports = LightGLEngine;
 
-},{"./jscad-viewer-helpers":237,"./lightgl":240,"most-gestures":135}],239:[function(require,module,exports){
+},{"./jscad-viewer-helpers":236,"./lightgl":239,"most-gestures":135}],238:[function(require,module,exports){
 'use strict';
 
 var LightGLEngine = require('./jscad-viewer-lightgl');
@@ -48244,7 +48141,7 @@ Viewer.prototype = {
 
 module.exports = Viewer;
 
-},{"./jscad-viewer-helpers":237,"./jscad-viewer-lightgl":238}],240:[function(require,module,exports){
+},{"./jscad-viewer-helpers":236,"./jscad-viewer-lightgl":237}],239:[function(require,module,exports){
 'use strict';
 
 /*
@@ -50472,4 +50369,5 @@ var GL = function () {
 
 module.exports = GL;
 
-},{}]},{},[236]);
+},{}]},{},[235])(235)
+});
