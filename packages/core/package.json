@@ -31,16 +31,10 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/csg": "0.7.0",
-<<<<<<< HEAD
     "@jscad/io": "pre-V2",
     "@most/create": "^2.0.1",
     "astring": "^1.0.2",
     "es2015-i18n-tag": "^1.3.1",
-=======
-    "@jscad/io": "0.4.7",
-    "@jscad/openscad-openjscad-translator": "0.0.11",
-    "astring": "^1.3.1",
->>>>>>> origin/V2
     "esprima": "^3.1.3",
     "estraverse": "^4.2.0",
     "is-electron": "^2.1.0",
