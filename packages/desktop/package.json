@@ -33,8 +33,9 @@
     "release-major": "git checkout master && git pull origin master && npm version major"
   },
   "dependencies": {
-    "@jscad/core": "^0.4.0",
-    "@jscad/csg": "0.7.0",
+    "@jscad/amf-serializer": "0.1.1",
+    "@jscad/core": "0.2.3",
+    "@jscad/csg": "0.5.3",
     "@jscad/csg-viewer": "github:jscad/csg-viewer",
     "@jscad/io": "0.4.7",
     "@most/create": "^2.0.1",
