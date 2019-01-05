@@ -1,6 +1,6 @@
 {
   "name": "@jscad/cli",
-  "version": "1.8.3",
+  "version": "1.10.0",
   "description": "Command Line Interface (CLI) for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "bin": {
@@ -8,7 +8,7 @@
     "jscad": "./cli.js"
   },
   "scripts": {
-    "test": "ava './*.test.js' --verbose --timeout 10000",
+    "test": "ava './*.test.js' --verbose --timeout 60000",
     "preversion": "npm test",
     "version": "git add -A ",
     "postversion": "git push origin master && git push origin master --tags",

@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.10.0"></a>
+# [1.10.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@1.9.0...@jscad/web@1.10.0) (2019-01-04)
+
+
+### Features
+
+* **web:** add standalone umd / embeddable version ([#413](https://github.com/jscad/OpenJSCAD.org/issues/413)) ([f25d8c0](https://github.com/jscad/OpenJSCAD.org/commit/f25d8c0)), closes [#402](https://github.com/jscad/OpenJSCAD.org/issues/402) [#343](https://github.com/jscad/OpenJSCAD.org/issues/343)
+
+
+
+
+<a name="1.9.0"></a>
+# [1.9.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@1.8.4...@jscad/web@1.9.0) (2018-09-02)
+
+
+### Features
+
+* **io:** add updated dependencies: enable csg to dxf ([#394](https://github.com/jscad/OpenJSCAD.org/issues/394)) ([1144a78](https://github.com/jscad/OpenJSCAD.org/commit/1144a78))
+
+
+
+
+<a name="1.8.4"></a>
+## [1.8.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@1.8.3...@jscad/web@1.8.4) (2018-05-12)
+
+
+### Bug Fixes
+
+* **web:** HTML syntax and performance improvement ([#383](https://github.com/jscad/OpenJSCAD.org/issues/383)) ([d5be1fb](https://github.com/jscad/OpenJSCAD.org/commit/d5be1fb))
+
+
+
+
 <a name="1.8.3"></a>
 ## [1.8.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@1.8.2...@jscad/web@1.8.3) (2018-04-07)
 

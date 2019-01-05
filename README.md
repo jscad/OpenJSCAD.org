@@ -16,6 +16,11 @@ This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-th
 
 [![Backers on Open Collective](https://opencollective.com/openjscad/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/openjscad/sponsors/badge.svg)](#sponsors) 
 
+> NOTE : as of September 1 2018, we will NOT be accepting new PRS against the V1 / master branch: we realistically
+are not able to keep adding new features/fixes to the 'old' version and work on the very different V2.
+thank you for your comprehension !
+(already open PRS at that date are exempt)
+
 ## Table of Contents
 
 - [Usage](#usage)

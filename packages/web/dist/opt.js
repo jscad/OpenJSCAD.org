@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 const WebWorkify = require('webworkify')
 const { CAG, CSG } = require('@jscad/csg')
 const oscad = require('@jscad/csg/api')
@@ -110,7 +110,7 @@ module.exports = {
   rebuildSolidsInWorker
 }
 
-},{"../code-loading/jscad-function":2,"../code-loading/jscad-worker.js":3,"../code-loading/replaceIncludes":4,"../code-loading/resolveIncludesHttp":5,"../utils/arrays":419,"@jscad/csg":52,"@jscad/csg/api":51,"webworkify":413}],2:[function(require,module,exports){
+},{"../code-loading/jscad-function":2,"../code-loading/jscad-worker.js":3,"../code-loading/replaceIncludes":4,"../code-loading/resolveIncludesHttp":5,"../utils/arrays":120,"@jscad/csg":18,"@jscad/csg/api":17,"webworkify":114}],2:[function(require,module,exports){
 /**
  * Create an function for processing the JSCAD script into CSG/CAG objects
  * @param {String} script the script
@@ -197,7 +197,7 @@ module.exports = function (self) {
   }
 }
 
-},{"../utils/arrays":419,"./jscad-function":2,"@jscad/csg":52,"@jscad/csg/api":51}],4:[function(require,module,exports){
+},{"../utils/arrays":120,"./jscad-function":2,"@jscad/csg":18,"@jscad/csg/api":17}],4:[function(require,module,exports){
 const esprima = require('esprima')
 const estraverse = require('estraverse')
 const astring = require('astring')
@@ -320,7 +320,7 @@ module.exports = {
   replaceIncludes
 }
 
-},{"astring":407,"esprima":408,"estraverse":409}],5:[function(require,module,exports){
+},{"astring":108,"esprima":109,"estraverse":110}],5:[function(require,module,exports){
 /**
  * fetch the requested script either via MemFs or HTTP Request
  * (Note: The resolved modules are prepepended in front of the calling script
@@ -378,7 +378,7 @@ module.exports = {
   convertToBlob
 }
 
-},{"@jscad/io":219}],7:[function(require,module,exports){
+},{"@jscad/io":90}],7:[function(require,module,exports){
 const { isCSG, isCAG } = require('@jscad/csg')
 
 // handled format descriptions
@@ -427,7 +427,7 @@ const formats = {
     description: 'AutoCAD Drawing Exchange Format',
     extension: 'dxf',
     mimetype: 'application/dxf',
-    convertCSG: false,
+    convertCSG: true,
     convertCAG: true },
   jscad: {
     displayName: 'JSCAD',
@@ -502,7 +502,7 @@ module.exports = {
   supportedFormatsForObjects
 }
 
-},{"@jscad/csg":52}],8:[function(require,module,exports){
+},{"@jscad/csg":18}],8:[function(require,module,exports){
 const { formats } = require('./formats')
 const {mergeSolids2} = require('../utils/mergeSolids')
 
@@ -564,7 +564,7 @@ module.exports = {
   prepareOutput
 }
 
-},{"../utils/mergeSolids":420,"./formats":7,"@jscad/io":219}],9:[function(require,module,exports){
+},{"../utils/mergeSolids":121,"./formats":7,"@jscad/io":90}],9:[function(require,module,exports){
 const inchMM = (1 / 0.039370) // used for scaling AMF (inch) to CAG coordinates(MM)
 
 module.exports = {inchMM}
@@ -598,7 +598,7 @@ const objectify = (amf, data) => {
 
 module.exports = deserializeToCSG
 
-},{"./constants":9,"./objectBuilder":47,"./parse":48,"@jscad/csg":13}],11:[function(require,module,exports){
+},{"./constants":9,"./objectBuilder":13,"./parse":14,"@jscad/csg":18}],11:[function(require,module,exports){
 function amfMesh (element) {
   let obj = {type: 'mesh'}
   obj.objects = []
@@ -803,7385 +803,7 @@ module.exports = {
   deserialize
 }
 
-},{"./deserialize":10,"./translate":49}],13:[function(require,module,exports){
-/*
-## License
-
-Copyright (c) 2014 bebbi (elghatta@gmail.com)
-Copyright (c) 2013 Eduard Bespalov (edwbes@gmail.com)
-Copyright (c) 2012 Joost Nieuwenhuijse (joost@newhouse.nl)
-Copyright (c) 2011 Evan Wallace (http://evanw.github.com/csg.js/)
-Copyright (c) 2012 Alexandre Girard (https://github.com/alx)
-
-All code released under MIT license
-
-## Overview
-
-For an overview of the CSG process see the original csg.js code:
-http://evanw.github.com/csg.js/
-
-CSG operations through BSP trees suffer from one problem: heavy fragmentation
-of polygons. If two CSG solids of n polygons are unified, the resulting solid may have
-in the order of n*n polygons, because each polygon is split by the planes of all other
-polygons. After a few operations the number of polygons explodes.
-
-This version of CSG.js solves the problem in 3 ways:
-
-1. Every polygon split is recorded in a tree (CSG.PolygonTreeNode). This is a separate
-tree, not to be confused with the CSG tree. If a polygon is split into two parts but in
-the end both fragments have not been discarded by the CSG operation, we can retrieve
-the original unsplit polygon from the tree, instead of the two fragments.
-
-This does not completely solve the issue though: if a polygon is split multiple times
-the number of fragments depends on the order of subsequent splits, and we might still
-end up with unncessary splits:
-Suppose a polygon is first split into A and B, and then into A1, B1, A2, B2. Suppose B2 is
-discarded. We will end up with 2 polygons: A and B1. Depending on the actual split boundaries
-we could still have joined A and B1 into one polygon. Therefore a second approach is used as well:
-
-2. After CSG operations all coplanar polygon fragments are joined by a retesselating
-operation. See CSG.reTesselated(). Retesselation is done through a
-linear sweep over the polygon surface. The sweep line passes over the y coordinates
-of all vertices in the polygon. Polygons are split at each sweep line, and the fragments
-are joined horizontally and vertically into larger polygons (making sure that we
-will end up with convex polygons).
-This still doesn't solve the problem completely: due to floating point imprecisions
-we may end up with small gaps between polygons, and polygons may not be exactly coplanar
-anymore, and as a result the retesselation algorithm may fail to join those polygons.
-Therefore:
-
-3. A canonicalization algorithm is implemented: it looks for vertices that have
-approximately the same coordinates (with a certain tolerance, say 1e-5) and replaces
-them with the same vertex. If polygons share a vertex they will actually point to the
-same CSG.Vertex instance. The same is done for polygon planes. See CSG.canonicalized().
-
-Performance improvements to the original CSG.js:
-
-Replaced the flip() and invert() methods by flipped() and inverted() which don't
-modify the source object. This allows to get rid of all clone() calls, so that
-multiple polygons can refer to the same CSG.Plane instance etc.
-
-The original union() used an extra invert(), clipTo(), invert() sequence just to remove the
-coplanar front faces from b; this is now combined in a single b.clipTo(a, true) call.
-
-Detection whether a polygon is in front or in back of a plane: for each polygon
-we are caching the coordinates of the bounding sphere. If the bounding sphere is
-in front or in back of the plane we don't have to check the individual vertices
-anymore.
-
-Other additions to the original CSG.js:
-
-CSG.Vector class has been renamed into CSG.Vector3D
-
-Classes for 3D lines, 2D vectors, 2D lines, and methods to find the intersection of
-a line and a plane etc.
-
-Transformations: CSG.transform(), CSG.translate(), CSG.rotate(), CSG.scale()
-
-Expanding or contracting a solid: CSG.expand() and CSG.contract(). Creates nice
-smooth corners.
-
-The vertex normal has been removed since it complicates retesselation. It's not needed
-for solid CAD anyway.
-
-*/
-
-const {addTransformationMethodsToPrototype, addCenteringToPrototype} = require('./src/mutators')
-let CSG = require('./src/CSG')
-let CAG = require('./src/CAG')
-
-// FIXME: how many are actual usefull to be exposed as API ?? looks like a code smell
-const { _CSGDEBUG,
-  defaultResolution2D,
-  defaultResolution3D,
-  EPS,
-  angleEPS,
-  areaEPS,
-  all,
-  top,
-  bottom,
-  left,
-  right,
-  front,
-  back,
-  staticTag,
-  getTag} = require('./src/constants')
-
-CSG._CSGDEBUG = _CSGDEBUG
-CSG.defaultResolution2D = defaultResolution2D
-CSG.defaultResolution3D = defaultResolution3D
-CSG.EPS = EPS
-CSG.angleEPS = angleEPS
-CSG.areaEPS = areaEPS
-CSG.all = all
-CSG.top = top
-CSG.bottom = bottom
-CSG.left = left
-CSG.right = right
-CSG.front = front
-CSG.back = back
-CSG.staticTag = staticTag
-CSG.getTag = getTag
-
-// eek ! all this is kept for backwards compatibility...for now
-CSG.Vector2D = require('./src/math/Vector2')
-CSG.Vector3D = require('./src/math/Vector3')
-CSG.Vertex = require('./src/math/Vertex3')
-CAG.Vertex = require('./src/math/Vertex2')
-CSG.Plane = require('./src/math/Plane')
-CSG.Polygon = require('./src/math/Polygon3')
-CSG.Polygon2D = require('./src/math/Polygon2')
-CSG.Line2D = require('./src/math/Line2')
-CSG.Line3D = require('./src/math/Line3')
-CSG.Path2D = require('./src/math/Path2')
-CSG.OrthoNormalBasis = require('./src/math/OrthoNormalBasis')
-CSG.Matrix4x4 = require('./src/math/Matrix4')
-
-CAG.Side = require('./src/math/Side')
-
-CSG.Connector = require('./src/connectors').Connector
-CSG.ConnectorList = require('./src/connectors').ConnectorList
-CSG.Properties = require('./src/Properties')
-
-const {circle, ellipse, rectangle, roundedRectangle} = require('./src/primitives2d')
-const {sphere, cube, roundedCube, cylinder, roundedCylinder, cylinderElliptic, polyhedron} = require('./src/primitives3d')
-
-CSG.sphere = sphere
-CSG.cube = cube
-CSG.roundedCube = roundedCube
-CSG.cylinder = cylinder
-CSG.roundedCylinder = roundedCylinder
-CSG.cylinderElliptic = cylinderElliptic
-CSG.polyhedron = polyhedron
-
-CAG.circle = circle
-CAG.ellipse = ellipse
-CAG.rectangle = rectangle
-CAG.roundedRectangle = roundedRectangle
-
-//
-const {fromCompactBinary, fromObject, fromSlices} = require('./src/CSGFactories')
-CSG.fromCompactBinary = fromCompactBinary
-CSG.fromObject = fromObject
-CSG.fromSlices = fromSlices
-
-CSG.toPointCloud = require('./src/debugHelpers').toPointCloud
-
-const CAGMakers = require('./src/CAGFactories')
-CAG.fromObject = CAGMakers.fromObject
-CAG.fromPointsNoCheck = CAGMakers.fromPointsNoCheck
-CAG.fromPath2 = CAGMakers.fromPath2
-
-// ////////////////////////////////////
-addTransformationMethodsToPrototype(CSG.prototype)
-addTransformationMethodsToPrototype(CSG.Vector2D.prototype)
-addTransformationMethodsToPrototype(CSG.Vector3D.prototype)
-addTransformationMethodsToPrototype(CSG.Vertex.prototype)
-addTransformationMethodsToPrototype(CSG.Plane.prototype)
-addTransformationMethodsToPrototype(CSG.Polygon.prototype)
-addTransformationMethodsToPrototype(CSG.Line2D.prototype)
-addTransformationMethodsToPrototype(CSG.Line3D.prototype)
-addTransformationMethodsToPrototype(CSG.Path2D.prototype)
-addTransformationMethodsToPrototype(CSG.OrthoNormalBasis.prototype)
-addTransformationMethodsToPrototype(CSG.Connector.prototype)
-
-addTransformationMethodsToPrototype(CAG.prototype)
-addTransformationMethodsToPrototype(CAG.Side.prototype)
-addTransformationMethodsToPrototype(CAG.Vertex.prototype)
-
-addCenteringToPrototype(CSG.prototype, ['x', 'y', 'z'])
-addCenteringToPrototype(CAG.prototype, ['x', 'y'])
-
-module.exports = {CSG, CAG}
-
-},{"./src/CAG":14,"./src/CAGFactories":15,"./src/CSG":16,"./src/CSGFactories":17,"./src/Properties":21,"./src/connectors":22,"./src/constants":23,"./src/debugHelpers":24,"./src/math/Line2":25,"./src/math/Line3":26,"./src/math/Matrix4":27,"./src/math/OrthoNormalBasis":28,"./src/math/Path2":29,"./src/math/Plane":30,"./src/math/Polygon2":31,"./src/math/Polygon3":32,"./src/math/Side":33,"./src/math/Vector2":34,"./src/math/Vector3":35,"./src/math/Vertex2":36,"./src/math/Vertex3":37,"./src/mutators":40,"./src/primitives2d":42,"./src/primitives3d":43}],14:[function(require,module,exports){
-const {EPS, angleEPS, areaEPS, defaultResolution3D} = require('./constants')
-const {Connector} = require('./connectors')
-const OrthoNormalBasis = require('./math/OrthoNormalBasis')
-const Vertex2D = require('./math/Vertex2')
-const Vertex3D = require('./math/Vertex3')
-const Vector2D = require('./math/Vector2')
-const Vector3D = require('./math/Vector3')
-const Polygon = require('./math/Polygon3')
-const Path2D = require('./math/Path2')
-const Side = require('./math/Side')
-const {linesIntersect} = require('./math/lineUtils')
-const {parseOptionAs3DVector, parseOptionAsBool, parseOptionAsFloat, parseOptionAsInt} = require('./optionParsers')
-const FuzzyCAGFactory = require('./FuzzyFactory2d')
-/**
- * Class CAG
- * Holds a solid area geometry like CSG but 2D.
- * Each area consists of a number of sides.
- * Each side is a line between 2 points.
- * @constructor
- */
-let CAG = function () {
-  this.sides = []
-  this.isCanonicalized = false
-}
-
-/** Construct a CAG from a list of `Side` instances.
- * @param {Side[]} sides - list of sides
- * @returns {CAG} new CAG object
- */
-CAG.fromSides = function (sides) {
-  let cag = new CAG()
-  cag.sides = sides
-  return cag
-}
-
-
-// Converts a CSG to a  The CSG must consist of polygons with only z coordinates +1 and -1
-// as constructed by _toCSGWall(-1, 1). This is so we can use the 3D union(), intersect() etc
-CAG.fromFakeCSG = function (csg) {
-  let sides = csg.polygons.map(function (p) {
-    return Side._fromFakePolygon(p)
-  })
-        .filter(function (s) {
-          return s !== null
-        })
-  return CAG.fromSides(sides)
-}
-
-/** Construct a CAG from a list of points (a polygon).
- * The rotation direction of the points is not relevant.
- * The points can define a convex or a concave polygon.
- * The polygon must not self intersect.
- * @param {points[]} points - list of points in 2D space
- * @returns {CAG} new CAG object
- */
-CAG.fromPoints = function (points) {
-  let numpoints = points.length
-  if (numpoints < 3) throw new Error('CAG shape needs at least 3 points')
-  let sides = []
-  let prevpoint = new Vector2D(points[numpoints - 1])
-  let prevvertex = new Vertex2D(prevpoint)
-  points.map(function (p) {
-    let point = new Vector2D(p)
-    let vertex = new Vertex2D(point)
-    let side = new Side(prevvertex, vertex)
-    sides.push(side)
-    prevvertex = vertex
-  })
-  let result = CAG.fromSides(sides)
-  if (result.isSelfIntersecting()) {
-    throw new Error('Polygon is self intersecting!')
-  }
-  let area = result.area()
-  if (Math.abs(area) < areaEPS) {
-    throw new Error('Degenerate polygon!')
-  }
-  if (area < 0) {
-    result = result.flipped()
-  }
-  result = result.canonicalized()
-  return result
-}
-
-const CAGFromCAGFuzzyFactory = function (factory, sourcecag) {
-  let _this = factory
-  let newsides = sourcecag.sides.map(function (side) {
-    return _this.getSide(side)
-  })
-      // remove bad sides (mostly a user input issue)
-      .filter(function (side) {
-        return side.length() > EPS
-      })
-  return CAG.fromSides(newsides)
-}
-
-CAG.prototype = {
-  toString: function () {
-    let result = 'CAG (' + this.sides.length + ' sides):\n'
-    this.sides.map(function (side) {
-      result += '  ' + side.toString() + '\n'
-    })
-    return result
-  },
-
-  _toCSGWall: function (z0, z1) {
-    const CSG = require('./CSG') // FIXME: circular dependencies CAG=>CSG=>CAG
-    let polygons = this.sides.map(function (side) {
-      return side.toPolygon3D(z0, z1)
-    })
-    return CSG.fromPolygons(polygons)
-  },
-
-  _toVector3DPairs: function (m) {
-        // transform m
-    let pairs = this.sides.map(function (side) {
-      let p0 = side.vertex0.pos
-      let p1 = side.vertex1.pos
-      return [Vector3D.Create(p0.x, p0.y, 0),
-        Vector3D.Create(p1.x, p1.y, 0)]
-    })
-    if (typeof m !== 'undefined') {
-      pairs = pairs.map(function (pair) {
-        return pair.map(function (v) {
-          return v.transform(m)
-        })
-      })
-    }
-    return pairs
-  },
-
-    /*
-     * transform a cag into the polygons of a corresponding 3d plane, positioned per options
-     * Accepts a connector for plane positioning, or optionally
-     * single translation, axisVector, normalVector arguments
-     * (toConnector has precedence over single arguments if provided)
-     */
-  _toPlanePolygons: function (options) {
-    const CSG = require('./CSG') // FIXME: circular dependencies CAG=>CSG=>CAG
-    let flipped = options.flipped || false
-    // reference connector for transformation
-    let origin = [0, 0, 0]
-    let defaultAxis = [0, 0, 1]
-    let defaultNormal = [0, 1, 0]
-    let thisConnector = new Connector(origin, defaultAxis, defaultNormal)
-    // translated connector per options
-    let translation = options.translation || origin
-    let axisVector = options.axisVector || defaultAxis
-    let normalVector = options.normalVector || defaultNormal
-    // will override above if options has toConnector
-    let toConnector = options.toConnector ||
-            new Connector(translation, axisVector, normalVector)
-    // resulting transform
-    let m = thisConnector.getTransformationTo(toConnector, false, 0)
-    // create plane as a (partial non-closed) CSG in XY plane
-    let bounds = this.getBounds()
-    bounds[0] = bounds[0].minus(new Vector2D(1, 1))
-    bounds[1] = bounds[1].plus(new Vector2D(1, 1))
-    let csgshell = this._toCSGWall(-1, 1)
-    let csgplane = CSG.fromPolygons([new Polygon([
-      new Vertex3D(new Vector3D(bounds[0].x, bounds[0].y, 0)),
-      new Vertex3D(new Vector3D(bounds[1].x, bounds[0].y, 0)),
-      new Vertex3D(new Vector3D(bounds[1].x, bounds[1].y, 0)),
-      new Vertex3D(new Vector3D(bounds[0].x, bounds[1].y, 0))
-    ])])
-    if (flipped) {
-      csgplane = csgplane.invert()
-    }
-    // intersectSub -> prevent premature retesselate/canonicalize
-    csgplane = csgplane.intersectSub(csgshell)
-    // only keep the polygons in the z plane:
-    let polys = csgplane.polygons.filter(function (polygon) {
-      return Math.abs(polygon.plane.normal.z) > 0.99
-    })
-    // finally, position the plane per passed transformations
-    return polys.map(function (poly) {
-      return poly.transform(m)
-    })
-  },
-
-    /*
-     * given 2 connectors, this returns all polygons of a "wall" between 2
-     * copies of this cag, positioned in 3d space as "bottom" and
-     * "top" plane per connectors toConnector1, and toConnector2, respectively
-     */
-  _toWallPolygons: function (options) {
-        // normals are going to be correct as long as toConn2.point - toConn1.point
-        // points into cag normal direction (check in caller)
-        // arguments: options.toConnector1, options.toConnector2, options.cag
-        //     walls go from toConnector1 to toConnector2
-        //     optionally, target cag to point to - cag needs to have same number of sides as this!
-    let origin = [0, 0, 0]
-    let defaultAxis = [0, 0, 1]
-    let defaultNormal = [0, 1, 0]
-    let thisConnector = new Connector(origin, defaultAxis, defaultNormal)
-        // arguments:
-    let toConnector1 = options.toConnector1
-        // let toConnector2 = new Connector([0, 0, -30], defaultAxis, defaultNormal);
-    let toConnector2 = options.toConnector2
-    if (!(toConnector1 instanceof Connector && toConnector2 instanceof Connector)) {
-      throw new Error('could not parse Connector arguments toConnector1 or toConnector2')
-    }
-    if (options.cag) {
-      if (options.cag.sides.length !== this.sides.length) {
-        throw new Error('target cag needs same sides count as start cag')
-      }
-    }
-        // target cag is same as this unless specified
-    let toCag = options.cag || this
-    let m1 = thisConnector.getTransformationTo(toConnector1, false, 0)
-    let m2 = thisConnector.getTransformationTo(toConnector2, false, 0)
-    let vps1 = this._toVector3DPairs(m1)
-    let vps2 = toCag._toVector3DPairs(m2)
-
-    let polygons = []
-    vps1.forEach(function (vp1, i) {
-      polygons.push(new Polygon([
-        new Vertex3D(vps2[i][1]), new Vertex3D(vps2[i][0]), new Vertex3D(vp1[0])]))
-      polygons.push(new Polygon([
-        new Vertex3D(vps2[i][1]), new Vertex3D(vp1[0]), new Vertex3D(vp1[1])]))
-    })
-    return polygons
-  },
-
-    /**
-     * Convert to a list of points.
-     * @return {points[]} list of points in 2D space
-     */
-  toPoints: function () {
-    let points = this.sides.map(function (side) {
-      let v0 = side.vertex0
-      // let v1 = side.vertex1
-      return v0.pos
-    })
-    // due to the logic of CAG.fromPoints()
-    // move the first point to the last
-    if (points.length > 0) {
-      points.push(points.shift())
-    }
-    return points
-  },
-
-  union: function (cag) {
-    let cags
-    if (cag instanceof Array) {
-      cags = cag
-    } else {
-      cags = [cag]
-    }
-    let r = this._toCSGWall(-1, 1)
-    r = r.union(
-            cags.map(function (cag) {
-              return cag._toCSGWall(-1, 1).reTesselated()
-            }), false, false)
-    return CAG.fromFakeCSG(r).canonicalized()
-  },
-
-  subtract: function (cag) {
-    let cags
-    if (cag instanceof Array) {
-      cags = cag
-    } else {
-      cags = [cag]
-    }
-    let r = this._toCSGWall(-1, 1)
-    cags.map(function (cag) {
-      r = r.subtractSub(cag._toCSGWall(-1, 1), false, false)
-    })
-    r = r.reTesselated()
-    r = r.canonicalized()
-    r = CAG.fromFakeCSG(r)
-    r = r.canonicalized()
-    return r
-  },
-
-  intersect: function (cag) {
-    let cags
-    if (cag instanceof Array) {
-      cags = cag
-    } else {
-      cags = [cag]
-    }
-    let r = this._toCSGWall(-1, 1)
-    cags.map(function (cag) {
-      r = r.intersectSub(cag._toCSGWall(-1, 1), false, false)
-    })
-    r = r.reTesselated()
-    r = r.canonicalized()
-    r = CAG.fromFakeCSG(r)
-    r = r.canonicalized()
-    return r
-  },
-
-  transform: function (matrix4x4) {
-    let ismirror = matrix4x4.isMirroring()
-    let newsides = this.sides.map(function (side) {
-      return side.transform(matrix4x4)
-    })
-    let result = CAG.fromSides(newsides)
-    if (ismirror) {
-      result = result.flipped()
-    }
-    return result
-  },
-
-    // see http://local.wasp.uwa.edu.au/~pbourke/geometry/polyarea/ :
-    // Area of the polygon. For a counter clockwise rotating polygon the area is positive, otherwise negative
-    // Note(bebbi): this looks wrong. See polygon getArea()
-  area: function () {
-    let polygonArea = 0
-    this.sides.map(function (side) {
-      polygonArea += side.vertex0.pos.cross(side.vertex1.pos)
-    })
-    polygonArea *= 0.5
-    return polygonArea
-  },
-
-  flipped: function () {
-    let newsides = this.sides.map(function (side) {
-      return side.flipped()
-    })
-    newsides.reverse()
-    return CAG.fromSides(newsides)
-  },
-
-  getBounds: function () {
-    let minpoint
-    if (this.sides.length === 0) {
-      minpoint = new Vector2D(0, 0)
-    } else {
-      minpoint = this.sides[0].vertex0.pos
-    }
-    let maxpoint = minpoint
-    this.sides.map(function (side) {
-      minpoint = minpoint.min(side.vertex0.pos)
-      minpoint = minpoint.min(side.vertex1.pos)
-      maxpoint = maxpoint.max(side.vertex0.pos)
-      maxpoint = maxpoint.max(side.vertex1.pos)
-    })
-    return [minpoint, maxpoint]
-  },
-
-  isSelfIntersecting: function (debug) {
-    let numsides = this.sides.length
-    for (let i = 0; i < numsides; i++) {
-      let side0 = this.sides[i]
-      for (let ii = i + 1; ii < numsides; ii++) {
-        let side1 = this.sides[ii]
-        if (linesIntersect(side0.vertex0.pos, side0.vertex1.pos, side1.vertex0.pos, side1.vertex1.pos)) {
-          if (debug) { console.log('side ' + i + ': ' + side0); console.log('side ' + ii + ': ' + side1) }
-          return true
-        }
-      }
-    }
-    return false
-  },
-
-  expandedShell: function (radius, resolution) {
-    resolution = resolution || 8
-    if (resolution < 4) resolution = 4
-    let cags = []
-    let pointmap = {}
-    let cag = this.canonicalized()
-    cag.sides.map(function (side) {
-      let d = side.vertex1.pos.minus(side.vertex0.pos)
-      let dl = d.length()
-      if (dl > EPS) {
-        d = d.times(1.0 / dl)
-        let normal = d.normal().times(radius)
-        let shellpoints = [
-          side.vertex1.pos.plus(normal),
-          side.vertex1.pos.minus(normal),
-          side.vertex0.pos.minus(normal),
-          side.vertex0.pos.plus(normal)
-        ]
-                //      let newcag = CAG.fromPointsNoCheck(shellpoints);
-        let newcag = CAG.fromPoints(shellpoints)
-        cags.push(newcag)
-        for (let step = 0; step < 2; step++) {
-          let p1 = (step === 0) ? side.vertex0.pos : side.vertex1.pos
-          let p2 = (step === 0) ? side.vertex1.pos : side.vertex0.pos
-          let tag = p1.x + ' ' + p1.y
-          if (!(tag in pointmap)) {
-            pointmap[tag] = []
-          }
-          pointmap[tag].push({
-            'p1': p1,
-            'p2': p2
-          })
-        }
-      }
-    })
-    for (let tag in pointmap) {
-      let m = pointmap[tag]
-      let angle1, angle2
-      let pcenter = m[0].p1
-      if (m.length === 2) {
-        let end1 = m[0].p2
-        let end2 = m[1].p2
-        angle1 = end1.minus(pcenter).angleDegrees()
-        angle2 = end2.minus(pcenter).angleDegrees()
-        if (angle2 < angle1) angle2 += 360
-        if (angle2 >= (angle1 + 360)) angle2 -= 360
-        if (angle2 < angle1 + 180) {
-          let t = angle2
-          angle2 = angle1 + 360
-          angle1 = t
-        }
-        angle1 += 90
-        angle2 -= 90
-      } else {
-        angle1 = 0
-        angle2 = 360
-      }
-      let fullcircle = (angle2 > angle1 + 359.999)
-      if (fullcircle) {
-        angle1 = 0
-        angle2 = 360
-      }
-      if (angle2 > (angle1 + angleEPS)) {
-        let points = []
-        if (!fullcircle) {
-          points.push(pcenter)
-        }
-        let numsteps = Math.round(resolution * (angle2 - angle1) / 360)
-        if (numsteps < 1) numsteps = 1
-        for (let step = 0; step <= numsteps; step++) {
-          let angle = angle1 + step / numsteps * (angle2 - angle1)
-          if (step === numsteps) angle = angle2 // prevent rounding errors
-          let point = pcenter.plus(Vector2D.fromAngleDegrees(angle).times(radius))
-          if ((!fullcircle) || (step > 0)) {
-            points.push(point)
-          }
-        }
-        let newcag = CAG.fromPointsNoCheck(points)
-        cags.push(newcag)
-      }
-    }
-    let result = new CAG()
-    result = result.union(cags)
-    return result
-  },
-
-  expand: function (radius, resolution) {
-    let result = this.union(this.expandedShell(radius, resolution))
-    return result
-  },
-
-  contract: function (radius, resolution) {
-    let result = this.subtract(this.expandedShell(radius, resolution))
-    return result
-  },
-
-    // extrude the CAG in a certain plane.
-    // Giving just a plane is not enough, multiple different extrusions in the same plane would be possible
-    // by rotating around the plane's origin. An additional right-hand vector should be specified as well,
-    // and this is exactly a OrthoNormalBasis.
-    //
-    // orthonormalbasis: characterizes the plane in which to extrude
-    // depth: thickness of the extruded shape. Extrusion is done upwards from the plane
-    //        (unless symmetrical option is set, see below)
-    // options:
-    //   {symmetrical: true}  // extrude symmetrically in two directions about the plane
-  extrudeInOrthonormalBasis: function (orthonormalbasis, depth, options) {
-        // first extrude in the regular Z plane:
-    if (!(orthonormalbasis instanceof OrthoNormalBasis)) {
-      throw new Error('extrudeInPlane: the first parameter should be a OrthoNormalBasis')
-    }
-    let extruded = this.extrude({
-      offset: [0, 0, depth]
-    })
-    if (parseOptionAsBool(options, 'symmetrical', false)) {
-      extruded = extruded.translate([0, 0, -depth / 2])
-    }
-    let matrix = orthonormalbasis.getInverseProjectionMatrix()
-    extruded = extruded.transform(matrix)
-    return extruded
-  },
-
-    // Extrude in a standard cartesian plane, specified by two axis identifiers. Each identifier can be
-    // one of ["X","Y","Z","-X","-Y","-Z"]
-    // The 2d x axis will map to the first given 3D axis, the 2d y axis will map to the second.
-    // See OrthoNormalBasis.GetCartesian for details.
-    // options:
-    //   {symmetrical: true}  // extrude symmetrically in two directions about the plane
-  extrudeInPlane: function (axis1, axis2, depth, options) {
-    return this.extrudeInOrthonormalBasis(OrthoNormalBasis.GetCartesian(axis1, axis2), depth, options)
-  },
-
-    // extruded=cag.extrude({offset: [0,0,10], twistangle: 360, twiststeps: 100});
-    // linear extrusion of 2D shape, with optional twist
-    // The 2d shape is placed in in z=0 plane and extruded into direction <offset> (a Vector3D)
-    // The final face is rotated <twistangle> degrees. Rotation is done around the origin of the 2d shape (i.e. x=0, y=0)
-    // twiststeps determines the resolution of the twist (should be >= 1)
-    // returns a CSG object
-  extrude: function (options) {
-    const CSG = require('./CSG') // FIXME: circular dependencies CAG=>CSG=>CAG
-    if (this.sides.length === 0) {
-            // empty!
-      return new CSG()
-    }
-    let offsetVector = parseOptionAs3DVector(options, 'offset', [0, 0, 1])
-    let twistangle = parseOptionAsFloat(options, 'twistangle', 0)
-    let twiststeps = parseOptionAsInt(options, 'twiststeps', defaultResolution3D)
-    if (offsetVector.z === 0) {
-      throw new Error('offset cannot be orthogonal to Z axis')
-    }
-    if (twistangle === 0 || twiststeps < 1) {
-      twiststeps = 1
-    }
-    let normalVector = Vector3D.Create(0, 1, 0)
-
-    let polygons = []
-        // bottom and top
-    polygons = polygons.concat(this._toPlanePolygons({
-      translation: [0, 0, 0],
-      normalVector: normalVector,
-      flipped: !(offsetVector.z < 0)}
-    ))
-    polygons = polygons.concat(this._toPlanePolygons({
-      translation: offsetVector,
-      normalVector: normalVector.rotateZ(twistangle),
-      flipped: offsetVector.z < 0}))
-        // walls
-    for (let i = 0; i < twiststeps; i++) {
-      let c1 = new Connector(offsetVector.times(i / twiststeps), [0, 0, offsetVector.z],
-                normalVector.rotateZ(i * twistangle / twiststeps))
-      let c2 = new Connector(offsetVector.times((i + 1) / twiststeps), [0, 0, offsetVector.z],
-                normalVector.rotateZ((i + 1) * twistangle / twiststeps))
-      polygons = polygons.concat(this._toWallPolygons({toConnector1: c1, toConnector2: c2}))
-    }
-
-    return CSG.fromPolygons(polygons)
-  },
-
-    /** Extrude to into a 3D solid by rotating the origin around the Y axis.
-     * (and turning everything into XY plane)
-     * @param {Object} options - options for construction
-     * @param {Number} [options.angle=360] - angle of rotation
-     * @param {Number} [options.resolution=defaultResolution3D] - number of polygons per 360 degree revolution
-     * @returns {CSG} new 3D solid
-     */
-  rotateExtrude: function (options) { // FIXME options should be optional
-    const CSG = require('./CSG') // FIXME: circular dependencies CAG=>CSG=>CAG
-    let alpha = parseOptionAsFloat(options, 'angle', 360)
-    let resolution = parseOptionAsInt(options, 'resolution', defaultResolution3D)
-
-    alpha = alpha > 360 ? alpha % 360 : alpha
-    let origin = [0, 0, 0]
-    let axisV = Vector3D.Create(0, 1, 0)
-    let normalV = [0, 0, 1]
-    let polygons = []
-        // planes only needed if alpha > 0
-    let connS = new Connector(origin, axisV, normalV)
-    if (alpha > 0 && alpha < 360) {
-            // we need to rotate negative to satisfy wall function condition of
-            // building in the direction of axis vector
-      let connE = new Connector(origin, axisV.rotateZ(-alpha), normalV)
-      polygons = polygons.concat(
-                this._toPlanePolygons({toConnector: connS, flipped: true}))
-      polygons = polygons.concat(
-                this._toPlanePolygons({toConnector: connE}))
-    }
-    let connT1 = connS
-    let connT2
-    let step = alpha / resolution
-    for (let a = step; a <= alpha + EPS; a += step) { // FIXME Should this be angelEPS?
-      connT2 = new Connector(origin, axisV.rotateZ(-a), normalV)
-      polygons = polygons.concat(this._toWallPolygons(
-                {toConnector1: connT1, toConnector2: connT2}))
-      connT1 = connT2
-    }
-    return CSG.fromPolygons(polygons).reTesselated()
-  },
-
-    // check if we are a valid CAG (for debugging)
-    // NOTE(bebbi) uneven side count doesn't work because rounding with EPS isn't taken into account
-  check: function () {
-    let errors = []
-    if (this.isSelfIntersecting(true)) {
-      errors.push('Self intersects')
-    }
-    let pointcount = {}
-    this.sides.map(function (side) {
-      function mappoint (p) {
-        let tag = p.x + ' ' + p.y
-        if (!(tag in pointcount)) pointcount[tag] = 0
-        pointcount[tag] ++
-      }
-      mappoint(side.vertex0.pos)
-      mappoint(side.vertex1.pos)
-    })
-    for (let tag in pointcount) {
-      let count = pointcount[tag]
-      if (count & 1) {
-        errors.push('Uneven number of sides (' + count + ') for point ' + tag)
-      }
-    }
-    let area = this.area()
-    if (area < areaEPS) {
-      errors.push('Area is ' + area)
-    }
-    if (errors.length > 0) {
-      let ertxt = ''
-      errors.map(function (err) {
-        ertxt += err + '\n'
-      })
-      throw new Error(ertxt)
-    }
-  },
-
-  canonicalized: function () {
-    if (this.isCanonicalized) {
-      return this
-    } else {
-      let factory = new FuzzyCAGFactory()
-      let result = CAGFromCAGFuzzyFactory(factory, this)
-      result.isCanonicalized = true
-      return result
-    }
-  },
-
-  /** Convert to compact binary form.
-   * See CAG.fromCompactBinary.
-   * @return {CompactBinary}
-   */
-  toCompactBinary: function () {
-    let cag = this.canonicalized()
-    let numsides = cag.sides.length
-    let vertexmap = {}
-    let vertices = []
-    let numvertices = 0
-    let sideVertexIndices = new Uint32Array(2 * numsides)
-    let sidevertexindicesindex = 0
-    cag.sides.map(function (side) {
-      [side.vertex0, side.vertex1].map(function (v) {
-        let vertextag = v.getTag()
-        let vertexindex
-        if (!(vertextag in vertexmap)) {
-          vertexindex = numvertices++
-          vertexmap[vertextag] = vertexindex
-          vertices.push(v)
-        } else {
-          vertexindex = vertexmap[vertextag]
-        }
-        sideVertexIndices[sidevertexindicesindex++] = vertexindex
-      })
-    })
-    let vertexData = new Float64Array(numvertices * 2)
-    let verticesArrayIndex = 0
-    vertices.map(function (v) {
-      let pos = v.pos
-      vertexData[verticesArrayIndex++] = pos._x
-      vertexData[verticesArrayIndex++] = pos._y
-    })
-    let result = {
-      'class': 'CAG',
-      sideVertexIndices: sideVertexIndices,
-      vertexData: vertexData
-    }
-    return result
-  },
-
-  getOutlinePaths: function () {
-    let cag = this.canonicalized()
-    let sideTagToSideMap = {}
-    let startVertexTagToSideTagMap = {}
-    cag.sides.map(function (side) {
-      let sidetag = side.getTag()
-      sideTagToSideMap[sidetag] = side
-      let startvertextag = side.vertex0.getTag()
-      if (!(startvertextag in startVertexTagToSideTagMap)) {
-        startVertexTagToSideTagMap[startvertextag] = []
-      }
-      startVertexTagToSideTagMap[startvertextag].push(sidetag)
-    })
-    let paths = []
-    while (true) {
-      let startsidetag = null
-      for (let aVertexTag in startVertexTagToSideTagMap) {
-        let sidesForThisVertex = startVertexTagToSideTagMap[aVertexTag]
-        startsidetag = sidesForThisVertex[0]
-        sidesForThisVertex.splice(0, 1)
-        if (sidesForThisVertex.length === 0) {
-          delete startVertexTagToSideTagMap[aVertexTag]
-        }
-        break
-      }
-      if (startsidetag === null) break // we've had all sides
-      let connectedVertexPoints = []
-      let sidetag = startsidetag
-      let thisside = sideTagToSideMap[sidetag]
-      let startvertextag = thisside.vertex0.getTag()
-      while (true) {
-        connectedVertexPoints.push(thisside.vertex0.pos)
-        let nextvertextag = thisside.vertex1.getTag()
-        if (nextvertextag === startvertextag) break // we've closed the polygon
-        if (!(nextvertextag in startVertexTagToSideTagMap)) {
-          throw new Error('Area is not closed!')
-        }
-        let nextpossiblesidetags = startVertexTagToSideTagMap[nextvertextag]
-        let nextsideindex = -1
-        if (nextpossiblesidetags.length === 1) {
-          nextsideindex = 0
-        } else {
-                    // more than one side starting at the same vertex. This means we have
-                    // two shapes touching at the same corner
-          let bestangle = null
-          let thisangle = thisside.direction().angleDegrees()
-          for (let sideindex = 0; sideindex < nextpossiblesidetags.length; sideindex++) {
-            let nextpossiblesidetag = nextpossiblesidetags[sideindex]
-            let possibleside = sideTagToSideMap[nextpossiblesidetag]
-            let angle = possibleside.direction().angleDegrees()
-            let angledif = angle - thisangle
-            if (angledif < -180) angledif += 360
-            if (angledif >= 180) angledif -= 360
-            if ((nextsideindex < 0) || (angledif > bestangle)) {
-              nextsideindex = sideindex
-              bestangle = angledif
-            }
-          }
-        }
-        let nextsidetag = nextpossiblesidetags[nextsideindex]
-        nextpossiblesidetags.splice(nextsideindex, 1)
-        if (nextpossiblesidetags.length === 0) {
-          delete startVertexTagToSideTagMap[nextvertextag]
-        }
-        thisside = sideTagToSideMap[nextsidetag]
-      } // inner loop
-            // due to the logic of CAG.fromPoints()
-            // move the first point to the last
-      if (connectedVertexPoints.length > 0) {
-        connectedVertexPoints.push(connectedVertexPoints.shift())
-      }
-      let path = new Path2D(connectedVertexPoints, true)
-      paths.push(path)
-    } // outer loop
-    return paths
-  },
-
-    /*
-    cag = cag.overCutInsideCorners(cutterradius);
-
-    Using a CNC router it's impossible to cut out a true sharp inside corner. The inside corner
-    will be rounded due to the radius of the cutter. This function compensates for this by creating
-    an extra cutout at each inner corner so that the actual cut out shape will be at least as large
-    as needed.
-    */
-  overCutInsideCorners: function (cutterradius) {
-    let cag = this.canonicalized()
-        // for each vertex determine the 'incoming' side and 'outgoing' side:
-    let pointmap = {} // tag => {pos: coord, from: [], to: []}
-    cag.sides.map(function (side) {
-      if (!(side.vertex0.getTag() in pointmap)) {
-        pointmap[side.vertex0.getTag()] = {
-          pos: side.vertex0.pos,
-          from: [],
-          to: []
-        }
-      }
-      pointmap[side.vertex0.getTag()].to.push(side.vertex1.pos)
-      if (!(side.vertex1.getTag() in pointmap)) {
-        pointmap[side.vertex1.getTag()] = {
-          pos: side.vertex1.pos,
-          from: [],
-          to: []
-        }
-      }
-      pointmap[side.vertex1.getTag()].from.push(side.vertex0.pos)
-    })
-        // overcut all sharp corners:
-    let cutouts = []
-    for (let pointtag in pointmap) {
-      let pointobj = pointmap[pointtag]
-      if ((pointobj.from.length === 1) && (pointobj.to.length === 1)) {
-                // ok, 1 incoming side and 1 outgoing side:
-        let fromcoord = pointobj.from[0]
-        let pointcoord = pointobj.pos
-        let tocoord = pointobj.to[0]
-        let v1 = pointcoord.minus(fromcoord).unit()
-        let v2 = tocoord.minus(pointcoord).unit()
-        let crossproduct = v1.cross(v2)
-        let isInnerCorner = (crossproduct < 0.001)
-        if (isInnerCorner) {
-                    // yes it's a sharp corner:
-          let alpha = v2.angleRadians() - v1.angleRadians() + Math.PI
-          if (alpha < 0) {
-            alpha += 2 * Math.PI
-          } else if (alpha >= 2 * Math.PI) {
-            alpha -= 2 * Math.PI
-          }
-          let midvector = v2.minus(v1).unit()
-          let circlesegmentangle = 30 / 180 * Math.PI // resolution of the circle: segments of 30 degrees
-                    // we need to increase the radius slightly so that our imperfect circle will contain a perfect circle of cutterradius
-          let radiuscorrected = cutterradius / Math.cos(circlesegmentangle / 2)
-          let circlecenter = pointcoord.plus(midvector.times(radiuscorrected))
-                    // we don't need to create a full circle; a pie is enough. Find the angles for the pie:
-          let startangle = alpha + midvector.angleRadians()
-          let deltaangle = 2 * (Math.PI - alpha)
-          let numsteps = 2 * Math.ceil(deltaangle / circlesegmentangle / 2) // should be even
-                    // build the pie:
-          let points = [circlecenter]
-          for (let i = 0; i <= numsteps; i++) {
-            let angle = startangle + i / numsteps * deltaangle
-            let p = Vector2D.fromAngleRadians(angle).times(radiuscorrected).plus(circlecenter)
-            points.push(p)
-          }
-          cutouts.push(CAG.fromPoints(points))
-        }
-      }
-    }
-    let result = cag.subtract(cutouts)
-    return result
-  }
-}
-
-module.exports = CAG
-
-},{"./CSG":16,"./FuzzyFactory2d":19,"./connectors":22,"./constants":23,"./math/OrthoNormalBasis":28,"./math/Path2":29,"./math/Polygon3":32,"./math/Side":33,"./math/Vector2":34,"./math/Vector3":35,"./math/Vertex2":36,"./math/Vertex3":37,"./math/lineUtils":38,"./optionParsers":41}],15:[function(require,module,exports){
-const CAG = require('./CAG')
-const Side = require('./math/Side')
-const Vector2D = require('./math/Vector2')
-const Vertex = require('./math/Vertex2')
-const Path2 = require('./math/Path2')
-
-/** Reconstruct a CAG from an object with identical property names.
- * @param {Object} obj - anonymous object, typically from JSON
- * @returns {CAG} new CAG object
- */
-const fromObject = function (obj) {
-  let sides = obj.sides.map(function (s) {
-    return Side.fromObject(s)
-  })
-  let cag = CAG.fromSides(sides)
-  cag.isCanonicalized = obj.isCanonicalized
-  return cag
-}
-
-/** Construct a CAG from a list of points (a polygon).
- * Like fromPoints() but does not check if the result is a valid polygon.
- * The points MUST rotate counter clockwise.
- * The points can define a convex or a concave polygon.
- * The polygon must not self intersect.
- * @param {points[]} points - list of points in 2D space
- * @returns {CAG} new CAG object
- */
-const fromPointsNoCheck = function (points) {
-  let sides = []
-  let prevpoint = new Vector2D(points[points.length - 1])
-  let prevvertex = new Vertex(prevpoint)
-  points.map(function (p) {
-    let point = new Vector2D(p)
-    let vertex = new Vertex(point)
-    let side = new Side(prevvertex, vertex)
-    sides.push(side)
-    prevvertex = vertex
-  })
-  return CAG.fromSides(sides)
-}
-
-/** Construct a CAG from a 2d-path (a closed sequence of points).
- * Like fromPoints() but does not check if the result is a valid polygon.
- * @param {path} Path2 - a Path2 path
- * @returns {CAG} new CAG object
- */
-const fromPath2 = function (path) {
-  if (!path.isClosed()) throw new Error('The path should be closed!')
-  return CAG.fromPoints(path.getPoints())
-}
-
-
-module.exports = {
-  fromObject,
-  fromPointsNoCheck,
-  fromPath2
-  //fromFakeCSG
-}
-
-},{"./CAG":14,"./math/Path2":29,"./math/Side":33,"./math/Vector2":34,"./math/Vertex2":36}],16:[function(require,module,exports){
-const {fnNumberSort} = require('./utils')
-const FuzzyCSGFactory = require('./FuzzyFactory3d')
-const Tree = require('./trees')
-const {EPS} = require('./constants')
-const {reTesselateCoplanarPolygons} = require('./math/polygonUtils')
-const Polygon = require('./math/Polygon3')
-const Plane = require('./math/Plane')
-const Vertex = require('./math/Vertex3')
-const Vector2D = require('./math/Vector2')
-const Vector3D = require('./math/Vector3')
-const Matrix4x4 = require('./math/Matrix4')
-const OrthoNormalBasis = require('./math/OrthoNormalBasis')
-
-const CAG = require('./CAG') // FIXME: circular dependency !
-
-const Properties = require('./Properties')
-const {Connector} = require('./connectors')
-const fixTJunctions = require('./utils/fixTJunctions')
-// let {fromPolygons} = require('./CSGMakers') // FIXME: circular dependency !
-
-/** Class CSG
- * Holds a binary space partition tree representing a 3D solid. Two solids can
- * be combined using the `union()`, `subtract()`, and `intersect()` methods.
- * @constructor
- */
-let CSG = function () {
-  this.polygons = []
-  this.properties = new Properties()
-  this.isCanonicalized = true
-  this.isRetesselated = true
-}
-
-CSG.prototype = {
-  /** @return {Polygon[]} The list of polygons. */
-  toPolygons: function () {
-    return this.polygons
-  },
-
-  /**
-   * Return a new CSG solid representing the space in either this solid or
-   * in the given solids. Neither this solid nor the given solids are modified.
-   * @param {CSG[]} csg - list of CSG objects
-   * @returns {CSG} new CSG object
-   * @example
-   * let C = A.union(B)
-   * @example
-   * +-------+            +-------+
-   * |       |            |       |
-   * |   A   |            |       |
-   * |    +--+----+   =   |       +----+
-   * +----+--+    |       +----+       |
-   *      |   B   |            |       |
-   *      |       |            |       |
-   *      +-------+            +-------+
-   */
-  union: function (csg) {
-    let csgs
-    if (csg instanceof Array) {
-      csgs = csg.slice(0)
-      csgs.push(this)
-    } else {
-      csgs = [this, csg]
-    }
-
-    let i
-    // combine csg pairs in a way that forms a balanced binary tree pattern
-    for (i = 1; i < csgs.length; i += 2) {
-      csgs.push(csgs[i - 1].unionSub(csgs[i]))
-    }
-    return csgs[i - 1].reTesselated().canonicalized()
-  },
-
-  unionSub: function (csg, retesselate, canonicalize) {
-    if (!this.mayOverlap(csg)) {
-      return this.unionForNonIntersecting(csg)
-    } else {
-      let a = new Tree(this.polygons)
-      let b = new Tree(csg.polygons)
-      a.clipTo(b, false)
-
-            // b.clipTo(a, true); // ERROR: this doesn't work
-      b.clipTo(a)
-      b.invert()
-      b.clipTo(a)
-      b.invert()
-
-      let newpolygons = a.allPolygons().concat(b.allPolygons())
-      let result = CSG.fromPolygons(newpolygons)
-      result.properties = this.properties._merge(csg.properties)
-      if (retesselate) result = result.reTesselated()
-      if (canonicalize) result = result.canonicalized()
-      return result
-    }
-  },
-
-    // Like union, but when we know that the two solids are not intersecting
-    // Do not use if you are not completely sure that the solids do not intersect!
-  unionForNonIntersecting: function (csg) {
-    let newpolygons = this.polygons.concat(csg.polygons)
-    let result = CSG.fromPolygons(newpolygons)
-    result.properties = this.properties._merge(csg.properties)
-    result.isCanonicalized = this.isCanonicalized && csg.isCanonicalized
-    result.isRetesselated = this.isRetesselated && csg.isRetesselated
-    return result
-  },
-
-  /**
-   * Return a new CSG solid representing space in this solid but
-   * not in the given solids. Neither this solid nor the given solids are modified.
-   * @param {CSG[]} csg - list of CSG objects
-   * @returns {CSG} new CSG object
-   * @example
-   * let C = A.subtract(B)
-   * @example
-   * +-------+            +-------+
-   * |       |            |       |
-   * |   A   |            |       |
-   * |    +--+----+   =   |    +--+
-   * +----+--+    |       +----+
-   *      |   B   |
-   *      |       |
-   *      +-------+
-   */
-  subtract: function (csg) {
-    let csgs
-    if (csg instanceof Array) {
-      csgs = csg
-    } else {
-      csgs = [csg]
-    }
-    let result = this
-    for (let i = 0; i < csgs.length; i++) {
-      let islast = (i === (csgs.length - 1))
-      result = result.subtractSub(csgs[i], islast, islast)
-    }
-    return result
-  },
-
-  subtractSub: function (csg, retesselate, canonicalize) {
-    let a = new Tree(this.polygons)
-    let b = new Tree(csg.polygons)
-    a.invert()
-    a.clipTo(b)
-    b.clipTo(a, true)
-    a.addPolygons(b.allPolygons())
-    a.invert()
-    let result = CSG.fromPolygons(a.allPolygons())
-    result.properties = this.properties._merge(csg.properties)
-    if (retesselate) result = result.reTesselated()
-    if (canonicalize) result = result.canonicalized()
-    return result
-  },
-
-  /**
-   * Return a new CSG solid representing space in both this solid and
-   * in the given solids. Neither this solid nor the given solids are modified.
-   * @param {CSG[]} csg - list of CSG objects
-   * @returns {CSG} new CSG object
-   * @example
-   * let C = A.intersect(B)
-   * @example
-   * +-------+
-   * |       |
-   * |   A   |
-   * |    +--+----+   =   +--+
-   * +----+--+    |       +--+
-   *      |   B   |
-   *      |       |
-   *      +-------+
-   */
-  intersect: function (csg) {
-    let csgs
-    if (csg instanceof Array) {
-      csgs = csg
-    } else {
-      csgs = [csg]
-    }
-    let result = this
-    for (let i = 0; i < csgs.length; i++) {
-      let islast = (i === (csgs.length - 1))
-      result = result.intersectSub(csgs[i], islast, islast)
-    }
-    return result
-  },
-
-  intersectSub: function (csg, retesselate, canonicalize) {
-    let a = new Tree(this.polygons)
-    let b = new Tree(csg.polygons)
-    a.invert()
-    b.clipTo(a)
-    b.invert()
-    a.clipTo(b)
-    b.clipTo(a)
-    a.addPolygons(b.allPolygons())
-    a.invert()
-    let result = CSG.fromPolygons(a.allPolygons())
-    result.properties = this.properties._merge(csg.properties)
-    if (retesselate) result = result.reTesselated()
-    if (canonicalize) result = result.canonicalized()
-    return result
-  },
-
-  /**
-   * Return a new CSG solid with solid and empty space switched.
-   * This solid is not modified.
-   * @returns {CSG} new CSG object
-   * @example
-   * let B = A.invert()
-   */
-  invert: function () {
-    let flippedpolygons = this.polygons.map(function (p) {
-      return p.flipped()
-    })
-    return CSG.fromPolygons(flippedpolygons)
-        // TODO: flip properties?
-  },
-
-    // Affine transformation of CSG object. Returns a new CSG object
-  transform1: function (matrix4x4) {
-    let newpolygons = this.polygons.map(function (p) {
-      return p.transform(matrix4x4)
-    })
-    let result = CSG.fromPolygons(newpolygons)
-    result.properties = this.properties._transform(matrix4x4)
-    result.isRetesselated = this.isRetesselated
-    return result
-  },
-
-  /**
-   * Return a new CSG solid that is transformed using the given Matrix.
-   * Several matrix transformations can be combined before transforming this solid.
-   * @param {CSG.Matrix4x4} matrix4x4 - matrix to be applied
-   * @returns {CSG} new CSG object
-   * @example
-   * var m = new CSG.Matrix4x4()
-   * m = m.multiply(CSG.Matrix4x4.rotationX(40))
-   * m = m.multiply(CSG.Matrix4x4.translation([-.5, 0, 0]))
-   * let B = A.transform(m)
-   */
-  transform: function (matrix4x4) {
-    let ismirror = matrix4x4.isMirroring()
-    let transformedvertices = {}
-    let transformedplanes = {}
-    let newpolygons = this.polygons.map(function (p) {
-      let newplane
-      let plane = p.plane
-      let planetag = plane.getTag()
-      if (planetag in transformedplanes) {
-        newplane = transformedplanes[planetag]
-      } else {
-        newplane = plane.transform(matrix4x4)
-        transformedplanes[planetag] = newplane
-      }
-      let newvertices = p.vertices.map(function (v) {
-        let newvertex
-        let vertextag = v.getTag()
-        if (vertextag in transformedvertices) {
-          newvertex = transformedvertices[vertextag]
-        } else {
-          newvertex = v.transform(matrix4x4)
-          transformedvertices[vertextag] = newvertex
-        }
-        return newvertex
-      })
-      if (ismirror) newvertices.reverse()
-      return new Polygon(newvertices, p.shared, newplane)
-    })
-    let result = CSG.fromPolygons(newpolygons)
-    result.properties = this.properties._transform(matrix4x4)
-    result.isRetesselated = this.isRetesselated
-    result.isCanonicalized = this.isCanonicalized
-    return result
-  },
-
-  toString: function () {
-    let result = 'CSG solid:\n'
-    this.polygons.map(function (p) {
-      result += p.toString()
-    })
-    return result
-  },
-
-    // Expand the solid
-    // resolution: number of points per 360 degree for the rounded corners
-  expand: function (radius, resolution) {
-    let result = this.expandedShell(radius, resolution, true)
-    result = result.reTesselated()
-    result.properties = this.properties // keep original properties
-    return result
-  },
-
-    // Contract the solid
-    // resolution: number of points per 360 degree for the rounded corners
-  contract: function (radius, resolution) {
-    let expandedshell = this.expandedShell(radius, resolution, false)
-    let result = this.subtract(expandedshell)
-    result = result.reTesselated()
-    result.properties = this.properties // keep original properties
-    return result
-  },
-
-    // cut the solid at a plane, and stretch the cross-section found along plane normal
-  stretchAtPlane: function (normal, point, length) {
-    let plane = Plane.fromNormalAndPoint(normal, point)
-    let onb = new OrthoNormalBasis(plane)
-    let crosssect = this.sectionCut(onb)
-    let midpiece = crosssect.extrudeInOrthonormalBasis(onb, length)
-    let piece1 = this.cutByPlane(plane)
-    let piece2 = this.cutByPlane(plane.flipped())
-    let result = piece1.union([midpiece, piece2.translate(plane.normal.times(length))])
-    return result
-  },
-
-    // Create the expanded shell of the solid:
-    // All faces are extruded to get a thickness of 2*radius
-    // Cylinders are constructed around every side
-    // Spheres are placed on every vertex
-    // unionWithThis: if true, the resulting solid will be united with 'this' solid;
-    //   the result is a true expansion of the solid
-    //   If false, returns only the shell
-  expandedShell: function (radius, resolution, unionWithThis) {
-    // const {sphere} = require('./primitives3d') // FIXME: circular dependency !
-    let csg = this.reTesselated()
-    let result
-    if (unionWithThis) {
-      result = csg
-    } else {
-      result = new CSG()
-    }
-
-        // first extrude all polygons:
-    csg.polygons.map(function (polygon) {
-      let extrudevector = polygon.plane.normal.unit().times(2 * radius)
-      let translatedpolygon = polygon.translate(extrudevector.times(-0.5))
-      let extrudedface = translatedpolygon.extrude(extrudevector)
-      result = result.unionSub(extrudedface, false, false)
-    })
-
-    // Make a list of all unique vertex pairs (i.e. all sides of the solid)
-    // For each vertex pair we collect the following:
-    //   v1: first coordinate
-    //   v2: second coordinate
-    //   planenormals: array of normal vectors of all planes touching this side
-    let vertexpairs = {} // map of 'vertex pair tag' to {v1, v2, planenormals}
-    csg.polygons.map(function (polygon) {
-      let numvertices = polygon.vertices.length
-      let prevvertex = polygon.vertices[numvertices - 1]
-      let prevvertextag = prevvertex.getTag()
-      for (let i = 0; i < numvertices; i++) {
-        let vertex = polygon.vertices[i]
-        let vertextag = vertex.getTag()
-        let vertextagpair
-        if (vertextag < prevvertextag) {
-          vertextagpair = vertextag + '-' + prevvertextag
-        } else {
-          vertextagpair = prevvertextag + '-' + vertextag
-        }
-        let obj
-        if (vertextagpair in vertexpairs) {
-          obj = vertexpairs[vertextagpair]
-        } else {
-          obj = {
-            v1: prevvertex,
-            v2: vertex,
-            planenormals: []
-          }
-          vertexpairs[vertextagpair] = obj
-        }
-        obj.planenormals.push(polygon.plane.normal)
-
-        prevvertextag = vertextag
-        prevvertex = vertex
-      }
-    })
-
-        // now construct a cylinder on every side
-        // The cylinder is always an approximation of a true cylinder: it will have <resolution> polygons
-        // around the sides. We will make sure though that the cylinder will have an edge at every
-        // face that touches this side. This ensures that we will get a smooth fill even
-        // if two edges are at, say, 10 degrees and the resolution is low.
-        // Note: the result is not retesselated yet but it really should be!
-    for (let vertextagpair in vertexpairs) {
-      let vertexpair = vertexpairs[vertextagpair]
-      let startpoint = vertexpair.v1.pos
-      let endpoint = vertexpair.v2.pos
-                // our x,y and z vectors:
-      let zbase = endpoint.minus(startpoint).unit()
-      let xbase = vertexpair.planenormals[0].unit()
-      let ybase = xbase.cross(zbase)
-
-      // make a list of angles that the cylinder should traverse:
-      let angles = []
-
-            // first of all equally spaced around the cylinder:
-      for (let i = 0; i < resolution; i++) {
-        angles.push(i * Math.PI * 2 / resolution)
-      }
-
-            // and also at every normal of all touching planes:
-      for (let i = 0, iMax = vertexpair.planenormals.length; i < iMax; i++) {
-        let planenormal = vertexpair.planenormals[i]
-        let si = ybase.dot(planenormal)
-        let co = xbase.dot(planenormal)
-        let angle = Math.atan2(si, co)
-
-        if (angle < 0) angle += Math.PI * 2
-        angles.push(angle)
-        angle = Math.atan2(-si, -co)
-        if (angle < 0) angle += Math.PI * 2
-        angles.push(angle)
-      }
-
-            // this will result in some duplicate angles but we will get rid of those later.
-            // Sort:
-      angles = angles.sort(fnNumberSort)
-
-            // Now construct the cylinder by traversing all angles:
-      let numangles = angles.length
-      let prevp1
-      let prevp2
-      let startfacevertices = []
-      let endfacevertices = []
-      let polygons = []
-      for (let i = -1; i < numangles; i++) {
-        let angle = angles[(i < 0) ? (i + numangles) : i]
-        let si = Math.sin(angle)
-        let co = Math.cos(angle)
-        let p = xbase.times(co * radius).plus(ybase.times(si * radius))
-        let p1 = startpoint.plus(p)
-        let p2 = endpoint.plus(p)
-        let skip = false
-        if (i >= 0) {
-          if (p1.distanceTo(prevp1) < EPS) {
-            skip = true
-          }
-        }
-        if (!skip) {
-          if (i >= 0) {
-            startfacevertices.push(new Vertex(p1))
-            endfacevertices.push(new Vertex(p2))
-            let polygonvertices = [
-              new Vertex(prevp2),
-              new Vertex(p2),
-              new Vertex(p1),
-              new Vertex(prevp1)
-            ]
-            let polygon = new Polygon(polygonvertices)
-            polygons.push(polygon)
-          }
-          prevp1 = p1
-          prevp2 = p2
-        }
-      }
-      endfacevertices.reverse()
-      polygons.push(new Polygon(startfacevertices))
-      polygons.push(new Polygon(endfacevertices))
-      let cylinder = CSG.fromPolygons(polygons)
-      result = result.unionSub(cylinder, false, false)
-    }
-
-        // make a list of all unique vertices
-        // For each vertex we also collect the list of normals of the planes touching the vertices
-    let vertexmap = {}
-    csg.polygons.map(function (polygon) {
-      polygon.vertices.map(function (vertex) {
-        let vertextag = vertex.getTag()
-        let obj
-        if (vertextag in vertexmap) {
-          obj = vertexmap[vertextag]
-        } else {
-          obj = {
-            pos: vertex.pos,
-            normals: []
-          }
-          vertexmap[vertextag] = obj
-        }
-        obj.normals.push(polygon.plane.normal)
-      })
-    })
-
-        // and build spheres at each vertex
-        // We will try to set the x and z axis to the normals of 2 planes
-        // This will ensure that our sphere tesselation somewhat matches 2 planes
-    for (let vertextag in vertexmap) {
-      let vertexobj = vertexmap[vertextag]
-            // use the first normal to be the x axis of our sphere:
-      let xaxis = vertexobj.normals[0].unit()
-            // and find a suitable z axis. We will use the normal which is most perpendicular to the x axis:
-      let bestzaxis = null
-      let bestzaxisorthogonality = 0
-      for (let i = 1; i < vertexobj.normals.length; i++) {
-        let normal = vertexobj.normals[i].unit()
-        let cross = xaxis.cross(normal)
-        let crosslength = cross.length()
-        if (crosslength > 0.05) {
-          if (crosslength > bestzaxisorthogonality) {
-            bestzaxisorthogonality = crosslength
-            bestzaxis = normal
-          }
-        }
-      }
-      if (!bestzaxis) {
-        bestzaxis = xaxis.randomNonParallelVector()
-      }
-      let yaxis = xaxis.cross(bestzaxis).unit()
-      let zaxis = yaxis.cross(xaxis)
-      let _sphere = CSG.sphere({
-        center: vertexobj.pos,
-        radius: radius,
-        resolution: resolution,
-        axes: [xaxis, yaxis, zaxis]
-      })
-      result = result.unionSub(_sphere, false, false)
-    }
-
-    return result
-  },
-
-  canonicalized: function () {
-    if (this.isCanonicalized) {
-      return this
-    } else {
-      let factory = new FuzzyCSGFactory()
-      let result = CSGFromCSGFuzzyFactory(factory, this)
-      result.isCanonicalized = true
-      result.isRetesselated = this.isRetesselated
-      result.properties = this.properties // keep original properties
-      return result
-    }
-  },
-
-  reTesselated: function () {
-    if (this.isRetesselated) {
-      return this
-    } else {
-      let csg = this
-      let polygonsPerPlane = {}
-      let isCanonicalized = csg.isCanonicalized
-      let fuzzyfactory = new FuzzyCSGFactory()
-      csg.polygons.map(function (polygon) {
-        let plane = polygon.plane
-        let shared = polygon.shared
-        if (!isCanonicalized) {
-          // in order to identify to polygons having the same plane, we need to canonicalize the planes
-          // We don't have to do a full canonizalization (including vertices), to save time only do the planes and the shared data:
-          plane = fuzzyfactory.getPlane(plane)
-          shared = fuzzyfactory.getPolygonShared(shared)
-        }
-        let tag = plane.getTag() + '/' + shared.getTag()
-        if (!(tag in polygonsPerPlane)) {
-          polygonsPerPlane[tag] = [polygon]
-        } else {
-          polygonsPerPlane[tag].push(polygon)
-        }
-      })
-      let destpolygons = []
-      for (let planetag in polygonsPerPlane) {
-        let sourcepolygons = polygonsPerPlane[planetag]
-        if (sourcepolygons.length < 2) {
-          destpolygons = destpolygons.concat(sourcepolygons)
-        } else {
-          let retesselayedpolygons = []
-          reTesselateCoplanarPolygons(sourcepolygons, retesselayedpolygons)
-          destpolygons = destpolygons.concat(retesselayedpolygons)
-        }
-      }
-      let result = CSG.fromPolygons(destpolygons)
-      result.isRetesselated = true
-            // result = result.canonicalized();
-      result.properties = this.properties // keep original properties
-      return result
-    }
-  },
-
-  /**
-   * Returns an array of Vector3D, providing minimum coordinates and maximum coordinates
-   * of this solid.
-   * @returns {Vector3D[]}
-   * @example
-   * let bounds = A.getBounds()
-   * let minX = bounds[0].x
-   */
-  getBounds: function () {
-    if (!this.cachedBoundingBox) {
-      let minpoint = new Vector3D(0, 0, 0)
-      let maxpoint = new Vector3D(0, 0, 0)
-      let polygons = this.polygons
-      let numpolygons = polygons.length
-      for (let i = 0; i < numpolygons; i++) {
-        let polygon = polygons[i]
-        let bounds = polygon.boundingBox()
-        if (i === 0) {
-          minpoint = bounds[0]
-          maxpoint = bounds[1]
-        } else {
-          minpoint = minpoint.min(bounds[0])
-          maxpoint = maxpoint.max(bounds[1])
-        }
-      }
-      this.cachedBoundingBox = [minpoint, maxpoint]
-    }
-    return this.cachedBoundingBox
-  },
-
-    // returns true if there is a possibility that the two solids overlap
-    // returns false if we can be sure that they do not overlap
-  mayOverlap: function (csg) {
-    if ((this.polygons.length === 0) || (csg.polygons.length === 0)) {
-      return false
-    } else {
-      let mybounds = this.getBounds()
-      let otherbounds = csg.getBounds()
-      if (mybounds[1].x < otherbounds[0].x) return false
-      if (mybounds[0].x > otherbounds[1].x) return false
-      if (mybounds[1].y < otherbounds[0].y) return false
-      if (mybounds[0].y > otherbounds[1].y) return false
-      if (mybounds[1].z < otherbounds[0].z) return false
-      if (mybounds[0].z > otherbounds[1].z) return false
-      return true
-    }
-  },
-
-    // Cut the solid by a plane. Returns the solid on the back side of the plane
-  cutByPlane: function (plane) {
-    if (this.polygons.length === 0) {
-      return new CSG()
-    }
-        // Ideally we would like to do an intersection with a polygon of inifinite size
-        // but this is not supported by our implementation. As a workaround, we will create
-        // a cube, with one face on the plane, and a size larger enough so that the entire
-        // solid fits in the cube.
-        // find the max distance of any vertex to the center of the plane:
-    let planecenter = plane.normal.times(plane.w)
-    let maxdistance = 0
-    this.polygons.map(function (polygon) {
-      polygon.vertices.map(function (vertex) {
-        let distance = vertex.pos.distanceToSquared(planecenter)
-        if (distance > maxdistance) maxdistance = distance
-      })
-    })
-    maxdistance = Math.sqrt(maxdistance)
-    maxdistance *= 1.01 // make sure it's really larger
-        // Now build a polygon on the plane, at any point farther than maxdistance from the plane center:
-    let vertices = []
-    let orthobasis = new OrthoNormalBasis(plane)
-    vertices.push(new Vertex(orthobasis.to3D(new Vector2D(maxdistance, -maxdistance))))
-    vertices.push(new Vertex(orthobasis.to3D(new Vector2D(-maxdistance, -maxdistance))))
-    vertices.push(new Vertex(orthobasis.to3D(new Vector2D(-maxdistance, maxdistance))))
-    vertices.push(new Vertex(orthobasis.to3D(new Vector2D(maxdistance, maxdistance))))
-    let polygon = new Polygon(vertices, null, plane.flipped())
-
-        // and extrude the polygon into a cube, backwards of the plane:
-    let cube = polygon.extrude(plane.normal.times(-maxdistance))
-
-        // Now we can do the intersection:
-    let result = this.intersect(cube)
-    result.properties = this.properties // keep original properties
-    return result
-  },
-
-    // Connect a solid to another solid, such that two Connectors become connected
-    //   myConnector: a Connector of this solid
-    //   otherConnector: a Connector to which myConnector should be connected
-    //   mirror: false: the 'axis' vectors of the connectors should point in the same direction
-    //           true: the 'axis' vectors of the connectors should point in opposite direction
-    //   normalrotation: degrees of rotation between the 'normal' vectors of the two
-    //                   connectors
-  connectTo: function (myConnector, otherConnector, mirror, normalrotation) {
-    let matrix = myConnector.getTransformationTo(otherConnector, mirror, normalrotation)
-    return this.transform(matrix)
-  },
-
-    // set the .shared property of all polygons
-    // Returns a new CSG solid, the original is unmodified!
-  setShared: function (shared) {
-    let polygons = this.polygons.map(function (p) {
-      return new Polygon(p.vertices, shared, p.plane)
-    })
-    let result = CSG.fromPolygons(polygons)
-    result.properties = this.properties // keep original properties
-    result.isRetesselated = this.isRetesselated
-    result.isCanonicalized = this.isCanonicalized
-    return result
-  },
-
-  setColor: function (args) {
-    let newshared = Polygon.Shared.fromColor.apply(this, arguments)
-    return this.setShared(newshared)
-  },
-
-  toCompactBinary: function () {
-    let csg = this.canonicalized(),
-      numpolygons = csg.polygons.length,
-      numpolygonvertices = 0,
-      numvertices = 0,
-      vertexmap = {},
-      vertices = [],
-      numplanes = 0,
-      planemap = {},
-      polygonindex = 0,
-      planes = [],
-      shareds = [],
-      sharedmap = {},
-      numshared = 0
-        // for (let i = 0, iMax = csg.polygons.length; i < iMax; i++) {
-        //  let p = csg.polygons[i];
-        //  for (let j = 0, jMax = p.length; j < jMax; j++) {
-        //      ++numpolygonvertices;
-        //      let vertextag = p[j].getTag();
-        //      if(!(vertextag in vertexmap)) {
-        //          vertexmap[vertextag] = numvertices++;
-        //          vertices.push(p[j]);
-        //      }
-        //  }
-    csg.polygons.map(function (p) {
-      p.vertices.map(function (v) {
-        ++numpolygonvertices
-        let vertextag = v.getTag()
-        if (!(vertextag in vertexmap)) {
-          vertexmap[vertextag] = numvertices++
-          vertices.push(v)
-        }
-      })
-
-      let planetag = p.plane.getTag()
-      if (!(planetag in planemap)) {
-        planemap[planetag] = numplanes++
-        planes.push(p.plane)
-      }
-      let sharedtag = p.shared.getTag()
-      if (!(sharedtag in sharedmap)) {
-        sharedmap[sharedtag] = numshared++
-        shareds.push(p.shared)
-      }
-    })
-    let numVerticesPerPolygon = new Uint32Array(numpolygons)
-    let polygonSharedIndexes = new Uint32Array(numpolygons)
-    let polygonVertices = new Uint32Array(numpolygonvertices)
-    let polygonPlaneIndexes = new Uint32Array(numpolygons)
-    let vertexData = new Float64Array(numvertices * 3)
-    let planeData = new Float64Array(numplanes * 4)
-    let polygonVerticesIndex = 0
-    for (let polygonindex = 0; polygonindex < numpolygons; ++polygonindex) {
-      let p = csg.polygons[polygonindex]
-      numVerticesPerPolygon[polygonindex] = p.vertices.length
-      p.vertices.map(function (v) {
-        let vertextag = v.getTag()
-        let vertexindex = vertexmap[vertextag]
-        polygonVertices[polygonVerticesIndex++] = vertexindex
-      })
-      let planetag = p.plane.getTag()
-      let planeindex = planemap[planetag]
-      polygonPlaneIndexes[polygonindex] = planeindex
-      let sharedtag = p.shared.getTag()
-      let sharedindex = sharedmap[sharedtag]
-      polygonSharedIndexes[polygonindex] = sharedindex
-    }
-    let verticesArrayIndex = 0
-    vertices.map(function (v) {
-      let pos = v.pos
-      vertexData[verticesArrayIndex++] = pos._x
-      vertexData[verticesArrayIndex++] = pos._y
-      vertexData[verticesArrayIndex++] = pos._z
-    })
-    let planesArrayIndex = 0
-    planes.map(function (p) {
-      let normal = p.normal
-      planeData[planesArrayIndex++] = normal._x
-      planeData[planesArrayIndex++] = normal._y
-      planeData[planesArrayIndex++] = normal._z
-      planeData[planesArrayIndex++] = p.w
-    })
-    let result = {
-      'class': 'CSG',
-      numPolygons: numpolygons,
-      numVerticesPerPolygon: numVerticesPerPolygon,
-      polygonPlaneIndexes: polygonPlaneIndexes,
-      polygonSharedIndexes: polygonSharedIndexes,
-      polygonVertices: polygonVertices,
-      vertexData: vertexData,
-      planeData: planeData,
-      shared: shareds
-    }
-    return result
-  },
-
-    // Get the transformation that transforms this CSG such that it is lying on the z=0 plane,
-    // as flat as possible (i.e. the least z-height).
-    // So that it is in an orientation suitable for CNC milling
-  getTransformationAndInverseTransformationToFlatLying: function () {
-    if (this.polygons.length === 0) {
-      let m = new Matrix4x4() // unity
-      return [m, m]
-    } else {
-            // get a list of unique planes in the CSG:
-      let csg = this.canonicalized()
-      let planemap = {}
-      csg.polygons.map(function (polygon) {
-        planemap[polygon.plane.getTag()] = polygon.plane
-      })
-            // try each plane in the CSG and find the plane that, when we align it flat onto z=0,
-            // gives the least height in z-direction.
-            // If two planes give the same height, pick the plane that originally had a normal closest
-            // to [0,0,-1].
-      let xvector = new Vector3D(1, 0, 0)
-      let yvector = new Vector3D(0, 1, 0)
-      let zvector = new Vector3D(0, 0, 1)
-      let z0connectorx = new Connector([0, 0, 0], [0, 0, -1], xvector)
-      let z0connectory = new Connector([0, 0, 0], [0, 0, -1], yvector)
-      let isfirst = true
-      let minheight = 0
-      let maxdotz = 0
-      let besttransformation, bestinversetransformation
-      for (let planetag in planemap) {
-        let plane = planemap[planetag]
-        let pointonplane = plane.normal.times(plane.w)
-        let transformation, inversetransformation
-                // We need a normal vecrtor for the transformation
-                // determine which is more perpendicular to the plane normal: x or y?
-                // we will align this as much as possible to the x or y axis vector
-        let xorthogonality = plane.normal.cross(xvector).length()
-        let yorthogonality = plane.normal.cross(yvector).length()
-        if (xorthogonality > yorthogonality) {
-                    // x is better:
-          let planeconnector = new Connector(pointonplane, plane.normal, xvector)
-          transformation = planeconnector.getTransformationTo(z0connectorx, false, 0)
-          inversetransformation = z0connectorx.getTransformationTo(planeconnector, false, 0)
-        } else {
-                    // y is better:
-          let planeconnector = new Connector(pointonplane, plane.normal, yvector)
-          transformation = planeconnector.getTransformationTo(z0connectory, false, 0)
-          inversetransformation = z0connectory.getTransformationTo(planeconnector, false, 0)
-        }
-        let transformedcsg = csg.transform(transformation)
-        let dotz = -plane.normal.dot(zvector)
-        let bounds = transformedcsg.getBounds()
-        let zheight = bounds[1].z - bounds[0].z
-        let isbetter = isfirst
-        if (!isbetter) {
-          if (zheight < minheight) {
-            isbetter = true
-          } else if (zheight === minheight) {
-            if (dotz > maxdotz) isbetter = true
-          }
-        }
-        if (isbetter) {
-                    // translate the transformation around the z-axis and onto the z plane:
-          let translation = new Vector3D([-0.5 * (bounds[1].x + bounds[0].x), -0.5 * (bounds[1].y + bounds[0].y), -bounds[0].z])
-          transformation = transformation.multiply(Matrix4x4.translation(translation))
-          inversetransformation = Matrix4x4.translation(translation.negated()).multiply(inversetransformation)
-          minheight = zheight
-          maxdotz = dotz
-          besttransformation = transformation
-          bestinversetransformation = inversetransformation
-        }
-        isfirst = false
-      }
-      return [besttransformation, bestinversetransformation]
-    }
-  },
-
-  getTransformationToFlatLying: function () {
-    let result = this.getTransformationAndInverseTransformationToFlatLying()
-    return result[0]
-  },
-
-  lieFlat: function () {
-    let transformation = this.getTransformationToFlatLying()
-    return this.transform(transformation)
-  },
-
-    // project the 3D CSG onto a plane
-    // This returns a 2D CAG with the 'shadow' shape of the 3D solid when projected onto the
-    // plane represented by the orthonormal basis
-  projectToOrthoNormalBasis: function (orthobasis) {
-    let cags = []
-    this.polygons.filter(function (p) {
-                // only return polys in plane, others may disturb result
-      return p.plane.normal.minus(orthobasis.plane.normal).lengthSquared() < (EPS * EPS)
-    })
-            .map(function (polygon) {
-              let cag = polygon.projectToOrthoNormalBasis(orthobasis)
-              if (cag.sides.length > 0) {
-                cags.push(cag)
-              }
-            })
-    let result = new CAG().union(cags)
-    return result
-  },
-
-  sectionCut: function (orthobasis) {
-    let plane1 = orthobasis.plane
-    let plane2 = orthobasis.plane.flipped()
-    plane1 = new Plane(plane1.normal, plane1.w)
-    plane2 = new Plane(plane2.normal, plane2.w + (5 * EPS))
-    let cut3d = this.cutByPlane(plane1)
-    cut3d = cut3d.cutByPlane(plane2)
-    return cut3d.projectToOrthoNormalBasis(orthobasis)
-  },
-
-  fixTJunctions: function () {
-    return fixTJunctions(CSG.fromPolygons, this)
-  },
-
-  toTriangles: function () {
-    let polygons = []
-    this.polygons.forEach(function (poly) {
-      let firstVertex = poly.vertices[0]
-      for (let i = poly.vertices.length - 3; i >= 0; i--) {
-        polygons.push(new Polygon([
-          firstVertex, poly.vertices[i + 1], poly.vertices[i + 2]
-        ],
-                    poly.shared, poly.plane))
-      }
-    })
-    return polygons
-  },
-
-  /**
-   * Returns an array of values for the requested features of this solid.
-   * Supported Features: 'volume', 'area'
-   * @param {String[]} features - list of features to calculate
-   * @returns {Float[]} values
-   * @example
-   * let volume = A.getFeatures('volume')
-   * let values = A.getFeatures('area','volume')
-   */
-  getFeatures: function (features) {
-    if (!(features instanceof Array)) {
-      features = [features]
-    }
-    let result = this.toTriangles().map(function (triPoly) {
-      return triPoly.getTetraFeatures(features)
-    })
-            .reduce(function (pv, v) {
-              return v.map(function (feat, i) {
-                return feat + (pv === 0 ? 0 : pv[i])
-              })
-            }, 0)
-    return (result.length === 1) ? result[0] : result
-  }
-}
-
-/** Construct a CSG solid from a list of `Polygon` instances.
- * @param {Polygon[]} polygons - list of polygons
- * @returns {CSG} new CSG object
- */
-CSG.fromPolygons = function fromPolygons (polygons) {
-  let csg = new CSG()
-  csg.polygons = polygons
-  csg.isCanonicalized = false
-  csg.isRetesselated = false
-  return csg
-}
-
-const CSGFromCSGFuzzyFactory = function (factory, sourcecsg) {
-  let _this = factory
-  let newpolygons = []
-  sourcecsg.polygons.forEach(function (polygon) {
-    let newpolygon = _this.getPolygon(polygon)
-          // see getPolygon above: we may get a polygon with no vertices, discard it:
-    if (newpolygon.vertices.length >= 3) {
-      newpolygons.push(newpolygon)
-    }
-  })
-  return CSG.fromPolygons(newpolygons)
-}
-
-module.exports = CSG
-
-},{"./CAG":14,"./FuzzyFactory3d":20,"./Properties":21,"./connectors":22,"./constants":23,"./math/Matrix4":27,"./math/OrthoNormalBasis":28,"./math/Plane":30,"./math/Polygon3":32,"./math/Vector2":34,"./math/Vector3":35,"./math/Vertex3":37,"./math/polygonUtils":39,"./trees":44,"./utils":45,"./utils/fixTJunctions":46}],17:[function(require,module,exports){
-const Vector3D = require('./math/Vector3')
-const Vertex = require('./math/Vertex3')
-const Plane = require('./math/Plane')
-const Polygon2D = require('./math/Polygon2')
-const Polygon3D = require('./math/Polygon3')
-
-/** Construct a CSG solid from a list of pre-generated slices.
- * See Polygon.prototype.solidFromSlices() for details.
- * @param {Object} options - options passed to solidFromSlices()
- * @returns {CSG} new CSG object
- */
-function fromSlices (options) {
-  return (new Polygon2D.createFromPoints([
-        [0, 0, 0],
-        [1, 0, 0],
-        [1, 1, 0],
-        [0, 1, 0]
-  ])).solidFromSlices(options)
-}
-
-/** Reconstruct a CSG solid from an object with identical property names.
- * @param {Object} obj - anonymous object, typically from JSON
- * @returns {CSG} new CSG object
- */
-function fromObject (obj) {
-  const CSG = require('./CSG')
-  let polygons = obj.polygons.map(function (p) {
-    return Polygon3D.fromObject(p)
-  })
-  let csg = CSG.fromPolygons(polygons)
-  csg.isCanonicalized = obj.isCanonicalized
-  csg.isRetesselated = obj.isRetesselated
-  return csg
-}
-
-/** Reconstruct a CSG from the output of toCompactBinary().
- * @param {CompactBinary} bin - see toCompactBinary().
- * @returns {CSG} new CSG object
- */
-function fromCompactBinary (bin) {
-  const CSG = require('./CSG') // FIXME: circular dependency ??
-
-  if (bin['class'] !== 'CSG') throw new Error('Not a CSG')
-  let planes = []
-  let planeData = bin.planeData
-  let numplanes = planeData.length / 4
-  let arrayindex = 0
-  let x, y, z, w, normal, plane
-  for (let planeindex = 0; planeindex < numplanes; planeindex++) {
-    x = planeData[arrayindex++]
-    y = planeData[arrayindex++]
-    z = planeData[arrayindex++]
-    w = planeData[arrayindex++]
-    normal = Vector3D.Create(x, y, z)
-    plane = new Plane(normal, w)
-    planes.push(plane)
-  }
-
-  let vertices = []
-  const vertexData = bin.vertexData
-  const numvertices = vertexData.length / 3
-  let pos
-  let vertex
-  arrayindex = 0
-  for (let vertexindex = 0; vertexindex < numvertices; vertexindex++) {
-    x = vertexData[arrayindex++]
-    y = vertexData[arrayindex++]
-    z = vertexData[arrayindex++]
-    pos = Vector3D.Create(x, y, z)
-    vertex = new Vertex(pos)
-    vertices.push(vertex)
-  }
-
-  let shareds = bin.shared.map(function (shared) {
-    return Polygon3D.Shared.fromObject(shared)
-  })
-
-  let polygons = []
-  let numpolygons = bin.numPolygons
-  let numVerticesPerPolygon = bin.numVerticesPerPolygon
-  let polygonVertices = bin.polygonVertices
-  let polygonPlaneIndexes = bin.polygonPlaneIndexes
-  let polygonSharedIndexes = bin.polygonSharedIndexes
-  let numpolygonvertices
-  let polygonvertices
-  let shared
-  let polygon // already defined plane,
-  arrayindex = 0
-  for (let polygonindex = 0; polygonindex < numpolygons; polygonindex++) {
-    numpolygonvertices = numVerticesPerPolygon[polygonindex]
-    polygonvertices = []
-    for (let i = 0; i < numpolygonvertices; i++) {
-      polygonvertices.push(vertices[polygonVertices[arrayindex++]])
-    }
-    plane = planes[polygonPlaneIndexes[polygonindex]]
-    shared = shareds[polygonSharedIndexes[polygonindex]]
-    polygon = new Polygon3D(polygonvertices, shared, plane)
-    polygons.push(polygon)
-  }
-  let csg = CSG.fromPolygons(polygons)
-  csg.isCanonicalized = true
-  csg.isRetesselated = true
-  return csg
-}
-
-module.exports = {
-  //fromPolygons,
-  fromSlices,
-  fromObject,
-  fromCompactBinary
-}
-
-},{"./CSG":16,"./math/Plane":30,"./math/Polygon2":31,"./math/Polygon3":32,"./math/Vector3":35,"./math/Vertex3":37}],18:[function(require,module,exports){
-// //////////////////////////////
-// ## class fuzzyFactory
-// This class acts as a factory for objects. We can search for an object with approximately
-// the desired properties (say a rectangle with width 2 and height 1)
-// The lookupOrCreate() method looks for an existing object (for example it may find an existing rectangle
-// with width 2.0001 and height 0.999. If no object is found, the user supplied callback is
-// called, which should generate a new object. The new object is inserted into the database
-// so it can be found by future lookupOrCreate() calls.
-// Constructor:
-//   numdimensions: the number of parameters for each object
-//     for example for a 2D rectangle this would be 2
-//   tolerance: The maximum difference for each parameter allowed to be considered a match
-const FuzzyFactory = function (numdimensions, tolerance) {
-  this.lookuptable = {}
-  this.multiplier = 1.0 / tolerance
-}
-
-FuzzyFactory.prototype = {
-    // let obj = f.lookupOrCreate([el1, el2, el3], function(elements) {/* create the new object */});
-    // Performs a fuzzy lookup of the object with the specified elements.
-    // If found, returns the existing object
-    // If not found, calls the supplied callback function which should create a new object with
-    // the specified properties. This object is inserted in the lookup database.
-  lookupOrCreate: function (els, creatorCallback) {
-    let hash = ''
-    let multiplier = this.multiplier
-    els.forEach(function (el) {
-      let valueQuantized = Math.round(el * multiplier)
-      hash += valueQuantized + '/'
-    })
-    if (hash in this.lookuptable) {
-      return this.lookuptable[hash]
-    } else {
-      let object = creatorCallback(els)
-      let hashparts = els.map(function (el) {
-        let q0 = Math.floor(el * multiplier)
-        let q1 = q0 + 1
-        return ['' + q0 + '/', '' + q1 + '/']
-      })
-      let numelements = els.length
-      let numhashes = 1 << numelements
-      for (let hashmask = 0; hashmask < numhashes; ++hashmask) {
-        let hashmaskShifted = hashmask
-        hash = ''
-        hashparts.forEach(function (hashpart) {
-          hash += hashpart[hashmaskShifted & 1]
-          hashmaskShifted >>= 1
-        })
-        this.lookuptable[hash] = object
-      }
-      return object
-    }
-  }
-}
-
-module.exports = FuzzyFactory
-
-},{}],19:[function(require,module,exports){
-const FuzzyFactory = require('./FuzzyFactory')
-const {EPS} = require('./constants')
-const Side = require('./math/Side')
-
-const FuzzyCAGFactory = function () {
-  this.vertexfactory = new FuzzyFactory(2, EPS)
-}
-
-FuzzyCAGFactory.prototype = {
-  getVertex: function (sourcevertex) {
-    let elements = [sourcevertex.pos._x, sourcevertex.pos._y]
-    let result = this.vertexfactory.lookupOrCreate(elements, function (els) {
-      return sourcevertex
-    })
-    return result
-  },
-
-  getSide: function (sourceside) {
-    let vertex0 = this.getVertex(sourceside.vertex0)
-    let vertex1 = this.getVertex(sourceside.vertex1)
-    return new Side(vertex0, vertex1)
-  }
-}
-
-module.exports = FuzzyCAGFactory
-
-},{"./FuzzyFactory":18,"./constants":23,"./math/Side":33}],20:[function(require,module,exports){
-const {EPS} = require('./constants')
-const Polygon = require('./math/Polygon3')
-const FuzzyFactory = require('./FuzzyFactory')
-
-// ////////////////////////////////////
-const FuzzyCSGFactory = function () {
-  this.vertexfactory = new FuzzyFactory(3, EPS)
-  this.planefactory = new FuzzyFactory(4, EPS)
-  this.polygonsharedfactory = {}
-}
-
-FuzzyCSGFactory.prototype = {
-  getPolygonShared: function (sourceshared) {
-    let hash = sourceshared.getHash()
-    if (hash in this.polygonsharedfactory) {
-      return this.polygonsharedfactory[hash]
-    } else {
-      this.polygonsharedfactory[hash] = sourceshared
-      return sourceshared
-    }
-  },
-
-  getVertex: function (sourcevertex) {
-    let elements = [sourcevertex.pos._x, sourcevertex.pos._y, sourcevertex.pos._z]
-    let result = this.vertexfactory.lookupOrCreate(elements, function (els) {
-      return sourcevertex
-    })
-    return result
-  },
-
-  getPlane: function (sourceplane) {
-    let elements = [sourceplane.normal._x, sourceplane.normal._y, sourceplane.normal._z, sourceplane.w]
-    let result = this.planefactory.lookupOrCreate(elements, function (els) {
-      return sourceplane
-    })
-    return result
-  },
-
-  getPolygon: function (sourcepolygon) {
-    let newplane = this.getPlane(sourcepolygon.plane)
-    let newshared = this.getPolygonShared(sourcepolygon.shared)
-    let _this = this
-    let newvertices = sourcepolygon.vertices.map(function (vertex) {
-      return _this.getVertex(vertex)
-    })
-        // two vertices that were originally very close may now have become
-        // truly identical (referring to the same Vertex object).
-        // Remove duplicate vertices:
-    let newverticesDedup = []
-    if (newvertices.length > 0) {
-      let prevvertextag = newvertices[newvertices.length - 1].getTag()
-      newvertices.forEach(function (vertex) {
-        let vertextag = vertex.getTag()
-        if (vertextag !== prevvertextag) {
-          newverticesDedup.push(vertex)
-        }
-        prevvertextag = vertextag
-      })
-    }
-        // If it's degenerate, remove all vertices:
-    if (newverticesDedup.length < 3) {
-      newverticesDedup = []
-    }
-    return new Polygon(newverticesDedup, newshared, newplane)
-  }
-}
-
-module.exports = FuzzyCSGFactory
-
-},{"./FuzzyFactory":18,"./constants":23,"./math/Polygon3":32}],21:[function(require,module,exports){
-// ////////////////////////////////////
-// # Class Properties
-// This class is used to store properties of a solid
-// A property can for example be a Vertex, a Plane or a Line3D
-// Whenever an affine transform is applied to the CSG solid, all its properties are
-// transformed as well.
-// The properties can be stored in a complex nested structure (using arrays and objects)
-const Properties = function () {}
-
-Properties.prototype = {
-  _transform: function (matrix4x4) {
-    let result = new Properties()
-    Properties.transformObj(this, result, matrix4x4)
-    return result
-  },
-  _merge: function (otherproperties) {
-    let result = new Properties()
-    Properties.cloneObj(this, result)
-    Properties.addFrom(result, otherproperties)
-    return result
-  }
-}
-
-Properties.transformObj = function (source, result, matrix4x4) {
-  for (let propertyname in source) {
-    if (propertyname === '_transform') continue
-    if (propertyname === '_merge') continue
-    let propertyvalue = source[propertyname]
-    let transformed = propertyvalue
-    if (typeof (propertyvalue) === 'object') {
-      if (('transform' in propertyvalue) && (typeof (propertyvalue.transform) === 'function')) {
-        transformed = propertyvalue.transform(matrix4x4)
-      } else if (propertyvalue instanceof Array) {
-        transformed = []
-        Properties.transformObj(propertyvalue, transformed, matrix4x4)
-      } else if (propertyvalue instanceof Properties) {
-        transformed = new Properties()
-        Properties.transformObj(propertyvalue, transformed, matrix4x4)
-      }
-    }
-    result[propertyname] = transformed
-  }
-}
-
-Properties.cloneObj = function (source, result) {
-  for (let propertyname in source) {
-    if (propertyname === '_transform') continue
-    if (propertyname === '_merge') continue
-    let propertyvalue = source[propertyname]
-    let cloned = propertyvalue
-    if (typeof (propertyvalue) === 'object') {
-      if (propertyvalue instanceof Array) {
-        cloned = []
-        for (let i = 0; i < propertyvalue.length; i++) {
-          cloned.push(propertyvalue[i])
-        }
-      } else if (propertyvalue instanceof Properties) {
-        cloned = new Properties()
-        Properties.cloneObj(propertyvalue, cloned)
-      }
-    }
-    result[propertyname] = cloned
-  }
-}
-
-Properties.addFrom = function (result, otherproperties) {
-  for (let propertyname in otherproperties) {
-    if (propertyname === '_transform') continue
-    if (propertyname === '_merge') continue
-    if ((propertyname in result) &&
-            (typeof (result[propertyname]) === 'object') &&
-            (result[propertyname] instanceof Properties) &&
-            (typeof (otherproperties[propertyname]) === 'object') &&
-            (otherproperties[propertyname] instanceof Properties)) {
-      Properties.addFrom(result[propertyname], otherproperties[propertyname])
-    } else if (!(propertyname in result)) {
-      result[propertyname] = otherproperties[propertyname]
-    }
-  }
-}
-
-module.exports = Properties
-
-},{}],22:[function(require,module,exports){
-const Vector3D = require('./math/Vector3')
-const Line3D = require('./math/Line3')
-const Matrix4x4 = require('./math/Matrix4')
-const OrthoNormalBasis = require('./math/OrthoNormalBasis')
-const Plane = require('./math/Plane')
-
-// # class Connector
-// A connector allows to attach two objects at predefined positions
-// For example a servo motor and a servo horn:
-// Both can have a Connector called 'shaft'
-// The horn can be moved and rotated such that the two connectors match
-// and the horn is attached to the servo motor at the proper position.
-// Connectors are stored in the properties of a CSG solid so they are
-// ge the same transformations applied as the solid
-const Connector = function (point, axisvector, normalvector) {
-  this.point = new Vector3D(point)
-  this.axisvector = new Vector3D(axisvector).unit()
-  this.normalvector = new Vector3D(normalvector).unit()
-}
-
-Connector.prototype = {
-  normalized: function () {
-    let axisvector = this.axisvector.unit()
-        // make the normal vector truly normal:
-    let n = this.normalvector.cross(axisvector).unit()
-    let normalvector = axisvector.cross(n)
-    return new Connector(this.point, axisvector, normalvector)
-  },
-
-  transform: function (matrix4x4) {
-    let point = this.point.multiply4x4(matrix4x4)
-    let axisvector = this.point.plus(this.axisvector).multiply4x4(matrix4x4).minus(point)
-    let normalvector = this.point.plus(this.normalvector).multiply4x4(matrix4x4).minus(point)
-    return new Connector(point, axisvector, normalvector)
-  },
-
-    // Get the transformation matrix to connect this Connector to another connector
-    //   other: a Connector to which this connector should be connected
-    //   mirror: false: the 'axis' vectors of the connectors should point in the same direction
-    //           true: the 'axis' vectors of the connectors should point in opposite direction
-    //   normalrotation: degrees of rotation between the 'normal' vectors of the two
-    //                   connectors
-  getTransformationTo: function (other, mirror, normalrotation) {
-    mirror = mirror ? true : false
-    normalrotation = normalrotation ? Number(normalrotation) : 0
-    let us = this.normalized()
-    other = other.normalized()
-        // shift to the origin:
-    let transformation = Matrix4x4.translation(this.point.negated())
-        // construct the plane crossing through the origin and the two axes:
-    let axesplane = Plane.anyPlaneFromVector3Ds(
-            new Vector3D(0, 0, 0), us.axisvector, other.axisvector)
-    let axesbasis = new OrthoNormalBasis(axesplane)
-    let angle1 = axesbasis.to2D(us.axisvector).angle()
-    let angle2 = axesbasis.to2D(other.axisvector).angle()
-    let rotation = 180.0 * (angle2 - angle1) / Math.PI
-    if (mirror) rotation += 180.0
-    transformation = transformation.multiply(axesbasis.getProjectionMatrix())
-    transformation = transformation.multiply(Matrix4x4.rotationZ(rotation))
-    transformation = transformation.multiply(axesbasis.getInverseProjectionMatrix())
-    let usAxesAligned = us.transform(transformation)
-        // Now we have done the transformation for aligning the axes.
-        // We still need to align the normals:
-    let normalsplane = Plane.fromNormalAndPoint(other.axisvector, new Vector3D(0, 0, 0))
-    let normalsbasis = new OrthoNormalBasis(normalsplane)
-    angle1 = normalsbasis.to2D(usAxesAligned.normalvector).angle()
-    angle2 = normalsbasis.to2D(other.normalvector).angle()
-    rotation = 180.0 * (angle2 - angle1) / Math.PI
-    rotation += normalrotation
-    transformation = transformation.multiply(normalsbasis.getProjectionMatrix())
-    transformation = transformation.multiply(Matrix4x4.rotationZ(rotation))
-    transformation = transformation.multiply(normalsbasis.getInverseProjectionMatrix())
-        // and translate to the destination point:
-    transformation = transformation.multiply(Matrix4x4.translation(other.point))
-        // let usAligned = us.transform(transformation);
-    return transformation
-  },
-
-  axisLine: function () {
-    return new Line3D(this.point, this.axisvector)
-  },
-
-    // creates a new Connector, with the connection point moved in the direction of the axisvector
-  extend: function (distance) {
-    let newpoint = this.point.plus(this.axisvector.unit().times(distance))
-    return new Connector(newpoint, this.axisvector, this.normalvector)
-  }
-}
-
-const ConnectorList = function (connectors) {
-  this.connectors_ = connectors ? connectors.slice() : []
-}
-
-ConnectorList.defaultNormal = [0, 0, 1]
-
-ConnectorList.fromPath2D = function (path2D, arg1, arg2) {
-  if (arguments.length === 3) {
-    return ConnectorList._fromPath2DTangents(path2D, arg1, arg2)
-  } else if (arguments.length === 2) {
-    return ConnectorList._fromPath2DExplicit(path2D, arg1)
-  } else {
-    throw new Error('call with path2D and either 2 direction vectors, or a function returning direction vectors')
-  }
-}
-
-/*
- * calculate the connector axisvectors by calculating the "tangent" for path2D.
- * This is undefined for start and end points, so axis for these have to be manually
- * provided.
- */
-ConnectorList._fromPath2DTangents = function (path2D, start, end) {
-    // path2D
-  let axis
-  let pathLen = path2D.points.length
-  let result = new ConnectorList([new Connector(path2D.points[0],
-        start, ConnectorList.defaultNormal)])
-    // middle points
-  path2D.points.slice(1, pathLen - 1).forEach(function (p2, i) {
-    axis = path2D.points[i + 2].minus(path2D.points[i]).toVector3D(0)
-    result.appendConnector(new Connector(p2.toVector3D(0), axis,
-          ConnectorList.defaultNormal))
-  }, this)
-  result.appendConnector(new Connector(path2D.points[pathLen - 1], end,
-      ConnectorList.defaultNormal))
-  result.closed = path2D.closed
-  return result
-}
-
-/*
- * angleIsh: either a static angle, or a function(point) returning an angle
- */
-ConnectorList._fromPath2DExplicit = function (path2D, angleIsh) {
-  function getAngle (angleIsh, pt, i) {
-    if (typeof angleIsh === 'function') {
-      angleIsh = angleIsh(pt, i)
-    }
-    return angleIsh
-  }
-  let result = new ConnectorList(
-        path2D.points.map(function (p2, i) {
-          return new Connector(p2.toVector3D(0),
-                Vector3D.Create(1, 0, 0).rotateZ(getAngle(angleIsh, p2, i)),
-                  ConnectorList.defaultNormal)
-        }, this)
-    )
-  result.closed = path2D.closed
-  return result
-}
-
-ConnectorList.prototype = {
-  setClosed: function (closed) {
-    this.closed = !!closed // FIXME: what the hell ?
-  },
-  appendConnector: function (conn) {
-    this.connectors_.push(conn)
-  },
-    /*
-     * arguments: cagish: a cag or a function(connector) returning a cag
-     *            closed: whether the 3d path defined by connectors location
-     *              should be closed or stay open
-     *              Note: don't duplicate connectors in the path
-     * TODO: consider an option "maySelfIntersect" to close & force union all single segments
-     */
-  followWith: function (cagish) {
-    const CSG = require('./CSG') // FIXME , circular dependency connectors => CSG => connectors
-
-    this.verify()
-    function getCag (cagish, connector) {
-      if (typeof cagish === 'function') {
-        cagish = cagish(connector.point, connector.axisvector, connector.normalvector)
-      }
-      return cagish
-    }
-
-    let polygons = []
-    let currCag
-    let prevConnector = this.connectors_[this.connectors_.length - 1]
-    let prevCag = getCag(cagish, prevConnector)
-        // add walls
-    this.connectors_.forEach(function (connector, notFirst) {
-      currCag = getCag(cagish, connector)
-      if (notFirst || this.closed) {
-        polygons.push.apply(polygons, prevCag._toWallPolygons({
-          toConnector1: prevConnector, toConnector2: connector, cag: currCag}))
-      } else {
-                // it is the first, and shape not closed -> build start wall
-        polygons.push.apply(polygons,
-                    currCag._toPlanePolygons({toConnector: connector, flipped: true}))
-      }
-      if (notFirst === this.connectors_.length - 1 && !this.closed) {
-                // build end wall
-        polygons.push.apply(polygons,
-                    currCag._toPlanePolygons({toConnector: connector}))
-      }
-      prevCag = currCag
-      prevConnector = connector
-    }, this)
-    return CSG.fromPolygons(polygons).reTesselated().canonicalized()
-  },
-    /*
-     * general idea behind these checks: connectors need to have smooth transition from one to another
-     * TODO: add a check that 2 follow-on CAGs are not intersecting
-     */
-  verify: function () {
-    let connI
-    let connI1
-    for (let i = 0; i < this.connectors_.length - 1; i++) {
-      connI = this.connectors_[i]
-      connI1 = this.connectors_[i + 1]
-      if (connI1.point.minus(connI.point).dot(connI.axisvector) <= 0) {
-        throw new Error('Invalid ConnectorList. Each connectors position needs to be within a <90deg range of previous connectors axisvector')
-      }
-      if (connI.axisvector.dot(connI1.axisvector) <= 0) {
-        throw new Error('invalid ConnectorList. No neighboring connectors axisvectors may span a >=90deg angle')
-      }
-    }
-  }
-}
-
-module.exports = {Connector, ConnectorList}
-
-},{"./CSG":16,"./math/Line3":26,"./math/Matrix4":27,"./math/OrthoNormalBasis":28,"./math/Plane":30,"./math/Vector3":35}],23:[function(require,module,exports){
-const _CSGDEBUG = false
-
-/** Number of polygons per 360 degree revolution for 2D objects.
- * @default
- */
-const defaultResolution2D = 32 // FIXME this seems excessive
-/** Number of polygons per 360 degree revolution for 3D objects.
- * @default
- */
-const defaultResolution3D = 12
-
-/** Epsilon used during determination of near zero distances.
- * @default
- */
-const EPS = 1e-5
-
-/** Epsilon used during determination of near zero areas.
- * @default
- */
-const angleEPS = 0.10
-
-/** Epsilon used during determination of near zero areas.
- *  This is the minimal area of a minimal polygon.
- * @default
- */
-const areaEPS = 0.50 * EPS * EPS * Math.sin(angleEPS)
-
-const all = 0
-const top = 1
-const bottom = 2
-const left = 3
-const right = 4
-const front = 5
-const back = 6
-// Tag factory: we can request a unique tag through CSG.getTag()
-let staticTag = 1
-const getTag = () => staticTag++
-
-module.exports = {
-  _CSGDEBUG,
-  defaultResolution2D,
-  defaultResolution3D,
-  EPS,
-  angleEPS,
-  areaEPS,
-  all,
-  top,
-  bottom,
-  left,
-  right,
-  front,
-  back,
-  staticTag,
-  getTag
-}
-
-},{}],24:[function(require,module,exports){
-const CSG = require('./CSG')
-const {cube} = require('./primitives3d')
-
-// For debugging
-// Creates a new solid with a tiny cube at every vertex of the source solid
-// this is seperated from the CSG class itself because of the dependency on cube
-const toPointCloud = function (csg, cuberadius) {
-  csg = csg.reTesselated()
-
-  let result = new CSG()
-
-    // make a list of all unique vertices
-    // For each vertex we also collect the list of normals of the planes touching the vertices
-  let vertexmap = {}
-  csg.polygons.map(function (polygon) {
-    polygon.vertices.map(function (vertex) {
-      vertexmap[vertex.getTag()] = vertex.pos
-    })
-  })
-
-  for (let vertextag in vertexmap) {
-    let pos = vertexmap[vertextag]
-    let _cube = cube({
-      center: pos,
-      radius: cuberadius
-    })
-    result = result.unionSub(_cube, false, false)
-  }
-  result = result.reTesselated()
-  return result
-}
-
-module.exports = {toPointCloud}
-
-},{"./CSG":16,"./primitives3d":43}],25:[function(require,module,exports){
-const Vector2D = require('./Vector2')
-const {solve2Linear} = require('../utils')
-
-/**  class Line2D
- * Represents a directional line in 2D space
- * A line is parametrized by its normal vector (perpendicular to the line, rotated 90 degrees counter clockwise)
- * and w. The line passes through the point <normal>.times(w).
- * Equation: p is on line if normal.dot(p)==w
- * @param {Vector2D} normal normal must be a unit vector!
- * @returns {Line2D}
-*/
-const Line2D = function (normal, w) {
-  normal = new Vector2D(normal)
-  w = parseFloat(w)
-  let l = normal.length()
-    // normalize:
-  w *= l
-  normal = normal.times(1.0 / l)
-  this.normal = normal
-  this.w = w
-}
-
-Line2D.fromPoints = function (p1, p2) {
-  p1 = new Vector2D(p1)
-  p2 = new Vector2D(p2)
-  let direction = p2.minus(p1)
-  let normal = direction.normal().negated().unit()
-  let w = p1.dot(normal)
-  return new Line2D(normal, w)
-}
-
-Line2D.prototype = {
-    // same line but opposite direction:
-  reverse: function () {
-    return new Line2D(this.normal.negated(), -this.w)
-  },
-
-  equals: function (l) {
-    return (l.normal.equals(this.normal) && (l.w === this.w))
-  },
-
-  origin: function () {
-    return this.normal.times(this.w)
-  },
-
-  direction: function () {
-    return this.normal.normal()
-  },
-
-  xAtY: function (y) {
-        // (py == y) && (normal * p == w)
-        // -> px = (w - normal._y * y) / normal.x
-    let x = (this.w - this.normal._y * y) / this.normal.x
-    return x
-  },
-
-  absDistanceToPoint: function (point) {
-    point = new Vector2D(point)
-    let pointProjected = point.dot(this.normal)
-    let distance = Math.abs(pointProjected - this.w)
-    return distance
-  },
-    /* FIXME: has error - origin is not defined, the method is never used
-     closestPoint: function(point) {
-         point = new Vector2D(point);
-         let vector = point.dot(this.direction());
-         return origin.plus(vector);
-     },
-     */
-
-    // intersection between two lines, returns point as Vector2D
-  intersectWithLine: function (line2d) {
-    let point = solve2Linear(this.normal.x, this.normal.y, line2d.normal.x, line2d.normal.y, this.w, line2d.w)
-    point = new Vector2D(point) // make  vector2d
-    return point
-  },
-
-  transform: function (matrix4x4) {
-    let origin = new Vector2D(0, 0)
-    let pointOnPlane = this.normal.times(this.w)
-    let neworigin = origin.multiply4x4(matrix4x4)
-    let neworiginPlusNormal = this.normal.multiply4x4(matrix4x4)
-    let newnormal = neworiginPlusNormal.minus(neworigin)
-    let newpointOnPlane = pointOnPlane.multiply4x4(matrix4x4)
-    let neww = newnormal.dot(newpointOnPlane)
-    return new Line2D(newnormal, neww)
-  }
-}
-
-module.exports = Line2D
-
-},{"../utils":45,"./Vector2":34}],26:[function(require,module,exports){
-const Vector3D = require('./Vector3')
-const {EPS} = require('../constants')
-const {solve2Linear} = require('../utils')
-
-// # class Line3D
-// Represents a line in 3D space
-// direction must be a unit vector
-// point is a random point on the line
-const Line3D = function (point, direction) {
-  point = new Vector3D(point)
-  direction = new Vector3D(direction)
-  this.point = point
-  this.direction = direction.unit()
-}
-
-Line3D.fromPoints = function (p1, p2) {
-  p1 = new Vector3D(p1)
-  p2 = new Vector3D(p2)
-  let direction = p2.minus(p1)
-  return new Line3D(p1, direction)
-}
-
-Line3D.fromPlanes = function (p1, p2) {
-  let direction = p1.normal.cross(p2.normal)
-  let l = direction.length()
-  if (l < EPS) {
-    throw new Error('Parallel planes')
-  }
-  direction = direction.times(1.0 / l)
-
-  let mabsx = Math.abs(direction.x)
-  let mabsy = Math.abs(direction.y)
-  let mabsz = Math.abs(direction.z)
-  let origin
-  if ((mabsx >= mabsy) && (mabsx >= mabsz)) {
-        // direction vector is mostly pointing towards x
-        // find a point p for which x is zero:
-    let r = solve2Linear(p1.normal.y, p1.normal.z, p2.normal.y, p2.normal.z, p1.w, p2.w)
-    origin = new Vector3D(0, r[0], r[1])
-  } else if ((mabsy >= mabsx) && (mabsy >= mabsz)) {
-        // find a point p for which y is zero:
-    let r = solve2Linear(p1.normal.x, p1.normal.z, p2.normal.x, p2.normal.z, p1.w, p2.w)
-    origin = new Vector3D(r[0], 0, r[1])
-  } else {
-        // find a point p for which z is zero:
-    let r = solve2Linear(p1.normal.x, p1.normal.y, p2.normal.x, p2.normal.y, p1.w, p2.w)
-    origin = new Vector3D(r[0], r[1], 0)
-  }
-  return new Line3D(origin, direction)
-}
-
-Line3D.prototype = {
-  intersectWithPlane: function (plane) {
-        // plane: plane.normal * p = plane.w
-        // line: p=line.point + labda * line.direction
-    let labda = (plane.w - plane.normal.dot(this.point)) / plane.normal.dot(this.direction)
-    let point = this.point.plus(this.direction.times(labda))
-    return point
-  },
-
-  clone: function (line) {
-    return new Line3D(this.point.clone(), this.direction.clone())
-  },
-
-  reverse: function () {
-    return new Line3D(this.point.clone(), this.direction.negated())
-  },
-
-  transform: function (matrix4x4) {
-    let newpoint = this.point.multiply4x4(matrix4x4)
-    let pointPlusDirection = this.point.plus(this.direction)
-    let newPointPlusDirection = pointPlusDirection.multiply4x4(matrix4x4)
-    let newdirection = newPointPlusDirection.minus(newpoint)
-    return new Line3D(newpoint, newdirection)
-  },
-
-  closestPointOnLine: function (point) {
-    point = new Vector3D(point)
-    let t = point.minus(this.point).dot(this.direction) / this.direction.dot(this.direction)
-    let closestpoint = this.point.plus(this.direction.times(t))
-    return closestpoint
-  },
-
-  distanceToPoint: function (point) {
-    point = new Vector3D(point)
-    let closestpoint = this.closestPointOnLine(point)
-    let distancevector = point.minus(closestpoint)
-    let distance = distancevector.length()
-    return distance
-  },
-
-  equals: function (line3d) {
-    if (!this.direction.equals(line3d.direction)) return false
-    let distance = this.distanceToPoint(line3d.point)
-    if (distance > EPS) return false
-    return true
-  }
-}
-
-module.exports = Line3D
-
-},{"../constants":23,"../utils":45,"./Vector3":35}],27:[function(require,module,exports){
-const Vector3D = require('./Vector3')
-const Vector2D = require('./Vector2')
-const OrthoNormalBasis = require('./OrthoNormalBasis')
-const Plane = require('./Plane')
-
-// # class Matrix4x4:
-// Represents a 4x4 matrix. Elements are specified in row order
-const Matrix4x4 = function (elements) {
-  if (arguments.length >= 1) {
-    this.elements = elements
-  } else {
-        // if no arguments passed: create unity matrix
-    this.elements = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
-  }
-}
-
-Matrix4x4.prototype = {
-  plus: function (m) {
-    var r = []
-    for (var i = 0; i < 16; i++) {
-      r[i] = this.elements[i] + m.elements[i]
-    }
-    return new Matrix4x4(r)
-  },
-
-  minus: function (m) {
-    var r = []
-    for (var i = 0; i < 16; i++) {
-      r[i] = this.elements[i] - m.elements[i]
-    }
-    return new Matrix4x4(r)
-  },
-
-    // right multiply by another 4x4 matrix:
-  multiply: function (m) {
-        // cache elements in local variables, for speedup:
-    var this0 = this.elements[0]
-    var this1 = this.elements[1]
-    var this2 = this.elements[2]
-    var this3 = this.elements[3]
-    var this4 = this.elements[4]
-    var this5 = this.elements[5]
-    var this6 = this.elements[6]
-    var this7 = this.elements[7]
-    var this8 = this.elements[8]
-    var this9 = this.elements[9]
-    var this10 = this.elements[10]
-    var this11 = this.elements[11]
-    var this12 = this.elements[12]
-    var this13 = this.elements[13]
-    var this14 = this.elements[14]
-    var this15 = this.elements[15]
-    var m0 = m.elements[0]
-    var m1 = m.elements[1]
-    var m2 = m.elements[2]
-    var m3 = m.elements[3]
-    var m4 = m.elements[4]
-    var m5 = m.elements[5]
-    var m6 = m.elements[6]
-    var m7 = m.elements[7]
-    var m8 = m.elements[8]
-    var m9 = m.elements[9]
-    var m10 = m.elements[10]
-    var m11 = m.elements[11]
-    var m12 = m.elements[12]
-    var m13 = m.elements[13]
-    var m14 = m.elements[14]
-    var m15 = m.elements[15]
-
-    var result = []
-    result[0] = this0 * m0 + this1 * m4 + this2 * m8 + this3 * m12
-    result[1] = this0 * m1 + this1 * m5 + this2 * m9 + this3 * m13
-    result[2] = this0 * m2 + this1 * m6 + this2 * m10 + this3 * m14
-    result[3] = this0 * m3 + this1 * m7 + this2 * m11 + this3 * m15
-    result[4] = this4 * m0 + this5 * m4 + this6 * m8 + this7 * m12
-    result[5] = this4 * m1 + this5 * m5 + this6 * m9 + this7 * m13
-    result[6] = this4 * m2 + this5 * m6 + this6 * m10 + this7 * m14
-    result[7] = this4 * m3 + this5 * m7 + this6 * m11 + this7 * m15
-    result[8] = this8 * m0 + this9 * m4 + this10 * m8 + this11 * m12
-    result[9] = this8 * m1 + this9 * m5 + this10 * m9 + this11 * m13
-    result[10] = this8 * m2 + this9 * m6 + this10 * m10 + this11 * m14
-    result[11] = this8 * m3 + this9 * m7 + this10 * m11 + this11 * m15
-    result[12] = this12 * m0 + this13 * m4 + this14 * m8 + this15 * m12
-    result[13] = this12 * m1 + this13 * m5 + this14 * m9 + this15 * m13
-    result[14] = this12 * m2 + this13 * m6 + this14 * m10 + this15 * m14
-    result[15] = this12 * m3 + this13 * m7 + this14 * m11 + this15 * m15
-    return new Matrix4x4(result)
-  },
-
-  clone: function () {
-    var elements = this.elements.map(function (p) {
-      return p
-    })
-    return new Matrix4x4(elements)
-  },
-
-    // Right multiply the matrix by a Vector3D (interpreted as 3 row, 1 column)
-    // (result = M*v)
-    // Fourth element is taken as 1
-  rightMultiply1x3Vector: function (v) {
-    var v0 = v._x
-    var v1 = v._y
-    var v2 = v._z
-    var v3 = 1
-    var x = v0 * this.elements[0] + v1 * this.elements[1] + v2 * this.elements[2] + v3 * this.elements[3]
-    var y = v0 * this.elements[4] + v1 * this.elements[5] + v2 * this.elements[6] + v3 * this.elements[7]
-    var z = v0 * this.elements[8] + v1 * this.elements[9] + v2 * this.elements[10] + v3 * this.elements[11]
-    var w = v0 * this.elements[12] + v1 * this.elements[13] + v2 * this.elements[14] + v3 * this.elements[15]
-        // scale such that fourth element becomes 1:
-    if (w !== 1) {
-      var invw = 1.0 / w
-      x *= invw
-      y *= invw
-      z *= invw
-    }
-    return new Vector3D(x, y, z)
-  },
-
-    // Multiply a Vector3D (interpreted as 3 column, 1 row) by this matrix
-    // (result = v*M)
-    // Fourth element is taken as 1
-  leftMultiply1x3Vector: function (v) {
-    var v0 = v._x
-    var v1 = v._y
-    var v2 = v._z
-    var v3 = 1
-    var x = v0 * this.elements[0] + v1 * this.elements[4] + v2 * this.elements[8] + v3 * this.elements[12]
-    var y = v0 * this.elements[1] + v1 * this.elements[5] + v2 * this.elements[9] + v3 * this.elements[13]
-    var z = v0 * this.elements[2] + v1 * this.elements[6] + v2 * this.elements[10] + v3 * this.elements[14]
-    var w = v0 * this.elements[3] + v1 * this.elements[7] + v2 * this.elements[11] + v3 * this.elements[15]
-        // scale such that fourth element becomes 1:
-    if (w !== 1) {
-      var invw = 1.0 / w
-      x *= invw
-      y *= invw
-      z *= invw
-    }
-    return new Vector3D(x, y, z)
-  },
-
-    // Right multiply the matrix by a Vector2D (interpreted as 2 row, 1 column)
-    // (result = M*v)
-    // Fourth element is taken as 1
-  rightMultiply1x2Vector: function (v) {
-    var v0 = v.x
-    var v1 = v.y
-    var v2 = 0
-    var v3 = 1
-    var x = v0 * this.elements[0] + v1 * this.elements[1] + v2 * this.elements[2] + v3 * this.elements[3]
-    var y = v0 * this.elements[4] + v1 * this.elements[5] + v2 * this.elements[6] + v3 * this.elements[7]
-    var z = v0 * this.elements[8] + v1 * this.elements[9] + v2 * this.elements[10] + v3 * this.elements[11]
-    var w = v0 * this.elements[12] + v1 * this.elements[13] + v2 * this.elements[14] + v3 * this.elements[15]
-        // scale such that fourth element becomes 1:
-    if (w !== 1) {
-      var invw = 1.0 / w
-      x *= invw
-      y *= invw
-      z *= invw
-    }
-    return new Vector2D(x, y)
-  },
-
-    // Multiply a Vector2D (interpreted as 2 column, 1 row) by this matrix
-    // (result = v*M)
-    // Fourth element is taken as 1
-  leftMultiply1x2Vector: function (v) {
-    var v0 = v.x
-    var v1 = v.y
-    var v2 = 0
-    var v3 = 1
-    var x = v0 * this.elements[0] + v1 * this.elements[4] + v2 * this.elements[8] + v3 * this.elements[12]
-    var y = v0 * this.elements[1] + v1 * this.elements[5] + v2 * this.elements[9] + v3 * this.elements[13]
-    var z = v0 * this.elements[2] + v1 * this.elements[6] + v2 * this.elements[10] + v3 * this.elements[14]
-    var w = v0 * this.elements[3] + v1 * this.elements[7] + v2 * this.elements[11] + v3 * this.elements[15]
-        // scale such that fourth element becomes 1:
-    if (w !== 1) {
-      var invw = 1.0 / w
-      x *= invw
-      y *= invw
-      z *= invw
-    }
-    return new Vector2D(x, y)
-  },
-
-    // determine whether this matrix is a mirroring transformation
-  isMirroring: function () {
-    var u = new Vector3D(this.elements[0], this.elements[4], this.elements[8])
-    var v = new Vector3D(this.elements[1], this.elements[5], this.elements[9])
-    var w = new Vector3D(this.elements[2], this.elements[6], this.elements[10])
-
-        // for a true orthogonal, non-mirrored base, u.cross(v) == w
-        // If they have an opposite direction then we are mirroring
-    var mirrorvalue = u.cross(v).dot(w)
-    var ismirror = (mirrorvalue < 0)
-    return ismirror
-  }
-}
-
-// return the unity matrix
-Matrix4x4.unity = function () {
-  return new Matrix4x4()
-}
-
-// Create a rotation matrix for rotating around the x axis
-Matrix4x4.rotationX = function (degrees) {
-  var radians = degrees * Math.PI * (1.0 / 180.0)
-  var cos = Math.cos(radians)
-  var sin = Math.sin(radians)
-  var els = [
-    1, 0, 0, 0, 0, cos, sin, 0, 0, -sin, cos, 0, 0, 0, 0, 1
-  ]
-  return new Matrix4x4(els)
-}
-
-// Create a rotation matrix for rotating around the y axis
-Matrix4x4.rotationY = function (degrees) {
-  var radians = degrees * Math.PI * (1.0 / 180.0)
-  var cos = Math.cos(radians)
-  var sin = Math.sin(radians)
-  var els = [
-    cos, 0, -sin, 0, 0, 1, 0, 0, sin, 0, cos, 0, 0, 0, 0, 1
-  ]
-  return new Matrix4x4(els)
-}
-
-// Create a rotation matrix for rotating around the z axis
-Matrix4x4.rotationZ = function (degrees) {
-  var radians = degrees * Math.PI * (1.0 / 180.0)
-  var cos = Math.cos(radians)
-  var sin = Math.sin(radians)
-  var els = [
-    cos, sin, 0, 0, -sin, cos, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1
-  ]
-  return new Matrix4x4(els)
-}
-
-// Matrix for rotation about arbitrary point and axis
-Matrix4x4.rotation = function (rotationCenter, rotationAxis, degrees) {
-  rotationCenter = new Vector3D(rotationCenter)
-  rotationAxis = new Vector3D(rotationAxis)
-  var rotationPlane = Plane.fromNormalAndPoint(rotationAxis, rotationCenter)
-  var orthobasis = new OrthoNormalBasis(rotationPlane)
-  var transformation = Matrix4x4.translation(rotationCenter.negated())
-  transformation = transformation.multiply(orthobasis.getProjectionMatrix())
-  transformation = transformation.multiply(Matrix4x4.rotationZ(degrees))
-  transformation = transformation.multiply(orthobasis.getInverseProjectionMatrix())
-  transformation = transformation.multiply(Matrix4x4.translation(rotationCenter))
-  return transformation
-}
-
-// Create an affine matrix for translation:
-Matrix4x4.translation = function (v) {
-    // parse as Vector3D, so we can pass an array or a Vector3D
-  var vec = new Vector3D(v)
-  var els = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, vec.x, vec.y, vec.z, 1]
-  return new Matrix4x4(els)
-}
-
-// Create an affine matrix for mirroring into an arbitrary plane:
-Matrix4x4.mirroring = function (plane) {
-  var nx = plane.normal.x
-  var ny = plane.normal.y
-  var nz = plane.normal.z
-  var w = plane.w
-  var els = [
-        (1.0 - 2.0 * nx * nx), (-2.0 * ny * nx), (-2.0 * nz * nx), 0,
-        (-2.0 * nx * ny), (1.0 - 2.0 * ny * ny), (-2.0 * nz * ny), 0,
-        (-2.0 * nx * nz), (-2.0 * ny * nz), (1.0 - 2.0 * nz * nz), 0,
-        (2.0 * nx * w), (2.0 * ny * w), (2.0 * nz * w), 1
-  ]
-  return new Matrix4x4(els)
-}
-
-// Create an affine matrix for scaling:
-Matrix4x4.scaling = function (v) {
-    // parse as Vector3D, so we can pass an array or a Vector3D
-  var vec = new Vector3D(v)
-  var els = [
-    vec.x, 0, 0, 0, 0, vec.y, 0, 0, 0, 0, vec.z, 0, 0, 0, 0, 1
-  ]
-  return new Matrix4x4(els)
-}
-
-module.exports = Matrix4x4
-
-},{"./OrthoNormalBasis":28,"./Plane":30,"./Vector2":34,"./Vector3":35}],28:[function(require,module,exports){
-const Vector2D = require('./Vector2')
-const Vector3D = require('./Vector3')
-const Line2D = require('./Line2')
-const Line3D = require('./Line3')
-const Plane = require('./Plane')
-
-// # class OrthoNormalBasis
-// Reprojects points on a 3D plane onto a 2D plane
-// or from a 2D plane back onto the 3D plane
-const OrthoNormalBasis = function (plane, rightvector) {
-  if (arguments.length < 2) {
-        // choose an arbitrary right hand vector, making sure it is somewhat orthogonal to the plane normal:
-    rightvector = plane.normal.randomNonParallelVector()
-  } else {
-    rightvector = new Vector3D(rightvector)
-  }
-  this.v = plane.normal.cross(rightvector).unit()
-  this.u = this.v.cross(plane.normal)
-  this.plane = plane
-  this.planeorigin = plane.normal.times(plane.w)
-}
-
-// Get an orthonormal basis for the standard XYZ planes.
-// Parameters: the names of two 3D axes. The 2d x axis will map to the first given 3D axis, the 2d y
-// axis will map to the second.
-// Prepend the axis with a "-" to invert the direction of this axis.
-// For example: OrthoNormalBasis.GetCartesian("-Y","Z")
-//   will return an orthonormal basis where the 2d X axis maps to the 3D inverted Y axis, and
-//   the 2d Y axis maps to the 3D Z axis.
-OrthoNormalBasis.GetCartesian = function (xaxisid, yaxisid) {
-  let axisid = xaxisid + '/' + yaxisid
-  let planenormal, rightvector
-  if (axisid === 'X/Y') {
-    planenormal = [0, 0, 1]
-    rightvector = [1, 0, 0]
-  } else if (axisid === 'Y/-X') {
-    planenormal = [0, 0, 1]
-    rightvector = [0, 1, 0]
-  } else if (axisid === '-X/-Y') {
-    planenormal = [0, 0, 1]
-    rightvector = [-1, 0, 0]
-  } else if (axisid === '-Y/X') {
-    planenormal = [0, 0, 1]
-    rightvector = [0, -1, 0]
-  } else if (axisid === '-X/Y') {
-    planenormal = [0, 0, -1]
-    rightvector = [-1, 0, 0]
-  } else if (axisid === '-Y/-X') {
-    planenormal = [0, 0, -1]
-    rightvector = [0, -1, 0]
-  } else if (axisid === 'X/-Y') {
-    planenormal = [0, 0, -1]
-    rightvector = [1, 0, 0]
-  } else if (axisid === 'Y/X') {
-    planenormal = [0, 0, -1]
-    rightvector = [0, 1, 0]
-  } else if (axisid === 'X/Z') {
-    planenormal = [0, -1, 0]
-    rightvector = [1, 0, 0]
-  } else if (axisid === 'Z/-X') {
-    planenormal = [0, -1, 0]
-    rightvector = [0, 0, 1]
-  } else if (axisid === '-X/-Z') {
-    planenormal = [0, -1, 0]
-    rightvector = [-1, 0, 0]
-  } else if (axisid === '-Z/X') {
-    planenormal = [0, -1, 0]
-    rightvector = [0, 0, -1]
-  } else if (axisid === '-X/Z') {
-    planenormal = [0, 1, 0]
-    rightvector = [-1, 0, 0]
-  } else if (axisid === '-Z/-X') {
-    planenormal = [0, 1, 0]
-    rightvector = [0, 0, -1]
-  } else if (axisid === 'X/-Z') {
-    planenormal = [0, 1, 0]
-    rightvector = [1, 0, 0]
-  } else if (axisid === 'Z/X') {
-    planenormal = [0, 1, 0]
-    rightvector = [0, 0, 1]
-  } else if (axisid === 'Y/Z') {
-    planenormal = [1, 0, 0]
-    rightvector = [0, 1, 0]
-  } else if (axisid === 'Z/-Y') {
-    planenormal = [1, 0, 0]
-    rightvector = [0, 0, 1]
-  } else if (axisid === '-Y/-Z') {
-    planenormal = [1, 0, 0]
-    rightvector = [0, -1, 0]
-  } else if (axisid === '-Z/Y') {
-    planenormal = [1, 0, 0]
-    rightvector = [0, 0, -1]
-  } else if (axisid === '-Y/Z') {
-    planenormal = [-1, 0, 0]
-    rightvector = [0, -1, 0]
-  } else if (axisid === '-Z/-Y') {
-    planenormal = [-1, 0, 0]
-    rightvector = [0, 0, -1]
-  } else if (axisid === 'Y/-Z') {
-    planenormal = [-1, 0, 0]
-    rightvector = [0, 1, 0]
-  } else if (axisid === 'Z/Y') {
-    planenormal = [-1, 0, 0]
-    rightvector = [0, 0, 1]
-  } else {
-    throw new Error('OrthoNormalBasis.GetCartesian: invalid combination of axis identifiers. Should pass two string arguments from [X,Y,Z,-X,-Y,-Z], being two different axes.')
-  }
-  return new OrthoNormalBasis(new Plane(new Vector3D(planenormal), 0), new Vector3D(rightvector))
-}
-
-/*
-// test code for OrthoNormalBasis.GetCartesian()
-OrthoNormalBasis.GetCartesian_Test=function() {
-  let axisnames=["X","Y","Z","-X","-Y","-Z"];
-  let axisvectors=[[1,0,0], [0,1,0], [0,0,1], [-1,0,0], [0,-1,0], [0,0,-1]];
-  for(let axis1=0; axis1 < 3; axis1++) {
-    for(let axis1inverted=0; axis1inverted < 2; axis1inverted++) {
-      let axis1name=axisnames[axis1+3*axis1inverted];
-      let axis1vector=axisvectors[axis1+3*axis1inverted];
-      for(let axis2=0; axis2 < 3; axis2++) {
-        if(axis2 != axis1) {
-          for(let axis2inverted=0; axis2inverted < 2; axis2inverted++) {
-            let axis2name=axisnames[axis2+3*axis2inverted];
-            let axis2vector=axisvectors[axis2+3*axis2inverted];
-            let orthobasis=OrthoNormalBasis.GetCartesian(axis1name, axis2name);
-            let test1=orthobasis.to3D(new Vector2D([1,0]));
-            let test2=orthobasis.to3D(new Vector2D([0,1]));
-            let expected1=new Vector3D(axis1vector);
-            let expected2=new Vector3D(axis2vector);
-            let d1=test1.distanceTo(expected1);
-            let d2=test2.distanceTo(expected2);
-            if( (d1 > 0.01) || (d2 > 0.01) ) {
-              throw new Error("Wrong!");
-  }}}}}}
-  throw new Error("OK");
-};
-*/
-
-// The z=0 plane, with the 3D x and y vectors mapped to the 2D x and y vector
-OrthoNormalBasis.Z0Plane = function () {
-  let plane = new Plane(new Vector3D([0, 0, 1]), 0)
-  return new OrthoNormalBasis(plane, new Vector3D([1, 0, 0]))
-}
-
-OrthoNormalBasis.prototype = {
-  getProjectionMatrix: function () {
-    const Matrix4x4 = require('./Matrix4') // FIXME: circular dependencies Matrix=>OrthoNormalBasis => Matrix
-    return new Matrix4x4([
-      this.u.x, this.v.x, this.plane.normal.x, 0,
-      this.u.y, this.v.y, this.plane.normal.y, 0,
-      this.u.z, this.v.z, this.plane.normal.z, 0,
-      0, 0, -this.plane.w, 1
-    ])
-  },
-
-  getInverseProjectionMatrix: function () {
-    const Matrix4x4 = require('./Matrix4') // FIXME: circular dependencies Matrix=>OrthoNormalBasis => Matrix
-    let p = this.plane.normal.times(this.plane.w)
-    return new Matrix4x4([
-      this.u.x, this.u.y, this.u.z, 0,
-      this.v.x, this.v.y, this.v.z, 0,
-      this.plane.normal.x, this.plane.normal.y, this.plane.normal.z, 0,
-      p.x, p.y, p.z, 1
-    ])
-  },
-
-  to2D: function (vec3) {
-    return new Vector2D(vec3.dot(this.u), vec3.dot(this.v))
-  },
-
-  to3D: function (vec2) {
-    return this.planeorigin.plus(this.u.times(vec2.x)).plus(this.v.times(vec2.y))
-  },
-
-  line3Dto2D: function (line3d) {
-    let a = line3d.point
-    let b = line3d.direction.plus(a)
-    let a2d = this.to2D(a)
-    let b2d = this.to2D(b)
-    return Line2D.fromPoints(a2d, b2d)
-  },
-
-  line2Dto3D: function (line2d) {
-    let a = line2d.origin()
-    let b = line2d.direction().plus(a)
-    let a3d = this.to3D(a)
-    let b3d = this.to3D(b)
-    return Line3D.fromPoints(a3d, b3d)
-  },
-
-  transform: function (matrix4x4) {
-        // todo: this may not work properly in case of mirroring
-    let newplane = this.plane.transform(matrix4x4)
-    let rightpointTransformed = this.u.transform(matrix4x4)
-    let originTransformed = new Vector3D(0, 0, 0).transform(matrix4x4)
-    let newrighthandvector = rightpointTransformed.minus(originTransformed)
-    let newbasis = new OrthoNormalBasis(newplane, newrighthandvector)
-    return newbasis
-  }
-}
-
-module.exports = OrthoNormalBasis
-
-},{"./Line2":25,"./Line3":26,"./Matrix4":27,"./Plane":30,"./Vector2":34,"./Vector3":35}],29:[function(require,module,exports){
-const Vector2D = require('./Vector2')
-const {EPS, angleEPS} = require('../constants')
-const {parseOptionAs2DVector, parseOptionAsFloat, parseOptionAsInt, parseOptionAsBool} = require('../optionParsers')
-const {defaultResolution2D} = require('../constants')
-const Vertex = require('./Vertex2')
-const Side = require('./Side')
-
-/** Class Path2D
- * Represents a series of points, connected by infinitely thin lines.
- * A path can be open or closed, i.e. additional line between first and last points. 
- * The difference between Path2D and CAG is that a path is a 'thin' line, whereas a CAG is an enclosed area. 
- * @constructor
- * @param {Vector2D[]} [points=[]] - list of points
- * @param {boolean} [closed=false] - closer of path
- *
- * @example
- * new CSG.Path2D()
- * new CSG.Path2D([[10,10], [-10,10], [-10,-10], [10,-10]], true) // closed
- */
-const Path2D = function (points, closed) {
-  closed = !!closed
-  points = points || []
-    // re-parse the points into Vector2D
-    // and remove any duplicate points
-  let prevpoint = null
-  if (closed && (points.length > 0)) {
-    prevpoint = new Vector2D(points[points.length - 1])
-  }
-  let newpoints = []
-  points.map(function (point) {
-    point = new Vector2D(point)
-    let skip = false
-    if (prevpoint !== null) {
-      let distance = point.distanceTo(prevpoint)
-      skip = distance < EPS
-    }
-    if (!skip) newpoints.push(point)
-    prevpoint = point
-  })
-  this.points = newpoints
-  this.closed = closed
-}
-
-/** Construct an arc.
- * @param {Object} [options] - options for construction
- * @param {Vector2D} [options.center=[0,0]] - center of circle
- * @param {Number} [options.radius=1] - radius of circle
- * @param {Number} [options.startangle=0] - starting angle of the arc, in degrees
- * @param {Number} [options.endangle=360] - ending angle of the arc, in degrees
- * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
- * @param {Boolean} [options.maketangent=false] - adds line segments at both ends of the arc to ensure that the gradients at the edges are tangent
- * @returns {Path2D} new Path2D object (not closed)
- *
- * @example
- * let path = CSG.Path2D.arc({
- *   center: [5, 5],
- *   radius: 10,
- *   startangle: 90,
- *   endangle: 180,
- *   resolution: 36,
- *   maketangent: true
- * });
- */
-Path2D.arc = function (options) {
-  let center = parseOptionAs2DVector(options, 'center', 0)
-  let radius = parseOptionAsFloat(options, 'radius', 1)
-  let startangle = parseOptionAsFloat(options, 'startangle', 0)
-  let endangle = parseOptionAsFloat(options, 'endangle', 360)
-  let resolution = parseOptionAsInt(options, 'resolution', defaultResolution2D)
-  let maketangent = parseOptionAsBool(options, 'maketangent', false)
-    // no need to make multiple turns:
-  while (endangle - startangle >= 720) {
-    endangle -= 360
-  }
-  while (endangle - startangle <= -720) {
-    endangle += 360
-  }
-  let points = []
-  let point
-  let absangledif = Math.abs(endangle - startangle)
-  if (absangledif < angleEPS) {
-    point = Vector2D.fromAngle(startangle / 180.0 * Math.PI).times(radius)
-    points.push(point.plus(center))
-  } else {
-    let numsteps = Math.floor(resolution * absangledif / 360) + 1
-    let edgestepsize = numsteps * 0.5 / absangledif // step size for half a degree
-    if (edgestepsize > 0.25) edgestepsize = 0.25
-    let numstepsMod = maketangent ? (numsteps + 2) : numsteps
-    for (let i = 0; i <= numstepsMod; i++) {
-      let step = i
-      if (maketangent) {
-        step = (i - 1) * (numsteps - 2 * edgestepsize) / numsteps + edgestepsize
-        if (step < 0) step = 0
-        if (step > numsteps) step = numsteps
-      }
-      let angle = startangle + step * (endangle - startangle) / numsteps
-      point = Vector2D.fromAngle(angle / 180.0 * Math.PI).times(radius)
-      points.push(point.plus(center))
-    }
-  }
-  return new Path2D(points, false)
-}
-
-Path2D.prototype = {
-  concat: function (otherpath) {
-    if (this.closed || otherpath.closed) {
-      throw new Error('Paths must not be closed')
-    }
-    let newpoints = this.points.concat(otherpath.points)
-    return new Path2D(newpoints)
-  },
-
-  /**
-   * Get the points that make up the path.
-   * note that this is current internal list of points, not an immutable copy.
-   * @returns {Vector2[]} array of points the make up the path
-   */
-  getPoints: function() {
-    return this.points;
-  },
-
-  /**
-   * Append an point to the end of the path.
-   * @param {Vector2D} point - point to append
-   * @returns {Path2D} new Path2D object (not closed)
-   */
-  appendPoint: function (point) {
-    if (this.closed) {
-      throw new Error('Path must not be closed')
-    }
-    point = new Vector2D(point) // cast to Vector2D
-    let newpoints = this.points.concat([point])
-    return new Path2D(newpoints)
-  },
-
-  /**
-   * Append a list of points to the end of the path.
-   * @param {Vector2D[]} points - points to append
-   * @returns {Path2D} new Path2D object (not closed)
-   */
-  appendPoints: function (points) {
-    if (this.closed) {
-      throw new Error('Path must not be closed')
-    }
-    let newpoints = this.points
-    points.forEach(function (point) {
-      newpoints.push(new Vector2D(point)) // cast to Vector2D
-    })
-    return new Path2D(newpoints)
-  },
-
-  close: function () {
-    return new Path2D(this.points, true)
-  },
-
-  /**
-   * Determine if the path is a closed or not.
-   * @returns {Boolean} true when the path is closed, otherwise false
-   */
-  isClosed: function() {
-    return this.closed
-  },
-
-    // Extrude the path by following it with a rectangle (upright, perpendicular to the path direction)
-    // Returns a CSG solid
-    //   width: width of the extrusion, in the z=0 plane
-    //   height: height of the extrusion in the z direction
-    //   resolution: number of segments per 360 degrees for the curve in a corner
-  rectangularExtrude: function (width, height, resolution) {
-    let cag = this.expandToCAG(width / 2, resolution)
-    let result = cag.extrude({
-      offset: [0, 0, height]
-    })
-    return result
-  },
-
-    // Expand the path to a CAG
-    // This traces the path with a circle with radius pathradius
-  expandToCAG: function (pathradius, resolution) {
-    const CAG = require('../CAG') // FIXME: cyclic dependencies CAG => PATH2 => CAG
-    let sides = []
-    let numpoints = this.points.length
-    let startindex = 0
-    if (this.closed && (numpoints > 2)) startindex = -1
-    let prevvertex
-    for (let i = startindex; i < numpoints; i++) {
-      let pointindex = i
-      if (pointindex < 0) pointindex = numpoints - 1
-      let point = this.points[pointindex]
-      let vertex = new Vertex(point)
-      if (i > startindex) {
-        let side = new Side(prevvertex, vertex)
-        sides.push(side)
-      }
-      prevvertex = vertex
-    }
-    let shellcag = CAG.fromSides(sides)
-    let expanded = shellcag.expandedShell(pathradius, resolution)
-    return expanded
-  },
-
-  innerToCAG: function() {
-    const CAG = require('../CAG') // FIXME: cyclic dependencies CAG => PATH2 => CAG
-    if (!this.closed) throw new Error("The path should be closed!");
-    return CAG.fromPoints(this.points);
-  },
-
-  transform: function (matrix4x4) {
-    let newpoints = this.points.map(function (point) {
-      return point.multiply4x4(matrix4x4)
-    })
-    return new Path2D(newpoints, this.closed)
-  },
-
-  /**
-   * Append a Bezier curve to the end of the path, using the control points to transition the curve through start and end points.
-   * <br>
-   * The Bézier curve starts at the last point in the path,
-   * and ends at the last given control point. Other control points are intermediate control points.
-   * <br>
-   * The first control point may be null to ensure a smooth transition occurs. In this case,  
-   * the second to last control point of the path is mirrored into the control points of the Bezier curve.
-   * In other words, the trailing gradient of the path matches the new gradient of the curve. 
-   * @param {Vector2D[]} controlpoints - list of control points
-   * @param {Object} [options] - options for construction
-   * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
-   * @returns {Path2D} new Path2D object (not closed)
-   *
-   * @example
-   * let p5 = new CSG.Path2D([[10,-20]],false);
-   * p5 = p5.appendBezier([[10,-10],[25,-10],[25,-20]]);
-   * p5 = p5.appendBezier([[25,-30],[40,-30],[40,-20]]);
-   */
-  appendBezier: function (controlpoints, options) {
-    if (arguments.length < 2) {
-      options = {}
-    }
-    if (this.closed) {
-      throw new Error('Path must not be closed')
-    }
-    if (!(controlpoints instanceof Array)) {
-      throw new Error('appendBezier: should pass an array of control points')
-    }
-    if (controlpoints.length < 1) {
-      throw new Error('appendBezier: need at least 1 control point')
-    }
-    if (this.points.length < 1) {
-      throw new Error('appendBezier: path must already contain a point (the endpoint of the path is used as the starting point for the bezier curve)')
-    }
-    let resolution = parseOptionAsInt(options, 'resolution', defaultResolution2D)
-    if (resolution < 4) resolution = 4
-    let factorials = []
-    let controlpointsParsed = []
-    controlpointsParsed.push(this.points[this.points.length - 1]) // start at the previous end point
-    for (let i = 0; i < controlpoints.length; ++i) {
-      let p = controlpoints[i]
-      if (p === null) {
-                // we can pass null as the first control point. In that case a smooth gradient is ensured:
-        if (i !== 0) {
-          throw new Error('appendBezier: null can only be passed as the first control point')
-        }
-        if (controlpoints.length < 2) {
-          throw new Error('appendBezier: null can only be passed if there is at least one more control point')
-        }
-        let lastBezierControlPoint
-        if ('lastBezierControlPoint' in this) {
-          lastBezierControlPoint = this.lastBezierControlPoint
-        } else {
-          if (this.points.length < 2) {
-            throw new Error('appendBezier: null is passed as a control point but this requires a previous bezier curve or at least two points in the existing path')
-          }
-          lastBezierControlPoint = this.points[this.points.length - 2]
-        }
-                // mirror the last bezier control point:
-        p = this.points[this.points.length - 1].times(2).minus(lastBezierControlPoint)
-      } else {
-        p = new Vector2D(p) // cast to Vector2D
-      }
-      controlpointsParsed.push(p)
-    }
-    let bezierOrder = controlpointsParsed.length - 1
-    let fact = 1
-    for (let i = 0; i <= bezierOrder; ++i) {
-      if (i > 0) fact *= i
-      factorials.push(fact)
-    }
-    let binomials = []
-    for (let i = 0; i <= bezierOrder; ++i) {
-      let binomial = factorials[bezierOrder] / (factorials[i] * factorials[bezierOrder - i])
-      binomials.push(binomial)
-    }
-    let getPointForT = function (t) {
-      let t_k = 1 // = pow(t,k)
-      let one_minus_t_n_minus_k = Math.pow(1 - t, bezierOrder) // = pow( 1-t, bezierOrder - k)
-      let inv_1_minus_t = (t !== 1) ? (1 / (1 - t)) : 1
-      let point = new Vector2D(0, 0)
-      for (let k = 0; k <= bezierOrder; ++k) {
-        if (k === bezierOrder) one_minus_t_n_minus_k = 1
-        let bernstein_coefficient = binomials[k] * t_k * one_minus_t_n_minus_k
-        point = point.plus(controlpointsParsed[k].times(bernstein_coefficient))
-        t_k *= t
-        one_minus_t_n_minus_k *= inv_1_minus_t
-      }
-      return point
-    }
-    let newpoints = []
-    let newpoints_t = []
-    let numsteps = bezierOrder + 1
-    for (let i = 0; i < numsteps; ++i) {
-      let t = i / (numsteps - 1)
-      let point = getPointForT(t)
-      newpoints.push(point)
-      newpoints_t.push(t)
-    }
-    // subdivide each segment until the angle at each vertex becomes small enough:
-    let subdivideBase = 1
-    let maxangle = Math.PI * 2 / resolution // segments may have differ no more in angle than this
-    let maxsinangle = Math.sin(maxangle)
-    while (subdivideBase < newpoints.length - 1) {
-      let dir1 = newpoints[subdivideBase].minus(newpoints[subdivideBase - 1]).unit()
-      let dir2 = newpoints[subdivideBase + 1].minus(newpoints[subdivideBase]).unit()
-      let sinangle = dir1.cross(dir2) // this is the sine of the angle
-      if (Math.abs(sinangle) > maxsinangle) {
-                // angle is too big, we need to subdivide
-        let t0 = newpoints_t[subdivideBase - 1]
-        let t1 = newpoints_t[subdivideBase + 1]
-        let t0_new = t0 + (t1 - t0) * 1 / 3
-        let t1_new = t0 + (t1 - t0) * 2 / 3
-        let point0_new = getPointForT(t0_new)
-        let point1_new = getPointForT(t1_new)
-                // remove the point at subdivideBase and replace with 2 new points:
-        newpoints.splice(subdivideBase, 1, point0_new, point1_new)
-        newpoints_t.splice(subdivideBase, 1, t0_new, t1_new)
-                // re - evaluate the angles, starting at the previous junction since it has changed:
-        subdivideBase--
-        if (subdivideBase < 1) subdivideBase = 1
-      } else {
-        ++subdivideBase
-      }
-    }
-        // append to the previous points, but skip the first new point because it is identical to the last point:
-    newpoints = this.points.concat(newpoints.slice(1))
-    let result = new Path2D(newpoints)
-    result.lastBezierControlPoint = controlpointsParsed[controlpointsParsed.length - 2]
-    return result
-  },
-
-
-  /**
-   * Append an arc to the end of the path.
-   * This implementation follows the SVG arc specs. For the details see
-   * http://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
-   * @param {Vector2D} endpoint - end point of arc
-   * @param {Object} [options] - options for construction
-   * @param {Number} [options.radius=0] - radius of arc (X and Y), see also xradius and yradius
-   * @param {Number} [options.xradius=0] - X radius of arc, see also radius
-   * @param {Number} [options.yradius=0] - Y radius of arc, see also radius
-   * @param {Number} [options.xaxisrotation=0] -  rotation (in degrees) of the X axis of the arc with respect to the X axis of the coordinate system
-   * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
-   * @param {Boolean} [options.clockwise=false] - draw an arc clockwise with respect to the center point
-   * @param {Boolean} [options.large=false] - draw an arc longer than 180 degrees
-   * @returns {Path2D} new Path2D object (not closed)
-   *
-   * @example
-   * let p1 = new CSG.Path2D([[27.5,-22.96875]],false);
-   * p1 = p1.appendPoint([27.5,-3.28125]);
-   * p1 = p1.appendArc([12.5,-22.96875],{xradius: 15,yradius: -19.6875,xaxisrotation: 0,clockwise: false,large: false});
-   * p1 = p1.close();
-   */
-  appendArc: function (endpoint, options) {
-    let decimals = 100000
-    if (arguments.length < 2) {
-      options = {}
-    }
-    if (this.closed) {
-      throw new Error('Path must not be closed')
-    }
-    if (this.points.length < 1) {
-      throw new Error('appendArc: path must already contain a point (the endpoint of the path is used as the starting point for the arc)')
-    }
-    let resolution = parseOptionAsInt(options, 'resolution', defaultResolution2D)
-    if (resolution < 4) resolution = 4
-    let xradius, yradius
-    if (('xradius' in options) || ('yradius' in options)) {
-      if ('radius' in options) {
-        throw new Error('Should either give an xradius and yradius parameter, or a radius parameter')
-      }
-      xradius = parseOptionAsFloat(options, 'xradius', 0)
-      yradius = parseOptionAsFloat(options, 'yradius', 0)
-    } else {
-      xradius = parseOptionAsFloat(options, 'radius', 0)
-      yradius = xradius
-    }
-    let xaxisrotation = parseOptionAsFloat(options, 'xaxisrotation', 0)
-    let clockwise = parseOptionAsBool(options, 'clockwise', false)
-    let largearc = parseOptionAsBool(options, 'large', false)
-    let startpoint = this.points[this.points.length - 1]
-    endpoint = new Vector2D(endpoint)
-        // round to precision in order to have determinate calculations
-    xradius = Math.round(xradius * decimals) / decimals
-    yradius = Math.round(yradius * decimals) / decimals
-    endpoint = new Vector2D(Math.round(endpoint.x * decimals) / decimals, Math.round(endpoint.y * decimals) / decimals)
-
-    let sweepFlag = !clockwise
-    let newpoints = []
-    if ((xradius === 0) || (yradius === 0)) {
-            // http://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes:
-            // If rx = 0 or ry = 0, then treat this as a straight line from (x1, y1) to (x2, y2) and stop
-      newpoints.push(endpoint)
-    } else {
-      xradius = Math.abs(xradius)
-      yradius = Math.abs(yradius)
-
-            // see http://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes :
-      let phi = xaxisrotation * Math.PI / 180.0
-      let cosphi = Math.cos(phi)
-      let sinphi = Math.sin(phi)
-      let minushalfdistance = startpoint.minus(endpoint).times(0.5)
-            // F.6.5.1:
-            // round to precision in order to have determinate calculations
-      let x = Math.round((cosphi * minushalfdistance.x + sinphi * minushalfdistance.y) * decimals) / decimals
-      let y = Math.round((-sinphi * minushalfdistance.x + cosphi * minushalfdistance.y) * decimals) / decimals
-      let startTranslated = new Vector2D(x, y)
-            // F.6.6.2:
-      let biglambda = (startTranslated.x * startTranslated.x) / (xradius * xradius) + (startTranslated.y * startTranslated.y) / (yradius * yradius)
-      if (biglambda > 1.0) {
-                // F.6.6.3:
-        let sqrtbiglambda = Math.sqrt(biglambda)
-        xradius *= sqrtbiglambda
-        yradius *= sqrtbiglambda
-                // round to precision in order to have determinate calculations
-        xradius = Math.round(xradius * decimals) / decimals
-        yradius = Math.round(yradius * decimals) / decimals
-      }
-            // F.6.5.2:
-      let multiplier1 = Math.sqrt((xradius * xradius * yradius * yradius - xradius * xradius * startTranslated.y * startTranslated.y - yradius * yradius * startTranslated.x * startTranslated.x) / (xradius * xradius * startTranslated.y * startTranslated.y + yradius * yradius * startTranslated.x * startTranslated.x))
-      if (sweepFlag === largearc) multiplier1 = -multiplier1
-      let centerTranslated = new Vector2D(xradius * startTranslated.y / yradius, -yradius * startTranslated.x / xradius).times(multiplier1)
-            // F.6.5.3:
-      let center = new Vector2D(cosphi * centerTranslated.x - sinphi * centerTranslated.y, sinphi * centerTranslated.x + cosphi * centerTranslated.y).plus((startpoint.plus(endpoint)).times(0.5))
-            // F.6.5.5:
-      let vec1 = new Vector2D((startTranslated.x - centerTranslated.x) / xradius, (startTranslated.y - centerTranslated.y) / yradius)
-      let vec2 = new Vector2D((-startTranslated.x - centerTranslated.x) / xradius, (-startTranslated.y - centerTranslated.y) / yradius)
-      let theta1 = vec1.angleRadians()
-      let theta2 = vec2.angleRadians()
-      let deltatheta = theta2 - theta1
-      deltatheta = deltatheta % (2 * Math.PI)
-      if ((!sweepFlag) && (deltatheta > 0)) {
-        deltatheta -= 2 * Math.PI
-      } else if ((sweepFlag) && (deltatheta < 0)) {
-        deltatheta += 2 * Math.PI
-      }
-
-            // Ok, we have the center point and angle range (from theta1, deltatheta radians) so we can create the ellipse
-      let numsteps = Math.ceil(Math.abs(deltatheta) / (2 * Math.PI) * resolution) + 1
-      if (numsteps < 1) numsteps = 1
-      for (let step = 1; step <= numsteps; step++) {
-        let theta = theta1 + step / numsteps * deltatheta
-        let costheta = Math.cos(theta)
-        let sintheta = Math.sin(theta)
-                // F.6.3.1:
-        let point = new Vector2D(cosphi * xradius * costheta - sinphi * yradius * sintheta, sinphi * xradius * costheta + cosphi * yradius * sintheta).plus(center)
-        newpoints.push(point)
-      }
-    }
-    newpoints = this.points.concat(newpoints)
-    let result = new Path2D(newpoints)
-    return result
-  }
-}
-
-module.exports = Path2D
-
-},{"../CAG":14,"../constants":23,"../optionParsers":41,"./Side":33,"./Vector2":34,"./Vertex2":36}],30:[function(require,module,exports){
-const Vector3D = require('./Vector3')
-const Line3D = require('./Line3')
-const {EPS, getTag} = require('../constants')
-
-// # class Plane
-// Represents a plane in 3D space.
-const Plane = function (normal, w) {
-  this.normal = normal
-  this.w = w
-}
-
-// create from an untyped object with identical property names:
-Plane.fromObject = function (obj) {
-  let normal = new Vector3D(obj.normal)
-  let w = parseFloat(obj.w)
-  return new Plane(normal, w)
-}
-
-Plane.fromVector3Ds = function (a, b, c) {
-  let n = b.minus(a).cross(c.minus(a)).unit()
-  return new Plane(n, n.dot(a))
-}
-
-// like fromVector3Ds, but allow the vectors to be on one point or one line
-// in such a case a random plane through the given points is constructed
-Plane.anyPlaneFromVector3Ds = function (a, b, c) {
-  let v1 = b.minus(a)
-  let v2 = c.minus(a)
-  if (v1.length() < EPS) {
-    v1 = v2.randomNonParallelVector()
-  }
-  if (v2.length() < EPS) {
-    v2 = v1.randomNonParallelVector()
-  }
-  let normal = v1.cross(v2)
-  if (normal.length() < EPS) {
-        // this would mean that v1 == v2.negated()
-    v2 = v1.randomNonParallelVector()
-    normal = v1.cross(v2)
-  }
-  normal = normal.unit()
-  return new Plane(normal, normal.dot(a))
-}
-
-Plane.fromPoints = function (a, b, c) {
-  a = new Vector3D(a)
-  b = new Vector3D(b)
-  c = new Vector3D(c)
-  return Plane.fromVector3Ds(a, b, c)
-}
-
-Plane.fromNormalAndPoint = function (normal, point) {
-  normal = new Vector3D(normal)
-  point = new Vector3D(point)
-  normal = normal.unit()
-  let w = point.dot(normal)
-  return new Plane(normal, w)
-}
-
-Plane.prototype = {
-  flipped: function () {
-    return new Plane(this.normal.negated(), -this.w)
-  },
-
-  getTag: function () {
-    let result = this.tag
-    if (!result) {
-      result = getTag()
-      this.tag = result
-    }
-    return result
-  },
-
-  equals: function (n) {
-    return this.normal.equals(n.normal) && this.w === n.w
-  },
-
-  transform: function (matrix4x4) {
-    let ismirror = matrix4x4.isMirroring()
-        // get two vectors in the plane:
-    let r = this.normal.randomNonParallelVector()
-    let u = this.normal.cross(r)
-    let v = this.normal.cross(u)
-        // get 3 points in the plane:
-    let point1 = this.normal.times(this.w)
-    let point2 = point1.plus(u)
-    let point3 = point1.plus(v)
-        // transform the points:
-    point1 = point1.multiply4x4(matrix4x4)
-    point2 = point2.multiply4x4(matrix4x4)
-    point3 = point3.multiply4x4(matrix4x4)
-        // and create a new plane from the transformed points:
-    let newplane = Plane.fromVector3Ds(point1, point2, point3)
-    if (ismirror) {
-            // the transform is mirroring
-            // We should mirror the plane:
-      newplane = newplane.flipped()
-    }
-    return newplane
-  },
-
-    // robust splitting of a line by a plane
-    // will work even if the line is parallel to the plane
-  splitLineBetweenPoints: function (p1, p2) {
-    let direction = p2.minus(p1)
-    let labda = (this.w - this.normal.dot(p1)) / this.normal.dot(direction)
-    if (isNaN(labda)) labda = 0
-    if (labda > 1) labda = 1
-    if (labda < 0) labda = 0
-    let result = p1.plus(direction.times(labda))
-    return result
-  },
-
-    // returns Vector3D
-  intersectWithLine: function (line3d) {
-    return line3d.intersectWithPlane(this)
-  },
-
-    // intersection of two planes
-  intersectWithPlane: function (plane) {
-    return Line3D.fromPlanes(this, plane)
-  },
-
-  signedDistanceToPoint: function (point) {
-    let t = this.normal.dot(point) - this.w
-    return t
-  },
-
-  toString: function () {
-    return '[normal: ' + this.normal.toString() + ', w: ' + this.w + ']'
-  },
-
-  mirrorPoint: function (point3d) {
-    let distance = this.signedDistanceToPoint(point3d)
-    let mirrored = point3d.minus(this.normal.times(distance * 2.0))
-    return mirrored
-  }
-}
-
-module.exports = Plane
-
-},{"../constants":23,"./Line3":26,"./Vector3":35}],31:[function(require,module,exports){
-const CAG = require('../CAG')
-
-/*
-2D polygons are now supported through the CAG class.
-With many improvements (see documentation):
-  - shapes do no longer have to be convex
-  - union/intersect/subtract is supported
-  - expand / contract are supported
-
-But we'll keep CSG.Polygon2D as a stub for backwards compatibility
-*/
-function Polygon2D (points) {
-  const cag = CAG.fromPoints(points)
-  this.sides = cag.sides
-}
-
-Polygon2D.prototype = CAG.prototype
-
-module.exports = Polygon2D
-
-},{"../CAG":14}],32:[function(require,module,exports){
-const Vector3D = require('./Vector3')
-const Vertex = require('./Vertex3')
-const Matrix4x4 = require('./Matrix4')
-const {_CSGDEBUG, EPS, getTag, areaEPS} = require('../constants')
-const {fnSortByIndex} = require('../utils')
-
-/** Class Polygon
- * Represents a convex polygon. The vertices used to initialize a polygon must
- *   be coplanar and form a convex loop. They do not have to be `Vertex`
- *   instances but they must behave similarly (duck typing can be used for
- *   customization).
- * <br>
- * Each convex polygon has a `shared` property, which is shared between all
- *   polygons that are clones of each other or were split from the same polygon.
- *   This can be used to define per-polygon properties (such as surface color).
- * <br>
- * The plane of the polygon is calculated from the vertex coordinates if not provided.
- *   The plane can alternatively be passed as the third argument to avoid calculations.
- *
- * @constructor
- * @param {Vertex[]} vertices - list of vertices
- * @param {Polygon.Shared} [shared=defaultShared] - shared property to apply
- * @param {Plane} [plane] - plane of the polygon
- *
- * @example
- * const vertices = [
- *   new CSG.Vertex(new CSG.Vector3D([0, 0, 0])),
- *   new CSG.Vertex(new CSG.Vector3D([0, 10, 0])),
- *   new CSG.Vertex(new CSG.Vector3D([0, 10, 10]))
- * ]
- * let observed = new Polygon(vertices)
- */
-let Polygon = function (vertices, shared, plane) {
-  this.vertices = vertices
-  if (!shared) shared = Polygon.defaultShared
-  this.shared = shared
-    // let numvertices = vertices.length;
-
-  if (arguments.length >= 3) {
-    this.plane = plane
-  } else {
-    const Plane = require('./Plane') // FIXME: circular dependencies
-    this.plane = Plane.fromVector3Ds(vertices[0].pos, vertices[1].pos, vertices[2].pos)
-  }
-
-  if (_CSGDEBUG) {
-    if (!this.checkIfConvex()) {
-      throw new Error('Not convex!')
-    }
-  }
-}
-
-// create from an untyped object with identical property names:
-Polygon.fromObject = function (obj) {
-  const Plane = require('./Plane') // FIXME: circular dependencies
-  let vertices = obj.vertices.map(function (v) {
-    return Vertex.fromObject(v)
-  })
-  let shared = Polygon.Shared.fromObject(obj.shared)
-  let plane = Plane.fromObject(obj.plane)
-  return new Polygon(vertices, shared, plane)
-}
-
-Polygon.prototype = {
-  /** Check whether the polygon is convex. (it should be, otherwise we will get unexpected results)
-   * @returns {boolean}
-   */
-  checkIfConvex: function () {
-    return Polygon.verticesConvex(this.vertices, this.plane.normal)
-  },
-
-  // FIXME what? why does this return this, and not a new polygon?
-  // FIXME is this used?
-  setColor: function (args) {
-    let newshared = Polygon.Shared.fromColor.apply(this, arguments)
-    this.shared = newshared
-    return this
-  },
-
-  getSignedVolume: function () {
-    let signedVolume = 0
-    for (let i = 0; i < this.vertices.length - 2; i++) {
-      signedVolume += this.vertices[0].pos.dot(this.vertices[i + 1].pos
-                .cross(this.vertices[i + 2].pos))
-    }
-    signedVolume /= 6
-    return signedVolume
-  },
-
-    // Note: could calculate vectors only once to speed up
-  getArea: function () {
-    let polygonArea = 0
-    for (let i = 0; i < this.vertices.length - 2; i++) {
-      polygonArea += this.vertices[i + 1].pos.minus(this.vertices[0].pos)
-                .cross(this.vertices[i + 2].pos.minus(this.vertices[i + 1].pos)).length()
-    }
-    polygonArea /= 2
-    return polygonArea
-  },
-
-    // accepts array of features to calculate
-    // returns array of results
-  getTetraFeatures: function (features) {
-    let result = []
-    features.forEach(function (feature) {
-      if (feature === 'volume') {
-        result.push(this.getSignedVolume())
-      } else if (feature === 'area') {
-        result.push(this.getArea())
-      }
-    }, this)
-    return result
-  },
-
-    // Extrude a polygon into the direction offsetvector
-    // Returns a CSG object
-  extrude: function (offsetvector) {
-    const CSG = require('../CSG') // because of circular dependencies
-
-    let newpolygons = []
-
-    let polygon1 = this
-    let direction = polygon1.plane.normal.dot(offsetvector)
-    if (direction > 0) {
-      polygon1 = polygon1.flipped()
-    }
-    newpolygons.push(polygon1)
-    let polygon2 = polygon1.translate(offsetvector)
-    let numvertices = this.vertices.length
-    for (let i = 0; i < numvertices; i++) {
-      let sidefacepoints = []
-      let nexti = (i < (numvertices - 1)) ? i + 1 : 0
-      sidefacepoints.push(polygon1.vertices[i].pos)
-      sidefacepoints.push(polygon2.vertices[i].pos)
-      sidefacepoints.push(polygon2.vertices[nexti].pos)
-      sidefacepoints.push(polygon1.vertices[nexti].pos)
-      let sidefacepolygon = Polygon.createFromPoints(sidefacepoints, this.shared)
-      newpolygons.push(sidefacepolygon)
-    }
-    polygon2 = polygon2.flipped()
-    newpolygons.push(polygon2)
-    return CSG.fromPolygons(newpolygons)
-  },
-
-  translate: function (offset) {
-    return this.transform(Matrix4x4.translation(offset))
-  },
-
-    // returns an array with a Vector3D (center point) and a radius
-  boundingSphere: function () {
-    if (!this.cachedBoundingSphere) {
-      let box = this.boundingBox()
-      let middle = box[0].plus(box[1]).times(0.5)
-      let radius3 = box[1].minus(middle)
-      let radius = radius3.length()
-      this.cachedBoundingSphere = [middle, radius]
-    }
-    return this.cachedBoundingSphere
-  },
-
-    // returns an array of two Vector3Ds (minimum coordinates and maximum coordinates)
-  boundingBox: function () {
-    if (!this.cachedBoundingBox) {
-      let minpoint, maxpoint
-      let vertices = this.vertices
-      let numvertices = vertices.length
-      if (numvertices === 0) {
-        minpoint = new Vector3D(0, 0, 0)
-      } else {
-        minpoint = vertices[0].pos
-      }
-      maxpoint = minpoint
-      for (let i = 1; i < numvertices; i++) {
-        let point = vertices[i].pos
-        minpoint = minpoint.min(point)
-        maxpoint = maxpoint.max(point)
-      }
-      this.cachedBoundingBox = [minpoint, maxpoint]
-    }
-    return this.cachedBoundingBox
-  },
-
-  flipped: function () {
-    let newvertices = this.vertices.map(function (v) {
-      return v.flipped()
-    })
-    newvertices.reverse()
-    let newplane = this.plane.flipped()
-    return new Polygon(newvertices, this.shared, newplane)
-  },
-
-    // Affine transformation of polygon. Returns a new Polygon
-  transform: function (matrix4x4) {
-    let newvertices = this.vertices.map(function (v) {
-      return v.transform(matrix4x4)
-    })
-    let newplane = this.plane.transform(matrix4x4)
-    if (matrix4x4.isMirroring()) {
-            // need to reverse the vertex order
-            // in order to preserve the inside/outside orientation:
-      newvertices.reverse()
-    }
-    return new Polygon(newvertices, this.shared, newplane)
-  },
-
-  toString: function () {
-    let result = 'Polygon plane: ' + this.plane.toString() + '\n'
-    this.vertices.map(function (vertex) {
-      result += '  ' + vertex.toString() + '\n'
-    })
-    return result
-  },
-
-    // project the 3D polygon onto a plane
-  projectToOrthoNormalBasis: function (orthobasis) {
-    const CAG = require('../CAG')
-    const {fromPointsNoCheck} = require('../CAGFactories') // circular dependencies
-    let points2d = this.vertices.map(function (vertex) {
-      return orthobasis.to2D(vertex.pos)
-    })
-
-    let result = fromPointsNoCheck(points2d)
-    let area = result.area()
-    if (Math.abs(area) < areaEPS) {
-            // the polygon was perpendicular to the orthnormal plane. The resulting 2D polygon would be degenerate
-            // return an empty area instead:
-      result = new CAG()
-    } else if (area < 0) {
-      result = result.flipped()
-    }
-    return result
-  },
-
-  //FIXME: WHY is this for 3D polygons and not for 2D shapes ?
-    /**
-     * Creates solid from slices (Polygon) by generating walls
-     * @param {Object} options Solid generating options
-     *  - numslices {Number} Number of slices to be generated
-     *  - callback(t, slice) {Function} Callback function generating slices.
-     *          arguments: t = [0..1], slice = [0..numslices - 1]
-     *          return: Polygon or null to skip
-     *  - loop {Boolean} no flats, only walls, it's used to generate solids like a tor
-     */
-  solidFromSlices: function (options) {
-    const CSG = require('../CSG')
-
-    let polygons = [],
-      csg = null,
-      prev = null,
-      bottom = null,
-      top = null,
-      numSlices = 2,
-      bLoop = false,
-      fnCallback,
-      flipped = null
-
-    if (options) {
-      bLoop = Boolean(options['loop'])
-
-      if (options.numslices) { numSlices = options.numslices }
-
-      if (options.callback) {
-        fnCallback = options.callback
-      }
-    }
-    if (!fnCallback) {
-      let square = new Polygon.createFromPoints([
-                [0, 0, 0],
-                [1, 0, 0],
-                [1, 1, 0],
-                [0, 1, 0]
-      ])
-      fnCallback = function (t, slice) {
-        return t === 0 || t === 1 ? square.translate([0, 0, t]) : null
-      }
-    }
-    for (let i = 0, iMax = numSlices - 1; i <= iMax; i++) {
-      csg = fnCallback.call(this, i / iMax, i)
-      if (csg) {
-        if (!(csg instanceof Polygon)) {
-          throw new Error('Polygon.solidFromSlices callback error: Polygon expected')
-        }
-        csg.checkIfConvex()
-
-        if (prev) { // generate walls
-          if (flipped === null) { // not generated yet
-            flipped = prev.plane.signedDistanceToPoint(csg.vertices[0].pos) < 0
-          }
-          this._addWalls(polygons, prev, csg, flipped)
-        } else { // the first - will be a bottom
-          bottom = csg
-        }
-        prev = csg
-      } // callback can return null to skip that slice
-    }
-    top = csg
-
-    if (bLoop) {
-      let bSameTopBottom = bottom.vertices.length === top.vertices.length &&
-                bottom.vertices.every(function (v, index) {
-                  return v.pos.equals(top.vertices[index].pos)
-                })
-            // if top and bottom are not the same -
-            // generate walls between them
-      if (!bSameTopBottom) {
-        this._addWalls(polygons, top, bottom, flipped)
-      } // else - already generated
-    } else {
-            // save top and bottom
-            // TODO: flip if necessary
-      polygons.unshift(flipped ? bottom : bottom.flipped())
-      polygons.push(flipped ? top.flipped() : top)
-    }
-    return CSG.fromPolygons(polygons)
-  },
-    /**
-     *
-     * @param walls Array of wall polygons
-     * @param bottom Bottom polygon
-     * @param top Top polygon
-     */
-  _addWalls: function (walls, bottom, top, bFlipped) {
-    let bottomPoints = bottom.vertices.slice(0) // make a copy
-    let topPoints = top.vertices.slice(0) // make a copy
-    let color = top.shared || null
-
-        // check if bottom perimeter is closed
-    if (!bottomPoints[0].pos.equals(bottomPoints[bottomPoints.length - 1].pos)) {
-      bottomPoints.push(bottomPoints[0])
-    }
-
-        // check if top perimeter is closed
-    if (!topPoints[0].pos.equals(topPoints[topPoints.length - 1].pos)) {
-      topPoints.push(topPoints[0])
-    }
-    if (bFlipped) {
-      bottomPoints = bottomPoints.reverse()
-      topPoints = topPoints.reverse()
-    }
-
-    let iTopLen = topPoints.length - 1
-    let iBotLen = bottomPoints.length - 1
-    let iExtra = iTopLen - iBotLen// how many extra triangles we need
-    let bMoreTops = iExtra > 0
-    let bMoreBottoms = iExtra < 0
-
-    let aMin = [] // indexes to start extra triangles (polygon with minimal square)
-        // init - we need exactly /iExtra/ small triangles
-    for (let i = Math.abs(iExtra); i > 0; i--) {
-      aMin.push({
-        len: Infinity,
-        index: -1
-      })
-    }
-
-    let len
-    if (bMoreBottoms) {
-      for (let i = 0; i < iBotLen; i++) {
-        len = bottomPoints[i].pos.distanceToSquared(bottomPoints[i + 1].pos)
-                // find the element to replace
-        for (let j = aMin.length - 1; j >= 0; j--) {
-          if (aMin[j].len > len) {
-            aMin[j].len = len
-            aMin.index = j
-            break
-          }
-        } // for
-      }
-    } else if (bMoreTops) {
-      for (let i = 0; i < iTopLen; i++) {
-        len = topPoints[i].pos.distanceToSquared(topPoints[i + 1].pos)
-                // find the element to replace
-        for (let j = aMin.length - 1; j >= 0; j--) {
-          if (aMin[j].len > len) {
-            aMin[j].len = len
-            aMin.index = j
-            break
-          }
-        } // for
-      }
-    } // if
-        // sort by index
-    aMin.sort(fnSortByIndex)
-    let getTriangle = function addWallsPutTriangle (pointA, pointB, pointC, color) {
-      return new Polygon([pointA, pointB, pointC], color)
-            // return bFlipped ? triangle.flipped() : triangle;
-    }
-
-    let bpoint = bottomPoints[0]
-    let tpoint = topPoints[0]
-    let secondPoint
-    let nBotFacet
-    let nTopFacet // length of triangle facet side
-    for (let iB = 0, iT = 0, iMax = iTopLen + iBotLen; iB + iT < iMax;) {
-      if (aMin.length) {
-        if (bMoreTops && iT === aMin[0].index) { // one vertex is on the bottom, 2 - on the top
-          secondPoint = topPoints[++iT]
-                    // console.log('<<< extra top: ' + secondPoint + ', ' + tpoint + ', bottom: ' + bpoint);
-          walls.push(getTriangle(
-                        secondPoint, tpoint, bpoint, color
-                    ))
-          tpoint = secondPoint
-          aMin.shift()
-          continue
-        } else if (bMoreBottoms && iB === aMin[0].index) {
-          secondPoint = bottomPoints[++iB]
-          walls.push(getTriangle(
-                        tpoint, bpoint, secondPoint, color
-                    ))
-          bpoint = secondPoint
-          aMin.shift()
-          continue
-        }
-      }
-            // choose the shortest path
-      if (iB < iBotLen) { // one vertex is on the top, 2 - on the bottom
-        nBotFacet = tpoint.pos.distanceToSquared(bottomPoints[iB + 1].pos)
-      } else {
-        nBotFacet = Infinity
-      }
-      if (iT < iTopLen) { // one vertex is on the bottom, 2 - on the top
-        nTopFacet = bpoint.pos.distanceToSquared(topPoints[iT + 1].pos)
-      } else {
-        nTopFacet = Infinity
-      }
-      if (nBotFacet <= nTopFacet) {
-        secondPoint = bottomPoints[++iB]
-        walls.push(getTriangle(
-                    tpoint, bpoint, secondPoint, color
-                ))
-        bpoint = secondPoint
-      } else if (iT < iTopLen) { // nTopFacet < Infinity
-        secondPoint = topPoints[++iT]
-                // console.log('<<< top: ' + secondPoint + ', ' + tpoint + ', bottom: ' + bpoint);
-        walls.push(getTriangle(
-                    secondPoint, tpoint, bpoint, color
-                ))
-        tpoint = secondPoint
-      };
-    }
-    return walls
-  }
-}
-
-Polygon.verticesConvex = function (vertices, planenormal) {
-  let numvertices = vertices.length
-  if (numvertices > 2) {
-    let prevprevpos = vertices[numvertices - 2].pos
-    let prevpos = vertices[numvertices - 1].pos
-    for (let i = 0; i < numvertices; i++) {
-      let pos = vertices[i].pos
-      if (!Polygon.isConvexPoint(prevprevpos, prevpos, pos, planenormal)) {
-        return false
-      }
-      prevprevpos = prevpos
-      prevpos = pos
-    }
-  }
-  return true
-}
-
-/** Create a polygon from the given points.
- *
- * @param {Array[]} points - list of points
- * @param {Polygon.Shared} [shared=defaultShared] - shared property to apply
- * @param {Plane} [plane] - plane of the polygon
- *
- * @example
- * const points = [
- *   [0,  0, 0],
- *   [0, 10, 0],
- *   [0, 10, 10]
- * ]
- * let observed = CSG.Polygon.createFromPoints(points)
- */
-Polygon.createFromPoints = function (points, shared, plane) {
-  let vertices = []
-  points.map(function (p) {
-    let vec = new Vector3D(p)
-    let vertex = new Vertex(vec)
-    vertices.push(vertex)
-  })
-  let polygon
-  if (arguments.length < 3) {
-    polygon = new Polygon(vertices, shared)
-  } else {
-    polygon = new Polygon(vertices, shared, plane)
-  }
-  return polygon
-}
-
-// calculate whether three points form a convex corner
-//  prevpoint, point, nextpoint: the 3 coordinates (Vector3D instances)
-//  normal: the normal vector of the plane
-Polygon.isConvexPoint = function (prevpoint, point, nextpoint, normal) {
-  let crossproduct = point.minus(prevpoint).cross(nextpoint.minus(point))
-  let crossdotnormal = crossproduct.dot(normal)
-  return (crossdotnormal >= 0)
-}
-
-Polygon.isStrictlyConvexPoint = function (prevpoint, point, nextpoint, normal) {
-  let crossproduct = point.minus(prevpoint).cross(nextpoint.minus(point))
-  let crossdotnormal = crossproduct.dot(normal)
-  return (crossdotnormal >= EPS)
-}
-
-/** Class Polygon.Shared
- * Holds the shared properties for each polygon (Currently only color).
- * @constructor
- * @param {Array[]} color - array containing RGBA values, or null
- *
- * @example
- *   let shared = new CSG.Polygon.Shared([0, 0, 0, 1])
- */
-Polygon.Shared = function (color) {
-  if (color !== null && color !== undefined) {
-    if (color.length !== 4) {
-      throw new Error('Expecting 4 element array')
-    }
-  }
-  this.color = color
-}
-
-Polygon.Shared.fromObject = function (obj) {
-  return new Polygon.Shared(obj.color)
-}
-
-/** Create Polygon.Shared from color values.
- * @param {number} r - value of RED component
- * @param {number} g - value of GREEN component
- * @param {number} b - value of BLUE component
- * @param {number} [a] - value of ALPHA component
- * @param {Array[]} [color] - OR array containing RGB values (optional Alpha)
- *
- * @example
- * let s1 = Polygon.Shared.fromColor(0,0,0)
- * let s2 = Polygon.Shared.fromColor([0,0,0,1])
- */
-Polygon.Shared.fromColor = function (args) {
-  let color
-  if (arguments.length === 1) {
-    color = arguments[0].slice() // make deep copy
-  } else {
-    color = []
-    for (let i = 0; i < arguments.length; i++) {
-      color.push(arguments[i])
-    }
-  }
-  if (color.length === 3) {
-    color.push(1)
-  } else if (color.length !== 4) {
-    throw new Error('setColor expects either an array with 3 or 4 elements, or 3 or 4 parameters.')
-  }
-  return new Polygon.Shared(color)
-}
-
-Polygon.Shared.prototype = {
-  getTag: function () {
-    let result = this.tag
-    if (!result) {
-      result = getTag()
-      this.tag = result
-    }
-    return result
-  },
-    // get a string uniquely identifying this object
-  getHash: function () {
-    if (!this.color) return 'null'
-    return this.color.join('/')
-  }
-}
-
-Polygon.defaultShared = new Polygon.Shared(null)
-
-module.exports = Polygon
-
-},{"../CAG":14,"../CAGFactories":15,"../CSG":16,"../constants":23,"../utils":45,"./Matrix4":27,"./Plane":30,"./Vector3":35,"./Vertex3":37}],33:[function(require,module,exports){
-const Vector2D = require('./Vector2')
-const Vertex = require('./Vertex2')
-const Vertex3 = require('./Vertex3')
-const Polygon = require('./Polygon3')
-const {getTag} = require('../constants')
-
-const Side = function (vertex0, vertex1) {
-  if (!(vertex0 instanceof Vertex)) throw new Error('Assertion failed')
-  if (!(vertex1 instanceof Vertex)) throw new Error('Assertion failed')
-  this.vertex0 = vertex0
-  this.vertex1 = vertex1
-}
-
-Side.fromObject = function (obj) {
-  var vertex0 = Vertex.fromObject(obj.vertex0)
-  var vertex1 = Vertex.fromObject(obj.vertex1)
-  return new Side(vertex0, vertex1)
-}
-
-Side._fromFakePolygon = function (polygon) {
-    // this can happen based on union, seems to be residuals -
-    // return null and handle in caller
-  if (polygon.vertices.length < 4) {
-    return null
-  }
-  var vert1Indices = []
-  var pts2d = polygon.vertices.filter(function (v, i) {
-    if (v.pos.z > 0) {
-      vert1Indices.push(i)
-      return true
-    }
-    return false
-  })
-    .map(function (v) {
-      return new Vector2D(v.pos.x, v.pos.y)
-    })
-  if (pts2d.length !== 2) {
-    throw new Error('Assertion failed: _fromFakePolygon: not enough points found')
-  }
-  var d = vert1Indices[1] - vert1Indices[0]
-  if (d === 1 || d === 3) {
-    if (d === 1) {
-      pts2d.reverse()
-    }
-  } else {
-    throw new Error('Assertion failed: _fromFakePolygon: unknown index ordering')
-  }
-  var result = new Side(new Vertex(pts2d[0]), new Vertex(pts2d[1]))
-  return result
-}
-
-Side.prototype = {
-  toString: function () {
-    return this.vertex0 + ' -> ' + this.vertex1
-  },
-
-  toPolygon3D: function (z0, z1) {
-    //console.log(this.vertex0.pos)
-    const vertices = [
-      new Vertex3(this.vertex0.pos.toVector3D(z0)),
-      new Vertex3(this.vertex1.pos.toVector3D(z0)),
-      new Vertex3(this.vertex1.pos.toVector3D(z1)),
-      new Vertex3(this.vertex0.pos.toVector3D(z1))
-    ]
-    return new Polygon(vertices)
-  },
-
-  transform: function (matrix4x4) {
-    var newp1 = this.vertex0.pos.transform(matrix4x4)
-    var newp2 = this.vertex1.pos.transform(matrix4x4)
-    return new Side(new Vertex(newp1), new Vertex(newp2))
-  },
-
-  flipped: function () {
-    return new Side(this.vertex1, this.vertex0)
-  },
-
-  direction: function () {
-    return this.vertex1.pos.minus(this.vertex0.pos)
-  },
-
-  getTag: function () {
-    var result = this.tag
-    if (!result) {
-      result = getTag()
-      this.tag = result
-    }
-    return result
-  },
-
-  lengthSquared: function () {
-    let x = this.vertex1.pos.x - this.vertex0.pos.x
-    let y = this.vertex1.pos.y - this.vertex0.pos.y
-    return x * x + y * y
-  },
-
-  length: function () {
-    return Math.sqrt(this.lengthSquared())
-  }
-}
-
-module.exports = Side
-
-},{"../constants":23,"./Polygon3":32,"./Vector2":34,"./Vertex2":36,"./Vertex3":37}],34:[function(require,module,exports){
-const {IsFloat} = require('../utils')
-
-/** Class Vector2D
- * Represents a 2D vector with X, Y coordinates
- * @constructor
- *
- * @example
- * new CSG.Vector2D(1, 2);
- * new CSG.Vector3D([1, 2]);
- * new CSG.Vector3D({ x: 1, y: 2});
- */
-const Vector2D = function (x, y) {
-  if (arguments.length === 2) {
-    this._x = parseFloat(x)
-    this._y = parseFloat(y)
-  } else {
-    var ok = true
-    if (arguments.length === 1) {
-      if (typeof (x) === 'object') {
-        if (x instanceof Vector2D) {
-          this._x = x._x
-          this._y = x._y
-        } else if (x instanceof Array) {
-          this._x = parseFloat(x[0])
-          this._y = parseFloat(x[1])
-        } else if (('x' in x) && ('y' in x)) {
-          this._x = parseFloat(x.x)
-          this._y = parseFloat(x.y)
-        } else ok = false
-      } else {
-        var v = parseFloat(x)
-        this._x = v
-        this._y = v
-      }
-    } else ok = false
-    if (ok) {
-      if ((!IsFloat(this._x)) || (!IsFloat(this._y))) ok = false
-    }
-    if (!ok) {
-      throw new Error('wrong arguments')
-    }
-  }
-}
-
-Vector2D.fromAngle = function (radians) {
-  return Vector2D.fromAngleRadians(radians)
-}
-
-Vector2D.fromAngleDegrees = function (degrees) {
-  var radians = Math.PI * degrees / 180
-  return Vector2D.fromAngleRadians(radians)
-}
-
-Vector2D.fromAngleRadians = function (radians) {
-  return Vector2D.Create(Math.cos(radians), Math.sin(radians))
-}
-
-// This does the same as new Vector2D(x,y) but it doesn't go through the constructor
-// and the parameters are not validated. Is much faster.
-Vector2D.Create = function (x, y) {
-  var result = Object.create(Vector2D.prototype)
-  result._x = x
-  result._y = y
-  return result
-}
-
-Vector2D.prototype = {
-  get x () {
-    return this._x
-  },
-  get y () {
-    return this._y
-  },
-
-  set x (v) {
-    throw new Error('Vector2D is immutable')
-  },
-  set y (v) {
-    throw new Error('Vector2D is immutable')
-  },
-
-  // extend to a 3D vector by adding a z coordinate:
-  toVector3D: function (z) {
-    const Vector3D = require('./Vector3') // FIXME: circular dependencies Vector2 => Vector3 => Vector2
-    return new Vector3D(this._x, this._y, z)
-  },
-
-  equals: function (a) {
-    return (this._x === a._x) && (this._y === a._y)
-  },
-
-  clone: function () {
-    return Vector2D.Create(this._x, this._y)
-  },
-
-  negated: function () {
-    return Vector2D.Create(-this._x, -this._y)
-  },
-
-  plus: function (a) {
-    return Vector2D.Create(this._x + a._x, this._y + a._y)
-  },
-
-  minus: function (a) {
-    return Vector2D.Create(this._x - a._x, this._y - a._y)
-  },
-
-  times: function (a) {
-    return Vector2D.Create(this._x * a, this._y * a)
-  },
-
-  dividedBy: function (a) {
-    return Vector2D.Create(this._x / a, this._y / a)
-  },
-
-  dot: function (a) {
-    return this._x * a._x + this._y * a._y
-  },
-
-  lerp: function (a, t) {
-    return this.plus(a.minus(this).times(t))
-  },
-
-  length: function () {
-    return Math.sqrt(this.dot(this))
-  },
-
-  distanceTo: function (a) {
-    return this.minus(a).length()
-  },
-
-  distanceToSquared: function (a) {
-    return this.minus(a).lengthSquared()
-  },
-
-  lengthSquared: function () {
-    return this.dot(this)
-  },
-
-  unit: function () {
-    return this.dividedBy(this.length())
-  },
-
-  cross: function (a) {
-    return this._x * a._y - this._y * a._x
-  },
-
-    // returns the vector rotated by 90 degrees clockwise
-  normal: function () {
-    return Vector2D.Create(this._y, -this._x)
-  },
-
-    // Right multiply by a 4x4 matrix (the vector is interpreted as a row vector)
-    // Returns a new Vector2D
-  multiply4x4: function (matrix4x4) {
-    return matrix4x4.leftMultiply1x2Vector(this)
-  },
-
-  transform: function (matrix4x4) {
-    return matrix4x4.leftMultiply1x2Vector(this)
-  },
-
-  angle: function () {
-    return this.angleRadians()
-  },
-
-  angleDegrees: function () {
-    var radians = this.angleRadians()
-    return 180 * radians / Math.PI
-  },
-
-  angleRadians: function () {
-        // y=sin, x=cos
-    return Math.atan2(this._y, this._x)
-  },
-
-  min: function (p) {
-    return Vector2D.Create(
-            Math.min(this._x, p._x), Math.min(this._y, p._y))
-  },
-
-  max: function (p) {
-    return Vector2D.Create(
-            Math.max(this._x, p._x), Math.max(this._y, p._y))
-  },
-
-  toString: function () {
-    return '(' + this._x.toFixed(5) + ', ' + this._y.toFixed(5) + ')'
-  },
-
-  abs: function () {
-    return Vector2D.Create(Math.abs(this._x), Math.abs(this._y))
-  }
-}
-
-module.exports = Vector2D
-
-},{"../utils":45,"./Vector3":35}],35:[function(require,module,exports){
-const {IsFloat} = require('../utils')
-const Vector2D = require('./Vector2')
-
-/** Class Vector3D
- * Represents a 3D vector with X, Y, Z coordinates.
- * @constructor
- *
- * @example
- * new CSG.Vector3D(1, 2, 3);
- * new CSG.Vector3D([1, 2, 3]);
- * new CSG.Vector3D({ x: 1, y: 2, z: 3 });
- * new CSG.Vector3D(1, 2); // assumes z=0
- * new CSG.Vector3D([1, 2]); // assumes z=0
- */
-const Vector3D = function (x, y, z) {
-  if (arguments.length === 3) {
-    this._x = parseFloat(x)
-    this._y = parseFloat(y)
-    this._z = parseFloat(z)
-  } else if (arguments.length === 2) {
-    this._x = parseFloat(x)
-    this._y = parseFloat(y)
-    this._z = 0
-  } else {
-    var ok = true
-    if (arguments.length === 1) {
-      if (typeof (x) === 'object') {
-        if (x instanceof Vector3D) {
-          this._x = x._x
-          this._y = x._y
-          this._z = x._z
-        } else if (x instanceof Vector2D) {
-          this._x = x._x
-          this._y = x._y
-          this._z = 0
-        } else if (x instanceof Array) {
-          if ((x.length < 2) || (x.length > 3)) {
-            ok = false
-          } else {
-            this._x = parseFloat(x[0])
-            this._y = parseFloat(x[1])
-            if (x.length === 3) {
-              this._z = parseFloat(x[2])
-            } else {
-              this._z = 0
-            }
-          }
-        } else if (('x' in x) && ('y' in x)) {
-          this._x = parseFloat(x.x)
-          this._y = parseFloat(x.y)
-          if ('z' in x) {
-            this._z = parseFloat(x.z)
-          } else {
-            this._z = 0
-          }
-        } else if (('_x' in x) && ('_y' in x)) {
-          this._x = parseFloat(x._x)
-          this._y = parseFloat(x._y)
-          if ('_z' in x) {
-            this._z = parseFloat(x._z)
-          } else {
-            this._z = 0
-          }
-        } else ok = false
-      } else {
-        var v = parseFloat(x)
-        this._x = v
-        this._y = v
-        this._z = v
-      }
-    } else ok = false
-    if (ok) {
-      if ((!IsFloat(this._x)) || (!IsFloat(this._y)) || (!IsFloat(this._z))) ok = false
-    } else {
-      throw new Error('wrong arguments')
-    }
-  }
-}
-
-// This does the same as new Vector3D(x,y,z) but it doesn't go through the constructor
-// and the parameters are not validated. Is much faster.
-Vector3D.Create = function (x, y, z) {
-  var result = Object.create(Vector3D.prototype)
-  result._x = x
-  result._y = y
-  result._z = z
-  return result
-}
-
-Vector3D.prototype = {
-  get x () {
-    return this._x
-  },
-  get y () {
-    return this._y
-  },
-  get z () {
-    return this._z
-  },
-
-  set x (v) {
-    throw new Error('Vector3D is immutable')
-  },
-  set y (v) {
-    throw new Error('Vector3D is immutable')
-  },
-  set z (v) {
-    throw new Error('Vector3D is immutable')
-  },
-
-  clone: function () {
-    return Vector3D.Create(this._x, this._y, this._z)
-  },
-
-  negated: function () {
-    return Vector3D.Create(-this._x, -this._y, -this._z)
-  },
-
-  abs: function () {
-    return Vector3D.Create(Math.abs(this._x), Math.abs(this._y), Math.abs(this._z))
-  },
-
-  plus: function (a) {
-    return Vector3D.Create(this._x + a._x, this._y + a._y, this._z + a._z)
-  },
-
-  minus: function (a) {
-    return Vector3D.Create(this._x - a._x, this._y - a._y, this._z - a._z)
-  },
-
-  times: function (a) {
-    return Vector3D.Create(this._x * a, this._y * a, this._z * a)
-  },
-
-  dividedBy: function (a) {
-    return Vector3D.Create(this._x / a, this._y / a, this._z / a)
-  },
-
-  dot: function (a) {
-    return this._x * a._x + this._y * a._y + this._z * a._z
-  },
-
-  lerp: function (a, t) {
-    return this.plus(a.minus(this).times(t))
-  },
-
-  lengthSquared: function () {
-    return this.dot(this)
-  },
-
-  length: function () {
-    return Math.sqrt(this.lengthSquared())
-  },
-
-  unit: function () {
-    return this.dividedBy(this.length())
-  },
-
-  cross: function (a) {
-    return Vector3D.Create(
-            this._y * a._z - this._z * a._y, this._z * a._x - this._x * a._z, this._x * a._y - this._y * a._x)
-  },
-
-  distanceTo: function (a) {
-    return this.minus(a).length()
-  },
-
-  distanceToSquared: function (a) {
-    return this.minus(a).lengthSquared()
-  },
-
-  equals: function (a) {
-    return (this._x === a._x) && (this._y === a._y) && (this._z === a._z)
-  },
-
-    // Right multiply by a 4x4 matrix (the vector is interpreted as a row vector)
-    // Returns a new Vector3D
-  multiply4x4: function (matrix4x4) {
-    return matrix4x4.leftMultiply1x3Vector(this)
-  },
-
-  transform: function (matrix4x4) {
-    return matrix4x4.leftMultiply1x3Vector(this)
-  },
-
-  toString: function () {
-    return '(' + this._x.toFixed(5) + ', ' + this._y.toFixed(5) + ', ' + this._z.toFixed(5) + ')'
-  },
-
-    // find a vector that is somewhat perpendicular to this one
-  randomNonParallelVector: function () {
-    var abs = this.abs()
-    if ((abs._x <= abs._y) && (abs._x <= abs._z)) {
-      return Vector3D.Create(1, 0, 0)
-    } else if ((abs._y <= abs._x) && (abs._y <= abs._z)) {
-      return Vector3D.Create(0, 1, 0)
-    } else {
-      return Vector3D.Create(0, 0, 1)
-    }
-  },
-
-  min: function (p) {
-    return Vector3D.Create(
-            Math.min(this._x, p._x), Math.min(this._y, p._y), Math.min(this._z, p._z))
-  },
-
-  max: function (p) {
-    return Vector3D.Create(
-            Math.max(this._x, p._x), Math.max(this._y, p._y), Math.max(this._z, p._z))
-  }
-}
-
-module.exports = Vector3D
-
-},{"../utils":45,"./Vector2":34}],36:[function(require,module,exports){
-const Vector2D = require('./Vector2')
-const {getTag} = require('../constants')
-
-const Vertex = function (pos) {
-  this.pos = pos
-}
-
-Vertex.fromObject = function (obj) {
-  return new Vertex(new Vector2D(obj.pos._x, obj.pos._y))
-}
-
-Vertex.prototype = {
-  toString: function () {
-    return '(' + this.pos.x.toFixed(5) + ',' + this.pos.y.toFixed(5) + ')'
-  },
-  getTag: function () {
-    var result = this.tag
-    if (!result) {
-      result = getTag()
-      this.tag = result
-    }
-    return result
-  }
-}
-
-module.exports = Vertex
-
-},{"../constants":23,"./Vector2":34}],37:[function(require,module,exports){
-const Vector3D = require('./Vector3')
-const {getTag} = require('../constants')
-
-// # class Vertex
-// Represents a vertex of a polygon. Use your own vertex class instead of this
-// one to provide additional features like texture coordinates and vertex
-// colors. Custom vertex classes need to provide a `pos` property
-// `flipped()`, and `interpolate()` methods that behave analogous to the ones
-// FIXME: And a lot MORE (see plane.fromVector3Ds for ex) ! This is fragile code
-// defined by `Vertex`.
-const Vertex = function (pos) {
-  this.pos = pos
-}
-
-// create from an untyped object with identical property names:
-Vertex.fromObject = function (obj) {
-  var pos = new Vector3D(obj.pos)
-  return new Vertex(pos)
-}
-
-Vertex.prototype = {
-    // Return a vertex with all orientation-specific data (e.g. vertex normal) flipped. Called when the
-    // orientation of a polygon is flipped.
-  flipped: function () {
-    return this
-  },
-
-  getTag: function () {
-    var result = this.tag
-    if (!result) {
-      result = getTag()
-      this.tag = result
-    }
-    return result
-  },
-
-    // Create a new vertex between this vertex and `other` by linearly
-    // interpolating all properties using a parameter of `t`. Subclasses should
-    // override this to interpolate additional properties.
-  interpolate: function (other, t) {
-    var newpos = this.pos.lerp(other.pos, t)
-    return new Vertex(newpos)
-  },
-
-    // Affine transformation of vertex. Returns a new Vertex
-  transform: function (matrix4x4) {
-    var newpos = this.pos.multiply4x4(matrix4x4)
-    return new Vertex(newpos)
-  },
-
-  toString: function () {
-    return this.pos.toString()
-  }
-}
-
-module.exports = Vertex
-
-},{"../constants":23,"./Vector3":35}],38:[function(require,module,exports){
-const {EPS} = require('../constants')
-const {solve2Linear} = require('../utils')
-
-// see if the line between p0start and p0end intersects with the line between p1start and p1end
-// returns true if the lines strictly intersect, the end points are not counted!
-const linesIntersect = function (p0start, p0end, p1start, p1end) {
-  if (p0end.equals(p1start) || p1end.equals(p0start)) {
-    let d = p1end.minus(p1start).unit().plus(p0end.minus(p0start).unit()).length()
-    if (d < EPS) {
-      return true
-    }
-  } else {
-    let d0 = p0end.minus(p0start)
-    let d1 = p1end.minus(p1start)
-        // FIXME These epsilons need review and testing
-    if (Math.abs(d0.cross(d1)) < 1e-9) return false // lines are parallel
-    let alphas = solve2Linear(-d0.x, d1.x, -d0.y, d1.y, p0start.x - p1start.x, p0start.y - p1start.y)
-    if ((alphas[0] > 1e-6) && (alphas[0] < 0.999999) && (alphas[1] > 1e-5) && (alphas[1] < 0.999999)) return true
-        //    if( (alphas[0] >= 0) && (alphas[0] <= 1) && (alphas[1] >= 0) && (alphas[1] <= 1) ) return true;
-  }
-  return false
-}
-
-
-module.exports = {linesIntersect}
-
-},{"../constants":23,"../utils":45}],39:[function(require,module,exports){
-const {EPS} = require('../constants')
-const OrthoNormalBasis = require('./OrthoNormalBasis')
-const {interpolateBetween2DPointsForY, insertSorted, fnNumberSort} = require('../utils')
-const Vertex = require('./Vertex3')
-const Vector2D = require('./Vector2')
-const Line2D = require('./Line2')
-const Polygon = require('./Polygon3')
-
-// Retesselation function for a set of coplanar polygons. See the introduction at the top of
-// this file.
-const reTesselateCoplanarPolygons = function (sourcepolygons, destpolygons) {
-  let numpolygons = sourcepolygons.length
-  if (numpolygons > 0) {
-    let plane = sourcepolygons[0].plane
-    let shared = sourcepolygons[0].shared
-    let orthobasis = new OrthoNormalBasis(plane)
-    let polygonvertices2d = [] // array of array of Vector2D
-    let polygontopvertexindexes = [] // array of indexes of topmost vertex per polygon
-    let topy2polygonindexes = {}
-    let ycoordinatetopolygonindexes = {}
-
-    let xcoordinatebins = {}
-    let ycoordinatebins = {}
-
-        // convert all polygon vertices to 2D
-        // Make a list of all encountered y coordinates
-        // And build a map of all polygons that have a vertex at a certain y coordinate:
-    let ycoordinateBinningFactor = 1.0 / EPS * 10
-    for (let polygonindex = 0; polygonindex < numpolygons; polygonindex++) {
-      let poly3d = sourcepolygons[polygonindex]
-      let vertices2d = []
-      let numvertices = poly3d.vertices.length
-      let minindex = -1
-      if (numvertices > 0) {
-        let miny, maxy, maxindex
-        for (let i = 0; i < numvertices; i++) {
-          let pos2d = orthobasis.to2D(poly3d.vertices[i].pos)
-                    // perform binning of y coordinates: If we have multiple vertices very
-                    // close to each other, give them the same y coordinate:
-          let ycoordinatebin = Math.floor(pos2d.y * ycoordinateBinningFactor)
-          let newy
-          if (ycoordinatebin in ycoordinatebins) {
-            newy = ycoordinatebins[ycoordinatebin]
-          } else if (ycoordinatebin + 1 in ycoordinatebins) {
-            newy = ycoordinatebins[ycoordinatebin + 1]
-          } else if (ycoordinatebin - 1 in ycoordinatebins) {
-            newy = ycoordinatebins[ycoordinatebin - 1]
-          } else {
-            newy = pos2d.y
-            ycoordinatebins[ycoordinatebin] = pos2d.y
-          }
-          pos2d = Vector2D.Create(pos2d.x, newy)
-          vertices2d.push(pos2d)
-          let y = pos2d.y
-          if ((i === 0) || (y < miny)) {
-            miny = y
-            minindex = i
-          }
-          if ((i === 0) || (y > maxy)) {
-            maxy = y
-            maxindex = i
-          }
-          if (!(y in ycoordinatetopolygonindexes)) {
-            ycoordinatetopolygonindexes[y] = {}
-          }
-          ycoordinatetopolygonindexes[y][polygonindex] = true
-        }
-        if (miny >= maxy) {
-                    // degenerate polygon, all vertices have same y coordinate. Just ignore it from now:
-          vertices2d = []
-          numvertices = 0
-          minindex = -1
-        } else {
-          if (!(miny in topy2polygonindexes)) {
-            topy2polygonindexes[miny] = []
-          }
-          topy2polygonindexes[miny].push(polygonindex)
-        }
-      } // if(numvertices > 0)
-            // reverse the vertex order:
-      vertices2d.reverse()
-      minindex = numvertices - minindex - 1
-      polygonvertices2d.push(vertices2d)
-      polygontopvertexindexes.push(minindex)
-    }
-    let ycoordinates = []
-    for (let ycoordinate in ycoordinatetopolygonindexes) ycoordinates.push(ycoordinate)
-    ycoordinates.sort(fnNumberSort)
-
-        // Now we will iterate over all y coordinates, from lowest to highest y coordinate
-        // activepolygons: source polygons that are 'active', i.e. intersect with our y coordinate
-        //   Is sorted so the polygons are in left to right order
-        // Each element in activepolygons has these properties:
-        //        polygonindex: the index of the source polygon (i.e. an index into the sourcepolygons
-        //                      and polygonvertices2d arrays)
-        //        leftvertexindex: the index of the vertex at the left side of the polygon (lowest x)
-        //                         that is at or just above the current y coordinate
-        //        rightvertexindex: dito at right hand side of polygon
-        //        topleft, bottomleft: coordinates of the left side of the polygon crossing the current y coordinate
-        //        topright, bottomright: coordinates of the right hand side of the polygon crossing the current y coordinate
-    let activepolygons = []
-    let prevoutpolygonrow = []
-    for (let yindex = 0; yindex < ycoordinates.length; yindex++) {
-      let newoutpolygonrow = []
-      let ycoordinate_as_string = ycoordinates[yindex]
-      let ycoordinate = Number(ycoordinate_as_string)
-
-            // update activepolygons for this y coordinate:
-            // - Remove any polygons that end at this y coordinate
-            // - update leftvertexindex and rightvertexindex (which point to the current vertex index
-            //   at the the left and right side of the polygon
-            // Iterate over all polygons that have a corner at this y coordinate:
-      let polygonindexeswithcorner = ycoordinatetopolygonindexes[ycoordinate_as_string]
-      for (let activepolygonindex = 0; activepolygonindex < activepolygons.length; ++activepolygonindex) {
-        let activepolygon = activepolygons[activepolygonindex]
-        let polygonindex = activepolygon.polygonindex
-        if (polygonindexeswithcorner[polygonindex]) {
-                    // this active polygon has a corner at this y coordinate:
-          let vertices2d = polygonvertices2d[polygonindex]
-          let numvertices = vertices2d.length
-          let newleftvertexindex = activepolygon.leftvertexindex
-          let newrightvertexindex = activepolygon.rightvertexindex
-                    // See if we need to increase leftvertexindex or decrease rightvertexindex:
-          while (true) {
-            let nextleftvertexindex = newleftvertexindex + 1
-            if (nextleftvertexindex >= numvertices) nextleftvertexindex = 0
-            if (vertices2d[nextleftvertexindex].y !== ycoordinate) break
-            newleftvertexindex = nextleftvertexindex
-          }
-          let nextrightvertexindex = newrightvertexindex - 1
-          if (nextrightvertexindex < 0) nextrightvertexindex = numvertices - 1
-          if (vertices2d[nextrightvertexindex].y === ycoordinate) {
-            newrightvertexindex = nextrightvertexindex
-          }
-          if ((newleftvertexindex !== activepolygon.leftvertexindex) && (newleftvertexindex === newrightvertexindex)) {
-                        // We have increased leftvertexindex or decreased rightvertexindex, and now they point to the same vertex
-                        // This means that this is the bottom point of the polygon. We'll remove it:
-            activepolygons.splice(activepolygonindex, 1)
-            --activepolygonindex
-          } else {
-            activepolygon.leftvertexindex = newleftvertexindex
-            activepolygon.rightvertexindex = newrightvertexindex
-            activepolygon.topleft = vertices2d[newleftvertexindex]
-            activepolygon.topright = vertices2d[newrightvertexindex]
-            let nextleftvertexindex = newleftvertexindex + 1
-            if (nextleftvertexindex >= numvertices) nextleftvertexindex = 0
-            activepolygon.bottomleft = vertices2d[nextleftvertexindex]
-            let nextrightvertexindex = newrightvertexindex - 1
-            if (nextrightvertexindex < 0) nextrightvertexindex = numvertices - 1
-            activepolygon.bottomright = vertices2d[nextrightvertexindex]
-          }
-        } // if polygon has corner here
-      } // for activepolygonindex
-      let nextycoordinate
-      if (yindex >= ycoordinates.length - 1) {
-                // last row, all polygons must be finished here:
-        activepolygons = []
-        nextycoordinate = null
-      } else // yindex < ycoordinates.length-1
-            {
-        nextycoordinate = Number(ycoordinates[yindex + 1])
-        let middleycoordinate = 0.5 * (ycoordinate + nextycoordinate)
-                // update activepolygons by adding any polygons that start here:
-        let startingpolygonindexes = topy2polygonindexes[ycoordinate_as_string]
-        for (let polygonindex_key in startingpolygonindexes) {
-          let polygonindex = startingpolygonindexes[polygonindex_key]
-          let vertices2d = polygonvertices2d[polygonindex]
-          let numvertices = vertices2d.length
-          let topvertexindex = polygontopvertexindexes[polygonindex]
-                    // the top of the polygon may be a horizontal line. In that case topvertexindex can point to any point on this line.
-                    // Find the left and right topmost vertices which have the current y coordinate:
-          let topleftvertexindex = topvertexindex
-          while (true) {
-            let i = topleftvertexindex + 1
-            if (i >= numvertices) i = 0
-            if (vertices2d[i].y !== ycoordinate) break
-            if (i === topvertexindex) break // should not happen, but just to prevent endless loops
-            topleftvertexindex = i
-          }
-          let toprightvertexindex = topvertexindex
-          while (true) {
-            let i = toprightvertexindex - 1
-            if (i < 0) i = numvertices - 1
-            if (vertices2d[i].y !== ycoordinate) break
-            if (i === topleftvertexindex) break // should not happen, but just to prevent endless loops
-            toprightvertexindex = i
-          }
-          let nextleftvertexindex = topleftvertexindex + 1
-          if (nextleftvertexindex >= numvertices) nextleftvertexindex = 0
-          let nextrightvertexindex = toprightvertexindex - 1
-          if (nextrightvertexindex < 0) nextrightvertexindex = numvertices - 1
-          let newactivepolygon = {
-            polygonindex: polygonindex,
-            leftvertexindex: topleftvertexindex,
-            rightvertexindex: toprightvertexindex,
-            topleft: vertices2d[topleftvertexindex],
-            topright: vertices2d[toprightvertexindex],
-            bottomleft: vertices2d[nextleftvertexindex],
-            bottomright: vertices2d[nextrightvertexindex]
-          }
-          insertSorted(activepolygons, newactivepolygon, function (el1, el2) {
-            let x1 = interpolateBetween2DPointsForY(
-                            el1.topleft, el1.bottomleft, middleycoordinate)
-            let x2 = interpolateBetween2DPointsForY(
-                            el2.topleft, el2.bottomleft, middleycoordinate)
-            if (x1 > x2) return 1
-            if (x1 < x2) return -1
-            return 0
-          })
-        } // for(let polygonindex in startingpolygonindexes)
-      } //  yindex < ycoordinates.length-1
-            // if( (yindex === ycoordinates.length-1) || (nextycoordinate - ycoordinate > EPS) )
-      if (true) {
-                // Now activepolygons is up to date
-                // Build the output polygons for the next row in newoutpolygonrow:
-        for (let activepolygonKey in activepolygons) {
-          let activepolygon = activepolygons[activepolygonKey]
-          let polygonindex = activepolygon.polygonindex
-          let vertices2d = polygonvertices2d[polygonindex]
-          let numvertices = vertices2d.length
-
-          let x = interpolateBetween2DPointsForY(activepolygon.topleft, activepolygon.bottomleft, ycoordinate)
-          let topleft = Vector2D.Create(x, ycoordinate)
-          x = interpolateBetween2DPointsForY(activepolygon.topright, activepolygon.bottomright, ycoordinate)
-          let topright = Vector2D.Create(x, ycoordinate)
-          x = interpolateBetween2DPointsForY(activepolygon.topleft, activepolygon.bottomleft, nextycoordinate)
-          let bottomleft = Vector2D.Create(x, nextycoordinate)
-          x = interpolateBetween2DPointsForY(activepolygon.topright, activepolygon.bottomright, nextycoordinate)
-          let bottomright = Vector2D.Create(x, nextycoordinate)
-          let outpolygon = {
-            topleft: topleft,
-            topright: topright,
-            bottomleft: bottomleft,
-            bottomright: bottomright,
-            leftline: Line2D.fromPoints(topleft, bottomleft),
-            rightline: Line2D.fromPoints(bottomright, topright)
-          }
-          if (newoutpolygonrow.length > 0) {
-            let prevoutpolygon = newoutpolygonrow[newoutpolygonrow.length - 1]
-            let d1 = outpolygon.topleft.distanceTo(prevoutpolygon.topright)
-            let d2 = outpolygon.bottomleft.distanceTo(prevoutpolygon.bottomright)
-            if ((d1 < EPS) && (d2 < EPS)) {
-                            // we can join this polygon with the one to the left:
-              outpolygon.topleft = prevoutpolygon.topleft
-              outpolygon.leftline = prevoutpolygon.leftline
-              outpolygon.bottomleft = prevoutpolygon.bottomleft
-              newoutpolygonrow.splice(newoutpolygonrow.length - 1, 1)
-            }
-          }
-          newoutpolygonrow.push(outpolygon)
-        } // for(activepolygon in activepolygons)
-        if (yindex > 0) {
-                    // try to match the new polygons against the previous row:
-          let prevcontinuedindexes = {}
-          let matchedindexes = {}
-          for (let i = 0; i < newoutpolygonrow.length; i++) {
-            let thispolygon = newoutpolygonrow[i]
-            for (let ii = 0; ii < prevoutpolygonrow.length; ii++) {
-              if (!matchedindexes[ii]) // not already processed?
-                            {
-                                // We have a match if the sidelines are equal or if the top coordinates
-                                // are on the sidelines of the previous polygon
-                let prevpolygon = prevoutpolygonrow[ii]
-                if (prevpolygon.bottomleft.distanceTo(thispolygon.topleft) < EPS) {
-                  if (prevpolygon.bottomright.distanceTo(thispolygon.topright) < EPS) {
-                                        // Yes, the top of this polygon matches the bottom of the previous:
-                    matchedindexes[ii] = true
-                                        // Now check if the joined polygon would remain convex:
-                    let d1 = thispolygon.leftline.direction().x - prevpolygon.leftline.direction().x
-                    let d2 = thispolygon.rightline.direction().x - prevpolygon.rightline.direction().x
-                    let leftlinecontinues = Math.abs(d1) < EPS
-                    let rightlinecontinues = Math.abs(d2) < EPS
-                    let leftlineisconvex = leftlinecontinues || (d1 >= 0)
-                    let rightlineisconvex = rightlinecontinues || (d2 >= 0)
-                    if (leftlineisconvex && rightlineisconvex) {
-                                            // yes, both sides have convex corners:
-                                            // This polygon will continue the previous polygon
-                      thispolygon.outpolygon = prevpolygon.outpolygon
-                      thispolygon.leftlinecontinues = leftlinecontinues
-                      thispolygon.rightlinecontinues = rightlinecontinues
-                      prevcontinuedindexes[ii] = true
-                    }
-                    break
-                  }
-                }
-              } // if(!prevcontinuedindexes[ii])
-            } // for ii
-          } // for i
-          for (let ii = 0; ii < prevoutpolygonrow.length; ii++) {
-            if (!prevcontinuedindexes[ii]) {
-                            // polygon ends here
-                            // Finish the polygon with the last point(s):
-              let prevpolygon = prevoutpolygonrow[ii]
-              prevpolygon.outpolygon.rightpoints.push(prevpolygon.bottomright)
-              if (prevpolygon.bottomright.distanceTo(prevpolygon.bottomleft) > EPS) {
-                                // polygon ends with a horizontal line:
-                prevpolygon.outpolygon.leftpoints.push(prevpolygon.bottomleft)
-              }
-                            // reverse the left half so we get a counterclockwise circle:
-              prevpolygon.outpolygon.leftpoints.reverse()
-              let points2d = prevpolygon.outpolygon.rightpoints.concat(prevpolygon.outpolygon.leftpoints)
-              let vertices3d = []
-              points2d.map(function (point2d) {
-                let point3d = orthobasis.to3D(point2d)
-                let vertex3d = new Vertex(point3d)
-                vertices3d.push(vertex3d)
-              })
-              let polygon = new Polygon(vertices3d, shared, plane)
-              destpolygons.push(polygon)
-            }
-          }
-        } // if(yindex > 0)
-        for (let i = 0; i < newoutpolygonrow.length; i++) {
-          let thispolygon = newoutpolygonrow[i]
-          if (!thispolygon.outpolygon) {
-                        // polygon starts here:
-            thispolygon.outpolygon = {
-              leftpoints: [],
-              rightpoints: []
-            }
-            thispolygon.outpolygon.leftpoints.push(thispolygon.topleft)
-            if (thispolygon.topleft.distanceTo(thispolygon.topright) > EPS) {
-                            // we have a horizontal line at the top:
-              thispolygon.outpolygon.rightpoints.push(thispolygon.topright)
-            }
-          } else {
-                        // continuation of a previous row
-            if (!thispolygon.leftlinecontinues) {
-              thispolygon.outpolygon.leftpoints.push(thispolygon.topleft)
-            }
-            if (!thispolygon.rightlinecontinues) {
-              thispolygon.outpolygon.rightpoints.push(thispolygon.topright)
-            }
-          }
-        }
-        prevoutpolygonrow = newoutpolygonrow
-      }
-    } // for yindex
-  } // if(numpolygons > 0)
-}
-
-module.exports = {reTesselateCoplanarPolygons}
-
-},{"../constants":23,"../utils":45,"./Line2":25,"./OrthoNormalBasis":28,"./Polygon3":32,"./Vector2":34,"./Vertex3":37}],40:[function(require,module,exports){
-const Matrix4x4 = require('./math/Matrix4')
-const Vector3D = require('./math/Vector3')
-const Plane = require('./math/Plane')
-
-// Add several convenience methods to the classes that support a transform() method:
-const addTransformationMethodsToPrototype = function (prot) {
-  prot.mirrored = function (plane) {
-    return this.transform(Matrix4x4.mirroring(plane))
-  }
-
-  prot.mirroredX = function () {
-    let plane = new Plane(Vector3D.Create(1, 0, 0), 0)
-    return this.mirrored(plane)
-  }
-
-  prot.mirroredY = function () {
-    let plane = new Plane(Vector3D.Create(0, 1, 0), 0)
-    return this.mirrored(plane)
-  }
-
-  prot.mirroredZ = function () {
-    let plane = new Plane(Vector3D.Create(0, 0, 1), 0)
-    return this.mirrored(plane)
-  }
-
-  prot.translate = function (v) {
-    return this.transform(Matrix4x4.translation(v))
-  }
-
-  prot.scale = function (f) {
-    return this.transform(Matrix4x4.scaling(f))
-  }
-
-  prot.rotateX = function (deg) {
-    return this.transform(Matrix4x4.rotationX(deg))
-  }
-
-  prot.rotateY = function (deg) {
-    return this.transform(Matrix4x4.rotationY(deg))
-  }
-
-  prot.rotateZ = function (deg) {
-    return this.transform(Matrix4x4.rotationZ(deg))
-  }
-
-  prot.rotate = function (rotationCenter, rotationAxis, degrees) {
-    return this.transform(Matrix4x4.rotation(rotationCenter, rotationAxis, degrees))
-  }
-
-  prot.rotateEulerAngles = function (alpha, beta, gamma, position) {
-    position = position || [0, 0, 0]
-
-    let Rz1 = Matrix4x4.rotationZ(alpha)
-    let Rx = Matrix4x4.rotationX(beta)
-    let Rz2 = Matrix4x4.rotationZ(gamma)
-    let T = Matrix4x4.translation(new Vector3D(position))
-
-    return this.transform(Rz2.multiply(Rx).multiply(Rz1).multiply(T))
-  }
-}
-
-// TODO: consider generalization and adding to addTransformationMethodsToPrototype
-const addCenteringToPrototype = function (prot, axes) {
-  prot.center = function (cAxes) {
-    cAxes = Array.prototype.map.call(arguments, function (a) {
-      return a // .toLowerCase();
-    })
-        // no args: center on all axes
-    if (!cAxes.length) {
-      cAxes = axes.slice()
-    }
-    let b = this.getBounds()
-    return this.translate(axes.map(function (a) {
-      return cAxes.indexOf(a) > -1 ? -(b[0][a] + b[1][a]) / 2 : 0
-    }))
-  }
-}
-module.exports = {
-  addTransformationMethodsToPrototype,
-  addCenteringToPrototype
-}
-
-},{"./math/Matrix4":27,"./math/Plane":30,"./math/Vector3":35}],41:[function(require,module,exports){
-const Vector3D = require('./math/Vector3')
-const Vector2D = require('./math/Vector2')
-
-// Parse an option from the options object
-// If the option is not present, return the default value
-const parseOption = function (options, optionname, defaultvalue) {
-  var result = defaultvalue
-  if (options && optionname in options) {
-    result = options[optionname]
-  }
-  return result
-}
-
-  // Parse an option and force into a Vector3D. If a scalar is passed it is converted
-  // into a vector with equal x,y,z
-const parseOptionAs3DVector = function (options, optionname, defaultvalue) {
-  var result = parseOption(options, optionname, defaultvalue)
-  result = new Vector3D(result)
-  return result
-}
-
-const parseOptionAs3DVectorList = function (options, optionname, defaultvalue) {
-  var result = parseOption(options, optionname, defaultvalue)
-  return result.map(function (res) {
-    return new Vector3D(res)
-  })
-}
-
-  // Parse an option and force into a Vector2D. If a scalar is passed it is converted
-  // into a vector with equal x,y
-const parseOptionAs2DVector = function (options, optionname, defaultvalue) {
-  var result = parseOption(options, optionname, defaultvalue)
-  result = new Vector2D(result)
-  return result
-}
-
-const parseOptionAsFloat = function (options, optionname, defaultvalue) {
-  var result = parseOption(options, optionname, defaultvalue)
-  if (typeof (result) === 'string') {
-    result = Number(result)
-  }
-  if (isNaN(result) || typeof (result) !== 'number') {
-    throw new Error('Parameter ' + optionname + ' should be a number')
-  }
-  return result
-}
-
-const parseOptionAsInt = function (options, optionname, defaultvalue) {
-  var result = parseOption(options, optionname, defaultvalue)
-  result = Number(Math.floor(result))
-  if (isNaN(result)) {
-    throw new Error('Parameter ' + optionname + ' should be a number')
-  }
-  return result
-}
-
-const parseOptionAsBool = function (options, optionname, defaultvalue) {
-  var result = parseOption(options, optionname, defaultvalue)
-  if (typeof (result) === 'string') {
-    if (result === 'true') result = true
-    else if (result === 'false') result = false
-    else if (result === 0) result = false
-  }
-  result = !!result
-  return result
-}
-
-module.exports = {
-  parseOption,
-  parseOptionAsInt,
-  parseOptionAsFloat,
-  parseOptionAsBool,
-  parseOptionAs3DVector,
-  parseOptionAs2DVector,
-  parseOptionAs3DVectorList
-}
-
-},{"./math/Vector2":34,"./math/Vector3":35}],42:[function(require,module,exports){
-const CAG = require('./CAG')
-const {parseOptionAs2DVector, parseOptionAsFloat, parseOptionAsInt} = require('./optionParsers')
-const {defaultResolution2D} = require('./constants')
-const Vector2D = require('./math/Vector2')
-const Path2D = require('./math/Path2')
-const {fromCompactBinary} = require('./CAGFactories')
-
-/** Construct a circle.
- * @param {Object} [options] - options for construction
- * @param {Vector2D} [options.center=[0,0]] - center of circle
- * @param {Number} [options.radius=1] - radius of circle
- * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
- * @returns {CAG} new CAG object
- */
-const circle = function (options) {
-  options = options || {}
-  let center = parseOptionAs2DVector(options, 'center', [0, 0])
-  let radius = parseOptionAsFloat(options, 'radius', 1)
-  let resolution = parseOptionAsInt(options, 'resolution', defaultResolution2D)
-  let points = []
-  for (let i = 0; i < resolution; i++) {
-    let radians = 2 * Math.PI * i / resolution
-    let point = Vector2D.fromAngleRadians(radians).times(radius).plus(center)
-    points.push(point)
-  }
-  return CAG.fromPoints(points)
-}
-
-/** Construct an ellispe.
- * @param {Object} [options] - options for construction
- * @param {Vector2D} [options.center=[0,0]] - center of ellipse
- * @param {Vector2D} [options.radius=[1,1]] - radius of ellipse, width and height
- * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
- * @returns {CAG} new CAG object
- */
-const ellipse = function (options) {
-  options = options || {}
-  let c = parseOptionAs2DVector(options, 'center', [0, 0])
-  let r = parseOptionAs2DVector(options, 'radius', [1, 1])
-  r = r.abs() // negative radii make no sense
-  let res = parseOptionAsInt(options, 'resolution', defaultResolution2D)
-
-  let e2 = new Path2D([[c.x, c.y + r.y]])
-  e2 = e2.appendArc([c.x, c.y - r.y], {
-    xradius: r.x,
-    yradius: r.y,
-    xaxisrotation: 0,
-    resolution: res,
-    clockwise: true,
-    large: false
-  })
-  e2 = e2.appendArc([c.x, c.y + r.y], {
-    xradius: r.x,
-    yradius: r.y,
-    xaxisrotation: 0,
-    resolution: res,
-    clockwise: true,
-    large: false
-  })
-  e2 = e2.close()
-  return CAG.fromPath2(e2)
-}
-
-/** Construct a rectangle.
- * @param {Object} [options] - options for construction
- * @param {Vector2D} [options.center=[0,0]] - center of rectangle
- * @param {Vector2D} [options.radius=[1,1]] - radius of rectangle, width and height
- * @param {Vector2D} [options.corner1=[0,0]] - bottom left corner of rectangle (alternate)
- * @param {Vector2D} [options.corner2=[0,0]] - upper right corner of rectangle (alternate)
- * @returns {CAG} new CAG object
- */
-const rectangle = function (options) {
-  options = options || {}
-  let c, r
-  if (('corner1' in options) || ('corner2' in options)) {
-    if (('center' in options) || ('radius' in options)) {
-      throw new Error('rectangle: should either give a radius and center parameter, or a corner1 and corner2 parameter')
-    }
-    let corner1 = parseOptionAs2DVector(options, 'corner1', [0, 0])
-    let corner2 = parseOptionAs2DVector(options, 'corner2', [1, 1])
-    c = corner1.plus(corner2).times(0.5)
-    r = corner2.minus(corner1).times(0.5)
-  } else {
-    c = parseOptionAs2DVector(options, 'center', [0, 0])
-    r = parseOptionAs2DVector(options, 'radius', [1, 1])
-  }
-  r = r.abs() // negative radii make no sense
-  let rswap = new Vector2D(r.x, -r.y)
-  let points = [
-    c.plus(r), c.plus(rswap), c.minus(r), c.minus(rswap)
-  ]
-  return CAG.fromPoints(points)
-}
-
-/** Construct a rounded rectangle.
- * @param {Object} [options] - options for construction
- * @param {Vector2D} [options.center=[0,0]] - center of rounded rectangle
- * @param {Vector2D} [options.radius=[1,1]] - radius of rounded rectangle, width and height
- * @param {Vector2D} [options.corner1=[0,0]] - bottom left corner of rounded rectangle (alternate)
- * @param {Vector2D} [options.corner2=[0,0]] - upper right corner of rounded rectangle (alternate)
- * @param {Number} [options.roundradius=0.2] - round radius of corners
- * @param {Number} [options.resolution=defaultResolution2D] - number of sides per 360 rotation
- * @returns {CAG} new CAG object
- *
- * @example
- * let r = roundedRectangle({
- *   center: [0, 0],
- *   radius: [5, 10],
- *   roundradius: 2,
- *   resolution: 36,
- * });
- */
-const roundedRectangle = function (options) {
-  options = options || {}
-  let center, radius
-  if (('corner1' in options) || ('corner2' in options)) {
-    if (('center' in options) || ('radius' in options)) {
-      throw new Error('roundedRectangle: should either give a radius and center parameter, or a corner1 and corner2 parameter')
-    }
-    let corner1 = parseOptionAs2DVector(options, 'corner1', [0, 0])
-    let corner2 = parseOptionAs2DVector(options, 'corner2', [1, 1])
-    center = corner1.plus(corner2).times(0.5)
-    radius = corner2.minus(corner1).times(0.5)
-  } else {
-    center = parseOptionAs2DVector(options, 'center', [0, 0])
-    radius = parseOptionAs2DVector(options, 'radius', [1, 1])
-  }
-  radius = radius.abs() // negative radii make no sense
-  let roundradius = parseOptionAsFloat(options, 'roundradius', 0.2)
-  let resolution = parseOptionAsInt(options, 'resolution', defaultResolution2D)
-  let maxroundradius = Math.min(radius.x, radius.y)
-  maxroundradius -= 0.1
-  roundradius = Math.min(roundradius, maxroundradius)
-  roundradius = Math.max(0, roundradius)
-  radius = new Vector2D(radius.x - roundradius, radius.y - roundradius)
-  let rect = CAG.rectangle({
-    center: center,
-    radius: radius
-  })
-  if (roundradius > 0) {
-    rect = rect.expand(roundradius, resolution)
-  }
-  return rect
-}
-
-/** Reconstruct a CAG from the output of toCompactBinary().
- * @param {CompactBinary} bin - see toCompactBinary()
- * @returns {CAG} new CAG object
- */
-CAG.fromCompactBinary = function (bin) {
-  if (bin['class'] !== 'CAG') throw new Error('Not a CAG')
-  let vertices = []
-  let vertexData = bin.vertexData
-  let numvertices = vertexData.length / 2
-  let arrayindex = 0
-  for (let vertexindex = 0; vertexindex < numvertices; vertexindex++) {
-    let x = vertexData[arrayindex++]
-    let y = vertexData[arrayindex++]
-    let pos = new Vector2D(x, y)
-    let vertex = new CAG.Vertex(pos)
-    vertices.push(vertex)
-  }
-
-  let sides = []
-  let numsides = bin.sideVertexIndices.length / 2
-  arrayindex = 0
-  for (let sideindex = 0; sideindex < numsides; sideindex++) {
-    let vertexindex0 = bin.sideVertexIndices[arrayindex++]
-    let vertexindex1 = bin.sideVertexIndices[arrayindex++]
-    let side = new CAG.Side(vertices[vertexindex0], vertices[vertexindex1])
-    sides.push(side)
-  }
-  let cag = CAG.fromSides(sides)
-  cag.isCanonicalized = true
-  return cag
-}
-
-module.exports = {
-  circle,
-  ellipse,
-  rectangle,
-  roundedRectangle,
-  fromCompactBinary
-}
-
-},{"./CAG":14,"./CAGFactories":15,"./constants":23,"./math/Path2":29,"./math/Vector2":34,"./optionParsers":41}],43:[function(require,module,exports){
-const CSG = require('./CSG')
-const {parseOption, parseOptionAs3DVector, parseOptionAs2DVector, parseOptionAs3DVectorList, parseOptionAsFloat, parseOptionAsInt} = require('./optionParsers')
-const {defaultResolution3D, defaultResolution2D, EPS} = require('./constants')
-const Vector3D = require('./math/Vector3')
-const Vertex = require('./math/Vertex3')
-const Polygon = require('./math/Polygon3')
-const {Connector} = require('./connectors')
-const Properties = require('./Properties')
-
-/** Construct an axis-aligned solid cuboid.
- * @param {Object} [options] - options for construction
- * @param {Vector3D} [options.center=[0,0,0]] - center of cube
- * @param {Vector3D} [options.radius=[1,1,1]] - radius of cube, single scalar also possible
- * @returns {CSG} new 3D solid
- *
- * @example
- * let cube = CSG.cube({
- *   center: [5, 5, 5],
- *   radius: 5, // scalar radius
- * });
- */
-const cube = function (options) {
-  let c
-  let r
-  let corner1
-  let corner2
-  options = options || {}
-  if (('corner1' in options) || ('corner2' in options)) {
-    if (('center' in options) || ('radius' in options)) {
-      throw new Error('cube: should either give a radius and center parameter, or a corner1 and corner2 parameter')
-    }
-    corner1 = parseOptionAs3DVector(options, 'corner1', [0, 0, 0])
-    corner2 = parseOptionAs3DVector(options, 'corner2', [1, 1, 1])
-    c = corner1.plus(corner2).times(0.5)
-    r = corner2.minus(corner1).times(0.5)
-  } else {
-    c = parseOptionAs3DVector(options, 'center', [0, 0, 0])
-    r = parseOptionAs3DVector(options, 'radius', [1, 1, 1])
-  }
-  r = r.abs() // negative radii make no sense
-  let result = CSG.fromPolygons([
-    [
-            [0, 4, 6, 2],
-            [-1, 0, 0]
-    ],
-    [
-            [1, 3, 7, 5],
-            [+1, 0, 0]
-    ],
-    [
-            [0, 1, 5, 4],
-            [0, -1, 0]
-    ],
-    [
-            [2, 6, 7, 3],
-            [0, +1, 0]
-    ],
-    [
-            [0, 2, 3, 1],
-            [0, 0, -1]
-    ],
-    [
-            [4, 5, 7, 6],
-            [0, 0, +1]
-    ]
-  ].map(function (info) {
-    let vertices = info[0].map(function (i) {
-      let pos = new Vector3D(
-                c.x + r.x * (2 * !!(i & 1) - 1), c.y + r.y * (2 * !!(i & 2) - 1), c.z + r.z * (2 * !!(i & 4) - 1))
-      return new Vertex(pos)
-    })
-    return new Polygon(vertices, null /* , plane */)
-  }))
-  result.properties.cube = new Properties()
-  result.properties.cube.center = new Vector3D(c)
-    // add 6 connectors, at the centers of each face:
-  result.properties.cube.facecenters = [
-    new Connector(new Vector3D([r.x, 0, 0]).plus(c), [1, 0, 0], [0, 0, 1]),
-    new Connector(new Vector3D([-r.x, 0, 0]).plus(c), [-1, 0, 0], [0, 0, 1]),
-    new Connector(new Vector3D([0, r.y, 0]).plus(c), [0, 1, 0], [0, 0, 1]),
-    new Connector(new Vector3D([0, -r.y, 0]).plus(c), [0, -1, 0], [0, 0, 1]),
-    new Connector(new Vector3D([0, 0, r.z]).plus(c), [0, 0, 1], [1, 0, 0]),
-    new Connector(new Vector3D([0, 0, -r.z]).plus(c), [0, 0, -1], [1, 0, 0])
-  ]
-  return result
-}
-
-/** Construct a solid sphere
- * @param {Object} [options] - options for construction
- * @param {Vector3D} [options.center=[0,0,0]] - center of sphere
- * @param {Number} [options.radius=1] - radius of sphere
- * @param {Number} [options.resolution=defaultResolution3D] - number of polygons per 360 degree revolution
- * @param {Array} [options.axes] -  an array with 3 vectors for the x, y and z base vectors
- * @returns {CSG} new 3D solid
- *
- *
- * @example
- * let sphere = CSG.sphere({
- *   center: [0, 0, 0],
- *   radius: 2,
- *   resolution: 32,
- * });
-*/
-const sphere = function (options) {
-  options = options || {}
-  let center = parseOptionAs3DVector(options, 'center', [0, 0, 0])
-  let radius = parseOptionAsFloat(options, 'radius', 1)
-  let resolution = parseOptionAsInt(options, 'resolution', defaultResolution3D)
-  let xvector, yvector, zvector
-  if ('axes' in options) {
-    xvector = options.axes[0].unit().times(radius)
-    yvector = options.axes[1].unit().times(radius)
-    zvector = options.axes[2].unit().times(radius)
-  } else {
-    xvector = new Vector3D([1, 0, 0]).times(radius)
-    yvector = new Vector3D([0, -1, 0]).times(radius)
-    zvector = new Vector3D([0, 0, 1]).times(radius)
-  }
-  if (resolution < 4) resolution = 4
-  let qresolution = Math.round(resolution / 4)
-  let prevcylinderpoint
-  let polygons = []
-  for (let slice1 = 0; slice1 <= resolution; slice1++) {
-    let angle = Math.PI * 2.0 * slice1 / resolution
-    let cylinderpoint = xvector.times(Math.cos(angle)).plus(yvector.times(Math.sin(angle)))
-    if (slice1 > 0) {
-            // cylinder vertices:
-      let vertices = []
-      let prevcospitch, prevsinpitch
-      for (let slice2 = 0; slice2 <= qresolution; slice2++) {
-        let pitch = 0.5 * Math.PI * slice2 / qresolution
-        let cospitch = Math.cos(pitch)
-        let sinpitch = Math.sin(pitch)
-        if (slice2 > 0) {
-          vertices = []
-          vertices.push(new Vertex(center.plus(prevcylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
-          vertices.push(new Vertex(center.plus(cylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
-          if (slice2 < qresolution) {
-            vertices.push(new Vertex(center.plus(cylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
-          }
-          vertices.push(new Vertex(center.plus(prevcylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
-          polygons.push(new Polygon(vertices))
-          vertices = []
-          vertices.push(new Vertex(center.plus(prevcylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
-          vertices.push(new Vertex(center.plus(cylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
-          if (slice2 < qresolution) {
-            vertices.push(new Vertex(center.plus(cylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
-          }
-          vertices.push(new Vertex(center.plus(prevcylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
-          vertices.reverse()
-          polygons.push(new Polygon(vertices))
-        }
-        prevcospitch = cospitch
-        prevsinpitch = sinpitch
-      }
-    }
-    prevcylinderpoint = cylinderpoint
-  }
-  let result = CSG.fromPolygons(polygons)
-  result.properties.sphere = new Properties()
-  result.properties.sphere.center = new Vector3D(center)
-  result.properties.sphere.facepoint = center.plus(xvector)
-  return result
-}
-
-/** Construct a solid cylinder.
- * @param {Object} [options] - options for construction
- * @param {Vector} [options.start=[0,-1,0]] - start point of cylinder
- * @param {Vector} [options.end=[0,1,0]] - end point of cylinder
- * @param {Number} [options.radius=1] - radius of cylinder, must be scalar
- * @param {Number} [options.resolution=defaultResolution3D] - number of polygons per 360 degree revolution
- * @returns {CSG} new 3D solid
- *
- * @example
- * let cylinder = CSG.cylinder({
- *   start: [0, -10, 0],
- *   end: [0, 10, 0],
- *   radius: 10,
- *   resolution: 16
- * });
- */
-const cylinder = function (options) {
-  let s = parseOptionAs3DVector(options, 'start', [0, -1, 0])
-  let e = parseOptionAs3DVector(options, 'end', [0, 1, 0])
-  let r = parseOptionAsFloat(options, 'radius', 1)
-  let rEnd = parseOptionAsFloat(options, 'radiusEnd', r)
-  let rStart = parseOptionAsFloat(options, 'radiusStart', r)
-  let alpha = parseOptionAsFloat(options, 'sectorAngle', 360)
-  alpha = alpha > 360 ? alpha % 360 : alpha
-
-  if ((rEnd < 0) || (rStart < 0)) {
-    throw new Error('Radius should be non-negative')
-  }
-  if ((rEnd === 0) && (rStart === 0)) {
-    throw new Error('Either radiusStart or radiusEnd should be positive')
-  }
-
-  let slices = parseOptionAsInt(options, 'resolution', defaultResolution2D) // FIXME is this 3D?
-  let ray = e.minus(s)
-  let axisZ = ray.unit() //, isY = (Math.abs(axisZ.y) > 0.5);
-  let axisX = axisZ.randomNonParallelVector().unit()
-
-    //  let axisX = new Vector3D(isY, !isY, 0).cross(axisZ).unit();
-  let axisY = axisX.cross(axisZ).unit()
-  let start = new Vertex(s)
-  let end = new Vertex(e)
-  let polygons = []
-
-  function point (stack, slice, radius) {
-    let angle = slice * Math.PI * alpha / 180
-    let out = axisX.times(Math.cos(angle)).plus(axisY.times(Math.sin(angle)))
-    let pos = s.plus(ray.times(stack)).plus(out.times(radius))
-    return new Vertex(pos)
-  }
-  if (alpha > 0) {
-    for (let i = 0; i < slices; i++) {
-      let t0 = i / slices
-      let t1 = (i + 1) / slices
-      if (rEnd === rStart) {
-        polygons.push(new Polygon([start, point(0, t0, rEnd), point(0, t1, rEnd)]))
-        polygons.push(new Polygon([point(0, t1, rEnd), point(0, t0, rEnd), point(1, t0, rEnd), point(1, t1, rEnd)]))
-        polygons.push(new Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
-      } else {
-        if (rStart > 0) {
-          polygons.push(new Polygon([start, point(0, t0, rStart), point(0, t1, rStart)]))
-          polygons.push(new Polygon([point(0, t0, rStart), point(1, t0, rEnd), point(0, t1, rStart)]))
-        }
-        if (rEnd > 0) {
-          polygons.push(new Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
-          polygons.push(new Polygon([point(1, t0, rEnd), point(1, t1, rEnd), point(0, t1, rStart)]))
-        }
-      }
-    }
-    if (alpha < 360) {
-      polygons.push(new Polygon([start, end, point(0, 0, rStart)]))
-      polygons.push(new Polygon([point(0, 0, rStart), end, point(1, 0, rEnd)]))
-      polygons.push(new Polygon([start, point(0, 1, rStart), end]))
-      polygons.push(new Polygon([point(0, 1, rStart), point(1, 1, rEnd), end]))
-    }
-  }
-  let result = CSG.fromPolygons(polygons)
-  result.properties.cylinder = new Properties()
-  result.properties.cylinder.start = new Connector(s, axisZ.negated(), axisX)
-  result.properties.cylinder.end = new Connector(e, axisZ, axisX)
-  let cylCenter = s.plus(ray.times(0.5))
-  let fptVec = axisX.rotate(s, axisZ, -alpha / 2).times((rStart + rEnd) / 2)
-  let fptVec90 = fptVec.cross(axisZ)
-    // note this one is NOT a face normal for a cone. - It's horizontal from cyl perspective
-  result.properties.cylinder.facepointH = new Connector(cylCenter.plus(fptVec), fptVec, axisZ)
-  result.properties.cylinder.facepointH90 = new Connector(cylCenter.plus(fptVec90), fptVec90, axisZ)
-  return result
-}
-
-/** Construct a cylinder with rounded ends.
- * @param {Object} [options] - options for construction
- * @param {Vector3D} [options.start=[0,-1,0]] - start point of cylinder
- * @param {Vector3D} [options.end=[0,1,0]] - end point of cylinder
- * @param {Number} [options.radius=1] - radius of rounded ends, must be scalar
- * @param {Vector3D} [options.normal] - vector determining the starting angle for tesselation. Should be non-parallel to start.minus(end)
- * @param {Number} [options.resolution=defaultResolution3D] - number of polygons per 360 degree revolution
- * @returns {CSG} new 3D solid
- *
- * @example
- * let cylinder = CSG.roundedCylinder({
- *   start: [0, -10, 0],
- *   end: [0, 10, 0],
- *   radius: 2,
- *   resolution: 16
- * });
- */
-const roundedCylinder = function (options) {
-  let p1 = parseOptionAs3DVector(options, 'start', [0, -1, 0])
-  let p2 = parseOptionAs3DVector(options, 'end', [0, 1, 0])
-  let radius = parseOptionAsFloat(options, 'radius', 1)
-  let direction = p2.minus(p1)
-  let defaultnormal
-  if (Math.abs(direction.x) > Math.abs(direction.y)) {
-    defaultnormal = new Vector3D(0, 1, 0)
-  } else {
-    defaultnormal = new Vector3D(1, 0, 0)
-  }
-  let normal = parseOptionAs3DVector(options, 'normal', defaultnormal)
-  let resolution = parseOptionAsInt(options, 'resolution', defaultResolution3D)
-  if (resolution < 4) resolution = 4
-  let polygons = []
-  let qresolution = Math.floor(0.25 * resolution)
-  let length = direction.length()
-  if (length < EPS) {
-    return sphere({
-      center: p1,
-      radius: radius,
-      resolution: resolution
-    })
-  }
-  let zvector = direction.unit().times(radius)
-  let xvector = zvector.cross(normal).unit().times(radius)
-  let yvector = xvector.cross(zvector).unit().times(radius)
-  let prevcylinderpoint
-  for (let slice1 = 0; slice1 <= resolution; slice1++) {
-    let angle = Math.PI * 2.0 * slice1 / resolution
-    let cylinderpoint = xvector.times(Math.cos(angle)).plus(yvector.times(Math.sin(angle)))
-    if (slice1 > 0) {
-            // cylinder vertices:
-      let vertices = []
-      vertices.push(new Vertex(p1.plus(cylinderpoint)))
-      vertices.push(new Vertex(p1.plus(prevcylinderpoint)))
-      vertices.push(new Vertex(p2.plus(prevcylinderpoint)))
-      vertices.push(new Vertex(p2.plus(cylinderpoint)))
-      polygons.push(new Polygon(vertices))
-      let prevcospitch, prevsinpitch
-      for (let slice2 = 0; slice2 <= qresolution; slice2++) {
-        let pitch = 0.5 * Math.PI * slice2 / qresolution
-                // let pitch = Math.asin(slice2/qresolution);
-        let cospitch = Math.cos(pitch)
-        let sinpitch = Math.sin(pitch)
-        if (slice2 > 0) {
-          vertices = []
-          vertices.push(new Vertex(p1.plus(prevcylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
-          vertices.push(new Vertex(p1.plus(cylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
-          if (slice2 < qresolution) {
-            vertices.push(new Vertex(p1.plus(cylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
-          }
-          vertices.push(new Vertex(p1.plus(prevcylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
-          polygons.push(new Polygon(vertices))
-          vertices = []
-          vertices.push(new Vertex(p2.plus(prevcylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
-          vertices.push(new Vertex(p2.plus(cylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
-          if (slice2 < qresolution) {
-            vertices.push(new Vertex(p2.plus(cylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
-          }
-          vertices.push(new Vertex(p2.plus(prevcylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
-          vertices.reverse()
-          polygons.push(new Polygon(vertices))
-        }
-        prevcospitch = cospitch
-        prevsinpitch = sinpitch
-      }
-    }
-    prevcylinderpoint = cylinderpoint
-  }
-  let result = CSG.fromPolygons(polygons)
-  let ray = zvector.unit()
-  let axisX = xvector.unit()
-  result.properties.roundedCylinder = new Properties()
-  result.properties.roundedCylinder.start = new Connector(p1, ray.negated(), axisX)
-  result.properties.roundedCylinder.end = new Connector(p2, ray, axisX)
-  result.properties.roundedCylinder.facepoint = p1.plus(xvector)
-  return result
-}
-
-/** Construct an elliptic cylinder.
- * @param {Object} [options] - options for construction
- * @param {Vector3D} [options.start=[0,-1,0]] - start point of cylinder
- * @param {Vector3D} [options.end=[0,1,0]] - end point of cylinder
- * @param {Vector2D} [options.radius=[1,1]] - radius of rounded ends, must be two dimensional array
- * @param {Vector2D} [options.radiusStart=[1,1]] - OPTIONAL radius of rounded start, must be two dimensional array
- * @param {Vector2D} [options.radiusEnd=[1,1]] - OPTIONAL radius of rounded end, must be two dimensional array
- * @param {Number} [options.resolution=defaultResolution2D] - number of polygons per 360 degree revolution
- * @returns {CSG} new 3D solid
- *
- * @example
- *     let cylinder = CSG.cylinderElliptic({
- *       start: [0, -10, 0],
- *       end: [0, 10, 0],
- *       radiusStart: [10,5],
- *       radiusEnd: [8,3],
- *       resolution: 16
- *     });
- */
-
-const cylinderElliptic = function (options) {
-  let s = parseOptionAs3DVector(options, 'start', [0, -1, 0])
-  let e = parseOptionAs3DVector(options, 'end', [0, 1, 0])
-  let r = parseOptionAs2DVector(options, 'radius', [1, 1])
-  let rEnd = parseOptionAs2DVector(options, 'radiusEnd', r)
-  let rStart = parseOptionAs2DVector(options, 'radiusStart', r)
-
-  if ((rEnd._x < 0) || (rStart._x < 0) || (rEnd._y < 0) || (rStart._y < 0)) {
-    throw new Error('Radius should be non-negative')
-  }
-  if ((rEnd._x === 0 || rEnd._y === 0) && (rStart._x === 0 || rStart._y === 0)) {
-    throw new Error('Either radiusStart or radiusEnd should be positive')
-  }
-
-  let slices = parseOptionAsInt(options, 'resolution', defaultResolution2D) // FIXME is this correct?
-  let ray = e.minus(s)
-  let axisZ = ray.unit() //, isY = (Math.abs(axisZ.y) > 0.5);
-  let axisX = axisZ.randomNonParallelVector().unit()
-
-    //  let axisX = new Vector3D(isY, !isY, 0).cross(axisZ).unit();
-  let axisY = axisX.cross(axisZ).unit()
-  let start = new Vertex(s)
-  let end = new Vertex(e)
-  let polygons = []
-
-  function point (stack, slice, radius) {
-    let angle = slice * Math.PI * 2
-    let out = axisX.times(radius._x * Math.cos(angle)).plus(axisY.times(radius._y * Math.sin(angle)))
-    let pos = s.plus(ray.times(stack)).plus(out)
-    return new Vertex(pos)
-  }
-  for (let i = 0; i < slices; i++) {
-    let t0 = i / slices
-    let t1 = (i + 1) / slices
-
-    if (rEnd._x === rStart._x && rEnd._y === rStart._y) {
-      polygons.push(new Polygon([start, point(0, t0, rEnd), point(0, t1, rEnd)]))
-      polygons.push(new Polygon([point(0, t1, rEnd), point(0, t0, rEnd), point(1, t0, rEnd), point(1, t1, rEnd)]))
-      polygons.push(new Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
-    } else {
-      if (rStart._x > 0) {
-        polygons.push(new Polygon([start, point(0, t0, rStart), point(0, t1, rStart)]))
-        polygons.push(new Polygon([point(0, t0, rStart), point(1, t0, rEnd), point(0, t1, rStart)]))
-      }
-      if (rEnd._x > 0) {
-        polygons.push(new Polygon([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
-        polygons.push(new Polygon([point(1, t0, rEnd), point(1, t1, rEnd), point(0, t1, rStart)]))
-      }
-    }
-  }
-  let result = CSG.fromPolygons(polygons)
-  result.properties.cylinder = new Properties()
-  result.properties.cylinder.start = new Connector(s, axisZ.negated(), axisX)
-  result.properties.cylinder.end = new Connector(e, axisZ, axisX)
-  result.properties.cylinder.facepoint = s.plus(axisX.times(rStart))
-  return result
-}
-
-/** Construct an axis-aligned solid rounded cuboid.
- * @param {Object} [options] - options for construction
- * @param {Vector3D} [options.center=[0,0,0]] - center of rounded cube
- * @param {Vector3D} [options.radius=[1,1,1]] - radius of rounded cube, single scalar is possible
- * @param {Number} [options.roundradius=0.2] - radius of rounded edges
- * @param {Number} [options.resolution=defaultResolution3D] - number of polygons per 360 degree revolution
- * @returns {CSG} new 3D solid
- *
- * @example
- * let cube = CSG.roundedCube({
- *   center: [2, 0, 2],
- *   radius: 15,
- *   roundradius: 2,
- *   resolution: 36,
- * });
- */
-const roundedCube = function (options) {
-  let minRR = 1e-2 // minroundradius 1e-3 gives rounding errors already
-  let center
-  let cuberadius
-  let corner1
-  let corner2
-  options = options || {}
-  if (('corner1' in options) || ('corner2' in options)) {
-    if (('center' in options) || ('radius' in options)) {
-      throw new Error('roundedCube: should either give a radius and center parameter, or a corner1 and corner2 parameter')
-    }
-    corner1 = parseOptionAs3DVector(options, 'corner1', [0, 0, 0])
-    corner2 = parseOptionAs3DVector(options, 'corner2', [1, 1, 1])
-    center = corner1.plus(corner2).times(0.5)
-    cuberadius = corner2.minus(corner1).times(0.5)
-  } else {
-    center = parseOptionAs3DVector(options, 'center', [0, 0, 0])
-    cuberadius = parseOptionAs3DVector(options, 'radius', [1, 1, 1])
-  }
-  cuberadius = cuberadius.abs() // negative radii make no sense
-  let resolution = parseOptionAsInt(options, 'resolution', defaultResolution3D)
-  if (resolution < 4) resolution = 4
-  if (resolution % 2 === 1 && resolution < 8) resolution = 8 // avoid ugly
-  let roundradius = parseOptionAs3DVector(options, 'roundradius', [0.2, 0.2, 0.2])
-    // slight hack for now - total radius stays ok
-  roundradius = Vector3D.Create(Math.max(roundradius.x, minRR), Math.max(roundradius.y, minRR), Math.max(roundradius.z, minRR))
-  let innerradius = cuberadius.minus(roundradius)
-  if (innerradius.x < 0 || innerradius.y < 0 || innerradius.z < 0) {
-    throw new Error('roundradius <= radius!')
-  }
-  let res = sphere({radius: 1, resolution: resolution})
-  res = res.scale(roundradius)
-  innerradius.x > EPS && (res = res.stretchAtPlane([1, 0, 0], [0, 0, 0], 2 * innerradius.x))
-  innerradius.y > EPS && (res = res.stretchAtPlane([0, 1, 0], [0, 0, 0], 2 * innerradius.y))
-  innerradius.z > EPS && (res = res.stretchAtPlane([0, 0, 1], [0, 0, 0], 2 * innerradius.z))
-  res = res.translate([-innerradius.x + center.x, -innerradius.y + center.y, -innerradius.z + center.z])
-  res = res.reTesselated()
-  res.properties.roundedCube = new Properties()
-  res.properties.roundedCube.center = new Vertex(center)
-  res.properties.roundedCube.facecenters = [
-    new Connector(new Vector3D([cuberadius.x, 0, 0]).plus(center), [1, 0, 0], [0, 0, 1]),
-    new Connector(new Vector3D([-cuberadius.x, 0, 0]).plus(center), [-1, 0, 0], [0, 0, 1]),
-    new Connector(new Vector3D([0, cuberadius.y, 0]).plus(center), [0, 1, 0], [0, 0, 1]),
-    new Connector(new Vector3D([0, -cuberadius.y, 0]).plus(center), [0, -1, 0], [0, 0, 1]),
-    new Connector(new Vector3D([0, 0, cuberadius.z]).plus(center), [0, 0, 1], [1, 0, 0]),
-    new Connector(new Vector3D([0, 0, -cuberadius.z]).plus(center), [0, 0, -1], [1, 0, 0])
-  ]
-  return res
-}
-
-/** Create a polyhedron using Openscad style arguments.
- * Define face vertices clockwise looking from outside.
- * @param {Object} [options] - options for construction
- * @returns {CSG} new 3D solid
- */
-const polyhedron = function (options) {
-  options = options || {}
-  if (('points' in options) !== ('faces' in options)) {
-    throw new Error("polyhedron needs 'points' and 'faces' arrays")
-  }
-  let vertices = parseOptionAs3DVectorList(options, 'points', [
-            [1, 1, 0],
-            [1, -1, 0],
-            [-1, -1, 0],
-            [-1, 1, 0],
-            [0, 0, 1]
-  ])
-        .map(function (pt) {
-          return new Vertex(pt)
-        })
-  let faces = parseOption(options, 'faces', [
-            [0, 1, 4],
-            [1, 2, 4],
-            [2, 3, 4],
-            [3, 0, 4],
-            [1, 0, 3],
-            [2, 1, 3]
-  ])
-    // Openscad convention defines inward normals - so we have to invert here
-  faces.forEach(function (face) {
-    face.reverse()
-  })
-  let polygons = faces.map(function (face) {
-    return new Polygon(face.map(function (idx) {
-      return vertices[idx]
-    }))
-  })
-
-    // TODO: facecenters as connectors? probably overkill. Maybe centroid
-    // the re-tesselation here happens because it's so easy for a user to
-    // create parametrized polyhedrons that end up with 1-2 dimensional polygons.
-    // These will create infinite loops at CSG.Tree()
-  return CSG.fromPolygons(polygons).reTesselated()
-}
-
-module.exports = {
-  cube,
-  sphere,
-  roundedCube,
-  cylinder,
-  roundedCylinder,
-  cylinderElliptic,
-  polyhedron
-}
-
-},{"./CSG":16,"./Properties":21,"./connectors":22,"./constants":23,"./math/Polygon3":32,"./math/Vector3":35,"./math/Vertex3":37,"./optionParsers":41}],44:[function(require,module,exports){
-const {_CSGDEBUG, EPS} = require('./constants')
-const Vertex = require('./math/Vertex3')
-const Polygon = require('./math/Polygon3')
-
-// Returns object:
-// .type:
-//   0: coplanar-front
-//   1: coplanar-back
-//   2: front
-//   3: back
-//   4: spanning
-// In case the polygon is spanning, returns:
-// .front: a Polygon of the front part
-// .back: a Polygon of the back part
-function splitPolygonByPlane (plane, polygon) {
-  let result = {
-    type: null,
-    front: null,
-    back: null
-  }
-      // cache in local lets (speedup):
-  let planenormal = plane.normal
-  let vertices = polygon.vertices
-  let numvertices = vertices.length
-  if (polygon.plane.equals(plane)) {
-    result.type = 0
-  } else {
-    let thisw = plane.w
-    let hasfront = false
-    let hasback = false
-    let vertexIsBack = []
-    let MINEPS = -EPS
-    for (let i = 0; i < numvertices; i++) {
-      let t = planenormal.dot(vertices[i].pos) - thisw
-      let isback = (t < 0)
-      vertexIsBack.push(isback)
-      if (t > EPS) hasfront = true
-      if (t < MINEPS) hasback = true
-    }
-    if ((!hasfront) && (!hasback)) {
-              // all points coplanar
-      let t = planenormal.dot(polygon.plane.normal)
-      result.type = (t >= 0) ? 0 : 1
-    } else if (!hasback) {
-      result.type = 2
-    } else if (!hasfront) {
-      result.type = 3
-    } else {
-              // spanning
-      result.type = 4
-      let frontvertices = []
-      let backvertices = []
-      let isback = vertexIsBack[0]
-      for (let vertexindex = 0; vertexindex < numvertices; vertexindex++) {
-        let vertex = vertices[vertexindex]
-        let nextvertexindex = vertexindex + 1
-        if (nextvertexindex >= numvertices) nextvertexindex = 0
-        let nextisback = vertexIsBack[nextvertexindex]
-        if (isback === nextisback) {
-                      // line segment is on one side of the plane:
-          if (isback) {
-            backvertices.push(vertex)
-          } else {
-            frontvertices.push(vertex)
-          }
-        } else {
-                      // line segment intersects plane:
-          let point = vertex.pos
-          let nextpoint = vertices[nextvertexindex].pos
-          let intersectionpoint = plane.splitLineBetweenPoints(point, nextpoint)
-          let intersectionvertex = new Vertex(intersectionpoint)
-          if (isback) {
-            backvertices.push(vertex)
-            backvertices.push(intersectionvertex)
-            frontvertices.push(intersectionvertex)
-          } else {
-            frontvertices.push(vertex)
-            frontvertices.push(intersectionvertex)
-            backvertices.push(intersectionvertex)
-          }
-        }
-        isback = nextisback
-      } // for vertexindex
-              // remove duplicate vertices:
-      let EPS_SQUARED = EPS * EPS
-      if (backvertices.length >= 3) {
-        let prevvertex = backvertices[backvertices.length - 1]
-        for (let vertexindex = 0; vertexindex < backvertices.length; vertexindex++) {
-          let vertex = backvertices[vertexindex]
-          if (vertex.pos.distanceToSquared(prevvertex.pos) < EPS_SQUARED) {
-            backvertices.splice(vertexindex, 1)
-            vertexindex--
-          }
-          prevvertex = vertex
-        }
-      }
-      if (frontvertices.length >= 3) {
-        let prevvertex = frontvertices[frontvertices.length - 1]
-        for (let vertexindex = 0; vertexindex < frontvertices.length; vertexindex++) {
-          let vertex = frontvertices[vertexindex]
-          if (vertex.pos.distanceToSquared(prevvertex.pos) < EPS_SQUARED) {
-            frontvertices.splice(vertexindex, 1)
-            vertexindex--
-          }
-          prevvertex = vertex
-        }
-      }
-      if (frontvertices.length >= 3) {
-        result.front = new Polygon(frontvertices, polygon.shared, polygon.plane)
-      }
-      if (backvertices.length >= 3) {
-        result.back = new Polygon(backvertices, polygon.shared, polygon.plane)
-      }
-    }
-  }
-  return result
-}
-
-// # class PolygonTreeNode
-// This class manages hierarchical splits of polygons
-// At the top is a root node which doesn hold a polygon, only child PolygonTreeNodes
-// Below that are zero or more 'top' nodes; each holds a polygon. The polygons can be in different planes
-// splitByPlane() splits a node by a plane. If the plane intersects the polygon, two new child nodes
-// are created holding the splitted polygon.
-// getPolygons() retrieves the polygon from the tree. If for PolygonTreeNode the polygon is split but
-// the two split parts (child nodes) are still intact, then the unsplit polygon is returned.
-// This ensures that we can safely split a polygon into many fragments. If the fragments are untouched,
-//  getPolygons() will return the original unsplit polygon instead of the fragments.
-// remove() removes a polygon from the tree. Once a polygon is removed, the parent polygons are invalidated
-// since they are no longer intact.
-// constructor creates the root node:
-const PolygonTreeNode = function () {
-  this.parent = null
-  this.children = []
-  this.polygon = null
-  this.removed = false
-}
-
-PolygonTreeNode.prototype = {
-    // fill the tree with polygons. Should be called on the root node only; child nodes must
-    // always be a derivate (split) of the parent node.
-  addPolygons: function (polygons) {
-    if (!this.isRootNode())
-        // new polygons can only be added to root node; children can only be splitted polygons
-          {
-      throw new Error('Assertion failed')
-    }
-    let _this = this
-    polygons.map(function (polygon) {
-      _this.addChild(polygon)
-    })
-  },
-
-    // remove a node
-    // - the siblings become toplevel nodes
-    // - the parent is removed recursively
-  remove: function () {
-    if (!this.removed) {
-      this.removed = true
-
-      if (_CSGDEBUG) {
-        if (this.isRootNode()) throw new Error('Assertion failed') // can't remove root node
-        if (this.children.length) throw new Error('Assertion failed') // we shouldn't remove nodes with children
-      }
-
-            // remove ourselves from the parent's children list:
-      let parentschildren = this.parent.children
-      let i = parentschildren.indexOf(this)
-      if (i < 0) throw new Error('Assertion failed')
-      parentschildren.splice(i, 1)
-
-            // invalidate the parent's polygon, and of all parents above it:
-      this.parent.recursivelyInvalidatePolygon()
-    }
-  },
-
-  isRemoved: function () {
-    return this.removed
-  },
-
-  isRootNode: function () {
-    return !this.parent
-  },
-
-    // invert all polygons in the tree. Call on the root node
-  invert: function () {
-    if (!this.isRootNode()) throw new Error('Assertion failed') // can only call this on the root node
-    this.invertSub()
-  },
-
-  getPolygon: function () {
-    if (!this.polygon) throw new Error('Assertion failed') // doesn't have a polygon, which means that it has been broken down
-    return this.polygon
-  },
-
-  getPolygons: function (result) {
-    let children = [this]
-    let queue = [children]
-    let i, j, l, node
-    for (i = 0; i < queue.length; ++i) { // queue size can change in loop, don't cache length
-      children = queue[i]
-      for (j = 0, l = children.length; j < l; j++) { // ok to cache length
-        node = children[j]
-        if (node.polygon) {
-                    // the polygon hasn't been broken yet. We can ignore the children and return our polygon:
-          result.push(node.polygon)
-        } else {
-                    // our polygon has been split up and broken, so gather all subpolygons from the children
-          queue.push(node.children)
-        }
-      }
-    }
-  },
-
-    // split the node by a plane; add the resulting nodes to the frontnodes and backnodes array
-    // If the plane doesn't intersect the polygon, the 'this' object is added to one of the arrays
-    // If the plane does intersect the polygon, two new child nodes are created for the front and back fragments,
-    //  and added to both arrays.
-  splitByPlane: function (plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes) {
-    if (this.children.length) {
-      let queue = [this.children]
-      let i
-      let j
-      let l
-      let node
-      let nodes
-      for (i = 0; i < queue.length; i++) { // queue.length can increase, do not cache
-        nodes = queue[i]
-        for (j = 0, l = nodes.length; j < l; j++) { // ok to cache length
-          node = nodes[j]
-          if (node.children.length) {
-            queue.push(node.children)
-          } else {
-                        // no children. Split the polygon:
-            node._splitByPlane(plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes)
-          }
-        }
-      }
-    } else {
-      this._splitByPlane(plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes)
-    }
-  },
-
-    // only to be called for nodes with no children
-  _splitByPlane: function (plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes) {
-    let polygon = this.polygon
-    if (polygon) {
-      let bound = polygon.boundingSphere()
-      let sphereradius = bound[1] + EPS // FIXME Why add imprecision?
-      let planenormal = plane.normal
-      let spherecenter = bound[0]
-      let d = planenormal.dot(spherecenter) - plane.w
-      if (d > sphereradius) {
-        frontnodes.push(this)
-      } else if (d < -sphereradius) {
-        backnodes.push(this)
-      } else {
-        let splitresult = splitPolygonByPlane(plane, polygon)
-        switch (splitresult.type) {
-          case 0:
-                        // coplanar front:
-            coplanarfrontnodes.push(this)
-            break
-
-          case 1:
-                        // coplanar back:
-            coplanarbacknodes.push(this)
-            break
-
-          case 2:
-                        // front:
-            frontnodes.push(this)
-            break
-
-          case 3:
-                        // back:
-            backnodes.push(this)
-            break
-
-          case 4:
-                        // spanning:
-            if (splitresult.front) {
-              let frontnode = this.addChild(splitresult.front)
-              frontnodes.push(frontnode)
-            }
-            if (splitresult.back) {
-              let backnode = this.addChild(splitresult.back)
-              backnodes.push(backnode)
-            }
-            break
-        }
-      }
-    }
-  },
-
-    // PRIVATE methods from here:
-    // add child to a node
-    // this should be called whenever the polygon is split
-    // a child should be created for every fragment of the split polygon
-    // returns the newly created child
-  addChild: function (polygon) {
-    let newchild = new PolygonTreeNode()
-    newchild.parent = this
-    newchild.polygon = polygon
-    this.children.push(newchild)
-    return newchild
-  },
-
-  invertSub: function () {
-    let children = [this]
-    let queue = [children]
-    let i, j, l, node
-    for (i = 0; i < queue.length; i++) {
-      children = queue[i]
-      for (j = 0, l = children.length; j < l; j++) {
-        node = children[j]
-        if (node.polygon) {
-          node.polygon = node.polygon.flipped()
-        }
-        queue.push(node.children)
-      }
-    }
-  },
-
-  recursivelyInvalidatePolygon: function () {
-    let node = this
-    while (node.polygon) {
-      node.polygon = null
-      if (node.parent) {
-        node = node.parent
-      }
-    }
-  }
-}
-
-// # class Tree
-// This is the root of a BSP tree
-// We are using this separate class for the root of the tree, to hold the PolygonTreeNode root
-// The actual tree is kept in this.rootnode
-const Tree = function (polygons) {
-  this.polygonTree = new PolygonTreeNode()
-  this.rootnode = new Node(null)
-  if (polygons) this.addPolygons(polygons)
-}
-
-Tree.prototype = {
-  invert: function () {
-    this.polygonTree.invert()
-    this.rootnode.invert()
-  },
-
-    // Remove all polygons in this BSP tree that are inside the other BSP tree
-    // `tree`.
-  clipTo: function (tree, alsoRemovecoplanarFront) {
-    alsoRemovecoplanarFront = alsoRemovecoplanarFront ? true : false
-    this.rootnode.clipTo(tree, alsoRemovecoplanarFront)
-  },
-
-  allPolygons: function () {
-    let result = []
-    this.polygonTree.getPolygons(result)
-    return result
-  },
-
-  addPolygons: function (polygons) {
-    let _this = this
-    let polygontreenodes = polygons.map(function (p) {
-      return _this.polygonTree.addChild(p)
-    })
-    this.rootnode.addPolygonTreeNodes(polygontreenodes)
-  }
-}
-
-// # class Node
-// Holds a node in a BSP tree. A BSP tree is built from a collection of polygons
-// by picking a polygon to split along.
-// Polygons are not stored directly in the tree, but in PolygonTreeNodes, stored in
-// this.polygontreenodes. Those PolygonTreeNodes are children of the owning
-// Tree.polygonTree
-// This is not a leafy BSP tree since there is
-// no distinction between internal and leaf nodes.
-const Node = function (parent) {
-  this.plane = null
-  this.front = null
-  this.back = null
-  this.polygontreenodes = []
-  this.parent = parent
-}
-
-Node.prototype = {
-    // Convert solid space to empty space and empty space to solid space.
-  invert: function () {
-    let queue = [this]
-    let node
-    for (let i = 0; i < queue.length; i++) {
-      node = queue[i]
-      if (node.plane) node.plane = node.plane.flipped()
-      if (node.front) queue.push(node.front)
-      if (node.back) queue.push(node.back)
-      let temp = node.front
-      node.front = node.back
-      node.back = temp
-    }
-  },
-
-    // clip polygontreenodes to our plane
-    // calls remove() for all clipped PolygonTreeNodes
-  clipPolygons: function (polygontreenodes, alsoRemovecoplanarFront) {
-    let args = {'node': this, 'polygontreenodes': polygontreenodes}
-    let node
-    let stack = []
-
-    do {
-      node = args.node
-      polygontreenodes = args.polygontreenodes
-
-            // begin "function"
-      if (node.plane) {
-        let backnodes = []
-        let frontnodes = []
-        let coplanarfrontnodes = alsoRemovecoplanarFront ? backnodes : frontnodes
-        let plane = node.plane
-        let numpolygontreenodes = polygontreenodes.length
-        for (let i = 0; i < numpolygontreenodes; i++) {
-          let node1 = polygontreenodes[i]
-          if (!node1.isRemoved()) {
-            node1.splitByPlane(plane, coplanarfrontnodes, backnodes, frontnodes, backnodes)
-          }
-        }
-
-        if (node.front && (frontnodes.length > 0)) {
-          stack.push({'node': node.front, 'polygontreenodes': frontnodes})
-        }
-        let numbacknodes = backnodes.length
-        if (node.back && (numbacknodes > 0)) {
-          stack.push({'node': node.back, 'polygontreenodes': backnodes})
-        } else {
-                    // there's nothing behind this plane. Delete the nodes behind this plane:
-          for (let i = 0; i < numbacknodes; i++) {
-            backnodes[i].remove()
-          }
-        }
-      }
-      args = stack.pop()
-    } while (typeof (args) !== 'undefined')
-  },
-
-    // Remove all polygons in this BSP tree that are inside the other BSP tree
-    // `tree`.
-  clipTo: function (tree, alsoRemovecoplanarFront) {
-    let node = this
-    let stack = []
-    do {
-      if (node.polygontreenodes.length > 0) {
-        tree.rootnode.clipPolygons(node.polygontreenodes, alsoRemovecoplanarFront)
-      }
-      if (node.front) stack.push(node.front)
-      if (node.back) stack.push(node.back)
-      node = stack.pop()
-    } while (typeof (node) !== 'undefined')
-  },
-
-  addPolygonTreeNodes: function (polygontreenodes) {
-    let args = {'node': this, 'polygontreenodes': polygontreenodes}
-    let node
-    let stack = []
-    do {
-      node = args.node
-      polygontreenodes = args.polygontreenodes
-
-      if (polygontreenodes.length === 0) {
-        args = stack.pop()
-        continue
-      }
-      let _this = node
-      if (!node.plane) {
-        let bestplane = polygontreenodes[0].getPolygon().plane
-        node.plane = bestplane
-      }
-      let frontnodes = []
-      let backnodes = []
-
-      for (let i = 0, n = polygontreenodes.length; i < n; ++i) {
-        polygontreenodes[i].splitByPlane(_this.plane, _this.polygontreenodes, backnodes, frontnodes, backnodes)
-      }
-
-      if (frontnodes.length > 0) {
-        if (!node.front) node.front = new Node(node)
-        stack.push({'node': node.front, 'polygontreenodes': frontnodes})
-      }
-      if (backnodes.length > 0) {
-        if (!node.back) node.back = new Node(node)
-        stack.push({'node': node.back, 'polygontreenodes': backnodes})
-      }
-
-      args = stack.pop()
-    } while (typeof (args) !== 'undefined')
-  },
-
-  getParentPlaneNormals: function (normals, maxdepth) {
-    if (maxdepth > 0) {
-      if (this.parent) {
-        normals.push(this.parent.plane.normal)
-        this.parent.getParentPlaneNormals(normals, maxdepth - 1)
-      }
-    }
-  }
-}
-
-module.exports = Tree
-
-},{"./constants":23,"./math/Polygon3":32,"./math/Vertex3":37}],45:[function(require,module,exports){
-function fnNumberSort (a, b) {
-  return a - b
-}
-
-function fnSortByIndex (a, b) {
-  return a.index - b.index
-}
-
-const IsFloat = function (n) {
-  return (!isNaN(n)) || (n === Infinity) || (n === -Infinity)
-}
-
-const solve2Linear = function (a, b, c, d, u, v) {
-  let det = a * d - b * c
-  let invdet = 1.0 / det
-  let x = u * d - b * v
-  let y = -u * c + a * v
-  x *= invdet
-  y *= invdet
-  return [x, y]
-}
-
-function insertSorted (array, element, comparefunc) {
-  let leftbound = 0
-  let rightbound = array.length
-  while (rightbound > leftbound) {
-    let testindex = Math.floor((leftbound + rightbound) / 2)
-    let testelement = array[testindex]
-    let compareresult = comparefunc(element, testelement)
-    if (compareresult > 0) // element > testelement
-    {
-      leftbound = testindex + 1
-    } else {
-      rightbound = testindex
-    }
-  }
-  array.splice(leftbound, 0, element)
-}
-
-// Get the x coordinate of a point with a certain y coordinate, interpolated between two
-// points (CSG.Vector2D).
-// Interpolation is robust even if the points have the same y coordinate
-const interpolateBetween2DPointsForY = function (point1, point2, y) {
-  let f1 = y - point1.y
-  let f2 = point2.y - point1.y
-  if (f2 < 0) {
-    f1 = -f1
-    f2 = -f2
-  }
-  let t
-  if (f1 <= 0) {
-    t = 0.0
-  } else if (f1 >= f2) {
-    t = 1.0
-  } else if (f2 < 1e-10) { // FIXME Should this be CSG.EPS?
-    t = 0.5
-  } else {
-    t = f1 / f2
-  }
-  let result = point1.x + t * (point2.x - point1.x)
-  return result
-}
-
-module.exports = {
-  fnNumberSort,
-  fnSortByIndex,
-  IsFloat,
-  solve2Linear,
-  insertSorted,
-  interpolateBetween2DPointsForY
-}
-
-},{}],46:[function(require,module,exports){
-const {EPS} = require('../constants')
-const Polygon = require('../math/Polygon3')
-const Plane = require('../math/Plane')
-
-function addSide (sidemap, vertextag2sidestart, vertextag2sideend, vertex0, vertex1, polygonindex) {
-  let starttag = vertex0.getTag()
-  let endtag = vertex1.getTag()
-  if (starttag === endtag) throw new Error('Assertion failed')
-  let newsidetag = starttag + '/' + endtag
-  let reversesidetag = endtag + '/' + starttag
-  if (reversesidetag in sidemap) {
-    // we have a matching reverse oriented side.
-    // Instead of adding the new side, cancel out the reverse side:
-    // console.log("addSide("+newsidetag+") has reverse side:");
-    deleteSide(sidemap, vertextag2sidestart, vertextag2sideend, vertex1, vertex0, null)
-    return null
-  }
-  //  console.log("addSide("+newsidetag+")");
-  let newsideobj = {
-    vertex0: vertex0,
-    vertex1: vertex1,
-    polygonindex: polygonindex
-  }
-  if (!(newsidetag in sidemap)) {
-    sidemap[newsidetag] = [newsideobj]
-  } else {
-    sidemap[newsidetag].push(newsideobj)
-  }
-  if (starttag in vertextag2sidestart) {
-    vertextag2sidestart[starttag].push(newsidetag)
-  } else {
-    vertextag2sidestart[starttag] = [newsidetag]
-  }
-  if (endtag in vertextag2sideend) {
-    vertextag2sideend[endtag].push(newsidetag)
-  } else {
-    vertextag2sideend[endtag] = [newsidetag]
-  }
-  return newsidetag
-}
-
-function deleteSide (sidemap, vertextag2sidestart, vertextag2sideend, vertex0, vertex1, polygonindex) {
-  let starttag = vertex0.getTag()
-  let endtag = vertex1.getTag()
-  let sidetag = starttag + '/' + endtag
-  // console.log("deleteSide("+sidetag+")");
-  if (!(sidetag in sidemap)) throw new Error('Assertion failed')
-  let idx = -1
-  let sideobjs = sidemap[sidetag]
-  for (let i = 0; i < sideobjs.length; i++) {
-    let sideobj = sideobjs[i]
-    if (sideobj.vertex0 !== vertex0) continue
-    if (sideobj.vertex1 !== vertex1) continue
-    if (polygonindex !== null) {
-      if (sideobj.polygonindex !== polygonindex) continue
-    }
-    idx = i
-    break
-  }
-  if (idx < 0) throw new Error('Assertion failed')
-  sideobjs.splice(idx, 1)
-  if (sideobjs.length === 0) {
-    delete sidemap[sidetag]
-  }
-  idx = vertextag2sidestart[starttag].indexOf(sidetag)
-  if (idx < 0) throw new Error('Assertion failed')
-  vertextag2sidestart[starttag].splice(idx, 1)
-  if (vertextag2sidestart[starttag].length === 0) {
-    delete vertextag2sidestart[starttag]
-  }
-
-  idx = vertextag2sideend[endtag].indexOf(sidetag)
-  if (idx < 0) throw new Error('Assertion failed')
-  vertextag2sideend[endtag].splice(idx, 1)
-  if (vertextag2sideend[endtag].length === 0) {
-    delete vertextag2sideend[endtag]
-  }
-}
-
-/*
-     fixTJunctions:
-
-     Suppose we have two polygons ACDB and EDGF:
-
-      A-----B
-      |     |
-      |     E--F
-      |     |  |
-      C-----D--G
-
-     Note that vertex E forms a T-junction on the side BD. In this case some STL slicers will complain
-     that the solid is not watertight. This is because the watertightness check is done by checking if
-     each side DE is matched by another side ED.
-
-     This function will return a new solid with ACDB replaced by ACDEB
-
-     Note that this can create polygons that are slightly non-convex (due to rounding errors). Therefore the result should
-     not be used for further CSG operations!
-*/
-const fixTJunctions = function (fromPolygons, csg) {
-  csg = csg.canonicalized()
-  let sidemap = {}
-
-  // STEP 1
-  for (let polygonindex = 0; polygonindex < csg.polygons.length; polygonindex++) {
-    let polygon = csg.polygons[polygonindex]
-    let numvertices = polygon.vertices.length
-    // should be true
-    if (numvertices >= 3) {
-      let vertex = polygon.vertices[0]
-      let vertextag = vertex.getTag()
-      for (let vertexindex = 0; vertexindex < numvertices; vertexindex++) {
-        let nextvertexindex = vertexindex + 1
-        if (nextvertexindex === numvertices) nextvertexindex = 0
-        let nextvertex = polygon.vertices[nextvertexindex]
-        let nextvertextag = nextvertex.getTag()
-        let sidetag = vertextag + '/' + nextvertextag
-        let reversesidetag = nextvertextag + '/' + vertextag
-        if (reversesidetag in sidemap) {
-          // this side matches the same side in another polygon. Remove from sidemap:
-          let ar = sidemap[reversesidetag]
-          ar.splice(-1, 1)
-          if (ar.length === 0) {
-            delete sidemap[reversesidetag]
-          }
-        } else {
-          let sideobj = {
-            vertex0: vertex,
-            vertex1: nextvertex,
-            polygonindex: polygonindex
-          }
-          if (!(sidetag in sidemap)) {
-            sidemap[sidetag] = [sideobj]
-          } else {
-            sidemap[sidetag].push(sideobj)
-          }
-        }
-        vertex = nextvertex
-        vertextag = nextvertextag
-      }
-    }
-  }
-  // STEP 2
-  // now sidemap contains 'unmatched' sides
-  // i.e. side AB in one polygon does not have a matching side BA in another polygon
-  let vertextag2sidestart = {}
-  let vertextag2sideend = {}
-  let sidestocheck = {}
-  let sidemapisempty = true
-  for (let sidetag in sidemap) {
-    sidemapisempty = false
-    sidestocheck[sidetag] = true
-    sidemap[sidetag].map(function (sideobj) {
-      let starttag = sideobj.vertex0.getTag()
-      let endtag = sideobj.vertex1.getTag()
-      if (starttag in vertextag2sidestart) {
-        vertextag2sidestart[starttag].push(sidetag)
-      } else {
-        vertextag2sidestart[starttag] = [sidetag]
-      }
-      if (endtag in vertextag2sideend) {
-        vertextag2sideend[endtag].push(sidetag)
-      } else {
-        vertextag2sideend[endtag] = [sidetag]
-      }
-    })
-  }
-
-  // STEP 3 : if sidemap is not empty
-  if (!sidemapisempty) {
-    // make a copy of the polygons array, since we are going to modify it:
-    let polygons = csg.polygons.slice(0)
-    while (true) {
-      let sidemapisempty = true
-      for (let sidetag in sidemap) {
-        sidemapisempty = false
-        sidestocheck[sidetag] = true
-      }
-      if (sidemapisempty) break
-      let donesomething = false
-      while (true) {
-        let sidetagtocheck = null
-        for (let sidetag in sidestocheck) {
-          sidetagtocheck = sidetag
-          break // FIXME  : say what now ?
-        }
-        if (sidetagtocheck === null) break // sidestocheck is empty, we're done!
-        let donewithside = true
-        if (sidetagtocheck in sidemap) {
-          let sideobjs = sidemap[sidetagtocheck]
-          if (sideobjs.length === 0) throw new Error('Assertion failed')
-          let sideobj = sideobjs[0]
-          for (let directionindex = 0; directionindex < 2; directionindex++) {
-            let startvertex = (directionindex === 0) ? sideobj.vertex0 : sideobj.vertex1
-            let endvertex = (directionindex === 0) ? sideobj.vertex1 : sideobj.vertex0
-            let startvertextag = startvertex.getTag()
-            let endvertextag = endvertex.getTag()
-            let matchingsides = []
-            if (directionindex === 0) {
-              if (startvertextag in vertextag2sideend) {
-                matchingsides = vertextag2sideend[startvertextag]
-              }
-            } else {
-              if (startvertextag in vertextag2sidestart) {
-                matchingsides = vertextag2sidestart[startvertextag]
-              }
-            }
-            for (let matchingsideindex = 0; matchingsideindex < matchingsides.length; matchingsideindex++) {
-              let matchingsidetag = matchingsides[matchingsideindex]
-              let matchingside = sidemap[matchingsidetag][0]
-              let matchingsidestartvertex = (directionindex === 0) ? matchingside.vertex0 : matchingside.vertex1
-              let matchingsideendvertex = (directionindex === 0) ? matchingside.vertex1 : matchingside.vertex0
-              let matchingsidestartvertextag = matchingsidestartvertex.getTag()
-              let matchingsideendvertextag = matchingsideendvertex.getTag()
-              if (matchingsideendvertextag !== startvertextag) throw new Error('Assertion failed')
-              if (matchingsidestartvertextag === endvertextag) {
-                // matchingside cancels sidetagtocheck
-                deleteSide(sidemap, vertextag2sidestart, vertextag2sideend, startvertex, endvertex, null)
-                deleteSide(sidemap, vertextag2sidestart, vertextag2sideend, endvertex, startvertex, null)
-                donewithside = false
-                directionindex = 2 // skip reverse direction check
-                donesomething = true
-                break
-              } else {
-                let startpos = startvertex.pos
-                let endpos = endvertex.pos
-                let checkpos = matchingsidestartvertex.pos
-                let direction = checkpos.minus(startpos)
-                // Now we need to check if endpos is on the line startpos-checkpos:
-                let t = endpos.minus(startpos).dot(direction) / direction.dot(direction)
-                if ((t > 0) && (t < 1)) {
-                  let closestpoint = startpos.plus(direction.times(t))
-                  let distancesquared = closestpoint.distanceToSquared(endpos)
-                  if (distancesquared < (EPS * EPS)) {
-                    // Yes it's a t-junction! We need to split matchingside in two:
-                    let polygonindex = matchingside.polygonindex
-                    let polygon = polygons[polygonindex]
-                    // find the index of startvertextag in polygon:
-                    let insertionvertextag = matchingside.vertex1.getTag()
-                    let insertionvertextagindex = -1
-                    for (let i = 0; i < polygon.vertices.length; i++) {
-                      if (polygon.vertices[i].getTag() === insertionvertextag) {
-                        insertionvertextagindex = i
-                        break
-                      }
-                    }
-                    if (insertionvertextagindex < 0) throw new Error('Assertion failed')
-                    // split the side by inserting the vertex:
-                    let newvertices = polygon.vertices.slice(0)
-                    newvertices.splice(insertionvertextagindex, 0, endvertex)
-                    let newpolygon = new Polygon(newvertices, polygon.shared /* polygon.plane */)
-
-                    // calculate plane with differents point
-                    if (isNaN(newpolygon.plane.w)) {
-                      let found = false
-                      let loop = function (callback) {
-                        newpolygon.vertices.forEach(function (item) {
-                          if (found) return
-                          callback(item)
-                        })
-                      }
-
-                      loop(function (a) {
-                        loop(function (b) {
-                          loop(function (c) {
-                            newpolygon.plane = Plane.fromPoints(a.pos, b.pos, c.pos)
-                            if (!isNaN(newpolygon.plane.w)) {
-                              found = true
-                            }
-                          })
-                        })
-                      })
-                    }
-                    polygons[polygonindex] = newpolygon
-                    // remove the original sides from our maps
-                    // deleteSide(sideobj.vertex0, sideobj.vertex1, null)
-                    deleteSide(sidemap, vertextag2sidestart, vertextag2sideend, matchingside.vertex0, matchingside.vertex1, polygonindex)
-                    let newsidetag1 = addSide(sidemap, vertextag2sidestart, vertextag2sideend, matchingside.vertex0, endvertex, polygonindex)
-                    let newsidetag2 = addSide(sidemap, vertextag2sidestart, vertextag2sideend, endvertex, matchingside.vertex1, polygonindex)
-                    if (newsidetag1 !== null) sidestocheck[newsidetag1] = true
-                    if (newsidetag2 !== null) sidestocheck[newsidetag2] = true
-                    donewithside = false
-                    directionindex = 2 // skip reverse direction check
-                    donesomething = true
-                    break
-                  } // if(distancesquared < 1e-10)
-                } // if( (t > 0) && (t < 1) )
-              } // if(endingstidestartvertextag === endvertextag)
-            } // for matchingsideindex
-          } // for directionindex
-        } // if(sidetagtocheck in sidemap)
-        if (donewithside) {
-          delete sidestocheck[sidetagtocheck]
-        }
-      }
-      if (!donesomething) break
-    }
-    let newcsg = fromPolygons(polygons)
-    newcsg.properties = csg.properties
-    newcsg.isCanonicalized = true
-    newcsg.isRetesselated = true
-    csg = newcsg
-  }
-
-  // FIXME : what is even the point of this ???
-  /* sidemapisempty = true
-  for (let sidetag in sidemap) {
-    sidemapisempty = false
-    break
-  }
-  */
-
-  return csg
-}
-
-module.exports = fixTJunctions
-
-},{"../constants":23,"../math/Plane":30,"../math/Polygon3":32}],47:[function(require,module,exports){
+},{"./deserialize":10,"./translate":15}],13:[function(require,module,exports){
 function findMaterial (materials, id) {
   let lastmaterial = null // FIXME: shoud this be outside this scope ?
 
@@ -8365,7 +987,7 @@ function createObject${obj.id}() {
 
 module.exports = createObject
 
-},{"@jscad/csg":13}],48:[function(require,module,exports){
+},{"@jscad/csg":18}],14:[function(require,module,exports){
 const sax = require('sax')
 const {amfMesh,
 amfVertices,
@@ -8671,7 +1293,7 @@ const parse = (src, pxPmm) => {
 
 module.exports = parse
 
-},{"./constants":9,"./helpers":11,"sax":412}],49:[function(require,module,exports){
+},{"./constants":9,"./helpers":11,"sax":113}],15:[function(require,module,exports){
 const createObject = require('./objectBuilder')
 const parse = require('./parse')
 
@@ -8768,7 +1390,7 @@ function main() {
 
 module.exports = translate
 
-},{"./constants":9,"./objectBuilder":47,"./parse":48}],50:[function(require,module,exports){
+},{"./constants":9,"./objectBuilder":13,"./parse":14}],16:[function(require,module,exports){
 const { ensureManifoldness } = require('@jscad/io-utils')
 const mimeType = 'application/amf+xml'
 
@@ -8845,13 +1467,13 @@ module.exports = {
   mimeType
 }
 
-},{"@jscad/io-utils":217}],51:[function(require,module,exports){
+},{"@jscad/io-utils":88}],17:[function(require,module,exports){
 const api = require('./src/api/index')
 // const csg = require('./csg')
 
 module.exports = api // {api, csg}
 
-},{"./src/api/index":58}],52:[function(require,module,exports){
+},{"./src/api/index":25}],18:[function(require,module,exports){
 /*
 ## License
 
@@ -9046,9 +1668,6 @@ addTransformationMethodsToPrototype(CAG.prototype)
 addTransformationMethodsToPrototype(CAG.Side.prototype)
 addTransformationMethodsToPrototype(CAG.Vertex.prototype)
 
-addCenteringToPrototype(CSG.prototype, ['x', 'y', 'z'])
-addCenteringToPrototype(CAG.prototype, ['x', 'y'])
-
 CSG.parseOptionAs2DVector = optionsParsers.parseOptionAs3DVector
 CSG.parseOptionAs3DVector = optionsParsers.parseOptionAs3DVector
 CSG.parseOptionAs3DVectorList = optionsParsers.parseOptionAs3DVectorList
@@ -9065,7 +1684,7 @@ const globalApi = Object.assign({}, {CSG, CAG}, optionsParsers, {isCAG, isCSG})
 
 module.exports = globalApi
 
-},{"./src/api/debugHelpers":56,"./src/api/optionParsers":67,"./src/api/primitives2d":69,"./src/api/primitives3d":71,"./src/core/CAG":74,"./src/core/CAGFactories":75,"./src/core/CSG":76,"./src/core/CSGFactories":77,"./src/core/Properties":81,"./src/core/connectors":82,"./src/core/constants":83,"./src/core/math/Line2":84,"./src/core/math/Line3":85,"./src/core/math/Matrix4":86,"./src/core/math/OrthoNormalBasis":87,"./src/core/math/Path2":88,"./src/core/math/Plane":89,"./src/core/math/Polygon2":90,"./src/core/math/Polygon3":91,"./src/core/math/Side":92,"./src/core/math/Vector2":93,"./src/core/math/Vector3":94,"./src/core/math/Vertex2":95,"./src/core/math/Vertex3":96,"./src/core/mutators":99,"./src/core/utils":101}],53:[function(require,module,exports){
+},{"./src/api/debugHelpers":23,"./src/api/optionParsers":34,"./src/api/primitives2d":36,"./src/api/primitives3d":38,"./src/core/CAG":41,"./src/core/CAGFactories":42,"./src/core/CSG":43,"./src/core/CSGFactories":44,"./src/core/Properties":48,"./src/core/connectors":49,"./src/core/constants":50,"./src/core/math/Line2":51,"./src/core/math/Line3":52,"./src/core/math/Matrix4":53,"./src/core/math/OrthoNormalBasis":54,"./src/core/math/Path2":55,"./src/core/math/Plane":56,"./src/core/math/Polygon2":57,"./src/core/math/Polygon3":58,"./src/core/math/Side":59,"./src/core/math/Vector2":60,"./src/core/math/Vector3":61,"./src/core/math/Vertex2":62,"./src/core/math/Vertex3":63,"./src/core/mutators":66,"./src/core/utils":68}],19:[function(require,module,exports){
 const Path2D = require('../core/math/Path2')
 
 const cagoutlinePaths = function (_cag) {
@@ -9147,7 +1766,45 @@ const cagoutlinePaths = function (_cag) {
 
 module.exports = cagoutlinePaths
 
-},{"../core/math/Path2":88}],54:[function(require,module,exports){
+},{"../core/math/Path2":55}],20:[function(require,module,exports){
+const toArray = require('../core/utils/toArray')
+
+/**
+ * Centers the given object(s) using the given options (if any)
+ * @param {Object} [options] - options for centering
+ * @param {Array} [options.axes=[true,true,true]] - axis of which to center, true or false
+ * @param {Array} [options.center=[0,0,0]] - point of which to center the object upon
+ * @param {Object|Array} objects - the shape(s) to center
+ * @return {Object|Array} objects
+ *
+ * @example
+ * let csg = center({axes: [true,false,false]}, sphere()) // center about the X axis
+ */
+const center = function (options, objects) {
+  const defaults = {
+    axes: [true, true, true],
+    center: [0, 0, 0]
+  // TODO : Add addition 'methods' of centering; midpoint, centeriod
+  }
+  options = Object.assign({}, defaults, options)
+  const {axes,center} = options
+  objects = toArray(objects)
+
+  const results = objects.map(function (object) {
+    let bounds = object.getBounds()
+    let offset = [0,0,0]
+    if (axes[0]) offset[0] = center[0] - (bounds[0].x + ((bounds[1].x - bounds[0].x) / 2))
+    if (axes[1]) offset[1] = center[1] - (bounds[0].y + ((bounds[1].y - bounds[0].y) / 2))
+    if (axes[2]) offset[2] = center[2] - (bounds[0].z + ((bounds[1].y - bounds[0].y) / 2))
+    return object.translate(offset)
+  })
+  // if there is more than one result, return them all , otherwise a single one
+  return results.length === 1 ? results[0] : results
+}
+
+module.exports = center
+
+},{"../core/utils/toArray":76}],21:[function(require,module,exports){
 // color table from http://www.w3.org/TR/css3-color/
 const cssColors = {
 // basic color keywords
@@ -9594,7 +2251,7 @@ module.exports = {
   rgb2html
 }
 
-},{}],55:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 function echo () {
   console.warn('echo() will be deprecated in the near future: please use console.log/warn/error instead')
   var s = '', a = arguments
@@ -9611,7 +2268,7 @@ module.exports = {
   echo
 }
 
-},{}],56:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 const CSG = require('../core/CSG')
 const {cube} = require('./primitives3d')
 
@@ -9646,7 +2303,7 @@ const toPointCloud = function (csg, cuberadius) {
 
 module.exports = {toPointCloud}
 
-},{"../core/CSG":76,"./primitives3d":71}],57:[function(require,module,exports){
+},{"../core/CSG":43,"./primitives3d":38}],24:[function(require,module,exports){
 const Vertex3 = require('../core/math/Vertex3')
 const Vector3 = require('../core/math/Vector3')
 const Polygon3 = require('../core/math/Polygon3')
@@ -9711,7 +2368,7 @@ const degToRad = deg => (Math.PI / 180) * deg
 
 module.exports = {cagToPointsArray, clamp, rightMultiply1x3VectorToArray, polygonFromPoints}
 
-},{"../core/math/Polygon3":91,"../core/math/Vector3":94,"../core/math/Vertex3":96}],58:[function(require,module,exports){
+},{"../core/math/Polygon3":58,"../core/math/Vector3":61,"../core/math/Vertex3":63}],25:[function(require,module,exports){
 
 const primitives3d = require('./primitives3d-api')
 const primitives2d = require('./primitives2d-api')
@@ -9747,7 +2404,7 @@ const exportedApi = {
 
 module.exports = exportedApi
 
-},{"../../csg":52,"./color":54,"./debug":55,"./log":59,"./maths":60,"./ops-booleans":61,"./ops-extrusions":65,"./ops-transformations":66,"./primitives2d-api":68,"./primitives3d-api":70,"./text":73}],59:[function(require,module,exports){
+},{"../../csg":18,"./color":21,"./debug":22,"./log":26,"./maths":27,"./ops-booleans":28,"./ops-extrusions":32,"./ops-transformations":33,"./primitives2d-api":35,"./primitives3d-api":37,"./text":40}],26:[function(require,module,exports){
 function log (txt) {
   console.warn('log() will be deprecated in the near future: please use console.log/warn/error instead')
   var timeInMs = Date.now()
@@ -9775,7 +2432,7 @@ module.exports = {
   status
 }
 
-},{}],60:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 // -- Math functions (360 deg based vs 2pi)
 function sin (a) {
   return Math.sin(a / 360 * Math.PI * 2)
@@ -9886,7 +2543,7 @@ module.exports = {
   round
 }
 
-},{}],61:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 const {isCAG} = require('../core/utils')
 // boolean operations
 
@@ -9989,7 +2646,7 @@ module.exports = {
   intersection
 }
 
-},{"../core/utils":101}],62:[function(require,module,exports){
+},{"../core/utils":68}],29:[function(require,module,exports){
 const Matrix4x4 = require('../core/math/Matrix4.js')
 const Vector3D = require('../core/math/Vector3.js')
 const {Connector} = require('../core/connectors.js')
@@ -10158,7 +2815,7 @@ const overCutInsideCorners = function (_cag, cutterradius) {
 
 module.exports = {lieFlat, getTransformationToFlatLying, getTransformationAndInverseTransformationToFlatLying, overCutInsideCorners}
 
-},{"../core/CAGFactories":75,"../core/connectors.js":82,"../core/math/Matrix4.js":86,"../core/math/Vector2":93,"../core/math/Vector3.js":94}],63:[function(require,module,exports){
+},{"../core/CAGFactories":42,"../core/connectors.js":49,"../core/math/Matrix4.js":53,"../core/math/Vector2":60,"../core/math/Vector3.js":61}],30:[function(require,module,exports){
 const {EPS} = require('../core/constants')
 const Plane = require('../core/math/Plane')
 const Vector2 = require('../core/math/Vector2')
@@ -10224,7 +2881,7 @@ const cutByPlane = function (csg, plane) {
 
 module.exports = {sectionCut, cutByPlane}
 
-},{"../core/CSG":76,"../core/constants":83,"../core/math/OrthoNormalBasis":87,"../core/math/Plane":89,"../core/math/Polygon3":91,"../core/math/Vector2":93,"../core/math/Vertex3":96}],64:[function(require,module,exports){
+},{"../core/CSG":43,"../core/constants":50,"../core/math/OrthoNormalBasis":54,"../core/math/Plane":56,"../core/math/Polygon3":58,"../core/math/Vector2":60,"../core/math/Vertex3":63}],31:[function(require,module,exports){
 
 const {EPS, angleEPS} = require('../core/constants')
 const Vertex = require('../core/math/Vertex3')
@@ -10563,7 +3220,7 @@ module.exports = {
   expandedShellOfCCSG
 }
 
-},{"../core/CAG":74,"../core/CAGFactories":75,"../core/CSG":76,"../core/CSGFactories":77,"../core/constants":83,"../core/math/Polygon3":91,"../core/math/Vector2":93,"../core/math/Vertex3":96,"../core/utils":101}],65:[function(require,module,exports){
+},{"../core/CAG":41,"../core/CAGFactories":42,"../core/CSG":43,"../core/CSGFactories":44,"../core/constants":50,"../core/math/Polygon3":58,"../core/math/Vector2":60,"../core/math/Vertex3":63,"../core/utils":68}],32:[function(require,module,exports){
 const {EPS, defaultResolution3D} = require('../core/constants')
 const OrthoNormalBasis = require('../core/math/OrthoNormalBasis')
 const {parseOptionAs3DVector, parseOptionAsBool, parseOptionAsFloat, parseOptionAsInt} = require('./optionParsers')
@@ -10922,7 +3579,7 @@ module.exports = {
   rectangular_extrude
 }
 
-},{"../core/CAGFactories":75,"../core/CSG":76,"../core/CSGFactories":77,"../core/connectors":82,"../core/constants":83,"../core/math/Matrix4":86,"../core/math/OrthoNormalBasis":87,"../core/math/Path2":88,"../core/math/Vector3":94,"./helpers":57,"./optionParsers":67}],66:[function(require,module,exports){
+},{"../core/CAGFactories":42,"../core/CSG":43,"../core/CSGFactories":44,"../core/connectors":49,"../core/constants":50,"../core/math/Matrix4":53,"../core/math/OrthoNormalBasis":54,"../core/math/Path2":55,"../core/math/Vector3":61,"./helpers":24,"./optionParsers":34}],33:[function(require,module,exports){
 const Matrix4 = require('../core/math/Matrix4')
 const Plane = require('../core/math/Plane')
 const Vector3 = require('../core/math/Vector3')
@@ -11043,15 +3700,17 @@ function transform (matrix, ...objects) { // v, obj or array
   return object.transform(transformationMatrix)
 }
 
-/** center an object in 2D/3D space
- * @param {Boolean|Array} axis - either an array or single boolean to indicate which axis you want to center on
- * @param {Object(s)|Array} objects either a single or multiple CSG/CAG objects to translate
+
+/**
+ * Center the given object(s) about the given axes
+ * @param {Array|Boolean} axes=[true,true,true]|true  - an array of boolean values that indicate the axes (X,Y,Z) to center upon. A single boolean is also allowed.
+ * @param {...Object} object one or more objects to center, i.e. objects are CSG or CAG
  * @returns {CSG} new CSG object , translated by the given amount
  *
  * @example
- * let movedSphere = center(false, sphere())
+ * let csg = center([true,false,false], sphere()) // center about the X axis
  */
-function center (axis, ...objects) { // v, obj or array
+function center (axes, ...objects) {
   const _objects = (objects.length >= 1 && objects[0].length) ? objects[0] : objects
   let object = _objects[0]
 
@@ -11060,7 +3719,10 @@ function center (axis, ...objects) { // v, obj or array
       object = object.union(_objects[i])
     }
   }
-  return object.center(axis)
+  if (! Array.isArray(axes)) {
+    axes = [axes,axes,axes]
+  }
+  return object.center(axes)
 }
 
 /** mirror an object in 2D/3D space
@@ -11339,7 +4001,7 @@ module.exports = {
   chain_hull
 }
 
-},{"../core/CAGFactories":75,"../core/math/Matrix4":86,"../core/math/Plane":89,"../core/math/Vector3":94,"../core/utils":101,"./ops-booleans":61}],67:[function(require,module,exports){
+},{"../core/CAGFactories":42,"../core/math/Matrix4":53,"../core/math/Plane":56,"../core/math/Vector3":61,"../core/utils":68,"./ops-booleans":28}],34:[function(require,module,exports){
 const Vector3D = require('../core/math/Vector3')
 const Vector2D = require('../core/math/Vector2')
 
@@ -11417,7 +4079,7 @@ module.exports = {
   parseOptionAs3DVectorList
 }
 
-},{"../core/math/Vector2":93,"../core/math/Vector3":94}],68:[function(require,module,exports){
+},{"../core/math/Vector2":60,"../core/math/Vector3":61}],35:[function(require,module,exports){
 const {CAG} = require('../../csg')// we have to import from top level otherwise prototypes are not complete..
 const {fromPoints} = require('../core/CAGFactories')
 
@@ -11475,32 +4137,43 @@ function circle (params) {
   return CAG.circle({center: offset, radius: r, resolution: fn})
 }
 
-/** Construct a polygon either from arrays of paths and points, or just arrays of points
- * nested paths (multiple paths) and flat paths are supported
- * @param {Object} [options] - options for construction
- * @param {Array} [options.paths] - paths of the polygon : either flat or nested array
- * @param {Array} [options.points] - points of the polygon : either flat or nested array
+/** Construct a polygon either from arrays of paths and points,
+ * or just arrays of points nested paths (multiple paths) and flat paths are supported
+ * @param {Object} [options] - options for construction or either flat or nested array of points
+ * @param {Array} [options.points] - points of the polygon : either flat or nested array of points
+ * @param {Array} [options.paths] - paths of the polygon : either flat or nested array of points index
  * @returns {CAG} new polygon
  *
  * @example
- * let poly = polygon([0,1,2,3,4])
+ * let roof = [[10,11], [0,11], [5,20]]
+ * let wall = [[0,0], [10,0], [10,10], [0,10]]
+ *
+ * let poly = polygon(roof)
  * or
- * let poly = polygon({path: [0,1,2,3,4]})
+ * let poly = polygon([roof, wall])
  * or
- * let poly = polygon({path: [0,1,2,3,4], points: [2,1,3]})
+ * let poly = polygon({ points: roof })
+ * or
+ * let poly = polygon({ points: [roof, wall] })
+ * or
+ * let poly = polygon({ points: roof, path: [0, 1, 2] })
+ * or
+ * let poly = polygon({ points: [roof, wall], path: [[0, 1, 2], [3, 4, 5, 6]] })
+ * or
+ * let poly = polygon({ points: roof.concat(wall), paths: [[0, 1, 2], [3, 4, 5], [3, 6, 5]] })
  */
 function polygon (params) { // array of po(ints) and pa(ths)
-  let points = [ ]
+  let points = []
   if (params.paths && params.paths.length && params.paths[0].length) { // pa(th): [[0,1,2],[2,3,1]] (two paths)
-    for (let j = 0; j < params.paths.length; j++) {
-      for (let i = 0; i < params.paths[j].length; i++) {
-        points[i] = params.points[params.paths[j][i]]
-      }
+    if (typeof params.points[0][0] !== 'number') { // flatten points array
+      params.points = params.points.reduce((a, b) => a.concat(b))
     }
+    params.paths.forEach((path, i) => {
+      points.push([])
+      path.forEach(j => points[i].push(params.points[j]))
+    })
   } else if (params.paths && params.paths.length) { // pa(th): [0,1,2,3,4] (single path)
-    for (let i = 0; i < params.paths.length; i++) {
-      points[i] = params.points[params.paths[i]]
-    }
+    params.paths.forEach(i => points.push(params.points[i]))
   } else { // pa(th) = po(ints)
     if (params.length) {
       points = params
@@ -11533,7 +4206,7 @@ module.exports = {
   triangle
 }
 
-},{"../../csg":52,"../core/CAGFactories":75}],69:[function(require,module,exports){
+},{"../../csg":18,"../core/CAGFactories":42}],36:[function(require,module,exports){
 const CAG = require('../core/CAG')
 const {parseOptionAs2DVector, parseOptionAsFloat, parseOptionAsInt} = require('./optionParsers')
 const {defaultResolution2D} = require('../core/constants')
@@ -11720,7 +4393,7 @@ module.exports = {
   fromCompactBinary
 }
 
-},{"../core/CAG":74,"../core/CAGFactories":75,"../core/constants":83,"../core/math/Path2":88,"../core/math/Vector2":93,"../core/math/Vertex2":95,"./optionParsers":67}],70:[function(require,module,exports){
+},{"../core/CAG":41,"../core/CAGFactories":42,"../core/constants":50,"../core/math/Path2":55,"../core/math/Vector2":60,"../core/math/Vertex2":62,"./optionParsers":34}],37:[function(require,module,exports){
 
 /// //////////FUNCTIONAL API
 const {CSG} = require('../../csg')
@@ -12117,7 +4790,7 @@ module.exports = {
   polyhedron
 }
 
-},{"../../csg":52,"../core/CSGFactories":77,"../core/math/Polygon3":91,"../core/math/Vector3":94,"../core/math/Vertex3":96,"./ops-extrusions":65,"./ops-transformations":66,"./primitives2d-api":68}],71:[function(require,module,exports){
+},{"../../csg":18,"../core/CSGFactories":44,"../core/math/Polygon3":58,"../core/math/Vector3":61,"../core/math/Vertex3":63,"./ops-extrusions":32,"./ops-transformations":33,"./primitives2d-api":35}],38:[function(require,module,exports){
 const {parseOption, parseOptionAs3DVector, parseOptionAs2DVector, parseOptionAs3DVectorList, parseOptionAsFloat, parseOptionAsInt} = require('./optionParsers')
 const {defaultResolution3D, defaultResolution2D, EPS} = require('../core/constants')
 const Vector3 = require('../core/math/Vector3')
@@ -12667,7 +5340,7 @@ module.exports = {
   polyhedron
 }
 
-},{"../core/CSGFactories":77,"../core/Properties":81,"../core/connectors":82,"../core/constants":83,"../core/math/Polygon3":91,"../core/math/Vector3":94,"../core/math/Vertex3":96,"./optionParsers":67}],72:[function(require,module,exports){
+},{"../core/CSGFactories":44,"../core/Properties":48,"../core/connectors":49,"../core/constants":50,"../core/math/Polygon3":58,"../core/math/Vector3":61,"../core/math/Vertex3":63,"./optionParsers":34}],39:[function(require,module,exports){
 const Polygon = require('../core/math/Polygon3')
 const {fromPolygons} = require('../core/CSGFactories')
 const {fnSortByIndex} = require('../core/utils')
@@ -12882,646 +5555,218 @@ const _addWalls = function (walls, bottom, top, bFlipped) {
 
 module.exports = solidFromSlices
 
-},{"../core/CSGFactories":77,"../core/math/Polygon3":91,"../core/utils":101}],73:[function(require,module,exports){
+},{"../core/CSGFactories":44,"../core/math/Polygon3":58,"../core/utils":68}],40:[function(require,module,exports){
+const defaultFont = require('../fonts/single-line/hershey/simplex.js')
+const { union } = require('./ops-booleans')
 
-/** Construct a with, segments tupple from a character
- * @param {Float} x - x offset
- * @param {Float} y - y offset
- * @param {Float} char - character
- * @returns {Object} { width: X, segments: [...] }
- *
- * @example
- * let charData = vector_char(0, 12.2, 'b')
- */
-function vector_char (x, y, char) {
-  char = char.charCodeAt(0)
-  char -= 32
-  if (char < 0 || char >= 95) return { width: 0, segments: [] }
-
-  let off = char * 112
-  let n = simplexFont[off++]
-  let w = simplexFont[off++]
-  let l = []
-  let segs = []
-
-  for (let i = 0; i < n; i++) {
-    let xp = simplexFont[off + i * 2]
-    let yp = simplexFont[off + i * 2 + 1]
-    if (xp === -1 && yp === -1) {
-      segs.push(l); l = []
-    } else {
-      l.push([xp + x, yp + y])
-    }
-  }
-  if (l.length) segs.push(l)
-  return { width: w, segments: segs }
+const defaultsVectorParams = {
+  xOffset: 0,
+  yOffset: 0,
+  input: '?',
+  align: 'left',
+  font: defaultFont,
+  height: 14, // == old vector_xxx simplex font height
+  lineSpacing: 2.142857142857143, // == 30/14 == old vector_xxx ratio
+  letterSpacing: 1,
+  extrudeOffset: 0
 }
 
-/** Construct an array of with, segments tupple from a string
- * @param {Float} x - x offset
- * @param {Float} y - y offset
- * @param {Float} string - string
- * @returns {Array} [{ width: X, segments: [...] }]
- *
- * @example
- * let stringData = vector_text(0, 12.2, 'b')
- */
-function vector_text (x, y, string) {
-  let output = []
-  let x0 = x
-  for (let i = 0; i < string.length; i++) {
-    let char = string.charAt(i)
-    if (char === '\n') {
-      x = x0; y -= 30
-    } else {
-      let d = vector_char(x, y, char)
-      x += d.width
-      output = output.concat(d.segments)
+// vectorsXXX parameters handler
+function vectorParams (options, input) {
+  if (!input && typeof options === 'string') {
+    options = { input: options }
+  }
+  options = options || {}
+  let params = Object.assign({}, defaultsVectorParams, options)
+  params.input = input || params.input
+  return params
+}
+
+// translate text line
+function translateLine (options, line) {
+  const { x, y } = Object.assign({ x: 0, y: 0 }, options || {})
+  let segments = line.segments
+  let segment = null
+  let point = null
+  for (let i = 0, il = segments.length; i < il; i++) {
+    segment = segments[i]
+    for (let j = 0, jl = segment.length; j < jl; j++) {
+      point = segment[j]
+      segment[j] = [point[0] + x, point[1] + y]
     }
+  }
+  return line
+}
+
+/** Represents a character as segments
+* @typedef {Object} VectorCharObject
+* @property {Float} width - character width
+* @property {Float} height - character height (uppercase)
+* @property {Array} segments - character segments [[[x, y], ...], ...]
+*/
+
+/** Construct a {@link VectorCharObject} from a ascii character whose code is between 31 and 127,
+* if the character is not supported it is replaced by a question mark.
+* @param {Object|String} [options] - options for construction or ascii character
+* @param {Float} [options.xOffset=0] - x offset
+* @param {Float} [options.yOffset=0] - y offset
+* @param {Float} [options.height=21] - font size (uppercase height)
+* @param {Float} [options.extrudeOffset=0] - width of the extrusion that will be applied (manually) after the creation of the character
+* @param {String} [options.input='?'] - ascii character (ignored/overwrited if provided as seconds parameter)
+* @param {String} [char='?'] - ascii character
+* @returns {VectorCharObject}
+*
+* @example
+* let vectorCharObject = vectorChar()
+* or
+* let vectorCharObject = vectorChar('A')
+* or
+* let vectorCharObject = vectorChar({ xOffset: 57 }, 'C')
+* or
+* let vectorCharObject = vectorChar({ xOffset: 78, input: '!' })
+*/
+function vectorChar (options, char) {
+  let {
+    xOffset, yOffset, input, font, height, extrudeOffset
+  } = vectorParams(options, char)
+  let code = input.charCodeAt(0)
+  if (!code || !font[code]) {
+    code = 63 // 63 => ?
+  }
+  let glyph = [].concat(font[code])
+  let ratio = (height - extrudeOffset) / font.height
+  let extrudeYOffset = (extrudeOffset / 2)
+  let width = glyph.shift() * ratio
+  let segments = []
+  let polyline = []
+  for (let i = 0, il = glyph.length; i < il; i += 2) {
+    gx = ratio * glyph[i] + xOffset
+    gy = ratio * glyph[i + 1] + yOffset + extrudeYOffset
+    if (glyph[i] !== undefined) {
+      polyline.push([ gx, gy ])
+      continue
+    }
+    segments.push(polyline)
+    polyline = []
+    i--
+  }
+  if (polyline.length) {
+    segments.push(polyline)
+  }
+  return { width, height, segments }
+}
+
+/** Construct an array of character segments from a ascii string whose characters code is between 31 and 127,
+* if one character is not supported it is replaced by a question mark.
+* @param {Object|String} [options] - options for construction or ascii string
+* @param {Float} [options.xOffset=0] - x offset
+* @param {Float} [options.yOffset=0] - y offset
+* @param {Float} [options.height=21] - font size (uppercase height)
+* @param {Float} [options.lineSpacing=1.4] - line spacing expressed as a percentage of font size
+* @param {Float} [options.letterSpacing=1] - extra letter spacing expressed as a percentage of font size
+* @param {String} [options.align='left'] - multi-line text alignement: left, center or right
+* @param {Float} [options.extrudeOffset=0] - width of the extrusion that will be applied (manually) after the creation of the character
+* @param {String} [options.input='?'] - ascii string (ignored/overwrited if provided as seconds parameter)
+* @param {String} [text='?'] - ascii string
+* @returns {Array} characters segments [[[x, y], ...], ...]
+*
+* @example
+* let textSegments = vectorText()
+* or
+* let textSegments = vectorText('OpenJSCAD')
+* or
+* let textSegments = vectorText({ yOffset: -50 }, 'OpenJSCAD')
+* or
+* let textSegments = vectorText({ yOffset: -80, input: 'OpenJSCAD' })
+*/
+function vectorText (options, text) {
+  let {
+    xOffset, yOffset, input, font, height, align, extrudeOffset, lineSpacing, letterSpacing
+  } = vectorParams(options, text)
+  let [ x, y ] = [ xOffset, yOffset ]
+  let [ i, il, char, vect, width, diff ] = []
+  let line = { width: 0, segments: [] }
+  let lines = []
+  let output = []
+  let maxWidth = 0
+  let lineStart = x
+  const pushLine = () => {
+    lines.push(line)
+    maxWidth = Math.max(maxWidth, line.width)
+    line = { width: 0, segments: [] }
+  }
+  for (i = 0, il = input.length; i < il; i++) {
+    char = input[i]
+    vect = vectorChar({ xOffset: x, yOffset: y, font, height, extrudeOffset }, char)
+    if (char === '\n') {
+      x = lineStart
+      y -= vect.height * lineSpacing
+      pushLine()
+      continue
+    }
+    width = vect.width * letterSpacing
+    line.width += width
+    x += width
+    if (char !== ' ') {
+      line.segments = line.segments.concat(vect.segments)
+    }
+  }
+  if (line.segments.length) {
+    pushLine()
+  }
+  for (i = 0, il = lines.length; i < il; i++) {
+    line = lines[i]
+    if (maxWidth > line.width) {
+      diff = maxWidth - line.width
+      if (align === 'right') {
+        line = translateLine({ x: diff }, line)
+      } else if (align === 'center') {
+        line = translateLine({ x: diff / 2 }, line)
+      }
+    }
+    output = output.concat(line.segments)
   }
   return output
 }
 
-// -- data below from http://paulbourke.net/dataformats/hershey/
-const simplexFont = [
-  0, 16, /* Ascii 32 */
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  8, 10, /* Ascii 33 */
-  5, 21, 5, 7, -1, -1, 5, 2, 4, 1, 5, 0, 6, 1, 5, 2, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  5, 16, /* Ascii 34 */
-  4, 21, 4, 14, -1, -1, 12, 21, 12, 14, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  11, 21, /* Ascii 35 */
-  11, 25, 4, -7, -1, -1, 17, 25, 10, -7, -1, -1, 4, 12, 18, 12, -1, -1, 3, 6, 17, 6, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  26, 20, /* Ascii 36 */
-  8, 25, 8, -4, -1, -1, 12, 25, 12, -4, -1, -1, 17, 18, 15, 20, 12, 21, 8, 21, 5, 20, 3,
-  18, 3, 16, 4, 14, 5, 13, 7, 12, 13, 10, 15, 9, 16, 8, 17, 6, 17, 3, 15, 1, 12, 0,
-  8, 0, 5, 1, 3, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  31, 24, /* Ascii 37 */
-  21, 21, 3, 0, -1, -1, 8, 21, 10, 19, 10, 17, 9, 15, 7, 14, 5, 14, 3, 16, 3, 18, 4,
-  20, 6, 21, 8, 21, 10, 20, 13, 19, 16, 19, 19, 20, 21, 21, -1, -1, 17, 7, 15, 6, 14, 4,
-  14, 2, 16, 0, 18, 0, 20, 1, 21, 3, 21, 5, 19, 7, 17, 7, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  34, 26, /* Ascii 38 */
-  23, 12, 23, 13, 22, 14, 21, 14, 20, 13, 19, 11, 17, 6, 15, 3, 13, 1, 11, 0, 7, 0, 5,
-  1, 4, 2, 3, 4, 3, 6, 4, 8, 5, 9, 12, 13, 13, 14, 14, 16, 14, 18, 13, 20, 11, 21,
-  9, 20, 8, 18, 8, 16, 9, 13, 11, 10, 16, 3, 18, 1, 20, 0, 22, 0, 23, 1, 23, 2, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  7, 10, /* Ascii 39 */
-  5, 19, 4, 20, 5, 21, 6, 20, 6, 18, 5, 16, 4, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  10, 14, /* Ascii 40 */
-  11, 25, 9, 23, 7, 20, 5, 16, 4, 11, 4, 7, 5, 2, 7, -2, 9, -5, 11, -7, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  10, 14, /* Ascii 41 */
-  3, 25, 5, 23, 7, 20, 9, 16, 10, 11, 10, 7, 9, 2, 7, -2, 5, -5, 3, -7, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  8, 16, /* Ascii 42 */
-  8, 21, 8, 9, -1, -1, 3, 18, 13, 12, -1, -1, 13, 18, 3, 12, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  5, 26, /* Ascii 43 */
-  13, 18, 13, 0, -1, -1, 4, 9, 22, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  8, 10, /* Ascii 44 */
-  6, 1, 5, 0, 4, 1, 5, 2, 6, 1, 6, -1, 5, -3, 4, -4, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  2, 26, /* Ascii 45 */
-  4, 9, 22, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  5, 10, /* Ascii 46 */
-  5, 2, 4, 1, 5, 0, 6, 1, 5, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  2, 22, /* Ascii 47 */
-  20, 25, 2, -7, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  17, 20, /* Ascii 48 */
-  9, 21, 6, 20, 4, 17, 3, 12, 3, 9, 4, 4, 6, 1, 9, 0, 11, 0, 14, 1, 16, 4, 17,
-  9, 17, 12, 16, 17, 14, 20, 11, 21, 9, 21, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  4, 20, /* Ascii 49 */
-  6, 17, 8, 18, 11, 21, 11, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  14, 20, /* Ascii 50 */
-  4, 16, 4, 17, 5, 19, 6, 20, 8, 21, 12, 21, 14, 20, 15, 19, 16, 17, 16, 15, 15, 13, 13,
-  10, 3, 0, 17, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  15, 20, /* Ascii 51 */
-  5, 21, 16, 21, 10, 13, 13, 13, 15, 12, 16, 11, 17, 8, 17, 6, 16, 3, 14, 1, 11, 0, 8,
-  0, 5, 1, 4, 2, 3, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  6, 20, /* Ascii 52 */
-  13, 21, 3, 7, 18, 7, -1, -1, 13, 21, 13, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  17, 20, /* Ascii 53 */
-  15, 21, 5, 21, 4, 12, 5, 13, 8, 14, 11, 14, 14, 13, 16, 11, 17, 8, 17, 6, 16, 3, 14,
-  1, 11, 0, 8, 0, 5, 1, 4, 2, 3, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  23, 20, /* Ascii 54 */
-  16, 18, 15, 20, 12, 21, 10, 21, 7, 20, 5, 17, 4, 12, 4, 7, 5, 3, 7, 1, 10, 0, 11,
-  0, 14, 1, 16, 3, 17, 6, 17, 7, 16, 10, 14, 12, 11, 13, 10, 13, 7, 12, 5, 10, 4, 7,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  5, 20, /* Ascii 55 */
-  17, 21, 7, 0, -1, -1, 3, 21, 17, 21, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  29, 20, /* Ascii 56 */
-  8, 21, 5, 20, 4, 18, 4, 16, 5, 14, 7, 13, 11, 12, 14, 11, 16, 9, 17, 7, 17, 4, 16,
-  2, 15, 1, 12, 0, 8, 0, 5, 1, 4, 2, 3, 4, 3, 7, 4, 9, 6, 11, 9, 12, 13, 13,
-  15, 14, 16, 16, 16, 18, 15, 20, 12, 21, 8, 21, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  23, 20, /* Ascii 57 */
-  16, 14, 15, 11, 13, 9, 10, 8, 9, 8, 6, 9, 4, 11, 3, 14, 3, 15, 4, 18, 6, 20, 9,
-  21, 10, 21, 13, 20, 15, 18, 16, 14, 16, 9, 15, 4, 13, 1, 10, 0, 8, 0, 5, 1, 4, 3,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  11, 10, /* Ascii 58 */
-  5, 14, 4, 13, 5, 12, 6, 13, 5, 14, -1, -1, 5, 2, 4, 1, 5, 0, 6, 1, 5, 2, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  14, 10, /* Ascii 59 */
-  5, 14, 4, 13, 5, 12, 6, 13, 5, 14, -1, -1, 6, 1, 5, 0, 4, 1, 5, 2, 6, 1, 6,
-  -1, 5, -3, 4, -4, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  3, 24, /* Ascii 60 */
-  20, 18, 4, 9, 20, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  5, 26, /* Ascii 61 */
-  4, 12, 22, 12, -1, -1, 4, 6, 22, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  3, 24, /* Ascii 62 */
-  4, 18, 20, 9, 4, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  20, 18, /* Ascii 63 */
-  3, 16, 3, 17, 4, 19, 5, 20, 7, 21, 11, 21, 13, 20, 14, 19, 15, 17, 15, 15, 14, 13, 13,
-  12, 9, 10, 9, 7, -1, -1, 9, 2, 8, 1, 9, 0, 10, 1, 9, 2, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  55, 27, /* Ascii 64 */
-  18, 13, 17, 15, 15, 16, 12, 16, 10, 15, 9, 14, 8, 11, 8, 8, 9, 6, 11, 5, 14, 5, 16,
-  6, 17, 8, -1, -1, 12, 16, 10, 14, 9, 11, 9, 8, 10, 6, 11, 5, -1, -1, 18, 16, 17, 8,
-  17, 6, 19, 5, 21, 5, 23, 7, 24, 10, 24, 12, 23, 15, 22, 17, 20, 19, 18, 20, 15, 21, 12,
-  21, 9, 20, 7, 19, 5, 17, 4, 15, 3, 12, 3, 9, 4, 6, 5, 4, 7, 2, 9, 1, 12, 0,
-  15, 0, 18, 1, 20, 2, 21, 3, -1, -1, 19, 16, 18, 8, 18, 6, 19, 5,
-  8, 18, /* Ascii 65 */
-  9, 21, 1, 0, -1, -1, 9, 21, 17, 0, -1, -1, 4, 7, 14, 7, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  23, 21, /* Ascii 66 */
-  4, 21, 4, 0, -1, -1, 4, 21, 13, 21, 16, 20, 17, 19, 18, 17, 18, 15, 17, 13, 16, 12, 13,
-  11, -1, -1, 4, 11, 13, 11, 16, 10, 17, 9, 18, 7, 18, 4, 17, 2, 16, 1, 13, 0, 4, 0,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  18, 21, /* Ascii 67 */
-  18, 16, 17, 18, 15, 20, 13, 21, 9, 21, 7, 20, 5, 18, 4, 16, 3, 13, 3, 8, 4, 5, 5,
-  3, 7, 1, 9, 0, 13, 0, 15, 1, 17, 3, 18, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  15, 21, /* Ascii 68 */
-  4, 21, 4, 0, -1, -1, 4, 21, 11, 21, 14, 20, 16, 18, 17, 16, 18, 13, 18, 8, 17, 5, 16,
-  3, 14, 1, 11, 0, 4, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  11, 19, /* Ascii 69 */
-  4, 21, 4, 0, -1, -1, 4, 21, 17, 21, -1, -1, 4, 11, 12, 11, -1, -1, 4, 0, 17, 0, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  8, 18, /* Ascii 70 */
-  4, 21, 4, 0, -1, -1, 4, 21, 17, 21, -1, -1, 4, 11, 12, 11, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  22, 21, /* Ascii 71 */
-  18, 16, 17, 18, 15, 20, 13, 21, 9, 21, 7, 20, 5, 18, 4, 16, 3, 13, 3, 8, 4, 5, 5,
-  3, 7, 1, 9, 0, 13, 0, 15, 1, 17, 3, 18, 5, 18, 8, -1, -1, 13, 8, 18, 8, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  8, 22, /* Ascii 72 */
-  4, 21, 4, 0, -1, -1, 18, 21, 18, 0, -1, -1, 4, 11, 18, 11, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  2, 8, /* Ascii 73 */
-  4, 21, 4, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  10, 16, /* Ascii 74 */
-  12, 21, 12, 5, 11, 2, 10, 1, 8, 0, 6, 0, 4, 1, 3, 2, 2, 5, 2, 7, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  8, 21, /* Ascii 75 */
-  4, 21, 4, 0, -1, -1, 18, 21, 4, 7, -1, -1, 9, 12, 18, 0, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  5, 17, /* Ascii 76 */
-  4, 21, 4, 0, -1, -1, 4, 0, 16, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  11, 24, /* Ascii 77 */
-  4, 21, 4, 0, -1, -1, 4, 21, 12, 0, -1, -1, 20, 21, 12, 0, -1, -1, 20, 21, 20, 0, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  8, 22, /* Ascii 78 */
-  4, 21, 4, 0, -1, -1, 4, 21, 18, 0, -1, -1, 18, 21, 18, 0, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  21, 22, /* Ascii 79 */
-  9, 21, 7, 20, 5, 18, 4, 16, 3, 13, 3, 8, 4, 5, 5, 3, 7, 1, 9, 0, 13, 0, 15,
-  1, 17, 3, 18, 5, 19, 8, 19, 13, 18, 16, 17, 18, 15, 20, 13, 21, 9, 21, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  13, 21, /* Ascii 80 */
-  4, 21, 4, 0, -1, -1, 4, 21, 13, 21, 16, 20, 17, 19, 18, 17, 18, 14, 17, 12, 16, 11, 13,
-  10, 4, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  24, 22, /* Ascii 81 */
-  9, 21, 7, 20, 5, 18, 4, 16, 3, 13, 3, 8, 4, 5, 5, 3, 7, 1, 9, 0, 13, 0, 15,
-  1, 17, 3, 18, 5, 19, 8, 19, 13, 18, 16, 17, 18, 15, 20, 13, 21, 9, 21, -1, -1, 12, 4,
-  18, -2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  16, 21, /* Ascii 82 */
-  4, 21, 4, 0, -1, -1, 4, 21, 13, 21, 16, 20, 17, 19, 18, 17, 18, 15, 17, 13, 16, 12, 13,
-  11, 4, 11, -1, -1, 11, 11, 18, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  20, 20, /* Ascii 83 */
-  17, 18, 15, 20, 12, 21, 8, 21, 5, 20, 3, 18, 3, 16, 4, 14, 5, 13, 7, 12, 13, 10, 15,
-  9, 16, 8, 17, 6, 17, 3, 15, 1, 12, 0, 8, 0, 5, 1, 3, 3, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  5, 16, /* Ascii 84 */
-  8, 21, 8, 0, -1, -1, 1, 21, 15, 21, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  10, 22, /* Ascii 85 */
-  4, 21, 4, 6, 5, 3, 7, 1, 10, 0, 12, 0, 15, 1, 17, 3, 18, 6, 18, 21, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  5, 18, /* Ascii 86 */
-  1, 21, 9, 0, -1, -1, 17, 21, 9, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  11, 24, /* Ascii 87 */
-  2, 21, 7, 0, -1, -1, 12, 21, 7, 0, -1, -1, 12, 21, 17, 0, -1, -1, 22, 21, 17, 0, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  5, 20, /* Ascii 88 */
-  3, 21, 17, 0, -1, -1, 17, 21, 3, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  6, 18, /* Ascii 89 */
-  1, 21, 9, 11, 9, 0, -1, -1, 17, 21, 9, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  8, 20, /* Ascii 90 */
-  17, 21, 3, 0, -1, -1, 3, 21, 17, 21, -1, -1, 3, 0, 17, 0, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  11, 14, /* Ascii 91 */
-  4, 25, 4, -7, -1, -1, 5, 25, 5, -7, -1, -1, 4, 25, 11, 25, -1, -1, 4, -7, 11, -7, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  2, 14, /* Ascii 92 */
-  0, 21, 14, -3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  11, 14, /* Ascii 93 */
-  9, 25, 9, -7, -1, -1, 10, 25, 10, -7, -1, -1, 3, 25, 10, 25, -1, -1, 3, -7, 10, -7, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  10, 16, /* Ascii 94 */
-  6, 15, 8, 18, 10, 15, -1, -1, 3, 12, 8, 17, 13, 12, -1, -1, 8, 17, 8, 0, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  2, 16, /* Ascii 95 */
-  0, -2, 16, -2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  7, 10, /* Ascii 96 */
-  6, 21, 5, 20, 4, 18, 4, 16, 5, 15, 6, 16, 5, 17, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  17, 19, /* Ascii 97 */
-  15, 14, 15, 0, -1, -1, 15, 11, 13, 13, 11, 14, 8, 14, 6, 13, 4, 11, 3, 8, 3, 6, 4,
-  3, 6, 1, 8, 0, 11, 0, 13, 1, 15, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  17, 19, /* Ascii 98 */
-  4, 21, 4, 0, -1, -1, 4, 11, 6, 13, 8, 14, 11, 14, 13, 13, 15, 11, 16, 8, 16, 6, 15,
-  3, 13, 1, 11, 0, 8, 0, 6, 1, 4, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  14, 18, /* Ascii 99 */
-  15, 11, 13, 13, 11, 14, 8, 14, 6, 13, 4, 11, 3, 8, 3, 6, 4, 3, 6, 1, 8, 0, 11,
-  0, 13, 1, 15, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  17, 19, /* Ascii 100 */
-  15, 21, 15, 0, -1, -1, 15, 11, 13, 13, 11, 14, 8, 14, 6, 13, 4, 11, 3, 8, 3, 6, 4,
-  3, 6, 1, 8, 0, 11, 0, 13, 1, 15, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  17, 18, /* Ascii 101 */
-  3, 8, 15, 8, 15, 10, 14, 12, 13, 13, 11, 14, 8, 14, 6, 13, 4, 11, 3, 8, 3, 6, 4,
-  3, 6, 1, 8, 0, 11, 0, 13, 1, 15, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  8, 12, /* Ascii 102 */
-  10, 21, 8, 21, 6, 20, 5, 17, 5, 0, -1, -1, 2, 14, 9, 14, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  22, 19, /* Ascii 103 */
-  15, 14, 15, -2, 14, -5, 13, -6, 11, -7, 8, -7, 6, -6, -1, -1, 15, 11, 13, 13, 11, 14, 8,
-  14, 6, 13, 4, 11, 3, 8, 3, 6, 4, 3, 6, 1, 8, 0, 11, 0, 13, 1, 15, 3, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  10, 19, /* Ascii 104 */
-  4, 21, 4, 0, -1, -1, 4, 10, 7, 13, 9, 14, 12, 14, 14, 13, 15, 10, 15, 0, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  8, 8, /* Ascii 105 */
-  3, 21, 4, 20, 5, 21, 4, 22, 3, 21, -1, -1, 4, 14, 4, 0, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  11, 10, /* Ascii 106 */
-  5, 21, 6, 20, 7, 21, 6, 22, 5, 21, -1, -1, 6, 14, 6, -3, 5, -6, 3, -7, 1, -7, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  8, 17, /* Ascii 107 */
-  4, 21, 4, 0, -1, -1, 14, 14, 4, 4, -1, -1, 8, 8, 15, 0, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  2, 8, /* Ascii 108 */
-  4, 21, 4, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  18, 30, /* Ascii 109 */
-  4, 14, 4, 0, -1, -1, 4, 10, 7, 13, 9, 14, 12, 14, 14, 13, 15, 10, 15, 0, -1, -1, 15,
-  10, 18, 13, 20, 14, 23, 14, 25, 13, 26, 10, 26, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  10, 19, /* Ascii 110 */
-  4, 14, 4, 0, -1, -1, 4, 10, 7, 13, 9, 14, 12, 14, 14, 13, 15, 10, 15, 0, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  17, 19, /* Ascii 111 */
-  8, 14, 6, 13, 4, 11, 3, 8, 3, 6, 4, 3, 6, 1, 8, 0, 11, 0, 13, 1, 15, 3, 16,
-  6, 16, 8, 15, 11, 13, 13, 11, 14, 8, 14, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  17, 19, /* Ascii 112 */
-  4, 14, 4, -7, -1, -1, 4, 11, 6, 13, 8, 14, 11, 14, 13, 13, 15, 11, 16, 8, 16, 6, 15,
-  3, 13, 1, 11, 0, 8, 0, 6, 1, 4, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  17, 19, /* Ascii 113 */
-  15, 14, 15, -7, -1, -1, 15, 11, 13, 13, 11, 14, 8, 14, 6, 13, 4, 11, 3, 8, 3, 6, 4,
-  3, 6, 1, 8, 0, 11, 0, 13, 1, 15, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  8, 13, /* Ascii 114 */
-  4, 14, 4, 0, -1, -1, 4, 8, 5, 11, 7, 13, 9, 14, 12, 14, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  17, 17, /* Ascii 115 */
-  14, 11, 13, 13, 10, 14, 7, 14, 4, 13, 3, 11, 4, 9, 6, 8, 11, 7, 13, 6, 14, 4, 14,
-  3, 13, 1, 10, 0, 7, 0, 4, 1, 3, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  8, 12, /* Ascii 116 */
-  5, 21, 5, 4, 6, 1, 8, 0, 10, 0, -1, -1, 2, 14, 9, 14, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  10, 19, /* Ascii 117 */
-  4, 14, 4, 4, 5, 1, 7, 0, 10, 0, 12, 1, 15, 4, -1, -1, 15, 14, 15, 0, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  5, 16, /* Ascii 118 */
-  2, 14, 8, 0, -1, -1, 14, 14, 8, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  11, 22, /* Ascii 119 */
-  3, 14, 7, 0, -1, -1, 11, 14, 7, 0, -1, -1, 11, 14, 15, 0, -1, -1, 19, 14, 15, 0, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  5, 17, /* Ascii 120 */
-  3, 14, 14, 0, -1, -1, 14, 14, 3, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  9, 16, /* Ascii 121 */
-  2, 14, 8, 0, -1, -1, 14, 14, 8, 0, 6, -4, 4, -6, 2, -7, 1, -7, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  8, 17, /* Ascii 122 */
-  14, 14, 3, 0, -1, -1, 3, 14, 14, 14, -1, -1, 3, 0, 14, 0, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  39, 14, /* Ascii 123 */
-  9, 25, 7, 24, 6, 23, 5, 21, 5, 19, 6, 17, 7, 16, 8, 14, 8, 12, 6, 10, -1, -1, 7,
-  24, 6, 22, 6, 20, 7, 18, 8, 17, 9, 15, 9, 13, 8, 11, 4, 9, 8, 7, 9, 5, 9, 3,
-  8, 1, 7, 0, 6, -2, 6, -4, 7, -6, -1, -1, 6, 8, 8, 6, 8, 4, 7, 2, 6, 1, 5,
-  -1, 5, -3, 6, -5, 7, -6, 9, -7, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  2, 8, /* Ascii 124 */
-  4, 25, 4, -7, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  39, 14, /* Ascii 125 */
-  5, 25, 7, 24, 8, 23, 9, 21, 9, 19, 8, 17, 7, 16, 6, 14, 6, 12, 8, 10, -1, -1, 7,
-  24, 8, 22, 8, 20, 7, 18, 6, 17, 5, 15, 5, 13, 6, 11, 10, 9, 6, 7, 5, 5, 5, 3,
-  6, 1, 7, 0, 8, -2, 8, -4, 7, -6, -1, -1, 8, 8, 6, 6, 6, 4, 7, 2, 8, 1, 9,
-  -1, 9, -3, 8, -5, 7, -6, 5, -7, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  23, 24, /* Ascii 126 */
-  3, 6, 3, 8, 4, 11, 6, 12, 8, 12, 10, 11, 14, 8, 16, 7, 18, 7, 20, 8, 21, 10, -1,
-  -1, 3, 8, 4, 10, 6, 11, 8, 11, 10, 10, 14, 7, 16, 6, 18, 6, 20, 7, 21, 10, 21, 12,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-]
+/** Construct a {@link VectorCharObject} from a ascii character whose code is between 31 and 127,
+* if the character is not supported it is replaced by a question mark.
+* @param {Float} x - x offset
+* @param {Float} y - y offset
+* @param {String} char - ascii character
+* @returns {VectorCharObject}
+* @deprecated >= v2
+
+* @example
+* let vectorCharObject = vector_char(36, 0, 'B')
+*/
+function vector_char (x, y, char) {
+  return vectorChar({ xOffset: x, yOffset: y }, char)
+}
+
+/** Construct an array of character segments from a ascii string whose characters code is between 31 and 127,
+* if one character is not supported it is replaced by a question mark.
+* @param {Float} x - x offset
+* @param {Float} y - y offset
+* @param {String} text - ascii string
+* @returns {Array} characters segments [[[x, y], ...], ...]
+* @deprecated >= v2
+*
+* @example
+* let textSegments = vector_text(0, -20, 'OpenJSCAD')
+*/
+function vector_text (x, y, text) {
+  return vectorText({ xOffset: x, yOffset: y }, text)
+}
 
 module.exports = {
   vector_char,
-  vector_text
+  vector_text,
+  vectorChar,
+  vectorText
 }
 
-},{}],74:[function(require,module,exports){
+},{"../fonts/single-line/hershey/simplex.js":77,"./ops-booleans":28}],41:[function(require,module,exports){
 const {Connector} = require('./connectors')
 const Vertex3D = require('./math/Vertex3')
 const Vector2D = require('./math/Vector2')
@@ -13533,13 +5778,14 @@ const {fromSides, fromFakeCSG} = require('./CAGFactories')
 
 const canonicalize = require('./utils/canonicalize')
 const retesselate = require('./utils/retesellate')
-const {isCAGValid, isSelfIntersecting} = require('./utils/cagValidation')
+const {isCAGValid, isSelfIntersecting, hasPointInside} = require('./utils/cagValidation')
 const {area, getBounds} = require('./utils/cagMeasurements')
 
 // all of these are good candidates for elimination in this scope, since they are part of a functional api
 const {overCutInsideCorners} = require('../api/ops-cnc')
 const {extrudeInOrthonormalBasis, extrudeInPlane, extrude, rotateExtrude} = require('../api/ops-extrusions')
 const cagoutlinePaths = require('../api/cagOutlinePaths')
+const center = require('../api/center')
 const {expand, contract, expandedShellOfCAG} = require('../api/ops-expandContract')
 /**
  * Class CAG
@@ -13626,6 +5872,11 @@ CAG.prototype = {
   },
 
   // ALIAS !
+  center: function (axes) {
+    return center({axes: axes}, [this])
+  },
+
+  // ALIAS !
   expandedShell: function (radius, resolution) {
     return expandedShellOfCAG(this, radius, resolution)
   },
@@ -13695,6 +5946,11 @@ CAG.prototype = {
   // ALIAS !
   overCutInsideCorners: function (cutterradius) {
     return overCutInsideCorners(this, cutterradius)
+  },
+
+  // ALIAS !
+  hasPointInside: function (point) {
+    return hasPointInside(this, point)
   },
 
   // All the toXXX functions
@@ -13889,12 +6145,13 @@ CAG.prototype = {
 
 module.exports = CAG
 
-},{"../api/cagOutlinePaths":53,"../api/ops-cnc":62,"../api/ops-expandContract":64,"../api/ops-extrusions":65,"./CAGFactories":75,"./CSGFactories":77,"./connectors":82,"./math/Polygon3":91,"./math/Vector2":93,"./math/Vector3":94,"./math/Vertex3":96,"./utils/cagMeasurements":102,"./utils/cagValidation":103,"./utils/canonicalize":104,"./utils/retesellate":108}],75:[function(require,module,exports){
+},{"../api/cagOutlinePaths":19,"../api/center":20,"../api/ops-cnc":29,"../api/ops-expandContract":31,"../api/ops-extrusions":32,"./CAGFactories":42,"./CSGFactories":44,"./connectors":49,"./math/Polygon3":58,"./math/Vector2":60,"./math/Vector3":61,"./math/Vertex3":63,"./utils/cagMeasurements":69,"./utils/cagValidation":70,"./utils/canonicalize":71,"./utils/retesellate":75}],42:[function(require,module,exports){
 const Side = require('./math/Side')
 const Vector2D = require('./math/Vector2')
 const Vertex2 = require('./math/Vertex2')
 const {areaEPS} = require('./constants')
-const {isSelfIntersecting} = require('./utils/cagValidation')
+const {isSelfIntersecting, contains} = require('./utils/cagValidation')
+const {union, difference} = require('../api/ops-booleans')
 
 /** Construct a CAG from a list of `Side` instances.
  * @param {Side[]} sides - list of sides
@@ -13919,24 +6176,41 @@ const fromFakeCSG = function (csg) {
   return fromSides(sides)
 }
 
-/** Construct a CAG from a list of points (a polygon).
+/** Construct a CAG from a list of points (a polygon) or an nested array of points.
  * The rotation direction of the points is not relevant.
  * The points can define a convex or a concave polygon.
  * The polygon must not self intersect.
- * @param {points[]} points - list of points in 2D space
+ * Hole detection follows the even/odd rule,
+ * which means that the order of the paths is not important.
+ * @param {points[]|Array.<points[]>} points - (nested) list of points in 2D space
  * @returns {CAG} new CAG object
  */
 const fromPoints = function (points) {
-  let numpoints = points.length
-  if (numpoints < 3) throw new Error('CAG shape needs at least 3 points')
+  if (!points) {
+    throw new Error('points parameter must be defined')
+  }
+  if (!Array.isArray(points)) {
+    throw new Error('points parameter must be an array')
+  }
+  if (points[0].x !== undefined || typeof points[0][0] === 'number') {
+    return fromPointsArray(points)
+  }
+  if (typeof points[0][0] === 'object') {
+    return fromNestedPointsArray(points)
+  }
+  throw new Error('Unsupported points list format')
+}
+
+// Do not export the two following function (code splitting for fromPoints())
+const fromPointsArray = function (points) {
+  if (points.length < 3) {
+    throw new Error('CAG shape needs at least 3 points')
+  }
   let sides = []
-  let prevpoint = new Vector2D(points[numpoints - 1])
-  let prevvertex = new Vertex2(prevpoint)
-  points.map(function (p) {
-    let point = new Vector2D(p)
-    let vertex = new Vertex2(point)
-    let side = new Side(prevvertex, vertex)
-    sides.push(side)
+  let prevvertex = new Vertex2(new Vector2D(points[points.length - 1]))
+  points.map(function (point) {
+    let vertex = new Vertex2(new Vector2D(point))
+    sides.push(new Side(prevvertex, vertex))
     prevvertex = vertex
   })
   let result = fromSides(sides)
@@ -13950,8 +6224,55 @@ const fromPoints = function (points) {
   if (area < 0) {
     result = result.flipped()
   }
-  result = result.canonicalized()
-  return result
+  return result.canonicalized()
+}
+
+const fromNestedPointsArray = function (points) {
+  if (points.length === 1) {
+    return fromPoints(points[0])
+  }
+  // First pass: create a collection of CAG paths
+  let paths = []
+  points.forEach(path => {
+    paths.push(fromPointsArray(path))
+  })
+  // Second pass: make a tree of paths
+  let tree = {}
+    // for each polygon extract parents and childs polygons
+  paths.forEach((p1, i) => {
+    // check for intersection
+    paths.forEach((p2, y) => {
+      if (p1 !== p2) {
+        // create default node
+        tree[i] || (tree[i] = { parents: [], isHole: false })
+        tree[y] || (tree[y] = { parents: [], isHole: false })
+        // check if polygon2 stay in poylgon1
+        if (contains(p2, p1)) {
+          // push parent and child; odd parents number ==> hole
+          tree[i].parents.push(y)
+          tree[i].isHole = !! (tree[i].parents.length % 2)
+          tree[y].isHole = !! (tree[y].parents.length % 2)
+        }
+      }
+    })
+  })
+  // Third pass: subtract holes
+  let path = null
+  for (key in tree) {
+    path = tree[key]
+    if (path.isHole) {
+      delete tree[key] // remove holes for final pass
+      path.parents.forEach(parentKey => {
+        paths[parentKey] = difference(paths[parentKey], paths[key])
+      })
+    }
+  }
+  // Fourth and last pass: create final CAG object
+  let cag = fromSides([])
+  for (key in tree) {
+    cag = union(cag, paths[key])
+  }
+  return cag
 }
 
 /** Reconstruct a CAG from an object with identical property names.
@@ -14040,7 +6361,7 @@ module.exports = {
   fromCompactBinary
 }
 
-},{"./CAG":74,"./constants":83,"./math/Side":92,"./math/Vector2":93,"./math/Vertex2":95,"./utils/cagValidation":103}],76:[function(require,module,exports){
+},{"../api/ops-booleans":28,"./CAG":41,"./constants":50,"./math/Side":59,"./math/Vector2":60,"./math/Vertex2":62,"./utils/cagValidation":70}],43:[function(require,module,exports){
 const Tree = require('./trees')
 const Polygon = require('./math/Polygon3')
 const Plane = require('./math/Plane')
@@ -14059,6 +6380,7 @@ const {projectToOrthoNormalBasis} = require('./utils/csgProjections')
 
 const {lieFlat, getTransformationToFlatLying, getTransformationAndInverseTransformationToFlatLying} = require('../api/ops-cnc')
 const {sectionCut, cutByPlane} = require('../api/ops-cuts')
+const center = require('../api/center')
 const {expand, contract, expandedShellOfCCSG} = require('../api/ops-expandContract')
 
 /** Class CSG
@@ -14308,6 +6630,11 @@ CSG.prototype = {
     result.isRetesselated = this.isRetesselated
     result.isCanonicalized = this.isCanonicalized
     return result
+  },
+
+  // ALIAS !
+  center: function (axes) {
+    return center({axes: axes},[this])
   },
 
   // ALIAS !
@@ -14622,7 +6949,7 @@ CSG.prototype = {
 
 module.exports = CSG
 
-},{"../api/ops-cnc":62,"../api/ops-cuts":63,"../api/ops-expandContract":64,"./CAG":74,"./CSGFactories":77,"./Properties":81,"./math/OrthoNormalBasis":87,"./math/Plane":89,"./math/Polygon3":91,"./trees":100,"./utils/canonicalize":104,"./utils/csgMeasurements":105,"./utils/csgProjections":106,"./utils/fixTJunctions":107,"./utils/retesellate":108}],77:[function(require,module,exports){
+},{"../api/center":20,"../api/ops-cnc":29,"../api/ops-cuts":30,"../api/ops-expandContract":31,"./CAG":41,"./CSGFactories":44,"./Properties":48,"./math/OrthoNormalBasis":54,"./math/Plane":56,"./math/Polygon3":58,"./trees":67,"./utils/canonicalize":71,"./utils/csgMeasurements":72,"./utils/csgProjections":73,"./utils/fixTJunctions":74,"./utils/retesellate":75}],44:[function(require,module,exports){
 const Vector3D = require('./math/Vector3')
 const Vertex = require('./math/Vertex3')
 const Plane = require('./math/Plane')
@@ -14745,15 +7072,246 @@ module.exports = {
   fromCompactBinary
 }
 
-},{"./CSG":76,"./math/Plane":89,"./math/Polygon2":90,"./math/Polygon3":91,"./math/Vector3":94,"./math/Vertex3":96}],78:[function(require,module,exports){
-arguments[4][18][0].apply(exports,arguments)
-},{"dup":18}],79:[function(require,module,exports){
-arguments[4][19][0].apply(exports,arguments)
-},{"./FuzzyFactory":78,"./constants":83,"./math/Side":92,"dup":19}],80:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"./FuzzyFactory":78,"./constants":83,"./math/Polygon3":91,"dup":20}],81:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"dup":21}],82:[function(require,module,exports){
+},{"./CSG":43,"./math/Plane":56,"./math/Polygon2":57,"./math/Polygon3":58,"./math/Vector3":61,"./math/Vertex3":63}],45:[function(require,module,exports){
+// //////////////////////////////
+// ## class fuzzyFactory
+// This class acts as a factory for objects. We can search for an object with approximately
+// the desired properties (say a rectangle with width 2 and height 1)
+// The lookupOrCreate() method looks for an existing object (for example it may find an existing rectangle
+// with width 2.0001 and height 0.999. If no object is found, the user supplied callback is
+// called, which should generate a new object. The new object is inserted into the database
+// so it can be found by future lookupOrCreate() calls.
+// Constructor:
+//   numdimensions: the number of parameters for each object
+//     for example for a 2D rectangle this would be 2
+//   tolerance: The maximum difference for each parameter allowed to be considered a match
+const FuzzyFactory = function (numdimensions, tolerance) {
+  this.lookuptable = {}
+  this.multiplier = 1.0 / tolerance
+}
+
+FuzzyFactory.prototype = {
+    // let obj = f.lookupOrCreate([el1, el2, el3], function(elements) {/* create the new object */});
+    // Performs a fuzzy lookup of the object with the specified elements.
+    // If found, returns the existing object
+    // If not found, calls the supplied callback function which should create a new object with
+    // the specified properties. This object is inserted in the lookup database.
+  lookupOrCreate: function (els, creatorCallback) {
+    let hash = ''
+    let multiplier = this.multiplier
+    els.forEach(function (el) {
+      let valueQuantized = Math.round(el * multiplier)
+      hash += valueQuantized + '/'
+    })
+    if (hash in this.lookuptable) {
+      return this.lookuptable[hash]
+    } else {
+      let object = creatorCallback(els)
+      let hashparts = els.map(function (el) {
+        let q0 = Math.floor(el * multiplier)
+        let q1 = q0 + 1
+        return ['' + q0 + '/', '' + q1 + '/']
+      })
+      let numelements = els.length
+      let numhashes = 1 << numelements
+      for (let hashmask = 0; hashmask < numhashes; ++hashmask) {
+        let hashmaskShifted = hashmask
+        hash = ''
+        hashparts.forEach(function (hashpart) {
+          hash += hashpart[hashmaskShifted & 1]
+          hashmaskShifted >>= 1
+        })
+        this.lookuptable[hash] = object
+      }
+      return object
+    }
+  }
+}
+
+module.exports = FuzzyFactory
+
+},{}],46:[function(require,module,exports){
+const FuzzyFactory = require('./FuzzyFactory')
+const {EPS} = require('./constants')
+const Side = require('./math/Side')
+
+const FuzzyCAGFactory = function () {
+  this.vertexfactory = new FuzzyFactory(2, EPS)
+}
+
+FuzzyCAGFactory.prototype = {
+  getVertex: function (sourcevertex) {
+    let elements = [sourcevertex.pos._x, sourcevertex.pos._y]
+    let result = this.vertexfactory.lookupOrCreate(elements, function (els) {
+      return sourcevertex
+    })
+    return result
+  },
+
+  getSide: function (sourceside) {
+    let vertex0 = this.getVertex(sourceside.vertex0)
+    let vertex1 = this.getVertex(sourceside.vertex1)
+    return new Side(vertex0, vertex1)
+  }
+}
+
+module.exports = FuzzyCAGFactory
+
+},{"./FuzzyFactory":45,"./constants":50,"./math/Side":59}],47:[function(require,module,exports){
+const {EPS} = require('./constants')
+const Polygon = require('./math/Polygon3')
+const FuzzyFactory = require('./FuzzyFactory')
+
+// ////////////////////////////////////
+const FuzzyCSGFactory = function () {
+  this.vertexfactory = new FuzzyFactory(3, EPS)
+  this.planefactory = new FuzzyFactory(4, EPS)
+  this.polygonsharedfactory = {}
+}
+
+FuzzyCSGFactory.prototype = {
+  getPolygonShared: function (sourceshared) {
+    let hash = sourceshared.getHash()
+    if (hash in this.polygonsharedfactory) {
+      return this.polygonsharedfactory[hash]
+    } else {
+      this.polygonsharedfactory[hash] = sourceshared
+      return sourceshared
+    }
+  },
+
+  getVertex: function (sourcevertex) {
+    let elements = [sourcevertex.pos._x, sourcevertex.pos._y, sourcevertex.pos._z]
+    let result = this.vertexfactory.lookupOrCreate(elements, function (els) {
+      return sourcevertex
+    })
+    return result
+  },
+
+  getPlane: function (sourceplane) {
+    let elements = [sourceplane.normal._x, sourceplane.normal._y, sourceplane.normal._z, sourceplane.w]
+    let result = this.planefactory.lookupOrCreate(elements, function (els) {
+      return sourceplane
+    })
+    return result
+  },
+
+  getPolygon: function (sourcepolygon) {
+    let newplane = this.getPlane(sourcepolygon.plane)
+    let newshared = this.getPolygonShared(sourcepolygon.shared)
+    let _this = this
+    let newvertices = sourcepolygon.vertices.map(function (vertex) {
+      return _this.getVertex(vertex)
+    })
+        // two vertices that were originally very close may now have become
+        // truly identical (referring to the same Vertex object).
+        // Remove duplicate vertices:
+    let newverticesDedup = []
+    if (newvertices.length > 0) {
+      let prevvertextag = newvertices[newvertices.length - 1].getTag()
+      newvertices.forEach(function (vertex) {
+        let vertextag = vertex.getTag()
+        if (vertextag !== prevvertextag) {
+          newverticesDedup.push(vertex)
+        }
+        prevvertextag = vertextag
+      })
+    }
+        // If it's degenerate, remove all vertices:
+    if (newverticesDedup.length < 3) {
+      newverticesDedup = []
+    }
+    return new Polygon(newverticesDedup, newshared, newplane)
+  }
+}
+
+module.exports = FuzzyCSGFactory
+
+},{"./FuzzyFactory":45,"./constants":50,"./math/Polygon3":58}],48:[function(require,module,exports){
+// ////////////////////////////////////
+// # Class Properties
+// This class is used to store properties of a solid
+// A property can for example be a Vertex, a Plane or a Line3D
+// Whenever an affine transform is applied to the CSG solid, all its properties are
+// transformed as well.
+// The properties can be stored in a complex nested structure (using arrays and objects)
+const Properties = function () {}
+
+Properties.prototype = {
+  _transform: function (matrix4x4) {
+    let result = new Properties()
+    Properties.transformObj(this, result, matrix4x4)
+    return result
+  },
+  _merge: function (otherproperties) {
+    let result = new Properties()
+    Properties.cloneObj(this, result)
+    Properties.addFrom(result, otherproperties)
+    return result
+  }
+}
+
+Properties.transformObj = function (source, result, matrix4x4) {
+  for (let propertyname in source) {
+    if (propertyname === '_transform') continue
+    if (propertyname === '_merge') continue
+    let propertyvalue = source[propertyname]
+    let transformed = propertyvalue
+    if (typeof (propertyvalue) === 'object') {
+      if (('transform' in propertyvalue) && (typeof (propertyvalue.transform) === 'function')) {
+        transformed = propertyvalue.transform(matrix4x4)
+      } else if (propertyvalue instanceof Array) {
+        transformed = []
+        Properties.transformObj(propertyvalue, transformed, matrix4x4)
+      } else if (propertyvalue instanceof Properties) {
+        transformed = new Properties()
+        Properties.transformObj(propertyvalue, transformed, matrix4x4)
+      }
+    }
+    result[propertyname] = transformed
+  }
+}
+
+Properties.cloneObj = function (source, result) {
+  for (let propertyname in source) {
+    if (propertyname === '_transform') continue
+    if (propertyname === '_merge') continue
+    let propertyvalue = source[propertyname]
+    let cloned = propertyvalue
+    if (typeof (propertyvalue) === 'object') {
+      if (propertyvalue instanceof Array) {
+        cloned = []
+        for (let i = 0; i < propertyvalue.length; i++) {
+          cloned.push(propertyvalue[i])
+        }
+      } else if (propertyvalue instanceof Properties) {
+        cloned = new Properties()
+        Properties.cloneObj(propertyvalue, cloned)
+      }
+    }
+    result[propertyname] = cloned
+  }
+}
+
+Properties.addFrom = function (result, otherproperties) {
+  for (let propertyname in otherproperties) {
+    if (propertyname === '_transform') continue
+    if (propertyname === '_merge') continue
+    if ((propertyname in result) &&
+            (typeof (result[propertyname]) === 'object') &&
+            (result[propertyname] instanceof Properties) &&
+            (typeof (otherproperties[propertyname]) === 'object') &&
+            (otherproperties[propertyname] instanceof Properties)) {
+      Properties.addFrom(result[propertyname], otherproperties[propertyname])
+    } else if (!(propertyname in result)) {
+      result[propertyname] = otherproperties[propertyname]
+    }
+  }
+}
+
+module.exports = Properties
+
+},{}],49:[function(require,module,exports){
 const Vector3D = require('./math/Vector3')
 const Line3D = require('./math/Line3')
 const Matrix4x4 = require('./math/Matrix4')
@@ -14975,15 +7533,544 @@ ConnectorList.prototype = {
 
 module.exports = {Connector, ConnectorList}
 
-},{"./CSG":76,"./math/Line3":85,"./math/Matrix4":86,"./math/OrthoNormalBasis":87,"./math/Plane":89,"./math/Vector3":94}],83:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],84:[function(require,module,exports){
-arguments[4][25][0].apply(exports,arguments)
-},{"../utils":101,"./Vector2":93,"dup":25}],85:[function(require,module,exports){
-arguments[4][26][0].apply(exports,arguments)
-},{"../constants":83,"../utils":101,"./Vector3":94,"dup":26}],86:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./OrthoNormalBasis":87,"./Plane":89,"./Vector2":93,"./Vector3":94,"dup":27}],87:[function(require,module,exports){
+},{"./CSG":43,"./math/Line3":52,"./math/Matrix4":53,"./math/OrthoNormalBasis":54,"./math/Plane":56,"./math/Vector3":61}],50:[function(require,module,exports){
+const _CSGDEBUG = false
+
+/** Number of polygons per 360 degree revolution for 2D objects.
+ * @default
+ */
+const defaultResolution2D = 32 // FIXME this seems excessive
+/** Number of polygons per 360 degree revolution for 3D objects.
+ * @default
+ */
+const defaultResolution3D = 12
+
+/** Epsilon used during determination of near zero distances.
+ * @default
+ */
+const EPS = 1e-5
+
+/** Epsilon used during determination of near zero areas.
+ * @default
+ */
+const angleEPS = 0.10
+
+/** Epsilon used during determination of near zero areas.
+ *  This is the minimal area of a minimal polygon.
+ * @default
+ */
+const areaEPS = 0.50 * EPS * EPS * Math.sin(angleEPS)
+
+const all = 0
+const top = 1
+const bottom = 2
+const left = 3
+const right = 4
+const front = 5
+const back = 6
+// Tag factory: we can request a unique tag through CSG.getTag()
+let staticTag = 1
+const getTag = () => staticTag++
+
+module.exports = {
+  _CSGDEBUG,
+  defaultResolution2D,
+  defaultResolution3D,
+  EPS,
+  angleEPS,
+  areaEPS,
+  all,
+  top,
+  bottom,
+  left,
+  right,
+  front,
+  back,
+  staticTag,
+  getTag
+}
+
+},{}],51:[function(require,module,exports){
+const Vector2D = require('./Vector2')
+const {solve2Linear} = require('../utils')
+
+/**  class Line2D
+ * Represents a directional line in 2D space
+ * A line is parametrized by its normal vector (perpendicular to the line, rotated 90 degrees counter clockwise)
+ * and w. The line passes through the point <normal>.times(w).
+ * Equation: p is on line if normal.dot(p)==w
+ * @param {Vector2D} normal normal must be a unit vector!
+ * @returns {Line2D}
+*/
+const Line2D = function (normal, w) {
+  normal = new Vector2D(normal)
+  w = parseFloat(w)
+  let l = normal.length()
+    // normalize:
+  w *= l
+  normal = normal.times(1.0 / l)
+  this.normal = normal
+  this.w = w
+}
+
+Line2D.fromPoints = function (p1, p2) {
+  p1 = new Vector2D(p1)
+  p2 = new Vector2D(p2)
+  let direction = p2.minus(p1)
+  let normal = direction.normal().negated().unit()
+  let w = p1.dot(normal)
+  return new Line2D(normal, w)
+}
+
+Line2D.prototype = {
+    // same line but opposite direction:
+  reverse: function () {
+    return new Line2D(this.normal.negated(), -this.w)
+  },
+
+  equals: function (l) {
+    return (l.normal.equals(this.normal) && (l.w === this.w))
+  },
+
+  origin: function () {
+    return this.normal.times(this.w)
+  },
+
+  direction: function () {
+    return this.normal.normal()
+  },
+
+  xAtY: function (y) {
+        // (py == y) && (normal * p == w)
+        // -> px = (w - normal._y * y) / normal.x
+    let x = (this.w - this.normal._y * y) / this.normal.x
+    return x
+  },
+
+  absDistanceToPoint: function (point) {
+    point = new Vector2D(point)
+    let pointProjected = point.dot(this.normal)
+    let distance = Math.abs(pointProjected - this.w)
+    return distance
+  },
+    /* FIXME: has error - origin is not defined, the method is never used
+     closestPoint: function(point) {
+         point = new Vector2D(point);
+         let vector = point.dot(this.direction());
+         return origin.plus(vector);
+     },
+     */
+
+    // intersection between two lines, returns point as Vector2D
+  intersectWithLine: function (line2d) {
+    let point = solve2Linear(this.normal.x, this.normal.y, line2d.normal.x, line2d.normal.y, this.w, line2d.w)
+    point = new Vector2D(point) // make  vector2d
+    return point
+  },
+
+  transform: function (matrix4x4) {
+    let origin = new Vector2D(0, 0)
+    let pointOnPlane = this.normal.times(this.w)
+    let neworigin = origin.multiply4x4(matrix4x4)
+    let neworiginPlusNormal = this.normal.multiply4x4(matrix4x4)
+    let newnormal = neworiginPlusNormal.minus(neworigin)
+    let newpointOnPlane = pointOnPlane.multiply4x4(matrix4x4)
+    let neww = newnormal.dot(newpointOnPlane)
+    return new Line2D(newnormal, neww)
+  }
+}
+
+module.exports = Line2D
+
+},{"../utils":68,"./Vector2":60}],52:[function(require,module,exports){
+const Vector3D = require('./Vector3')
+const {EPS} = require('../constants')
+const {solve2Linear} = require('../utils')
+
+// # class Line3D
+// Represents a line in 3D space
+// direction must be a unit vector
+// point is a random point on the line
+const Line3D = function (point, direction) {
+  point = new Vector3D(point)
+  direction = new Vector3D(direction)
+  this.point = point
+  this.direction = direction.unit()
+}
+
+Line3D.fromPoints = function (p1, p2) {
+  p1 = new Vector3D(p1)
+  p2 = new Vector3D(p2)
+  let direction = p2.minus(p1)
+  return new Line3D(p1, direction)
+}
+
+Line3D.fromPlanes = function (p1, p2) {
+  let direction = p1.normal.cross(p2.normal)
+  let l = direction.length()
+  if (l < EPS) {
+    throw new Error('Parallel planes')
+  }
+  direction = direction.times(1.0 / l)
+
+  let mabsx = Math.abs(direction.x)
+  let mabsy = Math.abs(direction.y)
+  let mabsz = Math.abs(direction.z)
+  let origin
+  if ((mabsx >= mabsy) && (mabsx >= mabsz)) {
+        // direction vector is mostly pointing towards x
+        // find a point p for which x is zero:
+    let r = solve2Linear(p1.normal.y, p1.normal.z, p2.normal.y, p2.normal.z, p1.w, p2.w)
+    origin = new Vector3D(0, r[0], r[1])
+  } else if ((mabsy >= mabsx) && (mabsy >= mabsz)) {
+        // find a point p for which y is zero:
+    let r = solve2Linear(p1.normal.x, p1.normal.z, p2.normal.x, p2.normal.z, p1.w, p2.w)
+    origin = new Vector3D(r[0], 0, r[1])
+  } else {
+        // find a point p for which z is zero:
+    let r = solve2Linear(p1.normal.x, p1.normal.y, p2.normal.x, p2.normal.y, p1.w, p2.w)
+    origin = new Vector3D(r[0], r[1], 0)
+  }
+  return new Line3D(origin, direction)
+}
+
+Line3D.prototype = {
+  intersectWithPlane: function (plane) {
+        // plane: plane.normal * p = plane.w
+        // line: p=line.point + labda * line.direction
+    let labda = (plane.w - plane.normal.dot(this.point)) / plane.normal.dot(this.direction)
+    let point = this.point.plus(this.direction.times(labda))
+    return point
+  },
+
+  clone: function (line) {
+    return new Line3D(this.point.clone(), this.direction.clone())
+  },
+
+  reverse: function () {
+    return new Line3D(this.point.clone(), this.direction.negated())
+  },
+
+  transform: function (matrix4x4) {
+    let newpoint = this.point.multiply4x4(matrix4x4)
+    let pointPlusDirection = this.point.plus(this.direction)
+    let newPointPlusDirection = pointPlusDirection.multiply4x4(matrix4x4)
+    let newdirection = newPointPlusDirection.minus(newpoint)
+    return new Line3D(newpoint, newdirection)
+  },
+
+  closestPointOnLine: function (point) {
+    point = new Vector3D(point)
+    let t = point.minus(this.point).dot(this.direction) / this.direction.dot(this.direction)
+    let closestpoint = this.point.plus(this.direction.times(t))
+    return closestpoint
+  },
+
+  distanceToPoint: function (point) {
+    point = new Vector3D(point)
+    let closestpoint = this.closestPointOnLine(point)
+    let distancevector = point.minus(closestpoint)
+    let distance = distancevector.length()
+    return distance
+  },
+
+  equals: function (line3d) {
+    if (!this.direction.equals(line3d.direction)) return false
+    let distance = this.distanceToPoint(line3d.point)
+    if (distance > EPS) return false
+    return true
+  }
+}
+
+module.exports = Line3D
+
+},{"../constants":50,"../utils":68,"./Vector3":61}],53:[function(require,module,exports){
+const Vector3D = require('./Vector3')
+const Vector2D = require('./Vector2')
+const OrthoNormalBasis = require('./OrthoNormalBasis')
+const Plane = require('./Plane')
+
+// # class Matrix4x4:
+// Represents a 4x4 matrix. Elements are specified in row order
+const Matrix4x4 = function (elements) {
+  if (arguments.length >= 1) {
+    this.elements = elements
+  } else {
+        // if no arguments passed: create unity matrix
+    this.elements = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+  }
+}
+
+Matrix4x4.prototype = {
+  plus: function (m) {
+    var r = []
+    for (var i = 0; i < 16; i++) {
+      r[i] = this.elements[i] + m.elements[i]
+    }
+    return new Matrix4x4(r)
+  },
+
+  minus: function (m) {
+    var r = []
+    for (var i = 0; i < 16; i++) {
+      r[i] = this.elements[i] - m.elements[i]
+    }
+    return new Matrix4x4(r)
+  },
+
+    // right multiply by another 4x4 matrix:
+  multiply: function (m) {
+        // cache elements in local variables, for speedup:
+    var this0 = this.elements[0]
+    var this1 = this.elements[1]
+    var this2 = this.elements[2]
+    var this3 = this.elements[3]
+    var this4 = this.elements[4]
+    var this5 = this.elements[5]
+    var this6 = this.elements[6]
+    var this7 = this.elements[7]
+    var this8 = this.elements[8]
+    var this9 = this.elements[9]
+    var this10 = this.elements[10]
+    var this11 = this.elements[11]
+    var this12 = this.elements[12]
+    var this13 = this.elements[13]
+    var this14 = this.elements[14]
+    var this15 = this.elements[15]
+    var m0 = m.elements[0]
+    var m1 = m.elements[1]
+    var m2 = m.elements[2]
+    var m3 = m.elements[3]
+    var m4 = m.elements[4]
+    var m5 = m.elements[5]
+    var m6 = m.elements[6]
+    var m7 = m.elements[7]
+    var m8 = m.elements[8]
+    var m9 = m.elements[9]
+    var m10 = m.elements[10]
+    var m11 = m.elements[11]
+    var m12 = m.elements[12]
+    var m13 = m.elements[13]
+    var m14 = m.elements[14]
+    var m15 = m.elements[15]
+
+    var result = []
+    result[0] = this0 * m0 + this1 * m4 + this2 * m8 + this3 * m12
+    result[1] = this0 * m1 + this1 * m5 + this2 * m9 + this3 * m13
+    result[2] = this0 * m2 + this1 * m6 + this2 * m10 + this3 * m14
+    result[3] = this0 * m3 + this1 * m7 + this2 * m11 + this3 * m15
+    result[4] = this4 * m0 + this5 * m4 + this6 * m8 + this7 * m12
+    result[5] = this4 * m1 + this5 * m5 + this6 * m9 + this7 * m13
+    result[6] = this4 * m2 + this5 * m6 + this6 * m10 + this7 * m14
+    result[7] = this4 * m3 + this5 * m7 + this6 * m11 + this7 * m15
+    result[8] = this8 * m0 + this9 * m4 + this10 * m8 + this11 * m12
+    result[9] = this8 * m1 + this9 * m5 + this10 * m9 + this11 * m13
+    result[10] = this8 * m2 + this9 * m6 + this10 * m10 + this11 * m14
+    result[11] = this8 * m3 + this9 * m7 + this10 * m11 + this11 * m15
+    result[12] = this12 * m0 + this13 * m4 + this14 * m8 + this15 * m12
+    result[13] = this12 * m1 + this13 * m5 + this14 * m9 + this15 * m13
+    result[14] = this12 * m2 + this13 * m6 + this14 * m10 + this15 * m14
+    result[15] = this12 * m3 + this13 * m7 + this14 * m11 + this15 * m15
+    return new Matrix4x4(result)
+  },
+
+  clone: function () {
+    var elements = this.elements.map(function (p) {
+      return p
+    })
+    return new Matrix4x4(elements)
+  },
+
+    // Right multiply the matrix by a Vector3D (interpreted as 3 row, 1 column)
+    // (result = M*v)
+    // Fourth element is taken as 1
+  rightMultiply1x3Vector: function (v) {
+    var v0 = v._x
+    var v1 = v._y
+    var v2 = v._z
+    var v3 = 1
+    var x = v0 * this.elements[0] + v1 * this.elements[1] + v2 * this.elements[2] + v3 * this.elements[3]
+    var y = v0 * this.elements[4] + v1 * this.elements[5] + v2 * this.elements[6] + v3 * this.elements[7]
+    var z = v0 * this.elements[8] + v1 * this.elements[9] + v2 * this.elements[10] + v3 * this.elements[11]
+    var w = v0 * this.elements[12] + v1 * this.elements[13] + v2 * this.elements[14] + v3 * this.elements[15]
+        // scale such that fourth element becomes 1:
+    if (w !== 1) {
+      var invw = 1.0 / w
+      x *= invw
+      y *= invw
+      z *= invw
+    }
+    return new Vector3D(x, y, z)
+  },
+
+    // Multiply a Vector3D (interpreted as 3 column, 1 row) by this matrix
+    // (result = v*M)
+    // Fourth element is taken as 1
+  leftMultiply1x3Vector: function (v) {
+    var v0 = v._x
+    var v1 = v._y
+    var v2 = v._z
+    var v3 = 1
+    var x = v0 * this.elements[0] + v1 * this.elements[4] + v2 * this.elements[8] + v3 * this.elements[12]
+    var y = v0 * this.elements[1] + v1 * this.elements[5] + v2 * this.elements[9] + v3 * this.elements[13]
+    var z = v0 * this.elements[2] + v1 * this.elements[6] + v2 * this.elements[10] + v3 * this.elements[14]
+    var w = v0 * this.elements[3] + v1 * this.elements[7] + v2 * this.elements[11] + v3 * this.elements[15]
+        // scale such that fourth element becomes 1:
+    if (w !== 1) {
+      var invw = 1.0 / w
+      x *= invw
+      y *= invw
+      z *= invw
+    }
+    return new Vector3D(x, y, z)
+  },
+
+    // Right multiply the matrix by a Vector2D (interpreted as 2 row, 1 column)
+    // (result = M*v)
+    // Fourth element is taken as 1
+  rightMultiply1x2Vector: function (v) {
+    var v0 = v.x
+    var v1 = v.y
+    var v2 = 0
+    var v3 = 1
+    var x = v0 * this.elements[0] + v1 * this.elements[1] + v2 * this.elements[2] + v3 * this.elements[3]
+    var y = v0 * this.elements[4] + v1 * this.elements[5] + v2 * this.elements[6] + v3 * this.elements[7]
+    var z = v0 * this.elements[8] + v1 * this.elements[9] + v2 * this.elements[10] + v3 * this.elements[11]
+    var w = v0 * this.elements[12] + v1 * this.elements[13] + v2 * this.elements[14] + v3 * this.elements[15]
+        // scale such that fourth element becomes 1:
+    if (w !== 1) {
+      var invw = 1.0 / w
+      x *= invw
+      y *= invw
+      z *= invw
+    }
+    return new Vector2D(x, y)
+  },
+
+    // Multiply a Vector2D (interpreted as 2 column, 1 row) by this matrix
+    // (result = v*M)
+    // Fourth element is taken as 1
+  leftMultiply1x2Vector: function (v) {
+    var v0 = v.x
+    var v1 = v.y
+    var v2 = 0
+    var v3 = 1
+    var x = v0 * this.elements[0] + v1 * this.elements[4] + v2 * this.elements[8] + v3 * this.elements[12]
+    var y = v0 * this.elements[1] + v1 * this.elements[5] + v2 * this.elements[9] + v3 * this.elements[13]
+    var z = v0 * this.elements[2] + v1 * this.elements[6] + v2 * this.elements[10] + v3 * this.elements[14]
+    var w = v0 * this.elements[3] + v1 * this.elements[7] + v2 * this.elements[11] + v3 * this.elements[15]
+        // scale such that fourth element becomes 1:
+    if (w !== 1) {
+      var invw = 1.0 / w
+      x *= invw
+      y *= invw
+      z *= invw
+    }
+    return new Vector2D(x, y)
+  },
+
+    // determine whether this matrix is a mirroring transformation
+  isMirroring: function () {
+    var u = new Vector3D(this.elements[0], this.elements[4], this.elements[8])
+    var v = new Vector3D(this.elements[1], this.elements[5], this.elements[9])
+    var w = new Vector3D(this.elements[2], this.elements[6], this.elements[10])
+
+        // for a true orthogonal, non-mirrored base, u.cross(v) == w
+        // If they have an opposite direction then we are mirroring
+    var mirrorvalue = u.cross(v).dot(w)
+    var ismirror = (mirrorvalue < 0)
+    return ismirror
+  }
+}
+
+// return the unity matrix
+Matrix4x4.unity = function () {
+  return new Matrix4x4()
+}
+
+// Create a rotation matrix for rotating around the x axis
+Matrix4x4.rotationX = function (degrees) {
+  var radians = degrees * Math.PI * (1.0 / 180.0)
+  var cos = Math.cos(radians)
+  var sin = Math.sin(radians)
+  var els = [
+    1, 0, 0, 0, 0, cos, sin, 0, 0, -sin, cos, 0, 0, 0, 0, 1
+  ]
+  return new Matrix4x4(els)
+}
+
+// Create a rotation matrix for rotating around the y axis
+Matrix4x4.rotationY = function (degrees) {
+  var radians = degrees * Math.PI * (1.0 / 180.0)
+  var cos = Math.cos(radians)
+  var sin = Math.sin(radians)
+  var els = [
+    cos, 0, -sin, 0, 0, 1, 0, 0, sin, 0, cos, 0, 0, 0, 0, 1
+  ]
+  return new Matrix4x4(els)
+}
+
+// Create a rotation matrix for rotating around the z axis
+Matrix4x4.rotationZ = function (degrees) {
+  var radians = degrees * Math.PI * (1.0 / 180.0)
+  var cos = Math.cos(radians)
+  var sin = Math.sin(radians)
+  var els = [
+    cos, sin, 0, 0, -sin, cos, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1
+  ]
+  return new Matrix4x4(els)
+}
+
+// Matrix for rotation about arbitrary point and axis
+Matrix4x4.rotation = function (rotationCenter, rotationAxis, degrees) {
+  rotationCenter = new Vector3D(rotationCenter)
+  rotationAxis = new Vector3D(rotationAxis)
+  var rotationPlane = Plane.fromNormalAndPoint(rotationAxis, rotationCenter)
+  var orthobasis = new OrthoNormalBasis(rotationPlane)
+  var transformation = Matrix4x4.translation(rotationCenter.negated())
+  transformation = transformation.multiply(orthobasis.getProjectionMatrix())
+  transformation = transformation.multiply(Matrix4x4.rotationZ(degrees))
+  transformation = transformation.multiply(orthobasis.getInverseProjectionMatrix())
+  transformation = transformation.multiply(Matrix4x4.translation(rotationCenter))
+  return transformation
+}
+
+// Create an affine matrix for translation:
+Matrix4x4.translation = function (v) {
+    // parse as Vector3D, so we can pass an array or a Vector3D
+  var vec = new Vector3D(v)
+  var els = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, vec.x, vec.y, vec.z, 1]
+  return new Matrix4x4(els)
+}
+
+// Create an affine matrix for mirroring into an arbitrary plane:
+Matrix4x4.mirroring = function (plane) {
+  var nx = plane.normal.x
+  var ny = plane.normal.y
+  var nz = plane.normal.z
+  var w = plane.w
+  var els = [
+        (1.0 - 2.0 * nx * nx), (-2.0 * ny * nx), (-2.0 * nz * nx), 0,
+        (-2.0 * nx * ny), (1.0 - 2.0 * ny * ny), (-2.0 * nz * ny), 0,
+        (-2.0 * nx * nz), (-2.0 * ny * nz), (1.0 - 2.0 * nz * nz), 0,
+        (2.0 * nx * w), (2.0 * ny * w), (2.0 * nz * w), 1
+  ]
+  return new Matrix4x4(els)
+}
+
+// Create an affine matrix for scaling:
+Matrix4x4.scaling = function (v) {
+    // parse as Vector3D, so we can pass an array or a Vector3D
+  var vec = new Vector3D(v)
+  var els = [
+    vec.x, 0, 0, 0, 0, vec.y, 0, 0, 0, 0, vec.z, 0, 0, 0, 0, 1
+  ]
+  return new Matrix4x4(els)
+}
+
+module.exports = Matrix4x4
+
+},{"./OrthoNormalBasis":54,"./Plane":56,"./Vector2":60,"./Vector3":61}],54:[function(require,module,exports){
 const Vector2D = require('./Vector2')
 const Vector3D = require('./Vector3')
 const Line2D = require('./Line2')
@@ -15190,7 +8277,7 @@ OrthoNormalBasis.prototype = {
 
 module.exports = OrthoNormalBasis
 
-},{"./Line2":84,"./Line3":85,"./Matrix4":86,"./Plane":89,"./Vector2":93,"./Vector3":94}],88:[function(require,module,exports){
+},{"./Line2":51,"./Line3":52,"./Matrix4":53,"./Plane":56,"./Vector2":60,"./Vector3":61}],55:[function(require,module,exports){
 const Vector2D = require('./Vector2')
 const {EPS, angleEPS} = require('../constants')
 const {parseOptionAs2DVector, parseOptionAsFloat, parseOptionAsInt, parseOptionAsBool} = require('../../api/optionParsers')
@@ -15352,6 +8439,27 @@ Path2D.prototype = {
    */
   isClosed: function () {
     return this.closed
+  },
+
+  /**
+   * Determine the overall clockwise or anti-clockwise turn of a path.
+   * See: http://mathworld.wolfram.com/PolygonArea.html
+   * @returns {String} One of ['clockwise', 'counter-clockwise', 'straight'].
+   */
+  getTurn: function () {
+    const points = this.points;
+    let twice_area = 0;
+    let last = points.length - 1;
+    for (let current = 0; current < points.length; last = current++) {
+      twice_area += points[last].x * points[current].y - points[last].y * points[current].x;
+    }
+    if (twice_area > 0) {
+      return 'clockwise';
+    } else if (twice_area < 0) {
+      return 'counter-clockwise';
+    } else {
+      return 'straight';
+    }
   },
 
     // Extrude the path by following it with a rectangle (upright, perpendicular to the path direction)
@@ -15663,9 +8771,149 @@ Path2D.prototype = {
 
 module.exports = Path2D
 
-},{"../../api/optionParsers":67,"../CAG":74,"../constants":83,"./Side":92,"./Vector2":93,"./Vertex2":95}],89:[function(require,module,exports){
-arguments[4][30][0].apply(exports,arguments)
-},{"../constants":83,"./Line3":85,"./Vector3":94,"dup":30}],90:[function(require,module,exports){
+},{"../../api/optionParsers":34,"../CAG":41,"../constants":50,"./Side":59,"./Vector2":60,"./Vertex2":62}],56:[function(require,module,exports){
+const Vector3D = require('./Vector3')
+const Line3D = require('./Line3')
+const {EPS, getTag} = require('../constants')
+
+// # class Plane
+// Represents a plane in 3D space.
+const Plane = function (normal, w) {
+  this.normal = normal
+  this.w = w
+}
+
+// create from an untyped object with identical property names:
+Plane.fromObject = function (obj) {
+  let normal = new Vector3D(obj.normal)
+  let w = parseFloat(obj.w)
+  return new Plane(normal, w)
+}
+
+Plane.fromVector3Ds = function (a, b, c) {
+  let n = b.minus(a).cross(c.minus(a)).unit()
+  return new Plane(n, n.dot(a))
+}
+
+// like fromVector3Ds, but allow the vectors to be on one point or one line
+// in such a case a random plane through the given points is constructed
+Plane.anyPlaneFromVector3Ds = function (a, b, c) {
+  let v1 = b.minus(a)
+  let v2 = c.minus(a)
+  if (v1.length() < EPS) {
+    v1 = v2.randomNonParallelVector()
+  }
+  if (v2.length() < EPS) {
+    v2 = v1.randomNonParallelVector()
+  }
+  let normal = v1.cross(v2)
+  if (normal.length() < EPS) {
+        // this would mean that v1 == v2.negated()
+    v2 = v1.randomNonParallelVector()
+    normal = v1.cross(v2)
+  }
+  normal = normal.unit()
+  return new Plane(normal, normal.dot(a))
+}
+
+Plane.fromPoints = function (a, b, c) {
+  a = new Vector3D(a)
+  b = new Vector3D(b)
+  c = new Vector3D(c)
+  return Plane.fromVector3Ds(a, b, c)
+}
+
+Plane.fromNormalAndPoint = function (normal, point) {
+  normal = new Vector3D(normal)
+  point = new Vector3D(point)
+  normal = normal.unit()
+  let w = point.dot(normal)
+  return new Plane(normal, w)
+}
+
+Plane.prototype = {
+  flipped: function () {
+    return new Plane(this.normal.negated(), -this.w)
+  },
+
+  getTag: function () {
+    let result = this.tag
+    if (!result) {
+      result = getTag()
+      this.tag = result
+    }
+    return result
+  },
+
+  equals: function (n) {
+    return this.normal.equals(n.normal) && this.w === n.w
+  },
+
+  transform: function (matrix4x4) {
+    let ismirror = matrix4x4.isMirroring()
+        // get two vectors in the plane:
+    let r = this.normal.randomNonParallelVector()
+    let u = this.normal.cross(r)
+    let v = this.normal.cross(u)
+        // get 3 points in the plane:
+    let point1 = this.normal.times(this.w)
+    let point2 = point1.plus(u)
+    let point3 = point1.plus(v)
+        // transform the points:
+    point1 = point1.multiply4x4(matrix4x4)
+    point2 = point2.multiply4x4(matrix4x4)
+    point3 = point3.multiply4x4(matrix4x4)
+        // and create a new plane from the transformed points:
+    let newplane = Plane.fromVector3Ds(point1, point2, point3)
+    if (ismirror) {
+            // the transform is mirroring
+            // We should mirror the plane:
+      newplane = newplane.flipped()
+    }
+    return newplane
+  },
+
+    // robust splitting of a line by a plane
+    // will work even if the line is parallel to the plane
+  splitLineBetweenPoints: function (p1, p2) {
+    let direction = p2.minus(p1)
+    let labda = (this.w - this.normal.dot(p1)) / this.normal.dot(direction)
+    if (isNaN(labda)) labda = 0
+    if (labda > 1) labda = 1
+    if (labda < 0) labda = 0
+    let result = p1.plus(direction.times(labda))
+    return result
+  },
+
+    // returns Vector3D
+  intersectWithLine: function (line3d) {
+    return line3d.intersectWithPlane(this)
+  },
+
+    // intersection of two planes
+  intersectWithPlane: function (plane) {
+    return Line3D.fromPlanes(this, plane)
+  },
+
+  signedDistanceToPoint: function (point) {
+    let t = this.normal.dot(point) - this.w
+    return t
+  },
+
+  toString: function () {
+    return '[normal: ' + this.normal.toString() + ', w: ' + this.w + ']'
+  },
+
+  mirrorPoint: function (point3d) {
+    let distance = this.signedDistanceToPoint(point3d)
+    let mirrored = point3d.minus(this.normal.times(distance * 2.0))
+    return mirrored
+  }
+}
+
+module.exports = Plane
+
+},{"../constants":50,"./Line3":52,"./Vector3":61}],57:[function(require,module,exports){
 const CAG = require('../CAG')
 const {fromPoints} = require('../CAGFactories')
 
@@ -15687,7 +8935,7 @@ Polygon2D.prototype = CAG.prototype
 
 module.exports = Polygon2D
 
-},{"../CAG":74,"../CAGFactories":75}],91:[function(require,module,exports){
+},{"../CAG":41,"../CAGFactories":42}],58:[function(require,module,exports){
 const Vector3D = require('./Vector3')
 const Vertex = require('./Vertex3')
 const Matrix4x4 = require('./Matrix4')
@@ -16063,7 +9311,7 @@ Polygon.defaultShared = new Polygon.Shared(null)
 
 module.exports = Polygon
 
-},{"../../api/solidFromSlices":72,"../CAG":74,"../CAGFactories":75,"../CSGFactories":77,"../constants":83,"./Matrix4":86,"./Plane":89,"./Vector3":94,"./Vertex3":96}],92:[function(require,module,exports){
+},{"../../api/solidFromSlices":39,"../CAG":41,"../CAGFactories":42,"../CSGFactories":44,"../constants":50,"./Matrix4":53,"./Plane":56,"./Vector3":61,"./Vertex3":63}],59:[function(require,module,exports){
 const Vector2D = require('./Vector2')
 const Vertex = require('./Vertex2')
 const Vertex3 = require('./Vertex3')
@@ -16167,7 +9415,7 @@ Side.prototype = {
 
 module.exports = Side
 
-},{"../constants":83,"./Polygon3":91,"./Vector2":93,"./Vertex2":95,"./Vertex3":96}],93:[function(require,module,exports){
+},{"../constants":50,"./Polygon3":58,"./Vector2":60,"./Vertex2":62,"./Vertex3":63}],60:[function(require,module,exports){
 const {IsFloat} = require('../utils')
 
 /** Class Vector2D
@@ -16365,13 +9613,308 @@ Vector2D.prototype = {
 
 module.exports = Vector2D
 
-},{"../utils":101,"./Vector3":94}],94:[function(require,module,exports){
-arguments[4][35][0].apply(exports,arguments)
-},{"../utils":101,"./Vector2":93,"dup":35}],95:[function(require,module,exports){
-arguments[4][36][0].apply(exports,arguments)
-},{"../constants":83,"./Vector2":93,"dup":36}],96:[function(require,module,exports){
-arguments[4][37][0].apply(exports,arguments)
-},{"../constants":83,"./Vector3":94,"dup":37}],97:[function(require,module,exports){
+},{"../utils":68,"./Vector3":61}],61:[function(require,module,exports){
+const {IsFloat} = require('../utils')
+const Vector2D = require('./Vector2')
+
+/** Class Vector3D
+ * Represents a 3D vector with X, Y, Z coordinates.
+ * @constructor
+ *
+ * @example
+ * new CSG.Vector3D(1, 2, 3);
+ * new CSG.Vector3D([1, 2, 3]);
+ * new CSG.Vector3D({ x: 1, y: 2, z: 3 });
+ * new CSG.Vector3D(1, 2); // assumes z=0
+ * new CSG.Vector3D([1, 2]); // assumes z=0
+ */
+const Vector3D = function (x, y, z) {
+  if (arguments.length === 3) {
+    this._x = parseFloat(x)
+    this._y = parseFloat(y)
+    this._z = parseFloat(z)
+  } else if (arguments.length === 2) {
+    this._x = parseFloat(x)
+    this._y = parseFloat(y)
+    this._z = 0
+  } else {
+    var ok = true
+    if (arguments.length === 1) {
+      if (typeof (x) === 'object') {
+        if (x instanceof Vector3D) {
+          this._x = x._x
+          this._y = x._y
+          this._z = x._z
+        } else if (x instanceof Vector2D) {
+          this._x = x._x
+          this._y = x._y
+          this._z = 0
+        } else if (x instanceof Array) {
+          if ((x.length < 2) || (x.length > 3)) {
+            ok = false
+          } else {
+            this._x = parseFloat(x[0])
+            this._y = parseFloat(x[1])
+            if (x.length === 3) {
+              this._z = parseFloat(x[2])
+            } else {
+              this._z = 0
+            }
+          }
+        } else if (('x' in x) && ('y' in x)) {
+          this._x = parseFloat(x.x)
+          this._y = parseFloat(x.y)
+          if ('z' in x) {
+            this._z = parseFloat(x.z)
+          } else {
+            this._z = 0
+          }
+        } else if (('_x' in x) && ('_y' in x)) {
+          this._x = parseFloat(x._x)
+          this._y = parseFloat(x._y)
+          if ('_z' in x) {
+            this._z = parseFloat(x._z)
+          } else {
+            this._z = 0
+          }
+        } else ok = false
+      } else {
+        var v = parseFloat(x)
+        this._x = v
+        this._y = v
+        this._z = v
+      }
+    } else ok = false
+    if (ok) {
+      if ((!IsFloat(this._x)) || (!IsFloat(this._y)) || (!IsFloat(this._z))) ok = false
+    } else {
+      throw new Error('wrong arguments')
+    }
+  }
+}
+
+// This does the same as new Vector3D(x,y,z) but it doesn't go through the constructor
+// and the parameters are not validated. Is much faster.
+Vector3D.Create = function (x, y, z) {
+  var result = Object.create(Vector3D.prototype)
+  result._x = x
+  result._y = y
+  result._z = z
+  return result
+}
+
+Vector3D.prototype = {
+  get x () {
+    return this._x
+  },
+  get y () {
+    return this._y
+  },
+  get z () {
+    return this._z
+  },
+
+  set x (v) {
+    throw new Error('Vector3D is immutable')
+  },
+  set y (v) {
+    throw new Error('Vector3D is immutable')
+  },
+  set z (v) {
+    throw new Error('Vector3D is immutable')
+  },
+
+  clone: function () {
+    return Vector3D.Create(this._x, this._y, this._z)
+  },
+
+  negated: function () {
+    return Vector3D.Create(-this._x, -this._y, -this._z)
+  },
+
+  abs: function () {
+    return Vector3D.Create(Math.abs(this._x), Math.abs(this._y), Math.abs(this._z))
+  },
+
+  plus: function (a) {
+    return Vector3D.Create(this._x + a._x, this._y + a._y, this._z + a._z)
+  },
+
+  minus: function (a) {
+    return Vector3D.Create(this._x - a._x, this._y - a._y, this._z - a._z)
+  },
+
+  times: function (a) {
+    return Vector3D.Create(this._x * a, this._y * a, this._z * a)
+  },
+
+  dividedBy: function (a) {
+    return Vector3D.Create(this._x / a, this._y / a, this._z / a)
+  },
+
+  dot: function (a) {
+    return this._x * a._x + this._y * a._y + this._z * a._z
+  },
+
+  lerp: function (a, t) {
+    return this.plus(a.minus(this).times(t))
+  },
+
+  lengthSquared: function () {
+    return this.dot(this)
+  },
+
+  length: function () {
+    return Math.sqrt(this.lengthSquared())
+  },
+
+  unit: function () {
+    return this.dividedBy(this.length())
+  },
+
+  cross: function (a) {
+    return Vector3D.Create(
+            this._y * a._z - this._z * a._y, this._z * a._x - this._x * a._z, this._x * a._y - this._y * a._x)
+  },
+
+  distanceTo: function (a) {
+    return this.minus(a).length()
+  },
+
+  distanceToSquared: function (a) {
+    return this.minus(a).lengthSquared()
+  },
+
+  equals: function (a) {
+    return (this._x === a._x) && (this._y === a._y) && (this._z === a._z)
+  },
+
+    // Right multiply by a 4x4 matrix (the vector is interpreted as a row vector)
+    // Returns a new Vector3D
+  multiply4x4: function (matrix4x4) {
+    return matrix4x4.leftMultiply1x3Vector(this)
+  },
+
+  transform: function (matrix4x4) {
+    return matrix4x4.leftMultiply1x3Vector(this)
+  },
+
+  toString: function () {
+    return '(' + this._x.toFixed(5) + ', ' + this._y.toFixed(5) + ', ' + this._z.toFixed(5) + ')'
+  },
+
+    // find a vector that is somewhat perpendicular to this one
+  randomNonParallelVector: function () {
+    var abs = this.abs()
+    if ((abs._x <= abs._y) && (abs._x <= abs._z)) {
+      return Vector3D.Create(1, 0, 0)
+    } else if ((abs._y <= abs._x) && (abs._y <= abs._z)) {
+      return Vector3D.Create(0, 1, 0)
+    } else {
+      return Vector3D.Create(0, 0, 1)
+    }
+  },
+
+  min: function (p) {
+    return Vector3D.Create(
+            Math.min(this._x, p._x), Math.min(this._y, p._y), Math.min(this._z, p._z))
+  },
+
+  max: function (p) {
+    return Vector3D.Create(
+            Math.max(this._x, p._x), Math.max(this._y, p._y), Math.max(this._z, p._z))
+  }
+}
+
+module.exports = Vector3D
+
+},{"../utils":68,"./Vector2":60}],62:[function(require,module,exports){
+const Vector2D = require('./Vector2')
+const {getTag} = require('../constants')
+
+const Vertex = function (pos) {
+  this.pos = pos
+}
+
+Vertex.fromObject = function (obj) {
+  return new Vertex(new Vector2D(obj.pos._x, obj.pos._y))
+}
+
+Vertex.prototype = {
+  toString: function () {
+    return '(' + this.pos.x.toFixed(5) + ',' + this.pos.y.toFixed(5) + ')'
+  },
+  getTag: function () {
+    var result = this.tag
+    if (!result) {
+      result = getTag()
+      this.tag = result
+    }
+    return result
+  }
+}
+
+module.exports = Vertex
+
+},{"../constants":50,"./Vector2":60}],63:[function(require,module,exports){
+const Vector3D = require('./Vector3')
+const {getTag} = require('../constants')
+
+// # class Vertex
+// Represents a vertex of a polygon. Use your own vertex class instead of this
+// one to provide additional features like texture coordinates and vertex
+// colors. Custom vertex classes need to provide a `pos` property
+// `flipped()`, and `interpolate()` methods that behave analogous to the ones
+// FIXME: And a lot MORE (see plane.fromVector3Ds for ex) ! This is fragile code
+// defined by `Vertex`.
+const Vertex = function (pos) {
+  this.pos = pos
+}
+
+// create from an untyped object with identical property names:
+Vertex.fromObject = function (obj) {
+  var pos = new Vector3D(obj.pos)
+  return new Vertex(pos)
+}
+
+Vertex.prototype = {
+    // Return a vertex with all orientation-specific data (e.g. vertex normal) flipped. Called when the
+    // orientation of a polygon is flipped.
+  flipped: function () {
+    return this
+  },
+
+  getTag: function () {
+    var result = this.tag
+    if (!result) {
+      result = getTag()
+      this.tag = result
+    }
+    return result
+  },
+
+    // Create a new vertex between this vertex and `other` by linearly
+    // interpolating all properties using a parameter of `t`. Subclasses should
+    // override this to interpolate additional properties.
+  interpolate: function (other, t) {
+    var newpos = this.pos.lerp(other.pos, t)
+    return new Vertex(newpos)
+  },
+
+    // Affine transformation of vertex. Returns a new Vertex
+  transform: function (matrix4x4) {
+    var newpos = this.pos.multiply4x4(matrix4x4)
+    return new Vertex(newpos)
+  },
+
+  toString: function () {
+    return this.pos.toString()
+  }
+}
+
+module.exports = Vertex
+
+},{"../constants":50,"./Vector3":61}],64:[function(require,module,exports){
 const {EPS} = require('../constants')
 const {solve2Linear} = require('../utils')
 
@@ -16397,7 +9940,7 @@ const linesIntersect = function (p0start, p0end, p1start, p1end) {
 
 module.exports = {linesIntersect}
 
-},{"../constants":83,"../utils":101}],98:[function(require,module,exports){
+},{"../constants":50,"../utils":68}],65:[function(require,module,exports){
 const {EPS} = require('../constants')
 const OrthoNormalBasis = require('./OrthoNormalBasis')
 const {interpolateBetween2DPointsForY, insertSorted, fnNumberSort} = require('../utils')
@@ -16741,9 +10284,90 @@ const reTesselateCoplanarPolygons = function (sourcepolygons, destpolygons) {
 
 module.exports = reTesselateCoplanarPolygons
 
-},{"../constants":83,"../utils":101,"./Line2":84,"./OrthoNormalBasis":87,"./Polygon3":91,"./Vector2":93,"./Vertex3":96}],99:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"./math/Matrix4":86,"./math/Plane":89,"./math/Vector3":94,"dup":40}],100:[function(require,module,exports){
+},{"../constants":50,"../utils":68,"./Line2":51,"./OrthoNormalBasis":54,"./Polygon3":58,"./Vector2":60,"./Vertex3":63}],66:[function(require,module,exports){
+const Matrix4x4 = require('./math/Matrix4')
+const Vector3D = require('./math/Vector3')
+const Plane = require('./math/Plane')
+
+// Add several convenience methods to the classes that support a transform() method:
+const addTransformationMethodsToPrototype = function (prot) {
+  prot.mirrored = function (plane) {
+    return this.transform(Matrix4x4.mirroring(plane))
+  }
+
+  prot.mirroredX = function () {
+    let plane = new Plane(Vector3D.Create(1, 0, 0), 0)
+    return this.mirrored(plane)
+  }
+
+  prot.mirroredY = function () {
+    let plane = new Plane(Vector3D.Create(0, 1, 0), 0)
+    return this.mirrored(plane)
+  }
+
+  prot.mirroredZ = function () {
+    let plane = new Plane(Vector3D.Create(0, 0, 1), 0)
+    return this.mirrored(plane)
+  }
+
+  prot.translate = function (v) {
+    return this.transform(Matrix4x4.translation(v))
+  }
+
+  prot.scale = function (f) {
+    return this.transform(Matrix4x4.scaling(f))
+  }
+
+  prot.rotateX = function (deg) {
+    return this.transform(Matrix4x4.rotationX(deg))
+  }
+
+  prot.rotateY = function (deg) {
+    return this.transform(Matrix4x4.rotationY(deg))
+  }
+
+  prot.rotateZ = function (deg) {
+    return this.transform(Matrix4x4.rotationZ(deg))
+  }
+
+  prot.rotate = function (rotationCenter, rotationAxis, degrees) {
+    return this.transform(Matrix4x4.rotation(rotationCenter, rotationAxis, degrees))
+  }
+
+  prot.rotateEulerAngles = function (alpha, beta, gamma, position) {
+    position = position || [0, 0, 0]
+
+    let Rz1 = Matrix4x4.rotationZ(alpha)
+    let Rx = Matrix4x4.rotationX(beta)
+    let Rz2 = Matrix4x4.rotationZ(gamma)
+    let T = Matrix4x4.translation(new Vector3D(position))
+
+    return this.transform(Rz2.multiply(Rx).multiply(Rz1).multiply(T))
+  }
+}
+
+// TODO: consider generalization and adding to addTransformationMethodsToPrototype
+const addCenteringToPrototype = function (prot, axes) {
+  prot.center = function (cAxes) {
+    cAxes = Array.prototype.map.call(arguments, function (a) {
+      return a // .toLowerCase();
+    })
+        // no args: center on all axes
+    if (!cAxes.length) {
+      cAxes = axes.slice()
+    }
+    let b = this.getBounds()
+    return this.translate(axes.map(function (a) {
+      return cAxes.indexOf(a) > -1 ? -(b[0][a] + b[1][a]) / 2 : 0
+    }))
+  }
+}
+module.exports = {
+  addTransformationMethodsToPrototype,
+  addCenteringToPrototype
+}
+
+},{"./math/Matrix4":53,"./math/Plane":56,"./math/Vector3":61}],67:[function(require,module,exports){
 const {_CSGDEBUG, EPS} = require('./constants')
 const Vertex = require('./math/Vertex3')
 const Polygon = require('./math/Polygon3')
@@ -17254,7 +10878,7 @@ Node.prototype = {
 
 module.exports = Tree
 
-},{"./constants":83,"./math/Polygon3":91,"./math/Vertex3":96}],101:[function(require,module,exports){
+},{"./constants":50,"./math/Polygon3":58,"./math/Vertex3":63}],68:[function(require,module,exports){
 function fnNumberSort (a, b) {
   return a - b
 }
@@ -17358,7 +10982,7 @@ module.exports = {
   isCSG
 }
 
-},{}],102:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 const Vector2D = require('../math/Vector2')
 
 // see http://local.wasp.uwa.edu.au/~pbourke/geometry/polyarea/ :
@@ -17392,7 +11016,7 @@ const getBounds = function (cag) {
 
 module.exports = {area, getBounds}
 
-},{"../math/Vector2":93}],103:[function(require,module,exports){
+},{"../math/Vector2":60}],70:[function(require,module,exports){
 const {areaEPS} = require('../constants')
 const {linesIntersect} = require('../math/lineUtils')
 
@@ -17447,9 +11071,54 @@ const isSelfIntersecting = function (cag, debug) {
   return false
 }
 
-module.exports = {isCAGValid, isSelfIntersecting}
+/** Check if the point stay inside the CAG shape
+* ray-casting algorithm based on :
+* https://github.com/substack/point-in-polygon/blob/master/index.js
+* http://www.ecse.rp1.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+* originaly writed for https://github.com/lautr3k/SLAcer.js/blob/dev/js/slacer/slicer.js#L82
+* @param {CAG} cag - CAG object
+* @param {Object} p0 - Vertex2 like object
+* @returns {Boolean}
+*/
+const hasPointInside = function (cag, p0) {
+  let p1 = null
+  let p2 = null
+  let inside = false
+  cag.sides.forEach(side => {
+    p1 = side.vertex0.pos
+    p2 = side.vertex1.pos
+    if (hasPointInside.c1(p0, p1, p2) && hasPointInside.c2(p0, p1, p2)) {
+      inside = !inside
+    }
+  })
+  return inside
+}
 
-},{"../constants":83,"../math/lineUtils":97}],104:[function(require,module,exports){
+hasPointInside.c1 = (p0, p1, p2) => (p1.y > p0.y) !== (p2.y > p0.y)
+hasPointInside.c2 = (p0, p1, p2) => (p0.x < (p2.x - p1.x) * (p0.y - p1.y) / (p2.y - p1.y) + p1.x)
+
+/** Check if all points from one CAG stay inside another CAG
+* @param {CAG} cag1 - CAG object
+* @param {Object} cag2 - CAG object
+* @returns {Boolean}
+*/
+const contains = function (cag1, cag2) {
+  for (let i = 0, il = cag2.sides.length; i < il; i++) {
+    if (!hasPointInside(cag1, cag2.sides[i].vertex0.pos)) {
+      return false
+    }
+  }
+  return true
+}
+
+module.exports = {
+  isCAGValid,
+  isSelfIntersecting,
+  hasPointInside,
+  contains
+}
+
+},{"../constants":50,"../math/lineUtils":64}],71:[function(require,module,exports){
 const {EPS} = require('../constants')
 const FuzzyCSGFactory = require('../FuzzyFactory3d')
 const FuzzyCAGFactory = require('../FuzzyFactory2d')
@@ -17535,7 +11204,7 @@ const CAGFromCAGFuzzyFactory = function (factory, sourcecag) {
 
 module.exports = canonicalize
 
-},{"../CAGFactories":75,"../CSGFactories":77,"../FuzzyFactory2d":79,"../FuzzyFactory3d":80,"../constants":83}],105:[function(require,module,exports){
+},{"../CAGFactories":42,"../CSGFactories":44,"../FuzzyFactory2d":46,"../FuzzyFactory3d":47,"../constants":50}],72:[function(require,module,exports){
 const Vector3D = require('../math/Vector3')
 
 /**
@@ -17585,7 +11254,7 @@ const area = function (csg) {
 
 module.exports = {bounds, volume, area}
 
-},{"../math/Vector3":94}],106:[function(require,module,exports){
+},{"../math/Vector3":61}],73:[function(require,module,exports){
 const CAG = require('../CAG') // FIXME: circular dependency !
 const {EPS} = require('../constants')
 
@@ -17610,9 +11279,325 @@ const projectToOrthoNormalBasis = function (csg, orthobasis) {
 
 module.exports = {projectToOrthoNormalBasis}
 
-},{"../CAG":74,"../constants":83}],107:[function(require,module,exports){
-arguments[4][46][0].apply(exports,arguments)
-},{"../constants":83,"../math/Plane":89,"../math/Polygon3":91,"dup":46}],108:[function(require,module,exports){
+},{"../CAG":41,"../constants":50}],74:[function(require,module,exports){
+const {EPS} = require('../constants')
+const Polygon = require('../math/Polygon3')
+const Plane = require('../math/Plane')
+
+function addSide (sidemap, vertextag2sidestart, vertextag2sideend, vertex0, vertex1, polygonindex) {
+  let starttag = vertex0.getTag()
+  let endtag = vertex1.getTag()
+  if (starttag === endtag) throw new Error('Assertion failed')
+  let newsidetag = starttag + '/' + endtag
+  let reversesidetag = endtag + '/' + starttag
+  if (reversesidetag in sidemap) {
+    // we have a matching reverse oriented side.
+    // Instead of adding the new side, cancel out the reverse side:
+    // console.log("addSide("+newsidetag+") has reverse side:");
+    deleteSide(sidemap, vertextag2sidestart, vertextag2sideend, vertex1, vertex0, null)
+    return null
+  }
+  //  console.log("addSide("+newsidetag+")");
+  let newsideobj = {
+    vertex0: vertex0,
+    vertex1: vertex1,
+    polygonindex: polygonindex
+  }
+  if (!(newsidetag in sidemap)) {
+    sidemap[newsidetag] = [newsideobj]
+  } else {
+    sidemap[newsidetag].push(newsideobj)
+  }
+  if (starttag in vertextag2sidestart) {
+    vertextag2sidestart[starttag].push(newsidetag)
+  } else {
+    vertextag2sidestart[starttag] = [newsidetag]
+  }
+  if (endtag in vertextag2sideend) {
+    vertextag2sideend[endtag].push(newsidetag)
+  } else {
+    vertextag2sideend[endtag] = [newsidetag]
+  }
+  return newsidetag
+}
+
+function deleteSide (sidemap, vertextag2sidestart, vertextag2sideend, vertex0, vertex1, polygonindex) {
+  let starttag = vertex0.getTag()
+  let endtag = vertex1.getTag()
+  let sidetag = starttag + '/' + endtag
+  // console.log("deleteSide("+sidetag+")");
+  if (!(sidetag in sidemap)) throw new Error('Assertion failed')
+  let idx = -1
+  let sideobjs = sidemap[sidetag]
+  for (let i = 0; i < sideobjs.length; i++) {
+    let sideobj = sideobjs[i]
+    if (sideobj.vertex0 !== vertex0) continue
+    if (sideobj.vertex1 !== vertex1) continue
+    if (polygonindex !== null) {
+      if (sideobj.polygonindex !== polygonindex) continue
+    }
+    idx = i
+    break
+  }
+  if (idx < 0) throw new Error('Assertion failed')
+  sideobjs.splice(idx, 1)
+  if (sideobjs.length === 0) {
+    delete sidemap[sidetag]
+  }
+  idx = vertextag2sidestart[starttag].indexOf(sidetag)
+  if (idx < 0) throw new Error('Assertion failed')
+  vertextag2sidestart[starttag].splice(idx, 1)
+  if (vertextag2sidestart[starttag].length === 0) {
+    delete vertextag2sidestart[starttag]
+  }
+
+  idx = vertextag2sideend[endtag].indexOf(sidetag)
+  if (idx < 0) throw new Error('Assertion failed')
+  vertextag2sideend[endtag].splice(idx, 1)
+  if (vertextag2sideend[endtag].length === 0) {
+    delete vertextag2sideend[endtag]
+  }
+}
+
+/*
+     fixTJunctions:
+
+     Suppose we have two polygons ACDB and EDGF:
+
+      A-----B
+      |     |
+      |     E--F
+      |     |  |
+      C-----D--G
+
+     Note that vertex E forms a T-junction on the side BD. In this case some STL slicers will complain
+     that the solid is not watertight. This is because the watertightness check is done by checking if
+     each side DE is matched by another side ED.
+
+     This function will return a new solid with ACDB replaced by ACDEB
+
+     Note that this can create polygons that are slightly non-convex (due to rounding errors). Therefore the result should
+     not be used for further CSG operations!
+*/
+const fixTJunctions = function (fromPolygons, csg) {
+  csg = csg.canonicalized()
+  let sidemap = {}
+
+  // STEP 1
+  for (let polygonindex = 0; polygonindex < csg.polygons.length; polygonindex++) {
+    let polygon = csg.polygons[polygonindex]
+    let numvertices = polygon.vertices.length
+    // should be true
+    if (numvertices >= 3) {
+      let vertex = polygon.vertices[0]
+      let vertextag = vertex.getTag()
+      for (let vertexindex = 0; vertexindex < numvertices; vertexindex++) {
+        let nextvertexindex = vertexindex + 1
+        if (nextvertexindex === numvertices) nextvertexindex = 0
+        let nextvertex = polygon.vertices[nextvertexindex]
+        let nextvertextag = nextvertex.getTag()
+        let sidetag = vertextag + '/' + nextvertextag
+        let reversesidetag = nextvertextag + '/' + vertextag
+        if (reversesidetag in sidemap) {
+          // this side matches the same side in another polygon. Remove from sidemap:
+          let ar = sidemap[reversesidetag]
+          ar.splice(-1, 1)
+          if (ar.length === 0) {
+            delete sidemap[reversesidetag]
+          }
+        } else {
+          let sideobj = {
+            vertex0: vertex,
+            vertex1: nextvertex,
+            polygonindex: polygonindex
+          }
+          if (!(sidetag in sidemap)) {
+            sidemap[sidetag] = [sideobj]
+          } else {
+            sidemap[sidetag].push(sideobj)
+          }
+        }
+        vertex = nextvertex
+        vertextag = nextvertextag
+      }
+    }
+  }
+  // STEP 2
+  // now sidemap contains 'unmatched' sides
+  // i.e. side AB in one polygon does not have a matching side BA in another polygon
+  let vertextag2sidestart = {}
+  let vertextag2sideend = {}
+  let sidestocheck = {}
+  let sidemapisempty = true
+  for (let sidetag in sidemap) {
+    sidemapisempty = false
+    sidestocheck[sidetag] = true
+    sidemap[sidetag].map(function (sideobj) {
+      let starttag = sideobj.vertex0.getTag()
+      let endtag = sideobj.vertex1.getTag()
+      if (starttag in vertextag2sidestart) {
+        vertextag2sidestart[starttag].push(sidetag)
+      } else {
+        vertextag2sidestart[starttag] = [sidetag]
+      }
+      if (endtag in vertextag2sideend) {
+        vertextag2sideend[endtag].push(sidetag)
+      } else {
+        vertextag2sideend[endtag] = [sidetag]
+      }
+    })
+  }
+
+  // STEP 3 : if sidemap is not empty
+  if (!sidemapisempty) {
+    // make a copy of the polygons array, since we are going to modify it:
+    let polygons = csg.polygons.slice(0)
+    while (true) {
+      let sidemapisempty = true
+      for (let sidetag in sidemap) {
+        sidemapisempty = false
+        sidestocheck[sidetag] = true
+      }
+      if (sidemapisempty) break
+      let donesomething = false
+      while (true) {
+        let sidetagtocheck = null
+        for (let sidetag in sidestocheck) {
+          sidetagtocheck = sidetag
+          break // FIXME  : say what now ?
+        }
+        if (sidetagtocheck === null) break // sidestocheck is empty, we're done!
+        let donewithside = true
+        if (sidetagtocheck in sidemap) {
+          let sideobjs = sidemap[sidetagtocheck]
+          if (sideobjs.length === 0) throw new Error('Assertion failed')
+          let sideobj = sideobjs[0]
+          for (let directionindex = 0; directionindex < 2; directionindex++) {
+            let startvertex = (directionindex === 0) ? sideobj.vertex0 : sideobj.vertex1
+            let endvertex = (directionindex === 0) ? sideobj.vertex1 : sideobj.vertex0
+            let startvertextag = startvertex.getTag()
+            let endvertextag = endvertex.getTag()
+            let matchingsides = []
+            if (directionindex === 0) {
+              if (startvertextag in vertextag2sideend) {
+                matchingsides = vertextag2sideend[startvertextag]
+              }
+            } else {
+              if (startvertextag in vertextag2sidestart) {
+                matchingsides = vertextag2sidestart[startvertextag]
+              }
+            }
+            for (let matchingsideindex = 0; matchingsideindex < matchingsides.length; matchingsideindex++) {
+              let matchingsidetag = matchingsides[matchingsideindex]
+              let matchingside = sidemap[matchingsidetag][0]
+              let matchingsidestartvertex = (directionindex === 0) ? matchingside.vertex0 : matchingside.vertex1
+              let matchingsideendvertex = (directionindex === 0) ? matchingside.vertex1 : matchingside.vertex0
+              let matchingsidestartvertextag = matchingsidestartvertex.getTag()
+              let matchingsideendvertextag = matchingsideendvertex.getTag()
+              if (matchingsideendvertextag !== startvertextag) throw new Error('Assertion failed')
+              if (matchingsidestartvertextag === endvertextag) {
+                // matchingside cancels sidetagtocheck
+                deleteSide(sidemap, vertextag2sidestart, vertextag2sideend, startvertex, endvertex, null)
+                deleteSide(sidemap, vertextag2sidestart, vertextag2sideend, endvertex, startvertex, null)
+                donewithside = false
+                directionindex = 2 // skip reverse direction check
+                donesomething = true
+                break
+              } else {
+                let startpos = startvertex.pos
+                let endpos = endvertex.pos
+                let checkpos = matchingsidestartvertex.pos
+                let direction = checkpos.minus(startpos)
+                // Now we need to check if endpos is on the line startpos-checkpos:
+                let t = endpos.minus(startpos).dot(direction) / direction.dot(direction)
+                if ((t > 0) && (t < 1)) {
+                  let closestpoint = startpos.plus(direction.times(t))
+                  let distancesquared = closestpoint.distanceToSquared(endpos)
+                  if (distancesquared < (EPS * EPS)) {
+                    // Yes it's a t-junction! We need to split matchingside in two:
+                    let polygonindex = matchingside.polygonindex
+                    let polygon = polygons[polygonindex]
+                    // find the index of startvertextag in polygon:
+                    let insertionvertextag = matchingside.vertex1.getTag()
+                    let insertionvertextagindex = -1
+                    for (let i = 0; i < polygon.vertices.length; i++) {
+                      if (polygon.vertices[i].getTag() === insertionvertextag) {
+                        insertionvertextagindex = i
+                        break
+                      }
+                    }
+                    if (insertionvertextagindex < 0) throw new Error('Assertion failed')
+                    // split the side by inserting the vertex:
+                    let newvertices = polygon.vertices.slice(0)
+                    newvertices.splice(insertionvertextagindex, 0, endvertex)
+                    let newpolygon = new Polygon(newvertices, polygon.shared /* polygon.plane */)
+
+                    // calculate plane with differents point
+                    if (isNaN(newpolygon.plane.w)) {
+                      let found = false
+                      let loop = function (callback) {
+                        newpolygon.vertices.forEach(function (item) {
+                          if (found) return
+                          callback(item)
+                        })
+                      }
+
+                      loop(function (a) {
+                        loop(function (b) {
+                          loop(function (c) {
+                            newpolygon.plane = Plane.fromPoints(a.pos, b.pos, c.pos)
+                            if (!isNaN(newpolygon.plane.w)) {
+                              found = true
+                            }
+                          })
+                        })
+                      })
+                    }
+                    polygons[polygonindex] = newpolygon
+                    // remove the original sides from our maps
+                    // deleteSide(sideobj.vertex0, sideobj.vertex1, null)
+                    deleteSide(sidemap, vertextag2sidestart, vertextag2sideend, matchingside.vertex0, matchingside.vertex1, polygonindex)
+                    let newsidetag1 = addSide(sidemap, vertextag2sidestart, vertextag2sideend, matchingside.vertex0, endvertex, polygonindex)
+                    let newsidetag2 = addSide(sidemap, vertextag2sidestart, vertextag2sideend, endvertex, matchingside.vertex1, polygonindex)
+                    if (newsidetag1 !== null) sidestocheck[newsidetag1] = true
+                    if (newsidetag2 !== null) sidestocheck[newsidetag2] = true
+                    donewithside = false
+                    directionindex = 2 // skip reverse direction check
+                    donesomething = true
+                    break
+                  } // if(distancesquared < 1e-10)
+                } // if( (t > 0) && (t < 1) )
+              } // if(endingstidestartvertextag === endvertextag)
+            } // for matchingsideindex
+          } // for directionindex
+        } // if(sidetagtocheck in sidemap)
+        if (donewithside) {
+          delete sidestocheck[sidetagtocheck]
+        }
+      }
+      if (!donesomething) break
+    }
+    let newcsg = fromPolygons(polygons)
+    newcsg.properties = csg.properties
+    newcsg.isCanonicalized = true
+    newcsg.isRetesselated = true
+    csg = newcsg
+  }
+
+  // FIXME : what is even the point of this ???
+  /* sidemapisempty = true
+  for (let sidetag in sidemap) {
+    sidemapisempty = false
+    break
+  }
+  */
+
+  return csg
+}
+
+module.exports = fixTJunctions
+
+},{"../constants":50,"../math/Plane":56,"../math/Polygon3":58}],75:[function(require,module,exports){
 const FuzzyCSGFactory = require('../FuzzyFactory3d')
 const reTesselateCoplanarPolygons = require('../math/reTesselateCoplanarPolygons')
 const {fromPolygons} = require('../CSGFactories')
@@ -17661,7 +11646,120 @@ const reTesselate = function (csg) {
 
 module.exports = reTesselate
 
-},{"../CSGFactories":77,"../FuzzyFactory3d":80,"../math/reTesselateCoplanarPolygons":98}],109:[function(require,module,exports){
+},{"../CSGFactories":44,"../FuzzyFactory3d":47,"../math/reTesselateCoplanarPolygons":65}],76:[function(require,module,exports){
+/* converts input data to array if it is not already an array */
+function toArray (data) {
+  if (!data) return []
+  if (data.constructor !== Array) return [data]
+  return data
+}
+
+module.exports = toArray
+
+},{}],77:[function(require,module,exports){
+// -- data source from from http://paulbourke.net/dataformats/hershey/
+// -- reduced to save some bytes...
+// { [ascii code]: [width, x, y, ...] } - undefined value as path separator
+module.exports = {
+  height: 14,
+  32:[16],
+  33:[10,5,21,5,7,,5,2,4,1,5,0,6,1,5,2],
+  34:[16,4,21,4,14,,12,21,12,14],
+  35:[21,11,25,4,-7,,17,25,10,-7,,4,12,18,12,,3,6,17,6],
+  36:[20,8,25,8,-4,,12,25,12,-4,,17,18,15,20,12,21,8,21,5,20,3,18,3,16,4,14,5,13,7,12,13,10,15,9,16,8,17,6,17,3,15,1,12,0,8,0,5,1,3,3],
+  37:[24,21,21,3,0,,8,21,10,19,10,17,9,15,7,14,5,14,3,16,3,18,4,20,6,21,8,21,10,20,13,19,16,19,19,20,21,21,,17,7,15,6,14,4,14,2,16,0,18,0,20,1,21,3,21,5,19,7,17,7],
+  38:[26,23,12,23,13,22,14,21,14,20,13,19,11,17,6,15,3,13,1,11,0,7,0,5,1,4,2,3,4,3,6,4,8,5,9,12,13,13,14,14,16,14,18,13,20,11,21,9,20,8,18,8,16,9,13,11,10,16,3,18,1,20,0,22,0,23,1,23,2],
+  39:[10,5,19,4,20,5,21,6,20,6,18,5,16,4,15],
+  40:[14,11,25,9,23,7,20,5,16,4,11,4,7,5,2,7,-2,9,-5,11,-7],
+  41:[14,3,25,5,23,7,20,9,16,10,11,10,7,9,2,7,-2,5,-5,3,-7],
+  42:[16,8,21,8,9,,3,18,13,12,,13,18,3,12],
+  43:[26,13,18,13,0,,4,9,22,9],
+  44:[10,6,1,5,0,4,1,5,2,6,1,6,-1,5,-3,4,-4],
+  45:[26,4,9,22,9],
+  46:[10,5,2,4,1,5,0,6,1,5,2],
+  47:[22,20,25,2,-7],
+  48:[20,9,21,6,20,4,17,3,12,3,9,4,4,6,1,9,0,11,0,14,1,16,4,17,9,17,12,16,17,14,20,11,21,9,21],
+  49:[20,6,17,8,18,11,21,11,0],
+  50:[20,4,16,4,17,5,19,6,20,8,21,12,21,14,20,15,19,16,17,16,15,15,13,13,10,3,0,17,0],
+  51:[20,5,21,16,21,10,13,13,13,15,12,16,11,17,8,17,6,16,3,14,1,11,0,8,0,5,1,4,2,3,4],
+  52:[20,13,21,3,7,18,7,,13,21,13,0],
+  53:[20,15,21,5,21,4,12,5,13,8,14,11,14,14,13,16,11,17,8,17,6,16,3,14,1,11,0,8,0,5,1,4,2,3,4],
+  54:[20,16,18,15,20,12,21,10,21,7,20,5,17,4,12,4,7,5,3,7,1,10,0,11,0,14,1,16,3,17,6,17,7,16,10,14,12,11,13,10,13,7,12,5,10,4,7],
+  55:[20,17,21,7,0,,3,21,17,21],
+  56:[20,8,21,5,20,4,18,4,16,5,14,7,13,11,12,14,11,16,9,17,7,17,4,16,2,15,1,12,0,8,0,5,1,4,2,3,4,3,7,4,9,6,11,9,12,13,13,15,14,16,16,16,18,15,20,12,21,8,21],
+  57:[20,16,14,15,11,13,9,10,8,9,8,6,9,4,11,3,14,3,15,4,18,6,20,9,21,10,21,13,20,15,18,16,14,16,9,15,4,13,1,10,0,8,0,5,1,4,3],
+  58:[10,5,14,4,13,5,12,6,13,5,14,,5,2,4,1,5,0,6,1,5,2],
+  59:[10,5,14,4,13,5,12,6,13,5,14,,6,1,5,0,4,1,5,2,6,1,6,-1,5,-3,4,-4],
+  60:[24,20,18,4,9,20,0],
+  61:[26,4,12,22,12,,4,6,22,6],
+  62:[24,4,18,20,9,4,0],
+  63:[18,3,16,3,17,4,19,5,20,7,21,11,21,13,20,14,19,15,17,15,15,14,13,13,12,9,10,9,7,,9,2,8,1,9,0,10,1,9,2],
+  64:[27,18,13,17,15,15,16,12,16,10,15,9,14,8,11,8,8,9,6,11,5,14,5,16,6,17,8,,12,16,10,14,9,11,9,8,10,6,11,5,,18,16,17,8,17,6,19,5,21,5,23,7,24,10,24,12,23,15,22,17,20,19,18,20,15,21,12,21,9,20,7,19,5,17,4,15,3,12,3,9,4,6,5,4,7,2,9,1,12,0,15,0,18,1,20,2,21,3,,19,16,18,8,18,6,19,5],
+  65:[18,9,21,1,0,,9,21,17,0,,4,7,14,7],
+  66:[21,4,21,4,0,,4,21,13,21,16,20,17,19,18,17,18,15,17,13,16,12,13,11,,4,11,13,11,16,10,17,9,18,7,18,4,17,2,16,1,13,0,4,0],
+  67:[21,18,16,17,18,15,20,13,21,9,21,7,20,5,18,4,16,3,13,3,8,4,5,5,3,7,1,9,0,13,0,15,1,17,3,18,5],
+  68:[21,4,21,4,0,,4,21,11,21,14,20,16,18,17,16,18,13,18,8,17,5,16,3,14,1,11,0,4,0],
+  69:[19,4,21,4,0,,4,21,17,21,,4,11,12,11,,4,0,17,0],
+  70:[18,4,21,4,0,,4,21,17,21,,4,11,12,11],
+  71:[21,18,16,17,18,15,20,13,21,9,21,7,20,5,18,4,16,3,13,3,8,4,5,5,3,7,1,9,0,13,0,15,1,17,3,18,5,18,8,,13,8,18,8],
+  72:[22,4,21,4,0,,18,21,18,0,,4,11,18,11],
+  73:[8,4,21,4,0],
+  74:[16,12,21,12,5,11,2,10,1,8,0,6,0,4,1,3,2,2,5,2,7],
+  75:[21,4,21,4,0,,18,21,4,7,,9,12,18,0],
+  76:[17,4,21,4,0,,4,0,16,0],
+  77:[24,4,21,4,0,,4,21,12,0,,20,21,12,0,,20,21,20,0],
+  78:[22,4,21,4,0,,4,21,18,0,,18,21,18,0],
+  79:[22,9,21,7,20,5,18,4,16,3,13,3,8,4,5,5,3,7,1,9,0,13,0,15,1,17,3,18,5,19,8,19,13,18,16,17,18,15,20,13,21,9,21],
+  80:[21,4,21,4,0,,4,21,13,21,16,20,17,19,18,17,18,14,17,12,16,11,13,10,4,10],
+  81:[22,9,21,7,20,5,18,4,16,3,13,3,8,4,5,5,3,7,1,9,0,13,0,15,1,17,3,18,5,19,8,19,13,18,16,17,18,15,20,13,21,9,21,,12,4,18,-2],
+  82:[21,4,21,4,0,,4,21,13,21,16,20,17,19,18,17,18,15,17,13,16,12,13,11,4,11,,11,11,18,0],
+  83:[20,17,18,15,20,12,21,8,21,5,20,3,18,3,16,4,14,5,13,7,12,13,10,15,9,16,8,17,6,17,3,15,1,12,0,8,0,5,1,3,3],
+  84:[16,8,21,8,0,,1,21,15,21],
+  85:[22,4,21,4,6,5,3,7,1,10,0,12,0,15,1,17,3,18,6,18,21],
+  86:[18,1,21,9,0,,17,21,9,0],
+  87:[24,2,21,7,0,,12,21,7,0,,12,21,17,0,,22,21,17,0],
+  88:[20,3,21,17,0,,17,21,3,0],
+  89:[18,1,21,9,11,9,0,,17,21,9,11],
+  90:[20,17,21,3,0,,3,21,17,21,,3,0,17,0],
+  91:[14,4,25,4,-7,,5,25,5,-7,,4,25,11,25,,4,-7,11,-7],
+  92:[14,0,21,14,-3],
+  93:[14,9,25,9,-7,,10,25,10,-7,,3,25,10,25,,3,-7,10,-7],
+  94:[16,6,15,8,18,10,15,,3,12,8,17,13,12,,8,17,8,0],
+  95:[16,0,-2,16,-2],
+  96:[10,6,21,5,20,4,18,4,16,5,15,6,16,5,17],
+  97:[19,15,14,15,0,,15,11,13,13,11,14,8,14,6,13,4,11,3,8,3,6,4,3,6,1,8,0,11,0,13,1,15,3],
+  98:[19,4,21,4,0,,4,11,6,13,8,14,11,14,13,13,15,11,16,8,16,6,15,3,13,1,11,0,8,0,6,1,4,3],
+  99:[18,15,11,13,13,11,14,8,14,6,13,4,11,3,8,3,6,4,3,6,1,8,0,11,0,13,1,15,3],
+  100:[19,15,21,15,0,,15,11,13,13,11,14,8,14,6,13,4,11,3,8,3,6,4,3,6,1,8,0,11,0,13,1,15,3],
+  101:[18,3,8,15,8,15,10,14,12,13,13,11,14,8,14,6,13,4,11,3,8,3,6,4,3,6,1,8,0,11,0,13,1,15,3],
+  102:[12,10,21,8,21,6,20,5,17,5,0,,2,14,9,14],
+  103:[19,15,14,15,-2,14,-5,13,-6,11,-7,8,-7,6,-6,,15,11,13,13,11,14,8,14,6,13,4,11,3,8,3,6,4,3,6,1,8,0,11,0,13,1,15,3],
+  104:[19,4,21,4,0,,4,10,7,13,9,14,12,14,14,13,15,10,15,0],
+  105:[8,3,21,4,20,5,21,4,22,3,21,,4,14,4,0],
+  106:[10,5,21,6,20,7,21,6,22,5,21,,6,14,6,-3,5,-6,3,-7,1,-7],
+  107:[17,4,21,4,0,,14,14,4,4,,8,8,15,0],
+  108:[8,4,21,4,0],
+  109:[30,4,14,4,0,,4,10,7,13,9,14,12,14,14,13,15,10,15,0,,15,10,18,13,20,14,23,14,25,13,26,10,26,0],
+  110:[19,4,14,4,0,,4,10,7,13,9,14,12,14,14,13,15,10,15,0],
+  111:[19,8,14,6,13,4,11,3,8,3,6,4,3,6,1,8,0,11,0,13,1,15,3,16,6,16,8,15,11,13,13,11,14,8,14],
+  112:[19,4,14,4,-7,,4,11,6,13,8,14,11,14,13,13,15,11,16,8,16,6,15,3,13,1,11,0,8,0,6,1,4,3],
+  113:[19,15,14,15,-7,,15,11,13,13,11,14,8,14,6,13,4,11,3,8,3,6,4,3,6,1,8,0,11,0,13,1,15,3],
+  114:[13,4,14,4,0,,4,8,5,11,7,13,9,14,12,14],
+  115:[17,14,11,13,13,10,14,7,14,4,13,3,11,4,9,6,8,11,7,13,6,14,4,14,3,13,1,10,0,7,0,4,1,3,3],
+  116:[12,5,21,5,4,6,1,8,0,10,0,,2,14,9,14],
+  117:[19,4,14,4,4,5,1,7,0,10,0,12,1,15,4,,15,14,15,0],
+  118:[16,2,14,8,0,,14,14,8,0],
+  119:[22,3,14,7,0,,11,14,7,0,,11,14,15,0,,19,14,15,0],
+  120:[17,3,14,14,0,,14,14,3,0],
+  121:[16,2,14,8,0,,14,14,8,0,6,-4,4,-6,2,-7,1,-7],
+  122:[17,14,14,3,0,,3,14,14,14,,3,0,14,0],
+  123:[14,9,25,7,24,6,23,5,21,5,19,6,17,7,16,8,14,8,12,6,10,,7,24,6,22,6,20,7,18,8,17,9,15,9,13,8,11,4,9,8,7,9,5,9,3,8,1,7,0,6,-2,6,-4,7,-6,,6,8,8,6,8,4,7,2,6,1,5,-1,5,-3,6,-5,7,-6,9,-7],
+  124:[8,4,25,4,-7],
+  125:[14,5,25,7,24,8,23,9,21,9,19,8,17,7,16,6,14,6,12,8,10,,7,24,8,22,8,20,7,18,6,17,5,15,5,13,6,11,10,9,6,7,5,5,5,3,6,1,7,0,8,-2,8,-4,7,-6,,8,8,6,6,6,4,7,2,8,1,9,-1,9,-3,8,-5,7,-6,5,-7],
+  126:[24,3,6,3,8,4,11,6,12,8,12,10,11,14,8,16,7,18,7,20,8,21,10,,3,8,4,10,6,11,8,11,10,10,14,7,16,6,18,6,20,7,21,10,21,12]
+}
+
+},{}],78:[function(require,module,exports){
 /*
 ## License
 
@@ -17917,7 +12015,7 @@ Char: ${reader.c}`
   }
 })(typeof exports === 'undefined' ? this.dxf = {} : exports)
 
-},{}],110:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 /*
 AutoCAD Constants
 
@@ -18283,7 +12381,7 @@ module.exports = {
   getTLA
 }
 
-},{}],111:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 /*
 ## License
 
@@ -18880,7 +12978,7 @@ module.exports = {
   deserialize
 }
 
-},{"./DxfReader":109,"./autocad":110,"./instantiate":112,"./translate":162}],112:[function(require,module,exports){
+},{"./DxfReader":78,"./autocad":79,"./instantiate":81,"./translate":82}],81:[function(require,module,exports){
 /*
 ## License
 
@@ -19466,1316 +13564,7 @@ module.exports = {
   instantiateAsciiDxf
 }
 
-},{"./autocad":110,"@jscad/csg":113}],113:[function(require,module,exports){
-/*
-## License
-
-Copyright (c) 2014 bebbi (elghatta@gmail.com)
-Copyright (c) 2013 Eduard Bespalov (edwbes@gmail.com)
-Copyright (c) 2012 Joost Nieuwenhuijse (joost@newhouse.nl)
-Copyright (c) 2011 Evan Wallace (http://evanw.github.com/csg.js/)
-Copyright (c) 2012 Alexandre Girard (https://github.com/alx)
-
-All code released under MIT license
-
-## Overview
-
-For an overview of the CSG process see the original csg.js code:
-http://evanw.github.com/csg.js/
-
-CSG operations through BSP trees suffer from one problem: heavy fragmentation
-of polygons. If two CSG solids of n polygons are unified, the resulting solid may have
-in the order of n*n polygons, because each polygon is split by the planes of all other
-polygons. After a few operations the number of polygons explodes.
-
-This version of CSG.js solves the problem in 3 ways:
-
-1. Every polygon split is recorded in a tree (CSG.PolygonTreeNode). This is a separate
-tree, not to be confused with the CSG tree. If a polygon is split into two parts but in
-the end both fragments have not been discarded by the CSG operation, we can retrieve
-the original unsplit polygon from the tree, instead of the two fragments.
-
-This does not completely solve the issue though: if a polygon is split multiple times
-the number of fragments depends on the order of subsequent splits, and we might still
-end up with unncessary splits:
-Suppose a polygon is first split into A and B, and then into A1, B1, A2, B2. Suppose B2 is
-discarded. We will end up with 2 polygons: A and B1. Depending on the actual split boundaries
-we could still have joined A and B1 into one polygon. Therefore a second approach is used as well:
-
-2. After CSG operations all coplanar polygon fragments are joined by a retesselating
-operation. See CSG.reTesselated(). Retesselation is done through a
-linear sweep over the polygon surface. The sweep line passes over the y coordinates
-of all vertices in the polygon. Polygons are split at each sweep line, and the fragments
-are joined horizontally and vertically into larger polygons (making sure that we
-will end up with convex polygons).
-This still doesn't solve the problem completely: due to floating point imprecisions
-we may end up with small gaps between polygons, and polygons may not be exactly coplanar
-anymore, and as a result the retesselation algorithm may fail to join those polygons.
-Therefore:
-
-3. A canonicalization algorithm is implemented: it looks for vertices that have
-approximately the same coordinates (with a certain tolerance, say 1e-5) and replaces
-them with the same vertex. If polygons share a vertex they will actually point to the
-same CSG.Vertex instance. The same is done for polygon planes. See CSG.canonicalized().
-
-Performance improvements to the original CSG.js:
-
-Replaced the flip() and invert() methods by flipped() and inverted() which don't
-modify the source object. This allows to get rid of all clone() calls, so that
-multiple polygons can refer to the same CSG.Plane instance etc.
-
-The original union() used an extra invert(), clipTo(), invert() sequence just to remove the
-coplanar front faces from b; this is now combined in a single b.clipTo(a, true) call.
-
-Detection whether a polygon is in front or in back of a plane: for each polygon
-we are caching the coordinates of the bounding sphere. If the bounding sphere is
-in front or in back of the plane we don't have to check the individual vertices
-anymore.
-
-Other additions to the original CSG.js:
-
-CSG.Vector class has been renamed into CSG.Vector3D
-
-Classes for 3D lines, 2D vectors, 2D lines, and methods to find the intersection of
-a line and a plane etc.
-
-Transformations: CSG.transform(), CSG.translate(), CSG.rotate(), CSG.scale()
-
-Expanding or contracting a solid: CSG.expand() and CSG.contract(). Creates nice
-smooth corners.
-
-The vertex normal has been removed since it complicates retesselation. It's not needed
-for solid CAD anyway.
-
-*/
-
-const {addTransformationMethodsToPrototype, addCenteringToPrototype} = require('./src/core/mutators')
-let CSG = require('./src/core/CSG')
-let CAG = require('./src/core/CAG')
-
-// FIXME: how many are actual usefull to be exposed as API ?? looks like a code smell
-const { _CSGDEBUG,
-  defaultResolution2D,
-  defaultResolution3D,
-  EPS,
-  angleEPS,
-  areaEPS,
-  all,
-  top,
-  bottom,
-  left,
-  right,
-  front,
-  back,
-  staticTag,
-  getTag} = require('./src/core/constants')
-
-CSG._CSGDEBUG = _CSGDEBUG
-CSG.defaultResolution2D = defaultResolution2D
-CSG.defaultResolution3D = defaultResolution3D
-CSG.EPS = EPS
-CSG.angleEPS = angleEPS
-CSG.areaEPS = areaEPS
-CSG.all = all
-CSG.top = top
-CSG.bottom = bottom
-CSG.left = left
-CSG.right = right
-CSG.front = front
-CSG.back = back
-CSG.staticTag = staticTag
-CSG.getTag = getTag
-
-// eek ! all this is kept for backwards compatibility...for now
-CSG.Vector2D = require('./src/core/math/Vector2')
-CSG.Vector3D = require('./src/core/math/Vector3')
-CSG.Vertex = require('./src/core/math/Vertex3')
-CAG.Vertex = require('./src/core/math/Vertex2')
-CSG.Plane = require('./src/core/math/Plane')
-CSG.Polygon = require('./src/core/math/Polygon3')
-CSG.Polygon2D = require('./src/core/math/Polygon2')
-CSG.Line2D = require('./src/core/math/Line2')
-CSG.Line3D = require('./src/core/math/Line3')
-CSG.Path2D = require('./src/core/math/Path2')
-CSG.OrthoNormalBasis = require('./src/core/math/OrthoNormalBasis')
-CSG.Matrix4x4 = require('./src/core/math/Matrix4')
-
-CAG.Side = require('./src/core/math/Side')
-
-CSG.Connector = require('./src/core/connectors').Connector
-CSG.ConnectorList = require('./src/core/connectors').ConnectorList
-CSG.Properties = require('./src/core/Properties')
-
-const {circle, ellipse, rectangle, roundedRectangle} = require('./src/api/primitives2d')
-const {sphere, cube, roundedCube, cylinder, roundedCylinder, cylinderElliptic, polyhedron} = require('./src/api/primitives3d')
-
-CSG.sphere = sphere
-CSG.cube = cube
-CSG.roundedCube = roundedCube
-CSG.cylinder = cylinder
-CSG.roundedCylinder = roundedCylinder
-CSG.cylinderElliptic = cylinderElliptic
-CSG.polyhedron = polyhedron
-
-CAG.circle = circle
-CAG.ellipse = ellipse
-CAG.rectangle = rectangle
-CAG.roundedRectangle = roundedRectangle
-
-// injecting factories
-const {fromPolygons, fromCompactBinary, fromObject, fromSlices} = require('./src/core/CSGFactories')
-CSG.fromCompactBinary = fromCompactBinary
-CSG.fromObject = fromObject
-CSG.fromSlices = fromSlices
-CSG.fromPolygons = fromPolygons
-
-CSG.toPointCloud = require('./src/api/debugHelpers').toPointCloud
-
-const CAGFactories = require('./src/core/CAGFactories')
-CAG.fromSides = CAGFactories.fromSides
-CAG.fromObject = CAGFactories.fromObject
-CAG.fromPoints = CAGFactories.fromPoints
-CAG.fromPointsNoCheck = CAGFactories.fromPointsNoCheck
-CAG.fromPath2 = CAGFactories.fromPath2
-CAG.fromFakeCSG = CAGFactories.fromFakeCSG
-CAG.fromCompactBinary = CAGFactories.fromCompactBinary
-
-/// ////////////////////////////////////
-// option parsers
-const optionsParsers = require('./src/api/optionParsers')
-
-// ////////////////////////////////////
-addTransformationMethodsToPrototype(CSG.prototype)
-addTransformationMethodsToPrototype(CSG.Vector2D.prototype)
-addTransformationMethodsToPrototype(CSG.Vector3D.prototype)
-addTransformationMethodsToPrototype(CSG.Vertex.prototype)
-addTransformationMethodsToPrototype(CSG.Plane.prototype)
-addTransformationMethodsToPrototype(CSG.Polygon.prototype)
-addTransformationMethodsToPrototype(CSG.Line2D.prototype)
-addTransformationMethodsToPrototype(CSG.Line3D.prototype)
-addTransformationMethodsToPrototype(CSG.Path2D.prototype)
-addTransformationMethodsToPrototype(CSG.OrthoNormalBasis.prototype)
-addTransformationMethodsToPrototype(CSG.Connector.prototype)
-
-addTransformationMethodsToPrototype(CAG.prototype)
-addTransformationMethodsToPrototype(CAG.Side.prototype)
-addTransformationMethodsToPrototype(CAG.Vertex.prototype)
-
-CSG.parseOptionAs2DVector = optionsParsers.parseOptionAs3DVector
-CSG.parseOptionAs3DVector = optionsParsers.parseOptionAs3DVector
-CSG.parseOptionAs3DVectorList = optionsParsers.parseOptionAs3DVectorList
-CSG.parseOptionAsBool = optionsParsers.parseOptionAsBool
-CSG.parseOptionAsFloat = optionsParsers.parseOptionAsFloat
-CSG.parseOptionAsInt = optionsParsers.parseOptionAsInt
-// this is needed for now, otherwise there are missing features in Polygon2D
-CSG.Polygon2D.prototype = CAG.prototype
-
-// utilities
-const {isCAG, isCSG} = require('./src/core/utils')
-
-const globalApi = Object.assign({}, {CSG, CAG}, optionsParsers, {isCAG, isCSG})
-
-module.exports = globalApi
-
-},{"./src/api/debugHelpers":116,"./src/api/optionParsers":122,"./src/api/primitives2d":123,"./src/api/primitives3d":124,"./src/core/CAG":126,"./src/core/CAGFactories":127,"./src/core/CSG":128,"./src/core/CSGFactories":129,"./src/core/Properties":133,"./src/core/connectors":134,"./src/core/constants":135,"./src/core/math/Line2":136,"./src/core/math/Line3":137,"./src/core/math/Matrix4":138,"./src/core/math/OrthoNormalBasis":139,"./src/core/math/Path2":140,"./src/core/math/Plane":141,"./src/core/math/Polygon2":142,"./src/core/math/Polygon3":143,"./src/core/math/Side":144,"./src/core/math/Vector2":145,"./src/core/math/Vector3":146,"./src/core/math/Vertex2":147,"./src/core/math/Vertex3":148,"./src/core/mutators":151,"./src/core/utils":153}],114:[function(require,module,exports){
-arguments[4][53][0].apply(exports,arguments)
-},{"../core/math/Path2":140,"dup":53}],115:[function(require,module,exports){
-const toArray = require('../core/utils/toArray')
-
-/**
- * Centers the given object(s) using the given options (if any)
- * @param {Object} [options] - options for centering
- * @param {Array} [options.axes=[true,true,true]] - axis of which to center, true or false
- * @param {Array} [options.center=[0,0,0]] - point of which to center the object upon
- * @param {Object|Array} objects - the shape(s) to center
- * @return {Object|Array} objects
- *
- * @example
- * let csg = center({axes: [true,false,false]}, sphere()) // center about the X axis
- */
-const center = function (options, objects) {
-  const defaults = {
-    axes: [true, true, true],
-    center: [0, 0, 0]
-  // TODO : Add addition 'methods' of centering; midpoint, centeriod
-  }
-  options = Object.assign({}, defaults, options)
-  const {axes,center} = options
-  objects = toArray(objects)
-
-  const results = objects.map(function (object) {
-    let bounds = object.getBounds()
-    let offset = [0,0,0]
-    if (axes[0]) offset[0] = center[0] - (bounds[0].x + ((bounds[1].x - bounds[0].x) / 2))
-    if (axes[1]) offset[1] = center[1] - (bounds[0].y + ((bounds[1].y - bounds[0].y) / 2))
-    if (axes[2]) offset[2] = center[2] - (bounds[0].z + ((bounds[1].y - bounds[0].y) / 2))
-    return object.translate(offset)
-  })
-  // if there is more than one result, return them all , otherwise a single one
-  return results.length === 1 ? results[0] : results
-}
-
-module.exports = center
-
-},{"../core/utils/toArray":161}],116:[function(require,module,exports){
-arguments[4][56][0].apply(exports,arguments)
-},{"../core/CSG":128,"./primitives3d":124,"dup":56}],117:[function(require,module,exports){
-arguments[4][57][0].apply(exports,arguments)
-},{"../core/math/Polygon3":143,"../core/math/Vector3":146,"../core/math/Vertex3":148,"dup":57}],118:[function(require,module,exports){
-arguments[4][62][0].apply(exports,arguments)
-},{"../core/CAGFactories":127,"../core/connectors.js":134,"../core/math/Matrix4.js":138,"../core/math/Vector2":145,"../core/math/Vector3.js":146,"dup":62}],119:[function(require,module,exports){
-arguments[4][63][0].apply(exports,arguments)
-},{"../core/CSG":128,"../core/constants":135,"../core/math/OrthoNormalBasis":139,"../core/math/Plane":141,"../core/math/Polygon3":143,"../core/math/Vector2":145,"../core/math/Vertex3":148,"dup":63}],120:[function(require,module,exports){
-arguments[4][64][0].apply(exports,arguments)
-},{"../core/CAG":126,"../core/CAGFactories":127,"../core/CSG":128,"../core/CSGFactories":129,"../core/constants":135,"../core/math/Polygon3":143,"../core/math/Vector2":145,"../core/math/Vertex3":148,"../core/utils":153,"dup":64}],121:[function(require,module,exports){
-arguments[4][65][0].apply(exports,arguments)
-},{"../core/CAGFactories":127,"../core/CSG":128,"../core/CSGFactories":129,"../core/connectors":134,"../core/constants":135,"../core/math/Matrix4":138,"../core/math/OrthoNormalBasis":139,"../core/math/Path2":140,"../core/math/Vector3":146,"./helpers":117,"./optionParsers":122,"dup":65}],122:[function(require,module,exports){
-arguments[4][67][0].apply(exports,arguments)
-},{"../core/math/Vector2":145,"../core/math/Vector3":146,"dup":67}],123:[function(require,module,exports){
-arguments[4][69][0].apply(exports,arguments)
-},{"../core/CAG":126,"../core/CAGFactories":127,"../core/constants":135,"../core/math/Path2":140,"../core/math/Vector2":145,"../core/math/Vertex2":147,"./optionParsers":122,"dup":69}],124:[function(require,module,exports){
-arguments[4][71][0].apply(exports,arguments)
-},{"../core/CSGFactories":129,"../core/Properties":133,"../core/connectors":134,"../core/constants":135,"../core/math/Polygon3":143,"../core/math/Vector3":146,"../core/math/Vertex3":148,"./optionParsers":122,"dup":71}],125:[function(require,module,exports){
-arguments[4][72][0].apply(exports,arguments)
-},{"../core/CSGFactories":129,"../core/math/Polygon3":143,"../core/utils":153,"dup":72}],126:[function(require,module,exports){
-const {Connector} = require('./connectors')
-const Vertex3D = require('./math/Vertex3')
-const Vector2D = require('./math/Vector2')
-const Vector3D = require('./math/Vector3')
-const Polygon = require('./math/Polygon3')
-
-const {fromPolygons} = require('./CSGFactories')
-const {fromSides, fromFakeCSG} = require('./CAGFactories')
-
-const canonicalize = require('./utils/canonicalize')
-const retesselate = require('./utils/retesellate')
-const {isCAGValid, isSelfIntersecting} = require('./utils/cagValidation')
-const {area, getBounds} = require('./utils/cagMeasurements')
-
-// all of these are good candidates for elimination in this scope, since they are part of a functional api
-const {overCutInsideCorners} = require('../api/ops-cnc')
-const {extrudeInOrthonormalBasis, extrudeInPlane, extrude, rotateExtrude} = require('../api/ops-extrusions')
-const cagoutlinePaths = require('../api/cagOutlinePaths')
-const center = require('../api/center')
-const {expand, contract, expandedShellOfCAG} = require('../api/ops-expandContract')
-/**
- * Class CAG
- * Holds a solid area geometry like CSG but 2D.
- * Each area consists of a number of sides.
- * Each side is a line between 2 points.
- * @constructor
- */
-let CAG = function () {
-  this.sides = []
-  this.isCanonicalized = false
-}
-
-CAG.prototype = {
-  union: function (cag) {
-    let cags
-    if (cag instanceof Array) {
-      cags = cag
-    } else {
-      cags = [cag]
-    }
-    let r = this._toCSGWall(-1, 1)
-    r = r.union(
-            cags.map(function (cag) {
-              return cag._toCSGWall(-1, 1).reTesselated()
-            }), false, false)
-    return fromFakeCSG(r).canonicalized()
-  },
-
-  subtract: function (cag) {
-    let cags
-    if (cag instanceof Array) {
-      cags = cag
-    } else {
-      cags = [cag]
-    }
-    let r = this._toCSGWall(-1, 1)
-    cags.map(function (cag) {
-      r = r.subtractSub(cag._toCSGWall(-1, 1), false, false)
-    })
-    r = r.reTesselated()
-    r = r.canonicalized()
-    r = fromFakeCSG(r)
-    r = r.canonicalized()
-    return r
-  },
-
-  intersect: function (cag) {
-    let cags
-    if (cag instanceof Array) {
-      cags = cag
-    } else {
-      cags = [cag]
-    }
-    let r = this._toCSGWall(-1, 1)
-    cags.map(function (cag) {
-      r = r.intersectSub(cag._toCSGWall(-1, 1), false, false)
-    })
-    r = r.reTesselated()
-    r = r.canonicalized()
-    r = fromFakeCSG(r)
-    r = r.canonicalized()
-    return r
-  },
-
-  transform: function (matrix4x4) {
-    let ismirror = matrix4x4.isMirroring()
-    let newsides = this.sides.map(function (side) {
-      return side.transform(matrix4x4)
-    })
-    let result = fromSides(newsides)
-    if (ismirror) {
-      result = result.flipped()
-    }
-    return result
-  },
-
-  flipped: function () {
-    let newsides = this.sides.map(function (side) {
-      return side.flipped()
-    })
-    newsides.reverse()
-    return fromSides(newsides)
-  },
-
-  // ALIAS !
-  center: function (axes) {
-    return center({axes: axes}, [this])
-  },
-
-  // ALIAS !
-  expandedShell: function (radius, resolution) {
-    return expandedShellOfCAG(this, radius, resolution)
-  },
-
-  // ALIAS !
-  expand: function (radius, resolution) {
-    return expand(this, radius, resolution)
-  },
-
-  contract: function (radius, resolution) {
-    return contract(this, radius, resolution)
-  },
-
-  // ALIAS !
-  area: function () {
-    return area(this)
-  },
-
-  // ALIAS !
-  getBounds: function () {
-    return getBounds(this)
-  },
-  // ALIAS !
-  isSelfIntersecting: function (debug) {
-    return isSelfIntersecting(this, debug)
-  },
-  // extrusion: all aliases to simple functions
-  extrudeInOrthonormalBasis: function (orthonormalbasis, depth, options) {
-    return extrudeInOrthonormalBasis(this, orthonormalbasis, depth, options)
-  },
-
-  // ALIAS !
-  extrudeInPlane: function (axis1, axis2, depth, options) {
-    return extrudeInPlane(this, axis1, axis2, depth, options)
-  },
-
-  // ALIAS !
-  extrude: function (options) {
-    return extrude(this, options)
-  },
-
-  // ALIAS !
-  rotateExtrude: function (options) { // FIXME options should be optional
-    return rotateExtrude(this, options)
-  },
-
-  // ALIAS !
-  check: function () {
-    return isCAGValid(this)
-  },
-
-  // ALIAS !
-  canonicalized: function () {
-    return canonicalize(this)
-  },
-
-  // ALIAS !
-  reTesselated: function () {
-    return retesselate(this)
-  },
-
-  // ALIAS !
-  getOutlinePaths: function () {
-    return cagoutlinePaths(this)
-  },
-
-  // ALIAS !
-  overCutInsideCorners: function (cutterradius) {
-    return overCutInsideCorners(this, cutterradius)
-  },
-
-  // All the toXXX functions
-  toString: function () {
-    let result = 'CAG (' + this.sides.length + ' sides):\n'
-    this.sides.map(function (side) {
-      result += '  ' + side.toString() + '\n'
-    })
-    return result
-  },
-
-  _toCSGWall: function (z0, z1) {
-    let polygons = this.sides.map(function (side) {
-      return side.toPolygon3D(z0, z1)
-    })
-    return fromPolygons(polygons)
-  },
-
-  _toVector3DPairs: function (m) {
-        // transform m
-    let pairs = this.sides.map(function (side) {
-      let p0 = side.vertex0.pos
-      let p1 = side.vertex1.pos
-      return [Vector3D.Create(p0.x, p0.y, 0),
-        Vector3D.Create(p1.x, p1.y, 0)]
-    })
-    if (typeof m !== 'undefined') {
-      pairs = pairs.map(function (pair) {
-        return pair.map(function (v) {
-          return v.transform(m)
-        })
-      })
-    }
-    return pairs
-  },
-
-  /*
-    * transform a cag into the polygons of a corresponding 3d plane, positioned per options
-    * Accepts a connector for plane positioning, or optionally
-    * single translation, axisVector, normalVector arguments
-    * (toConnector has precedence over single arguments if provided)
-    */
-  _toPlanePolygons: function (options) {
-    const defaults = {
-      flipped: false
-    }
-    options = Object.assign({}, defaults, options)
-    let {flipped} = options
-    // reference connector for transformation
-    let origin = [0, 0, 0]
-    let defaultAxis = [0, 0, 1]
-    let defaultNormal = [0, 1, 0]
-    let thisConnector = new Connector(origin, defaultAxis, defaultNormal)
-    // translated connector per options
-    let translation = options.translation || origin
-    let axisVector = options.axisVector || defaultAxis
-    let normalVector = options.normalVector || defaultNormal
-    // will override above if options has toConnector
-    let toConnector = options.toConnector ||
-            new Connector(translation, axisVector, normalVector)
-    // resulting transform
-    let m = thisConnector.getTransformationTo(toConnector, false, 0)
-    // create plane as a (partial non-closed) CSG in XY plane
-    let bounds = this.getBounds()
-    bounds[0] = bounds[0].minus(new Vector2D(1, 1))
-    bounds[1] = bounds[1].plus(new Vector2D(1, 1))
-    let csgshell = this._toCSGWall(-1, 1)
-    let csgplane = fromPolygons([new Polygon([
-      new Vertex3D(new Vector3D(bounds[0].x, bounds[0].y, 0)),
-      new Vertex3D(new Vector3D(bounds[1].x, bounds[0].y, 0)),
-      new Vertex3D(new Vector3D(bounds[1].x, bounds[1].y, 0)),
-      new Vertex3D(new Vector3D(bounds[0].x, bounds[1].y, 0))
-    ])])
-    if (flipped) {
-      csgplane = csgplane.invert()
-    }
-    // intersectSub -> prevent premature retesselate/canonicalize
-    csgplane = csgplane.intersectSub(csgshell)
-    // only keep the polygons in the z plane:
-    let polys = csgplane.polygons.filter(function (polygon) {
-      return Math.abs(polygon.plane.normal.z) > 0.99
-    })
-    // finally, position the plane per passed transformations
-    return polys.map(function (poly) {
-      return poly.transform(m)
-    })
-  },
-
-  /*
-    * given 2 connectors, this returns all polygons of a "wall" between 2
-    * copies of this cag, positioned in 3d space as "bottom" and
-    * "top" plane per connectors toConnector1, and toConnector2, respectively
-    */
-  _toWallPolygons: function (options) {
-        // normals are going to be correct as long as toConn2.point - toConn1.point
-        // points into cag normal direction (check in caller)
-        // arguments: options.toConnector1, options.toConnector2, options.cag
-        //     walls go from toConnector1 to toConnector2
-        //     optionally, target cag to point to - cag needs to have same number of sides as this!
-    let origin = [0, 0, 0]
-    let defaultAxis = [0, 0, 1]
-    let defaultNormal = [0, 1, 0]
-    let thisConnector = new Connector(origin, defaultAxis, defaultNormal)
-        // arguments:
-    let toConnector1 = options.toConnector1
-        // let toConnector2 = new Connector([0, 0, -30], defaultAxis, defaultNormal);
-    let toConnector2 = options.toConnector2
-    if (!(toConnector1 instanceof Connector && toConnector2 instanceof Connector)) {
-      throw new Error('could not parse Connector arguments toConnector1 or toConnector2')
-    }
-    if (options.cag) {
-      if (options.cag.sides.length !== this.sides.length) {
-        throw new Error('target cag needs same sides count as start cag')
-      }
-    }
-        // target cag is same as this unless specified
-    let toCag = options.cag || this
-    let m1 = thisConnector.getTransformationTo(toConnector1, false, 0)
-    let m2 = thisConnector.getTransformationTo(toConnector2, false, 0)
-    let vps1 = this._toVector3DPairs(m1)
-    let vps2 = toCag._toVector3DPairs(m2)
-
-    let polygons = []
-    vps1.forEach(function (vp1, i) {
-      polygons.push(new Polygon([
-        new Vertex3D(vps2[i][1]), new Vertex3D(vps2[i][0]), new Vertex3D(vp1[0])]))
-      polygons.push(new Polygon([
-        new Vertex3D(vps2[i][1]), new Vertex3D(vp1[0]), new Vertex3D(vp1[1])]))
-    })
-    return polygons
-  },
-
-    /**
-     * Convert to a list of points.
-     * @return {points[]} list of points in 2D space
-     */
-  toPoints: function () {
-    let points = this.sides.map(function (side) {
-      let v0 = side.vertex0
-      // let v1 = side.vertex1
-      return v0.pos
-    })
-    // due to the logic of fromPoints()
-    // move the first point to the last
-    if (points.length > 0) {
-      points.push(points.shift())
-    }
-    return points
-  },
-
-    /** Convert to compact binary form.
-   * See fromCompactBinary.
-   * @return {CompactBinary}
-   */
-  toCompactBinary: function () {
-    let cag = this.canonicalized()
-    let numsides = cag.sides.length
-    let vertexmap = {}
-    let vertices = []
-    let numvertices = 0
-    let sideVertexIndices = new Uint32Array(2 * numsides)
-    let sidevertexindicesindex = 0
-    cag.sides.map(function (side) {
-      [side.vertex0, side.vertex1].map(function (v) {
-        let vertextag = v.getTag()
-        let vertexindex
-        if (!(vertextag in vertexmap)) {
-          vertexindex = numvertices++
-          vertexmap[vertextag] = vertexindex
-          vertices.push(v)
-        } else {
-          vertexindex = vertexmap[vertextag]
-        }
-        sideVertexIndices[sidevertexindicesindex++] = vertexindex
-      })
-    })
-    let vertexData = new Float64Array(numvertices * 2)
-    let verticesArrayIndex = 0
-    vertices.map(function (v) {
-      let pos = v.pos
-      vertexData[verticesArrayIndex++] = pos._x
-      vertexData[verticesArrayIndex++] = pos._y
-    })
-    let result = {
-      'class': 'CAG',
-      sideVertexIndices: sideVertexIndices,
-      vertexData: vertexData
-    }
-    return result
-  }
-}
-
-module.exports = CAG
-
-},{"../api/cagOutlinePaths":114,"../api/center":115,"../api/ops-cnc":118,"../api/ops-expandContract":120,"../api/ops-extrusions":121,"./CAGFactories":127,"./CSGFactories":129,"./connectors":134,"./math/Polygon3":143,"./math/Vector2":145,"./math/Vector3":146,"./math/Vertex3":148,"./utils/cagMeasurements":154,"./utils/cagValidation":155,"./utils/canonicalize":156,"./utils/retesellate":160}],127:[function(require,module,exports){
-arguments[4][75][0].apply(exports,arguments)
-},{"./CAG":126,"./constants":135,"./math/Side":144,"./math/Vector2":145,"./math/Vertex2":147,"./utils/cagValidation":155,"dup":75}],128:[function(require,module,exports){
-const Tree = require('./trees')
-const Polygon = require('./math/Polygon3')
-const Plane = require('./math/Plane')
-const OrthoNormalBasis = require('./math/OrthoNormalBasis')
-
-const CAG = require('./CAG') // FIXME: for some weird reason if CAG is imported AFTER frompolygons, a lot of things break???
-
-const Properties = require('./Properties')
-const {fromPolygons} = require('./CSGFactories') // FIXME: circular dependency !
-
-const fixTJunctions = require('./utils/fixTJunctions')
-const canonicalize = require('./utils/canonicalize')
-const retesselate = require('./utils/retesellate')
-const {bounds} = require('./utils/csgMeasurements')
-const {projectToOrthoNormalBasis} = require('./utils/csgProjections')
-
-const {lieFlat, getTransformationToFlatLying, getTransformationAndInverseTransformationToFlatLying} = require('../api/ops-cnc')
-const {sectionCut, cutByPlane} = require('../api/ops-cuts')
-const center = require('../api/center')
-const {expand, contract, expandedShellOfCCSG} = require('../api/ops-expandContract')
-
-/** Class CSG
- * Holds a binary space partition tree representing a 3D solid. Two solids can
- * be combined using the `union()`, `subtract()`, and `intersect()` methods.
- * @constructor
- */
-let CSG = function () {
-  this.polygons = []
-  this.properties = new Properties()
-  this.isCanonicalized = true
-  this.isRetesselated = true
-}
-
-CSG.prototype = {
-  /**
-   * Return a new CSG solid representing the space in either this solid or
-   * in the given solids. Neither this solid nor the given solids are modified.
-   * @param {CSG[]} csg - list of CSG objects
-   * @returns {CSG} new CSG object
-   * @example
-   * let C = A.union(B)
-   * @example
-   * +-------+            +-------+
-   * |       |            |       |
-   * |   A   |            |       |
-   * |    +--+----+   =   |       +----+
-   * +----+--+    |       +----+       |
-   *      |   B   |            |       |
-   *      |       |            |       |
-   *      +-------+            +-------+
-   */
-  union: function (csg) {
-    let csgs
-    if (csg instanceof Array) {
-      csgs = csg.slice(0)
-      csgs.push(this)
-    } else {
-      csgs = [this, csg]
-    }
-
-    let i
-    // combine csg pairs in a way that forms a balanced binary tree pattern
-    for (i = 1; i < csgs.length; i += 2) {
-      csgs.push(csgs[i - 1].unionSub(csgs[i]))
-    }
-    return csgs[i - 1].reTesselated().canonicalized()
-  },
-
-  unionSub: function (csg, retesselate, canonicalize) {
-    if (!this.mayOverlap(csg)) {
-      return this.unionForNonIntersecting(csg)
-    } else {
-      let a = new Tree(this.polygons)
-      let b = new Tree(csg.polygons)
-      a.clipTo(b, false)
-
-            // b.clipTo(a, true); // ERROR: this doesn't work
-      b.clipTo(a)
-      b.invert()
-      b.clipTo(a)
-      b.invert()
-
-      let newpolygons = a.allPolygons().concat(b.allPolygons())
-      let result = fromPolygons(newpolygons)
-      result.properties = this.properties._merge(csg.properties)
-      if (retesselate) result = result.reTesselated()
-      if (canonicalize) result = result.canonicalized()
-      return result
-    }
-  },
-
-  // Like union, but when we know that the two solids are not intersecting
-  // Do not use if you are not completely sure that the solids do not intersect!
-  unionForNonIntersecting: function (csg) {
-    let newpolygons = this.polygons.concat(csg.polygons)
-    let result = fromPolygons(newpolygons)
-    result.properties = this.properties._merge(csg.properties)
-    result.isCanonicalized = this.isCanonicalized && csg.isCanonicalized
-    result.isRetesselated = this.isRetesselated && csg.isRetesselated
-    return result
-  },
-
-  /**
-   * Return a new CSG solid representing space in this solid but
-   * not in the given solids. Neither this solid nor the given solids are modified.
-   * @param {CSG[]} csg - list of CSG objects
-   * @returns {CSG} new CSG object
-   * @example
-   * let C = A.subtract(B)
-   * @example
-   * +-------+            +-------+
-   * |       |            |       |
-   * |   A   |            |       |
-   * |    +--+----+   =   |    +--+
-   * +----+--+    |       +----+
-   *      |   B   |
-   *      |       |
-   *      +-------+
-   */
-  subtract: function (csg) {
-    let csgs
-    if (csg instanceof Array) {
-      csgs = csg
-    } else {
-      csgs = [csg]
-    }
-    let result = this
-    for (let i = 0; i < csgs.length; i++) {
-      let islast = (i === (csgs.length - 1))
-      result = result.subtractSub(csgs[i], islast, islast)
-    }
-    return result
-  },
-
-  subtractSub: function (csg, retesselate, canonicalize) {
-    let a = new Tree(this.polygons)
-    let b = new Tree(csg.polygons)
-    a.invert()
-    a.clipTo(b)
-    b.clipTo(a, true)
-    a.addPolygons(b.allPolygons())
-    a.invert()
-    let result = fromPolygons(a.allPolygons())
-    result.properties = this.properties._merge(csg.properties)
-    if (retesselate) result = result.reTesselated()
-    if (canonicalize) result = result.canonicalized()
-    return result
-  },
-
-  /**
-   * Return a new CSG solid representing space in both this solid and
-   * in the given solids. Neither this solid nor the given solids are modified.
-   * @param {CSG[]} csg - list of CSG objects
-   * @returns {CSG} new CSG object
-   * @example
-   * let C = A.intersect(B)
-   * @example
-   * +-------+
-   * |       |
-   * |   A   |
-   * |    +--+----+   =   +--+
-   * +----+--+    |       +--+
-   *      |   B   |
-   *      |       |
-   *      +-------+
-   */
-  intersect: function (csg) {
-    let csgs
-    if (csg instanceof Array) {
-      csgs = csg
-    } else {
-      csgs = [csg]
-    }
-    let result = this
-    for (let i = 0; i < csgs.length; i++) {
-      let islast = (i === (csgs.length - 1))
-      result = result.intersectSub(csgs[i], islast, islast)
-    }
-    return result
-  },
-
-  intersectSub: function (csg, retesselate, canonicalize) {
-    let a = new Tree(this.polygons)
-    let b = new Tree(csg.polygons)
-    a.invert()
-    b.clipTo(a)
-    b.invert()
-    a.clipTo(b)
-    b.clipTo(a)
-    a.addPolygons(b.allPolygons())
-    a.invert()
-    let result = fromPolygons(a.allPolygons())
-    result.properties = this.properties._merge(csg.properties)
-    if (retesselate) result = result.reTesselated()
-    if (canonicalize) result = result.canonicalized()
-    return result
-  },
-
-  /**
-   * Return a new CSG solid with solid and empty space switched.
-   * This solid is not modified.
-   * @returns {CSG} new CSG object
-   * @example
-   * let B = A.invert()
-   */
-  invert: function () {
-    let flippedpolygons = this.polygons.map(function (p) {
-      return p.flipped()
-    })
-    return fromPolygons(flippedpolygons)
-    // TODO: flip properties?
-  },
-
-  // Affine transformation of CSG object. Returns a new CSG object
-  transform1: function (matrix4x4) {
-    let newpolygons = this.polygons.map(function (p) {
-      return p.transform(matrix4x4)
-    })
-    let result = fromPolygons(newpolygons)
-    result.properties = this.properties._transform(matrix4x4)
-    result.isRetesselated = this.isRetesselated
-    return result
-  },
-
-  /**
-   * Return a new CSG solid that is transformed using the given Matrix.
-   * Several matrix transformations can be combined before transforming this solid.
-   * @param {CSG.Matrix4x4} matrix4x4 - matrix to be applied
-   * @returns {CSG} new CSG object
-   * @example
-   * var m = new CSG.Matrix4x4()
-   * m = m.multiply(CSG.Matrix4x4.rotationX(40))
-   * m = m.multiply(CSG.Matrix4x4.translation([-.5, 0, 0]))
-   * let B = A.transform(m)
-   */
-  transform: function (matrix4x4) {
-    let ismirror = matrix4x4.isMirroring()
-    let transformedvertices = {}
-    let transformedplanes = {}
-    let newpolygons = this.polygons.map(function (p) {
-      let newplane
-      let plane = p.plane
-      let planetag = plane.getTag()
-      if (planetag in transformedplanes) {
-        newplane = transformedplanes[planetag]
-      } else {
-        newplane = plane.transform(matrix4x4)
-        transformedplanes[planetag] = newplane
-      }
-      let newvertices = p.vertices.map(function (v) {
-        let newvertex
-        let vertextag = v.getTag()
-        if (vertextag in transformedvertices) {
-          newvertex = transformedvertices[vertextag]
-        } else {
-          newvertex = v.transform(matrix4x4)
-          transformedvertices[vertextag] = newvertex
-        }
-        return newvertex
-      })
-      if (ismirror) newvertices.reverse()
-      return new Polygon(newvertices, p.shared, newplane)
-    })
-    let result = fromPolygons(newpolygons)
-    result.properties = this.properties._transform(matrix4x4)
-    result.isRetesselated = this.isRetesselated
-    result.isCanonicalized = this.isCanonicalized
-    return result
-  },
-
-  // ALIAS !
-  center: function (axes) {
-    return center({axes: axes},[this])
-  },
-
-  // ALIAS !
-  expand: function (radius, resolution) {
-    return expand(this, radius, resolution)
-  },
-
-  // ALIAS !
-  contract: function (radius, resolution) {
-    return contract(this, radius, resolution)
-  },
-
-  // ALIAS !
-  expandedShell: function (radius, resolution, unionWithThis) {
-    return expandedShellOfCCSG(this, radius, resolution, unionWithThis)
-  },
-
-  // cut the solid at a plane, and stretch the cross-section found along plane normal
-  // note: only used in roundedCube() internally
-  stretchAtPlane: function (normal, point, length) {
-    let plane = Plane.fromNormalAndPoint(normal, point)
-    let onb = new OrthoNormalBasis(plane)
-    let crosssect = this.sectionCut(onb)
-    let midpiece = crosssect.extrudeInOrthonormalBasis(onb, length)
-    let piece1 = this.cutByPlane(plane)
-    let piece2 = this.cutByPlane(plane.flipped())
-    let result = piece1.union([midpiece, piece2.translate(plane.normal.times(length))])
-    return result
-  },
-
-  // ALIAS !
-  canonicalized: function () {
-    return canonicalize(this)
-  },
-
-  // ALIAS !
-  reTesselated: function () {
-    return retesselate(this)
-  },
-
-  // ALIAS !
-  fixTJunctions: function () {
-    return fixTJunctions(fromPolygons, this)
-  },
-
-  // ALIAS !
-  getBounds: function () {
-    return bounds(this)
-  },
-
-  /** returns true if there is a possibility that the two solids overlap
-   * returns false if we can be sure that they do not overlap
-   * NOTE: this is critical as it is used in UNIONs
-   * @param  {CSG} csg
-   */
-  mayOverlap: function (csg) {
-    if ((this.polygons.length === 0) || (csg.polygons.length === 0)) {
-      return false
-    } else {
-      let mybounds = bounds(this)
-      let otherbounds = bounds(csg)
-      if (mybounds[1].x < otherbounds[0].x) return false
-      if (mybounds[0].x > otherbounds[1].x) return false
-      if (mybounds[1].y < otherbounds[0].y) return false
-      if (mybounds[0].y > otherbounds[1].y) return false
-      if (mybounds[1].z < otherbounds[0].z) return false
-      if (mybounds[0].z > otherbounds[1].z) return false
-      return true
-    }
-  },
-
-  // ALIAS !
-  cutByPlane: function (plane) {
-    return cutByPlane(this, plane)
-  },
-
-  /**
-   * Connect a solid to another solid, such that two Connectors become connected
-   * @param  {Connector} myConnector a Connector of this solid
-   * @param  {Connector} otherConnector a Connector to which myConnector should be connected
-   * @param  {Boolean} mirror false: the 'axis' vectors of the connectors should point in the same direction
-   * true: the 'axis' vectors of the connectors should point in opposite direction
-   * @param  {Float} normalrotation degrees of rotation between the 'normal' vectors of the two
-   * connectors
-   * @returns {CSG} this csg, tranformed accordingly
-   */
-  connectTo: function (myConnector, otherConnector, mirror, normalrotation) {
-    let matrix = myConnector.getTransformationTo(otherConnector, mirror, normalrotation)
-    return this.transform(matrix)
-  },
-
-  /**
-   * set the .shared property of all polygons
-   * @param  {Object} shared
-   * @returns {CSG} Returns a new CSG solid, the original is unmodified!
-   */
-  setShared: function (shared) {
-    let polygons = this.polygons.map(function (p) {
-      return new Polygon(p.vertices, shared, p.plane)
-    })
-    let result = fromPolygons(polygons)
-    result.properties = this.properties // keep original properties
-    result.isRetesselated = this.isRetesselated
-    result.isCanonicalized = this.isCanonicalized
-    return result
-  },
-
-  /** sets the color of this csg: non mutating, returns a new CSG
-   * @param  {Object} args
-   * @returns {CSG} a copy of this CSG, with the given color
-   */
-  setColor: function (args) {
-    let newshared = Polygon.Shared.fromColor.apply(this, arguments)
-    return this.setShared(newshared)
-  },
-
-  // ALIAS !
-  getTransformationAndInverseTransformationToFlatLying: function () {
-    return getTransformationAndInverseTransformationToFlatLying(this)
-  },
-
-  // ALIAS !
-  getTransformationToFlatLying: function () {
-    return getTransformationToFlatLying(this)
-  },
-
-  // ALIAS !
-  lieFlat: function () {
-    return lieFlat(this)
-  },
-
-  // project the 3D CSG onto a plane
-  // This returns a 2D CAG with the 'shadow' shape of the 3D solid when projected onto the
-  // plane represented by the orthonormal basis
-  projectToOrthoNormalBasis: function (orthobasis) {
-    // FIXME:  DEPENDS ON CAG !!
-    return projectToOrthoNormalBasis(this, orthobasis)
-  },
-
-  // FIXME: not finding any uses within our code ?
-  sectionCut: function (orthobasis) {
-    return sectionCut(this, orthobasis)
-  },
-
-  /**
-   * Returns an array of values for the requested features of this solid.
-   * Supported Features: 'volume', 'area'
-   * @param {String[]} features - list of features to calculate
-   * @returns {Float[]} values
-   * @example
-   * let volume = A.getFeatures('volume')
-   * let values = A.getFeatures('area','volume')
-   */
-  getFeatures: function (features) {
-    if (!(features instanceof Array)) {
-      features = [features]
-    }
-    let result = this.toTriangles().map(function (triPoly) {
-      return triPoly.getTetraFeatures(features)
-    })
-    .reduce(function (pv, v) {
-      return v.map(function (feat, i) {
-        return feat + (pv === 0 ? 0 : pv[i])
-      })
-    }, 0)
-    return (result.length === 1) ? result[0] : result
-  },
-  /** @return {Polygon[]} The list of polygons. */
-  toPolygons: function () {
-    return this.polygons
-  },
-
-  toString: function () {
-    let result = 'CSG solid:\n'
-    this.polygons.map(function (p) {
-      result += p.toString()
-    })
-    return result
-  },
-
-  /** returns a compact binary representation of this csg
-   * usually used to transfer CSG objects to/from webworkes
-   * NOTE: very interesting compact format, with a lot of reusable ideas
-   * @returns {Object} compact binary representation of a CSG
-   */
-  toCompactBinary: function () {
-    let csg = this.canonicalized()
-    let numpolygons = csg.polygons.length
-    let numpolygonvertices = 0
-
-    let numvertices = 0
-    let vertexmap = {}
-    let vertices = []
-
-    let numplanes = 0
-    let planemap = {}
-    let planes = []
-
-    let shareds = []
-    let sharedmap = {}
-    let numshared = 0
-        // for (let i = 0, iMax = csg.polygons.length; i < iMax; i++) {
-        //  let p = csg.polygons[i];
-        //  for (let j = 0, jMax = p.length; j < jMax; j++) {
-        //      ++numpolygonvertices;
-        //      let vertextag = p[j].getTag();
-        //      if(!(vertextag in vertexmap)) {
-        //          vertexmap[vertextag] = numvertices++;
-        //          vertices.push(p[j]);
-        //      }
-        //  }
-    csg.polygons.map(function (polygon) {
-      // FIXME: why use map if we do not return anything ?
-      // either for... or forEach
-      polygon.vertices.map(function (vertex) {
-        ++numpolygonvertices
-        let vertextag = vertex.getTag()
-        if (!(vertextag in vertexmap)) {
-          vertexmap[vertextag] = numvertices++
-          vertices.push(vertex)
-        }
-      })
-
-      let planetag = polygon.plane.getTag()
-      if (!(planetag in planemap)) {
-        planemap[planetag] = numplanes++
-        planes.push(polygon.plane)
-      }
-      let sharedtag = polygon.shared.getTag()
-      if (!(sharedtag in sharedmap)) {
-        sharedmap[sharedtag] = numshared++
-        shareds.push(polygon.shared)
-      }
-    })
-
-    let numVerticesPerPolygon = new Uint32Array(numpolygons)
-    let polygonSharedIndexes = new Uint32Array(numpolygons)
-    let polygonVertices = new Uint32Array(numpolygonvertices)
-    let polygonPlaneIndexes = new Uint32Array(numpolygons)
-    let vertexData = new Float64Array(numvertices * 3)
-    let planeData = new Float64Array(numplanes * 4)
-    let polygonVerticesIndex = 0
-
-    // FIXME: doublecheck : why does it go through the whole polygons again?
-    // can we optimise that ? (perhap due to needing size to init buffers above)
-    for (let polygonindex = 0; polygonindex < numpolygons; ++polygonindex) {
-      let polygon = csg.polygons[polygonindex]
-      numVerticesPerPolygon[polygonindex] = polygon.vertices.length
-      polygon.vertices.map(function (vertex) {
-        let vertextag = vertex.getTag()
-        let vertexindex = vertexmap[vertextag]
-        polygonVertices[polygonVerticesIndex++] = vertexindex
-      })
-      let planetag = polygon.plane.getTag()
-      let planeindex = planemap[planetag]
-      polygonPlaneIndexes[polygonindex] = planeindex
-      let sharedtag = polygon.shared.getTag()
-      let sharedindex = sharedmap[sharedtag]
-      polygonSharedIndexes[polygonindex] = sharedindex
-    }
-    let verticesArrayIndex = 0
-    vertices.map(function (vertex) {
-      const pos = vertex.pos
-      vertexData[verticesArrayIndex++] = pos._x
-      vertexData[verticesArrayIndex++] = pos._y
-      vertexData[verticesArrayIndex++] = pos._z
-    })
-    let planesArrayIndex = 0
-    planes.map(function (plane) {
-      const normal = plane.normal
-      planeData[planesArrayIndex++] = normal._x
-      planeData[planesArrayIndex++] = normal._y
-      planeData[planesArrayIndex++] = normal._z
-      planeData[planesArrayIndex++] = plane.w
-    })
-
-    let result = {
-      'class': 'CSG',
-      numPolygons: numpolygons,
-      numVerticesPerPolygon: numVerticesPerPolygon,
-      polygonPlaneIndexes: polygonPlaneIndexes,
-      polygonSharedIndexes: polygonSharedIndexes,
-      polygonVertices: polygonVertices,
-      vertexData: vertexData,
-      planeData: planeData,
-      shared: shareds
-    }
-    return result
-  },
-
-  /** returns the triangles of this csg
-   * @returns {Polygons} triangulated polygons
-   */
-  toTriangles: function () {
-    let polygons = []
-    this.polygons.forEach(function (poly) {
-      let firstVertex = poly.vertices[0]
-      for (let i = poly.vertices.length - 3; i >= 0; i--) {
-        polygons.push(new Polygon(
-          [
-            firstVertex,
-            poly.vertices[i + 1],
-            poly.vertices[i + 2]
-          ],
-          poly.shared,
-          poly.plane))
-      }
-    })
-    return polygons
-  }
-}
-
-module.exports = CSG
-
-},{"../api/center":115,"../api/ops-cnc":118,"../api/ops-cuts":119,"../api/ops-expandContract":120,"./CAG":126,"./CSGFactories":129,"./Properties":133,"./math/OrthoNormalBasis":139,"./math/Plane":141,"./math/Polygon3":143,"./trees":152,"./utils/canonicalize":156,"./utils/csgMeasurements":157,"./utils/csgProjections":158,"./utils/fixTJunctions":159,"./utils/retesellate":160}],129:[function(require,module,exports){
-arguments[4][77][0].apply(exports,arguments)
-},{"./CSG":128,"./math/Plane":141,"./math/Polygon2":142,"./math/Polygon3":143,"./math/Vector3":146,"./math/Vertex3":148,"dup":77}],130:[function(require,module,exports){
-arguments[4][18][0].apply(exports,arguments)
-},{"dup":18}],131:[function(require,module,exports){
-arguments[4][19][0].apply(exports,arguments)
-},{"./FuzzyFactory":130,"./constants":135,"./math/Side":144,"dup":19}],132:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"./FuzzyFactory":130,"./constants":135,"./math/Polygon3":143,"dup":20}],133:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"dup":21}],134:[function(require,module,exports){
-arguments[4][82][0].apply(exports,arguments)
-},{"./CSG":128,"./math/Line3":137,"./math/Matrix4":138,"./math/OrthoNormalBasis":139,"./math/Plane":141,"./math/Vector3":146,"dup":82}],135:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],136:[function(require,module,exports){
-arguments[4][25][0].apply(exports,arguments)
-},{"../utils":153,"./Vector2":145,"dup":25}],137:[function(require,module,exports){
-arguments[4][26][0].apply(exports,arguments)
-},{"../constants":135,"../utils":153,"./Vector3":146,"dup":26}],138:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./OrthoNormalBasis":139,"./Plane":141,"./Vector2":145,"./Vector3":146,"dup":27}],139:[function(require,module,exports){
-arguments[4][87][0].apply(exports,arguments)
-},{"./Line2":136,"./Line3":137,"./Matrix4":138,"./Plane":141,"./Vector2":145,"./Vector3":146,"dup":87}],140:[function(require,module,exports){
-arguments[4][88][0].apply(exports,arguments)
-},{"../../api/optionParsers":122,"../CAG":126,"../constants":135,"./Side":144,"./Vector2":145,"./Vertex2":147,"dup":88}],141:[function(require,module,exports){
-arguments[4][30][0].apply(exports,arguments)
-},{"../constants":135,"./Line3":137,"./Vector3":146,"dup":30}],142:[function(require,module,exports){
-arguments[4][90][0].apply(exports,arguments)
-},{"../CAG":126,"../CAGFactories":127,"dup":90}],143:[function(require,module,exports){
-arguments[4][91][0].apply(exports,arguments)
-},{"../../api/solidFromSlices":125,"../CAG":126,"../CAGFactories":127,"../CSGFactories":129,"../constants":135,"./Matrix4":138,"./Plane":141,"./Vector3":146,"./Vertex3":148,"dup":91}],144:[function(require,module,exports){
-arguments[4][92][0].apply(exports,arguments)
-},{"../constants":135,"./Polygon3":143,"./Vector2":145,"./Vertex2":147,"./Vertex3":148,"dup":92}],145:[function(require,module,exports){
-arguments[4][93][0].apply(exports,arguments)
-},{"../utils":153,"./Vector3":146,"dup":93}],146:[function(require,module,exports){
-arguments[4][35][0].apply(exports,arguments)
-},{"../utils":153,"./Vector2":145,"dup":35}],147:[function(require,module,exports){
-arguments[4][36][0].apply(exports,arguments)
-},{"../constants":135,"./Vector2":145,"dup":36}],148:[function(require,module,exports){
-arguments[4][37][0].apply(exports,arguments)
-},{"../constants":135,"./Vector3":146,"dup":37}],149:[function(require,module,exports){
-arguments[4][97][0].apply(exports,arguments)
-},{"../constants":135,"../utils":153,"dup":97}],150:[function(require,module,exports){
-arguments[4][98][0].apply(exports,arguments)
-},{"../constants":135,"../utils":153,"./Line2":136,"./OrthoNormalBasis":139,"./Polygon3":143,"./Vector2":145,"./Vertex3":148,"dup":98}],151:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"./math/Matrix4":138,"./math/Plane":141,"./math/Vector3":146,"dup":40}],152:[function(require,module,exports){
-arguments[4][100][0].apply(exports,arguments)
-},{"./constants":135,"./math/Polygon3":143,"./math/Vertex3":148,"dup":100}],153:[function(require,module,exports){
-arguments[4][101][0].apply(exports,arguments)
-},{"dup":101}],154:[function(require,module,exports){
-arguments[4][102][0].apply(exports,arguments)
-},{"../math/Vector2":145,"dup":102}],155:[function(require,module,exports){
-arguments[4][103][0].apply(exports,arguments)
-},{"../constants":135,"../math/lineUtils":149,"dup":103}],156:[function(require,module,exports){
-arguments[4][104][0].apply(exports,arguments)
-},{"../CAGFactories":127,"../CSGFactories":129,"../FuzzyFactory2d":131,"../FuzzyFactory3d":132,"../constants":135,"dup":104}],157:[function(require,module,exports){
-arguments[4][105][0].apply(exports,arguments)
-},{"../math/Vector3":146,"dup":105}],158:[function(require,module,exports){
-arguments[4][106][0].apply(exports,arguments)
-},{"../CAG":126,"../constants":135,"dup":106}],159:[function(require,module,exports){
-arguments[4][46][0].apply(exports,arguments)
-},{"../constants":135,"../math/Plane":141,"../math/Polygon3":143,"dup":46}],160:[function(require,module,exports){
-arguments[4][108][0].apply(exports,arguments)
-},{"../CSGFactories":129,"../FuzzyFactory3d":132,"../math/reTesselateCoplanarPolygons":150,"dup":108}],161:[function(require,module,exports){
-/* converts input data to array if it is not already an array */
-function toArray (data) {
-  if (!data) return []
-  if (data.constructor !== Array) return [data]
-  return data
-}
-
-module.exports = toArray
-
-},{}],162:[function(require,module,exports){
+},{"./autocad":79,"@jscad/csg":18}],82:[function(require,module,exports){
 /*
 ## License
 
@@ -21164,6 +13953,7 @@ function findLayer0 (layers) {
   }
   // this DXF did not specify so create
   let layer = {type: 'layer'}
+  layer['lnam'] = 'layer0'
   layer['name'] = '0'
   layer['lscl'] = 1.0
   layer['visb'] = 0
@@ -21455,9 +14245,9 @@ function translateCurrent (obj, layers, parts, options) {
 // translate the given layer into a wrapper function for the previous translated objects
 //
 function translateLayer (layer) {
-  let name = layer['name'] || 'Unknown'
+  let name = layer['lnam'] || 'Unknown'
 
-  let script = `function layer${name}() {
+  let script = `function ${name}() {
 `
   for (let object of layer['objects']) {
     script += object['script']
@@ -21496,6 +14286,8 @@ const translateAsciiDxf = function (reader, options) {
   let objects = [] // the list of objects translated
   let numobjs = 0
 
+  findLayer0(layers)
+
   let p = null
   for (let obj of reader.objstack) {
     p = null
@@ -21527,6 +14319,7 @@ const translateAsciiDxf = function (reader, options) {
         parts = []
         // save the layer for later reference
         obj['objects'] = [] // with a list of objects
+        obj['lnam'] = 'layer' + layers.length
         layers.push(obj)
         break
       case 'variable':
@@ -21633,8 +14426,8 @@ const translateAsciiDxf = function (reader, options) {
   let script = 'function main() {\n  let layers = []\n  return layers.concat('
   layers.forEach(
     function (layer) {
-      let name = layer['name'] || 'Unknown'
-      script += `layer${name}(),`
+      let name = layer['lnam'] || 'Unknown'
+      script += `${name}(),`
     }
   )
   script += '[])\n}\n'
@@ -21670,7 +14463,7 @@ function createPolygon(listofpoints,color,pointandw) {
 
 module.exports = translateAsciiDxf
 
-},{"./autocad":110,"./instantiate":112,"@jscad/csg":113}],163:[function(require,module,exports){
+},{"./autocad":79,"./instantiate":81,"@jscad/csg":18}],83:[function(require,module,exports){
 /*
 AutoCAD DXF Content
 
@@ -24915,7 +17708,7 @@ module.exports = {
   dxfObjects
 }
 
-},{}],164:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 /*
 JSCAD Object to AutoCAD DXF Entity Serialization
 
@@ -24941,6 +17734,7 @@ TBD
 */
 
 const {isCAG, isCSG} = require('@jscad/csg')
+const {ensureManifoldness} = require('@jscad/io-utils')
 const {dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects} = require('./autocad_AC2017')
 
 const mimeType = 'application/dxf'
@@ -24989,6 +17783,7 @@ const dxfEntities = function (objects, options) {
       return PathsToLwpolyine(paths, options)
     }
     if (isCSG(object)) {
+      object = ensureManifoldness(object)
       if (options.csgTo === 'polyline') {
         return PolygonsToPolyline(object, options)
       }
@@ -25130,14 +17925,40 @@ const PolygonsTo3DFaces = function (csg, options) {
   options.statusCallback && options.statusCallback({progress: 0})
   let str = ''
   csg.polygons.map(function (polygon, i) {
-    let corner10 = polygon.vertices[0].pos
-    let corner11 = polygon.vertices[1].pos
-    let corner12 = polygon.vertices[2].pos
-    let corner13 = polygon.vertices[2].pos
-    if (polygon.vertices.length > 3) {
-      corner13 = polygon.vertices[3].pos
-    }
-    str += `  0
+    let triangles = polygonToTriangles(polygon)
+    triangles.map(function (triangle, i) {
+      str += triangleTo3DFaces(triangle, options)
+    })
+  })
+  options.statusCallback && options.statusCallback({progress: 100})
+  return [str]
+}
+
+//
+// convert the given polygon to triangles
+//
+// NOTE: This only works for CONVEX polygons
+const polygonToTriangles = (polygon) => {
+  let length = polygon.vertices.length - 2
+  if (length < 1) return []
+
+  let pivot = polygon.vertices[0]
+  let triangles = []
+  for (let i = 0; i < length; i++) {
+    triangles.push([pivot, polygon.vertices[i + 1], polygon.vertices[i + 2]])
+  }
+  return triangles
+}
+
+//
+// convert the given triangle to DXF 3D face entity
+//
+const triangleTo3DFaces = (triangle, options) => {
+  let corner10 = triangle[0].pos
+  let corner11 = triangle[1].pos
+  let corner12 = triangle[2].pos
+  let corner13 = triangle[2].pos // same in DXF
+  let str = `  0
 3DFACE
   5
 ${getEntityId()}
@@ -25174,9 +17995,7 @@ ${corner13.y}
   33
 ${corner13.z}
 `
-  })
-  options.statusCallback && options.statusCallback({progress: 100})
-  return [str]
+  return str
 }
 
 // convert the given CSG to DXF POLYLINE (polyface mesh)
@@ -25315,105 +18134,7 @@ module.exports = {
   mimeType
 }
 
-},{"./autocad_AC2017":163,"@jscad/csg":165}],165:[function(require,module,exports){
-arguments[4][113][0].apply(exports,arguments)
-},{"./src/api/debugHelpers":168,"./src/api/optionParsers":174,"./src/api/primitives2d":175,"./src/api/primitives3d":176,"./src/core/CAG":178,"./src/core/CAGFactories":179,"./src/core/CSG":180,"./src/core/CSGFactories":181,"./src/core/Properties":185,"./src/core/connectors":186,"./src/core/constants":187,"./src/core/math/Line2":188,"./src/core/math/Line3":189,"./src/core/math/Matrix4":190,"./src/core/math/OrthoNormalBasis":191,"./src/core/math/Path2":192,"./src/core/math/Plane":193,"./src/core/math/Polygon2":194,"./src/core/math/Polygon3":195,"./src/core/math/Side":196,"./src/core/math/Vector2":197,"./src/core/math/Vector3":198,"./src/core/math/Vertex2":199,"./src/core/math/Vertex3":200,"./src/core/mutators":203,"./src/core/utils":205,"dup":113}],166:[function(require,module,exports){
-arguments[4][53][0].apply(exports,arguments)
-},{"../core/math/Path2":192,"dup":53}],167:[function(require,module,exports){
-arguments[4][115][0].apply(exports,arguments)
-},{"../core/utils/toArray":213,"dup":115}],168:[function(require,module,exports){
-arguments[4][56][0].apply(exports,arguments)
-},{"../core/CSG":180,"./primitives3d":176,"dup":56}],169:[function(require,module,exports){
-arguments[4][57][0].apply(exports,arguments)
-},{"../core/math/Polygon3":195,"../core/math/Vector3":198,"../core/math/Vertex3":200,"dup":57}],170:[function(require,module,exports){
-arguments[4][62][0].apply(exports,arguments)
-},{"../core/CAGFactories":179,"../core/connectors.js":186,"../core/math/Matrix4.js":190,"../core/math/Vector2":197,"../core/math/Vector3.js":198,"dup":62}],171:[function(require,module,exports){
-arguments[4][63][0].apply(exports,arguments)
-},{"../core/CSG":180,"../core/constants":187,"../core/math/OrthoNormalBasis":191,"../core/math/Plane":193,"../core/math/Polygon3":195,"../core/math/Vector2":197,"../core/math/Vertex3":200,"dup":63}],172:[function(require,module,exports){
-arguments[4][64][0].apply(exports,arguments)
-},{"../core/CAG":178,"../core/CAGFactories":179,"../core/CSG":180,"../core/CSGFactories":181,"../core/constants":187,"../core/math/Polygon3":195,"../core/math/Vector2":197,"../core/math/Vertex3":200,"../core/utils":205,"dup":64}],173:[function(require,module,exports){
-arguments[4][65][0].apply(exports,arguments)
-},{"../core/CAGFactories":179,"../core/CSG":180,"../core/CSGFactories":181,"../core/connectors":186,"../core/constants":187,"../core/math/Matrix4":190,"../core/math/OrthoNormalBasis":191,"../core/math/Path2":192,"../core/math/Vector3":198,"./helpers":169,"./optionParsers":174,"dup":65}],174:[function(require,module,exports){
-arguments[4][67][0].apply(exports,arguments)
-},{"../core/math/Vector2":197,"../core/math/Vector3":198,"dup":67}],175:[function(require,module,exports){
-arguments[4][69][0].apply(exports,arguments)
-},{"../core/CAG":178,"../core/CAGFactories":179,"../core/constants":187,"../core/math/Path2":192,"../core/math/Vector2":197,"../core/math/Vertex2":199,"./optionParsers":174,"dup":69}],176:[function(require,module,exports){
-arguments[4][71][0].apply(exports,arguments)
-},{"../core/CSGFactories":181,"../core/Properties":185,"../core/connectors":186,"../core/constants":187,"../core/math/Polygon3":195,"../core/math/Vector3":198,"../core/math/Vertex3":200,"./optionParsers":174,"dup":71}],177:[function(require,module,exports){
-arguments[4][72][0].apply(exports,arguments)
-},{"../core/CSGFactories":181,"../core/math/Polygon3":195,"../core/utils":205,"dup":72}],178:[function(require,module,exports){
-arguments[4][126][0].apply(exports,arguments)
-},{"../api/cagOutlinePaths":166,"../api/center":167,"../api/ops-cnc":170,"../api/ops-expandContract":172,"../api/ops-extrusions":173,"./CAGFactories":179,"./CSGFactories":181,"./connectors":186,"./math/Polygon3":195,"./math/Vector2":197,"./math/Vector3":198,"./math/Vertex3":200,"./utils/cagMeasurements":206,"./utils/cagValidation":207,"./utils/canonicalize":208,"./utils/retesellate":212,"dup":126}],179:[function(require,module,exports){
-arguments[4][75][0].apply(exports,arguments)
-},{"./CAG":178,"./constants":187,"./math/Side":196,"./math/Vector2":197,"./math/Vertex2":199,"./utils/cagValidation":207,"dup":75}],180:[function(require,module,exports){
-arguments[4][128][0].apply(exports,arguments)
-},{"../api/center":167,"../api/ops-cnc":170,"../api/ops-cuts":171,"../api/ops-expandContract":172,"./CAG":178,"./CSGFactories":181,"./Properties":185,"./math/OrthoNormalBasis":191,"./math/Plane":193,"./math/Polygon3":195,"./trees":204,"./utils/canonicalize":208,"./utils/csgMeasurements":209,"./utils/csgProjections":210,"./utils/fixTJunctions":211,"./utils/retesellate":212,"dup":128}],181:[function(require,module,exports){
-arguments[4][77][0].apply(exports,arguments)
-},{"./CSG":180,"./math/Plane":193,"./math/Polygon2":194,"./math/Polygon3":195,"./math/Vector3":198,"./math/Vertex3":200,"dup":77}],182:[function(require,module,exports){
-arguments[4][18][0].apply(exports,arguments)
-},{"dup":18}],183:[function(require,module,exports){
-arguments[4][19][0].apply(exports,arguments)
-},{"./FuzzyFactory":182,"./constants":187,"./math/Side":196,"dup":19}],184:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"./FuzzyFactory":182,"./constants":187,"./math/Polygon3":195,"dup":20}],185:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"dup":21}],186:[function(require,module,exports){
-arguments[4][82][0].apply(exports,arguments)
-},{"./CSG":180,"./math/Line3":189,"./math/Matrix4":190,"./math/OrthoNormalBasis":191,"./math/Plane":193,"./math/Vector3":198,"dup":82}],187:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],188:[function(require,module,exports){
-arguments[4][25][0].apply(exports,arguments)
-},{"../utils":205,"./Vector2":197,"dup":25}],189:[function(require,module,exports){
-arguments[4][26][0].apply(exports,arguments)
-},{"../constants":187,"../utils":205,"./Vector3":198,"dup":26}],190:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./OrthoNormalBasis":191,"./Plane":193,"./Vector2":197,"./Vector3":198,"dup":27}],191:[function(require,module,exports){
-arguments[4][87][0].apply(exports,arguments)
-},{"./Line2":188,"./Line3":189,"./Matrix4":190,"./Plane":193,"./Vector2":197,"./Vector3":198,"dup":87}],192:[function(require,module,exports){
-arguments[4][88][0].apply(exports,arguments)
-},{"../../api/optionParsers":174,"../CAG":178,"../constants":187,"./Side":196,"./Vector2":197,"./Vertex2":199,"dup":88}],193:[function(require,module,exports){
-arguments[4][30][0].apply(exports,arguments)
-},{"../constants":187,"./Line3":189,"./Vector3":198,"dup":30}],194:[function(require,module,exports){
-arguments[4][90][0].apply(exports,arguments)
-},{"../CAG":178,"../CAGFactories":179,"dup":90}],195:[function(require,module,exports){
-arguments[4][91][0].apply(exports,arguments)
-},{"../../api/solidFromSlices":177,"../CAG":178,"../CAGFactories":179,"../CSGFactories":181,"../constants":187,"./Matrix4":190,"./Plane":193,"./Vector3":198,"./Vertex3":200,"dup":91}],196:[function(require,module,exports){
-arguments[4][92][0].apply(exports,arguments)
-},{"../constants":187,"./Polygon3":195,"./Vector2":197,"./Vertex2":199,"./Vertex3":200,"dup":92}],197:[function(require,module,exports){
-arguments[4][93][0].apply(exports,arguments)
-},{"../utils":205,"./Vector3":198,"dup":93}],198:[function(require,module,exports){
-arguments[4][35][0].apply(exports,arguments)
-},{"../utils":205,"./Vector2":197,"dup":35}],199:[function(require,module,exports){
-arguments[4][36][0].apply(exports,arguments)
-},{"../constants":187,"./Vector2":197,"dup":36}],200:[function(require,module,exports){
-arguments[4][37][0].apply(exports,arguments)
-},{"../constants":187,"./Vector3":198,"dup":37}],201:[function(require,module,exports){
-arguments[4][97][0].apply(exports,arguments)
-},{"../constants":187,"../utils":205,"dup":97}],202:[function(require,module,exports){
-arguments[4][98][0].apply(exports,arguments)
-},{"../constants":187,"../utils":205,"./Line2":188,"./OrthoNormalBasis":191,"./Polygon3":195,"./Vector2":197,"./Vertex3":200,"dup":98}],203:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"./math/Matrix4":190,"./math/Plane":193,"./math/Vector3":198,"dup":40}],204:[function(require,module,exports){
-arguments[4][100][0].apply(exports,arguments)
-},{"./constants":187,"./math/Polygon3":195,"./math/Vertex3":200,"dup":100}],205:[function(require,module,exports){
-arguments[4][101][0].apply(exports,arguments)
-},{"dup":101}],206:[function(require,module,exports){
-arguments[4][102][0].apply(exports,arguments)
-},{"../math/Vector2":197,"dup":102}],207:[function(require,module,exports){
-arguments[4][103][0].apply(exports,arguments)
-},{"../constants":187,"../math/lineUtils":201,"dup":103}],208:[function(require,module,exports){
-arguments[4][104][0].apply(exports,arguments)
-},{"../CAGFactories":179,"../CSGFactories":181,"../FuzzyFactory2d":183,"../FuzzyFactory3d":184,"../constants":187,"dup":104}],209:[function(require,module,exports){
-arguments[4][105][0].apply(exports,arguments)
-},{"../math/Vector3":198,"dup":105}],210:[function(require,module,exports){
-arguments[4][106][0].apply(exports,arguments)
-},{"../CAG":178,"../constants":187,"dup":106}],211:[function(require,module,exports){
-arguments[4][46][0].apply(exports,arguments)
-},{"../constants":187,"../math/Plane":193,"../math/Polygon3":195,"dup":46}],212:[function(require,module,exports){
-arguments[4][108][0].apply(exports,arguments)
-},{"../CSGFactories":181,"../FuzzyFactory3d":184,"../math/reTesselateCoplanarPolygons":202,"dup":108}],213:[function(require,module,exports){
-arguments[4][161][0].apply(exports,arguments)
-},{"dup":161}],214:[function(require,module,exports){
+},{"./autocad_AC2017":83,"@jscad/csg":18,"@jscad/io-utils":88}],85:[function(require,module,exports){
 
 function deserialize (gcode, filename, options) {
   options && options.statusCallback && options.statusCallback({progress: 0})
@@ -25526,7 +18247,7 @@ module.exports = {
   deserialize
 }
 
-},{}],215:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 // BinaryReader
 // Refactored by Vjeux <vjeuxx@gmail.com>
 // http://blog.vjeux.com/2010/javascript/javascript-binary-reader.html
@@ -25652,7 +18373,7 @@ BinaryReader.prototype = {
 
 module.exports = BinaryReader
 
-},{}],216:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 /**
  * wrapper around internal csg methods (in case they change) to make sure
  * it resuts in a manifold mesh
@@ -25672,13 +18393,13 @@ function ensureManifoldness (input) {
 
 module.exports = ensureManifoldness
 
-},{}],217:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 const makeBlob = require('./makeBlob')
 const BinaryReader = require('./BinaryReader')
 const ensureManifoldness = require('./ensureManifoldness')
 module.exports = {makeBlob, BinaryReader, ensureManifoldness}
 
-},{"./BinaryReader":215,"./ensureManifoldness":216,"./makeBlob":218}],218:[function(require,module,exports){
+},{"./BinaryReader":86,"./ensureManifoldness":87,"./makeBlob":89}],89:[function(require,module,exports){
 (function (Buffer){
 /*
  * Blob.js
@@ -25796,7 +18517,7 @@ Blob.prototype = {
 module.exports = makeBlob
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":426}],219:[function(require,module,exports){
+},{"buffer":127}],90:[function(require,module,exports){
 const {makeBlob} = require('@jscad/io-utils')
 
 const amfSerializer = require('@jscad/amf-serializer')
@@ -25851,7 +18572,7 @@ export {parseOBJ} from './deserializers/parseOBJ'
 export {parseSTL} from './deserializers/parseSTL'
 export {parseSVG} from './deserializers/parseSVG' */
 
-},{"@jscad/amf-deserializer":12,"@jscad/amf-serializer":50,"@jscad/dxf-deserializer":111,"@jscad/dxf-serializer":164,"@jscad/gcode-deserializer":214,"@jscad/io-utils":217,"@jscad/json-deserializer":220,"@jscad/json-serializer":255,"@jscad/obj-deserializer":256,"@jscad/stl-deserializer":292,"@jscad/stl-serializer":330,"@jscad/svg-deserializer":333,"@jscad/svg-serializer":371,"@jscad/x3d-serializer":406}],220:[function(require,module,exports){
+},{"@jscad/amf-deserializer":12,"@jscad/amf-serializer":16,"@jscad/dxf-deserializer":80,"@jscad/dxf-serializer":84,"@jscad/gcode-deserializer":85,"@jscad/io-utils":88,"@jscad/json-deserializer":91,"@jscad/json-serializer":92,"@jscad/obj-deserializer":93,"@jscad/stl-deserializer":95,"@jscad/stl-serializer":99,"@jscad/svg-deserializer":102,"@jscad/svg-serializer":106,"@jscad/x3d-serializer":107}],91:[function(require,module,exports){
 /*
 ## License
 
@@ -25963,650 +18684,7 @@ module.exports = {
   deserialize
 }
 
-},{"@jscad/csg":221}],221:[function(require,module,exports){
-arguments[4][13][0].apply(exports,arguments)
-},{"./src/CAG":222,"./src/CAGFactories":223,"./src/CSG":224,"./src/CSGFactories":225,"./src/Properties":229,"./src/connectors":230,"./src/constants":231,"./src/debugHelpers":232,"./src/math/Line2":233,"./src/math/Line3":234,"./src/math/Matrix4":235,"./src/math/OrthoNormalBasis":236,"./src/math/Path2":237,"./src/math/Plane":238,"./src/math/Polygon2":239,"./src/math/Polygon3":240,"./src/math/Side":241,"./src/math/Vector2":242,"./src/math/Vector3":243,"./src/math/Vertex2":244,"./src/math/Vertex3":245,"./src/mutators":248,"./src/primitives2d":250,"./src/primitives3d":251,"dup":13}],222:[function(require,module,exports){
-arguments[4][14][0].apply(exports,arguments)
-},{"./CSG":224,"./FuzzyFactory2d":227,"./connectors":230,"./constants":231,"./math/OrthoNormalBasis":236,"./math/Path2":237,"./math/Polygon3":240,"./math/Side":241,"./math/Vector2":242,"./math/Vector3":243,"./math/Vertex2":244,"./math/Vertex3":245,"./math/lineUtils":246,"./optionParsers":249,"dup":14}],223:[function(require,module,exports){
-arguments[4][15][0].apply(exports,arguments)
-},{"./CAG":222,"./math/Path2":237,"./math/Side":241,"./math/Vector2":242,"./math/Vertex2":244,"dup":15}],224:[function(require,module,exports){
-arguments[4][16][0].apply(exports,arguments)
-},{"./CAG":222,"./FuzzyFactory3d":228,"./Properties":229,"./connectors":230,"./constants":231,"./math/Matrix4":235,"./math/OrthoNormalBasis":236,"./math/Plane":238,"./math/Polygon3":240,"./math/Vector2":242,"./math/Vector3":243,"./math/Vertex3":245,"./math/polygonUtils":247,"./trees":252,"./utils":253,"./utils/fixTJunctions":254,"dup":16}],225:[function(require,module,exports){
-arguments[4][17][0].apply(exports,arguments)
-},{"./CSG":224,"./math/Plane":238,"./math/Polygon2":239,"./math/Polygon3":240,"./math/Vector3":243,"./math/Vertex3":245,"dup":17}],226:[function(require,module,exports){
-arguments[4][18][0].apply(exports,arguments)
-},{"dup":18}],227:[function(require,module,exports){
-arguments[4][19][0].apply(exports,arguments)
-},{"./FuzzyFactory":226,"./constants":231,"./math/Side":241,"dup":19}],228:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"./FuzzyFactory":226,"./constants":231,"./math/Polygon3":240,"dup":20}],229:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"dup":21}],230:[function(require,module,exports){
-arguments[4][22][0].apply(exports,arguments)
-},{"./CSG":224,"./math/Line3":234,"./math/Matrix4":235,"./math/OrthoNormalBasis":236,"./math/Plane":238,"./math/Vector3":243,"dup":22}],231:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],232:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"./CSG":224,"./primitives3d":251,"dup":24}],233:[function(require,module,exports){
-arguments[4][25][0].apply(exports,arguments)
-},{"../utils":253,"./Vector2":242,"dup":25}],234:[function(require,module,exports){
-arguments[4][26][0].apply(exports,arguments)
-},{"../constants":231,"../utils":253,"./Vector3":243,"dup":26}],235:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./OrthoNormalBasis":236,"./Plane":238,"./Vector2":242,"./Vector3":243,"dup":27}],236:[function(require,module,exports){
-arguments[4][28][0].apply(exports,arguments)
-},{"./Line2":233,"./Line3":234,"./Matrix4":235,"./Plane":238,"./Vector2":242,"./Vector3":243,"dup":28}],237:[function(require,module,exports){
-arguments[4][29][0].apply(exports,arguments)
-},{"../CAG":222,"../constants":231,"../optionParsers":249,"./Side":241,"./Vector2":242,"./Vertex2":244,"dup":29}],238:[function(require,module,exports){
-arguments[4][30][0].apply(exports,arguments)
-},{"../constants":231,"./Line3":234,"./Vector3":243,"dup":30}],239:[function(require,module,exports){
-arguments[4][31][0].apply(exports,arguments)
-},{"../CAG":222,"dup":31}],240:[function(require,module,exports){
-const Vector3D = require('./Vector3')
-const Vertex = require('./Vertex3')
-const Matrix4x4 = require('./Matrix4')
-const {_CSGDEBUG, EPS, getTag, areaEPS} = require('../constants')
-const {fnSortByIndex} = require('../utils')
-
-/** Class Polygon
- * Represents a convex polygon. The vertices used to initialize a polygon must
- *   be coplanar and form a convex loop. They do not have to be `Vertex`
- *   instances but they must behave similarly (duck typing can be used for
- *   customization).
- * <br>
- * Each convex polygon has a `shared` property, which is shared between all
- *   polygons that are clones of each other or were split from the same polygon.
- *   This can be used to define per-polygon properties (such as surface color).
- * <br>
- * The plane of the polygon is calculated from the vertex coordinates if not provided.
- *   The plane can alternatively be passed as the third argument to avoid calculations.
- *
- * @constructor
- * @param {Vertex[]} vertices - list of vertices
- * @param {Polygon.Shared} [shared=defaultShared] - shared property to apply
- * @param {Plane} [plane] - plane of the polygon
- *
- * @example
- * const vertices = [
- *   new CSG.Vertex(new CSG.Vector3D([0, 0, 0])),
- *   new CSG.Vertex(new CSG.Vector3D([0, 10, 0])),
- *   new CSG.Vertex(new CSG.Vector3D([0, 10, 10]))
- * ]
- * let observed = new Polygon(vertices)
- */
-let Polygon = function (vertices, shared, plane) {
-  this.vertices = vertices
-  if (!shared) shared = Polygon.defaultShared
-  this.shared = shared
-    // let numvertices = vertices.length;
-
-  if (arguments.length >= 3) {
-    this.plane = plane
-  } else {
-    const Plane = require('./Plane') // FIXME: circular dependencies
-    this.plane = Plane.fromVector3Ds(vertices[0].pos, vertices[1].pos, vertices[2].pos)
-  }
-
-  if (_CSGDEBUG) {
-    if (!this.checkIfConvex()) {
-      throw new Error('Not convex!')
-    }
-  }
-}
-
-// create from an untyped object with identical property names:
-Polygon.fromObject = function (obj) {
-  const Plane = require('./Plane') // FIXME: circular dependencies
-  let vertices = obj.vertices.map(function (v) {
-    return Vertex.fromObject(v)
-  })
-  let shared = Polygon.Shared.fromObject(obj.shared)
-  let plane = Plane.fromObject(obj.plane)
-  return new Polygon(vertices, shared, plane)
-}
-
-Polygon.prototype = {
-  /** Check whether the polygon is convex. (it should be, otherwise we will get unexpected results)
-   * @returns {boolean}
-   */
-  checkIfConvex: function () {
-    return Polygon.verticesConvex(this.vertices, this.plane.normal)
-  },
-
-  // FIXME what? why does this return this, and not a new polygon?
-  // FIXME is this used?
-  setColor: function (args) {
-    let newshared = Polygon.Shared.fromColor.apply(this, arguments)
-    this.shared = newshared
-    return this
-  },
-
-  getSignedVolume: function () {
-    let signedVolume = 0
-    for (let i = 0; i < this.vertices.length - 2; i++) {
-      signedVolume += this.vertices[0].pos.dot(this.vertices[i + 1].pos
-                .cross(this.vertices[i + 2].pos))
-    }
-    signedVolume /= 6
-    return signedVolume
-  },
-
-    // Note: could calculate vectors only once to speed up
-  getArea: function () {
-    let polygonArea = 0
-    for (let i = 0; i < this.vertices.length - 2; i++) {
-      polygonArea += this.vertices[i + 1].pos.minus(this.vertices[0].pos)
-                .cross(this.vertices[i + 2].pos.minus(this.vertices[i + 1].pos)).length()
-    }
-    polygonArea /= 2
-    return polygonArea
-  },
-
-    // accepts array of features to calculate
-    // returns array of results
-  getTetraFeatures: function (features) {
-    let result = []
-    features.forEach(function (feature) {
-      if (feature === 'volume') {
-        result.push(this.getSignedVolume())
-      } else if (feature === 'area') {
-        result.push(this.getArea())
-      }
-    }, this)
-    return result
-  },
-
-    // Extrude a polygon into the direction offsetvector
-    // Returns a CSG object
-  extrude: function (offsetvector) {
-    const CSG = require('../CSG') // because of circular dependencies
-
-    let newpolygons = []
-
-    let polygon1 = this
-    let direction = polygon1.plane.normal.dot(offsetvector)
-    if (direction > 0) {
-      polygon1 = polygon1.flipped()
-    }
-    newpolygons.push(polygon1)
-    let polygon2 = polygon1.translate(offsetvector)
-    let numvertices = this.vertices.length
-    for (let i = 0; i < numvertices; i++) {
-      let sidefacepoints = []
-      let nexti = (i < (numvertices - 1)) ? i + 1 : 0
-      sidefacepoints.push(polygon1.vertices[i].pos)
-      sidefacepoints.push(polygon2.vertices[i].pos)
-      sidefacepoints.push(polygon2.vertices[nexti].pos)
-      sidefacepoints.push(polygon1.vertices[nexti].pos)
-      let sidefacepolygon = Polygon.createFromPoints(sidefacepoints, this.shared)
-      newpolygons.push(sidefacepolygon)
-    }
-    polygon2 = polygon2.flipped()
-    newpolygons.push(polygon2)
-    return CSG.fromPolygons(newpolygons)
-  },
-
-  translate: function (offset) {
-    return this.transform(Matrix4x4.translation(offset))
-  },
-
-    // returns an array with a Vector3D (center point) and a radius
-  boundingSphere: function () {
-    if (!this.cachedBoundingSphere) {
-      let box = this.boundingBox()
-      let middle = box[0].plus(box[1]).times(0.5)
-      let radius3 = box[1].minus(middle)
-      let radius = radius3.length()
-      this.cachedBoundingSphere = [middle, radius]
-    }
-    return this.cachedBoundingSphere
-  },
-
-    // returns an array of two Vector3Ds (minimum coordinates and maximum coordinates)
-  boundingBox: function () {
-    if (!this.cachedBoundingBox) {
-      let minpoint, maxpoint
-      let vertices = this.vertices
-      let numvertices = vertices.length
-      if (numvertices === 0) {
-        minpoint = new Vector3D(0, 0, 0)
-      } else {
-        minpoint = vertices[0].pos
-      }
-      maxpoint = minpoint
-      for (let i = 1; i < numvertices; i++) {
-        let point = vertices[i].pos
-        minpoint = minpoint.min(point)
-        maxpoint = maxpoint.max(point)
-      }
-      this.cachedBoundingBox = [minpoint, maxpoint]
-    }
-    return this.cachedBoundingBox
-  },
-
-  flipped: function () {
-    let newvertices = this.vertices.map(function (v) {
-      return v.flipped()
-    })
-    newvertices.reverse()
-    let newplane = this.plane.flipped()
-    return new Polygon(newvertices, this.shared, newplane)
-  },
-
-    // Affine transformation of polygon. Returns a new Polygon
-  transform: function (matrix4x4) {
-    let newvertices = this.vertices.map(function (v) {
-      return v.transform(matrix4x4)
-    })
-    let newplane = this.plane.transform(matrix4x4)
-    if (matrix4x4.isMirroring()) {
-            // need to reverse the vertex order
-            // in order to preserve the inside/outside orientation:
-      newvertices.reverse()
-    }
-    return new Polygon(newvertices, this.shared, newplane)
-  },
-
-  toString: function () {
-    let result = 'Polygon plane: ' + this.plane.toString() + '\n'
-    this.vertices.map(function (vertex) {
-      result += '  ' + vertex.toString() + '\n'
-    })
-    return result
-  },
-
-    // project the 3D polygon onto a plane
-  projectToOrthoNormalBasis: function (orthobasis) {
-    const CAG = require('../CAG')
-    const {fromPointsNoCheck} = require('../CAGFactories') // circular dependencies
-    let points2d = this.vertices.map(function (vertex) {
-      return orthobasis.to2D(vertex.pos)
-    })
-
-    let result = fromPointsNoCheck(points2d)
-    let area = result.area()
-    if (Math.abs(area) < areaEPS) {
-            // the polygon was perpendicular to the orthnormal plane. The resulting 2D polygon would be degenerate
-            // return an empty area instead:
-      result = new CAG()
-    } else if (area < 0) {
-      result = result.flipped()
-    }
-    return result
-  },
-
-  //FIXME: WHY is this for 3D polygons and not for 2D shapes ?
-    /**
-     * Creates solid from slices (Polygon) by generating walls
-     * @param {Object} options Solid generating options
-     *  - numslices {Number} Number of slices to be generated
-     *  - callback(t, slice) {Function} Callback function generating slices.
-     *          arguments: t = [0..1], slice = [0..numslices - 1]
-     *          return: Polygon or null to skip
-     *  - loop {Boolean} no flats, only walls, it's used to generate solids like a tor
-     */
-  solidFromSlices: function (options) {
-    const CSG = require('../CSG')
-
-    let polygons = [],
-      csg = null,
-      prev = null,
-      bottom = null,
-      top = null,
-      numSlices = 2,
-      bLoop = false,
-      fnCallback,
-      flipped = null
-
-    if (options) {
-      bLoop = Boolean(options['loop'])
-
-      if (options.numslices) { numSlices = options.numslices }
-
-      if (options.callback) {
-        fnCallback = options.callback
-      }
-    }
-    if (!fnCallback) {
-      let square = new Polygon.createFromPoints([
-                [0, 0, 0],
-                [1, 0, 0],
-                [1, 1, 0],
-                [0, 1, 0]
-      ])
-      fnCallback = function (t, slice) {
-        return t === 0 || t === 1 ? square.translate([0, 0, t]) : null
-      }
-    }
-    for (let i = 0, iMax = numSlices - 1; i <= iMax; i++) {
-      csg = fnCallback.call(this, i / iMax, i)
-      if (csg) {
-        if (!(csg instanceof Polygon)) {
-          throw new Error('Polygon.solidFromSlices callback error: Polygon expected')
-        }
-        csg.checkIfConvex()
-
-        if (prev) { // generate walls
-          if (flipped === null) { // not generated yet
-            flipped = prev.plane.signedDistanceToPoint(csg.vertices[0].pos) < 0
-          }
-          this._addWalls(polygons, prev, csg, flipped)
-        } else { // the first - will be a bottom
-          bottom = csg
-        }
-        prev = csg
-      } // callback can return null to skip that slice
-    }
-    top = csg
-
-    if (bLoop) {
-      let bSameTopBottom = bottom.vertices.length === top.vertices.length &&
-                bottom.vertices.every(function (v, index) {
-                  return v.pos.equals(top.vertices[index].pos)
-                })
-            // if top and bottom are not the same -
-            // generate walls between them
-      if (!bSameTopBottom) {
-        this._addWalls(polygons, top, bottom, flipped)
-      } // else - already generated
-    } else {
-            // save top and bottom
-            // TODO: flip if necessary
-      polygons.unshift(flipped ? bottom : bottom.flipped())
-      polygons.push(flipped ? top.flipped() : top)
-    }
-    return CSG.fromPolygons(polygons)
-  },
-    /**
-     *
-     * @param walls Array of wall polygons
-     * @param bottom Bottom polygon
-     * @param top Top polygon
-     */
-  _addWalls: function (walls, bottom, top, bFlipped) {
-    let bottomPoints = bottom.vertices.slice(0) // make a copy
-    let topPoints = top.vertices.slice(0) // make a copy
-    let color = top.shared || null
-
-        // check if bottom perimeter is closed
-    if (!bottomPoints[0].pos.equals(bottomPoints[bottomPoints.length - 1].pos)) {
-      bottomPoints.push(bottomPoints[0])
-    }
-
-        // check if top perimeter is closed
-    if (!topPoints[0].pos.equals(topPoints[topPoints.length - 1].pos)) {
-      topPoints.push(topPoints[0])
-    }
-    if (bFlipped) {
-      bottomPoints = bottomPoints.reverse()
-      topPoints = topPoints.reverse()
-    }
-
-    let iTopLen = topPoints.length - 1
-    let iBotLen = bottomPoints.length - 1
-    let iExtra = iTopLen - iBotLen// how many extra triangles we need
-    let bMoreTops = iExtra > 0
-    let bMoreBottoms = iExtra < 0
-
-    let aMin = [] // indexes to start extra triangles (polygon with minimal square)
-        // init - we need exactly /iExtra/ small triangles
-    for (let i = Math.abs(iExtra); i > 0; i--) {
-      aMin.push({
-        len: Infinity,
-        index: -1
-      })
-    }
-
-    let len
-    if (bMoreBottoms) {
-      for (let i = 0; i < iBotLen; i++) {
-        len = bottomPoints[i].pos.distanceToSquared(bottomPoints[i + 1].pos)
-                // find the element to replace
-        for (let j = aMin.length - 1; j >= 0; j--) {
-          if (aMin[j].len > len) {
-            aMin[j].len = len
-            aMin.index = j
-            break
-          }
-        } // for
-      }
-    } else if (bMoreTops) {
-      for (let i = 0; i < iTopLen; i++) {
-        len = topPoints[i].pos.distanceToSquared(topPoints[i + 1].pos)
-                // find the element to replace
-        for (let j = aMin.length - 1; j >= 0; j--) {
-          if (aMin[j].len > len) {
-            aMin[j].len = len
-            aMin.index = j
-            break
-          }
-        } // for
-      }
-    } // if
-        // sort by index
-    aMin.sort(fnSortByIndex)
-    let getTriangle = function addWallsPutTriangle (pointA, pointB, pointC, color) {
-      return new Polygon([pointA, pointB, pointC], color)
-            // return bFlipped ? triangle.flipped() : triangle;
-    }
-
-    let bpoint = bottomPoints[0]
-    let tpoint = topPoints[0]
-    let secondPoint
-    let nBotFacet
-    let nTopFacet // length of triangle facet side
-    for (let iB = 0, iT = 0, iMax = iTopLen + iBotLen; iB + iT < iMax;) {
-      if (aMin.length) {
-        if (bMoreTops && iT === aMin[0].index) { // one vertex is on the bottom, 2 - on the top
-          secondPoint = topPoints[++iT]
-                    // console.log('<<< extra top: ' + secondPoint + ', ' + tpoint + ', bottom: ' + bpoint);
-          walls.push(getTriangle(
-                        secondPoint, tpoint, bpoint, color
-                    ))
-          tpoint = secondPoint
-          aMin.shift()
-          continue
-        } else if (bMoreBottoms && iB === aMin[0].index) {
-          secondPoint = bottomPoints[++iB]
-          walls.push(getTriangle(
-                        tpoint, bpoint, secondPoint, color
-                    ))
-          bpoint = secondPoint
-          aMin.shift()
-          continue
-        }
-      }
-            // choose the shortest path
-      if (iB < iBotLen) { // one vertex is on the top, 2 - on the bottom
-        nBotFacet = tpoint.pos.distanceToSquared(bottomPoints[iB + 1].pos)
-      } else {
-        nBotFacet = Infinity
-      }
-      if (iT < iTopLen) { // one vertex is on the bottom, 2 - on the top
-        nTopFacet = bpoint.pos.distanceToSquared(topPoints[iT + 1].pos)
-      } else {
-        nTopFacet = Infinity
-      }
-      if (nBotFacet <= nTopFacet) {
-        secondPoint = bottomPoints[++iB]
-        walls.push(getTriangle(
-                    tpoint, bpoint, secondPoint, color
-                ))
-        bpoint = secondPoint
-      } else if (iT < iTopLen) { // nTopFacet < Infinity
-        secondPoint = topPoints[++iT]
-                // console.log('<<< top: ' + secondPoint + ', ' + tpoint + ', bottom: ' + bpoint);
-        walls.push(getTriangle(
-                    secondPoint, tpoint, bpoint, color
-                ))
-        tpoint = secondPoint
-      };
-    }
-    return walls
-  }
-}
-
-Polygon.verticesConvex = function (vertices, planenormal) {
-  let numvertices = vertices.length
-  if (numvertices > 2) {
-    let prevprevpos = vertices[numvertices - 2].pos
-    let prevpos = vertices[numvertices - 1].pos
-    for (let i = 0; i < numvertices; i++) {
-      let pos = vertices[i].pos
-      if (!Polygon.isConvexPoint(prevprevpos, prevpos, pos, planenormal)) {
-        return false
-      }
-      prevprevpos = prevpos
-      prevpos = pos
-    }
-  }
-  return true
-}
-
-/** Create a polygon from the given points.
- *
- * @param {Array[]} points - list of points
- * @param {Polygon.Shared} [shared=defaultShared] - shared property to apply
- * @param {Plane} [plane] - plane of the polygon
- *
- * @example
- * const points = [
- *   [0,  0, 0],
- *   [0, 10, 0],
- *   [0, 10, 10]
- * ]
- * let observed = CSG.Polygon.createFromPoints(points)
- */
-Polygon.createFromPoints = function (points, shared, plane) {
-  let vertices = []
-  points.map(function (p) {
-    let vec = new Vector3D(p)
-    let vertex = new Vertex(vec)
-    vertices.push(vertex)
-  })
-  let polygon
-  if (arguments.length < 3) {
-    polygon = new Polygon(vertices, shared)
-  } else {
-    polygon = new Polygon(vertices, shared, plane)
-  }
-  return polygon
-}
-
-// calculate whether three points form a convex corner
-//  prevpoint, point, nextpoint: the 3 coordinates (Vector3D instances)
-//  normal: the normal vector of the plane
-Polygon.isConvexPoint = function (prevpoint, point, nextpoint, normal) {
-  let crossproduct = point.minus(prevpoint).cross(nextpoint.minus(point))
-  let crossdotnormal = crossproduct.dot(normal)
-  return (crossdotnormal >= 0)
-}
-
-Polygon.isStrictlyConvexPoint = function (prevpoint, point, nextpoint, normal) {
-  let crossproduct = point.minus(prevpoint).cross(nextpoint.minus(point))
-  let crossdotnormal = crossproduct.dot(normal)
-  return (crossdotnormal >= EPS)
-}
-
-/** Class Polygon.Shared
- * Holds the shared properties for each polygon (Currently only color).
- * @constructor
- * @param {Array[]} color - array containing RGBA values, or null
- *
- * @example
- *   let shared = new CSG.Polygon.Shared([0, 0, 0, 1])
- */
-Polygon.Shared = function (color) {
-  if (color !== null) {
-    if (color.length !== 4) {
-      throw new Error('Expecting 4 element array')
-    }
-  }
-  this.color = color
-}
-
-Polygon.Shared.fromObject = function (obj) {
-  return new Polygon.Shared(obj.color)
-}
-
-/** Create Polygon.Shared from color values.
- * @param {number} r - value of RED component
- * @param {number} g - value of GREEN component
- * @param {number} b - value of BLUE component
- * @param {number} [a] - value of ALPHA component
- * @param {Array[]} [color] - OR array containing RGB values (optional Alpha)
- *
- * @example
- * let s1 = Polygon.Shared.fromColor(0,0,0)
- * let s2 = Polygon.Shared.fromColor([0,0,0,1])
- */
-Polygon.Shared.fromColor = function (args) {
-  let color
-  if (arguments.length === 1) {
-    color = arguments[0].slice() // make deep copy
-  } else {
-    color = []
-    for (let i = 0; i < arguments.length; i++) {
-      color.push(arguments[i])
-    }
-  }
-  if (color.length === 3) {
-    color.push(1)
-  } else if (color.length !== 4) {
-    throw new Error('setColor expects either an array with 3 or 4 elements, or 3 or 4 parameters.')
-  }
-  return new Polygon.Shared(color)
-}
-
-Polygon.Shared.prototype = {
-  getTag: function () {
-    let result = this.tag
-    if (!result) {
-      result = getTag()
-      this.tag = result
-    }
-    return result
-  },
-    // get a string uniquely identifying this object
-  getHash: function () {
-    if (!this.color) return 'null'
-    return this.color.join('/')
-  }
-}
-
-Polygon.defaultShared = new Polygon.Shared(null)
-
-module.exports = Polygon
-
-},{"../CAG":222,"../CAGFactories":223,"../CSG":224,"../constants":231,"../utils":253,"./Matrix4":235,"./Plane":238,"./Vector3":243,"./Vertex3":245}],241:[function(require,module,exports){
-arguments[4][33][0].apply(exports,arguments)
-},{"../constants":231,"./Polygon3":240,"./Vector2":242,"./Vertex2":244,"./Vertex3":245,"dup":33}],242:[function(require,module,exports){
-arguments[4][34][0].apply(exports,arguments)
-},{"../utils":253,"./Vector3":243,"dup":34}],243:[function(require,module,exports){
-arguments[4][35][0].apply(exports,arguments)
-},{"../utils":253,"./Vector2":242,"dup":35}],244:[function(require,module,exports){
-arguments[4][36][0].apply(exports,arguments)
-},{"../constants":231,"./Vector2":242,"dup":36}],245:[function(require,module,exports){
-arguments[4][37][0].apply(exports,arguments)
-},{"../constants":231,"./Vector3":243,"dup":37}],246:[function(require,module,exports){
-arguments[4][38][0].apply(exports,arguments)
-},{"../constants":231,"../utils":253,"dup":38}],247:[function(require,module,exports){
-arguments[4][39][0].apply(exports,arguments)
-},{"../constants":231,"../utils":253,"./Line2":233,"./OrthoNormalBasis":236,"./Polygon3":240,"./Vector2":242,"./Vertex3":245,"dup":39}],248:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"./math/Matrix4":235,"./math/Plane":238,"./math/Vector3":243,"dup":40}],249:[function(require,module,exports){
-arguments[4][41][0].apply(exports,arguments)
-},{"./math/Vector2":242,"./math/Vector3":243,"dup":41}],250:[function(require,module,exports){
-arguments[4][42][0].apply(exports,arguments)
-},{"./CAG":222,"./CAGFactories":223,"./constants":231,"./math/Path2":237,"./math/Vector2":242,"./optionParsers":249,"dup":42}],251:[function(require,module,exports){
-arguments[4][43][0].apply(exports,arguments)
-},{"./CSG":224,"./Properties":229,"./connectors":230,"./constants":231,"./math/Polygon3":240,"./math/Vector3":243,"./math/Vertex3":245,"./optionParsers":249,"dup":43}],252:[function(require,module,exports){
-arguments[4][44][0].apply(exports,arguments)
-},{"./constants":231,"./math/Polygon3":240,"./math/Vertex3":245,"dup":44}],253:[function(require,module,exports){
-arguments[4][45][0].apply(exports,arguments)
-},{"dup":45}],254:[function(require,module,exports){
-arguments[4][46][0].apply(exports,arguments)
-},{"../constants":231,"../math/Plane":238,"../math/Polygon3":240,"dup":46}],255:[function(require,module,exports){
+},{"@jscad/csg":18}],92:[function(require,module,exports){
 const { ensureManifoldness } = require('@jscad/io-utils')
 
 const mimeType = 'application/json'
@@ -26656,7 +18734,7 @@ module.exports = {
   mimeType
 }
 
-},{"@jscad/io-utils":217}],256:[function(require,module,exports){
+},{"@jscad/io-utils":88}],93:[function(require,module,exports){
 const { vt2jscad } = require('./vt2jscad')
 const {CSG} = require('@jscad/csg')
 
@@ -26745,75 +18823,7 @@ module.exports = {
   deserialize
 }
 
-},{"./vt2jscad":291,"@jscad/csg":257}],257:[function(require,module,exports){
-arguments[4][13][0].apply(exports,arguments)
-},{"./src/CAG":258,"./src/CAGFactories":259,"./src/CSG":260,"./src/CSGFactories":261,"./src/Properties":265,"./src/connectors":266,"./src/constants":267,"./src/debugHelpers":268,"./src/math/Line2":269,"./src/math/Line3":270,"./src/math/Matrix4":271,"./src/math/OrthoNormalBasis":272,"./src/math/Path2":273,"./src/math/Plane":274,"./src/math/Polygon2":275,"./src/math/Polygon3":276,"./src/math/Side":277,"./src/math/Vector2":278,"./src/math/Vector3":279,"./src/math/Vertex2":280,"./src/math/Vertex3":281,"./src/mutators":284,"./src/primitives2d":286,"./src/primitives3d":287,"dup":13}],258:[function(require,module,exports){
-arguments[4][14][0].apply(exports,arguments)
-},{"./CSG":260,"./FuzzyFactory2d":263,"./connectors":266,"./constants":267,"./math/OrthoNormalBasis":272,"./math/Path2":273,"./math/Polygon3":276,"./math/Side":277,"./math/Vector2":278,"./math/Vector3":279,"./math/Vertex2":280,"./math/Vertex3":281,"./math/lineUtils":282,"./optionParsers":285,"dup":14}],259:[function(require,module,exports){
-arguments[4][15][0].apply(exports,arguments)
-},{"./CAG":258,"./math/Path2":273,"./math/Side":277,"./math/Vector2":278,"./math/Vertex2":280,"dup":15}],260:[function(require,module,exports){
-arguments[4][16][0].apply(exports,arguments)
-},{"./CAG":258,"./FuzzyFactory3d":264,"./Properties":265,"./connectors":266,"./constants":267,"./math/Matrix4":271,"./math/OrthoNormalBasis":272,"./math/Plane":274,"./math/Polygon3":276,"./math/Vector2":278,"./math/Vector3":279,"./math/Vertex3":281,"./math/polygonUtils":283,"./trees":288,"./utils":289,"./utils/fixTJunctions":290,"dup":16}],261:[function(require,module,exports){
-arguments[4][17][0].apply(exports,arguments)
-},{"./CSG":260,"./math/Plane":274,"./math/Polygon2":275,"./math/Polygon3":276,"./math/Vector3":279,"./math/Vertex3":281,"dup":17}],262:[function(require,module,exports){
-arguments[4][18][0].apply(exports,arguments)
-},{"dup":18}],263:[function(require,module,exports){
-arguments[4][19][0].apply(exports,arguments)
-},{"./FuzzyFactory":262,"./constants":267,"./math/Side":277,"dup":19}],264:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"./FuzzyFactory":262,"./constants":267,"./math/Polygon3":276,"dup":20}],265:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"dup":21}],266:[function(require,module,exports){
-arguments[4][22][0].apply(exports,arguments)
-},{"./CSG":260,"./math/Line3":270,"./math/Matrix4":271,"./math/OrthoNormalBasis":272,"./math/Plane":274,"./math/Vector3":279,"dup":22}],267:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],268:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"./CSG":260,"./primitives3d":287,"dup":24}],269:[function(require,module,exports){
-arguments[4][25][0].apply(exports,arguments)
-},{"../utils":289,"./Vector2":278,"dup":25}],270:[function(require,module,exports){
-arguments[4][26][0].apply(exports,arguments)
-},{"../constants":267,"../utils":289,"./Vector3":279,"dup":26}],271:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./OrthoNormalBasis":272,"./Plane":274,"./Vector2":278,"./Vector3":279,"dup":27}],272:[function(require,module,exports){
-arguments[4][28][0].apply(exports,arguments)
-},{"./Line2":269,"./Line3":270,"./Matrix4":271,"./Plane":274,"./Vector2":278,"./Vector3":279,"dup":28}],273:[function(require,module,exports){
-arguments[4][29][0].apply(exports,arguments)
-},{"../CAG":258,"../constants":267,"../optionParsers":285,"./Side":277,"./Vector2":278,"./Vertex2":280,"dup":29}],274:[function(require,module,exports){
-arguments[4][30][0].apply(exports,arguments)
-},{"../constants":267,"./Line3":270,"./Vector3":279,"dup":30}],275:[function(require,module,exports){
-arguments[4][31][0].apply(exports,arguments)
-},{"../CAG":258,"dup":31}],276:[function(require,module,exports){
-arguments[4][32][0].apply(exports,arguments)
-},{"../CAG":258,"../CAGFactories":259,"../CSG":260,"../constants":267,"../utils":289,"./Matrix4":271,"./Plane":274,"./Vector3":279,"./Vertex3":281,"dup":32}],277:[function(require,module,exports){
-arguments[4][33][0].apply(exports,arguments)
-},{"../constants":267,"./Polygon3":276,"./Vector2":278,"./Vertex2":280,"./Vertex3":281,"dup":33}],278:[function(require,module,exports){
-arguments[4][34][0].apply(exports,arguments)
-},{"../utils":289,"./Vector3":279,"dup":34}],279:[function(require,module,exports){
-arguments[4][35][0].apply(exports,arguments)
-},{"../utils":289,"./Vector2":278,"dup":35}],280:[function(require,module,exports){
-arguments[4][36][0].apply(exports,arguments)
-},{"../constants":267,"./Vector2":278,"dup":36}],281:[function(require,module,exports){
-arguments[4][37][0].apply(exports,arguments)
-},{"../constants":267,"./Vector3":279,"dup":37}],282:[function(require,module,exports){
-arguments[4][38][0].apply(exports,arguments)
-},{"../constants":267,"../utils":289,"dup":38}],283:[function(require,module,exports){
-arguments[4][39][0].apply(exports,arguments)
-},{"../constants":267,"../utils":289,"./Line2":269,"./OrthoNormalBasis":272,"./Polygon3":276,"./Vector2":278,"./Vertex3":281,"dup":39}],284:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"./math/Matrix4":271,"./math/Plane":274,"./math/Vector3":279,"dup":40}],285:[function(require,module,exports){
-arguments[4][41][0].apply(exports,arguments)
-},{"./math/Vector2":278,"./math/Vector3":279,"dup":41}],286:[function(require,module,exports){
-arguments[4][42][0].apply(exports,arguments)
-},{"./CAG":258,"./CAGFactories":259,"./constants":267,"./math/Path2":273,"./math/Vector2":278,"./optionParsers":285,"dup":42}],287:[function(require,module,exports){
-arguments[4][43][0].apply(exports,arguments)
-},{"./CSG":260,"./Properties":265,"./connectors":266,"./constants":267,"./math/Polygon3":276,"./math/Vector3":279,"./math/Vertex3":281,"./optionParsers":285,"dup":43}],288:[function(require,module,exports){
-arguments[4][44][0].apply(exports,arguments)
-},{"./constants":267,"./math/Polygon3":276,"./math/Vertex3":281,"dup":44}],289:[function(require,module,exports){
-arguments[4][45][0].apply(exports,arguments)
-},{"dup":45}],290:[function(require,module,exports){
-arguments[4][46][0].apply(exports,arguments)
-},{"../constants":267,"../math/Plane":274,"../math/Polygon3":276,"dup":46}],291:[function(require,module,exports){
+},{"./vt2jscad":94,"@jscad/csg":18}],94:[function(require,module,exports){
 // positions, triangles, normals and colors
 function vt2jscad (positions, triangles, normals, colors) {
   let src = ''
@@ -26842,7 +18852,7 @@ module.exports = {
   vt2jscad
 }
 
-},{}],292:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 const { CSG } = require('@jscad/csg')
 const { vt2jscad } = require('./vt2jscad')
 const { BinaryReader } = require('@jscad/io-utils')
@@ -27240,77 +19250,9 @@ module.exports = {
   deserialize
 }
 
-},{"./vt2jscad":327,"@jscad/csg":293,"@jscad/io-utils":217}],293:[function(require,module,exports){
-arguments[4][13][0].apply(exports,arguments)
-},{"./src/CAG":294,"./src/CAGFactories":295,"./src/CSG":296,"./src/CSGFactories":297,"./src/Properties":301,"./src/connectors":302,"./src/constants":303,"./src/debugHelpers":304,"./src/math/Line2":305,"./src/math/Line3":306,"./src/math/Matrix4":307,"./src/math/OrthoNormalBasis":308,"./src/math/Path2":309,"./src/math/Plane":310,"./src/math/Polygon2":311,"./src/math/Polygon3":312,"./src/math/Side":313,"./src/math/Vector2":314,"./src/math/Vector3":315,"./src/math/Vertex2":316,"./src/math/Vertex3":317,"./src/mutators":320,"./src/primitives2d":322,"./src/primitives3d":323,"dup":13}],294:[function(require,module,exports){
-arguments[4][14][0].apply(exports,arguments)
-},{"./CSG":296,"./FuzzyFactory2d":299,"./connectors":302,"./constants":303,"./math/OrthoNormalBasis":308,"./math/Path2":309,"./math/Polygon3":312,"./math/Side":313,"./math/Vector2":314,"./math/Vector3":315,"./math/Vertex2":316,"./math/Vertex3":317,"./math/lineUtils":318,"./optionParsers":321,"dup":14}],295:[function(require,module,exports){
-arguments[4][15][0].apply(exports,arguments)
-},{"./CAG":294,"./math/Path2":309,"./math/Side":313,"./math/Vector2":314,"./math/Vertex2":316,"dup":15}],296:[function(require,module,exports){
-arguments[4][16][0].apply(exports,arguments)
-},{"./CAG":294,"./FuzzyFactory3d":300,"./Properties":301,"./connectors":302,"./constants":303,"./math/Matrix4":307,"./math/OrthoNormalBasis":308,"./math/Plane":310,"./math/Polygon3":312,"./math/Vector2":314,"./math/Vector3":315,"./math/Vertex3":317,"./math/polygonUtils":319,"./trees":324,"./utils":325,"./utils/fixTJunctions":326,"dup":16}],297:[function(require,module,exports){
-arguments[4][17][0].apply(exports,arguments)
-},{"./CSG":296,"./math/Plane":310,"./math/Polygon2":311,"./math/Polygon3":312,"./math/Vector3":315,"./math/Vertex3":317,"dup":17}],298:[function(require,module,exports){
-arguments[4][18][0].apply(exports,arguments)
-},{"dup":18}],299:[function(require,module,exports){
-arguments[4][19][0].apply(exports,arguments)
-},{"./FuzzyFactory":298,"./constants":303,"./math/Side":313,"dup":19}],300:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"./FuzzyFactory":298,"./constants":303,"./math/Polygon3":312,"dup":20}],301:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"dup":21}],302:[function(require,module,exports){
-arguments[4][22][0].apply(exports,arguments)
-},{"./CSG":296,"./math/Line3":306,"./math/Matrix4":307,"./math/OrthoNormalBasis":308,"./math/Plane":310,"./math/Vector3":315,"dup":22}],303:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],304:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"./CSG":296,"./primitives3d":323,"dup":24}],305:[function(require,module,exports){
-arguments[4][25][0].apply(exports,arguments)
-},{"../utils":325,"./Vector2":314,"dup":25}],306:[function(require,module,exports){
-arguments[4][26][0].apply(exports,arguments)
-},{"../constants":303,"../utils":325,"./Vector3":315,"dup":26}],307:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./OrthoNormalBasis":308,"./Plane":310,"./Vector2":314,"./Vector3":315,"dup":27}],308:[function(require,module,exports){
-arguments[4][28][0].apply(exports,arguments)
-},{"./Line2":305,"./Line3":306,"./Matrix4":307,"./Plane":310,"./Vector2":314,"./Vector3":315,"dup":28}],309:[function(require,module,exports){
-arguments[4][29][0].apply(exports,arguments)
-},{"../CAG":294,"../constants":303,"../optionParsers":321,"./Side":313,"./Vector2":314,"./Vertex2":316,"dup":29}],310:[function(require,module,exports){
-arguments[4][30][0].apply(exports,arguments)
-},{"../constants":303,"./Line3":306,"./Vector3":315,"dup":30}],311:[function(require,module,exports){
-arguments[4][31][0].apply(exports,arguments)
-},{"../CAG":294,"dup":31}],312:[function(require,module,exports){
-arguments[4][240][0].apply(exports,arguments)
-},{"../CAG":294,"../CAGFactories":295,"../CSG":296,"../constants":303,"../utils":325,"./Matrix4":307,"./Plane":310,"./Vector3":315,"./Vertex3":317,"dup":240}],313:[function(require,module,exports){
-arguments[4][33][0].apply(exports,arguments)
-},{"../constants":303,"./Polygon3":312,"./Vector2":314,"./Vertex2":316,"./Vertex3":317,"dup":33}],314:[function(require,module,exports){
-arguments[4][34][0].apply(exports,arguments)
-},{"../utils":325,"./Vector3":315,"dup":34}],315:[function(require,module,exports){
-arguments[4][35][0].apply(exports,arguments)
-},{"../utils":325,"./Vector2":314,"dup":35}],316:[function(require,module,exports){
-arguments[4][36][0].apply(exports,arguments)
-},{"../constants":303,"./Vector2":314,"dup":36}],317:[function(require,module,exports){
-arguments[4][37][0].apply(exports,arguments)
-},{"../constants":303,"./Vector3":315,"dup":37}],318:[function(require,module,exports){
-arguments[4][38][0].apply(exports,arguments)
-},{"../constants":303,"../utils":325,"dup":38}],319:[function(require,module,exports){
-arguments[4][39][0].apply(exports,arguments)
-},{"../constants":303,"../utils":325,"./Line2":305,"./OrthoNormalBasis":308,"./Polygon3":312,"./Vector2":314,"./Vertex3":317,"dup":39}],320:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"./math/Matrix4":307,"./math/Plane":310,"./math/Vector3":315,"dup":40}],321:[function(require,module,exports){
-arguments[4][41][0].apply(exports,arguments)
-},{"./math/Vector2":314,"./math/Vector3":315,"dup":41}],322:[function(require,module,exports){
-arguments[4][42][0].apply(exports,arguments)
-},{"./CAG":294,"./CAGFactories":295,"./constants":303,"./math/Path2":309,"./math/Vector2":314,"./optionParsers":321,"dup":42}],323:[function(require,module,exports){
-arguments[4][43][0].apply(exports,arguments)
-},{"./CSG":296,"./Properties":301,"./connectors":302,"./constants":303,"./math/Polygon3":312,"./math/Vector3":315,"./math/Vertex3":317,"./optionParsers":321,"dup":43}],324:[function(require,module,exports){
-arguments[4][44][0].apply(exports,arguments)
-},{"./constants":303,"./math/Polygon3":312,"./math/Vertex3":317,"dup":44}],325:[function(require,module,exports){
-arguments[4][45][0].apply(exports,arguments)
-},{"dup":45}],326:[function(require,module,exports){
-arguments[4][46][0].apply(exports,arguments)
-},{"../constants":303,"../math/Plane":310,"../math/Polygon3":312,"dup":46}],327:[function(require,module,exports){
-arguments[4][291][0].apply(exports,arguments)
-},{"dup":291}],328:[function(require,module,exports){
+},{"./vt2jscad":96,"@jscad/csg":18,"@jscad/io-utils":88}],96:[function(require,module,exports){
+arguments[4][94][0].apply(exports,arguments)
+},{"dup":94}],97:[function(require,module,exports){
 
 function serialize (CSG, options) {
   options && options.statusCallback && options.statusCallback({progress: 0})
@@ -27353,7 +19295,7 @@ module.exports = {
   serialize
 }
 
-},{}],329:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 
 // see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
 function serialize (CSG, options) {
@@ -27425,7 +19367,7 @@ module.exports = {
   serialize
 }
 
-},{}],330:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 const binarySerializer = require('./CSGToStlb').serialize
 const asciiSerializer = require('./CSGToStla').serialize
 const { ensureManifoldness } = require('@jscad/io-utils')
@@ -27447,7 +19389,7 @@ module.exports = {
   serialize
 }
 
-},{"./CSGToStla":328,"./CSGToStlb":329,"@jscad/io-utils":217}],331:[function(require,module,exports){
+},{"./CSGToStla":97,"./CSGToStlb":98,"@jscad/io-utils":88}],100:[function(require,module,exports){
 // units for converting CSS2 points/length, i.e. CSS2 value / pxPmm
 const pxPmm = 1 / 0.2822222 // used for scaling SVG coordinates(PX) to CAG coordinates(MM)
 const inchMM = 1 / (1 / 0.039370) // used for scaling SVG coordinates(IN) to CAG coordinates(MM)
@@ -27615,7 +19557,7 @@ module.exports = {
   svgColors
 }
 
-},{}],332:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 const {inchMM, ptMM, pcMM, svgColors} = require('./constants')
 
 // Calculate the CAG length/size from the given SVG value (float)
@@ -27756,7 +19698,7 @@ const cssStyle = function (element, name) {
     if (v !== null) {
       v = v[0]
       var i = v.length
-      while (v[i] !== ' ') i--
+      while (v[i] !== ' ' && i > 0) i--
       v = v.slice(i + 1, v.length - 1)
       return v
     }
@@ -27799,7 +19741,7 @@ module.exports = {
   groupValue
 }
 
-},{"./constants":331}],333:[function(require,module,exports){
+},{"./constants":100}],102:[function(require,module,exports){
 /*
 ## License
 
@@ -27955,9 +19897,9 @@ const objectify = function (group) {
     if ('transforms' in obj) {
       // NOTE: SVG specifications require that transforms are applied in the order given.
       // But these are applied in the order as required by CSG/CAG
-      let tr
-      let ts
-      let tt
+      let tr = null
+      let ts = null
+      let tt = null
 
       for (let j = 0; j < obj.transforms.length; j++) {
         const t = obj.transforms[j]
@@ -28035,9 +19977,9 @@ const codify = function (group) {
     if ('transforms' in obj) {
       // NOTE: SVG specifications require that transforms are applied in the order given.
       //       But these are applied in the order as required by CSG/CAG
-      let tr
-      let ts
-      let tt
+      let tr = null;
+      let ts = null;
+      let tt = null;
 
       for (let j = 0; j < obj.transforms.length; j++) {
         var t = obj.transforms[j]
@@ -28045,17 +19987,17 @@ const codify = function (group) {
         if ('scale' in t) { ts = t }
         if ('translate' in t) { tt = t }
       }
-      if (ts !== null && ts !== undefined) {
+      if (ts !== null) {
         const x = ts.scale[0]
         const y = ts.scale[1]
         code += indent + on + ' = ' + on + '.scale([' + x + ',' + y + ']);\n'
       }
-      if (tr !== null && tr !== undefined) {
+      if (tr !== null) {
         console.log('tr', tr)
         const z = 0 - tr.rotate
         code += indent + on + ' = ' + on + '.rotateZ(' + z + ');\n'
       }
-      if (tt !== null && tt !== undefined) {
+      if (tt !== null) {
         const x = cagLengthX(tt.translate[0], svgUnitsPmm, svgUnitsX)
         const y = (0 - cagLengthY(tt.translate[1], svgUnitsPmm, svgUnitsY))
         code += indent + on + ' = ' + on + '.translate([' + x + ',' + y + ']);\n'
@@ -28096,7 +20038,7 @@ function createSvgParser (src, pxPmm) {
       POLYGON: svgPolygon,
       PATH: svgPath,
       USE: svgUse,
-      DEFS: () => { svgInDefs = true },
+      DEFS: () => { svgInDefs = true; return null; },
       DESC: () => undefined, // ignored by design
       TITLE: () => undefined, // ignored by design
       STYLE: () => undefined, // ignored by design
@@ -28175,75 +20117,7 @@ function createSvgParser (src, pxPmm) {
 
 module.exports = {deserialize}
 
-},{"./constants":331,"./helpers":332,"./shapesMapCsg":368,"./shapesMapJscad":369,"./svgElementHelpers":370,"@jscad/csg":334,"sax":412}],334:[function(require,module,exports){
-arguments[4][13][0].apply(exports,arguments)
-},{"./src/CAG":335,"./src/CAGFactories":336,"./src/CSG":337,"./src/CSGFactories":338,"./src/Properties":342,"./src/connectors":343,"./src/constants":344,"./src/debugHelpers":345,"./src/math/Line2":346,"./src/math/Line3":347,"./src/math/Matrix4":348,"./src/math/OrthoNormalBasis":349,"./src/math/Path2":350,"./src/math/Plane":351,"./src/math/Polygon2":352,"./src/math/Polygon3":353,"./src/math/Side":354,"./src/math/Vector2":355,"./src/math/Vector3":356,"./src/math/Vertex2":357,"./src/math/Vertex3":358,"./src/mutators":361,"./src/primitives2d":363,"./src/primitives3d":364,"dup":13}],335:[function(require,module,exports){
-arguments[4][14][0].apply(exports,arguments)
-},{"./CSG":337,"./FuzzyFactory2d":340,"./connectors":343,"./constants":344,"./math/OrthoNormalBasis":349,"./math/Path2":350,"./math/Polygon3":353,"./math/Side":354,"./math/Vector2":355,"./math/Vector3":356,"./math/Vertex2":357,"./math/Vertex3":358,"./math/lineUtils":359,"./optionParsers":362,"dup":14}],336:[function(require,module,exports){
-arguments[4][15][0].apply(exports,arguments)
-},{"./CAG":335,"./math/Path2":350,"./math/Side":354,"./math/Vector2":355,"./math/Vertex2":357,"dup":15}],337:[function(require,module,exports){
-arguments[4][16][0].apply(exports,arguments)
-},{"./CAG":335,"./FuzzyFactory3d":341,"./Properties":342,"./connectors":343,"./constants":344,"./math/Matrix4":348,"./math/OrthoNormalBasis":349,"./math/Plane":351,"./math/Polygon3":353,"./math/Vector2":355,"./math/Vector3":356,"./math/Vertex3":358,"./math/polygonUtils":360,"./trees":365,"./utils":366,"./utils/fixTJunctions":367,"dup":16}],338:[function(require,module,exports){
-arguments[4][17][0].apply(exports,arguments)
-},{"./CSG":337,"./math/Plane":351,"./math/Polygon2":352,"./math/Polygon3":353,"./math/Vector3":356,"./math/Vertex3":358,"dup":17}],339:[function(require,module,exports){
-arguments[4][18][0].apply(exports,arguments)
-},{"dup":18}],340:[function(require,module,exports){
-arguments[4][19][0].apply(exports,arguments)
-},{"./FuzzyFactory":339,"./constants":344,"./math/Side":354,"dup":19}],341:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"./FuzzyFactory":339,"./constants":344,"./math/Polygon3":353,"dup":20}],342:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"dup":21}],343:[function(require,module,exports){
-arguments[4][22][0].apply(exports,arguments)
-},{"./CSG":337,"./math/Line3":347,"./math/Matrix4":348,"./math/OrthoNormalBasis":349,"./math/Plane":351,"./math/Vector3":356,"dup":22}],344:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],345:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"./CSG":337,"./primitives3d":364,"dup":24}],346:[function(require,module,exports){
-arguments[4][25][0].apply(exports,arguments)
-},{"../utils":366,"./Vector2":355,"dup":25}],347:[function(require,module,exports){
-arguments[4][26][0].apply(exports,arguments)
-},{"../constants":344,"../utils":366,"./Vector3":356,"dup":26}],348:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./OrthoNormalBasis":349,"./Plane":351,"./Vector2":355,"./Vector3":356,"dup":27}],349:[function(require,module,exports){
-arguments[4][28][0].apply(exports,arguments)
-},{"./Line2":346,"./Line3":347,"./Matrix4":348,"./Plane":351,"./Vector2":355,"./Vector3":356,"dup":28}],350:[function(require,module,exports){
-arguments[4][29][0].apply(exports,arguments)
-},{"../CAG":335,"../constants":344,"../optionParsers":362,"./Side":354,"./Vector2":355,"./Vertex2":357,"dup":29}],351:[function(require,module,exports){
-arguments[4][30][0].apply(exports,arguments)
-},{"../constants":344,"./Line3":347,"./Vector3":356,"dup":30}],352:[function(require,module,exports){
-arguments[4][31][0].apply(exports,arguments)
-},{"../CAG":335,"dup":31}],353:[function(require,module,exports){
-arguments[4][240][0].apply(exports,arguments)
-},{"../CAG":335,"../CAGFactories":336,"../CSG":337,"../constants":344,"../utils":366,"./Matrix4":348,"./Plane":351,"./Vector3":356,"./Vertex3":358,"dup":240}],354:[function(require,module,exports){
-arguments[4][33][0].apply(exports,arguments)
-},{"../constants":344,"./Polygon3":353,"./Vector2":355,"./Vertex2":357,"./Vertex3":358,"dup":33}],355:[function(require,module,exports){
-arguments[4][34][0].apply(exports,arguments)
-},{"../utils":366,"./Vector3":356,"dup":34}],356:[function(require,module,exports){
-arguments[4][35][0].apply(exports,arguments)
-},{"../utils":366,"./Vector2":355,"dup":35}],357:[function(require,module,exports){
-arguments[4][36][0].apply(exports,arguments)
-},{"../constants":344,"./Vector2":355,"dup":36}],358:[function(require,module,exports){
-arguments[4][37][0].apply(exports,arguments)
-},{"../constants":344,"./Vector3":356,"dup":37}],359:[function(require,module,exports){
-arguments[4][38][0].apply(exports,arguments)
-},{"../constants":344,"../utils":366,"dup":38}],360:[function(require,module,exports){
-arguments[4][39][0].apply(exports,arguments)
-},{"../constants":344,"../utils":366,"./Line2":346,"./OrthoNormalBasis":349,"./Polygon3":353,"./Vector2":355,"./Vertex3":358,"dup":39}],361:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"./math/Matrix4":348,"./math/Plane":351,"./math/Vector3":356,"dup":40}],362:[function(require,module,exports){
-arguments[4][41][0].apply(exports,arguments)
-},{"./math/Vector2":355,"./math/Vector3":356,"dup":41}],363:[function(require,module,exports){
-arguments[4][42][0].apply(exports,arguments)
-},{"./CAG":335,"./CAGFactories":336,"./constants":344,"./math/Path2":350,"./math/Vector2":355,"./optionParsers":362,"dup":42}],364:[function(require,module,exports){
-arguments[4][43][0].apply(exports,arguments)
-},{"./CSG":337,"./Properties":342,"./connectors":343,"./constants":344,"./math/Polygon3":353,"./math/Vector3":356,"./math/Vertex3":358,"./optionParsers":362,"dup":43}],365:[function(require,module,exports){
-arguments[4][44][0].apply(exports,arguments)
-},{"./constants":344,"./math/Polygon3":353,"./math/Vertex3":358,"dup":44}],366:[function(require,module,exports){
-arguments[4][45][0].apply(exports,arguments)
-},{"dup":45}],367:[function(require,module,exports){
-arguments[4][46][0].apply(exports,arguments)
-},{"../constants":344,"../math/Plane":351,"../math/Polygon3":353,"dup":46}],368:[function(require,module,exports){
+},{"./constants":100,"./helpers":101,"./shapesMapCsg":103,"./shapesMapJscad":104,"./svgElementHelpers":105,"@jscad/csg":18,"sax":113}],103:[function(require,module,exports){
 const {CSG, CAG} = require('@jscad/csg')
 const {svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect, groupValue} = require('./helpers')
 const {cssPxUnit} = require('./constants')
@@ -28397,7 +20271,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
         }
         // close the previous path
         if (pi > 0 && pc === false) {
-          paths[pathName].expandToCAG(CSG.defaultResolution2D)
+          paths[pathName] =  paths[pathName].expandToCAG(CSG.defaultResolution2D)
           // code += indent + pathName + ' = ' + pathName + '.expandToCAG(' + r + ',CSG.defaultResolution2D);\n'
         }
         // open a new path
@@ -28414,7 +20288,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
         while (pts.length >= 2) {
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
-          paths[pathName].appendPoint([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)])
+          paths[pathName] = paths[pathName].appendPoint([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)])
         }
         break
       case 'M': // absolute move to X,Y
@@ -28436,7 +20310,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
         while (pts.length >= 2) {
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
-          paths[pathName].appendPoint([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)])
+          paths[pathName] = paths[pathName].appendPoint([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)])
         }
         break
       case 'a': // relative elliptical arc
@@ -28448,7 +20322,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
           let sf = (pts.shift() === '1')
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
-          paths[pathName].appendArc([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)], {xradius: svg2cagX(rx, svgUnitsPmm), yradius: svg2cagY(ry, svgUnitsPmm), xaxisrotation: ro, clockwise: sf, large: lf})
+          paths[pathName] = paths[pathName].appendArc([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)], {xradius: svg2cagX(rx, svgUnitsPmm), yradius: svg2cagY(ry, svgUnitsPmm), xaxisrotation: ro, clockwise: sf, large: lf})
         }
         break
       case 'A': // absolute elliptical arc
@@ -28460,7 +20334,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
           let sf = (pts.shift() === '1')
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
-          paths[pathName].appendArc([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)], {xradius: svg2cagX(rx, svgUnitsPmm), yradius: svg2cagY(ry, svgUnitsPmm), xaxisrotation: ro, clockwise: sf, large: lf})
+          paths[pathName] = paths[pathName].appendArc([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)], {xradius: svg2cagX(rx, svgUnitsPmm), yradius: svg2cagY(ry, svgUnitsPmm), xaxisrotation: ro, clockwise: sf, large: lf})
         }
         break
       case 'c': // relative cubic Bézier
@@ -28603,8 +20477,17 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
         break
       case 'z': // close current line
       case 'Z':
-        paths[pathName] = paths[pathName].close().innerToCAG()
-        pathCag = pathCag.union(paths[pathName])
+        let closedpath = paths[pathName].close();
+        paths[pathName] = closedpath.innerToCAG();
+        switch (closedpath.getTurn()) {
+          default:
+          case 'clockwise':
+            pathCag = pathCag.union(paths[pathName])
+            break;
+          case 'counter-clockwise':
+            pathCag = pathCag.subtract(paths[pathName])
+            break;
+        }
         cx = sx
         cy = sy // return to the starting point
         pc = true
@@ -28622,7 +20505,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
   return pathCag
 }
 
-},{"./constants":331,"./helpers":332,"@jscad/csg":334}],369:[function(require,module,exports){
+},{"./constants":100,"./helpers":101,"@jscad/csg":18}],104:[function(require,module,exports){
 const {svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect, groupValue} = require('./helpers')
 const {cssPxUnit} = require('./constants')
 
@@ -28985,8 +20868,17 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGro
       case 'z': // close current line
       case 'Z':
         tmpCode += indent + pathName + ' = ' + pathName + '.close();\n'
-        tmpCode += indent + pathName + ' = ' + pathName + '.innerToCAG();\n'
-        tmpCode += indent + on + ' = ' + on + '.union(' + pathName + ');\n'
+        tmpCode += indent + 'switch (' + pathName + '.getTurn()) {\n';
+        tmpCode += indent + '  default:\n';
+        tmpCode += indent + '  case "clockwise":\n';
+        tmpCode += indent + '  ' + pathName + ' = ' + pathName + '.innerToCAG();\n'
+        tmpCode += indent + '  ' + on + ' = ' + on + '.union(' + pathName + ');\n'
+        tmpCode += indent + '  break;\n';
+        tmpCode += indent + '  case "counter-clockwise":\n';
+        tmpCode += indent + '  ' + pathName + ' = ' + pathName + '.innerToCAG();\n'
+        tmpCode += indent + '  ' + on + ' = ' + on + '.subtract(' + pathName + ');\n'
+        tmpCode += indent + '  break;\n';
+        tmpCode += indent + '}\n';
         cx = sx
         cy = sy // return to the starting point
         pc = true
@@ -29004,7 +20896,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGro
   return tmpCode
 }
 
-},{"./constants":331,"./helpers":332}],370:[function(require,module,exports){
+},{"./constants":100,"./helpers":101}],105:[function(require,module,exports){
 const {cagColor, cssStyle, css2cag} = require('./helpers')
 const {pxPmm} = require('./constants')
 
@@ -29452,7 +21344,7 @@ module.exports = {
   svgUse
 }
 
-},{"./constants":331,"./helpers":332}],371:[function(require,module,exports){
+},{"./constants":100,"./helpers":101}],106:[function(require,module,exports){
 const {CSG} = require('@jscad/csg')
 const stringify = require('onml/lib/stringify')
 
@@ -29526,75 +21418,7 @@ module.exports = {
   mimeType
 }
 
-},{"@jscad/csg":372,"onml/lib/stringify":411}],372:[function(require,module,exports){
-arguments[4][13][0].apply(exports,arguments)
-},{"./src/CAG":373,"./src/CAGFactories":374,"./src/CSG":375,"./src/CSGFactories":376,"./src/Properties":380,"./src/connectors":381,"./src/constants":382,"./src/debugHelpers":383,"./src/math/Line2":384,"./src/math/Line3":385,"./src/math/Matrix4":386,"./src/math/OrthoNormalBasis":387,"./src/math/Path2":388,"./src/math/Plane":389,"./src/math/Polygon2":390,"./src/math/Polygon3":391,"./src/math/Side":392,"./src/math/Vector2":393,"./src/math/Vector3":394,"./src/math/Vertex2":395,"./src/math/Vertex3":396,"./src/mutators":399,"./src/primitives2d":401,"./src/primitives3d":402,"dup":13}],373:[function(require,module,exports){
-arguments[4][14][0].apply(exports,arguments)
-},{"./CSG":375,"./FuzzyFactory2d":378,"./connectors":381,"./constants":382,"./math/OrthoNormalBasis":387,"./math/Path2":388,"./math/Polygon3":391,"./math/Side":392,"./math/Vector2":393,"./math/Vector3":394,"./math/Vertex2":395,"./math/Vertex3":396,"./math/lineUtils":397,"./optionParsers":400,"dup":14}],374:[function(require,module,exports){
-arguments[4][15][0].apply(exports,arguments)
-},{"./CAG":373,"./math/Path2":388,"./math/Side":392,"./math/Vector2":393,"./math/Vertex2":395,"dup":15}],375:[function(require,module,exports){
-arguments[4][16][0].apply(exports,arguments)
-},{"./CAG":373,"./FuzzyFactory3d":379,"./Properties":380,"./connectors":381,"./constants":382,"./math/Matrix4":386,"./math/OrthoNormalBasis":387,"./math/Plane":389,"./math/Polygon3":391,"./math/Vector2":393,"./math/Vector3":394,"./math/Vertex3":396,"./math/polygonUtils":398,"./trees":403,"./utils":404,"./utils/fixTJunctions":405,"dup":16}],376:[function(require,module,exports){
-arguments[4][17][0].apply(exports,arguments)
-},{"./CSG":375,"./math/Plane":389,"./math/Polygon2":390,"./math/Polygon3":391,"./math/Vector3":394,"./math/Vertex3":396,"dup":17}],377:[function(require,module,exports){
-arguments[4][18][0].apply(exports,arguments)
-},{"dup":18}],378:[function(require,module,exports){
-arguments[4][19][0].apply(exports,arguments)
-},{"./FuzzyFactory":377,"./constants":382,"./math/Side":392,"dup":19}],379:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"./FuzzyFactory":377,"./constants":382,"./math/Polygon3":391,"dup":20}],380:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"dup":21}],381:[function(require,module,exports){
-arguments[4][22][0].apply(exports,arguments)
-},{"./CSG":375,"./math/Line3":385,"./math/Matrix4":386,"./math/OrthoNormalBasis":387,"./math/Plane":389,"./math/Vector3":394,"dup":22}],382:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],383:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"./CSG":375,"./primitives3d":402,"dup":24}],384:[function(require,module,exports){
-arguments[4][25][0].apply(exports,arguments)
-},{"../utils":404,"./Vector2":393,"dup":25}],385:[function(require,module,exports){
-arguments[4][26][0].apply(exports,arguments)
-},{"../constants":382,"../utils":404,"./Vector3":394,"dup":26}],386:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./OrthoNormalBasis":387,"./Plane":389,"./Vector2":393,"./Vector3":394,"dup":27}],387:[function(require,module,exports){
-arguments[4][28][0].apply(exports,arguments)
-},{"./Line2":384,"./Line3":385,"./Matrix4":386,"./Plane":389,"./Vector2":393,"./Vector3":394,"dup":28}],388:[function(require,module,exports){
-arguments[4][29][0].apply(exports,arguments)
-},{"../CAG":373,"../constants":382,"../optionParsers":400,"./Side":392,"./Vector2":393,"./Vertex2":395,"dup":29}],389:[function(require,module,exports){
-arguments[4][30][0].apply(exports,arguments)
-},{"../constants":382,"./Line3":385,"./Vector3":394,"dup":30}],390:[function(require,module,exports){
-arguments[4][31][0].apply(exports,arguments)
-},{"../CAG":373,"dup":31}],391:[function(require,module,exports){
-arguments[4][240][0].apply(exports,arguments)
-},{"../CAG":373,"../CAGFactories":374,"../CSG":375,"../constants":382,"../utils":404,"./Matrix4":386,"./Plane":389,"./Vector3":394,"./Vertex3":396,"dup":240}],392:[function(require,module,exports){
-arguments[4][33][0].apply(exports,arguments)
-},{"../constants":382,"./Polygon3":391,"./Vector2":393,"./Vertex2":395,"./Vertex3":396,"dup":33}],393:[function(require,module,exports){
-arguments[4][34][0].apply(exports,arguments)
-},{"../utils":404,"./Vector3":394,"dup":34}],394:[function(require,module,exports){
-arguments[4][35][0].apply(exports,arguments)
-},{"../utils":404,"./Vector2":393,"dup":35}],395:[function(require,module,exports){
-arguments[4][36][0].apply(exports,arguments)
-},{"../constants":382,"./Vector2":393,"dup":36}],396:[function(require,module,exports){
-arguments[4][37][0].apply(exports,arguments)
-},{"../constants":382,"./Vector3":394,"dup":37}],397:[function(require,module,exports){
-arguments[4][38][0].apply(exports,arguments)
-},{"../constants":382,"../utils":404,"dup":38}],398:[function(require,module,exports){
-arguments[4][39][0].apply(exports,arguments)
-},{"../constants":382,"../utils":404,"./Line2":384,"./OrthoNormalBasis":387,"./Polygon3":391,"./Vector2":393,"./Vertex3":396,"dup":39}],399:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"./math/Matrix4":386,"./math/Plane":389,"./math/Vector3":394,"dup":40}],400:[function(require,module,exports){
-arguments[4][41][0].apply(exports,arguments)
-},{"./math/Vector2":393,"./math/Vector3":394,"dup":41}],401:[function(require,module,exports){
-arguments[4][42][0].apply(exports,arguments)
-},{"./CAG":373,"./CAGFactories":374,"./constants":382,"./math/Path2":388,"./math/Vector2":393,"./optionParsers":400,"dup":42}],402:[function(require,module,exports){
-arguments[4][43][0].apply(exports,arguments)
-},{"./CSG":375,"./Properties":380,"./connectors":381,"./constants":382,"./math/Polygon3":391,"./math/Vector3":394,"./math/Vertex3":396,"./optionParsers":400,"dup":43}],403:[function(require,module,exports){
-arguments[4][44][0].apply(exports,arguments)
-},{"./constants":382,"./math/Polygon3":391,"./math/Vertex3":396,"dup":44}],404:[function(require,module,exports){
-arguments[4][45][0].apply(exports,arguments)
-},{"dup":45}],405:[function(require,module,exports){
-arguments[4][46][0].apply(exports,arguments)
-},{"../constants":382,"../math/Plane":389,"../math/Polygon3":391,"dup":46}],406:[function(require,module,exports){
+},{"@jscad/csg":18,"onml/lib/stringify":112}],107:[function(require,module,exports){
 // import xmldom from 'xmldom'
 const xmldom = require('xmldom')
 const { ensureManifoldness } = require('@jscad/io-utils')
@@ -29719,7 +21543,7 @@ module.exports = {
   mimeType
 }
 
-},{"@jscad/io-utils":217,"xmldom":414}],407:[function(require,module,exports){
+},{"@jscad/io-utils":88,"xmldom":115}],108:[function(require,module,exports){
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
     define(['exports'], factory);
@@ -30775,7 +22599,7 @@ module.exports = {
 });
 
 
-},{}],408:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 (function webpackUniversalModuleDefinition(root, factory) {
 /* istanbul ignore next */
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -37177,7 +29001,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
-},{}],409:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 /*
   Copyright (C) 2012-2013 Yusuke Suzuki <utatane.tea@gmail.com>
   Copyright (C) 2012 Ariya Hidayat <ariya.hidayat@gmail.com>
@@ -38028,29 +29852,23 @@ return /******/ (function(modules) { // webpackBootstrap
 }(exports));
 /* vim: set sw=4 ts=4 et tw=80 : */
 
-},{"./package.json":410}],410:[function(require,module,exports){
+},{"./package.json":111}],111:[function(require,module,exports){
 module.exports={
-  "_args": [
-    [
-      "estraverse@4.2.0",
-      "/Users/kraftwerk-mb/dev/projects/openjscad/core/tmp/OpenJSCAD.org/packages/core"
-    ]
-  ],
-  "_from": "estraverse@4.2.0",
+  "_from": "estraverse@^4.2.0",
   "_id": "estraverse@4.2.0",
   "_inBundle": false,
   "_integrity": "sha1-De4/7TH81GlhjOc0IJn8GvoL2xM=",
   "_location": "/estraverse",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "range",
     "registry": true,
-    "raw": "estraverse@4.2.0",
+    "raw": "estraverse@^4.2.0",
     "name": "estraverse",
     "escapedName": "estraverse",
-    "rawSpec": "4.2.0",
+    "rawSpec": "^4.2.0",
     "saveSpec": null,
-    "fetchSpec": "4.2.0"
+    "fetchSpec": "^4.2.0"
   },
   "_requiredBy": [
     "/",
@@ -38058,11 +29876,14 @@ module.exports={
     "/call-matcher"
   ],
   "_resolved": "https://registry.npmjs.org/estraverse/-/estraverse-4.2.0.tgz",
-  "_spec": "4.2.0",
-  "_where": "/Users/kraftwerk-mb/dev/projects/openjscad/core/tmp/OpenJSCAD.org/packages/core",
+  "_shasum": "0dee3fed31fcd469618ce7342099fc1afa0bdb13",
+  "_spec": "estraverse@^4.2.0",
+  "_where": "/Users/kraftwerk-mb/dev/projects/openjscad/release/OpenJSCAD.org/packages/core",
   "bugs": {
     "url": "https://github.com/estools/estraverse/issues"
   },
+  "bundleDependencies": false,
+  "deprecated": false,
   "description": "ECMAScript JS AST traversal functions",
   "devDependencies": {
     "babel-preset-es2015": "^6.3.13",
@@ -38103,7 +29924,7 @@ module.exports={
   "version": "4.2.0"
 }
 
-},{}],411:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 'use strict';
 
 function isObject (o) {
@@ -38200,7 +30021,7 @@ function stringify (a) {
 
 module.exports = stringify;
 
-},{}],412:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 (function (Buffer){
 ;(function (sax) { // wrapper for non-node envs
   sax.parser = function (strict, opt) { return new SAXParser(strict, opt) }
@@ -39769,7 +31590,7 @@ module.exports = stringify;
 })(typeof exports === 'undefined' ? this.sax = {} : exports)
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":426,"stream":524,"string_decoder":425}],413:[function(require,module,exports){
+},{"buffer":127,"stream":224,"string_decoder":126}],114:[function(require,module,exports){
 var bundleFn = arguments[3];
 var sources = arguments[4];
 var cache = arguments[5];
@@ -39851,7 +31672,7 @@ module.exports = function (fn, options) {
     return worker;
 };
 
-},{}],414:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 function DOMParser(options){
 	this.options = options ||{locator:{}};
 	
@@ -40104,7 +31925,7 @@ function appendElement (hander,node) {
 	exports.DOMParser = DOMParser;
 //}
 
-},{"./dom":415,"./sax":416}],415:[function(require,module,exports){
+},{"./dom":116,"./sax":117}],116:[function(require,module,exports){
 /*
  * DOM Level 2
  * Object DOMException
@@ -41350,7 +33171,7 @@ try{
 	exports.XMLSerializer = XMLSerializer;
 //}
 
-},{}],416:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 //[4]   	NameStartChar	   ::=   	":" | [A-Z] | "_" | [a-z] | [#xC0-#xD6] | [#xD8-#xF6] | [#xF8-#x2FF] | [#x370-#x37D] | [#x37F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] | [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]
 //[4a]   	NameChar	   ::=   	NameStartChar | "-" | "." | [0-9] | #xB7 | [#x0300-#x036F] | [#x203F-#x2040]
 //[5]   	Name	   ::=   	NameStartChar (NameChar)*
@@ -41985,7 +33806,7 @@ function split(source,start){
 exports.XMLReader = XMLReader;
 
 
-},{}],417:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 /**
  * parse the jscad script to get the parameter definitions
  * @param {String} script the script
@@ -42016,7 +33837,7 @@ module.exports = function getParamDefinitions (script) {
   return params
 }
 
-},{}],418:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 /**
  * extracts the parameter
  * @param {Array} paramControls
@@ -42075,7 +33896,7 @@ module.exports = function getParameterValuesFromUIControls (paramControls, param
   return paramValues
 }
 
-},{}],419:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 /* converts input data to array if it is not already an array */
 function toArray (data) {
   if (!data) return []
@@ -42085,7 +33906,7 @@ function toArray (data) {
 
 module.exports = {toArray}
 
-},{}],420:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 const { CSG, CAG, isCSG, isCAG } = require('@jscad/csg')
 const {toArray} = require('./arrays')
 
@@ -42167,7 +33988,7 @@ module.exports = {
   mergeSolids2
 }
 
-},{"./arrays":419,"@jscad/csg":52}],421:[function(require,module,exports){
+},{"./arrays":120,"@jscad/csg":18}],122:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@most/prelude')) :
   typeof define === 'function' && define.amd ? define(['exports', '@most/prelude'], factory) :
@@ -42285,7 +34106,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })));
 
 
-},{"@most/prelude":422}],422:[function(require,module,exports){
+},{"@most/prelude":123}],123:[function(require,module,exports){
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -42444,6 +34265,7 @@ function unsafeRemove(i, a, l) {
 
 // removeAll :: (a -> boolean) -> [a] -> [a]
 // remove all elements matching a predicate
+// @deprecated
 function removeAll(f, a) {
   var l = a.length;
   var b = new Array(l);
@@ -42587,7 +34409,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })));
 
 
-},{}],423:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -42604,68 +34426,102 @@ for (var i = 0, len = code.length; i < len; ++i) {
   revLookup[code.charCodeAt(i)] = i
 }
 
+// Support decoding URL-safe base64 strings, as Node.js does.
+// See: https://en.wikipedia.org/wiki/Base64#URL_applications
 revLookup['-'.charCodeAt(0)] = 62
 revLookup['_'.charCodeAt(0)] = 63
 
-function placeHoldersCount (b64) {
+function getLens (b64) {
   var len = b64.length
+
   if (len % 4 > 0) {
     throw new Error('Invalid string. Length must be a multiple of 4')
   }
 
-  // the number of equal signs (place holders)
-  // if there are two placeholders, than the two characters before it
-  // represent one byte
-  // if there is only one, then the three characters before it represent 2 bytes
-  // this is just a cheap hack to not do indexOf twice
-  return b64[len - 2] === '=' ? 2 : b64[len - 1] === '=' ? 1 : 0
+  // Trim off extra bytes after placeholder bytes are found
+  // See: https://github.com/beatgammit/base64-js/issues/42
+  var validLen = b64.indexOf('=')
+  if (validLen === -1) validLen = len
+
+  var placeHoldersLen = validLen === len
+    ? 0
+    : 4 - (validLen % 4)
+
+  return [validLen, placeHoldersLen]
 }
 
+// base64 is 4/3 + up to two characters of the original data
 function byteLength (b64) {
-  // base64 is 4/3 + up to two characters of the original data
-  return (b64.length * 3 / 4) - placeHoldersCount(b64)
+  var lens = getLens(b64)
+  var validLen = lens[0]
+  var placeHoldersLen = lens[1]
+  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
+}
+
+function _byteLength (b64, validLen, placeHoldersLen) {
+  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
 }
 
 function toByteArray (b64) {
-  var i, l, tmp, placeHolders, arr
-  var len = b64.length
-  placeHolders = placeHoldersCount(b64)
+  var tmp
+  var lens = getLens(b64)
+  var validLen = lens[0]
+  var placeHoldersLen = lens[1]
 
-  arr = new Arr((len * 3 / 4) - placeHolders)
+  var arr = new Arr(_byteLength(b64, validLen, placeHoldersLen))
+
+  var curByte = 0
 
   // if there are placeholders, only get up to the last complete 4 chars
-  l = placeHolders > 0 ? len - 4 : len
+  var len = placeHoldersLen > 0
+    ? validLen - 4
+    : validLen
 
-  var L = 0
-
-  for (i = 0; i < l; i += 4) {
-    tmp = (revLookup[b64.charCodeAt(i)] << 18) | (revLookup[b64.charCodeAt(i + 1)] << 12) | (revLookup[b64.charCodeAt(i + 2)] << 6) | revLookup[b64.charCodeAt(i + 3)]
-    arr[L++] = (tmp >> 16) & 0xFF
-    arr[L++] = (tmp >> 8) & 0xFF
-    arr[L++] = tmp & 0xFF
+  for (var i = 0; i < len; i += 4) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 18) |
+      (revLookup[b64.charCodeAt(i + 1)] << 12) |
+      (revLookup[b64.charCodeAt(i + 2)] << 6) |
+      revLookup[b64.charCodeAt(i + 3)]
+    arr[curByte++] = (tmp >> 16) & 0xFF
+    arr[curByte++] = (tmp >> 8) & 0xFF
+    arr[curByte++] = tmp & 0xFF
   }
 
-  if (placeHolders === 2) {
-    tmp = (revLookup[b64.charCodeAt(i)] << 2) | (revLookup[b64.charCodeAt(i + 1)] >> 4)
-    arr[L++] = tmp & 0xFF
-  } else if (placeHolders === 1) {
-    tmp = (revLookup[b64.charCodeAt(i)] << 10) | (revLookup[b64.charCodeAt(i + 1)] << 4) | (revLookup[b64.charCodeAt(i + 2)] >> 2)
-    arr[L++] = (tmp >> 8) & 0xFF
-    arr[L++] = tmp & 0xFF
+  if (placeHoldersLen === 2) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 2) |
+      (revLookup[b64.charCodeAt(i + 1)] >> 4)
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  if (placeHoldersLen === 1) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 10) |
+      (revLookup[b64.charCodeAt(i + 1)] << 4) |
+      (revLookup[b64.charCodeAt(i + 2)] >> 2)
+    arr[curByte++] = (tmp >> 8) & 0xFF
+    arr[curByte++] = tmp & 0xFF
   }
 
   return arr
 }
 
 function tripletToBase64 (num) {
-  return lookup[num >> 18 & 0x3F] + lookup[num >> 12 & 0x3F] + lookup[num >> 6 & 0x3F] + lookup[num & 0x3F]
+  return lookup[num >> 18 & 0x3F] +
+    lookup[num >> 12 & 0x3F] +
+    lookup[num >> 6 & 0x3F] +
+    lookup[num & 0x3F]
 }
 
 function encodeChunk (uint8, start, end) {
   var tmp
   var output = []
   for (var i = start; i < end; i += 3) {
-    tmp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
+    tmp =
+      ((uint8[i] << 16) & 0xFF0000) +
+      ((uint8[i + 1] << 8) & 0xFF00) +
+      (uint8[i + 2] & 0xFF)
     output.push(tripletToBase64(tmp))
   }
   return output.join('')
@@ -42675,37 +34531,40 @@ function fromByteArray (uint8) {
   var tmp
   var len = uint8.length
   var extraBytes = len % 3 // if we have 1 byte left, pad 2 bytes
-  var output = ''
   var parts = []
   var maxChunkLength = 16383 // must be multiple of 3
 
   // go through the array every three bytes, we'll deal with trailing stuff later
   for (var i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
-    parts.push(encodeChunk(uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)))
+    parts.push(encodeChunk(
+      uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)
+    ))
   }
 
   // pad the end with zeros, but make sure to not forget the extra bytes
   if (extraBytes === 1) {
     tmp = uint8[len - 1]
-    output += lookup[tmp >> 2]
-    output += lookup[(tmp << 4) & 0x3F]
-    output += '=='
+    parts.push(
+      lookup[tmp >> 2] +
+      lookup[(tmp << 4) & 0x3F] +
+      '=='
+    )
   } else if (extraBytes === 2) {
-    tmp = (uint8[len - 2] << 8) + (uint8[len - 1])
-    output += lookup[tmp >> 10]
-    output += lookup[(tmp >> 4) & 0x3F]
-    output += lookup[(tmp << 2) & 0x3F]
-    output += '='
+    tmp = (uint8[len - 2] << 8) + uint8[len - 1]
+    parts.push(
+      lookup[tmp >> 10] +
+      lookup[(tmp >> 4) & 0x3F] +
+      lookup[(tmp << 2) & 0x3F] +
+      '='
+    )
   }
-
-  parts.push(output)
 
   return parts.join('')
 }
 
-},{}],424:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 
-},{}],425:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -42928,7 +34787,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":426}],426:[function(require,module,exports){
+},{"buffer":127}],127:[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -42977,16 +34836,32 @@ function typedArraySupport () {
   // Can typed array instances can be augmented?
   try {
     var arr = new Uint8Array(1)
-    arr.__proto__ = {__proto__: Uint8Array.prototype, foo: function () { return 42 }}
+    arr.__proto__ = { __proto__: Uint8Array.prototype, foo: function () { return 42 } }
     return arr.foo() === 42
   } catch (e) {
     return false
   }
 }
 
+Object.defineProperty(Buffer.prototype, 'parent', {
+  enumerable: true,
+  get: function () {
+    if (!Buffer.isBuffer(this)) return undefined
+    return this.buffer
+  }
+})
+
+Object.defineProperty(Buffer.prototype, 'offset', {
+  enumerable: true,
+  get: function () {
+    if (!Buffer.isBuffer(this)) return undefined
+    return this.byteOffset
+  }
+})
+
 function createBuffer (length) {
   if (length > K_MAX_LENGTH) {
-    throw new RangeError('Invalid typed array length')
+    throw new RangeError('The value "' + length + '" is invalid for option "size"')
   }
   // Return an augmented `Uint8Array` instance
   var buf = new Uint8Array(length)
@@ -43008,8 +34883,8 @@ function Buffer (arg, encodingOrOffset, length) {
   // Common case.
   if (typeof arg === 'number') {
     if (typeof encodingOrOffset === 'string') {
-      throw new Error(
-        'If encoding is specified then the first argument must be a string'
+      throw new TypeError(
+        'The "string" argument must be of type string. Received type number'
       )
     }
     return allocUnsafe(arg)
@@ -43018,7 +34893,7 @@ function Buffer (arg, encodingOrOffset, length) {
 }
 
 // Fix subarray() in ES2016. See: https://github.com/feross/buffer/pull/97
-if (typeof Symbol !== 'undefined' && Symbol.species &&
+if (typeof Symbol !== 'undefined' && Symbol.species != null &&
     Buffer[Symbol.species] === Buffer) {
   Object.defineProperty(Buffer, Symbol.species, {
     value: null,
@@ -43031,19 +34906,51 @@ if (typeof Symbol !== 'undefined' && Symbol.species &&
 Buffer.poolSize = 8192 // not used by this implementation
 
 function from (value, encodingOrOffset, length) {
-  if (typeof value === 'number') {
-    throw new TypeError('"value" argument must not be a number')
-  }
-
-  if (isArrayBuffer(value)) {
-    return fromArrayBuffer(value, encodingOrOffset, length)
-  }
-
   if (typeof value === 'string') {
     return fromString(value, encodingOrOffset)
   }
 
-  return fromObject(value)
+  if (ArrayBuffer.isView(value)) {
+    return fromArrayLike(value)
+  }
+
+  if (value == null) {
+    throw TypeError(
+      'The first argument must be one of type string, Buffer, ArrayBuffer, Array, ' +
+      'or Array-like Object. Received type ' + (typeof value)
+    )
+  }
+
+  if (isInstance(value, ArrayBuffer) ||
+      (value && isInstance(value.buffer, ArrayBuffer))) {
+    return fromArrayBuffer(value, encodingOrOffset, length)
+  }
+
+  if (typeof value === 'number') {
+    throw new TypeError(
+      'The "value" argument must not be of type number. Received type number'
+    )
+  }
+
+  var valueOf = value.valueOf && value.valueOf()
+  if (valueOf != null && valueOf !== value) {
+    return Buffer.from(valueOf, encodingOrOffset, length)
+  }
+
+  var b = fromObject(value)
+  if (b) return b
+
+  if (typeof Symbol !== 'undefined' && Symbol.toPrimitive != null &&
+      typeof value[Symbol.toPrimitive] === 'function') {
+    return Buffer.from(
+      value[Symbol.toPrimitive]('string'), encodingOrOffset, length
+    )
+  }
+
+  throw new TypeError(
+    'The first argument must be one of type string, Buffer, ArrayBuffer, Array, ' +
+    'or Array-like Object. Received type ' + (typeof value)
+  )
 }
 
 /**
@@ -43065,9 +34972,9 @@ Buffer.__proto__ = Uint8Array
 
 function assertSize (size) {
   if (typeof size !== 'number') {
-    throw new TypeError('"size" argument must be a number')
+    throw new TypeError('"size" argument must be of type number')
   } else if (size < 0) {
-    throw new RangeError('"size" argument must not be negative')
+    throw new RangeError('The value "' + size + '" is invalid for option "size"')
   }
 }
 
@@ -43119,7 +35026,7 @@ function fromString (string, encoding) {
   }
 
   if (!Buffer.isEncoding(encoding)) {
-    throw new TypeError('"encoding" must be a valid string encoding')
+    throw new TypeError('Unknown encoding: ' + encoding)
   }
 
   var length = byteLength(string, encoding) | 0
@@ -43148,11 +35055,11 @@ function fromArrayLike (array) {
 
 function fromArrayBuffer (array, byteOffset, length) {
   if (byteOffset < 0 || array.byteLength < byteOffset) {
-    throw new RangeError('\'offset\' is out of bounds')
+    throw new RangeError('"offset" is outside of buffer bounds')
   }
 
   if (array.byteLength < byteOffset + (length || 0)) {
-    throw new RangeError('\'length\' is out of bounds')
+    throw new RangeError('"length" is outside of buffer bounds')
   }
 
   var buf
@@ -43182,20 +35089,16 @@ function fromObject (obj) {
     return buf
   }
 
-  if (obj) {
-    if (isArrayBufferView(obj) || 'length' in obj) {
-      if (typeof obj.length !== 'number' || numberIsNaN(obj.length)) {
-        return createBuffer(0)
-      }
-      return fromArrayLike(obj)
+  if (obj.length !== undefined) {
+    if (typeof obj.length !== 'number' || numberIsNaN(obj.length)) {
+      return createBuffer(0)
     }
-
-    if (obj.type === 'Buffer' && Array.isArray(obj.data)) {
-      return fromArrayLike(obj.data)
-    }
+    return fromArrayLike(obj)
   }
 
-  throw new TypeError('First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.')
+  if (obj.type === 'Buffer' && Array.isArray(obj.data)) {
+    return fromArrayLike(obj.data)
+  }
 }
 
 function checked (length) {
@@ -43216,12 +35119,17 @@ function SlowBuffer (length) {
 }
 
 Buffer.isBuffer = function isBuffer (b) {
-  return b != null && b._isBuffer === true
+  return b != null && b._isBuffer === true &&
+    b !== Buffer.prototype // so Buffer.isBuffer(Buffer.prototype) will be false
 }
 
 Buffer.compare = function compare (a, b) {
+  if (isInstance(a, Uint8Array)) a = Buffer.from(a, a.offset, a.byteLength)
+  if (isInstance(b, Uint8Array)) b = Buffer.from(b, b.offset, b.byteLength)
   if (!Buffer.isBuffer(a) || !Buffer.isBuffer(b)) {
-    throw new TypeError('Arguments must be Buffers')
+    throw new TypeError(
+      'The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array'
+    )
   }
 
   if (a === b) return 0
@@ -43282,6 +35190,9 @@ Buffer.concat = function concat (list, length) {
   var pos = 0
   for (i = 0; i < list.length; ++i) {
     var buf = list[i]
+    if (isInstance(buf, Uint8Array)) {
+      buf = Buffer.from(buf)
+    }
     if (!Buffer.isBuffer(buf)) {
       throw new TypeError('"list" argument must be an Array of Buffers')
     }
@@ -43295,15 +35206,19 @@ function byteLength (string, encoding) {
   if (Buffer.isBuffer(string)) {
     return string.length
   }
-  if (isArrayBufferView(string) || isArrayBuffer(string)) {
+  if (ArrayBuffer.isView(string) || isInstance(string, ArrayBuffer)) {
     return string.byteLength
   }
   if (typeof string !== 'string') {
-    string = '' + string
+    throw new TypeError(
+      'The "string" argument must be one of type string, Buffer, or ArrayBuffer. ' +
+      'Received type ' + typeof string
+    )
   }
 
   var len = string.length
-  if (len === 0) return 0
+  var mustMatch = (arguments.length > 2 && arguments[2] === true)
+  if (!mustMatch && len === 0) return 0
 
   // Use a for loop to avoid recursion
   var loweredCase = false
@@ -43315,7 +35230,6 @@ function byteLength (string, encoding) {
         return len
       case 'utf8':
       case 'utf-8':
-      case undefined:
         return utf8ToBytes(string).length
       case 'ucs2':
       case 'ucs-2':
@@ -43327,7 +35241,9 @@ function byteLength (string, encoding) {
       case 'base64':
         return base64ToBytes(string).length
       default:
-        if (loweredCase) return utf8ToBytes(string).length // assume utf8
+        if (loweredCase) {
+          return mustMatch ? -1 : utf8ToBytes(string).length // assume utf8
+        }
         encoding = ('' + encoding).toLowerCase()
         loweredCase = true
     }
@@ -43463,6 +35379,8 @@ Buffer.prototype.toString = function toString () {
   return slowToString.apply(this, arguments)
 }
 
+Buffer.prototype.toLocaleString = Buffer.prototype.toString
+
 Buffer.prototype.equals = function equals (b) {
   if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
   if (this === b) return true
@@ -43472,16 +35390,20 @@ Buffer.prototype.equals = function equals (b) {
 Buffer.prototype.inspect = function inspect () {
   var str = ''
   var max = exports.INSPECT_MAX_BYTES
-  if (this.length > 0) {
-    str = this.toString('hex', 0, max).match(/.{2}/g).join(' ')
-    if (this.length > max) str += ' ... '
-  }
+  str = this.toString('hex', 0, max).replace(/(.{2})/g, '$1 ').trim()
+  if (this.length > max) str += ' ... '
   return '<Buffer ' + str + '>'
 }
 
 Buffer.prototype.compare = function compare (target, start, end, thisStart, thisEnd) {
+  if (isInstance(target, Uint8Array)) {
+    target = Buffer.from(target, target.offset, target.byteLength)
+  }
   if (!Buffer.isBuffer(target)) {
-    throw new TypeError('Argument must be a Buffer')
+    throw new TypeError(
+      'The "target" argument must be one of type Buffer or Uint8Array. ' +
+      'Received type ' + (typeof target)
+    )
   }
 
   if (start === undefined) {
@@ -43560,7 +35482,7 @@ function bidirectionalIndexOf (buffer, val, byteOffset, encoding, dir) {
   } else if (byteOffset < -0x80000000) {
     byteOffset = -0x80000000
   }
-  byteOffset = +byteOffset  // Coerce to Number.
+  byteOffset = +byteOffset // Coerce to Number.
   if (numberIsNaN(byteOffset)) {
     // byteOffset: it it's undefined, null, NaN, "foo", etc, search whole buffer
     byteOffset = dir ? 0 : (buffer.length - 1)
@@ -43683,9 +35605,7 @@ function hexWrite (buf, string, offset, length) {
     }
   }
 
-  // must be an even number of digits
   var strLen = string.length
-  if (strLen % 2 !== 0) throw new TypeError('Invalid hex string')
 
   if (length > strLen / 2) {
     length = strLen / 2
@@ -43814,8 +35734,8 @@ function utf8Slice (buf, start, end) {
     var codePoint = null
     var bytesPerSequence = (firstByte > 0xEF) ? 4
       : (firstByte > 0xDF) ? 3
-      : (firstByte > 0xBF) ? 2
-      : 1
+        : (firstByte > 0xBF) ? 2
+          : 1
 
     if (i + bytesPerSequence <= end) {
       var secondByte, thirdByte, fourthByte, tempCodePoint
@@ -44378,6 +36298,7 @@ Buffer.prototype.writeDoubleBE = function writeDoubleBE (value, offset, noAssert
 
 // copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
 Buffer.prototype.copy = function copy (target, targetStart, start, end) {
+  if (!Buffer.isBuffer(target)) throw new TypeError('argument should be a Buffer')
   if (!start) start = 0
   if (!end && end !== 0) end = this.length
   if (targetStart >= target.length) targetStart = target.length
@@ -44392,7 +36313,7 @@ Buffer.prototype.copy = function copy (target, targetStart, start, end) {
   if (targetStart < 0) {
     throw new RangeError('targetStart out of bounds')
   }
-  if (start < 0 || start >= this.length) throw new RangeError('sourceStart out of bounds')
+  if (start < 0 || start >= this.length) throw new RangeError('Index out of range')
   if (end < 0) throw new RangeError('sourceEnd out of bounds')
 
   // Are we oob?
@@ -44402,22 +36323,19 @@ Buffer.prototype.copy = function copy (target, targetStart, start, end) {
   }
 
   var len = end - start
-  var i
 
-  if (this === target && start < targetStart && targetStart < end) {
+  if (this === target && typeof Uint8Array.prototype.copyWithin === 'function') {
+    // Use built-in when available, missing from IE11
+    this.copyWithin(targetStart, start, end)
+  } else if (this === target && start < targetStart && targetStart < end) {
     // descending copy from end
-    for (i = len - 1; i >= 0; --i) {
-      target[i + targetStart] = this[i + start]
-    }
-  } else if (len < 1000) {
-    // ascending copy from start
-    for (i = 0; i < len; ++i) {
+    for (var i = len - 1; i >= 0; --i) {
       target[i + targetStart] = this[i + start]
     }
   } else {
     Uint8Array.prototype.set.call(
       target,
-      this.subarray(start, start + len),
+      this.subarray(start, end),
       targetStart
     )
   }
@@ -44440,17 +36358,19 @@ Buffer.prototype.fill = function fill (val, start, end, encoding) {
       encoding = end
       end = this.length
     }
-    if (val.length === 1) {
-      var code = val.charCodeAt(0)
-      if (code < 256) {
-        val = code
-      }
-    }
     if (encoding !== undefined && typeof encoding !== 'string') {
       throw new TypeError('encoding must be a string')
     }
     if (typeof encoding === 'string' && !Buffer.isEncoding(encoding)) {
       throw new TypeError('Unknown encoding: ' + encoding)
+    }
+    if (val.length === 1) {
+      var code = val.charCodeAt(0)
+      if ((encoding === 'utf8' && code < 128) ||
+          encoding === 'latin1') {
+        // Fast path: If `val` fits into a single byte, use that numeric value.
+        val = code
+      }
     }
   } else if (typeof val === 'number') {
     val = val & 255
@@ -44478,8 +36398,12 @@ Buffer.prototype.fill = function fill (val, start, end, encoding) {
   } else {
     var bytes = Buffer.isBuffer(val)
       ? val
-      : new Buffer(val, encoding)
+      : Buffer.from(val, encoding)
     var len = bytes.length
+    if (len === 0) {
+      throw new TypeError('The value "' + val +
+        '" is invalid for argument "value"')
+    }
     for (i = 0; i < end - start; ++i) {
       this[i + start] = bytes[i % len]
     }
@@ -44494,6 +36418,8 @@ Buffer.prototype.fill = function fill (val, start, end, encoding) {
 var INVALID_BASE64_RE = /[^+/0-9A-Za-z-_]/g
 
 function base64clean (str) {
+  // Node takes equal signs as end of the Base64 encoding
+  str = str.split('=')[0]
   // Node strips out invalid characters like \n and \t from the string, base64-js does not
   str = str.trim().replace(INVALID_BASE64_RE, '')
   // Node converts strings with length < 2 to ''
@@ -44627,24 +36553,20 @@ function blitBuffer (src, dst, offset, length) {
   return i
 }
 
-// ArrayBuffers from another context (i.e. an iframe) do not pass the `instanceof` check
-// but they should be treated as valid. See: https://github.com/feross/buffer/issues/166
-function isArrayBuffer (obj) {
-  return obj instanceof ArrayBuffer ||
-    (obj != null && obj.constructor != null && obj.constructor.name === 'ArrayBuffer' &&
-      typeof obj.byteLength === 'number')
+// ArrayBuffer or Uint8Array objects from other contexts (i.e. iframes) do not pass
+// the `instanceof` check but they should be treated as of that type.
+// See: https://github.com/feross/buffer/issues/166
+function isInstance (obj, type) {
+  return obj instanceof type ||
+    (obj != null && obj.constructor != null && obj.constructor.name != null &&
+      obj.constructor.name === type.name)
 }
-
-// Node 0.10 supports `ArrayBuffer` but lacks `ArrayBuffer.isView`
-function isArrayBufferView (obj) {
-  return (typeof ArrayBuffer.isView === 'function') && ArrayBuffer.isView(obj)
-}
-
 function numberIsNaN (obj) {
+  // For IE11 support
   return obj !== obj // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":423,"ieee754":429}],427:[function(require,module,exports){
+},{"base64-js":124,"ieee754":130}],128:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -44755,7 +36677,7 @@ function objectToString(o) {
 }
 
 }).call(this,{"isBuffer":require("../../is-buffer/index.js")})
-},{"../../is-buffer/index.js":431}],428:[function(require,module,exports){
+},{"../../is-buffer/index.js":132}],129:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -45059,10 +36981,10 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],429:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
-  var eLen = nBytes * 8 - mLen - 1
+  var eLen = (nBytes * 8) - mLen - 1
   var eMax = (1 << eLen) - 1
   var eBias = eMax >> 1
   var nBits = -7
@@ -45075,12 +36997,12 @@ exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   e = s & ((1 << (-nBits)) - 1)
   s >>= (-nBits)
   nBits += eLen
-  for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) {}
+  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
 
   m = e & ((1 << (-nBits)) - 1)
   e >>= (-nBits)
   nBits += mLen
-  for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8) {}
+  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
 
   if (e === 0) {
     e = 1 - eBias
@@ -45095,7 +37017,7 @@ exports.read = function (buffer, offset, isLE, mLen, nBytes) {
 
 exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   var e, m, c
-  var eLen = nBytes * 8 - mLen - 1
+  var eLen = (nBytes * 8) - mLen - 1
   var eMax = (1 << eLen) - 1
   var eBias = eMax >> 1
   var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
@@ -45128,7 +37050,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
       m = 0
       e = eMax
     } else if (e + eBias >= 1) {
-      m = (value * c - 1) * Math.pow(2, mLen)
+      m = ((value * c) - 1) * Math.pow(2, mLen)
       e = e + eBias
     } else {
       m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
@@ -45145,7 +37067,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],430:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -45170,7 +37092,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],431:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 /*!
  * Determine if an object is a Buffer
  *
@@ -45193,14 +37115,14 @@ function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
-},{}],432:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],433:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 const { merge } = require('most')
 
 // based on http://jsfiddle.net/mattpodwysocki/pfCqq/
@@ -45286,7 +37208,7 @@ function drags ({mouseDowns$, mouseUps$, mouseMoves$, touchStarts$, touchEnds$, 
 
 module.exports = {mouseDrags, touchDrags, drags}
 
-},{"most":475}],434:[function(require,module,exports){
+},{"most":176}],135:[function(require,module,exports){
 const { fromEvent, merge } = require('most')
 const { normalizeWheel, preventDefault } = require('./utils')
 const { presses } = require('./presses')
@@ -45387,7 +37309,7 @@ function pointerGestures (input, options) {
 
 module.exports = {baseInteractionsFromEvents, pointerGestures}
 
-},{"./drags":433,"./presses":435,"./taps":436,"./utils":437,"./zooms":438,"most":475}],435:[function(require,module,exports){
+},{"./drags":134,"./presses":136,"./taps":137,"./utils":138,"./zooms":139,"most":176}],136:[function(require,module,exports){
 const { just, merge, empty } = require('most')
 const { exists, isMoving } = require('./utils')
 /* alternative "clicks" (ie mouseDown -> mouseUp ) implementation, with more fine
@@ -45479,7 +37401,7 @@ function presses (baseInteractions, settings) {
 
 module.exports = {presses}
 
-},{"./utils":437,"most":475}],436:[function(require,module,exports){
+},{"./utils":138,"most":176}],137:[function(require,module,exports){
 const { exists } = require('./utils')
 
 /**
@@ -45517,7 +37439,7 @@ function taps (presses$, settings) {
 
 module.exports = {taps}
 
-},{"./utils":437}],437:[function(require,module,exports){
+},{"./utils":138}],138:[function(require,module,exports){
 const { empty, continueWith } = require('most')
 
 // for most.js
@@ -45587,7 +37509,7 @@ return baseBuffer$
 
 module.exports = {repeat, preventDefault, isMoving, normalizeWheel, exists}
 
-},{"most":475}],438:[function(require,module,exports){
+},{"most":176}],139:[function(require,module,exports){
 const { merge } = require('most')
 
 // this one is not reliable enough
@@ -45673,7 +37595,7 @@ function zooms ({touchStarts$, touchMoves$, touchEnds$, wheel$}, settings) {
 
 module.exports = {pinchZooms, zooms}
 
-},{"most":475}],439:[function(require,module,exports){
+},{"most":176}],140:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45755,7 +37677,7 @@ LinkedList.prototype.dispose = function () {
 
   return Promise.all(promises);
 };
-},{}],440:[function(require,module,exports){
+},{}],141:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45769,7 +37691,7 @@ exports.isPromise = isPromise;
 function isPromise(p) {
   return p !== null && typeof p === 'object' && typeof p.then === 'function';
 }
-},{}],441:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45838,7 +37760,7 @@ function copy(src, srcIndex, dst, dstIndex, len) {
     src[j + srcIndex] = void 0;
   }
 }
-},{}],442:[function(require,module,exports){
+},{}],143:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45856,7 +37778,7 @@ function Stream(source) {
 Stream.prototype.run = function (sink, scheduler) {
   return this.source.run(sink, scheduler);
 };
-},{}],443:[function(require,module,exports){
+},{}],144:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45968,7 +37890,7 @@ ReduceSink.prototype.error = _Pipe2.default.prototype.error;
 ReduceSink.prototype.end = function (t) {
   this.sink.end(t, this.value);
 };
-},{"../Stream":442,"../disposable/dispose":470,"../runSource":481,"../scheduler/PropagateTask":483,"../sink/Pipe":490}],444:[function(require,module,exports){
+},{"../Stream":143,"../disposable/dispose":171,"../runSource":182,"../scheduler/PropagateTask":184,"../sink/Pipe":191}],145:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45997,7 +37919,7 @@ var _prelude = require('@most/prelude');
 function ap(fs, xs) {
   return (0, _combine.combine)(_prelude.apply, fs, xs);
 }
-},{"./combine":446,"@most/prelude":422}],445:[function(require,module,exports){
+},{"./combine":147,"@most/prelude":123}],146:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46034,7 +37956,7 @@ function concat(left, right) {
     return right;
   }, left);
 }
-},{"../source/core":494,"./continueWith":448}],446:[function(require,module,exports){
+},{"../source/core":195,"./continueWith":149}],147:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46185,7 +38107,7 @@ CombineSink.prototype.end = function (t, indexedValue) {
     this.sink.end(t, indexedValue.value);
   }
 };
-},{"../Stream":442,"../disposable/dispose":470,"../invoke":476,"../sink/IndexSink":489,"../sink/Pipe":490,"../source/core":494,"./transform":466,"@most/prelude":422}],447:[function(require,module,exports){
+},{"../Stream":143,"../disposable/dispose":171,"../invoke":177,"../sink/IndexSink":190,"../sink/Pipe":191,"../source/core":195,"./transform":167,"@most/prelude":123}],148:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46211,7 +38133,7 @@ function concatMap(f, stream) {
 } /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
-},{"./mergeConcurrently":456}],448:[function(require,module,exports){
+},{"./mergeConcurrently":157}],149:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46292,7 +38214,7 @@ ContinueWithSink.prototype.dispose = function () {
   this.active = false;
   return this.disposable.dispose();
 };
-},{"../Stream":442,"../disposable/dispose":470,"../sink/Pipe":490}],449:[function(require,module,exports){
+},{"../Stream":143,"../disposable/dispose":171,"../sink/Pipe":191}],150:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46365,7 +38287,7 @@ DelaySink.prototype.end = function (t, x) {
 };
 
 DelaySink.prototype.error = _Pipe2.default.prototype.error;
-},{"../Stream":442,"../disposable/dispose":470,"../scheduler/PropagateTask":483,"../sink/Pipe":490}],450:[function(require,module,exports){
+},{"../Stream":143,"../disposable/dispose":171,"../scheduler/PropagateTask":184,"../sink/Pipe":191}],151:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46482,7 +38404,7 @@ RecoverWithSink.prototype._continue = function (f, x, sink) {
 RecoverWithSink.prototype.dispose = function () {
   return this.disposable.dispose();
 };
-},{"../Stream":442,"../disposable/dispose":470,"../scheduler/PropagateTask":483,"../sink/SafeSink":491,"../source/tryEvent":502}],451:[function(require,module,exports){
+},{"../Stream":143,"../disposable/dispose":171,"../scheduler/PropagateTask":184,"../sink/SafeSink":192,"../source/tryEvent":203}],152:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46572,7 +38494,7 @@ SkipRepeatsSink.prototype.event = function (t, x) {
 function same(a, b) {
   return a === b;
 }
-},{"../Stream":442,"../fusion/Filter":472,"../sink/Pipe":490}],452:[function(require,module,exports){
+},{"../Stream":143,"../fusion/Filter":173,"../sink/Pipe":191}],153:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46607,7 +38529,7 @@ function flatMap(f, stream) {
 function join(stream) {
   return (0, _mergeConcurrently.mergeConcurrently)(Infinity, stream);
 }
-},{"./mergeConcurrently":456}],453:[function(require,module,exports){
+},{"./mergeConcurrently":157}],154:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46624,10 +38546,6 @@ var _Pipe = require('../sink/Pipe');
 
 var _Pipe2 = _interopRequireDefault(_Pipe);
 
-var _PropagateTask = require('../scheduler/PropagateTask');
-
-var _PropagateTask2 = _interopRequireDefault(_PropagateTask);
-
 var _Map = require('../fusion/Map');
 
 var _Map2 = _interopRequireDefault(_Map);
@@ -46640,13 +38558,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {Stream} stream
  * @returns {Stream}
  */
-/** @license MIT License (c) copyright 2010-2016 original author or authors */
-/** @author Brian Cavalier */
-/** @author John Hann */
-
 function throttle(period, stream) {
   return new _Stream2.default(throttleSource(period, stream.source));
-}
+} /** @license MIT License (c) copyright 2010-2016 original author or authors */
+/** @author Brian Cavalier */
+/** @author John Hann */
 
 function throttleSource(period, source) {
   return source instanceof _Map2.default ? commuteMapThrottle(period, source) : source instanceof Throttle ? fuseThrottle(period, source) : new Throttle(period, source);
@@ -46718,7 +38634,12 @@ function DebounceSink(dt, source, sink, scheduler) {
 DebounceSink.prototype.event = function (t, x) {
   this._clearTimer();
   this.value = x;
-  this.timer = this.scheduler.delay(this.dt, _PropagateTask2.default.event(x, this.sink));
+  this.timer = this.scheduler.delay(this.dt, new DebounceTask(this, x));
+};
+
+DebounceSink.prototype._event = function (t, x) {
+  this._clearTimer();
+  this.sink.event(t, x);
 };
 
 DebounceSink.prototype.end = function (t, x) {
@@ -46747,7 +38668,22 @@ DebounceSink.prototype._clearTimer = function () {
   this.timer = null;
   return true;
 };
-},{"../Stream":442,"../fusion/Map":474,"../scheduler/PropagateTask":483,"../sink/Pipe":490}],454:[function(require,module,exports){
+
+function DebounceTask(debounce, value) {
+  this.debounce = debounce;
+  this.value = value;
+}
+
+DebounceTask.prototype.run = function (t) {
+  this.debounce._event(t, this.value);
+};
+
+DebounceTask.prototype.error = function (t, e) {
+  this.debounce.error(t, e);
+};
+
+DebounceTask.prototype.dispose = function () {};
+},{"../Stream":143,"../fusion/Map":175,"../sink/Pipe":191}],155:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46811,7 +38747,7 @@ LoopSink.prototype.event = function (t, x) {
 LoopSink.prototype.end = function (t) {
   this.sink.end(t, this.seed);
 };
-},{"../Stream":442,"../sink/Pipe":490}],455:[function(require,module,exports){
+},{"../Stream":143,"../sink/Pipe":191}],156:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46858,7 +38794,7 @@ var reduce = base.reduce;
  * list in time order.  If two events are simultaneous they will be merged in
  * arbitrary order.
  */
-function merge() /* ...streams*/{
+function merge() /* ...streams */{
   return mergeArray(copy(arguments));
 }
 
@@ -46930,7 +38866,7 @@ MergeSink.prototype.end = function (t, indexedValue) {
     this.sink.end(t, indexedValue.value);
   }
 };
-},{"../Stream":442,"../disposable/dispose":470,"../sink/IndexSink":489,"../sink/Pipe":490,"../source/core":494,"@most/prelude":422}],456:[function(require,module,exports){
+},{"../Stream":143,"../disposable/dispose":171,"../sink/IndexSink":190,"../sink/Pipe":191,"../source/core":195,"@most/prelude":123}],157:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47077,7 +39013,7 @@ Inner.prototype.error = function (t, e) {
 Inner.prototype.dispose = function () {
   return this.disposable.dispose();
 };
-},{"../LinkedList":439,"../Stream":442,"../disposable/dispose":470,"@most/prelude":422}],457:[function(require,module,exports){
+},{"../LinkedList":140,"../Stream":143,"../disposable/dispose":171,"@most/prelude":123}],158:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47115,7 +39051,7 @@ function observe(f, stream) {
 function drain(stream) {
   return (0, _runSource.withDefaultScheduler)(stream.source);
 }
-},{"../runSource":481,"./transform":466}],458:[function(require,module,exports){
+},{"../runSource":182,"./transform":167}],159:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47219,7 +39155,7 @@ AwaitSink.prototype._event = function (promise) {
 AwaitSink.prototype._end = function (x) {
   return Promise.resolve(x).then(this._endBound);
 };
-},{"../Stream":442,"../fatalError":471,"../source/core":494}],459:[function(require,module,exports){
+},{"../Stream":143,"../fatalError":172,"../source/core":195}],160:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47356,7 +39292,7 @@ function hasValue(hold) {
 function getValue(hold) {
   return hold.value;
 }
-},{"../Stream":442,"../disposable/dispose":470,"../invoke":476,"../sink/Pipe":490,"@most/prelude":422}],460:[function(require,module,exports){
+},{"../Stream":143,"../disposable/dispose":171,"../invoke":177,"../sink/Pipe":191,"@most/prelude":123}],161:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47594,7 +39530,7 @@ SkipAfterSink.prototype.event = function event(t, x) {
 
 SkipAfterSink.prototype.end = _Pipe2.default.prototype.end;
 SkipAfterSink.prototype.error = _Pipe2.default.prototype.error;
-},{"../Stream":442,"../disposable/dispose":470,"../fusion/Map":474,"../sink/Pipe":490,"../source/core":494}],461:[function(require,module,exports){
+},{"../Stream":143,"../disposable/dispose":171,"../fusion/Map":175,"../sink/Pipe":191,"../source/core":195}],162:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47723,7 +39659,7 @@ Segment.prototype._dispose = function (t) {
   this.max = t;
   dispose.tryDispose(t, this.disposable, this.sink);
 };
-},{"../Stream":442,"../disposable/dispose":470}],462:[function(require,module,exports){
+},{"../Stream":143,"../disposable/dispose":171}],163:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -47737,7 +39673,7 @@ exports.thru = thru;
 function thru(f, stream) {
   return f(stream);
 }
-},{}],463:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47872,7 +39808,7 @@ UpperBound.prototype.dispose = function () {
 };
 
 function noop() {}
-},{"../Stream":442,"../combinator/flatMap":452,"../disposable/dispose":470,"../sink/Pipe":490}],464:[function(require,module,exports){
+},{"../Stream":143,"../combinator/flatMap":153,"../disposable/dispose":171,"../sink/Pipe":191}],165:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47916,7 +39852,7 @@ TimestampSink.prototype.error = _Pipe2.default.prototype.error;
 TimestampSink.prototype.event = function (t, x) {
   this.sink.event(t, { time: t, value: x });
 };
-},{"../Stream":442,"../sink/Pipe":490}],465:[function(require,module,exports){
+},{"../Stream":143,"../sink/Pipe":191}],166:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48043,7 +39979,7 @@ LegacyTxAdapter.prototype.isReduced = function (x) {
 LegacyTxAdapter.prototype.getResult = function (x) {
   return x.value;
 };
-},{"../Stream":442}],466:[function(require,module,exports){
+},{"../Stream":143}],167:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48126,7 +40062,7 @@ TapSink.prototype.event = function (t, x) {
   f(x);
   this.sink.event(t, x);
 };
-},{"../Stream":442,"../fusion/Map":474,"../sink/Pipe":490}],467:[function(require,module,exports){
+},{"../Stream":143,"../fusion/Map":175,"../sink/Pipe":191}],168:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48295,7 +40231,7 @@ function ready(buffers) {
   }
   return true;
 }
-},{"../Queue":441,"../Stream":442,"../disposable/dispose":470,"../invoke":476,"../sink/IndexSink":489,"../sink/Pipe":490,"../source/core":494,"./transform":466,"@most/prelude":422}],468:[function(require,module,exports){
+},{"../Queue":142,"../Stream":143,"../disposable/dispose":171,"../invoke":177,"../sink/IndexSink":190,"../sink/Pipe":191,"../source/core":195,"./transform":167,"@most/prelude":123}],169:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -48320,7 +40256,7 @@ function Disposable(dispose, data) {
 Disposable.prototype.dispose = function () {
   return this._dispose(this._data);
 };
-},{}],469:[function(require,module,exports){
+},{}],170:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48367,7 +40303,7 @@ SettableDisposable.prototype.dispose = function () {
 
   return this.result;
 };
-},{}],470:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48510,7 +40446,7 @@ function disposeMemoized(memoized) {
 function memoized(disposable) {
   return { disposed: false, disposable: disposable, value: void 0 };
 }
-},{"../Promise":440,"./Disposable":468,"./SettableDisposable":469,"@most/prelude":422}],471:[function(require,module,exports){
+},{"../Promise":141,"./Disposable":169,"./SettableDisposable":170,"@most/prelude":123}],172:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -48526,7 +40462,7 @@ function fatalError(e) {
     throw e;
   }, 0);
 }
-},{}],472:[function(require,module,exports){
+},{}],173:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48585,7 +40521,7 @@ function and(p, q) {
     return p(x) && q(x);
   };
 }
-},{"../sink/Pipe":490}],473:[function(require,module,exports){
+},{"../sink/Pipe":191}],174:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48625,7 +40561,7 @@ FilterMapSink.prototype.event = function (t, x) {
 
 FilterMapSink.prototype.end = _Pipe2.default.prototype.end;
 FilterMapSink.prototype.error = _Pipe2.default.prototype.error;
-},{"../sink/Pipe":490}],474:[function(require,module,exports){
+},{"../sink/Pipe":191}],175:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48698,7 +40634,7 @@ MapSink.prototype.event = function (t, x) {
   var f = this.f;
   this.sink.event(t, f(x));
 };
-},{"../sink/Pipe":490,"./Filter":472,"./FilterMap":473,"@most/prelude":422}],475:[function(require,module,exports){
+},{"../sink/Pipe":191,"./Filter":173,"./FilterMap":174,"@most/prelude":123}],176:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48835,6 +40771,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
+
+/* eslint import/first: 0 */
 
 exports.Stream = _Stream2.default;
 
@@ -49143,7 +41081,7 @@ exports.mergeArray = _merge.mergeArray;
  * arbitrary order.
  */
 
-_Stream2.default.prototype.merge = function () /* ...streams*/{
+_Stream2.default.prototype.merge = function () /* ...streams */{
   return (0, _merge.mergeArray)(base.cons(this, arguments));
 };
 
@@ -49160,7 +41098,7 @@ exports.combineArray = _combine.combineArray;
  *  event of each input stream, whenever a new event arrives on any stream.
  */
 
-_Stream2.default.prototype.combine = function (f /*, ...streams*/) {
+_Stream2.default.prototype.combine = function (f /*, ...streams */) {
   return (0, _combine.combineArray)(f, base.replace(this, 0, arguments));
 };
 
@@ -49206,7 +41144,7 @@ exports.zipArray = _zip.zipArray;
  * @returns {Stream} new stream containing pairs
  */
 
-_Stream2.default.prototype.zip = function (f /*, ...streams*/) {
+_Stream2.default.prototype.zip = function (f /*, ...streams */) {
   return (0, _zip.zipArray)(f, base.replace(this, 0, arguments));
 };
 
@@ -49532,7 +41470,7 @@ exports.defaultScheduler = _defaultScheduler2.default;
 // export an implementation of Task used internally for third-party libraries
 
 exports.PropagateTask = _PropagateTask2.default;
-},{"./Stream":442,"./combinator/accumulate":443,"./combinator/applicative":444,"./combinator/build":445,"./combinator/combine":446,"./combinator/concatMap":447,"./combinator/continueWith":448,"./combinator/delay":449,"./combinator/errors":450,"./combinator/filter":451,"./combinator/flatMap":452,"./combinator/limit":453,"./combinator/loop":454,"./combinator/merge":455,"./combinator/mergeConcurrently":456,"./combinator/observe":457,"./combinator/promises":458,"./combinator/sample":459,"./combinator/slice":460,"./combinator/switch":461,"./combinator/thru":462,"./combinator/timeslice":463,"./combinator/timestamp":464,"./combinator/transduce":465,"./combinator/transform":466,"./combinator/zip":467,"./observable/subscribe":480,"./scheduler/PropagateTask":483,"./scheduler/defaultScheduler":487,"./source/core":494,"./source/from":495,"./source/fromEvent":497,"./source/generate":499,"./source/iterate":500,"./source/periodic":501,"./source/unfold":503,"@most/multicast":421,"@most/prelude":422,"symbol-observable":505}],476:[function(require,module,exports){
+},{"./Stream":143,"./combinator/accumulate":144,"./combinator/applicative":145,"./combinator/build":146,"./combinator/combine":147,"./combinator/concatMap":148,"./combinator/continueWith":149,"./combinator/delay":150,"./combinator/errors":151,"./combinator/filter":152,"./combinator/flatMap":153,"./combinator/limit":154,"./combinator/loop":155,"./combinator/merge":156,"./combinator/mergeConcurrently":157,"./combinator/observe":158,"./combinator/promises":159,"./combinator/sample":160,"./combinator/slice":161,"./combinator/switch":162,"./combinator/thru":163,"./combinator/timeslice":164,"./combinator/timestamp":165,"./combinator/transduce":166,"./combinator/transform":167,"./combinator/zip":168,"./observable/subscribe":181,"./scheduler/PropagateTask":184,"./scheduler/defaultScheduler":188,"./source/core":195,"./source/from":196,"./source/fromEvent":198,"./source/generate":200,"./source/iterate":201,"./source/periodic":202,"./source/unfold":204,"@most/multicast":122,"@most/prelude":123,"symbol-observable":206}],177:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -49544,7 +41482,7 @@ exports.default = invoke;
 /** @author John Hann */
 
 function invoke(f, args) {
-  /*eslint complexity: [2,7]*/
+  /* eslint complexity: [2,7] */
   switch (args.length) {
     case 0:
       return f();
@@ -49562,7 +41500,7 @@ function invoke(f, args) {
       return f.apply(void 0, args);
   }
 }
-},{}],477:[function(require,module,exports){
+},{}],178:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -49575,14 +41513,14 @@ exports.makeIterable = makeIterable;
 /** @author Brian Cavalier */
 /** @author John Hann */
 
-/*global Set, Symbol*/
+/* global Set, Symbol */
 var iteratorSymbol;
 // Firefox ships a partial implementation using the name @@iterator.
 // https://bugzilla.mozilla.org/show_bug.cgi?id=907077#c14
 if (typeof Set === 'function' && typeof new Set()['@@iterator'] === 'function') {
   iteratorSymbol = '@@iterator';
 } else {
-  iteratorSymbol = typeof Symbol === 'function' && Symbol.iterator || '_es6shim_iterator_';
+  iteratorSymbol = typeof Symbol === 'function' ? Symbol.iterator : '_es6shim_iterator_';
 }
 
 function isIterable(o) {
@@ -49597,7 +41535,7 @@ function makeIterable(f, o) {
   o[iteratorSymbol] = f;
   return o;
 }
-},{}],478:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -49662,7 +41600,7 @@ SubscriberSink.prototype.error = function (e) {
 function unsubscribe(subscription) {
   return subscription.unsubscribe();
 }
-},{"../Stream":442,"../disposable/dispose":470,"../source/tryEvent":502}],479:[function(require,module,exports){
+},{"../Stream":143,"../disposable/dispose":171,"../source/tryEvent":203}],180:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -49694,7 +41632,7 @@ function getObservable(o) {
 } /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
-},{"symbol-observable":505}],480:[function(require,module,exports){
+},{"symbol-observable":206}],181:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -49788,7 +41726,7 @@ function throwError(e1, subscriber, throwError) {
     throwError(e1);
   }
 }
-},{"../disposable/dispose":470,"../fatalError":471,"../scheduler/defaultScheduler":487}],481:[function(require,module,exports){
+},{"../disposable/dispose":171,"../fatalError":172,"../scheduler/defaultScheduler":188}],182:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -49857,7 +41795,7 @@ function disposeThen(end, error, disposable, x) {
     end(x);
   }, error);
 }
-},{"./disposable/dispose":470,"./scheduler/defaultScheduler":487}],482:[function(require,module,exports){
+},{"./disposable/dispose":171,"./scheduler/defaultScheduler":188}],183:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -49867,7 +41805,7 @@ exports.default = ClockTimer;
 
 var _task = require('../task');
 
-/*global setTimeout, clearTimeout*/
+/* global setTimeout, clearTimeout */
 
 function ClockTimer() {} /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
@@ -49905,7 +41843,7 @@ function runAsap(f) {
   (0, _task.defer)(task);
   return task;
 }
-},{"../task":504}],483:[function(require,module,exports){
+},{"../task":205}],184:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -49969,7 +41907,7 @@ function emit(t, x, sink) {
 function end(t, x, sink) {
   sink.end(t, x);
 }
-},{"../fatalError":471}],484:[function(require,module,exports){
+},{"../fatalError":172}],185:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -50000,7 +41938,7 @@ ScheduledTask.prototype.dispose = function () {
   this.scheduler.cancel(this);
   return this.task.dispose();
 };
-},{}],485:[function(require,module,exports){
+},{}],186:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50110,7 +42048,7 @@ Scheduler.prototype._runReadyTasks = function (now) {
   this.timeline.runTasks(now, _task.runTask);
   this._scheduleNextRun(this.now());
 };
-},{"../task":504,"./ScheduledTask":484}],486:[function(require,module,exports){
+},{"../task":205,"./ScheduledTask":185}],187:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50252,7 +42190,7 @@ function binarySearch(t, sortedArray) {
 function newTimeslot(t, events) {
   return { time: t, events: events };
 }
-},{"@most/prelude":422}],487:[function(require,module,exports){
+},{"@most/prelude":123}],188:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50278,7 +42216,7 @@ var defaultScheduler = new _Scheduler2.default(new _ClockTimer2.default(), new _
 /** @author John Hann */
 
 exports.default = defaultScheduler;
-},{"./ClockTimer":482,"./Scheduler":485,"./Timeline":486}],488:[function(require,module,exports){
+},{"./ClockTimer":183,"./Scheduler":186,"./Timeline":187}],189:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50378,7 +42316,7 @@ ErrorTask.prototype.run = function () {
 ErrorTask.prototype.error = function (e) {
   throw e;
 };
-},{"../task":504}],489:[function(require,module,exports){
+},{"../task":205}],190:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50418,7 +42356,7 @@ IndexSink.prototype.end = function (t, x) {
 };
 
 IndexSink.prototype.error = _Pipe2.default.prototype.error;
-},{"./Pipe":490}],490:[function(require,module,exports){
+},{"./Pipe":191}],191:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -50450,7 +42388,7 @@ Pipe.prototype.end = function (t, x) {
 Pipe.prototype.error = function (t, e) {
   return this.sink.error(t, e);
 };
-},{}],491:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -50490,7 +42428,7 @@ SafeSink.prototype.disable = function () {
   this.active = false;
   return this.sink;
 };
-},{}],492:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50553,7 +42491,7 @@ function disposeEventEmitter(info) {
   var target = info.target;
   target.source.removeListener(target.event, info.addEvent);
 }
-},{"../disposable/dispose":470,"../sink/DeferredSink":488,"./tryEvent":502}],493:[function(require,module,exports){
+},{"../disposable/dispose":171,"../sink/DeferredSink":189,"./tryEvent":203}],194:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50595,7 +42533,7 @@ function disposeEventTarget(info) {
   var target = info.target;
   target.source.removeEventListener(target.event, info.addEvent, target.capture);
 }
-},{"../disposable/dispose":470,"./tryEvent":502}],494:[function(require,module,exports){
+},{"../disposable/dispose":171,"./tryEvent":203}],195:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50683,7 +42621,7 @@ NeverSource.prototype.run = function () {
 };
 
 var NEVER = new _Stream2.default(new NeverSource());
-},{"../Stream":442,"../disposable/dispose":470,"../scheduler/PropagateTask":483}],495:[function(require,module,exports){
+},{"../Stream":143,"../disposable/dispose":171,"../scheduler/PropagateTask":184}],196:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50734,7 +42672,7 @@ function from(a) {
 } /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
-},{"../Stream":442,"../iterable":477,"../observable/fromObservable":478,"../observable/getObservable":479,"./fromArray":496,"./fromIterable":498,"@most/prelude":422}],496:[function(require,module,exports){
+},{"../Stream":143,"../iterable":178,"../observable/fromObservable":179,"../observable/getObservable":180,"./fromArray":197,"./fromIterable":199,"@most/prelude":123}],197:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50775,7 +42713,7 @@ function runProducer(t, array, sink) {
 
   this.active && sink.end(t);
 }
-},{"../Stream":442,"../scheduler/PropagateTask":483}],497:[function(require,module,exports){
+},{"../Stream":143,"../scheduler/PropagateTask":184}],198:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50826,7 +42764,7 @@ function fromEvent(event, source, capture) {
 } /** @license MIT License (c) copyright 2010-2016 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
-},{"../Stream":442,"./EventEmitterSource":492,"./EventTargetSource":493}],498:[function(require,module,exports){
+},{"../Stream":143,"./EventEmitterSource":193,"./EventTargetSource":194}],199:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50870,7 +42808,7 @@ function runProducer(t, iterator, sink) {
 
   sink.end(t, r.value);
 }
-},{"../Stream":442,"../iterable":477,"../scheduler/PropagateTask":483}],499:[function(require,module,exports){
+},{"../Stream":143,"../iterable":178,"../scheduler/PropagateTask":184}],200:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50955,7 +42893,7 @@ function error(generate, e) {
 Generate.prototype.dispose = function () {
   this.active = false;
 };
-},{"../Stream":442,"@most/prelude":422}],500:[function(require,module,exports){
+},{"../Stream":143,"@most/prelude":123}],201:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -51031,7 +42969,7 @@ function stepIterate(iterate, x) {
 function continueIterate(iterate, x) {
   return !iterate.active ? iterate.value : stepIterate(iterate, x);
 }
-},{"../Stream":442}],501:[function(require,module,exports){
+},{"../Stream":143}],202:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -51071,7 +43009,7 @@ function Periodic(period, value) {
 Periodic.prototype.run = function (sink, scheduler) {
   return scheduler.periodic(this.period, _PropagateTask2.default.event(this.value, sink));
 };
-},{"../Stream":442,"../scheduler/PropagateTask":483}],502:[function(require,module,exports){
+},{"../Stream":143,"../scheduler/PropagateTask":184}],203:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -51098,7 +43036,7 @@ function tryEnd(t, x, sink) {
     sink.error(t, e);
   }
 }
-},{}],503:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -51179,7 +43117,7 @@ function continueUnfold(unfold, tuple) {
   }
   return stepUnfold(unfold, tuple.seed);
 }
-},{"../Stream":442}],504:[function(require,module,exports){
+},{"../Stream":143}],205:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -51202,10 +43140,7 @@ function runTask(task) {
     return task.error(e);
   }
 }
-},{}],505:[function(require,module,exports){
-module.exports = require('./lib/index');
-
-},{"./lib/index":506}],506:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -51237,7 +43172,7 @@ if (typeof self !== 'undefined') {
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ponyfill.js":507}],507:[function(require,module,exports){
+},{"./ponyfill.js":207}],207:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -51261,16 +43196,16 @@ function symbolObservablePonyfill(root) {
 
 	return result;
 };
-},{}],508:[function(require,module,exports){
+},{}],208:[function(require,module,exports){
 (function (process){
 'use strict';
 
 if (!process.version ||
     process.version.indexOf('v0.') === 0 ||
     process.version.indexOf('v1.') === 0 && process.version.indexOf('v1.8.') !== 0) {
-  module.exports = nextTick;
+  module.exports = { nextTick: nextTick };
 } else {
-  module.exports = process.nextTick;
+  module.exports = process
 }
 
 function nextTick(fn, arg1, arg2, arg3) {
@@ -51307,8 +43242,9 @@ function nextTick(fn, arg1, arg2, arg3) {
   }
 }
 
+
 }).call(this,require('_process'))
-},{"_process":509}],509:[function(require,module,exports){
+},{"_process":209}],209:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -51494,10 +43430,10 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],510:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 module.exports = require('./lib/_stream_duplex.js');
 
-},{"./lib/_stream_duplex.js":511}],511:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":211}],211:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -51528,7 +43464,7 @@ module.exports = require('./lib/_stream_duplex.js');
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var pna = require('process-nextick-args');
 /*</replacement>*/
 
 /*<replacement>*/
@@ -51552,10 +43488,13 @@ var Writable = require('./_stream_writable');
 
 util.inherits(Duplex, Readable);
 
-var keys = objectKeys(Writable.prototype);
-for (var v = 0; v < keys.length; v++) {
-  var method = keys[v];
-  if (!Duplex.prototype[method]) Duplex.prototype[method] = Writable.prototype[method];
+{
+  // avoid scope creep, the keys array can then be collected
+  var keys = objectKeys(Writable.prototype);
+  for (var v = 0; v < keys.length; v++) {
+    var method = keys[v];
+    if (!Duplex.prototype[method]) Duplex.prototype[method] = Writable.prototype[method];
+  }
 }
 
 function Duplex(options) {
@@ -51574,6 +43513,16 @@ function Duplex(options) {
   this.once('end', onend);
 }
 
+Object.defineProperty(Duplex.prototype, 'writableHighWaterMark', {
+  // making it explicit this property is not enumerable
+  // because otherwise some prototype manipulation in
+  // userland will fail
+  enumerable: false,
+  get: function () {
+    return this._writableState.highWaterMark;
+  }
+});
+
 // the no-half-open enforcer
 function onend() {
   // if we allow half-open state, or if the writable side ended,
@@ -51582,7 +43531,7 @@ function onend() {
 
   // no more data can be written.
   // But allow more writes to happen in this tick.
-  processNextTick(onEndNT, this);
+  pna.nextTick(onEndNT, this);
 }
 
 function onEndNT(self) {
@@ -51614,15 +43563,9 @@ Duplex.prototype._destroy = function (err, cb) {
   this.push(null);
   this.end();
 
-  processNextTick(cb, err);
+  pna.nextTick(cb, err);
 };
-
-function forEach(xs, f) {
-  for (var i = 0, l = xs.length; i < l; i++) {
-    f(xs[i], i);
-  }
-}
-},{"./_stream_readable":513,"./_stream_writable":515,"core-util-is":427,"inherits":430,"process-nextick-args":508}],512:[function(require,module,exports){
+},{"./_stream_readable":213,"./_stream_writable":215,"core-util-is":128,"inherits":131,"process-nextick-args":208}],212:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -51670,7 +43613,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":514,"core-util-is":427,"inherits":430}],513:[function(require,module,exports){
+},{"./_stream_transform":214,"core-util-is":128,"inherits":131}],213:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -51697,7 +43640,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var pna = require('process-nextick-args');
 /*</replacement>*/
 
 module.exports = Readable;
@@ -51724,9 +43667,8 @@ var EElistenerCount = function (emitter, type) {
 var Stream = require('./internal/streams/stream');
 /*</replacement>*/
 
-// TODO(bmeurer): Change this back to const once hole checks are
-// properly optimized away early in Ignition+TurboFan.
 /*<replacement>*/
+
 var Buffer = require('safe-buffer').Buffer;
 var OurUint8Array = global.Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
@@ -51735,6 +43677,7 @@ function _uint8ArrayToBuffer(chunk) {
 function _isUint8Array(obj) {
   return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
 }
+
 /*</replacement>*/
 
 /*<replacement>*/
@@ -51763,15 +43706,13 @@ var kProxyEvents = ['error', 'close', 'destroy', 'pause', 'resume'];
 function prependListener(emitter, event, fn) {
   // Sadly this is not cacheable as some libraries bundle their own
   // event emitter implementation with them.
-  if (typeof emitter.prependListener === 'function') {
-    return emitter.prependListener(event, fn);
-  } else {
-    // This is a hack to make sure that our error handler is attached before any
-    // userland ones.  NEVER DO THIS. This is here only because this code needs
-    // to continue to work with older versions of Node.js that do not include
-    // the prependListener() method. The goal is to eventually remove this hack.
-    if (!emitter._events || !emitter._events[event]) emitter.on(event, fn);else if (isArray(emitter._events[event])) emitter._events[event].unshift(fn);else emitter._events[event] = [fn, emitter._events[event]];
-  }
+  if (typeof emitter.prependListener === 'function') return emitter.prependListener(event, fn);
+
+  // This is a hack to make sure that our error handler is attached before any
+  // userland ones.  NEVER DO THIS. This is here only because this code needs
+  // to continue to work with older versions of Node.js that do not include
+  // the prependListener() method. The goal is to eventually remove this hack.
+  if (!emitter._events || !emitter._events[event]) emitter.on(event, fn);else if (isArray(emitter._events[event])) emitter._events[event].unshift(fn);else emitter._events[event] = [fn, emitter._events[event]];
 }
 
 function ReadableState(options, stream) {
@@ -51779,17 +43720,26 @@ function ReadableState(options, stream) {
 
   options = options || {};
 
+  // Duplex streams are both readable and writable, but share
+  // the same options object.
+  // However, some cases require setting options to different
+  // values for the readable and the writable sides of the duplex stream.
+  // These options can be provided separately as readableXXX and writableXXX.
+  var isDuplex = stream instanceof Duplex;
+
   // object stream flag. Used to make read(n) ignore n and to
   // make all the buffer merging and length checks go away
   this.objectMode = !!options.objectMode;
 
-  if (stream instanceof Duplex) this.objectMode = this.objectMode || !!options.readableObjectMode;
+  if (isDuplex) this.objectMode = this.objectMode || !!options.readableObjectMode;
 
   // the point at which it stops calling _read() to fill the buffer
   // Note: 0 is a valid value, means "don't call _read preemptively ever"
   var hwm = options.highWaterMark;
+  var readableHwm = options.readableHighWaterMark;
   var defaultHwm = this.objectMode ? 16 : 16 * 1024;
-  this.highWaterMark = hwm || hwm === 0 ? hwm : defaultHwm;
+
+  if (hwm || hwm === 0) this.highWaterMark = hwm;else if (isDuplex && (readableHwm || readableHwm === 0)) this.highWaterMark = readableHwm;else this.highWaterMark = defaultHwm;
 
   // cast to ints.
   this.highWaterMark = Math.floor(this.highWaterMark);
@@ -52162,7 +44112,7 @@ function emitReadable(stream) {
   if (!state.emittedReadable) {
     debug('emitReadable', state.flowing);
     state.emittedReadable = true;
-    if (state.sync) processNextTick(emitReadable_, stream);else emitReadable_(stream);
+    if (state.sync) pna.nextTick(emitReadable_, stream);else emitReadable_(stream);
   }
 }
 
@@ -52181,7 +44131,7 @@ function emitReadable_(stream) {
 function maybeReadMore(stream, state) {
   if (!state.readingMore) {
     state.readingMore = true;
-    processNextTick(maybeReadMore_, stream, state);
+    pna.nextTick(maybeReadMore_, stream, state);
   }
 }
 
@@ -52226,7 +44176,7 @@ Readable.prototype.pipe = function (dest, pipeOpts) {
   var doEnd = (!pipeOpts || pipeOpts.end !== false) && dest !== process.stdout && dest !== process.stderr;
 
   var endFn = doEnd ? onend : unpipe;
-  if (state.endEmitted) processNextTick(endFn);else src.once('end', endFn);
+  if (state.endEmitted) pna.nextTick(endFn);else src.once('end', endFn);
 
   dest.on('unpipe', onunpipe);
   function onunpipe(readable, unpipeInfo) {
@@ -52416,7 +44366,7 @@ Readable.prototype.on = function (ev, fn) {
       state.readableListening = state.needReadable = true;
       state.emittedReadable = false;
       if (!state.reading) {
-        processNextTick(nReadingNextTick, this);
+        pna.nextTick(nReadingNextTick, this);
       } else if (state.length) {
         emitReadable(this);
       }
@@ -52447,7 +44397,7 @@ Readable.prototype.resume = function () {
 function resume(stream, state) {
   if (!state.resumeScheduled) {
     state.resumeScheduled = true;
-    processNextTick(resume_, stream, state);
+    pna.nextTick(resume_, stream, state);
   }
 }
 
@@ -52484,18 +44434,19 @@ function flow(stream) {
 // This is *not* part of the readable stream interface.
 // It is an ugly unfortunate mess of history.
 Readable.prototype.wrap = function (stream) {
+  var _this = this;
+
   var state = this._readableState;
   var paused = false;
 
-  var self = this;
   stream.on('end', function () {
     debug('wrapped end');
     if (state.decoder && !state.ended) {
       var chunk = state.decoder.end();
-      if (chunk && chunk.length) self.push(chunk);
+      if (chunk && chunk.length) _this.push(chunk);
     }
 
-    self.push(null);
+    _this.push(null);
   });
 
   stream.on('data', function (chunk) {
@@ -52505,7 +44456,7 @@ Readable.prototype.wrap = function (stream) {
     // don't skip over falsy values in objectMode
     if (state.objectMode && (chunk === null || chunk === undefined)) return;else if (!state.objectMode && (!chunk || !chunk.length)) return;
 
-    var ret = self.push(chunk);
+    var ret = _this.push(chunk);
     if (!ret) {
       paused = true;
       stream.pause();
@@ -52526,12 +44477,12 @@ Readable.prototype.wrap = function (stream) {
 
   // proxy certain important events.
   for (var n = 0; n < kProxyEvents.length; n++) {
-    stream.on(kProxyEvents[n], self.emit.bind(self, kProxyEvents[n]));
+    stream.on(kProxyEvents[n], this.emit.bind(this, kProxyEvents[n]));
   }
 
   // when we try to consume some more bytes, simply unpause the
   // underlying stream.
-  self._read = function (n) {
+  this._read = function (n) {
     debug('wrapped _read', n);
     if (paused) {
       paused = false;
@@ -52539,8 +44490,18 @@ Readable.prototype.wrap = function (stream) {
     }
   };
 
-  return self;
+  return this;
 };
+
+Object.defineProperty(Readable.prototype, 'readableHighWaterMark', {
+  // making it explicit this property is not enumerable
+  // because otherwise some prototype manipulation in
+  // userland will fail
+  enumerable: false,
+  get: function () {
+    return this._readableState.highWaterMark;
+  }
+});
 
 // exposed for testing purposes only.
 Readable._fromList = fromList;
@@ -52654,7 +44615,7 @@ function endReadable(stream) {
 
   if (!state.endEmitted) {
     state.ended = true;
-    processNextTick(endReadableNT, state, stream);
+    pna.nextTick(endReadableNT, state, stream);
   }
 }
 
@@ -52667,12 +44628,6 @@ function endReadableNT(state, stream) {
   }
 }
 
-function forEach(xs, f) {
-  for (var i = 0, l = xs.length; i < l; i++) {
-    f(xs[i], i);
-  }
-}
-
 function indexOf(xs, x) {
   for (var i = 0, l = xs.length; i < l; i++) {
     if (xs[i] === x) return i;
@@ -52680,7 +44635,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./_stream_duplex":511,"./internal/streams/BufferList":516,"./internal/streams/destroy":517,"./internal/streams/stream":518,"_process":509,"core-util-is":427,"events":428,"inherits":430,"isarray":432,"process-nextick-args":508,"safe-buffer":523,"string_decoder/":525,"util":424}],514:[function(require,module,exports){
+},{"./_stream_duplex":211,"./internal/streams/BufferList":216,"./internal/streams/destroy":217,"./internal/streams/stream":218,"_process":209,"core-util-is":128,"events":129,"inherits":131,"isarray":133,"process-nextick-args":208,"safe-buffer":223,"string_decoder/":225,"util":125}],214:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -52757,39 +44712,28 @@ util.inherits = require('inherits');
 
 util.inherits(Transform, Duplex);
 
-function TransformState(stream) {
-  this.afterTransform = function (er, data) {
-    return afterTransform(stream, er, data);
-  };
-
-  this.needTransform = false;
-  this.transforming = false;
-  this.writecb = null;
-  this.writechunk = null;
-  this.writeencoding = null;
-}
-
-function afterTransform(stream, er, data) {
-  var ts = stream._transformState;
+function afterTransform(er, data) {
+  var ts = this._transformState;
   ts.transforming = false;
 
   var cb = ts.writecb;
 
   if (!cb) {
-    return stream.emit('error', new Error('write callback called multiple times'));
+    return this.emit('error', new Error('write callback called multiple times'));
   }
 
   ts.writechunk = null;
   ts.writecb = null;
 
-  if (data !== null && data !== undefined) stream.push(data);
+  if (data != null) // single equals check for both `null` and `undefined`
+    this.push(data);
 
   cb(er);
 
-  var rs = stream._readableState;
+  var rs = this._readableState;
   rs.reading = false;
   if (rs.needReadable || rs.length < rs.highWaterMark) {
-    stream._read(rs.highWaterMark);
+    this._read(rs.highWaterMark);
   }
 }
 
@@ -52798,9 +44742,14 @@ function Transform(options) {
 
   Duplex.call(this, options);
 
-  this._transformState = new TransformState(this);
-
-  var stream = this;
+  this._transformState = {
+    afterTransform: afterTransform.bind(this),
+    needTransform: false,
+    transforming: false,
+    writecb: null,
+    writechunk: null,
+    writeencoding: null
+  };
 
   // start out asking for a readable event once data is transformed.
   this._readableState.needReadable = true;
@@ -52817,11 +44766,19 @@ function Transform(options) {
   }
 
   // When the writable side finishes, then flush out anything remaining.
-  this.once('prefinish', function () {
-    if (typeof this._flush === 'function') this._flush(function (er, data) {
-      done(stream, er, data);
-    });else done(stream);
-  });
+  this.on('prefinish', prefinish);
+}
+
+function prefinish() {
+  var _this = this;
+
+  if (typeof this._flush === 'function') {
+    this._flush(function (er, data) {
+      done(_this, er, data);
+    });
+  } else {
+    done(this, null, null);
+  }
 }
 
 Transform.prototype.push = function (chunk, encoding) {
@@ -52871,32 +44828,30 @@ Transform.prototype._read = function (n) {
 };
 
 Transform.prototype._destroy = function (err, cb) {
-  var _this = this;
+  var _this2 = this;
 
   Duplex.prototype._destroy.call(this, err, function (err2) {
     cb(err2);
-    _this.emit('close');
+    _this2.emit('close');
   });
 };
 
 function done(stream, er, data) {
   if (er) return stream.emit('error', er);
 
-  if (data !== null && data !== undefined) stream.push(data);
+  if (data != null) // single equals check for both `null` and `undefined`
+    stream.push(data);
 
   // if there's nothing in the write buffer, then that means
   // that nothing more will ever be provided
-  var ws = stream._writableState;
-  var ts = stream._transformState;
+  if (stream._writableState.length) throw new Error('Calling transform done when ws.length != 0');
 
-  if (ws.length) throw new Error('Calling transform done when ws.length != 0');
-
-  if (ts.transforming) throw new Error('Calling transform done when still transforming');
+  if (stream._transformState.transforming) throw new Error('Calling transform done when still transforming');
 
   return stream.push(null);
 }
-},{"./_stream_duplex":511,"core-util-is":427,"inherits":430}],515:[function(require,module,exports){
-(function (process,global){
+},{"./_stream_duplex":211,"core-util-is":128,"inherits":131}],215:[function(require,module,exports){
+(function (process,global,setImmediate){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -52926,7 +44881,7 @@ function done(stream, er, data) {
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var pna = require('process-nextick-args');
 /*</replacement>*/
 
 module.exports = Writable;
@@ -52953,7 +44908,7 @@ function CorkedRequest(state) {
 /* </replacement> */
 
 /*<replacement>*/
-var asyncWrite = !process.browser && ['v0.10', 'v0.9.'].indexOf(process.version.slice(0, 5)) > -1 ? setImmediate : processNextTick;
+var asyncWrite = !process.browser && ['v0.10', 'v0.9.'].indexOf(process.version.slice(0, 5)) > -1 ? setImmediate : pna.nextTick;
 /*</replacement>*/
 
 /*<replacement>*/
@@ -52978,6 +44933,7 @@ var Stream = require('./internal/streams/stream');
 /*</replacement>*/
 
 /*<replacement>*/
+
 var Buffer = require('safe-buffer').Buffer;
 var OurUint8Array = global.Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
@@ -52986,6 +44942,7 @@ function _uint8ArrayToBuffer(chunk) {
 function _isUint8Array(obj) {
   return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
 }
+
 /*</replacement>*/
 
 var destroyImpl = require('./internal/streams/destroy');
@@ -52999,18 +44956,27 @@ function WritableState(options, stream) {
 
   options = options || {};
 
+  // Duplex streams are both readable and writable, but share
+  // the same options object.
+  // However, some cases require setting options to different
+  // values for the readable and the writable sides of the duplex stream.
+  // These options can be provided separately as readableXXX and writableXXX.
+  var isDuplex = stream instanceof Duplex;
+
   // object stream flag to indicate whether or not this stream
   // contains buffers or objects.
   this.objectMode = !!options.objectMode;
 
-  if (stream instanceof Duplex) this.objectMode = this.objectMode || !!options.writableObjectMode;
+  if (isDuplex) this.objectMode = this.objectMode || !!options.writableObjectMode;
 
   // the point at which write() starts returning false
   // Note: 0 is a valid value, means that we always return false if
   // the entire buffer is not flushed immediately on write()
   var hwm = options.highWaterMark;
+  var writableHwm = options.writableHighWaterMark;
   var defaultHwm = this.objectMode ? 16 : 16 * 1024;
-  this.highWaterMark = hwm || hwm === 0 ? hwm : defaultHwm;
+
+  if (hwm || hwm === 0) this.highWaterMark = hwm;else if (isDuplex && (writableHwm || writableHwm === 0)) this.highWaterMark = writableHwm;else this.highWaterMark = defaultHwm;
 
   // cast to ints.
   this.highWaterMark = Math.floor(this.highWaterMark);
@@ -53124,6 +45090,7 @@ if (typeof Symbol === 'function' && Symbol.hasInstance && typeof Function.protot
   Object.defineProperty(Writable, Symbol.hasInstance, {
     value: function (object) {
       if (realHasInstance.call(this, object)) return true;
+      if (this !== Writable) return false;
 
       return object && object._writableState instanceof WritableState;
     }
@@ -53175,7 +45142,7 @@ function writeAfterEnd(stream, cb) {
   var er = new Error('write after end');
   // TODO: defer error events consistently everywhere, not just the cb
   stream.emit('error', er);
-  processNextTick(cb, er);
+  pna.nextTick(cb, er);
 }
 
 // Checks that a user-supplied chunk is valid, especially for the particular
@@ -53192,7 +45159,7 @@ function validChunk(stream, state, chunk, cb) {
   }
   if (er) {
     stream.emit('error', er);
-    processNextTick(cb, er);
+    pna.nextTick(cb, er);
     valid = false;
   }
   return valid;
@@ -53201,7 +45168,7 @@ function validChunk(stream, state, chunk, cb) {
 Writable.prototype.write = function (chunk, encoding, cb) {
   var state = this._writableState;
   var ret = false;
-  var isBuf = _isUint8Array(chunk) && !state.objectMode;
+  var isBuf = !state.objectMode && _isUint8Array(chunk);
 
   if (isBuf && !Buffer.isBuffer(chunk)) {
     chunk = _uint8ArrayToBuffer(chunk);
@@ -53254,6 +45221,16 @@ function decodeChunk(state, chunk, encoding) {
   }
   return chunk;
 }
+
+Object.defineProperty(Writable.prototype, 'writableHighWaterMark', {
+  // making it explicit this property is not enumerable
+  // because otherwise some prototype manipulation in
+  // userland will fail
+  enumerable: false,
+  get: function () {
+    return this._writableState.highWaterMark;
+  }
+});
 
 // if we're already writing something, then just put this
 // in the queue, and wait our turn.  Otherwise, call _write
@@ -53312,10 +45289,10 @@ function onwriteError(stream, state, sync, er, cb) {
   if (sync) {
     // defer the callback if we are being called synchronously
     // to avoid piling up things on the stack
-    processNextTick(cb, er);
+    pna.nextTick(cb, er);
     // this can emit finish, and it will always happen
     // after error
-    processNextTick(finishMaybe, stream, state);
+    pna.nextTick(finishMaybe, stream, state);
     stream._writableState.errorEmitted = true;
     stream.emit('error', er);
   } else {
@@ -53413,6 +45390,7 @@ function clearBuffer(stream, state) {
     } else {
       state.corkedRequestsFree = new CorkedRequest(state);
     }
+    state.bufferedRequestCount = 0;
   } else {
     // Slow case, write chunks one-by-one
     while (entry) {
@@ -53423,6 +45401,7 @@ function clearBuffer(stream, state) {
 
       doWrite(stream, state, false, len, chunk, encoding, cb);
       entry = entry.next;
+      state.bufferedRequestCount--;
       // if we didn't call the onwrite immediately, then
       // it means that we need to wait until it does.
       // also, that means that the chunk and cb are currently
@@ -53435,7 +45414,6 @@ function clearBuffer(stream, state) {
     if (entry === null) state.lastBufferedRequest = null;
   }
 
-  state.bufferedRequestCount = 0;
   state.bufferedRequest = entry;
   state.bufferProcessing = false;
 }
@@ -53489,7 +45467,7 @@ function prefinish(stream, state) {
     if (typeof stream._final === 'function') {
       state.pendingcb++;
       state.finalCalled = true;
-      processNextTick(callFinal, stream, state);
+      pna.nextTick(callFinal, stream, state);
     } else {
       state.prefinished = true;
       stream.emit('prefinish');
@@ -53513,7 +45491,7 @@ function endWritable(stream, state, cb) {
   state.ending = true;
   finishMaybe(stream, state);
   if (cb) {
-    if (state.finished) processNextTick(cb);else stream.once('finish', cb);
+    if (state.finished) pna.nextTick(cb);else stream.once('finish', cb);
   }
   state.ended = true;
   stream.writable = false;
@@ -53561,16 +45539,14 @@ Writable.prototype._destroy = function (err, cb) {
   this.end();
   cb(err);
 };
-}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./_stream_duplex":511,"./internal/streams/destroy":517,"./internal/streams/stream":518,"_process":509,"core-util-is":427,"inherits":430,"process-nextick-args":508,"safe-buffer":523,"util-deprecate":526}],516:[function(require,module,exports){
+}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("timers").setImmediate)
+},{"./_stream_duplex":211,"./internal/streams/destroy":217,"./internal/streams/stream":218,"_process":209,"core-util-is":128,"inherits":131,"process-nextick-args":208,"safe-buffer":223,"timers":226,"util-deprecate":227}],216:[function(require,module,exports){
 'use strict';
-
-/*<replacement>*/
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Buffer = require('safe-buffer').Buffer;
-/*</replacement>*/
+var util = require('util');
 
 function copyBuffer(src, target, offset) {
   src.copy(target, offset);
@@ -53637,12 +45613,19 @@ module.exports = function () {
 
   return BufferList;
 }();
-},{"safe-buffer":523}],517:[function(require,module,exports){
+
+if (util && util.inspect && util.inspect.custom) {
+  module.exports.prototype[util.inspect.custom] = function () {
+    var obj = util.inspect({ length: this.length });
+    return this.constructor.name + ' ' + obj;
+  };
+}
+},{"safe-buffer":223,"util":125}],217:[function(require,module,exports){
 'use strict';
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var pna = require('process-nextick-args');
 /*</replacement>*/
 
 // undocumented cb() API, needed for core, not for public API
@@ -53656,9 +45639,9 @@ function destroy(err, cb) {
     if (cb) {
       cb(err);
     } else if (err && (!this._writableState || !this._writableState.errorEmitted)) {
-      processNextTick(emitErrorNT, this, err);
+      pna.nextTick(emitErrorNT, this, err);
     }
-    return;
+    return this;
   }
 
   // we set destroyed to true before firing error callbacks in order
@@ -53675,7 +45658,7 @@ function destroy(err, cb) {
 
   this._destroy(err || null, function (err) {
     if (!cb && err) {
-      processNextTick(emitErrorNT, _this, err);
+      pna.nextTick(emitErrorNT, _this, err);
       if (_this._writableState) {
         _this._writableState.errorEmitted = true;
       }
@@ -53683,6 +45666,8 @@ function destroy(err, cb) {
       cb(err);
     }
   });
+
+  return this;
 }
 
 function undestroy() {
@@ -53710,13 +45695,13 @@ module.exports = {
   destroy: destroy,
   undestroy: undestroy
 };
-},{"process-nextick-args":508}],518:[function(require,module,exports){
+},{"process-nextick-args":208}],218:[function(require,module,exports){
 module.exports = require('events').EventEmitter;
 
-},{"events":428}],519:[function(require,module,exports){
+},{"events":129}],219:[function(require,module,exports){
 module.exports = require('./readable').PassThrough
 
-},{"./readable":520}],520:[function(require,module,exports){
+},{"./readable":220}],220:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = exports;
 exports.Readable = exports;
@@ -53725,13 +45710,13 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":511,"./lib/_stream_passthrough.js":512,"./lib/_stream_readable.js":513,"./lib/_stream_transform.js":514,"./lib/_stream_writable.js":515}],521:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":211,"./lib/_stream_passthrough.js":212,"./lib/_stream_readable.js":213,"./lib/_stream_transform.js":214,"./lib/_stream_writable.js":215}],221:[function(require,module,exports){
 module.exports = require('./readable').Transform
 
-},{"./readable":520}],522:[function(require,module,exports){
+},{"./readable":220}],222:[function(require,module,exports){
 module.exports = require('./lib/_stream_writable.js');
 
-},{"./lib/_stream_writable.js":515}],523:[function(require,module,exports){
+},{"./lib/_stream_writable.js":215}],223:[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
 var Buffer = buffer.Buffer
@@ -53795,7 +45780,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":426}],524:[function(require,module,exports){
+},{"buffer":127}],224:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -53924,10 +45909,34 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":428,"inherits":430,"readable-stream/duplex.js":510,"readable-stream/passthrough.js":519,"readable-stream/readable.js":520,"readable-stream/transform.js":521,"readable-stream/writable.js":522}],525:[function(require,module,exports){
+},{"events":129,"inherits":131,"readable-stream/duplex.js":210,"readable-stream/passthrough.js":219,"readable-stream/readable.js":220,"readable-stream/transform.js":221,"readable-stream/writable.js":222}],225:[function(require,module,exports){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 'use strict';
 
+/*<replacement>*/
+
 var Buffer = require('safe-buffer').Buffer;
+/*</replacement>*/
 
 var isEncoding = Buffer.isEncoding || function (encoding) {
   encoding = '' + encoding;
@@ -54039,10 +46048,10 @@ StringDecoder.prototype.fillLast = function (buf) {
 };
 
 // Checks the type of a UTF-8 byte, whether it's ASCII, a leading byte, or a
-// continuation byte.
+// continuation byte. If an invalid byte is detected, -2 is returned.
 function utf8CheckByte(byte) {
   if (byte <= 0x7F) return 0;else if (byte >> 5 === 0x06) return 2;else if (byte >> 4 === 0x0E) return 3;else if (byte >> 3 === 0x1E) return 4;
-  return -1;
+  return byte >> 6 === 0x02 ? -1 : -2;
 }
 
 // Checks at most 3 bytes at the end of a Buffer in order to detect an
@@ -54056,13 +46065,13 @@ function utf8CheckIncomplete(self, buf, i) {
     if (nb > 0) self.lastNeed = nb - 1;
     return nb;
   }
-  if (--j < i) return 0;
+  if (--j < i || nb === -2) return 0;
   nb = utf8CheckByte(buf[j]);
   if (nb >= 0) {
     if (nb > 0) self.lastNeed = nb - 2;
     return nb;
   }
-  if (--j < i) return 0;
+  if (--j < i || nb === -2) return 0;
   nb = utf8CheckByte(buf[j]);
   if (nb >= 0) {
     if (nb > 0) {
@@ -54076,7 +46085,7 @@ function utf8CheckIncomplete(self, buf, i) {
 // Validates as many continuation bytes for a multi-byte UTF-8 character as
 // needed or are available. If we see a non-continuation byte where we expect
 // one, we "replace" the validated continuation bytes we've seen so far with
-// UTF-8 replacement characters ('\ufffd'), to match v8's UTF-8 decoding
+// a single UTF-8 replacement character ('\ufffd'), to match v8's UTF-8 decoding
 // behavior. The continuation byte check is included three times in the case
 // where all of the continuation bytes for a character exist in the same buffer.
 // It is also done this way as a slight performance increase instead of using a
@@ -54084,17 +46093,17 @@ function utf8CheckIncomplete(self, buf, i) {
 function utf8CheckExtraBytes(self, buf, p) {
   if ((buf[0] & 0xC0) !== 0x80) {
     self.lastNeed = 0;
-    return '\ufffd'.repeat(p);
+    return '\ufffd';
   }
   if (self.lastNeed > 1 && buf.length > 1) {
     if ((buf[1] & 0xC0) !== 0x80) {
       self.lastNeed = 1;
-      return '\ufffd'.repeat(p + 1);
+      return '\ufffd';
     }
     if (self.lastNeed > 2 && buf.length > 2) {
       if ((buf[2] & 0xC0) !== 0x80) {
         self.lastNeed = 2;
-        return '\ufffd'.repeat(p + 2);
+        return '\ufffd';
       }
     }
   }
@@ -54125,11 +46134,11 @@ function utf8Text(buf, i) {
   return buf.toString('utf8', i, end);
 }
 
-// For UTF-8, a replacement character for each buffered byte of a (partial)
-// character needs to be added to the output.
+// For UTF-8, a replacement character is added when ending on a partial
+// character.
 function utf8End(buf) {
   var r = buf && buf.length ? this.write(buf) : '';
-  if (this.lastNeed) return r + '\ufffd'.repeat(this.lastTotal - this.lastNeed);
+  if (this.lastNeed) return r + '\ufffd';
   return r;
 }
 
@@ -54197,7 +46206,86 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
-},{"safe-buffer":523}],526:[function(require,module,exports){
+},{"safe-buffer":223}],226:[function(require,module,exports){
+(function (setImmediate,clearImmediate){
+var nextTick = require('process/browser.js').nextTick;
+var apply = Function.prototype.apply;
+var slice = Array.prototype.slice;
+var immediateIds = {};
+var nextImmediateId = 0;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) { timeout.close(); };
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(window, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// That's not how node.js implements it but the exposed api is the same.
+exports.setImmediate = typeof setImmediate === "function" ? setImmediate : function(fn) {
+  var id = nextImmediateId++;
+  var args = arguments.length < 2 ? false : slice.call(arguments, 1);
+
+  immediateIds[id] = true;
+
+  nextTick(function onNextTick() {
+    if (immediateIds[id]) {
+      // fn.call() is faster so we optimize for the common use-case
+      // @see http://jsperf.com/call-apply-segu
+      if (args) {
+        fn.apply(null, args);
+      } else {
+        fn.call(null);
+      }
+      // Prevent ids from leaking
+      exports.clearImmediate(id);
+    }
+  });
+
+  return id;
+};
+
+exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
+  delete immediateIds[id];
+};
+}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
+},{"process/browser.js":209,"timers":226}],227:[function(require,module,exports){
 (function (global){
 
 /**
@@ -54268,17 +46356,18 @@ function config (name) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],527:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 module.exports={
   "name": "@jscad/web",
-  "version": "1.8.3",
+  "version": "1.10.0",
   "description": "Web UI for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
     "build-web": "browserify src/ui/index.js -o dist/index.js -t [babelify browserify minifyify]",
     "build-min": "browserify src/ui/min.js -o dist/min.js -t [babelify browserify minifyify]",
     "build-opt": "browserify src/ui/opt.js -o dist/opt.js -t [babelify browserify minifyify]",
-    "build-all": "npm run build-web && npm run build-min && npm run build-opt",
+    "build-umd": "browserify --standalone openjscad src/ui/umd.js -o dist/openjscad.umd.js -t [babelify browserify minifyify]",
+    "build-all": "npm run build-web && npm run build-min && npm run build-opt && npm run build-umd",
     "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
     "preversion": "npm test",
     "version": "npm run build-all && git add -A ",
@@ -54303,13 +46392,15 @@ module.exports={
     }
   ],
   "license": "MIT",
+  "main": "dist/openjscad.umd.js",
+  "module": "dist/openjscad.umd.js",
   "dependencies": {
-    "@jscad/core": "^0.2.3",
-    "@jscad/csg": "0.5.2",
-    "@jscad/examples": "^1.7.1",
-    "@jscad/io": "0.4.4",
-    "@jscad/openscad-openjscad-translator": "0.0.10",
-    "astring": "^1.0.2",
+    "@jscad/core": "^0.4.0",
+    "@jscad/csg": "0.7.0",
+    "@jscad/examples": "^1.7.2",
+    "@jscad/io": "0.4.7",
+    "@jscad/openscad-openjscad-translator": "0.0.11",
+    "astring": "^1.3.1",
     "brace": "0.10.0",
     "esprima": "^3.1.3",
     "estraverse": "^4.2.0",
@@ -54341,7 +46432,7 @@ module.exports={
   }
 }
 
-},{}],528:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 'use strict';
 
 var generateOutputFileBlobUrl = require('../io/generateOutputFileBlobUrl');
@@ -54359,7 +46450,7 @@ module.exports = {
   generateOutputFile: generateOutputFile
 };
 
-},{"../io/generateOutputFileBlobUrl":529,"../io/generateOutputFileFileSystem":530}],529:[function(require,module,exports){
+},{"../io/generateOutputFileBlobUrl":230,"../io/generateOutputFileFileSystem":231}],230:[function(require,module,exports){
 'use strict';
 
 var _require = require('./utils'),
@@ -54387,7 +46478,7 @@ module.exports = function generateOutputFileBlobUrl(extension, blob, callback) {
   }
 };
 
-},{"./utils":531}],530:[function(require,module,exports){
+},{"./utils":232}],231:[function(require,module,exports){
 'use strict';
 
 var FileSystemApiErrorHandler = require('./utils');
@@ -54426,7 +46517,7 @@ module.exports = function generateOutputFileFileSystem(extension, blob, callback
   });
 };
 
-},{"./utils":531}],531:[function(require,module,exports){
+},{"./utils":232}],232:[function(require,module,exports){
 'use strict';
 
 function isSafari() {
@@ -54474,7 +46565,7 @@ module.exports = {
   FileSystemApiErrorHandler: FileSystemApiErrorHandler
 };
 
-},{}],532:[function(require,module,exports){
+},{}],233:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -54505,7 +46596,7 @@ module.exports = {
   status: status
 };
 
-},{}],533:[function(require,module,exports){
+},{}],234:[function(require,module,exports){
 'use strict';
 
 var log = require('./log');
@@ -55299,7 +47390,7 @@ Processor.prototype = {
 
 module.exports = Processor;
 
-},{"../io/generateOutputFile":528,"../io/utils":531,"../ui/viewer/jscad-viewer":538,"./log":532,"@jscad/core/code-evaluation/rebuildSolids":1,"@jscad/core/io/convertToBlob":6,"@jscad/core/io/formats":7,"@jscad/core/io/prepareOutput":8,"@jscad/core/parameters/getParameterDefinitions":417,"@jscad/core/parameters/getParameterValuesFromUIControls":418,"@jscad/core/utils/mergeSolids":420}],534:[function(require,module,exports){
+},{"../io/generateOutputFile":229,"../io/utils":232,"../ui/viewer/jscad-viewer":239,"./log":233,"@jscad/core/code-evaluation/rebuildSolids":1,"@jscad/core/io/convertToBlob":6,"@jscad/core/io/formats":7,"@jscad/core/io/prepareOutput":8,"@jscad/core/parameters/getParameterDefinitions":118,"@jscad/core/parameters/getParameterValuesFromUIControls":119,"@jscad/core/utils/mergeSolids":121}],235:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -55344,7 +47435,7 @@ function AlertUserOfUncaughtExceptions() {
 
 module.exports = AlertUserOfUncaughtExceptions;
 
-},{}],535:[function(require,module,exports){
+},{}],236:[function(require,module,exports){
 'use strict';
 
 // == OpenJSCAD.org, Copyright (c) 2017, Licensed under MIT License
@@ -55404,7 +47495,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
   init();
 });
 
-},{"../../package.json":527,"../jscad/processor":533,"./errorDispatcher":534}],536:[function(require,module,exports){
+},{"../../package.json":228,"../jscad/processor":234,"./errorDispatcher":235}],237:[function(require,module,exports){
 'use strict';
 
 /**
@@ -55464,7 +47555,7 @@ module.exports = {
   parseColor: parseColor
 };
 
-},{}],537:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 'use strict';
 
 var _require = require('most-gestures'),
@@ -55606,8 +47697,8 @@ LightGLEngine.prototype = {
     topArrow.classList.add('arrow-top');
 
     var bottomArrow = document.createElement('div');
-    topArrow.classList.add('arrow');
-    topArrow.classList.add('arrow-bottom');
+    bottomArrow.classList.add('arrow');
+    bottomArrow.classList.add('arrow-bottom');
 
     shiftControl.appendChild(leftArrow);
     shiftControl.appendChild(rightArrow);
@@ -55950,7 +48041,7 @@ LightGLEngine.prototype = {
 
 module.exports = LightGLEngine;
 
-},{"./jscad-viewer-helpers":536,"./lightgl":539,"most-gestures":434}],538:[function(require,module,exports){
+},{"./jscad-viewer-helpers":237,"./lightgl":240,"most-gestures":135}],239:[function(require,module,exports){
 'use strict';
 
 var LightGLEngine = require('./jscad-viewer-lightgl');
@@ -56167,7 +48258,7 @@ Viewer.prototype = {
 
 module.exports = Viewer;
 
-},{"./jscad-viewer-helpers":536,"./jscad-viewer-lightgl":537}],539:[function(require,module,exports){
+},{"./jscad-viewer-helpers":237,"./jscad-viewer-lightgl":238}],240:[function(require,module,exports){
 'use strict';
 
 /*
@@ -58395,4 +50486,4 @@ var GL = function () {
 
 module.exports = GL;
 
-},{}]},{},[535]);
+},{}]},{},[236]);

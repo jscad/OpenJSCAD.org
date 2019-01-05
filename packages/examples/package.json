@@ -1,6 +1,6 @@
 {
   "name": "@jscad/examples",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "example files for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
@@ -38,8 +38,8 @@
   "eslintConfig": {
     "extends": "standard",
     "rules": {
-        "semi": "off",
-        "no-undef": "off"
+      "semi": "off",
+      "no-undef": "off"
     }
   },
   "collective": {
