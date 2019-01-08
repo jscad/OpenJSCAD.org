@@ -1,11 +1,16 @@
 const mat4 = require('gl-mat4')
-const { flatten, toArray } = require('./utils')
-const csgToGeometries = require('./geometry-utils/csgToGeometries')
-const cagToGeometries = require('./geometry-utils/cagToGeometries')
-const computeBounds = require('./bound-utils/computeBounds')
+const { flatten, toArray } = require('../utils')
+const csgToGeometries = require('./csgToGeometries')
+const cagToGeometries = require('./cagToGeometries')
+const computeBounds = require('../bound-utils/computeBounds')
 
 const entitiesFromSolids = (params, solids) => {
-  const defaultColor = params.rendering.meshColor
+  const defaults = {
+    meshColor: [0, 0.6, 1, 1],
+    smoothNormals: true
+  }
+  const { meshColor, smoothNormals } = defaults
+  // const defaultColor = params.rendering.meshColor
 
   solids = toArray(solids)
   // warning !!! fixTJunctions alters the csg and can result in visual issues ??
@@ -17,13 +22,13 @@ const entitiesFromSolids = (params, solids) => {
     let type
     if ('sides' in solid) {
       type = '2d'
-      geometry = cagToGeometries(solid, { color: defaultColor })
+      geometry = cagToGeometries(solid, { color: meshColor })
     } else if ('polygons' in solid) {
       type = '3d'
       geometry = csgToGeometries(solid, {
-        smoothLighting: params.smoothNormals,
+        smoothLighting: smoothNormals,
         normalThreshold: 0.3,
-        faceColor: defaultColor })//, normalThreshold: 0})
+        faceColor: meshColor })//, normalThreshold: 0})
     }
     // geometry = flatten(geometries)// FXIME : ACTUALLY deal with arrays since a single csg can
     // generate multiple geometries if positions count is >65535

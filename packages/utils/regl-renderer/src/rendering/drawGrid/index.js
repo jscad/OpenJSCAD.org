@@ -67,8 +67,6 @@ module.exports = function prepareDrawGrid (regl, params = {}) {
       positions.push(i, -width * 0.5, 0)
     }
   }
-  console.log('making grid')
-
   return regl({
     vert: `precision mediump float;
 

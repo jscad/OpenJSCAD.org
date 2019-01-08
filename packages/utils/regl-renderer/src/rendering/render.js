@@ -38,6 +38,7 @@ const prepareRender = (regl, params) => {
 
     // props is the first parameter, the second one is a function
     renderWrapper(regl)(props, context => {
+      // console.log('props', props)
       regl.clear({
         color: props.rendering.background,
         depth: 1
@@ -72,17 +73,22 @@ const prepareRender = (regl, params) => {
         // console.log('gna', props.entities)
         props.entities.forEach(entity => {
           // console.log('entity', entity)
-          if (entity.drawCmd && entity.show) {
-            console.log('drawCmd', entity.drawCmd, props.drawCommands)
+          if (entity.drawCmd && entity.show && props.drawCommands[entity.drawCmd]) {
+            // console.log('drawCmd', entity.drawCmd, props.drawCommands)
             const key = JSON.stringify(entity)
             let drawCmd = drawCache[key]
             if (!drawCmd) {
               // makeDrawFunction
-              console.log('making draw command')
+              // console.log('making draw command', entity.drawCmd)
               drawCmd = props.drawCommands[entity.drawCmd](regl, entity)
               drawCache[key] = drawCmd
             }
-            drawCmd(entity)
+            console.log('drawing with', entity.drawCmd, entity)
+            const fooParams = {
+              ...entity,
+              camera: props.camera
+            }
+            drawCmd(fooParams)
           }
         })
       }

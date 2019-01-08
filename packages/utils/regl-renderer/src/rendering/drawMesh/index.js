@@ -40,12 +40,14 @@ const drawMesh = function (regl, params = { extras: {} }) {
 
     uniforms: {
       model: (context, props) => props && props.model ? props.model : mat4.identity([]),
-      ucolor: (context, props) => props && props.color ? props.color : [1, 1, 1, 1],
+      ucolor: (context, props) => props && props.color ? props.color : [1, 0.5, 1, 1],
       // semi hack, woraround to enable/disable vertex colors!!!
       vColorToggler: (context, props) => (props && props.useVertexColors && props.useVertexColors === true) ? 1.0 : 0.0,
       // experimental
       unormal: (context, props) => {
-        const model = props.model
+        const model = props.model || props.transforms.matrix
+        // console.log('here', model)
+        // const model = mat4.identity([])
         const modelViewMatrix = mat4.multiply(mat4.create(), model, props.camera.view)
         const normalMatrix = mat4.create()
         mat4.invert(normalMatrix, modelViewMatrix)
