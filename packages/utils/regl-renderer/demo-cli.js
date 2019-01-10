@@ -6,9 +6,10 @@ const entitiesFromSolids = require('./src/geometry-utils/entitiesFromSolids')
 
 // setup demo data
 const initializeData = function () {
+  const { color } = require('@jscad/scad-api').color
   const { cube, sphere } = require('@jscad/scad-api').primitives3d
   const { union, difference, intersection } = require('@jscad/scad-api').booleanOps
-  return union(
+  const logo = union(
     difference(
       cube({ size: 30, center: true }),
       sphere({ r: 20, center: true })
@@ -18,6 +19,9 @@ const initializeData = function () {
       cube({ size: 21, center: true })
     )
   ).translate([0, 0, 1.5]).scale(10)
+
+  const transpCube = color([1, 0, 0, 0.75], cube({ size: [100, 100, 400] }))
+  return [ transpCube, logo ]
 }
 
 const params = {
