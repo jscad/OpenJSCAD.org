@@ -1,9 +1,5 @@
 const renderWrapper = require('./renderWrapper')
 
-// const makeDrawMeshNoNormals = require('./drawMeshNoNormals')
-// const makeDrawNormals = require('./drawNormals')
-// const makeDrawConnector = require('./drawConnector')
-
 const prepareRender = (regl, params) => {
   // const drawGrid = prepDrawGrid(regl, {fadeOut: true, ticks: 10, size: [1000, 1000]})
   // const drawNormals = makeDrawNormals(regl, {geometry})
@@ -27,74 +23,45 @@ const prepareRender = (regl, params) => {
   }
 
   // const drawTest = makeDrawMeshNoNormals(regl, { geometry: cube })
-  // const drawAxis = makeDrawAxis(regl, {})
-  // const drawConnector = makeDrawConnector(regl, {})
 
   let command = props => {
     // console.log('params in render', props)
-    const { camera, drawCommands } = props
-    // const { drawGrid, drawCSGs } = drawCommands
     const useVertexColors = !props.overrideOriginalColors
 
-    // props is the first parameter, the second one is a function
+    // props is the first parameter, the second one is a function, doing the actual rendering
     renderWrapper(regl)(props, context => {
-      // console.log('props', props)
       regl.clear({
         color: props.rendering.background,
         depth: 1
       })
-      // console.log('props', props)
-
-      /* const transparents = drawCSGs.filter(drawCall => drawCall.isTransparent)
-      const nonTransparents = drawCSGs.filter(drawCall => !drawCall.isTransparent)
-
-      nonTransparents.forEach(drawCall => {
-        const { entity } = drawCall
-        const primitive = entity.type === '2d' ? 'lines' : 'triangles'
-        const model = entity.transforms.matrix
-        drawCall({ color: props.rendering.meshColor, primitive, useVertexColors, camera, model })
-      })
-      transparents.forEach(drawCall => {
-        const { entity } = drawCall
-        const primitive = entity.type === '2d' ? 'lines' : 'triangles'
-        const model = entity.transforms.matrix
-        drawCall({ color: props.rendering.meshColor, primitive, useVertexColors, camera, model })
-      }) */
-
-      // drawTest({color: [1, 0, 0, 1], model: mat4.translate(mat4.create(), mat4.identity([]), [100, 0, 200])})
-      /* if (drawGrid && props.grid.show) {
-        const gridColor = props.grid.color
-        const subGridColor = [gridColor[0], gridColor[1], gridColor[2], gridColor[3] * 0.35]
-        const fadeOut = props.grid.fadeOut
-        drawGrid({ color: gridColor, subColor: subGridColor, fadeOut })
-      } */
+      // this whole thing is very inneficiant and innelegant ... improve in the future
       if (props.entities) {
-        console.log('-------')
-        // console.log('gna', props.entities)
-        props.entities.forEach(entity => {
-          // console.log('entity', entity)
-          if (entity.drawCmd && entity.show && props.drawCommands[entity.drawCmd]) {
-            // console.log('drawCmd', entity.drawCmd, props.drawCommands)
-            const key = JSON.stringify(entity)
-            let drawCmd = drawCache[key]
-            if (!drawCmd) {
-              // makeDrawFunction
-              // console.log('making draw command', entity.drawCmd)
-              drawCmd = props.drawCommands[entity.drawCmd](regl, entity)
-              drawCache[key] = drawCmd
+        // we need to sort transparents vs non transparents: transparent objects should be rendered last
+        // since you can see 'behind' transparent ones, so what is behind needs to already be rendered
+        props.entities
+          .sort((a, b) => {
+            const aTransparent = 'isTransparent' in a ? a.isTransparent : false
+            const bTransparent = 'isTransparent' in b ? b.isTransparent : false
+            return (aTransparent === bTransparent) ? 0 : aTransparent ? 1 : -1
+          })
+          .forEach(entity => {
+            if (entity.drawCmd && entity.show && props.drawCommands[entity.drawCmd]) {
+              const key = JSON.stringify(entity) // FIXME: EEEEEK horribly inneficient, change this!
+              let drawCmd = drawCache[key]
+              if (!drawCmd) {
+              // make draw function
+                drawCmd = props.drawCommands[entity.drawCmd](regl, entity)
+                drawCache[key] = drawCmd
+              }
+              // console.log('drawing with', entity.drawCmd, entity)
+              const drawParams = {
+                ...entity,
+                camera: props.camera
+              }
+              drawCmd(drawParams)
             }
-            console.log('drawing with', entity.drawCmd, entity)
-            const fooParams = {
-              ...entity,
-              camera: props.camera
-            }
-            drawCmd(fooParams)
-          }
-        })
+          })
       }
-      // drawAxis() // needs to be last to be 'on top' of the scene
-      // drawConnector()
-      // drawNormals()
     })
   }
   // actual render function
