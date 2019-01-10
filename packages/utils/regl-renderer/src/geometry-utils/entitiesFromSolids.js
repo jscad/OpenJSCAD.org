@@ -11,7 +11,6 @@ const entitiesFromSolids = (params, solids) => {
   }
   const { meshColor, smoothNormals } = defaults
   // const defaultColor = params.rendering.meshColor
-
   solids = toArray(solids)
   // warning !!! fixTJunctions alters the csg and can result in visual issues ??
   // .fixTJunctions()
@@ -33,6 +32,8 @@ const entitiesFromSolids = (params, solids) => {
     // geometry = flatten(geometries)// FXIME : ACTUALLY deal with arrays since a single csg can
     // generate multiple geometries if positions count is >65535
     geometry = flatten(geometry)[0]
+    // not sure
+    const isTransparent = geometry.isTransparent
 
     // const time = (performance.now() - start) / 1000
     // console.log(`Total time for geometry conversion: ${time} s`)
@@ -53,7 +54,7 @@ const entitiesFromSolids = (params, solids) => {
       return normalMatrix */
     }
 
-    const entity = { geometry, transforms, bounds, type }
+    const entity = { geometry, transforms, bounds, type, isTransparent }
     return entity
   })
   // }
