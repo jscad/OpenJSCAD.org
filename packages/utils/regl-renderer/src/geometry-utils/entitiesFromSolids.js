@@ -32,8 +32,6 @@ const entitiesFromSolids = (params, solids) => {
     // geometry = flatten(geometries)// FXIME : ACTUALLY deal with arrays since a single csg can
     // generate multiple geometries if positions count is >65535
     geometry = flatten(geometry)[0]
-    // not sure
-    const isTransparent = geometry.isTransparent
 
     // const time = (performance.now() - start) / 1000
     // console.log(`Total time for geometry conversion: ${time} s`)
@@ -43,6 +41,7 @@ const entitiesFromSolids = (params, solids) => {
     const bounds = computeBounds({ geometry })// FXIME : ACTUALLY deal with arrays as inputs see above
 
     // transforms: for now not used, since all transformed are stored in the geometry
+    // FIXME : for V2 we will be able to use the transfors provided by the solids directly
     const matrix = mat4.identity([])
 
     const transforms = {
@@ -54,7 +53,22 @@ const entitiesFromSolids = (params, solids) => {
       return normalMatrix */
     }
 
-    const entity = { geometry, transforms, bounds, type, isTransparent }
+    const visuals = {
+      drawCmd: 'drawMesh',
+      show: true,
+      color: [0.8, 0.5, 0.7, 0.1],
+      transparent: geometry.isTransparent, // not sure
+      useVertexColors: true
+    }
+
+    const entity = {
+      type,
+      geometry,
+      transforms,
+      bounds,
+      isTransparent: geometry.isTransparent,
+      visuals
+    }
     return entity
   })
   // }

@@ -4,7 +4,7 @@ const prepareRender = require('./src/rendering/render')
 const perspectiveCamera = require('./src/cameras/perspectiveCamera')
 const entitiesFromSolids = require('./src/geometry-utils/entitiesFromSolids')
 
-// setup demo data
+// setup demo solids data
 const initializeData = function () {
   const { color } = require('@jscad/scad-api').color
   const { cube, sphere } = require('@jscad/scad-api').primitives3d
@@ -29,11 +29,12 @@ const params = {
   height: 480
 }
 const { width, height } = params
+// process entities and inject extras
 const solids = entitiesFromSolids({}, initializeData()).map(e => {
   e.drawCmd = 'drawMesh'
   e.show = true
   e.color = [0.8, 0.5, 0.7, 0.1]
-  e.useVertexColors = true// : true
+  e.useVertexColors = true
   return e
 })
 
@@ -67,7 +68,7 @@ const options = {
   // data
   entities: [
     { // grid data
-      // the choice of what draw command to use is also be data based
+      // the choice of what draw command to use is also data based
       drawCmd: 'drawGrid',
       show: true,
       size: [500, 500],
@@ -98,3 +99,13 @@ const render = prepareRender(regl, options)
 render(options)
 // output to file
 writeContextToFile(gl, width, height, 4, './test.png')
+
+/*
+// brainstorem : should we group some visual props like this ?
+const visuals = {
+  drawCmd: 'drawMesh',
+  show: true,
+  color: [0.8, 0.5, 0.7, 0.1],
+  transparent: false,
+  useVertexColors: true
+} */
