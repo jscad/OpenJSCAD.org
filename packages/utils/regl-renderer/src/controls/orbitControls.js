@@ -64,7 +64,7 @@ const controlsState = {
 
 const defaults = Object.assign({}, controlsState, controlsProps)
 
-function update ({ controls, camera }) {
+const update = ({ controls, camera }) => {
   // custom z up is settable, with inverted Y and Z (since we use camera[2] => up)
   const { EPS, drag } = controls
   let { position, target } = camera
@@ -154,7 +154,7 @@ function update ({ controls, camera }) {
   * @param {Float} angle value of the angle to rotate
   * @return {Object} the updated camera data/state
 */
-function rotate ({ controls, camera }, angle) {
+const rotate = ({ controls, camera }, angle) => {
   const reductionFactor = 500
   let {
     thetaDelta,
@@ -182,7 +182,7 @@ function rotate ({ controls, camera }, angle) {
   * @param {Float} zoomDelta value of the zoom
   * @return {Object} the updated camera data/state
 */
-function zoom ({ controls, camera }, zoomDelta = 0) {
+const zoom = ({ controls, camera }, zoomDelta = 0) => {
   let { scale } = controls
 
   if (controls.userControl.zoom && camera && zoomDelta !== undefined && zoomDelta !== 0 && !isNaN(zoomDelta)) {
@@ -224,7 +224,7 @@ function zoom ({ controls, camera }, zoomDelta = 0) {
   * @param {Float} delta value of the raw pan delta
   * @return {Object} the updated camera data/state
 */
-function pan ({ controls, camera }, delta) {
+const pan = ({ controls, camera }, delta) => {
   const unproject = require('camera-unproject')
   const { projection, view, viewport } = camera
   const combinedProjView = mat4.multiply([], projection, view)
@@ -262,7 +262,7 @@ function pan ({ controls, camera }, delta) {
   * @param {Object} entity an object containing a 'bounds' property for bounds information
   * @return {Object} the updated camera data/state
 */
-function zoomToFit ({ controls, camera, entities }) {
+const zoomToFit = ({ controls, camera, entities }) => {
   // our camera.fov is already in radian, no need to convert
   const { zoomToFit } = controls
   if (entities.length < 1 || zoomToFit.targets !== 'all') { //! == 'all' || entity === undefined || !entity.bounds) {
@@ -306,7 +306,7 @@ function zoomToFit ({ controls, camera, entities }) {
   * @param {Object} desiredState the state to reset the camera to: defaults to default values
   * @return {Object} the updated camera data/state
 */
-function reset ({ controls, camera }, desiredState) {
+const reset = ({ controls, camera }, desiredState) => {
   /* camera = Object.assign({}, camera, desiredState.camera)
   camera.projection = mat4.perspective([], camera.fov, camera.aspect, camera.near, camera.far)
   controls = Object.assign({}, controls, desiredState.controls)
@@ -330,7 +330,7 @@ function reset ({ controls, camera }, desiredState) {
 }
 
 // FIXME: upgrade or obsolete
-function setFocus ({ controls, camera }, focusPoint) {
+const setFocus = ({ controls, camera }, focusPoint) => {
   const sub = (a, b) => a.map((a1, i) => a1 - b[i])
   const add = (a, b) => a.map((a1, i) => a1 + b[i]) // NOTE: NO typedArray.map support on old browsers, polyfilled
   const camTarget = camera.target
