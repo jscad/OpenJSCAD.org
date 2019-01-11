@@ -99,13 +99,3 @@ const render = prepareRender(regl, options)
 render(options)
 // output to file
 writeContextToFile(gl, width, height, 4, './test.png')
-
-/*
-// brainstorem : should we group some visual props like this ?
-const visuals = {
-  drawCmd: 'drawMesh',
-  show: true,
-  color: [0.8, 0.5, 0.7, 0.1],
-  transparent: false,
-  useVertexColors: true
-} */
