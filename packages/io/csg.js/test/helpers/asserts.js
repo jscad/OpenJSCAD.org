@@ -79,6 +79,9 @@ function nearlyEquals (a, b, epsilon = 1) {
   var absA = Math.abs(a)
   var absB = Math.abs(b)
   var diff = Math.abs(a - b)
+  if (Number.isNaN(diff)) {
+    return false
+  }
   if (a === 0 || b === 0 || diff < Number.EPSILON) {
   // a or b is zero or both are extremely close to it
   // relative error is less meaningful here

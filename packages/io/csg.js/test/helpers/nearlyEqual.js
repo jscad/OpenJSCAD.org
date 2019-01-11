@@ -9,6 +9,9 @@ const nearlyEqual = (t, a, b, epsilon, failMessage) => {
   let absA = Math.abs(a)
   let absB = Math.abs(b)
   let diff = Math.abs(a - b)
+  if (Number.isNaN(diff)) {
+    return false
+  }
 //console.log(absA)
 //console.log(absB)
 //console.log(diff)

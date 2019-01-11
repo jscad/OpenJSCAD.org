@@ -5,12 +5,12 @@ module.exports = {
   direction: require('./direction'),
   distanceToPoint: require('./distanceToPoint'),
   equals: require('./equals'),
+  fromPointAndDirection: require('./fromPointAndDirection'),
+  fromPlanes: require('./fromPlanes'),
   fromPoints: require('./fromPoints'),
-  fromValues: require('./fromValues'),
-  intersectPointOfLines: require('./intersectPointOfLines'),
+  intersectPointOfLineAndPlane: require('./intersectPointOfLineAndPlane'),
   origin: require('./origin'),
   reverse: require('./reverse'),
   toString: require('./toString'),
-  transform: require('./transform'),
-  xAtY: require('./xAtY')
+  transform: require('./transform')
 }

@@ -9,7 +9,7 @@ const create = require('./create')
  * @param {vec3} vector the vector to transform
  * @returns {vec3} out
  */
-const transformMat4 = (...params) => {
+const transform = (...params) => {
   let out
   let vector
   let matrix
@@ -34,4 +34,4 @@ const transformMat4 = (...params) => {
   return out
 }
 
-module.exports = transformMat4
+module.exports = transform

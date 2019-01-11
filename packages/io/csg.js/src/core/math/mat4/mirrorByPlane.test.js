@@ -1,13 +1,13 @@
 const test = require('ava')
 const { mirrorByPlane, create, toString } = require('.')
-const { fromVec3s } = require('../plane')
+const { fromPoints } = require('../plane')
 
 const { compareVectors } = require('../../../../test/helpers')
 
 test('mat4: mirrorByPlane() should return a new mat4 with correct values', (t) => {
-  const planeX = fromVec3s([0, 0, 0], [0, 1, 1], [0, 1, 0])
-  const planeY = fromVec3s([0, 0, 0], [1, 0, 0], [1, 0, 1])
-  const planeZ = fromVec3s([0, 0, 0], [1, 0, 0], [1, 1, 0])
+  const planeX = fromPoints([0, 0, 0], [0, 1, 1], [0, 1, 0])
+  const planeY = fromPoints([0, 0, 0], [1, 0, 0], [1, 0, 1])
+  const planeZ = fromPoints([0, 0, 0], [1, 0, 0], [1, 1, 0])
 
   const obs1 = mirrorByPlane(planeX)
   t.true(compareVectors(obs1, [-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]))
@@ -20,9 +20,9 @@ test('mat4: mirrorByPlane() should return a new mat4 with correct values', (t) =
 })
 
 test('mat4: mirrorByPlane() called with out parameter should return a new mat4 with correct values', (t) => {
-  const planeX = fromVec3s([0, 0, 0], [0, 1, 1], [0, 1, 0])
-  const planeY = fromVec3s([0, 0, 0], [1, 0, 0], [1, 0, 1])
-  const planeZ = fromVec3s([0, 0, 0], [1, 0, 0], [1, 1, 0])
+  const planeX = fromPoints([0, 0, 0], [0, 1, 1], [0, 1, 0])
+  const planeY = fromPoints([0, 0, 0], [1, 0, 0], [1, 0, 1])
+  const planeZ = fromPoints([0, 0, 0], [1, 0, 0], [1, 1, 0])
 
   const out1 = create()
   const ret1 = mirrorByPlane(out1, planeX)

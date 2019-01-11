@@ -21,7 +21,7 @@ const fromPoints = (points, planeof) => {
 // TODO handle optional parameters; planeof
   const out = create()
   out.vertices = points.map((point) => { return vec3.clone(point) })
-  out.plane = plane.fromVec3s(out.vertices[0], out.vertices[1], out.vertices[2])
+  out.plane = plane.fromPoints(out.vertices[0], out.vertices[1], out.vertices[2])
   return out
 }
 
