@@ -1,8 +1,8 @@
-const glslify = require('glslify')// -sync') // works in client & server
+// const glslify = require('glslify')// -sync') // works in client & server
 const mat4 = require('gl-mat4')
-const path = require('path')
+// const path = require('path')
 
-module.exports = function prepareDrawGrid (regl, params = {}) {
+const makeDrawGrid = (regl, params = {}) => {
   let positions = []
   const defaults = {
     color: [1, 1, 1, 1],
@@ -141,6 +141,8 @@ module.exports = function prepareDrawGrid (regl, params = {}) {
 
   })
 }
+
+module.exports = makeDrawGrid
 
 /* alternate rendering method
 

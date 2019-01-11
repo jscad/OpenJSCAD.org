@@ -1,35 +1,13 @@
-const renderWrapper = require('./renderWrapper')
+const renderContext = require('./renderContext')
 
 const prepareRender = (regl, params) => {
-  // const drawGrid = prepDrawGrid(regl, {fadeOut: true, ticks: 10, size: [1000, 1000]})
-  // const drawNormals = makeDrawNormals(regl, {geometry})
-  /* const vectorizeText = require('vectorize-text')
-  const complex = vectorizeText('Hello world! 你好', {
-    triangles: true,
-    width: 500,
-    textBaseline: 'hanging'
-  })
-
-  complex.positions = complex.positions.map(point => [point[0], point[1], 0]) */
-
   const drawCache = {}
-
-  const cube = { positions: [
-    0, 0, 0,
-    0, 100, 0,
-    0, 100, 100],
-
-  cells: [0, 1, 2]
-  }
-
-  // const drawTest = makeDrawMeshNoNormals(regl, { geometry: cube })
-
   let command = props => {
     // console.log('params in render', props)
     const useVertexColors = !props.overrideOriginalColors
 
     // props is the first parameter, the second one is a function, doing the actual rendering
-    renderWrapper(regl)(props, context => {
+    renderContext(regl)(props, context => {
       regl.clear({
         color: props.rendering.background,
         depth: 1

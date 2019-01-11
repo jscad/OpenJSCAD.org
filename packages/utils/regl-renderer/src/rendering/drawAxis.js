@@ -1,6 +1,6 @@
 const mat4 = require('gl-mat4')
 
-const drawAxis = function (regl, params) {
+const drawAxis = (regl, params) => {
   const defaults = {
     xColor: [1, 0, 0, 1],
     yColor: [0, 1, 0, 1],
