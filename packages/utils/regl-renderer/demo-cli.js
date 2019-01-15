@@ -34,13 +34,7 @@ const { width, height } = params
 const gl = require('gl')(width, height)
 
 // process entities and inject extras
-const solids = entitiesFromSolids({}, initializeData()).map(e => {
-  e.drawCmd = 'drawMesh'
-  e.show = true
-  e.color = [0.8, 0.5, 0.7, 0.1]
-  e.useVertexColors = true
-  return e
-})
+const solids = entitiesFromSolids({}, initializeData())
 
 const perspectiveCamera = cameras.perspective
 const camera = Object.assign({}, perspectiveCamera.defaults)
@@ -75,17 +69,22 @@ const options = {
   entities: [
     { // grid data
       // the choice of what draw command to use is also data based
-      drawCmd: 'drawGrid',
-      show: true,
+      visuals: {
+        drawCmd: 'drawGrid',
+        show: true,
+        color: [0, 0, 0, 1],
+        // subColor: [0, 0, 1, 1],
+        fadeOut: true
+      },
       size: [500, 500],
       ticks: [10, 1],
-      color: [0, 0, 0, 1],
-      // subColor: [0, 0, 1, 1],
-      fadeOut: false
+      transparent: true
     },
     {
-      drawCmd: 'drawAxis',
-      show: true
+      visuals: {
+        drawCmd: 'drawAxis',
+        show: true
+      }
     },
     ...solids
   ]
