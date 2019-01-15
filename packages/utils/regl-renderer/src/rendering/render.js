@@ -1,5 +1,5 @@
 const renderContext = require('./renderContext')
-const defaults = require('./defaults')
+const renderDefaults = require('./renderDefaults')
 
 const prepareRender = (params) => {
   const defaults = {
@@ -8,25 +8,31 @@ const prepareRender = (params) => {
   const options = Object.assign(
     {},
     defaults,
-    params.glOptions
-    /* {
-      canvas: (element.nodeName.toLowerCase() === 'canvas') ? element : undefined,
-      container: (element.nodeName.toLowerCase() !== 'canvas') ? element : undefined
-      gl ? gl : undefined
-    } */
+    params.glOptions,
+    {
+      // canvas: (element.nodeName.toLowerCase() === 'canvas') ? element : undefined,
+      // container: (element.nodeName.toLowerCase() !== 'canvas') ? element : undefined
+      onDone: (err, callback) => {
+        if (err) {
+          throw err
+        }
+      }
+    } 
   )
   // setup regl
   const regl = require('regl')(options)// , (width, height))
   // setup draw command cache
   const drawCache = {}
+
+  // create the main draw command
   let command = props => {
     // console.log('params in render', props)
-    const useVertexColors = !props.overrideOriginalColors
+    props.rendering = Object.assign({}, renderDefaults, props.rendering)
 
     // props is the first parameter, the second one is a function, doing the actual rendering
     renderContext(regl)(props, context => {
       regl.clear({
-        color: props.rendering.background, // props.rendering ? props.rendering.background || defaults.background,
+        color: props.rendering.background,
         depth: 1
       })
       // this whole thing is very inneficiant and innelegant ... improve in the future

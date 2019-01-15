@@ -1,5 +1,5 @@
 const mat4 = require('gl-mat4')
-const defaults = require('./defaults')
+const defaults = require('./renderDefaults')
 
 const getPropValue = () => {
   
