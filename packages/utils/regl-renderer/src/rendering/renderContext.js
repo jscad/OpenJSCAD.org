@@ -1,4 +1,9 @@
 const mat4 = require('gl-mat4')
+const defaults = require('./defaults')
+
+const getPropValue = () => {
+  
+}
 
 /** function that injects most of the uniforms into the regl context:
  * ie keeps track of all regl global state.
@@ -26,7 +31,7 @@ const renderWrapper = (regl, params = {}) => {
       invertedView: (context, props) => mat4.invert([], props.camera.view),
       // lighting stuff, needs cleanup
       lightPosition: (context, props) => props && props.rendering && props.rendering.lightPosition ? props.rendering.lightPosition : [100, 200, 100],
-      lightDirection: (context, props) => props.rendering.lightDirection || context.lightDirection || [0, 0, 0],
+      lightDirection: (context, props) => props && props.rendering && props.rendering.lightDirection ? props.rendering.lightDirection : context.lightDirection || [0, 0, 0],
       lightView: (context) => {
         return mat4.lookAt([], context.lightDirection, [0.0, 0.0, 0.0], [0.0, 0.0, 1.0])
       },

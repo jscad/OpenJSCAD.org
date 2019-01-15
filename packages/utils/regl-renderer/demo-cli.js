@@ -1,8 +1,9 @@
 
 const { writeContextToFile } = require('../img/src/imgUtils')
-const prepareRender = require('./src/rendering/render')
+/* const prepareRender = require('./src/rendering/render')
 const perspectiveCamera = require('./src/cameras/perspectiveCamera')
-const entitiesFromSolids = require('./src/geometry-utils/entitiesFromSolids')
+const entitiesFromSolids = require('./src/geometry-utils/entitiesFromSolids') */
+const { prepareRender, drawCommands, cameras, entitiesFromSolids } = require('./src') // replace this with the correct import
 
 // setup demo solids data
 const initializeData = function () {
@@ -29,6 +30,9 @@ const params = {
   height: 480
 }
 const { width, height } = params
+// create webgl context
+const gl = require('gl')(width, height)
+
 // process entities and inject extras
 const solids = entitiesFromSolids({}, initializeData()).map(e => {
   e.drawCmd = 'drawMesh'
@@ -38,22 +42,24 @@ const solids = entitiesFromSolids({}, initializeData()).map(e => {
   return e
 })
 
+const perspectiveCamera = cameras.perspective
 const camera = Object.assign({}, perspectiveCamera.defaults)
 perspectiveCamera.setProjection(camera, camera, { width, height })
 perspectiveCamera.update(camera, camera)
 
 const options = {
+  glOptions: { gl },
   camera,
   drawCommands: {
-    // draw commands should bootstrap themselves the first time they are run
-    drawGrid: require('./src/rendering/drawGrid/index.js'),
-    drawAxis: require('./src/rendering/drawAxis'),
-    drawMesh: require('./src/rendering/drawMesh/index.js')
+    // draw commands bootstrap themselves the first time they are run
+    drawGrid: drawCommands.drawGrid, // require('./src/rendering/drawGrid/index.js'),
+    drawAxis: drawCommands.drawAxis, // require('./src/rendering/drawAxis'),
+    drawMesh: drawCommands.drawMesh // require('./src/rendering/drawMesh/index.js')
   },
   rendering: {
     background: [1, 1, 1, 1],
     meshColor: [1, 0.5, 0.5, 1], // use as default face color for csgs, color for cags
-    lightColor: [1, 1, 1, 1],
+    lightColor: [1, 1, 1, 1], // note: for now there is a single preset light, not an entity
     lightDirection: [0.2, 0.2, 1],
     lightPosition: [100, 200, 100],
     ambientLightAmount: 0.3,
@@ -85,16 +91,8 @@ const options = {
   ]
 }
 
-// create webgl context
-const gl = require('gl')(width, height)
-// setup regl
-const regl = require('regl')({
-  gl
-// extensions:['oes_element_index_uint']
-}, (width, height))
-
 // prepare
-const render = prepareRender(regl, options)
+const render = prepareRender(options)
 // do the actual render
 render(options)
 // output to file
