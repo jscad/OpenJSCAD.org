@@ -66,8 +66,8 @@ const entitiesFromSolids = (params, solids) => {
       geometry,
       transforms,
       bounds,
-      isTransparent: geometry.isTransparent,
-      visuals
+      visuals,
+      isTransparent: geometry.isTransparent
     }
     return entity
   })

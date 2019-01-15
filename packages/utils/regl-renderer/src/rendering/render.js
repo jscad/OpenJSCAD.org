@@ -17,7 +17,7 @@ const prepareRender = (params) => {
           throw err
         }
       }
-    } 
+    }
   )
   // setup regl
   const regl = require('regl')(options)// , (width, height))
@@ -46,17 +46,19 @@ const prepareRender = (params) => {
             return (aTransparent === bTransparent) ? 0 : aTransparent ? 1 : -1
           })
           .forEach(entity => {
-            if (entity.drawCmd && entity.show && props.drawCommands[entity.drawCmd]) {
+            const { visuals } = entity
+            if (visuals.drawCmd && visuals.show && props.drawCommands[visuals.drawCmd]) {
               const key = JSON.stringify(entity) // FIXME: EEEEEK horribly inneficient, change this!
               let drawCmd = drawCache[key]
               if (!drawCmd) {
               // make draw function
-                drawCmd = props.drawCommands[entity.drawCmd](regl, entity)
+                drawCmd = props.drawCommands[visuals.drawCmd](regl, entity)
                 drawCache[key] = drawCmd
               }
               // console.log('drawing with', entity.drawCmd, entity)
-              const drawParams = {
+              const drawParams = { // FIXME: horrible, tidy up !!: what is needed/should be passed to render pass ?
                 ...entity,
+                ...visuals,
                 camera: props.camera
               }
               drawCmd(drawParams)

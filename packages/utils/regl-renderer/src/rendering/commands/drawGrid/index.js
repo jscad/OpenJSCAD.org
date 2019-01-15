@@ -5,16 +5,20 @@ const mat4 = require('gl-mat4')
 const makeDrawGrid = (regl, params = {}) => {
   let positions = []
   const defaults = {
-    color: [1, 1, 1, 1],
+    visuals: {
+      color: [1, 1, 1, 1],
+      fadeOut: false
+    },
     ticks: 1,
     size: [16, 16],
-    fadeOut: false,
     centered: false,
     lineWidth: 2
   }
+  const visuals = Object.assign({}, defaults.visuals, params.visuals || {})
+  const { fadeOut, color } = visuals
+  let { size, ticks, centered, lineWidth } = Object.assign({}, defaults, params)
 
-  let { size, ticks, fadeOut, centered, lineWidth, color } = Object.assign({}, defaults, params)
-
+  console.log('size', size ,'ticks', ticks)
   const width = size[0]
   const length = size[1]
 
