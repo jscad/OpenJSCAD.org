@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "tape test.js",
-    "dev": "budo example/demo.js --title csg-viewer --live --css example/demo.css -- -t glslify -t brfs",
+    "dev": "budo ./demo-web.js --title regl-renderer --live",
     "build": "browserify -p common-shakeify --standalone makeCsgViewer src/index.js > dist/bundle.js",
     "minify": "uglifyjs dist/bundle.js --compress > dist/bundle.min.js",
     "build-min": "npm run build && npm run minify && npm run compress",

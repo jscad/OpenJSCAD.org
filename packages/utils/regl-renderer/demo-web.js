@@ -1,105 +1,86 @@
-const makeCsgViewer = require('../src/index')
-const { cube } = require('@jscad/scad-api').primitives3d
+const { prepareRender, drawCommands, cameras, entitiesFromSolids } = require('./src') // replace this with the correct import
 
+// setup demo solids data
 const initializeData = function () {
-  return cube({ size: 100 * Math.random() })
-}
-// dark bg : [0.211, 0.2, 0.207, 1]
-// dark grid :  [1, 1, 1, 0.1],
+  const { color } = require('@jscad/scad-api').color
+  const { cube, sphere } = require('@jscad/scad-api').primitives3d
+  const { union, difference, intersection } = require('@jscad/scad-api').booleanOps
+  const logo = union(
+    difference(
+      cube({ size: 30, center: true }),
+      sphere({ r: 20, center: true })
+    ),
+    intersection(
+      sphere({ r: 13, center: true }),
+      cube({ size: 21, center: true })
+    )
+  ).translate([0, 0, 1.5]).scale(10)
 
-const viewerOptions = {
-  rendering: {
-    background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
-    meshColor: [0.4, 0.6, 0.5, 1]
+  const transpCube = color([1, 0, 0, 0.75], cube({ size: [100, 100, 400] }))
+  return [ transpCube, logo ]
+}
+
+const width = window.innerWidth
+const height = window.innerHeight
+
+// process entities and inject extras
+const solids = entitiesFromSolids({}, initializeData())
+
+// prepare the camera
+const perspectiveCamera = cameras.perspective
+const camera = Object.assign({}, perspectiveCamera.defaults)
+perspectiveCamera.setProjection(camera, camera, { width, height })
+perspectiveCamera.update(camera, camera)
+
+const options = {
+  glOptions: { container: document.body },
+  camera,
+  drawCommands: {
+    // draw commands bootstrap themselves the first time they are run
+    drawGrid: drawCommands.drawGrid, // require('./src/rendering/drawGrid/index.js'),
+    drawAxis: drawCommands.drawAxis, // require('./src/rendering/drawAxis'),
+    drawMesh: drawCommands.drawMesh // require('./src/rendering/drawMesh/index.js')
   },
-  grid: {
-    show: true,
-    color: [1, 1, 1, 1]
-  },
-  camera: {
-    position: [450, 550, 700]
-  },
-  controls: {
-    zoomToFit: {
-      targets: 'all'
+  // data
+  entities: [
+    { // grid data
+      // the choice of what draw command to use is also data based
+      visuals: {
+        drawCmd: 'drawGrid',
+        show: true,
+        color: [0, 0, 0, 1],
+        subColor: [0, 0, 1, 0.5],
+        fadeOut: false,
+        transparent: true
+      },
+      size: [500, 500],
+      ticks: [10, 1]
     },
-    limits: {
-      maxDistance: 1600,
-      minDistance: 0.01
-    }
-  }
+    {
+      visuals: {
+        drawCmd: 'drawAxis',
+        show: true
+      }
+    },
+    ...solids
+  ]
 }
+// prepare
+const render = prepareRender(options)
+// do the actual render :  it is a simple function !
+render(options)
 
-const csg = initializeData()
-const { csgViewer, viewerDefaults, viewerState$ } = makeCsgViewer(document.body, viewerOptions)
+// some live animation example
+let tick = 0
+const updateAndRender = () => {
+  tick += 0.01
+  camera.position[0] = Math.cos(tick) * 800
+  perspectiveCamera.update(camera, camera)
+  options.camera = camera
 
-// update / initialize the viewer with some data
-csgViewer(viewerOptions, { solids: csg })
-
-// you also have access to the defaults
-console.log('viewerDefaults', viewerDefaults)
-
-// you can subscribe to the state of the viewer to react to it if you want to,
-// as the state is a most.js observable
-viewerState$
-  .throttle(5000)
-  // .skipRepeats()
-  .forEach(viewerState => console.log('viewerState', viewerState))
-
-// you can change the state of the viewer at any time by just calling the viewer
-// function again with different params
-// NOTE: the params need to respect the SAME structure as the defaults
-setTimeout(function (t) {
-  csgViewer({ camera: { position: [0, 100, 100] } })
-}, 5000)
-
-// or different params AND different data
-setTimeout(function (t) {
-  const csg = initializeData()
-  csgViewer({ overrideOriginalColors: true, rendering: { meshColor: [0.8, 0, 0, 1], background: [0.2, 1, 1, 1] } }, { solids: csg })
-}, 10000)
-
-// and again
-setTimeout(function (t) {
-  csgViewer({ controls: { autoRotate: { enabled: true } } })
-}, 15000)
-
-/* setTimeout(function (t) {
-  csgViewer({camera: {position: 'top'}})
-}, 2000)
-
-setTimeout(function (t) {
-  csgViewer({camera: {position: 'bottom'}})
-}, 2500)
-
-setTimeout(function (t) {
-  csgViewer({camera: {position: 'front'}})
-}, 3000)
-
-setTimeout(function (t) {
-  csgViewer({camera: {position: 'back'}})
-}, 3500)
-
-setTimeout(function (t) {
-  csgViewer({camera: {position: 'left'}})
-}, 4000)
-
-setTimeout(function (t) {
-  csgViewer({camera: {position: 'right'}})
-}, 4500)
-
-setTimeout(function (t) {
-  csgViewer({camera: {position: 'goomba'}})
-}, 5500) */
-
-setTimeout(function (t) {
-  csgViewer({ grid: { size: [90, 90], display: true } })
-}, 2500)
-
-setTimeout(function (t) {
-  csgViewer({ grid: { size: [200, 20], display: true, fadeout: true } })
-}, 5500)
-
-setTimeout(function (t) {
-  csgViewer({ grid: { size: [800, 800], display: true, fadeout: true } })
-}, 6500)
+  // you can change the state of the viewer at any time by just calling the viewer
+  // function again with different params
+  render(options)
+  window.requestAnimationFrame(updateAndRender)
+}
+window.requestAnimationFrame(updateAndRender)
