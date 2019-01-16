@@ -41,8 +41,8 @@ const prepareRender = (params) => {
         // since you can see 'behind' transparent ones, so what is behind needs to already be rendered
         props.entities
           .sort((a, b) => {
-            const aTransparent = 'isTransparent' in a ? a.isTransparent : false
-            const bTransparent = 'isTransparent' in b ? b.isTransparent : false
+            const aTransparent = 'transparent' in a.visuals ? a.visuals.transparent : false
+            const bTransparent = 'transparent' in b.visuals ? b.visuals.transparent : false
             return (aTransparent === bTransparent) ? 0 : aTransparent ? 1 : -1
           })
           .forEach(entity => {
