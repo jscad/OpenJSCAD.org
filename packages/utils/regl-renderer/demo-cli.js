@@ -1,8 +1,5 @@
 
 const { writeContextToFile } = require('../img/src/imgUtils')
-/* const prepareRender = require('./src/rendering/render')
-const perspectiveCamera = require('./src/cameras/perspectiveCamera')
-const entitiesFromSolids = require('./src/geometry-utils/entitiesFromSolids') */
 const { prepareRender, drawCommands, cameras, entitiesFromSolids } = require('./src') // replace this with the correct import
 
 // setup demo solids data
@@ -36,6 +33,7 @@ const gl = require('gl')(width, height)
 // process entities and inject extras
 const solids = entitiesFromSolids({}, initializeData())
 
+// prepare the camera
 const perspectiveCamera = cameras.perspective
 const camera = Object.assign({}, perspectiveCamera.defaults)
 perspectiveCamera.setProjection(camera, camera, { width, height })
