@@ -72,13 +72,13 @@ const options = {
       visuals: {
         drawCmd: 'drawGrid',
         show: true,
-        color: [0, 0, 0, 1],
-        // subColor: [0, 0, 1, 1],
-        fadeOut: true
+        color: [0, 0, 0, 0.1],
+        subColor: [0, 0, 1, 0.1],
+        fadeOut: true,
+        transparent: true
       },
       size: [500, 500],
-      ticks: [10, 1],
-      transparent: true
+      ticks: [10, 1]
     },
     {
       visuals: {
