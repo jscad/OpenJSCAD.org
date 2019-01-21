@@ -175,7 +175,7 @@ const _cube = function (options) {
  * @param {Number} [options.resolution=defaultResolution3D] - number of polygons per 360 degree revolution
  * @returns {CSG} new 3D solid
  *
- * @example
+ * @example:
  * let cube = CSG.roundedCube({
  *   center: [2, 0, 2],
  *   radius: 15,

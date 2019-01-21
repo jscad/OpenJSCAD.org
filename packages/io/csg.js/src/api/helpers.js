@@ -7,11 +7,7 @@ const vertexFromVectorArray = array => {
   return new Vertex3(new Vector3(array))
 }
 
-const polygonFromPoints = points => {
-  // EEK talk about wrapping wrappers !
-  const vertices = points.map(point => new Vertex3(new Vector3(point)))
-  return new Polygon3(vertices)
-}
+
 
 // Simplified, array vector rightMultiply1x3Vector
 const rightMultiply1x3VectorToArray = (matrix, vector) => {

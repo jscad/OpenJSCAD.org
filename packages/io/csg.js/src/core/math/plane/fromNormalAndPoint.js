@@ -3,8 +3,8 @@ const fromValues = require('../vec4/fromValues')
 
 /**
  * Create a new plane from the given normal and point values
- * @param {normal} vec3 - vector 3D
- * @param {point} vec3 - vector 3D
+ * @param {Vec3} normal  - vector 3D
+ * @param {Vec3}  point- vector 3D
  * @returns {Array} a new plane with properly typed values
  */
 const fromNormalAndPoint = (normal, point) => {

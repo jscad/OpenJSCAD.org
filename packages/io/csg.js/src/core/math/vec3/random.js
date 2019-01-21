@@ -1,6 +1,7 @@
 const abs = require('./abs')
 const create = require('./create')
 
+// find a vector that is somewhat perpendicular to this one
 const random = (...params) => {
   let out
   let vec

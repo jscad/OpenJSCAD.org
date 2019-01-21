@@ -2,7 +2,7 @@ module.exports = {
   clone: require('./clone'),
   create: require('./create'),
   flip: require('./flip'),
-//  fromData: require('./fromData'),
+  fromPointsAndPlane: require('./fromPointsAndPlane'),
   fromPoints: require('./fromPoints'),
 //  fromObject: require('./fromObject'),
   isConvex: require('./isConvex'),

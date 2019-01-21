@@ -56,7 +56,11 @@ better for future code splitting etc)
   
   **TODO**  
   * use quaternions or not ?
-  * define position, rotation, scale individually, or just transformation matrix/quaternion, with setters/getters
+  * define position, rotation, scale individually ie: 
+      position: [10, 0, -1.2],
+      rotation: [0, 0, 0],
+      scale: [1, 1, 1] 
+    or just transformation matrix/quaternion, (possibly with setters/getters / proxy if needed)
 
 #### properties
 
@@ -279,3 +283,15 @@ part : {
     - for 2d shapes (CAG): FuzzyShape2Factory (used every time canonicalize() is called, ie A LOT)
     lookupOrCreate() is called FOR EACH VERTEX but the results are discarded !! lots of calls for nothing
     - 3d shape (CSG) 3d polygons have 'planes' but a lot of geometry primitives generate planes (normals) on the fly, not 
+
+### Notes
+
+- Planes: used a lot, 
+  * V1: had the following structure
+  this.normal = normal
+  this.w = w
+  * V2: simply a vec4 : [x,y,z,w]
+  xyzw are like xyzw = abcd from common written form of the plane equation
+
+- OrthoNormalBasis: mostly used to project back & forth between 2D & 3D
+  * 

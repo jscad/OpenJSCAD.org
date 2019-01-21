@@ -16,6 +16,8 @@ module.exports = {
   mirror: require('./mirror'),
   mirrorByPlane: require('./mirrorByPlane'),
   multiply: require('./multiply'),
+  rightMultiplyVec2: require('./rightMultiplyVec2'),
+  rightMultiplyVec3: require('./rightMultiplyVec3'),
   rotate: require('./rotate'),
   rotateX: require('./rotateX'),
   rotateY: require('./rotateY'),

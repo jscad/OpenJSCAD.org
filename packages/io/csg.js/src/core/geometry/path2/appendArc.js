@@ -14,7 +14,7 @@
    * @returns {Path2D} new Path2D object (not closed)
    *
    * @example
-   * let p1 = new CSG.Path2D([[27.5,-22.96875]],false);
+   * let p1 = new Geom3.Path2D([[27.5,-22.96875]],false);
    * p1 = p1.appendPoint([27.5,-3.28125]);
    * p1 = p1.appendArc([12.5,-22.96875],{xradius: 15,yradius: -19.6875,xaxisrotation: 0,clockwise: false,large: false});
    * p1 = p1.close();

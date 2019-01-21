@@ -1,6 +1,5 @@
-const create = require('./create')
+const fromPoints = require('./fromPoints')
 
-const plane = require('../../math/plane/')
 const vec3 = require('../../math/vec3')
 
 const mat4 = require('../../math/mat4')
@@ -12,9 +11,7 @@ const transform = (matrix, poly3) => {
     // reverse the order to preserve the orientation
     vertices.reverse()
   }
-  const out = create()
-  out.vertices = vertices
-  out.plane = plane.transform(matrix, poly3.plane)
+  const out = fromPoints(vertices)
   return out
 }
 

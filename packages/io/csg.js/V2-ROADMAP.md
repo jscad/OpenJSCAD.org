@@ -101,7 +101,7 @@ The end result at this stage is to put it midly, a big mess, that has become inc
   
   - use arrays & typed arrays with functions to manipulate their data rather than overly complex , shoe-horned classes where applicable
 
-  - 
+  - this does not mean excluding classes ! IF they make sense, and mostly as very minimal objects that get manipulated by functions (not methods !!) 
 
 
  #### Some generic thoughts

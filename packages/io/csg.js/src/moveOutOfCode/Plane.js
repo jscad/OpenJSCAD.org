@@ -29,7 +29,7 @@ Plane.fromVector3Ds = function (a, b, c) {
 // like fromVector3Ds, but allow the vectors to be on one point or one line
 // in such a case a random plane through the given points is constructed
 
-// UNUSED SO REMOVE
+// CONVERTED TO V2 as fromPointsRandom
 Plane.anyPlaneFromVector3Ds = function (a, b, c) {
   let v1 = b.minus(a)
   let v2 = c.minus(a)

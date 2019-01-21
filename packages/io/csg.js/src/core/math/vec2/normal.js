@@ -19,5 +19,6 @@ const normal = (...params) => {
   vec = params[1]
   return rotate(out, (Math.PI / 2), vec)
 }
+// old : Vector2D.Create(this._y, -this._x)
 
 module.exports = normal

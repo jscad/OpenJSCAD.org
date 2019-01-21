@@ -6,6 +6,7 @@ module.exports = {
   fromNormalAndPoint: require('./fromNormalAndPoint'),
   fromValues: require('../vec4/fromValues'),
   fromPoints: require('./fromPoints'),
+  fromPointsRandom: require('./fromPointsRandom'),
   signedDistanceToPoint: require('./signedDistanceToPoint'),
   toString: require('../vec4/toString'),
   transform: require('./transform'),

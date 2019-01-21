@@ -1,4 +1,4 @@
 module.exports = {
-  shape2: require('./shape2'),
-  shape3: require('./shape3')
+  geom2: require('./geom2'),
+  geom3: require('./geom3')
 }

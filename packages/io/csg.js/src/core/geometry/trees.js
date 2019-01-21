@@ -1,7 +1,18 @@
-const { _CSGDEBUG, EPS } = require('./constants')
-const poly3 = require('./poly3')
-const vec4 = require('../math/plane')
+const { _CSGDEBUG, EPS } = require('../constants')
+const plane = require('../math/plane')
 const vec3 = require('../math/vec3')
+
+const poly3 = require('./poly3')
+
+const splitLineSegmentByPlane = (plane, p1, p2) => {
+  const direction = vec3.subtract(p2, p1)
+  let lambda = (plane[3] - vec3.dot(plane, p1)) / vec3.dot(plane, direction)
+  if (Number.isNaN(lambda)) lambda = 0
+  if (lambda > 1) lambda = 1
+  if (lambda < 0) lambda = 0
+  const result = vec3.add(p1, vec3.scale(lambda, direction))
+  return result
+}
 
 // Returns object:
 // .type:
@@ -13,26 +24,24 @@ const vec3 = require('../math/vec3')
 // In case the polygon is spanning, returns:
 // .front: a Polygon3 of the front part
 // .back: a Polygon3 of the back part
-function splitPolygonByPlane (plane, polygon) {
+function splitPolygonByPlane (splane, polygon) {
   let result = {
     type: null,
     front: null,
     back: null
   }
   // cache in local lets (speedup):
-  let planenormal = [plane[0], plane[1], plane[2]] // plane.normal
   let vertices = polygon.vertices
   let numvertices = vertices.length
-  if (polygon.plane.equals(plane)) {
+  if (plane.equals(polygon.plane, splane)) {
     result.type = 0
   } else {
-    let thisw = plane[3]// .w
     let hasfront = false
     let hasback = false
     let vertexIsBack = []
     let MINEPS = -EPS
     for (let i = 0; i < numvertices; i++) {
-      let t = planenormal.dot(vertices[i].pos) - thisw
+      let t = vec3.dot(splane, vertices[i]) - splane[3]
       let isback = (t < 0)
       vertexIsBack.push(isback)
       if (t > EPS) hasfront = true
@@ -40,7 +49,7 @@ function splitPolygonByPlane (plane, polygon) {
     }
     if ((!hasfront) && (!hasback)) {
       // all points coplanar
-      let t = vec3.dot(planenormal, polygon.plane.normal) // FIXME FINISH CONVERSION TO V2
+      let t = vec3.dot(splane, polygon.plane)
       result.type = (t >= 0) ? 0 : 1
     } else if (!hasback) {
       result.type = 2
@@ -66,18 +75,17 @@ function splitPolygonByPlane (plane, polygon) {
           }
         } else {
           // line segment intersects plane:
-          let point = vertex.pos
-          let nextpoint = vertices[nextvertexindex].pos
-          let intersectionpoint = vec4.splitLineSegmentByPlane(plane, point, nextpoint)
-          // let intersectionvertex = new Vertex3(intersectionpoint)
+          let point = vertex
+          let nextpoint = vertices[nextvertexindex]
+          let intersectionpoint = splitLineSegmentByPlane(splane, point, nextpoint)
           if (isback) {
             backvertices.push(vertex)
-            backvertices.push(intersectionvertex)
-            frontvertices.push(intersectionvertex)
+            backvertices.push(intersectionpoint)
+            frontvertices.push(intersectionpoint)
           } else {
             frontvertices.push(vertex)
-            frontvertices.push(intersectionvertex)
-            backvertices.push(intersectionvertex)
+            frontvertices.push(intersectionpoint)
+            backvertices.push(intersectionpoint)
           }
         }
         isback = nextisback
@@ -88,7 +96,7 @@ function splitPolygonByPlane (plane, polygon) {
         let prevvertex = backvertices[backvertices.length - 1]
         for (let vertexindex = 0; vertexindex < backvertices.length; vertexindex++) {
           let vertex = backvertices[vertexindex]
-          if (vertex.pos.distanceToSquared(prevvertex.pos) < EPS_SQUARED) {
+          if (vec3.squaredDistance(vertex, prevvertex) < EPS_SQUARED) {
             backvertices.splice(vertexindex, 1)
             vertexindex--
           }
@@ -99,7 +107,7 @@ function splitPolygonByPlane (plane, polygon) {
         let prevvertex = frontvertices[frontvertices.length - 1]
         for (let vertexindex = 0; vertexindex < frontvertices.length; vertexindex++) {
           let vertex = frontvertices[vertexindex]
-          if (vertex.pos.distanceToSquared(prevvertex.pos) < EPS_SQUARED) {
+          if (vec3.squaredDistance(vertex, prevvertex) < EPS_SQUARED) {
             frontvertices.splice(vertexindex, 1)
             vertexindex--
           }
@@ -107,10 +115,10 @@ function splitPolygonByPlane (plane, polygon) {
         }
       }
       if (frontvertices.length >= 3) {
-        result.front = poly3.fromData(frontvertices, polygon.shared, polygon.plane)
+        result.front = poly3.fromPoints(frontvertices, polygon.plane)
       }
       if (backvertices.length >= 3) {
-        result.back = poly3.fromData(backvertices, polygon.shared, polygon.plane)
+        result.back = poly3.fromPoints(backvertices, polygon.plane)
       }
     }
   }
@@ -242,20 +250,19 @@ PolygonTreeNode.prototype = {
   },
 
   // only to be called for nodes with no children
-  _splitByPlane: function (plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes) {
+  _splitByPlane: function (splane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes) {
     let polygon = this.polygon
     if (polygon) {
       let bound = poly3.measureBoundingSphere(polygon)
       let sphereradius = bound[1] + EPS // FIXME Why add imprecision?
-      let planenormal = [plane[0], plane[1], plane[2]]// .normal
       let spherecenter = bound[0]
-      let d = vec3.dot(planenormal, spherecenter) - plane[3]// plane.w
+      let d = vec3.dot(splane, spherecenter) - splane[3]
       if (d > sphereradius) {
         frontnodes.push(this)
       } else if (d < -sphereradius) {
         backnodes.push(this)
       } else {
-        let splitresult = splitPolygonByPlane(plane, polygon)
+        let splitresult = splitPolygonByPlane(splane, polygon)
         switch (splitresult.type) {
           case 0:
             // coplanar front:
@@ -394,7 +401,7 @@ Node.prototype = {
     let node
     for (let i = 0; i < queue.length; i++) {
       node = queue[i]
-      if (node.plane) node.plane = node.plane.flipped()
+      if (node.plane) node.plane = plane.flip(node.plane)
       if (node.front) queue.push(node.front)
       if (node.back) queue.push(node.back)
       let temp = node.front

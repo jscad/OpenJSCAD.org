@@ -8,8 +8,8 @@
  * @param {Boolean} [options.maketangent=false] - adds line segments at both ends of the arc to ensure that the gradients at the edges are tangent
  * @returns {Path2D} new Path2D object (not closed)
  *
- * @example
- * let path = CSG.Path2D.arc({
+ * @example:
+ * let path = Geom3.Path2D.arc({
  *   center: [5, 5],
  *   radius: 10,
  *   startangle: 90,

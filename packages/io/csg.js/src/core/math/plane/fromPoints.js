@@ -4,10 +4,10 @@ const fromValues = require('../vec4/fromValues')
 /**
  * Create a new plane from the given points
  *
- * @param {a} vec3 - 3D point
- * @param {b} vec3 - 3D point
- * @param {c} vec3 - 3D point
- * @returns {Array} a new plane with properly typed values
+ * @param {Vec3} a - 3D point
+ * @param {Vec3} b - 3D point
+ * @param {Vec3} c - 3D point
+ * @returns {Vec4} a new plane with properly typed values
  */
 const fromPoints = (a, b, c) => {
   // let n = b.minus(a).cross(c.minus(a)).unit()
@@ -21,3 +21,5 @@ const fromPoints = (a, b, c) => {
 }
 
 module.exports = fromPoints
+
+

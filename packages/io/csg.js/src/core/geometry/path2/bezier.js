@@ -13,7 +13,7 @@
    * @returns {Path2D} new Path2D object (not closed)
    *
    * @example
-   * let p5 = new CSG.Path2D([[10,-20]],false);
+   * let p5 = new Geom3.Path2D([[10,-20]],false);
    * p5 = p5.appendBezier([[10,-10],[25,-10],[25,-20]]);
    * p5 = p5.appendBezier([[25,-30],[40,-30],[40,-20]]);
    */

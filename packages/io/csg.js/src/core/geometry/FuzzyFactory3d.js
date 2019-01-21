@@ -1,5 +1,5 @@
-const { EPS } = require('./constants')
-const Polygon = require('./math/Polygon3')
+const { EPS } = require('../constants')
+const Polygon = require('./poly3')
 const FuzzyFactory = require('./FuzzyFactory')
 
 const polygonSHaredHash = (shared) => {

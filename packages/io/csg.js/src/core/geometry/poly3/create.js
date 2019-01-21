@@ -4,11 +4,11 @@ const plane = require('../../math/plane/')
  * Represents a convex polygon. The vertices used to initialize a polygon must
  *   be coplanar and form a convex loop. They do not have to be `vec3`
  *   instances but they must behave similarly.
- * <br>
+ *
  * Each convex polygon has a `shared` property, which is shared between all
  *   polygons that are clones of each other or were split from the same polygon.
  *   This can be used to define per-polygon properties (such as surface color).
- * <br>
+ * 
  * The plane of the polygon is calculated from the vertex coordinates if not provided.
  *   The plane can alternatively be passed as the third argument to avoid calculations.
  *

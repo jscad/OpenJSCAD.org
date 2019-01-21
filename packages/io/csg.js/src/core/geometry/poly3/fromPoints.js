@@ -18,10 +18,14 @@ const vec3 = require('../../math/vec3')
  * const polygon = createFromPoints(points)
  */
 const fromPoints = (points, planeof) => {
-// TODO handle optional parameters; planeof
   const out = create()
+  out.plane = planeof
   out.vertices = points.map((point) => { return vec3.clone(point) })
-  out.plane = plane.fromPoints(out.vertices[0], out.vertices[1], out.vertices[2])
+
+  // calculate the plane if not provided
+  if (out.plane === undefined) {
+    out.plane = plane.fromPoints(out.vertices[0], out.vertices[1], out.vertices[2])
+  }
   return out
 }
 
