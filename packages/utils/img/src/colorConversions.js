@@ -1,4 +1,4 @@
-export function hexToRgba (hex, normalize = true) {
+const hexToRgba = (hex, normalize = true) => {
   hex = hex.replace('#', '')
   const r = parseInt(hex.substring(0, 2), 16)
   const g = parseInt(hex.substring(2, 4), 16)
@@ -9,6 +9,8 @@ export function hexToRgba (hex, normalize = true) {
 }
 
 // normalize 0-255 values to 0-1
-export function normalizeRgba (rgba) {
+const normalizeRgba = (rgba) => {
   return rgba.map(v => (+(v / 255).toFixed(2)))
 }
+
+module.exports = { hexToRgba, normalizeRgba }

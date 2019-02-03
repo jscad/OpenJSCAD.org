@@ -39,7 +39,7 @@ const drawMesh = function (regl, params = { extras: {} }) {
     frag,
 
     uniforms: {
-      model: (context, props) => props && props.model ? props.model : mat4.identity([]),
+      model: (context, props) => props.model || props.transforms.matrix || mat4.identity([]), // props && props.model ? props.model : mat4.identity([]),
       ucolor: (context, props) => props && props.color ? props.color : [1, 0.5, 1, 1],
       // semi hack, woraround to enable/disable vertex colors!!!
       vColorToggler: (context, props) => (props && props.useVertexColors && props.useVertexColors === true) ? 1.0 : 0.0,

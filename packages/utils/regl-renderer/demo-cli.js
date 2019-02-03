@@ -1,5 +1,5 @@
 
-const { writeContextToFile } = require('../img/src/imgUtils')
+const { writeContextToFile } = require('@jscad/img-utils')
 const { prepareRender, drawCommands, cameras, entitiesFromSolids } = require('./src') // replace this with the correct import
 
 // setup demo solids data

@@ -1,4 +1,9 @@
-// image
-export {contextToBuffer, writeBufferToFile, writeContextToFile} from './imgUtils'
-export {default as bufferToPng} from './bufferToPng'
-export * from './colorConversions'
+
+const { contextToBuffer, writeBufferToFile, writeContextToFile } = require('./imgUtils')
+module.exports = {
+  contextToBuffer,
+  writeBufferToFile,
+  writeContextToFile,
+  bufferToPng: require('./bufferToPng'),
+  colorConversions: require('./colorConversions')
+}

@@ -16,7 +16,8 @@
   "devDependencies": {
     "budo": "10.0.4",
     "gl": "4.1.1",
-    "pngjs": "3.3.3"
+    "pngjs": "3.3.3",
+    "@jscad/img-utils": "0.0.0"
   },
   "dependencies": {
     "angle-normals": "1.0.0",
