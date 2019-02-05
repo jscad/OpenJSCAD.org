@@ -5,9 +5,11 @@ const poly3 = require('../poly3')
  * @param  {Geom3} sourceGeometry the geometry to clone
  * @returns {Geom3} the new clone
  */
-const clone = sourceGeometry => {
+const clone = (sourceGeometry) => {
   return {
-    polygons: sourceGeometry.polygons.map(p => poly3.clone(p)),
+    polygons: sourceGeometry.polygons.map((p) => {
+      return poly3.clone(p)
+    }),
     isCanonicalized: sourceGeometry.isCanonicalized,
     isRetesselated: sourceGeometry.isRetesselated
   }

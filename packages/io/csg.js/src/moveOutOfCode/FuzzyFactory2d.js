@@ -1,11 +1,12 @@
-const FuzzyFactory = require('./FuzzyFactory')
-const { EPS } = require('../constants')
+const { EPS } = require('../../constants')
 
-const FuzzyShape2Factory = function () {
+const FuzzyFactory = require('./FuzzyFactory')
+
+const FuzzyFactory2d = function () {
   this.vertexfactory = new FuzzyFactory(2, EPS)
 }
 
-FuzzyShape2Factory.prototype = {
+FuzzyFactory2d.prototype = {
   getVertex: function (sourcevertex) {
     let elements = [sourcevertex[0], sourcevertex[1]]
     // FIXME: oh blimey, this actually never did anything : returns the SOURCE VERTEX!!
@@ -21,4 +22,4 @@ FuzzyShape2Factory.prototype = {
   }
 }
 
-module.exports = FuzzyShape2Factory
+module.exports = FuzzyFactory2d

@@ -1,5 +1,5 @@
-const vec3 = require('../../../math/vec3')
-const measureBoundingBox = require('../../poly3/measureBoundingBox')
+const vec3 = require('../../math/vec3')
+const measureBoundingBox = require('../poly3/measureBoundingBox')
 
 /**
  * Returns the AABB (axis aligned bounding box) of the given geometry

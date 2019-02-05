@@ -1,9 +1,7 @@
 const test = require('ava')
 const { clone, create, fromPoints } = require('./index')
 
-const { compareVectors } = require('../../../../test/helpers/index')
-
-test('geom3: clone() should return a new geometry with same values', t => {
+test('geom3: clone() should return a new geometry with same values', (t) => {
   const polygons = [
     [// a simple triangle
       [0, 0, 0],

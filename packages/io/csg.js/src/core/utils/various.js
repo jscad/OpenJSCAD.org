@@ -33,8 +33,8 @@ const solve2Linear = function (a, b, c, d, u, v) {
 // points (CSG.Vector2D).
 // Interpolation is robust even if the points have the same y coordinate
 const interpolateBetween2DPointsForY = function (point1, point2, y) {
-  let f1 = y - point1.y
-  let f2 = point2.y - point1.y
+  let f1 = y - point1[1]
+  let f2 = point2[1] - point1[1]
   if (f2 < 0) {
     f1 = -f1
     f2 = -f2
@@ -49,7 +49,7 @@ const interpolateBetween2DPointsForY = function (point1, point2, y) {
   } else {
     t = f1 / f2
   }
-  let result = point1.x + t * (point2.x - point1.x)
+  let result = point1[0] + t * (point2[0] - point1[0])
   return result
 }
 

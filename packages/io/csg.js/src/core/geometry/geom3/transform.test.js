@@ -48,7 +48,7 @@ test('shape3: transform() should return a new shape3 with correct values', (t) =
   ]
 
   const org3 = fromPoints(polygons)
-  const exp3 = fromPoints([[[0,-1, 0], [1, 0, 0], [0, 0, 1]]])
+  const exp3 = fromPoints([[[0, -1, 0], [1, 0, 0], [0, 0, 1]]])
   const ret3 = transform(rotateZMatrix, org3)
   // TODO need compare routine t.deepEqual(ret3, exp3)
   t.not(org3, ret3)

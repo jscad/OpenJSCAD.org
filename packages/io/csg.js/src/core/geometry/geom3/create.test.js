@@ -3,7 +3,7 @@ const { create } = require('./index')
 
 test('geom3: create() should return an empty geometry', (t) => {
   const obs = create()
-  const exp = { 
+  const exp = {
     polygons: [],
     isCanonicalized: true,
     isRetesselated: true

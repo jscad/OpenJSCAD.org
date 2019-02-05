@@ -18,7 +18,7 @@ test('geom3: invert() should return correct geometries', (t) => {
   ]
 
   const org1 = create()
-  const exp1 = { 
+  const exp1 = {
     polygons: [],
     isCanonicalized: false,
     isRetesselated: false

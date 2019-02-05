@@ -1,8 +1,10 @@
-const Vector2D = require('./Vector2')
-const Vector3D = require('./Vector3')
-const Line2D = require('./Line2')
-const Line3D = require('./Line3')
-const Plane = require('./Plane')
+const vec2 = require('./vec2')
+const vec3 = require('./vec3')
+
+const line2 = require('./line2')
+const line3 = require('./line3')
+
+const plane = require('./plane')
 
 /** class OrthoNormalBasis
  * Reprojects points on a 3D plane onto a 2D plane
@@ -13,14 +15,14 @@ const Plane = require('./Plane')
 const OrthoNormalBasis = function (plane, rightvector) {
   if (arguments.length < 2) {
     // choose an arbitrary right hand vector, making sure it is somewhat orthogonal to the plane normal:
-    rightvector = plane.normal.randomNonParallelVector()
+    rightvector = vec3.random(plane)
   } else {
-    rightvector = new Vector3D(rightvector)
+    rightvector = rightvector
   }
-  this.v = plane.normal.cross(rightvector).unit()
-  this.u = this.v.cross(plane.normal)
+  this.v = vec3.unit(vec3.cross(plane, rightvector))
+  this.u = vec3.cross(this.v, plane)
   this.plane = plane
-  this.planeorigin = plane.normal.times(plane.w)
+  this.planeorigin = vec3.scale(plane[3], plane)
 }
 
 // Get an orthonormal basis for the standard XYZ planes.
@@ -167,12 +169,17 @@ OrthoNormalBasis.prototype = {
     ])
   },
 
-  to2D: function (vec3) {
-    return new Vector2D(vec3.dot(this.u), vec3.dot(this.v))
+  to2D: function (point) {
+    return vec2.fromValues(vec3.dot(point, this.u), vec3.dot(point, this.v))
   },
 
-  to3D: function (vec2) {
-    return this.planeorigin.plus(this.u.times(vec2.x)).plus(this.v.times(vec2.y))
+  to3D: function (point) {
+    const v1 = vec3.scale(point[0], this.u)
+    const v2 = vec3.scale(point[1], this.v)
+
+    const v3 = vec3.add(this.planeorigin, v1)
+    const v4 = vec3.add(v3, v2)
+    return v4
   },
 
   line3Dto2D: function (line3d) {
