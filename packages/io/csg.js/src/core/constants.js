@@ -9,7 +9,14 @@ const defaultResolution2D = 32 // FIXME this seems excessive
  */
 const defaultResolution3D = 12
 
+/** The resolution of space, currently one hundred nanometers.
+ *  This should be 1 / EPS.
+ * @default
+ */
+const spatialResolution = 1e5
+
 /** Epsilon used during determination of near zero distances.
+ *  This should be 1 / spacialResolution.
  * @default
  */
 const EPS = 1e-5
@@ -51,5 +58,6 @@ module.exports = {
   front,
   back,
   staticTag,
-  getTag
+  getTag,
+  spatialResolution
 }

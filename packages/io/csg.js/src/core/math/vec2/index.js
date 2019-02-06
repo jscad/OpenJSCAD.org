@@ -4,6 +4,7 @@ module.exports = {
   angle: require('./angle'),
   angleDegrees: require('./angleDegrees'),
   angleRadians: require('./angleRadians'),
+  canonicalize: require('./canonicalize'),
   clone: require('./clone'),
   create: require('./create'),
   cross: require('./cross'),
