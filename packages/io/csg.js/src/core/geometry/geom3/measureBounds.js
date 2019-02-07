@@ -2,34 +2,25 @@ const vec3 = require('../../math/vec3')
 const measureBoundingBox = require('../poly3/measureBoundingBox')
 
 /**
- * Returns the AABB (axis aligned bounding box) of the given geometry
- * as an arry of 
- * @returns {Array[]}
- * @example
- * let bounds = A.getBounds()
- * let minX = bounds[0].x
+ * Measure the bounding box of the given geometry.
+ *
+ * @param {Geom3} geometry - 3D geometry to measure
+ * @returns {Array[minpoint, maxpoint]}
  */
-const measureBounds = geometry => {
-  if (!geometry.cachedBoundingBox) {
-    let minpoint = vec3.create()
-    let maxpoint = vec3.create()
-    let polygons = geometry.polygons
-    let numpolygons = polygons.length
-    for (let i = 0; i < numpolygons; i++) {
-      let polygon = polygons[i]
-      let bounds = measureBoundingBox(polygon)
-      if (i === 0) {
-        minpoint = bounds[0]
-        maxpoint = bounds[1]
-      } else {
-        minpoint = vec3.min(minpoint, bounds[0])
-        maxpoint = vec3.max(maxpoint, bounds[1])
-      }
+const measureBounds = (geometry) => {
+  let minpoint = vec3.create()
+  let maxpoint = vec3.create()
+  for (let i = 0; i < geometry.polygons.length; i++) {
+    let bounds = measureBoundingBox(geometry.polygons[i])
+    if (i === 0) {
+      vec3.clone(minpoint, bounds[0])
+      vec3.clone(maxpoint, bounds[1])
+    } else {
+      vec3.min(minpoint, minpoint, bounds[0])
+      vec3.max(maxpoint, maxpoint, bounds[1])
     }
-    // FIXME: not ideal, we are mutating the input, we need to move some of it out
-    geometry.cachedBoundingBox = [minpoint, maxpoint]
   }
-  return geometry.cachedBoundingBox
+  return [minpoint, maxpoint]
 }
 
 module.exports = measureBounds
