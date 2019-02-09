@@ -80,7 +80,7 @@ const formats = {
     description: 'JavaScript Object Notation Format' }
 }
 
-// handled input formats that can be converted to jscad code
+// handled input formats
 const conversionFormats = [
 // 3D file formats
   'amf',
@@ -91,97 +91,8 @@ const conversionFormats = [
   'scad',
   'stl',
   'dxf',
-  // 2D file formats
-  'svg',
-  'ttf',
-  'woff'
-]
-
-// formats that can be inported
-const supportedInputFormats = [
-  // 3D file formats
-  {
-    extensions: ['stl', 'stla'],
-    type: '3d',
-    binary: false,
-    convertableToJscad: true
-  },
-  {
-    extensions: ['obj'],
-    type: '3d',
-    binary: false,
-    convertableToJscad: true
-  },
-  {
-    extensions: ['amf'],
-    type: '3d',
-    binary: true,
-    convertableToJscad: true
-  },
-  {
-    extensions: ['gcode'],
-    type: '3d',
-    binary: false,
-    convertableToJscad: true
-  },
-  {
-    extensions: ['dxf'],
-    type: '3d/2d',
-    binary: true,
-    convertableToJscad: true
-  },
-  // 2D file formats
-  {
-    extensions: ['stl', 'stla'],
-    type: '3d',
-    binary: false,
-    convertableToJscad: true
-  },
-  // script file formats
-  {
-    extensions: ['js'],
-    type: 'script',
-    binary: false,
-    convertableToJscad: true
-  },
-  {
-    extensions: ['jscad'],
-    type: 'script',
-    binary: false,
-    convertableToJscad: true
-  },
-  {
-    extensions: ['scad'],
-    type: 'script',
-    binary: false,
-    convertableToJscad: true
-  },
-  // OpenType fonts
-  {
-    extensions: ['ttf'],
-    type: 'font',
-    binary: false,
-    convertableToJscad: false
-  },
-  {
-    extensions: ['otf'],
-    type: 'font',
-    binary: false,
-    convertableToJscad: false
-  },
-  {
-    extensions: ['woff'],
-    type: 'font',
-    binary: false,
-    convertableToJscad: false
-  },
-  {
-    extensions: ['woff2'],
-    type: 'font',
-    binary: false,
-    convertableToJscad: false
-  }
-
+// 2D file formats
+  'svg'
 ]
 
 function supportedFormatsForObjects (objects) {

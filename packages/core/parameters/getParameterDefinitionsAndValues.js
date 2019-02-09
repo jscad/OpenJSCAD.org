@@ -5,31 +5,23 @@ const doesModuleExportParameterDefiniitions = moduleToCheck => {
   return moduleToCheck && 'getParameterDefinitions' in moduleToCheck
 }
 
-const getRawParameterDefinitionsAndValues = (rootModule, overrides) => {
+const getRawParameterDefinitionsAndValues = (scriptRootModule) => {
   let parameterValues = {}
   let parameterDefinitions = []
-  if (doesModuleExportParameterDefiniitions(rootModule)) {
-    parameterDefinitions = rootModule.getParameterDefinitions(overrides) || []
-    parameterValues = getParameterValuesFromParameters(parameterDefinitions)
+  if (doesModuleExportParameterDefiniitions(scriptRootModule)) {
+    parameterDefinitions = scriptRootModule.getParameterDefinitions() || []
+    parameterValues = getParameterValuesFromParameters(scriptRootModule.getParameterDefinitions)
   }
-  return { parameterDefinitions, parameterValues }
+
+  return {parameterDefinitions, parameterValues}
 }
 
-/** given the root/main module and optional parameter value overrides,
- * returns parameterDefinitions & 'default' parameter values
- * the overrides are passed for to enable the parameter definitions to access the PREVIOUS
- * version of the parameter values
- * @param  {Module} rootModule an object with a structure like { main: function, getParameterDefinitions: function}
- * getParameterDefinitions is optional
- * @param  {Object} overrides an object containing parameter values, used as overrides
- * @returns {Object} { parameterValues, parameterDefinitions }
- */
-const getAllParameterDefintionsAndValues = (rootModule, overrides) => {
-  let { parameterDefinitions, parameterValues } = getRawParameterDefinitionsAndValues(rootModule, overrides)
+const getFinalParameterDefintionsAndValues = (design, overrides) => {
+  let {parameterDefinitions, parameterValues} = getRawParameterDefinitionsAndValues(design)
   parameterValues = Object.assign({}, parameterValues, overrides)
   parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, parameterDefinitions) : parameterValues
 
-  return { parameterValues, parameterDefinitions }
+  return {parameterValues, parameterDefinitions}
 }
 
-module.exports = getAllParameterDefintionsAndValues
+module.exports = getFinalParameterDefintionsAndValues

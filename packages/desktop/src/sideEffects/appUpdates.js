@@ -1,11 +1,12 @@
 const https = require('https')
+const packageInfo = require('../../package.json')
 const compareVersion = require('compare-version')
 const callBackToStream = require('../utils/observable-utils/callbackToObservable')
 const updatesFromCB = callBackToStream()
 
 const releasesUrl = 'https://github.com/jscad/OpenJSCAD.org/releases/'
 
-const appUpdateSource = (packageInfo) => {
+const appUpdateSource = () => {
   https.get({
     host: 'api.github.com',
     path: '/repos/jscad/OpenJSCAD.org/releases/latest',
@@ -35,8 +36,8 @@ const appUpdateSource = (packageInfo) => {
   return updatesFromCB.stream
 }
 
-const makeAppUpdateSideEffect = (packageInfo) => {
-  return {source: appUpdateSource.bind(null, packageInfo)}
+const makeAppUpdateSideEffect = () => {
+  return {source: appUpdateSource}
 }
 
 module.exports = makeAppUpdateSideEffect
