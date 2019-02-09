@@ -1,5 +1,5 @@
 const { CSG, CAG, isCSG, isCAG } = require('@jscad/csg')
-const {toArray} = require('./arrays')
+const { toArray } = require('./arrays')
 
 /**
  * convert objects to a single solid
@@ -20,7 +20,7 @@ function mergeSolids (objects, params) {
   for (var i = 0; i < objects.length; i++) {
     let obj = objects[i]
     if (isCAG(obj)) {
-      obj = obj.extrude({offset: [0, 0, 0.1]}) // convert CAG to a thin solid CSG
+      obj = obj.extrude({ offset: [0, 0, 0.1] }) // convert CAG to a thin solid CSG
     }
     if (solid !== null) {
       solid = solid.unionForNonIntersecting(obj)
@@ -40,7 +40,7 @@ function mergeSolids (objects, params) {
  * @returns {CSG} a single CSG/CAG object
  */
 function mergeSolids2 (objects, params) {
-  const {convertCSG, convertCAG} = params
+  const { convertCSG, convertCAG } = params
 
   let object
   objects = toArray(objects)
@@ -62,7 +62,7 @@ function mergeSolids2 (objects, params) {
 
   for (let i = 0; i < objects.length; i++) {
     if (foundCSG === true && isCAG(objects[i])) {
-      object = object.union(objects[i].extrude({offset: [0, 0, 0.1]})) // convert CAG to a thin solid CSG
+      object = object.union(objects[i].extrude({ offset: [0, 0, 0.1] })) // convert CAG to a thin solid CSG
       continue
     }
     if (foundCAG === true && isCSG(objects[i])) {

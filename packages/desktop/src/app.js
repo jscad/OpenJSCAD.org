@@ -4,22 +4,26 @@ const {makeState} = require('./state')
 const makeCsgViewer = require('@jscad/csg-viewer')
 let csgViewer
 
-// all the side effects : ie , input/outputs
-const titleBar = require('./sideEffects/titleBar')()
-// electron store side effect
-const electronStore = require('./sideEffects/electronStore')()
-// drag & drop side effect
-const dragDrop = require('./sideEffects/dragDrop')()
 // file system side effect
 const fs = require('./sideEffects/fs')()
-// dom side effect
-const dom = require('./sideEffects/dom')()
-// worker side effect
-const makeWorkerEffect = require('./sideEffects/worker')
+// electron store side effect
+const electronStore = require('./sideEffects/electronStore')()
 // app updates side effect
-const appUpdates = require('./sideEffects/appUpdates')()
+const appUpdates = require('./sideEffects/appUpdates')(require('../package.json'))
+
+// all the side effects : ie , input/outputs
+const titleBar = require('@jscad/core/sideEffects/titleBar')()
+// drag & drop side effect
+const dragDrop = require('@jscad/core/sideEffects/dragDrop')()
+// dom side effect
+const dom = require('@jscad/core/sideEffects/dom')()
+// worker side effect
+const makeWorkerEffect = require('@jscad/core/sideEffects/worker')
+
 // internationalization side effect
-const i18n = require('./sideEffects/i18n')()
+const path = require('path')
+const localesPath = path.join(__dirname, '..', 'locales')
+const i18n = require('@jscad/core/sideEffects/i18n')({localesPath})
 // web workers
 const solidWorker = makeWorkerEffect('src/core/code-evaluation/rebuildSolidsWorker.js')
 // generic design parameter handling
