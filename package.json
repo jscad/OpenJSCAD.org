@@ -29,11 +29,10 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "ava": "^0.25.0",
-    "lerna": "2.7.0"
+    "lerna": "3.11.0"
   },
   "collective": {
     "type": "opencollective",
