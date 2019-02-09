@@ -1,12 +1,12 @@
 const fs = require('fs')
+const png = require('pngjs')
 
 const bufferToPng = (buffer, width, height, fileName) => {
-  function genOutput (inBuf, width, height) {
-    let PNG = require('pngjs').PNG
-    let png = new PNG({ width, height })
+  const genOutput = (inBuf, width, height) => {
+    let pngImg = new png.PNG({ width, height })
 
     /* for (let i = 0; i < inBuf.length; ++i) {
-      png.data[i] = inBuf[i]
+      pngImg.data[i] = inBuf[i]
     } */
     // vertical flip
 
@@ -20,13 +20,13 @@ const bufferToPng = (buffer, width, height, fileName) => {
 
         // let m = (height - j + 1) * width + i
         let m = (height - j) * width + i
-        png.data[4 * m] = r
-        png.data[4 * m + 1] = g
-        png.data[4 * m + 2] = b
-        png.data[4 * m + 3] = a
+        pngImg.data[4 * m] = r
+        pngImg.data[4 * m + 1] = g
+        pngImg.data[4 * m + 2] = b
+        pngImg.data[4 * m + 3] = a
       }
     }
-    png.pack().pipe(fs.createWriteStream(fileName))
+    pngImg.pack().pipe(fs.createWriteStream(fileName))
   }
 
   // this is just a helper

@@ -18,7 +18,6 @@ const makeDrawGrid = (regl, params = {}) => {
   const { fadeOut, color } = visuals
   let { size, ticks, centered, lineWidth } = Object.assign({}, defaults, params)
 
-  console.log('size', size ,'ticks', ticks)
   const width = size[0]
   const length = size[1]
 
