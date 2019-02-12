@@ -2,6 +2,7 @@ module.exports = {
   abs: require('./abs'),
   add: require('./add'),
   angle: require('./angle'),
+  canonicalize: require('./canonicalize'),
   clone: require('./clone'),
   create: require('./create'),
   cross: require('./cross'),
