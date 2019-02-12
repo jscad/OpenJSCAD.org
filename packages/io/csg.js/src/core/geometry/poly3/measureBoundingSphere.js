@@ -1,4 +1,4 @@
-const vec3 = require('../../math/vec3')
+const vec3 = require('../../../math/vec3')
 const measureBoundingBox = require('./measureBoundingBox')
 
 /** Measure the bounding sphere of the given poly3

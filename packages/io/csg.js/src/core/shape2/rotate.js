@@ -3,8 +3,8 @@
 }, */
 
 const transform = require('./transform')
-const mat4 = require('../math//mat4')
-const { degToRad } = require('../math//utils')
+const mat4 = require('../../math//mat4')
+const { degToRad } = require('../../math//utils')
 
 // FIXME : overly complex ??
 /** rotate the given shape by the given vector, applying rotateX, rotateY

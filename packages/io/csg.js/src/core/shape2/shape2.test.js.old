@@ -1,6 +1,6 @@
 const test = require('ava')
 const { create, fromPoints } = require('./index')
-const mat4 = require('../math//mat4')
+const mat4 = require('../../math/mat4')
 
 test('shape2: create() should return an empty shape2', t => {
   const obs = create()

@@ -1,6 +1,6 @@
 const {EPS} = require('../../constants')
 
-const vec3 = require('../../math/vec3')
+const vec3 = require('../../../math/vec3')
 
 const poly3 = require('../poly3')
 

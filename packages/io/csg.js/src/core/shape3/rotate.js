@@ -1,4 +1,4 @@
-const mat4 = require('../math/mat4')
+const mat4 = require('../../math/mat4')
 const transform = require('./transform')
 
 /** return a clone of the input shape, rotated by parameter

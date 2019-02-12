@@ -1,7 +1,7 @@
 const test = require('ava')
 const { measureBoundingBox, create, fromPoints, transform } = require('./index')
 
-const mat4 = require('../../math/mat4')
+const mat4 = require('../../../math/mat4')
 
 const { compareVectors } = require('../../../../test/helpers/index')
 

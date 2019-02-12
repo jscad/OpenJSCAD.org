@@ -1,4 +1,4 @@
-const vec3 = require('../../math/vec3')
+const vec3 = require('../../../math/vec3')
 
 // measure the area of the given poly3 (3D planar polygon)
 // translated from the orginal C++ code from Dan Sunday

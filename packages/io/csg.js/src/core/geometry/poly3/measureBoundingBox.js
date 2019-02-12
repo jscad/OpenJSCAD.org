@@ -1,4 +1,4 @@
-const vec3 = require('../../math/vec3')
+const vec3 = require('../../../math/vec3')
 
 // returns an array of two Vector3Ds (minimum coordinates and maximum coordinates)
 const measureBoundingBox = (poly3) => {

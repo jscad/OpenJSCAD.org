@@ -1,4 +1,4 @@
-const { EPS } = require('../../constants')
+const { EPS } = require('../constants')
 const { solve2Linear } = require('../utils')
 const vec2 = require('../vec2')
 

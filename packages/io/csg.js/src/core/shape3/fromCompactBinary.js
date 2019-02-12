@@ -1,8 +1,8 @@
 const vec3 = require('../../math/vec3')
+const plane = require('../../math/plane')
 const vert3 = require('../vert3')
 const poly3 = require('../poly3')
 const fromPolygons = require('../../shape3/fromPolygons')
-const Plane = require('./math/Plane')
 
 /** Reconstruct a CSG from the output of toCompactBinary().
  * @param {CompactBinary} bin - see toCompactBinary().

@@ -2,7 +2,7 @@ const test = require('ava')
 
 const { measureSignedVolume, create, flip, fromPoints, transform } = require('./index')
 
-const mat4 = require('../../math/mat4')
+const mat4 = require('../../../math/mat4')
 
 const { nearlyEqual } = require('../../../../test/helpers/index')
 

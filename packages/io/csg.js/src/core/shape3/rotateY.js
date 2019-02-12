@@ -1,6 +1,6 @@
 
 const transform = require('./transform')
-const mat4 = require('../math/mat4')
+const mat4 = require('../../math/mat4')
 
 /** return a clone of the input shape, rotated along the Y axis
  * the clone's geometry still points to the original's, but the transforms are changed

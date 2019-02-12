@@ -2,7 +2,7 @@ const { EPS, angleEPS } = require('../../constants')
 const canonicalize = require('./canonicalize')
 const fromPoints = require('./fromPoints')
 const fromPointsNoCheck = require('./fromPoints')
-const vec2 = require('../../math/vec2')
+const vec2 = require('../../../math/vec2')
 const union = require('./union')
 
 /** Expand a Geom2 by the given radius and resolution

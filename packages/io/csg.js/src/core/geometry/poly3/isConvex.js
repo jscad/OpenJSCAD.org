@@ -1,4 +1,4 @@
-const vec3 = require('../../math/vec3')
+const vec3 = require('../../../math/vec3')
 
 /** Check whether the polygon is convex. (it should be, otherwise we will get unexpected results)
  * @returns {boolean}

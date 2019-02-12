@@ -1,8 +1,8 @@
 const fromPoints = require('./fromPoints')
 
-const vec3 = require('../../math/vec3')
+const vec3 = require('../../../math/vec3')
 
-const mat4 = require('../../math/mat4')
+const mat4 = require('../../../math/mat4')
 
 // Affine transformation of polygon. Returns a new Polygon3
 const transform = (matrix, poly3) => {

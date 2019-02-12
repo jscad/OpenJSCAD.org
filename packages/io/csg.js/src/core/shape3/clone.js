@@ -1,5 +1,5 @@
 const geom3 = require('../geometry/geom3')
-const mat4 = require('../math/mat4')
+const mat4 = require('../../math/mat4')
 const create = require('./create')
 
 /** create a copy/clone of the input shape

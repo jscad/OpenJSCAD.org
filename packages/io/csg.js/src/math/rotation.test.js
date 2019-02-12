@@ -7,7 +7,7 @@ const { mat4, vec2, vec3 } = require('./index')
 
 // ALL POSITIVE ROTATIONS ARE CLOCKWISE
 // see https://webglfundamentals.org/webgl/lessons/webgl-3d-orthographic.html
-// IN A LEFT-HANDED COORDIANATE SYSTEM
+// IN A LEFT-HANDED COORDINATE SYSTEM
 
 // identity matrices for comparisons
 
@@ -79,10 +79,10 @@ test('rotation: vec2 rotation functions should produce expected results', t => {
   const matZ = mat4.fromZRotation(rad90)
 
   // transform
-  let t1 = vec2.transformMat4(matZ, onX)
+  let t1 = vec2.transform(matZ, onX)
   t.true(compareVectors(t1, [0, 3]))
 
-  let t2 = vec2.transformMat4(matZ, onY)
+  let t2 = vec2.transform(matZ, onY)
   t.true(compareVectors(t2, [-3, 0]))
 
   // rotate
@@ -106,13 +106,13 @@ test('rotation: vec3 rotation functions should produce expected results', t => {
   const matZ = mat4.fromZRotation(rad90)
 
   // transform
-  let t1 = vec3.transformMat4(matZ, onX)
+  let t1 = vec3.transform(matZ, onX)
   t.true(compareVectors(t1, [0, 3, 0]))
 
-  let t2 = vec3.transformMat4(matX, onY)
+  let t2 = vec3.transform(matX, onY)
   t.true(compareVectors(t2, [0, 0, 3]))
 
-  let t3 = vec3.transformMat4(matY, onZ)
+  let t3 = vec3.transform(matY, onZ)
   t.true(compareVectors(t3, [3, 0, 0]))
 
   // rotate

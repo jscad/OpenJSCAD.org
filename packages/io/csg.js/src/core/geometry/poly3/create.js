@@ -1,4 +1,4 @@
-const plane = require('../../math/plane/')
+const plane = require('../../../math/plane/')
 
 /**
  * Represents a convex polygon. The vertices used to initialize a polygon must

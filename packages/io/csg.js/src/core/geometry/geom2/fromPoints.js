@@ -1,5 +1,5 @@
 const { areaEPS } = require('../../constants')
-const vec2 = require('../../math/vec2')
+const vec2 = require('../../../math/vec2')
 
 const fromSides = require('../../shape2/fromSides')
 // const fromCurves = require('./fromCurves')

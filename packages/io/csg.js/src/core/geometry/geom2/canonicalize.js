@@ -1,7 +1,7 @@
 const { EPS } = require('../../constants')
-const FuzzyShape2Factory = require('../FuzzyFactory2d')
+//const FuzzyShape2Factory = require('../FuzzyFactory2d')
 const fromSides = require('./fromSides')
-const vec2 = require('../../math/vec2')
+const vec2 = require('../../../math/vec2')
 
 const shape2FromFuzzyFactory = (factory, sourceShape) => {
   let _factory = factory
@@ -16,11 +16,12 @@ const canonicalize = (shape, options) => {
   if (shape.isCanonicalized) {
     return shape
   }
-  const factory = new FuzzyShape2Factory()
-  const result = shape2FromFuzzyFactory(factory, shape)
-  console.log('result', result)
-  result.isCanonicalized = true
-  return result
+  return shape
+  //const factory = new FuzzyShape2Factory()
+  //const result = shape2FromFuzzyFactory(factory, shape)
+  //console.log('result', result)
+  //result.isCanonicalized = true
+  //return result
 }
 
 module.exports = canonicalize

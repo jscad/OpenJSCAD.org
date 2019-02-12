@@ -1,5 +1,5 @@
 const transform = require('./transform')
-const fromScaling = require('../math/mat4/fromScaling')
+const fromScaling = require('../../math/mat4/fromScaling')
 
 /** return a clone of the input shape, scaled by the given Vec3
  * the clone's geometry still points to the original's, but the transforms are changed

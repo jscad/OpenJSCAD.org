@@ -1,6 +1,6 @@
 const { _CSGDEBUG, EPS } = require('../constants')
-const plane = require('../math/plane')
-const vec3 = require('../math/vec3')
+const plane = require('../../math/plane')
+const vec3 = require('../../math/vec3')
 
 const poly3 = require('./poly3')
 

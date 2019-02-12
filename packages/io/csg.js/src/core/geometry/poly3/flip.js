@@ -1,6 +1,6 @@
 const create = require('./create')
 
-const plane = require('../../math/plane/')
+const plane = require('../../../math/plane/')
 
 /**
  * Flip the give polygon to face the opposite direction.

@@ -1,4 +1,4 @@
-const vec4 = require('../math/vec4')
+const vec4 = require('../../math/vec4')
 const mirror = require('./mirror')
 
 /** return a clone of the input shape, mirrored along the Z axis

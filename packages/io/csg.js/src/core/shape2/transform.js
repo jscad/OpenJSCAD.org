@@ -1,4 +1,4 @@
-const mat4 = require('../math//mat4')
+const mat4 = require('../../math/mat4')
 const clone = require('./clone')
 
 /**

@@ -1,5 +1,5 @@
-const mat4 = require('../math/mat4')
-// const vec3 = require('../math/vec3')
+const mat4 = require('../../math/mat4')
+// const vec3 = require('../../math/vec3')
 const transform = require('./tranform')
 
 const rotateEulerAngles = (alpha, beta, gamma, position, shape3) => {

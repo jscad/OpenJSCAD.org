@@ -1,4 +1,4 @@
-const vec2 = require('../../math/vec2')
+const vec2 = require('../../../math/vec2')
 
 /** Calculate the area of the given Geom2 (a closed convex 2D polygon)
  * For a counter clockwise rotating polygon (about Z) the area is positive, otherwise negative.

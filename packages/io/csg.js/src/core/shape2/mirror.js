@@ -1,5 +1,5 @@
 const transform = require('./transform')
-const mat4 = require('../math//mat4')
+const mat4 = require('../../math//mat4')
 
 /** mirror the given shape2 by the given plane
  * @param  {vec4} plane the vec4 / plane to mirror by

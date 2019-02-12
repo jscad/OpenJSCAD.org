@@ -1,5 +1,5 @@
 const geom3 = require('../geometry/geom3')
-const mat4 = require('../math/mat4')
+const mat4 = require('../../math/mat4')
 
 // TODO: deal with properties etc
 const toString = shape => {

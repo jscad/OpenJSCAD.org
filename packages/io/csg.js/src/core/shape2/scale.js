@@ -1,6 +1,6 @@
 const transform = require('./transform')
 
-const fromScaling = require('../math//mat4/fromScaling')
+const fromScaling = require('../../math/mat4/fromScaling')
 
 /** scale the given shape by the given vector, x axis then y axis
  * this function does NOT mutate the input data

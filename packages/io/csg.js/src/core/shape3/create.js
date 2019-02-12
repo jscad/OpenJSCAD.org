@@ -1,4 +1,4 @@
-const mat4 = require('../math/mat4')
+const mat4 = require('../../math/mat4')
 const geom3 = require('../geometry/geom3')
 
 /** create shape3/ CSG

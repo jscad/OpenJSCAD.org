@@ -1,5 +1,5 @@
 const { EPS } = require('../../constants')
-const plane = require('../../math/plane')
+const plane = require('../../../math/plane')
 const canonicalize = require('./canonicalize')
 const poly3 = require('../../poly3')
 

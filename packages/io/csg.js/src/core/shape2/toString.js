@@ -1,4 +1,4 @@
-const mat4 = require('../math/mat4')
+const mat4 = require('../../math/mat4')
 const geom2 = require('../geometry/geom2')
 
 // TODO: deal with properties etc

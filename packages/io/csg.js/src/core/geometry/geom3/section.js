@@ -1,5 +1,5 @@
 const { EPS } = require('../../constants')
-const plane = require('../../math/plane')
+const plane = require('../../../math/plane')
 const cutByPlane = require('../../shape3/cutByPlane')
 
 /** cuts a Geom3 along a orthobasis, returns a 2d geometry

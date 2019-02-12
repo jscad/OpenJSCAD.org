@@ -1,5 +1,5 @@
 const transform = require('./transform')
-const fromTranslation = require('../math//mat4/fromTranslation')
+const fromTranslation = require('../../math/mat4/fromTranslation')
 
 /** translate/move the given shape by the given vector, x axis then y axis
  * this function does NOT mutate the input data

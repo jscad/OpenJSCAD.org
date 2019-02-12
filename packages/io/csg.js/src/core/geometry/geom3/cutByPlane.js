@@ -1,12 +1,12 @@
 const { EPS } = require('../../constants')
-const vec4 = require('../../math/vec4')
-const vec2 = require('../../math/vec2')
+const vec4 = require('../../../math/vec4')
+const vec2 = require('../../../math/vec2')
 const poly3 = require('../poly3')
 const intersection = require('./intersection')
 
-const Plane = require('../../math/Plane')
+const Plane = require('../../../math/Plane')
 const Vertex3 = require('../core/math/Vertex3')
-const OrthoNormalBasis = require('../../math/OrthoNormalBasis')
+const OrthoNormalBasis = require('../../../math/OrthoNormalBasis')
 
 const { extrudePolygon3 } = require('../geom2/extrusionUtils')
 
