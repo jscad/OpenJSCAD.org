@@ -1,14 +1,13 @@
 {
   "name": "@jscad/io",
-  "private": "true",
-  "version": "0.1.0",
-  "description": "Input , output and formats handling for jscad project",
+  "version": "1.0.0-alpha.d0fb3056",
+  "description": "Meta package for input , output and formats handling for jscad project",
   "repository": "https://github.com/jscad/io",
+  "main": "index.js",
   "scripts": {
-    "test": "lerna bootstrap && lerna run test",
-    "lint": "eslint packages/**/*.js",
-    "publish": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits",
-    "publish-dryrun": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits --skip-git --skip-npm"
+    "release-patch": "git checkout master && npm version patch ; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
+    "release-minor": "git checkout master && npm version minor ; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
+    "release-major": "git checkout master && npm version major ; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
   },
   "contributors": [
     {
@@ -39,18 +38,20 @@
     "deserializer"
   ],
   "license": "MIT",
-  "devDependencies": {
-    "@jscad/sample-files": "github:jscad/sample-files",
-    "ava": "^0.25.0",
-    "eslint": "^4.9.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-node": "^5.2.0",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "lerna": "2.1.2"
-  },
-  "eslintConfig": {
-    "extends": "standard"
+  "dependencies": {
+    "@jscad/amf-deserializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/amf-serializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/dxf-deserializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/dxf-serializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/gcode-deserializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/io-utils": "1.0.0-alpha.d0fb3056",
+    "@jscad/json-deserializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/json-serializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/obj-deserializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/stl-deserializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/stl-serializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/svg-deserializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/svg-serializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/x3d-serializer": "1.0.0-alpha.d0fb3056"
   }
 }
