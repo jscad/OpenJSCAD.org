@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm i && npm run bootstrap && lerna run test",
     "lint": "eslint packages/**/*.js",
-    "bootstrap": "lerna bootstrap  --ignore-prepublish --no-ci --production",
+    "bootstrap": "lerna bootstrap  --ignore-prepublish --no-ci -- --production",
     "clean": "lerna clean",
     "cli": "npm run bootstrap && cd ./packages/cli",
     "web": "npm run bootstrap && cd ./packages/web && npm run dev",
