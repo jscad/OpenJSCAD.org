@@ -1,9 +1,9 @@
 const test = require('ava')
 
-const {CSG} = require('@jscad/csg')
+const { CSG } = require('@jscad/csg')
 
-const {serialize} = require('../index.js')
-const {dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects} = require('../autocad_AC2017')
+const { serialize } = require('../index.js')
+const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('../autocad_AC2017')
 
 test('Path2 to DXF LWPOLYLINE', t => {
   const path1 = new CSG.Path2D()
@@ -13,7 +13,7 @@ test('Path2 to DXF LWPOLYLINE', t => {
   const exp1 = [empty]
   t.deepEqual(obs1, exp1)
 
-  let path2 = CSG.Path2D.arc({center: [5, 5], endangle: 45})
+  let path2 = CSG.Path2D.arc({ center: [5, 5], endangle: 45 })
   t.is(path2.points.length, 6)
 
   const obs2 = serialize({}, path2)
@@ -21,7 +21,7 @@ test('Path2 to DXF LWPOLYLINE', t => {
   t.deepEqual(obs2, exp2)
 
   let path3 = new CSG.Path2D([[10, -20]], false)
-  path3 = path3.appendBezier([[10, -10], [25, -10], [25, -20]], {resolution: 8})
+  path3 = path3.appendBezier([[10, -10], [25, -10], [25, -20]], { resolution: 8 })
   t.is(path3.points.length, 6)
 
   const obs3 = serialize({}, [path2, path3])

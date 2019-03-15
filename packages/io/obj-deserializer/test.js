@@ -3,11 +3,11 @@ const path = require('path')
 const test = require('ava')
 const deserializer = require('./index.js')
 
-const filesPath = path.resolve('../../node_modules/@jscad/sample-files') // require.resolve('@jscad/sample-files')
+const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
 const polygonsFromCsg = csg => csg.polygons.map(x => x.vertices.map(vert => ([vert.pos.x, vert.pos.y, vert.pos.z])))
 
 test('translate simple obj file to jscad code', function (t) {
-  const inputPath = path.resolve(filesPath, 'obj/cube.obj')
+  const inputPath = path.resolve(samplesPath, 'obj/cube.obj')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
   const expected = `// objects: 1
@@ -38,7 +38,7 @@ polyhedron({ points: [
 })
 
 test('deserialize simple obj to cag/csg objects', function (t) {
-  const inputPath = path.resolve(filesPath, 'obj/cube.obj')
+  const inputPath = path.resolve(samplesPath, 'obj/cube.obj')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
   const observed = deserializer.deserialize(inputFile, undefined, {output: 'csg', addMetaData: false})

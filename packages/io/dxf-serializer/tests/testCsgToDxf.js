@@ -1,9 +1,9 @@
 const test = require('ava')
 
-const {CSG} = require('@jscad/csg')
+const { CSG } = require('@jscad/csg')
 
-const {serialize} = require('../index.js')
-const {dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects} = require('../autocad_AC2017')
+const { serialize } = require('../index.js')
+const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('../autocad_AC2017')
 
 test('CSG to DXF 3DFACE', t => {
   const csg1 = new CSG()
@@ -25,14 +25,14 @@ test('CSG to DXF POLYLINE FACES', t => {
   const csg1 = new CSG()
   t.is(csg1.polygons.length, 0)
 
-  const obs1 = serialize({csgTo: 'polyline'}, csg1)
+  const obs1 = serialize({ csgTo: 'polyline' }, csg1)
   const exp1 = [empty]
   t.deepEqual(obs1, exp1)
 
   const csg2 = CSG.cube()
   t.is(csg2.polygons.length, 6)
 
-  const obs2 = serialize({csgTo: 'polyline'}, csg2)
+  const obs2 = serialize({ csgTo: 'polyline' }, csg2)
   const exp2 = [polyline1]
   t.deepEqual(obs2, exp2)
 })

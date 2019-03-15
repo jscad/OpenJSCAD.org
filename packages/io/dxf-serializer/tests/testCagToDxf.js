@@ -1,9 +1,9 @@
 const test = require('ava')
 
-const {CAG} = require('@jscad/csg')
+const { CAG } = require('@jscad/csg')
 
-const {serialize} = require('../index.js')
-const {dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects} = require('../autocad_AC2017')
+const { serialize } = require('../index.js')
+const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('../autocad_AC2017')
 
 test('CAG to DXF LWPOLYLINE', t => {
   const cag1 = new CAG()
@@ -20,7 +20,7 @@ test('CAG to DXF LWPOLYLINE', t => {
   const exp2 = [lwpolyline0]
   t.deepEqual(obs2, exp2)
 
-  const obs3 = serialize({cagTo: 'lwpolyline'}, [cag1, cag2])
+  const obs3 = serialize({ cagTo: 'lwpolyline' }, [cag1, cag2])
   const exp3 = [lwpolyline1]
   t.deepEqual(obs3, exp3)
 
@@ -33,14 +33,14 @@ test('CAG to DXF POLYLINE', t => {
   const cag1 = new CAG()
   t.is(cag1.sides.length, 0)
 
-  const obs1 = serialize({cagTo: 'polyline'}, cag1)
+  const obs1 = serialize({ cagTo: 'polyline' }, cag1)
   const exp1 = [empty]
   t.deepEqual(obs1, exp1)
 
   const cag2 = CAG.rectangle()
   t.is(cag2.sides.length, 4)
 
-  const obs2 = serialize({cagTo: 'polyline'}, cag2)
+  const obs2 = serialize({ cagTo: 'polyline' }, cag2)
   const exp2 = [polyline1]
   t.deepEqual(obs2, exp2)
 })

@@ -3,17 +3,17 @@ const path = require('path')
 const test = require('ava')
 const { CSG, CAG } = require('@jscad/csg')
 
-const { nearlyEqual } = require( '../../../test/helpers/nearlyEqual' )
+const { nearlyEqual } = require( '../../test/helpers/nearlyEqual' )
 
 const { deserialize } = require( '../index' )
 
-const samples = path.resolve('../../node_modules/@jscad/sample-files')
+const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
 
 //
 // Test suite for DXF deserialization (import)
 //
 test('ASCII DXF R13 to Object Conversion', t => {
-  const dxfPath = path.resolve(samples, 'dxf/ezdxf/small_r13.dxf')
+  const dxfPath = path.resolve(samplesPath, 'dxf/ezdxf/small_r13.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
@@ -27,7 +27,7 @@ test('ASCII DXF R13 to Object Conversion', t => {
 })
 
 test('ASCII DXF R14 to Object Conversion', t => {
-  const dxfPath = path.resolve(samples, 'dxf/ezdxf/small_r14.dxf')
+  const dxfPath = path.resolve(samplesPath, 'dxf/ezdxf/small_r14.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
@@ -38,7 +38,7 @@ test('ASCII DXF R14 to Object Conversion', t => {
 })
 
 test('ASCII DXF ANSI to Object Conversion', t => {
-  const dxfPath = path.resolve(samples, 'dxf/ezdxf/ansi_pattern.dxf')
+  const dxfPath = path.resolve(samplesPath, 'dxf/ezdxf/ansi_pattern.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
@@ -51,7 +51,7 @@ test('ASCII DXF ANSI to Object Conversion', t => {
 })
 
 test('ASCII DXF ISO to Object Conversion', t => {
-  const dxfPath = path.resolve(samples, 'dxf/ezdxf/iso_pattern.dxf')
+  const dxfPath = path.resolve(samplesPath, 'dxf/ezdxf/iso_pattern.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')

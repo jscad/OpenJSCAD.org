@@ -1,11 +1,11 @@
 const test = require('ava')
-const {CSG} = require('@jscad/csg')
+const { CSG } = require('@jscad/csg')
 const serializer = require('./index.js')
 
 test('serialize csg to stl (binary)', function (t) {
   const csg1 = new CSG.cube()
-  const observed = serializer.serialize({binary: true}, csg1)
-  
+  const observed = serializer.serialize({ binary: true }, csg1)
+
   // TODO: VERY shallow testing ... improve
   t.deepEqual(observed[0].byteLength, 80)
   t.deepEqual(observed[1].byteLength, 4)
@@ -13,25 +13,25 @@ test('serialize csg to stl (binary)', function (t) {
 })
 
 test('serialize csg to stl (ascii)', function (t) {
-  const csg1 = new CSG.cube({radius: 5}).setColor([0,0,1,1])
-  const observed1 = serializer.serialize({binary: false}, csg1)
+  const csg1 = new CSG.cube({ radius: 5 }).setColor([0, 0, 1, 1])
+  const observed1 = serializer.serialize({ binary: false }, csg1)
   t.deepEqual(observed1, [expected1])
 
-  const csg2 = csg1.translate([5,5,5]).setColor([1,0,0,1])
-  const observed2 = serializer.serialize({binary: false}, [csg1, csg2])
+  const csg2 = csg1.translate([5, 5, 5]).setColor([1, 0, 0, 1])
+  const observed2 = serializer.serialize({ binary: false }, [csg1, csg2])
   t.deepEqual(observed2, [expected2])
 })
 
 test('progress status callback', function (t) {
   const input = new CSG.cube()
-  const progresses = [];
+  const progresses = []
   const statusCallback = function (statusObj) {
-    progresses.push(statusObj.progress);
+    progresses.push(statusObj.progress)
   };
-  const observed = serializer.serialize({statusCallback: statusCallback}, input)
+  const observed = serializer.serialize({ statusCallback: statusCallback }, input)
 
-  t.deepEqual(0, progresses[0]);
-  t.deepEqual(100, progresses[progresses.length - 1]);
+  t.deepEqual(0, progresses[0])
+  t.deepEqual(100, progresses[progresses.length - 1])
 })
 
 const expected1 = `solid JSCAD

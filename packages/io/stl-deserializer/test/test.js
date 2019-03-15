@@ -3,12 +3,12 @@ const path = require('path')
 const test = require('ava')
 const deserializer = require('../index.js')
 
-const filesPath = path.resolve('../../node_modules/@jscad/sample-files') // require.resolve('@jscad/sample-files')
+const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
 
 const polygonsFromCsg = csg => csg.polygons.map(x => x.vertices.map(vert => ([vert.pos.x, vert.pos.y, vert.pos.z])))
 // x=>console.log(
 test('translate simple ascii stl to jscad code', function (t) {
-  const inputPath = path.resolve(filesPath, 'stl/testcube_ascii.stl')
+  const inputPath = path.resolve(samplesPath, 'stl/testcube_ascii.stl')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
   const expected = `function main() { return union(
@@ -72,7 +72,7 @@ polyhedron({ points: [
 })
 
 test('translate simple binary stl to jscad code', function (t) {
-  const inputPath = path.resolve(filesPath, 'stl/testcube_10mm.stl')
+  const inputPath = path.resolve(samplesPath, 'stl/testcube_10mm.stl')
   const inputFile = fs.readFileSync(inputPath)
 
   const expected = `function main() { return union(
@@ -136,7 +136,7 @@ polyhedron({ points: [
 })
 
 test('deserialize simple ascii stl to cag/csg objects', function (t) {
-  const inputPath = path.resolve(filesPath, 'stl/testcube_ascii.stl')
+  const inputPath = path.resolve(samplesPath, 'stl/testcube_ascii.stl')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
   const observed = deserializer.deserialize(inputFile, undefined, {output: 'csg', addMetaData: false})
@@ -153,7 +153,7 @@ test('deserialize simple ascii stl to cag/csg objects', function (t) {
 })
 
 test('deserialize simple binary stl to cag/csg objects', function (t) {
-  const inputPath = path.resolve(filesPath, 'stl/testcube_10mm.stl')
+  const inputPath = path.resolve(samplesPath, 'stl/testcube_10mm.stl')
   const inputFile = fs.readFileSync(inputPath)
 
   const observed = deserializer.deserialize(inputFile, undefined, {output: 'csg', addMetaData: false})
@@ -169,7 +169,7 @@ test('deserialize simple binary stl to cag/csg objects', function (t) {
 })
 
 test('deserialize medium complexity binary stl to cag/csg objects', function (t) {
-  const inputPath = path.resolve(filesPath, 'stl/pr2_head_tilt.stl')
+  const inputPath = path.resolve(samplesPath, 'stl/pr2_head_tilt.stl')
   const inputFile = fs.readFileSync(inputPath)
 
   const observed = deserializer.deserialize(inputFile, undefined, {output: 'csg', addMetaData: false})
@@ -180,7 +180,7 @@ test('deserialize medium complexity binary stl to cag/csg objects', function (t)
 })
 
 test('deserialize complex ascii stl to cag/csg objects', function (t) {
-  const inputPath = path.resolve(filesPath, 'stl/herringbone-gear-large.stl')
+  const inputPath = path.resolve(samplesPath, 'stl/herringbone-gear-large.stl')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
   const observed = deserializer.deserialize(inputFile, undefined, {output: 'csg', addMetaData: false})
@@ -194,7 +194,7 @@ test('deserialize complex ascii stl to cag/csg objects', function (t) {
 })
 
 test('deserialize complex binary stl to cag/csg objects (2)', function (t) {
-  const inputPath = path.resolve(filesPath, 'stl/UM2CableChain_BedEnd.STL')
+  const inputPath = path.resolve(samplesPath, 'stl/UM2CableChain_BedEnd.STL')
   const inputFile = fs.readFileSync(inputPath)
 
   const observed = deserializer.deserialize(inputFile, undefined, {output: 'csg', addMetaData: false})

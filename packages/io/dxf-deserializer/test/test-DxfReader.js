@@ -5,13 +5,13 @@ const { CSG, CAG } = require('@jscad/csg')
 
 const dxf = require('../DxfReader')
 
-const samples = path.resolve('../../node_modules/@jscad/sample-files')
+const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
 
 //
 // Test suite for DXF reader
 //
 test('DXF Reader', t => {
-  const dxfPath = path.resolve(samples, 'dxf/jscad/circle10.dxf')
+  const dxfPath = path.resolve(samplesPath, 'dxf/jscad/circle10.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let src = fs.readFileSync(dxfPath, 'UTF8')

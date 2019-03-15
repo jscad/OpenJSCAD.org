@@ -1,5 +1,5 @@
 const test = require('ava')
-const {CAG, CSG} = require('@jscad/csg')
+const { CAG, CSG } = require('@jscad/csg')
 const serializer = require('./index.js')
 
 test('serialize CAG objects to SVG paths', function (t) {
@@ -8,7 +8,7 @@ test('serialize CAG objects to SVG paths', function (t) {
   const observed1 = serializer.serialize({}, cag1)
   t.deepEqual([expected1], observed1)
 
-  const cag2 = CAG.rectangle({radius: [5, 10]})
+  const cag2 = CAG.rectangle({ radius: [5, 10] })
   const observed2 = serializer.serialize({}, cag2)
   t.deepEqual([expected2], observed2)
 
@@ -58,7 +58,7 @@ test('serialize cag objects to svg (path: simple)', function (t) {
   }
 
   const object1 = source()
-  const observed = serializer.serialize({output: 'jscad', addMetaData: false}, object1)
+  const observed = serializer.serialize({ output: 'jscad', addMetaData: false }, object1)
   t.deepEqual([expected], observed)
 })
 

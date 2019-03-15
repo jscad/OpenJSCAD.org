@@ -3,9 +3,9 @@ const path = require('path')
 const test = require('ava')
 const { CSG, CAG } = require('@jscad/csg')
 
-const { nearlyEqual } = require( '../../../test/helpers/nearlyEqual' )
+const { nearlyEqual } = require('../../test/helpers/nearlyEqual')
 
-const { deserialize } = require( '../index' )
+const { deserialize } = require('../index')
 
 //
 // Test suite for DXF deserialization (import)
@@ -13,8 +13,8 @@ const { deserialize } = require( '../index' )
 test('ASCII DXF 2D Entities translated to JSCAD Scripts', t => {
 // DXF empty source, translate to main and helper functions and layer0
   let dxf1 = ''
-  let src1 = deserialize(dxf1, 'dxf1 test', {output: 'jscad'})
-  let ss1 = src1.split("\n")
+  let src1 = deserialize(dxf1, 'dxf1 test', { output: 'jscad' })
+  let ss1 = src1.split('\n')
   t.is(ss1.length, 25)
   t.true(src1.indexOf('main()') > 0)
   t.true(src1.indexOf('createVertex(') > 0)
@@ -22,7 +22,7 @@ test('ASCII DXF 2D Entities translated to JSCAD Scripts', t => {
   t.true(src1.indexOf('createPolygon(') > 0)
   t.true(src1.indexOf('function layer0(') > 0)
 
-// DXF CIRCLE, translates to script with CAG.circle
+  // DXF CIRCLE, translates to script with CAG.circle
   let dxf2 = `0
 SECTION
 2
@@ -41,12 +41,12 @@ CIRCLE
 2.5
   0
 ENDSEC`
-  let src2 = deserialize(dxf2,'dxf2 test',{output: 'jscad'})
-  let ss2 = src2.split("\n")
-  t.is(ss2.length,26)
+  let src2 = deserialize(dxf2, 'dxf2 test', { output: 'jscad' })
+  let ss2 = src2.split('\n')
+  t.is(ss2.length, 26)
   t.true(src2.indexOf('CAG.circle(') > 0)
 
-// DXF LINE, translates to script with CSG.Line2D.fromPoints
+  // DXF LINE, translates to script with CSG.Line2D.fromPoints
   let dxf3 = `0
 SECTION
 2
@@ -67,12 +67,12 @@ LINE
 0.0
 0
 ENDSEC`
-  let src3 = deserialize(dxf3,'dxf3-test',{output: 'jscad'})
-  let ss3 = src3.split("\n")
-  t.is(ss3.length,26)
+  let src3 = deserialize(dxf3, 'dxf3-test', { output: 'jscad' })
+  let ss3 = src3.split('\n')
+  t.is(ss3.length, 26)
   t.true(src3.indexOf('CSG.Line2D.fromPoints(') > 0)
 
-// DXF ARC, translates to script with 'CSG.Path2D.arc'
+  // DXF ARC, translates to script with 'CSG.Path2D.arc'
   let dxf4 = `0
 SECTION
 2
@@ -103,12 +103,12 @@ AcDbArc
 225.0
 0
 ENDSEC`
-  let src4 = deserialize(dxf4,'dxf4-test',{output: 'jscad'})
-  let ss4 = src4.split("\n")
-  t.is(ss4.length,26)
+  let src4 = deserialize(dxf4, 'dxf4-test', { output: 'jscad' })
+  let ss4 = src4.split('\n')
+  t.is(ss4.length, 26)
   t.true(src4.indexOf('CSG.Path2D.arc(') > 0)
 
-// DXF LWPOLYLINE without bulges, translates to script with CSG.Path2D, appendPoint, and CAG.fromPoints
+  // DXF LWPOLYLINE without bulges, translates to script with CSG.Path2D, appendPoint, and CAG.fromPoints
   let dxf5 = `0
 SECTION
 2
@@ -139,15 +139,15 @@ LWPOLYLINE
 21.75
 0
 ENDSEC`
-  let src5 = deserialize(dxf5,'dxf5-test',{output: 'jscad'})
-  let ss5 = src5.split("\n")
-  t.is(ss5.length,29)
+  let src5 = deserialize(dxf5, 'dxf5-test', { output: 'jscad' })
+  let ss5 = src5.split('\n')
+  t.is(ss5.length, 29)
   t.true(src5.indexOf('CSG.Path2D(') > 0)
   t.true(src5.indexOf('appendPoint(') > 0)
   t.true(src5.indexOf('close(') > 0)
   t.true(src5.indexOf('CAG.fromPoints(') > 0)
 
-// DXF LWPOLYLINE with bulges, translates to script with CSG.Path2D and appendArc, and CAG.fromPoints
+  // DXF LWPOLYLINE with bulges, translates to script with CSG.Path2D and appendArc, and CAG.fromPoints
   let dxf6 = `0
 SECTION
 2
@@ -186,16 +186,16 @@ LWPOLYLINE
 5.00
 0
 ENDSEC`
-  let src6 = deserialize(dxf6,'dxf6-test',{output: 'jscad'})
-  let ss6 = src6.split("\n")
-  t.is(ss6.length,29)
+  let src6 = deserialize(dxf6, 'dxf6-test', { output: 'jscad' })
+  let ss6 = src6.split('\n')
+  t.is(ss6.length, 29)
   t.true(src6.indexOf('CSG.Path2D(') > 0)
   t.true(src6.indexOf('appendPoint(') > 0)
   t.true(src6.indexOf('appendArc(') > 0)
   t.true(src6.indexOf('close(') > 0)
   t.true(src6.indexOf('CAG.fromPoints(') > 0)
 
-// DXF ELLIPSE, translates to script with CAG.ellipse
+  // DXF ELLIPSE, translates to script with CAG.ellipse
   let dxf7 = `0
 SECTION
 2
@@ -230,11 +230,10 @@ ELLIPSE
 6.283185307179586
 0
 ENDSEC`
-  let src7 = deserialize(dxf7,'dxf7-test',{output: 'jscad'})
-  let ss7 = src7.split("\n")
-  t.is(ss7.length,26)
+  let src7 = deserialize(dxf7, 'dxf7-test', { output: 'jscad' })
+  let ss7 = src7.split('\n')
+  t.is(ss7.length, 26)
   t.true(src7.indexOf('CAG.ellipse(') > 0)
-
 })
 
 test('ASCII DXF Polylines translated to JSCAD Scripts', t => {
@@ -289,13 +288,13 @@ ED
 SEQEND
 0
 ENDSEC`
-  let src1 = deserialize(dxf1,'dxf1-test',{output: 'jscad'})
-  let ss1 = src1.split("\n")
-  t.is(ss1.length,27)
+  let src1 = deserialize(dxf1, 'dxf1-test', { output: 'jscad' })
+  let ss1 = src1.split('\n')
+  t.is(ss1.length, 27)
   t.true(src1.indexOf('CSG.Path2D(') > 0)
   t.true(src1.indexOf('appendPoint(') > 0)
 
-// DXF 2D POLYLINE with bulges, translates to script with CSG.Path2D, appendArc
+  // DXF 2D POLYLINE with bulges, translates to script with CSG.Path2D, appendArc
   let dxf2 = `0
 SECTION
 2
@@ -336,14 +335,14 @@ VERTEX
 SEQEND
 0
 ENDSEC`
-  let src2 = deserialize(dxf2,'dxf2-test',{output: 'jscad'})
-  let ss2 = src2.split("\n")
-  t.is(ss2.length,27)
+  let src2 = deserialize(dxf2, 'dxf2-test', { output: 'jscad' })
+  let ss2 = src2.split('\n')
+  t.is(ss2.length, 27)
   t.true(src2.indexOf('CSG.Path2D(') > 0)
   t.true(src2.indexOf('appendPoint(') > 0)
   t.true(src2.indexOf('appendArc(') > 0)
 
-// DXF with two labels (ASCII and KANJI) with one entity (CIRCLE), translates to script with three layers
+  // DXF with two labels (ASCII and KANJI) with one entity (CIRCLE), translates to script with three layers
   let dxf3 = `0
 TABLES
 0
@@ -388,13 +387,11 @@ CIRCLE
 SEQEND
 0
 ENDSEC`
-  let src3 = deserialize(dxf3,'dxf3-test',{output: 'jscad'})
-  let ss3 = src3.split("\n")
+  let src3 = deserialize(dxf3, 'dxf3-test', { output: 'jscad' })
+  let ss3 = src3.split('\n')
   t.is(ss3.length, 32)
   t.true(src3.indexOf('function layer0(') > 0)
   t.true(src3.indexOf('function layer1(') > 0)
   t.true(src3.indexOf('function layer2(') > 0)
   t.true(src3.indexOf('CAG.circle') > 0)
-
 })
-
