@@ -4,7 +4,6 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "test": "tape test.js",
     "dev": "budo ./demo-web.js --title regl-renderer --live",
     "build": "browserify -p common-shakeify --standalone makeCsgViewer src/index.js > dist/bundle.js",
     "minify": "uglifyjs dist/bundle.js --compress > dist/bundle.min.js",

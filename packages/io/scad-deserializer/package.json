@@ -7,7 +7,7 @@
     "lapack": false
   },
   "scripts": {
-    "test": "node tests/all-tests",
+    "test-old": "node tests/all-tests",
     "build-old": "browserify src/parserWrapper.js --ignore lapack  --standalone openscadOpenJscadParser -o dist/web-built.js",
     "build-min-old": "browserify src/parserWrapper.js --ignore lapack  --standalone openscadOpenJscadParser | uglifyjs -c > dist/web-built.min.js",
     "build-all-old": "npm run build && npm run build-min",
