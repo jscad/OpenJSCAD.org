@@ -1,0 +1,1 @@
+color("red") sphere(5);
