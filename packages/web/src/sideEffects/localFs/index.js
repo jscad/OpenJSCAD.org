@@ -36,7 +36,6 @@ const makeLocalFsSideEffect = async (params) => {
       }
 
       const watch = () => {
-        
         // if rawData is undefined, it means we cannot watch the target data
         if (rawData === undefined) {
           return
@@ -66,10 +65,16 @@ const makeLocalFsSideEffect = async (params) => {
         }
       }
 
+      const write = () => {
+        // TODO: ??
+        log.warning('writing to local file system is not implemented yet')
+      }
+
       const commandHandlers = {
         unhandled,
         read,
-        watch
+        watch,
+        write
       }
       const commandHandler = commandHandlers[type] || commandHandlers['unhandled']
       commandHandler()
