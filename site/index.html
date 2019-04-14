@@ -1,103 +1,73 @@
 <!DOCTYPE html>
-<html  xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <style>
-      body{
-        height: 100%;
-        min-height: 100%;
-        min-width: 100%;
-        margin: 0px;
-        font-family: 'Open Sans', sans-serif;
-      }
-      #jscad{
-        width: 100%;
-        height: 400px;
-      }
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Navbar + Showcase</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="showcase">
+           <nav>
+                <ul>
+                    <li><a href=#>Home</a></li>
+                    <li><a href=#>Docs</a></li>
+                    <li><a href=#>Features</a></li>
+                    <li><a href=#>Community</a></li>
+                    <li><a href=#>Playground</a></li>
+                    <li><a href=#>Blog</a></li>
+                    <li><a href=#>Showcase</a></li>
+                </ul> 
+            </nav>
+            <h1>Welcome to OpenJSCAD</h1>
+            <p>OpenJsCad is a set of modular, browser and command line tools for creating parametric 2D and 3D designs with JavaScript code</p>
+        </div>   
 
-      header {
-        color: #dfdfea;
-        background: #333d44;/*#FF5722*/
-
-        white-space: nowrap;
-        position: relative;
-        z-index: 10001;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        transition: all .3s;
-        max-height: 64px;
-        line-height: 64px;
-        overflow: hidden;
-        user-select: none;
-        -webkit-user-select: none;
-      }
-      header .links{
-        float: right;
-        padding: 0 24px;
-        margin: 0 auto;
-        max-width: 50%;
-        width: 100%;
-        overflow: hidden;
-        height: 50px;
-        display: flex;
-      }
-
-      header .links a {
-        text-decoration: none;
-      color: white;
-      }
-
-      header .links div{
-        flex: 1 0 200px;
-        box-sizing: border-box;
-      }
-
-      .jscad header{
-        /*background: blue;*/
-      }
-      .jscad header section h3 a{
-        visibility:hidden;
-        display: none;
-      }
-      .jscad #options{
-        visibility:hidden;
-      }
-      .jscad #toolbar{
-        visibility:hidden;
-      }
-      .jscad #controls{
-        visibility:hidden;
-      }
-      .jscad #io{
-        visibility: hidden;
-      }
-      .jscad #exports{
-        visibility: hidden!important;
-      }
-    </style>
-    <link rel="stylesheet" type="text/css" href="../packages/web/demo.css">
-    <link rel="stylesheet" type="text/css" href="../packages/web/editor.css">
-  </head>
-  <body>
-      <header>
-        <div class='links'> 
-          <div><a href='#showcase'>Showcase</a></div>
-          <div><a href='#documentation'>Documentation</a></div>
-          <div><a href='#examples'>Examples</a></div>
-          <div><a href='#flavors'>Flavors</a></div>
-          <div><a href='#sketch'>Sketch</a></div>
-          <div><a href='#blog'>Blog</a></div>
-          <div><a href='#github'>Github</a></div>
+    
+        <div class="embed">
+            <h1>Embedded example</h1>
+            <p>reserved space for embedded JSCAD. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque eveniet architecto tenetur sunt quae nobis atque nostrum praesentium molestias ea, perspiciatis a ipsam delectus illo autem non asperiores eius corporis quasi voluptatum dolorem? Nulla tempore obcaecati earum praesentium, placeat itaque! Itaque eligendi alias aliquid eius deleniti, quod veritatis quas quidem.</p>
         </div>
-      </header>
-      <div id='jscad'></div>
-      
-      <script language="javascript" src="../packages/web/dist/jscad-full.min.js"></script> 
-      <script language="javascript">
-        const el1 = document.getElementById('jscad')
-        const jscadInst1 = makeJscad(el1, {name: 'jscad1'})
-      </script>
-  </body>
+        
+
+        <div class="examples">
+            <div class="example">
+                <h1>Example 1</h1>
+                <p>placeholder for examples. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti unde delectus, distinctio quisquam perferendis excepturi, voluptatibus ipsa recusandae temporibus reiciendis ab autem magni asperiores maxime optio, sed perspiciatis architecto. Laudantium dignissimos sed corporis doloribus adipisci commodi blanditiis provident molestiae, facilis debitis! Optio culpa assumenda minima reiciendis, dolorum ad earum laudantium?</p>
+            </div>
+
+            <div class="example">
+                <h1>Example 2</h1>
+                <p>placeholder for examples. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti unde delectus, distinctio quisquam perferendis excepturi, voluptatibus ipsa recusandae temporibus reiciendis ab autem magni asperiores maxime optio, sed perspiciatis architecto. Laudantium dignissimos sed corporis doloribus adipisci commodi blanditiis provident molestiae, facilis debitis! Optio culpa assumenda minima reiciendis, dolorum ad earum laudantium?</p>
+                
+            </div>
+
+            <div class="example">
+                <h1>Example 3</h1>
+                <p>placeholder for examples. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti unde delectus, distinctio quisquam perferendis excepturi, voluptatibus ipsa recusandae temporibus reiciendis ab autem magni asperiores maxime optio, sed perspiciatis architecto. Laudantium dignissimos sed corporis doloribus adipisci commodi blanditiis provident molestiae, facilis debitis! Optio culpa assumenda minima reiciendis, dolorum ad earum laudantium?</p>  
+            </div>
+        </div>
+
+        <div class="howtos">
+            <div class="howto">
+                <h1>Howto 1</h1>
+                <p>placeholder for howtos. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro temporibus nulla ipsum voluptates quo, laudantium, tempora voluptatibus, nam quos ratione esse. Maiores consequuntur, incidunt cupiditate, quisquam aliquam nesciunt perferendis mollitia quia vel reprehenderit dolores, debitis voluptas. Porro quis accusamus sed perferendis, inventore, facilis, ipsam saepe laboriosam sapiente dicta voluptatem, animi.</p>
+            </div>
+            <div class="howto">
+                <h1>Howto 2</h1>
+                <p>placeholder for howtos. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro temporibus nulla ipsum voluptates quo, laudantium, tempora voluptatibus, nam quos ratione esse. Maiores consequuntur, incidunt cupiditate, quisquam aliquam nesciunt perferendis mollitia quia vel reprehenderit dolores, debitis voluptas. Porro quis accusamus sed perferendis, inventore, facilis, ipsam saepe laboriosam sapiente dicta voluptatem, animi.</p>
+            </div>
+            <div class="howto">
+                <h1>Howto 3</h1>
+                <p>placeholder for howtos. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro temporibus nulla ipsum voluptates quo, laudantium, tempora voluptatibus, nam quos ratione esse. Maiores consequuntur, incidunt cupiditate, quisquam aliquam nesciunt perferendis mollitia quia vel reprehenderit dolores, debitis voluptas. Porro quis accusamus sed perferendis, inventore, facilis, ipsam saepe laboriosam sapiente dicta voluptatem, animi.</p>
+            </div>
+
+        </div>
+        
+        <footer>
+            <p>OpenJSCAD, MIT License, get your own copy/clone/fork from: <a href="https://github.com/jscad/OpenJSCAD.org">Github OpenJSCAD</a>
+</p>
+        </footer>
+    </div>
+</body>
 </html>
