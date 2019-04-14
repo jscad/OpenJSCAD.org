@@ -6,7 +6,8 @@ const fs = require('fs')
 
 const examplesPath = path.resolve('./node_modules/@jscad/examples')
 const coreExamplesPath = path.join(examplesPath, 'core')
-const advancedExamplesPath = path.join(examplesPath, 'various')
+const parametersExamplesPath = path.join(examplesPath, 'parameters')
+const variousExamplesPath = path.join(examplesPath, 'various')
 const scadExamplesPath = path.join(examplesPath, 'formats', 'scad')
 const amfExamplesPath = path.join(examplesPath, 'formats', 'amf')
 const stlExamplesPath = path.join(examplesPath, 'formats', 'stl')
@@ -34,8 +35,8 @@ test.beforeEach(t => {
 // core functionality
 test('jscad (basic, input file only)', t => {
   const jscadPath = t.context.jscadPath
-  const inputPath = path.join(advancedExamplesPath, '/logo.jscad')
-  const expPath = path.join(advancedExamplesPath, '/logo.stl')
+  const inputPath = path.join(variousExamplesPath, '/logo.jscad')
+  const expPath = path.join(variousExamplesPath, '/logo.stl')
   t.context = { outputPath: expPath }
 
   const cmd = `node ${jscadPath} ${inputPath} -add-metadata false`
@@ -64,7 +65,7 @@ test('require() support: loading a design from a folder', t => {
 
 test('jscad with parameters', t => {
   const jscadPath = t.context.jscadPath
-  const inputPath = path.join(advancedExamplesPath, '/name-plate.jscad')
+  const inputPath = path.join(parametersExamplesPath, '/name-plate.jscad')
   const outputPath = 'JustMe_Geek_name_plate.stl'
   const expPath = outputPath
   t.context = { outputPath }
@@ -76,7 +77,7 @@ test('jscad with parameters', t => {
 
 test('jscad with complex/ multiple type of parameters', t => {
   const jscadPath = t.context.jscadPath
-  const inputPath = path.join(advancedExamplesPath, '/grille.jscad')
+  const inputPath = path.join(parametersExamplesPath, '/grille.jscad')
   const outputPath = 'grille.stl'
   const expPath = outputPath
   t.context = { outputPath }
@@ -104,7 +105,7 @@ test('jscad with complex/ multiple type of parameters', t => {
 
 test('jscad to stl (ascii)', t => {
   const jscadPath = t.context.jscadPath
-  const inputPath = path.join(advancedExamplesPath, '/logo.jscad')
+  const inputPath = path.join(variousExamplesPath, '/logo.jscad')
   const outputPath = 'test.stl'
   const expPath = 'test.stl'
   t.context = { outputPath }
@@ -117,7 +118,7 @@ test('jscad to stl (ascii)', t => {
 
 test('jscad to stl(binary)', t => {
   const jscadPath = t.context.jscadPath
-  const inputPath = path.join(advancedExamplesPath, '/logo.jscad')
+  const inputPath = path.join(variousExamplesPath, '/logo.jscad')
   const outputPath = 'test.stl'
   t.context = { outputPath }
 
