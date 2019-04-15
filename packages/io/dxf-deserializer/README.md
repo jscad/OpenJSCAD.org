@@ -60,7 +60,7 @@ const jscadCode = deSerializer(rawData)
 
 ## Contribute
 
-For questions about the API, please contact the [User Group](https://plus.google.com/communities/114958480887231067224)
+For questions about the API, please contact the [User Group](https://jscad.xyz/forum)
 
 PRs accepted.
 

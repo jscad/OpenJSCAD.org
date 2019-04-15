@@ -85,9 +85,9 @@ This library is part of the JSCAD Organization, and is maintained by a group of 
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use the IO library, then please start a conversation at the [OpenJSCAD.org User Group](https://plus.google.com/communities/114958480887231067224). You might find the answer in the [OpenJSCAD.org User Guide](https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide).
+* If you have a question about how to use the IO library, then please start a conversation at the [OpenJSCAD.org User Group](https://jscad.xyz/forum). You might find the answer in the [OpenJSCAD.org User Guide](https://github.com/Spiritdude/OpenJSCAD.org/wiki/User-Guide).
 
-* If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://plus.google.com/communities/114958480887231067224) and start contributing changes.
+* If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
 
 Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 

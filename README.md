@@ -131,17 +131,17 @@ Thank you to all the people who have already contributed to this project:
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use the OpenJSCAD.org, then please start a conversation at the [OpenJSCAD.org User Group](https://plus.google.com/communities/114958480887231067224). You might find the answer in the [OpenJSCAD.org User Guide](https://openjscad.org/dokuwiki/doku.php?id=start).
+* If you have a question about how to use the OpenJSCAD.org, then please start a conversation at the [OpenJSCAD.org User Group](https://jscad.xyz/forum). You might find the answer in the [OpenJSCAD.org User Guide](https://openjscad.org/dokuwiki/doku.php?id=start).
 
-* If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://plus.google.com/communities/114958480887231067224) and start contributing changes.
+* If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
 
 Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## Community
 
 See for more details
-* [G+ OpenJSCAD.org Announcements](https://plus.google.com/communities/114958480887231067224)
-* [G+ OpenJSCAD Community](https://plus.google.com/communities/114958480887231067224)
+* [JSCAD Forum Announcements](https://jscad.xyz/forum/category/1/announcements)
+* [JSCAD Forum Community](https://jscad.xyz/forum)
 to discuss with other user and developers.
 
 ## Acknowledgements
