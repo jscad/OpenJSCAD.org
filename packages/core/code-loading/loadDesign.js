@@ -20,7 +20,7 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
   // ie either the only file if there is only one
   // OR the file in the 'main' entry of package.js, index.js, main.js or <folderName>.js
 
-  console.log('mainPath', mainPath)
+  // console.log('mainPath', mainPath)
   // now attempt to load the design
   /*
     - if the script is a common.js file already
@@ -55,8 +55,8 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
   const designName = getDesignName(fakeFs, rootPath)
   const designPath = require('path').dirname(rootPath)
 
-  console.log('HEEEEEERE', 'root', rootPath, 'main', mainPath1, designName, designPath, filesAndFolders)
-  console.log('filesAndFolders', filesAndFolders)
+  // console.log('HEEEEEERE', 'root', rootPath, 'main', mainPath1, designName, designPath, filesAndFolders)
+  // console.log('filesAndFolders', filesAndFolders)
   // console.log('transformed sources', filesAndFolders)
   // now check if we need fake require or not
   // FIXME: we need to come up with a way to intercept node 'require' calls to be able to apply transformSources on the fly
@@ -66,7 +66,13 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
   // register all extension formats
   registerAllExtensions(fakeFs, webRequire)
 
+  // if we have not been able to find an entry point, bail out?
+  if (!mainPath) {
+    throw Error('no design entry point found: please check if your design is valid')
+  }
+
   // rootModule SHOULD contain a main() entry and optionally a getParameterDefinitions entrye
+  // console.log('and now HEEERe', mainPath, mainPath1, rootPath)
   const rootModule = requireDesignFromModule(mainPath, webRequire)
   // console.log('rootModule', rootModule, 'parameterValuesOverride', parameterValuesOverride)
   // the design (module tree) has been loaded at this stage
