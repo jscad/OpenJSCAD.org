@@ -163,6 +163,8 @@ Tooling:
 
 and many more!
 
+We would like to particularly thank [NodeBB](https://nodebb.org/) for providing us with a fantastic new forum!
+
 ## Backers
 
 Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/openjscad#backer)]
