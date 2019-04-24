@@ -9,7 +9,6 @@ const solidFromSlices = require('./solidFromSlices')
 // const {area, volume} = require('./ops-measurements')
 // const clone = require('./clone')
 // const mirror = require('./mirror')
-// const text = require('./text')
 // const color = require('./color)
 // const {rectangle, ellipse, polygon}
 
@@ -18,7 +17,6 @@ const solidFromSlices = require('./solidFromSlices')
 rectangle // encompasses both squares & rectangles since squares are a specific rectangle
 ellipse // encompases both circle & ellipses since circle are a specific ellipse
 polygon
-text
 // 3D
 cuboid // encompasses both cubes & cuboids (rectangle faces) since cubes are a specific cuboid
 spheroid // encompasses both spheres & spheroids (3d ellipse) since spheres are a specific spheroid

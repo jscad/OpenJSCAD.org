@@ -6,7 +6,6 @@ const transformations = require('./transformations/ops-transformations')
 const extrusions = require('./ops-extrusions')
 const color = require('./color')
 const maths = require('./maths')
-const text = require('./text')
 const { echo } = require('./debug')
 
 // these are 'external' to this api and we basically just re-export for old api compatibility
@@ -22,11 +21,10 @@ const exportedApi = {
   extrusions,
   color,
   maths,
-  text,
   debug: {echo}
 }
 
 // easier to access
-// const flatApi = Object.assign({}, primitives2d, primitives3d, booleanOps, transformations, extrusions, color, text)
+// const flatApi = Object.assign({}, primitives2d, primitives3d, booleanOps, transformations, extrusions, color)
 
 module.exports = exportedApi
