@@ -144,6 +144,8 @@ See for more details
 * [JSCAD Forum Community](https://jscad.xyz/forum)
 to discuss with other user and developers.
 
+a huge thanks and shoutout to [nodeBB](https://nodebb.org/) for hosting our (awesome) forum for free ! Thanks a lot !
+
 ## Acknowledgements
 
 OpenJSCAD and its sub components are built upon great open source work, contribution & modules
@@ -187,7 +189,7 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 <a href="https://opencollective.com/openjscad/sponsor/8/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/8/avatar.svg"></a>
 <a href="https://opencollective.com/openjscad/sponsor/9/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/9/avatar.svg"></a>
 
-
+a huge thanks and shoutout to [nodeBB](https://nodebb.org/) for hosting our (awesome) forum for free ! Thanks a lot !
 
 ## License
 
