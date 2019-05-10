@@ -27,10 +27,10 @@ module.exports = function help (state, i18n) {
         <a class="navlink" href="https://openjscad.org/dokuwiki/doku.php" target="_blank">User Guide / Documentation <img src="imgs/externalLink.png" style="externalLink"></a>
         <br/><span class="menuSubInfo">How to program with OpenJSCAD: online, offline & CLI</span>
         <br/>
-        <a class="navlink" href="https://plus.google.com/communities/114958480887231067224" rel="publisher" target="_blank">Recent Updates <img src="imgs/externalLink.png" style="externalLink"></a>
+        <a class="navlink" href="https://jscad.xyz/forum" rel="publisher" target="_blank">Recent Updates <img src="imgs/externalLink.png" style="externalLink"></a>
         <br/><span class="menuSubInfo">Announcements of recent developments</span>
         <br/>
-        <a class="navlink" href="https://plus.google.com/communities/114958480887231067224" target="_blank">Google+ Community <img src="imgs/externalLink.png" style="externalLink"></a>
+        <a class="navlink" href="https://jscad.xyz/forum" target="_blank">Google+ Community <img src="imgs/externalLink.png" style="externalLink"></a>
         <br/><span class="menuSubInfo">Discuss with other users &amp; developers</span>
       </div>
       <div>
