@@ -6,6 +6,7 @@ module.exports = {
   equals: require('./equals'),
   fromRotation: require('./fromRotation'),
   fromScaling: require('./fromScaling'),
+  fromTaitBryanRotation: require('./fromTaitBryanRotation'),
   fromTranslation: require('./fromTranslation'),
   fromValues: require('./fromValues'),
   fromXRotation: require('./fromXRotation'),

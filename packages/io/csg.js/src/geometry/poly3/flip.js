@@ -7,7 +7,7 @@ const create = require('./create')
  * @returns {poly3} a new poly3
  */
 const flip = (polygon) => {
-  const vertices = polygon.vertices.reverse()
+  const vertices = polygon.vertices.slice().reverse()
   return create(vertices)
 }
 

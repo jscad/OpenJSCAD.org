@@ -14,4 +14,5 @@ test('poly3: flip() should return a new poly3 with correct values', (t) => {
   const org2 = fromPoints([[1, 1, 0], [1, 0, 0], [0, 0, 0]])
   const ret2 = flip(org2)
   t.true(comparePolygons(ret2, exp2))
+  t.false(comparePolygons(ret2, org2)) // the original should NOT change
 })
