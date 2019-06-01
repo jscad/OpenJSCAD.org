@@ -3,7 +3,8 @@ const _CSGDEBUG = false
 /** Number of polygons per 360 degree revolution for 2D objects.
  * @default
  */
-const defaultResolution2D = 32 // FIXME this seems excessive
+const defaultResolution2D = 16
+
 /** Number of polygons per 360 degree revolution for 3D objects.
  * @default
  */
@@ -39,9 +40,6 @@ const left = 3
 const right = 4
 const front = 5
 const back = 6
-// Tag factory: we can request a unique tag through CSG.getTag()
-let staticTag = 1
-const getTag = () => staticTag++
 
 module.exports = {
   _CSGDEBUG,
@@ -57,7 +55,5 @@ module.exports = {
   right,
   front,
   back,
-  staticTag,
-  getTag,
   spatialResolution
 }

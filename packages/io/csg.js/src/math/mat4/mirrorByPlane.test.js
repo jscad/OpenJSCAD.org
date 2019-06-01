@@ -1,6 +1,8 @@
 const test = require('ava')
-const { mirrorByPlane, create, toString } = require('.')
+
 const { fromPoints } = require('../plane')
+
+const { mirrorByPlane, create, toString } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers')
 

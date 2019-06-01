@@ -10,6 +10,7 @@ module.exports = {
   divide: require('./divide'),
   dot: require('./dot'),
   equals: require('./equals'),
+  fromArray: require('./fromArray'),
   fromScalar: require('./fromScalar'),
   fromValues: require('./fromValues'),
   fromVec2: require('./fromVec2'),

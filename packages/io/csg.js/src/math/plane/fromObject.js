@@ -1,4 +1,4 @@
-const vec3 = require('../../math/vec3')
+const vec3 = require('../vec3')
 const fromValues = require('../vec4/fromValues')
 
 /**
