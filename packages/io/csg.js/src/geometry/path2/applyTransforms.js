@@ -12,7 +12,7 @@ const vec2 = require('../../math/vec2')
 const applyTransforms = (geometry) => {
   if (mat4.equals(geometry.transforms, mat4.identity())) return geometry
 
-  geometry.points = geometry.points.map((point) => vec2.canonicalize(vec2.transform(geometry.transforms, point)))
+  geometry.points = geometry.points.map((point) => vec2.transform(geometry.transforms, point))
   mat4.identity(geometry.transforms)
   return geometry
 }

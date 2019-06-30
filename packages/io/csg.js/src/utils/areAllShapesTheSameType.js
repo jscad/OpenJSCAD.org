@@ -1,5 +1,5 @@
 // list of supported geometries
-const {geom2, geom3, path2} = require('../../geometry')
+const {geom2, geom3, path2} = require('../geometry')
 
 const areAllShapesTheSameType = (shapes) => {
   let previousType

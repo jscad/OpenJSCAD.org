@@ -4,6 +4,8 @@ const {geom2, geom3, path2} = require('../../geometry')
 
 const {rotate, rotateX, rotateY, rotateZ} = require('./rotate')
 
+const comparePoints = require('../../../test/helpers/comparePoints')
+
 test('rotate: rotating of a path2 produces expected changes to points', t => {
   let geometry = path2.fromPoints({}, [[1, 0], [0, 1], [-1, 0]])
 
@@ -15,11 +17,11 @@ test('rotate: rotating of a path2 produces expected changes to points', t => {
     new Float32Array([ -1, 0 ]),
     new Float32Array([ -0, -1 ])
   ]
-  t.deepEqual(obs, exp)
+  t.true(comparePoints(obs, exp))
 
   rotated = rotateZ(90, geometry)
   obs = path2.toPoints(rotated)
-  t.deepEqual(obs, exp)
+  t.true(comparePoints(obs, exp))
 })
 
 test('rotate: rotating of a geom2 produces expected changes to points', t => {
@@ -33,11 +35,11 @@ test('rotate: rotating of a geom2 produces expected changes to points', t => {
     new Float32Array([0, -1]),
     new Float32Array([1, 0])
   ]
-  t.deepEqual(obs, exp)
+  t.true(comparePoints(obs, exp))
 
   rotated = rotateZ(-90, geometry)
   obs = geom2.toPoints(rotated)
-  t.deepEqual(obs, exp)
+  t.true(comparePoints(obs, exp))
 })
 
 test('rotate: rotating of a geom3 produces expected changes to polygons', t => {
@@ -142,8 +144,8 @@ test('rotate: rotating of multiple objects produces expected changes', t => {
   let obs2 = geom2.toPoints(rotated[2])
   let exp2 = [
     new Float32Array([ 5, -5 ]),
-    new Float32Array([ -5, 0 ]),
+    new Float32Array([ -5, 3.0616169991140216e-16 ]),
     new Float32Array([ 5, 10 ])
   ]
-  t.deepEqual(obs2, exp2)
+  t.true(comparePoints(obs2, exp2))
 })
