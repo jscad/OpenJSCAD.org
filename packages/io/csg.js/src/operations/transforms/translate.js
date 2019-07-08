@@ -2,7 +2,7 @@ const flatten = require('../../utils/flatten')
 
 const mat4 = require('../../math/mat4')
 
-const {geom2, geom3, path2} = require('../../geometry')
+const { geom2, geom3, path2 } = require('../../geometry')
 
 /**
  * Translate the given object(s) using the given options (if any)
@@ -15,7 +15,7 @@ const {geom2, geom3, path2} = require('../../geometry')
  */
 const translate = (offsets, ...objects) => {
   if (!Array.isArray(offsets)) throw new Error('offsets must be an array')
-  if (offsets.length != 3) throw new Error('offsets must contain X, Y and Z values')
+  if (offsets.length !== 3) throw new Error('offsets must contain X, Y and Z values')
 
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')

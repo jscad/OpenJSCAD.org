@@ -1,8 +1,6 @@
 const flatten = require('../../utils/flatten')
 
-const mat4 = require('../../math/mat4')
-
-const {geom2, geom3, path2} = require('../../geometry')
+const { geom2, geom3, path2 } = require('../../geometry')
 
 /**
  * Transform the given object(s) using the given matrix

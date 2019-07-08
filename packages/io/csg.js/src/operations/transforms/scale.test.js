@@ -1,8 +1,8 @@
 const test = require('ava')
 
-const {geom2, geom3, path2} = require('../../geometry')
+const { geom2, geom3, path2 } = require('../../geometry')
 
-const {scale, scaleX, scaleY, scaleZ} = require('./scale')
+const { scale, scaleX, scaleY, scaleZ } = require('./index')
 
 test('scale: scaling of a path2 produces expected changes to points', t => {
   let geometry = path2.fromPoints({}, [[0, 4], [1, 0]])
@@ -68,12 +68,12 @@ test('scale: scaling of a geom2 produces expected changes to points', t => {
 
 test('scale: scaling of a geom3 produces expected changes to polygons', t => {
   let points = [
-    [ [-2, -7, -12],[-2, -7, 18],[-2, 13, 18],[-2, 13, -12] ],
-    [ [8, -7, -12],[8, 13, -12],[8, 13, 18],[8, -7, 18] ],
-    [ [-2, -7, -12],[8, -7, -12],[8, -7, 18],[-2, -7, 18] ],
-    [ [-2, 13, -12],[-2, 13, 18],[8, 13, 18],[8, 13, -12] ],
-    [ [-2, -7, -12],[-2, 13, -12],[8, 13, -12],[8, -7, -12] ],
-    [ [-2, -7, 18],[8, -7, 18],[8, 13, 18],[-2, 13, 18] ]
+    [ [-2, -7, -12], [-2, -7, 18], [-2, 13, 18], [-2, 13, -12] ],
+    [ [8, -7, -12], [8, 13, -12], [8, 13, 18], [8, -7, 18] ],
+    [ [-2, -7, -12], [8, -7, -12], [8, -7, 18], [-2, -7, 18] ],
+    [ [-2, 13, -12], [-2, 13, 18], [8, 13, 18], [8, 13, -12] ],
+    [ [-2, -7, -12], [-2, 13, -12], [8, 13, -12], [8, -7, -12] ],
+    [ [-2, -7, 18], [8, -7, 18], [8, 13, 18], [-2, 13, 18] ]
   ]
   let geometry = geom3.fromPoints(points)
 
@@ -161,11 +161,11 @@ test('scale: scaling of a geom3 produces expected changes to polygons', t => {
 
 test('scale: scaling of multiple objects produces expected changes', t => {
   let junk = 'hello'
-  let geometry1 = path2.fromPoints({}, [[-5,5],[5,5],[-5,-5],[10,-5]])
-  let geometry2 = geom2.fromPoints([[-5,-5],[0,5],[10,-5]])
+  let geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
+  let geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])
 
   let scaled = scale([3, 1, 1], junk, geometry1, geometry2)
-  
+
   t.is(scaled[0], junk)
 
   let obs1 = path2.toPoints(scaled[1])

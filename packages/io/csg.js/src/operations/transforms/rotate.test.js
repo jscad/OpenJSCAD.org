@@ -1,8 +1,8 @@
 const test = require('ava')
 
-const {geom2, geom3, path2} = require('../../geometry')
+const { geom2, geom3, path2 } = require('../../geometry')
 
-const {rotate, rotateX, rotateY, rotateZ} = require('./rotate')
+const { rotate, rotateX, rotateY, rotateZ } = require('./index')
 
 const comparePoints = require('../../../test/helpers/comparePoints')
 
@@ -44,12 +44,12 @@ test('rotate: rotating of a geom2 produces expected changes to points', t => {
 
 test('rotate: rotating of a geom3 produces expected changes to polygons', t => {
   let points = [
-    [ [-2, -7, -12],[-2, -7, 18],[-2, 13, 18],[-2, 13, -12] ],
-    [ [8, -7, -12],[8, 13, -12],[8, 13, 18],[8, -7, 18] ],
-    [ [-2, -7, -12],[8, -7, -12],[8, -7, 18],[-2, -7, 18] ],
-    [ [-2, 13, -12],[-2, 13, 18],[8, 13, 18],[8, 13, -12] ],
-    [ [-2, -7, -12],[-2, 13, -12],[8, 13, -12],[8, -7, -12] ],
-    [ [-2, -7, 18],[8, -7, 18],[8, 13, 18],[-2, 13, 18] ]
+    [ [-2, -7, -12], [-2, -7, 18], [-2, 13, 18], [-2, 13, -12] ],
+    [ [8, -7, -12], [8, 13, -12], [8, 13, 18], [8, -7, 18] ],
+    [ [-2, -7, -12], [8, -7, -12], [8, -7, 18], [-2, -7, 18] ],
+    [ [-2, 13, -12], [-2, 13, 18], [8, 13, 18], [8, 13, -12] ],
+    [ [-2, -7, -12], [-2, 13, -12], [8, 13, -12], [8, -7, -12] ],
+    [ [-2, -7, 18], [8, -7, 18], [8, 13, 18], [-2, 13, 18] ]
   ]
   let geometry = geom3.fromPoints(points)
 
@@ -125,8 +125,8 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', t => {
 
 test('rotate: rotating of multiple objects produces expected changes', t => {
   let junk = 'hello'
-  let geometry1 = path2.fromPoints({}, [[-5,5],[5,5],[-5,-5],[10,-5]])
-  let geometry2 = geom2.fromPoints([[-5,-5],[0,5],[10,-5]])
+  let geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
+  let geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])
 
   let rotated = rotate([0, 0, 90], junk, geometry1, geometry2)
 

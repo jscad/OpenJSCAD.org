@@ -2,7 +2,7 @@ const flatten = require('../../utils/flatten')
 
 const mat4 = require('../../math/mat4')
 
-const {geom2, geom3, path2} = require('../../geometry')
+const { geom2, geom3, path2 } = require('../../geometry')
 
 /**
  * Rotate the given object(s) using the given options (if any)
@@ -15,7 +15,7 @@ const {geom2, geom3, path2} = require('../../geometry')
  */
 const rotate = (angles, ...objects) => {
   if (!Array.isArray(angles)) throw new Error('angles must be an array')
-  if (angles.length != 3) throw new Error('angles must contain X, Y and Z values')
+  if (angles.length !== 3) throw new Error('angles must contain X, Y and Z values')
 
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')

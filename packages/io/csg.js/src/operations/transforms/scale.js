@@ -2,7 +2,7 @@ const flatten = require('../../utils/flatten')
 
 const mat4 = require('../../math/mat4')
 
-const {geom2, geom3, path2} = require('../../geometry')
+const { geom2, geom3, path2 } = require('../../geometry')
 
 /**
  * Scale the given object(s) using the given options (if any)
@@ -15,7 +15,7 @@ const {geom2, geom3, path2} = require('../../geometry')
  */
 const scale = (factors, ...objects) => {
   if (!Array.isArray(factors)) throw new Error('factors must be an array')
-  if (factors.length != 3) throw new Error('factors must contain X, Y and Z values')
+  if (factors.length !== 3) throw new Error('factors must contain X, Y and Z values')
   if (factors[0] <= 0 || factors[1] <= 0 || factors[2] <= 0) throw new Error('factors must be positive')
 
   objects = flatten(objects)

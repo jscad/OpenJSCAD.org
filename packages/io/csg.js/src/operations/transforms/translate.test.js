@@ -1,8 +1,8 @@
 const test = require('ava')
 
-const {geom2, geom3, path2} = require('../../geometry')
+const { geom2, geom3, path2 } = require('../../geometry')
 
-const {translate, translateX, translateY, translateZ} = require('./translate')
+const { translate, translateX, translateY, translateZ } = require('./index')
 
 test('translate: translating of a path2 produces expected changes to points', t => {
   let line = path2.fromPoints({}, [[0, 0], [1, 0]])
@@ -68,17 +68,17 @@ test('translate: translating of a geom2 produces expected changes to points', t 
 
 test('translate: translating of a geom3 produces expected changes to polygons', t => {
   let points = [
-    [ [-2, -7, -12],[-2, -7, 18],[-2, 13, 18],[-2, 13, -12] ],
-    [ [8, -7, -12],[8, 13, -12],[8, 13, 18],[8, -7, 18] ],
-    [ [-2, -7, -12],[8, -7, -12],[8, -7, 18],[-2, -7, 18] ],
-    [ [-2, 13, -12],[-2, 13, 18],[8, 13, 18],[8, 13, -12] ],
-    [ [-2, -7, -12],[-2, 13, -12],[8, 13, -12],[8, -7, -12] ],
-    [ [-2, -7, 18],[8, -7, 18],[8, 13, 18],[-2, 13, 18] ]
+    [ [-2, -7, -12], [-2, -7, 18], [-2, 13, 18], [-2, 13, -12] ],
+    [ [8, -7, -12], [8, 13, -12], [8, 13, 18], [8, -7, 18] ],
+    [ [-2, -7, -12], [8, -7, -12], [8, -7, 18], [-2, -7, 18] ],
+    [ [-2, 13, -12], [-2, 13, 18], [8, 13, 18], [8, 13, -12] ],
+    [ [-2, -7, -12], [-2, 13, -12], [8, 13, -12], [8, -7, -12] ],
+    [ [-2, -7, 18], [8, -7, 18], [8, 13, 18], [-2, 13, 18] ]
   ]
   let geometry = geom3.fromPoints(points)
 
   // translate X
-  let translated = translate([3,0,0], geometry)
+  let translated = translate([3, 0, 0], geometry)
   let obs = geom3.toPoints(translated)
   let exp = [
     [ new Float32Array([ 1, -7, -12 ]), new Float32Array([ 1, -7, 18 ]),
@@ -101,7 +101,7 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
   t.deepEqual(obs, exp)
 
   // translated Y
-  translated = translate([0,3,0], geometry)
+  translated = translate([0, 3, 0], geometry)
   obs = geom3.toPoints(translated)
   exp = [
     [ new Float32Array([ -2, -4, -12 ]), new Float32Array([ -2, -4, 18 ]),
@@ -124,7 +124,7 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
   t.deepEqual(obs, exp)
 
   // translate Z
-  translated = translate([0,0,3], geometry)
+  translated = translate([0, 0, 3], geometry)
   obs = geom3.toPoints(translated)
   exp = [
     [ new Float32Array([ -2, -7, -9 ]), new Float32Array([ -2, -7, 21 ]),
@@ -149,10 +149,10 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
 
 test('translate: translating of multiple objects produces expected changes', t => {
   let junk = 'hello'
-  let geometry1 = path2.fromPoints({}, [[-5,5],[5,5],[-5,-5],[10,-5]])
-  let geometry2 = geom2.fromPoints([[-5,-5],[0,5],[10,-5]])
+  let geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
+  let geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])
 
-  let translated = translate([3,3,3], junk, geometry1, geometry2)
+  let translated = translate([3, 3, 3], junk, geometry1, geometry2)
   t.is(translated[0], junk)
 
   let obs = path2.toPoints(translated[1])
