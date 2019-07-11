@@ -5,10 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "budo ./demo-web.js --title regl-renderer --live",
-    "build": "browserify -p common-shakeify --standalone makeCsgViewer src/index.js > dist/bundle.js",
-    "minify": "uglifyjs dist/bundle.js --compress > dist/bundle.min.js",
-    "build-min": "npm run build && npm run minify && npm run compress",
-    "demo": "node ./demo-cli.js"
+    "demo-cli": "node ./demo-cli.js",
+    "demo-web": "budo ./demo-web.js --title regl-renderer --live"
   },
   "author": "Mark 'kaosat-dev' Moissette",
   "license": "MIT",
@@ -16,7 +14,8 @@
     "budo": "10.0.4",
     "gl": "4.1.1",
     "pngjs": "3.3.3",
-    "@jscad/img-utils": "0.0.0"
+    "@jscad/img-utils": "0.0.0",
+    "@jscad/scad-api":"latest"
   },
   "dependencies": {
     "angle-normals": "1.0.0",

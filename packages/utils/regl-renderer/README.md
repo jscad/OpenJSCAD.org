@@ -15,3 +15,9 @@ This is a very early version of this viewer ! Expect changes !
 ## How
 
 ### Node.js/headless
+
+- try the demo by running ```npm run demo-cli``` if all goes well you should end up with a png image rendering of the demo jscad code (a few solids)
+
+### Web
+
+- try the demo by running ```npm run demo-web``` and open the webpage at the adress displayed in the command line: if all goes well you should end up with a web page with a rotating camera (no mouse controls) that displays the demo jscad code (a few solids)
