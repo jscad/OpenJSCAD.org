@@ -43,8 +43,55 @@ function makeReactions (inputs) {
   dat(outputs$.filter(x => 'sink' in x && x.sink === 'dat'))
 
   // viewer data
+  // FIXME: does not belong here at all !
   const makeCsgViewer = require('@jscad/csg-viewer')
+
+  const { prepareRender, drawCommands, cameras, entitiesFromSolids } = require('@jscad/regl-renderer') // replace this with the correct import
+  const width = window.innerWidth
+  const height = window.innerHeight
+  // prepare the camera
+  const perspectiveCamera = cameras.perspective
+  const camera = Object.assign({}, perspectiveCamera.defaults)
+  perspectiveCamera.setProjection(camera, camera, { width, height })
+  perspectiveCamera.update(camera, camera)
+  let solids = []
+
+  const viewerOptions = {
+    glOptions: { container: document.body },
+    camera,
+    drawCommands: {
+      // draw commands bootstrap themselves the first time they are run
+      drawGrid: drawCommands.drawGrid, // require('./src/rendering/drawGrid/index.js'),
+      drawAxis: drawCommands.drawAxis, // require('./src/rendering/drawAxis'),
+      drawMesh: drawCommands.drawMesh // require('./src/rendering/drawMesh/index.js')
+    },
+    // data
+    entities: [
+      { // grid data
+        // the choice of what draw command to use is also data based
+        visuals: {
+          drawCmd: 'drawGrid',
+          show: true,
+          color: [0, 0, 0, 1],
+          subColor: [0, 0, 1, 0.5],
+          fadeOut: false,
+          transparent: true
+        },
+        size: [500, 500],
+        ticks: [10, 1]
+      },
+      {
+        visuals: {
+          drawCmd: 'drawAxis',
+          show: true
+        }
+      },
+      ...solids
+    ]
+  }
+
   let csgViewer
+  let render
   const jscadEl = extras.jscadEl
   sources.state
     .filter(state => state.design && state.design.mainPath !== '')
@@ -55,7 +102,11 @@ function makeReactions (inputs) {
     })
     .forEach(state => {
       if (csgViewer !== undefined) {
-        csgViewer(undefined, { solids: state.design.solids })
+        viewerOptions.entities = entitiesFromSolids({}, state.design.solids)
+        console.log('rendering', viewerOptions.solids)
+        render(viewerOptions)
+        
+        // csgViewer(undefined, { solids: state.design.solids })
       }
     })
 
@@ -63,9 +114,10 @@ function makeReactions (inputs) {
     .forEach(x => {
       console.log('viewer', x)
       if (csgViewer) {
-        csgViewer({ camera: { projectionType: x.data } })
+        // csgViewer({ camera: { projectionType: x.data } })
       }
     })
+
   sources.state
     .map(state => state.viewer)
   // FIXME: not working correctly with themeing
@@ -75,15 +127,37 @@ function makeReactions (inputs) {
   }) */
     .forEach(params => {
       const viewerElement = jscadEl.querySelector('#renderTarget')
+
       // initialize viewer if it has not been done already
       if (viewerElement && !csgViewer) {
-        const csgViewerItems = makeCsgViewer(viewerElement, params)
-        csgViewer = csgViewerItems.csgViewer
-      // const bar = require('most-gestures').pointerGestures(jscadEl.querySelector('#renderTarget'))
+        console.log('preparing renderer')
+
+        // const csgViewerItems = makeCsgViewer(viewerElement, params)
+        // csgViewer = csgViewerItems.csgViewer
+        viewerOptions.glOptions.container = viewerElement
+        csgViewer = render = prepareRender(viewerOptions)
+        render(viewerOptions)
+        // const bar = require('most-gestures').pointerGestures(jscadEl.querySelector('#renderTarget'))
+
+        // some live animation example
+        let tick = 0
+        const updateAndRender = () => {
+          tick += 0.01
+          camera.position[0] = Math.cos(tick) * 800
+          perspectiveCamera.update(camera, camera)
+          viewerOptions.camera = camera
+
+          // you can change the state of the viewer at any time by just calling the viewer
+          // function again with different params
+          render(viewerOptions)
+          window.requestAnimationFrame(updateAndRender)
+        }
+        window.requestAnimationFrame(updateAndRender)
       }
       if (csgViewer) {
-      // console.log('params', params)
-        csgViewer(params)
+        console.log('params', params)
+        render(viewerOptions)
+        // csgViewer(params)
       }
     })
 
