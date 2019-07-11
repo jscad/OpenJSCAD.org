@@ -1,5 +1,5 @@
 const most = require('most')
-const limitFlow = require('./observable-utils/limitFlow')
+const limitFlow = require('../../../core/observable-utils/limitFlow')
 
 function actions (sources) {
   const {gestures, heartBeat$, params$, data$, state$} = sources

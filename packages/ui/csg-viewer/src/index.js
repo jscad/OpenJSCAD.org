@@ -1,7 +1,7 @@
 // const {pointerGestures} = require('most-gestures')
 const most = require('most')
 const {proxy} = require('most-proxy')
-const {holdSubject} = require('./observable-utils/most-subject/index')
+const {holdSubject} = require('../../../core/observable-utils/most-subject/index')
 // require('most-subject')github:briancavalier/most-subject : issues with webpack hence the above
 const makeCameraControlsActions = require('./cameraControlsActions')
 const makeDataParamsActions = require('./dataParamsActions')
@@ -103,8 +103,8 @@ const makeCsgViewer = function (element, options = {}, inputs$ = most.never()) {
     // inputs$: inputs$.filter(x => x !== undefined), // custom user inputs
     // live ui elements only
     gestures: state.useGestures ? require('most-gestures').pointerGestures(element) : {drags: most.never(), zooms: most.never(), taps: most.never()},
-    resizes$: state.useGestures ? require('./cameraAndControls/elementSizing')(element) : most.never(),
-    heartBeat$: require('./observable-utils/rafStream').rafStream() // state.useGestures ? require('./observable-utils/rafStream').rafStream() : most.never() // heartbeat provided by requestAnimationFrame
+    resizes$: state.useGestures ? require('../../../utils/regl-renderer/src/controls/elementSizing')(element) : most.never(),
+    heartBeat$: require('../../../core/observable-utils/rafStream').rafStream() // state.useGestures ? require('./observable-utils/rafStream').rafStream() : most.never() // heartbeat provided by requestAnimationFrame
   }
 
   // create our action streams

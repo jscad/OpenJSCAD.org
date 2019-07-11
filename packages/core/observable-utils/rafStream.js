@@ -1,5 +1,5 @@
 // taken from https://github.com/briancavalier/most-behavior/blob/2888b2b69fe2c8e44617c611eb5fdaf512d52007/src/animationFrames.js
-const { Stream } = require('most')
+const { Stream } = require('../../../../core/observable-utils/most-subject/node_modules/most')
 const {create} = require('@most/create')
 
 function animationFrames () {
