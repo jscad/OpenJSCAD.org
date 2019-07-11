@@ -90,6 +90,15 @@ function makeReactions (inputs) {
     ]
   }
 
+  const resize = (viewerElement) => {
+    const bounds = viewerElement.getBoundingClientRect()
+    const w = bounds.right - bounds.left
+    const h = bounds.bottom - bounds.top
+    const pixelRatio = window.devicePixelRatio || 1
+    viewerElement.width = pixelRatio * w
+    viewerElement.height = pixelRatio * h
+  }
+
   let csgViewer
   let render
   const jscadEl = extras.jscadEl
@@ -105,7 +114,7 @@ function makeReactions (inputs) {
         viewerOptions.entities = entitiesFromSolids({}, state.design.solids)
         console.log('rendering', viewerOptions.solids)
         render(viewerOptions)
-        
+
         // csgViewer(undefined, { solids: state.design.solids })
       }
     })
@@ -134,7 +143,7 @@ function makeReactions (inputs) {
 
         // const csgViewerItems = makeCsgViewer(viewerElement, params)
         // csgViewer = csgViewerItems.csgViewer
-        viewerOptions.glOptions.container = viewerElement
+        viewerOptions.glOptions.canvas = viewerElement
         csgViewer = render = prepareRender(viewerOptions)
         render(viewerOptions)
         // const bar = require('most-gestures').pointerGestures(jscadEl.querySelector('#renderTarget'))
@@ -153,10 +162,14 @@ function makeReactions (inputs) {
           window.requestAnimationFrame(updateAndRender)
         }
         window.requestAnimationFrame(updateAndRender)
+
+        resize(viewerElement)
       }
       if (csgViewer) {
         console.log('params', params)
+        viewerOptions.camera.position = [150, 150, 100]
         render(viewerOptions)
+        resize(viewerElement)
         // csgViewer(params)
       }
     })

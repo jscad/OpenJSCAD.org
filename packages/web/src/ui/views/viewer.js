@@ -3,7 +3,7 @@ const html = require('bel')
 // const onload = require('on-load')
 
 module.exports = function viewer (state, i18n) {
-  const el = html`<div id='renderTarget'> </div>`
+  const el = html`<canvas id='renderTarget'> </canvas>`
 
   // handle injection into dom
   /*onload(el, function (_el) {
