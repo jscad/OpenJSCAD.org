@@ -41,6 +41,9 @@ const setProjection = (output, camera, input) => {
 }
 
 const update = (output, camera) => {
+  if (!camera) {
+    camera = output
+  }
   const { position, target, up } = camera
   let offset = vec3.subtract([], position, target)
   let newPosition = vec3.add(vec3.create(), target, offset)

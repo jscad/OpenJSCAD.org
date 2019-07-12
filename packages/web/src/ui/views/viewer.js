@@ -1,15 +1,23 @@
 
 const html = require('bel')
-// const onload = require('on-load')
 // viewer data
 const makeCsgViewer = require('@jscad/csg-viewer')
-const { prepareRender, drawCommands, cameras, entitiesFromSolids } = require('@jscad/regl-renderer') // replace this with the correct import
+const rendererStuff = require('@jscad/regl-renderer') // replace this with the correct import
+const { prepareRender, drawCommands, cameras, entitiesFromSolids } = rendererStuff
 const perspectiveCamera = cameras.perspective
+const orbitControls = rendererStuff.controls.orbit
 
+// params
+const rotateSpeed = 1
+const panSpeed = 1
+const zoomSpeed = 1
+
+// internal state
 let initialized = false
 let render
 let viewerOptions
-let camera
+let camera = perspectiveCamera.defaults
+let controls = orbitControls.defaults
 
 let grid = { // grid data
   // the choice of what draw command to use is also data based
@@ -39,32 +47,79 @@ module.exports = function viewer (state, i18n) {
   const el = html`<canvas id='renderTarget'> </canvas>`
 
   if (!initialized) {
+    window.onresize = function () {
+      resize(el)
+      render(viewerOptions)
+    }
     let foo = setup()
     viewerOptions = foo.viewerOptions
     camera = foo.camera
+    camera.position = [150, 180, 233] // [150, 250, 200]
     render = prepareRender(viewerOptions)
-    render(viewerOptions)
-    // const bar = require('most-gestures').pointerGestures(jscadEl.querySelector('#renderTarget'))
+    const gestures = require('most-gestures').pointerGestures(el)
+
+    // rotate
+    gestures.drags
+      .forEach(data => {
+        const delta = [data.delta.x, data.delta.y].map(d => d * -Math.PI)
+        const { shiftKey } = data.originalEvents[0]
+        if (!shiftKey) {
+          const updated = orbitControls.rotate({ controls, camera }, delta)
+          controls = { ...controls, ...updated.controls }
+        }
+      })
+    // pan
+    gestures.drags
+      .forEach(data => {
+        const delta = [data.delta.x, data.delta.y].map(d => d)
+        const { shiftKey } = data.originalEvents[0]
+        if (shiftKey) {
+          const updated = orbitControls.pan({ controls, camera, speed: panSpeed }, delta)
+          // const fooCam = camera = { ...camera, ...updated.camera }
+          camera.position = updated.camera.position
+          camera.target = updated.camera.target
+        }
+      })
+
+    // zoom
+    gestures.zooms
+      .forEach(x => {
+        const updated = orbitControls.zoom({ controls, camera, speed: zoomSpeed }, -x)
+        controls = { ...controls, ...updated.controls }
+      })
+
+    // auto fit
+    gestures.taps
+      .filter(taps => taps.nb === 2)
+      .forEach(x => {
+        const updated = orbitControls.zoomToFit({ controls, camera, entities })
+        controls = { ...controls, ...updated.controls }
+      })
 
     // some live animation example
-    /* let tick = 0
+    let tick = 0
     const updateAndRender = () => {
       tick += 0.01
-      camera.position[0] = Math.cos(tick) * 800
+      let updatedA = orbitControls.update({ controls, camera })
+      controls = { ...controls, ...updatedA.controls }
+      camera.position = updatedA.camera.position
+      perspectiveCamera.update(camera)
+
+      resize(el)
+      render(viewerOptions)
+      /* camera.position[0] = Math.cos(tick) * 800
       perspectiveCamera.update(camera, camera)
       viewerOptions.camera = camera
 
       // you can change the state of the viewer at any time by just calling the viewer
       // function again with different params
-      render(viewerOptions)
+      render(viewerOptions) */
       window.requestAnimationFrame(updateAndRender)
     }
-    window.requestAnimationFrame(updateAndRender) */
+    window.requestAnimationFrame(updateAndRender)
 
     resize(el)
   } else {
-    viewerOptions.camera.position = [150, 150, 100]
-
     if (prevSolids) {
       let solids = state.design.solids
       const sameSolids = solids.length === prevSolids.length &&
@@ -86,19 +141,16 @@ module.exports = function viewer (state, i18n) {
       ...entities
     ]
       .filter(x => x !== undefined)
-    // console.log('rendering', viewerOptions.entities)
-    perspectiveCamera.update(camera, camera)
 
+    let updated = orbitControls.update({ controls, camera })
+    controls = { ...controls, ...updated.controls }
+    camera.position = updated.camera.position
+    perspectiveCamera.update(camera)
+
+    resize(el)
     render(viewerOptions)
   }
 
-  // handle injection into dom
-  /* onload(el, function (_el) {
-    setCanvasSize(_el)
-    window.onresize = function () {
-      setCanvasSize(_el)
-    }
-  }) */
   return el
 }
 
@@ -133,19 +185,7 @@ const setup = () => {
 }
 
 const resize = (viewerElement) => {
-  const bounds = viewerElement.getBoundingClientRect()
-  const w = bounds.right - bounds.left
-  const h = bounds.bottom - bounds.top
   const pixelRatio = window.devicePixelRatio || 1
-  viewerElement.width = pixelRatio * w
-  viewerElement.height = pixelRatio * h
-}
-
-const setCanvasSize = (viewerElement) => {
-  if (!viewerElement) {
-    return
-  }
-  let pixelRatio = window.devicePixelRatio || 1
   let width = window.innerWidth
   let height = window.innerHeight
   if (viewerElement !== document.body) {
@@ -153,9 +193,6 @@ const setCanvasSize = (viewerElement) => {
     width = bounds.right - bounds.left
     height = bounds.bottom - bounds.top
   }
-  width *= pixelRatio
-  height *= pixelRatio
-  viewerElement.width = width
-  viewerElement.height = height
-  // console.log('width', width, 'height', height, 'of', viewerElement)
+  viewerElement.width = pixelRatio * width
+  viewerElement.height = pixelRatio * height
 }

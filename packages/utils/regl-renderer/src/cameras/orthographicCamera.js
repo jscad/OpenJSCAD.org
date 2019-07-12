@@ -26,7 +26,6 @@ function setProjection (camera, input) {
   const aspect = width / height
   const viewport = [0, 0, width, height]
   const multiplier = camera.zoom
-  console.log('zoom', multiplier)
 
   const left = -width * multiplier
   const right = width * multiplier

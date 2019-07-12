@@ -72,11 +72,40 @@ render(options)
 
 // some live animation example
 let tick = 0
+
+let updateCounter = 0
 const updateAndRender = () => {
   tick += 0.01
   camera.position[0] = Math.cos(tick) * 800
   perspectiveCamera.update(camera, camera)
   options.camera = camera
+
+  // dynamic csg data, yes indeed !, uncoment this if you want to show it
+  // updateCounter += 1
+
+  const dynamicData = function () {
+    const { color } = require('@jscad/scad-api').color
+    const { cube, sphere } = require('@jscad/scad-api').primitives3d
+    const { union, difference, intersection } = require('@jscad/scad-api').booleanOps
+    const logo = union(
+      difference(
+        cube({ size: 30, center: true }),
+        sphere({ r: 20, center: true })
+      ),
+      intersection(
+        sphere({ r: 13, center: true }),
+        cube({ size: 21, center: true })
+      )
+    ).translate([0, 0, 1.5]).scale(10)
+
+    const transpCube = color([1, tick, 0, 0.75], cube({ size: [100 * Math.random(), 100, 400 * Math.random() + 200] }))
+    return [ transpCube, logo ]
+  }
+  if (updateCounter > 66) {
+    const solidsDynamic = entitiesFromSolids({}, dynamicData())
+    options.entities = solidsDynamic
+    updateCounter = 0
+  }
 
   // you can change the state of the viewer at any time by just calling the viewer
   // function again with different params
