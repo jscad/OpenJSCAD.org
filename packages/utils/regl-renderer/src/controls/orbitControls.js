@@ -159,16 +159,15 @@ const update = ({ controls, camera }, output) => {
   * @param {Float} angle value of the angle to rotate
   * @return {Object} the updated camera data/state
 */
-const rotate = ({ controls, camera }, angle) => {
-  const reductionFactor = 500
+const rotate = ({ controls, camera, speed = 1 }, angle) => {
   let {
     thetaDelta,
     phiDelta
   } = controls
 
   if (controls.userControl.rotate) {
-    thetaDelta += (angle[0] / reductionFactor)
-    phiDelta += (angle[1] / reductionFactor)
+    thetaDelta += (angle[0] * speed)
+    phiDelta += (angle[1] * speed)
   }
 
   return {
@@ -187,12 +186,12 @@ const rotate = ({ controls, camera }, angle) => {
   * @param {Float} zoomDelta value of the zoom
   * @return {Object} the updated camera data/state
 */
-const zoom = ({ controls, camera, speed }, zoomDelta = 0) => {
+const zoom = ({ controls, camera, speed = 1 }, zoomDelta = 0) => {
   let { scale } = controls
 
   if (controls.userControl.zoom && camera && zoomDelta !== undefined && zoomDelta !== 0 && !isNaN(zoomDelta)) {
     const sign = Math.sign(zoomDelta) === 0 ? 1 : Math.sign(zoomDelta)
-    zoomDelta = (zoomDelta / zoomDelta) * sign * 0.04 * speed// controls.userControl.zoomSpeed
+    zoomDelta = (zoomDelta / zoomDelta) * sign * speed// controls.userControl.zoomSpeed
     // adjust zoom scaling based on distance : the closer to the target, the lesser zoom scaling we apply
     // zoomDelta *= Math.exp(Math.max(camera.scale * 0.05, 1))
     // updated scale after we will apply the new zoomDelta to the current scale
@@ -229,7 +228,7 @@ const zoom = ({ controls, camera, speed }, zoomDelta = 0) => {
   * @param {Float} delta value of the raw pan delta
   * @return {Object} the updated camera data/state
 */
-const pan = ({ controls, camera, speed }, delta) => {
+const pan = ({ controls, camera, speed = 1 }, delta) => {
   const unproject = require('camera-unproject')
   const { projection, view, viewport } = camera
   const combinedProjView = mat4.multiply([], projection, view)

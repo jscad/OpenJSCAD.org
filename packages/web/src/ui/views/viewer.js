@@ -8,9 +8,9 @@ const perspectiveCamera = cameras.perspective
 const orbitControls = rendererStuff.controls.orbit
 
 // params
-const rotateSpeed = 1
+const rotateSpeed = 0.002
+const zoomSpeed = 0.08
 const panSpeed = 1
-const zoomSpeed = 1
 
 // internal state
 let initialized = false
@@ -61,10 +61,10 @@ module.exports = function viewer (state, i18n) {
     // rotate
     gestures.drags
       .forEach(data => {
-        const delta = [data.delta.x, data.delta.y].map(d => d * -Math.PI)
+        const delta = [data.delta.x, data.delta.y].map(d => -d)
         const { shiftKey } = data.originalEvents[0]
         if (!shiftKey) {
-          const updated = orbitControls.rotate({ controls, camera }, delta)
+          const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, delta)
           controls = { ...controls, ...updated.controls }
         }
       })
@@ -107,13 +107,6 @@ module.exports = function viewer (state, i18n) {
 
       resize(el)
       render(viewerOptions)
-      /* camera.position[0] = Math.cos(tick) * 800
-      perspectiveCamera.update(camera, camera)
-      viewerOptions.camera = camera
-
-      // you can change the state of the viewer at any time by just calling the viewer
-      // function again with different params
-      render(viewerOptions) */
       window.requestAnimationFrame(updateAndRender)
     }
     window.requestAnimationFrame(updateAndRender)
