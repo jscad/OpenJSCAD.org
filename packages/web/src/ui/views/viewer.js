@@ -32,8 +32,10 @@ const axes =
     }
   }
 
+let prevSolids
+
 module.exports = function viewer (state, i18n) {
-  console.log('regen viewer', state.viewer)
+  // console.log('regen viewer', state.viewer)
   const el = html`<canvas id='renderTarget'> </canvas>`
 
   if (!initialized) {
@@ -61,6 +63,18 @@ module.exports = function viewer (state, i18n) {
 
     resize(el)
   } else {
+    if (prevSolids) {
+      let solids = state.design.solids
+      const sameSolids = solids.length === prevSolids.length &&
+      JSON.stringify(state.design.solids) === JSON.stringify(prevSolids)
+      // return sameSolids
+      prevSolids = solids
+      console.log('sameSolids', sameSolids)
+      if (sameSolids) { return el }
+    } else {
+      prevSolids = state.design.solids
+    }
+
     viewerOptions.camera.position = [150, 150, 100]
     viewerOptions.entities = [
       state.viewer.grid.show ? grid : undefined,
@@ -70,6 +84,7 @@ module.exports = function viewer (state, i18n) {
       .filter(x => x !== undefined)
     console.log('rendering', viewerOptions.entities)
     perspectiveCamera.update(camera, camera)
+
     render(viewerOptions)
   }
 

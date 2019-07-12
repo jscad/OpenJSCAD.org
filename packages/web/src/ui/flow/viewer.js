@@ -74,7 +74,7 @@ const actions = ({ sources }) => {
     // sources.store.map(data => data.viewer.grid.show)
   ])
     .thru(withLatestFrom(reducers.toggleAxes, sources.state))
-    .map(data => ({ type: 'toggleAxes', data }))
+    .map(data => ({ type: 'toggleAxes', state: data, sink: 'state' }))
 
   const toggleAutorotate$ = most.mergeArray([
     sources.dom.select('#autoRotate').events('click')
