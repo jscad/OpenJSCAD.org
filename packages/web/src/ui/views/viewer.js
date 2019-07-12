@@ -31,7 +31,7 @@ const axes =
       show: true
     }
   }
-
+let entities = []
 let prevSolids
 
 module.exports = function viewer (state, i18n) {
@@ -63,6 +63,8 @@ module.exports = function viewer (state, i18n) {
 
     resize(el)
   } else {
+    viewerOptions.camera.position = [150, 150, 100]
+
     if (prevSolids) {
       let solids = state.design.solids
       const sameSolids = solids.length === prevSolids.length &&
@@ -70,19 +72,21 @@ module.exports = function viewer (state, i18n) {
       // return sameSolids
       prevSolids = solids
       console.log('sameSolids', sameSolids)
-      if (sameSolids) { return el }
+      if (!sameSolids) {
+        console.log('REGEN')
+        entities = entitiesFromSolids({}, state.design.solids)
+      }
     } else {
       prevSolids = state.design.solids
     }
 
-    viewerOptions.camera.position = [150, 150, 100]
     viewerOptions.entities = [
       state.viewer.grid.show ? grid : undefined,
       state.viewer.axes.show ? axes : undefined,
-      ...entitiesFromSolids({}, state.design.solids)
+      ...entities
     ]
       .filter(x => x !== undefined)
-    console.log('rendering', viewerOptions.entities)
+    // console.log('rendering', viewerOptions.entities)
     perspectiveCamera.update(camera, camera)
 
     render(viewerOptions)
