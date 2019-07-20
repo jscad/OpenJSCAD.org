@@ -16,6 +16,9 @@ This is a very early version of this viewer ! Expect changes !
 
 ### Node.js/headless
 
+- install these packages manually (they had issues in our CI setup as devdependencies)
+  - "gl": "4.1.1",
+  - "pngjs": "3.3.3",
 - try the demo by running ```npm run demo-cli``` if all goes well you should end up with a png image rendering of the demo jscad code (a few solids)
 
 ### Web
