@@ -3,6 +3,7 @@ const requireDesignFromModule = require('./requireDesignFromModule')
 const getAllParameterDefintionsAndValues = require('../parameters/getParameterDefinitionsAndValues')
 const transformSources = require('./transformSources')
 const { registerAllExtensions } = require('../io/registerExtensions')
+
 // taken verbatim from https://github.com/iliakan/detect-node
 // return true if we are are in node/ env that has require()
 const hasRequire = () => Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]'
@@ -16,6 +17,7 @@ const makeWebRequire = require('./webRequire')
  * @param {Object} parameterValuesOverride, the values to use to override the defaults for the current design
  */
 const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverride) => {
+  // console.log('***** loadDesign',mainPath)
   // the root script is the main entry point in a design
   // ie either the only file if there is only one
   // OR the file in the 'main' entry of package.js, index.js, main.js or <folderName>.js
@@ -45,6 +47,7 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
 
   // we need to update the source for our module
   filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
+  // console.log('filesAndFolders',filesAndFolders)
 
   const makeFakeFs = require('./makeFakeFs')
   const { getDesignEntryPoint, getDesignName } = require('./requireDesignUtilsFs')
@@ -55,13 +58,13 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
   const designName = getDesignName(fakeFs, rootPath)
   const designPath = require('path').dirname(rootPath)
 
-  // console.log('HEEEEEERE', 'root', rootPath, 'main', mainPath1, designName, designPath, filesAndFolders)
+  // console.log('***** root', rootPath, 'main', mainPath1, designName, designPath, filesAndFolders)
   // console.log('filesAndFolders', filesAndFolders)
   // console.log('transformed sources', filesAndFolders)
   // now check if we need fake require or not
   // FIXME: we need to come up with a way to intercept node 'require' calls to be able to apply transformSources on the fly
   // since we keep passing the 'mainPath' to the normal require which points to the NON TRANSFORMED source
-  const webRequire = makeWebRequire(filesAndFolders, { apiMainPath })// hasRequire() ? require : makeWebRequire(filesAndFolders, { apiMainPath })
+  const webRequire = makeWebRequire(filesAndFolders, { apiMainPath })
 
   // register all extension formats
   registerAllExtensions(fakeFs, webRequire)
@@ -72,13 +75,12 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
   }
 
   // rootModule SHOULD contain a main() entry and optionally a getParameterDefinitions entrye
-  // console.log('and now HEEERe', mainPath, mainPath1, rootPath)
-  const rootModule = requireDesignFromModule(mainPath, webRequire)
-  // console.log('rootModule', rootModule, 'parameterValuesOverride', parameterValuesOverride)
+  // console.log('*****', mainPath, mainPath1)
+  const rootModule = requireDesignFromModule(mainPath1, webRequire)
   // the design (module tree) has been loaded at this stage
   // now we can get our usefull data (definitions and values/defaults)
   const parameters = getAllParameterDefintionsAndValues(rootModule, parameterValuesOverride)
-  // console.log('parameters', parameterDefinitions, parameterValues, parameterDefaults)
+
   return { rootModule, ...parameters }
 }
 
