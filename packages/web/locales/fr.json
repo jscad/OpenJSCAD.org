@@ -1,41 +1,65 @@
 {
-  "language":"langue",
+  "language":"french",
+
   "english":"anglais",
   "german":"allemand",
   "french":"français",
+  "japanese":"",
+
+  "options.language.h3":"Langue",
+  "options.theme.h3": "Theme",
+
+  "options.generation.h3": "Génération de Géometrie",
+  "options.generation.caching":"Systeme de cache experimental de la geometrie",
+  "options.generation.timeout": "Timeout génération de solides (ms)",
+
+  "options.viewer.h3": "Visualisation 3d",
+  "options.viewer.zoomonparamchange":"Zoom adapté lors de nouveaux paramètres",
+  "options.viewer.zoomonreload":"Zoom adapté lors de chargement de design",
+
+  "options.storage.h3":"Stockage",
+  "options.storage.settingspath":"Chemin de stockage des paramètres",
+
+  "options.filehandling.h3": "File Handling",
+  "options.filehandling.converttoscript":"Convert external formats to JSCAD scripts",
+
+  "options.shortcuts.h3":"Racourcis Clavier",
+
+  "command":"Commande",
+  "keybinding":"Racourci",
+  "when":"Quand",
+  "typeandenter":"type and hit enter",
+
+  "notsettable": "(non modifiable)",
   "see":"voir",
-  "grid": "grille",
-  "axes":"axes",
-  "autorotate": "auto rotation",
-  "auto reload": "auto chargement",
-  "storage": "stockage",
-  "export":"exporter",
-  "load jscad project":"charger projet jscad",
-  "timeout for solids generation": "timeout génération de solides",
-  "geometry generation": "génération de géometrie",
-  "experimental geometry caching":"systeme de cache experimental de la geometrie",
-  "zoom to fit on new parameters":"zoom adapté lors de nouveaux paramètres",
-  "zoom to fit on design load":"zoom adapté lors de chargement de design",
-  "settings storage path":"chemin de stockage des paramètres",
-  "3d viewer": "visualisation 3d",
-  "(not settable)": "(non modifiable)",
-  "theme": "theme",
+
+  "grid": "Grille",
+  "axes":"Axes",
+  "autorotate": "Auto rotation",
+  "auto reload": "Auto chargement",
+  "export":"Exporter",
+  "load jscad project":"Charger projet jscad",
+
   "STL (Binary)":"STL (binaire)",
   "STL (ASCII)":"STL (ASCII)",
   "AMF (experimental)":"AMF (experimental)",
-  "update":"actualiser",
-  "instant update":"actualisation instantanée",
-  "keyboard shortcuts":"racourcis clavier",
-  "command":"commande",
-  "keybinding":"racourci",
-  "when":"quand",
-  "always":"toujours",
-  "front":"devant",
-  "back":"derrière",
-  "top":"dessus",
-  "bottom":"dessous",
-  "left":"gauche",
-  "right":"droite",
-  "perspective":"perspective",
-  "orthographic":"orthographique"
+
+  "update":"Actualiser",
+  "instant update":"Actualisation Instantanée",
+
+  "toPresetView":"Reset view",
+  "front":"Devant",
+  "back":"Derrière",
+  "top":"Dessus",
+  "bottom":"Dessous",
+  "left":"Gauche",
+  "right":"Droite",
+
+  "setProjectionType":"View type",
+  "perspective":"Perspective",
+  "orthographic":"Orthographique",
+
+  "reEvaluateCode":"Reload script",
+
+  "always":"Toujours",
 }
