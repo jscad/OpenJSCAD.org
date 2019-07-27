@@ -12,24 +12,41 @@ const modulifyTransform = (options, entry) => {
   return Object.assign({}, entry, { source })
 }
 
-const translateToJscad = (options, entry) => {
-  // console.log('translateToJscad', entry)
-  const { apiMainPath } = options
-  const deserializeStl = require('@jscad/io').stlDeSerializer.deserialize
-  const source = deserializeStl(entry.source, entry.name, options)
-  // const ext = 'js'
-  // const name = entry.name.split('.') + ext
-  // const fullPath = entry.fullPath.split('.') + ext
-  return Object.assign({}, entry, { source })
+const transformDxfToJscad = (options, entry) => {
+  // console.log('***** transformDxfToJscad',options,entry)
+  const deserialize = require('@jscad/io').dxfDeSerializer.deserialize
+  const source = deserialize(entry.source, entry.name, options)
+
+  const ext = 'jscad'
+  const name = entry.name.substring(0, entry.name.lastIndexOf('.') + 1) + ext
+  const fullPath = '/' + name
+
+  return Object.assign({}, entry, { ext, name, fullPath, source })
+}
+
+const transformStlToJscad = (options, entry) => {
+  console.log('***** transformStlToJscad',options,entry)
+  const deserialize = require('@jscad/io').stlDeSerializer.deserialize
+  const source = deserialize(entry.source, entry.name, options)
+
+  const ext = 'jscad'
+  const name = entry.name.substring(0, entry.name.lastIndexOf('.') + 1) + ext
+  const fullPath = '/' + name
+
+  return Object.assign({}, entry, { ext, name, fullPath, source })
 }
 
 const transformSources = (options, filesAndFolders) => {
-  // console.log('transformSources', options, filesAndFolders)
+  console.log('***** transformSources', options, filesAndFolders)
   const transformsPerFormat = {
     'js': [modulifyTransform],
     'jscad': [modulifyTransform],
-    'stl': [translateToJscad, modulifyTransform],
-    'amf': [translateToJscad, modulifyTransform]
+    // formats that require translation
+    //'amf': [transformToJscad, modulifyTransform],
+    'dxf': [transformDxfToJscad, modulifyTransform],
+    //'obj': [transformToJscad, modulifyTransform],
+    'stl': [transformStlToJscad, modulifyTransform],
+    //'svg': [transformToJscad, modulifyTransform]
   }
 
   function updateEntry (entry) {
@@ -39,7 +56,6 @@ const transformSources = (options, filesAndFolders) => {
         return transform(options, entry)
       }, entry)
 
-      // console.log('source after transform', transformedEntry)
       return transformedEntry// Object.assign({}, entry, {source: transformedEntry.source})
     }
     if (entry.children) {
