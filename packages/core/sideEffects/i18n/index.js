@@ -3,7 +3,8 @@ const isElectron = require('is-electron')
 const longNames = {
   en: 'english',
   de: 'german',
-  fr: 'french'
+  fr: 'french',
+  ja: 'japanese'
 }
 
 const getDefaultLocale = () => {
@@ -59,7 +60,9 @@ const makei18nSideEffect = (options) => {
     getAvailableLanguages: command => {
       const availableLanguages = Object.keys(translations)
         .map(code => {
-          const fullName = longNames[code] ? longNames[code] : 'placeholder'
+          let fullName = longNames[code] ? longNames[code] : 'placeholder'
+          let translation = translations[code]
+          if (translation && 'language' in translation) fullName = translation.language
           return { code, fullName }
         })
       translationsCB.callback({ data: availableLanguages, type: 'getAvailableLanguages' })
