@@ -14,6 +14,8 @@ const packageMetadata = require('../../../package.json')
 
 const jsonCompare = (first, second) => JSON.stringify(first) === JSON.stringify(second)
 
+const serialize = require('serialize-to-js')
+
 // what fields should we check to determine if two designs are the same
 const designEqualityFields = [
   'parameterDefinitions',
@@ -266,7 +268,6 @@ const reducers = {
 
   requestWriteCachedGeometry: ({ design }, cache) => {
     console.log('requestWriteCachedGeometry', cache)
-    const serialize = require('serialize-to-js').serialize
     let data = {}
     Object.keys(cache).forEach(function (key) {
       data[key] = cache[key]

@@ -52,6 +52,7 @@
     "most-gestures": "^0.3.0",
     "most-proxy": "^3.3.0",
     "on-load": "^3.4.0",
+    "serialize-to-js": "^3.0.0",
     "webworkify": "1.5.0"
   },
   "devDependencies": {
