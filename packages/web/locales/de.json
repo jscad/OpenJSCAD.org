@@ -1,41 +1,65 @@
 {
-  "language": "Sprache",
+  "language":"german",
+
   "english":"englisch",
   "german":"deutsch",
   "french":"französich",
+  "japanese":"",
+
+  "options.language.h3":"Sprache",
+  "options.theme.h3":"Thema",
+
+  "options.generation.h3":"Generieren von Geometrie",
+  "options.generation.caching":"Experimenteles caching von Geometrie,",
+  "options.generation.timeout":"Abfallzeit für generieren von Soliden (ms)",
+
+  "options.viewer.h3":"3d Viewer",
+  "options.viewer.zoomonparamchange":"Alles Zoom bei neue Parameter",
+  "options.viewer.zoomonreload":"Alles Zoom beim laden von Designs",
+
+  "options.storage.h3":"Speicher",
+  "options.storage.settingspath":"Dateipfad für Einstellungen",
+
+  "options.filehandling.h3":"File Handling",
+  "options.filehandling.converttoscript":"Convert external formats to JSCAD scripts",
+
+  "options.shortcuts.h3":"Tastenkombinationen",
+
+  "command":"Befehl",
+  "keybinding":"Tastenkombination",
+  "when":"Wann",
+  "typeandenter":"type and hit enter",
+
+  "notsettable)": "(nicht verränderbar)",
   "see":"sehe",
+
   "grid": "gitter",
   "axes":"achsen",
   "autorotate": "auto drehung",
   "auto reload": "auto laden",
-  "storage": "speicher",
   "export":"exportieren",
   "load jscad project":"jscad Projekt laden",
-  "timeout for solids generation": "Abfallzeit für generieren von Soliden",
-  "geometry generation": "generieren von Geometrie",
-  "experimental geometry caching":"experimenteles caching von Geometrie",
-  "zoom to fit on new parameters":"Alles Zoom bei neue Parameter",
-  "zoom to fit on design load":"Alles Zoom beim laden von Designs",
-  "settings storage path":"Dateipfad für Einstellungen",
-  "3d viewer": "3d viewer",
-  "(not settable)": "(nicht verränderbar)",
-  "theme": "Thema",
+
   "STL (Binary)":"STL (binär)",
   "STL (ASCII)":"STL (ASCII)",
-  "AMF (experimental)":"AMF (experimentell)",
+  "AMF (experimental)":"AMF",
+
   "update":"aktualisieren",
   "instant update":"automatisch aktualisieren",
-  "keyboard shortcuts":"Tastenkombinationen",
-  "command":"befehl",
-  "keybinding":"Tastenkombination",
-  "when":"wann",
-  "always":"immer",
-  "front":"forne",
-  "back":"hinten",
-  "top":"oben",
-  "bottom":"unten",
-  "left":"links",
-  "right":"rechts",
-  "perspective":"perspektive",
-  "orthographic":"orthographic"
+
+  "toPresetView":"Reset view",
+  "front":"Forne",
+  "back":"Hinten",
+  "top":"Oben",
+  "bottom":"Unten",
+  "left":"Links",
+  "right":"Rechts",
+
+  "setProjectionType":"View type",
+  "perspective":"Perspektive",
+  "orthographic":"Orthographic",
+
+  "reEvaluateCode":"Reload script",
+
+  "always":"Immer"
 }

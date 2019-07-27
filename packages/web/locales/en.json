@@ -1,41 +1,65 @@
 {
-  "language":"language",
-  "english":"english",
-  "german":"german",
-  "french":"french",
+  "language":"english",
+
+  "english":"English",
+  "german":"German",
+  "french":"French",
+  "japanese":"Japanese",
+
+  "options.language.h3":"Languages",
+  "options.theme.h3":"Themes",
+
+  "options.generation.h3":"Geometry Generation",
+  "options.generation.caching":"Enable Experimental Geometry Caching, ",
+  "options.generation.timeout":"Timeout for Solid Generation (ms)",
+
+  "options.viewer.h3":"Viewer",
+  "options.viewer.zoomonparamchange":"Zoom to fit on parameter changes",
+  "options.viewer.zoomonreload":"Zoom to fit on design reload",
+
+  "options.storage.h3": "Storage",
+  "options.storage.settingspath":"Settings storage path",
+
+  "options.filehandling.h3": "File Handling",
+  "options.filehandling.converttoscript":"Convert external formats to JSCAD scripts",
+
+  "options.shortcuts.h3":"Keyboard Shortcuts",
+
+  "command":"Command",
+  "keybinding":"Key Stroke",
+  "when":"When",
+  "typeandenter":"type and hit enter",
+
+  "notsettable":"(not settable)",
   "see":"see",
-  "grid": "grid",
-  "axes":"axes",
-  "autorotate": "autorotate",
-  "auto reload": "auto reload",
-  "storage": "storage",
-  "export":"export",
-  "load jscad project":"",
-  "timeout for solids generation": "",
-  "geometry generation": "",
-  "experimental geometry caching":"",
-  "zoom to fit on new parameters":"",
-  "zoom to fit on design load":"",
-  "settings storage path":"",
-  "3d viewer":"",
-  "(not settable)": "",
-  "theme": "",
-  "STL (Binary)":"",
-  "STL (ASCII)":"",
-  "AMF (experimental)":"",
-  "update":"",
-  "instant update":"",
-  "keyboard shortcuts":"",
-  "command":"",
-  "keybinding":"",
-  "when":"",
-  "always":"",
-  "front":"",
-  "back":"",
-  "top":"",
-  "bottom":"",
-  "left":"",
-  "right":"",
-  "perspective":"",
-  "orthographic":""
+
+  "grid":"Show Grid",
+  "axes":"Show Axis",
+  "autorotate": "Enable Auto-rotate",
+  "auto reload": "Enable Auto-reload",
+  "export":"Export",
+  "load jscad project":"Load a new project",
+
+  "STL (Binary)":"STL (binary)",
+  "STL (ASCII)":"STL (text)",
+  "AMF (experimental)":"AMF",
+
+  "update":"Update",
+  "instant update":"Instant Update",
+
+  "toPresetView":"Reset view",
+  "front":"Front",
+  "back":"Back",
+  "top":"Top",
+  "bottom":"Bottom",
+  "left":"Left",
+  "right":"Right",
+
+  "setProjectionType":"View type",
+  "perspective":"Perspective",
+  "orthographic":"Orthographic",
+
+  "reEvaluateCode":"Reload script",
+
+  "always":"Always"
 }
