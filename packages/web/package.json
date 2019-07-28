@@ -41,6 +41,7 @@
     "@jscad/core": "0.4.0",
     "@jscad/csg": "0.7.0",
     "@jscad/csg-viewer": "github:jscad/csg-viewer#overhaul",
+    "@jscad/regl-renderer":"0.0.0",
     "@jscad/examples": "1.7.2",
     "@jscad/io": "pre-V2",
     "bel": "^6.0.0",

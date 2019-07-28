@@ -64,7 +64,7 @@ const controlsState = {
 
 const defaults = Object.assign({}, controlsState, controlsProps)
 
-const update = ({ controls, camera }) => {
+const update = ({ controls, camera }, output) => {
   // custom z up is settable, with inverted Y and Z (since we use camera[2] => up)
   const { EPS, drag } = controls
   let { position, target } = camera
@@ -130,6 +130,11 @@ const update = ({ controls, camera }) => {
   // let newMatrix = composeMat4(mat4.create(), newPosition, quaternion, [1, 1, 1])
 
   // view = newMatrix
+
+  /* if (output) {
+    output.controls.thetaDelta = curThetaDelta * dragEffect
+  } */
+
   return {
     // controls state
     controls: {
@@ -154,16 +159,15 @@ const update = ({ controls, camera }) => {
   * @param {Float} angle value of the angle to rotate
   * @return {Object} the updated camera data/state
 */
-const rotate = ({ controls, camera }, angle) => {
-  const reductionFactor = 500
+const rotate = ({ controls, camera, speed = 1 }, angle) => {
   let {
     thetaDelta,
     phiDelta
   } = controls
 
   if (controls.userControl.rotate) {
-    thetaDelta += (angle[0] / reductionFactor)
-    phiDelta += (angle[1] / reductionFactor)
+    thetaDelta += (angle[0] * speed)
+    phiDelta += (angle[1] * speed)
   }
 
   return {
@@ -182,12 +186,12 @@ const rotate = ({ controls, camera }, angle) => {
   * @param {Float} zoomDelta value of the zoom
   * @return {Object} the updated camera data/state
 */
-const zoom = ({ controls, camera }, zoomDelta = 0) => {
+const zoom = ({ controls, camera, speed = 1 }, zoomDelta = 0) => {
   let { scale } = controls
 
   if (controls.userControl.zoom && camera && zoomDelta !== undefined && zoomDelta !== 0 && !isNaN(zoomDelta)) {
     const sign = Math.sign(zoomDelta) === 0 ? 1 : Math.sign(zoomDelta)
-    zoomDelta = (zoomDelta / zoomDelta) * sign * 0.04// controls.userControl.zoomSpeed
+    zoomDelta = (zoomDelta / zoomDelta) * sign * speed// controls.userControl.zoomSpeed
     // adjust zoom scaling based on distance : the closer to the target, the lesser zoom scaling we apply
     // zoomDelta *= Math.exp(Math.max(camera.scale * 0.05, 1))
     // updated scale after we will apply the new zoomDelta to the current scale
@@ -204,7 +208,7 @@ const zoom = ({ controls, camera }, zoomDelta = 0) => {
       const width = Math.tan(camera.fov) * distance * camera.aspect
       const height = Math.tan(camera.fov) * distance
 
-      const projection = require('../cameraAndControls/orthographicCamera').setProjection(camera, { width, height })
+      const projection = require('../cameras/orthographicCamera').setProjection(camera, { width, height })
       camera = projection
     }
 
@@ -224,7 +228,7 @@ const zoom = ({ controls, camera }, zoomDelta = 0) => {
   * @param {Float} delta value of the raw pan delta
   * @return {Object} the updated camera data/state
 */
-const pan = ({ controls, camera }, delta) => {
+const pan = ({ controls, camera, speed = 1 }, delta) => {
   const unproject = require('camera-unproject')
   const { projection, view, viewport } = camera
   const combinedProjView = mat4.multiply([], projection, view)
@@ -244,7 +248,7 @@ const pan = ({ controls, camera }, delta) => {
   const unPanEnd = unproject([], panEnd, viewport, invProjView)
   // TODO scale by the correct near/far value instead of 1000 ?
   // const planesDiff = camera.far - camera.near
-  const offset = vec3.subtract([], unPanStart, unPanEnd).map(x => x * 1000 * controls.userControl.panSpeed * controls.scale)
+  const offset = vec3.subtract([], unPanStart, unPanEnd).map(x => x * speed * 250 * controls.scale)
 
   return {
     controls,

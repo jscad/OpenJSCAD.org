@@ -1,0 +1,15 @@
+html{
+    height: 100%;
+  }
+  body {
+    min-height: 100%;
+    min-width: 100%;
+  }
+  
+document.body {
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    position: absolute;
+}

@@ -11,5 +11,9 @@ module.exports = {
     orthographic: require('./cameras/orthographicCamera'),
     perspective: require('./cameras/perspectiveCamera')
   },
-  entitiesFromSolids: require('./geometry-utils/entitiesFromSolids')
+  controls: {
+    orbit: require('./controls/orbitControls')
+  },
+  entitiesFromSolids: require('./geometry-utils/entitiesFromSolids'),
+
 }
