@@ -1,44 +1,44 @@
 {
   "language":"french",
 
-  "english":"anglais",
-  "german":"allemand",
-  "french":"français",
-  "japanese":"",
+  "english":"Anglais",
+  "german":"Allemand",
+  "french":"Français",
+  "japanese":"Japonais",
 
-  "options.language.h3":"Langue",
-  "options.theme.h3": "Theme",
+  "Languages":"Langue",
+  "Themes": "Theme",
 
-  "options.generation.h3": "Génération de Géometrie",
-  "options.generation.caching":"Systeme de cache experimental de la geometrie",
-  "options.generation.timeout": "Timeout génération de solides (ms)",
+  "Generation": "Génération de Géometrie",
+  "enable geometry caching":"Systeme de cache experimental de la geometrie",
+  "timeout for generation": "Timeout génération de solides (ms)",
 
-  "options.viewer.h3": "Visualisation 3d",
-  "options.viewer.zoomonparamchange":"Zoom adapté lors de nouveaux paramètres",
-  "options.viewer.zoomonreload":"Zoom adapté lors de chargement de design",
+  "Viewer": "Visualisation 3d",
+  "enable zoom on new parameters":"Zoom adapté lors de nouveaux paramètres",
+  "enable zoom on reload":"Zoom adapté lors de chargement de design",
 
-  "options.storage.h3":"Stockage",
-  "options.storage.settingspath":"Chemin de stockage des paramètres",
+  "Storage":"Stockage",
+  "settings storage path":"Chemin de stockage des paramètres",
 
-  "options.filehandling.h3": "File Handling",
-  "options.filehandling.converttoscript":"Convert external formats to JSCAD scripts",
+  "File Handling": "File Handling",
+  "enable conversion to scripts":"Convert external formats to JSCAD scripts",
 
-  "options.shortcuts.h3":"Racourcis Clavier",
+  "Shortcuts":"Racourcis Clavier",
 
-  "command":"Commande",
-  "keybinding":"Racourci",
-  "when":"Quand",
-  "typeandenter":"type and hit enter",
+  "Command":"Commande",
+  "Key Binding":"Racourci",
+  "When":"Quand",
+  "type and hit enter":"type and hit enter",
 
-  "notsettable": "(non modifiable)",
+  "not settable": "(non modifiable)",
   "see":"voir",
 
   "grid": "Grille",
   "axes":"Axes",
-  "autorotate": "Auto rotation",
+  "auto rotate": "Auto rotation",
   "auto reload": "Auto chargement",
   "export":"Exporter",
-  "load jscad project":"Charger projet jscad",
+  "load project":"Charger projet jscad",
 
   "STL (Binary)":"STL (binaire)",
   "STL (ASCII)":"STL (ASCII)",
