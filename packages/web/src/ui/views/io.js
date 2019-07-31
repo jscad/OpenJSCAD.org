@@ -13,8 +13,8 @@ module.exports = function io (state, i18n) {
   return html`
   <section id='io'>
   
-      <input type="file" value="${i18n`load jscad project`}" id="fileLoader" multiple webkitdirectory mozdirectory msdirectory odirectory directory  />
-      <label for="fileLoader"> ${i18n`load jscad project`}> </label>
+      <input type="file" value="${i18n`load project`}" id="fileLoader" multiple webkitdirectory mozdirectory msdirectory odirectory directory  />
+      <label for="fileLoader"> ${i18n`load project`}> </label>
 
       <label for="autoReload">${i18n`auto reload`}</label>
         <input type="checkbox" id="autoReload" checked=${state.design.autoReload}/>

@@ -7,7 +7,7 @@ module.exports = function shortcuts (state, i18n) {
 
     // if we are in the midst of assigning a keypress (inProgress) display 'type & hit enter'
     // if we already have a temporary key use that one instead
-    const placeholder = (tmpKey && tmpKey.length > 0) ? tmpKey : i18n.translate('typeandenter')
+    const placeholder = (tmpKey && tmpKey.length > 0) ? tmpKey : i18n.translate('type and hit enter')
     const value = binding.inProgress ? '' : key
 
     const validArgs = args || '' // to prevent undefined args
@@ -31,13 +31,13 @@ module.exports = function shortcuts (state, i18n) {
 
   return html`
 <section id='shortcuts'>   
-  <h3> ${i18n`options.shortcuts.h3`} </h3>
+  <h3> ${i18n`Shortcuts`} </h3>
   <table>
     <thead>
       <tr>
-        <th>${i18n`command`}</th>
-        <th>${i18n`keybinding`}</th>
-        <th>${i18n`when`}</th>
+        <th>${i18n`Command`}</th>
+        <th>${i18n`Key Binding`}</th>
+        <th>${i18n`When`}</th>
       </tr>
     </thead>
     <tbody>
