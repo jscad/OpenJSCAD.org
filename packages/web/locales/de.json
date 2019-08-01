@@ -1,41 +1,65 @@
 {
-  "language": "Sprache",
-  "english":"englisch",
-  "german":"deutsch",
-  "french":"französich",
+  "language":"german",
+
+  "english":"Englisch",
+  "german":"Deutsch",
+  "french":"Französich",
+  "japanese":"Japanisch",
+
+  "Languages":"Sprache",
+  "Themes":"Thema",
+
+  "Generation":"Generieren von Geometrie",
+  "enable geometry caching":"Experimenteles caching von Geometrie,",
+  "timeout for generation":"Abfallzeit für generieren von Soliden (ms)",
+
+  "Viewer":"3d Viewer",
+  "enable zoom on new parameters":"Alles Zoom bei neue Parameter",
+  "enable zoom on reload":"Alles Zoom beim laden von Designs",
+
+  "Storage":"Speicher",
+  "settings storage path":"Dateipfad für Einstellungen",
+
+  "File Handling":"File Handling",
+  "enable conversion to scripts":"Convert external formats to JSCAD scripts",
+
+  "Shortcuts":"Tastenkombinationen",
+
+  "Command":"Befehl",
+  "Key Binding":"Tastenkombination",
+  "When":"Wann",
+  "type and hit enter":"type and hit enter",
+
+  "not settable": "(nicht verränderbar)",
   "see":"sehe",
+
   "grid": "gitter",
   "axes":"achsen",
-  "autorotate": "auto drehung",
+  "auto rotate": "auto drehung",
   "auto reload": "auto laden",
-  "storage": "speicher",
   "export":"exportieren",
-  "load jscad project":"jscad Projekt laden",
-  "timeout for solids generation": "Abfallzeit für generieren von Soliden",
-  "geometry generation": "generieren von Geometrie",
-  "experimental geometry caching":"experimenteles caching von Geometrie",
-  "zoom to fit on new parameters":"Alles Zoom bei neue Parameter",
-  "zoom to fit on design load":"Alles Zoom beim laden von Designs",
-  "settings storage path":"Dateipfad für Einstellungen",
-  "3d viewer": "3d viewer",
-  "(not settable)": "(nicht verränderbar)",
-  "theme": "Thema",
+  "load project":"JSCAD Projekt laden",
+
   "STL (Binary)":"STL (binär)",
   "STL (ASCII)":"STL (ASCII)",
-  "AMF (experimental)":"AMF (experimentell)",
+  "AMF (experimental)":"AMF",
+
   "update":"aktualisieren",
   "instant update":"automatisch aktualisieren",
-  "keyboard shortcuts":"Tastenkombinationen",
-  "command":"befehl",
-  "keybinding":"Tastenkombination",
-  "when":"wann",
-  "always":"immer",
-  "front":"forne",
-  "back":"hinten",
-  "top":"oben",
-  "bottom":"unten",
-  "left":"links",
-  "right":"rechts",
-  "perspective":"perspektive",
-  "orthographic":"orthographic"
+
+  "toPresetView":"Reset view",
+  "front":"Forne",
+  "back":"Hinten",
+  "top":"Oben",
+  "bottom":"Unten",
+  "left":"Links",
+  "right":"Rechts",
+
+  "setProjectionType":"View type",
+  "perspective":"Perspektive",
+  "orthographic":"Orthographic",
+
+  "reEvaluateCode":"Reload script",
+
+  "always":"Immer"
 }

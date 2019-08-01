@@ -238,6 +238,9 @@ header .designName{
   display: table-row;
   align-self: flex-end;
 }
+#shortcuts {
+  padding: 5px;
+}
 
 #editor {
   position: absolute;
