@@ -12,24 +12,63 @@ const modulifyTransform = (options, entry) => {
   return Object.assign({}, entry, { source })
 }
 
-const translateToJscad = (options, entry) => {
-  // console.log('translateToJscad', entry)
-  const { apiMainPath } = options
-  const deserializeStl = require('@jscad/io').stlDeSerializer.deserialize
-  const source = deserializeStl(entry.source, entry.name, options)
-  // const ext = 'js'
-  // const name = entry.name.split('.') + ext
-  // const fullPath = entry.fullPath.split('.') + ext
-  return Object.assign({}, entry, { source })
+/*
+ * Create a new entry for a script (JSCAD) from the given entry and source
+ */
+const createJscadEntry = (entry, source) => {
+  const ext = 'jscad'
+  const name = entry.name.substring(0, entry.name.lastIndexOf('.') + 1) + ext
+  const fullPath = '/' + name
+
+  return Object.assign({}, entry, { ext, name, fullPath, source })
+}
+
+const transformAmfToJscad = (options, entry) => {
+  // console.log('***** transformAmfToJscad',options,entry)
+  const deserialize = require('@jscad/io').amfDeSerializer.deserialize
+  const source = deserialize(entry.source, entry.name, options)
+  return createJscadEntry(entry, source)
+}
+
+const transformDxfToJscad = (options, entry) => {
+  // console.log('***** transformDxfToJscad',options,entry)
+  const deserialize = require('@jscad/io').dxfDeSerializer.deserialize
+  const source = deserialize(entry.source, entry.name, options)
+  return createJscadEntry(entry, source)
+}
+
+const transformObjToJscad = (options, entry) => {
+  // console.log('***** transformObjToJscad',options,entry)
+  const deserialize = require('@jscad/io').objDeSerializer.deserialize
+  const source = deserialize(entry.source, entry.name, options)
+  return createJscadEntry(entry, source)
+}
+
+const transformStlToJscad = (options, entry) => {
+  // console.log('***** transformStlToJscad',options,entry)
+  const deserialize = require('@jscad/io').stlDeSerializer.deserialize
+  const source = deserialize(entry.source, entry.name, options)
+  return createJscadEntry(entry, source)
+}
+
+const transformSvgToJscad = (options, entry) => {
+  // console.log('***** transformSvgToJscad',options,entry)
+  const deserialize = require('@jscad/io').svgDeSerializer.deserialize
+  const source = deserialize(entry.source, entry.name, options)
+  return createJscadEntry(entry, source)
 }
 
 const transformSources = (options, filesAndFolders) => {
-  // console.log('transformSources', options, filesAndFolders)
+  // console.log('***** transformSources', options, filesAndFolders)
   const transformsPerFormat = {
     'js': [modulifyTransform],
     'jscad': [modulifyTransform],
-    'stl': [translateToJscad, modulifyTransform],
-    'amf': [translateToJscad, modulifyTransform]
+    // formats that require translation
+    'amf': [transformAmfToJscad, modulifyTransform],
+    'dxf': [transformDxfToJscad, modulifyTransform],
+    'obj': [transformObjToJscad, modulifyTransform],
+    'stl': [transformStlToJscad, modulifyTransform],
+    'svg': [transformSvgToJscad, modulifyTransform]
   }
 
   function updateEntry (entry) {
@@ -39,8 +78,7 @@ const transformSources = (options, filesAndFolders) => {
         return transform(options, entry)
       }, entry)
 
-      // console.log('source after transform', transformedEntry)
-      return transformedEntry// Object.assign({}, entry, {source: transformedEntry.source})
+      return transformedEntry
     }
     if (entry.children) {
       entry.children = entry.children.map(function (childEntry) {
