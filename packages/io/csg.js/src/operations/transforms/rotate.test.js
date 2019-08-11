@@ -10,7 +10,7 @@ test('rotate: rotating of a path2 produces expected changes to points', t => {
   let geometry = path2.fromPoints({}, [[1, 0], [0, 1], [-1, 0]])
 
   // rotate about Z
-  let rotated = rotate([0, 0, 90], geometry)
+  let rotated = rotate([0, 0, Math.PI/2], geometry)
   let obs = path2.toPoints(rotated)
   let exp = [
     new Float32Array([ 0, 1 ]),
@@ -19,7 +19,7 @@ test('rotate: rotating of a path2 produces expected changes to points', t => {
   ]
   t.true(comparePoints(obs, exp))
 
-  rotated = rotateZ(90, geometry)
+  rotated = rotateZ(Math.PI/2, geometry)
   obs = path2.toPoints(rotated)
   t.true(comparePoints(obs, exp))
 })
@@ -28,7 +28,7 @@ test('rotate: rotating of a geom2 produces expected changes to points', t => {
   let geometry = geom2.fromPoints([[0, 0], [1, 0], [0, 1]])
 
   // rotate about Z
-  let rotated = rotate([0, 0, -90], geometry)
+  let rotated = rotate([0, 0, -Math.PI/2], geometry)
   let obs = geom2.toPoints(rotated)
   let exp = [
     new Float32Array([0, 0]),
@@ -37,7 +37,7 @@ test('rotate: rotating of a geom2 produces expected changes to points', t => {
   ]
   t.true(comparePoints(obs, exp))
 
-  rotated = rotateZ(-90, geometry)
+  rotated = rotateZ(-Math.PI/2, geometry)
   obs = geom2.toPoints(rotated)
   t.true(comparePoints(obs, exp))
 })
@@ -54,7 +54,7 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', t => {
   let geometry = geom3.fromPoints(points)
 
   // rotate about X
-  let rotated = rotate([90, 0, 0], geometry)
+  let rotated = rotate([Math.PI/2, 0, 0], geometry)
   let obs = geom3.toPoints(rotated)
   let exp = [
     [ new Float32Array([ -2, 12, -7 ]), new Float32Array([ -2, -18, -7 ]),
@@ -72,12 +72,12 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', t => {
   ]
   t.deepEqual(obs, exp)
 
-  rotated = rotateX(90, geometry)
+  rotated = rotateX(Math.PI/2, geometry)
   obs = geom3.toPoints(rotated)
   t.deepEqual(obs, exp)
 
   // rotate about Y
-  rotated = rotate([0, -90, 0], geometry)
+  rotated = rotate([0, -Math.PI/2, 0], geometry)
   obs = geom3.toPoints(rotated)
   exp = [
     [ new Float32Array([ 12, -7, -2 ]), new Float32Array([ -18, -7, -2 ]),
@@ -95,12 +95,12 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', t => {
   ]
   t.deepEqual(obs, exp)
 
-  rotated = rotateY(-90, geometry)
+  rotated = rotateY(-Math.PI/2, geometry)
   obs = geom3.toPoints(rotated)
   t.deepEqual(obs, exp)
 
   // rotate about Z
-  rotated = rotate([0, 0, 180], geometry)
+  rotated = rotate([0, 0, Math.PI], geometry)
   obs = geom3.toPoints(rotated)
   exp = [
     [ new Float32Array([ 2, 7, -12 ]), new Float32Array([ 2, 7, 18 ]),
@@ -118,7 +118,7 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', t => {
   ]
   t.deepEqual(obs, exp)
 
-  rotated = rotateZ(180, geometry)
+  rotated = rotateZ(Math.PI, geometry)
   obs = geom3.toPoints(rotated)
   t.deepEqual(obs, exp)
 })
@@ -128,7 +128,7 @@ test('rotate: rotating of multiple objects produces expected changes', t => {
   let geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
   let geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])
 
-  let rotated = rotate([0, 0, 90], junk, geometry1, geometry2)
+  let rotated = rotate([0, 0, Math.PI/2], junk, geometry1, geometry2)
 
   t.is(rotated[0], junk)
 
