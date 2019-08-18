@@ -1,10 +1,12 @@
-const vec2 = require('./vec2')
-const vec3 = require('./vec3')
+const mat4 = require('./mat4')
 
 const line2 = require('./line2')
 const line3 = require('./line3')
 
 const plane = require('./plane')
+
+const vec2 = require('./vec2')
+const vec3 = require('./vec3')
 
 /** class OrthoNormalBasis
  * Reprojects points on a 3D plane onto a 2D plane
@@ -148,25 +150,24 @@ OrthoNormalBasis.Z0Plane = function () {
 }
 
 OrthoNormalBasis.prototype = {
+
   getProjectionMatrix: function () {
-    const Matrix4x4 = require('./Matrix4') // FIXME: circular dependencies Matrix=>OrthoNormalBasis => Matrix
-    return new Matrix4x4([
-      this.u.x, this.v.x, this.plane.normal.x, 0,
-      this.u.y, this.v.y, this.plane.normal.y, 0,
-      this.u.z, this.v.z, this.plane.normal.z, 0,
-      0, 0, -this.plane.w, 1
-    ])
+    return mat4.fromValues(
+      this.u[0], this.v[0], this.plane[0], 0,
+      this.u[1], this.v[1], this.plane[1], 0,
+      this.u[2], this.v[2], this.plane[2], 0,
+      0, 0, -this.plane[3], 1
+    )
   },
 
   getInverseProjectionMatrix: function () {
-    const Matrix4x4 = require('./Matrix4') // FIXME: circular dependencies Matrix=>OrthoNormalBasis => Matrix
-    let p = this.plane.normal.times(this.plane.w)
-    return new Matrix4x4([
-      this.u.x, this.u.y, this.u.z, 0,
-      this.v.x, this.v.y, this.v.z, 0,
-      this.plane.normal.x, this.plane.normal.y, this.plane.normal.z, 0,
-      p.x, p.y, p.z, 1
-    ])
+    let p = vec3.scale(this.plane[3], this.plane)
+    return mat4.fromValues(
+      this.u[0], this.u[1], this.u[2], 0,
+      this.v[0], this.v[1], this.v[2], 0,
+      this.plane[0], this.plane[1], this.plane[2], 0,
+      p[0], p[1], p[2], 1
+    )
   },
 
   to2D: function (point) {
