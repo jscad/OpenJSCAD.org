@@ -162,6 +162,9 @@ test('intersect: intersect of one or more geom3 objects produces expected geomet
 
   let result3 = intersect(geometry2, geometry3)
   obs = geom3.toPoints(result3)
+
+  // the order changes based on the bestplane chosen in Node.js
+/*
   exp = [
     [ [ 9, 9, 8 ], [ 9, 9, 9 ], [ 9, 8, 9 ], [ 9, 8, 8 ] ],
     [ [ 8, 9, 9 ], [ 9, 9, 9 ], [ 9, 9, 8 ], [ 8, 9, 8 ] ],
@@ -170,6 +173,16 @@ test('intersect: intersect of one or more geom3 objects produces expected geomet
     [ [ 8, 8, 9 ], [ 8, 8, 8 ], [ 9, 8, 8 ], [ 9, 8, 9 ] ],
     [ [ 9, 9, 8 ], [ 9, 8, 8 ], [ 8, 8, 8 ], [ 8, 9, 8 ] ]
   ]
+*/
+  exp = [
+    [ [ 9, 9, 8 ], [ 9, 9, 9 ], [ 9, 8, 9 ], [ 9, 8, 8 ] ],
+    [ [ 8, 9, 9 ], [ 9, 9, 9 ], [ 9, 9, 8 ], [ 8, 9, 8 ] ],
+    [ [ 9, 8, 9 ], [ 9, 9, 9 ], [ 8, 9, 9 ], [ 8, 8, 9 ] ],
+    [ [ 8, 9, 9 ], [ 8, 9, 8 ], [ 8, 8, 8 ], [ 8, 8, 9 ] ],
+    [ [ 8, 8, 9 ], [ 8, 8, 8 ], [ 9, 8, 8 ], [ 9, 8, 9 ] ],
+    [ [ 9, 8, 8 ], [ 8, 8, 8 ], [ 8, 9, 8 ], [ 9, 9, 8 ] ]
+  ]
+
   t.is(obs.length, 6)
   t.true(comparePolygonsAsPoints(obs, exp))
 

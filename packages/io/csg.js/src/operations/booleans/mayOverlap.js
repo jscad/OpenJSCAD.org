@@ -1,4 +1,4 @@
-const { EPS } = require('../../core/constants')
+const { EPS } = require('../../math/constants')
 
 const measureBounds = require('../measurements/measureBounds')
 

@@ -1,12 +1,14 @@
+const create = require('./create')
+
 /**
- * Creates a new vec3 initialized with the given values
+ * Creates a new vec2 initialized with the given values
  *
  * @param {Number} x X component
  * @param {Number} y Y component
- * @returns {vec3} a new 2D vector
+ * @returns {vec2} a new 2D vector
  */
 const fromValues = (x, y) => {
-  const out = new Float32Array(2)
+  const out = create()
   out[0] = x
   out[1] = y
   return out

@@ -1,3 +1,5 @@
+const create = require('./create')
+
 /**
  * Creates a new vec4 initialized with the given values
  *
@@ -8,7 +10,7 @@
  * @returns {vec4} a new vector
  */
 const fromValues = (x, y, z, w) => {
-  const out = new Float32Array(4)
+  const out = create()
   out[0] = x
   out[1] = y
   out[2] = z

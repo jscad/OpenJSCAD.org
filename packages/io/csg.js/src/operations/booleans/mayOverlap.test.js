@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { EPS } = require('../../core/constants')
+const { EPS } = require('../../math/constants')
 
 const { geom3 } = require('../../geometry')
 

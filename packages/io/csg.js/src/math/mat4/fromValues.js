@@ -1,3 +1,5 @@
+const create = require('./create')
+
 /**
  * Create a new mat4 with the given values
  *
@@ -20,7 +22,7 @@
  * @returns {mat4} A new mat4
  */
 const fromValues = (m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) => {
-  const out = new Float32Array(16)
+  const out = create()
   out[0] = m00
   out[1] = m01
   out[2] = m02

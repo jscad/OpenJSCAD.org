@@ -6,8 +6,10 @@ const splitLineSegmentByPlane = (plane, p1, p2) => {
   if (Number.isNaN(lambda)) lambda = 0
   if (lambda > 1) lambda = 1
   if (lambda < 0) lambda = 0
-  const result = vec3.add(p1, vec3.scale(lambda, direction))
-  return result
+
+  vec3.scale(direction, lambda, direction)
+  vec3.add(direction, p1, direction)
+  return direction
 }
 
 module.exports = splitLineSegmentByPlane

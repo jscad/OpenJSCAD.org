@@ -89,28 +89,30 @@ Node.prototype = {
     } while (node !== undefined)
   },
 
-  addPolygonTreeNodes: function (polygontreenodes) {
-    let current = { 'node': this, 'polygontreenodes': polygontreenodes }
-    let node
+  addPolygonTreeNodes: function (newpolygontreenodes) {
+    let current = { 'node': this, 'polygontreenodes': newpolygontreenodes }
     let stack = []
     do {
-      node = current.node
-      polygontreenodes = current.polygontreenodes
+      let node = current.node
+      let polygontreenodes = current.polygontreenodes
 
       if (polygontreenodes.length === 0) {
         current = stack.pop()
         continue
       }
-      let _this = node
       if (!node.plane) {
-        let bestplane = polygontreenodes[0].getPolygon().plane
+        let index = 0 // default
+        index = Math.floor(polygontreenodes.length / 2)
+        //index = polygontreenodes.length >> 1
+        //index = Math.floor(Math.random()*polygontreenodes.length)
+        let bestplane = polygontreenodes[index].getPolygon().plane
         node.plane = bestplane
       }
       let frontnodes = []
       let backnodes = []
 
       for (let i = 0, n = polygontreenodes.length; i < n; ++i) {
-        polygontreenodes[i].splitByPlane(_this.plane, _this.polygontreenodes, backnodes, frontnodes, backnodes)
+        polygontreenodes[i].splitByPlane(node.plane, node.polygontreenodes, backnodes, frontnodes, backnodes)
       }
 
       if (frontnodes.length > 0) {
@@ -126,6 +128,7 @@ Node.prototype = {
     } while (current !== undefined)
   },
 
+  // TODO is this still used?
   getParentPlaneNormals: function (normals, maxdepth) {
     if (maxdepth > 0) {
       if (this.parent) {

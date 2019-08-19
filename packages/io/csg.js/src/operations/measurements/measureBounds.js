@@ -48,6 +48,7 @@ const measureBoundsOfGeom2 = (geometry) => {
     vec2.min(minpoint, minpoint, point)
     vec2.max(maxpoint, maxpoint, point)
   })
+
   minpoint = [minpoint[0], minpoint[1], 0]
   maxpoint = [maxpoint[0], maxpoint[1], 0]
 
@@ -61,12 +62,10 @@ const measureBoundsOfGeom2 = (geometry) => {
 const measureBoundsOfGeom3 = (geometry) => {
   const polygons = geom3.toPolygons(geometry)
 
-  let minpoint
-  if (polygons.length === 0) {
-    minpoint = vec3.create()
-  } else {
+  let minpoint = vec3.create()
+  if (polygons.length > 0) {
     let points = poly3.toPoints(polygons[0])
-    minpoint = vec3.clone(points[0])
+    vec3.clone(minpoint, points[0])
   }
   let maxpoint = vec3.clone(minpoint)
 
@@ -76,6 +75,7 @@ const measureBoundsOfGeom3 = (geometry) => {
       vec3.max(maxpoint, maxpoint, point)
     })
   })
+
   minpoint = [minpoint[0], minpoint[1], minpoint[2]]
   maxpoint = [maxpoint[0], maxpoint[1], maxpoint[2]]
 

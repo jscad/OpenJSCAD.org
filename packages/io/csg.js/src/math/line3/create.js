@@ -8,7 +8,7 @@ const fromPointAndDirection = require('./fromPointAndDirection')
  * @returns {line3} a new unbounded 3D line
  */
 const create = () => {
-  const point = vec3.fromValues(0, 0, 0)
+  const point = vec3.create() // 0, 0, 0
   const direction = vec3.fromValues(0, 0, 1)
   return fromPointAndDirection(point, direction)
 }

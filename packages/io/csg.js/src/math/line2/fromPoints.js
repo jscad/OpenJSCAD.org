@@ -10,14 +10,14 @@ const fromValues = require('./fromValues')
  * @returns {line2} a new unbounded 2D line
  */
 const fromPoints = (p1, p2) => {
-  const direction = vec2.subtract(p2, p1)
+  const vector = vec2.subtract(p2, p1) // directional vector
 
-  const normal = vec2.normal(direction)
-  vec2.normalize(normal, normal)
+  vec2.normal(vector, vector)
+  vec2.normalize(vector, vector) // normalized
 
-  const distance = vec2.dot(p1, normal)
+  const distance = vec2.dot(p1, vector)
 
-  return fromValues(normal[0], normal[1], distance)
+  return fromValues(vector[0], vector[1], distance)
 }
 
 module.exports = fromPoints

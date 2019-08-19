@@ -1,4 +1,4 @@
-const {EPS} = require('../../core/constants')
+const {EPS} = require('../../math/constants')
 
 const vec2 = require('../../math/vec2')
 

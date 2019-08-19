@@ -31,11 +31,15 @@ Tree.prototype = {
   },
 
   addPolygons: function (polygons) {
-    let _this = this
-    let polygontreenodes = polygons.map(function (p) {
-      return _this.polygonTree.addChild(p)
-    })
+    let polygontreenodes = new Array(polygons.length)
+    for (let i = 0; i < polygons.length; i++) {
+      polygontreenodes[i] = this.polygonTree.addChild(polygons[i])
+    }
     this.rootnode.addPolygonTreeNodes(polygontreenodes)
+  },
+
+  clear: function () {
+    this.polygonTree.clear()
   },
 
   toString: function () {

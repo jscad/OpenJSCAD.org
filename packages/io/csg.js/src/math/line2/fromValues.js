@@ -1,3 +1,5 @@
+const create = require('./create')
+
 /**
  * Creates a new unbounded 2D line initialized with the given values.
  *
@@ -7,7 +9,7 @@
  * @returns {line2} a new unbounded 2D line
  */
 const fromValues = (x, y, w) => {
-  const out = new Float32Array(3)
+  const out = create()
   out[0] = x
   out[1] = y
   out[2] = w

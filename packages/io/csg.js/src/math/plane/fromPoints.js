@@ -10,14 +10,12 @@ const fromValues = require('../vec4/fromValues')
  * @returns {Vec4} a new plane with properly typed values
  */
 const fromPoints = (a, b, c) => {
-  // let n = b.minus(a).cross(c.minus(a)).unit()
-  // FIXME optimize later
   const ba = vec3.subtract(b, a)
   const ca = vec3.subtract(c, a)
-  const cr = vec3.cross(ba, ca)
-  const normal = vec3.unit(cr) // normal part
-  const w = vec3.dot(normal, a)
-  return fromValues(normal[0], normal[1], normal[2], w)
+  vec3.cross(ba, ba, ca)
+  vec3.unit(ba, ba) // normal part
+  const w = vec3.dot(ba, a)
+  return fromValues(ba[0], ba[1], ba[2], w)
 }
 
 module.exports = fromPoints

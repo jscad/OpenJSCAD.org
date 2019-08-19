@@ -219,7 +219,7 @@ test('union of geom3 with rounding issues #137', t => {
   t.is(pts.length, 6) // number of polygons in union
 })
 
-test('union of geom2 with closing issues #15', t => {
+test.failing('union of geom2 with closing issues #15', t => {
   const c = geom2.create([
     [[-45.82118740347841168159, -16.85726810555620147625], [-49.30331715865012398581, -14.68093629710870118288]],
     [[-49.10586702080816223770, -15.27604177352110781385], [-48.16645938811709015681, -15.86317173589183227023]],
@@ -252,7 +252,11 @@ test('union of geom2 with closing issues #15', t => {
     [[-68.40089829889257089235, -2.98180502037078554167], [-68.31614651314507113966, -3.10790373951434872879]],
     [[-54.61235529924312714911, -11.79066769321313756791], [-49.58572929483430868913, -14.97552686612213790340]]
   ])
+  // geom2.toOutlines(c)
+  // geom2.toOutlines(d)
+
   let obs = union(c, d)
+  let outlines = geom2.toOutlines(obs)
   let pts = geom2.toPoints(obs)
   let exp = [
     new Float32Array([-49.105865478515625, -15.276041984558105]),
@@ -276,5 +280,6 @@ test('union of geom2 with closing issues #15', t => {
     new Float32Array([-49.34036636352539, -15.797331809997559]),
     new Float32Array([-45.82118606567383, -16.857267379760742])
   ]
+  t.is(pts.length, 20) // number of sides in union
   t.deepEqual(pts, exp)
 })

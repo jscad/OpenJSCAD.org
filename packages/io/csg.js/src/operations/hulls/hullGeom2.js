@@ -16,13 +16,19 @@ const hullGeom2 = (...geometries) => {
 
   // extract the unique points from the geometries
   let uniquepoints = []
-  geometries.forEach((geometry) => {
-    let sides = geom2.toSides(geometry)
-    sides.forEach((side) => {
-      let index = uniquepoints.findIndex((unique) => vec2.equals(unique, side[0]))
-      if (index < 0) uniquepoints.push(side[0])
-    })
-  })
+  let found = new Map()
+  for (let g = 0; g < geometries.length; g++) {
+    let sides = geom2.toSides(geometries[g])
+     for (let s = 0; s < sides.length; s++) {
+       let side = sides[s]
+       let point = side[0]
+       let id = `${point[0]},${point[1]}`
+       if (found.has(id)) continue
+       uniquepoints.push(point)
+       found.set(id, true)
+     }
+  }
+  found.clear()
 
   let hullpoints = hullPoints2(uniquepoints)
 

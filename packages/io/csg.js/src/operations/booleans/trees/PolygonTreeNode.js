@@ -1,4 +1,4 @@
-const { _CSGDEBUG, EPS } = require('../../../core/constants')
+const { EPS } = require('../../../math/constants')
 
 const { vec3 } = require('../../../math')
 
@@ -47,11 +47,6 @@ PolygonTreeNode.prototype = {
     if (!this.removed) {
       this.removed = true
 
-      if (_CSGDEBUG) {
-        if (this.isRootNode()) throw new Error('Assertion failed') // can't remove root node
-        if (this.children.length) throw new Error('Assertion failed') // we shouldn't remove nodes with children
-      }
-
       // remove ourselves from the parent's children list:
       let parentschildren = this.parent.children
       let i = parentschildren.indexOf(this)
@@ -95,7 +90,7 @@ PolygonTreeNode.prototype = {
           result.push(node.polygon)
         } else {
           // our polygon has been split up and broken, so gather all subpolygons from the children
-          queue.push(node.children)
+          if (node.children.length > 0) queue.push(node.children)
         }
       }
     }
@@ -117,7 +112,7 @@ PolygonTreeNode.prototype = {
         nodes = queue[i]
         for (j = 0, l = nodes.length; j < l; j++) { // ok to cache length
           node = nodes[j]
-          if (node.children.length) {
+          if (node.children.length > 0) {
             queue.push(node.children)
           } else {
             // no children. Split the polygon:
@@ -205,7 +200,7 @@ PolygonTreeNode.prototype = {
         if (node.polygon) {
           node.polygon = poly3.flip(node.polygon)
         }
-        queue.push(node.children)
+        if (node.children.length > 0) queue.push(node.children)
       }
     }
   },
@@ -220,6 +215,27 @@ PolygonTreeNode.prototype = {
     }
   },
 
+  clear: function () {
+    let children = [this]
+    let queue = [children]
+    let l
+    for (let i = 0; i < queue.length; ++i) { // queue size can change in loop, don't cache length
+      children = queue[i]
+      let l = children.length
+      for (let j = 0; j < l; j++) {
+        let node = children[j]
+        if (node.polygon) {
+          node.polygon = null
+        }
+        if (node.parent) {
+          node.parent = null
+        }
+        if (node.children.length > 0) queue.push(node.children)
+        node.children = []
+      }
+    }
+  },
+
   toString: function () {
     let result = ''
     let children = [this]
@@ -230,15 +246,13 @@ PolygonTreeNode.prototype = {
       let prefix = ' '.repeat(i)
       for (j = 0, l = children.length; j < l; j++) { // ok to cache length
         node = children[j]
-        result += prefix + 'PolygonTreeNode (' + node.isRootNode() + '): ' + node.children.length
+        result += `${prefix}PolygonTreeNode (${node.isRootNode()}): ${node.children.length}`
         if (node.polygon) {
-          // the polygon hasn't been broken yet. We can ignore the children and return our polygon:
-          result += '\n ' + prefix + poly3.toString(node.polygon)
+          result += `\n ${prefix}poly3\n`
         } else {
           result += '\n'
-          // our polygon has been split up and broken, so gather all subpolygons from the children
-          queue.push(node.children)
         }
+        if (node.children.length > 0) queue.push(node.children)
       }
     }
     return result

@@ -4,12 +4,7 @@
  * @returns {vec4} a new vector
  */
 const create = () => {
-  const out = new Float32Array(4)
-  out[0] = 0
-  out[1] = 0
-  out[2] = 0
-  out[3] = 0
-  return out
+  return new Float32Array(4) // 0, 0, 0, 0
 }
 
 module.exports = create
