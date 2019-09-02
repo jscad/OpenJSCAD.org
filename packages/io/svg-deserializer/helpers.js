@@ -1,4 +1,4 @@
-const {inchMM, ptMM, pcMM, svgColors} = require('./constants')
+const { inchMM, ptMM, pcMM, svgColors } = require('./constants')
 
 // Calculate the CAG length/size from the given SVG value (float)
 const svg2cagX = function (v, svgUnitsPmm) {
@@ -15,7 +15,7 @@ const cagLengthX = function (css, svgUnitsPmm, svgUnitsX) {
     return css2cag(css, svgUnitsPmm[0])
   }
   // calculate the units as a percentage of the width
-  var v = parseFloat(css) // number part
+  let v = parseFloat(css) // number part
   if (isNaN(v)) { return 0.0 }
   if (v === 0) return v
   v = (v / 100) * svgUnitsX
@@ -30,7 +30,7 @@ const cagLengthY = function (css, svgUnitsPmm, svgUnitsY) {
     return css2cag(css, svgUnitsPmm[1])
   }
   // calculate the units as a percentage of the width
-  var v = parseFloat(css) // number part
+  let v = parseFloat(css) // number part
   if (isNaN(v)) { return 0.0 }
   if (v === 0) return v
   v = (v / 100) * svgUnitsY
@@ -45,7 +45,7 @@ const cagLengthP = function (css, svgUnitsPmm, svgUnitsV) {
     return css2cag(css, svgUnitsPmm[1])
   }
   // calculate the units as a percentage of the viewport
-  var v = parseFloat(css) // number part
+  let v = parseFloat(css) // number part
   if (isNaN(v)) { return 0.0 }
   if (v === 0) return v
   v = (v / 100) * svgUnitsV
@@ -55,8 +55,7 @@ const cagLengthP = function (css, svgUnitsPmm, svgUnitsV) {
 }
 
 const css2cag = function (css, unit) {
-// console.log('css2cag('+css+','+unit+')');
-  var v = parseFloat(css) // number part
+  let v = parseFloat(css) // number part
   if (isNaN(v)) { return 0.0 }
   if (v === 0) return v
   if (css.search(/EM/i) > 0) { // FIXME self assignment , useless ?
@@ -82,14 +81,13 @@ const css2cag = function (css, unit) {
   } else {
     v = (v / unit) // absolute pixels(units) > millimeters
   }
-  // console.log('v ('+v+')');
   return v
 }
 
 // convert the SVG color specification to CAG RGB
 const cagColor = function (value) {
-  // var rgb = [0,0,0]; // default is black
-  var rgb = null
+  // let rgb = [0,0,0]; // default is black
+  let rgb
   value = value.toLowerCase()
   if (value in svgColors) {
     rgb = svgColors[value]
@@ -107,8 +105,8 @@ const cagColor = function (value) {
           parseInt('0x' + value.slice(5, 7)) / 255 ]
       }
     } else {
-      var pat = /rgb\(.+,.+,.+\)/
-      var s = pat.exec(value)
+      let pat = /rgb\(.+,.+,.+\)/
+      let s = pat.exec(value)
       if (s !== null) {
       // RGB specification
         s = s[0]
@@ -131,24 +129,24 @@ const cagColor = function (value) {
 
 const cssStyle = function (element, name) {
   if ('STYLE' in element) {
-    var list = element.STYLE
-    var pat = name + '\\s*:\\s*\\S+;'
-    var exp = new RegExp(pat, 'i')
-    var v = exp.exec(list)
+    let list = element.STYLE + ';'
+    let pat = name + '\\s*:\\s*(\\S+);'
+    let exp = new RegExp(pat, 'i')
+    let v = exp.exec(list)
     if (v !== null) {
-      v = v[0]
-      var i = v.length
-      while (v[i] !== ' ' && i > 0) i--
-      v = v.slice(i + 1, v.length - 1)
+      v = v[0] // name plus value
+      let i = v.indexOf(':') + 1 // skip past the ':'
+      while (v[i] === ' ') i++
+      v = v.slice(i, v.indexOf(';'))
       return v
     }
   }
-  return null
+  return undefined
 }
 
 const reflect = function (x, y, px, py) {
-  var ox = x - px
-  var oy = y - py
+  let ox = x - px
+  let oy = y - py
   if (x === px && y === px) return [x, y]
   if (x === px) return [x, py + (-oy)]
   if (y === py) return [px + (-ox), y]
@@ -157,7 +155,7 @@ const reflect = function (x, y, px, py) {
 
 // Return the value for the given attribute from the group hiearchy
 const groupValue = function (svgGroups, name) {
-  var i = svgGroups.length
+  let i = svgGroups.length
   while (i > 0) {
     const g = svgGroups[i - 1]
     if (name in g) {
@@ -165,7 +163,7 @@ const groupValue = function (svgGroups, name) {
     }
     i--
   }
-  return null
+  return undefined
 }
 
 module.exports = {

@@ -1,5 +1,5 @@
-const {cagColor, cssStyle, css2cag} = require('./helpers')
-const {pxPmm} = require('./constants')
+const { cagColor, cssStyle, css2cag } = require('./helpers')
+const { pxPmm } = require('./constants')
 
 const svgCore = function (obj, element) {
   if ('ID' in element) { obj.id = element.ID }
@@ -14,8 +14,8 @@ const svgPresentation = function (obj, element) {
   if ('FILL' in element) {
     obj.fill = cagColor(element.FILL)
   } else {
-    var s = cssStyle(element, 'fill')
-    if (s !== null) {
+    let s = cssStyle(element, 'fill')
+    if (s) {
       obj.fill = cagColor(s)
     }
   }
@@ -24,8 +24,8 @@ const svgPresentation = function (obj, element) {
   if ('STROKE-WIDTH' in element) {
     obj.strokeWidth = element['STROKE-WIDTH']
   } else {
-    var sw = cssStyle(element, 'stroke-width')
-    if (sw !== null) {
+    let sw = cssStyle(element, 'stroke-width')
+    if (sw) {
       obj.strokeWidth = sw
     }
   }
@@ -33,7 +33,7 @@ const svgPresentation = function (obj, element) {
     obj.stroke = cagColor(element.STROKE)
   } else {
     let s = cssStyle(element, 'stroke')
-    if (s !== null) {
+    if (s) {
       obj.stroke = cagColor(s)
     }
   }
@@ -41,40 +41,40 @@ const svgPresentation = function (obj, element) {
 }
 
 const svgTransforms = function (cag, element) {
-  var list = null
+  let list = null
   if ('TRANSFORM' in element) {
     list = element.TRANSFORM
   } else {
-    var s = cssStyle(element, 'transform')
-    if (s !== null) { list = s }
+    let s = cssStyle(element, 'transform')
+    if (s) { list = s }
   }
   if (list !== null) {
     cag.transforms = []
     let exp = new RegExp('\\w+\\(.+\\)', 'i')
-    var v = exp.exec(list)
+    let v = exp.exec(list)
     while (v !== null) {
       let s = exp.lastIndex
-      var e = list.indexOf(')') + 1
-      var t = list.slice(s, e) // the transform
+      let e = list.indexOf(')') + 1
+      let t = list.slice(s, e) // the transform
       t = t.trim()
       // add the transform to the CAG
       // which are applied in the order provided
-      var n = t.slice(0, t.indexOf('('))
-      var a = t.slice(t.indexOf('(') + 1, t.indexOf(')')).trim()
+      let n = t.slice(0, t.indexOf('('))
+      let a = t.slice(t.indexOf('(') + 1, t.indexOf(')')).trim()
       if (a.indexOf(',') > 0) { a = a.split(',') } else { a = a.split(' ') }
       let o
       switch (n) {
         case 'translate':
-          o = {translate: [a[0], a[1]]}
+          o = { translate: [a[0], a[1]] }
           cag.transforms.push(o)
           break
         case 'scale':
           if (a.length === 1) a.push(a[0]) // as per SVG
-          o = {scale: [a[0], a[1]]}
+          o = { scale: [a[0], a[1]] }
           cag.transforms.push(o)
           break
         case 'rotate':
-          o = {rotate: a}
+          o = { rotate: a }
           cag.transforms.push(o)
           break
         // case 'matrix':
@@ -90,9 +90,9 @@ const svgTransforms = function (cag, element) {
   }
 }
 
-const svgSvg = function (element, {customPxPmm}) {
+const svgSvg = function (element, { customPxPmm }) {
   // default SVG with no viewport
-  var obj = {type: 'svg', x: 0, y: 0, width: '100%', height: '100%', strokeWidth: '1'}
+  let obj = { type: 'svg', x: 0, y: 0, width: '100%', height: '100%', strokeWidth: '1' }
 
   // default units per mm
   obj.unitsPmm = [pxPmm, pxPmm]
@@ -105,9 +105,9 @@ const svgSvg = function (element, {customPxPmm}) {
   if ('WIDTH' in element) { obj.width = element.WIDTH }
   if ('HEIGHT' in element) { obj.height = element.HEIGHT }
   if ('VIEWBOX' in element) {
-    var list = element.VIEWBOX.trim()
-    var exp = new RegExp('([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)', 'i')
-    var v = exp.exec(list)
+    let list = element.VIEWBOX.trim()
+    let exp = new RegExp('([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)', 'i')
+    let v = exp.exec(list)
     if (v !== null) {
       obj.viewX = parseFloat(v[1])
       obj.viewY = parseFloat(v[2])
@@ -117,7 +117,7 @@ const svgSvg = function (element, {customPxPmm}) {
     // apply the viewbox
     if (obj.width.indexOf('%') < 0) {
       // calculate a scaling from width and viewW
-      var s = css2cag(obj.width, customPxPmm) // width in millimeters
+      let s = css2cag(obj.width, customPxPmm) // width in millimeters
       s = obj.viewW / s
       // scale the default units
       // obj.unitsPmm[0] = obj.unitsPmm[0] * s;
@@ -153,12 +153,11 @@ const svgSvg = function (element, {customPxPmm}) {
   svgPresentation(obj, element)
 
   obj.objects = []
-  // console.log(JSON.stringify(obj));
   return obj
 }
 
 const svgEllipse = function (element) {
-  const obj = {type: 'ellipse', cx: '0', cy: '0', rx: '0', ry: '0'}
+  const obj = { type: 'ellipse', cx: '0', cy: '0', rx: '0', ry: '0' }
   if ('CX' in element) { obj.cx = element.CX }
   if ('CY' in element) { obj.cy = element.CY }
   if ('RX' in element) { obj.rx = element.RX }
@@ -173,7 +172,7 @@ const svgEllipse = function (element) {
 }
 
 const svgLine = function (element) {
-  var obj = {type: 'line', x1: '0', y1: '0', x2: '0', y2: '0'}
+  let obj = { type: 'line', x1: '0', y1: '0', x2: '0', y2: '0' }
   if ('X1' in element) { obj.x1 = element.X1 }
   if ('Y1' in element) { obj.y1 = element.Y1 }
   if ('X2' in element) { obj.x2 = element.X2 }
@@ -188,14 +187,14 @@ const svgLine = function (element) {
 }
 
 const svgListOfPoints = function (list) {
-  var points = []
-  var exp = new RegExp('([\\d\\-\\+\\.]+)[\\s,]+([\\d\\-\\+\\.]+)[\\s,]*', 'i')
+  let points = []
+  let exp = new RegExp('([\\d\\-\\+\\.]+)[\\s,]+([\\d\\-\\+\\.]+)[\\s,]*', 'i')
   list = list.trim()
-  var v = exp.exec(list)
+  let v = exp.exec(list)
   while (v !== null) {
-    var point = v[0]
-    var next = exp.lastIndex + point.length
-    point = {x: v[1], y: v[2]}
+    let point = v[0]
+    let next = exp.lastIndex + point.length
+    point = { x: v[1], y: v[2] }
     points.push(point)
     list = list.slice(next, list.length)
     v = exp.exec(list)
@@ -204,7 +203,7 @@ const svgListOfPoints = function (list) {
 }
 
 const svgPolyline = function (element) {
-  const obj = {type: 'polyline'}
+  const obj = { type: 'polyline' }
   // transforms
   svgTransforms(obj, element)
   // core attributes
@@ -219,7 +218,7 @@ const svgPolyline = function (element) {
 }
 
 const svgPolygon = function (element) {
-  const obj = {type: 'polygon'}
+  const obj = { type: 'polygon' }
   // transforms
   svgTransforms(obj, element)
   // core attributes
@@ -234,7 +233,7 @@ const svgPolygon = function (element) {
 }
 
 const svgRect = function (element) {
-  var obj = {type: 'rect', x: '0', y: '0', rx: '0', ry: '0', width: '0', height: '0'}
+  let obj = { type: 'rect', x: '0', y: '0', rx: '0', ry: '0', width: '0', height: '0' }
 
   if ('X' in element) { obj.x = element.X }
   if ('Y' in element) { obj.y = element.Y }
@@ -261,7 +260,7 @@ const svgRect = function (element) {
 }
 
 const svgCircle = function (element) {
-  let obj = {type: 'circle', x: '0', y: '0', radius: '0'}
+  let obj = { type: 'circle', x: '0', y: '0', radius: '0' }
 
   if ('CX' in element) { obj.x = element.CX }
   if ('CY' in element) { obj.y = element.CY }
@@ -276,7 +275,7 @@ const svgCircle = function (element) {
 }
 
 const svgGroup = function (element) {
-  let obj = {type: 'group'}
+  let obj = { type: 'group' }
   // transforms
   svgTransforms(obj, element)
   // core attributes
@@ -292,23 +291,23 @@ const svgGroup = function (element) {
 // Convert the PATH element into object representation
 //
 const svgPath = function (element) {
-  var obj = {type: 'path'}
+  let obj = { type: 'path' }
   // transforms
   svgTransforms(obj, element)
   // core attributes
   svgCore(obj, element)
   // presentation attributes
-  // svgPresentation(obj,element);
+  svgPresentation(obj, element)
 
   obj.commands = []
   if ('D' in element) {
-    var co = null // current command
-    var bf = ''
+    let co = null // current command
+    let bf = ''
 
-    var i = 0
-    var l = element.D.length
+    let i = 0
+    let l = element.D.length
     while (i < l) {
-      var c = element.D[i]
+      let c = element.D[i]
       switch (c) {
       // numbers
       // FIXME support E notation numbers
@@ -368,7 +367,7 @@ const svgPath = function (element) {
             }
             obj.commands.push(co)
           }
-          co = {c: c, p: []}
+          co = { c: c, p: [] }
           break
         // white space
         case ',':
@@ -397,12 +396,12 @@ const svgPath = function (element) {
 }
 
 // generate GROUP with attributes from USE element
-// - except X,Y,HEIGHT,WIDTH,XLINK:HREF
+// - expect X,Y,HEIGHT,WIDTH,XLINK:HREF
 // - append translate(x,y) if X,Y available
 // deep clone the referenced OBJECT and add to group
 // - clone using JSON.parse(JSON.stringify(obj))
-const svgUse = function (element, {svgObjects}) {
-  var obj = {type: 'group'}
+const svgUse = function (element, { svgObjects }) {
+  let obj = { type: 'group' }
   // transforms
   svgTransforms(obj, element)
   // core attributes
@@ -412,14 +411,14 @@ const svgUse = function (element, {svgObjects}) {
 
   if ('X' in element && 'Y' in element) {
     if (!('transforms' in obj)) obj.transforms = []
-    var o = {translate: [element.X, element.Y]}
+    let o = { translate: [element.X, element.Y] }
     obj.transforms.push(o)
   }
 
   obj.objects = []
   if ('XLINK:HREF' in element) {
   // lookup the named object
-    var ref = element['XLINK:HREF']
+    let ref = element['XLINK:HREF']
     if (ref[0] === '#') { ref = ref.slice(1, ref.length) }
     if (svgObjects[ref] !== undefined) {
       ref = svgObjects[ref]

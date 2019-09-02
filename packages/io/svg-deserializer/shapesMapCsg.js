@@ -1,15 +1,13 @@
-const {CSG, CAG} = require('@jscad/csg')
-const {svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect, groupValue} = require('./helpers')
-const {cssPxUnit} = require('./constants')
+const { geometry, primitives } = require('@jscad/csg')
 
-const shapesMap = function (obj, codify, params) {
-  const {svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups} = params
+const { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect, groupValue } = require('./helpers')
+const { cssPxUnit } = require('./constants')
+
+const shapesMapCsg = (obj, objectify, params) => {
+  const { svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, target } = params
 
   const types = {
-    group: (obj) => {
-      // cag from nested element
-      return codify(obj)
-    },
+    group: (obj) => objectify({ target }, obj),
 
     rect: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY) => {
       let x = cagLengthX(obj.x, svgUnitsPmm, svgUnitsX)
@@ -18,15 +16,21 @@ const shapesMap = function (obj, codify, params) {
       const h = cagLengthY(obj.height, svgUnitsPmm, svgUnitsY)
       const rx = cagLengthX(obj.rx, svgUnitsPmm, svgUnitsX)
       // const ry = cagLengthY(obj.ry, svgUnitsPmm, svgUnitsY)
+
+      let shape
       if (w > 0 && h > 0) {
         x = (x + (w / 2)).toFixed(4) // position the object via the center
         y = (y - (h / 2)).toFixed(4) // position the object via the center
         if (rx === 0) {
-          return CAG.rectangle({center: [x, y], radius: [w / 2, h / 2]})
+          shape = primitives.rectangle({ center: [x, y], size: [w / 2, h / 2] })
         } else {
-          return CAG.roundedRectangle({center: [x, y], radius: [w / 2, h / 2], roundradius: rx})
+          shape = primitives.roundedRectangle({ center: [x, y], size: [w / 2, h / 2], roundRadius: rx })
+        }
+        if (target === '1D') {
+          shape = geometry.path2.fromPoints({ }, geometry.geom2.toPoints(shape))
         }
       }
+      return shape
     },
 
     circle: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV) => {
@@ -34,9 +38,14 @@ const shapesMap = function (obj, codify, params) {
       const y = (0 - cagLengthY(obj.y, svgUnitsPmm, svgUnitsY))
       const r = cagLengthP(obj.radius, svgUnitsPmm, svgUnitsV)
 
+      let shape
       if (r > 0) {
-        return CAG.circle({center: [x, y], radius: r})
+        shape = primitives.circle({ center: [x, y], radius: r })
+        if (target === '1D') {
+          shape = geometry.path2.fromPoints({}, geometry.geom2.toPoints(shape))
+        }
       }
+      return shape
     },
 
     ellipse: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV) => {
@@ -44,9 +53,15 @@ const shapesMap = function (obj, codify, params) {
       const ry = cagLengthY(obj.ry, svgUnitsPmm, svgUnitsY)
       const cx = cagLengthX(obj.cx, svgUnitsPmm, svgUnitsX)
       const cy = (0 - cagLengthY(obj.cy, svgUnitsPmm, svgUnitsY))
+
+      let shape
       if (rx > 0 && ry > 0) {
-        return CAG.ellipse({center: [cx, cy], radius: [rx, ry]})
+        shape = primitives.ellipse({ center: [cx, cy], radius: [rx, ry] })
+        if (target === '1D') {
+          shape = geometry.path2.fromPoints({}, geometry.geom2.toPoints(shape))
+        }
       }
+      return shape
     },
 
     line: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV) => {
@@ -63,9 +78,12 @@ const shapesMap = function (obj, codify, params) {
           r = cagLengthP(v, svgUnitsPmm, svgUnitsV) / 2
         }
       }
-      const tmpObj = new CSG.Path2D([[x1, y1], [x2, y2]], false)
-        .expandToCAG(r, CSG.defaultResolution2D)
-      return tmpObj
+
+      let shape = primitives.line([[x1, y1], [x2, y2]])
+      if (target === '2D') {
+        // FIXME expand if 2D target
+      }
+      return shape
     },
 
     polygon: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY) => {
@@ -78,8 +96,10 @@ const shapesMap = function (obj, codify, params) {
           points.push([x, y])
         }
       }
-      let tmpObj = new CSG.Path2D(points, true).innerToCAG()
-      return tmpObj
+      if (target === '2D') {
+        return geometry.geom2.fromPoints(points)
+      }
+      return geometry.path2.fromPoints({}, points)
     },
 
     polyline: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV) => {
@@ -101,21 +121,58 @@ const shapesMap = function (obj, codify, params) {
           points.push([x, y])
         }
       }
-      let tmpObj = new CSG.Path2D(points, false).expandToCAG(r, CSG.defaultResolution2D)
-      return tmpObj
+
+      let shape = primitives.line(points)
+      if (target === '2D') {
+        // FIXME expand if 2D target
+        // .expandToCAG(r, CSG.defaultResolution2D)
+      }
+      return shape
     },
 
-    path // paths are a lot more complex, handled seperatly , see below
+    path: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) => {
+      let listofpaths = expandPath(obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups)
+      // order is important
+      let shapes
+      let listofentries = Object.entries(listofpaths).sort((a, b) => a[0].localeCompare(b[0]))
+      if (target === '2D') {
+        // convert each path to geometry
+        for (let [key, path] of listofentries) {
+          // FIXME this needs to be implemented once extrude is available
+          // if closed then create a 2D geometry
+        }
+      }
+      if (target === '1D') {
+        shapes = listofentries.map((entry) => entry[1])
+        // if (listofentries.length !== 1) throw new Error('malformed path specification')
+        // for (let [key, path] of listofentries) {
+        //   shapes = path
+        // }
+      }
+      return shapes
+      /*
+        switch (closedpath.getTurn()) {
+          default:
+          case 'clockwise':
+            pathCag = pathCag.union(paths[pathName])
+            break;
+          case 'counter-clockwise':
+            pathCag = pathCag.subtract(paths[pathName])
+            break;
+        }
+      paths[pathName] = paths[pathName] // .expandToCAG(r, CSG.defaultResolution2D)
+      pathCag = pathCag.union(paths[pathName])
+      */
+    }
   }
   return types[obj.type](obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups)
 }
 
-module.exports = shapesMap
+module.exports = shapesMapCsg
 
-function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
-  let pathCag = new CAG()
+const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) => {
   let paths = {}
-  const on = '' // not sure
+  const on = 'path'
 
   let r = cssPxUnit // default
   if ('strokeWidth' in obj) {
@@ -151,8 +208,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
         }
         // close the previous path
         if (pi > 0 && pc === false) {
-          paths[pathName] =  paths[pathName].expandToCAG(CSG.defaultResolution2D)
-          // code += indent + pathName + ' = ' + pathName + '.expandToCAG(' + r + ',CSG.defaultResolution2D);\n'
+          // FIXME paths[pathName] =  paths[pathName]
         }
         // open a new path
         if (pts.length >= 2) {
@@ -161,20 +217,20 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
           pi++
           pathName = on + pi
           pc = false
-          paths[pathName] = new CSG.Path2D([[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]], false)
+          paths[pathName] = geometry.path2.fromPoints({ }, [[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
           sx = cx; sy = cy
         }
         // optional implicit relative lineTo (cf SVG spec 8.3.2)
         while (pts.length >= 2) {
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
-          paths[pathName] = paths[pathName].appendPoint([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)])
+          paths[pathName] = geometry.path2.appendPoints([[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]], paths[pathName])
         }
         break
       case 'M': // absolute move to X,Y
         // close the previous path
         if (pi > 0 && pc === false) {
-          paths[pathName] = paths[pathName].expandToCAG(CSG.defaultResolution2D)
+          // FIXME paths[pathName] = paths[pathName]
         }
         // open a new path
         if (pts.length >= 2) {
@@ -183,38 +239,38 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
           pi++
           pathName = on + pi
           pc = false
-          paths[pathName] = new CSG.Path2D([[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]], false)
+          paths[pathName] = geometry.path2.fromPoints({ }, [[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
           sx = cx; sy = cy
         }
         // optional implicit absolute lineTo (cf SVG spec 8.3.2)
         while (pts.length >= 2) {
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
-          paths[pathName] = paths[pathName].appendPoint([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)])
+          paths[pathName] = geometry.path2.appendPoints([[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]], paths[pathName])
         }
         break
       case 'a': // relative elliptical arc
         while (pts.length >= 7) {
           let rx = parseFloat(pts.shift())
           let ry = parseFloat(pts.shift())
-          let ro = 0 - parseFloat(pts.shift())
+          let ro = 0 - parseFloat(pts.shift()) * 0.017453292519943295 // radians
           let lf = (pts.shift() === '1')
           let sf = (pts.shift() === '1')
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
-          paths[pathName] = paths[pathName].appendArc([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)], {xradius: svg2cagX(rx, svgUnitsPmm), yradius: svg2cagY(ry, svgUnitsPmm), xaxisrotation: ro, clockwise: sf, large: lf})
+          paths[pathName] = geometry.path2.appendArc({ endpoint: [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)], radius: [svg2cagX(rx, svgUnitsPmm), svg2cagY(ry, svgUnitsPmm)], xaxisrotation: ro, clockwise: sf, large: lf }, paths[pathName])
         }
         break
       case 'A': // absolute elliptical arc
         while (pts.length >= 7) {
           let rx = parseFloat(pts.shift())
           let ry = parseFloat(pts.shift())
-          let ro = 0 - parseFloat(pts.shift())
+          let ro = 0 - parseFloat(pts.shift()) * 0.017453292519943295 // radians
           let lf = (pts.shift() === '1')
           let sf = (pts.shift() === '1')
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
-          paths[pathName] = paths[pathName].appendArc([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)], {xradius: svg2cagX(rx, svgUnitsPmm), yradius: svg2cagY(ry, svgUnitsPmm), xaxisrotation: ro, clockwise: sf, large: lf})
+          paths[pathName] = geometry.path2.appendArc({ endpoint: [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)], radius: [svg2cagX(rx, svgUnitsPmm), svg2cagY(ry, svgUnitsPmm)], xaxisrotation: ro, clockwise: sf, large: lf }, paths[pathName])
         }
         break
       case 'c': // relative cubic Bézier
@@ -225,7 +281,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
           by = cy + parseFloat(pts.shift())
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
-          paths[pathName] = paths[pathName].appendBezier([[svg2cagX(x1, svgUnitsPmm), svg2cagY(y1, svgUnitsPmm)], [svg2cagX(bx, svgUnitsPmm), svg2cagY(by, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
+          paths[pathName] = geometry.path2.appendBezier({ controlPoints: [[svg2cagX(x1, svgUnitsPmm), svg2cagY(y1, svgUnitsPmm)], [svg2cagX(bx, svgUnitsPmm), svg2cagY(by, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]] }, paths[pathName])
           let rf = reflect(bx, by, cx, cy)
           bx = rf[0]
           by = rf[1]
@@ -239,7 +295,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
           by = parseFloat(pts.shift())
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
-          paths[pathName] = paths[pathName].appendBezier([[svg2cagX(x1, svgUnitsPmm), svg2cagY(y1, svgUnitsPmm)], [svg2cagX(bx, svgUnitsPmm), svg2cagY(by, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
+          paths[pathName] = geometry.path2.appendBezier({ controlPoints: [[svg2cagX(x1, svgUnitsPmm), svg2cagY(y1, svgUnitsPmm)], [svg2cagX(bx, svgUnitsPmm), svg2cagY(by, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]] }, paths[pathName])
           let rf = reflect(bx, by, cx, cy)
           bx = rf[0]
           by = rf[1]
@@ -251,7 +307,7 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
           qy = cy + parseFloat(pts.shift())
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
-          paths[pathName] = paths[pathName].appendBezier([[svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
+          paths[pathName] = geometry.path2.appendBezier({ controlPoints: [[svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]] }, paths[pathName])
           let rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
           qy = rf[1]
@@ -320,54 +376,45 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
       case 'h': // relative Horzontal line to
         while (pts.length >= 1) {
           cx = cx + parseFloat(pts.shift())
-          paths[pathName] = paths[pathName].appendPoint([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)])
+          paths[pathName] = geometry.path2.appendPoints([[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]], paths[pathName])
         }
         break
       case 'H': // absolute Horzontal line to
         while (pts.length >= 1) {
           cx = parseFloat(pts.shift())
-          paths[pathName] = paths[pathName].appendPoint([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)])
+          paths[pathName] = geometry.path2.appendPoints([[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]], paths[pathName])
         }
         break
       case 'l': // relative line to
         while (pts.length >= 2) {
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
-          paths[pathName] = paths[pathName].appendPoint([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)])
+          paths[pathName] = geometry.path2.appendPoints([[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]], paths[pathName])
         }
         break
       case 'L': // absolute line to
         while (pts.length >= 2) {
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
-          paths[pathName] = paths[pathName].appendPoint([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)])
+          paths[pathName] = geometry.path2.appendPoints([[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]], paths[pathName])
         }
         break
       case 'v': // relative Vertical line to
         while (pts.length >= 1) {
           cy = cy + parseFloat(pts.shift())
-          paths[pathName] = paths[pathName].appendPoint([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)])
+          paths[pathName] = geometry.path2.appendPoints([[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]], paths[pathName])
         }
         break
       case 'V': // absolute Vertical line to
         while (pts.length >= 1) {
           cy = parseFloat(pts.shift())
-          paths[pathName] = paths[pathName].appendPoint([svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)])
+          paths[pathName] = geometry.path2.appendPoints([[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]], paths[pathName])
         }
         break
       case 'z': // close current line
       case 'Z':
-        let closedpath = paths[pathName].close();
-        paths[pathName] = closedpath.innerToCAG();
-        switch (closedpath.getTurn()) {
-          default:
-          case 'clockwise':
-            pathCag = pathCag.union(paths[pathName])
-            break;
-          case 'counter-clockwise':
-            pathCag = pathCag.subtract(paths[pathName])
-            break;
-        }
+        let closedpath = geometry.path2.close(paths[pathName])
+        paths[pathName] = closedpath
         cx = sx
         cy = sy // return to the starting point
         pc = true
@@ -378,9 +425,5 @@ function path (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) {
     }
     // console.log('postion: ['+cx+','+cy+'] after '+co.c);
   }
-  if (pi > 0 && pc === false) {
-    paths[pathName] = paths[pathName].expandToCAG(r, CSG.defaultResolution2D)
-    pathCag = pathCag.union(paths[pathName])
-  }
-  return pathCag
+  return paths
 }
