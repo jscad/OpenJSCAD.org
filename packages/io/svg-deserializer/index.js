@@ -35,7 +35,7 @@ const deserialize = (input, filename, options) => {
     addMetaData: true,
     output: 'script',
     pxPmm: require('./constants').pxPmm,
-    target: '2D', // target - 2D geometry, or 1D geometry (paths)
+    target: '1D', // target - 2D geometry, or 1D geometry (paths)
     version: '0.0.0'
   }
   options = Object.assign({}, defaults, options)
@@ -99,7 +99,7 @@ const translate = (src, filename, options) => {
   // date: ${new Date()}
   // source: ${filename}
   //
-  ` : ''
+` : ''
 
   if (!svgObj) {
     throw new Error('SVG parsing failed, no valid svg data retrieved')
@@ -156,10 +156,6 @@ const objectify = (options, group) => {
     const obj = group.objects[i]
     let shapes = utils.toArray(shapesMapCsg(obj, objectify, params))
     shapes = shapes.map((shape) => {
-      if ('fill' in obj) {
-      // FIXME when color is supported
-      //  code += indent+on+' = '+on+'.setColor(['+obj.fill[0]+','+obj.fill[1]+','+obj.fill[2]+']);\n';
-      }
       if ('transforms' in obj) {
         // NOTE: SVG specifications require that transforms are applied in the order given.
         // But these are applied in the order as required by the CSG library
@@ -216,15 +212,15 @@ const codify = (options, group) => {
   // pre-code
   let code = ''
   if (level === 0) {
-    code += 'function main(params) {\n'
+    code += 'function main(params) {\n  let levels = {}\n  let paths = {}\n  let parts\n'
   }
-  let ln = 'cag' + level
-  code += indent + 'let ' + ln + ' = geometry.geom2.create();\n'
+  let ln = 'levels.l' + level
+  code += `${indent}${ln} = []\n`
 
   // generate code for all objects
   for (i = 0; i < group.objects.length; i++) {
     const obj = group.objects[i]
-    const on = ln + i
+    const on = 'paths.p' + i
 
     const params = {
       level,
@@ -242,10 +238,6 @@ const codify = (options, group) => {
     let tmpCode = shapesMapJscad(obj, codify, params)
     code += tmpCode
 
-    if (obj.fill) {
-    // FIXME when color is supported
-      code += `${indent}${on}.color = [${obj.fill[0]}, ${obj.fill[1]}, ${obj.fill[2]}, 1]\n`
-    }
     if ('transforms' in obj) {
       // NOTE: SVG specifications require that transforms are applied in the order given.
       //       But these are applied in the order as required by CSG/CAG
@@ -273,11 +265,17 @@ const codify = (options, group) => {
         code += `${indent}${on} = transforms.translate([${x}, ${y}, 0], ${on})\n`
       }
     }
-    code += `${indent}${ln} = booleans.union(${ln}, ${on})\n`
+    if (target === '1D' && obj.stroke) {
+      code += `${indent}${on}.color = [${obj.stroke[0]}, ${obj.stroke[1]}, ${obj.stroke[2]}, 1]\n`
+    }
+    if (target === '2D' && obj.fill) {
+      code += `${indent}color.color([${obj.fill[0]}, ${obj.fill[1]}, ${obj.fill[2]}, 1], ${on})\n`
+    }
+    code += `${indent}${ln}.push(${on})\n\n`
   }
   // post-code
   if (level === 0) {
-    code += indent + 'return ' + ln + ';\n'
+    code += indent + 'return ' + ln + '\n'
     code += '}\n'
   }
   // remove this group from the hiearchy
