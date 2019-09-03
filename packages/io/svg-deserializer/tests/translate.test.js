@@ -121,7 +121,6 @@ test('deserialize : translate svg (polyline) to script', function (t) {
   let obs = deserializer.deserialize(sourceSvg, undefined, { output: 'script', addMetaData: false })
   t.is(typeof obs, 'string')
   t.is(countOf('path2.fromPoints', obs), 1)
-  t.is(countOf('expand', obs), 1)
 
   obs = deserializer.deserialize(sourceSvg, undefined, { output: 'script', target: '1D', addMetaData: false })
   t.is(typeof obs, 'string')
@@ -137,7 +136,6 @@ test('deserialize : translate svg (polyline) to script', function (t) {
   obs = deserializer.deserialize(sourceSvg, undefined, { output: 'script', addMetaData: false })
   t.is(typeof obs, 'string')
   t.is(countOf('path2.fromPoints', obs), 1)
-  t.is(countOf('expand', obs), 1)
 })
 
 // ################################
@@ -287,6 +285,16 @@ test('deserialize : translate svg (path: bezier) to script', function (t) {
   t.is(countOf('path2.fromPoints', obs), 1)
   t.is(countOf('path2.appendBezier', obs), 2)
   t.is(countOf('path2.close', obs), 0)
+
+  sourceSvg = `<svg height="500" width="500">
+  <path id="Sin_Mqttttz" fill="none" stroke="#FF0000" d="M240 296 q25-100 47 0 t47 0 t47 0 t47 0 t47 0 z"/>
+</svg>`
+
+  obs = deserializer.deserialize(sourceSvg, undefined, { output: 'script', addMetaData: false })
+  t.is(typeof obs, 'string')
+  t.is(countOf('path2.fromPoints', obs), 1)
+  t.is(countOf('path2.appendBezier', obs), 5)
+  t.is(countOf('path2.close', obs), 1)
 })
 
 // ################################
