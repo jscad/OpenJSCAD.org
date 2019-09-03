@@ -9,7 +9,7 @@ const svgPresentation = function (obj, element) {
   // presentation attributes for all
   if ('DISPLAY' in element) { obj.visible = element.DISPLAY }
   // presentation attributes for solids
-  if ('COLOR' in element) { obj.fill = cagColor(element.COLOR) }
+  if ('COLOR' in element) { obj.fill = cagColor(element.COLOR); obj.stroke = obj.fill; }
   if ('OPACITY' in element) { obj.opacity = element.OPACITY }
   if ('FILL' in element) {
     obj.fill = cagColor(element.FILL)
