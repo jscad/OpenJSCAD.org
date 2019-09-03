@@ -1,18 +1,12 @@
-const fs = require('fs')
-const path = require('path')
 const test = require('ava')
-const { CSG, CAG } = require('@jscad/csg')
 
-const { nearlyEqual } = require( '../../test/helpers/nearlyEqual' )
-
-const { deserialize } = require( '../index' )
+const { deserialize } = require('../index')
 
 //
 // Test suite for DXF deserialization (import)
 //
 test('ASCII DXF 3D Polyline Entities translated to JSCAD Scripts', t => {
-
-// DXF 3D POLYLINE with mesh, translates to script with CSG.fromPolygons
+  // DXF 3D POLYLINE with mesh, translates to script with CSG.fromPolygons
   let dxf3 = `0
 SECTION
 2
@@ -217,13 +211,12 @@ VERTEX
 SEQEND
 0
 ENDSEC`
-  let src3 = deserialize(dxf3,'dxf3-test',{output: 'jscad'})
-  let ss3 = src3.split("\n")
-  t.is(ss3.length,34)
-  t.true(src3.indexOf('fromPolygons') > 0)
+  let src3 = deserialize(dxf3, 'dxf3-test', { output: 'jscad' })
+  let ss3 = src3.split('\n')
+  t.is(ss3.length, 25)
+  t.true(src3.indexOf('geom3.create') > 0)
 
-// DXF 3D POLYLINE with faces, translates to script with CSG
-
+  // DXF 3D POLYLINE with faces, translates to script with CSG
 })
 
 test('ASCII DXF 3D FACE Entities translated to JSCAD Scripts', t => {
@@ -293,12 +286,10 @@ ENTITIES
 0.5
 0
 ENDSEC`
-// expect a script which calls CSG.fromPolygons
-  let src1 = deserialize(dxf1,'dxf1-test',{output: 'jscad'})
-  let ss1 = src1.split("\n")
-  t.is(ss1.length,30)
+  // expect a script which calls createPolygon for each 3DFACE, and creates a new 3D geometry
+  let src1 = deserialize(dxf1, 'dxf1-test', { output: 'jscad' })
+  let ss1 = src1.split('\n')
+  t.is(ss1.length, 21)
   t.true(src1.indexOf('createPolygon(') > 0)
-  t.true(src1.indexOf('fromPolygons(') > 0)
-
+  t.true(src1.indexOf('geom3.create(') > 0)
 })
-

@@ -1,11 +1,10 @@
 const fs = require('fs')
 const path = require('path')
 const test = require('ava')
-const { CSG, CAG } = require('@jscad/csg')
 
-const { nearlyEqual } = require( '../../test/helpers/nearlyEqual' )
+const { geometry } = require('@jscad/csg')
 
-const { deserialize } = require( '../index' )
+const { deserialize } = require('../index')
 
 const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
 
@@ -17,13 +16,13 @@ test('ASCII DXF R13 to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf,'aaa',{output: 'csg'})
+  let objs = deserialize(dxf, 'aaa', { output: 'csg' })
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 16)
 
-  t.true(objs[0] instanceof CSG.Path2D)
-  t.true(objs[15] instanceof CSG.Path2D)
+  t.true(geometry.path2.isA(objs[0]))
+  t.true(geometry.path2.isA(objs[15]))
 })
 
 test('ASCII DXF R14 to Object Conversion', t => {
@@ -31,7 +30,7 @@ test('ASCII DXF R14 to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf,'aaa',{output: 'csg'})
+  let objs = deserialize(dxf, 'aaa', { output: 'csg' })
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 0)
@@ -42,12 +41,12 @@ test('ASCII DXF ANSI to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf,'aaa',{output: 'csg'})
+  let objs = deserialize(dxf, 'aaa', { output: 'csg' })
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 1)
 
-  t.true(objs[0] instanceof CAG)
+  t.true(geometry.path2.isA(objs[0]))
 })
 
 test('ASCII DXF ISO to Object Conversion', t => {
@@ -55,14 +54,11 @@ test('ASCII DXF ISO to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf,'aaa',{output: 'csg'})
+  let objs = deserialize(dxf, 'aaa', { output: 'csg' })
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 14)
 
-  t.true(objs[0] instanceof CAG)
-  t.true(objs[13] instanceof CAG)
+  t.true(geometry.path2.isA(objs[0]))
+  t.true(geometry.path2.isA(objs[13]))
 })
-
-
-

@@ -7,9 +7,10 @@ All code released under MIT license
 
 */
 
-const {colorIndex, BYLAYER, getTLA} = require('./autocad')
+const { BYLAYER, getTLA } = require('./autocad')
+const colorIndex = require('./colorindex2017')
 const dxf = require('./DxfReader')
-const {instantiateAsciiDxf} = require('./instantiate')
+const { instantiateAsciiDxf } = require('./instantiate')
 const translateAsciiDxf = require('./translate')
 
 // //////////////////////////////////////////
@@ -18,18 +19,20 @@ const translateAsciiDxf = require('./translate')
 //
 // //////////////////////////////////////////
 
-function handleError (reader, error) {
+const handleError = (reader, error) => {
   if (reader.options.strict === true) {
     throw error
   } else {
     console.log(`error: line ${error.line}, column ${error.column}, bad character [${error.c}]`)
   }
 }
-function handleStart (reader, data) {
-  //console.log('DXF reader started')
+
+const handleStart = (reader, data) => {
+  // console.log('DXF reader started')
 }
-function handleEnd (reader, data) {
-  //console.log('DXF reader completed')
+
+const handleEnd = (reader, data) => {
+  // console.log('DXF reader completed')
 }
 
 //
@@ -37,13 +40,13 @@ function handleEnd (reader, data) {
 // groups: 0
 // special handling to set defaults as per DXF specifications
 //
-function handleEntity (reader, group, value) {
+const handleEntity = (reader, group, value) => {
   // console.log('entity: '+group+','+value)
 
   let obj = null
   switch (value) {
     case 'LAYER':
-      obj = {type: 'layer'}
+      obj = { type: 'layer' }
       // entity defaults
       obj[getTLA(48)] = 1.0
       obj[getTLA(60)] = 0
@@ -53,7 +56,7 @@ function handleEntity (reader, group, value) {
       reader.objstack.push(obj)
       break
     case 'LINE':
-      obj = {type: 'line'}
+      obj = { type: 'line' }
       // entity defaults
       obj[getTLA(48)] = 1.0
       obj[getTLA(60)] = 0
@@ -67,7 +70,7 @@ function handleEntity (reader, group, value) {
       reader.objstack.push(obj)
       break
     case 'LWPOLYLINE':
-      obj = {type: 'lwpolyline'}
+      obj = { type: 'lwpolyline' }
       // entity defaults
       obj[getTLA(48)] = 1.0
       obj[getTLA(60)] = 0
@@ -86,7 +89,7 @@ function handleEntity (reader, group, value) {
       reader.objstack.push(obj)
       break
     case 'MESH':
-      obj = {type: 'mesh'}
+      obj = { type: 'mesh' }
       // entity defaults
       obj[getTLA(48)] = 1.0
       obj[getTLA(60)] = 0
@@ -102,7 +105,7 @@ function handleEntity (reader, group, value) {
       reader.objstack.push(obj)
       break
     case 'POLYLINE':
-      obj = {type: 'polyline'}
+      obj = { type: 'polyline' }
       // entity defaults
       obj[getTLA(48)] = 1.0
       obj[getTLA(60)] = 0
@@ -128,7 +131,7 @@ function handleEntity (reader, group, value) {
       reader.objstack.push(obj)
       break
     case 'ARC':
-      obj = {type: 'arc'}
+      obj = { type: 'arc' }
       // entity defaults
       obj[getTLA(48)] = 1.0
       obj[getTLA(60)] = 0
@@ -143,7 +146,7 @@ function handleEntity (reader, group, value) {
       reader.objstack.push(obj)
       break
     case 'CIRCLE':
-      obj = {type: 'circle'}
+      obj = { type: 'circle' }
       // entity defaults
       obj[getTLA(48)] = 1.0
       obj[getTLA(60)] = 0
@@ -158,7 +161,7 @@ function handleEntity (reader, group, value) {
       reader.objstack.push(obj)
       break
     case 'ELLIPSE':
-      obj = {type: 'ellipse'}
+      obj = { type: 'ellipse' }
       // entity defaults
       obj[getTLA(48)] = 1.0
       obj[getTLA(60)] = 0
@@ -172,7 +175,7 @@ function handleEntity (reader, group, value) {
       reader.objstack.push(obj)
       break
     case 'VERTEX':
-      obj = {type: 'vertex'}
+      obj = { type: 'vertex' }
       // entity defaults
       obj[getTLA(48)] = 1.0
       obj[getTLA(60)] = 0
@@ -195,7 +198,7 @@ function handleEntity (reader, group, value) {
       reader.objstack.push(obj)
       break
     case '3DFACE':
-      obj = {type: '3dface'}
+      obj = { type: '3dface' }
       // entity defaults
       obj[getTLA(48)] = 1.0
       obj[getTLA(60)] = 0
@@ -207,7 +210,7 @@ function handleEntity (reader, group, value) {
       reader.objstack.push(obj)
       break
     case 'SEQEND':
-      obj = {type: 'seqend'}
+      obj = { type: 'seqend' }
       reader.objstack.push(obj)
       break
     default:
@@ -222,9 +225,9 @@ function handleEntity (reader, group, value) {
 // handle a varible as provided by the reader
 // groups: 9
 //
-function handleVariable (reader, group, value) {
+const handleVariable = (reader, group, value) => {
   // console.log('variable: '+group+','+value)
-  let obj = {type: 'variable', name: value}
+  let obj = { type: 'variable', name: value }
   reader.objstack.push(obj)
 }
 
@@ -232,7 +235,7 @@ function handleVariable (reader, group, value) {
 // handle a int as provided by the reader
 // groups: 62, 70, 71, 72, 73, 74, 75, 210, 220, 230
 //
-function handleInt (reader, group, value) {
+const handleInt = (reader, group, value) => {
   // console.log('int: '+group+','+value)
   let obj = reader.objstack.pop()
   if ('type' in obj) {
@@ -245,7 +248,7 @@ function handleInt (reader, group, value) {
 // handle a double as provided by the reader
 // groups: 11, 12, 13, 21, 22, 23, 31, 32, 33, 39, 40, 41, 50, 51
 //
-function handleDouble (reader, group, value) {
+const handleDouble = (reader, group, value) => {
   // console.log('double: '+group+','+value)
   let obj = reader.objstack.pop()
   if ('type' in obj) {
@@ -259,7 +262,7 @@ function handleDouble (reader, group, value) {
 // groups: 10
 // special handling of (lwpolyline and mesh) float values
 //
-function handleXcoord (reader, group, value) {
+const handleXcoord = (reader, group, value) => {
   // console.log('xcoord: '+group+','+value)
   let obj = reader.objstack.pop()
   if ('type' in obj) {
@@ -291,7 +294,7 @@ function handleXcoord (reader, group, value) {
 // groups: 20
 // special handling of (lwpolyline and mesh) float values
 //
-function handleYcoord (reader, group, value) {
+const handleYcoord = (reader, group, value) => {
   // console.log('ycoord: '+group+','+value)
   let obj = reader.objstack.pop()
   if ('type' in obj) {
@@ -313,7 +316,7 @@ function handleYcoord (reader, group, value) {
 // groups: 30
 // special handling of (mesh) float values
 //
-function handleZcoord (reader, group, value) {
+const handleZcoord = (reader, group, value) => {
   // console.log('ycoord: '+group+','+value)
   let obj = reader.objstack.pop()
   if ('type' in obj) {
@@ -335,7 +338,7 @@ function handleZcoord (reader, group, value) {
 // groups: 41
 // special handling of (lwpolyline) float values
 //
-function handleBulge (reader, group, value) {
+const handleBulge = (reader, group, value) => {
   // console.log('bulg: '+group+','+value)
   let obj = reader.objstack.pop()
   if ('type' in obj) {
@@ -360,7 +363,7 @@ function handleBulge (reader, group, value) {
 // groups: 91, 92, 93, 94, 95
 // special handling of (mesh) float values based on group and state
 //
-function handleLen (reader, group, value) {
+const handleLen = (reader, group, value) => {
   // console.log('len: '+group+','+value)
   let obj = reader.objstack.pop()
   if ('type' in obj) {
@@ -410,7 +413,7 @@ function handleLen (reader, group, value) {
 // groups: 90
 // special handling of (mesh) float values based on state
 //
-function handleValue (reader, group, value) {
+const handleValue = (reader, group, value) => {
   // console.log('int: '+group+','+value)
   let obj = reader.objstack.pop()
   if ('type' in obj) {
@@ -445,7 +448,7 @@ function handleValue (reader, group, value) {
 // handle a string as provided by the reader
 // groups: 1,6,7,8,
 //
-function handleString (reader, group, value) {
+const handleString = (reader, group, value) => {
   // console.log('string: '+group+','+value)
   let obj = reader.objstack.pop()
   if ('type' in obj) {
@@ -458,7 +461,7 @@ function handleString (reader, group, value) {
 // handle a name as provided by the reader
 // groups: 2,3
 //
-function handleName (reader, group, value) {
+const handleName = (reader, group, value) => {
   // console.log('name: '+group+','+value)
   let obj = reader.objstack.pop()
   if ('type' in obj) {
@@ -477,7 +480,7 @@ function handleName (reader, group, value) {
 // OR
 // - adds a new attribute to the current object
 //
-function createReader (src, options) {
+const createReader = (src, options) => {
   // create a reader for the DXF
   let reader = dxf.reader(options)
 
@@ -532,7 +535,7 @@ function createReader (src, options) {
 
   // initial state
   reader.objstack = []
-  reader.objstack.push({type: 'dxf'})
+  reader.objstack.push({ type: 'dxf' })
 
   // start the reader
   reader.write(src).close()
@@ -542,7 +545,7 @@ function createReader (src, options) {
 //
 // instantiate the give DXF definition (src) into a set of CSG library objects
 //
-function instantiate (src, filename, options) {
+const instantiate = (src, filename, options) => {
   let reader = createReader(src, options)
   let objs = instantiateAsciiDxf(reader, options)
   return objs
@@ -551,7 +554,7 @@ function instantiate (src, filename, options) {
 //
 // translate the give DXF definition (src) into a  JSCAD script
 //
-function translate (src, filename, options) {
+const translate = (src, filename, options) => {
   let reader = createReader(src, options)
 
   let code = `// Produced by JSCAD IO Library : DXF Deserialization (${options.version})
@@ -574,7 +577,7 @@ function translate (src, filename, options) {
  * @param {array} [options.colorindex=[]] list of colors (256) for use during rendering
  * @return {string|[objects]} a string (jscad script) or array of objects
  */
-const deserialize = function (src, filename, options) {
+const deserialize = (src, filename, options) => {
   const defaults = {
     version: '0.0.1',
     output: 'jscad',
@@ -583,7 +586,7 @@ const deserialize = function (src, filename, options) {
     dxf: {
       angdir: 0, // counter clockwise
       insunits: 4, // millimeters
-      pfacevmax: 4, // number of vertices per face
+      pfacevmax: 4 // number of vertices per face
     }
   }
   options = Object.assign({}, defaults, options)

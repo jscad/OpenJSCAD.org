@@ -1,7 +1,6 @@
 const fs = require('fs')
 const path = require('path')
 const test = require('ava')
-const { CSG, CAG } = require('@jscad/csg')
 
 const dxf = require('../DxfReader')
 
