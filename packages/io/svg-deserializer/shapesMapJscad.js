@@ -18,24 +18,34 @@ const shapesMap = function (obj, codify, params) {
       const h = cagLengthY(obj.height, svgUnitsPmm, svgUnitsY)
       const rx = cagLengthX(obj.rx, svgUnitsPmm, svgUnitsX)
       // const ry = cagLengthY(obj.ry, svgUnitsPmm, svgUnitsY)
+      let code
       if (w > 0 && h > 0) {
         x = (x + (w / 2)).toFixed(4) // position the object via the center
         y = (y - (h / 2)).toFixed(4) // position the object via the center
         if (rx === 0) {
-          return `${indent}${on} = primitives.rectangle({center: [${x}, ${y}], size: [${w / 2}, ${h / 2}]})\n`
+          code = `${indent}${on} = primitives.rectangle({center: [${x}, ${y}], size: [${w / 2}, ${h / 2}]})\n`
         } else {
-          return `${indent}${on} = primitives.roundedRectangle({center: [${x}, ${y}], size: [${w / 2}, ${h / 2}], roundRadius: ${rx}})\n`
+          code = `${indent}${on} = primitives.roundedRectangle({center: [${x}, ${y}], size: [${w / 2}, ${h / 2}], roundRadius: ${rx}})\n`
+        }
+        if (target === '1D') {
+          code += `${indent}${on} = geometry.path2.fromPoints({close: true}, geometry.geom2.toPoints(${on}))\n`
         }
       }
+      return code
     },
 
     circle: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV) => {
       const x = cagLengthX(obj.x, svgUnitsPmm, svgUnitsX)
       const y = (0 - cagLengthY(obj.y, svgUnitsPmm, svgUnitsY))
       const r = cagLengthP(obj.radius, svgUnitsPmm, svgUnitsV)
+      let code
       if (r > 0) {
-        return `${indent}${on} = primitives.circle({center: [${x}, ${y}], radius: ${r}})\n`
+        code = `${indent}${on} = primitives.circle({center: [${x}, ${y}], radius: ${r}})\n`
+        if (target === '1D') {
+          code += `${indent}${on} = geometry.path2.fromPoints({close: true}, geometry.geom2.toPoints(${on}))\n`
+        }
       }
+      return code
     },
 
     ellipse: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV) => {
@@ -43,9 +53,14 @@ const shapesMap = function (obj, codify, params) {
       const ry = cagLengthY(obj.ry, svgUnitsPmm, svgUnitsY)
       const cx = cagLengthX(obj.cx, svgUnitsPmm, svgUnitsX)
       const cy = (0 - cagLengthY(obj.cy, svgUnitsPmm, svgUnitsY))
+      let code
       if (rx > 0 && ry > 0) {
-        return `${indent}${on} = primitives.ellipse({center: [${cx}, ${cy}], radius: [${rx}, ${ry}]})\n`
+        code = `${indent}${on} = primitives.ellipse({center: [${cx}, ${cy}], radius: [${rx}, ${ry}]})\n`
+        if (target === '1D') {
+          code += `${indent}${on} = geometry.path2.fromPoints({close: true}, geometry.geom2.toPoints(${on}))\n`
+        }
       }
+      return code
     },
 
     line: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV) => {
@@ -53,56 +68,47 @@ const shapesMap = function (obj, codify, params) {
       const y1 = (0 - cagLengthY(obj.y1, svgUnitsPmm, svgUnitsY))
       const x2 = cagLengthX(obj.x2, svgUnitsPmm, svgUnitsX)
       const y2 = (0 - cagLengthY(obj.y2, svgUnitsPmm, svgUnitsY))
-      let r = cssPxUnit // default
-      if ('strokeWidth' in obj) {
-        r = cagLengthP(obj.strokeWidth, svgUnitsPmm, svgUnitsV) / 2
-      } else {
-        const v = groupValue(svgGroups, 'strokeWidth')
-        if (v !== null) {
-          r = cagLengthP(v, svgUnitsPmm, svgUnitsV) / 2
-        }
+      let code = `${indent}${on} = primitives.line([[${x1}, ${y1}], [${x2}, ${y2}]])\n`
+      if (target === '2D') {
+        let r = getStrokeWidth(obj, svgUnitsPmm, svgUnitsV, svgGroups)
+        // TODO
       }
-
-      let tmpCode = `${indent}${on} = primitives.line([[${x1}, ${y1}], [${x2}, ${y2}]])\n`
-      return tmpCode
+      return code
     },
 
     polygon: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY) => {
-      let tmpCode = `${indent}${on} = primitives.polygon({points: [\n`
-
+      let code = `${indent}${on} = primitives.polygon({points: [\n`
       for (let j = 0; j < obj.points.length; j++) {
         const p = obj.points[j]
         if ('x' in p && 'y' in p) {
           const x = cagLengthX(p.x, svgUnitsPmm, svgUnitsX)
           const y = (0 - cagLengthY(p.y, svgUnitsPmm, svgUnitsY))
-          tmpCode += `${indent}  [${x}, ${y}],\n`
+          code += `${indent}  [${x}, ${y}],\n`
         }
       }
-      tmpCode += `${indent}]})\n`
-      return tmpCode
+      code += `${indent}]})\n`
+      if (target === '1D') {
+        code += `${indent}${on} = geometry.path2.fromPoints({close: true}, geometry.geom2.toPoints(${on}))\n`
+      }
+      return code
     },
 
     polyline: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV) => {
-      let r = cssPxUnit // default
-      if ('strokeWidth' in obj) {
-        r = cagLengthP(obj.strokeWidth, svgUnitsPmm, svgUnitsV) / 2
-      } else {
-        const v = groupValue(svgGroups, 'strokeWidth')
-        if (v !== null) {
-          r = cagLengthP(v, svgUnitsPmm, svgUnitsV) / 2
-        }
-      }
-      let tmpCode = `${indent}${on} = geometry.path2.fromPoints({}, [\n`
+      let code = `${indent}${on} = geometry.path2.fromPoints({}, [\n`
       for (let j = 0; j < obj.points.length; j++) {
         const p = obj.points[j]
         if ('x' in p && 'y' in p) {
           let x = cagLengthX(p.x, svgUnitsPmm, svgUnitsX)
           let y = (0 - cagLengthY(p.y, svgUnitsPmm, svgUnitsY))
-          tmpCode += `${indent}  [${x}, ${y}],\n`
+          code += `${indent}  [${x}, ${y}],\n`
         }
       }
-      tmpCode += `${indent}])\n`
-      return tmpCode
+      code += `${indent}])\n`
+      if (target === '2D') {
+        let r = getStrokeWidth(obj, svgUnitsPmm, svgUnitsV, svgGroups)
+        // TODO
+      }
+      return code
     },
 
     path
@@ -112,10 +118,7 @@ const shapesMap = function (obj, codify, params) {
 
 module.exports = shapesMap
 
-const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGroups) => {
-  const { level, indent, on, target } = params
-  let tmpCode = `${indent}parts = []\n`
-
+const getStrokeWidth = (obj, svgUnitsPmm, svgUnitsV, svgGroups) => {
   let r = cssPxUnit // default
   if ('strokeWidth' in obj) {
     r = cagLengthP(obj.strokeWidth, svgUnitsPmm, svgUnitsV) / 2
@@ -125,6 +128,27 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
       r = cagLengthP(v, svgUnitsPmm, svgUnitsV) / 2
     }
   }
+  return r
+}
+
+const getColor = (obj, target) => {
+  let c
+  if (target === '1D' && obj.stroke) {
+    c = obj.stroke
+  }
+  if (target === '2D' && obj.fill) {
+    c = obj.fill
+  }
+  return c
+}
+
+const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGroups) => {
+  const { indent, on, target } = params
+  let tmpCode = `${indent}parts = []\n`
+
+  let c = getColor(obj, target)
+  let r = getStrokeWidth(obj, svgUnitsPmm, svgUnitsV, svgGroups)
+
   // Note: All values are SVG values
   let sx = 0 // starting position
   let sy = 0
@@ -148,7 +172,7 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
         if (j === 0) {
           cx = 0; cy = 0
         }
-        // close the previous path
+        // complete the previous path
         if (pi > 0 && pc === false) {
           tmpCode += `${indent}parts.push(${pathName})\n`
         }
@@ -170,7 +194,7 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
         }
         break
       case 'M': // absolute move to X,Y
-        // close the previous path
+        // complete the previous path
         if (pi > 0 && pc === false) {
           tmpCode += `${indent}parts.push(${pathName})\n`
         }
@@ -245,8 +269,6 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
         break
       case 'q': // relative quadratic Bézier
         while (pts.length >= 4) {
-          let x1 = cx
-          let y1 = cy
           qx = cx + parseFloat(pts.shift())
           qy = cy + parseFloat(pts.shift())
           cx = cx + parseFloat(pts.shift()) // end point
@@ -271,8 +293,6 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
         break
       case 't': // relative quadratic Bézier shorthand
         while (pts.length >= 2) {
-          let x1 = cx
-          let y1 = cy
           cx = cx + parseFloat(pts.shift()) // end point
           cy = cy + parseFloat(pts.shift())
           tmpCode += `${indent}${pathName} = geometry.path2.appendBezier({controlPoints: [[${svg2cagX(qx, svgUnitsPmm)}, ${svg2cagY(qy, svgUnitsPmm)}], [${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]]}, ${pathName})\n`
@@ -360,6 +380,9 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
       case 'z': // close current line
       case 'Z':
         tmpCode += `${indent}${pathName} = geometry.path2.close(${pathName})\n`
+        if (target === '2D') {
+          tmpCode += `${indent}${pathName} = geometry.geom2.fromPoints(geometry.path2.toPoints(${pathName}))\n`
+        }
         tmpCode += `${indent}parts.push(${pathName})\n`
 
         cx = sx

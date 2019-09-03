@@ -266,7 +266,7 @@ const codify = (options, group) => {
       }
     }
     if (target === '1D' && obj.stroke) {
-      code += `${indent}${on}.color = [${obj.stroke[0]}, ${obj.stroke[1]}, ${obj.stroke[2]}, 1]\n`
+      code += `${indent}color.color([${obj.stroke[0]}, ${obj.stroke[1]}, ${obj.stroke[2]}, 1], ${on})\n`
     }
     if (target === '2D' && obj.fill) {
       code += `${indent}color.color([${obj.fill[0]}, ${obj.fill[1]}, ${obj.fill[2]}, 1], ${on})\n`
