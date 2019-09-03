@@ -65,8 +65,7 @@ test('deserialize : translate svg produced by inkscape to script', function (t) 
   t.is(typeof obs, 'string')
   t.is(countOf('path2.fromPoints', obs), 2)
   t.is(countOf('path2.close', obs), 2)
-  t.is(countOf('geom2.fromPoints', obs), 2)
-  t.is(countOf('color', obs), 2)
+  t.is(countOf('color', obs), 0) // no colors, as fill is ignored for 1D
 
   obs = deserializer.deserialize(sourceSvg, undefined, { output: 'script', target: '1D', addMetaData: false })
 })
