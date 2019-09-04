@@ -8,7 +8,15 @@ const deserializer = require('../index.js')
 
 const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
 
-const toArray = (polygons) => polygons.map((p) => p.vertices.map((v) => ([v[0], v[1], v[2]])))
+const countOf = (search, string) => {
+  let count = 0
+  let index = string.indexOf(search)
+  while (index !== -1) {
+    count++
+    index = string.indexOf(search, index + 1)
+  }
+  return count
+}
 
 test('translate simple ascii stl to jscad code', function (t) {
   const inputPath = path.resolve(samplesPath, 'stl/testcube_ascii.stl')
@@ -138,4 +146,15 @@ primitives.polyhedron({orientation: 'inward', points: [
 
   const observed = deserializer.deserialize(inputFile, undefined, { output: 'jscad', addMetaData: false })
   t.deepEqual(observed, expected)
+})
+
+test('translate stl with colors to jscad code', function (t) {
+  const inputPath = path.resolve(samplesPath, 'stl/3D.stl')
+  const inputFile = fs.readFileSync(inputPath)
+
+  const observed = deserializer.deserialize(inputFile, undefined, { output: 'jscad', addMetaData: false })
+  t.is(countOf('primitives.polyhedron', observed), 1)
+  t.is(countOf('points', observed), 1)
+  t.is(countOf('faces', observed), 1)
+  t.is(countOf('colors', observed), 1)
 })
