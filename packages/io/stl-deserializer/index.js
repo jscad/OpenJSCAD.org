@@ -2,8 +2,6 @@ const { math, primitives } = require('@jscad/csg')
 
 const { BinaryReader } = require('@jscad/io-utils')
 
-const { vt2jscad } = require('./vt2jscad')
-
 // STL function from http://jsfiddle.net/Riham/yzvGD/35/
 // CC BY-SA by Riham
 // changes by Rene K. Mueller <spiritdude@gmail.com>
@@ -41,7 +39,7 @@ const deserialize = (stl, filename, options) => {
 
   options && options.statusCallback && options.statusCallback({ progress: 33 })
 
-  const elementFormatterJscad = ({ vertices, triangles, normals, colors, index }) => `// object #${index}: triangles: ${triangles.length}\n${vt2jscad(vertices, triangles, null, colors)}`
+  const elementFormatterJscad = ({ vertices, triangles, normals, colors, index }) => toScript(vertices, triangles, null, colors, index)
   const elementFormatterObject = ({ vertices, triangles, normals, colors }) => toPolyhedron(vertices, triangles, null, colors)
 
   options && options.statusCallback && options.statusCallback({ progress: 66 })
@@ -112,11 +110,13 @@ const formatAsJscad = (data, addMetaData, version, filename) => {
   //
   `
   }
-  return code + `function main() { return [
-${data.join('\n')}
-  ];
+  code += data.join('\n')
+  code += `
+const main = () => {
+ return [${data.map((d, i) => `solid${i + 1}()`)}]
 }
 `
+  return code
 }
 
 const formatAsCsg = (data) => data
@@ -261,7 +261,7 @@ const deserializeBinarySTL = (stl, filename, version, elementFormatter) => {
     // FIXME: this used to be added to the output script, which makes more sense
   }
 
-  return [elementFormatter({ vertices, triangles, normals, colors })]
+  return [elementFormatter({ vertices, triangles, normals, colors, index: 1 })]
 }
 
 const deserializeAsciiSTL = (stl, filename, version, elementFormatter) => {
@@ -350,7 +350,7 @@ const deserializeAsciiSTL = (stl, filename, version, elementFormatter) => {
 }
 
 /*
- * Convert the given positions, faces(triangles), normals, colors to geometry (polyhedron).
+ * Convert the given points, faces(triangles), normals, colors to geometry (polyhedron).
  */
 const toPolyhedron = (points, faces, normals, colors) => {
   const options = {
@@ -360,6 +360,44 @@ const toPolyhedron = (points, faces, normals, colors) => {
     colors
   }
   return primitives.polyhedron(options)
+}
+
+/*
+ * Convert the given points, faces(triangles), normals, colors to JSCAD script.
+ */
+const toScript = (points, faces, normals, colors, index) => {
+  // console.log('***** toScript',index,points.length,faces.length,colors.length)
+
+  let src = `
+//
+// solid ${index} : ${points.length} points, ${faces.length} faces, ${colors.length} colors
+//
+const solid${index} = () => {
+`
+
+  src += `  const points = [\n`
+  for (let i = 0; i < points.length; i++) {
+    src += `    [${points[i]}],\n`
+  }
+  src += '  ]\n'
+
+  src += `  const faces = [\n`
+  for (let i = 0; i < faces.length; i++) {
+    src += `    [${faces[i]}],\n`
+  }
+  src += '  ]\n'
+
+  if (colors && faces.length === colors.length) {
+    src += `  const colors = [\n`
+    for (let i = 0; i < colors.length; i++) {
+      src += `    [${colors[i]}],\n`
+    }
+    src += '  ]\n'
+  } else {
+    src += `  const colors = null\n`
+  }
+  src += `  return primitives.polyhedron({points, faces, colors, orientation: 'inside'})\n}\n`
+  return src
 }
 
 module.exports = {
