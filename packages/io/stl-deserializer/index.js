@@ -1,50 +1,58 @@
-const { CSG } = require('@jscad/csg')
-const { vt2jscad } = require('./vt2jscad')
+const { math, geometry } = require('@jscad/csg')
+
 const { BinaryReader } = require('@jscad/io-utils')
+
+const { vt2jscad } = require('./vt2jscad')
 
 // STL function from http://jsfiddle.net/Riham/yzvGD/35/
 // CC BY-SA by Riham
 // changes by Rene K. Mueller <spiritdude@gmail.com>
 // changes by Mark 'kaosat-dev' Moissette
-// 2017/10/14: refactoring, added support for CSG output etc
+// 2017/10/14: refactoring, added support for object output etc
 // 2013/03/28: lot of rework and debugging included, and error handling
 // 2013/03/18: renamed functions, creating .jscad source direct via polyhedron()
-const echo = console.info
 
 /**
-* Parse the given stl data and return either a JSCAD script or a CSG/CAG object
+* Parse the given stl data and return either a JSCAD script OR a list of geometries
 * @param {string} input stl data
 * @param {string} filename (optional) original filename of AMF source
 * @param {object} options options (optional) anonymous object with:
 * @param {string} [options.version='0.0.0'] version number to add to the metadata
 * @param {boolean} [options.addMetadata=true] toggle injection of metadata (producer, date, source) at the start of the file
 * @param {string} [options.output='jscad'] {String} either jscad or csg to set desired output
-* @return {CSG/string} either a CAG/CSG object or a string (jscad script)
+* @return {[geometries]/string} a list of geometries OR a jscad script (string)
 */
-function deserialize (stl, filename, options) {
-  options && options.statusCallback && options.statusCallback({progress: 0})
-  const defaults = {version: '0.0.0', addMetaData: true, output: 'jscad'}
+const deserialize = (stl, filename, options) => {
+  // console.log('***** deserialize', stl.length, filename, options)
+  const defaults = {
+    version: '0.0.0',
+    addMetaData: true,
+    output: 'jscad'
+  }
   options = Object.assign({}, defaults, options)
-  const {version, output, addMetaData} = options
+
+  options && options.statusCallback && options.statusCallback({ progress: 0 })
+
+  const { version, output, addMetaData } = options
 
   const isBinary = isDataBinaryRobust(stl)
 
   stl = isBinary && isBuffer(stl) ? bufferToBinaryString(stl) : stl
 
-  options && options.statusCallback && options.statusCallback({progress: 33})
+  options && options.statusCallback && options.statusCallback({ progress: 33 })
 
-  const elementFormatterJscad = ({vertices, triangles, normals, colors, index}) => `// object #${index}: triangles: ${triangles.length}\n${vt2jscad(vertices, triangles, null)}`
-  const elementFormatterCSG = ({vertices, triangles, normals, colors}) => polyhedron({ points: vertices, polygons: triangles })
+  const elementFormatterJscad = ({ vertices, triangles, normals, colors, index }) => `// object #${index}: triangles: ${triangles.length}\n${vt2jscad(vertices, triangles, null, colors)}`
+  const elementFormatterObject = ({ vertices, triangles, normals, colors }) => polyhedron({ points: vertices, polygons: triangles, colors: colors })
 
-  options && options.statusCallback && options.statusCallback({progress: 66})
-  
+  options && options.statusCallback && options.statusCallback({ progress: 66 })
+
   const deserializer = isBinary ? deserializeBinarySTL : deserializeAsciiSTL
-  const elementFormatter = output === 'jscad' ? elementFormatterJscad : elementFormatterCSG
+  const elementFormatter = output === 'jscad' ? elementFormatterJscad : elementFormatterObject
   const outputFormatter = output === 'jscad' ? formatAsJscad : formatAsCsg
 
   const result = outputFormatter(deserializer(stl, filename, version, elementFormatter), addMetaData, version, filename)
-  
-  options && options.statusCallback && options.statusCallback({progress: 100})
+
+  options && options.statusCallback && options.statusCallback({ progress: 100 })
   return result
 
   /*
@@ -55,7 +63,7 @@ function deserialize (stl, filename, options) {
   src += '; }' */
 }
 
-function bufferToBinaryString (buffer) {
+const bufferToBinaryString = (buffer) => {
   let binary = ''
   const bytes = new Uint8Array(buffer)
   let length = bytes.byteLength
@@ -66,12 +74,12 @@ function bufferToBinaryString (buffer) {
 }
 
 // taken from https://github.com/feross/is-buffer if we need it more than once, add as dep
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+const isBuffer = (obj) => {
+  return (!!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj))
 }
 
 // transforms input to string if it was not already the case
-function ensureString (buf) {
+const ensureString = (buf) => {
   if (typeof buf !== 'string') {
     let arrayBuffer = new Uint8Array(buf)
     let str = ''
@@ -79,45 +87,49 @@ function ensureString (buf) {
       str += String.fromCharCode(arrayBuffer[i]) // implicitly assumes little-endian
     }
     return str
-  } else {
-    return buf
   }
+  return buf
 }
 
 // reliable binary detection
-function isDataBinaryRobust (data) {
-  // console.log('data is binary ?')
+const isDataBinaryRobust = (data) => {
   const patternVertex = /vertex[\s]+([-+]?[0-9]+\.?[0-9]*([eE][-+]?[0-9]+)?)+[\s]+([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)+[\s]+([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)+/g
   const text = ensureString(data)
-  const isBinary = patternVertex.exec(text) === null
-  return isBinary
+  const isBinary = patternVertex.exec(text)
+  return (isBinary === null)
 }
 
-function formatAsJscad (data, addMetaData, version, filename) {
-  let code = addMetaData ? `//
-  // producer: OpenJSCAD.org Compatibility${version} STL Binary Importer
+const formatAsJscad = (data, addMetaData, version, filename) => {
+  // console.log('***** formatAsJscad')
+  let code = ''
+  if (addMetaData) {
+    code = `
+  //
+  // producer: OpenJSCAD.org ${version} - STL Deserializer
   // date: ${new Date()}
   // source: ${filename}
+  // objects: ${data.length}
   //
-  ` : ''
-
-  return code + `function main() { return union(
-// objects: ${data.length}
-${data.join('\n')}); }
+  `
+  }
+  return code + `function main() { return [
+${data.join('\n')}
+  ];
+}
 `
 }
 
-function formatAsCsg (data) {
-  return new CSG().union(data)
-}
+const formatAsCsg = (data) => data
 
-function deserializeBinarySTL (stl, filename, version, elementFormatter, debug = false) {
-  // -- This makes more sense if you read http://en.wikipedia.org/wiki/STL_(file_format)#Binary_STL
+/*
+ * @see http://en.wikipedia.org/wiki/STL_(file_format)#Binary_STL
+ */
+const deserializeBinarySTL = (stl, filename, version, elementFormatter) => {
+  // console.log('***** deserializeBinary: ', stl.length)
   let vertices = []
   let triangles = []
   let normals = []
   let colors = []
-  let converted = 0
   let vertexIndex = 0
   let err = 0
   let mcolor = null
@@ -174,9 +186,6 @@ function deserializeBinarySTL (stl, filename, version, elementFormatter, debug =
   let totalTriangles = br.readUInt32() // Read # triangles
 
   for (let tr = 0; tr < totalTriangles; tr++) {
-    if (debug) {
-      if (tr % 100 === 0) console.info(`stl importer: converted ${converted} out of ${totalTriangles} triangles`)
-    }
     /*
       REAL32[3] . Normal vector
       REAL32[3] . Vertex 1
@@ -200,7 +209,7 @@ function deserializeBinarySTL (stl, filename, version, elementFormatter, debug =
       if (isNaN(no[i])) skip++
     }
     if (skip > 0) {
-      echo('bad triangle vertice coords/normal: ', skip)
+      console.log('bad triangle vertice coords/normal: ', skip)
     }
 
     err += skip
@@ -230,12 +239,10 @@ function deserializeBinarySTL (stl, filename, version, elementFormatter, debug =
       // E2 = C - A
       // test = dot( Normal, cross( E1, E2 ) )
       // test > 0: cw, test < 0 : ccw
-      let w1 = new CSG.Vector3D(v1)
-      let w2 = new CSG.Vector3D(v2)
-      let w3 = new CSG.Vector3D(v3)
-      let e1 = w2.minus(w1)
-      let e2 = w3.minus(w1)
-      let t = new CSG.Vector3D(no).dot(e1.cross(e2))
+      let e1 = math.vec3.subtract(v2, v1)
+      let e2 = math.vec3.subtract(v3, v1)
+      let cr = math.vec3.cross(e1, e2)
+      let t = math.vec3.dot(no, cr)
       if (t > 0) { // 1,2,3 -> 3,2,1
         let tmp = v3
         v3 = v1
@@ -247,53 +254,48 @@ function deserializeBinarySTL (stl, filename, version, elementFormatter, debug =
     vertices.push(v3)
     triangles.push(triangle)
     normals.push(no)
-    converted++
   }
 
   if (err) {
-    console.warn(`WARNING: import errors: ${err} (some triangles might be misaligned or missing)`)
+    console.log(`WARNING: import errors: ${err} (some triangles might be misaligned or missing)`)
     // FIXME: this used to be added to the output script, which makes more sense
   }
 
-  return [elementFormatter({vertices, triangles, normals, colors})]
+  return [elementFormatter({ vertices, triangles, normals, colors })]
 }
 
-function deserializeAsciiSTL (stl, filename, version, elementFormatter) {
+const deserializeAsciiSTL = (stl, filename, version, elementFormatter) => {
+  // console.log('***** deserializeAscii: '+stl.length)
   let converted = 0
-  let o
 
   // -- Find all models
   const objects = stl.split('endsolid')
-  // src += '// objects: ' + (objects.length - 1) + '\n'
   let elements = []
-  for (o = 1; o < objects.length; o++) {
+  for (let o = 1; o < objects.length; o++) {
     // -- Translation: a non-greedy regex for facet {...} endloop pattern
     let patt = /\bfacet[\s\S]*?endloop/mgi
     let vertices = []
     let triangles = []
     let normals = []
+    let colors = []
     let vertexIndex = 0
     let err = 0
 
     let match = stl.match(patt)
     if (match == null) continue
     for (let i = 0; i < match.length; i++) {
-      // if(converted%100==0) status('stl to jscad: converted '+converted+' out of '+match.length+ ' facets');
       // -- 1 normal with 3 numbers, 3 different vertex objects each with 3 numbers:
-      // let vpatt = /\bfacet\s+normal\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s*outer\s+loop\s+vertex\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s*vertex\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s*vertex\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)\s+(-?\d+\.?\d*)/mgi;
-      // (-?\d+\.?\d*) -1.21223
-      // (-?\d+\.?\d*[Ee]?[-+]?\d*)
       let vpatt = /\bfacet\s+normal\s+(\S+)\s+(\S+)\s+(\S+)\s+outer\s+loop\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s*/mgi
       let v = vpatt.exec(match[i])
       if (v == null) continue
       if (v.length !== 13) {
-        echo('Failed to parse ' + match[i])
+        console.log('Failed to parse ' + match[i])
         break
       }
       let skip = 0
       for (let k = 0; k < v.length; k++) {
         if (v[k] === 'NaN') {
-          echo('bad normal or triangle vertice #' + converted + ' ' + k + ": '" + v[k] + "', skipped")
+          console.log('bad normal or triangle vertice #' + converted + ' ' + k + ": '" + v[k] + "', skipped")
           skip++
         }
       }
@@ -301,24 +303,7 @@ function deserializeAsciiSTL (stl, filename, version, elementFormatter) {
       if (skip) {
         continue
       }
-      if (0 && skip) {
-        let j = 1 + 3
-        let v1 = []; v1.push(parseFloat(v[j++])); v1.push(parseFloat(v[j++])); v1.push(parseFloat(v[j++]))
-        let v2 = []; v2.push(parseFloat(v[j++])); v2.push(parseFloat(v[j++])); v2.push(parseFloat(v[j++]))
-        let v3 = []; v3.push(parseFloat(v[j++])); v3.push(parseFloat(v[j++])); v3.push(parseFloat(v[j++]))
-        echo('recalculate norm', v1, v2, v3)
-        let w1 = new CSG.Vector3D(v1)
-        let w2 = new CSG.Vector3D(v2)
-        let w3 = new CSG.Vector3D(v3)
-        let _u = w1.minus(w3)
-        let _v = w1.minus(w2)
-        let norm = _u.cross(_v).unit()
-        j = 1
-        v[j++] = norm._x
-        v[j++] = norm._y
-        v[j++] = norm._z
-        skip = false
-      }
+
       let j = 1
       let no = []; no.push(parseFloat(v[j++])); no.push(parseFloat(v[j++])); no.push(parseFloat(v[j++]))
       let v1 = []; v1.push(parseFloat(v[j++])); v1.push(parseFloat(v[j++])); v1.push(parseFloat(v[j++]))
@@ -328,17 +313,16 @@ function deserializeAsciiSTL (stl, filename, version, elementFormatter) {
 
       // -- Add 3 vertices for every triangle
       // TODO: OPTIMIZE: Check if the vertex is already in the array, if it is just reuse the index
-      if (skip === 0) {  // checking cw vs ccw
+      if (skip === 0) {
+        // checking cw vs ccw
         // E1 = B - A
         // E2 = C - A
         // test = dot( Normal, cross( E1, E2 ) )
         // test > 0: cw, test < 0: ccw
-        let w1 = new CSG.Vector3D(v1)
-        let w2 = new CSG.Vector3D(v2)
-        let w3 = new CSG.Vector3D(v3)
-        let e1 = w2.minus(w1)
-        let e2 = w3.minus(w1)
-        let t = new CSG.Vector3D(no).dot(e1.cross(e2))
+        let e1 = math.vec3.subtract(v2, v1)
+        let e2 = math.vec3.subtract(v3, v1)
+        let cr = math.vec3.cross(e1, e2)
+        let t = math.vec3.dot(no, cr)
         if (t > 0) { // 1,2,3 -> 3,2,1
           let tmp = v3
           v3 = v1
@@ -358,7 +342,7 @@ function deserializeAsciiSTL (stl, filename, version, elementFormatter) {
     }
 
     elements.push(
-      elementFormatter({vertices, triangles, index: o})
+      elementFormatter({ vertices, triangles, colors, index: o })
     )
   }
 
@@ -366,28 +350,26 @@ function deserializeAsciiSTL (stl, filename, version, elementFormatter) {
 }
 
 // FIXME : just a stand in for now from scad-api, not sure if we should rely on scad-api from here ?
-function polyhedron (p) {
-  let pgs = []
-  let ref = p.triangles || p.polygons
-  let colors = p.colors || null
+const polyhedron = (p) => {
+  let polygons = []
+  let faces = p.triangles || p.polygons
+  // let colors = p.colors || null
 
-  for (let i = 0; i < ref.length; i++) {
+  for (let i = 0; i < faces.length; i++) {
     let pp = []
-    for (let j = 0; j < ref[i].length; j++) {
-      pp[j] = p.points[ref[i][j]]
+    for (let j = 0; j < faces[i].length; j++) {
+      pp[j] = p.points[faces[i][j]]
     }
 
-    let v = []
-    for (let j = ref[i].length - 1; j >= 0; j--) { // --- we reverse order for examples of OpenSCAD work
-      v.push(new CSG.Vertex(new CSG.Vector3D(pp[j][0], pp[j][1], pp[j][2])))
+    let vertices = []
+    for (let j = faces[i].length - 1; j >= 0; j--) { // --- we reverse order for examples of OpenSCAD work
+      vertices.push(math.vec3.fromArray(pp[j]))
     }
-    let s = CSG.Polygon.defaultShared
-    if (colors && colors[i]) {
-      s = CSG.Polygon.Shared.fromColor(colors[i])
-    }
-    pgs.push(new CSG.Polygon(v, s))
+
+    // TODO add support for colors
+    polygons.push(geometry.poly3.fromPoints(vertices))
   }
-  let r = CSG.fromPolygons(pgs)
+  let r = geometry.geom3.create(polygons)
   return r
 }
 
