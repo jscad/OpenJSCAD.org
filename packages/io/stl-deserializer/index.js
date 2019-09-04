@@ -1,4 +1,4 @@
-const { math, geometry } = require('@jscad/csg')
+const { math, primitives } = require('@jscad/csg')
 
 const { BinaryReader } = require('@jscad/io-utils')
 
@@ -42,7 +42,7 @@ const deserialize = (stl, filename, options) => {
   options && options.statusCallback && options.statusCallback({ progress: 33 })
 
   const elementFormatterJscad = ({ vertices, triangles, normals, colors, index }) => `// object #${index}: triangles: ${triangles.length}\n${vt2jscad(vertices, triangles, null, colors)}`
-  const elementFormatterObject = ({ vertices, triangles, normals, colors }) => polyhedron({ points: vertices, polygons: triangles, colors: colors })
+  const elementFormatterObject = ({ vertices, triangles, normals, colors }) => toPolyhedron(vertices, triangles, null, colors)
 
   options && options.statusCallback && options.statusCallback({ progress: 66 })
 
@@ -349,28 +349,17 @@ const deserializeAsciiSTL = (stl, filename, version, elementFormatter) => {
   return elements
 }
 
-// FIXME : just a stand in for now from scad-api, not sure if we should rely on scad-api from here ?
-const polyhedron = (p) => {
-  let polygons = []
-  let faces = p.triangles || p.polygons
-  // let colors = p.colors || null
-
-  for (let i = 0; i < faces.length; i++) {
-    let pp = []
-    for (let j = 0; j < faces[i].length; j++) {
-      pp[j] = p.points[faces[i][j]]
-    }
-
-    let vertices = []
-    for (let j = faces[i].length - 1; j >= 0; j--) { // --- we reverse order for examples of OpenSCAD work
-      vertices.push(math.vec3.fromArray(pp[j]))
-    }
-
-    // TODO add support for colors
-    polygons.push(geometry.poly3.fromPoints(vertices))
+/*
+ * Convert the given positions, faces(triangles), normals, colors to geometry (polyhedron).
+ */
+const toPolyhedron = (points, faces, normals, colors) => {
+  const options = {
+    orientation: 'inward',
+    points,
+    faces,
+    colors
   }
-  let r = geometry.geom3.create(polygons)
-  return r
+  return primitives.polyhedron(options)
 }
 
 module.exports = {
