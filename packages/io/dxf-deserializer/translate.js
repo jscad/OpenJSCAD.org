@@ -809,6 +809,8 @@ const translateAsciiDxf = (reader, options) => {
         translateLine(obj, layers, options)
         break
       case 'polyline':
+        // console.log('##### polyline')
+        current = translateCurrent(current, layers, parts, options)
         if (current === null) {
           // console.log('##### start of polyline')
           current = getPolyType(obj)
