@@ -65,18 +65,14 @@ const translateLine = (obj, layers, options) => {
   if (!obj['pptz'] || (obj['pptz'] === obj['sptz'] && obj['pptz'] === 0)) {
     let p1 = math.vec2.fromValues(obj['pptx'], obj['ppty'])
     let p2 = math.vec2.fromValues(obj['sptx'], obj['spty'])
-    script = `  let ${name} = primitives.line([[${translateVector2D(p1)}],[${translateVector2D(p2)}]])
-`
-    if (color) {
-      script += `  ${name}.color = [${color[0]}, ${color[1]}, ${color[2]}, 1]
-`
-    }
+    script = `  let ${name} = primitives.line([[${translateVector2D(p1)}],[${translateVector2D(p2)}]])\n`
   } else {
     let p1 = math.vec3.fromValues(obj['pptx'], obj['ppty'], obj['pptz'])
     let p2 = math.vec3.fromValues(obj['sptx'], obj['spty'], obj['sptz'])
-    // FIXME how to create a 3D line?
-    script = `  let ${name} = primitives.line([[${translateVector3D(p1)}],[${translateVector3D(p2)}]])
-`
+    script = `  let ${name} = primitives.line([[${translateVector3D(p1)}],[${translateVector3D(p2)}]])\n`
+  }
+  if (color) {
+    script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
   }
   obj['script'] = script
   addToLayer(obj, layers)
@@ -121,18 +117,15 @@ const translatePath2D = (obj, layers, options) => {
   let flags = obj['lflg']
   let name = obj['name']
 
-  // FIXME add color when supported
-  // let cn = getColorNumber(obj, layers)
-  // let color = getColor(cn, options.colorindex)
+  let cn = getColorNumber(obj, layers)
+  let color = getColor(cn, options.colorindex)
 
   // translation
-  let script = `  let ${name} = geometry.path2.create()
-`
+  let script = `  let ${name} = geometry.path2.create()\n`
   let isclosed = ((flags & closed) === closed)
   if (vlen === pptxs.length && vlen === pptys.length && vlen === bulgs.length) {
     // add initial point
-    script += `  ${name} = geometry.path2.appendPoints([[${pptxs[0]}, ${pptys[0]}]], ${name})
-`
+    script += `  ${name} = geometry.path2.appendPoints([[${pptxs[0]}, ${pptys[0]}]], ${name})\n`
     // add sections
     for (let i = 0; i < pptxs.length; i++) {
       let j = (i + 1) % pptxs.length
@@ -150,10 +143,12 @@ const translatePath2D = (obj, layers, options) => {
     return
   }
   if (isclosed) {
-    script += `  ${name} = geometry.path2.close(${name})
-`
+    script += `  ${name} = geometry.path2.close(${name})\n`
   } else {
     script += '\n'
+  }
+  if (color) {
+    script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
   }
   obj['script'] = script
   addToLayer(obj, layers)
@@ -171,24 +166,35 @@ const translateArc = (obj, layers, options) => {
   let swid = obj['swid']
   let ang0 = obj['ang0'] // start angle (degrees)
   let ang1 = obj['ang1'] // end angle (degrees)
-
   let name = obj['name']
+
+  let cn = getColorNumber(obj, layers)
+  let color = getColor(cn, options.colorindex)
+
+  // convert angles to radians
+  ang0 *= 0.017453292519943295
+  ang1 *= 0.017453292519943295
 
   // FIXME need to determine segements from object/layer/variables
   let res = 16
 
   // convert to 2D object
   if (lthk === 0.0) {
-    // convert angles to radians
-    ang0 *= 0.017453292519943295
-    ang1 *= 0.017453292519943295
-
-    let script = `  let ${name} = primitives.arc({center: [${pptx}, ${ppty}], radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}})
-`
+    let script = `  let ${name} = primitives.arc({center: [${pptx}, ${ppty}], radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}})\n`
+    if (color) {
+      script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+    }
     obj['script'] = script
     addToLayer(obj, layers)
+    return
   }
   // FIXME how to represent 3D arc?
+  let script = `  let ${name} = primitives.arc({center: [${pptx}, ${ppty}], radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}})\n`
+  if (color) {
+    script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+  }
+  obj['script'] = script
+  addToLayer(obj, layers)
 }
 
 //
@@ -211,11 +217,9 @@ const translateCircle = (obj, layers, options) => {
 
   // convert to 2D object
   if (lthk === 0.0) {
-    let script = `  let ${name} = primitives.circle({center: [${pptx},${ppty}],radius: ${swid},segments: ${res}})
-`
+    let script = `  let ${name} = primitives.circle({center: [${pptx},${ppty}],radius: ${swid},segments: ${res}})\n`
     if (color) {
-      script += `  ${name}.color = [${color[0]}, ${color[1]}, ${color[2]}, 1]
-`
+      script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
     }
     obj['script'] = script
     addToLayer(obj, layers)
@@ -223,8 +227,10 @@ const translateCircle = (obj, layers, options) => {
   }
 
   // convert to 3D object
-  let script = `  let ${name} = primitives.circle({center: [${pptx},${ppty}],radius: ${swid},segments: ${res}).extrude({offset: [0,0,${lthk}]})
-`
+  let script = `  let ${name} = primitives.circle({center: [${pptx},${ppty}],radius: ${swid},segments: ${res}).extrude({offset: [0,0,${lthk}]})\n`
+  if (color) {
+    script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+  }
 
   // FIXME need to use 210/220/230 for direction of rotation
   obj['script'] = script
@@ -244,6 +250,10 @@ const translateEllipse = (obj, layers, options) => {
   let sptz = obj['sptz']
   let swid = obj['swid'] // Ratio of minor axis to major axis
   let name = obj['name']
+
+  let cn = getColorNumber(obj, layers)
+  let color = getColor(cn, options.colorindex)
+
   // FIXME need to determine segments from object/layer/variables
   let res = 16
 
@@ -260,6 +270,9 @@ const translateEllipse = (obj, layers, options) => {
   let ${name}matrix = math.mat4.multiply(math.mat4.fromTranslation([${pptx}, ${ppty}, 0]), math.mat4.fromZRotation(${angle}))
   ${name} = geometry.geom2.transform(${name}matrix, ${name})
 `
+    if (color) {
+      script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+    }
     obj['script'] = script
     addToLayer(obj, layers)
   }
