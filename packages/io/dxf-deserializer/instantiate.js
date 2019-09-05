@@ -7,20 +7,13 @@ All code released under MIT license
 
 */
 const { math } = require('@jscad/csg')
-const mat4 = math.mat4
-const vec2 = math.vec2
-const vec3 = math.vec3
-const EPS = 1e-5
+const EPS = 1e-5 // FIXME
 
 const { geometry } = require('@jscad/csg')
-const geom2 = geometry.geom2
-const geom3 = geometry.geom3
-const path2 = geometry.path2
-const poly3 = geometry.poly3
 
 const { primitives } = require('@jscad/csg')
 
-const { BYBLOCK, BYLAYER } = require('./autocad')
+const { findLayer, getColor, getColorNumber } = require('./helpers')
 
 //
 // instantiate the given object (3dface) as a polygon
@@ -28,22 +21,22 @@ const { BYBLOCK, BYLAYER } = require('./autocad')
 const instantiatePolygon = (obj, layers, options) => {
   let vertices = []
   // FIXME: should check global variable to instantiate in the proper orientation
-  vertices.push(vec3.fromValues(obj['pptx'], obj['ppty'], obj['pptz']))
-  vertices.push(vec3.fromValues(obj['sptx'], obj['spty'], obj['sptz']))
-  vertices.push(vec3.fromValues(obj['tptx'], obj['tpty'], obj['tptz']))
+  vertices.push(math.vec3.fromValues(obj['pptx'], obj['ppty'], obj['pptz']))
+  vertices.push(math.vec3.fromValues(obj['sptx'], obj['spty'], obj['sptz']))
+  vertices.push(math.vec3.fromValues(obj['tptx'], obj['tpty'], obj['tptz']))
   if (obj['fptx']) {
     let pushit = false
     if (obj['tptx'] !== obj['fptx']) { pushit = true }
     if (obj['tpty'] !== obj['fpty']) { pushit = true }
     if (obj['tptz'] !== obj['fptz']) { pushit = true }
     if (pushit) {
-      vertices.push(vec3.fromValues(obj['fptx'], obj['fpty'], obj['fptz']))
+      vertices.push(math.vec3.fromValues(obj['fptx'], obj['fpty'], obj['fptz']))
     }
   }
   let cn = getColorNumber(obj, layers)
   let color = getColor(cn, options.colorindex)
 
-  let polygon = poly3.create(vertices)
+  let polygon = geometry.poly3.create(vertices)
   if (color) polygon.color = color
   return polygon
 }
@@ -54,13 +47,13 @@ const instantiatePolygon = (obj, layers, options) => {
 const instantiateLine = (obj, layers, options) => {
   // console.log('***** instantiateLine',obj)
   if (obj['pptz'] === obj['sptz'] & obj['pptz'] === 0) {
-    let p1 = vec2.fromValues(obj['pptx'], obj['ppty'])
-    let p2 = vec2.fromValues(obj['sptx'], obj['spty'])
+    let p1 = math.vec2.fromValues(obj['pptx'], obj['ppty'])
+    let p2 = math.vec2.fromValues(obj['sptx'], obj['spty'])
     return primitives.line([p1, p2])
   }
 
-  let p1 = vec3.fromValues(obj['pptx'], obj['ppty'], obj['pptz'])
-  let p2 = vec3.fromValues(obj['sptx'], obj['spty'], obj['sptz'])
+  let p1 = math.vec3.fromValues(obj['pptx'], obj['ppty'], obj['pptz'])
+  let p2 = math.vec3.fromValues(obj['sptx'], obj['spty'], obj['sptz'])
   // FIXME what should this really create?
   return primitives.line([p1, p2])
 }
@@ -76,20 +69,20 @@ const instantiateVector = (obj) => {
   let flags = obj['lflg']
   let vtype = {}
   if ((flags & d3line) === d3line) {
-    vtype['vec'] = vec3.fromValues(obj['pptx'], obj['ppty'], obj['pptz'])
+    vtype['vec'] = math.vec3.fromValues(obj['pptx'], obj['ppty'], obj['pptz'])
   } else
   if ((flags & d3mesh) === d3mesh) {
-    vtype['vec'] = vec3.fromValues(obj['pptx'], obj['ppty'], obj['pptz'])
+    vtype['vec'] = math.vec3.fromValues(obj['pptx'], obj['ppty'], obj['pptz'])
   } else
   if ((flags & d3face) === d3face) {
-    vtype['vec'] = vec3.fromValues(obj['pptx'], obj['ppty'], obj['pptz'])
+    vtype['vec'] = math.vec3.fromValues(obj['pptx'], obj['ppty'], obj['pptz'])
     // pass on face indexes
     vtype['fvia'] = obj['fvia']
     vtype['fvib'] = obj['fvib']
     vtype['fvic'] = obj['fvic']
     vtype['fvid'] = obj['fvid']
   } else {
-    vtype['vec'] = vec2.fromValues(obj['pptx'], obj['ppty'])
+    vtype['vec'] = math.vec2.fromValues(obj['pptx'], obj['ppty'])
     vtype['bulg'] = obj['bulg'] // for rendering curved sections
   }
   return vtype
@@ -101,13 +94,13 @@ const instantiateVector = (obj) => {
 const addSection = (path, x1, y1, bulg) => {
   if (bulg === 0) {
   // add straight line to the end of the path
-    path = path2.appendPoints([[x1, y1]], path)
+    path = geometry.path2.appendPoints([[x1, y1]], path)
   } else {
   // add arc to the end of the path
-    let points = path2.toPoints(path)
+    let points = geometry.path2.toPoints(path)
     let prev = points[points.length - 1]
-    let curr = vec2.fromValues(x1, y1)
-    let u = vec2.distance(prev, curr)
+    let curr = math.vec2.fromValues(x1, y1)
+    let u = math.vec2.distance(prev, curr)
     let r = u * ((1 + Math.pow(bulg, 2)) / (4 * bulg))
     let clockwise = (bulg < 0)
     let large = false // FIXME how to determine?
@@ -115,7 +108,7 @@ const addSection = (path, x1, y1, bulg) => {
     let d = Math.atan(bulg) * 4
     // FIXME; how to determine resolution
     let res = 16
-    path = path2.appendArc({ endpoint: [x1, y1], radius: [r, r], xaxisrotation: d, clockwise: clockwise, large: large, segments: res }, path)
+    path = geometry.path2.appendArc({ endpoint: [x1, y1], radius: [r, r], xaxisrotation: d, clockwise: clockwise, large: large, segments: res }, path)
   }
   return path
 }
@@ -135,7 +128,7 @@ const instantiatePath2D = (obj, layers, options) => {
   let flags = obj['lflg']
 
   // conversion
-  let path = path2.create()
+  let path = geometry.path2.create()
   let isclosed = ((flags & closed) === closed)
   if (vlen === pptxs.length && vlen === pptys.length && vlen === bulgs.length) {
     pptxs.forEach((item, index, array) => {
@@ -152,7 +145,7 @@ const instantiatePath2D = (obj, layers, options) => {
   if (isclosed && (!path.isClosed)) {
   // apply the last section between last and first points
     path = addSection(path, pptxs[0], pptys[0], bulgs[vlen - 1])
-    path = path2.close(path)
+    path = geometry.path2.close(path)
     // FIXME add optional to create 2D geometry from the path
   }
   return path
@@ -232,9 +225,9 @@ const instantiateEllipse = (obj, layers, options) => {
 
   // convert to 2D object
   if (pptz === 0.0 && sptz === 0.0) {
-    let center = vec2.fromValues(0, 0)
-    let mjaxis = vec2.fromValues(sptx, spty)
-    let rx = vec2.distance(center, mjaxis)
+    let center = math.vec2.fromValues(0, 0)
+    let mjaxis = math.vec2.fromValues(sptx, spty)
+    let rx = math.vec2.distance(center, mjaxis)
     let ry = rx * swid
     let angle = Math.atan2(spty, sptx) * 180 / Math.PI
     if (angle < EPS) angle = 0
@@ -242,10 +235,10 @@ const instantiateEllipse = (obj, layers, options) => {
 
     // FIXME add start and end angle when supported
     let cag = primitives.ellipse({ center: [0, 0], radius: [rx, ry], segments: res })
-    let matrix = mat4.fromZRotation(angle)
-    matrix = mat4.multiply(matrix, mat4.fromTranslation([pptx, ppty, 0]))
+    let matrix = math.mat4.fromZRotation(angle)
+    matrix = math.mat4.multiply(matrix, math.mat4.fromTranslation([pptx, ppty, 0]))
     // cag.rotateZ(angle).translate([pptx,ppty])
-    return geom2.transform(matrix, cag)
+    return geometry.geom2.transform(matrix, cag)
   }
   // convert to 3D object
 }
@@ -310,7 +303,7 @@ const instantiateMesh = (obj, layers, options) => {
         let vi = 0
         while (vi < face.length) {
           let pi = face[vi]
-          let vertex = vec3.fromArray(points[pi])
+          let vertex = math.vec3.fromArray(points[pi])
           vertices.push(vertex)
           vi++
         }
@@ -319,7 +312,7 @@ const instantiateMesh = (obj, layers, options) => {
         }
         // FIXME how to correct bad normals?
 
-        let poly = poly3.create(vertices)
+        let poly = geometry.poly3.create(vertices)
         if (color) poly.color = color
         polygons.push(poly)
 
@@ -331,78 +324,37 @@ const instantiateMesh = (obj, layers, options) => {
   } else {
     // invalid vlen
   }
-  return geom3.create(polygons)
-}
-
-//
-// find the layer referenced by the given object
-//
-const findLayer = (obj, layers) => {
-  let lname = obj['lnam'] || '0'
-  for (let layer of layers) {
-    if (layer['name'] === lname) {
-      return layer
-    }
-  }
-  return null
-}
-
-//
-// get the color number of the object, possibly looking at layer
-// returns -1 if a color number was not found
-//
-const getColorNumber = (obj, layers) => {
-  let cn = obj['cnmb'] || -1
-  if (cn === BYLAYER) {
-  // use the color number from the layer
-    cn = -1
-    let layer = findLayer(obj, layers)
-    if (layer !== null) {
-      cn = layer['cnmb'] || -1
-    }
-  } else
-  if (cn === BYBLOCK) {
-  // use the color number from the block
-    cn = -1
-  }
-  return cn
-}
-
-const mod = (num, mod) => {
-  let remain = num % mod
-  return Math.floor(remain >= 0 ? remain : remain + mod)
-}
-
-//
-// instantiate Polygon.Shared(color) using the given index into the given color index
-//
-const getColor = (index, colorindex) => {
-  if (index < 0) { return null }
-
-  index = mod(index, colorindex.length)
-  let rgba = colorindex[index]
-  // FIXME : colors should be cached and shared
-  return rgba
+  return geometry.geom3.create(polygons)
 }
 
 // works for both POLYLINE
 const getPolyType = (obj) => {
-  const closed = parseInt('00000000000000001', 2)
+  const closedM = parseInt('00000000000000001', 2)
   const d3line = parseInt('00000000000001000', 2)
   const d3mesh = parseInt('00000000000010000', 2)
+  const closedN = parseInt('00000000000100000', 2)
+  const d3face = parseInt('00000000001000000', 2)
 
   let flags = obj['lflg']
   let ptype = null
   if ((flags & d3line) === d3line) {
+    let isclosed = ((flags & closedM) === closedM)
     ptype = null // FIXME what to do?
   } else
   if ((flags & d3mesh) === d3mesh) {
-    ptype = geom3.create()
+    ptype = geometry.geom3.create()
+    ptype.closedM = ((flags & closedM) === closedM)
+    ptype.closedN = ((flags & closedN) === closedN)
+  } else
+  if ((flags & d3face) === d3face) {
+    ptype = geometry.geom3.create()
+    ptype.closedM = ((flags & closedM) === closedM)
+    ptype.closedN = ((flags & closedN) === closedN)
   } else {
-    let isClosed = ((flags & closed) === closed)
-    ptype = path2.create()
-    if (isClosed) ptype = path2.close(ptype)
+    ptype = geometry.path2.create()
+    ptype.closedM = ((flags & closedM) === closedM)
   }
+  if ('cnmb' in obj) { ptype['cnmb'] = obj['cnmb'] }
   return ptype
 }
 
@@ -412,14 +364,16 @@ const getPolyType = (obj) => {
 // - a series of vertex => vectors => 2D geometry
 //
 const completeCurrent = (objects, baseobj, polygons, vectors, options) => {
-  if (path2.isA(baseobj)) {
+  if (geometry.path2.isA(baseobj)) {
     // console.log('##### completing 2D geometry')
     let points = vectors.map((vector) => vector.vec)
-    objects.push(path2.fromPoints({ closed: baseobj.closed }, points))
+    // FIXME add color support
+    objects.push(geometry.path2.fromPoints({ closed: baseobj.closed }, points))
   }
-  if (geom3.isA(baseobj)) {
+  if (geometry.geom3.isA(baseobj)) {
     // console.log('##### completing 3D geometry')
-    objects.push(geom3.create(polygons))
+    // FIXME add color support
+    objects.push(geometry.geom3.create(polygons))
   }
   return null
 }
@@ -464,7 +418,7 @@ const instantiateAsciiDxf = (reader, options) => {
         p = instantiatePolygon(obj, layers, options)
         if (current === null) {
           // console.log('##### start of 3dfaces')
-          current = geom3.create()
+          current = geometry.geom3.create()
         }
         break
       case 'mesh':
@@ -495,6 +449,7 @@ const instantiateAsciiDxf = (reader, options) => {
         objects.push(instantiateLine(obj, layers, options))
         break
       case 'polyline':
+        current = completeCurrent(objects, current, polygons, vectors, options)
         if (current === null) {
           // console.log('##### start of polyline')
           current = getPolyType(obj)
@@ -521,7 +476,7 @@ const instantiateAsciiDxf = (reader, options) => {
         break
     }
     // accumlate polygons if necessary
-    if (poly3.isA(p)) {
+    if (geometry.poly3.isA(p)) {
       polygons.push(p)
     }
     // accumlate vectors if necessary
