@@ -1,6 +1,6 @@
-const {CSG} = require('@jscad/csg')
 
 const createObject = require('./objectBuilder')
+
 const parse = require('./parse')
 
 const deserializeToCSG = function (src, filename, options) {
@@ -19,9 +19,8 @@ const deserializeToCSG = function (src, filename, options) {
 }
 
 const objectify = (amf, data) => {
-  let objects = amf.objects
-  const csgs = objects.map((object, index) => object.type === 'object' ? createObject(object, index, data, {amf, csg: true}) : undefined)
-  return new CSG().union(csgs)
+  let objects = amf.objects.filter((o) => o.type === 'object')
+  return objects.map((object, index) => createObject(object, index, data, {amf, csg: true}))
 }
 
 module.exports = deserializeToCSG
