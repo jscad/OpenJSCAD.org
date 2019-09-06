@@ -1,4 +1,5 @@
 const sax = require('sax')
+
 const {
   amfMesh, amfVertices, amfCoordinates,
   amfX, amfY, amfZ, amfNormal,
@@ -131,7 +132,7 @@ const createAmfParser = (src, pxPmm) => {
 
     let obj = objMap[node.name] ? objMap[node.name](node.attributes, { amfObjects }) : null
 
-    if (obj !== null) {
+    if (obj) {
       switch (amfDefinition) {
         case 0: // definition of AMF
           if ('objects' in obj) {

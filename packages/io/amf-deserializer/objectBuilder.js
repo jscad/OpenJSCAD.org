@@ -179,7 +179,7 @@ const createObject${obj.id} = () => {
 
     let scale = options.scale ? options.scale : 1.0
     if (scale !== 1.0) {
-      code += `  shape = transforms.scale([${scale},${scale},${scale}], geometry)\n}\n`
+      code += `  shape = transforms.scale([${scale},${scale},${scale}], shape)\n`
     }
 
     code += `  return shape\n}\n`
