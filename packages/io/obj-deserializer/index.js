@@ -1,5 +1,6 @@
+const { primitives } = require('@jscad/csg')
+
 const { vt2jscad } = require('./vt2jscad')
-const {CSG} = require('@jscad/csg')
 
 /**
  * Parse the given obj data and return either a JSCAD script or a CSG/CAG object
@@ -12,14 +13,18 @@ const {CSG} = require('@jscad/csg')
  * @return {CSG/string} either a CAG/CSG object or a string (jscad script)
  */
 function deserialize (input, filename, options) { // http://en.wikipedia.org/wiki/Wavefront_.obj_file
-  options && options.statusCallback && options.statusCallback({progress: 0})
   const defaults = {version: '0.0.0', addMetaData: true, output: 'jscad'}
   options = Object.assign({}, defaults, options)
   const {output} = options
 
+  options && options.statusCallback && options.statusCallback({progress: 0})
+
   const {positions, faces} = getPositionsAndFaces(input, options)
-  const result = output === 'jscad' ? stringify({positions, faces, options}) : objectify({positions, faces, options})
+
+  const result = output === 'jscad' ? stringify(positions, faces, options) : objectify(positions, faces, options)
+
   options && options.statusCallback && options.statusCallback({progress: 100})
+
   return result
 }
 
@@ -33,7 +38,7 @@ const getPositionsAndFaces = (data, options) => {
     let a = s.split(/\s+/)
 
     if (a[0] === 'v') {
-      positions.push([a[1], a[2], a[3]])
+      positions.push([parseFloat(a[1]), parseFloat(a[2]), parseFloat(a[3])])
     } else if (a[0] === 'f') {
       let fc = []
       let skip = 0
@@ -46,7 +51,7 @@ const getPositionsAndFaces = (data, options) => {
           skip++
         }
         if (skip === 0) {
-          fc.push(c)
+          fc.push(parseFloat(c))
         }
       }
          // fc.reverse();
@@ -61,11 +66,13 @@ const getPositionsAndFaces = (data, options) => {
   return {positions, faces}
 }
 
-const objectify = ({positions, faces}) => {
-  return CSG.polyhedron({points: positions, faces})
+const objectify = (points, faces, options) => {
+  return [primitives.polyhedron({orientation: 'inward', points, faces})]
 }
 
-const stringify = ({positions, faces, addMetaData, filename, version}) => {
+const stringify = (positions, faces, options) => {
+  let { addMetaData }  = options
+
   let code = addMetaData ? `//
   // producer: OpenJSCAD.org Compatibility${version} OBJ deserializer
   // date: ${new Date()}

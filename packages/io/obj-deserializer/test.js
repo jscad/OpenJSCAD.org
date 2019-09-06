@@ -1,10 +1,14 @@
 const fs = require('fs')
 const path = require('path')
 const test = require('ava')
-const deserializer = require('./index.js')
 
 const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
-const polygonsFromCsg = csg => csg.polygons.map(x => x.vertices.map(vert => ([vert.pos.x, vert.pos.y, vert.pos.z])))
+
+const { geometry } = require('@jscad/csg')
+
+const deserializer = require('./index.js')
+
+const toArray = (polygons) => polygons.map((p) => p.vertices.map((v) => ([v[0], v[1], v[2]])))
 
 test('translate simple obj file to jscad code', function (t) {
   const inputPath = path.resolve(samplesPath, 'obj/cube.obj')
@@ -13,7 +17,7 @@ test('translate simple obj file to jscad code', function (t) {
   const expected = `// objects: 1
 // object #1: polygons: 6
 function main() { return
-polyhedron({ points: [
+primitives.polyhedron({orientation: 'inward', points: [
   [-0.5,-0.5,0.5],
   [-0.5,-0.5,-0.5],
   [-0.5,0.5,-0.5],
@@ -22,7 +26,7 @@ polyhedron({ points: [
   [0.5,-0.5,-0.5],
   [0.5,0.5,-0.5],
   [0.5,0.5,0.5]],
-  polygons: [
+  faces: [
   [3,2,1,0],
   [1,5,4,0],
   [2,6,5,1],
@@ -42,32 +46,18 @@ test('deserialize simple obj to cag/csg objects', function (t) {
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
   const observed = deserializer.deserialize(inputFile, undefined, {output: 'csg', addMetaData: false})
-  t.deepEqual(observed.polygons.length, 6)
+  t.is(observed.length, 1)
+  const polygons = geometry.geom3.toPolygons(observed[0])
+  t.deepEqual(polygons.length, 6)
 
-  const observedVertices = polygonsFromCsg(observed)
-  const expectedVertices = [ [ [ -0.5, -0.5, 0.5 ],
-    [ -0.5, -0.5, -0.5 ],
-    [ -0.5, 0.5, -0.5 ],
-    [ -0.5, 0.5, 0.5 ] ],
-  [ [ -0.5, -0.5, 0.5 ],
-    [ 0.5, -0.5, 0.5 ],
-    [ 0.5, -0.5, -0.5 ],
-    [ -0.5, -0.5, -0.5 ] ],
-  [ [ -0.5, -0.5, -0.5 ],
-    [ 0.5, -0.5, -0.5 ],
-    [ 0.5, 0.5, -0.5 ],
-    [ -0.5, 0.5, -0.5 ] ],
-  [ [ -0.5, 0.5, 0.5 ],
-    [ -0.5, 0.5, -0.5 ],
-    [ 0.5, 0.5, -0.5 ],
-    [ 0.5, 0.5, 0.5 ] ],
-  [ [ -0.5, -0.5, 0.5 ],
-    [ -0.5, 0.5, 0.5 ],
-    [ 0.5, 0.5, 0.5 ],
-    [ 0.5, -0.5, 0.5 ] ],
-  [ [ 0.5, -0.5, 0.5 ],
-    [ 0.5, 0.5, 0.5 ],
-    [ 0.5, 0.5, -0.5 ],
-    [ 0.5, -0.5, -0.5 ] ] ]
+  const observedVertices = toArray(polygons)
+  const expectedVertices = [
+    [ [ -0.5, -0.5, 0.5 ], [ -0.5, -0.5, -0.5 ], [ -0.5, 0.5, -0.5 ], [ -0.5, 0.5, 0.5 ] ],
+    [ [ -0.5, -0.5, 0.5 ], [ 0.5, -0.5, 0.5 ], [ 0.5, -0.5, -0.5 ], [ -0.5, -0.5, -0.5 ] ],
+    [ [ -0.5, -0.5, -0.5 ], [ 0.5, -0.5, -0.5 ], [ 0.5, 0.5, -0.5 ], [ -0.5, 0.5, -0.5 ] ],
+    [ [ -0.5, 0.5, 0.5 ], [ -0.5, 0.5, -0.5 ], [ 0.5, 0.5, -0.5 ], [ 0.5, 0.5, 0.5 ] ],
+    [ [ -0.5, -0.5, 0.5 ], [ -0.5, 0.5, 0.5 ], [ 0.5, 0.5, 0.5 ], [ 0.5, -0.5, 0.5 ] ],
+    [ [ 0.5, -0.5, 0.5 ], [ 0.5, 0.5, 0.5 ], [ 0.5, 0.5, -0.5 ], [ 0.5, -0.5, -0.5 ] ]
+  ]
   t.deepEqual(observedVertices, expectedVertices)
 })
