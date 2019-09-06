@@ -1,8 +1,8 @@
-const { color, math, geometry, primitives } = require('@jscad/csg')
+const { color, math, geometry } = require('@jscad/csg')
 
-function findMaterial (materials, id) {
-  let lastmaterial = null // FIXME: shoud this be outside this scope ?
+let lastmaterial
 
+const findMaterial = (materials, id) => {
   if (lastmaterial && lastmaterial.id === id) return lastmaterial
   for (let i = 0; i < materials.length; i++) {
     if (materials[i].id && materials[i].id === id) {
@@ -13,14 +13,14 @@ function findMaterial (materials, id) {
   return null
 }
 
-function getValue (objects, type) {
+const getValue = (objects, type) => {
   for (let i = 0; i < objects.length; i++) {
     if (objects[i].type === type) return objects[i].value
   }
   return null
 }
 
-function getColor (objects) {
+const getColor = (objects) => {
   for (let i = 0; i < objects.length; i++) {
     let obj = objects[i]
     if (obj.type === 'color') {
@@ -38,7 +38,7 @@ function getColor (objects) {
   return null
 }
 
-function findColorByMaterial (materials, id) {
+const findColorByMaterial = (materials, id) => {
   let m = findMaterial(materials, id)
   if (m) {
     return getColor(m.objects)
@@ -47,12 +47,12 @@ function findColorByMaterial (materials, id) {
 }
 
 // convert all objects to CSG based code
-function createObject (obj, index, data, options) {
+const createObject = (obj, index, data, options) => {
   let vertices = [] // [x,y,z]
   let faces = [] // [v1,v2,v3]
   let colors = [] // [r,g,b,a]
 
-  function addCoord (coord, cidx) {
+  const addCoord = (coord, cidx) => {
     if (coord.type === 'coordinates') {
       let x = parseFloat(getValue(coord.objects, 'x'))
       let y = parseFloat(getValue(coord.objects, 'y'))
@@ -62,14 +62,14 @@ function createObject (obj, index, data, options) {
     // normal is possible
   }
 
-  function addVertex (vertex, vidx) {
+  const addVertex = (vertex, vidx) => {
     if (vertex.type === 'vertex') {
-      vertex.objects.map(addCoord)
+      vertex.objects.forEach(addCoord)
     }
     // edge is possible
   }
 
-  function addTriangle (tri, tidx) {
+  const addTriangle = (tri, tidx) => {
     if (tri.type === 'triangle') {
       let v1 = parseInt(getValue(tri.objects, 'v1'))
       let v2 = parseInt(getValue(tri.objects, 'v2'))
@@ -83,13 +83,14 @@ function createObject (obj, index, data, options) {
       }
     }
   }
+
   let tricolor = null // for found colors
 
-  function addPart (part, pidx) {
+  const addPart = (part, pidx) => {
     // console.log(part.type);
     switch (part.type) {
       case 'vertices':
-        part.objects.map(addVertex, data)
+        part.objects.forEach(addVertex)
         break
       case 'volume':
         tricolor = getColor(part.objects)
@@ -97,17 +98,17 @@ function createObject (obj, index, data, options) {
         // convert material to color
           tricolor = findColorByMaterial(part.materialid)
         }
-        part.objects.map(addTriangle, data)
+        part.objects.forEach(addTriangle)
         break
       default:
         break
     }
   }
 
-  function addMesh (mesh, midx) {
+  const addMesh = (mesh, midx) => {
     // console.log(mesh.type);
     if (mesh.type === 'mesh') {
-      mesh.objects.map(addPart, data)
+      mesh.objects.forEach(addPart)
     }
   }
 
@@ -117,11 +118,10 @@ function createObject (obj, index, data, options) {
     const vertex = scale !== 1.0 ? ([x, y, z]) => math.vec3.fromValues(x * scale, y * scale, z * scale)
       : (v) => math.vec3.fromArray(v)
 
-    obj.objects.map(addMesh, data)
+    obj.objects.forEach(addMesh)
 
     let fcount = faces.length
     let vcount = vertices.length
-    // console.log('here', fcount, vcount)
 
     let polygons = []
     for (let i = 0; i < fcount; i++) {
@@ -143,7 +143,7 @@ function createObject (obj, index, data, options) {
   let code = ''
   if (obj.objects.length > 0) {
     // build a list of faces and vertices
-    obj.objects.map(addMesh, data)
+    obj.objects.forEach(addMesh)
 
     let fcount = faces.length
     let vcount = vertices.length
@@ -164,7 +164,6 @@ const createObject${obj.id} = () => {
         if (faces[i][j] < 0 || faces[i][j] >= vcount) {
           continue
         }
-        //if (j) code += ',\n'
         code += `      [${vertices[faces[i][j]]}],\n`
       }
       code += `  ])\n`

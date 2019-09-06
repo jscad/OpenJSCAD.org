@@ -14,7 +14,7 @@ test('deserialize simple amf to geometry', function (t) {
   const inputPath = path.resolve(samplesPath, 'amf/Amf_Cube.amf')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
-  const observed = deserializer.deserialize(inputFile, undefined, {output: 'csg', addMetaData: false})
+  const observed = deserializer.deserialize(inputFile, undefined, { output: 'csg', addMetaData: false })
   t.is(observed.length, 1)
   const polygons = geometry.geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 12)

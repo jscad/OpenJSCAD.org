@@ -3,19 +3,15 @@ const parse = require('./parse')
 
 const translate = function (src, filename, options) {
   const defaults = {
-    pxPmm: require('./constants').pxPmm,
-    version: '0.0.0',
-    addMetaData: true
+    pxPmm: require('./constants').pxPmm
   }
   options = Object.assign({}, defaults, options)
-  const {version, pxPmm, addMetaData} = options
+  const { version, pxPmm, addMetaData } = options
 
-  filename = filename || 'amf'
-
-  options && options.statusCallback && options.statusCallback({progress: 0})
+  options && options.statusCallback && options.statusCallback({ progress: 0 })
 
   // parse the AMF source
-  const {amfObj, amfMaterials, amfTextures, amfConstels} = parse(src, pxPmm)
+  const { amfObj, amfMaterials, amfTextures, amfConstels } = parse(src, pxPmm)
 
   // convert the internal objects to JSCAD code
   let code = addMetaData ? `//
@@ -29,11 +25,11 @@ const translate = function (src, filename, options) {
     throw new Error('AMF parsing failed, no valid AMF data retrieved')
   }
 
-  options && options.statusCallback && options.statusCallback({progress: 50})
-  
-  code += codify(amfObj, {amfMaterials, amfTextures, amfConstels})
-  
-  options && options.statusCallback && options.statusCallback({progress: 100})
+  options && options.statusCallback && options.statusCallback({ progress: 50 })
+
+  code += codify(amfObj, { amfMaterials, amfTextures, amfConstels })
+
+  options && options.statusCallback && options.statusCallback({ progress: 100 })
 
   return code
 }
@@ -41,7 +37,7 @@ const translate = function (src, filename, options) {
 //
 // convert the internal repreentation into JSCAD code
 //
-function codify (amf, data) {
+const codify = (amf, data) => {
   if (amf.type !== 'amf' || (!amf.objects)) throw new Error('AMF malformed')
 
   let code = ''
@@ -52,17 +48,17 @@ function codify (amf, data) {
 
   // convert high level definitions
   // this ~= data
-  function createDefinition (object, index) {
+  const createDefinition = (object, index) => {
     switch (object.type) {
       case 'object':
-        code += createObject(object, index, data, {csg: false, scale: amf.scale})
+        code += createObject(object, index, data, { csg: false, scale: amf.scale })
         break
       case 'metadata':
         break
       case 'material':
         break
       default:
-        console.log('Warning: unknown definition: ' + obj.type)
+        console.log('Warning: unknown definition: ' + object.type)
         break
     }
   }
@@ -79,7 +75,7 @@ const main = () => {
   for (let i = 0; i < objects.length; i++) {
     let obj = objects[i]
     if (obj.type === 'object') {
-      code += '  geometries.push(createObject' + obj.id + '())\n'
+      code += `  geometries.push(createObject${obj.id}())\n`
     }
   }
 
