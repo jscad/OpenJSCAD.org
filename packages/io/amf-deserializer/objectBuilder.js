@@ -51,6 +51,7 @@ const createObject = (obj, index, data, options) => {
   let vertices = [] // [x,y,z]
   let faces = [] // [v1,v2,v3]
   let colors = [] // [r,g,b,a]
+  let materials = data.amfMaterials
 
   const addCoord = (coord, cidx) => {
     if (coord.type === 'coordinates') {
@@ -96,7 +97,7 @@ const createObject = (obj, index, data, options) => {
         tricolor = getColor(part.objects)
         if (part.materialid) {
         // convert material to color
-          tricolor = findColorByMaterial(part.materialid)
+          tricolor = findColorByMaterial(materials, part.materialid)
         }
         part.objects.forEach(addTriangle)
         break
