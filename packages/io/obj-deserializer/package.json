@@ -7,7 +7,7 @@
   "scripts": {
     "coverage": "nyc --reporter=html --reporter=text npm test",
     "lint": "eslint --ignore-path .gitignore './**/*.js'",
-    "test": "ava --concurrency 3 --verbose --timeout 40000 './test.js'",
+    "test": "ava --concurrency 3 --verbose --timeout 40000 './tests/*.test.js'",
     "release-patch": "git checkout master && npm version patch && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-minor": "git checkout master && npm version minor && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-major": "git checkout master && npm version major && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
