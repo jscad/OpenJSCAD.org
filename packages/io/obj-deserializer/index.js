@@ -1,6 +1,5 @@
 const { primitives } = require('@jscad/csg')
 
-const { vt2jscad } = require('./vt2jscad')
 const ObjReader = require('./ObjReader')
 
 /**
@@ -17,6 +16,7 @@ const ObjReader = require('./ObjReader')
 const deserialize = (input, filename, options) => {
   const defaults = {
     output: 'jscad',
+    orientation: 'outward',
     version: '0.0.0',
     addMetaData: true
   }
@@ -27,22 +27,29 @@ const deserialize = (input, filename, options) => {
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 
-  const { positions, faces } = getPositionsAndFaces(input, options)
+  const { positions, groups } = getGroups(input, options)
 
-  const result = output === 'jscad' ? stringify(positions, faces, options) : objectify(positions, faces, options)
+  const result = output === 'jscad' ? stringify(positions, groups, options) : objectify(positions, groups, options)
 
   options && options.statusCallback && options.statusCallback({ progress: 100 })
 
   return result
 }
 
-const getPositionsAndFaces = (data, options) => {
+const getGroups = (data, options) => {
+  let groups = []
   let positions = []
-  let faces = []
+
+  groups.push({ faces: [], name: 'default' })
 
   // setup the reader
-  let reader = new ObjReader
+  let reader = new ObjReader()
 
+  const handleG = (reader, command, values) => {
+    let group = { faces: [], name: '' }
+    if (values && values.length > 0) group.name = values.join(' ')
+    groups.push(group)
+  }
   const handleV = (reader, command, values) => {
     let x = parseFloat(values[0])
     let y = parseFloat(values[1])
@@ -52,7 +59,7 @@ const getPositionsAndFaces = (data, options) => {
   const handleF = (reader, command, values) => {
     // values : v/vt/vn
     let facerefs = values.map((value) => {
-      let refs = value.match(/[0-9\+\-]+/g)
+      let refs = value.match(/[0-9\+\-eE]+/g)
       let ref = parseInt(refs[0])
       if (ref < 0) {
         ref = positions.length + ref
@@ -61,35 +68,91 @@ const getPositionsAndFaces = (data, options) => {
       }
       return ref
     })
-    faces.push(facerefs)
+    let group = groups.pop()
+    group.faces.push(facerefs)
+    groups.push(group)
   }
+  reader.absorb('g', handleG)
   reader.absorb('v', handleV)
   reader.absorb('f', handleF)
   reader.write(data)
 
-  return { positions, faces }
+  // filter out groups without geometry
+  groups = groups.filter((group) => (group.faces.length > 0))
+
+  return { positions, groups }
 }
 
-const objectify = (points, faces, options) => {
-  return [primitives.polyhedron({ orientation: 'inward', points, faces })]
+const objectify = (points, groups, options) => {
+  const geometries = groups.map((group) => {
+    return primitives.polyhedron({ orientation: options.orientation, points, faces: group.faces })
+  })
+  return geometries
 }
 
-const stringify = (positions, faces, options) => {
+const translatePoints = (points) => {
+  let code = '  let points = [\n'
+  points.forEach((point) => code += `    [${point}],\n`)
+  code += '  ]'
+  return code
+}
+
+const translateFaces = (faces) => {
+  let code = '  let faces = [\n'
+  faces.forEach((face) => code += `    [${face}],\n`)
+  code += '  ]'
+  return code
+}
+
+const translateGroupsToCalls = (groups) => {
+  let code = ''
+  groups.forEach((group, index) => code += `    group${index}(points), // ${group.name}\n`)
+  return code
+}
+
+const translateGroupsToFunctions = (groups, options) => {
+  let code = ''
+  groups.forEach((group, index) => {
+    let faces = group.faces
+    code += `
+// group : ${group.name}
+// faces: ${faces.length}
+`
+    code += `const group${index} = (points) => {
+${translateFaces(faces)}
+  return primitives.polyhedron({ orientation: '${options.orientation}', points, faces })
+}
+`
+  })
+  return code
+}
+
+const stringify = (positions, groups, options) => {
   let { filename, addMetaData, version } = options
 
   let code = addMetaData ? `//
-  // producer: OpenJSCAD.org Compatibility${version} OBJ deserializer
-  // date: ${new Date()}
-  // source: ${filename}
-  //
+// producer: OpenJSCAD.org Compatibility${version} OBJ deserializer
+// date: ${new Date()}
+// source: ${filename}
+//
   ` : ''
 
-  code += `// objects: 1
-// object #1: polygons: ${faces.length}
-function main() { return
-${vt2jscad(positions, faces)}
+  // create the main function, with a list of points and translated groups
+  code += `// groups: ${groups.length}
+// points: ${positions.length}
+function main() {
+  // points are common to all geometries
+${translatePoints(positions)}
+
+  let geometries = [
+${translateGroupsToCalls(groups)}  ]
+  return geometries
 }
-  `
+
+${translateGroupsToFunctions(groups, options)}
+`
+
+  // create a function for each group
   return code
 }
 
