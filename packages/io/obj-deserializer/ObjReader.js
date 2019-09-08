@@ -28,16 +28,16 @@ const ObjStates = [
  * let src = fs.readFileSync(objPath, 'UTF8')
  * let reader = obj.reader({track: true})
  * // setup state handling
- * reader.on('error',handleError)
- * reader.on('start',handleStart)
- * reader.on('end'  ,handleEnd)
+ * reader.on('error', handleError)
+ * reader.on('start', handleStart)
+ * reader.on('end'  , handleEnd)
  * // setup handling for commands of interest, skip the rest
- * reader.absorb(0,handleEntity)
+ * reader.absorb('g', handleEntity)
  * // start the reader
  * reader.write(src).close()
  */
 function ObjReader (options) {
-  var reader = this
+  let reader = this
   reader.options = options || {}
 
   reader.trackPosition = (reader.options.track !== false)
@@ -52,7 +52,7 @@ ObjReader.prototype = {
   on: function (state, callback) {
   // verify the state
   // set the callback
-    var reader = this
+    let reader = this
     reader['on' + state] = callback
   },
 
@@ -66,14 +66,14 @@ ObjReader.prototype = {
 
   // write the given data into the reader, initiating parsing
   write: function (data) {
-    var reader = this
+    let reader = this
     parse(reader, data)
     return reader
   },
 
   // close and clear all state
   close: function () {
-    var reader = this
+    let reader = this
     reader.isclosed = true
     return reader
   }
@@ -82,17 +82,15 @@ ObjReader.prototype = {
 //
 // emit the start of processing to the onstart handler if any
 //
-function emitstart (reader) {
-  return emitstate(reader, 'onstart', reader.data)
-}
+const emitstart = (reader) => emitstate(reader, 'onstart', reader.data)
 
 //
 // emit the command (code and values) to asorbers
 //
-function emitcommand (reader, command, values) {
+const emitcommand = (reader, command, values) => {
   // emit this command to all listeners
   if (reader.absorbers !== undefined) {
-    var absorber = reader.absorbers.get(command)
+    let absorber = reader.absorbers.get(command)
     if (absorber !== undefined) {
       absorber(reader, command, values)
     }
@@ -102,7 +100,7 @@ function emitcommand (reader, command, values) {
 //
 // wrap and emit the given error to the onerror handler if any
 //
-function emiterror (reader, er) {
+const emiterror = (reader, er) => {
   if (reader.trackPosition) {
     er += `
 ne: ${reader.line}
@@ -117,12 +115,10 @@ ar: ${reader.c}`
 //
 // emit the end of processing to the onend handler if any
 //
-function emitend (reader) {
-  return emitstate(reader, 'onend', reader.data)
-}
+const emitend = (reader) => emitstate(reader, 'onend', reader.data)
 
-function emitstate (reader, state, data) {
-  var onhandler = state.toString()
+const emitstate = (reader, state, data) => {
+  let onhandler = state.toString()
   reader[onhandler] && reader[onhandler](reader, data)
   return reader
 }
@@ -130,7 +126,7 @@ function emitstate (reader, state, data) {
 //
 // parse the given data in the context of the given reader
 //
-function parse (reader, data) {
+const parse = (reader, data) => {
 // check reader state
   if (reader.error) {
     throw reader.error // throw the last error
@@ -155,9 +151,9 @@ function parse (reader, data) {
   reader.column = 0
 
   // use or convert the data to String
-  var i = 0
-  var c = ''
-  var l = ''
+  let i = 0
+  let c = ''
+  let l = ''
   while (reader.error === null) {
     c = charAt(data, i++)
     if (!c) {
@@ -190,7 +186,7 @@ function parse (reader, data) {
  * @param reader {ObjReader} - context ObjReader to use
  * @param line {String} - line to parse
  */
-function parseLine (reader, line) {
+const parseLine = (reader, line) => {
   line = line.trim()
   if (line && line.length > 0) {
     setObjCommand(reader, line)
@@ -211,7 +207,7 @@ function parseLine (reader, line) {
  * @param reader {ObjReader} - context ObjReader to use
  * @param line {String} - line to parse
  */
-function setObjCommand (reader, line) {
+const setObjCommand = (reader, line) => {
   // commands are alpha, and left justified
   let code = line.match(/^\S+/)
   if (code && code.length > 0) {
@@ -226,7 +222,7 @@ function setObjCommand (reader, line) {
  * @param reader {ObjReader} - context ObjReader to use
  * @param line {String} - line to parse
  */
-function setObjValues (reader, line) {
+const setObjValues = (reader, line) => {
   // Note: some commands do not have values
   let values = line.match(/\S+/g)
   if (values && values.length > 1) {
@@ -246,7 +242,7 @@ function setObjValues (reader, line) {
 //
 // helper function to return expected values
 //
-function charAt (data, i) {
+const charAt = (data, i) => {
   if (data && data.length > i) {
     return data.charAt(i)
   }

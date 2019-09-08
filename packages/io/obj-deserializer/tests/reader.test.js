@@ -1,8 +1,4 @@
-const fs = require('fs')
-const path = require('path')
 const test = require('ava')
-
-const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
 
 const ObjReader = require('../ObjReader.js')
 
@@ -20,7 +16,7 @@ g square thing all
 `
 
   // test the reader without asorbing anything
-  let reader = new ObjReader
+  let reader = new ObjReader()
   t.is(typeof reader, 'object')
 
   // test asorbing
