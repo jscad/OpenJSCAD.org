@@ -44,7 +44,15 @@ const group0 = (points) => {
     [4,7,3,0],
     [5,6,7,4],
   ]
-  return primitives.polyhedron({ orientation: 'outward', points, faces })
+  let colors = [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+  ]
+  return primitives.polyhedron({ orientation: 'outward', points, faces, colors })
 }
 
 `
@@ -63,6 +71,7 @@ v 0.000000 0.000000 0.000000
 v 2.000000 0.000000 0.000000
 v 2.000000 2.000000 0.000000
 g cube
+usemtl teal
 f 1 2 3 4
 f 8 7 6 5
 f 4 3 7 8
@@ -104,7 +113,15 @@ const group0 = (points) => {
     [4,5,1,0],
     [1,5,6,2],
   ]
-  return primitives.polyhedron({ orientation: 'outward', points, faces })
+  let colors = [
+    [0,0.5019607843137255,0.5019607843137255,1],
+    [0,0.5019607843137255,0.5019607843137255,1],
+    [0,0.5019607843137255,0.5019607843137255,1],
+    [0,0.5019607843137255,0.5019607843137255,1],
+    [0,0.5019607843137255,0.5019607843137255,1],
+    [0,0.5019607843137255,0.5019607843137255,1],
+  ]
+  return primitives.polyhedron({ orientation: 'outward', points, faces, colors })
 }
 
 `
@@ -195,7 +212,15 @@ const group0 = (points) => {
     [16,17,18,19],
     [20,21,22,23],
   ]
-  return primitives.polyhedron({ orientation: 'outward', points, faces })
+  let colors = [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+  ]
+  return primitives.polyhedron({ orientation: 'outward', points, faces, colors })
 }
 
 `

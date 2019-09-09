@@ -1,4 +1,4 @@
-const { primitives } = require('@jscad/csg')
+const { color, primitives } = require('@jscad/csg')
 
 const ObjReader = require('./ObjReader')
 
@@ -39,14 +39,15 @@ const deserialize = (input, filename, options) => {
 const getGroups = (data, options) => {
   let groups = []
   let positions = []
+  let material = null
 
-  groups.push({ faces: [], name: 'default' })
+  groups.push({ faces: [], colors: [], name: 'default', line: 0 })
 
   // setup the reader
   let reader = new ObjReader()
 
   const handleG = (reader, command, values) => {
-    let group = { faces: [], name: '' }
+    let group = { faces: [], colors: [], name: '' }
     if (values && values.length > 0) group.name = values.join(' ')
     groups.push(group)
   }
@@ -70,11 +71,21 @@ const getGroups = (data, options) => {
     })
     let group = groups.pop()
     group.faces.push(facerefs)
+    group.colors.push(material)
     groups.push(group)
+  }
+  const handleMtl = (reader, command, values) => {
+    material = null
+    if (values && values.length > 0) {
+      // try to convert the material to a color by name
+      let c = color.colorNameToRgb(values[0])
+      if (c) material = [c[0], c[1], c[2], 1] // add alpha
+    }
   }
   reader.absorb('g', handleG)
   reader.absorb('v', handleV)
   reader.absorb('f', handleF)
+  reader.absorb('usemtl', handleMtl)
   reader.write(data)
 
   // filter out groups without geometry
@@ -85,7 +96,7 @@ const getGroups = (data, options) => {
 
 const objectify = (points, groups, options) => {
   const geometries = groups.map((group) => {
-    return primitives.polyhedron({ orientation: options.orientation, points, faces: group.faces })
+    return primitives.polyhedron({ orientation: options.orientation, points, faces: group.faces, colors: group.colors })
   })
   return geometries
 }
@@ -104,6 +115,19 @@ const translateFaces = (faces) => {
   return code
 }
 
+const translateColors = (colors) => {
+  let code = '  let colors = [\n'
+  colors.forEach((c) => {
+    if (c) {
+      code += `    [${c}],\n`
+    } else {
+      code += `    null,\n`
+    }
+  })
+  code += '  ]'
+  return code
+}
+
 const translateGroupsToCalls = (groups) => {
   let code = ''
   groups.forEach((group, index) => code += `    group${index}(points), // ${group.name}\n`)
@@ -114,13 +138,15 @@ const translateGroupsToFunctions = (groups, options) => {
   let code = ''
   groups.forEach((group, index) => {
     let faces = group.faces
+    let colors = group.colors
     code += `
 // group : ${group.name}
 // faces: ${faces.length}
 `
     code += `const group${index} = (points) => {
 ${translateFaces(faces)}
-  return primitives.polyhedron({ orientation: '${options.orientation}', points, faces })
+${translateColors(colors)}
+  return primitives.polyhedron({ orientation: '${options.orientation}', points, faces, colors })
 }
 `
   })
