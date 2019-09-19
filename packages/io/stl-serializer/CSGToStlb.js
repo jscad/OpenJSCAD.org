@@ -1,9 +1,10 @@
+const { geometry } = require('@jscad/csg')
 
 // see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
 
-// objects must be an array of CSG objects (with polygons)
+// objects must be an array of 3D geometries
 const serializeBinary = (objects, options) => {
-  options.statusCallback && options.statusCallback({progress: 0})  
+  options.statusCallback && options.statusCallback({ progress: 0 })
 
   // first check if the host is little-endian:
   let buffer = new ArrayBuffer(4)
@@ -16,8 +17,9 @@ const serializeBinary = (objects, options) => {
 
   let numtriangles = 0
   let numpolygons = 0
-  objects.forEach(function (object, i) {
-    object.polygons.forEach(function (polygon) {
+  objects.forEach((object, i) => {
+    let polygons = geometry.geom3.toPolygons(object)
+    polygons.forEach((polygon) => {
       let numvertices = polygon.vertices.length
       let thisnumtriangles = (numvertices >= 3) ? numvertices - 2 : 0
       numtriangles += thisnumtriangles
@@ -50,21 +52,23 @@ const serializeBinary = (objects, options) => {
 
   let byteoffset = 0
   let p = 0
-  objects.forEach(function (object) {
-    object.polygons.forEach(function (polygon) {
-      let numvertices = polygon.vertices.length
+  objects.forEach((object) => {
+    let polygons = geometry.geom3.toPolygons(object)
+    polygons.forEach((polygon) => {
+      let vertices = polygon.vertices
+      let numvertices = vertices.length
+      let plane = polygon.plane
       for (let i = 0; i < numvertices - 2; i++) {
-        let normal = polygon.plane.normal
-        triangleFloat32array[0] = normal._x
-        triangleFloat32array[1] = normal._y
-        triangleFloat32array[2] = normal._z
+        triangleFloat32array[0] = plane[0]
+        triangleFloat32array[1] = plane[1]
+        triangleFloat32array[2] = plane[2]
         let arindex = 3
         for (let v = 0; v < 3; v++) {
           let vv = v + ((v > 0) ? i : 0)
-          let vertexpos = polygon.vertices[vv].pos
-          triangleFloat32array[arindex++] = vertexpos._x
-          triangleFloat32array[arindex++] = vertexpos._y
-          triangleFloat32array[arindex++] = vertexpos._z
+          let vertex = vertices[vv]
+          triangleFloat32array[arindex++] = vertex[0]
+          triangleFloat32array[arindex++] = vertex[1]
+          triangleFloat32array[arindex++] = vertex[2]
         }
         triangleUint16array[0] = 0
         // copy the triangle into allTrianglesBuffer:
@@ -72,10 +76,10 @@ const serializeBinary = (objects, options) => {
         byteoffset += 50
       }
       p += 1
-      options.statusCallback && options.statusCallback({progress: 100 * p / numpolygons})
+      options.statusCallback && options.statusCallback({ progress: 100 * p / numpolygons })
     })
   })
-  options.statusCallback && options.statusCallback({progress: 100})
+  options.statusCallback && options.statusCallback({ progress: 100 })
   return [headerarray.buffer, ar1.buffer, allTrianglesBuffer] // 'blobable array'
 }
 
