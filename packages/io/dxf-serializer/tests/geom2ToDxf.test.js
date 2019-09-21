@@ -1,43 +1,43 @@
 const test = require('ava')
 
-const { CAG } = require('@jscad/csg')
+const { geometry, primitives } = require('@jscad/csg')
 
 const { serialize } = require('../index.js')
 const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('../autocad_AC2017')
 
-test('CAG to DXF LWPOLYLINE', t => {
-  const cag1 = new CAG()
+test('2D GEOMETRY to DXF LWPOLYLINE', t => {
+  const cag1 = geometry.geom2.create()
   t.is(cag1.sides.length, 0)
 
-  const obs1 = serialize(cag1)
+  const obs1 = serialize({}, cag1)
   const exp1 = [empty]
   t.deepEqual(obs1, exp1)
 
-  const cag2 = CAG.rectangle()
+  const cag2 = primitives.rectangle()
   t.is(cag2.sides.length, 4)
 
-  const obs2 = serialize(cag2)
+  const obs2 = serialize({}, cag2)
   const exp2 = [lwpolyline0]
   t.deepEqual(obs2, exp2)
 
-  const obs3 = serialize({ cagTo: 'lwpolyline' }, [cag1, cag2])
+  const obs3 = serialize({ cagTo: 'lwpolyline' }, cag1, cag2)
   const exp3 = [lwpolyline1]
   t.deepEqual(obs3, exp3)
 
-  const obs4 = serialize({}, [cag2, cag2])
+  const obs4 = serialize({}, cag2, cag2)
   const exp4 = [lwpolylineByTwo]
   t.deepEqual(obs4, exp4)
 })
 
-test('CAG to DXF POLYLINE', t => {
-  const cag1 = new CAG()
+test('2D GEOMETRY to DXF POLYLINE', t => {
+  const cag1 = geometry.geom2.create()
   t.is(cag1.sides.length, 0)
 
   const obs1 = serialize({ cagTo: 'polyline' }, cag1)
   const exp1 = [empty]
   t.deepEqual(obs1, exp1)
 
-  const cag2 = CAG.rectangle()
+  const cag2 = primitives.rectangle()
   t.is(cag2.sides.length, 4)
 
   const obs2 = serialize({ cagTo: 'polyline' }, cag2)
@@ -128,7 +128,7 @@ ENTITIES
   0
 LWPOLYLINE
   5
-CAD00002
+CAD00001
   100
 AcDbEntity
   8
@@ -181,7 +181,7 @@ ENTITIES
   0
 LWPOLYLINE
   5
-CAD00003
+CAD00001
   100
 AcDbEntity
   8
@@ -217,7 +217,7 @@ AcDbPolyline
   0
 LWPOLYLINE
   5
-CAD00004
+CAD00002
   100
 AcDbEntity
   8
@@ -270,13 +270,77 @@ ENTITIES
   0
 POLYLINE
   5
-CAD00005
+CAD00001
   100
 AcDbEntity
   8
 0
   100
 AcDb2dPolyline
+  0
+VERTEX
+  5
+CAD00002
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb2dVertex
+ 10
+-1
+ 20
+-1
+  0
+VERTEX
+  5
+CAD00003
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb2dVertex
+ 10
+1
+ 20
+-1
+  0
+VERTEX
+  5
+CAD00004
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb2dVertex
+ 10
+1
+ 20
+1
+  0
+VERTEX
+  5
+CAD00005
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb2dVertex
+ 10
+-1
+ 20
+1
   0
 VERTEX
   5
@@ -294,73 +358,9 @@ AcDb2dVertex
  20
 -1
   0
-VERTEX
-  5
-CAD00007
-  100
-AcDbEntity
-  8
-0
-  100
-AcDbVertex
-  100
-AcDb2dVertex
- 10
-1
- 20
--1
-  0
-VERTEX
-  5
-CAD00008
-  100
-AcDbEntity
-  8
-0
-  100
-AcDbVertex
-  100
-AcDb2dVertex
- 10
-1
- 20
-1
-  0
-VERTEX
-  5
-CAD00009
-  100
-AcDbEntity
-  8
-0
-  100
-AcDbVertex
-  100
-AcDb2dVertex
- 10
--1
- 20
-1
-  0
-VERTEX
-  5
-CAD0000A
-  100
-AcDbEntity
-  8
-0
-  100
-AcDbVertex
-  100
-AcDb2dVertex
- 10
--1
- 20
--1
-  0
 SEQEND
   5
-CAD0000B
+CAD00007
   100
 AcDbEntity
   0
