@@ -1,33 +1,35 @@
 const test = require('ava')
-const { CSG } = require('@jscad/csg')
-const serializer = require('./index.js')
 
-test('serialize csg to amf', function (t) {
-  const emptyShape = new CSG()
+const { color, geometry, primitives } = require('@jscad/csg')
+
+const serializer = require('../index.js')
+
+test('serialize 3D geometry to amf', function (t) {
+  const emptyShape = geometry.geom3.create()
   const observed1 = serializer.serialize({}, emptyShape)
   t.deepEqual(observed1, expected1)
 
-  const testCube = new CSG.cube()
-  const observed2 = serializer.serialize(testCube)
+  const testCube = primitives.cube()
+  const observed2 = serializer.serialize({}, testCube)
   t.deepEqual(observed2, expected2)
 
-  const coloredCube = testCube.setColor([1.0, 0.0, 0.5, 0.8])
-  const observed3 = serializer.serialize({unit: 'inch'}, coloredCube)
+  const coloredCube = color.color([1.0, 0.0, 0.5, 0.8], testCube)
+  const observed3 = serializer.serialize({ unit: 'inch' }, coloredCube)
   t.deepEqual(observed3, expected3)
 })
 
 const expected1 = [
   `<?xml version="1.0" encoding="UTF-8"?>
-<amf unit=\"millimeter\" version=\"1.1\">
-  <metadata type=\"author\">Created using JSCAD</metadata>
+<amf unit="millimeter" version="1.1">
+  <metadata type="author">Created using JSCAD</metadata>
 </amf>
 `
 ]
 
 const expected2 = [
   `<?xml version="1.0" encoding="UTF-8"?>
-<amf unit=\"millimeter\" version=\"1.1\">
-  <metadata type=\"author\">Created using JSCAD</metadata>
+<amf unit="millimeter" version="1.1">
+  <metadata type="author">Created using JSCAD</metadata>
   <object id="0">
     <mesh>
       <vertices>
@@ -280,8 +282,8 @@ const expected2 = [
 
 const expected3 = [
   `<?xml version="1.0" encoding="UTF-8"?>
-<amf unit=\"inch\" version=\"1.1\">
-  <metadata type=\"author\">Created using JSCAD</metadata>
+<amf unit="inch" version="1.1">
+  <metadata type="author">Created using JSCAD</metadata>
   <object id="0">
     <mesh>
       <vertices>
