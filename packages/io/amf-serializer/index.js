@@ -124,7 +124,7 @@ const convertToCoordinates = (vertex, options) => {
 
 const convertToVolumes = (object, options) => {
   let n = 0
-  let color = convertColor(object.color)
+  let objectcolor = convertColor(object.color)
   let polygons = geometry.geom3.toPolygons(object)
 
   let contents = []
@@ -134,10 +134,14 @@ const convertToVolumes = (object, options) => {
     }
 
     let volume = ['volume', {}]
+    let polycolor = convertToColor(polygon, options)
     let triangles = convertToTriangles(polygon, n)
 
-    if (color) {
-      volume.push(color)
+    if (polycolor) {
+      volume.push(polycolor)
+    } else
+    if (objectcolor) {
+      volume.push(objectcolor)
     }
     volume = volume.concat(triangles)
 
