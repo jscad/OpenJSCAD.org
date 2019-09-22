@@ -21,9 +21,7 @@ TBD
 
 const { geometry } = require('@jscad/csg')
 
-const {ensureManifoldness} = require('@jscad/io-utils')
-
-const {toArray} = require('@jscad/io-utils/arrays')
+const { ensureManifoldness } = require('@jscad/io-utils')
 
 const stringify = require('onml/lib/stringify')
 
@@ -50,10 +48,10 @@ const serialize = (options, ...objects) => {
   // TODO flatten
   // objects = toArray(objects)
 
-  options.statusCallback && options.statusCallback({progress: 0})
+  options.statusCallback && options.statusCallback({ progress: 0 })
 
   // construct the contents of the XML
-  var body = ['X3D',
+  let body = ['X3D',
     {
       profile: 'Interchange',
       version: '3.3',
@@ -61,16 +59,16 @@ const serialize = (options, ...objects) => {
       'xsd:noNamespaceSchemaLocation': 'http://www.web3d.org/specifications/x3d-3.3.xsd'
     },
     ['head', {},
-      ['meta',{name: 'creator', content: 'Created using JSCAD'}]
+      ['meta', { name: 'creator', content: 'Created using JSCAD' }]
     ]
   ]
   body = body.concat(convertObjects(objects, options))
 
   // convert the contents to X3D (XML) format
-  var contents = `<?xml version="1.0" encoding="UTF-8"?>
+  let contents = `<?xml version="1.0" encoding="UTF-8"?>
 ${stringify(body)}`
 
-  options && options.statusCallback && options.statusCallback({progress: 100})
+  options && options.statusCallback && options.statusCallback({ progress: 100 })
 
   return [contents]
 }
@@ -79,7 +77,7 @@ const convertObjects = (objects, options) => {
   let scene = ['Scene', {}]
   let shapes = []
   objects.forEach((object, i) => {
-    options.statusCallback && options.statusCallback({progress: 100 * i / objects.length})
+    options.statusCallback && options.statusCallback({ progress: 100 * i / objects.length })
 
     if (geometry.geom3.isA(object)) {
       let polygons = geometry.geom3.toPolygons(object)
@@ -94,7 +92,7 @@ const convertObjects = (objects, options) => {
 }
 
 const convertShape = (object, options) => {
-  var shape = ['Shape', {}, convertMesh(object, options)]
+  let shape = ['Shape', {}, convertMesh(object, options)]
   return shape
 }
 
@@ -106,11 +104,11 @@ const convertMesh = (object, options) => {
   let pointList = lists[1].join(' ')
   let colorList = lists[2].join(' ')
 
-  var faceset = [
+  let faceset = [
     'IndexedTriangleSet',
-    {ccw: 'true', colorPerVertex: 'false', solid: 'false', index: indexList},
-    ['Coordinate', {point: pointList}],
-    ['Color', {color: colorList}]
+    { ccw: 'true', colorPerVertex: 'false', solid: 'false', index: indexList },
+    ['Coordinate', { point: pointList }],
+    ['Color', { color: colorList }]
   ]
   return faceset
 }
@@ -122,9 +120,9 @@ const convertToTriangles = (object, options) => {
     const firstVertex = poly.vertices[0]
     for (let i = poly.vertices.length - 3; i >= 0; i--) {
       const triangle = geometry.poly3.fromPoints([
-          firstVertex,
-          poly.vertices[i + 1],
-          poly.vertices[i + 2]
+        firstVertex,
+        poly.vertices[i + 1],
+        poly.vertices[i + 2]
       ])
 
       let color = options.color
@@ -152,20 +150,20 @@ const convertToColor = (polygon, options) => {
  * - colorList : color of each triangle (R G B)
  */
 const polygons2coordinates = (polygons, options) => {
-  var indexList = []
-  var pointList = []
-  var colorList = []
+  let indexList = []
+  let pointList = []
+  let colorList = []
 
-  var vertexTagToCoordIndexMap = new Map()
-  polygons.map((polygon, i) => {
+  let vertexTagToCoordIndexMap = new Map()
+  polygons.map((polygon) => {
     let polygonVertexIndices = []
     let numvertices = polygon.vertices.length
-    for (var i = 0; i < numvertices; i++) {
+    for (let i = 0; i < numvertices; i++) {
       let vertex = polygon.vertices[i]
       let id = `${vertex[0]},${vertex[1]},${vertex[2]}`
 
       // add the vertex to the list of points (and index) if not found
-      if (! vertexTagToCoordIndexMap.has(id)) {
+      if (!vertexTagToCoordIndexMap.has(id)) {
         let x = Math.round(vertex[0] * options.decimals) / options.decimals
         let y = Math.round(vertex[1] * options.decimals) / options.decimals
         let z = Math.round(vertex[2] * options.decimals) / options.decimals
