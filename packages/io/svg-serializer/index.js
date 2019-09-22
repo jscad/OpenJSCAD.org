@@ -8,19 +8,16 @@ Copyright (c) 2018 JSCAD Organization https://github.com/jscad
 All code released under MIT license
 
 Notes:
-1) CAG conversion to:
-     SVG GROUP containing a SVG PATH for each CAG outline path
-2) CSG conversion to:
-     mesh
-3) Path2D conversion to:
+1) geom2 conversion to:
+     SVG GROUP containing a SVG PATH for each outline of the geometry
+2) geom3 conversion to:
      none
-
-TBD
-1) add Path2D conversion
+3) Path2D conversion to:
+     SVG GROUP containing a SVG PATH for each path
 */
 
-const {isCAG} = require('@jscad/csg')
-const {toArray} = require('@jscad/io-utils/arrays')
+const { geometry, math, measurements } = require('@jscad/csg')
+
 const stringify = require('onml/lib/stringify')
 
 const mimeType = 'image/svg+xml'
@@ -30,29 +27,20 @@ const mimeType = 'image/svg+xml'
  * @param {Object|Array} objects - objects to serialize as SVG
  * @returns {Array} serialized contents, SVG format
  */
-const serialize = (...params) => {
-  let options = {}
-  let objects
-  if (params.length === 0) {
-    throw new Error('no arguments supplied to serialize function !')
-  } else if (params.length === 1) {
-    // assumed to be object(s)
-    objects = Array.isArray(params[0]) ? params[0] : params
-  } else if (params.length > 1) {
-    options = params[0]
-    objects = params[1]
-  }
-  // make sure we always deal with arrays of objects as inputs
-  objects = toArray(objects)
-  console.log('params', params)
-  console.log('options', options)
-  console.log('objects', objects)
+const serialize = (options, ...objects) => {
   const defaults = {
-    statusCallback: null,
     unit: 'mm', // em | ex | px | in | cm | mm | pt | pc
-    decimals: 10000
+    decimals: 10000,
+    statusCallback: null
   }
   options = Object.assign({}, defaults, options)
+
+  // TODO flatten
+  // objects = toArray(objects)
+
+  // console.log('params', params)
+  // console.log('options', options)
+  // console.log('objects', objects)
 
   options.statusCallback && options.statusCallback({progress: 0})
 
@@ -62,8 +50,8 @@ const serialize = (...params) => {
   var width = 0
   var height = 0
   if (bounds) {
-    width = Math.round((bounds[1].x - bounds[0].x) * options.decimals) / options.decimals
-    height = Math.round((bounds[1].y - bounds[0].y) * options.decimals) / options.decimals
+    width = Math.round((bounds[1][0] - bounds[0][0]) * options.decimals) / options.decimals
+    height = Math.round((bounds[1][1] - bounds[0][1]) * options.decimals) / options.decimals
   }
 
   var body = ['svg',
@@ -91,56 +79,59 @@ ${stringify(body)}`
 }
 
 const getBounds = (objects) => {
-  let bounds = null
-  objects.forEach(function (object, i) {
-    if (isCAG(object) && object.sides.length > 0) {
-      let cagBounds = object.getBounds()
-      if (bounds !== null) {
-        bounds[0] = bounds[0].min(cagBounds[0])
-        bounds[1] = bounds[1].max(cagBounds[1])
-      } else {
-        bounds = cagBounds
-      }
-    }
-  })
-  return bounds
+  let allbounds = measurements.measureBounds(objects)
+
+  if (objects.length === 1) return allbounds
+
+  // create a sum of the bounds
+  let sumofbounds = allbounds.reduce((sum, bounds) => {
+    math.vec3.min(sum[0], sum[0], bounds[0])
+    math.vec3.max(sum[1], sum[1], bounds[1])
+    return sum
+  }, [[0, 0, 0], [0, 0, 0]])
+  return sumofbounds
 }
 
 const convertObjects = (objects, bounds, options) => {
-  var xoffset = 0 - bounds[0].x
-  var yoffset = 0 - bounds[0].y
+  var xoffset = 0 - bounds[0][0]
+  var yoffset = 0 - bounds[0][1]
 
   let contents = []
-  objects.forEach(function (object, i) {
+  objects.forEach((object, i) => {
     options.statusCallback && options.statusCallback({progress: 100 * i / objects.length})
-    if (isCAG(object) && object.sides.length > 0) {
-      contents.push(convertCAG(object, [xoffset, yoffset], options))
+
+    if (geometry.geom2.isA(object)) {
+      contents.push(convertGeom2(object, [xoffset, yoffset], options))
+    }
+    if (geometry.path2.isA(object)) {
+      contents.push(convertPaths([object], [xoffset, yoffset], options))
     }
   })
   return contents
 }
 
-const convertCAG = (object, offsets, options) => {
-  var paths = object.getOutlinePaths()
+const convertGeom2 = (object, offsets, options) => {
+  let outlines = geometry.geom2.toOutlines(object)
+  // TODO set oddeven, and correct order of points
+  let paths = outlines.map((outline) => geometry.path2.fromPoints({closed: true}, outline))
   return convertPaths(paths, offsets, options)
 }
 
 const convertPaths = (paths, offsets, options) => {
-  return paths.reduce(function (res, path, i) {
+  return paths.reduce((res, path, i) => {
     return res.concat([['path', {d: convertPath(path, offsets, options)}]])
   }, ['g'])
 }
 
 const convertPath = (path, offsets, options) => {
-  var pointindex
   var str = ''
-  var numpointsClosed = path.points.length + (path.closed ? 1 : 0)
-  for (pointindex = 0; pointindex < numpointsClosed; pointindex++) {
+  var numpointsClosed = path.points.length + (path.isClosed ? 1 : 0)
+  for (let pointindex = 0; pointindex < numpointsClosed; pointindex++) {
     var pointindexwrapped = pointindex
     if (pointindexwrapped >= path.points.length) pointindexwrapped -= path.points.length
     var point = path.points[pointindexwrapped]
-    let x = Math.round((point.x + offsets[0]) * options.decimals) / options.decimals
-    let y = Math.round((point.y + offsets[1]) * options.decimals) / options.decimals
+    let x = Math.round((point[0] + offsets[0]) * options.decimals) / options.decimals
+    let y = Math.round((point[1] + offsets[1]) * options.decimals) / options.decimals
     if (pointindex > 0) {
       str += `L${x} ${y}`
     } else {
