@@ -1,11 +1,13 @@
 {
   "name": "@jscad/x3d-serializer",
-  "version": "1.0.0-alpha.d0fb3056",
-  "description": "X3d serializer for jscad project",
-  "repository": "https://github.com/jscad/io",
+  "version": "2.0.0-alpha.d0fb3056",
+  "description": "X3D serializer for JSCAD project",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "scripts": {
-    "test": "ava './test.js' --verbose --timeout 10000",
+    "coverage": "nyc --reporter=html --reporter=text npm test",
+    "lint": "eslint --ignore-path .gitignore './**/*.js'",
+    "test": "ava --concurrency 3 --verbose --timeout 40000 './tests/*.test.js'",
     "release-patch": "git checkout master && npm version patch && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-minor": "git checkout master && npm version minor && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-major": "git checkout master && npm version major && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
@@ -38,6 +40,13 @@
     "onml": "^0.4.1"
   },
   "devDependencies": {
-    "ava": "^0.25.0"
+    "ava": "^0.25.0",
+    "eslint": "^5.13.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "nyc": "^10.3.2"
   }
 }
