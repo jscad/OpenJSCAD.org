@@ -16,7 +16,7 @@ Notes:
      SVG GROUP containing a SVG PATH for each path
 */
 
-const { geometry, math, measurements } = require('@jscad/csg')
+const { color, geometry, math, measurements } = require('@jscad/csg')
 
 const stringify = require('onml/lib/stringify')
 
@@ -37,10 +37,6 @@ const serialize = (options, ...objects) => {
 
   // TODO flatten
   // objects = toArray(objects)
-
-  // console.log('params', params)
-  // console.log('options', options)
-  // console.log('objects', objects)
 
   options.statusCallback && options.statusCallback({progress: 0})
 
@@ -78,6 +74,9 @@ ${stringify(body)}`
   return [svg]
 }
 
+/*
+ * Measure the bounds of the given objects, which is required to offset all points to positive X/Y values.
+ */
 const getBounds = (objects) => {
   let allbounds = measurements.measureBounds(objects)
 
@@ -114,11 +113,17 @@ const convertGeom2 = (object, offsets, options) => {
   let outlines = geometry.geom2.toOutlines(object)
   // TODO set oddeven, and correct order of points
   let paths = outlines.map((outline) => geometry.path2.fromPoints({closed: true}, outline))
+  if (object.color) {
+    color.color(paths)
+  }
   return convertPaths(paths, offsets, options)
 }
 
 const convertPaths = (paths, offsets, options) => {
   return paths.reduce((res, path, i) => {
+    if (path.color) {
+      return res.concat([['path', {stroke: convertColor(path.color), 'stroke-width': 1, d: convertPath(path, offsets, options)}]])
+    }
     return res.concat([['path', {d: convertPath(path, offsets, options)}]])
   }, ['g'])
 }
@@ -139,6 +144,10 @@ const convertPath = (path, offsets, options) => {
     }
   }
   return str
+}
+
+const convertColor = (color) => {
+  return `rgb(${color[0] * 255},${color[1] * 255},${color[2] * 255},${color[3] * 255})`
 }
 
 module.exports = {
