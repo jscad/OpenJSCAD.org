@@ -111,12 +111,26 @@ const convertObjects = (objects, bounds, options) => {
 
 const convertGeom2 = (object, offsets, options) => {
   let outlines = geometry.geom2.toOutlines(object)
-  // TODO set oddeven, and correct order of points
   let paths = outlines.map((outline) => geometry.path2.fromPoints({closed: true}, outline))
   if (object.color) {
-    color.color(paths)
+    paths.forEach((path) => {
+      path.fill = object.color
+    })
   }
-  return convertPaths(paths, offsets, options)
+  return convertToContinousPath(paths, offsets, options)
+}
+
+const convertToContinousPath = (paths, offset, options) => {
+  let instructions = ''
+  paths.forEach((path) => instructions += convertPath(path, offset, options))
+  let continouspath = ['path', {d: instructions}]
+  if (paths.length > 0) {
+    let path0 = paths[0]
+    if (path0.fill) {
+      continouspath = ['path', {'fill-rule': 'evenodd', fill: convertColor(path0.fill), d: instructions}]
+    }
+  }
+  return ['g', continouspath]
 }
 
 const convertPaths = (paths, offsets, options) => {
