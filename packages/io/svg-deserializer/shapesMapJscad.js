@@ -28,7 +28,7 @@ const shapesMap = function (obj, codify, params) {
           code = `${indent}${on} = primitives.roundedRectangle({center: [${x}, ${y}], size: [${w / 2}, ${h / 2}], roundRadius: ${rx}})\n`
         }
         if (target === '1D') {
-          code += `${indent}${on} = geometry.path2.fromPoints({close: true}, geometry.geom2.toPoints(${on}))\n`
+          code += `${indent}${on} = geometry.path2.fromPoints({closed: true}, geometry.geom2.toPoints(${on}))\n`
         }
       }
       return code
@@ -42,7 +42,7 @@ const shapesMap = function (obj, codify, params) {
       if (r > 0) {
         code = `${indent}${on} = primitives.circle({center: [${x}, ${y}], radius: ${r}})\n`
         if (target === '1D') {
-          code += `${indent}${on} = geometry.path2.fromPoints({close: true}, geometry.geom2.toPoints(${on}))\n`
+          code += `${indent}${on} = geometry.path2.fromPoints({closed: true}, geometry.geom2.toPoints(${on}))\n`
         }
       }
       return code
@@ -57,7 +57,7 @@ const shapesMap = function (obj, codify, params) {
       if (rx > 0 && ry > 0) {
         code = `${indent}${on} = primitives.ellipse({center: [${cx}, ${cy}], radius: [${rx}, ${ry}]})\n`
         if (target === '1D') {
-          code += `${indent}${on} = geometry.path2.fromPoints({close: true}, geometry.geom2.toPoints(${on}))\n`
+          code += `${indent}${on} = geometry.path2.fromPoints({closed: true}, geometry.geom2.toPoints(${on}))\n`
         }
       }
       return code
@@ -88,7 +88,7 @@ const shapesMap = function (obj, codify, params) {
       }
       code += `${indent}]})\n`
       if (target === '1D') {
-        code += `${indent}${on} = geometry.path2.fromPoints({close: true}, geometry.geom2.toPoints(${on}))\n`
+        code += `${indent}${on} = geometry.path2.fromPoints({closed: true}, geometry.geom2.toPoints(${on}))\n`
       }
       return code
     },
