@@ -19,7 +19,7 @@ TBD
 1) gzipped is also possible; same mime type, with file extension .x3dz
 */
 
-const { geometry } = require('@jscad/csg')
+const { geometry, utils } = require('@jscad/csg')
 
 const { ensureManifoldness } = require('@jscad/io-utils')
 
@@ -45,8 +45,7 @@ const serialize = (options, ...objects) => {
   }
   options = Object.assign({}, defaults, options)
 
-  // TODO flatten
-  // objects = toArray(objects)
+  objects = utils.flatten(objects)
 
   options.statusCallback && options.statusCallback({ progress: 0 })
 
