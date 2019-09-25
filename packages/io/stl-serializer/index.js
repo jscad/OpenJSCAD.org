@@ -16,7 +16,7 @@ Notes:
      none
 */
 
-const { geometry } = require('@jscad/csg')
+const { geometry, utils } = require('@jscad/csg')
 
 const { serializeBinary } = require('./CSGToStlb')
 const { serializeText } = require('./CSGToStla')
@@ -30,7 +30,7 @@ const serialize = (options, ...objects) => {
   }
   options = Object.assign({}, defaults, options)
 
-  // TBD flatten the objects
+  objects = utils.flatten(objects)
 
   // convert only 3D geometries
   objects = objects.filter((object) => geometry.geom3.isA(object))
