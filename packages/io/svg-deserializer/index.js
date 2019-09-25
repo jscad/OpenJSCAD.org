@@ -271,7 +271,7 @@ const codify = (options, group) => {
     if (target === '2D' && obj.fill) {
       code += `${indent}color.color([${obj.fill[0]}, ${obj.fill[1]}, ${obj.fill[2]}, 1], ${on})\n`
     }
-    code += `${indent}${ln}.push(${on})\n\n`
+    code += `${indent}${ln} = ${ln}.concat(${on})\n\n`
   }
   // post-code
   if (level === 0) {
