@@ -219,7 +219,7 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
         while (pts.length >= 7) {
           let rx = parseFloat(pts.shift())
           let ry = parseFloat(pts.shift())
-          let ro = 0 - parseFloat(pts.shift())
+          let ro = 0 - parseFloat(pts.shift()) * 0.017453292519943295
           let lf = (pts.shift() === '1')
           let sf = (pts.shift() === '1')
           cx = cx + parseFloat(pts.shift())
@@ -231,7 +231,7 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
         while (pts.length >= 7) {
           let rx = parseFloat(pts.shift())
           let ry = parseFloat(pts.shift())
-          let ro = 0 - parseFloat(pts.shift())
+          let ro = 0 - parseFloat(pts.shift()) * 0.017453292519943295
           let lf = (pts.shift() === '1')
           let sf = (pts.shift() === '1')
           cx = parseFloat(pts.shift())
