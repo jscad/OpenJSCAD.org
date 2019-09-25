@@ -12,11 +12,11 @@ Notes:
      SVG GROUP containing a SVG PATH for each outline of the geometry
 2) geom3 conversion to:
      none
-3) Path2D conversion to:
+3) path2 conversion to:
      SVG GROUP containing a SVG PATH for each path
 */
 
-const { color, geometry, math, measurements } = require('@jscad/csg')
+const { color, geometry, math, measurements, utils } = require('@jscad/csg')
 
 const stringify = require('onml/lib/stringify')
 
@@ -35,8 +35,7 @@ const serialize = (options, ...objects) => {
   }
   options = Object.assign({}, defaults, options)
 
-  // TODO flatten
-  // objects = toArray(objects)
+  objects = utils.flatten(objects)
 
   options.statusCallback && options.statusCallback({progress: 0})
 
