@@ -1,4 +1,7 @@
 module.exports = {
+  appendArc: require('./appendArc'),
+  appendBezier: require('./appendBezier'),
+  appendPoints: require('./appendPoints'),
   close: require('./close'),
   concat: require('./concat'),
   create: require('./create'),
