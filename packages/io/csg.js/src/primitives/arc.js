@@ -8,12 +8,12 @@ const path2 = require('../geometry/path2')
 
 /** Construct an arc.
  * @param {Object} options - options for construction
- * @param {Array} options.center - center of arc
- * @param {Number} options.radius - radius of arc
- * @param {Number} options.startAngle - starting angle of the arc, in radians
- * @param {Number} options.endAngle - ending angle of the arc, in radians
- * @param {Number} options.segments - number of segments to create per 360 rotation
- * @param {Boolean} options.makeTangent - adds line segments at both ends of the arc to ensure that the gradients at the edges are tangent
+ * @param {Array} [options.center=[0,0]] - center of arc
+ * @param {Number} [options.radius=1] - radius of arc
+ * @param {Number} [options.startAngle=0] - starting angle of the arc, in radians
+ * @param {Number} [options.endAngle=Math.PI*2] - ending angle of the arc, in radians
+ * @param {Number} [options.segments=16] - number of segments to create per 360 rotation
+ * @param {Boolean} [options.makeTangent=false] - adds line segments at both ends of the arc to ensure that the gradients at the edges are tangent
  * @returns {path} new path (not closed)
  */
 const arc = function (options) {

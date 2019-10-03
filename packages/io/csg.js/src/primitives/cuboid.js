@@ -50,7 +50,7 @@ const cuboid = (options) => {
  * @see {@link cuboid} for more options, as this is an alias to cuboid
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of cube
- * @param {Number} [options.size=1 - size of cube
+ * @param {Number} [options.size=1] - size of cube
  * @returns {geom3} new 3D geometry
  *
  * @example

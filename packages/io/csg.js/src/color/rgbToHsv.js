@@ -2,8 +2,9 @@
  * Converts an RGB color value to HSV.
  *
  * @see http://en.wikipedia.org/wiki/HSV_color_space.
- * @param {Array} values - RGB color values
- * @return Array HSV color values
+ * @param {Number[]} values - RGB color values
+ * @return {Number[]} HSV color values
+ * @alias module:color.rgbToHsv
  */
 const rgbToHsv = (values) => {
   if (!Array.isArray(values)) throw new Error('values must be an array')

@@ -3,9 +3,9 @@ const create = require('./create')
 /**
  * Rotates a vec2 by an angle
  *
- * @param {vec2} out the receiving vector
- * @param {Number} angle the angle of rotation (in radians)
- * @param {vec2} vector the vector to rotate
+ * @param {vec2} [out] - the receiving vector
+ * @param {Number} angle - the angle of rotation (in radians)
+ * @param {vec2} vector - the vector to rotate
  * @returns {vec2} out
  */
 const rotate = (...params) => {

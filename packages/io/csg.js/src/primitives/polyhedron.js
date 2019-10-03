@@ -5,8 +5,8 @@ const poly3 = require('../geometry/poly3')
  * The faces can define outward or inward facing polygons (orientation).
  * However, each face must define a counter clockwise rotation of points which follows the right hand rule.
  * @param {Object} options - options for construction
- * @param {Array} options.points=[] - list of points in 3D space
- * @param {Array} options.faces=[] - list of faces, where each face is a set of indexes into the points
+ * @param {Array} options.points - list of points in 3D space
+ * @param {Array} options.faces - list of faces, where each face is a set of indexes into the points
  * @param {Array} [options.orientation='outward'] - orientation of faces
  * @returns {geom3} new 3D geometry
  *

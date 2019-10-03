@@ -4,10 +4,10 @@ const fromValues = require('../vec4/fromValues')
 /**
  * Create a new plane from the given points
  *
- * @param {Vec3} a - 3D point
- * @param {Vec3} b - 3D point
- * @param {Vec3} c - 3D point
- * @returns {Vec4} a new plane with properly typed values
+ * @param {vec3} a - 3D point
+ * @param {vec3} b - 3D point
+ * @param {vec3} c - 3D point
+ * @returns {plane} a new plane with properly typed values
  */
 const fromPoints = (a, b, c) => {
   const ba = vec3.subtract(b, a)

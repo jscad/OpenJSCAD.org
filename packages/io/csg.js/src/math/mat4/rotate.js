@@ -3,10 +3,10 @@ const create = require('./create')
 /**
  * Rotates a mat4 by the given angle
  *
- * @param {mat4} out the receiving matrix
- * @param {Number} rad the angle to rotate the matrix by
- * @param {vec3} axis the axis to rotate around
- * @param {mat4} matrix the matrix to rotate
+ * @param {mat4} [out] - the receiving matrix
+ * @param {Number} rad - the angle to rotate the matrix by
+ * @param {vec3} axis - the axis to rotate around
+ * @param {mat4} matrix - the matrix to rotate
  * @returns {mat4} out
  */
 const rotate = (...params) => {

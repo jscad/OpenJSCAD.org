@@ -8,7 +8,7 @@ const toPoints = require('./toPoints')
  * This implementation follows the SVG arc specifications.
  * @see http://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
  * @param {Object} options - options for construction
- * @param {vec2} options.endpoint - end point of arc REQUIRED
+ * @param {vec2} options.endpoint - end point of arc (REQUIRED)
  * @param {vec2} [options.radius=[0,0]] - radius of arc (X and Y)
  * @param {Number} [options.xaxisrotation=0] - rotation (RADIANS) of the X axis of the arc with respect to the X axis of the coordinate system
  * @param {Boolean} [options.clockwise=false] - draw an arc clockwise with respect to the center point

@@ -11,11 +11,11 @@
     "dictionaries": ["jsdoc","closure"]
   },
   "source": {
-    "include"       : "src",
+    "exclude"       : ["src/api", "src/core", "src/moveOutOfCode"],
     "includePattern": ".+\\.js(doc|x)?$",
-    "excludePattern": "(^|\\/|\\\\)_"
+    "excludePattern": ".+test.js$"
   },
-  "plugins": [],
+  "plugins": ["plugins/markdown"],
   "templates": {
     "default": {
       "useLongnameInNav": true

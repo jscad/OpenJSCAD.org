@@ -3,7 +3,8 @@ const toPoints = require('./toPoints')
 
 /**
  * Append the given list of points to the end of the given geometry.
- * @param {path2} geometry - the path to concatenate
+ * @param {vec2[]} points - the points to concatenate
+ * @param {path2} geometry - the given path
  * @returns {path2} new path
  * @example
  * let newpath = concat(fromPoints({}, [[1, 2]]), fromPoints({}, [[3, 4]]))

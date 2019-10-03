@@ -6,7 +6,7 @@ const { geom2, geom3, path2 } = require('../../geometry')
 
 /**
  * Rotate the given object(s) using the given options (if any)
- * @param {[x,y,y]} angles - angle (RADIANS) of rotations about X, Y, and X axis
+ * @param {Number[]} angles - angle (RADIANS) of rotations about X, Y, and X axis
  * @param {Object|Array} objects - the objects(s) to rotate
  * @return {Object|Array} the rotated object(s)
  *

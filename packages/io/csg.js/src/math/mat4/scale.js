@@ -3,9 +3,9 @@ const create = require('./create')
 /**
  * Scales the mat4 by the dimensions in the given vec3
  *
- * @param {mat4} out the receiving matrix
- * @param {vec3} vector the vec3 to scale the matrix by
- * @param {mat4} matrix the matrix to scale
+ * @param {mat4} [out] - the receiving matrix
+ * @param {vec3} vector - the vec3 to scale the matrix by
+ * @param {mat4} matrix - the matrix to scale
  * @returns {mat4} out
  */
 const scale = (...params) => {

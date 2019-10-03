@@ -6,7 +6,7 @@ const create = require('./create')
  * Transform the given geometry using the given matrix.
  * This is a lazy transform of the polygons, as this function only adjusts the transforms.
  * See applyTransforms() for the actual application of the transforms to the polygons.
- * @param {Matrix4x4} matrix - the matrix to transform with
+ * @param {mat4} matrix - the matrix to transform with
  * @param {geom3} geometry - the geometry to transform
  * @returns {geom3} - the transformed geometry
  * @example

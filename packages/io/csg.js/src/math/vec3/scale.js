@@ -3,9 +3,9 @@ const create = require('./create')
 /**
  * Scales a vec3 by a scalar number
  *
- * @param {vec3} out the receiving vector
- * @param {Number} amount amount to scale the vector by
- * @param {vec3} vector the vector to scale
+ * @param {vec3} [out] - the receiving vector
+ * @param {Number} amount - amount to scale the vector by
+ * @param {vec3} vector - the vector to scale
  * @returns {vec3} out
  */
 const scale = (...params) => {

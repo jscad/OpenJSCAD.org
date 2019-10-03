@@ -15,12 +15,12 @@ const to3DWall = (z0, z1, side) => {
   return poly3.fromPoints(points)
 }
 
-/**
- * Create a set of polygons (walls) from the given Z values and geometry.
+/*
+ * Create a 3D geometry with walls, as constructed from the given options and geometry.
  *
- * @param {object} options - options with Z offsets
+ * @param {Object} options - options with Z offsets
  * @param {geom2} geometry - geometry used as base of walls
- * @return {[poly3]} list of polygons
+ * @return {geom3} the new geometry
  */
 const to3DWalls = (options, geometry) => {
   let sides = geom2.toSides(geometry)

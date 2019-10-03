@@ -6,9 +6,9 @@ const vec3 = require('../../math/vec3')
 /**
  * Create a deep clone of the given polygon
  *
- * @param {vec3} [out] - receiving polygon
- * @param {vec3} poly3 - polygon to clone
- * @returns {vec3} clone of the polygon
+ * @param {poly3} [out] - receiving polygon
+ * @param {poly3} polygon - polygon to clone
+ * @returns {poly3} clone of the polygon
  */
 const clone = (...params) => {
   let out

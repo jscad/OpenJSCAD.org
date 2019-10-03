@@ -3,9 +3,9 @@ const create = require('./create')
 /**
  * Returns the minimum of two vec3's
  *
- * @param {vec3} out the receiving vector (optional)
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
+ * @param {vec3} [out] - the receiving vector
+ * @param {vec3} a - the first operand
+ * @param {vec3} b - the second operand
  * @returns {vec3} out
  */
 const min = (...params) => {

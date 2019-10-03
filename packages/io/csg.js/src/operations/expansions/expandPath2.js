@@ -6,7 +6,7 @@ const { geom2, path2 } = require('../../geometry')
 
 const offsetFromPoints = require('./offsetFromPoints')
 
-/**
+/*
  * Expand the given geometry (path2) using the given options (if any).
  * @param {Object} options - options for expand
  * @param {Number} [options.delta=1] - delta (+) of expansion

@@ -3,7 +3,7 @@ const flatten = require('../../utils/flatten')
 const retessellate = require('./retessellate')
 const unionSub = require('./unionGeom3Sub')
 
-/**
+/*
  * Return a new 3D geometry representing the space in the given 3D geometries.
  * @param {...objects} geometries - list of geometries to union
  * @returns {geom3} new 3D geometry

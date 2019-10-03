@@ -7,10 +7,10 @@ const { fromValues } = require('../vec4')
 /** Create a new plane from the given points like fromPoints, 
  * but allow the vectors to be on one point or one line
  * in such a case a random plane through the given points is constructed
- * @param {Vec3} a - 3D point
- * @param {Vec3} b - 3D point
- * @param {Vec3} c - 3D point
- * @returns {Vec4} a new plane with properly typed values
+ * @param {vec3} a - 3D point
+ * @param {vec3} b - 3D point
+ * @param {vec3} c - 3D point
+ * @returns {plane} a new plane with properly typed values
  */
 const fromPointsRandom = (a, b, c) => {
   let ba = vec3.subtract(b, a)

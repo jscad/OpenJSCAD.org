@@ -7,8 +7,8 @@ const create = require('./create')
  *     mat4.identity(dest);
  *     mat4.rotateY(dest, dest, rad);
  *
- * @param {mat4} out mat4 receiving operation result
- * @param {Number} rad the angle to rotate the matrix by
+ * @param {mat4} [out] - mat4 receiving operation result
+ * @param {Number} rad - the angle to rotate the matrix by
  * @returns {mat4} out
  */
 const fromYRotation = (...params) => {

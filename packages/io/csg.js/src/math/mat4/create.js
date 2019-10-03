@@ -1,7 +1,7 @@
 /**
- * Creates a new identity mat4
+ * Creates a new identity matrix
  *
- * @returns {mat4} a new 4x4 matrix
+ * @returns {mat4} a new 4 by 4 matrix
  */
 const create = () => {
   const out = new Float32Array(16)

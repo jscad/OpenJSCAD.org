@@ -31,7 +31,8 @@ const fromFakePolygon = (polygon) => {
   return pts2d
 }
 
-/** Convert the given polygons to a list of sides.
+/*
+ * Convert the given polygons to a list of sides.
  * The polygons must have only z coordinates +1 and -1, as constructed by to3DWalls().
  */
 const fromFakePolygons = (polygons) => {

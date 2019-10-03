@@ -4,7 +4,7 @@ const union = require('../booleans/union')
 
 const expandShell = require('./expandShell')
 
-/**
+/*
  * Expand the given geometry (geom3) using the given options (if any).
  * @param {Object} options - options for expand
  * @param {Number} [options.delta=1] - delta (+/-) of expansion

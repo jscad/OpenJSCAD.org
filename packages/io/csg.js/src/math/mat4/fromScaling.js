@@ -7,8 +7,8 @@ const create = require('./create')
  *     mat4.identity(dest);
  *     mat4.scale(dest, dest, vec);
  *
- * @param {mat4} out mat4 receiving operation result
- * @param {vec3} v Scaling vector
+ * @param {mat4} [out] - mat4 receiving operation result
+ * @param {vec3} v - Scaling vector
  * @returns {mat4} out
  */
 const fromScaling = (...params) => {

@@ -49,7 +49,7 @@ const addUniqueAngle = (map, angle) => {
   return i
 }
 
-/**
+/*
  * Create the expanded shell of the solid:
  * All faces are extruded to 2 times delta
  * Cylinders are constructed around every side

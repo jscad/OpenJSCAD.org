@@ -3,8 +3,8 @@ const create = require('./create')
 /**
  * Negates the components of a vec3
  *
- * @param {vec3} out the receiving vector (optional)
- * @param {vec3} a vector to negate
+ * @param {vec3} [out] - the receiving vector
+ * @param {vec3} a - vector to negate
  * @returns {vec3} out
  */
 const negate = (...params) => {

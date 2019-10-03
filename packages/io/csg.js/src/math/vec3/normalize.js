@@ -3,8 +3,8 @@ const create = require('./create')
 /**
  * Normalize a vec3
  *
- * @param {vec3} out the receiving vector (optional)
- * @param {vec3} a vector to normalize
+ * @param {vec3} [out] - the receiving vector
+ * @param {vec3} a - vector to normalize
  * @returns {vec3} out
  */
 const normalize = (...params) => {

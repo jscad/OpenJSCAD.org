@@ -6,6 +6,7 @@ const hueToColorComponent = require('./hueToColorComponent')
  * @see http://en.wikipedia.org/wiki/HSL_color_space.
  * @param {Array} values - HSL color values
  * @return {Array} RGB color values
+ * @alias module:color.hslToRgb
  *
  * @example
  * let mysphere = color(hslToRgb([0.9166666666666666, 1, 0.5]), sphere())

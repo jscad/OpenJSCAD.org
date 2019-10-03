@@ -6,7 +6,7 @@ const { line2, vec2 } = require('../../math')
 
 const { poly2 } = require('../../geometry')
 
-/**
+/*
  * Create a set of offset points from the given points using the given options (if any).
  * @param {Object} options - options for offset
  * @param {Float} [options.delta=1] - delta of offset (+ to exterior, - from interior)

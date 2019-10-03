@@ -94,7 +94,8 @@ const compute = (points) => {
   return indices
 }
 
-/** Create a convex hull of the given set of points,  where each point is an array of [x,y].
+/*
+ * Create a convex hull of the given set of points,  where each point is an array of [x,y].
  * @param {Array} uniquepoints - list of UNIQUE points from which to create a hull
  * @returns {Array} a list of points that form the hull
  */

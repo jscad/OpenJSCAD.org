@@ -7,8 +7,8 @@ const create = require('./create')
  * The list of points should contain sub-arrays, each defining a single polygon of points.
  * In addition, the points should follow the right-hand rule for rotation in order to
  * define an external facing polygon. The opposite is true for internal facing polygon.
- * @param {Array[[point],...]} listofpoints - (nested) list of points in 3D space
- * @returns {geom2} a new geometry
+ * @param {Array[]} listofpoints - list of lists, where each list is a set of points to construct a polygon
+ * @returns {geom3} a new geometry
  */
 const fromPoints = function (listofpoints) {
   if (!Array.isArray(listofpoints)) {

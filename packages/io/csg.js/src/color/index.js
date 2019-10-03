@@ -1,3 +1,6 @@
+/**
+ * @module color
+ */
 module.exports = {
   color: require('./color'),
   colorNameToRgb: require('./colorNameToRgb'),

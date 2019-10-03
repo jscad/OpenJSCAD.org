@@ -7,10 +7,10 @@ const { interpolateBetween2DPointsForY, insertSorted, fnNumberSort } = require('
 
 const { poly3 } = require('../../geometry')
 
-/**
+/*
  * Retesselation for a set of COPLANAR polygons.
- * @param {[poly3]} sourcepolygons - list of polygons
- * @returns {[poly3]} new set of polygons
+ * @param {poly3[]} sourcepolygons - list of polygons
+ * @returns {poly3[]} new set of polygons
  */
 const reTesselateCoplanarPolygons = (sourcepolygons) => {
   if (sourcepolygons.length < 2) return sourcepolygons

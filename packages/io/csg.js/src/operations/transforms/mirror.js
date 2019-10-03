@@ -8,8 +8,8 @@ const { geom2, geom3, path2 } = require('../../geometry')
  * Mirror the given object(s) using the given options (if any)
  * Note: The normal should be given as 90 degrees from the plane origin.
  * @param {Object} options - options for mirror
- * @param {Array} options.origin=[0,0,0] - the origin of the plane
- * @param {Array} options.normal=[0,0,1] - the normal vector of the plane
+ * @param {Array} [options.origin=[0,0,0]] - the origin of the plane
+ * @param {Array} [options.normal=[0,0,1]] - the normal vector of the plane
  * @param {Object|Array} objects - the objects(s) to mirror
  * @return {Object|Array} the mirrored object(s)
  *

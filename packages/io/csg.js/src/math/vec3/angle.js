@@ -3,9 +3,9 @@ const dot = require('./dot')
 
 /**
  * Get the angle between two 3D vectors
- * @param {vec3} a The first operand
- * @param {vec3} b The second operand
- * @returns {Number} The angle in radians
+ * @param {vec3} a - the first operand
+ * @param {vec3} b - the second operand
+ * @returns {Number} the angle in radians
  */
 const angle = (a, b) => {
   const tempA = normalize(a)

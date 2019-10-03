@@ -3,8 +3,9 @@
  *
  * @see http://en.wikipedia.org/wiki/HSL_color_space.
  * @see http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
- * @param {Array} values - RGB color values
- * @return Array HSL color values
+ * @param {Number[]} values - RGB color values
+ * @return {Number[]} HSL color values
+ * @alias module:color.rgbToHsl
  */
 const rgbToHsl = (values) => {
   if (!Array.isArray(values)) throw new Error('values must be an array')

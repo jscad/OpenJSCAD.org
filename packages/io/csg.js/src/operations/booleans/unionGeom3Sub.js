@@ -3,7 +3,7 @@ const { geom3 } = require('../../geometry')
 const mayOverlap = require('./mayOverlap')
 const { Tree } = require('./trees')
 
-/**
+/*
  * Return a new 3D geometry representing the space in the given geometries.
  * @param {geom3} geometry1 - geometry to union
  * @param {geom3} geometry2 - geometry to union

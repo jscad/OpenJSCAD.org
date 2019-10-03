@@ -1,4 +1,7 @@
-// color table from http://www.w3.org/TR/css3-color/
+/**
+ * @alias module:color.cssColors
+ * @see CSS color table from http://www.w3.org/TR/css3-color/
+ */
 const cssColors = {
   // basic color keywords
   'black': [ 0 / 255, 0 / 255, 0 / 255 ],

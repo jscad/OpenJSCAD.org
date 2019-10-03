@@ -3,7 +3,7 @@ const flatten = require('../../utils/flatten')
 const retessellate = require('./retessellate')
 const subtractSub = require('./subtractGeom3Sub')
 
-/**
+/*
  * Return a new 3D geometry representing space in this geometry but not in the given geometries.
  * Neither this geometry nor the given geometries are modified.
  * @param {...geom3} geometries - list of geometries

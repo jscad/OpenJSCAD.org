@@ -6,7 +6,7 @@ const { geom2, geom3, path2, poly3 } = require('../../geometry')
 
 /*
  * Measure the min and max bounds of the given (path2) geometry.
- * @return {[[x,y,z], [x,y,z]]} the bounds (min and max points) for the geometry
+ * @return {Array[]} the min and max bounds for the geometry
  */
 const measureBoundsOfPath2 = (geometry) => {
   const points = path2.toPoints(geometry)
@@ -31,7 +31,7 @@ const measureBoundsOfPath2 = (geometry) => {
 
 /*
  * Measure the min and max bounds of the given (geom2) geometry.
- * @return {[[x,y,z], [x,y,z]]} the bounds (min and max) for the geometry
+ * @return {Array[]} the min and max bounds for the geometry
  */
 const measureBoundsOfGeom2 = (geometry) => {
   const points = geom2.toPoints(geometry)
@@ -55,9 +55,9 @@ const measureBoundsOfGeom2 = (geometry) => {
   return [minpoint, maxpoint]
 }
 
-/**
+/*
  * Measure the min and max bounds of the given (geom3) geometry.
- * @return {[[x,y,z], [x,y,z]]} the bounds (min and max) for the geometry
+ * @return {Array[]} the min and max bounds for the geometry
  */
 const measureBoundsOfGeom3 = (geometry) => {
   const polygons = geom3.toPolygons(geometry)
@@ -86,7 +86,7 @@ const measureBoundsOfGeom3 = (geometry) => {
  * Measure the min and max bounds of the given geometry(s),
  * where min and max bounds are an array of [x,y,z]
  * @param {...geometries} geometries - the geometry(s) to measure
- * @return {[min, max]|Array[[min, max]]} the bounds for each geometry
+ * @return {Array[]} the min and max bounds for each geometry
  *
  * @example
  * let bounds = measureBounds(sphere())

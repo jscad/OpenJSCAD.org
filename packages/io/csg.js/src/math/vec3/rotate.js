@@ -4,8 +4,8 @@ const rotateY = require('./rotateY')
 const rotateZ = require('./rotateZ')
 /**
  * Rotate vector 3D vector around the all 3 axes in the order x-axis , yaxis, z axis
- * @param {vec3} out The receiving vec3 (optional)
- * @param {vec3} vector The vec3 point to rotate
+ * @param {vec3} [out] - the receiving vec3
+ * @param {vec3} vector - the vec3 point to rotate
  * @returns {vec3} out
  */
 function rotate (...params) {

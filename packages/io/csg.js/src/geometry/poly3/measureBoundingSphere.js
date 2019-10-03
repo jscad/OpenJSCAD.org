@@ -2,7 +2,7 @@ const vec3 = require('../../math/vec3')
 const measureBoundingBox = require('./measureBoundingBox')
 
 /** Measure the bounding sphere of the given poly3
- * @param {poly3} the poly3 to measure
+ * @param {poly3} polygon - the poly3 to measure
  * @returns computed bounding sphere; center (vec3) and radius
  */
 const measureBoundingSphere = (poly3) => {

@@ -5,7 +5,7 @@ const create = require('./create')
 
 /**
  * Performs a deep clone of the give path.
- * @params {path2} geometry - the geometry to clone
+ * @param {path2} geometry - the geometry to clone
  * @returns {path2} new path
  */
 const clone = (geometry) => {

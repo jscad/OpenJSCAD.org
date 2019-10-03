@@ -3,9 +3,9 @@ const create = require('./create')
 /**
  * Transform the given vec4 using the given mat4
  *
- * @param {vec4} out the receiving vector (optional)
- * @param {mat4} matrix matrix to transform with
- * @param {vec4} vector the vector to transform
+ * @param {vec4} [out] - the receiving vector (optional)
+ * @param {mat4} matrix - matrix to transform with
+ * @param {vec4} vector - the vector to transform
  * @returns {vec4} a new vector or the receiving vector
  */
 const transform = (...params) => {

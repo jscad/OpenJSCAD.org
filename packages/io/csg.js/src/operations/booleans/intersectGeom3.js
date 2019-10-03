@@ -3,7 +3,7 @@ const flatten = require('../../utils/flatten')
 const retessellate = require('./retessellate')
 const intersectSub = require('./intersectGeom3Sub')
 
-/**
+/*
  * Return a new 3D geometry representing space in both the first geometry and
  * in the subsequent geometries. None of the given geometries are modified.
  * @param {...geom3} geometries - list of 3D geometries

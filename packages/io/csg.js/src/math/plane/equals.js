@@ -1,5 +1,8 @@
 /**
  * Compare the given planes for equality
+ *
+ * @param {plane} a - the first plane
+ * @param {plane} b - the second plane
  * @return {boolean} true if planes are equal
  */
 const equals = (a, b) => {

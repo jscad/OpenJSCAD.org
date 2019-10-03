@@ -13,7 +13,7 @@ const toPoints = require('./toPoints')
  * the second to last control point of the path is mirrored into the control points of the Bezier curve.
  * In other words, the trailing gradient of the path matches the new gradient of the curve.
  * @param {Object} options - options for construction
- * @param {[vec2]} options.controlPoints - list of control points for the bezier curve
+ * @param {vec2[]} options.controlPoints - list of control points for the bezier curve
  * @param {Number} [options.segment=16] - number of segments per 360 rotation
  * @param {path2} geometry - the path of which to append the curves
  * @returns {path2} a new geometry with the appended curves

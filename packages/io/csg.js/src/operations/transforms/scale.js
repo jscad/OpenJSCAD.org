@@ -6,7 +6,7 @@ const { geom2, geom3, path2 } = require('../../geometry')
 
 /**
  * Scale the given object(s) using the given options (if any)
- * @param {Array} factors - factors by which to scale the object
+ * @param {Array} factors - X, Y, Z factors by which to scale the object
  * @param {Object|Array} objects - the objects(s) to scale
  * @return {Object|Array} the scaled object(s)
  *

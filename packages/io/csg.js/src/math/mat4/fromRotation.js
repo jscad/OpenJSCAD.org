@@ -9,9 +9,9 @@ const { EPSILON } = require('./constants')
  *     mat4.identity(dest);
  *     mat4.rotate(dest, dest, rad, axis);
  *
- * @param {mat4} out mat4 receiving operation result
- * @param {Number} rad the angle to rotate the matrix by
- * @param {vec3} axis the axis to rotate around
+ * @param {mat4} [out] - mat4 receiving operation result
+ * @param {Number} rad - the angle to rotate the matrix by
+ * @param {vec3} axis - the axis to rotate around
  * @returns {mat4} out
  */
 const fromRotation = (...params) => {

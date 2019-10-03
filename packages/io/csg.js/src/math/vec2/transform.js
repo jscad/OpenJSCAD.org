@@ -5,9 +5,9 @@ const create = require('./create')
  * 3rd vector component is implicitly '0'
  * 4th vector component is implicitly '1'
  *
- * @param {vec2} out the receiving vector
- * @param {mat4} matrix matrix to transform with
- * @param {vec2} vector the vector to transform
+ * @param {vec2} [out] - the receiving vector
+ * @param {mat4} matrix - matrix to transform with
+ * @param {vec2} vector - the vector to transform
  * @returns {vec2} out
  */
 const transform = (...params) => {

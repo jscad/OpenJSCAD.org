@@ -1,7 +1,9 @@
-/** convert hue values to a color component (ie one of r, g, b)
- * @param  {} p
- * @param  {} q
- * @param  {} t
+/**
+ * Convert hue values to a color component (ie one of r, g, b)
+ * @param  {Number} p
+ * @param  {Number} q
+ * @param  {Number} t
+ * @alias module:color.hueToColorComponent
  */
 const hueToColorComponent = (p, q, t) => {
   if (t < 0) t += 1

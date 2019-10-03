@@ -3,7 +3,7 @@
  * @see https://www.w3.org/TR/css-color-3/
  * @param {Array} values - RGB color values
  * @return {String} CSS color notation
- *
+ * @alias module:color.rgbToHex
  */
 const rgbToHex = (values) => {
   if (!Array.isArray(values)) throw new Error('values must be an array')

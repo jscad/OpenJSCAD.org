@@ -3,9 +3,9 @@ const create = require('./create')
 /**
  * Translate matrix mat4 by the given vector
  *
- * @param {mat4} out the receiving matrix
- * @param {vec3} vector vector to translate by
- * @param {mat4} matrix the matrix to translate
+ * @param {mat4} [out] - the receiving matrix
+ * @param {vec3} vector - vector to translate by
+ * @param {mat4} matrix - the matrix to translate
  * @returns {mat4} out
  */
 const translate = (...params) => {

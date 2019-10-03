@@ -4,8 +4,8 @@ const fromPointAxisNormal = require('./fromPointAxisNormal')
 
 /**
  * Normalize the given connector, calculating new axis and normal
- * @param {Connector} connector - the connector to normalize
- * @returns {Connector} a new connector
+ * @param {connector} connector - the connector to normalize
+ * @returns {connector} a new connector
  */
 const normalize = (connector) => {
   const newaxis = vec3.unit(connector.axis)

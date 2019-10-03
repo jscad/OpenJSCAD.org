@@ -1,8 +1,8 @@
 /**
  * Returns whether or not the matrices have exactly the same elements in the same position (when compared with ===)
  *
- * @param {mat4} a The first matrix.
- * @param {mat4} b The second matrix.
+ * @param {mat4} a - the first matrix
+ * @param {mat4} b - the second matrix
  * @returns {Boolean} True if the matrices are equal, false otherwise.
  */
 const equals = (a, b) => {

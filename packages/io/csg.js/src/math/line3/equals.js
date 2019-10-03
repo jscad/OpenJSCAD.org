@@ -3,6 +3,8 @@ const vec3 = require('../vec3')
 /**
  * Compare the given 3D lines for equality
  *
+ * @param {line3} a - the first line to compare
+ * @param {line3} b - the second line to compare
  * @return {boolean} true if lines are equal
  */
 const equals = (line1, line2) => {

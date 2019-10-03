@@ -109,7 +109,7 @@ const cylinderElliptic = function (options) {
 /** Construct a solid cylinder.
  * @param {Object} [options] - options for construction
  * @param {Array} [options.height=2] - height of cylinder
- * @param {Number} [options.startRadisu=1] - radius of cylinder at the start
+ * @param {Number} [options.startRadius=1] - radius of cylinder at the start
  * @param {Number} [options.startAngle=0] - start angle of cylinder
  * @param {Number} [options.endRadius=1] - radius of cylinder at the end
  * @param {Number} [options.endAngle=(Math.PI * 2)] - end angle of cylinder
@@ -119,8 +119,8 @@ const cylinderElliptic = function (options) {
  * @example
  * let cylinder = cylinder({
  *   height: 2,
- *   startRadis: 10,
- *   endRadis: 5,
+ *   startRadius: 10,
+ *   endRadius: 5,
  *   segments: 16
  * })
  */

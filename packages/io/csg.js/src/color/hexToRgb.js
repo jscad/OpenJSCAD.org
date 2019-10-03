@@ -4,6 +4,7 @@
  * @see https://www.w3.org/TR/css-color-3/
  * @param {String} notation - color notation
  * @return {Array} RGB color values
+ * @alias module:color.hexToRgb
  *
  * @example
  * let mysphere = color(hexToRgb('#000080'), sphere()) // navy blue

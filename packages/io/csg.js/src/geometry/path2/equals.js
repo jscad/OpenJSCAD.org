@@ -5,8 +5,8 @@ const toPoints = require('./toPoints')
 /**
   * Determine if the given paths are equal.
   * For closed paths, this includes equality under point order rotation.
-  * @param {path} a - the first path to compare
-  * @param {path} b - the second path to compare
+  * @param {path2} a - the first path to compare
+  * @param {path2} b - the second path to compare
   * @returns {boolean}
   */
 const equals = (a, b) => {

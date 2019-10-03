@@ -3,7 +3,7 @@ const { geom3 } = require('../../geometry')
 const mayOverlap = require('./mayOverlap')
 const { Tree } = require('./trees')
 
-/**
+/*
  * Return a new 3D geometry representing the space in the first geometry but not
  * in the second geometry. None of the given geometries are modified.
  * @param {geom3} geometry1 - a geometry
