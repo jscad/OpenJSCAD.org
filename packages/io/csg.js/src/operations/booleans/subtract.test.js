@@ -38,7 +38,7 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
   t.deepEqual(obs, exp)
 
   // subtract of two non-overlapping objects
-  let geometry2 = rectangle({ size: [2, 2], center: [10, 10] })
+  let geometry2 = rectangle({ size: [4, 4], center: [10, 10] })
 
   let result2 = subtract(geometry1, geometry2)
   obs = geom2.toPoints(result2)
@@ -56,7 +56,7 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
   t.deepEqual(obs, exp)
 
   // subtract of two partially overlapping objects
-  let geometry3 = rectangle({ size: [9, 9] })
+  let geometry3 = rectangle({ size: [18, 18] })
 
   let result3 = subtract(geometry2, geometry3)
   obs = geom2.toPoints(result3)
@@ -156,14 +156,14 @@ test('subtract: subtract of one or more geom3 objects produces expected geometry
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // subtract of two non-overlapping objects
-  let geometry2 = cuboid({ size: [2, 2, 2], center: [10, 10, 10] })
+  let geometry2 = cuboid({ size: [4, 4, 4], center: [10, 10, 10] })
 
   let result2 = subtract(geometry1, geometry2)
   obs = geom3.toPoints(result2)
   t.is(obs.length, 32)
 
   // subtract of two partially overlapping objects
-  let geometry3 = cuboid({ size: [9, 9, 9] })
+  let geometry3 = cuboid({ size: [18, 18, 18] })
 
   let result3 = subtract(geometry2, geometry3)
   obs = geom3.toPoints(result3)

@@ -46,7 +46,7 @@ test('measureBounds (single objects)', t => {
 
 test('measureBounds (multiple objects)', t => {
   let aline = line([[10, 10], [15, 15]])
-  let arect = rectangle({ size: [5, 10] })
+  let arect = rectangle({ size: [10, 20] })
   let acube = cuboid()
   let o = {}
 

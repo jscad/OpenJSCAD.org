@@ -37,7 +37,7 @@ test('union of one or more geom2 objects produces expected geometry', t => {
   t.deepEqual(obs, exp)
 
   // union of two non-overlapping objects
-  let geometry2 = rectangle({ size: [2, 2], center: [10, 10] })
+  let geometry2 = rectangle({ size: [4, 4], center: [10, 10] })
 
   let result2 = union(geometry1, geometry2)
   obs = geom2.toPoints(result2)
@@ -58,7 +58,7 @@ test('union of one or more geom2 objects produces expected geometry', t => {
   t.deepEqual(obs, exp)
 
   // union of two partially overlapping objects
-  let geometry3 = rectangle({ size: [9, 9] })
+  let geometry3 = rectangle({ size: [18, 18] })
 
   let result3 = union(geometry2, geometry3)
   obs = geom2.toPoints(result3)
@@ -161,14 +161,14 @@ test('union of one or more geom3 objects produces expected geometry', t => {
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // union of two non-overlapping objects
-  let geometry2 = cuboid({ size: [2, 2, 2], center: [10, 10, 10] })
+  let geometry2 = cuboid({ size: [4, 4, 4], center: [10, 10, 10] })
 
   let result2 = union(geometry1, geometry2)
   obs = geom3.toPoints(result2)
   t.is(obs.length, 38)
 
   // union of two partially overlapping objects
-  let geometry3 = cuboid({ size: [9, 9, 9] })
+  let geometry3 = cuboid({ size: [18, 18, 18] })
 
   let result3 = union(geometry2, geometry3)
   obs = geom3.toPoints(result3)
@@ -211,8 +211,8 @@ test('union of one or more geom3 objects produces expected geometry', t => {
 })
 
 test('union of geom3 with rounding issues #137', t => {
-  let geometry1 = cuboid({ size: [22, 13, 2.5], center: [0, 0, -1] })
-  let geometry2 = cuboid({ size: [22, 13, 0.9], center: [0, 0, -4.400001] }) // introduce percision error
+  let geometry1 = cuboid({ size: [44, 26, 5], center: [0, 0, -1] })
+  let geometry2 = cuboid({ size: [44, 26, 1.8], center: [0, 0, -4.400001] }) // introduce percision error
 
   let obs = union(geometry1, geometry2)
   let pts = geom3.toPoints(obs)

@@ -1,9 +1,10 @@
 const {geom3, poly3} = require('../geometry')
 
-/** Construct an axis-aligned solid cuboid.
+/**
+ * Construct an axis-aligned solid cuboid.
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of cuboid
- * @param {Array} [options.size=[1,1,1]] - size of cuboid
+ * @param {Array} [options.size=[2,2,2]] - dimensions of cuboid; width, depth, height
  * @returns {geom3} new 3D geometry
  *
  * @example
@@ -12,7 +13,7 @@ const {geom3, poly3} = require('../geometry')
 const cuboid = (options) => {
   const defaults = {
     center: [0, 0, 0],
-    size: [1, 1, 1]
+    size: [2, 2, 2]
   }
   let {center, size} = Object.assign({}, defaults, options)
 
@@ -20,7 +21,7 @@ const cuboid = (options) => {
   if (center.length < 3) throw new Error('center must contain X, Y and Z values')
 
   if (!Array.isArray(size)) throw new Error('size must be an array')
-  if (size.length < 3) throw new Error('size must contain X, Y and Z values')
+  if (size.length < 3) throw new Error('size must contain width, depth and height values')
 
   let result = geom3.create(
     // adjust a basic shape to center and size
@@ -34,9 +35,9 @@ const cuboid = (options) => {
     ].map((info) => {
       let points = info[0].map((i) => {
         let pos = [
-          center[0] + size[0] * (2 * !!(i & 1) - 1),
-          center[1] + size[1] * (2 * !!(i & 2) - 1),
-          center[2] + size[2] * (2 * !!(i & 4) - 1)
+          center[0] + (size[0] / 2) * (2 * !!(i & 1) - 1),
+          center[1] + (size[1] / 2) * (2 * !!(i & 2) - 1),
+          center[2] + (size[2] / 2) * (2 * !!(i & 4) - 1)
         ]
         return pos
       })
@@ -46,24 +47,23 @@ const cuboid = (options) => {
   return result
 }
 
-/** Construct an axis-aligned solid cube with six square faces.
+/**
+ * Construct an axis-aligned solid cube with six square faces.
  * @see {@link cuboid} for more options, as this is an alias to cuboid
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of cube
- * @param {Number} [options.size=1] - size of cube
+ * @param {Number} [options.size=2] - dimension of cube
  * @returns {geom3} new 3D geometry
  *
  * @example
- * let mycube = cube({center: [5, 5, 5], size: 5})
+ * let mycube = cube({center: [5, 5, 5], size: 10})
  */
 const cube = (options) => {
   const defaults = {
     center: [0, 0, 0],
-    size: 1
+    size: 2
   }
   let {center, size} = Object.assign({}, defaults, options)
-
-  // TODO check that size is a number
 
   size = [size, size, size]
 

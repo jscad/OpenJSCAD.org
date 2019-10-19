@@ -246,7 +246,7 @@ test('roundedCuboid (options)', t => {
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // test size
-  obs = roundedCuboid({size: [4, 5, 6], segments: 8})
+  obs = roundedCuboid({size: [8, 10, 12], segments: 8})
   pts = geom3.toPoints(obs)
   exp = [
     [ [ 4, 4.800000190734863, -5.800000190734863 ],
@@ -470,7 +470,7 @@ test('roundedCuboid (options)', t => {
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // test roundRadius
-  obs = roundedCuboid({size: [4, 5, 6], roundRadius: 2, segments: 8})
+  obs = roundedCuboid({size: [8, 10, 12], roundRadius: 2, segments: 8})
   pts = geom3.toPoints(obs)
   exp = [
     [ [ 4, 3, -4 ],

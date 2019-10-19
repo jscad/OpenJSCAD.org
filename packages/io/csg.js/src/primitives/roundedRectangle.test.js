@@ -66,7 +66,7 @@ test('roundedRectangle (options)', t => {
   t.true(comparePoints(obs, exp))
 
   // test size
-  geometry = roundedRectangle({size: [5, 3]})
+  geometry = roundedRectangle({size: [10, 6]})
   obs = geom2.toPoints(geometry)
   exp = [
     new Float32Array([ 5, 2.799999952316284 ]),
@@ -94,7 +94,7 @@ test('roundedRectangle (options)', t => {
   t.true(comparePoints(obs, exp))
 
   // test roundRadius
-  geometry = roundedRectangle({size: [5, 3], roundRadius: 2})
+  geometry = roundedRectangle({size: [10, 6], roundRadius: 2})
   obs = geom2.toPoints(geometry)
   exp = [
     new Float32Array([ 5, 1 ]),
@@ -122,7 +122,7 @@ test('roundedRectangle (options)', t => {
   t.true(comparePoints(obs, exp))
 
   // test segments
-  geometry = roundedRectangle({size: [5, 3], roundRadius: 2, segments: 64})
+  geometry = roundedRectangle({size: [10, 6], roundRadius: 2, segments: 64})
   obs = geom2.toPoints(geometry)
   t.deepEqual(obs.length, 68)
 })

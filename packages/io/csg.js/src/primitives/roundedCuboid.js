@@ -104,10 +104,11 @@ const stitchSides = (bottomCorners, topCorners) => {
   return polygons
 }
 
-/** Construct an axis-aligned solid rounded cuboid.
+/**
+ * Construct an axis-aligned solid rounded cuboid.
  * @param {Object} [options] - options for construction
  * @param {Vector3} [options.center=[0,0,0]] - center of rounded cube
- * @param {Vector3} [options.size=[1,1,1]] - size of rounded cube, single scalar is possible
+ * @param {Vector3} [options.size=[2,2,2]] - dimension of rounded cube; width, depth, height
  * @param {Number} [options.roundRadius=0.2] - radius of rounded edges
  * @param {Number} [options.segments=12] - number of segments to create per 360 rotation
  * @returns {geom3} new 3D geometry
@@ -115,7 +116,7 @@ const stitchSides = (bottomCorners, topCorners) => {
  * @example
  * let mycube = roundedCuboid({
  *   center: [2, 0, 2],
- *   size: 15,
+ *   size: [10, 20, 10],
  *   roundRadius: 2,
  *   segments: 36,
  * });
@@ -123,15 +124,23 @@ const stitchSides = (bottomCorners, topCorners) => {
 const roundedCuboid = (options) => {
   const defaults = {
     center: [0, 0, 0],
-    size: [1, 1, 1],
+    size: [2, 2, 2],
     roundRadius: 0.2,
     segments: 12
   }
   let {size, center, roundRadius, segments} = Object.assign({}, defaults, options)
 
+  if (!Array.isArray(center)) throw new Error('center must be an array')
+  if (center.length < 3) throw new Error('center must contain X, Y and Z values')
+
+  if (!Array.isArray(size)) throw new Error('size must be an array')
+  if (size.length < 3) throw new Error('size must contain width, depth and height values')
+
+  size = size.map((v) => v / 2) // convert to radius
+
   if (roundRadius > (size[0] - EPS) ||
       roundRadius > (size[1] - EPS) ||
-      roundRadius > (size[2] - EPS)) throw new Error('roundRadius must be smaller then the size')
+      roundRadius > (size[2] - EPS)) throw new Error('roundRadius must be smaller then the radius of all dimensions')
 
   segments = Math.floor(segments / 4)
   if (segments < 1) throw new Error('segments must be four or more')

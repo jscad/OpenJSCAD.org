@@ -4,27 +4,34 @@ const vec2 = require('../math/vec2')
 
 const {geom2} = require('../geometry')
 
-/** Construct a rounded rectangle.
+/**
+ * Construct a rounded rectangle.
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of rounded rectangle
- * @param {Array} [options.size=[1,1]] - size of rounded rectangle, width and height
+ * @param {Array} [options.size=[2,2]] - dimension of rounded rectangle; width and length
  * @param {Number} [options.roundRadius=0.2] - round radius of corners
  * @param {Number} [options.segments=16] - number of segments to create per 360 rotation
  * @returns {geom2} new 2D geometry
  *
  * @example
- * let myrectangle = roundedRectangle({size: [5, 10], roundRadius: 2})
+ * let myrectangle = roundedRectangle({size: [10, 20], roundRadius: 2})
  */
 const roundedRectangle = (options) => {
   const defaults = {
     center: [0, 0],
-    size: [1, 1],
+    size: [2, 2],
     roundRadius: 0.2,
     segments: 16
   }
-  const {size, center, roundRadius, segments} = Object.assign({}, defaults, options)
+  let {size, center, roundRadius, segments} = Object.assign({}, defaults, options)
 
-  if (roundRadius > (size[0] - EPS) || roundRadius > (size[1] - EPS)) throw new Error('roundRadius must be smaller then the size')
+  if (!Array.isArray(size)) throw new Error('size must be an array')
+  if (size.length < 2) throw new Error('size must contain width and length values')
+
+  size = size.map((v) => v / 2) // convert to radius
+
+  if (roundRadius > (size[0] - EPS) ||
+      roundRadius > (size[1] - EPS)) throw new Error('roundRadius must be smaller then the radius of all dimensions')
 
   let cornersegments = Math.floor(segments / 4)
   if (cornersegments < 1) throw new Error('segments must be four or more')

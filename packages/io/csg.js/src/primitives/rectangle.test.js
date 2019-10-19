@@ -35,7 +35,7 @@ test('rectangle (options)', t => {
   t.true(comparePoints(obs, exp))
 
   // test size
-  geometry = rectangle({size: [3, 5]})
+  geometry = rectangle({size: [6, 10]})
   obs = geom2.toPoints(geometry)
   exp = [
     [ -3, -5 ],

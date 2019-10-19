@@ -41,7 +41,7 @@ test('cuboid (defaults)', t => {
 
 test('cuboid (options)', t => {
   // test size
-  let obs = cuboid({size: [2.25, 0.75, 3.5]})
+  let obs = cuboid({size: [4.5, 1.5, 7]})
   let pts = geom3.toPoints(obs)
   let exp = [
     [ [ -2.25, -0.75, -3.5 ], [ -2.25, -0.75, 3.5 ], [ -2.25, 0.75, 3.5 ], [ -2.25, 0.75, -3.5 ] ],
@@ -56,7 +56,7 @@ test('cuboid (options)', t => {
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // test center
-  obs = cuboid({size: [3, 3, 3], center: [3, 5, 7]})
+  obs = cuboid({size: [6, 6, 6], center: [3, 5, 7]})
   pts = geom3.toPoints(obs)
   exp = [
     [ [ 0, 2, 4 ], [ 0, 2, 10 ], [ 0, 8, 10 ], [ 0, 8, 4 ] ],
