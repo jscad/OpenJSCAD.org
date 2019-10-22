@@ -2,6 +2,7 @@ module.exports = {
   appendArc: require('./appendArc'),
   appendBezier: require('./appendBezier'),
   appendPoints: require('./appendPoints'),
+  clone: require('./clone'),
   close: require('./close'),
   concat: require('./concat'),
   create: require('./create'),

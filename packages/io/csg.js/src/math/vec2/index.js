@@ -18,7 +18,6 @@ module.exports = {
   fromArray: require('./fromArray'),
   fromScalar: require('./fromScalar'),
   fromValues: require('./fromValues'),
-  fromVarious: require('./fromVarious'),
   length: require('./length'),
   lerp: require('./lerp'),
   max: require('./max'),

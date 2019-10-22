@@ -8,7 +8,7 @@ module.exports = {
   fromPoints: require('./fromPoints'),
   fromPointsRandom: require('./fromPointsRandom'),
   signedDistanceToPoint: require('./signedDistanceToPoint'),
+  splitLineSegmentByPlane: require('./splitLineSegmentByPlane'),
   toString: require('../vec4/toString'),
-  transform: require('./transform'),
-  splitLineSegmentByPlane: require('./splitLineSegmentByPlane')
+  transform: require('./transform')
 }

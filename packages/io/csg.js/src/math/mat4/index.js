@@ -1,7 +1,6 @@
 module.exports = {
   add: require('./add'),
   clone: require('./clone'),
-  constants: require('./constants'),
   create: require('./create'),
   equals: require('./equals'),
   fromRotation: require('./fromRotation'),
