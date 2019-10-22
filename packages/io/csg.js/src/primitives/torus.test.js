@@ -6,7 +6,7 @@ const {torus} = require('./index')
 
 const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoints')
 
-test.skip('torus (defaults)', t => {
+test('torus (defaults)', t => {
   const obs = torus()
   const pts = geom3.toPoints(obs)
   const exp = [
@@ -15,7 +15,7 @@ test.skip('torus (defaults)', t => {
   //t.true(comparePolygonsAsPoints(pts, exp))
 })
 
-test.skip('torus (custom inner circle, customer outer circle)', t => {
+test('torus (custom inner circle, customer outer circle)', t => {
   const obs = torus({innerRadius: 0.5, innerSegments: 4, outerRadius: 5, outerSegments: 8})
   const pts = geom3.toPoints(obs)
   const exp = [

@@ -18,5 +18,5 @@ module.exports = {
   sphere: require('./ellipsoid').sphere,
   square: require('./rectangle').square,
   star: require('./star'),
-//  torus: require('./torus')
+  torus: require('./torus')
 }

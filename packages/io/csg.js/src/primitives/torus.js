@@ -1,19 +1,22 @@
-const {extrudeRotate, rotateZ} = require('../operations')
+const {extrudeRotate} = require('../operations/extrusions')
+const {rotateZ} = require('../operations/transforms')
 
 const {circle} = require('./ellipse')
 
-/** Construct a torus by revolving a small circle (inner) about the circumference of a large (outer) circle.
+/**
+ * Construct a torus by revolving a small circle (inner) about the circumference of a large (outer) circle.
  * @param {Object} [options] - options for construction
  * @param {Float} [options.innerRadius=1] - radius of small (inner) circle
  * @param {Float} [options.outerRadius=4] - radius of large (outer) circle
- * @param {Integer} [options.innerSegments=16] - number of segments to create per 360 rotation
- * @param {Integer} [options.outerSegments=12] - number of segments to create per 360 rotation
+ * @param {Integer} [options.innerSegments=16] - number of segments to create per rotation
+ * @param {Integer} [options.outerSegments=12] - number of segments to create per rotation
  * @param {Integer} [options.innerRotation=0] - rotation of small (inner) circle in radians
  * @returns {geom3} new 3D geometry
  *
  * @example
  * let torus1 = torus({
- *   innerRadius: 10
+ *   innerRadius: 10,
+ *   outerRadius: 100
  * })
  */
 const torus = (options) => {
@@ -34,7 +37,7 @@ const torus = (options) => {
 
   options = {
     startAngle: 0,
-    angle: 360,
+    angle: Math.PI * 2,
     segments: outerSegments
   }
   return extrudeRotate(options, innerCircle)
