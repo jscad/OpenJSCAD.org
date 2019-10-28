@@ -1,6 +1,6 @@
 {
   "name": "@jscad/regl-renderer",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
   "main": "src/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   "license": "MIT",
   "devDependencies": {
     "budo": "10.0.4",
-    "@jscad/img-utils": "latest",
+    "@jscad/img-utils": "0.0.0",
     "@jscad/scad-api":"latest"
   },
   "dependencies": {
