@@ -26,7 +26,12 @@ const bufferToPng = (buffer, width, height, fileName) => {
         pngImg.data[4 * m + 3] = a
       }
     }
-    pngImg.pack().pipe(fs.createWriteStream(fileName))
+    // pngImg.pack().pipe(fs.createWriteStream(fileName))
+    /**
+     * Use a sync write to avoid needing a promise.
+     */
+    fs.writeFileSync(fileName, png.PNG.sync.write(pngImg))
+
   }
 
   // this is just a helper
