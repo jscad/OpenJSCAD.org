@@ -1,0 +1,10 @@
+objects
+coverage
+test
+package-lock.json
+*.log
+.nyc_output
+.DS_Store
+.nyc_output
+.travis.yml
+jsdoc.json

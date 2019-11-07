@@ -1,0 +1,7 @@
+node_modules/
+objects
+coverage
+.DS_Store
+.nyc_output
+*.log
+package-lock.json
