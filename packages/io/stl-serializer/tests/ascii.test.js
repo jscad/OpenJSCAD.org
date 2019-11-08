@@ -5,7 +5,7 @@ const { primitives, transforms } = require('@jscad/csg')
 const serializer = require('../index.js')
 
 test('serialize objects to stl (ascii)', function (t) {
-  const object1 = primitives.cube({ size: 5 }) // .setColor([0, 0, 1, 1])
+  const object1 = primitives.cube({ size: 10 }) // .setColor([0, 0, 1, 1])
   const observed1 = serializer.serialize({ binary: false }, object1)
   t.deepEqual(observed1, [expected1])
 
