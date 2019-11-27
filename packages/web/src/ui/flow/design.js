@@ -475,14 +475,20 @@ const actions = ({ sources }) => {
       .filter(event => !('error' in event) && event.data instanceof Object && event.data.type === 'solids')
       .map(function (event) {
         try {
+          console.log('SETDESIGN SOLIDS', event.data)
           if (event.data instanceof Object) {
             const start = new Date()
+
+            /* FIXME: update later
             const { CAG, CSG } = require('@jscad/csg')
             const solids = event.data.solids.map(function (object) {
+              console.log('setting solids from worker', object)
               if (object['class'] === 'CSG') { return CSG.fromCompactBinary(object) }
               if (object['class'] === 'CAG') { return CAG.fromCompactBinary(object) }
-            })
-            const { lookupCounts, lookup } = event.data
+            })*/
+            const solids = event.data.solids.map(solid => JSON.parse(solid))
+            const { lookupCounts, lookup } = event.data 
+            
             console.warn(`elapsed for csg gen ${new Date() - start}`)
             return { solids, lookup, lookupCounts }
           }

@@ -48,7 +48,10 @@ const serializeSolids = solids => {
   return solids
     .map(object => {
       if (isCSG(object) || isCAG(object)) {
-        return object.toCompactBinary()
+        console.log('thing to serialize', object)
+        // FIXME: add back to/from compact binary
+        // return object.toCompactBinary()
+        return JSON.stringify(object)
       }
     })
 }
@@ -59,7 +62,8 @@ const instanciateDesign = (rootModule, parameterValues, options) => {
   let solids
   let rawResults = toArray(rootModule.main(parameterValues))
 
-  if (vtreeMode) {
+  const forcedNOVtreeMode = false // FIXME: disabling Vtree mode for now until more V2 progress is done
+  if (forcedNOVtreeMode) {
     let lookup = lookupFromCompactBinary(inputLookup)
     let lookupCounts = inputLookupCounts
     const start = new Date()

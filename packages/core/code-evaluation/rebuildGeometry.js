@@ -22,7 +22,7 @@ const applyParameterDefinitions = require('../parameters/applyParameterDefinitio
 const rebuildSolids = (data, callback) => {
   const defaults = { vtreeMode: true, serialize: true }
   const { mainPath, vtreeMode, serialize, lookup, lookupCounts } = Object.assign({}, defaults, data)
-  const apiMainPath = vtreeMode ? '../code-loading/vtreeApi' : '@jscad/csg/api'
+  const apiMainPath = '@jscad/modeling'// vtreeMode ? '../code-loading/vtreeApi' : '@jscad/csg/api'
 
   // let start = new Date()
   const designData = loadDesign(mainPath, apiMainPath, data.filesAndFolders, data.parameterValues)
