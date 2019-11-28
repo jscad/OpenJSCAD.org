@@ -5,8 +5,8 @@ const { isCAG, isCSG } = require('@jscad/csg')
 const { toArray } = require('../utils/arrays')
 
 // const toCompactBinary = require('./toCompactTest')
-
-const isResultSolid = (rawResults) => (rawResults.length > 0 && (isCSG(rawResults[0]) || isCAG(rawResults[0])))
+const isLine = data => 'points' in data
+const isResultSolid = (rawResults) => (rawResults.length > 0 && (isCSG(rawResults[0]) || isCAG(rawResults[0]) || isLine(rawResults[0]) ))
 
 const lookupFromCompactBinary = (compactLookup) => {
   // TODO: optimise this !!
@@ -47,7 +47,7 @@ const serializeSolids = solids => {
   // FIXME: deal with NON CAG/CSG !!
   return solids
     .map(object => {
-      if (isCSG(object) || isCAG(object)) {
+      if (isCSG(object) || isCAG(object) || isLine(object) ) {
         console.log('thing to serialize', object)
         // FIXME: add back to/from compact binary
         // return object.toCompactBinary()
@@ -75,6 +75,7 @@ const instanciateDesign = (rootModule, parameterValues, options) => {
     solids = serialize ? serializeSolids(solids) : solids
     return { solids, lookup, lookupCounts }
   } else {
+    console.log('RAWRESULTS' ,rawResults)
     if (isResultSolid(rawResults)) {
       solids = serialize ? serializeSolids(rawResults) : rawResults
       return { solids }
