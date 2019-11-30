@@ -1,11 +1,12 @@
 {
   "lerna": "3.19.0",
   "packages": [
+    "packages/core",
+    "packages/modeling",
     "packages/cli",
     "packages/desktop",
     "packages/web",
     "packages/examples",
-    "packages/core",
     "packages/io/*",
     "packages/utils/*"
   ],
