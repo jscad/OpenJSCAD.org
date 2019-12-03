@@ -14,8 +14,11 @@ const modulifySource = (source, apiMainPath) => {
     const {rotate, translate, scale, mirror, transform} = require('${apiMainPath}').transforms
     const {hull, hullChain} = require('${apiMainPath}').hulls
     const {expand, offset} = require('${apiMainPath}').expansions
-
     const {union, difference, intersection} = require('${apiMainPath}').booleans
+    const { measureArea, measureBounds, measureVolume} = require('${apiMainPath}').measurements
+
+    const connectors = require('${apiMainPath}').connectors
+
     const {vec2, vec3, vec4, constants, line2, line3, mat4, plane, utils} = require('${apiMainPath}').math
 
     const {vectorText, vectorChar} = require('${apiMainPath}').text
