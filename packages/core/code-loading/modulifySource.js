@@ -6,6 +6,8 @@ const modulifySource = (source, apiMainPath) => {
   const getParamsString = source.includes('getParameterDefinitions')
     ? 'module.exports.getParameterDefinitions = getParameterDefinitions' : ''
   const updatedSource = `
+    const {geom2, geom3, path2, pol2, poly3} = require('${apiMainPath}').geometry
+
     const {square, circle, polygon, rectangle, ellipse, roundedRectangle} = require('${apiMainPath}').primitives
     const {cube, cylinder, sphere, polyhedron, torus} = require('${apiMainPath}').primitives
     const {color, hsl2rgb} = require('${apiMainPath}').color
