@@ -489,7 +489,7 @@ const actions = ({ sources }) => {
             const solids = event.data.solids.map(solid => JSON.parse(solid))
             const { lookupCounts, lookup } = event.data 
             
-            console.warn(`elapsed for csg gen ${new Date() - start}`)
+            console.warn(`elapsed for geometry gen ${new Date() - start}`)
             return { solids, lookup, lookupCounts }
           }
         } catch (error) {

@@ -1,22 +1,23 @@
 const path = require('path')
 const { head } = require('../../utils/utils')
 const { formats } = require('@jscad/core/io/formats')
-const { isCSG, isCAG } = require('@jscad/csg')
+const isGeom2 = require('@jscad/modeling').geometry.geom2.isA
+const isGeom3 = require('@jscad/modeling').geometry.geom3.isA
 
 const supportedFormatsForObjects = objects => {
   let objectFormats = []
-  let foundCSG = false
-  let foundCAG = false
+  let foundGeom3 = false
+  let foundGeom2 = false
   for (let i = 0; i < objects.length; i++) {
-    if (isCSG(objects[i])) { foundCSG = true }
-    if (isCAG(objects[i])) { foundCAG = true }
+    if (isGeom3(objects[i])) { foundGeom3 = true }
+    if (isGeom2(objects[i])) { foundGeom2 = true }
   }
   for (let format in formats) {
-    if (foundCSG && formats[format].convertCSG === true) {
+    if (foundGeom3 && formats[format].convertGeom3 === true) {
       objectFormats[objectFormats.length] = format
       continue // only add once
     }
-    if (foundCAG && formats[format].convertCAG === true) {
+    if (foundGeom2 && formats[format].convertGeom2 === true) {
       objectFormats[objectFormats.length] = format
     }
   }

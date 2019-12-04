@@ -14,7 +14,7 @@ const { color,
   measurements,
   transforms } = jscad
 
-const { cuboid, sphere, cylinder, circle, star } = primitives
+const { cuboid, sphere, cylinder, circle, star } = require('@jscad/modeling')
 const { translate, rotate, scale } = transforms
 
 console.log('jscad', jscad)

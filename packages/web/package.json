@@ -39,8 +39,6 @@
   "module": "dist/openjscad.umd.js",
   "dependencies": {
     "@jscad/core": "0.4.0",
-    "@jscad/csg": "0.7.0",
-    "@jscad/csg-viewer": "github:jscad/csg-viewer#overhaul",
     "@jscad/examples": "1.7.2",
     "@jscad/modeling": "0.0.1",
     "@jscad/io": "pre-V2",
