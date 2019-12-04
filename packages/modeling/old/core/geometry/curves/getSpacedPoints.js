@@ -1,3 +1,0 @@
-const getSpacedPoints = (steps, curve) => {
-
-}
