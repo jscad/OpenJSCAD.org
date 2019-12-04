@@ -14,7 +14,7 @@ const registerStlExtension = (fs, _require) => {
   const deserializer = require('@jscad/io').stlDeSerializer
   _require.extensions['.stl'] = (module, filename) => {
     const content = fs.readFileSync(filename, 'utf8')
-    const parsed = deserializer.deserialize(content, filename, { output: 'csg' })
+    const parsed = deserializer.deserialize(content, filename, { output: 'geometry' })
     module.exports = parsed
   }
 }
@@ -26,7 +26,7 @@ const registerAmfExtension = (fs, _require) => {
   const deserializer = require('@jscad/io').amfDeSerializer
   _require.extensions['.amf'] = (module, filename) => {
     const content = fs.readFileSync(filename, 'utf8')
-    const parsed = deserializer.deserialize(content, filename, { output: 'csg' })
+    const parsed = deserializer.deserialize(content, filename, { output: 'geometry' })
     module.exports = parsed
   }
 }
@@ -38,7 +38,7 @@ const registerDxfExtension = (fs, _require) => {
   const deserializer = require('@jscad/io').dxfDeSerializer
   _require.extensions['.dxf'] = (module, filename) => {
     const content = fs.readFileSync(filename, 'utf8')
-    const parsed = deserializer.deserialize(content, filename, { output: 'csg' })
+    const parsed = deserializer.deserialize(content, filename, { output: 'geometry' })
     module.exports = parsed
   }
 }
@@ -50,7 +50,7 @@ const registerSvgExtension = (fs, _require) => {
   const deserializer = require('@jscad/io').svgDeSerializer
   _require.extensions['.svg'] = (module, filename) => {
     const content = fs.readFileSync(filename, 'utf8')
-    const parsed = deserializer.deserialize(content, filename, { output: 'csg' })
+    const parsed = deserializer.deserialize(content, filename, { output: 'geometry' })
     module.exports = parsed
   }
 }

@@ -81,17 +81,14 @@ const registerJsonExtension = (fs, _require) => {
 
 const makeWebRequire = (filesAndFolders, options) => {
   const defaults = {
-    apiMainPath: '@jscad/modeling', // '@jscad/csg/api',
+    apiMainPath: '@jscad/modeling',
     fakeFs: require('./makeFakeFs')(filesAndFolders)
   }
   const { apiMainPath, fakeFs } = Object.assign({}, defaults, options)
-  const apiModule = require('@jscad/modeling')// FIXME: reintegrate later apiMainPath === '@jscad/csg/api' ? require('@jscad/csg/api') : require('./vtreeApi')
+  const apiModule = apiMainPath === '@jscad/modeling' ? require('@jscad/modeling') : require('./vtreeApi')
 
   // preset modules
   let modules = {
-    '@jscad/csg/api': {
-      exports: apiModule
-    },
     '@jscad/io': {
       exports: require('@jscad/io')
     },
