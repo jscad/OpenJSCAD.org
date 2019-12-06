@@ -8,7 +8,7 @@
 var o = [];
 
 function myLines (l) {
-  o.push(rectangular_extrude(l, {w: 2, h: 2}));
+  o.push(extrudeRectangular(l, {w: 2, h: 2}));
 }
 
 function main () {

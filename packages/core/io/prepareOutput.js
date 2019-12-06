@@ -23,17 +23,17 @@ const prepareOutput = (objects, params) => {
   }
 
   const outputFormatHandlers = {
-    amf: amfSerializer, // CSG to AMF
-    stl: stlSerializer, // CSG to STL ASCII // NOTE: now using binary output by default !!
+    amf: amfSerializer, // Geom3 to AMF
+    stl: stlSerializer, // Geom3 to STL ASCII // NOTE: now using binary output by default !!
     stla: {
       mimeType: stlSerializer.mimeType,
       serialize: (options, data) => stlSerializer.serialize(Object.assign({}, { binary: false }, options), data)
-    }, // CSG to STL ASCII
-    stlb: stlSerializer, // CSG to STL BINARY
-    dxf: dxfSerializer, // CAG to DXF
-    svg: svgSerializer, // CAG to SVG
-    x3d: x3dSerializer, // CSG to X3D
-    json: jsonSerializer, // CSG or CAG to JSON
+    }, // Geom3 to STL ASCII
+    stlb: stlSerializer, // Geom3 to STL BINARY
+    dxf: dxfSerializer, // Geom2 to DXF
+    svg: svgSerializer, // Geom2 to SVG
+    x3d: x3dSerializer, // Geom3 to X3D
+    json: jsonSerializer, // Geom3 or Geom2 to JSON
     js: {
       mimeType: formats['js'].mimetype,
       serialize: (options, objects) => toArray(objects) // js , pass through

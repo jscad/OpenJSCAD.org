@@ -23,9 +23,9 @@ function getParameterDefinitions () {
 function text (m, h, w) {
   // render the text
   var o = []; // list of 3D objects
-  var l = vector_text(0, 0, m); // line segments for each character
+  var l = vectorText(0, 0, m); // line segments for each character
   l.forEach(function (s) { // process the line segments
-    o.push(rectangular_extrude(s, {w: w, h: h}));
+    o.push(extrudeRectangular(s, {w: w, h: h}));
   });
   // center the message
   m = union(o);
