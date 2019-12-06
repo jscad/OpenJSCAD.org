@@ -21,7 +21,7 @@ const main = () => {
     const x = sin(i / 12 * 180) * 10
     const y = cos(i / 12 * 180) * 10
     shell.push(
-      translate([x, y, 0], scale(6 - i / 2, circle({ center: true })))
+      translate([x, y, 0], scale(6 - i / 2, circle())) // { center: true }
     )
   }
 
@@ -30,7 +30,7 @@ const main = () => {
     const x = sin(i / n * 360) * 10
     const y = cos(i / n * 360) * 10
     hexagon.push(
-      translate([x, y, 0], circle({ center: true }))
+      translate([x, y, 0], circle())// { center: true }
     )
   }
 

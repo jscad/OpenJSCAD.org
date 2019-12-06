@@ -1,9 +1,16 @@
-// title      : transformations
+
+/* title      : transformations
 // author     : Mark Moissette
 // license    : MIT License
 // description: all the different transforms operations
+// tags: transforms, translate, rotate, scale, transform matrix
+*/
 
-function main () {
+const { cube } = require('@jscad/modeling').primitives
+const { translate, rotate, scale, transform } = require('@jscad/modeling').transforms
+const { sin, cos } = Math
+
+const main = () => {
   const testCube = cube()
 
   return [
@@ -18,3 +25,5 @@ function main () {
     ], testCube)
   ]
 }
+
+module.exports = { main }
