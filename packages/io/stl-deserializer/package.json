@@ -1,6 +1,6 @@
 {
   "name": "@jscad/stl-deserializer",
-  "version": "2.0.0-alpha.d0fb3056",
+  "version": "1.0.0-alpha.d0fb3056",
   "description": "STL deserializer for JSCAD project",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
@@ -30,13 +30,14 @@
     "openjscad",
     "jscad",
     "csg",
+    "import",
     "deserializer",
     "stl"
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/csg": "0.7.0",
-    "@jscad/io-utils": "^1.0.0-alpha.d0fb3056"
+    "@jscad/modeling": "0.0.1",
+    "@jscad/io-utils": "1.0.0-alpha.d0fb3056"
   },
   "devDependencies": {
     "ava": "^0.25.0",
@@ -46,7 +47,6 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "nyc": "^10.3.2",
-    "@jscad/sample-files": "^0.0.0"
+    "nyc": "^10.3.2"
   }
 }
