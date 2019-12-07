@@ -36,6 +36,6 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@jscad/csg": "0.7.0"
+    "@jscad/modeling": "0.0.1"
   }
 }
