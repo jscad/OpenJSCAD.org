@@ -35,8 +35,8 @@ const cagToPointsArray = input => {
   if ('sides' in input) { // this is a cag
     points = []
     input.sides.forEach(side => {
-      points.push([side.vertex0.pos.x, side.vertex0.pos.y])
-      points.push([side.vertex1.pos.x, side.vertex1.pos.y])
+      points.push([side[0][0], side[0][1]])
+      points.push([side[1][0], side[1][1]])
     })
     // cag.sides.map(side => [side.vertex0.pos.x, side.vertex0.pos.y])
     //, side.vertex1.pos.x, side.vertex1.pos.y])
@@ -46,7 +46,7 @@ const cagToPointsArray = input => {
       points.push(points.shift())
     } */
   } else if ('points' in input) {
-    points = input.points.map(p => ([p.x, p.y]))
+    points = input.points.map(p => ([p[0], p[1]]))
   }
 
   return points

@@ -20,7 +20,7 @@ function compile (source, params, options) {
     rootPath: ''
   }
   options = Object.assign({}, defaults, options)
-  const {implicitGlobals, rootPath} = options
+  const { implicitGlobals, rootPath } = options
 
   let globals = {}
   if (implicitGlobals) {
@@ -32,7 +32,7 @@ function compile (source, params, options) {
       if (!err) { return resolve(result) }
       reject(err)
     }
-    rebuildSolids(source, rootPath, params, callback, {implicitGlobals, globals, includeResolver: resolveIncludesFs})
+    rebuildSolids(source, rootPath, params, callback, { implicitGlobals, globals, includeResolver: resolveIncludesFs })
   })
 }
 
@@ -42,7 +42,7 @@ function compile (source, params, options) {
  * @param  {Object} objects the CSG/CAG object or array of CSG/CAG objects
  */
 function generateOutput (outputFormat, objects) {
-  return convertToBlob(prepareOutput(objects, {format: outputFormat}))
+  return convertToBlob(prepareOutput(objects, { format: outputFormat }))
 }
 
-module.exports = {generateOutput, compile}
+module.exports = { generateOutput, compile }
