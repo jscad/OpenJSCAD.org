@@ -1,4 +1,4 @@
-const { geometry } = require('@jscad/csg')
+const { geometry } = require('@jscad/modeling')
 
 // objects must be an array of 3D geomertries (with polygons)
 const serializeText = (objects, options) => {

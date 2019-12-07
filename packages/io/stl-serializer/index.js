@@ -16,7 +16,7 @@ Notes:
      none
 */
 
-const { geometry, utils } = require('@jscad/csg')
+const { geometry, utils } = require('@jscad/modeling')
 
 const { serializeBinary } = require('./CSGToStlb')
 const { serializeText } = require('./CSGToStla')

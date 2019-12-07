@@ -1,4 +1,4 @@
-const { geometry } = require('@jscad/csg')
+const { geometry } = require('@jscad/modeling')
 
 // see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
 
