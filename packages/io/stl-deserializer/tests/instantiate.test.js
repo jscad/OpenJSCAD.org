@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const test = require('ava')
 
-const { geometry } = require('@jscad/csg')
+const { geometry } = require('@jscad/modeling')
 
 const deserializer = require('../index.js')
 

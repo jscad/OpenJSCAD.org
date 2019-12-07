@@ -1,4 +1,4 @@
-const { math, primitives } = require('@jscad/csg')
+const { math, primitives } = require('@jscad/modeling')
 
 const { BinaryReader } = require('@jscad/io-utils')
 
@@ -18,7 +18,7 @@ const { BinaryReader } = require('@jscad/io-utils')
 * @param {string} [options.version='0.0.0'] version number to add to the metadata
 * @param {boolean} [options.addMetadata=true] toggle injection of metadata (producer, date, source) at the start of the file
 * @param {string} [options.output='jscad'] {String} either jscad or csg to set desired output
-* @return {[geometries]/string} a list of geometries OR a jscad script (string)
+* @return {[geometries]|string} a list of geometries OR a jscad script (string)
 */
 const deserialize = (stl, filename, options) => {
   // console.log('***** deserialize', stl.length, filename, options)

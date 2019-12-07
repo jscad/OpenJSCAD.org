@@ -165,7 +165,7 @@ const main = () => {
 })
 
 test('translate stl with colors to jscad code', function (t) {
-  const inputPath = path.resolve(samplesPath, 'stl/3D.stl')
+  const inputPath = path.resolve(samplesPath, 'stl/colors.stl')
   const inputFile = fs.readFileSync(inputPath)
 
   const observed = deserializer.deserialize(inputFile, undefined, { output: 'jscad', addMetaData: false })
