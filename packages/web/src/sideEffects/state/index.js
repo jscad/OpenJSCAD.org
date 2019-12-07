@@ -1,14 +1,14 @@
 const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
-const {head} = require('@jscad/core/utils/arrays')
+const { head } = require('@jscad/core/utils/arrays')
 const makeLogger = require('../../utils/logger')
 
 const makeState = (params) => {
   const defaults = {
     logging: true
   }
-  const {logging, packageMetadata, keyBindings} = Object.assign({}, defaults, params)
-  const log = makeLogger({enabled: logging})
+  const { logging, packageMetadata, keyBindings } = Object.assign({}, defaults, params)
+  const log = makeLogger({ enabled: logging })
   const commandResponses = callBackToStream()
 
   const initialState = {
@@ -34,22 +34,19 @@ const makeState = (params) => {
     // return commandResponses$
     // commandResponses$.forEach(x=>console.log('commandResponses', x))
     return most.scan((state, input) => {
+      // console.log('updating state', state.design, input.type, input.state.design)
       const foo = Object.assign({}, state, input.state)
-      /*if(state.design){
-        console.log('updating state from', state.design, 'to', foo.design, 'via', input.type)
-      }*/
-      
-      // state = input.state
+      // console.log('output state', foo.design)
       return foo
     }, initialState, commandResponses$)
-    .startWith(initialState)
-    .skipRepeatsWith((state, previousState) => JSON.stringify(state) === JSON.stringify(previousState))
-    .multicast()
+      .startWith(initialState)
+      .skipRepeatsWith((state, previousState) => JSON.stringify(state) === JSON.stringify(previousState))
+      .multicast()
   }
 
   const sink = (out$) => {
     out$.forEach(function (command) {
-      let {state} = command
+      let { state } = command
       /* try {
         const newState = state
       } catch (error) {
@@ -60,7 +57,7 @@ const makeState = (params) => {
       commandResponses.callback(command)
     })
   }
-  return {source, sink}
+  return { source, sink }
 }
 
 module.exports = makeState

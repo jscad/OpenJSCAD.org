@@ -11,7 +11,7 @@ const { registerAllExtensions } = require('../io/registerExtensions')
 const rebuildSolids = (data) => {
   const defaults = { vtreeMode: false, serialize: false }
   const { mainPath, vtreeMode, parameterValues, inputIsDirectory } = Object.assign({}, defaults, data)
-  const apiMainPath = vtreeMode ? '../code-loading/vtreeApi' : '@jscad/csg/api'
+  const apiMainPath = vtreeMode ? '../code-loading/vtreeApi' : '@jscad/modeling'
   // we need to update the source for our module
   let requireFn = require
   if (!inputIsDirectory) {

@@ -1,7 +1,6 @@
 
 const html = require('bel')
 // viewer data
-const makeCsgViewer = require('@jscad/csg-viewer')
 const rendererStuff = require('@jscad/regl-renderer') // replace this with the correct import
 const { prepareRender, drawCommands, cameras, entitiesFromSolids } = rendererStuff
 const perspectiveCamera = cameras.perspective
@@ -119,9 +118,8 @@ module.exports = function viewer (state, i18n) {
       JSON.stringify(state.design.solids) === JSON.stringify(prevSolids)
       // return sameSolids
       prevSolids = solids
-      console.log('sameSolids', sameSolids)
+      // console.log('sameSolids', sameSolids)
       if (!sameSolids) {
-        console.log('REGEN')
         entities = entitiesFromSolids({}, state.design.solids)
       }
     } else {
