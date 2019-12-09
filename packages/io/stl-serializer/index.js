@@ -35,7 +35,7 @@ const serialize = (options, ...objects) => {
   // convert only 3D geometries
   objects = objects.filter((object) => geometry.geom3.isA(object))
 
-  if (objects.length === 0) throw new Error('the given objects cannot be converted')
+  if (objects.length === 0) throw new Error('only 3D geometries can be serialized to STL')
 
   return options.binary ? serializeBinary(objects, options) : serializeText(objects, options)
 }
