@@ -7,10 +7,12 @@
 
 const { circle, cube, cylinder } = require('@jscad/modeling').primitives
 const { color } = require('@jscad/modeling').color
-const { translate } = require('@jscad/modeling').transforms
+const { translate, rotateX } = require('@jscad/modeling').transforms
 const { extrudeFromSlices, slice } = require('@jscad/modeling').extrusions
 const { mat4 } = require('@jscad/modeling').math
+const { union, intersect } = require('@jscad/modeling').booleans
 const { sqrt } = Math
+const { degToRad } = require('@jscad/modeling').math
 
 const getParameterDefinitions = () => {
   return ([
@@ -70,19 +72,19 @@ const main = (parameters) => {
     center: [0, 0, 0],
     radius: [length, ch2, ch2]
   })
-  xcube = xcube.setColor(fooColor)
-  xcube = xcube.rotateX(45)
-  cube2 = cube2.intersect(xcube)
-  cube3 = cube3.intersect(xcube)
+  xcube = color(fooColor, xcube)
+  xcube = rotateX(degToRad(45), xcube)
+  cube2 = intersect(cube2, xcube)
+  cube3 = intersect(cube3, xcube)
 
-  /*pipe(
+  /* pipe(
     cube({
       center: [0, 0, 0],
       radius: [length, ch2, ch2]
     }),
     color(fooColor),
     rotateX(45)
-  )*/
+  ) */
 
   const ring = color([0.81176470588235294117647058823529, 0.84313725490196078431372549019608, 0.85098039215686274509803921568627],
     cylinder({
@@ -111,12 +113,12 @@ const main = (parameters) => {
     })
   )
 
-  let motor = cube.union([cube2, cube3, ring, shaft])
+  let motor = union([cube, cube2, cube3, ring, shaft])
   motor = motor.subtract(
-    mountinghole.translate([length, offset, offset]),
-    mountinghole.translate([length, offset, -offset]),
-    mountinghole.translate([length, -offset, offset]),
-    mountinghole.translate([length, -offset, -offset])
+    translate([length, offset, offset], mountinghole),
+    translate([length, offset, -offset], mountinghole),
+    translate([length, -offset, offset], mountinghole),
+    translate([length, -offset, -offset], mountinghole)
   )
 
   return translate([0, 0, width], motor)
