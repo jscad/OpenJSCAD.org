@@ -14,7 +14,7 @@ test('instantiate simple ascii stl to geometry', function (t) {
   const inputPath = path.resolve(samplesPath, 'stl/testcube_ascii.stl')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
-  const observed = deserializer.deserialize(inputFile, undefined, { output: 'csg', addMetaData: false })
+  const observed = deserializer.deserialize(inputFile, undefined, { output: 'geometry', addMetaData: false })
   t.is(observed.length, 1)
   const polygons = geometry.geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 12) // 6 faces, 12 polygons
@@ -41,7 +41,7 @@ test('instantiate simple binary stl to geometry', function (t) {
   const inputPath = path.resolve(samplesPath, 'stl/testcube_10mm.stl')
   const inputFile = fs.readFileSync(inputPath)
 
-  const observed = deserializer.deserialize(inputFile, undefined, { output: 'csg', addMetaData: false })
+  const observed = deserializer.deserialize(inputFile, undefined, { output: 'geometry', addMetaData: false })
   t.is(observed.length, 1)
   const polygons = geometry.geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 12) // 6 faces, 12 polygons
@@ -68,7 +68,7 @@ test('instantiate medium complexity binary stl to geometry', function (t) {
   const inputPath = path.resolve(samplesPath, 'stl/pr2_head_tilt.stl')
   const inputFile = fs.readFileSync(inputPath)
 
-  const observed = deserializer.deserialize(inputFile, undefined, { output: 'csg', addMetaData: false })
+  const observed = deserializer.deserialize(inputFile, undefined, { output: 'geometry', addMetaData: false })
   t.is(observed.length, 1)
   const polygons = geometry.geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 1052)
@@ -78,7 +78,7 @@ test('instantiate complex ascii stl to geometry', function (t) {
   const inputPath = path.resolve(samplesPath, 'stl/herringbone-gear-large.stl')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
-  const observed = deserializer.deserialize(inputFile, undefined, { output: 'csg', addMetaData: false })
+  const observed = deserializer.deserialize(inputFile, undefined, { output: 'geometry', addMetaData: false })
   t.is(observed.length, 1)
   const polygons = geometry.geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 17742)
@@ -88,7 +88,7 @@ test('instantiate complex binary stl to geometry', function (t) {
   const inputPath = path.resolve(samplesPath, 'stl/UM2CableChain_BedEnd.STL')
   const inputFile = fs.readFileSync(inputPath)
 
-  const observed = deserializer.deserialize(inputFile, undefined, { output: 'csg', addMetaData: false })
+  const observed = deserializer.deserialize(inputFile, undefined, { output: 'geometry', addMetaData: false })
   t.is(observed.length, 1)
   const polygons = geometry.geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 12744)
