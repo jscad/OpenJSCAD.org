@@ -17,7 +17,7 @@ const { BinaryReader } = require('@jscad/io-utils')
 * @param {object} options options (optional) anonymous object with:
 * @param {string} [options.version='0.0.0'] version number to add to the metadata
 * @param {boolean} [options.addMetadata=true] toggle injection of metadata (producer, date, source) at the start of the file
-* @param {string} [options.output='jscad'] {String} either jscad or csg to set desired output
+* @param {string} [options.output='jscad'] {String} either jscad or geometry to set desired output
 * @return {[geometries]|string} a list of geometries OR a jscad script (string)
 */
 const deserialize = (stl, filename, options) => {
@@ -257,7 +257,7 @@ const deserializeBinarySTL = (stl, filename, version, elementFormatter) => {
   }
 
   if (err) {
-    console.log(`WARNING: import errors: ${err} (some triangles might be misaligned or missing)`)
+    console.warn(`WARNING: import errors: ${err} (some triangles might be misaligned or missing)`)
     // FIXME: this used to be added to the output script, which makes more sense
   }
 
