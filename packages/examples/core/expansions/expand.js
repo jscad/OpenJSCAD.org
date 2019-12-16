@@ -5,9 +5,7 @@
 */
 
 const { geom2, geom3, line2, path2 } = require('@jscad/modeling').geometry
-const { cuboid, cylinder } = require('@jscad/modeling').primitives
-const { translate, scale } = require('@jscad/modeling').transforms
-const { union, difference } = require('@jscad/modeling').booleans
+const { cuboid } = require('@jscad/modeling').primitives
 const { expand } = require('@jscad/modeling').expansions
 const { color } = require('@jscad/modeling').color
 
@@ -57,7 +55,6 @@ const main = () => {
     geom3Example,
     expandedGeom3,
     contractedGeom3
-
   ]
   /*
   // old example
