@@ -33,11 +33,12 @@ const serialize = (options, ...objects) => {
   objects = utils.flatten(objects)
 
   // convert only 3D geometries
-  objects = objects.filter((object) => geometry.geom3.isA(object))
+  let objects3d = objects.filter((object) => geometry.geom3.isA(object))
 
-  if (objects.length === 0) throw new Error('only 3D geometries can be serialized to STL')
+  if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to STL')
+  if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to STL')
 
-  return options.binary ? serializeBinary(objects, options) : serializeText(objects, options)
+  return options.binary ? serializeBinary(objects3d, options) : serializeText(objects3d, options)
 }
 
 module.exports = {
