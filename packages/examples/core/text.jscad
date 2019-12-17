@@ -15,10 +15,10 @@ function getParameterDefinitions () {
 function main (param) {
   var o = [];
 
-  var l = vector_text(0, 0, param.s); // get line segments [ [ [x1,y1], [x2,y2] ...], [ ]... ]
+  var l = vectorText(0, 0, param.s); // get line segments [ [ [x1,y1], [x2,y2] ...], [ ]... ]
 
   l.forEach(function (s) { // process the line segments
-    o.push(rectangular_extrude(s, {w: 2, h: 2}));
+    o.push(extrudeRectangular(s, {w: 2, h: 2}));
   });
 
   if (param.c.length) {
