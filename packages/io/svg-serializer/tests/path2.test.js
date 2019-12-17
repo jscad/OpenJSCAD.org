@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { color, geometry, primitives } = require('@jscad/csg')
+const { color, geometry, primitives } = require('@jscad/modeling')
 
 const serializer = require('../index.js')
 

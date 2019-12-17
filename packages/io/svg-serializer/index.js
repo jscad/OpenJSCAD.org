@@ -16,7 +16,7 @@ Notes:
      SVG GROUP containing a SVG PATH for each path
 */
 
-const { color, geometry, math, measurements, utils } = require('@jscad/csg')
+const { color, geometry, math, measurements, utils } = require('@jscad/modeling')
 
 const stringify = require('onml/lib/stringify')
 
