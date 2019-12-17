@@ -1,13 +1,13 @@
 ## @jscad/stl-deserializer
 
-> Deserializer of STL data to CSG geometries
+> Deserializer of STL data to JSCAD scripts or geometries
 
 [![npm version](https://badge.fury.io/js/%40jscad%2Fstl-deserializer.svg)](https://badge.fury.io/js/%40jscad%2Fstl-deserializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/stl-deserializer)
 
 ## Overview
 
-This deserializer converts raw STL formatted data (files) to JSCAD scripts or CSG geometries.
+This deserializer converts raw STL formatted data (files) to JSCAD scripts or geometries.
 
 ## Table of Contents
 
@@ -28,7 +28,7 @@ npm install @jscad/stl-deserializer
 const stlDeserializer = require('@jscad/stl-deserializer')
 
 const rawData = fs.readFileSync('PATH/TO/file.stl')
-const geometry = stlDeserializer.deserialize(rawData, 'file.stl', {output: 'csg'})
+const geometry = stlDeserializer.deserialize(rawData, 'file.stl', {output: 'geometry'})
 
 ```
 
