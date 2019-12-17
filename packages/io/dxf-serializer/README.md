@@ -1,13 +1,13 @@
 ## @jscad/dxf-serializer
 
-> Serializer of CSG geometries to DXF entities
+> Serializer of JSCAD geometries to DXF entities
 
 [![npm version](https://badge.fury.io/js/%40jscad%2Fdxf-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fdxf-serializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/dxf-serializer)
 
 ## Overview
 
-This serializer outputs a 'blobable' array of data from one or more CSG geometries. Currently, only TEXT output is supported.
+This serializer outputs a 'blobable' array of data from one or more JSCAD geometries. Currently, only DXF TEXT output is supported.
 The array of data can either be used to create a Blob (`new Blob(blobable)`), or converted to a Node.js buffer.
 
 The serialization of the following geometries are possible.
