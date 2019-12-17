@@ -54,11 +54,8 @@ const deserialize = (stl, filename, options) => {
   return result
 
   /*
-  if (err) src += '// WARNING: import errors: ' + err + ' (some triangles might be misaligned or missing)\n'
-  src += '// objects: 1\n// object #1: triangles: ' + totalTriangles + '\n\n'
-  src += 'function main() { return '
-  src += vt2jscad(vertices, triangles, normals, colors)
-  src += '; }' */
+  TODO if (err) src += '// WARNING: import errors: ' + err + ' (some triangles might be misaligned or missing)\n'
+  */
 }
 
 const bufferToBinaryString = (buffer) => {
@@ -110,11 +107,14 @@ const formatAsJscad = (data, addMetaData, version, filename) => {
   //
   `
   }
+  code += `const {primitives} = require('@jscad/modeling')\n`
   code += data.join('\n')
   code += `
 const main = () => {
  return [${data.map((d, i) => `solid${i + 1}()`)}]
 }
+
+module.exports = {main}
 `
   return code
 }

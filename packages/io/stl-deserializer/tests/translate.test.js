@@ -20,7 +20,8 @@ test('translate simple ascii stl to jscad code', function (t) {
   const inputPath = path.resolve(samplesPath, 'stl/testcube_ascii.stl')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
-  const expected = `
+  const expected = `const {primitives} = require('@jscad/modeling')
+
 //
 // solid 1 : 36 points, 12 faces, 0 colors
 //
@@ -84,6 +85,8 @@ const solid1 = () => {
 const main = () => {
  return [solid1()]
 }
+
+module.exports = {main}
 `
 
   const observed = deserializer.deserialize(inputFile, undefined, { output: 'jscad', addMetaData: false })
@@ -94,7 +97,8 @@ test('translate simple binary stl to jscad code', function (t) {
   const inputPath = path.resolve(samplesPath, 'stl/testcube_10mm.stl')
   const inputFile = fs.readFileSync(inputPath)
 
-  const expected = `
+  const expected = `const {primitives} = require('@jscad/modeling')
+
 //
 // solid 1 : 36 points, 12 faces, 0 colors
 //
@@ -158,6 +162,8 @@ const solid1 = () => {
 const main = () => {
  return [solid1()]
 }
+
+module.exports = {main}
 `
 
   const observed = deserializer.deserialize(inputFile, undefined, { output: 'jscad', addMetaData: false })
