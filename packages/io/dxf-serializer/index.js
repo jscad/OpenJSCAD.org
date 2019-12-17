@@ -21,7 +21,7 @@ TBD
 2) add color conversion
 */
 
-const { geometry, utils } = require('@jscad/csg')
+const { geometry, utils } = require('@jscad/modeling')
 
 const { ensureManifoldness } = require('@jscad/io-utils')
 

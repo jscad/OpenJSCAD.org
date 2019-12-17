@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { geometry, primitives } = require('@jscad/csg')
+const { geometry, primitives } = require('@jscad/modeling')
 
 const { serialize } = require('../index.js')
 const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('../autocad_AC2017')
@@ -78,17 +78,17 @@ AcDbPolyline
   20
 5
   10
-5.943009745777588
+5.943009853363037
   20
-5.33276511140516
+5.332765102386475
   10
-5.778534761263023
+5.778534889221191
   20
-5.627601486219662
+5.627601623535156
   10
-5.525321988817728
+5.525321960449219
   20
-5.850903524534119
+5.850903511047363
   0
 ENDSEC
 ${dxfObjects({})}

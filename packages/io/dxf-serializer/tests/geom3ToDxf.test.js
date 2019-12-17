@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { geometry, primitives } = require('@jscad/csg')
+const { geometry, primitives } = require('@jscad/modeling')
 
 const { serialize } = require('../index.js')
 const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('../autocad_AC2017')
