@@ -1,13 +1,13 @@
 ## @jscad/svg-deserializer
 
-> Deserializer of SVG data to CSG geometries
+> Deserializer of SVG data to JSCAD scripts or geometries
 
 [![npm version](https://badge.fury.io/js/%40jscad%2Fsvg-deserializer.svg)](https://badge.fury.io/js/%40jscad%2Fsvg-deserializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/svg-deserializer)
 
 ## Overview
 
-This deserializer converts raw SVG formatted data (files) to JSCAD scripts or CSG geometries.
+This deserializer converts raw SVG formatted data (files) to JSCAD scripts or geometries.
 
 ## Table of Contents
 
@@ -28,7 +28,7 @@ npm install @jscad/svg-deserializer
 const svgDeserializer = require('@jscad/svg-deserializer').deserialize
 
 const rawData = fs.readFileSync('PATH/TO/file.svg')
-const geometry = svgDeserializer.deserialize(rawData, 'file.svg', {output: 'csg'})
+const geometry = svgDeserializer.deserialize(rawData, 'file.svg', {output: 'geometry'})
 
 ```
 
