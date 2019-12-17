@@ -29,7 +29,8 @@ const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('./
 
 const mimeType = 'application/dxf'
 
-/** Serialize the give objects to AutoCad DXF format.
+/**
+ * Serialize the give objects to AutoCad DXF format.
  * @param {Object} options - options for serialization, REQUIRED
  * @param {Object|Array} objects - objects to serialize as DXF
  * @returns {Array} serialized contents, DXF format
@@ -39,10 +40,11 @@ const serialize = (options, ...objects) => {
     cagTo: 'lwpolyline', // or polyline
     csgTo: '3dface', // or polyline
     pathTo: 'lwpolyline',
-    entityId: 0,
     statusCallback: null
   }
   options = Object.assign({}, defaults, options)
+
+  options.entityId = 0 // sequence id for entities created
 
   if (objects.length === 0) {
     throw new Error('no arguments supplied to serialize function !')
