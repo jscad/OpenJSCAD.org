@@ -1,4 +1,4 @@
-const { geometry, primitives } = require('@jscad/csg')
+const { geometry, primitives } = require('@jscad/modeling')
 
 const { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect, groupValue } = require('./helpers')
 const { cssPxUnit } = require('./constants')

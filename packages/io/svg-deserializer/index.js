@@ -12,7 +12,9 @@ All code released under MIT license
 
 const sax = require('sax')
 
-const { transforms, utils } = require('@jscad/csg')
+const { transforms } = require('@jscad/modeling')
+
+const toArray = require('./toArray')
 
 const { cagLengthX, cagLengthY } = require('./helpers')
 const { svgSvg, svgRect, svgCircle, svgGroup, svgLine, svgPath, svgEllipse, svgPolygon, svgPolyline, svgUse } = require('./svgElementHelpers')
@@ -20,16 +22,16 @@ const shapesMapCsg = require('./shapesMapCsg')
 const shapesMapJscad = require('./shapesMapJscad')
 
 /**
-* Parse the given svg data and return either a JSCAD script or a set of geometries
-* @param {string} input svg data
-* @param {string} filename (optional) original filename of AMF source
-* @param {object} options options (optional) anonymous object with:
-* @param {string} [options.version='0.0.0'] version number to add to the metadata
-* @param {boolean} [options.addMetadata=true] toggle injection of metadata (producer, date, source) at the start of the file
-* @param {string} [options.output='script'] {String} either 'script' or 'object' to set desired output
-* @param {float} [options.pxPmm] custom pixels per mm unit
-* @return {string|[geometry]} either a string (jscad script) or a set of geometries
-*/
+ * Parse the given svg data and return either a JSCAD script or a set of geometries
+ * @param {string} input svg data
+ * @param {string} filename (optional) original filename of AMF source
+ * @param {object} options options (optional) anonymous object with:
+ * @param {string} [options.version='0.0.0'] version number to add to the metadata
+ * @param {boolean} [options.addMetadata=true] toggle injection of metadata (producer, date, source) at the start of the file
+ * @param {string} [options.output='script'] {String} either 'script' or 'geometry' to set desired output
+ * @param {float} [options.pxPmm] custom pixels per mm unit
+ * @return {string|[geometry]} either a string (jscad script) or a set of geometries
+ */
 const deserialize = (input, filename, options) => {
   const defaults = {
     addMetaData: true,
@@ -114,7 +116,7 @@ const translate = (src, filename, options) => {
   return code
 }
 
-// FIXE: should these be kept here ? any risk of side effects ?
+// FIXME: should these be kept here ? any risk of side effects ?
 let svgUnitsX
 let svgUnitsY
 let svgUnitsV
@@ -154,7 +156,7 @@ const objectify = (options, group) => {
   // apply base level attributes to all shapes
   for (i = 0; i < group.objects.length; i++) {
     const obj = group.objects[i]
-    let shapes = utils.toArray(shapesMapCsg(obj, objectify, params))
+    let shapes = toArray(shapesMapCsg(obj, objectify, params))
     shapes = shapes.map((shape) => {
       if ('transforms' in obj) {
         // NOTE: SVG specifications require that transforms are applied in the order given.
