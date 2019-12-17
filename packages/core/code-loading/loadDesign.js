@@ -12,7 +12,7 @@ const makeWebRequire = require('./webRequire')
 /** load a jscad script, injecting the basic dependencies if necessary
  * @param source the source code
  * @param {String} mainPath
- * @param {String} apiMainPath='../../../../core/tmp/csg.js : relative path or  '@jscad/csg'
+ * @param {String} apiMainPath='../../../../core/tmp/modeling.js : relative path or  '@jscad/modeling'
  * @param {Array} filesAndFolders array of files and folders to use
  * @param {Object} parameterValuesOverride, the values to use to override the defaults for the current design
  */
