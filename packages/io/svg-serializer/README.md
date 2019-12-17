@@ -1,13 +1,13 @@
 ## @jscad/svg-serializer
 
-> Serializer of CSG geometries to SVG commands
+> Serializer of JSCAD geometries to SVG commands
 
 [![npm version](https://badge.fury.io/js/%40jscad%2Fsvg-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fsvg-serializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/svg-serializer)
 
 ## Overview
 
-This serializer outputs a 'blobable' array of data from one or more CSG geometries.
+This serializer outputs a 'blobable' array of data from one or more JSCAD geometries.
 The array of data can either be used to create a Blob (`new Blob(blobable)`), or converted to a Node.js buffer.
 
 The serialization of the following geometries are possible.
@@ -32,9 +32,9 @@ npm install @jscad/svg-serializer
 ```javascript
 const svgSerializer = require('@jscad/svg-serializer')
 
-const rawData = svgSerializer.serialize({unit: 'cm'}, CAGObject)
+const rawData = svgSerializer.serialize({unit: 'cm'}, object)
 
-//in browser (with browserify etc)
+// within a browser (with browserify etc)
 const blob = new Blob(rawData)
 
 ```
