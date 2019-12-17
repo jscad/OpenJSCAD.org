@@ -18,7 +18,7 @@ const toArray = require('./toArray')
 
 const { cagLengthX, cagLengthY } = require('./helpers')
 const { svgSvg, svgRect, svgCircle, svgGroup, svgLine, svgPath, svgEllipse, svgPolygon, svgPolyline, svgUse } = require('./svgElementHelpers')
-const shapesMapCsg = require('./shapesMapCsg')
+const shapesMapGeometry = require('./shapesMapGeometry')
 const shapesMapJscad = require('./shapesMapJscad')
 
 /**
@@ -156,7 +156,7 @@ const objectify = (options, group) => {
   // apply base level attributes to all shapes
   for (i = 0; i < group.objects.length; i++) {
     const obj = group.objects[i]
-    let shapes = toArray(shapesMapCsg(obj, objectify, params))
+    let shapes = toArray(shapesMapGeometry(obj, objectify, params))
     shapes = shapes.map((shape) => {
       if ('transforms' in obj) {
         // NOTE: SVG specifications require that transforms are applied in the order given.

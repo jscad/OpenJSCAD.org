@@ -3,7 +3,7 @@ const { geometry, primitives } = require('@jscad/modeling')
 const { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect, groupValue } = require('./helpers')
 const { cssPxUnit } = require('./constants')
 
-const shapesMapCsg = (obj, objectify, params) => {
+const shapesMapGeometry = (obj, objectify, params) => {
   const { svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, target } = params
 
   const types = {
@@ -168,7 +168,7 @@ const shapesMapCsg = (obj, objectify, params) => {
   return types[obj.type](obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups)
 }
 
-module.exports = shapesMapCsg
+module.exports = shapesMapGeometry
 
 const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) => {
   let paths = {}
