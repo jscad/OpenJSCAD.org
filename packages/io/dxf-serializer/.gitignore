@@ -1,8 +1,0 @@
-node_modules
-objects
-coverage
-.DS_Store
-.nyc_output
-*.log
-*.swp
-package-lock.json
