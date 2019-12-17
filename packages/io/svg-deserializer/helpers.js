@@ -1,16 +1,16 @@
 const { inchMM, ptMM, pcMM, svgColors } = require('./constants')
 
 // Calculate the CAG length/size from the given SVG value (float)
-const svg2cagX = function (v, svgUnitsPmm) {
+const svg2cagX = (v, svgUnitsPmm) => {
   return (v / svgUnitsPmm[0])
 }
 
-const svg2cagY = function (v, svgUnitsPmm) {
+const svg2cagY = (v, svgUnitsPmm) => {
   return 0 - (v / svgUnitsPmm[1])
 }
 
 // Calculate the CAG length/size from the given CSS value (string)
-const cagLengthX = function (css, svgUnitsPmm, svgUnitsX) {
+const cagLengthX = (css, svgUnitsPmm, svgUnitsX) => {
   if (css.indexOf('%') < 0) {
     return css2cag(css, svgUnitsPmm[0])
   }
@@ -25,7 +25,7 @@ const cagLengthX = function (css, svgUnitsPmm, svgUnitsX) {
   return Math.round(v / -100000) * -100000
 }
 
-const cagLengthY = function (css, svgUnitsPmm, svgUnitsY) {
+const cagLengthY = (css, svgUnitsPmm, svgUnitsY) => {
   if (css.indexOf('%') < 0) {
     return css2cag(css, svgUnitsPmm[1])
   }
@@ -40,7 +40,7 @@ const cagLengthY = function (css, svgUnitsPmm, svgUnitsY) {
   return Math.round(v / -100000) * -100000
 }
 
-const cagLengthP = function (css, svgUnitsPmm, svgUnitsV) {
+const cagLengthP = (css, svgUnitsPmm, svgUnitsV) => {
   if (css.indexOf('%') < 0) {
     return css2cag(css, svgUnitsPmm[1])
   }
@@ -54,7 +54,7 @@ const cagLengthP = function (css, svgUnitsPmm, svgUnitsV) {
   return v
 }
 
-const css2cag = function (css, unit) {
+const css2cag = (css, unit) => {
   let v = parseFloat(css) // number part
   if (isNaN(v)) { return 0.0 }
   if (v === 0) return v
@@ -85,7 +85,7 @@ const css2cag = function (css, unit) {
 }
 
 // convert the SVG color specification to CAG RGB
-const cagColor = function (value) {
+const cagColor = (value) => {
   // let rgb = [0,0,0]; // default is black
   let rgb
   value = value.toLowerCase()
@@ -127,7 +127,7 @@ const cagColor = function (value) {
   return rgb
 }
 
-const cssStyle = function (element, name) {
+const cssStyle = (element, name) => {
   if ('STYLE' in element) {
     let list = element.STYLE + ';'
     let pat = name + '\\s*:\\s*(\\S+);'
@@ -144,7 +144,7 @@ const cssStyle = function (element, name) {
   return undefined
 }
 
-const reflect = function (x, y, px, py) {
+const reflect = (x, y, px, py) => {
   let ox = x - px
   let oy = y - py
   if (x === px && y === px) return [x, y]
@@ -154,7 +154,7 @@ const reflect = function (x, y, px, py) {
 }
 
 // Return the value for the given attribute from the group hiearchy
-const groupValue = function (svgGroups, name) {
+const groupValue = (svgGroups, name) => {
   let i = svgGroups.length
   while (i > 0) {
     const g = svgGroups[i - 1]
