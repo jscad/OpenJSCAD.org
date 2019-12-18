@@ -1,9 +1,6 @@
 const fs = require('fs')
 const path = require('path')
 const test = require('ava')
-const { CSG, CAG } = require('@jscad/csg')
-
-const { nearlyEqual } = require('../../test/helpers/nearlyEqual')
 
 const { deserialize } = require('../index')
 
