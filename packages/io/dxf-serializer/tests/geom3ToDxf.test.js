@@ -23,14 +23,14 @@ test('3D Geometry to DXF 3DFACE', t => {
 test('3D Geometry to DXF POLYLINE FACES', t => {
   const csg1 = geometry.geom3.create()
 
-  const obs1 = serialize({ csgTo: 'polyline' }, csg1)
+  const obs1 = serialize({ geom3To: 'polyline' }, csg1)
   const exp1 = [empty]
   t.deepEqual(obs1, exp1)
 
   const csg2 = primitives.cube()
   t.is(csg2.polygons.length, 6)
 
-  const obs2 = serialize({ csgTo: 'polyline' }, csg2)
+  const obs2 = serialize({ geom3To: 'polyline' }, csg2)
   const exp2 = [polyline1]
   t.deepEqual(obs2, exp2)
 })
