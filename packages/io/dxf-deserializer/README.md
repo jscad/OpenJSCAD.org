@@ -1,13 +1,13 @@
 ## @jscad/dxf-deserializer
 
-> Deserializer of DXF data to CSG geometries
+> Deserializer of DXF data to JSCAD scripts or geometries
 
 [![GitHub version](https://badge.fury.io/gh/jscad%40jscad%2Fdxf-deserializer.svg)](https://badge.fury.io/gh/jscad%40jscad%2Fdxf-deserializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/dxf-deserializer)
 
 ## Overview
 
-This deserializer converts raw DXF formatted data (files) to JSCAD scripts or CSG geometries.
+This deserializer converts raw DXF formatted data (files) to JSCAD scripts or geometries.
 When converting unknown DXF data, converting to JSCAD scripts will provide more information on the converted DXF entities.
 
 ### DXF Implementation Notes
@@ -16,20 +16,20 @@ The [DXF(tm) file structure](http://docs.autodesk.com/ACD/2014/ENU/files/GUID-73
 
 **NOTE: At this time, only ASCII DXF files are supported. BINARY DXF files are not supported.**
 
-This deserializer converts only what is supported by JSCAD libraries. Full document conversion is NOT supported, so don't even try. However, conversion of the following DXF entities are possible:
+This deserializer converts only what is supported by JSCAD libraries. Full document conversion is NOT supported, however conversion of the following DXF entities are possible:
 
-| DXF Entity      | CSG Geometry | Notes |
-| --------------- | ------------ | ------ |
-| 3DFACE          | to geom3     | |
-| ARC             | to path2     | |
-| CIRCLE          | to geom2     | Start and stop angles are ignored |
-| ELLIPSE         | to geom2     | Start and stop angles are ignored |
-| LINE            | to path2     | |
+| DXF Entity      | JSCAD Geometry | Notes |
+| --------------- | -------------  | ------ |
+| 3DFACE          | to geom3       | |
+| ARC             | to path2       | |
+| CIRCLE          | to geom2       | Start and stop angles are ignored |
+| ELLIPSE         | to geom2       | Start and stop angles are ignored |
+| LINE            | to path2       | |
 | LWPOLYLINE      | to path2 or geom2  | Conversion to geom2 if LWPOLYLINE is closed |
-| MESH            | to geom3     | |
+| MESH            | to geom3       | |
 | POLYLINE (line) | to path2 or geom2 | Conversion to geom2 if POLYLINE is closed |
-| POLYLINE (mesh) | to geom3     | |
-| POLYLINE (face) | to geom3     | |
+| POLYLINE (mesh) | to geom3       | |
+| POLYLINE (face) | to geom3       | |
 
 In addition, colors are converted using the AutoCad 2017 standard color index (256 colors).
 
