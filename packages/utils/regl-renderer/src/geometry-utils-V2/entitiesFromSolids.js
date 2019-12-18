@@ -22,6 +22,9 @@ const entitiesFromSolids = (params, solids) => {
     if ('sides' in solid) {
       type = '2d'
       geometry = cagToGeometries(solid, { color: meshColor })
+    } else if ('points' in solid) {
+      type = '2d'
+      geometry = cagToGeometries(solid, { color: meshColor })
     } else if ('polygons' in solid) {
       type = '3d'
       geometry = csgToGeometries(solid, {
@@ -42,7 +45,7 @@ const entitiesFromSolids = (params, solids) => {
 
     // transforms: for now not used, since all transformed are stored in the geometry
     // FIXME : for V2 we will be able to use the transfors provided by the solids directly
-    const matrix = mat4.identity([])
+    const matrix = mat4.copy(mat4.create(), solid.transforms) // mat4.identity([])
 
     const transforms = {
       matrix
