@@ -6,12 +6,8 @@ Copyright (c) 2017 Z3 Development https://github.com/z3dev
 All code released under MIT license
 
 */
-const { math } = require('@jscad/csg')
+const { geometry, math, primitives } = require('@jscad/modeling')
 const EPS = 1e-5 // FIXME
-
-const { geometry } = require('@jscad/csg')
-
-const { primitives } = require('@jscad/csg')
 
 const { findLayer, getColor, getColorNumber } = require('./helpers')
 

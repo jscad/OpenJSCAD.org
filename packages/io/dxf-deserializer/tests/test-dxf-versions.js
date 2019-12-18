@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const test = require('ava')
 
-const { geometry } = require('@jscad/csg')
+const { geometry } = require('@jscad/modeling')
 
 const { deserialize } = require('../index')
 
@@ -16,7 +16,7 @@ test('ASCII DXF R13 to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, 'aaa', { output: 'csg' })
+  let objs = deserialize(dxf, 'aaa', { output: 'geometry' })
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 16)
@@ -30,7 +30,7 @@ test('ASCII DXF R14 to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, 'aaa', { output: 'csg' })
+  let objs = deserialize(dxf, 'aaa', { output: 'geometry' })
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 0)
@@ -41,7 +41,7 @@ test('ASCII DXF ANSI to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, 'aaa', { output: 'csg' })
+  let objs = deserialize(dxf, 'aaa', { output: 'geometry' })
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 1)
@@ -54,7 +54,7 @@ test('ASCII DXF ISO to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, 'aaa', { output: 'csg' })
+  let objs = deserialize(dxf, 'aaa', { output: 'geometry' })
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 14)

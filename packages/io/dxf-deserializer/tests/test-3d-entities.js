@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const test = require('ava')
 
-const { geometry } = require('@jscad/csg')
+const { geometry } = require('@jscad/modeling')
 
 const { deserialize } = require('../index')
 
@@ -16,7 +16,7 @@ test('ASCII DXF from Bourke 3D Entities to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, 'aaa', { output: 'csg' })
+  let objs = deserialize(dxf, 'aaa', { output: 'geometry' })
 
   // expect one layer, containing 2 objects (geom3 and line3)
   t.true(Array.isArray(objs))
@@ -31,7 +31,7 @@ test('ASCII DXF from JSCAD 3D Shapes to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, 'pyramid', { output: 'csg' })
+  let objs = deserialize(dxf, 'pyramid', { output: 'geometry' })
 
   // expect one layer, containing one solid (geom3)
   t.true(Array.isArray(objs))
@@ -44,7 +44,7 @@ test('ASCII DXF from JSCAD 3D Shapes to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   dxf = fs.readFileSync(dxfPath, 'UTF8')
-  objs = deserialize(dxf, 'cube', { output: 'csg' })
+  objs = deserialize(dxf, 'cube', { output: 'geometry' })
 
   // expect one layer, containing one solid (geom3)
   t.true(Array.isArray(objs))
@@ -57,7 +57,7 @@ test('ASCII DXF from JSCAD 3D Shapes to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   dxf = fs.readFileSync(dxfPath, 'UTF8')
-  objs = deserialize(dxf, 'sphere', { output: 'csg' })
+  objs = deserialize(dxf, 'sphere', { output: 'geometry' })
 
   // expect one layer, containing one solid (geom3)
   t.true(Array.isArray(objs))
@@ -70,7 +70,7 @@ test('ASCII DXF from JSCAD 3D Shapes to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   dxf = fs.readFileSync(dxfPath, 'UTF8')
-  objs = deserialize(dxf, 'cylinder', { output: 'csg' })
+  objs = deserialize(dxf, 'cylinder', { output: 'geometry' })
 
   // expect one layer, containing one solid (geom3)
   t.true(Array.isArray(objs))
@@ -84,7 +84,7 @@ test('ASCII DXF from Autocad2017 3D Lines to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, '3Dlines', { output: 'csg' })
+  let objs = deserialize(dxf, '3Dlines', { output: 'geometry' })
 
   // expect one layer, containing three objects (Path2D,Path2D,Line3D)
   t.true(Array.isArray(objs))
@@ -103,7 +103,7 @@ test('ASCII DXF from Autocad2017 3D Boxes to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, '3Dboxes', { output: 'csg' })
+  let objs = deserialize(dxf, '3Dboxes', { output: 'geometry' })
 
   // expect nothing as 3DSOLID entities cannot be converted
   t.true(Array.isArray(objs))
@@ -115,7 +115,7 @@ test('ASCII DXF from Autocad2017 3D Drawing Shapes to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, '3Ddraw', { output: 'csg' })
+  let objs = deserialize(dxf, '3Ddraw', { output: 'geometry' })
 
   // expect nothing as 3DSOLID entities cannot be converted
   t.true(Array.isArray(objs))
@@ -127,7 +127,7 @@ test('ASCII DXF from exdxf 3D Mesh to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, '3Dmesh01', { output: 'csg' })
+  let objs = deserialize(dxf, '3Dmesh01', { output: 'geometry' })
 
   // expect 2D and 3D objects
   t.true(Array.isArray(objs))
@@ -143,7 +143,7 @@ test('ASCII DXF from Autocad2017 3D Mesh to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, '3Dmesh01', { output: 'csg' })
+  let objs = deserialize(dxf, '3Dmesh01', { output: 'geometry' })
 
   // expect 3D objects
   t.true(Array.isArray(objs))

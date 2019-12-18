@@ -572,7 +572,7 @@ const translate = (src, filename, options) => {
  * @param {string} filename (optional) original filename of DXF data stream if any
  * @param {object} options (optional) anonymous object with:
  * @param {string} [options.version='0.0.1'] version number to add to the metadata
- * @param {string} [options.output='jscad'] either jscad or csg to set desired output
+ * @param {string} [options.output='jscad'] either jscad or geometry to set desired output
  * @param {boolean} [options.strict=true] obey strict DXF specifications
  * @param {array} [options.colorindex=[]] list of colors (256) for use during rendering
  * @return {string|[objects]} a string (jscad script) or array of objects
