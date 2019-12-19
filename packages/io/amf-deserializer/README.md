@@ -1,13 +1,13 @@
 ## @jscad/amf-deserializer
 
-> Deserializer of AMF data to CSG geometries
+> Deserializer of AMF data to JSCAD geometries
 
 [![npm version](https://badge.fury.io/js/%40jscad%2Famf-deserializer.svg)](https://badge.fury.io/js/%40jscad%2Famf-deserializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/amf-deserializer)
 
 ## Overview
 
-This deserializer converts raw AMF formatted data (files) to JSCAD scripts or CSG geometries.
+This deserializer converts raw AMF formatted data (files) to JSCAD scripts or geometries.
 
 ## Table of Contents
 
@@ -28,7 +28,7 @@ npm install @jscad/amf-deserializer
 const amfDeSerializer = require('@jscad/amf-deserializer')
 
 const rawData = fs.readFileSync('PATH/TO/file.amf')
-const csgData = amfDeSerializer.deserialize(rawData, 'file.amf', {output: 'jscad'})
+const jscadScript = amfDeSerializer.deserialize(rawData, 'file.amf', {output: 'jscad'})
 ```
 
 ## Contribute
