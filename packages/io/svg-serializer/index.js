@@ -37,10 +37,16 @@ const serialize = (options, ...objects) => {
 
   objects = utils.flatten(objects)
 
+  // convert only 2D geometries
+  let objects2d = objects.filter((object) => geometry.geom2.isA(object) || geometry.path2.isA(object))
+
+  if (objects2d.length === 0) throw new Error('only 2D geometries can be serialized to SVG')
+  if (objects.length !== objects2d.length) console.warn('some objects could not be serialized to SVG')
+
   options.statusCallback && options.statusCallback({progress: 0})
 
   // get the lower and upper bounds of ALL convertable objects
-  var bounds = getBounds(objects)
+  var bounds = getBounds(objects2d)
 
   var width = 0
   var height = 0
@@ -61,7 +67,7 @@ const serialize = (options, ...objects) => {
     }
   ]
   if (bounds) {
-    body = body.concat(convertObjects(objects, bounds, options))
+    body = body.concat(convertObjects(objects2d, bounds, options))
   }
 
   var svg = `<?xml version="1.0" encoding="UTF-8"?>
