@@ -14,7 +14,7 @@ test.beforeEach(t => {
 
 test('webRequire: should allow requiring single (main) files', t => {
   const mainPath = 'http://localhost:8081/examples/logo.js'
-  const apiMainPath = '@jscad/csg/api'
+  const apiMainPath = '@jscad/modeling'
   let filesAndFolders = [
     {
       ext: 'js',
@@ -35,7 +35,7 @@ test('webRequire: should allow requiring single (main) files', t => {
 
 test('webRequire: should support requiring relative .js files with extensions', t => {
   const mainPath = '/examples/logo.js'
-  const apiMainPath = '@jscad/csg/api'
+  const apiMainPath = '@jscad/modeling'
   let filesAndFolders = [
     {
       fullPath: '/examples/logo.js',
@@ -70,7 +70,7 @@ test('webRequire: should support requiring relative .js files with extensions', 
 
 test('webRequire: should support requiring relative .js files with no extensions', t => {
   const mainPath = '/examples/logo.js'
-  const apiMainPath = '@jscad/csg/api'
+  const apiMainPath = '@jscad/modeling'
   let filesAndFolders = [
     {
       fullPath: '/examples/logo.js',
@@ -105,7 +105,7 @@ test('webRequire: should support requiring relative .js files with no extensions
 
 test('webRequire: should support requiring relative .json files with extensions', t => {
   const mainPath = '/examples/logo.js'
-  const apiMainPath = '@jscad/csg/api'
+  const apiMainPath = '@jscad/modeling'
   let filesAndFolders = [
     {
       fullPath: '/examples/logo.js',
@@ -142,7 +142,7 @@ test('webRequire: should support requiring relative .json files with extensions'
 
 test('webRequire: should accept an optional fakeFs instance', t => {
   const mainPath = 'http://localhost:8081/examples/logo.js'
-  const apiMainPath = '@jscad/csg/api'
+  const apiMainPath = '@jscad/modeling'
   let filesAndFolders = [
     {
       ext: 'js',
@@ -172,7 +172,7 @@ test('webRequire: should allow using require.extensions like the native node req
   }
 
   const mainPath = 'http://localhost:8081/examples/logo.jscad'
-  const apiMainPath = '@jscad/csg/api'
+  const apiMainPath = '@jscad/modeling'
   let filesAndFolders = [
     {
       ext: 'jscad',
@@ -198,13 +198,13 @@ test('webRequire: should allow using require.extensions like the native node req
     const deserializer = require('@jscad/io').stlDeSerializer
     _require.extensions['.stl'] = (module, filename) => {
       const content = fs.readFileSync(filename, 'utf8')
-      const parsed = deserializer.deserialize(content, filename, { output: 'csg' })
+      const parsed = deserializer.deserialize(content, filename, { output: 'geometry' })
       module.exports = parsed
     }
   }
 
   const mainPath = '/examples/logo.js'
-  const apiMainPath = '@jscad/csg/api'
+  const apiMainPath = '@jscad/modeling'
   let filesAndFolders = [
     {
       ext: 'js',
