@@ -32,7 +32,7 @@ const instantiate = require('./deserialize')
  * @param {Boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script
  * @return {[geometry]/String} either an array of geometry (object) or a string (jscad)
  */
-const deserialize = function (input, filename, options) {
+const deserialize = (input, filename, options) => {
   const defaults = {
     output: 'jscad',
     version: '0.0.0',

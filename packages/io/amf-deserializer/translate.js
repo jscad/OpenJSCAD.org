@@ -1,7 +1,7 @@
 const createObject = require('./objectBuilder')
 const parse = require('./parse')
 
-const translate = function (src, filename, options) {
+const translate = (src, filename, options) => {
   const defaults = {
     pxPmm: require('./constants').pxPmm
   }
