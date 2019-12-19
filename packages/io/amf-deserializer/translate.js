@@ -51,7 +51,7 @@ const codify = (amf, data) => {
   const createDefinition = (object, index) => {
     switch (object.type) {
       case 'object':
-        code += createObject(object, index, data, { csg: false, scale: amf.scale })
+        code += createObject(object, index, data, { instantiate: false, scale: amf.scale })
         break
       case 'metadata':
         break

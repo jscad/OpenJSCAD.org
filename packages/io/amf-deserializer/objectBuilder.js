@@ -114,7 +114,7 @@ const createObject = (obj, index, data, options) => {
   }
 
   // const output =
-  if (options.csg === true) {
+  if (options.instantiate === true) {
     const scale = options.amf.scale
     const vertex = scale !== 1.0 ? ([x, y, z]) => math.vec3.fromValues(x * scale, y * scale, z * scale)
       : (v) => math.vec3.fromArray(v)

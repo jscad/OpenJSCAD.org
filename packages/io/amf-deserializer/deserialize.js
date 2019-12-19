@@ -22,7 +22,7 @@ const instantiate = function (src, filename, options) {
 
 const objectify = (amf, data) => {
   let objects = amf.objects.filter((o) => o.type === 'object')
-  return objects.map((object, index) => createObject(object, index, data, { amf, csg: true }))
+  return objects.map((object, index) => createObject(object, index, data, { amf, instantiate: true }))
 }
 
 module.exports = instantiate
