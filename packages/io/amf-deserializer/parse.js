@@ -1,34 +1,19 @@
 const sax = require('sax')
-const {amfMesh,
-amfVertices,
-amfCoordinates,
-amfX,
-amfY,
-amfZ,
-amfNormal,
-amfVolume,
-amfTriangle,
-amfV1,
-amfV2,
-amfV3,
-amfVertex,
-amfEdge,
-amfMetadata,
-amfMaterial,
-amfColor,
-amfR,
-amfG,
-amfB,
-amfA,
-amfMap,
-amfU1,
-amfU2,
-amfU3} = require('./helpers')
-const {inchMM} = require('./constants')
+
+const {
+  amfMesh, amfVertices, amfCoordinates,
+  amfX, amfY, amfZ, amfNormal,
+  amfVolume, amfTriangle, amfV1,
+  amfV2, amfV3, amfVertex, amfEdge,
+  amfMetadata, amfMaterial, amfColor,
+  amfR, amfG, amfB, amfA, amfMap,
+  amfU1, amfU2, amfU3
+} = require('./helpers')
+const { inchMM } = require('./constants')
 
 let amfLast = null // last object found
 let amfDefinition = 0 // definitions beinging created
-// 0-AMF,1-object,2-material,3-texture,4-constellation,5-metadata
+// 0-AMF, 1-object, 2-material, 3-texture, 4-constellation, 5-metadata
 // high level elements / definitions
 let amfObjects = [] // list of objects
 let amfMaterials = [] // list of materials
@@ -37,9 +22,9 @@ let amfConstels = [] // list of constellations
 // let amfMetadata = [] // list of metadata
 let amfObj = null // amf in object form
 
-function amfAmf (element) {
-  // default SVG with no viewport
-  let obj = {type: 'amf', unit: 'mm', scale: 1.0}
+const amfAmf = (element) => {
+  // default AMF with no objects
+  let obj = { type: 'amf', unit: 'mm', scale: 1.0 }
 
   if ('UNIT' in element) { obj.unit = element.UNIT.toLowerCase() }
   // set scaling
@@ -66,7 +51,7 @@ function amfAmf (element) {
 }
 
 const amfObject = function (element) {
-  let obj = {type: 'object', id: 'JSCAD' + (amfObjects.length)} // default ID
+  let obj = { type: 'object', id: `JSCAD${amfObjects.length}` } // default ID
 
   if ('ID' in element) { obj.id = element.ID }
 
@@ -74,12 +59,12 @@ const amfObject = function (element) {
   return obj
 }
 
-function createAmfParser (src, pxPmm) {
+const createAmfParser = (src, pxPmm) => {
   // create a parser for the XML
-  const parser = sax.parser(false, {trim: true, lowercase: false, position: true})
+  const parser = sax.parser(false, { trim: true, lowercase: false, position: true })
 
   parser.onerror = function (e) {
-    console.log('error: line ' + e.line + ', column ' + e.column + ', bad character [' + e.c + ']')
+    console.log(`error: line ${e.line}, column ${e.column}, bad character [${e.c}]`)
   }
   parser.onopentag = function (node) {
     const objMap = {
@@ -142,12 +127,12 @@ function createAmfParser (src, pxPmm) {
       UTEX3: amfU3,
       WTEX3: amfU3,
       COMPOSITE: () => undefined, // ignored by design
-      undefined: () => console.log('Warning: Unsupported AMF element: ' + node.name)
+      undefined: () => console.log(`warning: unsupported AMF element: ${node.name}`)
     }
 
-    let obj = objMap[node.name] ? objMap[node.name](node.attributes, {amfObjects}) : null
+    let obj = objMap[node.name] ? objMap[node.name](node.attributes, { amfObjects }) : null
 
-    if (obj !== null) {
+    if (obj) {
       switch (amfDefinition) {
         case 0: // definition of AMF
           if ('objects' in obj) {
@@ -201,7 +186,7 @@ function createAmfParser (src, pxPmm) {
         case 5: // definition of METADATA
           break
         default:
-          console.log('ERROR: invalid AMF definition')
+          console.log('warning: invalid AMF definition')
           break
       }
       amfLast = obj // retain this object in order to add values
@@ -298,7 +283,7 @@ function createAmfParser (src, pxPmm) {
 
 const parse = (src, pxPmm) => {
   createAmfParser(src, pxPmm)
-  return {amfObj, amfMaterials, amfTextures, amfConstels}
+  return { amfObj, amfMaterials, amfTextures, amfConstels }
 }
 
 module.exports = parse
