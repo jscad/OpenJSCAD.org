@@ -1,13 +1,13 @@
 ## @jscad/amf-serializer
 
-> Serializer of CSG geometries to AMF shapes
+> Serializer of JSCAD geometries to AMF shapes
 
 [![npm version](https://badge.fury.io/js/%40jscad%2Famf-serializer.svg)](https://badge.fury.io/js/%40jscad%2Famf-serializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/amf-serializer)
 
 ## Overview
 
-This serializer outputs a 'blobable' array of data from one or more CSG geometries. Only XML output is supported.
+This serializer outputs a 'blobable' array of data from one or more JSCAD geometries. Only XML output is supported.
 The array of data can either be used to create a Blob (`new Blob(blobable)`), or converted to a Node.js buffer.
 
 The serialization of the following geometries are possible.
