@@ -23,7 +23,7 @@ const stringify = require('onml/lib/stringify')
 
 const { ensureManifoldness } = require('@jscad/io-utils')
 
-const { geometry, utils } = require('@jscad/csg')
+const { geometry, utils } = require('@jscad/modeling')
 
 const mimeType = 'application/amf+xml'
 
