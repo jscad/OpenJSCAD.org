@@ -1,4 +1,4 @@
-const { color, math, geometry } = require('@jscad/csg')
+const { color, math, geometry } = require('@jscad/modeling')
 
 let lastmaterial
 
