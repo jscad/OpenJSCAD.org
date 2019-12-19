@@ -4,7 +4,7 @@
 Copyright (c) 2016 Z3 Development https://github.com/z3dev
               2017 Mark 'kaosat-dev' Moissette
 
-* The upgrades (direct CSG output from this deserializer) and refactoring
+* The upgrades (direct geometry instantiation from this deserializer) and refactoring
 have been very kindly sponsored by [Copenhagen Fabrication / Stykka](https://www.stykka.com/)***
 
 All code released under MIT license
@@ -160,7 +160,7 @@ const objectify = (options, group) => {
     shapes = shapes.map((shape) => {
       if ('transforms' in obj) {
         // NOTE: SVG specifications require that transforms are applied in the order given.
-        // But these are applied in the order as required by the CSG library
+        // But these are applied in the order as required by the JSCAD library
         let tr
         let ts
         let tt
@@ -242,7 +242,7 @@ const codify = (options, group) => {
 
     if ('transforms' in obj) {
       // NOTE: SVG specifications require that transforms are applied in the order given.
-      //       But these are applied in the order as required by CSG/CAG
+      //       But these are applied in the order as required by JSCAD
       let tr
       let ts
       let tt
