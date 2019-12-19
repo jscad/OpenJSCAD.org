@@ -27,7 +27,7 @@ const shapesMap = function (obj, codify, params) {
         } else {
           code = `${indent}${on} = primitives.roundedRectangle({center: [${x}, ${y}], size: [${w / 2}, ${h / 2}], roundRadius: ${rx}})\n`
         }
-        if (target === '1D') {
+        if (target === 'path') {
           code += `${indent}${on} = geometry.path2.fromPoints({closed: true}, geometry.geom2.toPoints(${on}))\n`
         }
       }
@@ -41,7 +41,7 @@ const shapesMap = function (obj, codify, params) {
       let code
       if (r > 0) {
         code = `${indent}${on} = primitives.circle({center: [${x}, ${y}], radius: ${r}})\n`
-        if (target === '1D') {
+        if (target === 'path') {
           code += `${indent}${on} = geometry.path2.fromPoints({closed: true}, geometry.geom2.toPoints(${on}))\n`
         }
       }
@@ -56,7 +56,7 @@ const shapesMap = function (obj, codify, params) {
       let code
       if (rx > 0 && ry > 0) {
         code = `${indent}${on} = primitives.ellipse({center: [${cx}, ${cy}], radius: [${rx}, ${ry}]})\n`
-        if (target === '1D') {
+        if (target === 'path') {
           code += `${indent}${on} = geometry.path2.fromPoints({closed: true}, geometry.geom2.toPoints(${on}))\n`
         }
       }
@@ -69,7 +69,7 @@ const shapesMap = function (obj, codify, params) {
       const x2 = cagLengthX(obj.x2, svgUnitsPmm, svgUnitsX)
       const y2 = (0 - cagLengthY(obj.y2, svgUnitsPmm, svgUnitsY))
       let code = `${indent}${on} = primitives.line([[${x1}, ${y1}], [${x2}, ${y2}]])\n`
-      if (target === '2D') {
+      if (target === 'geom2') {
         let r = getStrokeWidth(obj, svgUnitsPmm, svgUnitsV, svgGroups)
         // TODO
       }
@@ -87,7 +87,7 @@ const shapesMap = function (obj, codify, params) {
         }
       }
       code += `${indent}]})\n`
-      if (target === '1D') {
+      if (target === 'path') {
         code += `${indent}${on} = geometry.path2.fromPoints({closed: true}, geometry.geom2.toPoints(${on}))\n`
       }
       return code
@@ -104,7 +104,7 @@ const shapesMap = function (obj, codify, params) {
         }
       }
       code += `${indent}])\n`
-      if (target === '2D') {
+      if (target === 'geom2') {
         let r = getStrokeWidth(obj, svgUnitsPmm, svgUnitsV, svgGroups)
         // TODO
       }
@@ -133,10 +133,10 @@ const getStrokeWidth = (obj, svgUnitsPmm, svgUnitsV, svgGroups) => {
 
 const getColor = (obj, target) => {
   let c
-  if (target === '1D' && obj.stroke) {
+  if (target === 'path' && obj.stroke) {
     c = obj.stroke
   }
-  if (target === '2D' && obj.fill) {
+  if (target === 'geom2' && obj.fill) {
     c = obj.fill
   }
   return c
@@ -380,7 +380,7 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
       case 'z': // close current line
       case 'Z':
         tmpCode += `${indent}${pathName} = geometry.path2.close(${pathName})\n`
-        if (target === '2D') {
+        if (target === 'geom2') {
           tmpCode += `${indent}${pathName} = geometry.geom2.fromPoints(geometry.path2.toPoints(${pathName}))\n`
         }
         tmpCode += `${indent}parts.push(${pathName})\n`

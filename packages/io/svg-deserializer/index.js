@@ -37,7 +37,7 @@ const deserialize = (input, filename, options) => {
     addMetaData: true,
     output: 'script',
     pxPmm: require('./constants').pxPmm,
-    target: '1D', // target - 2D geometry, or 1D geometry (paths)
+    target: 'path', // target - 'geom2' or 'path'
     version: '0.0.0'
   }
   options = Object.assign({}, defaults, options)
@@ -267,10 +267,12 @@ const codify = (options, group) => {
         code += `${indent}${on} = transforms.translate([${x}, ${y}, 0], ${on})\n`
       }
     }
-    if (target === '1D' && obj.stroke) {
+    if (target === 'path' && obj.stroke) {
+      // for path, only use the supplied SVG stroke color
       code += `${indent}color.color([${obj.stroke[0]}, ${obj.stroke[1]}, ${obj.stroke[2]}, 1], ${on})\n`
     }
-    if (target === '2D' && obj.fill) {
+    if (target === 'geom2' && obj.fill) {
+      // for geom2, only use the supplied SVG fill color
       code += `${indent}color.color([${obj.fill[0]}, ${obj.fill[1]}, ${obj.fill[2]}, 1], ${on})\n`
     }
     code += `${indent}${ln} = ${ln}.concat(${on})\n\n`

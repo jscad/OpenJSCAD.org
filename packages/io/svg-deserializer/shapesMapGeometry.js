@@ -26,7 +26,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
         } else {
           shape = primitives.roundedRectangle({ center: [x, y], size: [w / 2, h / 2], roundRadius: rx })
         }
-        if (target === '1D') {
+        if (target === 'path') {
           shape = geometry.path2.fromPoints({ }, geometry.geom2.toPoints(shape))
         }
       }
@@ -41,7 +41,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
       let shape
       if (r > 0) {
         shape = primitives.circle({ center: [x, y], radius: r })
-        if (target === '1D') {
+        if (target === 'path') {
           shape = geometry.path2.fromPoints({}, geometry.geom2.toPoints(shape))
         }
       }
@@ -57,7 +57,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
       let shape
       if (rx > 0 && ry > 0) {
         shape = primitives.ellipse({ center: [cx, cy], radius: [rx, ry] })
-        if (target === '1D') {
+        if (target === 'path') {
           shape = geometry.path2.fromPoints({}, geometry.geom2.toPoints(shape))
         }
       }
@@ -80,7 +80,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
       }
 
       let shape = primitives.line([[x1, y1], [x2, y2]])
-      if (target === '2D') {
+      if (target === 'geom2') {
         // FIXME expand if 2D target
       }
       return shape
@@ -96,7 +96,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
           points.push([x, y])
         }
       }
-      if (target === '2D') {
+      if (target === 'geom2') {
         return geometry.geom2.fromPoints(points)
       }
       return geometry.path2.fromPoints({}, points)
@@ -123,7 +123,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
       }
 
       let shape = primitives.line(points)
-      if (target === '2D') {
+      if (target === 'geom2') {
         // FIXME expand if 2D target
         // .expandToCAG(r, CSG.defaultResolution2D)
       }
@@ -135,14 +135,14 @@ const shapesMapGeometry = (obj, objectify, params) => {
       // order is important
       let shapes
       let listofentries = Object.entries(listofpaths).sort((a, b) => a[0].localeCompare(b[0]))
-      if (target === '2D') {
+      if (target === 'geom2') {
         // convert each path to geometry
         for (let [key, path] of listofentries) {
           // FIXME this needs to be implemented once extrude is available
           // if closed then create a 2D geometry
         }
       }
-      if (target === '1D') {
+      if (target === 'path') {
         shapes = listofentries.map((entry) => entry[1])
         // if (listofentries.length !== 1) throw new Error('malformed path specification')
         // for (let [key, path] of listofentries) {
@@ -150,19 +150,6 @@ const shapesMapGeometry = (obj, objectify, params) => {
         // }
       }
       return shapes
-      /*
-        switch (closedpath.getTurn()) {
-          default:
-          case 'clockwise':
-            pathCag = pathCag.union(paths[pathName])
-            break;
-          case 'counter-clockwise':
-            pathCag = pathCag.subtract(paths[pathName])
-            break;
-        }
-      paths[pathName] = paths[pathName] // .expandToCAG(r, CSG.defaultResolution2D)
-      pathCag = pathCag.union(paths[pathName])
-      */
     }
   }
   return types[obj.type](obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups)
