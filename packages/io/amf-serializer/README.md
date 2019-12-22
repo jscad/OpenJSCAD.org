@@ -11,7 +11,7 @@ This serializer outputs a 'blobable' array of data from one or more JSCAD geomet
 The array of data can either be used to create a Blob (`new Blob(blobable)`), or converted to a Node.js buffer.
 
 The serialization of the following geometries are possible.
-- serialization of 3D geometry (geom3) to AMF mesh(s)
+- serialization of 3D geometry (geom3) to AMF geometry (non-overlapping volumes)
 
 ## Table of Contents
 
