@@ -103,7 +103,7 @@ const reducers = {
  * @returns {Object} the updated state
  */
   setDesignContent: (state, payload) => {
-    console.log('design: set content', state.design, payload)
+    console.log('design: set content', state, state.design, payload)
     // all our available data (specific to web)
     const { filesAndFolders } = payload
     const makeFakeFs = require('@jscad/core/code-loading/makeFakeFs')
@@ -234,7 +234,7 @@ const reducers = {
   },
 
   setSettings: (state, { data }) => {
-    console.log('design: set settings', state.design)
+    console.log('design: set settings', state.design, data)
     let {
       vtreeMode,
       autoReload,
@@ -412,7 +412,7 @@ const actions = ({ sources }) => {
       })
   ])
     .filter(x => x !== undefined)
-    .thru(holdUntil(setDesignSettings$))// only after
+    .thru(holdUntil(setDesignSettings$))// only after FIXME : this does not seem to work
     .map(data => ({ type: 'read', id: 'loadRemote', urls: toArray(data.documentUris), sink: data.protocol, path: data.path, data: data.data }))
     .tap(x => console.log('requestLoadDesignContent', x))
     .multicast()
@@ -420,9 +420,9 @@ const actions = ({ sources }) => {
 
   // from all sources ...
   const setDesignContent$ = most.mergeArray(
-    Object.values(sources)
-      .filter(x => x !== undefined && 'source' in x)
+    Object.values(sources).filter(x => x !== undefined && 'source' in x)
   )
+    .delay(1000)// FIXME delay is a hack
     // ... containing loadRemote responses
     .filter(response => response.id === 'loadRemote' && response.type === 'read' && !('error' in response) && !('sink' in response))
     .map(({ data }) => ({ filesAndFolders: data }))
@@ -445,7 +445,7 @@ const actions = ({ sources }) => {
       .skipRepeatsWith(jsonCompare)
   ])
     .map(payload => Object.assign({}, { type: 'watch', sink: payload.origin }, payload))
-    .tap(x => console.log('foo', x))
+    .tap(x => console.log('WATCH', x))
     .multicast()
 
   const requestWriteCachedGeometry$ = most.mergeArray([
@@ -463,8 +463,11 @@ const actions = ({ sources }) => {
   const resetDesign$ = most.mergeArray([
     requestLoadDesignContent$.map(({ sink }) => sink)
   ])
+    .delay(500) // FIXME: horrible hack !!
+    // .thru(holdUntil(setDesignSettings$))// only after FIXME : this does not seem to work
     .thru(withLatestFrom(reducers.resetDesign, sources.state))
     .map(data => ({ type: 'resetDesign', state: data, sink: 'state' }))
+    .tap(x => console.log('design reset', x))
     .multicast()
 
   const setDesignSolids$ = most.mergeArray([
@@ -472,15 +475,21 @@ const actions = ({ sources }) => {
       .filter(event => !('error' in event) && event.data instanceof Object && event.data.type === 'solids')
       .map(function (event) {
         try {
+          console.log('SETDESIGN SOLIDS', event.data)
           if (event.data instanceof Object) {
             const start = new Date()
+
+            /* FIXME: update later
             const { CAG, CSG } = require('@jscad/csg')
             const solids = event.data.solids.map(function (object) {
+              console.log('setting solids from worker', object)
               if (object['class'] === 'CSG') { return CSG.fromCompactBinary(object) }
               if (object['class'] === 'CAG') { return CAG.fromCompactBinary(object) }
-            })
-            const { lookupCounts, lookup } = event.data
-            console.warn(`elapsed for csg gen ${new Date() - start}`)
+            })*/
+            const solids = event.data.solids.map(solid => JSON.parse(solid))
+            const { lookupCounts, lookup } = event.data 
+            
+            console.warn(`elapsed for geometry gen ${new Date() - start}`)
             return { solids, lookup, lookupCounts }
           }
         } catch (error) {
