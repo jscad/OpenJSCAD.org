@@ -1,4 +1,4 @@
-const { color, primitives } = require('@jscad/csg')
+const { color, primitives } = require('@jscad/modeling')
 
 const ObjReader = require('./ObjReader')
 

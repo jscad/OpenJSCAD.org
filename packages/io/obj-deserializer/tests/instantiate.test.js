@@ -4,7 +4,7 @@ const test = require('ava')
 
 const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
 
-const { geometry } = require('@jscad/csg')
+const { geometry } = require('@jscad/modeling')
 
 const deserializer = require('../index.js')
 
