@@ -47,6 +47,12 @@ const serialize = (options, ...objects) => {
 
   objects = utils.flatten(objects)
 
+  // convert only 3D geometries
+  let objects3d = objects.filter((object) => geometry.geom3.isA(object))
+
+  if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to X3D')
+  if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to X3D')
+
   options.statusCallback && options.statusCallback({ progress: 0 })
 
   // construct the contents of the XML
@@ -61,7 +67,7 @@ const serialize = (options, ...objects) => {
       ['meta', { name: 'creator', content: 'Created using JSCAD' }]
     ]
   ]
-  body = body.concat(convertObjects(objects, options))
+  body = body.concat(convertObjects(objects3d, options))
 
   // convert the contents to X3D (XML) format
   let contents = `<?xml version="1.0" encoding="UTF-8"?>
