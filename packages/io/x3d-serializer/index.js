@@ -19,7 +19,7 @@ TBD
 1) gzipped is also possible; same mime type, with file extension .x3dz
 */
 
-const { geometry, utils } = require('@jscad/csg')
+const { geometry, utils } = require('@jscad/modeling')
 
 const { ensureManifoldness } = require('@jscad/io-utils')
 
