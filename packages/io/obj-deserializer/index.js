@@ -3,15 +3,15 @@ const { color, primitives } = require('@jscad/modeling')
 const ObjReader = require('./ObjReader')
 
 /**
- * Parse the given obj data and return either a JSCAD script or a CSG/CAG object
+ * Parse the given obj data and return either a JSCAD script or a set of geometry
  * @see http://en.wikipedia.org/wiki/Wavefront_.obj_file
  * @param  {string} input obj data
  * @param {string} filename (optional) original filename of AMF source
  * @param {object} options options (optional) anonymous object with:
  * @param {string} [options.version='0.0.0'] version number to add to the metadata
  * @param {boolean} [options.addMetadata=true] toggle injection of metadata (producer, date, source) at the start of the file
- * @param {string} [options.output='jscad'] {String} either jscad or csg to set desired output
- * @return {CSG/string} either a CAG/CSG object or a string (jscad script)
+ * @param {string} [options.output='jscad'] {String} either jscad or geometry to set desired output
+ * @return {[geometry]/string} either a JSCAD script or a set of geometry
  */
 const deserialize = (input, filename, options) => {
   const defaults = {
