@@ -9,12 +9,6 @@ All code released under MIT license
 
 // OBJ reader to emit commands of interest to handlers
 
-const ObjStates = [
-  'start',
-  'end',
-  'error'
-]
-
 /**
  * Class ObjReader
  * A class to hold state while reading OBJ formatted data.
@@ -48,7 +42,6 @@ function ObjReader (options) {
 
 ObjReader.prototype = {
 // set a handler for the given state
-// see ObjStates above
   on: function (state, callback) {
   // verify the state
   // set the callback
@@ -80,11 +73,6 @@ ObjReader.prototype = {
 }
 
 //
-// emit the start of processing to the onstart handler if any
-//
-const emitstart = (reader) => emitstate(reader, 'onstart', reader.data)
-
-//
 // emit the command (code and values) to asorbers
 //
 const emitcommand = (reader, command, values) => {
@@ -103,9 +91,9 @@ const emitcommand = (reader, command, values) => {
 const emiterror = (reader, er) => {
   if (reader.trackPosition) {
     er += `
-ne: ${reader.line}
-lumn: ${reader.column}
-ar: ${reader.c}`
+line: ${reader.line}
+column: ${reader.column}
+char: ${reader.c}`
   }
   er = new Error(er)
   reader.error = er
@@ -135,7 +123,8 @@ const parse = (reader, data) => {
     return emiterror(reader, 'Cannot write after close')
   }
 
-  emitstart(reader)
+  // emit the start of processing to the onstart handler if any
+  emitstate(reader, 'onstart', reader.data)
 
   if (data === null) {
     return emitend(reader)
@@ -181,20 +170,17 @@ const parse = (reader, data) => {
   return reader
 }
 
-/**
- * Parse the given line in the context of the given reader, emitting command / values
- * @param reader {ObjReader} - context ObjReader to use
- * @param line {String} - line to parse
- */
+//
+// parse the given line in the context of the given reader, emitting command / values
+//
 const parseLine = (reader, line) => {
   line = line.trim()
   if (line && line.length > 0) {
     setObjCommand(reader, line)
     setObjValues(reader, line)
 
-    // handle command and values
+    // emit events for command and values
     if (reader.command !== null) {
-      // emit events for command and values
       emitcommand(reader, reader.command, reader.values)
     }
   }
@@ -203,10 +189,9 @@ const parseLine = (reader, line) => {
   reader.values = null
 }
 
-/** Parse the given line in the context of the given reader, and update the command
- * @param reader {ObjReader} - context ObjReader to use
- * @param line {String} - line to parse
- */
+//
+// parse the given line in the context of the given reader, and update the command
+//
 const setObjCommand = (reader, line) => {
   // commands are alpha, and left justified
   let code = line.match(/^\S+/)
@@ -218,10 +203,9 @@ const setObjCommand = (reader, line) => {
   }
 }
 
-/** Parse the given line in the context of the given reader, and update the values
- * @param reader {ObjReader} - context ObjReader to use
- * @param line {String} - line to parse
- */
+//
+// parse the given line in the context of the given reader, and update the values
+//
 const setObjValues = (reader, line) => {
   // Note: some commands do not have values
   let values = line.match(/\S+/g)
