@@ -3,7 +3,7 @@ const { color, primitives } = require('@jscad/modeling')
 const ObjReader = require('./ObjReader')
 
 /**
- * Parse the given obj data and return either a JSCAD script or a set of geometry
+ * Parse the given OBJ data and return either a JSCAD script or a set of geometry
  * @see http://en.wikipedia.org/wiki/Wavefront_.obj_file
  * @param  {string} input obj data
  * @param {string} filename (optional) original filename of AMF source
