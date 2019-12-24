@@ -1,13 +1,13 @@
 ## @jscad/x3d-serializer
 
-> Serializer of CSG geometries to X3D shapes
+> Serializer of JSCAD geometries to X3D shapes
 
 [![npm version](https://badge.fury.io/js/%40jscad%2Fx3d-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fx3d-serializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/x3d-serializer)
 
 ## Overview
 
-This serializer outputs a 'blobable' array of data from one or more CSG geometries.
+This serializer outputs a 'blobable' array of data from one or more JSCAD geometries.
 The array of data can either be used to create a Blob (`new Blob(blobable)`), or converted to a Node.js buffer.
 
 The serialization of the following geometries are possible.
