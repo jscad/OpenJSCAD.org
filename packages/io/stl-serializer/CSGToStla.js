@@ -1,42 +1,38 @@
-const { ensureManifoldness } = require('@jscad/io-utils')
-const {isCSG} = require('@jscad/csg')
+const { geometry } = require('@jscad/modeling')
 
-// objects must be an array of CSG objects (with polygons)
+// objects must be an array of 3D geomertries (with polygons)
 const serializeText = (objects, options) => {
-  options.statusCallback && options.statusCallback({progress: 0})
+  options.statusCallback && options.statusCallback({ progress: 0 })
 
   let result = `solid JSCAD
 ${convertToStl(objects, options)}
 endsolid JSCAD
 `
-  options.statusCallback && options.statusCallback({progress: 100})
+  options.statusCallback && options.statusCallback({ progress: 100 })
   return [result]
 }
 
 const convertToStl = (objects, options) => {
   let result = []
-  objects.forEach(function (object, i) {
+  objects.forEach((object, i) => {
     result.push(convertToFacets(object, options))
-    options.statusCallback && options.statusCallback({progress: 100 * i / objects.length})
+    options.statusCallback && options.statusCallback({ progress: 100 * i / objects.length })
   })
   return result.join('\n')
 }
 
 const convertToFacets = (object, options) => {
   let result = []
-  object.polygons.forEach(function (p, i) {
-    result.push(convertToFacet(p))
+  let polygons = geometry.geom3.toPolygons(object)
+  polygons.forEach((polygon, i) => {
+    result.push(convertToFacet(polygon))
   })
   return result.join('\n')
 }
 
-const vector3DtoStlString = (v) => {
-  return `${v._x} ${v._y} ${v._z}`
-}
+const vector3DtoStlString = (v) => `${v[0]} ${v[1]} ${v[2]}`
 
-const vertextoStlString = (vertex) => {
-  return `vertex ${vector3DtoStlString(vertex.pos)}`
-}
+const vertextoStlString = (vertex) => `vertex ${vector3DtoStlString(vertex)}`
 
 const convertToFacet = (polygon) => {
   let result = []
@@ -44,7 +40,7 @@ const convertToFacet = (polygon) => {
     // STL requires triangular polygons. If our polygon has more vertices, create multiple triangles:
     let firstVertexStl = vertextoStlString(polygon.vertices[0])
     for (let i = 0; i < polygon.vertices.length - 2; i++) {
-      let facet = `facet normal ${vector3DtoStlString(polygon.plane.normal)}
+      let facet = `facet normal ${vector3DtoStlString(polygon.plane)}
 outer loop
 ${firstVertexStl}
 ${vertextoStlString(polygon.vertices[i + 1])}

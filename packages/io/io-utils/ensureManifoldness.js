@@ -1,18 +1,17 @@
+const { retessellate } = require('@jscad/modeling')
+
 /**
- * wrapper around internal csg methods (in case they change) to make sure
- * it resuts in a manifold mesh
- * @constructor
- * @param {string} title - The title of the book.
- * @return {csg}
+ * wrapper around internal methods (in case they change) to make sure
+ * all geometry resuts in a manifold mesh
  */
 function ensureManifoldness (input) {
   const transform = input => {
-    input = 'reTesselated' in input ? input.reTesselated() : input
-    input = 'fixTJunctions' in input ? input.fixTJunctions() : input // fixTJunctions also calls this.canonicalized() so no need to do it twice
+    input = 'isRetesselated' in input ? retessellate(input) : input
+    // input = 'fixTJunctions' in input ? input.fixTJunctions() : input
     return input
   }
 
-  return input.constructor !== Array ? transform(input) : input.map(transform)
+  return Array.isArray(input) ? input.map(transform) : transform(input)
 }
 
 module.exports = ensureManifoldness

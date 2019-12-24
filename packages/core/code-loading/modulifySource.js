@@ -6,18 +6,24 @@ const modulifySource = (source, apiMainPath) => {
   const getParamsString = source.includes('getParameterDefinitions')
     ? 'module.exports.getParameterDefinitions = getParameterDefinitions' : ''
   const updatedSource = `
-    const {CSG, CAG} = require('${apiMainPath}').csg
-    const {square, circle, polygon, rectangle, ellipse, roundedRectangle} = require('${apiMainPath}').primitives2d
-    const {cube, cylinder, sphere, polyhedron, torus} = require('${apiMainPath}').primitives3d
-    const {color} = require('${apiMainPath}').color
-    const {rectangular_extrude, linear_extrude, rotate_extrude} = require('${apiMainPath}').extrusions
-    const {rotate, translate, scale, mirror, hull, chain_hull, expand, contract, transform} = require('${apiMainPath}').transformations
-    const {union, difference, intersection} = require('${apiMainPath}').booleanOps
-    const {sin, cos, tan, sqrt, lookup} = require('${apiMainPath}').maths
-    const {hsl2rgb} = require('${apiMainPath}').color
-    const {vector_text, vector_char} = require('${apiMainPath}').text
-    const {OpenJsCad} = require('${apiMainPath}').OpenJsCad
-    const {echo} = require('${apiMainPath}').debug 
+    const {geom2, geom3, path2, pol2, poly3} = require('${apiMainPath}').geometry
+
+    const {square, circle, polygon, rectangle, ellipse, roundedRectangle} = require('${apiMainPath}').primitives
+    const {cube, cylinder, sphere, polyhedron, torus} = require('${apiMainPath}').primitives
+    const {color, hsl2rgb} = require('${apiMainPath}').color
+
+    const {extrudeFromSlices, extrudeLinear, extrudeRectangular, extrudeRotate, slice} = require('${apiMainPath}').extrusions
+    const {rotate, translate, scale, mirror, transform} = require('${apiMainPath}').transforms
+    const {hull, hullChain} = require('${apiMainPath}').hulls
+    const {expand, offset} = require('${apiMainPath}').expansions
+    const {union, difference, intersection} = require('${apiMainPath}').booleans
+    const { measureArea, measureBounds, measureVolume} = require('${apiMainPath}').measurements
+
+    const connectors = require('${apiMainPath}').connectors
+
+    const {vec2, vec3, vec4, constants, line2, line3, mat4, plane, utils} = require('${apiMainPath}').math
+
+    const {vectorText, vectorChar} = require('${apiMainPath}').text
     
     ${source}
 
