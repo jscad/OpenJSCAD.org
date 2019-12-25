@@ -7,6 +7,13 @@ const normalize = require('../../../math/vec3/normalize')
 const scale = require('../../../math/vec3/scale')
 const subtract = require('../../../math/vec3/subtract')
 
+/*
+ * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)
+ * Copyright (c) 2015 Mauricio Poppe
+ *
+ * Adapted to JSCAD by Jeff Gay
+ */
+
 const HalfEdge = require('./HalfEdge')
 
 const VISIBLE = 0

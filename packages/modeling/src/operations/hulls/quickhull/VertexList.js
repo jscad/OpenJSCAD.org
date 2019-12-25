@@ -1,3 +1,10 @@
+/*
+ * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)
+ * Copyright (c) 2015 Mauricio Poppe
+ *
+ * Adapted to JSCAD by Jeff Gay
+ */
+
 class VertexList {
   constructor () {
     this.head = null

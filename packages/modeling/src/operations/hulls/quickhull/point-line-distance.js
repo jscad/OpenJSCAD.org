@@ -1,13 +1,13 @@
-/*
- * point-line-distance
- *
- * Copyright (c) 2015 Mauricio Poppe
- * Licensed under the MIT license.
- */
-
 const cross = require('../../../math/vec3/cross')
 const subtract = require('../../../math/vec3/subtract')
 const squaredLength = require('../../../math/vec3/squaredLength')
+
+/*
+ * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)
+ * Copyright (c) 2015 Mauricio Poppe
+ *
+ * Adapted to JSCAD by Jeff Gay
+ */
 
 const distanceSquared = (p, a, b) => {
   // == parallelogram solution

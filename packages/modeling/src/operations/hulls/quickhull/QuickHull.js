@@ -7,6 +7,13 @@ const VertexList = require('./VertexList')
 const Vertex = require('./Vertex')
 const {Face, VISIBLE, NON_CONVEX, DELETED} = require('./Face')
 
+/*
+ * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)
+ * Copyright (c) 2015 Mauricio Poppe
+ *
+ * Adapted to JSCAD by Jeff Gay
+ */
+
 // merge types
 // non convex with respect to the large face
 const MERGE_NON_CONVEX_WRT_LARGER_FACE = 1
