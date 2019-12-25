@@ -1,12 +1,18 @@
-// positions, triangles, normals and colors
-function vt2jscad (positions, triangles, normals, colors) {
+/*
+ * positions
+ * triangles
+ * normals
+ * colors
+ */
+const vt2jscad = (positions, triangles, normals, colors) => {
+  // console.log('***** vt2jscad',positions.length,triangles.length,colors.length)
   let src = ''
-  src += 'polyhedron({ points: [\n  '
+  src += 'primitives.polyhedron({orientation: \'inward\', points: [\n  '
   for (let i = 0, j = 0; i < positions.length; i++) {
     if (j++) src += ',\n  '
     src += '[' + positions[i] + ']' // .join(", ");
   }
-  src += '],\n  polygons: [\n  '
+  src += '],\n  faces: [\n  '
   for (let i = 0, j = 0; i < triangles.length; i++) {
     if (j++) src += ',\n  '
     src += '[' + triangles[i] + ']' // .join(', ');
