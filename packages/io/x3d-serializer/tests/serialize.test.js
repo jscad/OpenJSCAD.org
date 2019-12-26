@@ -1,21 +1,23 @@
 const test = require('ava')
-const { CSG } = require('@jscad/csg')
-const serializer = require('./index.js')
 
-test('serialize CSG objects to X3D', function (t) {
-  const csg1 = new CSG()
+const { color, geometry, primitives } = require('@jscad/modeling')
+
+const serializer = require('../index.js')
+
+test('serialize 3D geometry to X3D', function (t) {
+  const csg1 = geometry.geom3.create()
 
   const observed1 = serializer.serialize({}, csg1)
   t.deepEqual(observed1, [expected1])
 
-  const csg2 = new CSG.cube()
+  const csg2 = primitives.cube()
 
   const observed2 = serializer.serialize({}, csg2)
   t.deepEqual(observed2, [expected2])
 
-  const csg3 = new CSG.cube({ center: [5, 5, 5] }).setColor([0.5, 1, 0.5])
+  const csg3 = color.color([0.5, 1, 0.5, 1.0], primitives.cube({ center: [5, 5, 5] }))
 
-  const observed3 = serializer.serialize({}, [csg2, csg3])
+  const observed3 = serializer.serialize({}, csg2, csg3)
   t.deepEqual(observed3, [expected3])
 })
 
@@ -57,9 +59,9 @@ const expected3 = `<?xml version="1.0" encoding="UTF-8"?>
       </IndexedTriangleSet>
     </Shape>
     <Shape>
-      <IndexedTriangleSet ccw=\"true\" colorPerVertex=\"false\" solid=\"false\" index=\"0 1 2 0 3 1 4 5 6 4 7 5 0 6 3 0 4 6 2 5 7 2 1 5 0 7 4 0 2 7 3 5 1 3 6 5\">
-        <Coordinate point=\"4 4 4 4 6 6 4 6 4 4 4 6 6 4 4 6 6 6 6 4 6 6 6 4\"/>
-        <Color color=\"0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5\"/>
+      <IndexedTriangleSet ccw="true" colorPerVertex="false" solid="false" index="0 1 2 0 3 1 4 5 6 4 7 5 0 6 3 0 4 6 2 5 7 2 1 5 0 7 4 0 2 7 3 5 1 3 6 5">
+        <Coordinate point="4 4 4 4 6 6 4 6 4 4 4 6 6 4 4 6 6 6 6 4 6 6 6 4"/>
+        <Color color="0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5 0.5 1 0.5"/>
       </IndexedTriangleSet>
     </Shape>
   </Scene>
