@@ -4,9 +4,11 @@
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "scripts": {
-    "test": "npm i && npm run bootstrap && lerna run test",
+    "test-one": "lerna run --stream --scope '@jscad/json-deserializer' test",
+    "test": "lerna run --stream test",
     "lint": "eslint packages/**/*.js",
     "bootstrap": "lerna bootstrap  --ignore-prepublish --no-ci --ignore @jscad/scad-deserializer",
+    "list": "lerna ls",
     "clean": "lerna clean",
     "cli": "npm run bootstrap && cd ./packages/cli",
     "web": "npm run bootstrap && cd ./packages/web && npm run dev",
