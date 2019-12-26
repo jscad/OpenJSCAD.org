@@ -31,7 +31,7 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/modeling": "0.0.1",
-    "@jscad/io": "pre-V2",
+    "@jscad/io": "1.0.0-alpha.d0fb3056",
     "@most/create": "^2.0.1",
     "astring": "^1.0.2",
     "es2015-i18n-tag": "^1.3.1",

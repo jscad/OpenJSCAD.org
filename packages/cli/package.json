@@ -35,7 +35,7 @@
   "dependencies": {
     "@jscad/core": "0.4.0",
     "@jscad/examples": "1.7.2",
-    "@jscad/io": "pre-V2"
+    "@jscad/io": "1.0.0-alpha.d0fb3056"
   },
   "devDependencies": {
     "ava": "^0.25.0"
