@@ -34,7 +34,7 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/csg": "0.7.0",
-    "@jscad/io-utils": "^1.0.0-alpha.d0fb3056"
+    "@jscad/io-utils": "0.1.3"
   },
   "devDependencies": {
     "ava": "^0.25.0"
