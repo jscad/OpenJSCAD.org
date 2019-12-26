@@ -7,7 +7,7 @@
   "scripts": {
     "build-docs": "./node_modules/.bin/jsdoc -c jsdoc.json",
     "docs": "jsdoc2md src --configure jsdoc.json > docs/api.md",
-    "test": "nyc ava 'src/**/*.test.js' --concurrency 3  --verbose --timeout 40000",
+    "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
     "changelog__": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "preversion__": "npm test",
     "version__": "npm run changelog && npm run docs && git add -A ",
