@@ -17,7 +17,7 @@ Notes:
 */
 
 const { ensureManifoldness } = require('@jscad/io-utils')
-const {toArray} = require('@jscad/io-utils/arrays')
+//const {toArray} = require('@jscad/io-utils/arrays')
 const { isCSG, isCAG } = require('@jscad/csg')
 
 const mimeType = 'application/json'
@@ -66,7 +66,7 @@ function serialize (...params) {
     objects = params[1]
   }
   // make sure we always deal with arrays of objects as inputs
-  objects = toArray(objects)
+  //objects = toArray(objects)
 
   const defaults = {
     statusCallback: null
