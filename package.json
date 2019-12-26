@@ -5,7 +5,7 @@
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "scripts": {
     "test-one": "lerna run --stream --scope '@jscad/json-deserializer' test",
-    "test": "lerna run --stream test",
+    "test": "npm run bootstrap && lerna run --stream test",
     "lint": "eslint packages/**/*.js",
     "bootstrap": "lerna bootstrap  --ignore-prepublish --no-ci --ignore @jscad/scad-deserializer",
     "list": "lerna ls",
