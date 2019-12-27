@@ -1,51 +1,43 @@
 /*
 // title      : Colors
-// author     : Rene K. Mueller
+// authors     : Moissette Mark
 // license    : MIT License
-// description: testing hull() function
-// tags       : RGB, RGBA
-// file       : hull.jscad
+// description: showing various color functions
+// tags       : colors, transparency, hsl3rgb
 */
 
-const spread = () => {
-  var a = Array.prototype.slice.call(arguments)
-  var p = null
-  var type = 'linear'
-  var spacing = 1
-
-  if (a[0].type) p = a.shift() // first argument { type: 'something' }?
-  if (a[0].length) a = a[0]
-  if (p && p.type) type = p.type
-  if (p && p.spacing) spacing = p.spacing
-
-  if (type === 'circular') {
-    ;
-  } else {
-    var rows = Math.floor(Math.sqrt(a.length))
-    if (p && p.rows) rows = p.rows
-    if (rows < 1) rows = 1
-    for (i = 0; i < a.length; i++) {
-      a[i] = a[i].translate([(i % rows) * spacing, Math.floor(i / rows) * spacing, 0])
-    }
-  }
-  return a
-}
+const { color, hslToRgb, colorNameToRgb, hexToRgb, hsvToRgb } = require('@jscad/modeling').color
+const { cuboid, sphere } = require('@jscad/modeling').primitives
+const { translate } = require('@jscad/modeling').transforms
 
 const main = () => {
-  var o = []
+  // the color() function applies a color (rgb, or rgba) to the given object
+  const simple = color([0, 1, 0, 0.8], cuboid())
 
-  o.push(color([1, 0, 0], sphere()))
-  o.push(color([0, 1, 0], cube()))
-  o.push(color([0, 0, 1], cylinder()))
+  // you can also generate a color from a color name using colorNameToRgb
+  const fromColorName = color(colorNameToRgb('lightblue'), sphere())
 
-  o.push(color('red', sphere()))
-  o.push(color('green', cube()))
-  o.push(color('blue', cylinder()))
+  // or use a hex color value using fromHexValue
+  const fromHexValue = color(hexToRgb('#000080'), sphere()) // navy blue
 
-  for (var i = 0; i < 1; i += 1 / 12) {
-    o.push(cube().setColor(hsl2rgb(i, 1, 0.5)))
-  }
-  return spread({ type: 'linear', spacing: 3, rows: 3 }, o)
+  // or hsl input using hslToRgb
+  const fromHsl = color(hslToRgb([0.9166666666666666, 1, 0.5]), sphere())
+
+  // hsl works as well ! using hsvToRgb
+  const fromHsv = color(hsvToRgb([0.9166666666666666, 1, 1]), sphere())
+
+  // we also provide a few helpers to convert colors the other way around
+  // rgbToHex
+  // rgbToHsl
+  // rgbToHsv
+
+  return [
+    simple,
+    translate([5, 0, 0], fromColorName),
+    translate([-5, 0, 0], fromHexValue),
+    translate([0, 5, 0], fromHsl),
+    translate([0, -5, 0], fromHsv)
+  ]
 }
 
 module.exports = { main }
