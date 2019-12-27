@@ -1,7 +1,5 @@
 const { color, primitives } = require('@jscad/modeling')
 
-const ObjReader = require('./ObjReader')
-
 /**
  * Parse the given OBJ data and return either a JSCAD script or a set of geometry
  * @see http://en.wikipedia.org/wiki/Wavefront_.obj_file
@@ -43,21 +41,20 @@ const getGroups = (data, options) => {
 
   groups.push({ faces: [], colors: [], name: 'default', line: 0 })
 
-  // setup the reader
-  let reader = new ObjReader()
-
-  const handleG = (reader, command, values) => {
+  const handleG = (command, values) => {
     let group = { faces: [], colors: [], name: '' }
     if (values && values.length > 0) group.name = values.join(' ')
     groups.push(group)
   }
-  const handleV = (reader, command, values) => {
+
+  const handleV = (command, values) => {
     let x = parseFloat(values[0])
     let y = parseFloat(values[1])
     let z = parseFloat(values[2])
     positions.push([x, y, z])
   }
-  const handleF = (reader, command, values) => {
+
+  const handleF = (command, values) => {
     // values : v/vt/vn
     let facerefs = values.map((value) => {
       let refs = value.match(/[0-9\+\-eE]+/g)
@@ -74,7 +71,8 @@ const getGroups = (data, options) => {
     group.colors.push(material)
     groups.push(group)
   }
-  const handleMtl = (reader, command, values) => {
+
+  const handleMtl = (command, values) => {
     material = null
     if (values && values.length > 0) {
       // try to convert the material to a color by name
@@ -82,11 +80,33 @@ const getGroups = (data, options) => {
       if (c) material = [c[0], c[1], c[2], 1] // add alpha
     }
   }
-  reader.absorb('g', handleG)
-  reader.absorb('v', handleV)
-  reader.absorb('f', handleF)
-  reader.absorb('usemtl', handleMtl)
-  reader.write(data)
+
+  // parse the input into groups of vertices and faces
+  let lines = data.split(/\n/)
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i].trim()
+    if (line && line.length > 0) {
+      let values = line.match(/\S+/g)
+      if (values) {
+        let command = values[0]
+        values = values.slice(1)
+        switch (command) {
+          case 'g':
+            handleG(command, values)
+            break;
+          case 'v':
+            handleV(command, values)
+            break;
+          case 'f':
+            handleF(command, values)
+            break;
+          case 'usemtl':
+            handleMtl(command, values)
+            break;
+        }
+      }
+    }
+  }
 
   // filter out groups without geometry
   groups = groups.filter((group) => (group.faces.length > 0))
