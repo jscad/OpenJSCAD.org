@@ -2,6 +2,7 @@
 // author     : OpenSCAD.org, adapted by Rene K. Mueller
 // license    : MIT License
 // description: expand() function
+// tags: expand, expansion, operations
 */
 
 const { geom2, geom3, line2, path2 } = require('@jscad/modeling').geometry

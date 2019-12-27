@@ -2,6 +2,7 @@
 // author     : Moissette Mark
 // license    : MIT License
 // description: offset() function
+// tags: offset, expansion
 */
 
 const { geom2, geom3, line2, path2 } = require('@jscad/modeling').geometry
