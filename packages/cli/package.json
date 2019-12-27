@@ -8,7 +8,6 @@
     "jscad": "./cli.js"
   },
   "scripts": {
-    "test": "ava './*.test.js' --verbose --timeout 60000",
     "preversion": "npm test",
     "version": "git add -A ",
     "postversion": "git push origin master && git push origin master --tags",
