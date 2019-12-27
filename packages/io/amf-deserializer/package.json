@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "ava": "^0.25.0",
-    "nyc": "^10.3.2"
+    "nyc": "^10.3.2",
+    "@jscad/sample-files": "github:jscad/sample-files"
   }
 }
