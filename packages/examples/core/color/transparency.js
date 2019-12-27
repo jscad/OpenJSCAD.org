@@ -1,20 +1,31 @@
+/*
 // title      : Transparency
-// author     : Rene K. Mueller
+// authors     : Rene K. Mueller, Moissette Mark
 // license    : MIT License
 // description: showing transparent objects
-// file       : transparency.jscad
+// tags       : colors, transparency, hsl3rgb
+*/
 
-function main () {
-  var o = [];
-  for (var i = 7; i >= 0; i--) { // reverse order for seeing through all cylinders (see http://www.opengl.org/wiki/Transparency_Sorting)
+const { color, hsl2rgb } = require('@jscad/modeling').color
+const { cuboid, cylinder } = require('@jscad/modeling').primitives
+const { translate } = require('@jscad/modeling').transforms
+
+const main = () => {
+  const shapes = []
+  for (let i = 7; i >= 0; i--) { // reverse order for seeing through all cylinders (see http://www.opengl.org/wiki/Transparency_Sorting)
     // hsl to rgb, creating rainbow [r,g,b]
-    o.push(
-      cylinder({r: 3, h: 20}).setColor(
-        hsl2rgb(i / 8, 1, 0.5).concat(1 / 8 + i / 8) // and add to alpha to make it [r,g,b,a]
-      ).translate([(i - 3) * 7.5, 0, 0])
-    );
+    const shapeColor = hsl2rgb(i / 8, 1, 0.5).concat(1 / 8 + i / 8) // and add to alpha to make it [r,g,b,a]
+    shapes.push(
+      color(shapeColor, translate([(i - 3) * 7.5, 0, 0], cylinder({ r: 3, h: 20 })))
+    )
   }
-  o.push(color('red', cube(5)).translate([-4, -10, 0]));
-  o.push(color('red', 0.5, cube(5)).translate([4, -10, 0]));
-  return o;
+  shapes.push(
+    color('red', translate([-4, -10, 0], cuboid(5)))
+  )
+  shapes.push(
+    color('red', 0.5, translate([4, -10, 0], cuboid(5)))
+  )
+  return shapes
 }
+
+module.exports = { main }
