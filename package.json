@@ -35,7 +35,7 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "lerna": "3.19.0",
-    "@jscad/sample-files": "github:jscad/sample-files"
+    "@jscad/sample-files": "github:jscad/sample-files#master"
   },
   "collective": {
     "type": "opencollective",
