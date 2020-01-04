@@ -1,84 +1,204 @@
-const { vt2jscad } = require('./vt2jscad')
-const {CSG} = require('@jscad/csg')
+const { color, primitives } = require('@jscad/modeling')
 
 /**
- * Parse the given obj data and return either a JSCAD script or a CSG/CAG object
+ * Parse the given OBJ data and return either a JSCAD script or a set of geometry
+ * @see http://en.wikipedia.org/wiki/Wavefront_.obj_file
  * @param  {string} input obj data
  * @param {string} filename (optional) original filename of AMF source
  * @param {object} options options (optional) anonymous object with:
  * @param {string} [options.version='0.0.0'] version number to add to the metadata
  * @param {boolean} [options.addMetadata=true] toggle injection of metadata (producer, date, source) at the start of the file
- * @param {string} [options.output='jscad'] {String} either jscad or csg to set desired output
- * @return {CSG/string} either a CAG/CSG object or a string (jscad script)
+ * @param {string} [options.output='jscad'] {String} either jscad or geometry to set desired output
+ * @return {[geometry]/string} either a JSCAD script or a set of geometry
  */
-function deserialize (input, filename, options) { // http://en.wikipedia.org/wiki/Wavefront_.obj_file
-  options && options.statusCallback && options.statusCallback({progress: 0})
-  const defaults = {version: '0.0.0', addMetaData: true, output: 'jscad'}
+const deserialize = (input, filename, options) => {
+  const defaults = {
+    output: 'jscad',
+    orientation: 'outward',
+    version: '0.0.0',
+    addMetaData: true
+  }
   options = Object.assign({}, defaults, options)
-  const {output} = options
+  const { output } = options
 
-  const {positions, faces} = getPositionsAndFaces(input, options)
-  const result = output === 'jscad' ? stringify({positions, faces, options}) : objectify({positions, faces, options})
-  options && options.statusCallback && options.statusCallback({progress: 100})
+  options.filename = filename || 'obj'
+
+  options && options.statusCallback && options.statusCallback({ progress: 0 })
+
+  const { positions, groups } = getGroups(input, options)
+
+  const result = output === 'jscad' ? stringify(positions, groups, options) : objectify(positions, groups, options)
+
+  options && options.statusCallback && options.statusCallback({ progress: 100 })
+
   return result
 }
 
-const getPositionsAndFaces = (data, options) => {
-  let lines = data.split(/\n/)
+const getGroups = (data, options) => {
+  let groups = []
   let positions = []
-  let faces = []
+  let material = null
 
-  for (let i = 0; i < lines.length; i++) {
-    let s = lines[i]
-    let a = s.split(/\s+/)
+  groups.push({ faces: [], colors: [], name: 'default', line: 0 })
 
-    if (a[0] === 'v') {
-      positions.push([a[1], a[2], a[3]])
-    } else if (a[0] === 'f') {
-      let fc = []
-      let skip = 0
-
-      for (let j = 1; j < a.length; j++) {
-        let c = a[j]
-        c = c.replace(/\/.*$/, '') // -- if coord# is '840/840' -> 840
-        c-- // -- starts with 1, but we start with 0
-        if (c >= positions.length) {
-          skip++
-        }
-        if (skip === 0) {
-          fc.push(c)
-        }
-      }
-         // fc.reverse();
-      if (skip === 0) {
-        faces.push(fc)
-      }
-    } else {
-      // vn vt and all others disregarded
-    }
-    options && options.statusCallback && options.statusCallback({progress: 90 * i / lines.length})  //getPositionsAndFaces is 90% of total
+  const handleG = (command, values) => {
+    let group = { faces: [], colors: [], name: '' }
+    if (values && values.length > 0) group.name = values.join(' ')
+    groups.push(group)
   }
-  return {positions, faces}
+
+  const handleV = (command, values) => {
+    let x = parseFloat(values[0])
+    let y = parseFloat(values[1])
+    let z = parseFloat(values[2])
+    positions.push([x, y, z])
+  }
+
+  const handleF = (command, values) => {
+    // values : v/vt/vn
+    let facerefs = values.map((value) => {
+      let refs = value.match(/[0-9\+\-eE]+/g)
+      let ref = parseInt(refs[0])
+      if (ref < 0) {
+        ref = positions.length + ref
+      } else {
+        ref--
+      }
+      return ref
+    })
+    let group = groups.pop()
+    group.faces.push(facerefs)
+    group.colors.push(material)
+    groups.push(group)
+  }
+
+  const handleMtl = (command, values) => {
+    material = null
+    if (values && values.length > 0) {
+      // try to convert the material to a color by name
+      let c = color.colorNameToRgb(values[0])
+      if (c) material = [c[0], c[1], c[2], 1] // add alpha
+    }
+  }
+
+  // parse the input into groups of vertices and faces
+  let lines = data.split(/\n/)
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i].trim()
+    if (line && line.length > 0) {
+      let values = line.match(/\S+/g)
+      if (values) {
+        let command = values[0]
+        values = values.slice(1)
+        switch (command) {
+          case 'g':
+            handleG(command, values)
+            break;
+          case 'v':
+            handleV(command, values)
+            break;
+          case 'f':
+            handleF(command, values)
+            break;
+          case 'usemtl':
+            handleMtl(command, values)
+            break;
+        }
+      }
+    }
+  }
+
+  // filter out groups without geometry
+  groups = groups.filter((group) => (group.faces.length > 0))
+
+  return { positions, groups }
 }
 
-const objectify = ({positions, faces}) => {
-  return CSG.polyhedron({points: positions, faces})
+const objectify = (points, groups, options) => {
+  const geometries = groups.map((group) => {
+    return primitives.polyhedron({ orientation: options.orientation, points, faces: group.faces, colors: group.colors })
+  })
+  return geometries
 }
 
-const stringify = ({positions, faces, addMetaData, filename, version}) => {
+const translatePoints = (points) => {
+  let code = '  let points = [\n'
+  points.forEach((point) => code += `    [${point}],\n`)
+  code += '  ]'
+  return code
+}
+
+const translateFaces = (faces) => {
+  let code = '  let faces = [\n'
+  faces.forEach((face) => code += `    [${face}],\n`)
+  code += '  ]'
+  return code
+}
+
+const translateColors = (colors) => {
+  let code = '  let colors = [\n'
+  colors.forEach((c) => {
+    if (c) {
+      code += `    [${c}],\n`
+    } else {
+      code += `    null,\n`
+    }
+  })
+  code += '  ]'
+  return code
+}
+
+const translateGroupsToCalls = (groups) => {
+  let code = ''
+  groups.forEach((group, index) => code += `    group${index}(points), // ${group.name}\n`)
+  return code
+}
+
+const translateGroupsToFunctions = (groups, options) => {
+  let code = ''
+  groups.forEach((group, index) => {
+    let faces = group.faces
+    let colors = group.colors
+    code += `
+// group : ${group.name}
+// faces: ${faces.length}
+`
+    code += `const group${index} = (points) => {
+${translateFaces(faces)}
+${translateColors(colors)}
+  return primitives.polyhedron({ orientation: '${options.orientation}', points, faces, colors })
+}
+`
+  })
+  return code
+}
+
+const stringify = (positions, groups, options) => {
+  let { filename, addMetaData, version } = options
+
   let code = addMetaData ? `//
-  // producer: OpenJSCAD.org Compatibility${version} OBJ deserializer
-  // date: ${new Date()}
-  // source: ${filename}
-  //
+// producer: OpenJSCAD.org Compatibility${version} OBJ deserializer
+// date: ${new Date()}
+// source: ${filename}
+//
   ` : ''
-  // if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
-  code += `// objects: 1
-// object #1: polygons: ${faces.length}
-function main() { return
-${vt2jscad(positions, faces)}
+
+  // create the main function, with a list of points and translated groups
+  code += `// groups: ${groups.length}
+// points: ${positions.length}
+function main() {
+  // points are common to all geometries
+${translatePoints(positions)}
+
+  let geometries = [
+${translateGroupsToCalls(groups)}  ]
+  return geometries
 }
-  `
+
+${translateGroupsToFunctions(groups, options)}
+`
+
+  // create a function for each group
   return code
 }
 

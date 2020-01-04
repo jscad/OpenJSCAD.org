@@ -59,7 +59,11 @@ Small Note: If editing this README, please conform to the [standard-readme](http
 
 ## Copyrights
 
-Some copyrights apply. Copyright (c) 2012 Joost Nieuwenhuijse (joost@newhouse.nl), under the MIT license. Copyright (c) 2011 Evan Wallace (http://madebyevan.com/)
+Some copyrights apply from integration of original libraries.
+
+CSG Library : Copyright (c) 2012 Joost Nieuwenhuijse (joost@newhouse.nl), under the MIT license. Copyright (c) 2011 Evan Wallace (http://madebyevan.com/)
+
+Quickhull Library: Copyright (c) 2015 Mauricio Poppe, under the MIT license.
 
 ## License
 

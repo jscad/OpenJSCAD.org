@@ -1,11 +1,12 @@
 {
   "name": "@jscad/obj-deserializer",
   "version": "1.0.0-alpha.d0fb3056",
-  "description": "Obj deserializer for jscad project",
-  "repository": "https://github.com/jscad/io",
+  "description": "OBJ deserializer for JSCAD project",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "scripts": {
-    "test": "ava './test.js' --verbose --timeout 2m",
+    "coverage": "nyc --reporter=html --reporter=text npm test",
+    "test": "ava --verbose --timeout 2m './tests/*.test.js'",
     "release-patch": "git checkout master && npm version patch && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-minor": "git checkout master && npm version minor && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-major": "git checkout master && npm version major && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
@@ -27,15 +28,16 @@
   "keywords": [
     "openjscad",
     "jscad",
-    "csg",
+    "import",
     "deserializer",
     "obj"
   ],
   "license": "MIT",
-  "devDependencies": {
-    "ava": "^0.25.0"
-  },
   "dependencies": {
-    "@jscad/csg": "0.7.0"
+    "@jscad/modeling": "0.0.1"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "nyc": "^10.3.2"
   }
 }
