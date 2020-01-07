@@ -39,7 +39,7 @@
     "sax": "1.2.4"
   },
   "devDependencies": {
-   "ava": "3.0.0-beta.1",
+   "ava": "1.4.0",
     "nyc": "^10.3.2"
   }
 }

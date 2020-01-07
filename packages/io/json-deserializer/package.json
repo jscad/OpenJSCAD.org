@@ -36,6 +36,6 @@
     "@jscad/csg": "0.7.0"
   },
   "devDependencies": {
-   "ava": "3.0.0-beta.1"
+   "ava": "1.4.0"
   }
 }
