@@ -39,7 +39,7 @@
     "onml": "^0.4.1"
   },
   "devDependencies": {
-   "ava": "1.4.1",
+   "ava": "3.0.0-beta.1",
     "nyc": "^10.3.2"
   }
 }
