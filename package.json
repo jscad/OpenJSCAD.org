@@ -32,7 +32,7 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "ava": "^0.25.0",
+    "ava": "2.4.0",
     "lerna": "3.19.0",
     "@jscad/sample-files": "github:jscad/sample-files#master"
   },

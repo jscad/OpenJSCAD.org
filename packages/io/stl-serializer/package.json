@@ -38,7 +38,7 @@
     "@jscad/modeling": "0.0.1"
   },
   "devDependencies": {
-    "ava": "^0.25.0",
+    "ava": "2.4.0",
     "nyc": "^10.3.2"
   }
 }
