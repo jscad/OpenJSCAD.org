@@ -61,10 +61,5 @@
     "jsdoc": "^3.4.3",
     "jsdoc-to-markdown": "^3.0.0",
     "nyc": "^10.3.2"
-  },
-  "ava": {
-    "require": [
-      "babel-register"
-    ]
   }
 }
