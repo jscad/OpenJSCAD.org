@@ -19,6 +19,7 @@ History:
 //
 // //////////////////////////////////////////
 
+const version = require('./package.json').version
 const translate = require('./translate')
 const instantiate = require('./deserialize')
 
@@ -35,7 +36,7 @@ const instantiate = require('./deserialize')
 const deserialize = (input, filename, options) => {
   const defaults = {
     output: 'jscad',
-    version: '0.0.0',
+    version: version,
     addMetaData: true
   }
   options = Object.assign({}, defaults, options)
