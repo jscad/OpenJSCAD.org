@@ -1,21 +1,19 @@
+const fs = require('fs')
+
 const { getDesignEntryPoint } = require('@jscad/core/code-loading/requireDesignUtilsFs')
 const { conversionFormats } = require('@jscad/core/io/formats')
-const fs = require('fs')
+
 const version = require('../package.json').version
 const env = require('./env')
 
 const parseArgs = args => {
   // hint: https://github.com/substack/node-optimist
   //       https://github.com/visionmedia/commander.js
-  //
-  // process.argv.forEach(function (val, index, array) {
-  //  console.log(index + ': ' + val)
-  // })
   if (args.length < 1) {
     console.log('USAGE:\n\nopenjscad [-v] <file> [-of <format>] [-o <output>]')
-    console.log('\t<file>  :\tinput (Supported types: folder, .jscad, .js, .scad, .stl, .amf, .obj, .gcode, .svg, .json, .dxf)')
-    console.log('\t<output>:\toutput (Supported types: folder, .jscad, .stl, .amf, .dxf, .svg, .json)')
-    console.log("\t<format>:\t'jscad', 'stla' (STL ASCII, default), 'stlb' (STL Binary), 'amf', 'dxf', 'svg', 'json'")
+    console.log('\t<file>  :\tinput (Supported types: folder, .jscad, .js, .amf, .dxf, .obj, .stl, .svg)')
+    console.log('\t<output>:\toutput (Supported types: folder, .jscad, .amf, .dxf, .stl, .svg, .x3d)')
+    console.log("\t<format>:\t'jscad', 'amf', 'dxf', 'stla' (STL ASCII, default), 'stlb' (STL Binary), 'svg', 'x3d'")
     process.exit(1)
   }
 
@@ -27,8 +25,6 @@ const parseArgs = args => {
   let addMetaData = false // wether to add metadata to outputs or not : ie version info, timestamp etc
   let inputIsDirectory = false // did we pass in a folder or a file ?
 
-  // let supportedInputFormats = conversionFormats.join('|')
-  // console.log('supportedInputFormats', supportedInputFormats)
   const isValidInputFileFormat = input => {
     if (input === undefined || input === null || !(typeof input === 'string')) {
       return false
@@ -66,24 +62,27 @@ const parseArgs = args => {
       }
     } else if (args[i].match(/^-v$/)) { // show the version and the environment information
       env()
-      console.log('OpenSCAD Compatibility (' + version + ')')
     } else {
       inputFile = args[i]
       if (fs.statSync(inputFile).isDirectory()) {
         inputIsDirectory = true
-        inputFile = args[i]
         // get actual design entry point if applicable (if passed a folder as input etc)
         inputFile = getDesignEntryPoint(fs, inputFile)
+        if (!inputFile) {
+          console.log("ERROR: could not determin entry point of project.")
+          console.log("Verify main or index exists")
+          process.exit(1)
+        }
         inputFormat = require('path').extname(inputFile).substring(1)
       } else {
         console.log('ERROR: invalid file name or argument <' + args[i] + '>')
-        console.log("Type 'openjscad' for help")
+        console.log("Type 'openjscad' for a list of supported types")
         process.exit(1)
       }
     }
   }
   // exit if a input file was not provided
-  if (inputFile === null) process.exit(1)
+  if (!inputFile) process.exit(1)
 
   if (!outputFormat && !outputFile) {
     outputFormat = 'stla'
