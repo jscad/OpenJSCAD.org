@@ -213,7 +213,7 @@ SEQEND
 ENDSEC`
   let src3 = deserialize(dxf3, 'dxf3-test', { output: 'jscad' })
   let ss3 = src3.split('\n')
-  t.is(ss3.length, 25)
+  t.is(ss3.length, 28)
   t.true(src3.indexOf('geom3.create') > 0)
 
   // DXF 3D POLYLINE with faces, translates to script with CSG
@@ -289,7 +289,7 @@ ENDSEC`
   // expect a script which calls createPolygon for each 3DFACE, and creates a new 3D geometry
   let src1 = deserialize(dxf1, 'dxf1-test', { output: 'jscad' })
   let ss1 = src1.split('\n')
-  t.is(ss1.length, 21)
+  t.is(ss1.length, 24)
   t.true(src1.indexOf('createPolygon(') > 0)
   t.true(src1.indexOf('geom3.create(') > 0)
 })

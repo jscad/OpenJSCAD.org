@@ -7,6 +7,7 @@ All code released under MIT license
 
 */
 
+const version = require('./package.json').version
 const { BYLAYER, getTLA } = require('./autocad')
 const colorIndex = require('./colorindex2017')
 const dxf = require('./DxfReader')
@@ -557,7 +558,7 @@ const instantiate = (src, filename, options) => {
 const translate = (src, filename, options) => {
   let reader = createReader(src, options)
 
-  let code = `// Produced by JSCAD IO Library : DXF Deserialization (${options.version})
+  let code = `// Produced by JSCAD IO Library : DXF Deserializer (${options.version})
 
 `
   // code += '// date: ' + (new Date()) + '\n'
@@ -579,7 +580,7 @@ const translate = (src, filename, options) => {
  */
 const deserialize = (src, filename, options) => {
   const defaults = {
-    version: '0.0.1',
+    version: version,
     output: 'jscad',
     strict: true,
     colorindex: colorIndex,

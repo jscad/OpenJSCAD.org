@@ -823,7 +823,12 @@ const translateAsciiDxf = (reader, options) => {
 
   // debug output
   // console.log('**************************************************')
-  let script = 'function main() {\n  let layers = []\n  return layers.concat('
+  let script = `const {color, geometry, math, primitives} = require('@jscad/modeling')
+
+const main = () => {
+  let layers = []
+  return layers.concat(`
+
   layers.forEach((layer) => {
       let name = layer['lnam'] || 'Unknown'
       script += `${name}(),`
@@ -843,6 +848,9 @@ function createPolygon(listofpoints, color) {
   layers.forEach((layer) => {
       script += translateLayer(layer)
   })
+
+  script += `module.exports = {main}\n`
+
   // console.log(script)
   // console.log('**************************************************')
   return script
