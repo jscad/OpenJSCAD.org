@@ -15,7 +15,7 @@ const translate = (src, filename, options) => {
 
   // convert the internal objects to JSCAD code
   let code = addMetaData ? `//
-// producer: OpenJSCAD.org ${version} AMF deserializer
+// Produced by JSCAD IO Library : AMF Deserializer (${version})
 // date: ${new Date()}
 // source: ${filename}
 //
