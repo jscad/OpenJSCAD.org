@@ -580,7 +580,7 @@ const translate = (src, filename, options) => {
  */
 const deserialize = (src, filename, options) => {
   const defaults = {
-    version: version,
+    version,
     output: 'jscad',
     strict: true,
     colorindex: colorIndex,
