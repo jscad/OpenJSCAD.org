@@ -15,7 +15,7 @@ const translate = (src, filename, options) => {
 
   // convert the internal objects to JSCAD code
   let code = addMetaData ? `//
-// producer: OpenJSCAD.org ${version} AMF deserializer
+// Produced by JSCAD IO Library : AMF Deserializer (${version})
 // date: ${new Date()}
 // source: ${filename}
 //
@@ -68,6 +68,8 @@ const codify = (amf, data) => {
 // Materials: ${materials.length}
 // Scale    : ${amf.scale} from Units (${amf.unit})
 
+const {color, geometry, transforms} = require('@jscad/modeling')
+
 const main = () => {
   let geometries = []
 `
@@ -82,6 +84,9 @@ const main = () => {
   code += `  return geometries\n}\n`
 
   objects.forEach(createDefinition)
+
+  code += `module.exports = {main}\n`
+
   return code
 }
 
