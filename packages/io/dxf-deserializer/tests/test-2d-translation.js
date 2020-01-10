@@ -10,8 +10,8 @@ test('ASCII DXF 2D Entities translated to JSCAD Scripts', t => {
   let dxf1 = ''
   let src1 = deserialize(dxf1, 'dxf1 test', { output: 'jscad' })
   let ss1 = src1.split('\n')
-  t.is(ss1.length, 13)
-  t.true(src1.indexOf('main()') > 0)
+  t.is(ss1.length, 16)
+  t.true(src1.indexOf('main = ()') > 0)
   t.true(src1.indexOf('createPolygon(') > 0)
 
   // DXF CIRCLE, translates to script with a 'circle' function
@@ -35,8 +35,8 @@ CIRCLE
 ENDSEC`
   let src2 = deserialize(dxf2, 'dxf2 test', { output: 'jscad' })
   let ss2 = src2.split('\n')
-  t.is(ss2.length, 17)
-  t.true(src2.indexOf('main()') > 0)
+  t.is(ss2.length, 20)
+  t.true(src2.indexOf('main = ()') > 0)
   t.true(src2.indexOf('circle(') > 0)
 
   // DXF LINE, translates to script with a 'line' created from points
@@ -62,8 +62,8 @@ LINE
 ENDSEC`
   let src3 = deserialize(dxf3, 'dxf3-test', { output: 'jscad' })
   let ss3 = src3.split('\n')
-  t.is(ss3.length, 17)
-  t.true(src3.indexOf('main()') > 0)
+  t.is(ss3.length, 20)
+  t.true(src3.indexOf('main = ()') > 0)
   t.true(src3.indexOf('line(') > 0)
 
   // DXF ARC, translates to script with 'arc' function call
@@ -99,8 +99,8 @@ AcDbArc
 ENDSEC`
   let src4 = deserialize(dxf4, 'dxf4-test', { output: 'jscad' })
   let ss4 = src4.split('\n')
-  t.is(ss4.length, 17)
-  t.true(src4.indexOf('main()') > 0)
+  t.is(ss4.length, 20)
+  t.true(src4.indexOf('main = ()') > 0)
   t.true(src4.indexOf('arc(') > 0)
 
   // DXF LWPOLYLINE without bulges, translates to script with a path created from points
@@ -136,8 +136,8 @@ LWPOLYLINE
 ENDSEC`
   let src5 = deserialize(dxf5, 'dxf5-test', { output: 'jscad' })
   let ss5 = src5.split('\n')
-  t.is(ss5.length, 23)
-  t.true(src5.indexOf('main()') > 0)
+  t.is(ss5.length, 26)
+  t.true(src5.indexOf('main = ()') > 0)
   t.true(src5.indexOf('path2.create(') > 0)
   t.true(src5.indexOf('path2.appendPoints(') > 0)
   t.true(src5.indexOf('path2.close(') > 0)
@@ -183,8 +183,8 @@ LWPOLYLINE
 ENDSEC`
   let src6 = deserialize(dxf6, 'dxf6-test', { output: 'jscad' })
   let ss6 = src6.split('\n')
-  t.is(ss6.length, 23)
-  t.true(src5.indexOf('main()') > 0)
+  t.is(ss6.length, 26)
+  t.true(src6.indexOf('main = ()') > 0)
   t.true(src6.indexOf('path2.create(') > 0)
   t.true(src6.indexOf('path2.appendPoints(') > 0)
   t.true(src6.indexOf('path2.appendArc(') > 0)
@@ -228,8 +228,8 @@ ELLIPSE
 ENDSEC`
   let src7 = deserialize(dxf7, 'dxf7-test', { output: 'jscad' })
   let ss7 = src7.split('\n')
-  t.is(ss7.length, 19)
-  t.true(src5.indexOf('main()') > 0)
+  t.is(ss7.length, 22)
+  t.true(src7.indexOf('main = ()') > 0)
   t.true(src7.indexOf('ellipse(') > 0)
 })
 
@@ -287,7 +287,7 @@ SEQEND
 ENDSEC`
   let src1 = deserialize(dxf1, 'dxf1-test', { output: 'jscad' })
   let ss1 = src1.split('\n')
-  t.is(ss1.length, 20)
+  t.is(ss1.length, 23)
   t.true(src1.indexOf('path2.create(') > 0)
   t.true(src1.indexOf('appendPoints(') > 0)
 
@@ -334,7 +334,7 @@ SEQEND
 ENDSEC`
   let src2 = deserialize(dxf2, 'dxf2-test', { output: 'jscad' })
   let ss2 = src2.split('\n')
-  t.is(ss2.length, 21)
+  t.is(ss2.length, 24)
   t.true(src2.indexOf('path2.create(') > 0)
   t.true(src2.indexOf('appendPoints(') > 0)
   t.true(src2.indexOf('appendArc(') > 0)
@@ -386,7 +386,7 @@ SEQEND
 ENDSEC`
   let src3 = deserialize(dxf3, 'dxf3-test', { output: 'jscad' })
   let ss3 = src3.split('\n')
-  t.is(ss3.length, 20)
+  t.is(ss3.length, 23)
   t.true(src3.indexOf('function layer0(') > 0)
   t.true(src3.indexOf('function layer1(') > 0)
   t.true(src3.indexOf('circle(') > 0)
