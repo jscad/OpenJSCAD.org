@@ -36,7 +36,7 @@ const instantiate = require('./deserialize')
 const deserialize = (input, filename, options) => {
   const defaults = {
     output: 'jscad',
-    version: version,
+    version,
     addMetaData: true
   }
   options = Object.assign({}, defaults, options)
