@@ -11,9 +11,11 @@ test('translate simple obj file to jscad code', function (t) {
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
   const observed = deserializer.deserialize(inputFile, undefined, { output: 'jscad', addMetaData: false })
-  const expected = `// groups: 1
+  const expected = `const {primitives} = require('@jscad/modeling')
+
+// groups: 1
 // points: 8
-function main() {
+const main = () => {
   // points are common to all geometries
   let points = [
     [-0.5,-0.5,0.5],
@@ -55,6 +57,7 @@ const group0 = (points) => {
   return primitives.polyhedron({ orientation: 'outward', points, faces, colors })
 }
 
+module.exports = {main}
 `
 
   t.deepEqual(observed, expected)
@@ -80,9 +83,11 @@ f 5 6 2 1
 f 2 6 7 3
 `
   let observed = deserializer.deserialize(data, undefined, { output: 'jscad', addMetaData: false })
-  let expected = `// groups: 1
+  let expected = `const {primitives} = require('@jscad/modeling')
+
+// groups: 1
 // points: 8
-function main() {
+const main = () => {
   // points are common to all geometries
   let points = [
     [0,2,2],
@@ -124,6 +129,7 @@ const group0 = (points) => {
   return primitives.polyhedron({ orientation: 'outward', points, faces, colors })
 }
 
+module.exports = {main}
 `
 
   t.deepEqual(observed, expected)
@@ -163,9 +169,11 @@ v 2.000000 0.000000 2.000000
 f -4 -3 -2 -1
 `
   const observed = deserializer.deserialize(data, undefined, { output: 'jscad', addMetaData: false })
-  const expected = `// groups: 1
+  const expected = `const {primitives} = require('@jscad/modeling')
+
+// groups: 1
 // points: 24
-function main() {
+const main = () => {
   // points are common to all geometries
   let points = [
     [0,2,2],
@@ -223,6 +231,7 @@ const group0 = (points) => {
   return primitives.polyhedron({ orientation: 'outward', points, faces, colors })
 }
 
+module.exports = {main}
 `
   t.deepEqual(observed, expected)
 })

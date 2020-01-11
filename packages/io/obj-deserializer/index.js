@@ -1,10 +1,12 @@
 const { color, primitives } = require('@jscad/modeling')
 
+const version = require('./package.json').version
+
 /**
  * Parse the given OBJ data and return either a JSCAD script or a set of geometry
  * @see http://en.wikipedia.org/wiki/Wavefront_.obj_file
  * @param  {string} input obj data
- * @param {string} filename (optional) original filename of AMF source
+ * @param {string} filename (optional) original filename of the obj data
  * @param {object} options options (optional) anonymous object with:
  * @param {string} [options.version='0.0.0'] version number to add to the metadata
  * @param {boolean} [options.addMetadata=true] toggle injection of metadata (producer, date, source) at the start of the file
@@ -15,7 +17,7 @@ const deserialize = (input, filename, options) => {
   const defaults = {
     output: 'jscad',
     orientation: 'outward',
-    version: '0.0.0',
+    version,
     addMetaData: true
   }
   options = Object.assign({}, defaults, options)
@@ -177,16 +179,18 @@ const stringify = (positions, groups, options) => {
   let { filename, addMetaData, version } = options
 
   let code = addMetaData ? `//
-// producer: OpenJSCAD.org Compatibility${version} OBJ deserializer
+// Produced by JSCAD IO Library : OBJ Deserializer (${version})
 // date: ${new Date()}
 // source: ${filename}
 //
   ` : ''
 
   // create the main function, with a list of points and translated groups
-  code += `// groups: ${groups.length}
+  code += `const {primitives} = require('@jscad/modeling')
+
+// groups: ${groups.length}
 // points: ${positions.length}
-function main() {
+const main = () => {
   // points are common to all geometries
 ${translatePoints(positions)}
 
@@ -196,6 +200,7 @@ ${translateGroupsToCalls(groups)}  ]
 }
 
 ${translateGroupsToFunctions(groups, options)}
+module.exports = {main}
 `
 
   // create a function for each group
