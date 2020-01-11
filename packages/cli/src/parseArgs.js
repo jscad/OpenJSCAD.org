@@ -1,19 +1,23 @@
 const fs = require('fs')
 
 const { getDesignEntryPoint } = require('@jscad/core/code-loading/requireDesignUtilsFs')
-const { conversionFormats } = require('@jscad/core/io/formats')
+const { supportedInputExtensions, supportedOutputExtensions, supportedOutputFormats } = require('@jscad/core/io/formats')
 
 const version = require('../package.json').version
 const env = require('./env')
 
 const parseArgs = args => {
+  const inputExtensions = supportedInputExtensions()
+  const outputExtensions = supportedOutputExtensions()
+  const outputFormats = supportedOutputFormats()
+
   // hint: https://github.com/substack/node-optimist
   //       https://github.com/visionmedia/commander.js
   if (args.length < 1) {
     console.log('USAGE:\n\nopenjscad [-v] <file> [-of <format>] [-o <output>]')
-    console.log('\t<file>  :\tinput (Supported types: folder, .jscad, .js, .amf, .dxf, .obj, .stl, .svg)')
-    console.log('\t<output>:\toutput (Supported types: folder, .jscad, .amf, .dxf, .stl, .svg, .x3d)')
-    console.log("\t<format>:\t'jscad', 'amf', 'dxf', 'stla' (STL ASCII, default), 'stlb' (STL Binary), 'svg', 'x3d'")
+    console.log(`\t<file>  :\tinput (Supported types: folder, .${inputExtensions.join(', .')})`)
+    console.log(`\t<output>:\toutput (Supported types: folder, .${outputExtensions.join(', .')})`)
+    console.log(`\t<format>:\t${outputFormats.join(', ')}`)
     process.exit(1)
   }
 
@@ -29,8 +33,8 @@ const parseArgs = args => {
     if (input === undefined || input === null || !(typeof input === 'string')) {
       return false
     }
-    return conversionFormats.reduce(function (acc, format) {
-      return input.toLowerCase().endsWith(format.toLowerCase()) || acc
+    return inputExtensions.reduce((acc, format) => {
+      return input.toLowerCase().endsWith('.' + format) || acc
     }, false)
   }
   const getFileExtensionFromString = input => (input.substring(input.lastIndexOf('.') + 1)).toLowerCase()
@@ -69,7 +73,7 @@ const parseArgs = args => {
         // get actual design entry point if applicable (if passed a folder as input etc)
         inputFile = getDesignEntryPoint(fs, inputFile)
         if (!inputFile) {
-          console.log("ERROR: could not determin entry point of project.")
+          console.log("ERROR: could not determine entry point of project.")
           console.log("Verify main or index exists")
           process.exit(1)
         }
