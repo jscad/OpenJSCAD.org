@@ -56,7 +56,7 @@
     "webworkify": "1.5.0"
   },
   "devDependencies": {
-    "ava": "^0.25.0",
+   "ava": "1.4.0",
     "browserify": "16.2.3",
     "budo": "11.5.0",
     "common-shakeify": "^0.5.2",

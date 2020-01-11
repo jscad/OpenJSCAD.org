@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run bootstrap && lerna run --stream test",
     "lint": "eslint packages/**/*.js",
-    "bootstrap": "lerna bootstrap  --ignore-prepublish --no-ci --ignore @jscad/scad-deserializer",
+    "bootstrap": "lerna bootstrap  --ignore-prepublish --no-ci --ignore @jscad/scad-deserializer --ignore @jscad/desktop",
     "list": "lerna ls",
     "clean": "lerna clean",
     "cli": "npm run bootstrap && cd ./packages/cli",
@@ -32,7 +32,7 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "ava": "^0.25.0",
+    "ava": "1.4.0",
     "lerna": "3.19.0",
     "@jscad/sample-files": "github:jscad/sample-files#master"
   },
