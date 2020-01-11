@@ -1,13 +1,15 @@
-const extensionReg = /\.(amf|dxf|js|jscad|obj|stl|svg|x3d)$/
-const formatReg = /(amf|dxf|js|jscad|stl|stla|stlb|svg|x3d)/i
+const { supportedOutputExtensions, supportedOutputFormats } = require('@jscad/core/io/formats')
 
 const determineOutputNameAndFormat = (outputFormat, outputFile, inputFile) => {
-  if (!outputFormat && outputFile && outputFile.length && outputFile.match(extensionReg)) { // output filename set
+  const extReg = new RegExp(`\\.(${supportedOutputExtensions().join('|')})$`)
+  const forReg = new RegExp(`(${supportedOutputFormats().join('|')})`, 'i')
+
+  if (!outputFormat && outputFile && outputFile.length && outputFile.match(extReg)) { // output filename set
     outputFormat = RegExp.$1
   } else if (!outputFormat && outputFile && outputFile.length) { // output filename isn't valid
     console.log('ERROR: invalid output file <' + outputFile + '>')
     process.exit(1)
-  } else if (outputFormat.match(formatReg)) { // output format defined?
+  } else if (outputFormat.match(forReg)) { // output format defined?
     let ext = RegExp.$1
     if (!outputFile) { // unless output filename not set, compose it
       ext = ext.replace(/stl[ab]/, 'stl') // drop [ab] from stl
