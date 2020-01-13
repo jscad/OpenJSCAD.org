@@ -22,15 +22,17 @@
 //   openjscad name_plate.jscad --name "Just Me" --title "CEO" -o amf test.amf
 //
 const fs = require('fs')
-const version = require('./package.json').version
+
 const { formats } = require('@jscad/core/io/formats')
+
+const version = require('./package.json').version
 const generateOutputData = require('./src/generateOutputData')
 const determineOutputNameAndFormat = require('./src/determineOutputNameAndFormat')
 const writeOutput = require('./src/writeOutput')
 const parseArgs = require('./src/parseArgs')
-const args = process.argv.splice(2)
 
 // handle arguments (inputs, outputs, etc)
+const args = process.argv.splice(2)
 let { inputFile, inputFormat, outputFile, outputFormat, params, addMetaData, inputIsDirectory } = parseArgs(args)
 
 // outputs
