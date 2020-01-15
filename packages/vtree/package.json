@@ -18,7 +18,6 @@
     "decache": "4.4.0",
     "just-diff": "2.1.1",
     "simple-diff": "1.6.0",
-    "serialize-to-js": "3.0.2",
-    "usage": "0.7.1"
+    "serialize-to-js": "3.0.2"
   }
 }
