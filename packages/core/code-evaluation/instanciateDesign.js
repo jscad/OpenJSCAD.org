@@ -1,5 +1,5 @@
 // instanciation
-const makeBuildCachedGeometryFromTree = require('jscad-tree-experiment').buildCachedGeometry
+const makeBuildCachedGeometryFromTree = require('@jscad/vtree').buildCachedGeometry
 const isGeom2 = require('@jscad/modeling').geometry.geom2.isA
 const isGeom3 = require('@jscad/modeling').geometry.geom3.isA
 const { toArray } = require('../utils/arrays')

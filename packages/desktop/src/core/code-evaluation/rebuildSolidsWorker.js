@@ -1,5 +1,5 @@
 //
-const makeBuildCachedGeometryFromTree = require('jscad-tree-experiment').buildCachedGeometry
+const makeBuildCachedGeometryFromTree = require('@jscad/vtree').buildCachedGeometry
 const { CAG, CSG } = require('@jscad/csg')
 
 const defaults = {vtreeMode: true}

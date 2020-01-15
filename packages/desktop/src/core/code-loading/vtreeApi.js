@@ -1,1 +1,1 @@
-module.exports = require('jscad-tree-experiment').api
+module.exports = require('@jscad/vtree').api
