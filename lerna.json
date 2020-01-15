@@ -3,6 +3,7 @@
   "packages": [
     "packages/core",
     "packages/modeling",
+    "packages/vtree",
     "packages/cli",
     "packages/desktop",
     "packages/web",
