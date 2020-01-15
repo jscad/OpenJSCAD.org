@@ -1,4 +1,4 @@
-const {runBenchMark} = require('./runBenchmark')
+const { runBenchMark } = require('./runBenchmark')
 
 const runVanilla = () => {
   require('./examples/caching-test-vanilla')()

@@ -1,9 +1,9 @@
 
 const generate = require('./geometry-generator-cached')
 const makeCacheWithInvalidation = require('./cacheWithInvalidation')
-const {flatten, toArray} = require('./arrays')
+const { flatten, toArray } = require('./arrays')
 
-const {specials} = require('./index')
+const { specials } = require('./index')
 /**
  * higher order function returning a function that can be called to generate
  * geometry from a vtree, using caching (for root elements for now)
@@ -15,7 +15,7 @@ const makeBuildCachedGeometryFromTree = (params) => {
     lookup: {},
     lookupCounts: {}
   }
-  const {passesBeforeElimination, lookup, lookupCounts} = Object.assign({}, defaults, params)
+  const { passesBeforeElimination, lookup, lookupCounts } = Object.assign({}, defaults, params)
   const cache = makeCacheWithInvalidation(passesBeforeElimination, lookup, lookupCounts)
 
   const buildFinalResult = (tree, deep) => {
@@ -36,7 +36,7 @@ const makeBuildCachedGeometryFromTree = (params) => {
     const result = buildFinalResult(tree)
 
     // FIXME not sure
-    /*flatten(specials).forEach(function (childNode) {
+    /* flatten(specials).forEach(function (childNode) {
       dfs(childNode, cache)
     }) */
     // console.log('specials', JSON.stringify(specials))

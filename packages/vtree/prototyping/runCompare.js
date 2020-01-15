@@ -54,7 +54,7 @@ const runVTree = (moduleName) => {
 }
 
 const median = sequence => {
-  sequence.sort()  // note that direction doesn't matter
+  sequence.sort() // note that direction doesn't matter
   return sequence[Math.ceil(sequence.length / 2)]
 }
 

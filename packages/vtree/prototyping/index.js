@@ -1,4 +1,4 @@
-const writeOutput = require('../io/writeOutput')
+const writeOutput = require('./io/writeOutput')
 const {toArray} = require('../core/arrays')
 
 const makeBuildCachedGeometryFromTree = require('../core/buildCachedGeometryFromTree')

@@ -11,4 +11,4 @@ const flatten = arr =>
     []
   )
 
-module.exports = {toArray, flatten}
+module.exports = { toArray, flatten }

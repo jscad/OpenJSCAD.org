@@ -1,4 +1,4 @@
-//const serialize = require('serialize-to-js').serialize
+// const serialize = require('serialize-to-js')
 
 const deserializeGeometryCache = (cache) => {
   let data = {}

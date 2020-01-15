@@ -1,11 +1,11 @@
-const {flatten} = require('./arrays')
-const {omit} = require('./objectUtils')
-const {cube, sphere, cylinder} = require('@jscad/csg/api').primitives3d
-const {circle, square} = require('@jscad/csg/api').primitives2d
-const {union, difference, intersection} = require('@jscad/csg/api').booleanOps
-const {translate, rotate, scale, mirror, hull, chain_hull, contract, expand} = require('@jscad/csg/api').transformations
-const {color} = require('@jscad/csg/api').color
-const {linear_extrude, rectangular_extrude, rotate_extrude} = require('@jscad/csg/api').extrusions
+const { flatten } = require('./arrays')
+const { omit } = require('./objectUtils')
+const { cube, sphere, cylinder } = require('@jscad/csg/api').primitives3d
+const { circle, square } = require('@jscad/csg/api').primitives2d
+const { union, difference, intersection } = require('@jscad/csg/api').booleanOps
+const { translate, rotate, scale, mirror, hull, chain_hull, contract, expand } = require('@jscad/csg/api').transformations
+const { color } = require('@jscad/csg/api').color
+const { linear_extrude, rectangular_extrude, rotate_extrude } = require('@jscad/csg/api').extrusions
 
 const generate = (node, cache) => {
   let result
@@ -14,7 +14,7 @@ const generate = (node, cache) => {
     return flatten(node).map(n => generate(n, cache))
   }
 
-  const {foundData, nodeHash} = cache.find(node)
+  const { foundData, nodeHash } = cache.find(node)
   if (foundData) {
     return foundData
   }

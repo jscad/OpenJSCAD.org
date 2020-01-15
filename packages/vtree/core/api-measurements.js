@@ -19,7 +19,7 @@ const makeMeasureArea = specials => {
       return acc + tmpArea
     }, 0)
 
-    specials.push({cache, result: area})
+    specials.push({ cache, result: area })
     console.log('area', area)
 
     return area
@@ -41,7 +41,7 @@ const makeMeasureVolume = specials => {
       return acc + tmpArea
     }, 0)
 
-    specials.push({cache, result: volume})
+    specials.push({ cache, result: volume })
     console.log('volume', volume)
 
     return volume
@@ -55,7 +55,7 @@ const makeMeasureBounds = specials => {
     const cache = cacheWithInvalidation()
     const operands = cachedGenerator([solid], cache)
     const bounds = operands[0].getBounds()
-    specials.push({cache, result: bounds})
+    specials.push({ cache, result: bounds })
     console.log('bounds', bounds)
     return bounds
   }

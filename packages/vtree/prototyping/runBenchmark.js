@@ -31,7 +31,7 @@ function spawnBenchMark (path, runs = 100) {
       if (err) {
         console.log('error?', err)
       }
-      let {cpu, memory} = result
+      let { cpu, memory } = result
       cpuNumbers.push(cpu)
       memNumbers.push(memory / (1024 * 1024))
       // console.log('result' + path, 'memory:',memory/1000, 'cpu:', cpu)
@@ -78,7 +78,7 @@ const runPass = (runFn, runs, name) => {
 }
 
 const median = sequence => {
-  sequence.sort()  // note that direction doesn't matter
+  sequence.sort() // note that direction doesn't matter
   return sequence[Math.ceil(sequence.length / 2)]
 }
 

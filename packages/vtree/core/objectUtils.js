@@ -4,4 +4,4 @@ const omit = (obj, blacklist) => {
     .reduce((newObj, key) => Object.assign(newObj, { [key]: obj[key] }), {})
 }
 
-module.exports = {omit}
+module.exports = { omit }

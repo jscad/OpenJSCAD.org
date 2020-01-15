@@ -1,4 +1,4 @@
-const {flatten} = require('./arrays')
+const { flatten } = require('./arrays')
 
 /** finds all the disconnected sub graphs inside of a tree: ie if
  * the script on which the tree is based returns arrays of data will return those
@@ -7,7 +7,7 @@ const {flatten} = require('./arrays')
 const findDisconnectedSubGraphs = root => {
   // console.log('findDisconnectedSubGraphs')
   if (Array.isArray(root)) {
-    root = {children: root, type: 'root'}
+    root = { children: root, type: 'root' }
   }
 
   let stack = []
