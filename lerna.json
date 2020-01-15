@@ -1,9 +1,9 @@
 {
   "lerna": "3.19.0",
   "packages": [
+    "packages/vtree",
     "packages/core",
     "packages/modeling",
-    "packages/vtree",
     "packages/cli",
     "packages/desktop",
     "packages/web",
