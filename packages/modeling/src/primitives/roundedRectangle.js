@@ -7,7 +7,6 @@ const {geom2} = require('../geometry')
 /**
  * Construct a rounded rectangle.
  * @param {Object} [options] - options for construction
- * @param {Array} [options.center=[0,0]] - center of rounded rectangle
  * @param {Array} [options.size=[2,2]] - dimension of rounded rectangle; width and length
  * @param {Number} [options.roundRadius=0.2] - round radius of corners
  * @param {Number} [options.segments=16] - number of segments to create per 360 rotation
@@ -18,12 +17,12 @@ const {geom2} = require('../geometry')
  */
 const roundedRectangle = (options) => {
   const defaults = {
-    center: [0, 0],
     size: [2, 2],
     roundRadius: 0.2,
     segments: 16
   }
-  let {size, center, roundRadius, segments} = Object.assign({}, defaults, options)
+  let center = [0, 0];
+  let {size, roundRadius, segments} = Object.assign({}, defaults, options)
 
   if (!Array.isArray(size)) throw new Error('size must be an array')
   if (size.length < 2) throw new Error('size must contain width and length values')
