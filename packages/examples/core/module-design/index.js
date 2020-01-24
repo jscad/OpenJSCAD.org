@@ -1,4 +1,5 @@
 const mountPlate = require('./mountPlate.js')
+const sphereShape = require('./subFolder/sphereShape')
 
 const getParameterDefinitions = (prevParamValues) => {
   return [
@@ -8,7 +9,10 @@ const getParameterDefinitions = (prevParamValues) => {
 }
 
 const main = params => {
-  return mountPlate(params.length)
+  return [
+    mountPlate(params.length),
+    sphereShape(10)
+  ]
 }
 
 module.exports = { main, getParameterDefinitions }
