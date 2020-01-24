@@ -1,5 +1,4 @@
-const isGeom2 = require('@jscad/modeling').geometry.geom2.isA
-const isGeom3 = require('@jscad/modeling').geometry.geom3.isA
+const { geometry } = require('@jscad/modeling')
 
 // handled format descriptions
 const formats = {
@@ -208,18 +207,18 @@ const supportedInputFormats = [
 
 const supportedFormatsForObjects = objects => {
   let objectFormats = []
-  let foundGeom3 = false
-  let foundGeom2 = false
+  let found3Dsolid = false
+  let found2Dsolid = false
   for (let i = 0; i < objects.length; i++) {
-    if (isGeom3(objects[i])) { foundGeom3 = true }
-    if (isGeom2(objects[i])) { foundGeom2 = true }
+    if (geometry.geom3.isA(objects[i])) { found3Dsolid = true }
+    if (geometry.geom2.isA(objects[i]) || geometry.path2.isA(objects[i])) { found2Dsolid = true }
   }
   for (let format in formats) {
-    if (foundGeom3 && formats[format].convertGeom3 === true) {
+    if (found3Dsolid && formats[format].convertGeom3 === true) {
       objectFormats[objectFormats.length] = format
       continue // only add once
     }
-    if (foundGeom2 && formats[format].convertGeom2 === true) {
+    if (found2Dsolid && formats[format].convertGeom2 === true) {
       objectFormats[objectFormats.length] = format
     }
   }
