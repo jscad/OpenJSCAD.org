@@ -56,3 +56,5 @@ function circularExtrude (s, p) {
   }
   return union(o)
 }
+
+module.exports = { main, getParameterDefinitions }

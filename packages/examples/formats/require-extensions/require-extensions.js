@@ -4,7 +4,7 @@ const { difference } = require('@jscad/csg/api').booleanOps
 
 // MAGIIIIC ?
 // no, it is require.extensions ! + jscad deserializers
-const sculpture = require('./3d_sculpture-VernonBussler')
+const sculpture = require('./3d_sculpture-VernonBussler.stl')
 
 const main = () => {
   return difference(
