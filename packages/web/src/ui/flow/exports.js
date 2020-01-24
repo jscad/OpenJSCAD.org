@@ -15,21 +15,19 @@ const reducers = {
     return { io }
   },
   setExportFormat: (state, exportFormat) => {
-    console.log('exportformat', exportFormat, state)
     const io = Object.assign({}, state.io, exportFilePathFromFormatAndDesign(state.design, exportFormat))
+    io.exportFormat = exportFormat
     return { io }
   },
   requestExport: (state, _) => {
     const { exportFilePath, exportFormat } = state.io
     const { solids } = state.design
     /* const filePath = undefined // dialog.showSaveDialog({properties: ['saveFile'], title: 'export design to', defaultPath: defaultExportFilePath})//, function (filePath) {
-      console.log('saving', filePath)
       if (filePath !== undefined) {
         // FIXME: BAD ! does not use side effects!
         saveDataToFs(data, exportFormat, filePath)
       } */
     // return {defaultExportFilePath, exportFormat, data}
-    console.log('export requested', solids, exportFilePath)
     const { saveAs } = require('file-saver')
 
     // saveDataToFs(data, exportFormat, filePath)
@@ -56,7 +54,7 @@ const actions = ({ sources }) => {
 
   const requestExport$ = sources.dom.select('#exportBtn').events('click')
     .thru(withLatestFrom(reducers.requestExport, sources.state))
-    .map(data => ({ type: 'exportRequested', data }))
+    .map(data => ({ type: 'requestExport', data }))
 
   return { initializeExports$, requestExport$, changeExportFormat$ }
 }
