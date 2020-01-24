@@ -1,9 +1,11 @@
 const vec3 = require('gl-vec3')
 
+const {toArray} = require('../utils')
+
 /**
- * convert a CSG from csg.js to an array of geometries with positions, normals, colors & indices
- * typically used for example to display the csg data in a webgl wiever
- * @param {Array} csgs single or an array of CSG object
+ * Convert a list of geom3 objects to an array of geometries with positions, normals, colors & indices
+ * Typically used for displaying the geometric data in a webgl wiever
+ * @param {Array} listofgeom3 single or an array of geom3 object(s)
  * @param {Object} options options hash
  * @param {Boolean} options.smoothLighting=false set to true if we want to use interpolated vertex normals
  * this creates nice round spheres but does not represent the shape of the actual model
@@ -11,19 +13,21 @@ const vec3 = require('gl-vec3')
  * @param {String} options.faceColor='#FF000' hex color
  * @returns {Object} {indices, positions, normals, colors}
  */
-function csgToGeometries (csgs, options) {
+function geom3ToGeometries (listofgeom3, options) {
   const defaults = {
     smoothLighting: false, // set to true if we want to use interpolated vertex normals this creates nice round spheres but does not represent the shape of the actual model
     normalThreshold: 0.349066, // 20 deg
     faceColor: [1, 0.4, 0, 1]// default color
   }
-  const { smoothLighting, normalThreshold, faceColor } = Object.assign({}, defaults, options)
-  const faceColorRgb = faceColor === undefined ? undefined : normalizedColor(faceColor) // TODO : detect if hex or rgba
+  const {smoothLighting, normalThreshold, faceColor} = Object.assign({}, defaults, options)
 
-  csgs = toArray(csgs)
-  const geometriesPerCsg = csgs.map(convert)
+  let faceColorRgb = faceColor === undefined ? undefined : normalizedColor(faceColor) // TODO : detect if hex or rgba
 
-  function convert (csg) {
+
+  listofgeom3 = toArray(listofgeom3)
+  const listofgeometries = listofgeom3.map(convert)
+
+  function convert (geometry) {
     let geometries = []
 
     let positions = []
@@ -31,13 +35,12 @@ function csgToGeometries (csgs, options) {
     let normals = []
     let indices = []
 
+    if ('color' in geometry) faceColorRgb = geometry.color
+
     // flag for transparency
     let isTransparent = false
 
-    const polygons = csg.polygons// csg.canonicalized().toPolygons()
-
-    /* let positions = new Float32Array(faces * 3 * 3)
-    let normals = new Float32Array(faces * 3 * 3) */
+    const polygons = geometry.polygons
 
     let normalPositionLookup = []
     normalPositionLookup = {}
@@ -47,7 +50,7 @@ function csgToGeometries (csgs, options) {
       const polygon = polygons[i]
 
       const color = polygonColor(polygon, faceColorRgb)
-      const rawNormal = polygon.plane// polygon.plane.normal
+      const rawNormal = polygon.plane
       const normal = [rawNormal[0], rawNormal[1], rawNormal[2]]
 
       if (color[3] !== 1) {
@@ -61,15 +64,14 @@ function csgToGeometries (csgs, options) {
         let index
 
         const vertex = polygon.vertices[j]
-        const position = [vertex[0], vertex[1], vertex[2]]// new Float32Array(polygon.vertices[j]) // FIXME: should we already get the correct data format (float32 array) at this point
-        // const position = [vertex.pos.x, vertex.pos.y, vertex.pos.z]
+        const position = [vertex[0], vertex[1], vertex[2]]
 
         if (smoothLighting) {
-          const candidateTupple = { normal, position }
+          const candidateTupple = {normal, position}
           const existingTupple = fuzyNormalAndPositionLookup(normalPositionLookup, candidateTupple, normalThreshold)
           if (!existingTupple) {
             const existingPositing = normalPositionLookup[candidateTupple.position]
-            const itemToAdd = [{ normal: candidateTupple.normal, index: tupplesIndex }]
+            const itemToAdd = [{normal: candidateTupple.normal, index: tupplesIndex}]
             if (!existingPositing) {
               normalPositionLookup[candidateTupple.position] = itemToAdd
             } else {
@@ -113,6 +115,7 @@ function csgToGeometries (csgs, options) {
             indices,
             positions,
             normals,
+            color: faceColorRgb,
             isTransparent
           })
         } else {
@@ -128,33 +131,9 @@ function csgToGeometries (csgs, options) {
     }
     return geometries
   }
-
-  console.log('DONE', geometriesPerCsg)
-  return geometriesPerCsg
+  return listofgeometries
 }
 
-/**
- * converts input data to array if it is not already an array
- * @param {Any} input data: can be null or undefined, an array , an object etc
- * @returns {Array} if inital data was an array it returns it unmodified,
- * otherwise a 0 or one element array
- */
-function toArray (data) {
-  if (data === undefined || data === null) { return [] }
-  if (data.constructor !== Array) { return [data] }
-  return data
-}
-
-/**
- * convert color from rgba object to the array of bytes
- * @param {Object} color `{r: r, g: g, b: b, a: a}`
- * @returns {Array}  `[r, g, b, a]`
- */
-function colorBytes (colorRGBA) {
-  let result = [colorRGBA.r, colorRGBA.g, colorRGBA.b]
-  if (colorRGBA.a !== undefined) result.push(colorRGBA.a)
-  return result
-}
 /** determine if input is a hex (color) or not
  * @param  {Object} object a string, array, object , whatever
  * @returns {Boolean} wether the input is a hex string or not
@@ -192,16 +171,14 @@ function normalizedColor (input) {
 
 /**
  * return the color information of a polygon
- * @param {Object} polygon a csg.js polygon
+ * @param {Object} polygon a polygon
  * @param {Object} faceColor a hex color value to default to
  * @returns {Array}  `[r, g, b, a]`
  */
 function polygonColor (polygon, faceColor) {
   let color = faceColor
 
-  if (polygon.shared && polygon.shared.color) {
-    color = polygon.shared.color
-  } else if (polygon.color) {
+  if (polygon.color) {
     color = polygon.color
   }
   // opaque is default
@@ -234,11 +211,11 @@ function fuzyNormalAndPositionLookup (normalPositionLookup, toCompare, normalThr
       const similarNormal = areNormalsSimilar(normal, toCompare.normal, normalThreshold)
       const similar = similarNormal
       if (similar) {
-        return { tupple: { position: toCompare.position, normal }, index: normalsCandidates[i].index }
+        return {tupple: {position: toCompare.position, normal}, index: normalsCandidates[i].index}
       }
     }
   }
   return undefined
 }
 
-module.exports = csgToGeometries
+module.exports = geom3ToGeometries
