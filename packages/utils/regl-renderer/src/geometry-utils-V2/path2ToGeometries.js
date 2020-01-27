@@ -25,18 +25,9 @@ const path2ToGeometries = (solid, options) => {
   }
 
   let normals = positions.map(x => [0, 0, -1])
-  let colors = positions.map(x => color)
   let indices = positions.map((x, i) => i) // FIXME: temporary, not really needed, need to change drawMesh
 
-  return [
-    {
-      positions: positions,
-      normals: normals,
-      color,
-      colors: colors,
-      indices: indices
-    }
-  ]
+  return [ { positions, normals, color, indices } ]
 }
 
 module.exports = path2ToGeometries
