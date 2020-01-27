@@ -10,128 +10,134 @@ const {toArray} = require('../utils')
  * @param {Boolean} options.smoothLighting=false set to true if we want to use interpolated vertex normals
  * this creates nice round spheres but does not represent the shape of the actual model
  * @param {Float} options.normalThreshold=0.349066 threshold beyond which to split normals // 20 deg
- * @param {String} options.faceColor='#FF000' hex color
- * @returns {Object} {indices, positions, normals, colors}
+ * @param {String} options.color=[1, 0.4, 0, 1] default color of given geometry
+ * @returns {Object} [{indices, positions, normals, colors}, ...]
  */
 function geom3ToGeometries (listofgeom3, options) {
   const defaults = {
-    smoothLighting: false, // set to true if we want to use interpolated vertex normals this creates nice round spheres but does not represent the shape of the actual model
-    normalThreshold: 0.349066, // 20 deg
-    faceColor: [1, 0.4, 0, 1]// default color
+    smoothLighting: false,
+    normalThreshold: 0.349066,
+    color: [1, 0.4, 0, 1]
   }
-  const {smoothLighting, normalThreshold, faceColor} = Object.assign({}, defaults, options)
+  const {smoothLighting, normalThreshold, color} = Object.assign({}, defaults, options)
 
-  let faceColorRgb = faceColor === undefined ? undefined : normalizedColor(faceColor) // TODO : detect if hex or rgba
-
+  let meshColor = color ? normalizedColor(color) : undefined
 
   listofgeom3 = toArray(listofgeom3)
-  const listofgeometries = listofgeom3.map(convert)
+  const listofgeometries = listofgeom3.map((geometry) => convert({meshColor, smoothLighting, normalThreshold}, geometry))
 
-  function convert (geometry) {
-    let geometries = []
+  return listofgeometries
+}
 
-    let positions = []
-    let colors = []
-    let normals = []
-    let indices = []
+/*
+ * Convert the given geometry using the given options (see above for options)
+ * @returns {Object} [{indices, positions, normals, colors}, ...]
+ */
+const convert = (options, geometry) => {
+  let color = options.meshColor
+  let geometries = []
 
-    if ('color' in geometry) faceColorRgb = geometry.color
+  let positions = []
+  let colors = []
+  let normals = []
+  let indices = []
 
-    // flag for transparency
-    let isTransparent = false
+  if ('color' in geometry) color = geometry.color
 
-    const polygons = geometry.polygons
+  // flag for transparency
+  let isTransparent = false
 
-    let normalPositionLookup = []
-    normalPositionLookup = {}
-    let tupplesIndex = 0
+  const polygons = geometry.polygons
 
-    for (let i = 0; i < polygons.length; i++) {
-      const polygon = polygons[i]
+  let normalPositionLookup = []
+  normalPositionLookup = {}
+  let tupplesIndex = 0
 
-      const color = polygonColor(polygon, faceColorRgb)
-      const rawNormal = polygon.plane
-      const normal = [rawNormal[0], rawNormal[1], rawNormal[2]]
+  // FIXME this isn't going to work if the polygons are > 65000 (see below)
 
-      if (color[3] !== 1) {
-        isTransparent = true
-      }
+  for (let i = 0; i < polygons.length; i++) {
+    const polygon = polygons[i]
 
-      const polygonIndices = []
-      // we need unique tupples of normal + position , that gives us a specific index (indices)
-      // if the angle between a given normal and another normal is less than X they are considered the same
-      for (let j = 0; j < polygon.vertices.length; j++) {
-        let index
+    const faceColor = polygonColor(polygon, color)
+    const rawNormal = polygon.plane
+    const normal = [rawNormal[0], rawNormal[1], rawNormal[2]]
 
-        const vertex = polygon.vertices[j]
-        const position = [vertex[0], vertex[1], vertex[2]]
+    if (faceColor && faceColor[3] !== 1) {
+      isTransparent = true
+    }
 
-        if (smoothLighting) {
-          const candidateTupple = {normal, position}
-          const existingTupple = fuzyNormalAndPositionLookup(normalPositionLookup, candidateTupple, normalThreshold)
-          if (!existingTupple) {
-            const existingPositing = normalPositionLookup[candidateTupple.position]
-            const itemToAdd = [{normal: candidateTupple.normal, index: tupplesIndex}]
-            if (!existingPositing) {
-              normalPositionLookup[candidateTupple.position] = itemToAdd
-            } else {
-              normalPositionLookup[candidateTupple.position] = normalPositionLookup[candidateTupple.position]
-                .concat(itemToAdd)
-            }
-            index = tupplesIndex
-            // normalPositionLookup.push(candidateTupple)
-            // index = normalPositionLookup.length - 1
-            if (faceColor !== undefined) {
-              colors.push(color)
-            }
-            normals.push(normal)
-            positions.push(position)
-            tupplesIndex += 1
+    const polygonIndices = []
+    // we need unique tupples of normal + position , that gives us a specific index (indices)
+    // if the angle between a given normal and another normal is less than X they are considered the same
+    for (let j = 0; j < polygon.vertices.length; j++) {
+      let index
+
+      const vertex = polygon.vertices[j]
+      const position = [vertex[0], vertex[1], vertex[2]]
+
+      if (options.smoothLighting) {
+        const candidateTupple = {normal, position}
+        const existingTupple = fuzyNormalAndPositionLookup(normalPositionLookup, candidateTupple, options.normalThreshold)
+        if (!existingTupple) {
+          const existingPositing = normalPositionLookup[candidateTupple.position]
+          const itemToAdd = [{normal: candidateTupple.normal, index: tupplesIndex}]
+          if (!existingPositing) {
+            normalPositionLookup[candidateTupple.position] = itemToAdd
           } else {
-            index = existingTupple.index
+            normalPositionLookup[candidateTupple.position] = normalPositionLookup[candidateTupple.position]
+              .concat(itemToAdd)
           }
-        } else {
-          if (faceColor !== undefined) {
-            colors.push(color)
+          index = tupplesIndex
+          // normalPositionLookup.push(candidateTupple)
+          // index = normalPositionLookup.length - 1
+          if (faceColor) {
+            colors.push(faceColor)
           }
           normals.push(normal)
           positions.push(position)
-          index = positions.length - 1
-        }
-
-        // let prevcolor = colors[index]
-        polygonIndices.push(index)
-      }
-
-      for (let j = 2; j < polygonIndices.length; j++) {
-        indices.push([polygonIndices[0], polygonIndices[j - 1], polygonIndices[j]])
-      }
-
-      // if too many vertices or we are at the end, start a new geometry
-      if (positions.length > 65000 || i === polygons.length - 1) {
-        // special case to deal with face color SPECICIALLY SET TO UNDEFINED
-        if (faceColor === undefined) {
-          geometries.push({
-            indices,
-            positions,
-            normals,
-            color: faceColorRgb,
-            isTransparent
-          })
+          tupplesIndex += 1
         } else {
-          geometries.push({
-            indices,
-            positions,
-            normals,
-            colors,
-            isTransparent
-          })
+          index = existingTupple.index
         }
+      } else {
+        if (faceColor) {
+          colors.push(faceColor)
+        }
+        normals.push(normal)
+        positions.push(position)
+        index = positions.length - 1
+      }
+
+      polygonIndices.push(index)
+    }
+
+    for (let j = 2; j < polygonIndices.length; j++) {
+      indices.push([polygonIndices[0], polygonIndices[j - 1], polygonIndices[j]])
+    }
+
+    // if too many vertices or we are at the end, start a new geometry
+    if (positions.length > 65000 || i === polygons.length - 1) {
+      // special case to deal with face color SPECICIALLY SET TO UNDEFINED
+      if (faceColor === undefined) {
+        geometries.push({
+          indices,
+          positions,
+          normals,
+          color,
+          isTransparent
+        })
+      } else {
+        geometries.push({
+          indices,
+          positions,
+          normals,
+          colors,
+          isTransparent
+        })
       }
     }
-    return geometries
   }
-  return listofgeometries
+  return geometries
 }
 
 /** determine if input is a hex (color) or not
@@ -172,20 +178,20 @@ function normalizedColor (input) {
 /**
  * return the color information of a polygon
  * @param {Object} polygon a polygon
- * @param {Object} faceColor a hex color value to default to
+ * @param {Object} color a default color
  * @returns {Array}  `[r, g, b, a]`
  */
-function polygonColor (polygon, faceColor) {
-  let color = faceColor
+function polygonColor (polygon, color) {
+  let faceColor = color
 
   if (polygon.color) {
-    color = polygon.color
+    faceColor = polygon.color
   }
   // opaque is default
-  if (color !== undefined && color.length < 4) {
-    color.push(1.0)
+  if (faceColor && faceColor.length < 4) {
+    faceColor.push(1.0)
   }
-  return color
+  return faceColor
 }
 
 /**
@@ -201,7 +207,7 @@ function areNormalsSimilar (normal, otherNormal, threshold) {
   // return vec3.angle(normal, otherNormal) <= threshold
 }
 
-function fuzyNormalAndPositionLookup (normalPositionLookup, toCompare, normalThreshold = 0.349066) {
+function fuzyNormalAndPositionLookup (normalPositionLookup, toCompare, normalThreshold) {
   const normalsCandidates = normalPositionLookup[toCompare.position]
   if (normalsCandidates) {
     // normalPositionLookup[toCompare.position] = normalPositionLookup[toCompare.position].concat([toCompare.normal])
