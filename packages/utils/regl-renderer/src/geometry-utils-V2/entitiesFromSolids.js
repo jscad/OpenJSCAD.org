@@ -49,7 +49,7 @@ const entitiesFromSolids = (params, solids) => {
     const visuals = {
       drawCmd: 'drawMesh',
       show: true,
-      color: meshColor,
+      // color: meshColor, // overrides colors in geometries
       transparent: geometry.isTransparent, // not sure
       useVertexColors: true
     }
