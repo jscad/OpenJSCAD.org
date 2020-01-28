@@ -1,7 +1,7 @@
-const { cube } = require('@jscad/modeling').primitives
+const { cuboid } = require('@jscad/modeling').primitives
 
 const mountPlate = (length) => {
-  return cube({ size: [length, 1, 1] })
+  return cuboid({ size: [length, 10, 1] })
 }
 
 module.exports = mountPlate
