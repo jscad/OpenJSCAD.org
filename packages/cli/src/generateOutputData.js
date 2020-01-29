@@ -1,7 +1,6 @@
 const fs = require('fs')
 const { isAbsolute, resolve } = require('path')
-const { prepareOutput } = require('@jscad/core/io/prepareOutput')
-const { convertToBlob } = require('@jscad/core/io/convertToBlob')
+const { solidsAsBlob } = require('@jscad/io')
 // const rebuildSolids = require('@jscad/core/code-evaluation/rebuildGeometry')
 const rebuildSolids = require('@jscad/core/code-evaluation/rebuildGeometryCli')
 const { registerAllExtensions } = require('@jscad/core/io/registerExtensions')
@@ -74,9 +73,9 @@ const generateOutputData = (source, params, options) => {
       }
     }
   })
-    .then(objects => {
+    .then(solids => {
       // Buffer.from(outputData.data),{encoding: outputData.mimeType},
-      return convertToBlob(prepareOutput(objects, { format: outputFormat }))
+      return solidsAsBlob(solids, { format: outputFormat })
     })
 }
 
