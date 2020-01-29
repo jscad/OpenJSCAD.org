@@ -1,12 +1,13 @@
-// instanciation
 const makeBuildCachedGeometryFromTree = require('@jscad/vtree').buildCachedGeometry
+
 const isGeom2 = require('@jscad/modeling').geometry.geom2.isA
 const isGeom3 = require('@jscad/modeling').geometry.geom3.isA
+const isPath2 = require('@jscad/modeling').geometry.path2.isA
+
 const { toArray } = require('../utils/arrays')
 
 // const toCompactBinary = require('./toCompactTest')
-const isLine = data => 'points' in data
-const isResultSolid = (rawResults) => (rawResults.length > 0 && (isGeom3(rawResults[0]) || isGeom2(rawResults[0]) || isLine(rawResults[0]) ))
+const isResultSolid = (rawResults) => (rawResults.length > 0 && (isGeom3(rawResults[0]) || isGeom2(rawResults[0]) || isPath2(rawResults[0]) ))
 
 const lookupFromCompactBinary = (compactLookup) => {
   // TODO: optimise this !!
@@ -47,8 +48,7 @@ const serializeSolids = solids => {
   // FIXME: deal with NON GEOM2/GEOM3 !!
   return solids
     .map(object => {
-      if (isGeom3(object) || isGeom2(object) || isLine(object) ) {
-        console.log('thing to serialize', object)
+      if (isGeom3(object) || isGeom2(object) || isPath2(object) ) {
         // FIXME: add back to/from compact binary
         // return object.toCompactBinary()
         return JSON.stringify(object)
@@ -75,7 +75,6 @@ const instanciateDesign = (rootModule, parameterValues, options) => {
     solids = serialize ? serializeSolids(solids) : solids
     return { solids, lookup, lookupCounts }
   } else {
-    console.log('RAWRESULTS' ,rawResults)
     if (isResultSolid(rawResults)) {
       solids = serialize ? serializeSolids(rawResults) : rawResults
       return { solids }
