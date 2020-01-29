@@ -52,6 +52,7 @@
     "@jscad/stl-serializer": "1.0.0-alpha.d0fb3056",
     "@jscad/svg-deserializer": "1.0.0-alpha.d0fb3056",
     "@jscad/svg-serializer": "1.0.0-alpha.d0fb3056",
-    "@jscad/x3d-serializer": "1.0.0-alpha.d0fb3056"
+    "@jscad/x3d-serializer": "1.0.0-alpha.d0fb3056",
+    "@jscad/modeling": "0.0.1"
   }
 }

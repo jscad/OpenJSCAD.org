@@ -1,5 +1,5 @@
 
-const { toArray } = require('..//utils/arrays')
+const { toArray } = require('@jscad/array-utils')
 const { formats } = require('./formats')
 const { stlSerializer,
   amfSerializer,

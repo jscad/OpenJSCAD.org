@@ -1,4 +1,5 @@
-const { makeBlob } = require('@jscad/io-utils')
+const { makeBlob, convertToBlob } = require('@jscad/io-utils')
+const prepareOutput = require('./prepareOutput')
 
 const amfSerializer = require('@jscad/amf-serializer')
 const dxfSerializer = require('@jscad/dxf-serializer')
@@ -16,6 +17,8 @@ const objDeSerializer = require('@jscad/obj-deserializer')
 const stlDeSerializer = require('@jscad/stl-deserializer')
 const svgDeSerializer = require('@jscad/svg-deserializer')
 
+const solidsAsBlob = (solids, format) => convertToBlob(prepareOutput(solids, { format }))
+
 module.exports = {
   makeBlob,
   amfSerializer,
@@ -32,7 +35,9 @@ module.exports = {
   objDeSerializer,
   // scadDeSerializer,  //FIXME: upgrade, fix before re-enabling
   stlDeSerializer,
-  svgDeSerializer
+  svgDeSerializer,
+
+  solidsAsBlob
 }
 /* export {makeBlob} from './utils/Blob'
 
