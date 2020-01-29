@@ -30,4 +30,20 @@ const nth = (index, data) => {
   return data[index]
 }
 
-module.exports = {toArray, head, flatten, nth}
+/* function flatten (array) {
+  return [].concat(...array)
+}
+
+function flatten (array) {
+  if (array === undefined || array === null) {
+    return []
+  }
+  return [].concat(...array)
+}
+function toArray (data) {
+  if (data === undefined || data === null) { return [] }
+  if (data.constructor !== Array) { return [data] }
+  return data
+} */
+
+module.exports = { toArray, head, flatten, nth }

@@ -1,5 +1,5 @@
 
-const { flatten, toArray } = require('../utils')
+const { flatten, toArray } = require('@jscad/array-utils')
 
 function cagToGeometries (cags, options) {
   const defaults = {

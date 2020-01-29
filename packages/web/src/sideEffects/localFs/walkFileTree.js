@@ -1,12 +1,6 @@
 const { conversionFormats } = require('@jscad/core/io/formats')
 const getFileExtensionFromString = require('@jscad/core/utils/getFileExtensionFromString')
-
-function flatten (array) {
-  if (array === undefined || array === null) {
-    return []
-  }
-  return [].concat(...array)
-}
+const { flatten } = require('@jscad/array-utils')
 
 const readFileAsync = function (file, fileMeta) {
   const isBinaryFile = file.name.match(/\.(stl|gcode)$/) // FIXME how to determine?

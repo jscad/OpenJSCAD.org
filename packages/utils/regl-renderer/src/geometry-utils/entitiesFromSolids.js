@@ -1,5 +1,5 @@
 const mat4 = require('gl-mat4')
-const { flatten, toArray } = require('../utils')
+const { flatten, toArray } = require('@jscad/array-utils')
 const csgToGeometries = require('./csgToGeometries')
 const cagToGeometries = require('./cagToGeometries')
 const computeBounds = require('../bound-utils/computeBounds')
