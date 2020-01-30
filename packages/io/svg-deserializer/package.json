@@ -36,6 +36,7 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/modeling": "0.0.1",
+    "@jscad/array-utils":"0.0.0",
     "sax": "1.2.4"
   },
   "devDependencies": {
