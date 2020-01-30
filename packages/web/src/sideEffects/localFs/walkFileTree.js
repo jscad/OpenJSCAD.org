@@ -1,4 +1,4 @@
-const { conversionFormats } = require('@jscad/core/io/formats')
+const { conversionFormats } = require('@jscad/io/formats')
 const getFileExtensionFromString = require('@jscad/core/utils/getFileExtensionFromString')
 const { flatten } = require('@jscad/array-utils')
 

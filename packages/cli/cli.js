@@ -23,7 +23,7 @@
 //
 const fs = require('fs')
 
-const { formats } = require('@jscad/core/io/formats')
+const { formats } = require('@jscad/io/formats')
 
 const version = require('./package.json').version
 const generateOutputData = require('./src/generateOutputData')
