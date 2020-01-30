@@ -1,6 +1,6 @@
 const vec3 = require('gl-vec3')
 
-const {toArray} = require('../utils')
+const { toArray } = require('@jscad/array-utils')
 
 /**
  * Convert a list of geom3 objects to an array of geometries with positions, normals, colors & indices
@@ -19,12 +19,12 @@ function geom3ToGeometries (listofgeom3, options) {
     normalThreshold: 0.349066,
     color: [1, 0.4, 0, 1]
   }
-  const {smoothLighting, normalThreshold, color} = Object.assign({}, defaults, options)
+  const { smoothLighting, normalThreshold, color } = Object.assign({}, defaults, options)
 
   let meshColor = color ? normalizedColor(color) : undefined
 
   listofgeom3 = toArray(listofgeom3)
-  const listofgeometries = listofgeom3.map((geometry) => convert({meshColor, smoothLighting, normalThreshold}, geometry))
+  const listofgeometries = listofgeom3.map((geometry) => convert({ meshColor, smoothLighting, normalThreshold }, geometry))
 
   return listofgeometries
 }
@@ -76,11 +76,11 @@ const convert = (options, geometry) => {
       const position = [vertex[0], vertex[1], vertex[2]]
 
       if (options.smoothLighting) {
-        const candidateTupple = {normal, position}
+        const candidateTupple = { normal, position }
         const existingTupple = fuzyNormalAndPositionLookup(normalPositionLookup, candidateTupple, options.normalThreshold)
         if (!existingTupple) {
           const existingPositing = normalPositionLookup[candidateTupple.position]
-          const itemToAdd = [{normal: candidateTupple.normal, index: tupplesIndex}]
+          const itemToAdd = [{ normal: candidateTupple.normal, index: tupplesIndex }]
           if (!existingPositing) {
             normalPositionLookup[candidateTupple.position] = itemToAdd
           } else {
@@ -217,7 +217,7 @@ function fuzyNormalAndPositionLookup (normalPositionLookup, toCompare, normalThr
       const similarNormal = areNormalsSimilar(normal, toCompare.normal, normalThreshold)
       const similar = similarNormal
       if (similar) {
-        return {tupple: {position: toCompare.position, normal}, index: normalsCandidates[i].index}
+        return { tupple: { position: toCompare.position, normal }, index: normalsCandidates[i].index }
       }
     }
   }

@@ -13,8 +13,7 @@ All code released under MIT license
 const sax = require('sax')
 
 const { transforms } = require('@jscad/modeling')
-
-const toArray = require('./toArray')
+const { toArray } = require('@jscad/array-utils')
 
 const { cagLengthX, cagLengthY } = require('./helpers')
 const { svgSvg, svgRect, svgCircle, svgGroup, svgLine, svgPath, svgEllipse, svgPolygon, svgPolyline, svgUse } = require('./svgElementHelpers')
@@ -125,7 +124,7 @@ let svgObjects = [] // named objects
 let svgGroups = [] // groups of objects
 let svgDefs = [] // defined objects
 let svgInDefs = false // svg DEFS element in process
-let svgObj = undefined // svg in object form
+let svgObj // svg in object form
 let svgUnitsPmm = [1, 1]
 
 /*

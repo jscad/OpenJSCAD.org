@@ -1,5 +1,6 @@
 
-const {toArray} = require('../../utils/utils')
+const { toArray } = require('@jscad/array-utils')
+
 const getParameterValuesFromUIControls = require('../parameters/getParameterValuesFromUIControls')
 
 const rebuildSolids = (jscadScript, paramControls) => {
@@ -9,4 +10,4 @@ const rebuildSolids = (jscadScript, paramControls) => {
   return solids
 }
 
-module.exports = {rebuildSolids}
+module.exports = { rebuildSolids }
