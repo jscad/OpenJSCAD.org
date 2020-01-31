@@ -2,12 +2,12 @@ const modeling = require('@jscad/modeling') // FIXME: not ideal
 
 module.exports = {
   color: require('./color'),
-  connectors: require('./connectors'),
+  connectors: modeling.connectors,
   geometry: require('./geometry'),
-  math: require('./math'),
+  math: modeling.math,
   primitives: require('./primitives'),
   text: require('./text'),
-  utils: require('./utils'),
+  utils: modeling.utils,
 
   booleans: require('./operations/booleans'),
   expansions: require('./operations/expansions'),
