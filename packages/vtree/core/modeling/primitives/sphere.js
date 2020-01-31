@@ -8,4 +8,4 @@ const sphere = params => {
   return Object.assign({}, _params, { type: 'sphere' })
 }
 
-module.exports = sphere
+module.exports = { sphere }

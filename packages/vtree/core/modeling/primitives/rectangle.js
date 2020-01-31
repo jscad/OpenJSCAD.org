@@ -46,4 +46,4 @@ const square = (params) => {
   return Object.assign({}, _params, { type: 'square' })
 }
 
-module.exports = rectangle
+module.exports = { rectangle, square }
