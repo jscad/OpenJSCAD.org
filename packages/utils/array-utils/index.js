@@ -1,10 +1,17 @@
-/* converts input data to array if it is not already an array */
-const toArray = data => {
-  if (!data) return []
-  if (data.constructor !== Array) return [data]
-  return data
+/**
+ *  converts input data to array if it is not already an array
+ *  @param {Array} array
+ * */
+const toArray = array => {
+  if (array === undefined || array === null) { return [] }
+  if (array.constructor !== Array) return [array]
+  return array
 }
 
+/**
+ * returns the first item of an array, or undefined if the array is empty or undefined
+ * @param {Array} array
+ */
 const head = (array) => {
   if (array === undefined || null) {
     return undefined
@@ -15,35 +22,28 @@ const head = (array) => {
   return array[0]
 }
 
-const flatten = list => list.reduce(
-  (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
-)
-
-// helper function to retrieve the nth element of an array
-const nth = (index, data) => {
-  if (!data) {
-    return undefined
-  }
-  if (data.length < index) {
-    return undefined
-  }
-  return data[index]
+/** flatten the given argument into a single flat array
+ * the argument can be composed of multiple depths of values and arrays
+ * @param {Array} array
+ */
+const flatten = (array) => {
+  return array.reduce((acc, val) => Array.isArray(val) ? acc.concat(flatten(val)) : acc.concat(val), [])
 }
 
-/* function flatten (array) {
-  return [].concat(...array)
-}
-
-function flatten (array) {
+/**
+ * helper function to retrieve the nth element of an array
+ * if the array is undefined or empty, returns undefined, otherwise returns the item at the given index
+ * @param {Integer} index
+ * @param {Array} array
+ */
+const nth = (index, array) => {
   if (array === undefined || array === null) {
-    return []
+    return undefined
   }
-  return [].concat(...array)
+  if (array.length < index) {
+    return undefined
+  }
+  return array[index]
 }
-function toArray (data) {
-  if (data === undefined || data === null) { return [] }
-  if (data.constructor !== Array) { return [data] }
-  return data
-} */
 
 module.exports = { toArray, head, flatten, nth }
