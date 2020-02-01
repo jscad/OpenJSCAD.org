@@ -1,9 +1,7 @@
 const most = require('most')
 const { exportFilePathFromFormatAndDesign } = require('../../core/io/exportUtils')
-const { prepareOutput } = require('@jscad/core/io/prepareOutput')
-const { convertToBlob } = require('@jscad/core/io/convertToBlob')
+const { solidsAsBlob } = require('@jscad/io')
 const withLatestFrom = require('@jscad/core/observable-utils/withLatestFrom')
-// const saveDataToFs = require('../../core/io/saveDataToFs')
 
 const reducers = {
   initialize: (state) => {
@@ -23,18 +21,13 @@ const reducers = {
     const { exportFilePath, exportFormat } = state.io
     const { solids } = state.design
     /* const filePath = undefined // dialog.showSaveDialog({properties: ['saveFile'], title: 'export design to', defaultPath: defaultExportFilePath})//, function (filePath) {
-      console.log('saving', filePath)
-      if (filePath !== undefined) {
-        // FIXME: BAD ! does not use side effects!
-        saveDataToFs(data, exportFormat, filePath)
-      } */
+      */
     // return {defaultExportFilePath, exportFormat, data}
     console.log('export requested', solids, exportFilePath)
     const { saveAs } = require('file-saver')
-
-    // saveDataToFs(data, exportFormat, filePath)
     const format = exportFormat
-    const blob = convertToBlob(prepareOutput(solids, { format }))
+    const blob = solidsAsBlob(solids, { format })
+    // FIXME: BAD ! does not use side effects!
     // fs.writeFileSync(filePath, buffer)
     saveAs(blob, exportFilePath)
     // const io = Object.assign({}, state.io, {defaultExportFilePath, exportFormat: state.exportFormat, data: state.design.solids})

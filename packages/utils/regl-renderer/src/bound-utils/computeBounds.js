@@ -3,13 +3,6 @@ const vec3 = require('gl-vec3')
 const boundingBox = require('./boundingBox')
 const boundingSphere = require('./boundingSphere')
 
-/* converts input data to array if it is not already an array */
-function toArray (data) {
-  if (data === undefined || data === null) return []
-  if (data.constructor !== Array) return [data]
-  return data
-}
-
 /**
  * compute all bounding data given geometry data + position
  * @param  {Object} transforms the initial transforms ie {pos:[x, x, x], rot:[x, x, x], sca:[x, x, x]}.
@@ -40,9 +33,9 @@ function computeBounds (object) {
       let geomPositions = object.geometry.positions
       const isNested = geomPositions.length > 1 && Array.isArray(geomPositions[0])
       geomPositions = scale === 1 ? geomPositions
-      : (
-        isNested ? geomPositions.map(pos => pos.map(position => position * scale)) : geomPositions.map(position => position * scale)
-      )
+        : (
+          isNested ? geomPositions.map(pos => pos.map(position => position * scale)) : geomPositions.map(position => position * scale)
+        )
 
       positions = positions.concat(geomPositions)// object.geometry.positions.map(position => position * scale))
     })

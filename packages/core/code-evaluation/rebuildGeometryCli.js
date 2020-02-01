@@ -1,6 +1,6 @@
 
 const path = require('path')
-const { toArray } = require('../utils/arrays')
+const { toArray } = require('@jscad/array-utils')
 const requireDesignFromModule = require('../code-loading/requireDesignFromModule')
 const getAllParameterDefintionsAndValues = require('../parameters/getParameterDefinitionsAndValues')
 const transformSources = require('../code-loading/transformSources')

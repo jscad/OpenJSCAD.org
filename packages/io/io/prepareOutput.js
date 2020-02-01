@@ -1,13 +1,12 @@
 
-const { toArray } = require('..//utils/arrays')
+const { toArray } = require('@jscad/array-utils')
 const { formats } = require('./formats')
-const { stlSerializer,
-  amfSerializer,
-  x3dSerializer,
-  svgSerializer,
-  jsonSerializer,
-  dxfSerializer
-} = require('@jscad/io')
+const amfSerializer = require('@jscad/amf-serializer')
+const dxfSerializer = require('@jscad/dxf-serializer')
+const jsonSerializer = require('@jscad/json-serializer')
+const stlSerializer = require('@jscad/stl-serializer')
+const svgSerializer = require('@jscad/svg-serializer')
+const x3dSerializer = require('@jscad/x3d-serializer')
 
 const prepareOutput = (objects, params) => {
   const defaults = {

@@ -4,7 +4,7 @@ const isGeom2 = require('@jscad/modeling').geometry.geom2.isA
 const isGeom3 = require('@jscad/modeling').geometry.geom3.isA
 const isPath2 = require('@jscad/modeling').geometry.path2.isA
 
-const { toArray } = require('../utils/arrays')
+const { toArray } = require('@jscad/array-utils')
 
 // const toCompactBinary = require('./toCompactTest')
 const isResultSolid = (rawResults) => (rawResults.length > 0 && (isGeom3(rawResults[0]) || isGeom2(rawResults[0]) || isPath2(rawResults[0]) ))

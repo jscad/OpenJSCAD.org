@@ -14,8 +14,7 @@ onmessage = function (event) {
       const apiMainPath = vtreeMode ? './vtreeApi' : '@jscad/csg/api'
 
       const {isCAG, isCSG} = require('@jscad/csg')
-      const {toArray} = require('../../utils/utils')
-
+      const {toArray} = require('@jscad/array-utils')
       const {loadScript} = require('../code-loading/scriptLoading')
       const requireUncached = require('../code-loading/requireUncached')
       // TODO: only uncache when needed

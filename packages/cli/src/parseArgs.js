@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 const { getDesignEntryPoint } = require('@jscad/core/code-loading/requireDesignUtilsFs')
-const { supportedInputExtensions, supportedOutputExtensions, supportedOutputFormats } = require('@jscad/core/io/formats')
+const { supportedInputExtensions, supportedOutputExtensions, supportedOutputFormats } = require('@jscad/io/formats')
 
 const version = require('../package.json').version
 const env = require('./env')

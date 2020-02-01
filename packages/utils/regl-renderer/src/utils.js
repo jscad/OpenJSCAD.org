@@ -1,12 +1,3 @@
-function flatten (array) {
-  return [].concat(...array)
-}
-function toArray (data) {
-  if (data === undefined || data === null) { return [] }
-  if (data.constructor !== Array) { return [data] }
-  return data
-}
-
 /** kinda, sorta like a nested object.assign, so that nested object values
  * do not get lost
  * note : this is NOT actually making anything immutable !
@@ -39,7 +30,5 @@ function merge (output = {}, currentState, options) {
 }
 
 module.exports = {
-  flatten,
-  toArray,
   merge
 }

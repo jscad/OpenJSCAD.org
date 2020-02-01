@@ -17,7 +17,6 @@ Notes:
 */
 
 const { ensureManifoldness } = require('@jscad/io-utils')
-//const {toArray} = require('@jscad/io-utils/arrays')
 const { isCSG, isCAG } = require('@jscad/csg')
 
 const mimeType = 'application/json'

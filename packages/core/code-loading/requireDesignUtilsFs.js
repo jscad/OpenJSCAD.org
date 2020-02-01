@@ -1,5 +1,5 @@
 const path = require('path')
-const { toArray } = require('../utils/arrays')
+const { toArray } = require('@jscad/array-utils')
 
 // NOTE/ path.parse is NOT included by browserify & co , hence this function ...
 // https://github.com/substack/path-browserify/pull/3

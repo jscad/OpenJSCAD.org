@@ -1,5 +1,5 @@
 const most = require('most')
-const { flatten } = require('../../utils/utils')
+const { flatten } = require('@jscad/array-utils')
 const { proxy } = require('most-proxy')
 
 const makeActions = (sources) => {
