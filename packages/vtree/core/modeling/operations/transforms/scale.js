@@ -1,4 +1,4 @@
-const { toArray } = require('./arrays')
+const { toArray } = require('@jscad/array-utils')
 
 const scale = (params, ...solids) => {
   solids = toArray(solids)

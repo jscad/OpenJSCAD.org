@@ -1,4 +1,4 @@
-const { toArray } = require('./arrays')
+const { toArray } = require('@jscad/array-utils')
 
 const extrudeLinear = (params, ...solids) => {
   solids = toArray(solids)

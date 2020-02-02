@@ -1,7 +1,7 @@
 
 const generate = require('./geometry-generator-cached')
 const makeCacheWithInvalidation = require('./cacheWithInvalidation')
-const { flatten, toArray } = require('./arrays')
+const { flatten, toArray } = require('./@jscad/array-utils')
 
 const { specials } = require('./index')
 /**

@@ -1,5 +1,3 @@
-const { toArray } = require('./arrays')
-
 const cacheWithInvalidation = require('./cacheWithInvalidation')
 const cachedGenerator = require('./geometry-generator-cached')
 

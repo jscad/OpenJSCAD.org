@@ -1,4 +1,4 @@
-const { flatten } = require('../arrays')
+const { flatten } = require('@jscad/array-utils')
 const { omit } = require('../objectUtils')
 const modeling = require('@jscad/modeling')
 

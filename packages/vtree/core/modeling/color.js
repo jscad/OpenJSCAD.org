@@ -1,5 +1,5 @@
 
-const { toArray } = require('./arrays')
+const { toArray } = require('@jscad/array-utils')
 
 const color = (params, ...solids) => {
   solids = toArray(solids)

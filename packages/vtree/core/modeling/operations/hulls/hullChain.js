@@ -1,4 +1,4 @@
-const { toArray } = require('./arrays')
+const { toArray } = require('@jscad/array-utils')
 
 const hullChain = (...solids) => {
   solids = toArray(solids)

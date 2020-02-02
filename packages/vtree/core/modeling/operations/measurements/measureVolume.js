@@ -1,4 +1,4 @@
-const { toArray } = require('./arrays')
+const { toArray } = require('@jscad/array-utils')
 
 const cacheWithInvalidation = require('./cacheWithInvalidation')
 const cachedGenerator = require('./geometry-generator-cached')

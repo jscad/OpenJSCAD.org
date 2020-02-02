@@ -1,5 +1,3 @@
-const { toArray } = require('./arrays')
-
 const cuboid = params => {
   /* const defaults = {
       size: [1, 1, 1],
