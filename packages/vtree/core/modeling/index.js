@@ -3,7 +3,7 @@ const modeling = require('@jscad/modeling') // FIXME: not ideal
 module.exports = {
   color: require('./color'),
   connectors: modeling.connectors,
-  geometry: require('./geometry'),
+  geometry: modeling.geometry,
   math: modeling.math,
   primitives: require('./primitives'),
   text: require('./text'),

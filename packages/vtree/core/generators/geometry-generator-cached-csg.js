@@ -1,5 +1,4 @@
 const { flatten } = require('@jscad/array-utils')
-const { omit } = require('../objectUtils')
 const modeling = require('@jscad/modeling')
 
 const { cube, cuboid, sphere, cylinder } = modeling.primitivs
@@ -10,9 +9,13 @@ const { translate, rotate, scale, mirror } = modeling.transforms
 const { hull, hullChain } = modeling.hulls
 const { expand, offset } = modeling.exapnsions
 const { extrudeLinear, extrudeRotate, extrudeFromSlices, extrudeRectangular } = modeling.extrusions
-const {measureArea, measureVolume, measureBounds} = modeling.measurements
+const { measureArea, measureVolume, measureBounds } = modeling.measurements
 const { color } = modeling.color
 
+/** genere actual 'genometry' based on vtree node(s)
+ * @param  {} node
+ * @param  {} cache
+ */
 const generate = (node, cache) => {
   let operands
   if (Array.isArray(node)) {
@@ -34,8 +37,10 @@ const generate = (node, cache) => {
   }
 
   const lookup = {
+    // various
+    color: () => nodeWithParams(node, operands, color),
     // primitives
-    cube: () =>cube(node),
+    cube: () => cube(node),
     cuboid: () => cuboid(node),
     sphere: () => sphere(node),
     cylinder: () => cylinder(node),
@@ -55,9 +60,9 @@ const generate = (node, cache) => {
     scale: () => nodeWithParams(node, operands, scale),
     mirror: () => nodeWithParams(node, operands, mirror),
     // hulls
-    hull:() => nodeWithoutParams(node, operands, hull),
-    hullChain:() => nodeWithoutParams(node, operands, hullChain),
-    //expansions
+    hull: () => nodeWithoutParams(node, operands, hull),
+    hullChain: () => nodeWithoutParams(node, operands, hullChain),
+    // expansions
     expand: () => nodeWithParams(node, operands, expand),
     offset: () => nodeWithParams(node, operands, offset),
     // extrusions
@@ -68,18 +73,19 @@ const generate = (node, cache) => {
     extrudeFromSlices: () => nodeWithParams(node, operands, extrudeFromSlices),
     // measurements
     measureArea: () => {
-      operands = flatten(node.children).map(n => generate(n, cache))
-      const area = operands.reduce((acc, csg) => {
-        let tmpArea = csg.toTriangles().reduce(function (accSub, triPoly) {
-          return accSub + triPoly.getTetraFeatures(['area'])
-        }, 0)
-        return acc + tmpArea
-      }, 0)
+      // first generate the actual geometry for the items, then compute
+      return measureArea(flatten(node.children).map(n => generate(n, cache)))
     },
-    measureVolume: () => nodeWithParams(node, operands, measureVolume),
-    measureBounds: () => nodeWithParams(node, operands, measureBounds),
+    measureVolume: () => {
+      // first generate the actual geometry for the items, then compute
+      return measureVolume(flatten(node.children).map(n => generate(n, cache)))
+    },
+    measureBounds: () => {
+      // first generate the actual geometry for the items, then compute
+      return measureBounds(flatten(node.children).map(n => generate(n, cache)))
+    }
   }
-  
+
   const result = lookup[node.type] ? lookup[node.type]() : node
 
   cache.add(nodeHash, result)
