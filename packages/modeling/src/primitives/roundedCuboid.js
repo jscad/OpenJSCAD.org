@@ -129,9 +129,6 @@ const roundedCuboid = (options) => {
   let center = [0, 0, 0];
   let {size, roundRadius, segments} = Object.assign({}, defaults, options)
 
-  if (!Array.isArray(center)) throw new Error('center must be an array')
-  if (center.length < 3) throw new Error('center must contain X, Y and Z values')
-
   if (!Array.isArray(size)) throw new Error('size must be an array')
   if (size.length < 3) throw new Error('size must contain width, depth and height values')
 

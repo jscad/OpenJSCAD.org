@@ -12,7 +12,11 @@ const centerGeometry = (options, object) => {
     center: [0, 0, 0]
   }
   const { axes, center } = Object.assign({}, defaults, options)
-
+  
+  while(center[2] === undefined){
+    center.push(0);
+  }
+  
   let bounds = measureBounds(object)
   let offset = [0, 0, 0]
   if (axes[0]) offset[0] = center[0] - (bounds[0][0] + ((bounds[1][0] - bounds[0][0]) / 2))

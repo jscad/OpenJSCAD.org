@@ -8,6 +8,8 @@ const { circle, rectangle, sphere, cuboid } = require('../../primitives')
 
 const { union } = require('./index')
 
+const { center } = require('../transforms/center')
+
 // test('union: union of a path produces expected changes to points', t => {
 //   let geometry = path.fromPoints({}, [[0, 1, 0], [1, 0, 0]])
 //
@@ -37,7 +39,7 @@ test('union of one or more geom2 objects produces expected geometry', t => {
   t.deepEqual(obs, exp)
 
   // union of two non-overlapping objects
-  let geometry2 = rectangle({ size: [4, 4], center: [10, 10] })
+  let geometry2 = center({ center: [10, 10] }, rectangle({ size: [4, 4] }))
 
   let result2 = union(geometry1, geometry2)
   obs = geom2.toPoints(result2)
@@ -161,7 +163,7 @@ test('union of one or more geom3 objects produces expected geometry', t => {
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // union of two non-overlapping objects
-  let geometry2 = cuboid({ size: [4, 4, 4], center: [10, 10, 10] })
+  let geometry2 = center({ center: [10, 10, 10] }, cuboid({ size: [4, 4, 4] }))
 
   let result2 = union(geometry1, geometry2)
   obs = geom3.toPoints(result2)
@@ -211,8 +213,8 @@ test('union of one or more geom3 objects produces expected geometry', t => {
 })
 
 test('union of geom3 with rounding issues #137', t => {
-  let geometry1 = cuboid({ size: [44, 26, 5], center: [0, 0, -1] })
-  let geometry2 = cuboid({ size: [44, 26, 1.8], center: [0, 0, -4.400001] }) // introduce percision error
+  let geometry1 = center( { center: [0, 0, -1] }, cuboid({ size: [44, 26, 5] }))
+  let geometry2 = center( { center: [0, 0, -4.400001] }, cuboid({ size: [44, 26, 1.8] })) // introduce percision error
 
   let obs = union(geometry1, geometry2)
   let pts = geom3.toPoints(obs)

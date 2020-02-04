@@ -8,6 +8,8 @@ const { circle, rectangle, sphere, cuboid } = require('../../primitives')
 
 const { intersect } = require('./index')
 
+const { center } = require('../transforms/center')
+
 //  test('intersect: intersect of a path produces expected changes to points', t => {
 //    let geometry = path.fromPoints({}, [[0, 1, 0], [1, 0, 0]])
 //
@@ -38,7 +40,7 @@ test('intersect: intersect of one or more geom2 objects produces expected geomet
   t.deepEqual(obs, exp)
 
   // intersect of two non-overlapping objects
-  let geometry2 = rectangle({ size: [4, 4], center: [10, 10] })
+  let geometry2 = center({ center: [10, 10] }, rectangle({ size: [4, 4] }))
 
   let result2 = intersect(geometry1, geometry2)
   obs = geom2.toPoints(result2)
@@ -151,7 +153,7 @@ test('intersect: intersect of one or more geom3 objects produces expected geomet
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // intersect of two non-overlapping objects
-  let geometry2 = cuboid({ size: [4, 4, 4], center: [10, 10, 10] })
+  let geometry2 = center({ center: [10,10,10] }, cuboid({ size: [4, 4, 4] }))
 
   let result2 = intersect(geometry1, geometry2)
   obs = geom3.toPoints(result2)
