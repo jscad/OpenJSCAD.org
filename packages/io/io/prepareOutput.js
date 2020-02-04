@@ -51,6 +51,4 @@ const prepareOutput = (objects, params) => {
   return { data, mimeType }
 }
 
-module.exports = {
-  prepareOutput
-}
+module.exports = prepareOutput
