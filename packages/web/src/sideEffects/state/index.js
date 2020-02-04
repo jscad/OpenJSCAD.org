@@ -1,6 +1,6 @@
 const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
-const { head } = require('@jscad/core/utils/arrays')
+const { head } = require('@jscad/array-utils')
 const makeLogger = require('../../utils/logger')
 
 const makeState = (params) => {

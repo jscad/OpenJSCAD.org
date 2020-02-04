@@ -2,7 +2,7 @@ const most = require('most')
 const withLatestFrom = require('@jscad/core/observable-utils/withLatestFrom')
 const holdUntil = require('@jscad/core/observable-utils/holdUntil')
 const { getKeyCombos, isKeyEventScopeValid, simpleKey } = require('../../utils/keys')
-const { head } = require('@jscad/core/utils/arrays')
+const { head } = require('@jscad/array-utils')
 const { merge } = require('../../utils/utils')
 
 const reducers = {
