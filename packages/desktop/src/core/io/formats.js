@@ -64,9 +64,6 @@ const formats = {
     convertGeom3: false,
     convertGeom2: true
   },
-  gcode: {
-    displayName: 'gcode',
-    description: 'G Programming Language File Format' },
   json: {
     displayName: 'json',
     description: 'JavaScript Object Notation Format' }
@@ -76,7 +73,6 @@ const formats = {
 const conversionFormats = [
 // 3D file formats
   'amf',
-  'gcode',
   'js',
   'jscad',
   'obj',

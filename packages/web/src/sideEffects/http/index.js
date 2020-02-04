@@ -18,7 +18,7 @@ const makeHttpSideEffect = (params) => {
   const log = makeLogger({ enabled: logging })
   /* var xhr = new XMLHttpRequest()
   xhr.open('GET', url || filename, true)
-  if (filename.match(/\.(stl|gcode)$/i)) {
+  if (filename.match(/\.(stl)$/i)) {
       xhr.overrideMimeType('text/plain; charset=x-user-defined') // our pseudo binary retrieval (works with Chrome)
     }
   xhr.onload = function () {

@@ -41,7 +41,6 @@ const generateOutputData = (source, params, options) => {
     const conversionTable = {
       amf: data => require('@jscad/io').amfDeSerializer.deserialize(data.source, data.inputFile, options),
       obj: data => require('@jscad/io').objDeSerializer.deserialize(data.source, data.inputFile, options),
-      gcode: data => require('@jscad/io').gcodeDeSerializer.deserialize(data.source, data.inputFile, options),
       stl: data => require('@jscad/io').stlDeSerializer.deserialize(data.source, data.inputFile, options),
       svg: data => require('@jscad/io').svgDeSerializer.deserialize(data.source, data.inputFile, options),
       dxf: data => require('@jscad/io').dxfDeSerializer.deserialize(data.source, data.inputFile, options),
@@ -64,7 +63,7 @@ const generateOutputData = (source, params, options) => {
     if (outputFormat === 'jscad' || outputFormat === 'js') {
       resolve(source)
     } else if ((inputFormat === 'jscad' || inputFormat === 'js') &&
-    outputFormat !== 'jscad' && outputFormat !== 'js') {
+               outputFormat !== 'jscad' && outputFormat !== 'js') {
       try {
         const solids = rebuildSolids({ mainPath: inputPath, parameterValues: params, inputIsDirectory, source })
         resolve(solids)
