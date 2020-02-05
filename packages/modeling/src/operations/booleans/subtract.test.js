@@ -40,7 +40,7 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
   t.deepEqual(obs, exp)
 
   // subtract of two non-overlapping objects
-  let geometry2 = center( { center: [10,10] }, rectangle({ size: [4, 4] }))
+  let geometry2 = center( { center: [10,10,0] }, rectangle({ size: [4, 4] }))
 
   let result2 = subtract(geometry1, geometry2)
   obs = geom2.toPoints(result2)

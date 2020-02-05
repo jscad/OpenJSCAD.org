@@ -12,11 +12,7 @@ const centerGeometry = (options, object) => {
     center: [0, 0, 0]
   }
   const { axes, center } = Object.assign({}, defaults, options)
-  
-  while(center[2] === undefined){
-    center.push(0);
-  }
-  
+    
   let bounds = measureBounds(object)
   let offset = [0, 0, 0]
   if (axes[0]) offset[0] = center[0] - (bounds[0][0] + ((bounds[1][0] - bounds[0][0]) / 2))
@@ -46,6 +42,7 @@ const center = function (options, ...geometries) {
 
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('wrong number of arguments')
+  if (center.length !== 3) throw new Error('center must be an array of length 3')
 
   options = {
     axes: axes,
