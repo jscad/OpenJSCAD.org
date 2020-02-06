@@ -7,7 +7,8 @@
 
 ## NOTICE
 
-As of 2020, THIS LIBRARY HAS BEEN DEPRECATED.
+As of 2020, **THIS DESERIALIZER IS DEPRECATED**
+Ff you want to bring back the provided functionality in an up-to-date manner, please create a PR, thank you !
 
 ## Overview
 
