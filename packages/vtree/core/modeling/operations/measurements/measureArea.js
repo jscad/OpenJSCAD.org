@@ -1,7 +1,7 @@
 const { toArray } = require('@jscad/array-utils')
 
-const cacheWithInvalidation = require('./cacheWithInvalidation')
-const cachedGenerator = require('./geometry-generator-cached')
+const cacheWithInvalidation = require('../../../cacheWithInvalidation')
+const cachedGenerator = require('../../../generators/geometry-generator-cached-csg')
 
 /**
  * Unlike most 'virtual' functions measurement of areas pre-computes the needed geometric data

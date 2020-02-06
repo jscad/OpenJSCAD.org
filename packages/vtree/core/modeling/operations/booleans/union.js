@@ -1,4 +1,4 @@
-const { flatten } = require('@jscad/array-utils')
+const { flatten, toArray } = require('@jscad/array-utils')
 
 const union = (...solids) => {
   solids = flatten(toArray(solids))

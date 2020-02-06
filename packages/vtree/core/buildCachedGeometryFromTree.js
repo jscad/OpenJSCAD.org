@@ -1,9 +1,9 @@
 
-const generate = require('./geometry-generator-cached')
+const generate = require('./generators/geometry-generator-cached-csg')
 const makeCacheWithInvalidation = require('./cacheWithInvalidation')
-const { flatten, toArray } = require('./@jscad/array-utils')
+const { flatten, toArray } = require('@jscad/array-utils')
 
-const { specials } = require('./index')
+const { specials } = require('./modeling')
 /**
  * higher order function returning a function that can be called to generate
  * geometry from a vtree, using caching (for root elements for now)

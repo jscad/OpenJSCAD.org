@@ -3,7 +3,7 @@ module.exports = {
   // circle: require('./ellipse').circle,
   // cube: require('./cuboid').cube,
   cuboid: require('./cuboid'),
-  cylinder: require('./cylinderElliptic'),
+  // cylinder: require('./cylinderElliptic'),
   // cylinderElliptic: require('./cylinderElliptic').cylinderElliptic,
   ellipse: require('./ellipse'), // .ellipse
   // ellipsoid: require('./ellipsoid').ellipsoid,
@@ -16,7 +16,7 @@ module.exports = {
   // roundedCuboid: require('./roundedCuboid'),
   // roundedCylinder: require('./roundedCylinder'),
   // roundedRectangle: require('./roundedRectangle'),
-  sphere: require('./ellipsoid').sphere
+  // sphere: require('./ellipsoid').sphere
   // star: require('./star'),
   // torus: require('./torus')
 }

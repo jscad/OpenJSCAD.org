@@ -6,7 +6,7 @@ module.exports = {
   geometry: modeling.geometry,
   math: modeling.math,
   primitives: require('./primitives'),
-  text: require('./text'),
+  // text: require('./text'),
   utils: modeling.utils,
 
   booleans: require('./operations/booleans'),
@@ -14,5 +14,8 @@ module.exports = {
   extrusions: require('./operations/extrusions'),
   hulls: require('./operations/hulls'),
   measurements: require('./operations/measurements'),
-  transforms: require('./operations/transforms')
+  transforms: require('./operations/transforms'),
+
+  // specials
+  specials: require('./operations/measurements')
 }

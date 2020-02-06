@@ -1,4 +1,4 @@
 module.exports = {
-  api: require('./core/index').apiClone,
+  api: require('./core/modeling'),
   buildCachedGeometry: require('./core/buildCachedGeometryFromTree')
 }
