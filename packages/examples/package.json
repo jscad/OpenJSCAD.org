@@ -28,13 +28,6 @@
   "license": "MIT",
   "devDependencies": {
   },
-  "eslintConfig": {
-    "extends": "standard",
-    "rules": {
-      "semi": "off",
-      "no-undef": "off"
-    }
-  },
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/openjscad",
