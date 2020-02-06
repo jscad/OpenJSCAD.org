@@ -1,5 +1,5 @@
 const path = require('path')
-const { head } = require('../../utils/utils')
+const { head } = require('@jscad/array-utils')
 const { formats, supportedFormatsForObjects } = require('@jscad/io/formats')
 
 const availableExportFormatsFromSolids = (solids) => {

@@ -3,7 +3,7 @@ const getFileExtensionFromString = require('@jscad/core/utils/getFileExtensionFr
 const { flatten } = require('@jscad/array-utils')
 
 const readFileAsync = function (file, fileMeta) {
-  const isBinaryFile = file.name.match(/\.(stl|gcode)$/) // FIXME how to determine?
+  const isBinaryFile = file.name.match(/\.(stl)$/) // FIXME how to determine?
   const reader = new FileReader()
 
   return new Promise(function (resolve, reject) {

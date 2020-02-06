@@ -5,6 +5,11 @@
 [![npm version](https://badge.fury.io/js/%40jscad%2Fgcode-deserializer.svg)](https://badge.fury.io/js/%40jscad%2Fgcode-deserializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/gcode-deserializer)
 
+## NOTICE
+
+As of 2020, **THIS DESERIALIZER IS DEPRECATED**
+Ff you want to bring back the provided functionality in an up-to-date manner, please create a PR, thank you !
+
 ## Overview
 
 This deserializer converts raw gcode data to jscad code (that can be evaluated to CSG/CAG).

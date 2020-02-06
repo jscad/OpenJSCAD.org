@@ -10,14 +10,13 @@ const x3dSerializer = require('@jscad/x3d-serializer')
 
 const amfDeSerializer = require('@jscad/amf-deserializer')
 const dxfDeSerializer = require('@jscad/dxf-deserializer')
-const gcodeDeSerializer = require('@jscad/gcode-deserializer')
 const jsonDeSerializer = require('@jscad/json-deserializer')
 const objDeSerializer = require('@jscad/obj-deserializer')
 // const scadDeSerializer = require('@jscad/scad-deserializer') //FIXME: upgrade, fix before re-enabling
 const stlDeSerializer = require('@jscad/stl-deserializer')
 const svgDeSerializer = require('@jscad/svg-deserializer')
 
-const solidsAsBlob = (solids, format) => convertToBlob(prepareOutput(solids, { format }))
+const solidsAsBlob = (solids, params) => convertToBlob(prepareOutput(solids, params))
 
 module.exports = {
   makeBlob,
@@ -30,7 +29,6 @@ module.exports = {
 
   amfDeSerializer,
   dxfDeSerializer,
-  gcodeDeSerializer,
   jsonDeSerializer,
   objDeSerializer,
   // scadDeSerializer,  //FIXME: upgrade, fix before re-enabling

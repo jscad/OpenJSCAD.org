@@ -42,14 +42,6 @@ const formats = {
     deserializable: true,
     convertGeom3: true,
     convertGeom2: true },
-  gcode: {
-    displayName: 'GCODE',
-    description: 'G Programming Language File Format',
-    extension: 'gcode',
-    mimetype: 'application/octet-stream',
-    deserializable: false,
-    convertGeom3: false,
-    convertGeom2: false },
   jscad: {
     displayName: 'JSCAD',
     description: 'OpenJSCAD.org Source',
@@ -104,7 +96,6 @@ const formats = {
 const conversionFormats = [
 // 3D file formats
   'amf',
-  'gcode',
   'js',
   'jscad',
   'obj',
@@ -137,12 +128,6 @@ const supportedInputFormats = [
     extensions: ['amf'],
     type: '3d',
     binary: true,
-    convertableToJscad: true
-  },
-  {
-    extensions: ['gcode'],
-    type: '3d',
-    binary: false,
     convertableToJscad: true
   },
   {
