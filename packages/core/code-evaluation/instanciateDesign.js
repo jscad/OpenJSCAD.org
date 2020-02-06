@@ -7,9 +7,9 @@ const isPath2 = require('@jscad/modeling').geometry.path2.isA
 const { toArray } = require('@jscad/array-utils')
 
 // const toCompactBinary = require('./toCompactTest')
-const isResultSolid = (rawResults) => (rawResults.length > 0 && (isGeom3(rawResults[0]) || isGeom2(rawResults[0]) || isPath2(rawResults[0]) ))
+const isResultSolid = (rawResults) => (rawResults.length > 0 && (isGeom3(rawResults[0]) || isGeom2(rawResults[0]) || isPath2(rawResults[0])))
 
-const lookupFromCompactBinary = (compactLookup) => {
+const lookupFromCompactBinary = (compactLookup = {}) => {
   // TODO: optimise this !!
   let lookup = {}
   Object.keys(compactLookup).forEach(function (key) {
@@ -48,7 +48,7 @@ const serializeSolids = solids => {
   // FIXME: deal with NON GEOM2/GEOM3 !!
   return solids
     .map(object => {
-      if (isGeom3(object) || isGeom2(object) || isPath2(object) ) {
+      if (isGeom3(object) || isGeom2(object) || isPath2(object)) {
         // FIXME: add back to/from compact binary
         // return object.toCompactBinary()
         return JSON.stringify(object)
@@ -62,13 +62,13 @@ const instanciateDesign = (rootModule, parameterValues, options) => {
   let solids
   let rawResults = toArray(rootModule.main(parameterValues))
 
-  const forcedNOVtreeMode = false // FIXME: disabling Vtree mode for now until more V2 progress is done
-  if (forcedNOVtreeMode) {
+  if (vtreeMode) {
     let lookup = lookupFromCompactBinary(inputLookup)
     let lookupCounts = inputLookupCounts
     const start = new Date()
     const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree({ passesBeforeElimination: 5, lookup, lookupCounts })
     solids = buildCachedGeometryFromTree({}, rawResults)
+    console.log('solids, vtree', solids)
     console.warn(`buildCachedGeometryFromTree`, new Date() - start)//, rawResults, solids)
     // TODO: return both solids and cache instead of mutating ?
     lookup = lookupToCompactBinary(lookup)

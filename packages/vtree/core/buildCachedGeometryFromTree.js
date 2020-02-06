@@ -26,12 +26,12 @@ const makeBuildCachedGeometryFromTree = (params) => {
   // geometry from the vtree
   return function (params, tree) {
     // FIXME: not sure: merge pre-emptive cache results
-    specials.forEach(special => {
+    /* specials.forEach(special => {
       // console.log('special', special.cache)
       Object.keys(special.cache.lookup).forEach(key => {
         cache.add(key, special.cache.lookup[key])
       })
-    })
+    }) */
 
     const result = buildFinalResult(tree)
 

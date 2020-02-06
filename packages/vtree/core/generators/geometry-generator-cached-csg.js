@@ -1,13 +1,13 @@
 const { flatten } = require('@jscad/array-utils')
 const modeling = require('@jscad/modeling')
 
-const { cube, cuboid, sphere, cylinder } = modeling.primitivs
+const { cube, cuboid, sphere, cylinder } = modeling.primitives
 const { circle, ellipse, rectangle, square } = modeling.primitives
 
 const { union, difference, intersection } = modeling.booleans
 const { translate, rotate, scale, mirror } = modeling.transforms
 const { hull, hullChain } = modeling.hulls
-const { expand, offset } = modeling.exapnsions
+const { expand, offset } = modeling.expansions
 const { extrudeLinear, extrudeRotate, extrudeFromSlices, extrudeRectangular } = modeling.extrusions
 const { measureArea, measureVolume, measureBounds } = modeling.measurements
 const { color } = modeling.color
