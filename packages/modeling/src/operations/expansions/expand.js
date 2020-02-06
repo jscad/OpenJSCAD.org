@@ -16,7 +16,7 @@ const expandPath2 = require('./expandPath2')
  * @return {Object|Array} the expanded object(s)
  *
  * @example
- * let newsphere = expand({delta: 2}, cube({center: [0,0,15], size: [20, 25, 5]}))
+ * let newsphere = expand({delta: 2}, cube({size: [20, 25, 5]}))
  */
 const expand = (options, ...objects) => {
   objects = flatten(objects)

@@ -12,8 +12,7 @@ const getRadiusRatio = (vertices, density) => {
   return 0
 }
 
-const getPoints = (vertices, radius, startAngle) => {
-  var center = [0, 0];
+const getPoints = (vertices, radius, startAngle, center) => {
   var a = (Math.PI * 2) / vertices
 
   var points = []

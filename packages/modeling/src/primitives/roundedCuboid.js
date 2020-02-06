@@ -4,8 +4,7 @@ const {vec2, vec3} = require('../math')
 
 const {geom3, poly3} = require('../geometry')
 
-const createCorners = (size, radius, segments, slice, positive) => {
-  let center = [0,0,0];
+const createCorners = (center, size, radius, segments, slice, positive) => {
   let pitch = (Math.PI / 2) * slice / segments
   let cospitch = Math.cos(pitch)
   let sinpitch = Math.sin(pitch)
