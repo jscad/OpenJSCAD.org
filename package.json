@@ -4,6 +4,7 @@
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "scripts": {
+    "coverage": "lerna run --concurrency 1 --stream coverage",
     "test": "npm run bootstrap && lerna run --stream test",
     "lint": "standard 'packages/**/*.js'",
     "bootstrap": "lerna bootstrap  --ignore-prepublish --no-ci --ignore @jscad/scad-deserializer --ignore @jscad/desktop",
@@ -35,6 +36,7 @@
     "@jscad/sample-files": "github:jscad/sample-files#master",
     "ava": "1.4.0",
     "lerna": "3.19.0",
+    "nyc": "^15.0.0",
     "standard": "^14.3.1"
   },
   "collective": {
