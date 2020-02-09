@@ -36,8 +36,8 @@
     "@jscad/sample-files": "github:jscad/sample-files#master",
     "ava": "1.4.0",
     "lerna": "3.19.0",
-    "nyc": "^15.0.0",
-    "standard": "^14.3.1"
+    "nyc": "15.0.0",
+    "standard": "14.3.1"
   },
   "collective": {
     "type": "opencollective",
