@@ -9,9 +9,11 @@ module.exports = {
   eachPoint: require('./eachPoint'),
   equals: require('./equals'),
   fromPoints: require('./fromPoints'),
+  fromCompactBinary: require('./fromCompactBinary'),
   isA: require('./isA'),
   reverse: require('./reverse'),
   toPoints: require('./toPoints'),
   toString: require('./toString'),
+  toCompactBinary: require('./toCompactBinary'),
   transform: require('./transform')
 }
