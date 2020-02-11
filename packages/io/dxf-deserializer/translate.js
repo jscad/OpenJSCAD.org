@@ -181,7 +181,7 @@ const translateArc = (obj, layers, options) => {
 
   // convert to 2D object
   if (lthk === 0.0) {
-    let script = `  let ${name} = primitives.arc({center: [${pptx}, ${ppty}], radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}})\n`
+    let script = `  let ${name} = transforms.center({ center: [${pptx}, ${ppty}, 0] }, primitives.arc({ radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}}))\n`
     if (color) {
       script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
     }
@@ -190,7 +190,7 @@ const translateArc = (obj, layers, options) => {
     return
   }
   // FIXME how to represent 3D arc?
-  let script = `  let ${name} = primitives.arc({center: [${pptx}, ${ppty}], radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}})\n`
+  let script = `  let ${name} = transforms.center({ center: [${pptx}, ${ppty}, 0] }, primitives.arc({ radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}}))\n`
   if (color) {
     script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
   }
@@ -218,7 +218,7 @@ const translateCircle = (obj, layers, options) => {
 
   // convert to 2D object
   if (lthk === 0.0) {
-    let script = `  let ${name} = primitives.circle({center: [${pptx},${ppty}],radius: ${swid},segments: ${res}})\n`
+    let script = `  let ${name} = transforms.center({ center: [${pptx}, ${ppty}, 0] }, primitives.circle({radius: ${swid},segments: ${res}}))\n`
     if (color) {
       script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
     }
@@ -228,7 +228,7 @@ const translateCircle = (obj, layers, options) => {
   }
 
   // convert to 3D object
-  let script = `  let ${name} = primitives.circle({center: [${pptx},${ppty}],radius: ${swid},segments: ${res}).extrude({offset: [0,0,${lthk}]})\n`
+  let script = `  let ${name} = transforms.center({ center: [${pptx}, ${ppty}, 0] }, primitives.circle({radius: ${swid},segments: ${res}).extrude({offset: [0,0,${lthk}]}))\n`
   if (color) {
     script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
   }
@@ -267,7 +267,7 @@ const translateEllipse = (obj, layers, options) => {
     let angle = Math.atan2(spty, sptx) // * 180 / Math.PI
     // FIXME add start and end angle when supported
 
-    let script = `  let ${name} = primitives.ellipse({center: [0, 0], radius: [${rx}, ${ry}], segments: ${res}})
+    let script = `  let ${name} = transforms.center({ center: [0, 0, 0] }, primitives.ellipse({ radius: [${rx}, ${ry}], segments: ${res}}))
   let ${name}matrix = math.mat4.multiply(math.mat4.fromTranslation([${pptx}, ${ppty}, 0]), math.mat4.fromZRotation(${angle}))
   ${name} = geometry.geom2.transform(${name}matrix, ${name})
 `
