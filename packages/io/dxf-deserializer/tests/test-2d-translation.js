@@ -136,7 +136,7 @@ LWPOLYLINE
 ENDSEC`
   let src5 = deserialize(dxf5, 'dxf5-test', { output: 'jscad' })
   let ss5 = src5.split('\n')
-  t.is(ss5.length, 26)
+  t.is(ss5.length, 25)
   t.true(src5.indexOf('main = ()') > 0)
   t.true(src5.indexOf('path2.create(') > 0)
   t.true(src5.indexOf('path2.appendPoints(') > 0)

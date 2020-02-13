@@ -135,8 +135,13 @@ const translatePath2D = (obj, layers, options) => {
       let px = pptxs[i]
       let py = pptys[i]
       let bulg = bulgs[i] // apply the previous bulg
-      if ((j !== 0) || (j === 0 && isclosed)) {
+      if (j !== 0) {
         script += `  ${name} = ${translateSection(name, cx, cy, bulg, px, py)}`
+      } else {
+        if (bulg !== 0) {
+          // apply the last bulge
+          script += `  ${name} = ${translateSection(name, cx, cy, bulg, px, py)}`
+        }
       }
     }
   } else {
