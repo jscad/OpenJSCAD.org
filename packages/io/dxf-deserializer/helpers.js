@@ -13,9 +13,9 @@ const { BYBLOCK, BYLAYER } = require('./autocad')
 // find the layer referenced by the given object
 //
 const findLayer = (obj, layers) => {
-  let lname = obj['lnam'] || '0'
-  for (let layer of layers) {
-    if (layer['name'] === lname) {
+  const lname = obj.lnam || '0'
+  for (const layer of layers) {
+    if (layer.name === lname) {
       return layer
     }
   }
@@ -27,13 +27,13 @@ const findLayer = (obj, layers) => {
 // returns -1 if a color number was not found
 //
 const getColorNumber = (obj, layers) => {
-  let cn = obj['cnmb'] || -1
+  let cn = obj.cnmb || -1
   if (cn === BYLAYER) {
     // use the color number from the layer
     cn = -1
-    let layer = findLayer(obj, layers)
+    const layer = findLayer(obj, layers)
     if (layer !== null) {
-      cn = layer['cnmb'] || -1
+      cn = layer.cnmb || -1
     }
   } else
   if (cn === BYBLOCK) {
@@ -43,7 +43,7 @@ const getColorNumber = (obj, layers) => {
 }
 
 const mod = (num, mod) => {
-  let remain = num % mod
+  const remain = num % mod
   return Math.floor(remain >= 0 ? remain : remain + mod)
 }
 
@@ -54,8 +54,8 @@ const getColor = (index, colorindex) => {
   if (index < 1) { return null }
 
   index = mod(index, colorindex.length)
-  let color = colorindex[index - 1]
-  let rgba = [color[0] / 255, color[1] / 255, color[2] / 255, color[3] / 255]
+  const color = colorindex[index - 1]
+  const rgba = [color[0] / 255, color[1] / 255, color[2] / 255, color[3] / 255]
   return rgba
 }
 

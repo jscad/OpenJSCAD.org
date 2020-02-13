@@ -39,11 +39,11 @@ test('ASCII DXF 2D Entities from JSCAD to Object Conversion', t => {
 })
 
 test('ASCII DXF 2D Lines from Autocad 2017 to Object Conversion', t => {
-  let dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/2Dlines.dxf')
+  const dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/2Dlines.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
-  let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, '2Dlines', { output: 'geometry' })
+  const dxf = fs.readFileSync(dxfPath, 'UTF8')
+  const objs = deserialize(dxf, '2Dlines', { output: 'geometry' })
 
   // expect array containing 23 objects (20 path2 from page layout, 3 path2 from entities)
   t.true(Array.isArray(objs))
@@ -58,11 +58,11 @@ test('ASCII DXF 2D Lines from Autocad 2017 to Object Conversion', t => {
 })
 
 test('ASCII DXF 2D Circles from Autocad 2017 to Object Conversion', t => {
-  let dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/2Dcircles.dxf')
+  const dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/2Dcircles.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
-  let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, '2Dcircles', { output: 'geometry' })
+  const dxf = fs.readFileSync(dxfPath, 'UTF8')
+  const objs = deserialize(dxf, '2Dcircles', { output: 'geometry' })
 
   // expect array containing 23 objects (1 path2, 2 geom2)
   t.true(Array.isArray(objs))
@@ -76,11 +76,11 @@ test('ASCII DXF 2D Circles from Autocad 2017 to Object Conversion', t => {
 })
 
 test('ASCII DXF 2D Rectangles from Autocad 2017 to Object Conversion', t => {
-  let dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/2Drectangles.dxf')
+  const dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/2Drectangles.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
-  let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, '2Drectangles', { output: 'geometry' })
+  const dxf = fs.readFileSync(dxfPath, 'UTF8')
+  const objs = deserialize(dxf, '2Drectangles', { output: 'geometry' })
 
   // expect array containing 23 objects (3 path3)
   t.true(Array.isArray(objs))
@@ -98,11 +98,11 @@ test('ASCII DXF 2D Rectangles from Autocad 2017 to Object Conversion', t => {
 })
 
 test('ASCII DXF 2D Donuts from Autocad 2017 to Object Conversion', t => {
-  let dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/2Ddonuts.dxf')
+  const dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/2Ddonuts.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
-  let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, '2Ddonuts', { output: 'geometry' })
+  const dxf = fs.readFileSync(dxfPath, 'UTF8')
+  const objs = deserialize(dxf, '2Ddonuts', { output: 'geometry' })
 
   // expect array containing 23 objects (3 path2)
   t.true(Array.isArray(objs))
@@ -117,11 +117,11 @@ test('ASCII DXF 2D Donuts from Autocad 2017 to Object Conversion', t => {
 })
 
 test('ASCII DXF 2D Ellipses from Autocad 2017 to Object Conversion', t => {
-  let dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/2Dellipses.dxf')
+  const dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/2Dellipses.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
-  let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, '2Dellipses', { output: 'geometry' })
+  const dxf = fs.readFileSync(dxfPath, 'UTF8')
+  const objs = deserialize(dxf, '2Dellipses', { output: 'geometry' })
 
   // expect array containing 23 objects (3 CAG)
   t.true(Array.isArray(objs))
@@ -133,11 +133,11 @@ test('ASCII DXF 2D Ellipses from Autocad 2017 to Object Conversion', t => {
 })
 
 test('ASCII DXF 2D Arcs from Autocad 2017 to Object Conversion', t => {
-  let dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/2Darcs.dxf')
+  const dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/2Darcs.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
-  let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, '2Darcs', { output: 'geometry' })
+  const dxf = fs.readFileSync(dxfPath, 'UTF8')
+  const objs = deserialize(dxf, '2Darcs', { output: 'geometry' })
 
   // expect array containing 23 objects (9 path2, 14 path2)
   t.true(Array.isArray(objs))
