@@ -8,7 +8,7 @@ test('translate: translating of a path2 produces expected changes to points', t 
   let line = path2.fromPoints({}, [[0, 0], [1, 0]])
 
   // translate X
-  let translated = translate([1, 0, 0], line)
+  let translated = translate([1], line)
   let obs = path2.toPoints(translated)
   let exp = [
     new Float32Array([1, 0]),
@@ -21,7 +21,7 @@ test('translate: translating of a path2 produces expected changes to points', t 
   t.deepEqual(obs, exp)
 
   // translate Y
-  translated = translate([0, 1, 0], line)
+  translated = translate([0, 1], line)
   obs = path2.toPoints(translated)
   exp = [
     new Float32Array([0, 1]),
@@ -38,7 +38,7 @@ test('translate: translating of a geom2 produces expected changes to points', t 
   let geometry = geom2.fromPoints([[0, 0], [1, 0], [0, 1]])
 
   // translate X
-  let translated = translate([1, 0, 0], geometry)
+  let translated = translate([1], geometry)
   let obs = geom2.toPoints(translated)
   let exp = [
     new Float32Array([1, 0]),
@@ -52,7 +52,7 @@ test('translate: translating of a geom2 produces expected changes to points', t 
   t.deepEqual(obs, exp)
 
   // translate Y
-  translated = translate([0, 1, 0], geometry)
+  translated = translate([0, 1], geometry)
   obs = geom2.toPoints(translated)
   exp = [
     new Float32Array([0, 1]),
@@ -78,7 +78,7 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
   let geometry = geom3.fromPoints(points)
 
   // translate X
-  let translated = translate([3, 0, 0], geometry)
+  let translated = translate([3], geometry)
   let obs = geom3.toPoints(translated)
   let exp = [
     [ new Float32Array([ 1, -7, -12 ]), new Float32Array([ 1, -7, 18 ]),
@@ -101,7 +101,7 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
   t.deepEqual(obs, exp)
 
   // translated Y
-  translated = translate([0, 3, 0], geometry)
+  translated = translate([0, 3], geometry)
   obs = geom3.toPoints(translated)
   exp = [
     [ new Float32Array([ -2, -4, -12 ]), new Float32Array([ -2, -4, 18 ]),
