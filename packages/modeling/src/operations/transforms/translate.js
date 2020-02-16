@@ -21,9 +21,7 @@ const translate = (offset, ...objects) => {
 
   // adjust the offset if necessary
   offset = offset.slice() // don't modify the original
-  if (offset.length < 3) offset.push(0)
-  if (offset.length < 3) offset.push(0)
-  if (offset.length < 3) offset.push(0)
+  while (offset.length < 3) offset.push(0)
 
   const matrix = mat4.fromTranslation(offset)
 

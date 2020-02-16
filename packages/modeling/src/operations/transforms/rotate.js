@@ -21,9 +21,7 @@ const rotate = (angles, ...objects) => {
 
   // adjust the angles if necessary
   angles = angles.slice() // don't modify the original
-  if (angles.length < 3) angles.push(0)
-  if (angles.length < 3) angles.push(0)
-  if (angles.length < 3) angles.push(0)
+  while (angles.length < 3) angles.push(0)
 
   let yaw = angles[2]
   let pitch = angles[1]

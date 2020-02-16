@@ -21,9 +21,7 @@ const scale = (factors, ...objects) => {
 
   // adjust the factors if necessary
   factors = factors.slice() // don't modify the original
-  if (factors.length < 3) factors.push(1)
-  if (factors.length < 3) factors.push(1)
-  if (factors.length < 3) factors.push(1)
+  while (factors.length < 3) factors.push(1)
 
   if (factors[0] <= 0 || factors[1] <= 0 || factors[2] <= 0) throw new Error('factors must be positive')
 
