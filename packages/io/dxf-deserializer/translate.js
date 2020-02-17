@@ -181,7 +181,7 @@ const translateArc = (obj, layers, options) => {
 
   // convert to 2D object
   if (lthk === 0.0) {
-    let script = `  let ${name} = transforms.center({ center: [${pptx}, ${ppty}, 0] }, primitives.arc({ radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}}))\n`
+    let script = `  let ${name} = primitives.arc({center: [${pptx}, ${ppty}], radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}})\n`
     if (color) {
       script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
     }
@@ -190,7 +190,7 @@ const translateArc = (obj, layers, options) => {
     return
   }
   // FIXME how to represent 3D arc?
-  let script = `  let ${name} = transforms.center({ center: [${pptx}, ${ppty}, 0] }, primitives.arc({ radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}}))\n`
+  let script = `  let ${name} = primitives.arc({center: [${pptx}, ${ppty}], radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}})\n`
   if (color) {
     script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
   }

@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { geometry, primitives, transforms  } = require('@jscad/modeling')
+const { geometry, primitives } = require('@jscad/modeling')
 
 const { serialize } = require('../index.js')
 const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('../autocad_AC2017')
@@ -12,7 +12,7 @@ test('2D Path to DXF LWPOLYLINE', t => {
   const exp1 = [empty]
   t.deepEqual(obs1, exp1)
 
-  let path2 = transforms.center({ center: [5,5,0] }, primitives.arc({ endAngle: 45 }));
+  let path2 = primitives.arc({ center: [5, 5], endAngle: 45 })
 
   const obs2 = serialize({}, path2)
   const exp2 = [lwpolyline0]

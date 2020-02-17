@@ -8,6 +8,7 @@ const path2 = require('../geometry/path2')
 
 /** Construct an arc.
  * @param {Object} options - options for construction
+ * @param {Array} [options.center=[0,0]] - center of arc
  * @param {Number} [options.radius=1] - radius of arc
  * @param {Number} [options.startAngle=0] - starting angle of the arc, in radians
  * @param {Number} [options.endAngle=Math.PI*2] - ending angle of the arc, in radians
@@ -17,15 +18,15 @@ const path2 = require('../geometry/path2')
  */
 const arc = function (options) {
   const defaults = {
+    center: [0, 0],
     radius: 1,
     startAngle: 0,
     endAngle: (Math.PI * 2),
     makeTangent: false,
     segments: 16
   }
-  let center = [0, 0];
-  let {radius, startAngle, endAngle, makeTangent, segments} = Object.assign({}, defaults, options)
-  
+  let {center, radius, startAngle, endAngle, makeTangent, segments} = Object.assign({}, defaults, options)
+
   if (startAngle < 0 || endAngle < 0) throw new Error('the start and end angles must be positive')
   if (segments < 4) throw new Error('segments must be four or more')
 

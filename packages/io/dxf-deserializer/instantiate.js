@@ -6,7 +6,7 @@ Copyright (c) 2017 Z3 Development https://github.com/z3dev
 All code released under MIT license
 
 */
-const { geometry, math, primitives, transforms } = require('@jscad/modeling')
+const { geometry, math, primitives } = require('@jscad/modeling')
 const EPS = 1e-5 // FIXME
 
 const { findLayer, getColor, getColorNumber } = require('./helpers')
@@ -167,10 +167,10 @@ const instantiateArc = (obj, layers, options) => {
   // conversion
   if (lthk === 0.0) {
     // convert to 2D object
-    return transforms.center({ center: [pptx, ppty, 0] }, primitives.arc({ radius: swid, startAngle: ang0, endAngle: ang1, segments: res }))
+    return primitives.arc({ center: [pptx, ppty], radius: swid, startAngle: ang0, endAngle: ang1, segments: res })
   }
   // FIXME how to represent 3D arc?
-  return transforms.center({ center: [pptx, ppty, 0] }, primitives.arc({ radius: swid, startAngle: ang0, endAngle: ang1, segments: res }))
+  return primitives.arc({ center: [pptx, ppty], radius: swid, startAngle: ang0, endAngle: ang1, segments: res })
 }
 
 //
@@ -192,12 +192,12 @@ const instantiateCircle = (obj, layers, options) => {
 
   // convert to 2D object
   if (lthk === 0.0) {
-    let cag = transforms.center({ center: [pptx, ppty, 0] }, primitives.circle({ radius: swid, segments: res }))
+    let cag = primitives.circle({ center: [pptx, ppty], radius: swid, segments: res })
     if (color) cag.color = color
     return cag
   }
   // convert to 3D object
-  let cag = transforms.center({ center: [pptx, ppty, 0] }, primitives.circle({ radius: swid, segments: res }))
+  let cag = primitives.circle({ center: [pptx, ppty], radius: swid, segments: res })
   let csg = cag.extrude({ offset: [0, 0, lthk] })
   // FIXME need to use 210/220/230 for direction of extrusion
   if (color) csg.color = color
@@ -230,7 +230,7 @@ const instantiateEllipse = (obj, layers, options) => {
     angle = angle * 0.017453292519943295 // radians
 
     // FIXME add start and end angle when supported
-    let cag = transforms.center({ center: [0, 0, 0] }, primitives.ellipse({ radius: [rx, ry], segments: res }))
+    let cag = primitives.ellipse({ center: [0, 0], radius: [rx, ry], segments: res })
     let matrix = math.mat4.fromZRotation(angle)
     matrix = math.mat4.multiply(matrix, math.mat4.fromTranslation([pptx, ppty, 0]))
     // cag.rotateZ(angle).translate([pptx,ppty])
