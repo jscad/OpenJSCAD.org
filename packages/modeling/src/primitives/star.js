@@ -28,7 +28,6 @@ const getPoints = (vertices, radius, startAngle, center) => {
 /** Construct a star from the given options.
  * @see https://en.wikipedia.org/wiki/Star_polygon
  * @param {Object} [options] - options for construction
- * @param {Array} [options.center=[0,0]] - center of star
  * @param {Number} [options.vertices=5] - number of vertices (P) on the star
  * @param {Number} [options.density=2] - density (Q) of star
  * @param {Number} [options.outerRadius=1] - outer radius of vertices
@@ -41,17 +40,14 @@ const getPoints = (vertices, radius, startAngle, center) => {
  */
 const star = (options) => {
   const defaults = {
-    center: [0, 0],
     vertices: 5,
     outerRadius: 1,
     innerRadius: 0,
     density: 2,
     startAngle: 0
   }
-  var {center, vertices, outerRadius, innerRadius, density, startAngle} = Object.assign({}, defaults, options)
-
-  if (!Array.isArray(center)) throw new Error('center must be an array')
-  if (center.length < 2) throw new Error('center must contain X and Y values')
+  var center = [0,0];
+  var {vertices, outerRadius, innerRadius, density, startAngle} = Object.assign({}, defaults, options)
 
   if (startAngle < 0) throw new Error('startAngle must be positive')
 
