@@ -23,9 +23,9 @@ const shapesMap = function (obj, codify, params) {
         x = (x + (w / 2)).toFixed(4) // position the object via the center
         y = (y - (h / 2)).toFixed(4) // position the object via the center
         if (rx === 0) {
-          code = `${indent}${on} = primitives.rectangle({center: [${x}, ${y}], size: [${w / 2}, ${h / 2}]})\n`
+          code = `${indent}${on} = transforms.center({ center: [${x}, ${y}, 0] }, primitives.rectangle({size: [${w / 2}, ${h / 2}]}))\n`
         } else {
-          code = `${indent}${on} = primitives.roundedRectangle({center: [${x}, ${y}], size: [${w / 2}, ${h / 2}], roundRadius: ${rx}})\n`
+          code = `${indent}${on} = transforms.center({ center: [${x}, ${y}, 0] }, primitives.roundedRectangle({size: [${w / 2}, ${h / 2}], roundRadius: ${rx}}))\n`
         }
         if (target === 'path') {
           code += `${indent}${on} = geometry.path2.fromPoints({closed: true}, geometry.geom2.toPoints(${on}))\n`
@@ -40,7 +40,7 @@ const shapesMap = function (obj, codify, params) {
       const r = cagLengthP(obj.radius, svgUnitsPmm, svgUnitsV)
       let code
       if (r > 0) {
-        code = `${indent}${on} = primitives.circle({center: [${x}, ${y}], radius: ${r}})\n`
+        code = `${indent}${on} = transforms.center({ center: [${x}, ${y}, 0] }, primitives.circle({radius: ${r}}))\n`
         if (target === 'path') {
           code += `${indent}${on} = geometry.path2.fromPoints({closed: true}, geometry.geom2.toPoints(${on}))\n`
         }
@@ -55,7 +55,7 @@ const shapesMap = function (obj, codify, params) {
       const cy = (0 - cagLengthY(obj.cy, svgUnitsPmm, svgUnitsY))
       let code
       if (rx > 0 && ry > 0) {
-        code = `${indent}${on} = primitives.ellipse({center: [${cx}, ${cy}], radius: [${rx}, ${ry}]})\n`
+        code = `${indent}${on} = transforms.center({ center: [${cx}, ${cy}, 0] }, primitives.ellipse({radius: [${rx}, ${ry}]}))\n`
         if (target === 'path') {
           code += `${indent}${on} = geometry.path2.fromPoints({closed: true}, geometry.geom2.toPoints(${on}))\n`
         }

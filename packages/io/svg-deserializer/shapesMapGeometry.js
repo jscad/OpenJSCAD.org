@@ -1,4 +1,4 @@
-const { geometry, primitives } = require('@jscad/modeling')
+const { geometry, primitives, transforms } = require('@jscad/modeling')
 
 const { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect, groupValue } = require('./helpers')
 const { cssPxUnit } = require('./constants')
@@ -22,9 +22,9 @@ const shapesMapGeometry = (obj, objectify, params) => {
         x = (x + (w / 2)).toFixed(4) // position the object via the center
         y = (y - (h / 2)).toFixed(4) // position the object via the center
         if (rx === 0) {
-          shape = primitives.rectangle({ center: [x, y], size: [w / 2, h / 2] })
+          shape = transforms.center({ center: [x, y, 0] }, primitives.rectangle({ size: [w / 2, h / 2] }))
         } else {
-          shape = primitives.roundedRectangle({ center: [x, y], size: [w / 2, h / 2], roundRadius: rx })
+          shape = transforms.center({ center: [x, y, 0] }, primitives.roundedRectangle({ size: [w / 2, h / 2], roundRadius: rx }))
         }
         if (target === 'path') {
           shape = geometry.path2.fromPoints({ }, geometry.geom2.toPoints(shape))
@@ -40,7 +40,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
 
       let shape
       if (r > 0) {
-        shape = primitives.circle({ center: [x, y], radius: r })
+        shape = transforms.center({ center: [x, y, 0] }, primitives.circle({ radius: r }))
         if (target === 'path') {
           shape = geometry.path2.fromPoints({}, geometry.geom2.toPoints(shape))
         }
@@ -56,7 +56,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
 
       let shape
       if (rx > 0 && ry > 0) {
-        shape = primitives.ellipse({ center: [cx, cy], radius: [rx, ry] })
+        shape = transforms.center({ center: [cx, cy, 0] }, primitives.ellipse({ radius: [rx, ry] }))
         if (target === 'path') {
           shape = geometry.path2.fromPoints({}, geometry.geom2.toPoints(shape))
         }

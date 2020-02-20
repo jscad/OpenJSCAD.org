@@ -13,6 +13,8 @@ const unionGeom3Sub = require('../booleans/unionGeom3Sub')
 
 const extrudePolygon = require('./extrudePolygon')
 
+const { center } = require('../transforms/center')
+
 const mapPlaneToVertex = (map, vertex, plane) => {
   let i = map.findIndex((item) => vec3.equals(item[0], vertex))
   if (i < 0) {
@@ -197,12 +199,11 @@ const expandShell = (options, geometry) => {
     }
     let yaxis = vec3.unit(vec3.cross(xaxis, bestzaxis))
     let zaxis = vec3.cross(yaxis, xaxis)
-    let corner = sphere({
-      center: [vertex[0], vertex[1], vertex[2]],
+    let corner = center({ center: [vertex[0], vertex[1], vertex[2]] }, sphere({
       radius: delta,
       segments: segments,
       axes: [xaxis, yaxis, zaxis]
-    })
+    }))
     result = unionGeom3Sub(result, corner)
   })
   // FIXME ... hack hack hack

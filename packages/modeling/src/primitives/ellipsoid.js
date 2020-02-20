@@ -5,26 +5,22 @@ const poly3 = require('../geometry/poly3')
 
 /** Construct an ellipsoid.
  * @param {Object} [options] - options for construction
- * @param {Array} [options.center=[0,0,0]] - center of ellipsoid
  * @param {Array} [options.radius=[1,1,1]] - radius of ellipsoid, along X, Y and Z
  * @param {Number} [options.segments=12] - number of segements to create per 360 rotation
  * @param {Array} [options.axes] -  an array with three vectors for the x, y and z base vectors
  * @returns {geom3} new 3D geometry
  *
  * @example
- * let myshape = ellipsoid({center: [5, 5, 5], radius: [5, 10, 20]})
+ * let myshape = ellipsoid({radius: [5, 10, 20]})
 */
 const ellipsoid = (options) => {
   const defaults = {
-    center: [0, 0, 0],
     radius: [1, 1, 1],
     segments: 12,
     axes: [[1, 0, 0], [0, -1, 0], [0, 0, 1]]
   }
-  let {center, radius, segments, axes} = Object.assign({}, defaults, options)
-
-  if (!Array.isArray(center)) throw new Error('center must be an array')
-  if (center.length < 3) throw new Error('center must contain X, Y and Z values')
+  let center = [0,0,0];
+  let {radius, segments, axes} = Object.assign({}, defaults, options)
 
   if (!Array.isArray(radius)) throw new Error('radius must be an array')
   if (radius.length < 3) throw new Error('radius must contain X, Y and Z values')
@@ -91,7 +87,6 @@ const ellipsoid = (options) => {
  * Construct a sphere where are points are at the same distance from the center.
  * @see {@link ellipsoid} for additional options, as this is an alias for ellipsoid
  * @param {Object} [options] - options for construction
- * @param {Array} [options.center=[0,0,0]] - center of sphere
  * @param {Number} [options.radius=1] - radius of sphere
  * @param {Number} [options.segments=12] - number of segments to create per 360 rotation
  * @param {Array} [options.axes] -  an array with three vectors for the x, y and z base vectors
@@ -99,18 +94,17 @@ const ellipsoid = (options) => {
 */
 const sphere = (options) => {
   const defaults = {
-    center: [0, 0, 0],
     radius: 1,
     segments: 12,
     axes: [[1, 0, 0], [0, -1, 0], [0, 0, 1]]
   }
-  let {center, radius, segments, axes} = Object.assign({}, defaults, options)
+  let {radius, segments, axes} = Object.assign({}, defaults, options)
 
   // TODO check that radius is a number
 
   radius = [radius, radius, radius]
 
-  return ellipsoid({center: center, radius: radius, segments: segments, axes: axes})
+  return ellipsoid({radius: radius, segments: segments, axes: axes})
 }
 
 module.exports = {
