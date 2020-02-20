@@ -25,17 +25,4 @@ test('square (options)', t => {
 
   t.is(pts.length, 4)
   t.true(comparePoints(pts, exp))
-
-  // test center
-  obs = square({size: 7, center: [6.5, 6.5]})
-  pts = geom2.toPoints(obs)
-  exp = [
-    [ 3, 3 ],
-    [ 10, 3 ],
-    [ 10, 10 ],
-    [ 3, 10 ]
-  ]
-
-  t.is(pts.length, 4)
-  t.true(comparePoints(pts, exp))
 })
