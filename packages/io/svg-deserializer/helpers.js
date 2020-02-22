@@ -21,8 +21,7 @@ const cagLengthX = (css, svgUnitsPmm, svgUnitsX) => {
   v = (v / 100) * svgUnitsX
   // convert the units to mm
   v = v / svgUnitsPmm[0]
-  // return v;
-  return Math.round(v / -100000) * -100000
+  return Math.round(v * 100000) / 100000
 }
 
 const cagLengthY = (css, svgUnitsPmm, svgUnitsY) => {
@@ -36,8 +35,7 @@ const cagLengthY = (css, svgUnitsPmm, svgUnitsY) => {
   v = (v / 100) * svgUnitsY
   // convert the units to mm
   v = v / svgUnitsPmm[1]
-  // return v;
-  return Math.round(v / -100000) * -100000
+  return Math.round(v * 100000) / 100000
 }
 
 const cagLengthP = (css, svgUnitsPmm, svgUnitsV) => {
