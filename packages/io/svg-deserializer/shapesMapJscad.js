@@ -23,9 +23,9 @@ const shapesMap = function (obj, codify, params) {
         x = (x + (w / 2)).toFixed(4) // position the object via the center
         y = (y - (h / 2)).toFixed(4) // position the object via the center
         if (rx === 0) {
-          code = `${indent}${on} = transforms.center({ center: [${x}, ${y}, 0] }, primitives.rectangle({size: [${w / 2}, ${h / 2}]}))\n`
+          code = `${indent}${on} = transforms.center({ center: [${x}, ${y}, 0] }, primitives.rectangle({size: [${w}, ${h}]})) // line ${obj.position}\n`
         } else {
-          code = `${indent}${on} = transforms.center({ center: [${x}, ${y}, 0] }, primitives.roundedRectangle({size: [${w / 2}, ${h / 2}], roundRadius: ${rx}}))\n`
+          code = `${indent}${on} = transforms.center({ center: [${x}, ${y}, 0] }, primitives.roundedRectangle({size: [${w}, ${h}], roundRadius: ${rx}})) // line ${obj.position}\n`
         }
         if (target === 'path') {
           code += `${indent}${on} = geometry.path2.fromPoints({closed: true}, geometry.geom2.toPoints(${on}))\n`
@@ -40,7 +40,7 @@ const shapesMap = function (obj, codify, params) {
       const r = cagLengthP(obj.radius, svgUnitsPmm, svgUnitsV)
       let code
       if (r > 0) {
-        code = `${indent}${on} = transforms.center({ center: [${x}, ${y}, 0] }, primitives.circle({radius: ${r}}))\n`
+        code = `${indent}${on} = transforms.center({ center: [${x}, ${y}, 0] }, primitives.circle({radius: ${r}})) // line ${obj.position}\n`
         if (target === 'path') {
           code += `${indent}${on} = geometry.path2.fromPoints({closed: true}, geometry.geom2.toPoints(${on}))\n`
         }
@@ -55,7 +55,7 @@ const shapesMap = function (obj, codify, params) {
       const cy = (0 - cagLengthY(obj.cy, svgUnitsPmm, svgUnitsY))
       let code
       if (rx > 0 && ry > 0) {
-        code = `${indent}${on} = transforms.center({ center: [${cx}, ${cy}, 0] }, primitives.ellipse({radius: [${rx}, ${ry}]}))\n`
+        code = `${indent}${on} = transforms.center({ center: [${cx}, ${cy}, 0] }, primitives.ellipse({radius: [${rx}, ${ry}]})) // line ${obj.position}\n`
         if (target === 'path') {
           code += `${indent}${on} = geometry.path2.fromPoints({closed: true}, geometry.geom2.toPoints(${on}))\n`
         }
@@ -68,7 +68,7 @@ const shapesMap = function (obj, codify, params) {
       const y1 = (0 - cagLengthY(obj.y1, svgUnitsPmm, svgUnitsY))
       const x2 = cagLengthX(obj.x2, svgUnitsPmm, svgUnitsX)
       const y2 = (0 - cagLengthY(obj.y2, svgUnitsPmm, svgUnitsY))
-      let code = `${indent}${on} = primitives.line([[${x1}, ${y1}], [${x2}, ${y2}]])\n`
+      let code = `${indent}${on} = primitives.line([[${x1}, ${y1}], [${x2}, ${y2}]]) // line ${obj.position}\n`
       if (target === 'geom2') {
         let r = getStrokeWidth(obj, svgUnitsPmm, svgUnitsV, svgGroups)
         // TODO
@@ -86,7 +86,7 @@ const shapesMap = function (obj, codify, params) {
           code += `${indent}  [${x}, ${y}],\n`
         }
       }
-      code += `${indent}]})\n`
+      code += `${indent}]}) // line ${obj.position}\n`
       if (target === 'path') {
         code += `${indent}${on} = geometry.path2.fromPoints({closed: true}, geometry.geom2.toPoints(${on}))\n`
       }
@@ -103,7 +103,7 @@ const shapesMap = function (obj, codify, params) {
           code += `${indent}  [${x}, ${y}],\n`
         }
       }
-      code += `${indent}])\n`
+      code += `${indent}]) // line ${obj.position}\n`
       if (target === 'geom2') {
         let r = getStrokeWidth(obj, svgUnitsPmm, svgUnitsV, svgGroups)
         // TODO
@@ -144,7 +144,7 @@ const getColor = (obj, target) => {
 
 const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGroups) => {
   const { indent, on, target } = params
-  let tmpCode = `${indent}parts = []\n`
+  let tmpCode = `${indent}parts = [] // line ${obj.position}\n`
 
   let c = getColor(obj, target)
   let r = getStrokeWidth(obj, svgUnitsPmm, svgUnitsV, svgGroups)

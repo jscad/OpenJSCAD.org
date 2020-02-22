@@ -3,6 +3,7 @@ const { pxPmm } = require('./constants')
 
 const svgCore = function (obj, element) {
   if ('ID' in element) { obj.id = element.ID }
+  if ('position' in element) {obj.position = element.position}
 }
 
 const svgPresentation = function (obj, element) {
