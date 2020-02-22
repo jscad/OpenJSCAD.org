@@ -93,6 +93,9 @@ const translate = (src, filename, options) => {
 
   // parse the SVG source
   createSvgParser(src, pxPmm)
+  if (!svgObj) {
+    throw new Error('SVG parsing failed, no valid svg data retrieved')
+  }
 
   // convert the internal objects to JSCAD code
   let code = addMetaData ? `//
@@ -101,15 +104,13 @@ const translate = (src, filename, options) => {
   // source: ${filename}
   //
 ` : ''
-
-  if (!svgObj) {
-    throw new Error('SVG parsing failed, no valid svg data retrieved')
-  }
+  code += `const { color, geometry, primitives, transforms } = require('@jscad/modeling')\n\n`
 
   options && options.statusCallback && options.statusCallback({ progress: 50 })
 
   const scadCode = codify({ target }, svgObj)
   code += scadCode
+  code += '\nmodule.exports = { main }'
 
   options && options.statusCallback && options.statusCallback({ progress: 100 })
   return code
@@ -165,23 +166,20 @@ const objectify = (options, group) => {
         let tt
         for (let j = 0; j < obj.transforms.length; j++) {
           const t = obj.transforms[j]
-          if ('rotate' in t) { tr = t }
-          if ('scale' in t) { ts = t }
-          if ('translate' in t) { tt = t }
-        }
-        if (ts) {
-          const x = ts.scale[0]
-          const y = ts.scale[1]
-          shape = transforms.scale([x, y, 1], shape)
-        }
-        if (tr) {
-          const z = 0 - tr.rotate
-          shape = transforms.rotateZ(z, shape)
-        }
-        if (tt) {
-          const x = cagLengthX(tt.translate[0], svgUnitsPmm, svgUnitsX)
-          const y = (0 - cagLengthY(tt.translate[1], svgUnitsPmm, svgUnitsY))
-          shape = transforms.translate([x, y, 0], shape)
+          if ('rotate' in t) {
+            const z = 0 - tr.rotate
+            shape = transforms.rotateZ(z, shape)
+          }
+          if ('scale' in t) {
+            const x = ts.scale[0]
+            const y = ts.scale[1]
+            shape = transforms.scale([x, y, 1], shape)
+          }
+          if ('translate' in t) {
+            const x = cagLengthX(tt.translate[0], svgUnitsPmm, svgUnitsX)
+            const y = (0 - cagLengthY(tt.translate[1], svgUnitsPmm, svgUnitsY))
+            shape = transforms.translate([x, y, 0], shape)
+          }
         }
       }
       return shape
@@ -247,23 +245,20 @@ const codify = (options, group) => {
       let tt
       for (let j = 0; j < obj.transforms.length; j++) {
         let t = obj.transforms[j]
-        if ('rotate' in t) { tr = t }
-        if ('scale' in t) { ts = t }
-        if ('translate' in t) { tt = t }
-      }
-      if (ts) {
-        const x = ts.scale[0]
-        const y = ts.scale[1]
-        code += `${indent}${on} = transforms.scale([${x}, ${y}, 1], ${on})\n`
-      }
-      if (tr) {
-        const z = 0 - tr.rotate * 0.017453292519943295 // radians
-        code += `${indent}${on} = transforms.rotateZ(${z}, ${on})\n`
-      }
-      if (tt) {
-        const x = cagLengthX(tt.translate[0], svgUnitsPmm, svgUnitsX)
-        const y = (0 - cagLengthY(tt.translate[1], svgUnitsPmm, svgUnitsY))
-        code += `${indent}${on} = transforms.translate([${x}, ${y}, 0], ${on})\n`
+        if ('rotate' in t) {
+          const z = 0 - t.rotate * 0.017453292519943295 // radians
+          code += `${indent}${on} = transforms.rotateZ(${z}, ${on})\n`
+        }
+        if ('scale' in t) {
+          const x = t.scale[0]
+          const y = t.scale[1]
+          code += `${indent}${on} = transforms.scale([${x}, ${y}, 1], ${on})\n`
+        }
+        if ('translate' in t) {
+          const x = cagLengthX(t.translate[0], svgUnitsPmm, svgUnitsX)
+          const y = (0 - cagLengthY(t.translate[1], svgUnitsPmm, svgUnitsY))
+          code += `${indent}${on} = transforms.translate([${x}, ${y}, 0], ${on})\n`
+        }
       }
     }
     if (target === 'path' && obj.stroke) {
@@ -314,6 +309,7 @@ const createSvgParser = (src, pxPmm) => {
       STYLE: () => undefined, // ignored by design
       undefined: () => console.log('Warning: Unsupported SVG element: ' + node.name)
     }
+    node.attributes.position = [parser.line + 1, parser.column + 1]
     let obj = objMap[node.name] ? objMap[node.name](node.attributes, { svgObjects, customPxPmm: pxPmm }) : undefined
 
     // case 'SYMBOL':
