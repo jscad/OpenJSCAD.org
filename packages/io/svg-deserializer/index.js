@@ -104,7 +104,7 @@ const translate = (src, filename, options) => {
   // source: ${filename}
   //
 ` : ''
-  code += `const { color, geometry, primitives, transforms } = require('@jscad/modeling')\n\n`
+  code += 'const { color, geometry, primitives, transforms } = require(\'@jscad/modeling\')\n\n'
 
   options && options.statusCallback && options.statusCallback({ progress: 50 })
 
@@ -121,9 +121,9 @@ let svgUnitsX
 let svgUnitsY
 let svgUnitsV
 // processing controls
-let svgObjects = [] // named objects
-let svgGroups = [] // groups of objects
-let svgDefs = [] // defined objects
+const svgObjects = [] // named objects
+const svgGroups = [] // groups of objects
+const svgDefs = [] // defined objects
 let svgInDefs = false // svg DEFS element in process
 let svgObj // svg in object form
 let svgUnitsPmm = [1, 1]
@@ -213,7 +213,7 @@ const codify = (options, group) => {
   if (level === 0) {
     code += 'function main(params) {\n  let levels = {}\n  let paths = {}\n  let parts\n'
   }
-  let ln = 'levels.l' + level
+  const ln = 'levels.l' + level
   code += `${indent}${ln} = []\n`
 
   // generate code for all objects
@@ -234,17 +234,13 @@ const codify = (options, group) => {
       target
     }
 
-    let tmpCode = shapesMapJscad(obj, codify, params)
+    const tmpCode = shapesMapJscad(obj, codify, params)
     code += tmpCode
 
     if ('transforms' in obj) {
       // NOTE: SVG specifications require that transforms are applied in the order given.
-      //       But these are applied in the order as required by JSCAD
-      let tr
-      let ts
-      let tt
       for (let j = 0; j < obj.transforms.length; j++) {
-        let t = obj.transforms[j]
+        const t = obj.transforms[j]
         if ('rotate' in t) {
           const z = 0 - t.rotate * 0.017453292519943295 // radians
           code += `${indent}${on} = transforms.rotateZ(${z}, ${on})\n`
@@ -310,7 +306,7 @@ const createSvgParser = (src, pxPmm) => {
       undefined: () => console.log('Warning: Unsupported SVG element: ' + node.name)
     }
     node.attributes.position = [parser.line + 1, parser.column + 1]
-    let obj = objMap[node.name] ? objMap[node.name](node.attributes, { svgObjects, customPxPmm: pxPmm }) : undefined
+    const obj = objMap[node.name] ? objMap[node.name](node.attributes, { svgObjects, customPxPmm: pxPmm }) : undefined
 
     // case 'SYMBOL':
     // this is just like an embedded SVG but does NOT render directly, only named
@@ -334,7 +330,7 @@ const createSvgParser = (src, pxPmm) => {
         // add the object to the active group if necessary
         if (svgInDefs === true) {
           if (svgDefs.length > 0) {
-            let group = svgDefs.pop()
+            const group = svgDefs.pop()
             if ('objects' in group) {
               group.objects.push(obj)
             }
@@ -345,7 +341,7 @@ const createSvgParser = (src, pxPmm) => {
           }
         } else {
           if (svgGroups.length > 0) {
-            let group = svgGroups.pop()
+            const group = svgGroups.pop()
             if ('objects' in group) {
             // TBD apply presentation attributes from the group
               group.objects.push(obj)

@@ -391,7 +391,7 @@ test('deserialize : translate shape with a nested hole to script', function (t) 
 // ################################
 
 test('deserialize : translate svg with simple defs to script', function (t) {
-  let sourceSvg = `<svg  height='730' width='1300'>
+  const sourceSvg = `<svg  height='730' width='1300'>
   <defs>
     <ellipse id='kopf0' cx='0' cy='0' rx='100.00000000000001' ry='150.0' fill='#ff8000' stroke='#ff8800' />
   </defs>
@@ -402,7 +402,7 @@ test('deserialize : translate svg with simple defs to script', function (t) {
   </g>
 </svg>`
 
-  let obs = deserializer.deserialize(sourceSvg, undefined, { output: 'script', target: 'path', addMetaData: false })
+  const obs = deserializer.deserialize(sourceSvg, undefined, { output: 'script', target: 'path', addMetaData: false })
   t.is(typeof obs, 'string')
   t.is(countOf('ellipse', obs), 1)
   t.is(countOf('path2.fromPoints', obs), 1)
@@ -414,7 +414,7 @@ test('deserialize : translate svg with simple defs to script', function (t) {
 // ################################
 
 test('deserialize : translate svg with defs using defs to script', function (t) {
-  let sourceSvg = `<svg  height='730' width='1300'>
+  const sourceSvg = `<svg  height='730' width='1300'>
   <defs>
     <ellipse id='kopf0' cx='0' cy='0' rx='100.00000000000001' ry='150.0' fill='#ff8000' stroke='#ff8800' />
     <g id='heureka0'>
@@ -430,7 +430,7 @@ test('deserialize : translate svg with defs using defs to script', function (t) 
   </g>
 </svg>`
 
-  let obs = deserializer.deserialize(sourceSvg, undefined, { output: 'script', target: 'path', addMetaData: false })
+  const obs = deserializer.deserialize(sourceSvg, undefined, { output: 'script', target: 'path', addMetaData: false })
   t.is(typeof obs, 'string')
   t.is(countOf('ellipse', obs), 1)
   t.is(countOf('path2.fromPoints', obs), 1)

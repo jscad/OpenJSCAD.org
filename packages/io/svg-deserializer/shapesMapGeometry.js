@@ -79,15 +79,15 @@ const shapesMapGeometry = (obj, objectify, params) => {
         }
       }
 
-      let shape = primitives.line([[x1, y1], [x2, y2]])
+      const shape = primitives.line([[x1, y1], [x2, y2]])
       if (target === 'geom2') {
-        // FIXME expand if 2D target
+        // TODO expand if 2D target
       }
       return shape
     },
 
     polygon: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY) => {
-      let points = []
+      const points = []
       for (let j = 0; j < obj.points.length; j++) {
         const p = obj.points[j]
         if ('x' in p && 'y' in p) {
@@ -103,7 +103,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
     },
 
     polyline: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV) => {
-      let points = []
+      const points = []
       let r = cssPxUnit // default
       if ('strokeWidth' in obj) {
         r = cagLengthP(obj.strokeWidth, svgUnitsPmm, svgUnitsV) / 2
@@ -116,29 +116,29 @@ const shapesMapGeometry = (obj, objectify, params) => {
       for (let j = 0; j < obj.points.length; j++) {
         const p = obj.points[j]
         if ('x' in p && 'y' in p) {
-          let x = cagLengthX(p.x, svgUnitsPmm, svgUnitsX)
-          let y = (0 - cagLengthY(p.y, svgUnitsPmm, svgUnitsY))
+          const x = cagLengthX(p.x, svgUnitsPmm, svgUnitsX)
+          const y = (0 - cagLengthY(p.y, svgUnitsPmm, svgUnitsY))
           points.push([x, y])
         }
       }
 
-      let shape = primitives.line(points)
+      const shape = primitives.line(points)
       if (target === 'geom2') {
-        // FIXME expand if 2D target
+        // TODO expand if 2D target
         // .expandToCAG(r, CSG.defaultResolution2D)
       }
       return shape
     },
 
     path: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) => {
-      let listofpaths = expandPath(obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups)
+      const listofpaths = expandPath(obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups)
       // order is important
       let shapes
-      let listofentries = Object.entries(listofpaths).sort((a, b) => a[0].localeCompare(b[0]))
+      const listofentries = Object.entries(listofpaths).sort((a, b) => a[0].localeCompare(b[0]))
       if (target === 'geom2') {
         // convert each path to geometry
-        for (let [key, path] of listofentries) {
-          // FIXME this needs to be implemented once extrude is available
+        for (const [key, path] of listofentries) {
+          // TODO this needs to be implemented once extrude is available
           // if closed then create a 2D geometry
         }
       }
@@ -158,7 +158,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
 module.exports = shapesMapGeometry
 
 const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups) => {
-  let paths = {}
+  const paths = {}
   const on = 'path'
 
   let r = cssPxUnit // default
@@ -184,8 +184,8 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
   let qy = 0 // 2nd control point from previous Q command
 
   for (let j = 0; j < obj.commands.length; j++) {
-    let co = obj.commands[j]
-    let pts = co.p
+    const co = obj.commands[j]
+    const pts = co.p
     // console.log('postion: ['+cx+','+cy+'] before '+co.c);
     switch (co.c) {
       case 'm': // relative move to X,Y
@@ -238,11 +238,11 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
         break
       case 'a': // relative elliptical arc
         while (pts.length >= 7) {
-          let rx = parseFloat(pts.shift())
-          let ry = parseFloat(pts.shift())
-          let ro = 0 - parseFloat(pts.shift()) * 0.017453292519943295 // radians
-          let lf = (pts.shift() === '1')
-          let sf = (pts.shift() === '1')
+          const rx = parseFloat(pts.shift())
+          const ry = parseFloat(pts.shift())
+          const ro = 0 - parseFloat(pts.shift()) * 0.017453292519943295 // radians
+          const lf = (pts.shift() === '1')
+          const sf = (pts.shift() === '1')
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
           paths[pathName] = geometry.path2.appendArc({ endpoint: [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)], radius: [svg2cagX(rx, svgUnitsPmm), svg2cagY(ry, svgUnitsPmm)], xaxisrotation: ro, clockwise: sf, large: lf }, paths[pathName])
@@ -250,11 +250,11 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
         break
       case 'A': // absolute elliptical arc
         while (pts.length >= 7) {
-          let rx = parseFloat(pts.shift())
-          let ry = parseFloat(pts.shift())
-          let ro = 0 - parseFloat(pts.shift()) * 0.017453292519943295 // radians
-          let lf = (pts.shift() === '1')
-          let sf = (pts.shift() === '1')
+          const rx = parseFloat(pts.shift())
+          const ry = parseFloat(pts.shift())
+          const ro = 0 - parseFloat(pts.shift()) * 0.017453292519943295 // radians
+          const lf = (pts.shift() === '1')
+          const sf = (pts.shift() === '1')
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
           paths[pathName] = geometry.path2.appendArc({ endpoint: [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)], radius: [svg2cagX(rx, svgUnitsPmm), svg2cagY(ry, svgUnitsPmm)], xaxisrotation: ro, clockwise: sf, large: lf }, paths[pathName])
@@ -262,28 +262,28 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
         break
       case 'c': // relative cubic Bézier
         while (pts.length >= 6) {
-          let x1 = cx + parseFloat(pts.shift())
-          let y1 = cy + parseFloat(pts.shift())
+          const x1 = cx + parseFloat(pts.shift())
+          const y1 = cy + parseFloat(pts.shift())
           bx = cx + parseFloat(pts.shift())
           by = cy + parseFloat(pts.shift())
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
           paths[pathName] = geometry.path2.appendBezier({ controlPoints: [[svg2cagX(x1, svgUnitsPmm), svg2cagY(y1, svgUnitsPmm)], [svg2cagX(bx, svgUnitsPmm), svg2cagY(by, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]] }, paths[pathName])
-          let rf = reflect(bx, by, cx, cy)
+          const rf = reflect(bx, by, cx, cy)
           bx = rf[0]
           by = rf[1]
         }
         break
       case 'C': // absolute cubic Bézier
         while (pts.length >= 6) {
-          let x1 = parseFloat(pts.shift())
-          let y1 = parseFloat(pts.shift())
+          const x1 = parseFloat(pts.shift())
+          const y1 = parseFloat(pts.shift())
           bx = parseFloat(pts.shift())
           by = parseFloat(pts.shift())
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
           paths[pathName] = geometry.path2.appendBezier({ controlPoints: [[svg2cagX(x1, svgUnitsPmm), svg2cagY(y1, svgUnitsPmm)], [svg2cagX(bx, svgUnitsPmm), svg2cagY(by, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]] }, paths[pathName])
-          let rf = reflect(bx, by, cx, cy)
+          const rf = reflect(bx, by, cx, cy)
           bx = rf[0]
           by = rf[1]
         }
@@ -295,7 +295,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
           paths[pathName] = geometry.path2.appendBezier({ controlPoints: [[svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]] }, paths[pathName])
-          let rf = reflect(qx, qy, cx, cy)
+          const rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
           qy = rf[1]
         }
@@ -307,7 +307,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
           paths[pathName] = paths[pathName].appendBezier([[svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
-          let rf = reflect(qx, qy, cx, cy)
+          const rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
           qy = rf[1]
         }
@@ -317,7 +317,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
           paths[pathName] = paths[pathName].appendBezier([[svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [cx, cy]])
-          let rf = reflect(qx, qy, cx, cy)
+          const rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
           qy = rf[1]
         }
@@ -327,35 +327,35 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
           paths[pathName] = paths[pathName].appendBezier([[svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
-          let rf = reflect(qx, qy, cx, cy)
+          const rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
           qy = rf[1]
         }
         break
       case 's': // relative cubic Bézier shorthand
         while (pts.length >= 4) {
-          let x1 = bx // reflection of 2nd control point from previous C
-          let y1 = by // reflection of 2nd control point from previous C
+          const x1 = bx // reflection of 2nd control point from previous C
+          const y1 = by // reflection of 2nd control point from previous C
           bx = cx + parseFloat(pts.shift())
           by = cy + parseFloat(pts.shift())
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
           paths[pathName] = paths[pathName].appendBezier([[svg2cagX(x1, svgUnitsPmm), svg2cagY(y1, svgUnitsPmm)], [svg2cagX(bx, svgUnitsPmm), svg2cagY(by, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
-          let rf = reflect(bx, by, cx, cy)
+          const rf = reflect(bx, by, cx, cy)
           bx = rf[0]
           by = rf[1]
         }
         break
       case 'S': // absolute cubic Bézier shorthand
         while (pts.length >= 4) {
-          let x1 = bx // reflection of 2nd control point from previous C
-          let y1 = by // reflection of 2nd control point from previous C
+          const x1 = bx // reflection of 2nd control point from previous C
+          const y1 = by // reflection of 2nd control point from previous C
           bx = parseFloat(pts.shift())
           by = parseFloat(pts.shift())
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
           paths[pathName] = paths[pathName].appendBezier([[svg2cagX(x1, svgUnitsPmm), svg2cagY(y1, svgUnitsPmm)], [svg2cagX(bx, svgUnitsPmm), svg2cagY(by, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]])
-          let rf = reflect(bx, by, cx, cy)
+          const rf = reflect(bx, by, cx, cy)
           bx = rf[0]
           by = rf[1]
         }
@@ -400,7 +400,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
         break
       case 'z': // close current line
       case 'Z':
-        let closedpath = geometry.path2.close(paths[pathName])
+        const closedpath = geometry.path2.close(paths[pathName])
         paths[pathName] = closedpath
         cx = sx
         cy = sy // return to the starting point
