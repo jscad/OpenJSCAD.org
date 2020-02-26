@@ -42,7 +42,7 @@ Thanks to @issacs for the sax js library, and inspiration for this reader
    * reader.write(src).close()
    */
   function DxfReader (options) {
-    let reader = this
+    const reader = this
     reader.options = options || {}
 
     reader.trackPosition = (reader.options.track !== false)
@@ -57,7 +57,7 @@ Thanks to @issacs for the sax js library, and inspiration for this reader
     on: function (state, callback) {
     // verify the state
     // set the callback
-      let reader = this
+      const reader = this
       reader['on' + state] = callback
     },
 
@@ -71,14 +71,14 @@ Thanks to @issacs for the sax js library, and inspiration for this reader
 
     // write the given data into the reader, initiating parsing
     write: function (data) {
-      let reader = this
+      const reader = this
       parse(reader, data)
       return reader
     },
 
     // close and clear all state
     close: function () {
-      let reader = this
+      const reader = this
       reader.isclosed = true
       return reader
     }
@@ -98,7 +98,7 @@ Thanks to @issacs for the sax js library, and inspiration for this reader
     // console.log(group+": "+value)
     // emit this group to all listeners
     if (reader.absorbers !== undefined) {
-      let absorber = reader.absorbers.get(group)
+      const absorber = reader.absorbers.get(group)
       if (absorber !== undefined) {
         absorber(reader, group, value)
       }
@@ -129,7 +129,7 @@ Char: ${reader.c}`
   }
 
   function emitstate (reader, state, data) {
-    let onhandler = state.toString()
+    const onhandler = state.toString()
     reader[onhandler] && reader[onhandler](reader, data)
     return reader
   }
@@ -220,7 +220,7 @@ Char: ${reader.c}`
    */
   function setDxfGroup (reader, line) {
   // groups are numeric
-    let code = parseInt(line)
+    const code = parseInt(line)
     if (isNaN(code)) {
       emiterror(reader, 'Invalid group (int)')
       reader.group = null

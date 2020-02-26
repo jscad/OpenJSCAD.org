@@ -15,8 +15,8 @@ test('ASCII DXF R13 to Object Conversion', t => {
   const dxfPath = path.resolve(samplesPath, 'dxf/ezdxf/small_r13.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
-  let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, 'aaa', { output: 'geometry' })
+  const dxf = fs.readFileSync(dxfPath, 'UTF8')
+  const objs = deserialize(dxf, 'aaa', { output: 'geometry' })
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 16)
@@ -29,8 +29,8 @@ test('ASCII DXF R14 to Object Conversion', t => {
   const dxfPath = path.resolve(samplesPath, 'dxf/ezdxf/small_r14.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
-  let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, 'aaa', { output: 'geometry' })
+  const dxf = fs.readFileSync(dxfPath, 'UTF8')
+  const objs = deserialize(dxf, 'aaa', { output: 'geometry' })
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 0)
@@ -40,8 +40,8 @@ test('ASCII DXF ANSI to Object Conversion', t => {
   const dxfPath = path.resolve(samplesPath, 'dxf/ezdxf/ansi_pattern.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
-  let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, 'aaa', { output: 'geometry' })
+  const dxf = fs.readFileSync(dxfPath, 'UTF8')
+  const objs = deserialize(dxf, 'aaa', { output: 'geometry' })
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 1)
@@ -53,8 +53,8 @@ test('ASCII DXF ISO to Object Conversion', t => {
   const dxfPath = path.resolve(samplesPath, 'dxf/ezdxf/iso_pattern.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
-  let dxf = fs.readFileSync(dxfPath, 'UTF8')
-  let objs = deserialize(dxf, 'aaa', { output: 'geometry' })
+  const dxf = fs.readFileSync(dxfPath, 'UTF8')
+  const objs = deserialize(dxf, 'aaa', { output: 'geometry' })
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 14)

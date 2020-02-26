@@ -7,7 +7,7 @@ const { deserialize } = require('../index')
 //
 test('ASCII DXF 3D Polyline Entities translated to JSCAD Scripts', t => {
   // DXF 3D POLYLINE with mesh, translates to script with CSG.fromPolygons
-  let dxf3 = `0
+  const dxf3 = `0
 SECTION
 2
 ENTITIES
@@ -211,8 +211,8 @@ VERTEX
 SEQEND
 0
 ENDSEC`
-  let src3 = deserialize(dxf3, 'dxf3-test', { output: 'jscad' })
-  let ss3 = src3.split('\n')
+  const src3 = deserialize(dxf3, 'dxf3-test', { output: 'jscad' })
+  const ss3 = src3.split('\n')
   t.is(ss3.length, 28)
   t.true(src3.indexOf('geom3.create') > 0)
 
@@ -220,7 +220,7 @@ ENDSEC`
 })
 
 test('ASCII DXF 3D FACE Entities translated to JSCAD Scripts', t => {
-  let dxf1 = `0
+  const dxf1 = `0
 SECTION
 2
 ENTITIES
@@ -287,8 +287,8 @@ ENTITIES
 0
 ENDSEC`
   // expect a script which calls createPolygon for each 3DFACE, and creates a new 3D geometry
-  let src1 = deserialize(dxf1, 'dxf1-test', { output: 'jscad' })
-  let ss1 = src1.split('\n')
+  const src1 = deserialize(dxf1, 'dxf1-test', { output: 'jscad' })
+  const ss1 = src1.split('\n')
   t.is(ss1.length, 24)
   t.true(src1.indexOf('createPolygon(') > 0)
   t.true(src1.indexOf('geom3.create(') > 0)

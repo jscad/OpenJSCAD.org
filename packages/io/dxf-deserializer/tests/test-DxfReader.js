@@ -13,8 +13,8 @@ test('DXF Reader', t => {
   const dxfPath = path.resolve(samplesPath, 'dxf/jscad/circle10.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
-  let src = fs.readFileSync(dxfPath, 'UTF8')
-  let reader = dxf.reader(src)
+  const src = fs.readFileSync(dxfPath, 'UTF8')
+  const reader = dxf.reader(src)
 
   t.is(typeof reader, 'object')
 })
