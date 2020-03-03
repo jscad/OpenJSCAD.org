@@ -89,11 +89,11 @@ const main = () => {
 module.exports = {main}
 `
 
-  const observed = deserializer.deserialize(inputFile, undefined, { output: 'jscad', addMetaData: false })
+  const observed = deserializer.deserialize({ filename: 'ascii', output: 'script', addMetaData: false }, inputFile)
   t.deepEqual(observed, expected)
 })
 
-test('translate simple binary stl to jscad code', function (t) {
+test('translate simple binary stl to jscad script', function (t) {
   const inputPath = path.resolve(samplesPath, 'stl/testcube_10mm.stl')
   const inputFile = fs.readFileSync(inputPath)
 
@@ -166,15 +166,15 @@ const main = () => {
 module.exports = {main}
 `
 
-  const observed = deserializer.deserialize(inputFile, undefined, { output: 'jscad', addMetaData: false })
+  const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, inputFile)
   t.deepEqual(observed, expected)
 })
 
-test('translate stl with colors to jscad code', function (t) {
+test('translate stl with colors to jscad script', function (t) {
   const inputPath = path.resolve(samplesPath, 'stl/colors.stl')
   const inputFile = fs.readFileSync(inputPath)
 
-  const observed = deserializer.deserialize(inputFile, undefined, { output: 'jscad', addMetaData: false })
+  const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, inputFile)
   t.is(countOf('points', observed), 3) // comment, definition, useage
   t.is(countOf('faces', observed), 3)
   t.is(countOf('colors', observed), 3)

@@ -211,7 +211,7 @@ VERTEX
 SEQEND
 0
 ENDSEC`
-  const src3 = deserialize(dxf3, 'dxf3-test', { output: 'jscad' })
+  const src3 = deserialize({ filename: 'dxf3-test', output: 'script' }, dxf3)
   const ss3 = src3.split('\n')
   t.is(ss3.length, 28)
   t.true(src3.indexOf('geom3.create') > 0)
@@ -287,7 +287,7 @@ ENTITIES
 0
 ENDSEC`
   // expect a script which calls createPolygon for each 3DFACE, and creates a new 3D geometry
-  const src1 = deserialize(dxf1, 'dxf1-test', { output: 'jscad' })
+  const src1 = deserialize({ filename: 'dxf1-test', output: 'script' }, dxf1)
   const ss1 = src1.split('\n')
   t.is(ss1.length, 24)
   t.true(src1.indexOf('createPolygon(') > 0)

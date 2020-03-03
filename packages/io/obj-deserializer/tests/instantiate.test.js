@@ -14,7 +14,7 @@ test('deserialize simple obj to geometry', function (t) {
   const inputPath = path.resolve(samplesPath, 'obj/cube.obj')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
-  const observed = deserializer.deserialize(inputFile, undefined, { output: 'geometry', addMetaData: false })
+  const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.is(observed.length, 1)
   const polygons = geometry.geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 6)

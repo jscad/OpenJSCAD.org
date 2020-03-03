@@ -23,16 +23,17 @@ const shapesMapJscad = require('./shapesMapJscad')
 /**
  * Parse the given svg data and return either a JSCAD script or a set of geometries
  * @param {string} input svg data
- * @param {string} filename (optional) original filename of AMF source
  * @param {object} options options (optional) anonymous object with:
+ * @param {string} [options.filename='svg'] filename of original SVG source
  * @param {string} [options.version='0.0.0'] version number to add to the metadata
  * @param {boolean} [options.addMetadata=true] toggle injection of metadata (producer, date, source) at the start of the file
- * @param {string} [options.output='script'] {String} either 'script' or 'geometry' to set desired output
+ * @param {string} [options.output='script'] either 'script' or 'geometry' to set desired output
  * @param {float} [options.pxPmm] custom pixels per mm unit
- * @return {string|[geometry]} either a string (jscad script) or a set of geometries
+ * @return {string|[object]} either a string (script) or a set of objects (geometry)
  */
-const deserialize = (input, filename, options) => {
+const deserialize = (options, input) => {
   const defaults = {
+    filename: 'svg',
     addMetaData: true,
     output: 'script',
     pxPmm: require('./constants').pxPmm,
@@ -40,23 +41,21 @@ const deserialize = (input, filename, options) => {
     version: '0.0.0'
   }
   options = Object.assign({}, defaults, options)
-  return options.output === 'script' ? translate(input, filename, options) : instantiate(input, filename, options)
+  return options.output === 'script' ? translate(input, options) : instantiate(input, options)
 }
 
 /**
  * Parse the given SVG source and return a set of geometries.
  * @param  {string} src svg data as text
- * @param  {string} filename (optional) original filename of SVG source
  * @param  {object} options options (optional) anonymous object with:
- *  pxPmm {number: pixels per milimeter for calcuations
+ *  pxPmm {number} pixels per milimeter for calcuations
  *  version: {string} version number to add to the metadata
  *  addMetadata: {boolean} flag to enable/disable injection of metadata (producer, date, source)
  *
  * @return {[geometry]} a set of geometries
  */
-const instantiate = (src, filename, options) => {
+const instantiate = (src, options) => {
   const { pxPmm, target } = options
-  filename = filename || 'svg'
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 
@@ -77,7 +76,6 @@ const instantiate = (src, filename, options) => {
 /**
  * Parse the given SVG source and return a JSCAD script
  * @param  {string} src svg data as text
- * @param  {string} filename (optional) original filename of SVG source
  * @param  {object} options options (optional) anonymous object with:
  *  pxPmm {number: pixels per milimeter for calcuations
  *  version: {string} version number to add to the metadata
@@ -85,9 +83,8 @@ const instantiate = (src, filename, options) => {
  *    at the start of the file
  * @return {string} a string (JSCAD script)
  */
-const translate = (src, filename, options) => {
-  const { version, pxPmm, addMetaData, target } = options
-  filename = filename || 'svg'
+const translate = (src, options) => {
+  const { filename, version, pxPmm, addMetaData, target } = options
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 
@@ -390,4 +387,9 @@ const createSvgParser = (src, pxPmm) => {
   return parser
 }
 
-module.exports = { deserialize }
+const extension = 'svg'
+
+module.exports = {
+  deserialize,
+  extension
+}

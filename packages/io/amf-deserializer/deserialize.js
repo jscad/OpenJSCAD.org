@@ -3,7 +3,7 @@ const createObject = require('./objectBuilder')
 
 const parse = require('./parse')
 
-const instantiate = (src, filename, options) => {
+const instantiate = (src, options) => {
   const defaults = {
     pxPmm: require('./constants').pxPmm
   }

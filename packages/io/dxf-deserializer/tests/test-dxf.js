@@ -15,7 +15,7 @@ test('ASCII DXF from Bourke 3D Entities to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   const dxf = fs.readFileSync(dxfPath, 'UTF8')
-  const objs = deserialize(dxf, 'aaa', { output: 'objects' })
+  const objs = deserialize({ output: 'geometry' }, dxf)
 
   // expect one layer, containing 2 objects (CSG, and Line3D)
   t.true(Array.isArray(objs))
