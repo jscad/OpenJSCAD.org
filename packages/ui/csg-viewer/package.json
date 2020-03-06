@@ -22,15 +22,15 @@
     "uglify-es": "^3.2.1"
   },
   "dependencies": {
-    "@most/create": "^2.0.1",
+    "@most/create": "2.0.1",
     "angle-normals": "^1.0.0",
     "camera-unproject": "^1.0.1",
     "gl-mat4": "^1.1.4",
     "gl-vec3": "^1.0.3",
     "glslify": "^6.1.0",
-    "most": "^1.7.2",
-    "most-gestures": "^0.4.1",
-    "most-proxy": "^3.3.0",
+    "most": "1.8.0",
+    "most-gestures": "0.4.1",
+    "most-proxy": "3.3.0",
     "regl": "^1.3.0",
     "vertex-ao": "^1.0.0"
   }
