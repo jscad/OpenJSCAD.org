@@ -42,7 +42,7 @@ const deserialize = (options, input) => {
   }
   options = Object.assign({}, defaults, options)
 
-  return options.output === 'script' ? translate(input, options) : instantiate(input, options)
+  return options.output === 'script' ? translate(options, input) : instantiate(options, input)
 }
 
 const extension = 'amf'
