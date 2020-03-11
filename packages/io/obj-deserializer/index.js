@@ -6,16 +6,17 @@ const version = require('./package.json').version
  * Parse the given OBJ data and return either a JSCAD script or a set of geometry
  * @see http://en.wikipedia.org/wiki/Wavefront_.obj_file
  * @param  {string} input obj data
- * @param {string} filename (optional) original filename of the obj data
  * @param {object} options options (optional) anonymous object with:
+ * @param {string} [options.filename='obj'] filename of the original obj data
  * @param {string} [options.version='0.0.0'] version number to add to the metadata
  * @param {boolean} [options.addMetadata=true] toggle injection of metadata (producer, date, source) at the start of the file
- * @param {string} [options.output='jscad'] {String} either jscad or geometry to set desired output
- * @return {[geometry]/string} either a JSCAD script or a set of geometry
+ * @param {string} [options.output='script'] either script or geometry to set desired output
+ * @return {[object]/string} either a script (script) or a set of objects (geometry)
  */
-const deserialize = (input, filename, options) => {
+const deserialize = (options, input) => {
   const defaults = {
-    output: 'jscad',
+    filename: 'obj',
+    output: 'script',
     orientation: 'outward',
     version,
     addMetaData: true
@@ -23,13 +24,11 @@ const deserialize = (input, filename, options) => {
   options = Object.assign({}, defaults, options)
   const { output } = options
 
-  options.filename = filename || 'obj'
-
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 
   const { positions, groups } = getGroups(input, options)
 
-  const result = output === 'jscad' ? stringify(positions, groups, options) : objectify(positions, groups, options)
+  const result = output === 'script' ? stringify(positions, groups, options) : objectify(positions, groups, options)
 
   options && options.statusCallback && options.statusCallback({ progress: 100 })
 
@@ -207,6 +206,9 @@ module.exports = {main}
   return code
 }
 
+const extension = 'obj'
+
 module.exports = {
-  deserialize
+  deserialize,
+  extension
 }

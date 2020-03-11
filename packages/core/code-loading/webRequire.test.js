@@ -198,7 +198,7 @@ test('webRequire: should allow using require.extensions like the native node req
     const deserializer = require('@jscad/io').stlDeSerializer
     _require.extensions['.stl'] = (module, filename) => {
       const content = fs.readFileSync(filename, 'utf8')
-      const parsed = deserializer.deserialize(content, filename, { output: 'geometry' })
+      const parsed = deserializer.deserialize({ filename, output: 'geometry' }, content)
       module.exports = parsed
     }
   }

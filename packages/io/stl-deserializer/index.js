@@ -13,25 +13,25 @@ const { BinaryReader } = require('@jscad/io-utils')
 /**
 * Parse the given stl data and return either a JSCAD script OR a list of geometries
 * @param {string} input stl data
-* @param {string} filename (optional) original filename of AMF source
 * @param {object} options options (optional) anonymous object with:
+* @param {string} [options.filename='stl'] filename of original STL source
 * @param {string} [options.version='0.0.0'] version number to add to the metadata
 * @param {boolean} [options.addMetadata=true] toggle injection of metadata (producer, date, source) at the start of the file
-* @param {string} [options.output='jscad'] {String} either jscad or geometry to set desired output
-* @return {[geometries]|string} a list of geometries OR a jscad script (string)
+* @param {string} [options.output='script'] either script or geometry to set desired output
+* @return {[objects]|string} a list of objects (geometry) or a string (script)
 */
-const deserialize = (stl, filename, options) => {
-  // console.log('***** deserialize', stl.length, filename, options)
+const deserialize = (options, stl) => {
   const defaults = {
+    filename: 'stl',
     version: '0.0.0',
     addMetaData: true,
-    output: 'jscad'
+    output: 'script'
   }
   options = Object.assign({}, defaults, options)
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 
-  const { version, output, addMetaData } = options
+  const { filename, version, output, addMetaData } = options
 
   const isBinary = isDataBinaryRobust(stl)
 
@@ -45,8 +45,8 @@ const deserialize = (stl, filename, options) => {
   options && options.statusCallback && options.statusCallback({ progress: 66 })
 
   const deserializer = isBinary ? deserializeBinarySTL : deserializeAsciiSTL
-  const elementFormatter = output === 'jscad' ? elementFormatterJscad : elementFormatterObject
-  const outputFormatter = output === 'jscad' ? formatAsJscad : formatAsCsg
+  const elementFormatter = output === 'script' ? elementFormatterJscad : elementFormatterObject
+  const outputFormatter = output === 'script' ? formatAsJscad : formatAsCsg
 
   const result = outputFormatter(deserializer(stl, filename, version, elementFormatter), addMetaData, version, filename)
 
@@ -400,6 +400,9 @@ const solid${index} = () => {
   return src
 }
 
+const extension = 'stl'
+
 module.exports = {
-  deserialize
+  deserialize,
+  extension
 }

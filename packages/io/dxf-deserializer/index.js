@@ -546,7 +546,7 @@ const createReader = (src, options) => {
 //
 // instantiate the give DXF definition (src) into a set of CSG library objects
 //
-const instantiate = (src, filename, options) => {
+const instantiate = (src, options) => {
   const reader = createReader(src, options)
   const objs = instantiateAsciiDxf(reader, options)
   return objs
@@ -555,33 +555,34 @@ const instantiate = (src, filename, options) => {
 //
 // translate the give DXF definition (src) into a  JSCAD script
 //
-const translate = (src, filename, options) => {
+const translate = (src, options) => {
   const reader = createReader(src, options)
 
   let code = `// Produced by JSCAD IO Library : DXF Deserializer (${options.version})
 
 `
   // code += '// date: ' + (new Date()) + '\n'
-  // code += '// source: ' + filename + '\n'
+  // code += '// source: ' + options.filename + '\n'
   code += translateAsciiDxf(reader, options)
   return code
 }
 
 /**
  * Deserialize the given source and return the requested 'output'
- * @param {string} src DXF data stream
- * @param {string} filename (optional) original filename of DXF data stream if any
  * @param {object} options (optional) anonymous object with:
+ * @param {string} [options.filename='dxf'] filename of original DXF data stream
  * @param {string} [options.version='0.0.1'] version number to add to the metadata
- * @param {string} [options.output='jscad'] either jscad or geometry to set desired output
+ * @param {string} [options.output='script'] either script or geometry to set desired output
  * @param {boolean} [options.strict=true] obey strict DXF specifications
  * @param {array} [options.colorindex=[]] list of colors (256) for use during rendering
- * @return {string|[objects]} a string (jscad script) or array of objects
+ * @param {string} src DXF data stream
+ * @return {string|[objects]} a string (script) or array of objects (geometry)
  */
-const deserialize = (src, filename, options) => {
+const deserialize = (options, src) => {
   const defaults = {
+    filename: 'dxf',
     version,
-    output: 'jscad',
+    output: 'script',
     strict: true,
     colorindex: colorIndex,
     dxf: {
@@ -591,9 +592,12 @@ const deserialize = (src, filename, options) => {
     }
   }
   options = Object.assign({}, defaults, options)
-  return options.output === 'jscad' ? translate(src, filename, options) : instantiate(src, filename, options)
+  return options.output === 'script' ? translate(src, options) : instantiate(src, options)
 }
 
+const extension = 'dxf'
+
 module.exports = {
-  deserialize
+  deserialize,
+  extension
 }

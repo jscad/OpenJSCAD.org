@@ -16,7 +16,7 @@ test('ASCII DXF R13 to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   const dxf = fs.readFileSync(dxfPath, 'UTF8')
-  const objs = deserialize(dxf, 'aaa', { output: 'geometry' })
+  const objs = deserialize({ filename: 'r13', output: 'geometry' }, dxf)
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 16)
@@ -30,7 +30,7 @@ test('ASCII DXF R14 to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   const dxf = fs.readFileSync(dxfPath, 'UTF8')
-  const objs = deserialize(dxf, 'aaa', { output: 'geometry' })
+  const objs = deserialize({ filename: 'r14', output: 'geometry' }, dxf)
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 0)
@@ -41,7 +41,7 @@ test('ASCII DXF ANSI to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   const dxf = fs.readFileSync(dxfPath, 'UTF8')
-  const objs = deserialize(dxf, 'aaa', { output: 'geometry' })
+  const objs = deserialize({ filename: 'ansi', output: 'geometry' }, dxf)
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 1)
@@ -54,7 +54,7 @@ test('ASCII DXF ISO to Object Conversion', t => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   const dxf = fs.readFileSync(dxfPath, 'UTF8')
-  const objs = deserialize(dxf, 'aaa', { output: 'geometry' })
+  const objs = deserialize({ filename: 'iso', output: 'geometry' }, dxf)
 
   t.true(Array.isArray(objs))
   t.is(objs.length, 14)

@@ -1,12 +1,12 @@
 const createObject = require('./objectBuilder')
 const parse = require('./parse')
 
-const translate = (src, filename, options) => {
+const translate = (options, src) => {
   const defaults = {
     pxPmm: require('./constants').pxPmm
   }
   options = Object.assign({}, defaults, options)
-  const { version, pxPmm, addMetaData } = options
+  const { version, pxPmm, addMetaData, filename } = options
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 
