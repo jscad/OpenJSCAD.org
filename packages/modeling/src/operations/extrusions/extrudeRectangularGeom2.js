@@ -1,8 +1,9 @@
 const { area } = require('../../math/utils')
 
-const { geom2, path2 } = require('../../geometry')
+const geom2 = require('../../geometry/geom2')
+const path2 = require('../../geometry/path2')
 
-const { expand } = require('../expansions')
+const expand = require('../expansions/expand')
 
 const extrudeLinearGeom2 = require('./extrudeLinearGeom2')
 

@@ -1,6 +1,7 @@
 const flatten = require('../../utils/flatten')
 
-const { geom2, path2 } = require('../../geometry')
+const geom2 = require('../../geometry/geom2')
+const path2 = require('../../geometry/path2')
 
 const offsetGeom2 = require('./offsetGeom2')
 const offsetPath2 = require('./offsetPath2')

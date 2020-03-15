@@ -1,8 +1,11 @@
 const flatten = require('../../utils/flatten')
 
-const { mat4, plane } = require('../../math')
+const mat4 = require('../../math/mat4')
+const plane = require('../../math/plane')
 
-const { geom2, geom3, path2 } = require('../../geometry')
+const geom2 = require('../../geometry/geom2')
+const geom3 = require('../../geometry/geom3')
+const path2 = require('../../geometry/path2')
 
 /**
  * Mirror the given object(s) using the given options (if any)

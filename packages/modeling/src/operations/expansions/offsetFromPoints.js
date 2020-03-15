@@ -1,10 +1,11 @@
 const { EPS } = require('../../math/constants')
 
-const { intersect } = require('../../math/utils')
+const intersect = require('../../math/utils/intersect')
 
-const { line2, vec2 } = require('../../math')
+const line2 = require('../../math/line2')
+const vec2 = require('../../math/vec2')
 
-const { poly2 } = require('../../geometry')
+const poly2 = require('../../geometry/poly2')
 
 /*
  * Create a set of offset points from the given points using the given options (if any).

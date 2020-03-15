@@ -1,4 +1,7 @@
-const { mat4, plane, vec2, vec3 } = require('../math/')
+const mat4 = require('../math/mat4')
+const plane = require('../math/plane')
+const vec2 = require('../math/vec2')
+const vec3 = require('../math/vec3')
 
 const OrthoNormalBasis = require('../math/OrthoNormalBasis')
 

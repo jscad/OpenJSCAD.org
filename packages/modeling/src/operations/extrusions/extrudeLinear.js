@@ -1,6 +1,6 @@
 const flatten = require('../../utils/flatten')
 
-const { geom2 } = require('../../geometry')
+const geom2 = require('../../geometry/geom2')
 
 const extrudeLinearGeom2 = require('./extrudeLinearGeom2')
 
