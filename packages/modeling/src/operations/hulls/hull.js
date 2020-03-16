@@ -3,7 +3,7 @@ const areAllShapesTheSameType = require('../../utils/areAllShapesTheSameType')
 
 const geom2 = require('../../geometry/geom2')
 const geom3 = require('../../geometry/geom3')
-const path2 = require('../../geometry/poly3')
+const path2 = require('../../geometry/path2')
 
 const hullPath2 = require('./hullPath2')
 const hullGeom2 = require('./hullGeom2')
