@@ -5,8 +5,8 @@ const mat4 = require('../../math/mat4')
 const { geom2, geom3, path2 } = require('../../geometry')
 
 /**
- * Scale the given object(s) using the given options (if any)
- * @param {Array} factors - X, Y, Z factors by which to scale the object
+ * Scale the given object(s) using the given options.
+ * @param {Number[]} factors - X, Y, Z factors by which to scale the object
  * @param {Object|Array} objects - the objects(s) to scale
  * @return {Object|Array} the scaled object(s)
  *
@@ -15,11 +15,15 @@ const { geom2, geom3, path2 } = require('../../geometry')
  */
 const scale = (factors, ...objects) => {
   if (!Array.isArray(factors)) throw new Error('factors must be an array')
-  if (factors.length !== 3) throw new Error('factors must contain X, Y and Z values')
-  if (factors[0] <= 0 || factors[1] <= 0 || factors[2] <= 0) throw new Error('factors must be positive')
 
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')
+
+  // adjust the factors if necessary
+  factors = factors.slice() // don't modify the original
+  while (factors.length < 3) factors.push(1)
+
+  if (factors[0] <= 0 || factors[1] <= 0 || factors[2] <= 0) throw new Error('factors must be positive')
 
   const matrix = mat4.fromScaling(factors)
 
@@ -32,10 +36,28 @@ const scale = (factors, ...objects) => {
   return results.length === 1 ? results[0] : results
 }
 
+/**
+ * Scale the given object(s) about the X axis using the given options.
+ * @param {Number} factor - X factor by which to scale the object
+ * @param {Object|Array} objects - the objects(s) to scale
+ * @return {Object|Array} the scaled object(s)
+ */
 const scaleX = (offset, ...objects) => scale([offset, 1, 1], objects)
 
+/**
+ * Scale the given object(s) about the Y axis using the given options.
+ * @param {Number} factor - Y factor by which to scale the object
+ * @param {Object|Array} objects - the objects(s) to scale
+ * @return {Object|Array} the scaled object(s)
+ */
 const scaleY = (offset, ...objects) => scale([1, offset, 1], objects)
 
+/**
+ * Scale the given object(s) about the Z axis using the given options.
+ * @param {Number} factor - Z factor by which to scale the object
+ * @param {Object|Array} objects - the objects(s) to scale
+ * @return {Object|Array} the scaled object(s)
+ */
 const scaleZ = (offset, ...objects) => scale([1, 1, offset], objects)
 
 module.exports = {

@@ -5,7 +5,7 @@ const mat4 = require('../../math/mat4')
 const { geom2, geom3, path2 } = require('../../geometry')
 
 /**
- * Rotate the given object(s) using the given options (if any)
+ * Rotate the given object(s) using the given options.
  * @param {Number[]} angles - angle (RADIANS) of rotations about X, Y, and X axis
  * @param {Object|Array} objects - the objects(s) to rotate
  * @return {Object|Array} the rotated object(s)
@@ -15,10 +15,13 @@ const { geom2, geom3, path2 } = require('../../geometry')
  */
 const rotate = (angles, ...objects) => {
   if (!Array.isArray(angles)) throw new Error('angles must be an array')
-  if (angles.length !== 3) throw new Error('angles must contain X, Y and Z values')
 
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')
+
+  // adjust the angles if necessary
+  angles = angles.slice() // don't modify the original
+  while (angles.length < 3) angles.push(0)
 
   let yaw = angles[2]
   let pitch = angles[1]
@@ -35,10 +38,28 @@ const rotate = (angles, ...objects) => {
   return results.length === 1 ? results[0] : results
 }
 
+/**
+ * Rotate the given object(s) about the X axis, using the given options.
+ * @param {Number} angle - angle (RADIANS) of rotations about X
+ * @param {Object|Array} objects - the objects(s) to rotate
+ * @return {Object|Array} the rotated object(s)
+ */
 const rotateX = (angle, ...objects) => rotate([angle, 0, 0], objects)
 
+/**
+ * Rotate the given object(s) about the Y axis, using the given options.
+ * @param {Number} angle - angle (RADIANS) of rotations about Y
+ * @param {Object|Array} objects - the objects(s) to rotate
+ * @return {Object|Array} the rotated object(s)
+ */
 const rotateY = (angle, ...objects) => rotate([0, angle, 0], objects)
 
+/**
+ * Rotate the given object(s) about the Z axis, using the given options.
+ * @param {Number} angle - angle (RADIANS) of rotations about Z
+ * @param {Object|Array} objects - the objects(s) to rotate
+ * @return {Object|Array} the rotated object(s)
+ */
 const rotateZ = (angle, ...objects) => rotate([0, 0, angle], objects)
 
 module.exports = {
