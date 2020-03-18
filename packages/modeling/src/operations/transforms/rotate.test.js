@@ -54,7 +54,7 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', t => {
   let geometry = geom3.fromPoints(points)
 
   // rotate about X
-  let rotated = rotate([Math.PI/2, 0, 0], geometry)
+  let rotated = rotate([Math.PI/2], geometry)
   let obs = geom3.toPoints(rotated)
   let exp = [
     [ new Float32Array([ -2, 12, -7 ]), new Float32Array([ -2, -18, -7 ]),
@@ -77,7 +77,7 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', t => {
   t.deepEqual(obs, exp)
 
   // rotate about Y
-  rotated = rotate([0, -Math.PI/2, 0], geometry)
+  rotated = rotate([0, -Math.PI/2], geometry)
   obs = geom3.toPoints(rotated)
   exp = [
     [ new Float32Array([ 12, -7, -2 ]), new Float32Array([ -18, -7, -2 ]),
