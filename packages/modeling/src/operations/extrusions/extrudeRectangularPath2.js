@@ -1,6 +1,6 @@
-const { path2 } = require('../../geometry')
+const path2 = require('../../geometry/path2')
 
-const { expand } = require('../expansions')
+const expand = require('../expansions/expand')
 
 const extrudeLinearGeom2 = require('./extrudeLinearGeom2')
 

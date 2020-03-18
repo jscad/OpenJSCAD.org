@@ -1,6 +1,8 @@
 const flatten = require('../../utils/flatten')
 
-const { geom2, geom3, path2 } = require('../../geometry')
+const geom2 = require('../../geometry/geom2')
+const geom3 = require('../../geometry/geom3')
+const path2 = require('../../geometry/path2')
 
 const expandGeom2 = require('./expandGeom2')
 const expandGeom3 = require('./expandGeom3')

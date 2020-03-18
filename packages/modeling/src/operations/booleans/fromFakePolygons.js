@@ -1,6 +1,6 @@
-const { vec2 } = require('../../math')
+const vec2 = require('../../math/vec2')
 
-const { geom2 } = require('../../geometry')
+const geom2 = require('../../geometry/geom2')
 
 const fromFakePolygon = (polygon) => {
   // this can happen based on union, seems to be residuals -

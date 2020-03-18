@@ -1,4 +1,4 @@
-const { path2 } = require('../../geometry')
+const path2 = require('../../geometry/path2')
 
 const offsetFromPoints = require('./offsetFromPoints')
 

@@ -2,7 +2,7 @@ const {EPS} = require('../math/constants')
 
 const vec2 = require('../math/vec2')
 
-const {geom2} = require('../geometry')
+const geom2 = require('../geometry/geom2')
 
 /**
  * Construct a rounded rectangle.

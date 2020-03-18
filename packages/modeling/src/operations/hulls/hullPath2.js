@@ -1,8 +1,8 @@
 const flatten = require('../../utils/flatten')
 
-const { vec2 } = require('../../math')
+const vec2 = require('../../math/vec2')
 
-const { path2 } = require('../../geometry')
+const path2 = require('../../geometry/path2')
 
 const hullPoints2 = require('./hullPoints2')
 

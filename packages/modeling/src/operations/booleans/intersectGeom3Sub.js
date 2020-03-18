@@ -1,4 +1,4 @@
-const { geom3 } = require('../../geometry')
+const geom3 = require('../../geometry/geom3')
 
 const mayOverlap = require('./mayOverlap')
 const { Tree } = require('./trees')

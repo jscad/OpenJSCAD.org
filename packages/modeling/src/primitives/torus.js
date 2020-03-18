@@ -1,5 +1,5 @@
-const {extrudeRotate} = require('../operations/extrusions')
-const {rotateZ} = require('../operations/transforms')
+const extrudeRotate = require('../operations/extrusions/extrudeRotate')
+const {rotate} = require('../operations/transforms/rotate')
 
 const {circle} = require('./ellipse')
 
@@ -33,7 +33,7 @@ const torus = (options) => {
 
   let innerCircle = circle({radius: innerRadius, center: [outerRadius, 0], segments: innerSegments})
 
-  if (innerRotation !== 0) innerCircle = rotateZ(innerRotation, innerCircle)
+  if (innerRotation !== 0) innerCircle = rotate([0, 0, innerRotation], innerCircle)
 
   options = {
     startAngle: 0,
