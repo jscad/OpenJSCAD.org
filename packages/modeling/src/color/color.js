@@ -9,8 +9,9 @@ const flatten = require('../utils/flatten')
  *
  * @example
  * let redSphere = color([1,0,0], sphere()) // red
- * let greenCircle = color([0,1,0], circle()) // green
+ * let greenCircle = color([0,1,0,0.8], circle()) // green transparent
  * let blueArc = color([0,0,1], arc()) // blue
+ * let wildcylinder = color(colorNameToRgb('fuchsia'), cylinder()) // CSS color
  */
 const color = (color, ...objects) => {
   if (!Array.isArray(color)) throw new Error('color must be an array')
