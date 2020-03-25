@@ -8,7 +8,7 @@ test('hsvToRgb (HSV values)', t => {
 
   t.deepEqual(obs, exp)
 
-  obs = hsvToRgb([0.9166666666666666, 1, 1])
+  obs = hsvToRgb(0.9166666666666666, 1, 1)
   exp = [1, 0, 0.5]
 
   t.deepEqual(obs, exp)
@@ -20,7 +20,7 @@ test('hsvToRgb (HSVA values)', t => {
 
   t.deepEqual(obs, exp)
 
-  obs = hsvToRgb([0.9166666666666666, 1, 1, 0.5])
+  obs = hsvToRgb(0.9166666666666666, 1, 1, 0.5)
   exp = [1, 0, 0.5, 0.5]
 
   t.deepEqual(obs, exp)
