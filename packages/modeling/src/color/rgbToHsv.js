@@ -1,13 +1,15 @@
+const flatten = require('../utils/flatten')
+
 /**
  * Converts an RGB color value to HSV.
  *
  * @see http://en.wikipedia.org/wiki/HSV_color_space.
- * @param {Number[]} values - RGB color values
+ * @param {Number[]|Number,Number,Number} values - RGB color values
  * @return {Number[]} HSV color values
  * @alias module:color.rgbToHsv
  */
-const rgbToHsv = (values) => {
-  if (!Array.isArray(values)) throw new Error('values must be an array')
+const rgbToHsv = (...values) => {
+  values = flatten(values)
   if (values.length < 3) throw new Error('values must contain R, G and B values')
 
   let r = values[0]
