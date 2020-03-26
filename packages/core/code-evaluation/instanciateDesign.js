@@ -7,7 +7,7 @@ const isPath2 = require('@jscad/modeling').geometry.path2.isA
 const { toArray } = require('@jscad/array-utils')
 
 // const toCompactBinary = require('./toCompactTest')
-const isResultSolid = (rawResults) => (rawResults.length > 0 && (isGeom3(rawResults[0]) || isGeom2(rawResults[0]) || isPath2(rawResults[0])))
+const isResultGeometry = (rawResults) => (rawResults.length > 0 && (isGeom3(rawResults[0]) || isGeom2(rawResults[0]) || isPath2(rawResults[0])))
 
 const lookupFromCompactBinary = (compactLookup = {}) => {
   // console.log('lookupFromCompactBinary', compactLookup)
@@ -112,7 +112,7 @@ const instanciateDesign = (rootModule, parameterValues, options) => {
     solids = serialize ? serializeSolids(solids) : solids
     return { solids, lookup, lookupCounts }
   } else {
-    if (isResultSolid(rawResults)) {
+    if (isResultGeometry(rawResults)) {
       solids = serialize ? serializeSolids(rawResults) : rawResults
       return { solids }
     } else {

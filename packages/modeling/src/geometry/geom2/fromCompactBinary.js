@@ -1,4 +1,9 @@
 // FIXME: how about custom properties or fields ?
+/**
+ *
+ * @param {*} data
+ * @returns {Float32Array} compacted data
+ */
 const geom2FromCompactBinary = data => {
   const geom = require('./create')()
   // geom.isRetesselated = !!data[1]
