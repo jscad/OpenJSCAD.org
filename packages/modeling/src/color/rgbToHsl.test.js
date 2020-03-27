@@ -8,7 +8,7 @@ test('rgbToHsl', t => {
 
   t.deepEqual(obs, exp)
 
-  obs = rgbToHsl([0.5, 0.5, 0.5])
+  obs = rgbToHsl(0.5, 0.5, 0.5)
   exp = [0, 0, 0.5]
 
   t.deepEqual(obs, exp)
@@ -28,7 +28,7 @@ test('rgbToHsl', t => {
 
   t.deepEqual(obs, exp)
 
-  obs = rgbToHsl([0.6, 0.7, 0.8, 0.5])
+  obs = rgbToHsl(0.6, 0.7, 0.8, 0.5)
   exp = [0.5833333333333334, 0.3333333333333335, 0.7, 0.5]
 
   t.deepEqual(obs, exp)

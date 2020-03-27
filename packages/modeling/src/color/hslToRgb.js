@@ -1,18 +1,20 @@
+const flatten = require('../utils/flatten')
+
 const hueToColorComponent = require('./hueToColorComponent')
 
 /**
  * Converts HSL color values to RGB color values.
  *
  * @see http://en.wikipedia.org/wiki/HSL_color_space.
- * @param {Array} values - HSL color values
+ * @param {Number[]|Number,Number,Number} values - HSL color values
  * @return {Array} RGB color values
  * @alias module:color.hslToRgb
  *
  * @example
  * let mysphere = color(hslToRgb([0.9166666666666666, 1, 0.5]), sphere())
  */
-const hslToRgb = (values) => {
-  if (!Array.isArray(values)) throw new Error('values must be an array')
+const hslToRgb = (...values) => {
+  values = flatten(values)
   if (values.length < 3) throw new Error('values must contain H, S and L values')
 
   let h = values[0]
