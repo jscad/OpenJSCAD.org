@@ -1,6 +1,7 @@
 const { geometry } = require('@jscad/modeling')
 
 // handled format descriptions
+// note: order is important as regular expressions are created from extentions
 const formats = {
   stl: {
     displayName: 'STL (Binary)',
@@ -50,6 +51,14 @@ const formats = {
     deserializable: true,
     convertGeom3: true,
     convertGeom2: true },
+  json: {
+    displayName: 'json',
+    description: 'JavaScript Object Notation Format',
+    extension: 'json',
+    mimetype: 'application/json',
+    deserializable: true,
+    convertGeom3: true,
+    convertGeom2: true },
   js: {
     displayName: 'js',
     description: 'JavaScript Source',
@@ -81,14 +90,6 @@ const formats = {
     mimetype: 'model/x3d+xml',
     deserializable: false,
     convertGeom3: true,
-    convertGeom2: false },
-  json: {
-    displayName: 'json',
-    description: 'JavaScript Object Notation Format',
-    extension: 'json',
-    mimetype: 'application/json',
-    deserializable: false,
-    convertGeom3: false,
     convertGeom2: false }
 }
 
