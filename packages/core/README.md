@@ -1,10 +1,9 @@
 # @jscad/core
 
-This is the core package (reusable crucial pieces of code) for OpenJsCAD, used in the various 'front end'
+This is the core package of reusable crucial pieces of code for OpenJsCAD, which is used in the various 'front end'
 packages like @jscad/cli , @jscad/web, @jscad/desktop
 
 <img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right" alt="OpenJSCAD">
-
 
 [![npm version](https://badge.fury.io/js/%40jscad%2Fcore.svg)](https://badge.fury.io/js/%40jscad%2Fcore)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
@@ -25,11 +24,10 @@ packages like @jscad/cli , @jscad/web, @jscad/desktop
 - [Community](#community)
 - [Acknowledgements](#acknowledgements)
 - [License](#license)
-- [See also](#see-also)
 
 ## Usage
 
-there is no UI or CLi in this package, only pieces of code ready for re-use
+There is no UI or CLi in this package, only pieces of code ready for re-use.
 
 ## Development
 
@@ -80,8 +78,7 @@ Small Note: If editing this README, please conform to the [standard-readme](http
 
 See for more details
 * [JSCAD Forum Announcements](https://jscad.xyz/forum/category/1/announcements)
-* [JSCAD Forum Community](https://jscad.xyz/forum)
-to discuss with other user and developers.
+* [JSCAD Forum Community](https://jscad.xyz/forum) to discuss with other user and developers.
 
 ## Acknowledgements
 
@@ -108,7 +105,6 @@ Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com
 
 <a href="https://opencollective.com/openjscad#backers" target="_blank"><img src="https://opencollective.com/openjscad/backers.svg?width=890"></a>
 
-
 ## Sponsors
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/openjscad#sponsor)]
@@ -124,21 +120,7 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 <a href="https://opencollective.com/openjscad/sponsor/8/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/8/avatar.svg"></a>
 <a href="https://opencollective.com/openjscad/sponsor/9/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/9/avatar.svg"></a>
 
-
-
 ## License
 
 [The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 (unless specified otherwise)
-
-## See Also
-
-- [OpenJsCAD](http://joostn.github.com/OpenJsCad/), starting point of OpenJSCAD.org
-- [OpenSCAD.net](http://garyhodgson.github.com/openscad.net/), another place of inspiration, where the OpenSCAD translator was adapted from
-- [CoffeeSCad](http://kaosat-dev.github.com/CoffeeSCad/), JavaScript simplified (no more {}) (defunct)
-- [stl2pov](http://rsmith.home.xs4all.nl/software/py-stl-stl2pov.htmltool) to convert .stl to .pov, and then render via [PovRay.org](http://povray.org)
-- [P3D](https://github.com/D1plo1d/p3d) STL/AMF/OBJ viewer
-
-That's all for now,
-
-Rene K. Mueller, Jeff Gay, Mark Moissette & JSCAD Organization

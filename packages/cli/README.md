@@ -1,6 +1,6 @@
 # @jscad/cli : OpenJSCAD Command Line Interface
 
-This is the CLI (command line interface) package for [OpenJsCAD](https://github.com/jscad/OpenJSCAD.org) for server-side computations with NodeJS.
+This is the CLI (command line interface) package for [OpenJSCAD](https://github.com/jscad/OpenJSCAD.org) for creating design using NodeJS.
 
 <img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right" alt="OpenJSCAD">
 
@@ -28,18 +28,18 @@ This is the CLI (command line interface) package for [OpenJsCAD](https://github.
 
 ## Usage
 
-### Install node.js
+### Install Node.js
 
-> IMPORTANT: you need a recent , LTS version of [Node.js](http://nodejs.org/) > 6.x.x
-> we test OpenJSCAD on node.js version **6.x.x** and above all other versions are not guaranteed to work !
+> IMPORTANT: You need a recent, LTS version of [Node.js](http://nodejs.org/)
+> Click on build "passing" above to understand which versions of Node.js are supported. Other versions of Node.js are not guaranteed to work !
 
 An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
-- after installing nvm type ```nvm install v8``` (recomended)
+- after installing nvm type ```nvm install v8``` (choose a version from the list)
 - then ```nvm use v8```
 
 ### Install OpenJSCAD CLI:
 
-CLI(command-line interface) use
+CLI (command-line interface) use
 
 ```
  npm install -g @jscad/cli
@@ -47,40 +47,38 @@ CLI(command-line interface) use
 
 ### Using the CLI
 
-- simply run ```openjscad <InputFile> <options> <OutputFile>```
+Simply run ```openjscad <InputFile> <options> <OutputFile>```
 
-examples : 
+Examples:
 
 ```openjscad example005.jscad                         # -- creates example005.stl as default```
 
-```openjscad example001.jscad -o test.stl```
-
-```openjscad example001.scad -o example001scad.jscad  # -- convert .scad into .jscad```
+```openjscad example001.jscad -o test.stl             # -- convert .jscad to .stl as test.stl```
 
 ```openjscad frog.stl -o test.jscad                   # -- convert .stl into .jscad```
 
 ```openjscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf```
 
-- you can also provide the parameters to your script directly
-by passing --<paramName> <value> to the cli
+You can also provide the parameters to your script directly by passing --<paramName> <value> to the CLI.
 
 ```openjscad name_plate.jscad --name "Just Me" --title "Geek" -o output.stl```
 
 ### Using with the provided examples
 
-get the examples
+Install the examples for JSCAD
+
  * via git
  ```
   git clone git@github.com:jscad/OpenJSCAD.org.git
   cp -r OpenJSCAD.org/packages/examples . 
 
  ```
+
  * via npm 
  ```
   npm install @jscad/examples
   cp -r node_modules/@jscad/examples .
  ```
-
 
 run them through the CLI
 
@@ -97,7 +95,7 @@ run them through the CLI
 
 You can also run JSCAD designs created as node modules/npm packages through the CLI:
 
-see examples/module-design for such a design
+See examples/module-design for such a design
 
 - install the design using npm :
 
@@ -117,7 +115,7 @@ see examples/module-design for such a design
 
 #### About designs created as node modules (recomended for the future)
 
-You have to deal with your dependencies yourself, NO code is injected 'magically' / globals
+You have to deal with your dependencies yourself, NO code is injected 'magically' / globals.
 this means you have to import the design API yourself (this will be the case for all designs in
 the future, including the in-browser playground)
 
@@ -145,7 +143,6 @@ const getParameterDefinitions = () => {
   return []
 }
 
-
 module.exports = {main, getParameterDefinitions}
 ```
 
@@ -155,9 +152,8 @@ The ```main``` and ```getParameterDefinitions``` functions should be exported in
 module.exports = {main, getParameterDefinitions}
 ```
 
-you can find out more on node modules in the official docs [here](https://nodejs.org/api/modules.html)
+You can find out more on node modules in the official docs [here](https://nodejs.org/api/modules.html)
 or with this [nice presentation](https://darrenderidder.github.io/talks/ModulePatterns/) 
-
 
 ## Development
 
@@ -171,7 +167,6 @@ or with this [nice presentation](https://darrenderidder.github.io/talks/ModulePa
 > Note : you can also change the code in all the other packages/xxx folders and it will also
 impact the cli (ie : if you make changes to packages/core in parts that are used in the CLI,
 you do not need to run additional commands)
-
 
 ## Documentation
 
@@ -201,8 +196,7 @@ Small Note: If editing this README, please conform to the [standard-readme](http
 
 See for more details
 * [JSCAD Forum Announcements](https://jscad.xyz/forum/category/1/announcements)
-* [JSCAD Forum Community](https://jscad.xyz/forum)
-to discuss with other user and developers.
+* [JSCAD Forum Community](https://jscad.xyz/forum) to discuss with other user and developers.
 
 ## Acknowledgements
 
@@ -229,7 +223,6 @@ Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com
 
 <a href="https://opencollective.com/openjscad#backers" target="_blank"><img src="https://opencollective.com/openjscad/backers.svg?width=890"></a>
 
-
 ## Sponsors
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/openjscad#sponsor)]
@@ -245,8 +238,6 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 <a href="https://opencollective.com/openjscad/sponsor/8/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/8/avatar.svg"></a>
 <a href="https://opencollective.com/openjscad/sponsor/9/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/9/avatar.svg"></a>
 
-
-
 ## License
 
 [The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
@@ -254,7 +245,7 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 ## See Also
 
-- [OpenJsCAD](http://joostn.github.com/OpenJsCad/), starting point of OpenJSCAD.org
+- [OpenJSCAD](http://joostn.github.com/OpenJsCad/), starting point of OpenJSCAD.org
 - [OpenSCAD.net](http://garyhodgson.github.com/openscad.net/), another place of inspiration, where the OpenSCAD translator was adapted from
 - [CoffeeSCad](http://kaosat-dev.github.com/CoffeeSCad/), JavaScript simplified (no more {}) (defunct)
 - [stl2pov](http://rsmith.home.xs4all.nl/software/py-stl-stl2pov.htmltool) to convert .stl to .pov, and then render via [PovRay.org](http://povray.org)

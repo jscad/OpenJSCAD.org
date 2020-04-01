@@ -4,7 +4,6 @@ This is the Web based UI for [OpenJsCAD](https://github.com/jscad/OpenJSCAD.org)
 
 <img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right" alt="OpenJSCAD">
 
-
 [![npm version](https://badge.fury.io/js/%40jscad%2Fweb.svg)](https://badge.fury.io/js/%40jscad%2Fweb)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
 [![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
@@ -44,13 +43,13 @@ cd packages/web . // this is where the web version is
 cp ../examples ./examples // copy the examples here
 <start a web server here>
 ```
+
 And then access the contents via the URL of the web-site.
   * index.html for the standard version
   * viewer-minimal.html for the barebones viewer
   * viewer-options.html for the 'all options' variant of the above
 
-
->NOTE: You might need configuration changes to allow access to the some of the contents (examples etc).
+> NOTE: You might need configuration changes to allow access to the some of the contents (examples etc).
 
 ### Use within a Web Site (custom build)
 
@@ -66,14 +65,13 @@ cp ../examples ./examples // copy the examples here
 modify the code as you see fit (see 'Adding new features the other modules in this repository' section)
 ```
 
-
-
 #### Use of proxies for remote file loading:
 
-if you want the capability , just like the official OpenJSCAD.org site, to load remote projects/files directly
+If you want the capability , just like the official OpenJSCAD.org site, to load remote projects/files directly
 from the web based user interface, but without the hassle with CORS issues,
-you can use a proxy file (see [remote.pl](./remote.pl) & [remote.php](./remote.php)):
-this is a server side script that does the following
+then you can use a proxy file (see [remote.pl](./remote.pl) & [remote.php](./remote.php)):
+
+This is a server side script that does the following
 - caches the remote file locally on the server
 - returns the local path to the downloaded file for OpenJSCAD to use
 
@@ -82,13 +80,12 @@ use and path of the proxy can be set by:
 - since this is hardcoded , if you do not use the provided dev server,
  rebuild your main file (npm run build-web etc, see [Development](#development))
 
-
 then you can use it like so:
 https://<YOURSITE>/?uri=http://www.thingiverse.com/download:164128
 or
 https://<YOURSITE>/#http://www.thingiverse.com/download:164128
 
->Note: a PR with a node.js based proxy would be a welcome addition :)
+> Note: a PR with a node.js based proxy would be a welcome addition :)
 
 ## Development
 
@@ -103,8 +100,8 @@ but you can also rebuild them manually if you need :
 - minimalist: ```npm run build-min```
 - with options: ```npm run build-opt```
 
-
 ### Adding new features the other modules in this repository:
+
 Since OpenJSCAD is made up of multiple dependent modules (csg.js, openscad-openjscad-translator etc),
 the easiest method is to use ```npm link``` to have a 'live' updating development version of OpenJSCAD:
 - create a base directory
@@ -168,8 +165,9 @@ Small Note: If editing this README, please conform to the [standard-readme](http
 
 See for more details
 * [JSCAD Forum Announcements](https://jscad.xyz/forum/category/1/announcements)
-* [JSCAD Forum Community](https://jscad.xyz/forum)
-to discuss with other user and developers.
+* [JSCAD Forum Community](https://jscad.xyz/forum) to discuss with other users and developers.
+
+HUGE THANKS and SHOUTOUT to [nodeBB](https://nodebb.org/) for hosting our (awesome) forum for free ! Thanks a lot !
 
 ## Acknowledgements
 
@@ -179,10 +177,6 @@ Evan Wallace,
 Eduard Bespalov,
 Joost Nieuwenhuijse,
 Alexandre Girard
-
-For input/output
-- [xmldom](https://github.com/jindw/xmldom)
-- [sax](https://github.com/isaacs/sax-js)
 
 Tooling:
 - [browserify](http://browserify.org/)
@@ -195,7 +189,6 @@ and many more!
 Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/openjscad#backer)]
 
 <a href="https://opencollective.com/openjscad#backers" target="_blank"><img src="https://opencollective.com/openjscad/backers.svg?width=890"></a>
-
 
 ## Sponsors
 
@@ -211,8 +204,6 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 <a href="https://opencollective.com/openjscad/sponsor/7/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/7/avatar.svg"></a>
 <a href="https://opencollective.com/openjscad/sponsor/8/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/8/avatar.svg"></a>
 <a href="https://opencollective.com/openjscad/sponsor/9/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/9/avatar.svg"></a>
-
-
 
 ## License
 

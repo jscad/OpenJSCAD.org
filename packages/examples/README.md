@@ -1,10 +1,9 @@
 # @jscad/examples
 
-This is package containing all examples for OpenJsCAD, used in the various 'front end'
+This is package containing all examples for OpenJSCAD, used in the various 'front end'
 packages like @jscad/cli , @jscad/web, @jscad/desktop
 
 <img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right" alt="OpenJSCAD">
-
 
 [![npm version](https://badge.fury.io/js/%40jscad%2Fexamples.svg)](https://badge.fury.io/js/%40jscad%2Fexamples)
 [![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
@@ -25,7 +24,7 @@ packages like @jscad/cli , @jscad/web, @jscad/desktop
 
 ## Usage
 
-just install this package if you need access to the various examples 
+Install this package if you need access to the various examples.
 
 ## Documentation
 
@@ -83,7 +82,6 @@ Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com
 
 <a href="https://opencollective.com/openjscad#backers" target="_blank"><img src="https://opencollective.com/openjscad/backers.svg?width=890"></a>
 
-
 ## Sponsors
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/openjscad#sponsor)]
@@ -99,21 +97,7 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 <a href="https://opencollective.com/openjscad/sponsor/8/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/8/avatar.svg"></a>
 <a href="https://opencollective.com/openjscad/sponsor/9/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/9/avatar.svg"></a>
 
-
-
 ## License
 
 [The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 (unless specified otherwise)
-
-## See Also
-
-- [OpenJsCAD](http://joostn.github.com/OpenJsCad/), starting point of OpenJSCAD.org
-- [OpenSCAD.net](http://garyhodgson.github.com/openscad.net/), another place of inspiration, where the OpenSCAD translator was adapted from
-- [CoffeeSCad](http://kaosat-dev.github.com/CoffeeSCad/), JavaScript simplified (no more {}) (defunct)
-- [stl2pov](http://rsmith.home.xs4all.nl/software/py-stl-stl2pov.htmltool) to convert .stl to .pov, and then render via [PovRay.org](http://povray.org)
-- [P3D](https://github.com/D1plo1d/p3d) STL/AMF/OBJ viewer
-
-That's all for now,
-
-Rene K. Mueller, Jeff Gay, Mark Moissette & JSCAD Organization
