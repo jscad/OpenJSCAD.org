@@ -1,11 +1,12 @@
 const { EPS } = require('../../math/constants')
 
-const { line2, vec2 } = require('../../math')
+const line2 = require('../../math/line2')
+const vec2 = require('../../math/vec2')
 const OrthoNormalBasis = require('../../math/OrthoNormalBasis')
 
 const { interpolateBetween2DPointsForY, insertSorted, fnNumberSort } = require('../../utils')
 
-const { poly3 } = require('../../geometry')
+const poly3 = require('../../geometry/poly3')
 
 /*
  * Retesselation for a set of COPLANAR polygons.

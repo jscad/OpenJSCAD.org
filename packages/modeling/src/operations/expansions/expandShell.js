@@ -1,12 +1,14 @@
 const { EPS } = require('../../math/constants')
 
-const { mat4, vec3 } = require('../../math')
+const mat4 = require('../../math/mat4')
+const vec3 = require('../../math/vec3')
 
-const { fnNumberSort } = require('../../utils')
+const fnNumberSort = require('../../utils/fnNumberSort')
 
-const { geom3, poly3 } = require('../../geometry')
+const geom3 = require('../../geometry/geom3')
+const poly3 = require('../../geometry/poly3')
 
-const { sphere } = require('../../primitives')
+const { sphere } = require('../../primitives/ellipsoid')
 
 const retessellate = require('../booleans/retessellate')
 const unionGeom3Sub = require('../booleans/unionGeom3Sub')

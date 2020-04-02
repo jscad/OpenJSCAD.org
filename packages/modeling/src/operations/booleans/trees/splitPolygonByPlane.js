@@ -1,8 +1,9 @@
 const { EPS } = require('../../../math/constants')
 
-const { plane, vec3 } = require('../../../math')
+const plane = require('../../../math/plane')
+const vec3 = require('../../../math/vec3')
 
-const { poly3 } = require('../../../geometry')
+const poly3 = require('../../../geometry/poly3')
 
 const splitLineSegmentByPlane = require('./splitLineSegmentByPlane')
 

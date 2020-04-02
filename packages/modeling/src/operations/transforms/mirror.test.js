@@ -176,14 +176,3 @@ test('mirror: mirroring of multiple objects produces an array of mirrored object
   ]
   t.deepEqual(obs, exp)
 })
-
-test('mirror: mirroring about NO axis should return original objects', t => {
-  let junk = 'hello'
-  let geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
-  let geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])
-
-  let mirrored = mirror({ normal: [0, 0, 0] }, junk, geometry1, geometry2)
-  t.is(mirrored[0], junk)
-  t.is(mirrored[1], geometry1)
-  t.is(mirrored[2], geometry2)
-})

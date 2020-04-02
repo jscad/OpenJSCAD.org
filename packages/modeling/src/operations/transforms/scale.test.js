@@ -8,7 +8,7 @@ test('scale: scaling of a path2 produces expected changes to points', t => {
   let geometry = path2.fromPoints({}, [[0, 4], [1, 0]])
 
   // scale X
-  let scaled = scale([3, 1, 1], geometry)
+  let scaled = scale([3], geometry)
   let obs = path2.toPoints(scaled)
   let exp = [
     new Float32Array([0, 4]),
@@ -21,7 +21,7 @@ test('scale: scaling of a path2 produces expected changes to points', t => {
   t.deepEqual(obs, exp)
 
   // scale Y
-  scaled = scale([1, 0.5, 1], geometry)
+  scaled = scale([1, 0.5], geometry)
   obs = path2.toPoints(scaled)
   exp = [
     new Float32Array([0, 2]),
@@ -38,7 +38,7 @@ test('scale: scaling of a geom2 produces expected changes to points', t => {
   let geometry = geom2.fromPoints([[-1, 0], [1, 0], [0, 1]])
 
   // scale X
-  let scaled = scale([3, 1, 1], geometry)
+  let scaled = scale([3], geometry)
   let obs = geom2.toPoints(scaled)
   let exp = [
     new Float32Array([-3, 0]),
@@ -52,7 +52,7 @@ test('scale: scaling of a geom2 produces expected changes to points', t => {
   t.deepEqual(obs, exp)
 
   // scale Y
-  scaled = scale([1, 3, 1], geometry)
+  scaled = scale([1, 3], geometry)
   obs = geom2.toPoints(scaled)
   exp = [
     new Float32Array([-1, 0]),
@@ -78,7 +78,7 @@ test('scale: scaling of a geom3 produces expected changes to polygons', t => {
   let geometry = geom3.fromPoints(points)
 
   // scale X
-  let scaled = scale([3, 1, 1], geometry)
+  let scaled = scale([3], geometry)
   let obs = geom3.toPoints(scaled)
   let exp = [
     [ new Float32Array([ -6, -7, -12 ]), new Float32Array([ -6, -7, 18 ]),
@@ -101,7 +101,7 @@ test('scale: scaling of a geom3 produces expected changes to polygons', t => {
   t.deepEqual(obs, exp)
 
   // scale Y
-  scaled = scale([1, 0.5, 1], geometry)
+  scaled = scale([1, 0.5], geometry)
   obs = geom3.toPoints(scaled)
   exp = [
     [ new Float32Array([ -2, -3.5, -12 ]), new Float32Array([ -2, -3.5, 18 ]),

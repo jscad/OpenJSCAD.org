@@ -1,8 +1,9 @@
 const {EPS} = require('../math/constants')
 
-const {vec3} = require('../math')
+const vec3 = require('../math/vec3')
 
-const {geom3, poly3} = require('../geometry')
+const geom3 = require('../geometry/geom3')
+const poly3 = require('../geometry/poly3')
 
 /** Construct a cylinder with rounded ends.
  * @param {Object} [options] - options for construction

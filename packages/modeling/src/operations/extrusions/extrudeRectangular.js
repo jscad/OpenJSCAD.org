@@ -1,6 +1,7 @@
 const flatten = require('../../utils/flatten')
 
-const { geom2, path2 } = require('../../geometry')
+const geom2 = require('../../geometry/geom2')
+const path2 = require('../../geometry/path2')
 
 const extrudeRectangularPath2 = require('./extrudeRectangularPath2')
 const extrudeRectangularGeom2 = require('./extrudeRectangularGeom2')

@@ -1,12 +1,16 @@
 {
-    "name": "@jscad/array-utils",
-    "version": "0.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {},
-    "author": "Mark 'kaosat-dev' Moissette",
-    "license": "MIT",
-    "devDependencies": {},
-    "dependencies": {}
-  }
-  
+  "name": "@jscad/array-utils",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc --all --reporter=html --reporter=text npm test",
+    "test": "ava '*.test.js' --verbose --timeout 2m"
+  },
+  "author": "Mark 'kaosat-dev' Moissette",
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "1.4.0"
+  },
+  "dependencies": {}
+}

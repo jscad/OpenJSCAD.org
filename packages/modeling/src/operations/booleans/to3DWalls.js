@@ -1,6 +1,8 @@
-const { vec3 } = require('../../math')
+const vec3 = require('../../math/vec3')
 
-const { geom2, geom3, poly3 } = require('../../geometry')
+const geom2 = require('../../geometry/geom2')
+const geom3 = require('../../geometry/geom3')
+const poly3 = require('../../geometry/poly3')
 
 /*
  * Create a polygon (wall) from the given Z values and side.
