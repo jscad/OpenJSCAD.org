@@ -28,13 +28,13 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
   let obs = geom2.toPoints(result1)
   let exp = [
     new Float32Array([ 2, 0 ]),
-    new Float32Array([ 1.4142135381698608, 1.4142135381698608 ]),
-    new Float32Array([ 1.2246468525851679e-16, 2 ]),
-    new Float32Array([ -1.4142135381698608, 1.4142135381698608 ]),
-    new Float32Array([ -2, 2.4492937051703357e-16 ]),
-    new Float32Array([ -1.4142135381698608, -1.4142135381698608 ]),
-    new Float32Array([ -3.6739402930577075e-16, -2 ]),
-    new Float32Array([ 1.4142135381698608, -1.4142135381698608 ])
+    new Float32Array([ 1.414199948310852, 1.414199948310852 ]),
+    new Float32Array([ 0, 2 ]),
+    new Float32Array([ -1.414199948310852, 1.414199948310852 ]),
+    new Float32Array([ -2, 0 ]),
+    new Float32Array([ -1.414199948310852, -1.414199948310852 ]),
+    new Float32Array([ 0, -2 ]),
+    new Float32Array([ 1.414199948310852, -1.414199948310852 ])
   ]
   t.is(obs.length, 8)
   t.deepEqual(obs, exp)
@@ -46,13 +46,13 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
   obs = geom2.toPoints(result2)
   exp = [
     new Float32Array([ 2, 0 ]),
-    new Float32Array([ 1.4142135381698608, 1.4142135381698608 ]),
-    new Float32Array([ 1.2246468525851679e-16, 2 ]),
-    new Float32Array([ -1.4142135381698608, 1.4142135381698608 ]),
-    new Float32Array([ -2, 2.4492937051703357e-16 ]),
-    new Float32Array([ -1.4142135381698608, -1.4142135381698608 ]),
-    new Float32Array([ -3.6739402930577075e-16, -2 ]),
-    new Float32Array([ 1.4142135381698608, -1.4142135381698608 ])
+    new Float32Array([ 1.414199948310852, 1.414199948310852 ]),
+    new Float32Array([ 0, 2 ]),
+    new Float32Array([ -1.414199948310852, 1.414199948310852 ]),
+    new Float32Array([ -2, 0 ]),
+    new Float32Array([ -1.414199948310852, -1.414199948310852 ]),
+    new Float32Array([ 0, -2 ]),
+    new Float32Array([ 1.414199948310852, -1.414199948310852 ])
   ]
   t.is(obs.length, 8)
   t.deepEqual(obs, exp)
