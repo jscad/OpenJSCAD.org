@@ -39,7 +39,9 @@ const polyhedron = (options) => {
     if (!Array.isArray(colors)) {
       throw new Error('colors must be an array')
     }
-    if (colors.length !== faces.length) colors = undefined
+    if (colors.length !== faces.length) {
+      throw new Error('faces and colors must have the same length')
+    }
   }
 
   // invert the faces if orientation is inwards, as all internals expect outwarding facing polygons
@@ -47,12 +49,11 @@ const polyhedron = (options) => {
     faces.forEach((face) => face.reverse())
   }
 
-  let polygons = faces.map((face) => poly3.fromPoints(face.map((idx) => points[idx])))
-
-  if (colors) {
-    // add color to each polygon
-    polygons.forEach((polygon, idx) => { if (colors[idx]) polygon.color = colors[idx] })
-  }
+  let polygons = faces.map((face, findex) => {
+    let polygon = poly3.fromPoints(face.map((pindex) => points[pindex]))
+    if (colors && colors[findex]) polygon.color = colors[findex]
+    return polygon
+  })
 
   return geom3.create(polygons)
 }
