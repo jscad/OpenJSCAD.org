@@ -10,7 +10,8 @@ test('polyhedron (points and faces)', t => {
   // points and faces form a cube
   let points = [ [-1, -1, -1], [-1, -1, 1], [-1, 1, 1], [-1, 1, -1], [1, -1, 1], [1, -1, -1], [1, 1, -1], [1, 1, 1] ]
   let faces = [[0, 1, 2, 3], [5, 6, 7, 4], [0, 5, 4, 1], [3, 2, 7, 6], [0, 3, 6, 5], [1, 4, 7, 2]]
-  let obs = polyhedron({points: points, faces: faces})
+  let colors = [[0, 0, 0, 1], [1, 0, 0, 1], [0, 1, 0, 1], [0, 0, 1, 1], [0.5, 0.5, 0.5, 1], [1, 1, 1, 1]]
+  let obs = polyhedron({points, faces, colors})
   let pts = geom3.toPoints(obs)
   let exp = [
     [[-1.0000000, -1.0000000, -1.0000000],
