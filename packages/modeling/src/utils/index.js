@@ -1,3 +1,6 @@
+/**
+ * @module modeling/utils
+ */
 module.exports = {
   areAllShapesTheSameType: require('./areAllShapesTheSameType'),
   flatten: require('./flatten'),

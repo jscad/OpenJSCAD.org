@@ -1,3 +1,6 @@
+/**
+ * @module modeling/geometry/poly3
+ */
 module.exports = {
   clone: require('./clone'),
   create: require('./create'),

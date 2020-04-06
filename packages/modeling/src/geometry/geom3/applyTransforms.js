@@ -2,7 +2,7 @@ const mat4 = require('../../math/mat4')
 
 const poly3 = require('../poly3')
 
-/**
+/*
  * Apply the transforms of the given geometry.
  * NOTE: This function must be called BEFORE exposing any data. See toPolygons.
  * @param {geom3} geometry - the geometry to transform

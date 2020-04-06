@@ -1,3 +1,6 @@
+/**
+ * @module modeling/geometry/path2
+ */
 module.exports = {
   appendArc: require('./appendArc'),
   appendBezier: require('./appendBezier'),

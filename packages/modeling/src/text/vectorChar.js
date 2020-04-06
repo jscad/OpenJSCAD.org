@@ -17,6 +17,7 @@ const vectorParams = require('./vectorParams')
 * @param {String} [options.input='?'] - ascii character (ignored/overwrited if provided as seconds parameter)
 * @param {String} [char='?'] - ascii character
 * @returns {VectorCharObject}
+* @alias module:modeling/text.vectorChar
 *
 * @example
 * let vectorCharObject = vectorChar()

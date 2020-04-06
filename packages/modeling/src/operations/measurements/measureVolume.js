@@ -36,8 +36,9 @@ const measureVolumeOfGeom3 = (geometry) => {
 
 /**
  * Measure the volume of the given geometry(s).
- * @param {...geometries} geometries - the geometry(s) to measure
- * @return {Number|Number[]} the volume for each geometry
+ * @param {...Object} geometries - the geometry(s) to measure
+ * @return {Number|Array} the volume, or a list of volumes
+ * @alias module:modeling/measurements.measureVolume
  *
  * @example
  * let volume = measureVolume(sphere())

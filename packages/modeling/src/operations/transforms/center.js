@@ -28,8 +28,9 @@ const centerGeometry = (options, object) => {
  * @param {Object} options - options for centering
  * @param {Array} [options.axes=[true,true,true]] - axis of which to center, true or false
  * @param {Array} [options.center=[0,0,0]] - point of which to center the object upon
- * @param {Object|Array} geometries - the geometries to center
- * @return {Object|Array} the centered geometries
+ * @param {...Object} geometries - the geometries to center
+ * @return {Object|Array} the centered geometry, or a list of centered geometries
+ * @alias module:modeling/transforms.center
  *
  * @example
  * let myshape = center({axes: [true,false,false]}, sphere()) // center about the X axis

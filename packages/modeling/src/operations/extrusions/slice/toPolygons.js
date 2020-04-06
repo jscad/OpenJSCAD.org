@@ -18,12 +18,10 @@ const toPolygon3D = (vector, edge) => {
 }
 
 /**
- * Calculate the plane of the given slice.
- * NOTE: The points are assumed to be planar from the beginning.
+ * Return a list of polygons which are enclosed by the slice.
  * @param {slice} slice - the slice
- * @returns {plane} the plane of the slice
- * @example
- * let myplane = toPlane(slice)
+ * @return {Array} a list of polygons (3D)
+ * @alias module:modeling/extrusions/slice.toPolygons
  */
 const toPolygons = (slice) => {
   const splane = calculatePlane(slice)

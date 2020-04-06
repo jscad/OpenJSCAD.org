@@ -1,7 +1,7 @@
 const mat4 = require('../../math/mat4')
 const vec2 = require('../../math/vec2')
 
-/**
+/*
  * Apply the transforms of the given geometry.
  * NOTE: This function must be called BEFORE exposing any data. See toPoints.
  * @param {path} geometry - the geometry to transform

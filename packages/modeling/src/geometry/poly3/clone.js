@@ -8,7 +8,8 @@ const vec3 = require('../../math/vec3')
  *
  * @param {poly3} [out] - receiving polygon
  * @param {poly3} polygon - polygon to clone
- * @returns {poly3} clone of the polygon
+ * @returns {poly3} a new polygon
+ * @alias module:modeling/geometry/poly3.clone
  */
 const clone = (...params) => {
   let out

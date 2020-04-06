@@ -6,6 +6,7 @@ const poly3 = require('../geometry/poly3')
  * @param {Object} [options] - options for construction
  * @param {Array} [options.size=[2,2,2]] - dimensions of cuboid; width, depth, height
  * @returns {geom3} new 3D geometry
+ * @alias module:modeling/primitives.cuboid
  *
  * @example
  * let myshape = cuboid(size: [5, 10, 5]})
@@ -46,10 +47,11 @@ const cuboid = (options) => {
 
 /**
  * Construct an axis-aligned solid cube with six square faces.
- * @see {@link cuboid} for more options, as this is an alias to cuboid
+ * @see [cuboid]{@link module:modeling/primitives.cuboid} for more options
  * @param {Object} [options] - options for construction
  * @param {Number} [options.size=2] - dimension of cube
  * @returns {geom3} new 3D geometry
+ * @alias module:modeling/primitives.cube
  *
  * @example
  * let mycube = cube({size: 10})

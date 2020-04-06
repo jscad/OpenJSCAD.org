@@ -8,9 +8,10 @@ const path2 = require('../../geometry/path2')
 
 /**
  * Scale the given object(s) using the given options.
- * @param {Number[]} factors - X, Y, Z factors by which to scale the object
- * @param {Object|Array} objects - the objects(s) to scale
+ * @param {Array} factors - X, Y, Z factors by which to scale the object
+ * @param {...Object} objects - the objects(s) to scale
  * @return {Object|Array} the scaled object(s)
+ * @alias module:modeling/transforms.scale
  *
  * @example
  * const newsphere = scale([5, 0, 10], sphere())
@@ -41,24 +42,27 @@ const scale = (factors, ...objects) => {
 /**
  * Scale the given object(s) about the X axis using the given options.
  * @param {Number} factor - X factor by which to scale the object
- * @param {Object|Array} objects - the objects(s) to scale
+ * @param {...Object} objects - the objects(s) to scale
  * @return {Object|Array} the scaled object(s)
+ * @alias module:modeling/transforms.scaleX
  */
 const scaleX = (offset, ...objects) => scale([offset, 1, 1], objects)
 
 /**
  * Scale the given object(s) about the Y axis using the given options.
  * @param {Number} factor - Y factor by which to scale the object
- * @param {Object|Array} objects - the objects(s) to scale
+ * @param {...Object} objects - the objects(s) to scale
  * @return {Object|Array} the scaled object(s)
+ * @alias module:modeling/transforms.scaleY
  */
 const scaleY = (offset, ...objects) => scale([1, offset, 1], objects)
 
 /**
  * Scale the given object(s) about the Z axis using the given options.
  * @param {Number} factor - Z factor by which to scale the object
- * @param {Object|Array} objects - the objects(s) to scale
+ * @param {...Object} objects - the objects(s) to scale
  * @return {Object|Array} the scaled object(s)
+ * @alias module:modeling/transforms.scaleZ
  */
 const scaleZ = (offset, ...objects) => scale([1, 1, offset], objects)
 

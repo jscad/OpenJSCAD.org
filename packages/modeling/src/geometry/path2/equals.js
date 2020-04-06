@@ -7,7 +7,8 @@ const toPoints = require('./toPoints')
   * For closed paths, this includes equality under point order rotation.
   * @param {path2} a - the first path to compare
   * @param {path2} b - the second path to compare
-  * @returns {boolean}
+  * @returns {Boolean}
+  * @alias module:modeling/geometry/path2.equals
   */
 const equals = (a, b) => {
   if (a.isClosed !== b.isClosed) {

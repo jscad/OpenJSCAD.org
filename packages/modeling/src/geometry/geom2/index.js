@@ -1,3 +1,6 @@
+/**
+ * @module modeling/geometry/geom2
+ */
 module.exports = {
   clone: require('./clone'),
   create: require('./create'),

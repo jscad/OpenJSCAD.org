@@ -1,7 +1,8 @@
 /**
  * Determin if the given object is a 2D geometry.
- * @params {geom2} object - the object to interogate
+ * @param {Object} object - the object to interogate
  * @returns {true} if the object matches a geom2 based object
+ * @alias module:modeling/geometry/geom2.isA
  */
 const isA = (object) => {
   if (object && typeof object === 'object') {

@@ -5,6 +5,8 @@ const toSides = require('./toSides')
  * NOTE: The points returned do NOT define an order. Use toOutlines() for ordered points. 
  * @param {geom2} geometry - the geometry
  * @returns {Array} an array of points, each point contains an array of two numbers
+ * @alias module:modeling/geometry/geom2.toPoints
+ *
  * @example
  * let sharedpoints = toPoints(geometry)
  */

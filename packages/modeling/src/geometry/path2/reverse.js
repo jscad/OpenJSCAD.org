@@ -5,7 +5,9 @@ const clone = require('./clone')
  * This swaps the left (interior) and right (exterior) edges.
  * Reversal of path segments with options may be non-trivial.
  * @param {path2} path - the path to reverse.
- * @returns {path2} the reversed path.
+ * @returns {path2} a new path
+ * @alias module:modeling/geometry/path2.reverse
+ *
  * @example
  * reverse(path)
  */

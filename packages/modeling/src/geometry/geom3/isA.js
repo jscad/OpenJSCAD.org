@@ -1,7 +1,8 @@
 /**
  * Determin if the given object is a 3D geometry.
- * @params {object} object - the object to interogate
- * @returns {true} if the object matches a geom3 based object
+ * @param {object} object - the object to interogate
+ * @returns {Boolean} true if the object matches a geom3
+ * @alias module:modeling/geometry/geom3.isA
  */
 const isA = (object) => {
   if (object && typeof object === 'object') {

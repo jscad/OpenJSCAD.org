@@ -2,7 +2,7 @@ const { EPS } = require('../../math/constants')
 
 const measureBounds = require('../measurements/measureBounds')
 
-/**
+/*
  * Determine if the given geometries overlap by comparing min and max bounds.
  * NOTE: This is used in union for performace gains.
  * @param {geom3} geometry1 - geometry for comparision

@@ -8,6 +8,7 @@ const create = require('./create')
  * @param {vec3} axis - the axis (directional vector) of the connector
  * @param {vec3} normal - the normal (directional vector) of the connector, perpendicular to the axis
  * @returns {connector} a new connector
+ * @alias module:modeling/connectors.fromPointsAxisNormal
  */
 const fromPointAxisNormal = (point, axis, normal) => {
   let connector = create()

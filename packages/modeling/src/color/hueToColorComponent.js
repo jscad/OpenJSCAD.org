@@ -3,7 +3,7 @@
  * @param  {Number} p
  * @param  {Number} q
  * @param  {Number} t
- * @alias module:color.hueToColorComponent
+ * @alias module:modeling/color.hueToColorComponent
  */
 const hueToColorComponent = (p, q, t) => {
   if (t < 0) t += 1

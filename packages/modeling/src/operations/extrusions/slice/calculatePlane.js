@@ -3,11 +3,13 @@ const vec3 = require('../../../math/vec3')
 
 /**
  * Calculate the plane of the given slice.
- * NOTE: The points are assumed to be planar from the beginning.
+ * NOTE: The slice (and all points) are assumed to be planar from the beginning.
  * @param {slice} slice - the slice
  * @returns {plane} the plane of the slice
+ * @alias module:modeling/extrusions/slice.calculatePlane
+ *
  * @example
- * let myplane = toPlane(slice)
+ * let myplane = calculatePlane(slice)
  */
 const calculatePlane = (slice) => {
   const edges = slice.edges

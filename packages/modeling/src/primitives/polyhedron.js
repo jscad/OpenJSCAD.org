@@ -1,14 +1,16 @@
 const geom3 = require('../geometry/geom3')
 const poly3 = require('../geometry/poly3')
 
-/** Create a polyhedron from the given set of points and faces.
+/**
+ * Create a polyhedron from the given set of points and faces.
  * The faces can define outward or inward facing polygons (orientation).
  * However, each face must define a counter clockwise rotation of points which follows the right hand rule.
  * @param {Object} options - options for construction
- * @param {Array} options.points - list of points in 3D space
- * @param {Array} options.faces - list of faces, where each face is a set of indexes into the points
+ * @param {Array} options.points=[] - list of points in 3D space
+ * @param {Array} options.faces=[] - list of faces, where each face is a set of indexes into the points
  * @param {Array} [options.orientation='outward'] - orientation of faces
  * @returns {geom3} new 3D geometry
+ * @alias module:modeling/primitives.polyhedron
  *
  * @example
  * let mypoints = [ [10, 10, 0], [10, -10, 0], [-10, -10, 0], [-10, 10, 0], [0, 0, 10] ]

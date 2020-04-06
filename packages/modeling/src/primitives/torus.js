@@ -12,6 +12,7 @@ const {circle} = require('./ellipse')
  * @param {Integer} [options.outerSegments=12] - number of segments to create per rotation
  * @param {Integer} [options.innerRotation=0] - rotation of small (inner) circle in radians
  * @returns {geom3} new 3D geometry
+ * @alias module:modeling/primitives.torus
  *
  * @example
  * let torus1 = torus({

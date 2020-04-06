@@ -5,7 +5,8 @@ const vec3 = require('../math/vec3')
 const geom3 = require('../geometry/geom3')
 const poly3 = require('../geometry/poly3')
 
-/** Construct an elliptic cylinder.
+/**
+ * Construct an elliptic cylinder.
  * @param {Object} [options] - options for construction
  * @param {Vector3} [options.height=2] - height of cylinder
  * @param {Vector2D} [options.startRadius=[1,1]] - radius of rounded start, must be two dimensional array
@@ -13,7 +14,8 @@ const poly3 = require('../geometry/poly3')
  * @param {Vector2D} [options.endRadius=[1,1]] - radius of rounded end, must be two dimensional array
  * @param {Number} [options.endAngle=(Math.PI * 2)] - end angle of cylinder, in radians
  * @param {Number} [options.segments=12] - number of segments to create per full rotation
- * @returns {geom3} new geometry
+ * @returns {geom3} new 3D geometry
+ * @alias module:modeling/primitives.cylinderElliptic
  *
  * @example
  *     let cylinder = cylinderElliptic({
@@ -107,7 +109,9 @@ const cylinderElliptic = function (options) {
   return result
 }
 
-/** Construct a solid cylinder.
+/**
+ * Construct a solid cylinder.
+ * @see [cylinderElliptic]{@link module:modeling/primitives.cylinderElliptic} for more options
  * @param {Object} [options] - options for construction
  * @param {Array} [options.height=2] - height of cylinder
  * @param {Number} [options.startRadius=1] - radius of cylinder at the start
@@ -115,7 +119,8 @@ const cylinderElliptic = function (options) {
  * @param {Number} [options.endRadius=1] - radius of cylinder at the end
  * @param {Number} [options.endAngle=(Math.PI * 2)] - end angle of cylinder
  * @param {Number} [options.segments=12] - number of segments to create per full rotation
- * @returns {geom3} new geometry
+ * @returns {geom3} new 3D geometry
+ * @alias module:modeling/primitives.cylinder
  *
  * @example
  * let cylinder = cylinder({

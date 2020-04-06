@@ -4,7 +4,10 @@ const toPolygons = require('./toPolygons')
 
 /**
  * Create a string representing the contents of the given geometry.
+ * @param {geom3} geometry - the geometry
  * @returns {String} a representive string
+ * @alias module:modeling/geometry/geom3.toString
+ *
  * @example
  * console.out(toString(geometry))
  */
