@@ -1,13 +1,13 @@
 ## @jscad/json-deserializer
 
-> Deserializer of JSON notation to JSCAD geometries
+> Deserializer of JSON (JavaScript Object Notation) to JSCAD geometries
 
 [![npm version](https://badge.fury.io/js/%40jscad%2Fjson-deserializer.svg)](https://badge.fury.io/js/%40jscad%2Fjson-deserializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/json-deserializer)
 
 ## Overview
 
-This deserializer converts JSON notation data (files) to JSCAD scripts or geometries.
+This deserializer converts JSON data (files) to JSCAD scripts or geometries.
 
 ## Table of Contents
 
