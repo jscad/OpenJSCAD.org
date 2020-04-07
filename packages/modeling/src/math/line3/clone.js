@@ -7,7 +7,8 @@ const create = require('./create')
  *
  * @param {line3} [out] - receiving line
  * @param {line3} line - line to clone
- * @returns {line3} clone of the line
+ * @returns {line3} a new unbounded line
+ * @alias module:modeling/math/line3.clone
  */
 const clone = (...params) => {
   let out

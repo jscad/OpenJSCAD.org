@@ -1,8 +1,9 @@
 /**
  * Return a string representing the given line.
  *
- * @param {line3} line the 3D line of reference
- * @returns {string} string representation
+ * @param {line3} line - the line of reference
+ * @returns {String} string representation
+ * @alias module:modeling/math/line3.toString
  */
 const toString = (line) => {
   const point = line[0]

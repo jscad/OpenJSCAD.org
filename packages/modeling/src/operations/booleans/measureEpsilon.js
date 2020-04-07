@@ -32,7 +32,7 @@ const measureEpsilonOfGeom2 = (geometry) => {
   return epsilon
 }
 
-/**
+/*
  * Measure the epsilon of the given (geom3) geometry.
  * @return {Float} the epsilon (precision) of the geometry
  */
@@ -46,11 +46,11 @@ const measureEpsilonOfGeom3 = (geometry) => {
   return epsilon
 }
 
-/**
+/*
  * Measure the epsilon of the given geometry(s).
  * Epsilon values are used in various functions to determin minimum distances between points, planes, etc.
- * @param {...geometries} geometries - the geometry(s) to measure
- * @return {Float|Array[Float]} the epsilon of each geometry
+ * @param {...Objects} geometries - the geometry(s) to measure
+ * @return {Float|Array} the epsilon of each geometry
  *
  * @example
  * let epsilon = measureEpsilon(sphere())

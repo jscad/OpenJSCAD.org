@@ -6,7 +6,10 @@ const flip = require('./flip')
 
 /**
  * Transform the given plane using the given matrix
- * @return {Array} a new plane with properly typed values
+ * @param {mat4} matrix - the matrix to transform with
+ * @param {plane} plane - the plane to transform
+ * @return {Array} a new plane
+ * @alias module:modeling/math/plane.transform
  */
 const transform = (matrix, plane) => {
   const ismirror = mat4.isMirroring(matrix)

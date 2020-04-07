@@ -2,12 +2,13 @@ const vec3 = require('../vec3')
 const fromValues = require('../vec4/fromValues')
 
 /**
- * Create a new plane from the given points
+ * Create a new plane from the given points.
  *
  * @param {vec3} a - 3D point
  * @param {vec3} b - 3D point
  * @param {vec3} c - 3D point
- * @returns {plane} a new plane with properly typed values
+ * @returns {plane} a new plane
+ * @alias module:modeling/math/plane.fromPoints
  */
 const fromPoints = (a, b, c) => {
   const ba = vec3.subtract(b, a)

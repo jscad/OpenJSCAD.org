@@ -1,10 +1,11 @@
 const fromValues = require('./fromValues')
 
-/** create a vec3 from a single scalar value
- * all components of the resulting vec3 have the value of the
- * input scalar
- * @param  {Float} scalar
- * @returns {Vec3}
+/**
+ * Creates a vector from a single scalar value.
+ * All components of the resulting vector have the given value.
+ * @param {Float} scalar
+ * @returns {Vec3} a new vector
+ * @alias module:modeling/math/vec3.fromScalar
  */
 const fromScalar = (scalar) => {
   return fromValues(scalar, scalar, scalar)

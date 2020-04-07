@@ -5,7 +5,8 @@ const create = require('./create')
  *
  * @param {vec2} [out] - the receiving vector
  * @param {vec2} a - vector to normalize
- * @returns {vec2} normalized (unit) vector
+ * @returns {vec2} a new (unit) vector
+ * @alias module:modeling/math/vec2.normalize
  */
 const normalize = (...params) => {
   let a

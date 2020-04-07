@@ -1,12 +1,12 @@
 const fromValues = require('../vec2/fromValues')
 
 /**
- * Multiply the input matrix by a Vector2 (interpreted as 2 row, 1 column)
- * (result = M*v)
- * Fourth element is set to 1
- * @param {vec2} vector the input vector
- * @param {mat4} matrix the input matrix
- * @returns {vec2} output
+ * Multiply a 2D vector by a matrix (interpreted as 2 row, 1 column).
+ * Calculation: result = v*M, where the fourth element is set to 1.
+ * @param {vec2} vector - the input vector
+ * @param {mat4} matrix - the input matrix
+ * @returns {vec2} a new vector
+ * @alias module:modeling/math/mat4.rightMultiplyVec2
  */
 const rightMultiplyVec2 = (vector, matrix) => {
   const [v0, v1] = vector

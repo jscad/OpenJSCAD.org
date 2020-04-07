@@ -1,4 +1,9 @@
-
+/**
+ * Convert the given vector to a representative string.
+ * @param {vec3} vector - vector of reference
+ * @returns (String) string representation
+ * @alias module:modeling/math/vec3.toString
+ */
 const toString = (vec) => {
   return `[${vec[0].toFixed(7)}, ${vec[1].toFixed(7)}, ${vec[2].toFixed(7)}]`
 }

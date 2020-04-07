@@ -1,12 +1,13 @@
 const vec3 = require('../vec3/index')
 
 /**
- * Computes the cross product (3D) of two 2D vectors
+ * Computes the cross product (3D) of two vectors.
  *
- * @param {vec3} [out] - the receiving vec3
+ * @param {vec3} [out] - the receiving vector (3D)
  * @param {vec2} a - the first operand
  * @param {vec2} b - the second operand
  * @returns {vec3} cross product
+ * @alias module:modeling/math/vec2.cross
  */
 const cross = (...params) => {
   let out

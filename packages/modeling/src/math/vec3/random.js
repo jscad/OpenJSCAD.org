@@ -1,7 +1,13 @@
 const abs = require('./abs')
 const create = require('./create')
 
-// find a vector that is somewhat perpendicular to this one
+/**
+ * Create a vector that is somewhat perpendicular to the given vector.
+ * @param {vec3} [out] - the receiving vector
+ * @param {vec3} vector - vector of reference
+ * @returns {vec3} a new vector
+ * @alias module:modeling/math/vec3.random
+ */
 const random = (...params) => {
   let out
   let vec

@@ -1,11 +1,12 @@
 const create = require('./create')
 
 /**
- * Creates a clone of the given matrix
+ * Creates a clone of the given matrix.
  *
  * @param {mat4} [out] - receiving matrix
  * @param {mat4} matrix - matrix to clone
- * @returns {mat4} clone of the given matrix
+ * @returns {mat4} a new matrix
+ * @alias module:modeling/math/mat4.clone
  */
 const clone = (...params) => {
   let out

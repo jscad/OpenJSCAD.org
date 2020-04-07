@@ -1,13 +1,14 @@
 const create = require('./create')
 
 /**
- * Performs a linear interpolation between two vec2's
+ * Performs a linear interpolation between two vectors.
  *
  * @param {vec2} [out] - the receiving vector
- * @param {Number} t - interpolation amount between the two inputs
+ * @param {Number} t - interpolation amount between the two vectors
  * @param {vec2} a - the first operand
  * @param {vec2} b - the second operand
- * @returns {vec2} out
+ * @returns {vec2} a new vector
+ * @alias module:modeling/math/vec2.lerp
  */
 const lerp = (...params) => {
   let out
