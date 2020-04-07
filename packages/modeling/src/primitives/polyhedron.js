@@ -8,6 +8,7 @@ const poly3 = require('../geometry/poly3')
  * @param {Object} options - options for construction
  * @param {Array} options.points=[] - list of points in 3D space
  * @param {Array} options.faces=[] - list of faces, where each face is a set of indexes into the points
+ * @param {Array} [options.colors=undefined] - list of RGBA colors to apply to each face
  * @param {Array} [options.orientation='outward'] - orientation of faces
  * @returns {geom3} new 3D geometry
  * @alias module:modeling/primitives.polyhedron
@@ -21,9 +22,10 @@ const polyhedron = (options) => {
   const defaults = {
     points: [],
     faces: [],
+    colors: undefined,
     orientation: 'outward'
   }
-  const {points, faces, orientation} = Object.assign({}, defaults, options)
+  let {points, faces, colors, orientation} = Object.assign({}, defaults, options)
 
   if (!(Array.isArray(points) && Array.isArray(faces))) {
     throw new Error('points and faces must be arrays')
@@ -34,13 +36,26 @@ const polyhedron = (options) => {
   if (faces.length < 1) {
     throw new Error('one or more faces are required')
   }
+  if (colors) {
+    if (!Array.isArray(colors)) {
+      throw new Error('colors must be an array')
+    }
+    if (colors.length !== faces.length) {
+      throw new Error('faces and colors must have the same length')
+    }
+  }
 
   // invert the faces if orientation is inwards, as all internals expect outwarding facing polygons
   if (orientation !== 'outward') {
     faces.forEach((face) => face.reverse())
   }
 
-  let polygons = faces.map((face) => poly3.fromPoints(face.map((idx) => points[idx])))
+  let polygons = faces.map((face, findex) => {
+    let polygon = poly3.fromPoints(face.map((pindex) => points[pindex]))
+    if (colors && colors[findex]) polygon.color = colors[findex]
+    return polygon
+  })
+
   return geom3.create(polygons)
 }
 
