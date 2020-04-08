@@ -1,4 +1,4 @@
-# jscad-desktop
+# @jscad/desktop
 
 [![GitHub version](https://badge.fury.io/gh/jscad%2Fdesktop.svg)](https://badge.fury.io/gh/jscad%2Fdesktop)
 [![Build Status](https://travis-ci.org/jscad/desktop.svg)](https://travis-ci.org/jscad/desktop)
@@ -19,7 +19,6 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 - there is basic theming support (only two are present, you can change them but not add more at this time)
 - uses the shiny new 3D viewer based on regl
 - uses most.js observables & a declarative approach internally
-
 
 ### what is supported:
  * almost all of the features of OpenJSCAD EXCEPT the things in the paragraph below 
@@ -45,7 +44,7 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 
  > there will NOT be out of the box support for es6 modules anytime soon, please use a transpiler (Babel.js etc) if you want to use es modules
 
- ## geometry caching
+### geometry caching
 
  this is an experimental feature that adds a HUGE performance boost by turning the various geometry creation
  functions (so cube(), sphere(), union(), difference() etc into a virtual tree, and caching each of the items in the tree when evaluating the tree into actual csg/cag object
@@ -57,7 +56,7 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 
   This desktop app also saves your current design's cache to the hard drive, making a reload after restarting the app very fast! IF you follow the instructions/limitations below
   
- ### Limitations
+#### Limitations
 
 - LIMITATION 1 :
  this **ONLY WORKS WITH THE FUNCTIONAL API** !! ie 
@@ -67,9 +66,7 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 - LIMITATION 2: because of the limitation above you CANNOT mix the two coding styles: so this is **FUNCTIONAL API ONLY, NO MIXING** !!
  since the non functional api will become deprecated soon, this is future facing decision regardless :)
 
-
-
- ### How to use it : (temporary instructions)
+### How to use it : (temporary instructions)
 
   > Note: this is experimental, and somewhat clunky, will VERY LIKELY change in the future !!!
 
@@ -130,7 +127,6 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
   just toggle the 'Experimental geometry caching:' setting in the options panel (turned off by default)
   be warned however that a lot of the official examples etc will not work with this out of the box
 
-
 ### translations
 
 This version of Jscad has support for multiple languages (as in text for the UI, not programming languages):
@@ -144,7 +140,6 @@ you can find the language files in the **locales** folder
 add translations for another one !
 * in the near future this will also be available for the non-desktop versions!
 
-
 pre-alpha, expect bugs! 
 
 ## Table of Contents
@@ -154,17 +149,22 @@ pre-alpha, expect bugs!
 
 ## Installation
 
+For now , dev mode only! 
+
 ```
-git clone this repository
-cd jscad-desktop
-npm i
+git clone https://github.com/jscad/OpenJSCAD.org.git
+cd OpenJSCAD.org
+npm install
+npm test
 ```
 
 ## Usage
 
 For now , dev mode only! 
-to start the app, in the root folder , type
+
+To start the app, in the root folder , type
 ```
+cd packages/desktop
 npm run dev
 ```
 
