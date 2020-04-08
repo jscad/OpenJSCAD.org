@@ -17,7 +17,6 @@ This is the Web based UI for [OpenJsCAD](https://github.com/jscad/OpenJSCAD.org)
 ## Table of Contents
 
 - [Usage](#usage)
-- [Development](#development)
 - [Documentation](#documentation)
 - [Known issues](#known-issues)
 - [Contribute](#contribute)
@@ -39,7 +38,7 @@ Go to *[OpenJSCAD.org](http://openjscad.org)* (Tested browsers include Chrome, F
 cd base-directory-of-website
 git clone https://github.com/jscad/OpenJSCAD.org
 cd OpenJSCAD.org
-cd packages/web . // this is where the web version is
+cd packages/web // this is where the web version is
 cp ../examples ./examples // copy the examples here
 <start a web server here>
 ```
@@ -78,7 +77,7 @@ This is a server side script that does the following
 use and path of the proxy can be set by:
 - changing the `proxyUrl` value in [src/ui/index.js](src/ui/index.js)
 - since this is hardcoded , if you do not use the provided dev server,
- rebuild your main file (npm run build-web etc, see [Development](#development))
+ rebuild your main file (See [Contributing](#contributing))
 
 then you can use it like so:
 https://<YOURSITE>/?uri=http://www.thingiverse.com/download:164128
@@ -86,45 +85,6 @@ or
 https://<YOURSITE>/#http://www.thingiverse.com/download:164128
 
 > Note: a PR with a node.js based proxy would be a welcome addition :)
-
-## Development
-
-We offer pre-built versions of OpenJSCAD to be uses directly here :
-- [standard](./dist/index.js)
-- [minimalist](./dist/min.js)
-- [with options](./dist/options.js)
-
-but you can also rebuild them manually if you need :
-
-- standard: ```npm run build-web```
-- minimalist: ```npm run build-min```
-- with options: ```npm run build-opt```
-
-### Adding new features the other modules in this repository:
-
-Since OpenJSCAD is made up of multiple dependent modules (csg.js, openscad-openjscad-translator etc),
-the easiest method is to use ```npm link``` to have a 'live' updating development version of OpenJSCAD:
-- create a base directory
-- clone this repository ```git clone https://github.com/jscad/OpenJSCAD.org.git```
-- go into OpenJSCAD.org folder ```cd OpenJSCAD.org```
-- install dependencies & setup inter package links ```npm run bootstrap```
-- go into the web folder : ```cd packages/web````
-- if desired, start dev server: ```npm run start-dev```
-
-> Note : you can also change the code in all the other packages/xxx folders and it will also
-impact the web ui (ie : if you make changes to packages/core in parts that are used in the Web Ui,
-you do not need to run additional commands)
-
-### Adding new features in CSG.js or other modules:
-
-Then, for example for CSG.js:
-- go back to base directory ```cd ..```
-- clone CSG.js ```git clone https://github.com/jscad/csg.js.git```
-- go into OpenJSCAD.org folder again ```cd OpenJSCAD.org```
-- now type ```npm link ../csg.js``` to make @jscad/csg refer to local ../csg.js.
-
-You can now make changes to the CSG.js code and see it impact your locally running
-copy of OpenJSCAD live.
 
 ## Documentation
 
@@ -151,7 +111,7 @@ Thank you to all the people who have already contributed to this project:
 
 * If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
 
-* If you want to submit a change or a patch, please see the [Contributing guidelines](https://github.com/jscad/OpenJSCAD.org/blob/master/CONTRIBUTING.md). New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
+* If you want to submit a change or a patch, please see the [Contributing guidelines](https://github.com/jscad/OpenJSCAD.org/blob/master/packages/web/CONTRIBUTING.md). New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
 
 * We only accept bug reports and pull requests on **GitHub**.
 
