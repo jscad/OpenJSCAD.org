@@ -51,10 +51,10 @@ const serializeBinary = (objects, options) => {
   let triangleUint16array = new Uint16Array(triangleBuffer, 48, 1)
 
   let byteoffset = 0
-  let p = 0
+  
   objects.forEach((object) => {
     let polygons = geometry.geom3.toPolygons(object)
-    polygons.forEach((polygon) => {
+    polygons.forEach((polygon,index) => {
       let vertices = polygon.vertices
       let numvertices = vertices.length
       let plane = polygon.plane
@@ -75,8 +75,8 @@ const serializeBinary = (objects, options) => {
         allTrianglesBufferAsInt8.set(triangleBufferAsInt8, byteoffset)
         byteoffset += 50
       }
-      p += 1
-      options.statusCallback && options.statusCallback({ progress: 100 * p / numpolygons })
+      
+      options.statusCallback && options.statusCallback({ progress: 100 * index / numpolygons })
     })
   })
   options.statusCallback && options.statusCallback({ progress: 100 })
