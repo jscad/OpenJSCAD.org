@@ -13,8 +13,6 @@ All code released under MIT license
 //
 // //////////////////////////////////////////
 
-const { geometry } = require('@jscad/modeling')
-
 const { flatten, toArray } = require('@jscad/array-utils')
 
 const version = require('./package.json').version
@@ -43,7 +41,6 @@ const deserialize = (options, input) => {
 
   // cleanup the objects
   objects = flatten(toArray(objects))
-  objects = objects.filter((object) => geometry.geom3.isA(object) || geometry.geom2.isA(object) || geometry.path2.isA(object))
 
   return options.output === 'script' ? translate(options, objects) : objects
 }
