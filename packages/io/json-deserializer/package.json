@@ -31,10 +31,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/modeling": "0.0.1",
     "@jscad/array-utils":"0.0.0"
   },
   "devDependencies": {
+    "@jscad/modeling": "0.0.1",
    "ava": "1.4.0"
   }
 }
