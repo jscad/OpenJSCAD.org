@@ -1,6 +1,7 @@
 module.exports = {
   clone: require('./clone'),
   create: require('./create'),
+  equals: require('./equals'),
   fromPoints: require('./fromPoints'),
   fromCompactBinary: require('./fromCompactBinary'),
   isA: require('./isA'),
