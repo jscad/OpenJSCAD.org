@@ -25,7 +25,7 @@ const makeMeasureArea = specials => {
     objects = flatten(objects)
     // we create a premptive cache
     const cache = cacheWithInvalidation()
-    const operands = cachedGenerator(solids, cache)
+    const operands = cachedGenerator(objects, cache)
 
     const area = operands.reduce((acc, csg) => {
       let tmpArea = csg.toTriangles().reduce(function (accSub, triPoly) {
