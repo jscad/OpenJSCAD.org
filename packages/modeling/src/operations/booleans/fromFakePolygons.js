@@ -27,6 +27,8 @@ const fromFakePolygon = (epsilon, polygon) => {
     return vec2.fromValues(x, y)
   })
 
+  if (vec2.equals(points2D[0], points2D[1])) return null
+
   const d = vert1Indices[1] - vert1Indices[0]
   if (d === 1 || d === 3) {
     if (d === 1) {
