@@ -1,8 +1,8 @@
-const { toArray } = require('@jscad/array-utils')
+const { flatten } = require('@jscad/array-utils')
 
-const extrudeFromSlices = (params, ...solids) => {
-  solids = toArray(solids)
-  return { children: solids, type: 'extrudeFromSlices', params }
+const extrudeFromSlices = (params, ...objects) => {
+  objects = flatten(objects)
+  return { children: objects, type: 'extrudeFromSlices', params }
 }
 
 module.exports = extrudeFromSlices

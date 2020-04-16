@@ -1,8 +1,8 @@
 const { flatten, toArray } = require('@jscad/array-utils')
 
-const union = (...solids) => {
+const union = (...objects) => {
   solids = flatten(toArray(solids))
-  return { children: solids, type: 'union', params: undefined }
+  return { children: objects, type: 'union', params: undefined }
 }
 
 module.exports = union

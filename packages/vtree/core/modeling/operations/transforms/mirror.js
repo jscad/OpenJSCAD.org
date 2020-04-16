@@ -1,8 +1,8 @@
-const { toArray } = require('@jscad/array-utils')
+const { flatten } = require('@jscad/array-utils')
 
-const mirror = (params, ...solids) => {
-  solids = toArray(solids)
-  return { children: solids, type: 'mirror', params }
+const mirror = (params, ...objects) => {
+  objects = flatten(objects)
+  return { children: objects, type: 'mirror', params }
 }
 
 module.exports = mirror

@@ -1,8 +1,8 @@
-const { toArray } = require('@jscad/array-utils')
+const { flatten } = require('@jscad/array-utils')
 
-const difference = (...solids) => {
-  solids = toArray(solids)
-  return { children: solids, type: 'difference', params: undefined }
+const difference = (...objects) => {
+  objects = flatten(objects)
+  return { children: objects, type: 'difference', params: undefined }
 }
 
 module.exports = difference

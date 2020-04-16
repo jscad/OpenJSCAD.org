@@ -1,4 +1,4 @@
-const { toArray } = require('@jscad/array-utils')
+const { flatten } = require('@jscad/array-utils')
 
 const cacheWithInvalidation = require('../../../cacheWithInvalidation')
 const cachedGenerator = require('../../../generators/geometry-generator-cached-csg')
@@ -19,10 +19,10 @@ const makeMeasureArea = specials => {
  * @param {geom2} geometry - 2D geometry to measure
  * @returns {Number} area of the geometry
  **/
-  const measureArea = (...solids) => {
+  const measureArea = (...objects) => {
     // console.log('measure area in overlay api', solids)
     // console.log(arguments[1])
-    solids = toArray(solids)
+    objects = flatten(objects)
     // we create a premptive cache
     const cache = cacheWithInvalidation()
     const operands = cachedGenerator(solids, cache)

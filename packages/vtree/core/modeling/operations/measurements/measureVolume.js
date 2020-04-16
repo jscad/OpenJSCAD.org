@@ -1,4 +1,4 @@
-const { toArray } = require('@jscad/array-utils')
+const { flatten } = require('@jscad/array-utils')
 
 const cacheWithInvalidation = require('../../../cacheWithInvalidation')
 const cachedGenerator = require('../../../generators/geometry-generator-cached-csg')
@@ -12,8 +12,8 @@ const cachedGenerator = require('../../../generators/geometry-generator-cached-c
  * @returns {Function} the actual function made for measuring volumes
  **/
 const makeMeasureVolume = specials => {
-  const measureVolume = (...solids) => {
-    solids = toArray(solids)
+  const measureVolume = (...objects) => {
+    objects = flatten(objects)
     // we create a premptive cache
     const cache = cacheWithInvalidation()
     const operands = cachedGenerator(solids, cache)

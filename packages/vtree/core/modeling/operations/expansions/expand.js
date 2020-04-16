@@ -1,13 +1,8 @@
-const { toArray } = require('@jscad/array-utils')
+const { flatten } = require('@jscad/array-utils')
 
-const contract = (radius, n, ...solids) => {
-  solids = toArray(solids)
-  return { children: solids, type: 'contract', radius, n }
-}
-
-const expand = (params, ...solids) => {
-  solids = toArray(solids)
-  return { children: solids, type: 'expand', params }
+const expand = (params, ...objects) => {
+  objects = flatten(objects)
+  return { children: objects, type: 'expand', params }
 }
 
 module.exports = expand

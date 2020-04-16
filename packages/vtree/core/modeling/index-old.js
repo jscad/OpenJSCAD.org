@@ -1,9 +1,9 @@
 
 const { toArray, flatten } = require('@jscad/array-utils')
 
-const color = (params, ...solids) => {
-  solids = toArray(solids)
-  return { children: solids, type: 'color', params }
+const color = (params, ...objects) => {
+  objects = flatten(objects)
+  return { children: objects, type: 'color', params }
 }
 
 // attempt at workaround for non tree items that need access to data before final evaluation

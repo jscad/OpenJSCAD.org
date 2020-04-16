@@ -1,8 +1,8 @@
-const { toArray } = require('@jscad/array-utils')
+const { flatten } = require('@jscad/array-utils')
 
-const rotate = (params, ...solids) => {
-  solids = toArray(solids)
-  return { children: solids, type: 'rotate', params }
+const rotate = (params, ...objects) => {
+  objects = flatten(objects)
+  return { children: objects, type: 'rotate', params }
 }
 
 module.exports = rotate
