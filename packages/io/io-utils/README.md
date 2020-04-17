@@ -50,8 +50,7 @@ PRs accepted.
 
 Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
-
 ## License
 
-[The MIT License (MIT)](./LICENSE)
+[The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 (unless specified otherwise)

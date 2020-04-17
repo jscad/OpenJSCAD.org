@@ -110,7 +110,7 @@ Small Note: If editing this README, please conform to the [standard-readme](http
 
 ## License
 
-[The MIT License (MIT)](https://github.com/jscad/openscad-openjscad-translator/blob/master/LICENSE)
+[The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 (unless specified otherwise)
 
 _NOTE: OpenSCAD and OpenSCAD API are released under the General Public License version 2._

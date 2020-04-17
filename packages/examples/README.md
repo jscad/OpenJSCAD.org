@@ -101,3 +101,11 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 [The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 (unless specified otherwise)
+
+Some content released under different licence:
+- thing_7-Zomboe.stl: CC-BY-NC-SA
+- 3d_sculpture-VernonBussler.stl: CC-BY-SA
+- frog-OwenCollins.stl: CC-BY-NC-SA
+- organic_flower-Bogoboy23.stl: CC-BY
+- treefrog-Jerrill.stl: CC-BY-NC-SA
+- yoda-RichRap.stl: CC-BY-SA

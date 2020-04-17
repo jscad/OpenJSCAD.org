@@ -68,4 +68,5 @@ Small Note: If editing this README, please conform to the [standard-readme](http
 
 ## License
 
-[The MIT License (MIT)](./LICENSE)
+[The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
+(unless specified otherwise)
