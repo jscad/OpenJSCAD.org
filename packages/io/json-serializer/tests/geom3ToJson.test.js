@@ -31,10 +31,10 @@ test('3D Geometry to JSON', t => {
   t.is(countOf(']', obs2[0]), 411)
   t.is(countOf(',', obs2[0]), 1096)
 
-  const obs3 = serialize({}, geom1, geom2)
+  const obs3 = serialize({}, geom1, geom2, ['hello', 'goodbye'])
   t.is(countOf('polygons', obs3[0]), 2)
   t.is(countOf('transforms', obs3[0]), 2)
   t.is(countOf('[', obs3[0]), 449)
   t.is(countOf(']', obs3[0]), 449)
-  t.is(countOf(',', obs3[0]), 1209)
+  t.is(countOf(',', obs3[0]), 1211)
 })

@@ -9,11 +9,11 @@ All code released under MIT license
 
 Notes:
 1) geom2 conversion to:
-     JSON notation
+     JSON
 2) geom3 conversion to:
-     JSON notation
+     JSON
 3) path2 conversion to:
-     JSON notation
+     JSON
 */
 
 const { geometry, utils } = require('@jscad/modeling')
@@ -37,10 +37,10 @@ function replacer (key, value) {
 }
 
 /**
- * Serialize the give objects to JSON notation.
+ * Serialize the give objects to JSON.
  * @param {Object} options - options for serialization, REQUIRED
  * @param {Object|Array} objects - objects to serialize as JSON
- * @returns {Array} serialized contents, JSON notation
+ * @returns {Array} serialized contents
  */
 const serialize = (options, ...objects) => {
   const defaults = {
@@ -51,9 +51,6 @@ const serialize = (options, ...objects) => {
   objects = utils.flatten(objects)
 
   options.statusCallback && options.statusCallback({ progress: 0 })
-
-  // only serialize known objects (geometries)
-  objects = objects.filter((object) => geometry.geom3.isA(object) || geometry.geom2.isA(object) || geometry.path2.isA(object))
 
   const notation = JSON.stringify(objects, replacer)
 
