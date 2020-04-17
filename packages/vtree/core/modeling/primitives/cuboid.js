@@ -3,9 +3,8 @@ const cuboid = params => {
       size: [1, 1, 1],
       center: [true, true, true]
     } */
-  const _params = Object.assign({}, params)
-
-  return Object.assign({}, _params, { type: 'cuboid' })
+  return Object.assign({}, params, { type: 'cuboid' })
 }
+const cube = params => Object.assign({}, params, { type: 'cube' })
 
-module.exports = cuboid
+module.exports = { cuboid, cube }

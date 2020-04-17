@@ -1,4 +1,5 @@
 const { flatten } = require('@jscad/array-utils')
+const measureVolume = require('@jscad/modeling').measurements.measureVolume
 
 const cacheWithInvalidation = require('../../../cacheWithInvalidation')
 const cachedGenerator = require('../../../generators/geometry-generator-cached-csg')
@@ -12,25 +13,17 @@ const cachedGenerator = require('../../../generators/geometry-generator-cached-c
  * @returns {Function} the actual function made for measuring volumes
  **/
 const makeMeasureVolume = specials => {
-  const measureVolume = (...objects) => {
+  const _measureVolume = (...objects) => {
     objects = flatten(objects)
     // we create a premptive cache
     const cache = cacheWithInvalidation()
     const operands = cachedGenerator(objects, cache)
 
-    const volume = operands.reduce((acc, csg) => {
-      let tmpArea = csg.toTriangles().reduce(function (accSub, triPoly) {
-        return accSub + triPoly.getTetraFeatures(['volume'])[0]
-      }, 0)
-      return acc + tmpArea
-    }, 0)
-
+    const volume = measureVolume(operands)
     specials.push({ cache, result: volume })
-    console.log('volume', volume)
-
     return volume
   }
-  return measureVolume
+  return _measureVolume
 }
 
 module.exports = makeMeasureVolume

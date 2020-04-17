@@ -3,9 +3,7 @@ const sphere = params => {
       size: 1,
       center: [true, true, true]
     } */
-  const _params = Object.assign({}, params)
-
-  return Object.assign({}, _params, { type: 'sphere' })
+  return Object.assign({}, params, { type: 'sphere' })
 }
 
 module.exports = { sphere }

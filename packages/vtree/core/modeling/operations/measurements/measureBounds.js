@@ -1,3 +1,5 @@
+const measureBounds = require('@jscad/modeling').measurements.measureBounds
+
 const cacheWithInvalidation = require('../../../cacheWithInvalidation')
 const cachedGenerator = require('../../../generators/geometry-generator-cached-csg')
 
@@ -10,16 +12,15 @@ const cachedGenerator = require('../../../generators/geometry-generator-cached-c
  * @returns {Function} the actual function made for measuring bounds
  **/
 const makeMeasureBounds = specials => {
-  const measureBounds = (solid) => {
+  const _measureBounds = (solids) => {
     // we create a premptive cache
     const cache = cacheWithInvalidation()
-    const operands = cachedGenerator([solid], cache)
-    const bounds = operands[0].getBounds()
+    const operands = cachedGenerator([solids], cache)
+    const bounds = measureBounds(operands)
     specials.push({ cache, result: bounds })
-    console.log('bounds', bounds)
     return bounds
   }
-  return measureBounds
+  return _measureBounds
 }
 
 module.exports = makeMeasureBounds
