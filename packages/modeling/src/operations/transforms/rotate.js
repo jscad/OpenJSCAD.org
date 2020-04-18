@@ -8,12 +8,12 @@ const path2 = require('../../geometry/path2')
 
 /**
  * Rotate the given object(s) using the given options.
- * @param {Number[]} angles - angle (RADIANS) of rotations about X, Y, and X axis
+ * @param {Number[]} angles - angle (RADIANS) of rotations about X, Y, and Z axis
  * @param {Object|Array} objects - the objects(s) to rotate
  * @return {Object|Array} the rotated object(s)
  *
  * @example
- * const newsphere = rotate([45,0,0], sphere())
+ * const newsphere = rotate([45 * Math.PI / 180.0, 0, 0], sphere())
  */
 const rotate = (angles, ...objects) => {
   if (!Array.isArray(angles)) throw new Error('angles must be an array')
