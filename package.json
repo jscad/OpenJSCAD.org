@@ -4,12 +4,14 @@
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "scripts": {
-    "test": "lerna bootstrap && lerna run test",
-    "lint": "eslint packages/**/*.js",
-    "bootstrap": "lerna bootstrap",
+    "coverage": "npm run bootstrap && lerna run --concurrency 1 --stream coverage",
+    "test": "npm run bootstrap && lerna run --stream test",
+    "lint": "standard 'packages/**/*.js'",
+    "bootstrap": "lerna bootstrap --hoist nyc --ignore-prepublish --no-ci --ignore @jscad/scad-deserializer --ignore @jscad/desktop",
+    "list": "lerna ls",
     "clean": "lerna clean",
     "cli": "npm run bootstrap && cd ./packages/cli",
-    "web": "npm run bootstrap && cd ./packages/web && npm run start-dev",
+    "web": "npm run bootstrap && cd ./packages/web && npm run dev",
     "desktop": "npm run bootstrap && cd ./packages/desktop && npm run dev",
     "publish": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits",
     "publish-dryrun": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits --skip-git --skip-npm"
@@ -29,15 +31,20 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "ava": "^0.23.0",
-    "lerna": "2.7.0"
+    "@jscad/sample-files": "github:jscad/sample-files#master",
+    "ava": "1.4.0",
+    "lerna": "3.19.0",
+    "nyc": "15.0.0",
+    "standard": "14.3.1"
   },
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/openjscad",
     "logo": "https://opencollective.com/openjscad/logo.txt"
+  },
+  "standard": {
+    "ignore": [ "**/dist/", "**/old/" ]
   }
 }

@@ -4,10 +4,10 @@
   "description": "Command Line Interface (CLI) for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "bin": {
-    "openjscad": "./cli.js"
+    "openjscad": "./cli.js",
+    "jscad": "./cli.js"
   },
   "scripts": {
-    "test": "ava './*.test.js' --verbose --timeout 60000",
     "preversion": "npm test",
     "version": "git add -A ",
     "postversion": "git push origin master && git push origin master --tags",
@@ -32,14 +32,12 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/core": "^0.4.0",
-    "@jscad/csg": "0.7.0",
-    "@jscad/examples": "^1.7.2",
-    "@jscad/io": "0.4.7",
-    "@jscad/openscad-openjscad-translator": "0.0.11"
+    "@jscad/core": "0.4.0",
+    "@jscad/examples": "1.7.2",
+    "@jscad/io": "1.0.0-alpha.d0fb3056"
   },
   "devDependencies": {
-    "ava": "^0.23.0"
+   "ava": "1.4.0"
   },
   "collective": {
     "type": "opencollective",

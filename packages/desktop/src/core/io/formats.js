@@ -8,65 +8,62 @@ const formats = {
     description: 'STereoLithography, Binary',
     extension: 'stl',
     mimetype: 'application/sla',
-    convertCSG: true,
-    convertCAG: false
+    convertGeom3: true,
+    convertGeom2: false
   },
   stla: {
     displayName: 'STL (ASCII)',
     description: 'STereoLithography, ASCII',
     extension: 'stl',
     mimetype: 'application/sla',
-    convertCSG: true,
-    convertCAG: false
+    convertGeom3: true,
+    convertGeom2: false
   },
   amf: {
     displayName: 'AMF (experimental)',
     description: 'Additive Manufacturing File Format',
     extension: 'amf',
     mimetype: 'application/amf+xml',
-    convertCSG: true,
-    convertCAG: false },
+    convertGeom3: true,
+    convertGeom2: false },
   x3d: {
     displayName: 'X3D',
     description: 'X3D File Format',
     extension: 'x3d',
     mimetype: 'model/x3d+xml',
-    convertCSG: true,
-    convertCAG: false },
+    convertGeom3: true,
+    convertGeom2: false },
   dxf: {
     displayName: 'DXF',
     description: 'AutoCAD Drawing Exchange Format',
     extension: 'dxf',
     mimetype: 'application/dxf',
-    convertCSG: false,
-    convertCAG: true },
+    convertGeom3: false,
+    convertGeom2: true },
   jscad: {
     displayName: 'JSCAD',
     description: 'OpenJSCAD.org Source',
     extension: 'jscad',
     mimetype: 'application/javascript',
-    convertCSG: true,
-    convertCAG: true
+    convertGeom3: true,
+    convertGeom2: true
   },
   js: {
     displayName: 'js',
     description: 'JavaScript Source',
     extension: 'js',
     mimetype: 'application/javascript',
-    convertCSG: true,
-    convertCAG: true
+    convertGeom3: true,
+    convertGeom2: true
   },
   svg: {
     displayName: 'SVG',
     description: 'Scalable Vector Graphics Format',
     extension: 'svg',
     mimetype: 'image/svg+xml',
-    convertCSG: false,
-    convertCAG: true
+    convertGeom3: false,
+    convertGeom2: true
   },
-  gcode: {
-    displayName: 'gcode',
-    description: 'G Programming Language File Format' },
   json: {
     displayName: 'json',
     description: 'JavaScript Object Notation Format' }
@@ -76,7 +73,6 @@ const formats = {
 const conversionFormats = [
 // 3D file formats
   'amf',
-  'gcode',
   'js',
   'jscad',
   'obj',
@@ -95,11 +91,11 @@ function supportedFormatsForObjects (objects) {
     if (isCAG(objects[i])) { foundCAG = true }
   }
   for (let format in formats) {
-    if (foundCSG && formats[format].convertCSG === true) {
+    if (foundCSG && formats[format].convertGeom3 === true) {
       objectFormats[objectFormats.length] = format
       continue // only add once
     }
-    if (foundCAG && formats[format].convertCAG === true) {
+    if (foundCAG && formats[format].convertGeom2 === true) {
       objectFormats[objectFormats.length] = format
     }
   }

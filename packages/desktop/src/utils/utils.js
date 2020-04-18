@@ -26,12 +26,6 @@ function isCSG (object) {
   }
   return true
 }
-/* converts input data to array if it is not already an array */
-function toArray (data) {
-  if (data === undefined || data === null) { return [] }
-  if (data.constructor !== Array) { return [data] }
-  return data
-}
 
 /** kinda, sorta like a nested object.assign, so that nested object values
  * do not get lost
@@ -64,25 +58,8 @@ function merge (output = {}, currentState, options) {
   return output
 }
 
-const head = (array) => {
-  if (array === undefined || null) {
-    return undefined
-  }
-  if (array.length === 0) {
-    return undefined
-  }
-  return array[0]
-}
-
-const flatten = list => list.reduce(
-  (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
-)
-
 module.exports = {
   isCSG,
   isCAG,
-  toArray,
-  merge,
-  head,
-  flatten
+  merge
 }

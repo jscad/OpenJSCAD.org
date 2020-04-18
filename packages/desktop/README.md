@@ -81,7 +81,7 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 
     ```npm install kaosat-dev/jscad-tree-experiments```
 
-  - replace your ```require('@jscad/csg/api')``` calls with ```require('jscad-tree-experiment').api```
+  - replace your ```require('@jscad/csg/api')``` calls with ```require('@jscad/vtree').api```
 
   - example :
 
@@ -106,10 +106,10 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 
     ```javascript
 
-      const {cylinder} = require('jscad-tree-experiment').api.primitives3d
-      const {color} = require('jscad-tree-experiment').api.color
-      const {difference} = require('jscad-tree-experiment').api.booleanOps
-      const {translate} = require('jscad-tree-experiment').api.transformations
+      const {cylinder} = require('@jscad/vtree').api.primitives3d
+      const {color} = require('@jscad/vtree').api.color
+      const {difference} = require('@jscad/vtree').api.booleanOps
+      const {translate} = require('@jscad/vtree').api.transformations
 
       module.exports = function assemblyMount (params) {
         const {plateThickness, plateOffset, assemblyMountDia, assemblyMountBoltDia} = params

@@ -1,0 +1,60 @@
+3D Only Entities
+================
++ 3DFACE (DXF)
++ MESH (DXF)
+SOLID (DXF)
+
+2D / 3D Entities
+================
++ ARC (DXF)
++ CIRCLE (DXF)
++ ELLIPSE (DXF)
+HATCH (DXF)
+HELIX (DXF)
++ LINE (DXF)
++ LWPOLYLINE (DXF)
+MLINE (DXF)
++ POLYLINE (DXF)
+
+2D Only Entities
+================
+SPLINE (DXF) - a (rational) spline with ControlPoints, Degrees, Knots and Weights. 
+
+Intermediate Entities
+=====================
++ SEQEND (DXF)
++ VERTEX (DXF)
+
+Unknown / Unsupported Entites
+=============================
+- 3DSOLID (DXF) - AA library objects in encoded binary format
+ACAD_PROXY_ENTITY (DXF)
+ATTDEF (DXF) - annotation
+ATTRIB (DXF) - annotation
+BODY (DXF)
+DIMENSION (DXF) - annotation
+IMAGE (DXF)
+INSERT (DXF) - annotation
+LEADER (DXF) - annotation
+LIGHT (DXF)
+MLEADERSTYLE (DXF)
+MLEADER (DXF) - annotation
+MTEXT (DXF) - annotation
+OLEFRAME (DXF)
+OLE2FRAME (DXF)
+POINT (DXF)
+RAY (DXF) - a ray with starting point and direction, extending to infinity on one end. 
+REGION (DXF)
+SHAPE (DXF)
+SUN (DXF)
+SURFACE (DXF)
+TABLE (DXF)
+TEXT (DXF) - annotation
+TOLERANCE (DXF) - annotation
+VIEWPORT (DXF)
+UNDERLAY (DXF) - underlay (image) of document
+WIPEOUT (DXF)
+XLINE (DXF) - a line with starting point and direction, extending to infinity on both ends. 
+
+SECTION (DXF)
+TRACE (DXF) - Four points defining the corners of the trace

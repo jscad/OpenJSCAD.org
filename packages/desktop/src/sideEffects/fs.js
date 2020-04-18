@@ -5,7 +5,7 @@ const callBackToStream = require('../utils/observable-utils/callbackToObservable
 
 const requireUncached = require('../core/code-loading/requireUncached')
 const resolveDependencies = require('../core/code-loading/resolveDependencies')
-const {flatten} = require('../utils/utils')
+const { flatten } = require('@jscad/array-utils')
 
 // FIXME: not used anymore? remove?
 function watchMultiplePaths (paths, callback) {
@@ -17,7 +17,7 @@ function watchMultiplePaths (paths, callback) {
       const contents = fs.readFileSync(filePath, 'utf8')
 
       if (prevContents[filePath] !== contents) {
-        callback({filePath, contents})
+        callback({ filePath, contents })
         prevContents[filePath] = contents
       }
     })
@@ -52,7 +52,7 @@ function watchTree (rootPath, callback) {
     const contents = fs.readFileSync(filePath, 'utf8')
 
     if (prevContents[filePath] !== contents) {
-      callback({filePath, contents})
+      callback({ filePath, contents })
       prevContents[filePath] = contents
 
       // now clear all watchers if needed
@@ -77,14 +77,14 @@ module.exports = function makeFsSideEffects () {
   const scriptDataFromCB = callBackToStream()
 
   function fsSink (out$) {
-    out$.forEach(function ({path, operation, id, data, options}) {
+    out$.forEach(function ({ path, operation, id, data, options }) {
     // console.log('read/writing to', path, operation)
       if (operation === 'read') {
         fs.readFile(path, 'utf8', function (error, data) {
           if (error) {
-            readFileToCB.callback({path, operation, error, id})
+            readFileToCB.callback({ path, operation, error, id })
           } else {
-            readFileToCB.callback({path, operation, data, id})
+            readFileToCB.callback({ path, operation, data, id })
           }
         })
       } else if (operation === 'write') {
@@ -92,17 +92,17 @@ module.exports = function makeFsSideEffects () {
       } else if (operation === 'watch') {
         let watchers = []
         let watchedFilePath
-        const {enabled} = options
+        const { enabled } = options
         const rootPath = path
         if (enabled === false) {
           if (watchers.length > 0 && watchers[0] !== undefined) {
-        // console.log('stopping to watch', filePath, enabled)
+            // console.log('stopping to watch', filePath, enabled)
             removeWatchers(watchers)
           }
         } else {
           if (watchedFilePath !== rootPath) {
             if (watchers.length > 0 && watchers[0] !== undefined) {
-          // console.log('stopping to watch', filePath, enabled)
+              // console.log('stopping to watch', filePath, enabled)
               removeWatchers(watchers)
             }
           }
@@ -114,7 +114,7 @@ module.exports = function makeFsSideEffects () {
               // force reload the main file
               const contents = fs.readFileSync(rootPath, 'utf8')
               // console.log('FOOOOO', path, contents, operation, id)
-              scriptDataFromCB.callback({path, data: contents, operation, id})
+              scriptDataFromCB.callback({ path, data: contents, operation, id })
             }
 
             watchers = watchTree(rootPath, stuffCallback)
@@ -135,5 +135,5 @@ module.exports = function makeFsSideEffects () {
       watch$
     ])
   }
-  return {sink: fsSink, source: fsSource}
+  return { sink: fsSink, source: fsSource }
 }

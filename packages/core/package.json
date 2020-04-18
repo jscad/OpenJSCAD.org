@@ -5,7 +5,8 @@
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "module.js",
   "scripts": {
-    "test": "ava '*.test.js' --verbose --timeout 60000",
+    "coverage": "nyc --all --reporter=html --reporter=text npm test",
+    "test": "ava './**/*.test.js' --verbose --timeout 2m",
     "preversion": "npm test",
     "version": "git add -A ",
     "postversion": "git push origin master && git push origin master --tags",
@@ -30,18 +31,24 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/csg": "0.7.0",
-    "@jscad/io": "0.4.7",
-    "@jscad/openscad-openjscad-translator": "0.0.11",
-    "astring": "^1.3.1",
-    "esprima": "^3.1.3",
-    "estraverse": "^4.2.0",
+    "@jscad/modeling": "0.0.1",
+    "@jscad/io": "1.0.0-alpha.d0fb3056",
+    "@jscad/io-utils": "1.0.0-alpha.d0fb3056",
+    "@jscad/array-utils":"0.0.0",
+    "@jscad/vtree":"0.0.1",
+    "@most/create": "2.0.1",
+    "es2015-i18n-tag": "^1.3.1",
+    "is-electron": "^2.1.0",
+    "morphdom": "^2.3.3",
+    "morphdom-hooks": "0.0.2",
+    "most": "1.8.0",
+    "most-proxy": "3.3.0",
     "require-from-string": "^2.0.1",
     "strip-bom": "^3.0.0",
-    "webworkify": "^1.4.0"
+    "webworkify": "^1.5.0"
   },
   "devDependencies": {
-    "ava": "^0.23.0"
+   "ava": "1.4.0"
   },
   "collective": {
     "type": "opencollective",

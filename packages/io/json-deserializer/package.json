@@ -1,0 +1,40 @@
+{
+  "name": "@jscad/json-deserializer",
+  "version": "1.0.0-alpha.d0fb3056",
+  "description": "JSON deserializer for JSCAD project",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc --all --reporter=html --reporter=text npm test",
+    "test": "ava 'tests/*.test.js' --verbose --timeout 2m",
+    "release-patch": "git checkout master && npm version patch && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
+    "release-minor": "git checkout master && npm version minor && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
+    "release-major": "git checkout master && npm version major && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
+  },
+  "contributors": [
+    {
+      "name": "z3dev",
+      "url": "http://www.z3d.jp"
+    },
+    {
+      "name": "Mark 'kaosat-dev' Moissette",
+      "url": "http://kaosat.net"
+    }
+  ],
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "csg",
+    "import",
+    "deserializer",
+    "json"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@jscad/array-utils":"0.0.0"
+  },
+  "devDependencies": {
+    "@jscad/modeling": "0.0.1",
+   "ava": "1.4.0"
+  }
+}
