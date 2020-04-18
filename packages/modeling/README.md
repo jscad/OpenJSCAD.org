@@ -15,9 +15,8 @@ This library contains boolean operations based on Constructive Solid Geometry (C
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [API](#api)
 - [Documentation](#documentation)
-- [Contribute](#contribute)
+- [Contributing](#contributing)
 - [Community](#community)
 - [Copyrights](#copyrights)
 - [License](#license)
@@ -37,41 +36,35 @@ const {color, connectors, geometry, math, primitives, text, utils} = require('@j
 const {booleans, expansions, extrusions, hulls, measurements, transforms} = require('@jscad/modeling')
 ```
 
-## API
+## Documentation
 
 The API documentation can be found [here](./docs/api.md).
-
-## Documentation
 
 - [JSCAD User Guide](https://openjscad.org/dokuwiki/doku.php?id=start)
 - [JSCAD Quick Reference](https://openjscad.org/dokuwiki/doku.php?id=jscad_quick_reference)
 
-## Contribute
+## Contributing
 
-JSCAD is part of the JSCAD Organization, and is maintained by a group of volunteers. We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
-
-Thank you to all the people who have already contributed to this project:
-<a href="graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" /></a>
+The various JSCAD packages and all source code are part of the JSCAD Organization, and maintained by a group of volunteers.
+We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
 
 * If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
 
-* If you want to submit a change or a patch, please see the [Contributing guidelines](https://github.com/jscad/OpenJSCAD.org/blob/master/CONTRIBUTING.md). New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GitHub.
+* If you want to submit a change or a patch, please read the [Contributing Guide](https://github.com/jscad/OpenJSCAD.org/blob/master/CONTRIBUTING.md) . New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use the JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD User Guide](https://openjscad.org/dokuwiki/doku.php?id=start).
+* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD.org User Guide](https://openjscad.org/dokuwiki/doku.php).
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
 
-Small Note: If editing this README, please conform to the [standard readme](https://github.com/RichardLitt/standard-readme) specification.
+Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## Community
 
 See for more details
 * [JSCAD Forum Announcements](https://jscad.xyz/forum/category/1/announcements)
 * [JSCAD Forum Community](https://jscad.xyz/forum) to discuss with other users and developers.
-
-HUGE THANKS and SHOUTOUT to [nodeBB](https://nodebb.org/) for hosting our (awesome) forum for free ! Thanks a lot !
 
 ## Copyrights
 

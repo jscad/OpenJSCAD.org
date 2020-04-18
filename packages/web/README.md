@@ -19,7 +19,7 @@ This is the Web based UI for [JSCAD](https://github.com/jscad/OpenJSCAD.org), ei
 - [Usage](#usage)
 - [Documentation](#documentation)
 - [Known issues](#known-issues)
-- [Contribute](#contribute)
+- [Contributing](#contributing)
 - [Community](#community)
 - [Acknowledgements](#acknowledgements)
 - [License](#license)
@@ -49,20 +49,6 @@ And then access the contents via the URL of the web-site.
   * viewer-options.html for the 'all options' variant of the above
 
 > NOTE: You might need configuration changes to allow access to the some of the contents (examples etc).
-
-### Use within a Web Site (custom build)
-
-```
-install node.js > 6.0
-cd base-directory-of-website
-git clone https://github.com/jscad/OpenJSCAD.org
-cd OpenJSCAD.org
-npm run boostrap
-cd packages/web . // this is where the web version is
-cp ../examples ./examples // copy the examples here
-<start a web server here>
-modify the code as you see fit (see 'Adding new features the other packages in this repository' section)
-```
 
 #### Use of proxies for remote file loading:
 
@@ -102,20 +88,18 @@ There are a few known issues, please be sure to check this out before submitting
 "File Error: [EncodingError] Please check permissions error."
 - A: This is a permissions issue in Chrome :  restart chrome using the "--allow-file-access-from-files" option
 
-## Contribute
+## Contributing
 
-JSCAD is part of the JSCAD Organization, and is maintained by a group of volunteers. We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
-
-Thank you to all the people who have already contributed to this project:
-<a href="graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" /></a>
+The various JSCAD packages and all source code are part of the JSCAD Organization, and maintained by a group of volunteers.
+We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
 
 * If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
 
-* If you want to submit a change or a patch, please see the [Contributing guidelines](https://github.com/jscad/OpenJSCAD.org/blob/master/packages/web/CONTRIBUTING.md). New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
+* If you want to submit a change or a patch, please read the [Contributing Guide](https://github.com/jscad/OpenJSCAD.org/blob/master/CONTRIBUTING.md) . New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD User Guide](https://openjscad.org/dokuwiki/doku.php?id=start).
+* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD.org User Guide](https://openjscad.org/dokuwiki/doku.php).
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
 
@@ -187,15 +171,3 @@ Drag & drop a local file:
 
 Drag & drop multiple files (Chrome & Firefox) or a folder (Chrome):
 <img src="docs/sshot-06-illu.png">
-
-## See Also
-
-- [OpenJsCAD](http://joostn.github.com/OpenJsCad/), starting point of JSCAD
-- [OpenSCAD.net](http://garyhodgson.github.com/openscad.net/), another place of inspiration, where the OpenSCAD translator was adapted from
-- [CoffeeSCad](http://kaosat-dev.github.com/CoffeeSCad/), JavaScript simplified (no more {}) (defunct)
-- [stl2pov](http://rsmith.home.xs4all.nl/software/py-stl-stl2pov.htmltool) to convert .stl to .pov, and then render via [PovRay.org](http://povray.org)
-- [P3D](https://github.com/D1plo1d/p3d) STL/AMF/OBJ viewer
-
-That's all for now,
-
-Rene K. Mueller, Jeff Gay, Mark Moissette & JSCAD Organization

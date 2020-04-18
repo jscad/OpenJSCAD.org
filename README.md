@@ -15,8 +15,6 @@ This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-th
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-[![Backers on Open Collective](https://opencollective.com/openjscad/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/openjscad/sponsors/badge.svg)](#sponsors) 
-
 > NOTE : as of September 1 2018, we will NOT be accepting new PRS against the V1 / master branch: we realistically
 are not able to keep adding new features/fixes to the 'old' version and work on the very different V2.
 thank you for your comprehension !
@@ -25,11 +23,12 @@ thank you for your comprehension !
 ## Table of Contents
 
 - [Usage](#usage)
-- [Development](#development)
 - [Documentation](#documentation)
-- [Contribute](#contribute)
+- [Contributing](#contributing)
 - [Community](#community)
 - [Acknowledgements](#acknowledgements)
+- [Backers](#backers)
+- [Sponsors](#sponsors)
 - [License](#license)
 - [Screenshots](#screenshots)
 - [See also](#see-also)
@@ -50,11 +49,11 @@ Go to *[OpenJSCAD.org](http://openjscad.org)* (Tested browsers include Chrome, F
 
 ### Use within a Web Site (pre built files, from GitHub)
 
-please see [here for details](./packages/web/README.md)
+Please see [here for details](./packages/web/README.md)
 
 ### Use as Command Line Interface (CLI)
 
-please see [here for details](./packages/cli/README.md)
+Please see [here for details](./packages/cli/README.md)
 
 ### Use of the different modular components directly
 
@@ -72,71 +71,28 @@ This means you can :
 
 This will be expanded upon in the future, and is the backbone of the newer, modular JSCAD project.
 
-### Adding new features in CSG.js or other packages:
-
-Since JSCAD is made up of multiple dependent packages (modeling, core, web, cli, etc),
-the easiest method is to use ```npm link``` to have a 'live' updating development version of JSCAD:
-- create a base directory
-- clone this repository ```git clone https://github.com/jscad/OpenJSCAD.org.git```
-- go into OpenJSCAD.org folder ```cd OpenJSCAD.org```
-- install dependencies ```npm install```
-- if desired, make the ```openjscad``` command refer to the code in this folder: ```npm link```
-- if desired, start dev server: ```npm run start-dev```
-
-Then, for example for CSG.js:
-- go back to base directory ```cd ..```
-- clone CSG.js ```git clone https://github.com/jscad/csg.js.git```
-- go into OpenJSCAD.org folder again ```cd OpenJSCAD.org```
-- now type ```npm link ../csg.js``` to make @jscad/csg refer to local ../csg.js.
-
-You can now make changes to the source code and see it impact your locally running
-copy of JSCAD live.
-
-## Development
-
-Please see the code and details in each [package](./packages) and their READMEs.
-You can link up all the code for simple development using the following command.
-
-```
-npm run bootstrap
-```
-
-This command
-- links all the JSCAD packages together
-- installs all dependencies for each JSCAD package
-
-We also provide a few shortcuts for some of the specific packages to start development.
-```
-npm run web // bootstrap, go to the web UI package, and start the dev server
-```
-```
-npm run cli // bootstrap, go to the CLI package
-```
-
 ## Documentation
 
 - [Technical Overview and Q&A](./docs/index.md)
 - [JSCAD User and Programming Guide](https://openjscad.org/dokuwiki/doku.php?id=start)
 - [JSCAD Quick Reference](https://openjscad.org/dokuwiki/doku.php?id=jscad_quick_reference)
 
-## Contribute
+## Contributing
 
-OpenJSCAD.org is part of the JSCAD Organization, and is maintained by a group of volunteers. We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
-
-Thank you to all the people who have already contributed to this project:
-<a href="graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" /></a>
+The various JSCAD packages and all source code are part of the JSCAD Organization, and maintained by a group of volunteers.
+We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
 
 * If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
 
-* If you want to submit a change or a patch, please see the [Contributing guidelines](https://github.com/jscad/OpenJSCAD.org/blob/master/CONTRIBUTING.md). New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GitHub.
+* If you want to submit a change or a patch, please read the [Contributing Guide](https://github.com/jscad/OpenJSCAD.org/blob/master/CONTRIBUTING.md) . New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use the JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD User Guide](https://openjscad.org/dokuwiki/doku.php?id=start).
+* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD.org User Guide](https://openjscad.org/dokuwiki/doku.php).
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
 
-Small Note: If editing this README, please conform to the [standard readme](https://github.com/RichardLitt/standard-readme) specification.
+Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## Community
 
@@ -173,10 +129,10 @@ Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com
 
 <a href="https://opencollective.com/openjscad#backers" target="_blank"><img src="https://opencollective.com/openjscad/backers.svg?width=890"></a>
 
-
 ## Sponsors
 
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/openjscad#sponsor)]
+This project has some awesome sponsors! [[Become a sponsor](https://opencollective.com/openjscad#sponsor)]
+Your logo will show up here with a link to your website.
 
 <a href="https://opencollective.com/openjscad/sponsor/0/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/0/avatar.svg"></a>
 <a href="https://opencollective.com/openjscad/sponsor/1/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/1/avatar.svg"></a>
