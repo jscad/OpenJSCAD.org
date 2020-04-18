@@ -1,9 +1,9 @@
 # @jscad/core
 
-This is the core package of reusable crucial pieces of code for OpenJsCAD, which is used in the various 'front end'
+This is the core package of reusable crucial pieces of code for JSCAD, which is used in the various 'front end'
 packages like @jscad/cli , @jscad/web, @jscad/desktop
 
-<img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right" alt="OpenJSCAD">
+<img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right" alt="JSCAD">
 
 [![npm version](https://badge.fury.io/js/%40jscad%2Fcore.svg)](https://badge.fury.io/js/%40jscad%2Fcore)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
@@ -31,9 +31,9 @@ There is no UI or CLi in this package, only pieces of code ready for re-use.
 
 ## Development
 
-### Adding new features in CSG.js or other modules:
-Since OpenJSCAD is made up of multiple dependent modules (csg.js, openscad-openjscad-translator etc),
-the easiest method is to use ```npm link``` to have a 'live' updating development version of OpenJSCAD:
+### Adding new features in CSG.js or other packages:
+Since JSCAD is made up of multiple dependent packages (csg.js, openscad-openjscad-translator etc),
+the easiest method is to use ```npm link``` to have a 'live' updating development version of JSCAD:
 - create a base directory
 - clone this repository ```git clone https://github.com/jscad/OpenJSCAD.org.git```
 - go into OpenJSCAD.org folder ```cd OpenJSCAD.org```
@@ -48,16 +48,16 @@ Then, for example for CSG.js:
 - now type ```npm link ../csg.js``` to make @jscad/csg refer to local ../csg.js.
 
 You can now make changes to the CSG.js code and see it impact your locally running
-copy of OpenJSCAD live.
+copy of JSCAD live.
 
 ## Documentation
 
-- [OpenJSCAD User & Programming Guide](https://openjscad.org/dokuwiki/doku.php?id=start)
-- [OpenJSCAD Quick Reference](https://openjscad.org/dokuwiki/doku.php?id=jscad_quick_reference)
+- [JSCAD User & Programming Guide](https://openjscad.org/dokuwiki/doku.php?id=start)
+- [JSCAD Quick Reference](https://openjscad.org/dokuwiki/doku.php?id=jscad_quick_reference)
 
 ## Contribute
 
-OpenJSCAD.org is part of the JSCAD Organization, and is maintained by a group of volunteers. We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
+JSCAD is part of the JSCAD Organization, and is maintained by a group of volunteers. We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
 
 Thank you to all the people who have already contributed to this project:
 <a href="graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" /></a>
@@ -68,7 +68,7 @@ Thank you to all the people who have already contributed to this project:
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use the OpenJSCAD.org, then please start a conversation at the [OpenJSCAD.org User Group](https://jscad.xyz/forum). You might find the answer in the [OpenJSCAD.org User Guide](https://openjscad.org/dokuwiki/doku.php?id=start).
+* If you have a question about how to use the JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD User Guide](https://openjscad.org/dokuwiki/doku.php?id=start).
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
 
@@ -82,7 +82,8 @@ See for more details
 
 ## Acknowledgements
 
-OpenJSCAD and its sub components are built upon great open source work, contribution & modules
+JSCAD and all sub components are built upon great open source packages, and contributions.
+
 - [csg.js](https://github.com/jscad/csg.js) core & improvements by
 Evan Wallace,
 Eduard Bespalov,

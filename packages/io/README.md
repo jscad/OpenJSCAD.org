@@ -43,7 +43,7 @@ Following formats are supported as outputs:
 
 ## Installation
 
-See the installation instructions of the specific module.
+See the installation instructions of the specific package.
 
 ## License
 

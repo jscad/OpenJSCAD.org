@@ -6,7 +6,7 @@ Tree (& caching & more ) experiments to speed up significantly design computatio
 
 ### The problem
 
-Currently in OpenJSCAD/JSCAD , everytime you change a variable's value, an objects position, it recomputes **everything** !!
+Currently in JSCAD designs, everytime you change a variable's value, an objects position, it recomputes **everything** !!
 but why recompute (in a very costly manner) ALL the geometry of a design everytime **a small portion** of the code changes ?
 
 While I love the simplicity of the current design ie ** code => design **, it does not scale well because of the limiations of our 'geometric core engine' (csg.js), javascript itself, and the complexity of the models.

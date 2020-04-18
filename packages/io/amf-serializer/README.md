@@ -42,7 +42,7 @@ const blob = new Blob(rawData)
 
 For questions about the API, please contact the [User Group](https://jscad.xyz/forum)
 
-Please see the README information of the OpenJSCAD.org project for how to submit bug reports or changes.
+Please see the README information of JSCAD project for how to submit bug reports or changes.
 
 Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 

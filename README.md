@@ -1,14 +1,14 @@
-# OpenJSCAD
+# JSCAD (previously known as OpenJSCAD)
 
->*OpenJsCad* is a set of modular, browser and command line tools for creating parametric 2D and 3D designs with JavaScript code.
+>*JSCad* is a set of modular, browser and command line tools for creating parametric 2D and 3D designs with JavaScript code.
 
-<img src="docs/logo.png" width="140" align="right" alt="OpenJSCAD">
+<img src="docs/logo.png" width="140" align="right" alt="JSCAD">
 
-There are many ways to use OpenJSCAD: 
+There are many ways to use JSCAD:
 
-An [online version](https://openjscad.org/), [self hosteable web based ui](https://github.com/jscad/OpenJSCAD.org/raw/master/packages/web), as [CLI](https://github.com/jscad/OpenJSCAD.org/raw/master/packages/cli) (command-line interface) for server-side computations with Node.js, as well as an experimental [desktop app](https://github.com/jscad/jscad-desktop) or [individual Node.js modules](https://github.com/jscad/OpenJSCAD.org/raw/master/packages/README.md)!!
+An [online version](https://openjscad.org/), [self hosteable web based ui](https://github.com/jscad/OpenJSCAD.org/raw/master/packages/web), as [CLI](https://github.com/jscad/OpenJSCAD.org/raw/master/packages/cli) (command-line interface) for server-side computations with Node.js, as well as an experimental [desktop app](https://github.com/jscad/jscad-desktop) or [individual Node.js packages](https://github.com/jscad/OpenJSCAD.org/raw/master/packages/README.md)!!
 
-This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-the-wild-33c6eb246cb9) (container of multiple node.js modules and tools) maintained with [Lerna](https://lernajs.io/)
+This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-the-wild-33c6eb246cb9) (container of multiple packages and tools) maintained with [Lerna](https://lernajs.io/)
 
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
 [![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
@@ -36,13 +36,13 @@ thank you for your comprehension !
 
 ## Usage
 
-There are different 'flavors' of OpenJscad that you can use based on your needs
+There are different 'flavors' of JSCAD that you can use based on your needs
 - web: online (no install) simply go to [https://openjscad.org/](https://openjscad.org/)
 - web: self hosted: can be found [here](./packages/web)
 - cli: command line interface : can be found [here](./packages/cli)
 - desktop app: pre pre alpha work in progress can be found [here](./packages/desktop)!
-- node.js: custom mix and match of modules
-  * all the modules are available [on NPM](https://www.npmjs.com/search?q=%40jscad) under the '@jscad' name 
+- node.js: custom mix and match of packages
+  * all the packages are available [on NPM](https://www.npmjs.com/search?q=%40jscad) under the '@jscad' name
 
 ### Immediate Use (no installation)
 
@@ -59,23 +59,23 @@ please see [here for details](./packages/cli/README.md)
 ### Use of the different modular components directly
 
 From version 1.0.0 onwards, almost all the individual parts of this project are available
-directly as scoped NPM modules, and can be used independently from the main repository.
+directly as scoped NPM packages, and can be used independently from the main repository.
 The full list of these is available [here](./packages/README.md) and [here](https://www.npmjs.com/org/jscad)
 
 One example of what can be achieved with this can be found [here](https://esnextb.in/?gist=0a2ac2c4e189e27692ea964956a3a2e5)
 This means you can :
 - easily create your own renderer for the 3D and 2D geometries
 - create custom UIs
-- use the specific modules as part of Node.js or Browserify projects
-- cherry pick formats you want to use for input/output without needing the dependencies of **all** modules
+- use the specific packages as part of Node.js or Browserify projects
+- cherry pick formats you want to use for input/output without needing the dependencies of **all** packages
 - lots more !
 
-This will be expanded upon in the future, and is the backbone of the newer, modular OpenJSCAD
+This will be expanded upon in the future, and is the backbone of the newer, modular JSCAD project.
 
-### Adding new features in CSG.js or other modules:
+### Adding new features in CSG.js or other packages:
 
-Since OpenJSCAD is made up of multiple dependent modules (modeling, core, web, cli, etc),
-the easiest method is to use ```npm link``` to have a 'live' updating development version of OpenJSCAD:
+Since JSCAD is made up of multiple dependent packages (modeling, core, web, cli, etc),
+the easiest method is to use ```npm link``` to have a 'live' updating development version of JSCAD:
 - create a base directory
 - clone this repository ```git clone https://github.com/jscad/OpenJSCAD.org.git```
 - go into OpenJSCAD.org folder ```cd OpenJSCAD.org```
@@ -89,12 +89,12 @@ Then, for example for CSG.js:
 - go into OpenJSCAD.org folder again ```cd OpenJSCAD.org```
 - now type ```npm link ../csg.js``` to make @jscad/csg refer to local ../csg.js.
 
-You can now make changes to the CSG.js code and see it impact your locally running
-copy of OpenJSCAD live.
+You can now make changes to the source code and see it impact your locally running
+copy of JSCAD live.
 
 ## Development
 
-Please see the code and details in each [module](./packages) and their READMEs.
+Please see the code and details in each [package](./packages) and their READMEs.
 You can link up all the code for simple development using the following command.
 
 ```
@@ -102,22 +102,22 @@ npm run bootstrap
 ```
 
 This command
-- links all the JSCAD modules together
-- installs all dependencies for each JSCAD module
+- links all the JSCAD packages together
+- installs all dependencies for each JSCAD package
 
-We also provide a few shortcuts for some of the specific modules to start development.
+We also provide a few shortcuts for some of the specific packages to start development.
 ```
-npm run web // bootstrap, go to the web UI module, and start the dev server
+npm run web // bootstrap, go to the web UI package, and start the dev server
 ```
 ```
-npm run cli // bootstrap, go to the CLI module
+npm run cli // bootstrap, go to the CLI package
 ```
 
 ## Documentation
 
 - [Technical Overview and Q&A](./docs/index.md)
-- [OpenJSCAD User and Programming Guide](https://openjscad.org/dokuwiki/doku.php?id=start)
-- [OpenJSCAD Quick Reference](https://openjscad.org/dokuwiki/doku.php?id=jscad_quick_reference)
+- [JSCAD User and Programming Guide](https://openjscad.org/dokuwiki/doku.php?id=start)
+- [JSCAD Quick Reference](https://openjscad.org/dokuwiki/doku.php?id=jscad_quick_reference)
 
 ## Contribute
 
@@ -132,7 +132,7 @@ Thank you to all the people who have already contributed to this project:
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use the OpenJSCAD.org, then please start a conversation at the [OpenJSCAD.org User Group](https://jscad.xyz/forum). You might find the answer in the [OpenJSCAD.org User Guide](https://openjscad.org/dokuwiki/doku.php?id=start).
+* If you have a question about how to use the JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD User Guide](https://openjscad.org/dokuwiki/doku.php?id=start).
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
 
@@ -148,14 +148,15 @@ HUGE THANKS and SHOUTOUT to [nodeBB](https://nodebb.org/) for hosting our (aweso
 
 ## Acknowledgements
 
-OpenJSCAD and its sub-components are built upon great open source, contributions, and other modules.
+JSCAD and all sub components are built upon great open source packages, and contributions.
+
 - [CSG Library](https://github.com/jscad/csg.js) by:
 Evan Wallace,
 Eduard Bespalov,
 Joost Nieuwenhuijse,
 Alexandre Girard
 
-Input/Output Libraries:
+XML parsing:
 - [sax](https://github.com/isaacs/sax-js)
 
 Tooling:
@@ -214,7 +215,7 @@ Drag and drop multiple files (Chrome and Firefox) or a folder (Chrome):
 
 ## See Also
 
-- [OpenJsCAD](http://joostn.github.com/OpenJsCad/), starting point of OpenJSCAD.org
+- [OpenJsCAD](http://joostn.github.com/OpenJsCad/), starting point of JSCAD
 - [OpenSCAD.net](http://garyhodgson.github.com/openscad.net/), another place of inspiration, where the OpenSCAD translator was adapted from
 - [CoffeeSCad](http://kaosat-dev.github.com/CoffeeSCad/), JavaScript simplified (no more {}) (defunct)
 - [stl2pov](http://rsmith.home.xs4all.nl/software/py-stl-stl2pov.htmltool) to convert .stl to .pov, and then render via [PovRay.org](http://povray.org)

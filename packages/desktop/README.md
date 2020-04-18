@@ -13,7 +13,7 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 
 ## Overview
 
-- this app works pretty much like the web based OpenJSCAD.org
+- this app works pretty much like the web based JSCAD
 (but does not included a text editor, see below)
 - it automatically saves & reloads most settings and the last design you were working on on restart
 - there is basic theming support (only two are present, you can change them but not add more at this time)
@@ -21,7 +21,7 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 - uses most.js observables & a declarative approach internally
 
 ### what is supported:
- * almost all of the features of OpenJSCAD EXCEPT the things in the paragraph below 
+ * almost all of the features of JSCAD web EXCEPT the things in the paragraph below 
 
 ### what is not supported
   - the include() function , [since include is EVIIIL and an antipattern
@@ -39,7 +39,7 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
  ```require(<moduleName>)``` calls to include other functions, shapes etc
  * in your main file, when using common.js modules please use named exports ie :
   ```javascript module.exports = {main, getParameterDefinitions}```
- * VERY IMPORTANT : if you use common.js modules you HAVE to `require()` all the OpenJSCAD modules you use (like `@jscad/csg` etc) **yourself**: if the app detects that you do not have `module.exports`, then it will inject all the OpenJSCAD api itself, with a MAJOR limitation at this time:
+ * VERY IMPORTANT : if you use common.js modules you HAVE to `require()` all the JSCAD packages you use (like `@jscad/csg` etc) **yourself**: if the app detects that you do not have `module.exports`, then it will inject all the JSCAD api itself, with a MAJOR limitation at this time:
   you cannot make require() calls from anything but the root level file, and you do not have access to the API (this will get fixed)
 
  > there will NOT be out of the box support for es6 modules anytime soon, please use a transpiler (Babel.js etc) if you want to use es modules

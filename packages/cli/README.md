@@ -2,9 +2,9 @@
 
 This is the Command Line Interface (CLI) package for creating designs using [Node.js](https://nodejs.org).
 
-<img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right" alt="OpenJSCAD">
+<img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right" alt="JSCAD">
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Fcli.svg)](https://badge.fury.io/js/%40jscad%2Fcli)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fcli.svg)](https://badge.fury.io/js/%40jscad%2Fcli)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
 [![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
 
@@ -89,9 +89,9 @@ run them through the CLI
 % openjscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf
 ```
 
-### Using the CLI on designs created as node modules
+### Using the CLI on designs created as NPM packages
 
-You can also run JSCAD designs created as node modules/npm packages through the CLI:
+You can also run JSCAD designs created as Node modules/NPM packages through the CLI:
 
 See examples/module-design for such a design
 
@@ -111,7 +111,7 @@ See examples/module-design for such a design
 > - first check if there is a package.json file in the folder and try to use its "main" field
 > - if that does not work if it will try to look for index.js/jscad, main.js/jscad or a file with same name as the folder
 
-#### About designs created as node modules (recomended for the future)
+#### About designs created as packages (recomended for the future)
 
 You have to deal with your dependencies yourself, NO code is injected 'magically' / globals.
 this means you have to import the design API yourself (this will be the case for all designs in
@@ -150,7 +150,7 @@ The ```main``` and ```getParameterDefinitions``` functions should be exported in
 module.exports = {main, getParameterDefinitions}
 ```
 
-You can find out more on node modules in the official docs [here](https://nodejs.org/api/modules.html)
+You can find out more on Node modules in the official docs [here](https://nodejs.org/api/modules.html)
 or with this [nice presentation](https://darrenderidder.github.io/talks/ModulePatterns/) 
 
 ## Development
@@ -189,14 +189,15 @@ See for more details
 
 ## Acknowledgements
 
-JSCAD CLI and all sub components are built upon great open source work, contribution and modules
+JSCAD and all sub components are built upon great open source packages, and contributions.
+
 - [csg.js](https://github.com/jscad/csg.js) core and improvements by
 Evan Wallace,
 Eduard Bespalov,
 Joost Nieuwenhuijse,
 Alexandre Girard
 
-For input/output
+XML parsing:
 - [sax](https://github.com/isaacs/sax-js)
 
 Tooling:

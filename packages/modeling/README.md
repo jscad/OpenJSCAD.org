@@ -43,12 +43,12 @@ The API documentation can be found [here](./docs/api.md).
 
 ## Documentation
 
-- [OpenJSCAD User & Programming Guide](https://openjscad.org/dokuwiki/doku.php?id=start)
-- [OpenJSCAD Quick Reference](https://openjscad.org/dokuwiki/doku.php?id=jscad_quick_reference)
+- [JSCAD User Guide](https://openjscad.org/dokuwiki/doku.php?id=start)
+- [JSCAD Quick Reference](https://openjscad.org/dokuwiki/doku.php?id=jscad_quick_reference)
 
 ## Contribute
 
-OpenJSCAD.org is part of the JSCAD Organization, and is maintained by a group of volunteers. We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
+JSCAD is part of the JSCAD Organization, and is maintained by a group of volunteers. We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
 
 Thank you to all the people who have already contributed to this project:
 <a href="graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" /></a>
@@ -59,7 +59,7 @@ Thank you to all the people who have already contributed to this project:
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use the OpenJSCAD.org, then please start a conversation at the [OpenJSCAD.org User Group](https://jscad.xyz/forum). You might find the answer in the [OpenJSCAD.org User Guide](https://openjscad.org/dokuwiki/doku.php?id=start).
+* If you have a question about how to use the JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD User Guide](https://openjscad.org/dokuwiki/doku.php?id=start).
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
 
