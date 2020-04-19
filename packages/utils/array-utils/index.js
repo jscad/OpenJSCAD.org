@@ -1,11 +1,11 @@
 /**
- *  converts input data to array if it is not already an array
- *  @param {Array} array
- * */
-const toArray = array => {
-  if (array === undefined || array === null) { return [] }
-  if (array.constructor !== Array) return [array]
-  return array
+ * converts input data to array if it is not already an array
+ * @param {Array} array
+ */
+const toArray = (array) => {
+  if (Array.isArray(array)) return array
+  if (array === undefined || array === null) return []
+  return [array]
 }
 
 /**
@@ -13,16 +13,14 @@ const toArray = array => {
  * @param {Array} array
  */
 const head = (array) => {
-  if (array === undefined || null) {
-    return undefined
-  }
-  if (array.length === 0) {
+  if (!Array.isArray(array) || array.length === 0) {
     return undefined
   }
   return array[0]
 }
 
-/** flatten the given argument into a single flat array
+/**
+ * flatten the given argument into a single flat array
  * the argument can be composed of multiple depths of values and arrays
  * @param {Array} array
  */
@@ -37,10 +35,7 @@ const flatten = (array) => {
  * @param {Array} array
  */
 const nth = (index, array) => {
-  if (array === undefined || array === null) {
-    return undefined
-  }
-  if (array.length < index) {
+  if (!Array.isArray(array) || array.length < index) {
     return undefined
   }
   return array[index]

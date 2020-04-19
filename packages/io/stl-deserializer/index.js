@@ -353,6 +353,7 @@ const deserializeAsciiSTL = (stl, filename, version, elementFormatter) => {
  * Convert the given points, faces(triangles), normals, colors to geometry (polyhedron).
  */
 const toPolyhedron = (points, faces, normals, colors) => {
+  if (colors && faces.length !== colors.length) colors = undefined
   const options = {
     orientation: 'inward',
     points,

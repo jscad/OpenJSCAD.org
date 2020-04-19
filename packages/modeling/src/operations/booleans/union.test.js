@@ -28,13 +28,13 @@ test('union of one or more geom2 objects produces expected geometry', t => {
   let obs = geom2.toPoints(result1)
   let exp = [
     new Float32Array([ 2, 0 ]),
-    new Float32Array([ 1.4142135381698608, 1.4142135381698608 ]),
-    new Float32Array([ 1.2246468525851679e-16, 2 ]),
-    new Float32Array([ -1.4142135381698608, 1.4142135381698608 ]),
-    new Float32Array([ -2, 2.4492937051703357e-16 ]),
-    new Float32Array([ -1.4142135381698608, -1.4142135381698608 ]),
-    new Float32Array([ -3.6739402930577075e-16, -2 ]),
-    new Float32Array([ 1.4142135381698608, -1.4142135381698608 ])
+    new Float32Array([ 1.414199948310852, 1.414199948310852 ]),
+    new Float32Array([ 0, 2 ]),
+    new Float32Array([ -1.414199948310852, 1.414199948310852 ]),
+    new Float32Array([ -2, 0 ]),
+    new Float32Array([ -1.414199948310852, -1.414199948310852 ]),
+    new Float32Array([ 0, -2 ]),
+    new Float32Array([ 1.414199948310852, -1.414199948310852 ])
   ]
   t.deepEqual(obs, exp)
 
@@ -45,17 +45,17 @@ test('union of one or more geom2 objects produces expected geometry', t => {
   obs = geom2.toPoints(result2)
   exp = [
     new Float32Array([ 2, 0 ]),
-    new Float32Array([ 1.4142135381698608, 1.4142135381698608 ]),
-    new Float32Array([ 1.2246468525851679e-16, 2 ]),
-    new Float32Array([ -1.4142135381698608, 1.4142135381698608 ]),
-    new Float32Array([ -2, 2.4492937051703357e-16 ]),
-    new Float32Array([ -1.4142135381698608, -1.4142135381698608 ]),
-    new Float32Array([ -3.6739402930577075e-16, -2 ]),
+    new Float32Array([ 1.414199948310852, 1.414199948310852 ]),
+    new Float32Array([ 0, 2 ]),
+    new Float32Array([ -1.414199948310852, 1.414199948310852 ]),
+    new Float32Array([ -2, 0 ]),
+    new Float32Array([ -1.414199948310852, -1.414199948310852 ]),
+    new Float32Array([ 0, -2 ]),
     new Float32Array([ 8, 12 ]),
     new Float32Array([ 8, 8 ]),
     new Float32Array([ 12, 8 ]),
     new Float32Array([ 12, 12 ]),
-    new Float32Array([ 1.4142135381698608, -1.4142135381698608 ])
+    new Float32Array([ 1.414199948310852, -1.414199948310852 ])
   ]
   t.deepEqual(obs, exp)
 
@@ -65,14 +65,14 @@ test('union of one or more geom2 objects produces expected geometry', t => {
   let result3 = union(geometry2, geometry3)
   obs = geom2.toPoints(result3)
   exp = [
-    new Float32Array([ 12, 12 ]),
-    new Float32Array([ 8, 12 ]),
-    new Float32Array([ 9, 8 ]),
-    new Float32Array([ -9, 9 ]),
-    new Float32Array([ -9, -9 ]),
-    new Float32Array([ 9, -9 ]),
-    new Float32Array([ 8, 9 ]),
-    new Float32Array([ 12, 8 ])
+    new Float32Array([ 11.99997329711914, 11.99997329711914 ]),
+    new Float32Array([ 7.999933242797852, 11.99997329711914 ]),
+    new Float32Array([ 9.000053405761719, 7.999933242797852 ]),
+    new Float32Array([ -9.000053405761719, 9.000053405761719 ]),
+    new Float32Array([ -9.000053405761719, -9.000053405761719 ]),
+    new Float32Array([ 9.000053405761719, -9.000053405761719 ]),
+    new Float32Array([ 7.999933242797852, 9.000053405761719 ]),
+    new Float32Array([ 11.99997329711914, 7.999933242797852 ])
   ]
   t.deepEqual(obs, exp)
 
@@ -80,10 +80,10 @@ test('union of one or more geom2 objects produces expected geometry', t => {
   let result4 = union(geometry1, geometry3)
   obs = geom2.toPoints(result4)
   exp = [
-    new Float32Array([ -9, -9 ]),
-    new Float32Array([ 9, -9 ]),
-    new Float32Array([ 9, 9 ]),
-    new Float32Array([ -9, 9 ])
+    new Float32Array([ -9.000046730041504, -9.000046730041504 ]),
+    new Float32Array([ 9.000046730041504, -9.000046730041504 ]),
+    new Float32Array([ 9.000046730041504, 9.000046730041504 ]),
+    new Float32Array([ -9.000046730041504, 9.000046730041504 ])
   ]
   t.deepEqual(obs, exp)
 })
