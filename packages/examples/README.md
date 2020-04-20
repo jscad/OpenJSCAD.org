@@ -18,7 +18,6 @@ packages like @jscad/cli , @jscad/web, @jscad/desktop
 - [Documentation](#documentation)
 - [Contributing](#contributing)
 - [Community](#community)
-- [Acknowledgements](#acknowledgements)
 - [License](#license)
 
 ## Usage
@@ -53,26 +52,6 @@ See for more details
 * [JSCAD Forum Announcements](https://jscad.xyz/forum/category/1/announcements)
 * [JSCAD Forum Community](https://jscad.xyz/forum)
 to discuss with other user and developers.
-
-## Acknowledgements
-
-JSCAD and all sub components are built upon great open source packages, and contributions.
-
-- [csg.js](https://github.com/jscad/csg.js) core & improvements by
-Evan Wallace,
-Eduard Bespalov,
-Joost Nieuwenhuijse,
-Alexandre Girard
-
-For input/output
-- [xmldom](https://github.com/jindw/xmldom)
-- [sax](https://github.com/isaacs/sax-js)
-
-Tooling:
-- [browserify](http://browserify.org/)
-- [babel](https://babeljs.io/)
-
-and many more!
 
 ## License
 

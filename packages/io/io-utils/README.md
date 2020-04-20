@@ -2,7 +2,7 @@
 
 > input/output handling utilities
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Fio-utils.svg)](https://badge.fury.io/js/%40jscad%2Fio-utils)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fio-utils.svg)](https://badge.fury.io/js/%40jscad%2Fio-utils)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/io-utils)
 
 ## Overview

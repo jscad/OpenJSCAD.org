@@ -1,8 +1,8 @@
-## @jscad/stl-serializer
+# @jscad/stl-serializer
 
 > Serializer of CSG geometries to STL mesh
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Fstl-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fstl-serializer)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fstl-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fstl-serializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/stl-serializer)
 
 ## Overview

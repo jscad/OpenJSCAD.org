@@ -5,7 +5,7 @@ packages like @jscad/cli , @jscad/web, @jscad/desktop
 
 <img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right" alt="JSCAD">
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Fcore.svg)](https://badge.fury.io/js/%40jscad%2Fcore)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fcore.svg)](https://badge.fury.io/js/%40jscad%2Fcore)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
 [![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
 
@@ -21,7 +21,6 @@ packages like @jscad/cli , @jscad/web, @jscad/desktop
 - [Documentation](#documentation)
 - [Contributing](#contributing)
 - [Community](#community)
-- [Acknowledgements](#acknowledgements)
 - [License](#license)
 
 ## Usage
@@ -55,26 +54,6 @@ Small Note: If editing this README, please conform to the [standard-readme](http
 See for more details
 * [JSCAD Forum Announcements](https://jscad.xyz/forum/category/1/announcements)
 * [JSCAD Forum Community](https://jscad.xyz/forum) to discuss with other user and developers.
-
-## Acknowledgements
-
-JSCAD and all sub components are built upon great open source packages, and contributions.
-
-- [csg.js](https://github.com/jscad/csg.js) core & improvements by
-Evan Wallace,
-Eduard Bespalov,
-Joost Nieuwenhuijse,
-Alexandre Girard
-
-For input/output
-- [xmldom](https://github.com/jindw/xmldom)
-- [sax](https://github.com/isaacs/sax-js)
-
-Tooling:
-- [browserify](http://browserify.org/)
-- [babel](https://babeljs.io/)
-
-and many more!
 
 ## License
 

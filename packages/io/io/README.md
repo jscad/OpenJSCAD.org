@@ -1,4 +1,4 @@
-## io
+## @jscad/io
 
 ## input output formats handling for the jscad project
 
@@ -33,7 +33,6 @@ Following formats are supported as outputs
   - [STL (binary, ASCII)](https://github.com/jscad/io/blob/master/packages/stl-serializer)
   - [SVG](https://github.com/jscad/io/blob/master/packages/svg-serializer)
   - [X3D](https://github.com/jscad/io/blob/master/packages/x3d-serializer)
-
 
 ## Table of Contents
 

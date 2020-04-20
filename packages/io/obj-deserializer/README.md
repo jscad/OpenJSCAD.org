@@ -1,8 +1,8 @@
-## @jscad/obj-deserializer
+# @jscad/obj-deserializer
 
 > Deserializer for OBJ data to JSCAD geometries
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Fobj-deserializer.svg)](https://badge.fury.io/js/%40jscad%2Fobj-deserializer)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fobj-deserializer.svg)](https://badge.fury.io/js/%40jscad%2Fobj-deserializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/obj-deserializer)
 
 ## Overview

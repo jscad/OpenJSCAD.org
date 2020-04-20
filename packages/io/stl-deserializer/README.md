@@ -1,8 +1,8 @@
-## @jscad/stl-deserializer
+# @jscad/stl-deserializer
 
 > Deserializer of STL data to JSCAD scripts or geometries
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Fstl-deserializer.svg)](https://badge.fury.io/js/%40jscad%2Fstl-deserializer)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fstl-deserializer.svg)](https://badge.fury.io/js/%40jscad%2Fstl-deserializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/stl-deserializer)
 
 ## Overview

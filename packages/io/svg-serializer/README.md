@@ -1,8 +1,8 @@
-## @jscad/svg-serializer
+# @jscad/svg-serializer
 
 > Serializer of JSCAD geometries to SVG commands
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Fsvg-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fsvg-serializer)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fsvg-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fsvg-serializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/svg-serializer)
 
 ## Overview

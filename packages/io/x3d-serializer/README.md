@@ -1,4 +1,4 @@
-## @jscad/x3d-serializer
+# @jscad/x3d-serializer
 
 > Serializer of JSCAD geometries to X3D shapes
 

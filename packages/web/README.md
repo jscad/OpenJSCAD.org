@@ -4,7 +4,7 @@ This is the Web based UI for [JSCAD](https://github.com/jscad/OpenJSCAD.org), ei
 
 <img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right" alt="JSCAD">
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Fweb.svg)](https://badge.fury.io/js/%40jscad%2Fweb)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fweb.svg)](https://badge.fury.io/js/%40jscad%2Fweb)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
 [![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
 
@@ -21,7 +21,6 @@ This is the Web based UI for [JSCAD](https://github.com/jscad/OpenJSCAD.org), ei
 - [Known issues](#known-issues)
 - [Contributing](#contributing)
 - [Community](#community)
-- [Acknowledgements](#acknowledgements)
 - [License](#license)
 - [Screenshots](#screenshots)
 - [See also](#see-also)
@@ -112,22 +111,6 @@ See for more details
 * [JSCAD Forum Community](https://jscad.xyz/forum) to discuss with other users and developers.
 
 HUGE THANKS and SHOUTOUT to [nodeBB](https://nodebb.org/) for hosting our (awesome) forum for free ! Thanks a lot !
-
-## Acknowledgements
-
-JSCAD and all sub components are built upon great open source packages, and contributions.
-
-- [csg.js](https://github.com/jscad/csg.js) core & improvements by
-Evan Wallace,
-Eduard Bespalov,
-Joost Nieuwenhuijse,
-Alexandre Girard
-
-Tooling:
-- [browserify](http://browserify.org/)
-- [babel](https://babeljs.io/)
-
-and many more!
 
 ## Backers
 

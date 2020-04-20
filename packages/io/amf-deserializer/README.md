@@ -2,7 +2,7 @@
 
 > Deserializer of AMF data to JSCAD geometries
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Famf-deserializer.svg)](https://badge.fury.io/js/%40jscad%2Famf-deserializer)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Famf-deserializer.svg)](https://badge.fury.io/js/%40jscad%2Famf-deserializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/amf-deserializer)
 
 ## Overview

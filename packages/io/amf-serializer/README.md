@@ -2,7 +2,7 @@
 
 > Serializer of JSCAD geometries to AMF shapes
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Famf-serializer.svg)](https://badge.fury.io/js/%40jscad%2Famf-serializer)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Famf-serializer.svg)](https://badge.fury.io/js/%40jscad%2Famf-serializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/amf-serializer)
 
 ## Overview

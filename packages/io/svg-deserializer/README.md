@@ -1,8 +1,8 @@
-## @jscad/svg-deserializer
+# @jscad/svg-deserializer
 
 > Deserializer of SVG data to JSCAD scripts or geometries
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Fsvg-deserializer.svg)](https://badge.fury.io/js/%40jscad%2Fsvg-deserializer)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fsvg-deserializer.svg)](https://badge.fury.io/js/%40jscad%2Fsvg-deserializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/svg-deserializer)
 
 ## Overview

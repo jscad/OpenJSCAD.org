@@ -20,7 +20,8 @@ This is the Command Line Interface (CLI) package for creating designs using [Nod
 - [Documentation](#documentation)
 - [Contributing](#contributing)
 - [Community](#community)
-- [Acknowledgements](#acknowledgements)
+- [Backers](#backers)
+- [Sponsors](#sponsors)
 - [License](#license)
 
 ## Usage
@@ -28,7 +29,7 @@ This is the Command Line Interface (CLI) package for creating designs using [Nod
 ### Install Node.js
 
 > IMPORTANT: You need a recent, LTS version of [Node.js](http://nodejs.org/)
-> Click on build "passing" above to understand which versions of Node.js are supported. Other versions of Node.js are not guaranteed to work !
+> Other versions of Node.js are not guaranteed to work!
 
 An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
 - after installing nvm type ```nvm install v8``` (choose a version from the list)
@@ -104,10 +105,10 @@ See examples/module-design for such a design
 
 - or run the CLI on the main file if you know which one it is
 
-```openjscad <PATH TO DESIGN FOLDER>/index.js <OPTIONS>```
+```openjscad <PATH TO DESIGN FOLDER>/main.js <OPTIONS>```
 
 > Note: when passing a folder to the CLI, it will:
-> - first check if there is a package.json file in the folder and try to use its "main" field
+> - check if there is a package.json file in the folder and try to use its "main" property
 > - if that does not work if it will try to look for index.js/jscad, main.js/jscad or a file with same name as the folder
 
 #### About designs created as packages (recomended for the future)
@@ -179,25 +180,6 @@ Small Note: If editing this README, please conform to the [standard-readme](http
 See for more details
 * [JSCAD Forum Announcements](https://jscad.xyz/forum/category/1/announcements)
 * [JSCAD Forum Community](https://jscad.xyz/forum) to discuss with other user and developers.
-
-## Acknowledgements
-
-JSCAD and all sub components are built upon great open source packages, and contributions.
-
-- [csg.js](https://github.com/jscad/csg.js) core and improvements by
-Evan Wallace,
-Eduard Bespalov,
-Joost Nieuwenhuijse,
-Alexandre Girard
-
-XML parsing:
-- [sax](https://github.com/isaacs/sax-js)
-
-Tooling:
-- [browserify](http://browserify.org/)
-- [babel](https://babeljs.io/)
-
-and many more!
 
 ## Backers
 

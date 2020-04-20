@@ -1,8 +1,8 @@
-## @jscad/json-serializer
+# @jscad/json-serializer
 
 > json serializer for the jscad project (from CSG)
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Fjson-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fjson-serializer)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fjson-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fjson-serializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/json-serializer)
 
 ## Overview

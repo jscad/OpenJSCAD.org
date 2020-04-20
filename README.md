@@ -15,11 +15,6 @@ This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-th
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-> NOTE : as of September 1 2018, we will NOT be accepting new PRS against the V1 / master branch: we realistically
-are not able to keep adding new features/fixes to the 'old' version and work on the very different V2.
-thank you for your comprehension !
-(already open PRS at that date are exempt)
-
 ## Table of Contents
 
 - [Usage](#usage)
@@ -106,11 +101,11 @@ HUGE THANKS and SHOUTOUT to [nodeBB](https://nodebb.org/) for hosting our (aweso
 
 JSCAD and all sub components are built upon great open source packages, and contributions.
 
-- [CSG Library](https://github.com/jscad/csg.js) by:
-Evan Wallace,
-Eduard Bespalov,
-Joost Nieuwenhuijse,
-Alexandre Girard
+Eary CSG Library by:
+- Evan Wallace,
+- Eduard Bespalov,
+- Joost Nieuwenhuijse,
+- Alexandre Girard
 
 XML parsing:
 - [sax](https://github.com/isaacs/sax-js)
@@ -120,8 +115,6 @@ Tooling:
 - [babel](https://babeljs.io/)
 
 and many more!
-
-We would like to particularly thank [NodeBB](https://nodebb.org/) for providing us with a fantastic new forum!
 
 ## Backers
 
@@ -144,8 +137,6 @@ Your logo will show up here with a link to your website.
 <a href="https://opencollective.com/openjscad/sponsor/7/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/7/avatar.svg"></a>
 <a href="https://opencollective.com/openjscad/sponsor/8/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/8/avatar.svg"></a>
 <a href="https://opencollective.com/openjscad/sponsor/9/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/9/avatar.svg"></a>
-
-HUGE THANKS and SHOUTOUT to [nodeBB](https://nodebb.org/) for hosting our (awesome) forum for free ! Thanks a lot !
 
 ## License
 
@@ -179,4 +170,4 @@ Drag and drop multiple files (Chrome and Firefox) or a folder (Chrome):
 
 That's all for now,
 
-Rene K. Mueller, Jeff Gay, Mark Moissette and JSCAD Organization
+The JSCAD Organization

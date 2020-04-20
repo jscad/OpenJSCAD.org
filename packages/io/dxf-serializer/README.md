@@ -2,7 +2,7 @@
 
 > Serializer of JSCAD geometries to DXF entities
 
-[![npm version](https://badge.fury.io/js/%40jscad%2Fdxf-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fdxf-serializer)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fdxf-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fdxf-serializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/dxf-serializer)
 
 ## Overview
