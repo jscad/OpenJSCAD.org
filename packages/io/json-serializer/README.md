@@ -1,6 +1,6 @@
 ## @jscad/json-serializer
 
-> Serializer of JSCAD geometries to JSON notation
+> Serializer of JSCAD geometries to JSON (JavaScript Object Notation)
 
 [![npm version](https://badge.fury.io/js/%40jscad%2Fjson-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fjson-serializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/json-serializer)
@@ -11,9 +11,9 @@ This serializer outputs a 'blobable' array of data from one or more JSCAD geomet
 The array of data can either be used to create a Blob (`new Blob(blobable)`), or converted to a Node.js buffer.
 
 The serialization of the following geometries are possible.
-- serialization of 2D geometry (geom3) to JSON notation (string)
-- serialization of 3D geometry (geom3) to JSON notation (string)
-- serialization of 2D paths (path2) to JSON notation (string)
+- serialization of 2D geometry (geom3) to JSON (string)
+- serialization of 3D geometry (geom3) to JSON (string)
+- serialization of 2D paths (path2) to JSON (string)
 
 ## Table of Contents
 
