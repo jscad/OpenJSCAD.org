@@ -8,18 +8,18 @@ module.exports = {
 
   cube: require('./cuboid').cube,
   cuboid: require('./cuboid').cuboid,
-  // cylinder: require('./cylinderElliptic'),
-  // cylinderElliptic: require('./cylinderElliptic').cylinderElliptic,
-  // geodesicSphere: require('./geodesicSphere'),
+  cylinder: require('./cylinderElliptic').cylinder,
+  cylinderElliptic: require('./cylinderElliptic').cylinderElliptic,
+  geodesicSphere: require('./geodesicSphere'),
   //
-  // polygon: require('./polygon'),
-  // polyhedron: require('./polyhedron'),
+  polygon: require('./polygon'),
+  polyhedron: require('./polyhedron'),
 
-  // roundedCuboid: require('./roundedCuboid'),
-  // roundedCylinder: require('./roundedCylinder'),
-  // roundedRectangle: require('./roundedRectangle'),
+  roundedCuboid: require('./roundedCuboid'),
+  roundedCylinder: require('./roundedCylinder'),
+  roundedRectangle: require('./roundedRectangle'),
   ellipsoid: require('./ellipsoid').ellipsoid,
-  sphere: require('./ellipsoid').sphere
-  // star: require('./star'),
-  // torus: require('./torus')
+  sphere: require('./ellipsoid').sphere,
+  star: require('./star'),
+  torus: require('./torus')
 }

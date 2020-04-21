@@ -1,12 +1,12 @@
 const modeling = require('@jscad/modeling') // FIXME: not ideal
 
-// we likely need to wrap the api in a function, to handle special cases like measurements in the future
+// TODO: we likely need to wrap the api in a function, to handle special cases like measurements in the future
 // const makeModelingApi = ()
 
 let specials = []
-const measureArea = require('./operations/measurements/measureArea')(specials)
-const measureVolume = require('./operations/measurements/measureVolume')(specials)
-const measureBounds = require('./operations/measurements/measureBounds')(specials)
+require('./operations/measurements/measureArea')(specials)
+require('./operations/measurements/measureVolume')(specials)
+require('./operations/measurements/measureBounds')(specials)
 
 module.exports = {
   color: require('./color'),

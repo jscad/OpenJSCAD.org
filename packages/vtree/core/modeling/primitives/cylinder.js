@@ -2,4 +2,8 @@ const cylinder = params => {
   return Object.assign({}, params, { type: 'cylinder' })
 }
 
-module.exports = cylinder
+const cylinderElliptic = params => {
+  return Object.assign({}, params, { type: 'cylinderElliptic' })
+}
+
+module.exports = { cylinder, cylinderElliptic }
