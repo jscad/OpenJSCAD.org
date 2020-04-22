@@ -4,6 +4,7 @@
   "description": "",
   "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
   "scripts": {
+    "docs": "jsdoc --configure jsdoc.json",
     "coverage": "npm run bootstrap && lerna run --concurrency 1 --stream coverage",
     "test": "npm run bootstrap && lerna run --stream test",
     "lint": "standard 'packages/**/*.js'",
@@ -35,6 +36,8 @@
   "devDependencies": {
     "@jscad/sample-files": "github:jscad/sample-files#master",
     "ava": "1.4.0",
+    "docdash": "^1.2.0",
+    "jsdoc": "^3.6.3",
     "lerna": "3.19.0",
     "nyc": "15.0.0",
     "standard": "14.3.1"
