@@ -1,6 +1,6 @@
 # JSCAD (previously known as OpenJSCAD)
 
->*JSCad* is a set of modular, browser and command line tools for creating parametric 2D and 3D designs with JavaScript code.
+>*JSCAD* is a set of modular, browser and command line tools for creating parametric 2D and 3D designs with JavaScript code.
 
 <img src="docs/logo.png" width="140" align="right" alt="JSCAD">
 
@@ -89,6 +89,9 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
+A BIG THANKS to all the people who have already contributed to the JSCAD project!
+<a href="graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" /></a>
+
 ## Community
 
 See for more details
@@ -101,7 +104,7 @@ HUGE THANKS and SHOUTOUT to [nodeBB](https://nodebb.org/) for hosting our (aweso
 
 JSCAD and all sub components are built upon great open source packages, and contributions.
 
-Eary CSG Library by:
+Early CSG Library by:
 - Evan Wallace,
 - Eduard Bespalov,
 - Joost Nieuwenhuijse,

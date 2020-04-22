@@ -29,6 +29,7 @@ This is the Command Line Interface (CLI) package for creating designs using [Nod
 ### Install Node.js
 
 > IMPORTANT: You need a recent, LTS version of [Node.js](http://nodejs.org/)
+> Click on the 'Build Status' badge at the top to see the supported environments.
 > Other versions of Node.js are not guaranteed to work!
 
 An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
@@ -105,7 +106,7 @@ See examples/module-design for such a design
 
 - or run the CLI on the main file if you know which one it is
 
-```openjscad <PATH TO DESIGN FOLDER>/main.js <OPTIONS>```
+```openjscad <PATH TO DESIGN FOLDER>/index.js <OPTIONS>```
 
 > Note: when passing a folder to the CLI, it will:
 > - check if there is a package.json file in the folder and try to use its "main" property
