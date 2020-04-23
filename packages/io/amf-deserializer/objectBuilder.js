@@ -135,7 +135,7 @@ const createObject = (obj, index, data, options) => {
       }
       const polygon = geometry.poly3.fromPoints(subData)
       const pcolor = colors[i] ? colors[i] : undefined
-      if (pcolor) color.color(pcolor, polygon)
+      if (pcolor) polygon.color = pcolor
       polygons.push(polygon)
     }
     return geometry.geom3.create(polygons)
@@ -171,7 +171,7 @@ const createObject${obj.id} = () => {
 
       let c = colors[i]
       if (c) {
-        code += `  color.color([${c}], polygon)\n`
+        code += `  polygon.color = [${c}]\n`
       }
       code += `  polygons.push(polygon)\n`
     }
