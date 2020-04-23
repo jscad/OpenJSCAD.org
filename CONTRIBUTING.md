@@ -1,121 +1,126 @@
-## OpenJSCAD.org
+# JSCAD - Contributing Guide
 
-## OpenJSCAD.org Website Components - Contributing Guide
+## Contributing
 
-These components are part of the JSCAD Organization, and is maintained by a group of volunteers. We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
+The various JSCAD packages and all source code are part of the JSCAD Organization, and is maintained by a group of volunteers.
+We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
 
-* If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/csg.js/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
+* If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
 
 * If you want to submit a change or a patch, please read the contents below on how to make changes. New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use OpenJSCAD, then please start a conversation at the [OpenJSCAD.org User Group](https://jscad.xyz/forum). You might find the answer in the [OpenJSCAD.org User Guide](https://openjscad.org/dokuwiki/doku.php).
+* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD.org User Guide](https://openjscad.org/dokuwiki/doku.php).
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
 
-Thanks!
+## Table of Contents
 
-The JSCAD Organization
+- [Making Changes](#making_changes)
+- [Developing with the CLI[(#developing-with-the-cli)
+- [Developing with the WEB[(#developing-with-the-web)
+- [Contributors](#contributors)
 
 ## Making Changes
 
-First, we suggest that you fork this GIT repository. This will keep your changes separate from the fast lane.  And make pull requests easier.
+The contents of this repository contain several packages, all part of the JSCAD project.
+The JSCAD packages contain both the UI components as well as the library components, and often the JSCAD packages are linked together through dependencies.
+Therefore, we suggest that you start by creating a fork of this repository.
+This will keep your changes separate from the fast lane, and make pull requests easier.
 
-Once forked, clone your copy of the OpenJSCAD.org components.
+You can create a fork via GitHub.
+
+Once forked, clone your copy of the OpenJSCAD.org repository to a local file system.
 ```
 git clone https://github.com/myusername/OpenJSCAD.org.git
 cd OpenJSCAD.org
 ```
 
-**We suggest downloading NPM. This will allow you to generate API documents, and run test suites.**
+The next steps require [NPM](https://www.npmjs.com/) and [Node.js](https://nodejs.org).
+The JSCAD project always develops with the latest LTS releases, so install these versions.
 
-Once you have NPM, install all the dependencies for development.
+Next, try to run the test suites to verify the installation.
 ```
 npm install
-```
-And, run the test cases to verify the library is functional.
-```
 npm test
 ```
-Next, start a small webserver to run the website. (Note: The web pages will automatically reload if changes are made.)
-```
-npm run start-dev
-```
 
-The project is structured as:
-- *.css : style sheets for the pages
-- index.html : main page with all features enabled
-- viewer-minimal.html : example of how to use just the veiwer
-- viewer-options.html : example of how to control the viewer options
-- dist/*.js : specific BAR files that are built fort each page
-- src/
-  - *.js : ??
-  - cli/*.js : ??
-  - core/*.js : ??
-  - io/*.js : ??
-  - jscad/*.js : ??
-  - ui/
-    - *.js : ??
-    - viewer/*.js : ??
-  - utils/*.js : various utiliity functions
+This may take some time... relax... have some coffee.
 
-You can now make changes to the library, as well as the test suites.
+If the tests ran successfully then changes can be made to any package. See the 'packages' directory.
 
-If you intend to contribute changes back to JSCAD then please be sure to create test cases.
+NOTE: All packages and dependencies have been linked together by Lerna. No other magic is required.
 
-Done? Great! Push the changes back to the fork.
+If you intend to contribute changes back to JSCAD then please follow these guides.
+- follow the [JavaScript Standard Style](https://standardjs.com/index.html) when making changes
+- enhance existing test suites or create new tests suites to verify changes
+- verify all tests PASS by running ```npm test``` in the local package
+- verify all tests PASS across all packages by running ```npm test``` in the base directory
+
+Done? Great! Push the changes back to your fork.
 ```
 git commit changed-file
 git add test/new-test-suite.js
 git commit test/new-test-suite.js
 git push
 ```
-Finally, you can review your changes via GitHub, and create a pull request. 
+
+Finally, you can review your changes via GitHub, and create a pull request.
 
 TIPS for successful pull requests:
-- Commit often, and comment well
-- Follow the [JavaScript Standard Style](https://github.com/feross/standard)
-- Create test cases for all changes
-- Verify that all tests suites pass
+- Commit often, and comment the changes well
+- Verify that automated tests pass (see the bottom of the pull request)
 
 WOW! Thanks for the cool code.
 
+## Developing with the CLI
 
+The JSCAD Command Line Interface (CLI) can be used for development by executing the CLI manually.
+```
+cd packages/cli
+node ./cli.js
+```
 
-## Financial contributions
+There are also test suites for the CLI, which can be executed. See *.test.js files for the test suites.
+```
+npm test
+```
 
-We also welcome financial contributions in full transparency on our [open collective](https://opencollective.com/openjscad).
-Anyone can file an expense. If the expense makes sense for the development of the community, it will be "merged" in the ledger of our open collective by the core contributors and the person who filed the expense will be reimbursed.
+You can now make changes to any package, and then check the changes by executing the CLI again.
 
+## Developing with the WEB
 
-## Credits
+The JSCAD Web UI can be used for development by starting a development webserver manually.
+```
+cd packages/web
+npm run dev
+```
 
+Now start a browser, and access the URL shown.
 
-### Contributors
+You can now make changes to any package. The webserver will automatically detect the change and repackage the distribution. Also, the browser will automaticlly reload the contents from the webserver. Slick!
 
-Thank you to all the people who have already contributed to openjscad!
+There are also test suites for the JSCAD Web UI, which can be executed. See *.test.js files for the test suites.
+```
+npm test
+```
+
+### Custom Builds
+
+There are pre-built versions of JSCAD Web package in the 'dist' directory.
+- [standard](./dist/index.js)
+- [minimal viewer](./dist/min.js)
+- [viewer with options](./dist/options.js)
+
+You can rebuild these if you need a new version with your changes.
+- standard: ```npm run build-web```
+- minimal viewer: ```npm run build-min```
+- viewer with options: ```npm run build-opt```
+
+## Contributors
+
+A BIG THANKS to all the people who have already contributed to the JSCAD project!
 <a href="graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" /></a>
 
-
-### Backers
-
-Thank you to all our backers! [[Become a backer](https://opencollective.com/openjscad#backer)]
-
-<a href="https://opencollective.com/openjscad#backers" target="_blank"><img src="https://opencollective.com/openjscad/backers.svg?width=890"></a>
-
-
-### Sponsors
-
-Thank you to all our sponsors! (please ask your company to also support this open source project by [becoming a sponsor](https://opencollective.com/openjscad#sponsor))
-
-<a href="https://opencollective.com/openjscad/sponsor/0/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/1/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/2/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/3/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/4/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/5/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/6/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/7/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/8/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/9/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/9/avatar.svg"></a>
+The JSCAD Organization
