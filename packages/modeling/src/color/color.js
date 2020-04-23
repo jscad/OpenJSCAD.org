@@ -1,10 +1,37 @@
 const flatten = require('../utils/flatten')
 
+const geom2 = require('../geometry/geom2')
+const geom3 = require('../geometry/geom3')
+const path2 = require('../geometry/path2')
+const poly3 = require('../geometry/poly3')
+
+const colorGeom2 = (color, object) => {
+  const newgeom2 = geom2.create(geom2.toSides(object))
+  newgeom2.color = color
+  return newgeom2
+}
+
+const colorGeom3 = (color, object) => {
+  const newgeom3 = geom3.create(geom3.toPolygons(object))
+  newgeom3.color = color
+  return newgeom3
+}
+
+const colorPath2 = (color, object) => {
+  const newpath2 = path2.create(path2.toPoints(object))
+  newpath2.color = color
+  return newpath2
+}
+
+const colorPoly3 = (color, object) => {
+  object.color = color
+}
+
 /**
  * Apply the given color to the given objects.
  * @param {Array} color - RGBA color values, where each value is between 0 and 1.0
  * @param {Object|Array} objects - the objects of which to color
- * @returns {Object|Array} the same objects with an additional attribute 'color'
+ * @returns {Object|Array} new geometry with an additional attribute 'color'
  * @alias module:color.color
  *
  * @example
@@ -22,6 +49,11 @@ const color = (color, ...objects) => {
   if (objects.length === 0) throw new Error('wrong number of arguments')
 
   const results = objects.map((object) => {
+    if (geom2.isA(object)) return colorGeom2(color, object)
+    if (geom3.isA(object)) return colorGeom3(color, object)
+    if (path2.isA(object)) return colorPath2(color, object)
+    if (poly3.isA(object)) return colorPoly3(color, object)
+
     object.color = color
     return object
   })
