@@ -828,7 +828,7 @@ const translateAsciiDxf = (reader, options) => {
 
   // debug output
   // console.log('**************************************************')
-  let script = `const {color, geometry, math, primitives} = require('@jscad/modeling')
+  let script = `const {color, geometry, math, primitives, transforms} = require('@jscad/modeling')
 
 const main = () => {
   let layers = []
