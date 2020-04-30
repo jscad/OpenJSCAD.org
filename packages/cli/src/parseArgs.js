@@ -25,7 +25,7 @@ const parseArgs = args => {
   let inputFormat
   let outputFile
   let outputFormat
-  let params = {} // parameters to feed the script if applicable
+  const params = {} // parameters to feed the script if applicable
   let addMetaData = false // wether to add metadata to outputs or not : ie version info, timestamp etc
   let inputIsDirectory = false // did we pass in a folder or a file ?
 
@@ -73,8 +73,8 @@ const parseArgs = args => {
         // get actual design entry point if applicable (if passed a folder as input etc)
         inputFile = getDesignEntryPoint(fs, inputFile)
         if (!inputFile) {
-          console.log("ERROR: could not determine entry point of project.")
-          console.log("Verify main or index exists")
+          console.log('ERROR: could not determine entry point of project.')
+          console.log('Verify main or index exists')
           process.exit(1)
         }
         inputFormat = require('path').extname(inputFile).substring(1)

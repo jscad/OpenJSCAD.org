@@ -1,7 +1,7 @@
 const mat4 = require('gl-mat4')
 
 function renderWrapper (regl, params = {}) {
-  const {fbo} = params
+  const { fbo } = params
 
   const commandParams = {
     cull: {

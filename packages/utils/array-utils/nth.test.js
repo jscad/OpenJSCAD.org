@@ -4,7 +4,7 @@ const { nth } = require('./index')
 
 test('array-utils: nth() should return undefined', (t) => {
   let obs = nth()
-  let exp = undefined
+  const exp = undefined
   t.deepEqual(obs, exp)
 
   obs = nth(0)

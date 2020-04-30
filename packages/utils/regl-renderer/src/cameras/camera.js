@@ -54,12 +54,12 @@ const toPerspectiveView = ({ camera }) => {
 
 const toPresetView = (viewName, { camera }) => {
   const presets = {
-    'top': [0, 0, 1],
-    'bottom': [0, 0, -1],
-    'front': [0, 1, 0],
-    'back': [0, -1, 0],
-    'left': [1, 0, 0],
-    'right': [-1, 0, 0],
+    top: [0, 0, 1],
+    bottom: [0, 0, -1],
+    front: [0, 1, 0],
+    back: [0, -1, 0],
+    left: [1, 0, 0],
+    right: [-1, 0, 0],
     undefined: [0, 0, 0]
   }
 

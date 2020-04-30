@@ -88,7 +88,7 @@ const reducers = {
       'parameterDefinitions', 'parameterValues', 'parameterDefaults',
       'lookup', 'lookupCounts', 'debug', 'solids'
     ]
-    let design = Object.assign({},
+    const design = Object.assign({},
       state.design, keep(fieldsToReset, reducers.initialize().design)
     )
     // ugh
@@ -159,7 +159,7 @@ const reducers = {
       endTime,
       totalTime
     })
-    console.warn(`total time for design regeneration`, totalTime, new Date().getSeconds())
+    console.warn('total time for design regeneration', totalTime, new Date().getSeconds())
 
     const design = Object.assign({}, state.design, {
       solids,
@@ -190,7 +190,7 @@ const reducers = {
     console.log('design: set parameter definitions & defaults', data)
     const parameterDefaults = data.parameterDefaults || state.design.parameterDefaults
     const parameterDefinitions = data.parameterDefinitions || state.design.parameterDefinitions
-    let design = Object.assign({}, state.design, {
+    const design = Object.assign({}, state.design, {
       parameterDefaults,
       parameterDefinitions,
       parametersOrigin: data.origin
@@ -235,7 +235,7 @@ const reducers = {
 
   setSettings: (state, { data }) => {
     console.log('design: set settings', state.design, data)
-    let {
+    const {
       vtreeMode,
       autoReload,
       instantUpdate,
@@ -268,7 +268,7 @@ const reducers = {
 
   requestWriteCachedGeometry: ({ design }, cache) => {
     console.log('requestWriteCachedGeometry', cache)
-    let data = {}
+    const data = {}
     Object.keys(cache).forEach(function (key) {
       data[key] = cache[key]
     })

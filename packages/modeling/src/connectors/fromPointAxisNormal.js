@@ -11,7 +11,7 @@ const create = require('./create')
  * @alias module:modeling/connectors.fromPointsAxisNormal
  */
 const fromPointAxisNormal = (point, axis, normal) => {
-  let connector = create()
+  const connector = create()
   connector.point = vec3.fromArray(point)
   connector.axis = vec3.unit(axis)
   connector.normal = vec3.unit(normal)

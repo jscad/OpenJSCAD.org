@@ -1,5 +1,5 @@
 function liveNode (node) {
-  let pieceCode = astring.generate(node, {indent: '  ', lineEnd: '\n'})
+  let pieceCode = astring.generate(node, { indent: '  ', lineEnd: '\n' })
   pieceCode = `
   const {cube, sphere} = require('@jscad/scad-api').primitives3d
   const {union, difference, intersection} = require('@jscad/scad-api').booleanOps
@@ -16,7 +16,7 @@ function liveNode (node) {
 }
 
 function solidsFromAst (ast) {
-  let results = []
+  const results = []
   let currentItem
   let textStuff = ''
   estraverse.traverse(ast, {
@@ -29,7 +29,7 @@ function solidsFromAst (ast) {
       if (isDifference(node)) {
         // console.log('difference', node)
         if (!currentItem) {
-          currentItem = {type: 'difference', args: []}
+          currentItem = { type: 'difference', args: [] }
           textStuff += 'difference('
         } else {
 
@@ -39,14 +39,14 @@ function solidsFromAst (ast) {
         // return estraverse.VisitorOption.Skip
       }
       if (isCube(node)) {
-        currentItem = {type: 'cube', args: []}
+        currentItem = { type: 'cube', args: [] }
         const args = extractSimpleArgs(node)
         const argsTxt = args ? `{${Object.keys(args).map(function (key) { return key + ':' + args[key] })}}` : ''
         textStuff += ` cube(${argsTxt}), `
         // liveNode(node)
       }
       if (isSphere(node)) {
-        currentItem = {type: 'sphere', args: []}
+        currentItem = { type: 'sphere', args: [] }
         const args = JSON.stringify(extractSimpleArgs(node))
         textStuff += ` sphere(${args || ''}), `
         // liveNode(node)

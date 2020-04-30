@@ -5,8 +5,8 @@ const { toArray } = require('@jscad/array-utils')
 function runCompare (basePath, runs = 10) {
   console.log('running benchmarks for ' + basePath)
 
-  let moduleNameVanilla = basePath + '-base'
-  let moduleNameVtree = basePath + '-vtree'
+  const moduleNameVanilla = basePath + '-base'
+  const moduleNameVtree = basePath + '-vtree'
   // first verify they all have the same output
   const baseLinePolyCounts = runVanilla(moduleNameVanilla)
   if (!samePolygonCount(baseLinePolyCounts, runVTreeTree(moduleNameVtree))) {
@@ -26,7 +26,7 @@ const runPass = (moduleName, runFn, runs, name) => {
   let elapsed
   let start
 
-  let numbers = []
+  const numbers = []
   for (var i = 0; i < runs; i++) {
     // decache(moduleName)
 

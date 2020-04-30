@@ -86,7 +86,7 @@ const makeHttpSideEffect = (params) => {
         watch,
         unhandled
       }
-      const commandHandler = commandHandlers[type] || commandHandlers['unhandled']
+      const commandHandler = commandHandlers[type] || commandHandlers.unhandled
       commandHandler()
     })
   }

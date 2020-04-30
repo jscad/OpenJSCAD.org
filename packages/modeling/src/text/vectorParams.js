@@ -18,7 +18,7 @@ function vectorParams (options, input) {
     options = { input: options }
   }
   options = options || {}
-  let params = Object.assign({}, defaultsVectorParams, options)
+  const params = Object.assign({}, defaultsVectorParams, options)
   params.input = input || params.input
   return params
 }

@@ -5,7 +5,7 @@ const getPlaneNormal = require('./get-plane-normal')
 
 const VertexList = require('./VertexList')
 const Vertex = require('./Vertex')
-const {Face, VISIBLE, NON_CONVEX, DELETED} = require('./Face')
+const { Face, VISIBLE, NON_CONVEX, DELETED } = require('./Face')
 
 /*
  * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)
@@ -178,7 +178,7 @@ class QuickHull {
       let maxDistance = this.tolerance
       let maxFace
       for (let i = 0; i < newFaces.length; i += 1) {
-        let face = newFaces[i]
+        const face = newFaces[i]
         if (face.mark === VISIBLE) {
           const dist = face.distanceToPlane(vertex.point)
           if (dist > maxDistance) {
@@ -348,7 +348,7 @@ class QuickHull {
 
       // set the opposite edge
       for (i = 0; i < 3; i += 1) {
-        let j = (i + 1) % 3
+        const j = (i + 1) % 3
         // join face[i] i > 0, with the first face
         faces[i + 1].getEdge(2).setOpposite(faces[0].getEdge(j))
         // join face[i] with face[i + 1], 1 <= i <= 3
@@ -366,7 +366,7 @@ class QuickHull {
 
       // set the opposite edge
       for (i = 0; i < 3; i += 1) {
-        let j = (i + 1) % 3
+        const j = (i + 1) % 3
         // join face[i] i > 0, with the first face
         faces[i + 1].getEdge(2).setOpposite(faces[0].getEdge((3 - i) % 3))
         // join face[i] with face[i + 1]
@@ -402,9 +402,9 @@ class QuickHull {
 
   reindexFaceAndVertices () {
     // remove inactive faces
-    let activeFaces = []
+    const activeFaces = []
     for (let i = 0; i < this.faces.length; i += 1) {
-      let face = this.faces[i]
+      const face = this.faces[i]
       if (face.mark === VISIBLE) {
         activeFaces.push(face)
       }
@@ -413,12 +413,12 @@ class QuickHull {
   }
 
   collectFaces (skipTriangulation) {
-    let faceIndices = []
+    const faceIndices = []
     for (let i = 0; i < this.faces.length; i += 1) {
       if (this.faces[i].mark !== VISIBLE) {
         throw Error('attempt to include a destroyed face in the hull')
       }
-      let indices = this.faces[i].collectIndices()
+      const indices = this.faces[i].collectIndices()
       if (skipTriangulation) {
         faceIndices.push(indices)
       } else {
@@ -449,7 +449,7 @@ class QuickHull {
       let maxDistance = 0
       const eyeFace = this.claimed.first().face
       for (vertex = eyeFace.outside; vertex && vertex.face === eyeFace; vertex = vertex.next) {
-        let distance = eyeFace.distanceToPlane(vertex.point)
+        const distance = eyeFace.distanceToPlane(vertex.point)
         if (distance > maxDistance) {
           maxDistance = distance
           eyeVertex = vertex
@@ -497,8 +497,8 @@ class QuickHull {
     //  dot(v, visible face normal) - visible face offset > this.tolerance
     //
     do {
-      let oppositeEdge = edge.opposite
-      let oppositeFace = oppositeEdge.face
+      const oppositeEdge = edge.opposite
+      const oppositeFace = oppositeEdge.face
       if (oppositeFace.mark === VISIBLE) {
         if (oppositeFace.distanceToPlane(eyePoint) > this.tolerance) {
           this.computeHorizon(eyePoint, oppositeEdge, oppositeFace, horizon)
@@ -533,7 +533,7 @@ class QuickHull {
     //          horizon.tail --- horizon.head
     //                        2
     //
-    let face = Face.createTriangle(
+    const face = Face.createTriangle(
       eyeVertex,
       horizonEdge.tail(),
       horizonEdge.head()
@@ -673,7 +673,7 @@ class QuickHull {
         // when two faces are merged it might be possible that redundant faces
         // are destroyed, in that case move all the visible vertices from the
         // destroyed faces to the `unclaimed` vertex list
-        let discardedFaces = face.mergeAdjacentFaces(edge, [])
+        const discardedFaces = face.mergeAdjacentFaces(edge, [])
         for (let i = 0; i < discardedFaces.length; i += 1) {
           this.deleteFaceVertices(discardedFaces[i], face)
         }

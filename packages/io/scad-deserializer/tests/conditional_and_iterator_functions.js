@@ -22,6 +22,6 @@ exports['test if statement'] = function () {
 /*
 exports['test assign statement'] = function () {
   assert.todo('todo ')
-}*/
+} */
 
 if (module === require.main) require('test').run(exports)

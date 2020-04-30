@@ -48,7 +48,7 @@ const serialize = (options, ...objects) => {
   objects = utils.flatten(objects)
 
   // convert only 3D geometries
-  let objects3d = objects.filter((object) => geometry.geom3.isA(object))
+  const objects3d = objects.filter((object) => geometry.geom3.isA(object))
 
   if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to X3D')
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to X3D')
@@ -70,7 +70,7 @@ const serialize = (options, ...objects) => {
   body = body.concat(convertObjects(objects3d, options))
 
   // convert the contents to X3D (XML) format
-  let contents = `<?xml version="1.0" encoding="UTF-8"?>
+  const contents = `<?xml version="1.0" encoding="UTF-8"?>
 ${stringify(body)}`
 
   options && options.statusCallback && options.statusCallback({ progress: 100 })
@@ -80,12 +80,12 @@ ${stringify(body)}`
 
 const convertObjects = (objects, options) => {
   let scene = ['Scene', {}]
-  let shapes = []
+  const shapes = []
   objects.forEach((object, i) => {
     options.statusCallback && options.statusCallback({ progress: 100 * i / objects.length })
 
     if (geometry.geom3.isA(object)) {
-      let polygons = geometry.geom3.toPolygons(object)
+      const polygons = geometry.geom3.toPolygons(object)
       if (polygons.length > 0) {
         // TODO object = ensureManifoldness(object)
         shapes.push(convertShape(object, options))
@@ -97,19 +97,19 @@ const convertObjects = (objects, options) => {
 }
 
 const convertShape = (object, options) => {
-  let shape = ['Shape', {}, convertMesh(object, options)]
+  const shape = ['Shape', {}, convertMesh(object, options)]
   return shape
 }
 
 const convertMesh = (object, options) => {
-  let mesh = convertToTriangles(object, options)
-  let lists = polygons2coordinates(mesh, options)
+  const mesh = convertToTriangles(object, options)
+  const lists = polygons2coordinates(mesh, options)
 
-  let indexList = lists[0].join(' ')
-  let pointList = lists[1].join(' ')
-  let colorList = lists[2].join(' ')
+  const indexList = lists[0].join(' ')
+  const pointList = lists[1].join(' ')
+  const colorList = lists[2].join(' ')
 
-  let faceset = [
+  const faceset = [
     'IndexedTriangleSet',
     { ccw: 'true', colorPerVertex: 'false', solid: 'false', index: indexList },
     ['Coordinate', { point: pointList }],
@@ -155,23 +155,23 @@ const convertToColor = (polygon, options) => {
  * - colorList : color of each triangle (R G B)
  */
 const polygons2coordinates = (polygons, options) => {
-  let indexList = []
-  let pointList = []
-  let colorList = []
+  const indexList = []
+  const pointList = []
+  const colorList = []
 
-  let vertexTagToCoordIndexMap = new Map()
+  const vertexTagToCoordIndexMap = new Map()
   polygons.map((polygon) => {
-    let polygonVertexIndices = []
-    let numvertices = polygon.vertices.length
+    const polygonVertexIndices = []
+    const numvertices = polygon.vertices.length
     for (let i = 0; i < numvertices; i++) {
-      let vertex = polygon.vertices[i]
-      let id = `${vertex[0]},${vertex[1]},${vertex[2]}`
+      const vertex = polygon.vertices[i]
+      const id = `${vertex[0]},${vertex[1]},${vertex[2]}`
 
       // add the vertex to the list of points (and index) if not found
       if (!vertexTagToCoordIndexMap.has(id)) {
-        let x = Math.round(vertex[0] * options.decimals) / options.decimals
-        let y = Math.round(vertex[1] * options.decimals) / options.decimals
-        let z = Math.round(vertex[2] * options.decimals) / options.decimals
+        const x = Math.round(vertex[0] * options.decimals) / options.decimals
+        const y = Math.round(vertex[1] * options.decimals) / options.decimals
+        const z = Math.round(vertex[2] * options.decimals) / options.decimals
         pointList.push(`${x} ${y} ${z}`)
         vertexTagToCoordIndexMap.set(id, pointList.length - 1)
       }

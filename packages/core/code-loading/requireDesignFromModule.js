@@ -10,7 +10,7 @@ const requireDesignFromModule = (filePath, requireFn = require) => {
   // const requireUncached = require('../code-loading/requireUncached')
   // TODO: only uncache when needed
   // requireUncached(mainPath)
-  let designRootModule = requireFn(filePath)
+  const designRootModule = requireFn(filePath)
   // make sure everything is ok
   validateDesignModule(designRootModule)
   return normalizeDesignModule(designRootModule)

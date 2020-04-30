@@ -7,29 +7,29 @@ const { line, rectangle, cuboid } = require('../../primitives')
 const { measureArea } = require('./index')
 
 test('measureArea: single objects', (t) => {
-  let aline = line([[10, 10], [15, 15]])
-  let arect = rectangle()
-  let acube = cuboid()
+  const aline = line([[10, 10], [15, 15]])
+  const arect = rectangle()
+  const acube = cuboid()
 
-  let apath2 = path2.create()
-  let ageom2 = geom2.create()
-  let ageom3 = geom3.create()
+  const apath2 = path2.create()
+  const ageom2 = geom2.create()
+  const ageom3 = geom3.create()
 
-  let n = null
-  let o = {}
-  let x = 'hi'
+  const n = null
+  const o = {}
+  const x = 'hi'
 
-  let larea = measureArea(aline)
-  let rarea = measureArea(arect)
-  let carea = measureArea(acube)
+  const larea = measureArea(aline)
+  const rarea = measureArea(arect)
+  const carea = measureArea(acube)
 
-  let p2area = measureArea(apath2)
-  let g2area = measureArea(ageom2)
-  let g3area = measureArea(ageom3)
+  const p2area = measureArea(apath2)
+  const g2area = measureArea(ageom2)
+  const g3area = measureArea(ageom3)
 
-  let narea = measureArea(n)
-  let oarea = measureArea(o)
-  let xarea = measureArea(x)
+  const narea = measureArea(n)
+  const oarea = measureArea(o)
+  const xarea = measureArea(x)
 
   t.is(larea, 0)
   t.is(rarea, 4) // 2x2
@@ -45,11 +45,11 @@ test('measureArea: single objects', (t) => {
 })
 
 test('measureArea (multiple objects)', t => {
-  let aline = line([[10, 10], [15, 15]])
-  let arect = rectangle({ size: [10, 20] })
-  let acube = cuboid({ size: [10, 20, 40] })
-  let o = {}
+  const aline = line([[10, 10], [15, 15]])
+  const arect = rectangle({ size: [10, 20] })
+  const acube = cuboid({ size: [10, 20, 40] })
+  const o = {}
 
-  let allarea = measureArea(aline, arect, acube, o)
+  const allarea = measureArea(aline, arect, acube, o)
   t.deepEqual(allarea, [0, 200, 2800, 0])
 })

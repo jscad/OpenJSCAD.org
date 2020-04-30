@@ -23,7 +23,7 @@ const calculatePlane = (slice) => {
   let farthestEdge = [[NaN, NaN, NaN], [NaN, NaN, NaN]]
   let distance = 0
   edges.forEach((edge) => {
-    let d = vec3.squaredDistance(midpoint, edge[0])
+    const d = vec3.squaredDistance(midpoint, edge[0])
     if (d > distance) {
       farthestEdge = edge
       distance = d

@@ -8,7 +8,7 @@ test('colorNameToRgb', t => {
   t.is(obs, undefined)
 
   obs = colorNameToRgb('lightblue')
-  let exp = [0.6784313725490196, 0.8470588235294118, 0.9019607843137255]
+  const exp = [0.6784313725490196, 0.8470588235294118, 0.9019607843137255]
 
   t.deepEqual(obs, exp)
 })

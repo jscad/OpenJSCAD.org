@@ -12,7 +12,7 @@ const isResultGeometry = (rawResults) => (rawResults.length > 0 && (isGeom3(rawR
 const lookupFromCompactBinary = (compactLookup = {}) => {
   // console.log('lookupFromCompactBinary', compactLookup)
   // TODO: optimise this !!
-  let lookup = {}
+  const lookup = {}
   Object.keys(compactLookup).forEach(function (key) {
     const object = compactLookup[key]
     let result

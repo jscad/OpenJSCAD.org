@@ -47,12 +47,12 @@ function createGeometry (options, positions, cells, uvs) {
       y = o.y
       z = Math.sin(cRad) * cRadius + o.z
 
-      positions.push([ x, y, z ])
+      positions.push([x, y, z])
       uvs.push([i / numSlices, j / numBandIncs])
 
       // if we've added in positions then we'll add cells
       if (idxSize == 1) {
-        cells.push([ curSlideIdx + j ])
+        cells.push([curSlideIdx + j])
       } else if (idxSize == 2) {
         if (i > 0 && j + 1 < lenJ) {
           cells.push([
@@ -97,7 +97,7 @@ function createGeometry (options, positions, cells, uvs) {
       for (var j = 0, lenJ = o.numBands - 1; j < lenJ; j++) {
         cells.push([
           curSlideIdx + j,
-          curSlideIdx + j + 1 ])
+          curSlideIdx + j + 1])
       }
 
       curSlideIdx = 0
@@ -105,7 +105,7 @@ function createGeometry (options, positions, cells, uvs) {
       for (var j = 0, lenJ = o.numBands - 1; j < lenJ; j++) {
         cells.push([
           curSlideIdx + j,
-          curSlideIdx + j + 1 ])
+          curSlideIdx + j + 1])
       }
     }
   }

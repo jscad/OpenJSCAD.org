@@ -37,7 +37,7 @@ const subtract = (...geometries) => {
     throw new Error('only subtract of the types are supported')
   }
 
-  let geometry = geometries[0]
+  const geometry = geometries[0]
   // if (path.isA(geometry)) return pathsubtract(matrix, geometries)
   if (geom2.isA(geometry)) return subtractGeom2(geometries)
   if (geom3.isA(geometry)) return subtractGeom3(geometries)

@@ -6,13 +6,13 @@ module.exports = function makeStorageSideEffect ({ name }) {
   function sink (outToStore$) {
     let enabled = true
     try {
-      localStorage.getItem(`jscad:`)
+      localStorage.getItem('jscad:')
     } catch (e) {
       enabled = false
     }
 
     if (!enabled) {
-      commandResponses.callback({ type, id, error: new Error(`Local storage not supported in this environment!`) })
+      commandResponses.callback({ type, id, error: new Error('Local storage not supported in this environment!') })
     } else {
       if (outToStore$) {
         outToStore$.forEach(function (command) {

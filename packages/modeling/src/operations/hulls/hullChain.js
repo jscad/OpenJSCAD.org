@@ -20,7 +20,7 @@ const hullChain = (...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length < 2) throw new Error('wrong number of arguments')
 
-  let hulls = []
+  const hulls = []
   for (let i = 1; i < geometries.length; i++) {
     hulls.push(hull(geometries[i - 1], geometries[i]))
   }

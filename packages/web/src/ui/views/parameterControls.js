@@ -1,13 +1,13 @@
 const html = require('bel')
 
 const createParamControls = (prevParameterValues = {}, parameterDefinitions, rebuildSolid) => {
-  let paramControls = []
+  const paramControls = []
 
   // FIXME: rework the way groups work
   let currentGroup
 
   const controls = parameterDefinitions.map(function (paramDefinition) {
-    let type = paramDefinition.type.toLowerCase()
+    const type = paramDefinition.type.toLowerCase()
     let subControls
     // console.log('type', type)
     switch (type) {
@@ -46,7 +46,7 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
     } else {
       subControls.forEach(control => {
         control.onchange = function (e) {
-          let l = e.currentTarget.nextElementSibling
+          const l = e.currentTarget.nextElementSibling
           if (l !== null && l.nodeName === 'LABEL') {
             l.innerHTML = e.currentTarget.value
           }
@@ -119,7 +119,7 @@ const createGroupControl = definition => {
   const groupClosedIcon = html`
       <svg class="icon icon-closed feather feather-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="9 18 15 12 9 6"/></svg>`
   const icon = expanded ? groupOpenIcon : groupClosedIcon
-  let control = html`<section class=${className}>
+  const control = html`<section class=${className}>
     <span class='groupStatus'>${icon}</span>
   </section> `
   // html`<title class=${className}>${text}</title>`
@@ -145,7 +145,7 @@ const createChoiceControl = (definition, prevValue) => {
     if (prevValue !== undefined) {
       selected = (prevValue === value)
     } else if ('default' in definition) {
-      selected = (definition['default'] === value)
+      selected = (definition.default === value)
     } else if ('initial' in definition) {
       selected = (definition.initial === value)
     }
@@ -154,7 +154,7 @@ const createChoiceControl = (definition, prevValue) => {
     </option>`
   })
 
-  let control = html`<select>
+  const control = html`<select>
     ${options}
   </select`
   control.paramName = definition.name
@@ -180,7 +180,7 @@ const createRadioControl = (definition, prevValue) => {
     if (prevValue !== undefined) {
       selected = (prevValue === value)
     } else if ('default' in definition) {
-      selected = (definition['default'] === value)
+      selected = (definition.default === value)
     } else if ('initial' in definition) {
       selected = (definition.initial === value)
     }
@@ -251,7 +251,7 @@ const createControl = (definition, prevValue) => {
   control.paramName = definition.name
   control.paramType = definition.type
   // set generic HTML attributes
-  for (let property in definition) {
+  for (const property in definition) {
     if (definition.hasOwnProperty(property)) {
       if (typeData.required.indexOf(property) < 0) {
         control.setAttribute(property, definition[property])

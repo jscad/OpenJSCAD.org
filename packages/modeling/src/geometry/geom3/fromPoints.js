@@ -16,12 +16,12 @@ const fromPoints = function (listofpoints) {
     throw new Error('the given points must be an array')
   }
 
-  let polygons = listofpoints.map((points, index) => {
+  const polygons = listofpoints.map((points, index) => {
     // TODO catch the error, and rethrow with index
-    let polygon = poly3.fromPoints(points)
+    const polygon = poly3.fromPoints(points)
     return polygon
   })
-  let result = create(polygons)
+  const result = create(polygons)
   return result
 }
 

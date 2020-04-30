@@ -13,7 +13,7 @@ const create = require('./create')
  * transform(fromZRotation(degToRad(90)), path)
  */
 const transform = (matrix, geometry) => {
-  let newgeometry = create(geometry.points) // reuse the points
+  const newgeometry = create(geometry.points) // reuse the points
   newgeometry.isClosed = geometry.isClosed
 
   newgeometry.transforms = mat4.multiply(geometry.transforms, matrix)

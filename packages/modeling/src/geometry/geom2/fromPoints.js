@@ -19,7 +19,7 @@ const fromPoints = function (points) {
     throw new Error('the given points must define a closed geometry with three or more points')
   }
 
-  let sides = []
+  const sides = []
   let prevpoint = points[points.length - 1]
   points.forEach(function (point) {
     sides.push([vec2.fromArray(prevpoint), vec2.fromArray(point)])

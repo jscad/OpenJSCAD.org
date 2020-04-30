@@ -46,8 +46,7 @@ class RateLimitSink {
     const nextTime = this.nextTime
     if (t >= nextTime) {
       this.scheduler.asap(task)
-    }
-    else if (nothingScheduled) {
+    } else if (nothingScheduled) {
       const interval = this.nextTime - this.scheduler.now()
       this.scheduler.delay(interval, new RateLimitTask(this))
     }

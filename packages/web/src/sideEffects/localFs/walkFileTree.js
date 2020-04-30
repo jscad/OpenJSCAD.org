@@ -15,7 +15,7 @@ const readFileAsync = function (file, fileMeta) {
     function convert (buffer) {
       let binary = ''
       const bytes = new Uint8Array(buffer)
-      let length = bytes.byteLength
+      const length = bytes.byteLength
       for (let i = 0; i < length; i++) {
         binary += String.fromCharCode(bytes[i])
       }
@@ -39,7 +39,7 @@ function isSupportedFormat (file) {
 }
 
 function pseudoArraytoArray (pseudoArray) {
-  let array = []
+  const array = []
   for (var i = 0; i < pseudoArray.length; i++) {
     const item = pseudoArray[i]
     array.push(item.webkitGetAsEntry ? item.webkitGetAsEntry() : item)
@@ -50,7 +50,7 @@ function pseudoArraytoArray (pseudoArray) {
 const isEmtpy = x => x !== null && x !== undefined// skip empty items
 
 function processItems (items) {
-  let results = pseudoArraytoArray(items.filter(isEmtpy))
+  const results = pseudoArraytoArray(items.filter(isEmtpy))
     .filter(isEmtpy)// skip empty items
     .reduce((result, item) => {
       // console.log('result', result, 'item', item)

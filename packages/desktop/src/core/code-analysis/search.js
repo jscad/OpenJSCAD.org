@@ -5,7 +5,7 @@
         } */
 
 function findByPredicate (predicate, dataExtractor, ast) {
-  let results = []
+  const results = []
   estraverse.traverse(ast, {
     enter: function (node, parent) {
       if (predicate(node)) {

@@ -25,13 +25,13 @@ Tree.prototype = {
   },
 
   allPolygons: function () {
-    let result = []
+    const result = []
     this.polygonTree.getPolygons(result)
     return result
   },
 
   addPolygons: function (polygons) {
-    let polygontreenodes = new Array(polygons.length)
+    const polygontreenodes = new Array(polygons.length)
     for (let i = 0; i < polygons.length; i++) {
       polygontreenodes[i] = this.polygonTree.addChild(polygons[i])
     }
@@ -43,7 +43,7 @@ Tree.prototype = {
   },
 
   toString: function () {
-    let result = 'Tree: ' + this.polygonTree.toString('')
+    const result = 'Tree: ' + this.polygonTree.toString('')
     return result
   }
 }

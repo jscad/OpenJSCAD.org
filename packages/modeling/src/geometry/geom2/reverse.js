@@ -14,9 +14,9 @@ const toSides = require('./toSides')
  * let newgeometry = reverse(geometry)
  */
 const reverse = (geometry) => {
-  let oldsides = toSides(geometry)
+  const oldsides = toSides(geometry)
 
-  let newsides = oldsides.map((side) => {
+  const newsides = oldsides.map((side) => {
     return [side[1], side[0]]
   })
   newsides.reverse() // is this required?

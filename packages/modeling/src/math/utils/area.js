@@ -4,7 +4,7 @@
 const area = (points) => {
   let area = 0
   for (let i = 0; i < points.length; i++) {
-    let j = (i + 1) % points.length
+    const j = (i + 1) % points.length
     area += points[i][0] * points[j][1]
     area -= points[j][0] * points[i][1]
   }

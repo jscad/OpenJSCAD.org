@@ -34,11 +34,11 @@ const prepareOutput = (objects, params) => {
     x3d: x3dSerializer, // Geom3 to X3D
     json: jsonSerializer, // Geom3 or Geom2 to JSON
     js: {
-      mimeType: formats['js'].mimetype,
+      mimeType: formats.js.mimetype,
       serialize: (options, objects) => toArray(objects) // js , pass through
     },
     jscad: {
-      mimeType: formats['jscad'].mimetype,
+      mimeType: formats.jscad.mimetype,
       serialize: (options, objects) => toArray(objects) // jscad , pass through
     },
     undefined: () => {

@@ -16,8 +16,8 @@ const ellipse = (options) => {
     radius: [1, 1],
     segments: 16
   }
-  let center = [0,0];
-  let {radius, segments} = Object.assign({}, defaults, options)
+  const center = [0, 0]
+  const { radius, segments } = Object.assign({}, defaults, options)
 
   if (!Array.isArray(radius)) throw new Error('radius must be an array')
   if (radius.length < 2) throw new Error('radius must contain X and Y values')
@@ -27,8 +27,8 @@ const ellipse = (options) => {
   const centerv = vec2.fromArray(center)
   const step = 2 * Math.PI / segments // radians
 
-  let points = []
-  for (var i = 0 ; i < segments ; i++) {
+  const points = []
+  for (var i = 0; i < segments; i++) {
     var point = vec2.fromValues(radius[0] * Math.cos(step * i), radius[1] * Math.sin(step * i))
     vec2.add(point, centerv, point)
     points.push(point)
@@ -50,13 +50,13 @@ const circle = (options) => {
     radius: 1,
     segments: 16
   }
-  let {radius, segments} = Object.assign({}, defaults, options)
+  let { radius, segments } = Object.assign({}, defaults, options)
 
   // TODO check that radius is a number
 
   radius = [radius, radius]
 
-  return ellipse({radius: radius, segments: segments})
+  return ellipse({ radius: radius, segments: segments })
 }
 
 module.exports = {

@@ -12,17 +12,17 @@ const rgbToHsv = (...values) => {
   values = flatten(values)
   if (values.length < 3) throw new Error('values must contain R, G and B values')
 
-  let r = values[0]
-  let g = values[1]
-  let b = values[2]
+  const r = values[0]
+  const g = values[1]
+  const b = values[2]
 
-  let max = Math.max(r, g, b)
-  let min = Math.min(r, g, b)
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
   let h
   let s
-  let v = max
+  const v = max
 
-  let d = max - min
+  const d = max - min
   s = max === 0 ? 0 : d / max
 
   if (max === min) {
@@ -44,7 +44,7 @@ const rgbToHsv = (...values) => {
 
   if (values.length > 3) {
     // add alpha if provided
-    let a = values[3]
+    const a = values[3]
     return [h, s, v, a]
   }
   return [h, s, v]

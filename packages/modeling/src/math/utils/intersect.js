@@ -21,8 +21,8 @@ const intersect = (p1, p2, p3, p4) => {
     return undefined
   }
 
-  let ua = ((p4[0] - p3[0]) * (p1[1] - p3[1]) - (p4[1] - p3[1]) * (p1[0] - p3[0])) / denominator
-  let ub = ((p2[0] - p1[0]) * (p1[1] - p3[1]) - (p2[1] - p1[1]) * (p1[0] - p3[0])) / denominator
+  const ua = ((p4[0] - p3[0]) * (p1[1] - p3[1]) - (p4[1] - p3[1]) * (p1[0] - p3[0])) / denominator
+  const ub = ((p2[0] - p1[0]) * (p1[1] - p3[1]) - (p2[1] - p1[1]) * (p1[0] - p3[0])) / denominator
 
   // is the intersection along the segments
   if (ua < 0 || ua > 1 || ub < 0 || ub > 1) {
@@ -30,8 +30,8 @@ const intersect = (p1, p2, p3, p4) => {
   }
 
   // Return the x and y coordinates of the intersection
-  let x = p1[0] + ua * (p2[0] - p1[0])
-  let y = p1[1] + ua * (p2[1] - p1[1])
+  const x = p1[0] + ua * (p2[0] - p1[0])
+  const y = p1[1] + ua * (p2[1] - p1[1])
 
   return [x, y]
 }

@@ -205,7 +205,7 @@ test('webRequire: should allow using require.extensions like the native node req
 
   const mainPath = '/examples/logo.js'
   const apiMainPath = '@jscad/modeling'
-  let filesAndFolders = [
+  const filesAndFolders = [
     {
       ext: 'js',
       fullPath: '/examples/logo.js',

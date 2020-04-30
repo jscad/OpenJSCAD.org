@@ -46,9 +46,9 @@ test('mat4: translate() called with two paramerters should return a mat4 with co
   const r = (90 * 0.017453292519943295)
   const rotateZMatrix = [
     Math.cos(r), -Math.sin(r), 0, 0,
-    Math.sin(r),  Math.cos(r), 0, 0,
-              0,            0, 1, 0,
-              0,            0, 0, 1
+    Math.sin(r), Math.cos(r), 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1
   ]
 
   const obs5 = translate([6, 4, 2], rotateZMatrix)
@@ -106,9 +106,9 @@ test('mat4: translate() called with three paramerters should update a mat4 with 
   const r = (90 * 0.017453292519943295)
   const rotateZMatrix = [
     Math.cos(r), -Math.sin(r), 0, 0,
-    Math.sin(r),  Math.cos(r), 0, 0,
-              0,            0, 1, 0,
-              0,            0, 0, 1
+    Math.sin(r), Math.cos(r), 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1
   ]
 
   const obs5 = create()
@@ -116,7 +116,7 @@ test('mat4: translate() called with three paramerters should update a mat4 with 
   // t.true(compareVectors(obs5, [0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 4, -6, 2, 1])) // close to zero
   // t.true(compareVectors(ret5, [0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 4, -6, 2, 1])) // close to zero
 
-// special case where in and out are the same
+  // special case where in and out are the same
   const obs6 = clone(rotateZMatrix)
   const ret6 = translate(obs6, [6, 4, 2], obs6)
   // t.true(compareVectors(obs6, [0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 4, -6, 2, 1])) // close to zero

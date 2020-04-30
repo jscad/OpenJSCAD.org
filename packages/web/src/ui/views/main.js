@@ -20,7 +20,7 @@ function dom (state, i18n, paramsCallbacktoStream, editorCallbackToStream) {
   const viewerControls = require('./viewerControls')(state, i18n)
 
   //       //<input type="button" value="${i18n`load jscad project`}" id="fileLoader"/>
-    // <a id="menuToggle">${menuIcon}</a>
+  // <a id="menuToggle">${menuIcon}</a>
   const output = html`
     <div id='container' style='color:${state.themes.themeSettings.mainTextColor}'>
 

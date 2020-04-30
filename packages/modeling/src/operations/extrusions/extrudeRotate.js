@@ -37,7 +37,7 @@ const extrudeRotate = (options, geometry) => {
   endAngle = Math.abs(endAngle) > (Math.PI * 2) ? endAngle % (Math.PI * 2) : endAngle
 
   if (endAngle < startAngle) {
-    let x = startAngle
+    const x = startAngle
     startAngle = endAngle
     endAngle = x
   }
@@ -46,7 +46,7 @@ const extrudeRotate = (options, geometry) => {
 
   if (Math.abs(totalRotation) < (Math.PI * 2)) {
     // adjust the segments to achieve the total rotation requested
-    let anglePerSegment = (Math.PI * 2) / segments
+    const anglePerSegment = (Math.PI * 2) / segments
     segments = Math.floor(Math.abs(totalRotation) / anglePerSegment)
     if (Math.abs(totalRotation) > (segments * anglePerSegment)) segments++
   }
@@ -105,8 +105,8 @@ const extrudeRotate = (options, geometry) => {
   slice.reverse(baseSlice, baseSlice)
 
   const createSlice = (progress, index, base) => {
-    let Zrotation = rotationPerSlice * index + startAngle
-    let matrix = mat4.multiply(mat4.fromZRotation(Zrotation), mat4.fromXRotation(Math.PI / 2))
+    const Zrotation = rotationPerSlice * index + startAngle
+    const matrix = mat4.multiply(mat4.fromZRotation(Zrotation), mat4.fromXRotation(Math.PI / 2))
 
     return slice.transform(matrix, base)
   }

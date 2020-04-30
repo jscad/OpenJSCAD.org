@@ -1,5 +1,6 @@
 const jscad = require('@jscad/modeling')
-const { color,
+const {
+  color,
   connectors,
   geometry,
   math,
@@ -12,7 +13,8 @@ const { color,
   extrusions,
   hulls,
   measurements,
-  transforms } = jscad
+  transforms
+} = jscad
 
 const { cuboid, sphere, cylinder, circle, star } = require('@jscad/modeling').primitives
 const { translate, rotate, scale } = transforms
@@ -20,9 +22,9 @@ const { translate, rotate, scale } = transforms
 console.log('jscad', jscad)
 const main = () => {
   return [
-    //rotate([0, 0, 0], cylinder({ radius: 0.1 })),
+    // rotate([0, 0, 0], cylinder({ radius: 0.1 })),
     cylinder({ radius: 0.5 }),
-    translate([0, 5, 0], cylinder({size: 2.5})),
+    translate([0, 5, 0], cylinder({ size: 2.5 })),
     circle({ diameter: 10, segments: 64 }),
     circle({ radius: 10, segments: 64 }),
     cuboid(),

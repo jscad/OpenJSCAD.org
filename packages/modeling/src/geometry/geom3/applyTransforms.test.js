@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const {fromPoints, toString} = require('./index')
+const { fromPoints, toString } = require('./index')
 
 const applyTransforms = require('./applyTransforms')
 
@@ -13,12 +13,12 @@ test('applyTransforms: Updates a geom3 with transformed polygons', (t) => {
         vertices: [
           new Float32Array([0, 0, 0]),
           new Float32Array([1, 0, 0]),
-          new Float32Array([1, 0, 1]),
-         ]
+          new Float32Array([1, 0, 1])
+        ]
       }
     ],
     isRetesselated: false,
-    transforms: new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1])
+    transforms: new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
   }
   const geometry = fromPoints(points)
   const updated = applyTransforms(geometry)

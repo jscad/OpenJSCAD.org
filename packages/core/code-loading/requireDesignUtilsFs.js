@@ -35,7 +35,7 @@ const assertPath = path => {
 }
 
 /** get main entry point of a design, given a file system instance and a list of paths
- * @param  {Object} fs a file-system like object (either node's fs or some other) providing at least 
+ * @param  {Object} fs a file-system like object (either node's fs or some other) providing at least
  * statSync, existSync, readFileSync, readdirSync
  * @param  {} paths
  */
@@ -43,7 +43,7 @@ const getDesignEntryPoint = (fs, paths) => {
   if (!paths) {
     return
   }
-  let mainPath = toArray(paths)[0]
+  const mainPath = toArray(paths)[0]
   let filePath
   const stats = fs.statSync(mainPath)
   if (stats.isFile()) {

@@ -15,5 +15,5 @@ function electronStoreSource () {
 }
 
 module.exports = function makeElectronStoreSideEffect (outToStore$) {
-  return {sink: electronStoreSink, source: electronStoreSource}
+  return { sink: electronStoreSink, source: electronStoreSource }
 }

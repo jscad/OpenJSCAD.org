@@ -7,7 +7,7 @@ module.exports = function viewer (state, i18n) {
   let height = 0
   const viewerElement = document.getElementById('renderTarget')
   if (viewerElement) {
-    let pixelRatio = window.devicePixelRatio || 1
+    const pixelRatio = window.devicePixelRatio || 1
     width = window.innerWidth
     height = window.innerHeight
     if (viewerElement !== document.body) {
@@ -28,7 +28,7 @@ function setCanvasSize (viewerElement) {
   if (!viewerElement) {
     return
   }
-  let pixelRatio = window.devicePixelRatio || 1
+  const pixelRatio = window.devicePixelRatio || 1
   let width = window.innerWidth
   let height = window.innerHeight
   if (viewerElement !== document.body) {

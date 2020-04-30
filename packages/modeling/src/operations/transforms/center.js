@@ -14,9 +14,9 @@ const centerGeometry = (options, object) => {
     center: [0, 0, 0]
   }
   const { axes, center } = Object.assign({}, defaults, options)
-    
-  let bounds = measureBounds(object)
-  let offset = [0, 0, 0]
+
+  const bounds = measureBounds(object)
+  const offset = [0, 0, 0]
   if (axes[0]) offset[0] = center[0] - (bounds[0][0] + ((bounds[1][0] - bounds[0][0]) / 2))
   if (axes[1]) offset[1] = center[1] - (bounds[0][1] + ((bounds[1][1] - bounds[0][1]) / 2))
   if (axes[2]) offset[2] = center[2] - (bounds[0][2] + ((bounds[1][2] - bounds[0][2]) / 2))

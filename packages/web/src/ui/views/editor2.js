@@ -39,7 +39,7 @@ function editorWrapper (state, editorCallbackToStream) {
     }
   }
 
-  /*var onload = require('on-load')
+  /* var onload = require('on-load')
   onload(el, function (_el) {
     console.log('in the dom')
     cm = CodeMirror(_el, {
@@ -55,7 +55,7 @@ function editorWrapper (state, editorCallbackToStream) {
     cm.refresh()
   }, function (el) {
     console.log('out of the dom')
-  })*/
+  }) */
   return el
 }
 

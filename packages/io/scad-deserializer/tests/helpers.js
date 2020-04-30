@@ -10,4 +10,4 @@ function check (filedir, testFileName) {
   assert.equal(actual, expected)
 }
 
-module.exports = {check}
+module.exports = { check }

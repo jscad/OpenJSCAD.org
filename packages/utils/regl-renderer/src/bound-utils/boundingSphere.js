@@ -12,9 +12,9 @@ function boundingSphere (center = [0, 0, 0], positions) {
   }
 
   if (!center) {
-    let box = boundingBox(positions)
+    const box = boundingBox(positions)
     // min & max are the box's min & max
-    let result = vec3.create()
+    const result = vec3.create()
     center = vec3.scale(result, vec3.add(result, box.min, box.max), 0.5)
   }
   const nested = (Array.isArray(positions) && Array.isArray(positions[0]))
@@ -24,7 +24,7 @@ function boundingSphere (center = [0, 0, 0], positions) {
   const max = positions.length
   for (let i = 0; i < max; i += increment) {
     if (nested) {
-      maxRadiusSq = Math.max(maxRadiusSq, squaredDistance(center, positions[ i ]))
+      maxRadiusSq = Math.max(maxRadiusSq, squaredDistance(center, positions[i]))
     } else {
       const position = [positions[i], positions[i + 1], positions[i + 2]]
       maxRadiusSq = Math.max(maxRadiusSq, squaredDistance(center, position))
@@ -43,15 +43,15 @@ function boundingSphereFromBoundingBox (center = [0, 0, 0], positions, boundingB
 
   if (!center) {
     // min & max are the box's min & max
-    let result = vec3.create()
+    const result = vec3.create()
     center = vec3.scale(result, vec3.add(result, boundingBox[0], boundingBox[1]), 0.5)
   }
 
   let maxRadiusSq = 0
   for (let i = 0, il = positions.length; i < il; i++) {
-    maxRadiusSq = Math.max(maxRadiusSq, squaredDistance(center, positions[ i ]))
+    maxRadiusSq = Math.max(maxRadiusSq, squaredDistance(center, positions[i]))
   }
   return Math.sqrt(maxRadiusSq)
 }
 
-module.exports = boundingSphere//{boundingSphere, boundingSphereFromBoundingBox}
+module.exports = boundingSphere// {boundingSphere, boundingSphereFromBoundingBox}

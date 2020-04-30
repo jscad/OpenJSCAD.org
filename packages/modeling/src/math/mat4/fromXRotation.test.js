@@ -1,10 +1,10 @@
 const test = require('ava')
-const { fromXRotation , toString } = require('./index')
+const { fromXRotation, toString } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
 test('mat4: fromXRotation() should return a new mat4 with correct values', (t) => {
-  let rotation = 90 * 0.017453292519943295
+  const rotation = 90 * 0.017453292519943295
 
   const obs2 = fromXRotation(rotation)
   t.true(compareVectors(obs2, [1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1]))
@@ -14,7 +14,7 @@ test('mat4: fromXRotation() should return a new mat4 with correct values', (t) =
 })
 
 test('mat4: fromXRotation() called with out parameter should return a new mat4 with correct values', (t) => {
-  let rotation = 90 * 0.017453292519943295
+  const rotation = 90 * 0.017453292519943295
 
   const mat2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   const ret2 = fromXRotation(mat2, rotation)

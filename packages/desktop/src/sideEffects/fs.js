@@ -9,7 +9,7 @@ const { flatten } = require('@jscad/array-utils')
 
 // FIXME: not used anymore? remove?
 function watchMultiplePaths (paths, callback) {
-  let prevContents = {}
+  const prevContents = {}
   const watchers = paths.map(function (filePath, index) {
     prevContents[filePath] = ''
     const watcher = fs.watch(filePath, { encoding: 'utf8' }, (eventType, filename) => {
@@ -35,7 +35,7 @@ const removeWatchers = watchers => {
 
 function watchTree (rootPath, callback) {
   // console.log('watchTree')
-  let prevContents = {}
+  const prevContents = {}
   let watchers = []
   let allDependencyPaths = Array.from(new Set(flatten(resolveDependencies(undefined, rootPath))))
     .sort()

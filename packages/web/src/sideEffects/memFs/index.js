@@ -56,7 +56,7 @@ const makeMemFsSideEffect = (params) => {
           // this from inputs typically like drag & drop data
           rawData = data
           filesAndFolders = await walkFileTree(data)
-          commandResponses.callback({ type, id, data: filesAndFolders })      
+          commandResponses.callback({ type, id, data: filesAndFolders })
         } else {
           console.log('data', data)
           filesAndFolders = data
@@ -86,7 +86,7 @@ const makeMemFsSideEffect = (params) => {
         add,
         write
       }
-      const commandHandler = commandHandlers[type] || commandHandlers['error']
+      const commandHandler = commandHandlers[type] || commandHandlers.error
       commandHandler()
     })
   }

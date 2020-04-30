@@ -9,9 +9,9 @@ const polygonsFromCsg = csg => csg.polygons.map(x => x.vertices.map(vert => ([ve
 test.failing('translate simple gcode file to jscad code (NOT IMPLEMENTED!!!)', function (t) {
   const inputPath = path.resolve(filesPath, 'gcode/cube_10mm.gcode')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
-  const expected = ``
+  const expected = ''
 
-  const observed = deserializer.deserialize(inputFile, undefined, {output: 'jscad', addMetaData: false})
+  const observed = deserializer.deserialize(inputFile, undefined, { output: 'jscad', addMetaData: false })
   t.deepEqual(observed, expected)
 })
 
@@ -19,15 +19,15 @@ test.failing('deserialize simple gcode to cag/csg objects (NOT IMPLEMENTED!!!)',
   const inputPath = path.resolve(filesPath, 'gcode/cube_10mm.gcode')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
-  const observed = deserializer.deserialize(inputFile, undefined, {output: 'csg', addMetaData: false})
+  const observed = deserializer.deserialize(inputFile, undefined, { output: 'csg', addMetaData: false })
   t.deepEqual(observed.polygons.length, 6)
 
   const observedVertices = polygonsFromCsg(observed)
-  const expectedVertices = [ [ [ 1, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 0 ], [ 0, 1, 0 ] ],
-  [ [ 0, 1, 1 ], [ 0, 1, 0 ], [ 0, 0, 0 ], [ 0, 0, 1 ] ],
-  [ [ 1, 1, 1 ], [ 1, 1, 0 ], [ 0, 1, 0 ], [ 0, 1, 1 ] ],
-  [ [ 1, 1, 0 ], [ 1, 1, 1 ], [ 1, 0, 1 ], [ 1, 0, 0 ] ],
-  [ [ 1, 0, 0 ], [ 1, 0, 1 ], [ 0, 0, 1 ], [ 0, 0, 0 ] ],
-  [ [ 1, 0, 1 ], [ 1, 1, 1 ], [ 0, 1, 1 ], [ 0, 0, 1 ] ] ]
+  const expectedVertices = [[[1, 1, 0], [1, 0, 0], [0, 0, 0], [0, 1, 0]],
+    [[0, 1, 1], [0, 1, 0], [0, 0, 0], [0, 0, 1]],
+    [[1, 1, 1], [1, 1, 0], [0, 1, 0], [0, 1, 1]],
+    [[1, 1, 0], [1, 1, 1], [1, 0, 1], [1, 0, 0]],
+    [[1, 0, 0], [1, 0, 1], [0, 0, 1], [0, 0, 0]],
+    [[1, 0, 1], [1, 1, 1], [0, 1, 1], [0, 0, 1]]]
   t.deepEqual(observedVertices, expectedVertices)
 })

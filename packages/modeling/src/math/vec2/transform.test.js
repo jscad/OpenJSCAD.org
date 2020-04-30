@@ -46,9 +46,9 @@ test('vec2: transform() called with two paramerters should return a vec2 with co
   const r = (90 * 0.017453292519943295)
   const rotateZMatrix = [
     Math.cos(r), -Math.sin(r), 0, 0,
-    Math.sin(r),  Math.cos(r), 0, 0,
-              0,            0, 1, 0,
-              0,            0, 0, 1
+    Math.sin(r), Math.cos(r), 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1
   ]
 
   const obs5 = transform(rotateZMatrix, [1, 2])
@@ -106,9 +106,9 @@ test('vec2: transform() called with three paramerters should update a vec2 with 
   const r = (90 * 0.017453292519943295)
   const rotateZMatrix = [
     Math.cos(r), -Math.sin(r), 0, 0,
-    Math.sin(r),  Math.cos(r), 0, 0,
-              0,            0, 1, 0,
-              0,            0, 0, 1
+    Math.sin(r), Math.cos(r), 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1
   ]
 
   const obs5 = fromValues(0, 0)

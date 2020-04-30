@@ -20,8 +20,8 @@ function runBenchMark (runFn, name, runs = 10) {
 
 function spawnBenchMark (path, runs = 100) {
   const usage = require('usage')
-  let cpuNumbers = []
-  let memNumbers = []
+  const cpuNumbers = []
+  const memNumbers = []
 
   const process = child_process.spawn('node', [path, runs])
 
@@ -31,7 +31,7 @@ function spawnBenchMark (path, runs = 100) {
       if (err) {
         console.log('error?', err)
       }
-      let { cpu, memory } = result
+      const { cpu, memory } = result
       cpuNumbers.push(cpu)
       memNumbers.push(memory / (1024 * 1024))
       // console.log('result' + path, 'memory:',memory/1000, 'cpu:', cpu)
@@ -62,7 +62,7 @@ const runPass = (runFn, runs, name) => {
   let elapsed
   let start
 
-  let numbers = []
+  const numbers = []
   for (var i = 0; i < runs; i++) {
     // decache(moduleName)
 

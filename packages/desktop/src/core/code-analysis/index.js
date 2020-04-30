@@ -6,7 +6,8 @@ const astUtils = require('esprima-ast-utils')
 const astParents = require('./ast-parents')
 console.log('astUtils', astUtils)
 
-const {isCube, isDifference, isSphere, isInclude,
+const {
+  isCube, isDifference, isSphere, isInclude,
   extractSimpleArgs
 } = require('./utils')
 
@@ -30,7 +31,7 @@ function astFromSource (source, options) {
 function csgTree (ast) {
   console.log('foo')
   ast = astParents(ast)
-  let results = []
+  const results = []
   let currentItem
   let textStuff = ''
   estraverse.traverse(ast, {
@@ -41,7 +42,7 @@ function csgTree (ast) {
       if (isDifference(node)) {
         // console.log('difference', node)
         if (!currentItem) {
-          currentItem = {type: 'difference', args: [], children: []}
+          currentItem = { type: 'difference', args: [], children: [] }
           textStuff += 'difference('
         } else {
 
@@ -49,7 +50,7 @@ function csgTree (ast) {
       }
       if (isCube(node)) {
         const args = extractSimpleArgs(node)
-        let leaf = {type: 'cube', args}
+        const leaf = { type: 'cube', args }
         if (currentItem) {
           currentItem.children.push(leaf)
         }
@@ -59,7 +60,7 @@ function csgTree (ast) {
       }
       if (isSphere(node)) {
         const args = extractSimpleArgs(node)
-        let leaf = {type: 'sphere', args}
+        const leaf = { type: 'sphere', args }
         if (currentItem) {
           currentItem.children.push(leaf)
         }
@@ -85,14 +86,14 @@ function replaceIncludesInAst (ast, replacement = '') {
     enter: function (node, parent) {
       if (isInclude(node)) {
         if (node.arguments && arguments.length > 0) {
-          return {type: 'Literal', value: replacement}
+          return { type: 'Literal', value: replacement }
         }
         return estraverse.VisitorOption.Skip
       }
     }
   })
 
-  return astring.generate(result, {indent: '  ', lineEnd: '\n'})
+  return astring.generate(result, { indent: '  ', lineEnd: '\n' })
 }
 /*
 var gen = require('escodegen').generate

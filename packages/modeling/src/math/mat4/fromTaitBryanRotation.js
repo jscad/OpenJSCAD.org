@@ -13,26 +13,26 @@ const clone = require('./clone')
  */
 const fromTaitBryanRotation = (yaw, pitch, roll) => {
   // precompute sines and cosines of Euler angles
-  const sy = Math.sin(yaw);
-  const cy = Math.cos(yaw);
-  const sp = Math.sin(pitch);
-  const cp = Math.cos(pitch);
-  const sr = Math.sin(roll);
-  const cr = Math.cos(roll);
+  const sy = Math.sin(yaw)
+  const cy = Math.cos(yaw)
+  const sp = Math.sin(pitch)
+  const cp = Math.cos(pitch)
+  const sr = Math.sin(roll)
+  const cr = Math.cos(roll)
 
   // create and populate rotation matrix
   // left-hand-rule rotation
-  //const els = [
+  // const els = [
   //  cp*cy, sr*sp*cy - cr*sy, sr*sy + cr*sp*cy, 0,
   //  cp*sy, cr*cy + sr*sp*sy, cr*sp*sy - sr*cy, 0,
   //  -sp, sr*cp, cr*cp, 0,
   //  0, 0, 0, 1
-  //]
+  // ]
   // right-hand-rule rotation
   const els = [
-    cp*cy, cp*sy, -sp, 0,
-    sr*sp*cy - cr*sy, cr*cy + sr*sp*sy, sr*cp, 0,
-    sr*sy + cr*sp*cy, cr*sp*sy - sr*cy, cr*cp, 0,
+    cp * cy, cp * sy, -sp, 0,
+    sr * sp * cy - cr * sy, cr * cy + sr * sp * sy, sr * cp, 0,
+    sr * sy + cr * sp * cy, cr * sp * sy - sr * cy, cr * cp, 0,
     0, 0, 0, 1
   ]
   return clone(els)

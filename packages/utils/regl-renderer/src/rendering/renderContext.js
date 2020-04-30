@@ -2,7 +2,7 @@ const mat4 = require('gl-mat4')
 const defaults = require('./renderDefaults')
 
 const getPropValue = () => {
-  
+
 }
 
 /** function that injects most of the uniforms into the regl context:

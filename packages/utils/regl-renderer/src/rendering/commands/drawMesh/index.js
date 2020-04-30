@@ -26,7 +26,7 @@ const drawMesh = function (regl, params = { extras: {} }) {
     return isOdd ? 'front' : 'back'
   } : 'back'
 
-  let vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
+  const vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
   let frag = hasVertexColors ? require('./vColorShaders').frag : require('./meshShaders').frag
 
   if (type === '2d') {

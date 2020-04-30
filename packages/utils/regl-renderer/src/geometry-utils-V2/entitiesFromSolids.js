@@ -29,7 +29,8 @@ const entitiesFromSolids = (params, solids) => {
       geometry = geom3ToGeometries(solid, {
         smoothLighting: smoothNormals,
         normalThreshold: 0.3,
-        color: meshColor })
+        color: meshColor
+      })
     }
 
     // geometry = flatten(geometries)// FXIME : ACTUALLY deal with arrays since a single design can

@@ -43,8 +43,8 @@ const codify = (amf, data) => {
   let code = ''
 
   // hack due to lack of this in array map()
-  let objects = amf.objects
-  let materials = data.amfMaterials
+  const objects = amf.objects
+  const materials = data.amfMaterials
 
   // convert high level definitions
   // this ~= data
@@ -75,17 +75,17 @@ const main = () => {
 `
 
   for (let i = 0; i < objects.length; i++) {
-    let obj = objects[i]
+    const obj = objects[i]
     if (obj.type === 'object') {
       code += `  geometries.push(createObject${obj.id}())\n`
     }
   }
 
-  code += `  return geometries\n}\n`
+  code += '  return geometries\n}\n'
 
   objects.forEach(createDefinition)
 
-  code += `module.exports = {main}\n`
+  code += 'module.exports = {main}\n'
 
   return code
 }

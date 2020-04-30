@@ -124,7 +124,7 @@ const actions = ({ sources }) => {
         const command = event.target.dataset.command
         const args = event.target.dataset.args
 
-        let updated = Object.assign({}, acc, { command, args, inProgress, done })
+        const updated = Object.assign({}, acc, { command, args, inProgress, done })
         if (compositeKey !== undefined && compositeKey !== '') {
           updated.key = compositeKey
           updated.tmpKey = compositeKey
