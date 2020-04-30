@@ -82,11 +82,6 @@ const transformSources = (options, filesAndFolders) => {
 
       return transformedEntry
     }
-    if (entry.children) {
-      entry.children = entry.children.map(function (childEntry) {
-        return updateEntry(childEntry)
-      })
-    }
     return entry
   }
 

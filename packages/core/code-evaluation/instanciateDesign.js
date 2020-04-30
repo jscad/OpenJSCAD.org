@@ -4,7 +4,7 @@ const isGeom2 = require('@jscad/modeling').geometry.geom2.isA
 const isGeom3 = require('@jscad/modeling').geometry.geom3.isA
 const isPath2 = require('@jscad/modeling').geometry.path2.isA
 
-const { toArray } = require('@jscad/array-utils')
+const { flatten, toArray } = require('@jscad/array-utils')
 
 // const toCompactBinary = require('./toCompactTest')
 const isResultSolid = (rawResults) => (rawResults.length > 0 && (isGeom3(rawResults[0]) || isGeom2(rawResults[0]) || isPath2(rawResults[0]) ))
@@ -60,7 +60,7 @@ const instanciateDesign = (rootModule, parameterValues, options) => {
   const { vtreeMode, inputLookup, inputLookupCounts, serialize } = options
   // deal with the actual solids generation
   let solids
-  let rawResults = toArray(rootModule.main(parameterValues))
+  let rawResults = flatten(toArray(rootModule.main(parameterValues)))
 
   const forcedNOVtreeMode = false // FIXME: disabling Vtree mode for now until more V2 progress is done
   if (forcedNOVtreeMode) {
