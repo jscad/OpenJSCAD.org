@@ -12,7 +12,7 @@ module.exports = function makeStorageSideEffect ({ name }) {
     }
 
     if (!enabled) {
-      commandResponses.callback({ type, id, error: new Error('Local storage not supported in this environment!') })
+      commandResponses.callback({ type: undefined, id: undefined, error: new Error('Local storage not supported in this environment!') })
     } else {
       if (outToStore$) {
         outToStore$.forEach(function (command) {

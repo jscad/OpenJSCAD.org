@@ -43,8 +43,8 @@ function vectorChar (options, char) {
   const segments = []
   let polyline = []
   for (let i = 0, il = glyph.length; i < il; i += 2) {
-    gx = ratio * glyph[i] + xOffset
-    gy = ratio * glyph[i + 1] + yOffset + extrudeYOffset
+    const gx = ratio * glyph[i] + xOffset
+    const gy = ratio * glyph[i + 1] + yOffset + extrudeYOffset
     if (glyph[i] !== undefined) {
       polyline.push([gx, gy])
       continue

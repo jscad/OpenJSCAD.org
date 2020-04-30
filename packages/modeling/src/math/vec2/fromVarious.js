@@ -8,24 +8,24 @@ const { IsFloat } = require('../utils')
  */
 const fromVarious = function (...params) {
   if (params.length === 2) {
-    this._x = parseFloat(x)
-    this._y = parseFloat(y)
+    this._x = parseFloat(params[0])
+    this._y = parseFloat(params[1])
   } else {
     var ok = true
     if (params.length === 1) {
-      if (typeof (x) === 'object') {
-        if (x instanceof Vector2D) {
-          this._x = x._x
-          this._y = x._y
-        } else if (x instanceof Array) {
-          this._x = parseFloat(x[0])
-          this._y = parseFloat(x[1])
-        } else if (('x' in x) && ('y' in x)) {
-          this._x = parseFloat(x.x)
-          this._y = parseFloat(x.y)
+      if (typeof params === 'object') {
+        if (params instanceof Vector2D) {
+          this._x = params._x
+          this._y = params._y
+        } else if (params instanceof Array) {
+          this._x = parseFloat(params[0])
+          this._y = parseFloat(params[1])
+        } else if (('x' in params) && ('y' in params)) {
+          this._x = parseFloat(params.x)
+          this._y = parseFloat(params.y)
         } else ok = false
       } else {
-        var v = parseFloat(x)
+        var v = parseFloat(params)
         this._x = v
         this._y = v
       }
