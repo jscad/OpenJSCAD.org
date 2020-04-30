@@ -23,7 +23,7 @@ TBD
 
 const { geometry, utils } = require('@jscad/modeling')
 
-const { ensureManifoldness } = require('@jscad/io-utils')
+// const { ensureManifoldness } = require('@jscad/io-utils')
 
 const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('./autocad_AC2017')
 

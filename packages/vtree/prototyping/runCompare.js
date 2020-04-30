@@ -1,5 +1,5 @@
 const generate = require('../core/geometry-generator-cached')
-const decache = require('decache')
+// const decache = require('decache')
 const { toArray } = require('@jscad/array-utils')
 
 function runCompare (basePath, runs = 10) {

@@ -16,7 +16,7 @@ Notes:
      SVG GROUP containing a SVG PATH for each path
 */
 
-const { color, geometry, math, measurements, utils } = require('@jscad/modeling')
+const { geometry, math, measurements, utils } = require('@jscad/modeling')
 
 const stringify = require('onml/lib/stringify')
 
@@ -127,7 +127,7 @@ const convertGeom2 = (object, offsets, options) => {
 
 const convertToContinousPath = (paths, offset, options) => {
   let instructions = ''
-  paths.forEach((path) => instructions += convertPath(path, offset, options))
+  paths.forEach((path) => (instructions += convertPath(path, offset, options)))
   let continouspath = ['path', { d: instructions }]
   if (paths.length > 0) {
     const path0 = paths[0]

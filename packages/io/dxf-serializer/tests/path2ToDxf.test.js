@@ -18,8 +18,8 @@ test('2D Path to DXF LWPOLYLINE', t => {
   const exp2 = [lwpolyline0]
   t.deepEqual(obs2, exp2)
 
-  const path3 = geometry.path2.fromPoints({}, [[10, -20]])
   // TODO
+  // const path3 = geometry.path2.fromPoints({}, [[10, -20]])
   // path3 = path3.appendBezier([[10, -10], [25, -10], [25, -20]], { resolution: 8 })
   // t.is(path3.points.length, 6)
 

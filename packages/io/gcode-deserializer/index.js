@@ -4,7 +4,7 @@ function deserialize (gcode, filename, options) {
   // http://reprap.org/wiki/G-code
   const defaults = { version: '0.0.0', addMetaData: true, output: 'jscad' }
   options = Object.assign({}, defaults, options)
-  const { version, output, addMetaData } = options
+  const { version, addMetaData } = options
   // just as experiment ...
   var l = gcode.split(/[\n]/) // for now just GCODE ASCII
   var srci = ''
@@ -17,7 +17,6 @@ function deserialize (gcode, filename, options) {
   var layers = 0
   var lh = 0.35
   var lz = 0
-  var ld = 0
 
   for (var i = 0; i < l.length; i++) {
     var val = ''
@@ -83,7 +82,6 @@ function deserialize (gcode, filename, options) {
       lpos.Z = pos.Z
       lpos.E = pos.E
     }
-    ld = d
     options && options.statusCallback && options.statusCallback({ progress: 100 * i / l.length })
   }
 

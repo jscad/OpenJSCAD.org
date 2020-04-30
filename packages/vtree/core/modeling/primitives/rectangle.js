@@ -4,7 +4,7 @@
 // anything before that: formal
 
 const rectangle = (options) => {
-  
+
 }
 
 // FIXME: FROM V1

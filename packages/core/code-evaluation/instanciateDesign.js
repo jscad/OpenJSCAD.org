@@ -91,12 +91,12 @@ const instanciateDesign = (rootModule, parameterValues, options) => {
   const { vtreeMode, serialize } = options
   // deal with the actual solids generation
   let solids
-  let rawResults = flatten(toArray(rootModule.main(parameterValues)))
+  const rawResults = flatten(toArray(rootModule.main(parameterValues)))
 
   if (vtreeMode) {
     console.log('input lookup', options.lookup)
     let lookup = lookupFromCompactBinary(options.lookup)
-    let lookupCounts = options.lookupCounts || {}
+    const lookupCounts = options.lookupCounts || {}
 
     console.log('lookup after', lookup)
     const start = new Date()

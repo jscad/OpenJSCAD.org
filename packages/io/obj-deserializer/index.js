@@ -124,14 +124,14 @@ const objectify = (points, groups, options) => {
 
 const translatePoints = (points) => {
   let code = '  let points = [\n'
-  points.forEach((point) => code += `    [${point}],\n`)
+  points.forEach((point) => (code += `    [${point}],\n`))
   code += '  ]'
   return code
 }
 
 const translateFaces = (faces) => {
   let code = '  let faces = [\n'
-  faces.forEach((face) => code += `    [${face}],\n`)
+  faces.forEach((face) => (code += `    [${face}],\n`))
   code += '  ]'
   return code
 }
@@ -151,7 +151,7 @@ const translateColors = (colors) => {
 
 const translateGroupsToCalls = (groups) => {
   let code = ''
-  groups.forEach((group, index) => code += `    group${index}(points), // ${group.name}\n`)
+  groups.forEach((group, index) => (code += `    group${index}(points), // ${group.name}\n`))
   return code
 }
 

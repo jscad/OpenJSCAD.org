@@ -48,7 +48,12 @@
     "logo": "https://opencollective.com/openjscad/logo.txt"
   },
   "standard": {
-    "ignore": [ "**/dist/", "**/old/" ],
+    "ignore": [
+      "**/dist/",
+      "**/old/",
+      "**/examples/",
+      "**/io/scad-deserializer"
+    ],
     "env": {
         "browser": true,
         "node": true

@@ -1,5 +1,4 @@
-const { toArray } = require('@jscad/array-utils')
-const decache = require('decache')
+// const decache = require('decache')
 const child_process = require('child_process')
 
 function runBenchMark (runFn, name, runs = 10) {
@@ -82,17 +81,17 @@ const median = sequence => {
   return sequence[Math.ceil(sequence.length / 2)]
 }
 
-const samePolygonCount = (a, b) => {
-  if (a.length !== b.length) {
-    return false
-  }
-  a.forEach((polycount, index) => {
-    if (polycount !== b[index]) {
-      return false
-    }
-  })
-  return true
-}
+// const samePolygonCount = (a, b) => {
+//   if (a.length !== b.length) {
+//     return false
+//   }
+//   a.forEach((polycount, index) => {
+//     if (polycount !== b[index]) {
+//       return false
+//     }
+//   })
+//   return true
+// }
 
 module.exports = {
   runBenchMark,
