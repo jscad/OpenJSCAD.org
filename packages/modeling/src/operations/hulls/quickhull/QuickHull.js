@@ -203,7 +203,6 @@ class QuickHull {
    * @return {number[]} The min/max vertices in the x,y,z directions
    */
   computeExtremes () {
-    const me = this
     const min = []
     const max = []
 
@@ -259,7 +258,7 @@ class QuickHull {
   createInitialSimplex () {
     const vertices = this.vertices
     const [min, max] = this.computeExtremes()
-    let v0, v1, v2, v3
+    let v2, v3
     let i, j
 
     // Find the two vertices with the greatest 1d separation
@@ -275,8 +274,8 @@ class QuickHull {
         indexMax = i
       }
     }
-    v0 = min[indexMax]
-    v1 = max[indexMax]
+    const v0 = min[indexMax]
+    const v1 = max[indexMax]
 
     // the next vertex is the one farthest to the line formed by `v0` and `v1`
     maxDistance = 0
@@ -743,11 +742,9 @@ class QuickHull {
   }
 
   build () {
-    let iterations = 0
     let eyeVertex
     this.createInitialSimplex()
     while ((eyeVertex = this.nextVertexToAdd())) {
-      iterations += 1
       this.addVertexToHull(eyeVertex)
     }
     this.reindexFaceAndVertices()

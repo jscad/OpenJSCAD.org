@@ -1,7 +1,5 @@
 const flatten = require('../../utils/flatten')
 
-const vec2 = require('../../math/vec2')
-
 const geom2 = require('../../geometry/geom2')
 
 const hullPoints2 = require('./hullPoints2')

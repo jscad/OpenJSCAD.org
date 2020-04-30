@@ -1,7 +1,5 @@
 const { EPS } = require('../math/constants')
 
-const { radToDeg, degToRad } = require('../math/utils')
-
 const vec2 = require('../math/vec2')
 
 const path2 = require('../geometry/path2')

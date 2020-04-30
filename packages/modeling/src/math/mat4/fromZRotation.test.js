@@ -1,5 +1,5 @@
 const test = require('ava')
-const { fromZRotation, toString } = require('./index')
+const { fromZRotation } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 

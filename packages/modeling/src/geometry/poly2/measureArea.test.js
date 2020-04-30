@@ -2,8 +2,6 @@ const test = require('ava')
 
 const { measureArea, create } = require('./index')
 
-const { nearlyEqual } = require('../../../test/helpers/index')
-
 test('poly2: measureArea() should return correct values', (t) => {
   const ply1 = create()
   const ret1 = measureArea(ply1)

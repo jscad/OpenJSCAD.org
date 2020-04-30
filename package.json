@@ -48,6 +48,10 @@
     "logo": "https://opencollective.com/openjscad/logo.txt"
   },
   "standard": {
-    "ignore": [ "**/dist/", "**/old/" ]
+    "ignore": [ "**/dist/", "**/old/" ],
+    "env": {
+        "browser": true,
+        "node": true
+    }
   }
 }

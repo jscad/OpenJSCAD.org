@@ -73,7 +73,7 @@ function setUpEditor (element, gProcessor) {
 
   function runExec (editor) {
     var src = editor.getValue()
-    if (src.match(/^\/\/\!OpenSCAD/i)) {
+    if (src.match(/^\/\/!OpenSCAD/i)) {
       editor.getSession().setMode('ace/mode/scad')
       // FIXME test for the global function first
       src = openscadOpenJscadParser.parse(src)
@@ -202,7 +202,7 @@ function editorWrapper (state, editorCallbackToStream) {
 
   const source = `
   const main = (params) => {
-    
+
   }
   module.exports = {main}
   `

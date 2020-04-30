@@ -258,7 +258,7 @@ test.failing('union of geom2 with closing issues #15', t => {
   // geom2.toOutlines(d)
 
   const obs = union(c, d)
-  const outlines = geom2.toOutlines(obs)
+  // const outlines = geom2.toOutlines(obs)
   const pts = geom2.toPoints(obs)
   const exp = [
     new Float32Array([-49.105865478515625, -15.276041984558105]),

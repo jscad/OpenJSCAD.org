@@ -3,7 +3,6 @@ const fs = require('fs')
 const { getDesignEntryPoint } = require('@jscad/core/code-loading/requireDesignUtilsFs')
 const { supportedInputExtensions, supportedOutputExtensions, supportedOutputFormats } = require('@jscad/io/formats')
 
-const version = require('../package.json').version
 const env = require('./env')
 
 const parseArgs = args => {
@@ -46,7 +45,7 @@ const parseArgs = args => {
       outputFormat = args[++i]
     } else if (args[i].match(/^-o(\S.+)/)) { // -o<output>
       outputFile = args[i]
-      outputFile = outputFile.replace(/^\-o(\S+)$/, '$1')
+      outputFile = outputFile.replace(/^-o(\S+)$/, '$1')
     } else if (args[i] === '-o') { // -o <output>
       outputFile = args[++i]
     } else if (args[i] === '-add-metadata') { // -metadata true/false

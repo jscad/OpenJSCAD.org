@@ -218,7 +218,6 @@ PolygonTreeNode.prototype = {
   clear: function () {
     let children = [this]
     const queue = [children]
-    let l
     for (let i = 0; i < queue.length; ++i) { // queue size can change in loop, don't cache length
       children = queue[i]
       const l = children.length

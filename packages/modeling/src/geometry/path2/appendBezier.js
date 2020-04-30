@@ -89,17 +89,17 @@ const appendBezier = (options, geometry) => {
   }
 
   const getPointForT = (t) => {
-    let t_k = 1 // = pow(t,k)
-    let one_minus_t_n_minus_k = Math.pow(1 - t, bezierOrder) // = pow( 1-t, bezierOrder - k)
-    const inv_1_minus_t = (t !== 1) ? (1 / (1 - t)) : 1
+    let tk = 1 // = pow(t,k)
+    let oneMinusTNMinusK = Math.pow(1 - t, bezierOrder) // = pow( 1-t, bezierOrder - k)
+    const invOneMinusT = (t !== 1) ? (1 / (1 - t)) : 1
     const point = vec2.create() // 0, 0, 0
     for (let k = 0; k <= bezierOrder; ++k) {
-      if (k === bezierOrder) one_minus_t_n_minus_k = 1
-      const bernsteinCoefficient = binomials[k] * t_k * one_minus_t_n_minus_k
+      if (k === bezierOrder) oneMinusTNMinusK = 1
+      const bernsteinCoefficient = binomials[k] * tk * oneMinusTNMinusK
       const derivativePoint = vec2.scale(bernsteinCoefficient, controlPoints[k])
       vec2.add(point, point, derivativePoint)
-      t_k *= t
-      one_minus_t_n_minus_k *= inv_1_minus_t
+      tk *= t
+      oneMinusTNMinusK *= invOneMinusT
     }
     return point
   }

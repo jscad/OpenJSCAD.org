@@ -4,10 +4,6 @@ const path = require('path')
 const { execSync } = require('child_process')
 const fs = require('fs')
 
-function almostEquals (t, observed, expected, precision) {
-  t.is(Math.abs(expected - observed) < precision, true)
-}
-
 test.afterEach.always(t => {
   // remove files
   try {

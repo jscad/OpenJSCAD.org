@@ -9,6 +9,4 @@ test('vec3: fromValues() should return a new vec3 with correct values', (t) => {
 
   const obs2 = fromValues(0, 1, -5)
   t.true(compareVectors(obs2, [0, 1, -5]))
-
-  const str1 = toString(obs2)
 })

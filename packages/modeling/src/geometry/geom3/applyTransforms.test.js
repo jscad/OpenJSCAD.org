@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { fromPoints, toString } = require('./index')
+const { fromPoints } = require('./index')
 
 const applyTransforms = require('./applyTransforms')
 

@@ -1,5 +1,5 @@
 const test = require('ava')
-const { fromPointAndDirection, toString } = require('./index')
+const { fromPointAndDirection } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
@@ -34,6 +34,4 @@ test('line3: fromPointAndDirection() should return a new line3 with correct valu
   dir = obs[1]
   t.true(compareVectors(pnt, [0, 5, 0]))
   t.true(compareVectors(dir, [NaN, NaN, NaN]))
-
-  const str = toString(obs)
 })

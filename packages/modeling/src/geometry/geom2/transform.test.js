@@ -37,7 +37,7 @@ test('transform: adjusts the transforms of geom2', (t) => {
     [new Float32Array([-5, 6]), new Float32Array([-6, 5])]
   ]
   expected.transforms = mat4.identity()
-  const sides = toSides(another)
+  toSides(another)
   t.deepEqual(another, expected)
 
   // expect lazy transform, i.e. only the transforms change

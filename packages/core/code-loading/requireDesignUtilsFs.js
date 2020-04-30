@@ -4,7 +4,7 @@ const { toArray } = require('@jscad/array-utils')
 // NOTE/ path.parse is NOT included by browserify & co , hence this function ...
 // https://github.com/substack/path-browserify/pull/3
 const splitPathRe =
-    /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/
+    /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^/]+?|)(\.[^./]*|))(?:[/]*)$/
 const splitPath = filename => {
   return splitPathRe.exec(filename).slice(1)
 }

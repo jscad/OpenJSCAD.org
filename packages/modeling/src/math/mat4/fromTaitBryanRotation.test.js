@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { fromTaitBryanRotation, toString } = require('./index')
+const { fromTaitBryanRotation } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 

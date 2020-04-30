@@ -1,5 +1,5 @@
 const test = require('ava')
-const { fromRotation, toString } = require('./index')
+const { fromRotation } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
@@ -35,5 +35,4 @@ test('mat4: fromRotation() called with out parameter should return a new mat4 wi
   const ret3 = fromRotation(mat3, -rotation, [0, 0, 1])
   t.true(compareVectors(mat3, [0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]))
   t.true(compareVectors(ret3, [0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]))
-// console.log(toString(mat3))
 })

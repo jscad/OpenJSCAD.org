@@ -58,7 +58,7 @@ const getGroups = (data, options) => {
   const handleF = (command, values) => {
     // values : v/vt/vn
     const facerefs = values.map((value) => {
-      const refs = value.match(/[0-9\+\-eE]+/g)
+      const refs = value.match(/[0-9+\-eE]+/g)
       let ref = parseInt(refs[0])
       if (ref < 0) {
         ref = positions.length + ref

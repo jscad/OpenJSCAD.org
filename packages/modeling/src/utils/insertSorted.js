@@ -8,8 +8,7 @@ const insertSorted = (array, element, comparefunc) => {
     const testindex = Math.floor((leftbound + rightbound) / 2)
     const testelement = array[testindex]
     const compareresult = comparefunc(element, testelement)
-    if (compareresult > 0) // element > testelement
-    {
+    if (compareresult > 0) { // element > testelement
       leftbound = testindex + 1
     } else {
       rightbound = testindex

@@ -14,10 +14,7 @@ const fromVarious = function (...params) {
     var ok = true
     if (params.length === 1) {
       if (typeof params === 'object') {
-        if (params instanceof Vector2D) {
-          this._x = params._x
-          this._y = params._y
-        } else if (params instanceof Array) {
+        if (params instanceof Array) {
           this._x = parseFloat(params[0])
           this._y = parseFloat(params[1])
         } else if (('x' in params) && ('y' in params)) {

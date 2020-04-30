@@ -9,7 +9,7 @@ test('line2: closestPoint() should return proper values', (t) => {
   t.true(compareVectors(x1, [0, 0]))
   const x2 = closestPoint([0, 1], line1)
   t.true(compareVectors(x2, [0, 0]))
-  const x3 = closestPoint([6, 0], line1)
+  // const x3 = closestPoint([6, 0], line1)
   // t.true(compareVectors(x3, [6, -0])) // rounding errors
 
   const line2 = fromPoints([-5, 5], [5, -5])

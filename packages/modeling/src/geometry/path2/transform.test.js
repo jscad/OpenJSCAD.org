@@ -1,8 +1,6 @@
 const test = require('ava')
 
-const { degToRad } = require('../../math/utils')
 const mat4 = require('../../math/mat4')
-const vec2 = require('../../math/vec2')
 
 const { transform, fromPoints, toPoints } = require('./index')
 
@@ -40,7 +38,7 @@ test('transform: adjusts the transforms of path', t => {
     new Float32Array([-6, 5])
   ]
   expected.transforms = mat4.identity()
-  const updatedpoints = toPoints(another)
+  toPoints(another)
   t.deepEqual(another, expected)
 
   // expect lazy transform, i.e. only the transforms change

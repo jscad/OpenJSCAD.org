@@ -22,7 +22,7 @@ const generateOutputData = (source, params, options) => {
     addMetaData: true
   }
   options = Object.assign({}, defaults, options)
-  const { outputFile, outputFormat, inputFile, inputFormat, version, inputIsDirectory } = options
+  const { outputFormat, inputFile, inputFormat, inputIsDirectory } = options
 
   options.filename = inputFile // for deserializers
 

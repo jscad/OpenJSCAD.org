@@ -1,5 +1,3 @@
-const vec2 = require('../../math/vec2')
-
 const create = require('./create')
 const toSides = require('./toSides')
 

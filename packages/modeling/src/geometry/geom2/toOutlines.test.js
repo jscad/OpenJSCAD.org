@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { create, toString } = require('./index')
+const { create } = require('./index')
 
 const { comparePoints } = require('../../../test/helpers')
 

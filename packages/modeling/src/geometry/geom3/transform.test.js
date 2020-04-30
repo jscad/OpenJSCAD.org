@@ -48,7 +48,7 @@ test('transform: Adjusts the transforms of a populated geom3', (t) => {
     }
   ]
   expected.transforms = mat4.identity()
-  const polygons = toPolygons(another)
+  toPolygons(another)
   t.deepEqual(another, expected)
 
   // expect lazy transform, i.e. only the transforms change

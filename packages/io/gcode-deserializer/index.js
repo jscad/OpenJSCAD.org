@@ -34,12 +34,12 @@ function deserialize (gcode, filename, options) {
       } else if (c[j].match(/M(\d+)/)) {
         const n = parseInt(RegExp.$1)
         if (n === 104 || n === 109) { k = 'temp' }
-      } else if (c[j].match(/S([\d\.]+)/)) {
+      } else if (c[j].match(/S([\d.]+)/)) {
         var v = parseInt(RegExp.$1)
         if (k !== undefined) {
           val[k] = v
         }
-      } else if (c[j].match(/([XYZE])([\-\d\.]+)/)) {
+      } else if (c[j].match(/([XYZE])([-\d.]+)/)) {
         var a = RegExp.$1
         const v = parseFloat(RegExp.$2)
         if (pos.type === 'abs') {

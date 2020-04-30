@@ -1,5 +1,5 @@
 const test = require('ava')
-const { fromYRotation, toString } = require('./index')
+const { fromYRotation } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 

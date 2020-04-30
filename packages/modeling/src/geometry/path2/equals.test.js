@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { equals, fromPoints, toString } = require('./index')
+const { equals, fromPoints } = require('./index')
 
 test('equals: two paths with different points are not equal', t => {
   const p1 = fromPoints({ closed: false }, [[0, 0], [2, 0], [2, 1]])
