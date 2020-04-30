@@ -147,7 +147,7 @@ const reducers = {
    * @returns {Object} the updated state
    */
   setDesignSolids: (state, { solids, lookup, lookupCounts }) => {
-    // console.log('design: set solids')
+    console.log('design: set solids', lookup, lookupCounts)
     solids = solids || []
     lookup = lookup || {}
     lookupCounts = lookupCounts || {}
@@ -479,16 +479,21 @@ const actions = ({ sources }) => {
           if (event.data instanceof Object) {
             const start = new Date()
 
-            /* FIXME: update later
-            const { CAG, CSG } = require('@jscad/csg')
             const solids = event.data.solids.map(function (object) {
               console.log('setting solids from worker', object)
-              if (object['class'] === 'CSG') { return CSG.fromCompactBinary(object) }
-              if (object['class'] === 'CAG') { return CAG.fromCompactBinary(object) }
-            })*/
-            const solids = event.data.solids.map(solid => JSON.parse(solid))
-            const { lookupCounts, lookup } = event.data 
-            
+              if (object[0] === 0) { // Geom2
+                return require('@jscad/modeling').geometry.geom2.fromCompactBinary(object)
+              }
+              if (object[0] === 1) { // Geom3
+                return require('@jscad/modeling').geometry.geom3.fromCompactBinary(object)
+              }
+              if (object[0] === 2) { // Path2
+                return require('@jscad/modeling').geometry.path2.fromCompactBinary(object)
+              }
+            })
+            // const solids = event.data.solids.map(solid => JSON.parse(solid))
+            const { lookupCounts, lookup } = event.data
+            console.log('SOLIDS', solids)
             console.warn(`elapsed for geometry gen ${new Date() - start}`)
             return { solids, lookup, lookupCounts }
           }
