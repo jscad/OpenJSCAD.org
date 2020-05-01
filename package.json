@@ -52,7 +52,9 @@
       "**/dist/",
       "**/old/",
       "**/examples/",
-      "**/io/scad-deserializer"
+      "**/ui/csg-viewer",
+      "**/io/scad-deserializer",
+      "**/io/gcode-deserializer"
     ],
     "env": {
         "browser": true,
