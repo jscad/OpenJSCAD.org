@@ -1,14 +1,12 @@
-const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
-const { head } = require('@jscad/array-utils')
-const makeLogger = require('../../utils/logger')
+// const makeLogger = require('../../utils/logger')
 
 const makeFileDialog = (params) => {
-  const defaults = {
-    logging: true
-  }
-  const { logging } = Object.assign({}, defaults, params)
-  const log = makeLogger({ enabled: logging })
+  // const defaults = {
+  //   logging: true
+  // }
+  // const { logging } = Object.assign({}, defaults, params)
+  // const log = makeLogger({ enabled: logging })
 
   const commandResponses = callBackToStream()
 

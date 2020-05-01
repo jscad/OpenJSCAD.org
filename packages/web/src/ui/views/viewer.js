@@ -96,9 +96,7 @@ module.exports = function viewer (state, i18n) {
       })
 
     // some live animation example
-    let tick = 0
     const updateAndRender = () => {
-      tick += 0.01
       const updatedA = orbitControls.update({ controls, camera })
       controls = { ...controls, ...updatedA.controls }
       camera.position = updatedA.camera.position

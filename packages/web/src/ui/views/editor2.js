@@ -1,6 +1,5 @@
 const CodeMirror = require('codemirror')
 const html = require('bel')
-const javascript = require('codemirror/mode/javascript/javascript.js')
 require('codemirror/addon/hint/show-hint')
 require('codemirror/addon/hint/javascript-hint')
 

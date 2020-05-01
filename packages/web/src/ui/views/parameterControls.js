@@ -113,7 +113,7 @@ const createGroupControl = definition => {
   }
   const { expanded, caption, className } = Object.assign({}, defaults, definition)
   console.log('createGroupControl', expanded, caption, className)
-  const text = definition.caption ? definition.caption : definition.name
+  // const text = definition.caption ? definition.caption : definition.name
   const groupOpenIcon = html`
       <svg  class="icon icon-open feather feather-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="6 9 12 15 18 9"/></svg>`
   const groupClosedIcon = html`
@@ -243,8 +243,8 @@ const createControl = (definition, prevValue) => {
   } else {
     controlValue = typeData.initial
   }
-  let control = html`<input 
-    type=${typeData.control} value=${controlValue} checked=${'checked' in definition ? controlValue : ''}> 
+  let control = html`<input
+    type=${typeData.control} value=${controlValue} checked=${'checked' in definition ? controlValue : ''}>
   </input>`
 
   // set name and type (used later for obtaining values)
@@ -252,7 +252,7 @@ const createControl = (definition, prevValue) => {
   control.paramType = definition.type
   // set generic HTML attributes
   for (const property in definition) {
-    if (definition.hasOwnProperty(property)) {
+    if (Object.prototype.hasOwnProperty.call(definition, property)) {
       if (typeData.required.indexOf(property) < 0) {
         control.setAttribute(property, definition[property])
       }

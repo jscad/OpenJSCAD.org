@@ -73,9 +73,9 @@ module.exports = function examples (state, i18n) {
     const exampleUrl = `${baseUrl}/examples/${example.file}`
     return html`
     <tr>
-      <td class="examplesSeparator" widthx=' + colp + ' valign=top>
-        <a class='example' data-path=${exampleUrl} href='#'> ${example.title} </a>
-        <span class=${type}>${type}</span> 
+      <td class="examplesSeparator" width="${colp}" valign="top">
+        <a class="example" data-path="${exampleUrl}" href="#"> ${example.title} </a>
+        <span class="${type}">${type}</span> 
       </td>
     </tr>
     `

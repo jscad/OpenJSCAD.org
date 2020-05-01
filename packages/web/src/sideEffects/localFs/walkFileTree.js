@@ -3,7 +3,6 @@ const getFileExtensionFromString = require('@jscad/core/utils/getFileExtensionFr
 const { flatten } = require('@jscad/array-utils')
 
 const readFileAsync = function (file, fileMeta) {
-  const isBinaryFile = file.name.match(/\.(stl)$/) // FIXME how to determine?
   const reader = new FileReader()
 
   return new Promise(function (resolve, reject) {
@@ -32,10 +31,9 @@ const readFileAsync = function (file, fileMeta) {
 
 function isSupportedFormat (file) {
   return true
-  const additionalFormats = ['json', 'txt']
-  var e = file.name.toLowerCase().match(/\.(\w+)$/i)
-  e = RegExp.$1
-  return conversionFormats.concat(['json']).indexOf(e) >= 0
+  // var e = file.name.toLowerCase().match(/\.(\w+)$/i)
+  // e = RegExp.$1
+  // return conversionFormats.concat(['json']).indexOf(e) >= 0
 }
 
 function pseudoArraytoArray (pseudoArray) {

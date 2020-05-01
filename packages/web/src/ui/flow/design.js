@@ -4,7 +4,7 @@ const holdUntil = require('@jscad/core/observable-utils/holdUntil')
 const delayFromObservable = require('@jscad/core/observable-utils/delayFromObservable')
 const getParameterValuesFromUIControls = require('@jscad/core/parameters/getParameterValuesFromUIControls')
 const { nth, toArray } = require('@jscad/array-utils')
-const { omit, keep, atKey } = require('../../utils/object')
+const { keep } = require('../../utils/object')
 const { fetchUriParams, getAllUriParams } = require('../../utils/urlUtils')
 const path = require('path')
 
@@ -397,10 +397,7 @@ const actions = ({ sources }) => {
       .filter(x => x !== undefined)
       .map(url => {
         const params = getAllUriParams(url)
-        const useProxy = params.proxyUrl !== undefined || url.match(/#(https?:\/\/\S+)$/) !== null
         const documentUri = fetchUriParams(url, 'uri', undefined) || nth(1, url.match(/#(https?:\/\/\S+)$/)) || nth(1, document.URL.match(/#(examples\/\S+)$/))
-        const baseUri = window.location.origin // location.protocol + '//' + location.host + location.pathname
-        // console.log('useProxy', useProxy, documentUri, baseUri)
         if (!documentUri) {
           return undefined
         }

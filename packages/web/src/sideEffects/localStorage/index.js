@@ -12,11 +12,12 @@ module.exports = function makeStorageSideEffect ({ name }) {
     }
 
     if (!enabled) {
+      const commandResponses = callBackToStream()
       commandResponses.callback({ type: undefined, id: undefined, error: new Error('Local storage not supported in this environment!') })
     } else {
       if (outToStore$) {
         outToStore$.forEach(function (command) {
-          const { type, key, options, data } = command
+          const { type, key, data } = command
           // const storage = target === `local` ? localStorage : sessionStorage
           if (type === 'write') {
             // console.log('writing settings', data)

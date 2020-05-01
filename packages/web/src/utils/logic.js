@@ -1,6 +1,5 @@
 const most = require('most')
 const withLatestFrom = require('@jscad/core/observable-utils/withLatestFrom')
-const holdUntil = require('@jscad/core/observable-utils/holdUntil')
 
 const capitalize = string => string.charAt(0).toUpperCase().concat(string.slice(1).toLowerCase())
 
