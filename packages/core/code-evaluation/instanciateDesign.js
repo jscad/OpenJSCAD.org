@@ -99,7 +99,7 @@ const instanciateDesign = (rootModule, parameterValues, options) => {
     const lookupCounts = options.lookupCounts || {}
 
     console.log('lookup after', lookup)
-    const start = new Date()
+    // const start = new Date()
     const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree({ passesBeforeElimination: 5, lookup, lookupCounts })
     solids = buildCachedGeometryFromTree({}, rawResults)
     console.log('created lookup', lookup, lookupCounts)

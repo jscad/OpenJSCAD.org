@@ -23,24 +23,24 @@ class RateLimitSink {
     this.sink = sink
     this.scheduler = scheduler
     this.nextTime = 0
-    this.buffered = void 0
+    this.buffered = undefined
   }
 
   _run (t) {
-    if (this.buffered === void 0) {
+    if (this.buffered === undefined) {
       return
     }
     const x = this.buffered
     const now = this.scheduler.now()
     const period = this.source.period
     const nextTime = this.nextTime
-    this.buffered = void 0
+    this.buffered = undefined
     this.nextTime = (nextTime + period > now ? nextTime : now) + period
     this.sink.event(t, x)
   }
 
   event (t, x) {
-    const nothingScheduled = this.buffered === void 0
+    const nothingScheduled = this.buffered === undefined
     this.buffered = x
     const task = new RateLimitTask(this)
     const nextTime = this.nextTime

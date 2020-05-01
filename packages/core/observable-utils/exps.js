@@ -9,10 +9,10 @@ const { proxy } = require('most-proxy')
 const stateStream = proxy()
 const stateProxy$ = stateStream.stream
 
-const store = callBackToStream()
+// const store = callBackToStream()
 const state = callBackToStream()
-const state$ = state.stream
-  .multicast()
+// const state$ = state.stream
+//   .multicast()
 
 const fooCB = callBackToStream()
 const fooSignal$ = fooCB.stream

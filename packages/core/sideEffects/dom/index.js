@@ -2,9 +2,6 @@ const most = require('most')
 const morph = require('morphdom')// require('nanomorph')
 const { proxy } = require('most-proxy')
 
-const hooks = require('morphdom-hooks')
-// const morph = hooks(require('morphdom'))
-
 module.exports = function makeDomSideEffect ({ targetEl }) {
   const { attach, stream } = proxy()
 
@@ -69,7 +66,7 @@ module.exports = function makeDomSideEffect ({ targetEl }) {
     out$.forEach(function () {
     // console.log('dom source watching dom change')
       Object.keys(storedListeners).forEach(function (queryAndEventName) {
-        const [query, eventName] = queryAndEventName.split('@@')
+        const [query] = queryAndEventName.split('@@')
         const items = getElements(query)
         if (items && items.length > 0) {
           const storedListener = storedListeners[queryAndEventName]

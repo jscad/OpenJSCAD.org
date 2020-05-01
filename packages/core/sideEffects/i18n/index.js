@@ -38,7 +38,6 @@ const { i18nConfig } = i18nImport
 
 const makei18nSideEffect = (options) => {
   const translationsCB = callBackToStream()
-  const defaultLocale = getDefaultLocale()
   let translations = initTranslations(options)
 
   // all available commands

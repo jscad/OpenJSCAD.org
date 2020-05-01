@@ -69,6 +69,6 @@ module.exports = function getParameterValuesFromUIControls (paramControls, param
   return parameterValues
 }
 
-function isNumber (value) {
-  return (!isNaN(parseFloat(value)) && isFinite(value))
-}
+// function isNumber (value) {
+//   return (!isNaN(parseFloat(value)) && isFinite(value))
+// }
