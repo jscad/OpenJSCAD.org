@@ -1,4 +1,4 @@
-const { toArray } = require('../core/arrays')
+const { toArray } = require('@jscad/array-utils')
 const decache = require('decache')
 const child_process = require('child_process')
 

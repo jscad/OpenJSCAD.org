@@ -1,9 +1,9 @@
 const writeOutput = require('./io/writeOutput')
-const {toArray} = require('../core/arrays')
+const { toArray } = require('@jscad/array-utils')
 
 const makeBuildCachedGeometryFromTree = require('../core/buildCachedGeometryFromTree')
-const {runCompare, runVTreeTree} = require('./runCompare')
-const {runBenchMark, spawnBenchMark} = require('./runBenchmark')
+const { runCompare, runVTreeTree } = require('./runCompare')
+const { runBenchMark, spawnBenchMark } = require('./runBenchmark')
 
 // spawnBenchMark('user/run-optimised.js')
 // spawnBenchMark('user/run-vanilla.js')

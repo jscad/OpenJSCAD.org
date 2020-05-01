@@ -4,6 +4,7 @@
 module.exports = {
   clone: require('./clone'),
   create: require('./create'),
+  equals: require('./equals'),
   flip: require('./flip'),
   fromPoints: require('./fromPoints'),
   fromPointsAndPlane: require('./fromPointsAndPlane'),

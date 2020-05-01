@@ -9,7 +9,7 @@ const create = require('./create')
  * @alias module:modeling/math/mat4.clone
  */
 const clone = (...params) => {
-  let out
+  let out, a
   if (params.length == 1) {
     out = create()
     a = params[0]
