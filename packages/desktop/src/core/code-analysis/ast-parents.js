@@ -17,7 +17,7 @@ function walk (node, keyname, parent) {
 
   for (var key in node) {
     if (key === 'parent') continue
-    if (!node.hasOwnProperty(key)) continue
+    if (!Object.prototype.hasOwnProperty.call(node, key)) continue
 
     var child = node[key]
     if (Array.isArray(child)) {

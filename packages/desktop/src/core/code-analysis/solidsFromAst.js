@@ -1,3 +1,7 @@
+const astring = require('astring')
+const estraverse = require('estraverse')
+const { isCube, isDifference, isSphere, extractSimpleArgs, returnsArray } = require('./utils')
+
 function liveNode (node) {
   let pieceCode = astring.generate(node, { indent: '  ', lineEnd: '\n' })
   pieceCode = `

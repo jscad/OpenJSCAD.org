@@ -179,7 +179,7 @@ const createControl = (definition, prevValue) => {
   }
   // set generic HTML attributes
   for (const property in definition) {
-    if (definition.hasOwnProperty(property)) {
+    if (Object.prototype.hasOwnProperty.call(definition, property)) {
       if (controlInstance.required.indexOf(property) < 0) {
         control.setAttribute(property, definition[property])
       }

@@ -1,15 +1,12 @@
 const esprima = require('esprima')
 const estraverse = require('estraverse')
-const astring = require('astring')
-const astEval = require('static-eval')
+// const astring = require('astring')
+// const astEval = require('static-eval')
 const astUtils = require('esprima-ast-utils')
 const astParents = require('./ast-parents')
 console.log('astUtils', astUtils)
 
-const {
-  isCube, isDifference, isSphere, isInclude,
-  extractSimpleArgs
-} = require('./utils')
+const { isCube, isDifference, isSphere, extractSimpleArgs } = require('./utils')
 
 function astFromSource (source, options) {
   const defaults = {
@@ -81,20 +78,20 @@ function csgTree (ast) {
   return results
 }
 
-function replaceIncludesInAst (ast, replacement = '') {
-  const result = estraverse.replace(ast, {
-    enter: function (node, parent) {
-      if (isInclude(node)) {
-        if (node.arguments && arguments.length > 0) {
-          return { type: 'Literal', value: replacement }
-        }
-        return estraverse.VisitorOption.Skip
-      }
-    }
-  })
-
-  return astring.generate(result, { indent: '  ', lineEnd: '\n' })
-}
+// function replaceIncludesInAst (ast, replacement = '') {
+//   const result = estraverse.replace(ast, {
+//     enter: function (node, parent) {
+//       if (isInclude(node)) {
+//         if (node.arguments && arguments.length > 0) {
+//           return { type: 'Literal', value: replacement }
+//         }
+//         return estraverse.VisitorOption.Skip
+//       }
+//     }
+//   })
+//
+//   return astring.generate(result, { indent: '  ', lineEnd: '\n' })
+// }
 /*
 var gen = require('escodegen').generate
 

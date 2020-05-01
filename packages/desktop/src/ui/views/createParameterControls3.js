@@ -183,8 +183,8 @@ const createControl = (definition, prevValue) => {
   } else {
     controlValue = typeData.initial
   }
-  let control = html`<input 
-    type=${typeData.control} value=${controlValue} checked=${'checked' in definition ? controlValue : ''}> 
+  let control = html`<input
+    type=${typeData.control} value=${controlValue} checked=${'checked' in definition ? controlValue : ''}>
   </input>`
 
   // set name and type (used later for obtaining values)
@@ -192,7 +192,7 @@ const createControl = (definition, prevValue) => {
   control.paramType = definition.type
   // set generic HTML attributes
   for (const property in definition) {
-    if (definition.hasOwnProperty(property)) {
+    if (Object.prototype.hasOwnProperty.call(definition, property)) {
       if (typeData.required.indexOf(property) < 0) {
         control.setAttribute(property, definition[property])
       }
