@@ -36,22 +36,22 @@ function boundingSphere (center = [0, 0, 0], positions) {
 /* compute boundingSphere from boundingBox
   for now more or less based on three.js implementation
 */
-function boundingSphereFromBoundingBox (center = [0, 0, 0], positions, boundingBox) {
-  if (positions.length === 0) {
-    return null
-  }
-
-  if (!center) {
-    // min & max are the box's min & max
-    const result = vec3.create()
-    center = vec3.scale(result, vec3.add(result, boundingBox[0], boundingBox[1]), 0.5)
-  }
-
-  let maxRadiusSq = 0
-  for (let i = 0, il = positions.length; i < il; i++) {
-    maxRadiusSq = Math.max(maxRadiusSq, squaredDistance(center, positions[i]))
-  }
-  return Math.sqrt(maxRadiusSq)
-}
+// function boundingSphereFromBoundingBox (center = [0, 0, 0], positions, boundingBox) {
+//   if (positions.length === 0) {
+//     return null
+//   }
+//
+//   if (!center) {
+//     // min & max are the box's min & max
+//     const result = vec3.create()
+//     center = vec3.scale(result, vec3.add(result, boundingBox[0], boundingBox[1]), 0.5)
+//   }
+//
+//   let maxRadiusSq = 0
+//   for (let i = 0, il = positions.length; i < il; i++) {
+//     maxRadiusSq = Math.max(maxRadiusSq, squaredDistance(center, positions[i]))
+//   }
+//   return Math.sqrt(maxRadiusSq)
+// }
 
 module.exports = boundingSphere// {boundingSphere, boundingSphereFromBoundingBox}

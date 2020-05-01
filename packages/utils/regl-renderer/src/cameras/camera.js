@@ -18,19 +18,19 @@ const fromPerspectiveToOrthographic = perspectiveCamera => {
 
   // set the orthographic view rectangle to 0,0,width,height
   // see here : http://stackoverflow.com/questions/13483775/set-zoomvalue-of-a-perspective-equal-to-perspective
-  const target = perspectiveCamera.target === undefined ? vec3.create() : perspectiveCamera.target
+  // const target = perspectiveCamera.target === undefined ? vec3.create() : perspectiveCamera.target
 
   const distance = vec3.length(vec3.subtract([], perspectiveCamera.position, perspectiveCamera.target)) * 0.3
   const width = Math.tan(fov) * distance * aspect
   const height = Math.tan(fov) * distance
 
-  const halfWidth = width
-  const halfHeight = height
+  // const halfWidth = width
+  // const halfHeight = height
 
-  const left = halfWidth
-  const right = -halfWidth
-  const top = -halfHeight
-  const bottom = halfHeight
+  // const left = halfWidth
+  // const right = -halfWidth
+  // const top = -halfHeight
+  // const bottom = halfHeight
 
   // we need to compute zoom from distance ? or pass it from controls ?
 
