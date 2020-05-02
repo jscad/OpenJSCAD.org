@@ -24,7 +24,9 @@ const colorPath2 = (color, object) => {
 }
 
 const colorPoly3 = (color, object) => {
-  object.color = color
+  const newpoly = poly3.clone(object)
+  newpoly.color = color
+  return newpoly
 }
 
 /**
