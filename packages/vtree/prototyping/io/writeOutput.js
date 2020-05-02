@@ -1,5 +1,5 @@
 const fs = require('fs')
-const { convertToBlob } = require('./convertToBlob')
+const { convertToBlob } = require('@jscad/io-utils')
 const serializer = require('@jscad/stl-serializer')
 
 const writeOutput = (filePath, data) => {

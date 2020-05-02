@@ -1,5 +1,3 @@
-const { flatten } = require('./arrays')
-
 /** finds all the disconnected sub graphs inside of a tree: ie if
  * the script on which the tree is based returns arrays of data will return those
  * @param  {} root 'findDisconnectedSubGraphs'

@@ -8,7 +8,7 @@ const create = require('./create')
  * @returns {mat4} clone of the given matrix
  */
 const clone = (...params) => {
-  let out
+  let out, a
   if (params.length == 1) {
     out = create()
     a = params[0]
