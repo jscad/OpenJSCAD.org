@@ -1,13 +1,15 @@
 const url = require('url')
 
+// FIXME url.parse deprecated
 const fetchUriParams = (uri, paramName, defaultValue = undefined) => {
-  const params = new url.URL(uri)
-  const result = params.searchParams.get(paramName)
-  return result !== undefined ? result : defaultValue
+  const params = url.parse(uri, true)
+  const result = params.query
+  if (paramName in result) return result[paramName]
+  return defaultValue
 }
 
 const getAllUriParams = uri => {
-  return Object.fromEntries(new url.URL(uri).searchParams.entries())
+  return url.parse(uri, true).query
 }
 
 module.exports = { fetchUriParams, getAllUriParams }
