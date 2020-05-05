@@ -49,7 +49,7 @@ const circle = (options) => {
   }
   let {radius, segments} = Object.assign({}, defaults, options)
 
-  // TODO check that radius is a number
+  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
 
   radius = [radius, radius]
 

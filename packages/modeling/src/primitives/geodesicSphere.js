@@ -17,6 +17,8 @@ const geodesicSphere = (options) => {
   }
   let {radius, frequency} = Object.assign({}, defaults, options)
 
+  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
+
   // adjust the frequency to base 6
   frequency = Math.floor(frequency / 6)
   if (frequency <= 0) frequency = 1

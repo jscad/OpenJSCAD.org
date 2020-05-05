@@ -27,6 +27,11 @@ const arc = function (options) {
   }
   let {center, radius, startAngle, endAngle, makeTangent, segments} = Object.assign({}, defaults, options)
 
+  if (!Array.isArray(center)) throw new Error('center must be an array')
+  if (center.length < 2) throw new Error('center must contain X and Y values')
+
+  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
+
   if (startAngle < 0 || endAngle < 0) throw new Error('the start and end angles must be positive')
   if (segments < 4) throw new Error('segments must be four or more')
 

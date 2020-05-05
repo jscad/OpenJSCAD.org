@@ -133,6 +133,8 @@ const roundedCuboid = (options) => {
   if (!Array.isArray(size)) throw new Error('size must be an array')
   if (size.length < 3) throw new Error('size must contain width, depth and height values')
 
+  if (!Number.isFinite(roundRadius)) throw new Error('roundRadius must be a number')
+
   size = size.map((v) => v / 2) // convert to radius
 
   if (roundRadius > (size[0] - EPS) ||

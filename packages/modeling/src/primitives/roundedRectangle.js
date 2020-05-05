@@ -27,6 +27,8 @@ const roundedRectangle = (options) => {
   if (!Array.isArray(size)) throw new Error('size must be an array')
   if (size.length < 2) throw new Error('size must contain width and length values')
 
+  if (!Number.isFinite(roundRadius)) throw new Error('roundRadius must be a number')
+
   size = size.map((v) => v / 2) // convert to radius
 
   if (roundRadius > (size[0] - EPS) ||

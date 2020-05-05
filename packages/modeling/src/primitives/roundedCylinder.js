@@ -31,6 +31,8 @@ const roundedCylinder = function (options) {
 
   if (height < (EPS*2)) throw new Error('height must be larger then zero')
 
+  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
+
   if (roundRadius > (radius - EPS)) throw new Error('roundRadius must be smaller then the radius')
 
   if (segments < 4) throw new Error('segments must be four or more')

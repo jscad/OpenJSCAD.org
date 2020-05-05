@@ -60,6 +60,8 @@ const cube = (options) => {
   }
   let {size} = Object.assign({}, defaults, options)
 
+  if (!Number.isFinite(size)) throw new Error('size must be a number')
+
   size = [size, size, size]
 
   return cuboid({size: size})
