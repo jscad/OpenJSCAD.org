@@ -110,38 +110,31 @@ const cylinderElliptic = function (options) {
 /** Construct a solid cylinder.
  * @param {Object} [options] - options for construction
  * @param {Array} [options.height=2] - height of cylinder
- * @param {Number} [options.startRadius=1] - radius of cylinder at the start
- * @param {Number} [options.startAngle=0] - start angle of cylinder
- * @param {Number} [options.endRadius=1] - radius of cylinder at the end
- * @param {Number} [options.endAngle=(Math.PI * 2)] - end angle of cylinder
+ * @param {Number} [options.radius=1] - radius of cylinder (at both start and end)
  * @param {Number} [options.segments=12] - number of segments to create per full rotation
  * @returns {geom3} new geometry
  *
  * @example
  * let cylinder = cylinder({
  *   height: 2,
- *   startRadius: 10,
- *   endRadius: 5,
+ *   radius: 10,
  *   segments: 16
  * })
  */
 const cylinder = function (options) {
   const defaults = {
     height: 2,
-    startRadius: 1,
-    startAngle: 0,
-    endRadius: 1,
-    endAngle: (Math.PI * 2),
+    radius: 1,
     segments: 12
   }
-  let {height, startRadius, startAngle, endRadius, endAngle, segments} = Object.assign({}, defaults, options)
+  let {height, radius, segments} = Object.assign({}, defaults, options)
+
+  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
 
   let newoptions = {
     height: height,
-    startRadius: [startRadius, startRadius],
-    startAngle: startAngle,
-    endRadius: [endRadius, endRadius],
-    endAngle: endAngle,
+    startRadius: [radius, radius],
+    endRadius: [radius, radius],
     segments: segments
   }
 
