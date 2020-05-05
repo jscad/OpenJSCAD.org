@@ -1,3 +1,9 @@
+/**
+ * Create a new path from the given compact binary data.
+ * @param {Array} data - compact binary data
+ * @returns {path2} a new path
+ * @alias module:modeling/geometry/path2.fromCompactBinary
+ */
 const path2FromCompactBinary = data => {
   const geom = require('./create')()
   geom.isClosed = !!data[1]

@@ -6,7 +6,7 @@ const plane = require('../../math/plane/')
  * instances but they must behave similarly.
  * @typedef {Object} poly3
  * @property {Array} vertices - list of ordered vertices (3D)
- * @property {plane} polyplane - plane of the polygon in 3D space
+ * @property {plane} plane - plane of the polygon in 3D space
  */
 
 /**
