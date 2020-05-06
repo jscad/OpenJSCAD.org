@@ -1,12 +1,12 @@
 const fromValues = require('../vec3/fromValues')
 
 /**
- * Multiply the input matrix by a Vector3 (interpreted as 3 row, 1 column)
- * (result = M*v)
- * Fourth element is set to 1
- * @param {vec3} vector the input vector
- * @param {mat4} matrix the input matrix
- * @returns {vec3} output
+ * Multiply a 3D vector by a matrix (interpreted as 3 row, 1 column)
+ * Calculation: result = v*M, where the fourth element is set to 1.
+ * @param {vec3} vector - the input vector
+ * @param {mat4} matrix - the input matrix
+ * @returns {vec3} a new vector
+ * @alias module:modeling/math/mat4.rightMultiplyVec3
  */
 const rightMultiplyVec3 = (vector, matrix) => {
   const [v0, v1, v2] = vector

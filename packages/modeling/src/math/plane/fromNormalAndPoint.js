@@ -2,10 +2,18 @@ const vec3 = require('../vec3')
 const fromValues = require('../vec4/fromValues')
 
 /**
- * Create a new plane from the given normal and point values
- * @param {vec3} normal - vector 3D
- * @param {vec3} point - vector 3D
- * @returns {plane} a new plane with properly typed values
+ * Represents a plane in 3D coordinate space as determined by a normal (perpendicular to the plane)
+ * and distance from 0,0,0.
+ * The contents of the array are a normal [0,1,2] and a distance [3].
+ * @typedef {Array} plane
+ */
+
+/**
+ * Create a new plane from the given normal and point values.
+ * @param {vec3} normal - directional vector
+ * @param {vec3} point - origin of plane
+ * @returns {plane} a new plane
+ * @alias module:modeling/math/plane.fromNormalAndPoint
  */
 const fromNormalAndPoint = (normal, point) => {
   const u = vec3.unit(normal)

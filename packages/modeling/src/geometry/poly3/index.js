@@ -1,3 +1,8 @@
+/**
+ * Represents a convex 3D polygon consisting of a list of vertices.
+ * @see {@link poly3} for data structure information.
+ * @module modeling/geometry/poly3
+ */
 module.exports = {
   clone: require('./clone'),
   create: require('./create'),

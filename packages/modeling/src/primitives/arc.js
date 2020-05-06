@@ -6,7 +6,8 @@ const vec2 = require('../math/vec2')
 
 const path2 = require('../geometry/path2')
 
-/** Construct an arc.
+/**
+ * Construct an arc.
  * @param {Object} options - options for construction
  * @param {Array} [options.center=[0,0]] - center of arc
  * @param {Number} [options.radius=1] - radius of arc
@@ -14,7 +15,8 @@ const path2 = require('../geometry/path2')
  * @param {Number} [options.endAngle=Math.PI*2] - ending angle of the arc, in radians
  * @param {Number} [options.segments=16] - number of segments to create per 360 rotation
  * @param {Boolean} [options.makeTangent=false] - adds line segments at both ends of the arc to ensure that the gradients at the edges are tangent
- * @returns {path} new path (not closed)
+ * @returns {path2} new 2D path
+ * @alias module:modeling/primitives.arc
  */
 const arc = function (options) {
   const defaults = {

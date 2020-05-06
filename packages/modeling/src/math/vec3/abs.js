@@ -1,11 +1,12 @@
 const create = require('./create')
 
 /**
- * Calculates the absolute value of the give vector
+ * Calculates the absolute coordinates of the give vector.
  *
  * @param {vec3} [out] - receiving vector
  * @param {vec3} vec - given value
- * @returns {vec3} absolute value of the vector
+ * @returns {vec3} a new vector
+ * @alias module:modeling/math/vec3.abs
  */
 const abs = (...params) => {
   let out

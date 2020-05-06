@@ -7,6 +7,7 @@ const fromPointAxisNormal = require('./fromPointAxisNormal')
  * @param {mat4} matrix - a transform matrix
  * @param {connector} connector - the connector to transform
  * @returns {connector} a new connector
+ * @alias module:modeling/connectors.transform
  */
 const transform = (matrix, connector) => {
   const newpoint = vec3.transform(matrix, connector.point)

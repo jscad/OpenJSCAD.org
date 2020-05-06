@@ -5,6 +5,7 @@ const vec2 = require('../vec2')
  *
  * @param {line2} line the 2D line of reference
  * @return {vec2} the origin of the line
+ * @alias module:modeling/math/line2.origin
  */
 const origin = (line) => {
   const point = vec2.scale(line[2], line)

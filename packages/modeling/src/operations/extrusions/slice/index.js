@@ -1,3 +1,6 @@
+/**
+ * @module modeling/extrusions/slice
+ */
 module.exports = {
   calculatePlane: require('./calculatePlane'),
   clone: require('./clone'),

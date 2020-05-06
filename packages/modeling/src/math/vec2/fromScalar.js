@@ -1,8 +1,10 @@
 const fromValues = require('./fromValues')
 
-/** Create a vec2 from a single scalar value
- * @param  {Float} scalar
- * @returns {Vec2} a new vec2
+/**
+ * Create a vector from a single scalar value.
+ * @param  {Number} scalar
+ * @returns {Vec2} a new vector
+ * @alias module:modeling/math/vec2.fromScalar
  */
 const fromScalar = (scalar) => {
   return fromValues(scalar, scalar)

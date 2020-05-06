@@ -1,3 +1,8 @@
+/**
+ * Represents a 2D geometry consisting of a list of sides.
+ * @see {@link geom2} for data structure information.
+ * @module modeling/geometry/geom2
+ */
 module.exports = {
   clone: require('./clone'),
   create: require('./create'),

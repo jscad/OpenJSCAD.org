@@ -11,6 +11,7 @@ const geom2 = require('../geometry/geom2')
  * @param {Number} [options.roundRadius=0.2] - round radius of corners
  * @param {Number} [options.segments=16] - number of segments to create per 360 rotation
  * @returns {geom2} new 2D geometry
+ * @alias module:modeling/primitives.roundedRectangle
  *
  * @example
  * let myrectangle = roundedRectangle({size: [10, 20], roundRadius: 2})

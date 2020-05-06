@@ -3,8 +3,9 @@ const create = require('./create')
 /**
  * Set a mat4 to the identity matrix
  *
- * @param {mat4} out the receiving matrix
- * @returns {mat4} out
+ * @param {mat4} [out] - the receiving matrix
+ * @returns {mat4} a new matrix
+ * @alias module:modeling/math/mat4.identity
  */
 const identity = (...params) => {
   let out

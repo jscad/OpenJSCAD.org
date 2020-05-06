@@ -7,6 +7,7 @@ const geom2 = require('../geometry/geom2')
  * @param {Object} [options] - options for construction
  * @param {Array} [options.size=[2,2]] - dimension of rectangle, width and length
  * @returns {geom2} new 2D geometry
+ * @alias module:modeling/primitives.rectangle
  *
  * @example
  * let myshape = rectangle({size: [10, 20]})
@@ -35,10 +36,11 @@ const rectangle = (options) => {
 
 /**
  * Construct an axis-aligned square with four equal sides and four 90-degree angles.
- * @see {@link rectangle} for additional options, as this is an alias fo rectangle
+ * @see [rectangle]{@link module:modeling/primitives.rectangle} for more options
  * @param {Object} [options] - options for construction
  * @param {Number} [options.size=2] - dimension of square
  * @returns {geom2} new 2D geometry
+ * @alias module:modeling/primitives.square
  *
  * @example
  * let myshape = square({size: 10})

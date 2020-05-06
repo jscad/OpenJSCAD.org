@@ -1,8 +1,12 @@
 const vec3 = require('../../math/vec3')
 
-// measure the area of the given poly3 (3D planar polygon)
-// translated from the orginal C++ code from Dan Sunday
-// 2000 softSurfer http://geomalgorithms.com
+/**
+ * Measure the area of the given polygon.
+ * @see 2000 softSurfer http://geomalgorithms.com
+ * @param {poly3} polygon - the polygon to measure
+ * @return {Float} area of the polygon
+ * @alias module:modeling/geometry/poly3.measureArea
+ */
 const measureArea = (poly3) => {
   const n = poly3.vertices.length
   if (n < 3) {

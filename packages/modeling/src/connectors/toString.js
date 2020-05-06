@@ -3,6 +3,7 @@
  *
  * @param {connector} connector - the connector of reference
  * @returns {string} string representation
+ * @alias module:modeling/connectors.toString
  */
 const toString = (connector) => {
   const point = connector.point

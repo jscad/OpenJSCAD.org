@@ -8,9 +8,10 @@ const path2 = require('../../geometry/path2')
 
 /**
  * Translate the given object(s) using the given options.
- * @param {Number[]} offset - offset (vector) of which to translate the object
- * @param {Object|Array} objects - the objects(s) to translate
+ * @param {Array} offset - offset (vector) of which to translate the object
+ * @param {...Object} objects - the objects(s) to translate
  * @return {Object|Array} the translated object(s)
+ * @alias module:modeling/transforms.translate
  *
  * @example
  * const newsphere = translate([5, 0, 10], sphere())
@@ -39,24 +40,27 @@ const translate = (offset, ...objects) => {
 /**
  * Translate the given object(s) along the X axis using the given options.
  * @param {Number} offset - X offset of which to translate the object
- * @param {Object|Array} objects - the objects(s) to translate
+ * @param {...Object} objects - the objects(s) to translate
  * @return {Object|Array} the translated object(s)
+ * @alias module:modeling/transforms.translateX
  */
 const translateX = (offset, ...objects) => translate([offset, 0, 0], objects)
 
 /**
  * Translate the given object(s) along the Y axis using the given options.
  * @param {Number} offset - Y offset of which to translate the object
- * @param {Object|Array} objects - the objects(s) to translate
+ * @param {...Object} objects - the objects(s) to translate
  * @return {Object|Array} the translated object(s)
+ * @alias module:modeling/transforms.translateY
  */
 const translateY = (offset, ...objects) => translate([0, offset, 0], objects)
 
 /**
  * Translate the given object(s) along the Z axis using the given options.
  * @param {Number} offset - Z offset of which to translate the object
- * @param {Object|Array} objects - the objects(s) to translate
+ * @param {...Object} objects - the objects(s) to translate
  * @return {Object|Array} the translated object(s)
+ * @alias module:modeling/transforms.translateZ
  */
 const translateZ = (offset, ...objects) => translate([0, 0, offset], objects)
 

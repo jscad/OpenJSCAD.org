@@ -1,12 +1,13 @@
 const create = require('./create')
 
 /**
- * Divides two vec3's
+ * Divides the coordinates of two vectors (A/B).
  *
  * @param {vec3} [out] - the receiving vector
- * @param {vec3} a - the first operand
- * @param {vec3} b - the second operand
- * @returns {vec3} out
+ * @param {vec3} a - the dividend vector
+ * @param {vec3} b - the divisor vector
+ * @returns {vec3} a new vector
+ * @alias module:modeling/math/vec3.divide
  */
 const divide = (...params) => {
   let out

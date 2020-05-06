@@ -13,6 +13,8 @@ const vec3 = require('../math/vec3')
  * @property {vec3} point - the position of the connector (relative to its parent)
  * @property {vec3} axis - the direction (unit vector) of the connector
  * @property {vec3} normal - the direction (unit vector) perpendicular to axis, that defines the "12 o'clock" orientation of the connector
+ * @alias module:modeling/connectors.create
+ *
  * @example
  * let myconnector = create()
  */

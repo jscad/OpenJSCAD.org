@@ -9,6 +9,7 @@ const create = require('./create')
  * The geometry must not self intersect, i.e. the sides cannot cross.
  * @param {Array} points - list of points in 2D space where each point is an array of two values
  * @returns {geom2} a new geometry
+ * @alias module:modeling/geometry/geom2.fromPoints
  */
 const fromPoints = function (points) {
   if (!Array.isArray(points)) {

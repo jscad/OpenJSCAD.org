@@ -1,3 +1,6 @@
+/**
+ * @module modeling/math/line3
+ */
 module.exports = {
   clone: require('./clone'),
   closestPoint: require('./closestPoint'),

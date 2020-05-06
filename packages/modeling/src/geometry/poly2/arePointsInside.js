@@ -7,6 +7,7 @@ const flip = require('./flip')
  * @param {Array} points - a list of points, where each point is an array with X and Y values
  * @param {poly2} polygon - a 2D polygon
  * @return {Integer} 1 if all points are inside, 0 if some or none are inside
+ * @alias module:modeling/geometry/poly2.arePointsInside
  */
 const arePointsInside = (points, polygon) => {
   if (points.length === 0) return 0 // nothing to check

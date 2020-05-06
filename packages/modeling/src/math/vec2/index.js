@@ -1,3 +1,6 @@
+/**
+ * @module modeling/math/vec2
+ */
 module.exports = {
   abs: require('./abs'),
   add: require('./add'),

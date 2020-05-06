@@ -1,12 +1,13 @@
 const create = require('./create')
 
 /**
- * Computes the cross product of two vec3's
+ * Computes the cross product of two vectors.
  *
  * @param {vec3} [out] - the receiving vector
  * @param {vec3} a - the first operand
  * @param {vec3} b - the second operand
- * @returns {vec3} out
+ * @returns {vec3} a new vector
+ * @alias module:modeling/math/vec3.cross
  */
 const cross = (...params) => {
   let out

@@ -7,13 +7,14 @@ const extrudeRectangularPath2 = require('./extrudeRectangularPath2')
 const extrudeRectangularGeom2 = require('./extrudeRectangularGeom2')
 
 /**
- * Extrude the given object(s) by following the outline(s) with a rectangle.
+ * Extrude the given geometry by following the outline(s) with a rectangle.
  * @See expand for addition options
  * @param {Object} options - options for extrusion, if any
  * @param {Number} [options.size=1] - size of the rectangle
  * @param {Number} [options.height=1] - height of the extrusion
- * @param {Object|Array} objects - the objects(s) to extrude
- * @return {Object|Array} the extruded object(s)
+ * @param {...Object} geometry - the list of geometry to extrude
+ * @return {Object|Array} the extruded object, or a list of extruded objects
+ * @alias module:modeling/extrusions.extrudeRectangular
  *
  * @example:
  * let mywalls = extrudeRectangular({offset: [0,0,10]}, square())

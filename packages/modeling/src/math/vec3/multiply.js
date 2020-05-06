@@ -1,12 +1,13 @@
 const create = require('./create')
 
 /**
- * Multiplies two vec3's
+ * Multiplies the coordinates of two vectors (A*B).
  *
  * @param {vec3} [out] - the receiving vector
  * @param {vec3} a - the first operand
  * @param {vec3} b - the second operand
- * @returns {vec3} out
+ * @returns {vec3} a new vector
+ * @alias module:modeling/math/vec3.multiply
  */
 const multiply = (...params) => {
   let out

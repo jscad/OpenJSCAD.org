@@ -1,6 +1,6 @@
 const { IsFloat } = require('../utils')
 
-/**
+/*
  * @example
  * new CSG.Vector2D(1, 2);
  * new CSG.Vector2D([1, 2]);

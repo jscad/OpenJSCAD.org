@@ -4,8 +4,9 @@ const create = require('../vec4/create')
  * Flip the given plane
  *
  * @param {plane} [out] - receiving plane
- * @param {plane} vec - plane to flip
- * @return {plane} flipped plane
+ * @param {plane} plane - plane to flip
+ * @return {plane} a new plane
+ * @alias module:modeling/math/plane.flip
  */
 const flip = (...params) => {
   let out

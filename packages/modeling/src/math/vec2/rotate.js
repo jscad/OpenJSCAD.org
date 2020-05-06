@@ -1,12 +1,13 @@
 const create = require('./create')
 
 /**
- * Rotates a vec2 by an angle
+ * Rotates the given vector by the given angle.
  *
  * @param {vec2} [out] - the receiving vector
- * @param {Number} angle - the angle of rotation (in radians)
+ * @param {Number} angle - the angle of rotation (radians)
  * @param {vec2} vector - the vector to rotate
- * @returns {vec2} out
+ * @returns {vec2} a new vector
+ * @alias module:modeling/math/vec2.rotate
  */
 const rotate = (...params) => {
   let out

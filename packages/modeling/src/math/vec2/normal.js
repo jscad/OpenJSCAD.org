@@ -1,12 +1,13 @@
 const rotate = require('./rotate')
 
 /**
- * Calculates the normal value of the give vector
+ * Calculates the normal of the given vector.
  * The normal value is the given vector rotated 90 degress.
  *
  * @param {vec2} [out] - receiving vector
  * @param {vec2} vec - given value
- * @returns {vec2} normal value of the vector
+ * @returns {vec2} a new vector
+ * @alias module:modeling/math/vec2.normal
  */
 const normal = (...params) => {
   let out
@@ -19,6 +20,5 @@ const normal = (...params) => {
   vec = params[1]
   return rotate(out, (Math.PI / 2), vec)
 }
-// old : Vector2D.Create(this._y, -this._x)
 
 module.exports = normal

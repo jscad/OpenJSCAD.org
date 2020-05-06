@@ -1,5 +1,5 @@
 /**
- * @module color
+ * @module modeling/color
  */
 module.exports = {
   color: require('./color'),

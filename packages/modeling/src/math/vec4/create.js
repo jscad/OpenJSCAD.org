@@ -1,7 +1,14 @@
 /**
- * Creates a new vec4 initialized to zero
+ * Represents a 4-dimensional vector.
+ * See fromValues().
+ * @typedef {Array} vec4
+ */
+
+/**
+ * Creates a new vector initialized to zero.
  *
  * @returns {vec4} a new vector
+ * @alias module:modeling/math/vec4.create
  */
 const create = () => {
   return new Float32Array(4) // 0, 0, 0, 0

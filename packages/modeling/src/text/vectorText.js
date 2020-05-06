@@ -37,6 +37,7 @@ function translateLine (options, line) {
 * @param {String} [options.input='?'] - ascii string (ignored/overwrited if provided as seconds parameter)
 * @param {String} [text='?'] - ascii string
 * @returns {Array} characters segments [[[x, y], ...], ...]
+* @alias module:modeling/text.vectorText
 *
 * @example
 * let textSegments = vectorText()

@@ -1,4 +1,11 @@
 // FIXME: how about custom properties or fields ?
+
+/**
+ * Construct a new 3D geometry from the given compact binary data.
+ * @param {Array} data - compact binary data
+ * @returns {geom3} a new geometry
+ * @alias module:modeling/geometry/geom3.fromCompactBinary
+ */
 const geom3FromCompactBinary = data => {
   const geom = require('./create')()
   geom.isRetesselated = !!data[1]

@@ -1,6 +1,10 @@
 const vec3 = require('../../math/vec3')
 
-// returns an array of two Vector3Ds (minimum coordinates and maximum coordinates)
+/**
+ * @param {poly3} polygon - the polygon to measure
+ * @returns {Array} an array of two vectors (3D);  minimum and maximum coordinates
+ * @alias module:modeling/geometry/poly3.measureBoundingBox
+ */
 const measureBoundingBox = (poly3) => {
   const vertices = poly3.vertices
   const numvertices = vertices.length

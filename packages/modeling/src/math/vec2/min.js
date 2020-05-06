@@ -1,12 +1,13 @@
 const create = require('./create')
 
 /**
- * Returns the minimum of two vec2's
+ * Returns the minimum coordinates of two vectors.
  *
  * @param {vec2} [out] - the receiving vector
  * @param {vec2} a - the first operand
  * @param {vec2} b - the second operand
- * @returns {vec2} out
+ * @returns {vec2} a new vector
+ * @alias module:modeling/math/vec2.min
  */
 const min = (...params) => {
   let out

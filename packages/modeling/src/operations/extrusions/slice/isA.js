@@ -1,7 +1,8 @@
 /**
  * Determin if the given object is a slice.
- * @params {slice} object - the object to interogate
- * @returns {true} if the object matches a slice based object
+ * @param {slice} object - the object to interogate
+ * @returns {Boolean} true if the object matches a slice
+ * @alias module:modeling/extrusions/slice.isA
  */
 const isA = (object) => {
   if (object && typeof object === 'object') {

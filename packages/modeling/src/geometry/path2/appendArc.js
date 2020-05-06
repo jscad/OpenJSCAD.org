@@ -15,7 +15,8 @@ const toPoints = require('./toPoints')
  * @param {Boolean} [options.large=false] - draw an arc longer than 180 degrees
  * @param {Number} [options.segments=16] - number of segments per 360 rotation
  * @param {path2} geometry - the path of which to append the arc
- * @returns {path2} new geometry with appended arc
+ * @returns {path2} a new path with the appended arc
+ * @alias module:modeling/geometry/path2.appendArc
  *
  * @example
  * let p1 = path2.fromPoints({}, [[27.5,-22.96875]]);

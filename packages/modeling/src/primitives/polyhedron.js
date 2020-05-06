@@ -11,6 +11,7 @@ const poly3 = require('../geometry/poly3')
  * @param {Array} [options.colors=undefined] - list of RGBA colors to apply to each face
  * @param {Array} [options.orientation='outward'] - orientation of faces
  * @returns {geom3} new 3D geometry
+ * @alias module:modeling/primitives.polyhedron
  *
  * @example
  * let mypoints = [ [10, 10, 0], [10, -10, 0], [-10, -10, 0], [-10, 10, 0], [0, 0, 10] ]

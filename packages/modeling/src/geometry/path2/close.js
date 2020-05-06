@@ -6,8 +6,9 @@ const clone = require('./clone')
 
 /**
  * Close the given geometry.
- * @params {geometry} the path to close
- * @returns {path} the closed path
+ * @param {path2} geometry - the path to close
+ * @returns {path2} a new path
+ * @alias module:modeling/geometry/path2.close
  */
 const close = (geometry) => {
   if (geometry.isClosed) return geometry

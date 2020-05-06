@@ -1,12 +1,13 @@
 const create = require('./create')
 
 /**
- * Creates a new vec3 initialized with the given values
+ * Creates a new vector initialized with the given values.
  *
  * @param {Number} x - X component
  * @param {Number} y - Y component
  * @param {Number} z - Z component
- * @returns {vec3} a new 3D vector
+ * @returns {vec3} a new vector
+ * @alias module:modeling/math/vec3.fromValues
  */
 const fromValues = (x, y, z) => {
   const out = create()
