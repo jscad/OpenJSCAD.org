@@ -20,7 +20,7 @@ test('deserialize : instantiate svg (rect) to objects', function (t) {
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 2)
   shape = observed[0]
-  t.is(shape.points.length, 20) // rounded rectangle
+  t.is(shape.points.length, 36) // rounded rectangle
 })
 
 // ################################
@@ -39,7 +39,7 @@ test('deserialize : instantiate svg (circle) to objects', function (t) {
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
   shape = observed[0]
-  t.is(shape.points.length, 16)
+  t.is(shape.points.length, 32)
 })
 
 // ################################
@@ -60,7 +60,7 @@ test('deserialize : instantiate svg (ellipse) to objects', function (t) {
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
   shape = observed[0]
-  t.is(shape.points.length, 16)
+  t.is(shape.points.length, 32)
 })
 
 // ################################
