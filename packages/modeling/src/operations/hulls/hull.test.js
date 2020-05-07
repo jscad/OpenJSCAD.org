@@ -242,9 +242,9 @@ test('hull (multiple, geom3)', t => {
 
 
 test('hull (multiple, overlapping, geom3)', t => {
-  let geometry1 = ellipsoid({ radius: [2, 2, 2] })
-  let geometry2 = center({ center: [3, -3, 3] }, ellipsoid({ radius: [3, 3, 3] }))
-  let geometry3 = center({ center: [-3, -3, -3] }, ellipsoid({ radius: [3, 3, 3] }))
+  let geometry1 = ellipsoid({ radius: [2, 2, 2], segments: 12 })
+  let geometry2 = center({ center: [3, -3, 3] }, ellipsoid({ radius: [3, 3, 3], segments: 12 }))
+  let geometry3 = center({ center: [-3, -3, -3] }, ellipsoid({ radius: [3, 3, 3], segments: 12 }))
 
   let obs = hull(geometry1, geometry2, geometry3)
   let pts = geom3.toPoints(obs)

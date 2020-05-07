@@ -9,7 +9,7 @@ const { arc, rectangle } = require('../../primitives')
 const extrudeRectangular = require('./extrudeRectangular')
 
 test('extrudeRectangular (defaults)', t => {
-  let geometry1 = arc({ radius: 5, endAngle: degToRad(90) })
+  let geometry1 = arc({ radius: 5, endAngle: degToRad(90), segments: 16 })
   let geometry2 = rectangle({ size: [5, 5] })
 
   let obs = extrudeRectangular({ }, geometry1)
@@ -22,7 +22,7 @@ test('extrudeRectangular (defaults)', t => {
 })
 
 test('extrudeRectangular (chamfer)', t => {
-  let geometry1 = arc({ radius: 5, endAngle: degToRad(90) })
+  let geometry1 = arc({ radius: 5, endAngle: degToRad(90), segments: 16 })
   let geometry2 = rectangle({ size: [5, 5] })
 
   let obs = extrudeRectangular({ corners: 'chamfer' }, geometry1)
@@ -35,7 +35,7 @@ test('extrudeRectangular (chamfer)', t => {
 })
 
 test('extrudeRectangular (segments = 8, round)', t => {
-  let geometry1 = arc({ radius: 5, endAngle: degToRad(90) })
+  let geometry1 = arc({ radius: 5, endAngle: degToRad(90), segments: 16 })
   let geometry2 = rectangle({ size: [5, 5] })
 
   let obs = extrudeRectangular({ segments: 8, corners: 'round' }, geometry1)
