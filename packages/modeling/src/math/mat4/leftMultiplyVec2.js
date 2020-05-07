@@ -1,6 +1,6 @@
 const fromValues = require('../vec2/fromValues')
 
-/**
+/*
  * Multiply the input matrix by a Vector2 (interpreted as 2 column, 1 row)
  * (result = v*M)
  * Fourth element is set to 1

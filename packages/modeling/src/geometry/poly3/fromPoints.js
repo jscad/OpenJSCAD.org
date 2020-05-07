@@ -5,7 +5,9 @@ const create = require('./create')
 /**
  * Create a polygon from the given points.
  *
- * @param {Array[]} points - list of points
+ * @param {Array} points - list of points (3D)
+ * @returns {poly3} a new polygon
+ * @alias module:modeling/geometry/poly3.fromPoints
  *
  * @example
  * const points = [

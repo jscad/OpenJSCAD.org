@@ -1,0 +1,37 @@
+{
+  "source" : {
+    "include": [
+      "packages/modeling/src/color",
+      "packages/modeling/src/connectors",
+      "packages/modeling/src/primitives",
+      "packages/modeling/src/geometry",
+      "packages/modeling/src/geometry/geom2",
+      "packages/modeling/src/geometry/geom3",
+      "packages/modeling/src/geometry/path2",
+      "packages/modeling/src/geometry/poly2",
+      "packages/modeling/src/geometry/poly3",
+      "packages/modeling/src/math",
+      "packages/modeling/src/math/line2",
+      "packages/modeling/src/math/line3",
+      "packages/modeling/src/math/mat4",
+      "packages/modeling/src/math/plane",
+      "packages/modeling/src/math/vec2",
+      "packages/modeling/src/math/vec3",
+      "packages/modeling/src/math/vec4",
+      "packages/modeling/src/operations/booleans",
+      "packages/modeling/src/operations/expansions",
+      "packages/modeling/src/operations/extrusions",
+      "packages/modeling/src/operations/extrusions/slice",
+      "packages/modeling/src/operations/hulls",
+      "packages/modeling/src/operations/measurements",
+      "packages/modeling/src/operations/transforms",
+      "packages/modeling/src/text",
+      "packages/modeling/src/utils"
+    ],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": ".+test.js$"
+  },
+  "opts": {
+    "template": "node_modules/docdash"
+  }
+}

@@ -1,11 +1,12 @@
 const create = require('./create')
 
 /**
- * Negates the components of a vec2
+ * Negates the coordinates of the given vector.
  *
  * @param {vec2} [out] - the receiving vector
  * @param {vec2} a - vector to negate
- * @returns {vec2} out
+ * @returns {vec2} a new vector
+ * @alias module:modeling/math/vec2.negate
  */
 const negate = (...params) => {
   let out

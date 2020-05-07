@@ -1,3 +1,6 @@
+/**
+ * @module modeling/math/mat4
+ */
 module.exports = {
   add: require('./add'),
   clone: require('./clone'),

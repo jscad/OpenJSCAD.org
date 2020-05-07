@@ -3,9 +3,17 @@ const vec3 = require('../vec3')
 const fromPointAndDirection = require('./fromPointAndDirection')
 
 /**
+ * Represents a unbounded line in 3D space, positioned at a point of origin.
+ * A line is parametrized by a point of origin and a directional vector.
+ * The array contents are two 3D vectors; origin and directional vector.
+ * @typedef {Array} line3
+ */
+
+/**
  * Create an unbounded 3D line, positioned at 0,0,0 and lying on the X axis.
  *
- * @returns {line3} a new unbounded 3D line
+ * @returns {line3} a new unbounded line
+ * @alias module:modeling/math/line3.create
  */
 const create = () => {
   const point = vec3.create() // 0, 0, 0

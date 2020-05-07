@@ -2,8 +2,12 @@ const vec3 = require('../vec3')
 
 /**
  * Split the given line by the given plane.
- * Robust splitting, even if the line is parallel to the plane
+ * Robust splitting, even if the line is parallel to the plane.
+ * @param {plane} plane - plane of reference
+ * @param {vec3} p1 - start point of line
+ * @param {vec3} p2 - end point of line
  * @return {vec3} a new point
+ * @alias module:modeling/math/plane.splitLineSegmentByPlane
  */
 const splitLineSegmentByPlane = (plane, p1, p2) => {
   const direction = vec3.subtract(p2, p1)

@@ -16,6 +16,7 @@ const transform = require('./transform')
  * @param {connector} from - connector from which to connect
  * @param {connector} to - connector to which to connected
  * @returns {mat4} - the matrix that transforms (connects) one connector to another
+ * @alias module:modeling/connectors.transformationBetween
  */
 const transformationBetween = (options, from, to) => {
   const defaults = {

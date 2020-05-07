@@ -3,7 +3,8 @@
  *
  * @param {mat4} a - the first matrix
  * @param {mat4} b - the second matrix
- * @returns {Boolean} True if the matrices are equal, false otherwise.
+ * @returns {Boolean} true if the matrices are equal, false otherwise.
+ * @alias module:modeling/math/mat4.equals
  */
 const equals = (a, b) => {
   return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] &&

@@ -1,3 +1,6 @@
+/**
+ * @module modeling/extrusions
+ */
 module.exports = {
   extrudeFromSlices: require('./extrudeFromSlices'),
   extrudeLinear: require('./extrudeLinear'),

@@ -1,6 +1,11 @@
 const fromValues = require('./fromValues')
 
-// extend to a 3D vector by adding a z coordinate:
+/**
+ * Create a new vector by extending a 2D vector with a Z value.
+ * @param {Array} vector - the vector of values
+ * @param {Number} [z=0] - Z value
+ * @alias module:modeling/math/vec3.fromVec2
+ */
 const fromVector2 = (vec2, z = 0) => {
   return fromValues(vec2[0], vec2[1], z)
 }

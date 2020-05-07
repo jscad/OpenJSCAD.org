@@ -1,12 +1,13 @@
 const create = require('./create')
 
 /**
- * Transform the given vec4 using the given mat4
+ * Transform the given vector using the given matrix.
  *
  * @param {vec4} [out] - the receiving vector (optional)
  * @param {mat4} matrix - matrix to transform with
  * @param {vec4} vector - the vector to transform
- * @returns {vec4} a new vector or the receiving vector
+ * @returns {vec4} a new vector
+ * @alias module:modeling/math/vec4.transform
  */
 const transform = (...params) => {
   let out

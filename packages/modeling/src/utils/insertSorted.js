@@ -1,3 +1,6 @@
+/**
+ * @alias module:modeling/utils.insertSorted
+ */
 const insertSorted = (array, element, comparefunc) => {
   let leftbound = 0
   let rightbound = array.length

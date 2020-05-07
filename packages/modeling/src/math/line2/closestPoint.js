@@ -5,11 +5,11 @@ const origin = require('./origin')
 
 /**
  * Determine the closest point on the given line to the given point.
- * Thanks to @khrismuc
  *
  * @param {vec2} point the point of reference
  * @param {line2} line the 2D line for calculations
- * @returns {vec2} a new point
+ * @returns {vec2} closest point
+ * @alias module:modeling/math/line2.closestPoint
  */
 const closestPoint = (point, line) => {
   // linear function of AB

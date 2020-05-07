@@ -1,3 +1,8 @@
+/**
+ * Represents a 2D geometry consisting of a list of ordered points.
+ * @see {@link path2} for data structure information.
+ * @module modeling/geometry/path2
+ */
 module.exports = {
   appendArc: require('./appendArc'),
   appendBezier: require('./appendBezier'),

@@ -7,9 +7,10 @@ const fromPointAndDirection = require('./fromPointAndDirection')
 /**
  * Transforms the given 3D line using the given matrix.
  *
- * @param {mat4} matrix matrix to transform with
- * @param {line3} line the 3D line to transform
- * @returns {line3} a new unbounded 3D line
+ * @param {mat4} matrix - matrix to transform with
+ * @param {line3} line - the line to transform
+ * @returns {line3} a new unbounded line
+ * @alias module:modeling/math/line3.transform
  */
 const transform = (...params) => {
   let out

@@ -1,7 +1,7 @@
 const create = require('./create')
 
 /**
- * Creates a matrix from the given angle around the Z axis
+ * Creates a matrix from the given angle around the Z axis.
  * This is equivalent to (but much faster than):
  *
  *     mat4.identity(dest);
@@ -9,7 +9,8 @@ const create = require('./create')
  *
  * @param {mat4} [out] - mat4 receiving operation result
  * @param {Number} rad - the angle to rotate the matrix by
- * @returns {mat4} out
+ * @returns {mat4} a new matrix
+ * @alias module:modeling/math/mat4.fromZRotation
  */
 const fromZRotation = (...params) => {
   let out

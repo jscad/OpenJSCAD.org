@@ -1,8 +1,9 @@
 /**
- * Calculates the length of a vec3
+ * Calculates the length of a vector.
  *
- * @param {vec3} a - vector to calculate length of
- * @returns {Number} length of a
+ * @param {vec3} vector - vector to calculate length of
+ * @returns {Number} length
+ * @alias module:modeling/math/vec3.length
  */
 const length = (a) => {
   const x = a[0]

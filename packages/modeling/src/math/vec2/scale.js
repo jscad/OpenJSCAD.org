@@ -1,12 +1,13 @@
 const create = require('./create')
 
 /**
- * Scales a vec2 by a scalar number
+ * Scales the coordinates of the given vector.
  *
  * @param {vec2} [out] - the receiving vector
- * @param {Number} amount - amount to scale the vector by
+ * @param {Number} amount - amount to scale
  * @param {vec2} vector - the vector to scale
- * @returns {vec2} out
+ * @returns {vec2} a new vector
+ * @alias module:modeling/math/vec2.scale
  */
 const scale = (...params) => {
   let out

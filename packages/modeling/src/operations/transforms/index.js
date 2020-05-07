@@ -1,3 +1,6 @@
+/**
+ * @module modeling/transforms
+ */
 module.exports = {
   center: require('./center').center,
   centerX: require('./center').centerX,

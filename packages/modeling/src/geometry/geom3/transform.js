@@ -8,7 +8,9 @@ const create = require('./create')
  * See applyTransforms() for the actual application of the transforms to the polygons.
  * @param {mat4} matrix - the matrix to transform with
  * @param {geom3} geometry - the geometry to transform
- * @returns {geom3} - the transformed geometry
+ * @returns {geom3} a new geometry
+ * @alias module:modeling/geometry/geom3.transform
+ *
  * @example
  * let newgeometry = transform(fromXRotation(degToRad(90)), geometry)
  */

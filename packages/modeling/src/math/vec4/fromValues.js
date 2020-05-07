@@ -1,13 +1,14 @@
 const create = require('./create')
 
 /**
- * Creates a new vec4 initialized with the given values
+ * Creates a new vector with the given values.
  *
- * @param {Number} x X component
- * @param {Number} y Y component
- * @param {Number} z Z component
- * @param {Number} w W component
+ * @param {Number} x - X component
+ * @param {Number} y - Y component
+ * @param {Number} z - Z component
+ * @param {Number} w - W component
  * @returns {vec4} a new vector
+ * @alias module:modeling/math/vec4.fromValues
  */
 const fromValues = (x, y, z, w) => {
   const out = create()

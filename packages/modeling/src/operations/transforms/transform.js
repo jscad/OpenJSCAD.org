@@ -7,8 +7,9 @@ const path2 = require('../../geometry/path2')
 /**
  * Transform the given object(s) using the given matrix
  * @param {mat4} matrix - a transformation matrix
- * @param {Object|Array} objects - the objects(s) to transform
+ * @param {...Object} objects - the objects(s) to transform
  * @return {Object|Array} the transform object(s)
+ * @alias module:modeling/transforms.transform
  *
  * @example
  * const newsphere = transform(mat4.rotateX(Math.PI/4), sphere())

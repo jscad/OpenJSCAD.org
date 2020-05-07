@@ -6,8 +6,9 @@ const create = require('./create')
 
 /**
  * Performs a deep clone of the given geometry.
- * @params {geom3} geometry - the geometry to clone
+ * @param {geom3} geometry - the geometry to clone
  * @returns {geom3} a new geometry
+ * @alias module:modeling/geometry/geom3.clone
  */
 const clone = (geometry) => {
   let out = create()

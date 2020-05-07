@@ -1,8 +1,9 @@
 /**
- * Calculates the length of a vec2
+ * Calculates the length of the given vector.
  *
- * @param {vec2} a vector to calculate length of
- * @returns {Number} length of a
+ * @param {vec2} vector - vector of reference
+ * @returns {Number} length
+ * @alias module:modeling/math/vec2.length
  */
 const length = (a) => {
   const x = a[0]

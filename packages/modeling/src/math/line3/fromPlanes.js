@@ -5,6 +5,12 @@ const { EPS } = require('../constants')
 
 const fromPointAndDirection = require('./fromPointAndDirection')
 
+/**
+ * Create a line in 3D space from the intersection of the given planes.
+ *
+ * @returns {line3} a new unbounded line
+ * @alias module:modeling/math/line3.fromPlanes
+ */
 const fromPlanes = (plane1, plane2) => {
   let direction = vec3.cross(plane1, plane2)
   let length = vec3.length(direction)

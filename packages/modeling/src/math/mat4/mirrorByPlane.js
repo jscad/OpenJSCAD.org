@@ -1,11 +1,12 @@
 const create = require('./create')
 
 /**
- * Create an affine matrix for mirroring onto an arbitrary plane
+ * Create a matrix for mirroring onto an arbitrary plane.
  *
- * @param {mat4} [out] receiving matrix
- * @param {vec4} plane to mirror the matrix by
- * @returns {mat4} out
+ * @param {mat4} [out] - receiving matrix
+ * @param {vec4} plane - plane of which to mirror the matrix
+ * @returns {mat4} a new matrix
+ * @alias module:modeling/math/mat4.mirrorByPlane
  */
 const mirrorByPlane = (...params) => {
   let out

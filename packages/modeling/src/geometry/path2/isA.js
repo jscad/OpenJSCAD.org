@@ -1,7 +1,8 @@
 /**
  * Determin if the given object is a path2 geometry.
  * @params {object} object - the object to interogate
- * @returns {true} if the object matches a path2 object
+ * @returns {Boolean} true if the object matches a path2
+ * @alias module:modeling/geometry/path2.isA
  */
 const isA = (object) => {
   if (object && typeof object === 'object') {

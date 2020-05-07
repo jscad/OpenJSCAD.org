@@ -8,7 +8,9 @@ const create = require('./create')
  * The transforms are applied when accessing the sides via toSides().
  * @param {mat4} matrix - the matrix to transform with
  * @param {geom2} geometry - the geometry to transform
- * @returns {geom2} - the transformed geometry
+ * @returns {geom2} a new geometry
+ * @alias module:modeling/geometry/geom2.transform
+ *
  * @example
  * let newgeometry = transform(fromZRotation(degToRad(90)), geometry)
  */

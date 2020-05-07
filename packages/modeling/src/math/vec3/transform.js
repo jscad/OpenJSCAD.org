@@ -1,12 +1,13 @@
 const create = require('./create')
 
 /**
- * Transforms the given vec3 with the given mat4.
- * 4th vector component is implicitly '1'
+ * Transforms the given vector using the given matrix.
+ * 4th vector component is implicitly '1'.
  * @param {vec3} [out] - the receiving vector
  * @param {mat4} matrix - the transform matrix
  * @param {vec3} vector - the vector to transform
- * @returns {vec3} the transformed vector
+ * @returns {vec3} a new vector
+ * @alias module:modeling/math/vec3.transform
  */
 const transform = (...params) => {
   let out

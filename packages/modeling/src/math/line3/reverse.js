@@ -8,8 +8,9 @@ const fromPointAndDirection = require('./fromPointAndDirection')
  * Create a new line in the opposite direction as the given.
  *
  * @param {line3} [out] - receiving line
- * @param {line3} line the 3D line to reverse
- * @returns {line3} a new unbounded 3D line
+ * @param {line3} line - the line to reverse
+ * @returns {line3} a new unbounded line
+ * @alias module:modeling/math/line3.reverse
  */
 const reverse = (...params) => {
   let out

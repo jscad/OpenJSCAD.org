@@ -1,7 +1,7 @@
 const vec3 = require('../vec3')
 const fromValues = require('../vec4/fromValues')
 
-/**
+/*
  * Create a new plane from an untyped object with identical properties
  */
 const fromObject = (obj) => {

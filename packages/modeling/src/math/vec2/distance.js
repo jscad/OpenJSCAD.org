@@ -1,9 +1,10 @@
 /**
- * Calculates the euclidian distance between two vec2's
+ * Calculates the euclidian distance between two vectors.
  *
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {Number} distance between a and b
+ * @param {vec2} a - the first operand
+ * @param {vec2} b - the second operand
+ * @returns {Number} distance
+ * @alias module:modeling/math/vec2.distance
  */
 const distance = (a, b) => {
   const x = b[0] - a[0]

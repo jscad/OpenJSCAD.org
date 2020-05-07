@@ -1,3 +1,8 @@
+/**
+ * Represents a 3D geometry consisting of a list of polygons.
+ * @see {@link geom3} for data structure information.
+ * @module modeling/geometry/geom3
+ */
 module.exports = {
   clone: require('./clone'),
   create: require('./create'),

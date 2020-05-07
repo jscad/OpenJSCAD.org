@@ -7,6 +7,7 @@ const geom2 = require('../geometry/geom2')
  * @param {Array} options.points - points of the polygon : either flat or nested array of points
  * @param {Array} [options.paths] - paths of the polygon : either flat or nested array of points index
  * @returns {geom2} new 2D geometry
+ * @alias module:modeling/primitives.polygon
  *
  * @example
  * let roof = [[10,11], [0,11], [5,20]]

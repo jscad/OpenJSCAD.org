@@ -1,11 +1,12 @@
 const create = require('./create')
 
 /**
- * Create a clone of the given vector
+ * Create a clone of the given vector.
  *
  * @param {vec4} [out] - receiving vector
  * @param {vec4} vector - vector to clone
- * @returns {vec4} clone of vector
+ * @returns {vec4} a new vector
+ * @alias module:modeling/math/vec4.clone
  */
 const clone = (...params) => {
   let out
