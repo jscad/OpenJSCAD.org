@@ -9,16 +9,19 @@ const expandGeom3 = require('./expandGeom3')
 const expandPath2 = require('./expandPath2')
 
 /**
- * Expand the given object(s) using the given options (if any)
+ * Expand the given geometry using the given options.
  * @param {Object} options - options for expand
  * @param {Number} [options.delta=1] - delta (+/-) of expansion
- * @param {String} [options.corners='edge'] - type corner to create during of expansion; edge, chamfer, round
- * @param {Integer} [options.segments=16] - number of segments when creating rounded corners
- * @param {Object|Array} objects - the object(s) to expand
- * @return {Object|Array} the expanded object(s)
+ * @param {String} [options.corners='edge'] - type of corner to create during of expansion; edge, chamfer, round
+ * @param {Integer} [options.segments=16] - number of segments when creating round corners
+ * @param {...Objects} geometry - the list of geometry to expand
+ * @return {Object|Array} new geometry, or list of new geometries
+ * @alias module:modeling/expansions.expand
  *
  * @example
- * let newsphere = expand({delta: 2}, cube({size: [20, 25, 5]}))
+ * let newarc = expand({delta: 5, edge: 'edge'}, arc({}))
+ * let newsquare = expand({delta: 5, edge: 'chamfer'}, square({size: 30}))
+ * let newsphere = expand({delta: 2, edge: 'round'}, cuboid({size: [20, 25, 5]}))
  */
 const expand = (options, ...objects) => {
   objects = flatten(objects)

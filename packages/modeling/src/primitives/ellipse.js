@@ -2,12 +2,14 @@ const vec2 = require('../math/vec2')
 
 const geom2 = require('../geometry/geom2')
 
-/** Construct an ellispe.
+/**
+ * Construct an ellispe.
  * @see https://en.wikipedia.org/wiki/Ellipse
  * @param {Object} [options] - options for construction
  * @param {Array} [options.radius=[1,1]] - radius of ellipse, along X and Y
  * @param {Number} [options.segments=32] - number of segments to create per 360 rotation
  * @returns {geom2} new 2D geometry
+ * @alias module:modeling/primitives.ellipse
  */
 const ellipse = (options) => {
   const defaults = {
@@ -36,11 +38,12 @@ const ellipse = (options) => {
 
 /**
  * Construct a circle where are points are at the same distance from the center.
- * @see {@link ellipse} for additional options, as this is an alias for ellipse
+ * @see [ellipse]{@link module:modeling/primitives.ellipse} for more options
  * @param {Object} [options] - options for construction
  * @param {Number} [options.radius=1] - radius of circle
  * @param {Number} [options.segments=32] - number of segments to create per 360 rotation
  * @returns {geom2} new 2D geometry
+ * @alias module:modeling/primitives.circle
  */
 const circle = (options) => {
   const defaults = {

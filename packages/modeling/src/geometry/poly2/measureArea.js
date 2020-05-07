@@ -1,7 +1,9 @@
-/*
- * Mearsure the area under the given 2D polygon.
+/**
+ * Measure the area under the given polygon.
+ *
  * @param {poly2} polygon - the polgon to measure
  * @return {Float} the area of the polygon
+ * @alias module:modeling/geometry/poly2.measureArea
  */
 const measureArea = (polygon) => {
   let vertices = polygon.vertices

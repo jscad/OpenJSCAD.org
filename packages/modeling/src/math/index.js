@@ -1,3 +1,6 @@
+/**
+ * @module modeling/math
+ */
 module.exports = {
   constants: require('./constants'),
   line2: require('./line2'),

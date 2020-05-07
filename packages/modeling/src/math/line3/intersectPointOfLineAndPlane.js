@@ -5,9 +5,10 @@ const vec3 = require('../vec3')
  *
  * The point of intersection will be invalid if parallel to the plane, e.g. NaN.
  *
- * @param {plane} plane the plane of reference
- * @param {line3} line the 3D line of reference
- * @returns {vec3} a new point
+ * @param {plane} plane - the plane of reference
+ * @param {line3} line - the line of reference
+ * @returns {vec3} a point on the line
+ * @alias module:modeling/math/line3.intersectPointOfLineAndPlane
  */
 const intersectToPlane = (plane, line) => {
   // plane: plane.normal * p = plane.w

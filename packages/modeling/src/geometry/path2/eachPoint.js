@@ -1,11 +1,14 @@
 const toPoints = require('./toPoints')
 
 /**
- * Calls a function for each point in the path in order.
- * @param {path2} path - the path to traverse
- * @param {function} thunk - the function to call
+ * Calls a function for each point in the geometry.
+ * @param {Object} options - options
+ * @param {Function} thunk - the function to call
+ * @param {path2} geometry - the geometry to traverse
+ * @alias module:modeling/geometry/path2.eachPoint
+ *
  * @example
- * eachPoint(path, accumulate)
+ * eachPoint({}, accumulate, geometry)
  */
 const eachPoint = (options, thunk, path) => {
   toPoints(path).forEach(thunk)

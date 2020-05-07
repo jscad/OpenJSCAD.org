@@ -1,7 +1,9 @@
-/*
+/**
  * Return the given geometry as a list of points.
- * The returned array should not be modified as the points are shared with the geometry.
- * @return {Array[point, ...]} list of points, where each point contains an array of 3 numbers
+ * NOTE: The returned array should not be modified as the points are shared with the geometry.
+ * @param {poly3} polygon - the polygon
+ * @return {Array} list of points (3D)
+ * @alias module:modeling/geometry/poly3.toPoints
  */
 const toPoints = function (geometry) {
   return geometry.vertices

@@ -4,9 +4,10 @@ const vec2 = require('../../math/vec2')
 const create = require('./create')
 
 /**
- * Performs a deep clone of the give path.
+ * Performs a deep clone of the give geometry.
  * @param {path2} geometry - the geometry to clone
- * @returns {path2} new path
+ * @returns {path2} a new path
+ * @alias module:modeling/geometry/path2.clone
  */
 const clone = (geometry) => {
   let out = create()

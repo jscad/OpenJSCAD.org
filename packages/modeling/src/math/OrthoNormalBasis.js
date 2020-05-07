@@ -8,7 +8,8 @@ const plane = require('./plane')
 const vec2 = require('./vec2')
 const vec3 = require('./vec3')
 
-/** class OrthoNormalBasis
+/*
+ * Class OrthoNormalBasis
  * Reprojects points on a 3D plane onto a 2D plane
  * or from a 2D plane back onto the 3D plane
  * @param  {Plane} plane

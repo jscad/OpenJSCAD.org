@@ -4,7 +4,8 @@ const vec2 = require('../vec2')
  * Return the direction of the given line.
  *
  * @param {line2} line - the 2D line for calculations
- * @return {vec2} a new relative vector in the direction of the line
+ * @return {vec2} a vector in the direction of the line
+ * @alias module:modeling/math/line2.direction
  */
 const direction = (line) => {
   const vector = vec2.normal(line)

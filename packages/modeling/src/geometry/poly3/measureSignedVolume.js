@@ -1,10 +1,13 @@
 const vec3 = require('../../math/vec3')
 
-/*
+/**
  * Measure the signed volume of the given polygon, which must be convex.
- * The volume is that formed by the tetrahedon connected to the axis,
+ * The volume is that formed by the tetrahedon connected to the axis [0,0,0],
  * and will be positive or negative based on the rotation of the vertices.
- * See http://chenlab.ece.cornell.edu/Publication/Cha/icip01_Cha.pdf
+ * @see http://chenlab.ece.cornell.edu/Publication/Cha/icip01_Cha.pdf
+ * @param {poly3} polygon - the polygon to measure
+ * @return {Float} volume of the polygon
+ * @alias module:modeling/geometry/poly3.measureSignedVolume
  */
 const measureSignedVolume = (poly3) => {
   let signedVolume = 0

@@ -10,10 +10,11 @@ const subtractGeom3 = require('./subtractGeom3')
 /**
  * Return a new geometry representing space in the first geometry but
  * not in all subsequent geometries.
- * Note: None of the given geometries are modified.
+ * The given geometries should be of the same type, either geom2 or geom3.
  *
- * @param {...geometries} geometries - list of geometries
+ * @param {...Object} geometries - list of geometries
  * @returns {geom2|geom3} a new geometry
+ * @alias module:modeling/booleans.subtract
  *
  * @example
  * let myshape = subtract(cubiod({size: [5,5,5]}), cubiod({size: [5,5,5], center: [5,5,5]}))

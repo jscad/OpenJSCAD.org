@@ -5,9 +5,10 @@ const vec3 = require('../../../math/vec3')
 /**
  * Create a deep clone of the given slice.
  *
- * @param {vec3} [out] - receiving slice
- * @param {vec3} slice - slice to clone
- * @returns {vec3} clone of the slice
+ * @param {slice} [out] - receiving slice
+ * @param {slice} slice - slice to clone
+ * @returns {slice} a new slice
+ * @alias module:modeling/extrusions/slice.clone
  */
 const clone = (...params) => {
   let out

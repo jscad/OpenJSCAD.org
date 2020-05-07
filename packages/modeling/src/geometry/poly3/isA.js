@@ -1,7 +1,8 @@
 /**
- * Determin if the given object is a poly3.
- * @params {poly3} object - the object to interogate
- * @returns {true} if the object matches a poly3 based object
+ * Determin if the given object is a polygon.
+ * @param {Object} object - the object to interogate
+ * @returns {Boolean} true if the object matches a poly3
+ * @alias module:modeling/geometry/poly3.isA
  */
 const isA = (object) => {
   if (object && typeof object === 'object') {

@@ -2,10 +2,11 @@ const normalize = require('./normalize')
 const dot = require('./dot')
 
 /**
- * Get the angle between two 3D vectors
+ * Calculate the angle between two vectors.
  * @param {vec3} a - the first operand
  * @param {vec3} b - the second operand
  * @returns {Number} the angle in radians
+ * @alias module:modeling/math/vec3.angle
  */
 const angle = (a, b) => {
   const tempA = normalize(a)

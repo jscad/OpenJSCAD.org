@@ -1,11 +1,12 @@
 const create = require('./create')
 
 /**
- * Creates a new vec2 initialized with the given values
+ * Creates a new vector initialized with the given values.
  *
- * @param {Number} x X component
- * @param {Number} y Y component
- * @returns {vec2} a new 2D vector
+ * @param {Number} x - X coordinate
+ * @param {Number} y - Y coordinate
+ * @returns {vec2} a new vector
+ * @alias module:modeling/math/vec2.fromValues
  */
 const fromValues = (x, y) => {
   const out = create()

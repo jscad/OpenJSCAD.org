@@ -1,11 +1,12 @@
 const create = require('./create')
 
 /**
- * Normalize a vec3
+ * Normalize the given vector.
  *
  * @param {vec3} [out] - the receiving vector
- * @param {vec3} a - vector to normalize
- * @returns {vec3} out
+ * @param {vec3} vector - vector to normalize
+ * @returns {vec3} a new vector
+ * @alias module:modeling/math/vec3.normalize
  */
 const normalize = (...params) => {
   let a

@@ -8,6 +8,7 @@ const origin = require('./origin')
  * @param {Number} y the Y coordinate on the line
  * @param {line2} line the 2D line of reference
  * @return {Number} the X coordinate on the line
+ * @alias module:modeling/math/line2.xAtY
  */
 const xAtY = (y, line) => {
   // px = (distance - normal.y * y) / normal.x

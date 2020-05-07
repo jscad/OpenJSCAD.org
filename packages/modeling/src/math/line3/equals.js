@@ -5,7 +5,8 @@ const vec3 = require('../vec3')
  *
  * @param {line3} a - the first line to compare
  * @param {line3} b - the second line to compare
- * @return {boolean} true if lines are equal
+ * @return {Boolean} true if lines are equal
+ * @alias module:modeling/math/line3.equals
  */
 const equals = (line1, line2) => {
   // compare directions (unit vectors)

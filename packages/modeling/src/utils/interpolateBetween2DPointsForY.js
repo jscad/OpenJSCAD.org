@@ -1,5 +1,9 @@
-// Get the x coordinate of a point with a certain y coordinate, interpolated between two points.
-// Interpolation is robust even if the points have the same y coordinate
+/**
+ * Get the X coordinate of a point with a certain Y coordinate, interpolated between two points.
+ * Interpolation is robust even if the points have the same Y coordinate
+ * @return {Array} X and Y of interpolated point
+ * @alias module:modeling/utils.interpolateBetween2DPointsForY
+ */
 const interpolateBetween2DPointsForY = (point1, point2, y) => {
   let f1 = y - point1[1]
   let f2 = point2[1] - point1[1]

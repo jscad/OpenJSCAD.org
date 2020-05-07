@@ -9,6 +9,7 @@ const clone = require('./clone')
  * @param {Number} pitch - Y rotation in radians
  * @param {Number} roll - X rotation in radians
  * @returns {mat4} a new matrix
+ * @alias module:modeling/math/mat4.fromTaitBryanRotation
  */
 const fromTaitBryanRotation = (yaw, pitch, roll) => {
   // precompute sines and cosines of Euler angles

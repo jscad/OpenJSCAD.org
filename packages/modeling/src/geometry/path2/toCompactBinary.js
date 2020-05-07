@@ -1,4 +1,11 @@
 // FIXME: how about custom properties or fields ?
+
+/**
+ * Produce a compact binary representation from the given path.
+ * @param {path2} geometry - the path
+ * @returns {Array} compact binary representation, array
+ * @alias module:modeling/geometry/path2.toCompactBinary
+ */
 const path2ToCompactBinary = geom => {
   let polysFlat = []
   polysFlat.push(2) // type code: 0 => geom2, 1 => geom3 , 2 => path2

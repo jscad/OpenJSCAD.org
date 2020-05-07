@@ -1,9 +1,10 @@
 const create = require('./create')
 
 /**
- * Creates a new vec3 initialized with the values in the given array
- * @param {Number[]} data - array of numerical values
- * @returns {vec3} a new 3D vector
+ * Creates a new vector initialized with the values in the given array.
+ * @param {Array} data - array of numerical values
+ * @returns {vec3} a new vector
+ * @alias module:modeling/math/vec3.fromArray
  */
 const fromArray = (data) => {
   const out = create()

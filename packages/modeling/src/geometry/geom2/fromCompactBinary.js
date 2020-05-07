@@ -1,9 +1,11 @@
 // FIXME: how about custom properties or fields ?
 const fromPoints = require('./fromPoints')
+
 /**
- *
- * @param {*} data
- * @returns {Float32Array} compacted data
+ * Create a new 2D geometry from the given compact binary data.
+ * @param {Array} data - compact binary data
+ * @returns {geom2} a new geometry
+ * @alias module:modeling/geometry/geom2.fromCompactBinary
  */
 const geom2FromCompactBinary = data => {
   // geom.isRetesselated = !!data[1]

@@ -1,10 +1,18 @@
 const plane = require('../../math/plane/')
 
 /**
- * Creates a new poly2 (polygon) with initial values.
+ * Represents a 2D polygon consisting of a list of ordered vertices.
+ * @typedef {Object} poly2
+ * @property {Array} vertices - list of ordered vertices (2D)
+ */
+
+/**
+ * Creates a new polygon with initial values.
  *
- * @param {Array[]} [vertices] - list of vertices
- * @returns {poly2} a new poly2
+ * @param {Array} [vertices] - list of vertices (2D)
+ * @returns {poly2} a new polygon
+ * @alias module:modeling/geometry/poly2.create
+ *
  * @example
  * let polygon = create()
  */

@@ -5,7 +5,7 @@ const flatten = require('../utils/flatten')
  * @param {Array} color - RGBA color values, where each value is between 0 and 1.0
  * @param {Object|Array} objects - the objects of which to color
  * @returns {Object|Array} the same objects with an additional attribute 'color'
- * @alias module:color.color
+ * @alias module:modeling/color.color
  *
  * @example
  * let redSphere = color([1,0,0], sphere()) // red

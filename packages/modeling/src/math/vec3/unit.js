@@ -2,11 +2,12 @@ const create = require('./create')
 const length = require('./length')
 
 /**
- * Calculates the unit vector of the given vector
+ * Calculates the unit vector of the given vector.
  *
- * @param {vec3} [out] - the optional receiving vector
- * @param {vec3} vector - the base vector for calculations
- * @returns {vec3} unit vector of the given vector
+ * @param {vec3} [out] - the receiving vector
+ * @param {vec3} vector - the vector for calculations
+ * @returns {vec3} a new vector
+ * @alias module:modeling/math/vec3.unit
  */
 const unit = (...params) => {
   let out

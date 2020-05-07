@@ -1,3 +1,7 @@
+/**
+ * Hello this is about primitives.
+ * @module modeling/primitives
+ */
 module.exports = {
   arc: require('./arc'),
   circle: require('./ellipse').circle,

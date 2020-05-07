@@ -9,7 +9,8 @@ const create = require('./create')
  *
  * @param {mat4} [out] - mat4 receiving operation result
  * @param {vec3} v - Translation vector
- * @returns {mat4} out
+ * @returns {mat4} a new matrix
+ * @alias module:modeling/math/mat4.fromTranslation
  */
 const fromTranslation = (...params) => {
   let out

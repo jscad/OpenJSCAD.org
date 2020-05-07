@@ -1,8 +1,9 @@
 /**
- * Calculates the squared length of a vec3
+ * Calculates the squared length of the given vector.
  *
- * @param {vec3} a - vector to calculate squared length of
- * @returns {Number} squared length of a
+ * @param {vec3} vector - vector to calculate squared length of
+ * @returns {Number} squared length
+ * @alias module:modeling/math/vec3.squaredLength
  */
 const squaredLength = (a) => {
   const x = a[0]

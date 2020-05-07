@@ -4,9 +4,9 @@ const flatten = require('../utils/flatten')
  * Converts HSV color values to RGB color values.
  *
  * @see http://en.wikipedia.org/wiki/HSV_color_space.
- * @param {Number[]|Number,Number,Number} values - HSV color values
- * @return {Array} RGB color values
- * @alias module:color.hsvToRgb
+ * @param {...Number|Array} values - HSV or HSVA color values
+ * @return {Array} RGB or RGBA color values
+ * @alias module:modeling/color.hsvToRgb
  *
  * @example
  * let mysphere = color(hsvToRgb([0.9166666666666666, 1, 1]), sphere())

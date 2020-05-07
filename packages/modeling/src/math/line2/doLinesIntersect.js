@@ -4,7 +4,7 @@ const vec2 = require('../vec2')
 
 // see if the line between p0start and p0end intersects with the line between p1start and p1end
 // returns true if the lines strictly intersect, the end points are not counted!
-/**
+/*
  * @param  {vec} p0start
  * @param  {vec} p0end
  * @param  {vec} p1start

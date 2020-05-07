@@ -1,3 +1,6 @@
+/**
+ * @module modeling/math/vec4
+ */
 module.exports = {
   clone: require('./clone'),
   create: require('./create'),

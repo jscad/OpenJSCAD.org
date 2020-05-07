@@ -12,7 +12,8 @@ const create = require('./create')
  * @param {line2} [out] - receiving line
  * @param {mat4} matrix matrix to transform with
  * @param {line2} line the 2D line to transform
- * @returns {line2} a new unbounded 2D line
+ * @returns {line2} a new unbounded line
+ * @alias module:modeling/math/line2.transform
  */
 const transform = (...params) => {
   let out

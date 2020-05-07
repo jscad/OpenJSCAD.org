@@ -2,7 +2,7 @@ const { create } = require('./index')
 
 const { IsFloat } = require('../../utils/typeChecks')
 
-/**
+/*
  * Represents a 3D vector with X, Y, Z coordinates.
  *
  * @example

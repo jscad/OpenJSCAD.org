@@ -7,6 +7,7 @@ const create = require('./create')
  * @param {mat4} matrix - transform matrix
  * @param {slice} slice - slice to transform
  * @returns {slice} the transformed slice
+ * @alias module:modeling/extrusions/slice.transform
  */
 const transform = (matrix, slice) => {
   const edges = slice.edges.map((edge) => [vec3.transform(matrix, edge[0]), vec3.transform(matrix, edge[1])])
