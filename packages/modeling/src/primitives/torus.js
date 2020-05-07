@@ -9,8 +9,8 @@ const {circle} = require('./ellipse')
  * @param {Object} [options] - options for construction
  * @param {Float} [options.innerRadius=1] - radius of small (inner) circle
  * @param {Float} [options.outerRadius=4] - radius of large (outer) circle
- * @param {Integer} [options.innerSegments=16] - number of segments to create per rotation
- * @param {Integer} [options.outerSegments=12] - number of segments to create per rotation
+ * @param {Integer} [options.innerSegments=32] - number of segments to create per rotation
+ * @param {Integer} [options.outerSegments=32] - number of segments to create per rotation
  * @param {Integer} [options.innerRotation=0] - rotation of small (inner) circle in radians
  * @returns {geom3} new 3D geometry
  *
@@ -23,9 +23,9 @@ const {circle} = require('./ellipse')
 const torus = (options) => {
   const defaults = {
     innerRadius: 1,
-    innerSegments: 16,
+    innerSegments: 32,
     outerRadius: 4,
-    outerSegments: 12,
+    outerSegments: 32,
     innerRotation: 0
   }
   let {innerRadius, innerSegments, outerRadius, outerSegments, innerRotation} = Object.assign({}, defaults, options)

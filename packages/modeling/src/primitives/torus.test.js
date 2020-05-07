@@ -9,10 +9,8 @@ const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoi
 test('torus (defaults)', t => {
   const obs = torus()
   const pts = geom3.toPoints(obs)
-  const exp = [
-  ]
-  t.is(pts.length, 384) // 12 * 16 * 2 (polys/segement) = 384
-  //t.true(comparePolygonsAsPoints(pts, exp))
+
+  t.is(pts.length, 2048) // 32 * 32 * 2 (polys/segement) = 2048
 })
 
 test('torus (custom inner circle, customer outer circle)', t => {

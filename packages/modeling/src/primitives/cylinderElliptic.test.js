@@ -12,12 +12,12 @@ test('cylinderElliptic (defaults)', t => {
   const obs = cylinderElliptic()
   const pts = geom3.toPoints(obs)
 
-  t.is(pts.length, 36)
+  t.is(pts.length, 96)
 })
 
 test('cylinderElliptic (options)', t => {
   // test height
-  let obs = cylinderElliptic({height: 10})
+  let obs = cylinderElliptic({height: 10, segments: 12})
   let pts = geom3.toPoints(obs)
   let exp = [
     [ [ 0, 0, -5 ],
@@ -146,7 +146,7 @@ test('cylinderElliptic (options)', t => {
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // test startRadius and endRadius
-  obs = cylinderElliptic({startRadius: [1, 2], endRadius: [2, 1]})
+  obs = cylinderElliptic({startRadius: [1, 2], endRadius: [2, 1], segments: 12})
   pts = geom3.toPoints(obs)
   exp = [
     [ [ 0, 0, -1 ],
@@ -299,7 +299,7 @@ test('cylinderElliptic (options)', t => {
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // test startAngle and endAngle
-  obs = cylinderElliptic({startRadius: [1, 2], endRadius: [2, 1], startAngle: degToRad(90), endAngle: degToRad(270)})
+  obs = cylinderElliptic({startRadius: [1, 2], endRadius: [2, 1], startAngle: degToRad(90), endAngle: degToRad(270), segments: 12})
   pts = geom3.toPoints(obs)
   exp = [
   ]

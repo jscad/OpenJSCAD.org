@@ -7,38 +7,15 @@ const geom2 = require('../geometry/geom2')
 const comparePoints = require('../../test/helpers/comparePoints')
 
 test('roundedRectangle (defaults)', t => {
-  const exp = [
-    new Float32Array([ 1, 0.800000011920929 ]),
-    new Float32Array([ 0.9847759008407593, 0.8765367269515991 ]),
-    new Float32Array([ 0.941421389579773, 0.941421389579773 ]),
-    new Float32Array([ 0.8765367269515991, 0.9847759008407593 ]),
-    new Float32Array([ 0.800000011920929, 1 ]),
-    new Float32Array([ -0.800000011920929, 1 ]),
-    new Float32Array([ -0.8765367269515991, 0.9847759008407593 ]),
-    new Float32Array([ -0.941421389579773, 0.941421389579773 ]),
-    new Float32Array([ -0.9847759008407593, 0.8765367269515991 ]),
-    new Float32Array([ -1, 0.800000011920929 ]),
-    new Float32Array([ -1, -0.800000011920929 ]),
-    new Float32Array([ -0.9847759008407593, -0.8765367269515991 ]),
-    new Float32Array([ -0.941421389579773, -0.941421389579773 ]),
-    new Float32Array([ -0.8765367269515991, -0.9847759008407593 ]),
-    new Float32Array([ -0.800000011920929, -1 ]),
-    new Float32Array([ 0.800000011920929, -1 ]),
-    new Float32Array([ 0.8765367269515991, -0.9847759008407593 ]),
-    new Float32Array([ 0.941421389579773, -0.941421389579773 ]),
-    new Float32Array([ 0.9847759008407593, -0.8765367269515991 ]),
-    new Float32Array([ 1, -0.800000011920929 ])
-  ]
   const geometry = roundedRectangle()
   const obs = geom2.toPoints(geometry)
 
-  t.deepEqual(obs.length, 20)
-  t.true(comparePoints(obs, exp))
+  t.deepEqual(obs.length, 36)
 })
 
 test('roundedRectangle (options)', t => {
   // test size
-  let geometry = roundedRectangle({size: [10, 6]})
+  let geometry = roundedRectangle({size: [10, 6], segments: 16})
   let obs = geom2.toPoints(geometry)
   let exp = [
     new Float32Array([ 5, 2.799999952316284 ]),
@@ -66,7 +43,7 @@ test('roundedRectangle (options)', t => {
   t.true(comparePoints(obs, exp))
 
   // test roundRadius
-  geometry = roundedRectangle({size: [10, 6], roundRadius: 2})
+  geometry = roundedRectangle({size: [10, 6], roundRadius: 2, segments: 16})
   obs = geom2.toPoints(geometry)
   exp = [
     new Float32Array([ 5, 1 ]),

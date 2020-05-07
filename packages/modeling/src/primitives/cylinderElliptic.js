@@ -12,7 +12,7 @@ const poly3 = require('../geometry/poly3')
  * @param {Number} [options.startAngle=0] - start angle of cylinder, in radians
  * @param {Vector2D} [options.endRadius=[1,1]] - radius of rounded end, must be two dimensional array
  * @param {Number} [options.endAngle=(Math.PI * 2)] - end angle of cylinder, in radians
- * @param {Number} [options.segments=12] - number of segments to create per full rotation
+ * @param {Number} [options.segments=32] - number of segments to create per full rotation
  * @returns {geom3} new geometry
  *
  * @example
@@ -29,7 +29,7 @@ const cylinderElliptic = function (options) {
     startAngle: 0,
     endRadius: [1,1],
     endAngle: (Math.PI * 2),
-    segments: 12
+    segments: 32
   }
   let {height, startRadius, startAngle, endRadius, endAngle, segments} = Object.assign({}, defaults, options)
 
@@ -111,7 +111,7 @@ const cylinderElliptic = function (options) {
  * @param {Object} [options] - options for construction
  * @param {Array} [options.height=2] - height of cylinder
  * @param {Number} [options.radius=1] - radius of cylinder (at both start and end)
- * @param {Number} [options.segments=12] - number of segments to create per full rotation
+ * @param {Number} [options.segments=32] - number of segments to create per full rotation
  * @returns {geom3} new geometry
  *
  * @example
@@ -125,7 +125,7 @@ const cylinder = function (options) {
   const defaults = {
     height: 2,
     radius: 1,
-    segments: 12
+    segments: 32
   }
   let {height, radius, segments} = Object.assign({}, defaults, options)
 

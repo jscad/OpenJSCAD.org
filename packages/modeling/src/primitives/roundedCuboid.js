@@ -111,21 +111,21 @@ const stitchSides = (bottomCorners, topCorners) => {
  * @param {Object} [options] - options for construction
  * @param {Vector3} [options.size=[2,2,2]] - dimension of rounded cube; width, depth, height
  * @param {Number} [options.roundRadius=0.2] - radius of rounded edges
- * @param {Number} [options.segments=12] - number of segments to create per 360 rotation
+ * @param {Number} [options.segments=32] - number of segments to create per 360 rotation
  * @returns {geom3} new 3D geometry
  *
  * @example
  * let mycube = roundedCuboid({
  *   size: [10, 20, 10],
  *   roundRadius: 2,
- *   segments: 36,
+ *   segments: 16,
  * });
  */
 const roundedCuboid = (options) => {
   const defaults = {
     size: [2, 2, 2],
     roundRadius: 0.2,
-    segments: 12
+    segments: 32
   }
   let center = [0, 0, 0];
   let {size, roundRadius, segments} = Object.assign({}, defaults, options)

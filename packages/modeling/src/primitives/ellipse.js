@@ -6,13 +6,13 @@ const geom2 = require('../geometry/geom2')
  * @see https://en.wikipedia.org/wiki/Ellipse
  * @param {Object} [options] - options for construction
  * @param {Array} [options.radius=[1,1]] - radius of ellipse, along X and Y
- * @param {Number} [options.segments=16] - number of segments to create per 360 rotation
+ * @param {Number} [options.segments=32] - number of segments to create per 360 rotation
  * @returns {geom2} new 2D geometry
  */
 const ellipse = (options) => {
   const defaults = {
     radius: [1, 1],
-    segments: 16
+    segments: 32
   }
   let center = [0,0];
   let {radius, segments} = Object.assign({}, defaults, options)
@@ -39,13 +39,13 @@ const ellipse = (options) => {
  * @see {@link ellipse} for additional options, as this is an alias for ellipse
  * @param {Object} [options] - options for construction
  * @param {Number} [options.radius=1] - radius of circle
- * @param {Number} [options.segments=16] - number of segments to create per 360 rotation
+ * @param {Number} [options.segments=32] - number of segments to create per 360 rotation
  * @returns {geom2} new 2D geometry
  */
 const circle = (options) => {
   const defaults = {
     radius: 1,
-    segments: 16
+    segments: 32
   }
   let {radius, segments} = Object.assign({}, defaults, options)
 
