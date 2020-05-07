@@ -12,6 +12,8 @@ const {circle} = require('./ellipse')
  * @param {Integer} [options.innerSegments=32] - number of segments to create per rotation
  * @param {Integer} [options.outerSegments=32] - number of segments to create per rotation
  * @param {Integer} [options.innerRotation=0] - rotation of small (inner) circle in radians
+ * @param {Float} [options.outerRotation=(PI * 2)] - rotation (outer) of the torus (RADIANS)
+ * @param {Float} [options.startAngle=0] - start angle of the torus (RADIANS)
  * @returns {geom3} new 3D geometry
  * @alias module:modeling/primitives.torus
  *
@@ -27,9 +29,11 @@ const torus = (options) => {
     innerSegments: 32,
     outerRadius: 4,
     outerSegments: 32,
-    innerRotation: 0
+    innerRotation: 0,
+    startAngle: 0,
+    outerRotation: Math.PI * 2
   }
-  let {innerRadius, innerSegments, outerRadius, outerSegments, innerRotation} = Object.assign({}, defaults, options)
+  let {innerRadius, innerSegments, outerRadius, outerSegments, innerRotation, startAngle, outerRotation} = Object.assign({}, defaults, options)
 
   if (!Number.isFinite(innerRadius)) throw new Error('innerRadius must be a number')
   if (!Number.isFinite(outerRadius)) throw new Error('outerRadius must be a number')
@@ -41,8 +45,8 @@ const torus = (options) => {
   if (innerRotation !== 0) innerCircle = rotate([0, 0, innerRotation], innerCircle)
 
   options = {
-    startAngle: 0,
-    angle: Math.PI * 2,
+    startAngle: startAngle,
+    angle: outerRotation,
     segments: outerSegments
   }
   return extrudeRotate(options, innerCircle)
