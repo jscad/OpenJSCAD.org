@@ -44,7 +44,7 @@ function loadScript (scriptAsText, filePath, csgBasePath = '@jscad/csg/api') {
   }
   if ((typeof (scriptRootModule) === 'function')) { // single export ???
     console.warn('please use named exports for your main() function !')
-    scriptRootModule = {main: scriptRootModule}
+    scriptRootModule = { main: scriptRootModule }
   }
   let params = {}
   let paramDefinitions = []
@@ -52,7 +52,7 @@ function loadScript (scriptAsText, filePath, csgBasePath = '@jscad/csg/api') {
     paramDefinitions = scriptRootModule.getParameterDefinitions() || []
     params = getParameterValuesFromParameters(scriptRootModule.getParameterDefinitions)
   }
-  return {params, paramDefinitions, scriptRootModule: scriptRootModule}
+  return { params, paramDefinitions, scriptRootModule: scriptRootModule }
 }
 
-module.exports = {loadScript}
+module.exports = { loadScript }

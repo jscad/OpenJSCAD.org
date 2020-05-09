@@ -197,9 +197,11 @@ Polyhedron.prototype.evaluate = function (parentContext, inst) {
   _.each(triangles, function (triangle) {
     polygons.push(
       _.template('new CSG.Polygon([new CSG.Vertex(new CSG.Vector3D([<%=vec1%>])),new CSG.Vertex(new CSG.Vector3D([<%=vec2%>])),new CSG.Vertex(new CSG.Vector3D([<%=vec3%>]))])')
-      ({ vec1: points[triangle[2]],
+      ({
+        vec1: points[triangle[2]],
         vec2: points[triangle[1]],
-        vec3: points[triangle[0]] }))
+        vec3: points[triangle[0]]
+      }))
   })
 
   return _.template('CSG.fromPolygons([<%=polygons%>])')({ polygons: polygons })

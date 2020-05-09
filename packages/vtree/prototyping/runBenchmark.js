@@ -1,5 +1,4 @@
-const { toArray } = require('@jscad/array-utils')
-const decache = require('decache')
+// const decache = require('decache')
 const child_process = require('child_process')
 
 function runBenchMark (runFn, name, runs = 10) {
@@ -20,8 +19,8 @@ function runBenchMark (runFn, name, runs = 10) {
 
 function spawnBenchMark (path, runs = 100) {
   const usage = require('usage')
-  let cpuNumbers = []
-  let memNumbers = []
+  const cpuNumbers = []
+  const memNumbers = []
 
   const process = child_process.spawn('node', [path, runs])
 
@@ -31,7 +30,7 @@ function spawnBenchMark (path, runs = 100) {
       if (err) {
         console.log('error?', err)
       }
-      let { cpu, memory } = result
+      const { cpu, memory } = result
       cpuNumbers.push(cpu)
       memNumbers.push(memory / (1024 * 1024))
       // console.log('result' + path, 'memory:',memory/1000, 'cpu:', cpu)
@@ -62,7 +61,7 @@ const runPass = (runFn, runs, name) => {
   let elapsed
   let start
 
-  let numbers = []
+  const numbers = []
   for (var i = 0; i < runs; i++) {
     // decache(moduleName)
 
@@ -82,17 +81,17 @@ const median = sequence => {
   return sequence[Math.ceil(sequence.length / 2)]
 }
 
-const samePolygonCount = (a, b) => {
-  if (a.length !== b.length) {
-    return false
-  }
-  a.forEach((polycount, index) => {
-    if (polycount !== b[index]) {
-      return false
-    }
-  })
-  return true
-}
+// const samePolygonCount = (a, b) => {
+//   if (a.length !== b.length) {
+//     return false
+//   }
+//   a.forEach((polycount, index) => {
+//     if (polycount !== b[index]) {
+//       return false
+//     }
+//   })
+//   return true
+// }
 
 module.exports = {
   runBenchMark,

@@ -1,11 +1,11 @@
 const test = require('ava')
 
-const { fromTaitBryanRotation , toString } = require('./index')
+const { fromTaitBryanRotation } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
 test('mat4: fromTaitBryanRotation() should return a new mat4 with correct values', (t) => {
-  let rotation = 90 * 0.017453292519943295
+  const rotation = 90 * 0.017453292519943295
 
   // rotation using YAW / Z
   const obs1 = fromTaitBryanRotation(rotation, 0, 0)

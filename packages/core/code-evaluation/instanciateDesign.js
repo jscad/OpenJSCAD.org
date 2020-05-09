@@ -12,7 +12,7 @@ const isResultGeometry = (rawResults) => (rawResults.length > 0 && (isGeom3(rawR
 const lookupFromCompactBinary = (compactLookup = {}) => {
   // console.log('lookupFromCompactBinary', compactLookup)
   // TODO: optimise this !!
-  let lookup = {}
+  const lookup = {}
   Object.keys(compactLookup).forEach(function (key) {
     const object = compactLookup[key]
     let result
@@ -91,15 +91,15 @@ const instanciateDesign = (rootModule, parameterValues, options) => {
   const { vtreeMode, serialize } = options
   // deal with the actual solids generation
   let solids
-  let rawResults = flatten(toArray(rootModule.main(parameterValues)))
+  const rawResults = flatten(toArray(rootModule.main(parameterValues)))
 
   if (vtreeMode) {
     console.log('input lookup', options.lookup)
     let lookup = lookupFromCompactBinary(options.lookup)
-    let lookupCounts = options.lookupCounts || {}
+    const lookupCounts = options.lookupCounts || {}
 
     console.log('lookup after', lookup)
-    const start = new Date()
+    // const start = new Date()
     const buildCachedGeometryFromTree = makeBuildCachedGeometryFromTree({ passesBeforeElimination: 5, lookup, lookupCounts })
     solids = buildCachedGeometryFromTree({}, rawResults)
     console.log('created lookup', lookup, lookupCounts)

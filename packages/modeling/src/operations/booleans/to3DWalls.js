@@ -25,11 +25,11 @@ const to3DWall = (z0, z1, side) => {
  * @return {geom3} the new geometry
  */
 const to3DWalls = (options, geometry) => {
-  let sides = geom2.toSides(geometry)
+  const sides = geom2.toSides(geometry)
 
-  let polygons = sides.map((side) => to3DWall(options.z0, options.z1, side))
+  const polygons = sides.map((side) => to3DWall(options.z0, options.z1, side))
 
-  let result = geom3.create(polygons)
+  const result = geom3.create(polygons)
   return result
 }
 

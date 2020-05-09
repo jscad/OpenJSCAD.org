@@ -10,11 +10,11 @@ function actions (sources) {
     .multicast()
     // .tap(x=>console.log('resizes',x))
 
-  let rotations$ = gestures.drags
+  const rotations$ = gestures.drags
     .filter(x => x !== undefined) // TODO: add this at gestures.drags level
     .map(function (data) {
       // console.log('rotation',data.originalEvents[0].target)
-      let delta = [data.delta.x, data.delta.y]
+      const delta = [data.delta.x, data.delta.y]
       const { shiftKey } = data.originalEvents[0]
       if (!shiftKey) {
         return delta
@@ -26,7 +26,7 @@ function actions (sources) {
     .map(data => ({ type: 'rotate', data }))
     .multicast()
 
-  let pan$ = gestures.drags
+  const pan$ = gestures.drags
     .filter(x => x !== undefined) // TODO: add this at gestures.drags level
     .map(function (data) {
       const delta = [data.delta.x, data.delta.y]
@@ -40,7 +40,7 @@ function actions (sources) {
     .map(data => ({ type: 'pan', data }))
     .multicast()
 
-  let zoom$ = gestures.zooms
+  const zoom$ = gestures.zooms
     .startWith(0) // TODO: add this at gestures.zooms level
     .map(x => -x) // we invert zoom direction
     .filter(x => !isNaN(x)) // TODO: add this at gestures.zooms level
@@ -55,7 +55,7 @@ function actions (sources) {
     .map(data => ({ type: 'setProjectionType', data: data.camera.projectionType }))
 
   // Reset view with a double tap/ when data changed
-  let reset$ = most.mergeArray([
+  const reset$ = most.mergeArray([
     gestures.taps
       .filter(taps => taps.nb === 2)
       .multicast(),
@@ -99,7 +99,7 @@ function actions (sources) {
     .multicast()
 
   /* const update$ = heartBeat$.thru(limitFlow(33))
-    .map(_ => ({type: 'update', data: undefined}))*/
+    .map(_ => ({type: 'update', data: undefined})) */
   const update$ = most.mergeArray([
     rotations$,
     zoom$,

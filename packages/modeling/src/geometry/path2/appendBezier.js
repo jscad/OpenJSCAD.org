@@ -41,7 +41,7 @@ const appendBezier = (options, geometry) => {
     throw new Error('the given geometry cannot be closed')
   }
 
-  let points = toPoints(geometry)
+  const points = toPoints(geometry)
   if (points.length < 1) {
     throw new Error('the given path must contain one or more points (as the starting point for the bezier curve)')
   }
@@ -50,7 +50,7 @@ const appendBezier = (options, geometry) => {
   controlPoints = controlPoints.slice()
 
   // special handling of null control point (only first is allowed)
-  let firstControlPoint = controlPoints[0]
+  const firstControlPoint = controlPoints[0]
   if (firstControlPoint === null) {
     if (controlPoints.length < 2) {
       throw new Error('a null control point must be passed with one more control points')
@@ -74,62 +74,62 @@ const appendBezier = (options, geometry) => {
   // add a control point for the previous end point
   controlPoints.unshift(points[points.length - 1])
 
-  let bezierOrder = controlPoints.length - 1
-  let factorials = []
+  const bezierOrder = controlPoints.length - 1
+  const factorials = []
   let fact = 1
   for (let i = 0; i <= bezierOrder; ++i) {
     if (i > 0) fact *= i
     factorials.push(fact)
   }
 
-  let binomials = []
+  const binomials = []
   for (let i = 0; i <= bezierOrder; ++i) {
-    let binomial = factorials[bezierOrder] / (factorials[i] * factorials[bezierOrder - i])
+    const binomial = factorials[bezierOrder] / (factorials[i] * factorials[bezierOrder - i])
     binomials.push(binomial)
   }
 
   const getPointForT = (t) => {
-    let t_k = 1 // = pow(t,k)
-    let one_minus_t_n_minus_k = Math.pow(1 - t, bezierOrder) // = pow( 1-t, bezierOrder - k)
-    let inv_1_minus_t = (t !== 1) ? (1 / (1 - t)) : 1
-    let point = vec2.create() // 0, 0, 0
+    let tk = 1 // = pow(t,k)
+    let oneMinusTNMinusK = Math.pow(1 - t, bezierOrder) // = pow( 1-t, bezierOrder - k)
+    const invOneMinusT = (t !== 1) ? (1 / (1 - t)) : 1
+    const point = vec2.create() // 0, 0, 0
     for (let k = 0; k <= bezierOrder; ++k) {
-      if (k === bezierOrder) one_minus_t_n_minus_k = 1
-      let bernsteinCoefficient = binomials[k] * t_k * one_minus_t_n_minus_k
-      let derivativePoint = vec2.scale(bernsteinCoefficient, controlPoints[k])
+      if (k === bezierOrder) oneMinusTNMinusK = 1
+      const bernsteinCoefficient = binomials[k] * tk * oneMinusTNMinusK
+      const derivativePoint = vec2.scale(bernsteinCoefficient, controlPoints[k])
       vec2.add(point, point, derivativePoint)
-      t_k *= t
-      one_minus_t_n_minus_k *= inv_1_minus_t
+      tk *= t
+      oneMinusTNMinusK *= invOneMinusT
     }
     return point
   }
 
-  let newpoints = []
-  let newpointsT = []
-  let numsteps = bezierOrder + 1
+  const newpoints = []
+  const newpointsT = []
+  const numsteps = bezierOrder + 1
   for (let i = 0; i < numsteps; ++i) {
-    let t = i / (numsteps - 1)
-    let point = getPointForT(t)
+    const t = i / (numsteps - 1)
+    const point = getPointForT(t)
     newpoints.push(point)
     newpointsT.push(t)
   }
 
   // subdivide each segment until the angle at each vertex becomes small enough:
   let subdivideBase = 1
-  let maxangle = Math.PI * 2 / segments
-  let maxsinangle = Math.sin(maxangle)
+  const maxangle = Math.PI * 2 / segments
+  const maxsinangle = Math.sin(maxangle)
   while (subdivideBase < newpoints.length - 1) {
-    let dir1 = vec2.normalize(vec2.subtract(newpoints[subdivideBase], newpoints[subdivideBase - 1]))
-    let dir2 = vec2.normalize(vec2.subtract(newpoints[subdivideBase + 1], newpoints[subdivideBase]))
-    let sinangle = vec2.cross(dir1, dir2) // the sine of the angle
+    const dir1 = vec2.normalize(vec2.subtract(newpoints[subdivideBase], newpoints[subdivideBase - 1]))
+    const dir2 = vec2.normalize(vec2.subtract(newpoints[subdivideBase + 1], newpoints[subdivideBase]))
+    const sinangle = vec2.cross(dir1, dir2) // the sine of the angle
     if (Math.abs(sinangle[2]) > maxsinangle) {
       // angle is too big, we need to subdivide
-      let t0 = newpointsT[subdivideBase - 1]
-      let t1 = newpointsT[subdivideBase + 1]
-      let newt0 = t0 + (t1 - t0) * 1 / 3
-      let newt1 = t0 + (t1 - t0) * 2 / 3
-      let point0 = getPointForT(newt0)
-      let point1 = getPointForT(newt1)
+      const t0 = newpointsT[subdivideBase - 1]
+      const t1 = newpointsT[subdivideBase + 1]
+      const newt0 = t0 + (t1 - t0) * 1 / 3
+      const newt1 = t0 + (t1 - t0) * 2 / 3
+      const point0 = getPointForT(newt0)
+      const point1 = getPointForT(newt1)
       // remove the point at subdivideBase and replace with 2 new points:
       newpoints.splice(subdivideBase, 1, point0, point1)
       newpointsT.splice(subdivideBase, 1, newt0, newt1)
@@ -144,7 +144,7 @@ const appendBezier = (options, geometry) => {
   // append to the new points to the given path
   // but skip the first new point because it is identical to the last point in the given path
   newpoints.shift()
-  let result = appendPoints(newpoints, geometry)
+  const result = appendPoints(newpoints, geometry)
   result.lastBezierControlPoint = controlPoints[controlPoints.length - 2]
   return result
 }

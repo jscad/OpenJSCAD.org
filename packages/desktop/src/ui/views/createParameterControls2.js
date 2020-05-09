@@ -1,13 +1,13 @@
 // getParamDefinitions(script)
 const createParamControls = (prevParamValues = {}, paramDefinitions, instantUpdate, rebuildSolid) => {
-  let paramControls = []
-  let results = []
+  const paramControls = []
+  const results = []
   for (let i = 0; i < paramDefinitions.length; i++) {
-    let paramdef = paramDefinitions[i]
+    const paramdef = paramDefinitions[i]
     // paramdef.index = i + 1
 
     let control = null
-    let type = paramdef.type.toLowerCase()
+    const type = paramdef.type.toLowerCase()
     switch (type) {
       case 'choice':
         control = createChoiceControl(paramdef, prevParamValues[paramdef.name])
@@ -20,9 +20,9 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, instantUpda
         break
     }
     // add the appropriate element to the table
-    let tr = document.createElement('tr')
+    const tr = document.createElement('tr')
     if (type === 'group') {
-      let th = document.createElement('th')
+      const th = document.createElement('th')
       if ('className' in control) {
         th.className = control.className
       }
@@ -31,7 +31,7 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, instantUpda
     } else {
       // implementing instantUpdate
       control.onchange = function (e) {
-        let l = e.currentTarget.nextElementSibling
+        const l = e.currentTarget.nextElementSibling
         if (l !== null && l.nodeName === 'LABEL') {
           l.innerHTML = e.currentTarget.value
         }
@@ -59,11 +59,11 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, instantUpda
 
     results.push(tr)
   }
-  return {controls: results, paramControls}
+  return { controls: results, paramControls }
 }
 
 const createGroupControl = definition => {
-  let control = document.createElement('title')
+  const control = document.createElement('title')
   control.paramName = definition.name
   control.paramType = definition.type
   if ('caption' in definition) {
@@ -79,10 +79,10 @@ const createChoiceControl = (definition, prevValue) => {
   if (!('values' in definition)) {
     throw new Error('Definition of choice parameter (' + definition.name + ") should include a 'values' parameter")
   }
-  let control = document.createElement('select')
+  const control = document.createElement('select')
   control.paramName = definition.name
   control.paramType = definition.type
-  let values = definition.values
+  const values = definition.values
   let captions
   if ('captions' in definition) {
     captions = definition.captions
@@ -94,7 +94,7 @@ const createChoiceControl = (definition, prevValue) => {
   }
   let selectedindex = 0
   for (let valueindex = 0; valueindex < values.length; valueindex++) {
-    let option = document.createElement('option')
+    const option = document.createElement('option')
     option.value = values[valueindex]
     option.text = captions[valueindex]
     control.add(option)
@@ -103,7 +103,7 @@ const createChoiceControl = (definition, prevValue) => {
         selectedindex = valueindex
       }
     } else if ('default' in definition) {
-      if (definition['default'] === values[valueindex]) {
+      if (definition.default === values[valueindex]) {
         selectedindex = valueindex
       }
     } else if ('initial' in definition) {
@@ -119,25 +119,25 @@ const createChoiceControl = (definition, prevValue) => {
 }
 
 const createControl = (definition, prevValue) => {
-  let controlList = [
-    {type: 'text', control: 'text', required: ['type', 'name'], initial: ''},
-    {type: 'int', control: 'number', required: ['type', 'name'], initial: 0},
-    {type: 'float', control: 'number', required: ['type', 'name'], initial: 0.0},
-    {type: 'number', control: 'number', required: ['type', 'name'], initial: 0.0},
-    {type: 'checkbox', control: 'checkbox', required: ['type', 'name', 'checked'], initial: ''},
-    {type: 'radio', control: 'radio', required: ['type', 'name', 'checked'], initial: ''},
-    {type: 'color', control: 'color', required: ['type', 'name'], initial: '#000000'},
-    {type: 'date', control: 'date', required: ['type', 'name'], initial: ''},
-    {type: 'email', control: 'email', required: ['type', 'name'], initial: ''},
-    {type: 'password', control: 'password', required: ['type', 'name'], initial: ''},
-    {type: 'url', control: 'url', required: ['type', 'name'], initial: ''},
-    {type: 'slider', control: 'range', required: ['type', 'name', 'min', 'max'], initial: 0, label: true}
+  const controlList = [
+    { type: 'text', control: 'text', required: ['type', 'name'], initial: '' },
+    { type: 'int', control: 'number', required: ['type', 'name'], initial: 0 },
+    { type: 'float', control: 'number', required: ['type', 'name'], initial: 0.0 },
+    { type: 'number', control: 'number', required: ['type', 'name'], initial: 0.0 },
+    { type: 'checkbox', control: 'checkbox', required: ['type', 'name', 'checked'], initial: '' },
+    { type: 'radio', control: 'radio', required: ['type', 'name', 'checked'], initial: '' },
+    { type: 'color', control: 'color', required: ['type', 'name'], initial: '#000000' },
+    { type: 'date', control: 'date', required: ['type', 'name'], initial: '' },
+    { type: 'email', control: 'email', required: ['type', 'name'], initial: '' },
+    { type: 'password', control: 'password', required: ['type', 'name'], initial: '' },
+    { type: 'url', control: 'url', required: ['type', 'name'], initial: '' },
+    { type: 'slider', control: 'range', required: ['type', 'name', 'min', 'max'], initial: 0, label: true }
   ]
   // check for required parameters
   if (!('type' in definition)) {
     throw new Error('Parameter definition (' + definition + ") must include a 'type' parameter")
   }
-  let control = document.createElement('input')
+  const control = document.createElement('input')
   let i, j, controlInstance, paramName
   for (i = 0; i < controlList.length; i++) {
     controlInstance = controlList[i]
@@ -178,8 +178,8 @@ const createControl = (definition, prevValue) => {
     control.value = controlInstance.initial
   }
   // set generic HTML attributes
-  for (let property in definition) {
-    if (definition.hasOwnProperty(property)) {
+  for (const property in definition) {
+    if (Object.prototype.hasOwnProperty.call(definition, property)) {
       if (controlInstance.required.indexOf(property) < 0) {
         control.setAttribute(property, definition[property])
       }
@@ -193,4 +193,4 @@ const createControl = (definition, prevValue) => {
   return control
 }
 
-module.exports = {createParamControls}
+module.exports = { createParamControls }

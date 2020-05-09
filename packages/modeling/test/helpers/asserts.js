@@ -6,14 +6,14 @@ const { toPolygons } = require('../../src/core/CSGToOther')
 // todo: should simplify colinear vertices
 // @return true if both polygons are identical
 function comparePolygons (a, b) {
-    // First find one matching vertice
-    // We try to find the first vertice of a inside b
-    // If there is no such vertice, then a != b
+  // First find one matching vertice
+  // We try to find the first vertice of a inside b
+  // If there is no such vertice, then a != b
   if (a.vertices.length !== b.vertices.length || a.vertices.length === 0) {
     return false
   }
-  let start = a.vertices[0]
-  let index = b.vertices.findIndex(v => {
+  const start = a.vertices[0]
+  const index = b.vertices.findIndex(v => {
     if (!v) { return false }
 
     return v._x === start._x && v._y === start._y && v._z === start._z
@@ -21,12 +21,12 @@ function comparePolygons (a, b) {
   if (index === -1) {
     return false
   }
-    // Rearrange b vertices so that they start with the same vertex as a
+  // Rearrange b vertices so that they start with the same vertex as a
   let vs = b.vertices
   if (index !== 0) {
     vs = b.vertices.slice(index).concat(b.vertices.slice(0, index))
   }
-    // Compare now vertices one by one
+  // Compare now vertices one by one
   for (let i = 0; i < a.vertices.length; i++) {
     if (a.vertices[i]._x !== vs[i]._x ||
             a.vertices[i]._y !== vs[i]._y ||
@@ -49,7 +49,7 @@ function containsCSG (observed, expected) {
 
   return toPolygons(observed).map(p => {
     let found = false
-    let bp = toPolygons(expected)
+    const bp = toPolygons(expected)
     for (let i = 0; i < bp.length; i++) {
       if (comparePolygons(p, bp[i])) {
         found = true
@@ -62,8 +62,8 @@ function containsCSG (observed, expected) {
 
 function simplifiedPolygon (polygon) {
   const vertices = polygon.vertices.map(vertex => [vertex.pos._x, vertex.pos._y, vertex.pos._z])
-  const plane = {normal: [polygon.plane.normal._x, polygon.plane.normal._y, polygon.plane.normal._z], w: polygon.plane.w}
-  return {positions: vertices, plane, shared: polygon.shared}
+  const plane = { normal: [polygon.plane.normal._x, polygon.plane.normal._y, polygon.plane.normal._z], w: polygon.plane.w }
+  return { positions: vertices, plane, shared: polygon.shared }
 }
 
 function simplifieSides (cag) {

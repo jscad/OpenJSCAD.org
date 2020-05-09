@@ -7,7 +7,7 @@
  * @alias module:modeling/geometry/path2.toCompactBinary
  */
 const path2ToCompactBinary = geom => {
-  let polysFlat = []
+  const polysFlat = []
   polysFlat.push(2) // type code: 0 => geom2, 1 => geom3 , 2 => path2
   polysFlat.push(geom.isClosed ? 1 : 0)
   polysFlat.push(...geom.transforms)

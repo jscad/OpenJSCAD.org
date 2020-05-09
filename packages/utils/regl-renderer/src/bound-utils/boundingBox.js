@@ -7,8 +7,8 @@ function boundingBox (positions) {
   const nested = (Array.isArray(positions) && Array.isArray(positions[0]))
 
   const dimensions = nested ? positions[0].length : 3
-  let min = new Array(dimensions)
-  let max = new Array(dimensions)
+  const min = new Array(dimensions)
+  const max = new Array(dimensions)
 
   for (var i = 0; i < dimensions; i += 1) {
     min[i] = Infinity

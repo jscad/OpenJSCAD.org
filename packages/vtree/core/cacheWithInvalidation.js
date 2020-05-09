@@ -25,9 +25,9 @@ const makeCacheWithInvalidation = (passesBeforeElimination = 1, lookup = {}, loo
   // call this after a 'pass'
   const update = () => {
     const totalHashes = Object.keys(lookup)
-    let a = new Set(totalHashes)
-    let b = new Set(currentPassHits)
-    let hashesWithNoHits = Array.from(new Set([...a].filter(x => !b.has(x))))
+    const a = new Set(totalHashes)
+    const b = new Set(currentPassHits)
+    const hashesWithNoHits = Array.from(new Set([...a].filter(x => !b.has(x))))
 
     hashesWithNoHits.forEach(function (nodeHash, index) {
       lookupCounts[nodeHash] -= 1

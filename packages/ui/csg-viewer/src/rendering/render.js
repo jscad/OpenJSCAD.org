@@ -17,22 +17,23 @@ const prepareRender = (regl, params) => {
 
   complex.positions = complex.positions.map(point => [point[0], point[1], 0]) */
 
-  const cube = {positions: [
-    0, 0, 0,
-    0, 100, 0,
-    0, 100, 100],
+  const cube = {
+    positions: [
+      0, 0, 0,
+      0, 100, 0,
+      0, 100, 100],
 
     cells: [0, 1, 2]
   }
 
-  const drawTest = makeDrawMeshNoNormals(regl, {geometry: cube})
+  const drawTest = makeDrawMeshNoNormals(regl, { geometry: cube })
   const drawAxis = makeDrawAxis(regl, {})
   const drawConnector = makeDrawConnector(regl, {})
 
-  let command = (props) => {
+  const command = (props) => {
     // console.log('params in render', props)
-    const {camera, drawCommands} = props
-    const {drawGrid, drawCSGs} = drawCommands
+    const { camera, drawCommands } = props
+    const { drawGrid, drawCSGs } = drawCommands
     const useVertexColors = !props.overrideOriginalColors
 
     renderWrapper(regl)(props, context => {
@@ -45,16 +46,16 @@ const prepareRender = (regl, params) => {
       const nonTransparents = drawCSGs.filter(drawCall => !drawCall.isTransparent)
 
       nonTransparents.forEach(drawCall => {
-        const {entity} = drawCall
+        const { entity } = drawCall
         const primitive = entity.type === '2d' ? 'lines' : 'triangles'
         const model = entity.transforms.matrix
-        drawCall({color: props.rendering.meshColor, primitive, useVertexColors, camera, model})
+        drawCall({ color: props.rendering.meshColor, primitive, useVertexColors, camera, model })
       })
       transparents.forEach(drawCall => {
-        const {entity} = drawCall
+        const { entity } = drawCall
         const primitive = entity.type === '2d' ? 'lines' : 'triangles'
         const model = entity.transforms.matrix
-        drawCall({color: props.rendering.meshColor, primitive, useVertexColors, camera, model})
+        drawCall({ color: props.rendering.meshColor, primitive, useVertexColors, camera, model })
       })
 
       // drawTest({color: [1, 0, 0, 1], model: mat4.translate(mat4.create(), mat4.identity([]), [100, 0, 200])})
@@ -62,7 +63,7 @@ const prepareRender = (regl, params) => {
         const gridColor = props.grid.color
         const subGridColor = [gridColor[0], gridColor[1], gridColor[2], gridColor[3] * 0.35]
         const fadeOut = props.grid.fadeOut
-        drawGrid({color: gridColor, subColor: subGridColor, fadeOut})
+        drawGrid({ color: gridColor, subColor: subGridColor, fadeOut })
       }
       if (props.axes.show) {
         drawAxis() // needs to be last to be 'on top' of the scene

@@ -27,6 +27,5 @@ test('line2: distanceToPoint() should return proper values', (t) => {
   const dis9 = distanceToPoint([5, 0], line2)
   nearlyEqual(t, dis9, 4.2426406145095825, EPS)
 
-
   t.true(true)
 })

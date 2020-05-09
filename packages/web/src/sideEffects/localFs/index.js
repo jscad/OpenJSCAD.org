@@ -8,7 +8,7 @@ const makeLocalFsSideEffect = async (params) => {
   const defaults = { logging: false }
   const { logging } = Object.assign({}, defaults, params)
   const log = makeLogger({ enabled: logging })
-  let enabled = true
+  const enabled = true
 
   const sink = (commands$) => {
     if (!enabled) { // bail out if not available
@@ -76,7 +76,7 @@ const makeLocalFsSideEffect = async (params) => {
         watch,
         write
       }
-      const commandHandler = commandHandlers[type] || commandHandlers['unhandled']
+      const commandHandler = commandHandlers[type] || commandHandlers.unhandled
       commandHandler()
     })
   }

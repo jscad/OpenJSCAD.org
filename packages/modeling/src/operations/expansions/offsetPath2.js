@@ -18,14 +18,14 @@ const offsetPath2 = (options, geometry) => {
     closed: geometry.isClosed,
     segments: 16
   }
-  let { delta, corners, closed, segments } = Object.assign({ }, defaults, options)
+  const { delta, corners, closed, segments } = Object.assign({ }, defaults, options)
 
   if (!(corners === 'edge' || corners === 'chamfer' || corners === 'round')) {
     throw new Error('corners must be "edge", "chamfer", or "round"')
   }
 
   options = { delta, corners, closed, segments }
-  let newpoints = offsetFromPoints(options, path2.toPoints(geometry))
+  const newpoints = offsetFromPoints(options, path2.toPoints(geometry))
   return path2.fromPoints({ closed: closed }, newpoints)
 }
 

@@ -1,5 +1,5 @@
 const test = require('ava')
-const { fromValues, toString } = require('./index')
+const { fromValues } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
@@ -9,6 +9,4 @@ test('line2: fromValues() should return a new line2 with correct values', (t) =>
 
   const obs2 = fromValues(0, 1, -5)
   t.true(compareVectors(obs2, [0, 1, -5]))
-
-  const str1 = toString(obs2)
 })

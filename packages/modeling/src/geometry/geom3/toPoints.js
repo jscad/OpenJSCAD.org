@@ -9,8 +9,8 @@ const toPolygons = require('./toPolygons')
  * @alias module:modeling/geometry/geom3.toPoints
  */
 const toPoints = function (geometry) {
-  let polygons = toPolygons(geometry)
-  let listofpoints = polygons.map(function (polygon) {
+  const polygons = toPolygons(geometry)
+  const listofpoints = polygons.map(function (polygon) {
     return poly3.toPoints(polygon)
   })
   return listofpoints

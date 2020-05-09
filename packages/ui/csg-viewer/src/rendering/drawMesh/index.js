@@ -1,15 +1,15 @@
 const mat4 = require('gl-mat4')
 const vao = require('vertex-ao')
 
-const drawMesh = function (regl, params = {extras: {}}) {
-  const {buffer} = regl
+const drawMesh = function (regl, params = { extras: {} }) {
+  const { buffer } = regl
   const defaults = {
     useVertexColors: true,
     dynamicCulling: false,
     geometry: undefined,
     type: undefined
   }
-  const {geometry, dynamicCulling, useVertexColors, type} = Object.assign({}, defaults, params)
+  const { geometry, dynamicCulling, useVertexColors, type } = Object.assign({}, defaults, params)
 
   let ambientOcclusion // = vao(geometry.indices, geometry.positions, 64, 64)
   ambientOcclusion = regl.buffer([])
@@ -23,7 +23,7 @@ const drawMesh = function (regl, params = {extras: {}}) {
     return isOdd ? 'front' : 'back'
   } : 'back'
 
-  let vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
+  const vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
   let frag = hasVertexColors ? require('./vColorShaders').frag : require('./meshShaders').frag
 
   // FIXME: forced override for 2D shape colors to have a simple color
@@ -67,7 +67,7 @@ const drawMesh = function (regl, params = {extras: {}}) {
     blend: {
       enable: true,
 
-      func: {src: 'src alpha', dst: 'one minus src alpha'}
+      func: { src: 'src alpha', dst: 'one minus src alpha' }
     },
     primitive: (context, props) => props && props.primitive ? props.primitive : 'triangles'
   }

@@ -1,4 +1,3 @@
-const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
 const { head } = require('@jscad/core/utils/arrays')
 const { walkFileTree } = require('../localFs/walkFileTree')
@@ -15,48 +14,41 @@ const makeMemFsSideEffect = (params) => {
   const commandResponses = callBackToStream()
 
   // general data
-  let rawData
   let filesAndFolders = []
-  let fs
-  let watcher
 
   const sink = (commands$) => {
     commands$.forEach(function (command) {
       const { path, type, id, data, options } = command
-      const defaults = {
-        isRawData: false
-      }
-      const { isRawData, isFs, isPreFetched } = Object.assign({}, defaults, options)
+      const { isFs } = options
       log.info(`memfs: operation: ${type} ${path} ${id} ${options}`)
 
       // command handlers/ response
-      const read = () => {
-        log.info('reading in memfs', data, path, options)
-        if (fs.statSync(path).isFile()) {
-          fs.readFile(path, 'utf8', function (error, data) {
-            if (error) {
-              commandResponses.callback({ path, type, error, id })
-            } else {
-              commandResponses.callback({ path, type, data, id, filesAndFolders })
-            }
-          })
-        } else {
-          fs.readDir(path, function (error, data) {
-            if (error) {
-              commandResponses.callback({ path, type, error, id })
-            } else {
-              commandResponses.callback({ path, type, data, id, filesAndFolders })
-            }
-          })
-        }
-      }
+      // const read = () => {
+      //   log.info('reading in memfs', data, path, options)
+      //   if (fs.statSync(path).isFile()) {
+      //     fs.readFile(path, 'utf8', function (error, data) {
+      //       if (error) {
+      //         commandResponses.callback({ path, type, error, id })
+      //       } else {
+      //         commandResponses.callback({ path, type, data, id, filesAndFolders })
+      //       }
+      //     })
+      //   } else {
+      //     fs.readDir(path, function (error, data) {
+      //       if (error) {
+      //         commandResponses.callback({ path, type, error, id })
+      //       } else {
+      //         commandResponses.callback({ path, type, data, id, filesAndFolders })
+      //       }
+      //     })
+      //   }
+      // }
 
       const add = async () => {
         if (isFs) {
           // this from inputs typically like drag & drop data
-          rawData = data
           filesAndFolders = await walkFileTree(data)
-          commandResponses.callback({ type, id, data: filesAndFolders })      
+          commandResponses.callback({ type, id, data: filesAndFolders })
         } else {
           console.log('data', data)
           filesAndFolders = data
@@ -86,7 +78,7 @@ const makeMemFsSideEffect = (params) => {
         add,
         write
       }
-      const commandHandler = commandHandlers[type] || commandHandlers['error']
+      const commandHandler = commandHandlers[type] || commandHandlers.error
       commandHandler()
     })
   }

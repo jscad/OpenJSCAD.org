@@ -2,11 +2,9 @@ const test = require('ava')
 
 const { measureArea, create } = require('./index')
 
-const { nearlyEqual } = require('../../../test/helpers/index')
-
 test('poly2: measureArea() should return correct values', (t) => {
-  let ply1 = create()
-  let ret1 = measureArea(ply1)
+  const ply1 = create()
+  const ret1 = measureArea(ply1)
   t.is(ret1, 0.0)
 
   // simple triangle
@@ -40,7 +38,7 @@ test('poly2: measureArea() should return correct values', (t) => {
     [1, 3],
     [3, 3]
   ]
-  let ply4 = create(points)
-  let ret4 = measureArea(ply4)
+  const ply4 = create(points)
+  const ret4 = measureArea(ply4)
   t.is(ret4, 19.5)
 })

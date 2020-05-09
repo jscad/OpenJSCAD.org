@@ -3,9 +3,9 @@ var Globals = require('./Globals')
 
 function Context (parentContext) {
   this.vars = (parentContext) ? {} : {
-    '$fn': Globals.FN_DEFAULT,
-    '$fs': Globals.FS_DEFAULT,
-    '$fa': Globals.FA_DEFAULT
+    $fn: Globals.FN_DEFAULT,
+    $fs: Globals.FS_DEFAULT,
+    $fa: Globals.FA_DEFAULT
   }
   this.parentContext = parentContext
   this.inst_p
@@ -125,7 +125,7 @@ Context.get_fragments_from_r = function (r, context) {
 
   var GRID_FINE = 0.000001
   if (r < GRID_FINE) return 0
-  if (fn > 0.0) { return parseInt(fn)}
+  if (fn > 0.0) { return parseInt(fn) }
   return parseInt(Math.ceil(Math.max(Math.min(360.0 / fa, r * 2 * Math.PI / fs), 5)))
 }
 
@@ -138,35 +138,35 @@ function deg2rad (deg) {
 };
 
 var functionNameLookup = {
-  'cos': function (degree) {
+  cos: function (degree) {
     if (_.isUndefined(degree) || _.isNaN(degree)) { return undefined }
     return Math.cos(deg2rad(degree))
   },
-  'sin': function (degree) {
+  sin: function (degree) {
     if (_.isUndefined(degree) || _.isNaN(degree)) { return undefined }
     return Math.sin(deg2rad(degree))
   },
-  'acos': function (degree) {
+  acos: function (degree) {
     if (_.isUndefined(degree) || _.isNaN(degree)) { return undefined }
     return rad2deg(Math.acos(degree))
   },
-  'asin': function (degree) {
+  asin: function (degree) {
     if (_.isUndefined(degree) || _.isNaN(degree)) { return undefined }
     return rad2deg(Math.asin(degree))
   },
-  'atan': function (degree) {
+  atan: function (degree) {
     if (_.isUndefined(degree) || _.isNaN(degree)) { return undefined }
     return rad2deg(Math.atan(degree))
   },
-  'atan2': function (x, y) {
+  atan2: function (x, y) {
     if (_.isUndefined(x) || _.isNaN(x) || _.isUndefined(y) || _.isNaN(y)) { return undefined }
     return rad2deg(Math.atan2(x, y))
   },
-  'tan': function (degree) {
+  tan: function (degree) {
     if (_.isUndefined(degree) || _.isNaN(degree)) { return undefined }
     return Math.tan(deg2rad(degree))
   },
-  'rands': function (min_value, max_value, value_count, seed_value) {
+  rands: function (min_value, max_value, value_count, seed_value) {
     var values = []
     if (seed_value !== undefined) {
       Math.seedrandom(seed_value)
@@ -177,53 +177,53 @@ var functionNameLookup = {
     }
     return values
   },
-  'round': function (x) {
+  round: function (x) {
     if (_.isUndefined(x) || _.isNaN(x)) { return undefined }
 
     // This is because Javascript rounds negative numbers up, whereas c++ rounds down
     return (x < 0) ? -(Math.round(Math.abs(x))) : Math.round(x)
   },
-  'exp': function (x) {
+  exp: function (x) {
     if (_.isUndefined(x) || _.isNaN(x)) { return undefined }
 
     return Math.exp(x)
   },
-  'abs': function (x) {
+  abs: function (x) {
     if (_.isUndefined(x) || _.isNaN(x)) { return undefined }
     return Math.abs(x)
   },
-  'max': function () {
+  max: function () {
     return Math.max.apply(null, _.map(arguments, function (num) { return num || -Infinity }))
   },
-  'min': function () {
+  min: function () {
     return Math.min.apply(null, _.map(arguments, function (num) { return num || Infinity }))
   },
-  'pow': function (x) {
+  pow: function (x) {
     if (_.isUndefined(x) || _.isNaN(x)) { return undefined }
     return Math.pow(x)
   },
-  'ln': function (x) {
+  ln: function (x) {
     if (_.isUndefined(x) || _.isNaN(x)) { return undefined }
     return Math.log(x)
   },
-  'ceil': function (x) {
+  ceil: function (x) {
     if (_.isUndefined(x) || _.isNaN(x)) { return undefined }
     return Math.ceil(x)
   },
-  'floor': function (x) {
+  floor: function (x) {
     if (_.isUndefined(x) || _.isNaN(x)) { return undefined }
     return Math.floor(x)
   },
-  'sqrt': function (x) {
+  sqrt: function (x) {
     if (_.isUndefined(x) || _.isNaN(x)) { return undefined }
     return Math.sqrt(x)
   },
-  'len': function (x) {
+  len: function (x) {
     if (_.isUndefined(x) || _.isNaN(x)) { return undefined }
     var y = _.isString(x) ? Globals.stripString(x) : x
     return y.length
   },
-  'log': function () {
+  log: function () {
     if (arguments.length == 2) {
       if (_.isUndefined(arguments[0]) || _.isNaN(arguments[0]) || _.isUndefined(arguments[1]) || _.isNaN(arguments[1])) { return undefined }
       return Math.log(arguments[1]) / Math.log(arguments[0])
@@ -234,7 +234,7 @@ var functionNameLookup = {
       return undefined
     }
   },
-  'str': function () {
+  str: function () {
     var vals = []
     _.each(arguments, function (x) {
       vals.push(Globals.convertForStrFunction(x))
@@ -242,11 +242,11 @@ var functionNameLookup = {
 
     return vals.join('')
   },
-  'sign': function (x) {
+  sign: function (x) {
     if (_.isUndefined(x) || _.isNaN(x)) { return undefined }
     return (x > 0) ? 1.0 : ((x < 0) ? -1.0 : 0)
   },
-  'lookup': function () {
+  lookup: function () {
     var low_p, low_v, high_p, high_v
     if (arguments.length < 2) {
       console.log('Lookup arguments are invalid. Incorrect parameter count. ' + arguments)

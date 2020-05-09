@@ -12,7 +12,7 @@ const toPoints = require('./toPoints')
  * console.out(toString(path))
  */
 const toString = (geometry) => {
-  let points = toPoints(geometry)
+  const points = toPoints(geometry)
   let result = 'path (' + points.length + ' points, ' + geometry.isClosed + '):\n[\n'
   points.forEach((point) => {
     result += '  ' + vec2.toString(point) + ',\n'

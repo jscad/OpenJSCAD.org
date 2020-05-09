@@ -27,7 +27,8 @@ const entitiesFromSolids = (params, solids) => {
       geometry = csgToGeometries(solid, {
         smoothLighting: smoothNormals,
         normalThreshold: 0.3,
-        faceColor: meshColor })//, normalThreshold: 0})
+        faceColor: meshColor
+      })//, normalThreshold: 0})
     }
     // geometry = flatten(geometries)// FXIME : ACTUALLY deal with arrays since a single csg can
     // generate multiple geometries if positions count is >65535

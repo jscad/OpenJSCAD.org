@@ -37,9 +37,9 @@ test('poly3: transform() should return a new poly3 with correct values', (t) => 
   const r = (90 * 0.017453292519943295)
   const rotateZMatrix = [
     Math.cos(r), -Math.sin(r), 0, 0,
-    Math.sin(r),  Math.cos(r), 0, 0,
-              0,            0, 1, 0,
-              0,            0, 0, 1
+    Math.sin(r), Math.cos(r), 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1
   ]
 
   const exp3 = { plane: [0, 0, 1, 0], vertices: [[0, 0, 0], [0, -1, 0], [1, -1, 0]] }

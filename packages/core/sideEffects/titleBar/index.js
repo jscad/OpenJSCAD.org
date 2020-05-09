@@ -29,5 +29,5 @@ module.exports = function makeTitleBarSideEffect () {
       .multicast()
       .skipRepeats()
   }
-  return {sink, source}
+  return { sink, source }
 }

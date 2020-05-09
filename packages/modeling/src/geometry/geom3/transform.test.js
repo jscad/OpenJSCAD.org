@@ -2,7 +2,7 @@ const test = require('ava')
 
 const mat4 = require('../../math/mat4')
 
-const {transform, fromPoints, toPolygons} = require('./index')
+const { transform, fromPoints, toPolygons } = require('./index')
 
 test('transform: Adjusts the transforms of a populated geom3', (t) => {
   const points = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]
@@ -19,8 +19,8 @@ test('transform: Adjusts the transforms of a populated geom3', (t) => {
         vertices: [
           new Float32Array([0, 0, 0]),
           new Float32Array([1, 0, 0]),
-          new Float32Array([1, 0, 1]),
-         ]
+          new Float32Array([1, 0, 1])
+        ]
       }
     ],
     isRetesselated: false,
@@ -43,16 +43,16 @@ test('transform: Adjusts the transforms of a populated geom3', (t) => {
       vertices: [
         new Float32Array([-5, 5, 5]),
         new Float32Array([-5, 6, 5]),
-        new Float32Array([-5, 6, 6]),
-       ]
+        new Float32Array([-5, 6, 6])
+      ]
     }
   ]
   expected.transforms = mat4.identity()
-  let polygons = toPolygons(another)
+  toPolygons(another)
   t.deepEqual(another, expected)
 
   // expect lazy transform, i.e. only the transforms change
-  expected.transforms = new Float32Array([ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 5, 5, 1 ])
+  expected.transforms = new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 5, 5, 1])
   another = transform(mat4.fromTranslation([5, 5, 5]), another)
   t.deepEqual(another, expected)
 })

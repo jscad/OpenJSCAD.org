@@ -6,4 +6,4 @@ void main () {
   gl_FragColor = ucolor;
 }
 `
-module.exports = {frag: vColorFrag}
+module.exports = { frag: vColorFrag }

@@ -16,7 +16,7 @@ Notes:
      JSON
 */
 
-const { geometry, utils } = require('@jscad/modeling')
+const { utils } = require('@jscad/modeling')
 
 // Replace all typed arrays in geometries with standard Arrays
 // NOTE: 'this' in replacer is the object in which key was found

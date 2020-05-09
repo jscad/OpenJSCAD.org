@@ -46,7 +46,7 @@ const extrudeFromSlices = (options, base) => {
     isCapped: true,
     callback: defaultCallback
   }
-  let { numberOfSlices, isCapped, callback } = Object.assign({ }, defaults, options)
+  const { numberOfSlices, isCapped, callback: generate } = Object.assign({ }, defaults, options)
 
   if (numberOfSlices < 2) throw new Error('numberOfSlices must be 2 or more')
 
@@ -59,12 +59,12 @@ const extrudeFromSlices = (options, base) => {
   for (let s = 0; s < numberOfSlices; s++) {
     // invoke the callback function to get the next slice
     // NOTE: callback can return null to skip the slice
-    let currentSlice = callback(s / sMax, s, base)
+    const currentSlice = generate(s / sMax, s, base)
 
     if (currentSlice) {
       if (!slice.isA(currentSlice)) throw new Error('the callback function must return slice objects')
 
-      let edges = slice.toEdges(currentSlice)
+      const edges = slice.toEdges(currentSlice)
       if (edges.length === 0) throw new Error('the callback function must return slices with one or more edges')
 
       if (prevSlice) {

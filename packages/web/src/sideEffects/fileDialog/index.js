@@ -1,14 +1,12 @@
-const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
-const { head } = require('@jscad/array-utils')
-const makeLogger = require('../../utils/logger')
+// const makeLogger = require('../../utils/logger')
 
 const makeFileDialog = (params) => {
-  const defaults = {
-    logging: true
-  }
-  const {logging} = Object.assign({}, defaults, params)
-  const log = makeLogger({enabled: logging})
+  // const defaults = {
+  //   logging: true
+  // }
+  // const { logging } = Object.assign({}, defaults, params)
+  // const log = makeLogger({ enabled: logging })
 
   const commandResponses = callBackToStream()
 
@@ -26,7 +24,7 @@ const makeFileDialog = (params) => {
       saveAs(blob, filePath) */
 
       console.log('here')
-      let input = document.createElement('input')
+      const input = document.createElement('input')
       input.id = 'foo'
       input.name = 'gna'
       input.setAttribute('type', 'file')
@@ -39,7 +37,7 @@ const makeFileDialog = (params) => {
       })
     })
   }
-  return {source, sink}
+  return { source, sink }
 }
 
 module.exports = makeFileDialog

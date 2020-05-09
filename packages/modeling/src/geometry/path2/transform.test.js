@@ -1,10 +1,8 @@
 const test = require('ava')
 
-const { degToRad } = require('../../math/utils')
 const mat4 = require('../../math/mat4')
-const vec2 = require('../../math/vec2')
 
-const {transform, fromPoints, toPoints} = require('./index')
+const { transform, fromPoints, toPoints } = require('./index')
 
 test('transform: adjusts the transforms of path', t => {
   const points = [[0, 0], [1, 0], [0, 1]]
@@ -14,13 +12,15 @@ test('transform: adjusts the transforms of path', t => {
   // continue with typical user scenario, several itterations of transforms and access
 
   // expect lazy transform, i.e. only the transforms change
-  let expected = {points: [
-                      new Float32Array([0, 0]),
-                      new Float32Array([1, 0]),
-                      new Float32Array([0, 1])
-                    ],
-                    isClosed: false,
-                    transforms: new Float32Array([6.123233995736766e-17, 1, 0, 0, -1, 6.123233995736766e-17, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]) }
+  const expected = {
+    points: [
+      new Float32Array([0, 0]),
+      new Float32Array([1, 0]),
+      new Float32Array([0, 1])
+    ],
+    isClosed: false,
+    transforms: new Float32Array([6.123233995736766e-17, 1, 0, 0, -1, 6.123233995736766e-17, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
+  }
   const geometry = fromPoints({}, points)
   let another = transform(rotate90, geometry)
   t.not(geometry, another)
@@ -38,11 +38,11 @@ test('transform: adjusts the transforms of path', t => {
     new Float32Array([-6, 5])
   ]
   expected.transforms = mat4.identity()
-  let updatedpoints = toPoints(another)
+  toPoints(another)
   t.deepEqual(another, expected)
 
   // expect lazy transform, i.e. only the transforms change
-  expected.transforms = new Float32Array([ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 5, 5, 1 ])
+  expected.transforms = new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 5, 5, 1])
   another = transform(mat4.fromTranslation([5, 5, 5]), another)
   t.deepEqual(another, expected)
 })

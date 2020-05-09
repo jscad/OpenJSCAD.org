@@ -38,4 +38,4 @@ const atKey = (key, object) => {
   return {}
 }
 
-module.exports = {omit, keep, atKey}
+module.exports = { omit, keep, atKey }

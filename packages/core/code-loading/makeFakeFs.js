@@ -1,6 +1,5 @@
 const makeFakeFs = (filesAndFolders) => {
   const findMatch = (path, inputs = filesAndFolders) => {
-    let result
     for (let i = 0; i < inputs.length; i++) {
       const entry = inputs[i]
       if (path === entry.fullPath || ('/' + path) === entry.fullPath) {

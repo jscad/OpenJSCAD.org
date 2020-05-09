@@ -1,9 +1,9 @@
-const {mergeArray} = require('most')
+const { mergeArray } = require('most')
 const packageMetadata = require('../package.json')
 
 const initialState = {
   appTitle: `jscad v ${packageMetadata.version}`,
-  appUpdates: {available: false, version: undefined},
+  appUpdates: { available: false, version: undefined },
   locale: require('electron').remote.app.getLocale().split('-')[0],
   availableLanguages: [],
   // for possible errors
@@ -22,7 +22,7 @@ const initialState = {
   busy: false,
   // visuals
   themeName: 'light',
-  themeSettings: {mainTextColor: '#FFF'},
+  themeSettings: { mainTextColor: '#FFF' },
   viewer: require('./ui/viewer/reducers').initialize(),
   // interactions
   shortcuts: require('../data/keybindings.json'),
@@ -35,7 +35,7 @@ const initialState = {
 
 console.log('initialState', initialState)
 
-//status infos from web ui: sort out, reuse or not
+// status infos from web ui: sort out, reuse or not
 /*
 error: data,
 ready: 'Ready',
@@ -47,7 +47,7 @@ saving: data,
 saved: data,
 converting: `Converting ${data} <img id=busy src='imgs/busy.gif'>`,
 fetching: `Fetching ${data} <img id=busy src='imgs/busy.gif'>`,
-rendering: `Rendering. Please wait <img id=busy src='imgs/busy.gif'>`*/
+rendering: `Rendering. Please wait <img id=busy src='imgs/busy.gif'>` */
 
 function makeState (actions) {
   // const reducers = //Object.assign({}, dataParamsReducers, cameraControlsReducers)
@@ -68,7 +68,7 @@ function makeState (actions) {
         return newState
       } catch (error) {
         console.error('caught error', error)
-        return Object.assign({}, state, {error})
+        return Object.assign({}, state, { error })
       }
       // const newState = merge({}, state, updatedData)
       // console.log('SCAAAN', action, newState)
@@ -79,4 +79,4 @@ function makeState (actions) {
   return state$
 }
 
-module.exports = {makeState, initialState}
+module.exports = { makeState, initialState }

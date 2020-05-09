@@ -3,7 +3,7 @@ const modeling = require('@jscad/modeling') // FIXME: not ideal
 // TODO: we likely need to wrap the api in a function, to handle special cases like measurements in the future
 // const makeModelingApi = ()
 
-let specials = []
+const specials = []
 require('./operations/measurements/measureArea')(specials)
 require('./operations/measurements/measureVolume')(specials)
 require('./operations/measurements/measureBounds')(specials)

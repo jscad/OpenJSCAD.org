@@ -25,7 +25,7 @@ const polyhedron = (options) => {
     colors: undefined,
     orientation: 'outward'
   }
-  let {points, faces, colors, orientation} = Object.assign({}, defaults, options)
+  const { points, faces, colors, orientation } = Object.assign({}, defaults, options)
 
   if (!(Array.isArray(points) && Array.isArray(faces))) {
     throw new Error('points and faces must be arrays')
@@ -50,8 +50,8 @@ const polyhedron = (options) => {
     faces.forEach((face) => face.reverse())
   }
 
-  let polygons = faces.map((face, findex) => {
-    let polygon = poly3.fromPoints(face.map((pindex) => points[pindex]))
+  const polygons = faces.map((face, findex) => {
+    const polygon = poly3.fromPoints(face.map((pindex) => points[pindex]))
     if (colors && colors[findex]) polygon.color = colors[findex]
     return polygon
   })

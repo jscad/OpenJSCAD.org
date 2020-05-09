@@ -11,7 +11,7 @@ const mayOverlap = require('./mayOverlap')
 const { center } = require('../transforms/center')
 
 test.only('mayOverlap: determination of overlap is reliable', t => {
-  let geometry1 = center({ center: [0, 0, 0] }, cuboid({ size: [4, 4, 4] }))
+  const geometry1 = center({ center: [0, 0, 0] }, cuboid({ size: [4, 4, 4] }))
   let geometry2 = center({ center: [0, 0, 0] }, cuboid({ size: [2, 2, 2] }))
   t.true(mayOverlap(geometry1, geometry2))
 
@@ -35,8 +35,8 @@ test.only('mayOverlap: determination of overlap is reliable', t => {
 
   // from issue #137, precision errors cause determination to fail
   // see the value of EPS
-  let issue1 = center({ center: [0, 0, -1] }, cuboid({ size: [44, 26, 5] }))
-  let issue2 = center({ center: [5, 0, -4.400001] }, cuboid({ size: [44, 26, 1.8] }))
+  const issue1 = center({ center: [0, 0, -1] }, cuboid({ size: [44, 26, 5] }))
+  const issue2 = center({ center: [5, 0, -4.400001] }, cuboid({ size: [44, 26, 1.8] }))
   t.true(mayOverlap(issue1, issue2))
 
   geometry2 = center({ center: [0, 0, 4 + 0.000001] }, cuboid({ size: [4, 4, 4] }))

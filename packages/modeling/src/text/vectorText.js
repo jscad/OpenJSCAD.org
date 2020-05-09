@@ -4,7 +4,7 @@ const vectorParams = require('./vectorParams')
 // translate text line
 function translateLine (options, line) {
   const { x, y } = Object.assign({ x: 0, y: 0 }, options || {})
-  let segments = line.segments
+  const segments = line.segments
   let segment = null
   let point = null
   for (let i = 0, il = segments.length; i < il; i++) {
@@ -49,16 +49,16 @@ function translateLine (options, line) {
 * let textSegments = vectorText({ yOffset: -80, input: 'OpenJSCAD' })
 */
 function vectorText (options, text) {
-  let {
+  const {
     xOffset, yOffset, input, font, height, align, extrudeOffset, lineSpacing, letterSpacing
   } = vectorParams(options, text)
-  let [ x, y ] = [ xOffset, yOffset ]
-  let [ i, il, char, vect, width, diff ] = []
+  let [x, y] = [xOffset, yOffset]
+  let [i, il, char, vect, width, diff] = []
   let line = { width: 0, segments: [] }
-  let lines = []
+  const lines = []
   let output = []
   let maxWidth = 0
-  let lineStart = x
+  const lineStart = x
   const pushLine = () => {
     lines.push(line)
     maxWidth = Math.max(maxWidth, line.width)

@@ -24,7 +24,7 @@ const getKeyCombos = (options, keyUps$, keyDown$) => {
     dropRepeats: false,
     endKeys: []
   }
-  const {dropRepeats, endKeys} = Object.assign({}, defaults, options)
+  const { dropRepeats, endKeys } = Object.assign({}, defaults, options)
 
   keyDown$ = keyDown$.multicast().debounce(10)
   if (dropRepeats) {
@@ -44,12 +44,12 @@ const getKeyCombos = (options, keyUps$, keyDown$) => {
           event: values.length > 0 ? values[0].event : undefined,
           compositeKey: values.map(x => x.compositeKey).join('+')
         }
-        return {seed: [], value}
+        return { seed: [], value }
       } else {
         const compositeKey = simpleKey(event)
-        values.push({event, compositeKey})
+        values.push({ event, compositeKey })
       }
-      return {seed: values}
+      return { seed: values }
     }, [])
     .filter(x => x !== undefined)
     .filter(x => x.event !== undefined)
@@ -69,4 +69,4 @@ const isKeyEventScopeValid = (mykey, x) => {
   return false
 }
 
-module.exports = {compositeKeyFromKeyEvent, getKeyCombos, simpleKey, isKeyEventScopeValid}
+module.exports = { compositeKeyFromKeyEvent, getKeyCombos, simpleKey, isKeyEventScopeValid }

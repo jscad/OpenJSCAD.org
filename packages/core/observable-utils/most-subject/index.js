@@ -1,7 +1,7 @@
 /* @flow */
-const {Subject} = require('./Subject')
-const {SubjectSource} = require('./source/SubjectSource')
-const {HoldSubjectSource} = require('./source/HoldSubjectSource')
+const { Subject } = require('./Subject')
+const { SubjectSource } = require('./source/SubjectSource')
+const { HoldSubjectSource } = require('./source/HoldSubjectSource')
 
 /**
  * Creates a new Subject
@@ -56,4 +56,4 @@ function holdSubject (bufferSize = 1) {
   }
   return new Subject(new HoldSubjectSource(bufferSize))
 }
-module.exports = {subject, holdSubject}
+module.exports = { subject, holdSubject }

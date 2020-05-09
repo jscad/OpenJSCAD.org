@@ -4,9 +4,6 @@ const getAllParameterDefintionsAndValues = require('../parameters/getParameterDe
 const transformSources = require('./transformSources')
 const { registerAllExtensions } = require('../io/registerExtensions')
 
-// taken verbatim from https://github.com/iliakan/detect-node
-// return true if we are are in node/ env that has require()
-const hasRequire = () => Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]'
 const makeWebRequire = require('./webRequire')
 
 /** load a jscad script, injecting the basic dependencies if necessary
@@ -50,13 +47,13 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
   // console.log('filesAndFolders',filesAndFolders)
 
   const makeFakeFs = require('./makeFakeFs')
-  const { getDesignEntryPoint, getDesignName } = require('./requireDesignUtilsFs')
+  const { getDesignEntryPoint } = require('./requireDesignUtilsFs')
 
   const fakeFs = makeFakeFs(filesAndFolders)
   const rootPath = filesAndFolders[0].fullPath
   const mainPath1 = getDesignEntryPoint(fakeFs, rootPath)
-  const designName = getDesignName(fakeFs, rootPath)
-  const designPath = require('path').dirname(rootPath)
+  // const designName = getDesignName(fakeFs, rootPath)
+  // const designPath = require('path').dirname(rootPath)
 
   // console.log('***** root', rootPath, 'main', mainPath1, designName, designPath, filesAndFolders)
   // console.log('filesAndFolders', filesAndFolders)

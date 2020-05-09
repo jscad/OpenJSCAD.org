@@ -28,7 +28,7 @@ const compute = (points) => {
   // Find the lowest point
   let min = 0
   points.forEach((point, i) => {
-    let minpoint = points[min]
+    const minpoint = points[min]
     if (point[1] === minpoint[1]) {
       if (point[0] < minpoint[0]) {
         min = i
@@ -39,7 +39,7 @@ const compute = (points) => {
   })
 
   // Calculate angles and distances from the lowest point
-  let al = []
+  const al = []
   let angle = 0.0
   let dist = 0.0
   for (let i = 0; i < points.length; i++) {
@@ -57,7 +57,7 @@ const compute = (points) => {
   al.sort(function (a, b) { return compareIndex(a, b) })
 
   // Wind around the points CCW, removing interior points
-  let stack = new Array(points.length + 1)
+  const stack = new Array(points.length + 1)
   let j = 2
   for (let i = 0; i < points.length; i++) {
     if (i === min) {
@@ -100,7 +100,7 @@ const compute = (points) => {
  * @returns {Array} a list of points that form the hull
  */
 const hullPoints2 = (uniquepoints) => {
-  let indices = compute(uniquepoints)
+  const indices = compute(uniquepoints)
 
   let hullpoints = []
   if (Array.isArray(indices)) {

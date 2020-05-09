@@ -1,7 +1,7 @@
 const test = require('ava')
 const { compareVectors } = require('../../test/helpers/index')
 
-const {radToDeg, degToRad} = require('./utils')
+const { radToDeg, degToRad } = require('./utils')
 
 const { mat4, vec2, vec3 } = require('./index')
 
@@ -18,24 +18,24 @@ const rad90 = degToRad(deg90)
 
 // +90 degree rotation about X
 const cwX90Matrix = [
-  1,                0,               0, 0,
-  0,  Math.cos(rad90), Math.sin(rad90), 0,
+  1, 0, 0, 0,
+  0, Math.cos(rad90), Math.sin(rad90), 0,
   0, -Math.sin(rad90), Math.cos(rad90), 0,
-  0,                0,               0, 1
+  0, 0, 0, 1
 ]
 // +90 degree rotation about Y
 const cwY90Matrix = [
   Math.cos(rad90), 0, -Math.sin(rad90), 0,
-                0, 1,                0, 0,
-  Math.sin(rad90), 0,  Math.cos(rad90), 0,
-                0, 0,                0, 1
+  0, 1, 0, 0,
+  Math.sin(rad90), 0, Math.cos(rad90), 0,
+  0, 0, 0, 1
 ]
 // +90 degree rotation about Z
 const cwZ90Matrix = [
   Math.cos(rad90), Math.sin(rad90), 0, 0,
- -Math.sin(rad90), Math.cos(rad90), 0, 0,
-                0,               0, 1, 0,
-                0,               0, 0, 1
+  -Math.sin(rad90), Math.cos(rad90), 0, 0,
+  0, 0, 1, 0,
+  0, 0, 0, 1
 ]
 
 test('rotation: mat4 rotation functions should produce expected results', t => {
@@ -79,17 +79,17 @@ test('rotation: vec2 rotation functions should produce expected results', t => {
   const matZ = mat4.fromZRotation(rad90)
 
   // transform
-  let t1 = vec2.transform(matZ, onX)
+  const t1 = vec2.transform(matZ, onX)
   t.true(compareVectors(t1, [0, 3]))
 
-  let t2 = vec2.transform(matZ, onY)
+  const t2 = vec2.transform(matZ, onY)
   t.true(compareVectors(t2, [-3, 0]))
 
   // rotate
-  let r1 = vec2.rotate(rad90, onX)
+  const r1 = vec2.rotate(rad90, onX)
   t.true(compareVectors(r1, [0, 3]))
 
-  let r2 = vec2.rotate(rad90, onY)
+  const r2 = vec2.rotate(rad90, onY)
   t.true(compareVectors(r2, [-3, 0]))
 
   // verify
@@ -106,23 +106,23 @@ test('rotation: vec3 rotation functions should produce expected results', t => {
   const matZ = mat4.fromZRotation(rad90)
 
   // transform
-  let t1 = vec3.transform(matZ, onX)
+  const t1 = vec3.transform(matZ, onX)
   t.true(compareVectors(t1, [0, 3, 0]))
 
-  let t2 = vec3.transform(matX, onY)
+  const t2 = vec3.transform(matX, onY)
   t.true(compareVectors(t2, [0, 0, 3]))
 
-  let t3 = vec3.transform(matY, onZ)
+  const t3 = vec3.transform(matY, onZ)
   t.true(compareVectors(t3, [3, 0, 0]))
 
   // rotate
-  let r1 = vec3.rotateZ(rad90, [0, 0, 0], onX)
+  const r1 = vec3.rotateZ(rad90, [0, 0, 0], onX)
   t.true(compareVectors(r1, [0, 3, 0]))
 
-  let r2 = vec3.rotateX(rad90, [0, 0, 0], onY)
+  const r2 = vec3.rotateX(rad90, [0, 0, 0], onY)
   t.true(compareVectors(r2, [0, 0, 3]))
 
-  let r3 = vec3.rotateY(rad90, [0, 0, 0], onZ)
+  const r3 = vec3.rotateY(rad90, [0, 0, 0], onZ)
   t.true(compareVectors(r3, [3, 0, 0]))
 
   // verify
@@ -130,4 +130,3 @@ test('rotation: vec3 rotation functions should produce expected results', t => {
   t.true(compareVectors(t2, r2))
   t.true(compareVectors(t3, r3))
 })
-

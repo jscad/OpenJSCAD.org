@@ -15,19 +15,19 @@ const hsvToRgb = (...values) => {
   values = flatten(values)
   if (values.length < 3) throw new Error('values must contain H, S and V values')
 
-  let h = values[0]
-  let s = values[1]
-  let v = values[2]
+  const h = values[0]
+  const s = values[1]
+  const v = values[2]
 
   let r = 0
   let g = 0
   let b = 0
 
-  let i = Math.floor(h * 6)
-  let f = h * 6 - i
-  let p = v * (1 - s)
-  let q = v * (1 - f * s)
-  let t = v * (1 - (1 - f) * s)
+  const i = Math.floor(h * 6)
+  const f = h * 6 - i
+  const p = v * (1 - s)
+  const q = v * (1 - f * s)
+  const t = v * (1 - (1 - f) * s)
 
   switch (i % 6) {
     case 0:
@@ -64,7 +64,7 @@ const hsvToRgb = (...values) => {
 
   if (values.length > 3) {
     // add alpha value if provided
-    let a = values[3]
+    const a = values[3]
     return [r, g, b, a]
   }
   return [r, g, b]

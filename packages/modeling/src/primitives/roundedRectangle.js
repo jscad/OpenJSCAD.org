@@ -1,4 +1,4 @@
-const {EPS} = require('../math/constants')
+const { EPS } = require('../math/constants')
 
 const vec2 = require('../math/vec2')
 
@@ -22,8 +22,8 @@ const roundedRectangle = (options) => {
     roundRadius: 0.2,
     segments: 16
   }
-  let center = [0, 0];
-  let {size, roundRadius, segments} = Object.assign({}, defaults, options)
+  const center = [0, 0]
+  let { size, roundRadius, segments } = Object.assign({}, defaults, options)
 
   if (!Array.isArray(size)) throw new Error('size must be an array')
   if (size.length < 2) throw new Error('size must contain width and length values')
@@ -33,21 +33,21 @@ const roundedRectangle = (options) => {
   if (roundRadius > (size[0] - EPS) ||
       roundRadius > (size[1] - EPS)) throw new Error('roundRadius must be smaller then the radius of all dimensions')
 
-  let cornersegments = Math.floor(segments / 4)
+  const cornersegments = Math.floor(segments / 4)
   if (cornersegments < 1) throw new Error('segments must be four or more')
 
   // create sets of points that define the corners
-  let corner0 = vec2.add(center, [size[0] - roundRadius, size[1] - roundRadius])
-  let corner1 = vec2.add(center, [roundRadius - size[0], size[1] - roundRadius])
-  let corner2 = vec2.add(center, [roundRadius - size[0], roundRadius - size[1]])
-  let corner3 = vec2.add(center, [size[0] - roundRadius, roundRadius - size[1]])
-  let corner0Points = []
-  let corner1Points = []
-  let corner2Points = []
-  let corner3Points = []
+  const corner0 = vec2.add(center, [size[0] - roundRadius, size[1] - roundRadius])
+  const corner1 = vec2.add(center, [roundRadius - size[0], size[1] - roundRadius])
+  const corner2 = vec2.add(center, [roundRadius - size[0], roundRadius - size[1]])
+  const corner3 = vec2.add(center, [size[0] - roundRadius, roundRadius - size[1]])
+  const corner0Points = []
+  const corner1Points = []
+  const corner2Points = []
+  const corner3Points = []
   for (let i = 0; i <= cornersegments; i++) {
-    let radians = Math.PI / 2 * i / cornersegments
-    let point = vec2.fromAngleRadians(radians)
+    const radians = Math.PI / 2 * i / cornersegments
+    const point = vec2.fromAngleRadians(radians)
     vec2.scale(point, roundRadius, point)
     corner0Points.push(vec2.add(corner0, point))
     vec2.rotate(point, Math.PI / 2, point)
