@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const {primitives} = require('@jscad/modeling')
+const { primitives } = require('@jscad/modeling')
 
 const ensureManifoldness = require('./ensureManifoldness.js')
 

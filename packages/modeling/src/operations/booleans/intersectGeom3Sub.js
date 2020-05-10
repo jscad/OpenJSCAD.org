@@ -15,8 +15,8 @@ const intersectGeom3Sub = (geometry1, geometry2) => {
     return geom3.create() // empty geometry
   }
 
-  let a = new Tree(geom3.toPolygons(geometry1))
-  let b = new Tree(geom3.toPolygons(geometry2))
+  const a = new Tree(geom3.toPolygons(geometry1))
+  const b = new Tree(geom3.toPolygons(geometry2))
 
   a.invert()
   b.clipTo(a)
@@ -26,7 +26,7 @@ const intersectGeom3Sub = (geometry1, geometry2) => {
   a.addPolygons(b.allPolygons())
   a.invert()
 
-  let newpolygons = a.allPolygons()
+  const newpolygons = a.allPolygons()
   return geom3.create(newpolygons)
 }
 

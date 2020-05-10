@@ -82,8 +82,8 @@ f 5 1 4 8
 f 5 6 2 1
 f 2 6 7 3
 `
-  let observed = deserializer.deserialize({ filename: 'absolute', output: 'script', addMetaData: false }, data)
-  let expected = `const {primitives} = require('@jscad/modeling')
+  const observed = deserializer.deserialize({ filename: 'absolute', output: 'script', addMetaData: false }, data)
+  const expected = `const {primitives} = require('@jscad/modeling')
 
 // groups: 1
 // points: 8

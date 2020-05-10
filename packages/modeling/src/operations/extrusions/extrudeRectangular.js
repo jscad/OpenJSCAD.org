@@ -24,7 +24,7 @@ const extrudeRectangular = (options, ...objects) => {
     size: 1,
     height: 1
   }
-  let { size, height } = Object.assign({}, defaults, options)
+  const { size, height } = Object.assign({}, defaults, options)
 
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')

@@ -52,7 +52,7 @@ const drawAxis = (regl, params) => {
   const xAxisModel = mat4.identity([])
   const yAxisModel = mat4.rotateZ(mat4.create(), mat4.identity([]), Math.PI / 2)
   const zAxisModel = mat4.rotateY(mat4.create(), mat4.identity([]), -Math.PI / 2)
-  let single = regl(commandParams)
+  const single = regl(commandParams)
   return (props) => {
     const defaults = {
       model: mat4.identity([])

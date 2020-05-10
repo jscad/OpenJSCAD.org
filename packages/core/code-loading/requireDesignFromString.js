@@ -38,7 +38,7 @@ const requireDesignFromString = (scriptAsText, filePath, requireFn = require, ap
   }
   validateDesignModule(scriptRootModule)
   const design = Object.assign(
-    {getParameterDefinitions: () => []},
+    { getParameterDefinitions: () => [] },
     scriptRootModule
   )
   return design

@@ -6,7 +6,7 @@
  * @returns {Object} the parameter values, as an object
  */
 module.exports = function getParameterValuesFromUIControls (paramControls, parameterDefinitions, onlyChanged) {
-  let parameterValues = {}
+  const parameterValues = {}
   let value
   for (var i = 0; i < paramControls.length; i++) {
     const control = paramControls[i]
@@ -50,8 +50,8 @@ module.exports = function getParameterValuesFromUIControls (paramControls, param
         value = control.value
         break
       case 'group':
-        console.log('group');
-        break;
+        console.log('group')
+        break
       default:
         value = control.value
         break
@@ -69,6 +69,6 @@ module.exports = function getParameterValuesFromUIControls (paramControls, param
   return parameterValues
 }
 
-function isNumber (value) {
-  return (!isNaN(parseFloat(value)) && isFinite(value))
-}
+// function isNumber (value) {
+//   return (!isNaN(parseFloat(value)) && isFinite(value))
+// }

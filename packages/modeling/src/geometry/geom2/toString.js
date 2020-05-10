@@ -12,7 +12,7 @@ const toSides = require('./toSides')
  * console.out(toString(geometry))
  */
 const toString = function (geometry) {
-  let sides = toSides(geometry)
+  const sides = toSides(geometry)
   let result = 'geom2 (' + sides.length + ' sides):\n[\n'
   sides.forEach((side) => {
     result += '  [' + vec2.toString(side[0]) + ', ' + vec2.toString(side[1]) + ']\n'

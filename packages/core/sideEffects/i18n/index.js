@@ -38,7 +38,6 @@ const { i18nConfig } = i18nImport
 
 const makei18nSideEffect = (options) => {
   const translationsCB = callBackToStream()
-  const defaultLocale = getDefaultLocale()
   let translations = initTranslations(options)
 
   // all available commands
@@ -61,7 +60,7 @@ const makei18nSideEffect = (options) => {
       const availableLanguages = Object.keys(translations)
         .map(code => {
           let fullName = longNames[code] ? longNames[code] : 'placeholder'
-          let translation = translations[code]
+          const translation = translations[code]
           if (translation && 'language' in translation) fullName = translation.language
           return { code, fullName }
         })

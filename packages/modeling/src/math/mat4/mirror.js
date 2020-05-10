@@ -1,5 +1,4 @@
 const create = require('./create')
-const fromValues = require('./fromValues')
 
 /*
  * m the mat4 by the dimensions in the given vec3

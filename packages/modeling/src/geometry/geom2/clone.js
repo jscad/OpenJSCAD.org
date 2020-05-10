@@ -10,7 +10,7 @@ const create = require('./create')
  * @alias module:modeling/geometry/geom2.clone
  */
 const clone = (geometry) => {
-  let out = create()
+  const out = create()
   out.sides = geometry.sides.map((side) => {
     return [vec2.clone(side[0]), vec2.clone(side[1])]
   })

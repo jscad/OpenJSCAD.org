@@ -1,5 +1,3 @@
-const plane = require('../../math/plane/')
-
 /**
  * Represents a 2D polygon consisting of a list of ordered vertices.
  * @typedef {Object} poly2

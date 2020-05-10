@@ -9,7 +9,7 @@ test('progress status callback', function (t) {
   const progresses = []
   const statusCallback = function (statusObj) {
     progresses.push(statusObj.progress)
-  };
+  }
   const observed = serializer.serialize({ statusCallback: statusCallback }, input)
 
   t.deepEqual(0, progresses[0])

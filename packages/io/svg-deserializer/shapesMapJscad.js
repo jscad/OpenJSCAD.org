@@ -1,4 +1,4 @@
-const { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect, groupValue } = require('./helpers')
+const { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect } = require('./helpers')
 const { cssPxUnit } = require('./constants')
 
 const shapesMap = function (obj, codify, params) {
@@ -118,18 +118,18 @@ const shapesMap = function (obj, codify, params) {
 
 module.exports = shapesMap
 
-const getStrokeWidth = (obj, svgUnitsPmm, svgUnitsV, svgGroups) => {
-  let r = cssPxUnit // default
-  if ('strokeWidth' in obj) {
-    r = cagLengthP(obj.strokeWidth, svgUnitsPmm, svgUnitsV) / 2
-  } else {
-    const v = groupValue(svgGroups, 'strokeWidth')
-    if (v !== null) {
-      r = cagLengthP(v, svgUnitsPmm, svgUnitsV) / 2
-    }
-  }
-  return r
-}
+// const getStrokeWidth = (obj, svgUnitsPmm, svgUnitsV, svgGroups) => {
+//   let r = cssPxUnit // default
+//   if ('strokeWidth' in obj) {
+//     r = cagLengthP(obj.strokeWidth, svgUnitsPmm, svgUnitsV) / 2
+//   } else {
+//     const v = groupValue(svgGroups, 'strokeWidth')
+//     if (v !== null) {
+//       r = cagLengthP(v, svgUnitsPmm, svgUnitsV) / 2
+//     }
+//   }
+//   return r
+// }
 
 const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGroups) => {
   const { indent, on, target } = params

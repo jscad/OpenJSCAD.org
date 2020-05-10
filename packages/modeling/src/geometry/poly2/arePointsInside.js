@@ -15,10 +15,10 @@ const arePointsInside = (points, polygon) => {
   if (measureArea(polygon) < 0) {
     polygon = flip(polygon) // CCW is required
   }
-  let vertices = polygon.vertices
+  const vertices = polygon.vertices
   if (vertices.length === 0) return 0 // nothing can be inside an empty polygon
 
-  let sum = points.reduce((acc, point) => {
+  const sum = points.reduce((acc, point) => {
     return acc + isPointInside(point, vertices)
   }, 0)
   return sum === points.length ? 1 : 0
@@ -34,12 +34,12 @@ const arePointsInside = (points, polygon) => {
  */
 const isPointInside = (point, polygon) => {
   let wn = 0
-  let n = polygon.length
-  let x = point[0]
-  let y = point[1]
+  const n = polygon.length
+  const x = point[0]
+  const y = point[1]
   for (let i = 0; i < polygon.length; i++) {
-    let p1 = polygon[i]
-    let p2 = polygon[(i + 1) % n]
+    const p1 = polygon[i]
+    const p2 = polygon[(i + 1) % n]
     if (x !== p1[0] && y !== p1[1] && x !== p2[0] && y !== p2[1]) { // no overlap of points
       if (p1[1] <= y) {
         if (p2[1] > y) { // upward crossing
@@ -48,11 +48,11 @@ const isPointInside = (point, polygon) => {
           }
         }
       } else {
-         if (p2[1] <= y) { // downward crossing
-           if (isLeft(p1, p2, point) < 0) { // point right of edge
-             wn--
-           }
-         }
+        if (p2[1] <= y) { // downward crossing
+          if (isLeft(p1, p2, point) < 0) { // point right of edge
+            wn--
+          }
+        }
       }
     }
   }

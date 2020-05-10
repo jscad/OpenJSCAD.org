@@ -21,7 +21,7 @@ function geom3ToGeometries (listofgeom3, options) {
   }
   const { smoothLighting, normalThreshold, color } = Object.assign({}, defaults, options)
 
-  let meshColor = color ? normalizedColor(color) : undefined
+  const meshColor = color ? normalizedColor(color) : undefined
 
   listofgeom3 = toArray(listofgeom3)
   const listofgeometries = listofgeom3.map((geometry) => convert({ meshColor, smoothLighting, normalThreshold }, geometry))
@@ -35,12 +35,12 @@ function geom3ToGeometries (listofgeom3, options) {
  */
 const convert = (options, geometry) => {
   let color = options.meshColor
-  let geometries = []
+  const geometries = []
 
-  let positions = []
-  let colors = []
-  let normals = []
-  let indices = []
+  const positions = []
+  const colors = []
+  const normals = []
+  const indices = []
 
   if ('color' in geometry) color = geometry.color
 

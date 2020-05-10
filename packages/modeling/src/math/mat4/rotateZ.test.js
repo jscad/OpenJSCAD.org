@@ -1,10 +1,10 @@
 const test = require('ava')
-const { rotateZ, identity, toString } = require('./index')
+const { rotateZ, identity } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
 test('mat4: rotateZ() should return a new mat4 with correct values', (t) => {
-  let rotation = 90 * 0.017453292519943295
+  const rotation = 90 * 0.017453292519943295
 
   const idn = identity()
 
@@ -16,7 +16,7 @@ test('mat4: rotateZ() should return a new mat4 with correct values', (t) => {
 })
 
 test('mat4: rotateZ() called with out parameter should return a new mat4 with correct values', (t) => {
-  let rotation = 90 * 0.017453292519943295
+  const rotation = 90 * 0.017453292519943295
 
   const idn = identity()
 

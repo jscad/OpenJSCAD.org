@@ -8,8 +8,8 @@ const resolveDependencies = require('../core/code-loading/resolveDependencies')
 const { flatten } = require('@jscad/array-utils')
 
 // FIXME: not used anymore? remove?
-function watchMultiplePaths (paths, callback) {
-  let prevContents = {}
+function watchMultiplePaths (paths, changed) {
+  const prevContents = {}
   const watchers = paths.map(function (filePath, index) {
     prevContents[filePath] = ''
     const watcher = fs.watch(filePath, { encoding: 'utf8' }, (eventType, filename) => {
@@ -17,7 +17,7 @@ function watchMultiplePaths (paths, callback) {
       const contents = fs.readFileSync(filePath, 'utf8')
 
       if (prevContents[filePath] !== contents) {
-        callback({ filePath, contents })
+        changed({ filePath, contents })
         prevContents[filePath] = contents
       }
     })
@@ -33,9 +33,9 @@ const removeWatchers = watchers => {
   })
 }
 
-function watchTree (rootPath, callback) {
+function watchTree (rootPath, changed) {
   // console.log('watchTree')
-  let prevContents = {}
+  const prevContents = {}
   let watchers = []
   let allDependencyPaths = Array.from(new Set(flatten(resolveDependencies(undefined, rootPath))))
     .sort()
@@ -52,7 +52,7 @@ function watchTree (rootPath, callback) {
     const contents = fs.readFileSync(filePath, 'utf8')
 
     if (prevContents[filePath] !== contents) {
-      callback({ filePath, contents })
+      changed({ filePath, contents })
       prevContents[filePath] = contents
 
       // now clear all watchers if needed
@@ -109,15 +109,13 @@ module.exports = function makeFsSideEffects () {
           if (watchedFilePath !== rootPath || watchers[0] === undefined) {
             watchedFilePath = rootPath
 
-            function stuffCallback (data) {
+            watchers = watchTree(rootPath, (data) => {
               requireUncached(rootPath)
               // force reload the main file
               const contents = fs.readFileSync(rootPath, 'utf8')
               // console.log('FOOOOO', path, contents, operation, id)
               scriptDataFromCB.callback({ path, data: contents, operation, id })
-            }
-
-            watchers = watchTree(rootPath, stuffCallback)
+            })
           }
         }
       }

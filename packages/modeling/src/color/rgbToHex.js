@@ -11,9 +11,9 @@ const rgbToHex = (...values) => {
   values = flatten(values)
   if (values.length < 3) throw new Error('values must contain R, G and B values')
 
-  let r = values[0] * 255
-  let g = values[1] * 255
-  let b = values[2] * 255
+  const r = values[0] * 255
+  const g = values[1] * 255
+  const b = values[2] * 255
 
   let s = `#${Number(0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).substring(1, 7)}`
 

@@ -2,7 +2,7 @@ const test = require('ava')
 
 const { fromPoints } = require('../plane')
 
-const { mirrorByPlane, create, toString } = require('./index')
+const { mirrorByPlane, create } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers')
 

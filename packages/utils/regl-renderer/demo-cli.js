@@ -19,7 +19,7 @@ const initializeData = function () {
   ).translate([0, 0, 1.5]).scale(10)
 
   const transpCube = color([1, 0, 0, 0.75], cube({ size: [100, 100, 400] }))
-  return [ transpCube, logo ]
+  return [transpCube, logo]
 }
 
 const params = {

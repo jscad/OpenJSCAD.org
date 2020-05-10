@@ -20,5 +20,3 @@ const fromPoints = (a, b, c) => {
 }
 
 module.exports = fromPoints
-
-

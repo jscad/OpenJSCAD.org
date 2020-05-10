@@ -3,7 +3,7 @@ const withLatestFrom = require('@jscad/core/observable-utils/withLatestFrom')
 
 const reducers = {
   initialize: (state) => {
-    const viewer = {// ridiculous shadowing of viewer state ?? or actually logical
+    const viewer = { // ridiculous shadowing of viewer state ?? or actually logical
       rendering: {
         background: [1, 1, 1, 1],
         meshColor: [0, 0.6, 1, 1]
@@ -90,7 +90,7 @@ const actions = ({ sources }) => {
     .filter(action => Object.keys(reducers).includes(action.type))
     /* .thru(withLatestFrom(function (state, action) {
       return reducers[action.type](state, action.data)
-    }, sources.state))*/
+    }, sources.state)) */
     // .map(data => ({state: data, sink: 'state'}))
     .map(payload => Object.assign({}, { sink: 'viewer' }, payload))
 

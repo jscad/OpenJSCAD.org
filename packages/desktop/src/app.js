@@ -1,6 +1,6 @@
 const most = require('most')
-const {proxy} = require('most-proxy')
-const {makeState} = require('./state')
+const { proxy } = require('most-proxy')
+const { makeState } = require('./state')
 const makeCsgViewer = require('@jscad/csg-viewer')
 let csgViewer
 
@@ -23,7 +23,7 @@ const makeWorkerEffect = require('@jscad/core/sideEffects/worker')
 // internationalization side effect
 const path = require('path')
 const localesPath = path.join(__dirname, '..', 'locales')
-const i18n = require('@jscad/core/sideEffects/i18n')({localesPath})
+const i18n = require('@jscad/core/sideEffects/i18n')({ localesPath })
 // web workers
 const solidWorker = makeWorkerEffect('src/core/code-evaluation/rebuildSolidsWorker.js')
 // generic design parameter handling
@@ -62,8 +62,8 @@ titleBar.sink(
 
 //
 const settingsStorage = state => {
-  const {themeName, design, locale, shortcuts} = state
-  const {name, mainPath, vtreeMode, paramDefinitions, paramDefaults, paramValues} = design
+  const { themeName, design, locale, shortcuts } = state
+  const { name, mainPath, vtreeMode, paramDefinitions, paramDefaults, paramValues } = design
   return {
     themeName,
     locale,
@@ -79,8 +79,8 @@ const settingsStorage = state => {
       }
     },
     viewer: {
-      axes: {show: state.viewer.axes.show},
-      grid: {show: state.viewer.grid.show}
+      axes: { show: state.viewer.axes.show },
+      grid: { show: state.viewer.grid.show }
       // autorotate: {enabled: state.viewer.controls.autoRotate.enabled}
     },
     autoReload: state.autoReload,
@@ -98,15 +98,16 @@ fs.sink(
     // watched data
     state$
       .filter(state => state.design.mainPath !== '')
-      .map(state => ({path: state.design.mainPath, enabled: state.autoReload}))
+      .map(state => ({ path: state.design.mainPath, enabled: state.autoReload }))
       .skipRepeatsWith((state, previousState) => {
         return JSON.stringify(state) === JSON.stringify(previousState)
       })
-      .map(({path, enabled}) => ({
+      .map(({ path, enabled }) => ({
         operation: 'watch',
         id: 'watchScript',
         path,
-        options: {enabled}})// enable/disable watch if autoreload is set to false
+        options: { enabled }
+      })// enable/disable watch if autoreload is set to false
       ),
     // files to read/write
     state$
@@ -115,7 +116,7 @@ fs.sink(
       .skipRepeatsWith((state, previousState) => {
         return JSON.stringify(state) === JSON.stringify(previousState)
       })
-      .map(path => ({operation: 'read', id: 'loadScript', path})),
+      .map(path => ({ operation: 'read', id: 'loadScript', path })),
     most.just()
       .map(function () {
         const electron = require('electron').remote
@@ -123,7 +124,7 @@ fs.sink(
         const path = require('path')
 
         const cachePath = path.join(userDataPath, '/cache.js')
-        return {operation: 'read', id: 'loadCachedGeometry', path: cachePath}
+        return { operation: 'read', id: 'loadCachedGeometry', path: cachePath }
       })
   ])
 )
@@ -133,44 +134,44 @@ i18n.sink(
     state$
       .map(state => state.locale)
       .skipRepeats()
-      .map(data => ({operation: 'changeSettings', data})),
+      .map(data => ({ operation: 'changeSettings', data })),
     // get all available translations
     state$
       .take(1)
-      .map(data => ({operation: 'getAvailableLanguages', data}))
+      .map(data => ({ operation: 'getAvailableLanguages', data }))
   ])
 )
 
 // web worker sink
 const solidWorkerBase$ = most.mergeArray([
-  actions$.setDesignContent$.map(action => ({paramValues: undefined, origin: 'designContent', error: undefined})),
+  actions$.setDesignContent$.map(action => ({ paramValues: undefined, origin: 'designContent', error: undefined })),
   actions$.updateDesignFromParams$.map(action => action.data)
 ]).multicast()
 
 solidWorker.sink(
-    most.sample(function ({origin, paramValues, error}, {design, instantUpdate}) {
-      if (error) {
-        return undefined
-      }
-      console.log('design stuff', design)
-      const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
-      paramValues = paramValues || design.paramValues // this ensures the last, manually modified params have upper hand
-      paramValues = paramValues ? applyParameterDefinitions(paramValues, design.paramDefinitions) : paramValues
-      if (!instantUpdate && origin === 'instantUpdate') {
-        return undefined
-      }
-      // console.log('sending paramValues', paramValues, 'options', vtreeMode)
-      const options = {vtreeMode: design.vtreeMode, lookup: design.lookup, lookupCounts: design.lookupCounts}
-      return {source: design.source, mainPath: design.mainPath, paramValues, options}
-    },
-    solidWorkerBase$,
-    solidWorkerBase$,
-    state$
-      .filter(state => state.design.mainPath !== '')
-      .skipRepeats()
+  most.sample(function ({ origin, paramValues, error }, { design, instantUpdate }) {
+    if (error) {
+      return undefined
+    }
+    console.log('design stuff', design)
+    const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
+    paramValues = paramValues || design.paramValues // this ensures the last, manually modified params have upper hand
+    paramValues = paramValues ? applyParameterDefinitions(paramValues, design.paramDefinitions) : paramValues
+    if (!instantUpdate && origin === 'instantUpdate') {
+      return undefined
+    }
+    // console.log('sending paramValues', paramValues, 'options', vtreeMode)
+    const options = { vtreeMode: design.vtreeMode, lookup: design.lookup, lookupCounts: design.lookupCounts }
+    return { source: design.source, mainPath: design.mainPath, paramValues, options }
+  },
+  solidWorkerBase$,
+  solidWorkerBase$,
+  state$
+    .filter(state => state.design.mainPath !== '')
+    .skipRepeats()
   )
     .filter(x => x !== undefined)
-    .map(({source, mainPath, paramValues, options}) => ({cmd: 'render', source, mainPath, parameters: paramValues, options}))
+    .map(({ source, mainPath, paramValues, options }) => ({ cmd: 'render', source, mainPath, parameters: paramValues, options }))
 )
 
 // viewer data
@@ -185,7 +186,7 @@ state$
   })
   .forEach(state => {
     if (csgViewer !== undefined) {
-      csgViewer(undefined, {solids: state.design.solids})
+      csgViewer(undefined, { solids: state.design.solids })
     }
   })
 

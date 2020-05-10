@@ -1,7 +1,8 @@
 const {
   cube, sphere,
   difference, intersection, union,
-  scale, rotate, translate } = require('../../core/index')
+  scale, rotate, translate
+} = require('../../core/index')
 
 function foo () {
   return [

@@ -1,4 +1,4 @@
-const {EPS} = require('../../math/constants')
+const { EPS } = require('../../math/constants')
 
 const vec2 = require('../../math/vec2')
 
@@ -15,13 +15,13 @@ const close = (geometry) => {
 
   const cloned = clone(geometry)
   cloned.isClosed = true
- 
+
   if (cloned.points.length > 1) {
     // make sure the paths are formed properly
-    let points = cloned.points
-    let p0 = points[0]
+    const points = cloned.points
+    const p0 = points[0]
     let pn = points[points.length - 1]
-    while (vec2.distance(p0, pn) < (EPS*EPS)) {
+    while (vec2.distance(p0, pn) < (EPS * EPS)) {
       points.pop()
       if (points.length === 1) break
       pn = points[points.length - 1]

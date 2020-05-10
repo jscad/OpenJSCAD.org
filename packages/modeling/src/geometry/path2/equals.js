@@ -18,12 +18,12 @@ const equals = (a, b) => {
     return false
   }
 
-  let apoints = toPoints(a)
-  let bpoints = toPoints(b)
+  const apoints = toPoints(a)
+  const bpoints = toPoints(b)
 
   // closed paths might be equal under graph rotation
   // so try comparison by rotating across all points
-  let length = apoints.length
+  const length = apoints.length
   let offset = 0
   do {
     let unequal = false

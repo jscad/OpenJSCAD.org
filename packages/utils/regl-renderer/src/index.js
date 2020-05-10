@@ -14,6 +14,6 @@ module.exports = {
   controls: {
     orbit: require('./controls/orbitControls')
   },
-  entitiesFromSolids: require('./geometry-utils-V2/entitiesFromSolids'),
+  entitiesFromSolids: require('./geometry-utils-V2/entitiesFromSolids')
 
 }

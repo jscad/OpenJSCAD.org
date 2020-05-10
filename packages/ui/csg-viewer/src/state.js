@@ -1,4 +1,4 @@
-const {merge} = require('./utils')
+const { merge } = require('./utils')
 const makeCameraAndControlsReducers = require('./cameraControlsReducers')
 const makeDataAndParamsReducers = require('./dataParamsReducers')
 
@@ -19,7 +19,7 @@ function makeState (actions, initialState, regl) {
         return newState
       } catch (error) {
         console.error('error', error)
-        return merge({}, state, {error})
+        return merge({}, state, { error })
       }
     }, initialState)
     .filter(x => x !== undefined)// just in case ...

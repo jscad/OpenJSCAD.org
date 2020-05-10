@@ -14,10 +14,9 @@ const html = require('bel')
     if (examples[i].type) src += ' <span class=type>(' + examples[i].type + ')</span></a>'
     if (examples[i].new) src += ' <span class=newExample>new</span></a>'
   }
-  src += '</td></tr></table>'*/
+  src += '</td></tr></table>' */
 
 module.exports = function help (state, i18n) {
-
   // <td widthx=' + ${colp} + ' valign=top>
   const exampleElems = require('./examples')(state, i18n)
   return html`

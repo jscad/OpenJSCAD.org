@@ -37,28 +37,28 @@ const deserialize = (options, input) => {
 
 const getGroups = (data, options) => {
   let groups = []
-  let positions = []
+  const positions = []
   let material = null
 
   groups.push({ faces: [], colors: [], name: 'default', line: 0 })
 
   const handleG = (command, values) => {
-    let group = { faces: [], colors: [], name: '' }
+    const group = { faces: [], colors: [], name: '' }
     if (values && values.length > 0) group.name = values.join(' ')
     groups.push(group)
   }
 
   const handleV = (command, values) => {
-    let x = parseFloat(values[0])
-    let y = parseFloat(values[1])
-    let z = parseFloat(values[2])
+    const x = parseFloat(values[0])
+    const y = parseFloat(values[1])
+    const z = parseFloat(values[2])
     positions.push([x, y, z])
   }
 
   const handleF = (command, values) => {
     // values : v/vt/vn
-    let facerefs = values.map((value) => {
-      let refs = value.match(/[0-9\+\-eE]+/g)
+    const facerefs = values.map((value) => {
+      const refs = value.match(/[0-9+\-eE]+/g)
       let ref = parseInt(refs[0])
       if (ref < 0) {
         ref = positions.length + ref
@@ -67,7 +67,7 @@ const getGroups = (data, options) => {
       }
       return ref
     })
-    let group = groups.pop()
+    const group = groups.pop()
     group.faces.push(facerefs)
     group.colors.push(material)
     groups.push(group)
@@ -77,33 +77,33 @@ const getGroups = (data, options) => {
     material = null
     if (values && values.length > 0) {
       // try to convert the material to a color by name
-      let c = color.colorNameToRgb(values[0])
+      const c = color.colorNameToRgb(values[0])
       if (c) material = [c[0], c[1], c[2], 1] // add alpha
     }
   }
 
   // parse the input into groups of vertices and faces
-  let lines = data.split(/\n/)
+  const lines = data.split(/\n/)
   for (let i = 0; i < lines.length; i++) {
-    let line = lines[i].trim()
+    const line = lines[i].trim()
     if (line && line.length > 0) {
       let values = line.match(/\S+/g)
       if (values) {
-        let command = values[0]
+        const command = values[0]
         values = values.slice(1)
         switch (command) {
           case 'g':
             handleG(command, values)
-            break;
+            break
           case 'v':
             handleV(command, values)
-            break;
+            break
           case 'f':
             handleF(command, values)
-            break;
+            break
           case 'usemtl':
             handleMtl(command, values)
-            break;
+            break
         }
       }
     }
@@ -124,14 +124,14 @@ const objectify = (points, groups, options) => {
 
 const translatePoints = (points) => {
   let code = '  let points = [\n'
-  points.forEach((point) => code += `    [${point}],\n`)
+  points.forEach((point) => (code += `    [${point}],\n`))
   code += '  ]'
   return code
 }
 
 const translateFaces = (faces) => {
   let code = '  let faces = [\n'
-  faces.forEach((face) => code += `    [${face}],\n`)
+  faces.forEach((face) => (code += `    [${face}],\n`))
   code += '  ]'
   return code
 }
@@ -142,7 +142,7 @@ const translateColors = (colors) => {
     if (c) {
       code += `    [${c}],\n`
     } else {
-      code += `    null,\n`
+      code += '    null,\n'
     }
   })
   code += '  ]'
@@ -151,15 +151,15 @@ const translateColors = (colors) => {
 
 const translateGroupsToCalls = (groups) => {
   let code = ''
-  groups.forEach((group, index) => code += `    group${index}(points), // ${group.name}\n`)
+  groups.forEach((group, index) => (code += `    group${index}(points), // ${group.name}\n`))
   return code
 }
 
 const translateGroupsToFunctions = (groups, options) => {
   let code = ''
   groups.forEach((group, index) => {
-    let faces = group.faces
-    let colors = group.colors
+    const faces = group.faces
+    const colors = group.colors
     code += `
 // group : ${group.name}
 // faces: ${faces.length}
@@ -175,7 +175,7 @@ ${translateColors(colors)}
 }
 
 const stringify = (positions, groups, options) => {
-  let { filename, addMetaData, version } = options
+  const { filename, addMetaData, version } = options
 
   let code = addMetaData ? `//
 // Produced by JSCAD IO Library : OBJ Deserializer (${version})

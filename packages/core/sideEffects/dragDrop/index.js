@@ -1,7 +1,7 @@
 const { mergeArray, fromEvent } = require('most')
 
 function formatData (data, type) {
-  return {data, type}
+  return { data, type }
 }
 
 function preventDefault (event) {
@@ -23,26 +23,26 @@ function dragEvents (targetEl) {
   const dragOvers$ = fromEvent('dragover', targetEl)
   const drops$ = fromEvent('drop', targetEl)
 
-  return {dragOvers$, drops$}
+  return { dragOvers$, drops$ }
 }
 
 function dragAndDropSource (targetEl) { // {dragOvers$, drops$}
-  const {dragOvers$, drops$} = dragEvents(targetEl)
+  const { dragOvers$, drops$ } = dragEvents(targetEl)
   drops$.multicast()
   drops$.forEach(preventDefault)
   dragOvers$.forEach(preventDefault)
 
-  let urls$ = drops$
+  const urls$ = drops$
     .map(event => event.dataTransfer.getData('url'))
     .filter(isTextNotEmpty)
     .map(data => formatData([data], 'url'))
 
-  let texts$ = drops$
+  const texts$ = drops$
     .map(event => event.dataTransfer.getData('Text'))
     .filter(isTextNotEmpty)
     .map(data => formatData([data], 'text'))
 
-  let filesOrFolders$ = drops$
+  const filesOrFolders$ = drops$
     .map(event => event.dataTransfer.files)
     .filter(exists)
     .map(data => [].slice.call(data))
@@ -52,5 +52,5 @@ function dragAndDropSource (targetEl) { // {dragOvers$, drops$}
 }
 
 module.exports = function makeDragAndDropSideEffect () {
-  return {source: dragAndDropSource}
+  return { source: dragAndDropSource }
 }

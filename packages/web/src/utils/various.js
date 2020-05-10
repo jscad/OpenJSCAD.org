@@ -1,6 +1,6 @@
 // FIXME : this could be usefull overall , we should reuse
 function isLocalMode () {
-  return document.location.toString().match(/^file\:\//i)
+  return document.location.toString().match(/^file:\//i)
 }
 
 // FIXME: SAME

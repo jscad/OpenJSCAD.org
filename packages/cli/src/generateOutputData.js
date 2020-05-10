@@ -22,7 +22,7 @@ const generateOutputData = (source, params, options) => {
     addMetaData: true
   }
   options = Object.assign({}, defaults, options)
-  const { outputFile, outputFormat, inputFile, inputFormat, version, inputIsDirectory } = options
+  const { outputFormat, inputFile, inputFormat, inputIsDirectory } = options
 
   options.filename = inputFile // for deserializers
 
@@ -42,7 +42,7 @@ const generateOutputData = (source, params, options) => {
       json: data => require('@jscad/io').jsonDeSerializer.deserialize(data.options, data.source),
       jscad: data => data.source,
       js: data => data.source,
-/*
+      /*
       scad: data => {
         const source = !data.source.match(/^\/\/!OpenSCAD/i) ? '//!OpenSCAD\n' + data.source : data.source
         const parsed = require('@jscad/openscad-openjscad-translator').parse(source)
@@ -60,8 +60,8 @@ const generateOutputData = (source, params, options) => {
     if (outputFormat === 'jscad' || outputFormat === 'js') {
       resolve(source)
     } else {
-//    } else if ((inputFormat === 'jscad' || inputFormat === 'js') &&
-//               outputFormat !== 'jscad' && outputFormat !== 'js') {
+      //    } else if ((inputFormat === 'jscad' || inputFormat === 'js') &&
+      //               outputFormat !== 'jscad' && outputFormat !== 'js') {
       try {
         const solids = rebuildSolids({ mainPath: inputPath, parameterValues: params, inputIsDirectory, source })
         resolve(solids)

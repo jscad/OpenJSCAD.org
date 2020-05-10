@@ -62,19 +62,19 @@ const transformSources = (options, filesAndFolders) => {
   // console.log('***** transformSources', options, filesAndFolders)
   // FIXME this table should come from IO
   const transformsPerFormat = {
-    'js': [modulifyTransform],
-    'jscad': [modulifyTransform],
+    js: [modulifyTransform],
+    jscad: [modulifyTransform],
     // formats that require translation
-    'amf': [transformAmfToJscad, modulifyTransform],
-    'dxf': [transformDxfToJscad, modulifyTransform],
-    'obj': [transformObjToJscad, modulifyTransform],
-    'stl': [transformStlToJscad, modulifyTransform],
-    'svg': [transformSvgToJscad, modulifyTransform]
+    amf: [transformAmfToJscad, modulifyTransform],
+    dxf: [transformDxfToJscad, modulifyTransform],
+    obj: [transformObjToJscad, modulifyTransform],
+    stl: [transformStlToJscad, modulifyTransform],
+    svg: [transformSvgToJscad, modulifyTransform]
   }
 
   function updateEntry (entry) {
     if (entry.source) {
-      const transformOptions = Object.assign({}, options, {filename: entry.name})
+      const transformOptions = Object.assign({}, options, { filename: entry.name })
       const transforms = transformsPerFormat[entry.ext] ? transformsPerFormat[entry.ext] : [passThroughTransform]
       const transformedEntry = transforms.reduce((entry, transform) => {
         return transform(transformOptions, entry)

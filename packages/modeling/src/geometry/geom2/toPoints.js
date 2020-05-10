@@ -2,7 +2,7 @@ const toSides = require('./toSides')
 
 /**
  * Produces an array of points from the given geometry.
- * NOTE: The points returned do NOT define an order. Use toOutlines() for ordered points. 
+ * NOTE: The points returned do NOT define an order. Use toOutlines() for ordered points.
  * @param {geom2} geometry - the geometry
  * @returns {Array} an array of points, each point contains an array of two numbers
  * @alias module:modeling/geometry/geom2.toPoints
@@ -11,8 +11,8 @@ const toSides = require('./toSides')
  * let sharedpoints = toPoints(geometry)
  */
 const toPoints = function (geometry) {
-  let sides = toSides(geometry)
-  let points = sides.map((side) => {
+  const sides = toSides(geometry)
+  const points = sides.map((side) => {
     return side[0]
   })
   // due to the logic of fromPoints()

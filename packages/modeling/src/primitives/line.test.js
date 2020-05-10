@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const {line} = require('./index')
+const { line } = require('./index')
 
 const path2 = require('../geometry/path2')
 

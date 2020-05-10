@@ -23,7 +23,7 @@ test('array-utils: flatten() should flatten arrays with arrays and values into a
 })
 
 test('array-utils: flatten() should flatten heiarchy of arrays and values into an array', (t) => {
-  let obs = flatten([[1], [2, 3, [4, 5]], 6])
-  let exp = [1, 2, 3, 4, 5, 6]
+  const obs = flatten([[1], [2, 3, [4, 5]], 6])
+  const exp = [1, 2, 3, 4, 5, 6]
   t.deepEqual(obs, exp)
 })

@@ -1,7 +1,5 @@
-const most = require('most')
-
 function makeReactions (inputs) {
-  const { sinks, sources, outputs$, extras } = inputs
+  const { sinks, outputs$ } = inputs
   const { store, fs, http, i18n, dom, solidWorker, state, dat } = sinks
 
   /* outputs$

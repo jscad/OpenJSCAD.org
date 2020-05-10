@@ -22,7 +22,7 @@ const fromPoints = (points) => {
   if (points.length < 3) throw new Error('the given points must contain THREE or more points')
 
   // create a list of edges from the points
-  let edges = []
+  const edges = []
   let prevpoint = points[points.length - 1]
   points.forEach((point) => {
     if (point.length === 2) edges.push([vec3.fromVec2(prevpoint), vec3.fromVec2(point)])

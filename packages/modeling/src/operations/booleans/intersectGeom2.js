@@ -18,8 +18,8 @@ const intersect = (...geometries) => {
   geometries = flatten(geometries)
   const newgeometries = geometries.map((geometry) => to3DWalls({ z0: -1, z1: 1 }, geometry))
 
-  let newgeom3 = intersectGeom3(newgeometries)
-  let epsilon = measureEpsilon(newgeom3)
+  const newgeom3 = intersectGeom3(newgeometries)
+  const epsilon = measureEpsilon(newgeom3)
 
   return fromFakePolygons(epsilon, geom3.toPolygons(newgeom3))
 }

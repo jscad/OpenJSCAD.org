@@ -1,4 +1,4 @@
-const {EPS} = require('../math/constants')
+const { EPS } = require('../math/constants')
 
 const vec3 = require('../math/vec3')
 
@@ -29,20 +29,20 @@ const roundedCylinder = function (options) {
     roundRadius: 0.2,
     segments: 12
   }
-  let {height, radius, roundRadius, segments} = Object.assign({}, defaults, options)
+  const { height, radius, roundRadius, segments } = Object.assign({}, defaults, options)
 
-  if (height < (EPS*2)) throw new Error('height must be larger then zero')
+  if (height < (EPS * 2)) throw new Error('height must be larger then zero')
 
   if (roundRadius > (radius - EPS)) throw new Error('roundRadius must be smaller then the radius')
 
   if (segments < 4) throw new Error('segments must be four or more')
 
-  let start = [0, 0, -(height/2)]
-  let end = [0, 0, height/2]
-  let direction = vec3.subtract(end, start)
-  let length = vec3.length(direction)
+  const start = [0, 0, -(height / 2)]
+  const end = [0, 0, height / 2]
+  const direction = vec3.subtract(end, start)
+  const length = vec3.length(direction)
 
-  if ((2*roundRadius) > (length - EPS)) throw new Error('the cylinder height must be larger than twice roundRadius')
+  if ((2 * roundRadius) > (length - EPS)) throw new Error('the cylinder height must be larger than twice roundRadius')
 
   let defaultnormal
   if (Math.abs(direction[0]) > Math.abs(direction[1])) {
@@ -51,20 +51,20 @@ const roundedCylinder = function (options) {
     defaultnormal = vec3.fromValues(1, 0, 0)
   }
 
-  let zvector = vec3.scale(roundRadius, vec3.unit(direction))
-  let xvector = vec3.scale(radius, vec3.unit(vec3.cross(zvector, defaultnormal)))
-  let yvector = vec3.scale(radius, vec3.unit(vec3.cross(xvector, zvector)))
+  const zvector = vec3.scale(roundRadius, vec3.unit(direction))
+  const xvector = vec3.scale(radius, vec3.unit(vec3.cross(zvector, defaultnormal)))
+  const yvector = vec3.scale(radius, vec3.unit(vec3.cross(xvector, zvector)))
 
   vec3.add(start, start, zvector)
   vec3.subtract(end, end, zvector)
 
-  let qsegments = Math.floor(0.25 * segments)
+  const qsegments = Math.floor(0.25 * segments)
 
-  let polygons = []
+  const polygons = []
   let prevcylinderpoint
   for (let slice1 = 0; slice1 <= segments; slice1++) {
-    let angle = Math.PI * 2.0 * slice1 / segments
-    let cylinderpoint = vec3.add(vec3.scale(Math.cos(angle), xvector), vec3.scale(Math.sin(angle), yvector))
+    const angle = Math.PI * 2.0 * slice1 / segments
+    const cylinderpoint = vec3.add(vec3.scale(Math.cos(angle), xvector), vec3.scale(Math.sin(angle), yvector))
     if (slice1 > 0) {
       // cylinder wall
       let points = []
@@ -76,9 +76,9 @@ const roundedCylinder = function (options) {
 
       let prevcospitch, prevsinpitch
       for (let slice2 = 0; slice2 <= qsegments; slice2++) {
-        let pitch = 0.5 * Math.PI * slice2 / qsegments
-        let cospitch = Math.cos(pitch)
-        let sinpitch = Math.sin(pitch)
+        const pitch = 0.5 * Math.PI * slice2 / qsegments
+        const cospitch = Math.cos(pitch)
+        const sinpitch = Math.sin(pitch)
         if (slice2 > 0) {
           // cylinder rounding, start
           points = []
@@ -118,7 +118,7 @@ const roundedCylinder = function (options) {
     }
     prevcylinderpoint = cylinderpoint
   }
-  let result = geom3.create(polygons)
+  const result = geom3.create(polygons)
   return result
 }
 

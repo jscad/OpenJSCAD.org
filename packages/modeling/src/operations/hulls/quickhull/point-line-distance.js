@@ -24,13 +24,13 @@ const distanceSquared = (p, a, b) => {
   //  |ap x s| = s * h
   //  h = |ap x s| / s
   //
-  let ab = []
-  let ap = []
-  let cr = []
+  const ab = []
+  const ap = []
+  const cr = []
   subtract(ab, b, a)
   subtract(ap, p, a)
-  let area = squaredLength(cross(cr, ap, ab))
-  let s = squaredLength(ab)
+  const area = squaredLength(cross(cr, ap, ab))
+  const s = squaredLength(ab)
   if (s === 0) {
     throw Error('a and b are the same point')
   }

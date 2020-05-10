@@ -9,8 +9,8 @@ const { arc, rectangle } = require('../../primitives')
 const extrudeRectangular = require('./extrudeRectangular')
 
 test('extrudeRectangular (defaults)', t => {
-  let geometry1 = arc({ radius: 5, endAngle: degToRad(90) })
-  let geometry2 = rectangle({ size: [5, 5] })
+  const geometry1 = arc({ radius: 5, endAngle: degToRad(90) })
+  const geometry2 = rectangle({ size: [5, 5] })
 
   let obs = extrudeRectangular({ }, geometry1)
   let pts = geom3.toPoints(obs)
@@ -22,8 +22,8 @@ test('extrudeRectangular (defaults)', t => {
 })
 
 test('extrudeRectangular (chamfer)', t => {
-  let geometry1 = arc({ radius: 5, endAngle: degToRad(90) })
-  let geometry2 = rectangle({ size: [5, 5] })
+  const geometry1 = arc({ radius: 5, endAngle: degToRad(90) })
+  const geometry2 = rectangle({ size: [5, 5] })
 
   let obs = extrudeRectangular({ corners: 'chamfer' }, geometry1)
   let pts = geom3.toPoints(obs)
@@ -35,8 +35,8 @@ test('extrudeRectangular (chamfer)', t => {
 })
 
 test('extrudeRectangular (segments = 8, round)', t => {
-  let geometry1 = arc({ radius: 5, endAngle: degToRad(90) })
-  let geometry2 = rectangle({ size: [5, 5] })
+  const geometry1 = arc({ radius: 5, endAngle: degToRad(90) })
+  const geometry2 = rectangle({ size: [5, 5] })
 
   let obs = extrudeRectangular({ segments: 8, corners: 'round' }, geometry1)
   let pts = geom3.toPoints(obs)
@@ -48,7 +48,7 @@ test('extrudeRectangular (segments = 8, round)', t => {
 })
 
 test('extrudeRectangular (holes)', t => {
-  let geometry2 = geom2.create([
+  const geometry2 = geom2.create([
     [[15.00000, 15.00000], [-15.00000, 15.00000]],
     [[-15.00000, 15.00000], [-15.00000, -15.00000]],
     [[-15.00000, -15.00000], [15.00000, -15.00000]],
@@ -59,7 +59,7 @@ test('extrudeRectangular (holes)', t => {
     [[-5.00000, -5.00000], [-5.00000, 5.00000]]
   ])
 
-  let obs = extrudeRectangular({ size: 2, height: 15, segments: 16, corners: 'round' }, geometry2)
-  let pts = geom3.toPoints(obs)
+  const obs = extrudeRectangular({ size: 2, height: 15, segments: 16, corners: 'round' }, geometry2)
+  const pts = geom3.toPoints(obs)
   t.is(pts.length, 122)
 })

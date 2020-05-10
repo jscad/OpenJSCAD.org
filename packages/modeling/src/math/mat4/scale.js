@@ -45,6 +45,6 @@ const scale = (...params) => {
   out[14] = matrix[14]
   out[15] = matrix[15]
   return out
-};
+}
 
 module.exports = scale

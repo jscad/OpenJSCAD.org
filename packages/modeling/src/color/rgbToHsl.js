@@ -13,20 +13,20 @@ const rgbToHsl = (...values) => {
   values = flatten(values)
   if (values.length < 3) throw new Error('values must contain R, G and B values')
 
-  let r = values[0]
-  let g = values[1]
-  let b = values[2]
+  const r = values[0]
+  const g = values[1]
+  const b = values[2]
 
-  let max = Math.max(r, g, b)
-  let min = Math.min(r, g, b)
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
   let h
   let s
-  let l = (max + min) / 2
+  const l = (max + min) / 2
 
   if (max === min) {
     h = s = 0 // achromatic
   } else {
-    let d = max - min
+    const d = max - min
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
     switch (max) {
       case r:
@@ -44,7 +44,7 @@ const rgbToHsl = (...values) => {
 
   if (values.length > 3) {
     // add alpha value if provided
-    let a = values[3]
+    const a = values[3]
     return [h, s, l, a]
   }
   return [h, s, l]

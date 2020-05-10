@@ -1,14 +1,14 @@
 const test = require('ava')
-const { rotate, identity, toString } = require('./index')
+const { rotate, identity } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
 test('mat4: rotate() should return a new mat4 with correct values', (t) => {
-  let rotation = 90 * 0.017453292519943295
+  const rotation = 90 * 0.017453292519943295
 
   const idn = identity()
 
-// invalid condition when axis is 0,0,0
+  // invalid condition when axis is 0,0,0
   const obs1 = rotate(rotation, [0, 0, 0], idn)
   t.true(obs1 === null)
 
@@ -20,11 +20,11 @@ test('mat4: rotate() should return a new mat4 with correct values', (t) => {
 })
 
 test('mat4: rotate() called with out parameter should return a new mat4 with correct values', (t) => {
-  let rotation = 90 * 0.017453292519943295
+  const rotation = 90 * 0.017453292519943295
 
   const idn = identity()
 
-// invalid condition when axis is 0,0,0
+  // invalid condition when axis is 0,0,0
   const out1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   const ret1 = rotate(out1, rotation, [0, 0, 0], idn)
   t.true(ret1 === null)

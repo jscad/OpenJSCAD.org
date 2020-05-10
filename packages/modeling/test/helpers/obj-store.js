@@ -1,5 +1,5 @@
 import fs from 'fs'
-import {CSG, CAG} from '../../csg' //FIXME: BAD!! tests are supposed to be independant from our CODE !!
+import { CSG, CAG } from '../../csg' // FIXME: BAD!! tests are supposed to be independant from our CODE !!
 
 // import the required modules if necessary
 
@@ -41,4 +41,4 @@ OBJ.loadPrevious = function (objectid, object) {
   return OBJ.load(objectid)
 }
 
-module.exports = {OBJ}
+module.exports = { OBJ }

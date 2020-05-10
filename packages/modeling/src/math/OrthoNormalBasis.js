@@ -36,7 +36,7 @@ const OrthoNormalBasis = function (plane, rightvector) {
 //   will return an orthonormal basis where the 2d X axis maps to the 3D inverted Y axis, and
 //   the 2d Y axis maps to the 3D Z axis.
 OrthoNormalBasis.GetCartesian = function (xaxisid, yaxisid) {
-  let axisid = xaxisid + '/' + yaxisid
+  const axisid = xaxisid + '/' + yaxisid
   let planenormal, rightvector
   if (axisid === 'X/Y') {
     planenormal = [0, 0, 1]
@@ -146,7 +146,7 @@ OrthoNormalBasis.GetCartesian_Test=function() {
 
 // The z=0 plane, with the 3D x and y vectors mapped to the 2D x and y vector
 OrthoNormalBasis.Z0Plane = function () {
-  let plane = new Plane(new Vector3D([0, 0, 1]), 0)
+  const plane = new Plane(new Vector3D([0, 0, 1]), 0)
   return new OrthoNormalBasis(plane, new Vector3D([1, 0, 0]))
 }
 
@@ -162,7 +162,7 @@ OrthoNormalBasis.prototype = {
   },
 
   getInverseProjectionMatrix: function () {
-    let p = vec3.scale(this.plane[3], this.plane)
+    const p = vec3.scale(this.plane[3], this.plane)
     return mat4.fromValues(
       this.u[0], this.u[1], this.u[2], 0,
       this.v[0], this.v[1], this.v[2], 0,
@@ -185,28 +185,28 @@ OrthoNormalBasis.prototype = {
   },
 
   line3Dto2D: function (line3d) {
-    let a = line3d.point
-    let b = line3d.direction.plus(a)
-    let a2d = this.to2D(a)
-    let b2d = this.to2D(b)
+    const a = line3d.point
+    const b = line3d.direction.plus(a)
+    const a2d = this.to2D(a)
+    const b2d = this.to2D(b)
     return Line2D.fromPoints(a2d, b2d)
   },
 
   line2Dto3D: function (line2d) {
-    let a = line2d.origin()
-    let b = line2d.direction().plus(a)
-    let a3d = this.to3D(a)
-    let b3d = this.to3D(b)
+    const a = line2d.origin()
+    const b = line2d.direction().plus(a)
+    const a3d = this.to3D(a)
+    const b3d = this.to3D(b)
     return Line3D.fromPoints(a3d, b3d)
   },
 
   transform: function (matrix4x4) {
     // todo: this may not work properly in case of mirroring
-    let newplane = this.plane.transform(matrix4x4)
-    let rightpointTransformed = this.u.transform(matrix4x4)
-    let originTransformed = new Vector3D(0, 0, 0).transform(matrix4x4)
-    let newrighthandvector = rightpointTransformed.minus(originTransformed)
-    let newbasis = new OrthoNormalBasis(newplane, newrighthandvector)
+    const newplane = this.plane.transform(matrix4x4)
+    const rightpointTransformed = this.u.transform(matrix4x4)
+    const originTransformed = new Vector3D(0, 0, 0).transform(matrix4x4)
+    const newrighthandvector = rightpointTransformed.minus(originTransformed)
+    const newbasis = new OrthoNormalBasis(newplane, newrighthandvector)
     return newbasis
   }
 }

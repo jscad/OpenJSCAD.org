@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 
 const grammar = fs.readFileSync('./openscad-parser.jison', 'utf8')
-const parser = new Parser(grammar, {type: 'LALR'})
+const parser = new Parser(grammar, { type: 'LALR' })
 
 // generate source, ready to be written to disk
 let parserSource = parser.generate()

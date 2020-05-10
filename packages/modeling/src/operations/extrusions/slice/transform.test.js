@@ -16,9 +16,9 @@ test('slice: transform() should return a new slice with correct values', (t) => 
 
   const edges1 = toEdges(ret1)
   const exp1 = [
-    [ new Float32Array([ 1, 1, 0 ]), new Float32Array([ 0, 0, 0 ]) ],
-    [ new Float32Array([ 0, 0, 0 ]), new Float32Array([ 1, 0, 0 ]) ],
-    [ new Float32Array([ 1, 0, 0 ]), new Float32Array([ 1, 1, 0 ]) ]
+    [new Float32Array([1, 1, 0]), new Float32Array([0, 0, 0])],
+    [new Float32Array([0, 0, 0]), new Float32Array([1, 0, 0])],
+    [new Float32Array([1, 0, 0]), new Float32Array([1, 1, 0])]
   ]
   t.deepEqual(edges1, exp1)
 
@@ -38,9 +38,9 @@ test('slice: transform() should return a new slice with correct values', (t) => 
 
   const edges2 = toEdges(ret2)
   const exp2 = [
-    [ new Float32Array([ 2, 6, 7 ]), new Float32Array([ 1, 5, 7 ]) ],
-    [ new Float32Array([ 1, 5, 7 ]), new Float32Array([ 2, 5, 7 ]) ],
-    [ new Float32Array([ 2, 5, 7 ]), new Float32Array([ 2, 6, 7 ]) ]
+    [new Float32Array([2, 6, 7]), new Float32Array([1, 5, 7])],
+    [new Float32Array([1, 5, 7]), new Float32Array([2, 5, 7])],
+    [new Float32Array([2, 5, 7]), new Float32Array([2, 6, 7])]
   ]
   t.deepEqual(edges2, exp2)
 
@@ -58,9 +58,9 @@ test('slice: transform() should return a new slice with correct values', (t) => 
 
   const edges3 = toEdges(ret3)
   const exp3 = [
-    [ new Float32Array([ 1, -1, 0 ]), new Float32Array([ 0, 0, 0 ]) ],
-    [ new Float32Array([ 0, 0, 0 ]), new Float32Array([ 6.123234262925839e-17, -1, 0 ]) ],
-    [ new Float32Array([ 6.123234262925839e-17, -1, 0 ]), new Float32Array([ 1, -1, 0 ]) ]
+    [new Float32Array([1, -1, 0]), new Float32Array([0, 0, 0])],
+    [new Float32Array([0, 0, 0]), new Float32Array([6.123234262925839e-17, -1, 0])],
+    [new Float32Array([6.123234262925839e-17, -1, 0]), new Float32Array([1, -1, 0])]
   ]
   t.deepEqual(edges3, exp3)
 })

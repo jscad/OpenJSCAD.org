@@ -18,7 +18,7 @@ let viewerOptions
 let camera = perspectiveCamera.defaults
 let controls = orbitControls.defaults
 
-let grid = { // grid data
+const grid = { // grid data
   // the choice of what draw command to use is also data based
   visuals: {
     drawCmd: 'drawGrid',
@@ -50,7 +50,7 @@ module.exports = function viewer (state, i18n) {
       resize(el)
       render(viewerOptions)
     }
-    let foo = setup()
+    const foo = setup()
     viewerOptions = foo.viewerOptions
     camera = foo.camera
     camera.position = [150, 180, 233] // [150, 250, 200]
@@ -96,10 +96,8 @@ module.exports = function viewer (state, i18n) {
       })
 
     // some live animation example
-    let tick = 0
     const updateAndRender = () => {
-      tick += 0.01
-      let updatedA = orbitControls.update({ controls, camera })
+      const updatedA = orbitControls.update({ controls, camera })
       controls = { ...controls, ...updatedA.controls }
       camera.position = updatedA.camera.position
       perspectiveCamera.update(camera)
@@ -113,7 +111,7 @@ module.exports = function viewer (state, i18n) {
     resize(el)
   } else {
     if (prevSolids) {
-      let solids = state.design.solids
+      const solids = state.design.solids
       const sameSolids = solids.length === prevSolids.length &&
       JSON.stringify(state.design.solids) === JSON.stringify(prevSolids)
       // return sameSolids
@@ -133,7 +131,7 @@ module.exports = function viewer (state, i18n) {
     ]
       .filter(x => x !== undefined)
 
-    let updated = orbitControls.update({ controls, camera })
+    const updated = orbitControls.update({ controls, camera })
     controls = { ...controls, ...updated.controls }
     camera.position = updated.camera.position
     perspectiveCamera.update(camera)

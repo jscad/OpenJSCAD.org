@@ -5,7 +5,7 @@ function dom (state, i18n, paramsCallbacktoStream, editorCallbackToStream) {
   i18nFake.translate = x => x
   i18n = i18n || i18nFake
 
-  const menuIcon = html`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`
+  // const menuIcon = html`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`
 
   const options = require('./options')(state, i18n)
   const parameters = require('./designParameters')(state, paramsCallbacktoStream, i18n)
@@ -20,14 +20,14 @@ function dom (state, i18n, paramsCallbacktoStream, editorCallbackToStream) {
   const viewerControls = require('./viewerControls')(state, i18n)
 
   //       //<input type="button" value="${i18n`load jscad project`}" id="fileLoader"/>
-    // <a id="menuToggle">${menuIcon}</a>
+  // <a id="menuToggle">${menuIcon}</a>
   const output = html`
     <div id='container' style='color:${state.themes.themeSettings.mainTextColor}'>
 
     <header>
     <section>
       <h3>
-        
+
         <span>JSCAD</span>
       </h3>
     </section>
@@ -38,7 +38,7 @@ function dom (state, i18n, paramsCallbacktoStream, editorCallbackToStream) {
     </section>
       ${io}
       </header>
-      
+
       ${options}
       ${help}
       ${toolBar}
@@ -57,7 +57,7 @@ function dom (state, i18n, paramsCallbacktoStream, editorCallbackToStream) {
 
       <!--Params-->
       ${parameters}
-    
+
     </div>
   `
 

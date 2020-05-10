@@ -16,8 +16,8 @@ const rectangle = (options) => {
   const defaults = {
     size: [2, 2]
   }
-  const center = [0,0];
-  const {size} = Object.assign({}, defaults, options)
+  const center = [0, 0]
+  const { size } = Object.assign({}, defaults, options)
 
   if (!Array.isArray(size)) throw new Error('size must be an array')
   if (size.length < 2) throw new Error('size must contain X and Y values')
@@ -49,13 +49,13 @@ const square = (options) => {
   const defaults = {
     size: 2
   }
-  let {size} = Object.assign({}, defaults, options)
+  let { size } = Object.assign({}, defaults, options)
 
   // TODO check that size is a number
 
   size = [size, size]
 
-  return rectangle({size})
+  return rectangle({ size })
 }
 
 module.exports = {

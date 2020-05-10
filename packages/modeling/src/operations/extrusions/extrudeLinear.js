@@ -23,7 +23,7 @@ const extrudeLinear = (options, ...objects) => {
     twistAngle: 0,
     twistSteps: 1
   }
-  let { height, twistAngle, twistSteps } = Object.assign({ }, defaults, options)
+  const { height, twistAngle, twistSteps } = Object.assign({ }, defaults, options)
 
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')

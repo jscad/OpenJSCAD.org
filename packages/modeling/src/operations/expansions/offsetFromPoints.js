@@ -31,31 +31,31 @@ const offsetFromPoints = (options, points) => {
   if (rotation === 0) rotation = 1.0
 
   // use right hand normal?
-  let orientation = ((rotation > 0) && (delta >= 0)) || ((rotation < 0) && (delta < 0))
+  const orientation = ((rotation > 0) && (delta >= 0)) || ((rotation < 0) && (delta < 0))
   delta = Math.abs(delta) // sign is no longer required
 
   let prevsegment = null
   const newpoints = []
   const newcorners = []
-  let n = points.length
+  const n = points.length
   for (let i = 0; i < n; i++) {
-    let j = (i + 1) % n
-    let p0 = points[i]
-    let p1 = points[j]
+    const j = (i + 1) % n
+    const p0 = points[i]
+    const p1 = points[j]
     // calculate the unit normal
-    let of = orientation ? vec2.normal(vec2.subtract(p0, p1)) : vec2.normal(vec2.subtract(p1, p0))
+    const of = orientation ? vec2.normal(vec2.subtract(p0, p1)) : vec2.normal(vec2.subtract(p1, p0))
     vec2.normalize(of, of)
     // calculate the offset vector
     vec2.scale(of, delta, of)
     // calculate the new points (edge)
-    let n0 = vec2.add(p0, of)
-    let n1 = vec2.add(p1, of)
+    const n0 = vec2.add(p0, of)
+    const n1 = vec2.add(p1, of)
 
-    let cursegment = [n0, n1]
+    const cursegment = [n0, n1]
     if (prevsegment != null) {
       if (closed || (!closed && j !== 0)) {
         // check for intersection of new line segments
-        let ip = intersect(prevsegment[0], prevsegment[1], cursegment[0], cursegment[1])
+        const ip = intersect(prevsegment[0], prevsegment[1], cursegment[0], cursegment[1])
         if (ip) {
           // adjust the previous points
           newpoints.pop()
@@ -76,16 +76,16 @@ const offsetFromPoints = (options, points) => {
   // complete the closure if required
   if (closed && prevsegment != null) {
     // check for intersection of closing line segments
-    let n0 = newpoints[0]
-    let n1 = newpoints[1]
-    let ip = intersect(prevsegment[0], prevsegment[1], n0, n1)
+    const n0 = newpoints[0]
+    const n1 = newpoints[1]
+    const ip = intersect(prevsegment[0], prevsegment[1], n0, n1)
     if (ip) {
       // adjust the previous points
       newpoints[0] = ip
       newpoints.pop()
     } else {
-      let p0 = points[0]
-      let cursegment = [n0, n1]
+      const p0 = points[0]
+      const cursegment = [n0, n1]
       newcorners.push({ c: p0, s0: prevsegment, s1: cursegment })
     }
   }
@@ -95,10 +95,10 @@ const offsetFromPoints = (options, points) => {
   if (corners === 'edge') {
     // create edge corners
     newcorners.forEach((corner) => {
-      let line0 = line2.fromPoints(corner.s0[0], corner.s0[1])
-      let line1 = line2.fromPoints(corner.s1[0], corner.s1[1])
-      let ip = line2.intersectPointOfLines(line0, line1)
-      let p0 = corner.s0[1]
+      const line0 = line2.fromPoints(corner.s0[0], corner.s0[1])
+      const line1 = line2.fromPoints(corner.s1[0], corner.s1[1])
+      const ip = line2.intersectPointOfLines(line0, line1)
+      const p0 = corner.s0[1]
       let i = newpoints.findIndex((point) => vec2.equals(p0, point))
       i = (i + 1) % newpoints.length
       newpoints.splice(i, 0, ip)
@@ -123,16 +123,16 @@ const offsetFromPoints = (options, points) => {
 
       // generate the segments
       cornersegments = Math.floor(segments * (Math.abs(rotation) / (2 * Math.PI)))
-      let step = rotation / cornersegments
-      let start = vec2.angle(vec2.subtract(corner.s0[1], corner.c))
-      let cornerpoints = []
+      const step = rotation / cornersegments
+      const start = vec2.angle(vec2.subtract(corner.s0[1], corner.c))
+      const cornerpoints = []
       for (let i = 1; i < cornersegments; i++) {
-        let radians = start + (step * i)
-        let point = vec2.add(corner.c, vec2.scale(delta, vec2.fromAngleRadians(radians)))
+        const radians = start + (step * i)
+        const point = vec2.add(corner.c, vec2.scale(delta, vec2.fromAngleRadians(radians)))
         cornerpoints.push(point)
       }
       if (cornerpoints.length > 0) {
-        let p0 = corner.s0[1]
+        const p0 = corner.s0[1]
         let i = newpoints.findIndex((point) => vec2.equals(p0, point))
         i = (i + 1) % newpoints.length
         newpoints.splice(i, 0, ...cornerpoints)

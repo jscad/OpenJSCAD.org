@@ -7,29 +7,29 @@ const { line, rectangle, cuboid } = require('../../primitives')
 const { measureBounds } = require('./index')
 
 test('measureBounds (single objects)', t => {
-  let aline = line([[10, 10], [15, 15]])
-  let arect = rectangle()
-  let acube = cuboid()
+  const aline = line([[10, 10], [15, 15]])
+  const arect = rectangle()
+  const acube = cuboid()
 
-  let apath2 = path2.create()
-  let ageom2 = geom2.create()
-  let ageom3 = geom3.create()
+  const apath2 = path2.create()
+  const ageom2 = geom2.create()
+  const ageom3 = geom3.create()
 
-  let n = null
-  let o = {}
-  let x = 'hi'
+  const n = null
+  const o = {}
+  const x = 'hi'
 
-  let lbounds = measureBounds(aline)
-  let rbounds = measureBounds(arect)
-  let cbounds = measureBounds(acube)
+  const lbounds = measureBounds(aline)
+  const rbounds = measureBounds(arect)
+  const cbounds = measureBounds(acube)
 
-  let p2bounds = measureBounds(apath2)
-  let g2bounds = measureBounds(ageom2)
-  let g3bounds = measureBounds(ageom3)
+  const p2bounds = measureBounds(apath2)
+  const g2bounds = measureBounds(ageom2)
+  const g3bounds = measureBounds(ageom3)
 
-  let nbounds = measureBounds(n)
-  let obounds = measureBounds(o)
-  let xbounds = measureBounds(x)
+  const nbounds = measureBounds(n)
+  const obounds = measureBounds(o)
+  const xbounds = measureBounds(x)
 
   t.deepEqual(lbounds, [[10, 10, 0], [15, 15, 0]])
   t.deepEqual(rbounds, [[-1, -1, 0], [1, 1, 0]])
@@ -45,11 +45,11 @@ test('measureBounds (single objects)', t => {
 })
 
 test('measureBounds (multiple objects)', t => {
-  let aline = line([[10, 10], [15, 15]])
-  let arect = rectangle({ size: [10, 20] })
-  let acube = cuboid()
-  let o = {}
+  const aline = line([[10, 10], [15, 15]])
+  const arect = rectangle({ size: [10, 20] })
+  const acube = cuboid()
+  const o = {}
 
-  let allbounds = measureBounds(aline, arect, acube, o)
+  const allbounds = measureBounds(aline, arect, acube, o)
   t.deepEqual(allbounds, [[[10, 10, 0], [15, 15, 0]], [[-5, -10, 0], [5, 10, 0]], [[-1, -1, -1], [1, 1, 1]], [[0, 0, 0], [0, 0, 0]]])
 })

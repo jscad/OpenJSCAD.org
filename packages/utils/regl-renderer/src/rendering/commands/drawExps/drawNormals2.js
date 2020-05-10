@@ -10,7 +10,7 @@ const drawNormals = function (regl, params) {
     alwaysVisible: true, // to have the widget alway visible 'on top' of the rest of the scene
     geometry: undefined
   }
-  let {size, xColor, yColor, zColor, lineWidth, alwaysVisible, geometry} = Object.assign({}, defaults, params)
+  let { size, xColor, yColor, zColor, lineWidth, alwaysVisible, geometry } = Object.assign({}, defaults, params)
 
   if (!geometry) {
     throw new Error('no geometry provided to drawNormals')
@@ -66,9 +66,9 @@ const drawNormals = function (regl, params) {
     orientation = mat4.rotateZ(orientation, orientation, normal[2])
     const position = mat4.translate([], orientation, geometry.positions[index])
 
-    return {color: xColor, model: position}
+    return { color: xColor, model: position }
   })
-  let singleNormal = regl(commandParams)
+  const singleNormal = regl(commandParams)
   return () => singleNormal(foo)
 }
 

@@ -15,18 +15,18 @@ const toPoints = require('./toPoints')
  */
 const concat = (...paths) => {
   // Only the last path can be closed, producing a closed path.
-  let isClosed = false;
+  let isClosed = false
   for (const path of paths) {
     if (isClosed) {
       throw new Error('Cannot concatenate to a closed path')
     }
-    isClosed = path.isClosed;
+    isClosed = path.isClosed
   }
   let newpoints = []
   paths.forEach((path) => {
     newpoints = newpoints.concat(toPoints(path))
   })
-  return fromPoints({closed: isClosed}, newpoints)
+  return fromPoints({ closed: isClosed }, newpoints)
 }
 
 module.exports = concat

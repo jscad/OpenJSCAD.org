@@ -35,7 +35,7 @@ const toPolygons = (slice) => {
   let farthestEdge = [[NaN, NaN, NaN], [NaN, NaN, NaN]]
   let distance = 0
   edges.forEach((edge) => {
-    let d = vec3.squaredDistance(midpoint, edge[0])
+    const d = vec3.squaredDistance(midpoint, edge[0])
     if (d > distance) {
       farthestEdge = edge
       distance = d
@@ -66,7 +66,7 @@ const toPolygons = (slice) => {
   // return only those polygons from the base
   let polygons = geom3.toPolygons(geometry3)
   polygons = polygons.filter((polygon) => {
-    let a = vec3.angle(splane, polygon.plane)
+    const a = vec3.angle(splane, polygon.plane)
     // walls should be PI / 2 radians rotated from the base
     return Math.abs(a) < (Math.PI / 90)
   })

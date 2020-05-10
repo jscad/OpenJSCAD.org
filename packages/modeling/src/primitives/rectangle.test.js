@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const {rectangle} = require('./index')
+const { rectangle } = require('./index')
 
 const geom2 = require('../geometry/geom2')
 
@@ -22,13 +22,13 @@ test('rectangle (defaults)', t => {
 
 test('rectangle (options)', t => {
   // test size
-  const geometry = rectangle({size: [6, 10]})
+  const geometry = rectangle({ size: [6, 10] })
   const obs = geom2.toPoints(geometry)
   const exp = [
-    [ -3, -5 ],
-    [ 3, -5 ],
-    [ 3, 5 ],
-    [ -3, 5 ]
+    [-3, -5],
+    [3, -5],
+    [3, 5],
+    [-3, 5]
   ]
 
   t.deepEqual(obs.length, 4)

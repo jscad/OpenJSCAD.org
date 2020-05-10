@@ -88,7 +88,7 @@ const makeWebRequire = (filesAndFolders, options) => {
   const apiModule = apiMainPath === '@jscad/modeling' ? require('@jscad/modeling') : require('./vtreeApi')
 
   // preset modules
-  let modules = {
+  const modules = {
     '@jscad/io': {
       exports: require('@jscad/io')
     },
@@ -101,7 +101,7 @@ const makeWebRequire = (filesAndFolders, options) => {
     },
     // fake fs module ! only useable with the currently available files & folders
     // that have been drag & dropped / created
-    'fs': {
+    fs: {
       exports: fakeFs
     }
   }

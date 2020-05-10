@@ -7,7 +7,7 @@ const getTranslationsInFolder = (localesPath, baseTranslation) => {
   translations[baseTranslation] = genericFile
   require('fs').readdirSync(localesPath).forEach((file) => {
     if (file.match(/\.json$/) !== null && baseTranslation + '.json' !== file) {
-      let name = file.replace('.json', '')
+      const name = file.replace('.json', '')
       translations[name] = require(path.join(localesPath, file))
     }
   })

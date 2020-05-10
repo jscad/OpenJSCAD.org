@@ -21,7 +21,7 @@ const interpolateBetween2DPointsForY = (point1, point2, y) => {
   } else {
     t = f1 / f2
   }
-  let result = point1[0] + t * (point2[0] - point1[0])
+  const result = point1[0] + t * (point2[0] - point1[0])
   return result
 }
 

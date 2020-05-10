@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 const { toArray, flatten } = require('@jscad/array-utils')
 
 const color = (params, ...objects) => {
@@ -7,7 +7,7 @@ const color = (params, ...objects) => {
 }
 
 // attempt at workaround for non tree items that need access to data before final evaluation
-let specials = []
+const specials = []
 const measureArea = require('./api-measurements').makeMeasureArea(specials)
 const measureVolume = require('./api-measurements').makeMeasureVolume(specials)
 const measureBounds = require('./api-measurements').makeMeasureBounds(specials)
