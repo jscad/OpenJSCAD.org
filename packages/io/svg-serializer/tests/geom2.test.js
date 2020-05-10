@@ -31,7 +31,7 @@ test('serialize 2D geometries (color) to svg', function (t) {
 })
 
 test('serialize 2D geometries (complex) to svg', function (t) {
-  const shape = geometry.geom2.create([
+  let shape = geometry.geom2.create([
     [[-75.00000, 75.00000], [-75.00000, -75.00000]],
     [[-75.00000, -75.00000], [75.00000, -75.00000]],
     [[75.00000, -75.00000], [75.00000, 75.00000]],
