@@ -1,8 +1,7 @@
 const extrudeRotate = require('../operations/extrusions/extrudeRotate')
-const { rotate } = require('../operations/transforms/rotate')
-const { translate } = require('../operations/transforms/translate')
+const {rotate} = require('../operations/transforms/rotate')
 
-const { circle } = require('./ellipse')
+const {circle} = require('./ellipse')
 
 /**
  * Construct a torus by revolving a small circle (inner) about the circumference of a large (outer) circle.
@@ -33,9 +32,7 @@ const torus = (options) => {
 
   if (innerRadius >= outerRadius) throw new Error('inner circle is two large to rotate about the outer circle')
 
-  let innerCircle = circle({radius: innerRadius, segments: innerSegments})
-
-  innerCircle = translate([outerRadius, 0], innerCircle)
+  let innerCircle = circle({radius: innerRadius, center: [outerRadius, 0], segments: innerSegments})
 
   if (innerRotation !== 0) innerCircle = rotate([0, 0, innerRotation], innerCircle)
 
