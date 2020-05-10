@@ -17,7 +17,7 @@ const initializeData = function () {
   ).translate([0, 0, 1.5]).scale(10)
 
   const transpCube = color([1, 0, 0, 0.75], cube({ size: [100, 100, 400] }))
-  return [ transpCube, logo ]
+  return [transpCube, logo]
 }
 
 const width = window.innerWidth
@@ -99,7 +99,7 @@ const updateAndRender = () => {
     ).translate([0, 0, 1.5]).scale(10)
 
     const transpCube = color([1, tick, 0, 0.75], cube({ size: [100 * Math.random(), 100, 400 * Math.random() + 200] }))
-    return [ transpCube, logo ]
+    return [transpCube, logo]
   }
   if (updateCounter > 66) {
     const solidsDynamic = entitiesFromSolids({}, dynamicData())

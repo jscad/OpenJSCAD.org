@@ -18,8 +18,8 @@ const create = function (sides) {
     sides = [] // empty contents
   }
   return {
-    sides : sides,
-    transforms : mat4.identity()
+    sides: sides,
+    transforms: mat4.identity()
   }
 }
 

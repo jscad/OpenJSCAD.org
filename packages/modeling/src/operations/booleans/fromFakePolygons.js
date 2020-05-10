@@ -22,8 +22,8 @@ const fromFakePolygon = (epsilon, polygon) => {
   }
 
   const points2D = points3D.map((v3) => {
-    let x = Math.round(v3[0] / epsilon) * epsilon + 0 // no more -0
-    let y = Math.round(v3[1] / epsilon) * epsilon + 0 // no more -0
+    const x = Math.round(v3[0] / epsilon) * epsilon + 0 // no more -0
+    const y = Math.round(v3[1] / epsilon) * epsilon + 0 // no more -0
     return vec2.fromValues(x, y)
   })
 
@@ -45,7 +45,7 @@ const fromFakePolygon = (epsilon, polygon) => {
  * The polygons must have only z coordinates +1 and -1, as constructed by to3DWalls().
  */
 const fromFakePolygons = (epsilon, polygons) => {
-  let sides = polygons.map((polygon) => fromFakePolygon(epsilon, polygon)).filter((polygon) => (polygon !== null))
+  const sides = polygons.map((polygon) => fromFakePolygon(epsilon, polygon)).filter((polygon) => (polygon !== null))
   return geom2.create(sides)
 }
 

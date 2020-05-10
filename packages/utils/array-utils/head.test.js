@@ -4,7 +4,7 @@ const { head } = require('./index')
 
 test('array-utils: head() should return undefined', (t) => {
   let obs = head()
-  let exp = undefined
+  let exp
   t.deepEqual(obs, exp)
 
   obs = head(null)

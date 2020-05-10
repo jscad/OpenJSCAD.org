@@ -4,7 +4,7 @@ const drawMesh = function (regl, params) {
   const defaults = {
     geometry: undefined
   }
-  const {geometry} = Object.assign({}, defaults, params)
+  const { geometry } = Object.assign({}, defaults, params)
 
   const commandParams = {
     frag: `precision mediump float;

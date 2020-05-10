@@ -1,4 +1,4 @@
-const {EPS} = require('../math/constants')
+const { EPS } = require('../math/constants')
 
 const vec2 = require('../math/vec2')
 const vec3 = require('../math/vec3')
@@ -7,29 +7,29 @@ const geom3 = require('../geometry/geom3')
 const poly3 = require('../geometry/poly3')
 
 const createCorners = (center, size, radius, segments, slice, positive) => {
-  let pitch = (Math.PI / 2) * slice / segments
-  let cospitch = Math.cos(pitch)
-  let sinpitch = Math.sin(pitch)
+  const pitch = (Math.PI / 2) * slice / segments
+  const cospitch = Math.cos(pitch)
+  const sinpitch = Math.sin(pitch)
 
-  let layersegments = segments - slice
+  const layersegments = segments - slice
   let layerradius = radius * cospitch
   let layeroffset = size[2] - (radius - (radius * sinpitch))
   if (!positive) layeroffset = (radius - (radius * sinpitch)) - size[2]
 
   layerradius = layerradius > EPS ? layerradius : 0
 
-  let corner0 = vec3.add(center, [size[0] - radius, size[1] - radius, layeroffset])
-  let corner1 = vec3.add(center, [radius - size[0], size[1] - radius, layeroffset])
-  let corner2 = vec3.add(center, [radius - size[0], radius - size[1], layeroffset])
-  let corner3 = vec3.add(center, [size[0] - radius, radius - size[1], layeroffset])
-  let corner0Points = []
-  let corner1Points = []
-  let corner2Points = []
-  let corner3Points = []
+  const corner0 = vec3.add(center, [size[0] - radius, size[1] - radius, layeroffset])
+  const corner1 = vec3.add(center, [radius - size[0], size[1] - radius, layeroffset])
+  const corner2 = vec3.add(center, [radius - size[0], radius - size[1], layeroffset])
+  const corner3 = vec3.add(center, [size[0] - radius, radius - size[1], layeroffset])
+  const corner0Points = []
+  const corner1Points = []
+  const corner2Points = []
+  const corner3Points = []
   for (let i = 0; i <= layersegments; i++) {
-    let radians = layersegments > 0 ? Math.PI / 2 * i / layersegments : 0
-    let point2d = vec2.fromAngleRadians(radians)
-    let point3d = vec3.fromVec2(vec2.scale(layerradius, point2d))
+    const radians = layersegments > 0 ? Math.PI / 2 * i / layersegments : 0
+    const point2d = vec2.fromAngleRadians(radians)
+    const point3d = vec3.fromVec2(vec2.scale(layerradius, point2d))
     corner0Points.push(vec3.add(corner0, point3d))
     vec3.rotateZ(point3d, Math.PI / 2, [0, 0, 0], point3d)
     corner1Points.push(vec3.add(corner1, point3d))
@@ -49,10 +49,10 @@ const createCorners = (center, size, radius, segments, slice, positive) => {
 }
 
 const stitchCorners = (previousCorners, currentCorners) => {
-  let polygons = []
+  const polygons = []
   for (let i = 0; i < previousCorners.length; i++) {
-    let previous = previousCorners[i]
-    let current = currentCorners[i]
+    const previous = previousCorners[i]
+    const current = currentCorners[i]
     for (let j = 0; j < (previous.length - 1); j++) {
       polygons.push(poly3.fromPoints([previous[j], previous[j + 1], current[j]]))
 
@@ -65,18 +65,18 @@ const stitchCorners = (previousCorners, currentCorners) => {
 }
 
 const stitchWalls = (previousCorners, currentCorners) => {
-  let polygons = []
+  const polygons = []
   for (let i = 0; i < previousCorners.length; i++) {
     let previous = previousCorners[i]
     let current = currentCorners[i]
-    let p0 = previous[previous.length - 1]
-    let c0 = current[current.length - 1]
+    const p0 = previous[previous.length - 1]
+    const c0 = current[current.length - 1]
 
-    let j = (i + 1) % previousCorners.length
+    const j = (i + 1) % previousCorners.length
     previous = previousCorners[j]
     current = currentCorners[j]
-    let p1 = previous[0]
-    let c1 = current[0]
+    const p1 = previous[0]
+    const c1 = current[0]
 
     polygons.push(poly3.fromPoints([p0, p1, c1, c0]))
   }
@@ -88,19 +88,19 @@ const stitchSides = (bottomCorners, topCorners) => {
   bottomCorners = [bottomCorners[3], bottomCorners[2], bottomCorners[1], bottomCorners[0]]
   bottomCorners = bottomCorners.map((corner) => corner.slice().reverse())
 
-  let bottomPoints = []
+  const bottomPoints = []
   bottomCorners.forEach((corner) => {
     corner.forEach((point) => bottomPoints.push(point))
   })
 
-  let topPoints = []
+  const topPoints = []
   topCorners.forEach((corner) => {
     corner.forEach((point) => topPoints.push(point))
   })
 
-  let polygons = []
+  const polygons = []
   for (let i = 0; i < topPoints.length; i++) {
-    let j = (i + 1) % topPoints.length
+    const j = (i + 1) % topPoints.length
     polygons.push(poly3.fromPoints([bottomPoints[i], bottomPoints[j], topPoints[j], topPoints[i]]))
   }
   return polygons
@@ -128,8 +128,8 @@ const roundedCuboid = (options) => {
     roundRadius: 0.2,
     segments: 32
   }
-  let center = [0, 0, 0];
-  let {size, roundRadius, segments} = Object.assign({}, defaults, options)
+  const center = [0, 0, 0]
+  let { size, roundRadius, segments } = Object.assign({}, defaults, options)
 
   if (!Array.isArray(size)) throw new Error('size must be an array')
   if (size.length < 3) throw new Error('size must contain width, depth and height values')
@@ -149,8 +149,8 @@ const roundedCuboid = (options) => {
   let prevCornersNeg = null
   let polygons = []
   for (let slice = 0; slice <= segments; slice++) {
-    let cornersPos = createCorners(center, size, roundRadius, segments, slice, true)
-    let cornersNeg = createCorners(center, size, roundRadius, segments, slice, false)
+    const cornersPos = createCorners(center, size, roundRadius, segments, slice, true)
+    const cornersNeg = createCorners(center, size, roundRadius, segments, slice, false)
 
     if (slice === 0) {
       polygons = polygons.concat(stitchSides(cornersNeg, cornersPos))
@@ -158,11 +158,11 @@ const roundedCuboid = (options) => {
 
     if (prevCornersPos) {
       polygons = polygons.concat(stitchCorners(prevCornersPos, cornersPos),
-                                 stitchWalls(prevCornersPos, cornersPos))
+        stitchWalls(prevCornersPos, cornersPos))
     }
     if (prevCornersNeg) {
       polygons = polygons.concat(stitchCorners(prevCornersNeg, cornersNeg),
-                                 stitchWalls(prevCornersNeg, cornersNeg))
+        stitchWalls(prevCornersNeg, cornersNeg))
     }
 
     if (slice === segments) {

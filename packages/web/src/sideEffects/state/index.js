@@ -1,14 +1,14 @@
 const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
-const { head } = require('@jscad/array-utils')
-const makeLogger = require('../../utils/logger')
+// const makeLogger = require('../../utils/logger')
 
 const makeState = (params) => {
-  const defaults = {
-    logging: true
-  }
-  const { logging, packageMetadata, keyBindings } = Object.assign({}, defaults, params)
-  const log = makeLogger({ enabled: logging })
+  // const defaults = {
+  //   logging: true
+  // }
+  // const { logging, packageMetadata, keyBindings } = Object.assign({}, defaults, params)
+  // const log = makeLogger({ enabled: logging })
+  const { packageMetadata, keyBindings } = params
   const commandResponses = callBackToStream()
 
   const initialState = {
@@ -46,7 +46,7 @@ const makeState = (params) => {
 
   const sink = (out$) => {
     out$.forEach(function (command) {
-      let { state } = command
+      // const { state } = command
       /* try {
         const newState = state
       } catch (error) {

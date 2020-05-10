@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { fromPointAxisNormal, toString } = require('./index')
+const { fromPointAxisNormal } = require('./index')
 
 const { compareVectors } = require('../../test/helpers/')
 
@@ -19,7 +19,4 @@ test('connector: fromPointAxisNormal() should return a new connector with correc
   t.true(compareVectors(obs.point, [5, 5, 5]))
   t.true(compareVectors(obs.axis, [0, 0, 1]))
   t.true(compareVectors(obs.normal, [0, 0.8944271802902222, 0.4472135901451111]))
-
-  const str = toString(obs)
-  // console.log(toString(obs))
 })

@@ -31,6 +31,6 @@ const identity = (...params) => {
   out[14] = 0
   out[15] = 1
   return out
-};
+}
 
 module.exports = identity

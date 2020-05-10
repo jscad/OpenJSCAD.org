@@ -27,7 +27,7 @@ const makeDatSideEffect = async (params) => {
       const { type, id, urls, path } = command
       // console.log('command', command)
       if (!enabled) {
-        commandResponses.callback({ type, id, error: new Error(`Dat archives not supported in this environment!`) })
+        commandResponses.callback({ type, id, error: new Error('Dat archives not supported in this environment!') })
         return
       }
 
@@ -109,7 +109,7 @@ const makeDatSideEffect = async (params) => {
         write,
         watch
       }
-      const commandHandler = commandHandlers[type] || commandHandlers['unhandled']
+      const commandHandler = commandHandlers[type] || commandHandlers.unhandled
       commandHandler()
     })
   }

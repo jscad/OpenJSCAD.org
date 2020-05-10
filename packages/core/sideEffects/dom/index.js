@@ -1,11 +1,8 @@
 const most = require('most')
 const morph = require('morphdom')// require('nanomorph')
-const {proxy} = require('most-proxy')
+const { proxy } = require('most-proxy')
 
-const hooks = require('morphdom-hooks')
-// const morph = hooks(require('morphdom'))
-
-module.exports = function makeDomSideEffect ({targetEl}) {
+module.exports = function makeDomSideEffect ({ targetEl }) {
   const { attach, stream } = proxy()
 
   const out$ = stream
@@ -34,15 +31,15 @@ module.exports = function makeDomSideEffect ({targetEl}) {
     domRenderRequest$.forEach(x => x)
   }
 
-  let storedListeners = {
+  const storedListeners = {
 
   }
   function domSource () {
     function getElements (query) {
       // todo : how to deal with 'document' level queries
-      /*if (query === document) {
+      /* if (query === document) {
         return [document] //Array.from(document.querySelectorAll(query))
-      }*/
+      } */
       return Array.from(targetEl.querySelectorAll(query))
     }
 
@@ -52,22 +49,24 @@ module.exports = function makeDomSideEffect ({targetEl}) {
 
       let outputStream
 
-      return {events: function events (eventName) {
-        if (!items || (items && items.length === 0)) {
-          const eventProxy = proxy()
-          outputStream = eventProxy.stream
-          storedListeners[query + '@@' + eventName] = {observable: eventProxy, live: false}
+      return {
+        events: function events (eventName) {
+          if (!items || (items && items.length === 0)) {
+            const eventProxy = proxy()
+            outputStream = eventProxy.stream
+            storedListeners[query + '@@' + eventName] = { observable: eventProxy, live: false }
+          }
+          // eventsForListners[query] = eventName
+          storedListeners[query + '@@' + eventName].events = eventName
+          return outputStream.multicast()
         }
-      // eventsForListners[query] = eventName
-        storedListeners[query + '@@' + eventName].events = eventName
-        return outputStream.multicast()
-      }}
+      }
     }
 
     out$.forEach(function () {
     // console.log('dom source watching dom change')
       Object.keys(storedListeners).forEach(function (queryAndEventName) {
-        const [query, eventName] = queryAndEventName.split('@@')
+        const [query] = queryAndEventName.split('@@')
         const items = getElements(query)
         if (items && items.length > 0) {
           const storedListener = storedListeners[queryAndEventName]
@@ -86,8 +85,8 @@ module.exports = function makeDomSideEffect ({targetEl}) {
     })
 
     // adding element: temporary ??
-    return {select, element: targetEl}
+    return { select, element: targetEl }
   }
 
-  return {source: domSource, sink: domSink.bind(null, targetEl)}
+  return { source: domSource, sink: domSink.bind(null, targetEl) }
 }

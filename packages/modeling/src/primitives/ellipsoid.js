@@ -21,30 +21,30 @@ const ellipsoid = (options) => {
     segments: 32,
     axes: [[1, 0, 0], [0, -1, 0], [0, 0, 1]]
   }
-  let center = [0,0,0];
-  let {radius, segments, axes} = Object.assign({}, defaults, options)
+  const center = [0, 0, 0]
+  const { radius, segments, axes } = Object.assign({}, defaults, options)
 
   if (!Array.isArray(radius)) throw new Error('radius must be an array')
   if (radius.length < 3) throw new Error('radius must contain X, Y and Z values')
 
   if (segments < 4) throw new Error('segments must be four or more')
 
-  let xvector = vec3.scale(radius[0], vec3.unit(axes[0]))
-  let yvector = vec3.scale(radius[1], vec3.unit(axes[1]))
-  let zvector = vec3.scale(radius[2], vec3.unit(axes[2]))
+  const xvector = vec3.scale(radius[0], vec3.unit(axes[0]))
+  const yvector = vec3.scale(radius[1], vec3.unit(axes[1]))
+  const zvector = vec3.scale(radius[2], vec3.unit(axes[2]))
 
-  let qsegments = Math.round(segments / 4)
+  const qsegments = Math.round(segments / 4)
   let prevcylinderpoint
-  let polygons = []
+  const polygons = []
   for (let slice1 = 0; slice1 <= segments; slice1++) {
-    let angle = Math.PI * 2.0 * slice1 / segments
-    let cylinderpoint = vec3.add(vec3.scale(Math.cos(angle), xvector), vec3.scale(Math.sin(angle), yvector))
+    const angle = Math.PI * 2.0 * slice1 / segments
+    const cylinderpoint = vec3.add(vec3.scale(Math.cos(angle), xvector), vec3.scale(Math.sin(angle), yvector))
     if (slice1 > 0) {
       let prevcospitch, prevsinpitch
       for (let slice2 = 0; slice2 <= qsegments; slice2++) {
-        let pitch = 0.5 * Math.PI * slice2 / qsegments
-        let cospitch = Math.cos(pitch)
-        let sinpitch = Math.sin(pitch)
+        const pitch = 0.5 * Math.PI * slice2 / qsegments
+        const cospitch = Math.cos(pitch)
+        const sinpitch = Math.sin(pitch)
         if (slice2 > 0) {
           let points = []
           let point
@@ -101,13 +101,13 @@ const sphere = (options) => {
     segments: 32,
     axes: [[1, 0, 0], [0, -1, 0], [0, 0, 1]]
   }
-  let {radius, segments, axes} = Object.assign({}, defaults, options)
+  let { radius, segments, axes } = Object.assign({}, defaults, options)
 
   if (!Number.isFinite(radius)) throw new Error('radius must be a number')
 
   radius = [radius, radius, radius]
 
-  return ellipsoid({radius: radius, segments: segments, axes: axes})
+  return ellipsoid({ radius: radius, segments: segments, axes: axes })
 }
 
 module.exports = {

@@ -13,4 +13,4 @@ function tryEnd (time, value, sink) {
     sink.error(time, err)
   }
 }
-module.exports = {tryEvent, tryEnd}
+module.exports = { tryEvent, tryEnd }

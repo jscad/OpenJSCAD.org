@@ -1,5 +1,5 @@
 const test = require('ava')
-const { fromScalar, toString } = require('./index')
+const { fromScalar } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
@@ -9,6 +9,4 @@ test('vec2: fromScalar() should return a new vec2 with correct values', (t) => {
 
   const obs2 = fromScalar(-5)
   t.true(compareVectors(obs2, [-5, -5]))
-
-  const str = toString(obs2)
 })

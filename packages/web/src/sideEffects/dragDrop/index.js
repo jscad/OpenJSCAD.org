@@ -14,7 +14,7 @@ function exists (input) {
 }
 
 function pseudoArraytoArray (pseudoArray) {
-  let array = []
+  const array = []
   for (var i = 0; i < pseudoArray.length; i++) {
     const item = pseudoArray[i]
     array.push(item.webkitGetAsEntry ? item.webkitGetAsEntry() : item)

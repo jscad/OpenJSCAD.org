@@ -1,4 +1,4 @@
-const makeOutput = ({sources, extras}) => {
+const makeOutput = ({ sources, extras }) => {
   return sources.state
     .filter(state => state.design && state.languages && state.viewer)
     .skipRepeatsWith(function (state, previousState) {

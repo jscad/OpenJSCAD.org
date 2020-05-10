@@ -1,4 +1,4 @@
-const {vec2} = require('../../math')
+const { vec2 } = require('../../math')
 
 const toSides = require('./toSides')
 
@@ -7,9 +7,9 @@ const toSides = require('./toSides')
  * This allows the edges to be traversed in order.
  */
 const toEdges = (sides) => {
-  let uniquevertices = []
+  const uniquevertices = []
   const getUniqueVertex = (vertex) => {
-    let i = uniquevertices.findIndex((v) => {
+    const i = uniquevertices.findIndex((v) => {
       return vec2.equals(v, vertex)
     })
     if (i < 0) {
@@ -19,7 +19,7 @@ const toEdges = (sides) => {
     return uniquevertices[i]
   }
 
-  let edges = []
+  const edges = []
   sides.forEach((side) => {
     edges.push([getUniqueVertex(side[0]), getUniqueVertex(side[1])])
   })
@@ -37,20 +37,20 @@ const toEdges = (sides) => {
  * let outlines = toOutlines(geometry) // returns two outlines
  */
 const toOutlines = (geometry) => {
-  let vertexMap = new Map()
-  let edges = toEdges(toSides(geometry))
+  const vertexMap = new Map()
+  const edges = toEdges(toSides(geometry))
   edges.forEach((edge) => {
     if (!(vertexMap.has(edge[0]))) {
       vertexMap.set(edge[0], [])
     }
-    let sideslist = vertexMap.get(edge[0])
+    const sideslist = vertexMap.get(edge[0])
     sideslist.push(edge)
   })
 
-  let outlines = []
+  const outlines = []
   while (true) {
-    let startside = undefined
-    for (let [vertex, edges] of vertexMap) {
+    let startside
+    for (const [vertex, edges] of vertexMap) {
       startside = edges.shift()
       if (!startside) {
         vertexMap.delete(vertex)
@@ -60,13 +60,13 @@ const toOutlines = (geometry) => {
     }
     if (startside === undefined) break // all starting sides have been visited
 
-    let connectedVertexPoints = []
-    let startvertex = startside[0]
+    const connectedVertexPoints = []
+    const startvertex = startside[0]
     while (true) {
       connectedVertexPoints.push(startside[0])
-      let nextvertex = startside[1]
+      const nextvertex = startside[1]
       if (nextvertex === startvertex) break // the outline has been closed
-      let nextpossiblesides = vertexMap.get(nextvertex)
+      const nextpossiblesides = vertexMap.get(nextvertex)
       if (!nextpossiblesides) {
         throw new Error('the given geometry is not closed. verify proper construction')
       }
@@ -75,11 +75,11 @@ const toOutlines = (geometry) => {
         nextsideindex = 0
       } else {
         // more than one side starting at the same vertex
-        let bestangle = undefined
-        let startangle = vec2.angleDegrees(vec2.subtract(startside[1], startside[0]))
+        let bestangle
+        const startangle = vec2.angleDegrees(vec2.subtract(startside[1], startside[0]))
         for (let sideindex = 0; sideindex < nextpossiblesides.length; sideindex++) {
-          let nextpossibleside = nextpossiblesides[sideindex]
-          let nextangle = vec2.angleDegrees(vec2.subtract(nextpossibleside[1], nextpossibleside[0]))
+          const nextpossibleside = nextpossiblesides[sideindex]
+          const nextangle = vec2.angleDegrees(vec2.subtract(nextpossibleside[1], nextpossibleside[0]))
           let angledif = nextangle - startangle
           if (angledif < -180) angledif += 360
           if (angledif >= 180) angledif -= 360
@@ -89,7 +89,7 @@ const toOutlines = (geometry) => {
           }
         }
       }
-      let nextside = nextpossiblesides[nextsideindex]
+      const nextside = nextpossiblesides[nextsideindex]
       nextpossiblesides.splice(nextsideindex, 1) // remove side from list
       if (nextpossiblesides.length === 0) {
         vertexMap.delete(nextvertex)

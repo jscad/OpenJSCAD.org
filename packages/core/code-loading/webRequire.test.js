@@ -1,13 +1,7 @@
 const test = require('ava')
-const path = require('path')
-const fs = require('fs')
 const makeWebRequire = require('./webRequire')
 const transformSources = require('./transformSources')
 const makeFakeFs = require('./makeFakeFs')
-
-function almostEquals (t, observed, expected, precision) {
-  t.is(Math.abs(expected - observed) < precision, true)
-}
 
 test.beforeEach(t => {
 })
@@ -205,7 +199,7 @@ test('webRequire: should allow using require.extensions like the native node req
 
   const mainPath = '/examples/logo.js'
   const apiMainPath = '@jscad/modeling'
-  let filesAndFolders = [
+  const filesAndFolders = [
     {
       ext: 'js',
       fullPath: '/examples/logo.js',
@@ -223,84 +217,84 @@ test('webRequire: should allow using require.extensions like the native node req
       fullPath: '/examples/cube.stl',
       name: 'cube.stl',
       source: `solid MYSOLID
-      facet normal  0.0   0.0  -1.0    
+      facet normal  0.0   0.0  -1.0
         outer loop
-          vertex    0.0   0.0   0.0    
-          vertex    1.0   1.0   0.0    
-          vertex    1.0   0.0   0.0    
+          vertex    0.0   0.0   0.0
+          vertex    1.0   1.0   0.0
+          vertex    1.0   0.0   0.0
         endloop
       endfacet
-      facet normal  0.0   0.0  -1.0    
+      facet normal  0.0   0.0  -1.0
         outer loop
-          vertex    0.0   0.0   0.0 
-          vertex    0.0   1.0   0.0    
-          vertex    1.0   1.0   0.0    
+          vertex    0.0   0.0   0.0
+          vertex    0.0   1.0   0.0
+          vertex    1.0   1.0   0.0
         endloop
       endfacet
-      facet normal -1.0   0.0   0.0    
+      facet normal -1.0   0.0   0.0
         outer loop
           vertex    0.0   0.0   0.0
           vertex    0.0   1.0   1.0
           vertex    0.0   1.0   0.0
         endloop
       endfacet
-      facet normal -1.0   0.0   0.0    
+      facet normal -1.0   0.0   0.0
         outer loop
           vertex    0.0   0.0   0.0
           vertex    0.0   0.0   1.0
           vertex    0.0   1.0   1.0
         endloop
       endfacet
-      facet normal  0.0   1.0   0.0    
+      facet normal  0.0   1.0   0.0
         outer loop
           vertex    0.0   1.0   0.0
           vertex    1.0   1.0   1.0
           vertex    1.0   1.0   0.0
         endloop
       endfacet
-      facet normal  0.0   1.0   0.0    
+      facet normal  0.0   1.0   0.0
         outer loop
           vertex    0.0   1.0   0.0
           vertex    0.0   1.0   1.0
           vertex    1.0   1.0   1.0
         endloop
       endfacet
-      facet normal  1.0   0.0   0.0    
+      facet normal  1.0   0.0   0.0
         outer loop
           vertex    1.0   0.0   0.0
           vertex    1.0   1.0   0.0
           vertex    1.0   1.0   1.0
         endloop
       endfacet
-      facet normal  1.0   0.0   0.0    
+      facet normal  1.0   0.0   0.0
         outer loop
           vertex    1.0   0.0   0.0
           vertex    1.0   1.0   1.0
           vertex    1.0   0.0   1.0
         endloop
       endfacet
-      facet normal  0.0  -1.0   0.0    
+      facet normal  0.0  -1.0   0.0
         outer loop
           vertex    0.0   0.0   0.0
           vertex    1.0   0.0   0.0
           vertex    1.0   0.0   1.0
         endloop
       endfacet
-      facet normal  0.0  -1.0   0.0    
+      facet normal  0.0  -1.0   0.0
         outer loop
           vertex    0.0   0.0   0.0
           vertex    1.0   0.0   1.0
           vertex    0.0   0.0   1.0
         endloop
       endfacet
-      facet normal  0.0   0.0   1.0    
+      facet normal  0.0   0.0   1.0
         outer loop
           vertex    0.0   0.0   1.0
           vertex    1.0   0.0   1.0
           vertex    1.0   1.0   1.0
         endloop
       endfacet
-      facet normal  0.0   0.0   1.0    
+      facet normal  0.0   0.0   1.0
         outer loop
           vertex    0.0   0.0   1.0
           vertex    1.0   1.0   1.0

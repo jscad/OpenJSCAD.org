@@ -2,7 +2,7 @@ const test = require('ava')
 
 const geom3 = require('../geometry/geom3')
 
-const {sphere} = require('./index')
+const { sphere } = require('./index')
 
 const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoints')
 
@@ -15,14 +15,14 @@ test('sphere (defaults)', t => {
 
 test('sphere (options)', t => {
   // test radius
-  let obs = sphere({radius: 5, segments: 12})
+  let obs = sphere({ radius: 5, segments: 12 })
   let pts = geom3.toPoints(obs)
-  let exp = [
-  ]
+  // let exp = []
   t.is(pts.length, 72)
+  // t.true(comparePolygonsAsPoints(pts, exp))
 
   // test segments
-  obs = sphere({segments: 8})
+  obs = sphere({ segments: 8 })
   pts = geom3.toPoints(obs)
   exp = [
     [[ 1, 0, 0 ],

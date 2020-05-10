@@ -1,25 +1,25 @@
 
 const amfMesh = (element) => {
-  let obj = { type: 'mesh' }
+  const obj = { type: 'mesh' }
   obj.objects = []
   return obj
 }
 
 // Note: TBD Vertices can have a color, which is used to interpolate a face color (from the 3 vertices)
 const amfVertices = (element) => {
-  let obj = { type: 'vertices' }
+  const obj = { type: 'vertices' }
   obj.objects = []
   return obj
 }
 
 const amfCoordinates = (element) => {
-  let obj = { type: 'coordinates' }
+  const obj = { type: 'coordinates' }
   obj.objects = []
   return obj
 }
 
 const amfNormal = (element) => {
-  let obj = { type: 'normal' }
+  const obj = { type: 'normal' }
   obj.objects = []
   return obj
 }
@@ -29,7 +29,7 @@ const amfY = (element) => ({ type: 'y', value: '0' })
 const amfZ = (element) => ({ type: 'z', value: '0' })
 
 const amfVolume = (element) => {
-  let obj = { type: 'volume' }
+  const obj = { type: 'volume' }
 
   if ('MATERIALID' in element) { obj.materialid = element.MATERIALID }
 
@@ -38,7 +38,7 @@ const amfVolume = (element) => {
 }
 
 const amfTriangle = (element) => {
-  let obj = { type: 'triangle' }
+  const obj = { type: 'triangle' }
   obj.objects = []
   return obj
 }
@@ -48,20 +48,20 @@ const amfV2 = (element) => ({ type: 'v2', value: '0' })
 const amfV3 = (element) => ({ type: 'v3', value: '0' })
 
 const amfVertex = (element) => {
-  let obj = { type: 'vertex' }
+  const obj = { type: 'vertex' }
   obj.objects = []
   return obj
 }
 
 const amfEdge = (element) => {
-  let obj = { type: 'edge' }
+  const obj = { type: 'edge' }
 
   obj.objects = []
   return obj
 }
 
 const amfMetadata = (element) => {
-  let obj = { type: 'metadata' }
+  const obj = { type: 'metadata' }
 
   if ('TYPE' in element) { obj.mtype = element.TYPE }
   if ('ID' in element) { obj.id = element.ID }
@@ -70,7 +70,7 @@ const amfMetadata = (element) => {
 }
 
 const amfMaterial = (element) => {
-  let obj = { type: 'material' }
+  const obj = { type: 'material' }
 
   if ('ID' in element) { obj.id = element.ID }
 
@@ -79,7 +79,7 @@ const amfMaterial = (element) => {
 }
 
 const amfColor = (element) => {
-  let obj = { type: 'color' }
+  const obj = { type: 'color' }
 
   obj.objects = []
   return obj
@@ -91,7 +91,7 @@ const amfB = (element) => ({ type: 'b', value: '1' })
 const amfA = (element) => ({ type: 'a', value: '1' })
 
 const amfMap = (element) => {
-  let obj = { type: 'map' }
+  const obj = { type: 'map' }
 
   if ('GTEXID' in element) { obj.gtexid = element.GTEXID }
   if ('BTEXID' in element) { obj.btexid = element.BTEXID }

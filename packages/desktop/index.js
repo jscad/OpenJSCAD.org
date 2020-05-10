@@ -82,11 +82,11 @@ electron.ipcMain.on('get-file-data', function (event) {
     data = openFilePath
   }
   console.log('here', data, event, process.argv)
-  event.sender.send('asynchronous-reply', {data, event, args: process.argv})
+  event.sender.send('asynchronous-reply', { data, event, args: process.argv })
   event.returnValue = data
 })
 
 electron.ipcMain.on('asynchronous-message', (event, arg) => {
-  console.log(arg)  // prints "ping"
+  console.log(arg) // prints "ping"
   event.sender.send('asynchronous-reply', 'pong')
 })

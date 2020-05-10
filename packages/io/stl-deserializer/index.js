@@ -61,7 +61,7 @@ const deserialize = (options, stl) => {
 const bufferToBinaryString = (buffer) => {
   let binary = ''
   const bytes = new Uint8Array(buffer)
-  let length = bytes.byteLength
+  const length = bytes.byteLength
   for (let i = 0; i < length; i++) {
     binary += String.fromCharCode(bytes[i])
   }
@@ -76,7 +76,7 @@ const isBuffer = (obj) => {
 // transforms input to string if it was not already the case
 const ensureString = (buf) => {
   if (typeof buf !== 'string') {
-    let arrayBuffer = new Uint8Array(buf)
+    const arrayBuffer = new Uint8Array(buf)
     let str = ''
     for (let i = 0; i < buf.byteLength; i++) {
       str += String.fromCharCode(arrayBuffer[i]) // implicitly assumes little-endian
@@ -107,7 +107,7 @@ const formatAsJscad = (data, addMetaData, version, filename) => {
   //
   `
   }
-  code += `const {primitives} = require('@jscad/modeling')\n`
+  code += 'const {primitives} = require(\'@jscad/modeling\')\n'
   code += data.join('\n')
   code += `
 const main = () => {
@@ -126,18 +126,18 @@ const formatAsCsg = (data) => data
  */
 const deserializeBinarySTL = (stl, filename, version, elementFormatter) => {
   // console.log('***** deserializeBinary: ', stl.length)
-  let vertices = []
-  let triangles = []
-  let normals = []
-  let colors = []
+  const vertices = []
+  const triangles = []
+  const normals = []
+  const colors = []
   let vertexIndex = 0
   let err = 0
   let mcolor = null
-  let umask = parseInt('01000000000000000', 2)
-  let rmask = parseInt('00000000000011111', 2)
-  let gmask = parseInt('00000001111100000', 2)
-  let bmask = parseInt('00111110000000000', 2)
-  let br = new BinaryReader(stl)
+  const umask = parseInt('01000000000000000', 2)
+  const rmask = parseInt('00000000000011111', 2)
+  const gmask = parseInt('00000001111100000', 2)
+  const bmask = parseInt('00111110000000000', 2)
+  const br = new BinaryReader(stl)
 
   let m = 0
   let c = 0
@@ -183,7 +183,7 @@ const deserializeBinarySTL = (stl, filename, version, elementFormatter) => {
     mcolor = [r / 255, g / 255, b / 255, a / 255]
   }
 
-  let totalTriangles = br.readUInt32() // Read # triangles
+  const totalTriangles = br.readUInt32() // Read # triangles
 
   for (let tr = 0; tr < totalTriangles; tr++) {
     /*
@@ -193,11 +193,11 @@ const deserializeBinarySTL = (stl, filename, version, elementFormatter) => {
       REAL32[3] . Vertex 3
       UINT16 . Attribute byte count */
     // -- Parse normal
-    let no = []; no.push(br.readFloat()); no.push(br.readFloat()); no.push(br.readFloat())
+    const no = []; no.push(br.readFloat()); no.push(br.readFloat()); no.push(br.readFloat())
 
     // -- Parse every 3 subsequent floats as a vertex
     let v1 = []; v1.push(br.readFloat()); v1.push(br.readFloat()); v1.push(br.readFloat())
-    let v2 = []; v2.push(br.readFloat()); v2.push(br.readFloat()); v2.push(br.readFloat())
+    const v2 = []; v2.push(br.readFloat()); v2.push(br.readFloat()); v2.push(br.readFloat())
     let v3 = []; v3.push(br.readFloat()); v3.push(br.readFloat()); v3.push(br.readFloat())
 
     let skip = 0
@@ -214,16 +214,16 @@ const deserializeBinarySTL = (stl, filename, version, elementFormatter) => {
 
     err += skip
     // -- every 3 vertices create a triangle.
-    let triangle = []; triangle.push(vertexIndex++); triangle.push(vertexIndex++); triangle.push(vertexIndex++)
+    const triangle = []; triangle.push(vertexIndex++); triangle.push(vertexIndex++); triangle.push(vertexIndex++)
 
-    let abc = br.readUInt16()
+    const abc = br.readUInt16()
     let color = null
     if (m === 10) {
-      let u = (abc & umask) // 0 if color is unique for this triangle
-      let r = (abc & rmask) / 31
-      let g = ((abc & gmask) >>> 5) / 31
-      let b = ((abc & bmask) >>> 10) / 31
-      let a = 255
+      const u = (abc & umask) // 0 if color is unique for this triangle
+      const r = (abc & rmask) / 31
+      const g = ((abc & gmask) >>> 5) / 31
+      const b = ((abc & bmask) >>> 10) / 31
+      const a = 255
       if (u === 0) {
         color = [r, g, b, a]
       } else {
@@ -239,12 +239,12 @@ const deserializeBinarySTL = (stl, filename, version, elementFormatter) => {
       // E2 = C - A
       // test = dot( Normal, cross( E1, E2 ) )
       // test > 0: cw, test < 0 : ccw
-      let e1 = math.vec3.subtract(v2, v1)
-      let e2 = math.vec3.subtract(v3, v1)
-      let cr = math.vec3.cross(e1, e2)
-      let t = math.vec3.dot(no, cr)
+      const e1 = math.vec3.subtract(v2, v1)
+      const e2 = math.vec3.subtract(v3, v1)
+      const cr = math.vec3.cross(e1, e2)
+      const t = math.vec3.dot(no, cr)
       if (t > 0) { // 1,2,3 -> 3,2,1
-        let tmp = v3
+        const tmp = v3
         v3 = v1
         v1 = tmp
       }
@@ -270,23 +270,23 @@ const deserializeAsciiSTL = (stl, filename, version, elementFormatter) => {
 
   // -- Find all models
   const objects = stl.split('endsolid')
-  let elements = []
+  const elements = []
   for (let o = 1; o < objects.length; o++) {
     // -- Translation: a non-greedy regex for facet {...} endloop pattern
-    let patt = /\bfacet[\s\S]*?endloop/mgi
-    let vertices = []
-    let triangles = []
-    let normals = []
-    let colors = []
+    const patt = /\bfacet[\s\S]*?endloop/mgi
+    const vertices = []
+    const triangles = []
+    const normals = []
+    const colors = []
     let vertexIndex = 0
     let err = 0
 
-    let match = stl.match(patt)
+    const match = stl.match(patt)
     if (match == null) continue
     for (let i = 0; i < match.length; i++) {
       // -- 1 normal with 3 numbers, 3 different vertex objects each with 3 numbers:
-      let vpatt = /\bfacet\s+normal\s+(\S+)\s+(\S+)\s+(\S+)\s+outer\s+loop\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s*/mgi
-      let v = vpatt.exec(match[i])
+      const vpatt = /\bfacet\s+normal\s+(\S+)\s+(\S+)\s+(\S+)\s+outer\s+loop\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s+vertex\s+(\S+)\s+(\S+)\s+(\S+)\s*/mgi
+      const v = vpatt.exec(match[i])
       if (v == null) continue
       if (v.length !== 13) {
         console.log('Failed to parse ' + match[i])
@@ -305,11 +305,11 @@ const deserializeAsciiSTL = (stl, filename, version, elementFormatter) => {
       }
 
       let j = 1
-      let no = []; no.push(parseFloat(v[j++])); no.push(parseFloat(v[j++])); no.push(parseFloat(v[j++]))
+      const no = []; no.push(parseFloat(v[j++])); no.push(parseFloat(v[j++])); no.push(parseFloat(v[j++]))
       let v1 = []; v1.push(parseFloat(v[j++])); v1.push(parseFloat(v[j++])); v1.push(parseFloat(v[j++]))
-      let v2 = []; v2.push(parseFloat(v[j++])); v2.push(parseFloat(v[j++])); v2.push(parseFloat(v[j++]))
+      const v2 = []; v2.push(parseFloat(v[j++])); v2.push(parseFloat(v[j++])); v2.push(parseFloat(v[j++]))
       let v3 = []; v3.push(parseFloat(v[j++])); v3.push(parseFloat(v[j++])); v3.push(parseFloat(v[j++]))
-      let triangle = []; triangle.push(vertexIndex++); triangle.push(vertexIndex++); triangle.push(vertexIndex++)
+      const triangle = []; triangle.push(vertexIndex++); triangle.push(vertexIndex++); triangle.push(vertexIndex++)
 
       // -- Add 3 vertices for every triangle
       // TODO: OPTIMIZE: Check if the vertex is already in the array, if it is just reuse the index
@@ -319,12 +319,12 @@ const deserializeAsciiSTL = (stl, filename, version, elementFormatter) => {
         // E2 = C - A
         // test = dot( Normal, cross( E1, E2 ) )
         // test > 0: cw, test < 0: ccw
-        let e1 = math.vec3.subtract(v2, v1)
-        let e2 = math.vec3.subtract(v3, v1)
-        let cr = math.vec3.cross(e1, e2)
-        let t = math.vec3.dot(no, cr)
+        const e1 = math.vec3.subtract(v2, v1)
+        const e2 = math.vec3.subtract(v3, v1)
+        const cr = math.vec3.cross(e1, e2)
+        const t = math.vec3.dot(no, cr)
         if (t > 0) { // 1,2,3 -> 3,2,1
-          let tmp = v3
+          const tmp = v3
           v3 = v1
           v1 = tmp
         }
@@ -376,28 +376,28 @@ const toScript = (points, faces, normals, colors, index) => {
 const solid${index} = () => {
 `
 
-  src += `  const points = [\n`
+  src += '  const points = [\n'
   for (let i = 0; i < points.length; i++) {
     src += `    [${points[i]}],\n`
   }
   src += '  ]\n'
 
-  src += `  const faces = [\n`
+  src += '  const faces = [\n'
   for (let i = 0; i < faces.length; i++) {
     src += `    [${faces[i]}],\n`
   }
   src += '  ]\n'
 
   if (colors && faces.length === colors.length) {
-    src += `  const colors = [\n`
+    src += '  const colors = [\n'
     for (let i = 0; i < colors.length; i++) {
       src += `    [${colors[i]}],\n`
     }
     src += '  ]\n'
   } else {
-    src += `  const colors = null\n`
+    src += '  const colors = null\n'
   }
-  src += `  return primitives.polyhedron({points, faces, colors, orientation: 'inside'})\n}\n`
+  src += '  return primitives.polyhedron({points, faces, colors, orientation: \'inside\'})\n}\n'
   return src
 }
 

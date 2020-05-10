@@ -3,7 +3,7 @@ const mat4 = require('gl-mat4')
 // const path = require('path')
 
 const makeDrawGrid = (regl, params = {}) => {
-  let positions = []
+  const positions = []
   const defaults = {
     visuals: {
       color: [1, 1, 1, 1],
@@ -16,18 +16,18 @@ const makeDrawGrid = (regl, params = {}) => {
   }
   const visuals = Object.assign({}, defaults.visuals, params.visuals || {})
   const { fadeOut, color } = visuals
-  let { size, ticks, centered, lineWidth } = Object.assign({}, defaults, params)
+  const { size, ticks, centered, lineWidth } = Object.assign({}, defaults, params)
 
   const width = size[0]
   const length = size[1]
 
-  if (false) {
-    const halfWidth = width * 0.5
-    const halfLength = length * 0.5
-    // const gridLine =
-    positions.push(-halfWidth, 0, 0)
-    positions.push(halfWidth, 0, 0)
-  }
+  // if (false) {
+  //   const halfWidth = width * 0.5
+  //   const halfLength = length * 0.5
+  //   // const gridLine =
+  //   positions.push(-halfWidth, 0, 0)
+  //   positions.push(halfWidth, 0, 0)
+  // }
 
   if (centered) {
     const halfWidth = width * 0.5
@@ -38,7 +38,7 @@ const makeDrawGrid = (regl, params = {}) => {
     const widthEnd = -widthStart
 
     const remLength = halfLength % ticks
-    let lengthStart = -halfLength + remLength
+    const lengthStart = -halfLength + remLength
     const lengthEnd = -lengthStart
 
     const skipEvery = 0
@@ -75,13 +75,13 @@ const makeDrawGrid = (regl, params = {}) => {
 
     uniform float camNear, camFar;
     uniform mat4 model, view, projection;
-    
+
     attribute vec3 position;
     varying vec3 fragNormal, fragPosition;
     varying vec4 worldPosition;
-    
+
     //#pragma glslify: zBufferAdjust = require('./zBufferAdjust')
-    
+
     void main() {
       //fragNormal = normal;
       fragPosition = position;
@@ -94,7 +94,7 @@ const makeDrawGrid = (regl, params = {}) => {
     uniform vec4 color;
     varying vec3 fragNormal, fragPosition;
     varying vec4 worldPosition;
-    
+
     uniform vec4 fogColor;
     uniform bool fadeOut;
     void main() {
@@ -105,7 +105,7 @@ const makeDrawGrid = (regl, params = {}) => {
         dist = sqrt(dist);
         //dist = clamp(dist, 0.0, 1.0);
       }
-    
+
       gl_FragColor = mix(color, fogColor, dist);
     }
     `, // glslify(path.join(__dirname, '/shaders/grid.frag')),

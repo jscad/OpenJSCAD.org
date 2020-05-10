@@ -45,9 +45,9 @@ const update = (output, camera) => {
     camera = output
   }
   const { position, target, up } = camera
-  let offset = vec3.subtract([], position, target)
-  let newPosition = vec3.add(vec3.create(), target, offset)
-  let newView = mat4.lookAt(mat4.create(), newPosition, target, up)
+  const offset = vec3.subtract([], position, target)
+  const newPosition = vec3.add(vec3.create(), target, offset)
+  const newView = mat4.lookAt(mat4.create(), newPosition, target, up)
 
   // optional mutation
   const out = output || {}

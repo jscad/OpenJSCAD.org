@@ -9,7 +9,7 @@ const availableExportFormatsFromSolids = (solids) => {
     .map(function (formatName) {
       return { name: formatName, displayName: formats[formatName].displayName }
     })
-  let exportFormat = head(availableExportFormats) ? head(availableExportFormats).name : undefined
+  const exportFormat = head(availableExportFormats) ? head(availableExportFormats).name : undefined
   return { exportFormat, availableExportFormats }
 }
 

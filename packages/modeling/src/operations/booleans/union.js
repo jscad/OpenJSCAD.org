@@ -36,7 +36,7 @@ const union = (...geometries) => {
     throw new Error('only unions of the same type are supported')
   }
 
-  let geometry = geometries[0]
+  const geometry = geometries[0]
   // if (path.isA(geometry)) return pathunion(matrix, geometries)
   if (geom2.isA(geometry)) return unionGeom2(geometries)
   if (geom3.isA(geometry)) return unionGeom3(geometries)

@@ -9,7 +9,7 @@ const create = require('./create')
  * @alias module:modeling/math/vec4.clone
  */
 const clone = (...params) => {
-  let out
+  let out, vec
   if (params.length === 1) {
     out = create()
     vec = params[0]

@@ -9,7 +9,7 @@ const create = require('../vec4/create')
  * @alias module:modeling/math/plane.flip
  */
 const flip = (...params) => {
-  let out
+  let out, vec
   if (params.length === 1) {
     out = create()
     vec = params[0]

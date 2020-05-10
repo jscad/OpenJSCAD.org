@@ -1,12 +1,12 @@
 // const {pointerGestures} = require('most-gestures')
 const most = require('most')
-const {proxy} = require('most-proxy')
-const {holdSubject} = require('../../../core/observable-utils/most-subject/index')
+const { proxy } = require('most-proxy')
+const { holdSubject } = require('../../../core/observable-utils/most-subject/index')
 // require('most-subject')github:briancavalier/most-subject : issues with webpack hence the above
 const makeCameraControlsActions = require('./cameraControlsActions')
 const makeDataParamsActions = require('./dataParamsActions')
 const makeState = require('./state')
-const {merge} = require('./utils')
+const { merge } = require('./utils')
 const prepareRender = require('./rendering/render')
 
 const cameraDefaults = require('./cameraAndControls/perspectiveCamera').defaults
@@ -15,7 +15,7 @@ const controlsDefaults = require('./cameraAndControls/orbitControls').defaults
 // FIXME : element needs to be either canvas, other htmlelement or gl context
 const makeCsgViewer = function (element, options = {}, inputs$ = most.never()) {
   const defaults = {
-    glOptions: {// all lower level regl options passed directly through, webgl ones are under attributes
+    glOptions: { // all lower level regl options passed directly through, webgl ones are under attributes
       attributes: {
         alpha: false
       }
@@ -62,7 +62,7 @@ const makeCsgViewer = function (element, options = {}, inputs$ = most.never()) {
 
     useGestures: true // toggle if you want to use external inputs to control camera etc
   }
-  let state = merge({}, defaults, options)
+  const state = merge({}, defaults, options)
 
   // we use an observable of parameters, date etc to play nicely with the other observables
   // note: subjects are anti patterns, but they simplify things here so ok for now
@@ -78,7 +78,7 @@ const makeCsgViewer = function (element, options = {}, inputs$ = most.never()) {
       canvas: (element.nodeName.toLowerCase() === 'canvas') ? element : undefined,
       container: (element.nodeName.toLowerCase() !== 'canvas') ? element : undefined
     },
-   state.glOptions,
+    state.glOptions,
     {
       onDone: function (err, callback) {
         if (err) {
@@ -102,7 +102,7 @@ const makeCsgViewer = function (element, options = {}, inputs$ = most.never()) {
     state$, // thanks to proxying, we also have access to the state observable/stream inside our actions
     // inputs$: inputs$.filter(x => x !== undefined), // custom user inputs
     // live ui elements only
-    gestures: state.useGestures ? require('most-gestures').pointerGestures(element) : {drags: most.never(), zooms: most.never(), taps: most.never()},
+    gestures: state.useGestures ? require('most-gestures').pointerGestures(element) : { drags: most.never(), zooms: most.never(), taps: most.never() },
     resizes$: state.useGestures ? require('../../../utils/regl-renderer/src/controls/elementSizing')(element) : most.never(),
     heartBeat$: require('../../../core/observable-utils/rafStream').rafStream() // state.useGestures ? require('./observable-utils/rafStream').rafStream() : most.never() // heartbeat provided by requestAnimationFrame
   }
@@ -118,10 +118,10 @@ const makeCsgViewer = function (element, options = {}, inputs$ = most.never()) {
   // skipRepeatsWith
   // re-render whenever state changes, since visuals are a function of the state
   state$
-    /*.skipRepeatsWith(function (state, previousState) {
+    /* .skipRepeatsWith(function (state, previousState) {
       const sameViewerParams = JSON.stringify(state) === JSON.stringify(previousState)
       return sameViewerParams
-    })*/
+    }) */
     .forEach(state => {
       state.render(state)
     })
@@ -137,7 +137,7 @@ const makeCsgViewer = function (element, options = {}, inputs$ = most.never()) {
     data$.next(data)
     params$.next(params)
   }
-  return {csgViewer, viewerDefaults: defaults, viewerState$: state$}
+  return { csgViewer, viewerDefaults: defaults, viewerState$: state$ }
 }
 
 module.exports = makeCsgViewer

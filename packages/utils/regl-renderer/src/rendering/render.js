@@ -25,7 +25,7 @@ const prepareRender = (params) => {
   const drawCache = {}
 
   // create the main draw command
-  let command = props => {
+  const command = props => {
     // console.log('params in render', props)
     props.rendering = Object.assign({}, renderDefaults, props.rendering)
 

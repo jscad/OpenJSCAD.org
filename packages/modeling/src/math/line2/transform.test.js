@@ -59,9 +59,9 @@ test('line2: transform() called with two paramerters should return a line2 with 
   const r = (90 * 0.017453292519943295)
   const rotateZMatrix = [
     Math.cos(r), Math.sin(r), 0, 0,
-   -Math.sin(r), Math.cos(r), 0, 0,
-              0,            0, 1, 0,
-              0,            0, 0, 1
+    -Math.sin(r), Math.cos(r), 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1
   ]
 
   let obs4 = transform(rotateZMatrix, line1)
@@ -140,9 +140,9 @@ test('line2: transform() called with three paramerters should update a line2 wit
   const r = (90 * 0.017453292519943295)
   const rotateZMatrix = [
     Math.cos(r), Math.sin(r), 0, 0,
-   -Math.sin(r), Math.cos(r), 0, 0,
-              0,            0, 1, 0,
-              0,            0, 0, 1
+    -Math.sin(r), Math.cos(r), 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1
   ]
 
   const obs4 = create()

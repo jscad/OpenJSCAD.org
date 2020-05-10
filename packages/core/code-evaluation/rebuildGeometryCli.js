@@ -43,7 +43,7 @@ const rebuildSolids = (data) => {
   // now we can get our usefull data (definitions and values/defaults)
   const parameters = getAllParameterDefintionsAndValues(rootModule, parameterValues)
 
-  let rawResults = toArray(rootModule.main(parameters.parameterValues))
+  const rawResults = toArray(rootModule.main(parameters.parameterValues))
   return rawResults
 }
 

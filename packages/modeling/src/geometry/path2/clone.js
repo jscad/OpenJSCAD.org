@@ -10,7 +10,7 @@ const create = require('./create')
  * @alias module:modeling/geometry/path2.clone
  */
 const clone = (geometry) => {
-  let out = create()
+  const out = create()
   out.points = geometry.points.map((point) => vec2.clone(point))
   out.isClosed = geometry.isClosed
   out.transforms = mat4.clone(geometry.transforms)

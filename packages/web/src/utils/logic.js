@@ -1,6 +1,5 @@
 const most = require('most')
 const withLatestFrom = require('@jscad/core/observable-utils/withLatestFrom')
-const holdUntil = require('@jscad/core/observable-utils/holdUntil')
 
 const capitalize = string => string.charAt(0).toUpperCase().concat(string.slice(1).toLowerCase())
 
@@ -14,11 +13,11 @@ const makeStorageIOStream = (name, sources, reducers) => {
   // setup default 'empty' state
   const initialize$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
-    .map(payload => Object.assign({}, {type: `initialize${capitalize(name)}`, sink: 'state'}, {state: payload}))
+    .map(payload => Object.assign({}, { type: `initialize${capitalize(name)}`, sink: 'state' }, { state: payload }))
 
   // we wait until the data here has been initialized before loading the serialized settings
   const requestLoadSettings$ = initialize$
-    .map(_ => ({sink: 'store', key: name, type: 'read'}))
+    .map(_ => ({ sink: 'store', key: name, type: 'read' }))
 
   // this 'fires' if we recieved back our settings from storage
   const recievedSettings$ = sources.store.filter(reply => reply.key === name && reply.type === 'read')
@@ -31,8 +30,8 @@ const makeStorageIOStream = (name, sources, reducers) => {
     .map(state => state.name)
     .thru(recievedSettings$)
     .map(reducers.requestSaveSettings)
-    .map(data => Object.assign({}, {data}, {sink: 'store', key: name, type: 'write'}))
+    .map(data => Object.assign({}, { data }, { sink: 'store', key: name, type: 'write' }))
     .multicast()
 
-  return {requestSaveSettings$, requestLoadSettings$}
+  return { requestSaveSettings$, requestLoadSettings$ }
 }

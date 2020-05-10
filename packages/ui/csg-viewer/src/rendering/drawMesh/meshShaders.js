@@ -51,4 +51,4 @@ void main() {
 }
 `
 
-module.exports = {vert: meshVert, frag: meshFrag}
+module.exports = { vert: meshVert, frag: meshFrag }

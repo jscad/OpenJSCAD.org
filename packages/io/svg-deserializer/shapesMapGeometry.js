@@ -1,7 +1,7 @@
 const { geometry, primitives, transforms } = require('@jscad/modeling')
 
-const { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect, groupValue } = require('./helpers')
-const { cssPxUnit } = require('./constants')
+const { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect } = require('./helpers')
+// const { cssPxUnit } = require('./constants')
 
 const shapesMapGeometry = (obj, objectify, params) => {
   const { svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, target } = params
@@ -69,15 +69,15 @@ const shapesMapGeometry = (obj, objectify, params) => {
       const y1 = (0 - cagLengthY(obj.y1, svgUnitsPmm, svgUnitsY))
       const x2 = cagLengthX(obj.x2, svgUnitsPmm, svgUnitsX)
       const y2 = (0 - cagLengthY(obj.y2, svgUnitsPmm, svgUnitsY))
-      let r = cssPxUnit // default
-      if ('strokeWidth' in obj) {
-        r = cagLengthP(obj.strokeWidth, svgUnitsPmm, svgUnitsV) / 2
-      } else {
-        const v = groupValue(svgGroups, 'strokeWidth')
-        if (v !== null) {
-          r = cagLengthP(v, svgUnitsPmm, svgUnitsV) / 2
-        }
-      }
+      // let r = cssPxUnit // default
+      // if ('strokeWidth' in obj) {
+      //   r = cagLengthP(obj.strokeWidth, svgUnitsPmm, svgUnitsV) / 2
+      // } else {
+      //   const v = groupValue(svgGroups, 'strokeWidth')
+      //   if (v !== null) {
+      //     r = cagLengthP(v, svgUnitsPmm, svgUnitsV) / 2
+      //   }
+      // }
 
       const shape = primitives.line([[x1, y1], [x2, y2]])
       if (target === 'geom2') {
@@ -104,15 +104,15 @@ const shapesMapGeometry = (obj, objectify, params) => {
 
     polyline: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV) => {
       const points = []
-      let r = cssPxUnit // default
-      if ('strokeWidth' in obj) {
-        r = cagLengthP(obj.strokeWidth, svgUnitsPmm, svgUnitsV) / 2
-      } else {
-        const v = groupValue(svgGroups, 'strokeWidth')
-        if (v !== null) {
-          r = cagLengthP(v, svgUnitsPmm, svgUnitsV) / 2
-        }
-      }
+      // let r = cssPxUnit // default
+      // if ('strokeWidth' in obj) {
+      //   r = cagLengthP(obj.strokeWidth, svgUnitsPmm, svgUnitsV) / 2
+      // } else {
+      //   const v = groupValue(svgGroups, 'strokeWidth')
+      //   if (v !== null) {
+      //     r = cagLengthP(v, svgUnitsPmm, svgUnitsV) / 2
+      //   }
+      // }
       for (let j = 0; j < obj.points.length; j++) {
         const p = obj.points[j]
         if ('x' in p && 'y' in p) {
@@ -137,10 +137,10 @@ const shapesMapGeometry = (obj, objectify, params) => {
       const listofentries = Object.entries(listofpaths).sort((a, b) => a[0].localeCompare(b[0]))
       if (target === 'geom2') {
         // convert each path to geometry
-        for (const [key, path] of listofentries) {
-          // TODO this needs to be implemented once extrude is available
-          // if closed then create a 2D geometry
-        }
+        // for (const [key, path] of listofentries) {
+        // TODO this needs to be implemented once extrude is available
+        // if closed then create a 2D geometry
+        // }
       }
       if (target === 'path') {
         shapes = listofentries.map((entry) => entry[1])
@@ -161,15 +161,15 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
   const paths = {}
   const on = 'path'
 
-  let r = cssPxUnit // default
-  if ('strokeWidth' in obj) {
-    r = cagLengthP(obj.strokeWidth, svgUnitsPmm, svgUnitsV) / 2
-  } else {
-    const v = groupValue(svgGroups, 'strokeWidth')
-    if (v !== null) {
-      r = cagLengthP(v, svgUnitsPmm, svgUnitsV) / 2
-    }
-  }
+  // let r = cssPxUnit // default
+  // if ('strokeWidth' in obj) {
+  //   r = cagLengthP(obj.strokeWidth, svgUnitsPmm, svgUnitsV) / 2
+  // } else {
+  //   const v = groupValue(svgGroups, 'strokeWidth')
+  //   if (v !== null) {
+  //     r = cagLengthP(v, svgUnitsPmm, svgUnitsV) / 2
+  //   }
+  // }
   // Note: All values are SVG values
   let sx = 0 // starting position
   let sy = 0
@@ -400,8 +400,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
         break
       case 'z': // close current line
       case 'Z':
-        const closedpath = geometry.path2.close(paths[pathName])
-        paths[pathName] = closedpath
+        paths[pathName] = geometry.path2.close(paths[pathName])
         cx = sx
         cy = sy // return to the starting point
         pc = true

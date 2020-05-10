@@ -1,4 +1,4 @@
-const {EPS} = require('../../math/constants')
+const { EPS } = require('../../math/constants')
 
 const vec2 = require('../../math/vec2')
 
@@ -19,17 +19,17 @@ const create = require('./create')
  * my newpath = fromPoints({closed: true}, [[10, 10], [-10, 10]])
  */
 const fromPoints = (options, points) => {
-  const defaults = {closed: false}
-  let {closed} = Object.assign({}, defaults, options)
+  const defaults = { closed: false }
+  let { closed } = Object.assign({}, defaults, options)
 
   let created = create()
   created.points = points.map((point) => vec2.fromArray(point))
 
   // check if first and last points are equal
   if (created.points.length > 1) {
-    let p0 = created.points[0]
-    let pn = created.points[created.points.length - 1]
-    if (vec2.distance(p0, pn) < (EPS*EPS)) {
+    const p0 = created.points[0]
+    const pn = created.points[created.points.length - 1]
+    if (vec2.distance(p0, pn) < (EPS * EPS)) {
       // and close automatically
       closed = true
     }
@@ -38,6 +38,5 @@ const fromPoints = (options, points) => {
 
   return created
 }
-
 
 module.exports = fromPoints

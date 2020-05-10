@@ -17,7 +17,7 @@ const fromSides = (sides) => {
   if (!Array.isArray(sides)) throw new Error('the given sides must be an array')
 
   // create a list of edges from the sides
-  let edges = []
+  const edges = []
   sides.forEach((side) => {
     edges.push([vec3.fromVec2(side[0]), vec3.fromVec2(side[1])])
   })

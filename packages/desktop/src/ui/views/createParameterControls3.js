@@ -2,10 +2,10 @@
 const html = require('bel')
 
 const createParamControls = (prevParamValues = {}, paramDefinitions, rebuildSolid) => {
-  let paramControls = []
+  const paramControls = []
 
   const controls = paramDefinitions.map(function (paramDefinition) {
-    let type = paramDefinition.type.toLowerCase()
+    const type = paramDefinition.type.toLowerCase()
     let subControls
     // console.log('type', type)
     switch (type) {
@@ -37,7 +37,7 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, rebuildSoli
     } else {
       subControls.forEach(control => {
         control.onchange = function (e) {
-          let l = e.currentTarget.nextElementSibling
+          const l = e.currentTarget.nextElementSibling
           if (l !== null && l.nodeName === 'LABEL') {
             l.innerHTML = e.currentTarget.value
           }
@@ -56,13 +56,13 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, rebuildSoli
     </tr>`
   })
 
-  return {controls}
+  return { controls }
 }
 
 const createGroupControl = definition => {
   const text = definition.caption ? definition.caption : definition.name
   const className = definition.caption ? 'caption' : ''
-  let control = html`<title class=${className}>${text}</title>`
+  const control = html`<title class=${className}>${text}</title>`
   control.paramName = definition.name
   control.paramType = definition.type
   return [control]
@@ -85,7 +85,7 @@ const createChoiceControl = (definition, prevValue) => {
     if (prevValue !== undefined) {
       selected = (prevValue === value)
     } else if ('default' in definition) {
-      selected = (definition['default'] === value)
+      selected = (definition.default === value)
     } else if ('initial' in definition) {
       selected = (definition.initial === value)
     }
@@ -94,7 +94,7 @@ const createChoiceControl = (definition, prevValue) => {
     </option>`
   })
 
-  let control = html`<select>
+  const control = html`<select>
     ${options}
   </select`
   control.paramName = definition.name
@@ -120,7 +120,7 @@ const createRadioControl = (definition, prevValue) => {
     if (prevValue !== undefined) {
       selected = (prevValue === value)
     } else if ('default' in definition) {
-      selected = (definition['default'] === value)
+      selected = (definition.default === value)
     } else if ('initial' in definition) {
       selected = (definition.initial === value)
     }
@@ -141,18 +141,18 @@ const createRadioControl = (definition, prevValue) => {
 
 const createControl = (definition, prevValue) => {
   const controlList = [
-    {type: 'text', control: 'text', required: ['type', 'name'], initial: ''},
-    {type: 'int', control: 'number', required: ['type', 'name'], initial: 0},
-    {type: 'float', control: 'number', required: ['type', 'name'], initial: 0.0},
-    {type: 'number', control: 'number', required: ['type', 'name'], initial: 0.0},
-    {type: 'checkbox', control: 'checkbox', required: ['type', 'name', 'checked'], initial: ''},
-    {type: 'radio', control: 'radio', required: ['type', 'name', 'checked'], initial: ''},
-    {type: 'color', control: 'color', required: ['type', 'name'], initial: '#000000'},
-    {type: 'date', control: 'date', required: ['type', 'name'], initial: ''},
-    {type: 'email', control: 'email', required: ['type', 'name'], initial: ''},
-    {type: 'password', control: 'password', required: ['type', 'name'], initial: ''},
-    {type: 'url', control: 'url', required: ['type', 'name'], initial: ''},
-    {type: 'slider', control: 'range', required: ['type', 'name', 'min', 'max'], initial: 0, label: true}
+    { type: 'text', control: 'text', required: ['type', 'name'], initial: '' },
+    { type: 'int', control: 'number', required: ['type', 'name'], initial: 0 },
+    { type: 'float', control: 'number', required: ['type', 'name'], initial: 0.0 },
+    { type: 'number', control: 'number', required: ['type', 'name'], initial: 0.0 },
+    { type: 'checkbox', control: 'checkbox', required: ['type', 'name', 'checked'], initial: '' },
+    { type: 'radio', control: 'radio', required: ['type', 'name', 'checked'], initial: '' },
+    { type: 'color', control: 'color', required: ['type', 'name'], initial: '#000000' },
+    { type: 'date', control: 'date', required: ['type', 'name'], initial: '' },
+    { type: 'email', control: 'email', required: ['type', 'name'], initial: '' },
+    { type: 'password', control: 'password', required: ['type', 'name'], initial: '' },
+    { type: 'url', control: 'url', required: ['type', 'name'], initial: '' },
+    { type: 'slider', control: 'range', required: ['type', 'name', 'min', 'max'], initial: 0, label: true }
   ]
   // check for required parameters
   if (!('type' in definition)) {
@@ -183,16 +183,16 @@ const createControl = (definition, prevValue) => {
   } else {
     controlValue = typeData.initial
   }
-  let control = html`<input 
-    type=${typeData.control} value=${controlValue} checked=${'checked' in definition ? controlValue : ''}> 
+  let control = html`<input
+    type=${typeData.control} value=${controlValue} checked=${'checked' in definition ? controlValue : ''}>
   </input>`
 
   // set name and type (used later for obtaining values)
   control.paramName = definition.name
   control.paramType = definition.type
   // set generic HTML attributes
-  for (let property in definition) {
-    if (definition.hasOwnProperty(property)) {
+  for (const property in definition) {
+    if (Object.prototype.hasOwnProperty.call(definition, property)) {
       if (typeData.required.indexOf(property) < 0) {
         control.setAttribute(property, definition[property])
       }
@@ -236,4 +236,4 @@ const createControl = (definition, prevValue) => {
   control.setAttribute('type', controlInstance.control)
 }
 
-module.exports = {createParamControls}
+module.exports = { createParamControls }

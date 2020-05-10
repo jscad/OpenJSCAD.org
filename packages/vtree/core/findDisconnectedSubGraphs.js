@@ -8,9 +8,9 @@ const findDisconnectedSubGraphs = root => {
     root = { children: root, type: 'root' }
   }
 
-  let stack = []
-  let leafs = []
-  let subTrees = []
+  const stack = []
+  const leafs = []
+  const subTrees = []
   dfs(root, stack, leafs, subTrees)
 
   // const independantSubtree = root.children

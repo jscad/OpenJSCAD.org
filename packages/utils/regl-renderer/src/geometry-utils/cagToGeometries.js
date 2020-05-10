@@ -1,6 +1,3 @@
-
-const { flatten, toArray } = require('@jscad/array-utils')
-
 function cagToGeometries (cags, options) {
   const defaults = {
     color: [1, 0.4, 0, 1]// default color
@@ -9,10 +6,10 @@ function cagToGeometries (cags, options) {
   // flag for transparency
   let isTransparent = false
 
-  let points = cagToPointsArray(cags).map(x => [x[0], x[1], 0])
-  let normals = points.map(x => [0, 0, -1])
-  let colors = points.map(x => color)
-  let indices = points.map((x, i) => i) // FIXME: temporary, not really needed, need to change drawMesh
+  const points = cagToPointsArray(cags).map(x => [x[0], x[1], 0])
+  const normals = points.map(x => [0, 0, -1])
+  const colors = points.map(x => color)
+  const indices = points.map((x, i) => i) // FIXME: temporary, not really needed, need to change drawMesh
 
   if (color[3] !== 1) {
     isTransparent = true // FIXME should be analyzed for each vertex

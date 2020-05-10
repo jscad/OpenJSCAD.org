@@ -10,7 +10,7 @@ const create = require('./create')
  */
 const clone = (...params) => {
   let out, a
-  if (params.length == 1) {
+  if (params.length === 1) {
     out = create()
     a = params[0]
   } else {

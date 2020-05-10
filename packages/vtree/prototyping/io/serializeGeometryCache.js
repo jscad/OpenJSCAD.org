@@ -7,7 +7,7 @@ const serializeGeometryCache = (cache) => {
   if (!fs.existsSync(cachePath)) {
     fs.mkdirSync(cachePath)
   }
-  let data = {}
+  const data = {}
   Object.keys(cache).map(function (key) {
     data[key] = cache[key]// .toCompactBinary()
   })

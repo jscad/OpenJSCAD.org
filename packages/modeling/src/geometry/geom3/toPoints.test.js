@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const {toPoints, fromPoints, toString} = require('./index')
+const { toPoints, fromPoints, toString } = require('./index')
 
 test('toPoints: Creates an array of points from a populated geom3', (t) => {
   const points = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]

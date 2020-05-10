@@ -20,7 +20,7 @@ test.afterEach.always(t => {
 })
 
 test.beforeEach(t => {
-  let cliName = './cli.js'
+  const cliName = './cli.js'
   t.context = {
     cliPath: path.resolve(__dirname, cliName)
   }
@@ -33,7 +33,7 @@ test.beforeEach(t => {
 // create a simple JSCAD script for input
 // the script should produce ALL geometry types
 const createJscad = (id) => {
-  let jscadScript = `// test script ${id}
+  const jscadScript = `// test script ${id}
 const { primitives } = require('@jscad/modeling')
 
 const getParameterDefinitions = () => {
@@ -57,8 +57,8 @@ const main = (params) => {
 module.exports = { main, getParameterDefinitions }
 `
 
-  let fileName = `./test${id}.jscad`
-  let filePath = path.resolve(__dirname, fileName)
+  const fileName = `./test${id}.jscad`
+  const filePath = path.resolve(__dirname, fileName)
   fs.writeFileSync(filePath, jscadScript)
   return filePath
 }

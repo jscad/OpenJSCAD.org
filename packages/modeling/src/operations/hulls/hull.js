@@ -40,7 +40,7 @@ const hull = (...geometries) => {
     throw new Error('only hulls of the same type are supported')
   }
 
-  let geometry = geometries[0]
+  const geometry = geometries[0]
   if (path2.isA(geometry)) return hullPath2(geometries)
   if (geom2.isA(geometry)) return hullGeom2(geometries)
   if (geom3.isA(geometry)) return hullGeom3(geometries)

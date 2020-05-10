@@ -1,9 +1,9 @@
 const html = require('bel')
-const {createParamControls} = require('./parameterControls')
+const { createParamControls } = require('./parameterControls')
 
 module.exports = function designParameters (state, paramsCallbacktoStream, i18n) {
-  const {parameterValues, parameterDefinitions, parameterDefaults} = state.design
-  const {controls} = createParamControls(
+  const { parameterValues, parameterDefinitions, parameterDefaults } = state.design
+  const { controls } = createParamControls(
     Object.assign({}, parameterDefaults, parameterValues), parameterDefinitions, paramsCallbacktoStream.callback
   )
   return html`

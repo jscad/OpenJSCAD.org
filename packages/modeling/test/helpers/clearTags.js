@@ -1,5 +1,5 @@
 /** helper function to remove the very variable 'tags' fields from a CAG object
- * @param  {CAG} input CAG 
+ * @param  {CAG} input CAG
  * @returns {CAG} the MUTATED CAG
  **/
 const clearTags = inputCAG => {

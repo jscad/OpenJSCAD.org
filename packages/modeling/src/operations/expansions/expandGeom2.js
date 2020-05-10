@@ -17,15 +17,15 @@ const expandGeom2 = (options, geometry) => {
     corners: 'edge',
     segments: 16
   }
-  let { delta, corners, segments } = Object.assign({ }, defaults, options)
+  const { delta, corners, segments } = Object.assign({ }, defaults, options)
 
   if (!(corners === 'edge' || corners === 'chamfer' || corners === 'round')) {
     throw new Error('corners must be "edge", "chamfer", or "round"')
   }
 
   // convert the geometry to outlines, and generate offsets from each
-  let outlines = geom2.toOutlines(geometry)
-  let newoutlines = outlines.map((outline) => {
+  const outlines = geom2.toOutlines(geometry)
+  const newoutlines = outlines.map((outline) => {
     options = {
       delta,
       corners,
@@ -36,7 +36,7 @@ const expandGeom2 = (options, geometry) => {
   })
 
   // create a composite geometry from the new outlines
-  let allsides = newoutlines.reduce((sides, newoutline) => {
+  const allsides = newoutlines.reduce((sides, newoutline) => {
     return sides.concat(geom2.toSides(geom2.fromPoints(newoutline)))
   }, [])
   return geom2.create(allsides)

@@ -3,7 +3,6 @@ const getFileExtensionFromString = require('@jscad/core/utils/getFileExtensionFr
 const { flatten } = require('@jscad/array-utils')
 
 const readFileAsync = function (file, fileMeta) {
-  const isBinaryFile = file.name.match(/\.(stl)$/) // FIXME how to determine?
   const reader = new FileReader()
 
   return new Promise(function (resolve, reject) {
@@ -15,7 +14,7 @@ const readFileAsync = function (file, fileMeta) {
     function convert (buffer) {
       let binary = ''
       const bytes = new Uint8Array(buffer)
-      let length = bytes.byteLength
+      const length = bytes.byteLength
       for (let i = 0; i < length; i++) {
         binary += String.fromCharCode(bytes[i])
       }
@@ -32,14 +31,13 @@ const readFileAsync = function (file, fileMeta) {
 
 function isSupportedFormat (file) {
   return true
-  const additionalFormats = ['json', 'txt']
-  var e = file.name.toLowerCase().match(/\.(\w+)$/i)
-  e = RegExp.$1
-  return conversionFormats.concat(['json']).indexOf(e) >= 0
+  // var e = file.name.toLowerCase().match(/\.(\w+)$/i)
+  // e = RegExp.$1
+  // return conversionFormats.concat(['json']).indexOf(e) >= 0
 }
 
 function pseudoArraytoArray (pseudoArray) {
-  let array = []
+  const array = []
   for (var i = 0; i < pseudoArray.length; i++) {
     const item = pseudoArray[i]
     array.push(item.webkitGetAsEntry ? item.webkitGetAsEntry() : item)
@@ -50,7 +48,7 @@ function pseudoArraytoArray (pseudoArray) {
 const isEmtpy = x => x !== null && x !== undefined// skip empty items
 
 function processItems (items) {
-  let results = pseudoArraytoArray(items.filter(isEmtpy))
+  const results = pseudoArraytoArray(items.filter(isEmtpy))
     .filter(isEmtpy)// skip empty items
     .reduce((result, item) => {
       // console.log('result', result, 'item', item)

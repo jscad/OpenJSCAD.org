@@ -26,9 +26,9 @@ const rotate = (angles, ...objects) => {
   angles = angles.slice() // don't modify the original
   while (angles.length < 3) angles.push(0)
 
-  let yaw = angles[2]
-  let pitch = angles[1]
-  let roll = angles[0]
+  const yaw = angles[2]
+  const pitch = angles[1]
+  const roll = angles[0]
 
   const matrix = mat4.fromTaitBryanRotation(yaw, pitch, roll)
 

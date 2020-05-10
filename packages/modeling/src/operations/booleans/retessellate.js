@@ -29,9 +29,9 @@ const retessellate = (geometry) => {
   const polygons = geom3.toPolygons(geometry)
   const polygonsPerPlane = [] // elements: [plane, [poly3...]]
   polygons.forEach((polygon) => {
-    let mapping = polygonsPerPlane.find((element) => coplanar(element[0], polygon.plane))
+    const mapping = polygonsPerPlane.find((element) => coplanar(element[0], polygon.plane))
     if (mapping) {
-      let polygons = mapping[1]
+      const polygons = mapping[1]
       polygons.push(polygon)
     } else {
       polygonsPerPlane.push([polygon.plane, [polygon]])
@@ -40,7 +40,7 @@ const retessellate = (geometry) => {
 
   let destpolygons = []
   polygonsPerPlane.forEach((mapping) => {
-    let sourcepolygons = mapping[1]
+    const sourcepolygons = mapping[1]
     const retesselayedpolygons = reTesselateCoplanarPolygons(sourcepolygons)
     destpolygons = destpolygons.concat(retesselayedpolygons)
   })

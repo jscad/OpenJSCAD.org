@@ -86,4 +86,4 @@ void main () {
 }
 `
 
-module.exports = {frag: vColorFrag, vert: vColorVert}
+module.exports = { frag: vColorFrag, vert: vColorVert }

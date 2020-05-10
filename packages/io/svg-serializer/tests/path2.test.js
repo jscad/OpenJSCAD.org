@@ -6,7 +6,7 @@ const serializer = require('../index.js')
 
 test('serialize 2D path (simple) objects to svg', (t) => {
   // simple open path
-  let object1 = primitives.line([[0, 0], [1, 1], [-3, 3]])
+  const object1 = primitives.line([[0, 0], [1, 1], [-3, 3]])
   let observed = serializer.serialize({}, object1)
   t.deepEqual(observed, [expected1])
 
@@ -24,9 +24,9 @@ test('serialize 2D path (simple) objects to svg', (t) => {
 
 test('serialize 2D path (color) objects to svg', (t) => {
   // simple open path
-  let object1 = primitives.line([[0, 0], [1, 1], [-3, 3]])
+  const object1 = primitives.line([[0, 0], [1, 1], [-3, 3]])
   color.color([0.5, 0.5, 0.5, 0.5], object1)
-  let observed = serializer.serialize({}, object1)
+  const observed = serializer.serialize({}, object1)
   t.deepEqual(observed, [expected4])
 })
 
@@ -63,4 +63,3 @@ const expected4 = `<?xml version="1.0" encoding="UTF-8"?>
   </g>
 </svg>
 `
-

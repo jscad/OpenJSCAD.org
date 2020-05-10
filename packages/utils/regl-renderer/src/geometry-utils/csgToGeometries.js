@@ -24,12 +24,12 @@ function csgToGeometries (csgs, options) {
   const geometriesPerCsg = csgs.map(convert)
 
   function convert (csg) {
-    let geometries = []
+    const geometries = []
 
-    let positions = []
-    let colors = []
-    let normals = []
-    let indices = []
+    const positions = []
+    const colors = []
+    const normals = []
+    const indices = []
 
     // flag for transparency
     let isTransparent = false
@@ -148,7 +148,7 @@ function toArray (data) {
  * @returns {Array}  `[r, g, b, a]`
  */
 function colorBytes (colorRGBA) {
-  let result = [colorRGBA.r, colorRGBA.g, colorRGBA.b]
+  const result = [colorRGBA.r, colorRGBA.g, colorRGBA.b]
   if (colorRGBA.a !== undefined) result.push(colorRGBA.a)
   return result
 }

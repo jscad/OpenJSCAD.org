@@ -1,4 +1,4 @@
-const {EPS} = require('../math/constants')
+const { EPS } = require('../math/constants')
 
 const vec3 = require('../math/vec3')
 
@@ -27,15 +27,15 @@ const poly3 = require('../geometry/poly3')
 const cylinderElliptic = function (options) {
   const defaults = {
     height: 2,
-    startRadius: [1,1],
+    startRadius: [1, 1],
     startAngle: 0,
-    endRadius: [1,1],
+    endRadius: [1, 1],
     endAngle: (Math.PI * 2),
     segments: 32
   }
-  let {height, startRadius, startAngle, endRadius, endAngle, segments} = Object.assign({}, defaults, options)
+  let { height, startRadius, startAngle, endRadius, endAngle, segments } = Object.assign({}, defaults, options)
 
-  if (height < (EPS*2)) throw new Error('height must be larger then zero')
+  if (height < (EPS * 2)) throw new Error('height must be larger then zero')
 
   if ((endRadius[0] <= 0) || (startRadius[0] <= 0) || (endRadius[1] <= 0) || (startRadius[1] <= 0)) {
     throw new Error('endRadus and startRadius should be positive')
@@ -55,34 +55,34 @@ const cylinderElliptic = function (options) {
     rotation = endAngle + ((Math.PI * 2) - startAngle)
   }
 
-  let minradius = Math.min(startRadius[0], startRadius[1], endRadius[0], endRadius[1])
-  let minangle = Math.acos(((minradius * minradius) + (minradius * minradius) - (EPS * EPS)) /
+  const minradius = Math.min(startRadius[0], startRadius[1], endRadius[0], endRadius[1])
+  const minangle = Math.acos(((minradius * minradius) + (minradius * minradius) - (EPS * EPS)) /
                             (2 * minradius * minradius))
   if (rotation < minangle) throw new Error('startAngle and endAngle to not define a significant rotation')
 
-  let slices = Math.floor(segments * (rotation / (Math.PI * 2)))
+  const slices = Math.floor(segments * (rotation / (Math.PI * 2)))
 
-  let start = [0, 0, -(height/2)]
-  let end = [0, 0, height/2]
-  let startv = vec3.fromArray(start)
-  let endv = vec3.fromArray(end)
-  let ray = vec3.subtract(endv, startv)
+  const start = [0, 0, -(height / 2)]
+  const end = [0, 0, height / 2]
+  const startv = vec3.fromArray(start)
+  const endv = vec3.fromArray(end)
+  const ray = vec3.subtract(endv, startv)
 
-  let axisZ = vec3.unit(ray)
-  let axisX = vec3.unit(vec3.random(axisZ))
-  let axisY = vec3.unit(vec3.cross(axisX, axisZ))
+  const axisZ = vec3.unit(ray)
+  const axisX = vec3.unit(vec3.random(axisZ))
+  const axisY = vec3.unit(vec3.cross(axisX, axisZ))
 
   const point = (stack, slice, radius) => {
-    let angle = slice * rotation + startAngle
-    let out = vec3.add(vec3.scale(radius[0] * Math.cos(angle), axisX), vec3.scale(radius[1] * Math.sin(angle), axisY))
-    let pos = vec3.add(vec3.add(vec3.scale(stack, ray), startv), out)
+    const angle = slice * rotation + startAngle
+    const out = vec3.add(vec3.scale(radius[0] * Math.cos(angle), axisX), vec3.scale(radius[1] * Math.sin(angle), axisY))
+    const pos = vec3.add(vec3.add(vec3.scale(stack, ray), startv), out)
     return pos
   }
 
-  let polygons = []
+  const polygons = []
   for (let i = 0; i < slices; i++) {
-    let t0 = i / slices
-    let t1 = (i + 1) / slices
+    const t0 = i / slices
+    const t1 = (i + 1) / slices
 
     if (endRadius[0] === startRadius[0] && endRadius[1] === startRadius[1]) {
       polygons.push(poly3.fromPoints([start, point(0, t0, endRadius), point(0, t1, endRadius)]))
@@ -105,7 +105,7 @@ const cylinderElliptic = function (options) {
     polygons.push(poly3.fromPoints([startv, point(0, 1, startRadius), endv]))
     polygons.push(poly3.fromPoints([point(0, 1, startRadius), point(1, 1, endRadius), endv]))
   }
-  let result = geom3.create(polygons)
+  const result = geom3.create(polygons)
   return result
 }
 
@@ -114,19 +114,10 @@ const cylinderElliptic = function (options) {
  * @see [cylinderElliptic]{@link module:modeling/primitives.cylinderElliptic} for more options
  * @param {Object} [options] - options for construction
  * @param {Array} [options.height=2] - height of cylinder
-<<<<<<< HEAD
  * @param {Number} [options.radius=1] - radius of cylinder (at both start and end)
  * @param {Number} [options.segments=32] - number of segments to create per full rotation
  * @returns {geom3} new geometry
-=======
- * @param {Number} [options.startRadius=1] - radius of cylinder at the start
- * @param {Number} [options.startAngle=0] - start angle of cylinder
- * @param {Number} [options.endRadius=1] - radius of cylinder at the end
- * @param {Number} [options.endAngle=(Math.PI * 2)] - end angle of cylinder
- * @param {Number} [options.segments=12] - number of segments to create per full rotation
- * @returns {geom3} new 3D geometry
  * @alias module:modeling/primitives.cylinder
->>>>>>> 6f3c7debb7310c5f3dee763986cd6a240b0dd3e7
  *
  * @example
  * let cylinder = cylinder({
@@ -141,11 +132,11 @@ const cylinder = function (options) {
     radius: 1,
     segments: 32
   }
-  let {height, radius, segments} = Object.assign({}, defaults, options)
+  let { height, radius, segments } = Object.assign({}, defaults, options)
 
   if (!Number.isFinite(radius)) throw new Error('radius must be a number')
 
-  let newoptions = {
+  const newoptions = {
     height: height,
     startRadius: [radius, radius],
     endRadius: [radius, radius],

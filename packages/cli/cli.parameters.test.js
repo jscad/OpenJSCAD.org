@@ -4,10 +4,6 @@ const path = require('path')
 const { execSync } = require('child_process')
 const fs = require('fs')
 
-function almostEquals (t, observed, expected, precision) {
-  t.is(Math.abs(expected - observed) < precision, true)
-}
-
 test.afterEach.always(t => {
   // remove files
   try {
@@ -19,12 +15,12 @@ test.afterEach.always(t => {
   } catch (err) {}
 
   try {
-    if (t.context.folderPath) fs.rmdirSync(t.context.folderPath, {recursive: false})
+    if (t.context.folderPath) fs.rmdirSync(t.context.folderPath, { recursive: false })
   } catch (err) {}
 })
 
 test.beforeEach(t => {
-  let cliName = './cli.js'
+  const cliName = './cli.js'
   t.context = {
     cliPath: path.resolve(__dirname, cliName)
   }
@@ -37,7 +33,7 @@ test.beforeEach(t => {
 // create a simple JSCAD script for input
 // the script should produce ALL geometry types
 const createJscad = (id) => {
-  let jscadScript = `// test script ${id}
+  const jscadScript = `// test script ${id}
 const { primitives } = require('@jscad/modeling')
 
 const getParameterDefinitions = () => {
@@ -61,8 +57,8 @@ const main = (params) => {
 module.exports = { main, getParameterDefinitions }
 `
 
-  let fileName = `./test${id}.jscad`
-  let filePath = path.resolve(__dirname, fileName)
+  const fileName = `./test${id}.jscad`
+  const filePath = path.resolve(__dirname, fileName)
   fs.writeFileSync(filePath, jscadScript)
   return filePath
 }
@@ -133,7 +129,7 @@ test('cli (single input file, output filename)', t => {
 test('cli (folder, output format', t => {
   const testID = 4
 
-  let inputPath = createJscad(testID)
+  const inputPath = createJscad(testID)
   t.true(fs.existsSync(inputPath))
 
   t.context.inputPath = inputPath
@@ -152,7 +148,7 @@ test('cli (folder, output format', t => {
 
   t.context.inputPath = mainPath
 
-  const outputName = `./test-folder/main.dxf`
+  const outputName = './test-folder/main.dxf'
   const outputPath = path.resolve(__dirname, outputName)
   t.false(fs.existsSync(outputPath))
 

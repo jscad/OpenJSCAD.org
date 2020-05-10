@@ -1,4 +1,4 @@
-const {Stream} = require('most')
+const { Stream } = require('most')
 
 /** The base Subject class, which is an extension of Stream
  * @typedef {Object} Subject
@@ -38,4 +38,4 @@ class Subject extends Stream {
   }
 }
 
-module.exports = {Subject}
+module.exports = { Subject }

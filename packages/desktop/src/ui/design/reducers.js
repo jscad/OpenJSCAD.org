@@ -1,7 +1,7 @@
 
 const path = require('path')
-const {getDesignEntryPoint, getDesignName} = require('@jscad/core/code-loading/requireDesignUtilsFs')
-const {availableExportFormatsFromSolids, exportFilePathFromFormatAndDesign} = require('../../core/io/exportUtils')
+const { getDesignEntryPoint, getDesignName } = require('@jscad/core/code-loading/requireDesignUtilsFs')
+const { availableExportFormatsFromSolids, exportFilePathFromFormatAndDesign } = require('../../core/io/exportUtils')
 const packageMetadata = require('../../../package.json')
 
 const initialize = () => {
@@ -43,8 +43,8 @@ const setDesignPath = (state, paths) => {
   })
 
   // we want the viewer to focus on new entities for our 'session' (until design change)
-  const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: ['new-entities']}})
-  return Object.assign({}, state, {busy: true, viewer, design})
+  const viewer = Object.assign({}, state.viewer, { behaviours: { resetViewOn: ['new-entities'] } })
+  return Object.assign({}, state, { busy: true, viewer, design })
 }
 
 const setDesignContent = (state, source) => {
@@ -53,17 +53,17 @@ const setDesignContent = (state, source) => {
     func(paramDefinitions) => paramsUI
     func(paramsUI + interaction) => params
   */
-  const design = Object.assign({}, state.design, {source})
-  const viewer = Object.assign({}, state.viewer, {behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']}})
+  const design = Object.assign({}, state.design, { source })
+  const viewer = Object.assign({}, state.viewer, { behaviours: { resetViewOn: [''], zoomToFitOn: ['new-entities'] } })
   const appTitle = `jscad v ${packageMetadata.version}: ${state.design.name}`
-  return Object.assign({}, state, {design, viewer}, {
+  return Object.assign({}, state, { design, viewer }, {
     appTitle,
     busy: true,
     error: undefined
   })
 }
 
-const setDesignSolids = (state, {solids, lookup, lookupCounts}) => {
+const setDesignSolids = (state, { solids, lookup, lookupCounts }) => {
   // console.log('setDesignSolids')
   solids = solids || []
   lookup = lookup || {}
@@ -73,7 +73,7 @@ const setDesignSolids = (state, {solids, lookup, lookupCounts}) => {
     lookup,
     lookupCounts
   })
-  const {exportFormat, availableExportFormats} = availableExportFormatsFromSolids(solids)
+  const { exportFormat, availableExportFormats } = availableExportFormatsFromSolids(solids)
   const exportInfos = exportFilePathFromFormatAndDesign(design, exportFormat)
 
   if (solids) {
@@ -88,7 +88,7 @@ const setDesignSolids = (state, {solids, lookup, lookupCounts}) => {
   }, exportInfos)
 }
 
-const setDesignParams = (state, {paramDefaults, paramValues, paramDefinitions}) => {
+const setDesignParams = (state, { paramDefaults, paramValues, paramDefinitions }) => {
   console.log('setDesignParams')
   const design = Object.assign({}, state.design, {
     paramDefaults,
@@ -100,7 +100,7 @@ const setDesignParams = (state, {paramDefaults, paramValues, paramDefinitions}) 
   })
 }
 
-const updateDesignFromParams = (state, {paramValues, origin, error}) => {
+const updateDesignFromParams = (state, { paramValues, origin, error }) => {
   /* if (error) { throw error }
   // disregard live updates if not enabled
   if (state.instantUpdate === false && origin === 'instantUpdate') {
@@ -111,7 +111,7 @@ const updateDesignFromParams = (state, {paramValues, origin, error}) => {
 
   const solids = toArray(script.main(paramValues))
   const design = Object.assign({}, originalDesign, {solids, paramValues}) */
-  return Object.assign({}, state, {busy: true})
+  return Object.assign({}, state, { busy: true })
 }
 
 const timeOutDesignGeneration = (state) => {
@@ -127,17 +127,17 @@ const timeOutDesignGeneration = (state) => {
 
 // ui/toggles
 const toggleAutoReload = (state, autoReload) => {
-  return Object.assign({}, state, {autoReload})
+  return Object.assign({}, state, { autoReload })
 }
 const toggleInstantUpdate = (state, instantUpdate) => {
   // console.log('toggleInstantUpdate', instantUpdate)
-  return Object.assign({}, state, {instantUpdate})
+  return Object.assign({}, state, { instantUpdate })
 }
 
 const toggleVtreeMode = (state, vtreeMode) => {
   console.log('toggleVtreeMode', vtreeMode)
-  const design = Object.assign({}, state.design, {vtreeMode})
-  return Object.assign({}, state, {design})
+  const design = Object.assign({}, state.design, { vtreeMode })
+  return Object.assign({}, state, { design })
 }
 
 // TODO: move this outside of this module, this is a side effect !!
@@ -150,7 +150,7 @@ const serializeGeometryCache = (cache) => {
   const path = require('path')
 
   const cachePath = path.join(userDataPath, '/cache.js')
-  let data = {}
+  const data = {}
   Object.keys(cache).forEach(function (key) {
     data[key] = cache[key]// .toCompactBinary()
   })

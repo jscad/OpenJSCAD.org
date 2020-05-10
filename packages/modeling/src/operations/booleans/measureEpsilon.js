@@ -2,7 +2,7 @@ const flatten = require('../../utils/flatten')
 
 const { EPS } = require('../../math/constants')
 
-const { geom2, geom3, path2, poly3 } = require('../../geometry')
+const { geom2, geom3, path2 } = require('../../geometry')
 
 const measureBounds = require('../measurements/measureBounds')
 
@@ -11,11 +11,11 @@ const measureBounds = require('../measurements/measureBounds')
  * @return {Float} the epsilon (precision) of the geometry
  */
 const measureEpsilonOfPath2 = (geometry) => {
-  let bounds = measureBounds(geometry)
-  let x = bounds[1][0] - bounds[0][0]
-  let y = bounds[1][1] - bounds[0][1]
+  const bounds = measureBounds(geometry)
+  const x = bounds[1][0] - bounds[0][0]
+  const y = bounds[1][1] - bounds[0][1]
 
-  let epsilon = (x + y) / 2 * EPS
+  const epsilon = (x + y) / 2 * EPS
   return epsilon
 }
 
@@ -24,11 +24,11 @@ const measureEpsilonOfPath2 = (geometry) => {
  * @return {Float} the epsilon (precision) of the geometry
  */
 const measureEpsilonOfGeom2 = (geometry) => {
-  let bounds = measureBounds(geometry)
-  let x = bounds[1][0] - bounds[0][0]
-  let y = bounds[1][1] - bounds[0][1]
+  const bounds = measureBounds(geometry)
+  const x = bounds[1][0] - bounds[0][0]
+  const y = bounds[1][1] - bounds[0][1]
 
-  let epsilon = (x + y) / 2 * EPS
+  const epsilon = (x + y) / 2 * EPS
   return epsilon
 }
 
@@ -37,12 +37,12 @@ const measureEpsilonOfGeom2 = (geometry) => {
  * @return {Float} the epsilon (precision) of the geometry
  */
 const measureEpsilonOfGeom3 = (geometry) => {
-  let bounds = measureBounds(geometry)
-  let x = bounds[1][0] - bounds[0][0]
-  let y = bounds[1][1] - bounds[0][1]
-  let z = bounds[1][2] - bounds[0][2]
+  const bounds = measureBounds(geometry)
+  const x = bounds[1][0] - bounds[0][0]
+  const y = bounds[1][1] - bounds[0][1]
+  const z = bounds[1][2] - bounds[0][2]
 
-  let epsilon = (x + y + z) / 3 * EPS
+  const epsilon = (x + y + z) / 3 * EPS
   return epsilon
 }
 

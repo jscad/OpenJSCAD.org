@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const {toPoints, create, fromPoints, toString} = require('./index')
+const { toPoints, create, fromPoints, toString } = require('./index')
 
 test('toPoints: creates an empty array of points from a unpopulated geom2', (t) => {
   const geometry = create()

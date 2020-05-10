@@ -18,9 +18,9 @@ const create = function (polygons) {
     polygons = [] // empty contents
   }
   return {
-    polygons : polygons,
-    isRetesselated : false,
-    transforms : mat4.create()
+    polygons: polygons,
+    isRetesselated: false,
+    transforms: mat4.create()
   }
 }
 

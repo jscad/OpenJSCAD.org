@@ -15,24 +15,24 @@ const cuboid = (options) => {
   const defaults = {
     size: [2, 2, 2]
   }
-  let center = [0,0,0];
-  let {size} = Object.assign({}, defaults, options)
+  const center = [0, 0, 0]
+  const { size } = Object.assign({}, defaults, options)
 
   if (!Array.isArray(size)) throw new Error('size must be an array')
   if (size.length < 3) throw new Error('size must contain width, depth and height values')
 
-  let result = geom3.create(
+  const result = geom3.create(
     // adjust a basic shape to size
     [
-      [ [0, 4, 6, 2], [-1, 0, 0] ],
-      [ [1, 3, 7, 5], [+1, 0, 0] ],
-      [ [0, 1, 5, 4], [0, -1, 0] ],
-      [ [2, 6, 7, 3], [0, +1, 0] ],
-      [ [0, 2, 3, 1], [0, 0, -1] ],
-      [ [4, 5, 7, 6], [0, 0, +1] ]
+      [[0, 4, 6, 2], [-1, 0, 0]],
+      [[1, 3, 7, 5], [+1, 0, 0]],
+      [[0, 1, 5, 4], [0, -1, 0]],
+      [[2, 6, 7, 3], [0, +1, 0]],
+      [[0, 2, 3, 1], [0, 0, -1]],
+      [[4, 5, 7, 6], [0, 0, +1]]
     ].map((info) => {
-      let points = info[0].map((i) => {
-        let pos = [
+      const points = info[0].map((i) => {
+        const pos = [
           center[0] + (size[0] / 2) * (2 * !!(i & 1) - 1),
           center[1] + (size[1] / 2) * (2 * !!(i & 2) - 1),
           center[2] + (size[2] / 2) * (2 * !!(i & 4) - 1)
@@ -60,13 +60,13 @@ const cube = (options) => {
   const defaults = {
     size: 2
   }
-  let {size} = Object.assign({}, defaults, options)
+  let { size } = Object.assign({}, defaults, options)
 
   if (!Number.isFinite(size)) throw new Error('size must be a number')
 
   size = [size, size, size]
 
-  return cuboid({size: size})
+  return cuboid({ size: size })
 }
 
 module.exports = {

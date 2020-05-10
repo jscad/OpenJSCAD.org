@@ -14,8 +14,8 @@ const drawMesh = function (regl, params = { extras: {} }) {
   }
   let { geometry, dynamicCulling, useVertexColors, type, primitive, color } = Object.assign({}, defaults, params)
 
-  let ambientOcclusion // = vao(geometry.indices, geometry.positions, 64, 64)
-  ambientOcclusion = regl.buffer([])
+  // let ambientOcclusion = vao(geometry.indices, geometry.positions, 64, 64)
+  const ambientOcclusion = regl.buffer([])
 
   // vertex colors or not ?
   const hasIndices = !!(geometry.indices && geometry.indices.length > 0)
@@ -26,7 +26,7 @@ const drawMesh = function (regl, params = { extras: {} }) {
     return isOdd ? 'front' : 'back'
   } : 'back'
 
-  let vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
+  const vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
   let frag = hasVertexColors ? require('./vColorShaders').frag : require('./meshShaders').frag
 
   if (type === '2d') {
@@ -41,7 +41,7 @@ const drawMesh = function (regl, params = { extras: {} }) {
     frag,
 
     uniforms: {
-      model: (context, props) => props.model || props.transforms.matrix || mat4.identity([]), // props && props.model ? props.model : mat4.identity([]),
+      model: (context, props) => props.model || props.transforms.matrix || mat4.identity([]), // props && props.model ? props.model : mat4.identity([]),
       ucolor: (context, props) => (props && props.color) ? props.color : color,
       // semi hack, woraround to enable/disable vertex colors!!!
       vColorToggler: (context, props) => (props && props.useVertexColors && props.useVertexColors === true) ? 1.0 : 0.0,

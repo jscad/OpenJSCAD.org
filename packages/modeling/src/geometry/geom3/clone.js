@@ -11,7 +11,7 @@ const create = require('./create')
  * @alias module:modeling/geometry/geom3.clone
  */
 const clone = (geometry) => {
-  let out = create()
+  const out = create()
   out.polygons = geometry.polygons.map((polygon) => poly3.clone(polygon))
   out.isRetesselated = geometry.isRetesselated
   out.transforms = mat4.clone(geometry.transforms)

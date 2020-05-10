@@ -25,7 +25,7 @@ const mirror = (options, ...objects) => {
     origin: [0, 0, 0],
     normal: [0, 0, 1] // Z axis
   }
-  let { origin, normal } = Object.assign({}, defaults, options)
+  const { origin, normal } = Object.assign({}, defaults, options)
 
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')

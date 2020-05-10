@@ -12,7 +12,7 @@ test('vec3: rotateZ() called with two paramerters should return a vec3 with corr
   const obs2 = rotateZ(0, [1, 2, 3], [3, 2, 1])
   t.true(compareVectors(obs2, [3, 2, 1]))
 
-  const obs3 = rotateZ(radians, [1, 2, 3], [-1, -2, -3])
+  // const obs3 = rotateZ(radians, [1, 2, 3], [-1, -2, -3])
   // FIXME t.true(compareVectors(obs3, [5, -0, -3]))
 
   const obs4 = rotateZ(-radians, [-1, -2, -3], [1, 2, 3])
@@ -32,8 +32,8 @@ test('vec3: rotateZ() called with three paramerters should update a vec3 with co
   t.true(compareVectors(obs2, [3, 2, 1]))
   t.true(compareVectors(ret2, [3, 2, 1]))
 
-  const obs3 = fromValues(0, 0, 0)
-  const ret3 = rotateZ(obs3, radians, [1, 2, 3], [-1, -2, -3])
+  // const obs3 = fromValues(0, 0, 0)
+  // const ret3 = rotateZ(obs3, radians, [1, 2, 3], [-1, -2, -3])
   // FIXME t.true(compareVectors(obs3, [5, -0, -3]))
   // FIXME t.true(compareVectors(ret3, [5, -0, -3]))
 

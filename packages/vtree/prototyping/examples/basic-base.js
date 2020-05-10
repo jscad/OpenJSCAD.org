@@ -1,4 +1,4 @@
-const {cube} = require('@jscad/csg/api').primitives3d
+const { cube } = require('@jscad/csg/api').primitives3d
 
 function main () {
   return cube()

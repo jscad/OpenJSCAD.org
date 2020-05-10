@@ -3,7 +3,7 @@ const mat4 = require('gl-mat4')
 const path = require('path')
 
 module.exports = function prepareDrawGrid (regl, params = {}) {
-  let positions = []
+  const positions = []
   const defaults = {
     color: [1, 1, 1, 1],
     ticks: 1,
@@ -13,7 +13,7 @@ module.exports = function prepareDrawGrid (regl, params = {}) {
     lineWidth: 2
   }
 
-  let {size, ticks, fadeOut, centered, lineWidth, color} = Object.assign({}, defaults, params)
+  const { size, ticks, fadeOut, centered, lineWidth, color } = Object.assign({}, defaults, params)
 
   const width = size[0]
   const length = size[1]
@@ -35,7 +35,7 @@ module.exports = function prepareDrawGrid (regl, params = {}) {
     const widthEnd = -widthStart
 
     const remLength = halfLength % ticks
-    let lengthStart = -halfLength + remLength
+    const lengthStart = -halfLength + remLength
     const lengthEnd = -lengthStart
 
     const skipEvery = 0

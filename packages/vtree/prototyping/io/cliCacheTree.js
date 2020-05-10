@@ -1,7 +1,7 @@
 // this is for keeping / comparing different trees in CLI mode
 const cliCacheTree = (curTree) => {
   const fs = require('fs')
-  let prevTreeFileName = 'prevTree.json'
+  const prevTreeFileName = 'prevTree.json'
   let prevTree
   if (fs.existsSync('prevTree')) {
     prevTree = fs.readFileSync(prevTreeFileName, 'utf8')
