@@ -17,7 +17,7 @@ test('sphere (options)', t => {
   // test radius
   let obs = sphere({ radius: 5, segments: 12 })
   let pts = geom3.toPoints(obs)
-  // let exp = []
+  let exp = []
   t.is(pts.length, 72)
   // t.true(comparePolygonsAsPoints(pts, exp))
 
