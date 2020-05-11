@@ -23,15 +23,15 @@ test('serialize 2D geometries (simple) to svg', function (t) {
 })
 
 test('serialize 2D geometries (color) to svg', function (t) {
-  const cag2 = primitives.rectangle({ size: [10, 20] })
-  color.color([0.5, 0.5, 0.5, 0.5], cag2)
+  let cag2 = primitives.rectangle({ size: [10, 20] })
+  cag2 = color.color([0.5, 0.5, 0.5, 0.5], cag2)
 
-  const observed2 = serializer.serialize({}, cag2)
+  let observed2 = serializer.serialize({}, cag2)
   t.deepEqual([expected4], observed2)
 })
 
 test('serialize 2D geometries (complex) to svg', function (t) {
-  const shape = geometry.geom2.create([
+  let shape = geometry.geom2.create([
     [[-75.00000, 75.00000], [-75.00000, -75.00000]],
     [[-75.00000, -75.00000], [75.00000, -75.00000]],
     [[75.00000, -75.00000], [75.00000, 75.00000]],
@@ -53,9 +53,9 @@ test('serialize 2D geometries (complex) to svg', function (t) {
     [[2.00000, -19.00000], [2.00000, -15.00000]],
     [[2.00000, -15.00000], [-2.00000, -15.00000]]
   ])
-  color.color([0.5, 0.5, 0.5, 0.5], shape)
+  shape = color.color([0.5, 0.5, 0.5, 0.5], shape)
 
-  const observed = serializer.serialize({}, shape)
+  let observed = serializer.serialize({}, shape)
   t.deepEqual([expected5], observed)
 })
 
