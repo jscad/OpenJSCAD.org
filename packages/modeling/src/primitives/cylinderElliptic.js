@@ -70,7 +70,7 @@ const cylinderElliptic = function (options) {
 
   const axisZ = vec3.unit(ray)
   const axisX = vec3.unit(vec3.random(axisZ))
-  const axisY = vec3.unit(vec3.cross(axisX, axisZ))
+  const axisY = vec3.unit(vec3.cross(axisZ, axisX))
 
   const point = (stack, slice, radius) => {
     const angle = slice * rotation + startAngle
@@ -85,25 +85,26 @@ const cylinderElliptic = function (options) {
     const t1 = (i + 1) / slices
 
     if (endRadius[0] === startRadius[0] && endRadius[1] === startRadius[1]) {
-      polygons.push(poly3.fromPoints([start, point(0, t0, endRadius), point(0, t1, endRadius)]))
-      polygons.push(poly3.fromPoints([point(0, t1, endRadius), point(0, t0, endRadius), point(1, t0, endRadius), point(1, t1, endRadius)]))
-      polygons.push(poly3.fromPoints([end, point(1, t1, endRadius), point(1, t0, endRadius)]))
+      polygons.push(poly3.fromPoints([start, point(0, t1, endRadius), point(0, t0, endRadius)]))
+      polygons.push(poly3.fromPoints([point(0, t1, endRadius), point(1, t1, endRadius),
+                                      point(1, t0, endRadius), point(0, t0, endRadius)]))
+      polygons.push(poly3.fromPoints([end, point(1, t0, endRadius), point(1, t1, endRadius)]))
     } else {
       if (startRadius[0] > 0) {
-        polygons.push(poly3.fromPoints([start, point(0, t0, startRadius), point(0, t1, startRadius)]))
-        polygons.push(poly3.fromPoints([point(0, t0, startRadius), point(1, t0, endRadius), point(0, t1, startRadius)]))
+        polygons.push(poly3.fromPoints([start, point(0, t1, startRadius), point(0, t0, startRadius)]))
+        polygons.push(poly3.fromPoints([point(0, t0, startRadius), point(0, t1, startRadius), point(1, t0, endRadius)]))
       }
       if (endRadius[0] > 0) {
-        polygons.push(poly3.fromPoints([end, point(1, t1, endRadius), point(1, t0, endRadius)]))
-        polygons.push(poly3.fromPoints([point(1, t0, endRadius), point(1, t1, endRadius), point(0, t1, startRadius)]))
+        polygons.push(poly3.fromPoints([end, point(1, t0, endRadius), point(1, t1, endRadius)]))
+        polygons.push(poly3.fromPoints([point(1, t0, endRadius), point(0, t1, startRadius), point(1, t1, endRadius)]))
       }
     }
   }
   if (rotation < (Math.PI * 2)) {
-    polygons.push(poly3.fromPoints([startv, endv, point(0, 0, startRadius)]))
-    polygons.push(poly3.fromPoints([point(0, 0, startRadius), endv, point(1, 0, endRadius)]))
-    polygons.push(poly3.fromPoints([startv, point(0, 1, startRadius), endv]))
-    polygons.push(poly3.fromPoints([point(0, 1, startRadius), point(1, 1, endRadius), endv]))
+    polygons.push(poly3.fromPoints([startv, point(0, 0, startRadius), endv]))
+    polygons.push(poly3.fromPoints([point(0, 0, startRadius), point(1, 0, endRadius), endv]))
+    polygons.push(poly3.fromPoints([startv, endv, point(0, 1, startRadius)]))
+    polygons.push(poly3.fromPoints([point(0, 1, startRadius), endv, point(1, 1, endRadius)]))
   }
   const result = geom3.create(polygons)
   return result
@@ -132,7 +133,7 @@ const cylinder = function (options) {
     radius: 1,
     segments: 32
   }
-  let { height, radius, segments } = Object.assign({}, defaults, options)
+  const { height, radius, segments } = Object.assign({}, defaults, options)
 
   if (!Number.isFinite(radius)) throw new Error('radius must be a number')
 
