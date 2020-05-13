@@ -12,7 +12,7 @@ const create = require('./create')
  * @alias module:modeling/geometry/geom3.fromCompactBinary
  */
 const fromCompactBinary = data => {
-  if (data[0] != 1) throw new Error('invalid compact binary data')
+  if (data[0] !== 1) throw new Error('invalid compact binary data')
 
   const created = create()
 
@@ -20,7 +20,7 @@ const fromCompactBinary = data => {
 
   created.isRetesselated = !!data[17]
 
-  let numberOfVertices = data[18]
+  const numberOfVertices = data[18]
   let ci = 19
   let vi = data.length - (numberOfVertices * 3)
   while (vi < data.length) {

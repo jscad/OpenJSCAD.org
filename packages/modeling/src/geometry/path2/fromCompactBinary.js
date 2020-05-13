@@ -10,7 +10,7 @@ const create = require('./create')
  * @alias module:modeling/geometry/path2.fromCompactBinary
  */
 const fromCompactBinary = data => {
-  if (data[0] != 2) throw new Error('invalid compact binary data')
+  if (data[0] !== 2) throw new Error('invalid compact binary data')
 
   const created = create()
 

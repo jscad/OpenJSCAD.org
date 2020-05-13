@@ -1,5 +1,3 @@
-const toPoints = require('./toPoints')
-
 /**
  * Produce a compact binary representation from the given path.
  * @param {path2} geometry - the path

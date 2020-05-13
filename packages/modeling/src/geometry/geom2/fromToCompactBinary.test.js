@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { fromCompactBinary, toCompactBinary, create, fromPoints } = require('./index')
+const { fromCompactBinary, toCompactBinary, create } = require('./index')
 
 test('toCompactBinary: converts geom2 into a compact form', (t) => {
   const geometry1 = create()
@@ -10,7 +10,7 @@ test('toCompactBinary: converts geom2 into a compact form', (t) => {
     1, 0, 0, 0, // transforms
     0, 1, 0, 0,
     0, 0, 1, 0,
-    0, 0, 0, 1,
+    0, 0, 0, 1
   ])
   t.deepEqual(compacted1, expected1)
 
@@ -44,7 +44,7 @@ test('fromCompactBinary: convert a compact form into a geom2', (t) => {
     1, 0, 0, 0, // transforms
     0, 1, 0, 0,
     0, 0, 1, 0,
-    0, 0, 0, 1,
+    0, 0, 0, 1
   ])
   const expected1 = create()
   const geometry1 = fromCompactBinary(compacted1)
@@ -53,7 +53,7 @@ test('fromCompactBinary: convert a compact form into a geom2', (t) => {
   t.deepEqual(geometry1.sides, expected1.sides)
 
   // geometry with a hole
-  const compacted2 = new Float32Array ([
+  const compacted2 = new Float32Array([
     0, // type flag
     1, 0, 0, 0, // transforms
     0, 1, 0, 0,

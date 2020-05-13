@@ -1,5 +1,3 @@
-const toSides = require('./toSides')
-
 /**
  * Produces a compact binary representation from the given geometry.
  * @param {geom2} geometry - the geometry

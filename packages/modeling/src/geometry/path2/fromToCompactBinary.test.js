@@ -61,7 +61,7 @@ test('fromCompactBinary: convert a compact form into a path2', (t) => {
     0, 0, 1, 0,
     0, 0, 0, 1,
     1, // closed/open flag
-    0, 0, //points
+    0, 0, // points
     1, 0,
     0, 1
   ]
