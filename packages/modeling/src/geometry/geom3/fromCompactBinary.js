@@ -1,4 +1,9 @@
-// FIXME: how about custom properties or fields ?
+const vec3 = require('../../math/vec3')
+const mat4 = require('../../math/mat4')
+
+const poly3 = require('../poly3')
+
+const create = require('./create')
 
 /**
  * Construct a new 3D geometry from the given compact binary data.
@@ -6,23 +11,32 @@
  * @returns {geom3} a new geometry
  * @alias module:modeling/geometry/geom3.fromCompactBinary
  */
-const geom3FromCompactBinary = data => {
-  const geom = require('./create')()
-  geom.isRetesselated = !!data[1]
-  geom.transforms = new Float32Array(data.slice(2, 18))
+const fromCompactBinary = data => {
+  if (data[0] != 1) throw new Error('invalid compact binary data')
 
-  for (let i = 18; i < data.length; i += 16) { // stride of 16
-    const vDat = data.slice(i + 4, i + 16)
+  const created = create()
+
+  created.transforms = mat4.clone(data.slice(1, 17))
+
+  created.isRetesselated = !!data[17]
+
+  let numberOfVertices = data[18]
+  let ci = 19
+  let vi = data.length - (numberOfVertices * 3)
+  while (vi < data.length) {
+    const verticesPerPolygon = data[ci]
+    ci++
+
     const vertices = []
-    for (let j = 0; j < vDat.length; j += 3) {
-      vertices.push([vDat[j], vDat[j + 1], vDat[j + 2]])
+    for (let i = 0; i < verticesPerPolygon; i++) {
+      vertices.push(vec3.fromValues(data[vi], data[vi + 1], data[vi + 2]))
+      vi += 3
     }
-    geom.polygons.push({
-      plane: data.slice(i, i + 4),
-      vertices
-    })
+    created.polygons.push(poly3.create(vertices))
   }
-  return geom
+
+  // TODO transfer known properities, i.e. color
+  return created
 }
 
-module.exports = geom3FromCompactBinary
+module.exports = fromCompactBinary

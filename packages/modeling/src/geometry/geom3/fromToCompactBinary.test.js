@@ -1,49 +1,93 @@
 const test = require('ava')
 
-const { fromCompactBinary, toCompactBinary, fromPoints, equals } = require('./index')
+const { fromCompactBinary, toCompactBinary, create, fromPoints, equals } = require('./index')
 
-test('toCompactBinary: converts geom3 into a compact form', (t) => {
-  const points = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]
-  const geom2 = fromPoints(points)
-  const compacted = toCompactBinary(geom2)
+test('toCompactBinary: converts geom3 (default)', (t) => {
+  const geometry = create()
+  const compacted = toCompactBinary(geometry)
   const expected = new Float32Array(
     [
-      1, // type flag
-      0, // isRetesselated flag
-      1, 0, 0, 0, // transforms matrix
+      1, // type
+      1, 0, 0, 0, // transforms
       0, 1, 0, 0,
       0, 0, 1, 0,
       0, 0, 0, 1,
-      // geometry
-      0, -1, 0, 0, // plane
-      0, 0, 0, // vertices
+      0, // isRetesselated flag
+      0 // number of vertices
+    ]
+  )
+  t.deepEqual(compacted, expected)
+})
+
+test('toCompactBinary: converts geom3 into a compact form', (t) => {
+  // two polygons; 3 points, 4 points
+  const points = [[[0, 0, 0], [1, 0, 0], [2, 0, 2]], [[0, 0, 0], [1, 0, 0], [2, 0, 2], [-3, 0, 3]]]
+  const geometry = fromPoints(points)
+  const compacted = toCompactBinary(geometry)
+  const expected = new Float32Array(
+    [
+      1, // type
+      1, 0, 0, 0, // transforms
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1,
+      0, // isRetesselated flag
+      7, // number of vertices
+      3, // number of vertices per polygon (2)
+      4,
+      0, 0, 0, // vertices (7)
       1, 0, 0,
-      1, 0, 1
+      2, 0, 2,
+      0, 0, 0,
+      1, 0, 0,
+      2, 0, 2,
+      -3, 0, 3
     ]
   )
 
-  t.deepEqual(Array.from(compacted), Array.from(expected))
-  // check if fromCompactBinary can get back the same data as the original geometry
-  t.is(equals(fromCompactBinary(compacted), geom2), true)
+  t.deepEqual(compacted, expected)
 })
 
 test('fromCompactBinary: convert a compact form into a geom3', (t) => {
-  const compacted = [
-    1, // type flag
-    0, // isRetesselated flag
-    1, 0, 0, 0, // transforms matrix
-    0, 1, 0, 0,
-    0, 0, 1, 0,
-    0, 0, 0, 1,
-    // geometry
-    0, -1, 0, 0, // plane
-    0, 0, 0, // vertices
-    1, 0, 0,
-    1, 0, 1
-  ]
-  const points = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]
-  const expected = fromPoints(points)
-  const geom3 = fromCompactBinary(compacted)
+  const compactedDefault = new Float32Array(
+    [
+      1, // type
+      1, 0, 0, 0, // transforms
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1,
+      0, // isRetesselated flag
+      0 // number of vertices
+    ]
+  )
+  let expected = create()
+  let geometry = fromCompactBinary(compactedDefault)
 
-  t.is(equals(geom3, expected), true)
+  t.is(equals(geometry, expected), true)
+
+  const compacted = new Float32Array(
+    [
+      1, // type
+      1, 0, 0, 0, // transforms
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1,
+      0, // isRetesselated flag
+      7, // number of vertices
+      3, // number of vertices per polygon (2)
+      4,
+      0, 0, 0, // vertices (7)
+      1, 0, 0,
+      2, 0, 2,
+      0, 0, 0,
+      1, 0, 0,
+      2, 0, 2,
+      -3, 0, 3
+    ]
+  )
+  const points = [[[0, 0, 0], [1, 0, 0], [2, 0, 2]], [[0, 0, 0], [1, 0, 0], [2, 0, 2], [-3, 0, 3]]]
+  expected = fromPoints(points)
+  geometry = fromCompactBinary(compacted)
+
+  t.is(equals(geometry, expected), true)
 })
