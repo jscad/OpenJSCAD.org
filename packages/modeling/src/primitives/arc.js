@@ -16,7 +16,7 @@ const path2 = require('../geometry/path2')
  * @returns {path2} new 2D path
  * @alias module:modeling/primitives.arc
  */
-const arc = function (options) {
+const arc = (options) => {
   const defaults = {
     center: [0, 0],
     radius: 1,

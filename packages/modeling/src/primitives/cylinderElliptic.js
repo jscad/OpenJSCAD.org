@@ -24,7 +24,7 @@ const poly3 = require('../geometry/poly3')
  *       endRadius: [8,3]
  *     });
  */
-const cylinderElliptic = function (options) {
+const cylinderElliptic = (options) => {
   const defaults = {
     height: 2,
     startRadius: [1, 1],
@@ -127,7 +127,7 @@ const cylinderElliptic = function (options) {
  *   segments: 16
  * })
  */
-const cylinder = function (options) {
+const cylinder = (options) => {
   const defaults = {
     height: 2,
     radius: 1,

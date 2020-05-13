@@ -22,7 +22,7 @@ const poly3 = require('../geometry/poly3')
  *   roundRadius: 0.5
  * })
  */
-const roundedCylinder = function (options) {
+const roundedCylinder = (options) => {
   const defaults = {
     height: 2,
     radius: 1,

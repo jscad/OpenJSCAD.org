@@ -42,7 +42,7 @@ const geodesicSphere = (options) => {
   const ti = [[0, 9, 1], [1, 10, 0], [6, 7, 0], [10, 6, 0], [7, 9, 0], [5, 1, 4], [4, 1, 9], [5, 10, 1], [2, 8, 3], [3, 11, 2], [2, 5, 4],
     [4, 8, 2], [2, 11, 5], [3, 7, 6], [6, 11, 3], [8, 7, 3], [9, 8, 4], [11, 10, 5], [10, 11, 6], [8, 9, 7]]
 
-  const geodesicSubDivide = function (p, frequency, offset) {
+  const geodesicSubDivide = (p, frequency, offset) => {
     const p1 = p[0]
     const p2 = p[1]
     const p3 = p[2]
@@ -103,7 +103,7 @@ const geodesicSphere = (options) => {
     return { points: c, triangles: f, offset: n }
   }
 
-  const mix3 = function (a, b, f) {
+  const mix3 = (a, b, f) => {
     const _f = 1 - f
     const c = []
     for (let i = 0; i < 3; i++) {
