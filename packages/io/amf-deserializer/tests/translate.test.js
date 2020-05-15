@@ -22,7 +22,7 @@ test('deserialize simple amf file to jscad script', function (t) {
 
   const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, inputFile)
   t.is(countOf('poly3.fromPoints', observed), 12)
-  t.is(countOf('color.color', observed), 12)
+  t.is(countOf('polygon.color', observed), 12)
   t.is(countOf('geom3.create', observed), 1)
 })
 
@@ -32,6 +32,6 @@ test('deserialize amf file with materials to jscad script', function (t) {
 
   const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, inputFile)
   t.is(countOf('poly3.fromPoints', observed), 144)
-  t.is(countOf('color.color', observed), 144)
+  t.is(countOf('polygon.color', observed), 144)
   t.is(countOf('geom3.create', observed), 1)
 })

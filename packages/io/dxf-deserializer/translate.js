@@ -73,7 +73,7 @@ const translateLine = (obj, layers, options) => {
     script = `  let ${name} = primitives.line([[${translateVector3D(p1)}],[${translateVector3D(p2)}]])\n`
   }
   if (color) {
-    script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+    script += `  ${name} = color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
   }
   obj.script = script
   addToLayer(obj, layers)
@@ -154,7 +154,7 @@ const translatePath2D = (obj, layers, options) => {
     script += '\n'
   }
   if (color) {
-    script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+    script += `  ${name} = color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
   }
   obj.script = script
   addToLayer(obj, layers)
@@ -188,7 +188,7 @@ const translateArc = (obj, layers, options) => {
   if (lthk === 0.0) {
     let script = `  let ${name} = primitives.arc({center: [${pptx}, ${ppty}], radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}})\n`
     if (color) {
-      script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+      script += `  ${name} = color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
     }
     obj.script = script
     addToLayer(obj, layers)
@@ -197,7 +197,7 @@ const translateArc = (obj, layers, options) => {
   // FIXME how to represent 3D arc?
   let script = `  let ${name} = primitives.arc({center: [${pptx}, ${ppty}], radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}})\n`
   if (color) {
-    script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+    script += `  ${name} = color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
   }
   obj.script = script
   addToLayer(obj, layers)
@@ -225,7 +225,7 @@ const translateCircle = (obj, layers, options) => {
   if (lthk === 0.0) {
     let script = `  let ${name} = transforms.center({ center: [${pptx}, ${ppty}, 0] }, primitives.circle({radius: ${swid},segments: ${res}}))\n`
     if (color) {
-      script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+      script += `  ${name} = color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
     }
     obj.script = script
     addToLayer(obj, layers)
@@ -235,7 +235,7 @@ const translateCircle = (obj, layers, options) => {
   // convert to 3D object
   let script = `  let ${name} = transforms.center({ center: [${pptx}, ${ppty}, 0] }, primitives.circle({radius: ${swid},segments: ${res}).extrude({offset: [0,0,${lthk}]}))\n`
   if (color) {
-    script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+    script += `  ${name} = color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
   }
 
   // FIXME need to use 210/220/230 for direction of rotation
@@ -277,7 +277,7 @@ const translateEllipse = (obj, layers, options) => {
   ${name} = geometry.geom2.transform(${name}matrix, ${name})
 `
     if (color) {
-      script += `  color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+      script += `  ${name} = color.color([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
     }
     obj.script = script
     addToLayer(obj, layers)
@@ -828,7 +828,7 @@ const translateAsciiDxf = (reader, options) => {
 
   // debug output
   // console.log('**************************************************')
-  let script = `const {color, geometry, math, primitives} = require('@jscad/modeling')
+  let script = `const {color, geometry, math, primitives, transforms} = require('@jscad/modeling')
 
 const main = () => {
   let layers = []

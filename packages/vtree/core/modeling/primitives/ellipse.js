@@ -1,9 +1,5 @@
-const ellipse = (params) => {
-  return Object.assign({}, params, { type: 'ellipse' })
-}
+const circle = (params) => Object.assign({}, params, { type: 'circle' })
 
-const circle = (params) => {
-  return Object.assign({}, params, { type: 'circle' })
-}
+const ellipse = (params) => Object.assign({}, params, { type: 'ellipse' })
 
 module.exports = { circle, ellipse }

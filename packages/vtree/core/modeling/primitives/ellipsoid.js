@@ -1,9 +1,5 @@
-const ellipsoid = (params) => {
-  return Object.assign({}, params, { type: 'ellipsoid' })
-}
+const ellipsoid = (params) => Object.assign({}, params, { type: 'ellipsoid' })
 
-const sphere = (params) => {
-  return Object.assign({}, params, { type: 'sphere' })
-}
+const sphere = (params) => Object.assign({}, params, { type: 'sphere' })
 
-module.exports = { sphere, ellipsoid }
+module.exports = { ellipsoid, sphere }

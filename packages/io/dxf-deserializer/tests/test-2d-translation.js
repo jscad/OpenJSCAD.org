@@ -31,13 +31,16 @@ CIRCLE
 0.0
  40
 2.5
+ 62
+7
   0
 ENDSEC`
   const src2 = deserialize({ filename: 'dxf2 test', output: 'script' }, dxf2)
   const ss2 = src2.split('\n')
-  t.is(ss2.length, 20)
+  t.is(ss2.length, 21)
   t.true(src2.indexOf('main = ()') > 0)
   t.true(src2.indexOf('circle(') > 0)
+  t.true(src2.indexOf('color.color(') > 0)
 
   // DXF LINE, translates to script with a 'line' created from points
   const dxf3 = `0

@@ -24,8 +24,8 @@ test('serialize 2D path (simple) objects to svg', (t) => {
 
 test('serialize 2D path (color) objects to svg', (t) => {
   // simple open path
-  const object1 = primitives.line([[0, 0], [1, 1], [-3, 3]])
-  color.color([0.5, 0.5, 0.5, 0.5], object1)
+  let object1 = primitives.line([[0, 0], [1, 1], [-3, 3]])
+  object1 = color.color([0.5, 0.5, 0.5, 0.5], object1)
   const observed = serializer.serialize({}, object1)
   t.deepEqual(observed, [expected4])
 })
