@@ -11,21 +11,26 @@ const path2 = require('../geometry/path2')
  * @param {Number} [options.radius=1] - radius of arc
  * @param {Number} [options.startAngle=0] - starting angle of the arc, in radians
  * @param {Number} [options.endAngle=Math.PI*2] - ending angle of the arc, in radians
- * @param {Number} [options.segments=16] - number of segments to create per 360 rotation
+ * @param {Number} [options.segments=32] - number of segments to create per 360 rotation
  * @param {Boolean} [options.makeTangent=false] - adds line segments at both ends of the arc to ensure that the gradients at the edges are tangent
  * @returns {path2} new 2D path
  * @alias module:modeling/primitives.arc
  */
-const arc = function (options) {
+const arc = (options) => {
   const defaults = {
     center: [0, 0],
     radius: 1,
     startAngle: 0,
     endAngle: (Math.PI * 2),
     makeTangent: false,
-    segments: 16
+    segments: 32
   }
   let { center, radius, startAngle, endAngle, makeTangent, segments } = Object.assign({}, defaults, options)
+
+  if (!Array.isArray(center)) throw new Error('center must be an array')
+  if (center.length < 2) throw new Error('center must contain X and Y values')
+
+  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
 
   if (startAngle < 0 || endAngle < 0) throw new Error('the start and end angles must be positive')
   if (segments < 4) throw new Error('segments must be four or more')

@@ -11,7 +11,7 @@ const poly3 = require('../geometry/poly3')
  * @param {Array} [options.height=2] - height of cylinder
  * @param {Number} [options.radius=1] - radius of cylinder
  * @param {Number} [options.roundRadius=0.2] - radius of rounded edges
- * @param {Number} [options.segments=12] - number of segments to create per 360 rotation
+ * @param {Number} [options.segments=32] - number of segments to create per 360 rotation
  * @returns {geom3} new 3D geometry
  * @alias module:modeling/primitives.roundedCylinder
  *
@@ -22,16 +22,18 @@ const poly3 = require('../geometry/poly3')
  *   roundRadius: 0.5
  * })
  */
-const roundedCylinder = function (options) {
+const roundedCylinder = (options) => {
   const defaults = {
     height: 2,
     radius: 1,
     roundRadius: 0.2,
-    segments: 12
+    segments: 32
   }
   const { height, radius, roundRadius, segments } = Object.assign({}, defaults, options)
 
   if (height < (EPS * 2)) throw new Error('height must be larger then zero')
+
+  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
 
   if (roundRadius > (radius - EPS)) throw new Error('roundRadius must be smaller then the radius')
 

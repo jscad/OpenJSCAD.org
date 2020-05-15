@@ -9,30 +9,10 @@ const path2 = require('../geometry/path2')
 const comparePoints = require('../../test/helpers/comparePoints')
 
 test('arc (defaults)', t => {
-  const exp = [
-    [1, 0],
-    [0.9324722290039062, 0.3612416684627533],
-    [0.739008903503418, 0.6736956238746643],
-    [0.4457383453845978, 0.8951632976531982],
-    [0.09226836264133453, 0.9957341551780701],
-    [-0.2736629843711853, 0.9618256688117981],
-    [-0.602634608745575, 0.7980172038078308],
-    [-0.8502171635627747, 0.5264321565628052],
-    [-0.9829730987548828, 0.1837495118379593],
-    [-0.9829730987548828, -0.1837495118379593],
-    [-0.8502171635627747, -0.5264321565628052],
-    [-0.602634608745575, -0.7980172038078308],
-    [-0.2736629843711853, -0.9618256688117981],
-    [0.09226836264133453, -0.9957341551780701],
-    [0.4457383453845978, -0.8951632976531982],
-    [0.739008903503418, -0.6736956238746643],
-    [0.9324722290039062, -0.3612416684627533]
-  ]
   const geometry = arc()
   const obs = path2.toPoints(geometry)
 
-  t.deepEqual(obs.length, 17)
-  t.true(comparePoints(obs, exp))
+  t.deepEqual(obs.length, 33)
 })
 
 test('arc (options)', t => {
@@ -56,7 +36,7 @@ test('arc (options)', t => {
     [2.739008903503418, 1.3263044357299805],
     [2.9324722290039062, 1.6387583017349243]
   ]
-  let geometry = arc({ center: [2, 2] })
+  let geometry = arc({ center: [2,2], segments: 16 })
   let obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 17)
@@ -82,7 +62,7 @@ test('arc (options)', t => {
     [1.478017807006836, -1.3473912477493286],
     [1.8649444580078125, -0.7224833369255066]
   ]
-  geometry = arc({ radius: 2 })
+  geometry = arc({ radius: 2, segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 17)
@@ -105,7 +85,7 @@ test('arc (options)', t => {
     [0.9350162148475647, -0.35460489988327026],
     [1, -2.4492937051703357e-16]
   ]
-  geometry = arc({ startAngle: degToRad(90) })
+  geometry = arc({ startAngle: degToRad(90), segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 14)
@@ -120,7 +100,7 @@ test('arc (options)', t => {
     [0.30901700258255005, 0.9510565400123596],
     [6.123234262925839e-17, 1]
   ]
-  geometry = arc({ endAngle: degToRad(90) })
+  geometry = arc({ endAngle: degToRad(90), segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 6)
@@ -148,7 +128,7 @@ test('arc (options)', t => {
     [0.8999557495117188, -0.43598127365112305],
     [0.9957341551780701, -0.09226836264133453]
   ]
-  geometry = arc({ makeTangent: true })
+  geometry = arc({ makeTangent: true, segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 19)
@@ -182,7 +162,7 @@ test('arc (rotations)', t => {
     [-0.9510565400123596, 0.30901700258255005],
     [-1, 1.2246468525851679e-16]
   ]
-  let geometry = arc({ startAngle: degToRad(90), endAngle: degToRad(180) })
+  let geometry = arc({ startAngle: degToRad(90), endAngle: degToRad(180), segments: 16 })
   let obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 6)
@@ -200,7 +180,7 @@ test('arc (rotations)', t => {
     [0.9396926164627075, -0.3420201539993286],
     [1, -2.4492937051703357e-16]
   ]
-  geometry = arc({ startAngle: degToRad(180), endAngle: degToRad(360) })
+  geometry = arc({ startAngle: degToRad(180), endAngle: degToRad(360), segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 10)
@@ -218,14 +198,14 @@ test('arc (rotations)', t => {
     [0.3420201539993286, 0.9396926164627075],
     [3.0616169991140216e-16, 1]
   ]
-  geometry = arc({ startAngle: degToRad(270), endAngle: degToRad(90) })
+  geometry = arc({ startAngle: degToRad(270), endAngle: degToRad(90), segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 10)
   t.true(comparePoints(obs, exp))
 
   exp = [[-1.8369701465288538e-16, -1]]
-  geometry = arc({ startAngle: degToRad(270), endAngle: degToRad(270.000000005) })
+  geometry = arc({ startAngle: degToRad(270), endAngle: degToRad(270.000000005), segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 1)

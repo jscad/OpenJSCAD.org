@@ -10,7 +10,7 @@ test('roundedCuboid (defaults)', t => {
   const obs = roundedCuboid()
   const pts = geom3.toPoints(obs)
 
-  t.deepEqual(pts.length, 114)
+  t.deepEqual(pts.length, 614)
 })
 
 test('roundedCuboid (options)', t => {

@@ -10,7 +10,7 @@ test('roundedCylinder (defaults)', t => {
   const obs = roundedCylinder()
   const pts = geom3.toPoints(obs)
 
-  t.is(pts.length, 84)
+  t.is(pts.length, 544)
 })
 
 test('roundedCylinder (options)', t => {

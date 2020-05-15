@@ -7,7 +7,7 @@ const poly3 = require('../geometry/poly3')
  * Construct an ellipsoid.
  * @param {Object} [options] - options for construction
  * @param {Array} [options.radius=[1,1,1]] - radius of ellipsoid, along X, Y and Z
- * @param {Number} [options.segments=12] - number of segements to create per 360 rotation
+ * @param {Number} [options.segments=32] - number of segements to create per 360 rotation
  * @param {Array} [options.axes] -  an array with three vectors for the x, y and z base vectors
  * @returns {geom3} new 3D geometry
  * @alias module:modeling/primitives.ellipsoid
@@ -18,7 +18,7 @@ const poly3 = require('../geometry/poly3')
 const ellipsoid = (options) => {
   const defaults = {
     radius: [1, 1, 1],
-    segments: 12,
+    segments: 32,
     axes: [[1, 0, 0], [0, -1, 0], [0, 0, 1]]
   }
   const center = [0, 0, 0]
@@ -90,7 +90,7 @@ const ellipsoid = (options) => {
  * @see [ellipsoid]{@link module:modeling/primitives.ellipsoid} for more options
  * @param {Object} [options] - options for construction
  * @param {Number} [options.radius=1] - radius of sphere
- * @param {Number} [options.segments=12] - number of segments to create per 360 rotation
+ * @param {Number} [options.segments=32] - number of segments to create per 360 rotation
  * @param {Array} [options.axes] -  an array with three vectors for the x, y and z base vectors
  * @returns {geom3} new 3D geometry
  * @alias module:modeling/primitives.sphere
@@ -98,12 +98,12 @@ const ellipsoid = (options) => {
 const sphere = (options) => {
   const defaults = {
     radius: 1,
-    segments: 12,
+    segments: 32,
     axes: [[1, 0, 0], [0, -1, 0], [0, 0, 1]]
   }
   let { radius, segments, axes } = Object.assign({}, defaults, options)
 
-  // TODO check that radius is a number
+  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
 
   radius = [radius, radius, radius]
 

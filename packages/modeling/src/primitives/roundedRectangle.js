@@ -9,7 +9,7 @@ const geom2 = require('../geometry/geom2')
  * @param {Object} [options] - options for construction
  * @param {Array} [options.size=[2,2]] - dimension of rounded rectangle; width and length
  * @param {Number} [options.roundRadius=0.2] - round radius of corners
- * @param {Number} [options.segments=16] - number of segments to create per 360 rotation
+ * @param {Number} [options.segments=32] - number of segments to create per 360 rotation
  * @returns {geom2} new 2D geometry
  * @alias module:modeling/primitives.roundedRectangle
  *
@@ -20,13 +20,15 @@ const roundedRectangle = (options) => {
   const defaults = {
     size: [2, 2],
     roundRadius: 0.2,
-    segments: 16
+    segments: 32
   }
   const center = [0, 0]
   let { size, roundRadius, segments } = Object.assign({}, defaults, options)
 
   if (!Array.isArray(size)) throw new Error('size must be an array')
   if (size.length < 2) throw new Error('size must contain width and length values')
+
+  if (!Number.isFinite(roundRadius)) throw new Error('roundRadius must be a number')
 
   size = size.map((v) => v / 2) // convert to radius
 
