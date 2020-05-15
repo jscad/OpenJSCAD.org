@@ -15,7 +15,7 @@ test('deserialize : instantiate svg (rect) to objects', function (t) {
   let observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 2)
   let shape = observed[0]
-  t.is(shape.sides.length, 20)
+  t.is(shape.sides.length, 36)
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 2)
@@ -34,7 +34,7 @@ test('deserialize : instantiate svg (circle) to objects', function (t) {
   let observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
   let shape = observed[0]
-  t.is(shape.sides.length, 16)
+  t.is(shape.sides.length, 32)
   t.deepEqual(shape.color, [1, 0, 0, 1])
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
@@ -57,7 +57,7 @@ test('deserialize : instantiate svg (ellipse) to objects', function (t) {
   let observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
   let shape = observed[0]
-  t.is(shape.sides.length, 16)
+  t.is(shape.sides.length, 32)
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
