@@ -10,34 +10,27 @@ const { registerAllExtensions } = require('../io/registerExtensions')
 
 const rebuildSolids = (data) => {
   const defaults = { vtreeMode: false, serialize: false }
-  const { mainPath, vtreeMode, parameterValues, inputIsDirectory } = Object.assign({}, defaults, data)
+  let { mainPath, vtreeMode, parameterValues, inputIsDirectory } = Object.assign({}, defaults, data)
   const apiMainPath = vtreeMode ? '../code-loading/vtreeApi' : '@jscad/modeling'
   // we need to update the source for our module
   let requireFn = require
-  if (!inputIsDirectory) {
+
+  // source came from conversion, i.e. not from file system
+  if (data.source) {
     let filesAndFolders = [
       {
-        ext: path.extname(mainPath).substring(1),
-        name: path.basename(mainPath),
-        fullPath: mainPath,
+        ext: 'js',
+        fullPath: './index.js',
+        name: 'index.js',
         source: data.source
       }
     ]
-    filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
-    // console.log('filesAndFolders', filesAndFolders)
+    requireFn = makeWebRequire(filesAndFolders, { apiMainPath })
 
-    const fakeFs = makeFakeFs(filesAndFolders)
-    requireFn = makeWebRequire(filesAndFolders, { apiMainPath, fakeFs })// hasRequire() ? require : makeWebRequire(filesAndFolders, { apiMainPath })
-    // register all extension formats
-    registerAllExtensions(fakeFs, requireFn)
+    mainPath = './index.js' // and use the alias as the entry point
   }
 
-  // console.log('transformed sources', filesAndFolders)
-  // now check if we need fake require or not
-  // FIXME: we need to come up with a way to intercept node 'require' calls to be able to apply transformSources on the fly
-  // since we keep passing the 'mainPath' to the normal require which points to the NON TRANSFORMED source
-  // const requireFn = makeWebRequire(filesAndFolders, { apiMainPath })// hasRequire() ? require : makeWebRequire(filesAndFolders, { apiMainPath })
-  // rootModule SHOULD contain a main() entry and optionally a getParameterDefinitions entry
+  // rootModule should contain exported main and getParameterDefinitions functions
   const rootModule = requireDesignFromModule(mainPath, requireFn)
   // the design (module tree) has been loaded at this stage
   // now we can get our usefull data (definitions and values/defaults)
