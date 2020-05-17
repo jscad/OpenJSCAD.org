@@ -55,7 +55,9 @@ const generateOutputData = (source, params, options) => {
     }
 
     // convert any inputs
+    const prevsource = source
     source = conversionTable[inputFormat]({ source, params, options })
+    if (source === prevsource) source = null // rebuild using the file system
 
     if (outputFormat === 'jscad' || outputFormat === 'js') {
       resolve(source)
