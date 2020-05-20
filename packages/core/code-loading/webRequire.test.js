@@ -1,17 +1,9 @@
 const test = require('ava')
 
-const path = require('path')
-const fs = require('fs')
-
 const { registerAllExtensions } = require('../io/registerExtensions')
 
 const makeWebRequire = require('./webRequire')
-const transformSources = require('./transformSources')
 const makeFakeFs = require('./makeFakeFs')
-
-function almostEquals (t, observed, expected, precision) {
-  t.is(Math.abs(expected - observed) < precision, true)
-}
 
 test.beforeEach(t => {
 })
@@ -30,7 +22,6 @@ test('webRequire: should support require, from a single file', t => {
   requireFn = makeWebRequire(singleFileJscad, { apiMainPath })
   registerAllExtensions(fakeFs, requireFn)
   designRootModule = requireFn(singleFileJscad[0].fullPath)
-
 
   t.true('main' in designRootModule)
   t.true(designRootModule.main instanceof Function)
@@ -77,7 +68,7 @@ test('webRequire: should support require, from a directory with dependent files'
   t.true('main' in designRootModule)
   t.true(designRootModule.main instanceof Function)
 
-  const resultOfMain = designRootModule.main()
+  // const resultOfMain = designRootModule.main()
 })
 
 test('webRequire: should allow using require.extensions like the native node require (simple)', t => {
@@ -91,7 +82,7 @@ test('webRequire: should allow using require.extensions like the native node req
 
   const mainPath = '/logo.jscad'
   const apiMainPath = '@jscad/modeling'
-  let filesAndFolders = [
+  const filesAndFolders = [
     {
       ext: 'jscad',
       fullPath: '/logo.jscad',
@@ -125,7 +116,7 @@ test('webRequire: should allow using require.extensions like the native node req
 
   const mainPath = '/examples/logo.js'
   const apiMainPath = '@jscad/modeling'
-  let filesAndFolders = [
+  const filesAndFolders = [
     {
       ext: 'js',
       fullPath: '/examples/logo.js',
@@ -333,4 +324,3 @@ const directoryWithDependencies = [
     ]
   }
 ]
-

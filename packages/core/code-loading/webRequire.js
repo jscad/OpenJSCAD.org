@@ -48,7 +48,7 @@ const makeWebRequire = (filesAndFolders, options) => {
   const apiModule = apiMainPath === '@jscad/modeling' ? require('@jscad/modeling') : require('./vtreeApi')
 
   // preset core modules
-  let core_modules = {
+  const coreModules = {
     '@jscad/io': {
       exports: require('@jscad/io')
     },
@@ -61,7 +61,7 @@ const makeWebRequire = (filesAndFolders, options) => {
     },
     // fake fs module ! only useable with the currently available files & folders
     // that have been drag & dropped / created
-    'fs': {
+    fs: {
       exports: fakeFs
     }
   }
@@ -78,7 +78,7 @@ const makeWebRequire = (filesAndFolders, options) => {
     // console.log('***** require: cur:', curPath, ' req:', reqPath)
 
     // core modules
-    const directModule = core_modules[reqPath]
+    const directModule = coreModules[reqPath]
     if (directModule) {
       return directModule.exports
     }
@@ -87,7 +87,7 @@ const makeWebRequire = (filesAndFolders, options) => {
       curPath = ''
     }
 
-    const load_as_file = (reqPath) => {
+    const loadAsFile = (reqPath) => {
       // console.log('***** load as file', reqPath)
       let baseExt = getFileExtensionFromString(reqPath)
       if (!baseExt) {
@@ -102,15 +102,14 @@ const makeWebRequire = (filesAndFolders, options) => {
       if (entry.children) return null // directory
 
       if (extensions[baseExt]) {
-        let matchingModule
         // evaluate the content
-        matchingModule = {
+        const matchingModule = {
           exports: {},
           _compile: (content, fileName) => {
             const moduleMakerFunction = new Function('require', 'module', content)
             moduleMakerFunction(_require.bind(null, entry.fullPath), matchingModule)
             // add to core to resolve later references
-            //core_modules[entry.fullPath] = matchingModule.exports
+            // FIXME coreModules[entry.fullPath] = matchingModule.exports
           }
         }
         extensions[baseExt](matchingModule, entry.fullPath)
@@ -119,7 +118,7 @@ const makeWebRequire = (filesAndFolders, options) => {
       return null
     }
 
-    const load_index = (reqPath) => {
+    const loadIndex = (reqPath) => {
       // console.log('***** load index', reqPath)
       const entry = findMatch(reqPath, filesAndFolders)
       if (!entry) return null
@@ -127,17 +126,17 @@ const makeWebRequire = (filesAndFolders, options) => {
       if (reqPath === '/') reqPath = '' // FIXME hack for multiple file dragNdrop
 
       let indexPath = reqPath + '/index.js'
-      let matchingModule = load_as_file(indexPath)
+      let matchingModule = loadAsFile(indexPath)
       if (matchingModule) return matchingModule
 
       indexPath = reqPath + '/index.json'
-      matchingModule = load_as_file(indexPath)
+      matchingModule = loadAsFile(indexPath)
       if (matchingModule) return matchingModule
 
       return null
     }
 
-    const load_as_directory = (reqPath) => {
+    const loadAsDirectory = (reqPath) => {
       // console.log('***** load as directory', reqPath)
       let entry = findMatch(reqPath, filesAndFolders)
       if (!entry) return null
@@ -146,16 +145,16 @@ const makeWebRequire = (filesAndFolders, options) => {
 
       // load from main definition
       let matchingModule
-      jsonPath = reqPath + '/package.json'
+      const jsonPath = reqPath + '/package.json'
       entry = findMatch(jsonPath, filesAndFolders)
       if (entry) {
         const main = JSON.parse(entry.source).main
         if (main) {
-          let mainPath = reqPath + '/' + main
-          matchingModule = load_as_file(mainPath)
+          const mainPath = reqPath + '/' + main
+          matchingModule = loadAsFile(mainPath)
           if (matchingModule) return matchingModule
 
-          matchingModule = load_index(mainPath)
+          matchingModule = loadIndex(mainPath)
           if (matchingModule) return matchingModule
 
           return null
@@ -163,7 +162,7 @@ const makeWebRequire = (filesAndFolders, options) => {
       }
 
       // load index
-      matchingModule = load_index(reqPath)
+      matchingModule = loadIndex(reqPath)
       if (matchingModule) return matchingModule
 
       return null
@@ -173,11 +172,11 @@ const makeWebRequire = (filesAndFolders, options) => {
     if (reqPath.startsWith('./') || reqPath.startsWith('/') || reqPath.startsWith('../')) {
       reqPath = path.resolve(path.dirname(curPath), reqPath)
       // load as file
-      let loadedModule = load_as_file(reqPath)
+      let loadedModule = loadAsFile(reqPath)
       if (loadedModule) return loadedModule
 
       // load as directory
-      loadedModule = load_as_directory(reqPath)
+      loadedModule = loadAsDirectory(reqPath)
       if (loadedModule) return loadedModule
 
       throw new Error(`Cannot find relative path to module ${reqPath}`)
@@ -185,35 +184,35 @@ const makeWebRequire = (filesAndFolders, options) => {
 
     // TODO load self-reference
 
-    const node_modules_paths = (basePath) => {
-      let parts = basePath.split('/')
-      let dirs = []
+    const nodeModulesPaths = (basePath) => {
+      const parts = basePath.split('/')
+      const dirs = []
       for (let i = parts.length - 1; i > 0; i--) {
         if (parts[i] === 'node_modules') continue
-        let dir = path.sep + path.join(...parts.slice(1, i + 1), 'node_modules')
+        const dir = path.sep + path.join(...parts.slice(1, i + 1), 'node_modules')
         dirs.push(dir)
       }
       return dirs
     }
 
-    const load_node_modules = (reqPath, basePath) => {
-      // console.log('load_node_modules',reqPath, basePath)
-      let dirs = node_modules_paths(basePath)
+    const loadNodeModules = (reqPath, basePath) => {
+      // console.log('loadNodeModules',reqPath, basePath)
+      const dirs = nodeModulesPaths(basePath)
       for (let i = 0; i < dirs.length; i++) {
-        let dir = dirs[i]
-        let relPath = path.join(dir, reqPath)
+        const dir = dirs[i]
+        const relPath = path.join(dir, reqPath)
         // load as file
-        let loadedModule = load_as_file(relPath)
+        let loadedModule = loadAsFile(relPath)
         if (loadedModule) return loadedModule
         // load as directory
-        loadedModule = load_as_directory(relPath)
+        loadedModule = loadAsDirectory(relPath)
         if (loadedModule) return loadedModule
       }
       return null
     }
 
     // load node_module
-    let loadedModule = load_node_modules(reqPath, path.dirname(curPath))
+    const loadedModule = loadNodeModules(reqPath, path.dirname(curPath))
     if (loadedModule) return loadedModule
 
     throw new Error(`Cannot find module ${reqPath}`)
