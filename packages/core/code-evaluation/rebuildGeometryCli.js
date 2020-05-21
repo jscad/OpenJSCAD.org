@@ -3,31 +3,31 @@ const path = require('path')
 const { toArray } = require('@jscad/array-utils')
 const requireDesignFromModule = require('../code-loading/requireDesignFromModule')
 const getAllParameterDefintionsAndValues = require('../parameters/getParameterDefinitionsAndValues')
-const transformSources = require('../code-loading/transformSources')
 const makeWebRequire = require('../code-loading/webRequire')
-const makeFakeFs = require('../code-loading/makeFakeFs')
-const { registerAllExtensions } = require('../io/registerExtensions')
 
 const rebuildSolids = (data) => {
   const defaults = { vtreeMode: false, serialize: false }
-  let { mainPath, vtreeMode, parameterValues, inputIsDirectory } = Object.assign({}, defaults, data)
+  let { mainPath, vtreeMode, parameterValues, useFakeFs } = Object.assign({}, defaults, data)
   const apiMainPath = vtreeMode ? '../code-loading/vtreeApi' : '@jscad/modeling'
   // we need to update the source for our module
   let requireFn = require
 
   // source came from conversion, i.e. not from file system
-  if (data.source) {
-    let filesAndFolders = [
+  if (useFakeFs) {
+    const pathParts = path.parse(mainPath)
+    const fakeName = `${pathParts.name}.js`
+    const fakePath = `/${pathParts.name}.js`
+    const filesAndFolders = [
       {
         ext: 'js',
-        fullPath: './index.js',
-        name: 'index.js',
+        fullPath: fakePath,
+        name: fakeName,
         source: data.source
       }
     ]
     requireFn = makeWebRequire(filesAndFolders, { apiMainPath })
 
-    mainPath = './index.js' // and use the alias as the entry point
+    mainPath = fakePath // and use the alias as the entry point
   }
 
   // rootModule should contain exported main and getParameterDefinitions functions
