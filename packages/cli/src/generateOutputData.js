@@ -22,7 +22,7 @@ const generateOutputData = (source, params, options) => {
     addMetaData: true
   }
   options = Object.assign({}, defaults, options)
-  const { outputFormat, inputFile, inputFormat, inputIsDirectory } = options
+  const { outputFormat, inputFile, inputFormat } = options
 
   options.filename = inputFile // for deserializers
 
@@ -55,7 +55,9 @@ const generateOutputData = (source, params, options) => {
     }
 
     // convert any inputs
+    const prevsource = source
     source = conversionTable[inputFormat]({ source, params, options })
+    const useFakeFs = (source !== prevsource) // conversion, so use a fake file system when rebuilding
 
     if (outputFormat === 'jscad' || outputFormat === 'js') {
       resolve(source)
@@ -63,7 +65,7 @@ const generateOutputData = (source, params, options) => {
       //    } else if ((inputFormat === 'jscad' || inputFormat === 'js') &&
       //               outputFormat !== 'jscad' && outputFormat !== 'js') {
       try {
-        const solids = rebuildSolids({ mainPath: inputPath, parameterValues: params, inputIsDirectory, source })
+        const solids = rebuildSolids({ mainPath: inputPath, parameterValues: params, useFakeFs, source })
         resolve(solids)
       } catch (error) {
         reject(error)
