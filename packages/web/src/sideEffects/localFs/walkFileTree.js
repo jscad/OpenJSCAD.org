@@ -52,12 +52,11 @@ function processItems (items) {
     .filter(isEmtpy)// skip empty items
     .reduce((result, item) => {
       // console.log('result', result, 'item', item)
+      if (item.name.startsWith('.')) return result // skip hidden files and directories
       if (item.isFile) {
         result.push(processFile(item))
       } else if (item.isDirectory) {
-        if (item.name !== '.git') { // ignore .git folder
-          result.push(processDirectory(item))
-        }
+        result.push(processDirectory(item))
       } else if (item instanceof File) {
         const file = isSupportedFormat(item) ? readFileAsync(item, { fullPath: undefined }) : undefined
         if (!file) {
@@ -68,9 +67,6 @@ function processItems (items) {
       return result
     }, [])
 
-  // const filesToIgnore()
-  // .DS_Store, .git
-  // console.warn(`ignoring Unsuported file ${fileData.name}`): this is for cases like .DSSTORE etc on mac
   return Promise.all(results)
     .then(x => x.filter(x => x !== null && x !== undefined))// .then(flatten)
     // .filter()
