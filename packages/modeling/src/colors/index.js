@@ -2,7 +2,7 @@
  * @module modeling/color
  */
 module.exports = {
-  color: require('./color'),
+  colorize: require('./colorize'),
   colorNameToRgb: require('./colorNameToRgb'),
   cssColors: require('./cssColors'),
   hexToRgb: require('./hexToRgb'),
