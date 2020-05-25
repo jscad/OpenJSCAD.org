@@ -1,9 +1,9 @@
 /* eslint-disable */
 const { toArray, flatten } = require('@jscad/array-utils')
 
-const color = (params, ...objects) => {
+const colors = (params, ...objects) => {
   objects = flatten(objects)
-  return { children: objects, type: 'color', params }
+  return { children: objects, type: 'colors', params }
 }
 
 // attempt at workaround for non tree items that need access to data before final evaluation
@@ -59,7 +59,7 @@ const apiClone = {
     measureBounds
   },
 
-  color: Object.assign({}, require('@jscad/csg/api').color, { color }),
+  colors: Object.assign({}, require('@jscad/csg/api').colors, { colors }),
   csg: require('@jscad/csg/api').csg,
   // these are obsolete, but keeping the same API for now ...
   maths: require('@jscad/csg/api').maths,
@@ -94,7 +94,7 @@ module.exports = {
   linear_extrude,
   rectangular_extrude,
 
-  color,
+  colors,
 
   measureArea,
   measureVolume,

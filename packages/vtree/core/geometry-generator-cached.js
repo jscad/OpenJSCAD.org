@@ -3,7 +3,7 @@ const { cube, sphere, cylinder } = require('@jscad/csg/api').primitives3d
 const { circle, square } = require('@jscad/csg/api').primitives2d
 const { union, difference, intersection } = require('@jscad/csg/api').booleanOps
 const { translate, rotate, scale, mirror, hull, chain_hull, contract } = require('@jscad/csg/api').transformations
-const { color } = require('@jscad/csg/api').color
+const { colorize } = require('@jscad/csg/api').colors
 const { linear_extrude, rectangular_extrude, rotate_extrude } = require('@jscad/csg/api').extrusions
 
 const generate = (node, cache) => {
@@ -84,9 +84,9 @@ const generate = (node, cache) => {
       operands = flatten(node.children).map(n => generate(n, cache))
       result = chain_hull(operands)
       break
-    case 'color':
+    case 'colorize':
       operands = flatten(node.children).map(n => generate(n, cache))
-      result = color(node.params, operands)
+      result = colorize(node.params, operands)
       break
     case 'linear_extrude':
       operands = flatten(node.children).map(n => generate(n, cache))

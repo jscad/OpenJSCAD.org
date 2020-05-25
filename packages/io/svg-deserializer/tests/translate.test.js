@@ -28,14 +28,14 @@ test('deserialize : translate svg (rect) to script', function (t) {
   t.is(typeof obs, 'string')
   t.is(countOf('rectangle', obs), 1)
   t.is(countOf('roundedRectangle', obs), 3)
-  t.is(countOf('color.color', obs), 3) // color
+  t.is(countOf('colors.colorize', obs), 3) // color
   t.is(countOf('path2.fromPoints', obs), 4)
 
   obs = deserializer.deserialize({ output: 'script', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(typeof obs, 'string')
   t.is(countOf('rectangle', obs), 1)
   t.is(countOf('roundedRectangle', obs), 3)
-  t.is(countOf('color.color', obs), 3) // color
+  t.is(countOf('colors.colorize', obs), 3) // color
   t.is(countOf('path2.fromPoints', obs), 0)
 })
 
@@ -49,13 +49,13 @@ test('deserialize : translate svg (circle) to script', function (t) {
   let obs = deserializer.deserialize({ output: 'script', target: 'path', addMetaData: false }, sourceSvg)
   t.is(typeof obs, 'string')
   t.is(countOf('circle', obs), 1)
-  t.is(countOf('color.color', obs), 1) // stroke
+  t.is(countOf('colors.colorize', obs), 1) // stroke
   t.is(countOf('path2.fromPoints', obs), 1)
 
   obs = deserializer.deserialize({ output: 'script', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(typeof obs, 'string')
   t.is(countOf('circle', obs), 1)
-  t.is(countOf('color.color', obs), 1) // fill
+  t.is(countOf('colors.colorize', obs), 1) // fill
   t.is(countOf('path2.fromPoints', obs), 0)
 })
 
@@ -70,13 +70,13 @@ test('deserialize : translate svg (ellipse) to script', function (t) {
   let obs = deserializer.deserialize({ output: 'script', target: 'path', addMetaData: false }, sourceSvg)
   t.is(typeof obs, 'string')
   t.is(countOf('ellipse', obs), 1)
-  t.is(countOf('color.color', obs), 0)
+  t.is(countOf('colors.colorize', obs), 0)
   t.is(countOf('path2.fromPoints', obs), 1)
 
   obs = deserializer.deserialize({ output: 'script', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(typeof obs, 'string')
   t.is(countOf('ellipse', obs), 1)
-  t.is(countOf('color.color', obs), 0)
+  t.is(countOf('colors.colorize', obs), 0)
   t.is(countOf('path2.fromPoints', obs), 0)
 })
 
@@ -164,7 +164,7 @@ test('deserialize : translate svg (path: simple) to script', function (t) {
   t.is(countOf('path2.fromPoints', obs), 1)
   t.is(countOf('path2.appendPoints', obs), 2)
   t.is(countOf('path2.close', obs), 1)
-  t.is(countOf('color.color', obs), 1) // stroke
+  t.is(countOf('colors.colorize', obs), 1) // stroke
   t.is(countOf('geom2.fromPoints', obs), 0)
 
   obs = deserializer.deserialize({ output: 'script', target: 'geom2', addMetaData: false }, sourceSvg)
@@ -172,7 +172,7 @@ test('deserialize : translate svg (path: simple) to script', function (t) {
   t.is(countOf('path2.fromPoints', obs), 1)
   t.is(countOf('path2.appendPoints', obs), 2)
   t.is(countOf('path2.close', obs), 1)
-  t.is(countOf('color.color', obs), 0) // no fill
+  t.is(countOf('colors.colorize', obs), 0) // no fill
   t.is(countOf('geom2.fromPoints', obs), 1)
 
   // test getting stroke width from group
@@ -208,7 +208,7 @@ test('deserialize : translate svg (path: simple) to script', function (t) {
   t.is(countOf('path2.appendPoints', obs), 8)
   t.is(countOf('path2.close', obs), 1)
   t.is(countOf('geom2.fromPoints', obs), 1)
-  t.is(countOf('color.color', obs), 1) // fill
+  t.is(countOf('colors.colorize', obs), 1) // fill
 
   sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120"">
   <path d="M 240.00000 56.00000 H 270.00000 V 86.00000 H 300.00000 V 116.00000 H 330.00000 V 146.00000 H 240.00000 V 56.00000 Z"/>
@@ -336,7 +336,7 @@ test('deserialize : translate svg (path: bezier) to script', function (t) {
   t.is(countOf('path2.appendBezier', obs), 5)
   t.is(countOf('path2.close', obs), 1)
   t.is(countOf('geom2.fromPoints', obs), 1)
-  t.is(countOf('color.color', obs), 1) // fill
+  t.is(countOf('colors.colorize', obs), 1) // fill
 })
 
 // ################################
@@ -354,7 +354,7 @@ test('deserialize : translate shape with a hole to script', function (t) {
   t.is(countOf('path2.appendArc', obs), 8)
   t.is(countOf('path2.close', obs), 2)
   t.is(countOf('geom2.fromPoints', obs), 0)
-  t.is(countOf('color.color', obs), 1) // stroke
+  t.is(countOf('colors.colorize', obs), 1) // stroke
 
   obs = deserializer.deserialize({ output: 'script', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(typeof obs, 'string')
@@ -362,7 +362,7 @@ test('deserialize : translate shape with a hole to script', function (t) {
   t.is(countOf('path2.appendArc', obs), 8)
   t.is(countOf('path2.close', obs), 2)
   t.is(countOf('geom2.fromPoints', obs), 2)
-  t.is(countOf('color.color', obs), 0) // no fill
+  t.is(countOf('colors.colorize', obs), 0) // no fill
 })
 
 test('deserialize : translate shape with a nested hole to script', function (t) {
@@ -406,7 +406,7 @@ test('deserialize : translate svg with simple defs to script', function (t) {
   t.is(typeof obs, 'string')
   t.is(countOf('ellipse', obs), 1)
   t.is(countOf('path2.fromPoints', obs), 1)
-  t.is(countOf('color.color', obs), 1) // stroke
+  t.is(countOf('colors.colorize', obs), 1) // stroke
   t.is(countOf('scale', obs), 1)
   t.is(countOf('translate', obs), 2)
 })
@@ -434,7 +434,7 @@ test('deserialize : translate svg with defs using defs to script', function (t) 
   t.is(typeof obs, 'string')
   t.is(countOf('ellipse', obs), 1)
   t.is(countOf('path2.fromPoints', obs), 1)
-  t.is(countOf('color.color', obs), 1) // stroke
+  t.is(countOf('colors.colorize', obs), 1) // stroke
   t.is(countOf('rotateZ', obs), 1)
   t.is(countOf('scale', obs), 1)
   t.is(countOf('translate', obs), 3)

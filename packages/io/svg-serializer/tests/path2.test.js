@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { color, geometry, primitives } = require('@jscad/modeling')
+const { colors, geometry, primitives } = require('@jscad/modeling')
 
 const serializer = require('../index.js')
 
@@ -25,7 +25,7 @@ test('serialize 2D path (simple) objects to svg', (t) => {
 test('serialize 2D path (color) objects to svg', (t) => {
   // simple open path
   let object1 = primitives.line([[0, 0], [1, 1], [-3, 3]])
-  object1 = color.color([0.5, 0.5, 0.5, 0.5], object1)
+  object1 = colors.colorize([0.5, 0.5, 0.5, 0.5], object1)
   const observed = serializer.serialize({}, object1)
   t.deepEqual(observed, [expected4])
 })
