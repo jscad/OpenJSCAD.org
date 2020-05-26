@@ -24,7 +24,7 @@ test('2D geometry to JSON', t => {
   t.is(countOf(']', obs1[0]), 15)
   t.is(countOf(',', obs1[0]), 31)
 
-  const geom2 = primitives.circle()
+  const geom2 = primitives.circle({segments: 16})
 
   const obs2 = serialize({}, geom2)
   t.is(countOf('sides', obs2[0]), 1)

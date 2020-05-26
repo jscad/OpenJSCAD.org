@@ -17,6 +17,10 @@ test.afterEach.always(t => {
   try {
     if (t.context.file3Path) fs.unlinkSync(t.context.file3Path)
   } catch (err) {}
+
+  try {
+    if (t.context.file4Path) fs.unlinkSync(t.context.file4Path)
+  } catch (err) {}
 })
 
 test.beforeEach(t => {
@@ -102,8 +106,7 @@ test('cli (conversions)', t => {
 
   t.context.file4Path = file4Path
 
-  // FIXME FAILS WITH STACK TRACE
-  // cmd = `node ${cliPath} ${file2Path} -of dxf`
-  // execSync(cmd, { stdio: [0, 1, 2] })
-  // t.true(fs.existsSync(file4Path))
+  cmd = `node ${cliPath} ${file2Path} -of dxf`
+  execSync(cmd, { stdio: [0, 1, 2] })
+  t.true(fs.existsSync(file4Path))
 })

@@ -7,14 +7,14 @@ const geom2 = require('../geometry/geom2')
  * @see https://en.wikipedia.org/wiki/Ellipse
  * @param {Object} [options] - options for construction
  * @param {Array} [options.radius=[1,1]] - radius of ellipse, along X and Y
- * @param {Number} [options.segments=16] - number of segments to create per 360 rotation
+ * @param {Number} [options.segments=32] - number of segments to create per 360 rotation
  * @returns {geom2} new 2D geometry
  * @alias module:modeling/primitives.ellipse
  */
 const ellipse = (options) => {
   const defaults = {
     radius: [1, 1],
-    segments: 16
+    segments: 32
   }
   const center = [0, 0]
   const { radius, segments } = Object.assign({}, defaults, options)
@@ -41,18 +41,18 @@ const ellipse = (options) => {
  * @see [ellipse]{@link module:modeling/primitives.ellipse} for more options
  * @param {Object} [options] - options for construction
  * @param {Number} [options.radius=1] - radius of circle
- * @param {Number} [options.segments=16] - number of segments to create per 360 rotation
+ * @param {Number} [options.segments=32] - number of segments to create per 360 rotation
  * @returns {geom2} new 2D geometry
  * @alias module:modeling/primitives.circle
  */
 const circle = (options) => {
   const defaults = {
     radius: 1,
-    segments: 16
+    segments: 32
   }
   let { radius, segments } = Object.assign({}, defaults, options)
 
-  // TODO check that radius is a number
+  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
 
   radius = [radius, radius]
 

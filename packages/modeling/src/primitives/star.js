@@ -50,6 +50,9 @@ const star = (options) => {
   var center = [0, 0]
   var { vertices, outerRadius, innerRadius, density, startAngle } = Object.assign({}, defaults, options)
 
+  if (!Number.isFinite(outerRadius)) throw new Error('outerRadius must be a number')
+  if (!Number.isFinite(innerRadius)) throw new Error('innerRadius must be a number')
+
   if (startAngle < 0) throw new Error('startAngle must be positive')
 
   startAngle = startAngle % (Math.PI * 2)

@@ -51,7 +51,7 @@ const square = (options) => {
   }
   let { size } = Object.assign({}, defaults, options)
 
-  // TODO check that size is a number
+  if (!Number.isFinite(size)) throw new Error('size must be a number')
 
   size = [size, size]
 

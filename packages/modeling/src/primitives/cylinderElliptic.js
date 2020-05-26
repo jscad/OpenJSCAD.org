@@ -13,8 +13,8 @@ const poly3 = require('../geometry/poly3')
  * @param {Number} [options.startAngle=0] - start angle of cylinder, in radians
  * @param {Vector2D} [options.endRadius=[1,1]] - radius of rounded end, must be two dimensional array
  * @param {Number} [options.endAngle=(Math.PI * 2)] - end angle of cylinder, in radians
- * @param {Number} [options.segments=12] - number of segments to create per full rotation
- * @returns {geom3} new 3D geometry
+ * @param {Number} [options.segments=32] - number of segments to create per full rotation
+ * @returns {geom3} new geometry
  * @alias module:modeling/primitives.cylinderElliptic
  *
  * @example
@@ -24,14 +24,14 @@ const poly3 = require('../geometry/poly3')
  *       endRadius: [8,3]
  *     });
  */
-const cylinderElliptic = function (options) {
+const cylinderElliptic = (options) => {
   const defaults = {
     height: 2,
     startRadius: [1, 1],
     startAngle: 0,
     endRadius: [1, 1],
     endAngle: (Math.PI * 2),
-    segments: 12
+    segments: 32
   }
   let { height, startRadius, startAngle, endRadius, endAngle, segments } = Object.assign({}, defaults, options)
 
@@ -70,7 +70,7 @@ const cylinderElliptic = function (options) {
 
   const axisZ = vec3.unit(ray)
   const axisX = vec3.unit(vec3.random(axisZ))
-  const axisY = vec3.unit(vec3.cross(axisX, axisZ))
+  const axisY = vec3.unit(vec3.cross(axisZ, axisX))
 
   const point = (stack, slice, radius) => {
     const angle = slice * rotation + startAngle
@@ -85,25 +85,26 @@ const cylinderElliptic = function (options) {
     const t1 = (i + 1) / slices
 
     if (endRadius[0] === startRadius[0] && endRadius[1] === startRadius[1]) {
-      polygons.push(poly3.fromPoints([start, point(0, t0, endRadius), point(0, t1, endRadius)]))
-      polygons.push(poly3.fromPoints([point(0, t1, endRadius), point(0, t0, endRadius), point(1, t0, endRadius), point(1, t1, endRadius)]))
-      polygons.push(poly3.fromPoints([end, point(1, t1, endRadius), point(1, t0, endRadius)]))
+      polygons.push(poly3.fromPoints([start, point(0, t1, endRadius), point(0, t0, endRadius)]))
+      polygons.push(poly3.fromPoints([point(0, t1, endRadius), point(1, t1, endRadius),
+                                      point(1, t0, endRadius), point(0, t0, endRadius)]))
+      polygons.push(poly3.fromPoints([end, point(1, t0, endRadius), point(1, t1, endRadius)]))
     } else {
       if (startRadius[0] > 0) {
-        polygons.push(poly3.fromPoints([start, point(0, t0, startRadius), point(0, t1, startRadius)]))
-        polygons.push(poly3.fromPoints([point(0, t0, startRadius), point(1, t0, endRadius), point(0, t1, startRadius)]))
+        polygons.push(poly3.fromPoints([start, point(0, t1, startRadius), point(0, t0, startRadius)]))
+        polygons.push(poly3.fromPoints([point(0, t0, startRadius), point(0, t1, startRadius), point(1, t0, endRadius)]))
       }
       if (endRadius[0] > 0) {
-        polygons.push(poly3.fromPoints([end, point(1, t1, endRadius), point(1, t0, endRadius)]))
-        polygons.push(poly3.fromPoints([point(1, t0, endRadius), point(1, t1, endRadius), point(0, t1, startRadius)]))
+        polygons.push(poly3.fromPoints([end, point(1, t0, endRadius), point(1, t1, endRadius)]))
+        polygons.push(poly3.fromPoints([point(1, t0, endRadius), point(0, t1, startRadius), point(1, t1, endRadius)]))
       }
     }
   }
   if (rotation < (Math.PI * 2)) {
-    polygons.push(poly3.fromPoints([startv, endv, point(0, 0, startRadius)]))
-    polygons.push(poly3.fromPoints([point(0, 0, startRadius), endv, point(1, 0, endRadius)]))
-    polygons.push(poly3.fromPoints([startv, point(0, 1, startRadius), endv]))
-    polygons.push(poly3.fromPoints([point(0, 1, startRadius), point(1, 1, endRadius), endv]))
+    polygons.push(poly3.fromPoints([startv, point(0, 0, startRadius), endv]))
+    polygons.push(poly3.fromPoints([point(0, 0, startRadius), point(1, 0, endRadius), endv]))
+    polygons.push(poly3.fromPoints([startv, endv, point(0, 1, startRadius)]))
+    polygons.push(poly3.fromPoints([point(0, 1, startRadius), endv, point(1, 1, endRadius)]))
   }
   const result = geom3.create(polygons)
   return result
@@ -114,39 +115,32 @@ const cylinderElliptic = function (options) {
  * @see [cylinderElliptic]{@link module:modeling/primitives.cylinderElliptic} for more options
  * @param {Object} [options] - options for construction
  * @param {Array} [options.height=2] - height of cylinder
- * @param {Number} [options.startRadius=1] - radius of cylinder at the start
- * @param {Number} [options.startAngle=0] - start angle of cylinder
- * @param {Number} [options.endRadius=1] - radius of cylinder at the end
- * @param {Number} [options.endAngle=(Math.PI * 2)] - end angle of cylinder
- * @param {Number} [options.segments=12] - number of segments to create per full rotation
- * @returns {geom3} new 3D geometry
+ * @param {Number} [options.radius=1] - radius of cylinder (at both start and end)
+ * @param {Number} [options.segments=32] - number of segments to create per full rotation
+ * @returns {geom3} new geometry
  * @alias module:modeling/primitives.cylinder
  *
  * @example
  * let cylinder = cylinder({
  *   height: 2,
- *   startRadius: 10,
- *   endRadius: 5,
+ *   radius: 10,
  *   segments: 16
  * })
  */
-const cylinder = function (options) {
+const cylinder = (options) => {
   const defaults = {
     height: 2,
-    startRadius: 1,
-    startAngle: 0,
-    endRadius: 1,
-    endAngle: (Math.PI * 2),
-    segments: 12
+    radius: 1,
+    segments: 32
   }
-  const { height, startRadius, startAngle, endRadius, endAngle, segments } = Object.assign({}, defaults, options)
+  const { height, radius, segments } = Object.assign({}, defaults, options)
+
+  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
 
   const newoptions = {
     height: height,
-    startRadius: [startRadius, startRadius],
-    startAngle: startAngle,
-    endRadius: [endRadius, endRadius],
-    endAngle: endAngle,
+    startRadius: [radius, radius],
+    endRadius: [radius, radius],
     segments: segments
   }
 

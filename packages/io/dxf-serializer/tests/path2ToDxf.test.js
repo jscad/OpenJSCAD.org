@@ -12,7 +12,7 @@ test('2D Path to DXF LWPOLYLINE', t => {
   const exp1 = [empty]
   t.deepEqual(obs1, exp1)
 
-  const path2 = primitives.arc({ center: [5, 5], endAngle: 45 })
+  const path2 = primitives.arc({ center: [5, 5], endAngle: 45, segments: 16 })
 
   const obs2 = serialize({}, path2)
   const exp2 = [lwpolyline0]
