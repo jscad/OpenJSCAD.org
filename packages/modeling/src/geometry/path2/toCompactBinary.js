@@ -7,8 +7,11 @@
 const toCompactBinary = geom => {
   const points = geom.points
   const transforms = geom.transforms
+  let color = [-1, -1, -1, -1]
+  if (geom.color) color = geom.color
+
   // FIXME why Float32Array?
-  const compacted = new Float32Array(1 + 16 + 1 + (points.length * 2)) // type + transforms + isClosed + points data
+  const compacted = new Float32Array(1 + 16 + 1 + 4 + (points.length * 2)) // type + transforms + isClosed + color + points data
 
   compacted[0] = 2 // type code: 0 => geom2, 1 => geom3 , 2 => path2
 
@@ -31,8 +34,13 @@ const toCompactBinary = geom => {
 
   compacted[17] = geom.isClosed ? 1 : 0
 
+  compacted[18] = color[0]
+  compacted[19] = color[1]
+  compacted[20] = color[2]
+  compacted[21] = color[3]
+
   for (let j = 0; j < points.length; j++) {
-    const ci = j * 2 + 18
+    const ci = j * 2 + 22
     const point = points[j]
     compacted[ci] = point[0]
     compacted[ci + 1] = point[1]

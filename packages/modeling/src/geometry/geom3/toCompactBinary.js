@@ -12,10 +12,12 @@ const toCompactBinary = geom => {
 
   const numberOfPolygons = polygons.length
   const numberOfVertices = polygons.reduce((count, polygon) => count + polygon.vertices.length, 0)
+  let color = [-1, -1, -1, -1]
+  if (geom.color) color = geom.color
 
   // FIXME why Float32Array?
-  const compacted = new Float32Array(1 + 16 + 1 + 1 + numberOfPolygons + (numberOfVertices * 3))
-  // type + transforms + isRetesselated + numberOfPolygons + numberOfVerticesPerPolygon[] + vertices data[]
+  const compacted = new Float32Array(1 + 16 + 1 + 4 + 1 + numberOfPolygons + (numberOfVertices * 3))
+  // type + transforms + isRetesselated + color + numberOfPolygons + numberOfVerticesPerPolygon[] + vertices data[]
 
   compacted[0] = 1 // type code: 0 => geom2, 1 => geom3 , 2 => path2
 
@@ -38,9 +40,14 @@ const toCompactBinary = geom => {
 
   compacted[17] = geom.isRetesselated ? 1 : 0
 
-  compacted[18] = numberOfVertices
+  compacted[18] = color[0]
+  compacted[19] = color[1]
+  compacted[20] = color[2]
+  compacted[21] = color[3]
 
-  let ci = 19
+  compacted[22] = numberOfVertices
+
+  let ci = 23
   let vi = ci + numberOfPolygons
   polygons.forEach((polygon) => {
     const points = poly3.toPoints(polygon)
@@ -57,7 +64,6 @@ const toCompactBinary = geom => {
     }
   })
 
-  // TODO transfer known properities, i.e. color
   return compacted
 }
 

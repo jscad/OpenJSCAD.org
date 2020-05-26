@@ -13,6 +13,7 @@ test('toCompactBinary: converts geom3 (default)', (t) => {
       0, 0, 1, 0,
       0, 0, 0, 1,
       0, // isRetesselated flag
+      -1, -1, -1, -1, // color
       0 // number of vertices
     ]
   )
@@ -32,6 +33,7 @@ test('toCompactBinary: converts geom3 into a compact form', (t) => {
       0, 0, 1, 0,
       0, 0, 0, 1,
       0, // isRetesselated flag
+      -1, -1, -1, -1, // color
       7, // number of vertices
       3, // number of vertices per polygon (2)
       4,
@@ -46,6 +48,33 @@ test('toCompactBinary: converts geom3 into a compact form', (t) => {
   )
 
   t.deepEqual(compacted, expected)
+
+  // test color as well
+  geometry.color = [1, 2, 3, 4]
+  const compacted2 = toCompactBinary(geometry)
+  const expected2 = new Float32Array(
+    [
+      1, // type
+      1, 0, 0, 0, // transforms
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1,
+      0, // isRetesselated flag
+      1, 2, 3, 4, // color
+      7, // number of vertices
+      3, // number of vertices per polygon (2)
+      4,
+      0, 0, 0, // vertices (7)
+      1, 0, 0,
+      2, 0, 2,
+      0, 0, 0,
+      1, 0, 0,
+      2, 0, 2,
+      -3, 0, 3
+    ]
+  )
+
+  t.deepEqual(compacted2, expected2)
 })
 
 test('fromCompactBinary: convert a compact form into a geom3', (t) => {
@@ -57,6 +86,7 @@ test('fromCompactBinary: convert a compact form into a geom3', (t) => {
       0, 0, 1, 0,
       0, 0, 0, 1,
       0, // isRetesselated flag
+      -1, -1, -1, -1, // color
       0 // number of vertices
     ]
   )
@@ -65,7 +95,7 @@ test('fromCompactBinary: convert a compact form into a geom3', (t) => {
 
   t.is(equals(geometry, expected), true)
 
-  const compacted = new Float32Array(
+  const compacted1 = new Float32Array(
     [
       1, // type
       1, 0, 0, 0, // transforms
@@ -73,6 +103,7 @@ test('fromCompactBinary: convert a compact form into a geom3', (t) => {
       0, 0, 1, 0,
       0, 0, 0, 1,
       0, // isRetesselated flag
+      -1, -1, -1, -1, // color
       7, // number of vertices
       3, // number of vertices per polygon (2)
       4,
@@ -87,7 +118,34 @@ test('fromCompactBinary: convert a compact form into a geom3', (t) => {
   )
   const points = [[[0, 0, 0], [1, 0, 0], [2, 0, 2]], [[0, 0, 0], [1, 0, 0], [2, 0, 2], [-3, 0, 3]]]
   expected = fromPoints(points)
-  geometry = fromCompactBinary(compacted)
+  geometry = fromCompactBinary(compacted1)
 
   t.is(equals(geometry, expected), true)
+
+  // test color as well
+  const compacted2 = new Float32Array(
+    [
+      1, // type
+      1, 0, 0, 0, // transforms
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1,
+      0, // isRetesselated flag
+      4, 5, 6, 7, // color
+      7, // number of vertices
+      3, // number of vertices per polygon (2)
+      4,
+      0, 0, 0, // vertices (7)
+      1, 0, 0,
+      2, 0, 2,
+      0, 0, 0,
+      1, 0, 0,
+      2, 0, 2,
+      -3, 0, 3
+    ]
+  )
+  geometry = fromCompactBinary(compacted2)
+
+  t.is(equals(geometry, expected), true)
+  t.deepEqual(geometry.color, [4, 5, 6, 7])
 })

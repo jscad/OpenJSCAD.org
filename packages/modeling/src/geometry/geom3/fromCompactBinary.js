@@ -20,8 +20,8 @@ const fromCompactBinary = data => {
 
   created.isRetesselated = !!data[17]
 
-  const numberOfVertices = data[18]
-  let ci = 19
+  const numberOfVertices = data[22]
+  let ci = 23
   let vi = data.length - (numberOfVertices * 3)
   while (vi < data.length) {
     const verticesPerPolygon = data[ci]
@@ -35,7 +35,11 @@ const fromCompactBinary = data => {
     created.polygons.push(poly3.create(vertices))
   }
 
-  // TODO transfer known properities, i.e. color
+  // transfer known properities, i.e. color
+  if (data[18] >= 0) {
+    created.color = [data[18], data[19], data[20], data[21] ]
+  }
+
   return created
 }
 

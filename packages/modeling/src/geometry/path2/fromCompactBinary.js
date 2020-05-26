@@ -18,11 +18,14 @@ const fromCompactBinary = data => {
 
   created.isClosed = !!data[17]
 
-  for (let i = 18; i < data.length; i += 2) {
+  for (let i = 22; i < data.length; i += 2) {
     const point = vec2.fromValues(data[i], data[i + 1])
     created.points.push(point)
   }
-  // TODO transfer known properties, i.e. color
+  // transfer known properties, i.e. color
+  if (data[18] >= 0) {
+    created.color = [data[18], data[19], data[20], data[21] ]
+  }
   return created
 }
 

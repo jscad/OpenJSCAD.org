@@ -7,8 +7,11 @@
 const toCompactBinary = geom => {
   const sides = geom.sides
   const transforms = geom.transforms
+  let color = [-1, -1, -1, -1]
+  if (geom.color) color = geom.color
+
   // FIXME why Float32Array?
-  const compacted = new Float32Array(1 + 16 + (sides.length * 4)) // type + transforms + sides data
+  const compacted = new Float32Array(1 + 16 + 4 + (sides.length * 4)) // type + transforms + color + sides data
 
   compacted[0] = 0 // type code: 0 => geom2, 1 => geom3 , 2 => path2
 
@@ -29,8 +32,13 @@ const toCompactBinary = geom => {
   compacted[15] = transforms[14]
   compacted[16] = transforms[15]
 
+  compacted[17] = color[0]
+  compacted[18] = color[1]
+  compacted[19] = color[2]
+  compacted[20] = color[3]
+
   for (let i = 0; i < sides.length; i++) {
-    const ci = i * 4 + 17
+    const ci = i * 4 + 21
     const point0 = sides[i][0]
     const point1 = sides[i][1]
     compacted[ci + 0] = point0[0]
@@ -38,7 +46,6 @@ const toCompactBinary = geom => {
     compacted[ci + 2] = point1[0]
     compacted[ci + 3] = point1[1]
   }
-  // TODO transfer known properities, i.e. color
   return compacted
 }
 
