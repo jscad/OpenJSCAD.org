@@ -45,7 +45,7 @@ const toCompactBinary = geom => {
     compacted[ci] = point[0]
     compacted[ci + 1] = point[1]
   }
-  // FIXME: how about custom properties or fields ?
+  // TODO: how about custom properties or fields ?
   return compacted
 }
 

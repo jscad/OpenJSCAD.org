@@ -63,7 +63,7 @@ const toCompactBinary = geom => {
       vi += 3
     }
   })
-
+  // TODO: how about custom properties or fields ?
   return compacted
 }
 

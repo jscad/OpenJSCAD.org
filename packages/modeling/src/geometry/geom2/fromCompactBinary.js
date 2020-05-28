@@ -25,6 +25,7 @@ const fromCompactBinary = data => {
   if (data[17] >= 0) {
     created.color = [data[17], data[18], data[19], data[20] ]
   }
+  // TODO: how about custom properties or fields ?
   return created
 }
 
