@@ -60,21 +60,21 @@ test('toCompactBinary: converts geom2 into a compact form', (t) => {
 })
 
 test('fromCompactBinary: convert a compact form into a geom2', (t) => {
-  const compacted1 = new Float32Array([
+  const compacted1 = [
     0, // type flag
     1, 0, 0, 0, // transforms
     0, 1, 0, 0,
     0, 0, 1, 0,
     0, 0, 0, 1,
     -1, -1, -1, -1, // color
-  ])
+  ]
   const expected1 = create()
   const geometry1 = fromCompactBinary(compacted1)
 
   t.deepEqual(geometry1, expected1)
 
   // geometry with a hole
-  const compacted2 = new Float32Array([
+  const compacted2 = [
     0, // type flag
     1, 0, 0, 0, // transforms
     0, 1, 0, 0,
@@ -87,7 +87,7 @@ test('fromCompactBinary: convert a compact form into a geom2', (t) => {
     5, -5, 6, -4,
     6, -5, 5, -5,
     6, -4, 6, -5
-  ])
+  ]
   const expected2 = create([
     [new Float32Array([10, 10]), new Float32Array([-10, -10])],
     [new Float32Array([-10, -10]), new Float32Array([10, -10])],
@@ -101,7 +101,7 @@ test('fromCompactBinary: convert a compact form into a geom2', (t) => {
   t.deepEqual(geometry2, expected2)
 
   // test color as well
-  const compacted3 = new Float32Array([
+  const compacted3 = [
     0, // type flag
     1, 0, 0, 0, // transforms
     0, 1, 0, 0,
@@ -114,7 +114,7 @@ test('fromCompactBinary: convert a compact form into a geom2', (t) => {
     5, -5, 6, -4,
     6, -5, 5, -5,
     6, -4, 6, -5
-  ])
+  ]
   expected2.color = [4, 5, 6, 7]
   const geometry3 = fromCompactBinary(compacted3)
 
