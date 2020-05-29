@@ -1,4 +1,4 @@
-// FIXME: how about custom properties or fields ?
+const poly3 = require('../poly3')
 
 /**
  * Return the given geometry in compact binary representation.
@@ -6,21 +6,65 @@
  * @return {Array} compact binary representation, array
  * @alias module:modeling/geometry/geom3.toCompactBinary
  */
-const geom3ToCompactBinary = geom => {
-  const polysFlat = []
-  polysFlat.push(1) // type code: 0 => geom2, 1 => geom3 , 2 => path2
-  polysFlat.push(geom.isRetesselated ? 1 : 0)
-  polysFlat.push(...geom.transforms)
-  // TODO: triangulate first !!
-  geom.polygons.forEach(p => {
-    polysFlat.push(...p.plane)
-    for (let i = 0; i < p.vertices.length; i += 1) {
-      polysFlat.push(...p.vertices[i])
+const toCompactBinary = geom => {
+  const polygons = geom.polygons
+  const transforms = geom.transforms
+
+  const numberOfPolygons = polygons.length
+  const numberOfVertices = polygons.reduce((count, polygon) => count + polygon.vertices.length, 0)
+  let color = [-1, -1, -1, -1]
+  if (geom.color) color = geom.color
+
+  // FIXME why Float32Array?
+  const compacted = new Float32Array(1 + 16 + 1 + 4 + 1 + numberOfPolygons + (numberOfVertices * 3))
+  // type + transforms + isRetesselated + color + numberOfPolygons + numberOfVerticesPerPolygon[] + vertices data[]
+
+  compacted[0] = 1 // type code: 0 => geom2, 1 => geom3 , 2 => path2
+
+  compacted[1] = transforms[0]
+  compacted[2] = transforms[1]
+  compacted[3] = transforms[2]
+  compacted[4] = transforms[3]
+  compacted[5] = transforms[4]
+  compacted[6] = transforms[5]
+  compacted[7] = transforms[6]
+  compacted[8] = transforms[7]
+  compacted[9] = transforms[8]
+  compacted[10] = transforms[9]
+  compacted[11] = transforms[10]
+  compacted[12] = transforms[11]
+  compacted[13] = transforms[12]
+  compacted[14] = transforms[13]
+  compacted[15] = transforms[14]
+  compacted[16] = transforms[15]
+
+  compacted[17] = geom.isRetesselated ? 1 : 0
+
+  compacted[18] = color[0]
+  compacted[19] = color[1]
+  compacted[20] = color[2]
+  compacted[21] = color[3]
+
+  compacted[22] = numberOfVertices
+
+  let ci = 23
+  let vi = ci + numberOfPolygons
+  polygons.forEach((polygon) => {
+    const points = poly3.toPoints(polygon)
+    // record the number of vertices per polygon
+    compacted[ci] = points.length
+    ci++
+    // convert the vertices
+    for (let i = 0; i < points.length; i++) {
+      const point = points[i]
+      compacted[vi + 0] = point[0]
+      compacted[vi + 1] = point[1]
+      compacted[vi + 2] = point[2]
+      vi += 3
     }
   })
-  const compacter = new Float32Array(polysFlat)
-  // typeFlag (1 float) + isRetesselatedFlag (1 float) + transforms (16 floats) + polygons data (variable length)
-  return compacter
+  // TODO: how about custom properties or fields ?
+  return compacted
 }
 
-module.exports = geom3ToCompactBinary
+module.exports = toCompactBinary
