@@ -22,43 +22,37 @@ function dom (state, i18n, paramsCallbacktoStream, editorCallbackToStream) {
   //       //<input type="button" value="${i18n`load jscad project`}" id="fileLoader"/>
   // <a id="menuToggle">${menuIcon}</a>
   const output = html`
-    <div id='container' style='color:${state.themes.themeSettings.mainTextColor}'>
-
+  <div id='container' style='color:${state.themes.themeSettings.mainTextColor}'>
     <header>
-    <section>
-      <h3>
-
-        <span>JSCAD</span>
-      </h3>
-    </section>
-    <section class='designName'>
-      <h3>${state.design.name}</h3>
-    </section>
-    <section>
-    </section>
+      <section>
+        <h3>
+          <span>JSCAD</span>
+        </h3>
+      </section>
+      <section class='designName'>
+        <h3>${state.design.name}</h3>
+      </section>
       ${io}
-      </header>
+    </header>
 
-      ${options}
-      ${help}
-      ${toolBar}
-      ${viewerControls}
+    ${options}
+    ${help}
+    ${toolBar}
+    ${viewerControls}
 
+    <!-- bare bones essentials -->
+    <!--Status information/errors-->
+    ${status}
 
-      <!-- bare bones essentials -->
-      <!--Status information/errors-->
-      ${status}
+    <!--Viewer-->
+    ${viewer}
 
-      <!--Viewer-->
-      ${viewer}
+    <!--Editor-->
+    ${state.activeTool === 'editor' ? editor : ''}
 
-      <!--Editor-->
-      ${state.activeTool === 'editor' ? editor : ''}
-
-      <!--Params-->
-      ${parameters}
-
-    </div>
+    <!--Params-->
+    ${parameters}
+  </div>
   `
 
   return output
