@@ -1,7 +1,7 @@
 {
   "source" : {
     "include": [
-      "packages/modeling/src/color",
+      "packages/modeling/src/colors",
       "packages/modeling/src/connectors",
       "packages/modeling/src/primitives",
       "packages/modeling/src/geometry",

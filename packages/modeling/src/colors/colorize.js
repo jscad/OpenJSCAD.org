@@ -18,7 +18,7 @@ const colorGeom3 = (color, object) => {
 }
 
 const colorPath2 = (color, object) => {
-  const newpath2 = path2.create(path2.toPoints(object))
+  const newpath2 = path2.clone(object)
   newpath2.color = color
   return newpath2
 }
@@ -34,15 +34,15 @@ const colorPoly3 = (color, object) => {
  * @param {Array} color - RGBA color values, where each value is between 0 and 1.0
  * @param {Object|Array} objects - the objects of which to color
  * @returns {Object|Array} new geometry with an additional attribute 'color'
- * @alias module:modeling/color.color
+ * @alias module:modeling/colors.colorize
  *
  * @example
- * let redSphere = color([1,0,0], sphere()) // red
- * let greenCircle = color([0,1,0,0.8], circle()) // green transparent
- * let blueArc = color([0,0,1], arc()) // blue
- * let wildcylinder = color(colorNameToRgb('fuchsia'), cylinder()) // CSS color
+ * let redSphere = colorize([1,0,0], sphere()) // red
+ * let greenCircle = colorize([0,1,0,0.8], circle()) // green transparent
+ * let blueArc = colorize([0,0,1], arc()) // blue
+ * let wildcylinder = colorize(colorNameToRgb('fuchsia'), cylinder()) // CSS color
  */
-const color = (color, ...objects) => {
+const colorize = (color, ...objects) => {
   if (!Array.isArray(color)) throw new Error('color must be an array')
   if (color.length < 3) throw new Error('color must contain R, G and B values')
   if (color.length === 3) color = [color[0], color[1], color[2], 1.0] // add alpha
@@ -62,4 +62,4 @@ const color = (color, ...objects) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = color
+module.exports = colorize

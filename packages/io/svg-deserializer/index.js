@@ -12,7 +12,7 @@ All code released under MIT license
 
 const sax = require('sax')
 
-const { color, transforms } = require('@jscad/modeling')
+const { colors, transforms } = require('@jscad/modeling')
 const { toArray } = require('@jscad/array-utils')
 
 const { cagLengthX, cagLengthY } = require('./helpers')
@@ -180,10 +180,10 @@ const objectify = (options, group) => {
         }
       }
       if (target === 'path' && obj.stroke) {
-        shape = color.color([obj.stroke[0], obj.stroke[1], obj.stroke[2], 1], shape)
+        shape = colors.colorize([obj.stroke[0], obj.stroke[1], obj.stroke[2], 1], shape)
       }
       if (target === 'geom2' && obj.fill) {
-        shape = color.color([obj.fill[0], obj.fill[1], obj.fill[2], 1], shape)
+        shape = colors.colorize([obj.fill[0], obj.fill[1], obj.fill[2], 1], shape)
       }
       return shape
     })
@@ -262,11 +262,11 @@ const codify = (options, group) => {
     }
     if (target === 'path' && obj.stroke) {
       // for path, only use the supplied SVG stroke color
-      code += `${indent}${on} = color.color([${obj.stroke[0]}, ${obj.stroke[1]}, ${obj.stroke[2]}, 1], ${on})\n`
+      code += `${indent}${on} = colors.colorize([${obj.stroke[0]}, ${obj.stroke[1]}, ${obj.stroke[2]}, 1], ${on})\n`
     }
     if (target === 'geom2' && obj.fill) {
       // for geom2, only use the supplied SVG fill color
-      code += `${indent}${on} = color.color([${obj.fill[0]}, ${obj.fill[1]}, ${obj.fill[2]}, 1], ${on})\n`
+      code += `${indent}${on} = colors.colorize([${obj.fill[0]}, ${obj.fill[1]}, ${obj.fill[2]}, 1], ${on})\n`
     }
     code += `${indent}${ln} = ${ln}.concat(${on})\n\n`
   }

@@ -40,7 +40,7 @@ ENDSEC`
   t.is(ss2.length, 21)
   t.true(src2.indexOf('main = ()') > 0)
   t.true(src2.indexOf('circle(') > 0)
-  t.true(src2.indexOf('color.color(') > 0)
+  t.true(src2.indexOf('colors.colorize(') > 0)
 
   // DXF LINE, translates to script with a 'line' created from points
   const dxf3 = `0
