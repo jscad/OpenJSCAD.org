@@ -18,7 +18,7 @@ const colorGeom3 = (color, object) => {
 }
 
 const colorPath2 = (color, object) => {
-  const newpath2 = path2.create(path2.toPoints(object))
+  const newpath2 = path2.clone(object)
   newpath2.color = color
   return newpath2
 }

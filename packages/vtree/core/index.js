@@ -82,7 +82,7 @@ const expand = (params, ...solids) => {
   return { children: solids, type: 'expand', params }
 }
 
-const colors = (params, ...solids) => {
+const colorize = (params, ...solids) => {
   solids = toArray(solids)
   return { children: solids, type: 'colors', params }
 }
