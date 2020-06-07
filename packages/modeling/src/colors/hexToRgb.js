@@ -4,10 +4,10 @@
  * @see https://www.w3.org/TR/css-color-3/
  * @param {String} notation - color notation
  * @return {Array} RGB color values
- * @alias module:modeling/color.hexToRgb
+ * @alias module:modeling/colors.hexToRgb
  *
  * @example
- * let mysphere = color(hexToRgb('#000080'), sphere()) // navy blue
+ * let mysphere = colorize(hexToRgb('#000080'), sphere()) // navy blue
  */
 const hexToRgb = (notation) => {
   notation = notation.replace('#', '')

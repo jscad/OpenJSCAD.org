@@ -1,14 +1,15 @@
 const flatten = require('../utils/flatten')
 
 /**
- * Converts an RGB color value to HSV.
+ * Converts an RGB color value to HSL.
  *
- * @see http://en.wikipedia.org/wiki/HSV_color_space.
+ * @see http://en.wikipedia.org/wiki/HSL_color_space.
+ * @see http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
  * @param {...Number|Array} values - RGB or RGBA color values
- * @return {Array} HSV or HSVA color values
- * @alias module:modeling/color.rgbToHsv
+ * @return {Number[]} HSL or HSLA color values
+ * @alias module:modeling/colors.rgbToHsl
  */
-const rgbToHsv = (...values) => {
+const rgbToHsl = (...values) => {
   values = flatten(values)
   if (values.length < 3) throw new Error('values must contain R, G and B values')
 
@@ -19,14 +20,14 @@ const rgbToHsv = (...values) => {
   const max = Math.max(r, g, b)
   const min = Math.min(r, g, b)
   let h
-  const v = max
-
-  const d = max - min
-  const s = max === 0 ? 0 : d / max
+  let s
+  const l = (max + min) / 2
 
   if (max === min) {
-    h = 0 // achromatic
+    h = s = 0 // achromatic
   } else {
+    const d = max - min
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
     switch (max) {
       case r:
         h = (g - b) / d + (g < b ? 6 : 0)
@@ -42,11 +43,11 @@ const rgbToHsv = (...values) => {
   }
 
   if (values.length > 3) {
-    // add alpha if provided
+    // add alpha value if provided
     const a = values[3]
-    return [h, s, v, a]
+    return [h, s, l, a]
   }
-  return [h, s, v]
+  return [h, s, l]
 }
 
-module.exports = rgbToHsv
+module.exports = rgbToHsl

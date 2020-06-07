@@ -1,5 +1,5 @@
 module.exports = {
-  color: require('./color'),
+  colors: require('./colors'),
   connectors: require('./connectors'),
   geometry: require('./geometry'),
   math: require('./math'),

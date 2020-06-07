@@ -5,9 +5,9 @@ const cssColors = require('./cssColors')
  *
  * @param {String} s - the CSS color name
  * @return {Array} the RGB color, or undefined if not found
- * @alias module:modeling/color.colorNameToRgb
+ * @alias module:modeling/colors.colorNameToRgb
  * @example
- * let mysphere = color(colorNameToRgb('lightblue'), sphere())
+ * let mysphere = colorize(colorNameToRgb('lightblue'), sphere())
  */
 const colorNameToRgb = s => {
   return cssColors[s.toLowerCase()]
