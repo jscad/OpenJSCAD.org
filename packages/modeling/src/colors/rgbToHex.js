@@ -5,7 +5,7 @@ const flatten = require('../utils/flatten')
  * @see https://www.w3.org/TR/css-color-3/
  * @param {...Number|Array} values - RGB or RGBA color values
  * @return {String} CSS color notation
- * @alias module:modeling/color.rgbToHex
+ * @alias module:modeling/colors.rgbToHex
  */
 const rgbToHex = (...values) => {
   values = flatten(values)

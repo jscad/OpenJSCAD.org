@@ -2,7 +2,7 @@ const { prepareRender, drawCommands, cameras, entitiesFromSolids } = require('./
 
 // setup demo solids data
 const initializeData = function () {
-  const { color } = require('@jscad/scad-api').color
+  const { colorize } = require('@jscad/scad-api').colors
   const { cube, sphere } = require('@jscad/scad-api').primitives3d
   const { union, difference, intersection } = require('@jscad/scad-api').booleanOps
   const logo = union(
@@ -16,7 +16,7 @@ const initializeData = function () {
     )
   ).translate([0, 0, 1.5]).scale(10)
 
-  const transpCube = color([1, 0, 0, 0.75], cube({ size: [100, 100, 400] }))
+  const transpCube = colorize([1, 0, 0, 0.75], cube({ size: [100, 100, 400] }))
   return [transpCube, logo]
 }
 
@@ -84,7 +84,7 @@ const updateAndRender = () => {
   // updateCounter += 1
 
   const dynamicData = function () {
-    const { color } = require('@jscad/scad-api').color
+    const { colorize } = require('@jscad/scad-api').colors
     const { cube, sphere } = require('@jscad/scad-api').primitives3d
     const { union, difference, intersection } = require('@jscad/scad-api').booleanOps
     const logo = union(
@@ -98,7 +98,7 @@ const updateAndRender = () => {
       )
     ).translate([0, 0, 1.5]).scale(10)
 
-    const transpCube = color([1, tick, 0, 0.75], cube({ size: [100 * Math.random(), 100, 400 * Math.random() + 200] }))
+    const transpCube = colorize([1, tick, 0, 0.75], cube({ size: [100 * Math.random(), 100, 400 * Math.random() + 200] }))
     return [transpCube, logo]
   }
   if (updateCounter > 66) {

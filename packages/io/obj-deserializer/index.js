@@ -1,4 +1,4 @@
-const { color, primitives } = require('@jscad/modeling')
+const { colors, primitives } = require('@jscad/modeling')
 
 const version = require('./package.json').version
 
@@ -77,7 +77,7 @@ const getGroups = (data, options) => {
     material = null
     if (values && values.length > 0) {
       // try to convert the material to a color by name
-      const c = color.colorNameToRgb(values[0])
+      const c = colors.colorNameToRgb(values[0])
       if (c) material = [c[0], c[1], c[2], 1] // add alpha
     }
   }

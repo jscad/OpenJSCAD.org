@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { color, geometry, primitives } = require('@jscad/modeling')
+const { colors, geometry, primitives } = require('@jscad/modeling')
 
 const serializer = require('../index.js')
 
@@ -13,7 +13,7 @@ test('serialize 3D geometry to amf', function (t) {
   const observed2 = serializer.serialize({}, testCube)
   t.deepEqual(observed2, expected2)
 
-  const coloredCube = color.color([1.0, 0.0, 0.5, 0.8], testCube)
+  const coloredCube = colors.colorize([1.0, 0.0, 0.5, 0.8], testCube)
   const observed3 = serializer.serialize({ unit: 'inch' }, coloredCube)
   t.deepEqual(observed3, expected3)
 })

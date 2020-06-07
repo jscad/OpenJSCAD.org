@@ -14,7 +14,7 @@
 ## Functions
 
 <dl>
-<dt><a href="#color">color(color, objects)</a> ⇒ <code>Object</code> | <code>Array</code></dt>
+<dt><a href="#colorize">colorize(color, objects)</a> ⇒ <code>Object</code> | <code>Array</code></dt>
 <dd><p>Apply the given color to the given objects.</p>
 </dd>
 <dt><a href="#colorNameToRgb">colorNameToRgb(String)</a> ⇒</dt>
@@ -459,7 +459,7 @@ Fourth element is set to 1</p>
 <dd><p>Create a new plane from the given points</p>
 </dd>
 <dt><a href="#fromPointsRandom">fromPointsRandom(a, b, c)</a> ⇒ <code>Vec4</code></dt>
-<dd><p>Create a new plane from the given points like fromPoints, 
+<dd><p>Create a new plane from the given points like fromPoints,
 but allow the vectors to be on one point or one line
 in such a case a random plane through the given points is constructed</p>
 </dd>
@@ -883,9 +883,9 @@ Epsilon used during determination of near zero distances.
 
 **Kind**: global constant  
 **Default**: <code>0.00001</code>  
-<a name="color"></a>
+<a name="colorize"></a>
 
-## color(color, objects) ⇒ <code>Object</code> \| <code>Array</code>
+## colorize(color, objects) ⇒ <code>Object</code> \| <code>Array</code>
 Apply the given color to the given objects.
 
 **Kind**: global function  
@@ -898,9 +898,9 @@ Apply the given color to the given objects.
 
 **Example**  
 ```js
-let redSphere = color([1,0,0], sphere()) // red
-let greenCircle = color([0,1,0], circle()) // green
-let blueArc = color([0,0,1], arc()) // blue
+let redSphere = colorize([1,0,0], sphere()) // red
+let greenCircle = colorize([0,1,0], circle()) // green
+let blueArc = colorize([0,0,1], arc()) // blue
 ```
 <a name="colorNameToRgb"></a>
 
@@ -916,7 +916,7 @@ Converts a CSS color name to RGB color.
 
 **Example**  
 ```js
-let mysphere = color(colorNameToRgb('lightblue'), sphere())
+let mysphere = colorize(colorNameToRgb('lightblue'), sphere())
 ```
 <a name="hexToRgb"></a>
 
@@ -933,7 +933,7 @@ Converts CSS color notations (string of hex values) to RGB values.
 
 **Example**  
 ```js
-let mysphere = color(hexToRgb('#000080'), sphere()) // navy blue
+let mysphere = colorize(hexToRgb('#000080'), sphere()) // navy blue
 ```
 <a name="hslToRgb"></a>
 
@@ -950,7 +950,7 @@ Converts HSL color values to RGB color values.
 
 **Example**  
 ```js
-let mysphere = color(hslToRgb([0.9166666666666666, 1, 0.5]), sphere())
+let mysphere = colorize(hslToRgb([0.9166666666666666, 1, 0.5]), sphere())
 ```
 <a name="hsvToRgb"></a>
 
@@ -967,7 +967,7 @@ Converts HSV color values to RGB color values.
 
 **Example**  
 ```js
-let mysphere = color(hsvToRgb([0.9166666666666666, 1, 1]), sphere())
+let mysphere = colorize(hsvToRgb([0.9166666666666666, 1, 1]), sphere())
 ```
 <a name="hueToColorComponent"></a>
 
@@ -978,9 +978,9 @@ convert hue values to a color component (ie one of r, g, b)
 
 | Param |
 | --- |
-| p | 
-| q | 
-| t | 
+| p |
+| q |
+| t |
 
 <a name="rgbToHex"></a>
 
@@ -1217,7 +1217,7 @@ Create the outline(s) of the given geometry.
 
 | Param | Type |
 | --- | --- |
-| geometry | <code>geom2</code> | 
+| geometry | <code>geom2</code> |
 
 **Example**  
 ```js
@@ -1763,8 +1763,8 @@ or from a 2D plane back onto the 3D plane
 
 | Param | Type |
 | --- | --- |
-| plane | <code>Plane</code> | 
-| rightvector | <code>Vector3D</code> \| <code>Vector2D</code> | 
+| plane | <code>Plane</code> |
+| rightvector | <code>Vector3D</code> \| <code>Vector2D</code> |
 
 <a name="clone"></a>
 
@@ -1827,10 +1827,10 @@ Calculate the distance (positive) between the given point and line
 
 | Param | Type |
 | --- | --- |
-| p0start | <code>vec</code> | 
-| p0end | <code>vec</code> | 
-| p1start | <code>vec</code> | 
-| p1end | <code>vec</code> | 
+| p0start | <code>vec</code> |
+| p0end | <code>vec</code> |
+| p1start | <code>vec</code> |
+| p1end | <code>vec</code> |
 
 <a name="equals"></a>
 
@@ -2577,7 +2577,7 @@ Create a new plane from the given points
 <a name="fromPointsRandom"></a>
 
 ## fromPointsRandom(a, b, c) ⇒ <code>Vec4</code>
-Create a new plane from the given points like fromPoints, 
+Create a new plane from the given points like fromPoints,
 but allow the vectors to be on one point or one line
 in such a case a random plane through the given points is constructed
 
@@ -2736,7 +2736,7 @@ Create a vec2 from a single scalar value
 
 | Param | Type |
 | --- | --- |
-| scalar | <code>Float</code> | 
+| scalar | <code>Float</code> |
 
 <a name="fromValues"></a>
 
@@ -3090,7 +3090,7 @@ input scalar
 
 | Param | Type |
 | --- | --- |
-| scalar | <code>Float</code> | 
+| scalar | <code>Float</code> |
 
 <a name="fromValues"></a>
 
@@ -3397,7 +3397,7 @@ Create a new vec4 from the given scalar value (single)
 
 | Param | Type |
 | --- | --- |
-| scalar | <code>Number</code> | 
+| scalar | <code>Number</code> |
 
 <a name="fromValues"></a>
 
@@ -3732,8 +3732,8 @@ the result is a true expansion of the solid
 
 | Param | Type |
 | --- | --- |
-| delta | <code>Number</code> | 
-| segments | <code>Integer</code> | 
+| delta | <code>Number</code> |
+| segments | <code>Integer</code> |
 
 <a name="offset"></a>
 
@@ -4471,4 +4471,3 @@ Represents a character as segments
 | width | <code>Float</code> | character width |
 | height | <code>Float</code> | character height (uppercase) |
 | segments | <code>Array</code> | character segments [[[x, y], ...], ...] |
-
