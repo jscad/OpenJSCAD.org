@@ -11,10 +11,10 @@ const toPolygons = require('./toPolygons')
  * @example
  * console.out(toString(geometry))
  */
-const toString = function (geometry) {
+const toString = (geometry) => {
   const polygons = toPolygons(geometry)
   let result = 'geom3 (' + polygons.length + ' polygons):\n'
-  polygons.forEach(function (polygon) {
+  polygons.forEach((polygon) => {
     result += '  ' + poly3.toString(polygon) + '\n'
   })
   return result

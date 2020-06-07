@@ -8,7 +8,7 @@ const geom2 = require('../geometry/geom2')
 
 const comparePoints = require('../../test/helpers/comparePoints')
 
-test('star (defaults)', t => {
+test('star (defaults)', (t) => {
   const geometry = star()
   const pts = geom2.toPoints(geometry)
   const exp = [
@@ -28,7 +28,7 @@ test('star (defaults)', t => {
   t.true(comparePoints(pts, exp))
 })
 
-test('star (options)', t => {
+test('star (options)', (t) => {
   // test vertices
   let geometry = star({ outerRadius: 5, vertices: 8 })
   let pts = geom2.toPoints(geometry)

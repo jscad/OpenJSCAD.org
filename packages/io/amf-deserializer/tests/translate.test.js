@@ -16,7 +16,7 @@ const countOf = (search, string) => {
   return count
 }
 
-test('deserialize simple amf file to jscad script', function (t) {
+test('deserialize simple amf file to jscad script', (t) => {
   const inputPath = path.resolve(samplesPath, 'amf/Amf_Cube.amf')
   const inputFile = fs.readFileSync(inputPath)
 
@@ -26,7 +26,7 @@ test('deserialize simple amf file to jscad script', function (t) {
   t.is(countOf('geom3.create', observed), 1)
 })
 
-test('deserialize amf file with materials to jscad script', function (t) {
+test('deserialize amf file with materials to jscad script', (t) => {
   const inputPath = path.resolve(samplesPath, 'amf/cube-with-hole.amf')
   const inputFile = fs.readFileSync(inputPath)
 

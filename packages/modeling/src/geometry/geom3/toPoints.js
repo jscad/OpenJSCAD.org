@@ -8,11 +8,9 @@ const toPolygons = require('./toPolygons')
  * @return {Array} list of polygons, represented as a list of points (3D)
  * @alias module:modeling/geometry/geom3.toPoints
  */
-const toPoints = function (geometry) {
+const toPoints = (geometry) => {
   const polygons = toPolygons(geometry)
-  const listofpoints = polygons.map(function (polygon) {
-    return poly3.toPoints(polygon)
-  })
+  const listofpoints = polygons.map((polygon) => poly3.toPoints(polygon))
   return listofpoints
 }
 

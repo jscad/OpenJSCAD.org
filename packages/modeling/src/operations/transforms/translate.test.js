@@ -4,7 +4,7 @@ const { geom2, geom3, path2 } = require('../../geometry')
 
 const { translate, translateX, translateY, translateZ } = require('./index')
 
-test('translate: translating of a path2 produces expected changes to points', t => {
+test('translate: translating of a path2 produces expected changes to points', (t) => {
   const line = path2.fromPoints({}, [[0, 0], [1, 0]])
 
   // translate X
@@ -34,7 +34,7 @@ test('translate: translating of a path2 produces expected changes to points', t 
   t.deepEqual(obs, exp)
 })
 
-test('translate: translating of a geom2 produces expected changes to points', t => {
+test('translate: translating of a geom2 produces expected changes to points', (t) => {
   const geometry = geom2.fromPoints([[0, 0], [1, 0], [0, 1]])
 
   // translate X
@@ -66,7 +66,7 @@ test('translate: translating of a geom2 produces expected changes to points', t 
   t.deepEqual(obs, exp)
 })
 
-test('translate: translating of a geom3 produces expected changes to polygons', t => {
+test('translate: translating of a geom3 produces expected changes to polygons', (t) => {
   const points = [
     [[-2, -7, -12], [-2, -7, 18], [-2, 13, 18], [-2, 13, -12]],
     [[8, -7, -12], [8, 13, -12], [8, 13, 18], [8, -7, 18]],
@@ -147,7 +147,7 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
   t.deepEqual(obs, exp)
 })
 
-test('translate: translating of multiple objects produces expected changes', t => {
+test('translate: translating of multiple objects produces expected changes', (t) => {
   const junk = 'hello'
   const geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
   const geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])

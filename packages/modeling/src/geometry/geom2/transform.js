@@ -14,22 +14,11 @@ const create = require('./create')
  * @example
  * let newgeometry = transform(fromZRotation(degToRad(90)), geometry)
  */
-const transform = function (matrix, geometry) {
+const transform = (matrix, geometry) => {
   const newgeometry = create(geometry.sides) // reuse the sides
 
   newgeometry.transforms = mat4.multiply(geometry.transforms, matrix)
   return newgeometry
-
-//  let isMirror = matrix.isMirroring()
-//  let newsides = geometry.sides.map(function (side) {
-//    return side.transform(matrix4x4)
-//  })
-//  let result = create(newsides)
-//
-//  if (isMirror) {
-//    result = reverse(result)
-//  }
-//  return result
 }
 
 module.exports = transform

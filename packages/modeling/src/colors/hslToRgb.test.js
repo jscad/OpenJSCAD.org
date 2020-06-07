@@ -2,7 +2,7 @@ const test = require('ava')
 
 const { hslToRgb } = require('./index')
 
-test('hslToRgb (HSL values)', t => {
+test('hslToRgb (HSL values)', (t) => {
   let obs = hslToRgb([0, 1, 0])
   let exp = [0, 0, 0]
 
@@ -19,7 +19,7 @@ test('hslToRgb (HSL values)', t => {
   t.deepEqual(obs, exp)
 })
 
-test('hslToRgb (HSLA values)', t => {
+test('hslToRgb (HSLA values)', (t) => {
   let obs = hslToRgb([0, 1, 0, 1])
   let exp = [0, 0, 0, 1]
 

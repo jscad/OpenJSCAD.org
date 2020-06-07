@@ -16,7 +16,7 @@
  * 2015/07/02: 0.0.1: contributed to OpenJSCAD.org CLI openjscad
  */
 
-function makeBlob (contents, options) {
+const makeBlob = (contents, options) => {
   const blob = typeof window !== 'undefined' ? window.Blob : Blob
   return blob
 }
@@ -59,8 +59,7 @@ function Blob (contents, options) {
   let object
   // convert the contents (String, ArrayBufferView, ArrayBuffer, Blob)
   this.buffer = Buffer.alloc(this.length) // new Buffer(this.length)
-  var index = 0
-  for (index = 0; index < contents.length; index++) {
+  for (let index = 0; index < contents.length; index++) {
     switch (typeof (contents[index])) {
       case 'string':
         wbytes = this.buffer.write(contents[index], this.size, this.encoding)
@@ -71,10 +70,9 @@ function Blob (contents, options) {
         if (Buffer.isBuffer(object)) {
         }
         if (object instanceof ArrayBuffer) {
-          var view = new DataView(object)
-          var bindex = 0
-          for (bindex = 0; bindex < object.byteLength; bindex++) {
-            var xbyte = view.getUint8(bindex)
+          const view = new DataView(object)
+          for (let bindex = 0; bindex < object.byteLength; bindex++) {
+            const xbyte = view.getUint8(bindex)
             wbytes = this.buffer.writeUInt8(xbyte, this.size, false)
             this.size++
           }

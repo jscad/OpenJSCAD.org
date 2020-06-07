@@ -120,7 +120,7 @@ const conversionFormats = [
   'woff'
 ]
 
-const supportedFormatsForObjects = objects => {
+const supportedFormatsForObjects = (objects) => {
   const objectFormats = []
   let found3Dsolid = false
   let found2Dsolid = false

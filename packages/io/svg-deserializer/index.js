@@ -288,7 +288,7 @@ const createSvgParser = (src, pxPmm) => {
     parser.pxPmm = pxPmm
   }
   // extend the parser with functions
-  parser.onerror = e => console.log('error: line ' + e.line + ', column ' + e.column + ', bad character [' + e.c + ']')
+  parser.onerror = (e) => console.log('error: line ' + e.line + ', column ' + e.column + ', bad character [' + e.c + ']')
 
   parser.onopentag = function (node) {
     const objMap = {

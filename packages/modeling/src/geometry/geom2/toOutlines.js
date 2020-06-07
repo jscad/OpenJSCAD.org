@@ -9,9 +9,7 @@ const toSides = require('./toSides')
 const toEdges = (sides) => {
   const uniquevertices = []
   const getUniqueVertex = (vertex) => {
-    const i = uniquevertices.findIndex((v) => {
-      return vec2.equals(v, vertex)
-    })
+    const i = uniquevertices.findIndex((v) => vec2.equals(v, vertex))
     if (i < 0) {
       uniquevertices.push(vertex)
       return vertex

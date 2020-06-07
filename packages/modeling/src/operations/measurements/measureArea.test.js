@@ -44,7 +44,7 @@ test('measureArea: single objects', (t) => {
   t.is(xarea, 0)
 })
 
-test('measureArea (multiple objects)', t => {
+test('measureArea (multiple objects)', (t) => {
   const aline = line([[10, 10], [15, 15]])
   const arect = rectangle({ size: [10, 20] })
   const acube = cuboid({ size: [10, 20, 40] })

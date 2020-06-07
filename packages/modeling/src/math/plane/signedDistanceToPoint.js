@@ -7,8 +7,6 @@ const vec3 = require('../vec3')
  * @return {Number} signed distance to point
  * @alias module:modeling/math/plane.signedDistanceToPoint
  */
-const signedDistanceToPoint = (plane, vector) => {
-  return vec3.dot(plane, vector) - plane[3]
-}
+const signedDistanceToPoint = (plane, vector) => vec3.dot(plane, vector) - plane[3]
 
 module.exports = signedDistanceToPoint

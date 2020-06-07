@@ -11,7 +11,7 @@ const create = require('./create')
  * @returns {geom2} a new geometry
  * @alias module:modeling/geometry/geom2.fromPoints
  */
-const fromPoints = function (points) {
+const fromPoints = (points) => {
   if (!Array.isArray(points)) {
     throw new Error('the given points must be an array')
   }
@@ -21,7 +21,7 @@ const fromPoints = function (points) {
 
   const sides = []
   let prevpoint = points[points.length - 1]
-  points.forEach(function (point) {
+  points.forEach((point) => {
     sides.push([vec2.fromArray(prevpoint), vec2.fromArray(point)])
     prevpoint = point
   })

@@ -11,9 +11,7 @@ const create = require('./create')
  */
 const clone = (geometry) => {
   const out = create()
-  out.sides = geometry.sides.map((side) => {
-    return [vec2.clone(side[0]), vec2.clone(side[1])]
-  })
+  out.sides = geometry.sides.map((side) => [vec2.clone(side[0]), vec2.clone(side[1])])
   out.transforms = mat4.clone(geometry.transforms)
   return out
 }

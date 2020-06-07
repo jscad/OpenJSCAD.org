@@ -7,9 +7,7 @@ const vec3 = require('../../math/vec3')
  * @returns {Boolean} true if convex
  * @alias module:modeling/geometry/poly3.isConvex
  */
-const isConvex = (poly3) => {
-  return areVerticesConvex(poly3.vertices)
-}
+const isConvex = (poly3) => areVerticesConvex(poly3.vertices)
 
 const areVerticesConvex = (vertices) => {
   const numvertices = vertices.length

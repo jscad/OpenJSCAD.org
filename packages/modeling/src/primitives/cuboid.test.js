@@ -6,7 +6,7 @@ const { cuboid } = require('./index')
 
 const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoints')
 
-test('cuboid (defaults)', t => {
+test('cuboid (defaults)', (t) => {
   const obs = cuboid()
   const pts = geom3.toPoints(obs)
   const exp = [
@@ -39,7 +39,7 @@ test('cuboid (defaults)', t => {
   t.true(comparePolygonsAsPoints(pts, exp))
 })
 
-test('cuboid (options)', t => {
+test('cuboid (options)', (t) => {
   // test size
   const obs = cuboid({ size: [4.5, 1.5, 7] })
   const pts = geom3.toPoints(obs)

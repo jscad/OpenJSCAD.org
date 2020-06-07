@@ -7,8 +7,6 @@ const fromValues = require('./fromValues')
  * @returns {Vec3} a new vector
  * @alias module:modeling/math/vec3.fromScalar
  */
-const fromScalar = (scalar) => {
-  return fromValues(scalar, scalar, scalar)
-}
+const fromScalar = (scalar) => fromValues(scalar, scalar, scalar)
 
 module.exports = fromScalar

@@ -20,7 +20,7 @@ const { utils } = require('@jscad/modeling')
 
 // Replace all typed arrays in geometries with standard Arrays
 // NOTE: 'this' in replacer is the object in which key was found
-function replacer (key, value) {
+const replacer = (key, value) => {
   switch (key) {
     case 'transforms':
     case 'plane':

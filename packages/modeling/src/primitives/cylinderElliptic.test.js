@@ -8,14 +8,14 @@ const { cylinderElliptic } = require('./index')
 
 const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoints')
 
-test('cylinderElliptic (defaults)', t => {
+test('cylinderElliptic (defaults)', (t) => {
   const obs = cylinderElliptic()
   const pts = geom3.toPoints(obs)
 
   t.is(pts.length, 96)
 })
 
-test('cylinderElliptic (options)', t => {
+test('cylinderElliptic (options)', (t) => {
   // test height
   let obs = cylinderElliptic({ height: 10, segments: 12 })
   let pts = geom3.toPoints(obs)

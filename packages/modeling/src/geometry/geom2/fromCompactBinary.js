@@ -9,7 +9,7 @@ const create = require('./create')
  * @returns {geom2} a new geometry
  * @alias module:modeling/geometry/geom2.fromCompactBinary
  */
-const fromCompactBinary = data => {
+const fromCompactBinary = (data) => {
   if (data[0] !== 0) throw new Error('invalid compact binary data')
 
   const created = create()
@@ -23,7 +23,7 @@ const fromCompactBinary = data => {
   }
   // transfer known properties, i.e. color
   if (data[17] >= 0) {
-    created.color = [data[17], data[18], data[19], data[20] ]
+    created.color = [data[17], data[18], data[19], data[20]]
   }
   // TODO: how about custom properties or fields ?
   return created

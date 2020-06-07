@@ -6,8 +6,6 @@
  * @returns {poly3} a new polygon
  * @alias module:modeling/geometry/poly3.fromPointsAndPlane
  */
-const fromPointsAndPlane = (vertices, plane) => {
-  return { vertices: vertices, plane: plane }
-}
+const fromPointsAndPlane = (vertices, plane) => ({ vertices: vertices, plane: plane })
 
 module.exports = fromPointsAndPlane

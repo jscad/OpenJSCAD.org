@@ -11,7 +11,7 @@ const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.js
 //
 // Test suite for DXF deserialization (import)
 //
-test('ASCII DXF from Bourke 3D Entities to Object Conversion', t => {
+test('ASCII DXF from Bourke 3D Entities to Object Conversion', (t) => {
   const dxfPath = path.resolve(samplesPath, 'dxf/bourke/3d-entities.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
@@ -25,7 +25,7 @@ test('ASCII DXF from Bourke 3D Entities to Object Conversion', t => {
   // t.true(objs[1] instanceof CSG.Line3D)
 })
 
-test('ASCII DXF from JSCAD 3D Shapes to Object Conversion', t => {
+test('ASCII DXF from JSCAD 3D Shapes to Object Conversion', (t) => {
 // instantiate from a simple shape
   let dxfPath = path.resolve(samplesPath, 'dxf/jscad/pyramid.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
@@ -79,7 +79,7 @@ test('ASCII DXF from JSCAD 3D Shapes to Object Conversion', t => {
   t.true(geometry.geom3.isA(csg))
 })
 
-test('ASCII DXF from Autocad2017 3D Lines to Object Conversion', t => {
+test('ASCII DXF from Autocad2017 3D Lines to Object Conversion', (t) => {
   const dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/3Dlines.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
@@ -98,7 +98,7 @@ test('ASCII DXF from Autocad2017 3D Lines to Object Conversion', t => {
   t.true(geometry.path2.isA(obj)) // FYI the DXF is incorrect
 })
 
-test('ASCII DXF from Autocad2017 3D Boxes to Object Conversion', t => {
+test('ASCII DXF from Autocad2017 3D Boxes to Object Conversion', (t) => {
   const dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/3Dboxes.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
@@ -110,7 +110,7 @@ test('ASCII DXF from Autocad2017 3D Boxes to Object Conversion', t => {
   t.is(objs.length, 0)
 })
 
-test('ASCII DXF from Autocad2017 3D Drawing Shapes to Object Conversion', t => {
+test('ASCII DXF from Autocad2017 3D Drawing Shapes to Object Conversion', (t) => {
   const dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/3Ddraw.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
@@ -122,7 +122,7 @@ test('ASCII DXF from Autocad2017 3D Drawing Shapes to Object Conversion', t => {
   t.is(objs.length, 0)
 })
 
-test('ASCII DXF from exdxf 3D Mesh to Object Conversion', t => {
+test('ASCII DXF from exdxf 3D Mesh to Object Conversion', (t) => {
   const dxfPath = path.resolve(samplesPath, 'dxf/ezdxf/AC1027_mesh.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
@@ -138,7 +138,7 @@ test('ASCII DXF from exdxf 3D Mesh to Object Conversion', t => {
   t.is(geometry.geom3.toPolygons(obj4).length, 6)
 })
 
-test('ASCII DXF from Autocad2017 3D Mesh to Object Conversion', t => {
+test('ASCII DXF from Autocad2017 3D Mesh to Object Conversion', (t) => {
   const dxfPath = path.resolve(samplesPath, 'dxf/autocad2017/3Dmesh01.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 

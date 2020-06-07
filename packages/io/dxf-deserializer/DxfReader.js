@@ -87,14 +87,12 @@ Thanks to @issacs for the sax js library, and inspiration for this reader
   //
   // emit the start of processing to the onstart handler if any
   //
-  function emitstart (reader) {
-    return emitstate(reader, 'onstart', reader.data)
-  }
+  const emitstart = (reader) => emitstate(reader, 'onstart', reader.data)
 
   //
   // emit the group (code and value) to asorbers
   //
-  function emitgroup (reader, group, value) {
+  const emitgroup = (reader, group, value) => {
     // console.log(group+": "+value)
     // emit this group to all listeners
     if (reader.absorbers !== undefined) {
@@ -108,7 +106,7 @@ Thanks to @issacs for the sax js library, and inspiration for this reader
   //
   // wrap and emit the given error to the onerror handler if any
   //
-  function emiterror (reader, er) {
+  const emiterror = (reader, er) => {
     // closeText(reader)
     if (reader.trackPosition) {
       er += `
@@ -124,11 +122,9 @@ Char: ${reader.c}`
   //
   // emit the end of processing to the onend handler if any
   //
-  function emitend (reader) {
-    return emitstate(reader, 'onend', reader.data)
-  }
+  const emitend = (reader) => emitstate(reader, 'onend', reader.data)
 
-  function emitstate (reader, state, data) {
+  const emitstate = (reader, state, data) => {
     const onhandler = state.toString()
     reader[onhandler] && reader[onhandler](reader, data)
     return reader
@@ -137,7 +133,7 @@ Char: ${reader.c}`
   //
   // parse the given data in the context of the given reader
   //
-  function parse (reader, data) {
+  const parse = (reader, data) => {
   // check reader state
     if (reader.error) {
       throw reader.error // throw the last error
@@ -196,7 +192,7 @@ Char: ${reader.c}`
    * @param reader {DxfReader} - context DxfReader to use
    * @param line {String} - line to parse
    */
-  function parseLine (reader, line) {
+  const parseLine = (reader, line) => {
     line = line.trim()
     if (reader.group === null) {
       setDxfGroup(reader, line)
@@ -218,7 +214,7 @@ Char: ${reader.c}`
    * @param reader {DxfReader} - context DxfReader to use
    * @param line {String} - line to parse
    */
-  function setDxfGroup (reader, line) {
+  const setDxfGroup = (reader, line) => {
   // groups are numeric
     const code = parseInt(line)
     if (isNaN(code)) {
@@ -233,7 +229,7 @@ Char: ${reader.c}`
    * @param reader {DxfReader} - context DxfReader to use
    * @param line {String} - line to parse
    */
-  function setDxfValue (reader, line) {
+  const setDxfValue = (reader, line) => {
     if (reader.options.strict) {
       // TODO evaluate the value based on DXF specifications
       reader.value = line
@@ -245,7 +241,7 @@ Char: ${reader.c}`
   //
   // helper function to return expected values
   //
-  function charAt (data, i) {
+  const charAt = (data, i) => {
     if (data && data.length > i) {
       return data.charAt(i)
     }

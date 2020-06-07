@@ -13,7 +13,7 @@ const mat4 = require('../../math/mat4')
  * @returns {geom2} a new empty geometry
  * @alias module:modeling/geometry/geom2.create
  */
-const create = function (sides) {
+const create = (sides) => {
   if (sides === undefined) {
     sides = [] // empty contents
   }
