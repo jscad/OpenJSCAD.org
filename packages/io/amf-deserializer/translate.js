@@ -68,7 +68,7 @@ const codify = (amf, data) => {
 // Materials: ${materials.length}
 // Scale    : ${amf.scale} from Units (${amf.unit})
 
-const {color, geometry, transforms} = require('@jscad/modeling')
+const {colors, geometry, transforms} = require('@jscad/modeling')
 
 const main = () => {
   let geometries = []
