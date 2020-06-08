@@ -10,7 +10,7 @@ const { hull, hullChain } = modeling.hulls
 const { expand, offset } = modeling.expansions
 const { extrudeLinear, extrudeRotate, extrudeFromSlices, extrudeRectangular } = modeling.extrusions
 const { measureArea, measureVolume, measureBounds } = modeling.measurements
-const { color } = modeling.color
+const { colorize } = modeling.colors
 
 /** genere actual 'genometry' based on vtree node(s)
  * @param  {} node
@@ -38,7 +38,7 @@ const generate = (node, cache) => {
 
   const lookup = {
     // various
-    color: () => nodeWithParams(node, operands, color),
+    colorize: () => nodeWithParams(node, operands, colorize),
     // primitives
     cube: () => cube(node),
     cuboid: () => cuboid(node),
@@ -48,8 +48,6 @@ const generate = (node, cache) => {
     ellipse: () => ellipse(node),
     rectangle: () => rectangle(node),
     square: () => square(node),
-    // color
-
     // booelans
     union: () => nodeWithoutParams(node, operands, union),
     difference: () => nodeWithoutParams(node, operands, difference),
