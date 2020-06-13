@@ -10,7 +10,7 @@ const { intersect } = require('./index')
 
 const { center } = require('../transforms/center')
 
-//  test('intersect: intersect of a path produces expected changes to points', t => {
+//  test('intersect: intersect of a path produces expected changes to points', (t) => {
 //    let geometry = path.fromPoints({}, [[0, 1, 0], [1, 0, 0]])
 //
 //    geometry = intersect({normal: [1, 0, 0]}, geometry)
@@ -20,7 +20,7 @@ const { center } = require('../transforms/center')
 //    t.deepEqual(obs, exp)
 //  })
 
-test('intersect: intersect of one or more geom2 objects produces expected geometry', t => {
+test('intersect: intersect of one or more geom2 objects produces expected geometry', (t) => {
   const geometry1 = circle({ radius: 2, segments: 8 })
 
   // intersect of one object
@@ -77,7 +77,7 @@ test('intersect: intersect of one or more geom2 objects produces expected geomet
   t.deepEqual(obs, exp)
 })
 
-test('intersect: intersect of one or more geom3 objects produces expected geometry', t => {
+test('intersect: intersect of one or more geom3 objects produces expected geometry', (t) => {
   const geometry1 = sphere({ radius: 2, segments: 8 })
 
   // intersect of one object

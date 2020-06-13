@@ -8,8 +8,6 @@ const { radToDeg } = require('../utils')
  * @returns {Number} angle in degrees
  * @alias module:modeling/math/vec2.angleDegrees
  */
-const angleDegrees = vector => {
-  return radToDeg(angleRadians(vector))
-}
+const angleDegrees = (vector) => radToDeg(angleRadians(vector))
 
 module.exports = angleDegrees

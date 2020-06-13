@@ -2,7 +2,7 @@ const vectorChar = require('./vectorChar')
 const vectorParams = require('./vectorParams')
 
 // translate text line
-function translateLine (options, line) {
+const translateLine = (options, line) => {
   const { x, y } = Object.assign({ x: 0, y: 0 }, options || {})
   const segments = line.segments
   let segment = null
@@ -48,7 +48,7 @@ function translateLine (options, line) {
 * or
 * let textSegments = vectorText({ yOffset: -80, input: 'OpenJSCAD' })
 */
-function vectorText (options, text) {
+const vectorText = (options, text) => {
   const {
     xOffset, yOffset, input, font, height, align, extrudeOffset, lineSpacing, letterSpacing
   } = vectorParams(options, text)

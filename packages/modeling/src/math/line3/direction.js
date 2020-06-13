@@ -5,8 +5,6 @@
  * @return {vec3} the relative vector in the direction of the line
  * @alias module:modeling/math/line3.direction
  */
-const direction = (line) => {
-  return line[1]
-}
+const direction = (line) => line[1]
 
 module.exports = direction

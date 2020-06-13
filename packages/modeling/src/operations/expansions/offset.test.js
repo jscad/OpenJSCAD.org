@@ -6,7 +6,7 @@ const { offset } = require('./index')
 
 const { comparePoints } = require('../../../test/helpers')
 
-test('offset (corners: chamfer): offset of a path2 produces expected offset path2', t => {
+test('offset (corners: chamfer): offset of a path2 produces expected offset path2', (t) => {
   const openline = path2.fromPoints({ }, [[0, 0], [5, 0], [0, 5]])
   const closeline = path2.fromPoints({ }, [[0, 0], [5, 0], [0, 5], [0, 0]])
 
@@ -61,7 +61,7 @@ test('offset (corners: chamfer): offset of a path2 produces expected offset path
   t.true(comparePoints(pts, exp))
 })
 
-test('offset (corners: edge): offset of a path2 produces expected offset path2', t => {
+test('offset (corners: edge): offset of a path2 produces expected offset path2', (t) => {
   const openline = path2.fromPoints({ }, [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5]])
   const closeline = path2.fromPoints({ }, [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5], [-5, -5]])
 
@@ -150,7 +150,7 @@ test('offset (corners: edge): offset of a path2 produces expected offset path2',
   t.true(comparePoints(pts, exp))
 })
 
-test('offset (corners: round): offset of a path2 produces expected offset path2', t => {
+test('offset (corners: round): offset of a path2 produces expected offset path2', (t) => {
   const openline = path2.fromPoints({ }, [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5]])
   const closeline = path2.fromPoints({ }, [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5], [-5, -5]])
 
@@ -223,7 +223,7 @@ test('offset (corners: round): offset of a path2 produces expected offset path2'
   t.true(comparePoints(pts, exp))
 })
 
-test('offset (corners: round): offset of a CW path2 produces expected offset path2', t => {
+test('offset (corners: round): offset of a CW path2 produces expected offset path2', (t) => {
   const openline = path2.fromPoints({ }, [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5]].reverse())
   const closeline = path2.fromPoints({ }, [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5], [-5, -5]].reverse())
 
@@ -288,7 +288,7 @@ test('offset (corners: round): offset of a CW path2 produces expected offset pat
   t.true(comparePoints(pts, exp))
 })
 
-test('offset (options): offsetting of a simple geom2 produces expected offset geom2', t => {
+test('offset (options): offsetting of a simple geom2 produces expected offset geom2', (t) => {
   const geometry = geom2.fromPoints([[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5]])
 
   // empty
@@ -388,7 +388,7 @@ test('offset (options): offsetting of a simple geom2 produces expected offset ge
   t.true(comparePoints(pts, exp))
 })
 
-test('offset (options): offsetting of a complex geom2 produces expected offset geom2', t => {
+test('offset (options): offsetting of a complex geom2 produces expected offset geom2', (t) => {
   const geometry = geom2.create([
     [[-75.00000, 75.00000], [-75.00000, -75.00000]],
     [[-75.00000, -75.00000], [75.00000, -75.00000]],
@@ -465,7 +465,7 @@ test('offset (options): offsetting of a complex geom2 produces expected offset g
   t.true(comparePoints(pts, exp))
 })
 
-test('offset (options): offsetting of round geom2 produces expected offset geom2', t => {
+test('offset (options): offsetting of round geom2 produces expected offset geom2', (t) => {
   const geometry = geom2.fromPoints([
     [10.00000, 0.00000],
     [9.23880, 3.82683],

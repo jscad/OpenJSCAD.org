@@ -5,7 +5,7 @@ const { deserialize } = require('../index')
 //
 // Test suite for DXF deserialization (import)
 //
-test('ASCII DXF 2D Entities translated to JSCAD Scripts', t => {
+test('ASCII DXF 2D Entities translated to JSCAD Scripts', (t) => {
 // DXF empty source, translate to main and helper functions and layer0
   const dxf1 = ''
   const src1 = deserialize({ filename: 'dxf1 test', output: 'script' }, dxf1)
@@ -236,7 +236,7 @@ ENDSEC`
   t.true(src7.indexOf('ellipse(') > 0)
 })
 
-test('ASCII DXF Polylines translated to JSCAD Scripts', t => {
+test('ASCII DXF Polylines translated to JSCAD Scripts', (t) => {
 // DXF 2D POLYLINE without bulges, translates to script with a path created from points
   const dxf1 = `0
 SECTION

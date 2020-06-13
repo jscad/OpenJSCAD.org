@@ -4,7 +4,7 @@ const { geom2, geom3, path2 } = require('../../geometry')
 
 const { center, centerX, centerY, centerZ } = require('./index')
 
-test('center: centering of a path2 produces expected changes to points', t => {
+test('center: centering of a path2 produces expected changes to points', (t) => {
   const geometry = path2.fromPoints({}, [[5, 0], [0, 3], [-1, 0]])
 
   // center about X
@@ -22,7 +22,7 @@ test('center: centering of a path2 produces expected changes to points', t => {
   t.deepEqual(pts, exp)
 })
 
-test('center: centering of a geom2 produces expected changes to points', t => {
+test('center: centering of a geom2 produces expected changes to points', (t) => {
   const geometry = geom2.fromPoints([[0, 0], [10, 0], [0, 10]])
 
   // center about Y
@@ -40,7 +40,7 @@ test('center: centering of a geom2 produces expected changes to points', t => {
   t.deepEqual(pts, exp)
 })
 
-test('center: centering of a geom3 produces expected changes to polygons', t => {
+test('center: centering of a geom3 produces expected changes to polygons', (t) => {
   const points = [
     [[-2, -7, -12], [-2, -7, 18], [-2, 13, 18], [-2, 13, -12]],
     [[8, -7, -12], [8, 13, -12], [8, 13, 18], [8, -7, 18]],
@@ -157,7 +157,7 @@ test('center: centering of a geom3 produces expected changes to polygons', t => 
   t.deepEqual(pts, exp)
 })
 
-test('center: centering of multiple objects produces expected changes', t => {
+test('center: centering of multiple objects produces expected changes', (t) => {
   const junk = 'hello'
   const geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
   const geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])

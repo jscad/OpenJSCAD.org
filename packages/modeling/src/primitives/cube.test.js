@@ -6,13 +6,13 @@ const { cube } = require('./index')
 
 const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoints')
 
-test('cube (defaults)', t => {
+test('cube (defaults)', (t) => {
   const obs = cube()
   const pts = geom3.toPoints(obs)
   t.is(pts.length, 6)
 })
 
-test('cube (options)', t => {
+test('cube (options)', (t) => {
   // test size
   const obs = cube({ size: 7 })
   const pts = geom3.toPoints(obs)

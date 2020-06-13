@@ -10,11 +10,9 @@ const toSides = require('./toSides')
  * @example
  * let sharedpoints = toPoints(geometry)
  */
-const toPoints = function (geometry) {
+const toPoints = (geometry) => {
   const sides = toSides(geometry)
-  const points = sides.map((side) => {
-    return side[0]
-  })
+  const points = sides.map((side) => side[0])
   // due to the logic of fromPoints()
   // move the first point to the last
   if (points.length > 0) {

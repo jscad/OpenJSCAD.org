@@ -6,14 +6,14 @@ const { ellipsoid } = require('./index')
 
 const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoints')
 
-test('ellipsoid (defaults)', t => {
+test('ellipsoid (defaults)', (t) => {
   const obs = ellipsoid()
   const pts = geom3.toPoints(obs)
 
   t.is(pts.length, 512)
 })
 
-test('ellipsoid (options)', t => {
+test('ellipsoid (options)', (t) => {
   // test radius
   let obs = ellipsoid({ radius: [3, 5, 7], segments: 12 })
   let pts = geom3.toPoints(obs)

@@ -10,7 +10,7 @@ const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.js
 
 const toArray = (polygons) => polygons.map((p) => p.vertices.map((v) => ([v[0], v[1], v[2]])))
 
-test('instantiate simple ascii stl to geometry', function (t) {
+test('instantiate simple ascii stl to geometry', (t) => {
   const inputPath = path.resolve(samplesPath, 'stl/testcube_ascii.stl')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
@@ -37,7 +37,7 @@ test('instantiate simple ascii stl to geometry', function (t) {
   t.deepEqual(observedPolygons, expectedPolygons)
 })
 
-test('instantiate simple binary stl to geometry', function (t) {
+test('instantiate simple binary stl to geometry', (t) => {
   const inputPath = path.resolve(samplesPath, 'stl/testcube_10mm.stl')
   const inputFile = fs.readFileSync(inputPath)
 
@@ -64,7 +64,7 @@ test('instantiate simple binary stl to geometry', function (t) {
   t.deepEqual(observedPolygons, expectedPolygons)
 })
 
-test('instantiate medium complexity binary stl to geometry', function (t) {
+test('instantiate medium complexity binary stl to geometry', (t) => {
   const inputPath = path.resolve(samplesPath, 'stl/pr2_head_tilt.stl')
   const inputFile = fs.readFileSync(inputPath)
 
@@ -74,7 +74,7 @@ test('instantiate medium complexity binary stl to geometry', function (t) {
   t.deepEqual(polygons.length, 1052)
 })
 
-test('instantiate complex ascii stl to geometry', function (t) {
+test('instantiate complex ascii stl to geometry', (t) => {
   const inputPath = path.resolve(samplesPath, 'stl/herringbone-gear-large.stl')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
@@ -84,7 +84,7 @@ test('instantiate complex ascii stl to geometry', function (t) {
   t.deepEqual(polygons.length, 17742)
 })
 
-test('instantiate complex binary stl to geometry', function (t) {
+test('instantiate complex binary stl to geometry', (t) => {
   const inputPath = path.resolve(samplesPath, 'stl/UM2CableChain_BedEnd.STL')
   const inputFile = fs.readFileSync(inputPath)
 

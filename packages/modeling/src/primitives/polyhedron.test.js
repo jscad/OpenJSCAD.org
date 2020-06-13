@@ -6,7 +6,7 @@ const geom3 = require('../geometry/geom3')
 
 const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoints')
 
-test('polyhedron (points and faces)', t => {
+test('polyhedron (points and faces)', (t) => {
   // points and faces form a cube
   let points = [[-1, -1, -1], [-1, -1, 1], [-1, 1, 1], [-1, 1, -1], [1, -1, 1], [1, -1, -1], [1, 1, -1], [1, 1, 1]]
   let faces = [[0, 1, 2, 3], [5, 6, 7, 4], [0, 5, 4, 1], [3, 2, 7, 6], [0, 3, 6, 5], [1, 4, 7, 2]]

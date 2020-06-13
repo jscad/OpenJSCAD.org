@@ -50,7 +50,7 @@ const amfAmf = (element) => {
   return obj
 }
 
-const amfObject = function (element) {
+const amfObject = (element) => {
   const obj = { type: 'object', id: `JSCAD${amfObjects.length}` } // default ID
 
   if ('ID' in element) { obj.id = element.ID }
@@ -79,18 +79,18 @@ const createAmfParser = (src, pxPmm) => {
       VERTEX: amfVertex,
       EDGE: amfEdge,
       VOLUME: amfVolume,
-      MATERIAL: attributes => {
+      MATERIAL: (attributes) => {
         const tmp = amfMaterial(attributes)
         if (amfDefinition === 0) amfDefinition = 2 // MATERIAL processing
         return tmp
       },
-      TEXTURE: node => {
+      TEXTURE: (node) => {
         if (amfDefinition === 0) amfDefinition = 3 // TEXTURE processing
       },
-      CONSTELLATION: node => {
+      CONSTELLATION: (node) => {
         if (amfDefinition === 0) amfDefinition = 4 // CONSTELLATION processing
       },
-      METADATA: attributes => {
+      METADATA: (attributes) => {
         const tmp = amfMetadata(attributes)
         if (amfDefinition === 0) amfDefinition = 5 // METADATA processing
         return tmp

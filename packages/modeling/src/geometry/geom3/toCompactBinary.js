@@ -6,7 +6,7 @@ const poly3 = require('../poly3')
  * @return {Array} compact binary representation, array
  * @alias module:modeling/geometry/geom3.toCompactBinary
  */
-const toCompactBinary = geom => {
+const toCompactBinary = (geom) => {
   const polygons = geom.polygons
   const transforms = geom.transforms
 

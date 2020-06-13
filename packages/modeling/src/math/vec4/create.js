@@ -10,8 +10,6 @@
  * @returns {vec4} a new vector
  * @alias module:modeling/math/vec4.create
  */
-const create = () => {
-  return new Float32Array(4) // 0, 0, 0, 0
-}
+const create = () => new Float32Array(4) // 0, 0, 0, 0
 
 module.exports = create

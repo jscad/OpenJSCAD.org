@@ -13,7 +13,7 @@ const slice = require('./slice')
 
 const comparePolygonsAsPoints = require('../../../test/helpers/comparePolygonsAsPoints')
 
-test('extrudeFromSlices (defaults)', t => {
+test('extrudeFromSlices (defaults)', (t) => {
   const geometry2 = geom2.fromPoints([[10, 10], [-10, 10], [-10, -10], [10, -10]])
 
   let geometry3 = extrudeFromSlices({ }, geometry2)
@@ -41,7 +41,7 @@ test('extrudeFromSlices (defaults)', t => {
   t.true(comparePolygonsAsPoints(pts, exp))
 })
 
-test('extrudeFromSlices (torus)', t => {
+test('extrudeFromSlices (torus)', (t) => {
   const sqrt3 = Math.sqrt(3) / 2
   const radius = 10
 
@@ -70,7 +70,7 @@ test('extrudeFromSlices (torus)', t => {
   t.is(pts.length, 96)
 })
 
-test('extrudeFromSlices (same shape, changing dimensions)', t => {
+test('extrudeFromSlices (same shape, changing dimensions)', (t) => {
   const base = slice.fromPoints([[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0]])
   const geometry3 = extrudeFromSlices(
     {
@@ -86,7 +86,7 @@ test('extrudeFromSlices (same shape, changing dimensions)', t => {
   t.is(pts.length, 26)
 })
 
-test('extrudeFromSlices (changing shape, changing dimensions)', t => {
+test('extrudeFromSlices (changing shape, changing dimensions)', (t) => {
   const base = circle({ radius: 4, segments: 4 })
   const geometry3 = extrudeFromSlices(
     {
@@ -103,7 +103,7 @@ test('extrudeFromSlices (changing shape, changing dimensions)', t => {
   t.is(pts.length, 298)
 })
 
-test('extrudeFromSlices (holes)', t => {
+test('extrudeFromSlices (holes)', (t) => {
   const geometry2 = geom2.create(
     [
       [[-10.0, 10.0], [-10.0, -10.0]],

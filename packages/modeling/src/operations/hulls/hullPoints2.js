@@ -1,8 +1,6 @@
 const vec2 = require('../../math/vec2')
 
-const angleBetweenPoints = (p0, p1) => {
-  return Math.atan2((p1[1] - p0[1]), (p1[0] - p0[0]))
-}
+const angleBetweenPoints = (p0, p1) => Math.atan2((p1[1] - p0[1]), (p1[0] - p0[0]))
 
 const compareIndex = (index1, index2) => {
   if (index1.angle < index2.angle) {
@@ -54,7 +52,7 @@ const compute = (points) => {
     al.push({ index: i, angle: angle, distance: dist })
   }
 
-  al.sort(function (a, b) { return compareIndex(a, b) })
+  al.sort((a, b) => compareIndex(a, b))
 
   // Wind around the points CCW, removing interior points
   const stack = new Array(points.length + 1)
@@ -69,10 +67,7 @@ const compute = (points) => {
   stack[0] = stack[points.length]
   stack[1] = min
 
-  const ccw = (i1, i2, i3) => {
-    return (points[i2][0] - points[i1][0]) * (points[i3][1] - points[i1][1]) -
-           (points[i2][1] - points[i1][1]) * (points[i3][0] - points[i1][0])
-  }
+  const ccw = (i1, i2, i3) => (points[i2][0] - points[i1][0]) * (points[i3][1] - points[i1][1]) - (points[i2][1] - points[i1][1]) * (points[i3][0] - points[i1][0])
 
   let tmp
   let M = 2

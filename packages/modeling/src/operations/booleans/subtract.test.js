@@ -10,7 +10,7 @@ const { subtract } = require('./index')
 
 const { center } = require('../transforms/center')
 
-// test('subtract: subtract of a path produces expected changes to points', t => {
+// test('subtract: subtract of a path produces expected changes to points', (t) => {
 //   let geometry = path.fromPoints({}, [[0, 1, 0], [1, 0, 0]])
 //
 //   geometry = subtract({normal: [1, 0, 0]}, geometry)
@@ -20,7 +20,7 @@ const { center } = require('../transforms/center')
 //   t.deepEqual(obs, exp)
 // })
 
-test('subtract: subtract of one or more geom2 objects produces expected geometry', t => {
+test('subtract: subtract of one or more geom2 objects produces expected geometry', (t) => {
   const geometry1 = circle({ radius: 2, segments: 8 })
 
   // subtract of one object
@@ -82,7 +82,7 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
   t.deepEqual(obs, exp)
 })
 
-test('subtract: subtract of one or more geom3 objects produces expected geometry', t => {
+test('subtract: subtract of one or more geom3 objects produces expected geometry', (t) => {
   const geometry1 = sphere({ radius: 2, segments: 8 })
 
   // subtract of one object

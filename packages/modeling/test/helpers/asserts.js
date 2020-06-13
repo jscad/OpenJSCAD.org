@@ -5,7 +5,7 @@ const { toPolygons } = require('../../src/core/CSGToOther')
 // todo: could be part of csg.js
 // todo: should simplify colinear vertices
 // @return true if both polygons are identical
-function comparePolygons (a, b) {
+const comparePolygons = (a, b) => {
   // First find one matching vertice
   // We try to find the first vertice of a inside b
   // If there is no such vertice, then a != b
@@ -13,7 +13,7 @@ function comparePolygons (a, b) {
     return false
   }
   const start = a.vertices[0]
-  const index = b.vertices.findIndex(v => {
+  const index = b.vertices.findIndex((v) => {
     if (!v) { return false }
 
     return v._x === start._x && v._y === start._y && v._z === start._z
@@ -35,7 +35,7 @@ function comparePolygons (a, b) {
   return true
 }
 
-function assertSameGeometry (t, observed, expected, failMessage) {
+const assertSameGeometry = (t, observed, expected, failMessage) => {
   if (!containsCSG(observed, expected) || !containsCSG(observed, expected)) {
     failMessage = failMessage === undefined ? 'CSG do not have the same geometry' : failMessage
     t.fail(failMessage)
@@ -43,11 +43,11 @@ function assertSameGeometry (t, observed, expected, failMessage) {
 }
 
 // a contains b if b polygons are also found in a
-function containsCSG (observed, expected) {
-  // console.log('Observed: ', observed)
-  // console.log('Expected: ', expected)
+const containsCSG = (observed, expected) => {
+  console.log('Observed: ', observed)
+  console.log('Expected: ', expected)
 
-  return toPolygons(observed).map(p => {
+  return toPolygons(observed).map((p) => {
     let found = false
     const bp = toPolygons(expected)
     for (let i = 0; i < bp.length; i++) {
@@ -58,27 +58,27 @@ function containsCSG (observed, expected) {
     }
     return found
   }).reduce((observed, expected) => observed && expected)
-};
+}
 
-function simplifiedPolygon (polygon) {
-  const vertices = polygon.vertices.map(vertex => [vertex.pos._x, vertex.pos._y, vertex.pos._z])
+const simplifiedPolygon = (polygon) => {
+  const vertices = polygon.vertices.map((vertex) => [vertex.pos._x, vertex.pos._y, vertex.pos._z])
   const plane = { normal: [polygon.plane.normal._x, polygon.plane.normal._y, polygon.plane.normal._z], w: polygon.plane.w }
   return { positions: vertices, plane, shared: polygon.shared }
 }
 
-function simplifieSides (cag) {
-  const sides = cag.sides.map(side => [side.vertex0.pos._x, side.vertex0.pos._y, side.vertex1.pos._x, side.vertex1.pos._y])
+const simplifieSides = (cag) => {
+  const sides = cag.sides.map((side) => [side.vertex0.pos._x, side.vertex0.pos._y, side.vertex1.pos._x, side.vertex1.pos._y])
   return sides.sort()
 }
 
-function nearlyEquals (a, b, epsilon = 1) {
+const nearlyEquals = (a, b, epsilon = 1) => {
   if (a === b) { // shortcut, also handles infinities and NaNs
     return true
   }
 
-  var absA = Math.abs(a)
-  var absB = Math.abs(b)
-  var diff = Math.abs(a - b)
+  const absA = Math.abs(a)
+  const absB = Math.abs(b)
+  const diff = Math.abs(a - b)
   if (Number.isNaN(diff)) {
     return false
   }
@@ -96,7 +96,7 @@ function nearlyEquals (a, b, epsilon = 1) {
   return true
 }
 
-function CAGNearlyEquals (observed, expected, precision) {
+const CAGNearlyEquals = (observed, expected, precision) => {
   if (observed.sides.length !== expected.sides.length) {
     return false
   }

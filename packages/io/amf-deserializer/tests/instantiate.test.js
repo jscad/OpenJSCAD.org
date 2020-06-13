@@ -10,7 +10,7 @@ const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.js
 
 const toArray = (polygons) => polygons.map((p) => p.vertices.map((v) => ([v[0], v[1], v[2]])))
 
-test('deserialize simple amf to geometry', function (t) {
+test('deserialize simple amf to geometry', (t) => {
   const inputPath = path.resolve(samplesPath, 'amf/Amf_Cube.amf')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 

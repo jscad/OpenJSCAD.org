@@ -6,14 +6,14 @@ const geom2 = require('../geometry/geom2')
 
 const comparePoints = require('../../test/helpers/comparePoints')
 
-test('circle (defaults)', t => {
+test('circle (defaults)', (t) => {
   const geometry = circle()
   const pts = geom2.toPoints(geometry)
 
   t.deepEqual(pts.length, 32)
 })
 
-test('circle (options)', t => {
+test('circle (options)', (t) => {
   // test radius
   let geometry = circle({ radius: 3.5, segments: 16 })
   let pts = geom2.toPoints(geometry)

@@ -1,7 +1,7 @@
 const test = require('ava')
 const { radToDeg, degToRad } = require('./utils')
 
-test('utils: radToDeg() should return correct values', t => {
+test('utils: radToDeg() should return correct values', (t) => {
   const radians = Math.PI / 180
 
   const obs1 = radToDeg(radians * 0)
@@ -17,7 +17,7 @@ test('utils: radToDeg() should return correct values', t => {
   t.true(obs4 === 270)
 })
 
-test('utils: degToRad() should return correct values', t => {
+test('utils: degToRad() should return correct values', (t) => {
   const radians = Math.PI / 180
 
   const obs1 = degToRad(0)

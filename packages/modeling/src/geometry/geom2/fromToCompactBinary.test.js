@@ -66,7 +66,7 @@ test('fromCompactBinary: convert a compact form into a geom2', (t) => {
     0, 1, 0, 0,
     0, 0, 1, 0,
     0, 0, 0, 1,
-    -1, -1, -1, -1, // color
+    -1, -1, -1, -1 // color
   ]
   const expected1 = create()
   const geometry1 = fromCompactBinary(compacted1)

@@ -6,13 +6,13 @@ const { geodesicSphere } = require('./index')
 
 const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoints')
 
-test('geodesicSphere (defaults)', t => {
+test('geodesicSphere (defaults)', (t) => {
   const obs = geodesicSphere()
   const pts = geom3.toPoints(obs)
   t.is(pts.length, 20)
 })
 
-test('geodesicSphere (options)', t => {
+test('geodesicSphere (options)', (t) => {
   // test radius
   let obs = geodesicSphere({ radius: 5 })
   let pts = geom3.toPoints(obs)

@@ -6,19 +6,17 @@ import { CSG, CAG } from '../../csg' // FIXME: BAD!! tests are supposed to be in
 // //////////////////////////////////////////
 // define the basic OBJ
 // //////////////////////////////////////////
-var OBJ = {}
+const OBJ = {}
 
-function _path (objectid) {
-  return './objects/' + objectid + '.bin'
-}
+const _path = (objectid) => './objects/' + objectid + '.bin'
 
 OBJ.save = function (objectid, object) {
   fs.writeFileSync(_path(objectid), JSON.stringify(object), 'utf8')
 }
 
 OBJ.load = function (objectid) {
-  var buffer = fs.readFileSync(_path(objectid), 'utf8')
-  var bin = JSON.parse(buffer)
+  const buffer = fs.readFileSync(_path(objectid), 'utf8')
+  const bin = JSON.parse(buffer)
   if ('sides' in bin) {
     return CAG.fromObject(bin)
   }

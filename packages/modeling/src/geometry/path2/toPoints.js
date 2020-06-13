@@ -10,8 +10,6 @@ const applyTransforms = require('./applyTransforms')
  * @example
  * let sharedpoints = toPoints(path)
  */
-const toPoints = (geometry) => {
-  return applyTransforms(geometry).points
-}
+const toPoints = (geometry) => applyTransforms(geometry).points
 
 module.exports = toPoints

@@ -5,7 +5,7 @@ const { deserialize } = require('../index')
 //
 // Test suite for DXF deserialization (import)
 //
-test('ASCII DXF 3D Polyline Entities translated to JSCAD Scripts', t => {
+test('ASCII DXF 3D Polyline Entities translated to JSCAD Scripts', (t) => {
   // DXF 3D POLYLINE with mesh, translates to script with CSG.fromPolygons
   const dxf3 = `0
 SECTION
@@ -221,7 +221,7 @@ ENDSEC`
   // DXF 3D POLYLINE with faces, translates to script with CSG
 })
 
-test('ASCII DXF 3D FACE Entities translated to JSCAD Scripts', t => {
+test('ASCII DXF 3D FACE Entities translated to JSCAD Scripts', (t) => {
   const dxf1 = `0
 SECTION
 2

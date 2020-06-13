@@ -138,14 +138,12 @@ const convertToContinousPath = (paths, offset, options) => {
   return ['g', continouspath]
 }
 
-const convertPaths = (paths, offsets, options) => {
-  return paths.reduce((res, path, i) => {
-    if (path.color) {
-      return res.concat([['path', { stroke: convertColor(path.color), 'stroke-width': 1, d: convertPath(path, offsets, options) }]])
-    }
-    return res.concat([['path', { d: convertPath(path, offsets, options) }]])
-  }, ['g'])
-}
+const convertPaths = (paths, offsets, options) => paths.reduce((res, path, i) => {
+  if (path.color) {
+    return res.concat([['path', { stroke: convertColor(path.color), 'stroke-width': 1, d: convertPath(path, offsets, options) }]])
+  }
+  return res.concat([['path', { d: convertPath(path, offsets, options) }]])
+}, ['g'])
 
 const convertPath = (path, offsets, options) => {
   let str = ''
@@ -165,9 +163,7 @@ const convertPath = (path, offsets, options) => {
   return str
 }
 
-const convertColor = (color) => {
-  return `rgb(${color[0] * 255},${color[1] * 255},${color[2] * 255},${color[3] * 255})`
-}
+const convertColor = (color) => `rgb(${color[0] * 255},${color[1] * 255},${color[2] * 255},${color[3] * 255})`
 
 module.exports = {
   serialize,

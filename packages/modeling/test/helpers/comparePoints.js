@@ -8,9 +8,7 @@ const compareVectors = require('./compareVectors')
  */
 const comparePoints = (list1, list2) => {
   if (list1.length === list2.length) {
-    return list1.reduce((valid, point, index) => {
-      return valid && compareVectors(list1[index], list2[index])
-    }, true)
+    return list1.reduce((valid, point, index) => valid && compareVectors(list1[index], list2[index]), true)
   }
   return false
 }

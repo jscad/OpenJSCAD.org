@@ -35,7 +35,7 @@ PolygonTreeNode.prototype = {
       throw new Error('Assertion failed')
     }
     const _this = this
-    polygons.forEach(function (polygon) {
+    polygons.forEach((polygon) => {
       _this.addChild(polygon)
     })
   },

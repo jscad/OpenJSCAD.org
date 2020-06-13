@@ -26,7 +26,7 @@ BinaryReader.prototype = {
   readChar: function () { return this.readString(1) },
   readString: function (length) {
     this._checkSize(length * 8)
-    var result = this._buffer.substr(this._pos, length)
+    const result = this._buffer.substr(this._pos, length)
     this._pos += length
     return result
   },
@@ -46,27 +46,28 @@ BinaryReader.prototype = {
 
   /* Private */
   _decodeFloat: function (precisionBits, exponentBits) {
-    var length = precisionBits + exponentBits + 1
-    var size = length >> 3
+    const length = precisionBits + exponentBits + 1
+    const size = length >> 3
     this._checkSize(length)
 
-    var bias = Math.pow(2, exponentBits - 1) - 1
-    var signal = this._readBits(precisionBits + exponentBits, 1, size)
-    var exponent = this._readBits(precisionBits, exponentBits, size)
-    var significand = 0
-    var divisor = 2
-    var curByte = 0 // length + (-precisionBits >> 3) - 1;
+    const bias = Math.pow(2, exponentBits - 1) - 1
+    const signal = this._readBits(precisionBits + exponentBits, 1, size)
+    const exponent = this._readBits(precisionBits, exponentBits, size)
+    let significand = 0
+    let divisor = 2
+    let curByte = 0 // length + (-precisionBits >> 3) - 1;
+    let startBit = 0
     do {
-      var byteValue = this._readByte(++curByte, size)
-      var startBit = precisionBits % 8 || 8
-      var mask = 1 << startBit
-      while (mask >>= 1) {
+      const byteValue = this._readByte(++curByte, size)
+      startBit = precisionBits % 8 || 8
+      let mask = 1 << startBit
+      while ((mask >>= 1)) {
         if (byteValue & mask) {
           significand += 1 / divisor
         }
         divisor *= 2
       }
-    } while (precisionBits -= startBit)
+    } while ((precisionBits -= startBit))
 
     this._pos += size
 
@@ -76,9 +77,9 @@ BinaryReader.prototype = {
   },
 
   _decodeInt: function (bits, signed) {
-    var x = this._readBits(0, bits, bits / 8)
-    var max = Math.pow(2, bits)
-    var result = signed && x >= max / 2 ? x - max : x
+    const x = this._readBits(0, bits, bits / 8)
+    const max = Math.pow(2, bits)
+    const result = signed && x >= max / 2 ? x - max : x
 
     this._pos += bits / 8
     return result
@@ -95,13 +96,13 @@ BinaryReader.prototype = {
   },
 
   _readBits: function (start, length, size) {
-    var offsetLeft = (start + length) % 8
-    var offsetRight = start % 8
-    var curByte = size - (start >> 3) - 1
-    var lastByte = size + (-(start + length) >> 3)
-    var diff = curByte - lastByte
+    const offsetLeft = (start + length) % 8
+    const offsetRight = start % 8
+    const curByte = size - (start >> 3) - 1
+    let lastByte = size + (-(start + length) >> 3)
+    let diff = curByte - lastByte
 
-    var sum = (this._readByte(curByte, size) >> offsetRight) & ((1 << (diff ? 8 - offsetRight : length)) - 1)
+    let sum = (this._readByte(curByte, size) >> offsetRight) & ((1 << (diff ? 8 - offsetRight : length)) - 1)
 
     if (diff && offsetLeft) {
       sum += (this._readByte(lastByte++, size) & ((1 << offsetLeft) - 1)) << (diff-- << 3) - offsetRight

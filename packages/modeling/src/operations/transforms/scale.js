@@ -30,7 +30,7 @@ const scale = (factors, ...objects) => {
 
   const matrix = mat4.fromScaling(factors)
 
-  const results = objects.map(function (object) {
+  const results = objects.map((object) => {
     if (path2.isA(object)) return path2.transform(matrix, object)
     if (geom2.isA(object)) return geom2.transform(matrix, object)
     if (geom3.isA(object)) return geom3.transform(matrix, object)

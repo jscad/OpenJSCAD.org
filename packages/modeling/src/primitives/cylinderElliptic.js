@@ -86,8 +86,9 @@ const cylinderElliptic = (options) => {
 
     if (endRadius[0] === startRadius[0] && endRadius[1] === startRadius[1]) {
       polygons.push(poly3.fromPoints([start, point(0, t1, endRadius), point(0, t0, endRadius)]))
-      polygons.push(poly3.fromPoints([point(0, t1, endRadius), point(1, t1, endRadius),
-                                      point(1, t0, endRadius), point(0, t0, endRadius)]))
+      polygons.push(poly3.fromPoints(
+        [point(0, t1, endRadius), point(1, t1, endRadius), point(1, t0, endRadius), point(0, t0, endRadius)]
+      ))
       polygons.push(poly3.fromPoints([end, point(1, t0, endRadius), point(1, t1, endRadius)]))
     } else {
       if (startRadius[0] > 0) {

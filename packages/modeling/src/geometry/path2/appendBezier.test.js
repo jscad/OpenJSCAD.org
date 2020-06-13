@@ -2,13 +2,13 @@ const test = require('ava')
 
 const { appendBezier, fromPoints, toPoints } = require('./index')
 
-test('appendBezier: appending to an empty path produces an error', t => {
+test('appendBezier: appending to an empty path produces an error', (t) => {
   const p1 = fromPoints({}, [])
   t.throws(() => appendBezier({ controlPoints: [[12, 12]] }, p1),
     'the given path must contain one or more points (as the starting point for the bezier curve)')
 })
 
-test('appendBezier: appending to a path produces a new path', t => {
+test('appendBezier: appending to a path produces a new path', (t) => {
   const p1 = fromPoints({}, [[10, -20]])
   const obs1 = appendBezier({ controlPoints: [[10, -10], [25, -10], [25, -20]], segments: 16 }, p1)
   const pts = toPoints(obs1)

@@ -5,7 +5,7 @@ const { geometry, primitives } = require('@jscad/modeling')
 const { serialize } = require('../index.js')
 const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('../autocad_AC2017')
 
-test('2D Path to DXF LWPOLYLINE', t => {
+test('2D Path to DXF LWPOLYLINE', (t) => {
   const path1 = geometry.path2.create()
 
   const obs1 = serialize({}, path1)

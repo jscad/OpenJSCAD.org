@@ -30,10 +30,7 @@ const mapPlaneToVertex = (map, vertex, plane) => {
 }
 
 const mapPlaneToEdge = (map, edge, plane) => {
-  const i = map.findIndex((item) => {
-    return (vec3.equals(item[0], edge[0]) && vec3.equals(item[1], edge[1])) ||
-           (vec3.equals(item[0], edge[1]) && vec3.equals(item[1], edge[0]))
-  })
+  const i = map.findIndex((item) => (vec3.equals(item[0], edge[0]) && vec3.equals(item[1], edge[1])) || (vec3.equals(item[0], edge[1]) && vec3.equals(item[1], edge[0])))
   if (i < 0) {
     const entry = [edge, [plane]]
     map.push(entry)

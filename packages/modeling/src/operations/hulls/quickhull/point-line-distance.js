@@ -37,8 +37,6 @@ const distanceSquared = (p, a, b) => {
   return area / s
 }
 
-const pointLineDistance = (point, a, b) => {
-  return Math.sqrt(distanceSquared(point, a, b))
-}
+const pointLineDistance = (point, a, b) => Math.sqrt(distanceSquared(point, a, b))
 
 module.exports = pointLineDistance
