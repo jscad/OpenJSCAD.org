@@ -2,7 +2,7 @@ const test = require('ava')
 
 const { colorNameToRgb } = require('./index')
 
-test('colorNameToRgb', t => {
+test('colorNameToRgb', (t) => {
   let obs = colorNameToRgb('bad')
 
   t.is(obs, undefined)

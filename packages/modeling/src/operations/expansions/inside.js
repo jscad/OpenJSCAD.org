@@ -5,9 +5,7 @@
  * @return {Integer} 1 if all points are inside, 0 if some or none are inside
  */
 const arePointsInside = (points, polygon) => {
-  const sum = points.reduce((acc, point) => {
-    return acc + isPointInside(point, polygon)
-  }, 0)
+  const sum = points.reduce((acc, point) => acc + isPointInside(point, polygon), 0)
   return sum === polygon.length ? 1 : 0
 }
 

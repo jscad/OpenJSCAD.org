@@ -116,9 +116,7 @@ const getGroups = (data, options) => {
 }
 
 const objectify = (points, groups, options) => {
-  const geometries = groups.map((group) => {
-    return primitives.polyhedron({ orientation: options.orientation, points, faces: group.faces, colors: group.colors })
-  })
+  const geometries = groups.map((group) => primitives.polyhedron({ orientation: options.orientation, points, faces: group.faces, colors: group.colors }))
   return geometries
 }
 

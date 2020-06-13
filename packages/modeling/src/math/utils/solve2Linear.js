@@ -1,4 +1,4 @@
-const solve2Linear = function (a, b, c, d, u, v) {
+const solve2Linear = (a, b, c, d, u, v) => {
   const det = a * d - b * c
   const invdet = 1.0 / det
   let x = u * d - b * v

@@ -4,7 +4,7 @@ const { geom2, geom3, path2 } = require('../../geometry')
 
 const { mirror, mirrorX, mirrorY, mirrorZ } = require('./index')
 
-test('mirror: mirroring of path2 about X/Y produces expected changes to points', t => {
+test('mirror: mirroring of path2 about X/Y produces expected changes to points', (t) => {
   const geometry = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
 
   // mirror about X
@@ -38,7 +38,7 @@ test('mirror: mirroring of path2 about X/Y produces expected changes to points',
   t.deepEqual(obs, exp)
 })
 
-test('mirror: mirroring of geom2 about X/Y produces expected changes to points', t => {
+test('mirror: mirroring of geom2 about X/Y produces expected changes to points', (t) => {
   const geometry = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])
 
   // mirror about X
@@ -70,7 +70,7 @@ test('mirror: mirroring of geom2 about X/Y produces expected changes to points',
   t.deepEqual(obs, exp)
 })
 
-test('mirror: mirroring of geom3 about X/Y/Z produces expected changes to polygons', t => {
+test('mirror: mirroring of geom3 about X/Y/Z produces expected changes to polygons', (t) => {
   const points = [
     [[-2, -7, -12], [-2, -7, 18], [-2, 13, 18], [-2, 13, -12]],
     [[8, -7, -12], [8, 13, -12], [8, 13, 18], [8, -7, 18]],
@@ -151,7 +151,7 @@ test('mirror: mirroring of geom3 about X/Y/Z produces expected changes to polygo
   t.deepEqual(obs, exp)
 })
 
-test('mirror: mirroring of multiple objects produces an array of mirrored objects', t => {
+test('mirror: mirroring of multiple objects produces an array of mirrored objects', (t) => {
   const junk = 'hello'
   const geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
   const geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])

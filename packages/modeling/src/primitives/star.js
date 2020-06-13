@@ -11,10 +11,10 @@ const getRadiusRatio = (vertices, density) => {
 }
 
 const getPoints = (vertices, radius, startAngle, center) => {
-  var a = (Math.PI * 2) / vertices
+  const a = (Math.PI * 2) / vertices
 
-  var points = []
-  for (var i = 0; i < vertices; i++) {
+  const points = []
+  for (let i = 0; i < vertices; i++) {
     const point = vec2.fromAngleRadians(a * i + startAngle)
     vec2.scale(point, radius, point)
     vec2.add(point, center, point)
@@ -47,8 +47,8 @@ const star = (options) => {
     density: 2,
     startAngle: 0
   }
-  var center = [0, 0]
-  var { vertices, outerRadius, innerRadius, density, startAngle } = Object.assign({}, defaults, options)
+  const center = [0, 0]
+  let { vertices, outerRadius, innerRadius, density, startAngle } = Object.assign({}, defaults, options)
 
   if (!Number.isFinite(outerRadius)) throw new Error('outerRadius must be a number')
   if (!Number.isFinite(innerRadius)) throw new Error('innerRadius must be a number')
@@ -71,7 +71,7 @@ const star = (options) => {
   const innerPoints = getPoints(vertices, innerRadius, startAngle + Math.PI / vertices, centerv)
 
   const allPoints = []
-  for (var i = 0; i < vertices; i++) {
+  for (let i = 0; i < vertices; i++) {
     allPoints.push(outerPoints[i])
     allPoints.push(innerPoints[i])
   }

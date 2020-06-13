@@ -18,9 +18,7 @@ const arePointsInside = (points, polygon) => {
   const vertices = polygon.vertices
   if (vertices.length === 0) return 0 // nothing can be inside an empty polygon
 
-  const sum = points.reduce((acc, point) => {
-    return acc + isPointInside(point, vertices)
-  }, 0)
+  const sum = points.reduce((acc, point) => acc + isPointInside(point, vertices), 0)
   return sum === points.length ? 1 : 0
 }
 
@@ -59,8 +57,6 @@ const isPointInside = (point, polygon) => {
   return wn
 }
 
-const isLeft = (p0, p1, p2) => {
-  return (p1[0] - p0[0]) * (p2[1] - p0[1]) - (p2[0] - p0[0]) * (p1[1] - p0[1])
-}
+const isLeft = (p0, p1, p2) => (p1[0] - p0[0]) * (p2[1] - p0[1]) - (p2[0] - p0[0]) * (p1[1] - p0[1])
 
 module.exports = arePointsInside

@@ -14,13 +14,13 @@ const path2 = require('../../geometry/path2')
  * @example
  * const newsphere = transform(mat4.rotateX(Math.PI/4), sphere())
  */
-const transform = function (matrix, ...objects) {
+const transform = (matrix, ...objects) => {
   // TODO how to check that the matrix is REAL?
 
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')
 
-  const results = objects.map(function (object) {
+  const results = objects.map((object) => {
     if (path2.isA(object)) return path2.transform(matrix, object)
     if (geom2.isA(object)) return geom2.transform(matrix, object)
     if (geom3.isA(object)) return geom3.transform(matrix, object)

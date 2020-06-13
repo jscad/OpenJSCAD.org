@@ -75,19 +75,13 @@ module.exports = { main }
   return script
 }
 
-const translateToList = (objects) => {
-  return objects.reduce((script, object, index) => script + ` json${index},`, '')
-}
+const translateToList = (objects) => objects.reduce((script, object, index) => script + ` json${index},`, '')
 
-const translateToObjects = (objects) => {
-  return objects.reduce((script, object, index) => script + translateToObject(object, index), '')
-}
+const translateToObjects = (objects) => objects.reduce((script, object, index) => script + translateToObject(object, index), '')
 
 // translate the given object to JSON notation (AGAIN)
 // NOTE: this implies that the original JSON was correct :)
-const translateToObject = (object, index) => {
-  return `const json${index} = ${JSON.stringify(object)}\n`
-}
+const translateToObject = (object, index) => `const json${index} = ${JSON.stringify(object)}\n`
 
 const extension = 'json'
 

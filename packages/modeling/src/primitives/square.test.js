@@ -6,13 +6,13 @@ const geom2 = require('../geometry/geom2')
 
 const comparePoints = require('../../test/helpers/comparePoints')
 
-test('square (defaults)', t => {
+test('square (defaults)', (t) => {
   const geometry = square()
   const obs = geom2.toPoints(geometry)
   t.deepEqual(obs.length, 4)
 })
 
-test('square (options)', t => {
+test('square (options)', (t) => {
   // test size
   const obs = square({ size: 7 })
   const pts = geom2.toPoints(obs)

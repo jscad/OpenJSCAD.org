@@ -2,8 +2,8 @@
  * @param  {CAG} input CAG
  * @returns {CAG} the MUTATED CAG
  **/
-const clearTags = inputCAG => {
-  inputCAG.sides = inputCAG.sides.map(function (side) {
+const clearTags = (inputCAG) => {
+  inputCAG.sides = inputCAG.sides.map((side) => {
     delete side.vertex0.tag
     delete side.vertex1.tag
     return side

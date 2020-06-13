@@ -4,7 +4,7 @@ const { primitives } = require('@jscad/modeling')
 
 const serializer = require('../index.js')
 
-test('serialize objects to stl (binary)', function (t) {
+test('serialize objects to stl (binary)', (t) => {
   const object1 = primitives.cube()
   const observed = serializer.serialize({ binary: true }, object1)
 

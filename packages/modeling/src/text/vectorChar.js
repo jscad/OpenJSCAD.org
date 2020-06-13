@@ -28,7 +28,7 @@ const vectorParams = require('./vectorParams')
 * or
 * let vectorCharObject = vectorChar({ xOffset: 78, input: '!' })
 */
-function vectorChar (options, char) {
+const vectorChar = (options, char) => {
   const {
     xOffset, yOffset, input, font, height, extrudeOffset
   } = vectorParams(options, char)

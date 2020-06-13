@@ -2,7 +2,7 @@ const test = require('ava')
 
 const { clone, create, fromPoints } = require('./index')
 
-test('clone: Creates a clone on an empty geom2', t => {
+test('clone: Creates a clone on an empty geom2', (t) => {
   const expected = {
     sides: [],
     transforms: new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
@@ -13,7 +13,7 @@ test('clone: Creates a clone on an empty geom2', t => {
   t.deepEqual(another, expected)
 })
 
-test('clone: Creates a clone of a complete geom2', t => {
+test('clone: Creates a clone of a complete geom2', (t) => {
   const points = [[0, 0], [1, 0], [0, 1]]
   const expected = {
     sides: [

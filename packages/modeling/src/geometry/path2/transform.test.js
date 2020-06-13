@@ -4,7 +4,7 @@ const mat4 = require('../../math/mat4')
 
 const { transform, fromPoints, toPoints } = require('./index')
 
-test('transform: adjusts the transforms of path', t => {
+test('transform: adjusts the transforms of path', (t) => {
   const points = [[0, 0], [1, 0], [0, 1]]
   const rotation = 90 * 0.017453292519943295
   const rotate90 = mat4.fromZRotation(rotation)

@@ -22,7 +22,7 @@ const fromPoints = (points, planeof) => {
   if (!Array.isArray(points)) throw new Error('the given points must be an array')
   if (points.length < 3) throw new Error('the given points must contain THREE or more points')
 
-  const vertices = points.map((point) => { return vec3.clone(point) })
+  const vertices = points.map((point) => vec3.clone(point))
   return create(vertices)
 }
 

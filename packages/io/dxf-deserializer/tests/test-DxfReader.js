@@ -9,7 +9,7 @@ const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.js
 //
 // Test suite for DXF reader
 //
-test('DXF Reader', t => {
+test('DXF Reader', (t) => {
   const dxfPath = path.resolve(samplesPath, 'dxf/jscad/circle10.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 

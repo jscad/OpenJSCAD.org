@@ -6,7 +6,7 @@ const { geom2, geom3, path2 } = require('../../geometry')
 
 const { expand } = require('./index')
 
-test('expand: expanding of a path2 produces an expected geom2', t => {
+test('expand: expanding of a path2 produces an expected geom2', (t) => {
   const points = [
     [10, 0],
     [9.510565162951535, 3.090169943749474],
@@ -79,7 +79,7 @@ test('expand: expanding of a path2 produces an expected geom2', t => {
   t.true(comparePoints(pts, exp))
 })
 
-test('expand: expanding of a geom2 produces expected changes to points', t => {
+test('expand: expanding of a geom2 produces expected changes to points', (t) => {
   const geometry = geom2.fromPoints([[-8, -8], [8, -8], [8, 8], [-8, 8]])
 
   const obs = expand({ delta: 2, corners: 'round', segments: 8 }, geometry)
@@ -102,7 +102,7 @@ test('expand: expanding of a geom2 produces expected changes to points', t => {
   t.true(comparePoints(pts, exp))
 })
 
-test('expand: expanding of a geom3 produces expected changes to polygons', t => {
+test('expand: expanding of a geom3 produces expected changes to polygons', (t) => {
   const polygonsAsPoints = [
     [[-5, -5, -5], [-5, -5, 15], [-5, 15, 15], [-5, 15, -5]],
     [[15, -5, -5], [15, 15, -5], [15, 15, 15], [15, -5, 15]],
@@ -132,7 +132,7 @@ test('expand: expanding of a geom3 produces expected changes to polygons', t => 
   t.true(comparePoints(pts[61], exp61))
 })
 
-test('expand (options): offsetting of a complex geom2 produces expected offset geom2', t => {
+test('expand (options): offsetting of a complex geom2 produces expected offset geom2', (t) => {
   const geometry = geom2.create([
     [[-75.00000, 75.00000], [-75.00000, -75.00000]],
     [[-75.00000, -75.00000], [75.00000, -75.00000]],

@@ -5,7 +5,7 @@ const { geometry, primitives } = require('@jscad/modeling')
 const { serialize } = require('../index.js')
 const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('../autocad_AC2017')
 
-test('3D Geometry to DXF 3DFACE', t => {
+test('3D Geometry to DXF 3DFACE', (t) => {
   const csg1 = geometry.geom3.create()
 
   const obs1 = serialize({}, csg1)
@@ -20,7 +20,7 @@ test('3D Geometry to DXF 3DFACE', t => {
   t.deepEqual(obs2, exp2)
 })
 
-test('3D Geometry to DXF POLYLINE FACES', t => {
+test('3D Geometry to DXF POLYLINE FACES', (t) => {
   const csg1 = geometry.geom3.create()
 
   const obs1 = serialize({ geom3To: 'polyline' }, csg1)

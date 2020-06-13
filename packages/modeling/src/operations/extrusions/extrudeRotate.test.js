@@ -8,7 +8,7 @@ const extrudeRotate = require('./extrudeRotate')
 
 const comparePolygonsAsPoints = require('../../../test/helpers/comparePolygonsAsPoints')
 
-test('extrudeRotate: (defaults) extruding of a geom2 produces an expected geom3', t => {
+test('extrudeRotate: (defaults) extruding of a geom2 produces an expected geom3', (t) => {
   const geometry2 = geom2.fromPoints([[10, 8], [10, -8], [26, -8], [26, 8]])
 
   const geometry3 = extrudeRotate({ }, geometry2)
@@ -16,7 +16,7 @@ test('extrudeRotate: (defaults) extruding of a geom2 produces an expected geom3'
   t.is(pts.length, 96)
 })
 
-test('extrudeRotate: (angle) extruding of a geom2 produces an expected geom3', t => {
+test('extrudeRotate: (angle) extruding of a geom2 produces an expected geom3', (t) => {
   const geometry2 = geom2.fromPoints([[10, 8], [10, -8], [26, -8], [26, 8]])
 
   // test angle
@@ -48,7 +48,7 @@ test('extrudeRotate: (angle) extruding of a geom2 produces an expected geom3', t
   t.is(pts.length, 26)
 })
 
-test('extrudeRotate: (startAngle) extruding of a geom2 produces an expected geom3', t => {
+test('extrudeRotate: (startAngle) extruding of a geom2 produces an expected geom3', (t) => {
   const geometry2 = geom2.fromPoints([[10, 8], [10, -8], [26, -8], [26, 8]])
 
   // test startAngle
@@ -73,7 +73,7 @@ test('extrudeRotate: (startAngle) extruding of a geom2 produces an expected geom
   t.deepEqual(pts[0], exp)
 })
 
-test('extrudeRotate: (segments) extruding of a geom2 produces an expected geom3', t => {
+test('extrudeRotate: (segments) extruding of a geom2 produces an expected geom3', (t) => {
   let geometry2 = geom2.fromPoints([[10, 8], [10, -8], [26, -8], [26, 8]])
 
   // test segments
@@ -92,7 +92,7 @@ test('extrudeRotate: (segments) extruding of a geom2 produces an expected geom3'
   t.is(pts.length, 96)
 })
 
-test('extrudeRotate: (overlap +/-) extruding of a geom2 produces an expected geom3', t => {
+test('extrudeRotate: (overlap +/-) extruding of a geom2 produces an expected geom3', (t) => {
   // overlap of Y axis; even number of + and - points
   let geometry = geom2.fromPoints([[-1, 8], [-1, -8], [7, -8], [7, 8]])
 

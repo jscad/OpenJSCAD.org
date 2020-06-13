@@ -6,7 +6,7 @@ const { rotate, rotateX, rotateY, rotateZ } = require('./index')
 
 const comparePoints = require('../../../test/helpers/comparePoints')
 
-test('rotate: rotating of a path2 produces expected changes to points', t => {
+test('rotate: rotating of a path2 produces expected changes to points', (t) => {
   const geometry = path2.fromPoints({}, [[1, 0], [0, 1], [-1, 0]])
 
   // rotate about Z
@@ -24,7 +24,7 @@ test('rotate: rotating of a path2 produces expected changes to points', t => {
   t.true(comparePoints(obs, exp))
 })
 
-test('rotate: rotating of a geom2 produces expected changes to points', t => {
+test('rotate: rotating of a geom2 produces expected changes to points', (t) => {
   const geometry = geom2.fromPoints([[0, 0], [1, 0], [0, 1]])
 
   // rotate about Z
@@ -42,7 +42,7 @@ test('rotate: rotating of a geom2 produces expected changes to points', t => {
   t.true(comparePoints(obs, exp))
 })
 
-test('rotate: rotating of a geom3 produces expected changes to polygons', t => {
+test('rotate: rotating of a geom3 produces expected changes to polygons', (t) => {
   const points = [
     [[-2, -7, -12], [-2, -7, 18], [-2, 13, 18], [-2, 13, -12]],
     [[8, -7, -12], [8, 13, -12], [8, 13, 18], [8, -7, 18]],
@@ -123,7 +123,7 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', t => {
   t.deepEqual(obs, exp)
 })
 
-test('rotate: rotating of multiple objects produces expected changes', t => {
+test('rotate: rotating of multiple objects produces expected changes', (t) => {
   const junk = 'hello'
   const geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
   const geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])

@@ -6,14 +6,14 @@ const { roundedCylinder } = require('./index')
 
 const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoints')
 
-test('roundedCylinder (defaults)', t => {
+test('roundedCylinder (defaults)', (t) => {
   const obs = roundedCylinder()
   const pts = geom3.toPoints(obs)
 
   t.is(pts.length, 544)
 })
 
-test('roundedCylinder (options)', t => {
+test('roundedCylinder (options)', (t) => {
   // test segments
   let obs = roundedCylinder({ segments: 5 })
   let pts = geom3.toPoints(obs)

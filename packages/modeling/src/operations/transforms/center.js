@@ -35,7 +35,7 @@ const centerGeometry = (options, object) => {
  * @example
  * let myshape = center({axes: [true,false,false]}, sphere()) // center about the X axis
  */
-const center = function (options, ...geometries) {
+const center = (options, ...geometries) => {
   const defaults = {
     axes: [true, true, true],
     center: [0, 0, 0]

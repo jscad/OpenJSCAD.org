@@ -57,7 +57,7 @@ test('toCompactBinary: converts path2 into a compact form', (t) => {
     ]
   )
 
-  t.deepEqual(compacted2, expected2)
+  t.deepEqual(compacted3, expected3)
 })
 
 test('fromCompactBinary: convert a compact form into a path2', (t) => {

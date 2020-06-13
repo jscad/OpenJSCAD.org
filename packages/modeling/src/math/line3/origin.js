@@ -5,8 +5,6 @@
  * @return {vec3} the origin of the line
  * @alias module:modeling/math/line3.origin
  */
-const origin = (line) => {
-  return line[0]
-}
+const origin = (line) => line[0]
 
 module.exports = origin

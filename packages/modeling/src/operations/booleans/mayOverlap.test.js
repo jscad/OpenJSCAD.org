@@ -10,7 +10,7 @@ const mayOverlap = require('./mayOverlap')
 
 const { center } = require('../transforms/center')
 
-test.only('mayOverlap: determination of overlap is reliable', t => {
+test.only('mayOverlap: determination of overlap is reliable', (t) => {
   const geometry1 = center({ center: [0, 0, 0] }, cuboid({ size: [4, 4, 4] }))
   let geometry2 = center({ center: [0, 0, 0] }, cuboid({ size: [2, 2, 2] }))
   t.true(mayOverlap(geometry1, geometry2))

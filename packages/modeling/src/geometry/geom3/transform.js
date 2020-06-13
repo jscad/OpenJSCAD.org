@@ -14,7 +14,7 @@ const create = require('./create')
  * @example
  * let newgeometry = transform(fromXRotation(degToRad(90)), geometry)
  */
-const transform = function (matrix, geometry) {
+const transform = (matrix, geometry) => {
   const newgeometry = create(geometry.polygons) // reuse the polygons
   newgeometry.isRetesselated = geometry.isRetesselated
 

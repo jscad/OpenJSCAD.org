@@ -5,8 +5,6 @@
  * @return {Array} list of points (3D)
  * @alias module:modeling/geometry/poly3.toPoints
  */
-const toPoints = function (geometry) {
-  return geometry.vertices
-}
+const toPoints = (geometry) => geometry.vertices
 
 module.exports = toPoints

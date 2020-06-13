@@ -16,7 +16,7 @@ const countOf = (search, string) => {
   return count
 }
 
-test('translate simple ascii stl to jscad code', function (t) {
+test('translate simple ascii stl to jscad code', (t) => {
   const inputPath = path.resolve(samplesPath, 'stl/testcube_ascii.stl')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
@@ -93,7 +93,7 @@ module.exports = {main}
   t.deepEqual(observed, expected)
 })
 
-test('translate simple binary stl to jscad script', function (t) {
+test('translate simple binary stl to jscad script', (t) => {
   const inputPath = path.resolve(samplesPath, 'stl/testcube_10mm.stl')
   const inputFile = fs.readFileSync(inputPath)
 
@@ -170,7 +170,7 @@ module.exports = {main}
   t.deepEqual(observed, expected)
 })
 
-test('translate stl with colors to jscad script', function (t) {
+test('translate stl with colors to jscad script', (t) => {
   const inputPath = path.resolve(samplesPath, 'stl/colors.stl')
   const inputFile = fs.readFileSync(inputPath)
 

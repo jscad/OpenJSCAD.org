@@ -6,14 +6,14 @@ const geom2 = require('../geometry/geom2')
 
 const comparePoints = require('../../test/helpers/comparePoints')
 
-test('roundedRectangle (defaults)', t => {
+test('roundedRectangle (defaults)', (t) => {
   const geometry = roundedRectangle()
   const obs = geom2.toPoints(geometry)
 
   t.deepEqual(obs.length, 36)
 })
 
-test('roundedRectangle (options)', t => {
+test('roundedRectangle (options)', (t) => {
   // test size
   let geometry = roundedRectangle({ size: [10, 6], segments: 16 })
   let obs = geom2.toPoints(geometry)
