@@ -1,13 +1,9 @@
 const { inchMM, ptMM, pcMM, svgColors } = require('./constants')
 
 // Calculate the CAG length/size from the given SVG value (float)
-const svg2cagX = (v, svgUnitsPmm) => {
-  return (v / svgUnitsPmm[0])
-}
+const svg2cagX = (v, svgUnitsPmm) => (v / svgUnitsPmm[0])
 
-const svg2cagY = (v, svgUnitsPmm) => {
-  return 0 - (v / svgUnitsPmm[1])
-}
+const svg2cagY = (v, svgUnitsPmm) => 0 - (v / svgUnitsPmm[1])
 
 // Calculate the CAG length/size from the given CSS value (string)
 const cagLengthX = (css, svgUnitsPmm, svgUnitsX) => {

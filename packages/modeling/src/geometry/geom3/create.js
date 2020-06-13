@@ -13,7 +13,7 @@ const mat4 = require('../../math/mat4')
  * @returns {geom3} a new geometry
  * @alias module:modeling/geometry/geom3.create
  */
-const create = function (polygons) {
+const create = (polygons) => {
   if (polygons === undefined) {
     polygons = [] // empty contents
   }

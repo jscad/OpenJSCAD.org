@@ -8,7 +8,7 @@ const extrudeLinear = require('./extrudeLinear')
 
 const comparePolygonsAsPoints = require('../../../test/helpers/comparePolygonsAsPoints')
 
-test('extrudeLinear (defaults)', t => {
+test('extrudeLinear (defaults)', (t) => {
   const geometry2 = geom2.fromPoints([[5, 5], [-5, 5], [-5, -5], [5, -5]])
 
   const geometry3 = extrudeLinear({ }, geometry2)
@@ -29,7 +29,7 @@ test('extrudeLinear (defaults)', t => {
   t.true(comparePolygonsAsPoints(pts, exp))
 })
 
-test('extrudeLinear (no twist)', t => {
+test('extrudeLinear (no twist)', (t) => {
   const geometry2 = geom2.fromPoints([[5, 5], [-5, 5], [-5, -5], [5, -5]])
 
   let geometry3 = extrudeLinear({ height: 15 }, geometry2)
@@ -67,7 +67,7 @@ test('extrudeLinear (no twist)', t => {
   t.true(comparePolygonsAsPoints(pts, exp))
 })
 
-test('extrudeLinear (twist)', t => {
+test('extrudeLinear (twist)', (t) => {
   const geometry2 = geom2.fromPoints([[5, 5], [-5, 5], [-5, -5], [5, -5]])
 
   let geometry3 = extrudeLinear({ height: 15, twistAngle: degToRad(-45) }, geometry2)
@@ -127,7 +127,7 @@ test('extrudeLinear (twist)', t => {
   t.is(pts.length, 242)
 })
 
-test('extrudeLinear (holes)', t => {
+test('extrudeLinear (holes)', (t) => {
   const geometry2 = geom2.create([
     [[-5.00000, 5.00000], [-5.00000, -5.00000]],
     [[-5.00000, -5.00000], [5.00000, -5.00000]],

@@ -11,7 +11,7 @@ const toSides = require('./toSides')
  * @example
  * console.out(toString(geometry))
  */
-const toString = function (geometry) {
+const toString = (geometry) => {
   const sides = toSides(geometry)
   let result = 'geom2 (' + sides.length + ' sides):\n[\n'
   sides.forEach((side) => {

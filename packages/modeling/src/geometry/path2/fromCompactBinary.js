@@ -9,7 +9,7 @@ const create = require('./create')
  * @returns {path2} a new path
  * @alias module:modeling/geometry/path2.fromCompactBinary
  */
-const fromCompactBinary = data => {
+const fromCompactBinary = (data) => {
   if (data[0] !== 2) throw new Error('invalid compact binary data')
 
   const created = create()
@@ -24,7 +24,7 @@ const fromCompactBinary = data => {
   }
   // transfer known properties, i.e. color
   if (data[18] >= 0) {
-    created.color = [data[18], data[19], data[20], data[21] ]
+    created.color = [data[18], data[19], data[20], data[21]]
   }
   // TODO: how about custom properties or fields ?
   return created

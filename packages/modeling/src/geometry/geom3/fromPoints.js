@@ -11,7 +11,7 @@ const create = require('./create')
  * @returns {geom3} a new geometry
  * @alias module:modeling/geometry/geom3.fromPoints
  */
-const fromPoints = function (listofpoints) {
+const fromPoints = (listofpoints) => {
   if (!Array.isArray(listofpoints)) {
     throw new Error('the given points must be an array')
   }

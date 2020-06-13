@@ -2,7 +2,7 @@ const test = require('ava')
 
 const { close, create, fromPoints } = require('./index')
 
-test('close: closes an empty path', t => {
+test('close: closes an empty path', (t) => {
   const p1 = create()
   t.false(p1.isClosed)
 
@@ -15,7 +15,7 @@ test('close: closes an empty path', t => {
   t.is(p2, p3)
 })
 
-test('close: closes various paths', t => {
+test('close: closes various paths', (t) => {
   let p1 = create()
   p1 = close(p1)
   t.true(p1.isClosed)

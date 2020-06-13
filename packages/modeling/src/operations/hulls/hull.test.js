@@ -10,7 +10,7 @@ const { center } = require('../transforms/center')
 
 const comparePolygonsAsPoints = require('../../../test/helpers/comparePolygonsAsPoints')
 
-test('hull (single, geom2)', t => {
+test('hull (single, geom2)', (t) => {
   let geometry = geom2.create()
 
   let obs = hull(geometry)
@@ -43,7 +43,7 @@ test('hull (single, geom2)', t => {
   t.is(pts.length, 7)
 })
 
-test('hull (multiple, overlaping, geom2)', t => {
+test('hull (multiple, overlaping, geom2)', (t) => {
   const geometry1 = geom2.fromPoints([[5, 5], [-5, 5], [-5, -5], [5, -5]])
   const geometry2 = geom2.fromPoints([[3, 3], [-3, 3], [-3, -3], [3, -3]])
   const geometry3 = geom2.fromPoints([[6, 3], [-6, 3], [-6, -3], [6, -3]])
@@ -86,7 +86,7 @@ test('hull (multiple, overlaping, geom2)', t => {
   t.is(pts.length, 7)
 })
 
-test('hull (multiple, various, geom2)', t => {
+test('hull (multiple, various, geom2)', (t) => {
   const geometry1 = geom2.fromPoints([[6, 6], [0, 6], [0, 0], [6, 0]])
   const geometry2 = geom2.fromPoints([[6, 3], [-6, 3], [-6, -3], [6, -3]])
   const geometry3 = geom2.fromPoints([[-10, -10], [0, -20], [10, -10]])
@@ -127,7 +127,7 @@ test('hull (multiple, various, geom2)', t => {
   t.is(pts.length, 8)
 })
 
-test('hull (single, path2)', t => {
+test('hull (single, path2)', (t) => {
   let geometry = path2.create()
 
   let obs = hull(geometry)
@@ -143,7 +143,7 @@ test('hull (single, path2)', t => {
   t.is(pts.length, 3)
 })
 
-test('hull (multiple, various, path2)', t => {
+test('hull (multiple, various, path2)', (t) => {
   const geometry1 = path2.fromPoints({ closed: true }, [[6, 6], [0, 6], [0, 0], [6, 0]])
   const geometry2 = path2.fromPoints({}, [[6, 3], [-6, 3], [-6, -3], [6, -3]])
   const geometry3 = path2.fromPoints({ closed: true }, [[-10, -10], [0, -20], [10, -10]])
@@ -184,7 +184,7 @@ test('hull (multiple, various, path2)', t => {
   t.is(pts.length, 8)
 })
 
-test('hull (single, geom3)', t => {
+test('hull (single, geom3)', (t) => {
   let geometry = geom3.create()
 
   let obs = hull(geometry)
@@ -200,7 +200,7 @@ test('hull (single, geom3)', t => {
   t.is(pts.length, 32)
 })
 
-test('hull (multiple, geom3)', t => {
+test('hull (multiple, geom3)', (t) => {
   const geometry1 = cuboid({ size: [2, 2, 2] })
 
   let obs = hull(geometry1, geometry1) // same
@@ -240,7 +240,7 @@ test('hull (multiple, geom3)', t => {
   t.true(comparePolygonsAsPoints(pts, exp))
 })
 
-test('hull (multiple, overlapping, geom3)', t => {
+test('hull (multiple, overlapping, geom3)', (t) => {
   const geometry1 = ellipsoid({ radius: [2, 2, 2], segments: 12 })
   const geometry2 = center({ center: [3, -3, 3] }, ellipsoid({ radius: [3, 3, 3], segments: 12 }))
   const geometry3 = center({ center: [-3, -3, -3] }, ellipsoid({ radius: [3, 3, 3], segments: 12 }))

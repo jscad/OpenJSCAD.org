@@ -35,9 +35,7 @@ const dxfTLA = [
 
 const dxfMap = new Map(dxfTLA)
 
-const getTLA = (group) => {
-  return dxfMap.get(group)
-}
+const getTLA = (group) => dxfMap.get(group)
 
 /*
  * AutoCAD Drawing Units

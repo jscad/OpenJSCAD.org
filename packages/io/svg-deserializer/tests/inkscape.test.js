@@ -14,7 +14,7 @@ const countOf = (search, string) => {
   return count
 }
 
-test('deserialize : translate svg produced by inkscape to script', function (t) {
+test('deserialize : translate svg produced by inkscape to script', (t) => {
   const sourceSvg = `
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg

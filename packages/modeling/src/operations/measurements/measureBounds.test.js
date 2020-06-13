@@ -6,7 +6,7 @@ const { line, rectangle, cuboid } = require('../../primitives')
 
 const { measureBounds } = require('./index')
 
-test('measureBounds (single objects)', t => {
+test('measureBounds (single objects)', (t) => {
   const aline = line([[10, 10], [15, 15]])
   const arect = rectangle()
   const acube = cuboid()
@@ -44,7 +44,7 @@ test('measureBounds (single objects)', t => {
   t.deepEqual(xbounds, [[0, 0, 0], [0, 0, 0]])
 })
 
-test('measureBounds (multiple objects)', t => {
+test('measureBounds (multiple objects)', (t) => {
   const aline = line([[10, 10], [15, 15]])
   const arect = rectangle({ size: [10, 20] })
   const acube = cuboid()

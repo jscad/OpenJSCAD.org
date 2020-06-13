@@ -11,7 +11,7 @@ test('serialize 2D path (simple) objects to svg', (t) => {
   t.deepEqual(observed, [expected1])
 
   // simple closed path
-  var object3 = geometry.path2.fromPoints({}, [
+  let object3 = geometry.path2.fromPoints({}, [
     [42.33333, 0],
     [21.166665, -56.44443999999999],
     [63.49999499999999, -56.44443999999999]

@@ -8,14 +8,14 @@ const path2 = require('../geometry/path2')
 
 const comparePoints = require('../../test/helpers/comparePoints')
 
-test('arc (defaults)', t => {
+test('arc (defaults)', (t) => {
   const geometry = arc()
   const obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 33)
 })
 
-test('arc (options)', t => {
+test('arc (options)', (t) => {
   // test center
   let exp = [
     [3, 2],
@@ -36,7 +36,7 @@ test('arc (options)', t => {
     [2.739008903503418, 1.3263044357299805],
     [2.9324722290039062, 1.6387583017349243]
   ]
-  let geometry = arc({ center: [2,2], segments: 16 })
+  let geometry = arc({ center: [2, 2], segments: 16 })
   let obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 17)
@@ -153,7 +153,7 @@ test('arc (options)', t => {
   t.true(comparePoints(obs, exp))
 })
 
-test('arc (rotations)', t => {
+test('arc (rotations)', (t) => {
   let exp = [
     [6.123234262925839e-17, 1],
     [-0.30901700258255005, 0.9510565400123596],

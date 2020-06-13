@@ -69,9 +69,7 @@ const bufferToBinaryString = (buffer) => {
 }
 
 // taken from https://github.com/feross/is-buffer if we need it more than once, add as dep
-const isBuffer = (obj) => {
-  return (!!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj))
-}
+const isBuffer = (obj) => (!!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj))
 
 // transforms input to string if it was not already the case
 const ensureString = (buf) => {

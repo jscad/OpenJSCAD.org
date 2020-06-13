@@ -9,7 +9,7 @@ const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.js
 //
 // Test suite for DXF deserialization (import)
 //
-test('ASCII DXF from Bourke 3D Entities to Object Conversion', t => {
+test('ASCII DXF from Bourke 3D Entities to Object Conversion', (t) => {
   // const dxfPath = path.resolve(__dirname, '../../../../sample-files/dxf/bourke/3d-entities.dxf')
   const dxfPath = path.resolve(samplesPath, 'dxf/bourke/3d-entities.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))

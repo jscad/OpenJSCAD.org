@@ -6,8 +6,6 @@
  * @returns {Number} dot product of a and b
  * @alias module:modeling/math/vec4.dot
  */
-const dot = (a, b) => {
-  return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]
-}
+const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]
 
 module.exports = dot

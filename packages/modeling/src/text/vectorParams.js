@@ -13,7 +13,7 @@ const defaultsVectorParams = {
 }
 
 // vectorsXXX parameters handler
-function vectorParams (options, input) {
+const vectorParams = (options, input) => {
   if (!input && typeof options === 'string') {
     options = { input: options }
   }

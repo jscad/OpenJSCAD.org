@@ -10,7 +10,7 @@ const deserializer = require('../index.js')
 
 const toArray = (polygons) => polygons.map((p) => p.vertices.map((v) => ([v[0], v[1], v[2]])))
 
-test('deserialize simple obj to geometry', function (t) {
+test('deserialize simple obj to geometry', (t) => {
   const inputPath = path.resolve(samplesPath, 'obj/cube.obj')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 

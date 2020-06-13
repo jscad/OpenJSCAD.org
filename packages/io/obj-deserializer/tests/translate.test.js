@@ -6,7 +6,7 @@ const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.js
 
 const deserializer = require('../index.js')
 
-test('translate simple obj file to jscad script', function (t) {
+test('translate simple obj file to jscad script', (t) => {
   const inputPath = path.resolve(samplesPath, 'obj/cube.obj')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
@@ -63,7 +63,7 @@ module.exports = {main}
   t.deepEqual(observed, expected)
 })
 
-test('translate absolute face references to jscad script', function (t) {
+test('translate absolute face references to jscad script', (t) => {
   const data = `
 v 0.000000 2.000000 2.000000
 v 0.000000 0.000000 2.000000
@@ -135,7 +135,7 @@ module.exports = {main}
   t.deepEqual(observed, expected)
 })
 
-test('translate relative face references to jscad script', function (t) {
+test('translate relative face references to jscad script', (t) => {
   const data = `
 v 0.000000 2.000000 2.000000
 v 0.000000 0.000000 2.000000

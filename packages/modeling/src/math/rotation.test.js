@@ -38,7 +38,7 @@ const cwZ90Matrix = [
   0, 0, 0, 1
 ]
 
-test('rotation: mat4 rotation functions should produce expected results', t => {
+test('rotation: mat4 rotation functions should produce expected results', (t) => {
   const idn = mat4.identity()
   let obs
 
@@ -73,7 +73,7 @@ test('rotation: mat4 rotation functions should produce expected results', t => {
   t.true(compareVectors(obs, cwZ90Matrix))
 })
 
-test('rotation: vec2 rotation functions should produce expected results', t => {
+test('rotation: vec2 rotation functions should produce expected results', (t) => {
   const onX = vec2.fromValues(3, 0)
   const onY = vec2.fromValues(0, 3)
   const matZ = mat4.fromZRotation(rad90)
@@ -97,7 +97,7 @@ test('rotation: vec2 rotation functions should produce expected results', t => {
   t.true(compareVectors(t2, r2))
 })
 
-test('rotation: vec3 rotation functions should produce expected results', t => {
+test('rotation: vec3 rotation functions should produce expected results', (t) => {
   const onX = vec3.fromValues(3, 0, 0)
   const onY = vec3.fromValues(0, 3, 0)
   const onZ = vec3.fromValues(0, 0, 3)

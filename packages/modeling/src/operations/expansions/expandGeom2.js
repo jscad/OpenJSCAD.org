@@ -36,9 +36,7 @@ const expandGeom2 = (options, geometry) => {
   })
 
   // create a composite geometry from the new outlines
-  const allsides = newoutlines.reduce((sides, newoutline) => {
-    return sides.concat(geom2.toSides(geom2.fromPoints(newoutline)))
-  }, [])
+  const allsides = newoutlines.reduce((sides, newoutline) => sides.concat(geom2.toSides(geom2.fromPoints(newoutline))), [])
   return geom2.create(allsides)
 }
 

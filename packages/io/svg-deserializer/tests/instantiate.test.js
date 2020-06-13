@@ -4,7 +4,7 @@ const deserializer = require('../index.js')
 
 // deserializer
 
-test('deserialize : instantiate svg (rect) to objects', function (t) {
+test('deserialize : instantiate svg (rect) to objects', (t) => {
   const sourceSvg = `
 <svg xmlns="http://www.w3.org/2000/svg"
  width="467" height="462">
@@ -25,7 +25,7 @@ test('deserialize : instantiate svg (rect) to objects', function (t) {
 
 // ################################
 
-test('deserialize : instantiate svg (circle) to objects', function (t) {
+test('deserialize : instantiate svg (circle) to objects', (t) => {
   const sourceSvg = `<svg height="100" width="100">
   <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
 </svg>
@@ -46,7 +46,7 @@ test('deserialize : instantiate svg (circle) to objects', function (t) {
 
 // ################################
 
-test('deserialize : instantiate svg (ellipse) to objects', function (t) {
+test('deserialize : instantiate svg (ellipse) to objects', (t) => {
   const sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120"
     xmlns="http://www.w3.org/2000/svg">
 
@@ -67,7 +67,7 @@ test('deserialize : instantiate svg (ellipse) to objects', function (t) {
 
 // ################################
 
-test('deserialize : instantiate svg (polyline) to objects', function (t) {
+test('deserialize : instantiate svg (polyline) to objects', (t) => {
   const sourceSvg = `
   <svg width="120" height="120" xmlns="http://www.w3.org/2000/svg">
     <polyline fill="none" stroke="black"
@@ -87,7 +87,7 @@ test('deserialize : instantiate svg (polyline) to objects', function (t) {
 
 // ################################
 
-test('deserialize : instantiate svg (polygon) to objects', function (t) {
+test('deserialize : instantiate svg (polygon) to objects', (t) => {
   const sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120"
     xmlns="http://www.w3.org/2000/svg">
 
@@ -105,7 +105,7 @@ test('deserialize : instantiate svg (polygon) to objects', function (t) {
   t.is(shape.points.length, 6)
 })
 
-test('deserialize : instantiate svg (line) to objects', function (t) {
+test('deserialize : instantiate svg (line) to objects', (t) => {
   const sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120"
       xmlns="http://www.w3.org/2000/svg">
 
@@ -127,7 +127,7 @@ test('deserialize : instantiate svg (line) to objects', function (t) {
 
 // ################################
 
-test('deserialize : instantiate svg (path: simple) to objects', function (t) {
+test('deserialize : instantiate svg (path: simple) to objects', (t) => {
   const sourceSvg = `<svg height="210" width="400">
   <path d="M150 0 L75 200 L225 200 Z" />
 </svg>
@@ -146,7 +146,7 @@ test('deserialize : instantiate svg (path: simple) to objects', function (t) {
 
 // ################################
 
-test('deserialize : instantiate svg (path: with bezier) to objects', function (t) {
+test('deserialize : instantiate svg (path: with bezier) to objects', (t) => {
   const sourceSvg = `
   <svg height="210" width="400">
   <path d="M100,100
@@ -171,7 +171,7 @@ test('deserialize : instantiate svg (path: with bezier) to objects', function (t
 
 // ################################
 
-test('deserialize : instantiate svg produced by inkscape to objects', function (t) {
+test('deserialize : instantiate svg produced by inkscape to objects', (t) => {
   const sourceSvg = `
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
@@ -232,7 +232,7 @@ test('deserialize : instantiate svg produced by inkscape to objects', function (
 
 // ################################
 
-test('deserialize : instantiate shape with a hole to objects', function (t) {
+test('deserialize : instantiate shape with a hole to objects', (t) => {
   const sourceSvg = `
   <svg height="297" width="210">
   <path d="M 325.71484 233.94922 A 122.85714 108.57142 0 0 0 202.85742 342.51953 A 122.85714 108.57142 0 0 0 325.71484 451.0918 A 122.85714 108.57142 0 0 0 448.57227 342.51953 A 122.85714 108.57142 0 0 0 325.71484 233.94922 z M 328.57227 308.23438 A 54.285711 35.714286 0 0 1 382.85742 343.94727 A 54.285711 35.714286 0 0 1 328.57227 379.66211 A 54.285711 35.714286 0 0 1 274.28516 343.94727 A 54.285711 35.714286 0 0 1 328.57227 308.23438 z " style="stroke: #006666; fill: none;"/>
@@ -252,7 +252,7 @@ test('deserialize : instantiate shape with a hole to objects', function (t) {
 
 // ################################
 
-test('deserialize : instantiate shape with a nested hole to objects', function (t) {
+test('deserialize : instantiate shape with a nested hole to objects', (t) => {
   const sourceSvg = `
   <svg height="297" width="210">
   <path d="M 348.57031 330.26758 A 122.85714 108.57142 0 0 0 225.71289 438.83789 A 122.85714 108.57142 0 0 0 348.57031 547.41016 A 122.85714 108.57142 0 0 0 471.42773 438.83789 A 122.85714 108.57142 0 0 0 348.57031 330.26758 z M 351.42773 404.55273 A 54.285709 35.714285 0 0 1 405.71289 440.26562 A 54.285709 35.714285 0 0 1 351.42773 475.98047 A 54.285709 35.714285 0 0 1 297.14062 440.26562 A 54.285709 35.714285 0 0 1 351.42773 404.55273 z M 348.57031 482.08984 C 359.59526 482.08984 369.65221 484.91497 377.28516 489.83398 C 384.9181 494.753 390.36523 502.16809 390.36523 510.82812 C 390.36523 519.48816 384.9181 526.90325 377.28516 531.82227 C 369.65221 536.74128 359.59526 539.56641 348.57031 539.56641 C 337.54536 539.56641 327.48646 536.74128 319.85352 531.82227 C 312.22057 526.90325 306.77344 519.48816 306.77344 510.82812 C 306.77344 502.16809 312.22057 494.753 319.85352 489.83398 C 327.48646 484.91497 337.54536 482.08984 348.57031 482.08984 z M 348.57031 492.21875 C 339.30907 492.21875 331.00105 494.6974 325.33984 498.3457 C 319.67864 501.99404 316.90234 506.41485 316.90234 510.82812 C 316.90234 515.2414 319.67864 519.66224 325.33984 523.31055 C 331.00105 526.95889 339.30907 529.4375 348.57031 529.4375 C 357.83155 529.4375 366.13958 526.95889 371.80078 523.31055 C 377.46198 519.66224 380.23828 515.2414 380.23828 510.82812 C 380.23828 506.41485 377.46198 501.99404 371.80078 498.3457 C 366.13958 494.6974 357.83155 492.21875 348.57031 492.21875 z "/>

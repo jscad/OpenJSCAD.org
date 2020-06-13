@@ -10,7 +10,7 @@ const { union } = require('./index')
 
 const { center } = require('../transforms/center')
 
-// test('union: union of a path produces expected changes to points', t => {
+// test('union: union of a path produces expected changes to points', (t) => {
 //   let geometry = path.fromPoints({}, [[0, 1, 0], [1, 0, 0]])
 //
 //   geometry = union({normal: [1, 0, 0]}, geometry)
@@ -20,7 +20,7 @@ const { center } = require('../transforms/center')
 //   t.deepEqual(obs, exp)
 // })
 
-test('union of one or more geom2 objects produces expected geometry', t => {
+test('union of one or more geom2 objects produces expected geometry', (t) => {
   const geometry1 = circle({ radius: 2, segments: 8 })
 
   // union of one object
@@ -88,7 +88,7 @@ test('union of one or more geom2 objects produces expected geometry', t => {
   t.deepEqual(obs, exp)
 })
 
-test('union of one or more geom3 objects produces expected geometry', t => {
+test('union of one or more geom3 objects produces expected geometry', (t) => {
   const geometry1 = sphere({ radius: 2, segments: 8 })
 
   // union of one object
@@ -212,7 +212,7 @@ test('union of one or more geom3 objects produces expected geometry', t => {
   t.true(comparePolygonsAsPoints(obs, exp))
 })
 
-test('union of geom3 with rounding issues #137', t => {
+test('union of geom3 with rounding issues #137', (t) => {
   const geometry1 = center({ center: [0, 0, -1] }, cuboid({ size: [44, 26, 5] }))
   const geometry2 = center({ center: [0, 0, -4.400001] }, cuboid({ size: [44, 26, 1.8] })) // introduce percision error
 
@@ -221,7 +221,7 @@ test('union of geom3 with rounding issues #137', t => {
   t.is(pts.length, 6) // number of polygons in union
 })
 
-test.failing('union of geom2 with closing issues #15', t => {
+test.failing('union of geom2 with closing issues #15', (t) => {
   const c = geom2.create([
     [[-45.82118740347841168159, -16.85726810555620147625], [-49.30331715865012398581, -14.68093629710870118288]],
     [[-49.10586702080816223770, -15.27604177352110781385], [-48.16645938811709015681, -15.86317173589183227023]],

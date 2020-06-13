@@ -6,8 +6,6 @@ const fromValues = require('./fromValues')
  * @returns {vec2} a new vector
  * @alias module:modeling/math/vec2.fromAngleRadians
  */
-const fromAngleRadians = (radians) => {
-  return fromValues(Math.cos(radians), Math.sin(radians))
-}
+const fromAngleRadians = (radians) => fromValues(Math.cos(radians), Math.sin(radians))
 
 module.exports = fromAngleRadians

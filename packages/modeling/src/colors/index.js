@@ -1,5 +1,5 @@
 /**
- * @module modeling/color
+ * @module modeling/colors
  */
 module.exports = {
   colorize: require('./colorize'),

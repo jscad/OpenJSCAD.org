@@ -10,8 +10,6 @@ const applyTransforms = require('./applyTransforms')
  * @example
  * let sharedpolygons = toPolygons(geometry)
  */
-const toPolygons = function (geometry) {
-  return applyTransforms(geometry).polygons
-}
+const toPolygons = (geometry) => applyTransforms(geometry).polygons
 
 module.exports = toPolygons

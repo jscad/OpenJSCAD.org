@@ -8,7 +8,7 @@ const { arc, rectangle } = require('../../primitives')
 
 const extrudeRectangular = require('./extrudeRectangular')
 
-test('extrudeRectangular (defaults)', t => {
+test('extrudeRectangular (defaults)', (t) => {
   const geometry1 = arc({ radius: 5, endAngle: degToRad(90), segments: 16 })
   const geometry2 = rectangle({ size: [5, 5] })
 
@@ -21,7 +21,7 @@ test('extrudeRectangular (defaults)', t => {
   t.is(pts.length, 40)
 })
 
-test('extrudeRectangular (chamfer)', t => {
+test('extrudeRectangular (chamfer)', (t) => {
   const geometry1 = arc({ radius: 5, endAngle: degToRad(90), segments: 16 })
   const geometry2 = rectangle({ size: [5, 5] })
 
@@ -34,7 +34,7 @@ test('extrudeRectangular (chamfer)', t => {
   t.is(pts.length, 32)
 })
 
-test('extrudeRectangular (segments = 8, round)', t => {
+test('extrudeRectangular (segments = 8, round)', (t) => {
   const geometry1 = arc({ radius: 5, endAngle: degToRad(90), segments: 16 })
   const geometry2 = rectangle({ size: [5, 5] })
 
@@ -47,7 +47,7 @@ test('extrudeRectangular (segments = 8, round)', t => {
   t.is(pts.length, 40)
 })
 
-test('extrudeRectangular (holes)', t => {
+test('extrudeRectangular (holes)', (t) => {
   const geometry2 = geom2.create([
     [[15.00000, 15.00000], [-15.00000, 15.00000]],
     [[-15.00000, 15.00000], [-15.00000, -15.00000]],

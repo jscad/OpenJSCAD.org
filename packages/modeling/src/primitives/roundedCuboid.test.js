@@ -6,14 +6,14 @@ const geom3 = require('../geometry/geom3')
 
 const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoints')
 
-test('roundedCuboid (defaults)', t => {
+test('roundedCuboid (defaults)', (t) => {
   const obs = roundedCuboid()
   const pts = geom3.toPoints(obs)
 
   t.deepEqual(pts.length, 614)
 })
 
-test('roundedCuboid (options)', t => {
+test('roundedCuboid (options)', (t) => {
   // test segments
   let obs = roundedCuboid({ segments: 8 })
   let pts = geom3.toPoints(obs)

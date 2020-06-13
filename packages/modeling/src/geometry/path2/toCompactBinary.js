@@ -4,7 +4,7 @@
  * @returns {Array} compact binary representation, array
  * @alias module:modeling/geometry/path2.toCompactBinary
  */
-const toCompactBinary = geom => {
+const toCompactBinary = (geom) => {
   const points = geom.points
   const transforms = geom.transforms
   let color = [-1, -1, -1, -1]

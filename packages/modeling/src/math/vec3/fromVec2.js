@@ -6,8 +6,6 @@ const fromValues = require('./fromValues')
  * @param {Number} [z=0] - Z value
  * @alias module:modeling/math/vec3.fromVec2
  */
-const fromVector2 = (vec2, z = 0) => {
-  return fromValues(vec2[0], vec2[1], z)
-}
+const fromVector2 = (vec2, z = 0) => fromValues(vec2[0], vec2[1], z)
 
 module.exports = fromVector2

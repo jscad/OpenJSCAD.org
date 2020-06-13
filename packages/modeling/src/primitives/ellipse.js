@@ -28,8 +28,8 @@ const ellipse = (options) => {
   const step = 2 * Math.PI / segments // radians
 
   const points = []
-  for (var i = 0; i < segments; i++) {
-    var point = vec2.fromValues(radius[0] * Math.cos(step * i), radius[1] * Math.sin(step * i))
+  for (let i = 0; i < segments; i++) {
+    const point = vec2.fromValues(radius[0] * Math.cos(step * i), radius[1] * Math.sin(step * i))
     vec2.add(point, centerv, point)
     points.push(point)
   }

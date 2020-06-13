@@ -75,7 +75,7 @@ const dxfEntities = (objects, options) => {
   const entityContents = objects.map((object, i) => {
     if (geometry.geom2.isA(object)) {
       const outlines = geometry.geom2.toOutlines(object)
-      const paths = outlines.map((outline) => { return { closed: true, points: outline } })
+      const paths = outlines.map((outline) => ({ closed: true, points: outline }))
       if (options.geom2To === 'polyline') {
         return PathsToPolyine(paths, options)
       }

@@ -4,16 +4,16 @@ const poly3 = require('../poly3')
 
 const { create } = require('./index')
 
-test('create: Creates an empty geom3', t => {
+test('create: Creates an empty geom3', (t) => {
   const expected = {
     polygons: [],
     isRetesselated: false,
     transforms: new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
   }
-  return t.deepEqual(create(), expected)
+  t.deepEqual(create(), expected)
 })
 
-test('create: Creates a populated geom3', t => {
+test('create: Creates a populated geom3', (t) => {
   const points = [[0, 0, 0], [0, 10, 0], [0, 10, 10]]
   const polygon = poly3.fromPoints(points)
 
@@ -23,5 +23,5 @@ test('create: Creates a populated geom3', t => {
     isRetesselated: false,
     transforms: new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
   }
-  return t.deepEqual(create(polygons), expected)
+  t.deepEqual(create(polygons), expected)
 })

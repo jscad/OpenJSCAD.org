@@ -11,7 +11,7 @@ const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.js
 //
 // Test suite for DXF deserialization (import)
 //
-test('ASCII DXF R13 to Object Conversion', t => {
+test('ASCII DXF R13 to Object Conversion', (t) => {
   const dxfPath = path.resolve(samplesPath, 'dxf/ezdxf/small_r13.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
@@ -25,7 +25,7 @@ test('ASCII DXF R13 to Object Conversion', t => {
   t.true(geometry.path2.isA(objs[15]))
 })
 
-test('ASCII DXF R14 to Object Conversion', t => {
+test('ASCII DXF R14 to Object Conversion', (t) => {
   const dxfPath = path.resolve(samplesPath, 'dxf/ezdxf/small_r14.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
@@ -36,7 +36,7 @@ test('ASCII DXF R14 to Object Conversion', t => {
   t.is(objs.length, 0)
 })
 
-test('ASCII DXF ANSI to Object Conversion', t => {
+test('ASCII DXF ANSI to Object Conversion', (t) => {
   const dxfPath = path.resolve(samplesPath, 'dxf/ezdxf/ansi_pattern.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 
@@ -49,7 +49,7 @@ test('ASCII DXF ANSI to Object Conversion', t => {
   t.true(geometry.path2.isA(objs[0]))
 })
 
-test('ASCII DXF ISO to Object Conversion', t => {
+test('ASCII DXF ISO to Object Conversion', (t) => {
   const dxfPath = path.resolve(samplesPath, 'dxf/ezdxf/iso_pattern.dxf')
   t.deepEqual(true, fs.existsSync(dxfPath))
 

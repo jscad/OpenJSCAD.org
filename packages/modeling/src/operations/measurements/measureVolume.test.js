@@ -44,7 +44,7 @@ test('measureVolume: single objects', (t) => {
   t.is(xvolume, 0)
 })
 
-test('measureVolume (multiple objects)', t => {
+test('measureVolume (multiple objects)', (t) => {
   const aline = line([[10, 10], [15, 15]])
   const arect = rectangle({ size: [5, 10] })
   const acube = cuboid({ size: [10, 20, 40] })

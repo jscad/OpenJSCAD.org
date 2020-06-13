@@ -6,14 +6,14 @@ const geom2 = require('../geometry/geom2')
 
 const comparePoints = require('../../test/helpers/comparePoints')
 
-test('ellipse (defaults)', t => {
+test('ellipse (defaults)', (t) => {
   const geometry = ellipse()
   const obs = geom2.toPoints(geometry)
 
   t.deepEqual(obs.length, 32)
 })
 
-test('ellipse (options)', t => {
+test('ellipse (options)', (t) => {
   // test radius
   let geometry = ellipse({ radius: [3, 5], segments: 16 })
   let obs = geom2.toPoints(geometry)
