@@ -50,10 +50,10 @@ module.exports = function viewer (state, i18n) {
       resize(el)
       render(viewerOptions)
     }
-    const foo = setup()
-    viewerOptions = foo.viewerOptions
-    camera = foo.camera
-    camera.position = [150, 180, 233] // [150, 250, 200]
+
+    const options = setup(el)
+    viewerOptions = options.viewerOptions
+    camera = options.camera
     render = prepareRender(viewerOptions)
     const gestures = require('most-gestures').pointerGestures(el)
 
@@ -74,7 +74,6 @@ module.exports = function viewer (state, i18n) {
         const { shiftKey } = data.originalEvents[0]
         if (shiftKey) {
           const updated = orbitControls.pan({ controls, camera, speed: panSpeed }, delta)
-          // const fooCam = camera = { ...camera, ...updated.camera }
           camera.position = updated.camera.position
           camera.target = updated.camera.target
         }
@@ -112,6 +111,7 @@ module.exports = function viewer (state, i18n) {
   } else {
     if (prevSolids) {
       const solids = state.design.solids
+      // FIXME inefficient, replace
       const sameSolids = solids.length === prevSolids.length &&
       JSON.stringify(state.design.solids) === JSON.stringify(prevSolids)
       // return sameSolids
@@ -149,16 +149,18 @@ module.exports = function viewer (state, i18n) {
     return sameSolids
   }) */
 
-const setup = () => {
+const setup = (element) => {
   const width = window.innerWidth
   const height = window.innerHeight
   // prepare the camera
   const camera = Object.assign({}, perspectiveCamera.defaults)
+  camera.position = [150, 180, 233] // [150, 250, 200]
+
   perspectiveCamera.setProjection(camera, camera, { width, height })
   perspectiveCamera.update(camera, camera)
 
   const viewerOptions = {
-    glOptions: { container: document.body },
+    glOptions: { canvas: element },
     camera,
     drawCommands: {
     // draw commands bootstrap themselves the first time they are run
