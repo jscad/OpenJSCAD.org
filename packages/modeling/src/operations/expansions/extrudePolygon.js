@@ -9,7 +9,7 @@ const poly3 = require('../../geometry/poly3')
 const extrudePolygon = (offsetvector, polygon1) => {
   const direction = vec3.dot(polygon1.plane, offsetvector)
   if (direction > 0) {
-    polygon1 = poly3.flip(polygon1)
+    polygon1 = poly3.invert(polygon1)
   }
 
   const newpolygons = [polygon1]
@@ -26,7 +26,7 @@ const extrudePolygon = (offsetvector, polygon1) => {
     const sidefacepolygon = poly3.fromPoints(sidefacepoints)
     newpolygons.push(sidefacepolygon)
   }
-  newpolygons.push(poly3.flip(polygon2))
+  newpolygons.push(poly3.invert(polygon2))
 
   return geom3.create(newpolygons)
 }

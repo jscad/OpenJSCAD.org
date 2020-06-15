@@ -198,7 +198,7 @@ PolygonTreeNode.prototype = {
       for (j = 0, l = children.length; j < l; j++) {
         node = children[j]
         if (node.polygon) {
-          node.polygon = poly3.flip(node.polygon)
+          node.polygon = poly3.invert(node.polygon)
         }
         if (node.children.length > 0) queue.push(node.children)
       }
