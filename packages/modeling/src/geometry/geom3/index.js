@@ -9,6 +9,7 @@ module.exports = {
   equals: require('./equals'),
   fromPoints: require('./fromPoints'),
   fromCompactBinary: require('./fromCompactBinary'),
+  invert: require('./invert'),
   isA: require('./isA'),
   toPoints: require('./toPoints'),
   toPolygons: require('./toPolygons'),
