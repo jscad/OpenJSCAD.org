@@ -7,6 +7,7 @@ const toPolygons = require('./toPolygons')
  * Invert the given geometry, transposing solid and empty space.
  * @params {geom3} geometry - the geometry to invert
  * @returns {geom3} a new geometry
+ * @alias module:modeling/geometry/geom3.invert
  */
 const invert = (geometry) => {
   const polygons = toPolygons(geometry)

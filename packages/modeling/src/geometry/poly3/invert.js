@@ -5,6 +5,7 @@ const create = require('./create')
  *
  * @param {poly3} polygon - the polygon to invert
  * @returns {poly3} a new poly3
+ * @alias module:modeling/geometry/poly3.invert
  */
 const invert = (polygon) => {
   const vertices = polygon.vertices.slice().reverse()
