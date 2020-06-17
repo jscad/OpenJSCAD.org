@@ -25,12 +25,12 @@ const prepareRender = (params) => {
   const drawCache = {}
 
   // create the main draw command
-  const command = props => {
+  const command = (props) => {
     // console.log('params in render', props)
     props.rendering = Object.assign({}, renderDefaults, props.rendering)
 
     // props is the first parameter, the second one is a function, doing the actual rendering
-    renderContext(regl)(props, context => {
+    renderContext(regl)(props, (context) => {
       regl.clear({
         color: props.rendering.background,
         depth: 1
@@ -45,7 +45,7 @@ const prepareRender = (params) => {
             const bTransparent = 'transparent' in b.visuals ? b.visuals.transparent : false
             return (aTransparent === bTransparent) ? 0 : aTransparent ? 1 : -1
           })
-          .forEach(entity => {
+          .forEach((entity) => {
             const { visuals } = entity
             if (visuals.drawCmd && visuals.show && props.drawCommands[visuals.drawCmd]) {
               const key = JSON.stringify(entity) // FIXME: EEEEEK horribly inneficient, change this!

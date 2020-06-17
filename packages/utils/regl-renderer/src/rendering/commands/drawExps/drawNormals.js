@@ -1,6 +1,6 @@
 const mat4 = require('gl-mat4')
 
-const drawNormals = function (regl, params) {
+const drawNormals = (regl, params) => {
   const defaults = {
     size: 20,
     lineWidth: 5, // FIXME/ linewidth has been "deprecated" in multiple browsers etc, need a workaround,
@@ -57,7 +57,7 @@ const drawNormals = function (regl, params) {
   // const yAxisModel = mat4.rotateZ(mat4.create(), mat4.identity([]), Math.PI / 2)
   // const zAxisModel = mat4.rotateY(mat4.create(), mat4.identity([]), -Math.PI / 2)
 
-  const normaLines = geometry.normals.map(function (normal, index) {
+  const normaLines = geometry.normals.map((normal, index) => {
     const position = geometry.positions[index]
     const orientation = mat4.multiply(
       mat4.identity([]),
@@ -66,7 +66,7 @@ const drawNormals = function (regl, params) {
       // mat4.lookAt(mat4.identity([]), position, vec3.add([], position, normal), [0, 0, 0])
     )
     const matrix = orientation
-    const absNormal = normal.map(x => Math.abs(x))
+    const absNormal = normal.map((x) => Math.abs(x))
     return { color: [absNormal[0], absNormal[1], absNormal[2], 1.0], model: matrix }
   })
   const singleNormal = regl(commandParams)

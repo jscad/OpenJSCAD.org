@@ -24,7 +24,7 @@ const path2ToGeometries = (solid, options) => {
     positions.push([point[0], point[1], 0])
   }
 
-  const normals = positions.map(x => [0, 0, -1])
+  const normals = positions.map((x) => [0, 0, -1])
   const indices = positions.map((x, i) => i) // FIXME: temporary, not really needed, need to change drawMesh
 
   return [{ positions, normals, color, indices }]
