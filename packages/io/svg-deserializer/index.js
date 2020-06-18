@@ -157,24 +157,20 @@ const objectify = (options, group) => {
     shapes = shapes.map((shape) => {
       if ('transforms' in obj) {
         // NOTE: SVG specifications require that transforms are applied in the order given.
-        // But these are applied in the order as required by the JSCAD library
-        let tr
-        let ts
-        let tt
         for (let j = 0; j < obj.transforms.length; j++) {
           const t = obj.transforms[j]
           if ('rotate' in t) {
-            const z = 0 - tr.rotate
+            const z = 0 - t.rotate
             shape = transforms.rotateZ(z, shape)
           }
           if ('scale' in t) {
-            const x = ts.scale[0]
-            const y = ts.scale[1]
+            const x = t.scale[0]
+            const y = t.scale[1]
             shape = transforms.scale([x, y, 1], shape)
           }
           if ('translate' in t) {
-            const x = cagLengthX(tt.translate[0], svgUnitsPmm, svgUnitsX)
-            const y = (0 - cagLengthY(tt.translate[1], svgUnitsPmm, svgUnitsY))
+            const x = cagLengthX(t.translate[0], svgUnitsPmm, svgUnitsX)
+            const y = (0 - cagLengthY(t.translate[1], svgUnitsPmm, svgUnitsY))
             shape = transforms.translate([x, y, 0], shape)
           }
         }
