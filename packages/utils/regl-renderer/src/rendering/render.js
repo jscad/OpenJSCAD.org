@@ -22,7 +22,8 @@ const prepareRender = (params) => {
   // setup regl
   const regl = require('regl')(options)// , (width, height))
   // setup draw command cache
-  const drawCache = {}
+//  const drawCache = {}
+  const drawCache2 = new Map()
 
   // create the main draw command
   const command = (props) => {
@@ -48,12 +49,22 @@ const prepareRender = (params) => {
           .forEach((entity) => {
             const { visuals } = entity
             if (visuals.drawCmd && visuals.show && props.drawCommands[visuals.drawCmd]) {
+/*
               const key = JSON.stringify(entity) // FIXME: EEEEEK horribly inneficient, change this!
               let drawCmd = drawCache[key]
               if (!drawCmd) {
               // make draw function
                 drawCmd = props.drawCommands[visuals.drawCmd](regl, entity)
                 drawCache[key] = drawCmd
+              }
+*/
+              let drawCmd
+              if (visuals.cacheId) {
+                drawCmd = drawCache2.get(visuals.cacheId)
+              } else {
+                visuals.cacheId = drawCache2.size
+                drawCmd = props.drawCommands[visuals.drawCmd](regl, entity)
+                drawCache2.set(visuals.cacheId, drawCmd)
               }
               // console.log('drawing with', entity.drawCmd, entity)
               const drawParams = { // FIXME: horrible, tidy up !!: what is needed/should be passed to render pass ?
