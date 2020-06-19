@@ -46,11 +46,23 @@ const unRegisterDxfExtension = (fs, _require) => {
   delete _require.extensions['.dxf']
 }
 
+const registerObjExtension = (fs, _require) => {
+  const deserializer = require('@jscad/io').objDeSerializer
+  _require.extensions['.obj'] = (module, filename) => {
+    const content = fs.readFileSync(filename, 'utf8')
+    const parsed = deserializer.deserialize({ filename, output: 'geometry' }, content)
+    module.exports = parsed
+  }
+}
+const unRegisterObjExtension = (fs, _require) => {
+  delete _require.extensions['.obj']
+}
+
 const registerSvgExtension = (fs, _require) => {
   const deserializer = require('@jscad/io').svgDeSerializer
   _require.extensions['.svg'] = (module, filename) => {
     const content = fs.readFileSync(filename, 'utf8')
-    const parsed = deserializer.deserialize(content, filename, { output: 'geometry' })
+    const parsed = deserializer.deserialize({ filename, output: 'geometry' }, content)
     module.exports = parsed
   }
 }
@@ -60,26 +72,33 @@ const unRegisterSvgExtension = (fs, _require) => {
 
 const registerAllExtensions = (fs, _require) => {
   registerJscadExtension(fs, _require)
-  registerStlExtension(fs, _require)
+
   registerAmfExtension(fs, _require)
   registerDxfExtension(fs, _require)
+  registerObjExtension(fs, _require)
+  registerStlExtension(fs, _require)
   registerSvgExtension(fs, _require)
 }
 
 const unRegisterAllExtensions = (fs, _require) => {
   unRegisterJscadExtension(fs, _require)
-  unRegisterStlExtension(fs, _require)
+
   unRegisterAmfExtension(fs, _require)
   unRegisterDxfExtension(fs, _require)
+  unRegisterObjExtension(fs, _require)
+  unRegisterStlExtension(fs, _require)
   unRegisterSvgExtension(fs, _require)
 }
 
 module.exports = {
   registerJscadExtension,
-  registerStlExtension,
+
   registerAmfExtension,
   registerDxfExtension,
+  registerObjExtension,
+  registerStlExtension,
   registerSvgExtension,
+
   registerAllExtensions,
   unRegisterAllExtensions
 }
