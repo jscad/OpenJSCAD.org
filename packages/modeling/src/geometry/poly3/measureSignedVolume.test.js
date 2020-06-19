@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { measureSignedVolume, create, flip, fromPoints, transform } = require('./index')
+const { measureSignedVolume, create, invert, fromPoints, transform } = require('./index')
 
 const mat4 = require('../../math/mat4')
 
@@ -53,10 +53,10 @@ test('poly3: measureSignedVolume() should return correct values', (t) => {
   nearlyEqual(t, ret3, 166.66666656019515, Number.EPSILON)
   nearlyEqual(t, ret4, -324.9999018284361, Number.EPSILON)
 
-  // flipped (opposite rotation, normal)
-  ply2 = flip(ply2)
-  ply3 = flip(ply3)
-  ply4 = flip(ply4)
+  // inverted (opposite rotation, normal)
+  ply2 = invert(ply2)
+  ply3 = invert(ply3)
+  ply4 = invert(ply4)
   ret2 = measureSignedVolume(ply2)
   ret3 = measureSignedVolume(ply3)
   ret4 = measureSignedVolume(ply4)

@@ -1,5 +1,5 @@
 const test = require('ava')
-const { measureArea, create, flip, fromPoints, transform } = require('./index')
+const { measureArea, create, invert, fromPoints, transform } = require('./index')
 
 const mat4 = require('../../math/mat4')
 
@@ -80,11 +80,11 @@ test('poly3: measureArea() should return correct values', (t) => {
   nearlyEqual(ret3, 100.0, Number.EPSILON)
   nearlyEqual(ret4, 19.5, Number.EPSILON)
 
-  // flipped
-  ply1 = flip(ply1)
-  ply2 = flip(ply2)
-  ply3 = flip(ply3)
-  ply4 = flip(ply4)
+  // inverted
+  ply1 = invert(ply1)
+  ply2 = invert(ply2)
+  ply3 = invert(ply3)
+  ply4 = invert(ply4)
   ret1 = measureArea(ply1)
   ret2 = measureArea(ply2)
   ret3 = measureArea(ply3)
