@@ -97,8 +97,8 @@ const getBounds = (objects) => {
 }
 
 const convertObjects = (objects, bounds, options) => {
-  const xoffset = 0 - bounds[0][0]
-  const yoffset = 0 - bounds[0][1]
+  const xoffset = 0 - bounds[0][0] // offset to X=0
+  const yoffset = 0 - bounds[1][1] // offset to Y=0
 
   const contents = []
   objects.forEach((object, i) => {
@@ -114,6 +114,15 @@ const convertObjects = (objects, bounds, options) => {
   return contents
 }
 
+const reflect = (x, y, px, py) => {
+  const ox = x - px
+  const oy = y - py
+  if (x === px && y === px) return [x, y]
+  if (x === px) return [x, py - (oy)]
+  if (y === py) return [px - (-ox), y]
+  return [px - (-ox), py - (oy)]
+}
+
 const convertGeom2 = (object, offsets, options) => {
   const outlines = geometry.geom2.toOutlines(object)
   const paths = outlines.map((outline) => geometry.path2.fromPoints({ closed: true }, outline))
@@ -125,9 +134,9 @@ const convertGeom2 = (object, offsets, options) => {
   return convertToContinousPath(paths, offsets, options)
 }
 
-const convertToContinousPath = (paths, offset, options) => {
+const convertToContinousPath = (paths, offsets, options) => {
   let instructions = ''
-  paths.forEach((path) => (instructions += convertPath(path, offset, options)))
+  paths.forEach((path) => (instructions += convertPath(path, offsets, options)))
   let continouspath = ['path', { d: instructions }]
   if (paths.length > 0) {
     const path0 = paths[0]
@@ -152,8 +161,10 @@ const convertPath = (path, offsets, options) => {
     let pointindexwrapped = pointindex
     if (pointindexwrapped >= path.points.length) pointindexwrapped -= path.points.length
     const point = path.points[pointindexwrapped]
-    const x = Math.round((point[0] + offsets[0]) * options.decimals) / options.decimals
-    const y = Math.round((point[1] + offsets[1]) * options.decimals) / options.decimals
+    const offpoint = [point[0] + offsets[0], point[1] + offsets[1]]
+    const svgpoint = reflect(offpoint[0], offpoint[1], 0, 0)
+    const x = Math.round(svgpoint[0] * options.decimals) / options.decimals
+    const y = Math.round(svgpoint[1] * options.decimals) / options.decimals
     if (pointindex > 0) {
       str += `L${x} ${y}`
     } else {

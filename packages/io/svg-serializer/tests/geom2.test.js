@@ -74,7 +74,7 @@ const expected2 = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg width="10mm" height="20mm" viewBox="0 0 10 20" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <path d="M0 0L10 0L10 20L0 20L0 0"/>
+    <path d="M0 20L10 20L10 0L0 0L0 20"/>
   </g>
 </svg>
 `
@@ -84,10 +84,10 @@ const expected3 = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg width="70mm" height="80mm" viewBox="0 0 70 80" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <path d="M0 0L10 0L10 20L0 20L0 0"/>
+    <path d="M0 80L10 80L10 60L0 60L0 80"/>
   </g>
   <g>
-    <path d="M60 60L70 60L70 80L60 80L60 60"/>
+    <path d="M60 20L70 20L70 0L60 0L60 20"/>
   </g>
 </svg>
 `
@@ -97,7 +97,7 @@ const expected4 = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg width="10mm" height="20mm" viewBox="0 0 10 20" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <path fill-rule="evenodd" fill="rgb(127.5,127.5,127.5,127.5)" d="M0 0L10 0L10 20L0 20L0 0"/>
+    <path fill-rule="evenodd" fill="rgb(127.5,127.5,127.5,127.5)" d="M0 20L10 20L10 0L0 0L0 20"/>
   </g>
 </svg>
 `
@@ -107,7 +107,7 @@ const expected5 = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg width="150mm" height="150mm" viewBox="0 0 150 150" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <path fill-rule="evenodd" fill="rgb(127.5,127.5,127.5,127.5)" d="M0 0L150 0L150 150L115 150L115 75L35 75L35 150L0 150L0 0M90 35L83 35L83 50L67 50L67 35L60 35L60 65L90 65L90 35M73 56L77 56L77 60L73 60L73 56"/>
+    <path fill-rule="evenodd" fill="rgb(127.5,127.5,127.5,127.5)" d="M0 150L150 150L150 0L115 0L115 75L35 75L35 0L0 0L0 150M90 115L83 115L83 100L67 100L67 115L60 115L60 85L90 85L90 115M73 94L77 94L77 90L73 90L73 94"/>
   </g>
 </svg>
 `
