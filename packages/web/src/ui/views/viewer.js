@@ -1,7 +1,8 @@
-
 const html = require('bel')
+
 // viewer data
-const rendererStuff = require('@jscad/regl-renderer') // replace this with the correct import
+const rendererStuff = require('@jscad/regl-renderer')
+
 const { prepareRender, drawCommands, cameras, entitiesFromSolids } = rendererStuff
 const perspectiveCamera = cameras.perspective
 const orbitControls = rendererStuff.controls.orbit
@@ -10,6 +11,7 @@ const orbitControls = rendererStuff.controls.orbit
 const rotateSpeed = 0.002
 const zoomSpeed = 0.08
 const panSpeed = 1
+const renderSpeed = 10 // number of renders per second
 
 // internal state
 let initialized = false
@@ -31,22 +33,24 @@ const grid = { // grid data
   size: [500, 500],
   ticks: [10, 1]
 }
-const axes =
-  {
-    visuals: {
-      drawCmd: 'drawAxis',
-      show: true
-    }
-  }
-let entities = []
-let prevSolids
 
-module.exports = function viewer (state, i18n) {
+const axes = {
+  visuals: {
+    drawCmd: 'drawAxis',
+    show: true
+  }
+}
+
+let prevEntities = []
+let prevSolids
+let prevTimestamp
+
+const viewer = (state, i18n) => {
   // console.log('regen viewer', state.viewer)
   const el = html`<canvas id='renderTarget'> </canvas>`
 
-  if (!initialized) {
-    window.onresize = function () {
+  if (!render) {
+    window.onresize = () => {
       resize(el)
       render(viewerOptions)
     }
@@ -59,8 +63,8 @@ module.exports = function viewer (state, i18n) {
 
     // rotate
     gestures.drags
-      .forEach(data => {
-        const delta = [data.delta.x, data.delta.y].map(d => -d)
+      .forEach((data) => {
+        const delta = [data.delta.x, data.delta.y].map((d) => -d)
         const { shiftKey } = data.originalEvents[0]
         if (!shiftKey) {
           const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, delta)
@@ -69,8 +73,8 @@ module.exports = function viewer (state, i18n) {
       })
     // pan
     gestures.drags
-      .forEach(data => {
-        const delta = [data.delta.x, data.delta.y].map(d => d)
+      .forEach((data) => {
+        const delta = [data.delta.x, data.delta.y].map((d) => d)
         const { shiftKey } = data.originalEvents[0]
         if (shiftKey) {
           const updated = orbitControls.pan({ controls, camera, speed: panSpeed }, delta)
@@ -81,80 +85,79 @@ module.exports = function viewer (state, i18n) {
 
     // zoom
     gestures.zooms
-      .forEach(x => {
+      .forEach((x) => {
         const updated = orbitControls.zoom({ controls, camera, speed: zoomSpeed }, -x)
         controls = { ...controls, ...updated.controls }
       })
 
     // auto fit
     gestures.taps
-      .filter(taps => taps.nb === 2)
-      .forEach(x => {
-        const updated = orbitControls.zoomToFit({ controls, camera, entities })
+      .filter((taps) => taps.nb === 2)
+      .forEach((x) => {
+        const updated = orbitControls.zoomToFit({ controls, camera, entities: prevEntities })
         controls = { ...controls, ...updated.controls }
       })
 
-    // some live animation example
-    const updateAndRender = () => {
-      const updatedA = orbitControls.update({ controls, camera })
-      controls = { ...controls, ...updatedA.controls }
-      camera.position = updatedA.camera.position
-      perspectiveCamera.update(camera)
+    // the heart of rendering, as themes, controls, etc change
+    const updateAndRender = (timestamp) => {
+      if (!prevTimestamp) prevTimestamp = timestamp
+      const elaspe = timestamp - prevTimestamp
+      if (elaspe > (1000 / renderSpeed)) {
+        prevTimestamp = timestamp
 
-      resize(el)
-      render(viewerOptions)
+        const updatedA = orbitControls.update({ controls, camera })
+        controls = { ...controls, ...updatedA.controls }
+        camera.position = updatedA.camera.position
+        perspectiveCamera.update(camera)
+
+        resize(el)
+        render(viewerOptions)
+      }
       window.requestAnimationFrame(updateAndRender)
     }
     window.requestAnimationFrame(updateAndRender)
-
-    resize(el)
   } else {
+    // only generate entities when the solids change
+    // themes, options, etc also change the viewer state
+    const solids = state.design.solids
     if (prevSolids) {
-      const solids = state.design.solids
       // FIXME inefficient, replace
-      const sameSolids = solids.length === prevSolids.length &&
-      JSON.stringify(state.design.solids) === JSON.stringify(prevSolids)
-      // return sameSolids
-      prevSolids = solids
-      // console.log('sameSolids', sameSolids)
+      const sameSolids = solids.length === prevSolids.length && JSON.stringify(solids) === JSON.stringify(prevSolids)
       if (!sameSolids) {
-        entities = entitiesFromSolids({}, state.design.solids)
+        const theme = state.themes.themeSettings.viewer
+        const meshColor = theme.rendering.meshColor
+        prevEntities = entitiesFromSolids({ meshColor }, solids)
       }
-    } else {
-      prevSolids = state.design.solids
+    }
+    prevSolids = solids
+
+    if (state.themes && state.themes.themeSettings) {
+      const theme = state.themes.themeSettings.viewer
+      grid.visuals.color = theme.grid.color
+      grid.visuals.subColor = theme.grid.subColor
+
+      if (viewerOptions.rendering) {
+        viewerOptions.rendering.background = theme.rendering.background
+        viewerOptions.rendering.meshColor = theme.rendering.meshColor
+      }
     }
 
     viewerOptions.entities = [
       state.viewer.grid.show ? grid : undefined,
       state.viewer.axes.show ? axes : undefined,
-      ...entities
-    ]
-      .filter(x => x !== undefined)
-
-    const updated = orbitControls.update({ controls, camera })
-    controls = { ...controls, ...updated.controls }
-    camera.position = updated.camera.position
-    perspectiveCamera.update(camera)
-
-    resize(el)
-    render(viewerOptions)
+      ...prevEntities
+    ].filter((x) => x !== undefined)
   }
 
   return el
 }
-
-/* .skipRepeatsWith(function (state, previousState) {
-    const sameSolids = state.design.solids.length === previousState.design.solids.length &&
-      JSON.stringify(state.design.solids) === JSON.stringify(previousState.design.solids)
-    return sameSolids
-  }) */
 
 const setup = (element) => {
   const width = window.innerWidth
   const height = window.innerHeight
   // prepare the camera
   const camera = Object.assign({}, perspectiveCamera.defaults)
-  camera.position = [150, 180, 233] // [150, 250, 200]
+  camera.position = [150, 180, 233]
 
   perspectiveCamera.setProjection(camera, camera, { width, height })
   perspectiveCamera.update(camera, camera)
@@ -163,10 +166,10 @@ const setup = (element) => {
     glOptions: { canvas: element },
     camera,
     drawCommands: {
-    // draw commands bootstrap themselves the first time they are run
-      drawGrid: drawCommands.drawGrid, // require('./src/rendering/drawGrid/index.js'),
-      drawAxis: drawCommands.drawAxis, // require('./src/rendering/drawAxis'),
-      drawMesh: drawCommands.drawMesh // require('./src/rendering/drawMesh/index.js')
+      // draw commands bootstrap themselves the first time they are run
+      drawGrid: drawCommands.drawGrid,
+      drawAxis: drawCommands.drawAxis,
+      drawMesh: drawCommands.drawMesh
     },
     // data
     entities: []
@@ -187,3 +190,5 @@ const resize = (viewerElement) => {
   viewerElement.width = pixelRatio * width
   viewerElement.height = pixelRatio * height
 }
+
+module.exports = viewer
