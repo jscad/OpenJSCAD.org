@@ -15,7 +15,9 @@ const reducers = {
     // very nice color for the cuts [0, 0.6, 1] to go with the orange
     const available = {
       light: require('../../../data/theme.light'),
-      dark: require('../../../data/theme.dark')
+      dark: require('../../../data/theme.dark'),
+      grass: require('../../../data/theme.grass'),
+      ocean: require('../../../data/theme.ocean')
     }
     const themeData = available[active]
     // console.log('setTheme', active, themeData)
