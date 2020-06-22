@@ -1,159 +1,74 @@
 const test = require('ava')
+
+const { registerAllExtensions } = require('../io/registerExtensions')
+
 const makeWebRequire = require('./webRequire')
-const transformSources = require('./transformSources')
 const makeFakeFs = require('./makeFakeFs')
 
 test.beforeEach(t => {
 })
 
-test('webRequire: should allow requiring single (main) files', t => {
-  const mainPath = 'http://localhost:8081/examples/logo.js'
+test('webRequire: should support require, from a single file', t => {
   const apiMainPath = '@jscad/modeling'
-  let filesAndFolders = [
-    {
-      ext: 'js',
-      fullPath: 'http://localhost:8081/examples/logo.js',
-      name: 'logo.js',
-      source: `const main = () => {
-        return cube()
-      }`
-    }
-  ]
-  filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
-  const requireFn = makeWebRequire(filesAndFolders, { apiMainPath })
-  const designRootModule = requireFn(mainPath)
+
+  let requireFn = makeWebRequire(singleFileJs, { apiMainPath })
+  let designRootModule = requireFn(singleFileJs[0].fullPath)
+
+  t.true('main' in designRootModule)
+  t.true(designRootModule.main instanceof Function)
+
+  // NOTE: 'jscad' must be registered as an extension
+  const fakeFs = makeFakeFs(singleFileJscad)
+  requireFn = makeWebRequire(singleFileJscad, { apiMainPath })
+  registerAllExtensions(fakeFs, requireFn)
+  designRootModule = requireFn(singleFileJscad[0].fullPath)
 
   t.true('main' in designRootModule)
   t.true(designRootModule.main instanceof Function)
 })
 
-test('webRequire: should support requiring relative .js files with extensions', t => {
-  const mainPath = '/examples/logo.js'
+test('webRequire: should support require, from a directory with index.js', t => {
   const apiMainPath = '@jscad/modeling'
-  let filesAndFolders = [
-    {
-      fullPath: '/examples/logo.js',
-      name: 'logo.js',
-      ext: 'js',
-      source: `
-      const {test} = require('./other.js')
-      const main = () => {
-        return test()
-      }
-      module.exports = {main}
-      `
-    },
-    {
-      fullPath: '/examples/other.js',
-      name: 'other.js',
-      ext: 'js',
-      source: `
-      const test = () => 42
-      module.exports = {test}`
-    }
-  ]
-  filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
-  const requireFn = makeWebRequire(filesAndFolders, { apiMainPath })
-  const designRootModule = requireFn(mainPath)
 
-  const resultOfMain = designRootModule.main()
+  const requireFn = makeWebRequire(directoryWithIndexJs, { apiMainPath })
+  const designRootModule = requireFn('/project')
+
   t.true('main' in designRootModule)
   t.true(designRootModule.main instanceof Function)
-  t.deepEqual(resultOfMain, 42)
 })
 
-test('webRequire: should support requiring relative .js files with no extensions', t => {
-  const mainPath = '/examples/logo.js'
+test('webRequire: should support require, from a directory with index.json', t => {
   const apiMainPath = '@jscad/modeling'
-  let filesAndFolders = [
-    {
-      fullPath: '/examples/logo.js',
-      name: 'logo.js',
-      ext: 'js',
-      source: `
-      const {test} = require('./other')
-      const main = () => {
-        return test()
-      }
-      module.exports = {main}
-      `
-    },
-    {
-      fullPath: '/examples/other.js',
-      name: 'other.js',
-      ext: 'js',
-      source: `
-      const test = () => 42
-      module.exports = {test}`
-    }
-  ]
-  filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
-  const requireFn = makeWebRequire(filesAndFolders, { apiMainPath })
-  const designRootModule = requireFn(mainPath)
 
-  const resultOfMain = designRootModule.main()
-  t.true('main' in designRootModule)
-  t.true(designRootModule.main instanceof Function)
-  t.deepEqual(resultOfMain, 42)
+  const requireFn = makeWebRequire(directoryWithIndexJson, { apiMainPath })
+  const designRootModule = requireFn('/project')
+
+  t.true('name' in designRootModule)
+  t.true('version' in designRootModule)
 })
 
-test('webRequire: should support requiring relative .json files with extensions', t => {
-  const mainPath = '/examples/logo.js'
+test('webRequire: should support require, from a directory with project.json', t => {
   const apiMainPath = '@jscad/modeling'
-  let filesAndFolders = [
-    {
-      fullPath: '/examples/logo.js',
-      name: 'logo.js',
-      ext: 'js',
-      source: `
-      const jsonTest = require('./data.json')
-      const main = () => {
-        return jsonTest.firstName
-      }
-      module.exports = {main}
-      `
-    },
-    {
-      fullPath: '/examples/data.json',
-      name: 'data.json',
-      ext: 'json',
-      source: `{
-        "firstName": "Liet",
-        "lastName": "Kynes",
-        "isAlive": true
-      }`
-    }
-  ]
-  filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
-  const requireFn = makeWebRequire(filesAndFolders, { apiMainPath })
-  const designRootModule = requireFn(mainPath)
 
-  const resultOfMain = designRootModule.main()
+  const requireFn = makeWebRequire(directoryWithPackageJson, { apiMainPath })
+  const designRootModule = requireFn('/project')
+
   t.true('main' in designRootModule)
   t.true(designRootModule.main instanceof Function)
-  t.deepEqual(resultOfMain, 'Liet')
 })
 
-test('webRequire: should accept an optional fakeFs instance', t => {
-  const mainPath = 'http://localhost:8081/examples/logo.js'
+test('webRequire: should support require, from a directory with dependent files', t => {
   const apiMainPath = '@jscad/modeling'
-  let filesAndFolders = [
-    {
-      ext: 'js',
-      fullPath: 'http://localhost:8081/examples/logo.js',
-      name: 'logo.js',
-      source: `const main = () => {
-        return cube()
-      }`
-    }
-  ]
-  filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
-  const fakeFs = makeFakeFs(filesAndFolders)
-  const requireFn = makeWebRequire(filesAndFolders, { apiMainPath, fakeFs })
-  const designRootModule = requireFn(mainPath)
+
+  const fakeFs = makeFakeFs(directoryWithDependencies)
+  const requireFn = makeWebRequire(directoryWithDependencies, { apiMainPath })
+  registerAllExtensions(fakeFs, requireFn)
+  const designRootModule = requireFn('/project')
 
   t.true('main' in designRootModule)
   t.true(designRootModule.main instanceof Function)
+
+  // const resultOfMain = designRootModule.main()
 })
 
 test('webRequire: should allow using require.extensions like the native node require (simple)', t => {
@@ -165,19 +80,21 @@ test('webRequire: should allow using require.extensions like the native node req
     }
   }
 
-  const mainPath = 'http://localhost:8081/examples/logo.jscad'
+  const mainPath = '/logo.jscad'
   const apiMainPath = '@jscad/modeling'
-  let filesAndFolders = [
+  const filesAndFolders = [
     {
       ext: 'jscad',
-      fullPath: 'http://localhost:8081/examples/logo.jscad',
+      fullPath: '/logo.jscad',
       name: 'logo.jscad',
-      source: `const main = () => {
-        return cube()
-      }`
+      source: `
+        const main = () => {
+          return cube()
+        }
+        module.exports = {main}
+      `
     }
   ]
-  filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
   const fakeFs = makeFakeFs(filesAndFolders)
   const requireFn = makeWebRequire(filesAndFolders, { apiMainPath, fakeFs })
   registerJscadExtension(fakeFs, requireFn)
@@ -217,91 +134,14 @@ test('webRequire: should allow using require.extensions like the native node req
       fullPath: '/examples/cube.stl',
       name: 'cube.stl',
       source: `solid MYSOLID
-      facet normal  0.0   0.0  -1.0
-        outer loop
-          vertex    0.0   0.0   0.0
-          vertex    1.0   1.0   0.0
-          vertex    1.0   0.0   0.0
-        endloop
-      endfacet
-      facet normal  0.0   0.0  -1.0
-        outer loop
-          vertex    0.0   0.0   0.0
-          vertex    0.0   1.0   0.0
-          vertex    1.0   1.0   0.0
-        endloop
-      endfacet
-      facet normal -1.0   0.0   0.0
-        outer loop
-          vertex    0.0   0.0   0.0
-          vertex    0.0   1.0   1.0
-          vertex    0.0   1.0   0.0
-        endloop
-      endfacet
-      facet normal -1.0   0.0   0.0
-        outer loop
-          vertex    0.0   0.0   0.0
-          vertex    0.0   0.0   1.0
-          vertex    0.0   1.0   1.0
-        endloop
-      endfacet
-      facet normal  0.0   1.0   0.0
-        outer loop
-          vertex    0.0   1.0   0.0
-          vertex    1.0   1.0   1.0
-          vertex    1.0   1.0   0.0
-        endloop
-      endfacet
-      facet normal  0.0   1.0   0.0
-        outer loop
-          vertex    0.0   1.0   0.0
-          vertex    0.0   1.0   1.0
-          vertex    1.0   1.0   1.0
-        endloop
-      endfacet
-      facet normal  1.0   0.0   0.0
-        outer loop
-          vertex    1.0   0.0   0.0
-          vertex    1.0   1.0   0.0
-          vertex    1.0   1.0   1.0
-        endloop
-      endfacet
-      facet normal  1.0   0.0   0.0
-        outer loop
-          vertex    1.0   0.0   0.0
-          vertex    1.0   1.0   1.0
-          vertex    1.0   0.0   1.0
-        endloop
-      endfacet
-      facet normal  0.0  -1.0   0.0
-        outer loop
-          vertex    0.0   0.0   0.0
-          vertex    1.0   0.0   0.0
-          vertex    1.0   0.0   1.0
-        endloop
-      endfacet
-      facet normal  0.0  -1.0   0.0
-        outer loop
-          vertex    0.0   0.0   0.0
-          vertex    1.0   0.0   1.0
-          vertex    0.0   0.0   1.0
-        endloop
-      endfacet
-      facet normal  0.0   0.0   1.0
-        outer loop
-          vertex    0.0   0.0   1.0
-          vertex    1.0   0.0   1.0
-          vertex    1.0   1.0   1.0
-        endloop
-      endfacet
-      facet normal  0.0   0.0   1.0
-        outer loop
-          vertex    0.0   0.0   1.0
-          vertex    1.0   1.0   1.0
-          vertex    0.0   1.0   1.0
-        endloop
-      endfacet
-    endsolid MYSOLID`
+        facet normal  0.0   0.0  -1.0    
+          outer loop
+            vertex    0.0   0.0   0.0    
+            vertex    1.0   1.0   0.0    
+            vertex    1.0   0.0   0.0    
+          endloop
+        endfacet
+        endsolid MYSOLID`
     }
   ]
   const fakeFs = makeFakeFs(filesAndFolders)
@@ -315,3 +155,172 @@ test('webRequire: should allow using require.extensions like the native node req
   const resultOfMain = designRootModule.main()
   t.true('cube' in resultOfMain)
 })
+
+// TEST FILE SYSTEMS
+
+const singleFileJs = [
+  {
+    ext: 'js',
+    fullPath: '/logo.js',
+    name: 'logo.js',
+    source: `
+      const { cube } = require('@jscad/modeling').primitives
+
+      const main = () => {
+        return cube()
+      }
+      module.exports = {main}
+    `
+  }
+]
+
+const singleFileJscad = [
+  {
+    ext: 'jscad',
+    fullPath: '/logo.jscad',
+    name: 'logo.jscad',
+    source: `
+      const main = () => {
+        return cube()
+      }
+      module.exports = {main}
+    `
+  }
+]
+
+const directoryWithIndexJs = [
+  {
+    fullPath: '/project',
+    name: 'project',
+    children: [
+      {
+        ext: 'js',
+        fullPath: '/project/index.js',
+        name: 'index.js',
+        source: `
+          const main = () => {
+            return cube()
+          }
+          module.exports = {main}
+        `
+      }
+    ]
+  }
+]
+
+const directoryWithIndexJson = [
+  {
+    fullPath: '/project',
+    name: 'project',
+    children: [
+      {
+        ext: 'json',
+        fullPath: '/project/index.json',
+        name: 'index.json',
+        source: `
+{
+  "name": "project",
+  "version": "0.0.0"
+}
+        `
+      }
+    ]
+  }
+]
+
+const directoryWithPackageJson = [
+  {
+    fullPath: '/project',
+    name: 'project',
+    children: [
+      {
+        ext: 'json',
+        fullPath: '/project/package.json',
+        name: 'package.json',
+        source: `
+{
+  "name": "project",
+  "version": "0.0.0",
+  "main": "file.js"
+}
+        `
+      },
+      {
+        ext: 'js',
+        fullPath: '/project/file.js',
+        name: 'file.js',
+        source: `
+          const main = () => {
+            return cube()
+          }
+          module.exports = {main}
+        `
+      }
+    ]
+  }
+]
+
+// REQUIRE: ./version.json
+// REQUIRE: ./file
+const directoryWithDependencies = [
+  {
+    fullPath: '/project',
+    name: 'project',
+    children: [
+      {
+        ext: 'js',
+        fullPath: '/project/index.js',
+        name: 'index.js',
+        source: `
+          const { transforms } = require('@jscad/modeling')
+
+          const { version } = require('./version.json')
+
+          const main = (params) => {
+            let mesh1 = require('./file1')
+            mesh1 = transforms.translate([50, 50, 50], mesh1)
+            return mesh1
+          }
+
+          module.exports = { main }
+        `
+      },
+      {
+        ext: 'json',
+        fullPath: '/project/version.json',
+        name: 'version.json',
+        source: `
+{
+  "name": "project",
+  "version": "0.0.0"
+}
+        `
+      },
+      {
+        ext: 'js',
+        fullPath: '/project/file1.js',
+        name: 'file1.js',
+        source: `
+          const file1 = () => {
+            const shape = require('file2')
+            return shape
+          }
+          module.exports = file1
+        `
+      },
+      {
+        ext: 'js',
+        fullPath: '/project/file2.js',
+        name: 'file2.js',
+        source: `
+          const { cube } = require('@jscad/modeling').primitives
+
+          const file2 = () => {
+            return cube()
+          }
+          module.exports = file2
+        `
+      }
+    ]
+  }
+]
