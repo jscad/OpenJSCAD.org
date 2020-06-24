@@ -354,6 +354,7 @@ const actions = ({ sources }) => {
     /* sources.store
       .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined && reply.data.origin === 'http')
       .map(({ data }) => data.mainPath), */
+
     // injection from drag & drop (files or folders )
     sources.drops
       .filter(d => d.type === 'fileOrFolder')
@@ -371,6 +372,7 @@ const actions = ({ sources }) => {
         const { protocol, origin, pathname } = urlData
         return { documentUris, protocol: protocol.replace(':', ''), origin, path: pathname }
       }),
+
     // load examples when clicked
     sources.dom.select('.example').events('click')
       .map(event => event.target.dataset.path)
@@ -381,17 +383,21 @@ const actions = ({ sources }) => {
         return { documentUris, protocol: protocol.replace(':', ''), origin }
       })
       .tap(x => console.log('stuff', x)),
-    // load single file ? TODO: remove this ?
+
+    // load files from a directory
     sources.dom.select('#fileLoader').events('change')
-      .map(function (event) {
-        console.log('here', event.target.files)
-        // literally an array of paths (strings)
-        // like those returned by dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
-        // nope ...
-        // const paths = []
-        // return paths
-        return { data: event.target.files }
+      .tap(x => console.log('selected directory', x))
+      .map((event) => {
+        // event is from a selection of a directory
+        const filelist = event.target.files
+        const files = []
+        for (let i = 0; i < filelist.length; i++) {
+          files.push(filelist.item(i))
+        }
+        // NOTE: the filelist cannot be passed as the event gets reset
+        return { id: 'droppedData', data: files, path: 'readFs:', protocol: 'fs' }
       }),
+
     // remote, via proxy, adresses of files passed via url
     sources.titleBar
       .filter(x => x !== undefined)
@@ -460,7 +466,7 @@ const actions = ({ sources }) => {
   const resetDesign$ = most.mergeArray([
     requestLoadDesignContent$.map(({ sink }) => sink)
   ])
-    .delay(500) // FIXME: horrible hack !!
+    //.delay(500) // FIXME: horrible hack !!
     // .thru(holdUntil(setDesignSettings$))// only after FIXME : this does not seem to work
     .thru(withLatestFrom(reducers.resetDesign, sources.state))
     .map(data => ({ type: 'resetDesign', state: data, sink: 'state' }))
