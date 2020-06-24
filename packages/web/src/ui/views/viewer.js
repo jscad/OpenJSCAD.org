@@ -43,7 +43,7 @@ const axes = {
 
 let prevEntities = []
 let prevSolids
-let prevTimestamp
+let prevTimestamp = 0
 
 const viewer = (state, i18n) => {
   // console.log('regen viewer', state.viewer)
@@ -100,7 +100,6 @@ const viewer = (state, i18n) => {
 
     // the heart of rendering, as themes, controls, etc change
     const updateAndRender = (timestamp) => {
-      if (!prevTimestamp) prevTimestamp = timestamp
       const elaspe = timestamp - prevTimestamp
       if (elaspe > (1000 / renderSpeed)) {
         prevTimestamp = timestamp
