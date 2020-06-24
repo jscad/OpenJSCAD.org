@@ -1,8 +1,7 @@
-
 const vec3 = require('gl-vec3')
 const mat4 = require('gl-mat4')
 
-const fromOrthographicToPerspective = orthographicCamera => {
+const fromOrthographicToPerspective = (orthographicCamera) => {
   const { near, far, fov, zoom } = orthographicCamera
   console.log('fov', fov, 'zoom', zoom)
   // : fov / zoom
@@ -13,7 +12,7 @@ const fromOrthographicToPerspective = orthographicCamera => {
   return Object.assign({}, orthographicCamera, projection, { projectionType }, { near, far, fov })
 }
 
-const fromPerspectiveToOrthographic = perspectiveCamera => {
+const fromPerspectiveToOrthographic = (perspectiveCamera) => {
   const { fov, aspect } = perspectiveCamera
 
   // set the orthographic view rectangle to 0,0,width,height
@@ -64,7 +63,7 @@ const toPresetView = (viewName, { camera }) => {
   }
 
   const offsetToTarget = vec3.distance(camera.position, camera.target)
-  const position = vec3.add([], presets[viewName].map(x => x * offsetToTarget), camera.target)
+  const position = vec3.add([], presets[viewName].map((x) => x * offsetToTarget), camera.target)
   const view = mat4.lookAt(mat4.create(), position, camera.target, camera.up)
 
   return { view, position }

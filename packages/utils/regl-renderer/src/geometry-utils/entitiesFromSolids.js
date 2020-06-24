@@ -16,7 +16,7 @@ const entitiesFromSolids = (params, solids) => {
   // .fixTJunctions()
   // cachedSolids = solids
   // const start = performance.now()
-  const entities = solids.map(function (solid) {
+  const entities = solids.map((solid) => {
     let geometry
     let type
     if ('sides' in solid) {

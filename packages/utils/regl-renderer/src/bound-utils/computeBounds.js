@@ -18,7 +18,7 @@ const boundingSphere = require('./boundingSphere')
  *   size: [6,20,4]
  *}
  */
-function computeBounds (object) {
+const computeBounds = (object) => {
   let scale
   let dia
   let center
@@ -27,14 +27,14 @@ function computeBounds (object) {
   if (Array.isArray(object) && object.length > 1) {
     const objects = object
     let positions = []
-    objects.forEach(function (object) {
+    objects.forEach((object) => {
       scale = object.transforms && object.transforms.sca ? object.transforms.sca : 1
       // TODO deal with nested/ non nested data
       let geomPositions = object.geometry.positions
       const isNested = geomPositions.length > 1 && Array.isArray(geomPositions[0])
       geomPositions = scale === 1 ? geomPositions
         : (
-          isNested ? geomPositions.map(pos => pos.map(position => position * scale)) : geomPositions.map(position => position * scale)
+          isNested ? geomPositions.map((pos) => pos.map((position) => position * scale)) : geomPositions.map((position) => position * scale)
         )
 
       positions = positions.concat(geomPositions)// object.geometry.positions.map(position => position * scale))

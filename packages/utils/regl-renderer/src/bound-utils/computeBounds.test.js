@@ -1,7 +1,7 @@
 const test = require('tape')
 const computeBounds = require('./computeBounds')
 
-test('computeBounds (geometry only)', t => {
+test('computeBounds (geometry only)', (t) => {
   t.plan(1)
   const input = {
     geometry: {
@@ -22,7 +22,7 @@ test('computeBounds (geometry only)', t => {
   t.equal(bounds, expBounds)
 })
 
-test('computeBounds (with transforms)', t => {
+test('computeBounds (with transforms)', (t) => {
   t.plan(1)
   const input = {
     geometry: {
@@ -46,7 +46,7 @@ test('computeBounds (with transforms)', t => {
   t.equal(bounds, expBounds)
 })
 
-test('computeBounds (non default scale)', t => {
+test('computeBounds (non default scale)', (t) => {
   t.plan(1)
   const input = {
     geometry: {

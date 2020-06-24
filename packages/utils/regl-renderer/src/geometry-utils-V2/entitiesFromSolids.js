@@ -12,10 +12,10 @@ const entitiesFromSolids = (params, solids) => {
     meshColor: [0, 0.6, 1, 1],
     smoothNormals: true
   }
-  const { meshColor, smoothNormals } = defaults
+  const { meshColor, smoothNormals } = Object.assign({}, defaults, params)
 
   solids = toArray(solids)
-  const entities = solids.map(function (solid) {
+  const entities = solids.map((solid) => {
     let geometry
     let type
     if ('sides' in solid) {

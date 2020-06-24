@@ -248,7 +248,7 @@ const pan = ({ controls, camera, speed = 1 }, delta) => {
   const unPanEnd = unproject([], panEnd, viewport, invProjView)
   // TODO scale by the correct near/far value instead of 1000 ?
   // const planesDiff = camera.far - camera.near
-  const offset = vec3.subtract([], unPanStart, unPanEnd).map(x => x * speed * 250 * controls.scale)
+  const offset = vec3.subtract([], unPanStart, unPanEnd).map((x) => x * speed * 250 * controls.scale)
 
   return {
     controls,
@@ -362,6 +362,7 @@ const setFocus = ({ controls, camera }, focusPoint) => {
     }
   } */
 }
+
 module.exports = {
   controlsProps,
   controlsState,
