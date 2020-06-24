@@ -1,12 +1,13 @@
 const { squaredDistance, vec3 } = require('gl-vec3')
 const boundingBox = require('./boundingBox')
-/**
-  * compute boundingSphere, given positions
-  * @param {array} center the center to use (optional).
-  * @param {array} positions the array/typed array of positions.
-  * for now loosely based on three.js implementation
-*/
-function boundingSphere (center = [0, 0, 0], positions) {
+
+/*
+ * compute boundingSphere, given positions
+ * @param {array} center the center to use (optional).
+ * @param {array} positions the array/typed array of positions.
+ * for now loosely based on three.js implementation
+ */
+const boundingSphere = (center = [0, 0, 0], positions) => {
   if (positions.length === 0) {
     return null
   }

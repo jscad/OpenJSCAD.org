@@ -1,6 +1,6 @@
 const mat4 = require('gl-mat4')
 
-const drawMesh = function (regl, params) {
+const drawMesh = (regl, params) => {
   const defaults = {
     geometry: undefined
   }

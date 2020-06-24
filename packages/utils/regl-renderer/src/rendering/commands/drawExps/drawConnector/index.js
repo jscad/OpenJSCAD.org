@@ -4,7 +4,7 @@ const makeArcGeometry = require('./arcGeo')
 
 const mat4 = require('gl-mat4')
 
-const drawConnector = function (regl, params) {
+const drawConnector = (regl, params) => {
   const argGeometry = makeArcGeometry({ innerRadius: 9, outerRadius: 10, startRadian: 0, endRadian: Math.PI * 2 })
   const drawAxis = makeDrawAxis(regl, { alwaysVisible: false })
   const drawArc = makeDrawMesh(regl, { geometry: argGeometry })
@@ -21,7 +21,7 @@ const drawConnector = function (regl, params) {
     { model: model2 }
   ]
   return () => {
-    connectors.forEach(connector => {
+    connectors.forEach((connector) => {
       drawAxis({ model: connector.model })
       drawArc({ model: mat4.rotateX(mat4.create(), connector.model, Math.PI / 2), color: [0.258, 0.921, 0.956, 1] })
     })

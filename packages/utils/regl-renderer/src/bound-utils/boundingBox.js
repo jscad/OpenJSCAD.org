@@ -1,5 +1,5 @@
 // modified version of https://github.com/thibauts/vertices-bounding-box that also works with non nested positions
-function boundingBox (positions) {
+const boundingBox = (positions) => {
   if (positions.length === 0) {
     return null
   }
@@ -10,14 +10,14 @@ function boundingBox (positions) {
   const min = new Array(dimensions)
   const max = new Array(dimensions)
 
-  for (var i = 0; i < dimensions; i += 1) {
+  for (let i = 0; i < dimensions; i += 1) {
     min[i] = Infinity
     max[i] = -Infinity
   }
 
   if (nested) {
-    positions.forEach(function (position) {
-      for (var i = 0; i < dimensions; i += 1) {
+    positions.forEach((position) => {
+      for (let i = 0; i < dimensions; i += 1) {
         const _position = nested ? position[i] : position
         max[i] = _position > max[i] ? _position : max[i] // position[i] > max[i] ? position[i] : max[i]
         min[i] = _position < min[i] ? _position : min[i] // min[i] = position[i] < min[i] ? position[i] : min[i]

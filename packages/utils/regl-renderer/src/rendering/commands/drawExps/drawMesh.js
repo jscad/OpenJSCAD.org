@@ -30,7 +30,7 @@ const drawMesh = (regl, params) => {
 
     uniforms: {
       model: (context, props) => props && props.model ? props.model : mat4.identity([]),
-      color: (context, props) => { return [1, 0, 0, 1] },
+      color: (context, props) => [1, 0, 0, 1],
       view: ({ tick }) => {
         const t = 0.01 * tick
         return mat4.lookAt([],

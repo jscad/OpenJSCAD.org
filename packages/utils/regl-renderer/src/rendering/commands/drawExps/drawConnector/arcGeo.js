@@ -1,6 +1,5 @@
-module.exports = geoArc
 
-function geoArc (options) {
+const geoArc = (options) => {
   const geo = {
     positions: [],
     cells: [],
@@ -25,7 +24,7 @@ function geoArc (options) {
   return geo
 }
 
-function createGeometry (options, positions, cells, uvs) {
+const createGeometry = (options, positions, cells, uvs) => {
   const o = options
   const idxSize = o.cellSize
   const radDist = o.endRadian - o.startRadian
@@ -110,3 +109,5 @@ function createGeometry (options, positions, cells, uvs) {
     }
   }
 }
+
+module.exports = geoArc
