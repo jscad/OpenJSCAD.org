@@ -11,8 +11,7 @@ module.exports = function io (state, i18n) {
     })
   const exportAvailable = state.io.availableExportFormats.length > 0
   return html`
-  <section id='io'>
-  
+  <span id='io'>
       <input type="file" value="${i18n`load project`}" id="fileLoader" multiple webkitdirectory mozdirectory msdirectory odirectory directory  />
       <label for="fileLoader"> ${i18n`load project`}> </label>
 
@@ -23,7 +22,7 @@ module.exports = function io (state, i18n) {
         ${formatsList}
         </select>
         <input type='button' value="${i18n`export`}" id="exportBtn"/>
+      </span>
     </span>
-    </section>
     `
 }

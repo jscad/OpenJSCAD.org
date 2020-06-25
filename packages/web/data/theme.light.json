@@ -6,7 +6,8 @@
       "meshColor": [0, 0.6, 1, 1]
     },
     "grid": {
-      "color": [0.1, 0.1, 0.1, 0.5]
+      "color": [0, 0, 0, 1],
+      "subColor": [0, 0, 1, 0.5]
     }
   },
   "mainTextColor": "#424242",

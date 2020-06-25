@@ -12,11 +12,7 @@ const reducers = {
     return { themes }
   },
   setTheme: (state, active) => {
-    // very nice color for the cuts [0, 0.6, 1] to go with the orange
-    const available = {
-      light: require('../../../data/theme.light'),
-      dark: require('../../../data/theme.dark')
-    }
+    const available = require('../../../data/themes')
     const themeData = available[active]
     // console.log('setTheme', active, themeData)
     const viewer = state.viewer ? merge({}, state.viewer, themeData.viewer) : themeData.viewer

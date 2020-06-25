@@ -9,7 +9,6 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
   const controls = parameterDefinitions.map(function (paramDefinition) {
     const type = paramDefinition.type.toLowerCase()
     let subControls
-    // console.log('type', type)
     switch (type) {
       case 'choice':
         subControls = createChoiceControl(paramDefinition, prevParameterValues[paramDefinition.name])
@@ -67,7 +66,6 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
     // this is to make groups collapsible
     if (type === 'group') {
       element.onclick = function (event) {
-        console.log('foo', element)
         if (element.className.includes('open')) {
           element.classList.remove('open')
           element.classList.add('closed')
@@ -112,7 +110,6 @@ const createGroupControl = definition => {
     className: ''
   }
   const { expanded, caption, className } = Object.assign({}, defaults, definition)
-  console.log('createGroupControl', expanded, caption, className)
   // const text = definition.caption ? definition.caption : definition.name
   const groupOpenIcon = html`
       <svg  class="icon icon-open feather feather-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="6 9 12 15 18 9"/></svg>`

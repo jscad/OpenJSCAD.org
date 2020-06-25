@@ -1,10 +1,16 @@
 const html = require('bel')
 
 module.exports = function options (state, i18n) {
-  const languages = state.languages.available.map(language => {
+  const languages = state.languages.available.map((language) => {
     const selected = state.languages.active === language.code
     return html`<option value='${language.code}' selected=${selected}>${i18n.translate(language.fullName)}</option>`
   })
+  const themes = Object.entries(state.themes.available).map((theme) => {
+    const name = theme[0]
+    const selected = state.themes.active === name
+    return html`<option value='${name}' selected=${selected}>${name}</option>`
+  })
+
   const shortcuts = require('./shortcuts')(state, i18n)
 
   return html`
@@ -20,8 +26,7 @@ module.exports = function options (state, i18n) {
   <fieldset>
     <legend> <h3> ${i18n`Themes`} </h3> </legend>
     <select id='themeSwitcher'>
-      <option value='dark' selected=${state.themes.active === 'dark'}>dark</option>
-      <option value='light' selected=${state.themes.active === 'light'}>light</option>
+      ${themes}
     </select>
   </fieldset>
 
