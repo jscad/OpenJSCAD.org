@@ -6,7 +6,7 @@
 
 There are many ways to use JSCAD:
 
-An [online version](https://openjscad.org/), [self hosteable web based ui](https://github.com/jscad/OpenJSCAD.org/raw/master/packages/web), as [CLI](https://github.com/jscad/OpenJSCAD.org/raw/master/packages/cli) (command-line interface) for server-side computations with Node.js, as well as an experimental [desktop app](https://github.com/jscad/jscad-desktop) or [individual Node.js packages](https://github.com/jscad/OpenJSCAD.org/raw/master/packages/README.md)!!
+An [online version](https://openjscad.org/), [self hosteable web based ui](./packages/web), as [CLI](./packages/cli) (command-line interface) for server-side computations with Node.js, as well as an experimental [desktop app](https://github.com/jscad/jscad-desktop) or [individual Node.js packages](./packages/README.md)!!
 
 This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-the-wild-33c6eb246cb9) (container of multiple packages and tools) maintained with [Lerna](https://lernajs.io/)
 
@@ -14,6 +14,8 @@ This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-th
 [![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
+<a href="https://opencollective.com/openjscad"><img src="https://opencollective.com/openjscad/donate/button.png?color=blue" alt="Open Collective"></a>
 
 ## Table of Contents
 

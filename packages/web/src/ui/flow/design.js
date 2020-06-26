@@ -81,7 +81,7 @@ const reducers = {
    * @returns {Object} the updated state
    */
   resetDesign: (state, origin) => {
-    console.log('design: reset', origin)
+    // console.log('design: reset', origin)
     // we reset only the given fields: mostly all except design specific things
     const fieldsToReset = [
       'name', 'path', 'mainPath', 'origin', 'filesAndFolders',
@@ -103,7 +103,7 @@ const reducers = {
  * @returns {Object} the updated state
  */
   setDesignContent: (state, payload) => {
-    console.log('design: set content', state, state.design, payload)
+    // console.log('design: set content', state, state.design, payload)
     // all our available data (specific to web)
     const { filesAndFolders } = payload
     const makeFakeFs = require('@jscad/core/code-loading/makeFakeFs')
@@ -112,7 +112,7 @@ const reducers = {
     const mainPath = getDesignEntryPoint(fakeFs, rootPath)
     const designName = getDesignName(fakeFs, rootPath)
     const designPath = path.dirname(rootPath)
-    console.log('BLAA', rootPath, designName, designPath)
+    // console.log('BLAA', rootPath, designName, designPath)
 
     let design = state.design
     // to track computation time
@@ -147,7 +147,7 @@ const reducers = {
    * @returns {Object} the updated state
    */
   setDesignSolids: (state, { solids, lookup, lookupCounts }) => {
-    console.log('design: set solids', lookup, lookupCounts)
+    // console.log('design: set solids', lookup, lookupCounts)
     solids = solids || []
     lookup = lookup || {}
     lookupCounts = lookupCounts || {}
@@ -187,7 +187,7 @@ const reducers = {
   },
 
   setDesignParameterDefinitions: (state, data) => {
-    console.log('design: set parameter definitions & defaults', data)
+    // console.log('design: set parameter definitions & defaults', data)
     const parameterDefaults = data.parameterDefaults || state.design.parameterDefaults
     const parameterDefinitions = data.parameterDefinitions || state.design.parameterDefinitions
     const design = Object.assign({}, state.design, {
@@ -234,7 +234,7 @@ const reducers = {
   },
 
   setSettings: (state, { data }) => {
-    console.log('design: set settings', state.design, data)
+    // console.log('design: set settings', state.design, data)
     const {
       vtreeMode,
       autoReload,
@@ -267,7 +267,7 @@ const reducers = {
   },
 
   requestWriteCachedGeometry: ({ design }, cache) => {
-    console.log('requestWriteCachedGeometry', cache)
+    // console.log('requestWriteCachedGeometry', cache)
     const data = {}
     Object.keys(cache).forEach(function (key) {
       data[key] = cache[key]
@@ -354,6 +354,7 @@ const actions = ({ sources }) => {
     /* sources.store
       .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined && reply.data.origin === 'http')
       .map(({ data }) => data.mainPath), */
+
     // injection from drag & drop (files or folders )
     sources.drops
       .filter(d => d.type === 'fileOrFolder')
@@ -371,6 +372,7 @@ const actions = ({ sources }) => {
         const { protocol, origin, pathname } = urlData
         return { documentUris, protocol: protocol.replace(':', ''), origin, path: pathname }
       }),
+
     // load examples when clicked
     sources.dom.select('.example').events('click')
       .map(event => event.target.dataset.path)
@@ -380,18 +382,22 @@ const actions = ({ sources }) => {
         const { protocol, origin } = urlData
         return { documentUris, protocol: protocol.replace(':', ''), origin }
       })
-      .tap(x => console.log('stuff', x)),
-    // load single file ? TODO: remove this ?
+      .tap(x => console.log('load example', x)),
+
+    // load files from a directory
     sources.dom.select('#fileLoader').events('change')
-      .map(function (event) {
-        console.log('here', event.target.files)
-        // literally an array of paths (strings)
-        // like those returned by dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
-        // nope ...
-        // const paths = []
-        // return paths
-        return { data: event.target.files }
+      .tap(x => console.log('selected directory', x))
+      .map((event) => {
+        // event is from a selection of a directory
+        const filelist = event.target.files
+        const files = []
+        for (let i = 0; i < filelist.length; i++) {
+          files.push(filelist.item(i))
+        }
+        // NOTE: the filelist cannot be passed as the event gets reset
+        return { id: 'droppedData', data: files, path: 'readFs:', protocol: 'fs' }
       }),
+
     // remote, via proxy, adresses of files passed via url
     sources.titleBar
       .filter(x => x !== undefined)
@@ -411,7 +417,7 @@ const actions = ({ sources }) => {
     .filter(x => x !== undefined)
     .thru(holdUntil(setDesignSettings$))// only after FIXME : this does not seem to work
     .map(data => ({ type: 'read', id: 'loadRemote', urls: toArray(data.documentUris), sink: data.protocol, path: data.path, data: data.data }))
-    .tap(x => console.log('requestLoadDesignContent', x))
+    .tap(x => console.log('load remote', x))
     .multicast()
     .skipRepeats()
 
@@ -442,7 +448,7 @@ const actions = ({ sources }) => {
       .skipRepeatsWith(jsonCompare)
   ])
     .map(payload => Object.assign({}, { type: 'watch', sink: payload.origin }, payload))
-    .tap(x => console.log('WATCH', x))
+    .tap(x => console.log('watch', x))
     .multicast()
 
   const requestWriteCachedGeometry$ = most.mergeArray([
@@ -460,7 +466,7 @@ const actions = ({ sources }) => {
   const resetDesign$ = most.mergeArray([
     requestLoadDesignContent$.map(({ sink }) => sink)
   ])
-    .delay(500) // FIXME: horrible hack !!
+    //.delay(500) // FIXME: horrible hack !!
     // .thru(holdUntil(setDesignSettings$))// only after FIXME : this does not seem to work
     .thru(withLatestFrom(reducers.resetDesign, sources.state))
     .map(data => ({ type: 'resetDesign', state: data, sink: 'state' }))
@@ -472,12 +478,12 @@ const actions = ({ sources }) => {
       .filter(event => !('error' in event) && event.data instanceof Object && event.data.type === 'solids')
       .map(function (event) {
         try {
-          console.log('SETDESIGN SOLIDS', event.data)
+          // console.log('SETDESIGN SOLIDS', event.data)
           if (event.data instanceof Object) {
-            const start = new Date()
+            const start = new Date().getTime()
 
             const solids = event.data.solids.map(function (object) {
-              console.log('setting solids from worker', object)
+              // console.log('setting solids from worker', object)
               if (object[0] === 0) { // Geom2
                 return require('@jscad/modeling').geometry.geom2.fromCompactBinary(object)
               }
@@ -490,8 +496,9 @@ const actions = ({ sources }) => {
             })
             // const solids = event.data.solids.map(solid => JSON.parse(solid))
             const { lookupCounts, lookup } = event.data
-            console.log('SOLIDS', solids)
-            console.warn(`elapsed for geometry gen ${new Date() - start}`)
+            // console.log('SOLIDS', solids)
+            const end = new Date().getTime()
+            console.warn(`elapse for solid generation: ${end - start}`)
             return { solids, lookup, lookupCounts }
           }
         } catch (error) {

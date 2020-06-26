@@ -63,9 +63,18 @@
   },
   "eslintConfig": {
     "rules": {
-      "func-style": ["error", "expression"],
-      "arrow-body-style": ["error", "as-needed"],
-      "arrow-parens": ["error", "always"],
+      "func-style": [
+        "error",
+        "expression"
+      ],
+      "arrow-body-style": [
+        "error",
+        "as-needed"
+      ],
+      "arrow-parens": [
+        "error",
+        "always"
+      ],
       "arrow-spacing": "error",
       "prefer-arrow-callback": "error",
       "no-var": "error"
