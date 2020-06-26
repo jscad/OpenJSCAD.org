@@ -24,14 +24,14 @@ class HoldSubjectSource extends SubjectSource {
   }
 }
 
-function pushEvents (buffer, sink) {
+const pushEvents = (buffer, sink) => {
   for (let i = 0; i < buffer.length; ++i) {
     const { time, value } = buffer[i]
     sink.event(time, value)
   }
 }
 
-function dropAndAppend (event, buffer, bufferSize) {
+const dropAndAppend = (event, buffer, bufferSize) => {
   if (buffer.length >= bufferSize) {
     return append(event, drop(1, buffer))
   }

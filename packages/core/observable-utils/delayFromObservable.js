@@ -7,17 +7,13 @@ const most = require('most')
  the latest one cancels the previous
 */
 const delayFromObservable = (mapper, stateStream) => {
-  const combiner = (delay, data) => {
-    return most.just(data).delay(delay)
-  }
+  const combiner = (delay, data) => most.just(data).delay(delay)
   // we extract the required delay from the stateStream
   const delayTime$ = stateStream.map(mapper)
 
-  return stream => {
-    // switchlatest ensures that if we have multiple consecute signals within the specified delay
-    // the latest one cancels the previous
-    return most.combine(combiner, delayTime$, stream).switchLatest()
-  }
+  // switchlatest ensures that if we have multiple consecute signals within the specified delay
+  // the latest one cancels the previous
+  return (stream) => most.combine(combiner, delayTime$, stream).switchLatest()
 }
 
 module.exports = delayFromObservable

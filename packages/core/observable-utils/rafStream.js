@@ -2,13 +2,11 @@
 const { Stream } = require('../../../../core/observable-utils/most-subject/node_modules/most')
 const { create } = require('@most/create')
 
-function animationFrames () {
-  return new Stream(new AnimationFramesSource())
-}
+const animationFrames = () => new Stream(new AnimationFramesSource())
 
 const recurse = (cancel, schedule) => (sink, scheduler) => {
   const canceler = new Cancel(cancel)
-  const onNext = x => {
+  const onNext = (x) => {
     sink.event(scheduler.now(), x)
     cancel.key = schedule(onNext)
   }
@@ -37,9 +35,9 @@ class Cancel {
 }
 
 /* alternative version */
-function rafStream () {
+const rafStream = () => {
   const stream = create((add, end, error) => {
-    function step (timestamp) {
+    const step = (timestamp) => {
       add(null)
       window.requestAnimationFrame(step)
     }
@@ -47,4 +45,5 @@ function rafStream () {
   })
   return stream
 }
+
 module.exports = { rafStream, animationFrames }

@@ -16,15 +16,11 @@ const makeFakeFs = (filesAndFolders) => {
     // return filesAndFolders
   }
 
-  const statSync = path => {
+  const statSync = (path) => {
     const entry = findMatch(path)
     return {
-      isFile: _ => {
-        return entry && ('source' in entry && !('children' in entry))
-      },
-      isDirectory: _ => {
-        return entry && (!('source' in entry) && ('children' in entry))
-      }
+      isFile: (_) => (entry && ('source' in entry && !('children' in entry))),
+      isDirectory: (_) => (entry && (!('source' in entry) && ('children' in entry)))
     }
   }
   const fakeFs = {
@@ -36,7 +32,7 @@ const makeFakeFs = (filesAndFolders) => {
     },
     readdirSync: (path) => {
       const entry = findMatch(path)
-      return entry.children.map(x => x.name)
+      return entry.children.map((x) => x.name)
       // filesAndFolders
     },
     readDir: (path, callback) => {
