@@ -5,8 +5,6 @@ function dom (state, i18n, paramsCallbacktoStream, editorCallbackToStream) {
   i18nFake.translate = x => x
   i18n = i18n || i18nFake
 
-  // const menuIcon = html`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`
-
   const options = require('./options')(state, i18n)
   const parameters = require('./designParameters')(state, paramsCallbacktoStream, i18n)
   const status = require('./status')(state, i18n)
@@ -19,25 +17,31 @@ function dom (state, i18n, paramsCallbacktoStream, editorCallbackToStream) {
   const viewer = require('./viewer')(state, i18n)
   const viewerControls = require('./viewerControls')(state, i18n)
 
-  //       //<input type="button" value="${i18n`load jscad project`}" id="fileLoader"/>
-  // <a id="menuToggle">${menuIcon}</a>
+
+  if (state.themes && state.themes.themeSettings) {
+    // set the global CSS variables (theme)
+    const { mainTextColor, secondaryTextColor } = state.themes.themeSettings
+    const bodyEL = document.body
+    bodyEL.style.setProperty('--main-text-color', `${mainTextColor}`)
+    bodyEL.style.setProperty('--secondary-text-color', `${secondaryTextColor}`)
+  }
+
   const output = html`
-  <div id='container' style='color:${state.themes.themeSettings.mainTextColor}'>
-    <header>
-      <section>
-        <h3>
-          <span>JSCAD</span>
-        </h3>
-      </section>
-      <section class='designName'>
+  <div id='container'>
+    <div id='header'>
+      <span id='jscad'>
+        <h3>JSCAD</h3>
+      </span>
+      <span id='designName'>
         <h3>${state.design.name}</h3>
-      </section>
+      </span>
       ${io}
-    </header>
+    </div>
 
     ${options}
-    ${help}
     ${toolBar}
+
+    ${help}
     ${viewerControls}
 
     <!-- bare bones essentials -->
