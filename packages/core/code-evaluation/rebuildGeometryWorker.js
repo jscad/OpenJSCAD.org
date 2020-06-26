@@ -7,7 +7,7 @@
  * @param {Object} callback the callback to call once evaluation is done /failed
  * @param {Object} options the settings to use when rebuilding the solid
  */
-module.exports = self => {
+const rebuildGeometryWorker = (self) => {
   const rebuildGeometry = require('./rebuildGeometry')
   self.onmessage = function (event) {
     if (event.data instanceof Object) {
@@ -18,3 +18,5 @@ module.exports = self => {
     }
   }
 }
+
+module.exports = rebuildGeometryWorker

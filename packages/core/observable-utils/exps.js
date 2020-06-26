@@ -1,5 +1,3 @@
-
-const { create } = require('@most/create')
 const most = require('most')
 const withLatestFrom = require('./src/utils/observable-utils/withLatestFrom')
 const callBackToStream = require('./src/utils/observable-utils/callbackToObservable')
@@ -10,9 +8,8 @@ const stateStream = proxy()
 const stateProxy$ = stateStream.stream
 
 // const store = callBackToStream()
-const state = callBackToStream()
-// const state$ = state.stream
-//   .multicast()
+// const state = callBackToStream()
+// const state$ = state.stream.multicast()
 
 const fooCB = callBackToStream()
 const fooSignal$ = fooCB.stream
@@ -52,7 +49,7 @@ const realState$ = most.scan((state, input) => {
 }, initialState, commandResponses$)
 stateStream.attach(realState$)
 
-stateProxy$.forEach(x => console.log('state', x))
+stateProxy$.forEach((x) => console.log('state', x))
 
 // store.callback('b')
 // we have pre-existing state

@@ -5,10 +5,10 @@ const { registerAllExtensions } = require('../io/registerExtensions')
 const makeWebRequire = require('./webRequire')
 const makeFakeFs = require('./makeFakeFs')
 
-test.beforeEach(t => {
+test.beforeEach((t) => {
 })
 
-test('webRequire: should support require, from a single file', t => {
+test('webRequire: should support require, from a single file', (t) => {
   const apiMainPath = '@jscad/modeling'
 
   let requireFn = makeWebRequire(singleFileJs, { apiMainPath })
@@ -27,7 +27,7 @@ test('webRequire: should support require, from a single file', t => {
   t.true(designRootModule.main instanceof Function)
 })
 
-test('webRequire: should support require, from a directory with index.js', t => {
+test('webRequire: should support require, from a directory with index.js', (t) => {
   const apiMainPath = '@jscad/modeling'
 
   const requireFn = makeWebRequire(directoryWithIndexJs, { apiMainPath })
@@ -37,7 +37,7 @@ test('webRequire: should support require, from a directory with index.js', t => 
   t.true(designRootModule.main instanceof Function)
 })
 
-test('webRequire: should support require, from a directory with index.json', t => {
+test('webRequire: should support require, from a directory with index.json', (t) => {
   const apiMainPath = '@jscad/modeling'
 
   const requireFn = makeWebRequire(directoryWithIndexJson, { apiMainPath })
@@ -47,7 +47,7 @@ test('webRequire: should support require, from a directory with index.json', t =
   t.true('version' in designRootModule)
 })
 
-test('webRequire: should support require, from a directory with project.json', t => {
+test('webRequire: should support require, from a directory with project.json', (t) => {
   const apiMainPath = '@jscad/modeling'
 
   const requireFn = makeWebRequire(directoryWithPackageJson, { apiMainPath })
@@ -57,7 +57,7 @@ test('webRequire: should support require, from a directory with project.json', t
   t.true(designRootModule.main instanceof Function)
 })
 
-test('webRequire: should support require, from a directory with dependent files', t => {
+test('webRequire: should support require, from a directory with dependent files', (t) => {
   const apiMainPath = '@jscad/modeling'
 
   const fakeFs = makeFakeFs(directoryWithDependencies)
@@ -71,7 +71,7 @@ test('webRequire: should support require, from a directory with dependent files'
   // const resultOfMain = designRootModule.main()
 })
 
-test('webRequire: should allow using require.extensions like the native node require (simple)', t => {
+test('webRequire: should allow using require.extensions like the native node require (simple)', (t) => {
   const registerJscadExtension = (fs, _require) => {
     const stripBom = require('strip-bom')
     _require.extensions['.jscad'] = (module, filename) => {
@@ -104,7 +104,7 @@ test('webRequire: should allow using require.extensions like the native node req
   t.true(designRootModule.main instanceof Function)
 })
 
-test('webRequire: should allow using require.extensions like the native node require (parser)', t => {
+test('webRequire: should allow using require.extensions like the native node require (parser)', (t) => {
   const registerStlExtension = (fs, _require) => {
     const deserializer = require('@jscad/io').stlDeSerializer
     _require.extensions['.stl'] = (module, filename) => {

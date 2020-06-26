@@ -1,9 +1,9 @@
 const { create } = require('@most/create')
 
-function callBackToStream () {
+const callBackToStream = () => {
   let addWrap = function () {}
 
-  function callbackTest (externalData) {
+  const callbackTest = (externalData) => {
     addWrap(externalData)
   }
   const callback = callbackTest
@@ -12,4 +12,5 @@ function callBackToStream () {
   })
   return { stream, callback }
 }
+
 module.exports = callBackToStream

@@ -1,9 +1,7 @@
 const getParameterValuesFromParameters = require('./getParameterValuesFromParameters')
 const applyParameterDefinitions = require('./applyParameterDefinitions')
 
-const doesModuleExportParameterDefiniitions = moduleToCheck => {
-  return moduleToCheck && 'getParameterDefinitions' in moduleToCheck
-}
+const doesModuleExportParameterDefiniitions = (moduleToCheck) => moduleToCheck && 'getParameterDefinitions' in moduleToCheck
 
 const getRawParameterDefinitionsAndValues = (rootModule, overrides) => {
   let parameterValues = {}

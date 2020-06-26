@@ -1,9 +1,10 @@
-// LimtiFlow by Nathan Ridley(axefrog) from https://gist.github.com/axefrog/84ec77c5f620dab5cdb7dd61e6f1df0b
-function limitFlow (period) {
-  return function limitFlow (stream) {
+// LimitFlow by Nathan Ridley(axefrog) from https://gist.github.com/axefrog/84ec77c5f620dab5cdb7dd61e6f1df0b
+const limitFlow = (period) => {
+  const limitStream = (stream) => {
     const source = new RateLimitSource(stream.source, period)
     return new stream.constructor(source)
   }
+  return limitStream
 }
 
 class RateLimitSource {
@@ -85,4 +86,5 @@ class RateLimitTask {
     this.disposed = true
   }
 }
+
 module.exports = limitFlow

@@ -1,4 +1,4 @@
-const getFileExtensionFromString = input => {
+const getFileExtensionFromString = (input) => {
   if (input.indexOf('.') === -1) {
     return undefined
   }

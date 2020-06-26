@@ -72,13 +72,11 @@ const transformSources = (options, filesAndFolders) => {
     svg: [transformSvgToJscad, modulifyTransform]
   }
 
-  function updateEntry (entry) {
+  const updateEntry = (entry) => {
     if (entry.source) {
       const transformOptions = Object.assign({}, options, { filename: entry.name })
       const transforms = transformsPerFormat[entry.ext] ? transformsPerFormat[entry.ext] : [passThroughTransform]
-      const transformedEntry = transforms.reduce((entry, transform) => {
-        return transform(transformOptions, entry)
-      }, entry)
+      const transformedEntry = transforms.reduce((entry, transform) => transform(transformOptions, entry), entry)
 
       return transformedEntry
     }
@@ -86,9 +84,7 @@ const transformSources = (options, filesAndFolders) => {
   }
 
   if (filesAndFolders) {
-    filesAndFolders = filesAndFolders.map(entry => {
-      return updateEntry(entry)
-    })
+    filesAndFolders = filesAndFolders.map((entry) => updateEntry(entry))
   }
   return filesAndFolders
 }

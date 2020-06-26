@@ -58,4 +58,5 @@ SubjectDisposable.prototype.dispose = function () {
   const remaining = this.source.remove(this.sink)
   return remaining === 0 && this.source._dispose()
 }
+
 module.exports = { SubjectSource }

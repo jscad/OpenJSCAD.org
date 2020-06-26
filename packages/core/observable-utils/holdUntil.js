@@ -11,12 +11,8 @@ const withLatestFrom = require('./withLatestFrom')
 // but ONLY after at least one event got through storeSource
 */
 const holdUntil = (startSignal) => {
-  return stream => {
-    return stream.skipUntil(startSignal)
-      .merge(
-        startSignal.take(1).thru(withLatestFrom(x => x, stream))
-      )
-  }
+  const hold = (stream) => stream.skipUntil(startSignal).merge(startSignal.take(1).thru(withLatestFrom((x) => x, stream)))
+  return hold
 }
 
 module.exports = holdUntil

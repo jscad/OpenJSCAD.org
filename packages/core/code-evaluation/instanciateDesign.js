@@ -13,7 +13,7 @@ const lookupFromCompactBinary = (compactLookup = {}) => {
   // console.log('lookupFromCompactBinary', compactLookup)
   // TODO: optimise this !!
   const lookup = {}
-  Object.keys(compactLookup).forEach(function (key) {
+  Object.keys(compactLookup).forEach((key) => {
     const object = compactLookup[key]
     let result
     if (object[0] === 0) { // Geom2
@@ -30,7 +30,7 @@ const lookupFromCompactBinary = (compactLookup = {}) => {
   return lookup
 }
 
-const toJSON = data => JSON.stringify(data, (key, value) => {
+const toJSON = (data) => JSON.stringify(data, (key, value) => {
   if (value instanceof Int8Array ||
     value instanceof Uint8Array ||
     value instanceof Uint8ClampedArray ||
@@ -40,7 +40,7 @@ const toJSON = data => JSON.stringify(data, (key, value) => {
     value instanceof Uint32Array ||
     value instanceof Float32Array ||
     value instanceof Float64Array) {
-    var replacement = {
+    const replacement = {
       constructor: value.constructor.name,
       data: Array.apply([], value),
       flag: 'FLAG_TYPED_ARRAY'
@@ -50,10 +50,10 @@ const toJSON = data => JSON.stringify(data, (key, value) => {
   return value
 })
 
-const lookupToCompactBinary = lookup => {
+const lookupToCompactBinary = (lookup) => {
   // FIXME: optimise this !!
   const compactLookup = {}
-  Object.keys(lookup).forEach(function (key) {
+  Object.keys(lookup).forEach((key) => {
     const object = lookup[key]
     let result = object
     if (isGeom2(object)) {
@@ -70,22 +70,19 @@ const lookupToCompactBinary = lookup => {
   return compactLookup
 }
 
-const serializeSolids = solids => {
-  // prepare solids for output from worker
-  // FIXME: deal with NON GEOM2/GEOM3 !!
-  return solids
-    .map(object => {
-      if (isGeom2(object)) {
-        return require('@jscad/modeling').geometry.geom2.toCompactBinary(object)
-      } else if (isGeom3(object)) {
-        return require('@jscad/modeling').geometry.geom3.toCompactBinary(object)
-      } else if (isPath2(object)) {
-        return require('@jscad/modeling').geometry.path2.toCompactBinary(object)
-      } else {
-        return toJSON(object)
-      }
-    })
-}
+// prepare solids for output from worker
+// FIXME: deal with NON GEOM2/GEOM3 !!
+const serializeSolids = (solids) => solids.map((object) => {
+  if (isGeom2(object)) {
+    return require('@jscad/modeling').geometry.geom2.toCompactBinary(object)
+  } else if (isGeom3(object)) {
+    return require('@jscad/modeling').geometry.geom3.toCompactBinary(object)
+  } else if (isPath2(object)) {
+    return require('@jscad/modeling').geometry.path2.toCompactBinary(object)
+  } else {
+    return toJSON(object)
+  }
+})
 
 const instanciateDesign = (rootModule, parameterValues, options) => {
   const { vtreeMode, serialize } = options

@@ -7,10 +7,10 @@
  * @param {Array} parameterDefinitions
  * @returns {Object} the parameter values, as an object
  */
-module.exports = function applyParameterDefinitions (inputParameters, parameterDefinitions, throwOnNoDefinition = false) {
-  return Object.keys(inputParameters).reduce((paramValues, paramName) => {
+const applyParameterDefinitions = (inputParameters, parameterDefinitions, throwOnNoDefinition = false) => {
+  const values = Object.keys(inputParameters).reduce((paramValues, paramName) => {
     let value = inputParameters[paramName]
-    let definition = parameterDefinitions.filter(definition => definition.name === paramName)
+    let definition = parameterDefinitions.filter((definition) => definition.name === paramName)
     definition = definition.length > 0 ? definition[0] : undefined
     if (definition === undefined) {
       if (throwOnNoDefinition) {
@@ -54,11 +54,11 @@ module.exports = function applyParameterDefinitions (inputParameters, parameterD
     paramValues[paramName] = value
     return paramValues
   }, {})
+  return values
 }
 
-const isNumber = value => {
-  return (!isNaN(parseFloat(value)) && isFinite(value))
-}
+const isNumber = (value) => (!isNaN(parseFloat(value)) && isFinite(value))
+
 const valueForChoices = (inputValue, definition) => {
   let value = inputValue
   // we try to match values against captions, then parse as numbers if applicable, then fallback to original value
@@ -70,3 +70,5 @@ const valueForChoices = (inputValue, definition) => {
   value = definition.values.length > 0 && typeof value === 'boolean' ? !!value : value
   return value
 }
+
+module.exports = applyParameterDefinitions
