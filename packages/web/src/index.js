@@ -103,7 +103,7 @@ async function makeJscad (targetElement, options) {
 
   // we return a function to allow setting/modifying params
   const mainParams = require('@jscad/core/observable-utils/callbackToObservable')()
-  mainParams.stream.forEach(x => console.log('setting params', x))
+  // mainParams.stream.forEach(x => console.log('setting params', x))
   return (params) => {
     mainParams.callback(params)
   }

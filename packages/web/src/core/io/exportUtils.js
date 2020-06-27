@@ -5,10 +5,8 @@ const { formats, supportedFormatsForObjects } = require('@jscad/io/formats')
 const availableExportFormatsFromSolids = (solids) => {
   const formatsToIgnore = ['jscad', 'js']
   const availableExportFormats = supportedFormatsForObjects(solids)
-    .filter(formatName => !formatsToIgnore.includes(formatName))
-    .map(function (formatName) {
-      return { name: formatName, displayName: formats[formatName].displayName }
-    })
+    .filter((formatName) => !formatsToIgnore.includes(formatName))
+    .map((formatName) => ({ name: formatName, displayName: formats[formatName].displayName }))
   const exportFormat = head(availableExportFormats) ? head(availableExportFormats).name : undefined
   return { exportFormat, availableExportFormats }
 }

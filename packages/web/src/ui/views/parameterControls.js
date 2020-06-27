@@ -6,7 +6,7 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
   // FIXME: rework the way groups work
   let currentGroup
 
-  const controls = parameterDefinitions.map(function (paramDefinition) {
+  const controls = parameterDefinitions.map((paramDefinition) => {
     const type = paramDefinition.type.toLowerCase()
     let subControls
     switch (type) {
@@ -39,12 +39,12 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
       label = html`<h1>${label}</h1>`
       trClassName = `groupTitle ${paramDefinition.name} open`
       currentGroup = paramDefinition.name
-      subControls = subControls.map(control => html`<th class='${control.className}'  >
+      subControls = subControls.map((control) => html`<th class='${control.className}'  >
         ${control}
       </th>`)
     } else {
-      subControls.forEach(control => {
-        control.onchange = function (e) {
+      subControls.forEach((control) => {
+        control.onchange = (e) => {
           const l = e.currentTarget.nextElementSibling
           if (l !== null && l.nodeName === 'LABEL') {
             l.innerHTML = e.currentTarget.value
@@ -55,9 +55,7 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
         }
       })
     }
-    const subItems = subControls.map(control => {
-      return html`<div>${control} ${'label' in control ? control.label : ''}</div>`
-    })
+    const subItems = subControls.map((control) => html`<div>${control} ${'label' in control ? control.label : ''}</div>`)
     const element = html`<tr class=${trClassName}>
       <td class=${className}> ${label} </td>
       <td> ${subItems}</td>
@@ -78,7 +76,7 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
           .replace('groupTitle', '')
           .replace(' ', '')
         const groupItems = document.getElementsByClassName(className)
-        Array.from(groupItems).forEach(item => {
+        Array.from(groupItems).forEach((item) => {
           if (item.className.includes('groupTitle')) {
             return
           }
@@ -103,13 +101,12 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
   return { controls }
 }
 
-const createGroupControl = definition => {
+const createGroupControl = (definition) => {
   const defaults = {
     expanded: false,
-    caption: '',
     className: ''
   }
-  const { expanded, caption, className } = Object.assign({}, defaults, definition)
+  const { expanded, className } = Object.assign({}, defaults, definition)
   // const text = definition.caption ? definition.caption : definition.name
   const groupOpenIcon = html`
       <svg  class="icon icon-open feather feather-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="6 9 12 15 18 9"/></svg>`
@@ -136,7 +133,7 @@ const createChoiceControl = (definition, prevValue) => {
     throw new Error('Definition of choice parameter (' + definition.name + ") should have the same number of items for 'captions' and 'values'")
   }
 
-  const options = captions.map(function (caption, index) {
+  const options = captions.map((caption, index) => {
     const value = values[index]
     let selected = false
     if (prevValue !== undefined) {
@@ -171,7 +168,7 @@ const createRadioControl = (definition, prevValue) => {
     throw new Error('Definition of choice parameter (' + definition.name + ") should have the same number of items for 'captions' and 'values'")
   }
 
-  const controls = captions.map(function (caption, index) {
+  const controls = captions.map((caption, index) => {
     const value = values[index]
     let selected = false
     if (prevValue !== undefined) {
@@ -215,7 +212,7 @@ const createControl = (definition, prevValue) => {
   if (!('type' in definition)) {
     throw new Error('Parameter definition (' + definition + ") must include a 'type' parameter")
   }
-  let typeData = controlList.filter(x => definition.type === x.type)
+  let typeData = controlList.filter((x) => definition.type === x.type)
   typeData = (typeData && typeData.length > 0) ? typeData[0] : undefined
   if (!typeData) {
     throw new Error('Parameter definition (' + definition + ') is not known')
@@ -223,7 +220,7 @@ const createControl = (definition, prevValue) => {
 
   // validate fields
   const definitionFields = Object.keys(definition)
-  typeData.required.forEach(function (requiredField) {
+  typeData.required.forEach((requiredField) => {
     if (!definitionFields.includes(requiredField)) {
       throw new Error(`Parameter definition for "${definition.name}" must include a "${requiredField}" parameter`)
     }
@@ -240,7 +237,7 @@ const createControl = (definition, prevValue) => {
   } else {
     controlValue = typeData.initial
   }
-  let control = html`<input
+  const control = html`<input
     type=${typeData.control} value=${controlValue} checked=${'checked' in definition ? controlValue : ''}>
   </input>`
 
@@ -264,6 +261,8 @@ const createControl = (definition, prevValue) => {
 
   return [control]
 
+/*
+  FIXME remove later
   control = document.createElement('input')
   let i, j, controlInstance, paramName
   for (i = 0; i < controlList.length; i++) {
@@ -291,6 +290,7 @@ const createControl = (definition, prevValue) => {
   }
   // set the control type
   control.setAttribute('type', controlInstance.control)
+*/
 }
 
 module.exports = { createParamControls }

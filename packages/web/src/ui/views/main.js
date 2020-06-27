@@ -1,8 +1,8 @@
 const html = require('bel')
 
-function dom (state, i18n, paramsCallbacktoStream, editorCallbackToStream) {
-  const i18nFake = x => x
-  i18nFake.translate = x => x
+const dom = (state, i18n, paramsCallbacktoStream, editorCallbackToStream) => {
+  const i18nFake = (x) => x
+  i18nFake.translate = (x) => x
   i18n = i18n || i18nFake
 
   const options = require('./options')(state, i18n)
@@ -16,7 +16,6 @@ function dom (state, i18n, paramsCallbacktoStream, editorCallbackToStream) {
 
   const viewer = require('./viewer')(state, i18n)
   const viewerControls = require('./viewerControls')(state, i18n)
-
 
   if (state.themes && state.themes.themeSettings) {
     // set the global CSS variables (theme)

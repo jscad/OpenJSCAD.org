@@ -7,7 +7,7 @@ const AlertUserOfUncaughtExceptions = require('./errorDispatcher')
 const version = require('../../package.json').version
 const Processor = require('../jscad/processor-bare')
 
-var gProcessor = null
+let gProcessor = null
 
 /**
  * Initialize a jscad viewer.  You can prevent the processor from creating
@@ -19,7 +19,7 @@ var gProcessor = null
  * @param {Object} viewer - A DOM element to use as the base element.
  * @param {JscadViewerOptions} options - options passed to the viewer processor
  */
-function init (viewer, options) {
+const init = (viewer, options) => {
   const versionText = 'UMD OpenJSCAD.org Version ' + version
   console.log('umd init', versionText, options)
 
@@ -32,12 +32,12 @@ function init (viewer, options) {
 
   // load the given design
   if (design) {
-    var xhr = new XMLHttpRequest()
+    const xhr = new XMLHttpRequest()
     xhr.open('GET', design, true)
     gProcessor.setStatus('Loading ' + design)
 
     xhr.onload = function () {
-      var source = this.responseText
+      const source = this.responseText
 
       if (design.match(/\.jscad$/i) || design.match(/\.js$/i)) {
         gProcessor.setStatus('Processing ' + design)

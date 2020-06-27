@@ -1,4 +1,4 @@
-function makeReactions (inputs) {
+const makeReactions = (inputs) => {
   const { sinks, outputs$ } = inputs
   const { store, fs, http, i18n, dom, solidWorker, state, dat } = sinks
 
@@ -23,22 +23,22 @@ function makeReactions (inputs) {
   // output to dom
   dom(require('./dom')(inputs))
   // output to i18n
-  i18n(outputs$.filter(x => 'sink' in x && x.sink === 'i18n'))
+  i18n(outputs$.filter((x) => 'sink' in x && x.sink === 'i18n'))
   // output to storage
-  store(outputs$.filter(x => 'sink' in x && x.sink === 'store'))
+  store(outputs$.filter((x) => 'sink' in x && x.sink === 'store'))
   // output to http
-  http(outputs$.filter(x => 'sink' in x && x.sink === 'http'))
+  http(outputs$.filter((x) => 'sink' in x && x.sink === 'http'))
   // data out to file system sink
   // drag & drops of files/folders have DUAL meaning:
   // * ADD this file/folder to the available ones
   // * OPEN this file/folder
-  fs(outputs$.filter(x => 'sink' in x && x.sink === 'fs'))
+  fs(outputs$.filter((x) => 'sink' in x && x.sink === 'fs'))
   // web worker sink
-  solidWorker(outputs$.filter(x => 'sink' in x && x.sink === 'geometryWorker'))
+  solidWorker(outputs$.filter((x) => 'sink' in x && x.sink === 'geometryWorker'))
   // state sink
-  state(outputs$.filter(x => 'sink' in x && x.sink === 'state'))
+  state(outputs$.filter((x) => 'sink' in x && x.sink === 'state'))
 
-  dat(outputs$.filter(x => 'sink' in x && x.sink === 'dat'))
+  dat(outputs$.filter((x) => 'sink' in x && x.sink === 'dat'))
 
   // titlebar & store side effects
   // FIXME/ not compatible with multiple instances !!

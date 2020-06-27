@@ -1,4 +1,4 @@
-function compositeKeyFromKeyEvent (event) {
+const compositeKeyFromKeyEvent = (event) => {
   const ctrl = event.ctrlKey ? 'ctrl+' : ''
   const shift = event.shiftKey ? 'shift+' : ''
   const meta = event.metaKey ? 'command+' : ''
@@ -15,9 +15,8 @@ function compositeKeyFromKeyEvent (event) {
   const compositeKey = `${ctrl}${shift}${meta}${key}`
   return compositeKey
 }
-const simpleKey = (event) => {
-  return event.key ? event.key.toLowerCase() : undefined
-}
+
+const simpleKey = (event) => event.key ? event.key.toLowerCase() : undefined
 
 const getKeyCombos = (options, keyUps$, keyDown$) => {
   const defaults = {
@@ -29,20 +28,18 @@ const getKeyCombos = (options, keyUps$, keyDown$) => {
   keyDown$ = keyDown$.multicast().debounce(10)
   if (dropRepeats) {
     keyDown$ = keyDown$
-      .skipRepeatsWith((event, previousEvent) => {
-        return simpleKey(event) === simpleKey(previousEvent)
-      })
+      .skipRepeatsWith((event, previousEvent) => simpleKey(event) === simpleKey(previousEvent))
   }
 
   const keyStuffEnd$ = keyDown$.throttle(1000).delay(2000)
   const keyCombos$ = keyDown$
-    .merge(keyUps$.map(x => 'end'))
-    .merge(keyStuffEnd$.map(x => 'end'))
+    .merge(keyUps$.map((x) => 'end'))
+    .merge(keyStuffEnd$.map((x) => 'end'))
     .loop((values, event) => {
       if (event === 'end' || endKeys.includes(simpleKey(event))) {
         const value = {
           event: values.length > 0 ? values[0].event : undefined,
-          compositeKey: values.map(x => x.compositeKey).join('+')
+          compositeKey: values.map((x) => x.compositeKey).join('+')
         }
         return { seed: [], value }
       } else {
@@ -51,8 +48,8 @@ const getKeyCombos = (options, keyUps$, keyDown$) => {
       }
       return { seed: values }
     }, [])
-    .filter(x => x !== undefined)
-    .filter(x => x.event !== undefined)
+    .filter((x) => x !== undefined)
+    .filter((x) => x.event !== undefined)
     // .tap(x => console.log('key stuff', x))
     .multicast()
 

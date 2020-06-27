@@ -8,8 +8,6 @@ const fetchUriParams = (uri, paramName, defaultValue = undefined) => {
   return defaultValue
 }
 
-const getAllUriParams = uri => {
-  return url.parse(uri, true).query
-}
+const getAllUriParams = (uri) => url.parse(uri, true).query
 
 module.exports = { fetchUriParams, getAllUriParams }
