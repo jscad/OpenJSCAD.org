@@ -312,14 +312,7 @@ const zoomToFit = ({ controls, camera, entities }) => {
   * @return {Object} the updated camera data/state
 */
 const reset = ({ controls, camera }, desiredState) => {
-  /* camera = Object.assign({}, camera, desiredState.camera)
-  camera.projection = mat4.perspective([], camera.fov, camera.aspect, camera.near, camera.far)
-  controls = Object.assign({}, controls, desiredState.controls)
-  return {
-    camera,
-    controls
-  } */
-  return {
+  const options = {
     camera: {
       position: desiredState.camera.position,
       target: desiredState.camera.target,
@@ -332,6 +325,7 @@ const reset = ({ controls, camera }, desiredState) => {
       scale: desiredState.controls.scale
     }
   }
+  return options
 }
 
 // FIXME: upgrade or obsolete

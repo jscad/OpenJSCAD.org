@@ -9,8 +9,6 @@ const hexToRgba = (hex, normalize = true) => {
 }
 
 // normalize 0-255 values to 0-1
-const normalizeRgba = (rgba) => {
-  return rgba.map(v => (+(v / 255).toFixed(2)))
-}
+const normalizeRgba = (rgba) => rgba.map((v) => (+(v / 255).toFixed(2)))
 
 module.exports = { hexToRgba, normalizeRgba }

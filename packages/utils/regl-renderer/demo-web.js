@@ -18,7 +18,7 @@ const demoSolids = (parameters) => {
   ]
 
   const transpCube = colorize([1, 0, 0, 0.75], cuboid({ size: [100 * parameters.scale, 100, 210 + (200 * parameters.scale)] }))
-  const star2D = star({vertices: 8, innerRadius: 150, outerRadius: 200})
+  const star2D = star({ vertices: 8, innerRadius: 150, outerRadius: 200 })
   const line2D = colorize([1.0, 0, 0], line([[220, 220], [-220, 220], [-220, -220], [220, -220], [220, 220]]))
 
   return [transpCube, line2D, star2D, ...logo]

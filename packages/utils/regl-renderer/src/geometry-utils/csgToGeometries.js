@@ -22,9 +22,6 @@ const csgToGeometries = (csgs, options) => {
   const { smoothLighting, normalThreshold, faceColor } = Object.assign({}, defaults, options)
   const faceColorRgb = faceColor === undefined ? undefined : normalizedColor(faceColor) // TODO : detect if hex or rgba
 
-  csgs = toArray(csgs)
-  const geometriesPerCsg = csgs.map(convert)
-
   const convert = (csg) => {
     const geometries = []
 
@@ -129,18 +126,11 @@ const csgToGeometries = (csgs, options) => {
     }
     return geometries
   }
-  return geometriesPerCsg
-}
 
-/**
- * convert color from rgba object to the array of bytes
- * @param {Object} color `{r: r, g: g, b: b, a: a}`
- * @returns {Array}  `[r, g, b, a]`
- */
-const colorBytes = (colorRGBA) => {
-  const result = [colorRGBA.r, colorRGBA.g, colorRGBA.b]
-  if (colorRGBA.a !== undefined) result.push(colorRGBA.a)
-  return result
+  csgs = toArray(csgs)
+  const geometriesPerCsg = csgs.map(convert)
+
+  return geometriesPerCsg
 }
 
 /** determine if input is a hex (color) or not
@@ -206,11 +196,9 @@ const polygonColor = (polygon, faceColor) => {
  * @param {Array} otherNormal another 3 component array normal
  * @returns {Boolean} true if the two normals are similar
  */
-const areNormalsSimilar = (normal, otherNormal, threshold) => {
-  return vec3.distance(normal, otherNormal) <= threshold
-  // angle computation is too slow but actually precise
-  // return vec3.angle(normal, otherNormal) <= threshold
-}
+const areNormalsSimilar = (normal, otherNormal, threshold) => vec3.distance(normal, otherNormal) <= threshold
+// angle computation is too slow but actually precise
+// return vec3.angle(normal, otherNormal) <= threshold
 
 const fuzyNormalAndPositionLookup = (normalPositionLookup, toCompare, normalThreshold = 0.349066) => {
   const normalsCandidates = normalPositionLookup[toCompare.position]
