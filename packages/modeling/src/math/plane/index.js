@@ -23,7 +23,6 @@ module.exports = {
   fromPoints: require('./fromPoints'),
   fromPointsRandom: require('./fromPointsRandom'),
   signedDistanceToPoint: require('./signedDistanceToPoint'),
-  splitLineSegmentByPlane: require('./splitLineSegmentByPlane'),
   /**
    * @see [vec4.toString()]{@link module:modeling/math/vec4.toString}
    * @function toString
