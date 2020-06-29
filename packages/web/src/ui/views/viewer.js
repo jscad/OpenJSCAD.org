@@ -14,7 +14,6 @@ const panSpeed = 1
 const renderSpeed = 10 // number of renders per second
 
 // internal state
-let initialized = false
 let render
 let viewerOptions
 let camera = perspectiveCamera.defaults
@@ -173,7 +172,6 @@ const setup = (element) => {
     // data
     entities: []
   }
-  initialized = true
   return { viewerOptions, camera }
 }
 

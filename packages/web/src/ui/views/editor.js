@@ -23,19 +23,19 @@ require('brace/theme/monokai')
 const openscadOpenJscadParser = require('@jscad/openscad-openjscad-translator')
 
 // See http://ace.ajax.org/#nav=howto
-function setUpEditor (element, gProcessor) {
+const setUpEditor = (element, gProcessor) => {
   const langTools = ace.acequire('ace/ext/language_tools')
 
   console.log('langTools', langTools)
-  var flowCompleter = {
-    getCompletions: function (editor, session, pos, prefix, callback) {
+  const flowCompleter = {
+    getCompletions: (editor, session, pos, prefix, callback) => {
       console.log('getCompletions')
       // your code
     }
   }
   langTools.addCompleter(flowCompleter)
 
-  var gEditor = null
+  let gEditor = null
   gEditor = ace.edit(element)
   gEditor.$blockScrolling = Infinity
   gEditor.getSession().setMode('ace/mode/javascript')
@@ -71,8 +71,8 @@ function setUpEditor (element, gProcessor) {
   // gEditor.setTheme("ace/theme/vibrant_ink")
   // gEditor.setTheme("ace/theme/xcode")
 
-  function runExec (editor) {
-    var src = editor.getValue()
+  const runExec = (editor) => {
+    let src = editor.getValue()
     if (src.match(/^\/\/!OpenSCAD/i)) {
       editor.getSession().setMode('ace/mode/scad')
       // FIXME test for the global function first
@@ -90,7 +90,7 @@ function setUpEditor (element, gProcessor) {
     bindKey: { win: 'F5|Shift-Return', mac: 'F5|Shift-Return' },
     exec: runExec
   })
-  document.body.addEventListener('keydown', function (evt) {
+  document.body.addEventListener('keydown', (evt) => {
     if (evt.key === 'F5') {
       evt.preventDefault()
       // console.log('no accidental reloading!')
@@ -110,7 +110,7 @@ function setUpEditor (element, gProcessor) {
     name: 'saveSource',
     bindKey: { win: 'Ctrl-S', mac: 'Command-S' },
     exec: function (editor) {
-      var src = editor.getValue()
+      const src = editor.getValue()
       localStorage.editorContent = src
       gProcessor.setStatus('saved', 'Saved source to browser storage')
     }
@@ -119,7 +119,7 @@ function setUpEditor (element, gProcessor) {
     name: 'loadSource',
     bindKey: { win: 'Ctrl-L', mac: 'Command-L' },
     exec: function (editor) {
-      var src = localStorage.editorContent
+      const src = localStorage.editorContent
       if (src && src.length) editor.setValue(src, 1)
       gEditor.commands.exec('setJSCAD', editor)
       gProcessor.setStatus('loaded', 'Loaded source from browser storage')
@@ -129,15 +129,15 @@ function setUpEditor (element, gProcessor) {
     name: 'downloadSource',
     bindKey: { win: 'Ctrl-Shift-S', mac: 'Command-Shift-S' },
     exec: function (editor) {
-      var src = editor.getValue()
-      setTimeout(function () {
-        var blob = new Blob([src], { type: 'text/plain' })
-        var objectUrl = URL.createObjectURL(blob)
-        var saveLink = document.createElementNS('http://www.w3.org/1999/xhtml', 'a')
+      const src = editor.getValue()
+      setTimeout(() => {
+        const blob = new Blob([src], { type: 'text/plain' })
+        const objectUrl = URL.createObjectURL(blob)
+        const saveLink = document.createElementNS('http://www.w3.org/1999/xhtml', 'a')
         saveLink.href = objectUrl
         saveLink.download = 'MyDesign.jscad'
 
-        var event = new MouseEvent('click')
+        const event = new MouseEvent('click')
         saveLink.dispatchEvent(event)
       }, 0)
     }
@@ -154,7 +154,7 @@ function setUpEditor (element, gProcessor) {
   return gEditor
 }
 
-function putSourceInEditor (gEditor, src, fn) {
+const putSourceInEditor = (gEditor, src, fn) => {
   if (gEditor) {
     gEditor.setValue(src, -1)
     if (src.match(/^\/\/!OpenSCAD/i)) {
@@ -165,7 +165,7 @@ function putSourceInEditor (gEditor, src, fn) {
   }
 }
 
-function getSourceFromEditor (gEditor) {
+const getSourceFromEditor = (gEditor) => {
   if (gEditor !== null) {
     return gEditor.getValue()
   }
@@ -173,7 +173,7 @@ function getSourceFromEditor (gEditor) {
 }
 const html = require('bel')
 
-function editorWrapper (state, editorCallbackToStream) {
+const editorWrapper = (state, editorCallbackToStream) => {
   const el = html`
   <div id='editor' key='editor' style='visibility:${state.activeTool === 'editor' ? 'visible' : 'hidden'}' >
   </div>`

@@ -45,7 +45,7 @@ const makeState = (params) => {
   }
 
   const sink = (out$) => {
-    out$.forEach(function (command) {
+    out$.forEach((command) => {
       // const { state } = command
       /* try {
         const newState = state

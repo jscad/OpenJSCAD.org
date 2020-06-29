@@ -17,7 +17,7 @@ const reducers = {
   },
 
   setExportFormat: (state, exportFormat) => {
-    const io = Object.assign({}, state.io, exportFilePathFromFormatAndDesign(state.design, exportFormat), {exportFormat})
+    const io = Object.assign({ }, state.io, exportFilePathFromFormatAndDesign(state.design, exportFormat), { exportFormat })
     return { io }
   },
 
@@ -35,7 +35,6 @@ const reducers = {
 }
 
 const actions = ({ sources }) => {
-
   const initializeExports$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
     .map((payload) => Object.assign({}, { type: 'initializeExports', sink: 'state' }, { state: payload }))

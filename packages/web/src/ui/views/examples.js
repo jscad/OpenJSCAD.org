@@ -64,8 +64,8 @@ const examplesData = [
 const html = require('bel')
 
 module.exports = function examples (state, i18n) {
-  var wrap = 26
-  var colp = 100 / Math.floor(examplesData.length / wrap + 1) + '%'
+  const wrap = 26
+  const colp = 100 / Math.floor(examplesData.length / wrap + 1) + '%'
 
   const baseUrl = window.location.origin
   const exampleElems = examplesData.map((example) => {

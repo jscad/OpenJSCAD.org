@@ -12,7 +12,7 @@ const { flatten } = require('@jscad/array-utils')
  */
 const readFileAsync = (file, fileMeta) => {
   // console.log('readFileAsync',file,fileMeta)
-  return new Promise((resolve, reject) => {
+  const promiseReader = new Promise((resolve, reject) => {
     const reader = new FileReader()
     // remove rootfolder since all files are within it
     const fullPath = fileMeta && fileMeta.fullPath ? fileMeta.fullPath/* .split('/').slice(2).join('/') */ : ''
@@ -37,6 +37,7 @@ const readFileAsync = (file, fileMeta) => {
 
     reader.readAsArrayBuffer(file)
   })
+  return promiseReader
 }
 
 const inputFormats = supportedInputExtensions()
@@ -49,7 +50,7 @@ const isSupportedFormat = (file) => {
 
 const pseudoArraytoArray = (pseudoArray) => {
   const array = []
-  for (var i = 0; i < pseudoArray.length; i++) {
+  for (let i = 0; i < pseudoArray.length; i++) {
     const item = pseudoArray[i]
     array.push(item.webkitGetAsEntry ? item.webkitGetAsEntry() : item)
   }
@@ -83,7 +84,7 @@ const processItems = (items) => {
     }, [])
 
   return Promise.all(results)
-    .then((x) => x.filter(x => x !== null && x !== undefined))
+    .then((x) => x.filter((x) => x !== null && x !== undefined))
     // BAD .catch((error) => console.error(error.message))
 }
 
@@ -94,11 +95,12 @@ const processItems = (items) => {
  */
 const processFile = (fileItem) => {
   // console.log('processFile',fileItem)
-  return new Promise((resolve, reject) => {
+  const promiseFile = new Promise((resolve, reject) => {
     fileItem.file((fileData) => {
       isSupportedFormat(fileData) ? resolve(readFileAsync(fileData, fileItem)) : resolve(undefined)
     }, reject)
   })
+  return promiseFile
 }
 
 /*
@@ -108,7 +110,7 @@ const processFile = (fileItem) => {
  */
 const processDirectory = (directory) => {
   // console.log('processDirectory',directory)
-  return new Promise((resolve, reject) => {
+  const promiseDirectory = new Promise((resolve, reject) => {
     if (directory.entries) {
       directory.entries.length ? processItems(directory.entries).then(resolve) : resolve(null)
     } else {
@@ -128,6 +130,7 @@ const processDirectory = (directory) => {
       })
       return { children, fullPath: directory.fullPath, name: directory.name }
     })
+  return promiseDirectory
 }
 
 /*
@@ -136,7 +139,7 @@ const processDirectory = (directory) => {
 const transformFileList = (fileList) => {
   const path = require('path')
 
-  let rootDirectory = undefined
+  let rootDirectory
   const directories = new Map()
 
   const addDirectory = (fullPath, name) => {
@@ -162,9 +165,6 @@ const transformFileList = (fileList) => {
     const hidden = fileParts.reduce((acc, part) => acc || part.startsWith('.'), false)
     if (hidden) continue
 
-    const fileName = fileParts[fileParts.length - 1]
-    const fileExt = getFileExtensionFromString(fileName)
-
     if (!isSupportedFormat(file)) continue
 
     const dirParts = fileParts.slice(0, -1)
@@ -173,7 +173,6 @@ const transformFileList = (fileList) => {
       addDirectory(dirPath, dirParts[i])
     }
 
-    const fullPath = path.sep + path.join(...fileParts)
     const dirPath = path.sep + path.join(...dirParts)
 
     const directory = directories.get(dirPath)

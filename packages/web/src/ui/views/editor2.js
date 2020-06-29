@@ -7,7 +7,8 @@ require('codemirror/addon/hint/javascript-hint')
 // const hintJs = require('./hint-js')
 
 let cm
-function editorWrapper (state, editorCallbackToStream) {
+
+const editorWrapper = (state, editorCallbackToStream) => {
   const el = html`
   <div id='editor' key='editor' style='visibility:${state.activeTool === 'editor' ? 'visible' : 'hidden'}'>
   </div>`
@@ -22,11 +23,11 @@ function editorWrapper (state, editorCallbackToStream) {
     cm.refresh()
   }// console.log.bind(console, ' updated in page!')
 
-  CodeMirror.commands.autocomplete = function (cm) {
+  CodeMirror.commands.autocomplete = (cm) => {
     console.log('autocomplete')
-    var doc = cm.getDoc()
-    var POS = doc.getCursor()
-    var mode = CodeMirror.innerMode(cm.getMode(), cm.getTokenAt(POS).state).mode.name
+    const doc = cm.getDoc()
+    const POS = doc.getCursor()
+    const mode = CodeMirror.innerMode(cm.getMode(), cm.getTokenAt(POS).state).mode.name
 
     console.log('foo', cm.getTokenAt(POS))
     if (mode === 'xml') { // html depends on xml

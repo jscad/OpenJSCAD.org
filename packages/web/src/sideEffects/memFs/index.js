@@ -17,7 +17,7 @@ const makeMemFsSideEffect = (params) => {
   let filesAndFolders = []
 
   const sink = (commands$) => {
-    commands$.forEach(function (command) {
+    commands$.forEach((command) => {
       const { path, type, id, data, options } = command
       const { isFs } = options
       log.info(`memfs: operation: ${type} ${path} ${id} ${options}`)
@@ -59,7 +59,7 @@ const makeMemFsSideEffect = (params) => {
       const write = () => {
         log.info('write', command, filesAndFolders, path)
         // check if we already have a matching entry with the same full (absolute) path
-        const foundEntry = head(filesAndFolders.filter(entry => entry.fullPath === path))
+        const foundEntry = head(filesAndFolders.filter((entry) => entry.fullPath === path))
         if (!foundEntry) {
           const name = require('path').basename(path)
           const ext = getFileExtensionFromString(path)
@@ -83,9 +83,7 @@ const makeMemFsSideEffect = (params) => {
     })
   }
 
-  const source = () => {
-    return commandResponses.stream.multicast()
-  }
+  const source = () => commandResponses.stream.multicast()
   return { source, sink }
 }
 

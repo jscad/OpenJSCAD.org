@@ -29,10 +29,10 @@ const makeActions = (sources) => {
     languageActions,
     shortcutActions]
 
-  const output$ = most.mergeArray(flatten(actions.map(actions => Object.values(actions))))
+  const output$ = most.mergeArray(flatten(actions.map((actions) => Object.values(actions))))
     .skipRepeatsWith((state, previousState) => JSON.stringify(state) === JSON.stringify(previousState))
     .multicast()
-    .filter(x => x !== undefined)
+    .filter((x) => x !== undefined)
 
   attach(output$)
   return output$

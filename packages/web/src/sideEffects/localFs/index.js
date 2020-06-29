@@ -10,7 +10,7 @@ const makeLocalFsSideEffect = async (params) => {
     let currentFileTree
     let rawData
     let watcher
-    let watcherDelay = 5000 // milliseconds
+    const watcherDelay = 5000 // milliseconds
 
     // every time a new command is recieved (observable)
     commands$.forEach((command) => {
@@ -37,7 +37,7 @@ const makeLocalFsSideEffect = async (params) => {
         const { enabled } = options
         if (enabled) {
           watcher = setInterval(() => {
-            const newFiles = walkFileTree(rawData)
+            walkFileTree(rawData)
               .catch((error) => {
                 console.error('failed to read files', error)
               })
@@ -49,7 +49,7 @@ const makeLocalFsSideEffect = async (params) => {
                   currentFileTree = newFileTree
                   commandResponses.callback({ type: 'read', id: 'loadRemote', data: currentFileTree, path, changed: whatChanged })
                 }
-            })
+              })
           }, watcherDelay)
         } else {
           if (watcher) {
@@ -75,9 +75,7 @@ const makeLocalFsSideEffect = async (params) => {
     })
   }
 
-  const source = () => {
-    return commandResponses.stream.multicast()
-  }
+  const source = () => commandResponses.stream.multicast()
 
   return { source, sink }
 }

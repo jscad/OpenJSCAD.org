@@ -3,7 +3,7 @@ const callBackToStream = require('@jscad/core/observable-utils/callbackToObserva
 module.exports = function makeStorageSideEffect ({ name }) {
   const reply = callBackToStream()
 
-  function sink (outToStore$) {
+  const sink = (outToStore$) => {
     let enabled = true
     try {
       localStorage.getItem('jscad:')
@@ -16,7 +16,7 @@ module.exports = function makeStorageSideEffect ({ name }) {
       commandResponses.callback({ type: undefined, id: undefined, error: new Error('Local storage not supported in this environment!') })
     } else {
       if (outToStore$) {
-        outToStore$.forEach(function (command) {
+        outToStore$.forEach((command) => {
           const { type, key, data } = command
           // const storage = target === `local` ? localStorage : sessionStorage
           if (type === 'write') {

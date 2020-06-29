@@ -24,9 +24,7 @@ const head = (array) => {
  * the argument can be composed of multiple depths of values and arrays
  * @param {Array} array
  */
-const flatten = (array) => {
-  return array.reduce((acc, val) => Array.isArray(val) ? acc.concat(flatten(val)) : acc.concat(val), [])
-}
+const flatten = (array) => array.reduce((acc, val) => Array.isArray(val) ? acc.concat(flatten(val)) : acc.concat(val), [])
 
 /**
  * helper function to retrieve the nth element of an array

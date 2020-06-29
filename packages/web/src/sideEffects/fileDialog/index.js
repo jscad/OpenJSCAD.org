@@ -10,12 +10,11 @@ const makeFileDialog = (params) => {
 
   const commandResponses = callBackToStream()
 
-  const source = () => {
-    const commandResponses$ = commandResponses.stream.multicast()
-  }
+  const source = () => { }
+  // FIXME const commandResponses$ = commandResponses.stream.multicast()
 
   const sink = (out$) => {
-    out$.forEach(function (command) {
+    out$.forEach((command) => {
       commandResponses.callback(command)
 
       /* const {saveAs} = require('file-saver')
@@ -32,7 +31,7 @@ const makeFileDialog = (params) => {
       // add onchange handler if you wish to get the file :)
       // input.trigger('click')// opening dialog
       // return false; // avoiding navigation
-      input.addEventListener('change', function () {
+      input.addEventListener('change', () => {
         console.log('foo')
       })
     })

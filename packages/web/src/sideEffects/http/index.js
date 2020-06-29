@@ -35,7 +35,7 @@ const makeHttpSideEffect = (params) => {
   xhr.send() */
 
   const sink = (out$) => {
-    out$.forEach(command => {
+    out$.forEach((command) => {
       const { type, id, urls } = command // { options, id, type, urls }
       log.debug('output from http', urls)
 
@@ -45,21 +45,21 @@ const makeHttpSideEffect = (params) => {
 
       const read = () => {
         let filesAndFolders = []
-        urls.forEach(url => {
+        urls.forEach((url) => {
           const xhr = new XMLHttpRequest()
-          xhr.onerror = error => {
+          xhr.onerror = (error) => {
             const rError = new Error(`failed to load ${url} see console for more details`)
             commandResponses.callback({ type, id, url, error: rError })
             log.error(error)
           }
-          xhr.onload = event => {
+          xhr.onload = (event) => {
             const result = event.currentTarget.responseText
             const status = event.target.status
             if (`${status}`.startsWith('4')) {
               commandResponses.callback({ type, id, url, error: new Error(result) })
             } else {
-              const path = url
-              const name = require('path').basename(path)
+              const name = require('path').basename(url)
+              const path = `/${name}` // fake path for fake filesystem lookup
               const ext = getFileExtensionFromString(path)
               filesAndFolders = filesAndFolders.concat({ name, ext, source: result, fullPath: path })
               commandResponses.callback({ type, id, url, data: filesAndFolders })
@@ -90,9 +90,7 @@ const makeHttpSideEffect = (params) => {
       commandHandler()
     })
   }
-  const source = () => {
-    return commandResponses.stream.multicast()
-  }
+  const source = () => commandResponses.stream.multicast()
 
   return { source, sink }
 }
