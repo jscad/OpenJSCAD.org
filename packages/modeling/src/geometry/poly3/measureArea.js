@@ -21,8 +21,6 @@ const measureArea = (poly3) => {
   const ba = vec3.subtract(b, a)
   const ca = vec3.subtract(c, a)
   const normal = vec3.cross(ba, ca)
-  // let normal = b.minus(a).cross(c.minus(a))
-  // let normal = poly3.plane.normal // unit based normal, CANNOT use
 
   // determin direction of projection
   const ax = Math.abs(normal[0])

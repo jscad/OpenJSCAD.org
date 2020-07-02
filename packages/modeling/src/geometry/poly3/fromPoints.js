@@ -18,10 +18,6 @@ const create = require('./create')
  * const polygon = fromPoints(points)
  */
 const fromPoints = (points, planeof) => {
-  if (planeof) throw new Error('use fromPointAndPlane')
-  if (!Array.isArray(points)) throw new Error('the given points must be an array')
-  if (points.length < 3) throw new Error('the given points must contain THREE or more points')
-
   const vertices = points.map((point) => vec3.clone(point))
   return create(vertices)
 }
