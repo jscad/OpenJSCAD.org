@@ -59,8 +59,9 @@ const convert = (options, geometry) => {
     const polygon = polygons[i]
 
     const faceColor = polygonColor(polygon, color)
-    const rawNormal = polygon.plane
-    const normal = [rawNormal[0], rawNormal[1], rawNormal[2]]
+    //const rawNormal = polygon.plane
+    //const normal = [rawNormal[0], rawNormal[1], rawNormal[2]]
+    const normal = calculateNormal(polygon.vertices)
 
     if (faceColor && faceColor[3] !== 1) {
       isTransparent = true
@@ -201,6 +202,17 @@ const polygonColor = (polygon, color) => {
  * @param {Array} otherNormal another 3 component array normal
  * @returns {Boolean} true if the two normals are similar
  */
+const calculateNormal = (vertices) => {
+  const ba = vec3.create()
+  vec3.subtract(ba, vertices[1], vertices[0])
+  const ca = vec3.create()
+  vec3.subtract(ca, vertices[2], vertices[0])
+  const normal = vec3.create()
+  vec3.cross(normal, ba, ca)
+  vec3.normalize(normal, normal)
+  return normal
+}
+
 const areNormalsSimilar = (normal, otherNormal, threshold) => (vec3.distance(normal, otherNormal) <= threshold)
 
 const fuzyNormalAndPositionLookup = (normalPositionLookup, toCompare, normalThreshold) => {
