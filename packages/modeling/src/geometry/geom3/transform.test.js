@@ -15,7 +15,6 @@ test('transform: Adjusts the transforms of a populated geom3', (t) => {
   const expected = {
     polygons: [
       {
-        plane: new Float32Array([0, -1, 0, 0]),
         vertices: [
           new Float32Array([0, 0, 0]),
           new Float32Array([1, 0, 0]),
@@ -39,7 +38,6 @@ test('transform: Adjusts the transforms of a populated geom3', (t) => {
   // expect application of the transforms to the polygons
   expected.polygons = [
     {
-      plane: new Float32Array([1, 0, 0, -5]),
       vertices: [
         new Float32Array([-5, 5, 5]),
         new Float32Array([-5, 6, 5]),
