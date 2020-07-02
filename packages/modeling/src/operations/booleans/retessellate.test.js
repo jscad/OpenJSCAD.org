@@ -90,15 +90,35 @@ test('geom3: retessellate() should create proper geometry from solid geometries'
 
   // one solid geometry
   const ret1 = retessellate(obj1)
-  const exp1 = geom3.fromPoints(box1)
-  exp1.isRetesselated = true
-  t.deepEqual(ret1, exp1)
+  const pts1 = geom3.toPoints(ret1)
+  const exp1 = [
+    [[-5, -5, -5], [-5, -5, 5], [-5, 5, 5], [-5, 5, -5]],
+    [[5, -5, -5], [5, 5, -5], [5, 5, 5], [5, -5, 5]],
+    [[-5, -5, -5], [5, -5, -5], [5, -5, 5], [-5, -5, 5]],
+    [[-5, 5, -5], [-5, 5, 5], [5, 5, 5], [5, 5, -5]],
+    [[-5, -5, -5], [-5, 5, -5], [5, 5, -5], [5, -5, -5]],
+    [[-5, -5, 5], [5, -5, 5], [5, 5, 5], [-5, 5, 5]]
+  ]
+  t.true(comparePolygonsAsPoints(pts1, exp1))
 
   // two non-overlapping geometries
   const ret2 = retessellate(obj2)
-  const exp2 = geom3.fromPoints(box1.concat(box2))
-  exp2.isRetesselated = true
-  t.deepEqual(ret2, exp2)
+  const pts2 = geom3.toPoints(ret2)
+  const exp2 = [
+    [[-5, -5, -5], [-5, -5, 5], [-5, 5, 5], [-5, 5, -5]],
+    [[5, -5, -5], [5, 5, -5], [5, 5, 5], [5, -5, 5]],
+    [[-5, -5, -5], [5, -5, -5], [5, -5, 5], [-5, -5, 5]],
+    [[-5, 5, -5], [-5, 5, 5], [5, 5, 5], [5, 5, -5]] ,
+    [[-5, -5, -5], [-5, 5, -5], [5, 5, -5], [5, -5, -5]],
+    [[-5, -5, 5], [5, -5, 5], [5, 5, 5], [-5, 5, 5]],
+    [[15, 15, 15], [15, 15, 25], [15, 25, 25], [15, 25, 15]],
+    [[25, 15, 15], [25, 25, 15], [25, 25, 25], [25, 15, 25]],
+    [[15, 15, 15], [25, 15, 15], [25, 15, 25], [15, 15, 25]],
+    [[15, 25, 15], [15, 25, 25], [25, 25, 25], [25, 25, 15]],
+    [[15, 15, 15], [15, 25, 15], [25, 25, 15], [25, 15, 15]],
+    [[15, 15, 25], [25, 15, 25], [25, 25, 25], [15, 25, 25]]
+  ]
+  t.true(comparePolygonsAsPoints(pts2, exp2))
 
   // two touching geometries (faces)
   const ret3 = retessellate(obj3)
