@@ -190,7 +190,7 @@ h3 {
   display: inline-flex;
   z-index: 1;
 }
-#jscad {
+#jscadName {
   margin: 5px 5px 5px 0px;
   text-transform: capitalize;
 }
