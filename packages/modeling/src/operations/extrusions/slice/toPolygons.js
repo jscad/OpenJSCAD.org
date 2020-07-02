@@ -66,7 +66,7 @@ const toPolygons = (slice) => {
   // return only those polygons from the base
   let polygons = geom3.toPolygons(geometry3)
   polygons = polygons.filter((polygon) => {
-    const a = vec3.angle(splane, polygon.plane)
+    const a = vec3.angle(splane, poly3.plane(polygon))
     // walls should be PI / 2 radians rotated from the base
     return Math.abs(a) < (Math.PI / 90)
   })

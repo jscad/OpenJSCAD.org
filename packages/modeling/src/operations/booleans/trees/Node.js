@@ -1,4 +1,5 @@
 const plane = require('../../../math/plane')
+const poly3 = require('../../../geometry/poly3')
 
 // # class Node
 // Holds a node in a BSP tree. A BSP tree is built from a collection of polygons
@@ -105,7 +106,8 @@ Node.prototype = {
         index = Math.floor(polygontreenodes.length / 2)
         // index = polygontreenodes.length >> 1
         // index = Math.floor(Math.random()*polygontreenodes.length)
-        const bestplane = polygontreenodes[index].getPolygon().plane
+        const bestpoly = polygontreenodes[index].getPolygon()
+        const bestplane = poly3.plane(bestpoly)
         node.plane = bestplane
       }
       const frontnodes = []

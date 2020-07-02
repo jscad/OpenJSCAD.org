@@ -26,7 +26,8 @@ const splitPolygonByPlane = (splane, polygon) => {
   // cache in local lets (speedup):
   const vertices = polygon.vertices
   const numvertices = vertices.length
-  if (plane.equals(polygon.plane, splane)) {
+  const pplane = poly3.plane(polygon)
+  if (plane.equals(pplane, splane)) {
     result.type = 0
   } else {
     let hasfront = false
@@ -42,7 +43,7 @@ const splitPolygonByPlane = (splane, polygon) => {
     }
     if ((!hasfront) && (!hasback)) {
       // all points coplanar
-      const t = vec3.dot(splane, polygon.plane)
+      const t = vec3.dot(splane, pplane)
       result.type = (t >= 0) ? 0 : 1
     } else if (!hasback) {
       result.type = 2
@@ -108,10 +109,10 @@ const splitPolygonByPlane = (splane, polygon) => {
         }
       }
       if (frontvertices.length >= 3) {
-        result.front = poly3.fromPointsAndPlane(frontvertices, polygon.plane)
+        result.front = poly3.fromPointsAndPlane(frontvertices, pplane)
       }
       if (backvertices.length >= 3) {
-        result.back = poly3.fromPointsAndPlane(backvertices, polygon.plane)
+        result.back = poly3.fromPointsAndPlane(backvertices, pplane)
       }
     }
   }
