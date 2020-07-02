@@ -497,7 +497,8 @@ const instantiateFacets = (meshM, meshN, parts, color, options) => {
         facet = facet.reverse()
       }
       const polygon = geometry.poly3.create(facet)
-      if (Number.isFinite(polygon.plane[3])) {
+      const plane = geometry.poly3.plane(polygon)
+      if (Number.isFinite(plane[3])) {
         if (color) polygon.color = color
         facets.push(polygon)
       }

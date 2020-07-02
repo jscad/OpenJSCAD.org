@@ -57,7 +57,7 @@ const serializeBinary = (objects, options) => {
     polygons.forEach((polygon, index) => {
       const vertices = polygon.vertices
       const numvertices = vertices.length
-      const plane = polygon.plane
+      const plane = geometry.poly3.plane(polygon)
       for (let i = 0; i < numvertices - 2; i++) {
         triangleFloat32array[0] = plane[0]
         triangleFloat32array[1] = plane[1]

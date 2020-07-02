@@ -40,7 +40,7 @@ const convertToFacet = (polygon) => {
     // STL requires triangular polygons. If our polygon has more vertices, create multiple triangles:
     const firstVertexStl = vertextoStlString(polygon.vertices[0])
     for (let i = 0; i < polygon.vertices.length - 2; i++) {
-      const facet = `facet normal ${vector3DtoStlString(polygon.plane)}
+      const facet = `facet normal ${vector3DtoStlString(geometry.poly3.plane(polygon))}
 outer loop
 ${firstVertexStl}
 ${vertextoStlString(polygon.vertices[i + 1])}
