@@ -28,7 +28,7 @@ const dom = (state, i18n, paramsCallbacktoStream, editorCallbackToStream) => {
   const output = html`
   <div id='container'>
     <div id='header'>
-      <span id='jscad'>
+      <span id='jscadName'>
         <h3>JSCAD</h3>
       </span>
       <span id='designName'>
