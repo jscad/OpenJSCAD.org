@@ -17,7 +17,7 @@ const create = require('./create')
  * ]
  * const polygon = fromPoints(points)
  */
-const fromPoints = (points, planeof) => {
+const fromPoints = (points) => {
   const vertices = points.map((point) => vec3.clone(point))
   return create(vertices)
 }

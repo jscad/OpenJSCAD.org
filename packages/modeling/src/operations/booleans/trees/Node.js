@@ -107,8 +107,7 @@ Node.prototype = {
         // index = polygontreenodes.length >> 1
         // index = Math.floor(Math.random()*polygontreenodes.length)
         const bestpoly = polygontreenodes[index].getPolygon()
-        const bestplane = poly3.plane(bestpoly)
-        node.plane = bestplane
+        node.plane = poly3.plane(bestpoly)
       }
       const frontnodes = []
       const backnodes = []
