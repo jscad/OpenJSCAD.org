@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "../", "/openjscad"
+  config.vm.synced_folder "../", "/jscad"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -65,10 +65,11 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
-    cp /openjscad/vagrant/resources/.bash_aliases ~/
+    cp /jscad/vagrant/resources/.bash_aliases ~/
     curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
     sudo apt-get install -y nodejs
-    cd /openjscad
+    sudo npm install standard --global
+    cd /jscad
     npm install
     npm run bootstrap
     npm test
