@@ -65,15 +65,20 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
-    cp /jscad/vagrant/resources/.bash_aliases ~/
     curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-    sudo apt-get install -y nodejs
-    sudo npm install standard --global
+    apt-get install -y nodejs
+    npm install standard --global
+
+    cp /jscad/vagrant/resources/.bash_aliases /home/vagrant/
+    chowm vagrant:vagrant /home/vagrant/.bash_aliases
+
     cd /jscad
     npm install
     npm run bootstrap
     npm run docs
     npm test
+
+    echo "Log in to the vm using 'vagrant ssh', and launch jscad on the vm with 'jscad'"
   SHELL
 
 end
