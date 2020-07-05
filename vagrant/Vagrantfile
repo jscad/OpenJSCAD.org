@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
-  config.vm.network "public_network"
+  # config.vm.network "public_network"
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
     vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
-  #   vb.memory = "1024"
+    vb.memory = "4096"
   end
   #
   # View the documentation for the provider you are using for more
@@ -72,9 +72,8 @@ Vagrant.configure("2") do |config|
     cd /jscad
     npm install
     npm run bootstrap
-    npm test
     npm run docs
-
+    npm test
   SHELL
 
 end
