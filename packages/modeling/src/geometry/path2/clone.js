@@ -1,5 +1,5 @@
-const mat4 = require('../../math/mat4')
-const vec2 = require('../../math/vec2')
+const mat4 = require('../../maths/mat4')
+const vec2 = require('../../maths/vec2')
 
 const create = require('./create')
 

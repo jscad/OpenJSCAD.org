@@ -1,4 +1,4 @@
-const vec3 = require('../../math/vec3')
+const vec3 = require('../../maths/vec3')
 
 const geom2 = require('../../geometry/geom2')
 const geom3 = require('../../geometry/geom3')

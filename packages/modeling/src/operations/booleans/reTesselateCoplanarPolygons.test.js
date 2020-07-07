@@ -1,8 +1,8 @@
 const test = require('ava')
 
-const { degToRad } = require('../../math/utils')
+const { degToRad } = require('../../maths/utils')
 
-const { mat4 } = require('../../math')
+const mat4 = require('../../maths/mat4')
 
 const { poly3 } = require('../../geometry')
 

@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { mat4 } = require('../../math')
+const { mat4 } = require('../../maths')
 
 const slice = require('./slice')
 

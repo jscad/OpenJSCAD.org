@@ -1,9 +1,9 @@
-const { EPS } = require('../../math/constants')
+const { EPS } = require('../../maths/constants')
 
-const intersect = require('../../math/utils/intersect')
+const intersect = require('../../maths/utils/intersect')
 
-const line2 = require('../../math/line2')
-const vec2 = require('../../math/vec2')
+const line2 = require('../../maths/line2')
+const vec2 = require('../../maths/vec2')
 
 const poly2 = require('../../geometry/poly2')
 

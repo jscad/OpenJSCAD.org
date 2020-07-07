@@ -1,4 +1,4 @@
-const vec2 = require('../../math/vec2')
+const vec2 = require('../../maths/vec2')
 
 const angleBetweenPoints = (p0, p1) => Math.atan2((p1[1] - p0[1]), (p1[0] - p0[0]))
 

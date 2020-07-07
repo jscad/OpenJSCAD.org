@@ -1,5 +1,5 @@
-const plane = require('../../math/plane')
-const vec3 = require('../../math/vec3')
+const plane = require('../../maths/plane')
+const vec3 = require('../../maths/vec3')
 
 /**
  * Check whether the given polygon is convex.

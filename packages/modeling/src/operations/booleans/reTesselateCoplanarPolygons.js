@@ -1,8 +1,8 @@
-const { EPS } = require('../../math/constants')
+const { EPS } = require('../../maths/constants')
 
-const line2 = require('../../math/line2')
-const vec2 = require('../../math/vec2')
-const OrthoNormalBasis = require('../../math/OrthoNormalBasis')
+const line2 = require('../../maths/line2')
+const vec2 = require('../../maths/vec2')
+const OrthoNormalBasis = require('../../maths/OrthoNormalBasis')
 
 const { interpolateBetween2DPointsForY, insertSorted, fnNumberSort } = require('../../utils')
 

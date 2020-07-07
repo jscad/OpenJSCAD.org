@@ -1,4 +1,4 @@
-const vec3 = require('../math/vec3')
+const vec3 = require('../maths/vec3')
 
 /**
  * Create a new connector.

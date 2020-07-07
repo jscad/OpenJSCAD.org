@@ -1,6 +1,6 @@
-const area = require('../../math/utils/area')
+const area = require('../../maths/utils/area')
 
-const vec2 = require('../../math/vec2')
+const vec2 = require('../../maths/vec2')
 
 const geom2 = require('../../geometry/geom2')
 const path2 = require('../../geometry/path2')

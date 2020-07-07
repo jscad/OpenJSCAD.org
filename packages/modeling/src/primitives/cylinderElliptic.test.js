@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { degToRad } = require('../math/utils')
+const { degToRad } = require('../maths/utils')
 
 const geom3 = require('../geometry/geom3')
 

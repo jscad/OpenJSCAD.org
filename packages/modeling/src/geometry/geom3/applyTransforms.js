@@ -1,4 +1,4 @@
-const mat4 = require('../../math/mat4')
+const mat4 = require('../../maths/mat4')
 
 const poly3 = require('../poly3')
 

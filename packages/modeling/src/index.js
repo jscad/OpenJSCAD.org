@@ -2,7 +2,7 @@ module.exports = {
   colors: require('./colors'),
   connectors: require('./connectors'),
   geometry: require('./geometry'),
-  math: require('./math'),
+  maths: require('./maths'),
   primitives: require('./primitives'),
   text: require('./text'),
   utils: require('./utils'),
