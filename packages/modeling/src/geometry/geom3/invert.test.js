@@ -19,7 +19,6 @@ test('invert: Creates a invert of a populated geom3', (t) => {
   const expected = {
     polygons: [
       {
-        plane: new Float32Array([0, 1, 0, 0]),
         vertices: [
           new Float32Array([1, 0, 1]),
           new Float32Array([1, 0, 0]),

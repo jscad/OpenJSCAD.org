@@ -12,7 +12,7 @@ test('isA: identifies created poly3', (t) => {
 test('isA: identifies non poly3', (t) => {
   const p1 = null
   const p2 = {}
-  const p3 = { vertices: 1, plane: 1 }
+  const p3 = { vertices: 1 }
   t.false(isA(p1))
   t.false(isA(p2))
   t.false(isA(p3))

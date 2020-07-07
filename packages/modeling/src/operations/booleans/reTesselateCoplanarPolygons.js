@@ -18,7 +18,7 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
 
   const destpolygons = []
   const numpolygons = sourcepolygons.length
-  const plane = sourcepolygons[0].plane
+  const plane = poly3.plane(sourcepolygons[0])
   const orthobasis = new OrthoNormalBasis(plane)
   const polygonvertices2d = [] // array of array of Vector2D
   const polygontopvertexindexes = [] // array of indexes of topmost vertex per polygon

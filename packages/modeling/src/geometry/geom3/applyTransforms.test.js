@@ -9,7 +9,6 @@ test('applyTransforms: Updates a geom3 with transformed polygons', (t) => {
   const expected = {
     polygons: [
       {
-        plane: new Float32Array([0, -1, 0, 0]),
         vertices: [
           new Float32Array([0, 0, 0]),
           new Float32Array([1, 0, 0]),

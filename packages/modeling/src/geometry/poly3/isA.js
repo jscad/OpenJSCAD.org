@@ -6,8 +6,8 @@
  */
 const isA = (object) => {
   if (object && typeof object === 'object') {
-    if ('vertices' in object && 'plane' in object) {
-      if (Array.isArray(object.vertices) && 'length' in object.plane) {
+    if ('vertices' in object) {
+      if (Array.isArray(object.vertices)) {
         return true
       }
     }

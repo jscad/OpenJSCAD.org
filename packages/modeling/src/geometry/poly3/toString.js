@@ -1,4 +1,3 @@
-const plane = require('../../math/plane/')
 const vec3 = require('../../math/vec3/')
 
 /**
@@ -7,7 +6,7 @@ const vec3 = require('../../math/vec3/')
  * @alias module:modeling/geometry/poly3.toString
  */
 const toString = (poly3) => {
-  let result = `poly3: plane: ${plane.toString(poly3.plane)}, \n  vertices: [`
+  let result = `poly3: vertices: [`
   poly3.vertices.forEach((vertex) => {
     result += `${vec3.toString(vertex)}, `
   })

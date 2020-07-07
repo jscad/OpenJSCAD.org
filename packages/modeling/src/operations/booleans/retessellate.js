@@ -1,6 +1,7 @@
 const vec3 = require('../../math/vec3')
 
 const geom3 = require('../../geometry/geom3')
+const poly3 = require('../../geometry/poly3')
 
 const reTesselateCoplanarPolygons = require('./reTesselateCoplanarPolygons')
 
@@ -29,12 +30,12 @@ const retessellate = (geometry) => {
   const polygons = geom3.toPolygons(geometry)
   const polygonsPerPlane = [] // elements: [plane, [poly3...]]
   polygons.forEach((polygon) => {
-    const mapping = polygonsPerPlane.find((element) => coplanar(element[0], polygon.plane))
+    const mapping = polygonsPerPlane.find((element) => coplanar(element[0], poly3.plane(polygon)))
     if (mapping) {
       const polygons = mapping[1]
       polygons.push(polygon)
     } else {
-      polygonsPerPlane.push([polygon.plane, [polygon]])
+      polygonsPerPlane.push([poly3.plane(polygon), [polygon]])
     }
   })
 

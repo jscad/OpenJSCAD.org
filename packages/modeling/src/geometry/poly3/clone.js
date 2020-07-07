@@ -1,6 +1,5 @@
 const create = require('./create')
 
-const plane = require('../../math/plane/')
 const vec3 = require('../../math/vec3')
 
 /**
@@ -23,8 +22,6 @@ const clone = (...params) => {
   }
   // deep clone of vertices
   out.vertices = poly3.vertices.map((vec) => vec3.clone(vec))
-  // deep clone of plane
-  out.plane = plane.clone(poly3.plane)
   return out
 }
 

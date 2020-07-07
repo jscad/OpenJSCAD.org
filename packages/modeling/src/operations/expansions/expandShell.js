@@ -76,17 +76,17 @@ const expandShell = (options, geometry) => {
   // - add the plane to the unique edge map
   const polygons = geom3.toPolygons(geometry)
   polygons.forEach((polygon) => {
-    const extrudevector = vec3.scale(2 * delta, polygon.plane)
+    const extrudevector = vec3.scale(2 * delta, poly3.plane(polygon))
     const translatedpolygon = poly3.transform(mat4.fromTranslation(vec3.scale(-0.5, extrudevector)), polygon)
     const extrudedface = extrudePolygon(extrudevector, translatedpolygon)
     result = unionGeom3Sub(result, extrudedface)
 
     const vertices = polygon.vertices
     for (let i = 0; i < vertices.length; i++) {
-      mapPlaneToVertex(vertices2planes, vertices[i], polygon.plane)
+      mapPlaneToVertex(vertices2planes, vertices[i], poly3.plane(polygon))
       const j = (i + 1) % vertices.length
       const edge = [vertices[i], vertices[j]]
-      mapPlaneToEdge(edges2planes, edge, polygon.plane)
+      mapPlaneToEdge(edges2planes, edge, poly3.plane(polygon))
     }
   })
 
