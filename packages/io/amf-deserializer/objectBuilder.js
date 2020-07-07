@@ -1,4 +1,4 @@
-const { math, geometry } = require('@jscad/modeling')
+const { maths, geometry } = require('@jscad/modeling')
 
 let lastmaterial
 
@@ -116,8 +116,8 @@ const createObject = (obj, index, data, options) => {
   // const output =
   if (options.instantiate === true) {
     const scale = options.amf.scale
-    const vertex = scale !== 1.0 ? ([x, y, z]) => math.vec3.fromValues(x * scale, y * scale, z * scale)
-      : (v) => math.vec3.fromArray(v)
+    const vertex = scale !== 1.0 ? ([x, y, z]) => maths.vec3.fromValues(x * scale, y * scale, z * scale)
+      : (v) => maths.vec3.fromArray(v)
 
     obj.objects.forEach(addMesh)
 

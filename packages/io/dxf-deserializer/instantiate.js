@@ -6,7 +6,7 @@ Copyright (c) 2017 Z3 Development https://github.com/z3dev
 All code released under MIT license
 
 */
-const { geometry, math, primitives } = require('@jscad/modeling')
+const { geometry, maths, primitives } = require('@jscad/modeling')
 const EPS = 1e-5 // FIXME
 
 const { getColor, getColorNumber } = require('./helpers')
@@ -17,16 +17,16 @@ const { getColor, getColorNumber } = require('./helpers')
 const instantiatePolygon = (obj, layers, options) => {
   const vertices = []
   // FIXME: should check global variable to instantiate in the proper orientation
-  vertices.push(math.vec3.fromValues(obj.pptx, obj.ppty, obj.pptz))
-  vertices.push(math.vec3.fromValues(obj.sptx, obj.spty, obj.sptz))
-  vertices.push(math.vec3.fromValues(obj.tptx, obj.tpty, obj.tptz))
+  vertices.push(maths.vec3.fromValues(obj.pptx, obj.ppty, obj.pptz))
+  vertices.push(maths.vec3.fromValues(obj.sptx, obj.spty, obj.sptz))
+  vertices.push(maths.vec3.fromValues(obj.tptx, obj.tpty, obj.tptz))
   if (obj.fptx) {
     let pushit = false
     if (obj.tptx !== obj.fptx) { pushit = true }
     if (obj.tpty !== obj.fpty) { pushit = true }
     if (obj.tptz !== obj.fptz) { pushit = true }
     if (pushit) {
-      vertices.push(math.vec3.fromValues(obj.fptx, obj.fpty, obj.fptz))
+      vertices.push(maths.vec3.fromValues(obj.fptx, obj.fpty, obj.fptz))
     }
   }
   const cn = getColorNumber(obj, layers)
@@ -43,13 +43,13 @@ const instantiatePolygon = (obj, layers, options) => {
 const instantiateLine = (obj, layers, options) => {
   // console.log('***** instantiateLine',obj)
   if (obj.pptz === obj.sptz && obj.pptz === 0) {
-    const p1 = math.vec2.fromValues(obj.pptx, obj.ppty)
-    const p2 = math.vec2.fromValues(obj.sptx, obj.spty)
+    const p1 = maths.vec2.fromValues(obj.pptx, obj.ppty)
+    const p2 = maths.vec2.fromValues(obj.sptx, obj.spty)
     return primitives.line([p1, p2])
   }
 
-  const p1 = math.vec3.fromValues(obj.pptx, obj.ppty, obj.pptz)
-  const p2 = math.vec3.fromValues(obj.sptx, obj.spty, obj.sptz)
+  const p1 = maths.vec3.fromValues(obj.pptx, obj.ppty, obj.pptz)
+  const p2 = maths.vec3.fromValues(obj.sptx, obj.spty, obj.sptz)
   // FIXME what should this really create?
   return primitives.line([p1, p2])
 }
@@ -65,20 +65,20 @@ const instantiateVector = (obj) => {
   const flags = obj.lflg
   const vtype = {}
   if ((flags & d3line) === d3line) {
-    vtype.vec = math.vec3.fromValues(obj.pptx, obj.ppty, obj.pptz)
+    vtype.vec = maths.vec3.fromValues(obj.pptx, obj.ppty, obj.pptz)
   } else
   if ((flags & d3mesh) === d3mesh) {
-    vtype.vec = math.vec3.fromValues(obj.pptx, obj.ppty, obj.pptz)
+    vtype.vec = maths.vec3.fromValues(obj.pptx, obj.ppty, obj.pptz)
   } else
   if ((flags & d3face) === d3face) {
-    vtype.vec = math.vec3.fromValues(obj.pptx, obj.ppty, obj.pptz)
+    vtype.vec = maths.vec3.fromValues(obj.pptx, obj.ppty, obj.pptz)
     // pass on face indexes
     vtype.fvia = obj.fvia
     vtype.fvib = obj.fvib
     vtype.fvic = obj.fvic
     vtype.fvid = obj.fvid
   } else {
-    vtype.vec = math.vec2.fromValues(obj.pptx, obj.ppty)
+    vtype.vec = maths.vec2.fromValues(obj.pptx, obj.ppty)
     vtype.bulg = obj.bulg // for rendering curved sections
   }
   return vtype
@@ -95,8 +95,8 @@ const addSection = (path, x1, y1, bulg) => {
   // add arc to the end of the path
     const points = geometry.path2.toPoints(path)
     const prev = points[points.length - 1]
-    const curr = math.vec2.fromValues(x1, y1)
-    const u = math.vec2.distance(prev, curr)
+    const curr = maths.vec2.fromValues(x1, y1)
+    const u = maths.vec2.distance(prev, curr)
     const r = u * ((1 + Math.pow(bulg, 2)) / (4 * bulg))
     const clockwise = (bulg < 0)
     const large = false // FIXME how to determine?
@@ -220,9 +220,9 @@ const instantiateEllipse = (obj, layers, options) => {
 
   // convert to 2D object
   if (pptz === 0.0 && sptz === 0.0) {
-    const center = math.vec2.fromValues(0, 0)
-    const mjaxis = math.vec2.fromValues(sptx, spty)
-    const rx = math.vec2.distance(center, mjaxis)
+    const center = maths.vec2.fromValues(0, 0)
+    const mjaxis = maths.vec2.fromValues(sptx, spty)
+    const rx = maths.vec2.distance(center, mjaxis)
     const ry = rx * swid
     let angle = Math.atan2(spty, sptx) * 180 / Math.PI
     if (angle < EPS) angle = 0
@@ -230,8 +230,8 @@ const instantiateEllipse = (obj, layers, options) => {
 
     // FIXME add start and end angle when supported
     const cag = primitives.ellipse({ center: [0, 0], radius: [rx, ry], segments: res })
-    let matrix = math.mat4.fromZRotation(angle)
-    matrix = math.mat4.multiply(matrix, math.mat4.fromTranslation([pptx, ppty, 0]))
+    let matrix = maths.mat4.fromZRotation(angle)
+    matrix = maths.mat4.multiply(matrix, maths.mat4.fromTranslation([pptx, ppty, 0]))
     // cag.rotateZ(angle).translate([pptx,ppty])
     return geometry.geom2.transform(matrix, cag)
   }
@@ -298,7 +298,7 @@ const instantiateMesh = (obj, layers, options) => {
         let vi = 0
         while (vi < face.length) {
           const pi = face[vi]
-          const vertex = math.vec3.fromArray(points[pi])
+          const vertex = maths.vec3.fromArray(points[pi])
           vertices.push(vertex)
           vi++
         }

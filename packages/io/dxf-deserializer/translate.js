@@ -6,7 +6,7 @@ Copyright (c) 2017-2019 Z3 Development https://github.com/z3dev
 All code released under MIT license
 
 */
-const { math, geometry } = require('@jscad/modeling')
+const { maths, geometry } = require('@jscad/modeling')
 
 const { instantiatePolygon, instantiateVector } = require('./instantiate')
 
@@ -64,12 +64,12 @@ const translateLine = (obj, layers, options) => {
 
   let script = ''
   if (!obj.pptz || (obj.pptz === obj.sptz && obj.pptz === 0)) {
-    const p1 = math.vec2.fromValues(obj.pptx, obj.ppty)
-    const p2 = math.vec2.fromValues(obj.sptx, obj.spty)
+    const p1 = maths.vec2.fromValues(obj.pptx, obj.ppty)
+    const p2 = maths.vec2.fromValues(obj.sptx, obj.spty)
     script = `  let ${name} = primitives.line([[${translateVector2D(p1)}],[${translateVector2D(p2)}]])\n`
   } else {
-    const p1 = math.vec3.fromValues(obj.pptx, obj.ppty, obj.pptz)
-    const p2 = math.vec3.fromValues(obj.sptx, obj.spty, obj.sptz)
+    const p1 = maths.vec3.fromValues(obj.pptx, obj.ppty, obj.pptz)
+    const p2 = maths.vec3.fromValues(obj.sptx, obj.spty, obj.sptz)
     script = `  let ${name} = primitives.line([[${translateVector3D(p1)}],[${translateVector3D(p2)}]])\n`
   }
   if (color) {
@@ -91,9 +91,9 @@ const translateSection = (name, x1, y1, bulg, px, py) => {
   }
 
   // add arc to the end of the path
-  const prev = math.vec2.fromValues(px, py)
-  const curr = math.vec2.fromValues(x1, y1)
-  const u = math.vec2.distance(prev, curr)
+  const prev = maths.vec2.fromValues(px, py)
+  const curr = maths.vec2.fromValues(x1, y1)
+  const u = maths.vec2.distance(prev, curr)
   const r = u * ((1 + Math.pow(bulg, 2)) / (4 * bulg))
   const clockwise = (bulg < 0)
   const large = false // FIXME how to determine?
@@ -265,15 +265,15 @@ const translateEllipse = (obj, layers, options) => {
 
   // convert to 2D object
   if (pptz === 0.0 && sptz === 0.0) {
-    const center = math.vec2.fromValues(0, 0)
-    const mjaxis = math.vec2.fromValues(sptx, spty)
-    const rx = math.vec2.distance(center, mjaxis)
+    const center = maths.vec2.fromValues(0, 0)
+    const mjaxis = maths.vec2.fromValues(sptx, spty)
+    const rx = maths.vec2.distance(center, mjaxis)
     const ry = rx * swid
     const angle = Math.atan2(spty, sptx) // * 180 / Math.PI
     // FIXME add start and end angle when supported
 
     let script = `  let ${name} = transforms.center({ center: [0, 0, 0] }, primitives.ellipse({ radius: [${rx}, ${ry}], segments: ${res}}))
-  let ${name}matrix = math.mat4.multiply(math.mat4.fromTranslation([${pptx}, ${ppty}, 0]), math.mat4.fromZRotation(${angle}))
+  let ${name}matrix = maths.mat4.multiply(maths.mat4.fromTranslation([${pptx}, ${ppty}, 0]), maths.mat4.fromZRotation(${angle}))
   ${name} = geometry.geom2.transform(${name}matrix, ${name})
 `
     if (color) {
@@ -345,7 +345,7 @@ const translateMesh = (obj, layers, options) => {
         let vi = 0
         while (vi < face.length) {
           const pi = face[vi]
-          const vector = math.vec3.fromArray(points[pi])
+          const vector = maths.vec3.fromArray(points[pi])
           vertices.push(vector)
           vi++
         }
@@ -829,7 +829,7 @@ const translateAsciiDxf = (reader, options) => {
 
   // debug output
   // console.log('**************************************************')
-  let script = `const {colors, geometry, math, primitives, transforms} = require('@jscad/modeling')
+  let script = `const {colors, geometry, maths, primitives, transforms} = require('@jscad/modeling')
 
 const main = () => {
   let layers = []
