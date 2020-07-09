@@ -58,13 +58,11 @@
     "webworkify": "1.5.0"
   },
   "devDependencies": {
-    "ava": "1.4.0",
-    "browserify": "16.2.3",
-    "budo": "11.5.0",
-    "common-shakeify": "^0.5.2",
-    "copy-dir": "^0.4.0",
-    "tinyify": "^2.5.0",
-    "uglifyify": "^5.0.1"
+    "ava": "3.10.0",
+    "browserify": "16.5.1",
+    "budo": "11.6.4",
+    "tinyify": "2.5.2",
+    "copy-dir": "1.3.0"
   },
   "collective": {
     "type": "opencollective",

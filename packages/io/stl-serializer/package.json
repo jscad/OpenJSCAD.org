@@ -38,6 +38,6 @@
     "@jscad/modeling": "0.0.1"
   },
   "devDependencies": {
-   "ava": "1.4.0"
+    "ava": "3.10.0"
   }
 }

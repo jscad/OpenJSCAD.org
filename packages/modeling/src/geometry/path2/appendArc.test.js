@@ -5,7 +5,7 @@ const { appendArc, fromPoints, toPoints } = require('./index')
 test('appendArc: appending to an empty path produces an error', (t) => {
   const p1 = fromPoints({}, [])
   t.throws(() => appendArc({ endpoint: [12, 12] }, p1),
-    'the given path must contain one or more points (as the starting point for the arc)')
+    {message: 'the given path must contain one or more points (as the starting point for the arc)'})
 })
 
 test('appendArc: appending to a path produces a new path', (t) => {

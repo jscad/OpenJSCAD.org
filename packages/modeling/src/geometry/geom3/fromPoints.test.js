@@ -22,8 +22,8 @@ test('fromPoints: Creates a populated geom3', (t) => {
 })
 
 test('fromPoints: throws for improper points', (t) => {
-  t.throws(() => fromPoints(), Error)
-  t.throws(() => fromPoints(0, 0, 0), Error)
-  //t.throws(() => fromPoints([[0, 0]]), Error)
-  //t.throws(() => fromPoints([[[0, 0, 0]]]), Error)
+  t.throws(() => fromPoints(), {instanceOf: Error})
+  t.throws(() => fromPoints(0, 0, 0), {instanceOf: Error})
+  //t.throws(() => fromPoints([[0, 0]]), {instanceOf: Error})
+  //t.throws(() => fromPoints([[[0, 0, 0]]]), {instanceOf: Error})
 })

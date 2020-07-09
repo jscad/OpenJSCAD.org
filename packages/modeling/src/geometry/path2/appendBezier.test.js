@@ -5,7 +5,7 @@ const { appendBezier, fromPoints, toPoints } = require('./index')
 test('appendBezier: appending to an empty path produces an error', (t) => {
   const p1 = fromPoints({}, [])
   t.throws(() => appendBezier({ controlPoints: [[12, 12]] }, p1),
-    'the given path must contain one or more points (as the starting point for the bezier curve)')
+    {message: 'the given path must contain one or more points (as the starting point for the bezier curve)'})
 })
 
 test('appendBezier: appending to a path produces a new path', (t) => {

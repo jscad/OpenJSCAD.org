@@ -35,11 +35,11 @@
   "dependencies": {},
   "devDependencies": {
     "@jscad/sample-files": "github:jscad/sample-files#master",
-    "ava": "1.4.0",
-    "docdash": "^1.2.0",
-    "jsdoc": "^3.6.3",
-    "lerna": "3.19.0",
-    "nyc": "15.0.0",
+    "ava": "3.10.0",
+    "docdash": "1.2.0",
+    "jsdoc": "3.6.4",
+    "lerna": "3.22.1",
+    "nyc": "15.1.0",
     "standardx": "5.0.0"
   },
   "collective": {

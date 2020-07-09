@@ -6,8 +6,8 @@
   "scripts": {},
   "author": "Mark 'kaosat-dev' Moissette",
   "license": "MIT",
-  "devDependencies": {},
   "dependencies": {
     "pngjs": "3.3.3"
-  }
+  },
+  "devDependencies": {}
 }

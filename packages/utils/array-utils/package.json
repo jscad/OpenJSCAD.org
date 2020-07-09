@@ -10,7 +10,7 @@
   "author": "Mark 'kaosat-dev' Moissette",
   "license": "MIT",
   "devDependencies": {
-    "ava": "1.4.0"
+    "ava": "3.10.0"
   },
   "dependencies": {}
 }
