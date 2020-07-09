@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const vec2 = require('../../math/vec2')
+const vec2 = require('../../maths/vec2')
 
 const { fromPoints, toPoints, toString } = require('./index')
 

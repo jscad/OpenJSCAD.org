@@ -1,7 +1,7 @@
 const flatten = require('../../utils/flatten')
 
-const mat4 = require('../../math/mat4')
-const plane = require('../../math/plane')
+const mat4 = require('../../maths/mat4')
+const plane = require('../../maths/plane')
 
 const geom2 = require('../../geometry/geom2')
 const geom3 = require('../../geometry/geom3')

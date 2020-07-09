@@ -9,10 +9,10 @@ require('./operations/measurements/measureVolume')(specials)
 require('./operations/measurements/measureBounds')(specials)
 
 module.exports = {
-  color: require('./color'),
+  colors: require('./color'),
   connectors: modeling.connectors,
   geometry: modeling.geometry,
-  math: modeling.math,
+  maths: modeling.maths,
   primitives: require('./primitives'),
   // text: require('./text'),
   utils: modeling.utils,

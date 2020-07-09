@@ -1,6 +1,6 @@
 const flatten = require('../../utils/flatten')
 
-const vec2 = require('../../math/vec2')
+const vec2 = require('../../maths/vec2')
 
 const path2 = require('../../geometry/path2')
 

@@ -16,7 +16,7 @@ Notes:
      SVG GROUP containing a SVG PATH for each path
 */
 
-const { geometry, math, measurements, utils } = require('@jscad/modeling')
+const { geometry, maths, measurements, utils } = require('@jscad/modeling')
 
 const stringify = require('onml/lib/stringify')
 
@@ -89,8 +89,8 @@ const getBounds = (objects) => {
 
   // create a sum of the bounds
   const sumofbounds = allbounds.reduce((sum, bounds) => {
-    math.vec3.min(sum[0], sum[0], bounds[0])
-    math.vec3.max(sum[1], sum[1], bounds[1])
+    maths.vec3.min(sum[0], sum[0], bounds[0])
+    maths.vec3.max(sum[1], sum[1], bounds[1])
     return sum
   }, [[0, 0, 0], [0, 0, 0]])
   return sumofbounds

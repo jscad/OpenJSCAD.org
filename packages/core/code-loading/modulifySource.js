@@ -21,7 +21,7 @@ const modulifySource = (source, apiMainPath) => {
 
     const connectors = require('${apiMainPath}').connectors
 
-    const {vec2, vec3, vec4, constants, line2, line3, mat4, plane, utils} = require('${apiMainPath}').math
+    const {vec2, vec3, vec4, constants, line2, line3, mat4, plane, utils} = require('${apiMainPath}').maths
 
     const {vectorText, vectorChar} = require('${apiMainPath}').text
 

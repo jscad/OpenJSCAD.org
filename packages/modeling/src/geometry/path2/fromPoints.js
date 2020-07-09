@@ -1,6 +1,6 @@
-const { EPS } = require('../../math/constants')
+const { EPS } = require('../../maths/constants')
 
-const vec2 = require('../../math/vec2')
+const vec2 = require('../../maths/vec2')
 
 const close = require('./close')
 const create = require('./create')

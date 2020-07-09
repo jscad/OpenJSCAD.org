@@ -1,6 +1,6 @@
 const create = require('./create')
 
-const vec3 = require('../../../math/vec3')
+const vec3 = require('../../../maths/vec3')
 
 /**
  * Create a deep clone of the given slice.

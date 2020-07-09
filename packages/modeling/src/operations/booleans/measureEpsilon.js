@@ -1,6 +1,6 @@
 const flatten = require('../../utils/flatten')
 
-const { EPS } = require('../../math/constants')
+const { EPS } = require('../../maths/constants')
 
 const { geom2, geom3, path2 } = require('../../geometry')
 

@@ -1,4 +1,4 @@
-const dot = require('../../../math/vec3/dot')
+const dot = require('../../../maths/vec3/dot')
 
 const pointLineDistance = require('./point-line-distance')
 const getPlaneNormal = require('./get-plane-normal')

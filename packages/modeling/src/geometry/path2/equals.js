@@ -1,4 +1,4 @@
-const vec2 = require('../../math/vec2')
+const vec2 = require('../../maths/vec2')
 
 const toPoints = require('./toPoints')
 

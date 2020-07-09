@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const mat4 = require('../../math/mat4')
+const mat4 = require('../../maths/mat4')
 
 const { transform, fromPoints, toPolygons } = require('./index')
 

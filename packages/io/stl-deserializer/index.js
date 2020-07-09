@@ -1,4 +1,4 @@
-const { math, primitives } = require('@jscad/modeling')
+const { maths, primitives } = require('@jscad/modeling')
 
 const { BinaryReader } = require('@jscad/io-utils')
 
@@ -237,10 +237,10 @@ const deserializeBinarySTL = (stl, filename, version, elementFormatter) => {
       // E2 = C - A
       // test = dot( Normal, cross( E1, E2 ) )
       // test > 0: cw, test < 0 : ccw
-      const e1 = math.vec3.subtract(v2, v1)
-      const e2 = math.vec3.subtract(v3, v1)
-      const cr = math.vec3.cross(e1, e2)
-      const t = math.vec3.dot(no, cr)
+      const e1 = maths.vec3.subtract(v2, v1)
+      const e2 = maths.vec3.subtract(v3, v1)
+      const cr = maths.vec3.cross(e1, e2)
+      const t = maths.vec3.dot(no, cr)
       if (t > 0) { // 1,2,3 -> 3,2,1
         const tmp = v3
         v3 = v1
@@ -317,10 +317,10 @@ const deserializeAsciiSTL = (stl, filename, version, elementFormatter) => {
         // E2 = C - A
         // test = dot( Normal, cross( E1, E2 ) )
         // test > 0: cw, test < 0: ccw
-        const e1 = math.vec3.subtract(v2, v1)
-        const e2 = math.vec3.subtract(v3, v1)
-        const cr = math.vec3.cross(e1, e2)
-        const t = math.vec3.dot(no, cr)
+        const e1 = maths.vec3.subtract(v2, v1)
+        const e2 = maths.vec3.subtract(v3, v1)
+        const cr = maths.vec3.cross(e1, e2)
+        const t = maths.vec3.dot(no, cr)
         if (t > 0) { // 1,2,3 -> 3,2,1
           const tmp = v3
           v3 = v1

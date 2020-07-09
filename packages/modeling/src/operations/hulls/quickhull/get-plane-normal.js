@@ -1,6 +1,6 @@
-const cross = require('../../../math/vec3/cross')
-const normalize = require('../../../math/vec3/normalize')
-const subtract = require('../../../math/vec3/subtract')
+const cross = require('../../../maths/vec3/cross')
+const normalize = require('../../../maths/vec3/normalize')
+const subtract = require('../../../maths/vec3/subtract')
 
 /*
  * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)

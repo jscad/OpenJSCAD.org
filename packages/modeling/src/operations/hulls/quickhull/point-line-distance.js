@@ -1,6 +1,6 @@
-const cross = require('../../../math/vec3/cross')
-const subtract = require('../../../math/vec3/subtract')
-const squaredLength = require('../../../math/vec3/squaredLength')
+const cross = require('../../../maths/vec3/cross')
+const subtract = require('../../../maths/vec3/subtract')
+const squaredLength = require('../../../maths/vec3/squaredLength')
 
 /*
  * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)

@@ -1,4 +1,4 @@
-const mplane = require('../../math/plane/')
+const mplane = require('../../maths/plane/')
 
 const plane = (polygon) => {
   if (!polygon.plane) {

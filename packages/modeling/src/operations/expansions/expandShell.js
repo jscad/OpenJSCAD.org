@@ -1,7 +1,7 @@
-const { EPS } = require('../../math/constants')
+const { EPS } = require('../../maths/constants')
 
-const mat4 = require('../../math/mat4')
-const vec3 = require('../../math/vec3')
+const mat4 = require('../../maths/mat4')
+const vec3 = require('../../maths/vec3')
 
 const fnNumberSort = require('../../utils/fnNumberSort')
 

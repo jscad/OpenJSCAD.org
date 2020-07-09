@@ -1,4 +1,4 @@
-const mat4 = require('../../math/mat4')
+const mat4 = require('../../maths/mat4')
 
 /**
  * Represents a 3D geometry consisting of a list of polygons.
