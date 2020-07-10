@@ -1,4 +1,4 @@
-const geom2 = require('../geometry/geom2')
+const geom2 = require('../geometries/geom2')
 
 /**
  * Construct a polygon from a list of points, or list of points and paths.

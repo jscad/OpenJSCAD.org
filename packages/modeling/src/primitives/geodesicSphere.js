@@ -1,6 +1,6 @@
 const mat4 = require('../maths/mat4')
 
-const geom3 = require('../geometry/geom3')
+const geom3 = require('../geometries/geom3')
 
 const polyhedron = require('./polyhedron')
 

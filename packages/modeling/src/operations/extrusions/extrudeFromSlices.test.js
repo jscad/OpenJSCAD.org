@@ -4,7 +4,7 @@ const { degToRad } = require('../../maths/utils')
 
 const mat4 = require('../../maths/mat4')
 
-const { geom2, geom3, poly3 } = require('../../geometry')
+const { geom2, geom3, poly3 } = require('../../geometries')
 
 const { circle } = require('../../primitives')
 

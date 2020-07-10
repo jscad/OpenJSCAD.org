@@ -6,7 +6,7 @@ const OrthoNormalBasis = require('../../maths/OrthoNormalBasis')
 
 const { interpolateBetween2DPointsForY, insertSorted, fnNumberSort } = require('../../utils')
 
-const poly3 = require('../../geometry/poly3')
+const poly3 = require('../../geometries/poly3')
 
 /*
  * Retesselation for a set of COPLANAR polygons.

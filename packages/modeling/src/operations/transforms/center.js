@@ -1,8 +1,8 @@
 const flatten = require('../../utils/flatten')
 
-const geom2 = require('../../geometry/geom2')
-const geom3 = require('../../geometry/geom3')
-const path2 = require('../../geometry/path2')
+const geom2 = require('../../geometries/geom2')
+const geom3 = require('../../geometries/geom3')
+const path2 = require('../../geometries/path2')
 
 const measureBounds = require('../measurements/measureBounds')
 

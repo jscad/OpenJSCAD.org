@@ -2,7 +2,7 @@ const test = require('ava')
 
 const { EPS } = require('../../maths/constants')
 
-const { geom3 } = require('../../geometry')
+const { geom3 } = require('../../geometries')
 
 const { cuboid } = require('../../primitives')
 

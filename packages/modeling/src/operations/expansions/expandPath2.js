@@ -2,8 +2,8 @@ const area = require('../../maths/utils/area')
 
 const vec2 = require('../../maths/vec2')
 
-const geom2 = require('../../geometry/geom2')
-const path2 = require('../../geometry/path2')
+const geom2 = require('../../geometries/geom2')
+const path2 = require('../../geometries/path2')
 
 const offsetFromPoints = require('./offsetFromPoints')
 

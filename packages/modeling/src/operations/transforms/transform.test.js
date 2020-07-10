@@ -2,7 +2,7 @@ const test = require('ava')
 
 const mat4 = require('../../maths/mat4')
 
-const { geom2, geom3, path2 } = require('../../geometry')
+const { geom2, geom3, path2 } = require('../../geometries')
 
 const { transform } = require('./index')
 

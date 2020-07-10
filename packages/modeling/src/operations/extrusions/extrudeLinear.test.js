@@ -2,7 +2,7 @@ const test = require('ava')
 
 const { degToRad } = require('../../maths/utils')
 
-const { geom2, geom3 } = require('../../geometry')
+const { geom2, geom3 } = require('../../geometries')
 
 const extrudeLinear = require('./extrudeLinear')
 

@@ -2,7 +2,7 @@ const test = require('ava')
 
 const { degToRad } = require('../maths/utils')
 
-const geom3 = require('../geometry/geom3')
+const geom3 = require('../geometries/geom3')
 
 const { cylinderElliptic } = require('./index')
 

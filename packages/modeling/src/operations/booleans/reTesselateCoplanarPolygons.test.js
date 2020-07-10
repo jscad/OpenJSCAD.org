@@ -4,7 +4,7 @@ const { degToRad } = require('../../maths/utils')
 
 const mat4 = require('../../maths/mat4')
 
-const { poly3 } = require('../../geometry')
+const { poly3 } = require('../../geometries')
 
 const reTesselateCoplanarPolygons = require('./reTesselateCoplanarPolygons')
 

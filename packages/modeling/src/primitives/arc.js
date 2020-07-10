@@ -2,7 +2,7 @@ const { EPS } = require('../maths/constants')
 
 const vec2 = require('../maths/vec2')
 
-const path2 = require('../geometry/path2')
+const path2 = require('../geometries/path2')
 
 /**
  * Construct an arc.

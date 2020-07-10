@@ -2,7 +2,7 @@ const test = require('ava')
 
 const { comparePoints } = require('../../../test/helpers')
 
-const { geom2, geom3, path2 } = require('../../geometry')
+const { geom2, geom3, path2 } = require('../../geometries')
 
 const { expand } = require('./index')
 

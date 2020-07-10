@@ -5,7 +5,7 @@ const intersect = require('../../maths/utils/intersect')
 const line2 = require('../../maths/line2')
 const vec2 = require('../../maths/vec2')
 
-const poly2 = require('../../geometry/poly2')
+const poly2 = require('../../geometries/poly2')
 
 /*
  * Create a set of offset points from the given points using the given options (if any).

@@ -1,5 +1,5 @@
 const plane = require('../../../maths/plane')
-const poly3 = require('../../../geometry/poly3')
+const poly3 = require('../../../geometries/poly3')
 
 // # class Node
 // Holds a node in a BSP tree. A BSP tree is built from a collection of polygons

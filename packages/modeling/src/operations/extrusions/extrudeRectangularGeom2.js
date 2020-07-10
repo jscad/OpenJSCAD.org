@@ -1,7 +1,7 @@
 const { area } = require('../../maths/utils')
 
-const geom2 = require('../../geometry/geom2')
-const path2 = require('../../geometry/path2')
+const geom2 = require('../../geometries/geom2')
+const path2 = require('../../geometries/path2')
 
 const expand = require('../expansions/expand')
 
