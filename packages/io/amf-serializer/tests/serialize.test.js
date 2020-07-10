@@ -1,11 +1,11 @@
 const test = require('ava')
 
-const { colors, geometry, primitives } = require('@jscad/modeling')
+const { colors, geometries, primitives } = require('@jscad/modeling')
 
 const serializer = require('../index.js')
 
 test('serialize 3D geometry to amf', (t) => {
-  const emptyShape = geometry.geom3.create()
+  const emptyShape = geometries.geom3.create()
   const observed1 = serializer.serialize({}, emptyShape)
   t.deepEqual(observed1, expected1)
 

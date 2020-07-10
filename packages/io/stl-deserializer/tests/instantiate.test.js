@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const test = require('ava')
 
-const { geometry } = require('@jscad/modeling')
+const { geometries } = require('@jscad/modeling')
 
 const deserializer = require('../index.js')
 
@@ -16,7 +16,7 @@ test('instantiate simple ascii stl to geometry', (t) => {
 
   const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.is(observed.length, 1)
-  const polygons = geometry.geom3.toPolygons(observed[0])
+  const polygons = geometries.geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 12) // 6 faces, 12 polygons
 
   const observedPolygons = toArray(polygons)
@@ -43,7 +43,7 @@ test('instantiate simple binary stl to geometry', (t) => {
 
   const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.is(observed.length, 1)
-  const polygons = geometry.geom3.toPolygons(observed[0])
+  const polygons = geometries.geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 12) // 6 faces, 12 polygons
 
   const observedPolygons = toArray(polygons)
@@ -70,7 +70,7 @@ test('instantiate medium complexity binary stl to geometry', (t) => {
 
   const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.is(observed.length, 1)
-  const polygons = geometry.geom3.toPolygons(observed[0])
+  const polygons = geometries.geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 1052)
 })
 
@@ -80,7 +80,7 @@ test('instantiate complex ascii stl to geometry', (t) => {
 
   const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.is(observed.length, 1)
-  const polygons = geometry.geom3.toPolygons(observed[0])
+  const polygons = geometries.geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 17742)
 })
 
@@ -90,6 +90,6 @@ test('instantiate complex binary stl to geometry', (t) => {
 
   const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.is(observed.length, 1)
-  const polygons = geometry.geom3.toPolygons(observed[0])
+  const polygons = geometries.geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 12744)
 })

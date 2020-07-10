@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const test = require('ava')
 
-const { geometry } = require('@jscad/modeling')
+const { geometries } = require('@jscad/modeling')
 
 const deserializer = require('../index.js')
 
@@ -16,7 +16,7 @@ test('deserialize simple amf to geometry', (t) => {
 
   const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.is(observed.length, 1)
-  const polygons = geometry.geom3.toPolygons(observed[0])
+  const polygons = geometries.geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 12)
 
   const observedVertices = toArray(polygons)

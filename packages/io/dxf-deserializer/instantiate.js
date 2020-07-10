@@ -6,7 +6,7 @@ Copyright (c) 2017 Z3 Development https://github.com/z3dev
 All code released under MIT license
 
 */
-const { geometry, maths, primitives } = require('@jscad/modeling')
+const { geometries, maths, primitives } = require('@jscad/modeling')
 const EPS = 1e-5 // FIXME
 
 const { getColor, getColorNumber } = require('./helpers')
@@ -32,7 +32,7 @@ const instantiatePolygon = (obj, layers, options) => {
   const cn = getColorNumber(obj, layers)
   const color = getColor(cn, options.colorindex)
 
-  const polygon = geometry.poly3.create(vertices)
+  const polygon = geometries.poly3.create(vertices)
   if (color) polygon.color = color
   return polygon
 }
@@ -90,10 +90,10 @@ const instantiateVector = (obj) => {
 const addSection = (path, x1, y1, bulg) => {
   if (bulg === 0) {
   // add straight line to the end of the path
-    path = geometry.path2.appendPoints([[x1, y1]], path)
+    path = geometries.path2.appendPoints([[x1, y1]], path)
   } else {
   // add arc to the end of the path
-    const points = geometry.path2.toPoints(path)
+    const points = geometries.path2.toPoints(path)
     const prev = points[points.length - 1]
     const curr = maths.vec2.fromValues(x1, y1)
     const u = maths.vec2.distance(prev, curr)
@@ -103,7 +103,7 @@ const addSection = (path, x1, y1, bulg) => {
     const d = Math.atan(bulg) * 4
     // FIXME; how to determine resolution
     const res = 16
-    path = geometry.path2.appendArc({ endpoint: [x1, y1], radius: [r, r], xaxisrotation: d, clockwise: clockwise, large: large, segments: res }, path)
+    path = geometries.path2.appendArc({ endpoint: [x1, y1], radius: [r, r], xaxisrotation: d, clockwise: clockwise, large: large, segments: res }, path)
   }
   return path
 }
@@ -123,7 +123,7 @@ const instantiatePath2D = (obj, layers, options) => {
   const flags = obj.lflg
 
   // conversion
-  let path = geometry.path2.create()
+  let path = geometries.path2.create()
   const isclosed = ((flags & closed) === closed)
   if (vlen === pptxs.length && vlen === pptys.length && vlen === bulgs.length) {
     pptxs.forEach((item, index, array) => {
@@ -140,7 +140,7 @@ const instantiatePath2D = (obj, layers, options) => {
   if (isclosed && (!path.isClosed)) {
   // apply the last section between last and first points
     path = addSection(path, pptxs[0], pptys[0], bulgs[vlen - 1])
-    path = geometry.path2.close(path)
+    path = geometries.path2.close(path)
     // FIXME add optional to create 2D geometry from the path
   }
   return path
@@ -233,7 +233,7 @@ const instantiateEllipse = (obj, layers, options) => {
     let matrix = maths.mat4.fromZRotation(angle)
     matrix = maths.mat4.multiply(matrix, maths.mat4.fromTranslation([pptx, ppty, 0]))
     // cag.rotateZ(angle).translate([pptx,ppty])
-    return geometry.geom2.transform(matrix, cag)
+    return geometries.geom2.transform(matrix, cag)
   }
   // convert to 3D object
 }
@@ -307,7 +307,7 @@ const instantiateMesh = (obj, layers, options) => {
         }
         // FIXME how to correct bad normals?
 
-        const poly = geometry.poly3.create(vertices)
+        const poly = geometries.poly3.create(vertices)
         if (color) poly.color = color
         polygons.push(poly)
 
@@ -319,7 +319,7 @@ const instantiateMesh = (obj, layers, options) => {
   } else {
     // invalid vlen
   }
-  return geometry.geom3.create(polygons)
+  return geometries.geom3.create(polygons)
 }
 
 // works for both POLYLINE
@@ -337,16 +337,16 @@ const getPolyType = (obj) => {
     ptype = null // FIXME what to do?
   } else
   if ((flags & d3mesh) === d3mesh) {
-    ptype = geometry.geom3.create()
+    ptype = geometries.geom3.create()
     ptype.closedM = ((flags & closedM) === closedM)
     ptype.closedN = ((flags & closedN) === closedN)
   } else
   if ((flags & d3face) === d3face) {
-    ptype = geometry.geom3.create()
+    ptype = geometries.geom3.create()
     ptype.closedM = ((flags & closedM) === closedM)
     ptype.closedN = ((flags & closedN) === closedN)
   } else {
-    ptype = geometry.path2.create()
+    ptype = geometries.path2.create()
     ptype.closedM = ((flags & closedM) === closedM)
   }
   if ('cnmb' in obj) { ptype.cnmb = obj.cnmb }
@@ -359,16 +359,16 @@ const getPolyType = (obj) => {
 // - a series of vertex => vectors => 2D geometry
 //
 const completeCurrent = (objects, baseobj, polygons, vectors, options) => {
-  if (geometry.path2.isA(baseobj)) {
+  if (geometries.path2.isA(baseobj)) {
     // console.log('##### completing 2D geometry')
     const points = vectors.map((vector) => vector.vec)
     // FIXME add color support
-    objects.push(geometry.path2.fromPoints({ closed: baseobj.closed }, points))
+    objects.push(geometries.path2.fromPoints({ closed: baseobj.closed }, points))
   }
-  if (geometry.geom3.isA(baseobj)) {
+  if (geometries.geom3.isA(baseobj)) {
     // console.log('##### completing 3D geometry')
     // FIXME add color support
-    objects.push(geometry.geom3.create(polygons))
+    objects.push(geometries.geom3.create(polygons))
   }
   return null
 }
@@ -413,7 +413,7 @@ const instantiateAsciiDxf = (reader, options) => {
         p = instantiatePolygon(obj, layers, options)
         if (current === null) {
           // console.log('##### start of 3dfaces')
-          current = geometry.geom3.create()
+          current = geometries.geom3.create()
         }
         break
       case 'mesh':
@@ -471,7 +471,7 @@ const instantiateAsciiDxf = (reader, options) => {
         break
     }
     // accumlate polygons if necessary
-    if (geometry.poly3.isA(p)) {
+    if (geometries.poly3.isA(p)) {
       polygons.push(p)
     }
     // accumlate vectors if necessary

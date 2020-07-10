@@ -23,7 +23,7 @@ const stringify = require('onml/lib/stringify')
 
 // const { ensureManifoldness } = require('@jscad/io-utils')
 
-const { geometry, utils } = require('@jscad/modeling')
+const { geometries, utils } = require('@jscad/modeling')
 
 const mimeType = 'application/amf+xml'
 
@@ -43,7 +43,7 @@ const serialize = (options, ...objects) => {
   objects = utils.flatten(objects)
 
   // convert only 3D geometries
-  const objects3d = objects.filter((object) => geometry.geom3.isA(object))
+  const objects3d = objects.filter((object) => geometries.geom3.isA(object))
 
   if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to AMF')
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to AMF')
@@ -72,8 +72,8 @@ ${stringify(body)}`
 const translateObjects = (objects, options) => {
   const contents = []
   objects.forEach((object, i) => {
-    if (geometry.geom3.isA(object)) {
-      const polygons = geometry.geom3.toPolygons(object)
+    if (geometries.geom3.isA(object)) {
+      const polygons = geometries.geom3.toPolygons(object)
       if (polygons.length > 0) {
         // TODO object = ensureManifoldness(object)
         options.id = i
@@ -103,7 +103,7 @@ const convertToVertices = (object, options) => {
   const contents = ['vertices', {}]
 
   const vertices = []
-  const polygons = geometry.geom3.toPolygons(object)
+  const polygons = geometries.geom3.toPolygons(object)
   polygons.forEach((polygon) => {
     for (let i = 0; i < polygon.vertices.length; i++) {
       vertices.push(convertToVertex(polygon.vertices[i], options))
@@ -130,7 +130,7 @@ const convertToCoordinates = (vertex, options) => {
 const convertToVolumes = (object, options) => {
   let n = 0
   const objectcolor = convertColor(object.color)
-  const polygons = geometry.geom3.toPolygons(object)
+  const polygons = geometries.geom3.toPolygons(object)
 
   const contents = []
   polygons.forEach((polygon) => {

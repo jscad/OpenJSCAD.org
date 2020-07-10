@@ -60,7 +60,7 @@ const translate = (options, objects) => {
 
   script +=
 `
-const { geometry } = require('@jscad/modeling')
+const { geometries } = require('@jscad/modeling')
 
 const main = () => {
   const objects = [${translateToList(objects)} ]

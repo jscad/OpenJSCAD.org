@@ -1,8 +1,8 @@
 const makeBuildCachedGeometryFromTree = require('@jscad/vtree').buildCachedGeometry
 
-const isGeom2 = require('@jscad/modeling').geometry.geom2.isA
-const isGeom3 = require('@jscad/modeling').geometry.geom3.isA
-const isPath2 = require('@jscad/modeling').geometry.path2.isA
+const isGeom2 = require('@jscad/modeling').geometries.geom2.isA
+const isGeom3 = require('@jscad/modeling').geometries.geom3.isA
+const isPath2 = require('@jscad/modeling').geometries.path2.isA
 
 const { flatten, toArray } = require('@jscad/array-utils')
 
@@ -17,13 +17,13 @@ const lookupFromCompactBinary = (compactLookup = {}) => {
     const object = compactLookup[key]
     let result
     if (object[0] === 0) { // Geom2
-      result = require('@jscad/modeling').geometry.geom2.fromCompactBinary(object)
+      result = require('@jscad/modeling').geometries.geom2.fromCompactBinary(object)
     }
     if (object[0] === 1) { // Geom3
-      result = require('@jscad/modeling').geometry.geom3.fromCompactBinary(object)
+      result = require('@jscad/modeling').geometries.geom3.fromCompactBinary(object)
     }
     if (object[0] === 2) { // Path2
-      result = require('@jscad/modeling').geometry.path2.fromCompactBinary(object)
+      result = require('@jscad/modeling').geometries.path2.fromCompactBinary(object)
     }
     lookup[key] = result
   })
@@ -57,11 +57,11 @@ const lookupToCompactBinary = (lookup) => {
     const object = lookup[key]
     let result = object
     if (isGeom2(object)) {
-      compactLookup[key] = require('@jscad/modeling').geometry.geom2.toCompactBinary(object)
+      compactLookup[key] = require('@jscad/modeling').geometries.geom2.toCompactBinary(object)
     } else if (isGeom3(object)) {
-      compactLookup[key] = require('@jscad/modeling').geometry.geom3.toCompactBinary(object)
+      compactLookup[key] = require('@jscad/modeling').geometries.geom3.toCompactBinary(object)
     } else if (isPath2(object)) {
-      compactLookup[key] = require('@jscad/modeling').geometry.path2.toCompactBinary(object)
+      compactLookup[key] = require('@jscad/modeling').geometries.path2.toCompactBinary(object)
     } else {
       result = toJSON(object)
       compactLookup[key] = result
@@ -74,11 +74,11 @@ const lookupToCompactBinary = (lookup) => {
 // FIXME: deal with NON GEOM2/GEOM3 !!
 const serializeSolids = (solids) => solids.map((object) => {
   if (isGeom2(object)) {
-    return require('@jscad/modeling').geometry.geom2.toCompactBinary(object)
+    return require('@jscad/modeling').geometries.geom2.toCompactBinary(object)
   } else if (isGeom3(object)) {
-    return require('@jscad/modeling').geometry.geom3.toCompactBinary(object)
+    return require('@jscad/modeling').geometries.geom3.toCompactBinary(object)
   } else if (isPath2(object)) {
-    return require('@jscad/modeling').geometry.path2.toCompactBinary(object)
+    return require('@jscad/modeling').geometries.path2.toCompactBinary(object)
   } else {
     return toJSON(object)
   }

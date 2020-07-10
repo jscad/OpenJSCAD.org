@@ -6,7 +6,7 @@ Copyright (c) 2017-2019 Z3 Development https://github.com/z3dev
 All code released under MIT license
 
 */
-const { maths, geometry } = require('@jscad/modeling')
+const { maths, geometries } = require('@jscad/modeling')
 
 const { instantiatePolygon, instantiateVector } = require('./instantiate')
 
@@ -32,7 +32,7 @@ const translateVector3D = (vector) => {
 // translate the given polygon into JSCAD script
 //
 const translatePolygon = (polygon) => {
-  const vertices = geometry.poly3.toPoints(polygon)
+  const vertices = geometries.poly3.toPoints(polygon)
   let script = 'createPolygon(['
   vertices.forEach((vertice) => {
     script += `[${translateVector3D(vertice)}],`
@@ -86,7 +86,7 @@ const translateSection = (name, x1, y1, bulg, px, py) => {
   // console.log('translateSection',x1,y1,bulg,px,py)
   if (bulg === 0) {
   // add straight line to the end of the path
-    return `geometry.path2.appendPoints([[${x1},${y1}]], ${name})
+    return `geometries.path2.appendPoints([[${x1},${y1}]], ${name})
 `
   }
 
@@ -100,7 +100,7 @@ const translateSection = (name, x1, y1, bulg, px, py) => {
   const d = Math.atan(bulg) * 4
   // FIXME need to determine segments from object/layer/variables
   const res = 16
-  return `geometry.path2.appendArc({endpoint: [${x1},${y1}],radius: [${r},${r}],xaxisrotation: ${d},clockwise: ${clockwise},large: ${large},segments: ${res}}, ${name})
+  return `geometries.path2.appendArc({endpoint: [${x1},${y1}],radius: [${r},${r}],xaxisrotation: ${d},clockwise: ${clockwise},large: ${large},segments: ${res}}, ${name})
 `
 }
 
@@ -122,11 +122,11 @@ const translatePath2D = (obj, layers, options) => {
   const color = getColor(cn, options.colorindex)
 
   // translation
-  let script = `  let ${name} = geometry.path2.create()\n`
+  let script = `  let ${name} = geometries.path2.create()\n`
   const isclosed = ((flags & closed) === closed)
   if (vlen === pptxs.length && vlen === pptys.length && vlen === bulgs.length) {
     // add initial point
-    script += `  ${name} = geometry.path2.appendPoints([[${pptxs[0]}, ${pptys[0]}]], ${name})\n`
+    script += `  ${name} = geometries.path2.appendPoints([[${pptxs[0]}, ${pptys[0]}]], ${name})\n`
     // add sections
     for (let i = 0; i < pptxs.length; i++) {
       const j = (i + 1) % pptxs.length
@@ -149,7 +149,7 @@ const translatePath2D = (obj, layers, options) => {
     return
   }
   if (isclosed) {
-    script += `  ${name} = geometry.path2.close(${name})\n`
+    script += `  ${name} = geometries.path2.close(${name})\n`
   } else {
     script += '\n'
   }
@@ -274,7 +274,7 @@ const translateEllipse = (obj, layers, options) => {
 
     let script = `  let ${name} = transforms.center({ center: [0, 0, 0] }, primitives.ellipse({ radius: [${rx}, ${ry}], segments: ${res}}))
   let ${name}matrix = maths.mat4.multiply(maths.mat4.fromTranslation([${pptx}, ${ppty}, 0]), maths.mat4.fromZRotation(${angle}))
-  ${name} = geometry.geom2.transform(${name}matrix, ${name})
+  ${name} = geometries.geom2.transform(${name}matrix, ${name})
 `
     if (color) {
       script += `  ${name} = colors.colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
@@ -354,7 +354,7 @@ const translateMesh = (obj, layers, options) => {
         }
         // FIXME how to correct bad normals?
 
-        const poly = geometry.poly3.create(vertices)
+        const poly = geometries.poly3.create(vertices)
         if (color) poly.color = color
         polygons.push(poly)
 
@@ -373,7 +373,7 @@ const translateMesh = (obj, layers, options) => {
     script += '    ' + translatePolygon(polygon) + ',\n'
   }
   script += `  ]
-  let ${name} = geometry.geom3.create(${name}_polygons)
+  let ${name} = geometries.geom3.create(${name}_polygons)
 `
   obj.script = script
   addToLayer(obj, layers)
@@ -496,8 +496,8 @@ const instantiateFacets = (meshM, meshN, parts, color, options) => {
       if (options.dxf.angdir === 1) {
         facet = facet.reverse()
       }
-      const polygon = geometry.poly3.create(facet)
-      const plane = geometry.poly3.plane(polygon)
+      const polygon = geometries.poly3.create(facet)
+      const plane = geometries.poly3.plane(polygon)
       if (Number.isFinite(plane[3])) {
         if (color) polygon.color = color
         facets.push(polygon)
@@ -555,7 +555,7 @@ const instantiatePolyFaces = (meshM, meshN, parts, color, options) => {
       if (options.dxf.angdir === 1) {
         vertices = vertices.reverse()
       }
-      const polygon = geometry.poly3.create(vertices)
+      const polygon = geometries.poly3.create(vertices)
       if (color) polygon.color = color
       faces.push(polygon)
     }
@@ -640,7 +640,7 @@ const translateCurrent = (obj, layers, parts, options) => {
     script += '    ' + translatePolygon(polygon) + ',\n'
   }
   script += `  ]
-  let ${name} = geometry.geom3.create(${name}_polygons)
+  let ${name} = geometries.geom3.create(${name}_polygons)
 `
   obj.script = script
   addToLayer(obj, layers)
@@ -810,7 +810,7 @@ const translateAsciiDxf = (reader, options) => {
         break
     }
     // accumlate polygons if necessary
-    if (geometry.poly3.isA(p)) {
+    if (geometries.poly3.isA(p)) {
       // console.log('##### push Polygon')
       parts.push(p)
     }
@@ -829,7 +829,7 @@ const translateAsciiDxf = (reader, options) => {
 
   // debug output
   // console.log('**************************************************')
-  let script = `const {colors, geometry, maths, primitives, transforms} = require('@jscad/modeling')
+  let script = `const {colors, geometries, maths, primitives, transforms} = require('@jscad/modeling')
 
 const main = () => {
   let layers = []
@@ -845,7 +845,7 @@ const main = () => {
   script +=
 `
 function createPolygon(listofpoints, color) {
-  let polygon = geometry.poly3.fromPoints(listofpoints)
+  let polygon = geometries.poly3.fromPoints(listofpoints)
   if (color) polygon.color = color
   return polygon
 }

@@ -1,4 +1,4 @@
-const { geometry } = require('@jscad/modeling')
+const { geometries } = require('@jscad/modeling')
 
 // handled format descriptions
 // note: order is important as regular expressions are created from extentions
@@ -125,8 +125,8 @@ const supportedFormatsForObjects = (objects) => {
   let found3Dsolid = false
   let found2Dsolid = false
   for (let i = 0; i < objects.length; i++) {
-    if (geometry.geom3.isA(objects[i])) { found3Dsolid = true }
-    if (geometry.geom2.isA(objects[i]) || geometry.path2.isA(objects[i])) { found2Dsolid = true }
+    if (geometries.geom3.isA(objects[i])) { found3Dsolid = true }
+    if (geometries.geom2.isA(objects[i]) || geometries.path2.isA(objects[i])) { found2Dsolid = true }
   }
   for (const format in formats) {
     if (found3Dsolid && formats[format].convertGeom3 === true) {

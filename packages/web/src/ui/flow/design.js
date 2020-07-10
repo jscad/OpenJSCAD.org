@@ -480,13 +480,13 @@ const actions = ({ sources }) => {
             const solids = event.data.solids.map((object) => {
               // console.log('setting solids from worker', object)
               if (object[0] === 0) { // Geom2
-                return require('@jscad/modeling').geometry.geom2.fromCompactBinary(object)
+                return require('@jscad/modeling').geometries.geom2.fromCompactBinary(object)
               }
               if (object[0] === 1) { // Geom3
-                return require('@jscad/modeling').geometry.geom3.fromCompactBinary(object)
+                return require('@jscad/modeling').geometries.geom3.fromCompactBinary(object)
               }
               if (object[0] === 2) { // Path2
-                return require('@jscad/modeling').geometry.path2.fromCompactBinary(object)
+                return require('@jscad/modeling').geometries.path2.fromCompactBinary(object)
               }
             })
             // const solids = event.data.solids.map(solid => JSON.parse(solid))

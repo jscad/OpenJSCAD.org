@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const test = require('ava')
 
-const { geometry } = require('@jscad/modeling')
+const { geometries } = require('@jscad/modeling')
 
 const { deserialize } = require('../index')
 
@@ -21,8 +21,8 @@ test('ASCII DXF R13 to Object Conversion', (t) => {
   t.true(Array.isArray(objs))
   t.is(objs.length, 16)
 
-  t.true(geometry.path2.isA(objs[0]))
-  t.true(geometry.path2.isA(objs[15]))
+  t.true(geometries.path2.isA(objs[0]))
+  t.true(geometries.path2.isA(objs[15]))
 })
 
 test('ASCII DXF R14 to Object Conversion', (t) => {
@@ -46,7 +46,7 @@ test('ASCII DXF ANSI to Object Conversion', (t) => {
   t.true(Array.isArray(objs))
   t.is(objs.length, 1)
 
-  t.true(geometry.path2.isA(objs[0]))
+  t.true(geometries.path2.isA(objs[0]))
 })
 
 test('ASCII DXF ISO to Object Conversion', (t) => {
@@ -59,6 +59,6 @@ test('ASCII DXF ISO to Object Conversion', (t) => {
   t.true(Array.isArray(objs))
   t.is(objs.length, 14)
 
-  t.true(geometry.path2.isA(objs[0]))
-  t.true(geometry.path2.isA(objs[13]))
+  t.true(geometries.path2.isA(objs[0]))
+  t.true(geometries.path2.isA(objs[13]))
 })
