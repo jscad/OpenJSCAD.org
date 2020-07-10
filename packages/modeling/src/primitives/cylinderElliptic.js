@@ -69,7 +69,7 @@ const cylinderElliptic = (options) => {
   const ray = vec3.subtract(endv, startv)
 
   const axisZ = vec3.unit(ray)
-  const axisX = vec3.unit(vec3.random(axisZ))
+  const axisX = vec3.unit(vec3.orthogonal(axisZ))
   const axisY = vec3.unit(vec3.cross(axisZ, axisX))
 
   const point = (stack, slice, radius) => {
