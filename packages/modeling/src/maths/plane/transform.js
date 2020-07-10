@@ -14,7 +14,7 @@ const flip = require('./flip')
 const transform = (matrix, plane) => {
   const ismirror = mat4.isMirroring(matrix)
   // get two vectors in the plane:
-  const r = vec3.random(plane)
+  const r = vec3.orthogonal(plane)
   const u = vec3.cross(plane, r)
   const v = vec3.cross(plane, u)
   // get 3 points in the plane:

@@ -8,7 +8,7 @@
 const length = (a) => {
   const x = a[0]
   const y = a[1]
-  return Math.sqrt(x * x + y * y)
+  return Math.hypot(x, y)
 }
 
 module.exports = length

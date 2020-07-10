@@ -40,7 +40,7 @@ test('hullChain (three, geom2)', (t) => {
 
   // the sides change based on the bestplane chosen in trees/Node.js
   // t.is(pts.length, 10)
-  t.is(pts.length, 12)
+  t.is(pts.length, 13)
 })
 
 test('hullChain (three, geom3)', (t) => {
@@ -79,5 +79,6 @@ test('hullChain (three, geom3)', (t) => {
   obs = hullChain(geometry1, geometry2, geometry3, geometry1)
   pts = geom3.toPoints(obs)
 
-  t.is(pts.length, 52)
+  // t.is(pts.length, 52)
+  t.is(pts.length, 45)
 })

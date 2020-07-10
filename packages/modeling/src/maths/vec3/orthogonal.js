@@ -2,13 +2,13 @@ const abs = require('./abs')
 const create = require('./create')
 
 /**
- * Create a vector that is somewhat perpendicular to the given vector.
+ * Create a vector that is somewhat orthogonal to the given vector.
  * @param {vec3} [out] - the receiving vector
  * @param {vec3} vector - vector of reference
  * @returns {vec3} a new vector
- * @alias module:modeling/maths/vec3.random
+ * @alias module:modeling/maths/vec3.orthogonal
  */
-const random = (...params) => {
+const orthogonal = (...params) => {
   let out
   let vec
   if (params.length === 1) {
@@ -35,4 +35,4 @@ const random = (...params) => {
   return out
 }
 
-module.exports = random
+module.exports = orthogonal

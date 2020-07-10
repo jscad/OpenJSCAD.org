@@ -23,9 +23,9 @@ const normalize = (...params) => {
   let len = x * x + y * y
   if (len > 0) {
     len = 1 / Math.sqrt(len)
-    out[0] = a[0] * len
-    out[1] = a[1] * len
   }
+  out[0] = x * len
+  out[1] = y * len
   return out
 }
 

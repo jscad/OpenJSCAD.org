@@ -18,7 +18,7 @@ const vec3 = require('./vec3')
 const OrthoNormalBasis = function (plane, rightvector) {
   if (arguments.length < 2) {
     // choose an arbitrary right hand vector, making sure it is somewhat orthogonal to the plane normal:
-    rightvector = vec3.random(plane)
+    rightvector = vec3.orthogonal(plane)
   } else {
     rightvector = rightvector
   }
