@@ -37,4 +37,14 @@ test('vec3: normalize() called with two paramerters should update a vec3 with co
   const ret4 = normalize(obs4, [-1, 2, -3])
   t.true(compareVectors(obs4, [-0.26726123690605164, 0.5345224738121033, -0.8017837405204773]))
   t.true(compareVectors(ret4, [-0.26726123690605164, 0.5345224738121033, -0.8017837405204773]))
+
+  const obs5 = fromValues(0, 0, 0)
+  const ret5 = normalize(obs5, [0.5, 1.5, 0.5])
+  t.true(compareVectors(obs5, [0.30151134729385376, 0.9045340418815613, 0.30151134729385376]))
+  t.true(compareVectors(ret5, [0.30151134729385376, 0.9045340418815613, 0.30151134729385376]))
+
+  const obs6 = fromValues(0, 0, 0)
+  const ret6 = normalize(obs6, [0.5, 0.5, 0.5])
+  t.true(compareVectors(obs6, [0.5773502588272095, 0.5773502588272095, 0.5773502588272095]))
+  t.true(compareVectors(ret6, [0.5773502588272095, 0.5773502588272095, 0.5773502588272095]))
 })
