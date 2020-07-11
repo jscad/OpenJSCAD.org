@@ -24,7 +24,7 @@ module.exports = {
   multiply: require('./multiply'),
   negate: require('./negate'),
   normalize: require('./normalize'),
-  random: require('./random'),
+  orthogonal: require('./orthogonal'),
   rotateX: require('./rotateX'),
   rotateY: require('./rotateY'),
   rotateZ: require('./rotateZ'),

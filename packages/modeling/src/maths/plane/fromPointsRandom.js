@@ -18,15 +18,15 @@ const fromPointsRandom = (a, b, c) => {
   let ba = vec3.subtract(b, a)
   let ca = vec3.subtract(c, a)
   if (vec3.length(ba) < EPS) {
-    ba = vec3.random(ca)
+    ba = vec3.orthogonal(ca)
   }
   if (vec3.length(ca) < EPS) {
-    ca = vec3.random(ba)
+    ca = vec3.orthogonal(ba)
   }
   let normal = vec3.cross(ba, ca)
   if (vec3.length(normal) < EPS) {
     // this would mean that ba == ca.negated()
-    ca = vec3.random(ba)
+    ca = vec3.orthogonal(ba)
     normal = vec3.cross(ba, ca)
   }
   normal = vec3.unit(normal)

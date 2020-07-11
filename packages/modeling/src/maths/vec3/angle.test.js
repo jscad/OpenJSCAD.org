@@ -23,7 +23,7 @@ test('vec3: angle() should return correct values', (t) => {
   const veca4 = fromValues(1, 1, 1)
   const vec4 = fromValues(-1, -1, -1)
   const angle4 = angle(veca4, vec4)
-  nearlyEqual(t, angle4, 3.14132, EPS)
+  nearlyEqual(t, angle4, 3.14159, EPS)
 
   t.true(true)
 })
