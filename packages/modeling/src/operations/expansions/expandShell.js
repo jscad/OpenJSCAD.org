@@ -194,7 +194,7 @@ const expandShell = (options, geometry) => {
       }
     }
     if (!bestzaxis) {
-      bestzaxis = vec3.random(xaxis)
+      bestzaxis = vec3.orthogonal(xaxis)
     }
     const yaxis = vec3.unit(vec3.cross(xaxis, bestzaxis))
     const zaxis = vec3.cross(yaxis, xaxis)
