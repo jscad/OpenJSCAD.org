@@ -4,7 +4,7 @@ const { degToRad } = require('../maths/utils')
 
 const { star } = require('./index')
 
-const geom2 = require('../geometry/geom2')
+const geom2 = require('../geometries/geom2')
 
 const comparePoints = require('../../test/helpers/comparePoints')
 

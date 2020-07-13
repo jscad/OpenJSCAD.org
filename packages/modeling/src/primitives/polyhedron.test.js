@@ -2,7 +2,7 @@ const test = require('ava')
 
 const { polyhedron } = require('./index')
 
-const geom3 = require('../geometry/geom3')
+const geom3 = require('../geometries/geom3')
 
 const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoints')
 

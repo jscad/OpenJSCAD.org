@@ -1,4 +1,4 @@
-const { maths, geometry } = require('@jscad/modeling')
+const { maths, geometries } = require('@jscad/modeling')
 
 let lastmaterial
 
@@ -133,12 +133,12 @@ const createObject = (obj, index, data, options) => {
         }
         subData.push(vertex(vertices[faces[i][j]]))
       }
-      const polygon = geometry.poly3.fromPoints(subData)
+      const polygon = geometries.poly3.fromPoints(subData)
       const pcolor = colors[i] ? colors[i] : undefined
       if (pcolor) polygon.color = pcolor
       polygons.push(polygon)
     }
-    return geometry.geom3.create(polygons)
+    return geometries.geom3.create(polygons)
   }
 
   let code = ''
@@ -160,7 +160,7 @@ const createObject${obj.id} = () => {
 
     // convert the results into function calls
     for (let i = 0; i < fcount; i++) {
-      code += '  polygon = geometry.poly3.fromPoints([\n'
+      code += '  polygon = geometries.poly3.fromPoints([\n'
       for (let j = 0; j < faces[i].length; j++) {
         if (faces[i][j] < 0 || faces[i][j] >= vcount) {
           continue
@@ -175,7 +175,7 @@ const createObject${obj.id} = () => {
       }
       code += '  polygons.push(polygon)\n'
     }
-    code += '  let shape = geometry.geom3.create(polygons)\n'
+    code += '  let shape = geometries.geom3.create(polygons)\n'
 
     const scale = options.scale ? options.scale : 1.0
     if (scale !== 1.0) {

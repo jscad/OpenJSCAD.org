@@ -1,4 +1,4 @@
-const path2 = require('../geometry/path2')
+const path2 = require('../geometries/path2')
 
 /**
  * Create a new line (path) from the given points.

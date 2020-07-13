@@ -1,9 +1,9 @@
 const flatten = require('../../utils/flatten')
 const areAllShapesTheSameType = require('../../utils/areAllShapesTheSameType')
 
-const geom2 = require('../../geometry/geom2')
-const geom3 = require('../../geometry/geom3')
-const path2 = require('../../geometry/path2')
+const geom2 = require('../../geometries/geom2')
+const geom3 = require('../../geometries/geom3')
+const path2 = require('../../geometries/path2')
 
 const hullPath2 = require('./hullPath2')
 const hullGeom2 = require('./hullGeom2')

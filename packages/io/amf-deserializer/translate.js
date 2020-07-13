@@ -68,20 +68,20 @@ const codify = (amf, data) => {
 // Materials: ${materials.length}
 // Scale    : ${amf.scale} from Units (${amf.unit})
 
-const {colors, geometry, transforms} = require('@jscad/modeling')
+const {colors, geometries, transforms} = require('@jscad/modeling')
 
 const main = () => {
-  let geometries = []
+  let objects = []
 `
 
   for (let i = 0; i < objects.length; i++) {
     const obj = objects[i]
     if (obj.type === 'object') {
-      code += `  geometries.push(createObject${obj.id}())\n`
+      code += `  objects.push(createObject${obj.id}())\n`
     }
   }
 
-  code += '  return geometries\n}\n'
+  code += '  return objects\n}\n'
 
   objects.forEach(createDefinition)
 

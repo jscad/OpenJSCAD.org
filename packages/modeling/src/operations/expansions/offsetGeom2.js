@@ -1,5 +1,5 @@
-const geom2 = require('../../geometry/geom2')
-const poly2 = require('../../geometry/poly2')
+const geom2 = require('../../geometries/geom2')
+const poly2 = require('../../geometries/poly2')
 
 const offsetFromPoints = require('./offsetFromPoints')
 

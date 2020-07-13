@@ -1,12 +1,12 @@
 const test = require('ava')
 
-const { geometry, primitives } = require('@jscad/modeling')
+const { geometries, primitives } = require('@jscad/modeling')
 
 const { serialize } = require('../index.js')
 const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('../autocad_AC2017')
 
 test('3D Geometry to DXF 3DFACE', (t) => {
-  const csg1 = geometry.geom3.create()
+  const csg1 = geometries.geom3.create()
 
   const obs1 = serialize({}, csg1)
   const exp1 = [empty]
@@ -21,7 +21,7 @@ test('3D Geometry to DXF 3DFACE', (t) => {
 })
 
 test('3D Geometry to DXF POLYLINE FACES', (t) => {
-  const csg1 = geometry.geom3.create()
+  const csg1 = geometries.geom3.create()
 
   const obs1 = serialize({ geom3To: 'polyline' }, csg1)
   const exp1 = [empty]

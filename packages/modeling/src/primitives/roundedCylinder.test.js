@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const geom3 = require('../geometry/geom3')
+const geom3 = require('../geometries/geom3')
 
 const { roundedCylinder } = require('./index')
 

@@ -1,6 +1,6 @@
 const vec3 = require('../../maths/vec3')
 
-const poly3 = require('../../geometry/poly3')
+const poly3 = require('../../geometries/poly3')
 
 const slice = require('./slice')
 

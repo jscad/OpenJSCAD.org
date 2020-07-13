@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const geom2 = require('../geometry/geom2')
+const geom2 = require('../geometries/geom2')
 
 const { polygon } = require('./index')
 

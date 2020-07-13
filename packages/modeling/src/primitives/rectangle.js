@@ -1,6 +1,6 @@
 const vec2 = require('../maths/vec2')
 
-const geom2 = require('../geometry/geom2')
+const geom2 = require('../geometries/geom2')
 
 /**
  * Construct an axis-aligned rectangle with four sides and four 90-degree angles.

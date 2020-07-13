@@ -4,7 +4,7 @@ const { degToRad } = require('../maths/utils')
 
 const { arc } = require('./index')
 
-const path2 = require('../geometry/path2')
+const path2 = require('../geometries/path2')
 
 const comparePoints = require('../../test/helpers/comparePoints')
 

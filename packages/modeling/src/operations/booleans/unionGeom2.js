@@ -1,6 +1,6 @@
 const flatten = require('../../utils/flatten')
 
-const geom3 = require('../../geometry/geom3')
+const geom3 = require('../../geometries/geom3')
 
 const fromFakePolygons = require('./fromFakePolygons')
 const to3DWalls = require('./to3DWalls')

@@ -21,7 +21,7 @@ TBD
 2) add color conversion
 */
 
-const { geometry, utils } = require('@jscad/modeling')
+const { geometries, utils } = require('@jscad/modeling')
 
 // const { ensureManifoldness } = require('@jscad/io-utils')
 
@@ -48,7 +48,7 @@ const serialize = (options, ...objects) => {
 
   objects = utils.flatten(objects)
 
-  objects = objects.filter((object) => geometry.geom3.isA(object) || geometry.geom2.isA(object) || geometry.path2.isA(object))
+  objects = objects.filter((object) => geometries.geom3.isA(object) || geometries.geom2.isA(object) || geometries.path2.isA(object))
 
   if (objects.length === 0) throw new Error('only JSCAD geometries can be serialized to DXF')
 
@@ -73,24 +73,24 @@ EOF
  */
 const dxfEntities = (objects, options) => {
   const entityContents = objects.map((object, i) => {
-    if (geometry.geom2.isA(object)) {
-      const outlines = geometry.geom2.toOutlines(object)
+    if (geometries.geom2.isA(object)) {
+      const outlines = geometries.geom2.toOutlines(object)
       const paths = outlines.map((outline) => ({ closed: true, points: outline }))
       if (options.geom2To === 'polyline') {
         return PathsToPolyine(paths, options)
       }
       return PathsToLwpolyine(paths, options)
     }
-    if (geometry.geom3.isA(object)) {
+    if (geometries.geom3.isA(object)) {
       // TODO object = ensureManifoldness(object)
       if (options.geom3To === 'polyline') {
         return PolygonsToPolyline(object, options)
       }
       return PolygonsTo3DFaces(object, options)
     }
-    if (geometry.path2.isA(object)) {
+    if (geometries.path2.isA(object)) {
       // mimic a path (outline) from geom2
-      const path = { closed: object.isClosed, points: geometry.path2.toPoints(object) }
+      const path = { closed: object.isClosed, points: geometries.path2.toPoints(object) }
       return PathsToLwpolyine([path], options)
     }
     return ''

@@ -1,8 +1,8 @@
 const mat4 = require('../../maths/mat4')
 
-const geom2 = require('../../geometry/geom2')
-const geom3 = require('../../geometry/geom3')
-const poly3 = require('../../geometry/poly3')
+const geom2 = require('../../geometries/geom2')
+const geom3 = require('../../geometries/geom3')
+const poly3 = require('../../geometries/poly3')
 
 const slice = require('./slice')
 

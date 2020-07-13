@@ -1,5 +1,5 @@
-const geom3 = require('../geometry/geom3')
-const poly3 = require('../geometry/poly3')
+const geom3 = require('../geometries/geom3')
+const poly3 = require('../geometries/poly3')
 
 /**
  * Create a polyhedron from the given set of points and faces.

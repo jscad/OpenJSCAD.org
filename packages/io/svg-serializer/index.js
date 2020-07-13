@@ -16,7 +16,7 @@ Notes:
      SVG GROUP containing a SVG PATH for each path
 */
 
-const { geometry, maths, measurements, utils } = require('@jscad/modeling')
+const { geometries, maths, measurements, utils } = require('@jscad/modeling')
 
 const stringify = require('onml/lib/stringify')
 
@@ -38,7 +38,7 @@ const serialize = (options, ...objects) => {
   objects = utils.flatten(objects)
 
   // convert only 2D geometries
-  const objects2d = objects.filter((object) => geometry.geom2.isA(object) || geometry.path2.isA(object))
+  const objects2d = objects.filter((object) => geometries.geom2.isA(object) || geometries.path2.isA(object))
 
   if (objects2d.length === 0) throw new Error('only 2D geometries can be serialized to SVG')
   if (objects.length !== objects2d.length) console.warn('some objects could not be serialized to SVG')
@@ -104,10 +104,10 @@ const convertObjects = (objects, bounds, options) => {
   objects.forEach((object, i) => {
     options.statusCallback && options.statusCallback({ progress: 100 * i / objects.length })
 
-    if (geometry.geom2.isA(object)) {
+    if (geometries.geom2.isA(object)) {
       contents.push(convertGeom2(object, [xoffset, yoffset], options))
     }
-    if (geometry.path2.isA(object)) {
+    if (geometries.path2.isA(object)) {
       contents.push(convertPaths([object], [xoffset, yoffset], options))
     }
   })
@@ -124,8 +124,8 @@ const reflect = (x, y, px, py) => {
 }
 
 const convertGeom2 = (object, offsets, options) => {
-  const outlines = geometry.geom2.toOutlines(object)
-  const paths = outlines.map((outline) => geometry.path2.fromPoints({ closed: true }, outline))
+  const outlines = geometries.geom2.toOutlines(object)
+  const paths = outlines.map((outline) => geometries.path2.fromPoints({ closed: true }, outline))
   if (object.color) {
     paths.forEach((path) => {
       path.fill = object.color

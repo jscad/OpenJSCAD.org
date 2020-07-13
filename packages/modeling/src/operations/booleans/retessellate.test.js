@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { geom3 } = require('../../geometry')
+const { geom3 } = require('../../geometries')
 
 const retessellate = require('./retessellate')
 

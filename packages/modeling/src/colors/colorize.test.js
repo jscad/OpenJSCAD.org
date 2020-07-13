@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { geom2, geom3, path2, poly3 } = require('../geometry')
+const { geom2, geom3, path2, poly3 } = require('../geometries')
 
 const { colorize } = require('./index')
 

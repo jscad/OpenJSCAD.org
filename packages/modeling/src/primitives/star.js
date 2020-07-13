@@ -1,6 +1,6 @@
 const vec2 = require('../maths/vec2')
 
-const geom2 = require('../geometry/geom2')
+const geom2 = require('../geometries/geom2')
 
 // @see http://www.jdawiseman.com/papers/easymath/surds_star_inner_radius.html
 const getRadiusRatio = (vertices, density) => {

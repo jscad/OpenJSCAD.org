@@ -1,12 +1,12 @@
 const test = require('ava')
 
-const { geometry, primitives } = require('@jscad/modeling')
+const { geometries, primitives } = require('@jscad/modeling')
 
 const { serialize } = require('../index.js')
 const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('../autocad_AC2017')
 
 test('2D Path to DXF LWPOLYLINE', (t) => {
-  const path1 = geometry.path2.create()
+  const path1 = geometries.path2.create()
 
   const obs1 = serialize({}, path1)
   const exp1 = [empty]
@@ -19,7 +19,7 @@ test('2D Path to DXF LWPOLYLINE', (t) => {
   t.deepEqual(obs2, exp2)
 
   // TODO
-  // const path3 = geometry.path2.fromPoints({}, [[10, -20]])
+  // const path3 = geometries.path2.fromPoints({}, [[10, -20]])
   // path3 = path3.appendBezier([[10, -10], [25, -10], [25, -20]], { resolution: 8 })
   // t.is(path3.points.length, 6)
 

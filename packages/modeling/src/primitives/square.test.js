@@ -2,7 +2,7 @@ const test = require('ava')
 
 const { square } = require('./index')
 
-const geom2 = require('../geometry/geom2')
+const geom2 = require('../geometries/geom2')
 
 const comparePoints = require('../../test/helpers/comparePoints')
 

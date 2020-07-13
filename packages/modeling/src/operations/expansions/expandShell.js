@@ -5,8 +5,8 @@ const vec3 = require('../../maths/vec3')
 
 const fnNumberSort = require('../../utils/fnNumberSort')
 
-const geom3 = require('../../geometry/geom3')
-const poly3 = require('../../geometry/poly3')
+const geom3 = require('../../geometries/geom3')
+const poly3 = require('../../geometries/poly3')
 
 const { sphere } = require('../../primitives/ellipsoid')
 
@@ -194,7 +194,7 @@ const expandShell = (options, geometry) => {
       }
     }
     if (!bestzaxis) {
-      bestzaxis = vec3.random(xaxis)
+      bestzaxis = vec3.orthogonal(xaxis)
     }
     const yaxis = vec3.unit(vec3.cross(xaxis, bestzaxis))
     const zaxis = vec3.cross(yaxis, xaxis)

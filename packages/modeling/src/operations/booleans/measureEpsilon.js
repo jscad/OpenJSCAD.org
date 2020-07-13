@@ -2,7 +2,7 @@ const flatten = require('../../utils/flatten')
 
 const { EPS } = require('../../maths/constants')
 
-const { geom2, geom3, path2 } = require('../../geometry')
+const { geom2, geom3, path2 } = require('../../geometries')
 
 const measureBounds = require('../measurements/measureBounds')
 

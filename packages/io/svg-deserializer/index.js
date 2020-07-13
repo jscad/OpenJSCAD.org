@@ -101,7 +101,7 @@ const translate = (src, options) => {
   // source: ${filename}
   //
 ` : ''
-  code += 'const { colors, geometry, primitives, transforms } = require(\'@jscad/modeling\')\n\n'
+  code += 'const { colors, geometries, primitives, transforms } = require(\'@jscad/modeling\')\n\n'
 
   options && options.statusCallback && options.statusCallback({ progress: 50 })
 

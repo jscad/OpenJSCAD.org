@@ -19,7 +19,7 @@ TBD
 1) gzipped is also possible; same mime type, with file extension .x3dz
 */
 
-const { geometry, utils } = require('@jscad/modeling')
+const { geometries, utils } = require('@jscad/modeling')
 
 // const { ensureManifoldness } = require('@jscad/io-utils')
 
@@ -48,7 +48,7 @@ const serialize = (options, ...objects) => {
   objects = utils.flatten(objects)
 
   // convert only 3D geometries
-  const objects3d = objects.filter((object) => geometry.geom3.isA(object))
+  const objects3d = objects.filter((object) => geometries.geom3.isA(object))
 
   if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to X3D')
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to X3D')
@@ -84,8 +84,8 @@ const convertObjects = (objects, options) => {
   objects.forEach((object, i) => {
     options.statusCallback && options.statusCallback({ progress: 100 * i / objects.length })
 
-    if (geometry.geom3.isA(object)) {
-      const polygons = geometry.geom3.toPolygons(object)
+    if (geometries.geom3.isA(object)) {
+      const polygons = geometries.geom3.toPolygons(object)
       if (polygons.length > 0) {
         // TODO object = ensureManifoldness(object)
         shapes.push(convertShape(object, options))
@@ -120,11 +120,11 @@ const convertMesh = (object, options) => {
 
 const convertToTriangles = (object, options) => {
   const triangles = []
-  const polygons = geometry.geom3.toPolygons(object)
+  const polygons = geometries.geom3.toPolygons(object)
   polygons.forEach((poly) => {
     const firstVertex = poly.vertices[0]
     for (let i = poly.vertices.length - 3; i >= 0; i--) {
-      const triangle = geometry.poly3.fromPoints([
+      const triangle = geometries.poly3.fromPoints([
         firstVertex,
         poly.vertices[i + 1],
         poly.vertices[i + 2]
