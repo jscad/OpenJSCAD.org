@@ -4,7 +4,7 @@
  * @param (vec} vec2 - vector (array) of values
  * @returns {boolean} result of comparison
  */
-const compareVectors = (vec1, vec2) => {
+const compareVectors = (vec1, vec2, eps = Number.EPSILON) => {
   if (vec1.length === vec2.length) {
     return vec1.reduce((valid, value, index) => {
       // special comparison for NAN values
@@ -17,7 +17,7 @@ const compareVectors = (vec1, vec2) => {
       }
       // only compare values, not types
       const diff = Math.abs(vec1[index] - vec2[index])
-      return valid && (diff < Number.EPSILON)
+      return valid && (diff < eps)
     }, true)
   }
   return false
