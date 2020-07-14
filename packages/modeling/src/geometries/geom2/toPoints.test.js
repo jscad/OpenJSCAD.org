@@ -2,6 +2,8 @@ const test = require('ava')
 
 const { toPoints, create, fromPoints, toString } = require('./index')
 
+const { compareVectors } = require('../../../test/helpers/')
+
 test('toPoints: creates an empty array of points from a unpopulated geom2', (t) => {
   const geometry = create()
   const pointarray = toPoints(geometry)
@@ -14,13 +16,9 @@ test('toPoints: creates an array of points from a populated geom2', (t) => {
 
   toString(geometry)
 
-  const expected = [
-    new Float32Array([0, 0]),
-    new Float32Array([1, 0]),
-    new Float32Array([0, 1])
-  ]
+  const expected = [[0, 0], [1, 0], [0, 1]]
   const pointarray = toPoints(geometry)
-  t.deepEqual(pointarray, expected)
+  t.true(compareVectors(pointarray, expected))
 
   toString(geometry)
 })

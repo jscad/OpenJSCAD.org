@@ -4,7 +4,7 @@ const { geom3 } = require('../../geometries')
 
 const retessellate = require('./retessellate')
 
-const comparePolygonsAsPoints = require('../../../test/helpers/comparePolygonsAsPoints')
+const { comparePolygonsAsPoints, compareVectors } = require('../../../test/helpers')
 
 test('geom3: retessellate() should create proper geometry from empty geometries', (t) => {
   const obj1 = geom3.create()
@@ -14,7 +14,7 @@ test('geom3: retessellate() should create proper geometry from empty geometries'
   const exp1 = {
     polygons: [],
     isRetesselated: true,
-    transforms: new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
+    transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   t.deepEqual(ret1, exp1)
 })

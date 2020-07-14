@@ -16,28 +16,28 @@ test('line3: reverse() should return proper lines', (t) => {
   pnt = rev[0]
   dir = rev[1]
   t.true(compareVectors(pnt, [1, 0, 0]))
-  t.true(compareVectors(dir, [0.7071067690849304, -0.7071067690849304, 0]))
+  t.true(compareVectors(dir, [0.7071067811865475, -0.7071067811865475, 0]))
 
   const line3 = fromPoints([0, 1, 0], [1, 0, 0])
   rev = reverse(line3)
   pnt = rev[0]
   dir = rev[1]
   t.true(compareVectors(pnt, [0, 1, 0]))
-  t.true(compareVectors(dir, [-0.7071067690849304, 0.7071067690849304, 0]))
+  t.true(compareVectors(dir, [-0.7071067811865475, 0.7071067811865475, 0]))
 
   const line4 = fromPoints([0, 6, 0], [0, 0, 6])
   rev = reverse(line4)
   pnt = rev[0]
   dir = rev[1]
   t.true(compareVectors(pnt, [0, 6, 0]))
-  t.true(compareVectors(dir, [0, 0.7071067690849304, -0.7071067690849304]))
+  t.true(compareVectors(dir, [0, 0.7071067811865475, -0.7071067811865475]))
 
   const line5 = fromPoints([-5, 5, 5], [5, -5, -5])
   rev = reverse(line5)
   pnt = rev[0]
   dir = rev[1]
   t.true(compareVectors(pnt, [-5, 5, 5]))
-  t.true(compareVectors(dir, [-0.5773502588272095, 0.5773502588272095, 0.5773502588272095]))
+  t.true(compareVectors(dir, [-0.5773502691896258, 0.5773502691896258, 0.5773502691896258]))
 })
 
 test('line3: reverse() called with two paramerters should update a line3 with proper values', (t) => {
@@ -61,10 +61,10 @@ test('line3: reverse() called with two paramerters should update a line3 with pr
   pnt = rev[0]
   dir = rev[1]
   t.true(compareVectors(pnt, [1, 0, 0]))
-  t.true(compareVectors(dir, [0.7071067690849304, -0.7071067690849304, 0]))
+  t.true(compareVectors(dir, [0.7071067811865475, -0.7071067811865475, 0]))
   pnt = line2[0]
   dir = line2[1]
   t.true(compareVectors(pnt, [1, 0, 0]))
-  t.true(compareVectors(dir, [0.7071067690849304, -0.7071067690849304, 0]))
+  t.true(compareVectors(dir, [0.7071067811865475, -0.7071067811865475, 0]))
   t.is(rev, line2)
 })

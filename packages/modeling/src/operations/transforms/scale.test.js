@@ -1,5 +1,7 @@
 const test = require('ava')
 
+const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
+
 const { geom2, geom3, path2 } = require('../../geometries')
 
 const { scale, scaleX, scaleY, scaleZ } = require('./index')
@@ -10,28 +12,22 @@ test('scale: scaling of a path2 produces expected changes to points', (t) => {
   // scale X
   let scaled = scale([3], geometry)
   let obs = path2.toPoints(scaled)
-  let exp = [
-    new Float32Array([0, 4]),
-    new Float32Array([3, 0])
-  ]
-  t.deepEqual(obs, exp)
+  let exp = [ [0, 4], [3, 0] ]
+  t.true(comparePoints(obs, exp))
 
   scaled = scaleX(3, geometry)
   obs = path2.toPoints(scaled)
-  t.deepEqual(obs, exp)
+  t.true(comparePoints(obs, exp))
 
   // scale Y
   scaled = scale([1, 0.5], geometry)
   obs = path2.toPoints(scaled)
-  exp = [
-    new Float32Array([0, 2]),
-    new Float32Array([1, 0])
-  ]
-  t.deepEqual(obs, exp)
+  exp = [ [0, 2], [1, 0] ]
+  t.true(comparePoints(obs, exp))
 
   scaled = scaleY(0.5, geometry)
   obs = path2.toPoints(scaled)
-  t.deepEqual(obs, exp)
+  t.true(comparePoints(obs, exp))
 })
 
 test('scale: scaling of a geom2 produces expected changes to points', (t) => {
@@ -40,30 +36,22 @@ test('scale: scaling of a geom2 produces expected changes to points', (t) => {
   // scale X
   let scaled = scale([3], geometry)
   let obs = geom2.toPoints(scaled)
-  let exp = [
-    new Float32Array([-3, 0]),
-    new Float32Array([3, 0]),
-    new Float32Array([0, 1])
-  ]
-  t.deepEqual(obs, exp)
+  let exp = [ [-3, 0], [3, 0], [0, 1] ]
+  t.true(comparePoints(obs, exp))
 
   scaled = scaleX(3, geometry)
   obs = geom2.toPoints(scaled)
-  t.deepEqual(obs, exp)
+  t.true(comparePoints(obs, exp))
 
   // scale Y
   scaled = scale([1, 3], geometry)
   obs = geom2.toPoints(scaled)
-  exp = [
-    new Float32Array([-1, 0]),
-    new Float32Array([1, 0]),
-    new Float32Array([0, 3])
-  ]
-  t.deepEqual(obs, exp)
+  exp = [ [-1, 0], [1, 0], [0, 3] ]
+  t.true(comparePoints(obs, exp))
 
   scaled = scaleY(3, geometry)
   obs = geom2.toPoints(scaled)
-  t.deepEqual(obs, exp)
+  t.true(comparePoints(obs, exp))
 })
 
 test('scale: scaling of a geom3 produces expected changes to polygons', (t) => {
@@ -81,82 +69,52 @@ test('scale: scaling of a geom3 produces expected changes to polygons', (t) => {
   let scaled = scale([3], geometry)
   let obs = geom3.toPoints(scaled)
   let exp = [
-    [new Float32Array([-6, -7, -12]), new Float32Array([-6, -7, 18]),
-      new Float32Array([-6, 13, 18]), new Float32Array([-6, 13, -12])],
-    [new Float32Array([24, -7, -12]), new Float32Array([24, 13, -12]),
-      new Float32Array([24, 13, 18]), new Float32Array([24, -7, 18])],
-    [new Float32Array([-6, -7, -12]), new Float32Array([24, -7, -12]),
-      new Float32Array([24, -7, 18]), new Float32Array([-6, -7, 18])],
-    [new Float32Array([-6, 13, -12]), new Float32Array([-6, 13, 18]),
-      new Float32Array([24, 13, 18]), new Float32Array([24, 13, -12])],
-    [new Float32Array([-6, -7, -12]), new Float32Array([-6, 13, -12]),
-      new Float32Array([24, 13, -12]), new Float32Array([24, -7, -12])],
-    [new Float32Array([-6, -7, 18]), new Float32Array([24, -7, 18]),
-      new Float32Array([24, 13, 18]), new Float32Array([-6, 13, 18])]
+    [[-6, -7, -12], [-6, -7, 18], [-6, 13, 18], [-6, 13, -12]],
+    [[24, -7, -12], [24, 13, -12], [24, 13, 18], [24, -7, 18]],
+    [[-6, -7, -12], [24, -7, -12], [24, -7, 18], [-6, -7, 18]],
+    [[-6, 13, -12], [-6, 13, 18], [24, 13, 18], [24, 13, -12]],
+    [[-6, -7, -12], [-6, 13, -12], [24, 13, -12], [24, -7, -12]],
+    [[-6, -7, 18], [24, -7, 18], [24, 13, 18], [-6, 13, 18]]
   ]
-  t.deepEqual(obs, exp)
+  t.true(comparePolygonsAsPoints(obs, exp))
 
   scaled = scaleX(3, geometry)
   obs = geom3.toPoints(scaled)
-  t.deepEqual(obs, exp)
+  t.true(comparePolygonsAsPoints(obs, exp))
 
   // scale Y
   scaled = scale([1, 0.5], geometry)
   obs = geom3.toPoints(scaled)
   exp = [
-    [new Float32Array([-2, -3.5, -12]), new Float32Array([-2, -3.5, 18]),
-      new Float32Array([-2, 6.5, 18]), new Float32Array([-2, 6.5, -12])],
-    [new Float32Array([8, -3.5, -12]), new Float32Array([8, 6.5, -12]),
-      new Float32Array([8, 6.5, 18]), new Float32Array([8, -3.5, 18])],
-    [new Float32Array([-2, -3.5, -12]), new Float32Array([8, -3.5, -12]),
-      new Float32Array([8, -3.5, 18]), new Float32Array([-2, -3.5, 18])],
-    [new Float32Array([-2, 6.5, -12]), new Float32Array([-2, 6.5, 18]),
-      new Float32Array([8, 6.5, 18]), new Float32Array([8, 6.5, -12])],
-    [new Float32Array([-2, -3.5, -12]), new Float32Array([-2, 6.5, -12]),
-      new Float32Array([8, 6.5, -12]), new Float32Array([8, -3.5, -12])],
-    [new Float32Array([-2, -3.5, 18]), new Float32Array([8, -3.5, 18]),
-      new Float32Array([8, 6.5, 18]), new Float32Array([-2, 6.5, 18])]
+    [[-2, -3.5, -12], [-2, -3.5, 18], [-2, 6.5, 18], [-2, 6.5, -12]],
+    [[8, -3.5, -12], [8, 6.5, -12], [8, 6.5, 18], [8, -3.5, 18]],
+    [[-2, -3.5, -12], [8, -3.5, -12], [8, -3.5, 18], [-2, -3.5, 18]],
+    [[-2, 6.5, -12], [-2, 6.5, 18], [8, 6.5, 18], [8, 6.5, -12]],
+    [[-2, -3.5, -12], [-2, 6.5, -12], [8, 6.5, -12], [8, -3.5, -12]],
+    [[-2, -3.5, 18], [8, -3.5, 18], [8, 6.5, 18], [-2, 6.5, 18]]
   ]
-  t.deepEqual(obs, exp)
+  t.true(comparePolygonsAsPoints(obs, exp))
 
   scaled = scaleY(0.5, geometry)
   obs = geom3.toPoints(scaled)
-  t.deepEqual(obs, exp)
+  t.true(comparePolygonsAsPoints(obs, exp))
 
   // scale Z
   scaled = scale([1, 1, 5], geometry)
   obs = geom3.toPoints(scaled)
   exp = [
-    [new Float32Array([-2, -7, -60]),
-      new Float32Array([-2, -7, 90]),
-      new Float32Array([-2, 13, 90]),
-      new Float32Array([-2, 13, -60])],
-    [new Float32Array([8, -7, -60]),
-      new Float32Array([8, 13, -60]),
-      new Float32Array([8, 13, 90]),
-      new Float32Array([8, -7, 90])],
-    [new Float32Array([-2, -7, -60]),
-      new Float32Array([8, -7, -60]),
-      new Float32Array([8, -7, 90]),
-      new Float32Array([-2, -7, 90])],
-    [new Float32Array([-2, 13, -60]),
-      new Float32Array([-2, 13, 90]),
-      new Float32Array([8, 13, 90]),
-      new Float32Array([8, 13, -60])],
-    [new Float32Array([-2, -7, -60]),
-      new Float32Array([-2, 13, -60]),
-      new Float32Array([8, 13, -60]),
-      new Float32Array([8, -7, -60])],
-    [new Float32Array([-2, -7, 90]),
-      new Float32Array([8, -7, 90]),
-      new Float32Array([8, 13, 90]),
-      new Float32Array([-2, 13, 90])]
+    [[-2, -7, -60], [-2, -7, 90], [-2, 13, 90], [-2, 13, -60]],
+    [[8, -7, -60], [8, 13, -60], [8, 13, 90], [8, -7, 90]],
+    [[-2, -7, -60], [8, -7, -60], [8, -7, 90], [-2, -7, 90]],
+    [[-2, 13, -60], [-2, 13, 90], [8, 13, 90], [8, 13, -60]],
+    [[-2, -7, -60], [-2, 13, -60], [8, 13, -60], [8, -7, -60]],
+    [[-2, -7, 90], [8, -7, 90], [8, 13, 90], [-2, 13, 90]]
   ]
-  t.deepEqual(obs, exp)
+  t.true(comparePolygonsAsPoints(obs, exp))
 
   scaled = scaleZ(5, geometry)
   obs = geom3.toPoints(scaled)
-  t.deepEqual(obs, exp)
+  t.true(comparePolygonsAsPoints(obs, exp))
 })
 
 test('scale: scaling of multiple objects produces expected changes', (t) => {
@@ -169,19 +127,10 @@ test('scale: scaling of multiple objects produces expected changes', (t) => {
   t.is(scaled[0], junk)
 
   const obs1 = path2.toPoints(scaled[1])
-  const exp1 = [
-    new Float32Array([-15, 5]),
-    new Float32Array([15, 5]),
-    new Float32Array([-15, -5]),
-    new Float32Array([30, -5])
-  ]
-  t.deepEqual(obs1, exp1)
+  const exp1 = [ [-15, 5], [15, 5], [-15, -5], [30, -5] ]
+  t.true(comparePoints(obs1, exp1))
 
   const obs2 = geom2.toPoints(scaled[2])
-  const exp2 = [
-    new Float32Array([-15, -5]),
-    new Float32Array([0, 5]),
-    new Float32Array([30, -5])
-  ]
-  t.deepEqual(obs2, exp2)
+  const exp2 = [ [-15, -5], [0, 5], [30, -5] ]
+  t.true(comparePoints(obs2, exp2))
 })

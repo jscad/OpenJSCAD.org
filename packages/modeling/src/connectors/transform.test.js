@@ -28,8 +28,8 @@ test('connector: transform() should return a connector with correct values', (t)
 
   obs1 = transform(identityMatrix, connector3)
   t.true(compareVectors(obs1.point, [-3, -3, -3]))
-  t.true(compareVectors(obs1.axis, [0.5773502588272095, 0.5773502588272095, 0.5773502588272095]))
-  t.true(compareVectors(obs1.normal, [0.5773502588272095, -0.5773502588272095, 0.5773502588272095]))
+  t.true(compareVectors(obs1.axis, [0.5773502691896258, 0.5773502691896258, 0.5773502691896258]))
+  t.true(compareVectors(obs1.normal, [0.5773502691896258, -0.5773502691896258, 0.5773502691896258]))
 
   const x = 1
   const y = 5
@@ -53,8 +53,8 @@ test('connector: transform() should return a connector with correct values', (t)
 
   obs2 = transform(translationMatrix, connector3)
   t.true(compareVectors(obs2.point, [-2, 2, 4]))
-  t.true(compareVectors(obs2.axis, [0.5773502588272095, 0.5773502588272095, 0.5773502588272095]))
-  t.true(compareVectors(obs2.normal, [0.5773502588272095, -0.5773502588272095, 0.5773502588272095]))
+  t.true(compareVectors(obs2.axis, [0.5773502691896256, 0.5773502691896256, 0.5773502691896261]))
+  t.true(compareVectors(obs2.normal, [0.5773502691896256, -0.5773502691896256, 0.5773502691896261]))
 
   const w = 1
   const h = 3
@@ -78,8 +78,8 @@ test('connector: transform() should return a connector with correct values', (t)
 
   obs3 = transform(scaleMatrix, connector3)
   t.true(compareVectors(obs3.point, [-3, -9, -15]))
-  t.true(compareVectors(obs3.axis, [0.1690308302640915, 0.5070924758911133, 0.8451542854309082]))
-  t.true(compareVectors(obs3.normal, [0.16903084516525269, -0.5070924162864685, 0.845154345035553]))
+  t.true(compareVectors(obs3.axis, [0.1690308509457033, 0.5070925528371097, 0.8451542547285166]))
+  t.true(compareVectors(obs3.normal, [0.1690308509457033, -0.5070925528371097, 0.8451542547285166]))
 
   const r = (90 * 0.017453292519943295)
   const rotateZMatrix = [
@@ -101,6 +101,6 @@ test('connector: transform() should return a connector with correct values', (t)
 
   obs4 = transform(rotateZMatrix, connector3)
   t.true(compareVectors(obs4.point, [3, -3, -3]))
-  t.true(compareVectors(obs4.axis, [-0.5773502588272095, 0.5773502588272095, 0.5773502588272095]))
-  t.true(compareVectors(obs4.normal, [0.5773502588272095, 0.5773502588272095, 0.5773502588272095]))
+  t.true(compareVectors(obs4.axis, [-0.5773502691896258, 0.5773502691896258, 0.5773502691896258]))
+  t.true(compareVectors(obs4.normal, [0.5773502691896258, 0.5773502691896258, 0.5773502691896258]))
 })

@@ -18,5 +18,5 @@ test('connector: fromPointAxisNormal() should return a new connector with correc
   obs = fromPointAxisNormal([5, 5, 5], [0, 0, 10], [0, 10, 5])
   t.true(compareVectors(obs.point, [5, 5, 5]))
   t.true(compareVectors(obs.axis, [0, 0, 1]))
-  t.true(compareVectors(obs.normal, [0, 0.8944271802902222, 0.4472135901451111]))
+  t.true(compareVectors(obs.normal, [0, 0.8944271909999159, 0.4472135954999579]))
 })

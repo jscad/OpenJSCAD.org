@@ -89,12 +89,12 @@ test('fromCompactBinary: convert a compact form into a geom2', (t) => {
     6, -4, 6, -5
   ]
   const expected2 = create([
-    [new Float32Array([10, 10]), new Float32Array([-10, -10])],
-    [new Float32Array([-10, -10]), new Float32Array([10, -10])],
-    [new Float32Array([10, -10]), new Float32Array([10, 10])],
-    [new Float32Array([5, -5]), new Float32Array([6, -4])],
-    [new Float32Array([6, -5]), new Float32Array([5, -5])],
-    [new Float32Array([6, -4]), new Float32Array([6, -5])]
+    [[10, 10], [-10, -10]],
+    [[-10, -10], [10, -10]],
+    [[10, -10], [10, 10]],
+    [[5, -5], [6, -4]],
+    [[6, -5], [5, -5]],
+    [[6, -4], [6, -5]]
   ])
   const geometry2 = fromCompactBinary(compacted2)
 

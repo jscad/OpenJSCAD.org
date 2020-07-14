@@ -2,6 +2,8 @@ const test = require('ava')
 
 const { appendArc, fromPoints, toPoints } = require('./index')
 
+const { compareVectors } = require('../../../test/helpers/')
+
 test('appendArc: appending to an empty path produces an error', (t) => {
   const p1 = fromPoints({}, [])
   t.throws(() => appendArc({ endpoint: [12, 12] }, p1),
@@ -29,16 +31,16 @@ test('appendArc: appending to a path produces a new path', (t) => {
   obs = appendArc({ endpoint: [12, -22], radius: [15, -20], clockwise: true }, p2)
   pts = toPoints(obs)
   let exp = [
-    new Float32Array([27, -22]),
-    new Float32Array([27, -3]),
-    new Float32Array([26.08645248413086, -8.941047668457031]),
-    new Float32Array([23.87938690185547, -14.243871688842773]),
-    new Float32Array([20.581748962402344, -18.420881271362305]),
-    new Float32Array([16.496747970581055, -21.08800506591797]),
-    new Float32Array([12, -22])
+    [27, -22],
+    [27, -3],
+    [26.08645248413086, -8.941047668457031],
+    [23.87938690185547, -14.243871688842773],
+    [20.581748962402344, -18.420881271362305],
+    [16.496747970581055, -21.08800506591797],
+    [12, -22]
   ]
   t.is(pts.length, 7)
-  t.deepEqual(pts, exp)
+  t.true(compareVectors(pts, exp))
 
   // test large
   obs = appendArc({ endpoint: [12, -22], radius: [15, -20], large: true }, p2)
@@ -49,17 +51,17 @@ test('appendArc: appending to a path produces a new path', (t) => {
   obs = appendArc({ endpoint: [12, -22], radius: [15, -20], xaxisrotation: Math.PI / 2 }, p2)
   pts = toPoints(obs)
   exp = [
-    new Float32Array([27, -22]),
-    new Float32Array([27, -3]),
-    new Float32Array([21.830322265625, -4.401627540588379]),
-    new Float32Array([17.364704132080078, -6.805886268615723]),
-    new Float32Array([13.940502166748047, -10.031143188476562]),
-    new Float32Array([11.816394805908203, -13.833745002746582]),
-    new Float32Array([11.152851104736328, -17.926424026489258]),
-    new Float32Array([12, -22])
+    [27, -22],
+    [27, -3],
+    [21.830322265625, -4.401627540588379],
+    [17.364704132080078, -6.805886268615723],
+    [13.940502166748047, -10.031143188476562],
+    [11.816394805908203, -13.833745002746582],
+    [11.152851104736328, -17.926424026489258],
+    [12, -22]
   ]
   t.is(pts.length, 8)
-  t.deepEqual(pts, exp)
+  t.true(compareVectors(pts, exp))
 
   // test small arc between far points
   obs = appendArc({ endpoint: [120, -220], radius: [5, -5] }, p2)
