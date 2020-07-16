@@ -3,6 +3,7 @@
  */
 module.exports = {
   constants: require('./constants'),
+  bezier: require('./bezier'),
   line2: require('./line2'),
   line3: require('./line3'),
   mat4: require('./mat4'),
