@@ -2,7 +2,7 @@ const test = require('ava')
 
 const { appendBezier, fromPoints, toPoints } = require('./index')
 
-const { compareVectors } = require('../../../test/helpers/')
+const { comparePoints } = require('../../../test/helpers/')
 
 test('appendBezier: appending to an empty path produces an error', (t) => {
   const p1 = fromPoints({}, [])
@@ -15,20 +15,20 @@ test('appendBezier: appending to a path produces a new path', (t) => {
   const obs1 = appendBezier({ controlPoints: [[10, -10], [25, -10], [25, -20]], segments: 16 }, p1)
   const pts = toPoints(obs1)
   const exp = [
-    [10, -20],
-    [10.410054206848145, -17.329673767089844],
-    [11.524609565734863, -15.244627952575684],
-    [13.170248985290527, -13.744856834411621],
-    [15.709946632385254, -12.69318675994873],
-    [18.46980094909668, -12.556013107299805],
-    [20.665245056152344, -13.128305435180664],
-    [22.592273712158203, -14.318841934204102],
-    [23.857263565063477, -15.783226013183594],
-    [24.696157455444336, -17.676944732666016],
-    [25, -20]
+    [10, -20 ],
+    [10.410054926134793, -17.32967535436671 ],
+    [11.524609505100285, -15.244627343392775 ],
+    [13.170248437738149, -13.74485596707819 ],
+    [15.709947106075743, -12.693187014174669 ],
+    [18.469801915922933, -12.556012802926382 ],
+    [20.665245172410074, -13.128305870265937 ],
+    [22.5922740239998, -14.318842543198585 ],
+    [23.857263873597326, -15.783225858248295 ],
+    [24.69615704524313, -17.676945010515432 ],
+    [25, -20 ]
   ]
   t.is(pts.length, 11)
-  t.true(compareVectors(pts, exp))
+  t.true(comparePoints(pts, exp))
 
   const obs2 = appendBezier({ controlPoints: [null, [25, -30], [40, -30], [40, -20]], segments: 16 }, obs1)
   const pts2 = toPoints(obs2)

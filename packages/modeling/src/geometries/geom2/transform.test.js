@@ -4,7 +4,7 @@ const mat4 = require('../../maths/mat4')
 
 const { transform, fromPoints, toSides } = require('./index')
 
-const { compareVectors } = require('../../../test/helpers/')
+const { comparePoints, compareVectors } = require('../../../test/helpers/')
 
 test('transform: adjusts the transforms of geom2', (t) => {
   const points = [[0, 0], [1, 0], [0, 1]]
@@ -21,25 +21,33 @@ test('transform: adjusts the transforms of geom2', (t) => {
   const geometry = fromPoints(points)
   let another = transform(rotate90, geometry)
   t.not(geometry, another)
-  t.true(compareVectors(another.sides, expected.sides))
+  t.true(comparePoints(another.sides[0], expected.sides[0]))
+  t.true(comparePoints(another.sides[1], expected.sides[1]))
+  t.true(comparePoints(another.sides[2], expected.sides[2]))
   t.true(compareVectors(another.transforms, expected.transforms))
 
   // expect lazy transform, i.e. only the transforms change
   expected.transforms = [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, -5, 5, 5, 1]
   another = transform(mat4.fromTranslation([5, 5, 5]), another)
-  t.true(compareVectors(another.sides, expected.sides))
+  t.true(comparePoints(another.sides[0], expected.sides[0]))
+  t.true(comparePoints(another.sides[1], expected.sides[1]))
+  t.true(comparePoints(another.sides[2], expected.sides[2]))
   t.true(compareVectors(another.transforms, expected.transforms))
 
   // expect application of the transforms to the sides
   expected.sides = [[[-6, 5], [-5, 5]], [[-5, 5], [-5, 6]], [[-5, 6], [-6, 5]]]
   expected.transforms = mat4.identity()
   toSides(another)
-  t.true(compareVectors(another.sides, expected.sides))
+  t.true(comparePoints(another.sides[0], expected.sides[0]))
+  t.true(comparePoints(another.sides[1], expected.sides[1]))
+  t.true(comparePoints(another.sides[2], expected.sides[2]))
   t.true(compareVectors(another.transforms, expected.transforms))
 
   // expect lazy transform, i.e. only the transforms change
   expected.transforms = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 5, 5, 1]
   another = transform(mat4.fromTranslation([5, 5, 5]), another)
-  t.true(compareVectors(another.sides, expected.sides))
+  t.true(comparePoints(another.sides[0], expected.sides[0]))
+  t.true(comparePoints(another.sides[1], expected.sides[1]))
+  t.true(comparePoints(another.sides[2], expected.sides[2]))
   t.true(compareVectors(another.transforms, expected.transforms))
 })

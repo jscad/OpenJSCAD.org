@@ -4,7 +4,7 @@ const { fromPoints } = require('./index')
 
 const applyTransforms = require('./applyTransforms')
 
-const { compareVectors } = require('../../../test/helpers/')
+const { comparePoints, compareVectors } = require('../../../test/helpers/')
 
 test('applyTransforms: Updates a populated path with transformed points', (t) => {
   const points = [[0, 0], [1, 0], [0, 1]]
@@ -16,13 +16,13 @@ test('applyTransforms: Updates a populated path with transformed points', (t) =>
   const geometry = fromPoints({}, points)
   const updated = applyTransforms(geometry)
   t.is(geometry, updated)
-  t.true(compareVectors(updated.points, expected.points))
+  t.true(comparePoints(updated.points, expected.points))
   t.false(updated.isClosed)
   t.true(compareVectors(updated.transforms, expected.transforms))
 
   const updated2 = applyTransforms(updated)
   t.is(updated, updated2)
-  t.true(compareVectors(updated2.points, expected.points))
+  t.true(comparePoints(updated2.points, expected.points))
   t.false(updated2.isClosed)
   t.true(compareVectors(updated2.transforms, expected.transforms))
 })
