@@ -7,17 +7,25 @@
 const compareVectors = (vec1, vec2, eps = Number.EPSILON) => {
   if (vec1.length === vec2.length) {
     return vec1.reduce((valid, value, index) => {
+      // get the values, which also does type conversions
+      const value1 = vec1[index]
+      const value2 = vec2[index]
       // special comparison for NAN values
-      if (isNaN(vec1[index]) && isNaN(vec2[index])) {
+      // type is Number, and value is NaN
+      if (Number.isNaN(value1) && Number.isNaN(value2)) {
         return valid
       }
-      // special comparison for Infinite values
-      if ((!Number.isFinite(vec1[index])) && (!Number.isFinite(vec2[index]))) {
-        return valid
+      // type is Number, and value is finite
+      if (Number.isFinite(value1) && Number.isFinite(value2)) {
+        // compare number values, not types
+        const diff = Math.abs(value1 - value2)
+        return valid && (diff < eps)
       }
-      // only compare values, not types
-      const diff = Math.abs(vec1[index] - vec2[index])
-      return valid && (diff < eps)
+      // catch mistakes in usage
+      if (typeof value1 !== 'number') throw new Error('invalid usage of compareVectors; vec1')
+      if (typeof value2 !== 'number') throw new Error('invalid usage of compareVectors; vec2')
+
+      return valid
     }, true)
   }
   return false
