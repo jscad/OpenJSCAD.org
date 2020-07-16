@@ -12,7 +12,7 @@ test('mirror: mirroring of path2 about X/Y produces expected changes to points',
   // mirror about X
   let mirrored = mirror({ normal: [1, 0, 0] }, geometry)
   let obs = path2.toPoints(mirrored)
-  let exp = [ [5, 5], [-5, 5], [5, -5], [-10, -5] ]
+  let exp = [[5, 5], [-5, 5], [5, -5], [-10, -5]]
   t.true(comparePoints(obs, exp))
 
   mirrored = mirrorX(geometry)
@@ -22,7 +22,7 @@ test('mirror: mirroring of path2 about X/Y produces expected changes to points',
   // mirror about Y
   mirrored = mirror({ normal: [0, 1, 0] }, geometry)
   obs = path2.toPoints(mirrored)
-  exp = [ [-5, -5], [5, -5], [-5, 5], [10, 5] ]
+  exp = [[-5, -5], [5, -5], [-5, 5], [10, 5]]
   t.true(comparePoints(obs, exp))
 
   mirrored = mirrorY(geometry)
@@ -36,7 +36,7 @@ test('mirror: mirroring of geom2 about X/Y produces expected changes to points',
   // mirror about X
   let mirrored = mirror({ normal: [1, 0, 0] }, geometry)
   let obs = geom2.toPoints(mirrored)
-  let exp = [ [5, -5], [0, 5], [-10, -5] ]
+  let exp = [[5, -5], [0, 5], [-10, -5]]
   t.true(comparePoints(obs, exp))
 
   mirrored = mirrorX(geometry)
@@ -46,7 +46,7 @@ test('mirror: mirroring of geom2 about X/Y produces expected changes to points',
   // mirror about Y
   mirrored = mirror({ normal: [0, 1, 0] }, geometry)
   obs = geom2.toPoints(mirrored)
-  exp = [ [-5, 5], [0, -5], [10, 5] ]
+  exp = [[-5, 5], [0, -5], [10, 5]]
   t.true(comparePoints(obs, exp))
 
   mirrored = mirrorY(geometry)
@@ -127,10 +127,10 @@ test('mirror: mirroring of multiple objects produces an array of mirrored object
   t.is(mirrored[0], junk)
 
   let obs = path2.toPoints(mirrored[1])
-  let exp = [ [-5, -5], [5, -5], [-5, 5], [10, 5] ]
+  let exp = [[-5, -5], [5, -5], [-5, 5], [10, 5]]
   t.true(comparePoints(obs, exp))
 
   obs = geom2.toPoints(mirrored[2])
-  exp = [ [-5, 5], [0, -5], [10, 5] ]
+  exp = [[-5, 5], [0, -5], [10, 5]]
   t.true(comparePoints(obs, exp))
 })

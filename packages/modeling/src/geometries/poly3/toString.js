@@ -6,7 +6,7 @@ const vec3 = require('../../maths/vec3/')
  * @alias module:modeling/geometries/poly3.toString
  */
 const toString = (poly3) => {
-  let result = `poly3: vertices: [`
+  let result = 'poly3: vertices: ['
   poly3.vertices.forEach((vertex) => {
     result += `${vec3.toString(vertex)}, `
   })

@@ -1,4 +1,3 @@
-const normalize = require('./normalize')
 const dot = require('./dot')
 
 /**

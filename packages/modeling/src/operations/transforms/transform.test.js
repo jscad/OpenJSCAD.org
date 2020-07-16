@@ -14,7 +14,7 @@ test('transform: transforming of a path2 produces expected changes to points', (
 
   geometry = transform(matrix, geometry)
   const obs = path2.toPoints(geometry)
-  const exp = [ [2, 2], [3, 2] ]
+  const exp = [[2, 2], [3, 2]]
   t.true(comparePoints(obs, exp))
 })
 
@@ -24,7 +24,7 @@ test('transform: transforming of a geom2 produces expected changes to sides', (t
 
   geometry = transform(matrix, geometry)
   const obs = geom2.toPoints(geometry)
-  const exp = [ [0, 0], [5, 0], [0, 5] ]
+  const exp = [[0, 0], [5, 0], [0, 5]]
   t.true(comparePoints(obs, exp))
 })
 
@@ -62,10 +62,10 @@ test('transform: transforming of multiple objects produces expected changes', (t
   t.is(transformed[0], junk)
 
   let obs = path2.toPoints(transformed[1])
-  let exp = [ [-3, 7], [7, 7], [-3, -3], [12, -3] ]
+  let exp = [[-3, 7], [7, 7], [-3, -3], [12, -3]]
   t.true(comparePoints(obs, exp))
 
   obs = geom2.toPoints(transformed[2])
-  exp = [ [-3, -3], [2, 7], [12, -3] ]
+  exp = [[-3, -3], [2, 7], [12, -3]]
   t.true(comparePoints(obs, exp))
 })

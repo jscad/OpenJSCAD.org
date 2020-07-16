@@ -35,7 +35,7 @@ test('line2: transform() called with two paramerters should return a line2 with 
   let obs2 = transform(translationMatrix, line1)
   t.true(compareVectors(obs2, [0, 1, 5]))
   obs2 = transform(translationMatrix, line2)
-  //t.true(compareVectors(obs2, [-1, 0, -1], 1e-15))
+  // t.true(compareVectors(obs2, [-1, 0, -1], 1e-15))
   obs2 = transform(translationMatrix, line3)
   t.true(compareVectors(obs2, [-0.7071067811865478, 0.7071067811865474, 2.828427124746189]))
 

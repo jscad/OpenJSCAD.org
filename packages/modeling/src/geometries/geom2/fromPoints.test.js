@@ -12,8 +12,8 @@ test('fromPoints: creates populated geom2', (t) => {
 })
 
 test('fromPoints: throws for improper points', (t) => {
-  t.throws(() => fromPoints(), {instanceOf: Error})
-  t.throws(() => fromPoints(0, 0), {instanceOf: Error})
-  t.throws(() => fromPoints([]), {instanceOf: Error})
-  t.throws(() => fromPoints([[0, 0]]), {instanceOf: Error})
+  t.throws(() => fromPoints(), { instanceOf: Error })
+  t.throws(() => fromPoints(0, 0), { instanceOf: Error })
+  t.throws(() => fromPoints([]), { instanceOf: Error })
+  t.throws(() => fromPoints([[0, 0]]), { instanceOf: Error })
 })

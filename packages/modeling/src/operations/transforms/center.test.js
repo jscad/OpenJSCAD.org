@@ -12,7 +12,7 @@ test('center: centering of a path2 produces expected changes to points', (t) => 
   // center about X
   let centered = center({ axes: [true, false, false] }, geometry)
   let pts = path2.toPoints(centered)
-  const exp = [ [3, 0], [-2, 3], [-3, 0] ]
+  const exp = [[3, 0], [-2, 3], [-3, 0]]
   t.true(comparePoints(pts, exp))
 
   centered = centerX(geometry)
@@ -26,7 +26,7 @@ test('center: centering of a geom2 produces expected changes to points', (t) => 
   // center about Y
   let centered = center({ axes: [false, true, false] }, geometry)
   let pts = geom2.toPoints(centered)
-  const exp = [ [0, -5], [10, -5], [0, 5] ]
+  const exp = [[0, -5], [10, -5], [0, 5]]
   t.true(comparePoints(pts, exp))
 
   centered = centerY(geometry)
@@ -107,10 +107,10 @@ test('center: centering of multiple objects produces expected changes', (t) => {
   t.is(centered[0], junk)
 
   const pts1 = path2.toPoints(centered[1])
-  const exp1 = [ [2.5, 20], [12.5, 20], [2.5, 10], [17.5, 10] ]
+  const exp1 = [[2.5, 20], [12.5, 20], [2.5, 10], [17.5, 10]]
   t.true(comparePoints(pts1, exp1))
 
   const pts2 = geom2.toPoints(centered[2])
-  const exp2 = [ [2.5, 10], [7.5, 20], [17.5, 10] ]
+  const exp2 = [[2.5, 10], [7.5, 20], [17.5, 10]]
   t.true(comparePoints(pts2, exp2))
 })

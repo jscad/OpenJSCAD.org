@@ -4,7 +4,7 @@ const { geom3 } = require('../../geometries')
 
 const retessellate = require('./retessellate')
 
-const { comparePolygonsAsPoints, compareVectors } = require('../../../test/helpers')
+const { comparePolygonsAsPoints } = require('../../../test/helpers')
 
 test('geom3: retessellate() should create proper geometry from empty geometries', (t) => {
   const obj1 = geom3.create()
@@ -108,7 +108,7 @@ test('geom3: retessellate() should create proper geometry from solid geometries'
     [[-5, -5, -5], [-5, -5, 5], [-5, 5, 5], [-5, 5, -5]],
     [[5, -5, -5], [5, 5, -5], [5, 5, 5], [5, -5, 5]],
     [[-5, -5, -5], [5, -5, -5], [5, -5, 5], [-5, -5, 5]],
-    [[-5, 5, -5], [-5, 5, 5], [5, 5, 5], [5, 5, -5]] ,
+    [[-5, 5, -5], [-5, 5, 5], [5, 5, 5], [5, 5, -5]],
     [[-5, -5, -5], [-5, 5, -5], [5, 5, -5], [5, -5, -5]],
     [[-5, -5, 5], [5, -5, 5], [5, 5, 5], [-5, 5, 5]],
     [[15, 15, 15], [15, 15, 25], [15, 25, 25], [15, 25, 15]],
