@@ -1,6 +1,10 @@
 /**
- * Hello this is about primitives.
+ * Primitives provide the building blocks for complex parts.
+ * Each primitive is a geometrical object that can be described mathematically, and therefore precise.
+ * Primitives can be logically combined, transformed, extruded, etc.
  * @module modeling/primitives
+ * @example
+ * const { cube, ellipse, star } = require('@jscad/modeling').primitives
  */
 module.exports = {
   arc: require('./arc'),

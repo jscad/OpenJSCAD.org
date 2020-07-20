@@ -2,7 +2,7 @@ const vec3 = require('../vec3')
 const fromValues = require('../vec4/fromValues')
 
 /**
- * Create a new plane from the given points.
+ * Create a plane from the given points.
  *
  * @param {vec3} a - 3D point
  * @param {vec3} b - 3D point

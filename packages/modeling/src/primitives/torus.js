@@ -18,7 +18,7 @@ const { circle } = require('./ellipse')
  * @alias module:modeling/primitives.torus
  *
  * @example
- * let torus1 = torus({
+ * let myshape = torus({
  *   innerRadius: 10,
  *   outerRadius: 100
  * })

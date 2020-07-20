@@ -2,7 +2,6 @@ const create = require('./create')
 
 /**
  * Transforms the given vector using the given matrix.
- * 4th vector component is implicitly '1'.
  * @param {vec3} [out] - the receiving vector
  * @param {mat4} matrix - the transform matrix
  * @param {vec3} vector - the vector to transform

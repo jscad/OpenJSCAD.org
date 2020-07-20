@@ -1,7 +1,7 @@
 const create = require('./create')
 
 /**
- * Multiplies the coordinates of two vectors (A*B).
+ * Multiplies the coordinates of the given vectors (A*B).
  *
  * @param {vec3} [out] - the receiving vector
  * @param {vec3} a - the first operand

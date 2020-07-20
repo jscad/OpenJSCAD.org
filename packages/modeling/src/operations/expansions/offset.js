@@ -7,7 +7,7 @@ const offsetGeom2 = require('./offsetGeom2')
 const offsetPath2 = require('./offsetPath2')
 
 /**
- * Create offset geometry from the given geomeotry using the given options.
+ * Create offset geometry from the given geometry using the given options.
  * @param {Object} options - options for offset
  * @param {Float} [options.delta=1] - delta of offset (+ to exterior, - from interior)
  * @param {String} [options.corners='edge'] - type corner to create during of expansion; edge, chamfer, round

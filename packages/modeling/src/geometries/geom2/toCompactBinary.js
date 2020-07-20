@@ -1,7 +1,7 @@
 /**
  * Produces a compact binary representation from the given geometry.
  * @param {geom2} geometry - the geometry
- * @returns {Array} compact binary representation, an array
+ * @returns {TypedArray} compact binary representation
  * @alias module:modeling/geometries/geom2.toCompactBinary
  */
 const toCompactBinary = (geom) => {

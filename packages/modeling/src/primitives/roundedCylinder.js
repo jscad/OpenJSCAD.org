@@ -6,17 +6,17 @@ const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
 /**
- * Construct a cylinder with rounded ends.
+ * Construct a solid cylinder in three dimensional space with rounded ends.
  * @param {Object} [options] - options for construction
  * @param {Array} [options.height=2] - height of cylinder
  * @param {Number} [options.radius=1] - radius of cylinder
  * @param {Number} [options.roundRadius=0.2] - radius of rounded edges
- * @param {Number} [options.segments=32] - number of segments to create per 360 rotation
+ * @param {Number} [options.segments=32] - number of segments to create per full rotation
  * @returns {geom3} new 3D geometry
  * @alias module:modeling/primitives.roundedCylinder
  *
  * @example
- * let mycylinder = roundedCylinder({
+ * let myshape = roundedCylinder({
  *   height: 10,
  *   radius: 2,
  *   roundRadius: 0.5

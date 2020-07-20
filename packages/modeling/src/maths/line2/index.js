@@ -1,4 +1,6 @@
 /**
+ * Represents a unbounded line in 2D space, positioned at a point of origin.
+ * @see {@link line2} for data structure information.
  * @module modeling/maths/line2
  */
 module.exports = {

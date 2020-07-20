@@ -107,11 +107,11 @@ const stitchSides = (bottomCorners, topCorners) => {
 }
 
 /**
- * Construct an axis-aligned solid rounded cuboid.
+ * Construct an axis-aligned solid cuboid in three dimensions with rounded edges.
  * @param {Object} [options] - options for construction
  * @param {Vector3} [options.size=[2,2,2]] - dimension of rounded cube; width, depth, height
  * @param {Number} [options.roundRadius=0.2] - radius of rounded edges
- * @param {Number} [options.segments=32] - number of segments to create per 360 rotation
+ * @param {Number} [options.segments=32] - number of segments to create per full rotation
  * @returns {geom3} new 3D geometry
  * @alias module:modeling/primitives.roundedCuboid
  *

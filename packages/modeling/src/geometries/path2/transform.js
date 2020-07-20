@@ -3,14 +3,16 @@ const mat4 = require('../../maths/mat4')
 const create = require('./create')
 
 /**
- * A lazy transform of all of the points in the path.
+ * Transform the given geometry using the given matrix.
+ * This is a lazy transform of the points, as this function only adjusts the transforms.
+ * The transforms are applied when accessing the points via toPoints().
  * @param {mat4} matrix - the matrix to transform with
- * @param {path2} geometry - the path to transform
+ * @param {path2} geometry - the geometry to transform
  * @returns {path2} a new path
  * @alias module:modeling/geometries/path2.transform
  *
  * @example
- * transform(fromZRotation(degToRad(90)), path)
+ * let newpath = transform(fromZRotation(Math.PI / 4), path)
  */
 const transform = (matrix, geometry) => {
   const newgeometry = create(geometry.points) // reuse the points

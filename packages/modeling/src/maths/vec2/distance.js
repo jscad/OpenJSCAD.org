@@ -1,5 +1,5 @@
 /**
- * Calculates the euclidian distance between two vectors.
+ * Calculates the distance between two vectors.
  *
  * @param {vec2} a - the first operand
  * @param {vec2} b - the second operand

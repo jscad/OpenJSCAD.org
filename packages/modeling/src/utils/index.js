@@ -1,5 +1,8 @@
 /**
+ * Utility functions of various sorts.
  * @module modeling/utils
+ * @example
+ * const { flatten, insertSorted } = require('@jscad/modeling').utils
  */
 module.exports = {
   areAllShapesTheSameType: require('./areAllShapesTheSameType'),

@@ -4,7 +4,7 @@ const vec3 = require('../../maths/vec3')
  * Measure the area of the given polygon.
  * @see 2000 softSurfer http://geomalgorithms.com
  * @param {poly3} polygon - the polygon to measure
- * @return {Float} area of the polygon
+ * @return {Number} area of the polygon
  * @alias module:modeling/geometries/poly3.measureArea
  */
 const measureArea = (poly3) => {

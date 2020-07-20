@@ -1,7 +1,7 @@
 const create = require('./create')
 
 /**
- * Computes the cross product of two vectors.
+ * Computes the cross product of the given vectors.
  *
  * @param {vec3} [out] - the receiving vector
  * @param {vec3} a - the first operand

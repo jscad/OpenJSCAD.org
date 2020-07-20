@@ -1,7 +1,7 @@
 const geom2 = require('../geometries/geom2')
 
 /**
- * Construct a polygon from a list of points, or list of points and paths.
+ * Construct a polygon in two dimensional space from a list of points, or a list of points and paths.
  * NOTE: The ordering of points is VERY IMPORTANT.
  * @param {Object} options - options for construction
  * @param {Array} options.points - points of the polygon : either flat or nested array of points

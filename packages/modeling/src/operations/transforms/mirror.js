@@ -8,17 +8,16 @@ const geom3 = require('../../geometries/geom3')
 const path2 = require('../../geometries/path2')
 
 /**
- * Mirror the given object(s) using the given options (if any).
- * Note: The normal should be given as 90 degrees from the plane origin.
+ * Mirror the given geometries using the given options.
  * @param {Object} options - options for mirror
  * @param {Array} [options.origin=[0,0,0]] - the origin of the plane
  * @param {Array} [options.normal=[0,0,1]] - the normal vector of the plane
- * @param {...Object} geometry - the geometry(s) to mirror
+ * @param {...Object} geometries - the geometries to mirror
  * @return {Object|Array} the mirrored geometry, or a list of mirrored geometry
  * @alias module:modeling/transforms.mirror
  *
  * @example
- * const newsphere = mirror({normal: [0,0,10]}, cube({center: [0,0,15], radius: [20, 25, 5]}))
+ * let myshape = mirror({normal: [0,0,10]}, cube({center: [0,0,15], radius: [20, 25, 5]}))
  */
 const mirror = (options, ...objects) => {
   const defaults = {
@@ -48,25 +47,25 @@ const mirror = (options, ...objects) => {
 }
 
 /**
- * Mirror the given object(s) about the X axis.
- * @param {...Object} objects - the objects(s) to mirror
- * @return {Object|Array} the mirrored object(s)
+ * Mirror the given geometries about the X axis.
+ * @param {...Object} geometries - the geometries to mirror
+ * @return {Object|Array} the mirrored geometry, or a list of mirrored geometry
  * @alias module:modeling/transforms.mirrorX
  */
 const mirrorX = (...objects) => mirror({ normal: [1, 0, 0] }, objects)
 
 /**
- * Mirror the given object(s) about the Y axis.
- * @param {...Object} objects - the objects(s) to mirror
- * @return {Object|Array} the mirrored object(s)
+ * Mirror the given geometries about the Y axis.
+ * @param {...Object} geometries - the geometries to mirror
+ * @return {Object|Array} the mirrored geometry, or a list of mirrored geometry
  * @alias module:modeling/transforms.mirrorY
  */
 const mirrorY = (...objects) => mirror({ normal: [0, 1, 0] }, objects)
 
 /**
  * Mirror the given object(s) about the Z axis.
- * @param {...Object} objects - the objects(s) to mirror
- * @return {Object|Array} the mirrored object(s)
+ * @param {...Object} objects - the geometries to mirror
+ * @return {Object|Array} the mirrored geometry, or a list of mirrored geometry
  * @alias module:modeling/transforms.mirrorZ
  */
 const mirrorZ = (...objects) => mirror({ normal: [0, 0, 1] }, objects)

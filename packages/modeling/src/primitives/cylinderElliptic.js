@@ -6,7 +6,7 @@ const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
 /**
- * Construct an elliptic cylinder.
+ * Construct an elliptic cylinder in three dimensional space.
  * @param {Object} [options] - options for construction
  * @param {Vector3} [options.height=2] - height of cylinder
  * @param {Vector2D} [options.startRadius=[1,1]] - radius of rounded start, must be two dimensional array
@@ -18,11 +18,11 @@ const poly3 = require('../geometries/poly3')
  * @alias module:modeling/primitives.cylinderElliptic
  *
  * @example
- *     let cylinder = cylinderElliptic({
- *       height: 2,
- *       startRadius: [10,5],
- *       endRadius: [8,3]
- *     });
+ * let myshape = cylinderElliptic({
+ *     height: 2,
+ *     startRadius: [10,5],
+ *     endRadius: [8,3]
+ *   })
  */
 const cylinderElliptic = (options) => {
   const defaults = {
@@ -112,7 +112,7 @@ const cylinderElliptic = (options) => {
 }
 
 /**
- * Construct a solid cylinder.
+ * Construct a solid cylinder in three dimensional space.
  * @see [cylinderElliptic]{@link module:modeling/primitives.cylinderElliptic} for more options
  * @param {Object} [options] - options for construction
  * @param {Array} [options.height=2] - height of cylinder
@@ -122,11 +122,10 @@ const cylinderElliptic = (options) => {
  * @alias module:modeling/primitives.cylinder
  *
  * @example
- * let cylinder = cylinder({
- *   height: 2,
- *   radius: 10,
- *   segments: 16
- * })
+ * let myshape = cylinder({
+ *     height: 2,
+ *     radius: 10
+ *   })
  */
 const cylinder = (options) => {
   const defaults = {
