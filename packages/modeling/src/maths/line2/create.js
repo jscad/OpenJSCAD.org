@@ -13,12 +13,6 @@
  * @returns {line2} a new unbounded line
  * @alias module:modeling/maths/line2.create
  */
-const create = () => {
-  const out = new Float32Array(3)
-  out[0] = 0 // normal
-  out[1] = 1
-  out[2] = 0 // distance
-  return out
-}
+const create = () => [0, 1, 0] // normal and distance
 
 module.exports = create

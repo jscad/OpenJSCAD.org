@@ -2,10 +2,12 @@ const test = require('ava')
 
 const { appendArc, fromPoints, toPoints } = require('./index')
 
+const { comparePoints } = require('../../../test/helpers/')
+
 test('appendArc: appending to an empty path produces an error', (t) => {
   const p1 = fromPoints({}, [])
   t.throws(() => appendArc({ endpoint: [12, 12] }, p1),
-    {message: 'the given path must contain one or more points (as the starting point for the arc)'})
+    { message: 'the given path must contain one or more points (as the starting point for the arc)' })
 })
 
 test('appendArc: appending to a path produces a new path', (t) => {
@@ -29,16 +31,16 @@ test('appendArc: appending to a path produces a new path', (t) => {
   obs = appendArc({ endpoint: [12, -22], radius: [15, -20], clockwise: true }, p2)
   pts = toPoints(obs)
   let exp = [
-    new Float32Array([27, -22]),
-    new Float32Array([27, -3]),
-    new Float32Array([26.08645248413086, -8.941047668457031]),
-    new Float32Array([23.87938690185547, -14.243871688842773]),
-    new Float32Array([20.581748962402344, -18.420881271362305]),
-    new Float32Array([16.496747970581055, -21.08800506591797]),
-    new Float32Array([12, -22])
+    [27, -22],
+    [27, -3],
+    [26.086451657912605, -8.941047736250177],
+    [23.87938869625451, -14.243872270248309],
+    [20.58174906029909, -18.420882475791835],
+    [16.49674848226545, -21.0880050920699],
+    [11.999999999999998, -22]
   ]
   t.is(pts.length, 7)
-  t.deepEqual(pts, exp)
+  t.true(comparePoints(pts, exp))
 
   // test large
   obs = appendArc({ endpoint: [12, -22], radius: [15, -20], large: true }, p2)
@@ -49,17 +51,17 @@ test('appendArc: appending to a path produces a new path', (t) => {
   obs = appendArc({ endpoint: [12, -22], radius: [15, -20], xaxisrotation: Math.PI / 2 }, p2)
   pts = toPoints(obs)
   exp = [
-    new Float32Array([27, -22]),
-    new Float32Array([27, -3]),
-    new Float32Array([21.830322265625, -4.401627540588379]),
-    new Float32Array([17.364704132080078, -6.805886268615723]),
-    new Float32Array([13.940502166748047, -10.031143188476562]),
-    new Float32Array([11.816394805908203, -13.833745002746582]),
-    new Float32Array([11.152851104736328, -17.926424026489258]),
-    new Float32Array([12, -22])
+    [27, -22],
+    [27, -3],
+    [21.830323320631795, -4.401628923214028],
+    [17.364704977487236, -6.805886946199115],
+    [13.940501387124588, -10.031143708098092],
+    [11.816394990371812, -13.833746263211978],
+    [11.15285201325494, -17.926425912558045],
+    [12, -22.000000000000004]
   ]
   t.is(pts.length, 8)
-  t.deepEqual(pts, exp)
+  t.true(comparePoints(pts, exp))
 
   // test small arc between far points
   obs = appendArc({ endpoint: [120, -220], radius: [5, -5] }, p2)

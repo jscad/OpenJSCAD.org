@@ -10,6 +10,6 @@
  * @returns {vec2} a new vector
  * @alias module:modeling/maths/vec2.create
  */
-const create = () => new Float32Array(2) // 0, 0
+const create = () => [0, 0]
 
 module.exports = create

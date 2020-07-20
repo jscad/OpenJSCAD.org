@@ -1,5 +1,7 @@
 const test = require('ava')
 
+const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
+
 const mat4 = require('../../maths/mat4')
 
 const { geom2, geom3, path2 } = require('../../geometries')
@@ -12,11 +14,8 @@ test('transform: transforming of a path2 produces expected changes to points', (
 
   geometry = transform(matrix, geometry)
   const obs = path2.toPoints(geometry)
-  const exp = [
-    new Float32Array([2, 2]),
-    new Float32Array([3, 2])
-  ]
-  t.deepEqual(obs, exp)
+  const exp = [[2, 2], [3, 2]]
+  t.true(comparePoints(obs, exp))
 })
 
 test('transform: transforming of a geom2 produces expected changes to sides', (t) => {
@@ -25,13 +24,8 @@ test('transform: transforming of a geom2 produces expected changes to sides', (t
 
   geometry = transform(matrix, geometry)
   const obs = geom2.toPoints(geometry)
-  const exp = [
-    new Float32Array([0, 0]),
-    new Float32Array([5, 0]),
-    new Float32Array([0, 5])
-  ]
-
-  t.deepEqual(obs, exp)
+  const exp = [[0, 0], [5, 0], [0, 5]]
+  t.true(comparePoints(obs, exp))
 })
 
 test('transform: transforming of a geom3 produces expected changes to polygons', (t) => {
@@ -48,32 +42,14 @@ test('transform: transforming of a geom3 produces expected changes to polygons',
   geometry = transform(matrix, geometry)
   const obs = geom3.toPoints(geometry)
   const exp = [
-    [new Float32Array([-5, -10, -15]),
-      new Float32Array([-5, -10, 15]),
-      new Float32Array([-5, 10, 15]),
-      new Float32Array([-5, 10, -15])],
-    [new Float32Array([5, -10, -15]),
-      new Float32Array([5, 10, -15]),
-      new Float32Array([5, 10, 15]),
-      new Float32Array([5, -10, 15])],
-    [new Float32Array([-5, -10, -15]),
-      new Float32Array([5, -10, -15]),
-      new Float32Array([5, -10, 15]),
-      new Float32Array([-5, -10, 15])],
-    [new Float32Array([-5, 10, -15]),
-      new Float32Array([-5, 10, 15]),
-      new Float32Array([5, 10, 15]),
-      new Float32Array([5, 10, -15])],
-    [new Float32Array([-5, -10, -15]),
-      new Float32Array([-5, 10, -15]),
-      new Float32Array([5, 10, -15]),
-      new Float32Array([5, -10, -15])],
-    [new Float32Array([-5, -10, 15]),
-      new Float32Array([5, -10, 15]),
-      new Float32Array([5, 10, 15]),
-      new Float32Array([-5, 10, 15])]
+    [[-5, -10, -15], [-5, -10, 15], [-5, 10, 15], [-5, 10, -15]],
+    [[5, -10, -15], [5, 10, -15], [5, 10, 15], [5, -10, 15]],
+    [[-5, -10, -15], [5, -10, -15], [5, -10, 15], [-5, -10, 15]],
+    [[-5, 10, -15], [-5, 10, 15], [5, 10, 15], [5, 10, -15]],
+    [[-5, -10, -15], [-5, 10, -15], [5, 10, -15], [5, -10, -15]],
+    [[-5, -10, 15], [5, -10, 15], [5, 10, 15], [-5, 10, 15]]
   ]
-  t.deepEqual(obs, exp)
+  t.true(comparePolygonsAsPoints(obs, exp))
 })
 
 test('transform: transforming of multiple objects produces expected changes', (t) => {
@@ -86,19 +62,10 @@ test('transform: transforming of multiple objects produces expected changes', (t
   t.is(transformed[0], junk)
 
   let obs = path2.toPoints(transformed[1])
-  let exp = [
-    new Float32Array([-3, 7]),
-    new Float32Array([7, 7]),
-    new Float32Array([-3, -3]),
-    new Float32Array([12, -3])
-  ]
-  t.deepEqual(obs, exp)
+  let exp = [[-3, 7], [7, 7], [-3, -3], [12, -3]]
+  t.true(comparePoints(obs, exp))
 
   obs = geom2.toPoints(transformed[2])
-  exp = [
-    new Float32Array([-3, -3]),
-    new Float32Array([2, 7]),
-    new Float32Array([12, -3])
-  ]
-  t.deepEqual(obs, exp)
+  exp = [[-3, -3], [2, 7], [12, -3]]
+  t.true(comparePoints(obs, exp))
 })

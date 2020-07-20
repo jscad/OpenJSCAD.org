@@ -8,13 +8,13 @@ test('vec2: normal() should return a vec2 with correct values', (t) => {
   t.true(compareVectors(obs1, [0, 0]))
 
   const obs2 = normal([1, 2])
-  t.true(compareVectors(obs2, [-2, 1]))
+  t.true(compareVectors(obs2, [-2, 1], 1e-15))
 
   const obs3 = normal([-1, -2])
-  t.true(compareVectors(obs3, [2, -1]))
+  t.true(compareVectors(obs3, [2, -1], 1e-15))
 
   const obs4 = normal([-1, 2])
-  t.true(compareVectors(obs4, [-2, -1]))
+  t.true(compareVectors(obs4, [-2, -1], 1e-15))
 })
 
 test('vec2: normal() with two params should update a vec2 with correct values', (t) => {
@@ -26,19 +26,19 @@ test('vec2: normal() with two params should update a vec2 with correct values', 
 
   const out2 = create()
   const ret2 = normal(out2, [1, 2])
-  t.true(compareVectors(out2, [-2, 1]))
-  t.true(compareVectors(ret2, [-2, 1]))
+  t.true(compareVectors(out2, [-2, 1], 1e-15))
+  t.true(compareVectors(ret2, [-2, 1], 1e-15))
   t.is(out2, ret2)
 
   const out3 = create()
   const ret3 = normal(out3, [-1, -2])
-  t.true(compareVectors(out3, [2, -1]))
-  t.true(compareVectors(ret3, [2, -1]))
+  t.true(compareVectors(out3, [2, -1], 1e-15))
+  t.true(compareVectors(ret3, [2, -1], 1e-15))
   t.is(out3, ret3)
 
   const out4 = create()
   const ret4 = normal(out4, [-1, 2])
-  t.true(compareVectors(out4, [-2, -1]))
-  t.true(compareVectors(ret4, [-2, -1]))
+  t.true(compareVectors(out4, [-2, -1], 1e-15))
+  t.true(compareVectors(ret4, [-2, -1], 1e-15))
   t.is(out4, ret4)
 })
