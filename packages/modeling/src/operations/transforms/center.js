@@ -4,7 +4,7 @@ const geom2 = require('../../geometries/geom2')
 const geom3 = require('../../geometries/geom3')
 const path2 = require('../../geometries/path2')
 
-const measureBounds = require('../../measurements/measureBounds')
+const measureBoundingBox = require('../../measurements/measureBoundingBox')
 
 const { translate } = require('./translate')
 
@@ -15,7 +15,7 @@ const centerGeometry = (options, object) => {
   }
   const { axes, center } = Object.assign({}, defaults, options)
 
-  const bounds = measureBounds(object)
+  const bounds = measureBoundingBox(object)
   const offset = [0, 0, 0]
   if (axes[0]) offset[0] = center[0] - (bounds[0][0] + ((bounds[1][0] - bounds[0][0]) / 2))
   if (axes[1]) offset[1] = center[1] - (bounds[0][1] + ((bounds[1][1] - bounds[0][1]) / 2))

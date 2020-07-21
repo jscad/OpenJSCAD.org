@@ -4,14 +4,14 @@ const { EPS } = require('../../maths/constants')
 
 const { geom2, geom3, path2 } = require('../../geometries')
 
-const measureBounds = require('../../measurements/measureBounds')
+const measureBoundingBox = require('../../measurements/measureBoundingBox')
 
 /*
  * Measure the epsilon of the given (path2) geometry.
  * @return {Float} the epsilon (precision) of the geometry
  */
 const measureEpsilonOfPath2 = (geometry) => {
-  const bounds = measureBounds(geometry)
+  const bounds = measureBoundingBox(geometry)
   const x = bounds[1][0] - bounds[0][0]
   const y = bounds[1][1] - bounds[0][1]
 
@@ -24,7 +24,7 @@ const measureEpsilonOfPath2 = (geometry) => {
  * @return {Float} the epsilon (precision) of the geometry
  */
 const measureEpsilonOfGeom2 = (geometry) => {
-  const bounds = measureBounds(geometry)
+  const bounds = measureBoundingBox(geometry)
   const x = bounds[1][0] - bounds[0][0]
   const y = bounds[1][1] - bounds[0][1]
 
@@ -37,7 +37,7 @@ const measureEpsilonOfGeom2 = (geometry) => {
  * @return {Float} the epsilon (precision) of the geometry
  */
 const measureEpsilonOfGeom3 = (geometry) => {
-  const bounds = measureBounds(geometry)
+  const bounds = measureBoundingBox(geometry)
   const x = bounds[1][0] - bounds[0][0]
   const y = bounds[1][1] - bounds[0][1]
   const z = bounds[1][2] - bounds[0][2]

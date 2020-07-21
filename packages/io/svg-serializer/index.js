@@ -83,7 +83,7 @@ ${stringify(body)}`
  * Measure the bounds of the given objects, which is required to offset all points to positive X/Y values.
  */
 const getBounds = (objects) => {
-  const allbounds = measurements.measureBounds(objects)
+  const allbounds = measurements.measureBoundingBox(objects)
 
   if (objects.length === 1) return allbounds
 
