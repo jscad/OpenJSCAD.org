@@ -4,7 +4,7 @@ const geom2 = require('../../geometries/geom2')
 const geom3 = require('../../geometries/geom3')
 const path2 = require('../../geometries/path2')
 
-const measureBounds = require('../measurements/measureBounds')
+const measureBounds = require('../../measurements/measureBounds')
 
 const { translate } = require('./translate')
 

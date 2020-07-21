@@ -1,8 +1,8 @@
 const test = require('ava')
 
-const { geom2, geom3, path2 } = require('../../geometries')
+const { geom2, geom3, path2 } = require('../geometries')
 
-const { line, rectangle, cuboid } = require('../../primitives')
+const { line, rectangle, cuboid } = require('../primitives')
 
 const { measureBounds } = require('./index')
 

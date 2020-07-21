@@ -4,7 +4,7 @@ const { EPS } = require('../../maths/constants')
 
 const { geom2, geom3, path2 } = require('../../geometries')
 
-const measureBounds = require('../measurements/measureBounds')
+const measureBounds = require('../../measurements/measureBounds')
 
 /*
  * Measure the epsilon of the given (path2) geometry.
