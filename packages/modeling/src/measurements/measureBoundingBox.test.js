@@ -1,12 +1,12 @@
 const test = require('ava')
 
-const { geom2, geom3, path2 } = require('../../geometries')
+const { geom2, geom3, path2 } = require('../geometries')
 
-const { line, rectangle, cuboid } = require('../../primitives')
+const { line, rectangle, cuboid } = require('../primitives')
 
-const { measureBounds } = require('./index')
+const { measureBoundingBox } = require('./index')
 
-test('measureBounds (single objects)', (t) => {
+test('measureBoundingBox (single objects)', (t) => {
   const aline = line([[10, 10], [15, 15]])
   const arect = rectangle()
   const acube = cuboid()
@@ -19,17 +19,17 @@ test('measureBounds (single objects)', (t) => {
   const o = {}
   const x = 'hi'
 
-  const lbounds = measureBounds(aline)
-  const rbounds = measureBounds(arect)
-  const cbounds = measureBounds(acube)
+  const lbounds = measureBoundingBox(aline)
+  const rbounds = measureBoundingBox(arect)
+  const cbounds = measureBoundingBox(acube)
 
-  const p2bounds = measureBounds(apath2)
-  const g2bounds = measureBounds(ageom2)
-  const g3bounds = measureBounds(ageom3)
+  const p2bounds = measureBoundingBox(apath2)
+  const g2bounds = measureBoundingBox(ageom2)
+  const g3bounds = measureBoundingBox(ageom3)
 
-  const nbounds = measureBounds(n)
-  const obounds = measureBounds(o)
-  const xbounds = measureBounds(x)
+  const nbounds = measureBoundingBox(n)
+  const obounds = measureBoundingBox(o)
+  const xbounds = measureBoundingBox(x)
 
   t.deepEqual(lbounds, [[10, 10, 0], [15, 15, 0]])
   t.deepEqual(rbounds, [[-1, -1, 0], [1, 1, 0]])
@@ -44,12 +44,12 @@ test('measureBounds (single objects)', (t) => {
   t.deepEqual(xbounds, [[0, 0, 0], [0, 0, 0]])
 })
 
-test('measureBounds (multiple objects)', (t) => {
+test('measureBoundingBox (multiple objects)', (t) => {
   const aline = line([[10, 10], [15, 15]])
   const arect = rectangle({ size: [10, 20] })
   const acube = cuboid()
   const o = {}
 
-  const allbounds = measureBounds(aline, arect, acube, o)
+  const allbounds = measureBoundingBox(aline, arect, acube, o)
   t.deepEqual(allbounds, [[[10, 10, 0], [15, 15, 0]], [[-5, -10, 0], [5, 10, 0]], [[-1, -1, -1], [1, 1, 1]], [[0, 0, 0], [0, 0, 0]]])
 })
