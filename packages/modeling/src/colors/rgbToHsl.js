@@ -6,7 +6,7 @@ const flatten = require('../utils/flatten')
  * @see http://en.wikipedia.org/wiki/HSL_color_space.
  * @see http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
  * @param {...Number|Array} values - RGB or RGBA color values
- * @return {Number[]} HSL or HSLA color values
+ * @return {Array} HSL or HSLA color values
  * @alias module:modeling/colors.rgbToHsl
  */
 const rgbToHsl = (...values) => {

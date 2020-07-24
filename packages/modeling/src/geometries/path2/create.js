@@ -10,7 +10,7 @@ const mat4 = require('../../maths/mat4')
 
 /**
  * Create an empty, open path.
- * @returns {path2} a new empty, open path
+ * @returns {path2} a new path
  * @alias module:modeling/geometries/path2.create
  *
  * @example

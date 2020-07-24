@@ -4,7 +4,7 @@ const dot = require('../vec3/dot')
 /**
  * Determine whether the given matrix is a mirroring transformation.
  *
- * @param {mat4} mat - the matrix
+ * @param {mat4} matrix - the matrix
  * @returns {Boolean} true if matrix is a mirroring transformation
  * @alias module:modeling/maths/mat4.isMirroring
  */

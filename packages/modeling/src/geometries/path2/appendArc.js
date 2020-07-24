@@ -4,18 +4,18 @@ const fromPoints = require('./fromPoints')
 const toPoints = require('./toPoints')
 
 /**
- * Append an arc to the end of the given geometry.
- * This implementation follows the SVG arc specifications.
+ * Append a series of points to the given geometry that represent an arc.
+ * This implementation follows the SVG specifications.
  * @see http://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
  * @param {Object} options - options for construction
  * @param {vec2} options.endpoint - end point of arc (REQUIRED)
  * @param {vec2} [options.radius=[0,0]] - radius of arc (X and Y)
  * @param {Number} [options.xaxisrotation=0] - rotation (RADIANS) of the X axis of the arc with respect to the X axis of the coordinate system
  * @param {Boolean} [options.clockwise=false] - draw an arc clockwise with respect to the center point
- * @param {Boolean} [options.large=false] - draw an arc longer than 180 degrees
- * @param {Number} [options.segments=16] - number of segments per 360 rotation
+ * @param {Boolean} [options.large=false] - draw an arc longer than PI radians
+ * @param {Number} [options.segments=16] - number of segments per full rotation
  * @param {path2} geometry - the path of which to append the arc
- * @returns {path2} a new path with the appended arc
+ * @returns {path2} a new path with the appended points
  * @alias module:modeling/geometries/path2.appendArc
  *
  * @example

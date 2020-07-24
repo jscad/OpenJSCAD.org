@@ -1,7 +1,7 @@
 /**
  * Produce a compact binary representation from the given path.
  * @param {path2} geometry - the path
- * @returns {Array} compact binary representation, array
+ * @returns {TypedArray} compact binary representation
  * @alias module:modeling/geometries/path2.toCompactBinary
  */
 const toCompactBinary = (geom) => {

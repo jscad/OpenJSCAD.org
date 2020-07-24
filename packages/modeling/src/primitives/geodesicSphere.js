@@ -11,6 +11,9 @@ const polyhedron = require('./polyhedron')
  * @param {Number} [options.frequency=6] - subdivision frequency per face, multiples of 6
  * @returns {geom3} new 3D geometry
  * @alias module:modeling/primitives.geodesicSphere
+ *
+ * @example
+ * let myshape = geodesicSphere({radius: 15, frequency: 18})
  */
 const geodesicSphere = (options) => {
   const defaults = {

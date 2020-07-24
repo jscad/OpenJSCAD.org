@@ -3,7 +3,7 @@ const vec3 = require('../vec3')
 const closestPoint = require('./closestPoint')
 
 /**
- * Calculate the distance (positive) between the given point and line
+ * Calculate the distance (positive) between the given point and line.
  *
  * @param {vec3} point the point of reference
  * @param {line3} line the line of reference

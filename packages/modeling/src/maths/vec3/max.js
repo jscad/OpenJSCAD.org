@@ -1,7 +1,7 @@
 const create = require('./create')
 
 /**
- * Returns the maximum coordinates from two vectors.
+ * Returns the maximum coordinates of the given vectors.
  *
  * @param {vec3} [out] - the receiving vector
  * @param {vec3} a - the first operand

@@ -10,6 +10,7 @@ const expandPath2 = require('./expandPath2')
 
 /**
  * Expand the given geometry using the given options.
+ * Note: Contract is expand using a negative delta.
  * @param {Object} options - options for expand
  * @param {Number} [options.delta=1] - delta (+/-) of expansion
  * @param {String} [options.corners='edge'] - type of corner to create during of expansion; edge, chamfer, round
@@ -19,9 +20,9 @@ const expandPath2 = require('./expandPath2')
  * @alias module:modeling/expansions.expand
  *
  * @example
- * let newarc = expand({delta: 5, edge: 'edge'}, arc({}))
- * let newsquare = expand({delta: 5, edge: 'chamfer'}, square({size: 30}))
- * let newsphere = expand({delta: 2, edge: 'round'}, cuboid({size: [20, 25, 5]}))
+ * let newarc = expand({delta: 5, corners: 'edge'}, arc({}))
+ * let newsquare = expand({delta: 5, corners: 'chamfer'}, square({size: 30}))
+ * let newsphere = expand({delta: 2, corners: 'round'}, cuboid({size: [20, 25, 5]}))
  */
 const expand = (options, ...objects) => {
   objects = flatten(objects)

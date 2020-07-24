@@ -87,11 +87,10 @@ const measureBoundingBoxOfGeom3 = (geometry) => {
 }
 
 /**
- * Measure the min and max bounds of the given geometry(s),
- * where min and max bounds are an array of [x,y,z]
- * @param {...Objects} geometries - the geometry(s) to measure
- * @return {Array} the min and max bounds for each geometry
- * @alias module:modeling/measurements.measureBoundingBox
+ * Measure the min and max bounds of the given geometries.
+ * @param {...Objects} geometries - the geometries to measure
+ * @return {Array} the min and max bounds for each geometry, i.e. [[X,Y,Z],[X,Y,Z]]
+ * @alias module:modeling/measurements.measureBounds
  *
  * @example
  * let bounds = measureBoundingBox(sphere())

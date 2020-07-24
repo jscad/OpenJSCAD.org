@@ -24,7 +24,7 @@ const getPoints = (vertices, radius, startAngle, center) => {
 }
 
 /**
- * Construct a star from the given options.
+ * Construct a star in two dimensional space.
  * @see https://en.wikipedia.org/wiki/Star_polygon
  * @param {Object} [options] - options for construction
  * @param {Number} [options.vertices=5] - number of vertices (P) on the star

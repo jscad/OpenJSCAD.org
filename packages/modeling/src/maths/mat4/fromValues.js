@@ -1,7 +1,7 @@
 const create = require('./create')
 
 /**
- * Create a new mat4 with the given values
+ * Create a matrix with the given values.
  *
  * @param {Number} m00 Component in column 0, row 0 position (index 0)
  * @param {Number} m01 Component in column 0, row 1 position (index 1)

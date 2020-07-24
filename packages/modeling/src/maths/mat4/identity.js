@@ -1,7 +1,7 @@
 const create = require('./create')
 
 /**
- * Set a mat4 to the identity matrix
+ * Set a matrix to the identity matrix.
  *
  * @param {mat4} [out] - the receiving matrix
  * @returns {mat4} a new matrix

@@ -1,7 +1,7 @@
 const create = require('../vec4/create')
 
 /**
- * Flip the given plane
+ * Flip the given plane.
  *
  * @param {plane} [out] - receiving plane
  * @param {plane} plane - plane to flip

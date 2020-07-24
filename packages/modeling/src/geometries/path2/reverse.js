@@ -3,13 +3,12 @@ const clone = require('./clone')
 /**
  * Reverses the path so that the points are in the opposite order.
  * This swaps the left (interior) and right (exterior) edges.
- * Reversal of path segments with options may be non-trivial.
- * @param {path2} path - the path to reverse.
+ * @param {path2} geometry - the geometry to reverse
  * @returns {path2} a new path
  * @alias module:modeling/geometries/path2.reverse
  *
  * @example
- * reverse(path)
+ * let newpath = reverse(mypath)
  */
 const reverse = (path) => {
   // NOTE: this only updates the order of the points

@@ -5,6 +5,7 @@ const fromValues = require('../vec4/fromValues')
  * Represents a plane in 3D coordinate space as determined by a normal (perpendicular to the plane)
  * and distance from 0,0,0.
  * The contents of the array are a normal [0,1,2] and a distance [3].
+ * @see https://en.wikipedia.org/wiki/Hesse_normal_form
  * @typedef {Array} plane
  */
 

@@ -3,7 +3,7 @@ const vec2 = require('../maths/vec2')
 const geom2 = require('../geometries/geom2')
 
 /**
- * Construct an axis-aligned rectangle with four sides and four 90-degree angles.
+ * Construct an axis-aligned rectangle in two dimensional space with four sides and four 90-degree angles.
  * @param {Object} [options] - options for construction
  * @param {Array} [options.size=[2,2]] - dimension of rectangle, width and length
  * @returns {geom2} new 2D geometry
@@ -35,7 +35,7 @@ const rectangle = (options) => {
 }
 
 /**
- * Construct an axis-aligned square with four equal sides and four 90-degree angles.
+ * Construct an axis-aligned square in two dimensional space with four equal sides and four 90-degree angles.
  * @see [rectangle]{@link module:modeling/primitives.rectangle} for more options
  * @param {Object} [options] - options for construction
  * @param {Number} [options.size=2] - dimension of square

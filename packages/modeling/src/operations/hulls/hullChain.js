@@ -13,8 +13,21 @@ const hull = require('./hull')
  * @returns {geom2|geom3} new geometry
  * @alias module:modeling/hulls.hullChain
  *
- * @example:
+ * @example
  * let newshape = hullChain(rectangle({center: [-5,-5]}), circle({center: [0,0]}), rectangle({center: [5,5]}))
+ *
+ * @example
+ * +-------+   +-------+     +-------+   +------+
+ * |       |   |       |     |        \ /       |
+ * |   A   |   |   C   |     |         |        |
+ * |       |   |       |     |                  |
+ * +-------+   +-------+     +                  +
+ *                       =   \                 /
+ *       +-------+            \               /
+ *       |       |             \             /
+ *       |   B   |              \           /
+ *       |       |               \         /
+ *       +-------+                +-------+
  */
 const hullChain = (...geometries) => {
   geometries = flatten(geometries)

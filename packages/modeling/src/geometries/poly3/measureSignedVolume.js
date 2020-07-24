@@ -6,7 +6,7 @@ const vec3 = require('../../maths/vec3')
  * and will be positive or negative based on the rotation of the vertices.
  * @see http://chenlab.ece.cornell.edu/Publication/Cha/icip01_Cha.pdf
  * @param {poly3} polygon - the polygon to measure
- * @return {Float} volume of the polygon
+ * @return {Number} volume of the polygon
  * @alias module:modeling/geometries/poly3.measureSignedVolume
  */
 const measureSignedVolume = (poly3) => {

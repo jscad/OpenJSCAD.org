@@ -1,5 +1,5 @@
 /**
- * Represents a 2D polygon consisting of a list of ordered vertices.
+ * Represents a convex 2D polygon consisting of a list of ordered vertices.
  * @typedef {Object} poly2
  * @property {Array} vertices - list of ordered vertices (2D)
  */
