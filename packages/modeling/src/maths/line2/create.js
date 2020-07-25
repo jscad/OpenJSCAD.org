@@ -1,9 +1,9 @@
 /**
  * Represents a unbounded line in 2D space, positioned at a point of origin.
- * A line is parametrized by a normal vector (perpendicular to the line, rotated 90 degrees counter clockwise)
- * and W. The line passes through the point of origin.
- * The contents are normal [0,1] followed by W [2].
- * Equation: a point (P) is on line (L) if dot(L.normal, P) == L.w
+ * A line is parametrized by a normal vector (perpendicular to the line, rotated 90 degrees counter clockwise) and
+ * distance from the origin.
+ * Equation: A Point (P) is on Line (L) if dot(L.normal, P) == L.distance
+ * The contents of the array are a normal [0,1] and a distance [2].
  * @typedef {Array} line2
  */
 
@@ -13,12 +13,6 @@
  * @returns {line2} a new unbounded line
  * @alias module:modeling/maths/line2.create
  */
-const create = () => {
-  const out = new Float32Array(3)
-  out[0] = 0 // normal
-  out[1] = 1
-  out[2] = 0 // distance
-  return out
-}
+const create = () => [0, 1, 0] // normal and distance
 
 module.exports = create

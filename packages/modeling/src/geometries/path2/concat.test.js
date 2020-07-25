@@ -21,5 +21,5 @@ test('concat: An open path and a closed path produces a closed path', (t) => {
 test('concat: A closed path and an open path throws an error', (t) => {
   t.throws(() => concat(fromPoints({ closed: true }, [[0, 0]]),
     fromPoints({ closed: false }, [[1, 1]])),
-  {message: 'Cannot concatenate to a closed path'})
+  { message: 'Cannot concatenate to a closed path' })
 })

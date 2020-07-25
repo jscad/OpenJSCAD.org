@@ -58,13 +58,13 @@ test('poly3: measureBoundingSphere() should return correct values', (t) => {
   exp1 = [[0, 0, 0], 0]
   t.true(compareVectors(ret1[0], exp1[0]))
   nearlyEqual(ret1[1], exp1[1], Number.EPSILON)
-  exp2 = [[-3.535533905029297, 3.535533905029297, 5], 7.071067810962035]
+  exp2 = [[-3.5355339059327373, 3.5355339059327378, 5], 7.0710678118654755]
   t.true(compareVectors(ret2[0], exp2[0]))
   nearlyEqual(ret2[1], exp2[1], Number.EPSILON)
-  exp3 = [[-3.535533905029297, 3.535533905029297, 5], 7.071067810962035]
+  exp3 = [[-3.5355339059327373, 3.5355339059327378, 5], 7.0710678118654755]
   t.true(compareVectors(ret3[0], exp3[0]))
   nearlyEqual(ret3[1], exp3[1], Number.EPSILON)
-  exp4 = [[-3.1819803714752197, 3.1819803714752197, 3], 4.609772183167014]
+  exp4 = [[-3.181980515339464, 3.1819805153394642, 3], 4.6097722286464435]
   t.true(compareVectors(ret4[0], exp4[0]))
   nearlyEqual(ret4[1], exp4[1], Number.EPSILON)
 })

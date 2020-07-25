@@ -1,5 +1,11 @@
 /**
+ * Maths are computational units for fundamental Euclidean geometry. All maths operate upon array data structures.
+ * Note: Maths data structues are consider immutable, so never change the contents directly.
+ * @see most computations are based upon glMatrix
  * @module modeling/maths
+ * @example
+ * const { constants, line2, mat4, vec2, vec3 } = require('@jscad/modeling').maths
+
  */
 module.exports = {
   constants: require('./constants'),

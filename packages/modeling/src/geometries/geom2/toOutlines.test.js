@@ -21,7 +21,7 @@ test('geom2: toOutlines() should return one or more outlines', (t) => {
   const exp1 = [
     [[1, -1], [1, 1], [-1, -1]]
   ]
-  t.true(comparePoints(exp1[0], ret1[0]))
+  t.true(comparePoints(ret1[0], exp1[0]))
 
   const shp2 = create([[[-1, -1], [1, -1]],
     [[1, -1], [1, 1]],
@@ -34,7 +34,8 @@ test('geom2: toOutlines() should return one or more outlines', (t) => {
     [[1, -1], [1, 1], [-1, -1]],
     [[6, 4], [6, 6], [4, 4]]
   ]
-  t.true(comparePoints(exp2, ret2))
+  t.true(comparePoints(ret2[0], exp2[0]))
+  t.true(comparePoints(ret2[1], exp2[1]))
 })
 
 test('geom2: toOutlines() should return outlines for holes in geom2', (t) => {
@@ -49,7 +50,8 @@ test('geom2: toOutlines() should return outlines for holes in geom2', (t) => {
     [[-10, -10], [10, -10], [10, 10]],
     [[6, -4], [6, -5], [5, -5]]
   ]
-  t.true(comparePoints(exp1, ret1))
+  t.true(comparePoints(ret1[0], exp1[0]))
+  t.true(comparePoints(ret1[1], exp1[1]))
 
   const shp2 = create([[[6, -4], [5, -5]],
     [[5, -5], [6, -5]],
@@ -66,7 +68,9 @@ test('geom2: toOutlines() should return outlines for holes in geom2', (t) => {
     [[-10, -10], [10, -10], [10, 10]],
     [[8, 6], [8, -8], [-6, -8]]
   ]
-  t.true(comparePoints(exp2, ret2))
+  t.true(comparePoints(ret2[0], exp2[0]))
+  t.true(comparePoints(ret2[1], exp2[1]))
+  t.true(comparePoints(ret2[2], exp2[2]))
 })
 
 test('geom2: toOutlines() should return outlines for edges that touch in geom2', (t) => {
@@ -85,7 +89,8 @@ test('geom2: toOutlines() should return outlines for edges that touch in geom2',
     [[5, 5], [15, 5], [15, 15], [5, 15]],
     [[-5, 5], [-5, -5], [5, -5], [5, 5]]
   ]
-  t.true(comparePoints(exp1, ret1))
+  t.true(comparePoints(ret1[0], exp1[0]))
+  t.true(comparePoints(ret1[1], exp1[1]))
 })
 
 test('geom2: toOutlines() should return outlines for holes that touch in geom2', (t) => {
@@ -109,7 +114,9 @@ test('geom2: toOutlines() should return outlines for holes that touch in geom2',
     [[5, 15], [15, 15], [15, 5], [5, 5]],
     [[5, -5], [-5, -5], [-5, 5], [5, 5]]
   ]
-  t.true(comparePoints(exp1, ret1))
+  t.true(comparePoints(ret1[0], exp1[0]))
+  t.true(comparePoints(ret1[1], exp1[1]))
+  t.true(comparePoints(ret1[2], exp1[2]))
 })
 
 // touching holes

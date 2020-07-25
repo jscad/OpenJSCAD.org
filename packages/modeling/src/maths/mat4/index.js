@@ -1,4 +1,6 @@
 /**
+ * Represents a 4x4 matrix which is column-major (when typed out it looks row-major).
+ * @see {@link mat4} for data structure information.
  * @module modeling/maths/mat4
  */
 module.exports = {

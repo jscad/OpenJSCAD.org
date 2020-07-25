@@ -1,9 +1,9 @@
-const flatten = require('../../utils/flatten')
+const flatten = require('../utils/flatten')
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const path2 = require('../../geometries/path2')
-const poly3 = require('../../geometries/poly3')
+const geom2 = require('../geometries/geom2')
+const geom3 = require('../geometries/geom3')
+const path2 = require('../geometries/path2')
+const poly3 = require('../geometries/poly3')
 
 /*
  * Measure the area of the given geometry.
@@ -41,9 +41,9 @@ const measureAreaOfGeom3 = (geometry) => {
 }
 
 /**
- * Measure the area of the given geometry(s).
- * @param {...Objects} geometries - the geometry(s) to measure
- * @return {Number|Array} the area, or list of areas
+ * Measure the area of the given geometries.
+ * @param {...Objects} geometries - the geometries to measure
+ * @return {Number|Array} the area, or a list of areas
  * @alias module:modeling/measurements.measureArea
  *
  * @example

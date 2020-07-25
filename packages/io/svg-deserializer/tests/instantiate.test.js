@@ -151,7 +151,6 @@ test('deserialize : instantiate svg (path: simple) to objects', (t) => {
   shape = observed[0]
   t.is(shape.points.length, 3)
 
-
   // test getting stroke width from group
   sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120"">
   <g stroke-width="2">
@@ -201,7 +200,7 @@ test('deserialize : instantiate svg (path: simple) to objects', (t) => {
 // ################################
 
 test('deserialize : instantiate svg (path: arc) to objects', (t) => {
-  let sourceSvg = `<svg height="500" width="500">
+  const sourceSvg = `<svg height="500" width="500">
   <path d="M 230 230 A 45 45 0 1 1 275 275 L 275 230 Z"/>
 </svg>`
 
@@ -438,9 +437,9 @@ test('deserialize : translate svg with simple defs to script', (t) => {
   </g>
 </svg>`
 
-  let observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
+  const observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
-  let shape = observed[0]
+  const shape = observed[0]
   t.is(shape.sides.length, 32)
 })
 
@@ -463,8 +462,8 @@ test('deserialize : translate svg with defs using defs to script', (t) => {
   </g>
 </svg>`
 
-  let observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
+  const observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
-  let shape = observed[0]
+  const shape = observed[0]
   t.is(shape.sides.length, 32)
 })

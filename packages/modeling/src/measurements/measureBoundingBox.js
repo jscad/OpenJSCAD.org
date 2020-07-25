@@ -1,18 +1,18 @@
-const flatten = require('../../utils/flatten')
+const flatten = require('../utils/flatten')
 
-const vec2 = require('../../maths/vec2')
-const vec3 = require('../../maths/vec3')
+const vec2 = require('../maths/vec2')
+const vec3 = require('../maths/vec3')
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const path2 = require('../../geometries/path2')
-const poly3 = require('../../geometries/poly3')
+const geom2 = require('../geometries/geom2')
+const geom3 = require('../geometries/geom3')
+const path2 = require('../geometries/path2')
+const poly3 = require('../geometries/poly3')
 
 /*
  * Measure the min and max bounds of the given (path2) geometry.
  * @return {Array[]} the min and max bounds for the geometry
  */
-const measureBoundsOfPath2 = (geometry) => {
+const measureBoundingBoxOfPath2 = (geometry) => {
   const points = path2.toPoints(geometry)
 
   let minpoint
@@ -37,7 +37,7 @@ const measureBoundsOfPath2 = (geometry) => {
  * Measure the min and max bounds of the given (geom2) geometry.
  * @return {Array[]} the min and max bounds for the geometry
  */
-const measureBoundsOfGeom2 = (geometry) => {
+const measureBoundingBoxOfGeom2 = (geometry) => {
   const points = geom2.toPoints(geometry)
 
   let minpoint
@@ -63,7 +63,7 @@ const measureBoundsOfGeom2 = (geometry) => {
  * Measure the min and max bounds of the given (geom3) geometry.
  * @return {Array[]} the min and max bounds for the geometry
  */
-const measureBoundsOfGeom3 = (geometry) => {
+const measureBoundingBoxOfGeom3 = (geometry) => {
   const polygons = geom3.toPolygons(geometry)
 
   let minpoint = vec3.create()
@@ -87,26 +87,25 @@ const measureBoundsOfGeom3 = (geometry) => {
 }
 
 /**
- * Measure the min and max bounds of the given geometry(s),
- * where min and max bounds are an array of [x,y,z]
- * @param {...Objects} geometries - the geometry(s) to measure
- * @return {Array} the min and max bounds for each geometry
+ * Measure the min and max bounds of the given geometries.
+ * @param {...Objects} geometries - the geometries to measure
+ * @return {Array} the min and max bounds for each geometry, i.e. [[X,Y,Z],[X,Y,Z]]
  * @alias module:modeling/measurements.measureBounds
  *
  * @example
- * let bounds = measureBounds(sphere())
+ * let bounds = measureBoundingBox(sphere())
  */
-const measureBounds = (...geometries) => {
+const measureBoundingBox = (...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('wrong number of arguments')
 
   const results = geometries.map((geometry) => {
-    if (path2.isA(geometry)) return measureBoundsOfPath2(geometry)
-    if (geom2.isA(geometry)) return measureBoundsOfGeom2(geometry)
-    if (geom3.isA(geometry)) return measureBoundsOfGeom3(geometry)
+    if (path2.isA(geometry)) return measureBoundingBoxOfPath2(geometry)
+    if (geom2.isA(geometry)) return measureBoundingBoxOfGeom2(geometry)
+    if (geom3.isA(geometry)) return measureBoundingBoxOfGeom3(geometry)
     return [[0, 0, 0], [0, 0, 0]]
   })
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = measureBounds
+module.exports = measureBoundingBox

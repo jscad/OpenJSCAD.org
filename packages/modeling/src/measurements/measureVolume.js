@@ -1,9 +1,9 @@
-const flatten = require('../../utils/flatten')
+const flatten = require('../utils/flatten')
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const path2 = require('../../geometries/path2')
-const poly3 = require('../../geometries/poly3')
+const geom2 = require('../geometries/geom2')
+const geom3 = require('../geometries/geom3')
+const path2 = require('../geometries/path2')
+const poly3 = require('../geometries/poly3')
 
 /*
  * Measure the volume of the given geometry.
@@ -35,8 +35,8 @@ const measureVolumeOfGeom3 = (geometry) => {
 }
 
 /**
- * Measure the volume of the given geometry(s).
- * @param {...Object} geometries - the geometry(s) to measure
+ * Measure the volume of the given geometries.
+ * @param {...Object} geometries - the geometries to measure
  * @return {Number|Array} the volume, or a list of volumes
  * @alias module:modeling/measurements.measureVolume
  *

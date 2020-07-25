@@ -18,12 +18,12 @@
       "packages/modeling/src/maths/vec2",
       "packages/modeling/src/maths/vec3",
       "packages/modeling/src/maths/vec4",
+      "packages/modeling/src/measurements",
       "packages/modeling/src/operations/booleans",
       "packages/modeling/src/operations/expansions",
       "packages/modeling/src/operations/extrusions",
       "packages/modeling/src/operations/extrusions/slice",
       "packages/modeling/src/operations/hulls",
-      "packages/modeling/src/operations/measurements",
       "packages/modeling/src/operations/transforms",
       "packages/modeling/src/primitives",
       "packages/modeling/src/text",
@@ -33,6 +33,7 @@
     "excludePattern": ".+test.js$"
   },
   "opts": {
-    "template": "node_modules/docdash"
+    "template": "node_modules/docdash",
+    "destination": "./docs"
   }
 }

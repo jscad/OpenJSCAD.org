@@ -3,7 +3,7 @@ const vec3 = require('../vec3')
 /**
  * Determine the closest point on the given plane to the given line.
  *
- * The point of intersection will be invalid if parallel to the plane, e.g. NaN.
+ * The point of intersection will be invalid if the line is parallel to the plane, e.g. NaN.
  *
  * @param {plane} plane - the plane of reference
  * @param {line3} line - the line of reference

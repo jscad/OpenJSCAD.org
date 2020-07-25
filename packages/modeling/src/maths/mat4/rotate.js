@@ -1,7 +1,7 @@
 const create = require('./create')
 
 /**
- * Rotates a mat4 by the given angle.
+ * Rotates a matrix by the given angle about the given axis.
  *
  * @param {mat4} [out] - the receiving matrix
  * @param {Number} rad - the angle to rotate the matrix by

@@ -30,10 +30,11 @@ const colorPoly3 = (color, object) => {
 }
 
 /**
- * Apply the given color to the given objects.
+ * Assign the given color to the given objects.
+ * Note: The color should only be assigned after performing all operations.
  * @param {Array} color - RGBA color values, where each value is between 0 and 1.0
  * @param {Object|Array} objects - the objects of which to color
- * @returns {Object|Array} new geometry with an additional attribute 'color'
+ * @return {Object|Array} new geometry, or list of new geometries with an additional attribute 'color'
  * @alias module:modeling/colors.colorize
  *
  * @example

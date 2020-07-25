@@ -4,10 +4,10 @@ const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
 /**
- * Construct an ellipsoid.
+ * Construct an ellipsoid in three dimensional space.
  * @param {Object} [options] - options for construction
  * @param {Array} [options.radius=[1,1,1]] - radius of ellipsoid, along X, Y and Z
- * @param {Number} [options.segments=32] - number of segements to create per 360 rotation
+ * @param {Number} [options.segments=32] - number of segements to create per full rotation
  * @param {Array} [options.axes] -  an array with three vectors for the x, y and z base vectors
  * @returns {geom3} new 3D geometry
  * @alias module:modeling/primitives.ellipsoid
@@ -86,14 +86,17 @@ const ellipsoid = (options) => {
 }
 
 /**
- * Construct a sphere where are points are at the same distance from the center.
+ * Construct a sphere in three dimensional space where are points are at the same distance from the center.
  * @see [ellipsoid]{@link module:modeling/primitives.ellipsoid} for more options
  * @param {Object} [options] - options for construction
  * @param {Number} [options.radius=1] - radius of sphere
- * @param {Number} [options.segments=32] - number of segments to create per 360 rotation
+ * @param {Number} [options.segments=32] - number of segments to create per full rotation
  * @param {Array} [options.axes] -  an array with three vectors for the x, y and z base vectors
  * @returns {geom3} new 3D geometry
  * @alias module:modeling/primitives.sphere
+ *
+ * @example
+ * let myshape = sphere({radius: 5})
  */
 const sphere = (options) => {
   const defaults = {

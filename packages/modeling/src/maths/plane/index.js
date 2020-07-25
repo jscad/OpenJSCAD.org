@@ -1,4 +1,7 @@
 /**
+ * Represents a plane in 3D coordinate space as determined by a normal (perpendicular to the plane)
+ * and distance from 0,0,0.
+ * @see {@link plane} for data structure information.
  * @module modeling/maths/plane
  */
 module.exports = {

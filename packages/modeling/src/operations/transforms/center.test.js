@@ -1,5 +1,7 @@
 const test = require('ava')
 
+const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
+
 const { geom2, geom3, path2 } = require('../../geometries')
 
 const { center, centerX, centerY, centerZ } = require('./index')
@@ -10,16 +12,12 @@ test('center: centering of a path2 produces expected changes to points', (t) => 
   // center about X
   let centered = center({ axes: [true, false, false] }, geometry)
   let pts = path2.toPoints(centered)
-  const exp = [
-    new Float32Array([3, 0]),
-    new Float32Array([-2, 3]),
-    new Float32Array([-3, 0])
-  ]
-  t.deepEqual(pts, exp)
+  const exp = [[3, 0], [-2, 3], [-3, 0]]
+  t.true(comparePoints(pts, exp))
 
   centered = centerX(geometry)
   pts = path2.toPoints(centered)
-  t.deepEqual(pts, exp)
+  t.true(comparePoints(pts, exp))
 })
 
 test('center: centering of a geom2 produces expected changes to points', (t) => {
@@ -28,16 +26,12 @@ test('center: centering of a geom2 produces expected changes to points', (t) => 
   // center about Y
   let centered = center({ axes: [false, true, false] }, geometry)
   let pts = geom2.toPoints(centered)
-  const exp = [
-    new Float32Array([0, -5]),
-    new Float32Array([10, -5]),
-    new Float32Array([0, 5])
-  ]
-  t.deepEqual(pts, exp)
+  const exp = [[0, -5], [10, -5], [0, 5]]
+  t.true(comparePoints(pts, exp))
 
   centered = centerY(geometry)
   pts = geom2.toPoints(centered)
-  t.deepEqual(pts, exp)
+  t.true(comparePoints(pts, exp))
 })
 
 test('center: centering of a geom3 produces expected changes to polygons', (t) => {
@@ -55,106 +49,52 @@ test('center: centering of a geom3 produces expected changes to polygons', (t) =
   let centered = center({ axes: [true, false, false] }, geometry)
   let pts = geom3.toPoints(centered)
   let exp = [
-    [new Float32Array([-5, -7, -12]),
-      new Float32Array([-5, -7, 18]),
-      new Float32Array([-5, 13, 18]),
-      new Float32Array([-5, 13, -12])],
-    [new Float32Array([5, -7, -12]),
-      new Float32Array([5, 13, -12]),
-      new Float32Array([5, 13, 18]),
-      new Float32Array([5, -7, 18])],
-    [new Float32Array([-5, -7, -12]),
-      new Float32Array([5, -7, -12]),
-      new Float32Array([5, -7, 18]),
-      new Float32Array([-5, -7, 18])],
-    [new Float32Array([-5, 13, -12]),
-      new Float32Array([-5, 13, 18]),
-      new Float32Array([5, 13, 18]),
-      new Float32Array([5, 13, -12])],
-    [new Float32Array([-5, -7, -12]),
-      new Float32Array([-5, 13, -12]),
-      new Float32Array([5, 13, -12]),
-      new Float32Array([5, -7, -12])],
-    [new Float32Array([-5, -7, 18]),
-      new Float32Array([5, -7, 18]),
-      new Float32Array([5, 13, 18]),
-      new Float32Array([-5, 13, 18])]
+    [[-5, -7, -12], [-5, -7, 18], [-5, 13, 18], [-5, 13, -12]],
+    [[5, -7, -12], [5, 13, -12], [5, 13, 18], [5, -7, 18]],
+    [[-5, -7, -12], [5, -7, -12], [5, -7, 18], [-5, -7, 18]],
+    [[-5, 13, -12], [-5, 13, 18], [5, 13, 18], [5, 13, -12]],
+    [[-5, -7, -12], [-5, 13, -12], [5, 13, -12], [5, -7, -12]],
+    [[-5, -7, 18], [5, -7, 18], [5, 13, 18], [-5, 13, 18]]
   ]
-  t.deepEqual(pts, exp)
+  t.true(comparePolygonsAsPoints(pts, exp))
 
   centered = centerX(geometry)
   pts = geom3.toPoints(centered)
-  t.deepEqual(pts, exp)
+  t.true(comparePolygonsAsPoints(pts, exp))
 
   // center about Y
   centered = center({ axes: [false, true, false] }, geometry)
   pts = geom3.toPoints(centered)
   exp = [
-    [new Float32Array([-2, -10, -12]),
-      new Float32Array([-2, -10, 18]),
-      new Float32Array([-2, 10, 18]),
-      new Float32Array([-2, 10, -12])],
-    [new Float32Array([8, -10, -12]),
-      new Float32Array([8, 10, -12]),
-      new Float32Array([8, 10, 18]),
-      new Float32Array([8, -10, 18])],
-    [new Float32Array([-2, -10, -12]),
-      new Float32Array([8, -10, -12]),
-      new Float32Array([8, -10, 18]),
-      new Float32Array([-2, -10, 18])],
-    [new Float32Array([-2, 10, -12]),
-      new Float32Array([-2, 10, 18]),
-      new Float32Array([8, 10, 18]),
-      new Float32Array([8, 10, -12])],
-    [new Float32Array([-2, -10, -12]),
-      new Float32Array([-2, 10, -12]),
-      new Float32Array([8, 10, -12]),
-      new Float32Array([8, -10, -12])],
-    [new Float32Array([-2, -10, 18]),
-      new Float32Array([8, -10, 18]),
-      new Float32Array([8, 10, 18]),
-      new Float32Array([-2, 10, 18])]
+    [[-2, -10, -12], [-2, -10, 18], [-2, 10, 18], [-2, 10, -12]],
+    [[8, -10, -12], [8, 10, -12], [8, 10, 18], [8, -10, 18]],
+    [[-2, -10, -12], [8, -10, -12], [8, -10, 18], [-2, -10, 18]],
+    [[-2, 10, -12], [-2, 10, 18], [8, 10, 18], [8, 10, -12]],
+    [[-2, -10, -12], [-2, 10, -12], [8, 10, -12], [8, -10, -12]],
+    [[-2, -10, 18], [8, -10, 18], [8, 10, 18], [-2, 10, 18]]
   ]
-  t.deepEqual(pts, exp)
+  t.true(comparePolygonsAsPoints(pts, exp))
 
   centered = centerY(geometry)
   pts = geom3.toPoints(centered)
-  t.deepEqual(pts, exp)
+  t.true(comparePolygonsAsPoints(pts, exp))
 
   // center about Z
   centered = center({ axes: [false, false, true] }, geometry)
   pts = geom3.toPoints(centered)
   exp = [
-    [new Float32Array([-2, -7, -15]),
-      new Float32Array([-2, -7, 15]),
-      new Float32Array([-2, 13, 15]),
-      new Float32Array([-2, 13, -15])],
-    [new Float32Array([8, -7, -15]),
-      new Float32Array([8, 13, -15]),
-      new Float32Array([8, 13, 15]),
-      new Float32Array([8, -7, 15])],
-    [new Float32Array([-2, -7, -15]),
-      new Float32Array([8, -7, -15]),
-      new Float32Array([8, -7, 15]),
-      new Float32Array([-2, -7, 15])],
-    [new Float32Array([-2, 13, -15]),
-      new Float32Array([-2, 13, 15]),
-      new Float32Array([8, 13, 15]),
-      new Float32Array([8, 13, -15])],
-    [new Float32Array([-2, -7, -15]),
-      new Float32Array([-2, 13, -15]),
-      new Float32Array([8, 13, -15]),
-      new Float32Array([8, -7, -15])],
-    [new Float32Array([-2, -7, 15]),
-      new Float32Array([8, -7, 15]),
-      new Float32Array([8, 13, 15]),
-      new Float32Array([-2, 13, 15])]
+    [[-2, -7, -15], [-2, -7, 15], [-2, 13, 15], [-2, 13, -15]],
+    [[8, -7, -15], [8, 13, -15], [8, 13, 15], [8, -7, 15]],
+    [[-2, -7, -15], [8, -7, -15], [8, -7, 15], [-2, -7, 15]],
+    [[-2, 13, -15], [-2, 13, 15], [8, 13, 15], [8, 13, -15]],
+    [[-2, -7, -15], [-2, 13, -15], [8, 13, -15], [8, -7, -15]],
+    [[-2, -7, 15], [8, -7, 15], [8, 13, 15], [-2, 13, 15]]
   ]
-  t.deepEqual(pts, exp)
+  t.true(comparePolygonsAsPoints(pts, exp))
 
   centered = centerZ(geometry)
   pts = geom3.toPoints(centered)
-  t.deepEqual(pts, exp)
+  t.true(comparePolygonsAsPoints(pts, exp))
 })
 
 test('center: centering of multiple objects produces expected changes', (t) => {
@@ -167,19 +107,10 @@ test('center: centering of multiple objects produces expected changes', (t) => {
   t.is(centered[0], junk)
 
   const pts1 = path2.toPoints(centered[1])
-  const exp1 = [
-    new Float32Array([2.5, 20]),
-    new Float32Array([12.5, 20]),
-    new Float32Array([2.5, 10]),
-    new Float32Array([17.5, 10])
-  ]
-  t.deepEqual(pts1, exp1)
+  const exp1 = [[2.5, 20], [12.5, 20], [2.5, 10], [17.5, 10]]
+  t.true(comparePoints(pts1, exp1))
 
   const pts2 = geom2.toPoints(centered[2])
-  const exp2 = [
-    new Float32Array([2.5, 10]),
-    new Float32Array([7.5, 20]),
-    new Float32Array([17.5, 10])
-  ]
-  t.deepEqual(pts2, exp2)
+  const exp2 = [[2.5, 10], [7.5, 20], [17.5, 10]]
+  t.true(comparePoints(pts2, exp2))
 })

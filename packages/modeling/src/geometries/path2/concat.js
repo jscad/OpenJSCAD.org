@@ -2,7 +2,7 @@ const fromPoints = require('./fromPoints')
 const toPoints = require('./toPoints')
 
 /**
- * Produces a path by concatenating the given paths.
+ * Concatenate the given paths.
  * A concatenation of zero paths is an empty, open path.
  * A concatenation of one closed path to a series of open paths produces a closed path.
  * A concatenation of a path to a closed path is an error.

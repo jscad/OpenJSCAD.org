@@ -8,7 +8,7 @@ test('create: Creates an empty geom3', (t) => {
   const expected = {
     polygons: [],
     isRetesselated: false,
-    transforms: new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
+    transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   t.deepEqual(create(), expected)
 })
@@ -21,7 +21,7 @@ test('create: Creates a populated geom3', (t) => {
   const expected = {
     polygons: polygons,
     isRetesselated: false,
-    transforms: new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
+    transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   t.deepEqual(create(polygons), expected)
 })

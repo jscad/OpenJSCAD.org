@@ -7,10 +7,10 @@ const geom3 = require('../../geometries/geom3')
 const path2 = require('../../geometries/path2')
 
 /**
- * Rotate the given object(s) using the given options.
+ * Rotate the given geometries using the given options.
  * @param {Array} angles - angle (RADIANS) of rotations about X, Y, and Z axis
- * @param {...Object} objects - the objects(s) to rotate
- * @return {Object|Array} the rotated object(s)
+ * @param {...Object} geometries - the geometries to rotate
+ * @return {Object|Array} the rotated geometry, or a list of rotated geometries
  * @alias module:modeling/transforms.rotate
  *
  * @example
@@ -44,8 +44,8 @@ const rotate = (angles, ...objects) => {
 /**
  * Rotate the given object(s) about the X axis, using the given options.
  * @param {Number} angle - angle (RADIANS) of rotations about X
- * @param {...Object} objects - the objects(s) to rotate
- * @return {Object|Array} the rotated object(s)
+ * @param {...Object} geometries - the geometries to rotate
+ * @return {Object|Array} the rotated geometry, or a list of rotated geometries
  * @alias module:modeling/transforms.rotateX
  */
 const rotateX = (angle, ...objects) => rotate([angle, 0, 0], objects)
@@ -53,8 +53,8 @@ const rotateX = (angle, ...objects) => rotate([angle, 0, 0], objects)
 /**
  * Rotate the given object(s) about the Y axis, using the given options.
  * @param {Number} angle - angle (RADIANS) of rotations about Y
- * @param {...Object} objects - the objects(s) to rotate
- * @return {Object|Array} the rotated object(s)
+ * @param {...Object} geometries - the geometries to rotate
+ * @return {Object|Array} the rotated geometry, or a list of rotated geometries
  * @alias module:modeling/transforms.rotateY
  */
 const rotateY = (angle, ...objects) => rotate([0, angle, 0], objects)
@@ -62,8 +62,8 @@ const rotateY = (angle, ...objects) => rotate([0, angle, 0], objects)
 /**
  * Rotate the given object(s) about the Z axis, using the given options.
  * @param {Number} angle - angle (RADIANS) of rotations about Z
- * @param {...Object} objects - the objects(s) to rotate
- * @return {Object|Array} the rotated object(s)
+ * @param {...Object} geometries - the geometries to rotate
+ * @return {Object|Array} the rotated geometry, or a list of rotated geometries
  * @alias module:modeling/transforms.rotateZ
  */
 const rotateZ = (angle, ...objects) => rotate([0, 0, angle], objects)

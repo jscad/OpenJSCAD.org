@@ -7,7 +7,7 @@ const create = require('./create')
 
 /**
  * Construct a new 3D geometry from the given compact binary data.
- * @param {Array} data - compact binary data
+ * @param {TypedArray} data - compact binary data
  * @returns {geom3} a new geometry
  * @alias module:modeling/geometries/geom3.fromCompactBinary
  */

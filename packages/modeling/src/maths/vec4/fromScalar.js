@@ -1,7 +1,7 @@
 const fromValues = require('./fromValues')
 
 /**
- * Create a new vector from the given scalar value (single).
+ * Create a new vector from the given scalar value.
  *
  * @param  {Number} scalar
  * @returns {vec4} a new vector

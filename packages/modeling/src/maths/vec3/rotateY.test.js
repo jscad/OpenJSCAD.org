@@ -16,7 +16,7 @@ test('vec3: rotateY() called with two paramerters should return a vec3 with corr
   t.true(compareVectors(obs3, [-5, -2, 5]))
 
   const obs4 = rotateY(-radians, [-1, -2, -3], [1, 2, 3])
-  t.true(compareVectors(obs4, [-7, 2, -1]))
+  t.true(compareVectors(obs4, [-7, 2, -1], 1e-15))
 })
 
 test('vec3: rotateY() called with three paramerters should update a vec3 with correct values', (t) => {
@@ -39,6 +39,6 @@ test('vec3: rotateY() called with three paramerters should update a vec3 with co
 
   const obs4 = fromValues(0, 0, 0)
   const ret4 = rotateY(obs4, -radians, [-1, -2, -3], [1, 2, 3])
-  t.true(compareVectors(obs4, [-7, 2, -1]))
-  t.true(compareVectors(ret4, [-7, 2, -1]))
+  t.true(compareVectors(obs4, [-7, 2, -1], 1e-15))
+  t.true(compareVectors(ret4, [-7, 2, -1], 1e-15))
 })

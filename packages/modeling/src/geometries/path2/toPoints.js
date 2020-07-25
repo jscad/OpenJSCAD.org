@@ -1,14 +1,14 @@
 const applyTransforms = require('./applyTransforms')
 
 /**
- * Produces a new array containing the path's point data.
- * NOTE: The returned array should not be modified as the data is shared with the geometry.
- * @param {path2} geometry - the path
- * @returns {Array} an array of points (2D)
+ * Produces an array of points from the given geometry.
+ * The returned array should not be modified as the data is shared with the geometry.
+ * @param {path2} geometry - the geometry
+ * @returns {Array} an array of points
  * @alias module:modeling/geometries/path2.toPoints
  *
  * @example
- * let sharedpoints = toPoints(path)
+ * let sharedpoints = toPoints(geometry)
  */
 const toPoints = (geometry) => applyTransforms(geometry).points
 

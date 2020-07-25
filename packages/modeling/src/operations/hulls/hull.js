@@ -16,7 +16,7 @@ const hullGeom3 = require('./hullGeom3')
  * @returns {geom2|geom3} new geometry
  * @alias module:modeling/hulls.hull
  *
- * @example:
+ * @example
  * let myshape = hull(rectangle({center: [-5,-5]}), ellipse({center: [5,5]}))
  *
  * @example

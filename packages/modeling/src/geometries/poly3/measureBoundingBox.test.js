@@ -58,13 +58,13 @@ test('poly3: measureBoundingBox() should return correct values', (t) => {
   exp1 = [[0, 0, 0], [0, 0, 0]]
   t.true(compareVectors(ret1[0], exp1[0]))
   t.true(compareVectors(ret1[1], exp1[1]))
-  exp2 = [[-7.071067810058594, 0, 0], [0, 7.071067810058594, 10]]
+  exp2 = [[-7.071067811865475, 0, 0], [0, 7.0710678118654755, 10]]
   t.true(compareVectors(ret2[0], exp2[0]))
   t.true(compareVectors(ret2[1], exp2[1]))
-  exp3 = [[-7.071067810058594, 0, 0], [0, 7.071067810058594, 10]]
+  exp3 = [[-7.071067811865475, 0, 0], [0, 7.0710678118654755, 10]]
   t.true(compareVectors(ret3[0], exp3[0]))
   t.true(compareVectors(ret3[1], exp3[1]))
-  exp4 = [[-5.656854152679443, 0.7071067690849304, 0], [-0.7071067690849304, 5.656854152679443, 6]]
+  exp4 = [[-5.65685424949238, 0.7071067811865476, 0], [-0.7071067811865475, 5.656854249492381, 6]]
   t.true(compareVectors(ret4[0], exp4[0]))
   t.true(compareVectors(ret4[1], exp4[1]))
 })

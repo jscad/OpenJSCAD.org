@@ -5,7 +5,7 @@ const create = require('./create')
  *
  * @param {Number} x X coordinate of the unit normal
  * @param {Number} y Y coordinate of the unit normal
- * @param {Number} w length (positive) of the normal segment
+ * @param {Number} d distance of the line from [0,0]
  * @returns {line2} a new unbounded line
  * @alias module:modeling/maths/line2.fromValues
  */
