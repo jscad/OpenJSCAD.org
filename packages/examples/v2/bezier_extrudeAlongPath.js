@@ -1,12 +1,10 @@
 const jscad = require('@jscad/modeling')
-const {
-	colors, connectors, geometries, maths, primitives, text, utils,
-	booleans, expansions, extrusions, hulls, measurements, transforms
-} = jscad
+const { colors, curves, geometries, maths, extrusions, transforms } = jscad
 
-const { cuboid, sphere, cylinder, circle, star } = require('@jscad/modeling').primitives
-const { translate, rotate, scale, transform } = transforms
-const { slice, extrudeLinear } = extrusions
+const { cuboid, circle } = require('@jscad/modeling').primitives
+const { translate } = transforms
+const { slice } = extrusions
+const { bezier } = curves
 
 
 console.log('jscad', jscad)
@@ -47,22 +45,20 @@ function tube(bezierControlPoints) {
 	tubeSlice = slice.transform(fromVectors(maths.vec3.fromArray([0,0,1]),bezierDelta), tubeSlice);
 
 	// Create the bezier function
-	var tubeCurve = maths.bezier.create(bezierControlPoints);
+	const tubeCurve = bezier.create(bezierControlPoints);
 
 	// ...and extrude.
-	let tube = extrusions.extrudeFromSlices({
-			numberOfSlices: 60,
-			isCapped: true,
-			callback: function (progress, count, base) {
-				let positionArray = tubeCurve.at(progress);
-				let tangentArray = tubeCurve.tangentAt(progress);
-				let rotationMatrix = fromVectors(bezierDelta, maths.vec3.fromArray(tangentArray));
-				let translationMatrix = maths.mat4.fromTranslation(positionArray);
-        		let sliceAtProgress = slice.transform(maths.mat4.multiply(translationMatrix, rotationMatrix), base);
-		        return sliceAtProgress
-			}
-		}, tubeSlice);
-	return tube;
+	return extrusions.extrudeFromSlices({
+		numberOfSlices: 60,
+		isCapped: true,
+		callback: function (progress, count, base) {
+			let positionArray = bezier.valueAt(progress, tubeCurve);
+			let tangentArray = bezier.tangentAt(progress, tubeCurve);
+			let rotationMatrix = fromVectors(bezierDelta, maths.vec3.fromArray(tangentArray));
+			let translationMatrix = maths.mat4.fromTranslation(positionArray);
+			return slice.transform(maths.mat4.multiply(translationMatrix, rotationMatrix), base)
+		}
+	}, tubeSlice);
 }
 
 
@@ -76,14 +72,12 @@ function fromVectors(srcVector, targetVector)
     let cosA = maths.vec3.dot( targetVector, srcVector );
     let k = 1 / (1 + cosA);
 
- 	R = maths.mat4.fromValues(
-		(axis[0]*axis[0]*k)+cosA, (axis[1]*axis[0]*k)-axis[2], (axis[2]*axis[0]*k)+axis[1], 0,
-		(axis[0]*axis[1]*k)+axis[2], (axis[1]*axis[1]*k)+cosA, (axis[2]*axis[1]*k)-axis[0], 0,
-		(axis[0]*axis[2]*k)-axis[1], (axis[1]*axis[2]*k)+axis[0], (axis[2]*axis[2]*k)+cosA, 0,
-		0,0,0,1
-	);
-
-	return R
+	return maths.mat4.fromValues(
+		(axis[0] * axis[0] * k) + cosA, (axis[1] * axis[0] * k) - axis[2], (axis[2] * axis[0] * k) + axis[1], 0,
+		(axis[0] * axis[1] * k) + axis[2], (axis[1] * axis[1] * k) + cosA, (axis[2] * axis[1] * k) - axis[0], 0,
+		(axis[0] * axis[2] * k) - axis[1], (axis[1] * axis[2] * k) + axis[0], (axis[2] * axis[2] * k) + cosA, 0,
+		0, 0, 0, 1
+	)
 }
 
 
