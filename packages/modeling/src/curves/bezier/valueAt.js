@@ -14,31 +14,31 @@
  * @alias module:modeling/curves/bezier.valueAt
  */
 const valueAt = (t, bezier) => {
-	if (t < 0 || t > 1) {
-		throw new Error('Bezier valueAt() input must be between 0 and 1');
-	}
-	if (bezier.pointType === 'float_single') {
-		return bezierFunction(bezier, bezier.points, t);
-	} else {
-		const result = [];
-		for (let i = 0; i < bezier.dimensions; i++) {
-			let singleDimensionPoints = [];
-			for (var j = 0; j < bezier.points.length; j++) {
-				singleDimensionPoints.push(bezier.points[j][i]);
-			}
-			result.push( bezierFunction(bezier, singleDimensionPoints, t) );
-		}
-		return result;
-	}
+  if (t < 0 || t > 1) {
+    throw new Error('Bezier valueAt() input must be between 0 and 1')
+  }
+  if (bezier.pointType === 'float_single') {
+    return bezierFunction(bezier, bezier.points, t)
+  } else {
+    const result = []
+    for (let i = 0; i < bezier.dimensions; i++) {
+      const singleDimensionPoints = []
+      for (var j = 0; j < bezier.points.length; j++) {
+        singleDimensionPoints.push(bezier.points[j][i])
+      }
+      result.push(bezierFunction(bezier, singleDimensionPoints, t))
+    }
+    return result
+  }
 }
 
 const bezierFunction = function (bezier, p, t) {
-	const n = p.length - 1;
-	let result = 0;
-	for (let i = 0; i <= n; i++) {
-		result += bezier.permutations[i] * Math.pow(1 - t, n - i) * Math.pow(t, i) * p[i];
-	}
-	return result;
+  const n = p.length - 1
+  let result = 0
+  for (let i = 0; i <= n; i++) {
+    result += bezier.permutations[i] * Math.pow(1 - t, n - i) * Math.pow(t, i) * p[i]
+  }
+  return result
 }
 
-module.exports = valueAt;
+module.exports = valueAt

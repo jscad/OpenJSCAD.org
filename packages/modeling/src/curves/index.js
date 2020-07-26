@@ -6,5 +6,5 @@
 
  */
 module.exports = {
-  bezier: require('./bezier'),
+  bezier: require('./bezier')
 }
