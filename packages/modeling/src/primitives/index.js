@@ -1,5 +1,5 @@
 /**
- * Primitives provide the building blocks for complex parts.
+ * Primitives provide the building blocks for complex parts.xx
  * Each primitive is a geometrical object that can be described mathematically, and therefore precise.
  * Primitives can be logically combined, transformed, extruded, etc.
  * @module modeling/primitives

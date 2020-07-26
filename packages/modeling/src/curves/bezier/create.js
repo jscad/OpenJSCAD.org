@@ -1,19 +1,3 @@
-/**
- * Represents a bezier easing function.
- *
- * Math and explanation comes from {@link https://www.freecodecamp.org/news/nerding-out-with-bezier-curves-6e3c0bc48e2f/}
- *
- *
- * @example
- * const b = bezier.create([0,10]) // a linear progression from 0 to 10
- * const b = bezier.create([0, 0, 10, 10]) // a symmetrical cubic easing curve that starts slowly and ends slowly from 0 to 10
- * const b = bezier.create([0,0,0], [0,5,10], [10,0,-5], [10,10,10]]) // a cubic 3 dimensional easing curve that can generate position arrays for modelling
- * Usage:
- * let position = b.at(t) // where 0 < t < 1
- * let tangent = b.tangentAt(t) // where 0 < t < 1
- *
- * @typedef {Object} bezier
- */
 
 /**
  * Creates an object representing a bezier easing curve. Can have both an arbitrary number of control points, and an arbitrary number of dimensions.
@@ -22,13 +6,10 @@
  * const b = bezier.create([0,10]) // a linear progression from 0 to 10
  * const b = bezier.create([0, 0, 10, 10]) // a symmetrical cubic easing curve that starts slowly and ends slowly from 0 to 10
  * const b = bezier.create([0,0,0], [0,5,10], [10,0,-5], [10,10,10]]) // a cubic 3 dimensional easing curve that can generate position arrays for modelling
- * Usage:
- * let position = b.at(t) // where 0 < t < 1
- * let tangent = b.tangentAt(t) // where 0 < t < 1
  *
  * @param {Array} points An array with at least 2 elements of either all numbers, or all arrays of numbers that are the same size.
- * @returns {bezier} a new bezier helper object
- * @alias module:modeling/maths/bezier.create
+ * @returns {bezier} a new bezier data object
+ * @alias module:modeling/curves/bezier.create
  */
 const create = (points) => {
 	if (points.length < 2) throw new Error('Bezier points must contain at least 2 values.')

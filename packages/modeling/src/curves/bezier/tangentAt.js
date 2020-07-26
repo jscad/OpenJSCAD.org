@@ -1,13 +1,11 @@
 /**
- * Creates an object representing a bezier easing curve. Can have both an arbitrary number of control points, and an arbitrary number of dimensions.
+ * Calculates the position at a specific point along a bezier easing curve.
+ * For multidimensional curves, the tangent is the slope of each dimension at that point.
+ * See the bezier_extrudeAlongPath.js example to see this in use.
  *
  * @example
- * const b = bezier.create([0,10]) // a linear progression from 0 to 10
- * const b = bezier.create([0, 0, 10, 10]) // a symmetrical cubic easing curve that starts slowly and ends slowly from 0 to 10
  * const b = bezier.create([0,0,0], [0,5,10], [10,0,-5], [10,10,10]]) // a cubic 3 dimensional easing curve that can generate position arrays for modelling
- * Usage:
- * let position = b.at(t) // where 0 < t < 1
- * let tangent = b.tangentAt(t) // where 0 < t < 1
+ * let tangent = bezier.tangentAt(t,b) // where 0 < t < 1
  *
  * @param {number} t The position that you wnat the bezier's tangent value at.
  * @param {Object} bezier An array with at least 2 elements of either all numbers, or all arrays of numbers that are the same size.
