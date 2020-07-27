@@ -12,6 +12,7 @@
  * @alias module:modeling/curves/bezier.create
  */
 const create = (points) => {
+  if (!Array.isArray(points)) throw new Error('Bezier points must be a valid array/')
   if (points.length < 2) throw new Error('Bezier points must contain at least 2 values.')
   const pointType = getPointType(points)
 
@@ -28,21 +29,14 @@ const getPointType = function (points) {
   let firstPointType = null
   points.forEach(point => {
     let pType = ''
-    if (typeof (point) === 'number') {
+    if (Number.isFinite(point)) {
       pType = 'float_single'
-    } else {
-      point = new Float32Array(point)
-      if (point) {
-        point.forEach(val => {
-          if (isNaN(val)) {
-            throw new Error('Bezier point values must all be numbers.')
-          }
-        })
-        pType = 'float_' + point.length
-      } else {
-        throw new Error('Bezier points must all be numbers or arrays of number.')
-      }
-    }
+    } else if (Array.isArray(point)) {
+      point.forEach(val => {
+        if (!Number.isFinite(val)) throw new Error('Bezier point values must all be numbers.')
+      })
+      pType = 'float_' + point.length
+    } else throw new Error('Bezier points must all be numbers or arrays of number.')
     if (firstPointType == null) {
       firstPointType = pType
     } else {
