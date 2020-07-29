@@ -1,7 +1,6 @@
 const test = require('ava')
-const { compareVectors } = require('../../test/helpers/index')
 
-const { radToDeg, degToRad } = require('./utils')
+const { compareVectors } = require('../../test/helpers/index')
 
 const { mat4, vec2, vec3 } = require('./index')
 
@@ -11,10 +10,7 @@ const { mat4, vec2, vec3 } = require('./index')
 
 // identity matrices for comparisons
 
-const radians = Math.PI / 180
-
-const deg90 = radToDeg(radians * 90)
-const rad90 = degToRad(deg90)
+const rad90 = Math.PI / 2
 
 // +90 degree rotation about X
 const cwX90Matrix = [

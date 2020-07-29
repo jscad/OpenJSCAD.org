@@ -1,7 +1,5 @@
 const test = require('ava')
 
-const { degToRad } = require('../maths/utils')
-
 const geom3 = require('../geometries/geom3')
 
 const { cylinderElliptic } = require('./index')
@@ -131,7 +129,7 @@ test('cylinderElliptic (options)', (t) => {
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // test startAngle and endAngle
-  obs = cylinderElliptic({ startRadius: [1, 2], endRadius: [2, 1], startAngle: degToRad(90), endAngle: degToRad(270), segments: 12 })
+  obs = cylinderElliptic({ startRadius: [1, 2], endRadius: [2, 1], startAngle: Math.PI / 2, endAngle: Math.PI * 2 * 0.75, segments: 12 })
   pts = geom3.toPoints(obs)
   exp = [
   ]

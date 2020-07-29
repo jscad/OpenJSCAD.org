@@ -1,7 +1,5 @@
 const test = require('ava')
 
-const { degToRad } = require('../maths/utils')
-
 const { arc } = require('./index')
 
 const path2 = require('../geometries/path2')
@@ -85,7 +83,7 @@ test('arc (options)', (t) => {
     [0.9350162426854147, -0.35460488704253595],
     [1, -2.4492935982947064e-16]
   ]
-  geometry = arc({ startAngle: degToRad(90), segments: 16 })
+  geometry = arc({ startAngle: Math.PI / 2, segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 14)
@@ -100,7 +98,7 @@ test('arc (options)', (t) => {
     [0.30901699437494745, 0.9510565162951535],
     [6.123233995736766e-17, 1]
   ]
-  geometry = arc({ endAngle: degToRad(90), segments: 16 })
+  geometry = arc({ endAngle: Math.PI / 2, segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 6)
@@ -162,7 +160,7 @@ test('arc (rotations)', (t) => {
     [-0.9510565162951535, 0.3090169943749475],
     [-1, 1.2246467991473532e-16]
   ]
-  let geometry = arc({ startAngle: degToRad(90), endAngle: degToRad(180), segments: 16 })
+  let geometry = arc({ startAngle: Math.PI / 2, endAngle: Math.PI, segments: 16 })
   let obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 6)
@@ -180,7 +178,7 @@ test('arc (rotations)', (t) => {
     [0.9396926207859084, -0.3420201433256686],
     [1, -2.4492935982947064e-16]
   ]
-  geometry = arc({ startAngle: degToRad(180), endAngle: degToRad(360), segments: 16 })
+  geometry = arc({ startAngle: Math.PI, endAngle: Math.PI * 2, segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 10)
@@ -198,14 +196,14 @@ test('arc (rotations)', (t) => {
     [0.34202014332566866, 0.9396926207859084],
     [3.061616997868383e-16, 1]
   ]
-  geometry = arc({ startAngle: degToRad(270), endAngle: degToRad(90), segments: 16 })
+  geometry = arc({ startAngle: Math.PI * 2 * 0.75, endAngle: Math.PI / 2, segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 10)
   t.true(comparePoints(obs, exp))
 
   exp = [[-1.8369701987210297e-16, -1]]
-  geometry = arc({ startAngle: degToRad(270), endAngle: degToRad(270.000000005), segments: 16 })
+  geometry = arc({ startAngle: Math.PI * 2 * 0.75, endAngle: 270.000000005 * 0.017453292519943295, segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.deepEqual(obs.length, 1)

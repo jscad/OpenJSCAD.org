@@ -6,8 +6,9 @@
  */
 module.exports = {
   areAllShapesTheSameType: require('./areAllShapesTheSameType'),
+  degToRad: require('./degToRad'),
   flatten: require('./flatten'),
   fnNumberSort: require('./fnNumberSort'),
   insertSorted: require('./insertSorted'),
-  interpolateBetween2DPointsForY: require('./interpolateBetween2DPointsForY')
+  radToDeg: require('./radToDeg')
 }

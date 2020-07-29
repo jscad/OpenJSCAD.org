@@ -1,7 +1,5 @@
 const test = require('ava')
 
-const { degToRad } = require('../../maths/utils')
-
 const { geom2, geom3 } = require('../../geometries')
 
 const extrudeRotate = require('./extrudeRotate')
@@ -20,7 +18,7 @@ test('extrudeRotate: (angle) extruding of a geom2 produces an expected geom3', (
   const geometry2 = geom2.fromPoints([[10, 8], [10, -8], [26, -8], [26, 8]])
 
   // test angle
-  let geometry3 = extrudeRotate({ segments: 4, angle: degToRad(45) }, geometry2)
+  let geometry3 = extrudeRotate({ segments: 4, angle: Math.PI / 4 }, geometry2)
   let pts = geom3.toPoints(geometry3)
   const exp = [
     [[10, 4.898587196589413e-16, 8], [26, 4.898587196589413e-16, 8], [18.38477631085024, 18.384776310850235, 8]],
@@ -39,11 +37,11 @@ test('extrudeRotate: (angle) extruding of a geom2 produces an expected geom3', (
   t.is(pts.length, 10)
   t.true(comparePolygonsAsPoints(pts, exp))
 
-  geometry3 = extrudeRotate({ segments: 4, angle: degToRad(-250) }, geometry2)
+  geometry3 = extrudeRotate({ segments: 4, angle: -250 * 0.017453292519943295 }, geometry2)
   pts = geom3.toPoints(geometry3)
   t.is(pts.length, 26)
 
-  geometry3 = extrudeRotate({ segments: 4, angle: degToRad(250) }, geometry2)
+  geometry3 = extrudeRotate({ segments: 4, angle: 250 * 0.017453292519943295 }, geometry2)
   pts = geom3.toPoints(geometry3)
   t.is(pts.length, 26)
 })
@@ -52,7 +50,7 @@ test('extrudeRotate: (startAngle) extruding of a geom2 produces an expected geom
   const geometry2 = geom2.fromPoints([[10, 8], [10, -8], [26, -8], [26, 8]])
 
   // test startAngle
-  let geometry3 = extrudeRotate({ segments: 5, startAngle: degToRad(45) }, geometry2)
+  let geometry3 = extrudeRotate({ segments: 5, startAngle: Math.PI / 4 }, geometry2)
   let pts = geom3.toPoints(geometry3)
   let exp = [
     [7.0710678118654755, 7.071067811865475, 8],
@@ -62,7 +60,7 @@ test('extrudeRotate: (startAngle) extruding of a geom2 produces an expected geom
   t.is(pts.length, 40)
   t.true(comparePoints(pts[0], exp))
 
-  geometry3 = extrudeRotate({ segments: 5, startAngle: degToRad(-45) }, geometry2)
+  geometry3 = extrudeRotate({ segments: 5, startAngle: Math.PI / -4 }, geometry2)
   pts = geom3.toPoints(geometry3)
   exp = [
     [7.0710678118654755, -7.071067811865475, 8],
@@ -96,7 +94,7 @@ test('extrudeRotate: (overlap +/-) extruding of a geom2 produces an expected geo
   // overlap of Y axis; even number of + and - points
   let geometry = geom2.fromPoints([[-1, 8], [-1, -8], [7, -8], [7, 8]])
 
-  let obs = extrudeRotate({ segments: 4, angle: degToRad(90) }, geometry)
+  let obs = extrudeRotate({ segments: 4, angle: Math.PI / 2 }, geometry)
   let pts = geom3.toPoints(obs)
   let exp = [
     [[0, 4.898587196589413e-16, 8], [7, 4.898587196589413e-16, 8], [-6.123233995736767e-17, 7, 8]],
@@ -118,7 +116,7 @@ test('extrudeRotate: (overlap +/-) extruding of a geom2 produces an expected geo
   // overlap of Y axis; larger number of - points
   geometry = geom2.fromPoints([[-1, 8], [-2, 4], [-1, -8], [7, -8], [7, 8]])
 
-  obs = extrudeRotate({ segments: 4, angle: degToRad(90) }, geometry)
+  obs = extrudeRotate({ segments: 4, angle: Math.PI / 2 }, geometry)
   pts = geom3.toPoints(obs)
   exp = [
     [[-1, 4.898587196589413e-16, 8], [0, 4.898587196589413e-16, 8], [-4.898587196589413e-16, 2.999519565323715e-32, 8]],
