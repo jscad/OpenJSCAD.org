@@ -1,5 +1,5 @@
 /**
- * Calculates the tangent at a specific point along a bezier easing curve.
+ * Calculates the position at a specific point along a bezier easing curve.
  * For multidimensional curves, the tangent is the slope of each dimension at that point.
  * See the bezier_extrudeAlongPath.js example to see this in use.
  * Math and explanation comes from {@link https://www.freecodecamp.org/news/nerding-out-with-bezier-curves-6e3c0bc48e2f/}
