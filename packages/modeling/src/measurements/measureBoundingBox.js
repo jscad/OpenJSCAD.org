@@ -13,6 +13,8 @@ const poly3 = require('../geometries/poly3')
  * @return {Array[]} the min and max bounds for the geometry
  */
 const measureBoundingBoxOfPath2 = (geometry) => {
+  if (geometry.boundingBox) return geometry.boundingBox
+
   const points = path2.toPoints(geometry)
 
   let minpoint
@@ -30,7 +32,8 @@ const measureBoundingBoxOfPath2 = (geometry) => {
   minpoint = [minpoint[0], minpoint[1], 0]
   maxpoint = [maxpoint[0], maxpoint[1], 0]
 
-  return [minpoint, maxpoint]
+  geometry.boundingBox = [minpoint, maxpoint]
+  return geometry.boundingBox
 }
 
 /*
@@ -38,6 +41,8 @@ const measureBoundingBoxOfPath2 = (geometry) => {
  * @return {Array[]} the min and max bounds for the geometry
  */
 const measureBoundingBoxOfGeom2 = (geometry) => {
+  if (geometry.boundingBox) return geometry.boundingBox
+
   const points = geom2.toPoints(geometry)
 
   let minpoint
@@ -56,7 +61,8 @@ const measureBoundingBoxOfGeom2 = (geometry) => {
   minpoint = [minpoint[0], minpoint[1], 0]
   maxpoint = [maxpoint[0], maxpoint[1], 0]
 
-  return [minpoint, maxpoint]
+  geometry.boundingBox = [minpoint, maxpoint]
+  return geometry.boundingBox
 }
 
 /*
@@ -64,6 +70,8 @@ const measureBoundingBoxOfGeom2 = (geometry) => {
  * @return {Array[]} the min and max bounds for the geometry
  */
 const measureBoundingBoxOfGeom3 = (geometry) => {
+  if (geometry.boundingBox) return geometry.boundingBox
+
   const polygons = geom3.toPolygons(geometry)
 
   let minpoint = vec3.create()
@@ -83,14 +91,15 @@ const measureBoundingBoxOfGeom3 = (geometry) => {
   minpoint = [minpoint[0], minpoint[1], minpoint[2]]
   maxpoint = [maxpoint[0], maxpoint[1], maxpoint[2]]
 
-  return [minpoint, maxpoint]
+  geometry.boundingBox = [minpoint, maxpoint]
+  return geometry.boundingBox
 }
 
 /**
  * Measure the min and max bounds of the given geometries.
  * @param {...Objects} geometries - the geometries to measure
  * @return {Array} the min and max bounds for each geometry, i.e. [[X,Y,Z],[X,Y,Z]]
- * @alias module:modeling/measurements.measureBounds
+ * @alias module:modeling/measurements.measureBoundingBox
  *
  * @example
  * let bounds = measureBoundingBox(sphere())

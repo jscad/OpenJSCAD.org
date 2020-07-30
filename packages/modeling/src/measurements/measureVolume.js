@@ -30,8 +30,11 @@ const measureVolumeOfGeom2 = () => 0
  * @returns {Number} volume of the geometry
  */
 const measureVolumeOfGeom3 = (geometry) => {
+  if (geometry.volume) return volume
+
   const polygons = geom3.toPolygons(geometry)
-  return polygons.reduce((volume, polygon) => volume + poly3.measureSignedVolume(polygon), 0)
+  geometry.volume = polygons.reduce((volume, polygon) => volume + poly3.measureSignedVolume(polygon), 0)
+  return geometry.volume
 }
 
 /**
