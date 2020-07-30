@@ -5,7 +5,7 @@ const poly3 = require('../../geometries/poly3')
 
 const reTesselateCoplanarPolygons = require('./reTesselateCoplanarPolygons')
 
-// Normals are directional vectors of length 0 to 1.0
+// Normals are directional vectors with component values from 0 to 1.0, requiring specialized comparision
 // This EPS is derived from a serieas of tests to determine the optimal precision for comparing coplanar polygons,
 // as provided by the sphere primitive at high segmentation
 // This EPS is for 64 bit Number values
