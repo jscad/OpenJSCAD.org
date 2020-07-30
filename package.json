@@ -8,14 +8,15 @@
     "coverage": "npm run bootstrap && lerna run --concurrency 1 --stream coverage",
     "test": "npm run bootstrap && lerna run --stream test",
     "lint": "standardx 'packages/**/*.js'",
-    "bootstrap": "lerna bootstrap --hoist nyc --ignore-prepublish --no-ci --ignore @jscad/scad-deserializer --ignore @jscad/desktop",
-    "list": "lerna ls",
+    "bootstrap": "lerna bootstrap --hoist nyc --ignore-prepublish --no-ci",
+    "changed": "lerna changed",
     "clean": "lerna clean",
+    "graph": "lerna list --graph",
+    "list": "lerna ls",
     "cli": "npm run bootstrap && cd ./packages/cli",
     "web": "npm run bootstrap && cd ./packages/web && npm run dev",
     "desktop": "npm run bootstrap && cd ./packages/desktop && npm run dev",
-    "publish": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits",
-    "publish-dryrun": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits --skip-git --skip-npm"
+    "publish-dryrun": "git checkout V2 && git pull origin V2 && git add --all && npm test && lerna version 2.0.0 --no-push"
   },
   "contributors": [
     {

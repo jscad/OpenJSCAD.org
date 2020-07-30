@@ -23,10 +23,12 @@ const measureAreaOfPath2 = () => 0
  * @returns {Number} area of the geometry
  */
 const measureAreaOfGeom2 = (geometry) => {
+  if (geometry.area) return geometry.area
+
   const sides = geom2.toSides(geometry)
-  let area = sides.reduce((area, side) => area + (side[0][0] * side[1][1] - side[0][1] * side[1][0]), 0)
-  area *= 0.5
-  return area
+  const area = sides.reduce((area, side) => area + (side[0][0] * side[1][1] - side[0][1] * side[1][0]), 0)
+  geometry.area = area * 0.5
+  return geometry.area
 }
 
 /*
@@ -36,8 +38,11 @@ const measureAreaOfGeom2 = (geometry) => {
  * @returns {Number} area of the geometry
  */
 const measureAreaOfGeom3 = (geometry) => {
+  if (geometry.area) return geometry.area
+
   const polygons = geom3.toPolygons(geometry)
-  return polygons.reduce((area, polygon) => area + poly3.measureArea(polygon), 0)
+  geometry.area = polygons.reduce((area, polygon) => area + poly3.measureArea(polygon), 0)
+  return geometry.area
 }
 
 /**
