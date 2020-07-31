@@ -1,7 +1,5 @@
 const test = require('ava')
 
-const { degToRad } = require('../../maths/utils')
-
 const mat4 = require('../../maths/mat4')
 
 const { geom2, geom3, poly3 } = require('../../geometries')
@@ -56,13 +54,13 @@ test('extrudeFromSlices (torus)', (t) => {
   hex = poly3.transform(mat4.fromTranslation([0, 20, 0]), hex)
   hex = slice.fromPoints(poly3.toPoints(hex))
 
-  const angle = 45
+  const angle = Math.PI / 4
   const geometry3 = extrudeFromSlices(
     {
-      numberOfSlices: 360 / angle,
+      numberOfSlices: Math.PI * 2 / angle,
       isCapped: false,
       callback: function (progress, index, base) {
-        return slice.transform(mat4.fromXRotation(degToRad(angle * index)), base)
+        return slice.transform(mat4.fromXRotation(angle * index), base)
       }
     }, hex
   )

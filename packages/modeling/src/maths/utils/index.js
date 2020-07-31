@@ -1,8 +1,7 @@
 module.exports = {
   area: require('./area'),
   clamp: require('./clamp'),
-  degToRad: require('./degToRad'),
+  interpolateBetween2DPointsForY: require('./interpolateBetween2DPointsForY'),
   intersect: require('./intersect'),
-  radToDeg: require('./radToDeg'),
   solve2Linear: require('./solve2Linear')
 }

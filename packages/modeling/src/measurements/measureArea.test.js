@@ -50,6 +50,9 @@ test('measureArea (multiple objects)', (t) => {
   const acube = cuboid({ size: [10, 20, 40] })
   const o = {}
 
-  const allarea = measureArea(aline, arect, acube, o)
+  let allarea = measureArea(aline, arect, acube, o)
+  t.deepEqual(allarea, [0, 200, 2800, 0])
+
+  allarea = measureArea(aline, arect, acube, o)
   t.deepEqual(allarea, [0, 200, 2800, 0])
 })

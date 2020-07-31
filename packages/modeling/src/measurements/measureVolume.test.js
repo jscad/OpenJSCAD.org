@@ -50,6 +50,9 @@ test('measureVolume (multiple objects)', (t) => {
   const acube = cuboid({ size: [10, 20, 40] })
   const o = {}
 
-  const allvolume = measureVolume(aline, arect, acube, o)
+  let allvolume = measureVolume(aline, arect, acube, o)
+  t.deepEqual(allvolume, [0, 0, 7999.999999999999, 0])
+
+  allvolume = measureVolume(aline, arect, acube, o)
   t.deepEqual(allvolume, [0, 0, 7999.999999999999, 0])
 })
