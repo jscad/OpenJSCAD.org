@@ -50,6 +50,9 @@ test('measureBoundingBox (multiple objects)', (t) => {
   const acube = cuboid()
   const o = {}
 
-  const allbounds = measureBoundingBox(aline, arect, acube, o)
+  let allbounds = measureBoundingBox(aline, arect, acube, o)
+  t.deepEqual(allbounds, [[[10, 10, 0], [15, 15, 0]], [[-5, -10, 0], [5, 10, 0]], [[-1, -1, -1], [1, 1, 1]], [[0, 0, 0], [0, 0, 0]]])
+
+  allbounds = measureBoundingBox(aline, arect, acube, o)
   t.deepEqual(allbounds, [[[10, 10, 0], [15, 15, 0]], [[-5, -10, 0], [5, 10, 0]], [[-1, -1, -1], [1, 1, 1]], [[0, 0, 0], [0, 0, 0]]])
 })
