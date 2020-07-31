@@ -9,7 +9,7 @@ module.exports = {
   degToRad: require('./degToRad'),
   flatten: require('./flatten'),
   fnNumberSort: require('./fnNumberSort'),
-  getSegmentsFromRadius: require('./getSegmentsFromRadius'),
   insertSorted: require('./insertSorted'),
+  radiusToSegments: require('./radiusToSegments'),
   radToDeg: require('./radToDeg')
 }
