@@ -8,6 +8,7 @@ const poly3 = require('../geometries/poly3')
 /**
  * Construct an elliptic cylinder in three dimensional space.
  * @param {Object} [options] - options for construction
+ * @param {Array} [options.center=[0,0,0]] - center of cylinder
  * @param {Vector3} [options.height=2] - height of cylinder
  * @param {Vector2D} [options.startRadius=[1,1]] - radius of rounded start, must be two dimensional array
  * @param {Number} [options.startAngle=0] - start angle of cylinder, in radians
@@ -26,6 +27,7 @@ const poly3 = require('../geometries/poly3')
  */
 const cylinderElliptic = (options) => {
   const defaults = {
+    center: [0, 0, 0],
     height: 2,
     startRadius: [1, 1],
     startAngle: 0,
@@ -33,7 +35,10 @@ const cylinderElliptic = (options) => {
     endAngle: (Math.PI * 2),
     segments: 32
   }
-  let { height, startRadius, startAngle, endRadius, endAngle, segments } = Object.assign({}, defaults, options)
+  let { center, height, startRadius, startAngle, endRadius, endAngle, segments } = Object.assign({}, defaults, options)
+
+  if (!Array.isArray(center)) throw new Error('center must be an array')
+  if (center.length < 3) throw new Error('center must contain X, Y and Z values')
 
   if (height < (EPS * 2)) throw new Error('height must be larger then zero')
 
@@ -62,11 +67,9 @@ const cylinderElliptic = (options) => {
 
   const slices = Math.floor(segments * (rotation / (Math.PI * 2)))
 
-  const start = [0, 0, -(height / 2)]
-  const end = [0, 0, height / 2]
-  const startv = vec3.fromArray(start)
-  const endv = vec3.fromArray(end)
-  const ray = vec3.subtract(endv, startv)
+  const start = vec3.fromValues(0, 0, -(height / 2))
+  const end = vec3.fromValues(0, 0, height / 2)
+  const ray = vec3.subtract(end, start)
 
   const axisZ = vec3.unit(ray)
   const axisX = vec3.unit(vec3.orthogonal(axisZ))
@@ -75,8 +78,14 @@ const cylinderElliptic = (options) => {
   const point = (stack, slice, radius) => {
     const angle = slice * rotation + startAngle
     const out = vec3.add(vec3.scale(radius[0] * Math.cos(angle), axisX), vec3.scale(radius[1] * Math.sin(angle), axisY))
-    const pos = vec3.add(vec3.add(vec3.scale(stack, ray), startv), out)
+    const pos = vec3.add(vec3.add(vec3.scale(stack, ray), start), out)
     return pos
+  }
+
+  // adjust the points to center
+  const fromPoints = (...points) => {
+    const newpoints = points.map((point) => vec3.add(point, center))
+    return poly3.fromPoints(newpoints)
   }
 
   const polygons = []
@@ -85,27 +94,25 @@ const cylinderElliptic = (options) => {
     const t1 = (i + 1) / slices
 
     if (endRadius[0] === startRadius[0] && endRadius[1] === startRadius[1]) {
-      polygons.push(poly3.fromPoints([start, point(0, t1, endRadius), point(0, t0, endRadius)]))
-      polygons.push(poly3.fromPoints(
-        [point(0, t1, endRadius), point(1, t1, endRadius), point(1, t0, endRadius), point(0, t0, endRadius)]
-      ))
-      polygons.push(poly3.fromPoints([end, point(1, t0, endRadius), point(1, t1, endRadius)]))
+      polygons.push(fromPoints(start, point(0, t1, endRadius), point(0, t0, endRadius)))
+      polygons.push(fromPoints(point(0, t1, endRadius), point(1, t1, endRadius), point(1, t0, endRadius), point(0, t0, endRadius)))
+      polygons.push(fromPoints(end, point(1, t0, endRadius), point(1, t1, endRadius)))
     } else {
       if (startRadius[0] > 0) {
-        polygons.push(poly3.fromPoints([start, point(0, t1, startRadius), point(0, t0, startRadius)]))
-        polygons.push(poly3.fromPoints([point(0, t0, startRadius), point(0, t1, startRadius), point(1, t0, endRadius)]))
+        polygons.push(fromPoints(start, point(0, t1, startRadius), point(0, t0, startRadius)))
+        polygons.push(fromPoints(point(0, t0, startRadius), point(0, t1, startRadius), point(1, t0, endRadius)))
       }
       if (endRadius[0] > 0) {
-        polygons.push(poly3.fromPoints([end, point(1, t0, endRadius), point(1, t1, endRadius)]))
-        polygons.push(poly3.fromPoints([point(1, t0, endRadius), point(0, t1, startRadius), point(1, t1, endRadius)]))
+        polygons.push(fromPoints(end, point(1, t0, endRadius), point(1, t1, endRadius)))
+        polygons.push(fromPoints(point(1, t0, endRadius), point(0, t1, startRadius), point(1, t1, endRadius)))
       }
     }
   }
   if (rotation < (Math.PI * 2)) {
-    polygons.push(poly3.fromPoints([startv, point(0, 0, startRadius), endv]))
-    polygons.push(poly3.fromPoints([point(0, 0, startRadius), point(1, 0, endRadius), endv]))
-    polygons.push(poly3.fromPoints([startv, endv, point(0, 1, startRadius)]))
-    polygons.push(poly3.fromPoints([point(0, 1, startRadius), endv, point(1, 1, endRadius)]))
+    polygons.push(fromPoints(start, point(0, 0, startRadius), end))
+    polygons.push(fromPoints(point(0, 0, startRadius), point(1, 0, endRadius), end))
+    polygons.push(fromPoints(start, end, point(0, 1, startRadius)))
+    polygons.push(fromPoints(point(0, 1, startRadius), end, point(1, 1, endRadius)))
   }
   const result = geom3.create(polygons)
   return result
@@ -115,6 +122,7 @@ const cylinderElliptic = (options) => {
  * Construct a solid cylinder in three dimensional space.
  * @see [cylinderElliptic]{@link module:modeling/primitives.cylinderElliptic} for more options
  * @param {Object} [options] - options for construction
+ * @param {Array} [options.center=[0,0,0]] - center of cylinder
  * @param {Array} [options.height=2] - height of cylinder
  * @param {Number} [options.radius=1] - radius of cylinder (at both start and end)
  * @param {Number} [options.segments=32] - number of segments to create per full rotation
@@ -129,19 +137,21 @@ const cylinderElliptic = (options) => {
  */
 const cylinder = (options) => {
   const defaults = {
+    center: [0, 0, 0],
     height: 2,
     radius: 1,
     segments: 32
   }
-  const { height, radius, segments } = Object.assign({}, defaults, options)
+  const { center, height, radius, segments } = Object.assign({}, defaults, options)
 
   if (!Number.isFinite(radius)) throw new Error('radius must be a number')
 
   const newoptions = {
-    height: height,
+    center,
+    height,
     startRadius: [radius, radius],
     endRadius: [radius, radius],
-    segments: segments
+    segments
   }
 
   return cylinderElliptic(newoptions)

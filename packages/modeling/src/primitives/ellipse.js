@@ -6,6 +6,7 @@ const geom2 = require('../geometries/geom2')
  * Construct an ellispe in two dimensional space.
  * @see https://en.wikipedia.org/wiki/Ellipse
  * @param {Object} [options] - options for construction
+ * @param {Array} [options.center=[0,0]] - center of ellipse
  * @param {Array} [options.radius=[1,1]] - radius of ellipse, along X and Y
  * @param {Number} [options.segments=32] - number of segments to create per full rotation
  * @returns {geom2} new 2D geometry
@@ -15,11 +16,14 @@ const geom2 = require('../geometries/geom2')
  */
 const ellipse = (options) => {
   const defaults = {
+    center: [0, 0],
     radius: [1, 1],
     segments: 32
   }
-  const center = [0, 0]
-  const { radius, segments } = Object.assign({}, defaults, options)
+  const { center, radius, segments } = Object.assign({}, defaults, options)
+
+  if (!Array.isArray(center)) throw new Error('center must be an array')
+  if (center.length < 2) throw new Error('center must contain X and Y values')
 
   if (!Array.isArray(radius)) throw new Error('radius must be an array')
   if (radius.length < 2) throw new Error('radius must contain X and Y values')
@@ -42,6 +46,7 @@ const ellipse = (options) => {
  * Construct a circle in two dimensional space where are points are at the same distance from the center.
  * @see [ellipse]{@link module:modeling/primitives.ellipse} for more options
  * @param {Object} [options] - options for construction
+ * @param {Array} [options.center=[0,0]] - center of circle
  * @param {Number} [options.radius=1] - radius of circle
  * @param {Number} [options.segments=32] - number of segments to create per full rotation
  * @returns {geom2} new 2D geometry
@@ -51,16 +56,17 @@ const ellipse = (options) => {
  */
 const circle = (options) => {
   const defaults = {
+    center: [0, 0],
     radius: 1,
     segments: 32
   }
-  let { radius, segments } = Object.assign({}, defaults, options)
+  let { center, radius, segments } = Object.assign({}, defaults, options)
 
   if (!Number.isFinite(radius)) throw new Error('radius must be a number')
 
   radius = [radius, radius]
 
-  return ellipse({ radius: radius, segments: segments })
+  return ellipse({ center, radius, segments })
 }
 
 module.exports = {

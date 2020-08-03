@@ -8,6 +8,7 @@ const poly3 = require('../geometries/poly3')
 /**
  * Construct a solid cylinder in three dimensional space with rounded ends.
  * @param {Object} [options] - options for construction
+ * @param {Array} [options.center=[0,0,0]] - center of cylinder
  * @param {Array} [options.height=2] - height of cylinder
  * @param {Number} [options.radius=1] - radius of cylinder
  * @param {Number} [options.roundRadius=0.2] - radius of rounded edges
@@ -24,12 +25,16 @@ const poly3 = require('../geometries/poly3')
  */
 const roundedCylinder = (options) => {
   const defaults = {
+    center: [0, 0, 0],
     height: 2,
     radius: 1,
     roundRadius: 0.2,
     segments: 32
   }
-  const { height, radius, roundRadius, segments } = Object.assign({}, defaults, options)
+  const { center, height, radius, roundRadius, segments } = Object.assign({}, defaults, options)
+
+  if (!Array.isArray(center)) throw new Error('center must be an array')
+  if (center.length < 3) throw new Error('center must contain X, Y and Z values')
 
   if (height < (EPS * 2)) throw new Error('height must be larger then zero')
 
@@ -62,6 +67,12 @@ const roundedCylinder = (options) => {
 
   const qsegments = Math.floor(0.25 * segments)
 
+  // adjust the points to center
+  const fromPoints = (points) => {
+    const newpoints = points.map((point) => vec3.add(point, center))
+    return poly3.fromPoints(newpoints)
+  }
+
   const polygons = []
   let prevcylinderpoint
   for (let slice1 = 0; slice1 <= segments; slice1++) {
@@ -74,7 +85,7 @@ const roundedCylinder = (options) => {
       points.push(vec3.add(start, prevcylinderpoint))
       points.push(vec3.add(end, prevcylinderpoint))
       points.push(vec3.add(end, cylinderpoint))
-      polygons.push(poly3.fromPoints(points))
+      polygons.push(fromPoints(points))
 
       let prevcospitch, prevsinpitch
       for (let slice2 = 0; slice2 <= qsegments; slice2++) {
@@ -96,7 +107,7 @@ const roundedCylinder = (options) => {
           point = vec3.add(start, vec3.subtract(vec3.scale(cospitch, prevcylinderpoint), vec3.scale(sinpitch, zvector)))
           points.push(point)
 
-          polygons.push(poly3.fromPoints(points))
+          polygons.push(fromPoints(points))
 
           // cylinder rounding, end
           points = []
@@ -112,7 +123,7 @@ const roundedCylinder = (options) => {
           points.push(point)
           points.reverse()
 
-          polygons.push(poly3.fromPoints(points))
+          polygons.push(fromPoints(points))
         }
         prevcospitch = cospitch
         prevsinpitch = sinpitch
