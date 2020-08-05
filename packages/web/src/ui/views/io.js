@@ -1,6 +1,6 @@
 const html = require('bel')
 
-module.exports = function io (state, i18n) {
+const io = (state, i18n) => {
   const formatsList = state.io.availableExportFormats
     .map(({ name, displayName }) => {
       displayName = i18n.translate(displayName)
@@ -28,3 +28,5 @@ module.exports = function io (state, i18n) {
     </span>
     `
 }
+
+module.exports = io

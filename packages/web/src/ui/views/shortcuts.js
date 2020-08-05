@@ -1,6 +1,6 @@
 const html = require('bel')
 
-module.exports = function shortcuts (state, i18n) {
+const shortcuts = (state, i18n) => {
   const keybindings = state.shortcuts// require('../../../data/keybindings.json')
   const bindingsList = keybindings.map((binding, index) => {
     const { command, key, args, tmpKey, error } = binding
@@ -46,3 +46,5 @@ module.exports = function shortcuts (state, i18n) {
   </table>
 </section>`
 }
+
+module.exports = shortcuts

@@ -66,4 +66,9 @@ const isKeyEventScopeValid = (mykey, x) => {
   return false
 }
 
-module.exports = { compositeKeyFromKeyEvent, getKeyCombos, simpleKey, isKeyEventScopeValid }
+module.exports = {
+  compositeKeyFromKeyEvent,
+  getKeyCombos,
+  simpleKey,
+  isKeyEventScopeValid
+}

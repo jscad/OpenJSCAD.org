@@ -1,6 +1,6 @@
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
 
-module.exports = function makeStorageSideEffect ({ name }) {
+const makeStorageSideEffect = ({ name }) => {
   const reply = callBackToStream()
 
   const sink = (outToStore$) => {
@@ -38,3 +38,5 @@ module.exports = function makeStorageSideEffect ({ name }) {
   }
   return { sink, source }
 }
+
+module.exports = makeStorageSideEffect
