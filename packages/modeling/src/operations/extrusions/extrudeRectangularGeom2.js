@@ -1,8 +1,9 @@
-const { area } = require('../../math/utils')
+const { area } = require('../../maths/utils')
 
-const { geom2, path2 } = require('../../geometry')
+const geom2 = require('../../geometries/geom2')
+const path2 = require('../../geometries/path2')
 
-const { expand } = require('../expansions')
+const expand = require('../expansions/expand')
 
 const extrudeLinearGeom2 = require('./extrudeLinearGeom2')
 
@@ -20,24 +21,24 @@ const extrudeRectangularGeom2 = (options, geometry) => {
     size: 1,
     height: 1
   }
-  let { size, height } = Object.assign({ }, defaults, options)
+  const { size, height } = Object.assign({ }, defaults, options)
 
   options.delta = size
   options.offset = [0, 0, height]
 
   // convert the geometry to outlines
-  let outlines = geom2.toOutlines(geometry)
+  const outlines = geom2.toOutlines(geometry)
   if (outlines.length === 0) throw new Error('the given geometry cannot be empty')
 
   // expand the outlines
-  let newparts = outlines.map((outline) => {
+  const newparts = outlines.map((outline) => {
     if (area(outline) < 0) outline.reverse() // all outlines must wind counter clockwise
     return expand(options, path2.fromPoints({ closed: true }, outline))
   })
 
   // create a composite geometry
-  let allsides = newparts.reduce((sides, part) => sides.concat(geom2.toSides(part)), [])
-  let newgeometry = geom2.create(allsides)
+  const allsides = newparts.reduce((sides, part) => sides.concat(geom2.toSides(part)), [])
+  const newgeometry = geom2.create(allsides)
 
   return extrudeLinearGeom2(options, newgeometry)
 }

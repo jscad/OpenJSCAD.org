@@ -1,11 +1,11 @@
 const test = require('ava')
 
-const { color, geometry, primitives } = require('@jscad/modeling')
+const { colors, geometries, primitives, transforms } = require('@jscad/modeling')
 
 const serializer = require('../index.js')
 
-test('serialize 2D geometries (simple) to svg', function (t) {
-  const cag1 = geometry.geom2.create()
+test('serialize 2D geometries (simple) to svg', (t) => {
+  const cag1 = geometries.geom2.create()
 
   const observed1 = serializer.serialize({}, cag1)
   t.deepEqual([expected1], observed1)
@@ -15,23 +15,23 @@ test('serialize 2D geometries (simple) to svg', function (t) {
   const observed2 = serializer.serialize({}, cag2)
   t.deepEqual([expected2], observed2)
 
-  const cag3 = primitives.rectangle({ size: [10, 20], center: [-30, -30] })
-  const cag4 = primitives.rectangle({ size: [10, 20], center: [30, 30] })
+  const cag3 = transforms.center({ center: [-30, -30, 0] }, primitives.rectangle({ size: [10, 20] }))
+  const cag4 = transforms.center({ center: [30, 30, 0] }, primitives.rectangle({ size: [10, 20] }))
 
   const observed3 = serializer.serialize({}, cag3, cag4)
   t.deepEqual([expected3], observed3)
 })
 
-test('serialize 2D geometries (color) to svg', function (t) {
-  const cag2 = primitives.rectangle({ size: [10, 20] })
-  color.color([0.5, 0.5, 0.5, 0.5], cag2)
+test('serialize 2D geometries (color) to svg', (t) => {
+  let cag2 = primitives.rectangle({ size: [10, 20] })
+  cag2 = colors.colorize([0.5, 0.5, 0.5, 0.5], cag2)
 
   const observed2 = serializer.serialize({}, cag2)
   t.deepEqual([expected4], observed2)
 })
 
-test('serialize 2D geometries (complex) to svg', function (t) {
-  let shape = geometry.geom2.create([
+test('serialize 2D geometries (complex) to svg', (t) => {
+  let shape = geometries.geom2.create([
     [[-75.00000, 75.00000], [-75.00000, -75.00000]],
     [[-75.00000, -75.00000], [75.00000, -75.00000]],
     [[75.00000, -75.00000], [75.00000, 75.00000]],
@@ -53,7 +53,7 @@ test('serialize 2D geometries (complex) to svg', function (t) {
     [[2.00000, -19.00000], [2.00000, -15.00000]],
     [[2.00000, -15.00000], [-2.00000, -15.00000]]
   ])
-  color.color([0.5, 0.5, 0.5, 0.5], shape)
+  shape = colors.colorize([0.5, 0.5, 0.5, 0.5], shape)
 
   const observed = serializer.serialize({}, shape)
   t.deepEqual([expected5], observed)
@@ -74,7 +74,7 @@ const expected2 = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg width="10mm" height="20mm" viewBox="0 0 10 20" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <path d="M0 0L10 0L10 20L0 20L0 0"/>
+    <path d="M0 20L10 20L10 0L0 0L0 20"/>
   </g>
 </svg>
 `
@@ -84,10 +84,10 @@ const expected3 = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg width="70mm" height="80mm" viewBox="0 0 70 80" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <path d="M0 0L10 0L10 20L0 20L0 0"/>
+    <path d="M0 80L10 80L10 60L0 60L0 80"/>
   </g>
   <g>
-    <path d="M60 60L70 60L70 80L60 80L60 60"/>
+    <path d="M60 20L70 20L70 0L60 0L60 20"/>
   </g>
 </svg>
 `
@@ -97,7 +97,7 @@ const expected4 = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg width="10mm" height="20mm" viewBox="0 0 10 20" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <path fill-rule="evenodd" fill="rgb(127.5,127.5,127.5,127.5)" d="M0 0L10 0L10 20L0 20L0 0"/>
+    <path fill-rule="evenodd" fill="rgb(127.5,127.5,127.5,127.5)" d="M0 20L10 20L10 0L0 0L0 20"/>
   </g>
 </svg>
 `
@@ -107,7 +107,7 @@ const expected5 = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg width="150mm" height="150mm" viewBox="0 0 150 150" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <path fill-rule="evenodd" fill="rgb(127.5,127.5,127.5,127.5)" d="M0 0L150 0L150 150L115 150L115 75L35 75L35 150L0 150L0 0M90 35L83 35L83 50L67 50L67 35L60 35L60 65L90 65L90 35M73 56L77 56L77 60L73 60L73 56"/>
+    <path fill-rule="evenodd" fill="rgb(127.5,127.5,127.5,127.5)" d="M0 150L150 150L150 0L115 0L115 75L35 75L35 0L0 0L0 150M90 115L83 115L83 100L67 100L67 115L60 115L60 85L90 85L90 115M73 94L77 94L77 90L73 90L73 94"/>
   </g>
 </svg>
 `

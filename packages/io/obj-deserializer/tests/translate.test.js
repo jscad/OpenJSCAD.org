@@ -6,11 +6,11 @@ const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.js
 
 const deserializer = require('../index.js')
 
-test('translate simple obj file to jscad code', function (t) {
+test('translate simple obj file to jscad script', (t) => {
   const inputPath = path.resolve(samplesPath, 'obj/cube.obj')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
-  const observed = deserializer.deserialize(inputFile, undefined, { output: 'jscad', addMetaData: false })
+  const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, inputFile)
   const expected = `const {primitives} = require('@jscad/modeling')
 
 // groups: 1
@@ -63,7 +63,7 @@ module.exports = {main}
   t.deepEqual(observed, expected)
 })
 
-test('translate absolute face references to jscad code', function (t) {
+test('translate absolute face references to jscad script', (t) => {
   const data = `
 v 0.000000 2.000000 2.000000
 v 0.000000 0.000000 2.000000
@@ -82,8 +82,8 @@ f 5 1 4 8
 f 5 6 2 1
 f 2 6 7 3
 `
-  let observed = deserializer.deserialize(data, undefined, { output: 'jscad', addMetaData: false })
-  let expected = `const {primitives} = require('@jscad/modeling')
+  const observed = deserializer.deserialize({ filename: 'absolute', output: 'script', addMetaData: false }, data)
+  const expected = `const {primitives} = require('@jscad/modeling')
 
 // groups: 1
 // points: 8
@@ -135,7 +135,7 @@ module.exports = {main}
   t.deepEqual(observed, expected)
 })
 
-test('translate relative face references to jscad code', function (t) {
+test('translate relative face references to jscad script', (t) => {
   const data = `
 v 0.000000 2.000000 2.000000
 v 0.000000 0.000000 2.000000
@@ -168,7 +168,7 @@ v 2.000000 0.000000 0.000000
 v 2.000000 0.000000 2.000000
 f -4 -3 -2 -1
 `
-  const observed = deserializer.deserialize(data, undefined, { output: 'jscad', addMetaData: false })
+  const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, data)
   const expected = `const {primitives} = require('@jscad/modeling')
 
 // groups: 1

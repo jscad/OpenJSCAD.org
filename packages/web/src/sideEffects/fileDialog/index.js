@@ -1,23 +1,20 @@
-const most = require('most')
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
-const {head} = require('@jscad/core/utils/arrays')
-const makeLogger = require('../../utils/logger')
+// const makeLogger = require('../../utils/logger')
 
 const makeFileDialog = (params) => {
-  const defaults = {
-    logging: true
-  }
-  const {logging} = Object.assign({}, defaults, params)
-  const log = makeLogger({enabled: logging})
+  // const defaults = {
+  //   logging: true
+  // }
+  // const { logging } = Object.assign({}, defaults, params)
+  // const log = makeLogger({ enabled: logging })
 
   const commandResponses = callBackToStream()
 
-  const source = () => {
-    const commandResponses$ = commandResponses.stream.multicast()
-  }
+  const source = () => { }
+  // FIXME const commandResponses$ = commandResponses.stream.multicast()
 
   const sink = (out$) => {
-    out$.forEach(function (command) {
+    out$.forEach((command) => {
       commandResponses.callback(command)
 
       /* const {saveAs} = require('file-saver')
@@ -26,7 +23,7 @@ const makeFileDialog = (params) => {
       saveAs(blob, filePath) */
 
       console.log('here')
-      let input = document.createElement('input')
+      const input = document.createElement('input')
       input.id = 'foo'
       input.name = 'gna'
       input.setAttribute('type', 'file')
@@ -34,12 +31,12 @@ const makeFileDialog = (params) => {
       // add onchange handler if you wish to get the file :)
       // input.trigger('click')// opening dialog
       // return false; // avoiding navigation
-      input.addEventListener('change', function () {
+      input.addEventListener('change', () => {
         console.log('foo')
       })
     })
   }
-  return {source, sink}
+  return { source, sink }
 }
 
 module.exports = makeFileDialog

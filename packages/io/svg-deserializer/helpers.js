@@ -1,13 +1,9 @@
 const { inchMM, ptMM, pcMM, svgColors } = require('./constants')
 
 // Calculate the CAG length/size from the given SVG value (float)
-const svg2cagX = (v, svgUnitsPmm) => {
-  return (v / svgUnitsPmm[0])
-}
+const svg2cagX = (v, svgUnitsPmm) => (v / svgUnitsPmm[0])
 
-const svg2cagY = (v, svgUnitsPmm) => {
-  return 0 - (v / svgUnitsPmm[1])
-}
+const svg2cagY = (v, svgUnitsPmm) => 0 - (v / svgUnitsPmm[1])
 
 // Calculate the CAG length/size from the given CSS value (string)
 const cagLengthX = (css, svgUnitsPmm, svgUnitsX) => {
@@ -21,8 +17,7 @@ const cagLengthX = (css, svgUnitsPmm, svgUnitsX) => {
   v = (v / 100) * svgUnitsX
   // convert the units to mm
   v = v / svgUnitsPmm[0]
-  // return v;
-  return Math.round(v / -100000) * -100000
+  return Math.round(v * 100000) / 100000
 }
 
 const cagLengthY = (css, svgUnitsPmm, svgUnitsY) => {
@@ -36,8 +31,7 @@ const cagLengthY = (css, svgUnitsPmm, svgUnitsY) => {
   v = (v / 100) * svgUnitsY
   // convert the units to mm
   v = v / svgUnitsPmm[1]
-  // return v;
-  return Math.round(v / -100000) * -100000
+  return Math.round(v * 100000) / 100000
 }
 
 const cagLengthP = (css, svgUnitsPmm, svgUnitsV) => {
@@ -100,12 +94,14 @@ const cagColor = (value) => {
       }
       if (value.length === 7) {
       // HEX specification
-        rgb = [ parseInt('0x' + value.slice(1, 3)) / 255,
+        rgb = [
+          parseInt('0x' + value.slice(1, 3)) / 255,
           parseInt('0x' + value.slice(3, 5)) / 255,
-          parseInt('0x' + value.slice(5, 7)) / 255 ]
+          parseInt('0x' + value.slice(5, 7)) / 255
+        ]
       }
     } else {
-      let pat = /rgb\(.+,.+,.+\)/
+      const pat = /rgb\(.+,.+,.+\)/
       let s = pat.exec(value)
       if (s !== null) {
       // RGB specification
@@ -129,9 +125,9 @@ const cagColor = (value) => {
 
 const cssStyle = (element, name) => {
   if ('STYLE' in element) {
-    let list = element.STYLE + ';'
-    let pat = name + '\\s*:\\s*(\\S+);'
-    let exp = new RegExp(pat, 'i')
+    const list = element.STYLE + ';'
+    const pat = name + '\\s*:\\s*(\\S+);'
+    const exp = new RegExp(pat, 'i')
     let v = exp.exec(list)
     if (v !== null) {
       v = v[0] // name plus value
@@ -145,8 +141,8 @@ const cssStyle = (element, name) => {
 }
 
 const reflect = (x, y, px, py) => {
-  let ox = x - px
-  let oy = y - py
+  const ox = x - px
+  const oy = y - py
   if (x === px && y === px) return [x, y]
   if (x === px) return [x, py + (-oy)]
   if (y === py) return [px + (-ox), y]

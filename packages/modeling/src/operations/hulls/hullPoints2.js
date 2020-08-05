@@ -1,8 +1,6 @@
-const { vec2 } = require('../../math')
+const vec2 = require('../../maths/vec2')
 
-const angleBetweenPoints = (p0, p1) => {
-  return Math.atan2((p1[1] - p0[1]), (p1[0] - p0[0]))
-}
+const angleBetweenPoints = (p0, p1) => Math.atan2((p1[1] - p0[1]), (p1[0] - p0[0]))
 
 const compareIndex = (index1, index2) => {
   if (index1.angle < index2.angle) {
@@ -28,7 +26,7 @@ const compute = (points) => {
   // Find the lowest point
   let min = 0
   points.forEach((point, i) => {
-    let minpoint = points[min]
+    const minpoint = points[min]
     if (point[1] === minpoint[1]) {
       if (point[0] < minpoint[0]) {
         min = i
@@ -39,7 +37,7 @@ const compute = (points) => {
   })
 
   // Calculate angles and distances from the lowest point
-  let al = []
+  const al = []
   let angle = 0.0
   let dist = 0.0
   for (let i = 0; i < points.length; i++) {
@@ -54,10 +52,10 @@ const compute = (points) => {
     al.push({ index: i, angle: angle, distance: dist })
   }
 
-  al.sort(function (a, b) { return compareIndex(a, b) })
+  al.sort((a, b) => compareIndex(a, b))
 
   // Wind around the points CCW, removing interior points
-  let stack = new Array(points.length + 1)
+  const stack = new Array(points.length + 1)
   let j = 2
   for (let i = 0; i < points.length; i++) {
     if (i === min) {
@@ -69,10 +67,7 @@ const compute = (points) => {
   stack[0] = stack[points.length]
   stack[1] = min
 
-  const ccw = (i1, i2, i3) => {
-    return (points[i2][0] - points[i1][0]) * (points[i3][1] - points[i1][1]) -
-           (points[i2][1] - points[i1][1]) * (points[i3][0] - points[i1][0])
-  }
+  const ccw = (i1, i2, i3) => (points[i2][0] - points[i1][0]) * (points[i3][1] - points[i1][1]) - (points[i2][1] - points[i1][1]) * (points[i3][0] - points[i1][0])
 
   let tmp
   let M = 2
@@ -100,7 +95,7 @@ const compute = (points) => {
  * @returns {Array} a list of points that form the hull
  */
 const hullPoints2 = (uniquepoints) => {
-  let indices = compute(uniquepoints)
+  const indices = compute(uniquepoints)
 
   let hullpoints = []
   if (Array.isArray(indices)) {

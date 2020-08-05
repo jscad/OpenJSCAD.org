@@ -1,52 +1,73 @@
 const flatten = require('../../utils/flatten')
 
-const { mat4, plane } = require('../../math')
+const mat4 = require('../../maths/mat4')
+const plane = require('../../maths/plane')
 
-const { geom2, geom3, path2 } = require('../../geometry')
+const geom2 = require('../../geometries/geom2')
+const geom3 = require('../../geometries/geom3')
+const path2 = require('../../geometries/path2')
 
 /**
- * Mirror the given object(s) using the given options (if any)
- * Note: The normal should be given as 90 degrees from the plane origin.
+ * Mirror the given geometries using the given options.
  * @param {Object} options - options for mirror
  * @param {Array} [options.origin=[0,0,0]] - the origin of the plane
  * @param {Array} [options.normal=[0,0,1]] - the normal vector of the plane
- * @param {Object|Array} objects - the objects(s) to mirror
- * @return {Object|Array} the mirrored object(s)
+ * @param {...Object} geometries - the geometries to mirror
+ * @return {Object|Array} the mirrored geometry, or a list of mirrored geometry
+ * @alias module:modeling/transforms.mirror
  *
  * @example
- * const newsphere = mirror({normal: [0,0,10]}, cube({center: [0,0,15], radius: [20, 25, 5]}))
+ * let myshape = mirror({normal: [0,0,10]}, cube({center: [0,0,15], radius: [20, 25, 5]}))
  */
 const mirror = (options, ...objects) => {
   const defaults = {
     origin: [0, 0, 0],
     normal: [0, 0, 1] // Z axis
   }
-  let { origin, normal } = Object.assign({}, defaults, options)
+  const { origin, normal } = Object.assign({}, defaults, options)
 
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')
 
   const planeOfMirror = plane.fromNormalAndPoint(normal, origin)
+  // verify the plane, i.e. check that the given normal was valid
+  if (Number.isNaN(planeOfMirror[0])) {
+    throw new Error('the given origin and normal do not define a proper plane')
+  }
+
   const matrix = mat4.mirrorByPlane(planeOfMirror)
 
-  // special check to verify the plane, i.e. check that the given normal was valid
-  const validPlane = !Number.isNaN(planeOfMirror[0])
-
   const results = objects.map((object) => {
-    if (validPlane) {
-      if (path2.isA(object)) return path2.transform(matrix, object)
-      if (geom2.isA(object)) return geom2.transform(matrix, object)
-      if (geom3.isA(object)) return geom3.transform(matrix, object)
-    }
+    if (path2.isA(object)) return path2.transform(matrix, object)
+    if (geom2.isA(object)) return geom2.transform(matrix, object)
+    if (geom3.isA(object)) return geom3.transform(matrix, object)
     return object
   })
   return results.length === 1 ? results[0] : results
 }
 
+/**
+ * Mirror the given geometries about the X axis.
+ * @param {...Object} geometries - the geometries to mirror
+ * @return {Object|Array} the mirrored geometry, or a list of mirrored geometry
+ * @alias module:modeling/transforms.mirrorX
+ */
 const mirrorX = (...objects) => mirror({ normal: [1, 0, 0] }, objects)
 
+/**
+ * Mirror the given geometries about the Y axis.
+ * @param {...Object} geometries - the geometries to mirror
+ * @return {Object|Array} the mirrored geometry, or a list of mirrored geometry
+ * @alias module:modeling/transforms.mirrorY
+ */
 const mirrorY = (...objects) => mirror({ normal: [0, 1, 0] }, objects)
 
+/**
+ * Mirror the given object(s) about the Z axis.
+ * @param {...Object} objects - the geometries to mirror
+ * @return {Object|Array} the mirrored geometry, or a list of mirrored geometry
+ * @alias module:modeling/transforms.mirrorZ
+ */
 const mirrorZ = (...objects) => mirror({ normal: [0, 0, 1] }, objects)
 
 module.exports = {

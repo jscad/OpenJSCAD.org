@@ -25,27 +25,29 @@ const instantiate = require('./deserialize')
 
 /**
  * Deserialize the given AMF source (xml) into either a script or an array of geometry
- * @param {String} input - AMF source data
- * @param {String} [filename] - original filename of AMF source
  * @param {Object} [options] - options used during deserializing
- * @param {String} [options.output='jscad'] - either 'jscad' or 'object' to set desired output
+ * @param {String} [options.filename='amf'] - filename of original AMF source
+ * @param {String} [options.output='script'] - either 'script' or 'geometry' to set desired output
  * @param {String} [options.version='0.0.0'] - version number to add to the metadata
  * @param {Boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script
- * @return {[geometry]/String} either an array of geometry (object) or a string (jscad)
+ * @param {String} input - AMF source data
+ * @return {[geometry]/String} either an array of objects (geometry) or a string (script)
  */
-const deserialize = (input, filename, options) => {
+const deserialize = (options, input) => {
   const defaults = {
-    output: 'jscad',
+    filename: 'amf',
+    output: 'script',
     version,
     addMetaData: true
   }
   options = Object.assign({}, defaults, options)
 
-  filename = filename || 'amf'
-
-  return options.output === 'jscad' ? translate(input, filename, options) : instantiate(input, filename, options)
+  return options.output === 'script' ? translate(options, input) : instantiate(options, input)
 }
 
+const extension = 'amf'
+
 module.exports = {
-  deserialize
+  deserialize,
+  extension
 }

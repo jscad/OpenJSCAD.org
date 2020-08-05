@@ -1,17 +1,18 @@
 const flatten = require('../../utils/flatten')
 
-const { geom2 } = require('../../geometry')
+const geom2 = require('../../geometries/geom2')
 
 const extrudeLinearGeom2 = require('./extrudeLinearGeom2')
 
 /**
- * Extrude the given object(s) in a linear direction using the given options.
- * @param {Object} [options] - options for extrude
+ * Extrude the given geometry in an upward linear direction using the given options.
+ * @param {Object} options - options for extrude
  * @param {Array} [options.height=1] the height of the extrusion
  * @param {Number} [options.twistAngle=0] the final rotation (RADIANS) about the origin of the shape (if any)
  * @param {Integer} [options.twistSteps=1] the resolution of the twist about the axis (if any)
- * @param {Object|Array} objects - the objects(s) to extrude
- * @return {Object|Array} the extruded object(s)
+ * @param {...Object} geometry - the list of geometry to extrude
+ * @return {Object|Array} the extruded geometry, or a list of extruded geometry
+ * @alias module:modeling/extrusions.extrudeLinear
  *
  * @example
  * let myshape = extrudeLinear({height: 10}, rectangle({size: [20, 25]}))
@@ -22,7 +23,7 @@ const extrudeLinear = (options, ...objects) => {
     twistAngle: 0,
     twistSteps: 1
   }
-  let { height, twistAngle, twistSteps } = Object.assign({ }, defaults, options)
+  const { height, twistAngle, twistSteps } = Object.assign({ }, defaults, options)
 
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')

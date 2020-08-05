@@ -1,3 +1,1 @@
-const jsonSkipRepeat = (state, previousState) => {
-  return JSON.stringify(state) === JSON.stringify(previousState)
-}
+const jsonSkipRepeat = (state, previousState) => JSON.stringify(state) === JSON.stringify(previousState)

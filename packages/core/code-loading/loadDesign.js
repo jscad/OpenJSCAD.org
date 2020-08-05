@@ -1,20 +1,19 @@
 // loading
-const requireDesignFromModule = require('./requireDesignFromModule')
-const getAllParameterDefintionsAndValues = require('../parameters/getParameterDefinitionsAndValues')
-const transformSources = require('./transformSources')
 const { registerAllExtensions } = require('../io/registerExtensions')
 
-// taken verbatim from https://github.com/iliakan/detect-node
-// return true if we are are in node/ env that has require()
-const hasRequire = () => Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]'
+const transformSources = require('./transformSources')
+const makeFakeFs = require('./makeFakeFs')
 const makeWebRequire = require('./webRequire')
+const normalizeDesignModule = require('./normalizeDesignModule')
+const getAllParameterDefintionsAndValues = require('../parameters/getParameterDefinitionsAndValues')
 
-/** load a jscad script, injecting the basic dependencies if necessary
+/**
+ * load a jscad script, injecting the basic dependencies if necessary
  * @param source the source code
- * @param {String} mainPath
- * @param {String} apiMainPath='../../../../core/tmp/modeling.js : relative path or  '@jscad/modeling'
- * @param {Array} filesAndFolders array of files and folders to use
- * @param {Object} parameterValuesOverride, the values to use to override the defaults for the current design
+ * @param {String} mainPath - file or directory path
+ * @param {String} apiMainPath - path to main API module, i.e. '@jscad/modeling'
+ * @param {Array} filesAndFolders - array of files and folders to use
+ * @param {Object} parameterValuesOverride - the values to use to override the defaults for the current design
  */
 const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverride) => {
   // console.log('***** loadDesign',mainPath)
@@ -22,8 +21,6 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
   // ie either the only file if there is only one
   // OR the file in the 'main' entry of package.js, index.js, main.js or <folderName>.js
 
-  // console.log('mainPath', mainPath)
-  // now attempt to load the design
   /*
     - if the script is a common.js file already
       > load as it is
@@ -40,43 +37,38 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
           use fake require() to load the rootScript
   */
 
-  // make sure we always deal with a commonJs module
-  // FIXME: cleanup, it is always the case now
-  // const isDesignCommonJs = isCommonJsModule(designRoot.source)
-  // designRoot.source = !isDesignCommonJs ? modulifySource(designRoot.source, apiMainPath) : designRoot.source
-
-  // we need to update the source for our module
+  // transform the source if passed non-javascript content, i.e. stl
   filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
+
+  if (filesAndFolders.length > 1) {
+    // this only happens if several files were dragNdrop
+    // FIXME throw new Error('please create a folder for multiple part projects')
+    // create a file structure to house the contents
+    filesAndFolders = [
+      {
+        fullPath: '/',
+        name: '',
+        children: filesAndFolders
+      }
+    ]
+  }
   // console.log('filesAndFolders',filesAndFolders)
 
-  const makeFakeFs = require('./makeFakeFs')
-  const { getDesignEntryPoint, getDesignName } = require('./requireDesignUtilsFs')
-
   const fakeFs = makeFakeFs(filesAndFolders)
-  const rootPath = filesAndFolders[0].fullPath
-  const mainPath1 = getDesignEntryPoint(fakeFs, rootPath)
-  const designName = getDesignName(fakeFs, rootPath)
-  const designPath = require('path').dirname(rootPath)
 
-  // console.log('***** root', rootPath, 'main', mainPath1, designName, designPath, filesAndFolders)
-  // console.log('filesAndFolders', filesAndFolders)
-  // console.log('transformed sources', filesAndFolders)
-  // now check if we need fake require or not
-  // FIXME: we need to come up with a way to intercept node 'require' calls to be able to apply transformSources on the fly
-  // since we keep passing the 'mainPath' to the normal require which points to the NON TRANSFORMED source
   const webRequire = makeWebRequire(filesAndFolders, { apiMainPath })
 
   // register all extension formats
   registerAllExtensions(fakeFs, webRequire)
 
-  // if we have not been able to find an entry point, bail out?
-  if (!mainPath) {
-    throw Error('no design entry point found: please check if your design is valid')
-  }
+  // find the root module
+  let rootModule = webRequire(filesAndFolders[0].fullPath)
 
-  // rootModule SHOULD contain a main() entry and optionally a getParameterDefinitions entrye
-  // console.log('*****', mainPath, mainPath1)
-  const rootModule = requireDesignFromModule(mainPath1, webRequire)
+  // console.log('***** rootModule',rootModule)
+
+  rootModule = normalizeDesignModule(rootModule)
+
+  // rootModule SHOULD contain a main() entry and optionally a getParameterDefinitions entry
   // the design (module tree) has been loaded at this stage
   // now we can get our usefull data (definitions and values/defaults)
   const parameters = getAllParameterDefintionsAndValues(rootModule, parameterValuesOverride)

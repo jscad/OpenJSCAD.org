@@ -1,15 +1,13 @@
 const path = require('path')
-const { head } = require('../../utils/utils')
-const { formats, supportedFormatsForObjects } = require('@jscad/core/io/formats')
+const { head } = require('@jscad/array-utils')
+const { formats, supportedFormatsForObjects } = require('@jscad/io/formats')
 
 const availableExportFormatsFromSolids = (solids) => {
   const formatsToIgnore = ['jscad', 'js']
   const availableExportFormats = supportedFormatsForObjects(solids)
-    .filter(formatName => !formatsToIgnore.includes(formatName))
-    .map(function (formatName) {
-      return { name: formatName, displayName: formats[formatName].displayName }
-    })
-  let exportFormat = head(availableExportFormats) ? head(availableExportFormats).name : undefined
+    .filter((formatName) => !formatsToIgnore.includes(formatName))
+    .map((formatName) => ({ name: formatName, displayName: formats[formatName].displayName }))
+  const exportFormat = head(availableExportFormats) ? head(availableExportFormats).name : undefined
   return { exportFormat, availableExportFormats }
 }
 

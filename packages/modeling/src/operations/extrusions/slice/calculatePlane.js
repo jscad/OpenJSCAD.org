@@ -1,12 +1,15 @@
-const { plane, vec3 } = require('../../../math')
+const plane = require('../../../maths/plane')
+const vec3 = require('../../../maths/vec3')
 
 /**
  * Calculate the plane of the given slice.
- * NOTE: The points are assumed to be planar from the beginning.
+ * NOTE: The slice (and all points) are assumed to be planar from the beginning.
  * @param {slice} slice - the slice
  * @returns {plane} the plane of the slice
+ * @alias module:modeling/extrusions/slice.calculatePlane
+ *
  * @example
- * let myplane = toPlane(slice)
+ * let myplane = calculatePlane(slice)
  */
 const calculatePlane = (slice) => {
   const edges = slice.edges
@@ -20,7 +23,7 @@ const calculatePlane = (slice) => {
   let farthestEdge = [[NaN, NaN, NaN], [NaN, NaN, NaN]]
   let distance = 0
   edges.forEach((edge) => {
-    let d = vec3.squaredDistance(midpoint, edge[0])
+    const d = vec3.squaredDistance(midpoint, edge[0])
     if (d > distance) {
       farthestEdge = edge
       distance = d

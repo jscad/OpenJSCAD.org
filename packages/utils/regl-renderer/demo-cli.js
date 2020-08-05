@@ -1,37 +1,43 @@
-
 const { writeContextToFile } = require('@jscad/img-utils')
+
 const { prepareRender, drawCommands, cameras, entitiesFromSolids } = require('./src') // replace this with the correct import
 
 // setup demo solids data
-const initializeData = function () {
-  const { color } = require('@jscad/scad-api').color
-  const { cube, sphere } = require('@jscad/scad-api').primitives3d
-  const { union, difference, intersection } = require('@jscad/scad-api').booleanOps
-  const logo = union(
-    difference(
-      cube({ size: 30, center: true }),
-      sphere({ r: 20, center: true })
-    ),
-    intersection(
-      sphere({ r: 13, center: true }),
-      cube({ size: 21, center: true })
-    )
-  ).translate([0, 0, 1.5]).scale(10)
+const demoSolids = (parameters) => {
+  const { colorize } = require('@jscad/modeling').colors
+  const { cube, cuboid, line, sphere, star } = require('@jscad/modeling').primitives
+  const { intersect, subtract } = require('@jscad/modeling').booleans
 
-  const transpCube = color([1, 0, 0, 0.75], cube({ size: [100, 100, 400] }))
-  return [ transpCube, logo ]
+  const logo = [
+    colorize([1.0, 0.4, 1.0], subtract(
+      cube({ size: 300 }),
+      sphere({ radius: 200 })
+    )),
+    colorize([1.0, 1.0, 0], intersect(
+      sphere({ radius: 130 }),
+      cube({ size: 210 })
+    ))
+  ]
+
+  const transpCube = colorize([1, 0, 0, 0.75], cuboid({ size: [100 * parameters.scale, 100, 210 + (200 * parameters.scale)] }))
+  const star2D = star({ vertices: 8, innerRadius: 150, outerRadius: 200 })
+  const line2D = colorize([1.0, 0, 0], line([[220, 220], [-220, 220], [-220, -220], [220, -220], [220, 220]]))
+
+  return [transpCube, star2D, line2D, ...logo]
 }
 
 const params = {
   width: 640,
   height: 480
 }
+
 const { width, height } = params
+
 // create webgl context
 const gl = require('gl')(width, height)
 
 // process entities and inject extras
-const solids = entitiesFromSolids({}, initializeData())
+const solids = entitiesFromSolids({}, demoSolids({ scale: 1 }))
 
 // prepare the camera
 const perspectiveCamera = cameras.perspective

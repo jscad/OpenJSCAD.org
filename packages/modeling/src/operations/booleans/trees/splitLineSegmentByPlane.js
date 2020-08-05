@@ -1,4 +1,4 @@
-const { vec3 } = require('../../../math')
+const vec3 = require('../../../maths/vec3')
 
 const splitLineSegmentByPlane = (plane, p1, p2) => {
   const direction = vec3.subtract(p2, p1)

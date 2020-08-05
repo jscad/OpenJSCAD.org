@@ -15,16 +15,16 @@ let amfLast = null // last object found
 let amfDefinition = 0 // definitions beinging created
 // 0-AMF, 1-object, 2-material, 3-texture, 4-constellation, 5-metadata
 // high level elements / definitions
-let amfObjects = [] // list of objects
-let amfMaterials = [] // list of materials
-let amfTextures = [] // list of textures
-let amfConstels = [] // list of constellations
+const amfObjects = [] // list of objects
+const amfMaterials = [] // list of materials
+const amfTextures = [] // list of textures
+const amfConstels = [] // list of constellations
 // let amfMetadata = [] // list of metadata
 let amfObj = null // amf in object form
 
 const amfAmf = (element) => {
   // default AMF with no objects
-  let obj = { type: 'amf', unit: 'mm', scale: 1.0 }
+  const obj = { type: 'amf', unit: 'mm', scale: 1.0 }
 
   if ('UNIT' in element) { obj.unit = element.UNIT.toLowerCase() }
   // set scaling
@@ -50,8 +50,8 @@ const amfAmf = (element) => {
   return obj
 }
 
-const amfObject = function (element) {
-  let obj = { type: 'object', id: `JSCAD${amfObjects.length}` } // default ID
+const amfObject = (element) => {
+  const obj = { type: 'object', id: `JSCAD${amfObjects.length}` } // default ID
 
   if ('ID' in element) { obj.id = element.ID }
 
@@ -79,18 +79,18 @@ const createAmfParser = (src, pxPmm) => {
       VERTEX: amfVertex,
       EDGE: amfEdge,
       VOLUME: amfVolume,
-      MATERIAL: attributes => {
+      MATERIAL: (attributes) => {
         const tmp = amfMaterial(attributes)
         if (amfDefinition === 0) amfDefinition = 2 // MATERIAL processing
         return tmp
       },
-      TEXTURE: node => {
+      TEXTURE: (node) => {
         if (amfDefinition === 0) amfDefinition = 3 // TEXTURE processing
       },
-      CONSTELLATION: node => {
+      CONSTELLATION: (node) => {
         if (amfDefinition === 0) amfDefinition = 4 // CONSTELLATION processing
       },
-      METADATA: attributes => {
+      METADATA: (attributes) => {
         const tmp = amfMetadata(attributes)
         if (amfDefinition === 0) amfDefinition = 5 // METADATA processing
         return tmp
@@ -130,7 +130,7 @@ const createAmfParser = (src, pxPmm) => {
       undefined: () => console.log(`warning: unsupported AMF element: ${node.name}`)
     }
 
-    let obj = objMap[node.name] ? objMap[node.name](node.attributes, { amfObjects }) : null
+    const obj = objMap[node.name] ? objMap[node.name](node.attributes, { amfObjects }) : null
 
     if (obj) {
       switch (amfDefinition) {
@@ -142,7 +142,7 @@ const createAmfParser = (src, pxPmm) => {
           break
         case 1: // definition of OBJECT
           if (amfObjects.length > 0) {
-            let group = amfObjects.pop()
+            const group = amfObjects.pop()
             // add the object to the active group if necessary
             if ('objects' in group) {
               // console.log('object '+group.type+' adding ['+obj.type+']');
@@ -163,7 +163,7 @@ const createAmfParser = (src, pxPmm) => {
             amfMaterials.push(obj)
           } else {
             if (amfMaterials.length > 0) {
-              let group = amfMaterials.pop()
+              const group = amfMaterials.pop()
               // add the object to the active group if necessary
               if ('objects' in group) {
                 // console.log('material '+group.type+' adding ['+obj.type+']');

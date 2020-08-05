@@ -82,9 +82,9 @@ const expand = (params, ...solids) => {
   return { children: solids, type: 'expand', params }
 }
 
-const color = (params, ...solids) => {
+const colorize = (params, ...solids) => {
   solids = toArray(solids)
-  return { children: solids, type: 'color', params }
+  return { children: solids, type: 'colors', params }
 }
 
 const square = (params) => {
@@ -114,7 +114,7 @@ const rectangular_extrude = (solids, params) => {
 }
 
 // attempt at workaround for non tree items that need access to data before final evaluation
-let specials = []
+const specials = []
 const measureArea = require('./api-measurements').makeMeasureArea(specials)
 const measureVolume = require('./api-measurements').makeMeasureVolume(specials)
 const measureBounds = require('./api-measurements').makeMeasureBounds(specials)
@@ -166,7 +166,7 @@ const apiClone = {
     measureBounds
   },
 
-  color: Object.assign({}, require('@jscad/csg/api').color, { color }),
+  colors: Object.assign({}, require('@jscad/csg/api').colors, { colors }),
   csg: require('@jscad/csg/api').csg,
   // these are obsolete, but keeping the same API for now ...
   maths: require('@jscad/csg/api').maths,
@@ -201,7 +201,7 @@ module.exports = {
   linear_extrude,
   rectangular_extrude,
 
-  color,
+  colors,
 
   measureArea,
   measureVolume,

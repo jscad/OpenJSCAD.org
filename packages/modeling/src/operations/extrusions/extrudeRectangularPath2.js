@@ -1,6 +1,6 @@
-const { path2 } = require('../../geometry')
+const path2 = require('../../geometries/path2')
 
-const { expand } = require('../expansions')
+const expand = require('../expansions/expand')
 
 const extrudeLinearGeom2 = require('./extrudeLinearGeom2')
 
@@ -18,7 +18,7 @@ const extrudeRectangularPath2 = (options, geometry) => {
     size: 1,
     height: 1
   }
-  let { size, height } = Object.assign({ }, defaults, options)
+  const { size, height } = Object.assign({ }, defaults, options)
 
   options.delta = size
   options.offset = [0, 0, height]
@@ -26,7 +26,7 @@ const extrudeRectangularPath2 = (options, geometry) => {
   const points = path2.toPoints(geometry)
   if (points.length === 0) throw new Error('the given geometry cannot be empty')
 
-  let newgeometry = expand(options, geometry)
+  const newgeometry = expand(options, geometry)
   return extrudeLinearGeom2(options, newgeometry)
 }
 

@@ -7,12 +7,10 @@ const compareVectors = require('./compareVectors')
  * @returns {boolean} result of comparison
  */
 const comparePolygons = (poly1, poly2) => {
-  if (compareVectors(poly1.plane, poly2.plane)) {
-    if (poly1.vertices.length === poly2.vertices.length) {
-      return poly1.vertices.reduce((valid, vertex, index) => {
-          return valid && compareVectors(poly1.vertices[index], poly2.vertices[index])
-        }, true)
-    }
+  if (poly1.vertices.length === poly2.vertices.length) {
+    return poly1.vertices.reduce((valid, vertex, index) => {
+      return valid && compareVectors(poly1.vertices[index], poly2.vertices[index])
+    }, true)
   }
   return false
 }

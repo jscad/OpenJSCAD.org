@@ -1,5 +1,5 @@
-const distance = require('../../../math/vec3/distance')
-const squaredDistance = require('../../../math/vec3/squaredDistance')
+const distance = require('../../../maths/vec3/distance')
+const squaredDistance = require('../../../maths/vec3/squaredDistance')
 
 /*
  * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)

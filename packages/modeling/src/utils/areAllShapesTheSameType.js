@@ -1,6 +1,13 @@
 // list of supported geometries
-const {geom2, geom3, path2} = require('../geometry')
+const geom2 = require('../geometries/geom2')
+const geom3 = require('../geometries/geom3')
+const path2 = require('../geometries/path2')
 
+/**
+ * @param {Array} shapes - list of shapes to compare
+ * @returns {Boolean} true if the given shapes are of the same type
+ * @alias module:modeling/utils.areAllShapesTheSameType
+ */
 const areAllShapesTheSameType = (shapes) => {
   let previousType
   shapes.forEach((shape) => {

@@ -1,12 +1,14 @@
+/**
+ * @alias module:modeling/utils.insertSorted
+ */
 const insertSorted = (array, element, comparefunc) => {
   let leftbound = 0
   let rightbound = array.length
   while (rightbound > leftbound) {
-    let testindex = Math.floor((leftbound + rightbound) / 2)
-    let testelement = array[testindex]
-    let compareresult = comparefunc(element, testelement)
-    if (compareresult > 0) // element > testelement
-    {
+    const testindex = Math.floor((leftbound + rightbound) / 2)
+    const testelement = array[testindex]
+    const compareresult = comparefunc(element, testelement)
+    if (compareresult > 0) { // element > testelement
       leftbound = testindex + 1
     } else {
       rightbound = testindex

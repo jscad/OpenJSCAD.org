@@ -1,27 +1,24 @@
 const most = require('most')
 const morph = require('morphdom')// require('nanomorph')
-const {proxy} = require('most-proxy')
+const { proxy } = require('most-proxy')
 
-const hooks = require('morphdom-hooks')
-// const morph = hooks(require('morphdom'))
-
-module.exports = function makeDomSideEffect ({targetEl}) {
+const makeDomSideEffect = ({ targetEl }) => {
   const { attach, stream } = proxy()
 
   const out$ = stream
 
-  function domSink (targetEl, outToDom$) {
+  const domSink = (targetEl, outToDom$) => {
     let tree
 
     const firstRender$ = outToDom$
       .take(1)
-      .map(function (_tree) {
+      .map((_tree) => {
         tree = _tree
         targetEl.appendChild(tree)
       })
     const otherRenders$ = outToDom$
       .skip(1)
-      .map(function (newTree) {
+      .map((newTree) => {
         morph(tree, newTree)
       })
 
@@ -31,53 +28,49 @@ module.exports = function makeDomSideEffect ({targetEl}) {
     ]).multicast()
 
     attach(domRenderRequest$)
-    domRenderRequest$.forEach(x => x)
+    domRenderRequest$.forEach((x) => x)
   }
 
-  let storedListeners = {
+  const storedListeners = {}
 
-  }
-  function domSource () {
-    function getElements (query) {
-      // todo : how to deal with 'document' level queries
-      /*if (query === document) {
-        return [document] //Array.from(document.querySelectorAll(query))
-      }*/
-      return Array.from(targetEl.querySelectorAll(query))
-    }
+  const domSource = () => {
+    // TODO : how to deal with 'document' level queries
+    const getElements = (query) => Array.from(targetEl.querySelectorAll(query))
+    /* if (query === document) {
+      return [document] //Array.from(document.querySelectorAll(query))
+    } */
 
-    const select = function (query) {
+    const select = (query) => {
       // console.log('selecting', query)
       const items = getElements(query)
 
       let outputStream
 
-      return {events: function events (eventName) {
-        if (!items || (items && items.length === 0)) {
-          const eventProxy = proxy()
-          outputStream = eventProxy.stream
-          storedListeners[query + '@@' + eventName] = {observable: eventProxy, live: false}
+      return {
+        events: function events (eventName) {
+          if (!items || (items && items.length === 0)) {
+            const eventProxy = proxy()
+            outputStream = eventProxy.stream
+            storedListeners[query + '@@' + eventName] = { observable: eventProxy, live: false }
+          }
+          // eventsForListners[query] = eventName
+          storedListeners[query + '@@' + eventName].events = eventName
+          return outputStream.multicast()
         }
-      // eventsForListners[query] = eventName
-        storedListeners[query + '@@' + eventName].events = eventName
-        return outputStream.multicast()
-      }}
+      }
     }
 
-    out$.forEach(function () {
+    out$.forEach(() => {
     // console.log('dom source watching dom change')
-      Object.keys(storedListeners).forEach(function (queryAndEventName) {
-        const [query, eventName] = queryAndEventName.split('@@')
+      Object.keys(storedListeners).forEach((queryAndEventName) => {
+        const [query] = queryAndEventName.split('@@')
         const items = getElements(query)
         if (items && items.length > 0) {
           const storedListener = storedListeners[queryAndEventName]
           if (storedListener.live === false) {
             storedListener.live = true
 
-            const itemObs = items.map(item => {
-            // console.log('HURRAY NOW I HAVE SOMETHING !!')
-              return most.fromEvent(storedListener.events, item)
-            })
+            const itemObs = items.map((item) => most.fromEvent(storedListener.events, item))
             const realObservable = most.mergeArray(itemObs)
             storedListener.observable.attach(realObservable)
           }
@@ -86,8 +79,10 @@ module.exports = function makeDomSideEffect ({targetEl}) {
     })
 
     // adding element: temporary ??
-    return {select, element: targetEl}
+    return { select, element: targetEl }
   }
 
-  return {source: domSource, sink: domSink.bind(null, targetEl)}
+  return { source: domSource, sink: domSink.bind(null, targetEl) }
 }
+
+module.exports = makeDomSideEffect

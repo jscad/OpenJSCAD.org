@@ -1,4 +1,4 @@
-const { color, math, geometry } = require('@jscad/modeling')
+const { maths, geometries } = require('@jscad/modeling')
 
 let lastmaterial
 
@@ -22,7 +22,7 @@ const getValue = (objects, type) => {
 
 const getColor = (objects) => {
   for (let i = 0; i < objects.length; i++) {
-    let obj = objects[i]
+    const obj = objects[i]
     if (obj.type === 'color') {
       let r = parseFloat(getValue(obj.objects, 'r'))
       let g = parseFloat(getValue(obj.objects, 'g'))
@@ -39,7 +39,7 @@ const getColor = (objects) => {
 }
 
 const findColorByMaterial = (materials, id) => {
-  let m = findMaterial(materials, id)
+  const m = findMaterial(materials, id)
   if (m) {
     return getColor(m.objects)
   }
@@ -48,16 +48,16 @@ const findColorByMaterial = (materials, id) => {
 
 // convert all objects to CSG based code
 const createObject = (obj, index, data, options) => {
-  let vertices = [] // [x,y,z]
-  let faces = [] // [v1,v2,v3]
-  let colors = [] // [r,g,b,a]
-  let materials = data.amfMaterials
+  const vertices = [] // [x,y,z]
+  const faces = [] // [v1,v2,v3]
+  const colors = [] // [r,g,b,a]
+  const materials = data.amfMaterials
 
   const addCoord = (coord, cidx) => {
     if (coord.type === 'coordinates') {
-      let x = parseFloat(getValue(coord.objects, 'x'))
-      let y = parseFloat(getValue(coord.objects, 'y'))
-      let z = parseFloat(getValue(coord.objects, 'z'))
+      const x = parseFloat(getValue(coord.objects, 'x'))
+      const y = parseFloat(getValue(coord.objects, 'y'))
+      const z = parseFloat(getValue(coord.objects, 'z'))
       vertices.push([x, y, z])
     }
     // normal is possible
@@ -72,11 +72,11 @@ const createObject = (obj, index, data, options) => {
 
   const addTriangle = (tri, tidx) => {
     if (tri.type === 'triangle') {
-      let v1 = parseInt(getValue(tri.objects, 'v1'))
-      let v2 = parseInt(getValue(tri.objects, 'v2'))
-      let v3 = parseInt(getValue(tri.objects, 'v3'))
+      const v1 = parseInt(getValue(tri.objects, 'v1'))
+      const v2 = parseInt(getValue(tri.objects, 'v2'))
+      const v3 = parseInt(getValue(tri.objects, 'v3'))
       faces.push([v1, v2, v3]) // HINT: reverse order for polyhedron()
-      let c = getColor(tri.objects)
+      const c = getColor(tri.objects)
       if (c) {
         colors.push(c)
       } else {
@@ -116,29 +116,29 @@ const createObject = (obj, index, data, options) => {
   // const output =
   if (options.instantiate === true) {
     const scale = options.amf.scale
-    const vertex = scale !== 1.0 ? ([x, y, z]) => math.vec3.fromValues(x * scale, y * scale, z * scale)
-      : (v) => math.vec3.fromArray(v)
+    const vertex = scale !== 1.0 ? ([x, y, z]) => maths.vec3.fromValues(x * scale, y * scale, z * scale)
+      : (v) => maths.vec3.fromArray(v)
 
     obj.objects.forEach(addMesh)
 
-    let fcount = faces.length
-    let vcount = vertices.length
+    const fcount = faces.length
+    const vcount = vertices.length
 
-    let polygons = []
+    const polygons = []
     for (let i = 0; i < fcount; i++) {
-      let subData = []
+      const subData = []
       for (let j = 0; j < faces[i].length; j++) {
         if (faces[i][j] < 0 || faces[i][j] >= vcount) {
           continue
         }
         subData.push(vertex(vertices[faces[i][j]]))
       }
-      const polygon = geometry.poly3.fromPoints(subData)
+      const polygon = geometries.poly3.fromPoints(subData)
       const pcolor = colors[i] ? colors[i] : undefined
-      if (pcolor) color.color(pcolor, polygon)
+      if (pcolor) polygon.color = pcolor
       polygons.push(polygon)
     }
-    return geometry.geom3.create(polygons)
+    return geometries.geom3.create(polygons)
   }
 
   let code = ''
@@ -146,8 +146,8 @@ const createObject = (obj, index, data, options) => {
     // build a list of faces and vertices
     obj.objects.forEach(addMesh)
 
-    let fcount = faces.length
-    let vcount = vertices.length
+    const fcount = faces.length
+    const vcount = vertices.length
 
     code += `
 // Object ${obj.id}
@@ -160,29 +160,29 @@ const createObject${obj.id} = () => {
 
     // convert the results into function calls
     for (let i = 0; i < fcount; i++) {
-      code += '  polygon = geometry.poly3.fromPoints([\n'
+      code += '  polygon = geometries.poly3.fromPoints([\n'
       for (let j = 0; j < faces[i].length; j++) {
         if (faces[i][j] < 0 || faces[i][j] >= vcount) {
           continue
         }
         code += `      [${vertices[faces[i][j]]}],\n`
       }
-      code += `  ])\n`
+      code += '  ])\n'
 
-      let c = colors[i]
+      const c = colors[i]
       if (c) {
-        code += `  color.color([${c}], polygon)\n`
+        code += `  polygon.color = [${c}]\n`
       }
-      code += `  polygons.push(polygon)\n`
+      code += '  polygons.push(polygon)\n'
     }
-    code += `  let shape = geometry.geom3.create(polygons)\n`
+    code += '  let shape = geometries.geom3.create(polygons)\n'
 
-    let scale = options.scale ? options.scale : 1.0
+    const scale = options.scale ? options.scale : 1.0
     if (scale !== 1.0) {
       code += `  shape = transforms.scale([${scale},${scale},${scale}], shape)\n`
     }
 
-    code += `  return shape\n}\n`
+    code += '  return shape\n}\n'
   }
   return code
 }

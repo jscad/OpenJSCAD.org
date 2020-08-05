@@ -1,4 +1,4 @@
-const vec3 = require('../math/vec3')
+const vec3 = require('../maths/vec3')
 
 const create = require('./create')
 
@@ -8,9 +8,10 @@ const create = require('./create')
  * @param {vec3} axis - the axis (directional vector) of the connector
  * @param {vec3} normal - the normal (directional vector) of the connector, perpendicular to the axis
  * @returns {connector} a new connector
+ * @alias module:modeling/connectors.fromPointsAxisNormal
  */
 const fromPointAxisNormal = (point, axis, normal) => {
-  let connector = create()
+  const connector = create()
   connector.point = vec3.fromArray(point)
   connector.axis = vec3.unit(axis)
   connector.normal = vec3.unit(normal)

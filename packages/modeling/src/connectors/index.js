@@ -1,3 +1,6 @@
+/**
+ * @module modeling/connectors
+ */
 module.exports = {
   create: require('./create'),
   // extends: require('./extends'),

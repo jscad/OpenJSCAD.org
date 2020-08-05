@@ -1,7 +1,7 @@
 /* @flow */
-const {Subject} = require('./Subject')
-const {SubjectSource} = require('./source/SubjectSource')
-const {HoldSubjectSource} = require('./source/HoldSubjectSource')
+const { Subject } = require('./Subject')
+const { SubjectSource } = require('./source/SubjectSource')
+const { HoldSubjectSource } = require('./source/HoldSubjectSource')
 
 /**
  * Creates a new Subject
@@ -21,9 +21,7 @@ const {HoldSubjectSource} = require('./source/HoldSubjectSource')
  * stream.next(2)
  * setTimeout(() => stream.complete(), 10)
  */
-function subject () {
-  return new Subject(new SubjectSource())
-}
+const subject = () => new Subject(new SubjectSource())
 
 /**
  * Create a subject with a buffer to keep = require( missing events.
@@ -49,11 +47,12 @@ function subject () {
  *
  * setTimeout(() => stream.complete(), 10)
  */
-function holdSubject (bufferSize = 1) {
+const holdSubject = (bufferSize = 1) => {
   if (bufferSize <= 0) {
     throw new Error('First and only argument to holdSubject `bufferSize` ' +
       'must be an integer 1 or greater')
   }
   return new Subject(new HoldSubjectSource(bufferSize))
 }
-module.exports = {subject, holdSubject}
+
+module.exports = { subject, holdSubject }

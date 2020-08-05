@@ -3,7 +3,7 @@ const html = require('bel')
 
 module.exports = function designParameters (state, paramsCallbacktoStream) {
   const statusMessage = state.error !== undefined
-  ? `Error: ${state.error.message} line: ${state.error.lineno}, filename:${state.error.filename} stack:  ${state.error.stack}` : ''
+    ? `Error: ${state.error.message} line: ${state.error.lineno}, filename:${state.error.filename} stack:  ${state.error.stack}` : ''
   const busy = state.busy
   return html`
       <span id='status'>${statusMessage}

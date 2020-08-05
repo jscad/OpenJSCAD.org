@@ -1,8 +1,10 @@
 const flatten = require('../../utils/flatten')
 
-const { geom2, geom3, path2 } = require('../../geometry')
+const geom2 = require('../../geometries/geom2')
+const geom3 = require('../../geometries/geom3')
+const path2 = require('../../geometries/path2')
 
-const { measureBounds } = require('../measurements')
+const measureBoundingBox = require('../../measurements/measureBoundingBox')
 
 const { translate } = require('./translate')
 
@@ -13,8 +15,8 @@ const centerGeometry = (options, object) => {
   }
   const { axes, center } = Object.assign({}, defaults, options)
 
-  let bounds = measureBounds(object)
-  let offset = [0, 0, 0]
+  const bounds = measureBoundingBox(object)
+  const offset = [0, 0, 0]
   if (axes[0]) offset[0] = center[0] - (bounds[0][0] + ((bounds[1][0] - bounds[0][0]) / 2))
   if (axes[1]) offset[1] = center[1] - (bounds[0][1] + ((bounds[1][1] - bounds[0][1]) / 2))
   if (axes[2]) offset[2] = center[2] - (bounds[0][2] + ((bounds[1][2] - bounds[0][2]) / 2))
@@ -22,17 +24,18 @@ const centerGeometry = (options, object) => {
 }
 
 /**
- * Center the given object(s) using the given options (if any)
+ * Center the given geometries using the given options.
  * @param {Object} options - options for centering
  * @param {Array} [options.axes=[true,true,true]] - axis of which to center, true or false
  * @param {Array} [options.center=[0,0,0]] - point of which to center the object upon
- * @param {Object|Array} geometries - the geometries to center
- * @return {Object|Array} the centered geometries
+ * @param {...Object} geometries - the geometries to center
+ * @return {Object|Array} the centered geometry, or a list of centered geometries
+ * @alias module:modeling/transforms.center
  *
  * @example
  * let myshape = center({axes: [true,false,false]}, sphere()) // center about the X axis
  */
-const center = function (options, ...geometries) {
+const center = (options, ...geometries) => {
   const defaults = {
     axes: [true, true, true],
     center: [0, 0, 0]
@@ -42,6 +45,7 @@ const center = function (options, ...geometries) {
 
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('wrong number of arguments')
+  if (center.length !== 3) throw new Error('center must be an array of length 3')
 
   options = {
     axes: axes,

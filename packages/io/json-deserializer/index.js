@@ -1,110 +1,91 @@
 /*
 ## License
 
-Copyright (c) 2016 Z3 Development https://github.com/z3dev
+Copyright (c) JSCAD Organization https://github.com/jscad
 
 All code released under MIT license
-
-History:
-  2016/10/15: 0.5.2: initial version
-
-Notes:
-1) All functions extend other objects in order to maintain namespaces.
 */
-
-// import { CSG } from '@jscad/csg'
-const {CSG, CAG} = require('@jscad/csg')
 
 // //////////////////////////////////////////
 //
 // JSON (JavaScript Object Notation) is a lightweight data-interchange format
-// See http://json.org/
+// See https://www.json.org
 //
 // //////////////////////////////////////////
 
-function toSourceCSGVertex (ver) {
-  return 'new CSG.Vertex(new CSG.Vector3D(' + ver._x + ',' + ver._y + ',' + ver._z + '))'
-}
+const { flatten, toArray } = require('@jscad/array-utils')
 
-// convert the give CSG object to JSCAD source
-function toSourceCSG (csg) {
-  var code = '  var polygons = [];\n'
-  csg.polygons.map(function (p) {
-    code += '  poly = new CSG.Polygon([\n'
-    for (var i = 0; i < p.vertices.length; i++) {
-      code += '                         ' + toSourceCSGVertex(p.vertices[i].pos) + ',\n'
-    }
-    code += '                         ])'
-    if (p.shared && p.shared.color && p.shared.color.length) {
-      code += '.setColor(' + JSON.stringify(p.shared.color) + ');\n'
-    } else {
-      code += ';\n'
-    }
-    code += '  polygons.push(poly);\n'
-  })
-  code += '  return CSG.fromPolygons(polygons);\n'
-  return code
-};
+const version = require('./package.json').version
 
-function toSourceCAGVertex (ver) {
-  return 'new CAG.Vertex(new CSG.Vector2D(' + ver.pos._x + ',' + ver.pos._y + '))'
-};
-function toSourceSide (side) {
-  return 'new CAG.Side(' + toSourceCAGVertex(side.vertex0) + ',' + toSourceCAGVertex(side.vertex1) + ')'
-};
-
-// convert the give CAG object to JSCAD source
-function toSourceCAG (cag) {
-  var code = '  var sides = [];\n'
-  cag.sides.map(function (s) {
-    code += '  sides.push(' + toSourceSide(s) + ');\n'
-  })
-  code += '  return CAG.fromSides(sides);\n'
-  return code
-}
-
-// convert an anonymous CSG/CAG object to JSCAD source
-function toSource (obj) {
-  if (obj.type && obj.type === 'csg') {
-    var csg = CSG.fromObject(obj)
-    return toSourceCSG(csg)
+/**
+ * Deserialize the given JSON notation (string) into either a script or an array of geometry.
+ * @param {Object} [options] - options used during deserializing
+ * @param {String} [options.filename='json'] - filename of original JSON source
+ * @param {String} [options.output='script'] - either 'script' or 'geometry' to set desired output
+ * @param {String} [options.version='0.0.0'] - version number to add to the metadata
+ * @param {Boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script
+ * @param {String} input - JSON source data
+ * @return {[geometry]/String} either an array of objects (geometry) or a string (script)
+ */
+const deserialize = (options, input) => {
+  const defaults = {
+    filename: 'json',
+    output: 'script',
+    version,
+    addMetaData: true
   }
-  if (obj.type && obj.type === 'cag') {
-    var cag = CAG.fromObject(obj)
-    return toSourceCAG(cag)
-  }
-  return ''
-};
-
-//
-// deserialize the given JSON source and return a JSCAD script
-//
-// fn (optional) original filename of JSON source
-//
-function deserialize (src, fn, options) {
-  options && options.statusCallback && options.statusCallback({progress: 0})
-  fn = fn || 'amf'
-  const defaults = {version: '0.0.0'}
   options = Object.assign({}, defaults, options)
-  const {version} = options
 
-  // convert the JSON into an anonymous object
-  var obj = JSON.parse(src)
-  options && options.statusCallback && options.statusCallback({progress: 50})
-  // convert the internal objects to JSCAD code
-  var code = ''
-  code += '//\n'
-  code += '// producer: OpenJSCAD.org ' + version + ' JSON Importer\n'
-  code += '// date: ' + (new Date()) + '\n'
-  code += '// source: ' + fn + '\n'
-  code += '//\n'
-  code += 'function main() {\n'
-  code += toSource(obj)
-  code += '};\n'
-  options && options.statusCallback && options.statusCallback({progress: 100})
-  return code
-};
+  // convert the JSON notation into anonymous object(s)
+  let objects = JSON.parse(input)
+
+  // cleanup the objects
+  objects = flatten(toArray(objects))
+
+  return options.output === 'script' ? translate(options, objects) : objects
+}
+
+//
+// translate the given objects (geometries) into a  JSCAD script
+//
+const translate = (options, objects) => {
+  const { addMetaData, filename, version } = options
+
+  let script = addMetaData ? `//
+// Produced by JSCAD IO Library : JSON Deserializer (${version})
+// date: ${new Date()}
+// source: ${filename}
+//
+` : ''
+
+  script +=
+`
+const { geometries } = require('@jscad/modeling')
+
+const main = () => {
+  const objects = [${translateToList(objects)} ]
+  return objects
+}
+
+${translateToObjects(objects)}
+
+module.exports = { main }
+`
+
+  return script
+}
+
+const translateToList = (objects) => objects.reduce((script, object, index) => script + ` json${index},`, '')
+
+const translateToObjects = (objects) => objects.reduce((script, object, index) => script + translateToObject(object, index), '')
+
+// translate the given object to JSON notation (AGAIN)
+// NOTE: this implies that the original JSON was correct :)
+const translateToObject = (object, index) => `const json${index} = ${JSON.stringify(object)}\n`
+
+const extension = 'json'
 
 module.exports = {
-  deserialize
+  deserialize,
+  extension
 }

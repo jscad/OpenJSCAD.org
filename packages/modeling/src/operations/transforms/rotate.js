@@ -1,28 +1,34 @@
 const flatten = require('../../utils/flatten')
 
-const mat4 = require('../../math/mat4')
+const mat4 = require('../../maths/mat4')
 
-const { geom2, geom3, path2 } = require('../../geometry')
+const geom2 = require('../../geometries/geom2')
+const geom3 = require('../../geometries/geom3')
+const path2 = require('../../geometries/path2')
 
 /**
- * Rotate the given object(s) using the given options (if any)
- * @param {Number[]} angles - angle (RADIANS) of rotations about X, Y, and X axis
- * @param {Object|Array} objects - the objects(s) to rotate
- * @return {Object|Array} the rotated object(s)
+ * Rotate the given geometries using the given options.
+ * @param {Array} angles - angle (RADIANS) of rotations about X, Y, and Z axis
+ * @param {...Object} geometries - the geometries to rotate
+ * @return {Object|Array} the rotated geometry, or a list of rotated geometries
+ * @alias module:modeling/transforms.rotate
  *
  * @example
- * const newsphere = rotate([45,0,0], sphere())
+ * const newsphere = rotate([Math.PI / 4, 0, 0], sphere())
  */
 const rotate = (angles, ...objects) => {
   if (!Array.isArray(angles)) throw new Error('angles must be an array')
-  if (angles.length !== 3) throw new Error('angles must contain X, Y and Z values')
 
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')
 
-  let yaw = angles[2]
-  let pitch = angles[1]
-  let roll = angles[0]
+  // adjust the angles if necessary
+  angles = angles.slice() // don't modify the original
+  while (angles.length < 3) angles.push(0)
+
+  const yaw = angles[2]
+  const pitch = angles[1]
+  const roll = angles[0]
 
   const matrix = mat4.fromTaitBryanRotation(yaw, pitch, roll)
 
@@ -35,10 +41,31 @@ const rotate = (angles, ...objects) => {
   return results.length === 1 ? results[0] : results
 }
 
+/**
+ * Rotate the given object(s) about the X axis, using the given options.
+ * @param {Number} angle - angle (RADIANS) of rotations about X
+ * @param {...Object} geometries - the geometries to rotate
+ * @return {Object|Array} the rotated geometry, or a list of rotated geometries
+ * @alias module:modeling/transforms.rotateX
+ */
 const rotateX = (angle, ...objects) => rotate([angle, 0, 0], objects)
 
+/**
+ * Rotate the given object(s) about the Y axis, using the given options.
+ * @param {Number} angle - angle (RADIANS) of rotations about Y
+ * @param {...Object} geometries - the geometries to rotate
+ * @return {Object|Array} the rotated geometry, or a list of rotated geometries
+ * @alias module:modeling/transforms.rotateY
+ */
 const rotateY = (angle, ...objects) => rotate([0, angle, 0], objects)
 
+/**
+ * Rotate the given object(s) about the Z axis, using the given options.
+ * @param {Number} angle - angle (RADIANS) of rotations about Z
+ * @param {...Object} geometries - the geometries to rotate
+ * @return {Object|Array} the rotated geometry, or a list of rotated geometries
+ * @alias module:modeling/transforms.rotateZ
+ */
 const rotateZ = (angle, ...objects) => rotate([0, 0, angle], objects)
 
 module.exports = {

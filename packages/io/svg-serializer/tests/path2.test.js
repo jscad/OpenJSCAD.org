@@ -1,22 +1,22 @@
 const test = require('ava')
 
-const { color, geometry, primitives } = require('@jscad/modeling')
+const { colors, geometries, primitives } = require('@jscad/modeling')
 
 const serializer = require('../index.js')
 
 test('serialize 2D path (simple) objects to svg', (t) => {
   // simple open path
-  let object1 = primitives.line([[0, 0], [1, 1], [-3, 3]])
+  const object1 = primitives.line([[0, 0], [1, 1], [-3, 3]])
   let observed = serializer.serialize({}, object1)
   t.deepEqual(observed, [expected1])
 
   // simple closed path
-  var object3 = geometry.path2.fromPoints({}, [
+  let object3 = geometries.path2.fromPoints({}, [
     [42.33333, 0],
     [21.166665, -56.44443999999999],
     [63.49999499999999, -56.44443999999999]
   ])
-  object3 = geometry.path2.close(object3)
+  object3 = geometries.path2.close(object3)
 
   observed = serializer.serialize({}, object3)
   t.deepEqual(observed, [expected3])
@@ -25,8 +25,8 @@ test('serialize 2D path (simple) objects to svg', (t) => {
 test('serialize 2D path (color) objects to svg', (t) => {
   // simple open path
   let object1 = primitives.line([[0, 0], [1, 1], [-3, 3]])
-  color.color([0.5, 0.5, 0.5, 0.5], object1)
-  let observed = serializer.serialize({}, object1)
+  object1 = colors.colorize([0.5, 0.5, 0.5, 0.5], object1)
+  const observed = serializer.serialize({}, object1)
   t.deepEqual(observed, [expected4])
 })
 
@@ -39,7 +39,7 @@ const expected1 = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg width="4mm" height="3mm" viewBox="0 0 4 3" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <path d="M3 0L4 1L0 3"/>
+    <path d="M3 3L4 2L0 0"/>
   </g>
 </svg>
 `
@@ -49,7 +49,7 @@ const expected3 = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg width="42.3333mm" height="56.4444mm" viewBox="0 0 42.3333 56.4444" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <path d="M21.1667 56.4444L0 0L42.3333 0L21.1667 56.4444"/>
+    <path d="M21.1667 0L0 56.4444L42.3333 56.4444L21.1667 0"/>
   </g>
 </svg>
 `
@@ -59,8 +59,7 @@ const expected4 = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg width="4mm" height="3mm" viewBox="0 0 4 3" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <path stroke="rgb(127.5,127.5,127.5,127.5)" stroke-width="1" d="M3 0L4 1L0 3"/>
+    <path stroke="rgb(127.5,127.5,127.5,127.5)" stroke-width="1" d="M3 3L4 2L0 0"/>
   </g>
 </svg>
 `
-

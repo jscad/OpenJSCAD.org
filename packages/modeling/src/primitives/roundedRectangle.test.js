@@ -1,128 +1,77 @@
 const test = require('ava')
 
-const {roundedRectangle} = require('./index')
+const { roundedRectangle } = require('./index')
 
-const geom2 = require('../geometry/geom2')
+const geom2 = require('../geometries/geom2')
 
 const comparePoints = require('../../test/helpers/comparePoints')
 
-test('roundedRectangle (defaults)', t => {
-  const exp = [
-    new Float32Array([ 1, 0.800000011920929 ]),
-    new Float32Array([ 0.9847759008407593, 0.8765367269515991 ]),
-    new Float32Array([ 0.941421389579773, 0.941421389579773 ]),
-    new Float32Array([ 0.8765367269515991, 0.9847759008407593 ]),
-    new Float32Array([ 0.800000011920929, 1 ]),
-    new Float32Array([ -0.800000011920929, 1 ]),
-    new Float32Array([ -0.8765367269515991, 0.9847759008407593 ]),
-    new Float32Array([ -0.941421389579773, 0.941421389579773 ]),
-    new Float32Array([ -0.9847759008407593, 0.8765367269515991 ]),
-    new Float32Array([ -1, 0.800000011920929 ]),
-    new Float32Array([ -1, -0.800000011920929 ]),
-    new Float32Array([ -0.9847759008407593, -0.8765367269515991 ]),
-    new Float32Array([ -0.941421389579773, -0.941421389579773 ]),
-    new Float32Array([ -0.8765367269515991, -0.9847759008407593 ]),
-    new Float32Array([ -0.800000011920929, -1 ]),
-    new Float32Array([ 0.800000011920929, -1 ]),
-    new Float32Array([ 0.8765367269515991, -0.9847759008407593 ]),
-    new Float32Array([ 0.941421389579773, -0.941421389579773 ]),
-    new Float32Array([ 0.9847759008407593, -0.8765367269515991 ]),
-    new Float32Array([ 1, -0.800000011920929 ])
-  ]
+test('roundedRectangle (defaults)', (t) => {
   const geometry = roundedRectangle()
   const obs = geom2.toPoints(geometry)
 
-  t.deepEqual(obs.length, 20)
-  t.true(comparePoints(obs, exp))
+  t.deepEqual(obs.length, 36)
 })
 
-test('roundedRectangle (options)', t => {
-  // test center
-  let geometry = roundedRectangle({center: [4,5]})
+test('roundedRectangle (options)', (t) => {
+  // test size
+  let geometry = roundedRectangle({ size: [10, 6], segments: 16 })
   let obs = geom2.toPoints(geometry)
   let exp = [
-    new Float32Array([ 5, 5.800000190734863 ]),
-    new Float32Array([ 4.984776020050049, 5.876536846160889 ]),
-    new Float32Array([ 4.9414215087890625, 5.9414215087890625 ]),
-    new Float32Array([ 4.876536846160889, 5.984776020050049 ]),
-    new Float32Array([ 4.800000190734863, 6 ]),
-    new Float32Array([ 3.200000047683716, 6 ]),
-    new Float32Array([ 3.1234633922576904, 5.984776020050049 ]),
-    new Float32Array([ 3.0585787296295166, 5.9414215087890625 ]),
-    new Float32Array([ 3.0152242183685303, 5.876536846160889 ]),
-    new Float32Array([ 3, 5.800000190734863 ]),
-    new Float32Array([ 3, 4.199999809265137 ]),
-    new Float32Array([ 3.0152242183685303, 4.123463153839111 ]),
-    new Float32Array([ 3.0585787296295166, 4.0585784912109375 ]),
-    new Float32Array([ 3.1234633922576904, 4.015223979949951 ]),
-    new Float32Array([ 3.200000047683716, 3.999999761581421 ]),
-    new Float32Array([ 4.800000190734863, 3.999999761581421 ]),
-    new Float32Array([ 4.876536846160889, 4.015223979949951 ]),
-    new Float32Array([ 4.9414215087890625, 4.0585784912109375 ]),
-    new Float32Array([ 4.984776020050049, 4.123463153839111 ]),
-    new Float32Array([ 5, 4.199999809265137 ])
-  ]
-  t.deepEqual(obs.length, 20)
-  t.true(comparePoints(obs, exp))
-
-  // test size
-  geometry = roundedRectangle({size: [10, 6]})
-  obs = geom2.toPoints(geometry)
-  exp = [
-    new Float32Array([ 5, 2.799999952316284 ]),
-    new Float32Array([ 4.984776020050049, 2.8765366077423096 ]),
-    new Float32Array([ 4.9414215087890625, 2.9414212703704834 ]),
-    new Float32Array([ 4.876536846160889, 2.9847757816314697 ]),
-    new Float32Array([ 4.800000190734863, 3 ]),
-    new Float32Array([ -4.800000190734863, 3 ]),
-    new Float32Array([ -4.876536846160889, 2.9847757816314697 ]),
-    new Float32Array([ -4.9414215087890625, 2.9414212703704834 ]),
-    new Float32Array([ -4.984776020050049, 2.8765366077423096 ]),
-    new Float32Array([ -5, 2.799999952316284 ]),
-    new Float32Array([ -5, -2.799999952316284 ]),
-    new Float32Array([ -4.984776020050049, -2.8765366077423096 ]),
-    new Float32Array([ -4.9414215087890625, -2.9414212703704834 ]),
-    new Float32Array([ -4.876536846160889, -2.9847757816314697 ]),
-    new Float32Array([ -4.800000190734863, -3 ]),
-    new Float32Array([ 4.800000190734863, -3 ]),
-    new Float32Array([ 4.876536846160889, -2.9847757816314697 ]),
-    new Float32Array([ 4.9414215087890625, -2.9414212703704834 ]),
-    new Float32Array([ 4.984776020050049, -2.8765366077423096 ]),
-    new Float32Array([ 5, -2.799999952316284 ])
+    [5, 2.8],
+    [4.984775906502257, 2.8765366864730177],
+    [4.941421356237309, 2.9414213562373095],
+    [4.876536686473018, 2.984775906502257],
+    [4.8, 3],
+    [-4.8, 3],
+    [-4.876536686473018, 2.984775906502257],
+    [-4.941421356237309, 2.9414213562373095],
+    [-4.984775906502257, 2.8765366864730177],
+    [-5, 2.8],
+    [-5, -2.8],
+    [-4.984775906502257, -2.8765366864730177],
+    [-4.941421356237309, -2.9414213562373095],
+    [-4.876536686473018, -2.984775906502257],
+    [-4.8, -3],
+    [4.8, -3],
+    [4.876536686473018, -2.984775906502257],
+    [4.941421356237309, -2.9414213562373095],
+    [4.984775906502257, -2.8765366864730177],
+    [5, -2.8]
   ]
   t.deepEqual(obs.length, 20)
   t.true(comparePoints(obs, exp))
 
   // test roundRadius
-  geometry = roundedRectangle({size: [10, 6], roundRadius: 2})
+  geometry = roundedRectangle({ size: [10, 6], roundRadius: 2, segments: 16 })
   obs = geom2.toPoints(geometry)
   exp = [
-    new Float32Array([ 5, 1 ]),
-    new Float32Array([ 4.847759246826172, 1.765366792678833 ]),
-    new Float32Array([ 4.41421365737915, 2.4142136573791504 ]),
-    new Float32Array([ 3.765366792678833, 2.8477590084075928 ]),
-    new Float32Array([ 3, 3 ]),
-    new Float32Array([ -3, 3 ]),
-    new Float32Array([ -3.765366792678833, 2.8477590084075928 ]),
-    new Float32Array([ -4.41421365737915, 2.4142136573791504 ]),
-    new Float32Array([ -4.847759246826172, 1.765366792678833 ]),
-    new Float32Array([ -5, 1 ]),
-    new Float32Array([ -5, -1 ]),
-    new Float32Array([ -4.847759246826172, -1.765366792678833 ]),
-    new Float32Array([ -4.41421365737915, -2.4142136573791504 ]),
-    new Float32Array([ -3.765366792678833, -2.8477590084075928 ]),
-    new Float32Array([ -3, -3 ]),
-    new Float32Array([ 3, -3 ]),
-    new Float32Array([ 3.765366792678833, -2.8477590084075928 ]),
-    new Float32Array([ 4.41421365737915, -2.4142136573791504 ]),
-    new Float32Array([ 4.847759246826172, -1.765366792678833 ]),
-    new Float32Array([ 5, -1 ])
+    [5, 1],
+    [4.847759065022574, 1.7653668647301797],
+    [4.414213562373095, 2.414213562373095],
+    [3.7653668647301797, 2.8477590650225735],
+    [3, 3],
+    [-3, 3],
+    [-3.7653668647301792, 2.8477590650225735],
+    [-4.414213562373095, 2.414213562373095],
+    [-4.847759065022574, 1.7653668647301797],
+    [-5, 1.0000000000000002],
+    [-5, -0.9999999999999998],
+    [-4.847759065022574, -1.7653668647301792],
+    [-4.414213562373095, -2.414213562373095],
+    [-3.76536686473018, -2.8477590650225735],
+    [-3.0000000000000004, -3],
+    [2.9999999999999996, -3],
+    [3.7653668647301792, -2.8477590650225735],
+    [4.414213562373095, -2.414213562373095],
+    [4.847759065022574, -1.7653668647301801],
+    [5, -1.0000000000000004]
   ]
   t.deepEqual(obs.length, 20)
   t.true(comparePoints(obs, exp))
 
   // test segments
-  geometry = roundedRectangle({size: [10, 6], roundRadius: 2, segments: 64})
+  geometry = roundedRectangle({ size: [10, 6], roundRadius: 2, segments: 64 })
   obs = geom2.toPoints(geometry)
   t.deepEqual(obs.length, 68)
 })

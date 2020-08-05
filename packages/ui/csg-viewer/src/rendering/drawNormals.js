@@ -7,7 +7,7 @@ const drawNormals = function (regl, params) {
     alwaysVisible: true, // to have the widget alway visible 'on top' of the rest of the scene
     geometry: undefined
   }
-  let {size, lineWidth, alwaysVisible, geometry} = Object.assign({}, defaults, params)
+  let { size, lineWidth, alwaysVisible, geometry } = Object.assign({}, defaults, params)
 
   if (!geometry) {
     throw new Error('no geometry provided to drawNormals')
@@ -59,7 +59,7 @@ const drawNormals = function (regl, params) {
 
   const normaLines = geometry.normals.map(function (normal, index) {
     const position = geometry.positions[index]
-    let orientation = mat4.multiply(
+    const orientation = mat4.multiply(
       mat4.identity([]),
       mat4.translate(mat4.identity([]), mat4.identity([]), position),
       mat4.lookAt(mat4.identity([]), [0, 0, 0], normal, [0, 0, 1])
@@ -67,9 +67,9 @@ const drawNormals = function (regl, params) {
     )
     const matrix = orientation
     const absNormal = normal.map(x => Math.abs(x))
-    return {color: [absNormal[0], absNormal[1], absNormal[2], 1.0], model: matrix}
+    return { color: [absNormal[0], absNormal[1], absNormal[2], 1.0], model: matrix }
   })
-  let singleNormal = regl(commandParams)
+  const singleNormal = regl(commandParams)
   return () => singleNormal(normaLines)
 }
 

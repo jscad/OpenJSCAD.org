@@ -1,12 +1,12 @@
-const {cube, sphere} = require('@jscad/csg/api').primitives3d
-const {union, difference, intersection} = require('@jscad/csg/api').booleanOps
-const {translate, rotate, scale} = require('@jscad/csg/api').transformations
+const { cube, sphere } = require('@jscad/csg/api').primitives3d
+const { union, difference, intersection } = require('@jscad/csg/api').booleanOps
+const { translate, rotate, scale } = require('@jscad/csg/api').transformations
 
 function foo () {
   return [
     cube(),
     translate([13, 0, 0], cube()),
-    sphere({fn: 128})
+    sphere({ fn: 128 })
   ]
 }
 function main () {
@@ -18,7 +18,7 @@ function main () {
     union(cube(), sphere()),
     translate([23, 0, 0], cube()),
     rotate([13, 0, 0], cube()),
-    sphere({fn: 128})
+    sphere({ fn: 128 })
   ]
 }
 

@@ -1,11 +1,13 @@
-const vec3 = require('../../../math/vec3')
+const vec3 = require('../../../maths/vec3')
 
 const create = require('./create')
 
 /**
  * Create a slice from the given points.
  *
- * @param {vec2[]|vec3[]} points - list of points
+ * @param {Array} points - list of points, where each point is either 2D or 3D
+ * @returns {slice} a new slice
+ * @alias module:modeling/extrusions/slice.fromPoints
  *
  * @example
  * const points = [
@@ -20,7 +22,7 @@ const fromPoints = (points) => {
   if (points.length < 3) throw new Error('the given points must contain THREE or more points')
 
   // create a list of edges from the points
-  let edges = []
+  const edges = []
   let prevpoint = points[points.length - 1]
   points.forEach((point) => {
     if (point.length === 2) edges.push([vec3.fromVec2(prevpoint), vec3.fromVec2(point)])

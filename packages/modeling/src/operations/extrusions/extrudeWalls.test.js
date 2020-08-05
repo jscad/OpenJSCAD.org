@@ -1,22 +1,22 @@
 const test = require('ava')
 
-const { mat4 } = require('../../math')
+const { mat4 } = require('../../maths')
 
 const slice = require('./slice')
 
 const extrudeWalls = require('./extrudeWalls')
 
-test('extrudeWalls (same shapes)', t => {
-  let matrix = mat4.fromTranslation([0, 0, 10])
+test('extrudeWalls (same shapes)', (t) => {
+  const matrix = mat4.fromTranslation([0, 0, 10])
 
-  let shape0 = []
-  let shape1 = [
+  const shape0 = []
+  const shape1 = [
     [[-10.0, 10.0], [-10.0, -10.0]],
     [[-10.0, -10.0], [10.0, -10.0]],
     [[10.0, -10.0], [10.0, 10.0]],
     [[10.0, 10.0], [-10.0, 10.0]]
   ]
-  let shape2 = [ // hole
+  const shape2 = [ // hole
     [[-10.0, 10.0], [-10.0, -10.0]],
     [[-10.0, -10.0], [10.0, -10.0]],
     [[10.0, -10.0], [10.0, 10.0]],
@@ -27,9 +27,9 @@ test('extrudeWalls (same shapes)', t => {
     [[-5.0, 5.0], [5.0, 5.0]]
   ]
 
-  let slice0 = slice.fromSides(shape0)
-  let slice1 = slice.fromSides(shape1)
-  let slice2 = slice.fromSides(shape2)
+  const slice0 = slice.fromSides(shape0)
+  const slice1 = slice.fromSides(shape1)
+  const slice2 = slice.fromSides(shape2)
 
   // empty slices
   let walls = extrudeWalls(slice0, slice0)
@@ -44,21 +44,21 @@ test('extrudeWalls (same shapes)', t => {
   t.is(walls.length, 16)
 })
 
-test('extrudeWalls (different shapes)', t => {
-  let matrix = mat4.fromTranslation([0, 0, 10])
+test('extrudeWalls (different shapes)', (t) => {
+  const matrix = mat4.fromTranslation([0, 0, 10])
 
-  let shape1 = [
+  const shape1 = [
     [[-10.0, 10.0], [-10.0, -10.0]],
     [[-10.0, -10.0], [10.0, -10.0]],
     [[10.0, -10.0], [10.0, 10.0]]
   ]
-  let shape2 = [
+  const shape2 = [
     [[-10.0, 10.0], [-10.0, -10.0]],
     [[-10.0, -10.0], [10.0, -10.0]],
     [[10.0, -10.0], [10.0, 10.0]],
     [[10.0, 10.0], [-10.0, 10.0]]
   ]
-  let shape3 = [
+  const shape3 = [
     [[2.50000, -4.33013], [5.00000, 0.00000]],
     [[5.00000, 0.00000], [2.50000, 4.33013]],
     [[2.50000, 4.33013], [-2.50000, 4.33013]],
@@ -67,9 +67,9 @@ test('extrudeWalls (different shapes)', t => {
     [[-2.50000, -4.33013], [2.50000, -4.33013]]
   ]
 
-  let slice1 = slice.fromSides(shape1)
-  let slice2 = slice.fromSides(shape2)
-  let slice3 = slice.fromSides(shape3)
+  const slice1 = slice.fromSides(shape1)
+  const slice2 = slice.fromSides(shape2)
+  const slice3 = slice.fromSides(shape3)
 
   let walls = extrudeWalls(slice1, slice.transform(matrix, slice2))
   t.is(walls.length, 24)

@@ -10,8 +10,8 @@ function makeReducers (initialState, regl) {
       const makeDrawMesh = require('./rendering/drawMesh/index')
       const drawCSGs = entities
         .map(entity => {
-          const {geometry, type} = entity
-          let drawMesh = makeDrawMesh(state.regl, {geometry, type})
+          const { geometry, type } = entity
+          const drawMesh = makeDrawMesh(state.regl, { geometry, type })
           drawMesh.isTransparent = geometry.isTransparent
           drawMesh.entity = entity
           return drawMesh
@@ -33,10 +33,10 @@ function makeReducers (initialState, regl) {
       if ('camera' in data) {
         // to enable camera position from preset names
         if (data.camera && data.camera.position && !Array.isArray(data.camera.position)) {
-          const {toPresetView} = require('./cameraAndControls/camera')
+          const { toPresetView } = require('./cameraAndControls/camera')
           const viewPresets = ['top', 'bottom', 'front', 'back', 'left', 'right']
           if (viewPresets.includes(data.camera.position)) {
-            const {merge} = require('./utils')
+            const { merge } = require('./utils')
             data.camera = merge({}, data.camera, toPresetView(data.camera.position, state))
           } else {
             throw new Error(`Unhandled camera position "${data.camera.position}" passed to viewer`)
@@ -48,7 +48,7 @@ function makeReducers (initialState, regl) {
           if (!validTypes.includes(data.camera.projectionType)) {
             throw new Error(`Unhandled camera projection type "${data.camera.projectionType}" passed to viewer`)
           }
-          const {fromPerspectiveToOrthographic, fromOrthographicToPerspective} = require('./cameraAndControls/camera')
+          const { fromPerspectiveToOrthographic, fromOrthographicToPerspective } = require('./cameraAndControls/camera')
 
           if (projectionType === 'orthographic' && state.camera.projectionType === 'perspective') {
             const camera = fromPerspectiveToOrthographic(state.camera)
@@ -61,11 +61,11 @@ function makeReducers (initialState, regl) {
       }
       if ('grid' in data) {
         if (data.grid && data.grid.size) {
-          const {merge} = require('./utils')
+          const { merge } = require('./utils')
           const makeDrawGrid = require('./rendering/drawGrid/multi')
-          const {ticks, size} = Object.assign([], state.grid, data.grid)
-          const drawGrid = makeDrawGrid(state.regl, {size, ticks})
-          data.drawCommands = merge({}, state.drawCommands, {drawGrid})
+          const { ticks, size } = Object.assign([], state.grid, data.grid)
+          const drawGrid = makeDrawGrid(state.regl, { size, ticks })
+          data.drawCommands = merge({}, state.drawCommands, { drawGrid })
         }
       }
       return data

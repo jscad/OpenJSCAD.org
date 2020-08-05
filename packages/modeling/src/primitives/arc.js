@@ -1,31 +1,36 @@
-const {EPS} = require('../math/constants')
+const { EPS } = require('../maths/constants')
 
-const {radToDeg, degToRad} = require('../math/utils')
+const vec2 = require('../maths/vec2')
 
-const vec2 = require('../math/vec2')
+const path2 = require('../geometries/path2')
 
-const path2 = require('../geometry/path2')
-
-/** Construct an arc.
- * @param {Object} options - options for construction
+/**
+ * Construct an arc in two dimensional space.
+ * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of arc
  * @param {Number} [options.radius=1] - radius of arc
  * @param {Number} [options.startAngle=0] - starting angle of the arc, in radians
  * @param {Number} [options.endAngle=Math.PI*2] - ending angle of the arc, in radians
- * @param {Number} [options.segments=16] - number of segments to create per 360 rotation
+ * @param {Number} [options.segments=32] - number of segments to create per full rotation
  * @param {Boolean} [options.makeTangent=false] - adds line segments at both ends of the arc to ensure that the gradients at the edges are tangent
- * @returns {path} new path (not closed)
+ * @returns {path2} new 2D path
+ * @alias module:modeling/primitives.arc
  */
-const arc = function (options) {
+const arc = (options) => {
   const defaults = {
     center: [0, 0],
     radius: 1,
     startAngle: 0,
     endAngle: (Math.PI * 2),
     makeTangent: false,
-    segments: 16
+    segments: 32
   }
-  let {center, radius, startAngle, endAngle, makeTangent, segments} = Object.assign({}, defaults, options)
+  let { center, radius, startAngle, endAngle, makeTangent, segments } = Object.assign({}, defaults, options)
+
+  if (!Array.isArray(center)) throw new Error('center must be an array')
+  if (center.length < 2) throw new Error('center must contain X and Y values')
+
+  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
 
   if (startAngle < 0 || endAngle < 0) throw new Error('the start and end angles must be positive')
   if (segments < 4) throw new Error('segments must be four or more')
@@ -41,11 +46,11 @@ const arc = function (options) {
     rotation = endAngle + ((Math.PI * 2) - startAngle)
   }
 
-  let minangle = Math.acos(((radius * radius) + (radius * radius) - (EPS * EPS)) / (2 * radius * radius))
+  const minangle = Math.acos(((radius * radius) + (radius * radius) - (EPS * EPS)) / (2 * radius * radius))
 
-  let centerv = vec2.fromArray(center)
+  const centerv = vec2.fromArray(center)
   let point
-  let pointArray = []
+  const pointArray = []
   if (rotation < minangle) {
     // there is no rotation, just a single point
     point = vec2.scale(radius, vec2.fromAngleRadians(startAngle))
@@ -53,11 +58,11 @@ const arc = function (options) {
     pointArray.push(point)
   } else {
     // note: add one additional step to acheive full rotation
-    let numsteps = Math.max(1, Math.floor(segments * (rotation / (Math.PI * 2)))) + 1
+    const numsteps = Math.max(1, Math.floor(segments * (rotation / (Math.PI * 2)))) + 1
     let edgestepsize = numsteps * 0.5 / rotation // step size for half a degree
     if (edgestepsize > 0.25) edgestepsize = 0.25
 
-    let totalsteps = makeTangent ? (numsteps + 2) : numsteps
+    const totalsteps = makeTangent ? (numsteps + 2) : numsteps
     for (let i = 0; i <= totalsteps; i++) {
       let step = i
       if (makeTangent) {
@@ -65,13 +70,13 @@ const arc = function (options) {
         if (step < 0) step = 0
         if (step > numsteps) step = numsteps
       }
-      let angle = startAngle + (step * (rotation / numsteps))
+      const angle = startAngle + (step * (rotation / numsteps))
       point = vec2.scale(radius, vec2.fromAngleRadians(angle))
       vec2.add(point, point, centerv)
       pointArray.push(point)
     }
   }
-  return path2.fromPoints({close: false}, pointArray)
+  return path2.fromPoints({ close: false }, pointArray)
 }
 
 module.exports = arc

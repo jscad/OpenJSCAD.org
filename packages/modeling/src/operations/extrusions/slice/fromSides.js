@@ -1,11 +1,13 @@
-const vec3 = require('../../../math/vec3')
+const vec3 = require('../../../maths/vec3')
 
 const create = require('./create')
 
 /**
  * Create a slice from the given sides (see geom2).
  *
- * @param {sides[]} sides - list of 2D sides
+ * @param {Array} sides - list of sides from geom2
+ * @returns {slice} a new slice
+ * @alias module:modeling/extrusions/slice.fromSides
  *
  * @example
  * const myshape = circle({radius: 10})
@@ -15,7 +17,7 @@ const fromSides = (sides) => {
   if (!Array.isArray(sides)) throw new Error('the given sides must be an array')
 
   // create a list of edges from the sides
-  let edges = []
+  const edges = []
   sides.forEach((side) => {
     edges.push([vec3.fromVec2(side[0]), vec3.fromVec2(side[1])])
   })

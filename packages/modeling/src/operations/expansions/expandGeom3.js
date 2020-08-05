@@ -1,4 +1,4 @@
-const { geom3 } = require('../../geometry')
+const geom3 = require('../../geometries/geom3')
 
 const union = require('../booleans/union')
 
@@ -19,7 +19,7 @@ const expandGeom3 = (options, geometry) => {
     corners: 'round',
     segments: 12
   }
-  let { delta, corners, segments } = Object.assign({ }, defaults, options)
+  const { delta, corners, segments } = Object.assign({ }, defaults, options)
 
   if (!(corners === 'round')) {
     throw new Error('corners must be "round" for 3D geometries')
@@ -29,7 +29,7 @@ const expandGeom3 = (options, geometry) => {
   if (polygons.length === 0) throw new Error('the given geometry cannot be empty')
 
   options = { delta, corners, segments }
-  let expanded = expandShell(options, geometry)
+  const expanded = expandShell(options, geometry)
   return union(geometry, expanded)
 }
 

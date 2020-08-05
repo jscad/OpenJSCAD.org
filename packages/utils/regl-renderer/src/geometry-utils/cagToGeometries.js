@@ -1,7 +1,4 @@
-
-const { flatten, toArray } = require('../utils')
-
-function cagToGeometries (cags, options) {
+const cagToGeometries = (cags, options) => {
   const defaults = {
     color: [1, 0.4, 0, 1]// default color
   }
@@ -9,10 +6,10 @@ function cagToGeometries (cags, options) {
   // flag for transparency
   let isTransparent = false
 
-  let points = cagToPointsArray(cags).map(x => [x[0], x[1], 0])
-  let normals = points.map(x => [0, 0, -1])
-  let colors = points.map(x => color)
-  let indices = points.map((x, i) => i) // FIXME: temporary, not really needed, need to change drawMesh
+  const points = cagToPointsArray(cags).map((x) => [x[0], x[1], 0])
+  const normals = points.map((x) => [0, 0, -1])
+  const colors = points.map((x) => color)
+  const indices = points.map((x, i) => i) // FIXME: temporary, not really needed, need to change drawMesh
 
   if (color[3] !== 1) {
     isTransparent = true // FIXME should be analyzed for each vertex
@@ -30,11 +27,11 @@ function cagToGeometries (cags, options) {
 }
 
 // FIXME same as in scad-api helpers...
-const cagToPointsArray = input => {
+const cagToPointsArray = (input) => {
   let points
   if ('sides' in input) { // this is a cag
     points = []
-    input.sides.forEach(side => {
+    input.sides.forEach((side) => {
       points.push([side.vertex0.pos.x, side.vertex0.pos.y])
       points.push([side.vertex1.pos.x, side.vertex1.pos.y])
     })
@@ -46,7 +43,7 @@ const cagToPointsArray = input => {
       points.push(points.shift())
     } */
   } else if ('points' in input) {
-    points = input.points.map(p => ([p.x, p.y]))
+    points = input.points.map((p) => ([p.x, p.y]))
   }
 
   return points

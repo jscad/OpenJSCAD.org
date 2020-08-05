@@ -1,28 +1,34 @@
 const flatten = require('../../utils/flatten')
 
-const mat4 = require('../../math/mat4')
+const mat4 = require('../../maths/mat4')
 
-const { geom2, geom3, path2 } = require('../../geometry')
+const geom2 = require('../../geometries/geom2')
+const geom3 = require('../../geometries/geom3')
+const path2 = require('../../geometries/path2')
 
 /**
- * Translate the given object(s) using the given options (if any)
- * @param {Array} offsets - offsets of which to translate the object
- * @param {Object|Array} objects - the objects(s) to translate
- * @return {Object|Array} the translated object(s)
+ * Translate the given geometries using the given options.
+ * @param {Array} offset - offset (vector) of which to translate the object
+ * @param {...Object} geometries - the geometries to translate
+ * @return {Object|Array} the translated geometry, or a list of translated geometries
+ * @alias module:modeling/transforms.translate
  *
  * @example
- * const newsphere = translate({offsets: [5, 0, 10]}, sphere())
+ * const newsphere = translate([5, 0, 10], sphere())
  */
-const translate = (offsets, ...objects) => {
-  if (!Array.isArray(offsets)) throw new Error('offsets must be an array')
-  if (offsets.length !== 3) throw new Error('offsets must contain X, Y and Z values')
+const translate = (offset, ...objects) => {
+  if (!Array.isArray(offset)) throw new Error('offset must be an array')
 
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')
 
-  const matrix = mat4.fromTranslation(offsets)
+  // adjust the offset if necessary
+  offset = offset.slice() // don't modify the original
+  while (offset.length < 3) offset.push(0)
 
-  const results = objects.map(function (object) {
+  const matrix = mat4.fromTranslation(offset)
+
+  const results = objects.map((object) => {
     if (path2.isA(object)) return path2.transform(matrix, object)
     if (geom2.isA(object)) return geom2.transform(matrix, object)
     if (geom3.isA(object)) return geom3.transform(matrix, object)
@@ -31,10 +37,31 @@ const translate = (offsets, ...objects) => {
   return results.length === 1 ? results[0] : results
 }
 
+/**
+ * Translate the given geometries along the X axis using the given options.
+ * @param {Number} offset - X offset of which to translate the object
+ * @param {...Object} geometries - the geometries to translate
+ * @return {Object|Array} the translated geometry, or a list of translated geometries
+ * @alias module:modeling/transforms.translateX
+ */
 const translateX = (offset, ...objects) => translate([offset, 0, 0], objects)
 
+/**
+ * Translate the given geometries along the Y axis using the given options.
+ * @param {Number} offset - Y offset of which to translate the object
+ * @param {...Object} geometries - the geometries to translate
+ * @return {Object|Array} the translated geometry, or a list of translated geometries
+ * @alias module:modeling/transforms.translateY
+ */
 const translateY = (offset, ...objects) => translate([0, offset, 0], objects)
 
+/**
+ * Translate the given geometries along the Z axis using the given options.
+ * @param {Number} offset - Z offset of which to translate the object
+ * @param {...Object} geometries - the geometries to translate
+ * @return {Object|Array} the translated geometry, or a list of translated geometries
+ * @alias module:modeling/transforms.translateZ
+ */
 const translateZ = (offset, ...objects) => translate([0, 0, offset], objects)
 
 module.exports = {

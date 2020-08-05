@@ -1,9 +1,10 @@
 const most = require('most')
-const { exportFilePathFromFormatAndDesign } = require('../../core/io/exportUtils')
-const { prepareOutput } = require('@jscad/core/io/prepareOutput')
-const { convertToBlob } = require('@jscad/core/io/convertToBlob')
+
+const { solidsAsBlob } = require('@jscad/io')
+
 const withLatestFrom = require('@jscad/core/observable-utils/withLatestFrom')
-// const saveDataToFs = require('../../core/io/saveDataToFs')
+
+const { exportFilePathFromFormatAndDesign } = require('../../core/io/exportUtils')
 
 const reducers = {
   initialize: (state) => {
@@ -14,49 +15,39 @@ const reducers = {
     }
     return { io }
   },
+
   setExportFormat: (state, exportFormat) => {
-    console.log('exportformat', exportFormat, state)
-    const io = Object.assign({}, state.io, exportFilePathFromFormatAndDesign(state.design, exportFormat))
+    const io = Object.assign({ }, state.io, exportFilePathFromFormatAndDesign(state.design, exportFormat), { exportFormat })
     return { io }
   },
-  requestExport: (state, _) => {
+
+  requestExport: (state) => {
     const { exportFilePath, exportFormat } = state.io
     const { solids } = state.design
-    /* const filePath = undefined // dialog.showSaveDialog({properties: ['saveFile'], title: 'export design to', defaultPath: defaultExportFilePath})//, function (filePath) {
-      console.log('saving', filePath)
-      if (filePath !== undefined) {
-        // FIXME: BAD ! does not use side effects!
-        saveDataToFs(data, exportFormat, filePath)
-      } */
-    // return {defaultExportFilePath, exportFormat, data}
-    console.log('export requested', solids, exportFilePath)
     const { saveAs } = require('file-saver')
-
-    // saveDataToFs(data, exportFormat, filePath)
     const format = exportFormat
-    const blob = convertToBlob(prepareOutput(solids, { format }))
+    const blob = solidsAsBlob(solids, { format })
+    // FIXME: BAD ! does not use side effects!
     // fs.writeFileSync(filePath, buffer)
     saveAs(blob, exportFilePath)
-    // const io = Object.assign({}, state.io, {defaultExportFilePath, exportFormat: state.exportFormat, data: state.design.solids})
-    // return {io}
+    // return { io }
   }
 }
-// boilerplate ? const initializeExports$ = init({}, 'export', 'state', reducers.initialize)
 
 const actions = ({ sources }) => {
   const initializeExports$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
-    .map(payload => Object.assign({}, { type: 'initializeExports', sink: 'state' }, { state: payload }))
+    .map((payload) => Object.assign({}, { type: 'initializeExports', sink: 'state' }, { state: payload }))
 
   const changeExportFormat$ = sources.dom.select('#exportFormats').events('change')
-    .map(e => e.target.value)
+    .map((e) => e.target.value)
     .thru(withLatestFrom(reducers.setExportFormat, sources.state))
-    .map(payload => Object.assign({}, { type: 'changeExportFormat', sink: 'state' }, { state: payload }))
+    .map((payload) => Object.assign({}, { type: 'changeExportFormat', sink: 'state' }, { state: payload }))
     .multicast()
 
   const requestExport$ = sources.dom.select('#exportBtn').events('click')
     .thru(withLatestFrom(reducers.requestExport, sources.state))
-    .map(data => ({ type: 'exportRequested', data }))
+    .map((data) => ({ type: 'exportRequested', data }))
 
   return { initializeExports$, requestExport$, changeExportFormat$ }
 }

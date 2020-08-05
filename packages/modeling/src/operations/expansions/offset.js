@@ -1,18 +1,23 @@
 const flatten = require('../../utils/flatten')
 
-const { geom2, path2 } = require('../../geometry')
+const geom2 = require('../../geometries/geom2')
+const path2 = require('../../geometries/path2')
 
 const offsetGeom2 = require('./offsetGeom2')
 const offsetPath2 = require('./offsetPath2')
 
 /**
- * Create offset geometry(s) from the given object(s) using the given options (if any).
+ * Create offset geometry from the given geometry using the given options.
  * @param {Object} options - options for offset
  * @param {Float} [options.delta=1] - delta of offset (+ to exterior, - from interior)
  * @param {String} [options.corners='edge'] - type corner to create during of expansion; edge, chamfer, round
  * @param {Integer} [options.segments=16] - number of segments when creating round corners
- * @param {Object|Array} objects - object(s) to offset
- * @return {Object|Array} the offset objects(s)
+ * @param {...Object} geometry - the list of geometry to offset
+ * @return {Object|Array} new geometry, or list of new geometries
+ * @alias module:modeling/expansions.offset
+ *
+ * @example
+ * let small = offset({ delta: -4, corners: 'chamfer' }, square({size: 40})) // contract
  */
 const offset = (options, ...objects) => {
   objects = flatten(objects)

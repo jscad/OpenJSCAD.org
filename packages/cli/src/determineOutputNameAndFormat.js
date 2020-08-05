@@ -1,4 +1,4 @@
-const { supportedOutputExtensions, supportedOutputFormats } = require('@jscad/core/io/formats')
+const { supportedOutputExtensions, supportedOutputFormats } = require('@jscad/io/formats')
 
 const determineOutputNameAndFormat = (outputFormat, outputFile, inputFile) => {
   const extReg = new RegExp(`\\.(${supportedOutputExtensions().join('|')})$`)
@@ -14,7 +14,7 @@ const determineOutputNameAndFormat = (outputFormat, outputFile, inputFile) => {
     if (!outputFile) { // unless output filename not set, compose it
       ext = ext.replace(/stl[ab]/, 'stl') // drop [ab] from stl
       outputFile = inputFile
-      outputFile = outputFile.replace(/\.([^\.]+)$/, '.' + ext) // compose output filename
+      outputFile = outputFile.replace(/\.([^.]+)$/, '.' + ext) // compose output filename
     }
   } else {
     console.log(`ERROR: invalid output format <${outputFormat}>`)

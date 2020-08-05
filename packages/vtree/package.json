@@ -9,7 +9,8 @@
   "author": "Mark 'kaosat-dev' Moissette",
   "license": "MIT",
   "dependencies": {
-    "@jscad/csg": "^0.7.0",
+    "@jscad/array-utils":"0.0.0",
+    "@jscad/modeling": "0.0.1",
     "object-hash": "1.2.0"
   },
   "devDependencies": {

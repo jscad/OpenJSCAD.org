@@ -1,8 +1,9 @@
-const { EPS } = require('../../../math/constants')
+const { EPS } = require('../../../maths/constants')
 
-const { plane, vec3 } = require('../../../math')
+const plane = require('../../../maths/plane')
+const vec3 = require('../../../maths/vec3')
 
-const { poly3 } = require('../../../geometry')
+const poly3 = require('../../../geometries/poly3')
 
 const splitLineSegmentByPlane = require('./splitLineSegmentByPlane')
 
@@ -17,31 +18,32 @@ const splitLineSegmentByPlane = require('./splitLineSegmentByPlane')
 // .front: a Polygon3 of the front part
 // .back: a Polygon3 of the back part
 const splitPolygonByPlane = (splane, polygon) => {
-  let result = {
+  const result = {
     type: null,
     front: null,
     back: null
   }
   // cache in local lets (speedup):
-  let vertices = polygon.vertices
-  let numvertices = vertices.length
-  if (plane.equals(polygon.plane, splane)) {
+  const vertices = polygon.vertices
+  const numvertices = vertices.length
+  const pplane = poly3.plane(polygon)
+  if (plane.equals(pplane, splane)) {
     result.type = 0
   } else {
     let hasfront = false
     let hasback = false
-    let vertexIsBack = []
-    let MINEPS = -EPS
+    const vertexIsBack = []
+    const MINEPS = -EPS
     for (let i = 0; i < numvertices; i++) {
-      let t = vec3.dot(splane, vertices[i]) - splane[3]
-      let isback = (t < 0)
+      const t = vec3.dot(splane, vertices[i]) - splane[3]
+      const isback = (t < 0)
       vertexIsBack.push(isback)
       if (t > EPS) hasfront = true
       if (t < MINEPS) hasback = true
     }
     if ((!hasfront) && (!hasback)) {
       // all points coplanar
-      let t = vec3.dot(splane, polygon.plane)
+      const t = vec3.dot(splane, pplane)
       result.type = (t >= 0) ? 0 : 1
     } else if (!hasback) {
       result.type = 2
@@ -50,14 +52,14 @@ const splitPolygonByPlane = (splane, polygon) => {
     } else {
       // spanning
       result.type = 4
-      let frontvertices = []
-      let backvertices = []
+      const frontvertices = []
+      const backvertices = []
       let isback = vertexIsBack[0]
       for (let vertexindex = 0; vertexindex < numvertices; vertexindex++) {
-        let vertex = vertices[vertexindex]
+        const vertex = vertices[vertexindex]
         let nextvertexindex = vertexindex + 1
         if (nextvertexindex >= numvertices) nextvertexindex = 0
-        let nextisback = vertexIsBack[nextvertexindex]
+        const nextisback = vertexIsBack[nextvertexindex]
         if (isback === nextisback) {
           // line segment is on one side of the plane:
           if (isback) {
@@ -67,9 +69,9 @@ const splitPolygonByPlane = (splane, polygon) => {
           }
         } else {
           // line segment intersects plane:
-          let point = vertex
-          let nextpoint = vertices[nextvertexindex]
-          let intersectionpoint = splitLineSegmentByPlane(splane, point, nextpoint)
+          const point = vertex
+          const nextpoint = vertices[nextvertexindex]
+          const intersectionpoint = splitLineSegmentByPlane(splane, point, nextpoint)
           if (isback) {
             backvertices.push(vertex)
             backvertices.push(intersectionpoint)
@@ -83,11 +85,11 @@ const splitPolygonByPlane = (splane, polygon) => {
         isback = nextisback
       } // for vertexindex
       // remove duplicate vertices:
-      let EPS_SQUARED = EPS * EPS
+      const EPS_SQUARED = EPS * EPS
       if (backvertices.length >= 3) {
         let prevvertex = backvertices[backvertices.length - 1]
         for (let vertexindex = 0; vertexindex < backvertices.length; vertexindex++) {
-          let vertex = backvertices[vertexindex]
+          const vertex = backvertices[vertexindex]
           if (vec3.squaredDistance(vertex, prevvertex) < EPS_SQUARED) {
             backvertices.splice(vertexindex, 1)
             vertexindex--
@@ -98,7 +100,7 @@ const splitPolygonByPlane = (splane, polygon) => {
       if (frontvertices.length >= 3) {
         let prevvertex = frontvertices[frontvertices.length - 1]
         for (let vertexindex = 0; vertexindex < frontvertices.length; vertexindex++) {
-          let vertex = frontvertices[vertexindex]
+          const vertex = frontvertices[vertexindex]
           if (vec3.squaredDistance(vertex, prevvertex) < EPS_SQUARED) {
             frontvertices.splice(vertexindex, 1)
             vertexindex--
@@ -107,10 +109,10 @@ const splitPolygonByPlane = (splane, polygon) => {
         }
       }
       if (frontvertices.length >= 3) {
-        result.front = poly3.fromPointsAndPlane(frontvertices, polygon.plane)
+        result.front = poly3.fromPointsAndPlane(frontvertices, pplane)
       }
       if (backvertices.length >= 3) {
-        result.back = poly3.fromPointsAndPlane(backvertices, polygon.plane)
+        result.back = poly3.fromPointsAndPlane(backvertices, pplane)
       }
     }
   }

@@ -1,67 +1,64 @@
+const most = require('most')
+const withLatestFrom = require('./src/utils/observable-utils/withLatestFrom')
+const callBackToStream = require('./src/utils/observable-utils/callbackToObservable')
 
- const {create} = require('@most/create')
- const most = require('most')
- const withLatestFrom = require('./src/utils/observable-utils/withLatestFrom')
- const callBackToStream = require('./src/utils/observable-utils/callbackToObservable')
+// const {stream, callback} = callBackToStream()
+const { proxy } = require('most-proxy')
+const stateStream = proxy()
+const stateProxy$ = stateStream.stream
 
- // const {stream, callback} = callBackToStream()
- const { proxy } = require('most-proxy')
- const stateStream = proxy()
- const stateProxy$ = stateStream.stream
+// const store = callBackToStream()
+// const state = callBackToStream()
+// const state$ = state.stream.multicast()
 
- const store = callBackToStream()
- const state = callBackToStream()
- const state$ = state.stream
-  .multicast()
+const fooCB = callBackToStream()
+const fooSignal$ = fooCB.stream
 
- const fooCB = callBackToStream()
- const fooSignal$ = fooCB.stream
+const barCB = callBackToStream()
+const barSignal$ = barCB.stream
 
- const barCB = callBackToStream()
- const barSignal$ = barCB.stream
+const initialState = {
+  foo: false,
+  bar: false
+}
 
- const initialState = {
-   foo: false,
-   bar: false
- }
-
- const fooReducer = (state, signal) => {
-   const updated = Object.assign({}, state, {foo: signal})
-   console.log('fooReducer state:', state, 'signal', signal, 'updated', updated)
-   return updated
- }
- const fooCommands$ = fooSignal$
+const fooReducer = (state, signal) => {
+  const updated = Object.assign({}, state, { foo: signal })
+  console.log('fooReducer state:', state, 'signal', signal, 'updated', updated)
+  return updated
+}
+const fooCommands$ = fooSignal$
   .thru(withLatestFrom(fooReducer, stateProxy$))
 
- const barReducer = (state, signal) => {
-   const updated = Object.assign({}, state, {bar: signal})
-   console.log('barReducer state:', state, 'signal', signal, 'updated', updated)
-   return updated
- }
- const barCommands$ = barSignal$
+const barReducer = (state, signal) => {
+  const updated = Object.assign({}, state, { bar: signal })
+  console.log('barReducer state:', state, 'signal', signal, 'updated', updated)
+  return updated
+}
+const barCommands$ = barSignal$
   .thru(withLatestFrom(barReducer, stateProxy$))
 
- const commandResponses$ = most.mergeArray([
-   fooCommands$,
-   barCommands$
- ])
+const commandResponses$ = most.mergeArray([
+  fooCommands$,
+  barCommands$
+])
 
- const realState$ = most.scan((state, input) => {
-   const foo = Object.assign({}, state, input)
-   return foo
- }, initialState, commandResponses$)
- stateStream.attach(realState$)
+const realState$ = most.scan((state, input) => {
+  const foo = Object.assign({}, state, input)
+  return foo
+}, initialState, commandResponses$)
+stateStream.attach(realState$)
 
- stateProxy$.forEach(x => console.log('state', x))
+stateProxy$.forEach((x) => console.log('state', x))
 
 // store.callback('b')
 // we have pre-existing state
 // a signal triggers a new value from the store
- // state.callback(initialState)
- // state.callback(2)
+// state.callback(initialState)
+// state.callback(2)
 
- fooCB.callback(true)// 'foo-a')
- barCB.callback(true)// 'bar-b')
+fooCB.callback(true)// 'foo-a')
+barCB.callback(true)// 'bar-b')
 
 /*
 const holdUntil = (startSignal) => {

@@ -1,8 +1,8 @@
-const { EPS } = require('../../../math/constants')
+const { EPS } = require('../../../maths/constants')
 
-const { vec3 } = require('../../../math')
+const vec3 = require('../../../maths/vec3')
 
-const { poly3 } = require('../../../geometry')
+const poly3 = require('../../../geometries/poly3')
 
 const splitPolygonByPlane = require('./splitPolygonByPlane')
 
@@ -34,8 +34,8 @@ PolygonTreeNode.prototype = {
     if (!this.isRootNode()) {
       throw new Error('Assertion failed')
     }
-    let _this = this
-    polygons.forEach(function (polygon) {
+    const _this = this
+    polygons.forEach((polygon) => {
       _this.addChild(polygon)
     })
   },
@@ -48,8 +48,8 @@ PolygonTreeNode.prototype = {
       this.removed = true
 
       // remove ourselves from the parent's children list:
-      let parentschildren = this.parent.children
-      let i = parentschildren.indexOf(this)
+      const parentschildren = this.parent.children
+      const i = parentschildren.indexOf(this)
       if (i < 0) throw new Error('Assertion failed')
       parentschildren.splice(i, 1)
 
@@ -79,7 +79,7 @@ PolygonTreeNode.prototype = {
 
   getPolygons: function (result) {
     let children = [this]
-    let queue = [children]
+    const queue = [children]
     let i, j, l, node
     for (i = 0; i < queue.length; ++i) { // queue size can change in loop, don't cache length
       children = queue[i]
@@ -102,7 +102,7 @@ PolygonTreeNode.prototype = {
   //  and added to both arrays.
   splitByPlane: function (plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes) {
     if (this.children.length) {
-      let queue = [this.children]
+      const queue = [this.children]
       let i
       let j
       let l
@@ -127,18 +127,18 @@ PolygonTreeNode.prototype = {
 
   // only to be called for nodes with no children
   _splitByPlane: function (splane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes) {
-    let polygon = this.polygon
+    const polygon = this.polygon
     if (polygon) {
-      let bound = poly3.measureBoundingSphere(polygon)
-      let sphereradius = bound[1] + EPS // ensure radius is LARGER then polygon
-      let spherecenter = bound[0]
-      let d = vec3.dot(splane, spherecenter) - splane[3]
+      const bound = poly3.measureBoundingSphere(polygon)
+      const sphereradius = bound[1] + EPS // ensure radius is LARGER then polygon
+      const spherecenter = bound[0]
+      const d = vec3.dot(splane, spherecenter) - splane[3]
       if (d > sphereradius) {
         frontnodes.push(this)
       } else if (d < -sphereradius) {
         backnodes.push(this)
       } else {
-        let splitresult = splitPolygonByPlane(splane, polygon)
+        const splitresult = splitPolygonByPlane(splane, polygon)
         switch (splitresult.type) {
           case 0:
             // coplanar front:
@@ -163,11 +163,11 @@ PolygonTreeNode.prototype = {
           case 4:
             // spanning:
             if (splitresult.front) {
-              let frontnode = this.addChild(splitresult.front)
+              const frontnode = this.addChild(splitresult.front)
               frontnodes.push(frontnode)
             }
             if (splitresult.back) {
-              let backnode = this.addChild(splitresult.back)
+              const backnode = this.addChild(splitresult.back)
               backnodes.push(backnode)
             }
             break
@@ -182,7 +182,7 @@ PolygonTreeNode.prototype = {
   // a child should be created for every fragment of the split polygon
   // returns the newly created child
   addChild: function (polygon) {
-    let newchild = new PolygonTreeNode()
+    const newchild = new PolygonTreeNode()
     newchild.parent = this
     newchild.polygon = polygon
     this.children.push(newchild)
@@ -191,14 +191,14 @@ PolygonTreeNode.prototype = {
 
   invertSub: function () {
     let children = [this]
-    let queue = [children]
+    const queue = [children]
     let i, j, l, node
     for (i = 0; i < queue.length; i++) {
       children = queue[i]
       for (j = 0, l = children.length; j < l; j++) {
         node = children[j]
         if (node.polygon) {
-          node.polygon = poly3.flip(node.polygon)
+          node.polygon = poly3.invert(node.polygon)
         }
         if (node.children.length > 0) queue.push(node.children)
       }
@@ -217,13 +217,12 @@ PolygonTreeNode.prototype = {
 
   clear: function () {
     let children = [this]
-    let queue = [children]
-    let l
+    const queue = [children]
     for (let i = 0; i < queue.length; ++i) { // queue size can change in loop, don't cache length
       children = queue[i]
-      let l = children.length
+      const l = children.length
       for (let j = 0; j < l; j++) {
-        let node = children[j]
+        const node = children[j]
         if (node.polygon) {
           node.polygon = null
         }
@@ -239,11 +238,11 @@ PolygonTreeNode.prototype = {
   toString: function () {
     let result = ''
     let children = [this]
-    let queue = [children]
+    const queue = [children]
     let i, j, l, node
     for (i = 0; i < queue.length; ++i) { // queue size can change in loop, don't cache length
       children = queue[i]
-      let prefix = ' '.repeat(i)
+      const prefix = ' '.repeat(i)
       for (j = 0, l = children.length; j < l; j++) { // ok to cache length
         node = children[j]
         result += `${prefix}PolygonTreeNode (${node.isRootNode()}): ${node.children.length}`

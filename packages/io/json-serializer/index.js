@@ -1,95 +1,65 @@
 /*
-JSCAD Object to JSON Format Serialization
+JSCAD Object to JSON Notation Serialization
 
 ## License
 
-Copyright (c) 2018 JSCAD Organization https://github.com/jscad
+Copyright (c) JSCAD Organization https://github.com/jscad
 
 All code released under MIT license
 
 Notes:
-1) CAG conversion to:
-     none
-2) CSG conversion to:
+1) geom2 conversion to:
      JSON
-3) Path2D conversion to:
-     none
+2) geom3 conversion to:
+     JSON
+3) path2 conversion to:
+     JSON
 */
 
-const { ensureManifoldness } = require('@jscad/io-utils')
-//const {toArray} = require('@jscad/io-utils/arrays')
-const { isCSG, isCAG } = require('@jscad/csg')
+const { utils } = require('@jscad/modeling')
 
-const mimeType = 'application/json'
-
-function fromCAG (CAG, options) {
-  let str = '{ "type": "cag","sides": ['
-  let comma = ''
-  CAG.sides.map(
-    function (side, i) {
-      str += comma
-      str += JSON.stringify(side)
-      comma = ','
-    }
-  )
-  str += '] }'
-  return str
-}
-
-function fromCSG (CSG, options) {
-  let str = '{ "type": "csg","polygons": ['
-  let comma = ''
-  CSG.polygons.map(
-    function (polygon, i) {
-      str += comma
-      str += JSON.stringify(polygon)
-      comma = ','
-    }
-  )
-  str += '],'
-  str += '"isCanonicalized": ' + JSON.stringify(CSG.isCanonicalized) + ','
-  str += '"isRetesselated": ' + JSON.stringify(CSG.isRetesselated)
-  str += '}'
-  return str
-}
-
-function serialize (...params) {
-  let options = {}
-  let objects
-  if (params.length === 0) {
-    throw new Error('no arguments supplied to serialize function !')
-  } else if (params.length === 1) {
-    // assumed to be object(s)
-    objects = Array.isArray(params[0]) ? params[0] : params
-  } else if (params.length > 1) {
-    options = params[0]
-    objects = params[1]
+// Replace all typed arrays in geometries with standard Arrays
+// NOTE: 'this' in replacer is the object in which key was found
+const replacer = (key, value) => {
+  switch (key) {
+    case 'transforms':
+    case 'plane':
+      return Array.from(value)
+    case 'points':
+    case 'vertices':
+      return value.map((v) => Array.from(v))
+    case 'sides':
+      return value.map((s) => [Array.from(s[0]), Array.from(s[1])])
+    default:
+      break
   }
-  // make sure we always deal with arrays of objects as inputs
-  //objects = toArray(objects)
+  return value
+}
 
+/**
+ * Serialize the give objects to JSON.
+ * @param {Object} options - options for serialization, REQUIRED
+ * @param {Object|Array} objects - objects to serialize as JSON
+ * @returns {Array} serialized contents
+ */
+const serialize = (options, ...objects) => {
   const defaults = {
     statusCallback: null
   }
   options = Object.assign({}, defaults, options)
 
-  options.statusCallback && options.statusCallback({progress: 0})
+  objects = utils.flatten(objects)
 
-  let contents = []
-  objects.forEach(function (object, i) {
-    if (isCSG(object) && object.polygons.length > 0) {
-      let data = ensureManifoldness(object)
-      contents.push(fromCSG(data, options))
-    }
-    if (isCAG(object) && object.sides.length > 0) {
-      contents.push(fromCAG(object, options))
-    }
-    options.statusCallback && options.statusCallback({progress: 100 * i / objects.length})
-  })
+  options.statusCallback && options.statusCallback({ progress: 0 })
 
-  options.statusCallback && options.statusCallback({progress: 100})
-  return contents
+  const notation = JSON.stringify(objects, replacer)
+
+  options.statusCallback && options.statusCallback({ progress: 100 })
+
+  return [notation]
 }
+
+const mimeType = 'application/json'
 
 module.exports = {
   serialize,

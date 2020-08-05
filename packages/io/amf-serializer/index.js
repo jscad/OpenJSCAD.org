@@ -21,9 +21,9 @@ TBD
 
 const stringify = require('onml/lib/stringify')
 
-const { ensureManifoldness } = require('@jscad/io-utils')
+// const { ensureManifoldness } = require('@jscad/io-utils')
 
-const { geometry, utils } = require('@jscad/modeling')
+const { geometries, utils } = require('@jscad/modeling')
 
 const mimeType = 'application/amf+xml'
 
@@ -43,7 +43,7 @@ const serialize = (options, ...objects) => {
   objects = utils.flatten(objects)
 
   // convert only 3D geometries
-  let objects3d = objects.filter((object) => geometry.geom3.isA(object))
+  const objects3d = objects.filter((object) => geometries.geom3.isA(object))
 
   if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to AMF')
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to AMF')
@@ -61,7 +61,7 @@ const serialize = (options, ...objects) => {
   body = body.concat(translateObjects(objects3d, options))
 
   // convert the contents to AMF (XML) format
-  let amf = `<?xml version="1.0" encoding="UTF-8"?>
+  const amf = `<?xml version="1.0" encoding="UTF-8"?>
 ${stringify(body)}`
 
   options && options.statusCallback && options.statusCallback({ progress: 100 })
@@ -70,10 +70,10 @@ ${stringify(body)}`
 }
 
 const translateObjects = (objects, options) => {
-  let contents = []
+  const contents = []
   objects.forEach((object, i) => {
-    if (geometry.geom3.isA(object)) {
-      let polygons = geometry.geom3.toPolygons(object)
+    if (geometries.geom3.isA(object)) {
+      const polygons = geometries.geom3.toPolygons(object)
       if (polygons.length > 0) {
         // TODO object = ensureManifoldness(object)
         options.id = i
@@ -85,7 +85,7 @@ const translateObjects = (objects, options) => {
 }
 
 const convertToObject = (object, options) => {
-  let contents = ['object', { id: options.id }, convertToMesh(object, options)]
+  const contents = ['object', { id: options.id }, convertToMesh(object, options)]
   return contents
 }
 
@@ -100,10 +100,10 @@ const convertToMesh = (object, options) => {
  */
 
 const convertToVertices = (object, options) => {
-  let contents = ['vertices', {}]
+  const contents = ['vertices', {}]
 
-  let vertices = []
-  let polygons = geometry.geom3.toPolygons(object)
+  const vertices = []
+  const polygons = geometries.geom3.toPolygons(object)
   polygons.forEach((polygon) => {
     for (let i = 0; i < polygon.vertices.length; i++) {
       vertices.push(convertToVertex(polygon.vertices[i], options))
@@ -114,12 +114,12 @@ const convertToVertices = (object, options) => {
 }
 
 const convertToVertex = (vertex, options) => {
-  let contents = ['vertex', {}, convertToCoordinates(vertex, options)]
+  const contents = ['vertex', {}, convertToCoordinates(vertex, options)]
   return contents
 }
 
 const convertToCoordinates = (vertex, options) => {
-  let contents = ['coordinates', {}, ['x', {}, vertex[0]], ['y', {}, vertex[1]], ['z', {}, vertex[2]]]
+  const contents = ['coordinates', {}, ['x', {}, vertex[0]], ['y', {}, vertex[1]], ['z', {}, vertex[2]]]
   return contents
 }
 
@@ -129,18 +129,18 @@ const convertToCoordinates = (vertex, options) => {
 
 const convertToVolumes = (object, options) => {
   let n = 0
-  let objectcolor = convertColor(object.color)
-  let polygons = geometry.geom3.toPolygons(object)
+  const objectcolor = convertColor(object.color)
+  const polygons = geometries.geom3.toPolygons(object)
 
-  let contents = []
+  const contents = []
   polygons.forEach((polygon) => {
     if (polygon.vertices.length < 3) {
       return
     }
 
     let volume = ['volume', {}]
-    let polycolor = convertToColor(polygon, options)
-    let triangles = convertToTriangles(polygon, n)
+    const polycolor = convertToColor(polygon, options)
+    const triangles = convertToTriangles(polygon, n)
 
     if (polycolor) {
       volume.push(polycolor)
@@ -166,16 +166,16 @@ const convertColor = (color) => {
 }
 
 const convertToColor = (polygon, options) => {
-  let color = polygon.color
+  const color = polygon.color
   return convertColor(color)
 }
 
 const convertToTriangles = (polygon, index) => {
-  let contents = []
+  const contents = []
 
   // making sure they are all triangles (triangular polygons)
   for (let i = 0; i < polygon.vertices.length - 2; i++) {
-    let triangle = ['triangle', {}, ['v1', {}, index], ['v2', {}, (index + i + 1)], ['v3', {}, (index + i + 2)]]
+    const triangle = ['triangle', {}, ['v1', {}, index], ['v2', {}, (index + i + 1)], ['v3', {}, (index + i + 2)]]
     contents.push(triangle)
   }
   return contents

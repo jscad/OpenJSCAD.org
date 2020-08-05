@@ -1,5 +1,5 @@
 const mat4 = require('gl-mat4')
-const { flatten, toArray } = require('../utils')
+const { flatten, toArray } = require('@jscad/array-utils')
 const csgToGeometries = require('./csgToGeometries')
 const cagToGeometries = require('./cagToGeometries')
 const computeBounds = require('../bound-utils/computeBounds')
@@ -16,7 +16,7 @@ const entitiesFromSolids = (params, solids) => {
   // .fixTJunctions()
   // cachedSolids = solids
   // const start = performance.now()
-  const entities = solids.map(function (solid) {
+  const entities = solids.map((solid) => {
     let geometry
     let type
     if ('sides' in solid) {
@@ -27,7 +27,8 @@ const entitiesFromSolids = (params, solids) => {
       geometry = csgToGeometries(solid, {
         smoothLighting: smoothNormals,
         normalThreshold: 0.3,
-        faceColor: meshColor })//, normalThreshold: 0})
+        faceColor: meshColor
+      })//, normalThreshold: 0})
     }
     // geometry = flatten(geometries)// FXIME : ACTUALLY deal with arrays since a single csg can
     // generate multiple geometries if positions count is >65535

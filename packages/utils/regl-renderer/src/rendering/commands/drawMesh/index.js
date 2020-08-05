@@ -1,46 +1,48 @@
 const mat4 = require('gl-mat4')
-// const vao = require('vertex-ao')
 
-const drawMesh = function (regl, params = { extras: {} }) {
+const { meshColor } = require('../../renderDefaults')
+
+const drawMesh = (regl, params = { extras: {} }) => {
   const { buffer } = regl
   const defaults = {
     useVertexColors: true,
     dynamicCulling: false,
     geometry: undefined,
-    type: undefined
+    type: '3d',
+    primitive: 'triangles',
+    color: meshColor
   }
-  const { geometry, dynamicCulling, useVertexColors, type } = Object.assign({}, defaults, params)
+  let { geometry, dynamicCulling, useVertexColors, type, primitive, color } = Object.assign({}, defaults, params)
 
-  let ambientOcclusion // = vao(geometry.indices, geometry.positions, 64, 64)
-  ambientOcclusion = regl.buffer([])
+  // let ambientOcclusion = vao(geometry.indices, geometry.positions, 64, 64)
+  const ambientOcclusion = regl.buffer([])
 
   // vertex colors or not ?
   const hasIndices = !!(geometry.indices && geometry.indices.length > 0)
   const hasNormals = !!(geometry.normals && geometry.normals.length > 0)
   const hasVertexColors = !!(useVertexColors && geometry.colors && geometry.colors.length > 0)
-  const cullFace = dynamicCulling ? function (context, props) {
-    const isOdd = ([props.model[0], props.model[5], props.model[10]].filter(x => x < 0).length) & 1 // count the number of negative components & deterine if that is odd or even
+  const cullFace = dynamicCulling ? (context, props) => {
+    const isOdd = ([props.model[0], props.model[5], props.model[10]].filter((x) => x < 0).length) & 1 // count the number of negative components & deterine if that is odd or even
     return isOdd ? 'front' : 'back'
   } : 'back'
 
-  let vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
+  const vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
   let frag = hasVertexColors ? require('./vColorShaders').frag : require('./meshShaders').frag
 
-  // FIXME: forced override for 2D shape colors to have a simple color
   if (type === '2d') {
+    primitive = 'lines'
+    if ('color' in geometry) color = geometry.color
     frag = require('./colorOnlyShaders').frag
   }
-  // console.log('type', type)
-  // const vert = vColorVert
-  // const frag = vColorFrag
+  // console.log('type', type, 'primitive', primitive, 'color', color, hasVertexColors)
 
   let commandParams = {
     vert,
     frag,
 
     uniforms: {
-      model: (context, props) => props.model || props.transforms.matrix || mat4.identity([]), // props && props.model ? props.model : mat4.identity([]),
-      ucolor: (context, props) => props && props.color ? props.color : [1, 0.5, 1, 1],
+      model: (context, props) => props.model || props.transforms.matrix || mat4.identity([]), // props && props.model ? props.model : mat4.identity([]),
+      ucolor: (context, props) => (props && props.color) ? props.color : color,
       // semi hack, woraround to enable/disable vertex colors!!!
       vColorToggler: (context, props) => (props && props.useVertexColors && props.useVertexColors === true) ? 1.0 : 0.0,
       // experimental
@@ -71,7 +73,7 @@ const drawMesh = function (regl, params = { extras: {} }) {
 
       func: { src: 'src alpha', dst: 'one minus src alpha' }
     },
-    primitive: (context, props) => props && props.primitive ? props.primitive : (type === '3d' ? 'triangles' : 'lines')
+    primitive: (context, props) => props && props.primitive ? props.primitive : primitive
   }
 
   if (geometry.cells) {

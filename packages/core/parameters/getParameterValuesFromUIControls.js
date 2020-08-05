@@ -1,14 +1,13 @@
-// TODO : this is the same one as in openjscad.org/src/core !! it should be reused!
 /**
  * extracts the parameter
  * @param {Array} paramControls
  * @param {Boolean} onlyChanged
  * @returns {Object} the parameter values, as an object
  */
-module.exports = function getParameterValuesFromUIControls (paramControls, parameterDefinitions, onlyChanged) {
-  let parameterValues = {}
+const getParameterValuesFromUIControls = (paramControls, parameterDefinitions, onlyChanged) => {
+  const parameterValues = {}
   let value
-  for (var i = 0; i < paramControls.length; i++) {
+  for (let i = 0; i < paramControls.length; i++) {
     const control = paramControls[i]
 
     switch (control.paramType) {
@@ -50,8 +49,8 @@ module.exports = function getParameterValuesFromUIControls (paramControls, param
         value = control.value
         break
       case 'group':
-        console.log('group');
-        break;
+        console.log('group')
+        break
       default:
         value = control.value
         break
@@ -69,6 +68,4 @@ module.exports = function getParameterValuesFromUIControls (paramControls, param
   return parameterValues
 }
 
-function isNumber (value) {
-  return (!isNaN(parseFloat(value)) && isFinite(value))
-}
+module.exports = getParameterValuesFromUIControls

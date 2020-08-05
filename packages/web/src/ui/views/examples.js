@@ -15,7 +15,7 @@ const examplesData = [
 
   // { file:'bunch-cubes.jscad', title: 'Bunch of Cubes', new: true },
   { file: 'core/transformations.jscad', title: 'Transformations', spacing: true },
-  { file: 'core/lookup.jscad', title: 'Lookup()'},
+  { file: 'core/lookup.jscad', title: 'Lookup()' },
   { file: 'core/expand.jscad', title: 'Expand()' },
   { file: 'core/rectangular_extrude.jscad', title: 'Rectangular_extrude()' },
   { file: 'core/linear_extrude.jscad', title: 'Linear_extrude()' },
@@ -53,19 +53,19 @@ const examplesData = [
   { file: 'globe.jscad', title: 'Include(): Globe', spacing: true },
   { file: 'platonics/', title: 'Recursive Include(): Platonics' },
 
-  { file: 'babypanda2.svg', title: 'SVG Image: Baby Panda', spacing: true},
+  { file: 'babypanda2.svg', title: 'SVG Image: Baby Panda', spacing: true },
 
   { file: '3d_sculpture-VernonBussler.stl', title: '3D Model: 3D Sculpture (Vernon Bussler)', type: 'STL', spacing: true },
   { file: 'frog-OwenCollins.stl', title: '3D Model: Frog (Owen Collins)', type: 'STL' },
   { file: 'thing_7-Zomboe.stl', title: '3D Model: Thing 7 / Flower (Zomboe)', type: 'STL' },
   { file: 'yoda-RichRap.stl', title: '3D Model: Yoda (RichRap)', type: 'STL' },
-  { file: 'feathers_mcgraw.stl', title: '3D Model: Feathers Mcgraw (q1g0ng)', type: 'STL'}
+  { file: 'feathers_mcgraw.stl', title: '3D Model: Feathers Mcgraw (q1g0ng)', type: 'STL' }
 ]
 const html = require('bel')
 
 module.exports = function examples (state, i18n) {
-  var wrap = 26
-  var colp = 100 / Math.floor(examplesData.length / wrap + 1) + '%'
+  const wrap = 26
+  const colp = 100 / Math.floor(examplesData.length / wrap + 1) + '%'
 
   const baseUrl = window.location.origin
   const exampleElems = examplesData.map((example) => {
@@ -73,9 +73,9 @@ module.exports = function examples (state, i18n) {
     const exampleUrl = `${baseUrl}/examples/${example.file}`
     return html`
     <tr>
-      <td class="examplesSeparator" widthx=' + colp + ' valign=top>
-        <a class='example' data-path=${exampleUrl} href='#'> ${example.title} </a>
-        <span class=${type}>${type}</span> 
+      <td class="examplesSeparator" width="${colp}" valign="top">
+        <a class="example" data-path="${exampleUrl}" href="#"> ${example.title} </a>
+        <span class="${type}">${type}</span> 
       </td>
     </tr>
     `

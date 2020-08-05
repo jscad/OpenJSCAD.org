@@ -1,10 +1,10 @@
 const html = require('bel')
-const {createParamControls} = require('./createParameterControls3')
+const { createParamControls } = require('./createParameterControls3')
 
 module.exports = function designParameters (state, paramsCallbacktoStream, i18n) {
-  const {paramValues, paramDefinitions} = state.design
+  const { paramValues, paramDefinitions } = state.design
 
-  const {controls} = createParamControls(paramValues, paramDefinitions, paramsCallbacktoStream.callback)
+  const { controls } = createParamControls(paramValues, paramDefinitions, paramsCallbacktoStream.callback)
 
   return html`
   <section id='params' style='visibility:${state.design.paramDefinitions.length === 0 ? 'hidden' : 'visible'};color:${state.themeSettings.secondaryTextColor}'>

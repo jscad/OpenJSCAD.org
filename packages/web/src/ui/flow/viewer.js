@@ -3,7 +3,7 @@ const withLatestFrom = require('@jscad/core/observable-utils/withLatestFrom')
 
 const reducers = {
   initialize: (state) => {
-    const viewer = {// ridiculous shadowing of viewer state ?? or actually logical
+    const viewer = { // ridiculous shadowing of viewer state ?? or actually logical
       rendering: {
         background: [1, 1, 1, 1],
         meshColor: [0, 0.6, 1, 1]
@@ -56,43 +56,43 @@ const actions = ({ sources }) => {
   console.log('sources', sources.actions)
   const initializeViewer$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
-    .map(payload => Object.assign({}, { type: 'initializeViewer', sink: 'state' }, { state: payload }))
+    .map((payload) => Object.assign({}, { type: 'initializeViewer', sink: 'state' }, { state: payload }))
 
   const toggleGrid$ = most.mergeArray([
     sources.dom.select('#grid').events('click')
-      .map(e => e.target.checked),
+      .map((e) => e.target.checked),
     sources.store
-      .filter(reply => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.viewer && reply.data.viewer.grid && reply.data.viewer.grid.show !== undefined)
-      .map(reply => reply.data.viewer.grid.show)
+      .filter((reply) => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.viewer && reply.data.viewer.grid && reply.data.viewer.grid.show !== undefined)
+      .map((reply) => reply.data.viewer.grid.show)
   ])
     .thru(withLatestFrom(reducers.toggleGrid, sources.state))
-    .map(data => ({ type: 'toggleGrid', state: data, sink: 'state' }))
+    .map((data) => ({ type: 'toggleGrid', state: data, sink: 'state' }))
 
   const toggleAxes$ = most.mergeArray([
     sources.dom.select('#toggleAxes').events('click')
-      .map(e => e.target.checked)
+      .map((e) => e.target.checked)
     // sources.store.map(data => data.viewer.grid.show)
   ])
     .thru(withLatestFrom(reducers.toggleAxes, sources.state))
-    .map(data => ({ type: 'toggleAxes', state: data, sink: 'state' }))
+    .map((data) => ({ type: 'toggleAxes', state: data, sink: 'state' }))
 
   const toggleAutorotate$ = most.mergeArray([
     sources.dom.select('#autoRotate').events('click')
-      .map(e => e.target.checked)
+      .map((e) => e.target.checked)
     // sources.store.map(data => data.viewer.grid.show)
     // sources.actions.filter(action => action.type === 'setProjectionType')
   ])
     .thru(withLatestFrom(reducers.toggleAutorotate, sources.state))
-    .map(data => ({ type: 'toggleAutorotate', state: data, sink: 'state' }))
+    .map((data) => ({ type: 'toggleAutorotate', state: data, sink: 'state' }))
 
   // all other viewer actions, triggered from elsewhere, for example via shortcuts ?
   const otherViewerActions$ = sources.actions
-    .filter(action => Object.keys(reducers).includes(action.type))
+    .filter((action) => Object.keys(reducers).includes(action.type))
     /* .thru(withLatestFrom(function (state, action) {
       return reducers[action.type](state, action.data)
-    }, sources.state))*/
+    }, sources.state)) */
     // .map(data => ({state: data, sink: 'state'}))
-    .map(payload => Object.assign({}, { sink: 'viewer' }, payload))
+    .map((payload) => Object.assign({}, { sink: 'viewer' }, payload))
 
   return {
     // 3d viewer

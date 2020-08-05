@@ -1,6 +1,7 @@
-const { vec3 } = require('../../../math')
+const vec3 = require('../../../maths/vec3')
 
-const { geom3, poly3 } = require('../../../geometry')
+const geom3 = require('../../../geometries/geom3')
+const poly3 = require('../../../geometries/poly3')
 
 const intersectGeom3Sub = require('../../booleans/intersectGeom3Sub')
 
@@ -17,12 +18,10 @@ const toPolygon3D = (vector, edge) => {
 }
 
 /**
- * Calculate the plane of the given slice.
- * NOTE: The points are assumed to be planar from the beginning.
+ * Return a list of polygons which are enclosed by the slice.
  * @param {slice} slice - the slice
- * @returns {plane} the plane of the slice
- * @example
- * let myplane = toPlane(slice)
+ * @return {Array} a list of polygons (3D)
+ * @alias module:modeling/extrusions/slice.toPolygons
  */
 const toPolygons = (slice) => {
   const splane = calculatePlane(slice)
@@ -36,7 +35,7 @@ const toPolygons = (slice) => {
   let farthestEdge = [[NaN, NaN, NaN], [NaN, NaN, NaN]]
   let distance = 0
   edges.forEach((edge) => {
-    let d = vec3.squaredDistance(midpoint, edge[0])
+    const d = vec3.squaredDistance(midpoint, edge[0])
     if (d > distance) {
       farthestEdge = edge
       distance = d
@@ -67,7 +66,7 @@ const toPolygons = (slice) => {
   // return only those polygons from the base
   let polygons = geom3.toPolygons(geometry3)
   polygons = polygons.filter((polygon) => {
-    let a = vec3.angle(splane, polygon.plane)
+    const a = vec3.angle(splane, poly3.plane(polygon))
     // walls should be PI / 2 radians rotated from the base
     return Math.abs(a) < (Math.PI / 90)
   })

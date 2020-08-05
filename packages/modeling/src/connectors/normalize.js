@@ -1,8 +1,8 @@
-const vec3 = require('../math/vec3')
+const vec3 = require('../maths/vec3')
 
 const fromPointAxisNormal = require('./fromPointAxisNormal')
 
-/**
+/*
  * Normalize the given connector, calculating new axis and normal
  * @param {connector} connector - the connector to normalize
  * @returns {connector} a new connector

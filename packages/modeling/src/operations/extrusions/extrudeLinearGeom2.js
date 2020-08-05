@@ -1,6 +1,7 @@
-const { mat4, vec3 } = require('../../math')
+const mat4 = require('../../maths/mat4')
+const vec3 = require('../../maths/vec3')
 
-const { geom2 } = require('../../geometry')
+const geom2 = require('../../geometries/geom2')
 
 const slice = require('./slice')
 
@@ -31,7 +32,7 @@ const extrudeGeom2 = (options, geometry) => {
   }
 
   // convert to vector in order to perform transforms
-  let offsetv = vec3.fromArray(offset)
+  const offsetv = vec3.fromArray(offset)
 
   const baseSides = geom2.toSides(geometry)
   if (baseSides.length === 0) throw new Error('the given geometry cannot be empty')
@@ -40,9 +41,9 @@ const extrudeGeom2 = (options, geometry) => {
   if (offsetv[2] < 0) slice.reverse(baseSlice, baseSlice)
 
   const createTwist = (progress, index, base) => {
-    let Zrotation = index / twistSteps * twistAngle
-    let Zoffset = vec3.scale(index / twistSteps, offsetv)
-    let matrix = mat4.multiply(mat4.fromZRotation(Zrotation), mat4.fromTranslation(Zoffset))
+    const Zrotation = index / twistSteps * twistAngle
+    const Zoffset = vec3.scale(index / twistSteps, offsetv)
+    const matrix = mat4.multiply(mat4.fromZRotation(Zrotation), mat4.fromTranslation(Zoffset))
 
     return slice.transform(matrix, base)
   }

@@ -1,6 +1,7 @@
 const flatten = require('../../utils/flatten')
 
-const { geom3, poly3 } = require('../../geometry')
+const geom3 = require('../../geometries/geom3')
+const poly3 = require('../../geometries/poly3')
 
 const quickhull = require('./quickhull')
 
@@ -15,14 +16,14 @@ const hullGeom3 = (...geometries) => {
   if (geometries.length === 1) return geometries[0]
 
   // extract the unique vertices from the geometries
-  let uniquevertices = []
-  let found = new Map()
+  const uniquevertices = []
+  const found = new Map()
   for (let g = 0; g < geometries.length; ++g) {
-    let polygons = geom3.toPolygons(geometries[g])
+    const polygons = geom3.toPolygons(geometries[g])
     for (let p = 0; p < polygons.length; ++p) {
-      let vertices = polygons[p].vertices
+      const vertices = polygons[p].vertices
       for (let v = 0; v < vertices.length; ++v) {
-        let id = `${vertices[v]}`
+        const id = `${vertices[v]}`
         if (found.has(id)) continue
         uniquevertices.push(vertices[v])
         found.set(id, true)
@@ -31,10 +32,10 @@ const hullGeom3 = (...geometries) => {
   }
   found.clear()
 
-  let faces = quickhull(uniquevertices, { skipTriangulation: true })
+  const faces = quickhull(uniquevertices, { skipTriangulation: true })
 
-  let polygons = faces.map((face) => {
-    let vertices = face.map((index) => uniquevertices[index])
+  const polygons = faces.map((face) => {
+    const vertices = face.map((index) => uniquevertices[index])
     return poly3.create(vertices)
   })
 

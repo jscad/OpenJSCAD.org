@@ -1,30 +1,34 @@
 const { prepareRender, drawCommands, cameras, entitiesFromSolids } = require('./src') // replace this with the correct import
 
 // setup demo solids data
-const initializeData = function () {
-  const { color } = require('@jscad/scad-api').color
-  const { cube, sphere } = require('@jscad/scad-api').primitives3d
-  const { union, difference, intersection } = require('@jscad/scad-api').booleanOps
-  const logo = union(
-    difference(
-      cube({ size: 30, center: true }),
-      sphere({ r: 20, center: true })
-    ),
-    intersection(
-      sphere({ r: 13, center: true }),
-      cube({ size: 21, center: true })
-    )
-  ).translate([0, 0, 1.5]).scale(10)
+const demoSolids = (parameters) => {
+  const { colorize } = require('@jscad/modeling').colors
+  const { cube, cuboid, line, sphere, star } = require('@jscad/modeling').primitives
+  const { intersect, subtract } = require('@jscad/modeling').booleans
 
-  const transpCube = color([1, 0, 0, 0.75], cube({ size: [100, 100, 400] }))
-  return [ transpCube, logo ]
+  const logo = [
+    colorize([1.0, 0.4, 1.0], subtract(
+      cube({ size: 300 }),
+      sphere({ radius: 200 })
+    )),
+    colorize([1.0, 1.0, 0], intersect(
+      sphere({ radius: 130 }),
+      cube({ size: 210 })
+    ))
+  ]
+
+  const transpCube = colorize([1, 0, 0, 0.75], cuboid({ size: [100 * parameters.scale, 100, 210 + (200 * parameters.scale)] }))
+  const star2D = star({ vertices: 8, innerRadius: 150, outerRadius: 200 })
+  const line2D = colorize([1.0, 0, 0], line([[220, 220], [-220, 220], [-220, -220], [220, -220], [220, 220]]))
+
+  return [transpCube, line2D, star2D, ...logo]
 }
 
 const width = window.innerWidth
 const height = window.innerHeight
 
 // process entities and inject extras
-const solids = entitiesFromSolids({}, initializeData())
+const solids = entitiesFromSolids({}, demoSolids({ scale: 1 }))
 
 // prepare the camera
 const perspectiveCamera = cameras.perspective
@@ -80,29 +84,11 @@ const updateAndRender = () => {
   perspectiveCamera.update(camera, camera)
   options.camera = camera
 
-  // dynamic csg data, yes indeed !, uncoment this if you want to show it
+  // dynamic geometries, yes indeed !, uncoment this if you want to show it
   // updateCounter += 1
 
-  const dynamicData = function () {
-    const { color } = require('@jscad/scad-api').color
-    const { cube, sphere } = require('@jscad/scad-api').primitives3d
-    const { union, difference, intersection } = require('@jscad/scad-api').booleanOps
-    const logo = union(
-      difference(
-        cube({ size: 30, center: true }),
-        sphere({ r: 20, center: true })
-      ),
-      intersection(
-        sphere({ r: 13, center: true }),
-        cube({ size: 21, center: true })
-      )
-    ).translate([0, 0, 1.5]).scale(10)
-
-    const transpCube = color([1, tick, 0, 0.75], cube({ size: [100 * Math.random(), 100, 400 * Math.random() + 200] }))
-    return [ transpCube, logo ]
-  }
-  if (updateCounter > 66) {
-    const solidsDynamic = entitiesFromSolids({}, dynamicData())
+  if (updateCounter > 360) {
+    const solidsDynamic = entitiesFromSolids({}, demoSolids({ scale: Math.random() }))
     options.entities = solidsDynamic
     updateCounter = 0
   }

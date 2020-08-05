@@ -1,10 +1,10 @@
 
 function deserialize (gcode, filename, options) {
-  options && options.statusCallback && options.statusCallback({progress: 0})
+  options && options.statusCallback && options.statusCallback({ progress: 0 })
   // http://reprap.org/wiki/G-code
-  const defaults = {version: '0.0.0', addMetaData: true, output: 'jscad'}
+  const defaults = { version: '0.0.0', addMetaData: true, output: 'jscad' }
   options = Object.assign({}, defaults, options)
-  const {version, output, addMetaData} = options
+  const { version, addMetaData } = options
   // just as experiment ...
   var l = gcode.split(/[\n]/) // for now just GCODE ASCII
   var srci = ''
@@ -17,7 +17,6 @@ function deserialize (gcode, filename, options) {
   var layers = 0
   var lh = 0.35
   var lz = 0
-  var ld = 0
 
   for (var i = 0; i < l.length; i++) {
     var val = ''
@@ -32,16 +31,16 @@ function deserialize (gcode, filename, options) {
         if (n === 90) pos.type = 'abs'
         if (n === 91) pos.type = 'rel'
       } else if (c[j].match(/M(\d+)/)) {
-        let n = parseInt(RegExp.$1)
+        const n = parseInt(RegExp.$1)
         if (n === 104 || n === 109) { k = 'temp' }
-      } else if (c[j].match(/S([\d\.]+)/)) {
+      } else if (c[j].match(/S([\d.]+)/)) {
         var v = parseInt(RegExp.$1)
         if (k !== undefined) {
           val[k] = v
         }
-      } else if (c[j].match(/([XYZE])([\-\d\.]+)/)) {
+      } else if (c[j].match(/([XYZE])([-\d.]+)/)) {
         var a = RegExp.$1
-        let v = parseFloat(RegExp.$2)
+        const v = parseFloat(RegExp.$2)
         if (pos.type === 'abs') {
           if (d) pos[a] = v
         } else {
@@ -71,7 +70,7 @@ function deserialize (gcode, filename, options) {
           lh = pos.Z - lz
           layers++
         }
-        srci += 'EX([' + p.join(', ') + '],{w: ' + lh * 1.1 + ', h:' + lh * 1.02 + ', fn:1, closed: false}).translate([0,0,' + pos['Z'] + '])'
+        srci += 'EX([' + p.join(', ') + '],{w: ' + lh * 1.1 + ', h:' + lh * 1.02 + ', fn:1, closed: false}).translate([0,0,' + pos.Z + '])'
         p = []
         lz = pos.Z
         // if(layers>2)
@@ -83,8 +82,7 @@ function deserialize (gcode, filename, options) {
       lpos.Z = pos.Z
       lpos.E = pos.E
     }
-    ld = d
-    options && options.statusCallback && options.statusCallback({progress: 100 * i / l.length})
+    options && options.statusCallback && options.statusCallback({ progress: 100 * i / l.length })
   }
 
   let code = addMetaData ? `//
@@ -101,8 +99,8 @@ function deserialize (gcode, filename, options) {
   `
   // if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
 
-  options && options.statusCallback && options.statusCallback({progress: 100})
-  
+  options && options.statusCallback && options.statusCallback({ progress: 100 })
+
   return code
 }
 

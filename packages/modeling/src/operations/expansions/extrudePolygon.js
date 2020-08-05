@@ -1,30 +1,32 @@
-const { mat4, vec3 } = require('../../math')
+const mat4 = require('../../maths/mat4')
+const vec3 = require('../../maths/vec3')
 
-const { geom3, poly3 } = require('../../geometry')
+const geom3 = require('../../geometries/geom3')
+const poly3 = require('../../geometries/poly3')
 
 // Extrude a polygon in the direction of the offsetvector.
 // Returns (geom3) a new geometry
 const extrudePolygon = (offsetvector, polygon1) => {
-  let direction = vec3.dot(polygon1.plane, offsetvector)
+  const direction = vec3.dot(poly3.plane(polygon1), offsetvector)
   if (direction > 0) {
-    polygon1 = poly3.flip(polygon1)
+    polygon1 = poly3.invert(polygon1)
   }
 
-  let newpolygons = [polygon1]
+  const newpolygons = [polygon1]
 
-  let polygon2 = poly3.transform(mat4.fromTranslation(offsetvector), polygon1)
-  let numvertices = polygon1.vertices.length
+  const polygon2 = poly3.transform(mat4.fromTranslation(offsetvector), polygon1)
+  const numvertices = polygon1.vertices.length
   for (let i = 0; i < numvertices; i++) {
-    let sidefacepoints = []
-    let nexti = (i < (numvertices - 1)) ? i + 1 : 0
+    const sidefacepoints = []
+    const nexti = (i < (numvertices - 1)) ? i + 1 : 0
     sidefacepoints.push(polygon1.vertices[i])
     sidefacepoints.push(polygon2.vertices[i])
     sidefacepoints.push(polygon2.vertices[nexti])
     sidefacepoints.push(polygon1.vertices[nexti])
-    let sidefacepolygon = poly3.fromPoints(sidefacepoints)
+    const sidefacepolygon = poly3.fromPoints(sidefacepoints)
     newpolygons.push(sidefacepolygon)
   }
-  newpolygons.push(poly3.flip(polygon2))
+  newpolygons.push(poly3.invert(polygon2))
 
   return geom3.create(newpolygons)
 }

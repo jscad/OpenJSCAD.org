@@ -1,7 +1,6 @@
-module.exports = geoArc
 
-function geoArc (options) {
-  var geo = {
+const geoArc = (options) => {
+  const geo = {
     positions: [],
     cells: [],
     uvs: []
@@ -25,35 +24,35 @@ function geoArc (options) {
   return geo
 }
 
-function createGeometry (options, positions, cells, uvs) {
-  var o = options
-  var idxSize = o.cellSize
-  var radDist = o.endRadian - o.startRadian
-  var numSlices = Math.floor(Math.abs(radDist) / (Math.PI * 2) * o.numSlices)
-  var radInc = radDist / numSlices
-  var numBandIncs = (o.numBands == 1) ? 1 : o.numBands - 1
-  var bandInc = (o.outerRadius - o.innerRadius) / numBandIncs
-  var cRad, x, y, z, cRadius, curSlideIdx, prevSlideIdx
+const createGeometry = (options, positions, cells, uvs) => {
+  const o = options
+  const idxSize = o.cellSize
+  const radDist = o.endRadian - o.startRadian
+  const numSlices = Math.floor(Math.abs(radDist) / (Math.PI * 2) * o.numSlices)
+  const radInc = radDist / numSlices
+  const numBandIncs = (o.numBands === 1) ? 1 : o.numBands - 1
+  const bandInc = (o.outerRadius - o.innerRadius) / numBandIncs
+  let cRad, x, y, z, cRadius, curSlideIdx, prevSlideIdx
 
-  for (var i = 0, len = numSlices; i <= len; i++) {
+  for (let i = 0, len = numSlices; i <= len; i++) {
     cRad = i * radInc + o.startRadian
     prevSlideIdx = (i - 1) * o.numBands
     curSlideIdx = i * o.numBands
 
-    for (var j = 0, lenJ = o.numBands; j < lenJ; j++) {
+    for (let j = 0, lenJ = o.numBands; j < lenJ; j++) {
       cRadius = o.innerRadius + bandInc * j
 
       x = Math.cos(cRad) * cRadius + o.x
       y = o.y
       z = Math.sin(cRad) * cRadius + o.z
 
-      positions.push([ x, y, z ])
+      positions.push([x, y, z])
       uvs.push([i / numSlices, j / numBandIncs])
 
       // if we've added in positions then we'll add cells
-      if (idxSize == 1) {
-        cells.push([ curSlideIdx + j ])
-      } else if (idxSize == 2) {
+      if (idxSize === 1) {
+        cells.push([curSlideIdx + j])
+      } else if (idxSize === 2) {
         if (i > 0 && j + 1 < lenJ) {
           cells.push([
             prevSlideIdx + j,
@@ -72,7 +71,7 @@ function createGeometry (options, positions, cells, uvs) {
             ])
           }
         }
-      } else if (idxSize == 3) {
+      } else if (idxSize === 3) {
         if (i > 0 && j + 1 < lenJ) {
           cells.push([
             curSlideIdx + j,
@@ -91,22 +90,24 @@ function createGeometry (options, positions, cells, uvs) {
   }
 
   // cap it off
-  if (idxSize == 2) {
+  if (idxSize === 2) {
     // if it's going all the way around then we wont put the connecting line
-    if (radDist % Math.PI * 2 != 0) {
-      for (var j = 0, lenJ = o.numBands - 1; j < lenJ; j++) {
+    if (radDist % Math.PI * 2 !== 0) {
+      for (let j = 0, lenJ = o.numBands - 1; j < lenJ; j++) {
         cells.push([
           curSlideIdx + j,
-          curSlideIdx + j + 1 ])
+          curSlideIdx + j + 1])
       }
 
       curSlideIdx = 0
 
-      for (var j = 0, lenJ = o.numBands - 1; j < lenJ; j++) {
+      for (let j = 0, lenJ = o.numBands - 1; j < lenJ; j++) {
         cells.push([
           curSlideIdx + j,
-          curSlideIdx + j + 1 ])
+          curSlideIdx + j + 1])
       }
     }
   }
 }
+
+module.exports = geoArc

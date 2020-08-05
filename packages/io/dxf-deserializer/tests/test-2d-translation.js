@@ -5,17 +5,17 @@ const { deserialize } = require('../index')
 //
 // Test suite for DXF deserialization (import)
 //
-test('ASCII DXF 2D Entities translated to JSCAD Scripts', t => {
+test('ASCII DXF 2D Entities translated to JSCAD Scripts', (t) => {
 // DXF empty source, translate to main and helper functions and layer0
-  let dxf1 = ''
-  let src1 = deserialize(dxf1, 'dxf1 test', { output: 'jscad' })
-  let ss1 = src1.split('\n')
+  const dxf1 = ''
+  const src1 = deserialize({ filename: 'dxf1 test', output: 'script' }, dxf1)
+  const ss1 = src1.split('\n')
   t.is(ss1.length, 16)
   t.true(src1.indexOf('main = ()') > 0)
   t.true(src1.indexOf('createPolygon(') > 0)
 
   // DXF CIRCLE, translates to script with a 'circle' function
-  let dxf2 = `0
+  const dxf2 = `0
 SECTION
 2
 ENTITIES
@@ -31,16 +31,19 @@ CIRCLE
 0.0
  40
 2.5
+ 62
+7
   0
 ENDSEC`
-  let src2 = deserialize(dxf2, 'dxf2 test', { output: 'jscad' })
-  let ss2 = src2.split('\n')
-  t.is(ss2.length, 20)
+  const src2 = deserialize({ filename: 'dxf2 test', output: 'script' }, dxf2)
+  const ss2 = src2.split('\n')
+  t.is(ss2.length, 21)
   t.true(src2.indexOf('main = ()') > 0)
   t.true(src2.indexOf('circle(') > 0)
+  t.true(src2.indexOf('colors.colorize(') > 0)
 
   // DXF LINE, translates to script with a 'line' created from points
-  let dxf3 = `0
+  const dxf3 = `0
 SECTION
 2
 ENTITIES
@@ -60,14 +63,14 @@ LINE
 0.0
 0
 ENDSEC`
-  let src3 = deserialize(dxf3, 'dxf3-test', { output: 'jscad' })
-  let ss3 = src3.split('\n')
+  const src3 = deserialize({ filename: 'dxf3-test', output: 'script' }, dxf3)
+  const ss3 = src3.split('\n')
   t.is(ss3.length, 20)
   t.true(src3.indexOf('main = ()') > 0)
   t.true(src3.indexOf('line(') > 0)
 
   // DXF ARC, translates to script with 'arc' function call
-  let dxf4 = `0
+  const dxf4 = `0
 SECTION
 2
 ENTITIES
@@ -97,14 +100,14 @@ AcDbArc
 225.0
 0
 ENDSEC`
-  let src4 = deserialize(dxf4, 'dxf4-test', { output: 'jscad' })
-  let ss4 = src4.split('\n')
+  const src4 = deserialize({ filename: 'dxf4-test', output: 'script' }, dxf4)
+  const ss4 = src4.split('\n')
   t.is(ss4.length, 20)
   t.true(src4.indexOf('main = ()') > 0)
   t.true(src4.indexOf('arc(') > 0)
 
   // DXF LWPOLYLINE without bulges, translates to script with a path created from points
-  let dxf5 = `0
+  const dxf5 = `0
 SECTION
 2
 ENTITIES
@@ -134,16 +137,16 @@ LWPOLYLINE
 21.75
 0
 ENDSEC`
-  let src5 = deserialize(dxf5, 'dxf5-test', { output: 'jscad' })
-  let ss5 = src5.split('\n')
-  t.is(ss5.length, 26)
+  const src5 = deserialize({ filename: 'dxf5-test', output: 'script' }, dxf5)
+  const ss5 = src5.split('\n')
+  t.is(ss5.length, 25)
   t.true(src5.indexOf('main = ()') > 0)
   t.true(src5.indexOf('path2.create(') > 0)
   t.true(src5.indexOf('path2.appendPoints(') > 0)
   t.true(src5.indexOf('path2.close(') > 0)
 
   // DXF LWPOLYLINE with bulges, translates to script with a path created from points
-  let dxf6 = `0
+  const dxf6 = `0
 SECTION
 2
 ENTITIES
@@ -181,8 +184,8 @@ LWPOLYLINE
 5.00
 0
 ENDSEC`
-  let src6 = deserialize(dxf6, 'dxf6-test', { output: 'jscad' })
-  let ss6 = src6.split('\n')
+  const src6 = deserialize({ filename: 'dxf6-test', output: 'script' }, dxf6)
+  const ss6 = src6.split('\n')
   t.is(ss6.length, 26)
   t.true(src6.indexOf('main = ()') > 0)
   t.true(src6.indexOf('path2.create(') > 0)
@@ -192,7 +195,7 @@ ENDSEC`
   t.true(src6.indexOf('fromPoints(') > 0)
 
   // DXF ELLIPSE, translates to script with a 'ellipse' function
-  let dxf7 = `0
+  const dxf7 = `0
 SECTION
 2
 ENTITIES
@@ -226,16 +229,16 @@ ELLIPSE
 6.283185307179586
 0
 ENDSEC`
-  let src7 = deserialize(dxf7, 'dxf7-test', { output: 'jscad' })
-  let ss7 = src7.split('\n')
+  const src7 = deserialize({ filename: 'dxf7-test', output: 'script' }, dxf7)
+  const ss7 = src7.split('\n')
   t.is(ss7.length, 22)
   t.true(src7.indexOf('main = ()') > 0)
   t.true(src7.indexOf('ellipse(') > 0)
 })
 
-test('ASCII DXF Polylines translated to JSCAD Scripts', t => {
+test('ASCII DXF Polylines translated to JSCAD Scripts', (t) => {
 // DXF 2D POLYLINE without bulges, translates to script with a path created from points
-  let dxf1 = `0
+  const dxf1 = `0
 SECTION
 2
 ENTITIES
@@ -285,14 +288,14 @@ ED
 SEQEND
 0
 ENDSEC`
-  let src1 = deserialize(dxf1, 'dxf1-test', { output: 'jscad' })
-  let ss1 = src1.split('\n')
+  const src1 = deserialize({ filename: 'dxf1-test', output: 'script' }, dxf1)
+  const ss1 = src1.split('\n')
   t.is(ss1.length, 23)
   t.true(src1.indexOf('path2.create(') > 0)
   t.true(src1.indexOf('appendPoints(') > 0)
 
   // DXF 2D POLYLINE with bulges, translates to script with a path created from points and arcs
-  let dxf2 = `0
+  const dxf2 = `0
 SECTION
 2
 ENTITIES
@@ -332,15 +335,15 @@ VERTEX
 SEQEND
 0
 ENDSEC`
-  let src2 = deserialize(dxf2, 'dxf2-test', { output: 'jscad' })
-  let ss2 = src2.split('\n')
+  const src2 = deserialize({ filename: 'dxf2-test', output: 'script' }, dxf2)
+  const ss2 = src2.split('\n')
   t.is(ss2.length, 24)
   t.true(src2.indexOf('path2.create(') > 0)
   t.true(src2.indexOf('appendPoints(') > 0)
   t.true(src2.indexOf('appendArc(') > 0)
 
   // DXF with two labels (ASCII and KANJI) with one entity (CIRCLE), translates to script with two layers
-  let dxf3 = `0
+  const dxf3 = `0
 TABLES
 0
 TABLE
@@ -384,8 +387,8 @@ CIRCLE
 SEQEND
 0
 ENDSEC`
-  let src3 = deserialize(dxf3, 'dxf3-test', { output: 'jscad' })
-  let ss3 = src3.split('\n')
+  const src3 = deserialize({ filename: 'dxf3-test', output: 'script' }, dxf3)
+  const ss3 = src3.split('\n')
   t.is(ss3.length, 23)
   t.true(src3.indexOf('function layer0(') > 0)
   t.true(src3.indexOf('function layer1(') > 0)

@@ -1,4 +1,4 @@
-function tryEvent (time, value, sink) {
+const tryEvent = (time, value, sink) => {
   try {
     sink.event(time, value)
   } catch (err) {
@@ -6,11 +6,12 @@ function tryEvent (time, value, sink) {
   }
 }
 
-function tryEnd (time, value, sink) {
+const tryEnd = (time, value, sink) => {
   try {
     sink.end(time, value)
   } catch (err) {
     sink.error(time, err)
   }
 }
-module.exports = {tryEvent, tryEnd}
+
+module.exports = { tryEvent, tryEnd }

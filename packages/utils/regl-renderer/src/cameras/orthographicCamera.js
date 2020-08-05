@@ -20,7 +20,7 @@ const cameraState = {
 
 const cameraProps = {}
 
-function setProjection (camera, input) {
+const setProjection = (camera, input) => {
   const { width, height } = input
   // context.viewportWidth / context.viewportHeight,
   const aspect = width / height

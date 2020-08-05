@@ -26,72 +26,65 @@ const createJscadEntry = (entry, source) => {
 const transformAmfToJscad = (options, entry) => {
   // console.log('***** transformAmfToJscad',options,entry)
   const deserialize = require('@jscad/io').amfDeSerializer.deserialize
-  const source = deserialize(entry.source, entry.name, options)
+  const source = deserialize(options, entry.source)
   return createJscadEntry(entry, source)
 }
 
 const transformDxfToJscad = (options, entry) => {
   // console.log('***** transformDxfToJscad',options,entry)
   const deserialize = require('@jscad/io').dxfDeSerializer.deserialize
-  const source = deserialize(entry.source, entry.name, options)
+  const source = deserialize(options, entry.source)
   return createJscadEntry(entry, source)
 }
 
 const transformObjToJscad = (options, entry) => {
   // console.log('***** transformObjToJscad',options,entry)
   const deserialize = require('@jscad/io').objDeSerializer.deserialize
-  const source = deserialize(entry.source, entry.name, options)
+  const source = deserialize(options, entry.source)
   return createJscadEntry(entry, source)
 }
 
 const transformStlToJscad = (options, entry) => {
   // console.log('***** transformStlToJscad',options,entry)
   const deserialize = require('@jscad/io').stlDeSerializer.deserialize
-  const source = deserialize(entry.source, entry.name, options)
+  const source = deserialize(options, entry.source)
   return createJscadEntry(entry, source)
 }
 
 const transformSvgToJscad = (options, entry) => {
   // console.log('***** transformSvgToJscad',options,entry)
   const deserialize = require('@jscad/io').svgDeSerializer.deserialize
-  const source = deserialize(entry.source, entry.name, options)
+  const source = deserialize(options, entry.source)
   return createJscadEntry(entry, source)
 }
 
 const transformSources = (options, filesAndFolders) => {
   // console.log('***** transformSources', options, filesAndFolders)
+  // FIXME this table should come from IO
   const transformsPerFormat = {
-    'js': [modulifyTransform],
-    'jscad': [modulifyTransform],
+    js: [modulifyTransform],
+    jscad: [modulifyTransform],
     // formats that require translation
-    'amf': [transformAmfToJscad, modulifyTransform],
-    'dxf': [transformDxfToJscad, modulifyTransform],
-    'obj': [transformObjToJscad, modulifyTransform],
-    'stl': [transformStlToJscad, modulifyTransform],
-    'svg': [transformSvgToJscad, modulifyTransform]
+    amf: [transformAmfToJscad, modulifyTransform],
+    dxf: [transformDxfToJscad, modulifyTransform],
+    obj: [transformObjToJscad, modulifyTransform],
+    stl: [transformStlToJscad, modulifyTransform],
+    svg: [transformSvgToJscad, modulifyTransform]
   }
 
-  function updateEntry (entry) {
+  const updateEntry = (entry) => {
     if (entry.source) {
+      const transformOptions = Object.assign({}, options, { filename: entry.name })
       const transforms = transformsPerFormat[entry.ext] ? transformsPerFormat[entry.ext] : [passThroughTransform]
-      const transformedEntry = transforms.reduce((entry, transform) => {
-        return transform(options, entry)
-      }, entry)
+      const transformedEntry = transforms.reduce((entry, transform) => transform(transformOptions, entry), entry)
 
       return transformedEntry
-    }
-    if (entry.children) {
-      entry.children = entry.children.map(function (childEntry) {
-        return updateEntry(childEntry)
-      })
     }
     return entry
   }
 
   if (filesAndFolders) {
-    filesAndFolders = filesAndFolders.map(entry => {
-      return updateEntry(entry)
-    })
+    filesAndFolders = filesAndFolders.map((entry) => updateEntry(entry))
   }
   return filesAndFolders
 }

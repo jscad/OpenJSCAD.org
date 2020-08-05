@@ -1,8 +1,8 @@
-const { EPS } = require('../../math/constants')
+const { EPS } = require('../../maths/constants')
 
-const measureBounds = require('../measurements/measureBounds')
+const measureBoundingBox = require('../../measurements/measureBoundingBox')
 
-/**
+/*
  * Determine if the given geometries overlap by comparing min and max bounds.
  * NOTE: This is used in union for performace gains.
  * @param {geom3} geometry1 - geometry for comparision
@@ -15,13 +15,13 @@ const mayOverlap = (geometry1, geometry2) => {
     return false
   }
 
-  let bounds1 = measureBounds(geometry1)
-  let min1 = bounds1[0]
-  let max1 = bounds1[1]
+  const bounds1 = measureBoundingBox(geometry1)
+  const min1 = bounds1[0]
+  const max1 = bounds1[1]
 
-  let bounds2 = measureBounds(geometry2)
-  let min2 = bounds2[0]
-  let max2 = bounds2[1]
+  const bounds2 = measureBoundingBox(geometry2)
+  const min2 = bounds2[0]
+  const max2 = bounds2[1]
 
   if ((min2[0] - max1[0]) > EPS) return false
   if ((min1[0] - max2[0]) > EPS) return false

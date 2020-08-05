@@ -1,6 +1,8 @@
 const flatten = require('../../utils/flatten')
 
-const { geom3 } = require('../../geometry')
+const geom3 = require('../../geometries/geom3')
+
+const measureEpsilon = require('../../measurements/measureEpsilon')
 
 const fromFakePolygons = require('./fromFakePolygons')
 const to3DWalls = require('./to3DWalls')
@@ -15,9 +17,10 @@ const union = (...geometries) => {
   geometries = flatten(geometries)
   const newgeometries = geometries.map((geometry) => to3DWalls({ z0: -1, z1: 1 }, geometry))
 
-  let newgeom3 = unionGeom3(newgeometries)
+  const newgeom3 = unionGeom3(newgeometries)
+  const epsilon = measureEpsilon(newgeom3)
 
-  return fromFakePolygons(geom3.toPolygons(newgeom3))
+  return fromFakePolygons(epsilon, geom3.toPolygons(newgeom3))
 }
 
 module.exports = union

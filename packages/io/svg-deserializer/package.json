@@ -5,7 +5,7 @@
   "repository": "https://github.com/jscad/",
   "main": "index.js",
   "scripts": {
-    "coverage": "nyc --reporter=html --reporter=text npm test",
+    "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava --verbose --timeout 2m './tests/*.test.js'",
     "release-patch": "git checkout master && npm version patch && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
     "release-minor": "git checkout master && npm version minor && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
@@ -36,10 +36,10 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/modeling": "0.0.1",
+    "@jscad/array-utils":"0.0.0",
     "sax": "1.2.4"
   },
   "devDependencies": {
-   "ava": "1.4.0",
-    "nyc": "^10.3.2"
+    "ava": "3.10.0"
   }
 }

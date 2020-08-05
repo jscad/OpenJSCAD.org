@@ -1,5 +1,5 @@
 const defaultScheduler = require('most/lib/scheduler/defaultScheduler').default
-const {MulticastSource} = require('@most/multicast')
+const { MulticastSource } = require('@most/multicast')
 
 function SubjectSource () {
   this.scheduler = defaultScheduler
@@ -58,4 +58,5 @@ SubjectDisposable.prototype.dispose = function () {
   const remaining = this.source.remove(this.sink)
   return remaining === 0 && this.source._dispose()
 }
-module.exports = {SubjectSource}
+
+module.exports = { SubjectSource }

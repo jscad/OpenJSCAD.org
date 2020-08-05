@@ -1,5 +1,3 @@
-const isCommonJsModule = string => {
-  return string.includes('module.exports') || string.includes('require(')
-}
+const isCommonJsModule = (string) => string.includes('module.exports') || string.includes('require(')
 
 module.exports = isCommonJsModule

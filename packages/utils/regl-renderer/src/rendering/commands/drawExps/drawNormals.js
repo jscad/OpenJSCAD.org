@@ -1,13 +1,13 @@
 const mat4 = require('gl-mat4')
 
-const drawNormals = function (regl, params) {
+const drawNormals = (regl, params) => {
   const defaults = {
     size: 20,
     lineWidth: 5, // FIXME/ linewidth has been "deprecated" in multiple browsers etc, need a workaround,
     alwaysVisible: true, // to have the widget alway visible 'on top' of the rest of the scene
     geometry: undefined
   }
-  let {size, lineWidth, alwaysVisible, geometry} = Object.assign({}, defaults, params)
+  let { size, lineWidth, alwaysVisible, geometry } = Object.assign({}, defaults, params)
 
   if (!geometry) {
     throw new Error('no geometry provided to drawNormals')
@@ -57,19 +57,19 @@ const drawNormals = function (regl, params) {
   // const yAxisModel = mat4.rotateZ(mat4.create(), mat4.identity([]), Math.PI / 2)
   // const zAxisModel = mat4.rotateY(mat4.create(), mat4.identity([]), -Math.PI / 2)
 
-  const normaLines = geometry.normals.map(function (normal, index) {
+  const normaLines = geometry.normals.map((normal, index) => {
     const position = geometry.positions[index]
-    let orientation = mat4.multiply(
+    const orientation = mat4.multiply(
       mat4.identity([]),
       mat4.translate(mat4.identity([]), mat4.identity([]), position),
       mat4.lookAt(mat4.identity([]), [0, 0, 0], normal, [0, 0, 1])
       // mat4.lookAt(mat4.identity([]), position, vec3.add([], position, normal), [0, 0, 0])
     )
     const matrix = orientation
-    const absNormal = normal.map(x => Math.abs(x))
-    return {color: [absNormal[0], absNormal[1], absNormal[2], 1.0], model: matrix}
+    const absNormal = normal.map((x) => Math.abs(x))
+    return { color: [absNormal[0], absNormal[1], absNormal[2], 1.0], model: matrix }
   })
-  let singleNormal = regl(commandParams)
+  const singleNormal = regl(commandParams)
   return () => singleNormal(normaLines)
 }
 

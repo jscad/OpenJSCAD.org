@@ -3,7 +3,7 @@ const createObject = require('./objectBuilder')
 
 const parse = require('./parse')
 
-const instantiate = (src, filename, options) => {
+const instantiate = (options, src) => {
   const defaults = {
     pxPmm: require('./constants').pxPmm
   }
@@ -21,7 +21,7 @@ const instantiate = (src, filename, options) => {
 }
 
 const objectify = (amf, data) => {
-  let objects = amf.objects.filter((o) => o.type === 'object')
+  const objects = amf.objects.filter((o) => o.type === 'object')
   return objects.map((object, index) => createObject(object, index, data, { amf, instantiate: true }))
 }
 

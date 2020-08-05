@@ -1,9 +1,8 @@
 const fs = require('fs')
 
 const { getDesignEntryPoint } = require('@jscad/core/code-loading/requireDesignUtilsFs')
-const { supportedInputExtensions, supportedOutputExtensions, supportedOutputFormats } = require('@jscad/core/io/formats')
+const { supportedInputExtensions, supportedOutputExtensions, supportedOutputFormats } = require('@jscad/io/formats')
 
-const version = require('../package.json').version
 const env = require('./env')
 
 const parseArgs = args => {
@@ -25,7 +24,7 @@ const parseArgs = args => {
   let inputFormat
   let outputFile
   let outputFormat
-  let params = {} // parameters to feed the script if applicable
+  const params = {} // parameters to feed the script if applicable
   let addMetaData = false // wether to add metadata to outputs or not : ie version info, timestamp etc
   let inputIsDirectory = false // did we pass in a folder or a file ?
 
@@ -46,7 +45,7 @@ const parseArgs = args => {
       outputFormat = args[++i]
     } else if (args[i].match(/^-o(\S.+)/)) { // -o<output>
       outputFile = args[i]
-      outputFile = outputFile.replace(/^\-o(\S+)$/, '$1')
+      outputFile = outputFile.replace(/^-o(\S+)$/, '$1')
     } else if (args[i] === '-o') { // -o <output>
       outputFile = args[++i]
     } else if (args[i] === '-add-metadata') { // -metadata true/false
@@ -73,8 +72,8 @@ const parseArgs = args => {
         // get actual design entry point if applicable (if passed a folder as input etc)
         inputFile = getDesignEntryPoint(fs, inputFile)
         if (!inputFile) {
-          console.log("ERROR: could not determine entry point of project.")
-          console.log("Verify main or index exists")
+          console.log('ERROR: could not determine entry point of project.')
+          console.log('Verify main or index exists')
           process.exit(1)
         }
         inputFormat = require('path').extname(inputFile).substring(1)

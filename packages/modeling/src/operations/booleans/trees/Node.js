@@ -1,4 +1,5 @@
-const { plane } = require('../../../math')
+const plane = require('../../../maths/plane')
+const poly3 = require('../../../geometries/poly3')
 
 // # class Node
 // Holds a node in a BSP tree. A BSP tree is built from a collection of polygons
@@ -19,14 +20,14 @@ const Node = function (parent) {
 Node.prototype = {
   // Convert solid space to empty space and empty space to solid space.
   invert: function () {
-    let queue = [this]
+    const queue = [this]
     let node
     for (let i = 0; i < queue.length; i++) {
       node = queue[i]
       if (node.plane) node.plane = plane.flip(node.plane)
       if (node.front) queue.push(node.front)
       if (node.back) queue.push(node.back)
-      let temp = node.front
+      const temp = node.front
       node.front = node.back
       node.back = temp
     }
@@ -35,9 +36,9 @@ Node.prototype = {
   // clip polygontreenodes to our plane
   // calls remove() for all clipped PolygonTreeNodes
   clipPolygons: function (polygontreenodes, alsoRemovecoplanarFront) {
-    let current = { 'node': this, 'polygontreenodes': polygontreenodes }
+    let current = { node: this, polygontreenodes: polygontreenodes }
     let node
-    let stack = []
+    const stack = []
 
     do {
       node = current.node
@@ -45,24 +46,24 @@ Node.prototype = {
 
       // begin "function"
       if (node.plane) {
-        let backnodes = []
-        let frontnodes = []
-        let coplanarfrontnodes = alsoRemovecoplanarFront ? backnodes : frontnodes
-        let plane = node.plane
-        let numpolygontreenodes = polygontreenodes.length
+        const backnodes = []
+        const frontnodes = []
+        const coplanarfrontnodes = alsoRemovecoplanarFront ? backnodes : frontnodes
+        const plane = node.plane
+        const numpolygontreenodes = polygontreenodes.length
         for (let i = 0; i < numpolygontreenodes; i++) {
-          let node1 = polygontreenodes[i]
+          const node1 = polygontreenodes[i]
           if (!node1.isRemoved()) {
             node1.splitByPlane(plane, coplanarfrontnodes, backnodes, frontnodes, backnodes)
           }
         }
 
         if (node.front && (frontnodes.length > 0)) {
-          stack.push({ 'node': node.front, 'polygontreenodes': frontnodes })
+          stack.push({ node: node.front, polygontreenodes: frontnodes })
         }
-        let numbacknodes = backnodes.length
+        const numbacknodes = backnodes.length
         if (node.back && (numbacknodes > 0)) {
-          stack.push({ 'node': node.back, 'polygontreenodes': backnodes })
+          stack.push({ node: node.back, polygontreenodes: backnodes })
         } else {
           // there's nothing behind this plane. Delete the nodes behind this plane:
           for (let i = 0; i < numbacknodes; i++) {
@@ -78,7 +79,7 @@ Node.prototype = {
   // `tree`.
   clipTo: function (tree, alsoRemovecoplanarFront) {
     let node = this
-    let stack = []
+    const stack = []
     do {
       if (node.polygontreenodes.length > 0) {
         tree.rootnode.clipPolygons(node.polygontreenodes, alsoRemovecoplanarFront)
@@ -90,11 +91,11 @@ Node.prototype = {
   },
 
   addPolygonTreeNodes: function (newpolygontreenodes) {
-    let current = { 'node': this, 'polygontreenodes': newpolygontreenodes }
-    let stack = []
+    let current = { node: this, polygontreenodes: newpolygontreenodes }
+    const stack = []
     do {
-      let node = current.node
-      let polygontreenodes = current.polygontreenodes
+      const node = current.node
+      const polygontreenodes = current.polygontreenodes
 
       if (polygontreenodes.length === 0) {
         current = stack.pop()
@@ -103,13 +104,13 @@ Node.prototype = {
       if (!node.plane) {
         let index = 0 // default
         index = Math.floor(polygontreenodes.length / 2)
-        //index = polygontreenodes.length >> 1
-        //index = Math.floor(Math.random()*polygontreenodes.length)
-        let bestplane = polygontreenodes[index].getPolygon().plane
-        node.plane = bestplane
+        // index = polygontreenodes.length >> 1
+        // index = Math.floor(Math.random()*polygontreenodes.length)
+        const bestpoly = polygontreenodes[index].getPolygon()
+        node.plane = poly3.plane(bestpoly)
       }
-      let frontnodes = []
-      let backnodes = []
+      const frontnodes = []
+      const backnodes = []
 
       for (let i = 0, n = polygontreenodes.length; i < n; ++i) {
         polygontreenodes[i].splitByPlane(node.plane, node.polygontreenodes, backnodes, frontnodes, backnodes)
@@ -117,11 +118,11 @@ Node.prototype = {
 
       if (frontnodes.length > 0) {
         if (!node.front) node.front = new Node(node)
-        stack.push({ 'node': node.front, 'polygontreenodes': frontnodes })
+        stack.push({ node: node.front, polygontreenodes: frontnodes })
       }
       if (backnodes.length > 0) {
         if (!node.back) node.back = new Node(node)
-        stack.push({ 'node': node.back, 'polygontreenodes': backnodes })
+        stack.push({ node: node.back, polygontreenodes: backnodes })
       }
 
       current = stack.pop()

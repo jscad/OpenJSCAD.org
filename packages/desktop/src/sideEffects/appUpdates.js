@@ -25,7 +25,7 @@ const appUpdateSource = (packageInfo) => {
           const localVersion = packageInfo.version
           const updateAvailable = (compareVersion(remoteVersion, localVersion) > 0)
           if (updateAvailable) {
-            updatesFromCB.callback({available: updateAvailable, version: remoteVersion, releasesUrl})
+            updatesFromCB.callback({ available: updateAvailable, version: remoteVersion, releasesUrl })
           }
         }
       })
@@ -36,7 +36,7 @@ const appUpdateSource = (packageInfo) => {
 }
 
 const makeAppUpdateSideEffect = (packageInfo) => {
-  return {source: appUpdateSource.bind(null, packageInfo)}
+  return { source: appUpdateSource.bind(null, packageInfo) }
 }
 
 module.exports = makeAppUpdateSideEffect

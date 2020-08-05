@@ -1,5 +1,5 @@
 // this is ALMOST EXACTLY the same code as openjscad.org/src/io/formats
-const {isCSG, isCAG} = require('@jscad/csg')
+const { isCSG, isCAG } = require('@jscad/csg')
 
 // handled format descriptions
 const formats = {
@@ -25,21 +25,24 @@ const formats = {
     extension: 'amf',
     mimetype: 'application/amf+xml',
     convertGeom3: true,
-    convertGeom2: false },
+    convertGeom2: false
+  },
   x3d: {
     displayName: 'X3D',
     description: 'X3D File Format',
     extension: 'x3d',
     mimetype: 'model/x3d+xml',
     convertGeom3: true,
-    convertGeom2: false },
+    convertGeom2: false
+  },
   dxf: {
     displayName: 'DXF',
     description: 'AutoCAD Drawing Exchange Format',
     extension: 'dxf',
     mimetype: 'application/dxf',
     convertGeom3: false,
-    convertGeom2: true },
+    convertGeom2: true
+  },
   jscad: {
     displayName: 'JSCAD',
     description: 'OpenJSCAD.org Source',
@@ -64,37 +67,34 @@ const formats = {
     convertGeom3: false,
     convertGeom2: true
   },
-  gcode: {
-    displayName: 'gcode',
-    description: 'G Programming Language File Format' },
   json: {
     displayName: 'json',
-    description: 'JavaScript Object Notation Format' }
+    description: 'JavaScript Object Notation Format'
+  }
 }
 
 // handled input formats
 const conversionFormats = [
 // 3D file formats
   'amf',
-  'gcode',
   'js',
   'jscad',
   'obj',
   'scad',
   'stl',
-// 2D file formats
+  // 2D file formats
   'svg'
 ]
 
 function supportedFormatsForObjects (objects) {
-  let objectFormats = []
+  const objectFormats = []
   let foundCSG = false
   let foundCAG = false
   for (let i = 0; i < objects.length; i++) {
     if (isCSG(objects[i])) { foundCSG = true }
     if (isCAG(objects[i])) { foundCAG = true }
   }
-  for (let format in formats) {
+  for (const format in formats) {
     if (foundCSG && formats[format].convertGeom3 === true) {
       objectFormats[objectFormats.length] = format
       continue // only add once

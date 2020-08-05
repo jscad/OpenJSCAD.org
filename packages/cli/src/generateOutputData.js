@@ -1,8 +1,8 @@
 const fs = require('fs')
 const { isAbsolute, resolve } = require('path')
-const { prepareOutput } = require('@jscad/core/io/prepareOutput')
-const { convertToBlob } = require('@jscad/core/io/convertToBlob')
-// const rebuildSolids = require('@jscad/core/code-evaluation/rebuildGeometry')
+
+const { solidsAsBlob } = require('@jscad/io')
+
 const rebuildSolids = require('@jscad/core/code-evaluation/rebuildGeometryCli')
 const { registerAllExtensions } = require('@jscad/core/io/registerExtensions')
 
@@ -22,33 +22,27 @@ const generateOutputData = (source, params, options) => {
     addMetaData: true
   }
   options = Object.assign({}, defaults, options)
-  const { outputFile, outputFormat, inputFile, inputFormat, version, inputIsDirectory } = options
+  const { outputFormat, inputFile, inputFormat } = options
 
-  const inputPath = isAbsolute(inputFile) ? inputFile : resolve(process.cwd(), inputFile) // path.dirname(inputFile)
+  options.filename = inputFile // for deserializers
 
-  // console.log('foo', outputFile, outputFormat, inputFile, inputFormat, version)
-  // objects = rebuildSolid(source, '', params, globals, callback)
-  return new Promise(function (resolve, reject) {
-    const callback = (err, result) => {
-      if (!err) {
-        return resolve(result)
-      }
-      return reject(err)
-    }
+  const inputPath = isAbsolute(inputFile) ? inputFile : resolve(process.cwd(), inputFile)
 
-    // setup support for require-ing files with .jscad, .stl etc extensions
-    registerAllExtensions(fs, require)
+  // setup support for require-ing files with .jscad, .stl etc extensions
+  registerAllExtensions(fs, require)
 
+  return new Promise((resolve, reject) => {
+    // FIXME this table should come from core
     const conversionTable = {
-      amf: data => require('@jscad/io').amfDeSerializer.deserialize(data.source, data.inputFile, options),
-      obj: data => require('@jscad/io').objDeSerializer.deserialize(data.source, data.inputFile, options),
-      gcode: data => require('@jscad/io').gcodeDeSerializer.deserialize(data.source, data.inputFile, options),
-      stl: data => require('@jscad/io').stlDeSerializer.deserialize(data.source, data.inputFile, options),
-      svg: data => require('@jscad/io').svgDeSerializer.deserialize(data.source, data.inputFile, options),
-      dxf: data => require('@jscad/io').dxfDeSerializer.deserialize(data.source, data.inputFile, options),
-      json: data => require('@jscad/io').jsonDeSerializer.deserialize(data.source, data.inputFile, options),
+      amf: data => require('@jscad/io').amfDeSerializer.deserialize(data.options, data.source),
+      obj: data => require('@jscad/io').objDeSerializer.deserialize(data.options, data.source),
+      stl: data => require('@jscad/io').stlDeSerializer.deserialize(data.options, data.source),
+      svg: data => require('@jscad/io').svgDeSerializer.deserialize(data.options, data.source),
+      dxf: data => require('@jscad/io').dxfDeSerializer.deserialize(data.options, data.source),
+      json: data => require('@jscad/io').jsonDeSerializer.deserialize(data.options, data.source),
       jscad: data => data.source,
       js: data => data.source,
+      /*
       scad: data => {
         const source = !data.source.match(/^\/\/!OpenSCAD/i) ? '//!OpenSCAD\n' + data.source : data.source
         const parsed = require('@jscad/openscad-openjscad-translator').parse(source)
@@ -56,27 +50,30 @@ const generateOutputData = (source, params, options) => {
       // source: ${outputFile}
       ${parsed}`
       },
+*/
       undefined: data => reject(new Error(`unsuported input format ${inputFormat}`))
     }
 
     // convert any inputs
+    const prevsource = source
     source = conversionTable[inputFormat]({ source, params, options })
+    const useFakeFs = (source !== prevsource) // conversion, so use a fake file system when rebuilding
 
     if (outputFormat === 'jscad' || outputFormat === 'js') {
       resolve(source)
-    } else if ((inputFormat === 'jscad' || inputFormat === 'js') &&
-    outputFormat !== 'jscad' && outputFormat !== 'js') {
+    } else {
+      //    } else if ((inputFormat === 'jscad' || inputFormat === 'js') &&
+      //               outputFormat !== 'jscad' && outputFormat !== 'js') {
       try {
-        const solids = rebuildSolids({ mainPath: inputPath, parameterValues: params, inputIsDirectory, source })
+        const solids = rebuildSolids({ mainPath: inputPath, parameterValues: params, useFakeFs, source })
         resolve(solids)
       } catch (error) {
         reject(error)
       }
     }
   })
-    .then(objects => {
-      // Buffer.from(outputData.data),{encoding: outputData.mimeType},
-      return convertToBlob(prepareOutput(objects, { format: outputFormat }))
+    .then(solids => {
+      return solidsAsBlob(solids, { format: outputFormat })
     })
 }
 

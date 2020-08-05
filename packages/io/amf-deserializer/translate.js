@@ -1,12 +1,12 @@
 const createObject = require('./objectBuilder')
 const parse = require('./parse')
 
-const translate = (src, filename, options) => {
+const translate = (options, src) => {
   const defaults = {
     pxPmm: require('./constants').pxPmm
   }
   options = Object.assign({}, defaults, options)
-  const { version, pxPmm, addMetaData } = options
+  const { version, pxPmm, addMetaData, filename } = options
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 
@@ -43,8 +43,8 @@ const codify = (amf, data) => {
   let code = ''
 
   // hack due to lack of this in array map()
-  let objects = amf.objects
-  let materials = data.amfMaterials
+  const objects = amf.objects
+  const materials = data.amfMaterials
 
   // convert high level definitions
   // this ~= data
@@ -68,24 +68,24 @@ const codify = (amf, data) => {
 // Materials: ${materials.length}
 // Scale    : ${amf.scale} from Units (${amf.unit})
 
-const {color, geometry, transforms} = require('@jscad/modeling')
+const {colors, geometries, transforms} = require('@jscad/modeling')
 
 const main = () => {
-  let geometries = []
+  let objects = []
 `
 
   for (let i = 0; i < objects.length; i++) {
-    let obj = objects[i]
+    const obj = objects[i]
     if (obj.type === 'object') {
-      code += `  geometries.push(createObject${obj.id}())\n`
+      code += `  objects.push(createObject${obj.id}())\n`
     }
   }
 
-  code += `  return geometries\n}\n`
+  code += '  return objects\n}\n'
 
   objects.forEach(createDefinition)
 
-  code += `module.exports = {main}\n`
+  code += 'module.exports = {main}\n'
 
   return code
 }

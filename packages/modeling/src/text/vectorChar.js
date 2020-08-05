@@ -17,6 +17,7 @@ const vectorParams = require('./vectorParams')
 * @param {String} [options.input='?'] - ascii character (ignored/overwrited if provided as seconds parameter)
 * @param {String} [char='?'] - ascii character
 * @returns {VectorCharObject}
+* @alias module:modeling/text.vectorChar
 *
 * @example
 * let vectorCharObject = vectorChar()
@@ -27,25 +28,25 @@ const vectorParams = require('./vectorParams')
 * or
 * let vectorCharObject = vectorChar({ xOffset: 78, input: '!' })
 */
-function vectorChar (options, char) {
-  let {
+const vectorChar = (options, char) => {
+  const {
     xOffset, yOffset, input, font, height, extrudeOffset
   } = vectorParams(options, char)
   let code = input.charCodeAt(0)
   if (!code || !font[code]) {
     code = 63 // 63 => ?
   }
-  let glyph = [].concat(font[code])
-  let ratio = (height - extrudeOffset) / font.height
-  let extrudeYOffset = (extrudeOffset / 2)
-  let width = glyph.shift() * ratio
-  let segments = []
+  const glyph = [].concat(font[code])
+  const ratio = (height - extrudeOffset) / font.height
+  const extrudeYOffset = (extrudeOffset / 2)
+  const width = glyph.shift() * ratio
+  const segments = []
   let polyline = []
   for (let i = 0, il = glyph.length; i < il; i += 2) {
-    gx = ratio * glyph[i] + xOffset
-    gy = ratio * glyph[i + 1] + yOffset + extrudeYOffset
+    const gx = ratio * glyph[i] + xOffset
+    const gy = ratio * glyph[i + 1] + yOffset + extrudeYOffset
     if (glyph[i] !== undefined) {
-      polyline.push([ gx, gy ])
+      polyline.push([gx, gy])
       continue
     }
     segments.push(polyline)

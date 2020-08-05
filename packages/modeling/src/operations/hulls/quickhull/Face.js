@@ -1,11 +1,11 @@
-const add = require('../../../math/vec3/add')
-const clone = require('../../../math/vec3/clone')
-const cross = require('../../../math/vec3/cross')
-const dot = require('../../../math/vec3/dot')
-const length = require('../../../math/vec3/length')
-const normalize = require('../../../math/vec3/normalize')
-const scale = require('../../../math/vec3/scale')
-const subtract = require('../../../math/vec3/subtract')
+const add = require('../../../maths/vec3/add')
+const clone = require('../../../maths/vec3/clone')
+const cross = require('../../../maths/vec3/cross')
+const dot = require('../../../maths/vec3/dot')
+const length = require('../../../maths/vec3/length')
+const normalize = require('../../../maths/vec3/normalize')
+const scale = require('../../../maths/vec3/scale')
+const subtract = require('../../../maths/vec3/subtract')
 
 /*
  * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)
@@ -50,12 +50,12 @@ class Face {
   }
 
   computeNormal () {
-    let e0 = this.edge
-    let e1 = e0.next
+    const e0 = this.edge
+    const e1 = e0.next
     let e2 = e1.next
-    let v2 = subtract([], e1.head().point, e0.head().point)
-    let t = []
-    let v1 = []
+    const v2 = subtract([], e1.head().point, e0.head().point)
+    const t = []
+    const v1 = []
 
     this.nVertices = 2
     this.normal = [0, 0, 0]
@@ -83,7 +83,7 @@ class Face {
 
       // find the longest edge (in length) in the chain of edges
       do {
-        let lengthSquared = edge.lengthSquared()
+        const lengthSquared = edge.lengthSquared()
         if (lengthSquared > maxSquaredLength) {
           maxEdge = edge
           maxSquaredLength = lengthSquared
@@ -91,14 +91,14 @@ class Face {
         edge = edge.next
       } while (edge !== this.edge)
 
-      let p1 = maxEdge.tail().point
-      let p2 = maxEdge.head().point
-      let maxVector = subtract([], p2, p1)
-      let maxLength = Math.sqrt(maxSquaredLength)
+      const p1 = maxEdge.tail().point
+      const p2 = maxEdge.head().point
+      const maxVector = subtract([], p2, p1)
+      const maxLength = Math.sqrt(maxSquaredLength)
       // maxVector is normalized after this operation
       scale(maxVector, 1 / maxLength, maxVector) // TODO review scale parameters
       // compute the projection of maxVector over this face normal
-      let maxProjection = dot(this.normal, maxVector)
+      const maxProjection = dot(this.normal, maxVector)
       // subtract the quantity maxEdge adds on the normal
       scale(maxVector, -maxProjection, maxVector) // TODO review scale parameters
       add(this.normal, this.normal, maxVector)
@@ -143,7 +143,7 @@ class Face {
     let discardedFace
     if (prev.opposite.face === next.opposite.face) {
       // `prev` is remove a redundant edge
-      let oppositeFace = next.opposite.face
+      const oppositeFace = next.opposite.face
       let oppositeEdge
       if (prev === this.edge) {
         this.edge = next
@@ -299,7 +299,7 @@ class Face {
   }
 
   collectIndices () {
-    let indices = []
+    const indices = []
     let edge = this.edge
     do {
       indices.push(edge.head().index)

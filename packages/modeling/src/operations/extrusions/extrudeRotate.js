@@ -1,6 +1,6 @@
-const { mat4 } = require('../../math')
+const mat4 = require('../../maths/mat4')
 
-const { geom2 } = require('../../geometry')
+const geom2 = require('../../geometries/geom2')
 
 const slice = require('./slice')
 
@@ -9,14 +9,15 @@ const extrudeFromSlices = require('./extrudeFromSlices')
 /**
  * Rotate extrude the given geometry using the given options.
  *
- * @param {Object} [options] - options for extrusion
+ * @param {Object} options - options for extrusion
  * @param {Float} [options.angle=PI*2] - angle of the extrusion (RADIANS)
  * @param {Float} [options.startAngle=0] - start angle of the extrusion (RADIANS)
  * @param {Float} [options.overflow='cap'] - what to do with points outside of bounds (+ / - x) :
  * defaults to capping those points to 0 (only supported behaviour for now)
  * @param {Integer} [options.segments=12] - number of segments of the extrusion
- * @param {geom2} geometry - the 2D geometry to extrude
- * @returns {geom3} new extruded 3D geometry
+ * @param {geom2} geometry - the geometry to extrude
+ * @returns {geom3} the extruded geometry
+ * @alias module:modeling/extrusions.extrudeRotate
  */
 const extrudeRotate = (options, geometry) => {
   const defaults = {
@@ -36,7 +37,7 @@ const extrudeRotate = (options, geometry) => {
   endAngle = Math.abs(endAngle) > (Math.PI * 2) ? endAngle % (Math.PI * 2) : endAngle
 
   if (endAngle < startAngle) {
-    let x = startAngle
+    const x = startAngle
     startAngle = endAngle
     endAngle = x
   }
@@ -45,7 +46,7 @@ const extrudeRotate = (options, geometry) => {
 
   if (Math.abs(totalRotation) < (Math.PI * 2)) {
     // adjust the segments to achieve the total rotation requested
-    let anglePerSegment = (Math.PI * 2) / segments
+    const anglePerSegment = (Math.PI * 2) / segments
     segments = Math.floor(Math.abs(totalRotation) / anglePerSegment)
     if (Math.abs(totalRotation) > (segments * anglePerSegment)) segments++
   }
@@ -104,8 +105,8 @@ const extrudeRotate = (options, geometry) => {
   slice.reverse(baseSlice, baseSlice)
 
   const createSlice = (progress, index, base) => {
-    let Zrotation = rotationPerSlice * index + startAngle
-    let matrix = mat4.multiply(mat4.fromZRotation(Zrotation), mat4.fromXRotation(Math.PI / 2))
+    const Zrotation = rotationPerSlice * index + startAngle
+    const matrix = mat4.multiply(mat4.fromZRotation(Zrotation), mat4.fromXRotation(Math.PI / 2))
 
     return slice.transform(matrix, base)
   }

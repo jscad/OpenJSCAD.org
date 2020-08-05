@@ -102,7 +102,7 @@ const handleEntity = (reader, group, value) => {
       obj[getTLA(93)] = 0
       obj[getTLA(94)] = 0
       obj[getTLA(95)] = 0
-      obj['state'] = 0 // keep a state
+      obj.state = 0 // keep a state
       reader.objstack.push(obj)
       break
     case 'POLYLINE':
@@ -228,7 +228,7 @@ const handleEntity = (reader, group, value) => {
 //
 const handleVariable = (reader, group, value) => {
   // console.log('variable: '+group+','+value)
-  let obj = { type: 'variable', name: value }
+  const obj = { type: 'variable', name: value }
   reader.objstack.push(obj)
 }
 
@@ -238,7 +238,7 @@ const handleVariable = (reader, group, value) => {
 //
 const handleInt = (reader, group, value) => {
   // console.log('int: '+group+','+value)
-  let obj = reader.objstack.pop()
+  const obj = reader.objstack.pop()
   if ('type' in obj) {
     obj[getTLA(group)] = parseFloat(value)
   }
@@ -251,7 +251,7 @@ const handleInt = (reader, group, value) => {
 //
 const handleDouble = (reader, group, value) => {
   // console.log('double: '+group+','+value)
-  let obj = reader.objstack.pop()
+  const obj = reader.objstack.pop()
   if ('type' in obj) {
     obj[getTLA(group)] = parseFloat(value)
   }
@@ -265,23 +265,23 @@ const handleDouble = (reader, group, value) => {
 //
 const handleXcoord = (reader, group, value) => {
   // console.log('xcoord: '+group+','+value)
-  let obj = reader.objstack.pop()
+  const obj = reader.objstack.pop()
   if ('type' in obj) {
-    if (obj['type'] === 'lwpolyline') {
+    if (obj.type === 'lwpolyline') {
     // special handling to build a list of vertices
-      if (obj['pptxs'] === undefined) {
-        obj['pptxs'] = []
-        obj['bulgs'] = []
+      if (obj.pptxs === undefined) {
+        obj.pptxs = []
+        obj.bulgs = []
       }
-      obj['pptxs'].push(parseFloat(value))
-      obj['bulgs'].push(0)
+      obj.pptxs.push(parseFloat(value))
+      obj.bulgs.push(0)
     } else {
-      if (obj['type'] === 'mesh') {
+      if (obj.type === 'mesh') {
       // special handling to build a list of vertices
-        if (obj['pptxs'] === undefined) {
-          obj['pptxs'] = []
+        if (obj.pptxs === undefined) {
+          obj.pptxs = []
         }
-        obj['pptxs'].push(parseFloat(value))
+        obj.pptxs.push(parseFloat(value))
       } else {
         obj[getTLA(group)] = parseFloat(value)
       }
@@ -297,14 +297,14 @@ const handleXcoord = (reader, group, value) => {
 //
 const handleYcoord = (reader, group, value) => {
   // console.log('ycoord: '+group+','+value)
-  let obj = reader.objstack.pop()
+  const obj = reader.objstack.pop()
   if ('type' in obj) {
-    if (obj['type'] === 'lwpolyline' || obj['type'] === 'mesh') {
+    if (obj.type === 'lwpolyline' || obj.type === 'mesh') {
     // special handling to build a list of vertices
-      if (obj['pptys'] === undefined) {
-        obj['pptys'] = []
+      if (obj.pptys === undefined) {
+        obj.pptys = []
       }
-      obj['pptys'].push(parseFloat(value))
+      obj.pptys.push(parseFloat(value))
     } else {
       obj[getTLA(group)] = parseFloat(value)
     }
@@ -319,14 +319,14 @@ const handleYcoord = (reader, group, value) => {
 //
 const handleZcoord = (reader, group, value) => {
   // console.log('ycoord: '+group+','+value)
-  let obj = reader.objstack.pop()
+  const obj = reader.objstack.pop()
   if ('type' in obj) {
-    if (obj['type'] === 'mesh') {
+    if (obj.type === 'mesh') {
     // special handling to build a list of vertices
-      if (obj['pptzs'] === undefined) {
-        obj['pptzs'] = []
+      if (obj.pptzs === undefined) {
+        obj.pptzs = []
       }
-      obj['pptzs'].push(parseFloat(value))
+      obj.pptzs.push(parseFloat(value))
     } else {
       obj[getTLA(group)] = parseFloat(value)
     }
@@ -341,13 +341,13 @@ const handleZcoord = (reader, group, value) => {
 //
 const handleBulge = (reader, group, value) => {
   // console.log('bulg: '+group+','+value)
-  let obj = reader.objstack.pop()
+  const obj = reader.objstack.pop()
   if ('type' in obj) {
-    if (obj['type'] === 'lwpolyline') {
+    if (obj.type === 'lwpolyline') {
     // special handling to build a list of vertices
-      let bulgs = obj['bulgs']
+      const bulgs = obj.bulgs
       if (bulgs !== undefined) {
-        let pptxs = obj['pptxs']
+        const pptxs = obj.pptxs
         if (pptxs.length === bulgs.length) {
           bulgs[bulgs.length - 1] = parseFloat(value)
         }
@@ -366,40 +366,40 @@ const handleBulge = (reader, group, value) => {
 //
 const handleLen = (reader, group, value) => {
   // console.log('len: '+group+','+value)
-  let obj = reader.objstack.pop()
+  const obj = reader.objstack.pop()
   if ('type' in obj) {
-    if (obj['type'] === 'mesh') {
+    if (obj.type === 'mesh') {
     // mesh has an order of lengths
-      let state = obj['state']
+      const state = obj.state
       // console.log('mesh len: '+group+','+value+','+state)
       switch (group) {
         case 91: // length of subdivisions
           obj[getTLA(group)] = parseFloat(value)
-          obj['state'] = 1
+          obj.state = 1
           break
         case 92: // vertex count OR overriden property count
           if (state === 1) {
-            obj['vlen'] = parseFloat(value) // override attribute
-            obj['state'] = 2
+            obj.vlen = parseFloat(value) // override attribute
+            obj.state = 2
           } else {
-            obj['plen'] = parseFloat(value) // override attribute
-            obj['state'] = 6
+            obj.plen = parseFloat(value) // override attribute
+            obj.state = 6
           }
           break
         case 93: // face count
           obj[getTLA(group)] = parseFloat(value)
-          obj['state'] = 3
+          obj.state = 3
           break
         case 94: // edge count
           obj[getTLA(group)] = parseFloat(value)
-          obj['state'] = 4
+          obj.state = 4
           break
         case 95: // edge crease count
           obj[getTLA(group)] = parseFloat(value)
-          obj['state'] = 5
+          obj.state = 5
           break
         default:
-          obj['state'] = 7
+          obj.state = 7
           break
       }
     } else {
@@ -416,24 +416,24 @@ const handleLen = (reader, group, value) => {
 //
 const handleValue = (reader, group, value) => {
   // console.log('int: '+group+','+value)
-  let obj = reader.objstack.pop()
+  const obj = reader.objstack.pop()
   if ('type' in obj) {
-    if (obj['type'] === 'mesh') {
-      let state = obj['state']
+    if (obj.type === 'mesh') {
+      const state = obj.state
       // console.log('mesh value: '+group+','+value+','+state)
       // mesh has an order of values based on state
       switch (state) {
         case 3: // accumulate face values
-          if (obj['fvals'] === undefined) {
-            obj['fvals'] = []
+          if (obj.fvals === undefined) {
+            obj.fvals = []
           }
-          obj['fvals'].push(parseFloat(value))
+          obj.fvals.push(parseFloat(value))
           break
         case 4: // accumulate edge values
-          if (obj['evals'] === undefined) {
-            obj['evals'] = []
+          if (obj.evals === undefined) {
+            obj.evals = []
           }
-          obj['evals'].push(parseFloat(value))
+          obj.evals.push(parseFloat(value))
           break
         default:
           break
@@ -451,7 +451,7 @@ const handleValue = (reader, group, value) => {
 //
 const handleString = (reader, group, value) => {
   // console.log('string: '+group+','+value)
-  let obj = reader.objstack.pop()
+  const obj = reader.objstack.pop()
   if ('type' in obj) {
     obj[getTLA(group)] = value
   }
@@ -464,7 +464,7 @@ const handleString = (reader, group, value) => {
 //
 const handleName = (reader, group, value) => {
   // console.log('name: '+group+','+value)
-  let obj = reader.objstack.pop()
+  const obj = reader.objstack.pop()
   if ('type' in obj) {
     if (obj[getTLA(group)] === undefined) {
       obj[getTLA(group)] = value
@@ -483,7 +483,7 @@ const handleName = (reader, group, value) => {
 //
 const createReader = (src, options) => {
   // create a reader for the DXF
-  let reader = dxf.reader(options)
+  const reader = dxf.reader(options)
 
   // setup event handling from the reader
   reader.on('error', handleError)
@@ -546,42 +546,43 @@ const createReader = (src, options) => {
 //
 // instantiate the give DXF definition (src) into a set of CSG library objects
 //
-const instantiate = (src, filename, options) => {
-  let reader = createReader(src, options)
-  let objs = instantiateAsciiDxf(reader, options)
+const instantiate = (src, options) => {
+  const reader = createReader(src, options)
+  const objs = instantiateAsciiDxf(reader, options)
   return objs
 }
 
 //
 // translate the give DXF definition (src) into a  JSCAD script
 //
-const translate = (src, filename, options) => {
-  let reader = createReader(src, options)
+const translate = (src, options) => {
+  const reader = createReader(src, options)
 
   let code = `// Produced by JSCAD IO Library : DXF Deserializer (${options.version})
 
 `
   // code += '// date: ' + (new Date()) + '\n'
-  // code += '// source: ' + filename + '\n'
+  // code += '// source: ' + options.filename + '\n'
   code += translateAsciiDxf(reader, options)
   return code
 }
 
 /**
  * Deserialize the given source and return the requested 'output'
- * @param {string} src DXF data stream
- * @param {string} filename (optional) original filename of DXF data stream if any
  * @param {object} options (optional) anonymous object with:
+ * @param {string} [options.filename='dxf'] filename of original DXF data stream
  * @param {string} [options.version='0.0.1'] version number to add to the metadata
- * @param {string} [options.output='jscad'] either jscad or geometry to set desired output
+ * @param {string} [options.output='script'] either script or geometry to set desired output
  * @param {boolean} [options.strict=true] obey strict DXF specifications
  * @param {array} [options.colorindex=[]] list of colors (256) for use during rendering
- * @return {string|[objects]} a string (jscad script) or array of objects
+ * @param {string} src DXF data stream
+ * @return {string|[objects]} a string (script) or array of objects (geometry)
  */
-const deserialize = (src, filename, options) => {
+const deserialize = (options, src) => {
   const defaults = {
+    filename: 'dxf',
     version,
-    output: 'jscad',
+    output: 'script',
     strict: true,
     colorindex: colorIndex,
     dxf: {
@@ -591,9 +592,12 @@ const deserialize = (src, filename, options) => {
     }
   }
   options = Object.assign({}, defaults, options)
-  return options.output === 'jscad' ? translate(src, filename, options) : instantiate(src, filename, options)
+  return options.output === 'script' ? translate(src, options) : instantiate(src, options)
 }
 
+const extension = 'dxf'
+
 module.exports = {
-  deserialize
+  deserialize,
+  extension
 }

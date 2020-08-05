@@ -15,9 +15,9 @@ const getUriQuery = (uri) => {
   return query
 } */
 
-module.exports = function makeTitleBarSideEffect () {
-  const sink = outToTitle$ => {
-    outToTitle$.forEach(title => {
+const makeTitleBarSideEffect = () => {
+  const sink = (outToTitle$) => {
+    outToTitle$.forEach((title) => {
       document.title = title
     })
   }
@@ -25,9 +25,11 @@ module.exports = function makeTitleBarSideEffect () {
   const source = () => {
     const _url = window.location.href
     return most.just(_url)
-      .filter(x => x !== undefined)
+      .filter((x) => x !== undefined)
       .multicast()
       .skipRepeats()
   }
-  return {sink, source}
+  return { sink, source }
 }
+
+module.exports = makeTitleBarSideEffect

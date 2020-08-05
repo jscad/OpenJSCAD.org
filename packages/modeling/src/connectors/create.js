@@ -1,4 +1,4 @@
-const vec3 = require('../math/vec3')
+const vec3 = require('../maths/vec3')
 
 /**
  * Create a new connector.
@@ -13,15 +13,11 @@ const vec3 = require('../math/vec3')
  * @property {vec3} point - the position of the connector (relative to its parent)
  * @property {vec3} axis - the direction (unit vector) of the connector
  * @property {vec3} normal - the direction (unit vector) perpendicular to axis, that defines the "12 o'clock" orientation of the connector
+ * @alias module:modeling/connectors.create
+ *
  * @example
  * let myconnector = create()
  */
-const create = () => {
-  return {
-    point: vec3.create(),
-    axis: vec3.unit([0, 0, 1]),
-    normal: vec3.unit([1, 0, 0])
-  }
-}
+const create = () => ({ point: vec3.create(), axis: vec3.unit([0, 0, 1]), normal: vec3.unit([1, 0, 0]) })
 
 module.exports = create

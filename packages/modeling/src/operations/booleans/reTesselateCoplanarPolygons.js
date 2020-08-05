@@ -1,11 +1,13 @@
-const { EPS } = require('../../math/constants')
+const { EPS } = require('../../maths/constants')
 
-const { line2, vec2 } = require('../../math')
-const OrthoNormalBasis = require('../../math/OrthoNormalBasis')
+const line2 = require('../../maths/line2')
+const vec2 = require('../../maths/vec2')
+const OrthoNormalBasis = require('../../maths/OrthoNormalBasis')
+const interpolateBetween2DPointsForY = require('../../maths/utils/interpolateBetween2DPointsForY')
 
-const { interpolateBetween2DPointsForY, insertSorted, fnNumberSort } = require('../../utils')
+const { insertSorted, fnNumberSort } = require('../../utils')
 
-const { poly3 } = require('../../geometry')
+const poly3 = require('../../geometries/poly3')
 
 /*
  * Retesselation for a set of COPLANAR polygons.
@@ -17,7 +19,7 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
 
   const destpolygons = []
   const numpolygons = sourcepolygons.length
-  const plane = sourcepolygons[0].plane
+  const plane = poly3.plane(sourcepolygons[0])
   const orthobasis = new OrthoNormalBasis(plane)
   const polygonvertices2d = [] // array of array of Vector2D
   const polygontopvertexindexes = [] // array of indexes of topmost vertex per polygon
@@ -88,7 +90,7 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
     polygontopvertexindexes.push(minindex)
   }
   const ycoordinates = []
-  for (let ycoordinate in ycoordinatetopolygonindexes) ycoordinates.push(ycoordinate)
+  for (const ycoordinate in ycoordinatetopolygonindexes) ycoordinates.push(ycoordinate)
   ycoordinates.sort(fnNumberSort)
 
   // Now we will iterate over all y coordinates, from lowest to highest y coordinate
@@ -165,7 +167,7 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
       const middleycoordinate = 0.5 * (ycoordinate + nextycoordinate)
       // update activepolygons by adding any polygons that start here:
       const startingpolygonindexes = topy2polygonindexes[ycoordinateasstring]
-      for (let polygonindexKey in startingpolygonindexes) {
+      for (const polygonindexKey in startingpolygonindexes) {
         const polygonindex = startingpolygonindexes[polygonindexKey]
         const vertices2d = polygonvertices2d[polygonindex]
         const numvertices = vertices2d.length
@@ -212,128 +214,127 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
     } //  yindex < ycoordinates.length-1
     // if( (yindex === ycoordinates.length-1) || (nextycoordinate - ycoordinate > EPS) )
     // FIXME : what ???
-    if (true) {
-      // Now activepolygons is up to date
-      // Build the output polygons for the next row in newoutpolygonrow:
-      for (let activepolygonKey in activepolygons) {
-        const activepolygon = activepolygons[activepolygonKey]
 
-        let x = interpolateBetween2DPointsForY(activepolygon.topleft, activepolygon.bottomleft, ycoordinate)
-        const topleft = vec2.fromValues(x, ycoordinate)
-        x = interpolateBetween2DPointsForY(activepolygon.topright, activepolygon.bottomright, ycoordinate)
-        const topright = vec2.fromValues(x, ycoordinate)
-        x = interpolateBetween2DPointsForY(activepolygon.topleft, activepolygon.bottomleft, nextycoordinate)
-        const bottomleft = vec2.fromValues(x, nextycoordinate)
-        x = interpolateBetween2DPointsForY(activepolygon.topright, activepolygon.bottomright, nextycoordinate)
-        const bottomright = vec2.fromValues(x, nextycoordinate)
-        const outpolygon = {
-          topleft: topleft,
-          topright: topright,
-          bottomleft: bottomleft,
-          bottomright: bottomright,
-          leftline: line2.fromPoints(topleft, bottomleft),
-          rightline: line2.fromPoints(bottomright, topright)
-        }
-        if (newoutpolygonrow.length > 0) {
-          const prevoutpolygon = newoutpolygonrow[newoutpolygonrow.length - 1]
-          const d1 = vec2.distance(outpolygon.topleft, prevoutpolygon.topright)
-          const d2 = vec2.distance(outpolygon.bottomleft, prevoutpolygon.bottomright)
-          if ((d1 < EPS) && (d2 < EPS)) {
-            // we can join this polygon with the one to the left:
-            outpolygon.topleft = prevoutpolygon.topleft
-            outpolygon.leftline = prevoutpolygon.leftline
-            outpolygon.bottomleft = prevoutpolygon.bottomleft
-            newoutpolygonrow.splice(newoutpolygonrow.length - 1, 1)
-          }
-        }
-        newoutpolygonrow.push(outpolygon)
-      } // for(activepolygon in activepolygons)
-      if (yindex > 0) {
-        // try to match the new polygons against the previous row:
-        const prevcontinuedindexes = {}
-        const matchedindexes = {}
-        for (let i = 0; i < newoutpolygonrow.length; i++) {
-          const thispolygon = newoutpolygonrow[i]
-          for (let ii = 0; ii < prevoutpolygonrow.length; ii++) {
-            if (!matchedindexes[ii]) { // not already processed?
-              // We have a match if the sidelines are equal or if the top coordinates
-              // are on the sidelines of the previous polygon
-              const prevpolygon = prevoutpolygonrow[ii]
-              if (vec2.distance(prevpolygon.bottomleft, thispolygon.topleft) < EPS) {
-                if (vec2.distance(prevpolygon.bottomright, thispolygon.topright) < EPS) {
-                  // Yes, the top of this polygon matches the bottom of the previous:
-                  matchedindexes[ii] = true
-                  // Now check if the joined polygon would remain convex:
-                  const v1 = line2.direction(thispolygon.leftline)
-                  const v2 = line2.direction(prevpolygon.leftline)
-                  const d1 = v1[0] - v2[0]
+    // Now activepolygons is up to date
+    // Build the output polygons for the next row in newoutpolygonrow:
+    for (const activepolygonKey in activepolygons) {
+      const activepolygon = activepolygons[activepolygonKey]
 
-                  const v3 = line2.direction(thispolygon.rightline)
-                  const v4 = line2.direction(prevpolygon.rightline)
-                  const d2 = v3[0] - v4[0]
-
-                  const leftlinecontinues = Math.abs(d1) < EPS
-                  const rightlinecontinues = Math.abs(d2) < EPS
-                  const leftlineisconvex = leftlinecontinues || (d1 >= 0)
-                  const rightlineisconvex = rightlinecontinues || (d2 >= 0)
-                  if (leftlineisconvex && rightlineisconvex) {
-                    // yes, both sides have convex corners:
-                    // This polygon will continue the previous polygon
-                    thispolygon.outpolygon = prevpolygon.outpolygon
-                    thispolygon.leftlinecontinues = leftlinecontinues
-                    thispolygon.rightlinecontinues = rightlinecontinues
-                    prevcontinuedindexes[ii] = true
-                  }
-                  break
-                }
-              }
-            } // if(!prevcontinuedindexes[ii])
-          } // for ii
-        } // for i
-        for (let ii = 0; ii < prevoutpolygonrow.length; ii++) {
-          if (!prevcontinuedindexes[ii]) {
-            // polygon ends here
-            // Finish the polygon with the last point(s):
-            const prevpolygon = prevoutpolygonrow[ii]
-            prevpolygon.outpolygon.rightpoints.push(prevpolygon.bottomright)
-            if (vec2.distance(prevpolygon.bottomright, prevpolygon.bottomleft) > EPS) {
-              // polygon ends with a horizontal line:
-              prevpolygon.outpolygon.leftpoints.push(prevpolygon.bottomleft)
-            }
-            // reverse the left half so we get a counterclockwise circle:
-            prevpolygon.outpolygon.leftpoints.reverse()
-            const points2d = prevpolygon.outpolygon.rightpoints.concat(prevpolygon.outpolygon.leftpoints)
-            const vertices3d = points2d.map((point2d) => orthobasis.to3D(point2d))
-            const polygon = poly3.fromPointsAndPlane(vertices3d, plane) // TODO support shared
-            destpolygons.push(polygon)
-          }
-        }
-      } // if(yindex > 0)
-      for (let i = 0; i < newoutpolygonrow.length; i++) {
-        const thispolygon = newoutpolygonrow[i]
-        if (!thispolygon.outpolygon) {
-          // polygon starts here:
-          thispolygon.outpolygon = {
-            leftpoints: [],
-            rightpoints: []
-          }
-          thispolygon.outpolygon.leftpoints.push(thispolygon.topleft)
-          if (vec2.distance(thispolygon.topleft, thispolygon.topright) > EPS) {
-            // we have a horizontal line at the top:
-            thispolygon.outpolygon.rightpoints.push(thispolygon.topright)
-          }
-        } else {
-          // continuation of a previous row
-          if (!thispolygon.leftlinecontinues) {
-            thispolygon.outpolygon.leftpoints.push(thispolygon.topleft)
-          }
-          if (!thispolygon.rightlinecontinues) {
-            thispolygon.outpolygon.rightpoints.push(thispolygon.topright)
-          }
+      let x = interpolateBetween2DPointsForY(activepolygon.topleft, activepolygon.bottomleft, ycoordinate)
+      const topleft = vec2.fromValues(x, ycoordinate)
+      x = interpolateBetween2DPointsForY(activepolygon.topright, activepolygon.bottomright, ycoordinate)
+      const topright = vec2.fromValues(x, ycoordinate)
+      x = interpolateBetween2DPointsForY(activepolygon.topleft, activepolygon.bottomleft, nextycoordinate)
+      const bottomleft = vec2.fromValues(x, nextycoordinate)
+      x = interpolateBetween2DPointsForY(activepolygon.topright, activepolygon.bottomright, nextycoordinate)
+      const bottomright = vec2.fromValues(x, nextycoordinate)
+      const outpolygon = {
+        topleft: topleft,
+        topright: topright,
+        bottomleft: bottomleft,
+        bottomright: bottomright,
+        leftline: line2.fromPoints(topleft, bottomleft),
+        rightline: line2.fromPoints(bottomright, topright)
+      }
+      if (newoutpolygonrow.length > 0) {
+        const prevoutpolygon = newoutpolygonrow[newoutpolygonrow.length - 1]
+        const d1 = vec2.distance(outpolygon.topleft, prevoutpolygon.topright)
+        const d2 = vec2.distance(outpolygon.bottomleft, prevoutpolygon.bottomright)
+        if ((d1 < EPS) && (d2 < EPS)) {
+          // we can join this polygon with the one to the left:
+          outpolygon.topleft = prevoutpolygon.topleft
+          outpolygon.leftline = prevoutpolygon.leftline
+          outpolygon.bottomleft = prevoutpolygon.bottomleft
+          newoutpolygonrow.splice(newoutpolygonrow.length - 1, 1)
         }
       }
-      prevoutpolygonrow = newoutpolygonrow
+      newoutpolygonrow.push(outpolygon)
+    } // for(activepolygon in activepolygons)
+    if (yindex > 0) {
+      // try to match the new polygons against the previous row:
+      const prevcontinuedindexes = {}
+      const matchedindexes = {}
+      for (let i = 0; i < newoutpolygonrow.length; i++) {
+        const thispolygon = newoutpolygonrow[i]
+        for (let ii = 0; ii < prevoutpolygonrow.length; ii++) {
+          if (!matchedindexes[ii]) { // not already processed?
+            // We have a match if the sidelines are equal or if the top coordinates
+            // are on the sidelines of the previous polygon
+            const prevpolygon = prevoutpolygonrow[ii]
+            if (vec2.distance(prevpolygon.bottomleft, thispolygon.topleft) < EPS) {
+              if (vec2.distance(prevpolygon.bottomright, thispolygon.topright) < EPS) {
+                // Yes, the top of this polygon matches the bottom of the previous:
+                matchedindexes[ii] = true
+                // Now check if the joined polygon would remain convex:
+                const v1 = line2.direction(thispolygon.leftline)
+                const v2 = line2.direction(prevpolygon.leftline)
+                const d1 = v1[0] - v2[0]
+
+                const v3 = line2.direction(thispolygon.rightline)
+                const v4 = line2.direction(prevpolygon.rightline)
+                const d2 = v3[0] - v4[0]
+
+                const leftlinecontinues = Math.abs(d1) < EPS
+                const rightlinecontinues = Math.abs(d2) < EPS
+                const leftlineisconvex = leftlinecontinues || (d1 >= 0)
+                const rightlineisconvex = rightlinecontinues || (d2 >= 0)
+                if (leftlineisconvex && rightlineisconvex) {
+                  // yes, both sides have convex corners:
+                  // This polygon will continue the previous polygon
+                  thispolygon.outpolygon = prevpolygon.outpolygon
+                  thispolygon.leftlinecontinues = leftlinecontinues
+                  thispolygon.rightlinecontinues = rightlinecontinues
+                  prevcontinuedindexes[ii] = true
+                }
+                break
+              }
+            }
+          } // if(!prevcontinuedindexes[ii])
+        } // for ii
+      } // for i
+      for (let ii = 0; ii < prevoutpolygonrow.length; ii++) {
+        if (!prevcontinuedindexes[ii]) {
+          // polygon ends here
+          // Finish the polygon with the last point(s):
+          const prevpolygon = prevoutpolygonrow[ii]
+          prevpolygon.outpolygon.rightpoints.push(prevpolygon.bottomright)
+          if (vec2.distance(prevpolygon.bottomright, prevpolygon.bottomleft) > EPS) {
+            // polygon ends with a horizontal line:
+            prevpolygon.outpolygon.leftpoints.push(prevpolygon.bottomleft)
+          }
+          // reverse the left half so we get a counterclockwise circle:
+          prevpolygon.outpolygon.leftpoints.reverse()
+          const points2d = prevpolygon.outpolygon.rightpoints.concat(prevpolygon.outpolygon.leftpoints)
+          const vertices3d = points2d.map((point2d) => orthobasis.to3D(point2d))
+          const polygon = poly3.fromPointsAndPlane(vertices3d, plane) // TODO support shared
+          destpolygons.push(polygon)
+        }
+      }
+    } // if(yindex > 0)
+    for (let i = 0; i < newoutpolygonrow.length; i++) {
+      const thispolygon = newoutpolygonrow[i]
+      if (!thispolygon.outpolygon) {
+        // polygon starts here:
+        thispolygon.outpolygon = {
+          leftpoints: [],
+          rightpoints: []
+        }
+        thispolygon.outpolygon.leftpoints.push(thispolygon.topleft)
+        if (vec2.distance(thispolygon.topleft, thispolygon.topright) > EPS) {
+          // we have a horizontal line at the top:
+          thispolygon.outpolygon.rightpoints.push(thispolygon.topright)
+        }
+      } else {
+        // continuation of a previous row
+        if (!thispolygon.leftlinecontinues) {
+          thispolygon.outpolygon.leftpoints.push(thispolygon.topleft)
+        }
+        if (!thispolygon.rightlinecontinues) {
+          thispolygon.outpolygon.rightpoints.push(thispolygon.topright)
+        }
+      }
     }
+    prevoutpolygonrow = newoutpolygonrow
   } // for yindex
   return destpolygons
 }

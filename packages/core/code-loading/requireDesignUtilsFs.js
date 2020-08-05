@@ -1,17 +1,14 @@
 const path = require('path')
-const { toArray } = require('../utils/arrays')
+const { toArray } = require('@jscad/array-utils')
 
 // NOTE/ path.parse is NOT included by browserify & co , hence this function ...
 // https://github.com/substack/path-browserify/pull/3
-const splitPathRe =
-    /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/
-const splitPath = filename => {
-  return splitPathRe.exec(filename).slice(1)
-}
-const parsePath = pathString => {
+const splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^/]+?|)(\.[^./]*|))(?:[/]*)$/
+const splitPath = (filename) => splitPathRe.exec(filename).slice(1)
+const parsePath = (pathString) => {
   assertPath(pathString)
 
-  var allParts = splitPath(pathString)
+  const allParts = splitPath(pathString)
   if (!allParts || allParts.length !== 4) {
     throw new TypeError("Invalid path '" + pathString + "'")
   }
@@ -28,14 +25,14 @@ const parsePath = pathString => {
   }
 }
 
-const assertPath = path => {
+const assertPath = (path) => {
   if (typeof path !== 'string') {
     throw new TypeError('Path must be a string. Received ' + path)// util.inspect(path))
   }
 }
 
 /** get main entry point of a design, given a file system instance and a list of paths
- * @param  {Object} fs a file-system like object (either node's fs or some other) providing at least 
+ * @param  {Object} fs a file-system like object (either node's fs or some other) providing at least
  * statSync, existSync, readFileSync, readdirSync
  * @param  {} paths
  */
@@ -43,7 +40,7 @@ const getDesignEntryPoint = (fs, paths) => {
   if (!paths) {
     return
   }
-  let mainPath = toArray(paths)[0]
+  const mainPath = toArray(paths)[0]
   let filePath
   const stats = fs.statSync(mainPath)
   if (stats.isFile()) {
@@ -62,13 +59,10 @@ const getDesignEntryPoint = (fs, paths) => {
     // as the folder
     const entries = fs.readdirSync(mainPath)
     const acceptableMainFiles = ['main', 'index', parsePath(path.basename(mainPath)).name]
-    const jsMainFiles = acceptableMainFiles.map(x => x + '.js')
-    const jscadMainFiles = acceptableMainFiles.map(x => x + '.jscad')
+    const jsMainFiles = acceptableMainFiles.map((x) => x + '.js')
+    const jscadMainFiles = acceptableMainFiles.map((x) => x + '.jscad')
 
-    const candidates = entries
-      .filter(entry => {
-        return jsMainFiles.concat(jscadMainFiles).includes(entry)
-      })
+    const candidates = entries.filter((entry) => jsMainFiles.concat(jscadMainFiles).includes(entry))
     if (candidates.length > 0) {
       filePath = path.join(mainPath, candidates[0])
     }

@@ -1,8 +1,6 @@
 const flatten = require('../../utils/flatten')
 
-const { vec2 } = require('../../math')
-
-const { geom2 } = require('../../geometry')
+const geom2 = require('../../geometries/geom2')
 
 const hullPoints2 = require('./hullPoints2')
 
@@ -15,22 +13,22 @@ const hullGeom2 = (...geometries) => {
   geometries = flatten(geometries)
 
   // extract the unique points from the geometries
-  let uniquepoints = []
-  let found = new Map()
+  const uniquepoints = []
+  const found = new Map()
   for (let g = 0; g < geometries.length; g++) {
-    let sides = geom2.toSides(geometries[g])
-     for (let s = 0; s < sides.length; s++) {
-       let side = sides[s]
-       let point = side[0]
-       let id = `${point[0]},${point[1]}`
-       if (found.has(id)) continue
-       uniquepoints.push(point)
-       found.set(id, true)
-     }
+    const sides = geom2.toSides(geometries[g])
+    for (let s = 0; s < sides.length; s++) {
+      const side = sides[s]
+      const point = side[0]
+      const id = `${point[0]},${point[1]}`
+      if (found.has(id)) continue
+      uniquepoints.push(point)
+      found.set(id, true)
+    }
   }
   found.clear()
 
-  let hullpoints = hullPoints2(uniquepoints)
+  const hullpoints = hullPoints2(uniquepoints)
 
   // NOTE: more then three points are required to create a new geometry
   if (hullpoints.length < 3) return geom2.create()

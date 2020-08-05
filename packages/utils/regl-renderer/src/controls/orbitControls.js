@@ -67,14 +67,14 @@ const defaults = Object.assign({}, controlsState, controlsProps)
 const update = ({ controls, camera }, output) => {
   // custom z up is settable, with inverted Y and Z (since we use camera[2] => up)
   const { EPS, drag } = controls
-  let { position, target } = camera
+  const { position, target } = camera
   const up = controls.up ? controls.up : camera.up
 
   let curThetaDelta = controls.thetaDelta
-  let curPhiDelta = controls.phiDelta
-  let curScale = controls.scale
+  const curPhiDelta = controls.phiDelta
+  const curScale = controls.scale
 
-  let offset = vec3.subtract([], position, target)
+  const offset = vec3.subtract([], position, target)
   let theta
   let phi
 
@@ -115,8 +115,8 @@ const update = ({ controls, camera }, output) => {
     offset[2] = radius * sin(phi) * cos(theta)
   }
 
-  let newPosition = vec3.add(vec3.create(), target, offset)
-  let newView = mat4.lookAt(mat4.create(), newPosition, target, up)
+  const newPosition = vec3.add(vec3.create(), target, offset)
+  const newView = mat4.lookAt(mat4.create(), newPosition, target, up)
 
   const dragEffect = 1 - max(min(drag, 1.0), 0.01)
   const positionChanged = vec3.distance(position, newPosition) > 0 // TODO optimise
@@ -248,14 +248,15 @@ const pan = ({ controls, camera, speed = 1 }, delta) => {
   const unPanEnd = unproject([], panEnd, viewport, invProjView)
   // TODO scale by the correct near/far value instead of 1000 ?
   // const planesDiff = camera.far - camera.near
-  const offset = vec3.subtract([], unPanStart, unPanEnd).map(x => x * speed * 250 * controls.scale)
+  const offset = vec3.subtract([], unPanStart, unPanEnd).map((x) => x * speed * 250 * controls.scale)
 
   return {
     controls,
     camera: {
       position: vec3.add(vec3.create(), camera.position, offset),
       target: vec3.add(vec3.create(), camera.target, offset)
-    } }
+    }
+  }
 }
 
 /**
@@ -311,14 +312,7 @@ const zoomToFit = ({ controls, camera, entities }) => {
   * @return {Object} the updated camera data/state
 */
 const reset = ({ controls, camera }, desiredState) => {
-  /* camera = Object.assign({}, camera, desiredState.camera)
-  camera.projection = mat4.perspective([], camera.fov, camera.aspect, camera.near, camera.far)
-  controls = Object.assign({}, controls, desiredState.controls)
-  return {
-    camera,
-    controls
-  } */
-  return {
+  const options = {
     camera: {
       position: desiredState.camera.position,
       target: desiredState.camera.target,
@@ -331,6 +325,7 @@ const reset = ({ controls, camera }, desiredState) => {
       scale: desiredState.controls.scale
     }
   }
+  return options
 }
 
 // FIXME: upgrade or obsolete
@@ -361,6 +356,7 @@ const setFocus = ({ controls, camera }, focusPoint) => {
     }
   } */
 }
+
 module.exports = {
   controlsProps,
   controlsState,

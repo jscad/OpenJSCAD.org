@@ -16,7 +16,7 @@ Notes:
      none
 */
 
-const { geometry, utils } = require('@jscad/modeling')
+const { geometries, utils } = require('@jscad/modeling')
 
 const { serializeBinary } = require('./CSGToStlb')
 const { serializeText } = require('./CSGToStla')
@@ -33,7 +33,7 @@ const serialize = (options, ...objects) => {
   objects = utils.flatten(objects)
 
   // convert only 3D geometries
-  let objects3d = objects.filter((object) => geometry.geom3.isA(object))
+  const objects3d = objects.filter((object) => geometries.geom3.isA(object))
 
   if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to STL')
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to STL')

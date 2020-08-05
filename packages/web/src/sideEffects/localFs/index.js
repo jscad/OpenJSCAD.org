@@ -1,28 +1,21 @@
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
-const makeLogger = require('../../utils/logger')
+
 const { walkFileTree } = require('./walkFileTree')
 const { changedFiles, flattenFiles } = require('./utils')
 
 const makeLocalFsSideEffect = async (params) => {
   const commandResponses = callBackToStream()
-  const defaults = { logging: false }
-  const { logging } = Object.assign({}, defaults, params)
-  const log = makeLogger({ enabled: logging })
-  let enabled = true
 
   const sink = (commands$) => {
-    if (!enabled) { // bail out if not available
-      return
-    }
-
-    let filesAndFolders
+    let currentFileTree
     let rawData
     let watcher
+    const watcherDelay = 5000 // milliseconds
 
     // every time a new command is recieved (observable)
-    commands$.forEach(command => {
-      const { type, id, data, options, path } = command
+    commands$.forEach((command) => {
       // console.log('command', command)
+      const { type, id, data, options, path } = command
 
       // command handlers/ response
       const unhandled = () => {
@@ -31,8 +24,8 @@ const makeLocalFsSideEffect = async (params) => {
 
       const read = async () => {
         rawData = data
-        filesAndFolders = await walkFileTree(data)
-        commandResponses.callback({ type, id, data: filesAndFolders })
+        currentFileTree = await walkFileTree(data)
+        commandResponses.callback({ type, id, data: currentFileTree })
       }
 
       const watch = () => {
@@ -40,34 +33,35 @@ const makeLocalFsSideEffect = async (params) => {
         if (rawData === undefined) {
           return
         }
+
         const { enabled } = options
-        if (watcher && !enabled) {
-          clearInterval(watcher)
-        }
         if (enabled) {
-          console.log('starting watch')
-          watcher = setInterval(function () {
-            const files = walkFileTree(rawData)
-            files.catch(function (error) {
-              log.error('failed to read files', error)
-            })
-            files.then(function (files) {
-              const flatCurrent = flattenFiles(filesAndFolders)
-              const flatNew = flattenFiles(files)
-              const whatChanged = changedFiles(flatCurrent, flatNew)
-              if (whatChanged.length > 0) {
-                filesAndFolders = files
-                // type: 'watch', data, id: 'watchFiles'
-                commandResponses.callback({ type: 'read', id: 'loadRemote', data: filesAndFolders, path, changed: whatChanged })
-              }
-            })
-          }, 2000)
+          watcher = setInterval(() => {
+            walkFileTree(rawData)
+              .catch((error) => {
+                console.error('failed to read files', error)
+              })
+              .then((newFileTree) => {
+                const flatCurrent = flattenFiles(currentFileTree)
+                const flatNew = flattenFiles(newFileTree)
+                const whatChanged = changedFiles(flatCurrent, flatNew)
+                if (whatChanged.length > 0) {
+                  currentFileTree = newFileTree
+                  commandResponses.callback({ type: 'read', id: 'loadRemote', data: currentFileTree, path, changed: whatChanged })
+                }
+              })
+          }, watcherDelay)
+        } else {
+          if (watcher) {
+            // disable watcher
+            clearInterval(watcher)
+            watcher = 0
+          }
         }
       }
 
       const write = () => {
-        // TODO: ??
-        log.warning('writing to local file system is not implemented yet')
+        // console.error('writing to local file system is not implemented yet')
       }
 
       const commandHandlers = {
@@ -76,14 +70,12 @@ const makeLocalFsSideEffect = async (params) => {
         watch,
         write
       }
-      const commandHandler = commandHandlers[type] || commandHandlers['unhandled']
+      const commandHandler = commandHandlers[type] || commandHandlers.unhandled
       commandHandler()
     })
   }
 
-  const source = () => {
-    return commandResponses.stream.multicast()
-  }
+  const source = () => commandResponses.stream.multicast()
 
   return { source, sink }
 }

@@ -5,9 +5,9 @@ const { deserialize } = require('../index')
 //
 // Test suite for DXF deserialization (import)
 //
-test('ASCII DXF 3D Polyline Entities translated to JSCAD Scripts', t => {
+test('ASCII DXF 3D Polyline Entities translated to JSCAD Scripts', (t) => {
   // DXF 3D POLYLINE with mesh, translates to script with CSG.fromPolygons
-  let dxf3 = `0
+  const dxf3 = `0
 SECTION
 2
 ENTITIES
@@ -27,6 +27,8 @@ POLYLINE
 6
 72
 3
+62
+7
 0
 VERTEX
 10
@@ -211,16 +213,16 @@ VERTEX
 SEQEND
 0
 ENDSEC`
-  let src3 = deserialize(dxf3, 'dxf3-test', { output: 'jscad' })
-  let ss3 = src3.split('\n')
+  const src3 = deserialize({ filename: 'dxf3-test', output: 'script' }, dxf3)
+  const ss3 = src3.split('\n')
   t.is(ss3.length, 28)
   t.true(src3.indexOf('geom3.create') > 0)
 
   // DXF 3D POLYLINE with faces, translates to script with CSG
 })
 
-test('ASCII DXF 3D FACE Entities translated to JSCAD Scripts', t => {
-  let dxf1 = `0
+test('ASCII DXF 3D FACE Entities translated to JSCAD Scripts', (t) => {
+  const dxf1 = `0
 SECTION
 2
 ENTITIES
@@ -287,8 +289,8 @@ ENTITIES
 0
 ENDSEC`
   // expect a script which calls createPolygon for each 3DFACE, and creates a new 3D geometry
-  let src1 = deserialize(dxf1, 'dxf1-test', { output: 'jscad' })
-  let ss1 = src1.split('\n')
+  const src1 = deserialize({ filename: 'dxf1-test', output: 'script' }, dxf1)
+  const ss1 = src1.split('\n')
   t.is(ss1.length, 24)
   t.true(src1.indexOf('createPolygon(') > 0)
   t.true(src1.indexOf('geom3.create(') > 0)

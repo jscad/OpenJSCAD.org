@@ -1,5 +1,6 @@
-const fnNumberSort = (a, b) => {
-  return a - b
-}
+/**
+ * @alias module:modeling/utils.fnNumberSort
+ */
+const fnNumberSort = (a, b) => a - b
 
 module.exports = fnNumberSort

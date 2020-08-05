@@ -20,16 +20,15 @@ const requireDesignFromString = (scriptAsText, filePath, requireFn = require, ap
     const commonJsScriptText = `
     const {square, circle, polygon} = require('${apiBasePath}').primitives2d
     const {cube, cylinder, sphere, polyhedron, torus} = require('${apiBasePath}').primitives3d
-    const {color} = require('${apiBasePath}').color
+    const {colorize, hsl2rgb} = require('${apiBasePath}').colors
     const {rectangular_extrude, linear_extrude, rotate_extrude} = require('${apiBasePath}').extrusions
     const {rotate, translate, scale, mirror, hull, chain_hull, expand, contract} = require('${apiBasePath}').transformations
     const {union, difference, intersection} = require('${apiBasePath}').booleanOps
     const {sin, cos, tan, sqrt, lookup} = require('${apiBasePath}').maths
-    const {hsl2rgb} = require('${apiBasePath}').color
     const {vector_text, vector_char} = require('${apiBasePath}').text
     const {OpenJsCad} = require('${apiBasePath}').OpenJsCad
     const {echo} = require('${apiBasePath}').debug
-    
+
     ${scriptAsText}
     module.exports.main = main
     ${getParamsString}
@@ -38,7 +37,7 @@ const requireDesignFromString = (scriptAsText, filePath, requireFn = require, ap
   }
   validateDesignModule(scriptRootModule)
   const design = Object.assign(
-    {getParameterDefinitions: () => []},
+    { getParameterDefinitions: () => [] },
     scriptRootModule
   )
   return design

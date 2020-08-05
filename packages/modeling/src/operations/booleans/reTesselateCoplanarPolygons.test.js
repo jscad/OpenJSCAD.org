@@ -1,10 +1,8 @@
 const test = require('ava')
 
-const { degToRad } = require('../../math/utils')
+const mat4 = require('../../maths/mat4')
 
-const { mat4 } = require('../../math')
-
-const { poly3 } = require('../../geometry')
+const { poly3 } = require('../../geometries')
 
 const reTesselateCoplanarPolygons = require('./reTesselateCoplanarPolygons')
 
@@ -14,7 +12,7 @@ const translatePoly3 = (offsets, polygon) => {
 }
 
 const rotatePoly3 = (angles, polygon) => {
-  const matrix = mat4.fromTaitBryanRotation(degToRad(angles[0]), degToRad(angles[1]), degToRad(angles[2]))
+  const matrix = mat4.fromTaitBryanRotation((angles[0] * 0.017453292519943295), (angles[1] * 0.017453292519943295), (angles[2] * 0.017453292519943295))
   return poly3.transform(matrix, polygon)
 }
 

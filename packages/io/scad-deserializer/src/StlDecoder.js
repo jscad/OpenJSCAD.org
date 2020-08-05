@@ -232,7 +232,7 @@ STL.prototype.getCSG = function () {
   }
 
   if (this.dataType == this.TYPE_BINARY) {
-    for (i = 0; i < numTriangles; i++) {
+    for (let i = 0; i < numTriangles; i++) {
       var csgVertices = []
 
       var normal = [0, 0, 0]
@@ -255,7 +255,7 @@ STL.prototype.getCSG = function () {
       csgPolygons.push(new CSG.Polygon(csgVertices, null, csgPlane))
     }
   } else {
-    for (i = 0; i < numTriangles; i++) {
+    for (let i = 0; i < numTriangles; i++) {
       var csgVertices = []
       for (var j = 0; j < 3; j++) {
         var vtx = this.readVertex(i * 3 + j)
@@ -281,7 +281,7 @@ STL.prototype.getCSGString = function () {
   }
 
   if (this.dataType == this.TYPE_BINARY) {
-    for (i = 0; i < numTriangles; i++) {
+    for (let i = 0; i < numTriangles; i++) {
       var csgVertices = []
 
       var normal = [0, 0, 0]
@@ -302,7 +302,7 @@ STL.prototype.getCSGString = function () {
       csgPolygons.push(_.template('new CSG.Polygon([<%=vertices%>], null)')({ vertices: csgVertices }))
     }
   } else {
-    for (i = 0; i < numTriangles; i++) {
+    for (let i = 0; i < numTriangles; i++) {
       var csgVertices = []
       for (var j = 0; j < 3; j++) {
         var vertex = this.readVertex(i * 3 + j)

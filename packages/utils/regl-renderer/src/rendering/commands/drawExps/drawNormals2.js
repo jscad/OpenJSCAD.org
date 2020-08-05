@@ -1,16 +1,16 @@
 const mat4 = require('gl-mat4')
 
-const drawNormals = function (regl, params) {
+const drawNormals = (regl, params) => {
   const defaults = {
     xColor: [1, 0, 0, 1],
-    yColor: [0, 1, 0, 1],
-    zColor: [0, 0, 1, 1],
+    // yColor: [0, 1, 0, 1],
+    // zColor: [0, 0, 1, 1],
     size: 10,
     lineWidth: 3, // FIXME/ linewidth has been "deprecated" in multiple browsers etc, need a workaround,
     alwaysVisible: true, // to have the widget alway visible 'on top' of the rest of the scene
     geometry: undefined
   }
-  let {size, xColor, yColor, zColor, lineWidth, alwaysVisible, geometry} = Object.assign({}, defaults, params)
+  let { size, xColor, lineWidth, alwaysVisible, geometry } = Object.assign({}, defaults, params)
 
   if (!geometry) {
     throw new Error('no geometry provided to drawNormals')
@@ -59,16 +59,16 @@ const drawNormals = function (regl, params) {
   // const yAxisModel = mat4.rotateZ(mat4.create(), mat4.identity([]), Math.PI / 2)
   // const zAxisModel = mat4.rotateY(mat4.create(), mat4.identity([]), -Math.PI / 2)
 
-  const foo = geometry.normals.map(function (normal, index) {
+  const foo = geometry.normals.map((normal, index) => {
     let orientation = mat4.identity([])
     orientation = mat4.rotateX(orientation, orientation, normal[0])
     orientation = mat4.rotateY(orientation, orientation, normal[1])
     orientation = mat4.rotateZ(orientation, orientation, normal[2])
     const position = mat4.translate([], orientation, geometry.positions[index])
 
-    return {color: xColor, model: position}
+    return { color: xColor, model: position }
   })
-  let singleNormal = regl(commandParams)
+  const singleNormal = regl(commandParams)
   return () => singleNormal(foo)
 }
 

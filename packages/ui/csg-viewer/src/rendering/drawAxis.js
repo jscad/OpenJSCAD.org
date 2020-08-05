@@ -9,7 +9,7 @@ const drawAxis = function (regl, params) {
     lineWidth: 3, // FIXME/ linewidth has been "deprecated" in multiple browsers etc, need a workaround,
     alwaysVisible: true // to have the widget alway visible 'on top' of the rest of the scene
   }
-  let {size, xColor, yColor, zColor, lineWidth, alwaysVisible} = Object.assign({}, defaults, params)
+  let { size, xColor, yColor, zColor, lineWidth, alwaysVisible } = Object.assign({}, defaults, params)
 
   if (lineWidth > regl.limits.lineWidthDims[1]) {
     lineWidth = regl.limits.lineWidthDims[1]
@@ -52,7 +52,7 @@ const drawAxis = function (regl, params) {
   const xAxisModel = mat4.identity([])
   const yAxisModel = mat4.rotateZ(mat4.create(), mat4.identity([]), Math.PI / 2)
   const zAxisModel = mat4.rotateY(mat4.create(), mat4.identity([]), -Math.PI / 2)
-  let single = regl(commandParams)
+  const single = regl(commandParams)
   return (props) => {
     const defaults = {
       model: mat4.identity([])

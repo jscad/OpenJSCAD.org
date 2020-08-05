@@ -3,18 +3,19 @@ const { pxPmm } = require('./constants')
 
 const svgCore = function (obj, element) {
   if ('ID' in element) { obj.id = element.ID }
+  if ('position' in element) { obj.position = element.position }
 }
 
 const svgPresentation = function (obj, element) {
   // presentation attributes for all
   if ('DISPLAY' in element) { obj.visible = element.DISPLAY }
   // presentation attributes for solids
-  if ('COLOR' in element) { obj.fill = cagColor(element.COLOR); obj.stroke = obj.fill; }
+  if ('COLOR' in element) { obj.fill = cagColor(element.COLOR); obj.stroke = obj.fill }
   if ('OPACITY' in element) { obj.opacity = element.OPACITY }
   if ('FILL' in element) {
     obj.fill = cagColor(element.FILL)
   } else {
-    let s = cssStyle(element, 'fill')
+    const s = cssStyle(element, 'fill')
     if (s) {
       obj.fill = cagColor(s)
     }
@@ -24,7 +25,7 @@ const svgPresentation = function (obj, element) {
   if ('STROKE-WIDTH' in element) {
     obj.strokeWidth = element['STROKE-WIDTH']
   } else {
-    let sw = cssStyle(element, 'stroke-width')
+    const sw = cssStyle(element, 'stroke-width')
     if (sw) {
       obj.strokeWidth = sw
     }
@@ -32,7 +33,7 @@ const svgPresentation = function (obj, element) {
   if ('STROKE' in element) {
     obj.stroke = cagColor(element.STROKE)
   } else {
-    let s = cssStyle(element, 'stroke')
+    const s = cssStyle(element, 'stroke')
     if (s) {
       obj.stroke = cagColor(s)
     }
@@ -45,21 +46,21 @@ const svgTransforms = function (cag, element) {
   if ('TRANSFORM' in element) {
     list = element.TRANSFORM
   } else {
-    let s = cssStyle(element, 'transform')
+    const s = cssStyle(element, 'transform')
     if (s) { list = s }
   }
   if (list !== null) {
     cag.transforms = []
-    let exp = new RegExp('\\w+\\(.+\\)', 'i')
+    const exp = new RegExp('\\w+\\(.+\\)', 'i')
     let v = exp.exec(list)
     while (v !== null) {
-      let s = exp.lastIndex
-      let e = list.indexOf(')') + 1
+      const s = exp.lastIndex
+      const e = list.indexOf(')') + 1
       let t = list.slice(s, e) // the transform
       t = t.trim()
       // add the transform to the CAG
       // which are applied in the order provided
-      let n = t.slice(0, t.indexOf('('))
+      const n = t.slice(0, t.indexOf('('))
       let a = t.slice(t.indexOf('(') + 1, t.indexOf(')')).trim()
       if (a.indexOf(',') > 0) { a = a.split(',') } else { a = a.split(' ') }
       let o
@@ -92,7 +93,7 @@ const svgTransforms = function (cag, element) {
 
 const svgSvg = function (element, { customPxPmm }) {
   // default SVG with no viewport
-  let obj = { type: 'svg', x: 0, y: 0, width: '100%', height: '100%', strokeWidth: '1' }
+  const obj = { type: 'svg', x: 0, y: 0, width: '100%', height: '100%', strokeWidth: '1' }
 
   // default units per mm
   obj.unitsPmm = [pxPmm, pxPmm]
@@ -105,9 +106,9 @@ const svgSvg = function (element, { customPxPmm }) {
   if ('WIDTH' in element) { obj.width = element.WIDTH }
   if ('HEIGHT' in element) { obj.height = element.HEIGHT }
   if ('VIEWBOX' in element) {
-    let list = element.VIEWBOX.trim()
-    let exp = new RegExp('([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)', 'i')
-    let v = exp.exec(list)
+    const list = element.VIEWBOX.trim()
+    const exp = new RegExp('([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)', 'i')
+    const v = exp.exec(list)
     if (v !== null) {
       obj.viewX = parseFloat(v[1])
       obj.viewY = parseFloat(v[2])
@@ -172,7 +173,7 @@ const svgEllipse = function (element) {
 }
 
 const svgLine = function (element) {
-  let obj = { type: 'line', x1: '0', y1: '0', x2: '0', y2: '0' }
+  const obj = { type: 'line', x1: '0', y1: '0', x2: '0', y2: '0' }
   if ('X1' in element) { obj.x1 = element.X1 }
   if ('Y1' in element) { obj.y1 = element.Y1 }
   if ('X2' in element) { obj.x2 = element.X2 }
@@ -187,13 +188,13 @@ const svgLine = function (element) {
 }
 
 const svgListOfPoints = function (list) {
-  let points = []
-  let exp = new RegExp('([\\d\\-\\+\\.]+)[\\s,]+([\\d\\-\\+\\.]+)[\\s,]*', 'i')
+  const points = []
+  const exp = new RegExp('([\\d\\-\\+\\.]+)[\\s,]+([\\d\\-\\+\\.]+)[\\s,]*', 'i')
   list = list.trim()
   let v = exp.exec(list)
   while (v !== null) {
     let point = v[0]
-    let next = exp.lastIndex + point.length
+    const next = exp.lastIndex + point.length
     point = { x: v[1], y: v[2] }
     points.push(point)
     list = list.slice(next, list.length)
@@ -233,7 +234,7 @@ const svgPolygon = function (element) {
 }
 
 const svgRect = function (element) {
-  let obj = { type: 'rect', x: '0', y: '0', rx: '0', ry: '0', width: '0', height: '0' }
+  const obj = { type: 'rect', x: '0', y: '0', rx: '0', ry: '0', width: '0', height: '0' }
 
   if ('X' in element) { obj.x = element.X }
   if ('Y' in element) { obj.y = element.Y }
@@ -260,7 +261,7 @@ const svgRect = function (element) {
 }
 
 const svgCircle = function (element) {
-  let obj = { type: 'circle', x: '0', y: '0', radius: '0' }
+  const obj = { type: 'circle', x: '0', y: '0', radius: '0' }
 
   if ('CX' in element) { obj.x = element.CX }
   if ('CY' in element) { obj.y = element.CY }
@@ -275,7 +276,7 @@ const svgCircle = function (element) {
 }
 
 const svgGroup = function (element) {
-  let obj = { type: 'group' }
+  const obj = { type: 'group' }
   // transforms
   svgTransforms(obj, element)
   // core attributes
@@ -291,7 +292,7 @@ const svgGroup = function (element) {
 // Convert the PATH element into object representation
 //
 const svgPath = function (element) {
-  let obj = { type: 'path' }
+  const obj = { type: 'path' }
   // transforms
   svgTransforms(obj, element)
   // core attributes
@@ -305,9 +306,9 @@ const svgPath = function (element) {
     let bf = ''
 
     let i = 0
-    let l = element.D.length
+    const l = element.D.length
     while (i < l) {
-      let c = element.D[i]
+      const c = element.D[i]
       switch (c) {
       // numbers
       // FIXME support E notation numbers
@@ -401,7 +402,7 @@ const svgPath = function (element) {
 // deep clone the referenced OBJECT and add to group
 // - clone using JSON.parse(JSON.stringify(obj))
 const svgUse = function (element, { svgObjects }) {
-  let obj = { type: 'group' }
+  const obj = { type: 'group' }
   // transforms
   svgTransforms(obj, element)
   // core attributes
@@ -411,7 +412,7 @@ const svgUse = function (element, { svgObjects }) {
 
   if ('X' in element && 'Y' in element) {
     if (!('transforms' in obj)) obj.transforms = []
-    let o = { translate: [element.X, element.Y] }
+    const o = { translate: [element.X, element.Y] }
     obj.transforms.push(o)
   }
 

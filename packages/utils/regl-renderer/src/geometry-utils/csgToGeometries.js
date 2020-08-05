@@ -1,5 +1,7 @@
 const vec3 = require('gl-vec3')
 
+const { toArray } = require('@jscad/array-utils')
+
 /**
  * convert a CSG from csg.js to an array of geometries with positions, normals, colors & indices
  * typically used for example to display the csg data in a webgl wiever
@@ -11,7 +13,7 @@ const vec3 = require('gl-vec3')
  * @param {String} options.faceColor='#FF000' hex color
  * @returns {Object} {indices, positions, normals, colors}
  */
-function csgToGeometries (csgs, options) {
+const csgToGeometries = (csgs, options) => {
   const defaults = {
     smoothLighting: false, // set to true if we want to use interpolated vertex normals this creates nice round spheres but does not represent the shape of the actual model
     normalThreshold: 0.349066, // 20 deg
@@ -20,16 +22,13 @@ function csgToGeometries (csgs, options) {
   const { smoothLighting, normalThreshold, faceColor } = Object.assign({}, defaults, options)
   const faceColorRgb = faceColor === undefined ? undefined : normalizedColor(faceColor) // TODO : detect if hex or rgba
 
-  csgs = toArray(csgs)
-  const geometriesPerCsg = csgs.map(convert)
+  const convert = (csg) => {
+    const geometries = []
 
-  function convert (csg) {
-    let geometries = []
-
-    let positions = []
-    let colors = []
-    let normals = []
-    let indices = []
+    const positions = []
+    const colors = []
+    const normals = []
+    const indices = []
 
     // flag for transparency
     let isTransparent = false
@@ -127,36 +126,18 @@ function csgToGeometries (csgs, options) {
     }
     return geometries
   }
+
+  csgs = toArray(csgs)
+  const geometriesPerCsg = csgs.map(convert)
+
   return geometriesPerCsg
 }
 
-/**
- * converts input data to array if it is not already an array
- * @param {Any} input data: can be null or undefined, an array , an object etc
- * @returns {Array} if inital data was an array it returns it unmodified,
- * otherwise a 0 or one element array
- */
-function toArray (data) {
-  if (data === undefined || data === null) { return [] }
-  if (data.constructor !== Array) { return [data] }
-  return data
-}
-
-/**
- * convert color from rgba object to the array of bytes
- * @param {Object} color `{r: r, g: g, b: b, a: a}`
- * @returns {Array}  `[r, g, b, a]`
- */
-function colorBytes (colorRGBA) {
-  let result = [colorRGBA.r, colorRGBA.g, colorRGBA.b]
-  if (colorRGBA.a !== undefined) result.push(colorRGBA.a)
-  return result
-}
 /** determine if input is a hex (color) or not
  * @param  {Object} object a string, array, object , whatever
  * @returns {Boolean} wether the input is a hex string or not
  */
-function isHexColor (object) {
+const isHexColor = (object) => {
   if (typeof sNum !== 'string') {
     return false
   }
@@ -164,24 +145,24 @@ function isHexColor (object) {
 }
 
 // modified from https://stackoverflow.com/questions/21646738/convert-hex-to-rgba
-function hexToRgbNormalized (hex, alpha) {
+const hexToRgbNormalized = (hex, alpha) => {
   hex = hex.replace('#', '')
   const r = parseInt(hex.length === 3 ? hex.slice(0, 1).repeat(2) : hex.slice(0, 2), 16)
   const g = parseInt(hex.length === 3 ? hex.slice(1, 2).repeat(2) : hex.slice(2, 4), 16)
   const b = parseInt(hex.length === 3 ? hex.slice(2, 3).repeat(2) : hex.slice(4, 6), 16)
-  return (alpha ? [r, g, b, alpha] : [r, g, b, 255]).map(x => x / 255)
+  return (alpha ? [r, g, b, alpha] : [r, g, b, 255]).map((x) => x / 255)
 }
 
 /** outputs a normalized [0...1] range, 4 component array color
  * @param  {} input
  */
-function normalizedColor (input) {
+const normalizedColor = (input) => {
   if (isHexColor(input)) {
     return hexToRgbNormalized(input)
   } else if (Array.isArray(input) && input.length >= 3) {
     input = input.length < 4 ? [input[0], input[1], input[2], 1] : input.slice(0, 4)
     if (input[0] > 1 || input[1] > 1 || input[2] > 1) {
-      return input.map(x => x / 255)
+      return input.map((x) => x / 255)
     }
     return input
   }
@@ -193,7 +174,7 @@ function normalizedColor (input) {
  * @param {Object} faceColor a hex color value to default to
  * @returns {Array}  `[r, g, b, a]`
  */
-function polygonColor (polygon, faceColor) {
+const polygonColor = (polygon, faceColor) => {
   let color = faceColor
 
   if (polygon.shared && polygon.shared.color) {
@@ -215,13 +196,11 @@ function polygonColor (polygon, faceColor) {
  * @param {Array} otherNormal another 3 component array normal
  * @returns {Boolean} true if the two normals are similar
  */
-function areNormalsSimilar (normal, otherNormal, threshold) {
-  return vec3.distance(normal, otherNormal) <= threshold
-  // angle computation is too slow but actually precise
-  // return vec3.angle(normal, otherNormal) <= threshold
-}
+const areNormalsSimilar = (normal, otherNormal, threshold) => vec3.distance(normal, otherNormal) <= threshold
+// angle computation is too slow but actually precise
+// return vec3.angle(normal, otherNormal) <= threshold
 
-function fuzyNormalAndPositionLookup (normalPositionLookup, toCompare, normalThreshold = 0.349066) {
+const fuzyNormalAndPositionLookup = (normalPositionLookup, toCompare, normalThreshold = 0.349066) => {
   const normalsCandidates = normalPositionLookup[toCompare.position]
   if (normalsCandidates) {
     // normalPositionLookup[toCompare.position] = normalPositionLookup[toCompare.position].concat([toCompare.normal])

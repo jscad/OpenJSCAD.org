@@ -21,11 +21,9 @@ const getDefaultLocale = () => {
 
 const initTranslations = (options) => {
   const defaults = {
-    localesPath: undefined,
-    translations: {},
-    baseTranslation: 'en'
+    translations: {}
   }
-  const { localesPath, translations, baseTranslation } = Object.assign({}, defaults, options)
+  const { translations } = Object.assign({}, defaults, options)
   // adapted from https://gist.github.com/gmarcos87/565d57747b30e1755046002137228562
 
   // const genericFile = translations['en']
@@ -38,18 +36,17 @@ const { i18nConfig } = i18nImport
 
 const makei18nSideEffect = (options) => {
   const translationsCB = callBackToStream()
-  const defaultLocale = getDefaultLocale()
   let translations = initTranslations(options)
 
   // all available commands
   const commandsMap = {
-    setAvailableTranslations: command => {
+    setAvailableTranslations: (command) => {
       translations = command.data
     },
-    getDefaultLocale: command => {
+    getDefaultLocale: (command) => {
       translationsCB.callback({ data: getDefaultLocale(), type: command.type })
     },
-    changeSettings: command => {
+    changeSettings: (command) => {
       const locales = command.data
       i18nConfig({
         locales,
@@ -57,11 +54,11 @@ const makei18nSideEffect = (options) => {
       })
       translationsCB.callback({ data: i18n, type: 'changeSettings' })
     },
-    getAvailableLanguages: command => {
+    getAvailableLanguages: (command) => {
       const availableLanguages = Object.keys(translations)
-        .map(code => {
+        .map((code) => {
           let fullName = longNames[code] ? longNames[code] : 'placeholder'
-          let translation = translations[code]
+          const translation = translations[code]
           if (translation && 'language' in translation) fullName = translation.language
           return { code, fullName }
         })
@@ -70,17 +67,14 @@ const makei18nSideEffect = (options) => {
   }
 
   const sink = (out$) => {
-    out$.forEach(command => {
+    out$.forEach((command) => {
       const commandAction = commandsMap[command.type]
       if (commandAction) {
         commandAction(command)
       }
     })
   }
-  const source = () => {
-    return translationsCB.stream
-      .multicast()
-  }
+  const source = () => translationsCB.stream.multicast()
   return { sink, source }
 }
 

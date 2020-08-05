@@ -5,15 +5,13 @@
  * @param  {Array} propertiesToFilter an array of property names
  * @returns {Object} a new object
  */
-const omit = (propertiesToFilter, object) => {
-  return Object.keys(object).reduce((result, key) => {
-    if (!propertiesToFilter.includes(key)) {
-      // eslint-disable-next-line no-param-reassign
-      result[key] = object[key]
-    }
-    return result
-  }, {})
-}
+const omit = (propertiesToFilter, object) => Object.keys(object).reduce((result, key) => {
+  if (!propertiesToFilter.includes(key)) {
+    // eslint-disable-next-line no-param-reassign
+    result[key] = object[key]
+  }
+  return result
+}, {})
 
 /** returns an object with ONLY the given properties of the input object
  * DO NOT USE on anything but basic data, prototype is not conserved !
@@ -21,15 +19,13 @@ const omit = (propertiesToFilter, object) => {
  * @param  {Array} propertiesToFilter an array of property names
  * @returns {Object} a new object
  */
-const keep = (propertiesToFilter, object) => {
-  return Object.keys(object).reduce((result, key) => {
-    if (propertiesToFilter.includes(key)) {
-      // eslint-disable-next-line no-param-reassign
-      result[key] = object[key]
-    }
-    return result
-  }, {})
-}
+const keep = (propertiesToFilter, object) => Object.keys(object).reduce((result, key) => {
+  if (propertiesToFilter.includes(key)) {
+    // eslint-disable-next-line no-param-reassign
+    result[key] = object[key]
+  }
+  return result
+}, {})
 
 const atKey = (key, object) => {
   if (key in object) {
@@ -38,4 +34,4 @@ const atKey = (key, object) => {
   return {}
 }
 
-module.exports = {omit, keep, atKey}
+module.exports = { omit, keep, atKey }

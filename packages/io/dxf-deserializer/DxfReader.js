@@ -42,7 +42,7 @@ Thanks to @issacs for the sax js library, and inspiration for this reader
    * reader.write(src).close()
    */
   function DxfReader (options) {
-    let reader = this
+    const reader = this
     reader.options = options || {}
 
     reader.trackPosition = (reader.options.track !== false)
@@ -57,7 +57,7 @@ Thanks to @issacs for the sax js library, and inspiration for this reader
     on: function (state, callback) {
     // verify the state
     // set the callback
-      let reader = this
+      const reader = this
       reader['on' + state] = callback
     },
 
@@ -71,14 +71,14 @@ Thanks to @issacs for the sax js library, and inspiration for this reader
 
     // write the given data into the reader, initiating parsing
     write: function (data) {
-      let reader = this
+      const reader = this
       parse(reader, data)
       return reader
     },
 
     // close and clear all state
     close: function () {
-      let reader = this
+      const reader = this
       reader.isclosed = true
       return reader
     }
@@ -87,18 +87,16 @@ Thanks to @issacs for the sax js library, and inspiration for this reader
   //
   // emit the start of processing to the onstart handler if any
   //
-  function emitstart (reader) {
-    return emitstate(reader, 'onstart', reader.data)
-  }
+  const emitstart = (reader) => emitstate(reader, 'onstart', reader.data)
 
   //
   // emit the group (code and value) to asorbers
   //
-  function emitgroup (reader, group, value) {
+  const emitgroup = (reader, group, value) => {
     // console.log(group+": "+value)
     // emit this group to all listeners
     if (reader.absorbers !== undefined) {
-      let absorber = reader.absorbers.get(group)
+      const absorber = reader.absorbers.get(group)
       if (absorber !== undefined) {
         absorber(reader, group, value)
       }
@@ -108,7 +106,7 @@ Thanks to @issacs for the sax js library, and inspiration for this reader
   //
   // wrap and emit the given error to the onerror handler if any
   //
-  function emiterror (reader, er) {
+  const emiterror = (reader, er) => {
     // closeText(reader)
     if (reader.trackPosition) {
       er += `
@@ -124,12 +122,10 @@ Char: ${reader.c}`
   //
   // emit the end of processing to the onend handler if any
   //
-  function emitend (reader) {
-    return emitstate(reader, 'onend', reader.data)
-  }
+  const emitend = (reader) => emitstate(reader, 'onend', reader.data)
 
-  function emitstate (reader, state, data) {
-    let onhandler = state.toString()
+  const emitstate = (reader, state, data) => {
+    const onhandler = state.toString()
     reader[onhandler] && reader[onhandler](reader, data)
     return reader
   }
@@ -137,7 +133,7 @@ Char: ${reader.c}`
   //
   // parse the given data in the context of the given reader
   //
-  function parse (reader, data) {
+  const parse = (reader, data) => {
   // check reader state
     if (reader.error) {
       throw reader.error // throw the last error
@@ -196,7 +192,7 @@ Char: ${reader.c}`
    * @param reader {DxfReader} - context DxfReader to use
    * @param line {String} - line to parse
    */
-  function parseLine (reader, line) {
+  const parseLine = (reader, line) => {
     line = line.trim()
     if (reader.group === null) {
       setDxfGroup(reader, line)
@@ -218,9 +214,9 @@ Char: ${reader.c}`
    * @param reader {DxfReader} - context DxfReader to use
    * @param line {String} - line to parse
    */
-  function setDxfGroup (reader, line) {
+  const setDxfGroup = (reader, line) => {
   // groups are numeric
-    let code = parseInt(line)
+    const code = parseInt(line)
     if (isNaN(code)) {
       emiterror(reader, 'Invalid group (int)')
       reader.group = null
@@ -233,7 +229,7 @@ Char: ${reader.c}`
    * @param reader {DxfReader} - context DxfReader to use
    * @param line {String} - line to parse
    */
-  function setDxfValue (reader, line) {
+  const setDxfValue = (reader, line) => {
     if (reader.options.strict) {
       // TODO evaluate the value based on DXF specifications
       reader.value = line
@@ -245,7 +241,7 @@ Char: ${reader.c}`
   //
   // helper function to return expected values
   //
-  function charAt (data, i) {
+  const charAt = (data, i) => {
     if (data && data.length > i) {
       return data.charAt(i)
     }

@@ -1,12 +1,13 @@
 # Packages you say ?
-Here you can find the full list of packages of the Openjscad / Jscad organization
+
+Here you can find the full list of packages of the JSCAD organization
 
 - [UI Packages](#ui-packages)
 - [Core Packages](#core-packages)
 - [IO Packages](#io-packages)
 - [Other Packages](#other-packages)
 
-### Ui Packages
+### UI Packages
 
 | Package | Version | Dependencies |
 |--------|-------|------------|
@@ -18,7 +19,7 @@ Here you can find the full list of packages of the Openjscad / Jscad organizatio
 
 | Package | Version | Dependencies |
 |--------|-------|------------|
-| [`@jscad/csg`](https://github.com/jscad/csg.js) | [![npm](https://img.shields.io/npm/v/@jscad/csg.svg?maxAge=2592000)](https://www.npmjs.com/package/@jscad/csg) | [![Dependency Status](https://david-dm.org/jscad/csg.js.svg)](https://david-dm.org/jscad/csg.js) |
+| [`@jscad/modeling`](https://github.com/jscad/modeling.js) | [![npm](https://img.shields.io/npm/v/@jscad/modeling.svg?maxAge=2592000)](https://www.npmjs.com/package/@jscad/modeling) | [![Dependency Status](https://david-dm.org/jscad/modeling.js.svg)](https://david-dm.org/jscad/modeling.js) |
 | [`@jscad/core`](/packages/core) | [![npm](https://img.shields.io/npm/v/@jscad/core.svg?maxAge=2592000)](https://www.npmjs.com/package/@jscad/core) | [![Dependency Status](https://david-dm.org/jscad/jscad.svg?path=packages/core)](https://david-dm.org/jscad/jscad?path=packages/core) |
 
 ### IO Packages
@@ -37,12 +38,9 @@ Here you can find the full list of packages of the Openjscad / Jscad organizatio
 | [`@jscad/x3d-serializer`](https://github.com/jscad/io/tree/master/packages/x3d-serializer) | [![npm](https://img.shields.io/npm/v/@jscad/x3d-serializer.svg?maxAge=2592000)](https://www.npmjs.com/package/@jscad/x3d-serializer) | [![Dependency Status](https://david-dm.org/jscad/io.svg?path=packages/x3d-serializer)](https://david-dm.org/jscad/io?path=packages/x3d-serializer) |
 | [`@jscad/dxf-serializer`](https://github.com/jscad/io/tree/master/packages/dxf-serializer) | [![npm](https://img.shields.io/npm/v/@jscad/dxf-serializer.svg?maxAge=2592000)](https://www.npmjs.com/package/@jscad/dxf-serializer) | [![Dependency Status](https://david-dm.org/jscad/io.svg?path=packages/dxf-serializer)](https://david-dm.org/jscad/io?path=packages/dxf-serializer) |
 
-
 ### Other Packages
 
 | Package | Version | Dependencies |
 |--------|-------|------------|
 | [`@jscad/examples`](/packages/examples) | [![npm](https://img.shields.io/npm/v/@jscad/examples.svg?maxAge=2592000)](https://www.npmjs.com/package/@jscad/examples) | [![Dependency Status](https://david-dm.org/jscad/jscad.svg?path=packages/examples)](https://david-dm.org/jscad/jscad?path=packages/examples) |
-| [`@jscad/openscad-openjscad-translator`](https://github.com/jscad/openscad-openjscad-translator) | [![npm](https://img.shields.io/npm/v/@jscad/openscad-openjscad-translator.svg?maxAge=2592000)](https://www.npmjs.com/package/@jscad/openscad-openjscad-translator) | [![Dependency Status](https://david-dm.org/jscad/jscad.svg)](https://david-dm.org/jscad/openscad-openjscad-translator) |
-
 

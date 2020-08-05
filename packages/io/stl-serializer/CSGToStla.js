@@ -1,10 +1,10 @@
-const { geometry } = require('@jscad/modeling')
+const { geometries } = require('@jscad/modeling')
 
 // objects must be an array of 3D geomertries (with polygons)
 const serializeText = (objects, options) => {
   options.statusCallback && options.statusCallback({ progress: 0 })
 
-  let result = `solid JSCAD
+  const result = `solid JSCAD
 ${convertToStl(objects, options)}
 endsolid JSCAD
 `
@@ -13,7 +13,7 @@ endsolid JSCAD
 }
 
 const convertToStl = (objects, options) => {
-  let result = []
+  const result = []
   objects.forEach((object, i) => {
     result.push(convertToFacets(object, options))
     options.statusCallback && options.statusCallback({ progress: 100 * i / objects.length })
@@ -22,8 +22,8 @@ const convertToStl = (objects, options) => {
 }
 
 const convertToFacets = (object, options) => {
-  let result = []
-  let polygons = geometry.geom3.toPolygons(object)
+  const result = []
+  const polygons = geometries.geom3.toPolygons(object)
   polygons.forEach((polygon, i) => {
     result.push(convertToFacet(polygon))
   })
@@ -35,12 +35,12 @@ const vector3DtoStlString = (v) => `${v[0]} ${v[1]} ${v[2]}`
 const vertextoStlString = (vertex) => `vertex ${vector3DtoStlString(vertex)}`
 
 const convertToFacet = (polygon) => {
-  let result = []
+  const result = []
   if (polygon.vertices.length >= 3) {
     // STL requires triangular polygons. If our polygon has more vertices, create multiple triangles:
-    let firstVertexStl = vertextoStlString(polygon.vertices[0])
+    const firstVertexStl = vertextoStlString(polygon.vertices[0])
     for (let i = 0; i < polygon.vertices.length - 2; i++) {
-      let facet = `facet normal ${vector3DtoStlString(polygon.plane)}
+      const facet = `facet normal ${vector3DtoStlString(geometries.poly3.plane(polygon))}
 outer loop
 ${firstVertexStl}
 ${vertextoStlString(polygon.vertices[i + 1])}

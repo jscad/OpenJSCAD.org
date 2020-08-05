@@ -24,16 +24,15 @@ function loadScript (scriptAsText, filePath, csgBasePath = '@jscad/csg/api') {
     const {CSG, CAG} = require('${csgBasePath}').csg
     const {square, circle, polygon} = require('${csgBasePath}').primitives2d
     const {cube, cylinder, sphere, polyhedron, torus} = require('${csgBasePath}').primitives3d
-    const {color} = require('${csgBasePath}').color
+    const {colorize, hsl2rgb} = require('${csgBasePath}').colors
     const {rectangular_extrude, linear_extrude, rotate_extrude} = require('${csgBasePath}').extrusions
     const {rotate, translate, scale, mirror, hull, chain_hull, expand, contract} = require('${csgBasePath}').transformations
     const {union, difference, intersection} = require('${csgBasePath}').booleanOps
     const {sin, cos, tan, sqrt, lookup} = require('${csgBasePath}').maths
-    const {hsl2rgb} = require('${csgBasePath}').color
     const {vector_text, vector_char} = require('${csgBasePath}').text
     const {OpenJsCad} = require('${csgBasePath}').OpenJsCad
     const {echo} = require('${csgBasePath}').debug
-    
+
     ${scriptAsText}
     module.exports.main = main
     ${getParamsString}
@@ -44,7 +43,7 @@ function loadScript (scriptAsText, filePath, csgBasePath = '@jscad/csg/api') {
   }
   if ((typeof (scriptRootModule) === 'function')) { // single export ???
     console.warn('please use named exports for your main() function !')
-    scriptRootModule = {main: scriptRootModule}
+    scriptRootModule = { main: scriptRootModule }
   }
   let params = {}
   let paramDefinitions = []
@@ -52,7 +51,7 @@ function loadScript (scriptAsText, filePath, csgBasePath = '@jscad/csg/api') {
     paramDefinitions = scriptRootModule.getParameterDefinitions() || []
     params = getParameterValuesFromParameters(scriptRootModule.getParameterDefinitions)
   }
-  return {params, paramDefinitions, scriptRootModule: scriptRootModule}
+  return { params, paramDefinitions, scriptRootModule: scriptRootModule }
 }
 
-module.exports = {loadScript}
+module.exports = { loadScript }

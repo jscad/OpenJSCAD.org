@@ -1,9 +1,9 @@
-const {ipcRenderer} = require('electron')
+const { ipcRenderer } = require('electron')
 var data = ipcRenderer.sendSync('get-file-data')
 if (data === null) {
   console.log('There is no file')
 } else {
-    // Do something with the file.
+  // Do something with the file.
   console.log(data)
 }
 ipcRenderer.send('asynchronous-message', 'ping')

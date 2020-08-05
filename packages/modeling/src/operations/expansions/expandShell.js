@@ -1,47 +1,48 @@
-const { EPS } = require('../../math/constants')
+const { EPS } = require('../../maths/constants')
 
-const { mat4, vec3 } = require('../../math')
+const mat4 = require('../../maths/mat4')
+const vec3 = require('../../maths/vec3')
 
-const { fnNumberSort } = require('../../utils')
+const fnNumberSort = require('../../utils/fnNumberSort')
 
-const { geom3, poly3 } = require('../../geometry')
+const geom3 = require('../../geometries/geom3')
+const poly3 = require('../../geometries/poly3')
 
-const { sphere } = require('../../primitives')
+const { sphere } = require('../../primitives/ellipsoid')
 
 const retessellate = require('../booleans/retessellate')
 const unionGeom3Sub = require('../booleans/unionGeom3Sub')
 
 const extrudePolygon = require('./extrudePolygon')
 
+const { center } = require('../transforms/center')
+
 const mapPlaneToVertex = (map, vertex, plane) => {
-  let i = map.findIndex((item) => vec3.equals(item[0], vertex))
+  const i = map.findIndex((item) => vec3.equals(item[0], vertex))
   if (i < 0) {
-    let entry = [vertex, [plane]]
+    const entry = [vertex, [plane]]
     map.push(entry)
     return map.length
   }
-  let planes = map[i][1]
+  const planes = map[i][1]
   planes.push(plane)
   return i
 }
 
 const mapPlaneToEdge = (map, edge, plane) => {
-  let i = map.findIndex((item) => {
-    return (vec3.equals(item[0], edge[0]) && vec3.equals(item[1], edge[1])) ||
-           (vec3.equals(item[0], edge[1]) && vec3.equals(item[1], edge[0]))
-  })
+  const i = map.findIndex((item) => (vec3.equals(item[0], edge[0]) && vec3.equals(item[1], edge[1])) || (vec3.equals(item[0], edge[1]) && vec3.equals(item[1], edge[0])))
   if (i < 0) {
-    let entry = [edge, [plane]]
+    const entry = [edge, [plane]]
     map.push(entry)
     return map.length
   }
-  let planes = map[i][1]
+  const planes = map[i][1]
   planes.push(plane)
   return i
 }
 
 const addUniqueAngle = (map, angle) => {
-  let i = map.findIndex((item) => item === angle)
+  const i = map.findIndex((item) => item === angle)
   if (i < 0) {
     map.push(angle)
     return map.length
@@ -63,11 +64,11 @@ const expandShell = (options, geometry) => {
     delta: 1,
     segments: 12
   }
-  let { delta, segments } = Object.assign({ }, defaults, options)
+  const { delta, segments } = Object.assign({ }, defaults, options)
 
   let result = geom3.create()
-  let vertices2planes = [] // contents: [vertex, [plane, ...]]
-  let edges2planes = [] // contents: [[vertex, vertex], [plane, ...]]
+  const vertices2planes = [] // contents: [vertex, [plane, ...]]
+  const edges2planes = [] // contents: [[vertex, vertex], [plane, ...]]
 
   // loop through the polygons
   // - extruded the polygon, and add to the composite result
@@ -75,17 +76,17 @@ const expandShell = (options, geometry) => {
   // - add the plane to the unique edge map
   const polygons = geom3.toPolygons(geometry)
   polygons.forEach((polygon) => {
-    let extrudevector = vec3.scale(2 * delta, polygon.plane)
-    let translatedpolygon = poly3.transform(mat4.fromTranslation(vec3.scale(-0.5, extrudevector)), polygon)
-    let extrudedface = extrudePolygon(extrudevector, translatedpolygon)
+    const extrudevector = vec3.scale(2 * delta, poly3.plane(polygon))
+    const translatedpolygon = poly3.transform(mat4.fromTranslation(vec3.scale(-0.5, extrudevector)), polygon)
+    const extrudedface = extrudePolygon(extrudevector, translatedpolygon)
     result = unionGeom3Sub(result, extrudedface)
 
-    let vertices = polygon.vertices
+    const vertices = polygon.vertices
     for (let i = 0; i < vertices.length; i++) {
-      mapPlaneToVertex(vertices2planes, vertices[i], polygon.plane)
-      let j = (i + 1) % vertices.length
-      let edge = [vertices[i], vertices[j]]
-      mapPlaneToEdge(edges2planes, edge, polygon.plane)
+      mapPlaneToVertex(vertices2planes, vertices[i], poly3.plane(polygon))
+      const j = (i + 1) % vertices.length
+      const edge = [vertices[i], vertices[j]]
+      mapPlaneToEdge(edges2planes, edge, poly3.plane(polygon))
     }
   })
 
@@ -95,15 +96,15 @@ const expandShell = (options, geometry) => {
   // face that touches this side. This ensures that we will get a smooth fill even
   // if two edges are at, say, 10 degrees and the segments is low.
   edges2planes.forEach((item) => {
-    let edge = item[0]
-    let planes = item[1]
-    let startpoint = edge[0]
-    let endpoint = edge[1]
+    const edge = item[0]
+    const planes = item[1]
+    const startpoint = edge[0]
+    const endpoint = edge[1]
 
     // our x,y and z vectors:
-    let zbase = vec3.unit(vec3.subtract(endpoint, startpoint))
-    let xbase = planes[0]
-    let ybase = vec3.cross(xbase, zbase)
+    const zbase = vec3.unit(vec3.subtract(endpoint, startpoint))
+    const xbase = planes[0]
+    const ybase = vec3.cross(xbase, zbase)
 
     // make a list of angles that the cylinder should traverse:
     let angles = []
@@ -115,9 +116,9 @@ const expandShell = (options, geometry) => {
 
     // and also at every normal of all touching planes:
     for (let i = 0, iMax = planes.length; i < iMax; i++) {
-      let planenormal = planes[i]
-      let si = vec3.dot(ybase, planenormal)
-      let co = vec3.dot(xbase, planenormal)
+      const planenormal = planes[i]
+      const si = vec3.dot(ybase, planenormal)
+      const co = vec3.dot(xbase, planenormal)
       let angle = Math.atan2(si, co)
 
       if (angle < 0) angle += Math.PI * 2
@@ -131,19 +132,19 @@ const expandShell = (options, geometry) => {
     angles = angles.sort(fnNumberSort)
 
     // Now construct the cylinder by traversing all angles:
-    let numangles = angles.length
+    const numangles = angles.length
     let prevp1
     let prevp2
-    let startfacevertices = []
-    let endfacevertices = []
-    let polygons = []
+    const startfacevertices = []
+    const endfacevertices = []
+    const polygons = []
     for (let i = -1; i < numangles; i++) {
-      let angle = angles[(i < 0) ? (i + numangles) : i]
-      let si = Math.sin(angle)
-      let co = Math.cos(angle)
-      let p = vec3.add(vec3.scale(co * delta, xbase), vec3.scale(si * delta, ybase))
-      let p1 = vec3.add(startpoint, p)
-      let p2 = vec3.add(endpoint, p)
+      const angle = angles[(i < 0) ? (i + numangles) : i]
+      const si = Math.sin(angle)
+      const co = Math.cos(angle)
+      const p = vec3.add(vec3.scale(co * delta, xbase), vec3.scale(si * delta, ybase))
+      const p1 = vec3.add(startpoint, p)
+      const p2 = vec3.add(endpoint, p)
       let skip = false
       if (i >= 0) {
         if (vec3.distance(p1, prevp1) < EPS) {
@@ -154,8 +155,8 @@ const expandShell = (options, geometry) => {
         if (i >= 0) {
           startfacevertices.push(p1)
           endfacevertices.push(p2)
-          let points = [prevp2, p2, p1, prevp1]
-          let polygon = poly3.fromPoints(points)
+          const points = [prevp2, p2, p1, prevp1]
+          const polygon = poly3.fromPoints(points)
           polygons.push(polygon)
         }
         prevp1 = p1
@@ -166,7 +167,7 @@ const expandShell = (options, geometry) => {
     polygons.push(poly3.fromPoints(startfacevertices))
     polygons.push(poly3.fromPoints(endfacevertices))
 
-    let cylinder = geom3.create(polygons)
+    const cylinder = geom3.create(polygons)
     result = unionGeom3Sub(result, cylinder)
   })
 
@@ -174,17 +175,17 @@ const expandShell = (options, geometry) => {
   // We will try to set the x and z axis to the normals of 2 planes
   // This will ensure that our sphere tesselation somewhat matches 2 planes
   vertices2planes.forEach((item) => {
-    let vertex = item[0]
-    let planes = item[1]
+    const vertex = item[0]
+    const planes = item[1]
     // use the first normal to be the x axis of our sphere:
-    let xaxis = planes[0]
+    const xaxis = planes[0]
     // and find a suitable z axis. We will use the normal which is most perpendicular to the x axis:
     let bestzaxis = null
     let bestzaxisorthogonality = 0
     for (let i = 1; i < planes.length; i++) {
-      let normal = planes[i]
-      let cross = vec3.cross(xaxis, normal)
-      let crosslength = vec3.length(cross)
+      const normal = planes[i]
+      const cross = vec3.cross(xaxis, normal)
+      const crosslength = vec3.length(cross)
       if (crosslength > 0.05) {
         if (crosslength > bestzaxisorthogonality) {
           bestzaxisorthogonality = crosslength
@@ -193,16 +194,15 @@ const expandShell = (options, geometry) => {
       }
     }
     if (!bestzaxis) {
-      bestzaxis = vec3.random(xaxis)
+      bestzaxis = vec3.orthogonal(xaxis)
     }
-    let yaxis = vec3.unit(vec3.cross(xaxis, bestzaxis))
-    let zaxis = vec3.cross(yaxis, xaxis)
-    let corner = sphere({
-      center: [vertex[0], vertex[1], vertex[2]],
+    const yaxis = vec3.unit(vec3.cross(xaxis, bestzaxis))
+    const zaxis = vec3.cross(yaxis, xaxis)
+    const corner = center({ center: [vertex[0], vertex[1], vertex[2]] }, sphere({
       radius: delta,
       segments: segments,
       axes: [xaxis, yaxis, zaxis]
-    })
+    }))
     result = unionGeom3Sub(result, corner)
   })
   // FIXME ... hack hack hack

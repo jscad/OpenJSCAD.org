@@ -1,8 +1,10 @@
 module.exports = {
-  color: require('./color'),
+  colors: require('./colors'),
   connectors: require('./connectors'),
-  geometry: require('./geometry'),
-  math: require('./math'),
+  curves: require('./curves'),
+  geometries: require('./geometries'),
+  maths: require('./maths'),
+  measurements: require('./measurements'),
   primitives: require('./primitives'),
   text: require('./text'),
   utils: require('./utils'),
@@ -11,6 +13,5 @@ module.exports = {
   expansions: require('./operations/expansions'),
   extrusions: require('./operations/extrusions'),
   hulls: require('./operations/hulls'),
-  measurements: require('./operations/measurements'),
   transforms: require('./operations/transforms')
 }

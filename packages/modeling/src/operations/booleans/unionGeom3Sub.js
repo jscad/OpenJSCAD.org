@@ -1,4 +1,4 @@
-const { geom3 } = require('../../geometry')
+const geom3 = require('../../geometries/geom3')
 
 const mayOverlap = require('./mayOverlap')
 const { Tree } = require('./trees')
@@ -14,8 +14,8 @@ const unionSub = (geometry1, geometry2) => {
     return unionForNonIntersecting(geometry1, geometry2)
   }
 
-  let a = new Tree(geom3.toPolygons(geometry1))
-  let b = new Tree(geom3.toPolygons(geometry2))
+  const a = new Tree(geom3.toPolygons(geometry1))
+  const b = new Tree(geom3.toPolygons(geometry2))
 
   a.clipTo(b, false)
   // b.clipTo(a, true); // ERROR: doesn't work
@@ -24,8 +24,8 @@ const unionSub = (geometry1, geometry2) => {
   b.clipTo(a)
   b.invert()
 
-  let newpolygons = a.allPolygons().concat(b.allPolygons())
-  let result = geom3.create(newpolygons)
+  const newpolygons = a.allPolygons().concat(b.allPolygons())
+  const result = geom3.create(newpolygons)
   return result
 }
 

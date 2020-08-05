@@ -14,9 +14,9 @@ const reducers = {
 }
 const actions = ({ sources }) => {
   const setErrors$ = most.mergeArray(
-    Object.values(sources).filter(x => x !== undefined && 'source' in x)
+    Object.values(sources).filter((x) => x !== undefined && 'source' in x)
   )
-    .filter(x => {
+    .filter((x) => {
       try {
         return 'error' in x
       } catch (e) {
@@ -24,11 +24,11 @@ const actions = ({ sources }) => {
       }
     })
     .thru(withLatestFrom(reducers.setErrors, sources.state))
-    .map(payload => Object.assign({}, { type: 'setErrors', sink: 'state' }, { state: payload }))
+    .map((payload) => Object.assign({}, { type: 'setErrors', sink: 'state' }, { state: payload }))
 
   const clearErrors$ = most.never()
     .thru(withLatestFrom(reducers.clearErrors, sources.state))
-    .map(payload => Object.assign({}, { type: 'clearErrors', sink: 'state' }, { state: payload }))
+    .map((payload) => Object.assign({}, { type: 'clearErrors', sink: 'state' }, { state: payload }))
 
   return { setErrors$, clearErrors$ }
 }

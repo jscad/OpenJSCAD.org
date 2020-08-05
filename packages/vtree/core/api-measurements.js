@@ -1,4 +1,4 @@
-const { toArray, flatten } = require('./arrays')
+const { toArray } = require('./arrays')
 
 const cacheWithInvalidation = require('./cacheWithInvalidation')
 const cachedGenerator = require('./geometry-generator-cached')
@@ -13,7 +13,7 @@ const makeMeasureArea = specials => {
     const operands = cachedGenerator(solids, cache)
 
     const area = operands.reduce((acc, csg) => {
-      let tmpArea = csg.toTriangles().reduce(function (accSub, triPoly) {
+      const tmpArea = csg.toTriangles().reduce(function (accSub, triPoly) {
         return accSub + triPoly.getTetraFeatures(['area'])[0]
       }, 0)
       return acc + tmpArea
@@ -35,7 +35,7 @@ const makeMeasureVolume = specials => {
     const operands = cachedGenerator(solids, cache)
 
     const volume = operands.reduce((acc, csg) => {
-      let tmpArea = csg.toTriangles().reduce(function (accSub, triPoly) {
+      const tmpArea = csg.toTriangles().reduce(function (accSub, triPoly) {
         return accSub + triPoly.getTetraFeatures(['volume'])[0]
       }, 0)
       return acc + tmpArea

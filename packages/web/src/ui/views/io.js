@@ -2,17 +2,18 @@ const html = require('bel')
 
 module.exports = function io (state, i18n) {
   const formatsList = state.io.availableExportFormats
-  .map(function ({name, displayName}) {
-    displayName = i18n.translate(displayName)
-    const selected = state.exportForma !== undefined ? state.exportFormat.toLowerCase() === name.toLowerCase() : undefined
-    return html`<option value=${name} selected='${selected}'>
+    .map(({ name, displayName }) => {
+      displayName = i18n.translate(displayName)
+      const selected = state.io.exportFormat ? state.io.exportFormat.toLowerCase() === name.toLowerCase() : undefined
+      return html`<option value=${name} selected='${selected}'>
       ${displayName}
     </option>`
-  })
+    })
+
   const exportAvailable = state.io.availableExportFormats.length > 0
+
   return html`
-  <section id='io'>
-  
+  <span id='io'>
       <input type="file" value="${i18n`load project`}" id="fileLoader" multiple webkitdirectory mozdirectory msdirectory odirectory directory  />
       <label for="fileLoader"> ${i18n`load project`}> </label>
 
@@ -23,7 +24,7 @@ module.exports = function io (state, i18n) {
         ${formatsList}
         </select>
         <input type='button' value="${i18n`export`}" id="exportBtn"/>
+      </span>
     </span>
-    </section>
     `
 }

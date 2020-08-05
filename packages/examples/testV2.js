@@ -1,5 +1,6 @@
 const jscad = require('@jscad/modeling')
-const { color,
+const {
+  color,
   connectors,
   geometry,
   math,
@@ -12,7 +13,8 @@ const { color,
   extrusions,
   hulls,
   measurements,
-  transforms } = jscad
+  transforms
+} = jscad
 
 const { cuboid, sphere, cylinder, circle, star } = require('@jscad/modeling').primitives
 const { translate, rotate, scale } = transforms

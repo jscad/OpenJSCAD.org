@@ -1,6 +1,6 @@
-const { vec3 } = require('../../math')
+const vec3 = require('../../maths/vec3')
 
-const { poly3 } = require('../../geometry')
+const poly3 = require('../../geometries/poly3')
 
 const slice = require('./slice')
 
@@ -33,7 +33,7 @@ const repartitionEdges = (newlength, edges) => {
     // repartition the edge
     let prev = edge[0]
     for (let i = 1; i <= multiple; ++i) {
-      let next = vec3.add(prev, increment)
+      const next = vec3.add(prev, increment)
       newEdges.push([prev, next])
       prev = next
     }
@@ -54,10 +54,10 @@ const extrudeWalls = (slice0, slice1) => {
 
   const walls = []
   edges0.forEach((edge0, i) => {
-    let edge1 = edges1[i]
+    const edge1 = edges1[i]
 
-    let poly0 = poly3.fromPoints([edge0[0], edge0[1], edge1[1]])
-    let poly1 = poly3.fromPoints([edge0[0], edge1[1], edge1[0]])
+    const poly0 = poly3.fromPoints([edge0[0], edge0[1], edge1[1]])
+    const poly1 = poly3.fromPoints([edge0[0], edge1[1], edge1[0]])
 
     walls.push(poly0, poly1)
   })

@@ -8,6 +8,8 @@
     "jscad": "./cli.js"
   },
   "scripts": {
+    "coverage": "nyc --all --reporter=html --reporter=text npm test",
+    "test": "ava '*.test.js' --serial --verbose --timeout 2m",
     "preversion": "npm test",
     "version": "git add -A ",
     "postversion": "git push origin master && git push origin master --tags",
@@ -33,11 +35,11 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/core": "0.4.0",
-    "@jscad/examples": "1.7.2",
+    "@jscad/modeling": "0.0.1",
     "@jscad/io": "1.0.0-alpha.d0fb3056"
   },
   "devDependencies": {
-   "ava": "1.4.0"
+    "ava": "3.10.0"
   },
   "collective": {
     "type": "opencollective",
