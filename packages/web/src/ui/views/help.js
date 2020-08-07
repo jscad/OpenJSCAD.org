@@ -5,18 +5,15 @@ const help = (state, i18n) => {
   return html`
     <span id='help' style='visibility:${state.activeTool === 'help' ? 'visible' : 'hidden'};' >
       <div>
-        <h3>Documentation:</h3>
-        <a class="navlink" href="https://openjscad.org/dokuwiki/doku.php" target="_blank">User Guide / Documentation <img src="imgs/externalLink.png" style="externalLink"></a>
-        <br/><span class="menuSubInfo">How to program with OpenJSCAD: online, offline & CLI</span>
-        <br/>
-        <a class="navlink" href="https://jscad.xyz/forum" rel="publisher" target="_blank">Recent Updates <img src="imgs/externalLink.png" style="externalLink"></a>
-        <br/><span class="menuSubInfo">Announcements of recent developments</span>
-        <br/>
-        <a class="navlink" href="https://jscad.xyz/forum" target="_blank">Google+ Community <img src="imgs/externalLink.png" style="externalLink"></a>
-        <br/><span class="menuSubInfo">Discuss with other users &amp; developers</span>
+        <h3>${i18n`Documentation`}:</h3>
+        <p><a class="navlink" href="https://openjscad.org/dokuwiki/doku.php" target="_blank">${i18n`User Guide`} <img src="imgs/externalLink.png" style="externalLink"></a></p>
+        <h3>${i18n`Forums`}:</h3>
+        <p><a class="navlink" href="https://jscad.xyz/forum" target="_blank">${i18n`User Group`} <img src="imgs/externalLink.png" style="externalLink"></a></p>
+        <p><a class="navlink" href="https://jscad.xyz/forum" rel="publisher" target="_blank">${i18n`Announcements`} <img src="imgs/externalLink.png" style="externalLink"></a></p>
+        <p><a class="navlink" href="https://jscad.xyz/forum" rel="publisher" target="_blank">${i18n`Recent Updates`} <img src="imgs/externalLink.png" style="externalLink"></a></p>
       </div>
       <div>
-        <h3>Examples:</h3>
+        <h3>${i18n`Examples`}:</h3>
         <table>
           ${exampleElems}
         </table>
