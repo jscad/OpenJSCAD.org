@@ -19,12 +19,12 @@ module.exports = {
   line: require('./line'),
   polygon: require('./polygon'),
   polyhedron: require('./polyhedron'),
-  rectangle: require('./rectangle').rectangle,
+  rectangle: require('./rectangle'),
   roundedCuboid: require('./roundedCuboid'),
   roundedCylinder: require('./roundedCylinder'),
   roundedRectangle: require('./roundedRectangle'),
   sphere: require('./ellipsoid').sphere,
-  square: require('./rectangle').square,
+  square: require('./square'),
   star: require('./star'),
   torus: require('./torus')
 }
