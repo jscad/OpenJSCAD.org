@@ -9,8 +9,8 @@
 module.exports = {
   arc: require('./arc'),
   circle: require('./circle'),
-  cube: require('./cuboid').cube,
-  cuboid: require('./cuboid').cuboid,
+  cube: require('./cube'),
+  cuboid: require('./cuboid'),
   cylinder: require('./cylinder'),
   cylinderElliptic: require('./cylinderElliptic'),
   ellipse: require('./ellipse'),
