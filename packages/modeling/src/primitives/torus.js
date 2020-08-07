@@ -2,7 +2,7 @@ const extrudeRotate = require('../operations/extrusions/extrudeRotate')
 const { rotate } = require('../operations/transforms/rotate')
 const { translate } = require('../operations/transforms/translate')
 
-const { circle } = require('./ellipse')
+const circle = require('./circle')
 
 /**
  * Construct a torus by revolving a small circle (inner) about the circumference of a large (outer) circle.
