@@ -2,7 +2,7 @@
  * @param  {} parameterDefinitions
  * @param  {} inputParameters
  */
-module.exports = function getParameterValuesFromParameters (parameterDefinitions, inputParameters) {
+const getParameterValuesFromParameters = (parameterDefinitions, inputParameters) => {
   const parameterValues = {}
   for (const a in parameterDefinitions) { // defaults, given by getParameterDefinitions()
     const x = parameterDefinitions[a]
@@ -19,3 +19,5 @@ module.exports = function getParameterValuesFromParameters (parameterDefinitions
   }
   return parameterValues
 }
+
+module.exports = getParameterValuesFromParameters

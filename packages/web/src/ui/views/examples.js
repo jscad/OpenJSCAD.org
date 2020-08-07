@@ -1,3 +1,5 @@
+const html = require('bel')
+
 const examplesData = [
   { file: 'various/logo.jscad', title: 'OpenJSCAD.org Logo' },
   { file: 'formas/amf/logo.amf', title: 'OpenJSCAD.org Logo', type: 'AMF' },
@@ -61,9 +63,8 @@ const examplesData = [
   { file: 'yoda-RichRap.stl', title: '3D Model: Yoda (RichRap)', type: 'STL' },
   { file: 'feathers_mcgraw.stl', title: '3D Model: Feathers Mcgraw (q1g0ng)', type: 'STL' }
 ]
-const html = require('bel')
 
-module.exports = function examples (state, i18n) {
+const examples = (state, i18n) => {
   const wrap = 26
   const colp = 100 / Math.floor(examplesData.length / wrap + 1) + '%'
 
@@ -82,3 +83,5 @@ module.exports = function examples (state, i18n) {
   })
   return exampleElems
 }
+
+module.exports = examples
