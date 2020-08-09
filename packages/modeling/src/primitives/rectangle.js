@@ -5,6 +5,7 @@ const geom2 = require('../geometries/geom2')
 /**
  * Construct an axis-aligned rectangle in two dimensional space with four sides and four 90-degree angles.
  * @param {Object} [options] - options for construction
+ * @param {Array} [options.center=[0,0]] - center of rectangle
  * @param {Array} [options.size=[2,2]] - dimension of rectangle, width and length
  * @returns {geom2} new 2D geometry
  * @alias module:modeling/primitives.rectangle
@@ -14,10 +15,10 @@ const geom2 = require('../geometries/geom2')
  */
 const rectangle = (options) => {
   const defaults = {
+    center: [0, 0],
     size: [2, 2]
   }
-  const center = [0, 0]
-  const { size } = Object.assign({}, defaults, options)
+  const { center, size } = Object.assign({}, defaults, options)
 
   if (!Array.isArray(size)) throw new Error('size must be an array')
   if (size.length < 2) throw new Error('size must contain X and Y values')
@@ -34,31 +35,4 @@ const rectangle = (options) => {
   return geom2.fromPoints(points)
 }
 
-/**
- * Construct an axis-aligned square in two dimensional space with four equal sides and four 90-degree angles.
- * @see [rectangle]{@link module:modeling/primitives.rectangle} for more options
- * @param {Object} [options] - options for construction
- * @param {Number} [options.size=2] - dimension of square
- * @returns {geom2} new 2D geometry
- * @alias module:modeling/primitives.square
- *
- * @example
- * let myshape = square({size: 10})
- */
-const square = (options) => {
-  const defaults = {
-    size: 2
-  }
-  let { size } = Object.assign({}, defaults, options)
-
-  if (!Number.isFinite(size)) throw new Error('size must be a number')
-
-  size = [size, size]
-
-  return rectangle({ size })
-}
-
-module.exports = {
-  rectangle,
-  square
-}
+module.exports = rectangle

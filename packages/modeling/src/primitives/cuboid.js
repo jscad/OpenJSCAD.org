@@ -4,6 +4,7 @@ const poly3 = require('../geometries/poly3')
 /**
  * Construct an axis-aligned solid cuboid in three dimensional space.
  * @param {Object} [options] - options for construction
+ * @param {Array} [options.center=[0,0,0]] - center of cuboid
  * @param {Array} [options.size=[2,2,2]] - dimensions of cuboid; width, depth, height
  * @returns {geom3} new 3D geometry
  * @alias module:modeling/primitives.cuboid
@@ -13,10 +14,13 @@ const poly3 = require('../geometries/poly3')
  */
 const cuboid = (options) => {
   const defaults = {
+    center: [0, 0, 0],
     size: [2, 2, 2]
   }
-  const center = [0, 0, 0]
-  const { size } = Object.assign({}, defaults, options)
+  const { center, size } = Object.assign({}, defaults, options)
+
+  if (!Array.isArray(center)) throw new Error('center must be an array')
+  if (center.length < 3) throw new Error('center must contain X, Y and Z values')
 
   if (!Array.isArray(size)) throw new Error('size must be an array')
   if (size.length < 3) throw new Error('size must contain width, depth and height values')
@@ -45,30 +49,4 @@ const cuboid = (options) => {
   return result
 }
 
-/**
- * Construct an axis-aligned solid cube in three dimensional space with six square faces.
- * @see [cuboid]{@link module:modeling/primitives.cuboid} for more options
- * @param {Object} [options] - options for construction
- * @param {Number} [options.size=2] - dimension of cube
- * @returns {geom3} new 3D geometry
- * @alias module:modeling/primitives.cube
- * @example
- * let myshape = cube({size: 10})
- */
-const cube = (options) => {
-  const defaults = {
-    size: 2
-  }
-  let { size } = Object.assign({}, defaults, options)
-
-  if (!Number.isFinite(size)) throw new Error('size must be a number')
-
-  size = [size, size, size]
-
-  return cuboid({ size: size })
-}
-
-module.exports = {
-  cube,
-  cuboid
-}
+module.exports = cuboid

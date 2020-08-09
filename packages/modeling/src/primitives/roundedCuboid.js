@@ -109,7 +109,8 @@ const stitchSides = (bottomCorners, topCorners) => {
 /**
  * Construct an axis-aligned solid cuboid in three dimensions with rounded edges.
  * @param {Object} [options] - options for construction
- * @param {Vector3} [options.size=[2,2,2]] - dimension of rounded cube; width, depth, height
+ * @param {Array} [options.center=[0,0,0]] - center of rounded cube
+ * @param {Array} [options.size=[2,2,2]] - dimension of rounded cube; width, depth, height
  * @param {Number} [options.roundRadius=0.2] - radius of rounded edges
  * @param {Number} [options.segments=32] - number of segments to create per full rotation
  * @returns {geom3} new 3D geometry
@@ -124,12 +125,12 @@ const stitchSides = (bottomCorners, topCorners) => {
  */
 const roundedCuboid = (options) => {
   const defaults = {
+    center: [0, 0, 0],
     size: [2, 2, 2],
     roundRadius: 0.2,
     segments: 32
   }
-  const center = [0, 0, 0]
-  let { size, roundRadius, segments } = Object.assign({}, defaults, options)
+  let { center, size, roundRadius, segments } = Object.assign({}, defaults, options)
 
   if (!Array.isArray(size)) throw new Error('size must be an array')
   if (size.length < 3) throw new Error('size must contain width, depth and height values')

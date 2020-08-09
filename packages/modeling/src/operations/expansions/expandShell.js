@@ -8,7 +8,7 @@ const fnNumberSort = require('../../utils/fnNumberSort')
 const geom3 = require('../../geometries/geom3')
 const poly3 = require('../../geometries/poly3')
 
-const { sphere } = require('../../primitives/ellipsoid')
+const sphere = require('../../primitives/sphere')
 
 const retessellate = require('../booleans/retessellate')
 const unionGeom3Sub = require('../booleans/unionGeom3Sub')

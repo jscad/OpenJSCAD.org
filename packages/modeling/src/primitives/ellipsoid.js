@@ -6,6 +6,7 @@ const poly3 = require('../geometries/poly3')
 /**
  * Construct an ellipsoid in three dimensional space.
  * @param {Object} [options] - options for construction
+ * @param {Array} [options.center=[0,0,0]] - center of ellipsoid
  * @param {Array} [options.radius=[1,1,1]] - radius of ellipsoid, along X, Y and Z
  * @param {Number} [options.segments=32] - number of segements to create per full rotation
  * @param {Array} [options.axes] -  an array with three vectors for the x, y and z base vectors
@@ -17,12 +18,12 @@ const poly3 = require('../geometries/poly3')
 */
 const ellipsoid = (options) => {
   const defaults = {
+    center: [0, 0, 0],
     radius: [1, 1, 1],
     segments: 32,
     axes: [[1, 0, 0], [0, -1, 0], [0, 0, 1]]
   }
-  const center = [0, 0, 0]
-  const { radius, segments, axes } = Object.assign({}, defaults, options)
+  const { center, radius, segments, axes } = Object.assign({}, defaults, options)
 
   if (!Array.isArray(radius)) throw new Error('radius must be an array')
   if (radius.length < 3) throw new Error('radius must contain X, Y and Z values')
@@ -85,35 +86,4 @@ const ellipsoid = (options) => {
   return geom3.create(polygons)
 }
 
-/**
- * Construct a sphere in three dimensional space where are points are at the same distance from the center.
- * @see [ellipsoid]{@link module:modeling/primitives.ellipsoid} for more options
- * @param {Object} [options] - options for construction
- * @param {Number} [options.radius=1] - radius of sphere
- * @param {Number} [options.segments=32] - number of segments to create per full rotation
- * @param {Array} [options.axes] -  an array with three vectors for the x, y and z base vectors
- * @returns {geom3} new 3D geometry
- * @alias module:modeling/primitives.sphere
- *
- * @example
- * let myshape = sphere({radius: 5})
- */
-const sphere = (options) => {
-  const defaults = {
-    radius: 1,
-    segments: 32,
-    axes: [[1, 0, 0], [0, -1, 0], [0, 0, 1]]
-  }
-  let { radius, segments, axes } = Object.assign({}, defaults, options)
-
-  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
-
-  radius = [radius, radius, radius]
-
-  return ellipsoid({ radius: radius, segments: segments, axes: axes })
-}
-
-module.exports = {
-  ellipsoid,
-  sphere
-}
+module.exports = ellipsoid
