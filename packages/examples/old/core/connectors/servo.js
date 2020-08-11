@@ -2,7 +2,7 @@
 // author     : Joost Nieuwenhuijse
 // license    : MIT License
 // description: a servo motor design
-// file       : servo.jscad
+// file       : servo.js
 
 // This demo intends to show how to use properties and connectors.
 // The servoMotor() function constructs the shape of a standard servo
@@ -16,12 +16,23 @@
 // the servo. We can simply subtract it from an object to make space for the servo
 // motor.
 
-function main (params) {
+// TODO Determine if/how connectors work with no object properties.
+
+const jscad = require('@jscad/modeling')
+console.log(jscad)
+const { curves, maths, extrusions, primitives, transforms, booleans } = jscad
+const { bezier } = curves
+const { slice } = extrusions
+const { cuboid, cylinder } = primitives
+const { translate } = transforms
+const { union, subtract } = booleans
+
+const main = (params) => {
   // the servo motor solid:
   var servo = servoMotor()
-
+  return servo
   // the plate:
-  var plate = CSG.cube({ radius: [40, 40, 4] })
+  var plate = cuboid({ size: [40, 40, 4] })
 
   // Define a Connector on the plate, at the place where we want to attach the servo:
   plate.properties.servoConnector = new CSG.Connector(
@@ -71,92 +82,104 @@ function getParameterDefinitions () {
 //    .properties.servomotor.surfaceConnector: a CSG.Connector that can be used to attach the servo motor to a surface
 
 function servoMotor () {
-  var width = 20
-  var length = 40.5
-  var h1 = 26.5
-  var h2 = 29
-  var h4 = 35.9
-  var l1 = 55.4
-  var w1 = 17.8
-  var holeradius = 2.1
-  var holex1 = 2 * 2.54
-  var holey1 = 9.5 * 2.54
-  var cutoutmargin = 1
-  var shaftradius = 3
-  var shafty = 9.25
-  var shafttop = 43
-  var cyl2radius = 7
-  var cyl2height = 2
+  const bodyWidth = 20
+  const bodyLength = 40.5
+  const heightToTabs = 26.5
+  const tabsHeight = 2.5
+  const bodyHeight = 35.9
+  const tabsLength = 55.4
+  const tabsWidth = 17.8
+  const holeRadius = 2.1
+  const holeXOffset = 2 * 2.54
+  const holeYOffset = 9.5 * 2.54
+  const cutOutMargin = 1
+  const shaftRadius = 3
+  const shaftY = 9.25
+  const shaftHeight = 4
+  const cyl2radius = 7
+  const gearHousingHeight = 2
 
-  var resolution = 16 // for all circular objects
+  const resolution = 16 // for all circular objects
 
-  // result: this is the solid in which we will store the servomotor
-  var result = CSG.cube({ radius: [width / 2, length / 2, h4 / 2] })
+  // servoMotor: this is the solid in which we will store the servomotor
+  let servoMotor = translate(
+    [0, 0, bodyHeight / 2],
+    cuboid({ size: [bodyWidth, bodyLength, bodyHeight] })
+  )
+  // console.log(servoMotor); return servoMotor
 
   // cutout: this is the solid for the cutout. It is never rendered directly,
   // but it will be returned as a property of the resulting solid.
   // it can be used to cutout the shape of the servo motor and screw holes
   // from another solid
-  var cutout = CSG.cube({ radius: [width / 2 + cutoutmargin, length / 2 + cutoutmargin, h4 / 2 + cutoutmargin] })
+  var cutout = translate(
+    [0, 0, (bodyHeight / 2) + cutOutMargin],
+    cuboid({ size: [bodyWidth + (2 * cutOutMargin), bodyLength + (2 * cutOutMargin), bodyHeight + (2 * cutOutMargin)] })
+  )
 
-  // add a 'bottomface' property. Since the cube already has predifined connectors at each face,
+  // add a 'bottomface' property. Since the cube already has predefined connectors at each face,
   // we can just copy the 5th:
-  result.properties.servomotor = new CSG.Properties()
-  result.properties.servomotor.bottomface = result.properties.cube.facecenters[5]
-
-  // get the z coordinate of the bottom face:
-  var bottomz = result.properties.servomotor.bottomface.point.z
+  // servoMotor.properties.servomotor = new CSG.Properties()
+  // servoMotor.properties.servomotor.bottomface = servoMotor.properties.cube.facecenters[5]
 
   // the tabs at the end containing the screw holes:
-  var cube2 = CSG.cube({ radius: [w1 / 2, l1 / 2, (h2 - h1) / 2] })
-  cube2 = cube2.translate([0, 0, (h2 - h1) / 2 + bottomz + h1])
-  result = result.union(cube2)
+  let servoTabs = cuboid({ size: [tabsWidth, tabsLength, tabsHeight] })
+  servoTabs = translate([0, 0, (tabsHeight / 2) + heightToTabs], servoTabs)
+  servoMotor = union(servoMotor, servoTabs)
 
+  // servoMotor = cuboid({ size: [1,1,1] })
   // create the cylinders for cutting out the screw holes:
-  for (var hole = 0; hole < 4; hole++) {
-    var xoffset = (hole & 1) ? holex1 : -holex1
-    var yoffset = (hole & 2) ? holey1 : -holey1
-    var cylstart = new CSG.Vector3D([xoffset, yoffset, bottomz + h2])
-    var cylend = new CSG.Vector3D([xoffset, yoffset, bottomz])
-    var cutoutcylinder = CSG.cylinder({ start: cylstart, end: cylend, radius: holeradius, resolution: resolution })
+  for (let hole = 0; hole < 4; hole++) {
+    const xoffset = (hole & 1) ? holeXOffset : -holeXOffset
+    const yoffset = (hole & 2) ? holeYOffset : -holeYOffset
+    // let cylstart = [xoffset, yoffset, bottomZ + h2]
+    // let cylend = [xoffset, yoffset, bottomZ]
+    const cutoutcylinder = translate([xoffset, yoffset, tabsHeight / 2 + heightToTabs],
+      cylinder({ height: tabsHeight, radius: holeRadius, segments: resolution })
+    )
 
     // create the screw hole in the tabs:
-    result = result.subtract(cutoutcylinder)
+    servoMotor = subtract(servoMotor, cutoutcylinder)
 
     // And also add the cutout cylinder to the cutout shape:
-    cutout = cutout.union(cutoutcylinder)
+    cutout = union(cutoutcylinder, cutout)
   }
 
   // cylinder at top:
-  var p1 = new CSG.Vector3D([0, shafty, bottomz + h4])
-  p2 = p1.plus(new CSG.Vector3D([0, 0, cyl2height]))
-  var cyl = CSG.cylinder({ start: p1, end: p2, radius: cyl2radius, resolution: resolution })
-  result = result.union(cyl)
+  var gearHousing = translate(
+      [0,shaftY,gearHousingHeight / 2 + bodyHeight],
+      cylinder({ height: gearHousingHeight, radius: cyl2radius, resolution: resolution })
+  )
+  servoMotor = union(servoMotor,gearHousing)
 
   // make the entire motor grey:
-  result = result.setColor(0.2, 0.2, 0.2)
+  // servoMotor = servoMotor.setColor(0.2, 0.2, 0.2)
 
   // create the shaft:
-  p1 = new CSG.Vector3D([0, shafty, bottomz + h4])
-  p2 = p1.plus(new CSG.Vector3D([0, 0, cyl2height]))
-  var shaft = CSG.cylinder({ start: [0, shafty, bottomz + h4], end: [0, shafty, bottomz + shafttop], radius: shaftradius, resolution: resolution })
-  shaft = shaft.setColor(1, 1, 1)
-  result = result.union(shaft)
+  // p1 = new CSG.Vector3D([0, shaftY, bottomZ + bodyHeight])
+  // p2 = p1.plus(new CSG.Vector3D([0, 0, gearHousingHeight]))
+  var shaft = translate(
+      [0, shaftY, shaftHeight / 2 + bodyHeight + gearHousingHeight],
+      cylinder({height: shaftHeight, radius: shaftRadius, segments: resolution })
+  )
+  servoMotor = union(shaft, servoMotor)
 
   // add the cutout solid to the properties:
-  result.properties.servomotor.cutout = cutout
+  // servoMotor.properties.cutout = 2
+
+  return servoMotor
 
   // Add a Connector to facilitate proper alignment of the servo motor to a surface
   // - The connector's point is at the x/y center of the box, in the bottom plane of the tabs
   // - The connector's axis points towards the top of the box
   // - The connector's normal points towards one of the tabs at the side
-  result.properties.servomotor.surfaceConnector = new CSG.Connector(
-    [0, 0, bottomz + h1], // point
-    [0, 0, 1], // axis
-    [0, 1, 0] // normal
-  )
+  // servoMotor.properties.servomotor.surfaceConnector = new CSG.Connector(
+  //   [0, 0, bottomZ + heightToTabs], // point
+  //   [0, 0, 1], // axis
+  //   [0, 1, 0] // normal
+  // )
 
-  return result
+  // return servoMotor
 }
 
 module.exports = { main, getParameterDefinitions }

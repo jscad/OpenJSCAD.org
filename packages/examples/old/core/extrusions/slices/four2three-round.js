@@ -5,8 +5,9 @@
 // description: testing solidFromSlices()
 */
 
-const { geom2, geom3, line2, path2, poly3 } = require('@jscad/modeling').geometry
+// TODO the code this demonstrates does not seem to exist any more.
 
+const { geom2, geom3, line2, path2, poly3 } = require('@jscad/modeling').geometry
 const { extrudeFromSlices } = require('@jscad/modeling').operations
 
 const getParameterDefinitions = () => {
@@ -23,25 +24,36 @@ const main = (params) => {
 }
 
 function thingTwisted (radius, height, twistangle) {
+  const resolution = 16
   twistangle = twistangle || 0
 
-  var flatBottom = poly3.fromPoints([
+  var cag = geom2.fromPoints([
     [-radius, -radius, 0],
     [radius, -radius, 0],
     [radius, radius, 0]
-  ])
+  ]).expand(2, resolution)
+
+  var flatBottom = poly3.fromPoints(
+    cag.getOutlinePaths()[0].points
+  )
 
   var thing = flatBottom.solidFromSlices({
     numslices: height,
 	 callback: function (t) {
       var coef = 1 - t
+      if (coef < 0.01) coef = 0.01// must not collapse polygon
       var h = height * t
-      return poly3.fromPoints([
+      var cag = geom2.fromPoints([
         [-radius, -radius, h],
         [radius, -radius, h],
 	 		[radius * coef, radius, h],
         [-radius * coef, radius, h]
-      ]).rotate([0, 0, 0], [0, 0, 1], twistangle * t)
+      ]).expand(2, resolution)
+        .rotate([0, 0, 0], [0, 0, 1], twistangle * t)
+
+      return poly3.fromPoints(
+        cag.getOutlinePaths()[0].points
+      ).translate([0, 0, h])
     }
   })
   return thing
