@@ -7,9 +7,6 @@
   "scripts": {
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava './**/*.test.js' --verbose --timeout 2m",
-    "preversion": "npm test",
-    "version": "git add -A ",
-    "postversion": "git push origin master && git push origin master --tags",
     "release-patch": "git checkout master && git pull origin master && npm version patch",
     "release-minor": "git checkout master && git pull origin master && npm version minor",
     "release-major": "git checkout master && git pull origin master && npm version major",

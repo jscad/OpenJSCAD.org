@@ -7,10 +7,6 @@
   "scripts": {
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
-    "changelog__": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "preversion__": "npm test",
-    "version__": "npm run changelog && npm run docs && git add -A ",
-    "postversion__": "git push origin master && git push origin master --tags",
     "release-patch__": "git checkout master && git pull origin master && npm version patch",
     "release-minor__": "git checkout master && git pull origin master && npm version minor",
     "release-major__": "git checkout master && git pull origin master && npm version major"
