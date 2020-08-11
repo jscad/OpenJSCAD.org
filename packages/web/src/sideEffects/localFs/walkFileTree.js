@@ -196,6 +196,5 @@ const walkFileTree = (filelist) => {
 }
 
 module.exports = {
-  pseudoArraytoArray,
   walkFileTree
 }

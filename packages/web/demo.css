@@ -256,7 +256,7 @@ h3 {
 }
 
 #help {
-  padding: 20px;
+  padding: 10px;
   position: absolute;
   top: 40px;
   right: 15px;
@@ -272,6 +272,12 @@ h3 {
 #help a {
   color: rgb(0, 153, 255);
   text-decoration: none;
+}
+#help p {
+  margin-left: 10px;
+}
+#help table {
+  margin: 10px 0px 0px 10px;
 }
 
 

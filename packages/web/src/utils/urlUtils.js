@@ -10,4 +10,7 @@ const fetchUriParams = (uri, paramName, defaultValue = undefined) => {
 
 const getAllUriParams = (uri) => url.parse(uri, true).query
 
-module.exports = { fetchUriParams, getAllUriParams }
+module.exports = {
+  fetchUriParams,
+  getAllUriParams
+}

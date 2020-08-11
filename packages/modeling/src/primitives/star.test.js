@@ -27,10 +27,29 @@ test('star (defaults)', (t) => {
 })
 
 test('star (options)', (t) => {
-  // test vertices
-  let geometry = star({ outerRadius: 5, vertices: 8 })
+  // test center
+  let geometry = star({outerRadius: 5, center: [5, 5]})
   let pts = geom2.toPoints(geometry)
   let exp = [
+    [ 10, 5 ],
+    [ 6.545084971874737, 6.122569941448964 ],
+    [ 6.545084971874737, 9.755282581475768 ],
+    [ 4.4098300562505255, 6.816356320013402 ],
+    [ 0.9549150281252636, 7.938926261462367 ],
+    [ 3.0901699437494745, 5 ],
+    [ 0.9549150281252627, 2.061073738537635 ],
+    [ 4.4098300562505255, 3.1836436799865977 ],
+    [ 6.545084971874736, 0.2447174185242318 ],
+    [ 6.545084971874736, 3.8774300585510364 ]
+  ]
+
+  t.deepEqual(pts.length, 10)
+  t.true(comparePoints(pts, exp))
+
+  // test vertices
+  geometry = star({ outerRadius: 5, vertices: 8 })
+  pts = geom2.toPoints(geometry)
+  exp = [
     [5, 0],
     [3.5355339059327378, 1.4644660940672625],
     [3.5355339059327378, 3.5355339059327373],

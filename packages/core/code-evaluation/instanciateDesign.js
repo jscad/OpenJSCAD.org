@@ -71,17 +71,17 @@ const lookupToCompactBinary = (lookup) => {
 }
 
 // prepare solids for output from worker
-// FIXME: deal with NON GEOM2/GEOM3 !!
 const serializeSolids = (solids) => solids.map((object) => {
-  if (isGeom2(object)) {
-    return require('@jscad/modeling').geometries.geom2.toCompactBinary(object)
-  } else if (isGeom3(object)) {
-    return require('@jscad/modeling').geometries.geom3.toCompactBinary(object)
-  } else if (isPath2(object)) {
-    return require('@jscad/modeling').geometries.path2.toCompactBinary(object)
-  } else {
-    return toJSON(object)
-  }
+  //  if (isGeom2(object)) {
+  //    return require('@jscad/modeling').geometries.geom2.toCompactBinary(object)
+  //  } else if (isGeom3(object)) {
+  //    return require('@jscad/modeling').geometries.geom3.toCompactBinary(object)
+  //  } else if (isPath2(object)) {
+  //    return require('@jscad/modeling').geometries.path2.toCompactBinary(object)
+  //  } else {
+  //    return toJSON(object)
+  //  }
+  return JSON.stringify(object)
 })
 
 const instanciateDesign = (rootModule, parameterValues, options) => {

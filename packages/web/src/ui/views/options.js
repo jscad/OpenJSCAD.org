@@ -1,6 +1,6 @@
 const html = require('bel')
 
-module.exports = function options (state, i18n) {
+const options = (state, i18n) => {
   const languages = state.languages.available.map((language) => {
     const selected = state.languages.active === language.code
     return html`<option value='${language.code}' selected=${selected}>${i18n.translate(language.fullName)}</option>`
@@ -68,3 +68,5 @@ module.exports = function options (state, i18n) {
 
 </section>`
 }
+
+module.exports = options

@@ -477,19 +477,19 @@ const actions = ({ sources }) => {
           if (event.data instanceof Object) {
             const start = new Date().getTime()
 
-            const solids = event.data.solids.map((object) => {
-              // console.log('setting solids from worker', object)
-              if (object[0] === 0) { // Geom2
-                return require('@jscad/modeling').geometries.geom2.fromCompactBinary(object)
-              }
-              if (object[0] === 1) { // Geom3
-                return require('@jscad/modeling').geometries.geom3.fromCompactBinary(object)
-              }
-              if (object[0] === 2) { // Path2
-                return require('@jscad/modeling').geometries.path2.fromCompactBinary(object)
-              }
-            })
-            // const solids = event.data.solids.map(solid => JSON.parse(solid))
+            // const solids = event.data.solids.map((object) => {
+            //   // console.log('setting solids from worker', object)
+            //   if (object[0] === 0) { // Geom2
+            //     return require('@jscad/modeling').geometries.geom2.fromCompactBinary(object)
+            //   }
+            //   if (object[0] === 1) { // Geom3
+            //     return require('@jscad/modeling').geometries.geom3.fromCompactBinary(object)
+            //   }
+            //   if (object[0] === 2) { // Path2
+            //     return require('@jscad/modeling').geometries.path2.fromCompactBinary(object)
+            //   }
+            // })
+            const solids = event.data.solids.map(solid => JSON.parse(solid))
             const { lookupCounts, lookup } = event.data
             // console.log('SOLIDS', solids)
             const end = new Date().getTime()

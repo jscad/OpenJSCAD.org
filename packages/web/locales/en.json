@@ -40,9 +40,11 @@
   "export":"Export",
   "load project":"Load a JSCAD project",
 
-  "STL (Binary)":"STL (binary)",
-  "STL (ASCII)":"STL (text)",
   "AMF (experimental)":"AMF",
+  "DXF (ASCII)":"DXF (ascii)",
+  "json":"JSON",
+  "STL (Binary)":"STL (binary)",
+  "STL (ASCII)":"STL (ascii)",
 
   "update":"Update",
   "instant update":"Instant Update",

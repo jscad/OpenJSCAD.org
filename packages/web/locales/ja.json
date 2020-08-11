@@ -27,7 +27,7 @@
 
   "Command":"コマンド",
   "Key Binding":"キーバインディング",
-  "When":"when",
+  "When":"場合",
   "type and hit enter":"type and hit enter",
 
   "not settable":"(not settable)",
@@ -40,15 +40,17 @@
   "export":"エクスポート",
   "load project":"JSCADプロジェクトロード",
 
+  "AMF (experimental)":"AMF",
+  "DXF (ASCII)":"DXF (アスキー)",
+  "json":"JSON",
   "STL (Binary)":"STL (バイナリ)",
   "STL (ASCII)":"STL (アスキー)",
-  "AMF (experimental)":"AMF",
 
   "update":"アップデート",
   "instant update":"自動アップデート",
   "reset":"リセット",
 
-  "toPresetView":"Reset view",
+  "toPresetView":"ビューのリセット",
   "front":"前面",
   "back":"背面",
   "top":"上面",
@@ -56,11 +58,19 @@
   "left":"左側",
   "right":"右側",
 
-  "setProjectionType":"View type",
-  "perspective":"",
-  "orthographic":"",
+  "setProjectionType":"投影図",
+  "perspective":"透視図",
+  "orthographic":"正投影図",
 
   "reEvaluateCode":"Reload script",
 
-  "always":""
+  "Documentation":"ドキュメント",
+  "User Guide":"ユーザー ガイド",
+  "Forums":"フォーラム",
+  "User Group":"ユーザー グループ",
+  "Announcements":"アヌーセメント",
+  "Recent Updates":"最近のアップデート",
+  "Examples":"設計例",
+
+  "always":"いつも"
 }

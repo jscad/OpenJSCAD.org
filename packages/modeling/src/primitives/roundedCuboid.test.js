@@ -19,7 +19,16 @@ test('roundedCuboid (options)', (t) => {
   let pts = geom3.toPoints(obs)
   let exp = []
 
-  t.deepEqual(pts.length, 62)
+  t.is(pts.length, 62)
+
+  // test center
+  obs = roundedCuboid({center: [4,5,6], segments: 8})
+  pts = geom3.toPoints(obs)
+  exp = [
+  ]
+
+  t.is(pts.length, 62)
+
   // test size
   obs = roundedCuboid({ size: [8, 10, 12], segments: 8 })
   pts = geom3.toPoints(obs)

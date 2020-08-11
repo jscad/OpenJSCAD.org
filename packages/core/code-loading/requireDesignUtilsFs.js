@@ -106,4 +106,7 @@ const getDesignName = (fs, paths) => {
   }
 }
 
-module.exports = { getDesignEntryPoint, getDesignName }
+module.exports = {
+  getDesignEntryPoint,
+  getDesignName
+}

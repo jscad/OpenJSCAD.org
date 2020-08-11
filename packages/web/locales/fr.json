@@ -40,9 +40,11 @@
   "export":"Exporter",
   "load project":"Charger projet jscad",
 
+  "AMF (experimental)":"AMF",
+  "DXF (ASCII)":"DXF (ascii)",
+  "json":"JSON",
   "STL (Binary)":"STL (binaire)",
-  "STL (ASCII)":"STL (ASCII)",
-  "AMF (experimental)":"AMF (experimental)",
+  "STL (ASCII)":"STL (ascii)",
 
   "update":"Actualiser",
   "instant update":"Actualisation Instantanée",
