@@ -1,9 +1,9 @@
 /*
-// title      : ColorCube
+// title      : Color Cube
 // author     : Simon Clark
 // license    : MIT License
 // description: looking at color functions
-// tags       : RGB, HSL, HSV
+// tags       : rgb, hsl, hsv, color
 // file       : colorCube.js
 */
 

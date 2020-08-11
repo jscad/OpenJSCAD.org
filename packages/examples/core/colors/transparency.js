@@ -1,9 +1,10 @@
 /*
 // title      : Transparency
-// authors    : Rene K. Mueller, Moissette Mark
+// authors    : Rene K. Mueller, Moissette Mark, Simon Clark
 // license    : MIT License
 // description: showing transparent objects
-// tags       : colors, transparency, hslToRgb
+// tags       : colors, transparency, hsltorgb
+// file       : transparency.js
 */
 
 const { colorize, hslToRgb, colorNameToRgb } = require('@jscad/modeling').colors

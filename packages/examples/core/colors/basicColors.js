@@ -4,6 +4,7 @@
 // license    : MIT License
 // description: showing various color functions
 // tags       : colors, transparency, hsltorgb, hsvtorgb, rgb, rgba
+// file       : basicColors.js
 */
 
 const jscad = require('@jscad/modeling')

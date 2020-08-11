@@ -1,8 +1,10 @@
-/* title      : Expand
-// author     : OpenSCAD.org, adapted by Rene K. Mueller
-// license    : MIT License
-// description: expand() function
-// tags: expand, expansion, operations
+/*
+// title       : Expand Example
+// author      : Rene K. Mueller, Simon Clark
+// license     : MIT License
+// description : Exploring the expand() function on 2D and 3D geometries
+// tags        : expand, expansion, operations
+// file        : expand.js
 */
 
 const { cuboid, arc, rectangle } = require('@jscad/modeling').primitives
