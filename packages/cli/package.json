@@ -34,9 +34,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/core": "0.4.0",
-    "@jscad/modeling": "0.0.1",
-    "@jscad/io": "1.0.0-alpha.d0fb3056"
+    "@jscad/core": "1.4.0",
+    "@jscad/modeling": "1.0.1",
+    "@jscad/io": "1.0.0"
   },
   "devDependencies": {
     "ava": "3.10.0"
