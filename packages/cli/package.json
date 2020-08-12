@@ -10,9 +10,6 @@
   "scripts": {
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava '*.test.js' --serial --verbose --timeout 2m",
-    "preversion": "npm test",
-    "version": "git add -A ",
-    "postversion": "git push origin master && git push origin master --tags",
     "release-patch": "git checkout master && git pull origin master && npm version patch",
     "release-minor": "git checkout master && git pull origin master && npm version minor",
     "release-major": "git checkout master && git pull origin master && npm version major",
@@ -34,9 +31,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/core": "0.4.0",
-    "@jscad/modeling": "0.0.1",
-    "@jscad/io": "1.0.0-alpha.d0fb3056"
+    "@jscad/core": "1.4.0",
+    "@jscad/modeling": "1.0.1",
+    "@jscad/io": "1.0.0"
   },
   "devDependencies": {
     "ava": "3.10.0"

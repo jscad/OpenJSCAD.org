@@ -27,14 +27,14 @@ test('transform: adjusts the transforms of path', (t) => {
   t.true(compareVectors(another.transforms, expected.transforms))
 
   // expect lazy transform, i.e. only the transforms change
-  expected.transforms = [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, -5, 5, 5, 1]
-  another = transform(mat4.fromTranslation([5, 5, 5]), another)
+  expected.transforms = [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 5, 10, 15, 1]
+  another = transform(mat4.fromTranslation([5, 10, 15]), another)
   t.true(comparePoints(another.points, expected.points))
   t.false(another.isClosed)
   t.true(compareVectors(another.transforms, expected.transforms))
 
   // expect application of the transforms to the sides
-  expected.points = [[-5, 5], [-5, 6], [-6, 5]]
+  expected.points = [[5, 10], [5, 11], [4, 10]]
   expected.transforms = mat4.identity()
   toPoints(another)
   t.true(comparePoints(another.points, expected.points))
@@ -42,8 +42,8 @@ test('transform: adjusts the transforms of path', (t) => {
   t.true(compareVectors(another.transforms, expected.transforms))
 
   // expect lazy transform, i.e. only the transforms change
-  expected.transforms = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 5, 5, 1]
-  another = transform(mat4.fromTranslation([5, 5, 5]), another)
+  expected.transforms = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 10, 15, 1]
+  another = transform(mat4.fromTranslation([5, 10, 15]), another)
   t.true(comparePoints(another.points, expected.points))
   t.false(another.isClosed)
   t.true(compareVectors(another.transforms, expected.transforms))

@@ -16,7 +16,8 @@
     "cli": "npm run bootstrap && cd ./packages/cli",
     "web": "npm run bootstrap && cd ./packages/web && npm run dev",
     "desktop": "npm run bootstrap && cd ./packages/desktop && npm run dev",
-    "publish-dryrun": "git checkout V2 && git pull origin V2 && git add --all && npm test && lerna version 2.0.0 --no-push"
+    "preversion": "npm run test && npm run docs",
+    "publish-dryrun": "lerna version premajor --amend --preid alpha"
   },
   "contributors": [
     {

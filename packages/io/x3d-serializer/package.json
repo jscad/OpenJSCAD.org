@@ -1,6 +1,6 @@
 {
   "name": "@jscad/x3d-serializer",
-  "version": "1.0.0-alpha.d0fb3056",
+  "version": "1.0.0",
   "description": "X3D serializer for JSCAD project",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
@@ -34,8 +34,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/modeling": "0.0.1",
-    "@jscad/io-utils": "1.0.0-alpha.d0fb3056",
+    "@jscad/modeling": "1.0.1",
+    "@jscad/io-utils": "1.0.0",
     "onml": "^0.4.1"
   },
   "devDependencies": {
