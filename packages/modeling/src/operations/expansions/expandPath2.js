@@ -4,6 +4,7 @@ const vec2 = require('../../maths/vec2')
 
 const geom2 = require('../../geometries/geom2')
 const path2 = require('../../geometries/path2')
+const poly2 = require('../../geometries/poly2')
 
 const offsetFromPoints = require('./offsetFromPoints')
 
@@ -35,16 +36,21 @@ const expandPath2 = (options, geometry) => {
   if (points.length === 0) throw new Error('the given geometry cannot be empty')
 
   let offsetopts = { delta, corners, segments, closed }
-  const external = offsetFromPoints(offsetopts, points)
+  let external = offsetFromPoints(offsetopts, points)
 
   offsetopts = { delta: -delta, corners, segments, closed }
-  const internal = offsetFromPoints(offsetopts, points)
+  let internal = offsetFromPoints(offsetopts, points)
 
   let newgeometry = null
   if (geometry.isClosed) {
-    // NOTE: creating path2 from the points insures proper closure
+    if (poly2.measureArea(poly2.create(external)) < 0) {
+      external = external.reverse()
+    } else {
+      internal = internal.reverse()
+    }
+    // NOTE: creating path2 from the points ensures proper closure
     const epath = path2.fromPoints({ closed: true }, external)
-    const ipath = path2.fromPoints({ closed: true }, internal.reverse())
+    const ipath = path2.fromPoints({ closed: true }, internal)
     const esides = geom2.toSides(geom2.fromPoints(path2.toPoints(epath)))
     const isides = geom2.toSides(geom2.fromPoints(path2.toPoints(ipath)))
     newgeometry = geom2.create(esides.concat(isides))
@@ -71,7 +77,10 @@ const expandPath2 = (options, geometry) => {
         i2eCap.push(point)
       }
     }
-    const allpoints = external.concat(e2iCap, internal.reverse(), i2eCap)
+    let allpoints = external.concat(e2iCap, internal.reverse(), i2eCap)
+    if (poly2.measureArea(poly2.create(allpoints)) < 0) {
+      allpoints = allpoints.reverse()
+    }
     newgeometry = geom2.fromPoints(allpoints)
   }
   return newgeometry
