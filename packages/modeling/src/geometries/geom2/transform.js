@@ -17,7 +17,7 @@ const create = require('./create')
 const transform = (matrix, geometry) => {
   const newgeometry = create(geometry.sides) // reuse the sides
 
-  newgeometry.transforms = mat4.multiply(geometry.transforms, matrix)
+  newgeometry.transforms = mat4.multiply(matrix, geometry.transforms)
   return newgeometry
 }
 

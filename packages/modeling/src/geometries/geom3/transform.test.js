@@ -28,14 +28,14 @@ test('transform: Adjusts the transforms of a populated geom3', (t) => {
   t.true(compareVectors(another.transforms, expected.transforms))
 
   // expect lazy transform, i.e. only the transforms change
-  expected.transforms = [6.123234262925839e-17, 1, 0, 0, -1, 6.123234262925839e-17, 0, 0, 0, 0, 1, 0, -5, 5, 5, 1]
-  another = transform(mat4.fromTranslation([5, 5, 5]), another)
+  expected.transforms = [6.123234262925839e-17, 1, 0, 0, -1, 6.123234262925839e-17, 0, 0, 0, 0, 1, 0, 5, 10, 15, 1]
+  another = transform(mat4.fromTranslation([5, 10, 15]), another)
   t.true(comparePolygons(another.polygons[0], expected.polygons[0]))
   t.true(compareVectors(another.transforms, expected.transforms))
 
   // expect application of the transforms to the polygons
   expected.polygons = [
-    { vertices: [[-5, 5, 5], [-5, 6, 5], [-5, 6, 6]] }
+    { vertices: [[5, 10, 15], [5, 11, 15], [5, 11, 16]] }
   ]
   expected.transforms = mat4.identity()
   toPolygons(another)
@@ -43,8 +43,8 @@ test('transform: Adjusts the transforms of a populated geom3', (t) => {
   t.true(compareVectors(another.transforms, expected.transforms))
 
   // expect lazy transform, i.e. only the transforms change
-  expected.transforms = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 5, 5, 1]
-  another = transform(mat4.fromTranslation([5, 5, 5]), another)
+  expected.transforms = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 10, 15, 1]
+  another = transform(mat4.fromTranslation([5, 10, 15]), another)
   t.true(comparePolygons(another.polygons[0], expected.polygons[0]))
   t.true(compareVectors(another.transforms, expected.transforms))
 })

@@ -18,7 +18,7 @@ const transform = (matrix, geometry) => {
   const newgeometry = create(geometry.points) // reuse the points
   newgeometry.isClosed = geometry.isClosed
 
-  newgeometry.transforms = mat4.multiply(geometry.transforms, matrix)
+  newgeometry.transforms = mat4.multiply(matrix, geometry.transforms)
   return newgeometry
 }
 
