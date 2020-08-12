@@ -11,7 +11,7 @@
     "build-umd": "browserify --standalone openjscad src/ui/umd.js -o dist/openjscad.umd.js -t [babelify browserify minifyify]",
     "build-all": "npm run build-web",
     "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
-    "preversion": "npm run build-all",
+    "preversion": "npm run build-all && git add dist",
     "release-patch": "git checkout master && git pull origin master && npm version patch",
     "release-minor": "git checkout master && git pull origin master && npm version minor",
     "release-major": "git checkout master && git pull origin master && npm version major",

@@ -4,6 +4,7 @@
   "description": "jscad desktop application",
   "author": "jscad core team/ Mark Moissette",
   "license": "MIT",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git@github.com:jscad/OpenJSCAD.org.git"
