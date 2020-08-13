@@ -1,6 +1,6 @@
 {
   "name": "@jscad/vtree",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,8 +9,8 @@
   "author": "Mark 'kaosat-dev' Moissette",
   "license": "MIT",
   "dependencies": {
-    "@jscad/array-utils":"0.0.0",
-    "@jscad/modeling": "0.0.1",
+    "@jscad/array-utils":"1.0.0",
+    "@jscad/modeling": "1.0.1",
     "object-hash": "1.2.0"
   },
   "devDependencies": {
