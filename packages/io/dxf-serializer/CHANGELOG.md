@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.0-alpha.0 (2020-08-13)
+
+
+### Bug Fixes
+
+* **dxf-serializer:** removed unnecessary 2D entities from BLOCKS section ([#537](https://github.com/jscad/OpenJSCAD.org/issues/537)) ([21a6d38](https://github.com/jscad/OpenJSCAD.org/commit/21a6d38a62a7fed353bdb3fc5e834178cac7b239))
+
+
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.2.5...@jscad/dxf-serializer@0.3.0) (2018-11-25)
 

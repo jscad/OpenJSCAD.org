@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.0-alpha.0 (2020-08-13)
+
+
+### Bug Fixes
+
+* **color:** color is now immutable & returns new geometries ([#566](https://github.com/jscad/OpenJSCAD.org/issues/566)) ([916824c](https://github.com/jscad/OpenJSCAD.org/commit/916824c63a0bf8896d1b6f85a82b129a013bec58))
+
+
+### Features
+
+* **center:** remove center on primitives ([#512](https://github.com/jscad/OpenJSCAD.org/issues/512)) ([7fdc3eb](https://github.com/jscad/OpenJSCAD.org/commit/7fdc3eb37228ffac1756e279a65ad66cdde9761f))
+
+
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/jscad/io/compare/@jscad/svg-serializer@0.1.3...@jscad/svg-serializer@0.2.0) (2018-11-25)
 

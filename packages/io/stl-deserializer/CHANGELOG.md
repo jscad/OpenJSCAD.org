@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.0-alpha.0 (2020-08-13)
+
+
+### Features
+
+* **polyhedron:** enhanced polyhedron to accept an array of colors ([#544](https://github.com/jscad/OpenJSCAD.org/issues/544)) ([3a2e863](https://github.com/jscad/OpenJSCAD.org/commit/3a2e863e8657500186a833cbb9808a47370f1312))
+
+
+
+
+
 <a name="0.3.3"></a>
 ## [0.3.3](https://github.com/jscad/io/compare/@jscad/stl-deserializer@0.3.2...@jscad/stl-deserializer@0.3.3) (2018-11-25)
 

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.0-alpha.0 (2020-08-13)
+
+
+### Bug Fixes
+
+* **color:** color is now immutable & returns new geometries ([#566](https://github.com/jscad/issues/566)) ([916824c](https://github.com/jscad/commit/916824c63a0bf8896d1b6f85a82b129a013bec58))
+* **dxf-deserializer:** corrected translation of lwpolylines & coding style update([#519](https://github.com/jscad/issues/519)) ([6bb2b38](https://github.com/jscad/commit/6bb2b3878d6b9e4f62fc741801ec9f0fad17575d))
+* **dxf-serializer:** corrected translate() to provide V2 require and export ([#496](https://github.com/jscad/issues/496)) ([9155a36](https://github.com/jscad/commit/9155a367b86046aa21992d7858fe0d54116f9975))
+
+
+### Features
+
+* **center:** remove center on primitives ([#512](https://github.com/jscad/issues/512)) ([7fdc3eb](https://github.com/jscad/commit/7fdc3eb37228ffac1756e279a65ad66cdde9761f))
+
+
+
+
+
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/jscad/io/compare/@jscad/dxf-deserializer@0.1.1...@jscad/dxf-deserializer@0.1.2) (2018-11-22)
 
