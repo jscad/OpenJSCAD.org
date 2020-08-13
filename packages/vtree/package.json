@@ -14,8 +14,8 @@
     "object-hash": "1.2.0"
   },
   "devDependencies": {
-    "@jscad/stl-serializer": "1.0.0-alpha.fb542811",
-    "@jscad/io-utils": "1.0.0-alpha.fb542811",
+    "@jscad/stl-serializer": "1.0.0",
+    "@jscad/io-utils": "1.0.0",
     "decache": "4.4.0",
     "just-diff": "2.1.1",
     "simple-diff": "1.6.0",
