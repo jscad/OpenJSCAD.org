@@ -224,34 +224,11 @@ test('offset (corners: round): offset of a path2 produces expected offset path2'
 })
 
 test('offset (corners: round): offset of a CW path2 produces expected offset path2', (t) => {
-  const openline = path2.fromPoints({ }, [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5]].reverse())
   const closeline = path2.fromPoints({ }, [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5], [-5, -5]].reverse())
 
-  let obs = offset({ delta: -0.5, corners: 'round', segments: 16 }, openline)
-  let pts = path2.toPoints(obs)
-  let exp = [
-    [-5, 4.5],
-    [-3.5, 4.5],
-    [-3.5, 3.061616997868383e-17],
-    [-3.4619397662556435, -0.19134171618254484],
-    [-3.353553390593274, -0.35355339059327373],
-    [-3.1913417161825453, -0.46193976625564326],
-    [-3, -0.5],
-    [3, -0.5],
-    [3.191341716182545, -0.46193976625564337],
-    [3.353553390593274, -0.35355339059327373],
-    [3.4619397662556435, -0.1913417161825449],
-    [3.5, -3.061616997868383e-17],
-    [3.5, 4.5],
-    [4.5, 4.5],
-    [4.5, -4.5],
-    [-5, -4.5]
-  ]
-  t.true(comparePoints(pts, exp))
-
-  obs = offset({ delta: 1, corners: 'round', segments: 16 }, closeline)
-  pts = path2.toPoints(obs)
-  exp = [
+  const obs = offset({ delta: 1, corners: 'round', segments: 16 }, closeline)
+  const pts = path2.toPoints(obs)
+  const exp = [
     [-5.38268343236509, -5.923879532511287],
     [-5.707106781186548, -5.707106781186548],
     [-5.923879532511287, -5.38268343236509],

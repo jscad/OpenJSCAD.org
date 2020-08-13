@@ -1,82 +1,55 @@
 const test = require('ava')
 
-const { comparePoints } = require('../../../test/helpers')
-
+const { comparePoints, nearlyEqual } = require('../../../test/helpers')
 const { geom2, geom3, path2 } = require('../../geometries')
-
+const measureBoundingBox = require('../../measurements/measureBoundingBox')
+const area = require('../../maths/utils/area')
 const { expand } = require('./index')
 
-test('expand: expanding of a path2 produces an expected geom2', (t) => {
-  const points = [
-    [10, 0],
-    [9.510565162951535, 3.090169943749474],
-    [8.090169943749475, 5.877852522924732],
-    [5.877852522924732, 8.090169943749475],
-    [3.0901699437494745, 9.510565162951535],
-    [6.123233995736766e-16, 10]
-  ]
-  let geometry = path2.fromPoints({ }, points)
+test('expand: edge-expanding a straight line produces rectangle', (t) => {
+  const points = [[0, 0], [0, 10]]
+  const linePath2 = path2.fromPoints({ closed: false }, points)
+  const expandedPathGeom2 = expand({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
+  const expandedPoints = geom2.toPoints(expandedPathGeom2)
 
-  // test counter clock wise winding paths
-  let obs = expand({ delta: 2, corners: 'round', segments: 8 }, geometry)
-  let pts = geom2.toPoints(obs)
-  let exp = [
-    [11.975376681190276, 0.31286893008046235],
-    [11.48594184414181, 3.4030388738299364],
-    [11.292578211328271, 3.9981509432285667],
-    [9.872182992126211, 6.785833522403824],
-    [9.504383506122569, 7.292066085297827],
-    [7.292066085297827, 9.504383506122569],
-    [6.785833522403824, 9.872182992126211],
-    [3.9981509432285676, 11.292578211328271],
-    [3.403038873829937, 11.48594184414181],
-    [0.3128689300804632, 11.975376681190276],
-    [-1.1755705045849454, 11.618033988749895],
-    [-1.9753766811902747, 10.312868930080462],
-    [-1.6180339887498942, 8.824429495415053],
-    [-0.31286893008046196, 8.024623318809724],
-    [2.4644320835885507, 7.584742052146989],
-    [4.6876283841274695, 6.451966957800547],
-    [6.451966957800547, 4.6876283841274695],
-    [7.584742052146989, 2.4644320835885507],
-    [8.024623318809724, -0.31286893008046235],
-    [8.824429495415053, -1.618033988749895],
-    [10.312868930080462, -1.9753766811902755],
-    [11.618033988749895, -1.1755705045849463]
-  ]
-  t.is(pts.length, 22)
-  t.true(comparePoints(pts, exp))
+  t.is(area(expandedPoints), 40)
+  t.true(comparePoints(measureBoundingBox(expandedPathGeom2), [[-2, 0, 0], [2, 10, 0]]))
+})
 
-  // test clock wise winding paths
-  geometry = path2.fromPoints({ }, points.reverse())
-  obs = expand({ delta: 2, corners: 'round', segments: 8 }, geometry)
-  pts = geom2.toPoints(obs)
-  exp = [
-    [0.3128689300804632, 11.975376681190276],
-    [3.403038873829937, 11.48594184414181],
-    [3.9981509432285676, 11.292578211328271],
-    [6.785833522403824, 9.872182992126211],
-    [7.292066085297827, 9.504383506122569],
-    [9.504383506122569, 7.292066085297827],
-    [9.872182992126211, 6.785833522403824],
-    [11.292578211328271, 3.9981509432285667],
-    [11.48594184414181, 3.4030388738299364],
-    [11.975376681190276, 0.31286893008046235],
-    [11.618033988749895, -1.1755705045849458],
-    [10.312868930080462, -1.9753766811902753],
-    [8.824429495415053, -1.618033988749895],
-    [8.024623318809724, -0.31286893008046235],
-    [7.584742052146989, 2.4644320835885507],
-    [6.451966957800547, 4.6876283841274695],
-    [4.6876283841274695, 6.451966957800547],
-    [2.4644320835885503, 7.584742052146989],
-    [-0.31286893008046196, 8.024623318809724],
-    [-1.6180339887498947, 8.824429495415055],
-    [-1.9753766811902747, 10.312868930080462],
-    [-1.1755705045849458, 11.618033988749895]
-  ]
-  t.is(pts.length, 22)
-  t.true(comparePoints(pts, exp))
+test('expand: edge-expanding a bent line produces expected geometry', (t) => {
+  const points = [[0, 0], [0, 10], [-5, 10]]
+  const linePath2 = path2.fromPoints({ closed: false }, points)
+  const expandedPathGeom2 = expand({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
+  const expandedPoints = geom2.toPoints(expandedPathGeom2)
+
+  t.is(area(expandedPoints), 60)
+  const boundingBox = measureBoundingBox(expandedPathGeom2)
+  t.true(comparePoints(boundingBox, [[-5, 0, 0], [2, 12, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
+})
+
+test('expand: round-expanding a bent line produces expected geometry', (t) => {
+  const delta = 2
+  const points = [[0, 0], [0, 10], [-5, 10]]
+  const linePath2 = path2.fromPoints({ closed: false }, points)
+  const expandedPathGeom2 = expand({ delta, corners: 'round', segments: 128 }, linePath2)
+  const expandedPoints = geom2.toPoints(expandedPathGeom2)
+
+  const expectedArea = 56 + 2 * Math.PI * delta * 1.25 // shape will have 1 and 1/4 circles
+  nearlyEqual(t, area(expandedPoints), expectedArea, 0.01, 'Measured area should be pretty close')
+  const boundingBox = measureBoundingBox(expandedPathGeom2)
+  t.true(comparePoints(boundingBox, [[-7, -2, 0], [2, 12, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
+})
+
+test('expand: chamfer-expanding a bent line produces expected geometry', (t) => {
+  const delta = 2
+  const points = [[0, 0], [0, 10], [-5, 10]]
+  const linePath2 = path2.fromPoints({ closed: false }, points)
+  const expandedPathGeom2 = expand({ delta, corners: 'chamfer', segments: 8 }, linePath2)
+  const expandedPoints = geom2.toPoints(expandedPathGeom2)
+
+  t.is(area(expandedPoints), 58)
+  const boundingBox = measureBoundingBox(expandedPathGeom2)
+  t.true(comparePoints(boundingBox, [[-5, 0, 0], [2, 12, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
 })
 
 test('expand: expanding of a geom2 produces expected changes to points', (t) => {
