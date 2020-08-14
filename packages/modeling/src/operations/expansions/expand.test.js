@@ -27,6 +27,17 @@ test('expand: edge-expanding a bent line produces expected geometry', (t) => {
   t.true(comparePoints(boundingBox, [[-5, 0, 0], [2, 12, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
 })
 
+test('expand: edge-expanding a bent line, reversed points, produces expected geometry', (t) => {
+  const points = [[-5, 10], [0, 10], [0, 0]]
+  const linePath2 = path2.fromPoints({ closed: false }, points)
+  const expandedPathGeom2 = expand({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
+  const expandedPoints = geom2.toPoints(expandedPathGeom2)
+
+  t.is(area(expandedPoints), 60)
+  const boundingBox = measureBoundingBox(expandedPathGeom2)
+  t.true(comparePoints(boundingBox, [[-5, 0, 0], [2, 12, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
+})
+
 test('expand: round-expanding a bent line produces expected geometry', (t) => {
   const delta = 2
   const points = [[0, 0], [0, 10], [-5, 10]]

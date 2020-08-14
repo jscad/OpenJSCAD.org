@@ -1,10 +1,66 @@
 const test = require('ava')
 
 const { geom2, path2 } = require('../../geometries')
-
 const { offset } = require('./index')
-
 const { comparePoints } = require('../../../test/helpers')
+const measureBoundingBox = require('../../measurements/measureBoundingBox')
+
+test('offset: offsetting a straight line produces expected geometry', (t) => {
+  const points = [[0, 0], [0, 10]]
+  let linePath2 = path2.fromPoints({ closed: false }, points)
+
+  // offset it by 2.
+  let offsetLinePath2 = offset({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
+  let offsetPoints = path2.toPoints(offsetLinePath2)
+  t.is(offsetPoints.length, 2)
+  let boundingBox = measureBoundingBox(offsetLinePath2)
+  t.true(comparePoints(boundingBox, [[2, 0, 0], [2, 10, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
+
+  // offset it by -2.
+  offsetLinePath2 = offset({ delta: -2, corners: 'edge', segments: 8 }, linePath2)
+  offsetPoints = path2.toPoints(offsetLinePath2)
+  t.is(offsetPoints.length, 2)
+  boundingBox = measureBoundingBox(offsetLinePath2)
+  t.true(comparePoints(boundingBox, [[-2, 0, 0], [-2, 10, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
+
+  // reverse the points, offset it by 2.
+  linePath2 = path2.fromPoints({ closed: false }, points.reverse())
+  offsetLinePath2 = offset({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
+  offsetPoints = path2.toPoints(offsetLinePath2)
+  t.is(offsetPoints.length, 2)
+  boundingBox = measureBoundingBox(offsetLinePath2)
+  t.true(comparePoints(boundingBox, [[-2, 0, 0], [-2, 10, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
+})
+
+test('offset: offsetting a bent line produces expected geometry', (t) => {
+  const points = [[0, 0], [0, 10], [10, 10]]
+  const linePath2 = path2.fromPoints({ closed: false }, points)
+
+  // offset it by 2.
+  let offsetLinePath2 = offset({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
+  let offsetPoints = path2.toPoints(offsetLinePath2)
+  t.is(offsetPoints.length, 3)
+  let boundingBox = measureBoundingBox(offsetLinePath2)
+  t.true(comparePoints(boundingBox, [[2, 0, 0], [10, 8, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
+
+  // offset it by -2.
+  offsetLinePath2 = offset({ delta: -2, corners: 'edge', segments: 8 }, linePath2)
+  offsetPoints = path2.toPoints(offsetLinePath2)
+  t.is(offsetPoints.length, 5) // obtuse angles produce 3 points, even in edge offsets
+  boundingBox = measureBoundingBox(offsetLinePath2)
+  t.true(comparePoints(boundingBox, [[-2, 0, 0], [10, 12, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
+})
+
+// TODO This test fails, since two parallel lines that connect are not considered to intersect, causing it to try and create impossible geometry.
+// test('offset: offsetting a 2 segment straight line produces expected geometry', (t) => {
+//   const points = [[0, 0], [0, 5], [0, 10]]
+//   const linePath2 = path2.fromPoints({ closed: false }, points)
+//   const offsetLinePath2 = offset({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
+//   const offsetPoints = path2.toPoints(offsetLinePath2)
+//   t.is(offsetPoints.length, 3)
+//   const boundingBox = measureBoundingBox(offsetLinePath2)
+//   t.true(comparePoints(boundingBox, [[2, 0, 0], [2, 10, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
+// })
 
 test('offset (corners: chamfer): offset of a path2 produces expected offset path2', (t) => {
   const openline = path2.fromPoints({ }, [[0, 0], [5, 0], [0, 5]])

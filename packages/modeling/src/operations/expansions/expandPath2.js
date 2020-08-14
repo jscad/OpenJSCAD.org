@@ -7,7 +7,7 @@ const path2 = require('../../geometries/path2')
 
 const offsetFromPoints = require('./offsetFromPoints')
 
-const createGeometryFromNestedPaths = (paths) => {
+const createGeometryFromClosedOffsets = (paths) => {
   let { external, internal } = paths
   if (area(external) < 0) {
     external = external.reverse()
@@ -86,7 +86,7 @@ const expandPath2 = (options, geometry) => {
   }
 
   if (geometry.isClosed) {
-    return createGeometryFromNestedPaths(paths)
+    return createGeometryFromClosedOffsets(paths)
   } else {
     return createGeometryFromExpandedOpenPath(paths, segments, corners, delta)
   }
