@@ -14,12 +14,27 @@
 */
 
 const jscad = require('@jscad/modeling')
-const { line } = jscad.primitives
-const { extrudeRectangular } = jscad.extrusions
+const { line, polygon, star } = jscad.primitives
+const { extrudeRectangular, extrudeLinear, extrudeRotate } = jscad.extrusions
+const { translate } = jscad.transforms
 
 function main () {
+  const shapes = []
   const aLine = line([[0, 0], [0, 5], [2, 8], [5, 9]])
-  return extrudeRectangular({ size: 1, height: 1 }, aLine)
+  shapes.push(translate([-20, 0, 0], aLine))
+
+  const aRectangularExtrude = extrudeRectangular({ size: 1, height: 1 }, aLine)
+  shapes.push(translate([-10, 0, 0], aRectangularExtrude))
+
+  const poly = polygon({ points: [[-1, -1], [3, -1], [3.5, 2], [2, 1], [1, 2], [0, 1], [-1, 2]] })
+  const extrudedPoly = extrudeLinear({ height: 5, twistAngle: Math.PI / 4, twistSteps: 10 }, poly)
+  shapes.push(extrudedPoly)
+
+  const starPoly = star()
+  const extrudedStar = extrudeRotate({segments: 12, startAngle: 0, angle: (Math.PI * 0.75), overflow: 'cap'}, starPoly)
+  shapes.push(extrudedStar)
+
+  return shapes
 }
 
 module.exports = { main }
