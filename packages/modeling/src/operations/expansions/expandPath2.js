@@ -7,6 +7,49 @@ const path2 = require('../../geometries/path2')
 
 const offsetFromPoints = require('./offsetFromPoints')
 
+const createGeometryFromClosedOffsets = (paths) => {
+  let { external, internal } = paths
+  if (area(external) < 0) {
+    external = external.reverse()
+  } else {
+    internal = internal.reverse()
+  }
+  // NOTE: creating path2 from the points ensures proper closure
+  const externalPath = path2.fromPoints({ closed: true }, external)
+  const internalPath = path2.fromPoints({ closed: true }, internal)
+  const externalSides = geom2.toSides(geom2.fromPoints(path2.toPoints(externalPath)))
+  const internalSides = geom2.toSides(geom2.fromPoints(path2.toPoints(internalPath)))
+  externalSides.push(...internalSides)
+  return geom2.create(externalSides)
+}
+
+const createGeometryFromExpandedOpenPath = (paths, segments, corners, delta) => {
+  const { points, external, internal } = paths
+  const capSegments = Math.floor(segments / 2) // rotation is 180 degrees
+  const e2iCap = []
+  const i2eCap = []
+  if (corners === 'round' && capSegments > 0) {
+    // added round caps to the geometry
+    const step = Math.PI / capSegments
+    const eCorner = points[points.length - 1]
+    const e2iStart = vec2.angle(vec2.subtract(external[external.length - 1], eCorner))
+    const iCorner = points[0]
+    const i2eStart = vec2.angle(vec2.subtract(internal[0], iCorner))
+    for (let i = 1; i < capSegments; i++) {
+      let radians = e2iStart + (step * i)
+      let point = vec2.add(eCorner, vec2.scale(delta, vec2.fromAngleRadians(radians)))
+      e2iCap.push(point)
+
+      radians = i2eStart + (step * i)
+      point = vec2.add(iCorner, vec2.scale(delta, vec2.fromAngleRadians(radians)))
+      i2eCap.push(point)
+    }
+  }
+  const allPoints = []
+  allPoints.push(...external, ...e2iCap, ...internal.reverse(), ...i2eCap)
+  return geom2.fromPoints(allPoints)
+}
+
 /*
  * Expand the given geometry (path2) using the given options (if any).
  * @param {Object} options - options for expand
@@ -22,7 +65,9 @@ const expandPath2 = (options, geometry) => {
     corners: 'edge',
     segments: 16
   }
-  const { delta, corners, segments } = Object.assign({ }, defaults, options)
+
+  options = Object.assign({ }, defaults, options)
+  const { delta, corners, segments } = options
 
   if (delta <= 0) throw new Error('the given delta must be positive for paths')
 
@@ -34,47 +79,17 @@ const expandPath2 = (options, geometry) => {
   const points = path2.toPoints(geometry)
   if (points.length === 0) throw new Error('the given geometry cannot be empty')
 
-  let offsetopts = { delta, corners, segments, closed }
-  const external = offsetFromPoints(offsetopts, points)
-
-  offsetopts = { delta: -delta, corners, segments, closed }
-  const internal = offsetFromPoints(offsetopts, points)
-
-  let newgeometry = null
-  if (geometry.isClosed) {
-    // NOTE: creating path2 from the points insures proper closure
-    const epath = path2.fromPoints({ closed: true }, external)
-    const ipath = path2.fromPoints({ closed: true }, internal.reverse())
-    const esides = geom2.toSides(geom2.fromPoints(path2.toPoints(epath)))
-    const isides = geom2.toSides(geom2.fromPoints(path2.toPoints(ipath)))
-    newgeometry = geom2.create(esides.concat(isides))
-  } else {
-    const capsegments = Math.floor(segments / 2) // rotation is 180 degrees
-    const e2iCap = []
-    const i2eCap = []
-    if (corners === 'round' && capsegments > 0) {
-      // added round caps to the geometry
-      const orientation = area(points)
-      const rotation = orientation < 0 ? -Math.PI : Math.PI
-      const step = rotation / capsegments
-      const eCorner = points[points.length - 1]
-      const e2iStart = vec2.angle(vec2.subtract(external[external.length - 1], eCorner))
-      const iCorner = points[0]
-      const i2eStart = vec2.angle(vec2.subtract(internal[0], iCorner))
-      for (let i = 1; i < capsegments; i++) {
-        let radians = e2iStart + (step * i)
-        let point = vec2.add(eCorner, vec2.scale(delta, vec2.fromAngleRadians(radians)))
-        e2iCap.push(point)
-
-        radians = i2eStart + (step * i)
-        point = vec2.add(iCorner, vec2.scale(delta, vec2.fromAngleRadians(radians)))
-        i2eCap.push(point)
-      }
-    }
-    const allpoints = external.concat(e2iCap, internal.reverse(), i2eCap)
-    newgeometry = geom2.fromPoints(allpoints)
+  const paths = {
+    points: points,
+    external: offsetFromPoints({ delta, corners, segments, closed }, points),
+    internal: offsetFromPoints({ delta: -delta, corners, segments, closed }, points)
   }
-  return newgeometry
+
+  if (geometry.isClosed) {
+    return createGeometryFromClosedOffsets(paths)
+  } else {
+    return createGeometryFromExpandedOpenPath(paths, segments, corners, delta)
+  }
 }
 
 module.exports = expandPath2

@@ -1,10 +1,12 @@
+const { EPS } = require('../../src/maths/constants')
 /**
  * Compare two vectors for equality
- * @param (vec} vec1 - vector (array) of values
- * @param (vec} vec2 - vector (array) of values
+ * @param {vec} vec1 - vector (array) of values
+ * @param {vec} vec2 - vector (array) of values
+ * @param {number} eps - Epsilon - the largest difference between two numbers to consider trivial
  * @returns {boolean} result of comparison
  */
-const compareVectors = (vec1, vec2, eps = Number.EPSILON) => {
+const compareVectors = (vec1, vec2, eps = EPS) => {
   if (vec1.length === vec2.length) {
     return vec1.reduce((valid, value, index) => {
       // get the values, which also does type conversions
