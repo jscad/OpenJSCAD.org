@@ -5,7 +5,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 2.0.0-alpha.0 (2020-08-13)
 
-**Note:** Version bump only for package @jscad/json-deserializer
+### Features
+
+* **json-deserializer:** Upgrade/overhaul JSON Deserializer for V2
+* **io:** change api to deserialize(options, source)
 
 
 

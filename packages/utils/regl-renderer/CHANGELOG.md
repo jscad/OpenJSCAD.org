@@ -8,9 +8,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* **V2:** small tweaks and fixes for V2 ([#484](https://github.com/jscad/OpenJSCAD.org/issues/484)) ([ee50200](https://github.com/jscad/OpenJSCAD.org/commit/ee50200bfcacd8078fa6f1fd73f6cd866afce5ed))
+* **regl-renderer:** small tweaks and fixes for V2 ([#484](https://github.com/jscad/OpenJSCAD.org/issues/484)) ([ee50200](https://github.com/jscad/OpenJSCAD.org/commit/ee50200bfcacd8078fa6f1fd73f6cd866afce5ed))
+* **regl-renderer:** implemented an alternative caching scheme in render
 
 
 ### Features
 
-* **reuseable Regl renderer:**  ([#425](https://github.com/jscad/OpenJSCAD.org/issues/425)) ([7ccc789](https://github.com/jscad/OpenJSCAD.org/commit/7ccc7898ddf98f0cf9425a67a8ffdf79ebb82b2a))
+* **regl-renderer:** Overhaul and V2 groundwork ([#425](https://github.com/jscad/OpenJSCAD.org/issues/425)) ([7ccc789](https://github.com/jscad/OpenJSCAD.org/commit/7ccc7898ddf98f0cf9425a67a8ffdf79ebb82b2a))
+* **regl-renderer:** set of V2 enhancements to renderer

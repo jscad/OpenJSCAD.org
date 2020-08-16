@@ -8,7 +8,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* **center:** remove center on primitives ([#512](https://github.com/jscad/OpenJSCAD.org/issues/512)) ([7fdc3eb](https://github.com/jscad/OpenJSCAD.org/commit/7fdc3eb37228ffac1756e279a65ad66cdde9761f))
+* **x3d-serializer:** overhaul for V2 (#476)
 
 
 

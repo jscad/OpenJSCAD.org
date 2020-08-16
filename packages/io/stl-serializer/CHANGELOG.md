@@ -5,7 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 2.0.0-alpha.0 (2020-08-13)
 
-**Note:** Version bump only for package @jscad/stl-serializer
+### Bug Fixes
+
+* **stl-serializer:** improved progress handling in CSGToStlb.js
+
+### Features
+
+* **stl-serializer:** updated for V2 (#473)
 
 
 

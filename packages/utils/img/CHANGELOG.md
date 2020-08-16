@@ -13,4 +13,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* **reuseable Regl renderer:**  ([#425](https://github.com/jscad/OpenJSCAD.org/issues/425)) ([7ccc789](https://github.com/jscad/OpenJSCAD.org/commit/7ccc7898ddf98f0cf9425a67a8ffdf79ebb82b2a))
+* **regl-renderer:** Overhaul and V2 groundwork ([#425](https://github.com/jscad/OpenJSCAD.org/issues/425)) ([7ccc789](https://github.com/jscad/OpenJSCAD.org/commit/7ccc7898ddf98f0cf9425a67a8ffdf79ebb82b2a))

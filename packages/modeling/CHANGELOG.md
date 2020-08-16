@@ -9,18 +9,37 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * **booleans:** corrected fromFakePolygons to ignore 0 length sides ([#552](https://github.com/jscad/openjscad.org/issues/552)) ([a44650b](https://github.com/jscad/openjscad.org/commit/a44650b2ce471b44ae2a40f4debddbc47e8d8c34))
-* **color:** color is now immutable & returns new geometries ([#566](https://github.com/jscad/openjscad.org/issues/566)) ([916824c](https://github.com/jscad/openjscad.org/commit/916824c63a0bf8896d1b6f85a82b129a013bec58))
+* **booleans:** added dynamic EPS for 2d boolean operations ([#535](https://github.com/jscad/openjscad.org/issues/535)) ([510e909](https://github.com/jscad/openjscad.org/commit/510e90901e65c63204c19e7f2d146edcbf4944ad))
+* **colors:** colorize is now immutable & returns new geometries ([#566](https://github.com/jscad/openjscad.org/issues/566)) ([916824c](https://github.com/jscad/openjscad.org/commit/916824c63a0bf8896d1b6f85a82b129a013bec58))
 * **mat4:** Missing variable declaration. ([6c68e81](https://github.com/jscad/openjscad.org/commit/6c68e81e8456e4208a8fe038653c464aa49f7487))
-* **modeling:** corrected order of transforms in geom2, geom3, and path2 ([2cde371](https://github.com/jscad/openjscad.org/commit/2cde3718fbd55b85f81c7dd9756ded6d9fe3214e))
+* **geometries:** corrected order of transforms in geom2, geom3, and path2 ([2cde371](https://github.com/jscad/openjscad.org/commit/2cde3718fbd55b85f81c7dd9756ded6d9fe3214e))
+* **transforms:** adjusted transforms to allow various lengths arrays as parameters
+* **geometries:** reworked toCompactBinary and fromCompactBinary functions
+* **primitives:** enhance primitives settings & defaults
+* **geometries:** added color support to to/fromCompactBinary functions
+* **maths:** updated vec2 and vec3 to use the same logic as glmatrix
+* **maths:** changed line2/mat4/vec2/vec3/vec4 to create arrays of Numbers
+* **measurements:** enhanced measurements to cache values as object attributes
+* **utils:** exposed additional user utility functions
+* **geometries:** corrected order of transforms in geom2, geom3, and path2
 
 
 ### Features
 
-* **booleans:** added dynamic EPS for 2d boolean operations ([#535](https://github.com/jscad/openjscad.org/issues/535)) ([510e909](https://github.com/jscad/openjscad.org/commit/510e90901e65c63204c19e7f2d146edcbf4944ad))
-* **center:** remove center on primitives ([#512](https://github.com/jscad/openjscad.org/issues/512)) ([7fdc3eb](https://github.com/jscad/openjscad.org/commit/7fdc3eb37228ffac1756e279a65ad66cdde9761f))
-* **color:** improve (values & arrays supported) & cleanup color api ([#542](https://github.com/jscad/openjscad.org/issues/542)) ([0f4feab](https://github.com/jscad/openjscad.org/commit/0f4feabde952ad9d1fac2fdce9b210e392316195))
-* **hull:** added 3D hull functionality based on quickhull ([#483](https://github.com/jscad/openjscad.org/issues/483)) ([c991eb7](https://github.com/jscad/openjscad.org/commit/c991eb7f4969543cb9ff79ee8622e29c15c02321))
-* **polyhedron:** enhanced polyhedron to accept an array of colors ([#544](https://github.com/jscad/openjscad.org/issues/544)) ([3a2e863](https://github.com/jscad/openjscad.org/commit/3a2e863e8657500186a833cbb9808a47370f1312))
+* **modeling:** merge csg.js into main repo (#482)
+* **primitives:** remove center on primitives ([#512](https://github.com/jscad/openjscad.org/issues/512)) ([7fdc3eb](https://github.com/jscad/openjscad.org/commit/7fdc3eb37228ffac1756e279a65ad66cdde9761f))
+* **primitives:** restored center parameter to primitives
+* **modeling:**: renamed color.color to colors.colorize
+* **colors:** improve (values & arrays supported) & cleanup color api ([#542](https://github.com/jscad/openjscad.org/issues/542)) ([0f4feab](https://github.com/jscad/openjscad.org/commit/0f4feabde952ad9d1fac2fdce9b210e392316195))
+* **hulls:** added 3D hull functionality based on quickhull ([#483](https://github.com/jscad/openjscad.org/issues/483)) ([c991eb7](https://github.com/jscad/openjscad.org/commit/c991eb7f4969543cb9ff79ee8622e29c15c02321))
+* **primitives:** enhanced polyhedron to accept an array of colors ([#544](https://github.com/jscad/openjscad.org/issues/544)) ([3a2e863](https://github.com/jscad/openjscad.org/commit/3a2e863e8657500186a833cbb9808a47370f1312))
+* **geometries:** added invert to geom3, as well as a new test suite
+* **geometries:** renamed flip to invert in poly3, adjusted test suites
+* **geometries:** removed plane from poly3 data structure, added plane() function
+* **modeling:** renamed math to maths
+* **modeling:** renamed geometry API to geometries, and adjusted tests…
+* **modeling:** moved measurements out of operations
+* **modeling:** adding curves/bezier object for curve-based easing and…
 
 
 

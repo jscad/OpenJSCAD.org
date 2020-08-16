@@ -14,6 +14,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+### Features
+
+* **dxf-serializer:** updated for V2 (#474)
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.2.5...@jscad/dxf-serializer@0.3.0) (2018-11-25)
 

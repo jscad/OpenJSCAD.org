@@ -9,11 +9,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * **amf-deserializer:** correct translate() & metadata  ([#495](https://github.com/jscad/OpenJSCAD.org/issues/495)) ([726bc8e](https://github.com/jscad/OpenJSCAD.org/commit/726bc8e338ce9746859050daa7af798daa0e5a13))
-* **color:** color is now immutable & returns new geometries ([#566](https://github.com/jscad/OpenJSCAD.org/issues/566)) ([916824c](https://github.com/jscad/OpenJSCAD.org/commit/916824c63a0bf8896d1b6f85a82b129a013bec58))
+* **colors:** colorize is now immutable & returns new geometries ([#566](https://github.com/jscad/OpenJSCAD.org/issues/566)) ([916824c](https://github.com/jscad/OpenJSCAD.org/commit/916824c63a0bf8896d1b6f85a82b129a013bec58))
 
 
 
 
+
+### Features
+
+* **amf-deserializer:** overhaul for V2 (#467)
+* **io:** change api to deserialize(options, source)
 
 <a name="0.2.3"></a>
 ## [0.2.3](https://github.com/jscad/io/compare/@jscad/amf-deserializer@0.2.2...@jscad/amf-deserializer@0.2.3) (2018-11-25)

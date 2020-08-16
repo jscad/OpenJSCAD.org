@@ -9,3 +9,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * **vtree:** corrected and completed all modeling primitives ([#577](https://github.com/jscad/OpenJSCAD.org/issues/577)) ([82dab93](https://github.com/jscad/OpenJSCAD.org/commit/82dab93e8ad0d71a325a6ce6dfac5ce19a095984))
+* **vtree:** corrected colorize in core API
+
+
+### Features
+
+* **vtree:** Vtree integration into main repo (#498)
+* **vtree:** overhauled vtree to align with V2 (#507)

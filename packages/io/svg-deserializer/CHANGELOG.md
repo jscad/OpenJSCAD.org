@@ -8,13 +8,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* **color:** color is now immutable & returns new geometries ([#566](https://github.com/jscad/issues/566)) ([916824c](https://github.com/jscad/commit/916824c63a0bf8896d1b6f85a82b129a013bec58))
+* **colors:** colorize is now immutable & returns new geometries ([#566](https://github.com/jscad/issues/566)) ([916824c](https://github.com/jscad/commit/916824c63a0bf8896d1b6f85a82b129a013bec58))
 * **svg-deserializer:** adds require / export to the translation & some minor fixes & tweaks([#524](https://github.com/jscad/issues/524)) ([5ee1509](https://github.com/jscad/commit/5ee15099552c2201259eaa1f4664cd83d761af4b))
+* **svg-deserializer:** corrected svg transforms while instantiating shapes
+* **svg-deserializer:** corrected conversion of shapes when target is geometry
 
 
 ### Features
 
-* **center:** remove center on primitives ([#512](https://github.com/jscad/issues/512)) ([7fdc3eb](https://github.com/jscad/commit/7fdc3eb37228ffac1756e279a65ad66cdde9761f))
+* **svg-deserializer:** overhaul for V2 (#463)
+* **io:** change api to deserialize(options, source)
 
 
 

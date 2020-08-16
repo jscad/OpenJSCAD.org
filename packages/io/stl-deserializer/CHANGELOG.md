@@ -8,7 +8,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* **polyhedron:** enhanced polyhedron to accept an array of colors ([#544](https://github.com/jscad/OpenJSCAD.org/issues/544)) ([3a2e863](https://github.com/jscad/OpenJSCAD.org/commit/3a2e863e8657500186a833cbb9808a47370f1312))
+* **stl-deserializer:** updated for V2 (#466)
+* **io:** change api to deserialize(options, source)
 
 
 

@@ -14,6 +14,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+### Features
+
+* **obj-deserializer:** overhaul for V2 branch (#469)
+* **io:** change api to deserialize(options, source)
+
 <a name="0.2.3"></a>
 ## [0.2.3](https://github.com/jscad/io/compare/@jscad/obj-deserializer@0.2.2...@jscad/obj-deserializer@0.2.3) (2018-11-25)
 
