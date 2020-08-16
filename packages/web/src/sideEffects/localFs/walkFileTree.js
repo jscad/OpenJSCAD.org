@@ -52,7 +52,7 @@ const pseudoArraytoArray = (pseudoArray) => {
   const array = []
   for (let i = 0; i < pseudoArray.length; i++) {
     const item = pseudoArray[i]
-    array.push(item.webkitGetAsEntry ? item.webkitGetAsEntry() : item)
+    if (item) array.push(item.webkitGetAsEntry ? item.webkitGetAsEntry() : item)
   }
   return array
 }
