@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "budo ./demo-web.js --title regl-renderer --live",
     "demo-cli": "node ./demo-cli.js",
-    "demo-web": "budo ./demo-web.js --title regl-renderer --live"
+    "demo-web": "budo ./demo-web.js --title regl-renderer --live",
+    "test": "ava 'src/**/*.test.js' --verbose --timeout 2m"
   },
   "author": "Mark 'kaosat-dev' Moissette",
   "license": "MIT",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@jscad/img-utils": "1.0.0",
     "@jscad/modeling": "1.0.1",
+    "ava": "3.10.0",
     "budo": "11.6.4"
   }
 }
