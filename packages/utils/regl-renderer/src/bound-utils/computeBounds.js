@@ -1,69 +1,62 @@
 const vec3 = require('gl-vec3')
 
 const boundingBox = require('./boundingBox')
-const boundingSphere = require('./boundingSphere')
 
-/**
- * compute all bounding data given geometry data + position
- * @param  {Object} transforms the initial transforms ie {pos:[x, x, x], rot:[x, x, x], sca:[x, x, x]}.
- * @param  {String} bounds the current bounds of the entity
- * @param  {String} axes on which axes to apply the transformation (default: [0, 0, 1])
- * @return {Object}      a new transforms object, with offset position
- * returns an object in this form:
+/*
+ * Compute the bounds of the given geometries.
+ * See geometry-utils-V2
+ * @param  {geometry|Array} geometries - geometry or list of geometries to measure
+ * @return {Object} the bounds of the given geometries
  * bounds: {
- *  dia: 40,
+ *   dia: 40,
  *   center: [0,20,8],
  *   min: [9, -10, 0],
  *   max: [15, 10, 4]
  *   size: [6,20,4]
- *}
+ * }
  */
-const computeBounds = (object) => {
-  let scale
+const computeBounds = (geometries) => {
   let dia
   let center
+  let bbox // min and max
   let size
-  let bbox
-  if (Array.isArray(object) && object.length > 1) {
-    const objects = object
-    let positions = []
-    objects.forEach((object) => {
-      scale = object.transforms && object.transforms.sca ? object.transforms.sca : 1
-      // TODO deal with nested/ non nested data
-      let geomPositions = object.geometry.positions
-      const isNested = geomPositions.length > 1 && Array.isArray(geomPositions[0])
-      geomPositions = scale === 1 ? geomPositions
-        : (
-          isNested ? geomPositions.map((pos) => pos.map((position) => position * scale)) : geomPositions.map((position) => position * scale)
-        )
-
-      positions = positions.concat(geomPositions)// object.geometry.positions.map(position => position * scale))
+  if (Array.isArray(geometries)) {
+    geometries.forEach((geometry) => {
+      let gbbox = boundingBox(geometry.positions)
+      gbbox = gbbox.map((bounds) => vec3.transformMat4(bounds, bounds, geometry.transforms))
+      if (bbox) {
+        vec3.min(bbox[0], bbox[0], gbbox[0])
+        vec3.max(bbox[1], bbox[1], gbbox[1])
+      } else {
+        bbox = gbbox
+      }
     })
-    bbox = boundingBox(positions)
-    center = vec3.scale(vec3.create(), vec3.add(vec3.create(), bbox[0], bbox[1]), 0.5)
-    const bsph = boundingSphere(center, positions)
-    size = [bbox[1][0] - bbox[0][0], bbox[1][1] - bbox[0][1], bbox[1][2] - bbox[0][2]]
-    dia = scale !== 1 ? bsph * Math.max(...scale) : bsph
-  } else {
-    scale = object.transforms && object.transforms.sca ? object.transforms.sca : undefined
-    bbox = boundingBox(object.geometry.positions)
-    if (scale) {
-      bbox[0] = bbox[0].map((x, i) => x * scale[i])
-      bbox[1] = bbox[1].map((x, i) => x * scale[i])
-    }
 
-    center = vec3.scale(vec3.create(), vec3.add(vec3.create(), bbox[0], bbox[1]), 0.5)
-    const bsph = boundingSphere(center, object.geometry.positions)
-    size = [bbox[1][0] - bbox[0][0], bbox[1][1] - bbox[0][1], bbox[1][2] - bbox[0][2]]
-    dia = scale ? bsph * Math.max(...scale) : bsph
+    size = vec3.subtract(vec3.create(), bbox[1], bbox[0])
+    center = vec3.scale(vec3.create(), size, 0.5)
+    center = vec3.add(center, bbox[0], center)
+    // aproximate diamter
+    dia = vec3.distance(center, bbox[1])
+  } else {
+    const geometry = geometries
+    bbox = boundingBox(geometry.positions)
+    bbox = bbox.map((bounds) => vec3.transformMat4(bounds, bounds, geometry.transforms))
+
+    size = vec3.subtract(vec3.create(), bbox[1], bbox[0])
+    center = vec3.scale(vec3.create(), size, 0.5)
+    center = vec3.add(center, bbox[0], center)
+    // aproximate diamter
+    dia = vec3.distance(center, bbox[1])
   }
 
-  return {
+  const bounds = {
     dia,
     center: [...center],
     min: bbox[0],
     max: bbox[1],
-    size
+    size: [...size]
   }
+  return bounds
 }
+
 module.exports = computeBounds

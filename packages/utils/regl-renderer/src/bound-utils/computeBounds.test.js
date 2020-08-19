@@ -1,71 +1,119 @@
-const test = require('tape')
+const test = require('ava')
+
 const computeBounds = require('./computeBounds')
 
 test('computeBounds (geometry only)', (t) => {
-  t.plan(1)
   const input = {
-    geometry: {
-      positions: [0, 2, 1, -10, 2, 1, -2.4, -2.8, 4]
-    }
+    positions: [0, 2, 1, -10, 2, 1, -2.4, -2.8, 4],
+    transforms: [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+    ]
   }
 
   const expBounds = {
-    dia: 5.745432971379113,
-    center: [-5, -0.4000000059604645, 2.5],
-    min: [-10, -2.8, 1],
+    center: [-5, -0.3999999165534973, 2.5],
+    dia: 5.74543293403176,
     max: [0, 2, 4],
-    size: [10, 4.8, 3]
+    min: [-10, -2.8, 1],
+    size: [10, 4.800000190734863, 3]
   }
 
   const bounds = computeBounds(input)
 
-  t.equal(bounds, expBounds)
+  t.deepEqual(bounds, expBounds)
 })
 
-test('computeBounds (with transforms)', (t) => {
-  t.plan(1)
+test('computeBounds (geometry with translate)', (t) => {
   const input = {
-    geometry: {
-      positions: [0, 2, 1, -10, 2, 1, -2.4, -2.8, 4]
-    },
-    transforms: {
-      sca: [1, 1, 1]
-    }
+    positions: [0, 2, 1, -10, 2, 1, -2.4, -2.8, 4],
+    transforms: [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      6, 6, 0, 1
+    ]
   }
 
   const expBounds = {
-    dia: 5.745432971379113,
-    center: [-5, -0.4000000059604645, 2.5],
-    min: [-10, -2.8, 1],
-    max: [0, 2, 4],
-    size: [10, 4.8, 3]
+    center: [1, 5.599999904632568, 2.5],
+    dia: 5.745433008726469,
+    max: [6, 8, 4],
+    min: [-4, 3.2, 1],
+    size: [10, 4.800000190734863, 3]
   }
 
   const bounds = computeBounds(input)
 
-  t.equal(bounds, expBounds)
+  t.deepEqual(bounds, expBounds)
 })
 
-test('computeBounds (non default scale)', (t) => {
-  t.plan(1)
+test('computeBounds (geometry with scale)', (t) => {
   const input = {
-    geometry: {
-      positions: [0, 2, 1, -10, 2, 1, -2.4, -2.8, 4]
-    },
-    transforms: {
-      sca: [1.2, 0.7, -1]
-    }
+    positions: [0, 2, 1, -10, 2, 1, -2.4, -2.8, 4],
+    transforms: [
+      10, 0, 0, 0,
+      0, 10, 0, 0,
+      0, 0, 10, 0,
+      0, 0, 0, 1
+    ]
   }
 
   const expBounds = {
-    dia: 9.415252306303229,
-    center: [-6, -0.2800000011920929, -2.5],
-    min: [-12, -1.9599999999999997, -1],
-    max: [0, 1.4, -4],
-    size: [12, 3.3599999999999994, -3]
+    center: [-50, -4, 25],
+    dia: 57.4543296888929,
+    max: [0, 20, 40],
+    min: [-100, -28, 10],
+    size: [100, 48, 30]
   }
 
   const bounds = computeBounds(input)
 
-  t.equal(bounds, expBounds)
+  t.deepEqual(bounds, expBounds)
+})
+
+test('computeBounds (multiple geometries)', (t) => {
+  const input = [
+    {
+      positions: [0, 2, 1, -10, 2, 1, -2.4, -2.8, 4],
+      transforms: [
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1
+      ]
+    },
+    {
+      positions: [0, 2, 1, -10, 2, 1, -2.4, -2.8, 4],
+      transforms: [
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        6, 6, 0, 1
+      ]
+    },
+    {
+      positions: [0, 2, 1, -10, 2, 1, -2.4, -2.8, 4],
+      transforms: [
+        10, 0, 0, 0,
+        0, 10, 0, 0,
+        0, 0, 10, 0,
+        0, 0, 0, 1
+      ]
+    }
+  ]
+
+  const expBounds = {
+    center: [-47, -4, 20.5],
+    dia: 61.3616329639295,
+    max: [6, 20, 40],
+    min: [-100, -28, 1],
+    size: [106, 48, 39]
+  }
+
+  const bounds = computeBounds(input)
+
+  t.deepEqual(bounds, expBounds)
 })
