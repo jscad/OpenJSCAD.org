@@ -49,15 +49,6 @@ const prepareRender = (params) => {
           .forEach((entity) => {
             const { visuals } = entity
             if (visuals.drawCmd && visuals.show && props.drawCommands[visuals.drawCmd]) {
-              /*
-              const key = JSON.stringify(entity) // FIXME: EEEEEK horribly inneficient, change this!
-              let drawCmd = drawCache[key]
-              if (!drawCmd) {
-              // make draw function
-                drawCmd = props.drawCommands[visuals.drawCmd](regl, entity)
-                drawCache[key] = drawCmd
-              }
-              */
               let drawCmd
               if (visuals.cacheId) {
                 drawCmd = drawCache2.get(visuals.cacheId)
@@ -66,7 +57,7 @@ const prepareRender = (params) => {
                 drawCmd = props.drawCommands[visuals.drawCmd](regl, entity)
                 drawCache2.set(visuals.cacheId, drawCmd)
               }
-              // console.log('drawing with', entity.drawCmd, entity)
+              // console.log('drawing with', drawCmd, entity)
               const drawParams = { // FIXME: horrible, tidy up !!: what is needed/should be passed to render pass ?
                 ...entity,
                 ...visuals,
