@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.0-alpha.0 (2020-08-13)
+
+### Bug Fixes
+
+* **stl-serializer:** improved progress handling in CSGToStlb.js
+
+### Features
+
+* **stl-serializer:** updated for V2 (#473)
+
+
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/jscad/io/compare/@jscad/stl-serializer@0.1.3...@jscad/stl-serializer@0.2.0) (2018-11-25)
 

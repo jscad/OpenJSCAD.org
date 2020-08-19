@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.0-alpha.0 (2020-08-13)
+
+### Features
+
+* **io:** merge IO packages into main repository (#436)
+
+
+
+
+
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/jscad/io/compare/@jscad/io@0.4.8...@jscad/io@0.5.0) (2018-11-25)
 
