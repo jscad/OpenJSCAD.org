@@ -7,6 +7,7 @@
     "dev": "budo ./demo-web.js --title regl-renderer --live",
     "demo-cli": "node ./demo-cli.js",
     "demo-web": "budo ./demo-web.js --title regl-renderer --live",
+    "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m"
   },
   "author": "Mark 'kaosat-dev' Moissette",
