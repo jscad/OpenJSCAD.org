@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.0-alpha.0 (2020-08-13)
+
+
+### Bug Fixes
+
+* **obj-deserializer:** corrected stringify() to supply V2 require and export ([#497](https://github.com/jscad/OpenJSCAD.org/issues/497)) ([1fd11ae](https://github.com/jscad/OpenJSCAD.org/commit/1fd11aeb1e1a309a3b87dd542d43870bceb9c903))
+
+
+
+
+
+### Features
+
+* **obj-deserializer:** overhaul for V2 branch (#469)
+* **io:** change api to deserialize(options, source)
+
 <a name="0.2.3"></a>
 ## [0.2.3](https://github.com/jscad/io/compare/@jscad/obj-deserializer@0.2.2...@jscad/obj-deserializer@0.2.3) (2018-11-25)
 
