@@ -1,3 +1,5 @@
+const mat4 = require('gl-mat4')
+
 const geom2ToGeometries = (solid, options) => {
   const defaults = {
     color: [1, 0.4, 0, 1] // default color
@@ -13,8 +15,9 @@ const geom2ToGeometries = (solid, options) => {
   })
   const normals = positions.map((x) => [0, 0, -1])
   const indices = positions.map((x, i) => i) // FIXME: temporary, not really needed, need to change drawMesh
+  const transforms = solid.transforms ? solid.transforms : mat4.create()
 
-  return [{ positions, normals, color, indices }]
+  return [{ positions, normals, transforms, color, indices }]
 }
 
 module.exports = geom2ToGeometries

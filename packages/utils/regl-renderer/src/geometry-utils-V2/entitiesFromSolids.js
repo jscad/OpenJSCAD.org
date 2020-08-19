@@ -38,7 +38,7 @@ const entitiesFromSolids = (params, solids) => {
     geometry = flatten(geometry)[0]
 
     // bounds
-    const bounds = computeBounds({ geometry })// FXIME : ACTUALLY deal with arrays as inputs see above
+    const bounds = computeBounds(geometry) // FXIME : ACTUALLY deal with arrays as inputs see above
 
     // transforms: for now not used, since all transformed are stored in the geometry
     // FIXME : for V2 we will be able to use the transfors provided by the solids directly
