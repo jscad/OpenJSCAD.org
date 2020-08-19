@@ -8,7 +8,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* **color:** color is now immutable & returns new geometries ([#566](https://github.com/jscad/OpenJSCAD.org/issues/566)) ([916824c](https://github.com/jscad/OpenJSCAD.org/commit/916824c63a0bf8896d1b6f85a82b129a013bec58))
+* **colors:** colorize is now immutable & returns new geometries ([#566](https://github.com/jscad/OpenJSCAD.org/issues/566)) ([916824c](https://github.com/jscad/OpenJSCAD.org/commit/916824c63a0bf8896d1b6f85a82b129a013bec58))
 * **svg-serializer:** corrected orientation of SVG shapes
 
 
