@@ -1,6 +1,6 @@
 {
   "name": "@jscad/array-utils",
-  "version": "1.0.0",
+  "version": "2.0.0-alpha.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,6 +11,5 @@
   "license": "MIT",
   "devDependencies": {
     "ava": "3.10.0"
-  },
-  "dependencies": {}
+  }
 }

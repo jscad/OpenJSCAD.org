@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@1.10.0...@jscad/cli@2.0.0-alpha.0) (2020-08-13)
+
+
+### Bug Fixes
+
+* **cli:** fix rebuild geometry for cli ([#583](https://github.com/jscad/OpenJSCAD.org/issues/583)) ([828394d](https://github.com/jscad/OpenJSCAD.org/commit/828394ddb88fc1139b1daf155548aa9fab7de823))
+* **cli:** improved/ added missing formats handling to CLI ([#494](https://github.com/jscad/OpenJSCAD.org/issues/494)) ([caaab97](https://github.com/jscad/OpenJSCAD.org/commit/caaab9765e4d286f740067075a8284fec3e77c39))
+
+
+### Features
+
+* Overhaul and V2 groundwork ([#382](https://github.com/jscad/OpenJSCAD.org/issues/382)) ([5e66632](https://github.com/jscad/OpenJSCAD.org/commit/5e666327a8b50a7fa6baa4bbdfd790d243f8064f))
+
+
+
+
+
 <a name="1.10.0"></a>
 # [1.10.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@1.9.0...@jscad/cli@1.10.0) (2019-01-04)
 
