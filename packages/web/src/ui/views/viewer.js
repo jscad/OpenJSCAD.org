@@ -42,6 +42,7 @@ const axes = {
 
 let prevEntities = []
 let prevSolids
+let prevColor = []
 let prevTimestamp = 0
 
 const viewer = (state, i18n) => {
@@ -119,12 +120,14 @@ const viewer = (state, i18n) => {
     // themes, options, etc also change the viewer state
     const solids = state.design.solids
     if (prevSolids) {
+      const theme = state.themes.themeSettings.viewer
+      const color = theme.rendering.meshColor
+      const sameColor = prevColor === color
       // FIXME inefficient, replace
       const sameSolids = solids.length === prevSolids.length && JSON.stringify(solids) === JSON.stringify(prevSolids)
-      if (!sameSolids) {
-        const theme = state.themes.themeSettings.viewer
-        const meshColor = theme.rendering.meshColor
-        prevEntities = entitiesFromSolids({ meshColor }, solids)
+      if (!(sameSolids && sameColor)) {
+        prevEntities = entitiesFromSolids({ color }, solids)
+        prevColor = color
       }
     }
     prevSolids = solids
