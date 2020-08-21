@@ -1,10 +1,7 @@
 const mat4 = require('gl-mat4')
 
-const path2ToGeometries = (solid, options) => {
-  const defaults = {
-    color: [1, 0.4, 0, 1] // default color
-  }
-  let { color } = Object.assign({}, defaults, options)
+const path2ToGeometries = (options, solid) => {
+  let { color } = options
 
   if ('color' in solid) color = solid.color
 

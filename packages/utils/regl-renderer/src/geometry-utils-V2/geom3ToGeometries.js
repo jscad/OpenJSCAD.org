@@ -14,18 +14,13 @@ const { toArray } = require('@jscad/array-utils')
  * @param {String} options.color=[1, 0.4, 0, 1] default color of given geometry
  * @returns {Object} [{indices, positions, normals, colors}, ...]
  */
-const geom3ToGeometries = (listofgeom3, options) => {
-  const defaults = {
-    smoothLighting: false,
-    normalThreshold: 0.349066,
-    color: [1, 0.4, 0, 1]
-  }
-  const { smoothLighting, normalThreshold, color } = Object.assign({}, defaults, options)
+const geom3ToGeometries = (options, listofgeom3) => {
+  let { smoothLighting, normalThreshold, color } = options
 
-  const meshColor = color ? normalizedColor(color) : undefined
+  color = normalizedColor(color)
 
   listofgeom3 = toArray(listofgeom3)
-  const listofgeometries = listofgeom3.map((geometry) => convert({ meshColor, smoothLighting, normalThreshold }, geometry))
+  const listofgeometries = listofgeom3.map((geometry) => convert({ color, smoothLighting, normalThreshold }, geometry))
 
   return listofgeometries
 }
@@ -35,7 +30,7 @@ const geom3ToGeometries = (listofgeom3, options) => {
  * @returns {Object} [{indices, positions, normals, colors}, ...]
  */
 const convert = (options, geometry) => {
-  let color = options.meshColor
+  let { color, smoothLighting, normalThreshold } = options
   const geometries = []
 
   const positions = []
@@ -76,9 +71,9 @@ const convert = (options, geometry) => {
       const vertex = polygon.vertices[j]
       const position = [vertex[0], vertex[1], vertex[2]]
 
-      if (options.smoothLighting) {
+      if (smoothLighting) {
         const candidateTupple = { normal, position }
-        const existingTupple = fuzyNormalAndPositionLookup(normalPositionLookup, candidateTupple, options.normalThreshold)
+        const existingTupple = fuzyNormalAndPositionLookup(normalPositionLookup, candidateTupple, normalThreshold)
         if (!existingTupple) {
           const existingPositing = normalPositionLookup[candidateTupple.position]
           const itemToAdd = [{ normal: candidateTupple.normal, index: tupplesIndex }]
