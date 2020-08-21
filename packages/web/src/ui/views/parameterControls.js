@@ -109,7 +109,7 @@ const createGroupControl = (definition) => {
   const { expanded, className } = Object.assign({}, defaults, definition)
   // const text = definition.caption ? definition.caption : definition.name
   const groupOpenIcon = html`
-      <svg  class="icon icon-open feather feather-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="6 9 12 15 18 9"/></svg>`
+      <svg class="icon icon-open feather feather-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="6 9 12 15 18 9"/></svg>`
   const groupClosedIcon = html`
       <svg class="icon icon-closed feather feather-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="9 18 15 12 9 6"/></svg>`
   const icon = expanded ? groupOpenIcon : groupClosedIcon
@@ -208,6 +208,8 @@ const createControl = (definition, prevValue) => {
     { type: 'url', control: 'url', required: ['type', 'name'], initial: '' },
     { type: 'slider', control: 'range', required: ['type', 'name', 'min', 'max'], initial: 0, label: true }
   ]
+  const handledAttributes = ['type', 'name', 'checked', 'initial', 'default']
+
   // check for required parameters
   if (!('type' in definition)) {
     throw new Error('Parameter definition (' + definition + ") must include a 'type' parameter")
@@ -237,6 +239,7 @@ const createControl = (definition, prevValue) => {
   } else {
     controlValue = typeData.initial
   }
+
   const control = html`<input
     type=${typeData.control} value=${controlValue} checked=${'checked' in definition ? controlValue : ''}>
   </input>`
@@ -247,7 +250,7 @@ const createControl = (definition, prevValue) => {
   // set generic HTML attributes
   for (const property in definition) {
     if (Object.prototype.hasOwnProperty.call(definition, property)) {
-      if (typeData.required.indexOf(property) < 0) {
+      if (handledAttributes.indexOf(property) < 0) {
         control.setAttribute(property, definition[property])
       }
     }
@@ -261,36 +264,36 @@ const createControl = (definition, prevValue) => {
 
   return [control]
 
-/*
-  FIXME remove later
-  control = document.createElement('input')
-  let i, j, controlInstance, paramName
-  for (i = 0; i < controlList.length; i++) {
-    controlInstance = controlList[i]
-    if (controlInstance.type === definition.type) {
-      for (j = 0; j < controlInstance.required.length; j++) {
-        paramName = controlInstance.required[j]
-        if (paramName in definition) {
-          if (paramName === 'index') continue
-          if (paramName === 'type') continue
-          if (paramName === 'checked') { // setAttribute() only accepts strings
-            control.checked = definition.checked
+  /*
+    FIXME remove later
+    control = document.createElement('input')
+    let i, j, controlInstance, paramName
+    for (i = 0; i < controlList.length; i++) {
+      controlInstance = controlList[i]
+      if (controlInstance.type === definition.type) {
+        for (j = 0; j < controlInstance.required.length; j++) {
+          paramName = controlInstance.required[j]
+          if (paramName in definition) {
+            if (paramName === 'index') continue
+            if (paramName === 'type') continue
+            if (paramName === 'checked') { // setAttribute() only accepts strings
+              control.checked = definition.checked
+            } else {
+              control.setAttribute(paramName, definition[paramName])
+            }
           } else {
-            control.setAttribute(paramName, definition[paramName])
+            throw new Error('Parameter definition (' + definition + ") must include a '" + paramName + "' parameter")
           }
-        } else {
-          throw new Error('Parameter definition (' + definition + ") must include a '" + paramName + "' parameter")
         }
+        break
       }
-      break
     }
-  }
-  if (i === controlList.length) {
-    throw new Error('Parameter definition (' + definition + ") is not a valid 'type'")
-  }
-  // set the control type
-  control.setAttribute('type', controlInstance.control)
-*/
+    if (i === controlList.length) {
+      throw new Error('Parameter definition (' + definition + ") is not a valid 'type'")
+    }
+    // set the control type
+    control.setAttribute('type', controlInstance.control)
+  */
 }
 
 module.exports = { createParamControls }
