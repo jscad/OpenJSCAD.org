@@ -1,36 +1,67 @@
 const html = require('bel')
 
-const createParamControls = (prevParameterValues = {}, parameterDefinitions, rebuildSolid) => {
-  const paramControls = []
-  let currentGroup = ''
-  let currentGroupExpanded = true
+let paramControls
+let currentGroupName
+let currentGroupIsExpanded
 
-  const createParamRowFromDefinition = (paramDefinition) => {
-    const type = paramDefinition.type.toLowerCase()
-    if (type === 'group') {
-      return createGroupRowFromDefinition(paramDefinition)
-    }
-    return createInputRowFromDefinition(type, paramDefinition)
+/**
+ * Creates a series of table row elements for the list of parameters
+ * @param  {Object} prevParameterValues - Current values and state of parameters to maintain consistency
+ * @param {array} parameterDefinitions - The definitions provides by the current model script
+ * @param {function} rebuildSolid - The method to call when parameters change.
+ * @returns {{controls: Array of DOM elements}}
+ */
+const createParamControls = (prevParameterValues = {}, parameterDefinitions, rebuildSolid) => {
+  paramControls = []
+  currentGroupName = ''
+  currentGroupIsExpanded = true
+
+  const controls = parameterDefinitions.map((paramDefinition) => {
+    return createParamRowFromDefinition(paramDefinition, prevParameterValues, rebuildSolid)
+  })
+
+  return { controls }
+}
+
+/**
+ * Create a single table row for the parameter window.
+ * @param paramDefinition
+ * @param prevParameterValues
+ * @param rebuildSolid
+ * @returns {element}
+ */
+const createParamRowFromDefinition = (paramDefinition, prevParameterValues, rebuildSolid) => {
+  const type = paramDefinition.type.toLowerCase()
+  if (type === 'group') {
+    return createGroupRowFromDefinition(paramDefinition, prevParameterValues)
+  }
+  return createInputRowFromDefinition(type, paramDefinition, prevParameterValues, rebuildSolid)
+}
+
+/**
+ * Render a Group Header parameter in HTML
+ * @param paramDefinition
+ * @param prevParameterValues
+ * @returns {*}
+ */
+const createGroupRowFromDefinition = (paramDefinition, prevParameterValues) => {
+  let label = paramDefinition.name + ':'
+  let tdClassName = ''
+  if ('caption' in paramDefinition) {
+    label = paramDefinition.caption
+    tdClassName = 'caption'
   }
 
-  const createGroupRowFromDefinition = (paramDefinition) => {
-    let label = paramDefinition.name + ':'
-    let tdClassName = ''
-    if ('caption' in paramDefinition) {
-      label = paramDefinition.caption
-      tdClassName = 'caption'
-    }
+  if (paramDefinition.name in prevParameterValues) {
+    currentGroupIsExpanded = prevParameterValues[paramDefinition.name] !== 'closed'
+  } else {
+    currentGroupIsExpanded = paramDefinition.initial !== 'closed'
+  }
 
-    if (paramDefinition.name in prevParameterValues) {
-      currentGroupExpanded = prevParameterValues[paramDefinition.name] !== 'closed'
-    } else {
-      currentGroupExpanded = paramDefinition.initial !== 'closed'
-    }
+  currentGroupName = paramDefinition.name
+  const trClassName = 'groupTitle ' + (currentGroupIsExpanded ? 'open' : 'closed')
 
-    const trClassName = 'groupTitle ' + (currentGroupExpanded ? 'open' : 'closed')
-    currentGroup = paramDefinition.name
-
-    const element = html`<tr class=${trClassName} data-groupname=${currentGroup} >
+  const groupHeaderRow = html`<tr class=${trClassName} data-groupname=${currentGroupName} >
         <td class=${tdClassName} colspan="2">
             <h1>
                 <svg class="icon icon-open feather feather-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="6 9 12 15 18 9"/></svg>
@@ -40,86 +71,97 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
         </td>
       </tr>`
 
-    // this is to make groups collapsible
-    element.onclick = () => {
-      let displayValue
-      if (element.className.includes('open')) {
-        element.classList.remove('open')
-        element.classList.add('closed')
-        displayValue = 'none'
-      } else {
-        element.classList.remove('closed')
-        element.classList.add('open')
-        displayValue = ''
-      }
-
-      const groupItems = document.getElementsByClassName(element.dataset.groupname)
-      Array.from(groupItems).forEach((item) => {
-        item.style.display = displayValue
-      })
-      return true
-    }
-
-    element.paramName = paramDefinition.name
-    element.paramType = paramDefinition.type
-    return element
+  // this is to make groups collapsible
+  groupHeaderRow.onclick = () => {
+    toggleGroupVisibility(groupHeaderRow)
+    return true
   }
 
-  const createInputRowFromDefinition = (type, paramDefinition) => {
-    let subControls
-    switch (type) {
-      case 'choice':
-        subControls = createChoiceControl(paramDefinition, prevParameterValues[paramDefinition.name])
-        break
-      case 'radio':
-        subControls = createRadioControl(paramDefinition, prevParameterValues[paramDefinition.name])
-        break
-      default:
-        subControls = createInputControl(paramDefinition, prevParameterValues[paramDefinition.name])
-        break
-    }
+  groupHeaderRow.paramName = paramDefinition.name
+  groupHeaderRow.paramType = paramDefinition.type
+  return groupHeaderRow
+}
 
-    let label = paramDefinition.name + ':'
-    let tdClassName = ''
-    if ('caption' in paramDefinition) {
-      label = paramDefinition.caption
-      tdClassName = 'caption'
-    }
+/**
+ * Given the Table Row element for a group header, show or hide the elements of the group.
+ * @param groupHeaderElement
+ */
+const toggleGroupVisibility = (groupHeaderElement) => {
+  let displayValue
+  if (groupHeaderElement.className.includes('open')) {
+    groupHeaderElement.classList.remove('open')
+    groupHeaderElement.classList.add('closed')
+    displayValue = 'none'
+  } else {
+    groupHeaderElement.classList.remove('closed')
+    groupHeaderElement.classList.add('open')
+    displayValue = ''
+  }
 
-    let trClassName = 'controlsLine'
-    if (currentGroup) {
-      trClassName += ' ' + currentGroup
-    }
-    const trStyle = (currentGroupExpanded ? '' : 'display:none')
+  const inputRowsInGroup = document.getElementsByClassName(groupHeaderElement.dataset.groupname)
+  Array.from(inputRowsInGroup).forEach((item) => {
+    item.style.display = displayValue
+  })
+}
 
-    subControls.forEach((control) => {
-      control.onchange = (e) => {
-        const l = e.currentTarget.nextElementSibling
-        if (l !== null && l.nodeName === 'LABEL') {
-          l.innerHTML = e.currentTarget.value
-        }
-        if (rebuildSolid) {
-          rebuildSolid(paramControls)
-        }
+/**
+ * Render an Input parameter in HTML
+ * @param {string} type - the type of input to create.
+ * @param paramDefinition
+ * @param prevParameterValues
+ * @param rebuildSolid
+ * @returns { element }
+ */
+const createInputRowFromDefinition = (type, paramDefinition, prevParameterValues, rebuildSolid) => {
+  let subControls
+  switch (type) {
+    case 'choice':
+      subControls = createChoiceControl(paramDefinition, prevParameterValues[paramDefinition.name])
+      break
+    case 'radio':
+      subControls = createRadioControl(paramDefinition, prevParameterValues[paramDefinition.name])
+      break
+    default:
+      subControls = createInputControl(paramDefinition, prevParameterValues[paramDefinition.name])
+      break
+  }
+
+  let label = paramDefinition.name + ':'
+  let tdClassName = ''
+  if ('caption' in paramDefinition) {
+    label = paramDefinition.caption
+    tdClassName = 'caption'
+  }
+
+  let trClassName = 'controlsLine'
+  if (currentGroupName) {
+    trClassName += ' ' + currentGroupName
+  }
+  const trStyle = (currentGroupIsExpanded ? '' : 'display:none')
+
+  subControls.forEach((control) => {
+    control.onchange = () => {
+      if (rebuildSolid) {
+        rebuildSolid(paramControls)
       }
-    })
+    }
+  })
 
-    const subItems = subControls.map((control) => html`<div>${control} ${'label' in control ? control.label : ''}</div>`)
-    const element = html`<tr class=${trClassName} style=${trStyle} >
+  const subItems = subControls.map((control) => html`<div>${control} ${'label' in control ? control.label : ''}</div>`)
+  const element = html`<tr class=${trClassName} style=${trStyle} >
         <td class=${tdClassName}> ${label} </td>
         <td colspan="2"> ${subItems}</td>
       </tr>`
-    element.dataset.groupName = currentGroup
-    return element
-  }
-
-  const controls = parameterDefinitions.map((paramDefinition) => {
-    return createParamRowFromDefinition(paramDefinition)
-  })
-
-  return { controls }
+  element.dataset.groupName = currentGroupName
+  return element
 }
 
+/**
+ * Create the input elements for a Choice (select) parameter
+ * @param definition
+ * @param prevValue
+ * @returns {[*]}
+ */
 const createChoiceControl = (definition, prevValue) => {
   if (!('values' in definition)) {
     throw new Error('Definition of choice parameter (' + definition.name + ") should include a 'values' parameter")
@@ -155,6 +197,12 @@ const createChoiceControl = (definition, prevValue) => {
   return [control]
 }
 
+/**
+ * Creates the DOM elements for a group of radio buttons
+ * @param definition
+ * @param prevValue
+ * @returns {*}
+ */
 const createRadioControl = (definition, prevValue) => {
   if (!('values' in definition)) {
     throw new Error('Definition of choice parameter (' + definition.name + ") should include a 'values' parameter")
@@ -190,6 +238,12 @@ const createRadioControl = (definition, prevValue) => {
   })
 }
 
+/**
+ * Creates the DOM elements for general input types.
+ * @param definition
+ * @param prevValue
+ * @returns {[*]}
+ */
 const createInputControl = (definition, prevValue) => {
   console.log('parameterControls.createInputControl')
   const controlList = [
