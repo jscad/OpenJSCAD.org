@@ -128,12 +128,14 @@ body {
   border-top: 1px solid #bfbcbc;
   cursor: pointer;
 }
-#paramsTable .groupTitle:hover  {
-  background: #ff6c6c;/* #8080802b; #ff6c6c*/
-  color: white;
+#paramsTable .groupTitle:hover {
+  background: #dceeff;
 }
 #paramsTable .groupTitle td:nth-child(2){
   float: right;
+}
+#paramsTable .groupTitle .icon {
+  vertical-align: middle;
 }
 #paramsTable .groupTitle.closed .icon-open{
   display: none;

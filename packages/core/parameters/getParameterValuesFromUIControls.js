@@ -49,7 +49,7 @@ const getParameterValuesFromUIControls = (paramControls, parameterDefinitions, o
         value = control.value
         break
       case 'group':
-        console.log('group')
+        value = control.className.includes('open') ? 'open' : 'closed'
         break
       default:
         value = control.value
