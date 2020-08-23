@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.1...@jscad/web@2.0.0-alpha.2) (2020-08-23)
+
+
+### Bug Fixes
+
+* **web:** apply throttles on viewer events, creating smoother transitions ([4528a7e](https://github.com/jscad/OpenJSCAD.org/commit/4528a7e310c26117982aebaf26307fbd78c51538))
+* **web:** corrected errors when uploading files using Chrome OS [#331](https://github.com/jscad/OpenJSCAD.org/issues/331) ([#441](https://github.com/jscad/OpenJSCAD.org/issues/441)), late V1 fix ([025aab2](https://github.com/jscad/OpenJSCAD.org/commit/025aab22f2517f5e499c044ef432781876399375))
+
+
+
+
+
 # [2.0.0-alpha.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.0...@jscad/web@2.0.0-alpha.1) (2020-08-19)
 
 **Note:** Version bump only for package @jscad/web
