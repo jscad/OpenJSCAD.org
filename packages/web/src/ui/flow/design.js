@@ -555,6 +555,7 @@ const actions = ({ sources }) => {
   // design parameter change actions
   const getControls = () => Array.from(document.getElementById('paramsTable').getElementsByTagName('input'))
     .concat(Array.from(document.getElementById('paramsTable').getElementsByTagName('select')))
+    .concat(Array.from(document.getElementById('paramsTable').getElementsByClassName('groupTitle')))
 
   const parametersFromDom$ = most.mergeArray([
     sources.dom.select('#updateDesignFromParams').events('click')
