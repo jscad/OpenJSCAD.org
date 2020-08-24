@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.1](https://github.com/jscad/openjscad.org/compare/@jscad/modeling@2.0.0-alpha.0...@jscad/modeling@2.0.0-alpha.1) (2020-08-19)
+
+
+### Bug Fixes
+
+* **modeling:** ensure extrude rectangular expand produces shapes with positive area ([43ce5dd](https://github.com/jscad/openjscad.org/commit/43ce5dd4341935966ed976ce16cb5a7e452becc2))
+
+
+
+
+
 # 2.0.0-alpha.0 (2020-08-13)
 
 
