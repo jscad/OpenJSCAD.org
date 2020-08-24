@@ -1,6 +1,6 @@
 {
   "name": "@jscad/web",
-  "version": "2.0.0-alpha.2",
+  "version": "2.0.0-alpha.3",
   "description": "Web UI for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
@@ -36,7 +36,7 @@
   "module": "dist/openjscad.umd.js",
   "dependencies": {
     "@jscad/array-utils": "2.0.0-alpha.1",
-    "@jscad/core": "2.0.0-alpha.1",
+    "@jscad/core": "2.0.0-alpha.2",
     "@jscad/examples": "2.0.0-alpha.1",
     "@jscad/io": "2.0.0-alpha.1",
     "@jscad/modeling": "2.0.0-alpha.1",

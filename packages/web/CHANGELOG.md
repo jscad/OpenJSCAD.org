@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.2...@jscad/web@2.0.0-alpha.3) (2020-08-24)
+
+
+### Bug Fixes
+
+* **web:** fixes for slider, group, and choice parameter types ([a3faba3](https://github.com/jscad/OpenJSCAD.org/commit/a3faba367604c897d240f56ba86ddb5404034afd))
+
+
+
+
+
 # [2.0.0-alpha.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.1...@jscad/web@2.0.0-alpha.2) (2020-08-23)
 
 
