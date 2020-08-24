@@ -1,127 +1,167 @@
 const html = require('bel')
 
-const createParamControls = (prevParameterValues = {}, parameterDefinitions, rebuildSolid) => {
-  const paramControls = []
+let paramControls
+let currentGroupName
+let currentGroupIsExpanded
 
-  // FIXME: rework the way groups work
-  let currentGroup
+/**
+ * Creates a series of table row elements for the list of parameters
+ * @param  {Object} prevParameterValues - Current values and state of parameters to maintain consistency
+ * @param {array} parameterDefinitions - The definitions provides by the current model script
+ * @param {function} rebuildSolid - The method to call when parameters change.
+ * @returns {{controls: Array of DOM elements}}
+ */
+const createParamControls = (prevParameterValues = {}, parameterDefinitions, rebuildSolid) => {
+  paramControls = []
+  currentGroupName = ''
+  currentGroupIsExpanded = true
 
   const controls = parameterDefinitions.map((paramDefinition) => {
-    const type = paramDefinition.type.toLowerCase()
-    let subControls
-    switch (type) {
-      case 'choice':
-        subControls = createChoiceControl(paramDefinition, prevParameterValues[paramDefinition.name])
-        break
-      case 'radio':
-        subControls = createRadioControl(paramDefinition, prevParameterValues[paramDefinition.name])
-        break
-      case 'group':
-        subControls = createGroupControl(paramDefinition)
-        break
-      default:
-        subControls = createControl(paramDefinition, prevParameterValues[paramDefinition.name])
-        break
-    }
-    let label = paramDefinition.name + ':'
-    let className = ''
-    if ('caption' in paramDefinition) {
-      label = paramDefinition.caption
-      className = 'caption'
-    }
-
-    let trClassName = 'controlsLine'
-    if (currentGroup && type !== 'group') {
-      trClassName += ' ' + currentGroup + ' open'
-    }
-
-    if (type === 'group') {
-      label = html`<h1>${label}</h1>`
-      trClassName = `groupTitle ${paramDefinition.name} open`
-      currentGroup = paramDefinition.name
-      subControls = subControls.map((control) => html`<th class='${control.className}'  >
-        ${control}
-      </th>`)
-    } else {
-      subControls.forEach((control) => {
-        control.onchange = (e) => {
-          const l = e.currentTarget.nextElementSibling
-          if (l !== null && l.nodeName === 'LABEL') {
-            l.innerHTML = e.currentTarget.value
-          }
-          if (rebuildSolid) {
-            rebuildSolid(paramControls)
-          }
-        }
-      })
-    }
-    const subItems = subControls.map((control) => html`<div>${control} ${'label' in control ? control.label : ''}</div>`)
-    const element = html`<tr class=${trClassName}>
-      <td class=${className}> ${label} </td>
-      <td> ${subItems}</td>
-    </tr>`
-
-    // this is to make groups collapsible
-    if (type === 'group') {
-      element.onclick = function (event) {
-        if (element.className.includes('open')) {
-          element.classList.remove('open')
-          element.classList.add('closed')
-        } else {
-          element.classList.remove('closed')
-          element.classList.add('open')
-        }
-
-        const className = event.target.parentNode.parentNode.className
-          .replace('groupTitle', '')
-          .replace(' ', '')
-        const groupItems = document.getElementsByClassName(className)
-        Array.from(groupItems).forEach((item) => {
-          if (item.className.includes('groupTitle')) {
-            return
-          }
-          if (item.className.includes('open')) {
-            item.style.display = 'none'
-            item.classList.remove('open')
-            item.classList.add('closed')
-          } else {
-            item.style.display = ''
-            item.classList.remove('closed')
-            item.classList.add('open')
-          }
-        })
-        // event.stopPropagation()
-        return true
-      }
-    }
-
-    return element
+    return createParamRowFromDefinition(paramDefinition, prevParameterValues, rebuildSolid)
   })
 
   return { controls }
 }
 
-const createGroupControl = (definition) => {
-  const defaults = {
-    expanded: false,
-    className: ''
+/**
+ * Create a single table row for the parameter window.
+ * @param paramDefinition
+ * @param prevParameterValues
+ * @param rebuildSolid
+ * @returns {element}
+ */
+const createParamRowFromDefinition = (paramDefinition, prevParameterValues, rebuildSolid) => {
+  const type = paramDefinition.type.toLowerCase()
+  if (type === 'group') {
+    return createGroupRowFromDefinition(paramDefinition, prevParameterValues)
   }
-  const { expanded, className } = Object.assign({}, defaults, definition)
-  // const text = definition.caption ? definition.caption : definition.name
-  const groupOpenIcon = html`
-      <svg  class="icon icon-open feather feather-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="6 9 12 15 18 9"/></svg>`
-  const groupClosedIcon = html`
-      <svg class="icon icon-closed feather feather-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="9 18 15 12 9 6"/></svg>`
-  const icon = expanded ? groupOpenIcon : groupClosedIcon
-  const control = html`<section class=${className}>
-    <span class='groupStatus'>${icon}</span>
-  </section> `
-  // html`<title class=${className}>${text}</title>`
-  control.paramName = definition.name
-  control.paramType = definition.type
-  return [control]
+  return createInputRowFromDefinition(type, paramDefinition, prevParameterValues, rebuildSolid)
 }
 
+/**
+ * Render a Group Header parameter in HTML
+ * @param paramDefinition
+ * @param prevParameterValues
+ * @returns {*}
+ */
+const createGroupRowFromDefinition = (paramDefinition, prevParameterValues) => {
+  let label = paramDefinition.name + ':'
+  let tdClassName = ''
+  if ('caption' in paramDefinition) {
+    label = paramDefinition.caption
+    tdClassName = 'caption'
+  }
+
+  if (paramDefinition.name in prevParameterValues) {
+    currentGroupIsExpanded = prevParameterValues[paramDefinition.name] !== 'closed'
+  } else {
+    currentGroupIsExpanded = paramDefinition.initial !== 'closed'
+  }
+
+  currentGroupName = paramDefinition.name
+  const trClassName = 'groupTitle ' + (currentGroupIsExpanded ? 'open' : 'closed')
+
+  const groupHeaderRow = html`<tr class=${trClassName} data-groupname=${currentGroupName} >
+        <td class=${tdClassName} colspan="2">
+            <h1>
+                <svg class="icon icon-open feather feather-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="6 9 12 15 18 9"/></svg>
+                <svg class="icon icon-closed feather feather-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="9 18 15 12 9 6"/></svg>
+                ${label}
+            </h1>
+        </td>
+      </tr>`
+
+  // this is to make groups collapsible
+  groupHeaderRow.onclick = () => {
+    toggleGroupVisibility(groupHeaderRow)
+    return true
+  }
+
+  groupHeaderRow.paramName = paramDefinition.name
+  groupHeaderRow.paramType = paramDefinition.type
+  return groupHeaderRow
+}
+
+/**
+ * Given the Table Row element for a group header, show or hide the elements of the group.
+ * @param groupHeaderElement
+ */
+const toggleGroupVisibility = (groupHeaderElement) => {
+  let displayValue
+  if (groupHeaderElement.className.includes('open')) {
+    groupHeaderElement.classList.remove('open')
+    groupHeaderElement.classList.add('closed')
+    displayValue = 'none'
+  } else {
+    groupHeaderElement.classList.remove('closed')
+    groupHeaderElement.classList.add('open')
+    displayValue = ''
+  }
+
+  const inputRowsInGroup = document.getElementsByClassName(groupHeaderElement.dataset.groupname)
+  Array.from(inputRowsInGroup).forEach((item) => {
+    item.style.display = displayValue
+  })
+}
+
+/**
+ * Render an Input parameter in HTML
+ * @param {string} type - the type of input to create.
+ * @param paramDefinition
+ * @param prevParameterValues
+ * @param rebuildSolid
+ * @returns { element }
+ */
+const createInputRowFromDefinition = (type, paramDefinition, prevParameterValues, rebuildSolid) => {
+  let subControls
+  switch (type) {
+    case 'choice':
+      subControls = createChoiceControl(paramDefinition, prevParameterValues[paramDefinition.name])
+      break
+    case 'radio':
+      subControls = createRadioControl(paramDefinition, prevParameterValues[paramDefinition.name])
+      break
+    default:
+      subControls = createInputControl(paramDefinition, prevParameterValues[paramDefinition.name])
+      break
+  }
+
+  let label = paramDefinition.name + ':'
+  let tdClassName = ''
+  if ('caption' in paramDefinition) {
+    label = paramDefinition.caption
+    tdClassName = 'caption'
+  }
+
+  let trClassName = 'controlsLine'
+  if (currentGroupName) {
+    trClassName += ' ' + currentGroupName
+  }
+  const trStyle = (currentGroupIsExpanded ? '' : 'display:none')
+
+  subControls.forEach((control) => {
+    control.onchange = () => {
+      if (rebuildSolid) {
+        rebuildSolid(paramControls)
+      }
+    }
+  })
+
+  const subItems = subControls.map((control) => html`<div>${control} ${'label' in control ? control.label : ''}</div>`)
+  const element = html`<tr class=${trClassName} style=${trStyle} >
+        <td class=${tdClassName}> ${label} </td>
+        <td colspan="2"> ${subItems}</td>
+      </tr>`
+  element.dataset.groupName = currentGroupName
+  return element
+}
+
+/**
+ * Create the input elements for a Choice (select) parameter
+ * @param definition
+ * @param prevValue
+ * @returns {[*]}
+ */
 const createChoiceControl = (definition, prevValue) => {
   if (!('values' in definition)) {
     throw new Error('Definition of choice parameter (' + definition.name + ") should include a 'values' parameter")
@@ -157,6 +197,12 @@ const createChoiceControl = (definition, prevValue) => {
   return [control]
 }
 
+/**
+ * Creates the DOM elements for a group of radio buttons
+ * @param definition
+ * @param prevValue
+ * @returns {*}
+ */
 const createRadioControl = (definition, prevValue) => {
   if (!('values' in definition)) {
     throw new Error('Definition of choice parameter (' + definition.name + ") should include a 'values' parameter")
@@ -168,7 +214,7 @@ const createRadioControl = (definition, prevValue) => {
     throw new Error('Definition of choice parameter (' + definition.name + ") should have the same number of items for 'captions' and 'values'")
   }
 
-  const controls = captions.map((caption, index) => {
+  return captions.map((caption, index) => {
     const value = values[index]
     let selected = false
     if (prevValue !== undefined) {
@@ -179,21 +225,27 @@ const createRadioControl = (definition, prevValue) => {
       selected = (definition.initial === value)
     }
 
-    const control = html`<label>
-      ${caption}
-      <input type='radio' value=${value} name=${definition.name} checked=${selected}/>
-      </label>`
-    // html`<input type='radio' value=${value} checked=${selected} name='${definition.name}'/>`
+    const control = html`
+      <label>
+        ${caption}
+        <input type='radio' value=${value} name=${definition.name} checked=${selected}/>
+      </label>
+    `
     control.children[0].paramName = definition.name
     control.children[0].paramType = definition.type
 
     return control
   })
-
-  return controls
 }
 
-const createControl = (definition, prevValue) => {
+/**
+ * Creates the DOM elements for general input types.
+ * @param definition
+ * @param prevValue
+ * @returns {[*]}
+ */
+const createInputControl = (definition, prevValue) => {
+  console.log('parameterControls.createInputControl')
   const controlList = [
     { type: 'text', control: 'text', required: ['type', 'name'], initial: '' },
     { type: 'int', control: 'number', required: ['type', 'name'], initial: 0 },
@@ -208,6 +260,8 @@ const createControl = (definition, prevValue) => {
     { type: 'url', control: 'url', required: ['type', 'name'], initial: '' },
     { type: 'slider', control: 'range', required: ['type', 'name', 'min', 'max'], initial: 0, label: true }
   ]
+  const handledAttributes = ['type', 'name', 'checked', 'initial', 'default']
+
   // check for required parameters
   if (!('type' in definition)) {
     throw new Error('Parameter definition (' + definition + ") must include a 'type' parameter")
@@ -237,9 +291,12 @@ const createControl = (definition, prevValue) => {
   } else {
     controlValue = typeData.initial
   }
+
   const control = html`<input
-    type=${typeData.control} value=${controlValue} checked=${'checked' in definition ? controlValue : ''}>
-  </input>`
+    type=${typeData.control} 
+    value=${controlValue} 
+    checked=${'checked' in definition ? controlValue : ''} 
+  />`
 
   // set name and type (used later for obtaining values)
   control.paramName = definition.name
@@ -247,50 +304,13 @@ const createControl = (definition, prevValue) => {
   // set generic HTML attributes
   for (const property in definition) {
     if (Object.prototype.hasOwnProperty.call(definition, property)) {
-      if (typeData.required.indexOf(property) < 0) {
+      if (handledAttributes.indexOf(property) < 0) {
         control.setAttribute(property, definition[property])
       }
     }
   }
 
-  // add a label if necessary
-  /* if ('label' in controlInstance) {
-    control.label = document.createElement('label')
-    control.label.innerHTML = control.value
-  } */
-
   return [control]
-
-/*
-  FIXME remove later
-  control = document.createElement('input')
-  let i, j, controlInstance, paramName
-  for (i = 0; i < controlList.length; i++) {
-    controlInstance = controlList[i]
-    if (controlInstance.type === definition.type) {
-      for (j = 0; j < controlInstance.required.length; j++) {
-        paramName = controlInstance.required[j]
-        if (paramName in definition) {
-          if (paramName === 'index') continue
-          if (paramName === 'type') continue
-          if (paramName === 'checked') { // setAttribute() only accepts strings
-            control.checked = definition.checked
-          } else {
-            control.setAttribute(paramName, definition[paramName])
-          }
-        } else {
-          throw new Error('Parameter definition (' + definition + ") must include a '" + paramName + "' parameter")
-        }
-      }
-      break
-    }
-  }
-  if (i === controlList.length) {
-    throw new Error('Parameter definition (' + definition + ") is not a valid 'type'")
-  }
-  // set the control type
-  control.setAttribute('type', controlInstance.control)
-*/
 }
 
 module.exports = { createParamControls }

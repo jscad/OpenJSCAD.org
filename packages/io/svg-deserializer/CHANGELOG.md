@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.1](https://github.com/jscad/compare/@jscad/svg-deserializer@2.0.0-alpha.0...@jscad/svg-deserializer@2.0.0-alpha.1) (2020-08-19)
+
+**Note:** Version bump only for package @jscad/svg-deserializer
+
+
+
+
+
+# 2.0.0-alpha.0 (2020-08-13)
+
+
+### Bug Fixes
+
+* **colors:** colorize is now immutable & returns new geometries ([#566](https://github.com/jscad/issues/566)) ([916824c](https://github.com/jscad/commit/916824c63a0bf8896d1b6f85a82b129a013bec58))
+* **svg-deserializer:** adds require / export to the translation & some minor fixes & tweaks([#524](https://github.com/jscad/issues/524)) ([5ee1509](https://github.com/jscad/commit/5ee15099552c2201259eaa1f4664cd83d761af4b))
+* **svg-deserializer:** corrected svg transforms while instantiating shapes
+* **svg-deserializer:** corrected conversion of shapes when target is geometry
+
+
+### Features
+
+* **svg-deserializer:** overhaul for V2 (#463)
+* **io:** change api to deserialize(options, source)
+
+
+
+
+
 <a name="0.4.3"></a>
 ## [0.4.3](https://github.com/jscad/io/compare/@jscad/svg-deserializer@0.4.2...@jscad/svg-deserializer@0.4.3) (2018-11-25)
 

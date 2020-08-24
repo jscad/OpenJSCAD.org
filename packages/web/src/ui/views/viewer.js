@@ -9,9 +9,17 @@ const orbitControls = rendererStuff.controls.orbit
 
 // params
 const rotateSpeed = 0.002
-const zoomSpeed = 0.08
 const panSpeed = 1
-const renderSpeed = 10 // number of renders per second
+const zoomSpeed = 0.08
+
+const rotateRate = 20 // number of rotations per second
+let lastRotate = 0 // time in ms
+const zoomRate = 20 // number of zooms per second
+let lastZoom = 0 // time in ms
+const panRate = 20 // number of pans per second
+let lastPan = 0 // time in ms
+const renderRate = 10 // number of renders per second
+let lastRender = 0
 
 // internal state
 let render
@@ -42,7 +50,6 @@ const axes = {
 
 let prevEntities = []
 let prevSolids
-let prevTimestamp = 0
 
 const viewer = (state, i18n) => {
   // console.log('regen viewer', state.viewer)
@@ -63,30 +70,45 @@ const viewer = (state, i18n) => {
     // rotate
     gestures.drags
       .forEach((data) => {
-        const delta = [data.delta.x, data.delta.y].map((d) => -d)
         const { shiftKey } = data.originalEvents[0]
         if (!shiftKey) {
-          const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, delta)
-          controls = { ...controls, ...updated.controls }
+          const now = Date.now()
+          const ms = now - lastRotate
+          if (ms > (1000 / rotateRate)) {
+            const delta = [data.delta.x, data.delta.y].map((d) => -d)
+            const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, delta)
+            controls = { ...controls, ...updated.controls }
+            lastRotate = now
+          }
         }
       })
     // pan
     gestures.drags
       .forEach((data) => {
-        const delta = [data.delta.x, data.delta.y].map((d) => d)
         const { shiftKey } = data.originalEvents[0]
         if (shiftKey) {
-          const updated = orbitControls.pan({ controls, camera, speed: panSpeed }, delta)
-          camera.position = updated.camera.position
-          camera.target = updated.camera.target
+          const now = Date.now()
+          const ms = now - lastPan
+          if (ms > (1000 / panRate)) {
+            const delta = [data.delta.x, data.delta.y].map((d) => d)
+            const updated = orbitControls.pan({ controls, camera, speed: panSpeed }, delta)
+            camera.position = updated.camera.position
+            camera.target = updated.camera.target
+            lastPan = now
+          }
         }
       })
 
     // zoom
     gestures.zooms
       .forEach((x) => {
-        const updated = orbitControls.zoom({ controls, camera, speed: zoomSpeed }, -x)
-        controls = { ...controls, ...updated.controls }
+        const now = Date.now()
+        const ms = now - lastZoom
+        if (ms > (1000 / zoomRate)) {
+          const updated = orbitControls.zoom({ controls, camera, speed: zoomSpeed }, -x)
+          controls = { ...controls, ...updated.controls }
+          lastZoom = now
+        }
       })
 
     // auto fit
@@ -99,9 +121,9 @@ const viewer = (state, i18n) => {
 
     // the heart of rendering, as themes, controls, etc change
     const updateAndRender = (timestamp) => {
-      const elaspe = timestamp - prevTimestamp
-      if (elaspe > (1000 / renderSpeed)) {
-        prevTimestamp = timestamp
+      const elaspe = timestamp - lastRender
+      if (elaspe > (1000 / renderRate)) {
+        lastRender = timestamp
 
         const updatedA = orbitControls.update({ controls, camera })
         controls = { ...controls, ...updatedA.controls }

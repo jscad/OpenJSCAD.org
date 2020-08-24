@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/stl-deserializer@2.0.0-alpha.0...@jscad/stl-deserializer@2.0.0-alpha.1) (2020-08-19)
+
+**Note:** Version bump only for package @jscad/stl-deserializer
+
+
+
+
+
+# 2.0.0-alpha.0 (2020-08-13)
+
+
+### Features
+
+* **stl-deserializer:** updated for V2 (#466)
+* **io:** change api to deserialize(options, source)
+
+
+
+
+
 <a name="0.3.3"></a>
 ## [0.3.3](https://github.com/jscad/io/compare/@jscad/stl-deserializer@0.3.2...@jscad/stl-deserializer@0.3.3) (2018-11-25)
 

@@ -17,7 +17,7 @@
     "web": "npm run bootstrap && cd ./packages/web && npm run dev",
     "desktop": "npm run bootstrap && cd ./packages/desktop && npm run dev",
     "preversion": "npm run test && npm run docs",
-    "publish-dryrun": "lerna version premajor --no-private --no-push --conventional-prerelease"
+    "publish-dryrun": "lerna version --no-private --no-push --conventional-prerelease"
   },
   "contributors": [
     {
