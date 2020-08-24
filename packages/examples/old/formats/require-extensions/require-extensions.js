@@ -1,13 +1,17 @@
-const { cylinder } = require('@jscad/core').primitives3d
-const { rotate } = require('@jscad/csg/api').transformations
-const { difference } = require('@jscad/csg/api').booleanOps
+// const { cylinder } = require('@jscad/modeling').primitives
+// const { expand } = require('@jscad/modeling').transforms
+// const { colorize, colorNameToRgb } = require('@jscad/modeling').colors
+
+const { cylinder } = require('@jscad/modeling').primitives
+const { rotate } = require('@jscad/modeling').transforms
+const { subtract } = require('@jscad/modeling').booleans
 
 // MAGIIIIC ?
 // no, it is require.extensions ! + jscad deserializers
 const sculpture = require('./3d_sculpture-VernonBussler.stl')
 
 const main = () => {
-  return difference(
+  return subtract(
     sculpture,
     rotate([0, 90, 0], cylinder({ d: 10, h: 40 }))
   )
