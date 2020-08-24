@@ -1,6 +1,6 @@
 {
   "name": "@jscad/vtree",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0-alpha.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,13 +9,13 @@
   "author": "Mark 'kaosat-dev' Moissette",
   "license": "MIT",
   "dependencies": {
-    "@jscad/array-utils": "2.0.0-alpha.0",
-    "@jscad/modeling": "2.0.0-alpha.0",
+    "@jscad/array-utils": "2.0.0-alpha.1",
+    "@jscad/modeling": "2.0.0-alpha.1",
     "object-hash": "1.2.0"
   },
   "devDependencies": {
-    "@jscad/io-utils": "2.0.0-alpha.0",
-    "@jscad/stl-serializer": "2.0.0-alpha.0",
+    "@jscad/io-utils": "2.0.0-alpha.1",
+    "@jscad/stl-serializer": "2.0.0-alpha.1",
     "decache": "4.4.0",
     "just-diff": "2.1.1",
     "serialize-to-js": "3.0.2",
