@@ -20,6 +20,8 @@ const computeBounds = (geometries) => {
   let center
   let bbox // min and max
   let size
+  let min
+  let max
   if (Array.isArray(geometries)) {
     geometries.forEach((geometry) => {
       let gbbox = boundingBox(geometry.positions)
@@ -32,28 +34,34 @@ const computeBounds = (geometries) => {
       }
     })
 
-    size = vec3.subtract(vec3.create(), bbox[1], bbox[0])
+    min = vec3.min(vec3.create(), bbox[1], bbox[0])
+    max = vec3.max(vec3.create(), bbox[1], bbox[0])
+
+    size = vec3.subtract(vec3.create(), max, min)
     center = vec3.scale(vec3.create(), size, 0.5)
-    center = vec3.add(center, bbox[0], center)
+    center = vec3.add(center, min, center)
     // aproximate diamter
-    dia = vec3.distance(center, bbox[1])
+    dia = vec3.distance(center, max)
   } else {
     const geometry = geometries
     bbox = boundingBox(geometry.positions)
     bbox = bbox.map((bounds) => vec3.transformMat4(bounds, bounds, geometry.transforms))
 
-    size = vec3.subtract(vec3.create(), bbox[1], bbox[0])
+    min = vec3.min(vec3.create(), bbox[1], bbox[0])
+    max = vec3.max(vec3.create(), bbox[1], bbox[0])
+
+    size = vec3.subtract(vec3.create(), max, min)
     center = vec3.scale(vec3.create(), size, 0.5)
-    center = vec3.add(center, bbox[0], center)
+    center = vec3.add(center, min, center)
     // aproximate diamter
-    dia = vec3.distance(center, bbox[1])
+    dia = vec3.distance(center, max)
   }
 
   const bounds = {
     dia,
     center: [...center],
-    min: bbox[0],
-    max: bbox[1],
+    min: [...min],
+    max: [...max],
     size: [...size]
   }
   return bounds
