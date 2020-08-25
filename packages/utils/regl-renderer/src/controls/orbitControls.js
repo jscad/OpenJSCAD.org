@@ -2,6 +2,8 @@ const vec3 = require('gl-vec3')
 const mat4 = require('gl-mat4')
 const { max, min, sqrt, PI, sin, cos, atan2 } = Math
 
+const computeBounds = require('../bound-utils/computeBounds')
+
 // TODO: make it more data driven ?
 /*
 setFocus => modify the focusPoint input
@@ -275,10 +277,10 @@ const zoomToFit = ({ controls, camera, entities }) => {
   }
 
   let bounds
-  // more than one entity, targeted, need to compute the overall bounds
   if (entities.length > 1) {
-    const computeBounds = require('../bound-utils/computeBounds')
-    bounds = computeBounds(entities)
+    // more than one entity, targeted, need to compute the overall bounds
+    const geometries = entities.map((entity) => entity.geometry)
+    bounds = computeBounds(geometries)
   } else {
     bounds = entities[0].bounds
   }

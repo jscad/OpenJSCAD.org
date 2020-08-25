@@ -2,6 +2,7 @@ const mat4 = require('gl-mat4')
 
 const { flatten, toArray } = require('@jscad/array-utils')
 const computeBounds = require('../bound-utils/computeBounds')
+const { meshColor } = require('../rendering/renderDefaults')
 
 const geom2ToGeometries = require('./geom2ToGeometries')
 const geom3ToGeometries = require('./geom3ToGeometries')
@@ -9,10 +10,10 @@ const path2ToGeometries = require('./path2ToGeometries')
 
 const entitiesFromSolids = (params, solids) => {
   const defaults = {
-    meshColor: [0, 0.6, 1, 1],
+    color: meshColor,
     smoothNormals: true
   }
-  const { meshColor, smoothNormals } = Object.assign({}, defaults, params)
+  const { color, smoothNormals } = Object.assign({}, defaults, params)
 
   solids = toArray(solids)
   const entities = solids.map((solid) => {
@@ -20,17 +21,17 @@ const entitiesFromSolids = (params, solids) => {
     let type
     if ('sides' in solid) {
       type = '2d'
-      geometry = geom2ToGeometries(solid, { color: meshColor })
+      geometry = geom2ToGeometries({ color }, solid)
     } else if ('points' in solid) {
       type = '2d'
-      geometry = path2ToGeometries(solid, { color: meshColor })
+      geometry = path2ToGeometries({ color }, solid)
     } else if ('polygons' in solid) {
       type = '3d'
-      geometry = geom3ToGeometries(solid, {
+      geometry = geom3ToGeometries({
         smoothLighting: smoothNormals,
         normalThreshold: 0.3,
-        color: meshColor
-      })
+        color
+      }, solid)
     }
 
     // geometry = flatten(geometries)// FXIME : ACTUALLY deal with arrays since a single design can
@@ -38,7 +39,7 @@ const entitiesFromSolids = (params, solids) => {
     geometry = flatten(geometry)[0]
 
     // bounds
-    const bounds = computeBounds({ geometry })// FXIME : ACTUALLY deal with arrays as inputs see above
+    const bounds = computeBounds(geometry) // FXIME : ACTUALLY deal with arrays as inputs see above
 
     // transforms: for now not used, since all transformed are stored in the geometry
     // FIXME : for V2 we will be able to use the transfors provided by the solids directly
