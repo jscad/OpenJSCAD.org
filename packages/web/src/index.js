@@ -1,6 +1,8 @@
+const html = require('nanohtml')
 
 const packageMetadata = require('../package.json')
 const keyBindings = require('../data/keybindings.json')
+
 let instances = 0
 
 /** make creator function, to create new jscad instances
@@ -18,8 +20,7 @@ async function makeJscad (targetElement, options) {
   const { name, logging } = Object.assign({}, defaults, options)
 
   // create root dom element
-  const bel = require('bel')
-  const jscadEl = bel`<div class='jscad' key=${name} tabindex=${instances}></div>`
+  const jscadEl = html`<div class='jscad' key=${name} tabindex=${instances}></div>`
   targetElement.appendChild(jscadEl)
 
   // setup all the side effects : ie , input/outputs

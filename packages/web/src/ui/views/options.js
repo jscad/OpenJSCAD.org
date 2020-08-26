@@ -1,4 +1,4 @@
-const html = require('bel')
+const html = require('nanohtml')
 
 const options = (state, i18n) => {
   const languages = state.languages.available.map((language) => {
