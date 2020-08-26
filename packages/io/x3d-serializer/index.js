@@ -71,7 +71,7 @@ const serialize = (options, ...objects) => {
 
   // convert the contents to X3D (XML) format
   const contents = `<?xml version="1.0" encoding="UTF-8"?>
-${stringify(body)}`
+${stringify(body, 2)}`
 
   options && options.statusCallback && options.statusCallback({ progress: 100 })
 
