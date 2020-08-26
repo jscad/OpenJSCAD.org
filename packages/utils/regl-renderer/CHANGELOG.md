@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [2.0.0-alpha.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.0.0-alpha.1...@jscad/regl-renderer@2.0.0-alpha.2) (2020-08-26)
 
-**Note:** Version bump only for package @jscad/regl-renderer
+* **regl-renderer:** various fixes to renderer
 
 
 

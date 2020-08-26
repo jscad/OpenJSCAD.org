@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [2.0.0-alpha.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.3...@jscad/web@2.0.0-alpha.4) (2020-08-26)
 
-**Note:** Version bump only for package @jscad/web
+* **regl-renderer:** various fixes to renderer
 
 
 
