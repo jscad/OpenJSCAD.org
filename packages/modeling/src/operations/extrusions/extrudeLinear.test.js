@@ -1,10 +1,10 @@
 const test = require('ava')
 
+const comparePolygonsAsPoints = require('../../../test/helpers/comparePolygonsAsPoints')
+
 const { geom2, geom3 } = require('../../geometries')
 
-const extrudeLinear = require('./extrudeLinear')
-
-const comparePolygonsAsPoints = require('../../../test/helpers/comparePolygonsAsPoints')
+const { extrudeLinear } = require('./index')
 
 test('extrudeLinear (defaults)', (t) => {
   const geometry2 = geom2.fromPoints([[5, 5], [-5, 5], [-5, -5], [5, -5]])
