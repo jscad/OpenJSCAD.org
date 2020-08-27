@@ -2,7 +2,7 @@ const test = require('ava')
 
 const { geom2, geom3 } = require('../../geometries')
 
-const hullChain = require('./hullChain')
+const { hullChain } = require('./index')
 
 test('hullChain (two, geom2)', (t) => {
   const geometry1 = geom2.fromPoints([[6, 6], [3, 6], [3, 3], [6, 3]])
