@@ -6,6 +6,7 @@
 module.exports = {
   clone: require('./clone'),
   create: require('./create'),
+  dot: require('./dot'),
   fromScalar: require('./fromScalar'),
   fromValues: require('./fromValues'),
   toString: require('./toString'),
