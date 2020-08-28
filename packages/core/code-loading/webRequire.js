@@ -1,5 +1,8 @@
 const path = require('path')
 
+// use posix versions of path, even in the browser
+const posix = path.posix ? path.posix : path
+
 const getFileExtensionFromString = require('../utils/getFileExtensionFromString')
 
 /* find matching path in inputs
@@ -84,7 +87,7 @@ const makeWebRequire = (filesAndFolders, options) => {
     }
 
     if (!curPath || reqPath.startsWith('/')) {
-      curPath = ''
+      curPath = '/'
     }
 
     const loadAsFile = (reqPath) => {
@@ -168,9 +171,9 @@ const makeWebRequire = (filesAndFolders, options) => {
       return null
     }
 
-    // relative paths
+    // relative paths (POSIX style)
     if (reqPath.startsWith('./') || reqPath.startsWith('/') || reqPath.startsWith('../')) {
-      reqPath = path.resolve(path.dirname(curPath), reqPath)
+      reqPath = posix.normalize(posix.dirname(curPath) + posix.sep + reqPath)
       // load as file
       let loadedModule = loadAsFile(reqPath)
       if (loadedModule) return loadedModule
@@ -189,7 +192,7 @@ const makeWebRequire = (filesAndFolders, options) => {
       const dirs = []
       for (let i = parts.length - 1; i > 0; i--) {
         if (parts[i] === 'node_modules') continue
-        const dir = path.sep + path.join(...parts.slice(1, i + 1), 'node_modules')
+        const dir = posix.sep + posix.join(...parts.slice(1, i + 1), 'node_modules')
         dirs.push(dir)
       }
       return dirs
@@ -200,7 +203,7 @@ const makeWebRequire = (filesAndFolders, options) => {
       const dirs = nodeModulesPaths(basePath)
       for (let i = 0; i < dirs.length; i++) {
         const dir = dirs[i]
-        const relPath = path.join(dir, reqPath)
+        const relPath = posix.join(dir, reqPath)
         // load as file
         let loadedModule = loadAsFile(relPath)
         if (loadedModule) return loadedModule
@@ -212,14 +215,14 @@ const makeWebRequire = (filesAndFolders, options) => {
     }
 
     // load node_module
-    const loadedModule = loadNodeModules(reqPath, path.dirname(curPath))
+    const loadedModule = loadNodeModules(reqPath, posix.dirname(curPath))
     if (loadedModule) return loadedModule
 
     throw new Error(`Cannot find module ${reqPath}`)
   }
 
   // create a top level require for the whole file system
-  const req = _require.bind(null, '')
+  const req = _require.bind(null, '/')
   req.extensions = extensions
   req.resolve = () => {}
 
