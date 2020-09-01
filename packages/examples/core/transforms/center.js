@@ -29,7 +29,7 @@ const getParameterDefinitions = () => {
 function main (params) {
   let crossHair3D = crosshair()
   if (params.centerx || params.centery || params.centerz) {
-    crossHair3D = center([params.centerx, params.centery, params.centerz], crossHair3D)
+    crossHair3D = center({ axes: [params.centerx, params.centery, params.centerz] }, crossHair3D)
   }
   return crossHair3D
 }

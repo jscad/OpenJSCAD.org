@@ -43,7 +43,7 @@ const buildFlatText = (message, extrusionHeight, characterLineWidth) => {
   })
 
   const messageObject = center([true, true, false], union(lineSegments3D))
-  return translate([0, -10, 0], messageObject)
+  return translate([0, 15, 0], messageObject)
 }
 
 // -- simplistic circularExtrude done with cylinders between points and spheres at each point.
@@ -61,7 +61,7 @@ function buildRoundText (message, p) {
   })
 
   const messageObject = center([true, true, false], union(lineJoints3D, lineSegments3D))
-  return translate([0, 20, 0], messageObject)
+  return translate([0, -15, 0], messageObject)
 }
 
 module.exports = { main, getParameterDefinitions }
