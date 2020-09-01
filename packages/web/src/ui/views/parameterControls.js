@@ -1,4 +1,4 @@
-const html = require('bel')
+const html = require('nanohtml')
 
 let paramControls
 let currentGroupName

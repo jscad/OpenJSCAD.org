@@ -1,4 +1,4 @@
-const html = require('bel')
+const html = require('nanohtml')
 
 // viewer data
 const rendererStuff = require('@jscad/regl-renderer')
