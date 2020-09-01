@@ -12,7 +12,7 @@ const jscad = require('@jscad/modeling')
 console.log(jscad)
 
 const { cuboid } = jscad.primitives
-const { intersect, union } = jscad.booleans
+const { intersect } = jscad.booleans
 const { rotateX, rotateZ, scale, translate } = jscad.transforms
 const { degToRad } = jscad.utils
 
@@ -34,8 +34,6 @@ const dodecahedron = (h) => {
 }
 
 const main = () => {
-  // TODO - Understand why scaling this up causes shading problems
-
   const d = dodecahedron(3)
   return [
     d,
