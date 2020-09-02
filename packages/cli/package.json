@@ -1,6 +1,6 @@
 {
   "name": "@jscad/cli",
-  "version": "2.0.0-alpha.2",
+  "version": "2.0.0-alpha.3",
   "description": "Command Line Interface (CLI) for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "bin": {
@@ -31,8 +31,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/core": "2.0.0-alpha.2",
-    "@jscad/io": "2.0.0-alpha.1",
+    "@jscad/core": "2.0.0-alpha.3",
+    "@jscad/io": "2.0.0-alpha.2",
     "@jscad/modeling": "2.0.0-alpha.1"
   },
   "devDependencies": {
