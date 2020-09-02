@@ -1,5 +1,12 @@
 const vec3 = require('../../maths/vec3')
 
+/**
+ * Compare the given geometries for equality.
+ * @param {poly3} first - a geometry to compare
+ * @param {poly3} second - a geometry to compare
+ * @returns {Boolean} true if the given geometries are equal
+ * @alias module:modeling/geometries/poly3.equals
+ */
 const equals = (first, second) => {
   if (first.vertices.length !== second.vertices.length) return false
 

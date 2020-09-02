@@ -1,6 +1,13 @@
 const mat4 = require('../../maths/mat4')
 const poly3 = require('../poly3')
 
+/**
+ * Compare the given geometries for equality.
+ * @param {geom3} first - a geometry to compare
+ * @param {geom3} second - a geometry to compare
+ * @returns {Boolean} true if the given geometries are equal
+ * @alias module:modeling/geometries/geom3.equals
+ */
 const equals = (first, second) => {
   if (first.isRetesselated !== second.isRetesselated) {
     return false
