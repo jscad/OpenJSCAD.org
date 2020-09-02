@@ -1,6 +1,6 @@
 {
   "name": "@jscad/core",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.3",
   "description": "reuseable utilities for the various jscad user interfaces",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "module.js",
@@ -29,10 +29,10 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/array-utils": "2.0.0-alpha.1",
-    "@jscad/io": "2.0.0-alpha.1",
+    "@jscad/io": "2.0.0-alpha.2",
     "@jscad/io-utils": "2.0.0-alpha.1",
     "@jscad/modeling": "2.0.0-alpha.1",
-    "@jscad/vtree": "2.0.0-alpha.1",
+    "@jscad/vtree": "2.0.0-alpha.2",
     "@most/create": "2.0.1",
     "es2015-i18n-tag": "1.6.1",
     "is-electron": "2.2.0",
