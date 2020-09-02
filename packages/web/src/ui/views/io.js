@@ -1,4 +1,4 @@
-const html = require('bel')
+const html = require('nanohtml')
 
 const io = (state, i18n) => {
   const formatsList = state.io.availableExportFormats

@@ -1,4 +1,4 @@
-const html = require('bel')
+const html = require('nanohtml')
 
 const shortcuts = (state, i18n) => {
   const keybindings = state.shortcuts// require('../../../data/keybindings.json')

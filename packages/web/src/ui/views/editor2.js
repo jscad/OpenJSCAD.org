@@ -1,5 +1,5 @@
+const html = require('nanohtml')
 const CodeMirror = require('codemirror')
-const html = require('bel')
 require('codemirror/addon/hint/show-hint')
 require('codemirror/addon/hint/javascript-hint')
 

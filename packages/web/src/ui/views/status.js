@@ -1,5 +1,4 @@
-
-const html = require('bel')
+const html = require('nanohtml')
 
 // status display
 const status = (state, paramsCallbacktoStream) => {
