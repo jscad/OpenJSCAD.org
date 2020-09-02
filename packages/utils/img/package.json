@@ -7,6 +7,6 @@
   "author": "Mark 'kaosat-dev' Moissette",
   "license": "MIT",
   "dependencies": {
-    "pngjs": "3.3.3"
+    "pngjs": "5.0.0"
   }
 }
