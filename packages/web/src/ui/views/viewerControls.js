@@ -1,4 +1,4 @@
-const html = require('bel')
+const html = require('nanohtml')
 
 const viewerControls = (state, i18n) => html`
 <div id='controls'>

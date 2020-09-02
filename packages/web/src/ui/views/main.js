@@ -1,4 +1,4 @@
-const html = require('bel')
+const html = require('nanohtml')
 
 const dom = (state, i18n, paramsCallbacktoStream, editorCallbackToStream) => {
   const i18nFake = (x) => x

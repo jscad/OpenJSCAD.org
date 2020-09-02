@@ -14,8 +14,6 @@ const packageMetadata = require('../../../package.json')
 
 const jsonCompare = (first, second) => JSON.stringify(first) === JSON.stringify(second)
 
-const serialize = require('serialize-to-js')
-
 // what fields should we check to determine if two designs are the same
 const designEqualityFields = [
   'parameterDefinitions',
@@ -271,7 +269,7 @@ const reducers = {
       data[key] = cache[key]
     })
     // we want to save the geometry cache under '.solidsCache'
-    return { data: serialize(data), path: '.solidsCache', options: { isRawData: true }, origin: design.origin }
+    return { path: '.solidsCache', options: { isRawData: true }, origin: design.origin }
   },
   // what do we want to save , return an object containing only that data?
   requestSaveSettings: ({ design }) => keep(serializableFields, design),
@@ -505,7 +503,7 @@ const actions = ({ sources }) => {
       .filter((res) => res.type === 'read' && res.id === 'loadCachedGeometry' && res.data)
       .map((raw) => {
         console.log('loading cached ')
-        const deserialize = () => {}// require('serialize-to-js').deserialize
+        const deserialize = () => {}
         const lookup = deserialize(raw.data)
         return { solids: undefined, lookupCounts: undefined, lookup }
       })

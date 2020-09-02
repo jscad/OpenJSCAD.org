@@ -1,4 +1,4 @@
-const html = require('bel')
+const html = require('nanohtml')
 
 const help = (state, i18n) => {
   const exampleElems = require('./examples')(state, i18n)

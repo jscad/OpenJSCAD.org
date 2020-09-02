@@ -1,4 +1,5 @@
-const html = require('bel')
+const html = require('nanohtml')
+
 const { createParamControls } = require('./parameterControls')
 
 const designParameters = (state, paramsCallbacktoStream, i18n) => {
