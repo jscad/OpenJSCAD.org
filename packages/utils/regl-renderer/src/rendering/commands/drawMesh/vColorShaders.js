@@ -81,7 +81,7 @@ void main () {
   float diffuseWeight4 = dot(surfaceNormal, vec3(-lightDirection.x, -lightDirection.y, lightDirection.z));
   vec3 diffuse4 = diffuseLightAmount * endColor.rgb * clamp(diffuseWeight4 , 0.0, 1.0 ) * light4Multiplier;*/
   
-  gl_FragColor = vec4((ambient + diffuse +specular), endColor.a);
+  gl_FragColor = vec4((ambient + diffuse + specular), endColor.a);
   //gl_FragColor = vec4((ambient + diffuse + diffuse2 + diffuse3 + diffuse4), endColor.a);
 }
 `

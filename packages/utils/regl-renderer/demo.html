@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Demo Application</title>
+    <style>
+      #jscad{
+        width: 6cm;
+        height: 6cm;
+        margin: 0;
+        outline: 1px solid black;
+      }
+    </style>
+</head>
+<body>
+  <script language="javascript" src="./dist/reglRenderer.js"></script>
+
+  <div id="jscad"></div>
+
+  <script language="javascript">
+const { prepareRender, drawCommands, cameras, controls, entitiesFromSolids } = reglRenderer
+
+const perspectiveCamera = cameras.perspective
+const orbitControls = controls.orbit
+
+const renderRate = 10 // number of renders per second
+
+const containerElement = document.getElementById("jscad")
+
+const width = containerElement.clientWidth
+const height = containerElement.clientHeight
+
+const state = {}
+
+// prepare the camera
+state.camera = Object.assign({}, perspectiveCamera.defaults)
+perspectiveCamera.setProjection(state.camera, state.camera, { width, height })
+perspectiveCamera.update(state.camera, state.camera)
+
+// prepare the controls
+state.controls = orbitControls.defaults
+
+// prepare the renderer
+const setupOptions = {
+  glOptions: { container: containerElement },
+}
+const renderer = prepareRender(setupOptions)
+
+const gridOptions = {
+  visuals: {
+    drawCmd: 'drawGrid',
+    show: true,
+    color: [0, 0, 0, 1],
+    subColor: [0, 0, 1, 0.5],
+    fadeOut: false,
+    transparent: true
+  },
+  size: [500, 500],
+  ticks: [100, 10]
+}
+
+const axisOptions = {
+  visuals: {
+    drawCmd: 'drawAxis',
+    show: true
+  }
+}
+
+// assemble the options for rendering
+const renderOptions = {
+  camera: state.camera,
+  drawCommands: {
+    drawGrid: drawCommands.drawGrid,
+    drawAxis: drawCommands.drawAxis,
+    drawMesh: drawCommands.drawMesh
+  },
+  // define the visual content
+  entities: [
+    gridOptions,
+    axisOptions
+    //...solids
+  ]
+}
+
+// the heart of rendering, as themes, controls, etc change
+prevTimestamp = 0
+const updateAndRender = (timestamp) => {
+  const elaspe = timestamp - prevTimestamp
+  if (elaspe > (1000 / renderRate)) {
+    prevTimestamp = timestamp
+
+    const updates = orbitControls.update({ controls: state.controls, camera: state.camera })
+    state.controls = { ...state.controls, ...updates.controls }
+    state.camera.position = updates.camera.position
+    perspectiveCamera.update(state.camera)
+
+    renderer(renderOptions)
+  }
+  window.requestAnimationFrame(updateAndRender)
+}
+window.requestAnimationFrame(updateAndRender)
+  </script>
+</body>
+</html>

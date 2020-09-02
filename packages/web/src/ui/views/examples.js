@@ -1,4 +1,4 @@
-const html = require('bel')
+const html = require('nanohtml')
 
 const examplesData = [
   { file: 'various/logo.jscad', title: 'OpenJSCAD.org Logo' },
