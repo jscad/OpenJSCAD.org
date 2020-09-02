@@ -77,29 +77,29 @@ const makeWebRequire = (filesAndFolders, options) => {
    * The logic is based on the original NODE require() function.
    * @see https://nodejs.org/dist/latest-v12.x/docs/api/modules.html#modules_all_together
    */
-  const _require = (curPath, reqPath) => {
-    // console.log('***** require: cur:', curPath, ' req:', reqPath)
+  const _require = (currentPath, requirePath) => {
+    // console.log('***** require: cur:', currentPath, ' req:', requirePath)
 
     // core modules
-    const directModule = coreModules[reqPath]
+    const directModule = coreModules[requirePath]
     if (directModule) {
       return directModule.exports
     }
 
-    if (!curPath || reqPath.startsWith('/')) {
-      curPath = '/'
+    if (!currentPath || requirePath.startsWith('/')) {
+      currentPath = '/'
     }
 
-    const loadAsFile = (reqPath) => {
-      // console.log('***** load as file', reqPath)
-      let baseExt = getFileExtensionFromString(reqPath)
+    const loadAsFile = (requirePath) => {
+      // console.log('***** load as file', requirePath)
+      let baseExt = getFileExtensionFromString(requirePath)
       if (!baseExt) {
         baseExt = 'js' // for lookups
-        reqPath = reqPath + '.js'
+        requirePath = requirePath + '.js'
       }
       baseExt = '.' + baseExt
 
-      const entry = findMatch(reqPath, filesAndFolders)
+      const entry = findMatch(requirePath, filesAndFolders)
       if (!entry) return null
 
       if (entry.children) return null // directory
@@ -121,39 +121,39 @@ const makeWebRequire = (filesAndFolders, options) => {
       return null
     }
 
-    const loadIndex = (reqPath) => {
-      // console.log('***** load index', reqPath)
-      const entry = findMatch(reqPath, filesAndFolders)
+    const loadIndex = (requirePath) => {
+      // console.log('***** load index', requirePath)
+      const entry = findMatch(requirePath, filesAndFolders)
       if (!entry) return null
 
-      if (reqPath === '/') reqPath = '' // FIXME hack for multiple file dragNdrop
+      if (requirePath === '/') requirePath = '' // FIXME hack for multiple file dragNdrop
 
-      let indexPath = reqPath + '/index.js'
+      let indexPath = requirePath + '/index.js'
       let matchingModule = loadAsFile(indexPath)
       if (matchingModule) return matchingModule
 
-      indexPath = reqPath + '/index.json'
+      indexPath = requirePath + '/index.json'
       matchingModule = loadAsFile(indexPath)
       if (matchingModule) return matchingModule
 
       return null
     }
 
-    const loadAsDirectory = (reqPath) => {
-      // console.log('***** load as directory', reqPath)
-      let entry = findMatch(reqPath, filesAndFolders)
+    const loadAsDirectory = (requirePath) => {
+      // console.log('***** load as directory', requirePath)
+      let entry = findMatch(requirePath, filesAndFolders)
       if (!entry) return null
 
       if (!entry.children) return null // file
 
       // load from main definition
       let matchingModule
-      const jsonPath = reqPath + '/package.json'
+      const jsonPath = requirePath + '/package.json'
       entry = findMatch(jsonPath, filesAndFolders)
       if (entry) {
         const main = JSON.parse(entry.source).main
         if (main) {
-          const mainPath = reqPath + '/' + main
+          const mainPath = requirePath + '/' + main
           matchingModule = loadAsFile(mainPath)
           if (matchingModule) return matchingModule
 
@@ -165,24 +165,24 @@ const makeWebRequire = (filesAndFolders, options) => {
       }
 
       // load index
-      matchingModule = loadIndex(reqPath)
+      matchingModule = loadIndex(requirePath)
       if (matchingModule) return matchingModule
 
       return null
     }
 
     // relative paths (POSIX style)
-    if (reqPath.startsWith('./') || reqPath.startsWith('/') || reqPath.startsWith('../')) {
-      reqPath = posix.normalize(posix.dirname(curPath) + posix.sep + reqPath)
+    if (requirePath.startsWith('./') || requirePath.startsWith('/') || requirePath.startsWith('../')) {
+      requirePath = posix.normalize(posix.dirname(currentPath) + posix.sep + requirePath)
       // load as file
-      let loadedModule = loadAsFile(reqPath)
+      let loadedModule = loadAsFile(requirePath)
       if (loadedModule) return loadedModule
 
       // load as directory
-      loadedModule = loadAsDirectory(reqPath)
+      loadedModule = loadAsDirectory(requirePath)
       if (loadedModule) return loadedModule
 
-      throw new Error(`Cannot find relative path to module ${reqPath}`)
+      throw new Error(`Cannot find relative path to module ${requirePath}`)
     }
 
     // TODO load self-reference
@@ -198,12 +198,12 @@ const makeWebRequire = (filesAndFolders, options) => {
       return dirs
     }
 
-    const loadNodeModules = (reqPath, basePath) => {
-      // console.log('loadNodeModules',reqPath, basePath)
+    const loadNodeModules = (requirePath, basePath) => {
+      // console.log('loadNodeModules',requirePath, basePath)
       const dirs = nodeModulesPaths(basePath)
       for (let i = 0; i < dirs.length; i++) {
         const dir = dirs[i]
-        const relPath = posix.join(dir, reqPath)
+        const relPath = posix.join(dir, requirePath)
         // load as file
         let loadedModule = loadAsFile(relPath)
         if (loadedModule) return loadedModule
@@ -215,10 +215,10 @@ const makeWebRequire = (filesAndFolders, options) => {
     }
 
     // load node_module
-    const loadedModule = loadNodeModules(reqPath, posix.dirname(curPath))
+    const loadedModule = loadNodeModules(requirePath, posix.dirname(currentPath))
     if (loadedModule) return loadedModule
 
-    throw new Error(`Cannot find module ${reqPath}`)
+    throw new Error(`Cannot find module ${requirePath}`)
   }
 
   // create a top level require for the whole file system
