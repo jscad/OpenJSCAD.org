@@ -14,8 +14,7 @@ const { hull, hullChain } = jscad.hulls
 
 const getParameterDefinitions = () => {
   return [
-    { name: 'doHull', type: 'radio', caption: 'Show:', values: ['shapes', 'hull', 'chain'], captions: ['Original Shapes', 'Hull', 'Hull Chain'], initial: 'shapes' },
-    { name: 'doCube', type: 'checkbox', checked: true, initial: '0', caption: 'Include Cube:' }
+    { name: 'doHull', type: 'radio', caption: 'Show:', values: ['shapes', 'hull', 'chain'], captions: ['Original Shapes', 'Hull', 'Hull Chain'], initial: 'shapes' }
   ]
 }
 

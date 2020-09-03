@@ -13,7 +13,7 @@ console.log(jscad)
 
 const { cuboid } = jscad.primitives
 const { intersect } = jscad.booleans
-const { rotateX, rotateZ, scale, translate } = jscad.transforms
+const { rotateX, rotateZ, scale } = jscad.transforms
 const { degToRad } = jscad.utils
 
 const dodecahedron = (h) => {
@@ -34,11 +34,7 @@ const dodecahedron = (h) => {
 }
 
 const main = () => {
-  const d = dodecahedron(3)
-  return [
-    d,
-    translate([-40, 0, 0], d)
-  ]
+  return dodecahedron(10)
 }
 
 module.exports = { main }
