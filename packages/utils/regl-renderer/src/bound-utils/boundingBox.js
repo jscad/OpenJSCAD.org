@@ -1,7 +1,7 @@
 // modified version of https://github.com/thibauts/vertices-bounding-box that also works with non nested positions
 const boundingBox = (positions) => {
   if (positions.length === 0) {
-    return null
+    return [[0, 0, 0], [0, 0, 0]]
   }
 
   const nested = (Array.isArray(positions) && Array.isArray(positions[0]))
