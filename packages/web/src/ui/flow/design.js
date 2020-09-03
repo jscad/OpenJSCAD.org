@@ -471,7 +471,6 @@ const actions = ({ sources }) => {
       .filter((event) => !('error' in event) && event.data instanceof Object && event.data.type === 'solids')
       .map((event) => {
         try {
-          // console.log('SETDESIGN SOLIDS', event.data)
           if (event.data instanceof Object) {
             const start = new Date().getTime()
 
@@ -487,9 +486,8 @@ const actions = ({ sources }) => {
             //     return require('@jscad/modeling').geometries.path2.fromCompactBinary(object)
             //   }
             // })
-            const solids = event.data.solids.map(solid => JSON.parse(solid))
+            const solids = event.data.solids.map((solid) => solid ? JSON.parse(solid) : solid)
             const { lookupCounts, lookup } = event.data
-            // console.log('SOLIDS', solids)
             const end = new Date().getTime()
             console.warn(`elapse for solid generation: ${end - start}`)
             return { solids, lookup, lookupCounts }
