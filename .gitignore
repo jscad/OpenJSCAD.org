@@ -7,3 +7,4 @@ packages/web/examples
 package-lock.json
 *.log
 *.swp
+*~
