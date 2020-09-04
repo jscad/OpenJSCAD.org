@@ -6,6 +6,8 @@ const isPath2 = require('@jscad/modeling').geometries.path2.isA
 
 const { flatten, toArray } = require('@jscad/array-utils')
 
+const serializeSolids = require('./serializeSolids')
+
 /*
  * determine if the given results contain valid geometry
  */
@@ -76,21 +78,6 @@ const lookupToCompactBinary = (lookup) => {
   })
   return compactLookup
 }
-
-// prepare solids for output from worker
-// returns {Array} list of objects in transfer format
-const serializeSolids = (solids) => solids.map((object) => {
-  //  if (isGeom2(object)) {
-  //    return require('@jscad/modeling').geometries.geom2.toCompactBinary(object)
-  //  } else if (isGeom3(object)) {
-  //    return require('@jscad/modeling').geometries.geom3.toCompactBinary(object)
-  //  } else if (isPath2(object)) {
-  //    return require('@jscad/modeling').geometries.path2.toCompactBinary(object)
-  //  } else {
-  //    return toJSON(object)
-  //  }
-  return JSON.stringify(object)
-})
 
 const instanciateDesign = (rootModule, parameterValues, options) => {
   const { vtreeMode, serialize } = options
