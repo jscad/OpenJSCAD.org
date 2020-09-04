@@ -21,7 +21,7 @@ const getParameterDefinitions = () => {
   ]
 }
 
-function buildBoundingBox (bounds) {
+const buildBoundingBox = (bounds) => {
   // Bounding box format is an array of arrays of values, eg:
   //     [LowerBoundsValues, UpperBoundsValues]
   //     [[left, front, bottom], [right, back, top]]

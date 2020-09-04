@@ -47,7 +47,7 @@ const buildFlatText = (message, extrusionHeight, characterLineWidth) => {
 }
 
 // -- simplistic circularExtrude done with cylinders between points and spheres at each point.
-function buildRoundText (message, p) {
+const buildRoundText = (message, p) => {
   const baseSphere = sphere({ radius: p })
   if (message === undefined || message.length === 0) return []
   const lineSegments3D = []
@@ -64,8 +64,6 @@ function buildRoundText (message, p) {
   return translate([0, -15, 0], messageObject)
 }
 
-module.exports = { main, getParameterDefinitions }
-
 const cylinderBetweenPoints = (point1, point2, radius) => {
   const length = Math.sqrt(Math.pow(point1[0] - point2[0], 2) + Math.pow(point1[1] - point2[1], 2))
   let cyl = translate([0, 0, length / 2], cylinder({ height: length, radius: radius }))
@@ -76,3 +74,5 @@ const cylinderBetweenPoints = (point1, point2, radius) => {
   cyl = translate([point1[0], point1[1], 0], cyl)
   return cyl
 }
+
+module.exports = { main, getParameterDefinitions }

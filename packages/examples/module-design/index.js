@@ -15,6 +15,8 @@ const getParameterDefinitions = () => {
     { name: 'showPlate', type: 'checkbox', checked: true, caption: 'Show plate:' },
     { name: 'showSphere', type: 'checkbox', checked: false, caption: 'Show sphere:' }
   ]
+
+  // Load the parameters defined in the mountPlate sub-file, and add them to the project parameters.
   const plateParams = mountPlate.getParameterDefinitions()
   globalParams.push(...plateParams)
   return globalParams

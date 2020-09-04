@@ -28,7 +28,7 @@ const getParameterDefinitions = () => {
     { name: 'color', type: 'color', initial: '#FFB431', caption: 'Color:' },
     { name: 'slider', type: 'slider', initial: 3, min: 1, max: 10, step: 1, caption: 'Slider:' },
     { name: 'choice1', type: 'choice', caption: 'Dropdown Menu:', values: [0, 1, 2, 3], captions: ['No', 'Yes', 'Maybe', 'So so'], initial: 2 },
-    { name: 'choice3', type: 'choice', caption: 'Dropdown Menu:', values: ['No', 'Yes', 'Maybe', 'So so'], initial: 2 },
+    { name: 'choice3', type: 'choice', caption: 'Dropdown Menu:', values: ['No', 'Yes', 'Maybe', 'So so'], initial: 'No' },
     { name: 'choice2', type: 'radio', caption: 'Radio Buttons:', values, captions, initial: 5 },
 
     { name: 'group3', type: 'group', initial: 'closed', caption: 'Group 3: Initially Closed Group' },

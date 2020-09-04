@@ -1,9 +1,3 @@
-/* title      : Center
-// authors     : Rene K. Mueller, Mark Moissette
-// license    : MIT License
-// description: testing all the different options of the OpenSCAD-like OpenJSCAD functions (aside of the strict object oriented approaches)
-// tags       : 2d,cnc
-*/
 /*
 // title       : Center function demonstration
 // author      : Rene K. Mueller, Moissette Mark, Simon Clark
@@ -26,7 +20,14 @@ const getParameterDefinitions = () => {
   ]
 }
 
-function main (params) {
+/**
+ * Creates a 3D crosshair, and centers it on various axes according to the parameters
+ * @param {Boolean} params.centerx - Center the geometry on the X axis.
+ * @param {Boolean} params.centery - Center the geometry on the Y axis.
+ * @param {Boolean} params.centerz - Center the geometry on the Z axis.
+ * @returns {geometry}
+ */
+const main = (params) => {
   let crossHair3D = crosshair()
   if (params.centerx || params.centery || params.centerz) {
     crossHair3D = center({ axes: [params.centerx, params.centery, params.centerz] }, crossHair3D)

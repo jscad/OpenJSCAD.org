@@ -27,6 +27,11 @@ const getColor = (a, b, c, method) => {
   else return [a, b, c]
 }
 
+/**
+ * Creates a 9x9x9 cube showing color variations on the the 3 main spectra (rgb, hsv, hsl)
+ * @param {String} params.method - The spectrum function to use: 'rgb'|'hsv'|'hsl'
+ * @returns {[geometry]}
+ */
 const main = (params) => {
   const o = []
   const rows = 8
@@ -50,7 +55,7 @@ const getParameterDefinitions = () => {
       caption: 'Colorize Method',
       values: ['rgb', 'hsv', 'hsl'],
       captions: ['(r,g,b) = (x,y,z)', '(h,s,v) = (x,y,z)', '(h,s,l) = (x,y,z)'],
-      initial: 0
+      initial: 'hsl'
     }
   ]
 }

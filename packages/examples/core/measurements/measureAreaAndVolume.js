@@ -2,8 +2,8 @@
 // title       : Measure Area & Volume
 // authors     : Simon Clark
 // license     : MIT License
-// description : Examples of measureArea() and measureVolume function
-// tags        : measurements, area, volume
+// description : Examples of measureArea() and measureVolume() function
+// tags        : measurements, area, volume, text
 */
 
 const { circle, sphere, cube, square, star } = require('@jscad/modeling').primitives
@@ -42,6 +42,13 @@ const getShape = (params) => {
   throw (new Error('Shape not provided'))
 }
 
+/**
+ * Measure the area and volume of different geometries at different resolutions.
+ * @param {String} params.shape - The shape to create. ( circle | square | star | sphere | cube )
+ * @param {Number} params.size - The size of shape to create.
+ * @param {Number} params.segments - The resolution of the shape to create. Affects only circle and sphere.
+ * @returns {[geometry]} The created shape, and text describing its area and volume.
+ */
 const main = (params) => {
   const shape = getShape(params)
 

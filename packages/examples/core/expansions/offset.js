@@ -12,13 +12,13 @@ const { offset } = require('@jscad/modeling').expansions
 const { colorize, colorNameToRgb } = require('@jscad/modeling').colors
 
 const main = () => {
-  // you can expand 2d paths
+  // 2d paths can be offset
   const path2Example = colorize(colorNameToRgb('black'), arc({ radius: 15, startAngle: Math.PI / 4, endAngle: 3 * Math.PI / 4 }))
   const expandedPath2Rounded = colorize(colorNameToRgb('red'),
     offset({ delta: 2, corners: 'round' }, path2Example)
   )
 
-  // but also 2d geometry
+  // 2d geometry can also be offset
   const geom2Example = colorize(
     colorNameToRgb('black'),
     rectangle({ size: [16, 16] })
@@ -40,6 +40,8 @@ const main = () => {
     colorNameToRgb('red'),
     offset({ delta: 2.2, corners: 'edge', segments: 8 }, geom2Example)
   )
+
+  // 3d geometry can not be offset yet.
 
   return [
     path2Example,

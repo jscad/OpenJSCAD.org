@@ -12,7 +12,7 @@ const { expand } = require('@jscad/modeling').expansions
 const { colorize, colorNameToRgb } = require('@jscad/modeling').colors
 
 const main = () => {
-  // you can expand 2d paths
+  // 2d paths can be expanded
   const path2Example = colorize(colorNameToRgb('black'), arc({ radius: 12, endAngle: Math.PI / 2 }))
   const expandedPath2Round = colorize(
     [0.5, 0.5, 1],
@@ -23,7 +23,7 @@ const main = () => {
     expand({ delta: 1.5, corners: 'edge', segments: 16 }, path2Example)
   )
 
-  // but also 2d geometry
+  // 2d geometry can also be expanded
   const geom2Example = colorize(
     colorNameToRgb('black'),
     rectangle({ size: [16, 16] })

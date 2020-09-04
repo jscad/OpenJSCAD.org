@@ -13,9 +13,9 @@ const { translate } = require('@jscad/modeling').transforms
 
 const main = () => {
   const shapes = []
-  for (let i = 7; i >= 0; i--) { // reverse order for seeing through all cylinders (see http://www.opengl.org/wiki/Transparency_Sorting)
-    const shapeColor = hslToRgb(i / 8, 1, 0.5)
-    shapeColor.push(1 / 8 + i / 8) // and add to alpha to make it [r,g,b,a]
+  for (let i = 7; i >= 0; i--) {
+    // reverse order for seeing through all cylinders (see http://www.opengl.org/wiki/Transparency_Sorting)
+    const shapeColor = hslToRgb(i / 8, 1, 0.5, (i + 1) / 8) // hslToRGB can accept a transparency value as well.
     shapes.push(
       colorize(shapeColor, translate([(i - 3) * 7.5, 0, 0], cylinder({ radius: 3, height: 20 })))
     )

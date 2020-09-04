@@ -4,13 +4,12 @@
 // license     : MIT License
 // description : testing sphere() and geodesicSphere() functions
 // file        : sphere.js
-// tags        : sphere, geodesic, geodesicsphere, ellipsoid, shape, 3d
+// tags        : sphere, geodesic, geodesicsphere, ellipsoid, shape
 */
 
 const { sphere, geodesicSphere } = require('@jscad/modeling').primitives
 const { translate, scale } = require('@jscad/modeling').transforms
 
-// TODO - Test with new transform apply orders
 const main = () => {
   return [
     translate([15, -25, 0], sphere({ radius: 10, segments: 18 })),

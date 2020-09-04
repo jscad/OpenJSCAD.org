@@ -9,8 +9,6 @@
 */
 
 const jscad = require('@jscad/modeling')
-console.log(jscad)
-
 const { cuboid } = jscad.primitives
 const { intersect } = jscad.booleans
 const { rotateX, rotateZ, scale } = jscad.transforms

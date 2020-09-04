@@ -9,7 +9,5 @@
   ],
   "author": "Simon Clark",
   "license": "MIT",
-  "dependencies": {
-    "@jscad": "2.0.0"
-  }
+  "dependencies": {}
 }

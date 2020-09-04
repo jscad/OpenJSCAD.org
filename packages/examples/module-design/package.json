@@ -9,7 +9,5 @@
   ],
   "author": "Mark 'kaosat-dev' Moissette & sons",
   "license": "MIT",
-  "dependencies": {
-    "@jscad": "2.0.0"
-  }
+  "dependencies": {}
 }

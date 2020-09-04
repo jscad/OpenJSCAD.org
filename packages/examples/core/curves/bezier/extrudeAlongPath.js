@@ -48,7 +48,7 @@ function tube (bezierControlPoints) {
     bezierControlPoints[l][1] - bezierControlPoints[0][1],
     bezierControlPoints[l][2] - bezierControlPoints[0][2]
   ])
-  tubeSlice = slice.transform(fromVectors(maths.vec3.fromArray([0, 0, 1]), bezierDelta), tubeSlice)
+  tubeSlice = slice.transform(rotationMatrixFromVectors(maths.vec3.fromArray([0, 0, 1]), bezierDelta), tubeSlice)
 
   // Create the bezier function
   const tubeCurve = bezier.create(bezierControlPoints)
@@ -60,14 +60,14 @@ function tube (bezierControlPoints) {
     callback: function (progress, count, base) {
       const positionArray = bezier.valueAt(progress, tubeCurve)
       const tangentArray = bezier.tangentAt(progress, tubeCurve)
-      const rotationMatrix = fromVectors(bezierDelta, maths.vec3.fromArray(tangentArray))
+      const rotationMatrix = rotationMatrixFromVectors(bezierDelta, maths.vec3.fromArray(tangentArray))
       const translationMatrix = maths.mat4.fromTranslation(positionArray)
       return slice.transform(maths.mat4.multiply(translationMatrix, rotationMatrix), base)
     }
   }, tubeSlice)
 }
 
-function fromVectors (srcVector, targetVector) {
+function rotationMatrixFromVectors (srcVector, targetVector) {
   // From https://gist.github.com/kevinmoran/b45980723e53edeb8a5a43c49f134724
   srcVector = maths.vec3.normalize(srcVector)
   targetVector = maths.vec3.normalize(targetVector)

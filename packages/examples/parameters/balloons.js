@@ -9,18 +9,16 @@
 
 const jscad = require('@jscad/modeling')
 const { ellipsoid, line } = jscad.primitives
-const { translate, scale, rotateX } = jscad.transforms
+const { translate, scale, rotateX, center } = jscad.transforms
 const { vectorText } = jscad.text
 const { extrudeLinear } = jscad.extrusions
 const { union } = jscad.booleans
 const { colorize, hexToRgb } = jscad.colors
-const { measureBoundingBox } = jscad.measurements
 const { expand } = require('@jscad/modeling').expansions
 
 const options = { resolution: 32 }
 
 const getParameterDefinitions = () => {
-  // b.ff()
   return [
     { name: 'balloon', type: 'group', caption: 'Balloons' },
     { name: 'isBig', type: 'checkbox', checked: true, initial: '20', caption: 'Big?' },
@@ -51,13 +49,7 @@ const text = (message, extrusionHeight, characterLineWidth) => {
     )
     lineSegments3D.push(segmentShape)
   })
-  // center the message
-  const messageObject = union(lineSegments3D)
-  const bounds = measureBoundingBox(messageObject)
-  const deltaX = 0 - bounds[0][0] - ((bounds[1][0] - bounds[0][0]) / 2)
-  const deltaY = 0 - bounds[0][1] - ((bounds[1][1] - bounds[0][1]) / 2)
-  const deltaZ = 0 - bounds[0][2] - ((bounds[1][2] - bounds[0][2]) / 2)
-  return translate([deltaX, deltaY, deltaZ], messageObject)
+  return center({ axes: [true, true, false] }, union(lineSegments3D))
 }
 
 function createSingleBalloon () {
@@ -68,14 +60,13 @@ function createSingleBalloon () {
 }
 
 const createBalloons = (params) => {
-  var balloon = createSingleBalloon()
-
+  const balloon = createSingleBalloon()
   const out = []
   const startingAngle = 360 * Math.random()
   const angleSpread = 360 / params.count
+
   for (let i = 0; i < params.count; i++) {
     const angle = Math.floor(startingAngle + (angleSpread * i)) % 360
-    // balloon
     const x = Math.cos(angle * Math.PI / 180) * 2 * options.b_radius
     const y = Math.sin(angle * Math.PI / 180) * 2 * options.b_radius
     const z = options.b_radius * 4 + (50 * Math.random())
@@ -98,6 +89,10 @@ const createAge = (age) => {
 }
 
 const createBirthDate = (birthDate) => {
+  const birthDateStr = birthDate.toString()
+  if (birthDateStr.length === 0) {
+    return []
+  }
   let birthDate3D = text(birthDate.toString(), 2, 1)
   birthDate3D = scale([0.7, 0.7, 0.7], birthDate3D)
   birthDate3D = translate([0, -30, 0], birthDate3D)

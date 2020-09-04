@@ -28,7 +28,7 @@ const getParameterDefinitions = () => {
 }
 
 // Main entry point; here we construct our solid:
-function main (params) {
+const main = (params) => {
   let gear = involuteGear(
     params.numTeeth,
     params.circularPitch,
@@ -37,21 +37,21 @@ function main (params) {
     params.thickness
   )
   if (params.centerholeradius > 0) {
-    const centerHole = translateZ(params.thickness / 2, cylinder({ height: params.thickness, radius: params.centerholeradius, resolution: 16 }))
+    const centerHole = translateZ(params.thickness / 2, cylinder({ height: params.thickness, radius: params.centerholeradius, segments: 16 }))
     gear = subtract(gear, centerHole)
   }
   return gear
 }
 
-function createSingleToothPolygon (maxAngle, baseRadius, angularToothWidthAtBase) {
+const createSingleToothPolygon = (maxAngle, baseRadius, angularToothWidthAtBase) => {
   // build a single 2d tooth in the 'points' array
   // A single tooth is a polygon from the origin out.
   // the points on the involute curve are made by adding a series of radial lines to tangents of increasing length.
-  const resolution = 5
+  const toothCurveResolution = 5
   const points = [[0, 0]]
-  for (let i = 0; i <= resolution; i++) {
+  for (let i = 0; i <= toothCurveResolution; i++) {
     // first side of the tooth:
-    const angle = maxAngle * i / resolution
+    const angle = maxAngle * i / toothCurveResolution
     const tanLength = angle * baseRadius
     let radiantVector = vec2.fromAngle(angle)
     let tangentVector = vec2.scale(-tanLength, vec2.normal(radiantVector))
@@ -62,7 +62,7 @@ function createSingleToothPolygon (maxAngle, baseRadius, angularToothWidthAtBase
     radiantVector = vec2.fromAngle(angularToothWidthAtBase - angle)
     tangentVector = vec2.scale(tanLength, vec2.normal(radiantVector))
     radiantVector = vec2.scale(baseRadius, radiantVector)
-    points[(2 * resolution) + 2 - i] = [radiantVector[0] + tangentVector[0], radiantVector[1] + tangentVector[1]]
+    points[(2 * toothCurveResolution) + 2 - i] = [radiantVector[0] + tangentVector[0], radiantVector[1] + tangentVector[1]]
   }
   return polygon({ points, closed: true })
 }
@@ -79,8 +79,7 @@ const createBaseCirclePolygon = (numTeeth, angularToothWidthAtBase, rootRadius) 
   return polygon({ points, closed: true })
 }
 
-function joinGearTeeth (numTeeth, tooth3d) {
-  // repeatedly rotate the tooth and add it to the buildCachedGeometryFromTree
+const joinGearTeeth = (numTeeth, tooth3d) => {
   const allTeeth = []
   for (let j = 0; j < numTeeth; j++) {
     const currentToothAngle = j * 2 * Math.PI / numTeeth
@@ -96,12 +95,7 @@ function joinGearTeeth (numTeeth, tooth3d) {
   Algorithm based on:
     http://www.cartertools.com/involute.html
 */
-function involuteGear (numTeeth, circularPitch, pressureAngle, clearance, thickness) {
-  // default values:
-  if (arguments.length < 3) pressureAngle = degToRad(20)
-  if (arguments.length < 4) clearance = 0
-  if (arguments.length < 5) thickness = 1
-
+const involuteGear = (numTeeth, circularPitch, pressureAngle, clearance, thickness) => {
   const addendum = circularPitch / Math.PI
   const dedendum = addendum + clearance
 
