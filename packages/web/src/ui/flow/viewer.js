@@ -53,7 +53,7 @@ const reducers = {
 }
 
 const actions = ({ sources }) => {
-  console.log('sources', sources.actions)
+  // console.log('sources', sources.actions)
   const initializeViewer$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
     .map((payload) => Object.assign({}, { type: 'initializeViewer', sink: 'state' }, { state: payload }))
