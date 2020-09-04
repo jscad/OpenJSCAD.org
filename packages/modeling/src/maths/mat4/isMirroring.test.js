@@ -2,7 +2,7 @@ const test = require('ava')
 
 const plane = require('../plane')
 
-const { isMirroring, fromScaling, identity, mirrorByPlane } = require('./index')
+const { isMirroring, fromScaling, identity, mirrorByPlane, rotate, scale, translate } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
@@ -24,5 +24,16 @@ test('mat4: isMirroring() should determine correctlly', (t) => {
   t.true(isMirroring(matrix))
 
   matrix = mirrorByPlane(planeZ)
+  t.true(isMirroring(matrix))
+
+  // additional transforms
+  const rotation = 90 * 0.017453292519943295
+  matrix = rotate(rotation, [0, 0, 1], matrix)
+  t.true(isMirroring(matrix))
+
+  matrix = scale([0.5, 2, 5], matrix)
+  t.true(isMirroring(matrix))
+
+  matrix = translate([2, -3, 600], matrix)
   t.true(isMirroring(matrix))
 })
