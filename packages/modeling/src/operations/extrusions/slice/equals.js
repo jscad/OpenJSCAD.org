@@ -1,7 +1,7 @@
 const vec3 = require('../../../maths/vec3')
 
 /**
- * Determine if the given slices are equal.
+ * Determine if the given slices have the same edges.
  * @param {slice} a - the first slice to compare
  * @param {slice} b - the second slice to compare
  * @returns {Boolean} true if the slices are equal
