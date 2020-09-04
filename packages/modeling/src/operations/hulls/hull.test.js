@@ -4,9 +4,9 @@ const { geom2, geom3, path2 } = require('../../geometries')
 
 const { sphere, cuboid, ellipsoid } = require('../../primitives')
 
-const hull = require('./hull')
-
 const { center } = require('../transforms/center')
+
+const { hull } = require('./index')
 
 const comparePolygonsAsPoints = require('../../../test/helpers/comparePolygonsAsPoints')
 
