@@ -7,11 +7,11 @@ test('slice: equals() should return proper value', (t) => {
   const sliceB = fromPoints([[0, 1], [1, 0], [1, 1]])
   const sliceC = fromPoints([[0, 0], [1, 0], [1, 1], [0, 0]])
 
-  t.is(equals(sliceA, sliceA), true)
+  t.true(equals(sliceA, sliceA))
 
-  t.is(equals(sliceA, sliceB), false)
-  t.is(equals(sliceB, sliceA), false)
+  t.false(equals(sliceA, sliceB))
+  t.false(equals(sliceB, sliceA))
 
-  t.is(equals(sliceA, sliceC), false)
-  t.is(equals(sliceC, sliceA), false)
+  t.false(equals(sliceA, sliceC))
+  t.false(equals(sliceC, sliceA))
 })
