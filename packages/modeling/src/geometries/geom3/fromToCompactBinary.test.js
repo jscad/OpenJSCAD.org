@@ -91,7 +91,7 @@ test('fromCompactBinary: convert a compact form into a geom3', (t) => {
   let expected = create()
   let geometry = fromCompactBinary(compactedDefault)
 
-  t.is(equals(geometry, expected), true)
+  t.deepEqual(geometry, expected)
 
   const compacted1 = [
     1, // type
@@ -116,7 +116,7 @@ test('fromCompactBinary: convert a compact form into a geom3', (t) => {
   expected = fromPoints(points)
   geometry = fromCompactBinary(compacted1)
 
-  t.is(equals(geometry, expected), true)
+  t.deepEqual(geometry, expected)
 
   // test color as well
   const compacted2 = [
@@ -138,8 +138,8 @@ test('fromCompactBinary: convert a compact form into a geom3', (t) => {
     2, 0, 2,
     -3, 0, 3
   ]
+  expected.color = [4, 5, 6, 7]
   geometry = fromCompactBinary(compacted2)
 
-  t.is(equals(geometry, expected), true)
-  t.deepEqual(geometry.color, [4, 5, 6, 7])
+  t.deepEqual(geometry, expected)
 })
