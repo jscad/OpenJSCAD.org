@@ -21,6 +21,8 @@ const entitiesFromSolids = (params, solids) => {
     let type
     if (!solid) {
       return null
+    } else if (!(solid instanceof Object)) {
+      return null
     } else if ('sides' in solid) {
       type = '2d'
       geometries = geom2ToGeometries({ color }, solid)
