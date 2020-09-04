@@ -6,6 +6,11 @@
  * const { center, rotateX, translate } = require('@jscad/modeling').transforms
  */
 module.exports = {
+  align: require('./align').align,
+  alignX: require('./align').alignX,
+  alignY: require('./align').alignY,
+  alignZ: require('./align').alignZ,
+
   center: require('./center').center,
   centerX: require('./center').centerX,
   centerY: require('./center').centerY,
