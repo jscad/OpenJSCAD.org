@@ -106,10 +106,11 @@ test('webRequire: should allow using require.extensions like the native node req
 
 test('webRequire: should allow using require.extensions like the native node require (parser)', (t) => {
   const registerStlExtension = (fs, _require) => {
-    const deserializer = require('@jscad/io').stlDeSerializer
+    const { deserializers } = require('@jscad/io')
+    const deserializer = deserializers.stl
     _require.extensions['.stl'] = (module, filename) => {
       const content = fs.readFileSync(filename, 'utf8')
-      const parsed = deserializer.deserialize({ filename, output: 'geometry' }, content)
+      const parsed = deserializer({ filename, output: 'geometry' }, content)
       module.exports = parsed
     }
   }
