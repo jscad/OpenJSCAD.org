@@ -1,7 +1,7 @@
 const fs = require('fs')
 const { isAbsolute, resolve } = require('path')
 
-const { solidsAsBlob } = require('@jscad/io')
+const { deserializers, solidsAsBlob } = require('@jscad/io')
 
 const rebuildSolids = require('@jscad/core/code-evaluation/rebuildGeometryCli')
 const { registerAllExtensions } = require('@jscad/core/io/registerExtensions')
@@ -34,23 +34,14 @@ const generateOutputData = (source, params, options) => {
   return new Promise((resolve, reject) => {
     // FIXME this table should come from core
     const conversionTable = {
-      amf: data => require('@jscad/io').amfDeSerializer.deserialize(data.options, data.source),
-      obj: data => require('@jscad/io').objDeSerializer.deserialize(data.options, data.source),
-      stl: data => require('@jscad/io').stlDeSerializer.deserialize(data.options, data.source),
-      svg: data => require('@jscad/io').svgDeSerializer.deserialize(data.options, data.source),
-      dxf: data => require('@jscad/io').dxfDeSerializer.deserialize(data.options, data.source),
-      json: data => require('@jscad/io').jsonDeSerializer.deserialize(data.options, data.source),
+      amf: data => deserializers.amf(data.options, data.source),
+      obj: data => deserializers.obj(data.options, data.source),
+      stl: data => deserializers.stl(data.options, data.source),
+      svg: data => deserializers.svg(data.options, data.source),
+      dxf: data => deserializers.dxf(data.options, data.source),
+      json: data => deserializers.json(data.options, data.source),
       jscad: data => data.source,
       js: data => data.source,
-      /*
-      scad: data => {
-        const source = !data.source.match(/^\/\/!OpenSCAD/i) ? '//!OpenSCAD\n' + data.source : data.source
-        const parsed = require('@jscad/openscad-openjscad-translator').parse(source)
-        return `//producer: OpenJSCAD ${version}
-      // source: ${outputFile}
-      ${parsed}`
-      },
-*/
       undefined: data => reject(new Error(`unsuported input format ${inputFormat}`))
     }
 
