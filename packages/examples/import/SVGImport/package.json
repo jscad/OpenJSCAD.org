@@ -1,0 +1,13 @@
+{
+  "name": "svg-import",
+  "version": "0.0.1",
+  "description": "Demonstrating SVG import. Drag the SVGImport folder onto the JSCAD instance.",
+  "main": "index.js",
+  "keywords": [
+    "jscad",
+    "cad"
+  ],
+  "author": "Simon Clark",
+  "license": "MIT",
+  "dependencies": {}
+}
