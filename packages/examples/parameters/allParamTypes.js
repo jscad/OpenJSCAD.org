@@ -20,7 +20,7 @@ const getParameterDefinitions = () => {
     { name: 'number', type: 'number', initial: 2.0, min: 1.0, max: 10.0, step: 0.1, caption: 'Number:' },
     { name: 'date', type: 'date', initial: '2020-01-01', min: '2020-01-01', max: '2030-12-31', caption: 'Date:', placeholder: 'YYYY-MM-DD' },
     { name: 'email', type: 'email', initial: 'me@example.com', caption: 'Email:' },
-    { name: 'url', type: 'url', initial: 'www.z3d.jp', size: 40, maxLength: 40, caption: 'Url:', placeholder: '40 characters' },
+    { name: 'url', type: 'url', initial: 'www.example.com', size: 40, maxLength: 40, caption: 'Url:', placeholder: '40 characters' },
     { name: 'password', type: 'password', initial: '', caption: 'Password:' },
 
     { name: 'group2', type: 'group', caption: 'Group 2: Interactive Controls' },
