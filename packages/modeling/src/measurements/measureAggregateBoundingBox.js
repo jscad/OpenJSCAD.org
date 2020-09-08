@@ -17,7 +17,8 @@ const measureAggregateBoundingBox = (...geometries) => {
   if (geometries.length === 1) {
     return bounds
   }
-  const result = bounds.pop()
+
+  const result = [[Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE], [Number.MIN_VALUE, Number.MIN_VALUE, Number.MIN_VALUE]]
   return bounds.reduce((result, item) => {
     for (let i = 0; i < 3; i++) {
       result[0][i] = Math.min(result[0][i], item[0][i])

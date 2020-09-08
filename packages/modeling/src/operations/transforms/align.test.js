@@ -1,18 +1,17 @@
 const test = require('ava')
 
-const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
+const { comparePoints } = require('../../../test/helpers')
 const { measureBoundingBox, measureAggregateBoundingBox } = require('../../measurements')
-const { geom2, geom3, path2 } = require('../../geometries')
 const { cube } = require('../../primitives')
 
-const { align, center, centerX, centerY, centerZ } = require('./index')
+const { align } = require('./index')
 
 test('align: single object returns geometry unchanged if all axes are none', (t) => {
   const original = cube({ size: 4, center: [10, 10, 10] })
   const aligned = align({ modes: ['none', 'none', 'none'] }, original)
   const bounds = measureBoundingBox(aligned)
   const expectedBounds = [[8, 8, 8], [12, 12, 12]]
-  t.true(comparePoints(bounds, expectedBounds), 'Bounding box was not as expected: ' + JSON.stringify(bounds))
+  t.true(comparePoints(bounds, expectedBounds), 'Bounding box was not as expected. Result: ' + JSON.stringify(bounds))
 })
 
 test('align: single objects returns geometry aligned, different modes on each axis', (t) => {
@@ -20,16 +19,60 @@ test('align: single objects returns geometry aligned, different modes on each ax
   const aligned = align({ modes: ['center', 'lower', 'upper'] }, original)
   const bounds = measureBoundingBox(aligned)
   const expectedBounds = [[-2, 0, -4], [2, 4, 0]]
-  t.true(comparePoints(bounds, expectedBounds), 'Bounding box was not as expected: ' + JSON.stringify(bounds))
+  t.true(comparePoints(bounds, expectedBounds), 'Bounding box was not as expected. Result: ' + JSON.stringify(bounds))
 })
 
 test('align: multiple objects grouped returns geometry aligned, different modes on each axis', (t) => {
   const original = [
-      cube({ size: 4, center: [10, 10, 10] }),
-      cube({ size: 2, center: [4, 4, 4] }),
-    ]
-  const aligned = align({ modes: ['center', 'lower', 'upper'], alignTo:[6,-10,0], grouped: true }, original)
+    cube({ size: 4, center: [10, 10, 10] }),
+    cube({ size: 2, center: [4, 4, 4] })
+  ]
+  const aligned = align({ modes: ['center', 'lower', 'upper'], alignTo: [6, -10, 0], grouped: true }, original)
   const bounds = measureAggregateBoundingBox(aligned)
-  const expectedBounds =  [[1.5,-19,0],[10.5,-10,9]]
-  t.true(comparePoints(bounds, expectedBounds), 'Bounding box was not as expected: ' + JSON.stringify(bounds))
+  console.log('bounding boxes after aligned;',measureBoundingBox(aligned))
+  const expectedBounds = [[1.5, -10, -9], [10.5, -1, 0]]
+  // [[1.5,-10,-9],[10.5,0,0]]
+  t.true(comparePoints(bounds, expectedBounds), 'Bounding box was not as expected. Result: ' + JSON.stringify(bounds))
+})
+
+test('align: multiple objects ungrouped returns geometry aligned, different modes on each axis', (t) => {
+  const original = [
+    cube({ size: 4, center: [10, 10, 10] }),
+    cube({ size: 2, center: [4, 4, 4] })
+  ]
+  const aligned = align({ modes: ['center', 'lower', 'upper'], alignTo: [30, 30, 30] }, original)
+  const bounds = measureAggregateBoundingBox(aligned)
+  const expectedBounds = [[28, 30, 26], [32, 34, 30]]
+  t.true(comparePoints(bounds, expectedBounds), 'Bounding box was not as expected. Result: ' + JSON.stringify(bounds))
+})
+
+test('align: multiple objects grouped, alignTo is nulls, returns geometry unchanged', (t) => {
+  const original = [
+    cube({ size: 4, center: [10, 10, 10] }),
+    cube({ size: 2, center: [4, 4, 4] })
+  ]
+  const aligned = align({ modes: ['center', 'lower', 'upper'], alignTo: [null, null, null], grouped: true }, original)
+  const bounds = measureAggregateBoundingBox(aligned)
+  const expectedBounds = [[3, 3, 3], [12, 12, 12]]
+  t.true(comparePoints(bounds, expectedBounds), 'Bounding box was not as expected. Result: ' + JSON.stringify(bounds))
+})
+
+test('align: multiple objects ungrouped, alignTo is nulls, returns geometry aligned to group bounds', (t) => {
+  const original = [
+    cube({ size: 2, center: [4, 4, 4] }),
+    cube({ size: 4, center: [10, 10, 10] })
+  ]
+  const aligned = align({ modes: ['center', 'lower', 'upper'], alignTo: [null, null, null], grouped: false }, original)
+  const bounds = measureAggregateBoundingBox(aligned)
+  const expectedBounds = [[5.5, 3, 8], [9.5, 7, 12]]
+  t.true(comparePoints(bounds, expectedBounds), 'Bounding box was not as expected. Result: ' + JSON.stringify(bounds))
+})
+
+test('align: throws errors on bad options', (t) => {
+  const aCube = cube({ size: 4, center: [10, 10, 10] })
+  t.throws(() => align({ grouped: 3 }, aCube), { instanceOf: Error })
+  t.throws(() => align({ alignTo: [3, 4] }, aCube), { instanceOf: Error })
+  t.throws(() => align({ alignTo: [3, 4, 'dog'] }, aCube), { instanceOf: Error })
+  t.throws(() => align({ modes: ['center', 'upper', 'james'] }, aCube), { instanceOf: Error })
+  t.throws(() => align({ modes: ['center', 'upper'] }, aCube), { instanceOf: Error })
 })
