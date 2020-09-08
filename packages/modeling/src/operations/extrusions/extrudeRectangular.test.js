@@ -4,7 +4,7 @@ const { geom2, geom3 } = require('../../geometries')
 
 const { arc, rectangle } = require('../../primitives')
 
-const extrudeRectangular = require('./extrudeRectangular')
+const { extrudeRectangular } = require('./index')
 
 test('extrudeRectangular (defaults)', (t) => {
   const geometry1 = arc({ radius: 5, endAngle: Math.PI / 2, segments: 16 })

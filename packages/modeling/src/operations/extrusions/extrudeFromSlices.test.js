@@ -1,15 +1,14 @@
 const test = require('ava')
 
+const comparePolygonsAsPoints = require('../../../test/helpers/comparePolygonsAsPoints')
+
 const mat4 = require('../../maths/mat4')
 
 const { geom2, geom3, poly3 } = require('../../geometries')
 
 const { circle } = require('../../primitives')
 
-const extrudeFromSlices = require('./extrudeFromSlices')
-const slice = require('./slice')
-
-const comparePolygonsAsPoints = require('../../../test/helpers/comparePolygonsAsPoints')
+const { extrudeFromSlices, slice } = require('./index')
 
 test('extrudeFromSlices (defaults)', (t) => {
   const geometry2 = geom2.fromPoints([[10, 10], [-10, 10], [-10, -10], [10, -10]])
