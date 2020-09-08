@@ -1,6 +1,6 @@
 {
   "name": "@jscad/web",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.6",
   "description": "Web UI for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
@@ -36,12 +36,12 @@
   "module": "dist/openjscad.umd.js",
   "dependencies": {
     "@jscad/array-utils": "2.0.0-alpha.1",
-    "@jscad/core": "2.0.0-alpha.3",
-    "@jscad/examples": "2.0.0-alpha.1",
-    "@jscad/io": "2.0.0-alpha.2",
-    "@jscad/modeling": "2.0.0-alpha.1",
-    "@jscad/regl-renderer": "2.0.0-alpha.3",
-    "@jscad/vtree": "2.0.0-alpha.2",
+    "@jscad/core": "2.0.0-alpha.4",
+    "@jscad/examples": "2.0.0-alpha.2",
+    "@jscad/io": "2.0.0-alpha.3",
+    "@jscad/modeling": "2.0.0-alpha.2",
+    "@jscad/regl-renderer": "2.0.0-alpha.4",
+    "@jscad/vtree": "2.0.0-alpha.3",
     "brace": "0.11.1",
     "codemirror": "5.57.0",
     "file-saver": "2.0.2",
