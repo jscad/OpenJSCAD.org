@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.0.0-alpha.3...@jscad/core@2.0.0-alpha.4) (2020-09-08)
+
+
+### Bug Fixes
+
+* **core:** corrected webRequire to use posix paths ([53a6e85](https://github.com/jscad/OpenJSCAD.org/commit/53a6e85e1dc8f515e8e259e0bb40f292909645fa))
+
+
+
+
+
+# [2.0.0-alpha.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.0.0-alpha.2...@jscad/core@2.0.0-alpha.3) (2020-09-02)
+
+
+### Bug Fixes
+
+* **all:** update dependencies ([d8c713a](https://github.com/jscad/OpenJSCAD.org/commit/d8c713a933b97a6d179ed3d3e923e188e334f99e))
+
+
+
+
+
+# [2.0.0-alpha.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.0.0-alpha.1...@jscad/core@2.0.0-alpha.2) (2020-08-24)
+
+
+### Bug Fixes
+
+* **web:** fixes for slider, group, and choice parameter types ([a3faba3](https://github.com/jscad/OpenJSCAD.org/commit/a3faba367604c897d240f56ba86ddb5404034afd))
+
+
+
+
+
 # [2.0.0-alpha.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.0.0-alpha.0...@jscad/core@2.0.0-alpha.1) (2020-08-19)
 
 **Note:** Version bump only for package @jscad/core

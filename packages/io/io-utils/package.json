@@ -1,6 +1,6 @@
 {
   "name": "@jscad/io-utils",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.2",
   "description": "Utilities for input , output and formats handling for jscad project",
   "repository": "https://github.com/jscad/io",
   "main": "index.js",
@@ -37,7 +37,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@jscad/modeling": "2.0.0-alpha.1",
+    "@jscad/modeling": "2.0.0-alpha.2",
     "ava": "3.10.0"
   }
 }

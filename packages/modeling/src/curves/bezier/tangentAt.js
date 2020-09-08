@@ -1,7 +1,7 @@
 /**
  * Calculates the tangent at a specific point along a bezier easing curve.
  * For multidimensional curves, the tangent is the slope of each dimension at that point.
- * See the bezier_extrudeAlongPath.js example to see this in use.
+ * See the extrudeAlongPath.js example to see this in use.
  *
  * @example
  * const b = bezier.create([0,0,0], [0,5,10], [10,0,-5], [10,10,10]]) // a cubic 3 dimensional easing curve that can generate position arrays for modelling

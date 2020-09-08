@@ -9,5 +9,6 @@ module.exports = {
   measureArea: require('./measureArea'),
   measureBoundingBox: require('./measureBoundingBox'),
   measureAggregateBoundingBox: require('./measureAggregateBoundingBox'),
+  measureEpsilon: require('./measureEpsilon'),
   measureVolume: require('./measureVolume')
 }

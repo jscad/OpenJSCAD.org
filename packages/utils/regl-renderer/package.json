@@ -1,6 +1,6 @@
 {
   "name": "@jscad/regl-renderer",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.4",
   "description": "",
   "main": "src/index.js",
   "scripts": {
@@ -23,8 +23,8 @@
     "regl": "1.6.1"
   },
   "devDependencies": {
-    "@jscad/img-utils": "2.0.0-alpha.1",
-    "@jscad/modeling": "2.0.0-alpha.1",
+    "@jscad/img-utils": "2.0.0-alpha.2",
+    "@jscad/modeling": "2.0.0-alpha.2",
     "ava": "3.10.0",
     "browserify": "16.5.1",
     "budo": "11.6.4"
