@@ -1,10 +1,10 @@
 const test = require('ava')
 
+const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
+
 const { geom2, geom3 } = require('../../geometries')
 
-const extrudeRotate = require('./extrudeRotate')
-
-const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
+const { extrudeRotate } = require('./index')
 
 test('extrudeRotate: (defaults) extruding of a geom2 produces an expected geom3', (t) => {
   const geometry2 = geom2.fromPoints([[10, 8], [10, -8], [26, -8], [26, 8]])

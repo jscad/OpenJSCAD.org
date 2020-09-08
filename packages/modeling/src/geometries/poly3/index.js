@@ -6,7 +6,6 @@
 module.exports = {
   clone: require('./clone'),
   create: require('./create'),
-  equals: require('./equals'),
   fromPoints: require('./fromPoints'),
   fromPointsAndPlane: require('./fromPointsAndPlane'),
   invert: require('./invert'),
