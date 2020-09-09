@@ -11,10 +11,10 @@ test('measureAggregateBoundingBox (single objects)', (t) => {
 })
 
 test('measureAggregateBoundingBox (multiple objects)', (t) => {
-  const cube1 = cube({ size: 4, center: [4, 10, 20] })
-  const cube2 = cube({ size: 6, center: [0, 20, 20] })
+  const cube1 = cube({ size: 4, center: [4, -10, 20] })
+  const cube2 = cube({ size: 6, center: [0, -20, 20] })
 
-  const expectedBounds = [[-3, 8, 17], [6, 23, 23]]
+  const expectedBounds = [[-3, -23, 17], [6, -8, 23]]
   let bounds = measureAggregateBoundingBox(cube1, cube2)
 
   t.deepEqual(bounds, expectedBounds, 'Bounds were not as expected: ' + JSON.stringify(bounds))

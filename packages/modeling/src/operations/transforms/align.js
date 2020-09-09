@@ -52,11 +52,11 @@ const alignGeometries = (geometry, modes, alignTo) => {
 /**
  * Align the given geometries using the given options.
  * @param {Object} options - options for aligning
- * @param {Array} [options.modes = ['center', 'center', 'lower']] - axis of which to align, true or false
- * @param {Array} [options.alignTo = [0,0,0]] - point of which to align the object upon
- * @param {Array} [options.grouped = false] - point of which to align the object upon
+ * @param {Array} [options.modes = ['center', 'center', 'lower']] - the point on the geometries to align to for each axis. Valid options are "center", "upper", "lower", and "none".
+ * @param {Array} [options.alignTo = [0,0,0]] - The point one each axis on which to align the geometries upon.  If the value is null, then the corresponding value from the group's bounding box is used.
+ * @param {Array} [options.grouped = false] - if true, transform all geometries by the same amount, maintaining the relative positions to each other.
  * @param {...Object} geometries - the geometries to align
- * @return {Object|Array} the aligned geometry, or a list of aligned geometries
+ * @return {Object|Array} the aligned geometry, if only one was provided, or an array of aligned geometries
  * @alias module:modeling/transforms.align
  *
  * @example

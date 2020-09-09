@@ -3,7 +3,7 @@
  * In all cases, the function returns the results, and never changes the original shapes.
  * @module modeling/measurements
  * @example
- * const { measureArea, measureBounds, measureVolume } = require('@jscad/modeling').measurements
+ * const { measureArea, measureBoundingBox, measureVolume } = require('@jscad/modeling').measurements
  */
 module.exports = {
   measureArea: require('./measureArea'),

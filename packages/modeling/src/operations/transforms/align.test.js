@@ -29,9 +29,7 @@ test('align: multiple objects grouped returns geometry aligned, different modes 
   ]
   const aligned = align({ modes: ['center', 'lower', 'upper'], alignTo: [6, -10, 0], grouped: true }, original)
   const bounds = measureAggregateBoundingBox(aligned)
-  console.log('bounding boxes after aligned;',measureBoundingBox(aligned))
   const expectedBounds = [[1.5, -10, -9], [10.5, -1, 0]]
-  // [[1.5,-10,-9],[10.5,0,0]]
   t.true(comparePoints(bounds, expectedBounds), 'Bounding box was not as expected. Result: ' + JSON.stringify(bounds))
 })
 
