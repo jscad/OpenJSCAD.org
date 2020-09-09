@@ -9,4 +9,3 @@ package-lock.json
 *.swp
 .idea/
 docs/
-vagrant/
