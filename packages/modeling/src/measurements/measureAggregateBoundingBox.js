@@ -1,15 +1,17 @@
 const flatten = require('../utils/flatten')
+const vec3min = require('../maths/vec3/min')
+const vec3max = require('../maths/vec3/max')
 
 const measureBoundingBox = require('./measureBoundingBox')
 
 /**
- * Measure a single set of min and max bounds of the group of given geometries.
+ * Measure the aggregated minimum and maximum bounds for the given geometries.
  * @param {...Object} geometries - the geometries to measure
  * @return {Array} the min and max bounds for the group of geometry, i.e. [[x,y,z],[X,Y,Z]]
  * @alias module:modeling/measurements.measureAggregateBoundingBox
  *
  * @example
- * let bounds = measureAggregateBoundingBox([sphere(),cube()])
+ * let bounds = measureAggregateBoundingBox(sphere(),cube())
  */
 const measureAggregateBoundingBox = (...geometries) => {
   geometries = flatten(geometries)
@@ -20,10 +22,7 @@ const measureAggregateBoundingBox = (...geometries) => {
   }
   const result = [[Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE], [-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE]]
   return bounds.reduce((result, item) => {
-    for (let i = 0; i < 3; i++) {
-      result[0][i] = Math.min(result[0][i], item[0][i])
-      result[1][i] = Math.max(result[1][i], item[1][i])
-    }
+    result = [vec3min(result[0], item[0]), vec3max(result[1], item[1])]
     return result
   }, result)
 }

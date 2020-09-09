@@ -1,15 +1,8 @@
 const flatten = require('../../utils/flatten')
-const { measureAggregateBoundingBox } = require('../../measurements')
+const measureAggregateBoundingBox = require('../../measurements/measureAggregateBoundingBox')
 const { translate } = require('./translate')
 
 const validateOptions = (options) => {
-  const defaults = {
-    modes: ['center', 'center', 'lower'],
-    alignTo: [0, 0, 0],
-    grouped: false
-  }
-  options = Object.assign({}, defaults, options)
-
   if (options.modes.length !== 3) throw new Error('align(): modes must be an array of length 3')
   if (options.modes.filter(mode => ['center', 'upper', 'lower', 'none'].includes(mode)).length !== 3) throw new Error('align(): all modes must be one of "center", "upper" or "lower"')
   if (options.alignTo.length !== 3) throw new Error('align(): alignTo must be an array of length 3')
@@ -50,7 +43,7 @@ const alignGeometries = (geometry, modes, alignTo) => {
 }
 
 /**
- * Align the given geometries using the given options.
+ * Align the boundaries of the given geometries using the given options.
  * @param {Object} options - options for aligning
  * @param {Array} [options.modes = ['center', 'center', 'lower']] - the point on the geometries to align to for each axis. Valid options are "center", "upper", "lower", and "none".
  * @param {Array} [options.alignTo = [0,0,0]] - The point one each axis on which to align the geometries upon.  If the value is null, then the corresponding value from the group's bounding box is used.
@@ -63,6 +56,13 @@ const alignGeometries = (geometry, modes, alignTo) => {
  * let alignedGeometries = align({modes: ['lower', 'center', 'none'], alignTo: [10, null, 10], grouped: true }, geometries)
  */
 const align = (options, ...geometries) => {
+  const defaults = {
+    modes: ['center', 'center', 'lower'],
+    alignTo: [0, 0, 0],
+    grouped: false
+  }
+  options = Object.assign({}, defaults, options)
+
   options = validateOptions(options)
   let { modes, alignTo, grouped } = options
   geometries = flatten(geometries)
@@ -82,6 +82,4 @@ const align = (options, ...geometries) => {
   return geometries.length === 1 ? geometries[0] : geometries
 }
 
-module.exports = {
-  align
-}
+module.exports = align
