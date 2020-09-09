@@ -11,6 +11,9 @@
           margin: 0px;
           font-family: 'Open Sans', sans-serif;
         }
+        noscript{
+          text-align: center;
+        }
         #jscad{
           width: 100%;
           height: 100%;
@@ -19,11 +22,20 @@
   </head>
 
   <body>
+    <noscript>
+      <h1>Please enable JavaScript to use this website</h1>
+    </noscript>
     <div id='jscad'></div>
     <script language="javascript" src="./dist/jscad-full.min.js"></script> 
     <script language="javascript">
       const el1 = document.getElementById('jscad')
       const jscadInst1 = makeJscad(el1, {name: 'jscad1'})
+    </script>
+    <script language="javascript">
+      window.addEventListener('beforeunload', (event) => {
+        event.preventDefault()
+        event.returnValue = ''
+      })
     </script>
   </body>
 </html>
