@@ -54,7 +54,7 @@ const getColor = (index, colorindex) => {
   if (index < 1) { return null }
 
   index = mod(index, colorindex.length)
-  const color = colorindex[index - 1]
+  const color = colorindex[index]
   const rgba = [color[0] / 255, color[1] / 255, color[2] / 255, color[3] / 255]
   return rgba
 }
