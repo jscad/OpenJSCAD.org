@@ -7,7 +7,7 @@ const measureBoundingBox = require('./measureBoundingBox')
 test('measureAggregateBoundingBox (single objects)', (t) => {
   const aCube = cube({ size: 4, center: [4, 10, 20] })
   const bounds = measureAggregateBoundingBox(aCube)
-  t.deepEqual(bounds, [[2, 8, 18], [6, 12, 22]], 'Bounds were not as expected: ' + JSON.stringify(bounds))
+  t.deepEqual(bounds, [[2, 8, 18], [6, 12, 22]], 'Bounds were not as expected')
 })
 
 test('measureAggregateBoundingBox (multiple objects)', (t) => {
@@ -17,10 +17,10 @@ test('measureAggregateBoundingBox (multiple objects)', (t) => {
   const expectedBounds = [[-3, -23, 17], [6, -8, 23]]
   let bounds = measureAggregateBoundingBox(cube1, cube2)
 
-  t.deepEqual(bounds, expectedBounds, 'Bounds were not as expected: ' + JSON.stringify(bounds))
+  t.deepEqual(bounds, expectedBounds, 'Bounds were not as expected')
 
   bounds = measureAggregateBoundingBox([cube1, cube2])
-  t.deepEqual(bounds, expectedBounds, 'Bounds were not as expected: ' + JSON.stringify(bounds))
+  t.deepEqual(bounds, expectedBounds, 'Bounds were not as expected')
 })
 
 test('measureAggregateBoundingBox (multiple objects) does not change original bounds', (t) => {
