@@ -1,13 +1,19 @@
 const flatten = require('../../utils/flatten')
+const padArrayToLength = require('../../utils/padArrayToLength')
 const measureAggregateBoundingBox = require('../../measurements/measureAggregateBoundingBox')
 const { translate } = require('./translate')
 
 const validateOptions = (options) => {
-  if (options.modes.length !== 3) throw new Error('align(): modes must be an array of length 3')
-  if (options.modes.filter(mode => ['center', 'upper', 'lower', 'none'].includes(mode)).length !== 3) throw new Error('align(): all modes must be one of "center", "upper" or "lower"')
-  if (options.alignTo.length !== 3) throw new Error('align(): alignTo must be an array of length 3')
+  if (!Array.isArray(options.modes) || options.modes.length > 3) throw new Error('align(): modes must be an array of length <= 3')
+  options.modes = padArrayToLength(options.modes, 'none', 3)
+  if (options.modes.filter(mode => ['center', 'max', 'min', 'none'].includes(mode)).length !== 3) throw new Error('align(): all modes must be one of "center", "max" or "min"')
+
+  if (!Array.isArray(options.alignTo) || options.alignTo.length > 3) throw new Error('align(): alignTo must be an array of length <= 3')
+  options.alignTo = padArrayToLength(options.alignTo, 0, 3)
   if (options.alignTo.filter(alignVal => (Number.isFinite(alignVal) || alignVal == null)).length !== 3) throw new Error('align(): all alignTo values must be a number, or null.')
-  if (options.grouped !== true && options.grouped !== false) throw new Error('align(): grouped must be either true or false.')
+
+  if (typeof options.grouped !== 'boolean') throw new Error('align(): grouped must be a boolean value.')
+
   return options
 }
 
@@ -16,9 +22,9 @@ const populateAlignToFromBounds = (alignTo, modes, bounds) => {
     if (alignTo[i] == null) {
       if (modes[i] === 'center') {
         alignTo[i] = (bounds[0][i] + bounds[1][i]) / 2
-      } else if (modes[i] === 'upper') {
+      } else if (modes[i] === 'max') {
         alignTo[i] = bounds[1][i]
-      } else if (modes[i] === 'lower') {
+      } else if (modes[i] === 'min') {
         alignTo[i] = bounds[0][i]
       }
     }
@@ -32,9 +38,9 @@ const alignGeometries = (geometry, modes, alignTo) => {
   for (let i = 0; i < 3; i++) {
     if (modes[i] === 'center') {
       translation[i] = alignTo[i] - (bounds[0][i] + bounds[1][i]) / 2
-    } else if (modes[i] === 'upper') {
+    } else if (modes[i] === 'max') {
       translation[i] = alignTo[i] - bounds[1][i]
-    } else if (modes[i] === 'lower') {
+    } else if (modes[i] === 'min') {
       translation[i] = alignTo[i] - bounds[0][i]
     }
   }
@@ -45,7 +51,7 @@ const alignGeometries = (geometry, modes, alignTo) => {
 /**
  * Align the boundaries of the given geometries using the given options.
  * @param {Object} options - options for aligning
- * @param {Array} [options.modes = ['center', 'center', 'lower']] - the point on the geometries to align to for each axis. Valid options are "center", "upper", "lower", and "none".
+ * @param {Array} [options.modes = ['center', 'center', 'min']] - the point on the geometries to align to for each axis. Valid options are "center", "max", "min", and "none".
  * @param {Array} [options.alignTo = [0,0,0]] - The point one each axis on which to align the geometries upon.  If the value is null, then the corresponding value from the group's bounding box is used.
  * @param {Array} [options.grouped = false] - if true, transform all geometries by the same amount, maintaining the relative positions to each other.
  * @param {...Object} geometries - the geometries to align
@@ -53,11 +59,11 @@ const alignGeometries = (geometry, modes, alignTo) => {
  * @alias module:modeling/transforms.align
  *
  * @example
- * let alignedGeometries = align({modes: ['lower', 'center', 'none'], alignTo: [10, null, 10], grouped: true }, geometries)
+ * let alignedGeometries = align({modes: ['min', 'center', 'none'], alignTo: [10, null, 10], grouped: true }, geometries)
  */
 const align = (options, ...geometries) => {
   const defaults = {
-    modes: ['center', 'center', 'lower'],
+    modes: ['center', 'center', 'min'],
     alignTo: [0, 0, 0],
     grouped: false
   }

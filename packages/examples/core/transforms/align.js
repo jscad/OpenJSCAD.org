@@ -15,7 +15,7 @@ const { align } = jscad.transforms
 const getParameterDefinitions = () => {
   return [
     { name: 'grouped', type: 'checkbox', checked: false, caption: 'Align as group' },
-    { name: 'modes', type: 'choice', caption: 'modes:', values: ['["none","none","none"]', '["center","center","lower"]', '["lower","lower","lower"]', '["upper","lower","center"]'], initial: '["none","none","none"]' },
+    { name: 'modes', type: 'choice', caption: 'modes:', values: ['["none","none","none"]', '["center","center","min"]', '["min","min","min"]', '["max","min","center"]'], initial: '["none","none","none"]' },
     { name: 'alignTo', type: 'choice', caption: 'alignTo:', values: ['[0,0,0]', '[null,null,null]', '[10,-10,0]'], initial: '[0,0,0]' }
   ]
 }
