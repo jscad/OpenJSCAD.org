@@ -38,7 +38,8 @@ const deserialize = (options, input) => {
     output: 'script',
     pxPmm: require('./constants').pxPmm,
     target: 'path', // target - 'geom2' or 'path'
-    version: '0.0.0'
+    version: '0.0.0',
+    segments: 16
   }
   options = Object.assign({}, defaults, options)
   return options.output === 'script' ? translate(input, options) : instantiate(input, options)
@@ -55,7 +56,7 @@ const deserialize = (options, input) => {
  * @return {[geometry]} a set of geometries
  */
 const instantiate = (src, options) => {
-  const { pxPmm, target } = options
+  const { pxPmm, target, segments } = options
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 
@@ -67,7 +68,7 @@ const instantiate = (src, options) => {
 
   options && options.statusCallback && options.statusCallback({ progress: 50 })
 
-  const result = objectify({ target }, svgObj)
+  const result = objectify({ target, segments }, svgObj)
 
   options && options.statusCallback && options.statusCallback({ progress: 100 })
   return result
@@ -84,7 +85,7 @@ const instantiate = (src, options) => {
  * @return {string} a string (JSCAD script)
  */
 const translate = (src, options) => {
-  const { filename, version, pxPmm, addMetaData, target } = options
+  const { filename, version, pxPmm, addMetaData, target, segments } = options
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 
@@ -105,7 +106,7 @@ const translate = (src, options) => {
 
   options && options.statusCallback && options.statusCallback({ progress: 50 })
 
-  const scadCode = codify({ target }, svgObj)
+  const scadCode = codify({ target, segments }, svgObj)
   code += scadCode
   code += '\nmodule.exports = { main }'
 
@@ -129,7 +130,7 @@ let svgUnitsPmm = [1, 1]
  * Convert the given group (of objects) into geometries
  */
 const objectify = (options, group) => {
-  const { target } = options
+  const { target, segments } = options
   const level = svgGroups.length
   // add this group to the heiarchy
   svgGroups.push(group)
@@ -148,7 +149,8 @@ const objectify = (options, group) => {
     svgUnitsV,
     level,
     target,
-    svgGroups
+    svgGroups,
+    segments
   }
   // apply base level attributes to all shapes
   for (i = 0; i < group.objects.length; i++) {
@@ -196,7 +198,7 @@ const objectify = (options, group) => {
  * Convert the given group into JSCAD script
  */
 const codify = (options, group) => {
-  const { target } = options
+  const { target, segments } = options
   const level = svgGroups.length
   // add this group to the heiarchy
   svgGroups.push(group)
@@ -230,7 +232,8 @@ const codify = (options, group) => {
       svgUnitsY,
       svgUnitsV,
       svgGroups,
-      target
+      target,
+      segments
     }
 
     const tmpCode = shapesMapJscad(obj, codify, params)
