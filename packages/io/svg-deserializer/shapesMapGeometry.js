@@ -9,7 +9,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
   const types = {
     group: (obj) => objectify({ target, segments }, obj),
 
-    rect: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY) => {
+    rect: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, segments) => {
       let x = cagLengthX(obj.x, svgUnitsPmm, svgUnitsX)
       let y = (0 - cagLengthY(obj.y, svgUnitsPmm, svgUnitsY))
       const w = cagLengthX(obj.width, svgUnitsPmm, svgUnitsX)
@@ -24,7 +24,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
         if (rx === 0) {
           shape = transforms.center({ center: [x, y, 0] }, primitives.rectangle({ size: [w / 2, h / 2] }))
         } else {
-          shape = transforms.center({ center: [x, y, 0] }, primitives.roundedRectangle({ size: [w / 2, h / 2], roundRadius: rx }))
+          shape = transforms.center({ center: [x, y, 0] }, primitives.roundedRectangle({ segments, size: [w / 2, h / 2], roundRadius: rx }))
         }
         if (target === 'path') {
           shape = geometries.path2.fromPoints({ }, geometries.geom2.toPoints(shape))
@@ -33,14 +33,14 @@ const shapesMapGeometry = (obj, objectify, params) => {
       return shape
     },
 
-    circle: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV) => {
+    circle: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, segments) => {
       const x = cagLengthX(obj.x, svgUnitsPmm, svgUnitsX)
       const y = (0 - cagLengthY(obj.y, svgUnitsPmm, svgUnitsY))
       const r = cagLengthP(obj.radius, svgUnitsPmm, svgUnitsV)
 
       let shape
       if (r > 0) {
-        shape = transforms.center({ center: [x, y, 0] }, primitives.circle({ radius: r }))
+        shape = transforms.center({ center: [x, y, 0] }, primitives.circle({ segments, radius: r }))
         if (target === 'path') {
           shape = geometries.path2.fromPoints({}, geometries.geom2.toPoints(shape))
         }
@@ -48,7 +48,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
       return shape
     },
 
-    ellipse: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV) => {
+    ellipse: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, segments) => {
       const rx = cagLengthX(obj.rx, svgUnitsPmm, svgUnitsX)
       const ry = cagLengthY(obj.ry, svgUnitsPmm, svgUnitsY)
       const cx = cagLengthX(obj.cx, svgUnitsPmm, svgUnitsX)
@@ -56,7 +56,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
 
       let shape
       if (rx > 0 && ry > 0) {
-        shape = transforms.center({ center: [cx, cy, 0] }, primitives.ellipse({ radius: [rx, ry] }))
+        shape = transforms.center({ center: [cx, cy, 0] }, primitives.ellipse({ segments, radius: [rx, ry] }))
         if (target === 'path') {
           shape = geometries.path2.fromPoints({}, geometries.geom2.toPoints(shape))
         }
