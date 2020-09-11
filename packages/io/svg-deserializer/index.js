@@ -39,7 +39,7 @@ const deserialize = (options, input) => {
     pxPmm: require('./constants').pxPmm,
     target: 'path', // target - 'geom2' or 'path'
     version: '0.0.0',
-    segments: 16
+    segments: 32
   }
   options = Object.assign({}, defaults, options)
   return options.output === 'script' ? translate(input, options) : instantiate(input, options)
@@ -56,7 +56,7 @@ const deserialize = (options, input) => {
  * @return {[geometry]} a set of geometries
  */
 const instantiate = (src, options) => {
-  const { pxPmm, target, segments } = options
+  const { pxPmm } = options
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 
@@ -68,7 +68,7 @@ const instantiate = (src, options) => {
 
   options && options.statusCallback && options.statusCallback({ progress: 50 })
 
-  const result = objectify({ target, segments }, svgObj)
+  const result = objectify(options, svgObj)
 
   options && options.statusCallback && options.statusCallback({ progress: 100 })
   return result
@@ -85,7 +85,7 @@ const instantiate = (src, options) => {
  * @return {string} a string (JSCAD script)
  */
 const translate = (src, options) => {
-  const { filename, version, pxPmm, addMetaData, target, segments } = options
+  const { filename, version, pxPmm, addMetaData } = options
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 
@@ -106,7 +106,7 @@ const translate = (src, options) => {
 
   options && options.statusCallback && options.statusCallback({ progress: 50 })
 
-  const scadCode = codify({ target, segments }, svgObj)
+  const scadCode = codify(options, svgObj)
   code += scadCode
   code += '\nmodule.exports = { main }'
 
