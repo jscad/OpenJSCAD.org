@@ -1,33 +1,13 @@
-# JSCAD (previously known as OpenJSCAD)
+# JSCAD V2 - Documentation
 
 >*JSCAD* is a set of modular, browser and command line tools for creating parametric 2D and 3D designs with JavaScript code.
-
-<img src="docs/logo.png" width="140" align="right" alt="JSCAD">
-
-There are many ways to use JSCAD:
-
-An [online version](https://openjscad.org/), [self hosteable web based ui](./packages/web), as [CLI](./packages/cli) (command-line interface) for server-side computations with Node.js, as well as an experimental [desktop app](https://github.com/jscad/jscad-desktop) or [individual Node.js packages](./packages/README.md)!!
-
-This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-the-wild-33c6eb246cb9) (container of multiple packages and tools) maintained with [Lerna](https://lernajs.io/)
-
-[![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
-[![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
-[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-
-<a href="https://opencollective.com/openjscad"><img src="https://opencollective.com/openjscad/donate/button.png?color=blue" alt="Open Collective"></a>
 
 ## Table of Contents
 
 - [Usage](#usage)
-- [Documentation](#documentation)
 - [Contributing](#contributing)
 - [Community](#community)
-- [Acknowledgements](#acknowledgements)
-- [Backers](#backers)
-- [Sponsors](#sponsors)
 - [License](#license)
-- [Screenshots](#screenshots)
 - [See also](#see-also)
 
 ## Usage
@@ -100,48 +80,6 @@ See for more details
 * [JSCAD Forum Announcements](https://jscad.xyz/forum/category/1/announcements)
 * [JSCAD Forum Community](https://jscad.xyz/forum) to discuss with other users and developers.
 
-HUGE THANKS and SHOUTOUT to [nodeBB](https://nodebb.org/) for hosting our (awesome) forum for free ! Thanks a lot !
-
-## Acknowledgements
-
-JSCAD and all sub components are built upon great open source packages, and contributions.
-
-Early CSG Library by:
-- Evan Wallace,
-- Eduard Bespalov,
-- Joost Nieuwenhuijse,
-- Alexandre Girard
-
-XML parsing:
-- [sax](https://github.com/isaacs/sax-js)
-
-Tooling:
-- [browserify](http://browserify.org/)
-- [babel](https://babeljs.io/)
-
-and many more!
-
-## Backers
-
-Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/openjscad#backer)]
-
-<a href="https://opencollective.com/openjscad#backers" target="_blank"><img src="https://opencollective.com/openjscad/backers.svg?width=890"></a>
-
-## Sponsors
-
-This project has some awesome sponsors! [[Become a sponsor](https://opencollective.com/openjscad#sponsor)]
-Your logo will show up here with a link to your website.
-
-<a href="https://opencollective.com/openjscad/sponsor/0/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/1/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/2/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/3/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/4/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/5/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/6/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/7/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/8/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/openjscad/sponsor/9/website" target="_blank"><img src="https://opencollective.com/openjscad/sponsor/9/avatar.svg"></a>
 
 ## License
 

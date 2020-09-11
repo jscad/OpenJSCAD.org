@@ -1,0 +1,18 @@
+{
+  "gettingStarted": {
+    "title": "Getting Started"
+  },
+  "modelingBasics": {
+    "title": "Modeling Basics"
+  },
+  "usingParameters": {
+    "title": "Using Parameters"
+  },
+  "usingModules": {
+    "title": "Using Modules"
+  },
+  "importingFiles": {
+    "title": "Importing Files"
+  }
+}
+

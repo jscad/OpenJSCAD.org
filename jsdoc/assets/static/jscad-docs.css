@@ -1,0 +1,180 @@
+
+h4.name {
+    background: #446997;
+}
+
+h4.name a {
+    color: #adc7f3;
+}
+
+nav h3 {
+    margin: 12px 0 2px;
+}
+nav h2 {
+    font-size: 13px;
+    margin: 4px 0 0 0;
+    padding: 0;
+}
+
+h1.page-title {
+    font-size: 38px;
+    margin: 30px 30px 20px;
+    line-height: 100%;
+    word-wrap: break-word;
+    font-weight: bold;
+    color: #1a64a57a;
+    text-decoration: underline;
+    text-transform: inherit;
+}
+
+h4.name {
+    background: #446997;
+    margin-top: 4em;
+}
+h4.name:nth-child(3) {
+    margin-top: 1em;
+}
+
+nav > h2 > a {
+    margin: 10px 0 -10px;
+    color: #1436ad !important;
+}
+
+nav > ul {
+    padding: 0 4px;
+}
+
+nav > ul > li > a {
+    margin-top: 4px;
+    color: #1436ad;
+    background-repeat: no-repeat;
+    background-size: 12px 12px;
+    padding-left: 15px;
+    background-position: 0px 2px;
+}
+
+nav ul a, nav ul a:active {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 18px;
+    padding: 0;
+    padding-left: 15px;
+    display: block;
+    font-size: 12px;
+}
+
+nav > ul > li.collapsable > a {
+    background-image: url(img/closed.png);
+}
+
+nav > ul > li.collapsable.open > a {
+    background-image: url(img/open.png);
+}
+
+nav ul ul a {
+    color: hsl(0deg 0% 42%);
+    border-left: 1px solid hsl(207, 10%, 86%);
+}
+
+.type-signature, .signature {
+    color: #95d1a7;
+}
+
+a, a:active {
+    color: #021a57;
+    text-decoration: none;
+}
+
+article a:hover, article a:active {
+    border-bottom-color: #030a1c;
+}
+
+pre.prettyprint {
+    margin-top: 3px;
+}
+
+.prettyprint > code {
+    padding: 10px;
+    /* border: 1px solid rgba(0,0,0,0.5); */
+    color: darkblue;
+    background-color: #e3e9fa;
+}
+
+.pln {
+    color: #2d2d2d;
+}
+
+/* string content */
+.str {
+    color: #154207;
+}
+
+/* a keyword */
+.kwd {
+    color: #453d06;
+}
+
+/* a comment */
+.com {
+    color: #343434;
+}
+
+/* a type name */
+.typ {
+    color: #2d3749;
+}
+
+/* a literal value */
+.lit {
+    color: #443d09;
+}
+
+/* punctuation */
+.pun {
+    color: #3b3636;
+}
+
+/* lisp open bracket */
+.opn {
+    color: #000000;
+}
+
+/* lisp close bracket */
+.clo {
+    color: #000000;
+}
+
+/* a markup tag name */
+.tag {
+    color: #18273d;
+}
+
+/* a markup attribute name */
+.atn {
+    color: #574e03;
+}
+
+/* a markup attribute value */
+.atv {
+    color: #535050;
+}
+
+/* a declaration */
+.dec {
+    color: #872828;
+}
+
+/* a variable name */
+.var {
+    color: #c82829;
+}
+
+/* a function name */
+.fun {
+    color: #4271ae;
+}
+
+/* Specify class=linenums on a pre to get line numbering */
+ol.linenums {
+    margin-top: 0;
+    margin-bottom: 0;
+}
