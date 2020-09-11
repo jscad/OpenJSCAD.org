@@ -7,21 +7,22 @@
 
 const { cube, sphere } = require('@jscad/modeling').primitives
 const { union, subtract, intersect } = require('@jscad/modeling').booleans
-const { rotate } = require('@jscad/modeling').transforms
+const { rotate, translate } = require('@jscad/modeling').transforms
+const { colorize } = require('@jscad/modeling').colors
 
 
 function main () {
-  var small = union(
-    subtract(
+  var small = [
+    colorize([1,.6,0.6], translate([0,0,3],rotate([0.3,0.8,0],subtract(
       cube({size: 3}),
       sphere({radius: 2})
-    ),
-    intersect(
+    )))),
+    colorize([1,1,0], translate([0,0,3],rotate([0.3,0.8,0],intersect(
       sphere({radius: 1.3}),
       cube({size: 2.1})
-    )
-  )
-  return rotate([0.3,0.8,0],small)
+    ))))
+  ]
+  return small
 
   var large = union(
     subtract(
