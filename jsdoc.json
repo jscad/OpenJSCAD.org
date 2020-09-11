@@ -38,6 +38,7 @@
     "tutorials": "./jsdoc/tutorials",
     "readme": "./jsdoc/assets/README.md"
   },
+  "plugins": ["plugins/markdown"],
   "templates": {
     "default": {
       "staticFiles": {

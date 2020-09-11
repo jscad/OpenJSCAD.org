@@ -100,22 +100,22 @@ pre.prettyprint {
 }
 
 .pln {
-    color: #2d2d2d;
+    color: #ab3737;
 }
 
 /* string content */
 .str {
-    color: #154207;
+    color: #218003;
 }
 
 /* a keyword */
 .kwd {
-    color: #453d06;
+    color: #7e6e02;
 }
 
 /* a comment */
 .com {
-    color: #343434;
+    color: #8388a1;
 }
 
 /* a type name */
