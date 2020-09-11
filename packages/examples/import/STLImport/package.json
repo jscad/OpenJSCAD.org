@@ -1,0 +1,13 @@
+{
+  "name": "stl-import",
+  "version": "0.0.1",
+  "description": "Demonstrating STL file import. Drag the STLImport folder onto the JSCAD instance.",
+  "main": "index.js",
+  "keywords": [
+    "jscad",
+    "cad"
+  ],
+  "author": "Simon Clark",
+  "license": "MIT",
+  "dependencies": {}
+}
