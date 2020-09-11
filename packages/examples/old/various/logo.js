@@ -5,20 +5,26 @@
 // tags       : Logo,Intersection,Sphere,Cube,Big
 // file       : logo_big.jscad
 
+const { cube, sphere } = require('@jscad/modeling').primitives
+const { union, subtract, intersect } = require('@jscad/modeling').booleans
+const { rotate } = require('@jscad/modeling').transforms
+
+
 function main () {
   var small = union(
-    difference(
-      cube({size: 3, center: true}),
-      sphere({r: 2, center: true})
+    subtract(
+      cube({size: 3}),
+      sphere({radius: 2})
     ),
-    intersection(
-      sphere({r: 1.3, center: true}),
-      cube({size: 2.1, center: true})
+    intersect(
+      sphere({radius: 1.3}),
+      cube({size: 2.1})
     )
-  ).translate([0, 0, 1.5]).scale(10);
+  )
+  return rotate([0.3,0.8,0],small)
 
   var large = union(
-    difference(
+    subtract(
       cube({size: 300, center: true}),
       sphere({r: 200, center: true})
     ),
@@ -30,3 +36,5 @@ function main () {
 
   return small.union(large);
 }
+
+module.exports = {main}

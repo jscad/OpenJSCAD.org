@@ -1,3 +1,17 @@
+body {
+    background: url(img/bkg.png);
+    background-repeat: no-repeat;
+    background-position: top left;
+}
+
+nav {
+    background: none;
+}
+
+section {
+    background: none;
+}
+
 
 h4.name {
     background: #446997;
@@ -7,6 +21,16 @@ h4.name a {
     color: #adc7f3;
 }
 
+#main h3 {
+    font-weight: bold;
+    color: #779fcc;
+    font-size: 21px;
+    margin: 30px 0 0px;
+}
+#main p {
+    margin: 10px 0px;
+    line-height: 23px;
+}
 nav h3 {
     margin: 12px 0 2px;
 }
@@ -16,7 +40,7 @@ nav h2 {
     padding: 0;
 }
 
-h1.page-title {
+.usertext h1, h1.page-title {
     font-size: 38px;
     margin: 30px 30px 20px;
     line-height: 100%;
@@ -25,8 +49,12 @@ h1.page-title {
     color: #1a64a57a;
     text-decoration: underline;
     text-transform: inherit;
+    text-shadow: 6px 6px 5px rgba(0,0,0,0.1);
 }
 
+header h2 {
+    display: none;
+}
 h4.name {
     background: #446997;
     margin-top: 4em;
@@ -99,79 +127,21 @@ pre.prettyprint {
     background-color: #e3e9fa;
 }
 
-.pln {
-    color: #ab3737;
-}
-
-/* string content */
-.str {
-    color: #218003;
-}
-
-/* a keyword */
-.kwd {
-    color: #7e6e02;
-}
-
-/* a comment */
-.com {
-    color: #8388a1;
-}
-
-/* a type name */
-.typ {
-    color: #2d3749;
-}
-
-/* a literal value */
-.lit {
-    color: #443d09;
-}
-
-/* punctuation */
-.pun {
-    color: #3b3636;
-}
-
-/* lisp open bracket */
-.opn {
-    color: #000000;
-}
-
-/* lisp close bracket */
-.clo {
-    color: #000000;
-}
-
-/* a markup tag name */
-.tag {
-    color: #18273d;
-}
-
-/* a markup attribute name */
-.atn {
-    color: #574e03;
-}
-
-/* a markup attribute value */
-.atv {
-    color: #535050;
-}
-
-/* a declaration */
-.dec {
-    color: #872828;
-}
-
-/* a variable name */
-.var {
-    color: #c82829;
-}
-
-/* a function name */
-.fun {
-    color: #4271ae;
-}
+.pln { color: #ab3737;}
+.str { color: #218003;}  /* string content */
+.kwd { color: #ac9500;}  /* a keyword */
+.com { color: #b4b4b4;}  /* a comment */
+.typ { color: #2d3749;}  /* a type name */
+.lit { color: #443d09;}  /* a literal value */
+.pun { color: #3b3636;}  /* punctuation */
+.opn { color: #000000;}  /* lisp open bracket */
+.clo { color: #000000;}  /* lisp close bracket */
+.tag { color: #18273d;}  /* a markup tag name */
+.atn { color: #574e03;}  /* a markup attribute name */
+.atv { color: #535050;}  /* a markup attribute value */
+.dec { color: #872828;}  /* a declaration */
+.var { color: #c82829;}  /* a variable name */
+.fun { color: #4271ae;}  /* a function name */
 
 /* Specify class=linenums on a pre to get line numbering */
 ol.linenums {

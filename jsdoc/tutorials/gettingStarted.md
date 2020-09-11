@@ -14,7 +14,7 @@ In all three options, you start with a javascript text file that programmaticall
 describes your model. The file (or even group of files) is handed off to JSCAD for 
 processing. The model can be outputted as STL, AMF, DXF, JSON and X3D formats.
  
-### Model script basics
+### Model Script Basics
 The simplest file that will render a cube in JSCAD looks like this:
 ```javascript
 // An import statement allows your code to use jscad methods:
@@ -48,7 +48,7 @@ const { cube, sphere } = jscad.primitives
 let aCube = cube()
 let aTorus = jscad.primitives.torus()
 ```
-### Adding methods
+### Adding Methods
 Clean, readable code is one of the most important aspects of a useful design. In that respect, it can often be useful to break your code into simple methods that do part of the work for your design:
 ```javascript
 const { cylinder } = require('@jscad/modeling').primitives
@@ -64,7 +64,7 @@ const main = () => {
 module.exports = { main }
 ```
 ### Re-usable Designs
-One valuable feature of JSCAD is the option to include runtime parameters in your design.  This is done using the 
+One valuable feature of JSCAD is the option to include runtime parameters in your design.  This is done using the getParameterDefinitions method:
 ```javascript
 const { cylinder } = require('@jscad/modeling').primitives
 
@@ -84,6 +84,8 @@ const main = (params) => {
 // You must also export the getParameterDefinitions method.
 module.exports = { main, getParameterDefinitions }
 ```
+<img src="img/parameters.png" alt="JSCAD Parameters Example">
+ 
 
 ### JSCAD Conventions...
 In JSCAD code, you will see a number of conventions that may be useful in your code...
