@@ -1,5 +1,6 @@
 body {
     background: url(img/bkg.png) no-repeat top left;
+    background-size: 100%;
 }
 
 nav {

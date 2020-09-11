@@ -12,11 +12,15 @@ provided examples are also a valuable resource.
 Most primitives in JSCAD are constructed by calling their constructor function,
 and passing in options that define their size, position, resolution, etc.
 ```javascript
-let caseShell = roundedCuboid({size:[2,7,10], center:[10,10,5], segments: 32})
+let caseShell = roundedCuboid({
+    size:[2,7,10],
+    center:[10,10,5],
+    segments: 32
+})
 ```
 
 You will see a recurring pattern of an array of three numbers, "[30,10,0]" in parameters 
-such as cuboid size, object center, etc. These represent the cartesion coordinate system
+such as cuboid size, object center, etc. These represent the cartesian coordinate system
 in JSCAD, and are always in the order x, y, z.
 
 The "segments" option is another common sight, and refers to the number of subdivisions 
@@ -24,7 +28,28 @@ present on curved paths and surfaces. A lower number will produce shapes with fe
 polygons, and less detail on curves. 
 
 ### Boolean Operations
+Booleans are one of the most important tools in the solid modeling toolkit. Many of
+the shapes that you will need to create on your journey can be created by joining, 
+subtracting and intersecting simple shapes.
+Unions
+<img src="img/booleans.jpg" alt="JSCAD Parameters Example">
 
 ### 2D to 3D
 
 ### Building with Polygons
+For complex shapes, it is possible to build the surfaces you need from simple polygons.
+```javascript
+  return polyhedron({
+    points: [
+      [0, -10, 60], [0, 10, 60], [0, 10, 0], [0, -10, 0], [60, -10, 60], [60, 10, 60],
+      [10, -10, 50], [10, 10, 50], [10, 10, 30], [10, -10, 30], [30, -10, 50], [30, 10, 50]
+    ],
+    faces: [
+      [0, 2, 3], [0, 1, 2], [4, 5, 0], [5, 1, 0], [5, 4, 2], [4, 3, 2],
+      [6, 9, 8], [6, 8, 7], [6, 11, 10], [6, 7, 11], [10, 11, 8], [10, 8, 9],
+      [3, 9, 0], [9, 6, 0], [10, 0, 6], [0, 10, 4], [3, 10, 9], [3, 4, 10],
+      [1, 11, 7], [1, 5, 11], [1, 7, 8], [2, 1, 8], [8, 11, 2], [5, 2, 11]
+    ]
+  })
+```
+<img src="img/polyhedron.jpg" alt="Building from polygons Example">
