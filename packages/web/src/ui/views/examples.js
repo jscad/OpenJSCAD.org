@@ -24,6 +24,7 @@ const examplesData = [
   { file: 'core/colors/transparency.js', title: 'Transparency' },
 
   { file: 'core/measurements/measureBounds.js', title: 'Measure Bounds' },
+  { file: 'core/measurements/measureAggregateBounds.js', title: 'Measure Aggregate Bounds' },
   { file: 'core/measurements/measureAreaAndVolume.js', title: 'Measure Area & Volume' },
   { file: 'core/curves/bezier/simpleExtrude.js', title: 'Simple Extrude' },
   { file: 'core/curves/bezier/extrudeAlongPath.js', title: 'Extrude Along a Path' },
