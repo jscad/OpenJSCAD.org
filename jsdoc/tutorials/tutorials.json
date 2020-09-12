@@ -1,17 +1,17 @@
 {
-  "gettingStarted": {
+  "01_gettingStarted": {
     "title": "Getting Started"
   },
-  "modelingBasics": {
+  "02_modelingBasics": {
     "title": "Modeling Basics"
   },
-  "usingParameters": {
+  "03_usingParameters": {
     "title": "Using Parameters"
   },
-  "usingModules": {
-    "title": "Using Modules"
+  "04_multifileProjects": {
+    "title": "Multi-File Projects"
   },
-  "importingFiles": {
+  "05_importingFiles": {
     "title": "Importing Files"
   }
 }

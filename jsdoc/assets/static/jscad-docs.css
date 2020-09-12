@@ -19,10 +19,18 @@ h4.name a {
     color: #adc7f3;
 }
 
-#main h3 {
+#main h2, #main h3 {
+    font-family: 'Montserrat', sans-serif;
     font-weight: bold;
     color: #779fcc;
     font-size: 21px;
+    margin: 30px 0 0;
+}
+
+#main h3 {
+    font-weight: bold;
+    color: #779fcc;
+    font-size: 17px;
     margin: 30px 0 0;
 }
 
@@ -98,6 +106,15 @@ nav > ul {
     padding: 0 4px;
 }
 
+ul ul {
+    margin-bottom: 0;
+}
+
+article img {
+    box-shadow: 9px 9px 7px rgba(0,0,0,0.3);
+    border: 1px solid #999;
+}
+
 nav > ul > li > a {
     margin-top: 4px;
     color: #1436ad;
@@ -130,7 +147,7 @@ nav ul ul a {
 }
 
 a, a:active {
-    color: #021a57;
+    color: ##0b3ebf;
     text-decoration: none;
 }
 
@@ -167,7 +184,7 @@ td, th {
 
 .pln { color: #ab3737;}
 .str { color: #218003;}  /* string content */
-.kwd { color: #ac9500;}  /* a keyword */
+.kwd { color: #7c7c7c;}  /* a keyword */
 .com { color: #b4b4b4;}  /* a comment */
 .typ { color: #2d3749;}  /* a type name */
 .lit { color: #443d09;}  /* a literal value */

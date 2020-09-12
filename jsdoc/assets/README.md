@@ -1,6 +1,8 @@
 # JSCAD V2 - Documentation
 
->*JSCAD* is a set of modular, browser and command line tools for creating parametric 2D and 3D designs with JavaScript code.
+*JSCAD* is an open source set of modular, browser and command line tools for creating parametric 2D and 3D designs with Javascript code. It provides a quick, precise and reproducible method for generating 3D models, and is especially useful for 3D printing applications.
+
+Check out the Tutorials section for tips on getting started, and best practises. 
 
 ## Table of Contents
 
@@ -13,46 +15,18 @@
 ## Usage
 
 There are different 'flavors' of JSCAD that you can use based on your needs
-- web: online (no install) simply go to [https://openjscad.org/](https://openjscad.org/)
-- web: self hosted: can be found [here](./packages/web)
-- cli: command line interface : can be found [here](./packages/cli)
-- desktop app: pre pre alpha work in progress can be found [here](./packages/desktop)!
-- node.js: custom mix and match of packages
-  * all the packages are available [on NPM](https://www.npmjs.com/search?q=%40jscad) under the '@jscad' name
+- For browser-based modelling (no install) simply go to [https://jscad.xyz/](https://jscad.xyz/)
+- For other usage options, the first step is to visit [JSCAD on GitHub](https://github.com/jscad/OpenJSCAD.org/tree/V2)
+  * Command line interface : can be found in ./packages/cli
+  * Desktop app : pre-pre-alpha work in progress can be found  at ./packages/desktop
+  * For custom mix and match of packages, all the packages are available [on NPM](https://www.npmjs.com/search?q=%40jscad) under the '@jscad' name
 
-### Immediate Use (no installation)
+## Community
 
-Go to *[OpenJSCAD.org](http://openjscad.org)* (Tested browsers include Chrome, Firefox, Opera, Safari)
+See for more details
+* [JSCAD Forum Announcements](https://jscad.xyz/forum/category/1/announcements)
+* [JSCAD Forum Community](https://jscad.xyz/forum) to discuss with other users and developers.
 
-### Use within a Web Site (pre built files, from GitHub)
-
-Please see [here for details](./packages/web/README.md)
-
-### Use as Command Line Interface (CLI)
-
-Please see [here for details](./packages/cli/README.md)
-
-### Use of the different modular components directly
-
-From version 1.0.0 onwards, almost all the individual parts of this project are available
-directly as scoped NPM packages, and can be used independently from the main repository.
-The full list of these is available [here](./packages/README.md) and [here](https://www.npmjs.com/org/jscad)
-
-One example of what can be achieved with this can be found [here](https://esnextb.in/?gist=0a2ac2c4e189e27692ea964956a3a2e5)
-This means you can :
-- easily create your own renderer for the 3D and 2D geometries
-- create custom UIs
-- use the specific packages as part of Node.js or Browserify projects
-- cherry pick formats you want to use for input/output without needing the dependencies of **all** packages
-- lots more !
-
-This will be expanded upon in the future, and is the backbone of the newer, modular JSCAD project.
-
-## Documentation
-
-- [Technical Overview and Q&A](./docs/index.md)
-- [JSCAD User and Programming Guide](https://openjscad.org/dokuwiki/doku.php?id=start)
-- [JSCAD Quick Reference](https://openjscad.org/dokuwiki/doku.php?id=jscad_quick_reference)
 
 ## Contributing
 
@@ -69,47 +43,14 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
 
-Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
-
 A BIG THANKS to all the people who have already contributed to the JSCAD project!
 <a href="graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" /></a>
-
-## Community
-
-See for more details
-* [JSCAD Forum Announcements](https://jscad.xyz/forum/category/1/announcements)
-* [JSCAD Forum Community](https://jscad.xyz/forum) to discuss with other users and developers.
 
 
 ## License
 
 [The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 (unless specified otherwise)
-
-## Screenshots
-
-Simple JSCAD example ([logo.jscad](examples/logo.jscad)) [try it](http://openjscad.org/#examples/logo.jscad):
-<img src="packages/web/docs/sshot-01.png">
-
-More sophisticated JSCAD example, with functions dedicated to object generation and with interactive parameters ([gear.jscad](examples/gear.jscad)) [try it](http://openjscad.org/#examples/gear.jscad) :
-<img src="packages/web/docs/sshot-03-illu.png">
-
-Import of STL models ([frog-OwenCollins.stl](examples/frog-OwenCollins.stl)) [try it](http://openjscad.org/#examples/frog-OwenCollins.stl):
-<img src="packages/web/docs/sshot-04.png">
-
-Drag and drop a local file:
-<img src="packages/web/docs/sshot-05-illu.png">
-
-Drag and drop multiple files (Chrome and Firefox) or a folder (Chrome):
-<img src="packages/web/docs/sshot-06-illu.png">
-
-## See Also
-
-- [OpenJsCAD](http://joostn.github.com/OpenJsCad/), starting point of JSCAD
-- [OpenSCAD.net](http://garyhodgson.github.com/openscad.net/), another place of inspiration, where the OpenSCAD translator was adapted from
-- [CoffeeSCad](http://kaosat-dev.github.com/CoffeeSCad/), JavaScript simplified (no more {}) (defunct)
-- [stl2pov](http://rsmith.home.xs4all.nl/software/py-stl-stl2pov.htmltool) to convert .stl to .pov, and then render via [PovRay.org](http://povray.org)
-- [P3D](https://github.com/D1plo1d/p3d) STL/AMF/OBJ viewer
 
 That's all for now,
 

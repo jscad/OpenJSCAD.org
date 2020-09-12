@@ -1,11 +1,11 @@
 JSCAD is a solids modelling system. It is fundamentally unitless, however, when you
-export files, typically 1 unit is jscad corresponds to 1mm in your model file.
+export files, typically 1 unit in JSCAD corresponds to 1 millimeter in your model file.
 
 Modelling in JSCAD is often a case of building the shape you want out of primitives,
 but there are often many different options to get the same shape.  Check out the 
-examples on the JSCAD app page to learn about the different capabilities.
+examples on the JSCAD app's info menu to learn about the different capabilities.
 
-### Working with Primitives
+## Working with Primitives
 The documentation is your best friend when working with primitives, but the 
 provided examples are also a valuable resource.
 
@@ -27,16 +27,31 @@ The "segments" option is another common sight, and refers to the number of subdi
 present on curved paths and surfaces. A lower number will produce shapes with fewer 
 polygons, and less detail on curves. 
 
-### Boolean Operations
+## Boolean Operations
 Booleans are one of the most important tools in the solid modeling toolkit. Many of
 the shapes that you will need to create on your journey can be created by joining, 
 subtracting and intersecting simple shapes.
-Unions
-<img src="img/booleans.jpg" alt="JSCAD Parameters Example">
+<img src="img/booleans.png" alt="JSCAD Parameters Example">
 
-### 2D to 3D
+## 2D to 3D
+Another valuable way of building shapes is to start with 2D shapes.  These can be created by 
+specifying points, starting with basic primitive 2D shapes, or importing SVG files.  The 2D 
+shapes can then be extruded to produce a wide variety of different geometries.
+```javascript
+const jscad = require('@jscad/modeling')
+const {polygon } = jscad.primitives
+const { extrudeLinear } = jscad.extrusions
 
-### Building with Polygons
+function main () {
+    const poly = polygon({ points: [[-1, -1], [3, -1], [3.5, 2], [2, 1], [1, 2], [0, 1], [-1, 2]] })
+    return extrudeLinear({ height: 5, twistAngle: Math.PI / 4, twistSteps: 10 }, poly)
+}
+
+module.exports = { main }
+```
+<img src="img/extrude.png" alt="Building from polygons Example">
+
+## Building with Polygons
 For complex shapes, it is possible to build the surfaces you need from simple polygons.
 ```javascript
   return polyhedron({
