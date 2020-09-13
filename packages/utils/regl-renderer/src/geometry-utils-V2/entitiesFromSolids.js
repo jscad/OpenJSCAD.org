@@ -17,32 +17,37 @@ const entitiesFromSolids = (params, solids) => {
 
   solids = toArray(solids)
   const entities = solids.map((solid) => {
-    let geometry
+    let geometries
     let type
-    if ('sides' in solid) {
+    if (!solid) {
+      return null
+    } else if (!(solid instanceof Object)) {
+      return null
+    } else if ('sides' in solid) {
       type = '2d'
-      geometry = geom2ToGeometries({ color }, solid)
+      geometries = geom2ToGeometries({ color }, solid)
     } else if ('points' in solid) {
       type = '2d'
-      geometry = path2ToGeometries({ color }, solid)
+      geometries = path2ToGeometries({ color }, solid)
     } else if ('polygons' in solid) {
       type = '3d'
-      geometry = geom3ToGeometries({
+      geometries = geom3ToGeometries({
         smoothLighting: smoothNormals,
         normalThreshold: 0.3,
         color
       }, solid)
+    } else {
+      return null
     }
 
-    // geometry = flatten(geometries)// FXIME : ACTUALLY deal with arrays since a single design can
-    // generate multiple geometries if positions count is >65535
-    geometry = flatten(geometry)[0]
+    // FIXME handle multiple geometries, i.e. when positions count is > 65535
+    const geometry = flatten(geometries)[0]
+    if (!geometry) return null
 
     // bounds
-    const bounds = computeBounds(geometry) // FXIME : ACTUALLY deal with arrays as inputs see above
+    const bounds = computeBounds(geometry) // FIXME : ACTUALLY deal with arrays as inputs see above
+    if (bounds.dia <= 0.0) return null
 
-    // transforms: for now not used, since all transformed are stored in the geometry
-    // FIXME : for V2 we will be able to use the transfors provided by the solids directly
     const matrix = mat4.copy(mat4.create(), solid.transforms) // mat4.identity([])
     const transforms = {
       matrix
@@ -65,7 +70,7 @@ const entitiesFromSolids = (params, solids) => {
       isTransparent: geometry.isTransparent
     }
     return entity
-  })
+  }).filter((entity) => entity !== null)
   return entities
 }
 

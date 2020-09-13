@@ -3,26 +3,20 @@ const mat4 = require('gl-mat4')
 
 const { toArray } = require('@jscad/array-utils')
 
-/**
- * Convert a list of geom3 objects to an array of geometries with positions, normals, colors & indices
- * Typically used for displaying the geometric data in a webgl wiever
- * @param {Array} listofgeom3 single or an array of geom3 object(s)
- * @param {Object} options options hash
- * @param {Boolean} options.smoothLighting=false set to true if we want to use interpolated vertex normals
+/*
+ * Convert the given solid into one or more geometries for rendering.
+ * @param {Object} options - options for conversion
+ * @param {Array} options.color - RGBA of solid
+ * @param {Float} options.normalThreshold - threshold beyond which to split normals
+ * @param {Boolean} options.smoothLighting - set to true in order to use interpolated vertex normals
  * this creates nice round spheres but does not represent the shape of the actual model
- * @param {Float} options.normalThreshold=0.349066 threshold beyond which to split normals // 20 deg
- * @param {String} options.color=[1, 0.4, 0, 1] default color of given geometry
- * @returns {Object} [{indices, positions, normals, colors}, ...]
+ * @param {path2} solid - the solid to convert
+ * @return {Array} list of new geometries
  */
-const geom3ToGeometries = (options, listofgeom3) => {
+const geom3ToGeometries = (options, solid) => {
   let { smoothLighting, normalThreshold, color } = options
 
-  color = normalizedColor(color)
-
-  listofgeom3 = toArray(listofgeom3)
-  const listofgeometries = listofgeom3.map((geometry) => convert({ color, smoothLighting, normalThreshold }, geometry))
-
-  return listofgeometries
+  return convert({ color, smoothLighting, normalThreshold }, solid)
 }
 
 /*
@@ -31,6 +25,7 @@ const geom3ToGeometries = (options, listofgeom3) => {
  */
 const convert = (options, geometry) => {
   let { color, smoothLighting, normalThreshold } = options
+
   const geometries = []
 
   const positions = []

@@ -1,5 +1,12 @@
 const mat4 = require('gl-mat4')
 
+/*
+ * Convert the given solid into one or more geometries for rendering.
+ * @param {Object} options - options for conversion
+ * @param {Array} options.color - RGBA of solid
+ * @param {geom2} solid - the solid to convert
+ * @return {Array} list of new geometries
+ */
 const geom2ToGeometries = (options, solid) => {
   let { color } = options
 
