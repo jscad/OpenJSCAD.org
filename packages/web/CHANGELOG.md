@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.5...@jscad/web@2.0.0-alpha.6) (2020-09-08)
+
+
+### Bug Fixes
+
+* **core:** corrected webRequire to use posix paths ([53a6e85](https://github.com/jscad/OpenJSCAD.org/commit/53a6e85e1dc8f515e8e259e0bb40f292909645fa))
+
+
+### Features
+
+* **examples:** examples overhaul for V2 JSCAD ([d73e06f](https://github.com/jscad/OpenJSCAD.org/commit/d73e06f51e187e673487c3d9599672e66ac441d7))
+
+
+
+
+
 # [2.0.0-alpha.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.4...@jscad/web@2.0.0-alpha.5) (2020-09-02)
 
 

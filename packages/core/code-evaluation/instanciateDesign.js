@@ -6,8 +6,17 @@ const isPath2 = require('@jscad/modeling').geometries.path2.isA
 
 const { flatten, toArray } = require('@jscad/array-utils')
 
-// const toCompactBinary = require('./toCompactTest')
-const isResultGeometry = (rawResults) => (rawResults.length > 0 && (isGeom3(rawResults[0]) || isGeom2(rawResults[0]) || isPath2(rawResults[0])))
+const serializeSolids = require('./serializeSolids')
+
+/*
+ * determine if the given results contain valid geometry
+ */
+const isResultGeometry = (results) => {
+  if (Array.isArray(results) && results.length > 0) {
+    return results.reduce((acc, result) => acc || (isGeom3(result) || isGeom2(result) || isPath2(result)), false)
+  }
+  return false
+}
 
 const lookupFromCompactBinary = (compactLookup = {}) => {
   // console.log('lookupFromCompactBinary', compactLookup)
@@ -70,20 +79,6 @@ const lookupToCompactBinary = (lookup) => {
   return compactLookup
 }
 
-// prepare solids for output from worker
-const serializeSolids = (solids) => solids.map((object) => {
-  //  if (isGeom2(object)) {
-  //    return require('@jscad/modeling').geometries.geom2.toCompactBinary(object)
-  //  } else if (isGeom3(object)) {
-  //    return require('@jscad/modeling').geometries.geom3.toCompactBinary(object)
-  //  } else if (isPath2(object)) {
-  //    return require('@jscad/modeling').geometries.path2.toCompactBinary(object)
-  //  } else {
-  //    return toJSON(object)
-  //  }
-  return JSON.stringify(object)
-})
-
 const instanciateDesign = (rootModule, parameterValues, options) => {
   const { vtreeMode, serialize } = options
   // deal with the actual solids generation
@@ -113,7 +108,7 @@ const instanciateDesign = (rootModule, parameterValues, options) => {
       solids = serialize ? serializeSolids(rawResults) : rawResults
       return { solids }
     } else {
-      throw new Error('Bad output from script: expected Geom3/Geom2/Line3 objects')
+      throw new Error('bad output from script: expected geom3/geom2/path2 objects')
     }
   }
 }

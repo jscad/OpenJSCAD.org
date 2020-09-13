@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.2](https://github.com/jscad/openjscad.org/compare/@jscad/modeling@2.0.0-alpha.1...@jscad/modeling@2.0.0-alpha.2) (2020-09-08)
+
+
+### Bug Fixes
+
+* **modeling:** Adding & improving tests, docs, removing some equals() ([1f3724b](https://github.com/jscad/openjscad.org/commit/1f3724b7cb9c8afd5ddc61587de506dbac93125e))
+* **modeling:** fix torus offset when outerRotation is supplied ([f7b3a2a](https://github.com/jscad/openjscad.org/commit/f7b3a2a9adfee91ecc2be1661883f5f17264a798))
+
+
+### Features
+
+* **examples:** examples overhaul for V2 JSCAD ([d73e06f](https://github.com/jscad/openjscad.org/commit/d73e06f51e187e673487c3d9599672e66ac441d7))
+
+
+
+
+
 # [2.0.0-alpha.1](https://github.com/jscad/openjscad.org/compare/@jscad/modeling@2.0.0-alpha.0...@jscad/modeling@2.0.0-alpha.1) (2020-08-19)
 
 

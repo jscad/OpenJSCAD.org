@@ -34,6 +34,67 @@
   },
   "opts": {
     "template": "node_modules/docdash",
-    "destination": "./docs"
+    "destination": "./docs",
+    "tutorials": "./jsdoc/tutorials",
+    "readme": "./jsdoc/assets/README.md"
+  },
+  "plugins": ["plugins/markdown"],
+  "templates": {
+    "default": {
+      "staticFiles": {
+        "include": [
+          "./jsdoc/assets/static"
+        ]
+      }
+    }
+  },
+  "docdash": {
+    "_static": [true],
+    "sort": [true],
+    "sectionOrder": [
+      "Tutorials",
+      "Modules"
+    ],
+    "_disqus": "",
+    "_openGraph": {
+      "title": "",
+      "type": "website",
+      "image": "",
+      "site_name": "",
+      "url": ""
+    },
+    "_meta": {
+      "title": "",
+      "description": "",
+      "keyword": ""
+    },
+    "search": [true],
+    "collapse": [true],
+    "wrap": [false],
+    "typedefs": [false],
+    "navLevel": [-1],
+    "private": [false],
+    "removeQuotes": ["none"],
+    "scripts": ["jscad-docs.css", "jscad-docs.js"],
+    "menu": {
+      "openjscad.org (v1)": {
+        "href":"https://openjscad.org",
+        "target":"_blank",
+        "class":"menu-item",
+        "id":"website_link"
+      },
+      "JSCad User Group": {
+        "href":"https://openjscad.nodebb.com/",
+        "target":"_blank",
+        "class":"menu-item",
+        "id":"forum_link"
+      },
+      "JSCad Github": {
+        "href":"https://github.com/jscad/OpenJSCAD.org/tree/V2",
+        "target":"_blank",
+        "class":"menu-item",
+        "id":"forum_link"
+      }
+    }
   }
 }

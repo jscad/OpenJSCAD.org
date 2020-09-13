@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.0.0-alpha.1...@jscad/examples@2.0.0-alpha.2) (2020-09-08)
+
+
+### Features
+
+* **examples:** examples overhaul for V2 JSCAD ([d73e06f](https://github.com/jscad/OpenJSCAD.org/commit/d73e06f51e187e673487c3d9599672e66ac441d7))
+
+
+
+
+
 # [2.0.0-alpha.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.0.0-alpha.0...@jscad/examples@2.0.0-alpha.1) (2020-08-19)
 
 **Note:** Version bump only for package @jscad/examples
