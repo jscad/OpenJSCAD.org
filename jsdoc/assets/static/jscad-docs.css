@@ -121,7 +121,7 @@ nav > ul > li > a {
     background-repeat: no-repeat;
     background-size: 12px 12px;
     padding-left: 15px;
-    background-position: 0px 2px;
+    background-position: 0 2px;
 }
 
 nav ul a, nav ul a:active {
@@ -147,7 +147,7 @@ nav ul ul a {
 }
 
 a, a:active {
-    color: ##0b3ebf;
+    color: #0b3ebf;
     text-decoration: none;
 }
 
@@ -167,6 +167,7 @@ pre.prettyprint {
     padding: 10px;
     color: darkblue;
     background-color: rgba(227, 228, 250, 0.35);
+    border: 1px solid;
 }
 
 .prettyprint.source {
