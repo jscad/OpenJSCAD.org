@@ -57,11 +57,6 @@ const viewer = (state, i18n) => {
   const el = html`<canvas id='renderTarget'> </canvas>`
 
   if (!render) {
-    window.onresize = () => {
-      resize(el)
-      render(viewerOptions)
-    }
-
     const options = setup(el)
     viewerOptions = options.viewerOptions
     camera = options.camera
@@ -71,7 +66,8 @@ const viewer = (state, i18n) => {
     // rotate
     gestures.drags
       .forEach((data) => {
-        const { shiftKey } = data.originalEvents[0]
+        const ev = data.originalEvents[0]
+        const shiftKey = (ev.shiftKey === true) || (ev.touches && ev.touches.length > 2)
         if (!shiftKey) {
           const now = Date.now()
           const ms = now - lastRotate
@@ -86,7 +82,8 @@ const viewer = (state, i18n) => {
     // pan
     gestures.drags
       .forEach((data) => {
-        const { shiftKey } = data.originalEvents[0]
+        const ev = data.originalEvents[0]
+        const shiftKey = (ev.shiftKey === true) || (ev.touches && ev.touches.length > 2)
         if (shiftKey) {
           const now = Date.now()
           const ms = now - lastPan
@@ -182,9 +179,6 @@ const setup = (element) => {
   const camera = Object.assign({}, perspectiveCamera.defaults)
   camera.position = [150, 180, 233]
 
-  perspectiveCamera.setProjection(camera, camera, { width, height })
-  perspectiveCamera.update(camera, camera)
-
   const viewerOptions = {
     glOptions: { canvas: element },
     camera,
@@ -202,15 +196,21 @@ const setup = (element) => {
 
 const resize = (viewerElement) => {
   const pixelRatio = window.devicePixelRatio || 1
-  let width = window.innerWidth
-  let height = window.innerHeight
-  if (viewerElement !== document.body) {
-    const bounds = viewerElement.getBoundingClientRect()
-    width = bounds.right - bounds.left
-    height = bounds.bottom - bounds.top
+  const bounds = viewerElement.getBoundingClientRect()
+
+  const width = (bounds.right - bounds.left) * pixelRatio
+  const height = (bounds.bottom - bounds.top) * pixelRatio
+
+  const prevWidth = viewerElement.width
+  const prevHeight = viewerElement.height
+
+  if (prevWidth !== width || prevHeight !== height) {
+    viewerElement.width = width
+    viewerElement.height = height
+
+    perspectiveCamera.setProjection(camera, camera, { width, height })
+    perspectiveCamera.update(camera, camera)
   }
-  viewerElement.width = pixelRatio * width
-  viewerElement.height = pixelRatio * height
 }
 
 module.exports = viewer
