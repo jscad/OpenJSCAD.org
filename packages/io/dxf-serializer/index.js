@@ -452,6 +452,7 @@ const getColorNumber = (object, options) => {
       const diff = Math.abs(r - rgb[0]) + Math.abs(g - rgb[1]) + Math.abs(b - rgb[2])
       if (diff < closest) {
         colorNumber = i
+        if (diff === 0) break
         closest = diff
       }
     }
