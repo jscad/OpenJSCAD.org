@@ -36,7 +36,9 @@ function mouseDrags (mouseDowns$, mouseUps, mouseMoves, settings) {
 function touchDrags (touchStarts$, touchEnds$, touchMoves$, settings) {
   const {pixelRatio} = settings
   return touchStarts$
+    // 2020-09 FIX
     .filter(t => (t.touches.length === 1 || t.touches.length === 3)) // length 2 is pinch (zoom)
+    // 2020-09 FIX
     .flatMap(function (e) {
       let startX = e.touches[0].pageX * pixelRatio
       let startY = e.touches[0].pageY * pixelRatio
@@ -69,6 +71,9 @@ function touchDrags (touchStarts$, touchEnds$, touchMoves$, settings) {
 /* drag move interactions press & move(continuously firing)
 */
 function drags ({mouseDowns$, mouseUps$, mouseMoves$, touchStarts$, touchEnds$, longTaps$, touchMoves$}, settings) {
+  // 2020-09 FIX
+  // touchMoves$ = touchMoves$.filter(t => t.touches.length === 1)
+  // 2020-09 FIX
   const drags$ = merge(
     mouseDrags(mouseDowns$, mouseUps$, mouseMoves$, settings),
     touchDrags(touchStarts$, touchEnds$, touchMoves$, settings)
