@@ -1835,8 +1835,6 @@ AcDbLayerTableRecord
 0
  70
 0
- 62
-7
   6
 Continuous
 370
@@ -1861,8 +1859,6 @@ AcDbLayerTableRecord
 View Port
  70
 0
- 62
-7
   6
 Continuous
 290
@@ -1889,8 +1885,6 @@ AcDbLayerTableRecord
 Defpoints
  70
 0
- 62
-7
   6
 Continuous
 290

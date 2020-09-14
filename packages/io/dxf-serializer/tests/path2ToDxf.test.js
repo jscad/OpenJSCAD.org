@@ -63,10 +63,14 @@ LWPOLYLINE
 CAD00001
   100
 AcDbEntity
+  3
+CAD00001
   8
 0
   67
 0
+  62
+256
   100
 AcDbPolyline
   90
@@ -112,10 +116,14 @@ LWPOLYLINE
 CAD00002
   100
 AcDbEntity
+  3
+CAD00002
   8
 0
   67
 0
+  62
+256
   100
 AcDbPolyline
   90
@@ -152,10 +160,14 @@ LWPOLYLINE
 CAD00003
   100
 AcDbEntity
+  3
+CAD00003
   8
 0
   67
 0
+  62
+256
   100
 AcDbPolyline
   90

@@ -70,6 +70,8 @@ CAD00001
 AcDbEntity
   8
 0
+  62
+256
   100
 AcDbFace
   70
@@ -106,6 +108,8 @@ CAD00002
 AcDbEntity
   8
 0
+  62
+256
   100
 AcDbFace
   70
@@ -142,6 +146,8 @@ CAD00003
 AcDbEntity
   8
 0
+  62
+256
   100
 AcDbFace
   70
@@ -178,6 +184,8 @@ CAD00004
 AcDbEntity
   8
 0
+  62
+256
   100
 AcDbFace
   70
@@ -214,6 +222,8 @@ CAD00005
 AcDbEntity
   8
 0
+  62
+256
   100
 AcDbFace
   70
@@ -250,6 +260,8 @@ CAD00006
 AcDbEntity
   8
 0
+  62
+256
   100
 AcDbFace
   70
@@ -286,6 +298,8 @@ CAD00007
 AcDbEntity
   8
 0
+  62
+256
   100
 AcDbFace
   70
@@ -322,6 +336,8 @@ CAD00008
 AcDbEntity
   8
 0
+  62
+256
   100
 AcDbFace
   70
@@ -358,6 +374,8 @@ CAD00009
 AcDbEntity
   8
 0
+  62
+256
   100
 AcDbFace
   70
@@ -394,6 +412,8 @@ CAD0000A
 AcDbEntity
   8
 0
+  62
+256
   100
 AcDbFace
   70
@@ -430,6 +450,8 @@ CAD0000B
 AcDbEntity
   8
 0
+  62
+256
   100
 AcDbFace
   70
@@ -466,6 +488,8 @@ CAD0000C
 AcDbEntity
   8
 0
+  62
+256
   100
 AcDbFace
   70
@@ -517,8 +541,12 @@ POLYLINE
 CAD00001
   100
 AcDbEntity
+  3
+CAD00001
   8
 0
+  62
+256
   100
 AcDb3dPolyline
   70
