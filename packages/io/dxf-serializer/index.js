@@ -23,9 +23,12 @@ TBD
 
 const { geometries, utils } = require('@jscad/modeling')
 
+const { geom3, geom2, path2 } = geometries
+
 // const { ensureManifoldness } = require('@jscad/io-utils')
 
 const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('./autocad_AC2017')
+const colorindex2017 = require('./colorindex2017')
 
 const mimeType = 'application/dxf'
 
@@ -40,7 +43,8 @@ const serialize = (options, ...objects) => {
     geom2To: 'lwpolyline', // or polyline
     geom3To: '3dface', // or polyline
     pathTo: 'lwpolyline',
-    statusCallback: null
+    statusCallback: null,
+    colorIndex: colorindex2017
   }
   options = Object.assign({}, defaults, options)
 
@@ -48,7 +52,7 @@ const serialize = (options, ...objects) => {
 
   objects = utils.flatten(objects)
 
-  objects = objects.filter((object) => geometries.geom3.isA(object) || geometries.geom2.isA(object) || geometries.path2.isA(object))
+  objects = objects.filter((object) => geom3.isA(object) || geom2.isA(object) || path2.isA(object))
 
   if (objects.length === 0) throw new Error('only JSCAD geometries can be serialized to DXF')
 
@@ -66,32 +70,37 @@ EOF
   return [dxfContent]
 }
 
-/** Serialize the given objects as a DXF entity section
+/**
+ * Serialize the given objects as a DXF entity section
  * @param {Array} objects - objects to serialize as DXF
  * @param {Object} options - options for serialization
  * @returns {Object} serialized contents, DXF format
  */
 const dxfEntities = (objects, options) => {
   const entityContents = objects.map((object, i) => {
-    if (geometries.geom2.isA(object)) {
-      const outlines = geometries.geom2.toOutlines(object)
-      const paths = outlines.map((outline) => ({ closed: true, points: outline }))
+    if (geom2.isA(object)) {
+      const color = object.color
+      const name = object.name
+      const outlines = geom2.toOutlines(object)
+      const paths = outlines.map((outline) => ({ closed: true, points: outline, color, name }))
       if (options.geom2To === 'polyline') {
         return PathsToPolyine(paths, options)
       }
-      return PathsToLwpolyine(paths, options)
+      return PathsToLwpolyline(paths, options)
     }
-    if (geometries.geom3.isA(object)) {
+    if (geom3.isA(object)) {
       // TODO object = ensureManifoldness(object)
       if (options.geom3To === 'polyline') {
         return PolygonsToPolyline(object, options)
       }
       return PolygonsTo3DFaces(object, options)
     }
-    if (geometries.path2.isA(object)) {
+    if (path2.isA(object)) {
       // mimic a path (outline) from geom2
-      const path = { closed: object.isClosed, points: geometries.path2.toPoints(object) }
-      return PathsToLwpolyine([path], options)
+      const color = object.color
+      const name = object.name
+      const path = { closed: object.isClosed, points: path2.toPoints(object), color, name }
+      return PathsToLwpolyline([path], options)
     }
     return ''
   })
@@ -120,7 +129,7 @@ ENDSEC`
 // 67 (0 - model space, 1 - paper space)
 // 100 -
 //
-const PathsToLwpolyine = (paths, options) => {
+const PathsToLwpolyline = (paths, options) => {
   options.statusCallback && options.statusCallback({ progress: 0 })
   let str = ''
   paths.forEach((path, i) => {
@@ -132,10 +141,14 @@ LWPOLYLINE
 ${getEntityId(options)}
   100
 AcDbEntity
+  3
+${getName(path, options)}
   8
 0
   67
 0
+  62
+${getColorNumber(path, options)}
   100
 AcDbPolyline
   90
@@ -174,8 +187,12 @@ POLYLINE
 ${getEntityId(options)}
   100
 AcDbEntity
+  3
+${getName(path, options)}
   8
 0
+  62
+${getColorNumber(path, options)}
   100
 AcDb2dPolyline
 `
@@ -215,16 +232,19 @@ AcDbEntity
 }
 
 //
-// convert the given object to DXF 3D face entities
+// convert the given object (geom3) to DXF 3D face entities
 // @return array of strings
 //
 const PolygonsTo3DFaces = (object, options) => {
   options.statusCallback && options.statusCallback({ progress: 0 })
   let str = ''
-  object.polygons.forEach((polygon, i) => {
+  const polygons = geom3.toPolygons(object)
+  const objectColor = getColorNumber(object, options)
+  polygons.forEach((polygon, i) => {
+    const polyColor = polygon.color ? getColorNumber(polygon, options) : objectColor
     const triangles = polygonToTriangles(polygon)
     triangles.forEach((triangle, i) => {
-      str += triangleTo3DFaces(triangle, options)
+      str += triangleTo3DFaces(triangle, options, polyColor)
     })
   })
   options.statusCallback && options.statusCallback({ progress: 100 })
@@ -250,7 +270,7 @@ const polygonToTriangles = (polygon) => {
 //
 // convert the given triangle to DXF 3D face entity
 //
-const triangleTo3DFaces = (triangle, options) => {
+const triangleTo3DFaces = (triangle, options, color) => {
   const corner10 = triangle[0]
   const corner11 = triangle[1]
   const corner12 = triangle[2]
@@ -263,6 +283,8 @@ ${getEntityId(options)}
 AcDbEntity
   8
 0
+  62
+${color}
   100
 AcDbFace
   70
@@ -295,12 +317,12 @@ ${corner13[2]}
   return str
 }
 
-// convert the given object to DXF POLYLINE (polyface mesh)
+// convert the given object (geom3) to DXF POLYLINE (polyface mesh)
 // FIXME The entity types are wrong, resulting in imterpretation as a 3D lines, not faces
 // @return array of strings
 const PolygonsToPolyline = (object, options) => {
   let str = ''
-  const mesh = polygons2polyfaces(object.polygons)
+  const mesh = polygons2polyfaces(geom3.toPolygons(object))
   if (mesh.faces.length > 0) {
     str += `  0
 POLYLINE
@@ -308,8 +330,12 @@ POLYLINE
 ${getEntityId(options)}
   100
 AcDbEntity
+  3
+${getName(object, options)}
   8
 0
+  62
+${getColorNumber(object, options)}
   100
 AcDb3dPolyline
   70
@@ -403,6 +429,35 @@ const getEntityId = (options) => {
   // add more zeros if the id needs to be larger
   const padded = '00000' + options.entityId.toString(16).toUpperCase()
   return 'CAD' + padded.substr(padded.length - 5)
+}
+
+const getName = (object, options) => {
+  if (object.name) return object.name
+  // add more zeros if the id needs to be larger
+  const padded = '00000' + options.entityId.toString(16).toUpperCase()
+  return 'CAD' + padded.substr(padded.length - 5)
+}
+
+const getColorNumber = (object, options) => {
+  let colorNumber = 256
+  if (object.color) {
+    const r = Math.floor(object.color[0] * 255)
+    const g = Math.floor(object.color[1] * 255)
+    const b = Math.floor(object.color[2] * 255)
+    // find the closest Autocad color number
+    const index = options.colorIndex
+    let closest = 255 + 255 + 255
+    for (i = 0; i < index.length; i++) {
+      const rgb = index[i]
+      const diff = Math.abs(r - rgb[0]) + Math.abs(g - rgb[1]) + Math.abs(b - rgb[2])
+      if (diff < closest) {
+        colorNumber = i
+        if (diff === 0) break
+        closest = diff
+      }
+    }
+  }
+  return colorNumber
 }
 
 module.exports = {
