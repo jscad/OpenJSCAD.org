@@ -1,30 +1,29 @@
 const flatten = require('../utils/flatten')
-const vec3min = require('../maths/vec3/min')
-const vec3max = require('../maths/vec3/max')
-
-const measureBoundingBox = require('./measureBoundingBox')
+const measureAggregateBoundingBox = require('./measureAggregateBoundingBox')
+const calculateEpsilonFromBounds = require('./calculateEpsilonFromBounds')
+const { geom2, geom3, path2 } = require('../geometries')
 
 /**
- * Measure the aggregated minimum and maximum bounds for the given geometries.
+ * Measure the aggregated Epsilon for the given geometries.
  * @param {...Object} geometries - the geometries to measure
- * @return {Array} the min and max bounds for the group of geometry, i.e. [[x,y,z],[X,Y,Z]]
- * @alias module:modeling/measurements.measureAggregateBoundingBox
+ * @return {Number} the aggregated Epsilon for the whole group of geometries
+ * @alias module:modeling/measurements.measureAggregateEpsilon
  *
  * @example
- * let bounds = measureAggregateBoundingBox(sphere(),cube())
+ * let bounds = measureAggregateEpsilon(sphere(),cube())
  */
-const measureAggregateBoundingBox = (...geometries) => {
+const measureAggregateEpsilon = (...geometries) => {
   geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('measureAggregateBoundingBox: no geometries supplied')
-  const bounds = measureBoundingBox(geometries)
-  if (geometries.length === 1) {
-    return bounds
-  }
-  const result = [[Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE], [-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE]]
-  return bounds.reduce((result, item) => {
-    result = [vec3min(result[0], item[0]), vec3max(result[1], item[1])]
-    return result
-  }, result)
+  if (geometries.length === 0) throw new Error('measureAggregateEpsilon: no geometries supplied')
+  const bounds = measureAggregateBoundingBox(geometries)
+
+  let dimensions = 0
+  dimensions = geometries.reduce((dimensions, geometry) => {
+    if (path2.isA(geometry) || geom2.isA(geometry)) return Math.max(dimensions, 2)
+    if (geom3.isA(geometry)) return Math.max(dimensions, 3)
+    return 0
+  }, dimensions)
+  return calculateEpsilonFromBounds(bounds, dimensions)
 }
 
-module.exports = measureAggregateBoundingBox
+module.exports = measureAggregateEpsilon

@@ -1,30 +1,26 @@
 const flatten = require('../utils/flatten')
-const vec3min = require('../maths/vec3/min')
-const vec3max = require('../maths/vec3/max')
 
-const measureBoundingBox = require('./measureBoundingBox')
+const measureVolume = require('./measureVolume')
 
 /**
- * Measure the aggregated minimum and maximum bounds for the given geometries.
- * @param {...Object} geometries - the geometries to measure
- * @return {Array} the min and max bounds for the group of geometry, i.e. [[x,y,z],[X,Y,Z]]
- * @alias module:modeling/measurements.measureAggregateBoundingBox
+ * Measure the total (aggregate) volume for the given geometries.
+ * This calculation will not account for overlapping geometry
+ * @param {...Object} geometries - the geometries to measure.
+ * @return {Number} the volume for the group of geometry.
+ * @alias module:modeling/measurements.measureAggregateVolume
  *
  * @example
- * let bounds = measureAggregateBoundingBox(sphere(),cube())
+ * let bounds = measureAggregateVolume(sphere(),cube())
  */
-const measureAggregateBoundingBox = (...geometries) => {
+const measureAggregateVolume = (...geometries) => {
   geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('measureAggregateBoundingBox: no geometries supplied')
-  const bounds = measureBoundingBox(geometries)
+  if (geometries.length === 0) throw new Error('measureAggregateVolume: no geometries supplied')
+  const volumes = measureVolume(geometries)
   if (geometries.length === 1) {
-    return bounds
+    return volumes
   }
-  const result = [[Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE], [-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE]]
-  return bounds.reduce((result, item) => {
-    result = [vec3min(result[0], item[0]), vec3max(result[1], item[1])]
-    return result
-  }, result)
+  const result = 0
+  return volumes.reduce((result, volume) => result + volume, result)
 }
 
-module.exports = measureAggregateBoundingBox
+module.exports = measureAggregateVolume

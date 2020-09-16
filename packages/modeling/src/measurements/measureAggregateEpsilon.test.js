@@ -1,35 +1,28 @@
 const test = require('ava')
+const { EPS } = require('../maths/constants')
 
-const { cube } = require('../primitives')
-const measureAggregateBoundingBox = require('./measureAggregateBoundingBox')
-const measureBoundingBox = require('./measureBoundingBox')
+const { cube, square } = require('../primitives')
+const measureAggregateEpsilon = require('./measureAggregateEpsilon')
 
-test('measureAggregateBoundingBox (single objects)', (t) => {
+test('measureAggregateEpsilon (single objects)', (t) => {
   const aCube = cube({ size: 4, center: [4, 10, 20] })
-  const bounds = measureAggregateBoundingBox(aCube)
-  t.deepEqual(bounds, [[2, 8, 18], [6, 12, 22]], 'Bounds were not as expected')
+  const calculatedEpsilon = measureAggregateEpsilon(aCube)
+  const expectedEpsilon = EPS * 4
+  t.is(calculatedEpsilon, expectedEpsilon)
 })
 
-test('measureAggregateBoundingBox (multiple objects)', (t) => {
-  const cube1 = cube({ size: 4, center: [4, -10, 20] })
-  const cube2 = cube({ size: 6, center: [0, -20, 20] })
-
-  const expectedBounds = [[-3, -23, 17], [6, -8, 23]]
-  let bounds = measureAggregateBoundingBox(cube1, cube2)
-
-  t.deepEqual(bounds, expectedBounds, 'Bounds were not as expected')
-
-  bounds = measureAggregateBoundingBox([cube1, cube2])
-  t.deepEqual(bounds, expectedBounds, 'Bounds were not as expected')
+test('measureAggregateEpsilon (multiple objects)', (t) => {
+  const highCube = cube({ size: 4, center: [-40, 100, 20] })
+  const lowCube = cube({ size: 60, center: [20, -10, 20] })
+  const calculatedEpsilon = measureAggregateEpsilon(highCube, lowCube)
+  const expectedEpsilon = EPS * 98
+  t.is(calculatedEpsilon, expectedEpsilon)
 })
 
-test('measureAggregateBoundingBox (multiple objects) does not change original bounds', (t) => {
-  const cube1 = cube({ size: 4, center: [4, 10, 20] })
-  const cube2 = cube({ size: 6, center: [0, 20, 20] })
-
-  const objectBoundsBefore = JSON.stringify(measureBoundingBox(cube1, cube2))
-  measureAggregateBoundingBox(cube1, cube2)
-  const objectBoundsAfter = JSON.stringify(measureBoundingBox(cube1, cube2))
-
-  t.is(objectBoundsBefore, objectBoundsAfter, 'Individual object bounds were not changed by the operation.')
+test('measureAggregateEpsilon (multiple 2D objects)', (t) => {
+  const highCube = cube({ size: 4, center: [-42, 100, 20] })
+  const lowCube = square({ size: 60, center: [20, -10, 0] })
+  const calculatedEpsilon = measureAggregateEpsilon(highCube, lowCube)
+  const expectedEpsilon = EPS * 86
+  t.is(calculatedEpsilon, expectedEpsilon)
 })

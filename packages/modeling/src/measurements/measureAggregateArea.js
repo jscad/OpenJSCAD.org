@@ -19,7 +19,7 @@ const measureAggregateArea = (...geometries) => {
     return areas
   }
   const result = 0
-  return areas.reduce((result, item) => result + item, result)
+  return areas.reduce((result, area) => result + area, result)
 }
 
 module.exports = measureAggregateArea
