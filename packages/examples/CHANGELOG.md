@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.0.0-alpha.2...@jscad/examples@2.0.0-alpha.3) (2020-09-19)
+
+
+### Features
+
+* **modeling:** add align() and measureAggregateBoundingBox() functions ([72df65c](https://github.com/jscad/OpenJSCAD.org/commit/72df65cfec065f26a84a8bb1ff80f5750a9972bf))
+
+
+
+
+
 # [2.0.0-alpha.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.0.0-alpha.1...@jscad/examples@2.0.0-alpha.2) (2020-09-08)
 
 

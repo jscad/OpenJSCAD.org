@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.6...@jscad/web@2.0.0-alpha.7) (2020-09-19)
+
+
+### Bug Fixes
+
+* **all:** support sparse arrays from main() ([#672](https://github.com/jscad/OpenJSCAD.org/issues/672)) ([209961d](https://github.com/jscad/OpenJSCAD.org/commit/209961d41ebf77373d427a7986934d195780f118))
+* **web:** V2 enable multi-gesture touch events for mobile devices ([#686](https://github.com/jscad/OpenJSCAD.org/issues/686)) ([3243f17](https://github.com/jscad/OpenJSCAD.org/commit/3243f17da5679d8bb6c19819a0e130ef5aafbb60))
+
+
+### Features
+
+* **modeling:** add align() and measureAggregateBoundingBox() functions ([72df65c](https://github.com/jscad/OpenJSCAD.org/commit/72df65cfec065f26a84a8bb1ff80f5750a9972bf))
+
+
+
+
+
 # [2.0.0-alpha.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.5...@jscad/web@2.0.0-alpha.6) (2020-09-08)
 
 
