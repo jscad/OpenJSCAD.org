@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": "browserify src/index.js -o dist/reglRenderer.js --standalone reglRenderer",
+    "preversion": "npm run build && git add dist",
     "dev": "budo ./demo-web.js --title regl-renderer --live",
     "demo-cli": "node ./demo-cli.js",
     "demo-web": "budo ./demo-web.js --title regl-renderer --live",
