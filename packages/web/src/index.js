@@ -70,11 +70,12 @@ async function makeJscad (targetElement, options) {
     store: storage.source(),
     fs: fs.source(),
     http: http.source(),
+    https: http.source(),
     drops: dragDrop.source(),
     dom: dom.source(),
     solidWorker: solidWorker.source(),
     i18n: i18n.source(),
-    titleBar: titleBar.source(), // #http://openjscad.org/examples/slices/tor.jscad
+    titleBar: titleBar.source(),
     fileDialog: fileDialog.source(),
     dat: await dat.source()
   }
@@ -84,6 +85,7 @@ async function makeJscad (targetElement, options) {
     store: storage.sink,
     fs: fs.sink,
     http: http.sink,
+    https: http.sink,
     i18n: i18n.sink,
     dom: dom.sink,
     solidWorker: solidWorker.sink,
