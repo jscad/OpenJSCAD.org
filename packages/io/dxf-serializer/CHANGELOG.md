@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.0-alpha.2...@jscad/dxf-serializer@2.0.0-alpha.3) (2020-09-19)
+
+
+### Bug Fixes
+
+* **dxf-deserializer:** support for colors in dxf serializer ([#684](https://github.com/jscad/OpenJSCAD.org/issues/684)) ([2b89a3a](https://github.com/jscad/OpenJSCAD.org/commit/2b89a3a7c4dde177ed93769d96522319954188df))
+
+
+
+
+
 # [2.0.0-alpha.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.0-alpha.1...@jscad/dxf-serializer@2.0.0-alpha.2) (2020-09-08)
 
 **Note:** Version bump only for package @jscad/dxf-serializer
