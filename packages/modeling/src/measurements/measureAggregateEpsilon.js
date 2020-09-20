@@ -10,7 +10,7 @@ const { geom2, geom3, path2 } = require('../geometries')
  * @alias module:modeling/measurements.measureAggregateEpsilon
  *
  * @example
- * let bounds = measureAggregateEpsilon(sphere(),cube())
+ * let groupEpsilon = measureAggregateEpsilon(sphere(),cube())
  */
 const measureAggregateEpsilon = (...geometries) => {
   geometries = flatten(geometries)

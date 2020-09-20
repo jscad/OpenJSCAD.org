@@ -10,7 +10,7 @@ const measureVolume = require('./measureVolume')
  * @alias module:modeling/measurements.measureAggregateVolume
  *
  * @example
- * let bounds = measureAggregateVolume(sphere(),cube())
+ * let totalVolume = measureAggregateVolume(sphere(),cube())
  */
 const measureAggregateVolume = (...geometries) => {
   geometries = flatten(geometries)
