@@ -1,3 +1,4 @@
+const url = require('url')
 const { fromEvent } = require('most')
 
 const preventDefault = (event) => {
@@ -24,7 +25,12 @@ const extractData = (event) => {
   }
   if (event.dataTransfer.types.includes('text/plain')) {
     const data = event.dataTransfer.getData('text')
-    return { type: 'text', data }
+    try {
+      const parts = new URL(data)
+      return { type: 'url', data: parts.href }
+    } catch {
+      return { type: 'text', data }
+    }
   }
   if (event.dataTransfer.items && event.dataTransfer.items.length > 0) {
     return { type: 'fileOrFolder', data: itemListToArray(event.dataTransfer.items) }
@@ -33,8 +39,6 @@ const extractData = (event) => {
 }
 
 const makeDragAndDropSideEffect = ({ targetEl }) => {
-  // onst dragOvers$ = DOM.select(':root').events('dragover')
-  // const drops$ = DOM.select(':root').events('drop')
   const dragEvents = (targetEl) => {
     const dragOvers$ = fromEvent('dragover', targetEl)
     const drops$ = fromEvent('drop', targetEl)
