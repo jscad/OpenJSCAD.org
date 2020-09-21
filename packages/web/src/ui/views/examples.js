@@ -1,4 +1,6 @@
 const html = require('nanohtml')
+const path = require('path')
+const url = require('url')
 
 const examplesData = [
   { file: 'core/primitives/primitives2D.js', title: '2D Primitives' },
@@ -44,10 +46,17 @@ const examples = (state, i18n) => {
   const wrap = 26
   const colp = 100 / Math.floor(examplesData.length / wrap + 1) + '%'
 
-  const baseUrl = window.location.origin
+  const baseUrl = new URL(window.location.href)
+  // normalize the path, removing document names
+  let newpath = path.dirname(baseUrl.pathname)
+  newpath = newpath.endsWith('/') ? newpath : newpath + path.sep
+  baseUrl.pathname = newpath
+  const originUrl = window.location.origin
+
   return examplesData.map((example) => {
     const type = example.type || ''
-    const exampleUrl = `${baseUrl}/examples/${example.file}`
+    const relativeUrl = new URL(`./examples/${example.file}`, baseUrl)
+    const exampleUrl = relativeUrl.href
     return html`
     <tr>
       <td class="examplesSeparator" width="${colp}" valign="top">
