@@ -9,10 +9,10 @@ const isTextNotEmpty = (text) => text !== ''
 
 const exists = (input) => (input !== null && input !== undefined)
 
-const pseudoArraytoArray = (pseudoArray) => {
+const itemListToArray = (list) => {
   const array = []
-  for (let i = 0; i < pseudoArray.length; i++) {
-    const item = pseudoArray[i]
+  for (let i = 0; i < list.length; i++) {
+    const item = list[i]
     array.push(item.webkitGetAsEntry ? item.webkitGetAsEntry() : item)
   }
   return array
@@ -23,10 +23,11 @@ const extractData = (event) => {
     return { type: 'url', data: event.dataTransfer.getData('url') }
   }
   if (event.dataTransfer.types.includes('text/plain')) {
-    return { type: 'text', data: event.dataTransfer.getData('text') }
+    const data = event.dataTransfer.getData('text')
+    return { type: 'text', data }
   }
   if (event.dataTransfer.items && event.dataTransfer.items.length > 0) {
-    return { type: 'fileOrFolder', data: pseudoArraytoArray(event.dataTransfer.items) }
+    return { type: 'fileOrFolder', data: itemListToArray(event.dataTransfer.items) }
   }
   return undefined
 }
