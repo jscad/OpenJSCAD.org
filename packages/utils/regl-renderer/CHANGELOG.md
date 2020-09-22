@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.0.0-alpha.4...@jscad/regl-renderer@2.0.0-alpha.5) (2020-09-19)
+
+
+### Bug Fixes
+
+* **all:** support sparse arrays from main() ([#672](https://github.com/jscad/OpenJSCAD.org/issues/672)) ([209961d](https://github.com/jscad/OpenJSCAD.org/commit/209961d41ebf77373d427a7986934d195780f118))
+
+
+
+
+
 # [2.0.0-alpha.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.0.0-alpha.3...@jscad/regl-renderer@2.0.0-alpha.4) (2020-09-08)
 
 **Note:** Version bump only for package @jscad/regl-renderer

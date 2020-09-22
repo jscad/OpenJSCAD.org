@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.4](https://github.com/jscad/io/compare/@jscad/io@2.0.0-alpha.3...@jscad/io@2.0.0-alpha.4) (2020-09-19)
+
+
+### Bug Fixes
+
+* **all:** fix json import ([#675](https://github.com/jscad/io/issues/675)) ([05caf60](https://github.com/jscad/io/commit/05caf60efc3f090313b3e0bddcc0b4f94de67c78))
+
+
+
+
+
 # [2.0.0-alpha.3](https://github.com/jscad/io/compare/@jscad/io@2.0.0-alpha.2...@jscad/io@2.0.0-alpha.3) (2020-09-08)
 
 **Note:** Version bump only for package @jscad/io

@@ -1,38 +1,27 @@
 const flatten = require('../utils/flatten')
-
-const { EPS } = require('../maths/constants')
-
+const calculateEpsilonFromBounds = require('./calculateEpsilonFromBounds')
 const { geom2, geom3, path2 } = require('../geometries')
-
 const measureBoundingBox = require('./measureBoundingBox')
 
 /*
  * Measure the epsilon of the given (path2) geometry.
- * @return {Float} the epsilon (precision) of the geometry
+ * @return {Number} the epsilon (precision) of the geometry
  */
 const measureEpsilonOfPath2 = (geometry) => {
   if (geometry.epsilon) return geometry.epsilon
 
-  const bounds = measureBoundingBox(geometry)
-  const x = bounds[1][0] - bounds[0][0]
-  const y = bounds[1][1] - bounds[0][1]
-
-  geometry.epsilon = (x + y) / 2 * EPS
+  geometry.epsilon = calculateEpsilonFromBounds(measureBoundingBox(geometry), 2)
   return geometry.epsilon
 }
 
 /*
  * Measure the epsilon of the given (geom2) geometry.
- * @return {Float} the epsilon (precision) of the geometry
+ * @return {Number} the epsilon (precision) of the geometry
  */
 const measureEpsilonOfGeom2 = (geometry) => {
   if (geometry.epsilon) return geometry.epsilon
 
-  const bounds = measureBoundingBox(geometry)
-  const x = bounds[1][0] - bounds[0][0]
-  const y = bounds[1][1] - bounds[0][1]
-
-  geometry.epsilon = (x + y) / 2 * EPS
+  geometry.epsilon = calculateEpsilonFromBounds(measureBoundingBox(geometry), 2)
   return geometry.epsilon
 }
 
@@ -43,20 +32,15 @@ const measureEpsilonOfGeom2 = (geometry) => {
 const measureEpsilonOfGeom3 = (geometry) => {
   if (geometry.epsilon) return geometry.epsilon
 
-  const bounds = measureBoundingBox(geometry)
-  const x = bounds[1][0] - bounds[0][0]
-  const y = bounds[1][1] - bounds[0][1]
-  const z = bounds[1][2] - bounds[0][2]
-
-  geometry.epsilon = (x + y + z) / 3 * EPS
+  geometry.epsilon = calculateEpsilonFromBounds(measureBoundingBox(geometry), 3)
   return geometry.epsilon
 }
 
 /**
  * Measure the epsilon of the given geometries.
- * Epsilon values are used in various functions to determin minimum distances between points, planes, etc.
- * @param {...Objects} geometries - the geometries to measure
- * @return {Float|Array} the epsilon of each geometry
+ * Epsilon values are used in various functions to determine minimum distances between points, planes, etc.
+ * @param {...Object} geometries - the geometries to measure
+ * @return {Number|Array} the epsilon of each geometry
  * @alias module:modeling/measurements.measureEpsilon
  *
  * @example

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.3](https://github.com/jscad/compare/@jscad/svg-deserializer@2.0.0-alpha.2...@jscad/svg-deserializer@2.0.0-alpha.3) (2020-09-19)
+
+
+### Features
+
+* **svg-deserializer:** add support for new segments option ([9bdc7f5](https://github.com/jscad/commit/9bdc7f59dff8847c250c8c63a91babb1a69a03a6))
+
+
+
+
+
 # [2.0.0-alpha.2](https://github.com/jscad/compare/@jscad/svg-deserializer@2.0.0-alpha.1...@jscad/svg-deserializer@2.0.0-alpha.2) (2020-09-08)
 
 **Note:** Version bump only for package @jscad/svg-deserializer
