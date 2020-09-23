@@ -40,21 +40,22 @@ body {
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
-  font-weight: 400;
-  src: local('OpenSans'), local('OpenSans'), url(assets/fonts/Open_Sans/OpenSans-Regular.ttf) format('truetype');
+  font-weight: normal;
+  src: local('OpenSans'), local('OpenSans'), url(../fonts/Open_Sans/OpenSans-Regular.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
-  font-weight: 400;
-  src: local('OpenSans'), local('OpenSans'), url(assets/fonts/Open_Sans/OpenSans-Italic.ttf) format('truetype');
+  font-weight: normal;
+  src: local('OpenSans'), local('OpenSans'), url(../fonts/Open_Sans/OpenSans-Italic.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
-  src: local('OpenSans'), local('OpenSans'), url(assets/fonts/Open_Sans/OpenSans-Bold.ttf) format('truetype');
+  font-weight: bold;
+  src: local('OpenSans'), local('OpenSans'), url(../fonts/Open_Sans/OpenSans-Bold.ttf) format('truetype');
 }
 
 #renderTarget{

@@ -7,7 +7,7 @@
     "build-web": "browserify src/index.js -o dist/jscad-full.min.js -g uglifyify -p common-shakeify --standalone makeJscad",
     "build-min": "browserify src/ui/min.js -o dist/jscad-min.min.js -t [babelify browserify minifyify]",
     "build-opt": "browserify src/ui/opt.js -o dist/opt.js -t [babelify browserify minifyify]",
-    "dev": "budo demo.js --port=8081 --css demo.css --live -- -b",
+    "dev": "budo demo.js --port=8081 --css ./css/demo.css --live -- -b",
     "build-umd": "browserify --standalone openjscad src/ui/umd.js -o dist/openjscad.umd.js -t [babelify browserify minifyify]",
     "build-all": "npm run build-web",
     "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
