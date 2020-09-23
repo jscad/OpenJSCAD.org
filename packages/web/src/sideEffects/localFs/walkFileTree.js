@@ -94,7 +94,7 @@ const processItems = (items) => {
  * @returns {Promise} new promise to read and process the file
  */
 const processFile = (fileItem) => {
-  console.log('processFile',fileItem)
+  // console.log('processFile',fileItem)
   const promiseFile = new Promise((resolve, reject) => {
     fileItem.file(
       (fileData) => {
