@@ -40,21 +40,22 @@ body {
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
-  font-weight: 400;
-  src: local('OpenSans'), local('OpenSans'), url(assets/fonts/Open_Sans/OpenSans-Regular.ttf) format('truetype');
+  font-weight: normal;
+  src: local('OpenSans'), local('OpenSans'), url(../fonts/Open_Sans/OpenSans-Regular.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
-  font-weight: 400;
-  src: local('OpenSans'), local('OpenSans'), url(assets/fonts/Open_Sans/OpenSans-Italic.ttf) format('truetype');
+  font-weight: normal;
+  src: local('OpenSans'), local('OpenSans'), url(../fonts/Open_Sans/OpenSans-Italic.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'Open Sans';
-  font-style: bold;
-  src: local('OpenSans'), local('OpenSans'), url(assets/fonts/Open_Sans/OpenSans-Bold.ttf) format('truetype');
+  font-style: normal;
+  font-weight: bold;
+  src: local('OpenSans'), local('OpenSans'), url(../fonts/Open_Sans/OpenSans-Bold.ttf) format('truetype');
 }
 
 #renderTarget{
@@ -109,8 +110,10 @@ body {
   left: 10px;
   user-select: none;
   padding: 10px;
-  background: white;
-  box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.17)
+  background: rgb(255, 255, 255, 80%);
+  box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.17);
+  max-height: calc(100% - 6em);
+  overflow-y: scroll;
 }
 #paramsTable{
   display: flex;
@@ -267,9 +270,6 @@ h3 {
   background: white;
   box-shadow: -1px 3px 3px 2px rgba(0, 0, 0, 0.17);
   z-index: 1;
-}
-#help::-webkit-scrollbar:vertical {
-  width: 11px;
 }
 #help a {
   color: rgb(0, 153, 255);
