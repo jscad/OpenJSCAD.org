@@ -220,7 +220,15 @@ h3 {
   border-color: white;
 }
 
-#options {
+section.popup-menu {
+  background: white;
+  box-shadow: -1px 3px 3px 2px rgba(0, 0, 0, 0.17);
+  z-index: 10;
+}
+
+section.popup-menu ul {
+  margin-top: 2px;
+  list-style: none;
   position: absolute;
   top: 40px;
   right: 15px;
@@ -228,10 +236,13 @@ h3 {
   height: 70%;
   overflow: scroll;
   color: var(--main-text-color);
-  background: white;
-  box-shadow: -1px 3px 3px 2px rgba(0, 0, 0, 0.17);
-  z-index: 1;
 }
+
+#options {
+  padding-left: 18px;
+
+}
+
 #options fieldset{
   border: none;
   display: table;
@@ -248,29 +259,17 @@ h3 {
 }
 
 #editor {
-  position: absolute;
-  top: 40px;
-  right: 15px;
   width: 50%;
   height: 80%;
-  box-shadow: -1px 3px 3px 2px rgba(0, 0, 0, 0.17);
   padding: 1px;
-  background: white;
   font-size: 0.9em;
-  z-index: 1;
 }
 
 #help {
-  padding: 10px;
-  position: absolute;
-  top: 40px;
-  right: 15px;
+  padding: 20px;
   height: 50%;
-  overflow: scroll;
-  background: white;
-  box-shadow: -1px 3px 3px 2px rgba(0, 0, 0, 0.17);
-  z-index: 1;
 }
+
 #help a {
   color: rgb(0, 153, 255);
   text-decoration: none;

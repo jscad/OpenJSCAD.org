@@ -10,8 +10,8 @@ let cm
 
 const editorWrapper = (state, editorCallbackToStream) => {
   const el = html`
-  <div id='editor' key='editor' style='visibility:${state.activeTool === 'editor' ? 'visible' : 'hidden'}'>
-  </div>`
+  <section class='popup-menu' id='editor' key='editor' style='visibility:${state.activeTool === 'editor' ? 'visible' : 'hidden'}'>
+  </section>`
   // el.onadd = console.log.bind(console, 'button added to page!')
   // el.onadd = console.log.bind(console, ' added to page!')
   // el.onupdate = console.log.bind(console, ' updated in page!')

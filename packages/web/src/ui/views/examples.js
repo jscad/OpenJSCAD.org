@@ -41,22 +41,17 @@ const examplesData = [
 ]
 
 const examples = (state, i18n) => {
-  const wrap = 26
-  const colp = 100 / Math.floor(examplesData.length / wrap + 1) + '%'
-
   const baseUrl = window.location.origin
-  return examplesData.map((example) => {
-    const type = example.type || ''
+  const examplesElements = examplesData.map((example) => {
+    const type = example.type ? `<span class="${example.type}">${example.type}</span>` : ''
     const exampleUrl = `${baseUrl}/examples/${example.file}`
     return html`
-    <tr>
-      <td class="examplesSeparator" width="${colp}" valign="top">
-        <a class="example" data-path="${exampleUrl}" href="#"> ${example.title} </a>
-        <span class="${type}">${type}</span> 
-      </td>
-    </tr>
+    <li>
+      <a class="example" data-path="${exampleUrl}" href="#"> ${example.title} </a> ${type}
+    </li>
     `
   })
+  return html`<ul>${examplesElements}</ul>`
 }
 
 module.exports = examples
