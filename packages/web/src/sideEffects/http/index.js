@@ -1,43 +1,35 @@
-// const most = require('most')
+const url = require('url')
+const path = require('path')
+
 const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
 const makeLogger = require('../../utils/logger')
 const getFileExtensionFromString = require('@jscad/core/utils/getFileExtensionFromString')
 
 const XMLHttpRequest = window.XMLHttpRequest
 
-/** function to create the http side effect
- * sink: input of commands that generate http requests
- * source: output of response from http requests
+// const proxyUrl = './remote.php?url='
+const proxyUrl = './remote.pl?url='
+
+/**
+ * Create the http side effect (sink)
  * NOTE: we could add 'adaptors' to specific API providers like github as input to this
  * function in order to be able to read remote files without the need to proxy with a server
  */
 const makeHttpSideEffect = (params) => {
-  const commandResponses = callBackToStream()
   const defaults = { logging: false }
   const { logging } = Object.assign({}, defaults, params)
+
+  const commandResponses = callBackToStream()
   const log = makeLogger({ enabled: logging })
-  /* var xhr = new XMLHttpRequest()
-  xhr.open('GET', url || filename, true)
-  if (filename.match(/\.(stl)$/i)) {
-      xhr.overrideMimeType('text/plain; charset=x-user-defined') // our pseudo binary retrieval (works with Chrome)
-    }
-  xhr.onload = function () {
-      const source = this.responseText
-      const baseurl = url ? url.replace(/\/[^\/]+$/, '/') : gProcessor.baseurl
-      filename = url ? url.replace(/^.+\//, '') : filename
 
-      // FIXME: refactor : same code as ui/drag-drop
-      gProcessor.setStatus('converting', filename)
-      const worker = createConversionWorker(onConversionDone)
-      // NOTE: cache: false is set to allow evaluation of 'include' statements
-      worker.postMessage({version, baseurl, source, filename, cache: false})
-    }
-  xhr.send() */
-
+  /*
+   * sink of http events (requests for http download)
+   * each command is processed asyncronously, loading the requested data, and generating a response with payload
+   * @param {Array} out$ - list of of commands, http requests
+   */
   const sink = (out$) => {
     out$.forEach((command) => {
-      const { type, id, urls } = command // { options, id, type, urls }
-      log.debug('output from http', urls)
+      const { type, id, urls, origin, proxy } = command
 
       const unhandled = () => {
         commandResponses.callback({ type, id, error: new Error(`http: no handler found for command ${type}`) })
@@ -46,27 +38,27 @@ const makeHttpSideEffect = (params) => {
       const read = () => {
         let filesAndFolders = []
         urls.forEach((url) => {
-          const xhr = new XMLHttpRequest()
-          xhr.onerror = (error) => {
-            const rError = new Error(`failed to load ${url} see console for more details`)
-            commandResponses.callback({ type, id, url, error: rError })
+          const onError = (error) => {
+            commandResponses.callback({ type, id, url, error })
             log.error(error)
           }
-          xhr.onload = (event) => {
-            const result = event.currentTarget.responseText
-            const status = event.target.status
-            if (`${status}`.startsWith('4')) {
-              commandResponses.callback({ type, id, url, error: new Error(result) })
-            } else {
-              const name = require('path').basename(url)
-              const path = `/${name}` // fake path for fake filesystem lookup
-              const ext = getFileExtensionFromString(path)
-              filesAndFolders = filesAndFolders.concat({ name, ext, source: result, fullPath: path })
-              commandResponses.callback({ type, id, url, data: filesAndFolders })
+          const onSuccess = (fileEntry) => {
+            filesAndFolders = filesAndFolders.concat(fileEntry)
+            commandResponses.callback({ type, id, url, data: filesAndFolders })
+          }
+          const onProxy = (proxy) => {
+            if (proxy.file) {
+              // create a relative URL to the file
+              const baseUrl = new URL(origin)
+              const newUrl = new URL(proxy.file, baseUrl)
+              readFile(newUrl, onError, onSuccess)
             }
           }
-          xhr.open('GET', url, true)
-          xhr.send()
+          if (proxy) {
+            readProxy(url, onError, onProxy)
+          } else {
+            readFile(url, onError, onSuccess)
+          }
         })
       }
 
@@ -93,6 +85,62 @@ const makeHttpSideEffect = (params) => {
   const source = () => commandResponses.stream.multicast()
 
   return { source, sink }
+}
+
+const readFile = (url, onerror, onsucess) => {
+  // console.log('readFile',url)
+
+  const xhr = new XMLHttpRequest()
+  xhr.onerror = () => {
+    const error = new Error(`failed to load ${url} see console for more details`)
+    onerror(error)
+  }
+  xhr.onload = (event) => {
+    const source = event.currentTarget.responseText
+    const status = event.target.status
+    if (`${status}`.startsWith('4')) {
+      const error = new Error(source)
+      onerror(error)
+    } else {
+      const name = path.basename(url)
+      const fullPath = `/${name}` // fake path for fake filesystem lookup
+      const ext = getFileExtensionFromString(fullPath)
+      const fileEntry = { name, ext, source, fullPath }
+      onsucess(fileEntry)
+    }
+  }
+  xhr.open('GET', url, true)
+  xhr.withCredentials = true
+  xhr.send()
+}
+
+const readProxy = (url, onerror, onsucess) => {
+  const proxyurl = proxyUrl + url
+  // console.log('readProxy',proxyurl)
+  const xhr = new XMLHttpRequest()
+  xhr.onerror = () => {
+    const error = new Error(`failed to load ${url} see console for more details`)
+    onerror(error)
+  }
+  xhr.onload = (event) => {
+    const source = event.currentTarget.responseText
+    const status = event.target.status
+    if (`${status}`.startsWith('4')) {
+      const error = new Error(source)
+      onerror(error)
+    } else {
+      try {
+        const fileentry = JSON.parse(source)
+        onsucess(fileentry)
+      } catch (e) {
+        const error = new Error(`failed to cache ${url} to the proxy server`)
+        onerror(error)
+      }
+    }
+  }
+  // send the request
+  xhr.open('GET', proxyurl, true)
+  xhr.send()
 }
 
 module.exports = makeHttpSideEffect

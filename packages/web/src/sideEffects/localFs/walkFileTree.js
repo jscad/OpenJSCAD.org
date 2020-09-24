@@ -96,9 +96,15 @@ const processItems = (items) => {
 const processFile = (fileItem) => {
   // console.log('processFile',fileItem)
   const promiseFile = new Promise((resolve, reject) => {
-    fileItem.file((fileData) => {
-      isSupportedFormat(fileData) ? resolve(readFileAsync(fileData, fileItem)) : resolve(undefined)
-    }, reject)
+    fileItem.file(
+      (fileData) => {
+        isSupportedFormat(fileData) ? resolve(readFileAsync(fileData, fileItem)) : resolve(undefined)
+      },
+      (fileError) => {
+        const message = `${fileError.message} (${fileError.code})`
+        reject(new Error(`Failed to load file: ${fileItem.fullPath} [${message}]`))
+      }
+    )
   })
   return promiseFile
 }
