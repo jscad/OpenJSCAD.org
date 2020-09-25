@@ -21,9 +21,11 @@ const cuboid = (options) => {
 
   if (!Array.isArray(center)) throw new Error('center must be an array')
   if (center.length < 3) throw new Error('center must contain X, Y and Z values')
+  if (!center.every((n) => Number.isFinite(n))) throw new Error('center values must be numbers')
 
   if (!Array.isArray(size)) throw new Error('size must be an array')
   if (size.length < 3) throw new Error('size must contain width, depth and height values')
+  if (!size.every((n) => n > 0)) throw new Error('size values must be greater than zero')
 
   const result = geom3.create(
     // adjust a basic shape to size

@@ -35,11 +35,13 @@ const roundedCylinder = (options) => {
 
   if (!Array.isArray(center)) throw new Error('center must be an array')
   if (center.length < 3) throw new Error('center must contain X, Y and Z values')
+  if (!center.every((n) => Number.isFinite(n))) throw new Error('center values must be numbers')
 
-  if (height < (EPS * 2)) throw new Error('height must be larger then zero')
+  if (!height > 0) throw new Error('height must be larger then zero')
 
-  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
+  if (!radius > 0) throw new Error('radius must be larger than zero')
 
+  if (!roundRadius > 0) throw new Error('roundRadius must be larger than zero')
   if (roundRadius > (radius - EPS)) throw new Error('roundRadius must be smaller then the radius')
 
   if (segments < 4) throw new Error('segments must be four or more')
@@ -49,7 +51,7 @@ const roundedCylinder = (options) => {
   const direction = vec3.subtract(end, start)
   const length = vec3.length(direction)
 
-  if ((2 * roundRadius) > (length - EPS)) throw new Error('the cylinder height must be larger than twice roundRadius')
+  if ((2 * roundRadius) > (length - EPS)) throw new Error('height must be larger than twice roundRadius')
 
   let defaultnormal
   if (Math.abs(direction[0]) > Math.abs(direction[1])) {

@@ -26,10 +26,15 @@ const roundedRectangle = (options) => {
   }
   let { center, size, roundRadius, segments } = Object.assign({}, defaults, options)
 
+  if (!Array.isArray(center)) throw new Error('center must be an array')
+  if (center.length < 2) throw new Error('center must contain X and Y values')
+  if (!center.every((n) => Number.isFinite(n))) throw new Error('center values must be numbers')
+
   if (!Array.isArray(size)) throw new Error('size must be an array')
   if (size.length < 2) throw new Error('size must contain width and length values')
+  if (!size.every((n) => n > 0)) throw new Error('size values must be greater than zero')
 
-  if (!Number.isFinite(roundRadius)) throw new Error('roundRadius must be a number')
+  if (!roundRadius > 0) throw new Error('roundRadius must be greater than zero')
 
   size = size.map((v) => v / 2) // convert to radius
 

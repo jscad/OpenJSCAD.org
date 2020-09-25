@@ -22,11 +22,11 @@ const geodesicSphere = (options) => {
   }
   let { radius, frequency } = Object.assign({}, defaults, options)
 
-  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
+  if (!radius > 0) throw new Error('radius must be greater than zero')
 
   // adjust the frequency to base 6
   frequency = Math.floor(frequency / 6)
-  if (frequency <= 0) frequency = 1
+  if (frequency <= 0) throw new Error('frequency must be greater than six')
 
   const ci = [ // hard-coded data of icosahedron (20 faces, all triangles)
     [0.850651, 0.000000, -0.525731],

@@ -1,7 +1,7 @@
 const ellipse = require('./ellipse')
 
 /**
- * Construct a circle in two dimensional space where are points are at the same distance from the center.
+ * Construct a circle in two dimensional space where all points are at the same distance from the center.
  * @see [ellipse]{@link module:modeling/primitives.ellipse} for more options
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of circle

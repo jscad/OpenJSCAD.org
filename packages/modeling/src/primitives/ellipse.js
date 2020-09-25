@@ -24,11 +24,13 @@ const ellipse = (options) => {
 
   if (!Array.isArray(center)) throw new Error('center must be an array')
   if (center.length < 2) throw new Error('center must contain X and Y values')
+  if (!center.every((n) => Number.isFinite(n))) throw new Error('center values must be numbers')
 
   if (!Array.isArray(radius)) throw new Error('radius must be an array')
   if (radius.length < 2) throw new Error('radius must contain X and Y values')
+  if (!radius.every((n) => n > 0)) throw new Error('radius values must be greater than zero')
 
-  if (segments < 4) throw new Error('segments must be four or more')
+  if (segments < 3) throw new Error('segments must be three or more')
 
   const centerv = vec2.fromArray(center)
   const step = 2 * Math.PI / segments // radians

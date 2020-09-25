@@ -51,18 +51,23 @@ const star = (options) => {
   }
   let { center, vertices, outerRadius, innerRadius, density, startAngle } = Object.assign({}, defaults, options)
 
-  if (!Number.isFinite(outerRadius)) throw new Error('outerRadius must be a number')
-  if (!Number.isFinite(innerRadius)) throw new Error('innerRadius must be a number')
-
-  if (startAngle < 0) throw new Error('startAngle must be positive')
-
-  startAngle = startAngle % (Math.PI * 2)
+  if (!Array.isArray(center)) throw new Error('center must be an array')
+  if (center.length < 2) throw new Error('center must contain X and Y values')
+  if (!center.every((n) => Number.isFinite(n))) throw new Error('center values must be numbers')
 
   // force integers
   vertices = Math.floor(vertices)
   density = Math.floor(density)
 
+  if (!vertices > 1) throw new Error('vertices must be greater than one')
+  if (!outerRadius > 0) throw new Error('outerRadius must be greater than zero')
+  if (innerRadius < 0) throw new Error('innerRadius must be greater than zero')
+  if (startAngle < 0) throw new Error('startAngle must be greater than zero')
+
+  startAngle = startAngle % (Math.PI * 2)
+
   if (innerRadius === 0) {
+    if (density < 2) throw new Error('density must be two or more')
     innerRadius = outerRadius * getRadiusRatio(vertices, density)
   }
 

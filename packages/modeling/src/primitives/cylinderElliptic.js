@@ -39,12 +39,18 @@ const cylinderElliptic = (options) => {
 
   if (!Array.isArray(center)) throw new Error('center must be an array')
   if (center.length < 3) throw new Error('center must contain X, Y and Z values')
+  if (!center.every((n) => Number.isFinite(n))) throw new Error('center values must be numbers')
 
-  if (height < (EPS * 2)) throw new Error('height must be larger then zero')
+  if (!height > 0) throw new Error('height must be larger then zero')
 
-  if ((endRadius[0] <= 0) || (startRadius[0] <= 0) || (endRadius[1] <= 0) || (startRadius[1] <= 0)) {
-    throw new Error('endRadus and startRadius should be positive')
-  }
+  if (!Array.isArray(startRadius)) throw new Error('startRadius must be an array')
+  if (startRadius.length < 2) throw new Error('startRadius must contain X and Y values')
+  if (!startRadius.every((n) => n > 0)) throw new Error('startRadius values must be greater than zero')
+
+  if (!Array.isArray(endRadius)) throw new Error('endRadius must be an array')
+  if (endRadius.length < 2) throw new Error('endRadius must contain X and Y values')
+  if (!endRadius.every((n) => n > 0)) throw new Error('endRadius values must be greater than zero')
+
   if (startAngle < 0 || endAngle < 0) throw new Error('startAngle and endAngle must be positive')
 
   if (segments < 4) throw new Error('segments must be four or more')
