@@ -22,7 +22,7 @@ test('roundedCuboid (options)', (t) => {
   t.is(pts.length, 62)
 
   // test center
-  obs = roundedCuboid({center: [4,5,6], segments: 8})
+  obs = roundedCuboid({ center: [4, 5, 6], segments: 8 })
   pts = geom3.toPoints(obs)
   exp = [
   ]
