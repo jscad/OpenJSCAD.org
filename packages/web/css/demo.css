@@ -104,17 +104,19 @@ body {
   z-index: 1;
 }
 
-#params {
+#controls input[type="checkbox"] {
+  margin-right: 19px;
+}
+
+section#params {
   position: absolute;
   bottom: 10px;
   left: 10px;
   user-select: none;
-  padding: 10px;
-  background: rgb(255, 255, 255, 80%);
-  box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.17);
   max-height: calc(100% - 6em);
   overflow-y: scroll;
 }
+
 #paramsTable{
   display: flex;
   margin-bottom: 20px;
@@ -220,27 +222,38 @@ h3 {
   border-color: white;
 }
 
-section.popup-menu {
-  background: white;
-  box-shadow: -1px 3px 3px 2px rgba(0, 0, 0, 0.17);
+section {
+  background: #fcfcff;
+  padding: 20px;
+  box-shadow: 5px 5px 7px 2px rgba(0, 0, 0, 0.17);
+  overflow: scroll;
+  color: var(--main-text-color);
   z-index: 10;
+  border: 1px solid #aaa;
+}
+
+section.popup-menu {
+  position: absolute;
+  top: 40px;
+  right: 15px;
+  max-width: 500px;
+  max-height: 70%;
+}
+
+section.popup-menu h3 {
+  margin: auto;
+  border-bottom: 1px solid #888888;
 }
 
 section.popup-menu ul {
   margin-top: 2px;
   list-style: none;
-  position: absolute;
-  top: 40px;
-  right: 15px;
-  max-width: 500px;
-  height: 70%;
-  overflow: scroll;
-  color: var(--main-text-color);
+  padding-left: 18px;
+
 }
 
 #options {
   padding-left: 18px;
-
 }
 
 #options fieldset{
@@ -266,7 +279,6 @@ section.popup-menu ul {
 }
 
 #help {
-  padding: 20px;
   height: 50%;
 }
 
