@@ -38,13 +38,6 @@ const dom = (state, i18n, paramsCallbacktoStream, editorCallbackToStream) => {
     </div>
 
     ${toolBar}
-    <!-- Options Popup -->
-    ${options}
-    <!-- Editor Popup -->
-    ${state.activeTool === 'editor' ? editor : ''}
-    <!-- Help Popup -->
-    ${help}
-
     ${viewerControls}
 
     <!-- bare bones essentials -->
@@ -56,6 +49,13 @@ const dom = (state, i18n, paramsCallbacktoStream, editorCallbackToStream) => {
 
     <!--Params-->
     ${parameters}
+    <!-- Options Popup -->
+    ${options}
+    <!-- Editor Popup -->
+    ${state.activeTool === 'editor' ? editor : ''}
+    <!-- Help Popup -->
+    ${help}
+
   </div>
   `
 

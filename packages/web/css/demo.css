@@ -286,6 +286,14 @@ section.popup-menu ul {
   color: rgb(0, 153, 255);
   text-decoration: none;
 }
+
+a.external-link {
+  background-image: url(../imgs/externalLink.png);
+  background-repeat: no-repeat;
+  background-position: right 3px;
+  padding-right: 16px;
+}
+
 #help p {
   margin-left: 10px;
 }
