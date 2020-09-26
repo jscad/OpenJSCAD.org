@@ -2,6 +2,8 @@ const vec2 = require('../maths/vec2')
 
 const geom2 = require('../geometries/geom2')
 
+const { isGT, isGTE, isArray } = require('./commonChecks')
+
 // @see http://www.jdawiseman.com/papers/easymath/surds_star_inner_radius.html
 const getRadiusRatio = (vertices, density) => {
   if (vertices > 0 && density > 1 && density < vertices / 2) {
@@ -51,23 +53,20 @@ const star = (options) => {
   }
   let { center, vertices, outerRadius, innerRadius, density, startAngle } = Object.assign({}, defaults, options)
 
-  if (!Array.isArray(center)) throw new Error('center must be an array')
-  if (center.length < 2) throw new Error('center must contain X and Y values')
-  if (!center.every((n) => Number.isFinite(n))) throw new Error('center values must be numbers')
+  if (!isArray(2, center)) throw new Error('center must be an array of X and Y values')
+  if (!isGTE(vertices, 2)) throw new Error('vertices must be two or more')
+  if (!isGT(outerRadius, 0)) throw new Error('outerRadius must be greater than zero')
+  if (!isGTE(innerRadius, 0)) throw new Error('innerRadius must be greater than zero')
+  if (!isGTE(startAngle, 0)) throw new Error('startAngle must be greater than zero')
 
   // force integers
   vertices = Math.floor(vertices)
   density = Math.floor(density)
 
-  if (!vertices > 1) throw new Error('vertices must be greater than one')
-  if (!outerRadius > 0) throw new Error('outerRadius must be greater than zero')
-  if (innerRadius < 0) throw new Error('innerRadius must be greater than zero')
-  if (startAngle < 0) throw new Error('startAngle must be greater than zero')
-
   startAngle = startAngle % (Math.PI * 2)
 
   if (innerRadius === 0) {
-    if (density < 2) throw new Error('density must be two or more')
+    if (!isGTE(density, 2)) throw new Error('density must be two or more')
     innerRadius = outerRadius * getRadiusRatio(vertices, density)
   }
 

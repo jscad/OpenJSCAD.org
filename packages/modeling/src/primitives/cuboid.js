@@ -1,6 +1,8 @@
 const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
+const { isArray } = require('./commonChecks')
+
 /**
  * Construct an axis-aligned solid cuboid in three dimensional space.
  * @param {Object} [options] - options for construction
@@ -19,12 +21,8 @@ const cuboid = (options) => {
   }
   const { center, size } = Object.assign({}, defaults, options)
 
-  if (!Array.isArray(center)) throw new Error('center must be an array')
-  if (center.length < 3) throw new Error('center must contain X, Y and Z values')
-  if (!center.every((n) => Number.isFinite(n))) throw new Error('center values must be numbers')
-
-  if (!Array.isArray(size)) throw new Error('size must be an array')
-  if (size.length < 3) throw new Error('size must contain width, depth and height values')
+  if (!isArray(3, center)) throw new Error('center must be an array of X, Y and Z values')
+  if (!isArray(3, size)) throw new Error('size must be an array of width, depth and height values')
   if (!size.every((n) => n > 0)) throw new Error('size values must be greater than zero')
 
   const result = geom3.create(

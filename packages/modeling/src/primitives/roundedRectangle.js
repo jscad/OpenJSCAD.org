@@ -4,6 +4,8 @@ const vec2 = require('../maths/vec2')
 
 const geom2 = require('../geometries/geom2')
 
+const { isGT, isGTE, isArray } = require('./commonChecks')
+
 /**
  * Construct a rounded rectangle in two dimensional space.
  * @param {Object} [options] - options for construction
@@ -26,15 +28,11 @@ const roundedRectangle = (options) => {
   }
   let { center, size, roundRadius, segments } = Object.assign({}, defaults, options)
 
-  if (!Array.isArray(center)) throw new Error('center must be an array')
-  if (center.length < 2) throw new Error('center must contain X and Y values')
-  if (!center.every((n) => Number.isFinite(n))) throw new Error('center values must be numbers')
-
-  if (!Array.isArray(size)) throw new Error('size must be an array')
-  if (size.length < 2) throw new Error('size must contain width and length values')
+  if (!isArray(2, center)) throw new Error('center must be an array of X and Y values')
+  if (!isArray(2, size)) throw new Error('size must be an array of X and Y values')
   if (!size.every((n) => n > 0)) throw new Error('size values must be greater than zero')
-
-  if (!roundRadius > 0) throw new Error('roundRadius must be greater than zero')
+  if (!isGT(roundRadius, 0)) throw new Error('roundRadius must be greater than zero')
+  if (!isGTE(segments, 4)) throw new Error('segments must be four or more')
 
   size = size.map((v) => v / 2) // convert to radius
 
@@ -42,7 +40,6 @@ const roundedRectangle = (options) => {
       roundRadius > (size[1] - EPS)) throw new Error('roundRadius must be smaller then the radius of all dimensions')
 
   const cornersegments = Math.floor(segments / 4)
-  if (cornersegments < 1) throw new Error('segments must be four or more')
 
   // create sets of points that define the corners
   const corner0 = vec2.add(center, [size[0] - roundRadius, size[1] - roundRadius])

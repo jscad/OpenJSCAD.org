@@ -1,5 +1,7 @@
 const cylinderElliptic = require('./cylinderElliptic')
 
+const { isGT } = require('./commonChecks')
+
 /**
  * Construct a solid cylinder in three dimensional space.
  * @see [cylinderElliptic]{@link module:modeling/primitives.cylinderElliptic} for more options
@@ -26,7 +28,7 @@ const cylinder = (options) => {
   }
   const { center, height, radius, segments } = Object.assign({}, defaults, options)
 
-  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
+  if (!isGT(radius, 0)) throw new Error('radius must be greater than zero')
 
   const newoptions = {
     center,

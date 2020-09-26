@@ -1,5 +1,7 @@
 const ellipsoid = require('./ellipsoid')
 
+const { isGT } = require('./commonChecks')
+
 /**
  * Construct a sphere in three dimensional space where are points are at the same distance from the center.
  * @see [ellipsoid]{@link module:modeling/primitives.ellipsoid} for more options
@@ -23,7 +25,7 @@ const sphere = (options) => {
   }
   let { center, radius, segments, axes } = Object.assign({}, defaults, options)
 
-  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
+  if (!isGT(radius, 0)) throw new Error('radius must be greater than zero')
 
   radius = [radius, radius, radius]
 
