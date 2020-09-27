@@ -2,7 +2,7 @@ const vec2 = require('../maths/vec2')
 
 const geom2 = require('../geometries/geom2')
 
-const { isGT, isGTE, isArray } = require('./commonChecks')
+const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 
 // @see http://www.jdawiseman.com/papers/easymath/surds_star_inner_radius.html
 const getRadiusRatio = (vertices, density) => {
@@ -53,7 +53,7 @@ const star = (options) => {
   }
   let { center, vertices, outerRadius, innerRadius, density, startAngle } = Object.assign({}, defaults, options)
 
-  if (!isArray(2, center)) throw new Error('center must be an array of X and Y values')
+  if (!isNumberArray(center, 2)) throw new Error('center must be an array of X and Y values')
   if (!isGTE(vertices, 2)) throw new Error('vertices must be two or more')
   if (!isGT(outerRadius, 0)) throw new Error('outerRadius must be greater than zero')
   if (!isGTE(innerRadius, 0)) throw new Error('innerRadius must be greater than zero')

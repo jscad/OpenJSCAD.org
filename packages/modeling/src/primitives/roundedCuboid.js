@@ -6,7 +6,7 @@ const vec3 = require('../maths/vec3')
 const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
-const { isGT, isGTE, isArray } = require('./commonChecks')
+const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 
 const createCorners = (center, size, radius, segments, slice, positive) => {
   const pitch = (Math.PI / 2) * slice / segments
@@ -134,8 +134,8 @@ const roundedCuboid = (options) => {
   }
   let { center, size, roundRadius, segments } = Object.assign({}, defaults, options)
 
-  if (!isArray(3, center)) throw new Error('center must be an array of X, Y and Z values')
-  if (!isArray(3, size)) throw new Error('size must be an array of X, Y and Z values')
+  if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
+  if (!isNumberArray(size, 3)) throw new Error('size must be an array of X, Y and Z values')
   if (!size.every((n) => n > 0)) throw new Error('size values must be greater than zero')
   if (!isGT(roundRadius, 0)) throw new Error('roundRadius must be greater than zero')
   if (!isGTE(segments, 4)) throw new Error('segments must be four or more')

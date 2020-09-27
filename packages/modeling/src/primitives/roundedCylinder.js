@@ -5,7 +5,7 @@ const vec3 = require('../maths/vec3')
 const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
-const { isGT, isGTE, isArray } = require('./commonChecks')
+const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 
 /**
  * Construct a solid cylinder in three dimensional space with rounded ends.
@@ -35,7 +35,7 @@ const roundedCylinder = (options) => {
   }
   const { center, height, radius, roundRadius, segments } = Object.assign({}, defaults, options)
 
-  if (!isArray(3, center)) throw new Error('center must be an array of X, Y and Z values')
+  if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
   if (!isGT(height, 0)) throw new Error('height must be greater then zero')
   if (!isGT(radius, 0)) throw new Error('radius must be greater then zero')
   if (!isGT(roundRadius, 0)) throw new Error('roundRadius must be greater then zero')

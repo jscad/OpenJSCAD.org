@@ -2,7 +2,7 @@ const vec2 = require('../maths/vec2')
 
 const geom2 = require('../geometries/geom2')
 
-const { isArray } = require('./commonChecks')
+const { isNumberArray } = require('./commonChecks')
 
 /**
  * Construct an axis-aligned rectangle in two dimensional space with four sides and four 90-degree angles.
@@ -22,8 +22,8 @@ const rectangle = (options) => {
   }
   const { center, size } = Object.assign({}, defaults, options)
 
-  if (!isArray(2, center)) throw new Error('center must be an array of X and Y values')
-  if (!isArray(2, size)) throw new Error('size must be an array of X and Y values')
+  if (!isNumberArray(center, 2)) throw new Error('center must be an array of X and Y values')
+  if (!isNumberArray(size, 2)) throw new Error('size must be an array of X and Y values')
   if (!size.every((n) => n > 0)) throw new Error('size values must be greater than zero')
 
   const point = [size[0] / 2, size[1] / 2]

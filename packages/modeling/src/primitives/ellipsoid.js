@@ -3,7 +3,7 @@ const vec3 = require('../maths/vec3')
 const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
-const { isGTE, isArray } = require('./commonChecks')
+const { isGTE, isNumberArray } = require('./commonChecks')
 
 /**
  * Construct an ellipsoid in three dimensional space.
@@ -27,8 +27,8 @@ const ellipsoid = (options) => {
   }
   const { center, radius, segments, axes } = Object.assign({}, defaults, options)
 
-  if (!isArray(3, center)) throw new Error('center must be an array of X, Y and Z values')
-  if (!isArray(3, radius)) throw new Error('radius must be an array of X, Y and Z values')
+  if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
+  if (!isNumberArray(radius, 3)) throw new Error('radius must be an array of X, Y and Z values')
   if (!radius.every((n) => n > 0)) throw new Error('radius values must be greater than zero')
   if (!isGTE(segments, 4)) throw new Error('segments must be four or more')
 

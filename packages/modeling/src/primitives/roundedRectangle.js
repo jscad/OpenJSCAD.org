@@ -4,7 +4,7 @@ const vec2 = require('../maths/vec2')
 
 const geom2 = require('../geometries/geom2')
 
-const { isGT, isGTE, isArray } = require('./commonChecks')
+const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 
 /**
  * Construct a rounded rectangle in two dimensional space.
@@ -28,8 +28,8 @@ const roundedRectangle = (options) => {
   }
   let { center, size, roundRadius, segments } = Object.assign({}, defaults, options)
 
-  if (!isArray(2, center)) throw new Error('center must be an array of X and Y values')
-  if (!isArray(2, size)) throw new Error('size must be an array of X and Y values')
+  if (!isNumberArray(center, 2)) throw new Error('center must be an array of X and Y values')
+  if (!isNumberArray(size, 2)) throw new Error('size must be an array of X and Y values')
   if (!size.every((n) => n > 0)) throw new Error('size values must be greater than zero')
   if (!isGT(roundRadius, 0)) throw new Error('roundRadius must be greater than zero')
   if (!isGTE(segments, 4)) throw new Error('segments must be four or more')

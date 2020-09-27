@@ -1,5 +1,5 @@
 // verify that the array has the given dimension, and contains Number values
-const isArray = (dimension, array) => {
+const isNumberArray = (array, dimension) => {
   if (Array.isArray(array) && array.length >= dimension) {
     return array.every((n) => Number.isFinite(n))
   }
@@ -13,7 +13,7 @@ const isGT = (value, constant) => (Number.isFinite(value) && value > constant)
 const isGTE = (value, constant) => (Number.isFinite(value) && value >= constant)
 
 module.exports = {
-  isArray,
+  isNumberArray,
   isGT,
   isGTE
 }
