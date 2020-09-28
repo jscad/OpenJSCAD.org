@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.8](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.7...@jscad/web@2.0.0-alpha.8) (2020-09-28)
+
+
+### Bug Fixes
+
+* **web:** V2 fix loading of designs from remote URLs ([#692](https://github.com/jscad/OpenJSCAD.org/issues/692)) ([21940a2](https://github.com/jscad/OpenJSCAD.org/commit/21940a2f113e574a05757e1f21811c485339d74e))
+* **web:** V2 web layout tweaks ([#687](https://github.com/jscad/OpenJSCAD.org/issues/687)) ([15f96a4](https://github.com/jscad/OpenJSCAD.org/commit/15f96a4bdfb61b2920a6b8999ad38e0e738c6eb4))
+
+
+
+
+
 # [2.0.0-alpha.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.6...@jscad/web@2.0.0-alpha.7) (2020-09-19)
 
 

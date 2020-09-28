@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.4](https://github.com/jscad/openjscad.org/compare/@jscad/modeling@2.0.0-alpha.3...@jscad/modeling@2.0.0-alpha.4) (2020-09-28)
+
+
+### Features
+
+* **modeling:** added aggregate functions for area, volume, epsilon measurements ([cf558bb](https://github.com/jscad/openjscad.org/commit/cf558bb7d0df1ab4562fda022a8db2c4216d7514))
+
+
+
+
+
 # [2.0.0-alpha.3](https://github.com/jscad/openjscad.org/compare/@jscad/modeling@2.0.0-alpha.2...@jscad/modeling@2.0.0-alpha.3) (2020-09-19)
 
 

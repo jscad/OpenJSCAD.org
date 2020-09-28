@@ -1,6 +1,6 @@
 {
   "name": "@jscad/vtree",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,12 +10,12 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/array-utils": "2.0.0-alpha.1",
-    "@jscad/modeling": "2.0.0-alpha.3",
+    "@jscad/modeling": "2.0.0-alpha.4",
     "object-hash": "2.0.3"
   },
   "devDependencies": {
-    "@jscad/io-utils": "2.0.0-alpha.3",
-    "@jscad/stl-serializer": "2.0.0-alpha.3",
+    "@jscad/io-utils": "2.0.0-alpha.4",
+    "@jscad/stl-serializer": "2.0.0-alpha.4",
     "decache": "4.4.0",
     "just-diff": "2.1.1",
     "serialize-to-js": "3.0.2",

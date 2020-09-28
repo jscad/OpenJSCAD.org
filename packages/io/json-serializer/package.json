@@ -1,6 +1,6 @@
 {
   "name": "@jscad/json-serializer",
-  "version": "2.0.0-alpha.3",
+  "version": "2.0.0-alpha.4",
   "description": "JSON serializer for JSCAD project",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
@@ -31,7 +31,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/modeling": "2.0.0-alpha.3"
+    "@jscad/modeling": "2.0.0-alpha.4"
   },
   "devDependencies": {
     "ava": "3.10.0"
