@@ -4,7 +4,7 @@
   "description": "Web UI for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
-    "build-web": "browserify src/index.js -o dist/jscad-full.min.js -g uglifyify -p common-shakeify --standalone makeJscad",
+    "build-web": "browserify src/index.js -o dist/jscad-full.min.js -g uglifyify --standalone makeJscad",
     "build-min": "browserify src/ui/min.js -o dist/jscad-min.min.js -t [babelify browserify minifyify]",
     "build-opt": "browserify src/ui/opt.js -o dist/opt.js -t [babelify browserify minifyify]",
     "dev": "budo demo.js --port=8081 --css ./css/demo.css --live -- -b",
