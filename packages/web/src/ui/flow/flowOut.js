@@ -1,6 +1,6 @@
 const makeReactions = (inputs) => {
   const { sinks, outputs$ } = inputs
-  const { store, fs, http, i18n, dom, solidWorker, state, dat } = sinks
+  const { store, fs, http, https, i18n, dom, solidWorker, state, dat } = sinks
 
   /* outputs$
     .filter(x => 'sink' in x && x.sink === 'dom')
@@ -28,6 +28,7 @@ const makeReactions = (inputs) => {
   store(outputs$.filter((x) => 'sink' in x && x.sink === 'store'))
   // output to http
   http(outputs$.filter((x) => 'sink' in x && x.sink === 'http'))
+  https(outputs$.filter((x) => 'sink' in x && x.sink === 'https'))
   // data out to file system sink
   // drag & drops of files/folders have DUAL meaning:
   // * ADD this file/folder to the available ones

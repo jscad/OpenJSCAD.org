@@ -350,36 +350,39 @@ const actions = ({ sources }) => {
       .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined && reply.data.origin === 'http')
       .map(({ data }) => data.mainPath), */
 
-    // injection from drag & drop (files or folders )
+    // load files from drag & drop (file or folder)
     sources.drops
       .filter((d) => d.type === 'fileOrFolder')
       .tap((x) => console.log('dropped file', x))
       // url, text, "fileOrFolder"
-      .map(({ data }) => ({ data, id: 'droppedData', path: 'realFs:', protocol: 'fs' })),
+      .map(({ data }) => ({ sink: 'fs', data, path: 'realFs', urls: [] })),
 
+    // load remote file from drag & drop (url)
     sources.drops
       .filter((d) => d.type === 'url')
       .tap((x) => console.log('dropped url', x))
       .map((payload) => {
+        const origin = window.location.href
         const url = payload.data
         const urlData = new URL(url)
-        const documentUris = url ? [url] : undefined
-        const { protocol, origin, pathname } = urlData
-        return { documentUris, protocol: protocol.replace(':', ''), origin, path: pathname }
-      }),
+        const urls = url ? [url] : []
+        const { protocol, pathname } = urlData
+        return { sink: protocol.replace(':', ''), urls, origin, path: pathname, proxy: true }
+      })
+      .tap((x) => console.log('load url', x)),
 
-    // load examples when clicked
+    // load example from click
     sources.dom.select('.example').events('click')
       .map((event) => event.target.dataset.path)
       .map((url) => {
         const urlData = new URL(url)
-        const documentUris = url ? [url] : undefined
-        const { protocol, origin } = urlData
-        return { documentUris, protocol: protocol.replace(':', ''), origin }
+        const urls = url ? [url] : []
+        const { protocol, origin, pathname } = urlData
+        return { sink: protocol.replace(':', ''), urls, origin }
       })
       .tap((x) => console.log('load example', x)),
 
-    // load files from a directory
+    // load files from selection (file list)
     sources.dom.select('#fileLoader').events('change')
       .tap((x) => console.log('selected directory', x))
       .map((event) => {
@@ -390,28 +393,31 @@ const actions = ({ sources }) => {
           files.push(filelist.item(i))
         }
         // NOTE: the filelist cannot be passed as the event gets reset
-        return { id: 'droppedData', data: files, path: 'readFs:', protocol: 'fs' }
+        return { sink: 'fs', data: files, path: 'realFs', urls: [] }
       }),
 
-    // remote, via proxy, adresses of files passed via url
+    // load remote file from query/hash (url options)
     sources.titleBar
       .filter((x) => x !== undefined)
+      .tap((x) => console.log('window href processing', x))
       .map((url) => {
-        const params = getAllUriParams(url)
-        const documentUri = fetchUriParams(url, 'uri', undefined) || nth(1, url.match(/#(https?:\/\/\S+)$/)) || nth(1, document.URL.match(/#(examples\/\S+)$/))
+        const origin = url
+        let documentUri = fetchUriParams(url, 'uri', undefined)
         if (!documentUri) {
-          return undefined
+          const urlParts = new URL(url)
+          // support URL HASH parts as well
+          if (urlParts.hash.length === 0) return undefined
+          documentUri = urlParts.hash.slice(1)
         }
-        const urlData = new URL(documentUri)
-        console.log('urlData', urlData, params, documentUri)
-        const documentUris = documentUri ? [documentUri] : undefined
-        const { protocol, origin, pathname } = urlData
-        return { documentUris, protocol: protocol.replace(':', ''), origin, path: pathname }
+        const uriParts = new URL(documentUri)
+        const urls = [documentUri]
+        const { protocol, pathname } = uriParts
+        return { sink: protocol.replace(':', ''), urls, origin, path: pathname, proxy: true }
       })
-  ])
+    ])
     .filter((x) => x !== undefined)
     .thru(holdUntil(setDesignSettings$))// only after FIXME : this does not seem to work
-    .map((data) => ({ type: 'read', id: 'loadRemote', urls: toArray(data.documentUris), sink: data.protocol, path: data.path, data: data.data }))
+    .map((data) => ({ type: 'read', id: 'loadRemote', urls: data.urls, sink: data.sink, origin: data.origin, path: data.path, data: data.data, proxy: data.proxy }))
     .tap((x) => console.log('load remote', x))
     .multicast()
     .skipRepeats()
@@ -426,6 +432,7 @@ const actions = ({ sources }) => {
     .map(({ data }) => ({ filesAndFolders: data }))
     .thru(withLatestFrom(reducers.setDesignContent, sources.state))
     .map((data) => ({ type: 'setDesignContent', state: data, sink: 'state' }))
+    .tap((x) => console.log(x))
     .multicast()
 
   const requestWatchDesign$ = most.mergeArray([

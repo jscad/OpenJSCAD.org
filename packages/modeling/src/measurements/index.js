@@ -6,9 +6,12 @@
  * const { measureArea, measureBoundingBox, measureVolume } = require('@jscad/modeling').measurements
  */
 module.exports = {
+  measureAggregateArea: require('./measureAggregateArea'),
+  measureAggregateBoundingBox: require('./measureAggregateBoundingBox'),
+  measureAggregateEpsilon: require('./measureAggregateEpsilon'),
+  measureAggregateVolume: require('./measureAggregateVolume'),
   measureArea: require('./measureArea'),
   measureBoundingBox: require('./measureBoundingBox'),
-  measureAggregateBoundingBox: require('./measureAggregateBoundingBox'),
   measureEpsilon: require('./measureEpsilon'),
   measureVolume: require('./measureVolume')
 }
