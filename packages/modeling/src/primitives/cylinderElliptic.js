@@ -5,6 +5,8 @@ const vec3 = require('../maths/vec3')
 const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
+const { isGT, isGTE, isNumberArray } = require('./commonChecks')
+
 /**
  * Construct an elliptic cylinder in three dimensional space.
  * @param {Object} [options] - options for construction
@@ -37,17 +39,15 @@ const cylinderElliptic = (options) => {
   }
   let { center, height, startRadius, startAngle, endRadius, endAngle, segments } = Object.assign({}, defaults, options)
 
-  if (!Array.isArray(center)) throw new Error('center must be an array')
-  if (center.length < 3) throw new Error('center must contain X, Y and Z values')
-
-  if (height < (EPS * 2)) throw new Error('height must be larger then zero')
-
-  if ((endRadius[0] <= 0) || (startRadius[0] <= 0) || (endRadius[1] <= 0) || (startRadius[1] <= 0)) {
-    throw new Error('endRadus and startRadius should be positive')
-  }
-  if (startAngle < 0 || endAngle < 0) throw new Error('startAngle and endAngle must be positive')
-
-  if (segments < 4) throw new Error('segments must be four or more')
+  if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
+  if (!isGT(height, 0)) throw new Error('height must be greater then zero')
+  if (!isNumberArray(startRadius, 2)) throw new Error('startRadius must be an array of X and Y values')
+  if (!startRadius.every((n) => n > 0)) throw new Error('startRadius values must be greater than zero')
+  if (!isNumberArray(endRadius, 2)) throw new Error('endRadius must be an array of X and Y values')
+  if (!endRadius.every((n) => n > 0)) throw new Error('endRadius values must be greater than zero')
+  if (!isGTE(startAngle, 0)) throw new Error('startAngle must be positive')
+  if (!isGTE(endAngle, 0)) throw new Error('endAngle must be positive')
+  if (!isGTE(segments, 4)) throw new Error('segments must be four or more')
 
   startAngle = startAngle % (Math.PI * 2)
   endAngle = endAngle % (Math.PI * 2)

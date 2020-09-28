@@ -22,13 +22,13 @@ test('rectangle (defaults)', (t) => {
 
 test('rectangle (options)', (t) => {
   // test center
-  let geometry = rectangle({center: [-4, -4]})
+  let geometry = rectangle({ center: [-4, -4] })
   let obs = geom2.toPoints(geometry)
   let exp = [
-    [ -5, -5 ],
-    [ -3, -5 ],
-    [ -3, -3 ],
-    [ -5, -3 ]
+    [-5, -5],
+    [-3, -5],
+    [-3, -3],
+    [-5, -3]
   ]
 
   t.deepEqual(obs.length, 4)
