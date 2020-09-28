@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.4](https://github.com/jscad/io/compare/@jscad/io-utils@2.0.0-alpha.3...@jscad/io-utils@2.0.0-alpha.4) (2020-09-28)
+
+**Note:** Version bump only for package @jscad/io-utils
+
+
+
+
+
 # [2.0.0-alpha.3](https://github.com/jscad/io/compare/@jscad/io-utils@2.0.0-alpha.2...@jscad/io-utils@2.0.0-alpha.3) (2020-09-19)
 
 **Note:** Version bump only for package @jscad/io-utils
