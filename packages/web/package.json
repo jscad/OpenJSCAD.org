@@ -46,7 +46,7 @@
     "codemirror": "5.57.0",
     "file-saver": "2.0.2",
     "most": "1.8.0",
-    "@jscad/most-gestures": "0.4.2-alpha.0",
+    "most-gestures": "0.4.2",
     "most-proxy": "3.3.0",
     "nanohtml": "1.9.1"
   },

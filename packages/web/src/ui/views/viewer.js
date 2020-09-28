@@ -61,7 +61,7 @@ const viewer = (state, i18n) => {
     viewerOptions = options.viewerOptions
     camera = options.camera
     render = prepareRender(viewerOptions)
-    const gestures = require('@jscad/most-gestures').pointerGestures(el)
+    const gestures = require('most-gestures').pointerGestures(el)
 
     // rotate
     gestures.drags
