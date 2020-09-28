@@ -1,11 +1,12 @@
-/*
-// title       : Center function demonstration
-// author      : Rene K. Mueller, Moissette Mark, Simon Clark
-// license     : MIT License
-// description : Demonstrating the basics of a variety of 3D primitives
-// file        : primitives3D.js
-// tags        : cube, cuboid, sphere, ellipsoid, cylinder, torus, shape, 3d
-*/
+/**
+ * Center function demonstration
+ * @category Manipulating Shapes
+ * @skillLevel 10
+ * @description Using center() to translate objects
+ * @tags center, translate,place
+ * @authors Simon Clark
+ * @licence MIT License
+ */
 
 const jscad = require('@jscad/modeling')
 const { polygon } = jscad.primitives

@@ -1,11 +1,12 @@
-/*
-// title       : All Parameters Demo
-// author      : Z3 Dev, Simon Clark
-// license     : MIT License
-// description : Example of interactive parameters
-// file        : allParamTypes.js
-// tags        : parameters, select, choice, checkbox, color, picker, slider, date, input, parameter
-*/
+/**
+ * All Parameter Types Demo
+ * @category Parameters
+ * @skillLevel 1
+ * @description Example of interactive parameters
+ * @tags parameters, select, choice, checkbox, color, picker, slider, date, input, parameter
+ * @authors Z3 Dev, Simon Clark
+ * @licence MIT License
+ */
 
 const { primitives } = require('@jscad/modeling')
 

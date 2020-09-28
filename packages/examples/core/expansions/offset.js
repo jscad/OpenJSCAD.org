@@ -1,11 +1,12 @@
-/*
-// title      : Offset Example
-// author     : Moissette Mark, Simon Clark
-// license    : MIT License
-// description: offset() function. Moves all points in a 2d path or 2D geometry perpendicular to the line's tangent.
-// tags: offset, expansion
-// file        : offset.js
-*/
+/**
+ * Offsetting 2D Shapes
+ * @category Manipulating Shapes
+ * @skillLevel 5
+ * @description Demonstrating the offset() function. Moves all points in a 2d path or 2D geometry perpendicular to the line's tangent.
+ * @tags offset, expansion
+ * @authors Moissette Mark, Simon Clark
+ * @licence MIT License
+ */
 
 const { arc, rectangle } = require('@jscad/modeling').primitives
 const { offset } = require('@jscad/modeling').expansions

@@ -1,11 +1,13 @@
-/*
-// title      : Basic Colors
-// authors    : Moissette Mark
-// license    : MIT License
-// description: showing various color functions
-// tags       : colors, transparency, hsltorgb, hsvtorgb, rgb, rgba
-// file       : basicColors.js
-*/
+/**
+ * Basic Colors
+ * @category Colors
+ * @skillLevel 1
+ * @description showing various color functions
+ * @tags colors, transparency, hsltorgb, hsvtorgb, rgb, rgba
+ * @authors Moissette Mark
+ * @licence MIT License
+ */
+
 
 const jscad = require('@jscad/modeling')
 const { colorize, hslToRgb, colorNameToRgb, hexToRgb, hsvToRgb } = jscad.colors

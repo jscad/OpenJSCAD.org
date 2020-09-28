@@ -1,11 +1,12 @@
-/*
-// title       : Sphere
-// author      : Rene K. Mueller
-// license     : MIT License
-// description : testing sphere() and geodesicSphere() functions
-// file        : sphere.js
-// tags        : sphere, geodesic, geodesicsphere, ellipsoid, shape
-*/
+/**
+ * Spheres of all sorts
+ * @category Creating Shapes
+ * @skillLevel 1
+ * @description Demonstrating the sphere() and geodesicSphere() functions
+ * @tags sphere, geodesic, geodesicsphere, ellipsoid, shape
+ * @authors Rene K. Mueller
+ * @licence MIT License
+ */
 
 const { sphere, geodesicSphere } = require('@jscad/modeling').primitives
 const { translate, scale } = require('@jscad/modeling').transforms

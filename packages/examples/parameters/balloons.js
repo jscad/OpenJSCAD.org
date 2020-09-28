@@ -1,11 +1,12 @@
-/*
-// title       : Birthday Balloons
-// author      : Z3 Dev, Simon Clark
-// license     : MIT License
-// description : Example of interactive parameters
-// file        : balloons.js
-// tags        : parameters, select, choice, checkbox, color, picker, slider, date, input, parameter
-*/
+/**
+ * Birthday Balloons
+ * @category Parameters
+ * @skillLevel 1
+ * @description Example of building models from interactive parameters
+ * @tags parameters, select, choice, checkbox, color, picker, slider, date, input, parameter
+ * @authors Z3 Dev, Simon Clark
+ * @licence MIT License
+ */
 
 const jscad = require('@jscad/modeling')
 const { ellipsoid, line } = jscad.primitives

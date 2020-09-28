@@ -1,11 +1,12 @@
-/*
-// title       : Hull & HullChain 2D example
-// author      : Simon Clark
-// license     : MIT License
-// description : Demonstrating the basics of Hulls in two dimensions
-// file        : hull.js
-// tags        : hull, hullchain
-*/
+/**
+ * Hull and HullChain 2D example
+ * @category Creating Shapes
+ * @skillLevel 8
+ * @description Demonstrating the basics of Hulls in two dimensions
+ * @tags hull, hullchain
+ * @authors Simon Clark
+ * @licence MIT License
+ */
 
 const jscad = require('@jscad/modeling')
 const { circle, rectangle } = jscad.primitives

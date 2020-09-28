@@ -1,11 +1,12 @@
-/*
-// title       : Use a bezier function to create a non-uniform extrusion
-// authors     : Simon Clark
-// license     : MIT License
-// description : Using a 1D bezier function to create a non-uniform extrusion
-// tags        : curves, bezier, extrusion, slice
-// file        : simpleExtrude.js
-*/
+/**
+ * Simple Bezier Extrude
+ * @category Creating Shapes
+ * @skillLevel 5
+ * @description Using a 1D bezier function to create a non-uniform extrusion
+ * @tags curves, bezier, extrusion, slice
+ * @authors Simon Clark
+ * @licence MIT License
+ */
 
 const jscad = require('@jscad/modeling')
 const { maths, extrusions } = jscad

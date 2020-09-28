@@ -115,8 +115,8 @@ section#params {
   user-select: none;
   max-height: calc(100% - 6em);
   overflow-y: scroll;
+  padding: 0;
 }
-
 #paramsTable{
   display: flex;
   margin-bottom: 20px;
@@ -124,14 +124,33 @@ section#params {
 #paramsTable table {
   border-collapse: collapse;
 }
+#paramsTable td {
+  padding: 1px 20px 5px 4px;
+}
+#paramsTable td.caption {
+  vertical-align: baseline;
+  font-weight: bold;
+  opacity: .7;
+  padding: 1px 4px 5px 20px;
+  text-align: right;
+}
 #paramsTable h1{
   margin-bottom: 6px;
   margin-top: 6px;
   font-size: medium;
 }
-#paramsTable .groupTitle  {
+#paramsTable h1 {
+  margin: 0px;
+  font-size: 1.3em;
+}
+#paramsTable .groupTitle {
   border-top: 1px solid #bfbcbc;
   cursor: pointer;
+  background: linear-gradient(180deg, #00000014, transparent);
+}
+#paramsTable .groupTitle td.caption {
+  text-align: left;
+  padding: 4px 10px 5px;
 }
 #paramsTable .groupTitle:hover {
   background: #dceeff;
@@ -158,6 +177,14 @@ section#params {
 
 #paramsTable .controlsLine{
   padding-top: 10px;
+}
+span#paramsControls {
+  display: block;
+  text-align: right;
+  padding: 3px 20px 10px;
+}
+#paramsTable tr.controlsLine:first-child td {
+   padding-top: 14px;
 }
 
 #busy{
@@ -287,6 +314,10 @@ section.popup-menu ul {
   text-decoration: none;
 }
 
+#help a:hover {
+  color: rgb(0 89 149);
+}
+
 a.external-link {
   background-image: url(../imgs/externalLink.png);
   background-repeat: no-repeat;
@@ -297,8 +328,17 @@ a.external-link {
 #help p {
   margin-left: 10px;
 }
+
 #help table {
   margin: 10px 0px 0px 10px;
+}
+
+#help ul.examples-group {
+  padding: 0;
+}
+
+#help ul.examples-group>li {
+  padding: 4px 0 0 0;
 }
 
 

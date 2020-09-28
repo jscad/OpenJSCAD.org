@@ -1,11 +1,12 @@
-/*
-// title       : Rounded Cube
-// author      : Rene K. Mueller
-// license     : MIT License
-// description : testing roundedCuboid() function
-// file        : roundedCuboid.js
-// tags        : cube, cuboid, shape, 3d
-*/
+/**
+ * Rounded Cuboid
+ * @category Creating Shapes
+ * @skillLevel 1
+ * @description Demonstrating the roundedCuboid() functiom
+ * @tags cube, cuboid, shape, 3d, rounded
+ * @authors Rene K. Mueller
+ * @licence MIT License
+ */
 
 const { cuboid, roundedCuboid } = require('@jscad/modeling').primitives
 

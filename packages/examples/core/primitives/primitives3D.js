@@ -1,11 +1,12 @@
-/*
-// title       : 3D Primitives Demonstration
-// author      : Rene K. Mueller, Moissette Mark, Simon Clark
-// license     : MIT License
-// description : Demonstrating the basics of a variety of 3D primitives
-// file        : primitives3D.js
-// tags        : cube, cuboid, sphere, ellipsoid, cylinder, torus, shape, 3d
-*/
+/**
+ * 3D Primitives Demonstration
+ * @category Creating Shapes
+ * @skillLevel 1
+ * @description Demonstrating the basics of a variety of 3D primitives
+ * @tags cube, cuboid, sphere, ellipsoid, cylinder, torus, shape, 3d
+ * @authors Rene K. Mueller, Moissette Mark, Simon Clark
+ * @licence MIT License
+ */
 
 const jscad = require('@jscad/modeling')
 const { cube, cuboid, cylinder, cylinderElliptic, ellipsoid, geodesicSphere, roundedCuboid, roundedCylinder, sphere, torus } = jscad.primitives
