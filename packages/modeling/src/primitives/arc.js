@@ -4,6 +4,8 @@ const vec2 = require('../maths/vec2')
 
 const path2 = require('../geometries/path2')
 
+const { isGT, isGTE, isNumberArray } = require('./commonChecks')
+
 /**
  * Construct an arc in two dimensional space.
  * @param {Object} [options] - options for construction
@@ -27,13 +29,11 @@ const arc = (options) => {
   }
   let { center, radius, startAngle, endAngle, makeTangent, segments } = Object.assign({}, defaults, options)
 
-  if (!Array.isArray(center)) throw new Error('center must be an array')
-  if (center.length < 2) throw new Error('center must contain X and Y values')
-
-  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
-
-  if (startAngle < 0 || endAngle < 0) throw new Error('the start and end angles must be positive')
-  if (segments < 4) throw new Error('segments must be four or more')
+  if (!isNumberArray(center, 2)) throw new Error('center must be an array of X and Y values')
+  if (!isGT(radius, 0)) throw new Error('radius must be greater than zero')
+  if (!isGTE(startAngle, 0)) throw new Error('startAngle must be positive')
+  if (!isGTE(endAngle, 0)) throw new Error('endAngle must be positive')
+  if (!isGTE(segments, 4)) throw new Error('segments must be four or more')
 
   startAngle = startAngle % (Math.PI * 2)
   endAngle = endAngle % (Math.PI * 2)

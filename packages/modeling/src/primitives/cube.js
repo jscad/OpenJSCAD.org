@@ -1,5 +1,7 @@
 const cuboid = require('./cuboid')
 
+const { isGT } = require('./commonChecks')
+
 /**
  * Construct an axis-aligned solid cube in three dimensional space with six square faces.
  * @see [cuboid]{@link module:modeling/primitives.cuboid} for more options
@@ -18,7 +20,7 @@ const cube = (options) => {
   }
   let { center, size } = Object.assign({}, defaults, options)
 
-  if (!Number.isFinite(size)) throw new Error('size must be a number')
+  if (!isGT(size, 0)) throw new Error('size must be greater than zero')
 
   size = [size, size, size]
 

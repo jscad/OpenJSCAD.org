@@ -1,7 +1,9 @@
 const ellipse = require('./ellipse')
 
+const { isGT } = require('./commonChecks')
+
 /**
- * Construct a circle in two dimensional space where are points are at the same distance from the center.
+ * Construct a circle in two dimensional space where all points are at the same distance from the center.
  * @see [ellipse]{@link module:modeling/primitives.ellipse} for more options
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of circle
@@ -20,7 +22,7 @@ const circle = (options) => {
   }
   let { center, radius, segments } = Object.assign({}, defaults, options)
 
-  if (!Number.isFinite(radius)) throw new Error('radius must be a number')
+  if (!isGT(radius, 0)) throw new Error('radius must be greater than zero')
 
   radius = [radius, radius]
 
