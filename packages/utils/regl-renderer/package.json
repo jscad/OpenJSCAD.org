@@ -14,6 +14,9 @@
   },
   "author": "Mark 'kaosat-dev' Moissette",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@jscad/array-utils": "2.0.0-alpha.1",
     "angle-normals": "1.0.0",

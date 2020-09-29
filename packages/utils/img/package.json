@@ -6,6 +6,9 @@
   "scripts": {},
   "author": "Mark 'kaosat-dev' Moissette",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "pngjs": "5.0.0"
   }
