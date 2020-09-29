@@ -1,6 +1,6 @@
 {
   "name": "@jscad/regl-renderer",
-  "version": "2.0.0-alpha.6",
+  "version": "2.0.0-alpha.7",
   "description": "",
   "main": "src/index.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@jscad/array-utils": "2.0.0-alpha.1",
+    "@jscad/array-utils": "2.0.0-alpha.2",
     "angle-normals": "1.0.0",
     "camera-unproject": "1.0.1",
     "gl-mat4": "1.2.0",
@@ -27,8 +27,8 @@
     "regl": "1.6.1"
   },
   "devDependencies": {
-    "@jscad/img-utils": "2.0.0-alpha.2",
-    "@jscad/modeling": "2.0.0-alpha.4",
+    "@jscad/img-utils": "2.0.0-alpha.3",
+    "@jscad/modeling": "2.0.0-alpha.5",
     "ava": "3.10.0",
     "browserify": "16.5.1",
     "budo": "11.6.4"

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.5](https://github.com/jscad/openjscad.org/compare/@jscad/modeling@2.0.0-alpha.4...@jscad/modeling@2.0.0-alpha.5) (2020-09-29)
+
+
+### Bug Fixes
+
+* **modeling:** V2 - primitives revisited ([#697](https://github.com/jscad/openjscad.org/issues/697)) ([4721484](https://github.com/jscad/openjscad.org/commit/47214847b9ea1a144bd0ec595318979199c47dea))
+
+
+
+
+
 # [2.0.0-alpha.4](https://github.com/jscad/openjscad.org/compare/@jscad/modeling@2.0.0-alpha.3...@jscad/modeling@2.0.0-alpha.4) (2020-09-28)
 
 

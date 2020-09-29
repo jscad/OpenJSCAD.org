@@ -1,6 +1,6 @@
 {
   "name": "@jscad/json-deserializer",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.5",
   "description": "JSON deserializer for JSCAD project",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
@@ -31,10 +31,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/array-utils": "2.0.0-alpha.1"
+    "@jscad/array-utils": "2.0.0-alpha.2"
   },
   "devDependencies": {
-    "@jscad/modeling": "2.0.0-alpha.4",
+    "@jscad/modeling": "2.0.0-alpha.5",
     "ava": "3.10.0"
   }
 }
