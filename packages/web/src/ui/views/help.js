@@ -5,6 +5,7 @@ const help = (state, i18n) => {
   return html`
     <section id='help' class="popup-menu" style='visibility:${state.activeTool === 'help' ? 'visible' : 'hidden'};' >
       <div>
+        <h2>${i18n`JSCAD V${state.version}`}</h2>
         <h3>${i18n`Documentation`}:</h3>
         <ul>
             <li>

@@ -267,6 +267,14 @@ section.popup-menu {
   max-height: 70%;
 }
 
+section.popup-menu h2 {
+  color: #5e6d7d;
+}
+
+section.popup-menu h2:first-child {
+  margin-block-start: 0;
+}
+
 section.popup-menu h3 {
   margin: auto;
   border-bottom: 1px solid #888888;
