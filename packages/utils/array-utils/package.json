@@ -9,6 +9,9 @@
   },
   "author": "Mark 'kaosat-dev' Moissette",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "ava": "3.10.0"
   }
