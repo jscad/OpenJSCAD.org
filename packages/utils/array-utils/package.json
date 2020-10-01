@@ -1,6 +1,6 @@
 {
   "name": "@jscad/array-utils",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,9 @@
   },
   "author": "Mark 'kaosat-dev' Moissette",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "ava": "3.10.0"
   }
