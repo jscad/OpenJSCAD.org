@@ -1,11 +1,12 @@
-/*
-// title       : Measure Bounding Box
-// authors     : Simon Clark
-// license     : MIT License
-// description : Examples of measureBoundingBox function
-// file        : measureBounds.js
-// tags        : measurements, bounds, boundingbox
-*/
+/**
+ * Measure Aggregate Bounding Box
+ * @category Manipulating Shapes
+ * @skillLevel 10
+ * @description Examples of measureAggregateBoundingBox function
+ * @tags measurements, bounds, boundingbox, aggregate
+ * @authors Simon Clark
+ * @licence MIT License
+ */
 
 const { cuboid } = require('@jscad/modeling').primitives
 const { translate, rotate } = require('@jscad/modeling').transforms

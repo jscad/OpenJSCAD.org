@@ -14,7 +14,7 @@ const options = (state, i18n) => {
   const shortcuts = require('./shortcuts')(state, i18n)
 
   return html`
-  <section id='options' style='visibility:${state.activeTool === 'options' ? 'visible' : 'hidden'}; color:${state.themes.themeSettings.secondaryTextColor}'>   
+  <section class="popup-menu" id='options' style='visibility:${state.activeTool === 'options' ? 'visible' : 'hidden'}; color:${state.themes.themeSettings.secondaryTextColor}'>   
 
   <fieldset>
     <legend> <h3> ${i18n`Languages`} </h3> </legend>

@@ -1,11 +1,12 @@
-/*
-// title      : Involute Gear
-// authors    : Joost Nieuwenhuijse, Simon Clark
-// license    : MIT License
-// description: Build a proper involute gear, demonstrating parameters, and how they can be used in complex math.
-// tags       : gear, tangent, parameter, parameters
-// file       : gear.js
-*/
+/**
+ * Parametric Involute Gear
+ * @category Parameters
+ * @skillLevel 1
+ * @description Build a proper involute gear, demonstrating parameters, and how they can be used in complex math.
+ * @tags gear, tangent, parameter, parameters
+ * @authors Joost Nieuwenhuijse, Simon Clark
+ * @licence MIT License
+ */
 
 const jscad = require('@jscad/modeling')
 const { cylinder, polygon } = jscad.primitives

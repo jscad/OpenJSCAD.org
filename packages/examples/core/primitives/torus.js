@@ -1,11 +1,12 @@
-/*
-// title       : Torus Variety Demonstration
-// author      : Rene K. Mueller, Simon Clark
-// license     : MIT License
-// description : Demonstrating the capabilities and variations of the Torus primitive
-// file        : torus.js
-// tags        : torus, shape, 3d
-*/
+/**
+ * Torus Variety
+ * @category Creating Shapes
+ * @skillLevel 2
+ * @description Demonstrating the capabilities and variations of the torus() primitive
+ * @tags torus, shape, 3d
+ * @authors Rene K. Mueller, Simon Clark
+ * @licence MIT License
+ */
 
 const { torus } = require('@jscad/modeling').primitives
 const { translate } = require('@jscad/modeling').transforms

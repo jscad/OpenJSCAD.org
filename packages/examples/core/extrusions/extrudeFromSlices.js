@@ -1,11 +1,12 @@
-/*
-// title       : Extrude From Slices
-// author      : Jeff Gay, Moissette Mark, Simon Clark
-// license     : MIT License
-// description : Demonstrating the advanced extrusion using slices with varying numbers of points.
-// file        : extrudeFromSlices.js
-// tags        : extrude, slice, slices, extrudefromslices, callback
-*/
+/**
+ * Extrude From Slices
+ * @category Creating Shapes
+ * @skillLevel 5
+ * @description Demonstrating the advanced extrusion using slices with varying numbers of points.
+ * @tags extrude, slice, slices, extrudefromslices, callback
+ * @authors Jeff Gay, Moissette Mark, Simon Clark
+ * @licence MIT License
+ */
 
 const { circle } = require('@jscad/modeling').primitives
 const { geom2 } = require('@jscad/modeling').geometries

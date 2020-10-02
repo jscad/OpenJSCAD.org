@@ -1,11 +1,12 @@
-/*
-// title      : Extrude along a bezier path
-// authors    : Simon Clark
-// license    : MIT License
-// description: Using a 3D bezier path to create a solid tube
-// tags       : curves, bezier, extrusion, slice
-// file       : extrudeAlongPath.js
-*/
+/**
+ * Extrude Along a Bezier Path
+ * @category Creating Shapes
+ * @skillLevel 5
+ * @description Using a 3D bezier path to create a solid tube
+ * @tags curves, bezier, extrusion, slice
+ * @authors Simon Clark
+ * @licence MIT License
+ */
 
 const jscad = require('@jscad/modeling')
 const { colors, geometries, maths, extrusions } = jscad

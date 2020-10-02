@@ -227,8 +227,8 @@ const createRadioControl = (definition, prevValue) => {
 
     const control = html`
       <label>
-        ${caption}
         <input type='radio' value=${value} name=${definition.name} checked=${selected}/>
+        ${caption}
       </label>
     `
     control.children[0].paramName = definition.name

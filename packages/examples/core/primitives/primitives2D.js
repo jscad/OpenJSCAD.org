@@ -1,11 +1,12 @@
-/*
-// title       : 2D Primitives Demonstration
-// author      : Simon Clark
-// license     : MIT License
-// description : Demonstrating the basics of a variety of 2D primitives
-// file        : primitives2D.js
-// tags        : circle, square, line, ellipse, polygon, shape, 2d
-*/
+/**
+ * 2D Primitives Demonstration
+ * @category Creating Shapes
+ * @skillLevel 1
+ * @description Demonstrating the basics of a variety of 2D primitives
+ * @tags circle, square, line, ellipse, polygon, shape, 2d
+ * @authors Simon Clark
+ * @licence MIT License
+ */
 
 const { arc, circle, ellipse, line, polygon, rectangle, roundedRectangle, square, star } = require('@jscad/modeling').primitives
 const { translate } = require('@jscad/modeling').transforms

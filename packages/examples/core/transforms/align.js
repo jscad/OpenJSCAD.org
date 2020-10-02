@@ -1,11 +1,12 @@
-/*
-// title       : Align function demonstration
-// author      : Simon Clark
-// license     : MIT License
-// description : Demonstrating aligning shapes using the align function
-// file        : align.js
-// tags        : align, center, bottom, top, place
-*/
+/**
+ * Align function demonstration
+ * @category Manipulating Shapes
+ * @skillLevel 3
+ * @description Demonstrating aligning shapes using the align function
+ * @tags align, center, bottom, top, place
+ * @authors Simon Clark
+ * @licence MIT License
+ */
 
 const jscad = require('@jscad/modeling')
 const { cuboid } = jscad.primitives

@@ -1,11 +1,12 @@
-/*
-// title       : Modular Project Design Example
-// author      : Moissette Mark, Simon Clark
-// license     : MIT License
-// description : Demonstrating the structure of a multi-file project
-// file        : index.js
-// tags        : project, module, code, files, subfolder
-*/
+/**
+ * Modular Project Design Example
+ * @category Other
+ * @skillLevel 1
+ * @description Demonstrating the structure of a multi-file project
+ * @tags measurements, bounds, boundingbox
+ * @authors Moissette Mark, Simon Clark
+ * @licence MIT License
+ */
 
 const mountPlate = require('./mountPlate.js')
 const sphereShape = require('./subFolder/sphereShape')

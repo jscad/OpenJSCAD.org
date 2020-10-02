@@ -1,10 +1,12 @@
-/*
-// title       : Measure Area & Volume
-// authors     : Simon Clark
-// license     : MIT License
-// description : Examples of measureArea() and measureVolume() function
-// tags        : measurements, area, volume, text
-*/
+/**
+ * Measure Area and Volume
+ * @category Manipulating Shapes
+ * @skillLevel 10
+ * @description Examples of measureArea() and measureVolume() function
+ * @tags measurements, area, volume, text
+ * @authors Simon Clark
+ * @licence MIT License
+ */
 
 const { circle, sphere, cube, square, star } = require('@jscad/modeling').primitives
 const { translate, scale } = require('@jscad/modeling').transforms

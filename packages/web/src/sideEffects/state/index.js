@@ -26,7 +26,8 @@ const makeState = (params) => {
     // storage: this is not changeable, only for display
     storage: {
       path: '' // require('electron').remote.app.getPath('userData')
-    }
+    },
+    version: packageMetadata.version
   }
 
   const source = () => {

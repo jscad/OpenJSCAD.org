@@ -1,11 +1,13 @@
-/*
-// title       : SVG Import Demonstration
-// author      : Simon Clark
-// license     : MIT License
-// description : Importing SVG files to manipulate and combine. Drag the whole SVGImport folder into JSCAD
-// file        : SVGImport/index.js
-// tags        : svg, import
-*/
+/**
+ * SVG Import Demonstration
+ * @category Imports
+ * @skillLevel 1
+ * @description Importing SVG files. Drag the whole SVGImport folder into JSCAD
+ * @tags svg, import
+ * @authors Simon Clark
+ * @licence MIT License
+ */
+
 
 const { translate } = require('@jscad/modeling').transforms
 const { extrudeLinear } = require('@jscad/modeling').extrusions

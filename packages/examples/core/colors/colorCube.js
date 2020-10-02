@@ -1,11 +1,12 @@
-/*
-// title      : Color Cube
-// author     : Simon Clark
-// license    : MIT License
-// description: looking at color functions
-// tags       : rgb, hsl, hsv, color
-// file       : colorCube.js
-*/
+/**
+ * Color Cube
+ * @category Colors
+ * @skillLevel 2
+ * @description looking at the different ways to specify a color
+ * @tags rgb, hsl, hsv, color
+ * @authors Simon Clark
+ * @licence MIT License
+ */
 
 const jscad = require('@jscad/modeling')
 const { colorize, hslToRgb, hsvToRgb } = jscad.colors
