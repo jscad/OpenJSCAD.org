@@ -80,6 +80,44 @@ test('circle (options)', (t) => {
   t.deepEqual(pts.length, 16)
   t.true(comparePoints(pts, exp))
 
+  // test startAngle
+  geometry = circle({ radius: 3.5, startAngle: Math.PI / 2, segments: 16 })
+  pts = geom2.toPoints(geometry)
+  exp = [
+    [2.143131898507868e-16, 3.5 ],
+    [-1.339392013277814, 3.2335783637895035 ],
+    [-2.474873734152916, 2.4748737341529163 ],
+    [-3.2335783637895035, 1.3393920132778145 ],
+    [-3.5, 4.286263797015736e-16 ],
+    [-3.233578363789504, -1.3393920132778139 ],
+    [-2.474873734152917, -2.474873734152916 ],
+    [-1.339392013277816, -3.233578363789503 ],
+    [-6.429395695523604e-16, -3.5 ],
+    [1.339392013277815, -3.233578363789503 ],
+    [2.474873734152916, -2.474873734152917 ],
+    [3.233578363789503, -1.3393920132778163 ],
+    [3.5, -8.572527594031472e-16 ],
+    [0, 0 ]
+  ]
+
+  t.deepEqual(pts.length, 14)
+  t.true(comparePoints(pts, exp))
+
+  // test endAngle
+  geometry = circle({ radius: 3.5, endAngle: Math.PI / 2, segments: 16 })
+  pts = geom2.toPoints(geometry)
+  exp = [
+    [3.5, 0],
+    [3.2335783637895035, 1.3393920132778143],
+    [2.4748737341529163, 2.474873734152916],
+    [1.3393920132778145, 3.2335783637895035],
+    [2.143131898507868e-16, 3.5],
+    [0, 0]
+  ]
+
+  t.deepEqual(pts.length, 6)
+  t.true(comparePoints(pts, exp))
+
   // test segments
   geometry = circle({ radius: 3.5, segments: 5 })
   pts = geom2.toPoints(geometry)

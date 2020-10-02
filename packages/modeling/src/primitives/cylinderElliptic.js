@@ -63,7 +63,7 @@ const cylinderElliptic = (options) => {
   const minradius = Math.min(startRadius[0], startRadius[1], endRadius[0], endRadius[1])
   const minangle = Math.acos(((minradius * minradius) + (minradius * minradius) - (EPS * EPS)) /
                             (2 * minradius * minradius))
-  if (rotation < minangle) throw new Error('startAngle and endAngle to not define a significant rotation')
+  if (rotation < minangle) throw new Error('startAngle and endAngle do not define a significant rotation')
 
   const slices = Math.floor(segments * (rotation / (Math.PI * 2)))
 
