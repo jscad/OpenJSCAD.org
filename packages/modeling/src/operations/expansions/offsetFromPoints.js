@@ -97,10 +97,17 @@ const offsetFromPoints = (options, points) => {
       const line0 = line2.fromPoints(corner.s0[0], corner.s0[1])
       const line1 = line2.fromPoints(corner.s1[0], corner.s1[1])
       const ip = line2.intersectPointOfLines(line0, line1)
-      const p0 = corner.s0[1]
-      let i = newPoints.findIndex((point) => vec2.equals(p0, point))
-      i = (i + 1) % newPoints.length
-      newPoints.splice(i, 0, ip)
+      if (Number.isFinite(ip[0]) && Number.isFinite(ip[1])) {
+        const p0 = corner.s0[1]
+        let i = newPoints.findIndex((point) => vec2.equals(p0, point))
+        i = (i + 1) % newPoints.length
+        newPoints.splice(i, 0, ip)
+      } else {
+        // paralell segments, drop one
+        const p0 = corner.s1[0]
+        let i = newPoints.findIndex((point) => vec2.equals(p0, point))
+        newPoints.splice(i, 1)
+      }
     })
   }
 
@@ -120,21 +127,28 @@ const offsetFromPoints = (options, points) => {
         if (rotation > 0) rotation = rotation - Math.PI
       }
 
-      // generate the segments
-      cornersegments = Math.floor(segments * (Math.abs(rotation) / (2 * Math.PI)))
-      const step = rotation / cornersegments
-      const start = vec2.angle(vec2.subtract(corner.s0[1], corner.c))
-      const cornerpoints = []
-      for (let i = 1; i < cornersegments; i++) {
-        const radians = start + (step * i)
-        const point = vec2.add(corner.c, vec2.scale(delta, vec2.fromAngleRadians(radians)))
-        cornerpoints.push(point)
-      }
-      if (cornerpoints.length > 0) {
-        const p0 = corner.s0[1]
+      if (rotation !== 0.0) {
+        // generate the segments
+        cornersegments = Math.floor(segments * (Math.abs(rotation) / (2 * Math.PI)))
+        const step = rotation / cornersegments
+        const start = vec2.angle(vec2.subtract(corner.s0[1], corner.c))
+        const cornerpoints = []
+        for (let i = 1; i < cornersegments; i++) {
+          const radians = start + (step * i)
+          const point = vec2.add(corner.c, vec2.scale(delta, vec2.fromAngleRadians(radians)))
+          cornerpoints.push(point)
+        }
+        if (cornerpoints.length > 0) {
+          const p0 = corner.s0[1]
+          let i = newPoints.findIndex((point) => vec2.equals(p0, point))
+          i = (i + 1) % newPoints.length
+          newPoints.splice(i, 0, ...cornerpoints)
+        }
+      } else {
+        // paralell segments, drop one
+        const p0 = corner.s1[0]
         let i = newPoints.findIndex((point) => vec2.equals(p0, point))
-        i = (i + 1) % newPoints.length
-        newPoints.splice(i, 0, ...cornerpoints)
+        newPoints.splice(i, 1)
       }
     })
   }
