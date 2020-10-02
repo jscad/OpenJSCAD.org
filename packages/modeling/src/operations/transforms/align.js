@@ -6,11 +6,11 @@ const { translate } = require('./translate')
 const validateOptions = (options) => {
   if (!Array.isArray(options.modes) || options.modes.length > 3) throw new Error('align(): modes must be an array of length <= 3')
   options.modes = padArrayToLength(options.modes, 'none', 3)
-  if (options.modes.filter(mode => ['center', 'max', 'min', 'none'].includes(mode)).length !== 3) throw new Error('align(): all modes must be one of "center", "max" or "min"')
+  if (options.modes.filter((mode) => ['center', 'max', 'min', 'none'].includes(mode)).length !== 3) throw new Error('align(): all modes must be one of "center", "max" or "min"')
 
   if (!Array.isArray(options.alignTo) || options.alignTo.length > 3) throw new Error('align(): alignTo must be an array of length <= 3')
   options.alignTo = padArrayToLength(options.alignTo, 0, 3)
-  if (options.alignTo.filter(alignVal => (Number.isFinite(alignVal) || alignVal == null)).length !== 3) throw new Error('align(): all alignTo values must be a number, or null.')
+  if (options.alignTo.filter((alignVal) => (Number.isFinite(alignVal) || alignVal == null)).length !== 3) throw new Error('align(): all alignTo values must be a number, or null.')
 
   if (typeof options.grouped !== 'boolean') throw new Error('align(): grouped must be a boolean value.')
 
@@ -74,16 +74,14 @@ const align = (options, ...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('align(): No geometries were provided to act upon')
 
-  if (alignTo.filter(val => val == null).length) {
+  if (alignTo.filter((val) => val == null).length) {
     const bounds = measureAggregateBoundingBox(geometries)
     alignTo = populateAlignToFromBounds(alignTo, modes, bounds)
   }
   if (grouped) {
     geometries = alignGeometries(geometries, modes, alignTo)
   } else {
-    geometries = geometries.map(geometry => {
-      return alignGeometries(geometry, modes, alignTo)
-    })
+    geometries = geometries.map((geometry) => alignGeometries(geometry, modes, alignTo))
   }
   return geometries.length === 1 ? geometries[0] : geometries
 }

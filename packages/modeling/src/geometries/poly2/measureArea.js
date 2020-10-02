@@ -7,8 +7,6 @@
  */
 const area = require('../../maths/utils/area')
 
-const measureArea = (polygon) => {
-  return area(polygon.vertices)
-}
+const measureArea = (polygon) => area(polygon.vertices)
 
 module.exports = measureArea

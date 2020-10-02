@@ -105,7 +105,7 @@ const offsetFromPoints = (options, points) => {
       } else {
         // paralell segments, drop one
         const p0 = corner.s1[0]
-        let i = newPoints.findIndex((point) => vec2.equals(p0, point))
+        const i = newPoints.findIndex((point) => vec2.equals(p0, point))
         newPoints.splice(i, 1)
       }
     })
@@ -147,7 +147,7 @@ const offsetFromPoints = (options, points) => {
       } else {
         // paralell segments, drop one
         const p0 = corner.s1[0]
-        let i = newPoints.findIndex((point) => vec2.equals(p0, point))
+        const i = newPoints.findIndex((point) => vec2.equals(p0, point))
         newPoints.splice(i, 1)
       }
     })

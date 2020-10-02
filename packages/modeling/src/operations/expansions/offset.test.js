@@ -33,7 +33,6 @@ test('offset: offsetting a straight line produces expected geometry', (t) => {
 })
 
 test('offset: offsetting a bent line produces expected geometry', (t) => {
-console.log('START')
   const points = [[0, 0], [0, 5], [0, 10], [5, 10], [10, 10]]
   const linePath2 = path2.fromPoints({ closed: false }, points)
 
