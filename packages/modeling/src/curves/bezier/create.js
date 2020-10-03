@@ -45,12 +45,12 @@ const create = (points) => {
 
 const getPointType = function (points) {
   let firstPointType = null
-  points.forEach(point => {
+  points.forEach((point) => {
     let pType = ''
     if (Number.isFinite(point)) {
       pType = 'float_single'
     } else if (Array.isArray(point)) {
-      point.forEach(val => {
+      point.forEach((val) => {
         if (!Number.isFinite(val)) throw new Error('Bezier point values must all be numbers.')
       })
       pType = 'float_' + point.length

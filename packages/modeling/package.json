@@ -5,6 +5,7 @@
   "repository": "https://github.com/jscad/openjscad.org",
   "main": "src/index.js",
   "scripts": {
+    "build": "browserify src/index.js -o dist/modeling.js -g uglifyify --standalone modeling",
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
     "release-patch__": "git checkout master && git pull origin master && npm version patch",
@@ -54,6 +55,8 @@
   },
   "devDependencies": {
     "ava": "3.10.0",
-    "conventional-changelog-cli": "^1.3.4"
+    "nyc": "15.1.0",
+    "browserify": "16.5.1",
+    "uglifyify": "5.0.2"
   }
 }

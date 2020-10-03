@@ -13,6 +13,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "ava": "3.10.0"
+    "ava": "3.10.0",
+    "nyc": "15.1.0"
   }
 }

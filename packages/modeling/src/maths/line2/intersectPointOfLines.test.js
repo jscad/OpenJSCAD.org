@@ -18,7 +18,7 @@ test('line2: intersectPointOfLines() should return proper points', (t) => {
   // paralell lines
   const line4 = fromPoints([0, 6], [6, 0])
   const int4 = intersectPointOfLines(line4, line3)
-  // FIXME BUG?? t.true(compareVectors(int4, [Infinity, -Infinity]))
+  t.true(compareVectors(int4, [Infinity, -Infinity]))
 
   // intersecting lines
   const line5 = fromPoints([0, -6], [6, 0])

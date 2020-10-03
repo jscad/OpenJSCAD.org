@@ -61,10 +61,28 @@ const center = (options, ...geometries) => {
   return results.length === 1 ? results[0] : results
 }
 
+/**
+ * Center the given geometries about the X axis.
+ * @param {...Object} geometries - the geometries to center
+ * @return {Object|Array} the centered geometry, or a list of centered geometry
+ * @alias module:modeling/transforms.centerX
+ */
 const centerX = (...objects) => center({ axes: [true, false, false] }, objects)
 
+/**
+ * Center the given geometries about the Y axis.
+ * @param {...Object} geometries - the geometries to center
+ * @return {Object|Array} the centered geometry, or a list of centered geometry
+ * @alias module:modeling/transforms.centerY
+ */
 const centerY = (...objects) => center({ axes: [false, true, false] }, objects)
 
+/**
+ * Center the given geometries about the Z axis.
+ * @param {...Object} geometries - the geometries to center
+ * @return {Object|Array} the centered geometry, or a list of centered geometry
+ * @alias module:modeling/transforms.centerZ
+ */
 const centerZ = (...objects) => center({ axes: [false, false, true] }, objects)
 
 module.exports = {

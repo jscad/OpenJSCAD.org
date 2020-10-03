@@ -9,6 +9,9 @@ test('fromPoints: creates populated geom2', (t) => {
     transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   t.deepEqual(fromPoints(points), expected)
+
+  const points2 = [[0, 0], [1, 0], [0, 1], [0, 0]]
+  t.deepEqual(fromPoints(points2), expected)
 })
 
 test('fromPoints: throws for improper points', (t) => {

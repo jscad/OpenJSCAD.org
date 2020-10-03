@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { fromCompactBinary, toCompactBinary, create, fromPoints, equals } = require('./index')
+const { fromCompactBinary, toCompactBinary, create, fromPoints } = require('./index')
 
 test('toCompactBinary: converts geom3 (default)', (t) => {
   const geometry = create()
