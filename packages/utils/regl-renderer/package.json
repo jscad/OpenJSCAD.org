@@ -30,6 +30,7 @@
     "@jscad/img-utils": "2.0.0-alpha.3",
     "@jscad/modeling": "2.0.0-alpha.5",
     "ava": "3.10.0",
+    "nyc": "15.1.0",
     "browserify": "16.5.1",
     "budo": "11.6.4"
   }

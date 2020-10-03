@@ -8,7 +8,7 @@
     "coverage": "npm run bootstrap && lerna run --concurrency 1 --stream coverage",
     "test": "npm run bootstrap && lerna run --stream test",
     "lint": "standardx 'packages/**/*.js'",
-    "bootstrap": "lerna bootstrap --hoist nyc --ignore-prepublish --no-ci",
+    "bootstrap": "lerna bootstrap --hoist nyc --hoist ava --ignore-prepublish --no-ci",
     "changed": "lerna changed",
     "clean": "lerna clean",
     "graph": "lerna list --graph",
