@@ -242,7 +242,7 @@ const directoryWithPackageJson = [
 {
   "name": "project",
   "version": "0.0.0",
-  "main": "file.js"
+  "main": "./file.js"
 }
         `
       },
