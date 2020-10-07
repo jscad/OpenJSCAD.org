@@ -18,10 +18,8 @@ const binaryMimetypes = {
   ttc: 'font/ttf',
   ttf: 'font/ttf',
   woff: 'font/woff',
-  woff2: 'font/woff'
-}
+  woff2: 'font/woff',
 
-const encodedMimetypes = {
   stl: 'application/sla'
 }
 
@@ -41,34 +39,20 @@ const readFileAsync = (file, fileMeta) => {
   const promiseReader = new Promise((resolve, reject) => {
     const reader = new FileReader()
 
-    // convert binary to UTF-16 code units
-    const convertArrayBuffer = (buffer) => {
-      let binary = ''
-      const bytes = new Uint8Array(buffer)
-      const length = bytes.byteLength
-      for (let i = 0; i < length; i++) {
-        binary += String.fromCharCode(bytes[i])
-      }
-      return binary
-    }
-
     reader.onload = (event) => {
       const result = event.target.result
       if (result.byteLength) {
-        if (encodedMimetypes[ext]) {
-          resolve({ name: file.name, ext, fullPath, mimetype, source: convertArrayBuffer(result) })
-        } else {
-          resolve({ name: file.name, ext, fullPath, mimetype, source: result })
-        }
+        resolve({ name: file.name, ext, fullPath, mimetype, source: result })
       } else if (typeof(result) === 'string') {
         resolve({ name: file.name, ext, fullPath, mimetype, source: result })
       }
     }
+
     reader.onerror = (event) => {
       reject(new Error(`Failed to load file: ${fullPath} [${reader.error}]`))
     }
 
-    if (binaryMimetypes[ext] || encodedMimetypes[ext]) {
+    if (binaryMimetypes[ext]) {
       reader.readAsArrayBuffer(file) // result is ArrayBuffer
     } else {
       reader.readAsText(file) // result is String
