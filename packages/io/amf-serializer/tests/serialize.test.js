@@ -21,7 +21,7 @@ test('serialize 3D geometry to amf', (t) => {
 const expected1 = [
   `<?xml version="1.0" encoding="UTF-8"?>
 <amf unit="millimeter" version="1.1">
-  <metadata type="author">Created using JSCAD</metadata>
+  <metadata type="author">Created by JSCAD</metadata>
 </amf>
 `
 ]
@@ -29,7 +29,7 @@ const expected1 = [
 const expected2 = [
   `<?xml version="1.0" encoding="UTF-8"?>
 <amf unit="millimeter" version="1.1">
-  <metadata type="author">Created using JSCAD</metadata>
+  <metadata type="author">Created by JSCAD</metadata>
   <object id="0">
     <mesh>
       <vertices>
@@ -283,7 +283,7 @@ const expected2 = [
 const expected3 = [
   `<?xml version="1.0" encoding="UTF-8"?>
 <amf unit="inch" version="1.1">
-  <metadata type="author">Created using JSCAD</metadata>
+  <metadata type="author">Created by JSCAD</metadata>
   <object id="0">
     <mesh>
       <vertices>

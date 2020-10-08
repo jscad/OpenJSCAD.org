@@ -64,7 +64,7 @@ const serialize = (options, ...objects) => {
       'xsd:noNamespaceSchemaLocation': 'http://www.web3d.org/specifications/x3d-3.3.xsd'
     },
     ['head', {},
-      ['meta', { name: 'creator', content: 'Created using JSCAD' }]
+      ['meta', { name: 'creator', content: 'Created by JSCAD' }]
     ]
   ]
   body = body.concat(convertObjects(objects3d, options))

@@ -56,7 +56,7 @@ const serialize = (options, ...objects) => {
       unit: options.unit,
       version: '1.1'
     },
-    ['metadata', { type: 'author' }, 'Created using JSCAD']
+    ['metadata', { type: 'author' }, 'Created by JSCAD']
   ]
   body = body.concat(translateObjects(objects3d, options))
 
