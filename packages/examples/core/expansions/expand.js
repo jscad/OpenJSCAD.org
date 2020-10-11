@@ -1,11 +1,12 @@
-/*
-// title       : Expand Example
-// author      : Rene K. Mueller, Simon Clark
-// license     : MIT License
-// description : Exploring the expand() function on 2D and 3D geometries
-// tags        : expand, expansion, operations
-// file        : expand.js
-*/
+/**
+ * Expanding 2D and 3D Shapes
+ * @category Manipulating Shapes
+ * @skillLevel 5
+ * @description Exploring the expand() function on 2D and 3D geometries
+ * @tags expand, expansion, operations
+ * @authors Rene K. Mueller, Simon Clark
+ * @licence MIT License
+ */
 
 const { cuboid, arc, rectangle } = require('@jscad/modeling').primitives
 const { expand } = require('@jscad/modeling').expansions

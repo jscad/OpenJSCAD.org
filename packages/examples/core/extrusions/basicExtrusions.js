@@ -1,11 +1,12 @@
-/*
-// title       : Basic Extrude Functions
-// author      : Rene K. Mueller, Moissette Mark, Simon Clark
-// license     : MIT License
-// description : Demonstrating the basic types of extrusions, and the variety of objects they can create.
-// file        : basicExtrusions.js
-// tags        : extrude, linear, extrudelinear, extruderectangular, extruderotate
-*/
+/**
+ * Basic Extrude Functions
+ * @category Creating Shapes
+ * @skillLevel 5
+ * @description Demonstrating the basic types of extrusions, and the variety of objects they can create.
+ * @tags extrude, linear, extrudelinear, extruderectangular, extruderotate
+ * @authors Rene K. Mueller, Moissette Mark, Simon Clark
+ * @licence MIT License
+ */
 
 const jscad = require('@jscad/modeling')
 const { line, polygon, star } = jscad.primitives

@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@jscad/modeling": "2.0.0-alpha.5",
-    "ava": "3.10.0"
+    "ava": "3.10.0",
+    "nyc": "15.1.0"
   }
 }

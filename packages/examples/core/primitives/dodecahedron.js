@@ -1,12 +1,13 @@
-/*
-// title      : Dodecahedron
-// author     : Rene K. Mueller
-// license    : MIT License
-// description: building dodecahedron() from cuboids
-// file       : dodecahedron.js
-// tags        : boolean, intersect, dodecahedron
-// from http://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Commented_Example_Projects
-*/
+/**
+ * Building a Dodecahedron
+ * @category Creating Shapes
+ * @skillLevel 2
+ * @description building dodecahedron() from cuboids
+ * @tags cuboid, primitive, boolean, intersect, dodecahedron
+ * @authors Rene K. Mueller
+ * @reference http://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Commented_Example_Projects
+ * @licence MIT License
+ */
 
 const jscad = require('@jscad/modeling')
 const { cuboid } = jscad.primitives

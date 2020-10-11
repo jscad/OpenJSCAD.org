@@ -104,16 +104,18 @@ body {
   z-index: 1;
 }
 
-#params {
+#controls input[type="checkbox"] {
+  margin-right: 19px;
+}
+
+section#params {
   position: absolute;
   bottom: 10px;
   left: 10px;
   user-select: none;
-  padding: 10px;
-  background: rgb(255, 255, 255, 80%);
-  box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.17);
   max-height: calc(100% - 6em);
   overflow-y: scroll;
+  padding: 0;
 }
 #paramsTable{
   display: flex;
@@ -122,14 +124,33 @@ body {
 #paramsTable table {
   border-collapse: collapse;
 }
+#paramsTable td {
+  padding: 1px 20px 5px 4px;
+}
+#paramsTable td.caption {
+  vertical-align: baseline;
+  font-weight: bold;
+  opacity: .7;
+  padding: 1px 4px 5px 20px;
+  text-align: right;
+}
 #paramsTable h1{
   margin-bottom: 6px;
   margin-top: 6px;
   font-size: medium;
 }
-#paramsTable .groupTitle  {
+#paramsTable h1 {
+  margin: 0px;
+  font-size: 1.3em;
+}
+#paramsTable .groupTitle {
   border-top: 1px solid #bfbcbc;
   cursor: pointer;
+  background: linear-gradient(180deg, #00000014, transparent);
+}
+#paramsTable .groupTitle td.caption {
+  text-align: left;
+  padding: 4px 10px 5px;
 }
 #paramsTable .groupTitle:hover {
   background: #dceeff;
@@ -156,6 +177,14 @@ body {
 
 #paramsTable .controlsLine{
   padding-top: 10px;
+}
+span#paramsControls {
+  display: block;
+  text-align: right;
+  padding: 3px 20px 10px;
+}
+#paramsTable tr.controlsLine:first-child td {
+   padding-top: 14px;
 }
 
 #busy{
@@ -220,18 +249,48 @@ h3 {
   border-color: white;
 }
 
-#options {
+section {
+  background: #fcfcff;
+  padding: 20px;
+  box-shadow: 5px 5px 7px 2px rgba(0, 0, 0, 0.17);
+  overflow: scroll;
+  color: var(--main-text-color);
+  z-index: 10;
+  border: 1px solid #aaa;
+}
+
+section.popup-menu {
   position: absolute;
   top: 40px;
   right: 15px;
   max-width: 500px;
-  height: 70%;
-  overflow: scroll;
-  color: var(--main-text-color);
-  background: white;
-  box-shadow: -1px 3px 3px 2px rgba(0, 0, 0, 0.17);
-  z-index: 1;
+  max-height: 70%;
 }
+
+section.popup-menu h2 {
+  color: #5e6d7d;
+}
+
+section.popup-menu h2:first-child {
+  margin-block-start: 0;
+}
+
+section.popup-menu h3 {
+  margin: auto;
+  border-bottom: 1px solid #888888;
+}
+
+section.popup-menu ul {
+  margin-top: 2px;
+  list-style: none;
+  padding-left: 18px;
+
+}
+
+#options {
+  padding-left: 18px;
+}
+
 #options fieldset{
   border: none;
   display: table;
@@ -248,38 +307,46 @@ h3 {
 }
 
 #editor {
-  position: absolute;
-  top: 40px;
-  right: 15px;
   width: 50%;
   height: 80%;
-  box-shadow: -1px 3px 3px 2px rgba(0, 0, 0, 0.17);
   padding: 1px;
-  background: white;
   font-size: 0.9em;
-  z-index: 1;
 }
 
 #help {
-  padding: 10px;
-  position: absolute;
-  top: 40px;
-  right: 15px;
   height: 50%;
-  overflow: scroll;
-  background: white;
-  box-shadow: -1px 3px 3px 2px rgba(0, 0, 0, 0.17);
-  z-index: 1;
 }
+
 #help a {
   color: rgb(0, 153, 255);
   text-decoration: none;
 }
+
+#help a:hover {
+  color: rgb(0 89 149);
+}
+
+a.external-link {
+  background-image: url(../imgs/externalLink.png);
+  background-repeat: no-repeat;
+  background-position: right 3px;
+  padding-right: 16px;
+}
+
 #help p {
   margin-left: 10px;
 }
+
 #help table {
   margin: 10px 0px 0px 10px;
+}
+
+#help ul.examples-group {
+  padding: 0;
+}
+
+#help ul.examples-group>li {
+  padding: 4px 0 0 0;
 }
 
 

@@ -1,11 +1,12 @@
-/*
-// title       : Polyhedron
-// author      : Rene K. Mueller
-// license     : MIT License
-// description : Demonstrating the polyhedron() function
-// tags        : polyhedron, geom3, modelling
-// file        : polyhedron.js
-*/
+/**
+ * Building a Polyhedron from scratch
+ * @category Creating Shapes
+ * @skillLevel 4
+ * @description Demonstrating the polyhedron() function
+ * @tags polyhedron, geom3, modeling
+ * @authors Rene K. Mueller
+ * @licence MIT License
+ */
 
 const { polyhedron } = require('@jscad/modeling').primitives
 

@@ -1,11 +1,12 @@
-/*
-// title       : Hull & HullChain example
-// author      : Simon Clark
-// license     : MIT License
-// description : Demonstrating the basics of Hulls
-// file        : hull.js
-// tags        : hull, hullchain
-*/
+/**
+ * Hull and HullChain 3D example
+ * @category Creating Shapes
+ * @skillLevel 8
+ * @description Demonstrating the basics of Hulls in three dimensions
+ * @tags hull, hullchain
+ * @authors Simon Clark
+ * @licence MIT License
+ */
 
 const jscad = require('@jscad/modeling')
 const { cuboid, sphere } = jscad.primitives

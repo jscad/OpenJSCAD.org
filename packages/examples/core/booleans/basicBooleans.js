@@ -1,11 +1,12 @@
-/*
-// title       : Basic Booleans Demonstration
-// author      : Simon Clark
-// license     : MIT License
-// description : Demonstrating the basics of boolean shape combinations
-// file        : basicBooleans.js
-// tags        : cube, sphere, union, subtract, difference, subtraction, intersect, intersection
-*/
+/**
+ * Basic Booleans Demonstration
+ * @category Manipulating Shapes
+ * @skillLevel 2
+ * @description Demonstrating the basics of boolean shape combinations
+ * @tags cube, sphere, union, subtract, difference, subtraction, intersect, intersection
+ * @authors Simon Clark
+ * @licence MIT License
+ */
 
 const jscad = require('@jscad/modeling')
 const { cube, sphere } = jscad.primitives

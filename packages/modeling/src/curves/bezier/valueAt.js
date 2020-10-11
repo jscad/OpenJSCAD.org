@@ -23,7 +23,7 @@ const valueAt = (t, bezier) => {
     const result = []
     for (let i = 0; i < bezier.dimensions; i++) {
       const singleDimensionPoints = []
-      for (var j = 0; j < bezier.points.length; j++) {
+      for (let j = 0; j < bezier.points.length; j++) {
         singleDimensionPoints.push(bezier.points[j][i])
       }
       result.push(bezierFunction(bezier, singleDimensionPoints, t))

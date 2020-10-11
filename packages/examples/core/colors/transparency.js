@@ -1,11 +1,12 @@
-/*
-// title      : Transparency
-// authors    : Rene K. Mueller, Moissette Mark, Simon Clark
-// license    : MIT License
-// description: showing transparent objects
-// tags       : colors, transparency, hsltorgb
-// file       : transparency.js
-*/
+/**
+ * Transparency
+ * @category Colors
+ * @skillLevel 2
+ * @description showing transparent objects
+ * @tags colors, transparency, hsltorgb
+ * @authors Rene K. Mueller, Moissette Mark, Simon Clark
+ * @licence MIT License
+ */
 
 const { colorize, hslToRgb, colorNameToRgb } = require('@jscad/modeling').colors
 const { cuboid, cylinder } = require('@jscad/modeling').primitives

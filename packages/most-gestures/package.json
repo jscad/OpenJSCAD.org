@@ -5,7 +5,7 @@
   "private": true,
   "main": "src/index.js",
   "scripts": {
-    "test": "ava './src/**/*.test.js' --verbose --timeout 30000",
+    "test": "ava --verbose --timeout 2m './src/**/*.test.js'",
     "release-patch": "git checkout master && git pull origin master && npm t && npm version patch && git push origin master --tags ",
     "release-minor": "git checkout master && git pull origin master && npm t && npm version minor && git push origin master --tags ",
     "release-major": "git checkout master && git pull origin master && npm t && npm version major && git push origin master --tags "

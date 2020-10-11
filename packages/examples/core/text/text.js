@@ -1,11 +1,12 @@
-/*
-// title       : Basic Text Creation
-// author      : Simon Clark
-// license     : MIT License
-// description : Demonstrating building 3D text
-// file        : text.js
-// tags        : text, font, characters
-*/
+/**
+ * Basic Text Creation
+ * @category Creating Shapes
+ * @skillLevel 10
+ * @description Demonstrating methods of building 3D text
+ * @tags text, font, characters
+ * @authors Simon Clark
+ * @licence MIT License
+ */
 
 const jscad = require('@jscad/modeling')
 const { sphere, line, cylinder } = jscad.primitives

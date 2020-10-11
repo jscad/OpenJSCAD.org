@@ -1,11 +1,12 @@
-/*
-// title       : STL Import Demonstration
-// author      : Simon Clark
-// license     : MIT License
-// description : Importing STL files to manipulate and combine. Drag the whole STLImport folder into JSCAD
-// file        : STLImport/index.js
-// tags        : stl, import
-*/
+/**
+ * STL Import Demonstration
+ * @category Imports
+ * @skillLevel 1
+ * @description Importing STL files. Drag the whole STLImport folder into JSCAD
+ * @tags stl, import
+ * @authors Simon Clark
+ * @licence MIT License
+ */
 
 const { translate, scale, rotateZ } = require('@jscad/modeling').transforms
 const { union } = require('@jscad/modeling').booleans
