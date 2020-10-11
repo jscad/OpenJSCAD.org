@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.6](https://github.com/jscad/openjscad.org/compare/@jscad/modeling@2.0.0-alpha.5...@jscad/modeling@2.0.0-alpha.6) (2020-10-11)
+
+
+### Bug Fixes
+
+* **all:** V2 : several fixes for modeling ([#705](https://github.com/jscad/openjscad.org/issues/705)) ([62017a4](https://github.com/jscad/openjscad.org/commit/62017a41214169d6e000f1e0c11aaefdd68e1097))
+* **core:** Remove connectors from public api ([#703](https://github.com/jscad/openjscad.org/issues/703)) ([a3bf8a4](https://github.com/jscad/openjscad.org/commit/a3bf8a42e7ccf2204351da4a4acff55c2d6acad6))
+
+
+
+
+
 # [2.0.0-alpha.5](https://github.com/jscad/openjscad.org/compare/@jscad/modeling@2.0.0-alpha.4...@jscad/modeling@2.0.0-alpha.5) (2020-09-29)
 
 
