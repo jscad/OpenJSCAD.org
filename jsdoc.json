@@ -2,7 +2,6 @@
   "source" : {
     "include": [
       "packages/modeling/src/colors",
-      "packages/modeling/src/connectors",
       "packages/modeling/src/curves/bezier",
       "packages/modeling/src/geometries",
       "packages/modeling/src/geometries/geom2",
