@@ -447,7 +447,7 @@ const getColorNumber = (object, options) => {
     // find the closest Autocad color number
     const index = options.colorIndex
     let closest = 255 + 255 + 255
-    for (i = 0; i < index.length; i++) {
+    for (let i = 0; i < index.length; i++) {
       const rgb = index[i]
       const diff = Math.abs(r - rgb[0]) + Math.abs(g - rgb[1]) + Math.abs(b - rgb[2])
       if (diff < closest) {

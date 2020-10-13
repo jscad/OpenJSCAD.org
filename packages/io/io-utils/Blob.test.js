@@ -66,7 +66,7 @@ test('blobs of array buffers', (t) => {
 })
 
 test('blob methods', (t) => {
-  let ablob = new Blob([Int32Array.from('12345').buffer, Int16Array.from('67890').buffer], { length: 5000 })
+  const ablob = new Blob([Int32Array.from('12345').buffer, Int16Array.from('67890').buffer], { length: 5000 })
   t.is(ablob.size, 30)
 
   let buffer = ablob.asBuffer()
