@@ -2,17 +2,17 @@
  * Compare the given files for equality; file path and file contents
  * @return {Boolean} true if the files are the same
  */
-const sameFile = (a, b) => {
-  if (a.fullPath === b.fullPath) {
-    if (typeof a.source === typeof b.source) {
-      if (a.source.byteLength) {
+const sameFile = (oldFile, newFile) => {
+  if (oldFile.fullPath === newFile.fullPath) {
+    if (typeof oldFile.source === typeof newFile.source) {
+      if (oldFile.source.byteLength) {
         // compare ArrayBuffer contents
-        const aArray = new Uint8Array(a.source)
-        const bArray = new Uint8Array(b.source)
-        return aArray.length === bArray.length && aArray.every((v, i) => v === bArray[i])
+        const oldArray = new Uint8Array(oldFile.source)
+        const newArray = new Uint8Array(newFile.source)
+        return oldArray.length === newArray.length && oldArray.every((oldInt, i) => oldInt === newArray[i])
       } else {
         // compare String contents
-        return a.length === b.length && a.source === b.source
+        return oldFile.length === newFile.length && oldFile.source === newFile.source
       }
     }
   }
@@ -20,16 +20,16 @@ const sameFile = (a, b) => {
 }
 
 /**
- * Compare the contents of the reference and the new file lists.
+ * Compare the contents of the old and the new file lists.
  * @see flattenFiles() below
- * @param {Array} reference - the reference list of files
- * @param {Array} files - the new list of files
+ * @param {Array} oldFileList - the old list of files
+ * @param {Array} newFileList - the new list of files
  * @return {Array} a list of the changed files
  */
-const changedFiles = (reference, files) =>  {
-  const working = reference.slice()
-  return files.filter((file) => {
-    const found = working.findIndex((a, i) => sameFile(a, file))
+const changedFiles = (oldFileList, newFileList) =>  {
+  const working = oldFileList.slice()
+  return newFileList.filter((newFile) => {
+    const found = working.findIndex((oldFile, i) => sameFile(oldFile, newFile))
     if (found < 0) {
       return true
     }
@@ -38,7 +38,7 @@ const changedFiles = (reference, files) =>  {
   })
 }
 
-/*
+/**
  * Create a flattened list of files from the given file heiarchy.
  * @return {Array} a list of file entries
  */
