@@ -153,7 +153,7 @@ const makeWebRequire = (filesAndFolders, options) => {
       if (entry) {
         const main = JSON.parse(entry.source).main
         if (main) {
-          const mainPath = requirePath + '/' + main
+          const mainPath = posix.normalize(requirePath + '/' + main)
           matchingModule = loadAsFile(mainPath)
           if (matchingModule) return matchingModule
 
