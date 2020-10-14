@@ -142,11 +142,11 @@ const processDirectory = (directory) => {
   // console.log('processDirectory',directory)
   const promiseDirectory = new Promise((resolve, reject) => {
     if (directory.entries) {
-      directory.entries.length ? processEntries(directory.entries).then(resolve) : resolve(null)
+      directory.entries.length ? processEntries(directory.entries).then(resolve) : resolve([])
     } else {
       const reader = directory.createReader()
       reader.readEntries((entries) => {
-        entries.length ? processEntries(entries).then(resolve) : resolve(null)
+        entries.length ? processEntries(entries).then(resolve) : resolve([])
       }, reject)
     }
   })
