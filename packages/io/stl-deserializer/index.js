@@ -35,9 +35,10 @@ const deserialize = (options, stl) => {
 
   const { filename, version, output, addMetaData } = options
 
-  const isBinary = isDataBinaryRobust(stl)
+  // if provided an ArrayBuffer then convert to String
+  stl = isBuffer(stl) ? bufferToBinaryString(stl) : stl
 
-  stl = isBinary && isBuffer(stl) ? bufferToBinaryString(stl) : stl
+  const isBinary = isDataBinaryRobust(stl)
 
   options && options.statusCallback && options.statusCallback({ progress: 33 })
 
@@ -60,6 +61,7 @@ const deserialize = (options, stl) => {
   */
 }
 
+// convert ArrayBuffer to UTF-16 code units
 const bufferToBinaryString = (buffer) => {
   let binary = ''
   const bytes = new Uint8Array(buffer)
@@ -70,8 +72,7 @@ const bufferToBinaryString = (buffer) => {
   return binary
 }
 
-// taken from https://github.com/feross/is-buffer if we need it more than once, add as dep
-const isBuffer = (obj) => (!!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj))
+const isBuffer = (obj) => (obj.byteLength && typeof obj.slice === 'function')
 
 // transforms input to string if it was not already the case
 const ensureString = (buf) => {
