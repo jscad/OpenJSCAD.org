@@ -1,10 +1,9 @@
 {
   "name": "@jscad/cli",
   "version": "2.0.0-alpha.8",
-  "description": "Command Line Interface (CLI) for OpenJsCAD",
+  "description": "Command Line Interface (CLI) for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "bin": {
-    "openjscad": "./cli.js",
     "jscad": "./cli.js"
   },
   "scripts": {
@@ -28,6 +27,13 @@
       "name": "Mark 'kaosat-dev' Moissette",
       "url": "http://kaosat.net"
     }
+  ],
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "cli",
+    "command",
+    "application"
   ],
   "license": "MIT",
   "dependencies": {

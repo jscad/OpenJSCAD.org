@@ -1,8 +1,8 @@
 {
   "name": "@jscad/io",
   "version": "2.0.0-alpha.7",
-  "description": "Meta package for input , output and formats handling for jscad project",
-  "repository": "https://github.com/jscad/io",
+  "description": "Meta Package for JSCAD IO Packages",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "scripts": {
     "release-patch": "git checkout master && npm version patch ; git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
@@ -24,16 +24,10 @@
     }
   ],
   "keywords": [
-    "openscad",
     "openjscad",
     "jscad",
-    "parametric",
-    "modeling",
-    "cad",
     "io",
     "formats",
-    "parser",
-    "writer",
     "serializer",
     "deserializer"
   ],

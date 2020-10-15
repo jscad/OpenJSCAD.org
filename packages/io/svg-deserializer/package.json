@@ -1,8 +1,8 @@
 {
   "name": "@jscad/svg-deserializer",
   "version": "2.0.0-alpha.6",
-  "description": "SVG deserializer for JSCAD project",
-  "repository": "https://github.com/jscad/",
+  "description": "SVG Deserializer for JSCAD",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "scripts": {
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
@@ -28,7 +28,6 @@
   "keywords": [
     "openjscad",
     "jscad",
-    "csg",
     "import",
     "deserializer",
     "svg"

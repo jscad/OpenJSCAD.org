@@ -1,8 +1,8 @@
 {
   "name": "@jscad/io-utils",
   "version": "2.0.0-alpha.6",
-  "description": "Utilities for input , output and formats handling for jscad project",
-  "repository": "https://github.com/jscad/io",
+  "description": "Utilities for JSCAD IO Packages",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "scripts": {
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
@@ -26,11 +26,9 @@
     }
   ],
   "keywords": [
-    "openscad",
     "openjscad",
     "jscad",
-    "cad",
-    "io",
+    "utilities",
     "formats",
     "serializer",
     "deserializer"

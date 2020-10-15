@@ -1,21 +1,19 @@
 {
   "name": "@jscad/web",
   "version": "2.0.0-alpha.10",
-  "description": "Web UI for OpenJsCAD",
+  "description": "Web Application for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "main": "src/index.js",
+  "unpkg": "dist/jscad-web.min.js",
   "scripts": {
-    "build-web": "browserify src/index.js -o dist/jscad-full.min.js -g uglifyify --standalone makeJscad",
-    "build-min": "browserify src/ui/min.js -o dist/jscad-min.min.js -t [babelify browserify minifyify]",
-    "build-opt": "browserify src/ui/opt.js -o dist/opt.js -t [babelify browserify minifyify]",
+    "build": "npm run build-web",
+    "build-web": "browserify src/index.js -o dist/jscad-web.min.js -g uglifyify --standalone jscadWeb",
     "dev": "budo demo.js --port=8081 --css ./css/demo.css --live -- -b",
-    "build-umd": "browserify --standalone openjscad src/ui/umd.js -o dist/openjscad.umd.js -t [babelify browserify minifyify]",
-    "build-all": "npm run build-web",
-    "start-dev": "budo src/ui/index.js:dist/index.js --port=8080 --live -- -b -t babelify",
-    "preversion": "npm run build-all && git add dist",
+    "preversion": "npm run build && git add dist",
     "release-patch": "git checkout master && git pull origin master && npm version patch",
     "release-minor": "git checkout master && git pull origin master && npm version minor",
     "release-major": "git checkout master && git pull origin master && npm version major",
-    "postinstall": "node postInstall.js && node -e \"console.log('\\u001b[35m\\u001b[1mLove OpenJSCAD? You can now donate to our open collective:\\u001b[22m\\u001b[39m\\n > \\u001b[34mhttps://opencollective.com/openjscad/donate\\u001b[0m')\""
+    "postinstall": "node postInstall.js && node -e \"console.log('\\u001b[35m\\u001b[1mLove JSCAD? You can now donate to our open collective:\\u001b[22m\\u001b[39m\\n > \\u001b[34mhttps://opencollective.com/openjscad/donate\\u001b[0m')\""
   },
   "contributors": [
     {
@@ -31,9 +29,13 @@
       "url": "http://kaosat.net"
     }
   ],
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "web",
+    "application"
+  ],
   "license": "MIT",
-  "main": "dist/openjscad.umd.js",
-  "module": "dist/openjscad.umd.js",
   "dependencies": {
     "@jscad/array-utils": "2.0.0-alpha.3",
     "@jscad/core": "2.0.0-alpha.8",
@@ -54,7 +56,6 @@
     "ava": "3.10.0",
     "browserify": "16.5.1",
     "budo": "11.6.4",
-    "common-shakeify": "0.6.2",
     "copy-dir": "1.3.0",
     "docblock": "0.4.4",
     "tinyify": "2.5.2",
