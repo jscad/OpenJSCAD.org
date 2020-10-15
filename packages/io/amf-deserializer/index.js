@@ -5,10 +5,6 @@ Copyright (c) 2016 Z3 Development https://github.com/z3dev
 Copyright (c) 2013-2016 by Rene K. Mueller <spiritdude@gmail.com>
 
 All code released under MIT license
-
-History:
-  2016/06/27: 0.5.1: rewrote using SAX XML parser, enhanced for multiple objects, materials, units by Z3Dev
-  2013/04/11: 0.018: added alpha support to AMF export
 */
 
 // //////////////////////////////////////////
@@ -19,7 +15,10 @@ History:
 // //////////////////////////////////////////
 
 /**
+ * Deserializer of AMF data to JSCAD geometries.
  * @module io/amf-deserializer
+ * @example
+ * const { deserializer, extension } = require('@jscad/amf-serializer')
  */
 
 const version = require('./package.json').version
@@ -33,7 +32,7 @@ const instantiate = require('./deserialize')
  * @param {Object} [options] - options used during deserializing
  * @param {String} [options.filename='amf'] - filename of original AMF source
  * @param {String} [options.output='script'] - either 'script' or 'geometry' to set desired output
- * @param {String} [options.version='0.0.0'] - version number to add to the metadata
+ * @param {String} [options.version] - version added to the script metadata, default is package version
  * @param {Boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script
  * @param {String} input - AMF source data (XML)
  * @returns {(Array|String)} either an array of objects (geometry) or a string (script)
