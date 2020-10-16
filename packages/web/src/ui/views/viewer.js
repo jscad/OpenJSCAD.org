@@ -83,19 +83,22 @@ const viewer = (state, i18n) => {
         if(!timer) timer = requestAnimationFrame(doRotatePan);
     })
 
-    const doRotatePan = () => {
+    const doRotatePan = (timestamp) => {
       timer = null;
       if(delta[0] || delta[1]){      
         const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, delta)
         delta = [0,0];
         controls = { ...controls, ...updated.controls }
       }
+      
       if(deltaPan[0] || deltaPan[1]){      
         const updated = orbitControls.pan({ controls, camera, speed: panSpeed }, deltaPan)
         deltaPan = [0,0];
         camera.position = updated.camera.position
         camera.target = updated.camera.target
       }
+
+      updateAndRender(timestamp)
     }
 
     // zoom
