@@ -54,7 +54,6 @@ let prevSolids
 let prevColor = []
 
 const viewer = (state, i18n) => {
-  // console.log('regen viewer', state.viewer)
   const el = html`<canvas id='renderTarget'> </canvas>`
 
   if (!render) {
@@ -64,43 +63,56 @@ const viewer = (state, i18n) => {
     render = prepareRender(viewerOptions)
     const gestures = require('most-gestures').pointerGestures(el)
 
-    var delta = [0,0];
-    var timer;
+    let delta = [0,0];
+    let deltaPan = [0,0];
+    let timer;
     // rotate
     gestures.drags
       .forEach((data) => {
         const ev = data.originalEvents[0]
         const shiftKey = (ev.shiftKey === true) || (ev.touches && ev.touches.length > 2)
-        if (!shiftKey) {
+        if (shiftKey) {
+          deltaPan[0] += data.delta.x;
+          deltaPan[1] += data.delta.y;          
+        }else{
           delta[0] -= data.delta.x;
           delta[1] -= data.delta.y;
-          cancelAnimationFrame(timer);
-          timer = requestAnimationFrame(doRotate);
         }
-      })
-    function doRotate(){
-      const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, delta)
-      delta = [0,0];
-      controls = { ...controls, ...updated.controls }
+        if(!timer) timer = requestAnimationFrame(doRotatePan);
+    })
+
+    function doRotatePan(){
+      timer = null;
+      if(delta[0] || delta[1]){      
+        const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, delta)
+        delta = [0,0];
+        controls = { ...controls, ...updated.controls }
+      }
+      if(deltaPan[0] || deltaPan[1]){      
+        const updated = orbitControls.pan({ controls, camera, speed: panSpeed }, deltaPan)
+        deltaPan = [0,0];
+        camera.position = updated.camera.position
+        camera.target = updated.camera.target
+      }
     }
 
     // pan
-    gestures.drags
-      .forEach((data) => {
-        const ev = data.originalEvents[0]
-        const shiftKey = (ev.shiftKey === true) || (ev.touches && ev.touches.length > 2)
-        if (shiftKey) {
-          const now = Date.now()
-          const ms = now - lastPan
-          if (ms > (1000 / panRate)) {
-            const delta = [data.delta.x, data.delta.y].map((d) => d)
-            const updated = orbitControls.pan({ controls, camera, speed: panSpeed }, delta)
-            camera.position = updated.camera.position
-            camera.target = updated.camera.target
-            lastPan = now
-          }
-        }
-      })
+    // gestures.drags
+    //   .forEach((data) => {
+    //     const ev = data.originalEvents[0]
+    //     const shiftKey = (ev.shiftKey === true) || (ev.touches && ev.touches.length > 2)
+    //     if (shiftKey) {
+    //       const now = Date.now()
+    //       const ms = now - lastPan
+    //       if (ms > (1000 / panRate)) {
+    //         const delta = [data.delta.x, data.delta.y].map((d) => d)
+    //         const updated = orbitControls.pan({ controls, camera, speed: panSpeed }, delta)
+    //         camera.position = updated.camera.position
+    //         camera.target = updated.camera.target
+    //         lastPan = now
+    //       }
+    //     }
+    //   })
 
     // zoom
     gestures.zooms
