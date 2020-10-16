@@ -70,13 +70,14 @@ const viewer = (state, i18n) => {
     gestures.drags
       .forEach((data) => {
         const ev = data.originalEvents[0]
+        const {x,y} = data.delta;
         const shiftKey = (ev.shiftKey === true) || (ev.touches && ev.touches.length > 2)
         if (shiftKey) {
-          deltaPan[0] += data.delta.x;
-          deltaPan[1] += data.delta.y;          
+          deltaPan[0] += x;
+          deltaPan[1] += y;          
         }else{
-          delta[0] -= data.delta.x;
-          delta[1] -= data.delta.y;
+          delta[0] -= x;
+          delta[1] -= y;
         }
         if(!timer) timer = requestAnimationFrame(doRotatePan);
     })
