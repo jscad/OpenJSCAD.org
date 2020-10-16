@@ -26,6 +26,7 @@ let render
 let viewerOptions
 let camera = perspectiveCamera.defaults
 let controls = orbitControls.defaults
+controls.drag = 1;
 
 const grid = { // grid data
   // the choice of what draw command to use is also data based
@@ -63,22 +64,26 @@ const viewer = (state, i18n) => {
     render = prepareRender(viewerOptions)
     const gestures = require('most-gestures').pointerGestures(el)
 
+    var delta = [0,0];
+    var timer;
     // rotate
     gestures.drags
       .forEach((data) => {
         const ev = data.originalEvents[0]
         const shiftKey = (ev.shiftKey === true) || (ev.touches && ev.touches.length > 2)
         if (!shiftKey) {
-          const now = Date.now()
-          const ms = now - lastRotate
-          if (ms > (1000 / rotateRate)) {
-            const delta = [data.delta.x, data.delta.y].map((d) => -d)
-            const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, delta)
-            controls = { ...controls, ...updated.controls }
-            lastRotate = now
-          }
+          delta[0] -= data.delta.x;
+          delta[1] -= data.delta.y;
+          cancelAnimationFrame(timer);
+          timer = requestAnimationFrame(doRotate);
         }
       })
+    function doRotate(){
+      const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, delta)
+      delta = [0,0];
+      controls = { ...controls, ...updated.controls }
+    }
+
     // pan
     gestures.drags
       .forEach((data) => {
