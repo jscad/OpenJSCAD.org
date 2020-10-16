@@ -26,7 +26,7 @@ let render
 let viewerOptions
 let camera = perspectiveCamera.defaults
 let controls = orbitControls.defaults
-controls.drag = 1;
+controls.drag = 1
 
 const grid = { // grid data
   // the choice of what draw command to use is also data based
@@ -66,6 +66,7 @@ const viewer = (state, i18n) => {
     let delta = [0,0];
     let deltaPan = [0,0];
     let timer;
+
     // rotate
     gestures.drags
       .forEach((data) => {
@@ -82,7 +83,7 @@ const viewer = (state, i18n) => {
         if(!timer) timer = requestAnimationFrame(doRotatePan);
     })
 
-    function doRotatePan(){
+    const doRotatePan = () => {
       timer = null;
       if(delta[0] || delta[1]){      
         const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, delta)
@@ -96,24 +97,6 @@ const viewer = (state, i18n) => {
         camera.target = updated.camera.target
       }
     }
-
-    // pan
-    // gestures.drags
-    //   .forEach((data) => {
-    //     const ev = data.originalEvents[0]
-    //     const shiftKey = (ev.shiftKey === true) || (ev.touches && ev.touches.length > 2)
-    //     if (shiftKey) {
-    //       const now = Date.now()
-    //       const ms = now - lastPan
-    //       if (ms > (1000 / panRate)) {
-    //         const delta = [data.delta.x, data.delta.y].map((d) => d)
-    //         const updated = orbitControls.pan({ controls, camera, speed: panSpeed }, delta)
-    //         camera.position = updated.camera.position
-    //         camera.target = updated.camera.target
-    //         lastPan = now
-    //       }
-    //     }
-    //   })
 
     // zoom
     gestures.zooms
