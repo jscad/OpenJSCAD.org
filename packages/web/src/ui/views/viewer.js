@@ -65,9 +65,11 @@ const viewer = (state, i18n) => {
 
     let delta = [0,0];
     let deltaPan = [0,0];
+    let zoomDelta = 0;
     let timer;
+    let renderTimer;
 
-    // rotate
+    // rotate & pan
     gestures.drags
       .forEach((data) => {
         const ev = data.originalEvents[0]
@@ -80,10 +82,33 @@ const viewer = (state, i18n) => {
           delta[0] -= x;
           delta[1] -= y;
         }
-        if(!timer) timer = requestAnimationFrame(doRotatePan);
+        if(!timer) {
+          cancelAnimationFrame(renderTimer);
+          timer = requestAnimationFrame(doRotatePanZoom);
+        } 
     })
 
-    const doRotatePan = (timestamp) => {
+    // zoom
+    gestures.zooms
+      .forEach((x) => {
+        const now = Date.now()
+        const ms = now - lastZoom
+        zoomDelta -=x;
+        if(!timer) {
+          cancelAnimationFrame(renderTimer);
+          timer = requestAnimationFrame(doRotatePanZoom);
+        } 
+      })
+
+    // auto fit
+    gestures.taps
+      .filter((taps) => taps.nb === 2)
+      .forEach((x) => {
+        const updated = orbitControls.zoomToFit({ controls, camera, entities: prevEntities })
+        controls = { ...controls, ...updated.controls }
+      })
+
+    const doRotatePanZoom = (timestamp) => {
       timer = null;
       if(delta[0] || delta[1]){      
         const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, delta)
@@ -98,33 +123,19 @@ const viewer = (state, i18n) => {
         camera.target = updated.camera.target
       }
 
-      updateAndRender(timestamp)
+      if(zoomDelta){
+        const updated = orbitControls.zoom({ controls, camera, speed: zoomSpeed }, zoomDelta)
+        controls = { ...controls, ...updated.controls }
+        zoomDelta = 0;
+      }
+
+      updateAndRender(timestamp, true)
     }
 
-    // zoom
-    gestures.zooms
-      .forEach((x) => {
-        const now = Date.now()
-        const ms = now - lastZoom
-        if (ms > (1000 / zoomRate)) {
-          const updated = orbitControls.zoom({ controls, camera, speed: zoomSpeed }, -x)
-          controls = { ...controls, ...updated.controls }
-          lastZoom = now
-        }
-      })
-
-    // auto fit
-    gestures.taps
-      .filter((taps) => taps.nb === 2)
-      .forEach((x) => {
-        const updated = orbitControls.zoomToFit({ controls, camera, entities: prevEntities })
-        controls = { ...controls, ...updated.controls }
-      })
-
     // the heart of rendering, as themes, controls, etc change
-    const updateAndRender = (timestamp) => {
+    const updateAndRender = (timestamp, force) => {
       const elaspe = timestamp - lastRender
-      if (elaspe > (1000 / renderRate)) {
+      // if (force || elaspe > (1000 / renderRate)) {
         lastRender = timestamp
 
         const updatedA = orbitControls.update({ controls, camera })
@@ -134,10 +145,10 @@ const viewer = (state, i18n) => {
 
         resize(el)
         render(viewerOptions)
-      }
-      window.requestAnimationFrame(updateAndRender)
+      // }
+      renderTimer = window.requestAnimationFrame(updateAndRender)
     }
-    window.requestAnimationFrame(updateAndRender)
+    renderTimer =window.requestAnimationFrame(updateAndRender)
   } else {
     // only generate entities when the solids change
     // themes, options, etc also change the viewer state
