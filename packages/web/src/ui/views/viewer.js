@@ -8,7 +8,7 @@ const perspectiveCamera = cameras.perspective
 const orbitControls = rendererStuff.controls.orbit
 
 // params
-const rotateSpeed = 0.003
+const rotateSpeed = 0.002
 const panSpeed = 1
 const zoomSpeed = 0.08
 
@@ -17,7 +17,6 @@ let render
 let viewerOptions
 let camera = perspectiveCamera.defaults
 let controls = orbitControls.defaults
-controls.drag = 1
 let rotateDelta = [0, 0]
 let panDelta = [0, 0]
 let zoomDelta = 0
