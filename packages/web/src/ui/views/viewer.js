@@ -12,20 +12,14 @@ const rotateSpeed = 0.002
 const panSpeed = 1
 const zoomSpeed = 0.08
 
-const rotateRate = 20 // number of rotations per second
-let lastRotate = 0 // time in ms
-const zoomRate = 20 // number of zooms per second
-let lastZoom = 0 // time in ms
-const panRate = 20 // number of pans per second
-let lastPan = 0 // time in ms
-const renderRate = 10 // number of renders per second
-let lastRender = 0
-
 // internal state
 let render
 let viewerOptions
 let camera = perspectiveCamera.defaults
 let controls = orbitControls.defaults
+let rotateDelta = [0, 0]
+let panDelta = [0, 0]
+let zoomDelta = 0
 
 const grid = { // grid data
   // the choice of what draw command to use is also data based
@@ -53,7 +47,6 @@ let prevSolids
 let prevColor = []
 
 const viewer = (state, i18n) => {
-  // console.log('regen viewer', state.viewer)
   const el = html`<canvas id='renderTarget'> </canvas>`
 
   if (!render) {
@@ -63,50 +56,25 @@ const viewer = (state, i18n) => {
     render = prepareRender(viewerOptions)
     const gestures = require('most-gestures').pointerGestures(el)
 
-    // rotate
+    // rotate & pan
     gestures.drags
       .forEach((data) => {
         const ev = data.originalEvents[0]
-        const shiftKey = (ev.shiftKey === true) || (ev.touches && ev.touches.length > 2)
-        if (!shiftKey) {
-          const now = Date.now()
-          const ms = now - lastRotate
-          if (ms > (1000 / rotateRate)) {
-            const delta = [data.delta.x, data.delta.y].map((d) => -d)
-            const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, delta)
-            controls = { ...controls, ...updated.controls }
-            lastRotate = now
-          }
-        }
-      })
-    // pan
-    gestures.drags
-      .forEach((data) => {
-        const ev = data.originalEvents[0]
+        const { x, y } = data.delta
         const shiftKey = (ev.shiftKey === true) || (ev.touches && ev.touches.length > 2)
         if (shiftKey) {
-          const now = Date.now()
-          const ms = now - lastPan
-          if (ms > (1000 / panRate)) {
-            const delta = [data.delta.x, data.delta.y].map((d) => d)
-            const updated = orbitControls.pan({ controls, camera, speed: panSpeed }, delta)
-            camera.position = updated.camera.position
-            camera.target = updated.camera.target
-            lastPan = now
-          }
+          panDelta[0] += x
+          panDelta[1] += y
+        } else {
+          rotateDelta[0] -= x
+          rotateDelta[1] -= y
         }
       })
 
     // zoom
     gestures.zooms
       .forEach((x) => {
-        const now = Date.now()
-        const ms = now - lastZoom
-        if (ms > (1000 / zoomRate)) {
-          const updated = orbitControls.zoom({ controls, camera, speed: zoomSpeed }, -x)
-          controls = { ...controls, ...updated.controls }
-          lastZoom = now
-        }
+        zoomDelta -= x
       })
 
     // auto fit
@@ -117,20 +85,38 @@ const viewer = (state, i18n) => {
         controls = { ...controls, ...updated.controls }
       })
 
-    // the heart of rendering, as themes, controls, etc change
-    const updateAndRender = (timestamp) => {
-      const elaspe = timestamp - lastRender
-      if (elaspe > (1000 / renderRate)) {
-        lastRender = timestamp
-
-        const updatedA = orbitControls.update({ controls, camera })
-        controls = { ...controls, ...updatedA.controls }
-        camera.position = updatedA.camera.position
-        perspectiveCamera.update(camera)
-
-        resize(el)
-        render(viewerOptions)
+    const doRotatePanZoom = (timestamp) => {
+      if (rotateDelta[0] || rotateDelta[1]) {
+        const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, rotateDelta)
+        rotateDelta = [0, 0]
+        controls = { ...controls, ...updated.controls }
       }
+
+      if (panDelta[0] || panDelta[1]) {
+        const updated = orbitControls.pan({ controls, camera, speed: panSpeed }, panDelta)
+        panDelta = [0, 0]
+        camera.position = updated.camera.position
+        camera.target = updated.camera.target
+      }
+
+      if (zoomDelta) {
+        const updated = orbitControls.zoom({ controls, camera, speed: zoomSpeed }, zoomDelta)
+        controls = { ...controls, ...updated.controls }
+        zoomDelta = 0
+      }
+    }
+
+    // the heart of rendering, as themes, controls, etc change
+    const updateAndRender = (timestamp, force) => {
+      doRotatePanZoom(timestamp)
+
+      const updatedA = orbitControls.update({ controls, camera })
+      controls = { ...controls, ...updatedA.controls }
+      camera.position = updatedA.camera.position
+      perspectiveCamera.update(camera)
+
+      resize(el)
+      render(viewerOptions)
       window.requestAnimationFrame(updateAndRender)
     }
     window.requestAnimationFrame(updateAndRender)
@@ -173,8 +159,6 @@ const viewer = (state, i18n) => {
 }
 
 const setup = (element) => {
-  const width = window.innerWidth
-  const height = window.innerHeight
   // prepare the camera
   const camera = Object.assign({}, perspectiveCamera.defaults)
   camera.position = [150, 180, 233]
