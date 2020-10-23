@@ -30,7 +30,7 @@ const binaryMimetypes = {
  * @returns {Promise} new promise to read and convert the file
  */
 const readFileAsync = (file, fileMeta) => {
-  console.log('readFileAsync',file,fileMeta)
+  // console.log('readFileAsync',file,fileMeta)
 
   const fullPath = file.fullPath ? file.fullPath : fileMeta.fullPath ? fileMeta.fullPath : ''
   const ext = getFileExtensionFromString(file.name)
@@ -109,7 +109,6 @@ const processEntries = (items) => {
 
   return Promise.all(results)
     .then((x) => x.filter((x) => x !== null && x !== undefined))
-    // BAD .catch((error) => console.error(error.message))
 }
 
 /*
@@ -154,7 +153,6 @@ const processDirectory = (directory) => {
     .then((children) => {
       children = children.map((child) => {
         if (!child.fullPath.startsWith('/')) {
-console.log('reset',child.fullPath)
           child.fullPath = directory.fullPath + '/' + child.name
         }
         return child
@@ -171,17 +169,21 @@ const transformFileList = (fileList) => {
   const path = require('path')
 
   if (fileList.length === 1) {
-    const dirFullPath = path.sep
-    const directory = { fullPath: dirFullPath, name: dirFullPath, isDirectory: true, entries: [] }
-
     const file = fileList[0]
     const filePath = file.webkitRelativePath ? file.webkitRelativePath : file.name
-    file.fullPath = path.normalize(dirFullPath + filePath)
-console.log('set',file)
+    const fileParts = filePath.split(path.sep)
 
-    directory.entries.push(file)
+    if (fileParts.length < 2) {
+      // special handling for a single File (not a directory)
+      const dirFullPath = path.sep
+      const directory = { fullPath: dirFullPath, name: dirFullPath, isDirectory: true, entries: [] }
 
-    return [directory]
+      file.fullPath = path.normalize(dirFullPath + filePath)
+
+      directory.entries.push(file)
+
+      return [directory]
+    }
   }
 
   let rootDirectory
@@ -231,12 +233,11 @@ console.log('set',file)
 //    1) walk the tree
 //    2) read the files (readFileAsync)
 //    3) return a flattened list of promises containing all file entries
-const walkFileTree = (filelist) => {
-  let items = filelist
-  if (filelist.length && (filelist[0] instanceof File)) {
+const walkFileTree = (fileList) => {
+  let items = fileList
+  if (fileList.length && (fileList[0] instanceof File)) {
     // transform the flat list of File entries
-    items = transformFileList(filelist)
-console.log('transformed',items)
+    items = transformFileList(fileList)
   }
   return processEntries(items)
 }
