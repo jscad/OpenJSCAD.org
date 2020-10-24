@@ -28,9 +28,9 @@ class Blob {
   constructor (contents, options) {
     // make the optional options non-optional
     options = options || {}
-    // number of bytes
+    // the size of the byte sequence in number of bytes
     this.size = 0 // contents, not allocation
-    // media type
+    // the media type, as an ASCII-encoded string in lower case, and parsable as a MIME type
     this.type = ''
     // readability state (CLOSED: true, OPENED: false)
     this.isClosed = false
