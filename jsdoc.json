@@ -26,7 +26,11 @@
       "packages/modeling/src/operations/transforms",
       "packages/modeling/src/primitives",
       "packages/modeling/src/text",
-      "packages/modeling/src/utils"
+      "packages/modeling/src/utils",
+
+      "packages/io/io-utils",
+      "packages/io/amf-deserializer",
+      "packages/io/amf-serializer"
     ],
     "includePattern": ".+\\.js(doc|x)?$",
     "excludePattern": ".+test.js$"

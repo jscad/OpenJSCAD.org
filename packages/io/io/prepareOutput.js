@@ -16,7 +16,7 @@ const prepareOutput = (objects, params) => {
   const { format, version } = Object.assign({}, defaults, params)
 
   const metaData = {
-    producer: 'OpenJSCAD.org ' + version,
+    producer: 'JSCAD ' + version,
     date: new Date(),
     version
   }
