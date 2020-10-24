@@ -23,6 +23,11 @@ const makeLocalFsSideEffect = async (params) => {
       }
 
       const read = async () => {
+         // disable old watcher
+         if (watcher) {
+           clearInterval(watcher)
+           watcher = 0
+         }
         rawData = data
         currentFileTree = await walkFileTree(data)
         commandResponses.callback({ type, id, data: currentFileTree })

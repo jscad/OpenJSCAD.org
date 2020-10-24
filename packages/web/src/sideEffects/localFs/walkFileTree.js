@@ -1,8 +1,27 @@
-const { supportedInputExtensions } = require('@jscad/io/formats')
+const { formats } = require('@jscad/io/formats')
 
 const getFileExtensionFromString = require('@jscad/core/utils/getFileExtensionFromString')
 
 const { flatten } = require('@jscad/array-utils')
+
+const binaryMimetypes = {
+  bmp: 'image/bmp',
+  gif: 'image/gif',
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+  png: 'image/png',
+  tif: 'image/tiff',
+  tiff: 'image/tiff',
+
+  otc: 'font/otf',
+  otf: 'font/otf',
+  ttc: 'font/ttf',
+  ttf: 'font/ttf',
+  woff: 'font/woff',
+  woff2: 'font/woff',
+
+  stl: 'application/sla'
+}
 
 /*
  * Read the given file asyncronously via a promise.
@@ -11,41 +30,45 @@ const { flatten } = require('@jscad/array-utils')
  * @returns {Promise} new promise to read and convert the file
  */
 const readFileAsync = (file, fileMeta) => {
-  // console.log('readFileAsync',file,fileMeta)
+  //console.log('readFileAsync',file,fileMeta)
+
+  const fullPath = fileMeta && fileMeta.fullPath ? fileMeta.fullPath : ''
+  const ext = getFileExtensionFromString(file.name)
+  const mimetype = file.mimetype
+
   const promiseReader = new Promise((resolve, reject) => {
     const reader = new FileReader()
-    // remove rootfolder since all files are within it
-    const fullPath = fileMeta && fileMeta.fullPath ? fileMeta.fullPath/* .split('/').slice(2).join('/') */ : ''
-
-    // convert binary to text
-    const convert = (buffer) => {
-      let binary = ''
-      const bytes = new Uint8Array(buffer)
-      const length = bytes.byteLength
-      for (let i = 0; i < length; i++) {
-        binary += String.fromCharCode(bytes[i])
-      }
-      return binary
-    }
 
     reader.onload = (event) => {
-      resolve({ name: file.name, ext: getFileExtensionFromString(fullPath), fullPath, source: convert(event.target.result) })
+      const result = event.target.result
+      if (result.byteLength) {
+        resolve({ name: file.name, ext, fullPath, mimetype, source: result })
+      } else if (typeof(result) === 'string') {
+        resolve({ name: file.name, ext, fullPath, mimetype, source: result })
+      }
     }
+
     reader.onerror = (event) => {
       reject(new Error(`Failed to load file: ${fullPath} [${reader.error}]`))
     }
 
-    reader.readAsArrayBuffer(file)
+    if (binaryMimetypes[ext]) {
+      reader.readAsArrayBuffer(file) // result is ArrayBuffer
+    } else {
+      reader.readAsText(file) // result is String
+    }
+    // readAsDataURL() - result is data URI
+    // readAsBinaryString() - result is raw binary data (OLD)
   })
   return promiseReader
 }
 
-const inputFormats = supportedInputExtensions()
-
-// File
+// all known formats are supported
 const isSupportedFormat = (file) => {
   const ext = getFileExtensionFromString(file.name)
-  return inputFormats.includes(ext)
+  const mimetype = formats[ext] ? formats[ext].mimetype : binaryMimetypes[ext]
+  file.mimetype = file.type && file.type.length ? file.type : mimetype
+  return file.mimetype && file.mimetype.length
 }
 
 const pseudoArraytoArray = (pseudoArray) => {
@@ -60,10 +83,11 @@ const pseudoArraytoArray = (pseudoArray) => {
 const isEmpty = (x) => x !== null && x !== undefined // skip empty items
 
 /*
- * Process the given items into a series of promises
+ * Process the given directory entries into a series of promises
  * @returns {Promise} one promise to resolve them all
  */
-const processItems = (items) => {
+const processEntries = (items) => {
+  // console.log('processEntries',items)
   const results = pseudoArraytoArray(items.filter(isEmpty))
     .filter(isEmpty) // skip empty items
     .reduce((result, item) => {
@@ -118,11 +142,11 @@ const processDirectory = (directory) => {
   // console.log('processDirectory',directory)
   const promiseDirectory = new Promise((resolve, reject) => {
     if (directory.entries) {
-      directory.entries.length ? processItems(directory.entries).then(resolve) : resolve(null)
+      directory.entries.length ? processEntries(directory.entries).then(resolve) : resolve([])
     } else {
       const reader = directory.createReader()
       reader.readEntries((entries) => {
-        entries.length ? processItems(entries).then(resolve) : resolve(null)
+        entries.length ? processEntries(entries).then(resolve) : resolve([])
       }, reject)
     }
   })
@@ -198,7 +222,7 @@ const walkFileTree = (filelist) => {
     // transform the flat list of File entries
     items = transformFileList(filelist)
   }
-  return processItems(items)
+  return processEntries(items)
 }
 
 module.exports = {

@@ -385,6 +385,7 @@ const actions = ({ sources }) => {
     // load files from selection (file list)
     sources.dom.select('#fileLoader').events('change')
       .tap((x) => console.log('selected directory', x))
+      .filter((event) => event.target.files.length > 0)
       .map((event) => {
         // event is from a selection of a directory
         const filelist = event.target.files
