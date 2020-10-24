@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/stl-deserializer@2.0.0-alpha.6...@jscad/stl-deserializer@2.0.0-alpha.7) (2020-10-24)
+
+
+### Bug Fixes
+
+* **all:** V2 : allow other file types to be loaded into the fake FS of the WEB UI ([#709](https://github.com/jscad/OpenJSCAD.org/issues/709)) ([1d4304a](https://github.com/jscad/OpenJSCAD.org/commit/1d4304ae6b42c51b0526cba369eab1806fe8f274))
+
+
+
+
+
 # [2.0.0-alpha.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/stl-deserializer@2.0.0-alpha.5...@jscad/stl-deserializer@2.0.0-alpha.6) (2020-10-11)
 
 
