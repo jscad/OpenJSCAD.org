@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.11](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.10...@jscad/web@2.0.0-alpha.11) (2020-10-24)
+
+
+### Bug Fixes
+
+* **all:** V2 : allow other file types to be loaded into the fake FS of the WEB UI ([#709](https://github.com/jscad/OpenJSCAD.org/issues/709)) ([1d4304a](https://github.com/jscad/OpenJSCAD.org/commit/1d4304ae6b42c51b0526cba369eab1806fe8f274))
+* **web:** improve tracking of rotate/pan/zoom changes ([#717](https://github.com/jscad/OpenJSCAD.org/issues/717)) ([ab69808](https://github.com/jscad/OpenJSCAD.org/commit/ab69808f8f17e2f5603c741fc793067e4b6d448b))
+
+
+
+
+
 # [2.0.0-alpha.10](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.9...@jscad/web@2.0.0-alpha.10) (2020-10-11)
 
 

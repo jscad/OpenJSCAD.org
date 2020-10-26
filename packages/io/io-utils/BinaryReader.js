@@ -1,4 +1,5 @@
 // BinaryReader
+// Converted to ES5 Class by @z3dev
 // Refactored by Vjeux <vjeuxx@gmail.com>
 // http://blog.vjeux.com/2010/javascript/javascript-binary-reader.html
 
@@ -6,46 +7,52 @@
 // + Jonas Raoni Soares Silva
 // @ http://jsfromhell.com/classes/binary-deserializer [rev. #1]
 
-function BinaryReader (data) {
-  this._buffer = data
-  this._pos = 0
-}
+class BinaryReader {
+  /*
+   * Construct a BinaryReader from the given data.
+   * The data is a string created from the specified sequence of UTF-16 code units.
+   * See String.fromCharCode()
+   * See _readByte() below
+   */
+  constructor (data) {
+    this._buffer = data
+    this._pos = 0
+  }
 
-BinaryReader.prototype = {
   /* Public */
-  readInt8: function () { return this._decodeInt(8, true) },
-  readUInt8: function () { return this._decodeInt(8, false) },
-  readInt16: function () { return this._decodeInt(16, true) },
-  readUInt16: function () { return this._decodeInt(16, false) },
-  readInt32: function () { return this._decodeInt(32, true) },
-  readUInt32: function () { return this._decodeInt(32, false) },
+  readInt8 () { return this._decodeInt(8, true) }
+  readUInt8 () { return this._decodeInt(8, false) }
+  readInt16 () { return this._decodeInt(16, true) }
+  readUInt16 () { return this._decodeInt(16, false) }
+  readInt32 () { return this._decodeInt(32, true) }
+  readUInt32 () { return this._decodeInt(32, false) }
 
-  readFloat: function () { return this._decodeFloat(23, 8) },
-  readDouble: function () { return this._decodeFloat(52, 11) },
+  readFloat () { return this._decodeFloat(23, 8) }
+  readDouble () { return this._decodeFloat(52, 11) }
 
-  readChar: function () { return this.readString(1) },
-  readString: function (length) {
+  readChar () { return this.readString(1) }
+  readString (length) {
     this._checkSize(length * 8)
     const result = this._buffer.substr(this._pos, length)
     this._pos += length
     return result
-  },
+  }
 
-  seek: function (pos) {
+  seek (pos) {
     this._pos = pos
     this._checkSize(0)
-  },
+  }
 
-  getPosition: function () {
+  getPosition () {
     return this._pos
-  },
+  }
 
-  getSize: function () {
+  getSize () {
     return this._buffer.length
-  },
+  }
 
   /* Private */
-  _decodeFloat: function (precisionBits, exponentBits) {
+  _decodeFloat (precisionBits, exponentBits) {
     const length = precisionBits + exponentBits + 1
     const size = length >> 3
     this._checkSize(length)
@@ -74,28 +81,28 @@ BinaryReader.prototype = {
     return exponent === (bias << 1) + 1 ? significand ? NaN : signal ? -Infinity : +Infinity
       : (1 + signal * -2) * (exponent || significand ? !exponent ? Math.pow(2, -bias + 1) * significand
         : Math.pow(2, exponent - bias) * (1 + significand) : 0)
-  },
+  }
 
-  _decodeInt: function (bits, signed) {
+  _decodeInt (bits, signed) {
     const x = this._readBits(0, bits, bits / 8)
     const max = Math.pow(2, bits)
     const result = signed && x >= max / 2 ? x - max : x
 
     this._pos += bits / 8
     return result
-  },
+  }
 
   // shl fix: Henri Torgemane ~1996 (compressed by Jonas Raoni)
-  _shl: function (a, b) {
+  _shl (a, b) {
     for (++b; --b; a = ((a %= 0x7fffffff + 1) & 0x40000000) === 0x40000000 ? a * 2 : (a - 0x40000000) * 2 + 0x7fffffff + 1);
     return a
-  },
+  }
 
-  _readByte: function (i, size) {
+  _readByte (i, size) {
     return this._buffer.charCodeAt(this._pos + size - i - 1) & 0xff
-  },
+  }
 
-  _readBits: function (start, length, size) {
+  _readBits (start, length, size) {
     const offsetLeft = (start + length) % 8
     const offsetRight = start % 8
     const curByte = size - (start >> 3) - 1
@@ -113,9 +120,9 @@ BinaryReader.prototype = {
     }
 
     return sum
-  },
+  }
 
-  _checkSize: function (neededBits) {
+  _checkSize (neededBits) {
     if (!(this._pos + Math.ceil(neededBits / 8) < this._buffer.length)) {
       // throw new Error("Index out of bound");
     }
