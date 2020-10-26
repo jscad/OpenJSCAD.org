@@ -19,24 +19,35 @@ TBD
 1) support zip output
 */
 
-const stringify = require('onml/lib/stringify')
+/**
+ * Serializer of JSCAD geometries to AMF elements.
+ * @module io/amf-serializer
+ * @example
+ * const { serializer, mimeType } = require('@jscad/amf-serializer')
+ */
 
-// const { ensureManifoldness } = require('@jscad/io-utils')
+const stringify = require('onml/lib/stringify')
 
 const { geometries, utils } = require('@jscad/modeling')
 
 const mimeType = 'application/amf+xml'
 
-/** Serialize the give objects to AMF (xml) format.
- * @param {Object} [options] - options for serialization
- * @param {Object|Array} objects - objects to serialize as AMF
- * @returns {Array} serialized contents, AMF format
+/**
+ * Serialize the give objects to AMF elements.
+ * @param {Object} options - options for serialization
+ * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer 
+ * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
+ * @param {...Object} objects - objects to serialize as AMF
+ * @returns {Array} serialized contents with one AMF structure (XML string)
+ * @alias module:io/amf-serializer.serialize
+ * @example
+ * const geometry = primitives.cube()
+ * const amfData = serializer({unit: 'meter'}, geometry)
  */
 const serialize = (options, ...objects) => {
   const defaults = {
     statusCallback: null,
-    unit: 'millimeter', // millimeter, inch, feet, meter or micrometer
-    metadata: null
+    unit: 'millimeter' // millimeter, inch, feet, meter or micrometer
   }
   options = Object.assign({}, defaults, options)
 
@@ -56,7 +67,7 @@ const serialize = (options, ...objects) => {
       unit: options.unit,
       version: '1.1'
     },
-    ['metadata', { type: 'author' }, 'Created using JSCAD']
+    ['metadata', { type: 'author' }, 'Created by JSCAD']
   ]
   body = body.concat(translateObjects(objects3d, options))
 

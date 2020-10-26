@@ -50,7 +50,7 @@ const formats = {
   },
   jscad: {
     displayName: 'JSCAD',
-    description: 'OpenJSCAD.org Source',
+    description: 'JSCAD Design Source',
     extension: 'jscad',
     mimetype: 'application/javascript',
     deserializable: true,

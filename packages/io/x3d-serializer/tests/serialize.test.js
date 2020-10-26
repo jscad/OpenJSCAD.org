@@ -24,7 +24,7 @@ test('serialize 3D geometry to X3D', (t) => {
 const expected1 = `<?xml version="1.0" encoding="UTF-8"?>
 <X3D profile="Interchange" version="3.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.3.xsd">
   <head>
-    <meta name="creator" content="Created using JSCAD"/>
+    <meta name="creator" content="Created by JSCAD"/>
   </head>
   <Scene/>
 </X3D>
@@ -33,7 +33,7 @@ const expected1 = `<?xml version="1.0" encoding="UTF-8"?>
 const expected2 = `<?xml version="1.0" encoding="UTF-8"?>
 <X3D profile="Interchange" version="3.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.3.xsd">
   <head>
-    <meta name="creator" content="Created using JSCAD"/>
+    <meta name="creator" content="Created by JSCAD"/>
   </head>
   <Scene>
     <Shape>
@@ -49,7 +49,7 @@ const expected2 = `<?xml version="1.0" encoding="UTF-8"?>
 const expected3 = `<?xml version="1.0" encoding="UTF-8"?>
 <X3D profile="Interchange" version="3.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.3.xsd">
   <head>
-    <meta name="creator" content="Created using JSCAD"/>
+    <meta name="creator" content="Created by JSCAD"/>
   </head>
   <Scene>
     <Shape>
