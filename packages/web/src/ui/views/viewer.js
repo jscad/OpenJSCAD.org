@@ -161,7 +161,7 @@ const viewer = (state, i18n) => {
 const setup = (element) => {
   // prepare the camera
   const camera = Object.assign({}, perspectiveCamera.defaults)
-  camera.position = [150, 180, 233]
+  camera.position = [150, -180, 233]
 
   const viewerOptions = {
     glOptions: { canvas: element },
