@@ -1,5 +1,3 @@
-const mat4 = require('gl-mat4')
-
 const { flatten, toArray } = require('@jscad/array-utils')
 const computeBounds = require('../bound-utils/computeBounds')
 const { meshColor } = require('../rendering/renderDefaults')
@@ -48,16 +46,13 @@ const entitiesFromSolids = (params, solids) => {
     const bounds = computeBounds(geometry) // FIXME : ACTUALLY deal with arrays as inputs see above
     if (bounds.dia <= 0.0) return null
 
-    const matrix = mat4.copy(mat4.create(), solid.transforms) // mat4.identity([])
-    const transforms = {
-      matrix
-    }
+    const transforms = { matrix: geometry.transforms }
 
     const visuals = {
       drawCmd: 'drawMesh',
       show: true,
       // color: meshColor, // overrides colors in geometries
-      transparent: geometry.isTransparent, // not sure
+      transparent: geometry.isTransparent,
       useVertexColors: true
     }
 
@@ -66,8 +61,7 @@ const entitiesFromSolids = (params, solids) => {
       geometry,
       transforms,
       bounds,
-      visuals,
-      isTransparent: geometry.isTransparent
+      visuals
     }
     return entity
   }).filter((entity) => entity !== null)
