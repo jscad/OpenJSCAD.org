@@ -1,8 +1,6 @@
 const vec3 = require('gl-vec3')
 const mat4 = require('gl-mat4')
 
-const { toArray } = require('@jscad/array-utils')
-
 /*
  * Convert the given solid into one or more geometries for rendering.
  * @param {Object} options - options for conversion
@@ -10,11 +8,11 @@ const { toArray } = require('@jscad/array-utils')
  * @param {Float} options.normalThreshold - threshold beyond which to split normals
  * @param {Boolean} options.smoothLighting - set to true in order to use interpolated vertex normals
  * this creates nice round spheres but does not represent the shape of the actual model
- * @param {path2} solid - the solid to convert
+ * @param {geom3} solid - the solid to convert
  * @return {Array} list of new geometries
  */
 const geom3ToGeometries = (options, solid) => {
-  let { smoothLighting, normalThreshold, color } = options
+  const { smoothLighting, normalThreshold, color } = options
 
   return convert({ color, smoothLighting, normalThreshold }, solid)
 }
@@ -131,41 +129,6 @@ const convert = (options, geometry) => {
     }
   }
   return geometries
-}
-
-/** determine if input is a hex (color) or not
- * @param  {Object} object a string, array, object , whatever
- * @returns {Boolean} wether the input is a hex string or not
- */
-const isHexColor = (object) => {
-  if (typeof sNum !== 'string') {
-    return false
-  }
-  return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(object)
-}
-
-// modified from https://stackoverflow.com/questions/21646738/convert-hex-to-rgba
-const hexToRgbNormalized = (hex, alpha) => {
-  hex = hex.replace('#', '')
-  const r = parseInt(hex.length === 3 ? hex.slice(0, 1).repeat(2) : hex.slice(0, 2), 16)
-  const g = parseInt(hex.length === 3 ? hex.slice(1, 2).repeat(2) : hex.slice(2, 4), 16)
-  const b = parseInt(hex.length === 3 ? hex.slice(2, 3).repeat(2) : hex.slice(4, 6), 16)
-  return (alpha ? [r, g, b, alpha] : [r, g, b, 255]).map((x) => x / 255)
-}
-
-/** outputs a normalized [0...1] range, 4 component array color
- * @param  {} input
- */
-const normalizedColor = (input) => {
-  if (isHexColor(input)) {
-    return hexToRgbNormalized(input)
-  } else if (Array.isArray(input) && input.length >= 3) {
-    input = input.length < 4 ? [input[0], input[1], input[2], 1] : input.slice(0, 4)
-    if (input[0] > 1 || input[1] > 1 || input[2] > 1) {
-      return input.map((x) => x / 255)
-    }
-    return input
-  }
 }
 
 /**
