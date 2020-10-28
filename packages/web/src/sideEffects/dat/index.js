@@ -1,9 +1,10 @@
-const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
+const { callbackToObservable } = require('@jscad/core').observableUtils
+const { getFileExtensionFromString } = require('@jscad/core').utils
+
 const makeLogger = require('../../utils/logger')
-const getFileExtensionFromString = require('@jscad/core/utils/getFileExtensionFromString')
 
 const makeDatSideEffect = async (params) => {
-  const commandResponses = callBackToStream()
+  const commandResponses = callbackToObservable()
   const defaults = { logging: false }
   const { logging } = Object.assign({}, defaults, params)
   const log = makeLogger({ enabled: logging })

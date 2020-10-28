@@ -1,7 +1,7 @@
-const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
+const { callbackToObservable } = require('@jscad/core').observableUtils
 
 const makeStorageSideEffect = ({ name }) => {
-  const reply = callBackToStream()
+  const reply = callbackToObservable()
 
   const sink = (outToStore$) => {
     let enabled = true
@@ -12,7 +12,7 @@ const makeStorageSideEffect = ({ name }) => {
     }
 
     if (!enabled) {
-      const commandResponses = callBackToStream()
+      const commandResponses = callbackToObservable()
       commandResponses.callback({ type: undefined, id: undefined, error: new Error('Local storage not supported in this environment!') })
     } else {
       if (outToStore$) {
