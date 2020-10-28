@@ -1,5 +1,4 @@
-const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
-// const makeLogger = require('../../utils/logger')
+const { callbackToObservable } = require('@jscad/core').observableUtils
 
 const makeFileDialog = (params) => {
   // const defaults = {
@@ -8,7 +7,7 @@ const makeFileDialog = (params) => {
   // const { logging } = Object.assign({}, defaults, params)
   // const log = makeLogger({ enabled: logging })
 
-  const commandResponses = callBackToStream()
+  const commandResponses = callbackToObservable()
 
   const source = () => { }
   // FIXME const commandResponses$ = commandResponses.stream.multicast()

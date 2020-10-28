@@ -1,10 +1,10 @@
-const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
+const { walkFileTree } = require('@jscad/core').web
+const { callbackToObservable } = require('@jscad/core').observableUtils
 
-const { walkFileTree } = require('./walkFileTree')
 const { changedFiles, flattenFiles } = require('./utils')
 
 const makeLocalFsSideEffect = async (params) => {
-  const commandResponses = callBackToStream()
+  const commandResponses = callbackToObservable()
 
   const sink = (commands$) => {
     let currentFileTree
