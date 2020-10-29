@@ -3,8 +3,8 @@ const { isAbsolute, resolve } = require('path')
 
 const { deserializers, solidsAsBlob } = require('@jscad/io')
 
-const rebuildSolids = require('@jscad/core/code-evaluation/rebuildGeometryCli')
-const { registerAllExtensions } = require('@jscad/core/io/registerExtensions')
+const { rebuildGeometryCli } = require('@jscad/core').evaluation
+const { registerAllExtensions } = require('@jscad/core').io
 
 /**
  * generate output data from source
@@ -56,7 +56,7 @@ const generateOutputData = (source, params, options) => {
       //    } else if ((inputFormat === 'jscad' || inputFormat === 'js') &&
       //               outputFormat !== 'jscad' && outputFormat !== 'js') {
       try {
-        const solids = rebuildSolids({ mainPath: inputPath, parameterValues: params, useFakeFs, source })
+        const solids = rebuildGeometryCli({ mainPath: inputPath, parameterValues: params, useFakeFs, source })
         resolve(solids)
       } catch (error) {
         reject(error)

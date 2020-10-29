@@ -3,12 +3,12 @@ const most = require('most')
 
 const { nth, toArray } = require('@jscad/array-utils')
 
-const withLatestFrom = require('@jscad/core/observable-utils/withLatestFrom')
-const holdUntil = require('@jscad/core/observable-utils/holdUntil')
-const delayFromObservable = require('@jscad/core/observable-utils/delayFromObservable')
-const getParameterValuesFromUIControls = require('@jscad/core/parameters/getParameterValuesFromUIControls')
-const { getDesignEntryPoint, getDesignName } = require('@jscad/core/code-loading/requireDesignUtilsFs')
-const deserializeSolids = require('@jscad/core/code-evaluation/deserializeSolids')
+const { callbackToObservable, delayFromObservable, holdUntil, withLatestFrom } = require('@jscad/core').observableUtils
+
+const { applyParameterDefinitions, getParameterValuesFromUIControls } = require('@jscad/core').parameters
+const { getDesignEntryPoint, getDesignName } = require('@jscad/core').loading.requireDesignUtilsFs
+const { deserializeSolids } = require('@jscad/core').evaluation
+const { makeFakeFs } = require('@jscad/core').loading
 
 const { keep } = require('../../utils/object')
 const { fetchUriParams, getAllUriParams } = require('../../utils/urlUtils')
@@ -107,7 +107,6 @@ const reducers = {
     // console.log('design: set content', state, state.design, payload)
     // all our available data (specific to web)
     const { filesAndFolders } = payload
-    const makeFakeFs = require('@jscad/core/code-loading/makeFakeFs')
     const fakeFs = makeFakeFs(filesAndFolders)
     const rootPath = filesAndFolders[0].fullPath
     const mainPath = getDesignEntryPoint(fakeFs, rootPath)
@@ -213,7 +212,6 @@ const reducers = {
     if (data.origin === 'instantUpdate' && !state.design.instantUpdate) {
       parameterValues = state.design.parameterValues
     }
-    const applyParameterDefinitions = require('@jscad/core/parameters/applyParameterDefinitions')
     parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, state.design.parameterDefinitions) : parameterValues
     parameterValues = Object.assign({}, state.design.parameterValues, parameterValues)
 
