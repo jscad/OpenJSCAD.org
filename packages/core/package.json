@@ -4,7 +4,10 @@
   "description": "Core functionality for JSCAD Applications",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
+  "unpkg": "dist/jscad-core.min.js",
   "scripts": {
+    "build": "browserify src/index.js -o dist/jscad-core.min.js -g uglifyify --standalone jscadCore",
+    "preversion": "npm run build && git add dist",
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava './src/**/*.test.js' --verbose --timeout 2m",
     "release-patch": "git checkout master && git pull origin master && npm version patch",
@@ -50,7 +53,9 @@
   },
   "devDependencies": {
     "ava": "3.10.0",
-    "nyc": "15.1.0"
+    "browserify": "16.5.1",
+    "nyc": "15.1.0",
+    "uglifyify": "5.0.2"
   },
   "collective": {
     "type": "opencollective",
