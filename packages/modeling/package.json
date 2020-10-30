@@ -4,13 +4,18 @@
   "description": "Constructive Solid Geometry (CSG) Library",
   "repository": "https://github.com/jscad/openjscad.org",
   "main": "src/index.js",
+  "types": "src/index.d.ts",
   "scripts": {
     "build": "browserify src/index.js -o dist/modeling.js -g uglifyify --standalone modeling",
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
+    "test:tsd": "tsd",
     "release-patch__": "git checkout master && git pull origin master && npm version patch",
     "release-minor__": "git checkout master && git pull origin master && npm version minor",
     "release-major__": "git checkout master && git pull origin master && npm version major"
+  },
+  "tsd": {
+    "directory": "src"
   },
   "contributors": [
     {
