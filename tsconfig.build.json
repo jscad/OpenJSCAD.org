@@ -1,0 +1,16 @@
+{
+  "include": [
+    "packages/modeling/src/geometries/geom2",
+    "packages/modeling/src/maths/vec2",
+    "packages/modeling/src/maths/mat4"
+  ],
+  "exclude": [
+    "**/.d.ts"
+  ],
+  "compilerOptions": {
+    "allowJs": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "emitDeclarationOnly": true
+  }
+}
