@@ -1,5 +1,7 @@
 const mat4 = require('../../maths/mat4')
 
+const { mirrorX } = require('../transforms/mirror')
+
 const geom2 = require('../../geometries/geom2')
 
 const slice = require('./slice')
@@ -86,6 +88,9 @@ const extrudeRotate = (options, geometry) => {
         point1 = [Math.min(point1[0], 0), point1[1]]
         return [point0, point1]
       })
+      // recreate the geometry from the (-) capped points
+      geometry = geom2.reverse(geom2.create(shapeSides))
+      geometry = mirrorX(geometry)
     } else if (pointsWithPositiveX.length >= pointsWithNegativeX.length) {
       shapeSides = shapeSides.map((side) => {
         let point0 = side[0]
@@ -94,9 +99,9 @@ const extrudeRotate = (options, geometry) => {
         point1 = [Math.max(point1[0], 0), point1[1]]
         return [point0, point1]
       })
+      // recreate the geometry from the (+) capped points
+      geometry = geom2.create(shapeSides)
     }
-    // recreate the geometry from the capped points
-    geometry = geom2.create(shapeSides)
   }
 
   const rotationPerSlice = totalRotation / segments
