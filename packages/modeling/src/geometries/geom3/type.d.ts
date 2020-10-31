@@ -1,7 +1,7 @@
-import Poly3 = require('../poly3/type')
-import Mat4 = require('../../maths/mat4/type')
+import Poly3 from '../poly3/type'
+import Mat4 from '../../maths/mat4/type'
 
-export = Geom3
+export default Geom3
 
 declare interface Geom3 {
   polygons: Array<Poly3>

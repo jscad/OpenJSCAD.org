@@ -1,7 +1,7 @@
-import Vec2 = require('../../maths/vec2/type')
-import Mat4 = require('../../maths/mat4/type')
+import Vec2 from '../../maths/vec2/type'
+import Mat4 from '../../maths/mat4/type'
 
-export = Geom2
+export default Geom2
 
 declare interface Geom2 {
   sides: Array<[Vec2, Vec2]>

@@ -1,6 +1,6 @@
-import Vec2 = require('../../maths/vec2/type')
+import Vec2 from '../../maths/vec2/type'
 
-export = Poly2
+export default Poly2
 
 declare interface Poly2 {
   vertices: Array<Vec2>

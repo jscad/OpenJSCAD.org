@@ -1,6 +1,6 @@
-import Vec3 = require('../maths/vec3/type')
+import Vec3 from '../maths/vec3/type'
 
-export = Connector
+export default Connector
 
 declare interface Connector {
   point: Vec3

@@ -1,5 +1,5 @@
-import Vec3 = require('../vec3/type')
+import Vec3 from '../vec3/type'
 
-export = Line3
+export default Line3
 
 declare type Line3 = [Vec3, Vec3]

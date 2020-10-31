@@ -1,4 +1,4 @@
-export = Bezier
+export default Bezier
 
 declare interface Bezier {
   points: Array<number> | Array<Array<number>>

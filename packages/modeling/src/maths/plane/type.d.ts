@@ -1,5 +1,5 @@
-import Vec3 = require('../vec3/type')
+import Vec3 from '../vec3/type'
 
-export = Plane
+export default Plane
 
 declare type Plane = Vec3
