@@ -1,0 +1,14 @@
+export const clone: (...params: any[]) => any;
+export const closestPoint: (point: any, line: any) => any;
+export const create: () => any[];
+export const direction: (line: any) => any;
+export const distanceToPoint: (point: any, line: any) => number;
+export const equals: (line1: any, line2: any) => boolean;
+export const fromPoints: (p1: any, p2: any) => any;
+export const fromValues: (x: number, y: number, w: any) => any;
+export const intersectPointOfLines: (line1: any, line2: any) => any;
+export const origin: (line: any) => any;
+export const reverse: (...params: any[]) => any;
+export const toString: (line: any) => string;
+export const transform: (...params: any[]) => any;
+export const xAtY: (y: number, line: any) => number;

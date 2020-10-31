@@ -1,0 +1,11 @@
+export const clone: (...params: any[]) => any;
+export const create: () => any[];
+export const equals: (a: any, b: any) => boolean;
+export const flip: (...params: any[]) => any;
+export const fromNormalAndPoint: (normal: any, point: any) => any[];
+export const fromValues: (x: number, y: number, z: number, w: number) => any;
+export const fromPoints: (a: any, b: any, c: any) => any;
+export const fromPointsRandom: (a: any, b: any, c: any) => any;
+export const signedDistanceToPoint: (plane: any, vector: any) => number;
+export const toString: (vec: any) => string;
+export const transform: (matrix: any, plane: any) => any[];

@@ -1,0 +1,11 @@
+export const clone: (geometry: any) => any;
+export const create: (polygons: any) => import("./create").geom3;
+export const fromPoints: (listofpoints: any[]) => any;
+export const fromCompactBinary: (data: any) => any;
+export const invert: (geometry: any) => any;
+export const isA: (object: any) => boolean;
+export const toPoints: (geometry: any) => any[];
+export const toPolygons: (geometry: any) => any[];
+export const toString: (geometry: any) => string;
+export const toCompactBinary: (geom: any) => any;
+export const transform: (matrix: any, geometry: any) => any;
