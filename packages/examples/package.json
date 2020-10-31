@@ -1,13 +1,9 @@
 {
   "name": "@jscad/examples",
   "version": "2.0.0-alpha.4",
-  "description": "example files for OpenJsCAD",
+  "description": "Example Files for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
-    "release-patch": "git checkout master && git pull origin master && npm version patch",
-    "release-minor": "git checkout master && git pull origin master && npm version minor",
-    "release-major": "git checkout master && git pull origin master && npm version major",
-    "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove OpenJSCAD? You can now donate to our open collective:\\u001b[22m\\u001b[39m\\n > \\u001b[34mhttps://opencollective.com/openjscad/donate\\u001b[0m')\""
   },
   "contributors": [
     {
@@ -22,6 +18,12 @@
       "name": "Mark 'kaosat-dev' Moissette",
       "url": "http://kaosat.net"
     }
+  ],
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "examples",
+    "tutorials"
   ],
   "license": "MIT",
   "collective": {

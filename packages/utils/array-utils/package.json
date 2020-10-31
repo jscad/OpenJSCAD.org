@@ -1,7 +1,8 @@
 {
   "name": "@jscad/array-utils",
   "version": "2.0.0-alpha.3",
-  "description": "",
+  "description": "Array Utilities for JSCAD",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "scripts": {
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
@@ -9,6 +10,12 @@
   },
   "author": "Mark 'kaosat-dev' Moissette",
   "license": "MIT",
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "utilities",
+    "array"
+  ],
   "publishConfig": {
     "access": "public"
   },

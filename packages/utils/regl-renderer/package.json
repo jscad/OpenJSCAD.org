@@ -1,18 +1,26 @@
 {
   "name": "@jscad/regl-renderer",
   "version": "2.0.0-alpha.8",
-  "description": "",
+  "description": "Renderer for JSCAD Geometries",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
+  "unpkg": "dist/jscad-regl-renderer.min.js",
   "scripts": {
-    "build": "browserify src/index.js -o dist/reglRenderer.js --standalone reglRenderer",
+    "build": "browserify src/index.js -o dist/jscad-regl-renderer.min.js -g uglifyify --standalone jscadReglRenderer",
     "preversion": "npm run build && git add dist",
     "dev": "budo ./demo-web.js --title regl-renderer --live",
     "demo-cli": "node ./demo-cli.js",
     "demo-web": "budo ./demo-web.js --title regl-renderer --live",
-    "coverage": "nyc --all --reporter=html --reporter=text npm test",
-    "test": "ava 'src/**/*.test.js' --verbose --timeout 2m"
+    "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
+    "coverage": "nyc --all --reporter=html --reporter=text npm test"
   },
   "author": "Mark 'kaosat-dev' Moissette",
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "utility",
+    "rendering"
+  ],
   "license": "MIT",
   "publishConfig": {
     "access": "public"
@@ -30,6 +38,7 @@
     "ava": "3.10.0",
     "browserify": "16.5.1",
     "budo": "11.6.4",
-    "nyc": "15.1.0"
+    "nyc": "15.1.0",
+    "uglifyify": "5.0.2"
   }
 }
