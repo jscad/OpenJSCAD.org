@@ -1,8 +1,8 @@
-export type Mat4 = [
+export = Mat4
+
+declare type Mat4 = [
   number, number, number, number,
   number, number, number, number,
   number, number, number, number,
   number, number, number, number,
 ]
-
-export default Mat4
