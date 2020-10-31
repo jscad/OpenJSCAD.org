@@ -9,10 +9,7 @@
     "build": "browserify src/index.js -o dist/jscad-modeling.min.js -g uglifyify --standalone jscadModeling",
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
-    "preversion": "npm run build && git add dist",
-    "release-patch__": "git checkout master && git pull origin master && npm version patch",
-    "release-minor__": "git checkout master && git pull origin master && npm version minor",
-    "release-major__": "git checkout master && git pull origin master && npm version major"
+    "preversion": "npm run build && git add dist"
   },
   "contributors": [
     {

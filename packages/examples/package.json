@@ -4,9 +4,6 @@
   "description": "Example Files for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
-    "release-patch": "git checkout master && git pull origin master && npm version patch",
-    "release-minor": "git checkout master && git pull origin master && npm version minor",
-    "release-major": "git checkout master && git pull origin master && npm version major"
   },
   "contributors": [
     {
