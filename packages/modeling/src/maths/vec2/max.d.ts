@@ -1,11 +1,6 @@
-export = max;
-/**
- * Returns the maximum coordinates of two vectors.
- *
- * @param {vec2} [out] - the receiving vector
- * @param {vec2} a - the first operand
- * @param {vec2} b - the second operand
- * @returns {vec2} a new vector
- * @alias module:modeling/maths/vec2.max
- */
-declare function max(...params: any[]): any;
+import Vec2 from './type'
+
+export default max
+
+declare function max(a: Vec2, b: Vec2): Vec2
+declare function max(out: Vec2, a: Vec2, b: Vec2): Vec2

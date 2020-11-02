@@ -1,11 +1,6 @@
-export = multiply;
-/**
- * Multiplies the coordinates of two vectors (A*B).
- *
- * @param {vec2} [out] - the receiving vector
- * @param {vec2} a - the first operand
- * @param {vec2} b - the second operand
- * @returns {vec2} a new vector
- * @alias module:modeling/maths/vec2.multiply
- */
-declare function multiply(...params: any[]): any;
+import Vec2 from './type'
+
+export default multiply
+
+declare function multiply(a: Vec2, b: Vec2): Vec2
+declare function multiply(out: Vec2, a: Vec2, b: Vec2): Vec2

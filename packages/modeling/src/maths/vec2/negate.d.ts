@@ -1,10 +1,6 @@
-export = negate;
-/**
- * Negates the coordinates of the given vector.
- *
- * @param {vec2} [out] - the receiving vector
- * @param {vec2} a - vector to negate
- * @returns {vec2} a new vector
- * @alias module:modeling/maths/vec2.negate
- */
-declare function negate(...params: any[]): any;
+import Vec2 from './type'
+
+export default negate
+
+declare function negate(vec: Vec2): Vec2
+declare function negate(out: Vec2, vec: Vec2): Vec2

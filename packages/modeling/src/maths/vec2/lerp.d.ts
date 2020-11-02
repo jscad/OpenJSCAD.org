@@ -1,12 +1,6 @@
-export = lerp;
-/**
- * Performs a linear interpolation between two vectors.
- *
- * @param {vec2} [out] - the receiving vector
- * @param {Number} t - interpolation amount between the two vectors
- * @param {vec2} a - the first operand
- * @param {vec2} b - the second operand
- * @returns {vec2} a new vector
- * @alias module:modeling/maths/vec2.lerp
- */
-declare function lerp(...params: any[]): any;
+import Vec2 from './type'
+
+export default lerp
+
+declare function lerp(t: number, a: Vec2, b: Vec2): Vec2
+declare function lerp(out: Vec2, t: number, a: Vec2, b: Vec2): Vec2

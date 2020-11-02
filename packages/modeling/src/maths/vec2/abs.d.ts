@@ -1,10 +1,6 @@
-export = abs;
-/**
- * Calculates the absolute coordinates of the given vector.
- *
- * @param {vec2} [out] - the receiving vector
- * @param {vec2} vec - the vector of reference
- * @returns {vec2} a new vector
- * @alias module:modeling/maths/vec2.abs
- */
-declare function abs(...params: any[]): any;
+import Vec2 from './type'
+
+export default abs
+
+declare function abs(vec: Vec2): Vec2
+declare function abs(out: Vec2, vec: Vec2): Vec2
