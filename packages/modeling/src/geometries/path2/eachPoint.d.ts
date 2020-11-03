@@ -1,12 +1,9 @@
-export = eachPoint;
-/**
- * Calls a function for each point in the geometry.
- * @param {Object} options - options
- * @param {Function} thunk - the function to call
- * @param {path2} geometry - the geometry to traverse
- * @alias module:modeling/geometries/path2.eachPoint
- *
- * @example
- * eachPoint({}, accumulate, geometry)
- */
-declare function eachPoint(options: any, thunk: Function, path: any): void;
+import Path2 from './type'
+import Vec2 from '../../maths/vec2/type'
+
+export default eachPoint
+
+export interface EachPointOptions {}
+export type EachPointThunk = (value: Vec2, index: number, array: Array<Vec2>) => void
+
+declare function eachPoint(options: EachPointOptions, thunk: EachPointThunk, path: Path2): void
