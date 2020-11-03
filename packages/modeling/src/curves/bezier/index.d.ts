@@ -1,3 +1,3 @@
-export const create: (points: any[]) => import("./create").bezier;
-export const valueAt: (t: number, bezier: any) => number | any[];
-export const tangentAt: (t: number, bezier: any) => number | any[];
+export { default as create } from './create'
+export { default as tangentAt } from './tangentAt'
+export { default as valueAt } from './valueAt'
