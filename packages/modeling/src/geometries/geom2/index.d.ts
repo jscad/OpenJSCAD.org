@@ -1,12 +1,12 @@
-export const clone: (geometry: any) => any;
-export const create: (sides?: any[]) => import("./create").geom2;
-export const fromPoints: (points: any[]) => any;
-export const fromCompactBinary: (data: any[]) => any;
-export const isA: (object: any) => boolean;
-export const reverse: (geometry: any) => any;
-export const toOutlines: (geometry: any) => any[];
-export const toPoints: (geometry: any) => any[];
-export const toSides: (geometry: any) => any[];
-export const toString: (geometry: any) => string;
-export const toCompactBinary: (geom: any) => any;
-export const transform: (matrix: any, geometry: any) => any;
+export { default as clone } from './clone'
+export { default as create } from './create'
+export { default as fromPoints } from './fromPoints'
+export { default as fromCompactBinary } from './fromCompactBinary'
+export { default as isA } from './isA'
+export { default as reverse } from './reverse'
+export { default as toOutlines } from './toOutlines'
+export { default as toPoints } from './toPoints'
+export { default as toSides } from './toSides'
+export { default as toString } from './toString'
+export { default as toCompactBinary } from './toCompactBinary'
+export { default as transform } from './transform'
