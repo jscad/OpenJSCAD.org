@@ -1,2 +1,3 @@
-export = clamp;
-declare function clamp(value: any, min: any, max: any): number;
+export default clamp
+
+declare function clamp(value: number, min: number, max: number): number

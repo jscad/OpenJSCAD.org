@@ -1,2 +1,5 @@
-export = solve2Linear;
-declare function solve2Linear(a: any, b: any, c: any, d: any, u: any, v: any): number[];
+import Vec2 from '../vec2/type'
+
+export default solve2Linear
+
+declare function solve2Linear(a: number, b: number, c: number, d: number, u: number, v: number): Vec2

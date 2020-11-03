@@ -1,2 +1,3 @@
-export = quantizeForSpace;
-declare function quantizeForSpace(value: any): number;
+export default quantizeForSpace
+
+declare function quantizeForSpace(value: number): number
