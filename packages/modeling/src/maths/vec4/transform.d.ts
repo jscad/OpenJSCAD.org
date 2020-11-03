@@ -1,11 +1,7 @@
-export = transform;
-/**
- * Transform the given vector using the given matrix.
- *
- * @param {vec4} [out] - the receiving vector (optional)
- * @param {mat4} matrix - matrix to transform with
- * @param {vec4} vector - the vector to transform
- * @returns {vec4} a new vector
- * @alias module:modeling/maths/vec4.transform
- */
-declare function transform(...params: any[]): any;
+import Vec4 from './type'
+import Mat4 from '../mat4/type'
+
+export default transform
+
+declare function transform(matrix: Mat4, vec: Vec4): Vec4
+declare function transform(out: Vec4, matrix: Mat4, vec: Vec4): Vec4

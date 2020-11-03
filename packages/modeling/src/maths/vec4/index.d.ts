@@ -1,7 +1,7 @@
-export const clone: (...params: any[]) => any;
-export const create: () => any[];
-export const dot: (a: any, b: any) => number;
-export const fromScalar: (scalar: number) => any;
-export const fromValues: (x: number, y: number, z: number, w: number) => any;
-export const toString: (vec: any) => string;
-export const transform: (...params: any[]) => any;
+export { default as clone } from './clone'
+export { default as create } from './create'
+export { default as dot } from './dot'
+export { default as fromScalar } from './fromScalar'
+export { default as fromValues } from './fromValues'
+export { default as toString } from './toString'
+export { default as transform } from './transform'
