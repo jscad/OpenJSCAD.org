@@ -1,15 +1,15 @@
-export const clone: (...params: any[]) => any;
-export const create: (vertices?: any[]) => import("./create").poly3;
-export const fromPoints: (points: any[]) => any;
-export const fromPointsAndPlane: (vertices: any[], plane: any) => any;
-export const invert: (polygon: any) => any;
-export const isA: (object: any) => boolean;
-export const isConvex: (poly3: any) => boolean;
-export const measureArea: (poly3: any) => number;
-export const measureBoundingBox: (poly3: any) => any[];
-export const measureBoundingSphere: (poly3: any) => any[];
-export const measureSignedVolume: (poly3: any) => number;
-export const plane: (polygon: any) => any;
-export const toPoints: (geometry: any) => any[];
-export const toString: (poly3: any) => string;
-export const transform: (matrix: any, poly3: any) => any;
+export { default as clone } from './clone'
+export { default as create } from './create'
+export { default as fromPoints } from './fromPoints'
+export { default as fromPointsAndPlane } from './fromPointsAndPlane'
+export { default as invert } from './invert'
+export { default as isA } from './isA'
+export { default as isConvex } from './isConvex'
+export { default as measureArea } from './measureArea'
+export { default as measureBoundingBox } from './measureBoundingBox'
+export { default as measureBoundingSphere } from './measureBoundingSphere'
+export { default as measureSignedVolume } from './measureSignedVolume'
+export { default as plane } from './plane'
+export { default as toPoints } from './toPoints'
+export { default as toString } from './toString'
+export { default as transform } from './transform'

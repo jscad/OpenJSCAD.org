@@ -1,7 +1,6 @@
-export = measureBoundingBox;
-/**
- * @param {poly3} polygon - the polygon to measure
- * @returns {Array} an array of two vectors (3D);  minimum and maximum coordinates
- * @alias module:modeling/geometries/poly3.measureBoundingBox
- */
-declare function measureBoundingBox(poly3: any): any[];
+import Poly3 from './type'
+import Vec3 from '../../maths/vec3/type'
+
+export default measureBoundingBox
+
+declare function measureBoundingBox(polygon: Poly3): [Vec3, Vec3]

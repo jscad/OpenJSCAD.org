@@ -1,8 +1,5 @@
-export = isConvex;
-/**
- * Check whether the given polygon is convex.
- * @param {poly3} polygon - the polygon to interogate
- * @returns {Boolean} true if convex
- * @alias module:modeling/geometries/poly3.isConvex
- */
-declare function isConvex(poly3: any): boolean;
+import Poly3 from './type'
+
+export default isConvex
+
+declare function isConvex(polygon: Poly3): boolean

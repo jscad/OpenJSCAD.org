@@ -1,10 +1,6 @@
-export = clone;
-/**
- * Create a deep clone of the given polygon
- *
- * @param {poly3} [out] - receiving polygon
- * @param {poly3} polygon - polygon to clone
- * @returns {poly3} a new polygon
- * @alias module:modeling/geometries/poly3.clone
- */
-declare function clone(...params: any[]): any;
+import Poly3 from './type'
+
+export default clone
+
+declare function clone(polygon: Poly3): Poly3
+declare function clone(out: Poly3, polygon: Poly3): Poly3

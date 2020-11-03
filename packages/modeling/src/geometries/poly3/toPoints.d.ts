@@ -1,9 +1,6 @@
-export = toPoints;
-/**
- * Return the given geometry as a list of points.
- * NOTE: The returned array should not be modified as the points are shared with the geometry.
- * @param {poly3} polygon - the polygon
- * @return {Array} list of points (3D)
- * @alias module:modeling/geometries/poly3.toPoints
- */
-declare function toPoints(geometry: any): any[];
+import Poly3 from './type'
+import Vec3 from '../../maths/vec3/type'
+
+export default toPoints
+
+declare function toPoints(polygon: Poly3): Array<Vec3>
