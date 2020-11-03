@@ -6,32 +6,36 @@ const { changedFiles, flattenFiles } = require('./utils')
 const makeLocalFsSideEffect = async (params) => {
   const commandResponses = callbackToObservable()
 
-  let webSocket = new WebSocket('ws://127.0.0.1:35729/livereload')
-  let webSocketOpen
+  let webSocket = null
+  let webSocketOpen = false
   let lastCheck = 0
 
   const sendWs = m=>webSocket.send(JSON.stringify(m))
 
-  webSocket.onopen = function (event) {
-    console.log('websocket open', event)
-    sendWs({"command":"hello","protocols":["http://livereload.com/protocols/official-6","http://livereload.com/protocols/official-7"],"ver":"2.0.8","ext":"Chrome","extver":"2.1.0"})
-    webSocketOpen = true
-  }
-
-  webSocket.onmessage = function (event) {
-    var data = JSON.parse(event.data)
-    console.log('message',data)
-    if(data.command == 'hello') sendWs({"command":"info","plugins":{"less":{"disable":false,"version":"1.0"}},"url":document.location})
-    if(data.command == 'reload') lastCheck = 0
-  }
+  const startWebSocket = () => {
+    webSocket = new WebSocket('ws://127.0.0.1:35729/livereload')
   
-  webSocket.onerror = function (event) {
-    console.log('websocket error', event)
-  }
+    webSocket.onopen = function (event) {
+      console.log('websocket open', event)
+      sendWs({"command":"hello","protocols":["http://livereload.com/protocols/official-6","http://livereload.com/protocols/official-7"],"ver":"2.0.8","ext":"Chrome","extver":"2.1.0"})
+      webSocketOpen = true
+    }
 
-  webSocket.onclose = function (event) {
-    console.log('websocket closed', event)
-    webSocketOpen = false
+    webSocket.onmessage = function (event) {
+      var data = JSON.parse(event.data)
+      console.log('message',data)
+      if(data.command == 'hello') sendWs({"command":"info","plugins":{"less":{"disable":false,"version":"1.0"}},"url":document.location})
+      if(data.command == 'reload') lastCheck = 0
+    }
+    
+    webSocket.onerror = function (event) {
+      console.log('websocket error', event)
+    }
+
+    webSocket.onclose = function (event) {
+      console.log('websocket closed', event)
+      webSocketOpen = false
+    }
   }
 
   const sink = (commands$) => {
@@ -62,6 +66,8 @@ const makeLocalFsSideEffect = async (params) => {
 
         currentFileTree = await walkFileTree(data)
         commandResponses.callback({ type, id, data: currentFileTree })
+
+        if(!webSocketOpen) startWebSocket()
       }
 
       const watch = () => {
@@ -99,7 +105,7 @@ const makeLocalFsSideEffect = async (params) => {
           }, 50)
         } else {
           if (watcher) {
-            clearTimeout(watcher)
+            clearInterval(watcher)
             watcher = 0
           }
         }
