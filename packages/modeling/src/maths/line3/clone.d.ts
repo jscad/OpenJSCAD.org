@@ -1,10 +1,6 @@
-export = clone;
-/**
- * Create a clone of the given 3D line.
- *
- * @param {line3} [out] - receiving line
- * @param {line3} line - line to clone
- * @returns {line3} a new unbounded line
- * @alias module:modeling/maths/line3.clone
- */
-declare function clone(...params: any[]): any;
+import Line3 from './type'
+
+export default clone
+
+declare function clone(line: Line3): Line3
+declare function clone(out: Line3, line: Line3): Line3

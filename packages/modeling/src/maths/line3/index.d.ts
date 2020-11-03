@@ -1,14 +1,14 @@
-export const clone: (...params: any[]) => any;
-export const closestPoint: (point: any, line: any) => any;
-export const create: () => any[];
-export const direction: (line: any) => any;
-export const distanceToPoint: (point: any, line: any) => number;
-export const equals: (line1: any, line2: any) => boolean;
-export const fromPlanes: (plane1: any, plane2: any) => any;
-export const fromPointAndDirection: (point: any, direction: any) => any;
-export const fromPoints: (p1: any, p2: any) => any;
-export const intersectPointOfLineAndPlane: (plane: any, line: any) => any;
-export const origin: (line: any) => any;
-export const reverse: (...params: any[]) => any;
-export const toString: (line: any) => string;
-export const transform: (...params: any[]) => any;
+export { default as clone } from './clone'
+export { default as closestPoint } from './closestPoint'
+export { default as create } from './create'
+export { default as direction } from './direction'
+export { default as distanceToPoint } from './distanceToPoint'
+export { default as equals } from './equals'
+export { default as fromPlanes } from './fromPlanes'
+export { default as fromPointAndDirection } from './fromPointAndDirection'
+export { default as fromPoints } from './fromPoints'
+export { default as intersectPointOfLineAndPlane } from './intersectPointOfLineAndPlane'
+export { default as origin } from './origin'
+export { default as reverse } from './reverse'
+export { default as toString } from './toString'
+export { default as transform } from './transform'

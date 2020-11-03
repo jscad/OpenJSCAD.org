@@ -1,10 +1,7 @@
-export = transform;
-/**
- * Transforms the given 3D line using the given matrix.
- *
- * @param {mat4} matrix - matrix to transform with
- * @param {line3} line - the line to transform
- * @returns {line3} a new unbounded line
- * @alias module:modeling/maths/line3.transform
- */
-declare function transform(...params: any[]): any;
+import Line3 from './type'
+import Mat4 from '../mat4/type'
+
+export default transform
+
+declare function transform(matrix: Mat4, line: Line3): Line3
+declare function transform(out: Line3, matrix: Mat4, line: Line3): Line3

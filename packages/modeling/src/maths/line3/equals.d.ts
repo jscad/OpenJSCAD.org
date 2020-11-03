@@ -1,10 +1,5 @@
-export = equals;
-/**
- * Compare the given 3D lines for equality.
- *
- * @param {line3} a - the first line to compare
- * @param {line3} b - the second line to compare
- * @return {Boolean} true if lines are equal
- * @alias module:modeling/maths/line3.equals
- */
-declare function equals(line1: any, line2: any): boolean;
+import Line3 from './type'
+
+export default equals
+
+declare function equals(a: Line3, b: Line3): boolean

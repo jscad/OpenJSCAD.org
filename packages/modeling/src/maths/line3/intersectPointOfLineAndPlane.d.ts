@@ -1,12 +1,7 @@
-export = intersectToPlane;
-/**
- * Determine the closest point on the given plane to the given line.
- *
- * The point of intersection will be invalid if the line is parallel to the plane, e.g. NaN.
- *
- * @param {plane} plane - the plane of reference
- * @param {line3} line - the line of reference
- * @returns {vec3} a point on the line
- * @alias module:modeling/maths/line3.intersectPointOfLineAndPlane
- */
-declare function intersectToPlane(plane: any, line: any): any;
+import Line3 from './type'
+import Plane from '../plane/type'
+import Vec3 from '../vec3/type'
+
+export default intersectPointOfLineAndPlane
+
+declare function intersectPointOfLineAndPlane(plane: Plane, line: Line3): Vec3
