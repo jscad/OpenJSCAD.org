@@ -1,1 +1,3 @@
-export default from './angleRadians'
+import angleRadians from './angleRadians'
+
+export default angleRadians

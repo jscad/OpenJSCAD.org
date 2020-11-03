@@ -1,1 +1,3 @@
-export default from './fromAngleRadians'
+import fromAngleRadians from './fromAngleRadians'
+
+export default fromAngleRadians
