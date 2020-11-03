@@ -1,10 +1,6 @@
-export = clone;
-/**
- * Create a clone of the given vector.
- *
- * @param {vec3} [out] - receiving vector
- * @param {vec3} vec - vector to clone
- * @returns {vec3} a new vector
- * @alias module:modeling/maths/vec3.clone
- */
-declare function clone(...params: any[]): any;
+import Vec3 from './type'
+
+export default clone
+
+declare function clone(vec: Vec3): Vec3
+declare function clone(out: Vec3, vec: Vec3): Vec3

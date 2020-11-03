@@ -1,33 +1,33 @@
-export const abs: (...params: any[]) => any;
-export const add: (...params: any[]) => any;
-export const angle: (a: any, b: any) => number;
-export const canonicalize: (vector: any) => any;
-export const clone: (...params: any[]) => any;
-export const create: () => any[];
-export const cross: (...params: any[]) => any;
-export const distance: (a: any, b: any) => number;
-export const divide: (...params: any[]) => any;
-export const dot: (a: any, b: any) => number;
-export const equals: (a: any, b: any) => boolean;
-export const fromArray: (data: any[]) => any;
-export const fromScalar: (scalar: any) => any;
-export const fromValues: (x: number, y: number, z: number) => any;
-export const fromVec2: (vec2: any, z?: number) => any;
-export const length: (a: any) => number;
-export const lerp: (...params: any[]) => any;
-export const max: (...params: any[]) => any;
-export const min: (...params: any[]) => any;
-export const multiply: (...params: any[]) => any;
-export const negate: (...params: any[]) => any;
-export const normalize: (...params: any[]) => any;
-export const orthogonal: (...params: any[]) => any;
-export const rotateX: (...params: any[]) => any;
-export const rotateY: (...params: any[]) => any;
-export const rotateZ: (...params: any[]) => any;
-export const scale: (...params: any[]) => any;
-export const squaredDistance: (a: any, b: any) => number;
-export const squaredLength: (a: any) => number;
-export const subtract: (...params: any[]) => any;
-export const toString: (vec: any) => string;
-export const transform: (...params: any[]) => any;
-export const unit: (...params: any[]) => any;
+export { default as abs } from './abs'
+export { default as add } from './add'
+export { default as angle } from './angle'
+export { default as canonicalize } from './canonicalize'
+export { default as clone } from './clone'
+export { default as create } from './create'
+export { default as cross } from './cross'
+export { default as distance } from './distance'
+export { default as divide } from './divide'
+export { default as dot } from './dot'
+export { default as equals } from './equals'
+export { default as fromArray } from './fromArray'
+export { default as fromScalar } from './fromScalar'
+export { default as fromValues } from './fromValues'
+export { default as fromVec2 } from './fromVec2'
+export { default as length } from './length'
+export { default as lerp } from './lerp'
+export { default as max } from './max'
+export { default as min } from './min'
+export { default as multiply } from './multiply'
+export { default as negate } from './negate'
+export { default as normalize } from './normalize'
+export { default as orthogonal } from './orthogonal'
+export { default as rotateX } from './rotateX'
+export { default as rotateY } from './rotateY'
+export { default as rotateZ } from './rotateZ'
+export { default as scale } from './scale'
+export { default as squaredDistance } from './squaredDistance'
+export { default as squaredLength } from './squaredLength'
+export { default as subtract } from './subtract'
+export { default as toString } from './toString'
+export { default as transform } from './transform'
+export { default as unit } from './unit'

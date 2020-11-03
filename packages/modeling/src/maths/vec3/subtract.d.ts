@@ -1,11 +1,6 @@
-export = subtract;
-/**
- * Subtracts the coordinates of two vectors (A-B).
- *
- * @param {vec3} [out] - the receiving vector
- * @param {vec3} a - the minuend vector
- * @param {vec3} b - the subtrahend vector
- * @returns {vec3} a new vector
- * @alias module:modeling/maths/vec3.subtract
- */
-declare function subtract(...params: any[]): any;
+import Vec3 from './type'
+
+export default subtract
+
+declare function subtract(a: Vec3, b: Vec3): Vec3
+declare function subtract(out: Vec3, a: Vec3, b: Vec3): Vec3

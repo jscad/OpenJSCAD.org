@@ -1,11 +1,6 @@
-export = divide;
-/**
- * Divides the coordinates of two vectors (A/B).
- *
- * @param {vec3} [out] - the receiving vector
- * @param {vec3} a - the dividend vector
- * @param {vec3} b - the divisor vector
- * @returns {vec3} a new vector
- * @alias module:modeling/maths/vec3.divide
- */
-declare function divide(...params: any[]): any;
+import Vec3 from './type'
+
+export default divide
+
+declare function divide(a: Vec3, b: Vec3): Vec3
+declare function divide(out: Vec3, a: Vec3, b: Vec3): Vec3

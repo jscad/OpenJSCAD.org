@@ -1,9 +1,5 @@
-export = squaredLength;
-/**
- * Calculates the squared length of the given vector.
- *
- * @param {vec3} vector - vector to calculate squared length of
- * @returns {Number} squared length
- * @alias module:modeling/maths/vec3.squaredLength
- */
-declare function squaredLength(a: any): number;
+import Vec3 from './type'
+
+export default squaredLength
+
+declare function squaredLength(vec: Vec3): number

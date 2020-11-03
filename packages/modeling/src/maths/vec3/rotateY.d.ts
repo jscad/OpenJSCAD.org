@@ -1,11 +1,6 @@
-export = rotateY;
-/**
- * Rotate the given vector around the given origin, Y axis only.
- * @param {vec3} [out] - the receiving vector
- * @param {Number} angle - the angle of rotation
- * @param {vec3} origin - the origin of the rotation
- * @param {vec3} vector - the vector to rotate
- * @returns {vec3} a new vector
- * @alias module:modeling/maths/vec3.rotateY
- */
-declare function rotateY(...params: any[]): any;
+import Vec3 from './type'
+
+export default rotateY
+
+declare function rotateY(angle: number, origin: Vec3, vec: Vec3): Vec3
+declare function rotateY(out: Vec3, angle: number, origin: Vec3, vec: Vec3): Vec3

@@ -1,10 +1,6 @@
-export = normalize;
-/**
- * Normalize the given vector.
- *
- * @param {vec3} [out] - the receiving vector
- * @param {vec3} vector - vector to normalize
- * @returns {vec3} a new (unit) vector
- * @alias module:modeling/maths/vec3.normalize
- */
-declare function normalize(...params: any[]): any;
+import Vec3 from './type'
+
+export default normalize
+
+declare function normalize(vec:  Vec3): Vec3
+declare function normalize(out: Vec3, vec:  Vec3): Vec3
