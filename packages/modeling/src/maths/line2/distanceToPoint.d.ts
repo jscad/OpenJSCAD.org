@@ -1,10 +1,6 @@
-export = distanceToPoint;
-/**
- * Calculate the distance (positive) between the given point and line.
- *
- * @param {vec2} point the point of reference
- * @param {line2} line the 2D line of reference
- * @return {Number} distance between line and point
- * @alias module:modeling/maths/line2.distanceToPoint
- */
-declare function distanceToPoint(point: any, line: any): number;
+import Line2 from './type'
+import Vec2 from '../vec2/type'
+
+export default distanceToPoint
+
+declare function distanceToPoint(point: Vec2, line: Line2): number

@@ -1,9 +1,6 @@
-export = origin;
-/**
- * Return the origin of the given line.
- *
- * @param {line2} line the 2D line of reference
- * @return {vec2} the origin of the line
- * @alias module:modeling/maths/line2.origin
- */
-declare function origin(line: any): any;
+import Line2 from './type'
+import Vec2 from '../vec2/type'
+
+export default origin
+
+declare function origin(line: Line2): Vec2

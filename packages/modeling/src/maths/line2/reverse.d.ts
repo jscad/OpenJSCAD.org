@@ -1,10 +1,6 @@
-export = reverse;
-/**
- * Create a new line in the opposite direction as the given.
- *
- * @param {line2} [out] - receiving line
- * @param {line2} line the 2D line to reverse
- * @returns {line2} a new unbounded line
- * @alias module:modeling/maths/line2.reverse
- */
-declare function reverse(...params: any[]): any;
+import Line2 from './type'
+
+export default reverse
+
+declare function reverse(line: Line2): Line2
+declare function reverse(out: Line2, line: Line2): Line2
