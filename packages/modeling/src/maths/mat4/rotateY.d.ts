@@ -1,11 +1,6 @@
-export = rotateY;
-/**
- * Rotates a matrix by the given angle around the Y axis.
- *
- * @param {mat4} [out] - the receiving matrix
- * @param {Number} angle - the angle to rotate the matrix by (in radian)
- * @param {mat4} matrix - the matrix to rotate
- * @returns {mat4} a new matrix
- * @alias module:modeling/maths/mat4.rotateY
- */
-declare function rotateY(...params: any[]): any;
+import Mat4 from './type'
+
+export default rotateY
+
+declare function rotateY(angle: number, matrix: Mat4): Mat4
+declare function rotateY(out: Mat4, angle: number, matrix: Mat4): Mat4

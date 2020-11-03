@@ -1,14 +1,7 @@
-export = fromTranslation;
-/**
- * Creates a matrix from a vector translation
- * This is equivalent to (but much faster than):
- *
- *     mat4.identity(dest);
- *     mat4.translate(dest, dest, vec);
- *
- * @param {mat4} [out] - mat4 receiving operation result
- * @param {vec3} v - Translation vector
- * @returns {mat4} a new matrix
- * @alias module:modeling/maths/mat4.fromTranslation
- */
-declare function fromTranslation(...params: any[]): any;
+import Mat4 from './type'
+import Vec3 from '../vec3/type'
+
+export default fromTranslation
+
+declare function fromTranslation(vec: Vec3): Mat4
+declare function fromTranslation(out: Mat4, vec: Vec3): Mat4

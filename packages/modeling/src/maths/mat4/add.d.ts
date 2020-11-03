@@ -1,11 +1,6 @@
-export = add;
-/**
- * Adds the two matrices.
- *
- * @param {mat4} [out] - the receiving matrix
- * @param {mat4} a - the first operand
- * @param {mat4} b - the second operand
- * @returns {mat4} a new matrix
- * @alias module:modeling/maths/mat4.add
- */
-declare function add(...params: any[]): any;
+import Mat4 from './type'
+
+export default add
+
+declare function add(a: Mat4, b: Mat4): Mat4
+declare function add(out: Mat4, a: Mat4, b: Mat4): Mat4

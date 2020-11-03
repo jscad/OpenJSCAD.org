@@ -1,11 +1,7 @@
-export = translate;
-/**
- * Translate the matrix by the given offset vector.
- *
- * @param {mat4} [out] - the receiving matrix
- * @param {vec3} offsets - offset vector to translate by
- * @param {mat4} matrix - the matrix to translate
- * @returns {mat4} a new matrix
- * @alias module:modeling/maths/mat4.translate
- */
-declare function translate(...params: any[]): any;
+import Mat4 from './type'
+import Vec3 from '../vec3/type'
+
+export default translate
+
+declare function translate(offsets: Vec3, matrix: Mat4): Mat4
+declare function translate(out: Mat4, offsets: Vec3, matrix: Mat4): Mat4

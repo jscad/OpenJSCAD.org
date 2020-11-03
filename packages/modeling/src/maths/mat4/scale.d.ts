@@ -1,11 +1,7 @@
-export = scale;
-/**
- * Scales the matrix by the given dimensions.
- *
- * @param {mat4} [out] - the receiving matrix
- * @param {vec3} dimensions - the dimensions to scale the matrix by
- * @param {mat4} matrix - the matrix to scale
- * @returns {mat4} a new matrix
- * @alias module:modeling/maths/mat4.scale
- */
-declare function scale(...params: any[]): any;
+import Mat4 from './type'
+import Vec3 from '../vec3/type'
+
+export default scale
+
+declare function scale(dimensions: Vec3, matrix: Mat4): Mat4
+declare function scale(out: Mat4, dimensions: Vec3, matrix: Mat4): Mat4

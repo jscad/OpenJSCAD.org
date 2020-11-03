@@ -1,15 +1,7 @@
-export = fromRotation;
-/**
- * Creates a matrix from a given angle around a given axis
- * This is equivalent to (but much faster than):
- *
- *     mat4.identity(dest);
- *     mat4.rotate(dest, dest, rad, axis);
- *
- * @param {mat4} [out] - mat4 receiving operation result
- * @param {Number} rad - the angle to rotate the matrix by
- * @param {vec3} axis - the axis to rotate around
- * @returns {mat4} a new matrix
- * @alias module:modeling/maths/mat4.fromRotation
- */
-declare function fromRotation(...params: any[]): any;
+import Mat4 from './type'
+import Vec3 from '../vec3/type'
+
+export default fromRotation
+
+declare function fromRotation(rad: number, axis: Vec3): Mat4
+declare function fromRotation(out: Mat4, rad: number, axis: Vec3): Mat4

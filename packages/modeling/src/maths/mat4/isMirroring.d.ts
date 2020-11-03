@@ -1,9 +1,5 @@
-export = isMirroring;
-/**
- * Determine whether the given matrix is a mirroring transformation.
- *
- * @param {mat4} matrix - the matrix
- * @returns {Boolean} true if matrix is a mirroring transformation
- * @alias module:modeling/maths/mat4.isMirroring
- */
-declare function isMirroring(mat: any): boolean;
+import Mat4 from './type'
+
+export default isMirroring
+
+declare function isMirroring(matrix: Mat4): boolean

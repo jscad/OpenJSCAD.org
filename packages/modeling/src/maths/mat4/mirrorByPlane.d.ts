@@ -1,10 +1,7 @@
-export = mirrorByPlane;
-/**
- * Create a matrix for mirroring onto an arbitrary plane.
- *
- * @param {mat4} [out] - receiving matrix
- * @param {vec4} plane - plane of which to mirror the matrix
- * @returns {mat4} a new matrix
- * @alias module:modeling/maths/mat4.mirrorByPlane
- */
-declare function mirrorByPlane(...params: any[]): any;
+import Mat4 from './type'
+import Plane from '../plane/type'
+
+export default mirrorByPlane
+
+declare function mirrorByPlane(plane: Plane): Mat4
+declare function mirrorByPlane(out: Mat4, plane: Plane): Mat4

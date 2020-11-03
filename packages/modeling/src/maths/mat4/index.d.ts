@@ -1,24 +1,24 @@
-export const add: (...params: any[]) => any;
-export const clone: (...params: any[]) => any;
-export const create: () => any[];
-export const equals: (a: any, b: any) => boolean;
-export const fromRotation: (...params: any[]) => any;
-export const fromScaling: (...params: any[]) => any;
-export const fromTaitBryanRotation: (yaw: number, pitch: number, roll: number) => any;
-export const fromTranslation: (...params: any[]) => any;
-export const fromValues: (m00: number, m01: number, m02: number, m03: number, m10: number, m11: number, m12: number, m13: number, m20: number, m21: number, m22: number, m23: number, m30: number, m31: number, m32: number, m33: number) => any;
-export const fromXRotation: (...params: any[]) => any;
-export const fromYRotation: (...params: any[]) => any;
-export const fromZRotation: (...params: any[]) => any;
-export const identity: (...params: any[]) => any;
-export const isMirroring: (mat: any) => boolean;
-export const mirrorByPlane: (...params: any[]) => any;
-export const multiply: (...params: any[]) => any;
-export const rotate: (...params: any[]) => any;
-export const rotateX: (...params: any[]) => any;
-export const rotateY: (...params: any[]) => any;
-export const rotateZ: (...params: any[]) => any;
-export const scale: (...params: any[]) => any;
-export const subtract: (...params: any[]) => any;
-export const toString: (mat: any) => string;
-export const translate: (...params: any[]) => any;
+export { default as add } from './add'
+export { default as clone } from './clone'
+export { default as create } from './create'
+export { default as equals } from './equals'
+export { default as fromRotation } from './fromRotation'
+export { default as fromScaling } from './fromScaling'
+export { default as fromTaitBryanRotation } from './fromTaitBryanRotation'
+export { default as fromTranslation } from './fromTranslation'
+export { default as fromValues } from './fromValues'
+export { default as fromXRotation } from './fromXRotation'
+export { default as fromYRotation } from './fromYRotation'
+export { default as fromZRotation } from './fromZRotation'
+export { default as identity } from './identity'
+export { default as isMirroring } from './isMirroring'
+export { default as mirrorByPlane } from './mirrorByPlane'
+export { default as multiply } from './multiply'
+export { default as rotate } from './rotate'
+export { default as rotateX } from './rotateX'
+export { default as rotateY } from './rotateY'
+export { default as rotateZ } from './rotateZ'
+export { default as scale } from './scale'
+export { default as subtract } from './subtract'
+export { default as toString } from './toString'
+export { default as translate } from './translate'

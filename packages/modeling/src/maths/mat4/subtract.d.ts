@@ -1,11 +1,6 @@
-export = subtract;
-/**
- * Subtracts matrix b from matrix a.
- *
- * @param {mat4} [out] - the receiving matrix
- * @param {mat4} a - the first operand
- * @param {mat4} b - the second operand
- * @returns {mat4} a new matrix
- * @alias module:modeling/maths/mat4.subtract
- */
-declare function subtract(...params: any[]): any;
+import Mat4 from './type'
+
+export default subtract
+
+declare function subtract(a: Mat4, b: Mat4): Mat4
+declare function subtract(out: Mat4, a: Mat4, b: Mat4): Mat4
