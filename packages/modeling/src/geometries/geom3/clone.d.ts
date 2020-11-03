@@ -1,8 +1,5 @@
-export = clone;
-/**
- * Performs a deep clone of the given geometry.
- * @param {geom3} geometry - the geometry to clone
- * @returns {geom3} a new geometry
- * @alias module:modeling/geometries/geom3.clone
- */
-declare function clone(geometry: any): any;
+import Geom3 from './type'
+
+export default clone
+
+declare function clone(geometry: Geom3): Geom3
