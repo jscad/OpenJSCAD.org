@@ -10,24 +10,24 @@ const makeLocalFsSideEffect = async (params) => {
   let webSocketOpen = false
   let lastCheck = 0
 
-  const sendWs = m=>webSocket.send(JSON.stringify(m))
+  const sendWs = (m) => webSocket.send(JSON.stringify(m))
 
   const startWebSocket = () => {
     webSocket = new WebSocket('ws://127.0.0.1:35729/livereload')
-  
+
     webSocket.onopen = function (event) {
       console.log('websocket open', event)
-      sendWs({"command":"hello","protocols":["http://livereload.com/protocols/official-6","http://livereload.com/protocols/official-7"],"ver":"2.0.8","ext":"Chrome","extver":"2.1.0"})
+      sendWs({ command: 'hello', protocols: ['http://livereload.com/protocols/official-6', 'http://livereload.com/protocols/official-7'], ver: '2.0.8', ext: 'Chrome', extver: '2.1.0' })
       webSocketOpen = true
     }
 
     webSocket.onmessage = function (event) {
-      var data = JSON.parse(event.data)
-      console.log('message',data)
-      if(data.command == 'hello') sendWs({"command":"info","plugins":{"less":{"disable":false,"version":"1.0"}},"url":document.location})
-      if(data.command == 'reload') lastCheck = 0
+      const data = JSON.parse(event.data)
+      console.log('message', data)
+      if (data.command === 'hello') sendWs({ command: 'info', plugins: { less: { disable: false, version: '1.0' } }, url: document.location })
+      if (data.command === 'reload') lastCheck = 0
     }
-    
+
     webSocket.onerror = function (event) {
       console.log('websocket error', event)
     }
@@ -67,7 +67,7 @@ const makeLocalFsSideEffect = async (params) => {
         currentFileTree = await walkFileTree(data)
         commandResponses.callback({ type, id, data: currentFileTree })
 
-        if(!webSocketOpen) startWebSocket()
+        if (!webSocketOpen) startWebSocket()
       }
 
       const watch = () => {
@@ -79,11 +79,10 @@ const makeLocalFsSideEffect = async (params) => {
         const { enabled } = options
         if (enabled) {
           watcher = setInterval(() => {
-
             const now = Date.now()
-            if((webSocketOpen && lastCheck) || (Date.now() - lastCheck) < watcherDelay) return
+            if ((webSocketOpen && lastCheck) || (Date.now() - lastCheck) < watcherDelay) return
             lastCheck = now
-            
+
             const startMs = Date.now()
             walkFileTree(rawData)
               .catch((error) => {
@@ -100,7 +99,7 @@ const makeLocalFsSideEffect = async (params) => {
 
                 const endMs = Date.now()
                 watcherDelay = Math.max((endMs - startMs) * 2, 1000)
-                console.log('watcherDelay',watcherDelay)
+                console.log('watcherDelay', watcherDelay)
               })
           }, 50)
         } else {
