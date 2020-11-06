@@ -22,12 +22,12 @@ const shapesMapGeometry = (obj, objectify, params) => {
         x = (x + (w / 2)).toFixed(4) // position the object via the center
         y = (y - (h / 2)).toFixed(4) // position the object via the center
         if (rx === 0) {
-          shape = transforms.center({ center: [x, y, 0] }, primitives.rectangle({ size: [w / 2, h / 2] }))
+          shape = transforms.center({ center: [x, y, 0] }, primitives.rectangle({ size: [w, h] }))
         } else {
-          shape = transforms.center({ center: [x, y, 0] }, primitives.roundedRectangle({ segments, size: [w / 2, h / 2], roundRadius: rx }))
+          shape = transforms.center({ center: [x, y, 0] }, primitives.roundedRectangle({ segments, size: [w, h], roundRadius: rx }))
         }
         if (target === 'path') {
-          shape = geometries.path2.fromPoints({ }, geometries.geom2.toPoints(shape))
+          shape = geometries.path2.fromPoints({ closed: true }, geometries.geom2.toPoints(shape))
         }
       }
       return shape
@@ -42,7 +42,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
       if (r > 0) {
         shape = transforms.center({ center: [x, y, 0] }, primitives.circle({ segments, radius: r }))
         if (target === 'path') {
-          shape = geometries.path2.fromPoints({}, geometries.geom2.toPoints(shape))
+          shape = geometries.path2.fromPoints({ closed: true }, geometries.geom2.toPoints(shape))
         }
       }
       return shape
@@ -58,7 +58,7 @@ const shapesMapGeometry = (obj, objectify, params) => {
       if (rx > 0 && ry > 0) {
         shape = transforms.center({ center: [cx, cy, 0] }, primitives.ellipse({ segments, radius: [rx, ry] }))
         if (target === 'path') {
-          shape = geometries.path2.fromPoints({}, geometries.geom2.toPoints(shape))
+          shape = geometries.path2.fromPoints({ closed: true }, geometries.geom2.toPoints(shape))
         }
       }
       return shape
