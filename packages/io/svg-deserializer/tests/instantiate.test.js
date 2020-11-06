@@ -1,6 +1,7 @@
 const test = require('ava')
 
 const deserializer = require('../index.js')
+const { measurements } = require('@jscad/modeling')
 
 // deserializer
 
@@ -9,22 +10,34 @@ test('deserialize : instantiate svg (rect) to objects', (t) => {
   <rect x="80" y="60" width="250" height="250" color="red"/>
   <rect x="140" y="120" width="250" height="250" rx="40" color="rgb(0,255,0)"/>
   <rect x="140" y="120" width="250" height="250" ry="40" color="blue"/>
-  <rect x="40" y="20" width="250" height="250" rx="40" ry="40"/>
+  <rect x="40" y="20" width="250" height="250" transform="translate(60 50) scale(2 3)"/>
 </svg>`
 
   let observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 4)
   let shape = observed[0]
   t.is(shape.sides.length, 4)
+  t.is(measurements.measureArea(shape), 625)
   shape = observed[1]
   t.is(shape.sides.length, 36)
+  t.is(measurements.measureArea(shape), 610.943122436129)
+  shape = observed[3]
+  t.is(shape.sides.length, 4)
+  t.is(measurements.measureArea(shape), 3750)
+  t.deepEqual(measurements.measureBoundingBox(shape), [[14, -86, 0], [64, -11, 0]])
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 4)
   shape = observed[0]
   t.is(shape.points.length, 4)
+  t.true(shape.isClosed)
   shape = observed[1]
   t.is(shape.points.length, 36) // rounded rectangle
+  t.true(shape.isClosed)
+  shape = observed[3]
+  t.is(shape.points.length, 4)
+  t.true(shape.isClosed)
+  t.deepEqual(measurements.measureBoundingBox(shape), [[14, -86, 0], [64, -11, 0]])
 })
 
 // ################################
@@ -45,12 +58,14 @@ test('deserialize : instantiate svg (circle) to objects', (t) => {
   t.is(observed.length, 1)
   shape = observed[0]
   t.is(shape.points.length, 32)
+  t.true(shape.isClosed)
   t.deepEqual(shape.color, [0, 0, 0, 1])
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false, segments: 16 }, sourceSvg)
   t.is(observed.length, 1)
   shape = observed[0]
   t.is(shape.points.length, 16)
+  t.true(shape.isClosed)
   t.deepEqual(shape.color, [0, 0, 0, 1])
 })
 
@@ -71,11 +86,13 @@ test('deserialize : instantiate svg (ellipse) to objects', (t) => {
   t.is(observed.length, 1)
   shape = observed[0]
   t.is(shape.points.length, 32)
+  t.true(shape.isClosed)
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false, segments: 16 }, sourceSvg)
   t.is(observed.length, 1)
   shape = observed[0]
   t.is(shape.points.length, 16)
+  t.true(shape.isClosed)
 })
 
 // ################################
@@ -213,22 +230,27 @@ test('deserialize : instantiate svg (path: simple) to objects', (t) => {
 test('deserialize : instantiate svg (path: arc) to objects', (t) => {
   const sourceSvg = `<svg height="500" width="500">
   <path d="M 230 230 A 45 45 0 1 1 275 275 L 275 230 Z"/>
+  <path d="M 230 230 A 45 45 0 1 1 275 275 L 275 230 Z" transform="translate(180 80) rotate(45)"/>
 </svg>`
 
   let observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
-  t.is(observed.length, 1)
+  t.is(observed.length, 2)
   let shape = observed[0]
   t.is(shape.sides.length, 27)
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
-  t.is(observed.length, 1)
+  t.is(observed.length, 2)
   shape = observed[0]
   t.is(shape.points.length, 27)
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false, segments: 16 }, sourceSvg)
-  t.is(observed.length, 1)
+  t.is(observed.length, 2)
   shape = observed[0]
   t.is(shape.points.length, 15) // segments double on a 3/4 circle
+  t.deepEqual(measurements.measureBoundingBox(shape), [[64.91110599999999, -77.611103, 0], [90.21850570104527, -52.30370029895471, 0]])
+  shape = observed[1]
+  t.is(shape.points.length, 15) // segments double on a 3/4 circle
+  t.deepEqual(measurements.measureBoundingBox(shape), [[50.79999599999999, -136.03302387090216, 0], [72.27222493929787, -110.6793647936299, 0]])
 })
 
 // ################################
