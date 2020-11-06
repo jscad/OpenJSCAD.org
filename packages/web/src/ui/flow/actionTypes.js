@@ -23,7 +23,7 @@ const CHANGE_EXPORT_FORMAT = 'changeExportFormat'
 // VIEWER
 const TOGGLE_VIEWER_GRID = 'toggleGrid'
 const TOGGLE_VIEWER_AXES = 'toggleAxes'
-const TOGGLE_VIEWER_AUTOROTATE = 'toggleAutorotate'
+const TOGGLE_VIEWER_AUTOROTATE = 'toggleAutoRotate'
 
 module.exports = {
   SET_SHORTCUTS,

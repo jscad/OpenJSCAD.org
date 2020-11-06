@@ -51,8 +51,8 @@ const reducers = {
       origin: undefined, // where the design came from : http, local etc
       filesAndFolders: [], // file tree, of sorts
       // code
-      instantUpdate: true,
-      autoReload: true,
+      instantUpdate: false,
+      autoReload: false,
       // if set to true, will overwrite existing code with the converted imput
       // if set to false, will create a script with an import of the input
       convertSupportedTypes: false,
@@ -126,14 +126,12 @@ const reducers = {
       debug
     })
 
-    const viewer = Object.assign({}, state.viewer, { behaviours: { resetViewOn: [''], zoomToFitOn: ['new-entities'] } })
     const appTitle = `jscad v ${packageMetadata.version}: ${state.design.name}`
 
     // FIXME: this is the same as clear errors ?
     const status = Object.assign({}, state.status, { busy: true, error: undefined })
     return {
       design,
-      viewer,
       appTitle,
       status
     }
@@ -615,7 +613,7 @@ const actions = ({ sources }) => {
   // setDesignContent$.map(x=>{behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']})
   // ui/toggles
   const toggleAutoReload$ = most.mergeArray([
-    sources.dom.select('#autoReload').events('click')
+    sources.dom.select('#toggleAutoReload').events('click')
       .map((e) => e.target.checked)
   ])
     .thru(withLatestFrom(reducers.toggleAutoReload, sources.state))
