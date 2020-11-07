@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.0.0-alpha.6...@jscad/modeling@2.0.0-alpha.7) (2020-11-07)
+
+
+### Bug Fixes
+
+* **modeling:** fix extrude rotate ([#727](https://github.com/jscad/OpenJSCAD.org/issues/727)) ([13de037](https://github.com/jscad/OpenJSCAD.org/commit/13de03788336ac5c2e00818fadd631bc8aadc523))
+
+
+
+
+
 # [2.0.0-alpha.6](https://github.com/jscad/openjscad.org/compare/@jscad/modeling@2.0.0-alpha.5...@jscad/modeling@2.0.0-alpha.6) (2020-10-11)
 
 
