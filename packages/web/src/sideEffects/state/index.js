@@ -1,6 +1,6 @@
 const most = require('most')
-const callBackToStream = require('@jscad/core/observable-utils/callbackToObservable')
-// const makeLogger = require('../../utils/logger')
+
+const { callbackToObservable } = require('@jscad/core').observableUtils
 
 const makeState = (params) => {
   // const defaults = {
@@ -9,7 +9,7 @@ const makeState = (params) => {
   // const { logging, packageMetadata, keyBindings } = Object.assign({}, defaults, params)
   // const log = makeLogger({ enabled: logging })
   const { packageMetadata, keyBindings } = params
-  const commandResponses = callBackToStream()
+  const commandResponses = callbackToObservable()
 
   const initialState = {
     appTitle: `jscad v ${packageMetadata.version}`,

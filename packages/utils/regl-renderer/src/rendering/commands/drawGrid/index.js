@@ -1,6 +1,4 @@
-// const glslify = require('glslify')// -sync') // works in client & server
 const mat4 = require('gl-mat4')
-// const path = require('path')
 
 const makeDrawGrid = (regl, params = {}) => {
   const positions = []
@@ -80,16 +78,12 @@ const makeDrawGrid = (regl, params = {}) => {
     varying vec3 fragNormal, fragPosition;
     varying vec4 worldPosition;
 
-    //#pragma glslify: zBufferAdjust = require('./zBufferAdjust')
-
     void main() {
-      //fragNormal = normal;
       fragPosition = position;
       worldPosition = model * vec4(position, 1);
       vec4 glPosition = projection * view * worldPosition;
       gl_Position = glPosition;
-      //gl_Position = zBufferAdjust(glPosition, camNear, camFar);
-    }`, // glslify(path.join(__dirname, '/../basic.vert')),
+    }`,
     frag: `precision mediump float;
     uniform vec4 color;
     varying vec3 fragNormal, fragPosition;
@@ -103,12 +97,11 @@ const makeDrawGrid = (regl, params = {}) => {
         dist = distance( vec2(0.,0.), vec2(worldPosition.x, worldPosition.y));
         dist *= 0.0025;
         dist = sqrt(dist);
-        //dist = clamp(dist, 0.0, 1.0);
       }
 
       gl_FragColor = mix(color, fogColor, dist);
     }
-    `, // glslify(path.join(__dirname, '/shaders/grid.frag')),
+    `,
 
     attributes: {
       position: regl.buffer(positions)
@@ -146,49 +139,3 @@ const makeDrawGrid = (regl, params = {}) => {
 }
 
 module.exports = makeDrawGrid
-
-/* alternate rendering method
-
-        let count = 80
-        let offset = 10
-        const datas = Array(80).fill(0)
-          .map(function (v, i) {
-            const model = mat4.translate(mat4.identity([]), mat4.identity([]), [0, i * offset - (count * 0.5 * offset), 0])
-            return {
-              color: gridColor, fadeOut, model
-            }
-          })
-        const datas2 = Array(80).fill(0)
-          .map(function (v, i) {
-            let model
-            model = mat4.rotateZ(mat4.identity([]), mat4.identity([]), 1.5708)
-            model = mat4.translate(model, model, [0, i * offset - (count * 0.5 * offset), 0])
-            return {
-              color: gridColor, fadeOut, model
-            }
-          })
-
-        count = 80
-        offset = 1
-        const datas3 = Array(80).fill(0)
-          .map(function (v, i) {
-            const model = mat4.translate(mat4.identity([]), mat4.identity([]), [0, i * offset - (count * 0.5 * offset), 0])
-            return {
-              color: subGridColor, fadeOut, model
-            }
-          })
-        const datas4 = Array(80).fill(0)
-          .map(function (v, i) {
-            let model
-            model = mat4.rotateZ(mat4.identity([]), mat4.identity([]), 1.5708)
-            model = mat4.translate(model, model, [0, i * offset - (count * 0.5 * offset), 0])
-            return {
-              color: subGridColor, fadeOut, model
-            }
-          })
-        // const model = mat4.translate(mat4.identity([]), mat4.identity([]), [0, 50, 0])
-        drawGrid(datas)// {color: gridColor, fadeOut, model})
-        drawGrid(datas2)
-
-        drawGrid(datas3)// {color: gridColor, fadeOut, model})
-        drawGrid(datas4) */

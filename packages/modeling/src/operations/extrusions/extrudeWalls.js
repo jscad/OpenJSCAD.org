@@ -1,3 +1,4 @@
+const { EPS } = require('../../maths/constants')
 const vec3 = require('../../maths/vec3')
 
 const poly3 = require('../../geometries/poly3')
@@ -41,6 +42,12 @@ const repartitionEdges = (newlength, edges) => {
   return newEdges
 }
 
+const EPSAREA = (EPS * EPS / 2) * Math.sin(Math.PI / 3)
+
+/*
+ * Extrude (build) walls between the given slices.
+ * Each wall consists of two triangles, which may be invalid if slices are overlapping.
+ */
 const extrudeWalls = (slice0, slice1) => {
   let edges0 = slice.toEdges(slice0)
   let edges1 = slice.toEdges(slice1)
@@ -57,9 +64,12 @@ const extrudeWalls = (slice0, slice1) => {
     const edge1 = edges1[i]
 
     const poly0 = poly3.fromPoints([edge0[0], edge0[1], edge1[1]])
-    const poly1 = poly3.fromPoints([edge0[0], edge1[1], edge1[0]])
+    const poly0area = poly3.measureArea(poly0)
+    if (Number.isFinite(poly0area) && poly0area > EPSAREA) walls.push(poly0)
 
-    walls.push(poly0, poly1)
+    const poly1 = poly3.fromPoints([edge0[0], edge1[1], edge1[0]])
+    const poly1area = poly3.measureArea(poly1)
+    if (Number.isFinite(poly1area) && poly1area > EPSAREA) walls.push(poly1)
   })
   return walls
 }

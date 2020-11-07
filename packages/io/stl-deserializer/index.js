@@ -2,6 +2,8 @@ const { maths, primitives } = require('@jscad/modeling')
 
 const { BinaryReader } = require('@jscad/io-utils')
 
+const packageVersion = require('./package.json').version
+
 // STL function from http://jsfiddle.net/Riham/yzvGD/35/
 // CC BY-SA by Riham
 // changes by Rene K. Mueller <spiritdude@gmail.com>
@@ -23,7 +25,7 @@ const { BinaryReader } = require('@jscad/io-utils')
 const deserialize = (options, stl) => {
   const defaults = {
     filename: 'stl',
-    version: '0.0.0',
+    version: packageVersion,
     addMetaData: true,
     output: 'script'
   }
@@ -99,7 +101,7 @@ const formatAsJscad = (data, addMetaData, version, filename) => {
   if (addMetaData) {
     code = `
   //
-  // producer: OpenJSCAD.org ${version} - STL Deserializer
+  // producer: JSCAD STL Deserializer ${version}
   // date: ${new Date()}
   // source: ${filename}
   // objects: ${data.length}

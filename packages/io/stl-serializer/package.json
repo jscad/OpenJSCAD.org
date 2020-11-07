@@ -1,15 +1,12 @@
 {
   "name": "@jscad/stl-serializer",
   "version": "2.0.0-alpha.6",
-  "description": "STL serializer for JSCAD project",
+  "description": "STL Serializer for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "scripts": {
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
-    "test": "ava --verbose --timeout 2m './tests/*.test.js'",
-    "release-patch": "git checkout master && npm version patch && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
-    "release-minor": "git checkout master && npm version minor && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",
-    "release-major": "git checkout master && npm version major && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags "
+    "test": "ava --verbose --timeout 2m './tests/*.test.js'"
   },
   "contributors": [
     {
@@ -28,7 +25,6 @@
   "keywords": [
     "openjscad",
     "jscad",
-    "csg",
     "export",
     "serializer",
     "stl"

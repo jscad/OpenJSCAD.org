@@ -15,6 +15,8 @@ const sax = require('sax')
 const { colors, transforms } = require('@jscad/modeling')
 const { toArray } = require('@jscad/array-utils')
 
+const version = require('./package.json').version
+
 const { cagLengthX, cagLengthY } = require('./helpers')
 const { svgSvg, svgRect, svgCircle, svgGroup, svgLine, svgPath, svgEllipse, svgPolygon, svgPolyline, svgUse } = require('./svgElementHelpers')
 const shapesMapGeometry = require('./shapesMapGeometry')
@@ -38,7 +40,7 @@ const deserialize = (options, input) => {
     output: 'script',
     pxPmm: require('./constants').pxPmm,
     target: 'path', // target - 'geom2' or 'path'
-    version: '0.0.0',
+    version,
     segments: 32
   }
   options = Object.assign({}, defaults, options)
@@ -97,7 +99,7 @@ const translate = (src, options) => {
 
   // convert the internal objects to JSCAD code
   let code = addMetaData ? `//
-  // producer: OpenJSCAD.org ${version} SVG Importer
+  // producer: JSCAD SVG Deserializer ${version}
   // date: ${new Date()}
   // source: ${filename}
   //

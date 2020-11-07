@@ -51,19 +51,22 @@ const toPerspectiveView = ({ camera }) => {
   return { view, position }
 }
 
+/**
+ * Calculate the camera view and position for acheiving the given preset view.
+ */
 const toPresetView = (viewName, { camera }) => {
   const presets = {
-    top: [0, 0, 1],
+    top: [0, -0.000001, 1],
     bottom: [0, 0, -1],
     front: [0, 1, 0],
     back: [0, -1, 0],
-    left: [1, 0, 0],
-    right: [-1, 0, 0],
+    left: [-1, 0, 0],
+    right: [1, 0, 0],
     undefined: [0, 0, 0]
   }
 
   const offsetToTarget = vec3.distance(camera.position, camera.target)
-  const position = vec3.add([], presets[viewName].map((x) => x * offsetToTarget), camera.target)
+  const position = vec3.add(vec3.create(), presets[viewName].map((x) => x * offsetToTarget), camera.target)
   const view = mat4.lookAt(mat4.create(), position, camera.target, camera.up)
 
   return { view, position }

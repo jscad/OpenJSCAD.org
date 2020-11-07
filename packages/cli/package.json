@@ -1,18 +1,14 @@
 {
   "name": "@jscad/cli",
   "version": "2.0.0-alpha.9",
-  "description": "Command Line Interface (CLI) for OpenJsCAD",
+  "description": "Command Line Interface (CLI) for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "bin": {
-    "openjscad": "./cli.js",
     "jscad": "./cli.js"
   },
   "scripts": {
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava '*.test.js' --serial --verbose --timeout 2m",
-    "release-patch": "git checkout master && git pull origin master && npm version patch",
-    "release-minor": "git checkout master && git pull origin master && npm version minor",
-    "release-major": "git checkout master && git pull origin master && npm version major",
     "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove OpenJSCAD? You can now donate to our open collective:\\u001b[22m\\u001b[39m\\n > \\u001b[34mhttps://opencollective.com/openjscad/donate\\u001b[0m')\""
   },
   "contributors": [
@@ -28,6 +24,13 @@
       "name": "Mark 'kaosat-dev' Moissette",
       "url": "http://kaosat.net"
     }
+  ],
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "cli",
+    "command",
+    "application"
   ],
   "license": "MIT",
   "dependencies": {

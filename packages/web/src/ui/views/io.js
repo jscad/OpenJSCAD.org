@@ -17,8 +17,8 @@ const io = (state, i18n) => {
       <input type="file" value="${i18n`load project`}" id="fileLoader" multiple webkitdirectory mozdirectory msdirectory odirectory directory  />
       <label for="fileLoader"> ${i18n`load project`}> </label>
 
-      <label for="autoReload">${i18n`auto reload`}</label>
-        <input type="checkbox" id="autoReload" checked=${state.design.autoReload}/>
+      <label for="toggleAutoReload">${i18n`auto reload`}</label>
+        <input type="checkbox" id="toggleAutoReload" checked=${state.design.autoReload}/>
       <span id='exports' style='visibility:${exportAvailable ? 'visible' : 'hidden'}'>
         <select id='exportFormats'>
         ${formatsList}

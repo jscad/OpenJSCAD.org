@@ -31,7 +31,7 @@ const grid = { // grid data
     fadeOut: false,
     transparent: true
   },
-  size: [500, 500],
+  size: [200, 200],
   ticks: [10, 1]
 }
 
@@ -85,7 +85,7 @@ const viewer = (state, i18n) => {
         controls = { ...controls, ...updated.controls }
       })
 
-    const doRotatePanZoom = (timestamp) => {
+    const doRotatePanZoom = () => {
       if (rotateDelta[0] || rotateDelta[1]) {
         const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, rotateDelta)
         rotateDelta = [0, 0]
@@ -107,12 +107,12 @@ const viewer = (state, i18n) => {
     }
 
     // the heart of rendering, as themes, controls, etc change
-    const updateAndRender = (timestamp, force) => {
-      doRotatePanZoom(timestamp)
+    const updateAndRender = (timestamp) => {
+      doRotatePanZoom()
 
-      const updatedA = orbitControls.update({ controls, camera })
-      controls = { ...controls, ...updatedA.controls }
-      camera.position = updatedA.camera.position
+      const updated = orbitControls.update({ controls, camera })
+      controls = { ...controls, ...updated.controls }
+      camera.position = updated.camera.position
       perspectiveCamera.update(camera)
 
       resize(el)
@@ -153,6 +153,18 @@ const viewer = (state, i18n) => {
       state.viewer.axes.show ? axes : undefined,
       ...prevEntities
     ].filter((x) => x !== undefined)
+
+    // special camera commands
+    if (state.viewer.camera.position !== '') {
+      const adjustment = cameras.camera.toPresetView(state.viewer.camera.position, { camera })
+      camera.position = adjustment.position
+      perspectiveCamera.update(camera)
+
+      state.viewer.camera.position = ''
+    }
+    if (state.viewer.rendering) {
+      controls.autoRotate.enabled = state.viewer.rendering.autoRotate
+    }
   }
 
   return el
@@ -161,7 +173,7 @@ const viewer = (state, i18n) => {
 const setup = (element) => {
   // prepare the camera
   const camera = Object.assign({}, perspectiveCamera.defaults)
-  camera.position = [150, 180, 233]
+  camera.position = [150, -180, 233]
 
   const viewerOptions = {
     glOptions: { canvas: element },

@@ -1,12 +1,18 @@
 {
   "name": "@jscad/vtree",
   "version": "2.0.0-alpha.7",
-  "description": "",
+  "description": "Experimental Object Caching for JSCAD",
   "main": "index.js",
   "scripts": {
     "output": "node user/index.js"
   },
   "author": "Mark 'kaosat-dev' Moissette",
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "vtree",
+    "cache"
+  ],
   "license": "MIT",
   "publishConfig": {
     "access": "public"
