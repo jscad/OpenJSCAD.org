@@ -1,7 +1,7 @@
 const html = require('nanohtml')
 
 const shortcuts = (state, i18n) => {
-  const keybindings = state.shortcuts// require('../../../data/keybindings.json')
+  const keybindings = state.shortcuts
   const bindingsList = keybindings.map((binding, index) => {
     const { command, key, args, tmpKey, error } = binding
 

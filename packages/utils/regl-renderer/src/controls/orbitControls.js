@@ -52,7 +52,7 @@ const controlsProps = {
   },
   autoRotate: {
     enabled: false,
-    speed: 2.0 // 30 seconds per round when fps is 60
+    speed: 1.0 // 30 seconds per round when fps is 60
   },
   autoAdjustPlanes: true // adjust near & far planes when zooming in &out
 }

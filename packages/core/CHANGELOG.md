@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.10](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.0.0-alpha.9...@jscad/core@2.0.0-alpha.10) (2020-11-07)
+
+
+### Features
+
+* **core:** V2 : Fix core packaging ([#720](https://github.com/jscad/OpenJSCAD.org/issues/720)) ([e19c10c](https://github.com/jscad/OpenJSCAD.org/commit/e19c10c6d1a8f2b4f15a0b81144be8439095e02f))
+
+
+
+
+
 # [2.0.0-alpha.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.0.0-alpha.8...@jscad/core@2.0.0-alpha.9) (2020-10-24)
 
 

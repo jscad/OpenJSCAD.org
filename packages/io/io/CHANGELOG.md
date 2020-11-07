@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io@2.0.0-alpha.8...@jscad/io@2.0.0-alpha.9) (2020-11-07)
+
+
+### Bug Fixes
+
+* **io:** io revisited ([#714](https://github.com/jscad/OpenJSCAD.org/issues/714)) ([22f04f1](https://github.com/jscad/OpenJSCAD.org/commit/22f04f1b2894a82e24952655875e73b74727bf86))
+
+
+
+
+
 # [2.0.0-alpha.8](https://github.com/jscad/io/compare/@jscad/io@2.0.0-alpha.7...@jscad/io@2.0.0-alpha.8) (2020-10-24)
 
 **Note:** Version bump only for package @jscad/io
