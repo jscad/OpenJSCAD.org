@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.0.0-alpha.6...@jscad/svg-deserializer@2.0.0-alpha.7) (2020-11-07)
+
+
+### Bug Fixes
+
+* **io:** io revisited ([#714](https://github.com/jscad/OpenJSCAD.org/issues/714)) ([22f04f1](https://github.com/jscad/OpenJSCAD.org/commit/22f04f1b2894a82e24952655875e73b74727bf86))
+
+
+
+
+
 # [2.0.0-alpha.6](https://github.com/jscad/compare/@jscad/svg-deserializer@2.0.0-alpha.5...@jscad/svg-deserializer@2.0.0-alpha.6) (2020-10-11)
 
 

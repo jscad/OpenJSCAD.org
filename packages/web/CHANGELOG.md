@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.12](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.11...@jscad/web@2.0.0-alpha.12) (2020-11-07)
+
+
+### Bug Fixes
+
+* **regl-renderer:** Changes to improve regl-renderer ([#722](https://github.com/jscad/OpenJSCAD.org/issues/722)) ([7bcc689](https://github.com/jscad/OpenJSCAD.org/commit/7bcc689e3d36cfbc3ac6f9b4c3822a72d54a996e))
+* **web:** changed the file system watcher to use setTimeout(), and calculate dynamic delays ([#725](https://github.com/jscad/OpenJSCAD.org/issues/725)) ([9757561](https://github.com/jscad/OpenJSCAD.org/commit/97575616ff850ee2a1d8a619f9ddd5e57efbda6a))
+
+
+### Features
+
+* **core:** V2 : Fix core packaging ([#720](https://github.com/jscad/OpenJSCAD.org/issues/720)) ([e19c10c](https://github.com/jscad/OpenJSCAD.org/commit/e19c10c6d1a8f2b4f15a0b81144be8439095e02f))
+
+
+
+
+
 # [2.0.0-alpha.11](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.10...@jscad/web@2.0.0-alpha.11) (2020-10-24)
 
 
