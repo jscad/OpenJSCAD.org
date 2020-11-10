@@ -1,2 +1,2 @@
-export const hull: (...geometries: any[]) => any;
-export const hullChain: (...geometries: any[]) => any;
+export { default as hull } from './hull'
+export { default as hullChain } from './hullChain'

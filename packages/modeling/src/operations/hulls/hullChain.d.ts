@@ -1,27 +1,8 @@
-export = hullChain;
-/**
- * Create a chain of hulled geometries from the given gemetries.
- * Essentially hull A+B, B+C, C+D, etc., then union the results.
- * The given geometries should be of the same type, either geom2 or geom3 or path2.
- *
- * @param {...Objects} geometries - list of geometries from which to create hulls
- * @returns {geom2|geom3} new geometry
- * @alias module:modeling/hulls.hullChain
- *
- * @example
- * let newshape = hullChain(rectangle({center: [-5,-5]}), circle({center: [0,0]}), rectangle({center: [5,5]}))
- *
- * @example
- * +-------+   +-------+     +-------+   +------+
- * |       |   |       |     |        \ /       |
- * |   A   |   |   C   |     |         |        |
- * |       |   |       |     |                  |
- * +-------+   +-------+     +                  +
- *                       =   \                 /
- *       +-------+            \               /
- *       |       |             \             /
- *       |   B   |              \           /
- *       |       |               \         /
- *       +-------+                +-------+
- */
-declare function hullChain(...geometries: any[]): any | any;
+import { Geom2, Geom3, Path2 } from '../../geometries/types'
+import RecursiveArray from '../../utils/recursiveArray'
+
+export default hullChain
+
+declare function hullChain(...geometries: RecursiveArray<Geom2>): Geom2
+declare function hullChain(...geometries: RecursiveArray<Geom3>): Geom3
+declare function hullChain(...geometries: RecursiveArray<Path2>): Path2
