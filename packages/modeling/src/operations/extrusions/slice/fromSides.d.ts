@@ -1,13 +1,7 @@
-export = fromSides;
-/**
- * Create a slice from the given sides (see geom2).
- *
- * @param {Array} sides - list of sides from geom2
- * @returns {slice} a new slice
- * @alias module:modeling/extrusions/slice.fromSides
- *
- * @example
- * const myshape = circle({radius: 10})
- * const slice = fromSides(geom2.toSides(myshape))
- */
-declare function fromSides(sides: any[]): any;
+import Geom2 from '../../../maths/geom2/type'
+
+import Slice from './type'
+
+export default fromSides
+
+declare function fromSides(sides: Geom2['sides']): Slice

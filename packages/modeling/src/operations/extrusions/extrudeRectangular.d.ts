@@ -1,18 +1,16 @@
-export = extrudeRectangular;
-/**
- * Extrude the given geometry by following the outline(s) with a rectangle.
- * @See expand for addition options
- * @param {Object} options - options for extrusion, if any
- * @param {Number} [options.size=1] - size of the rectangle
- * @param {Number} [options.height=1] - height of the extrusion
- * @param {...Object} geometry - the list of geometry to extrude
- * @return {Object|Array} the extruded object, or a list of extruded objects
- * @alias module:modeling/extrusions.extrudeRectangular
- *
- * @example:
- * let mywalls = extrudeRectangular({offset: [0,0,10]}, square())
- */
-declare function extrudeRectangular(options: {
-    size: number;
-    height: number;
-}, ...objects: any[]): any | any[];
+import { Path2, Geom2, Geom3 } from '../../geometries/types'
+import RecursiveArray from '../../utils/recursiveArray'
+
+import Slice from './slice/type'
+
+export default extrudeRectangular
+
+export interface ExtrudeRectangularOptions {
+  size?: number
+  height?: number
+}
+
+type Geometry = Path2 | Geom2
+
+declare function extrudeRectangular(options: ExtrudeRectangularOptions, geometry: Geometry): Geom3
+declare function extrudeRectangular(options: ExtrudeRectangularOptions, ...geometries: RecursiveArray<Geometry>): Geom3

@@ -1,12 +1,14 @@
-export const calculatePlane: (slice: any) => any;
-export const clone: (...params: any[]) => any;
-export const create: (edges: any) => import("./create").slice;
-export const equals: (a: any, b: any) => boolean;
-export const fromPoints: (points: any[]) => any;
-export const fromSides: (sides: any[]) => any;
-export const isA: (object: any) => boolean;
-export const reverse: (...params: any[]) => any;
-export const toEdges: (slice: any) => any[];
-export const toPolygons: (slice: any) => any[];
-export const toString: (slice: any) => string;
-export const transform: (matrix: any, slice: any) => any;
+export { default as calculatePlane } from './calculatePlane'
+export { default as clone } from './clone'
+export { default as create } from './create'
+export { default as equals } from './equals'
+export { default as fromPoints } from './fromPoints'
+export { default as fromSides } from './fromSides'
+export { default as isA } from './isA'
+export { default as reverse } from './reverse'
+export { default as toEdges } from './toEdges'
+export { default as toPolygons } from './toPolygons'
+export { default as toString } from './toString'
+export { default as transform } from './transform'
+
+export { default as Slice } from './type'
