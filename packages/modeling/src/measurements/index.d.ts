@@ -8,3 +8,4 @@ export { default as measureEpsilon } from './measureEpsilon'
 export { default as measureVolume } from './measureVolume'
 
 export * from './types'
+export as namespace measurements

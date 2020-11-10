@@ -1,4 +1,4 @@
-import { Geometry } from '../geometries'
+import { Geometry } from '../geometries/types'
 import RecursiveArray from '../utils/recursiveArray'
 
 export default measureAggregateArea

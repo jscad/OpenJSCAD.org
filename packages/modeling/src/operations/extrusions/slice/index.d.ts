@@ -12,3 +12,5 @@ export { default as toString } from './toString'
 export { default as transform } from './transform'
 
 export { default as Slice } from './type'
+
+export as namespace slice

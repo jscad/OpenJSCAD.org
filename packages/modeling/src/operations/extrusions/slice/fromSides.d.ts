@@ -1,4 +1,4 @@
-import Geom2 from '../../../maths/geom2/type'
+import Geom2 from '../../../geometries/geom2/type'
 
 import Slice from './type'
 

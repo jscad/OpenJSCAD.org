@@ -9,3 +9,6 @@ export { default as fromPointsRandom } from './fromPointsRandom'
 export { default as signedDistanceToPoint } from './signedDistanceToPoint'
 export { default as toString } from './toString'
 export { default as transform } from './transform'
+
+export { default as Plane } from './type'
+export as namespace Plane

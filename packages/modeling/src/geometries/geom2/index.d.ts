@@ -10,3 +10,6 @@ export { default as toSides } from './toSides'
 export { default as toString } from './toString'
 export { default as toCompactBinary } from './toCompactBinary'
 export { default as transform } from './transform'
+
+export { default as Geom2 } from './type'
+export as namespace geom2

@@ -12,3 +12,6 @@ export { default as reverse } from './reverse'
 export { default as toString } from './toString'
 export { default as transform } from './transform'
 export { default as xAtY } from './xAtY'
+
+export { default as Line2 } from './type'
+export as namespace line2

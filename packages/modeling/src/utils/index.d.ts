@@ -5,3 +5,5 @@ export { default as fnNumberSort } from './fnNumberSort'
 export { default as insertSorted } from './insertSorted'
 export { default as radiusToSegments } from './radiusToSegments'
 export { default as radToDeg } from './radToDeg'
+
+export as namespace utils

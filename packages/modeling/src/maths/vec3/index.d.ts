@@ -31,3 +31,6 @@ export { default as subtract } from './subtract'
 export { default as toString } from './toString'
 export { default as transform } from './transform'
 export { default as unit } from './unit'
+
+export { default as Vec3 } from './type'
+export as namespace vec3

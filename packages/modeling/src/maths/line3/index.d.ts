@@ -12,3 +12,6 @@ export { default as origin } from './origin'
 export { default as reverse } from './reverse'
 export { default as toString } from './toString'
 export { default as transform } from './transform'
+
+export { default as Line3 } from './type'
+export as namespace line3

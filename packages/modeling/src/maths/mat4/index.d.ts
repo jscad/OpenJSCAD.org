@@ -22,3 +22,6 @@ export { default as scale } from './scale'
 export { default as subtract } from './subtract'
 export { default as toString } from './toString'
 export { default as translate } from './translate'
+
+export { default as Mat4 } from './type'
+export as namespace mat4

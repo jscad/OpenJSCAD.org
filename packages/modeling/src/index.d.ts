@@ -12,3 +12,5 @@ export * as expansions from './operations/expansions'
 export * as extrusions from './operations/extrusions'
 export * as hulls from './operations/hulls'
 export * as transforms from './operations/transforms'
+
+export as namespace modeling

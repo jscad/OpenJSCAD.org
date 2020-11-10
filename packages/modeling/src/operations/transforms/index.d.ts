@@ -5,3 +5,5 @@ export * from './rotate'
 export * from './scale'
 export { default as transform } from './transform'
 export * from './translate'
+
+export as namespace transforms

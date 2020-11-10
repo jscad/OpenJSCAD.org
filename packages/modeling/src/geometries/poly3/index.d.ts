@@ -13,3 +13,6 @@ export { default as plane } from './plane'
 export { default as toPoints } from './toPoints'
 export { default as toString } from './toString'
 export { default as transform } from './transform'
+
+export { default as Poly3 } from './type'
+export as namespace poly3
