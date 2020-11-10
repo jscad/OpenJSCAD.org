@@ -1,116 +1,20 @@
-export const arc: (options?: {
-    center?: any[];
-    radius?: number;
-    startAngle?: number;
-    endAngle?: number;
-    segments?: number;
-    makeTangent?: boolean;
-}) => any;
-export const circle: (options?: {
-    center?: any[];
-    radius?: number;
-    startAngle?: number;
-    endAngle?: number;
-    segments?: number;
-}) => any;
-export const cube: (options?: {
-    center?: any[];
-    size?: number;
-}) => any;
-export const cuboid: (options?: {
-    center?: any[];
-    size?: any[];
-}) => any;
-export const cylinder: (options?: {
-    center?: any[];
-    height?: any[];
-    radius?: number;
-    segments?: number;
-}) => any;
-export const cylinderElliptic: (options?: {
-    center?: any[];
-    height?: any;
-    startRadius?: any;
-    startAngle?: number;
-    endRadius?: any;
-    endAngle?: number;
-    segments?: number;
-}) => any;
-export const ellipse: (options?: {
-    center?: any[];
-    radius?: any[];
-    startAngle?: number;
-    endAngle?: number;
-    segments?: number;
-}) => any;
-export const ellipsoid: (options?: {
-    center?: any[];
-    radius?: any[];
-    segments?: number;
-    axes?: any[];
-}) => any;
-export const geodesicSphere: (options?: {
-    radius?: number;
-    frequency?: number;
-}) => any;
-export const line: (points: any[]) => any;
-export const polygon: (options: {
-    points: any[];
-    paths?: any[];
-}) => any;
-export const polyhedron: (options: {
-    points: any[];
-    faces: any[];
-    colors?: any[];
-    orientation?: any[];
-}) => any;
-export const rectangle: (options?: {
-    center?: any[];
-    size?: any[];
-}) => any;
-export const roundedCuboid: (options?: {
-    center?: any[];
-    size?: any[];
-    roundRadius?: number;
-    segments?: number;
-}) => any;
-export const roundedCylinder: (options?: {
-    center?: any[];
-    height?: any[];
-    radius?: number;
-    roundRadius?: number;
-    segments?: number;
-}) => any;
-export const roundedRectangle: (options?: {
-    center?: any[];
-    size?: any[];
-    roundRadius?: number;
-    segments?: number;
-}) => any;
-export const sphere: (options?: {
-    center?: any[];
-    radius?: number;
-    segments?: number;
-    axes?: any[];
-}) => any;
-export const square: (options?: {
-    center?: any[];
-    size?: number;
-}) => any;
-export const star: (options?: {
-    center?: any[];
-    vertices?: number;
-    density?: number;
-    outerRadius?: number;
-    innerRadius?: number;
-    startAngle?: number;
-}) => any;
-export const torus: (options?: {
-    innerRadius?: number;
-    outerRadius?: number;
-    innerSegments?: any;
-    outerSegments?: any;
-    innerRotation?: any;
-    outerRotation?: number;
-    startAngle?: number;
-}) => any;
+export { default as arc } from './arc'
+export { default as circle } from './circle'
+export { default as cube } from './cube'
+export { default as cuboid } from './cuboid'
+export { default as cylinder } from './cylinder'
+export { default as cylinderElliptic } from './cylinderElliptic'
+export { default as ellipse } from './ellipse'
+export { default as ellipsoid } from './ellipsoid'
+export { default as geodesicSphere } from './geodesicSphere'
+export { default as line } from './line'
+export { default as polygon } from './polygon'
+export { default as polyhedron } from './polyhedron'
+export { default as rectangle } from './rectangle'
+export { default as roundedCuboid } from './roundedCuboid'
+export { default as roundedCylinder } from './roundedCylinder'
+export { default as roundedRectangle } from './roundedRectangle'
+export { default as sphere } from './sphere'
+export { default as square } from './square'
+export { default as star } from './star'
+export { default as torus } from './torus'

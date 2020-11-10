@@ -1,26 +1,14 @@
-export = roundedCylinder;
-/**
- * Construct a solid cylinder in three dimensional space with rounded ends.
- * @param {Object} [options] - options for construction
- * @param {Array} [options.center=[0,0,0]] - center of cylinder
- * @param {Array} [options.height=2] - height of cylinder
- * @param {Number} [options.radius=1] - radius of cylinder
- * @param {Number} [options.roundRadius=0.2] - radius of rounded edges
- * @param {Number} [options.segments=32] - number of segments to create per full rotation
- * @returns {geom3} new 3D geometry
- * @alias module:modeling/primitives.roundedCylinder
- *
- * @example
- * let myshape = roundedCylinder({
- *   height: 10,
- *   radius: 2,
- *   roundRadius: 0.5
- * })
- */
-declare function roundedCylinder(options?: {
-    center: any[];
-    height: any[];
-    radius: number;
-    roundRadius: number;
-    segments: number;
-}): any;
+import Vec3 from '../maths/vec3/type'
+import Geom3 from '../geometries/geom3/type'
+
+export default roundedCylinder
+
+export interface RoundedCylinderOptions {
+  center?: Vec3
+  height?: number
+  radius?: number
+  roundRadius?: number
+  segments?: number
+}
+
+declare function roundedCylinder(options?: RoundedCylinderOptions): Geom3
