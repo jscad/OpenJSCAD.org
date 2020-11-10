@@ -1,0 +1,7 @@
+export { default as Line2 } from './line2/type'
+export { default as Line3 } from './line3/type'
+export { default as Mat4 } from './mat4/type'
+export { default as Plane } from './plane/type'
+export { default as Vec2 } from './vec2/type'
+export { default as Vec3 } from './vec3/type'
+export { default as Vec4 } from './vec4/type'
