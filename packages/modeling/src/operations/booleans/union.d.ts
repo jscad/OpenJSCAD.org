@@ -1,23 +1,7 @@
-export = union;
-/**
- * Return a new geometry representing the total space in the given geometries.
- * The given geometries should be of the same type, either geom2 or geom3.
- *
- * @param {...Object} geometries - list of geometries
- * @returns {geom2|geom3} a new geometry
- * @alias module:modeling/booleans.union
- *
- * @example
- * let myshape = union(cube({size: [5,5,5]}), cube({size: [5,5,5], center: [5,5,5]}))
- *
- * @example
- * +-------+            +-------+
- * |       |            |       |
- * |   A   |            |       |
- * |    +--+----+   =   |       +----+
- * +----+--+    |       +----+       |
- *      |   B   |            |       |
- *      |       |            |       |
- *      +-------+            +-------+
- */
-declare function union(...geometries: any[]): any | any;
+import { Geom2, Geom3 } from '../../geometries/types'
+import RecursiveArray from '../../utils/recursiveArray'
+
+export default union
+
+declare function union(...geometries: RecursiveArray<Geom2>): Geom2
+declare function union(...geometries: RecursiveArray<Geom3>): Geom3

@@ -1,3 +1,3 @@
-export const intersect: (...geometries: any[]) => any;
-export const subtract: (...geometries: any[]) => any;
-export const union: (...geometries: any[]) => any;
+export { default as intersect } from './intersect'
+export { default as subtract } from './subtract'
+export { default as union } from './union'
