@@ -1,2 +1,2 @@
-export const vectorChar: (options?: any, char?: string) => import("./vectorChar").VectorCharObject;
-export const vectorText: (options?: any, text?: string) => any[];
+export { default as vectorChar, VectorChar, VectorCharOptions } from './vectorChar'
+export { default as vectorText, VectorText, VectorTextOptions } from './vectorText'
