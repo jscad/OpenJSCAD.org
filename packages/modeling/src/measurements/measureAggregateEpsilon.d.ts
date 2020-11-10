@@ -1,11 +1,6 @@
-export = measureAggregateEpsilon;
-/**
- * Measure the aggregated Epsilon for the given geometries.
- * @param {...Object} geometries - the geometries to measure
- * @return {Number} the aggregated Epsilon for the whole group of geometries
- * @alias module:modeling/measurements.measureAggregateEpsilon
- *
- * @example
- * let groupEpsilon = measureAggregateEpsilon(sphere(),cube())
- */
-declare function measureAggregateEpsilon(...geometries: any[]): number;
+import { Geometry } from '../geometries/types'
+import RecursiveArray from '../utils/recursiveArray'
+
+export default measureAggregateEpsilon
+
+declare function measureAggregateEpsilon(...geometries: RecursiveArray<Geometry>): number

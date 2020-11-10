@@ -1,11 +1,9 @@
-export = measureBoundingBox;
-/**
- * Measure the min and max bounds of the given geometries.
- * @param {...Object} geometries - the geometries to measure
- * @return {Array} the min and max bounds for each geometry, i.e. [[X,Y,Z],[X,Y,Z]]
- * @alias module:modeling/measurements.measureBoundingBox
- *
- * @example
- * let bounds = measureBoundingBox(sphere())
- */
-declare function measureBoundingBox(...geometries: any[]): any[];
+import { Geometry } from '../geometries/types'
+import RecursiveArray from '../utils/recursiveArray'
+
+import { BoundingBox } from './types'
+
+export default measureBoundingBox
+
+declare function measureBoundingBox(geometry: Geometry): BoundingBox
+declare function measureBoundingBox(...geometries: RecursiveArray<Geometry>): Array<BoundingBox>
