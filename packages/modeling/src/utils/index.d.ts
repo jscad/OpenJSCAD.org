@@ -1,7 +1,7 @@
-export const areAllShapesTheSameType: (shapes: any[]) => boolean;
-export const degToRad: (degrees: number) => number;
-export const flatten: (arr: any[]) => any[];
-export const fnNumberSort: (a: any, b: any) => number;
-export const insertSorted: (array: any, element: any, comparefunc: any) => void;
-export const radiusToSegments: (radius: number, minimumLength: number, minimumAngle: number) => number;
-export const radToDeg: (radians: number) => number;
+export { default as areAllShapesTheSameType } from './areAllShapesTheSameType'
+export { default as degToRad } from './degToRad'
+export { default as flatten } from './flatten'
+export { default as fnNumberSort } from './fnNumberSort'
+export { default as insertSorted } from './insertSorted'
+export { default as radiusToSegments } from './radiusToSegments'
+export { default as radToDeg } from './radToDeg'

@@ -1,5 +1,3 @@
-export = fnNumberSort;
-/**
- * @alias module:modeling/utils.fnNumberSort
- */
-declare function fnNumberSort(a: any, b: any): number;
+export default fnNumberSort
+
+declare function fnNumberSort(a: number, b: number): number

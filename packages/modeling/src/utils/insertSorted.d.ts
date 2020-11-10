@@ -1,5 +1,3 @@
-export = insertSorted;
-/**
- * @alias module:modeling/utils.insertSorted
- */
-declare function insertSorted(array: any, element: any, comparefunc: any): void;
+export default insertSorted
+
+declare function insertSorted<T>(array: Array<T>, element: T, comparefunc: (a: T, b: T) => number): void
