@@ -11,7 +11,5 @@ export interface ExpandOptions {
   segments?: number
 }
 
-declare function expand<T extends Geometry>(geometry: T): T
 declare function expand<T extends Geometry>(options: ExpandOptions, geometry: T): T
-declare function expand(...geometries: RecursiveArray<Geometry>): Geometry
 declare function expand(options?: ExpandOptions, ...geometries: RecursiveArray<Geometry>): Geometry

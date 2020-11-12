@@ -11,7 +11,5 @@ export interface OffsetOptions {
   segments?: number
 }
 
-declare function offset<T extends Geometry>(geometry: T): T
 declare function offset<T extends Geometry>(options: OffsetOptions, geometry: T): T
-declare function offset(...geometries: RecursiveArray<Geometry>): Geometry
 declare function offset(options?: OffsetOptions, ...geometries: RecursiveArray<Geometry>): Geometry
