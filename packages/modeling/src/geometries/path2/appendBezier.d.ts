@@ -5,7 +5,7 @@ export default appendBezier
 
 export interface AppendBezierOptions {
   controlPoints: Array<Vec2 | null>
-  segment: number
+  segments?: number
 }
 
 declare function appendBezier(options: AppendBezierOptions, geometry: Path2): Path2
