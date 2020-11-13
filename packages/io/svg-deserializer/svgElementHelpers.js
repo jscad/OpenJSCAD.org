@@ -66,6 +66,7 @@ const svgTransforms = function (cag, element) {
       let o
       switch (n) {
         case 'translate':
+          if (a.length === 1) a.push(0) // as per SVG
           o = { translate: [a[0], a[1]] }
           cag.transforms.push(o)
           break
@@ -284,6 +285,16 @@ const svgGroup = function (element) {
   // presentation attributes
   svgPresentation(obj, element)
 
+  if ('X' in element || 'Y' in element) {
+    let x = '0'
+    let y = '0'
+    if ('X' in element) x = element.X
+    if ('Y' in element) y = element.Y
+    if (!('transforms' in obj)) obj.transforms = []
+    const o = { translate: [x, y] }
+    obj.transforms.push(o)
+  }
+
   obj.objects = []
   return obj
 }
@@ -410,9 +421,13 @@ const svgUse = function (element, { svgObjects }) {
   // presentation attributes
   svgPresentation(obj, element)
 
-  if ('X' in element && 'Y' in element) {
+  if ('X' in element || 'Y' in element) {
+    let x = '0'
+    let y = '0'
+    if ('X' in element) x = element.X
+    if ('Y' in element) y = element.Y
     if (!('transforms' in obj)) obj.transforms = []
-    const o = { translate: [element.X, element.Y] }
+    const o = { translate: [x, y] }
     obj.transforms.push(o)
   }
 
