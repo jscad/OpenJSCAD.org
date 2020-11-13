@@ -173,9 +173,18 @@ const objectify = (options, group) => {
           if ('translate' in t) { tt = t }
         }
         if (ts !== null) {
-          const x = ts.scale[0]
-          const y = ts.scale[1]
+          let x = Math.abs(ts.scale[0])
+          let y = Math.abs(ts.scale[1])
           shape = transforms.scale([x, y, 1], shape)
+          // and mirror if necessary
+          x = ts.scale[0]
+          y = ts.scale[1]
+          if (x < 0) {
+            shape = transforms.mirrorX(shape)
+          }
+          if (y < 0) {
+            shape = transforms.mirrorY(shape)
+          }
         }
         if (tr !== null) {
           const z = 0 - tr.rotate * 0.017453292519943295 // radians
@@ -263,9 +272,18 @@ const codify = (options, group) => {
         if ('translate' in t) { tt = t }
       }
       if (ts !== null) {
-        const x = ts.scale[0]
-        const y = ts.scale[1]
+        let x = Math.abs(ts.scale[0])
+        let y = Math.abs(ts.scale[1])
         code += `${indent}${on} = transforms.scale([${x}, ${y}, 1], ${on})\n`
+        // and mirror if necessary
+        x = ts.scale[0]
+        y = ts.scale[1]
+        if (x < 0) {
+          code += `${indent}${on} = transforms.mirrorX(${on})\n`
+        }
+        if (y < 0) {
+          code += `${indent}${on} = transforms.mirrorY(${on})\n`
+        }
       }
       if (tr !== null) {
         const z = 0 - tr.rotate * 0.017453292519943295 // radians
