@@ -3,7 +3,10 @@ const { callbackToObservable } = require('@jscad/core').observableUtils
 
 const { changedFiles, flattenFiles } = require('./utils')
 
+const localFsOptions = require('../../../data/localFsOptions.json')
+
 const makeLocalFsSideEffect = async (params) => {
+  console.log('params', JSON.parse(JSON.stringify(params)))
   const commandResponses = callbackToObservable()
 
   let webSocket = null
@@ -13,7 +16,7 @@ const makeLocalFsSideEffect = async (params) => {
   const sendWs = (m) => webSocket.send(JSON.stringify(m))
 
   const startWebSocket = () => {
-    webSocket = new WebSocket('ws://127.0.0.1:35729/livereload')
+    webSocket = new WebSocket(localFsOptions.livereloadUrl)
 
     webSocket.onopen = function (event) {
       console.log('websocket open', event)
@@ -23,7 +26,6 @@ const makeLocalFsSideEffect = async (params) => {
 
     webSocket.onmessage = function (event) {
       const data = JSON.parse(event.data)
-      console.log('message', data)
       if (data.command === 'hello') sendWs({ command: 'info', plugins: { less: { disable: false, version: '1.0' } }, url: document.location })
       if (data.command === 'reload') lastCheck = 0
     }
@@ -61,13 +63,14 @@ const makeLocalFsSideEffect = async (params) => {
         if (watcher) {
           clearInterval(watcher)
           watcher = 0
+          if (webSocketOpen) {
+            webSocket.close()
+          }
         }
         if (!(data.length && (data[0] instanceof File))) rawData = data // only watch live FileSystem data
 
         currentFileTree = await walkFileTree(data)
         commandResponses.callback({ type, id, data: currentFileTree })
-
-        if (!webSocketOpen) startWebSocket()
       }
 
       const watch = () => {
@@ -78,9 +81,11 @@ const makeLocalFsSideEffect = async (params) => {
 
         const { enabled } = options
         if (enabled) {
+          if (!webSocketOpen) startWebSocket()
+
           watcher = setInterval(() => {
             const now = Date.now()
-            if ((webSocketOpen && lastCheck) || (Date.now() - lastCheck) < watcherDelay) return
+            if (!rawData || (webSocketOpen && lastCheck) || (Date.now() - lastCheck) < watcherDelay) return
             lastCheck = now
 
             const startMs = Date.now()
@@ -99,7 +104,6 @@ const makeLocalFsSideEffect = async (params) => {
 
                 const endMs = Date.now()
                 watcherDelay = Math.max((endMs - startMs) * 2, 1000)
-                console.log('watcherDelay', watcherDelay)
               })
           }, 50)
         } else {
