@@ -250,7 +250,8 @@ const pan = ({ controls, camera, speed = 1 }, delta) => {
   const unPanEnd = unproject([], panEnd, viewport, invProjView)
   // TODO scale by the correct near/far value instead of 1000 ?
   // const planesDiff = camera.far - camera.near
-  const offset = vec3.subtract([], unPanStart, unPanEnd).map((x) => x * speed * 250 * controls.scale)
+  const eyeDistance = vec3.distance(camera.position, camera.eye)
+  const offset = vec3.subtract([], unPanStart, unPanEnd).map((x) => x * speed * eyeDistance * controls.scale)
 
   return {
     controls,
