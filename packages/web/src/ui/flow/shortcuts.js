@@ -7,9 +7,10 @@ const { holdUntil, withLatestFrom } = require('@jscad/core').observableUtils
 const { getKeyCombos, isKeyEventScopeValid, simpleKey } = require('../../utils/keys')
 const { merge } = require('../../utils/utils')
 
+// see data/keybindings.json for the initial bindings
+// which are set as part of the initial state in index.js
+
 const reducers = {
-  // FIXME what to do with this ?
-  // require('../../../data/keybindings.json')
   initialize: (state) => state,
   // set all shortcuts
   setShortcuts: (state, newShortcuts) => {

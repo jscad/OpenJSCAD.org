@@ -1,10 +1,9 @@
 {
   "name": "@jscad/examples",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.5",
   "description": "Example Files for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
-  "scripts": {
-  },
+  "scripts": {},
   "contributors": [
     {
       "name": "Rene K. Mueller",

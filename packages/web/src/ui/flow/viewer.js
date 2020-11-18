@@ -7,9 +7,8 @@ const reducers = {
     const viewer = { // ridiculous shadowing of viewer state ?? or actually logical
       rendering: {
         background: [1, 1, 1, 1],
-        meshColor: [0, 0.6, 1, 1]
-        // background: [0.211, 0.2, 0.207, 1], // [1, 1, 1, 1],//54, 51, 53
-        // meshColor: [0.4, 0.6, 0.5, 1] // nice orange : [1, 0.4, 0, 1]
+        meshColor: [0, 0.6, 1, 1],
+        autoRotate: false
       },
       grid: {
         show: false,
@@ -18,18 +17,15 @@ const reducers = {
       axes: {
         show: true
       },
-      smoothNormals: true,
-      // UGH
-      behaviours: {
-        resetViewOn: []
-      },
-      autorotate: false
+      camera: {
+        position: ''
+      }
     }
     return { viewer }
   },
-  toggleAutorotate: (state, autoRotate) => {
-    const controls = Object.assign({}, state.viewer.controls, { autoRotate: { enabled: autoRotate } })
-    const viewer = Object.assign({}, state.viewer, { controls })
+  toggleAutoRotate: (state, autoRotate) => {
+    const rendering = Object.assign({}, state.viewer.rendering, { autoRotate })
+    const viewer = Object.assign({}, state.viewer, { rendering })
     return { viewer }
   },
   toggleGrid: (state, show) => {
@@ -42,8 +38,9 @@ const reducers = {
     const viewer = Object.assign({}, state.viewer, { axes })
     return { viewer }
   },
-  toPresetView: (state, viewName) => {
-    const viewer = Object.assign({}, state.viewer, { camera: { position: viewName } })
+  toPresetView: (state, position) => {
+    const camera = Object.assign({}, state.viewer.camera, { position })
+    const viewer = Object.assign({}, state.viewer, { camera })
     return { viewer }
   },
   setProjectionType: (state, projectionType) => {
@@ -54,17 +51,16 @@ const reducers = {
 }
 
 const actions = ({ sources }) => {
-  // console.log('sources', sources.actions)
   const initializeViewer$ = most.just({})
     .thru(withLatestFrom(reducers.initialize, sources.state))
     .map((payload) => Object.assign({}, { type: 'initializeViewer', sink: 'state' }, { state: payload }))
 
   const toggleGrid$ = most.mergeArray([
-    sources.dom.select('#grid').events('click')
-      .map((e) => e.target.checked),
-    sources.store
-      .filter((reply) => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.viewer && reply.data.viewer.grid && reply.data.viewer.grid.show !== undefined)
-      .map((reply) => reply.data.viewer.grid.show)
+    sources.dom.select('#toggleGrid').events('click')
+      .map((e) => e.target.checked)
+    // sources.store
+    // .filter((reply) => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.viewer && reply.data.viewer.grid && reply.data.viewer.grid.show !== undefined)
+    // .map((reply) => reply.data.viewer.grid.show)
   ])
     .thru(withLatestFrom(reducers.toggleGrid, sources.state))
     .map((data) => ({ type: 'toggleGrid', state: data, sink: 'state' }))
@@ -72,35 +68,36 @@ const actions = ({ sources }) => {
   const toggleAxes$ = most.mergeArray([
     sources.dom.select('#toggleAxes').events('click')
       .map((e) => e.target.checked)
-    // sources.store.map(data => data.viewer.grid.show)
+    // sources.store
+    // .filter((reply) => reply.target === 'settings' && reply.type === 'read' && reply.data && reply.data.viewer && reply.data.viewer.axes && reply.data.viewer.axes.show !== undefined)
+    // .map((reply) => reply.data.viewer.axes.show)
   ])
     .thru(withLatestFrom(reducers.toggleAxes, sources.state))
     .map((data) => ({ type: 'toggleAxes', state: data, sink: 'state' }))
 
-  const toggleAutorotate$ = most.mergeArray([
-    sources.dom.select('#autoRotate').events('click')
+  const toggleAutoRotate$ = most.mergeArray([
+    sources.dom.select('#toggleAutoRotate').events('click')
       .map((e) => e.target.checked)
     // sources.store.map(data => data.viewer.grid.show)
-    // sources.actions.filter(action => action.type === 'setProjectionType')
   ])
-    .thru(withLatestFrom(reducers.toggleAutorotate, sources.state))
-    .map((data) => ({ type: 'toggleAutorotate', state: data, sink: 'state' }))
+    .thru(withLatestFrom(reducers.toggleAutoRotate, sources.state))
+    .map((data) => ({ type: 'toggleAutoRotate', state: data, sink: 'state' }))
 
-  // all other viewer actions, triggered from elsewhere, for example via shortcuts ?
+  // all other viewer actions, triggered from elsewhere
+  const otherActions = ['toPresetView']
   const otherViewerActions$ = sources.actions
-    .filter((action) => Object.keys(reducers).includes(action.type))
-    /* .thru(withLatestFrom(function (state, action) {
+    .filter((action) => otherActions.includes(action.type))
+    .thru(withLatestFrom((state, action) => {
       return reducers[action.type](state, action.data)
-    }, sources.state)) */
-    // .map(data => ({state: data, sink: 'state'}))
-    .map((payload) => Object.assign({}, { sink: 'viewer' }, payload))
+    }, sources.state))
+    .map((data) => ({ type: 'otherActions', state: data, sink: 'state' }))
 
   return {
     // 3d viewer
     initializeViewer$,
     toggleGrid$,
     toggleAxes$,
-    toggleAutorotate$,
+    toggleAutoRotate$,
     otherViewerActions$
   }
 }

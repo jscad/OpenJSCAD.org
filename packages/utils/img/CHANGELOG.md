@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/img-utils@2.0.0-alpha.3...@jscad/img-utils@2.0.0-alpha.4) (2020-11-07)
+
+**Note:** Version bump only for package @jscad/img-utils
+
+
+
+
+
 # [2.0.0-alpha.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/img-utils@2.0.0-alpha.2...@jscad/img-utils@2.0.0-alpha.3) (2020-09-29)
 
 **Note:** Version bump only for package @jscad/img-utils
