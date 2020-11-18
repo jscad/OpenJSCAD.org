@@ -13,9 +13,6 @@
     "test:tsd": "tsd",
     "preversion": "npm run build && git add dist"
   },
-  "tsd": {
-    "directory": "src"
-  },
   "contributors": [
     {
       "name": "Alexandre Girard",
