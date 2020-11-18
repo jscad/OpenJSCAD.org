@@ -266,24 +266,22 @@ const pan = ({ controls, camera, speed = 1 }, delta) => {
   * Note1: this is a non optimal but fast & easy implementation
   * @param {Object} controls the controls data/state
   * @param {Object} camera the camera data/state
-  * @param {Object} entity an object containing a 'bounds' property for bounds information
+  * @param {Array} entities - an array of geometries or visuals
   * @return {Object} the updated camera data/state
 */
 const zoomToFit = ({ controls, camera, entities }) => {
   // our camera.fov is already in radian, no need to convert
   const { zoomToFit } = controls
-  if (entities.length < 1 || zoomToFit.targets !== 'all') { //! == 'all' || entity === undefined || !entity.bounds) {
+  if (zoomToFit.targets !== 'all') {
     return { controls, camera }
   }
 
-  let bounds
-  if (entities.length > 1) {
-    // more than one entity, targeted, need to compute the overall bounds
-    const geometries = entities.map((entity) => entity.geometry)
-    bounds = computeBounds(geometries)
-  } else {
-    bounds = entities[0].bounds
-  }
+  entities = entities.filter((entity) => entity.type && entity.type === '3d')
+  if (entities.length === 0) return { controls, camera }
+
+  // compute the overall bounds
+  const geometries = entities.map((entity) => entity.geometry)
+  const bounds = computeBounds(geometries)
 
   // fixme: for now , we only use the first item
   const { fov, target, position } = camera

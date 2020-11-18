@@ -10,7 +10,7 @@ const makeLocalFsSideEffect = async (params) => {
     let currentFileTree
     let rawData
     let watcher
-    const watcherDelay = 5000 // milliseconds
+    let watcherDelay = 5000 // milliseconds
 
     // every time a new command is recieved (observable)
     commands$.forEach((command) => {
@@ -23,12 +23,15 @@ const makeLocalFsSideEffect = async (params) => {
       }
 
       const read = async () => {
-         // disable old watcher
-         if (watcher) {
-           clearInterval(watcher)
-           watcher = 0
-         }
-        rawData = data
+        // reset state
+        currentFileTree = undefined
+        rawData = undefined
+        if (watcher) {
+          clearTimeout(watcher)
+          watcher = 0
+        }
+        if (!(data.length && (data[0] instanceof File))) rawData = data // only watch live FileSystem data
+
         currentFileTree = await walkFileTree(data)
         commandResponses.callback({ type, id, data: currentFileTree })
       }
@@ -41,7 +44,8 @@ const makeLocalFsSideEffect = async (params) => {
 
         const { enabled } = options
         if (enabled) {
-          watcher = setInterval(() => {
+          const walkAndCheck = () => {
+            const startMs = Date.now()
             walkFileTree(rawData)
               .catch((error) => {
                 console.error('failed to read files', error)
@@ -54,12 +58,16 @@ const makeLocalFsSideEffect = async (params) => {
                   currentFileTree = newFileTree
                   commandResponses.callback({ type: 'read', id: 'loadRemote', data: currentFileTree, path, changed: whatChanged })
                 }
+
+                const endMs = Date.now()
+                watcherDelay = Math.max((endMs - startMs) * 2, 1000)
+                watcher = setTimeout(walkAndCheck, watcherDelay)
               })
-          }, watcherDelay)
+          }
+          watcher = setTimeout(walkAndCheck, watcherDelay)
         } else {
           if (watcher) {
-            // disable watcher
-            clearInterval(watcher)
+            clearTimeout(watcher)
             watcher = 0
           }
         }

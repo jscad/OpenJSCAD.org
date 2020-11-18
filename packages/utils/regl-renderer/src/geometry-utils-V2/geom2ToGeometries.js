@@ -11,6 +11,7 @@ const geom2ToGeometries = (options, solid) => {
   let { color } = options
 
   if ('color' in solid) color = solid.color
+  const isTransparent = (color[3] < 1.0)
 
   const positions = []
   solid.sides.forEach((side) => {
@@ -19,9 +20,9 @@ const geom2ToGeometries = (options, solid) => {
   })
   const normals = positions.map((x) => [0, 0, -1])
   const indices = positions.map((x, i) => i) // FIXME: temporary, not really needed, need to change drawMesh
-  const transforms = solid.transforms ? solid.transforms : mat4.create()
+  const transforms = solid.transforms ? mat4.clone(solid.transforms) : mat4.create()
 
-  return [{ positions, normals, transforms, color, indices }]
+  return [{ positions, normals, transforms, color, indices, isTransparent }]
 }
 
 module.exports = geom2ToGeometries

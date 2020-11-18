@@ -12,12 +12,12 @@
     </style>
 </head>
 <body>
-  <script language="javascript" src="./dist/reglRenderer.js"></script>
+  <script language="javascript" src="./dist/jscad-regl-renderer.min.js"></script>
 
   <div id="jscad"></div>
 
   <script language="javascript">
-const { prepareRender, drawCommands, cameras, controls, entitiesFromSolids } = reglRenderer
+const { prepareRender, drawCommands, cameras, controls, entitiesFromSolids } = jscadReglRenderer
 
 const perspectiveCamera = cameras.perspective
 const orbitControls = controls.orbit
