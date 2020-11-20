@@ -10,7 +10,6 @@ const makeLocalFsSideEffect = async (params) => {
   const commandResponses = callbackToObservable()
 
   let webSocket = null
-  let webSocketOpen = false
   let lastCheck = 0
 
   const sendWs = (m) => webSocket.send(JSON.stringify(m))
@@ -21,7 +20,6 @@ const makeLocalFsSideEffect = async (params) => {
     webSocket.onopen = function (event) {
       console.log('websocket open', event)
       sendWs({ command: 'hello', protocols: ['http://livereload.com/protocols/official-6', 'http://livereload.com/protocols/official-7'], ver: '2.0.8', ext: 'Chrome', extver: '2.1.0' })
-      webSocketOpen = true
     }
 
     webSocket.onmessage = function (event) {
@@ -36,7 +34,7 @@ const makeLocalFsSideEffect = async (params) => {
 
     webSocket.onclose = function (event) {
       console.log('websocket closed', event)
-      webSocketOpen = false
+      webSocket = null
     }
   }
 
@@ -63,7 +61,7 @@ const makeLocalFsSideEffect = async (params) => {
         if (watcher) {
           clearInterval(watcher)
           watcher = 0
-          if (webSocketOpen) {
+          if (webSocket) {
             webSocket.close()
           }
         }
@@ -81,14 +79,14 @@ const makeLocalFsSideEffect = async (params) => {
 
         const { enabled } = options
         if (enabled) {
-          if (!webSocketOpen) startWebSocket()
+          if (!webSocket) startWebSocket()
 
           watcher = setInterval(() => {
-            const now = Date.now()
-            if (!rawData || (webSocketOpen && lastCheck) || (Date.now() - lastCheck) < watcherDelay) return
-            lastCheck = now
-
             const startMs = Date.now()
+            
+            if (!rawData || (webSocket && lastCheck) || (startMs - lastCheck) < watcherDelay) return
+            lastCheck = startMs
+
             walkFileTree(rawData)
               .catch((error) => {
                 console.error('failed to read files', error)
