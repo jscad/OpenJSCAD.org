@@ -423,7 +423,6 @@ const actions = ({ sources }) => {
   const setDesignContent$ = most.mergeArray(
     Object.values(sources).filter((x) => x !== undefined && 'source' in x)
   )
-    //.delay(1000)// FIXME delay is a hack
     // ... containing loadRemote responses
     .filter((response) => response.id === 'loadRemote' && response.type === 'read' && !('error' in response) && !('sink' in response))
     .map(({ data }) => ({ filesAndFolders: data }))

@@ -6,7 +6,6 @@ const { changedFiles, flattenFiles } = require('./utils')
 const localFsOptions = require('../../../data/localFsOptions.json')
 
 const makeLocalFsSideEffect = async (params) => {
-  console.log('params', JSON.parse(JSON.stringify(params)))
   const commandResponses = callbackToObservable()
 
   let webSocket = null
@@ -46,7 +45,6 @@ const makeLocalFsSideEffect = async (params) => {
 
     // every time a new command is recieved (observable)
     commands$.forEach((command) => {
-      // console.log('command', command)
       const { type, id, data, options, path } = command
 
       // command handlers/ response
