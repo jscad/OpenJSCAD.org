@@ -5,6 +5,8 @@ const geom3 = require('../geometries/geom3')
 const path2 = require('../geometries/path2')
 const poly3 = require('../geometries/poly3')
 
+const cache = new WeakMap()
+
 /*
  * Measure the volume of the given geometry.
  * NOTE: paths are infinitely narrow and do not have an volume
@@ -30,11 +32,15 @@ const measureVolumeOfGeom2 = () => 0
  * @returns {Number} volume of the geometry
  */
 const measureVolumeOfGeom3 = (geometry) => {
-  if (geometry.volume) return geometry.volume
+  if (cache.has(geometry)) return cache.get(geometry)
 
   const polygons = geom3.toPolygons(geometry)
-  geometry.volume = polygons.reduce((volume, polygon) => volume + poly3.measureSignedVolume(polygon), 0)
-  return geometry.volume
+
+  const volume = polygons.reduce((volume, polygon) => volume + poly3.measureSignedVolume(polygon), 0)
+
+  cache.set(geometry, volume)
+
+  return volume
 }
 
 /**

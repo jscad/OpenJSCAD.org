@@ -3,15 +3,20 @@ const calculateEpsilonFromBounds = require('./calculateEpsilonFromBounds')
 const { geom2, geom3, path2 } = require('../geometries')
 const measureBoundingBox = require('./measureBoundingBox')
 
+const cache = new WeakMap()
+
 /*
  * Measure the epsilon of the given (path2) geometry.
  * @return {Number} the epsilon (precision) of the geometry
  */
 const measureEpsilonOfPath2 = (geometry) => {
-  if (geometry.epsilon) return geometry.epsilon
+  if (cache.has(geometry)) return cache.get(geometry)
 
-  geometry.epsilon = calculateEpsilonFromBounds(measureBoundingBox(geometry), 2)
-  return geometry.epsilon
+  const epsilon = calculateEpsilonFromBounds(measureBoundingBox(geometry), 2)
+
+  cache.set(geometry, epsilon)
+
+  return epsilon
 }
 
 /*
@@ -19,10 +24,13 @@ const measureEpsilonOfPath2 = (geometry) => {
  * @return {Number} the epsilon (precision) of the geometry
  */
 const measureEpsilonOfGeom2 = (geometry) => {
-  if (geometry.epsilon) return geometry.epsilon
+  if (cache.has(geometry)) return cache.get(geometry)
 
-  geometry.epsilon = calculateEpsilonFromBounds(measureBoundingBox(geometry), 2)
-  return geometry.epsilon
+  const epsilon = calculateEpsilonFromBounds(measureBoundingBox(geometry), 2)
+
+  cache.set(geometry, epsilon)
+
+  return epsilon
 }
 
 /*
@@ -30,10 +38,13 @@ const measureEpsilonOfGeom2 = (geometry) => {
  * @return {Float} the epsilon (precision) of the geometry
  */
 const measureEpsilonOfGeom3 = (geometry) => {
-  if (geometry.epsilon) return geometry.epsilon
+  if (cache.has(geometry)) return cache.get(geometry)
 
-  geometry.epsilon = calculateEpsilonFromBounds(measureBoundingBox(geometry), 3)
-  return geometry.epsilon
+  const epsilon = calculateEpsilonFromBounds(measureBoundingBox(geometry), 3)
+
+  cache.set(geometry, epsilon)
+
+  return epsilon
 }
 
 /**
