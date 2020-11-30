@@ -7,6 +7,7 @@
     "docs": "jsdoc --configure jsdoc.json",
     "coverage": "npm run bootstrap && lerna run --concurrency 1 --stream coverage",
     "test": "npm run bootstrap && lerna run --stream test",
+    "test:tsd": "lerna run test:tsd",
     "lint": "standardx 'packages/**/*.js'",
     "bootstrap": "lerna bootstrap --hoist nyc --hoist ava --ignore-prepublish --no-ci",
     "changed": "lerna changed",
@@ -43,7 +44,8 @@
     "jsdoc": "3.6.4",
     "lerna": "3.22.1",
     "nyc": "15.1.0",
-    "standardx": "5.0.0"
+    "standardx": "5.0.0",
+    "tsd": "^0.13.1"
   },
   "collective": {
     "type": "opencollective",
