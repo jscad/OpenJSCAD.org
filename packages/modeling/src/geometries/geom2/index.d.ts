@@ -1,0 +1,15 @@
+export { default as clone } from './clone'
+export { default as create } from './create'
+export { default as fromPoints } from './fromPoints'
+export { default as fromCompactBinary } from './fromCompactBinary'
+export { default as isA } from './isA'
+export { default as reverse } from './reverse'
+export { default as toOutlines } from './toOutlines'
+export { default as toPoints } from './toPoints'
+export { default as toSides } from './toSides'
+export { default as toString } from './toString'
+export { default as toCompactBinary } from './toCompactBinary'
+export { default as transform } from './transform'
+
+export { default as Geom2 } from './type'
+export as namespace geom2

@@ -1,0 +1,17 @@
+export { default as clone } from './clone'
+export { default as closestPoint } from './closestPoint'
+export { default as create } from './create'
+export { default as direction } from './direction'
+export { default as distanceToPoint } from './distanceToPoint'
+export { default as equals } from './equals'
+export { default as fromPoints } from './fromPoints'
+export { default as fromValues } from './fromValues'
+export { default as intersectPointOfLines } from './intersectPointOfLines'
+export { default as origin } from './origin'
+export { default as reverse } from './reverse'
+export { default as toString } from './toString'
+export { default as transform } from './transform'
+export { default as xAtY } from './xAtY'
+
+export { default as Line2 } from './type'
+export as namespace line2

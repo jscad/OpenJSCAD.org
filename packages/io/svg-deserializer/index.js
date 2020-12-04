@@ -161,22 +161,39 @@ const objectify = (options, group) => {
     shapes = shapes.map((shape) => {
       if ('transforms' in obj) {
         // NOTE: SVG specifications require that transforms are applied in the order given.
+        // But these are applied in the order as required by JSCAD
+        let rotateAttribute = null
+        let scaleAttribute = null
+        let translateAttribute = null
+
         for (let j = 0; j < obj.transforms.length; j++) {
           const t = obj.transforms[j]
-          if ('rotate' in t) {
-            const z = 0 - t.rotate
-            shape = transforms.rotateZ(z, shape)
+          if ('rotate' in t) { rotateAttribute = t }
+          if ('scale' in t) { scaleAttribute = t }
+          if ('translate' in t) { translateAttribute = t }
+        }
+        if (scaleAttribute !== null) {
+          let x = Math.abs(scaleAttribute.scale[0])
+          let y = Math.abs(scaleAttribute.scale[1])
+          shape = transforms.scale([x, y, 1], shape)
+          // and mirror if necessary
+          x = scaleAttribute.scale[0]
+          y = scaleAttribute.scale[1]
+          if (x < 0) {
+            shape = transforms.mirrorX(shape)
           }
-          if ('scale' in t) {
-            const x = t.scale[0]
-            const y = t.scale[1]
-            shape = transforms.scale([x, y, 1], shape)
+          if (y < 0) {
+            shape = transforms.mirrorY(shape)
           }
-          if ('translate' in t) {
-            const x = cagLengthX(t.translate[0], svgUnitsPmm, svgUnitsX)
-            const y = (0 - cagLengthY(t.translate[1], svgUnitsPmm, svgUnitsY))
-            shape = transforms.translate([x, y, 0], shape)
-          }
+        }
+        if (rotateAttribute !== null) {
+          const z = 0 - rotateAttribute.rotate * 0.017453292519943295 // radians
+          shape = transforms.rotateZ(z, shape)
+        }
+        if (translateAttribute !== null) {
+          const x = cagLengthX(translateAttribute.translate[0], svgUnitsPmm, svgUnitsX)
+          const y = (0 - cagLengthY(translateAttribute.translate[1], svgUnitsPmm, svgUnitsY))
+          shape = transforms.translate([x, y, 0], shape)
         }
       }
       if (target === 'path' && obj.stroke) {
@@ -243,22 +260,39 @@ const codify = (options, group) => {
 
     if ('transforms' in obj) {
       // NOTE: SVG specifications require that transforms are applied in the order given.
+      // But these are applied in the order as required by JSCAD
+      let rotateAttribute = null
+      let scaleAttribute = null
+      let translateAttribute = null
+
       for (let j = 0; j < obj.transforms.length; j++) {
         const t = obj.transforms[j]
-        if ('rotate' in t) {
-          const z = 0 - t.rotate * 0.017453292519943295 // radians
-          code += `${indent}${on} = transforms.rotateZ(${z}, ${on})\n`
+        if ('rotate' in t) { rotateAttribute = t }
+        if ('scale' in t) { scaleAttribute = t }
+        if ('translate' in t) { translateAttribute = t }
+      }
+      if (scaleAttribute !== null) {
+        let x = Math.abs(scaleAttribute.scale[0])
+        let y = Math.abs(scaleAttribute.scale[1])
+        code += `${indent}${on} = transforms.scale([${x}, ${y}, 1], ${on})\n`
+        // and mirror if necessary
+        x = scaleAttribute.scale[0]
+        y = scaleAttribute.scale[1]
+        if (x < 0) {
+          code += `${indent}${on} = transforms.mirrorX(${on})\n`
         }
-        if ('scale' in t) {
-          const x = t.scale[0]
-          const y = t.scale[1]
-          code += `${indent}${on} = transforms.scale([${x}, ${y}, 1], ${on})\n`
+        if (y < 0) {
+          code += `${indent}${on} = transforms.mirrorY(${on})\n`
         }
-        if ('translate' in t) {
-          const x = cagLengthX(t.translate[0], svgUnitsPmm, svgUnitsX)
-          const y = (0 - cagLengthY(t.translate[1], svgUnitsPmm, svgUnitsY))
-          code += `${indent}${on} = transforms.translate([${x}, ${y}, 0], ${on})\n`
-        }
+      }
+      if (rotateAttribute !== null) {
+        const z = 0 - rotateAttribute.rotate * 0.017453292519943295 // radians
+        code += `${indent}${on} = transforms.rotateZ(${z}, ${on})\n`
+      }
+      if (translateAttribute !== null) {
+        const x = cagLengthX(translateAttribute.translate[0], svgUnitsPmm, svgUnitsX)
+        const y = (0 - cagLengthY(translateAttribute.translate[1], svgUnitsPmm, svgUnitsY))
+        code += `${indent}${on} = transforms.translate([${x}, ${y}, 0], ${on})\n`
       }
     }
     if (target === 'path' && obj.stroke) {

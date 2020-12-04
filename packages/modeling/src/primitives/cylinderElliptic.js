@@ -11,7 +11,7 @@ const { isGT, isGTE, isNumberArray } = require('./commonChecks')
  * Construct an elliptic cylinder in three dimensional space.
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of cylinder
- * @param {Vector3} [options.height=2] - height of cylinder
+ * @param {Number} [options.height=2] - height of cylinder
  * @param {Vector2D} [options.startRadius=[1,1]] - radius of rounded start, must be two dimensional array
  * @param {Number} [options.startAngle=0] - start angle of cylinder, in radians
  * @param {Vector2D} [options.endRadius=[1,1]] - radius of rounded end, must be two dimensional array
