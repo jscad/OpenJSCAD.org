@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.10](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.0.0-alpha.9...@jscad/regl-renderer@2.0.0-alpha.10) (2020-12-04)
+
+
+### Bug Fixes
+
+* **regl-renderer:** variable distance in pan controls ([#735](https://github.com/jscad/OpenJSCAD.org/issues/735)) ([9ad661c](https://github.com/jscad/OpenJSCAD.org/commit/9ad661c44cb87ee6ae58f20a69eaad5fd83a05a6))
+
+
+
+
+
 # [2.0.0-alpha.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.0.0-alpha.8...@jscad/regl-renderer@2.0.0-alpha.9) (2020-11-07)
 
 
