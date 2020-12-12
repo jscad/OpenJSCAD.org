@@ -32,6 +32,7 @@ module.exports = {
   normalize: require('./normalize'),
   rotate: require('./rotate'),
   scale: require('./scale'),
+  snap: require('./snap'),
   squaredDistance: require('./squaredDistance'),
   squaredLength: require('./squaredLength'),
   subtract: require('./subtract'),

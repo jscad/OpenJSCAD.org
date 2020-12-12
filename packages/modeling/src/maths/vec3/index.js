@@ -31,6 +31,7 @@ module.exports = {
   rotateY: require('./rotateY'),
   rotateZ: require('./rotateZ'),
   scale: require('./scale'),
+  snap: require('./snap'),
   squaredDistance: require('./squaredDistance'),
   squaredLength: require('./squaredLength'),
   subtract: require('./subtract'),
