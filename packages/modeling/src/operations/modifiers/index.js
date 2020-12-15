@@ -6,5 +6,6 @@
  * const { snap } = require('@jscad/modeling').modifiers
  */
 module.exports = {
+  generalize: require('./generalize'),
   snap: require('./snap')
 }
