@@ -98,11 +98,11 @@ const reducers = {
   },
 
   /** set the content of the design usually after a reset
- * bulk of the data is set here
- * @param  {Object} state
- * @param  {String} payload
- * @returns {Object} the updated state
- */
+   * bulk of the data is set here
+   * @param  {Object} state
+   * @param  {String} payload
+   * @returns {Object} the updated state
+   */
   setDesignContent: (state, payload) => {
     // console.log('design: set content', state, state.design, payload)
     // all our available data (specific to web)
@@ -204,7 +204,7 @@ const reducers = {
    * @returns {Object} the updated state
    */
   setDesignParameterValues: (state, data) => {
-    // console.log('design: set parameter values', data, JSON.stringify(data.parameterValues))
+    // console.log('setDesignParameterValues',state,data)
     let parameterValues = data.parameterValues
     // one of many ways of filtering out data from instantUpdates
     if (data.origin === 'instantUpdate' && !state.design.instantUpdate) {
@@ -220,7 +220,6 @@ const reducers = {
     // to track computation time
     const debug = Object.assign({ }, state.design.debug, { startTime: new Date() })
     design = Object.assign({}, design, { debug })
-    console.warn('start', new Date().getSeconds())
 
     const status = Object.assign({}, state.status, { busy: true, error: undefined })
 
@@ -270,10 +269,13 @@ const reducers = {
     // we want to save the geometry cache under '.solidsCache'
     return { path: '.solidsCache', options: { isRawData: true }, origin: design.origin }
   },
+
   // what do we want to save , return an object containing only that data?
   requestSaveSettings: ({ design }) => keep(serializableFields, design),
+
   // helpers
   isDesignValid: (state) => (state.design && state.design.name && state.design.path !== ''),
+
   // determine if a design has remained the same : does NOT include solids, as they are a result of all the other parameters
   isDesignTheSame: (previousState, state) => {
     if (!previousState.design) {
@@ -284,6 +286,7 @@ const reducers = {
     const previous = JSON.stringify(keep(designEqualityFields, previousState.design))
     return previous === current
   },
+
   // same as above but with added fields for settings
   isDesignTheSameForSerialization: (previousState, state) => {
     if (!previousState.design) {
@@ -300,19 +303,22 @@ const reducers = {
     const design = Object.assign({}, state.design, { autoReload })
     return { design }
   },
+
   toggleInstantUpdate: (state, instantUpdate) => {
     const design = Object.assign({}, state.design, { instantUpdate })
     return { design }
   },
+
   toggleVtreeMode: (state, vtreeMode) => {
     const design = Object.assign({}, state.design, { vtreeMode })
     return { design }
   },
+
   setSolidsTimeout: (state, solidsTimeOut) => {
     const design = Object.assign({}, state.design, { solidsTimeOut })
     return { design }
   }
-}
+} // end of reducers
 
 const actions = ({ sources }) => {
   const initialize$ = most.just({})
@@ -428,7 +434,7 @@ const actions = ({ sources }) => {
     .map(({ data }) => ({ filesAndFolders: data }))
     .thru(withLatestFrom(reducers.setDesignContent, sources.state))
     .map((data) => ({ type: 'setDesignContent', state: data, sink: 'state' }))
-    .tap((x) => console.log(x))
+    // .tap((x) => console.log(x))
     .multicast()
 
   const requestWatchDesign$ = most.mergeArray([
@@ -465,11 +471,10 @@ const actions = ({ sources }) => {
   const resetDesign$ = most.mergeArray([
     requestLoadDesignContent$.map(({ sink }) => sink)
   ])
-    // .delay(500) // FIXME: horrible hack !!
     // .thru(holdUntil(setDesignSettings$))// only after FIXME : this does not seem to work
     .thru(withLatestFrom(reducers.resetDesign, sources.state))
     .map((data) => ({ type: 'resetDesign', state: data, sink: 'state' }))
-    .tap((x) => console.log('design reset', x))
+    //.tap((x) => console.log('design reset', x))
     .multicast()
 
   const setDesignSolids$ = most.mergeArray([
@@ -543,9 +548,12 @@ const actions = ({ sources }) => {
     .multicast()
 
   // design parameter change actions
+  // FIXME decouple the HTML layout from the actions
   const getControls = () => Array.from(document.getElementById('paramsTable').getElementsByTagName('input'))
     .concat(Array.from(document.getElementById('paramsTable').getElementsByTagName('select')))
     .concat(Array.from(document.getElementById('paramsTable').getElementsByClassName('groupTitle')))
+
+  const getInstantUpdate = () => { return document.getElementById('instantUpdate').checked }
 
   const parametersFromDom$ = most.mergeArray([
     sources.dom.select('#updateDesignFromParams').events('click')
@@ -553,9 +561,9 @@ const actions = ({ sources }) => {
         const controls = getControls()
         const parameterValues = getParameterValuesFromUIControls(controls)
         return { parameterValues, origin: 'uiManualUpdate' }
-      })
-      .multicast(),
-    sources.paramChanges.multicast()
+      }),
+    sources.paramChanges
+      .filter((x) => getInstantUpdate())
       .map(() => {
         try {
           const controls = getControls()
@@ -590,14 +598,12 @@ const actions = ({ sources }) => {
     parametersFromDom$,
     parametersFromStore$,
     parametersFromTitleBar$,
+    // FIXME the default values are not being set into the DOM
     sources.dom.select('#resetDesignToParameterDefaults').events('click')
-      .thru(withLatestFrom((state, _) => ({ parameterValues: state.design.parameterDefaults }), sources.state))
+      .thru(withLatestFrom((state, _) => ({ parameterValues: state.design.parameterDefaults, origin: 'reset' }), sources.state))
   ])
     .skipRepeatsWith(jsonCompare)
-    // .tap(x => console.log('setDesignParameterValues', x))
-
     .thru(holdUntil(sources.state.filter(reducers.isDesignValid)))
-
     .thru(holdUntil(validDesignState$.filter((state) => {
       const hasParamDefinitions = state.design && Object.keys(state.design.parameterDefinitions).length > 0
       return hasParamDefinitions
@@ -605,11 +611,8 @@ const actions = ({ sources }) => {
     .thru(withLatestFrom(reducers.setDesignParameterValues, sources.state))
     .map((data) => ({ type: 'setDesignParameterValues', state: data, sink: 'state' }))
     .multicast()
-    .delay(10)// needed , why ?
+    .delay(10) // needed , why ?
 
-  // FIXME: this needs to be elsewhere
-  // const setZoomingBehaviour$ = ''
-  // setDesignContent$.map(x=>{behaviours: {resetViewOn: [''], zoomToFitOn: ['new-entities']})
   // ui/toggles
   const toggleAutoReload$ = most.mergeArray([
     sources.dom.select('#toggleAutoReload').events('click')
