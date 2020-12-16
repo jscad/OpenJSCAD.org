@@ -47,6 +47,7 @@
   "STL (ASCII)":"STL (ascii)",
 
   "update":"Actualiser",
+  "reset":"Réinitialiser",
   "instant update":"Actualisation Instantanée",
 
   "toPresetView":"Reset view",
