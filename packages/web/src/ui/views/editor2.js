@@ -22,7 +22,7 @@ let wrapper
 const createFileTree = (editor) => {
   const source = editor.getValue()
   if (source && source.length > 0) {
-    return [{ ext: 'js', fullPath: '/changes.js', mimetype: '', name: 'changes.js', source }]
+    return [{ ext: 'js', fullPath: '/changes.js', mimetype: 'javascript', name: 'changes.js', source }]
   }
   return null
 }
