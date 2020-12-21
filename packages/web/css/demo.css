@@ -262,8 +262,7 @@ section.popup-menu {
   position: absolute;
   top: 40px;
   right: 15px;
-  max-width: 500px;
-  max-height: 70%;
+  height: 80%;
 }
 
 section.popup-menu h2 {
@@ -306,14 +305,17 @@ section.popup-menu ul {
 }
 
 #editor {
-  width: 50%;
-  height: 80%;
   padding: 1px;
   font-size: 0.9em;
+  width: 50%;
+}
+
+textarea {
+  height: inherit;
+  width: inherit;
 }
 
 #help {
-  height: 50%;
 }
 
 #help a {
