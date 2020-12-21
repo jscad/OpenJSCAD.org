@@ -138,11 +138,12 @@ const actions = ({ sources }) => {
 
   // to make sure the key event was fired in the scope of the current jscad instance
   const myKey = sources.dom.element.getAttribute('key')
-  // FIXME: use dom source
-  const keyUps$ = most.fromEvent('keyup', document)
+
+  const keyUps$ = most.fromEvent('keyup', sources.dom.element)
     .filter((event) => isKeyEventScopeValid(myKey, event.target))
-    .multicast()// sources.dom.select(document).events('keyup') /
-  const keyDown$ = most.fromEvent('keydown', document)
+    .multicast()
+
+  const keyDown$ = most.fromEvent('keydown', sources.dom.element)
     .filter((event) => isKeyEventScopeValid(myKey, event.target))
     .multicast()
 
