@@ -20,6 +20,7 @@ const reducers = {
   // set a specific shortcut
   setShortcut: (state, shortcutData) => {
     const alreadyExists = (key) => state.shortcuts.filter((shortcut) => shortcut.key === key).length > 0
+
     const shortcuts = state.shortcuts.map((shortcut) => {
       const match = shortcut.command === shortcutData.command && shortcut.args === shortcutData.args
       if (!match) {
