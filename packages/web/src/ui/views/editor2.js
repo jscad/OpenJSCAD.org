@@ -42,14 +42,11 @@ const createWrapper = (state, callbackToStream) => {
 
     // and add the editor
     editor = CodeMirror.fromTextArea(wrapper.firstChild, editorOptions)
+
     editor.setOption("extraKeys", {
       Tab: (cm) => {
         const spaces = Array(cm.getOption("indentUnit") + 1).join(" ")
         cm.replaceSelection(spaces)
-      },
-      "Shift-Enter": (cm) => {
-        const fileTree = createFileTree(cm)
-        if (fileTree) callbackToStream.callback({ type: 'read', id: 'loadRemote', data: fileTree })
       }
     })
 
@@ -77,9 +74,30 @@ const editorWrapper = (state, editorCallbackToStream) => {
     el.style.visibility = 'visible'
     el.focus()
 
+    let compileShortcut = state.shortcuts.find((shortcut) => shortcut.args === 'reevaluate')
+    if (!compileShortcut) compileShortcut = {args: 'Shift-Enter'}
+    let key = compileShortcut.key.toUpperCase()
+    // can you say PAIN? codemirror has very specific control prefixes!
+    key = key.replace(/enter/i, 'Enter')
+    key = key.replace(/alt[\+\-]/i, 'Alt-')
+    key = key.replace(/cmd[\+\-]/i, 'Cmd-')
+    key = key.replace(/control[\+\-]/i, 'Ctrl-')
+    key = key.replace(/shift[\+-]/i, 'Shift-')
+
+    const extraKeys = {
+      Tab: (cm) => {
+        const spaces = Array(cm.getOption("indentUnit") + 1).join(" ")
+        cm.replaceSelection(spaces)
+      }
+    }
+    extraKeys[key] = (cm) => {
+      const fileTree = createFileTree(cm)
+      if (fileTree) editorCallbackToStream.callback({ type: 'read', id: 'loadRemote', data: fileTree })
+    }
+    editor.setOption("extraKeys", extraKeys)
+
     editor.focus()
     editor.scrollIntoView({line: 0, ch: 0})
-    // editor.refresh()
   } else {
     el.style.visibility = 'hidden'
   }
