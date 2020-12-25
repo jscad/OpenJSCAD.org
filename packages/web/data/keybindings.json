@@ -9,6 +9,6 @@
 
   {"key": "p", "command": "setProjectionType", "args": "perspective" },
   {"key": "o", "command": "setProjectionType", "args": "orthographic" },
-  {"key": "shift+enter", "command": "reEvaluateCode", "when": "editorTextFocus"},
-  {"key": "f5", "command": "reEvaluateCode", "when": "editorTextFocus"}
+
+  {"key": "shift+enter", "command": "editorCommand", "args": "reevaluate"}
 ]

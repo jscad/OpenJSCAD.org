@@ -62,7 +62,8 @@
   "perspective":"Perspektive",
   "orthographic":"Orthographic",
 
-  "reEvaluateCode":"Reload script",
+  "editorCommand":"Editor command",
+  "reevaluate":"Kompilieren",
 
   "always":"Immer"
 }

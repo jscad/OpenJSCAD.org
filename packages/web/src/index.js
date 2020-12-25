@@ -106,6 +106,9 @@ async function makeJscad (targetElement, options) {
   // increase the count of jscad instances in this page
   instances += 1
 
+  setTimeout(() => { document.getElementById("toggleAxes").click() }, 100)
+  setTimeout(() => { document.getElementById("toggleAxes").click() }, 200)
+
   // we return a function to allow setting/modifying params
   const mainParams = observableUtils.callbackToObservable()
   // mainParams.stream.forEach(x => console.log('setting params', x))

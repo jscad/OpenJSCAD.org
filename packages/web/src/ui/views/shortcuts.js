@@ -5,8 +5,9 @@ const shortcuts = (state, i18n) => {
   const bindingsList = keybindings.map((binding, index) => {
     const { command, key, args, tmpKey, error } = binding
 
-    // if we are in the midst of assigning a keypress (inProgress) display 'type & hit enter'
-    // if we already have a temporary key use that one instead
+    // if in the midst of assigning a keypress (inProgress) display placeholder
+    // OR
+    // if a temporary key has been assigned use that
     const placeholder = (tmpKey && tmpKey.length > 0) ? tmpKey : i18n.translate('type and hit enter')
     const value = binding.inProgress ? '' : key
 
