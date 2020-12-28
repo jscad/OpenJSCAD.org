@@ -11,7 +11,7 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD.org User Guide](https://openjscad.org/dokuwiki/doku.php).
+* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD.org User Guide](https://www.jscad.xyz/dokuwiki/doku.php).
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
 
