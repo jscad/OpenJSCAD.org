@@ -78,5 +78,5 @@ Quickhull Library: Copyright (c) 2015 Mauricio Poppe, under the MIT license.
 
 ## License
 
-[The MIT License (MIT)](https://github.com/jscad/csg.js/blob/master/LICENSE)
+[The MIT License (MIT)](../../LICENSE)
 (unless specified otherwise)

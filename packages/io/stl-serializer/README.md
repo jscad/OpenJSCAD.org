@@ -1,13 +1,13 @@
 # @jscad/stl-serializer
 
-> Serializer of CSG geometries to STL mesh
+> Serializer of JSCAD geometries to STL mesh
 
 [![NPM version](https://badge.fury.io/js/%40jscad%2Fstl-serializer.svg)](https://badge.fury.io/js/%40jscad%2Fstl-serializer)
 [![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/stl-serializer)
 
 ## Overview
 
-This serializer outputs a 'blobable' array of data from one or more CSG geometries.
+This serializer outputs a 'blobable' array of data from one or more JSCAD geometries.
 The array of data can either be used to create a Blob (`new Blob(blobable)`), or converted to a Node.js buffer.
 
 ## Table of Contents
