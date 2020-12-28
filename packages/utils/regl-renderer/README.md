@@ -34,5 +34,5 @@ If all goes well you should end up with a web page with a rotating camera (no mo
 
 ## License
 
-[The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
+[The MIT License (MIT)](../../../LICENSE)
 (unless specified otherwise)

@@ -46,21 +46,21 @@ CLI (command-line interface) use
 
 ### Using the CLI
 
-Simply run ```openjscad <InputFile> <options> <OutputFile>```
+Simply run ```jscad <InputFile> <options> <OutputFile>```
 
 Examples:
 
-```openjscad example005.jscad                         # -- creates example005.stl as default```
+```jscad example005.jscad                         # -- creates example005.stl as default```
 
-```openjscad example001.jscad -o test.stl             # -- convert .jscad to .stl as test.stl```
+```jscad example001.jscad -o test.stl             # -- convert .jscad to .stl as test.stl```
 
-```openjscad frog.stl -o test.jscad                   # -- convert .stl into .jscad```
+```jscad frog.stl -o test.jscad                   # -- convert .stl into .jscad```
 
-```openjscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf```
+```jscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf```
 
 You can also provide the parameters to your script directly by passing --<paramName> <value> to the CLI.
 
-```openjscad name_plate.jscad --name "Just Me" --title "Geek" -o output.stl```
+```jscad name_plate.jscad --name "Just Me" --title "Geek" -o output.stl```
 
 ### Using with the provided examples
 
@@ -83,11 +83,11 @@ run them through the CLI
 
 ```
 % cd examples/
-% openjscad example005.jscad                         # -- creates example005.stl as default
-% openjscad example001.jscad -o test.stl
-% openjscad example001.scad -o example001scad.jscad  # -- convert .scad into .jscad
-% openjscad frog.stl -o test.jscad                   # -- convert .stl into .jscad
-% openjscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf
+% jscad example005.jscad                         # -- creates example005.stl as default
+% jscad example001.jscad -o test.stl
+% jscad example001.scad -o example001scad.jscad  # -- convert .scad into .jscad
+% jscad frog.stl -o test.jscad                   # -- convert .stl into .jscad
+% jscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf
 ```
 
 ### Using the CLI on designs created as NPM packages
@@ -102,11 +102,11 @@ See examples/module-design for such a design
 
 - then just pass the folder containing your design to the CLI
 
-```openjscad <PATH TO DESIGN FOLDER> <OPTIONS>```
+```jscad <PATH TO DESIGN FOLDER> <OPTIONS>```
 
 - or run the CLI on the main file if you know which one it is
 
-```openjscad <PATH TO DESIGN FOLDER>/index.js <OPTIONS>```
+```jscad <PATH TO DESIGN FOLDER>/index.js <OPTIONS>```
 
 > Note: when passing a folder to the CLI, it will:
 > - check if there is a package.json file in the folder and try to use its "main" property
@@ -166,7 +166,7 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
 
-* If you want to submit a change or a patch, please read the [Contributing Guide](https://github.com/jscad/OpenJSCAD.org/blob/master/CONTRIBUTING.md) . New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
+* If you want to submit a change or a patch, please read the [Contributing Guide](../../CONTRIBUTING.md) . New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
 
 * We only accept bug reports and pull requests on **GitHub**.
 
@@ -205,5 +205,5 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 ## License
 
-[The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
+[The MIT License (MIT)](../../LICENSE)
 (unless specified otherwise)
