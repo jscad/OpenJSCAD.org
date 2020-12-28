@@ -28,7 +28,9 @@ This is the Web based UI for [JSCAD](https://github.com/jscad/OpenJSCAD.org), ei
 
 ### Immediate Use (no installation)
 
-Go to *[www.jscad.xyz](http://www.jscad.xyz)* (Tested browsers include Chrome, Firefox, Opera, Safari)
+Go to *[www.jscad.xyz](http://www.jscad.xyz)*
+
+> Note: Tested browsers include Chrome, Firefox, Opera, Safari, Edge
 
 ### Use within a Web Site (pre built files)
 
@@ -77,7 +79,7 @@ https://<YOURSITE>/#http://www.thingiverse.com/download:164128
 
 There are a few known issues, please be sure to check this out before submitting additional bug reports/issues.
 
-- Q: issues running certain npm commands like ```npm run build-web``` with [cnpm](https://github.com/cnpm/cnpm)
+- Q: issues running certain npm commands like ```npm run build``` with [cnpm](https://github.com/cnpm/cnpm)
 - A: this is a [know issue in cnpm](https://github.com/cnpm/cnpm/issues/214) , see [issue #283](https://github.com/jscad/OpenJSCAD.org/issues/283) for more information
 
 - Q: Attempting to use JSCAD from file:// in Chrome results in errors like
@@ -95,7 +97,7 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD.org User Guide](https://www.jscad.xyz/dokuwiki/doku.php).
+* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD User Guide](https://www.jscad.xyz/dokuwiki/doku.php).
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
 

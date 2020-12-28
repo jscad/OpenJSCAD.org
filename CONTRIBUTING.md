@@ -18,8 +18,8 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 ## Table of Contents
 
 - [Making Changes](#making_changes)
-- [Developing with the CLI[(#developing_with_the_cli)
-- [Developing with the WEB[(#developing_with_the_web)
+- [Developing with the CLI](#developing_with_the_cli)
+- [Developing with the WEB](#developing_with_the_web)
 - [Contributors](#contributors)
 
 ## Making Changes
