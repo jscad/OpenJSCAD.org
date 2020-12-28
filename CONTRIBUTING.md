@@ -18,14 +18,15 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 ## Table of Contents
 
 - [Making Changes](#making_changes)
-- [Developing with the CLI[(#developing-with-the-cli)
-- [Developing with the WEB[(#developing-with-the-web)
+- [Developing with the CLI[(#developing_with_the_cli)
+- [Developing with the WEB[(#developing_with_the_web)
 - [Contributors](#contributors)
 
 ## Making Changes
 
 The contents of this repository contain several packages, all part of the JSCAD project.
-The JSCAD packages contain both the UI components as well as the library components, and often the JSCAD packages are linked together through dependencies.
+The JSCAD packages contain both the UI components as well as the library components,
+and often the JSCAD packages are linked together through dependencies.
 Therefore, we suggest that you start by creating a fork of this repository.
 This will keep your changes separate from the fast lane, and make pull requests easier.
 
@@ -69,7 +70,7 @@ git push
 Finally, you can review your changes via GitHub, and create a pull request.
 
 TIPS for successful pull requests:
-- Commit often, and comment the changes well
+- Commit often, and add comments about what changed
 - Verify that automated tests pass (see the bottom of the pull request)
 
 WOW! Thanks for the cool code.
@@ -108,15 +109,16 @@ npm test
 
 ### Custom Builds
 
-There are pre-built versions of JSCAD Web package in the 'dist' directory.
-- [standard](./dist/index.js)
-- [minimal viewer](./dist/min.js)
-- [viewer with options](./dist/options.js)
+There are pre-built versions of several JSCAD packages in the 'dist' directory.
+- [core](./packages/core/dist)
+- [modeling](./packages/modeling/dist)
+- [web](./packages/web/dist)
 
 You can rebuild these if you need a new version with your changes.
-- standard: ```npm run build-web```
-- minimal viewer: ```npm run build-min```
-- viewer with options: ```npm run build-opt```
+```
+cd package/core
+npm run build
+```
 
 ## Contributors
 
