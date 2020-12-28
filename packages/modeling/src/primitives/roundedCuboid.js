@@ -119,11 +119,7 @@ const stitchSides = (bottomCorners, topCorners) => {
  * @alias module:modeling/primitives.roundedCuboid
  *
  * @example
- * let mycube = roundedCuboid({
- *   size: [10, 20, 10],
- *   roundRadius: 2,
- *   segments: 16,
- * });
+ * let mycube = roundedCuboid({size: [10, 20, 10], roundRadius: 2, segments: 16})
  */
 const roundedCuboid = (options) => {
   const defaults = {
