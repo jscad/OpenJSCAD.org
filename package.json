@@ -1,8 +1,8 @@
 {
   "name": "@jscad/openjscad",
-  "version": "1.6.1",
+  "version": "2.0.0-alpha.0",
   "description": "",
-  "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
     "docs": "jsdoc --configure jsdoc.json",
     "coverage": "npm run bootstrap && lerna run --concurrency 1 --stream coverage",

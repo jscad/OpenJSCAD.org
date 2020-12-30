@@ -2,12 +2,12 @@ const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
 /**
- * Construct a polyhedron in three dimensional space from the given set of points and faces.
+ * Construct a polyhedron in three dimensional space from the given set of 3D points and faces.
  * The faces can define outward or inward facing polygons (orientation).
  * However, each face must define a counter clockwise rotation of points which follows the right hand rule.
  * @param {Object} options - options for construction
- * @param {Array} options.points=[] - list of points in 3D space
- * @param {Array} options.faces=[] - list of faces, where each face is a set of indexes into the points
+ * @param {Array} options.points=[ ] - list of points in 3D space
+ * @param {Array} options.faces=[ ] - list of faces, where each face is a set of indexes into the points
  * @param {Array} [options.colors=undefined] - list of RGBA colors to apply to each face
  * @param {Array} [options.orientation='outward'] - orientation of faces
  * @returns {geom3} new 3D geometry

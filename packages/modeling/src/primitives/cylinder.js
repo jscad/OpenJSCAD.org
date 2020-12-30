@@ -3,7 +3,7 @@ const cylinderElliptic = require('./cylinderElliptic')
 const { isGT } = require('./commonChecks')
 
 /**
- * Construct a solid cylinder in three dimensional space.
+ * Construct a Z axis-aligned cylinder in three dimensional space.
  * @see [cylinderElliptic]{@link module:modeling/primitives.cylinderElliptic} for more options
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of cylinder
@@ -14,10 +14,7 @@ const { isGT } = require('./commonChecks')
  * @alias module:modeling/primitives.cylinder
  *
  * @example
- * let myshape = cylinder({
- *     height: 2,
- *     radius: 10
- *   })
+ * let myshape = cylinder({height: 2, radius: 10})
  */
 const cylinder = (options) => {
   const defaults = {

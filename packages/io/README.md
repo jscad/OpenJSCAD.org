@@ -17,24 +17,24 @@ OR
 formatted data => JSCAD geometry
 
 Following formats are supported as inputs:
- - [AMF](https://github.com/jscad/io/blob/master/packages/amf-deserializer)
- - [DXF](https://github.com/jscad/io/blob/master/packages/dxf-deserializer)
- - [JSON](https://github.com/jscad/io/blob/master/packages/json-deserializer)
- - [OBJ](https://github.com/jscad/io/blob/master/packages/obj-deserializer)
- - [STL (binary, ASCII)](https://github.com/jscad/io/blob/master/packages/stl-deserializer)
- - [SVG](https://github.com/jscad/io/blob/master/packages/svg-deserializer)
+ - [AMF](./amf-deserializer)
+ - [DXF](./dxf-deserializer)
+ - [JSON](./json-deserializer)
+ - [OBJ](./obj-deserializer)
+ - [STL (binary, ASCII)](./stl-deserializer)
+ - [SVG](./svg-deserializer)
 
 ### Output Format Handling (serializers)
 
 JSCAD geometries => formatted data (blob)
 
 Following formats are supported as outputs:
-  - [AMF](https://github.com/jscad/io/blob/master/packages/amf-serializer)
-  - [DXF](https://github.com/jscad/io/blob/master/packages/dxf-serializer)
-  - [JSON](https://github.com/jscad/io/blob/master/packages/json-serializer)
-  - [STL (binary, ASCII)](https://github.com/jscad/io/blob/master/packages/stl-serializer)
-  - [SVG](https://github.com/jscad/io/blob/master/packages/svg-serializer)
-  - [X3D](https://github.com/jscad/io/blob/master/packages/x3d-serializer)
+  - [AMF](./amf-serializer)
+  - [DXF](./dxf-serializer)
+  - [JSON](./json-serializer)
+  - [STL (binary, ASCII)](./stl-serializer)
+  - [SVG](./svg-serializer)
+  - [X3D](./x3d-serializer)
 
 ## Table of Contents
 
@@ -47,5 +47,5 @@ See the installation instructions of the specific package.
 
 ## License
 
-[The MIT License (MIT)](https://github.com/jscad/io/blob/master/LICENSE)
+[The MIT License (MIT)](../../LICENSE)
 (unless specified otherwise)

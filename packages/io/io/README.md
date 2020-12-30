@@ -10,29 +10,27 @@ This package is a metapackage and includes all the input/output format handling 
 
 ### Inputs / deserializers
 
-ie: file data => jscad code (that can be evaluated to CSG/CAG)
-> note : currently serializers & deserializers are NOT symetrical as deserializers
-do not generate CSG/CAG objects
+ie: file data => jscad code (that can be evaluated to geometry)
 
 Following formats are supported as inputs
- - [AMF](https://github.com/jscad/io/blob/master/packages/amf-deserializer)
- - [DXF](https://github.com/jscad/io/blob/master/packages/dxf-deserializer)
- - [JSON](https://github.com/jscad/io/blob/master/packages/json-deserializer)
- - [OBJ](https://github.com/jscad/io/blob/master/packages/obj-deserializer)
- - [STL (binary, ASCII)](https://github.com/jscad/io/blob/master/packages/stl-deserializer)
- - [SVG](https://github.com/jscad/io/blob/master/packages/svg-deserializer)
+ - [AMF](../amf-deserializer)
+ - [DXF](../dxf-deserializer)
+ - [JSON](../json-deserializer)
+ - [OBJ](../obj-deserializer)
+ - [STL (binary, ASCII)](../stl-deserializer)
+ - [SVG](../svg-deserializer)
 
 ### Outputs/ serializers
 
-ie: CSG/CAG => blob
+ie: geometry => blob
 
 Following formats are supported as outputs
-  - [AMF](https://github.com/jscad/io/blob/master/packages/amf-serializer)
-  - [DXF](https://github.com/jscad/io/blob/master/packages/dxf-serializer)
-  - [JSON](https://github.com/jscad/io/blob/master/packages/json-serializer)
-  - [STL (binary, ASCII)](https://github.com/jscad/io/blob/master/packages/stl-serializer)
-  - [SVG](https://github.com/jscad/io/blob/master/packages/svg-serializer)
-  - [X3D](https://github.com/jscad/io/blob/master/packages/x3d-serializer)
+  - [AMF](../amf-serializer)
+  - [DXF](../dxf-serializer)
+  - [JSON](../json-serializer)
+  - [STL (binary, ASCII)](../stl-serializer)
+  - [SVG](../svg-serializer)
+  - [X3D](../x3d-serializer)
 
 ## Table of Contents
 
@@ -62,11 +60,11 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
 
-* If you want to submit a change or a patch, please read the [Contributing Guide](https://github.com/jscad/OpenJSCAD.org/blob/master/CONTRIBUTING.md) . New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
+* If you want to submit a change or a patch, please read the [Contributing Guide](../../CONTRIBUTING.md) . New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD.org User Guide](https://openjscad.org/dokuwiki/doku.php).
+* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD.org User Guide](https://www.jscad.xyz/dokuwiki/doku.php).
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
 
@@ -74,5 +72,5 @@ Small Note: If editing this README, please conform to the [standard-readme](http
 
 ## License
 
-[The MIT License (MIT)](https://github.com/jscad/io/blob/master/LICENSE)
+[The MIT License (MIT)](../../../../LICENSE)
 (unless specified otherwise)
