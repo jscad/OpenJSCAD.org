@@ -20,7 +20,7 @@ const calculatePlane = (slice) => {
   vec3.scale(midpoint, 1 / edges.length, midpoint)
 
   // find the farthest edge from the midpoint, which will be on an outside edge
-  let farthestEdge = [[NaN, NaN, NaN], [NaN, NaN, NaN]]
+  let farthestEdge
   let distance = 0
   edges.forEach((edge) => {
     const d = vec3.squaredDistance(midpoint, edge[0])
@@ -29,8 +29,10 @@ const calculatePlane = (slice) => {
       distance = d
     }
   })
+  // find the before edge
+  let beforeEdge = edges.find((edge) => vec3.equals(edge[1], farthestEdge[0]))
 
-  return plane.fromPoints(midpoint, farthestEdge[0], farthestEdge[1])
+  return plane.fromPoints(beforeEdge[0], farthestEdge[0], farthestEdge[1])
 }
 
 module.exports = calculatePlane
