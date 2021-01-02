@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.14](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.13...@jscad/web@2.0.0-alpha.14) (2021-01-02)
+
+
+### Bug Fixes
+
+* **web:** V2 fix instant update ([#744](https://github.com/jscad/OpenJSCAD.org/issues/744)) ([c009e6d](https://github.com/jscad/OpenJSCAD.org/commit/c009e6df90d5dad99219e18ba83468ad75b10051))
+
+
+### Features
+
+* **web:** V2 : initial implementation of the built-in editor ([#746](https://github.com/jscad/OpenJSCAD.org/issues/746)) ([cc260ed](https://github.com/jscad/OpenJSCAD.org/commit/cc260edc873bc75a853d91c9d08bae85b69e9238))
+
+
+
+
+
 # [2.0.0-alpha.13](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.12...@jscad/web@2.0.0-alpha.13) (2020-12-04)
 
 **Note:** Version bump only for package @jscad/web

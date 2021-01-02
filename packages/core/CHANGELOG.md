@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.12](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.0.0-alpha.11...@jscad/core@2.0.0-alpha.12) (2021-01-02)
+
+
+### Bug Fixes
+
+* **core,modeling:** V2 fix extrude ([#751](https://github.com/jscad/OpenJSCAD.org/issues/751)) ([767b6fc](https://github.com/jscad/OpenJSCAD.org/commit/767b6fc13a24b6203248c197210645e5b7cebc28))
+
+
+
+
+
 # [2.0.0-alpha.11](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.0.0-alpha.10...@jscad/core@2.0.0-alpha.11) (2020-12-04)
 
 **Note:** Version bump only for package @jscad/core
