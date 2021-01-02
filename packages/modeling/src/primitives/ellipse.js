@@ -7,7 +7,7 @@ const geom2 = require('../geometries/geom2')
 const { isGTE, isNumberArray } = require('./commonChecks')
 
 /**
- * Construct an ellispe in two dimensional space.
+ * Construct an axis-aligned ellispe in two dimensional space.
  * @see https://en.wikipedia.org/wiki/Ellipse
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of ellipse

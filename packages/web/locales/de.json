@@ -31,14 +31,14 @@
   "type and hit enter":"type and hit enter",
 
   "not settable": "(nicht verränderbar)",
-  "see":"sehe",
+  "see":"Sehe",
 
-  "grid": "gitter",
-  "axes":"achsen",
-  "auto rotate": "auto drehung",
-  "auto reload": "auto laden",
-  "export":"exportieren",
-  "load project":"JSCAD Projekt laden",
+  "grid": "Gitter",
+  "axes":"Achsen",
+  "auto rotate": "Auto Drehung",
+  "auto reload": "Auto Laden",
+  "export":"Exportieren",
+  "load project":"JSCAD Projekt Laden",
 
   "AMF (experimental)":"AMF",
   "DXF (ASCII)":"DXF (ascii)",
@@ -46,8 +46,9 @@
   "STL (Binary)":"STL (binär)",
   "STL (ASCII)":"STL (ascii)",
 
-  "update":"aktualisieren",
-  "instant update":"automatisch aktualisieren",
+  "update":"Aktualisieren",
+  "reset":"Zurücksetzen",
+  "instant update":"Auto Aktualisieren",
 
   "toPresetView":"Reset view",
   "front":"Forne",
@@ -61,7 +62,8 @@
   "perspective":"Perspektive",
   "orthographic":"Orthographic",
 
-  "reEvaluateCode":"Reload script",
+  "editorCommand":"Editor command",
+  "reevaluate":"Kompilieren",
 
   "always":"Immer"
 }

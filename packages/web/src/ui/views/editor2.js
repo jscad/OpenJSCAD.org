@@ -1,61 +1,128 @@
 const html = require('nanohtml')
+
 const CodeMirror = require('codemirror')
-require('codemirror/addon/hint/show-hint')
+require('codemirror/mode/javascript/javascript')
 require('codemirror/addon/hint/javascript-hint')
 
-// const hint = require('./hint')
-// const hintJs = require('./hint-js')
+const editorOptions = {
+  mode: 'javascript',
+  indentUnit: 2,
+  smartIndent: false,
+  indentWithTabs: false,
+  lineNumbers: true,
+  autofocus: true
+}
 
-let cm
+let editor
+let wrapper
 
+/*
+ * Create a file tree from the contents of the editor
+ */
+const createFileTree = (editor) => {
+  const source = editor.getValue()
+  if (source && source.length > 0) {
+    return [{ ext: 'js', fullPath: '/changes.js', mimetype: 'javascript', name: 'changes.js', source }]
+  }
+  return null
+}
+
+/*
+ * Create a HTML wrapper for the editor (single instance)
+ */
+const createWrapper = (state, callbackToStream) => {
+  if (!wrapper) {
+    wrapper = html`
+    <section class='popup-menu' id='editor' key='editor' style='visibility:${state.activeTool === 'editor' ? 'visible' : 'hidden'}'>
+      <textarea></textarea>
+    </section>
+    `
+    wrapper.onkeydown = (e) => e.stopPropagation()
+    wrapper.onkeyup = (e) => e.stopPropagation()
+
+    // and add the editor
+    editor = CodeMirror.fromTextArea(wrapper.firstChild, editorOptions)
+
+    editor.setOption("extraKeys", {
+      Tab: (cm) => {
+        const spaces = Array(cm.getOption("indentUnit") + 1).join(" ")
+        cm.replaceSelection(spaces)
+      }
+    })
+
+    // inject style sheet for the editor
+    const head = document.getElementsByTagName('HEAD')[0]
+    const link = document.createElement('LINK')
+    link.rel = 'stylesheet'
+    link.href = './css/codemirror.css'
+    head.appendChild(link)
+  }
+  return wrapper
+}
+
+/*
+ * Create the editor wrapper for handling changes to file contents.
+ *
+ * Note: Only the contents of a single file are loaded into the editor. No projects.
+ * Note: Only the contents of javascript files are loaded into the editor. No external formats.
+ */
 const editorWrapper = (state, editorCallbackToStream) => {
-  const el = html`
-  <section class='popup-menu' id='editor' key='editor' style='visibility:${state.activeTool === 'editor' ? 'visible' : 'hidden'}'>
-  </section>`
-  // el.onadd = console.log.bind(console, 'button added to page!')
-  // el.onadd = console.log.bind(console, ' added to page!')
-  // el.onupdate = console.log.bind(console, ' updated in page!')
-  // el.ondiscard = console.log.bind(console, ' discarded from page!')
+  const el = createWrapper(state, editorCallbackToStream)
 
-  // console.log('el onupdate?', el.onupdate)
-  el.onupdate = function () {
-    // console.log('update')
-    cm.refresh()
-  }// console.log.bind(console, ' updated in page!')
+  // and adjust the state
+  if (state.activeTool === 'editor') {
+    el.style.visibility = 'visible'
+    el.focus()
 
-  CodeMirror.commands.autocomplete = (cm) => {
-    console.log('autocomplete')
-    const doc = cm.getDoc()
-    const POS = doc.getCursor()
-    const mode = CodeMirror.innerMode(cm.getMode(), cm.getTokenAt(POS).state).mode.name
+    let compileShortcut = state.shortcuts.find((shortcut) => shortcut.args === 'reevaluate')
+    if (!compileShortcut) compileShortcut = {args: 'Shift-Enter'}
+    let key = compileShortcut.key.toUpperCase()
+    // can you say PAIN? codemirror has very specific control prefixes!
+    key = key.replace(/enter/i, 'Enter')
+    key = key.replace(/alt[\+\-]/i, 'Alt-')
+    key = key.replace(/cmd[\+\-]/i, 'Cmd-')
+    key = key.replace(/control[\+\-]/i, 'Ctrl-')
+    key = key.replace(/shift[\+-]/i, 'Shift-')
 
-    console.log('foo', cm.getTokenAt(POS))
-    if (mode === 'xml') { // html depends on xml
-      CodeMirror.showHint(cm, CodeMirror.hint.html)
-    } else if (mode === 'javascript') {
-      CodeMirror.showHint(cm, CodeMirror.hint.javascript)
-    } else if (mode === 'css') {
-      CodeMirror.showHint(cm, CodeMirror.hint.css)
+    const extraKeys = {
+      Tab: (cm) => {
+        const spaces = Array(cm.getOption("indentUnit") + 1).join(" ")
+        cm.replaceSelection(spaces)
+      }
+    }
+    extraKeys[key] = (cm) => {
+      const fileTree = createFileTree(cm)
+      if (fileTree) editorCallbackToStream.callback({ type: 'read', id: 'loadRemote', data: fileTree })
+    }
+    editor.setOption("extraKeys", extraKeys)
+
+    editor.focus()
+    editor.scrollIntoView({line: 0, ch: 0})
+  } else {
+    el.style.visibility = 'hidden'
+  }
+
+  // and adjust the contents if any
+  if (state.design && state.design.filesAndFolders) {
+    if (state.design.filesAndFolders.length === 1) {
+      const file0 = state.design.filesAndFolders[0]
+      let source = file0.source ? file0.source : ''
+      if (file0.mimetype) {
+        if (file0.mimetype.indexOf('javascript') < 0) source = '// imported from external format'
+      } else {
+        source = '// imported from project'
+      }
+      const prevsource = editor.getValue()
+      if (source !== prevsource) {
+        editor.focus()
+        editor.setValue(source)
+        editor.setCursor(0, 0)
+        //editor.execCommand('goDocStart')
+        editor.refresh()
+      }
     }
   }
 
-  /* var onload = require('on-load')
-  onload(el, function (_el) {
-    console.log('in the dom')
-    cm = CodeMirror(_el, {
-      value: state.design.source,
-      mode: {name: 'javascript', globalVars: true},
-      // mode: 'javascript',
-      lineNumbers: true,
-      tabSize: 2,
-      theme: 'monokai',
-      smartIndent: true,
-      extraKeys: {'Ctrl-Space': 'autocomplete'}
-    })
-    cm.refresh()
-  }, function (el) {
-    console.log('out of the dom')
-  }) */
   return el
 }
 

@@ -4,6 +4,8 @@ const path = require('path')
 const { callbackToObservable } = require('@jscad/core').observableUtils
 const { getFileExtensionFromString } = require('@jscad/core').utils
 
+const { formats } = require('@jscad/io/formats')
+
 const makeLogger = require('../../utils/logger')
 
 const XMLHttpRequest = window.XMLHttpRequest
@@ -106,7 +108,8 @@ const readFile = (url, onerror, onsucess) => {
       const name = path.basename(url)
       const fullPath = `/${name}` // fake path for fake filesystem lookup
       const ext = getFileExtensionFromString(fullPath)
-      const fileEntry = { name, ext, source, fullPath }
+      const mimetype = formats[ext] ? formats[ext].mimetype : ''
+      const fileEntry = { name, ext, mimetype, source, fullPath }
       onsucess(fileEntry)
     }
   }

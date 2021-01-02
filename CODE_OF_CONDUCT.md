@@ -28,4 +28,4 @@ As contributors and maintainers of the JSCAD project, we pledge to respect all w
 
 We promise to extend courtesy and respect to everyone involved in this project regardless of gender, gender identity, sexual orientation, disability, age, race, ethnicity, religion, or level of experience.
 
-If you are subject to or witness unacceptable behavior, or have any other concerns, please anyone of the administrators of the JSCAD Project (See GitHub).
+If you are subject to or witness unacceptable behavior, or have any other concerns, please contact anyone of the administrators of the JSCAD Project (See GitHub).
