@@ -49,7 +49,7 @@ test('deserialize X3D 3D triangle sets to JSCAD script', (t) => {
   const inputFile = fs.readFileSync(inputPath)
 
   const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, inputFile)
-  t.is(countOf('createObjects', observed), 14)
+  t.is(countOf('createObjects', observed), 18)
   t.is(countOf('points', observed), 12)
   t.is(countOf('faces', observed), 12)
   t.is(countOf('orientation', observed), 8)
@@ -72,12 +72,22 @@ test('deserialize X3D 3D indexed triangle sets to JSCAD script', (t) => {
   const inputFile = fs.readFileSync(inputPath)
 
   const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, inputFile)
-  t.is(countOf('createObjects', observed), 16)
+  t.is(countOf('createObjects', observed), 20)
   t.is(countOf('points', observed), 15)
   t.is(countOf('faces', observed), 16)
   t.is(countOf('orientation', observed), 10)
   t.is(countOf('primitives.polyhedron', observed), 5)
   t.is(countOf('applyTransform', observed), 4)
+})
+
+test('deserialize X3D 3D groups to JSCAD script', (t) => {
+  const inputPath = path.resolve(samplesPath, 'tests/Groups.x3d')
+  const inputFile = fs.readFileSync(inputPath)
+
+  const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, inputFile)
+  t.is(countOf('createObjects', observed), 20)
+  t.is(countOf('primitives', observed), 4)
+  t.is(countOf('applyTransform', observed), 9)
 })
 
 // EXAMPLES FOR SIMPLE TESTING

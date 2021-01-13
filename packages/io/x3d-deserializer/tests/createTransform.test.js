@@ -91,6 +91,12 @@ test('createTransform returns expected transform matrix', (t) => {
   t.true(compareMat4ToMatrix4(obs, exp))
   rotation = [0, 0, 1, 0]
 
+  rotation = [0.0, 0.0, 0.0, 1.57]
+  obs = createTransform(center, rotation, scale, scaleOrientation, translation)
+  exp = matrix4.set(translation, rotation, scale, scaleOrientation, center)
+  t.true(compareMat4ToMatrix4(obs, exp))
+  rotation = [0, 0, 1, 0]
+
   // COMBINATIONS
   scale = [0.91, 0.6, 0.3]
   translation = [0.8, -0.65, 0.5]
