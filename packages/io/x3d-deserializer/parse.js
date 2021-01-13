@@ -9,6 +9,7 @@ const {
   x3dScene,
   x3dTransform,
   x3dShape,
+  x3dGroup,
 
   x3dBox,
   x3dCone,
@@ -62,6 +63,9 @@ const nodeToObjectMap = {
   SCENE: x3dScene,
   TRANSFORM: x3dTransform,
   SHAPE: x3dShape,
+  GROUP: x3dGroup,
+  STATICGROUP: x3dGroup,
+
   BOX: x3dBox,
   CONE: x3dCone,
   CYLINDER: x3dCylinder,
@@ -73,6 +77,7 @@ const nodeToObjectMap = {
   POLYLINE2D: x3dPolyline2D,
   RECTANGLE2D: x3dRectangle2D,
   TRIANGLESET2D: x3dTriangleSet2D,
+
   COORDINATE: x3dCoordinate,
   TRIANGLESET: x3dTriangleSet,
   TRIANGLEFANSET: x3dTriangleFanSet,
@@ -83,6 +88,7 @@ const nodeToObjectMap = {
   INDEXEDTRIANGLESTRIPSET: x3dIndexedTriangleStripSet,
   INDEXEDQUADSET: x3dIndexedQuadSet,
   INDEXEDFACESET: x3dIndexedFaceSet,
+
   APPEARANCE: x3dAppearance,
   MATERIAL: x3dMaterial
 }
@@ -137,6 +143,7 @@ const createX3DParser = (src, pxPmm) => {
         case x3dTypes.SCENE:
         case x3dTypes.TRANSFORM:
         case x3dTypes.SHAPE:
+        case x3dTypes.GROUP:
         case x3dTypes.APPEARANCE:
         case x3dTypes.TRIANGLESET:
         case x3dTypes.TRIANGLEFANSET:
@@ -176,6 +183,7 @@ const createX3DParser = (src, pxPmm) => {
         case x3dTypes.SCENE:
         case x3dTypes.TRANSFORM:
         case x3dTypes.SHAPE:
+        case x3dTypes.GROUP:
         case x3dTypes.APPEARANCE:
         case x3dTypes.TRIANGLESET:
         case x3dTypes.TRIANGLEFANSET:
@@ -216,6 +224,8 @@ const createX3DParser = (src, pxPmm) => {
       case 'SCENE':
       case 'TRANSFORM':
       case 'SHAPE':
+      case 'GROUP':
+      case 'STATICGROUP':
       case 'APPEARANCE':
       case 'TRIANGLESET':
       case 'TRIANGLEFANSET':
@@ -257,6 +267,7 @@ const createX3DParser = (src, pxPmm) => {
       case x3dTypes.SCENE:
       case x3dTypes.TRANSFORM:
       case x3dTypes.SHAPE:
+      case x3dTypes.GROUP:
       case x3dTypes.APPEARANCE:
       case x3dTypes.TRIANGLESET:
       case x3dTypes.TRIANGLEFANSET:

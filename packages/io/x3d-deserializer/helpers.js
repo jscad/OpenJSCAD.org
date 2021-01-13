@@ -13,6 +13,7 @@ const x3dTypes = {
   INDEXEDTRIANGLESTRIPSET: 11,
   INDEXEDQUADSET: 12,
   INDEXEDFACESET: 13,
+  GROUP: 14,
   NODE: -1
 }
 
@@ -441,6 +442,16 @@ const x3dMaterial = (element) => {
   return obj
 }
 
+// GROUPS
+
+const x3dGroup = (element) => {
+  const obj = { definition: x3dTypes.GROUP, type: 'group' }
+
+  obj.objects = []
+  return obj
+}
+
+
 module.exports = {
   x3dTypes,
 
@@ -450,6 +461,7 @@ module.exports = {
   x3dScene,
   x3dTransform,
   x3dShape,
+  x3dGroup,
 
   x3dBox,
   x3dCone,

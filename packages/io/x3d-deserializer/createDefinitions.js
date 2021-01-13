@@ -65,6 +65,29 @@ const createObjects${object.id} = (options) => {
   return code
 }
 
+const createGroup = (object, index, options) => {
+  let code = `
+// group
+const createObjects${object.id} = (options) => {
+  let objects = []
+`
+
+  const objects = object.objects
+  for (let i = 0; i < objects.length; i++) {
+    const obj = objects[i]
+    code += `  objects.push(...createObjects${obj.id}(options))\n`
+  }
+
+  code += `
+  return objects
+}
+`
+
+  code += createDefinitions(objects, options)
+
+  return code
+}
+
 const createMesh = (type, points, faces, orientation) => {
   const code = `
   // 3D ${type} set: ${points.length} points, ${faces.length} faces
@@ -391,8 +414,11 @@ const createDefintion = (object, index, options) => {
     case 'shape':
       code += createShape(object, index, options )
       break
+    case 'group':
+      code += createGroup(object, index, options )
+      break
     default:
-      console.log('Warning: unknown definition: ' + object.type)
+      console.log('WARNING: unknown definition: ' + object.type)
       break
   }
   return code
