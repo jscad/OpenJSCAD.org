@@ -19,13 +19,14 @@ const countOf = (search, string) => {
 
 test('deserialize simple X3D to JSCAD script', (t) => {
   const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, example01)
+console.log(observed)
   t.is(countOf('createObjects', observed), 10)
   t.is(countOf('primitives', observed), 3)
   t.is(countOf('createTransform', observed), 4)
   t.is(countOf('applyTransform', observed), 7)
 })
 
-test('deserialize X3D 2D components to JSCAD script', (t) => {
+test.skip('deserialize X3D 2D components to JSCAD script', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/Geometry2dComponents.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
@@ -36,7 +37,7 @@ test('deserialize X3D 2D components to JSCAD script', (t) => {
   t.is(countOf('applyTransform', observed), 17)
 })
 
-test('deserialize X3D 3D components to JSCAD script', (t) => {
+test.skip('deserialize X3D 3D components to JSCAD script', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/Geometry3dComponents.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
@@ -47,7 +48,7 @@ test('deserialize X3D 3D components to JSCAD script', (t) => {
   t.is(countOf('applyTransform', observed), 8)
 })
 
-test('deserialize X3D 3D triangle sets to JSCAD script', (t) => {
+test.skip('deserialize X3D 3D triangle sets to JSCAD script', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/TriangleSets.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
@@ -61,7 +62,7 @@ test('deserialize X3D 3D triangle sets to JSCAD script', (t) => {
   t.is(countOf('applyTransform', observed), 4)
 })
 
-test('deserialize X3D 3D transforms to JSCAD script', (t) => {
+test.skip('deserialize X3D 3D transforms to JSCAD script', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/TransformExample.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
@@ -72,7 +73,7 @@ test('deserialize X3D 3D transforms to JSCAD script', (t) => {
   t.is(countOf('applyTransform', observed), 8)
 })
 
-test('deserialize X3D 3D indexed triangle sets to JSCAD script', (t) => {
+test.skip('deserialize X3D 3D indexed triangle sets to JSCAD script', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/IndexedTriangleSets.x3d')
   const inputFile = fs.readFileSync(inputPath)
 

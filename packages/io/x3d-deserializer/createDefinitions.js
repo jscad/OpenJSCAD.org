@@ -46,7 +46,7 @@ const createObjects${object.id} = (options) => {
 
   // apply the transforms if any
     code += `
-  const matrix = createTransform([${object.center}], [${object.rotation}], [${object.scale}], [${object.scaleOrientation}], [${object.translation}])
+  const matrix = [${matrix}]
   return applyTransform(matrix, objects)
 }
 `

@@ -36,7 +36,7 @@ const translate = (options, src) => {
 }
 
 //
-// convert the internal repreentation into JSCAD code
+// convert the internal representation into JSCAD code
 //
 const codify = (x3d, data) => {
   if (x3d.type !== 'x3d' || (!x3d.objects)) throw new Error('X3D malformed')
@@ -44,7 +44,6 @@ const codify = (x3d, data) => {
   if (x3d.objects.length < 1 || x3d.objects[0].type !== 'scene') throw new Error('X3D did not define a SCENE')
 
   const scene = x3d.objects[0] // translation starts here
-console.log(scene)
   const objects = scene.objects
   const length = x3d.length
   const angle = x3d.angle
@@ -77,18 +76,6 @@ console.log(scene)
 const {booleans, colors, geometries, maths, primitives, transforms, utils} = require('@jscad/modeling')
 
 const toArray = (objects) => Array.isArray(objects) ? objects : [objects]
-
-const createTransform = (center, rotation, scale, scaleOrientation, translation) => {
-  const matrix = maths.mat4.create()
-  maths.mat4.multiply(matrix, matrix, maths.mat4.fromTranslation(translation))
-  maths.mat4.multiply(matrix, matrix, maths.mat4.fromTranslation(center))
-  maths.mat4.multiply(matrix, matrix, maths.mat4.fromRotation(rotation[3], rotation))
-  maths.mat4.multiply(matrix, matrix, maths.mat4.fromRotation(scaleOrientation[3], scaleOrientation))
-  maths.mat4.multiply(matrix, matrix, maths.mat4.fromScaling(scale))
-  maths.mat4.multiply(matrix, matrix, maths.mat4.fromRotation(-scaleOrientation[3], maths.vec3.negate(scaleOrientation)))
-  maths.mat4.multiply(matrix, matrix, maths.mat4.fromTranslation(maths.vec3.negate(center)))
-  return matrix
-}
 
 const applyTransform = (matrix, ...objects) => {
   objects = utils.flatten(objects)
