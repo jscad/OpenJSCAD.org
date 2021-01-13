@@ -3,15 +3,16 @@ const x3dTypes = {
   SCENE: 1,
   TRANSFORM: 2,
   SHAPE: 3,
-  TRIANGLESET: 4,
-  TRIANGLEFANSET: 5,
-  TRIANGLESTRIPSET: 6,
-  QUADSET: 7,
-  INDEXEDTRIANGLESET: 8,
-  INDEXEDTRIANGLEFANSET: 9,
-  INDEXEDTRIANGLESTRIPSET: 10,
-  INDEXEDQUADSET: 11,
-  INDEXEDFACESET: 12,
+  APPEARANCE: 4,
+  TRIANGLESET: 5,
+  TRIANGLEFANSET: 6,
+  TRIANGLESTRIPSET: 7,
+  QUADSET: 8,
+  INDEXEDTRIANGLESET: 9,
+  INDEXEDTRIANGLEFANSET: 10,
+  INDEXEDTRIANGLESTRIPSET: 11,
+  INDEXEDQUADSET: 12,
+  INDEXEDFACESET: 13,
   NODE: -1
 }
 
@@ -413,7 +414,9 @@ const x3dIndexedFaceSet = (element) => {
 //
 
 const x3dAppearance = (element) => {
-  const obj = { definition: x3dTypes.NODE, type: 'appearence' }
+  const obj = { definition: x3dTypes.NODE, type: 'appearance' }
+
+  obj.objects = []
   return obj
 }
 

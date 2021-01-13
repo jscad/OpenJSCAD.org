@@ -19,36 +19,32 @@ const countOf = (search, string) => {
 
 test('deserialize simple X3D to JSCAD script', (t) => {
   const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, example01)
-console.log(observed)
   t.is(countOf('createObjects', observed), 10)
   t.is(countOf('primitives', observed), 3)
-  t.is(countOf('createTransform', observed), 4)
   t.is(countOf('applyTransform', observed), 7)
 })
 
-test.skip('deserialize X3D 2D components to JSCAD script', (t) => {
+test('deserialize X3D 2D components to JSCAD script', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/Geometry2dComponents.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
   const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, inputFile)
-  t.is(countOf('createObjects', observed), 48)
+  t.is(countOf('createObjects', observed), 46)
   t.is(countOf('primitives', observed), 10)
-  t.is(countOf('createTransform', observed), 14)
-  t.is(countOf('applyTransform', observed), 17)
+  t.is(countOf('applyTransform', observed), 15)
 })
 
-test.skip('deserialize X3D 3D components to JSCAD script', (t) => {
+test('deserialize X3D 3D components to JSCAD script', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/Geometry3dComponents.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
   const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, inputFile)
   t.is(countOf('createObjects', observed), 16)
   t.is(countOf('primitives', observed), 5)
-  t.is(countOf('createTransform', observed), 5)
   t.is(countOf('applyTransform', observed), 8)
 })
 
-test.skip('deserialize X3D 3D triangle sets to JSCAD script', (t) => {
+test('deserialize X3D 3D triangle sets to JSCAD script', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/TriangleSets.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
@@ -58,22 +54,20 @@ test.skip('deserialize X3D 3D triangle sets to JSCAD script', (t) => {
   t.is(countOf('faces', observed), 12)
   t.is(countOf('orientation', observed), 8)
   t.is(countOf('primitives.polyhedron', observed), 4)
-  t.is(countOf('createTransform', observed), 1)
   t.is(countOf('applyTransform', observed), 4)
 })
 
-test.skip('deserialize X3D 3D transforms to JSCAD script', (t) => {
+test('deserialize X3D 3D transforms to JSCAD script', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/TransformExample.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
   const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, inputFile)
   t.is(countOf('createObjects', observed), 16)
   t.is(countOf('primitives', observed), 5)
-  t.is(countOf('createTransform', observed), 5)
   t.is(countOf('applyTransform', observed), 8)
 })
 
-test.skip('deserialize X3D 3D indexed triangle sets to JSCAD script', (t) => {
+test('deserialize X3D 3D indexed triangle sets to JSCAD script', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/IndexedTriangleSets.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
@@ -83,7 +77,6 @@ test.skip('deserialize X3D 3D indexed triangle sets to JSCAD script', (t) => {
   t.is(countOf('faces', observed), 16)
   t.is(countOf('orientation', observed), 10)
   t.is(countOf('primitives.polyhedron', observed), 5)
-  t.is(countOf('createTransform', observed), 1)
   t.is(countOf('applyTransform', observed), 4)
 })
 

@@ -7,7 +7,16 @@ const findType = (type, objects) => {
 }
 
 const findColor = (objects, options) => {
-  let material = findType('material', objects)
+  let appearance = findType('appearance', objects)
+  let material
+  if (appearance) {
+    material = findType('material', appearance.objects)
+    if (material) {
+      return material.color ? material.color : null
+    }
+  }
+
+  material = findType('material', objects)
   if (material) {
     return material.color ? material.color : null
   }
@@ -367,7 +376,13 @@ const createObjects${object.id} = (options) => {
   return code
 }
 
+const createdList = []
+
 const createDefintion = (object, index, options) => {
+  if (createdList.includes(object.id)) return ''
+
+  createdList.push(object.id)
+
   let code = ''
   switch (object.type) {
     case 'transform':
