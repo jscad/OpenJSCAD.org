@@ -1,6 +1,7 @@
 const { maths, geometries } = require('@jscad/modeling')
 
 const createMat4Transform = require('./createTransform')
+const calculateSCPTransforms = require('./calculateSCPTransforms')
 
 const findType = (type, objects) => {
   return objects.find((object) => object.type === type)
@@ -29,12 +30,9 @@ const pointToString = (point) => {
 
 const pointsToString = (triangle) => {
   const strings = triangle.map((point) => pointToString(point))
-  return `[${strings.join(',')}]`
-}
-
-const trianglesToString = (triangles) => {
-  const strings = triangles.map((triangle) => pointsToString(triangle))
-  return `[${strings.join(',')}]`
+  return `[
+    ${strings.join(',\n    ')}
+  ]`
 }
 
 // horrific order of transforms... see http://edutechwiki.unige.ch/en/X3D_grouping_and_transforms
@@ -132,6 +130,33 @@ const createObjects${object.id} = (options) => {
         shape = findType('sphere', objects)
         if (shape) {
           primitive = `primitives.sphere({radius: ${shape.radius}, segments: ${shape.subdivision}})`
+        } else {
+          shape = findType('extrusion', objects)
+          if (shape) {
+            const isCapped = shape.beginCap || shape.endCap
+            const transforms = calculateSCPTransforms(shape.spine, shape.orientation, shape.scale)
+            code += `
+  const ccw = ${shape.ccw}
+  const crossSection = ${pointsToString(shape.crossSection)}
+  const sides = []
+  for (let i = 1; i < crossSection.length; i++) {
+    sides.push([crossSection[i - 1], crossSection[i]])
+  }
+  let baseSlice = extrusions.slice.fromSides(sides)
+  if (!ccw) extrusions.slice.reverse(baseSlice, baseSlice)
+  baseSlice = extrusions.slice.transform(maths.mat4.fromXRotation(Math.PI / 2), baseSlice)
+console.log(baseSlice)
+
+  const scptransforms = ${pointsToString(transforms)}
+  const createSection = (progress, index, base) => {
+console.log(index)
+    const transform = scptransforms[index]
+    return extrusions.slice.transform(transform, base)
+  }
+  const extrudeOptions = {numberOfSlices: scptransforms.length, isCapped: ${isCapped}, callback: createSection}
+`
+            primitive = `extrusions.extrudeFromSlices(extrudeOptions, baseSlice)`
+          }
         }
       }
     }

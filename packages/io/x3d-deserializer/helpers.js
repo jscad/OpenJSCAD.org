@@ -166,6 +166,68 @@ const x3dSphere = (element) => {
   return obj
 }
 
+const x3dExtrusion = (element) => {
+  const obj = {
+    definition: x3dTypes.NODE, type: 'extrusion',
+    ccw: true, beginCap: true, endCap: true,
+    crossSection: [[1, 1], [1, -1], [-1, -1], [-1, 1], [1, 1]],
+    orientation: [[0, 0, 1, 0]],
+    scale: [[1, 1]],
+    spine: [[0, 0, 0], [0, 1, 0]]
+  }
+
+  if (element.CCW) {
+    obj.ccw = element.CCW.includes('TRUE') || element.CCW.includes('true')
+  }
+  if (element.BEGINCAP) {
+    obj.beginCap = element.BEGINCAP.includes('TRUE') || element.BEGINCAP.includes('true')
+  }
+  if (element.ENDCAP) {
+    obj.endCap = element.ENDCAP.includes('TRUE') || element.ENDCAP.includes('true')
+  }
+  if (element.CROSSSECTION) {
+    const values = element.CROSSSECTION.trim().split(/ +/).map((v) => parseFloat(v))
+    const numpoints = Math.trunc(values.length / 2)
+    const points = []
+    for (let i = 0; i < numpoints; i++) {
+      const vi = i * 2
+      points.push([values[vi], values[vi + 1]])
+    }
+    obj.crossSection = points
+  }
+  if (element.ORIENTATION) {
+    const values = element.ORIENTATION.trim().split(/ +/).map((v) => parseFloat(v))
+    const numpoints = Math.trunc(values.length / 4)
+    const points = []
+    for (let i = 0; i < numpoints; i++) {
+      const vi = i * 4
+      points.push([values[vi], values[vi + 1], values[vi + 2], values[vi + 3]])
+    }
+    obj.orientation = points
+  }
+  if (element.SCALE) {
+    const values = element.SCALE.trim().split(/ +/).map((v) => parseFloat(v))
+    const numpoints = Math.trunc(values.length / 2)
+    const points = []
+    for (let i = 0; i < numpoints; i++) {
+      const vi = i * 2
+      points.push([values[vi], values[vi + 1]])
+    }
+    obj.scale = points
+  }
+  if (element.SPINE) {
+    const values = element.SPINE.trim().split(/ +/).map((v) => parseFloat(v))
+    const numpoints = Math.trunc(values.length / 3)
+    const points = []
+    for (let i = 0; i < numpoints; i++) {
+      const vi = i * 3
+      points.push([values[vi], values[vi + 1], values[vi + 2]])
+    }
+    obj.spine = points
+  }
+  return obj
+}
+
 //
 // 2D shapes
 //
@@ -467,6 +529,7 @@ module.exports = {
   x3dCone,
   x3dCylinder,
   x3dSphere,
+  x3dExtrusion,
 
   x3dArc2D,
   x3dArcClose2D,

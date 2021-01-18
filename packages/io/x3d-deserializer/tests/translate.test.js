@@ -39,9 +39,10 @@ test('deserialize X3D 3D components to JSCAD script', (t) => {
   const inputFile = fs.readFileSync(inputPath)
 
   const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, inputFile)
-  t.is(countOf('createObjects', observed), 16)
+  t.is(countOf('createObjects', observed), 20)
   t.is(countOf('primitives', observed), 5)
-  t.is(countOf('applyTransform', observed), 8)
+  t.is(countOf('extrusions', observed), 6)
+  t.is(countOf('applyTransform', observed), 9)
 })
 
 test('deserialize X3D 3D triangle sets to JSCAD script', (t) => {

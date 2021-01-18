@@ -73,7 +73,7 @@ const codify = (x3d, data) => {
 // Units : ${length.name} (${length.factor})
 // Angles : ${angle.name} (${angle.factor})
 
-const {booleans, colors, geometries, maths, primitives, transforms, utils} = require('@jscad/modeling')
+const {booleans, colors, extrusions, geometries, maths, primitives, transforms, utils} = require('@jscad/modeling')
 
 const toArray = (objects) => Array.isArray(objects) ? objects : [objects]
 

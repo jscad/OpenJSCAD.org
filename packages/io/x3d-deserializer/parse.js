@@ -15,6 +15,7 @@ const {
   x3dCone,
   x3dCylinder,
   x3dSphere,
+  x3dExtrusion,
 
   x3dArc2D,
   x3dArcClose2D,
@@ -70,6 +71,8 @@ const nodeToObjectMap = {
   CONE: x3dCone,
   CYLINDER: x3dCylinder,
   SPHERE: x3dSphere,
+  EXTRUSION: x3dExtrusion,
+
   ARC2D: x3dArc2D,
   ARCCLOSE2D: x3dArcClose2D,
   CIRCLE2D: x3dCircle2D,
@@ -121,11 +124,11 @@ const createX3DParser = (src, pxPmm) => {
         if (x3dDefs.has(name)) {
           const def = x3dDefs.get(name)
           if (def.type !== obj.type) {
-            console.log(`WARNING: using a defintion "${name}" of a different type; ${obj.type} vs ${def.type}`)
+            console.log(`WARNING: using a definition "${name}" of a different type; ${obj.type} vs ${def.type}`)
           }
           obj = def
         } else {
-          console.log(`WARNING: defintion "${name}" does not exist, using default for ${obj.type}`)
+          console.log(`WARNING: definition "${name}" does not exist, using default for ${obj.type}`)
         }
       } else {
         if (node.attributes.DEF) {

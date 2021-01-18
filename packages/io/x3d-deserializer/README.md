@@ -25,33 +25,35 @@ Full document conversion is NOT supported, however conversion of the following X
 | Cone                     | cylinder | 3D  |
 | Cylinder                 | cylinder | 3D  |
 | Disk2D                   | arc or circle  | 2D  |
-| ElevationGrid            | TBD | 3D  |
-| Extrusion                | TBD | 3D  |
-| IndexedFaceSet           | TBD  | 3D mesh  |
-| IndexedLineSet           | NO   |  |
-| IndexedQuadSet           | TBD  | 3D mesh  |
-| IndexedTriangleFanSet    | TBD  | 3D mesh  |
-| IndexedTriangleSet       | TBD  | 3D mesh  |
-| IndexedTriangleStripSet  | TBD  | 3D mesh  |
-| NurbsCurve               | TBD  | CURVE  |
-| NurbsCurve2D             | TBD  | CURVE  |
-| PointSet                 | TBD  | 3D points  |
+| ElevationGrid            | TBD |   |
+| Extrusion                | extrudeFromSlices | 3D mesh BUGGY  |
+| IndexedFaceSet           | polyhedron  | 3D mesh  |
+| IndexedLineSet           | TBD   |  |
+| IndexedQuadSet           | polyhedron  | 3D mesh  |
+| IndexedTriangleFanSet    | polyhedron  | 3D mesh  |
+| IndexedTriangleSet       | polyhedron  | 3D mesh  |
+| IndexedTriangleStripSet  | polyhedron  | 3D mesh  |
+| NurbsCurve               | TBD  |   |
+| NurbsCurve2D             | TBD  |   |
+| PointSet                 | TBD  |   |
 | Polyline2D               | line | 2D  |
-| Polypoint2D              | TBD | 2D  |
-| QuadSet                  | TBD  | 3D mesh  |
+| Polypoint2D              | TBD |   |
+| QuadSet                  | polyhedron  | 3D mesh  |
 | Rectangle2D              | rectangle | 2D  |
 | Sphere                   | sphere | 3D  |
 | TriangleFanSet           | polyhedron  | 3D mesh  |
 | TriangleSet              | polyhedron  | 3D mesh  |
 | TriangleSet2D            | one or more geom2 | 2D  |
 | TriangleStripSet         | polyhedron  | 3D mesh  |
+| Text                     | TBD  |   |
 
-| Group                    | GROUP |  |
 | Shape                    | with one of the above |  |
-| Transform                | GROUP plus apply transforms |  |
 
-DEF a named node
-USE a named node in context
+| Group                    | GROUP  |  |
+| StaticGroup              | GROUP  |  |
+| Transform                | GROUP plus apply transforms |  |
+| LOD (level of detail)    | GROUP with children representing the same scene | only use the first child |
+| SWITCH                   | GROUP with children | only use the selected child |
 
 UNIT can be changed by a 'unit' statement
 - length (meters * conversionFactor)
