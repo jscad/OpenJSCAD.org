@@ -1,14 +1,10 @@
-const { maths, geometries } = require('@jscad/modeling')
-
 const createMat4Transform = require('./createTransform')
 const calculateSCPTransforms = require('./calculateSCPTransforms')
 
-const findType = (type, objects) => {
-  return objects.find((object) => object.type === type)
-}
+const findType = (type, objects) => objects.find((object) => object.type === type)
 
 const findColor = (objects, options) => {
-  let appearance = findType('appearance', objects)
+  const appearance = findType('appearance', objects)
   let material
   if (appearance) {
     material = findType('material', appearance.objects)
@@ -24,9 +20,7 @@ const findColor = (objects, options) => {
   return null
 }
 
-const pointToString = (point) => {
-  return `[${point}]`
-}
+const pointToString = (point) => `[${point}]`
 
 const pointsToString = (triangle) => {
   const strings = triangle.map((point) => pointToString(point))
@@ -52,7 +46,7 @@ const createObjects${object.id} = (options) => {
   const matrix = createMat4Transform(object.center, object.rotation, object.scale, object.scaleOrientation, object.translation)
 
   // apply the transforms if any
-    code += `
+  code += `
   const matrix = [${matrix}]
   return applyTransform(matrix, objects)
 }
@@ -155,7 +149,7 @@ console.log(index)
   }
   const extrudeOptions = {numberOfSlices: scptransforms.length, isCapped: ${isCapped}, callback: createSection}
 `
-            primitive = `extrusions.extrudeFromSlices(extrudeOptions, baseSlice)`
+            primitive = 'extrusions.extrudeFromSlices(extrudeOptions, baseSlice)'
           }
         }
       }
@@ -214,7 +208,7 @@ console.log(index)
     triangles.push(geometries.geom2.fromPoints([vertices[i], vertices[i + 1], vertices[i + 2]]))
   }
 `
-                   primitive = `triangles`
+                  primitive = 'triangles'
                 }
               }
             }
@@ -240,7 +234,7 @@ console.log(index)
         }
         const orientation = shape.ccw ? 'outward' : 'inward'
         code += createMesh('triangle', points, faces, orientation)
-        primitive = `primitives.polyhedron({points, faces, orientation})`
+        primitive = 'primitives.polyhedron({points, faces, orientation})'
       }
     } else {
       shape = findType('trianglefanset', objects)
@@ -249,7 +243,6 @@ console.log(index)
         const coordinate = findType('coordinate', shape.objects)
         if (coordinate) {
           const points = coordinate.points
-          const numpoints = points.length
           const numfans = fanCount.length
           const faces = []
           let fo = 0
@@ -262,7 +255,7 @@ console.log(index)
           }
           const orientation = shape.ccw ? 'outward' : 'inward'
           code += createMesh(`triangle fan (${numfans})`, points, faces, orientation)
-          primitive = `primitives.polyhedron({points, faces, orientation})`
+          primitive = 'primitives.polyhedron({points, faces, orientation})'
         }
       } else {
         shape = findType('trianglestripset', objects)
@@ -271,7 +264,6 @@ console.log(index)
           const coordinate = findType('coordinate', shape.objects)
           if (coordinate) {
             const points = coordinate.points
-            const numpoints = points.length
             const numstrips = stripCount.length
             const faces = []
             let so = 0
@@ -286,7 +278,7 @@ console.log(index)
             }
             const orientation = shape.ccw ? 'outward' : 'inward'
             code += createMesh(`triangle strip (${numstrips})`, points, faces, orientation)
-            primitive = `primitives.polyhedron({points, faces, orientation})`
+            primitive = 'primitives.polyhedron({points, faces, orientation})'
           }
         } else {
           shape = findType('quadset', objects)
@@ -303,7 +295,7 @@ console.log(index)
               }
               const orientation = shape.ccw ? 'outward' : 'inward'
               code += createMesh(`quad (${numquads})`, points, faces, orientation)
-              primitive = `primitives.polyhedron({points, faces, orientation})`
+              primitive = 'primitives.polyhedron({points, faces, orientation})'
             }
           } else {
             shape = findType('indexedtriangleset', objects)
@@ -312,7 +304,6 @@ console.log(index)
               const index = shape.index
               if (coordinate && index) {
                 const points = coordinate.points
-                const numpoints = points.length
                 const numfaces = Math.trunc(index.length / 3)
                 const faces = []
                 for (let fi = 0; fi < numfaces; fi++) {
@@ -321,7 +312,7 @@ console.log(index)
                 }
                 const orientation = shape.ccw ? 'outward' : 'inward'
                 code += createMesh('indexed triangle', points, faces, orientation)
-                primitive = `primitives.polyhedron({points, faces, orientation})`
+                primitive = 'primitives.polyhedron({points, faces, orientation})'
               }
             } else {
               shape = findType('indexedtrianglefanset', objects)
@@ -330,7 +321,6 @@ console.log(index)
                 const fans = shape.fans
                 if (coordinate && fans) {
                   const points = coordinate.points
-                  const numpoints = points.length
                   const numfans = fans.length
                   const faces = []
                   for (let fi = 0; fi < numfans; fi++) {
@@ -342,7 +332,7 @@ console.log(index)
                   }
                   const orientation = shape.ccw ? 'outward' : 'inward'
                   code += createMesh(`indexed triangle fan (${numfans})`, points, faces, orientation)
-                  primitive = `primitives.polyhedron({points, faces, orientation})`
+                  primitive = 'primitives.polyhedron({points, faces, orientation})'
                 }
               } else {
                 shape = findType('indexedtrianglestripset', objects)
@@ -351,7 +341,6 @@ console.log(index)
                   const strips = shape.strips
                   if (coordinate && strips) {
                     const points = coordinate.points
-                    const numpoints = points.length
                     const numstrips = strips.length
                     const faces = []
                     for (let si = 0; si < numstrips; si++) {
@@ -365,7 +354,7 @@ console.log(index)
                     }
                     const orientation = shape.ccw ? 'outward' : 'inward'
                     code += createMesh(`indexed triangle strip (${numstrips})`, points, faces, orientation)
-                    primitive = `primitives.polyhedron({points, faces, orientation})`
+                    primitive = 'primitives.polyhedron({points, faces, orientation})'
                   }
                 } else {
                   shape = findType('indexedquadset', objects)
@@ -374,7 +363,6 @@ console.log(index)
                     const index = shape.index
                     if (coordinate && index) {
                       const points = coordinate.points
-                      const numpoints = points.length
                       const numquads = Math.trunc(index.length / 4)
                       const faces = []
                       for (let qi = 0; qi < numquads; qi++) {
@@ -383,7 +371,7 @@ console.log(index)
                       }
                       const orientation = shape.ccw ? 'outward' : 'inward'
                       code += createMesh(`indexed quad (${numquads})`, points, faces, orientation)
-                      primitive = `primitives.polyhedron({points, faces, orientation})`
+                      primitive = 'primitives.polyhedron({points, faces, orientation})'
                     }
                   } else {
                     shape = findType('indexedfaceset', objects)
@@ -392,11 +380,10 @@ console.log(index)
                       const faces = shape.faces
                       if (coordinate && faces) {
                         const points = coordinate.points
-                        const numpoints = points.length
                         const numfaces = faces.length
                         const orientation = shape.ccw ? 'outward' : 'inward'
                         code += createMesh(`indexed faces (${numfaces})`, points, faces, orientation)
-                        primitive = `primitives.polyhedron({points, faces, orientation})`
+                        primitive = 'primitives.polyhedron({points, faces, orientation})'
                       }
                     }
                   }
@@ -434,13 +421,13 @@ const createDefintion = (object, index, options) => {
   let code = ''
   switch (object.type) {
     case 'transform':
-      code += createTransform(object, index, options )
+      code += createTransform(object, index, options)
       break
     case 'shape':
-      code += createShape(object, index, options )
+      code += createShape(object, index, options)
       break
     case 'group':
-      code += createGroup(object, index, options )
+      code += createGroup(object, index, options)
       break
     default:
       console.log('WARNING: unknown definition: ' + object.type)

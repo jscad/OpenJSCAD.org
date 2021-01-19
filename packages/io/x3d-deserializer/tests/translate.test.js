@@ -4,7 +4,7 @@ const test = require('ava')
 
 const deserializer = require('../index')
 
-//const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
+// const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
 const samplesPath = path.dirname('tests/')
 
 const countOf = (search, string) => {
@@ -122,46 +122,3 @@ const example01 = `
   </Scene>
 </X3D>
 `
-
-// all 3D geometry; Box, Cone, Cylinder, Sphere
-const example02 = `
-<X3D version='3.0' profile='Interchange'>
-  <Scene>
-    <Transform translation='-2.4 0.2 1.0' rotation='0.0 0.707 0.707 0.9'>
-      <Shape>
-        <Box/>
-        <Appearance>
-          <Material diffuseColor='0.0 0.0 1.0'/>
-        </Appearance>
-      </Shape>
-    </Transform>
-
-    <Transform rotation='1 0 0 5.27' translation='-6 0 0'>
-      <Shape>
-        <Cone bottomRadius='3.0' topRaidus='1.0' height='3.0' subdivision='8'/>
-        <Appearance USE='Red'/>
-      </Shape>
-    </Transform>
-
-    <Transform>
-      <Shape>
-        <Appearance>
-          <Material DEF='tank' ambientIntensity='0.3' diffuseColor='0.3 0.3 0.5' shininess='0.10' specularColor='0.7'/>
-        </Appearance>
-        <Cylinder height='7' radius='1' subdivision='8'/>
-      </Shape>
-    </Transform>
-
-    <Transform translation='3.0 0.0 1.0'>
-      <Shape>
-        <Sphere radius='2.3'/>
-        <Appearance>
-          <Material diffuseColor='1.0 0.0 0.0'/>
-        </Appearance>
-      </Shape>
-    </Transform>
-  </Scene>
-</X3D>
-`
-
-// all 2D geometry; Arc2D, ArcClose2D, Circle2D, Disk2D, Polyline2D, Polypoint2D, Rectangle2D, TriangleSet2D

@@ -40,8 +40,6 @@ const {
   x3dMaterial
 } = require('./helpers')
 
-const { inchMM } = require('./constants')
-
 let x3dLast = null // last object found
 let x3dDefinition = x3dTypes.X3D // what kind of object beinging created
 
@@ -97,9 +95,7 @@ const nodeToObjectMap = {
 }
 
 let objectId = 1
-const getObjectId = () => {
-  return ("0000" + objectId++).slice(-4)
-}
+const getObjectId = () => ('0000' + objectId++).slice(-4)
 
 const createX3DParser = (src, pxPmm) => {
   // create a parser for the XML
@@ -110,7 +106,6 @@ const createX3DParser = (src, pxPmm) => {
   }
 
   parser.onopentag = function (node) {
-
     // convert known XML tags to objects
     let obj = nodeToObjectMap[node.name] ? nodeToObjectMap[node.name](node.attributes, { x3dObjects }) : null
 
@@ -146,17 +141,17 @@ const createX3DParser = (src, pxPmm) => {
         case x3dTypes.SCENE:
         case x3dTypes.TRANSFORM:
         case x3dTypes.SHAPE:
-        case x3dTypes.GROUP:
         case x3dTypes.APPEARANCE:
         case x3dTypes.TRIANGLESET:
         case x3dTypes.TRIANGLEFANSET:
-        case x3dTypes.TRIANGLESET:
+        case x3dTypes.TRIANGLESTRIPSET:
         case x3dTypes.QUADSET:
         case x3dTypes.INDEXEDTRIANGLESET:
         case x3dTypes.INDEXEDTRIANGLEFANSET:
         case x3dTypes.INDEXEDTRIANGLESTRIPSET:
         case x3dTypes.INDEXEDQUADSET:
         case x3dTypes.INDEXEDFACESET:
+        case x3dTypes.GROUP:
           x3dDefinition = obj.definition
           break
         default:
@@ -288,7 +283,7 @@ const createX3DParser = (src, pxPmm) => {
         }
         break
       default:
-        console.log('WARNING: unhandled definition',x3dDefinition)
+        console.log('WARNING: unhandled definition', x3dDefinition)
         break
     }
   }
@@ -311,7 +306,7 @@ const createX3DParser = (src, pxPmm) => {
 
 const parse = (src, pxPmm) => {
   createX3DParser(src, pxPmm)
-// console.log(JSON.stringify(x3dObj))
+  // console.log(JSON.stringify(x3dObj))
   return { x3dObj, x3dMaterials, x3dTextures }
 }
 

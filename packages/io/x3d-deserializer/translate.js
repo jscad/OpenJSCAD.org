@@ -50,24 +50,6 @@ const codify = (x3d, data) => {
 
   let code = ''
 
-  const materials = data.amfMaterials
-
-  // convert high level definitions
-  // this ~= data
-  const createDefinition = (object, index) => {
-    switch (object.type) {
-      case 'object':
-        code += createObject(object, index, data, { instantiate: false, scale: amf.scale })
-        break
-      case 'transform':
-        code += createTransform(object, index, data, {} )
-        break
-      default:
-        console.log('Warning: unknown definition: ' + object.type)
-        break
-    }
-  }
-
   // start everthing
   code = `// Objects  : ${objects.length}
 // Units : ${length.name} (${length.factor})

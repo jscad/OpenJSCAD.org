@@ -55,8 +55,13 @@ const x3dScene = (element) => {
 // horrific order of transforms... see http://edutechwiki.unige.ch/en/X3D_grouping_and_transforms
 const x3dTransform = (element) => {
   const obj = {
-     definition: x3dTypes.TRANSFORM, type: 'transform',
-     center: [0,0,0], rotation: [0,0,1,0], scale: [1,1,1], scaleOrientation: [0,0,1,0], translation: [0,0,0]
+    definition: x3dTypes.TRANSFORM,
+    type: 'transform',
+    center: [0, 0, 0],
+    rotation: [0, 0, 1, 0],
+    scale: [1, 1, 1],
+    scaleOrientation: [0, 0, 1, 0],
+    translation: [0, 0, 0]
   }
 
   if (element.CENTER) {
@@ -168,8 +173,11 @@ const x3dSphere = (element) => {
 
 const x3dExtrusion = (element) => {
   const obj = {
-    definition: x3dTypes.NODE, type: 'extrusion',
-    ccw: true, beginCap: true, endCap: true,
+    definition: x3dTypes.NODE,
+    type: 'extrusion',
+    ccw: true,
+    beginCap: true,
+    endCap: true,
     crossSection: [[1, 1], [1, -1], [-1, -1], [-1, 1], [1, 1]],
     orientation: [[0, 0, 1, 0]],
     scale: [[1, 1]],
@@ -233,7 +241,7 @@ const x3dExtrusion = (element) => {
 //
 
 const x3dArc2D = (element) => {
-  const obj = { definition: x3dTypes.NODE, type: 'arc2d', endAngle: Math.PI/2, radius: 1, startAngle: 0, subdivision: 32 }
+  const obj = { definition: x3dTypes.NODE, type: 'arc2d', endAngle: Math.PI / 2, radius: 1, startAngle: 0, subdivision: 32 }
 
   if (element.ENDANGLE) {
     obj.endAngle = parseFloat(element.ENDANGLE)
@@ -251,7 +259,7 @@ const x3dArc2D = (element) => {
 }
 
 const x3dArcClose2D = (element) => {
-  const obj = { definition: x3dTypes.NODE, type: 'arcClose2d', closureType: 'PIE', endAngle: Math.PI/2, radius: 1, startAngle: 0, subdivision: 32 }
+  const obj = { definition: x3dTypes.NODE, type: 'arcClose2d', closureType: 'PIE', endAngle: Math.PI / 2, radius: 1, startAngle: 0, subdivision: 32 }
 
   if (element.CLOSURETYPE) {
     obj.closureType = element.CLOSURETYPE
@@ -494,7 +502,7 @@ const x3dMaterial = (element) => {
   // - specularColor="0 0 0" RGB, 0-1.0
   // - transparency="0" 1.0 transparent, 0 opaque
   if (element.DIFFUSECOLOR) {
-    let a = 1.0 // opaque
+    // TBD convert transparency to color alpha
     const values = element.DIFFUSECOLOR.trim().split(/ +/).map((v) => parseFloat(v))
     if (values.length > 2) {
       if (values.length < 4) values.push(1.0)
@@ -512,7 +520,6 @@ const x3dGroup = (element) => {
   obj.objects = []
   return obj
 }
-
 
 module.exports = {
   x3dTypes,

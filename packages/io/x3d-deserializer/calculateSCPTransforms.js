@@ -1,4 +1,4 @@
-const {booleans, extrusions, geometries, maths, measurements, primitives, transforms} = require('@jscad/modeling')
+const { maths } = require('@jscad/modeling')
 
 const rotationMatrixFromVectors = (srcVector, targetVector) => {
   // From https://gist.github.com/kevinmoran/b45980723e53edeb8a5a43c49f134724
@@ -50,7 +50,7 @@ const calculateSCPTransforms = (spine, orientations, scales) => {
   // calculate the rotation from the SPINE (point) and X/Y/Z axis
   let planeYRotation
   const calculateRotation = (s, x, y, z) => {
-//console.log('calculateRotation',s,x,y,z)
+    // console.log('calculateRotation',s,x,y,z)
     if (planeYRotation) {
       const matrix = maths.mat4.fromTranslation(s)
       return maths.mat4.multiply(matrix, matrix, planeYRotation)
@@ -64,12 +64,12 @@ const calculateSCPTransforms = (spine, orientations, scales) => {
   }
 
   const calculateYaxis = (y, a, b) => {
-//console.log('calculateYaxis',a,b)
+    // console.log('calculateYaxis',a,b)
     return maths.vec3.normalize(y, maths.vec3.subtract(y, b, a)) // directional vector from A to B
   }
 
   const calculateZaxis = (z, p, i, n) => {
-//console.log('calculateZaxis',p,i,n)
+    // console.log('calculateZaxis',p,i,n)
     if (p === undefined) return maths.vec3.clone(z, [0, 0, 0])
     if (n === undefined) return maths.vec3.clone(z, [0, 0, 0])
     const a = maths.vec3.subtract(n, i)
@@ -90,7 +90,7 @@ const calculateSCPTransforms = (spine, orientations, scales) => {
 
   let previousZaxis
   const calculateMatrixAt = (index) => {
-//console.log('calculateMatrixAt',index,closed)
+    // console.log('calculateMatrixAt',index,closed)
     const numpoints = spine.length
 
     const yaxis = [0, 0, 0]

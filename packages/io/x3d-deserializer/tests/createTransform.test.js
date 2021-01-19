@@ -31,12 +31,12 @@ const compareMat4ToMatrix4 = (mat4, matrix4) => {
 }
 
 test('createTransform returns expected transform matrix', (t) => {
-  let matrix4 = new Matrix4()
+  const matrix4 = new Matrix4()
   // X3D defaults
   let center = [0, 0, 0]
   let rotation = [0, 0, 1, 0]
   let scale = [1, 1, 1]
-  let scaleOrientation = [0, 0, 1, 0]
+  const scaleOrientation = [0, 0, 1, 0]
   let translation = [0, 0, 0]
 
   let obs = createTransform(center, rotation, scale, scaleOrientation, translation)
@@ -47,19 +47,19 @@ test('createTransform returns expected transform matrix', (t) => {
   obs = createTransform(center, rotation, scale, scaleOrientation, translation)
   exp = matrix4.set(translation, rotation, scale, scaleOrientation, center)
   t.true(compareMat4ToMatrix4(obs, exp))
-  center = [0,0,0]
+  center = [0, 0, 0]
 
-  scale = [5,5,5]
+  scale = [5, 5, 5]
   obs = createTransform(center, rotation, scale, scaleOrientation, translation)
   exp = matrix4.set(translation, rotation, scale, scaleOrientation, center)
   t.true(compareMat4ToMatrix4(obs, exp))
-  scale = [1,1,1]
+  scale = [1, 1, 1]
 
-  translation = [5,5,5]
+  translation = [5, 5, 5]
   obs = createTransform(center, rotation, scale, scaleOrientation, translation)
   exp = matrix4.set(translation, rotation, scale, scaleOrientation, center)
   t.true(compareMat4ToMatrix4(obs, exp))
-  translation = [0,0,0]
+  translation = [0, 0, 0]
 
   rotation = [1, 0, 0, -0.707]
   obs = createTransform(center, rotation, scale, scaleOrientation, translation)
@@ -103,8 +103,8 @@ test('createTransform returns expected transform matrix', (t) => {
   obs = createTransform(center, rotation, scale, scaleOrientation, translation)
   exp = matrix4.set(translation, rotation, scale, scaleOrientation, center)
   t.true(compareMat4ToMatrix4(obs, exp))
-  scale = [1,1,1]
-  translation = [0,0,0]
+  scale = [1, 1, 1]
+  translation = [0, 0, 0]
 
   rotation = [0.0, 0.0, -1.0, 0.523599]
   translation = [-0.25, 0.75, 0.0]
@@ -112,7 +112,7 @@ test('createTransform returns expected transform matrix', (t) => {
   exp = matrix4.set(translation, rotation, scale, scaleOrientation, center)
   t.true(compareMat4ToMatrix4(obs, exp))
   rotation = [0, 0, 1, 0]
-  translation = [0,0,0]
+  translation = [0, 0, 0]
 
   center = [-0.00303999, 0.898843, -0.091817]
   rotation = [0, 1, 0, 1.57079]
@@ -120,7 +120,7 @@ test('createTransform returns expected transform matrix', (t) => {
   obs = createTransform(center, rotation, scale, scaleOrientation, translation)
   exp = matrix4.set(translation, rotation, scale, scaleOrientation, center)
   t.true(compareMat4ToMatrix4(obs, exp))
-  center = [0,0,0]
+  center = [0, 0, 0]
   rotation = [0, 0, 1, 0]
-  translation = [0,0,0]
+  translation = [0, 0, 0]
 })

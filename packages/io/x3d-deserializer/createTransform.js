@@ -1,4 +1,4 @@
-const {maths} = require('@jscad/modeling')
+const { maths } = require('@jscad/modeling')
 
 const createTransform = (center, rotation, scale, scaleOrientation, translation) => {
   // console.log('createTransform',center,rotation,scale,scaleOrientation,translation)
