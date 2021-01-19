@@ -39,6 +39,7 @@ const generateOutputData = (source, params, options) => {
       stl: data => deserializers.stl(data.options, data.source),
       svg: data => deserializers.svg(data.options, data.source),
       dxf: data => deserializers.dxf(data.options, data.source),
+      x3d: data => deserializers.x3d(data.options, data.source),
       json: data => deserializers.json(data.options, data.source),
       jscad: data => data.source,
       js: data => data.source,
