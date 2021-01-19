@@ -6,7 +6,7 @@ const poly3 = require('../geometries/poly3')
 const { isGTE, isNumberArray } = require('./commonChecks')
 
 /**
- * Construct an ellipsoid in three dimensional space.
+ * Construct an axis-aligned ellipsoid in three dimensional space.
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of ellipsoid
  * @param {Array} [options.radius=[1,1,1]] - radius of ellipsoid, along X, Y and Z

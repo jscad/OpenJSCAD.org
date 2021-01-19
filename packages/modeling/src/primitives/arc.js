@@ -7,7 +7,7 @@ const path2 = require('../geometries/path2')
 const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 
 /**
- * Construct an arc in two dimensional space.
+ * Construct an arc in two dimensional space where all points are at the same distance from the center.
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of arc
  * @param {Number} [options.radius=1] - radius of arc

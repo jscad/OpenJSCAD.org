@@ -6,7 +6,7 @@
 
 There are many ways to use JSCAD:
 
-An [online version](https://openjscad.org/), [self hosteable web based ui](./packages/web), as [CLI](./packages/cli) (command-line interface) for server-side computations with Node.js, as well as an experimental [desktop app](https://github.com/jscad/jscad-desktop) or [individual Node.js packages](./packages/README.md)!!
+An [online version](https://www.jscad.xyz/), [self hosteable web based ui](./packages/web), as [CLI](./packages/cli) (command-line interface) for server-side computations with Node.js, as well as an experimental [desktop app](./packages/desktop) or [individual Node.js packages](./packages/README.md)!!
 
 This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-the-wild-33c6eb246cb9) (container of multiple packages and tools) maintained with [Lerna](https://lernajs.io/)
 
@@ -27,13 +27,12 @@ This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-th
 - [Backers](#backers)
 - [Sponsors](#sponsors)
 - [License](#license)
-- [Screenshots](#screenshots)
 - [See also](#see-also)
 
 ## Usage
 
 There are different 'flavors' of JSCAD that you can use based on your needs
-- web: online (no install) simply go to [https://openjscad.org/](https://openjscad.org/)
+- web: online (no install) simply go to [https://www.jscad.xyz/](https://www.jscad.xyz/)
 - web: self hosted: can be found [here](./packages/web)
 - cli: command line interface : can be found [here](./packages/cli)
 - desktop app: pre pre alpha work in progress can be found [here](./packages/desktop)!
@@ -42,7 +41,7 @@ There are different 'flavors' of JSCAD that you can use based on your needs
 
 ### Immediate Use (no installation)
 
-Go to *[OpenJSCAD.org](http://openjscad.org)* (Tested browsers include Chrome, Firefox, Opera, Safari)
+Go to *[OpenJSCAD.org](http://www.jscad.xyz)* (Tested browsers include Chrome, Firefox, Opera, Safari)
 
 ### Use within a Web Site (pre built files, from GitHub)
 
@@ -71,8 +70,8 @@ This will be expanded upon in the future, and is the backbone of the newer, modu
 ## Documentation
 
 - [Technical Overview and Q&A](./docs/index.md)
-- [JSCAD User and Programming Guide](https://openjscad.org/dokuwiki/doku.php?id=start)
-- [JSCAD Quick Reference](https://openjscad.org/dokuwiki/doku.php?id=jscad_quick_reference)
+- [JSCAD User and Programming Guide](https://www.jscad.xyz/dokuwiki/doku.php)
+- [JSCAD Quick Reference](https://www.jscad.xyz/dokuwiki/doku.php?id=jscad_quick_reference)
 
 ## Contributing
 
@@ -81,11 +80,11 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
 
-* If you want to submit a change or a patch, please read the [Contributing Guide](https://github.com/jscad/OpenJSCAD.org/blob/master/CONTRIBUTING.md) . New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
+* If you want to submit a change or a patch, please read the [Contributing Guide](./CONTRIBUTING.md) . New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD.org User Guide](https://openjscad.org/dokuwiki/doku.php).
+* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD.org User Guide](https://www.jscad.xyz/dokuwiki/doku.php).
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
 
@@ -145,25 +144,8 @@ Your logo will show up here with a link to your website.
 
 ## License
 
-[The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
+[The MIT License (MIT)](./LICENSE)
 (unless specified otherwise)
-
-## Screenshots
-
-Simple JSCAD example ([logo.jscad](examples/logo.jscad)) [try it](http://openjscad.org/#examples/logo.jscad):
-<img src="packages/web/docs/sshot-01.png">
-
-More sophisticated JSCAD example, with functions dedicated to object generation and with interactive parameters ([gear.jscad](examples/gear.jscad)) [try it](http://openjscad.org/#examples/gear.jscad) :
-<img src="packages/web/docs/sshot-03-illu.png">
-
-Import of STL models ([frog-OwenCollins.stl](examples/frog-OwenCollins.stl)) [try it](http://openjscad.org/#examples/frog-OwenCollins.stl):
-<img src="packages/web/docs/sshot-04.png">
-
-Drag and drop a local file:
-<img src="packages/web/docs/sshot-05-illu.png">
-
-Drag and drop multiple files (Chrome and Firefox) or a folder (Chrome):
-<img src="packages/web/docs/sshot-06-illu.png">
 
 ## See Also
 

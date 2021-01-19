@@ -62,7 +62,8 @@
   "perspective":"透視図",
   "orthographic":"正投影図",
 
-  "reEvaluateCode":"Reload script",
+  "editorCommand":"エディタ コマンド",
+  "reevaluate":"コンパイル",
 
   "Documentation":"ドキュメント",
   "User Guide":"ユーザー ガイド",

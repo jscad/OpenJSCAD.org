@@ -93,7 +93,7 @@
         "id":"forum_link"
       },
       "JSCad Github": {
-        "href":"https://github.com/jscad/OpenJSCAD.org/tree/V2",
+        "href":"https://github.com/jscad/OpenJSCAD.org",
         "target":"_blank",
         "class":"menu-item",
         "id":"forum_link"

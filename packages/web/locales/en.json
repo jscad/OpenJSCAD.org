@@ -47,6 +47,7 @@
   "STL (ASCII)":"STL (ascii)",
 
   "update":"Update",
+  "reset":"Reset",
   "instant update":"Instant Update",
 
   "toPresetView":"Reset view",
@@ -61,7 +62,8 @@
   "perspective":"Perspective",
   "orthographic":"Orthographic",
 
-  "reEvaluateCode":"Reload script",
+  "editorCommand":"Editor command",
+  "reevaluate":"Compile",
 
   "always":"Always"
 }

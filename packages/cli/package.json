@@ -1,6 +1,6 @@
 {
   "name": "@jscad/cli",
-  "version": "2.0.0-alpha.11",
+  "version": "2.0.0-alpha.12",
   "description": "Command Line Interface (CLI) for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "bin": {
@@ -9,7 +9,7 @@
   "scripts": {
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava '*.test.js' --serial --verbose --timeout 2m",
-    "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove OpenJSCAD? You can now donate to our open collective:\\u001b[22m\\u001b[39m\\n > \\u001b[34mhttps://opencollective.com/openjscad/donate\\u001b[0m')\""
+    "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove JSCAD? You can now donate to our open collective:\\u001b[22m\\u001b[39m\\n > \\u001b[34mhttps://opencollective.com/openjscad/donate\\u001b[0m')\""
   },
   "contributors": [
     {
@@ -34,9 +34,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/core": "2.0.0-alpha.11",
-    "@jscad/io": "2.0.0-alpha.10",
-    "@jscad/modeling": "2.0.0-alpha.8"
+    "@jscad/core": "2.0.0-alpha.12",
+    "@jscad/io": "2.0.0-alpha.11",
+    "@jscad/modeling": "2.0.0-alpha.9"
   },
   "devDependencies": {
     "ava": "3.10.0",

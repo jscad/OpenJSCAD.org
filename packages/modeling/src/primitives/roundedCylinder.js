@@ -8,7 +8,7 @@ const poly3 = require('../geometries/poly3')
 const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 
 /**
- * Construct a solid cylinder in three dimensional space with rounded ends.
+ * Construct a Z axis-aligned solid cylinder in three dimensional space with rounded ends.
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of cylinder
  * @param {Array} [options.height=2] - height of cylinder
@@ -19,11 +19,7 @@ const { isGT, isGTE, isNumberArray } = require('./commonChecks')
  * @alias module:modeling/primitives.roundedCylinder
  *
  * @example
- * let myshape = roundedCylinder({
- *   height: 10,
- *   radius: 2,
- *   roundRadius: 0.5
- * })
+ * let myshape = roundedCylinder({ height: 10, radius: 2, roundRadius: 0.5 })
  */
 const roundedCylinder = (options) => {
   const defaults = {

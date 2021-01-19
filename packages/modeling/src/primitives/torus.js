@@ -20,10 +20,7 @@ const { isGT, isGTE } = require('./commonChecks')
  * @alias module:modeling/primitives.torus
  *
  * @example
- * let myshape = torus({
- *   innerRadius: 10,
- *   outerRadius: 100
- * })
+ * let myshape = torus({ innerRadius: 10, outerRadius: 100 })
  */
 const torus = (options) => {
   const defaults = {

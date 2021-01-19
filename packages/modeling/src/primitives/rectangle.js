@@ -5,7 +5,7 @@ const geom2 = require('../geometries/geom2')
 const { isNumberArray } = require('./commonChecks')
 
 /**
- * Construct an axis-aligned rectangle in two dimensional space with four sides and four 90-degree angles.
+ * Construct an axis-aligned rectangle in two dimensional space with four sides at right angles.
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of rectangle
  * @param {Array} [options.size=[2,2]] - dimension of rectangle, width and length

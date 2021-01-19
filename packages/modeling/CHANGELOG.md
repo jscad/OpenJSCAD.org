@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.0.0-alpha.8...@jscad/modeling@2.0.0-alpha.9) (2021-01-02)
+
+
+### Bug Fixes
+
+* **core,modeling:** V2 fix extrude ([#751](https://github.com/jscad/OpenJSCAD.org/issues/751)) ([767b6fc](https://github.com/jscad/OpenJSCAD.org/commit/767b6fc13a24b6203248c197210645e5b7cebc28))
+* **modeling:** re-implemented poly2.isPointInside to correct issues ([#741](https://github.com/jscad/OpenJSCAD.org/issues/741)) ([4266c8f](https://github.com/jscad/OpenJSCAD.org/commit/4266c8f623f3de9f8c8a5999647e654c8d5aaf31))
+
+
+
+
+
 # [2.0.0-alpha.8](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.0.0-alpha.7...@jscad/modeling@2.0.0-alpha.8) (2020-12-04)
 
 **Note:** Version bump only for package @jscad/modeling
