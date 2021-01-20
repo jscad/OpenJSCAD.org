@@ -35,8 +35,7 @@ const fromRotation = (...params) => {
 
   if (Math.abs(len) < EPSILON) {
     // axis is 0,0,0 or almost
-    identity(out)
-    return out
+    return identity(out)
   }
 
   len = 1 / len
