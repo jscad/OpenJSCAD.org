@@ -57,7 +57,8 @@ test('extrudeFromSlices (torus)', (t) => {
   const geometry3 = extrudeFromSlices(
     {
       numberOfSlices: Math.PI * 2 / angle,
-      isCapped: false,
+      startCapped: false,
+      endCapped: false,
       callback: function (progress, index, base) {
         return slice.transform(mat4.fromXRotation(angle * index), base)
       }
@@ -72,6 +73,8 @@ test('extrudeFromSlices (same shape, changing dimensions)', (t) => {
   const geometry3 = extrudeFromSlices(
     {
       numberOfSlices: 4,
+      startCapped: true,
+      endCapped: false,
       callback: function (progress, count, base) {
         let newslice = slice.transform(mat4.fromTranslation([0, 0, count * 2]), base)
         newslice = slice.transform(mat4.fromScaling([1 + count, 1 + (count / 2), 1]), newslice)
@@ -80,7 +83,7 @@ test('extrudeFromSlices (same shape, changing dimensions)', (t) => {
     }, base
   )
   const pts = geom3.toPoints(geometry3)
-  t.is(pts.length, 26)
+  t.is(pts.length, 25)
 })
 
 test('extrudeFromSlices (changing shape, changing dimensions)', (t) => {
