@@ -57,7 +57,8 @@ function tube (bezierControlPoints) {
   // ...and extrude.
   return extrusions.extrudeFromSlices({
     numberOfSlices: 60,
-    isCapped: true,
+    capStart: true,
+    capEnd: true,
     callback: function (progress, count, base) {
       const positionArray = bezier.valueAt(progress, tubeCurve)
       const tangentArray = bezier.tangentAt(progress, tubeCurve)
