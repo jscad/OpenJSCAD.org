@@ -10,14 +10,10 @@
 const applyParameterDefinitions = (inputParameters, parameterDefinitions, throwOnNoDefinition = false) => {
   const values = Object.keys(inputParameters).reduce((paramValues, paramName) => {
     let value = inputParameters[paramName]
-    let definition = parameterDefinitions.filter((definition) => definition.name === paramName)
-    definition = definition.length > 0 ? definition[0] : undefined
-    if (definition === undefined) {
-      if (throwOnNoDefinition) {
-        throw new Error(`Parameter (${paramName}) has no matching definition`)
-      }
-      return paramValues
-    }
+
+    const definitions = parameterDefinitions.filter((definition) => definition.name === paramName)
+    const definition = definitions.length > 0 ? definitions[0] : { type: 'unknown' }
+
     switch (definition.type) {
       case 'choice':
         value = valueForChoices(value, definition)
@@ -48,6 +44,11 @@ const applyParameterDefinitions = (inputParameters, parameterDefinitions, throwO
           value = parseFloat(value)
         } else {
           throw new Error('Parameter (' + paramName + ') is not a valid number (' + value + ')')
+        }
+        break
+      default:
+        if (throwOnNoDefinition) {
+          throw new Error(`Parameter (${paramName}) has no matching definition`)
         }
         break
     }
