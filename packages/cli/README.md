@@ -26,133 +26,87 @@ This is the Command Line Interface (CLI) package for creating designs using [Nod
 
 ## Usage
 
-### Install Node.js
+The next steps require [NPM](https://www.npmjs.com/) and [Node.js](https://nodejs.org).
+The JSCAD project always develops with the latest LTS releases, so install these versions.
 
-> IMPORTANT: You need a recent, LTS version of [Node.js](http://nodejs.org/)
-> Click on the 'Build Status' badge at the top to see the supported environments.
-> Other versions of Node.js are not guaranteed to work!
+### Install the CLI for General Use
 
-An easy way to install any Node.js version is to use [NVM](https://github.com/creationix/nvm)
-- after installing nvm type ```nvm install v8``` (choose a version from the list)
-- then ```nvm use v8```
-
-### Install JSCAD Command Line Interface (CLI)
-
-CLI (command-line interface) use
-
+The CLI can be installed for general use using NPM.
 ```
- npm install -g @jscad/cli
+npm install -g @jscad/cli
 ```
+Once installed, the CLI can be invoked using
+```
+jscad -v
+jscad
+```
+
+### Install the CLI as Part of a Project
+
+If a general installation is not possible or desired, then installation as part of a project is possible.
+```
+cd myproject
+npm install -D @jscad/cli@alpha
+```
+
+This will add the CLI package as a development dependency. The CLI can be invoked using
+```
+npx jscad -v
+npx jscad
+```
+These two commands will show the version of the CLI, and a general help message.
 
 ### Using the CLI
 
-Simply run ```jscad <InputFile> <options> <OutputFile>```
+Simply invoke 'jscad' using various options. Here are some examples.
 
 Examples:
 
-```jscad example005.jscad                         # -- creates example005.stl as default```
+```jscad mydesign.js                            # -- convert mydesign.js to mydesign.stl as default```
 
-```jscad example001.jscad -o test.stl             # -- convert .jscad to .stl as test.stl```
+```jscad mydesign.js -o test.stl                # -- convert mydesign.js to test.stl```
 
-```jscad frog.stl -o test.jscad                   # -- convert .stl into .jscad```
+```jscad frog.stl -o test.js                    # -- convert frog.stl to test.js```
 
-```jscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf```
+```jscad mydesign.js -of amf                    # -- convert mydesign.js into mydesign.amf```
 
-You can also provide the parameters to your script directly by passing --<paramName> <value> to the CLI.
+The '-o' option can be used to control where the output will be placed.
+While, the '-of' option can be used to control the format of the output.
 
-```jscad name_plate.jscad --name "Just Me" --title "Geek" -o output.stl```
+You can also provide the parameters to a design by passing --<paramName> <value> to the CLI.
 
-### Using with the provided examples
+```jscad mydesign.js --name "Just Me" --title "Geek" -o output.stl```
 
-Install the examples for JSCAD
+Also, design projects (directories) can be used as the input to the CLI.
 
- * via git
- ```
-  git clone git@github.com:jscad/OpenJSCAD.org.git
-  cp -r OpenJSCAD.org/packages/examples . 
+```jscad myproject/ -o ./test.stl               # -- convert the project mydesign to test.stl```
 
- ```
+> Note: The CLI will search for the design entry point just like NPM.
+> - if there is a package.json file in the project, then try to use the 'main' property
+> - if not, then try to look for 'index.js'
 
- * via npm 
- ```
-  npm install @jscad/examples
-  cp -r node_modules/@jscad/examples .
- ```
+### Using the CLI with the JSCAD Examples
 
-run them through the CLI
-
+The easiest way to use the examples is to create a new NPM project.
 ```
-% cd examples/
-% jscad example005.jscad                         # -- creates example005.stl as default
-% jscad example001.jscad -o test.stl
-% jscad example001.scad -o example001scad.jscad  # -- convert .scad into .jscad
-% jscad frog.stl -o test.jscad                   # -- convert .stl into .jscad
-% jscad logo.jscad -of amf                       # -- convert logo.jscad into logo.amf
+mkdir newproject
+cd newproject
+npm init
 ```
-
-### Using the CLI on designs created as NPM packages
-
-You can also run JSCAD designs created as Node modules/NPM packages through the CLI:
-
-See examples/module-design for such a design
-
-- install the design using npm :
-
-```npm install <PATH TO DESIGN FOLDER>```
-
-- then just pass the folder containing your design to the CLI
-
-```jscad <PATH TO DESIGN FOLDER> <OPTIONS>```
-
-- or run the CLI on the main file if you know which one it is
-
-```jscad <PATH TO DESIGN FOLDER>/index.js <OPTIONS>```
-
-> Note: when passing a folder to the CLI, it will:
-> - check if there is a package.json file in the folder and try to use its "main" property
-> - if that does not work if it will try to look for index.js/jscad, main.js/jscad or a file with same name as the folder
-
-#### About designs created as packages (recomended for the future)
-
-You have to deal with your dependencies yourself, NO code is injected 'magically' / globals.
-this means you have to import the design API yourself (this will be the case for all designs in
-the future, including the in-browser playground)
-
-ie you should have things like this at the top of your design file(s) 
-
-use what you need, this is just an example :)
-
-```javascript
-const {color} = require('@jscad/csg/api').color
-const {cube, sphere, cylinder} = require('@jscad/csg/api').primitives3d
-const {square, circle} = require('@jscad/csg/api').primitives2d
-const {linear_extrude} = require('@jscad/csg/api').extrusions
-const {union, difference} = require('@jscad/csg/api').booleanOps
-const {translate} = require('@jscad/csg/api').transformations
-
-//then use the functions above
-const main = (parameters) => {
-  return [
-    union(cube(), sphere({r: 10})),
-    difference(sphere(), color([1, 0, 0], cylinder()))
-  ]
-}
-
-const getParameterDefinitions = () => {
-  return []
-}
-
-module.exports = {main, getParameterDefinitions}
+Then add both the examples and the CLI to the project.
 ```
-
-The ```main``` and ```getParameterDefinitions``` functions should be exported in the following manner:
-
-```javascript
-module.exports = {main, getParameterDefinitions}
+npm install @jscad/examples@alpha
+npm install @jscad/cli@alpha
 ```
-
-You can find out more on Node modules in the official docs [here](https://nodejs.org/api/modules.html)
-or with this [nice presentation](https://darrenderidder.github.io/talks/ModulePatterns/) 
+And finally, make the examples local to the project.
+```
+ln -s node_modules/@jscad/examples ./examples
+```
+The examples are just single file designs, or multiple file projects.
+```
+npx jscad examples/core/booleans/basicBooleans.js -o ./test.stl
+npx jscad examples/module-design/ -of dxf
+```
 
 ## Documentation
 
