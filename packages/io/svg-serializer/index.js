@@ -16,6 +16,13 @@ Notes:
      SVG GROUP containing a SVG PATH for each path
 */
 
+/**
+ * Serializer of JSCAD geometries to SVG elements.
+ * @module io/svg-serializer
+ * @example
+ * const { serializer, mimeType } = require('@jscad/svg-serializer')
+ */
+
 const { geometries, maths, measurements, utils } = require('@jscad/modeling')
 
 const stringify = require('onml/lib/stringify')
@@ -24,10 +31,17 @@ const version = require('./package.json').version
 
 const mimeType = 'image/svg+xml'
 
-/** Serialize the give objects to SVG format.
- * @param {Object} [options] - options for serialization
+/**
+ * Serialize the give objects to SVG format.
+ * @param {Object} options - options for serialization, REQUIRED
+ * @param {String} [options.unit='mm'] - unit of design; em, ex, px, in, cm, mm, pt, pc
+ * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
  * @param {Object|Array} objects - objects to serialize as SVG
- * @returns {Array} serialized contents, SVG format
+ * @returns {Array} serialized contents with one SVG structure (string)
+ * @alias module:io/svg-serializer.serialize
+ * @example
+ * const geometry = primitives.square()
+ * const svgData = serializer({unit: 'mm'}, geometry)
  */
 const serialize = (options, ...objects) => {
   const defaults = {

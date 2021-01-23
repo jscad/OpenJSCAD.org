@@ -29,7 +29,7 @@ const instantiate = require('./deserialize')
  * Deserialize the given AMF source (xml) into either a script or an array of geometry
  * @see {@link https://en.wikipedia.org/wiki/Additive_manufacturing_file_format|AMF File Format}
  * @see README for supported conversions.
- * @param {Object} [options] - options used during deserializing
+ * @param {Object} options - options used during deserializing
  * @param {String} [options.filename='amf'] - filename of original AMF source
  * @param {String} [options.output='script'] - either 'script' or 'geometry' to set desired output
  * @param {String} [options.version] - version added to the script metadata, default is package version

@@ -19,6 +19,13 @@ TBD
 1) gzipped is also possible; same mime type, with file extension .x3dz
 */
 
+/**
+ * Serializer of JSCAD geometries to X3D elements.
+ * @module io/x3d-serializer
+ * @example
+ * const { serializer, mimeType } = require('@jscad/x3d-serializer')
+ */
+
 const { geometries, utils } = require('@jscad/modeling')
 
 // const { ensureManifoldness } = require('@jscad/io-utils')
@@ -31,10 +38,17 @@ const stringify = require('onml/lib/stringify')
 
 const mimeType = 'model/x3d+xml'
 
-/** Serialize the give objects to X3D (xml) format.
- * @param {Object} options - options for serialization
+/**
+ * Serialize the give objects to X3D elements (XML).
+ * @param {Object} options - options for serialization, REQUIRED
+ * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer 
+ * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
  * @param {Object|Array} objects - objects to serialize as X3D
- * @returns {Array} serialized contents, X3D format
+ * @returns {Array} serialized contents, X3D format (XML)
+ * @alias module:io/x3d-serializer.serialize
+ * @example
+ * const geometry = primitives.cube()
+ * const x3dData = serializer({unit: 'meter'}, geometry)
  */
 const serialize = (options, ...objects) => {
   const defaults = {
