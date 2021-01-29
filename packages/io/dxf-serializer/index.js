@@ -33,10 +33,23 @@ const colorindex2017 = require('./colorindex2017')
 const mimeType = 'application/dxf'
 
 /**
+ * Serializer of JSCAD geometries to DXF entities.
+ * @module io/dxf-serializer
+ * @example
+ * const { serializer, mimeType } = require('@jscad/dxf-serializer')
+ */
+
+/**
  * Serialize the give objects to AutoCad DXF format.
  * @param {Object} options - options for serialization, REQUIRED
+ * @param {String} [options.geom2To='lypolyline'] - target entity for 2D geometries, 'lwpolyline' or 'polyline'
+ * @param {String} [options.geom3To='3dface'] - target entity for 3D geometries, '3dface' or 'polyline'
  * @param {Object|Array} objects - objects to serialize as DXF
  * @returns {Array} serialized contents, DXF format
+ * @alias module:io/dxf-serializer.serialize
+ * @example
+ * const geometry = primitives.cube()
+ * const dxfData = serializer({geom3To: '3dface'}, geometry)
  */
 const serialize = (options, ...objects) => {
   const defaults = {

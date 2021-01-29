@@ -4,8 +4,8 @@
 Copyright (c) 2016 Z3 Development https://github.com/z3dev
               2017 Mark 'kaosat-dev' Moissette
 
-* The upgrades (direct geometry instantiation from this deserializer) and refactoring
-have been very kindly sponsored by [Copenhagen Fabrication / Stykka](https://www.stykka.com/)***
+The upgrades (direct geometry instantiation from this deserializer) and refactoring
+have been very kindly sponsored by [Copenhagen Fabrication / Stykka](https://www.stykka.com/)
 
 All code released under MIT license
 */
@@ -23,15 +23,23 @@ const shapesMapGeometry = require('./shapesMapGeometry')
 const shapesMapJscad = require('./shapesMapJscad')
 
 /**
- * Parse the given svg data and return either a JSCAD script or a set of geometries
- * @param {string} input svg data
- * @param {object} options options (optional) anonymous object with:
- * @param {string} [options.filename='svg'] filename of original SVG source
- * @param {string} [options.version='0.0.0'] version number to add to the metadata
- * @param {boolean} [options.addMetadata=true] toggle injection of metadata (producer, date, source) at the start of the file
- * @param {string} [options.output='script'] either 'script' or 'geometry' to set desired output
- * @param {float} [options.pxPmm] custom pixels per mm unit
+ * Deserializer of STL data to JSCAD geometries.
+ * @module io/stl-deserializer
+ * @example
+ * const { deserializer, extension } = require('@jscad/stl-deserializer')
+ */
+
+/**
+ * Parse the given SVG data and return either a JSCAD script or a set of geometries
+ * @param {Object} options - options used during deserializing, REQUIRED
+ * @param {string} [options.filename='svg'] - filename of original SVG source
+ * @param {string} [options.version='0.0.0'] - version number to add to the metadata
+ * @param {boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script
+ * @param {string} [options.output='script'] - either 'script' or 'geometry' to set desired output
+ * @param {float} [options.pxPmm] - custom pixels per mm unit
+ * @param {string} input - SVG data
  * @return {string|[object]} either a string (script) or a set of objects (geometry)
+ * @alias module:io/svg-deserializer.deserialize
  */
 const deserialize = (options, input) => {
   const defaults = {
