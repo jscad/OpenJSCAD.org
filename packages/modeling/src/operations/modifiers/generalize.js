@@ -7,12 +7,12 @@ const geom3 = require('../../geometries/geom3')
 const path2 = require('../../geometries/path2')
 const poly3 = require('../../geometries/poly3')
 
-
 const snapPolygons = require('./snapPolygons')
 const mergePolygons = require('./mergePolygons')
 const repairTjunctions = require('./repairTjunctions')
 
 /*
+ * Convert the given polygon into a list of triangles (polygons with 3 vertices).
  */
 const toTriangles = (polygons) => {
   const triangles = []
@@ -73,7 +73,12 @@ const generalizeGeom3 = (options, geometry) => {
 
 /**
  * Apply various modifications in proper order to produce a generalized geometry.
- * @return {Object|Array} the snapped geometry, or a list of snapped geometries
+ * @param {Object} options - options for modifications
+ * @param {Boolean} [options.snap=false] the geometries should be snapped to epsilons
+ * @param {Boolean} [options.simplify=false] the geometries should be simplified
+ * @param {Boolean} [options.triangulate=false] the geometries should be triangulate
+ * @param {Boolean} [options.repair=false] the geometries should be repaired
+ * @return {Object|Array} the modified geometry, or a list of modified geometries
  */
 const generalize = (options, ...geometries) => {
   geometries = flatten(geometries)

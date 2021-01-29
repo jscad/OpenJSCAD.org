@@ -10,6 +10,9 @@ const isValidPoly3 = (epsilon, polygon) => {
   return false
 }
 
+/*
+ * Snap the given list of polygons to the epsilon.
+ */
 const snapPolygons = (epsilon, polygons) => {
   let newpolygons = polygons.map((polygon) => {
     const newvertices = polygon.vertices.map((vertice) => vec3.snap(vec3.create(), epsilon, vertice))
