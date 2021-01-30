@@ -16,6 +16,13 @@ Notes:
      JSON
 */
 
+/**
+ * Serializer of JSCAD geometries to JSON strings.
+ * @module io/json-serializer
+ * @example
+ * const { serializer, mimeType } = require('@jscad/json-serializer')
+ */
+
 const { utils } = require('@jscad/modeling')
 
 // Replace all typed arrays in geometries with standard Arrays
@@ -40,7 +47,11 @@ const replacer = (key, value) => {
  * Serialize the give objects to JSON.
  * @param {Object} options - options for serialization, REQUIRED
  * @param {Object|Array} objects - objects to serialize as JSON
- * @returns {Array} serialized contents
+ * @returns {Array} serialized contents as JSON string
+ * @alias module:io/json-serializer.serialize
+ * @example
+ * const geometry = primitives.cube()
+ * const jsonData = serializer({}, geometry)
  */
 const serialize = (options, ...objects) => {
   const defaults = {

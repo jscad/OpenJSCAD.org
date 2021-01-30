@@ -13,15 +13,23 @@ const packageVersion = require('./package.json').version
 // 2013/03/18: renamed functions, creating .jscad source direct via polyhedron()
 
 /**
-* Parse the given stl data and return either a JSCAD script OR a list of geometries
-* @param {string} input stl data
-* @param {object} options options (optional) anonymous object with:
-* @param {string} [options.filename='stl'] filename of original STL source
-* @param {string} [options.version='0.0.0'] version number to add to the metadata
-* @param {boolean} [options.addMetadata=true] toggle injection of metadata (producer, date, source) at the start of the file
-* @param {string} [options.output='script'] either script or geometry to set desired output
-* @return {[objects]|string} a list of objects (geometry) or a string (script)
-*/
+ * Deserializer of STL data to JSCAD geometries.
+ * @module io/stl-deserializer
+ * @example
+ * const { deserializer, extension } = require('@jscad/stl-deserializer')
+ */
+
+/**
+ * Parse the given STL data and return either a JSCAD script or a list of geometries
+ * @param {Object} options - options used during deserializing, REQUIRED
+ * @param {string} [options.filename='stl'] - filename of original STL source
+ * @param {string} [options.version='0.0.0'] - version number to add to the metadata
+ * @param {boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script
+ * @param {string} [options.output='script'] - either 'script' or 'geometry' to set desired output
+ * @param {string} input - stl data
+ * @return {[objects]|string} a list of objects (geometry) or a string (script)
+ * @alias module:io/stl-deserializer.deserialize
+ */
 const deserialize = (options, stl) => {
   const defaults = {
     filename: 'stl',

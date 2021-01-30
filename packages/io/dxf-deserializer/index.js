@@ -20,6 +20,13 @@ const translateAsciiDxf = require('./translate')
 //
 // //////////////////////////////////////////
 
+/**
+ * Deserializer of DXF data to JSCAD geometries.
+ * @module io/dxf-deserializer
+ * @example
+ * const { deserialize, extension } = require('@jscad/dxf-deserializer')
+ */
+
 const handleError = (reader, error) => {
   if (reader.options.strict === true) {
     throw error
@@ -568,15 +575,16 @@ const translate = (src, options) => {
 }
 
 /**
- * Deserialize the given source and return the requested 'output'
- * @param {object} options (optional) anonymous object with:
- * @param {string} [options.filename='dxf'] filename of original DXF data stream
- * @param {string} [options.version='0.0.1'] version number to add to the metadata
- * @param {string} [options.output='script'] either script or geometry to set desired output
- * @param {boolean} [options.strict=true] obey strict DXF specifications
- * @param {array} [options.colorindex=[]] list of colors (256) for use during rendering
- * @param {string} src DXF data stream
+ * Deserialize the given DXF source into either a script or an array of geometry
+ * @param {Object} options - options used during deserializing, REQUIRED
+ * @param {string} [options.filename='dxf'] - filename of original DXF data stream
+ * @param {String} [options.version] - version added to the script metadata, default is package version
+ * @param {string} [options.output='script'] - either 'script' or 'geometry' to set desired output
+ * @param {boolean} [options.strict=true] - obey strict DXF specifications
+ * @param {array} [options.colorindex=[]] - list of colors (256) for use during rendering
+ * @param {string} src - DXF data stream
  * @return {string|[objects]} a string (script) or array of objects (geometry)
+ * @alias module:io/dxf-deserializer.deserialize
  */
 const deserialize = (options, src) => {
   const defaults = {
