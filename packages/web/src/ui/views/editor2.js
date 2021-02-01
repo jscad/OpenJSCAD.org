@@ -43,9 +43,9 @@ const createWrapper = (state, callbackToStream) => {
     // and add the editor
     editor = CodeMirror.fromTextArea(wrapper.firstChild, editorOptions)
 
-    editor.setOption("extraKeys", {
+    editor.setOption('extraKeys', {
       Tab: (cm) => {
-        const spaces = Array(cm.getOption("indentUnit") + 1).join(" ")
+        const spaces = Array(cm.getOption('indentUnit') + 1).join(' ')
         cm.replaceSelection(spaces)
       }
     })
@@ -75,18 +75,18 @@ const editorWrapper = (state, editorCallbackToStream) => {
     el.focus()
 
     let compileShortcut = state.shortcuts.find((shortcut) => shortcut.args === 'reevaluate')
-    if (!compileShortcut) compileShortcut = {args: 'Shift-Enter'}
+    if (!compileShortcut) compileShortcut = { args: 'Shift-Enter' }
     let key = compileShortcut.key.toUpperCase()
     // can you say PAIN? codemirror has very specific control prefixes!
     key = key.replace(/enter/i, 'Enter')
-    key = key.replace(/alt[\+\-]/i, 'Alt-')
-    key = key.replace(/cmd[\+\-]/i, 'Cmd-')
-    key = key.replace(/control[\+\-]/i, 'Ctrl-')
-    key = key.replace(/shift[\+-]/i, 'Shift-')
+    key = key.replace(/alt[+-]/i, 'Alt-')
+    key = key.replace(/cmd[+-]/i, 'Cmd-')
+    key = key.replace(/control[+-]/i, 'Ctrl-')
+    key = key.replace(/shift[+-]/i, 'Shift-')
 
     const extraKeys = {
       Tab: (cm) => {
-        const spaces = Array(cm.getOption("indentUnit") + 1).join(" ")
+        const spaces = Array(cm.getOption('indentUnit') + 1).join(' ')
         cm.replaceSelection(spaces)
       }
     }
@@ -94,10 +94,10 @@ const editorWrapper = (state, editorCallbackToStream) => {
       const fileTree = createFileTree(cm)
       if (fileTree) editorCallbackToStream.callback({ type: 'read', id: 'loadRemote', data: fileTree })
     }
-    editor.setOption("extraKeys", extraKeys)
+    editor.setOption('extraKeys', extraKeys)
 
     editor.focus()
-    editor.scrollIntoView({line: 0, ch: 0})
+    editor.scrollIntoView({ line: 0, ch: 0 })
   } else {
     el.style.visibility = 'hidden'
   }
@@ -117,7 +117,6 @@ const editorWrapper = (state, editorCallbackToStream) => {
         editor.focus()
         editor.setValue(source)
         editor.setCursor(0, 0)
-        //editor.execCommand('goDocStart')
         editor.refresh()
       }
     }

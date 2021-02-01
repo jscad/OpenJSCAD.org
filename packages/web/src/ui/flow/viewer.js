@@ -87,9 +87,7 @@ const actions = ({ sources }) => {
   const otherActions = ['toPresetView']
   const otherViewerActions$ = sources.actions
     .filter((action) => otherActions.includes(action.type))
-    .thru(withLatestFrom((state, action) => {
-      return reducers[action.type](state, action.data)
-    }, sources.state))
+    .thru(withLatestFrom((state, action) => reducers[action.type](state, action.data), sources.state))
     .map((data) => ({ type: 'otherActions', state: data, sink: 'state' }))
 
   return {

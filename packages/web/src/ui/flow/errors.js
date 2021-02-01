@@ -1,6 +1,6 @@
 const most = require('most')
 
-const { holdUntil, withLatestFrom } = require('@jscad/core').observableUtils
+const { withLatestFrom } = require('@jscad/core').observableUtils
 
 const reducers = {
   setErrors: (state, errorPayload) => {

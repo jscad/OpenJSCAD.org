@@ -26,7 +26,7 @@ const sameFile = (oldFile, newFile) => {
  * @param {Array} newFileList - the new list of files
  * @return {Array} a list of the changed files
  */
-const changedFiles = (oldFileList, newFileList) =>  {
+const changedFiles = (oldFileList, newFileList) => {
   const working = oldFileList.slice()
   return newFileList.filter((newFile) => {
     const found = working.findIndex((oldFile, i) => sameFile(oldFile, newFile))

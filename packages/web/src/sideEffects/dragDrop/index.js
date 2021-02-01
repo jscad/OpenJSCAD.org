@@ -1,4 +1,3 @@
-const url = require('url')
 const { fromEvent } = require('most')
 
 const preventDefault = (event) => {
