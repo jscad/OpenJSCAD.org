@@ -50,7 +50,8 @@ const extrudeGeom2 = (options, geometry) => {
 
   options = {
     numberOfSlices: twistSteps + 1,
-    isCapped: true,
+    capStart: true,
+    capEnd: true,
     callback: createTwist
   }
   return extrudeFromSlices(options, baseSlice)
