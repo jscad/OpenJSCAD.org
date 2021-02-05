@@ -7,14 +7,14 @@ const DocBlock = require('docblock')
 const docBlock = new DocBlock()
 
 const copyAndProcessExamples = (examplesSrc) => {
-  const examples = { 'Creating Shapes': [], 'Manipulating Shapes': [], 'Colors': [], 'Parameters': [], 'Imports': [], 'Other': [] }
+  const examples = { 'Creating Shapes': [], 'Manipulating Shapes': [], Colors: [], Parameters: [], Imports: [], Other: [] }
   const examplesDist = 'examples'
   if (fs.existsSync(examplesSrc)) {
     console.log('Copying Examples...', examplesSrc)
     copydir.sync(examplesSrc, examplesDist, { mode: false })
     processExamplesInDirectory(examplesDist, examples)
     sortExamples(examples)
-    fs.writeFile('examples/examples.json', JSON.stringify(examples), function (err) {
+    fs.writeFile('examples/examples.json', JSON.stringify(examples), (err) => {
       if (err) return console.log(err)
     })
   } else {
@@ -24,7 +24,7 @@ const copyAndProcessExamples = (examplesSrc) => {
 
 const processExamplesInDirectory = (dir, examples) => {
   const files = fs.readdirSync(dir)
-  files.forEach(function (fileName) {
+  files.forEach((fileName) => {
     const filePath = path.join(dir, fileName)
     if (fs.lstatSync(filePath).isDirectory()) {
       if (fileName === 'old') return

@@ -81,7 +81,7 @@ const makeLocalFsSideEffect = async (params) => {
 
           watcher = setInterval(() => {
             const startMs = Date.now()
-            
+
             if (!rawData || (webSocket && lastCheck) || (startMs - lastCheck) < watcherDelay) return
             lastCheck = startMs
 
