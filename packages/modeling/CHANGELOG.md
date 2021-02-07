@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.10](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.0.0-alpha.9...@jscad/modeling@2.0.0-alpha.10) (2021-02-07)
+
+
+### Features
+
+* **modeling:** V2 : adding new class of operations to modeling; modifiers ([#743](https://github.com/jscad/OpenJSCAD.org/issues/743)) ([9e20303](https://github.com/jscad/OpenJSCAD.org/commit/9e20303255fb10bf11251dbefffa6b8c1dad9b49))
+* **modeling:** V2 fix extrusions ([#761](https://github.com/jscad/OpenJSCAD.org/issues/761)) ([466910e](https://github.com/jscad/OpenJSCAD.org/commit/466910e7c1a3398065ba2895871c42f35877834a))
+
+
+
+
+
 # [2.0.0-alpha.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.0.0-alpha.8...@jscad/modeling@2.0.0-alpha.9) (2021-01-02)
 
 
