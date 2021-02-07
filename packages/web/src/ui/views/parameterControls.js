@@ -16,9 +16,9 @@ const createParamControls = (prevParameterValues = {}, parameterDefinitions, reb
   currentGroupName = ''
   currentGroupIsExpanded = true
 
-  const controls = parameterDefinitions.map((paramDefinition) => {
-    return createParamRowFromDefinition(paramDefinition, prevParameterValues, rebuildSolid)
-  })
+  const controls = parameterDefinitions.map((paramDefinition) =>
+    createParamRowFromDefinition(paramDefinition, prevParameterValues, rebuildSolid)
+  )
 
   return { controls }
 }

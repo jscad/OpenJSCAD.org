@@ -7,7 +7,9 @@ export default extrudeFromSlices
 
 export interface ExtrudeFromSlicesOptions<Base> {
   numberOfSlices?: number
-  isCapped?: boolean
+  capStart?: boolean
+  capEnd?: boolean
+  close?: boolean
   callback?: (progress: number, index: number, base: Base) => Slice
 }
 

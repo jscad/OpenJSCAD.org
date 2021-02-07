@@ -1,9 +1,7 @@
 const path = require('path')
 const most = require('most')
 
-const { nth, toArray } = require('@jscad/array-utils')
-
-const { callbackToObservable, delayFromObservable, holdUntil, withLatestFrom } = require('@jscad/core').observableUtils
+const { delayFromObservable, holdUntil, withLatestFrom } = require('@jscad/core').observableUtils
 
 const { applyParameterDefinitions, getParameterValuesFromUIControls } = require('@jscad/core').parameters
 const { getDesignEntryPoint, getDesignName } = require('@jscad/core').loading.requireDesignUtilsFs
@@ -379,7 +377,7 @@ const actions = ({ sources }) => {
       .map((url) => {
         const urlData = new URL(url)
         const urls = url ? [url] : []
-        const { protocol, origin, pathname } = urlData
+        const { protocol, origin } = urlData
         return { sink: protocol.replace(':', ''), urls, origin }
       })
       .tap((x) => console.log('load example', x)),
@@ -417,7 +415,7 @@ const actions = ({ sources }) => {
         const { protocol, pathname } = uriParts
         return { sink: protocol.replace(':', ''), urls, origin, path: pathname, proxy: true }
       })
-    ])
+  ])
     .filter((x) => x !== undefined)
     .thru(holdUntil(setDesignSettings$))// only after FIXME : this does not seem to work
     .map((data) => ({ type: 'read', id: 'loadRemote', urls: data.urls, sink: data.sink, origin: data.origin, path: data.path, data: data.data, proxy: data.proxy }))
@@ -474,7 +472,7 @@ const actions = ({ sources }) => {
     // .thru(holdUntil(setDesignSettings$))// only after FIXME : this does not seem to work
     .thru(withLatestFrom(reducers.resetDesign, sources.state))
     .map((data) => ({ type: 'resetDesign', state: data, sink: 'state' }))
-    //.tap((x) => console.log('design reset', x))
+    // .tap((x) => console.log('design reset', x))
     .multicast()
 
   const setDesignSolids$ = most.mergeArray([
@@ -553,7 +551,7 @@ const actions = ({ sources }) => {
     .concat(Array.from(document.getElementById('paramsTable').getElementsByTagName('select')))
     .concat(Array.from(document.getElementById('paramsTable').getElementsByClassName('groupTitle')))
 
-  const getInstantUpdate = () => { return document.getElementById('instantUpdate').checked }
+  const getInstantUpdate = () => document.getElementById('instantUpdate').checked
 
   const parametersFromDom$ = most.mergeArray([
     sources.dom.select('#updateDesignFromParams').events('click')

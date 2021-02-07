@@ -14,7 +14,7 @@ let instances = 0
  * you might run into weird issues
  * @param {Boolean} options.logging toggle logging on/off
  */
-async function makeJscad (targetElement, options) {
+const makeJscad = async (targetElement, options) => {
   const defaults = {
     name: 'jscad',
     logging: false
@@ -106,8 +106,8 @@ async function makeJscad (targetElement, options) {
   // increase the count of jscad instances in this page
   instances += 1
 
-  setTimeout(() => { document.getElementById("toggleAxes").click() }, 100)
-  setTimeout(() => { document.getElementById("toggleAxes").click() }, 200)
+  setTimeout(() => { document.getElementById('toggleAxes').click() }, 100)
+  setTimeout(() => { document.getElementById('toggleAxes').click() }, 200)
 
   // we return a function to allow setting/modifying params
   const mainParams = observableUtils.callbackToObservable()

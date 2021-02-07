@@ -1,4 +1,5 @@
 const create = require('./create')
+const clone = require('./clone')
 
 /**
  * Rotates a matrix by the given angle about the given axis.
@@ -30,7 +31,10 @@ const rotate = (...params) => {
   let [x, y, z] = axis
   let len = Math.sqrt(x * x + y * y + z * z)
 
-  if (Math.abs(len) < 0.000001) { return null }
+  if (Math.abs(len) < 0.000001) {
+    // axis is 0,0,0 or almost
+    return clone(out, matrix)
+  }
 
   len = 1 / len
   x *= len
