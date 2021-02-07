@@ -10,9 +10,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * **modeling:** V2 fix extrusions ([#761](https://github.com/jscad/OpenJSCAD.org/issues/761)) ([466910e](https://github.com/jscad/OpenJSCAD.org/commit/466910e7c1a3398065ba2895871c42f35877834a))
 
+### Bug Fixes
 
-
-
+* **core:** changed serializeSolids to apply transforms before serializing, correcting issues with mirroring
 
 # [2.0.0-alpha.12](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.0.0-alpha.11...@jscad/core@2.0.0-alpha.12) (2021-01-02)
 

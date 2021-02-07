@@ -8,7 +8,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* **web:** various minor improvements ([#764](https://github.com/jscad/OpenJSCAD.org/issues/764)) ([82baca5](https://github.com/jscad/OpenJSCAD.org/commit/82baca565d3640b62ee27e6dacb41ba15c2bbc77))
+* **web:** corrected remote fetching of binary formats ([#764](https://github.com/jscad/OpenJSCAD.org/issues/764)) ([82baca5](https://github.com/jscad/OpenJSCAD.org/commit/82baca565d3640b62ee27e6dacb41ba15c2bbc77))
+* **web:** corrected theme names ([#764](https://github.com/jscad/OpenJSCAD.org/issues/764)) ([82baca5](https://github.com/jscad/OpenJSCAD.org/commit/82baca565d3640b62ee27e6dacb41ba15c2bbc77))
 
 
 
