@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.15](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.14...@jscad/web@2.0.0-alpha.15) (2021-02-07)
+
+
+### Bug Fixes
+
+* **web:** corrected remote fetching of binary formats ([#764](https://github.com/jscad/OpenJSCAD.org/issues/764)) ([82baca5](https://github.com/jscad/OpenJSCAD.org/commit/82baca565d3640b62ee27e6dacb41ba15c2bbc77))
+* **web:** corrected theme names ([#764](https://github.com/jscad/OpenJSCAD.org/issues/764)) ([82baca5](https://github.com/jscad/OpenJSCAD.org/commit/82baca565d3640b62ee27e6dacb41ba15c2bbc77))
+
+
+
+
+
 # [2.0.0-alpha.14](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.13...@jscad/web@2.0.0-alpha.14) (2021-01-02)
 
 

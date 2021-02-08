@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.0.0-alpha.5...@jscad/examples@2.0.0-alpha.6) (2021-02-07)
+
+
+### Features
+
+* **modeling:** V2 fix extrusions ([#761](https://github.com/jscad/OpenJSCAD.org/issues/761)) ([466910e](https://github.com/jscad/OpenJSCAD.org/commit/466910e7c1a3398065ba2895871c42f35877834a))
+
+
+
+
+
 # [2.0.0-alpha.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.0.0-alpha.4...@jscad/examples@2.0.0-alpha.5) (2020-11-07)
 
 **Note:** Version bump only for package @jscad/examples
