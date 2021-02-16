@@ -1,16 +1,18 @@
 const create = require('./create')
 
 /**
- * Creates a matrix from a vector scaling
+ * Creates a matrix from a vector scaling.
  * This is equivalent to (but much faster than):
  *
  *     mat4.identity(dest);
  *     mat4.scale(dest, dest, vec);
  *
  * @param {mat4} [out] - mat4 receiving operation result
- * @param {vec3} v - Scaling vector
+ * @param {vec3} vec - X, Y, Z factors by which to scale
  * @returns {mat4} a new matrix
  * @alias module:modeling/maths/mat4.fromScaling
+ * @example
+ * let matrix = fromScaling([1, 2, 0.5])
  */
 const fromScaling = (...params) => {
   let out
