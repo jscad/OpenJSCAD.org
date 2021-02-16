@@ -25,6 +25,7 @@
     "packages/utils/*",
     "packages/vtree",
     "packages/web",
+    "packages/web-parameters",
     "packages/most-gestures"
   ],
   "ignoreChanges": [

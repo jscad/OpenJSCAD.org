@@ -1,0 +1,39 @@
+{
+  "name": "@jscad/web-parameters",
+  "version": "2.0.0-alpha.15",
+  "description": "Parameter inputs for Web Application for JSCAD",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "main": "src/index.js",
+  "scripts": {
+    "preversion": "npm run build && git add dist"
+  },
+  "contributors": [
+    {
+      "name": "Rene K. Mueller",
+      "url": "http://renekmueller.com"
+    },
+    {
+      "name": "z3dev",
+      "url": "http://www.z3d.jp"
+    },
+    {
+      "name": "Mark 'kaosat-dev' Moissette",
+      "url": "http://kaosat.net"
+    }
+  ],
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "web",
+    "application"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "nanohtml": "1.9.1"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/openjscad",
+    "logo": "https://opencollective.com/openjscad/logo.txt"
+  }
+}

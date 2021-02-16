@@ -6,7 +6,7 @@ const dom = (state, i18n, paramsCallbacktoStream, editorCallbackToStream) => {
   i18n = i18n || i18nFake
 
   const options = require('./options')(state, i18n)
-  const parameters = require('./designParameters')(state, paramsCallbacktoStream, i18n)
+  const parameters = require('@jscad/web-parameters').designParameters(state, paramsCallbacktoStream, i18n)
   const status = require('./status')(state, i18n)
   const help = require('./help')(state, i18n)
 
