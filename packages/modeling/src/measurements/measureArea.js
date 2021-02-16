@@ -48,7 +48,7 @@ const measureAreaOfGeom3 = (geometry) => {
 /**
  * Measure the area of the given geometries.
  * @param {...Objects} geometries - the geometries to measure
- * @return {Number|Array} the area, or a list of areas
+ * @return {Number|Array} the area for each geometry
  * @alias module:modeling/measurements.measureArea
  *
  * @example

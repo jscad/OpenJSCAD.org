@@ -8,7 +8,7 @@ const path2 = require('../../geometries/path2')
 
 /**
  * Translate the given geometries using the given options.
- * @param {Array} offset - offset (vector) of which to translate the object
+ * @param {Array} offset - offset (vector) of which to translate the geometries
  * @param {...Object} geometries - the geometries to translate
  * @return {Object|Array} the translated geometry, or a list of translated geometries
  * @alias module:modeling/transforms.translate
@@ -39,7 +39,7 @@ const translate = (offset, ...objects) => {
 
 /**
  * Translate the given geometries along the X axis using the given options.
- * @param {Number} offset - X offset of which to translate the object
+ * @param {Number} offset - X offset of which to translate the geometries
  * @param {...Object} geometries - the geometries to translate
  * @return {Object|Array} the translated geometry, or a list of translated geometries
  * @alias module:modeling/transforms.translateX
@@ -48,7 +48,7 @@ const translateX = (offset, ...objects) => translate([offset, 0, 0], objects)
 
 /**
  * Translate the given geometries along the Y axis using the given options.
- * @param {Number} offset - Y offset of which to translate the object
+ * @param {Number} offset - Y offset of which to translate the geometries
  * @param {...Object} geometries - the geometries to translate
  * @return {Object|Array} the translated geometry, or a list of translated geometries
  * @alias module:modeling/transforms.translateY
@@ -57,7 +57,7 @@ const translateY = (offset, ...objects) => translate([0, offset, 0], objects)
 
 /**
  * Translate the given geometries along the Z axis using the given options.
- * @param {Number} offset - Z offset of which to translate the object
+ * @param {Number} offset - Z offset of which to translate the geometries
  * @param {...Object} geometries - the geometries to translate
  * @return {Object|Array} the translated geometry, or a list of translated geometries
  * @alias module:modeling/transforms.translateZ

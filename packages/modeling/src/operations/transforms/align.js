@@ -55,7 +55,7 @@ const alignGeometries = (geometry, modes, alignTo) => {
  * @param {Array} [options.alignTo = [0,0,0]] - The point one each axis on which to align the geometries upon.  If the value is null, then the corresponding value from the group's bounding box is used.
  * @param {Boolean} [options.grouped = false] - if true, transform all geometries by the same amount, maintaining the relative positions to each other.
  * @param {...Object} geometries - the geometries to align
- * @return {Object|Array} the aligned geometry, if only one was provided, or an array of aligned geometries
+ * @return {Object|Array} the aligned geometry, or a list of aligned geometries
  * @alias module:modeling/transforms.align
  *
  * @example
