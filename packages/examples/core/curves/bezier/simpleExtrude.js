@@ -27,7 +27,8 @@ function extrudeWobble (height) {
 
   return extrusions.extrudeFromSlices({
     numberOfSlices: 20,
-    isCapped: true,
+    capStart: true,
+    capEnd: true,
     callback: function (progress, count, base) {
       let newslice = slice.transform(maths.mat4.fromTranslation([0, 0, height * progress]), base)
       newslice = slice.transform(maths.mat4.fromScaling([

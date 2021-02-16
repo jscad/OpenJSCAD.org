@@ -1,4 +1,5 @@
 const create = require('./create')
+const identity = require('./identity')
 
 const { EPSILON } = require('./constants')
 
@@ -32,7 +33,10 @@ const fromRotation = (...params) => {
   let [x, y, z] = axis
   let len = Math.sqrt(x * x + y * y + z * z)
 
-  if (Math.abs(len) < EPSILON) { return null }
+  if (Math.abs(len) < EPSILON) {
+    // axis is 0,0,0 or almost
+    return identity(out)
+  }
 
   len = 1 / len
   x *= len

@@ -14,11 +14,9 @@ const reducers = {
   },
   setTheme: (state, active) => {
     const available = require('../../../data/themes')
-    const themeData = available[active]
-    // console.log('setTheme', active, themeData)
+    const themeData = available[active] ? available[active] : available['light']
     const viewer = state.viewer ? merge({}, state.viewer, themeData.viewer) : themeData.viewer
     const themes = Object.assign({}, state.themes, { available, active, themeSettings: themeData })
-    // return {themes}
     return { viewer, themes }
   },
   requestSaveSettings: (themes) => ({ active: themes.active })

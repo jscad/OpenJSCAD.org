@@ -6,9 +6,10 @@ const options = (state, i18n) => {
     return html`<option value='${language.code}' selected=${selected}>${i18n.translate(language.fullName)}</option>`
   })
   const themes = Object.entries(state.themes.available).map((theme) => {
-    const name = theme[0]
-    const selected = state.themes.active === name
-    return html`<option value='${name}' selected=${selected}>${name}</option>`
+    const value = theme[0]
+    const name = theme[1].name
+    const selected = state.themes.active === value
+    return html`<option value='${value}' selected=${selected}>${name}</option>`
   })
 
   const shortcuts = require('./shortcuts')(state, i18n)
