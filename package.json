@@ -40,6 +40,7 @@
   "devDependencies": {
     "@jscad/sample-files": "github:jscad/sample-files#master",
     "ava": "3.10.0",
+    "budo": "^11.6.4",
     "docdash": "1.2.0",
     "jsdoc": "3.6.4",
     "lerna": "3.22.1",
