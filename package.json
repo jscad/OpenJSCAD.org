@@ -44,7 +44,7 @@
     "jsdoc": "3.6.4",
     "lerna": "3.22.1",
     "nyc": "15.1.0",
-    "standardx": "5.0.0",
+    "standardx": "7.0.0",
     "tsd": "^0.13.1"
   },
   "collective": {
