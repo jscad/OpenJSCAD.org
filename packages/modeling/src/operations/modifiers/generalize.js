@@ -15,6 +15,19 @@ const repairTjunctions = require('./repairTjunctions')
 
 /*
  */
+const generalizePath2 = (options, geometry) => {
+  return geometry
+}
+
+
+/*
+ */
+const generalizeGeom2 = (options, geometry) => {
+  return geometry
+}
+
+/*
+ */
 const generalizeGeom3 = (options, geometry) => {
   const defaults = {
     snap: false,
@@ -51,7 +64,11 @@ const generalizeGeom3 = (options, geometry) => {
     // TODO fill holes
   }
 
-  return geom3.create(polygons)
+  // FIXME replace with geom3.cloneShallow() when available
+  const clone = Object.assign({}, geometry)
+  clone.polygons = polygons
+
+  return clone
 }
 
 /**
