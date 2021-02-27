@@ -28,7 +28,9 @@ TBD
 
 const stringify = require('onml/lib/stringify')
 
-const { geometries, utils } = require('@jscad/modeling')
+const { geometries, modifiers } = require('@jscad/modeling')
+
+const { flatten, toArray } = require('@jscad/array-utils')
 
 const mimeType = 'application/amf+xml'
 
@@ -51,13 +53,16 @@ const serialize = (options, ...objects) => {
   }
   options = Object.assign({}, defaults, options)
 
-  objects = utils.flatten(objects)
+  objects = flatten(objects)
 
   // convert only 3D geometries
-  const objects3d = objects.filter((object) => geometries.geom3.isA(object))
+  let objects3d = objects.filter((object) => geometries.geom3.isA(object))
 
   if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to AMF')
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to AMF')
+
+  // covert to triangles
+  objects3d = toArray(modifiers.generalize({snap: true, triangulate: true}, objects3d))
 
   options.statusCallback && options.statusCallback({ progress: 0 })
 

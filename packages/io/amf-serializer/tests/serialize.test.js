@@ -57,6 +57,20 @@ const expected2 = [
         <vertex>
           <coordinates>
             <x>-1</x>
+            <y>-1</y>
+            <z>-1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>-1</x>
+            <y>1</y>
+            <z>1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>-1</x>
             <y>1</y>
             <z>-1</z>
           </coordinates>
@@ -72,6 +86,20 @@ const expected2 = [
           <coordinates>
             <x>1</x>
             <y>1</y>
+            <z>-1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>1</x>
+            <y>-1</y>
             <z>-1</z>
           </coordinates>
         </vertex>
@@ -114,6 +142,20 @@ const expected2 = [
           <coordinates>
             <x>-1</x>
             <y>-1</y>
+            <z>-1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>1</x>
+            <y>-1</y>
+            <z>1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>-1</x>
+            <y>-1</y>
             <z>1</z>
           </coordinates>
         </vertex>
@@ -129,6 +171,20 @@ const expected2 = [
             <x>-1</x>
             <y>1</y>
             <z>1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>-1</x>
+            <y>1</y>
+            <z>-1</z>
           </coordinates>
         </vertex>
         <vertex>
@@ -168,6 +224,20 @@ const expected2 = [
         </vertex>
         <vertex>
           <coordinates>
+            <x>-1</x>
+            <y>-1</y>
+            <z>-1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>1</x>
+            <y>1</y>
+            <z>-1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
             <x>1</x>
             <y>-1</y>
             <z>-1</z>
@@ -183,6 +253,20 @@ const expected2 = [
         <vertex>
           <coordinates>
             <x>1</x>
+            <y>-1</y>
+            <z>1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>-1</x>
             <y>-1</y>
             <z>1</z>
           </coordinates>
@@ -208,32 +292,24 @@ const expected2 = [
           <v2>1</v2>
           <v3>2</v3>
         </triangle>
+      </volume>
+      <volume>
         <triangle>
-          <v1>0</v1>
-          <v2>2</v2>
-          <v3>3</v3>
+          <v1>3</v1>
+          <v2>4</v2>
+          <v3>5</v3>
         </triangle>
       </volume>
       <volume>
         <triangle>
-          <v1>4</v1>
-          <v2>5</v2>
-          <v3>6</v3>
-        </triangle>
-        <triangle>
-          <v1>4</v1>
-          <v2>6</v2>
-          <v3>7</v3>
+          <v1>6</v1>
+          <v2>7</v2>
+          <v3>8</v3>
         </triangle>
       </volume>
       <volume>
         <triangle>
-          <v1>8</v1>
-          <v2>9</v2>
-          <v3>10</v3>
-        </triangle>
-        <triangle>
-          <v1>8</v1>
+          <v1>9</v1>
           <v2>10</v2>
           <v3>11</v3>
         </triangle>
@@ -244,34 +320,54 @@ const expected2 = [
           <v2>13</v2>
           <v3>14</v3>
         </triangle>
+      </volume>
+      <volume>
         <triangle>
-          <v1>12</v1>
-          <v2>14</v2>
-          <v3>15</v3>
+          <v1>15</v1>
+          <v2>16</v2>
+          <v3>17</v3>
         </triangle>
       </volume>
       <volume>
         <triangle>
-          <v1>16</v1>
-          <v2>17</v2>
-          <v3>18</v3>
-        </triangle>
-        <triangle>
-          <v1>16</v1>
-          <v2>18</v2>
-          <v3>19</v3>
+          <v1>18</v1>
+          <v2>19</v2>
+          <v3>20</v3>
         </triangle>
       </volume>
       <volume>
         <triangle>
-          <v1>20</v1>
-          <v2>21</v2>
-          <v3>22</v3>
-        </triangle>
-        <triangle>
-          <v1>20</v1>
+          <v1>21</v1>
           <v2>22</v2>
           <v3>23</v3>
+        </triangle>
+      </volume>
+      <volume>
+        <triangle>
+          <v1>24</v1>
+          <v2>25</v2>
+          <v3>26</v3>
+        </triangle>
+      </volume>
+      <volume>
+        <triangle>
+          <v1>27</v1>
+          <v2>28</v2>
+          <v3>29</v3>
+        </triangle>
+      </volume>
+      <volume>
+        <triangle>
+          <v1>30</v1>
+          <v2>31</v2>
+          <v3>32</v3>
+        </triangle>
+      </volume>
+      <volume>
+        <triangle>
+          <v1>33</v1>
+          <v2>34</v2>
+          <v3>35</v3>
         </triangle>
       </volume>
     </mesh>
@@ -311,6 +407,20 @@ const expected3 = [
         <vertex>
           <coordinates>
             <x>-1</x>
+            <y>-1</y>
+            <z>-1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>-1</x>
+            <y>1</y>
+            <z>1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>-1</x>
             <y>1</y>
             <z>-1</z>
           </coordinates>
@@ -326,6 +436,20 @@ const expected3 = [
           <coordinates>
             <x>1</x>
             <y>1</y>
+            <z>-1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>1</x>
+            <y>-1</y>
             <z>-1</z>
           </coordinates>
         </vertex>
@@ -368,6 +492,20 @@ const expected3 = [
           <coordinates>
             <x>-1</x>
             <y>-1</y>
+            <z>-1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>1</x>
+            <y>-1</y>
+            <z>1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>-1</x>
+            <y>-1</y>
             <z>1</z>
           </coordinates>
         </vertex>
@@ -383,6 +521,20 @@ const expected3 = [
             <x>-1</x>
             <y>1</y>
             <z>1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>-1</x>
+            <y>1</y>
+            <z>-1</z>
           </coordinates>
         </vertex>
         <vertex>
@@ -422,6 +574,20 @@ const expected3 = [
         </vertex>
         <vertex>
           <coordinates>
+            <x>-1</x>
+            <y>-1</y>
+            <z>-1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>1</x>
+            <y>1</y>
+            <z>-1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
             <x>1</x>
             <y>-1</y>
             <z>-1</z>
@@ -437,6 +603,20 @@ const expected3 = [
         <vertex>
           <coordinates>
             <x>1</x>
+            <y>-1</y>
+            <z>1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>-1</x>
             <y>-1</y>
             <z>1</z>
           </coordinates>
@@ -468,10 +648,18 @@ const expected3 = [
           <v2>1</v2>
           <v3>2</v3>
         </triangle>
+      </volume>
+      <volume>
+        <color>
+          <r>1</r>
+          <g>0</g>
+          <b>0.5</b>
+          <a>0.8</a>
+        </color>
         <triangle>
-          <v1>0</v1>
-          <v2>2</v2>
-          <v3>3</v3>
+          <v1>3</v1>
+          <v2>4</v2>
+          <v3>5</v3>
         </triangle>
       </volume>
       <volume>
@@ -482,14 +670,9 @@ const expected3 = [
           <a>0.8</a>
         </color>
         <triangle>
-          <v1>4</v1>
-          <v2>5</v2>
-          <v3>6</v3>
-        </triangle>
-        <triangle>
-          <v1>4</v1>
-          <v2>6</v2>
-          <v3>7</v3>
+          <v1>6</v1>
+          <v2>7</v2>
+          <v3>8</v3>
         </triangle>
       </volume>
       <volume>
@@ -500,12 +683,7 @@ const expected3 = [
           <a>0.8</a>
         </color>
         <triangle>
-          <v1>8</v1>
-          <v2>9</v2>
-          <v3>10</v3>
-        </triangle>
-        <triangle>
-          <v1>8</v1>
+          <v1>9</v1>
           <v2>10</v2>
           <v3>11</v3>
         </triangle>
@@ -522,10 +700,18 @@ const expected3 = [
           <v2>13</v2>
           <v3>14</v3>
         </triangle>
+      </volume>
+      <volume>
+        <color>
+          <r>1</r>
+          <g>0</g>
+          <b>0.5</b>
+          <a>0.8</a>
+        </color>
         <triangle>
-          <v1>12</v1>
-          <v2>14</v2>
-          <v3>15</v3>
+          <v1>15</v1>
+          <v2>16</v2>
+          <v3>17</v3>
         </triangle>
       </volume>
       <volume>
@@ -536,14 +722,9 @@ const expected3 = [
           <a>0.8</a>
         </color>
         <triangle>
-          <v1>16</v1>
-          <v2>17</v2>
-          <v3>18</v3>
-        </triangle>
-        <triangle>
-          <v1>16</v1>
-          <v2>18</v2>
-          <v3>19</v3>
+          <v1>18</v1>
+          <v2>19</v2>
+          <v3>20</v3>
         </triangle>
       </volume>
       <volume>
@@ -554,14 +735,61 @@ const expected3 = [
           <a>0.8</a>
         </color>
         <triangle>
-          <v1>20</v1>
-          <v2>21</v2>
-          <v3>22</v3>
-        </triangle>
-        <triangle>
-          <v1>20</v1>
+          <v1>21</v1>
           <v2>22</v2>
           <v3>23</v3>
+        </triangle>
+      </volume>
+      <volume>
+        <color>
+          <r>1</r>
+          <g>0</g>
+          <b>0.5</b>
+          <a>0.8</a>
+        </color>
+        <triangle>
+          <v1>24</v1>
+          <v2>25</v2>
+          <v3>26</v3>
+        </triangle>
+      </volume>
+      <volume>
+        <color>
+          <r>1</r>
+          <g>0</g>
+          <b>0.5</b>
+          <a>0.8</a>
+        </color>
+        <triangle>
+          <v1>27</v1>
+          <v2>28</v2>
+          <v3>29</v3>
+        </triangle>
+      </volume>
+      <volume>
+        <color>
+          <r>1</r>
+          <g>0</g>
+          <b>0.5</b>
+          <a>0.8</a>
+        </color>
+        <triangle>
+          <v1>30</v1>
+          <v2>31</v2>
+          <v3>32</v3>
+        </triangle>
+      </volume>
+      <volume>
+        <color>
+          <r>1</r>
+          <g>0</g>
+          <b>0.5</b>
+          <a>0.8</a>
+        </color>
+        <triangle>
+          <v1>33</v1>
+          <v2>34</v2>
+          <v3>35</v3>
         </triangle>
       </volume>
     </mesh>
