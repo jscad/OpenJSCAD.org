@@ -552,9 +552,9 @@ AcDb3dPolyline
   70
 64
   71
-24
+36
   72
-6
+12
   0
 VERTEX
   5
@@ -630,7 +630,7 @@ AcDb3dPolylineVertex
   10
 -1
   20
-1
+-1
   30
 -1
   70
@@ -648,11 +648,11 @@ AcDbVertex
   100
 AcDb3dPolylineVertex
   10
-1
+-1
   20
--1
+1
   30
--1
+1
   70
 192
   0
@@ -668,7 +668,7 @@ AcDbVertex
   100
 AcDb3dPolylineVertex
   10
-1
+-1
   20
 1
   30
@@ -690,9 +690,9 @@ AcDb3dPolylineVertex
   10
 1
   20
-1
+-1
   30
-1
+-1
   70
 192
   0
@@ -710,9 +710,9 @@ AcDb3dPolylineVertex
   10
 1
   20
--1
-  30
 1
+  30
+-1
   70
 192
   0
@@ -728,11 +728,11 @@ AcDbVertex
   100
 AcDb3dPolylineVertex
   10
--1
+1
   20
--1
+1
   30
--1
+1
   70
 192
   0
@@ -770,7 +770,7 @@ AcDb3dPolylineVertex
   10
 1
   20
--1
+1
   30
 1
   70
@@ -788,7 +788,7 @@ AcDbVertex
   100
 AcDb3dPolylineVertex
   10
--1
+1
   20
 -1
   30
@@ -810,7 +810,7 @@ AcDb3dPolylineVertex
   10
 -1
   20
-1
+-1
   30
 -1
   70
@@ -828,11 +828,11 @@ AcDbVertex
   100
 AcDb3dPolylineVertex
   10
--1
+1
   20
-1
+-1
   30
-1
+-1
   70
 192
   0
@@ -850,7 +850,7 @@ AcDb3dPolylineVertex
   10
 1
   20
-1
+-1
   30
 1
   70
@@ -868,9 +868,9 @@ AcDbVertex
   100
 AcDb3dPolylineVertex
   10
-1
+-1
   20
-1
+-1
   30
 -1
   70
@@ -888,11 +888,11 @@ AcDbVertex
   100
 AcDb3dPolylineVertex
   10
--1
+1
   20
 -1
   30
--1
+1
   70
 192
   0
@@ -910,9 +910,9 @@ AcDb3dPolylineVertex
   10
 -1
   20
-1
-  30
 -1
+  30
+1
   70
 192
   0
@@ -928,7 +928,7 @@ AcDbVertex
   100
 AcDb3dPolylineVertex
   10
-1
+-1
   20
 1
   30
@@ -948,11 +948,11 @@ AcDbVertex
   100
 AcDb3dPolylineVertex
   10
-1
+-1
   20
--1
+1
   30
--1
+1
   70
 192
   0
@@ -968,9 +968,9 @@ AcDbVertex
   100
 AcDb3dPolylineVertex
   10
--1
+1
   20
--1
+1
   30
 1
   70
@@ -988,11 +988,11 @@ AcDbVertex
   100
 AcDb3dPolylineVertex
   10
-1
-  20
 -1
-  30
+  20
 1
+  30
+-1
   70
 192
   0
@@ -1028,6 +1028,246 @@ AcDbVertex
   100
 AcDb3dPolylineVertex
   10
+1
+  20
+1
+  30
+-1
+  70
+192
+  0
+VERTEX
+  5
+CAD0001A
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+-1
+  20
+-1
+  30
+-1
+  70
+192
+  0
+VERTEX
+  5
+CAD0001B
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+-1
+  20
+1
+  30
+-1
+  70
+192
+  0
+VERTEX
+  5
+CAD0001C
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+1
+  20
+1
+  30
+-1
+  70
+192
+  0
+VERTEX
+  5
+CAD0001D
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+-1
+  20
+-1
+  30
+-1
+  70
+192
+  0
+VERTEX
+  5
+CAD0001E
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+1
+  20
+1
+  30
+-1
+  70
+192
+  0
+VERTEX
+  5
+CAD0001F
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+1
+  20
+-1
+  30
+-1
+  70
+192
+  0
+VERTEX
+  5
+CAD00020
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+-1
+  20
+-1
+  30
+1
+  70
+192
+  0
+VERTEX
+  5
+CAD00021
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+1
+  20
+-1
+  30
+1
+  70
+192
+  0
+VERTEX
+  5
+CAD00022
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+1
+  20
+1
+  30
+1
+  70
+192
+  0
+VERTEX
+  5
+CAD00023
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+-1
+  20
+-1
+  30
+1
+  70
+192
+  0
+VERTEX
+  5
+CAD00024
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+1
+  20
+1
+  30
+1
+  70
+192
+  0
+VERTEX
+  5
+CAD00025
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
 -1
   20
 1
@@ -1038,7 +1278,7 @@ AcDb3dPolylineVertex
   0
 VERTEX
   5
-CAD0001A
+CAD00026
   100
 AcDbEntity
   8
@@ -1062,39 +1302,39 @@ AcDb3dPolylineVertex
   73
 3
   74
+0
+  0
+VERTEX
+  5
+CAD00027
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+0
+  20
+0
+  30
+0
+  70
+128
+  71
 4
-  0
-VERTEX
-  5
-CAD0001B
-  100
-AcDbEntity
-  8
-0
-  100
-AcDbVertex
-  100
-AcDb3dPolylineVertex
-  10
-0
-  20
-0
-  30
-0
-  70
-128
-  71
+  72
 5
-  72
-6
   73
-7
+6
   74
-8
+0
   0
 VERTEX
   5
-CAD0001C
+CAD00028
   100
 AcDbEntity
   8
@@ -1112,17 +1352,45 @@ AcDb3dPolylineVertex
   70
 128
   71
-9
+7
   72
-10
+8
   73
-11
+9
   74
-12
+0
   0
 VERTEX
   5
-CAD0001D
+CAD00029
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+0
+  20
+0
+  30
+0
+  70
+128
+  71
+10
+  72
+11
+  73
+12
+  74
+0
+  0
+VERTEX
+  5
+CAD0002A
   100
 AcDbEntity
   8
@@ -1146,39 +1414,39 @@ AcDb3dPolylineVertex
   73
 15
   74
+0
+  0
+VERTEX
+  5
+CAD0002B
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+0
+  20
+0
+  30
+0
+  70
+128
+  71
 16
-  0
-VERTEX
-  5
-CAD0001E
-  100
-AcDbEntity
-  8
-0
-  100
-AcDbVertex
-  100
-AcDb3dPolylineVertex
-  10
-0
-  20
-0
-  30
-0
-  70
-128
-  71
+  72
 17
-  72
-18
   73
-19
+18
   74
-20
+0
   0
 VERTEX
   5
-CAD0001F
+CAD0002C
   100
 AcDbEntity
   8
@@ -1196,13 +1464,153 @@ AcDb3dPolylineVertex
   70
 128
   71
-21
+19
   72
-22
+20
   73
-23
+21
   74
+0
+  0
+VERTEX
+  5
+CAD0002D
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+0
+  20
+0
+  30
+0
+  70
+128
+  71
+22
+  72
+23
+  73
 24
+  74
+0
+  0
+VERTEX
+  5
+CAD0002E
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+0
+  20
+0
+  30
+0
+  70
+128
+  71
+25
+  72
+26
+  73
+27
+  74
+0
+  0
+VERTEX
+  5
+CAD0002F
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+0
+  20
+0
+  30
+0
+  70
+128
+  71
+28
+  72
+29
+  73
+30
+  74
+0
+  0
+VERTEX
+  5
+CAD00030
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+0
+  20
+0
+  30
+0
+  70
+128
+  71
+31
+  72
+32
+  73
+33
+  74
+0
+  0
+VERTEX
+  5
+CAD00031
+  100
+AcDbEntity
+  8
+0
+  100
+AcDbVertex
+  100
+AcDb3dPolylineVertex
+  10
+0
+  20
+0
+  30
+0
+  70
+128
+  71
+34
+  72
+35
+  73
+36
+  74
+0
   0
 ENDSEC
 ${dxfObjects({})}
