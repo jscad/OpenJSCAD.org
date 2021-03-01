@@ -11,6 +11,8 @@ const create = require('./create')
  * @param {Number} rad - the angle to rotate the matrix by
  * @returns {mat4} a new matrix
  * @alias module:modeling/maths/mat4.fromYRotation
+ * @example
+ * let matrix = fromYRotation(Math.PI / 2)
  */
 const fromYRotation = (...params) => {
   let out

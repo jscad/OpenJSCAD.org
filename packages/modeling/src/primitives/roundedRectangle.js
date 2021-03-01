@@ -7,7 +7,7 @@ const geom2 = require('../geometries/geom2')
 const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 
 /**
- * Construct an axis-aligned rounded rectangle in two dimensional space.
+ * Construct an axis-aligned rectangle in two dimensional space with rounded corners.
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of rounded rectangle
  * @param {Array} [options.size=[2,2]] - dimension of rounded rectangle; width and length

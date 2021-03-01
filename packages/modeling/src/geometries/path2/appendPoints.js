@@ -3,13 +3,12 @@ const toPoints = require('./toPoints')
 
 /**
  * Append the given list of points to the end of the given geometry.
- * @param {Array} points - the points (2D) to concatenate
+ * @param {Array} points - the points (2D) to append to the given path
  * @param {path2} geometry - the given path
  * @returns {path2} a new path with the appended points
  * @alias module:modeling/geometries/path2.appendPoints
- *
  * @example
- * let newpath = concat(fromPoints({}, [[1, 2]]), fromPoints({}, [[3, 4]]))
+ * let newpath = appendPoints([[3, 4], [4, 5]], oldpath)
  */
 const appendPoints = (points, geometry) => {
   if (geometry.isClosed) {

@@ -7,7 +7,7 @@ const create = require('./create')
  * The direction (rotation) of the points is not relevant,
  * as the points can define a convex or a concave polygon.
  * The geometry must not self intersect, i.e. the sides cannot cross.
- * @param {Array} points - list of points in 2D space where each point is an array of two values
+ * @param {Array} points - list of points in 2D space
  * @returns {geom2} a new geometry
  * @alias module:modeling/geometries/geom2.fromPoints
  */

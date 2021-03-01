@@ -21,6 +21,13 @@ const create = require('./create')
  * @param {Number} m33 Component in column 3, row 3 position (index 15)
  * @returns {mat4} a new matrix
  * @alias module:modeling/maths/mat4.fromValues
+ * @example
+ * let matrix = fromValues(
+ *   1, 0, 0, 1,
+ *   0, 1, 0, 0,
+ *   0, 0, 1, 0,
+ *   0, 0, 0, 1
+ * )
  */
 const fromValues = (m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) => {
   const out = create()
