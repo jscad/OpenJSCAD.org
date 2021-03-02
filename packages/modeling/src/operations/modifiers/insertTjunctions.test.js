@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const comparePolygons = require('./comparePolygons')
+const { comparePolygonLists } = require('../../../test/helpers')
 
 const { geom3, poly3 } = require('../../geometries')
 
@@ -66,7 +66,7 @@ test('insertTjunctions: insertTjunctions produces expected polygons', (t) => {
     poly3.fromPoints([[-1, 1, 1], [-1, -1, 1], [0, 0, 1]])
   ]
   t.not(result3, geom3.toPolygons(geometry3))
-  t.true(comparePolygons(result3, exp))
+  t.true(comparePolygonLists(result3, exp))
 
   const result4 = insertTjunctions(geom3.toPolygons(geometry4))
   exp = [
@@ -85,5 +85,5 @@ test('insertTjunctions: insertTjunctions produces expected polygons', (t) => {
     poly3.fromPoints([[-1, 1, 1], [-1, 0, 1], [0, 0, 1]])
   ]
   t.not(result4, geometry4)
-  t.true(comparePolygons(result4, exp))
+  t.true(comparePolygonLists(result4, exp))
 })
