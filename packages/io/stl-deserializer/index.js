@@ -80,7 +80,7 @@ const bufferToBinaryString = (buffer) => {
   return binary
 }
 
-const isBuffer = (obj) => (obj.byteLength && typeof obj.slice === 'function')
+const isBuffer = (obj) => (obj.byteLength !== undefined && typeof obj.slice === 'function')
 
 // transforms input to string if it was not already the case
 const ensureString = (buf) => {

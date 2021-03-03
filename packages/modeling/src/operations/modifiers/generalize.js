@@ -5,39 +5,34 @@ const measureEpsilon = require('../../measurements/measureEpsilon')
 const geom2 = require('../../geometries/geom2')
 const geom3 = require('../../geometries/geom3')
 const path2 = require('../../geometries/path2')
-const poly3 = require('../../geometries/poly3')
 
 const snapPolygons = require('./snapPolygons')
 const mergePolygons = require('./mergePolygons')
+const insertTjunctions = require('./insertTjunctions')
+const triangulatePolygons = require('./triangulatePolygons')
+
 const repairTjunctions = require('./repairTjunctions')
 
 /*
- * Convert the given polygon into a list of triangles (polygons with 3 vertices).
  */
-const toTriangles = (polygons) => {
-  const triangles = []
-  polygons.forEach((polygon) => {
-    const steps = polygon.vertices.length - 2
-    if (steps > 1) {
-      // NOTE: this is possible because poly3 is CONVEX by definition
-      const firstVertex = polygon.vertices[0]
-      for (let i = 0; i < steps; i++) {
-        triangles.push(poly3.fromPoints([firstVertex, polygon.vertices[i + 1], polygon.vertices[i + 2]]))
-      }
-    } else {
-      triangles.push(polygon)
-    }
-  })
-  return triangles  
+const generalizePath2 = (options, geometry) => {
+  return geometry
+}
+
+
+/*
+ */
+const generalizeGeom2 = (options, geometry) => {
+  return geometry
 }
 
 /*
  */
 const generalizeGeom3 = (options, geometry) => {
   const defaults = {
-    snap : false,
-    simplify : false,
-    triangulate : false,
+    snap: false,
+    simplify: false,
+    triangulate: false,
     repair: false
   }
   const { snap, simplify, triangulate, repair } = Object.assign({}, defaults, options)
@@ -58,7 +53,8 @@ const generalizeGeom3 = (options, geometry) => {
 
   // triangulate the polygons if requested
   if (triangulate) {
-    polygons = toTriangles(polygons)
+    polygons = insertTjunctions(polygons)
+    polygons = triangulatePolygons(epsilon, polygons)
   }
 
   // repair the polygons (possibly triangles) if requested
@@ -68,7 +64,11 @@ const generalizeGeom3 = (options, geometry) => {
     // TODO fill holes
   }
 
-  return geom3.create(polygons)
+  // FIXME replace with geom3.cloneShallow() when available
+  const clone = Object.assign({}, geometry)
+  clone.polygons = polygons
+
+  return clone
 }
 
 /**
@@ -76,7 +76,7 @@ const generalizeGeom3 = (options, geometry) => {
  * @param {Object} options - options for modifications
  * @param {Boolean} [options.snap=false] the geometries should be snapped to epsilons
  * @param {Boolean} [options.simplify=false] the geometries should be simplified
- * @param {Boolean} [options.triangulate=false] the geometries should be triangulate
+ * @param {Boolean} [options.triangulate=false] the geometries should be triangulated
  * @param {Boolean} [options.repair=false] the geometries should be repaired
  * @return {Object|Array} the modified geometry, or a list of modified geometries
  */

@@ -9,7 +9,7 @@ const poly3 = require('../../geometries/poly3')
  * Edges with two polygons are complete, while edges with one polygon are open, i.e hole or t-junction..
  */
 const addEdge = (edges, edge, polygon) => {
-  let ei = edges.findIndex((element) => {
+  const ei = edges.findIndex((element) => {
     if (element) {
       if (vec3.equals(element[0], edge[0]) && vec3.equals(element[1], edge[1])) return true
       if (vec3.equals(element[0], edge[1]) && vec3.equals(element[1], edge[0])) return true
@@ -29,7 +29,7 @@ const addEdge = (edges, edge, polygon) => {
  * Remove the edge from the given list of edges.
  */
 const removeEdge = (edges, edge) => {
-  let ei = edges.findIndex((element) => {
+  const ei = edges.findIndex((element) => {
     if (element) {
       if (vec3.equals(element[0], edge[0]) && vec3.equals(element[1], edge[1])) return true
       if (vec3.equals(element[0], edge[1]) && vec3.equals(element[1], edge[0])) return true
@@ -46,10 +46,10 @@ const removeEdge = (edges, edge) => {
  * Add all edges of the polygon to the given list of edges.
  */
 const addPolygon = (edges, polygon) => {
-  let vertices = polygon.vertices
-  let nv = vertices.length
+  const vertices = polygon.vertices
+  const nv = vertices.length
 
-  let edge = [vertices[nv-1], vertices[0]]
+  let edge = [vertices[nv - 1], vertices[0]]
   addEdge(edges, edge, polygon)
 
   for (let i = 0; i < (nv - 1); i++) {
@@ -65,10 +65,10 @@ const removePolygons = (edges, oldedge) => {
   // console.log('removePolygons',oldedge)
   const polygons = oldedge.polygons
   polygons.forEach((polygon) => {
-    let vertices = polygon.vertices
-    let nv = vertices.length
+    const vertices = polygon.vertices
+    const nv = vertices.length
 
-    let edge = [vertices[nv-1], vertices[0]]
+    let edge = [vertices[nv - 1], vertices[0]]
     removeEdge(edges, edge)
 
     for (let i = 0; i < (nv - 1); i++) {
@@ -95,8 +95,6 @@ const splitPolygon = (openedge, polygon, eps) => {
   // console.log('polygon2',polygon2)
   return [polygon1, polygon2]
 }
-
-const NEPS = 1e-5
 
 /*
  * TBD This should be part of vec3.
@@ -134,9 +132,8 @@ const enclosedEdge = (openedge, edge, eps) => {
  */
 const splitEdge = (openedges, edge, eps) => {
   // console.log('splitEdge',edge)
-  let didSplit = false
   for (let i = 0; i < openedges.length; i++) {
-    let openedge = openedges[i]
+    const openedge = openedges[i]
     if (openedge) {
       if (enclosedEdge(openedge, edge, eps)) {
         // spit the polygon associated with the edge
@@ -153,11 +150,11 @@ const splitEdge = (openedges, edge, eps) => {
  * Cull a list of open edges (see above) from the list of edges.
  */
 const cullOpenEdges = (edges) => {
-  let openedges = []
+  const openedges = []
   edges.forEach((edge, i) => {
-    let polygons = edge.polygons
+    const polygons = edge.polygons
     if (polygons.length === 1) {
-      //console.log('open edge: ',edge[0],'<-->',edge[1])
+      // console.log('open edge: ',edge[0],'<-->',edge[1])
       edge.distance = vec3.squaredDistance(edge[0], edge[1])
       openedges.push(edge)
     }
@@ -173,7 +170,7 @@ const cullOpenEdges = (edges) => {
  * Convert the list of edges into a list of polygons.
  */
 const edgesToPolygons = (edges) => {
-  let polygons = []
+  const polygons = []
   edges.forEach((edge) => {
     if (edge && edge.polygons) {
       edge.polygons.forEach((polygon) => {
@@ -190,7 +187,7 @@ const edgesToPolygons = (edges) => {
  * Convert the given list of polygons to a list of edges.
  */
 const polygonsToEdges = (polygons) => {
-  let edges = []
+  const edges = []
   polygons.forEach((polygon) => {
     addPolygon(edges, polygon)
   })

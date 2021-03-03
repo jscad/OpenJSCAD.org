@@ -21,11 +21,10 @@ TBD
 2) add color conversion
 */
 
-const { geometries, utils } = require('@jscad/modeling')
-
+const { geometries, modifiers } = require('@jscad/modeling')
 const { geom3, geom2, path2 } = geometries
 
-// const { ensureManifoldness } = require('@jscad/io-utils')
+const { flatten, toArray } = require('@jscad/array-utils')
 
 const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('./autocad_AC2017')
 const colorindex2017 = require('./colorindex2017')
@@ -63,11 +62,14 @@ const serialize = (options, ...objects) => {
 
   options.entityId = 0 // sequence id for entities created
 
-  objects = utils.flatten(objects)
+  objects = flatten(objects)
 
   objects = objects.filter((object) => geom3.isA(object) || geom2.isA(object) || path2.isA(object))
 
   if (objects.length === 0) throw new Error('only JSCAD geometries can be serialized to DXF')
+
+  // covert to triangles
+  objects = toArray(modifiers.generalize({snap: true, triangulate: true}, objects))
 
   const dxfContent = `999
 Created by JSCAD

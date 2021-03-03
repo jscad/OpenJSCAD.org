@@ -11,7 +11,7 @@ const repairTjunctions = (epsilon, polygons) => {
   let splitting = true
   while (splitting) {
     let splitcount = 0
-    for (i = 0; i < openedges.length; i++) {
+    for (let i = 0; i < openedges.length; i++) {
       const edge = openedges[i]
       if (edge && edge.polygons && edge.polygons.length === 1) {
         const newpolygons = splitEdge(openedges, edge, epsilon)
@@ -34,12 +34,10 @@ const repairTjunctions = (epsilon, polygons) => {
     splitting = (splitcount > 0)
   }
   openedges = openedges.filter((edge) => (edge && edge.polygons && edge.polygons.length === 1))
-  if (openedges.length > 0) console.warn('Repair of all T-junctions failed:',openedges.length)
+  if (openedges.length > 0) console.warn('Repair of all T-junctions failed:', openedges.length)
 
   // rebuild the list of polygons from the edges
   polygons = edgesToPolygons(edges)
-  //polygons = polygons.concat(edgesToPolygons(openedges))
-  //polygons = edgesToPolygons(openedges)
   return polygons
 }
 

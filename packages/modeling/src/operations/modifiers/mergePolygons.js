@@ -1,5 +1,3 @@
-const { EPS } = require('../../maths/constants')
-
 const vec3 = require('../../maths/vec3')
 
 const poly3 = require('../../geometries/poly3')
@@ -7,18 +5,18 @@ const poly3 = require('../../geometries/poly3')
 // create a set of edges from the given polygon, and link the edges as well
 const createEdges = (polygon) => {
   const points = poly3.toPoints(polygon)
-  let edges = []
+  const edges = []
   for (let i = 0; i < points.length; i++) {
-    let j = (i + 1) % points.length
-    let edge = {
-        v1: points[i],
-        v2: points[j]
+    const j = (i + 1) % points.length
+    const edge = {
+      v1: points[i],
+      v2: points[j]
     }
     edges.push(edge)
   }
   // link the edges together
   for (let i = 0; i < edges.length; i++) {
-    let j = (i + 1) % points.length
+    const j = (i + 1) % points.length
     edges[i].next = edges[j]
     edges[j].prev = edges[i]
   }
@@ -45,12 +43,12 @@ const calculateAnglesBetween = (current, opposite, normal) => {
   let v0 = current.prev.v1
   let v1 = current.prev.v2
   let v2 = opposite.next.v2
-  let angle1 = calculateAngle(v0, v1, v2, normal)
+  const angle1 = calculateAngle(v0, v1, v2, normal)
 
   v0 = opposite.prev.v1
   v1 = opposite.prev.v2
   v2 = current.next.v2
-  let angle2 = calculateAngle(v0, v1, v2, normal)
+  const angle2 = calculateAngle(v0, v1, v2, normal)
 
   return [angle1, angle2]
 }
@@ -91,28 +89,21 @@ const createPolygonAnd = (edge) => {
 const mergeCoplanarPolygons = (epsilon, sourcepolygons) => {
   if (sourcepolygons.length < 2) return sourcepolygons
 
-  let normal = sourcepolygons[0].plane
-  let polygons = sourcepolygons.slice()
-  let edgeList = new Map()
+  const normal = sourcepolygons[0].plane
+  const polygons = sourcepolygons.slice()
+  const edgeList = new Map()
 
-  let count = 0
   while (polygons.length > 0) { // NOTE: the length of polygons WILL change
     const polygon = polygons.shift()
     const edges = createEdges(polygon)
-    count += 1
     for (let i = 0; i < edges.length; i++) {
       const current = edges[i]
       const opposite = findOppositeEdge(edgeList, current)
       if (opposite) {
         const angles = calculateAnglesBetween(current, opposite, normal)
-//console.log(angles)
         if (angles[0] >= 0 && angles[1] >= 0) {
-//console.log('merge of polygons')
-//console.log('current',current)
-//console.log('opposite',opposite)
-
-          let edge1 = opposite.next
-          let edge2 = current.next
+          const edge1 = opposite.next
+          const edge2 = current.next
           // adjust the edges, linking together opposing polygons
           current.prev.next = opposite.next
           current.next.prev = opposite.prev
@@ -134,7 +125,7 @@ const mergeCoplanarPolygons = (epsilon, sourcepolygons) => {
           opposite.prev = null
 
           const mergeEdges = (list, e1, e2) => {
-            let newedge = {
+            const newedge = {
               v1: e2.v1,
               v2: e1.v2,
               next: e1.next,
@@ -158,11 +149,9 @@ const mergeCoplanarPolygons = (epsilon, sourcepolygons) => {
           }
 
           if (angles[0] === 0.0) {
-//console.log('merge of edge1')
             mergeEdges(edgeList, edge1, edge1.prev)
           }
           if (angles[1] === 0.0) {
-//console.log('merge of edge2')
             mergeEdges(edgeList, edge2, edge2.prev)
           }
         }
