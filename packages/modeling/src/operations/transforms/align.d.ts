@@ -6,7 +6,7 @@ export default align
 
 export interface AlignOptions {
   modes?: Array<'center' | 'max' | 'min' | 'none'>
-  alignTo?: Vec3
+  relativeTo?: Vec3
   grouped?: boolean
 }
 
