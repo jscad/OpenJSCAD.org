@@ -11,15 +11,15 @@ const { translate } = require('./translate')
 const centerGeometry = (options, object) => {
   const defaults = {
     axes: [true, true, true],
-    center: [0, 0, 0]
+    relativeTo: [0, 0, 0]
   }
-  const { axes, center } = Object.assign({}, defaults, options)
+  const { axes, relativeTo } = Object.assign({}, defaults, options)
 
   const bounds = measureBoundingBox(object)
   const offset = [0, 0, 0]
-  if (axes[0]) offset[0] = center[0] - (bounds[0][0] + ((bounds[1][0] - bounds[0][0]) / 2))
-  if (axes[1]) offset[1] = center[1] - (bounds[0][1] + ((bounds[1][1] - bounds[0][1]) / 2))
-  if (axes[2]) offset[2] = center[2] - (bounds[0][2] + ((bounds[1][2] - bounds[0][2]) / 2))
+  if (axes[0]) offset[0] = relativeTo[0] - (bounds[0][0] + ((bounds[1][0] - bounds[0][0]) / 2))
+  if (axes[1]) offset[1] = relativeTo[1] - (bounds[0][1] + ((bounds[1][1] - bounds[0][1]) / 2))
+  if (axes[2]) offset[2] = relativeTo[2] - (bounds[0][2] + ((bounds[1][2] - bounds[0][2]) / 2))
   return translate(offset, object)
 }
 
@@ -27,7 +27,7 @@ const centerGeometry = (options, object) => {
  * Center the given geometries using the given options.
  * @param {Object} options - options for centering
  * @param {Array} [options.axes=[true,true,true]] - axis of which to center, true or false
- * @param {Array} [options.center=[0,0,0]] - point of which to center the object upon
+ * @param {Array} [options.relativeTo=[0,0,0]] - relative point of which to center the geometries
  * @param {...Object} geometries - the geometries to center
  * @return {Object|Array} the centered geometry, or a list of centered geometries
  * @alias module:modeling/transforms.center
@@ -38,19 +38,16 @@ const centerGeometry = (options, object) => {
 const center = (options, ...geometries) => {
   const defaults = {
     axes: [true, true, true],
-    center: [0, 0, 0]
+    relativeTo: [0, 0, 0]
   // TODO : Add addition 'methods' of centering; midpoint, centeriod
   }
-  const { axes, center } = Object.assign({}, defaults, options)
+  const { axes, relativeTo } = Object.assign({}, defaults, options)
 
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('wrong number of arguments')
-  if (center.length !== 3) throw new Error('center must be an array of length 3')
+  if (relativeTo.length !== 3) throw new Error('relativeTo must be an array of length 3')
 
-  options = {
-    axes: axes,
-    center: center
-  }
+  options = { axes, relativeTo }
 
   const results = geometries.map((object) => {
     if (path2.isA(object)) return centerGeometry(options, object)
