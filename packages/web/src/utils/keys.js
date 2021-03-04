@@ -58,10 +58,7 @@ const getKeyCombos = (options, keyUps$, keyDown$) => {
 
 const isKeyEventScopeValid = (mykey, x) => {
   if (x.className && x.className === 'jscad' && x.getAttribute('key') === mykey) {
-    return true// x.parentNode
-  }
-  if (x.parentNode) {
-    return isKeyEventScopeValid(mykey, x.parentNode)
+    return true
   }
   return false
 }
