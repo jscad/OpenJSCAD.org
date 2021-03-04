@@ -15,7 +15,7 @@ test('serialize 3D geometry to X3D', (t) => {
   const observed2 = serializer.serialize({}, geom2)
   t.deepEqual(observed2, [expected2])
 
-  const geom3 = colors.colorize([0.5, 1, 0.5, 1.0], transforms.center({ center: [5, 5, 5] }, primitives.cube()))
+  const geom3 = colors.colorize([0.5, 1, 0.5, 1.0], transforms.center({ relativeTo: [5, 5, 5] }, primitives.cube()))
 
   const observed3 = serializer.serialize({}, geom2, geom3)
   t.deepEqual(observed3, [expected3])
