@@ -1,6 +1,8 @@
 const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
+const { isNumberArray } = require('./commonChecks')
+
 /**
  * Construct a polyhedron in three dimensional space from the given set of 3D points and faces.
  * The faces can define outward or inward facing polygons (orientation).
@@ -44,6 +46,13 @@ const polyhedron = (options) => {
       throw new Error('faces and colors must have the same length')
     }
   }
+  points.forEach((point, i) => {
+    if (!isNumberArray(point, 3)) throw new Error(`point ${i} must be an array of X, Y, Z values`)
+  })
+  faces.forEach((face, i) => {
+    if (face.length < 3) throw new Error(`face ${i} must contain 3 or more indexes`)
+    if (!isNumberArray(face, face.length)) throw new Error(`face ${i} must be an array of numbers`)
+  })
 
   // invert the faces if orientation is inwards, as all internals expect outwarding facing polygons
   if (orientation !== 'outward') {

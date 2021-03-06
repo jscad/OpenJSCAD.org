@@ -40,7 +40,7 @@ test('intersect: intersect of one or more geom2 objects produces expected geomet
   t.true(comparePoints(obs, exp))
 
   // intersect of two non-overlapping objects
-  const geometry2 = center({ center: [10, 10, 0] }, rectangle({ size: [4, 4] }))
+  const geometry2 = center({ relativeTo: [10, 10, 0] }, rectangle({ size: [4, 4] }))
 
   const result2 = intersect(geometry1, geometry2)
   obs = geom2.toPoints(result2)
@@ -134,7 +134,7 @@ test('intersect: intersect of one or more geom3 objects produces expected geomet
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // intersect of two non-overlapping objects
-  const geometry2 = center({ center: [10, 10, 10] }, cuboid({ size: [4, 4, 4] }))
+  const geometry2 = center({ relativeTo: [10, 10, 10] }, cuboid({ size: [4, 4, 4] }))
 
   const result2 = intersect(geometry1, geometry2)
   obs = geom3.toPoints(result2)

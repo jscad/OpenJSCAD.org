@@ -17,7 +17,7 @@ const getParameterDefinitions = () => {
   return [
     { name: 'grouped', type: 'checkbox', checked: false, caption: 'Align as group' },
     { name: 'modes', type: 'choice', caption: 'modes:', values: ['["none","none","none"]', '["center","center","min"]', '["min","min","min"]', '["max","min","center"]'], initial: '["none","none","none"]' },
-    { name: 'alignTo', type: 'choice', caption: 'alignTo:', values: ['[0,0,0]', '[null,null,null]', '[10,-10,0]'], initial: '[0,0,0]' }
+    { name: 'relativeTo', type: 'choice', caption: 'relativeTo:', values: ['[0,0,0]', '[null,null,null]', '[10,-10,0]'], initial: '[0,0,0]' }
   ]
 }
 
@@ -25,7 +25,7 @@ const getParameterDefinitions = () => {
  * Generates a series of boxes of various sizes, and uses the align function to align them in different ways.
  * @param {Boolean} params.grouped - Treat all objects as a single object.
  * @param {String} params.modes - How to treat alignment on each axis.
- * @param {String} params.alignTo - The point to align to. Null to use the group's bounding box.
+ * @param {String} params.relativeTo - The relative point to align geometries. Null to use the group's bounding box.
  * @returns {geometry}
  */
 const main = (params) => {
@@ -36,9 +36,9 @@ const main = (params) => {
     cuboidFrame({ size: [10, 10, 3], center: [8, 16, 10] })
   ]
   const modes = JSON.parse(params.modes)
-  const alignTo = JSON.parse(params.alignTo)
+  const relativeTo = JSON.parse(params.relativeTo)
   const grouped = params.grouped
-  return align({ modes, alignTo, grouped }, shapes)
+  return align({ modes, relativeTo, grouped }, shapes)
 }
 
 const cuboidFrame = (opt) => {

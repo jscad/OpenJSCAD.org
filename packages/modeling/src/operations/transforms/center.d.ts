@@ -4,7 +4,7 @@ import RecursiveArray from '../../utils/recursiveArray'
 
 export interface CenterOptions {
   axes?: [boolean, boolean, boolean]
-  center?: Vec3
+  relativeTo?: Vec3
 }
 
 export function center(options: CenterOptions, geometry: Geometry): Geometry
