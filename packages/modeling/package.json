@@ -55,7 +55,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "ava": "3.10.0",
+    "ava": "3.15.0",
     "browserify": "16.5.1",
     "nyc": "15.1.0",
     "uglifyify": "5.0.2"

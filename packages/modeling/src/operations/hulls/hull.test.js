@@ -217,7 +217,7 @@ test('hull (multiple, geom3)', (t) => {
   t.is(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 
-  const geometry2 = center({ center: [5, 5, 5] }, cuboid({ size: [3, 3, 3] }))
+  const geometry2 = center({ relativeTo: [5, 5, 5] }, cuboid({ size: [3, 3, 3] }))
 
   obs = hull(geometry1, geometry2)
   pts = geom3.toPoints(obs)
@@ -242,8 +242,8 @@ test('hull (multiple, geom3)', (t) => {
 
 test('hull (multiple, overlapping, geom3)', (t) => {
   const geometry1 = ellipsoid({ radius: [2, 2, 2], segments: 12 })
-  const geometry2 = center({ center: [3, -3, 3] }, ellipsoid({ radius: [3, 3, 3], segments: 12 }))
-  const geometry3 = center({ center: [-3, -3, -3] }, ellipsoid({ radius: [3, 3, 3], segments: 12 }))
+  const geometry2 = center({ relativeTo: [3, -3, 3] }, ellipsoid({ radius: [3, 3, 3], segments: 12 }))
+  const geometry3 = center({ relativeTo: [-3, -3, -3] }, ellipsoid({ radius: [3, 3, 3], segments: 12 }))
 
   const obs = hull(geometry1, geometry2, geometry3)
   const pts = geom3.toPoints(obs)

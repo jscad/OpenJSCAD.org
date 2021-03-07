@@ -10,7 +10,7 @@ const mat4 = require('../../maths/mat4')
 /**
  * Create a new 2D geometry composed of unordered sides (two connected points).
  * @param {Array} [sides] - list of sides where each side is an array of two points
- * @returns {geom2} a new empty geometry
+ * @returns {geom2} a new geometry
  * @alias module:modeling/geometries/geom2.create
  */
 const create = (sides) => {

@@ -102,7 +102,7 @@ test('center: centering of multiple objects produces expected changes', (t) => {
   const geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
   const geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])
 
-  const centered = center({ axes: [true, true, false], center: [10, 15, 0] }, junk, geometry1, geometry2)
+  const centered = center({ axes: [true, true, false], relativeTo: [10, 15, 0] }, junk, geometry1, geometry2)
 
   t.is(centered[0], junk)
 

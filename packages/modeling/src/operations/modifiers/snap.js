@@ -15,7 +15,7 @@ const snapPath2 = (geometry) => {
   const points = path2.toPoints(geometry)
   const newpoints = points.map((point) => vec2.snap(vec2.create(), epsilon, point))
   // snap can produce duplicate points, remove those
-  return path2.create(points)
+  return path2.create(newpoints)
 }
 
 const snapGeom2 = (geometry) => {
@@ -30,7 +30,7 @@ const snapGeom2 = (geometry) => {
 const snapGeom3 = (geometry) => {
   const epsilon = measureEpsilon(geometry)
   const polygons = geom3.toPolygons(geometry)
-  newpolygons = snapPolygons(epsilon, polygons)
+  const newpolygons = snapPolygons(epsilon, polygons)
   return geom3.create(newpolygons)
 }
 

@@ -12,9 +12,11 @@ const { EPSILON } = require('./constants')
  *
  * @param {mat4} [out] - mat4 receiving operation result
  * @param {Number} rad - the angle to rotate the matrix by
- * @param {vec3} axis - the axis to rotate around
+ * @param {vec3} axis - the axis of which to rotate around
  * @returns {mat4} a new matrix
  * @alias module:modeling/maths/mat4.fromRotation
+ * @example
+ * let matrix = fromRotation(Math.PI / 2, [0, 0, 3])
  */
 const fromRotation = (...params) => {
   let out

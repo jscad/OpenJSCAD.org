@@ -39,7 +39,7 @@ test('union of one or more geom2 objects produces expected geometry', (t) => {
   t.true(comparePoints(obs, exp))
 
   // union of two non-overlapping objects
-  const geometry2 = center({ center: [10, 10, 0] }, rectangle({ size: [4, 4] }))
+  const geometry2 = center({ relativeTo: [10, 10, 0] }, rectangle({ size: [4, 4] }))
 
   const result2 = union(geometry1, geometry2)
   obs = geom2.toPoints(result2)
@@ -147,7 +147,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // union of two non-overlapping objects
-  const geometry2 = center({ center: [10, 10, 10] }, cuboid({ size: [4, 4, 4] }))
+  const geometry2 = center({ relativeTo: [10, 10, 10] }, cuboid({ size: [4, 4, 4] }))
 
   const result2 = union(geometry1, geometry2)
   obs = geom3.toPoints(result2)
@@ -197,8 +197,8 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
 })
 
 test('union of geom3 with rounding issues #137', (t) => {
-  const geometry1 = center({ center: [0, 0, -1] }, cuboid({ size: [44, 26, 5] }))
-  const geometry2 = center({ center: [0, 0, -4.400001] }, cuboid({ size: [44, 26, 1.8] })) // introduce percision error
+  const geometry1 = center({ relativeTo: [0, 0, -1] }, cuboid({ size: [44, 26, 5] }))
+  const geometry2 = center({ relativeTo: [0, 0, -4.400001] }, cuboid({ size: [44, 26, 1.8] })) // introduce percision error
 
   const obs = union(geometry1, geometry2)
   const pts = geom3.toPoints(obs)

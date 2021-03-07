@@ -9,7 +9,8 @@ const mat4 = require('../../maths/mat4')
  */
 
 /**
- * Create a new 3D geometry composed of polygons.
+ * Create a new 3D geometry composed of the given polygons.
+ * @param {Array} [polygons] - list of polygons, or undefined
  * @returns {geom3} a new geometry
  * @alias module:modeling/geometries/geom3.create
  */

@@ -1,11 +1,12 @@
 const vectorParams = require('./vectorParams')
 
-/** Represents a character as segments
-* @typedef {Object} VectorCharObject
-* @property {Float} width - character width
-* @property {Float} height - character height (uppercase)
-* @property {Array} segments - character segments [[[x, y], ...], ...]
-*/
+/**
+ * Represents a character as a list of segments
+ * @typedef {Object} VectorCharObject
+ * @property {Float} width - character width
+ * @property {Float} height - character height (uppercase)
+ * @property {Array} segments - character segments [[[x, y], ...], ...]
+ */
 
 /** Construct a {@link VectorCharObject} from a ascii character whose code is between 31 and 127,
 * if the character is not supported it is replaced by a question mark.

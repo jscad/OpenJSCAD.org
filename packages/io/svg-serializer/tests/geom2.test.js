@@ -15,8 +15,8 @@ test('serialize 2D geometries (simple) to svg', (t) => {
   const observed2 = serializer.serialize({}, cag2)
   t.deepEqual([expected2], observed2)
 
-  const cag3 = transforms.center({ center: [-30, -30, 0] }, primitives.rectangle({ size: [10, 20] }))
-  const cag4 = transforms.center({ center: [30, 30, 0] }, primitives.rectangle({ size: [10, 20] }))
+  const cag3 = transforms.center({ relativeTo: [-30, -30, 0] }, primitives.rectangle({ size: [10, 20] }))
+  const cag4 = transforms.center({ relativeTo: [30, 30, 0] }, primitives.rectangle({ size: [10, 20] }))
 
   const observed3 = serializer.serialize({}, cag3, cag4)
   t.deepEqual([expected3], observed3)

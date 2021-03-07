@@ -223,7 +223,7 @@ const translateCircle = (obj, layers, options) => {
 
   // convert to 2D object
   if (lthk === 0.0) {
-    let script = `  let ${name} = transforms.center({ center: [${pptx}, ${ppty}, 0] }, primitives.circle({radius: ${swid},segments: ${res}}))\n`
+    let script = `  let ${name} = primitives.circle({center: [${pptx}, ${ppty}], radius: ${swid}, segments: ${res}})\n`
     if (color) {
       script += `  ${name} = colors.colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
     }
@@ -233,7 +233,7 @@ const translateCircle = (obj, layers, options) => {
   }
 
   // convert to 3D object
-  let script = `  let ${name} = transforms.center({ center: [${pptx}, ${ppty}, 0] }, primitives.circle({radius: ${swid},segments: ${res}).extrude({offset: [0,0,${lthk}]}))\n`
+  let script = `  let ${name} = primitives.circle({center: [${pptx}, ${ppty}], radius: ${swid}, segments: ${res}}).extrude({offset: [0,0,${lthk}]}))\n`
   if (color) {
     script += `  ${name} = colors.colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
   }
@@ -272,7 +272,7 @@ const translateEllipse = (obj, layers, options) => {
     const angle = Math.atan2(spty, sptx) // * 180 / Math.PI
     // FIXME add start and end angle when supported
 
-    let script = `  let ${name} = transforms.center({ center: [0, 0, 0] }, primitives.ellipse({ radius: [${rx}, ${ry}], segments: ${res}}))
+    let script = `  let ${name} = primitives.ellipse({center: [0, 0, 0], radius: [${rx}, ${ry}], segments: ${res}})
   let ${name}matrix = maths.mat4.multiply(maths.mat4.fromTranslation([${pptx}, ${ppty}, 0]), maths.mat4.fromZRotation(${angle}))
   ${name} = geometries.geom2.transform(${name}matrix, ${name})
 `
