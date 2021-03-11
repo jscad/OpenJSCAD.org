@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.16](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.15...@jscad/web@2.0.0-alpha.16) (2021-03-07)
+
+
+### Features
+
+* **modeling:** V2 : rename option to align and center ([#775](https://github.com/jscad/OpenJSCAD.org/issues/775)) ([c5b0f48](https://github.com/jscad/OpenJSCAD.org/commit/c5b0f48bbd980b59876d73b673a0e3bef44d2b30))
+
+
+
+
+
 # [2.0.0-alpha.15](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.14...@jscad/web@2.0.0-alpha.15) (2021-02-07)
 
 
