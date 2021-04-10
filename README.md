@@ -6,7 +6,7 @@
 
 There are many ways to use JSCAD:
 
-An [online version](https://www.jscad.xyz/), [self hosteable web based ui](./packages/web), as [CLI](./packages/cli) (command-line interface) for server-side computations with Node.js, as well as an experimental [desktop app](./packages/desktop) or [individual Node.js packages](./packages/README.md)!!
+An [online version](https://www.openjscad.xyz/), [self hosteable web based ui](./packages/web), as [CLI](./packages/cli) (command-line interface) for server-side computations with Node.js, as well as an experimental [desktop app](./packages/desktop) or [individual Node.js packages](./packages/README.md)!!
 
 This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-the-wild-33c6eb246cb9) (container of multiple packages and tools) maintained with [Lerna](https://lernajs.io/)
 
@@ -32,7 +32,7 @@ This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-th
 ## Usage
 
 There are different 'flavors' of JSCAD that you can use based on your needs
-- web: online (no install) simply go to [https://www.jscad.xyz/](https://www.jscad.xyz/)
+- web: online (no install) simply go to [https://www.openjscad.xyz/](https://www.openjscad.xyz/)
 - web: self hosted: can be found [here](./packages/web)
 - cli: command line interface : can be found [here](./packages/cli)
 - desktop app: pre pre alpha work in progress can be found [here](./packages/desktop)!
@@ -41,7 +41,7 @@ There are different 'flavors' of JSCAD that you can use based on your needs
 
 ### Immediate Use (no installation)
 
-Go to *[OpenJSCAD.org](http://www.jscad.xyz)* (Tested browsers include Chrome, Firefox, Opera, Safari)
+Go to *[OpenJSCAD.org](http://www.openjscad.xyz)* (Tested browsers include Chrome, Firefox, Opera, Safari)
 
 ### Use within a Web Site (pre built files, from GitHub)
 
@@ -69,9 +69,8 @@ This will be expanded upon in the future, and is the backbone of the newer, modu
 
 ## Documentation
 
-- [Technical Overview and Q&A](./docs/index.md)
-- [JSCAD User and Programming Guide](https://www.jscad.xyz/dokuwiki/doku.php)
-- [JSCAD Quick Reference](https://www.jscad.xyz/dokuwiki/doku.php?id=jscad_quick_reference)
+- [JSCAD User Guide](https://www.openjscad.xyz/guide.html)
+- [API Reference](https://www.openjscad.xyz/docs)
 
 ## Contributing
 
@@ -84,9 +83,9 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD.org User Guide](https://www.jscad.xyz/dokuwiki/doku.php).
+* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://openjscad.xyz/forum.html). You might find the answer in the [JSCAD.org User Guide](https://www.openjscad.xyz/guide.html).
 
-* If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
+* If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://openjscad.xyz/forum.html) and start contributing changes.
 
 Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
@@ -96,8 +95,7 @@ A BIG THANKS to all the people who have already contributed to the JSCAD project
 ## Community
 
 See for more details
-* [JSCAD Forum Announcements](https://jscad.xyz/forum/category/1/announcements)
-* [JSCAD Forum Community](https://jscad.xyz/forum) to discuss with other users and developers.
+* [JSCAD User Group](https://openjscad.xyz/forum.html)
 
 HUGE THANKS and SHOUTOUT to [nodeBB](https://nodebb.org/) for hosting our (awesome) forum for free ! Thanks a lot !
 

@@ -8,17 +8,15 @@ const help = (state, i18n) => {
         <h2>${i18n`JSCAD V${state.version}`}</h2>
         <h3>${i18n`Documentation`}:</h3>
         <ul>
-            <li>
-              <a class="navlink external-link" href="docs/" target="_blank">${i18n`User Guide`}</a>
-            </li>
-         </ul>
+            <li><a class="navlink external-link" href="guide.html" target="_blank">${i18n`User Guide`}</a></li>
+            <li><a class="navlink external-link" href="docs/" target="_blank">${i18n`API Reference`}</a></li>
+        </ul>
       </div>
       <div>
         <h3>${i18n`Forums`}:</h3>
         <ul>
-            <li><a class="navlink external-link" href="https://jscad.xyz/forum" target="_blank">${i18n`User Group`}</a></li>
-            <li><a class="navlink external-link" href="https://jscad.xyz/forum/category/1/announcements" rel="publisher" target="_blank">${i18n`Announcements`}</a></li>
-            <li><a class="navlink external-link" href="https://jscad.xyz/forum" rel="publisher" target="_blank">${i18n`Recent Updates`}</a></li>
+            <li><a class="navlink external-link" href="forum.html" target="_blank">${i18n`User Group`}</a></li>
+            <li><a class="navlink external-link" href="announcements.html" rel="publisher" target="_blank">${i18n`Announcements`}</a></li>
         </ul>
       </div>
       <div>
