@@ -1,6 +1,6 @@
 # @jscad/web: JSCAD Web UI
 
-This is the Web based UI for [JSCAD](https://github.com/jscad/OpenJSCAD.org), either to host yourself, or use directly at https://www.jscad.xyz/.
+This is the Web based UI for [JSCAD](https://github.com/jscad/OpenJSCAD.org), either to host yourself, or use directly at https://www.openjscad.xyz/.
 
 <img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right" alt="JSCAD">
 
@@ -28,7 +28,7 @@ This is the Web based UI for [JSCAD](https://github.com/jscad/OpenJSCAD.org), ei
 
 ### Immediate Use (no installation)
 
-Go to *[www.jscad.xyz](http://www.jscad.xyz)*
+Go to *[www.openjscad.xyz](http://www.openjscad.xyz)*
 
 > Note: Tested browsers include Chrome, Firefox, Opera, Safari, Edge
 
@@ -50,7 +50,7 @@ And then access the contents via the URL of the web-site.
 
 #### Use of proxies for remote file loading:
 
-If you want the capability, just like the official www.jscad.xyz site, to load remote projects/files directly
+If you want the capability, just like the official www.openjscad.xyz site, to load remote projects/files directly
 from the web based user interface, but without the hassle with CORS issues,
 then you can use a proxy file (see [remote.pl](./remote.pl) & [remote.php](./remote.php)):
 
@@ -72,8 +72,8 @@ https://<YOURSITE>/#http://www.thingiverse.com/download:164128
 
 ## Documentation
 
-- [JSCAD User Guide](https://www.jscad.xyz/dokuwiki/doku.php)
-- [JSCAD Quick Reference](https://www.jscad.xyz/dokuwiki/doku.php?id=jscad_quick_reference)
+- [JSCAD User Guide](https://www.openjscad.xyz/guide.html)
+- [JSCAD API Reference](https://www.openjscad.xyz/docs)
 
 ## Known Issues
 
@@ -97,17 +97,16 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD User Guide](https://www.jscad.xyz/dokuwiki/doku.php).
+* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://openjscad.xyz/forum.html). You might find the answer in the [JSCAD User Guide](https://www.openjscad.xyz/guide.html).
 
-* If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
+* If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://openjscad.xyz/forum.html) and start contributing changes.
 
 Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## Community
 
 See for more details
-* [JSCAD Forum Announcements](https://jscad.xyz/forum/category/1/announcements)
-* [JSCAD Forum Community](https://jscad.xyz/forum) to discuss with other users and developers.
+* [JSCAD User Group](https://openjscad.xyz/forum.html)
 
 HUGE THANKS and SHOUTOUT to [nodeBB](https://nodebb.org/) for hosting our (awesome) forum for free ! Thanks a lot !
 
