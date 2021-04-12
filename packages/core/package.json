@@ -7,7 +7,7 @@
   "unpkg": "dist/jscad-core.min.js",
   "scripts": {
     "build": "browserify src/index.js -o dist/jscad-core.min.js -g uglifyify --standalone jscadCore",
-    "preversion": "npm run build && git add dist",
+    "version": "npm run build && git add dist",
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava './src/**/*.test.js' --verbose --timeout 2m"
   },

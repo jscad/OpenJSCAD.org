@@ -7,7 +7,7 @@
   "unpkg": "dist/jscad-regl-renderer.min.js",
   "scripts": {
     "build": "browserify src/index.js -o dist/jscad-regl-renderer.min.js -g uglifyify --standalone jscadReglRenderer",
-    "preversion": "npm run build && git add dist",
+    "version": "npm run build && git add dist",
     "dev": "budo ./demo-web.js --title regl-renderer --live",
     "demo-cli": "node ./demo-cli.js",
     "demo-web": "budo ./demo-web.js --title regl-renderer --live",
