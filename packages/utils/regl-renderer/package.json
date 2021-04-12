@@ -1,6 +1,6 @@
 {
   "name": "@jscad/regl-renderer",
-  "version": "2.0.0-alpha.13",
+  "version": "2.0.0",
   "description": "Renderer for JSCAD Geometries",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
@@ -26,15 +26,15 @@
     "access": "public"
   },
   "dependencies": {
-    "@jscad/array-utils": "2.0.0-alpha.5",
+    "@jscad/array-utils": "2.0.0",
     "camera-unproject": "1.0.1",
     "gl-mat4": "1.2.0",
     "gl-vec3": "1.1.3",
     "regl": "1.6.1"
   },
   "devDependencies": {
-    "@jscad/img-utils": "2.0.0-alpha.4",
-    "@jscad/modeling": "2.0.0-alpha.11",
+    "@jscad/img-utils": "2.0.0",
+    "@jscad/modeling": "2.0.0",
     "ava": "3.15.0",
     "browserify": "16.5.1",
     "budo": "11.6.4",
