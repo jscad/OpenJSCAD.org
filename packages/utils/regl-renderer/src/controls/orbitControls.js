@@ -266,7 +266,7 @@ const pan = ({ controls, camera, speed = 1 }, delta) => {
   * Note1: this is a non optimal but fast & easy implementation
   * @param {Object} controls the controls data/state
   * @param {Object} camera the camera data/state
-  * @param {Array} entities - an array of geometries or visuals
+  * @param {Array} entities - an array of entities (see entitiesFromSolids)
   * @return {Object} the updated camera data/state
 */
 const zoomToFit = ({ controls, camera, entities }) => {
@@ -276,7 +276,6 @@ const zoomToFit = ({ controls, camera, entities }) => {
     return { controls, camera }
   }
 
-  entities = entities.filter((entity) => entity.type && entity.type === '3d')
   if (entities.length === 0) return { controls, camera }
 
   // compute the overall bounds
