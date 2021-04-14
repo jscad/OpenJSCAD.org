@@ -1,7 +1,7 @@
 {
-  "name": "moduleDesign",
+  "name": "module-design",
   "version": "0.0.1",
-  "description": "some great jscad design",
+  "description": "Demonstrating modular jscad design. Drag the module-design folder onto the JSCAD instance.",
   "main": "index.js",
   "keywords": [
     "jscad",
@@ -9,7 +9,5 @@
   ],
   "author": "Mark 'kaosat-dev' Moissette & sons",
   "license": "MIT",
-  "dependencies": {
-    "@jscad/csg": "0.5.3"
-  }
+  "dependencies": {}
 }

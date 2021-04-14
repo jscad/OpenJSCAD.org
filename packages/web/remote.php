@@ -12,13 +12,20 @@ retrieveFile($_REQUEST['url']);
 cleanUpExpired();
 
 function retrieveFile($url) {
+   // only process valid requests
+   $valid = strncmp($url, "http://", 7) || strncmp($url, "https://", 8);
+   if (! $valid) return;
+
    $contents = file_get_contents($url);
-   $f = CACHE_PATH . "/tmp-".time()."-".rand(0,1024*1024)."-".basename($url);
-   file_put_contents("./".$f, $contents);
+
+   $fileName = basename($url); // FIXME a default extension needs to be added
+   $filePath = CACHE_PATH . "/".date("ymdHms")."-".$fileName;
+   file_put_contents("./".$filePath, $contents);
+
    $data = array(
-      'filename'  => basename($url),
-      'file'      => CACHE_PATH."/".basename($f),
-      'url'    => $url
+      'filename' => $fileName,
+      'file'     => $filePath,
+      'url'      => $url
    );
 
    echo json_encode ( $data );

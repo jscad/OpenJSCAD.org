@@ -1,0 +1,306 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [2.0.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io@2.0.0-alpha.13...@jscad/io@2.0.0) (2021-04-12)
+
+**Note:** Version bump only for package @jscad/io
+
+
+
+
+
+# [2.0.0-alpha.13](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io@2.0.0-alpha.12...@jscad/io@2.0.0-alpha.13) (2021-03-07)
+
+**Note:** Version bump only for package @jscad/io
+
+
+
+
+
+# [2.0.0-alpha.12](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io@2.0.0-alpha.11...@jscad/io@2.0.0-alpha.12) (2021-02-07)
+
+**Note:** Version bump only for package @jscad/io
+
+
+
+
+
+# [2.0.0-alpha.11](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io@2.0.0-alpha.10...@jscad/io@2.0.0-alpha.11) (2021-01-02)
+
+**Note:** Version bump only for package @jscad/io
+
+
+
+
+
+# [2.0.0-alpha.10](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io@2.0.0-alpha.9...@jscad/io@2.0.0-alpha.10) (2020-12-04)
+
+**Note:** Version bump only for package @jscad/io
+
+
+
+
+
+# [2.0.0-alpha.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io@2.0.0-alpha.8...@jscad/io@2.0.0-alpha.9) (2020-11-07)
+
+
+### Bug Fixes
+
+* **io:** io revisited ([#714](https://github.com/jscad/OpenJSCAD.org/issues/714)) ([22f04f1](https://github.com/jscad/OpenJSCAD.org/commit/22f04f1b2894a82e24952655875e73b74727bf86))
+
+
+
+
+
+# [2.0.0-alpha.8](https://github.com/jscad/io/compare/@jscad/io@2.0.0-alpha.7...@jscad/io@2.0.0-alpha.8) (2020-10-24)
+
+**Note:** Version bump only for package @jscad/io
+
+
+
+
+
+# [2.0.0-alpha.7](https://github.com/jscad/io/compare/@jscad/io@2.0.0-alpha.6...@jscad/io@2.0.0-alpha.7) (2020-10-11)
+
+**Note:** Version bump only for package @jscad/io
+
+
+
+
+
+# [2.0.0-alpha.6](https://github.com/jscad/io/compare/@jscad/io@2.0.0-alpha.5...@jscad/io@2.0.0-alpha.6) (2020-09-29)
+
+**Note:** Version bump only for package @jscad/io
+
+
+
+
+
+# [2.0.0-alpha.5](https://github.com/jscad/io/compare/@jscad/io@2.0.0-alpha.4...@jscad/io@2.0.0-alpha.5) (2020-09-28)
+
+**Note:** Version bump only for package @jscad/io
+
+
+
+
+
+# [2.0.0-alpha.4](https://github.com/jscad/io/compare/@jscad/io@2.0.0-alpha.3...@jscad/io@2.0.0-alpha.4) (2020-09-19)
+
+
+### Bug Fixes
+
+* **all:** fix json import ([#675](https://github.com/jscad/io/issues/675)) ([05caf60](https://github.com/jscad/io/commit/05caf60efc3f090313b3e0bddcc0b4f94de67c78))
+
+
+
+
+
+# [2.0.0-alpha.3](https://github.com/jscad/io/compare/@jscad/io@2.0.0-alpha.2...@jscad/io@2.0.0-alpha.3) (2020-09-08)
+
+**Note:** Version bump only for package @jscad/io
+
+
+
+
+
+# [2.0.0-alpha.2](https://github.com/jscad/io/compare/@jscad/io@2.0.0-alpha.1...@jscad/io@2.0.0-alpha.2) (2020-09-02)
+
+**Note:** Version bump only for package @jscad/io
+
+
+
+
+
+# [2.0.0-alpha.1](https://github.com/jscad/io/compare/@jscad/io@2.0.0-alpha.0...@jscad/io@2.0.0-alpha.1) (2020-08-19)
+
+**Note:** Version bump only for package @jscad/io
+
+
+
+
+
+# 2.0.0-alpha.0 (2020-08-13)
+
+### Features
+
+* **io:** merge IO packages into main repository (#436)
+
+
+
+
+
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/jscad/io/compare/@jscad/io@0.4.8...@jscad/io@0.5.0) (2018-11-25)
+
+
+### Features
+
+* **scad-deserializer:** added old openscad-openjscad-translator to the packages ([#75](https://github.com/jscad/io/issues/75)) ([0a20323](https://github.com/jscad/io/commit/0a20323))
+
+
+
+
+<a name="0.4.8"></a>
+## [0.4.8](https://github.com/jscad/io/compare/@jscad/io@0.4.7...@jscad/io@0.4.8) (2018-11-22)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.4.7"></a>
+## [0.4.7](https://github.com/jscad/io/compare/@jscad/io@0.4.6...@jscad/io@0.4.7) (2018-09-02)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.4.6"></a>
+## [0.4.6](https://github.com/jscad/io/compare/@jscad/io@0.4.5...@jscad/io@0.4.6) (2018-06-11)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.4.5"></a>
+## [0.4.5](https://github.com/jscad/io/compare/@jscad/io@0.4.4...@jscad/io@0.4.5) (2018-05-24)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.4.4"></a>
+## [0.4.4](https://github.com/jscad/io/compare/@jscad/io@0.4.3...@jscad/io@0.4.4) (2018-04-07)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.4.3"></a>
+## [0.4.3](https://github.com/jscad/io/compare/@jscad/io@0.4.2...@jscad/io@0.4.3) (2018-04-01)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.4.2"></a>
+## [0.4.2](https://github.com/jscad/io/compare/@jscad/io@0.4.1...@jscad/io@0.4.2) (2018-04-01)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.4.1"></a>
+## [0.4.1](https://github.com/jscad/io/compare/@jscad/io@0.4.0...@jscad/io@0.4.1) (2018-03-15)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/jscad/io/compare/@jscad/io@0.3.12...@jscad/io@0.4.0) (2018-02-24)
+
+
+### Features
+
+* **DXF Deserializer:** Adds dxf deserializer and all associated code ([ae4a6c0](https://github.com/jscad/io/commit/ae4a6c0)), closes [#10](https://github.com/jscad/io/issues/10)
+
+
+
+
+<a name="0.3.12"></a>
+## [0.3.12](https://github.com/jscad/io/compare/@jscad/io@0.3.11...@jscad/io@0.3.12) (2017-12-14)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.3.11"></a>
+## [0.3.11](https://github.com/jscad/io/compare/@jscad/io@0.3.10...@jscad/io@0.3.11) (2017-12-14)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.3.10"></a>
+## [0.3.10](https://github.com/jscad/io/compare/@jscad/io@0.3.9...@jscad/io@0.3.10) (2017-11-29)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.3.9"></a>
+## [0.3.9](https://github.com/jscad/io/compare/@jscad/io@0.3.8...@jscad/io@0.3.9) (2017-11-20)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.3.8"></a>
+## [0.3.8](https://github.com/jscad/io/compare/@jscad/io@0.3.7...@jscad/io@0.3.8) (2017-11-14)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.3.7"></a>
+## [0.3.7](https://github.com/jscad/io/compare/@jscad/io@0.3.6...@jscad/io@0.3.7) (2017-11-04)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.3.6"></a>
+## [0.3.6](https://github.com/jscad/io/compare/@jscad/io@0.3.5...@jscad/io@0.3.6) (2017-11-04)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.3.5"></a>
+## [0.3.5](https://github.com/jscad/io/compare/@jscad/io@0.3.4...@jscad/io@0.3.5) (2017-10-30)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.3.4"></a>
+## [0.3.4](https://github.com/jscad/io/compare/@jscad/io@0.3.3...@jscad/io@0.3.4) (2017-10-15)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.3.3"></a>
+## [0.3.3](https://github.com/jscad/io/compare/@jscad/io@0.3.2...@jscad/io@0.3.3) (2017-10-10)
+
+
+
+
+**Note:** Version bump only for package @jscad/io
+
+<a name="0.3.2"></a>
+## 0.3.2 (2017-10-10)
+
+
+### Bug Fixes
+
+* **io:** fixed bad version numbers for svg de/serializers ([#28](https://github.com/jscad/io/issues/28)) ([60d239c](https://github.com/jscad/io/commit/60d239c))

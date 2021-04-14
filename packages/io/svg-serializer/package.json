@@ -1,0 +1,41 @@
+{
+  "name": "@jscad/svg-serializer",
+  "version": "2.0.0",
+  "description": "SVG Serializer for JSCAD",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc --all --reporter=html --reporter=text npm test",
+    "test": "ava --verbose --timeout 2m './tests/*.test.js'"
+  },
+  "contributors": [
+    {
+      "name": "Rene K. Mueller",
+      "url": "http://renekmueller.com"
+    },
+    {
+      "name": "z3dev",
+      "url": "http://www.z3d.jp"
+    },
+    {
+      "name": "Mark 'kaosat-dev' Moissette",
+      "url": "http://kaosat.net"
+    }
+  ],
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "export",
+    "serializer",
+    "svg"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@jscad/modeling": "2.0.0",
+    "onml": "1.2.0"
+  },
+  "devDependencies": {
+    "ava": "3.15.0",
+    "nyc": "15.1.0"
+  }
+}

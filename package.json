@@ -1,18 +1,25 @@
 {
   "name": "@jscad/openjscad",
-  "version": "1.6.1",
+  "version": "2.0.0",
   "description": "",
-  "repository": "https://github.com/Spiritdude/OpenJSCAD.org",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
-    "test": "lerna bootstrap && lerna run test",
-    "lint": "eslint packages/**/*.js",
-    "bootstrap": "lerna bootstrap",
+    "docs": "jsdoc --configure jsdoc.json",
+    "coverage": "npm run bootstrap && lerna run --concurrency 1 --stream coverage",
+    "test": "npm run bootstrap && lerna run --stream test",
+    "test:tsd": "lerna run test:tsd",
+    "lint": "standardx 'packages/**/*.js'",
+    "bootstrap": "lerna bootstrap --hoist nyc --hoist ava --ignore-prepublish --no-ci",
+    "changed": "lerna changed",
     "clean": "lerna clean",
+    "graph": "lerna list --graph",
+    "list": "lerna ls",
     "cli": "npm run bootstrap && cd ./packages/cli",
-    "web": "npm run bootstrap && cd ./packages/web && npm run start-dev",
+    "web": "npm run bootstrap && cd ./packages/web && npm run dev",
     "desktop": "npm run bootstrap && cd ./packages/desktop && npm run dev",
-    "publish": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits",
-    "publish-dryrun": "git checkout master && git pull origin master && npm t && lerna publish --conventional-commits --skip-git --skip-npm"
+    "preversion": "npm run test && npm run docs",
+    "publish": "lerna publish --no-private --no-push --conventional-graduate",
+    "publish-dryrun": "lerna version --no-private --no-push --conventional-graduate"
   },
   "contributors": [
     {
@@ -29,15 +36,53 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "ava": "^0.23.0",
-    "lerna": "2.7.0"
+    "@jscad/sample-files": "github:jscad/sample-files#master",
+    "ava": "3.15.0",
+    "docdash": "1.2.0",
+    "jsdoc": "3.6.6",
+    "lerna": "3.22.1",
+    "nyc": "15.1.0",
+    "standardx": "7.0.0",
+    "tsd": "^0.13.1"
   },
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/openjscad",
     "logo": "https://opencollective.com/openjscad/logo.txt"
+  },
+  "standardx": {
+    "ignore": [
+      "**/dist/",
+      "**/old/",
+      "**/examples/",
+      "**/ui/csg-viewer",
+      "**/io/scad-deserializer",
+      "**/io/gcode-deserializer"
+    ],
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  },
+  "eslintConfig": {
+    "rules": {
+      "func-style": [
+        "error",
+        "expression"
+      ],
+      "arrow-body-style": [
+        "error",
+        "as-needed"
+      ],
+      "arrow-parens": [
+        "error",
+        "always"
+      ],
+      "arrow-spacing": "error",
+      "prefer-arrow-callback": "error",
+      "no-var": "error"
+    }
   }
 }

@@ -16,7 +16,7 @@ const extractSimpleArgs = node => {
     return undefined
   }
 
-  let argResults = {}
+  const argResults = {}
   argumentsNode.properties.forEach(function (property) {
     const name = property.key.name
     const value = property.value.value

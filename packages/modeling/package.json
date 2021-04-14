@@ -1,0 +1,63 @@
+{
+  "name": "@jscad/modeling",
+  "version": "2.0.0",
+  "description": "Constructive Solid Geometry (CSG) Library for JSCAD",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "unpkg": "dist/jscad-modeling.min.js",
+  "scripts": {
+    "build": "browserify src/index.js -o dist/jscad-modeling.min.js -g uglifyify --standalone jscadModeling",
+    "coverage": "nyc --all --reporter=html --reporter=text npm test",
+    "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
+    "test:tsd": "tsd",
+    "version": "npm run build && git add dist"
+  },
+  "contributors": [
+    {
+      "name": "Alexandre Girard",
+      "url": "https://github.com/alx"
+    },
+    {
+      "name": "Evan Wallace",
+      "url": "http://evanw.github.com/csg.js/"
+    },
+    {
+      "name": "Joost Nieuwenhuijse",
+      "email": "joost@newhouse.nl"
+    },
+    {
+      "name": "Eduard Bespalov",
+      "url": "http://evanw.github.com/csg.js/"
+    },
+    {
+      "name": "bebbi",
+      "email": "elghatta@gmail.com"
+    },
+    {
+      "name": "Spiritdude Rene K Mueller",
+      "url": "http://renekmueller.com"
+    },
+    {
+      "name": "Jeff Gay",
+      "url": "http://www.z3d.jp"
+    }
+  ],
+  "keywords": [
+    "csg",
+    "parametric",
+    "modeling",
+    "openjscad",
+    "jscad"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "ava": "3.15.0",
+    "browserify": "16.5.1",
+    "nyc": "15.1.0",
+    "uglifyify": "5.0.2"
+  }
+}

@@ -1,3 +1,5 @@
+const estraverse = require('estraverse')
+
 /* if (node.arguments && arguments.length > 0) {
           const includePath = node.arguments[0]
           const {raw, value} = includePath
@@ -5,7 +7,7 @@
         } */
 
 function findByPredicate (predicate, dataExtractor, ast) {
-  let results = []
+  const results = []
   estraverse.traverse(ast, {
     enter: function (node, parent) {
       if (predicate(node)) {

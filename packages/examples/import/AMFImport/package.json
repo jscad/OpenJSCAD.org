@@ -1,0 +1,13 @@
+{
+  "name": "amf-import",
+  "version": "0.0.1",
+  "description": "Demonstrating AMF import. Drag the AMFImport folder onto the JSCAD instance.",
+  "main": "index.js",
+  "keywords": [
+    "jscad",
+    "cad"
+  ],
+  "author": "Simon Clark",
+  "license": "MIT",
+  "dependencies": {}
+}

@@ -1,4 +1,4 @@
-# jscad-desktop
+# @jscad/desktop
 
 [![GitHub version](https://badge.fury.io/gh/jscad%2Fdesktop.svg)](https://badge.fury.io/gh/jscad%2Fdesktop)
 [![Build Status](https://travis-ci.org/jscad/desktop.svg)](https://travis-ci.org/jscad/desktop)
@@ -7,22 +7,21 @@
 ![dark ui](./docs/jscad-desktop-dark.jpg)
 
 
-> Experimental desktop jscad (openjscad) client, built using Electron
+> Experimental desktop JSCAD (openjscad) client, built using Electron
 
 A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at your own risk etc !
 
 ## Overview
 
-- this app works pretty much like the web based OpenJSCAD.org
+- this app works pretty much like the web based JSCAD
 (but does not included a text editor, see below)
 - it automatically saves & reloads most settings and the last design you were working on on restart
 - there is basic theming support (only two are present, you can change them but not add more at this time)
 - uses the shiny new 3D viewer based on regl
 - uses most.js observables & a declarative approach internally
 
-
 ### what is supported:
- * almost all of the features of OpenJSCAD EXCEPT the things in the paragraph below 
+ * almost all of the features of JSCAD web EXCEPT the things in the paragraph below 
 
 ### what is not supported
   - the include() function , [since include is EVIIIL and an antipattern
@@ -40,12 +39,12 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
  ```require(<moduleName>)``` calls to include other functions, shapes etc
  * in your main file, when using common.js modules please use named exports ie :
   ```javascript module.exports = {main, getParameterDefinitions}```
- * VERY IMPORTANT : if you use common.js modules you HAVE to `require()` all the OpenJSCAD modules you use (like `@jscad/csg` etc) **yourself**: if the app detects that you do not have `module.exports`, then it will inject all the OpenJSCAD api itself, with a MAJOR limitation at this time:
+ * VERY IMPORTANT : if you use common.js modules you HAVE to `require()` all the JSCAD packages you use (like `@jscad/csg` etc) **yourself**: if the app detects that you do not have `module.exports`, then it will inject all the JSCAD api itself, with a MAJOR limitation at this time:
   you cannot make require() calls from anything but the root level file, and you do not have access to the API (this will get fixed)
 
  > there will NOT be out of the box support for es6 modules anytime soon, please use a transpiler (Babel.js etc) if you want to use es modules
 
- ## geometry caching
+### geometry caching
 
  this is an experimental feature that adds a HUGE performance boost by turning the various geometry creation
  functions (so cube(), sphere(), union(), difference() etc into a virtual tree, and caching each of the items in the tree when evaluating the tree into actual csg/cag object
@@ -57,7 +56,7 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 
   This desktop app also saves your current design's cache to the hard drive, making a reload after restarting the app very fast! IF you follow the instructions/limitations below
   
- ### Limitations
+#### Limitations
 
 - LIMITATION 1 :
  this **ONLY WORKS WITH THE FUNCTIONAL API** !! ie 
@@ -67,9 +66,7 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 - LIMITATION 2: because of the limitation above you CANNOT mix the two coding styles: so this is **FUNCTIONAL API ONLY, NO MIXING** !!
  since the non functional api will become deprecated soon, this is future facing decision regardless :)
 
-
-
- ### How to use it : (temporary instructions)
+### How to use it : (temporary instructions)
 
   > Note: this is experimental, and somewhat clunky, will VERY LIKELY change in the future !!!
 
@@ -81,7 +78,7 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 
     ```npm install kaosat-dev/jscad-tree-experiments```
 
-  - replace your ```require('@jscad/csg/api')``` calls with ```require('jscad-tree-experiment').api```
+  - replace your ```require('@jscad/csg/api')``` calls with ```require('@jscad/vtree').api```
 
   - example :
 
@@ -106,10 +103,10 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
 
     ```javascript
 
-      const {cylinder} = require('jscad-tree-experiment').api.primitives3d
-      const {color} = require('jscad-tree-experiment').api.color
-      const {difference} = require('jscad-tree-experiment').api.booleanOps
-      const {translate} = require('jscad-tree-experiment').api.transformations
+      const {cylinder} = require('@jscad/vtree').api.primitives3d
+      const {color} = require('@jscad/vtree').api.color
+      const {difference} = require('@jscad/vtree').api.booleanOps
+      const {translate} = require('@jscad/vtree').api.transformations
 
       module.exports = function assemblyMount (params) {
         const {plateThickness, plateOffset, assemblyMountDia, assemblyMountBoltDia} = params
@@ -130,7 +127,6 @@ A LOT OF THE THINGS HERE CAN AND WILL CHANGE!! This softare is pre-alpha, use at
   just toggle the 'Experimental geometry caching:' setting in the options panel (turned off by default)
   be warned however that a lot of the official examples etc will not work with this out of the box
 
-
 ### translations
 
 This version of Jscad has support for multiple languages (as in text for the UI, not programming languages):
@@ -144,30 +140,35 @@ you can find the language files in the **locales** folder
 add translations for another one !
 * in the near future this will also be available for the non-desktop versions!
 
-
 pre-alpha, expect bugs! 
 
 ## Table of Contents
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Contributing](#Contributing)
+- [License](#license)
 
 ## Installation
 
+For now , dev mode only! 
+
 ```
-git clone this repository
-cd jscad-desktop
-npm i
+git clone https://github.com/jscad/OpenJSCAD.org.git
+cd OpenJSCAD.org
+npm install
+npm test
 ```
 
 ## Usage
 
 For now , dev mode only! 
-to start the app, in the root folder , type
+
+To start the app, in the root folder , type
 ```
+cd packages/desktop
 npm run dev
 ```
-
 - drag & drop a jscad/js file to get started
 - left/right drag to rotate camera
 - shift + drag to pan 
@@ -187,8 +188,24 @@ npm run dev
    * `o`: orthographic projection
 - most of the ui options should be explicit
 
+## Contributing
+
+The various JSCAD packages and all source code are part of the JSCAD Organization, and maintained by a group of volunteers.
+We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
+
+* If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
+
+* If you want to submit a change or a patch, please read the [Contributing Guide](https://github.com/jscad/OpenJSCAD.org/blob/master/CONTRIBUTING.md) . New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
+
+* We only accept bug reports and pull requests on **GitHub**.
+
+* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://openjscad.xyz/forum.html). You might find the answer in the [JSCAD.org User Guide](https://openjscad.org/dokuwiki/doku.php).
+
+* If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://openjscad.xyz/forum.html) and start contributing changes.
+
+Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## License
 
-[The MIT License (MIT)](./LICENSE)
+[The MIT License (MIT)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 (unless specified otherwise)

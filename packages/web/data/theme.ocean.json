@@ -1,0 +1,15 @@
+{
+  "name": "Ocean",
+  "viewer": {
+    "rendering": {
+      "background": [0.23, 0.39, 0.76, 1],
+      "meshColor": [0.61, 0.61, 0.61, 1]
+    },
+    "grid": {
+      "color": [1, 1, 1, 1],
+      "subColor": [0.29, 0.52, 0.96, 0.5]
+    }
+  },
+  "mainTextColor": "#4A85F7",
+  "secondaryTextColor": "#000"
+}

@@ -1,13 +1,13 @@
 const most = require('most')
-const {remote} = require('electron')
-const {dialog} = remote
+const { remote } = require('electron')
+const { dialog } = remote
 const getParameterValuesFromUIControls = require('../../core/parameters/getParameterValuesFromUIControls')
 
 const actions = (sources) => {
   const designPath$ = most.mergeArray([
     sources.dom.select('#fileLoader').events('click')
       .map(function () {
-        const paths = dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
+        const paths = dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] })
         return paths
       }),
     sources.store
@@ -24,7 +24,7 @@ const actions = (sources) => {
     .multicast()
 
   const setDesignPath$ = designPath$
-    .map(data => ({type: 'setDesignPath', data}))
+    .map(data => ({ type: 'setDesignPath', data }))
     .delay(1)
 
   const setDesignContent$ = most.mergeArray([
@@ -33,9 +33,9 @@ const actions = (sources) => {
       .map(raw => raw.data),
     sources.fs
       .filter(data => data.operation === 'watch' && data.id === 'watchScript')
-      .map(({path, data}) => data)
+      .map(({ path, data }) => data)
   ])
-    .map(data => ({type: 'setDesignContent', data}))
+    .map(data => ({ type: 'setDesignContent', data }))
 
   // design parameter change actions
   const updateDesignFromParams$ = most.mergeArray([
@@ -44,7 +44,7 @@ const actions = (sources) => {
         const controls = Array.from(document.getElementById('paramsTable').getElementsByTagName('input'))
           .concat(Array.from(document.getElementById('paramsTable').getElementsByTagName('select')))
         const paramValues = getParameterValuesFromUIControls(controls)
-        return {paramValues, origin: 'manualUpdate'}
+        return { paramValues, origin: 'manualUpdate' }
       })
       .multicast(),
     sources.paramChanges.multicast().map(function (_controls) {
@@ -53,14 +53,14 @@ const actions = (sources) => {
         const controls = Array.from(document.getElementById('paramsTable').getElementsByTagName('input'))
           .concat(Array.from(document.getElementById('paramsTable').getElementsByTagName('select')))
         const paramValues = getParameterValuesFromUIControls(controls)
-        return {paramValues, origin: 'instantUpdate'}
+        return { paramValues, origin: 'instantUpdate' }
       } catch (error) {
-        return {error, origin: 'instantUpdate'}
+        return { error, origin: 'instantUpdate' }
       }
     })
 
   ])
-  .map(data => ({type: 'updateDesignFromParams', data})).multicast()
+    .map(data => ({ type: 'updateDesignFromParams', data })).multicast()
 
   const setDesignSolids$ = most.mergeArray([
     sources.solidWorker
@@ -72,14 +72,14 @@ const actions = (sources) => {
           if (event.data instanceof Object) {
             const { CAG, CSG } = require('@jscad/csg')
             const solids = event.data.solids.map(function (object) {
-              if (object['class'] === 'CSG') { return CSG.fromCompactBinary(object) }
-              if (object['class'] === 'CAG') { return CAG.fromCompactBinary(object) }
+              if (object.class === 'CSG') { return CSG.fromCompactBinary(object) }
+              if (object.class === 'CAG') { return CAG.fromCompactBinary(object) }
             })
-            const {lookupCounts, lookup} = event.data
-            return {solids, lookup, lookupCounts}
+            const { lookupCounts, lookup } = event.data
+            return { solids, lookup, lookupCounts }
           }
         } catch (error) {
-          return {error}
+          return { error }
         }
       }),
     sources.fs
@@ -87,10 +87,10 @@ const actions = (sources) => {
       .map(raw => {
         const deserialize = require('serialize-to-js').deserialize
         const lookup = deserialize(raw.data)
-        return {solids: undefined, lookupCounts: undefined, lookup}
+        return { solids: undefined, lookupCounts: undefined, lookup }
       })
   ])
-    .map(data => ({type: 'setDesignSolids', data}))
+    .map(data => ({ type: 'setDesignSolids', data }))
 
   const setDesignParams$ = most.mergeArray([
     sources.solidWorker
@@ -99,23 +99,23 @@ const actions = (sources) => {
       .filter(event => event.data.type === 'params')
       .map(function (event) {
         try {
-          const {paramDefaults, paramValues, paramDefinitions} = event.data
-          return {paramDefaults, paramValues, paramDefinitions}
+          const { paramDefaults, paramValues, paramDefinitions } = event.data
+          return { paramDefaults, paramValues, paramDefinitions }
         } catch (error) {
-          return {error}
+          return { error }
         }
       }),
     sources.store
       .filter(data => data && data.design && data.design.parameters)
       .map(data => data.design.parameters)
   ])
-      .map(data => ({type: 'setDesignParams', data}))
+    .map(data => ({ type: 'setDesignParams', data }))
 
   const timeOutDesignGeneration$ = most.never()
     /* designPath$
     sources.state$
     .delay(60000) */
-    .map(data => ({type: 'timeOutDesignGeneration', data}))
+    .map(data => ({ type: 'timeOutDesignGeneration', data }))
     .tap(x => console.log('timeOutDesignGeneration'))
 
   // ui/toggles
@@ -126,7 +126,7 @@ const actions = (sources) => {
       .filter(data => data && data.autoReload !== undefined)
       .map(data => data.autoReload)
   ])
-  .map(data => ({type: 'toggleAutoReload', data}))
+    .map(data => ({ type: 'toggleAutoReload', data }))
 
   const toggleInstantUpdate$ = most.mergeArray([
     sources.dom.select('#instantUpdate').events('click').map(event => event.target.checked),
@@ -134,7 +134,7 @@ const actions = (sources) => {
       .filter(data => data && data.instantUpdate !== undefined)
       .map(data => data.instantUpdate)
   ])
-    .map(data => ({type: 'toggleInstantUpdate', data}))
+    .map(data => ({ type: 'toggleInstantUpdate', data }))
 
   const toggleVTreeMode$ = most.mergeArray([
     sources.dom.select('#toggleVtreeMode').events('click').map(event => event.target.checked),
@@ -142,7 +142,7 @@ const actions = (sources) => {
       .filter(data => data && data.design && data.design.vtreeMode !== undefined)
       .map(data => data.design.vtreeMode)
   ])
-    .map(data => ({type: 'toggleVtreeMode', data}))
+    .map(data => ({ type: 'toggleVtreeMode', data }))
 
   return {
     setDesignPath$,

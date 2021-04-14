@@ -1,0 +1,241 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [2.0.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.0-alpha.11...@jscad/dxf-serializer@2.0.0) (2021-04-12)
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+
+
+
+
+# [2.0.0-alpha.11](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.0-alpha.10...@jscad/dxf-serializer@2.0.0-alpha.11) (2021-03-07)
+
+
+### Bug Fixes
+
+* **modeling:** V2 revisit modifiers ([#773](https://github.com/jscad/OpenJSCAD.org/issues/773)) ([1e28120](https://github.com/jscad/OpenJSCAD.org/commit/1e28120d2b8505dc1882cf3d607296d6fcd5526d))
+
+
+
+
+
+# [2.0.0-alpha.10](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.0-alpha.9...@jscad/dxf-serializer@2.0.0-alpha.10) (2021-02-07)
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+
+
+
+
+# [2.0.0-alpha.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.0-alpha.8...@jscad/dxf-serializer@2.0.0-alpha.9) (2021-01-02)
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+
+
+
+
+# [2.0.0-alpha.8](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.0-alpha.7...@jscad/dxf-serializer@2.0.0-alpha.8) (2020-12-04)
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+
+
+
+
+# [2.0.0-alpha.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.0-alpha.6...@jscad/dxf-serializer@2.0.0-alpha.7) (2020-11-07)
+
+
+### Bug Fixes
+
+* **io:** io revisited ([#714](https://github.com/jscad/OpenJSCAD.org/issues/714)) ([22f04f1](https://github.com/jscad/OpenJSCAD.org/commit/22f04f1b2894a82e24952655875e73b74727bf86))
+
+
+
+
+
+# [2.0.0-alpha.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.0-alpha.5...@jscad/dxf-serializer@2.0.0-alpha.6) (2020-10-11)
+
+
+### Bug Fixes
+
+* **all:** V2 : several fixes for modeling ([#705](https://github.com/jscad/OpenJSCAD.org/issues/705)) ([62017a4](https://github.com/jscad/OpenJSCAD.org/commit/62017a41214169d6e000f1e0c11aaefdd68e1097))
+
+
+
+
+
+# [2.0.0-alpha.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.0-alpha.4...@jscad/dxf-serializer@2.0.0-alpha.5) (2020-09-29)
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+
+
+
+
+# [2.0.0-alpha.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.0-alpha.3...@jscad/dxf-serializer@2.0.0-alpha.4) (2020-09-28)
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+
+
+
+
+# [2.0.0-alpha.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.0-alpha.2...@jscad/dxf-serializer@2.0.0-alpha.3) (2020-09-19)
+
+
+### Bug Fixes
+
+* **dxf-deserializer:** support for colors in dxf serializer ([#684](https://github.com/jscad/OpenJSCAD.org/issues/684)) ([2b89a3a](https://github.com/jscad/OpenJSCAD.org/commit/2b89a3a7c4dde177ed93769d96522319954188df))
+
+
+
+
+
+# [2.0.0-alpha.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.0-alpha.1...@jscad/dxf-serializer@2.0.0-alpha.2) (2020-09-08)
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+
+
+
+
+# [2.0.0-alpha.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.0-alpha.0...@jscad/dxf-serializer@2.0.0-alpha.1) (2020-08-19)
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+
+
+
+
+# 2.0.0-alpha.0 (2020-08-13)
+
+
+### Bug Fixes
+
+* **dxf-serializer:** removed unnecessary 2D entities from BLOCKS section ([#537](https://github.com/jscad/OpenJSCAD.org/issues/537)) ([21a6d38](https://github.com/jscad/OpenJSCAD.org/commit/21a6d38a62a7fed353bdb3fc5e834178cac7b239))
+
+
+
+
+
+### Features
+
+* **dxf-serializer:** updated for V2 (#474)
+
+
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.2.5...@jscad/dxf-serializer@0.3.0) (2018-11-25)
+
+<a name="0.2.5"></a>
+## [0.2.5](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.2.4...@jscad/dxf-serializer@0.2.5) (2018-11-22)
+
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+<a name="0.2.4"></a>
+## [0.2.4](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.2.3...@jscad/dxf-serializer@0.2.4) (2018-09-02)
+
+
+
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+<a name="0.2.3"></a>
+## [0.2.3](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.2.2...@jscad/dxf-serializer@0.2.3) (2018-06-11)
+
+
+### Bug Fixes
+
+* **dxf-serializer:** corrected polygonToTriangles when polygon has less then 3 vertices ([#68](https://github.com/jscad/io/issues/68)) ([accac07](https://github.com/jscad/io/commit/accac07))
+
+
+
+
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.2.1...@jscad/dxf-serializer@0.2.2) (2018-05-24)
+
+
+### Bug Fixes
+
+* **dxf-serializer:** fix 3d faces output ([#67](https://github.com/jscad/io/issues/67)) ([51d316e](https://github.com/jscad/io/commit/51d316e))
+
+
+
+
+<a name="0.2.1"></a>
+## [0.2.1](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.2.0...@jscad/dxf-serializer@0.2.1) (2018-04-07)
+
+
+### Bug Fixes
+
+* **dxf-serializer:** Corrected EOF group as well as test cases ([#61](https://github.com/jscad/io/issues/61)) ([760c350](https://github.com/jscad/io/commit/760c350))
+* **dxf-serializer:** Removed extra line after ENDSEC which caused format errors in DXF ([#62](https://github.com/jscad/io/issues/62)) ([c967c4b](https://github.com/jscad/io/commit/c967c4b))
+
+
+
+
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.1.2...@jscad/dxf-serializer@0.2.0) (2018-04-01)
+
+
+### Features
+
+* **dxf-serializer:** DXF Serializer updates ([#59](https://github.com/jscad/io/issues/59)) ([68c0d30](https://github.com/jscad/io/commit/68c0d30))
+
+
+
+
+<a name="0.1.2"></a>
+## [0.1.2](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.1.1...@jscad/dxf-serializer@0.1.2) (2017-12-14)
+
+
+
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+<a name="0.1.1"></a>
+## [0.1.1](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.1.0...@jscad/dxf-serializer@0.1.1) (2017-12-14)
+
+
+
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+<a name="0.1.0"></a>
+# [0.1.0](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.0.4...@jscad/dxf-serializer@0.1.0) (2017-11-29)
+
+
+### Features
+
+* add support for a status callback for de/serialization progress ([#49](https://github.com/jscad/io/issues/49)) ([f457cdb](https://github.com/jscad/io/commit/f457cdb))
+
+
+
+
+<a name="0.0.4"></a>
+## [0.0.4](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.0.3...@jscad/dxf-serializer@0.0.4) (2017-11-04)
+
+
+
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+<a name="0.0.3"></a>
+## [0.0.3](https://github.com/jscad/io/compare/@jscad/dxf-serializer@0.0.2...@jscad/dxf-serializer@0.0.3) (2017-10-10)
+
+
+
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+<a name="0.0.2"></a>
+## 0.0.2 (2017-10-10)
+
+
+
+
+**Note:** Version bump only for package @jscad/dxf-serializer

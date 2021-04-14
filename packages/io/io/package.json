@@ -1,0 +1,48 @@
+{
+  "name": "@jscad/io",
+  "version": "2.0.0",
+  "description": "Meta Package for JSCAD IO Packages",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "main": "index.js",
+  "scripts": {},
+  "contributors": [
+    {
+      "name": "Rene K. Mueller",
+      "url": "http://renekmueller.com"
+    },
+    {
+      "name": "z3dev",
+      "url": "http://www.z3d.jp"
+    },
+    {
+      "name": "Mark 'kaosat-dev' Moissette",
+      "url": "http://kaosat.net"
+    }
+  ],
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "io",
+    "formats",
+    "serializer",
+    "deserializer"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@jscad/amf-deserializer": "2.0.0",
+    "@jscad/amf-serializer": "2.0.0",
+    "@jscad/array-utils": "2.0.0",
+    "@jscad/dxf-deserializer": "2.0.0",
+    "@jscad/dxf-serializer": "2.0.0",
+    "@jscad/io-utils": "2.0.0",
+    "@jscad/json-deserializer": "2.0.0",
+    "@jscad/json-serializer": "2.0.0",
+    "@jscad/modeling": "2.0.0",
+    "@jscad/obj-deserializer": "2.0.0",
+    "@jscad/stl-deserializer": "2.0.0",
+    "@jscad/stl-serializer": "2.0.0",
+    "@jscad/svg-deserializer": "2.0.0",
+    "@jscad/svg-serializer": "2.0.0",
+    "@jscad/x3d-serializer": "2.0.0"
+  }
+}

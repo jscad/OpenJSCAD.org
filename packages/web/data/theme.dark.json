@@ -1,0 +1,15 @@
+{
+  "name": "Dark",
+  "viewer": {
+    "rendering": {
+      "background": [0.211, 0.2, 0.207, 1],
+      "meshColor": [1, 0.4, 0, 1]
+    },
+    "grid": {
+      "color": [1, 1, 1, 0.5],
+      "subColor": [0, 1, 1, 0.5]
+    }
+  },
+  "mainTextColor": "#FFF",
+  "secondaryTextColor": "#000"
+}
