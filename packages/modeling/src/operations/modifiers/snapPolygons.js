@@ -3,11 +3,8 @@ const vec3 = require('../../maths/vec3')
 const poly3 = require('../../geometries/poly3')
 
 const isValidPoly3 = (epsilon, polygon) => {
-  if (poly3.isA(polygon)) {
-    const area = poly3.measureArea(polygon)
-    return (Number.isFinite(area) && area > epsilon)
-  }
-  return false
+  const area = poly3.measureArea(polygon)
+  return (Number.isFinite(area) && area > epsilon)
 }
 
 /*
@@ -15,7 +12,13 @@ const isValidPoly3 = (epsilon, polygon) => {
  */
 const snapPolygons = (epsilon, polygons) => {
   let newpolygons = polygons.map((polygon) => {
-    const newvertices = polygon.vertices.map((vertice) => vec3.snap(vec3.create(), epsilon, vertice))
+    const snapvertices = polygon.vertices.map((vertice) => vec3.snap(vec3.create(), epsilon, vertice))
+    // only retain unique vertices
+    const newvertices = []
+    for (let i = 0; i < snapvertices.length; i++) {
+      const j = (i + 1) % snapvertices.length
+      if (! vec3.equals(snapvertices[i], snapvertices[j])) newvertices.push(snapvertices[i])
+    }
     return poly3.create(newvertices)
   })
   // snap can produce polygons with zero (0) area, remove those
