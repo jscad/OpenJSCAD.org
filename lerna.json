@@ -9,7 +9,7 @@
       ]
     },
     "version": {
-      "allowBranch": "v2-prerelease",
+      "allowBranch": "release",
       "conventionalCommits": true,
       "exact": true,
       "message": "chore(release): publish"
