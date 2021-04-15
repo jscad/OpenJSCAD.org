@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-deserializer@2.0.0-alpha.0...@jscad/dxf-deserializer@2.1.0) (2021-04-15)
+
+
+### Bug Fixes
+
+* **all:** V2 : several fixes for modeling ([#705](https://github.com/jscad/OpenJSCAD.org/issues/705)) ([62017a4](https://github.com/jscad/OpenJSCAD.org/commit/62017a41214169d6e000f1e0c11aaefdd68e1097))
+* **dxf-deserializer:** support for colors in dxf serializer ([#684](https://github.com/jscad/OpenJSCAD.org/issues/684)) ([2b89a3a](https://github.com/jscad/OpenJSCAD.org/commit/2b89a3a7c4dde177ed93769d96522319954188df))
+
+
+### Features
+
+* **modeling:** V2 : rename option to align and center ([#775](https://github.com/jscad/OpenJSCAD.org/issues/775)) ([c5b0f48](https://github.com/jscad/OpenJSCAD.org/commit/c5b0f48bbd980b59876d73b673a0e3bef44d2b30))
+
+
+
+
+
 # [2.0.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-deserializer@2.0.0-alpha.11...@jscad/dxf-deserializer@2.0.0) (2021-04-12)
 
 **Note:** Version bump only for package @jscad/dxf-deserializer

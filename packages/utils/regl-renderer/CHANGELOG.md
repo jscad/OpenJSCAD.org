@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.0.0-alpha.0...@jscad/regl-renderer@2.0.1) (2021-04-15)
+
+
+### Bug Fixes
+
+* **all:** support sparse arrays from main() ([#672](https://github.com/jscad/OpenJSCAD.org/issues/672)) ([209961d](https://github.com/jscad/OpenJSCAD.org/commit/209961d41ebf77373d427a7986934d195780f118))
+* **all:** V2 : several fixes for modeling ([#705](https://github.com/jscad/OpenJSCAD.org/issues/705)) ([62017a4](https://github.com/jscad/OpenJSCAD.org/commit/62017a41214169d6e000f1e0c11aaefdd68e1097))
+* **regl-renderer:** Changes to improve regl-renderer ([#722](https://github.com/jscad/OpenJSCAD.org/issues/722)) ([7bcc689](https://github.com/jscad/OpenJSCAD.org/commit/7bcc689e3d36cfbc3ac6f9b4c3822a72d54a996e))
+* **regl-renderer:** corrected zoomToFit for 2D geometries ([#793](https://github.com/jscad/OpenJSCAD.org/issues/793)) ([2a05d3e](https://github.com/jscad/OpenJSCAD.org/commit/2a05d3e9b380e8782148c5d158c40715d6af2cd8))
+* **regl-renderer:** variable distance in pan controls ([#735](https://github.com/jscad/OpenJSCAD.org/issues/735)) ([9ad661c](https://github.com/jscad/OpenJSCAD.org/commit/9ad661c44cb87ee6ae58f20a69eaad5fd83a05a6))
+
+
+
+
+
 # [2.0.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.0.0-alpha.13...@jscad/regl-renderer@2.0.0) (2021-04-12)
 
 **Note:** Version bump only for package @jscad/regl-renderer

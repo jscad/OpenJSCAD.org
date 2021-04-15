@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.0.0-alpha.0...@jscad/modeling@2.1.0) (2021-04-15)
+
+
+### Bug Fixes
+
+* **all:** V2 : several fixes for modeling ([#705](https://github.com/jscad/OpenJSCAD.org/issues/705)) ([62017a4](https://github.com/jscad/OpenJSCAD.org/commit/62017a41214169d6e000f1e0c11aaefdd68e1097))
+* **core:** Remove connectors from public api ([#703](https://github.com/jscad/OpenJSCAD.org/issues/703)) ([a3bf8a4](https://github.com/jscad/OpenJSCAD.org/commit/a3bf8a42e7ccf2204351da4a4acff55c2d6acad6))
+* **core,modeling:** V2 fix extrude ([#751](https://github.com/jscad/OpenJSCAD.org/issues/751)) ([767b6fc](https://github.com/jscad/OpenJSCAD.org/commit/767b6fc13a24b6203248c197210645e5b7cebc28))
+* **modeling:** Adding & improving tests, docs, removing some equals() ([1f3724b](https://github.com/jscad/OpenJSCAD.org/commit/1f3724b7cb9c8afd5ddc61587de506dbac93125e))
+* **modeling:** correced snapPolygons to remove duplicate vertices which is possible ([#791](https://github.com/jscad/OpenJSCAD.org/issues/791)) ([1eaf86f](https://github.com/jscad/OpenJSCAD.org/commit/1eaf86f182e101cdf038e52f6a1ad1a6480575a8))
+* **modeling:** ensure extrude rectangular expand produces shapes with positive area ([43ce5dd](https://github.com/jscad/OpenJSCAD.org/commit/43ce5dd4341935966ed976ce16cb5a7e452becc2))
+* **modeling:** fix extrude rotate ([#727](https://github.com/jscad/OpenJSCAD.org/issues/727)) ([13de037](https://github.com/jscad/OpenJSCAD.org/commit/13de03788336ac5c2e00818fadd631bc8aadc523))
+* **modeling:** fix torus offset when outerRotation is supplied ([f7b3a2a](https://github.com/jscad/OpenJSCAD.org/commit/f7b3a2a9adfee91ecc2be1661883f5f17264a798))
+* **modeling:** re-implemented poly2.isPointInside to correct issues ([#741](https://github.com/jscad/OpenJSCAD.org/issues/741)) ([4266c8f](https://github.com/jscad/OpenJSCAD.org/commit/4266c8f623f3de9f8c8a5999647e654c8d5aaf31))
+* **modeling:** V2 - primitives revisited ([#697](https://github.com/jscad/OpenJSCAD.org/issues/697)) ([4721484](https://github.com/jscad/OpenJSCAD.org/commit/47214847b9ea1a144bd0ec595318979199c47dea))
+* **modeling:** V2 revisit modifiers ([#773](https://github.com/jscad/OpenJSCAD.org/issues/773)) ([1e28120](https://github.com/jscad/OpenJSCAD.org/commit/1e28120d2b8505dc1882cf3d607296d6fcd5526d))
+
+
+### Features
+
+* **examples:** examples overhaul for V2 JSCAD ([d73e06f](https://github.com/jscad/OpenJSCAD.org/commit/d73e06f51e187e673487c3d9599672e66ac441d7))
+* **modeling:** add align() and measureAggregateBoundingBox() functions ([72df65c](https://github.com/jscad/OpenJSCAD.org/commit/72df65cfec065f26a84a8bb1ff80f5750a9972bf))
+* **modeling:** added aggregate functions for area, volume, epsilon measurements ([cf558bb](https://github.com/jscad/OpenJSCAD.org/commit/cf558bb7d0df1ab4562fda022a8db2c4216d7514))
+* **modeling:** V2 : adding new class of operations to modeling; modifiers ([#743](https://github.com/jscad/OpenJSCAD.org/issues/743)) ([9e20303](https://github.com/jscad/OpenJSCAD.org/commit/9e20303255fb10bf11251dbefffa6b8c1dad9b49))
+* **modeling:** V2 : rename option to align and center ([#775](https://github.com/jscad/OpenJSCAD.org/issues/775)) ([c5b0f48](https://github.com/jscad/OpenJSCAD.org/commit/c5b0f48bbd980b59876d73b673a0e3bef44d2b30))
+* **modeling:** V2 fix extrusions ([#761](https://github.com/jscad/OpenJSCAD.org/issues/761)) ([466910e](https://github.com/jscad/OpenJSCAD.org/commit/466910e7c1a3398065ba2895871c42f35877834a))
+
+
+
+
+
 # [2.0.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.0.0-alpha.11...@jscad/modeling@2.0.0) (2021-04-12)
 
 **Note:** Version bump only for package @jscad/modeling
