@@ -1,36 +1,47 @@
 # @jscad-regl-renderer
 
-## 3D Renderer for JSCAD
+## Renderer for JSCAD
 
 [![GitHub version](https://badge.fury.io/gh/jscad%2Fregl-renderer.svg)](https://badge.fury.io/gh/jscad%2Fregl-renderer)
 [![Build Status](https://travis-ci.org/jscad/regl-renderer.svg)](https://travis-ci.org/jscad/regl-renderer)
 
-> 3D renderer for JSCAD geometries : small, fast
+> Renderer for JSCAD geometries, both 2D and 3D.
 
-This is a early version of this viewer ! Expect changes !
-
-## What ?
+## What is it?
 - webgl renderer (barebones, uses regl)
-- works in the browser
-- work in node (headless, see below for more details)
+- small, compact, and fast
+- works in all browsers
+- works in Node.js projects (headless rendering to PNG images)
 
 ## Usage
 
 ### Node.js (headless)
 
-Install the following packages manually. NOTE: There are issues with CI, so these are not installed as dev dependencies.
+Install the following packages manually.
+
+NOTE: There are issues with continous integration testing, so 'gl' is not installed initially.
 
 ```
  npm install gl
 ```
 
 Try the demo by running ```npm run demo-cli```.
-If all goes well you should end up with an image (test.png) rendering of the demo design (a few solids).
 
-### Web
+If all goes well you should end up with an image (test.png) that renders the demo design.
 
-Try the demo by running ```npm run demo-web``` and open the URL shown.
+The demo code can be found in 'demo-cli.js'
+
+### Browsers
+
+From a browser, try opening the file 'demo.html'. This should show the demo design.
+
+### Developers
+
+Run the development web server using ```npm run dev```, then open the URL shown.
+
 If all goes well you should end up with a web page with a rotating camera (no mouse controls) that displays the demo design (a few solids).
+
+After making changes, all tests must pass. Run ```npm test```
 
 ## License
 

@@ -4,19 +4,53 @@
   <title>Demo Application</title>
     <style>
       #jscad{
-        width: 6cm;
-        height: 6cm;
+        width: 15cm;
+        height: 15cm;
         margin: 0;
         outline: 1px solid black;
       }
     </style>
 </head>
 <body>
-  <script language="javascript" src="./dist/jscad-regl-renderer.min.js"></script>
+  <script language="javascript" src="https://unpkg.com/@jscad/modeling" id="MODELING"></script>
+  <script language="javascript" src="./dist/jscad-regl-renderer.min.js" id="RENDERING"></script>
 
   <div id="jscad"></div>
 
   <script language="javascript">
+// ********************
+// The design to render.
+// ********************
+const { booleans, colors, primitives } = jscadModeling // modeling comes from the included MODELING library
+
+const { intersect, subtract } = booleans
+const { colorize } = colors
+const { cube, cuboid, line, sphere, star } = primitives
+
+const demo = (parameters) => {
+  const logo = [
+    colorize([1.0, 0.4, 1.0], subtract(
+      cube({ size: 300 }),
+      sphere({ radius: 200 })
+    )),
+    colorize([1.0, 1.0, 0], intersect(
+      sphere({ radius: 130 }),
+      cube({ size: 210 })
+    ))
+  ]
+
+  const transpCube = colorize([1, 0, 0, 0.75], cuboid({ size: [100 * parameters.scale, 100, 210 + (200 * parameters.scale)] }))
+  const star2D = star({ vertices: 8, innerRadius: 150, outerRadius: 200 })
+  const line2D = colorize([1.0, 0, 0], line([[220, 220], [-220, 220], [-220, -220], [220, -220], [220, 220]]))
+
+  return [transpCube, star2D, line2D, ...logo]
+}
+  </script>
+
+  <script language="javascript">
+// ********************
+// Renderer configuration and initiation.
+// ********************
 const { prepareRender, drawCommands, cameras, controls, entitiesFromSolids } = jscadReglRenderer
 
 const perspectiveCamera = cameras.perspective
@@ -65,6 +99,8 @@ const axisOptions = {
   }
 }
 
+const entities = entitiesFromSolids({}, demo({ scale: 1 }))
+
 // assemble the options for rendering
 const renderOptions = {
   camera: state.camera,
@@ -76,8 +112,8 @@ const renderOptions = {
   // define the visual content
   entities: [
     gridOptions,
-    axisOptions
-    //...solids
+    axisOptions,
+    ...entities
   ]
 }
 
