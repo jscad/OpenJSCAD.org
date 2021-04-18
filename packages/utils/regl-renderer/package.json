@@ -12,7 +12,8 @@
     "demo-cli": "node ./demo-cli.js",
     "demo-web": "budo ./demo-web.js --title regl-renderer --live",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
-    "coverage": "nyc --all --reporter=html --reporter=text npm test"
+    "coverage": "nyc --all --reporter=html --reporter=text npm test",
+    "types": "tsc src/*.js src/**/*.js --declaration --allowJs --emitDeclarationOnly --outDir types"
   },
   "author": "Mark 'kaosat-dev' Moissette",
   "keywords": [
@@ -25,6 +26,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "types": "types",
   "dependencies": {
     "@jscad/array-utils": "2.1.0",
     "camera-unproject": "1.0.1",
@@ -39,6 +41,7 @@
     "browserify": "16.5.1",
     "budo": "11.6.4",
     "nyc": "15.1.0",
+    "typescript": "^4.0.0",
     "uglifyify": "5.0.2"
   }
 }
