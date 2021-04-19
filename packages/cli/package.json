@@ -36,6 +36,7 @@
   "dependencies": {
     "@jscad/core": "2.2.0",
     "@jscad/io": "2.0.2",
+    "@jscad/array-utils": "2.1.0",
     "@jscad/modeling": "2.1.0"
   },
   "devDependencies": {
