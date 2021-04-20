@@ -51,19 +51,18 @@ const makeWebRequire = (filesAndFolders, options) => {
   const apiModule = apiMainPath === '@jscad/modeling' ? require('@jscad/modeling') : require('./vtreeApi')
 
   // preset core modules
+  // FIXME this list of modules should be an option, replacing apiMainPath
   const coreModules = {
     '@jscad/io': {
       exports: require('@jscad/io')
     },
-    // ALIAS for now !!
-    '@jscad/api': {
-      exports: apiModule
+    '@jscad/array-utils': {
+      exports: require('@jscad/array-utils')
     },
     '@jscad/modeling': {
       exports: apiModule
     },
-    // fake fs module ! only useable with the currently available files & folders
-    // that have been drag & dropped / created
+    // expose the fake fs module
     fs: {
       exports: fakeFs
     }

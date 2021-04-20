@@ -1,6 +1,8 @@
 {
   "source" : {
     "include": [
+      "packages/utils/array-utils/src",
+
       "packages/modeling/src/colors",
       "packages/modeling/src/curves/bezier",
       "packages/modeling/src/geometries",

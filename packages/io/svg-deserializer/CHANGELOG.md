@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.2.0...@jscad/svg-deserializer@2.2.1) (2021-04-20)
+
+**Note:** Version bump only for package @jscad/svg-deserializer
+
+
+
+
+
+# [2.2.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.0.0-alpha.0...@jscad/svg-deserializer@2.2.0) (2021-04-17)
+
+
+### Bug Fixes
+
+* **all:** V2 : several fixes for modeling ([#705](https://github.com/jscad/OpenJSCAD.org/issues/705)) ([62017a4](https://github.com/jscad/OpenJSCAD.org/commit/62017a41214169d6e000f1e0c11aaefdd68e1097))
+* **io:** io revisited ([#714](https://github.com/jscad/OpenJSCAD.org/issues/714)) ([22f04f1](https://github.com/jscad/OpenJSCAD.org/commit/22f04f1b2894a82e24952655875e73b74727bf86))
+
+
+### Features
+
+* **modeling:** V2 : rename option to align and center ([#775](https://github.com/jscad/OpenJSCAD.org/issues/775)) ([c5b0f48](https://github.com/jscad/OpenJSCAD.org/commit/c5b0f48bbd980b59876d73b673a0e3bef44d2b30))
+* **svg-deserializer:** add support for new segments option ([9bdc7f5](https://github.com/jscad/OpenJSCAD.org/commit/9bdc7f59dff8847c250c8c63a91babb1a69a03a6))
+* **svg-deserializer:** V2 - enhance SVG deserializer for mirror transforms ([#733](https://github.com/jscad/OpenJSCAD.org/issues/733)) ([a50b584](https://github.com/jscad/OpenJSCAD.org/commit/a50b5847645009a385636852398257b12c6b0949))
+
+
+
+
+
 # [2.1.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.0.0-alpha.0...@jscad/svg-deserializer@2.1.0) (2021-04-15)
 
 

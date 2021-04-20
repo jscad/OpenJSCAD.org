@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.2.0...@jscad/core@2.3.0) (2021-04-20)
+
+
+### Features
+
+* **core:** added @jscad/array-utils to list of core modules ([79ddf31](https://github.com/jscad/OpenJSCAD.org/commit/79ddf31bd10b5250953545e110e59d736109c6b8))
+
+
+
+
+
+# [2.2.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.0.0-alpha.0...@jscad/core@2.2.0) (2021-04-17)
+
+
+### Bug Fixes
+
+* **all:** fix json import ([#675](https://github.com/jscad/OpenJSCAD.org/issues/675)) ([05caf60](https://github.com/jscad/OpenJSCAD.org/commit/05caf60efc3f090313b3e0bddcc0b4f94de67c78))
+* **all:** support sparse arrays from main() ([#672](https://github.com/jscad/OpenJSCAD.org/issues/672)) ([209961d](https://github.com/jscad/OpenJSCAD.org/commit/209961d41ebf77373d427a7986934d195780f118))
+* **all:** update dependencies ([d8c713a](https://github.com/jscad/OpenJSCAD.org/commit/d8c713a933b97a6d179ed3d3e923e188e334f99e))
+* **all:** V2 : allow other file types to be loaded into the fake FS of the WEB UI ([#709](https://github.com/jscad/OpenJSCAD.org/issues/709)) ([1d4304a](https://github.com/jscad/OpenJSCAD.org/commit/1d4304ae6b42c51b0526cba369eab1806fe8f274))
+* **all:** V2 : several fixes for modeling ([#705](https://github.com/jscad/OpenJSCAD.org/issues/705)) ([62017a4](https://github.com/jscad/OpenJSCAD.org/commit/62017a41214169d6e000f1e0c11aaefdd68e1097))
+* **core:** corrected webRequire to use posix paths ([53a6e85](https://github.com/jscad/OpenJSCAD.org/commit/53a6e85e1dc8f515e8e259e0bb40f292909645fa))
+* **core,modeling:** V2 fix extrude ([#751](https://github.com/jscad/OpenJSCAD.org/issues/751)) ([767b6fc](https://github.com/jscad/OpenJSCAD.org/commit/767b6fc13a24b6203248c197210645e5b7cebc28))
+* **web:** fixes for slider, group, and choice parameter types ([a3faba3](https://github.com/jscad/OpenJSCAD.org/commit/a3faba367604c897d240f56ba86ddb5404034afd))
+
+
+### Features
+
+* **core:** V2 : Fix core packaging ([#720](https://github.com/jscad/OpenJSCAD.org/issues/720)) ([e19c10c](https://github.com/jscad/OpenJSCAD.org/commit/e19c10c6d1a8f2b4f15a0b81144be8439095e02f))
+* **modeling:** V2 fix extrusions ([#761](https://github.com/jscad/OpenJSCAD.org/issues/761)) ([466910e](https://github.com/jscad/OpenJSCAD.org/commit/466910e7c1a3398065ba2895871c42f35877834a))
+
+
+
+
+
 # [2.1.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.0.0-alpha.0...@jscad/core@2.1.0) (2021-04-15)
 
 
