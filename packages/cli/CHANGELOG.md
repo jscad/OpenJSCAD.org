@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.1.1...@jscad/cli@2.2.0) (2021-04-20)
+
+
+### Features
+
+* **cli:** added array-utils to dependencies, enhanced test suite ([d631fc5](https://github.com/jscad/OpenJSCAD.org/commit/d631fc5842653b21fa94de3c6afd9ad8daaa951a))
+
+
+
+
+
 ## [2.1.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.1.0...@jscad/cli@2.1.1) (2021-04-17)
 
 **Note:** Version bump only for package @jscad/cli
