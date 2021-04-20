@@ -38,12 +38,13 @@ test.beforeEach(t => {
 // the script should produce ALL geometry types
 const createJscad = (id) => {
   const jscadScript = `// test script ${id}
+const { flatten } = require('@jscad/array-utils')
 const { primitives } = require('@jscad/modeling')
 
 const getParameterDefinitions = () => {
-  return [
+  return flatten([
     { name: 'segments', caption: 'Segements:', type: 'int', initial: 10, min: 5, max: 20, step: 1 }
-  ]
+  ])
 }
 
 const main = (params) => {
