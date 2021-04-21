@@ -230,9 +230,8 @@ const instantiateEllipse = (obj, layers, options) => {
 
     // FIXME add start and end angle when supported
     const cag = primitives.ellipse({ center: [0, 0], radius: [rx, ry], segments: res })
-    let matrix = maths.mat4.fromZRotation(angle)
-    matrix = maths.mat4.multiply(matrix, maths.mat4.fromTranslation([pptx, ppty, 0]))
-    // cag.rotateZ(angle).translate([pptx,ppty])
+    let matrix = maths.mat4.fromZRotation(maths.mat4.create(), angle)
+    maths.mat4.multiply(matrix, matrix, maths.mat4.fromTranslation(maths.mat4.create(), [pptx, ppty, 0]))
     return geometries.geom2.transform(matrix, cag)
   }
   // convert to 3D object
@@ -298,7 +297,7 @@ const instantiateMesh = (obj, layers, options) => {
         let vi = 0
         while (vi < face.length) {
           const pi = face[vi]
-          const vertex = maths.vec3.fromArray(points[pi])
+          const vertex = maths.vec3.clone(points[pi])
           vertices.push(vertex)
           vi++
         }
