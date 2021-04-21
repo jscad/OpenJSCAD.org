@@ -3,4 +3,4 @@ import Vec2 from '../vec2/type'
 
 export default distanceToPoint
 
-declare function distanceToPoint(point: Vec2, line: Line2): number
+declare function distanceToPoint(line: Line2, point: Vec2): number

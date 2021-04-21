@@ -1,5 +1,3 @@
-const create = require('./create')
-
 /**
  * Creates a matrix from a vector translation
  * This is equivalent to (but much faster than):
@@ -7,23 +5,14 @@ const create = require('./create')
  *     mat4.identity(dest);
  *     mat4.translate(dest, dest, vec);
  *
- * @param {mat4} [out] - mat4 receiving operation result
- * @param {vec3} vec - offset (vector) of translation
- * @returns {mat4} a new matrix
+ * @param {mat4} out - the receiving matrix
+ * @param {vec3} vector - offset (vector) of translation
+ * @returns {mat4} out
  * @alias module:modeling/maths/mat4.fromTranslation
  * @example
- * let matrix = fromTranslation([1, 2, 3])
+ * let matrix = fromTranslation(create(), [1, 2, 3])
  */
-const fromTranslation = (...params) => {
-  let out
-  let v
-  if (params.length === 1) {
-    out = create()
-    v = params[0]
-  } else {
-    out = params[0]
-    v = params[1]
-  }
+const fromTranslation = (out, vector) => {
   out[0] = 1
   out[1] = 0
   out[2] = 0
@@ -36,9 +25,9 @@ const fromTranslation = (...params) => {
   out[9] = 0
   out[10] = 1
   out[11] = 0
-  out[12] = v[0]
-  out[13] = v[1]
-  out[14] = v[2]
+  out[12] = vector[0]
+  out[13] = vector[1]
+  out[14] = vector[2]
   out[15] = 1
   return out
 }

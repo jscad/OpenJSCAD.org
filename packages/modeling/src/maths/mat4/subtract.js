@@ -1,27 +1,13 @@
-const create = require('./create')
-
 /**
- * Subtracts matrix b from matrix a.
+ * Subtracts matrix b from matrix a. (A-B)
  *
- * @param {mat4} [out] - the receiving matrix
+ * @param {mat4} out - the receiving matrix
  * @param {mat4} a - the first operand
  * @param {mat4} b - the second operand
- * @returns {mat4} a new matrix
+ * @returns {mat4} out
  * @alias module:modeling/maths/mat4.subtract
  */
-const subtract = (...params) => {
-  let out
-  let a
-  let b
-  if (params.length === 2) {
-    out = create()
-    a = params[0]
-    b = params[1]
-  } else {
-    out = params[0]
-    a = params[1]
-    b = params[2]
-  }
+const subtract = (out, a, b) => {
   out[0] = a[0] - b[0]
   out[1] = a[1] - b[1]
   out[2] = a[2] - b[2]

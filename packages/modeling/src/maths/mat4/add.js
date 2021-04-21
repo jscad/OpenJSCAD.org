@@ -1,27 +1,13 @@
-const create = require('./create')
-
 /**
- * Adds the two matrices.
+ * Adds the two matrices (A+B).
  *
- * @param {mat4} [out] - the receiving matrix
+ * @param {mat4} out - the receiving matrix
  * @param {mat4} a - the first operand
  * @param {mat4} b - the second operand
- * @returns {mat4} a new matrix
+ * @returns {mat4} out
  * @alias module:modeling/maths/mat4.add
  */
-const add = (...params) => {
-  let out
-  let a
-  let b
-  if (params.length === 2) {
-    out = create()
-    a = params[0]
-    b = params[1]
-  } else {
-    out = params[0]
-    a = params[1]
-    b = params[2]
-  }
+const add = (out, a, b) => {
   out[0] = a[0] + b[0]
   out[1] = a[1] + b[1]
   out[2] = a[2] + b[2]

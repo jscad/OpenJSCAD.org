@@ -4,4 +4,4 @@ import Vec3 from '../vec3/type'
 
 export default intersectPointOfLineAndPlane
 
-declare function intersectPointOfLineAndPlane(plane: Plane, line: Line3): Vec3
+declare function intersectPointOfLineAndPlane(line: Line3, plane: Plane): Vec3

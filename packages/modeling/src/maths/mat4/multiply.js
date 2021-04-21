@@ -1,27 +1,13 @@
-const create = require('./create')
-
 /**
  * Multiplies the two matrices.
  *
- * @param {mat4} [out] - the receiving matrix
+ * @param {mat4} out - the receiving matrix
  * @param {mat4} a - the first operand
  * @param {mat4} b - the second operand
- * @returns {mat4} a new matrix
+ * @returns {mat4} out
  * @alias module:modeling/maths/mat4.multiply
  */
-const multiply = (...params) => {
-  let out
-  let a
-  let b
-  if (params.length === 2) {
-    out = create()
-    a = params[0]
-    b = params[1]
-  } else {
-    out = params[0]
-    a = params[1]
-    b = params[2]
-  }
+const multiply = (out, a, b) => {
   const a00 = a[0]
   const a01 = a[1]
   const a02 = a[2]

@@ -3,17 +3,6 @@ const { create, orthogonal } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
-test('vec3: orthogonal() should return a vec3 with correct values', (t) => {
-  const obs1 = orthogonal([0, 0, 0])
-  t.true(compareVectors(obs1, [1, 0, 0]))
-
-  const obs2 = orthogonal([3, 1, 3])
-  t.true(compareVectors(obs2, [0, 1, 0]))
-
-  const obs3 = orthogonal([3, 2, 1])
-  t.true(compareVectors(obs3, [0, 0, 1]))
-})
-
 test('vec3: orthogonal() with two params should update a vec3 with correct values', (t) => {
   const org1 = create()
   const ret1 = orthogonal(org1, [0, 0, 0])

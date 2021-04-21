@@ -1,32 +1,16 @@
-const create = require('./create')
-
 /**
  * Scales the matrix by the given dimensions.
  *
- * @param {mat4} [out] - the receiving matrix
- * @param {vec3} dimensions - the dimensions to scale the matrix by
+ * @param {mat4} out - the receiving matrix
  * @param {mat4} matrix - the matrix to scale
- * @returns {mat4} a new matrix
+ * @param {vec3} dimensions - the dimensions to scale the matrix by
+ * @returns {mat4} out
  * @alias module:modeling/maths/mat4.scale
  */
-const scale = (...params) => {
-  let out
-  let vector
-  let matrix
-
-  if (params.length === 2) {
-    out = create()
-    vector = params[0]
-    matrix = params[1]
-  } else {
-    out = params[0]
-    vector = params[1]
-    matrix = params[2]
-  }
-
-  const x = vector[0]
-  const y = vector[1]
-  const z = vector[2]
+const scale = (out, matrix, dimensions) => {
+  const x = dimensions[0]
+  const y = dimensions[1]
+  const z = dimensions[2]
 
   out[0] = matrix[0] * x
   out[1] = matrix[1] * x

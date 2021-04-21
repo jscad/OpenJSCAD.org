@@ -3,26 +3,6 @@ const { multiply, fromValues } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
-test('vec3: multiply() called with two paramerters should return a vec3 with correct values', (t) => {
-  const obs1 = multiply([0, 0, 0], [0, 0, 0])
-  t.true(compareVectors(obs1, [0, 0, 0]))
-
-  const obs2 = multiply([0, 0, 0], [1, 2, 3])
-  t.true(compareVectors(obs2, [0, 0, 0]))
-
-  const obs3 = multiply([6, 6, 6], [1, 2, 3])
-  t.true(compareVectors(obs3, [6, 12, 18]))
-
-  const obs4 = multiply([-6, -6, -6], [1, 2, 3])
-  t.true(compareVectors(obs4, [-6, -12, -18]))
-
-  const obs5 = multiply([6, 6, 6], [-1, -2, -3])
-  t.true(compareVectors(obs5, [-6, -12, -18]))
-
-  const obs6 = multiply([-6, -6, -6], [-1, -2, -3])
-  t.true(compareVectors(obs6, [6, 12, 18]))
-})
-
 test('vec3: multiply() called with three paramerters should update a vec3 with correct values', (t) => {
   const obs1 = fromValues(0, 0, 0)
   const ret1 = multiply(obs1, [0, 0, 0], [0, 0, 0])

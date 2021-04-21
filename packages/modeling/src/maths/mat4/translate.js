@@ -1,30 +1,16 @@
-const create = require('./create')
-
 /**
  * Translate the matrix by the given offset vector.
  *
- * @param {mat4} [out] - the receiving matrix
- * @param {vec3} offsets - offset vector to translate by
+ * @param {mat4} out - the receiving matrix
  * @param {mat4} matrix - the matrix to translate
- * @returns {mat4} a new matrix
+ * @param {vec3} offsets - offset vector to translate by
+ * @returns {mat4} out
  * @alias module:modeling/maths/mat4.translate
  */
-const translate = (...params) => {
-  let out
-  let vector
-  let matrix
-  if (params.length === 2) {
-    out = create()
-    vector = params[0]
-    matrix = params[1]
-  } else {
-    out = params[0]
-    vector = params[1]
-    matrix = params[2]
-  }
-  const x = vector[0]
-  const y = vector[1]
-  const z = vector[2]
+const translate = (out, matrix, offsets) => {
+  const x = offsets[0]
+  const y = offsets[1]
+  const z = offsets[2]
   let a00
   let a01
   let a02
