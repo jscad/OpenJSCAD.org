@@ -1,4 +1,5 @@
 const vec2 = require('../../maths/vec2')
+const vec3 = require('../../maths/vec2')
 
 const appendPoints = require('./appendPoints')
 const toPoints = require('./toPoints')
@@ -62,9 +63,8 @@ const appendBezier = (options, geometry) => {
       throw new Error('the given path must contain TWO or more points if given a null control point')
     }
     // replace the first control point with the mirror of the last bezier control point
-    let controlpoint = points[points.length - 1]
-    controlpoint = vec2.scale(2, controlpoint)
-    controlpoint = vec2.subtract(controlpoint, lastBezierControlPoint)
+    const controlpoint = vec2.scale(vec2.create(), points[points.length - 1], 2)
+    vec2.subtract(controlpoint, controlpoint, lastBezierControlPoint)
 
     controlPoints[0] = controlpoint
   }
@@ -86,6 +86,9 @@ const appendBezier = (options, geometry) => {
     binomials.push(binomial)
   }
 
+  const v0 = vec2.create()
+  const v1 = vec2.create()
+  const v3 = vec3.create()
   const getPointForT = (t) => {
     let tk = 1 // = pow(t,k)
     let oneMinusTNMinusK = Math.pow(1 - t, bezierOrder) // = pow( 1-t, bezierOrder - k)
@@ -94,7 +97,7 @@ const appendBezier = (options, geometry) => {
     for (let k = 0; k <= bezierOrder; ++k) {
       if (k === bezierOrder) oneMinusTNMinusK = 1
       const bernsteinCoefficient = binomials[k] * tk * oneMinusTNMinusK
-      const derivativePoint = vec2.scale(bernsteinCoefficient, controlPoints[k])
+      const derivativePoint = vec2.scale(v0, controlPoints[k], bernsteinCoefficient)
       vec2.add(point, point, derivativePoint)
       tk *= t
       oneMinusTNMinusK *= invOneMinusT
@@ -117,9 +120,11 @@ const appendBezier = (options, geometry) => {
   const maxangle = Math.PI * 2 / segments
   const maxsinangle = Math.sin(maxangle)
   while (subdivideBase < newpoints.length - 1) {
-    const dir1 = vec2.normalize(vec2.subtract(newpoints[subdivideBase], newpoints[subdivideBase - 1]))
-    const dir2 = vec2.normalize(vec2.subtract(newpoints[subdivideBase + 1], newpoints[subdivideBase]))
-    const sinangle = vec2.cross(dir1, dir2) // the sine of the angle
+    const dir1 = vec2.subtract(v0, newpoints[subdivideBase], newpoints[subdivideBase - 1])
+    vec2.normalize(dir1, dir1)
+    const dir2 = vec2.subtract(v1, newpoints[subdivideBase + 1], newpoints[subdivideBase])
+    vec2.normalize(dir2, dir2)
+    const sinangle = vec2.cross(v3, dir1, dir2) // the sine of the angle
     if (Math.abs(sinangle[2]) > maxsinangle) {
       // angle is too big, we need to subdivide
       const t0 = newpointsT[subdivideBase - 1]

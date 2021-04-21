@@ -26,7 +26,7 @@ const translate = (offset, ...objects) => {
   offset = offset.slice() // don't modify the original
   while (offset.length < 3) offset.push(0)
 
-  const matrix = mat4.fromTranslation(offset)
+  const matrix = mat4.fromTranslation(mat4.create(), offset)
 
   const results = objects.map((object) => {
     if (path2.isA(object)) return path2.transform(matrix, object)

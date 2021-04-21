@@ -29,12 +29,13 @@ const repartitionEdges = (newlength, edges) => {
 
   const newEdges = []
   edges.forEach((edge) => {
-    const increment = vec3.divide(vec3.subtract(edge[1], edge[0]), divisor)
+    const increment = vec3.subtract(vec3.create(), edge[1], edge[0])
+    vec3.divide(increment, increment, divisor)
 
     // repartition the edge
     let prev = edge[0]
     for (let i = 1; i <= multiple; ++i) {
-      const next = vec3.add(prev, increment)
+      const next = vec3.add(vec3.create(), prev, increment)
       newEdges.push([prev, next])
       prev = next
     }

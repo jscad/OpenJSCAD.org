@@ -16,8 +16,8 @@ const calculatePlane = (slice) => {
   if (edges.length < 3) throw new Error('slices must have 3 or more edges to calculate a plane')
 
   // find the midpoint of the slice, which will lie on the plane by definition
-  const midpoint = edges.reduce((point, edge) => vec3.add(point, edge[0]), vec3.create())
-  vec3.scale(midpoint, 1 / edges.length, midpoint)
+  const midpoint = edges.reduce((point, edge) => vec3.add(vec3.create(), point, edge[0]), vec3.create())
+  vec3.scale(midpoint, midpoint, 1 / edges.length)
 
   // find the farthest edge from the midpoint, which will be on an outside edge
   let farthestEdge
@@ -30,9 +30,9 @@ const calculatePlane = (slice) => {
     }
   })
   // find the before edge
-  let beforeEdge = edges.find((edge) => vec3.equals(edge[1], farthestEdge[0]))
+  const beforeEdge = edges.find((edge) => vec3.equals(edge[1], farthestEdge[0]))
 
-  return plane.fromPoints(beforeEdge[0], farthestEdge[0], farthestEdge[1])
+  return plane.fromPoints(plane.create(), beforeEdge[0], farthestEdge[0], farthestEdge[1])
 }
 
 module.exports = calculatePlane

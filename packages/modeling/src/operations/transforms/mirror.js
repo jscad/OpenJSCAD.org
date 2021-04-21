@@ -29,13 +29,13 @@ const mirror = (options, ...objects) => {
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')
 
-  const planeOfMirror = plane.fromNormalAndPoint(normal, origin)
+  const planeOfMirror = plane.fromNormalAndPoint(plane.create(), normal, origin)
   // verify the plane, i.e. check that the given normal was valid
   if (Number.isNaN(planeOfMirror[0])) {
     throw new Error('the given origin and normal do not define a proper plane')
   }
 
-  const matrix = mat4.mirrorByPlane(planeOfMirror)
+  const matrix = mat4.mirrorByPlane(mat4.create(), planeOfMirror)
 
   const results = objects.map((object) => {
     if (path2.isA(object)) return path2.transform(matrix, object)

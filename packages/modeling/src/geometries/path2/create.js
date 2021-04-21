@@ -23,7 +23,7 @@ const create = (points) => {
   return {
     points: points,
     isClosed: false,
-    transforms: mat4.identity()
+    transforms: mat4.create()
   }
 }
 

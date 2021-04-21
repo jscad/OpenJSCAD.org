@@ -22,7 +22,7 @@ const measureAggregateBoundingBox = (...geometries) => {
   }
   const result = [[Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE], [-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE]]
   return bounds.reduce((result, item) => {
-    result = [vec3min(result[0], item[0]), vec3max(result[1], item[1])]
+    result = [vec3min(result[0], result[0], item[0]), vec3max(result[1], result[1], item[1])]
     return result
   }, result)
 }

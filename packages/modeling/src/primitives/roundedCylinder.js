@@ -40,7 +40,7 @@ const roundedCylinder = (options) => {
 
   const start = [0, 0, -(height / 2)]
   const end = [0, 0, height / 2]
-  const direction = vec3.subtract(end, start)
+  const direction = vec3.subtract(vec3.create(), end, start)
   const length = vec3.length(direction)
 
   if ((2 * roundRadius) > (length - EPS)) throw new Error('height must be larger than twice roundRadius')
@@ -52,33 +52,35 @@ const roundedCylinder = (options) => {
     defaultnormal = vec3.fromValues(1, 0, 0)
   }
 
-  const zvector = vec3.scale(roundRadius, vec3.unit(direction))
-  const xvector = vec3.scale(radius, vec3.unit(vec3.cross(zvector, defaultnormal)))
-  const yvector = vec3.scale(radius, vec3.unit(vec3.cross(xvector, zvector)))
+  const zvector = vec3.scale(vec3.create(), vec3.unit(vec3.create(), direction), roundRadius)
+  const xvector = vec3.scale(vec3.create(), vec3.unit(vec3.create(), vec3.cross(vec3.create(), zvector, defaultnormal)), radius)
+  const yvector = vec3.scale(vec3.create(), vec3.unit(vec3.create(), vec3.cross(vec3.create(), xvector, zvector)), radius)
 
   vec3.add(start, start, zvector)
   vec3.subtract(end, end, zvector)
 
   const qsegments = Math.floor(0.25 * segments)
 
-  // adjust the points to center
   const fromPoints = (points) => {
-    const newpoints = points.map((point) => vec3.add(point, center))
+    // adjust the points to center
+    const newpoints = points.map((point) => vec3.add(point, point, center))
     return poly3.fromPoints(newpoints)
   }
 
   const polygons = []
+  const v1 = vec3.create()
+  const v2 = vec3.create()
   let prevcylinderpoint
   for (let slice1 = 0; slice1 <= segments; slice1++) {
     const angle = Math.PI * 2.0 * slice1 / segments
-    const cylinderpoint = vec3.add(vec3.scale(Math.cos(angle), xvector), vec3.scale(Math.sin(angle), yvector))
+    const cylinderpoint = vec3.add(vec3.create(), vec3.scale(v1, xvector, Math.cos(angle)), vec3.scale(v2, yvector, Math.sin(angle)))
     if (slice1 > 0) {
       // cylinder wall
       let points = []
-      points.push(vec3.add(start, cylinderpoint))
-      points.push(vec3.add(start, prevcylinderpoint))
-      points.push(vec3.add(end, prevcylinderpoint))
-      points.push(vec3.add(end, cylinderpoint))
+      points.push(vec3.add(vec3.create(), start, cylinderpoint))
+      points.push(vec3.add(vec3.create(), start, prevcylinderpoint))
+      points.push(vec3.add(vec3.create(), end, prevcylinderpoint))
+      points.push(vec3.add(vec3.create(), end, cylinderpoint))
       polygons.push(fromPoints(points))
 
       let prevcospitch, prevsinpitch
@@ -90,30 +92,34 @@ const roundedCylinder = (options) => {
           // cylinder rounding, start
           points = []
           let point
-          point = vec3.add(start, vec3.subtract(vec3.scale(prevcospitch, prevcylinderpoint), vec3.scale(prevsinpitch, zvector)))
+          point = vec3.add(vec3.create(), start, vec3.subtract(v1, vec3.scale(v1, prevcylinderpoint, prevcospitch), vec3.scale(v2, zvector, prevsinpitch)))
           points.push(point)
-          point = vec3.add(start, vec3.subtract(vec3.scale(prevcospitch, cylinderpoint), vec3.scale(prevsinpitch, zvector)))
+          point = vec3.add(vec3.create(), start, vec3.subtract(v1, vec3.scale(v1, cylinderpoint, prevcospitch), vec3.scale(v2, zvector, prevsinpitch)))
           points.push(point)
           if (slice2 < qsegments) {
-            point = vec3.add(start, vec3.subtract(vec3.scale(cospitch, cylinderpoint), vec3.scale(sinpitch, zvector)))
+            point = vec3.add(vec3.create(), start, vec3.subtract(v1, vec3.scale(v1, cylinderpoint, cospitch), vec3.scale(v2, zvector, sinpitch)))
             points.push(point)
           }
-          point = vec3.add(start, vec3.subtract(vec3.scale(cospitch, prevcylinderpoint), vec3.scale(sinpitch, zvector)))
+          point = vec3.add(vec3.create(), start, vec3.subtract(v1, vec3.scale(v1, prevcylinderpoint, cospitch), vec3.scale(v2, zvector, sinpitch)))
           points.push(point)
 
           polygons.push(fromPoints(points))
 
           // cylinder rounding, end
           points = []
-          point = vec3.add(end, vec3.add(vec3.scale(prevcospitch, prevcylinderpoint), vec3.scale(prevsinpitch, zvector)))
+          point = vec3.add(vec3.create(), vec3.scale(v1, prevcylinderpoint, prevcospitch), vec3.scale(v2, zvector, prevsinpitch))
+          vec3.add(point, point, end)
           points.push(point)
-          point = vec3.add(end, vec3.add(vec3.scale(prevcospitch, cylinderpoint), vec3.scale(prevsinpitch, zvector)))
+          point = vec3.add(vec3.create(), vec3.scale(v1, cylinderpoint, prevcospitch), vec3.scale(v2, zvector, prevsinpitch))
+          vec3.add(point, point, end)
           points.push(point)
           if (slice2 < qsegments) {
-            point = vec3.add(end, vec3.add(vec3.scale(cospitch, cylinderpoint), vec3.scale(sinpitch, zvector)))
+            point = vec3.add(vec3.create(), vec3.scale(v1, cylinderpoint, cospitch), vec3.scale(v2, zvector, sinpitch))
+            vec3.add(point, point, end)
             points.push(point)
           }
-          point = vec3.add(end, vec3.add(vec3.scale(cospitch, prevcylinderpoint), vec3.scale(sinpitch, zvector)))
+          point = vec3.add(vec3.create(), vec3.scale(v1, prevcylinderpoint, cospitch), vec3.scale(v2, zvector, sinpitch))
+          vec3.add(point, point, end)
           points.push(point)
           points.reverse()
 

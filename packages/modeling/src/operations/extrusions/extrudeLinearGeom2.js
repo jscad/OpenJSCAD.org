@@ -32,7 +32,7 @@ const extrudeGeom2 = (options, geometry) => {
   }
 
   // convert to vector in order to perform transforms
-  const offsetv = vec3.fromArray(offset)
+  const offsetv = vec3.clone(offset)
 
   const baseSides = geom2.toSides(geometry)
   if (baseSides.length === 0) throw new Error('the given geometry cannot be empty')
@@ -40,10 +40,11 @@ const extrudeGeom2 = (options, geometry) => {
   const baseSlice = slice.fromSides(baseSides)
   if (offsetv[2] < 0) slice.reverse(baseSlice, baseSlice)
 
+  const matrix = mat4.create()
   const createTwist = (progress, index, base) => {
     const Zrotation = index / twistSteps * twistAngle
-    const Zoffset = vec3.scale(index / twistSteps, offsetv)
-    const matrix = mat4.multiply(mat4.fromZRotation(Zrotation), mat4.fromTranslation(Zoffset))
+    const Zoffset = vec3.scale(vec3.create(), offsetv, index / twistSteps)
+    mat4.multiply(matrix, mat4.fromZRotation(matrix, Zrotation), mat4.fromTranslation(mat4.create(), Zoffset))
 
     return slice.transform(matrix, base)
   }

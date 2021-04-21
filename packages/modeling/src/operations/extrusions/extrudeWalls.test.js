@@ -7,7 +7,7 @@ const slice = require('./slice')
 const extrudeWalls = require('./extrudeWalls')
 
 test('extrudeWalls (same shapes)', (t) => {
-  const matrix = mat4.fromTranslation([0, 0, 10])
+  const matrix = mat4.fromTranslation(mat4.create(), [0, 0, 10])
 
   const shape0 = []
   const shape1 = [
@@ -45,7 +45,7 @@ test('extrudeWalls (same shapes)', (t) => {
 })
 
 test('extrudeWalls (different shapes)', (t) => {
-  const matrix = mat4.fromTranslation([0, 0, 10])
+  const matrix = mat4.fromTranslation(mat4.create(), [0, 0, 10])
 
   const shape1 = [
     [[-10.0, 10.0], [-10.0, -10.0]],

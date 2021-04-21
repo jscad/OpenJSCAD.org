@@ -109,9 +109,10 @@ const extrudeRotate = (options, geometry) => {
   const baseSlice = slice.fromSides(geom2.toSides(geometry))
   slice.reverse(baseSlice, baseSlice)
 
+  const matrix = mat4.create()
   const createSlice = (progress, index, base) => {
     const Zrotation = rotationPerSlice * index + startAngle
-    const matrix = mat4.multiply(mat4.fromZRotation(Zrotation), mat4.fromXRotation(Math.PI / 2))
+    mat4.multiply(matrix, mat4.fromZRotation(matrix, Zrotation), mat4.fromXRotation(mat4.create(), Math.PI / 2))
 
     return slice.transform(matrix, base)
   }

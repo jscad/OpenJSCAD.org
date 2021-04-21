@@ -38,7 +38,7 @@ test('poly3: measureArea() should return correct values', (t) => {
   t.is(ret4, 19.5)
 
   // rotated to various angles
-  let rotation = mat4.fromZRotation((45 * 0.017453292519943295))
+  let rotation = mat4.fromZRotation(mat4.create(), (45 * 0.017453292519943295))
   ply1 = transform(rotation, ply1)
   ply2 = transform(rotation, ply2)
   ply3 = transform(rotation, ply3)
@@ -52,7 +52,7 @@ test('poly3: measureArea() should return correct values', (t) => {
   nearlyEqual(ret3, 100.0, Number.EPSILON)
   nearlyEqual(ret4, 19.5, Number.EPSILON)
 
-  rotation = mat4.fromYRotation((45 * 0.017453292519943295))
+  rotation = mat4.fromYRotation(mat4.create(), (45 * 0.017453292519943295))
   ply1 = transform(rotation, ply1)
   ply2 = transform(rotation, ply2)
   ply3 = transform(rotation, ply3)
@@ -66,7 +66,7 @@ test('poly3: measureArea() should return correct values', (t) => {
   nearlyEqual(ret3, 100.0, Number.EPSILON)
   nearlyEqual(ret4, 19.5, Number.EPSILON)
 
-  rotation = mat4.fromXRotation((45 * 0.017453292519943295))
+  rotation = mat4.fromXRotation(mat4.create(), (45 * 0.017453292519943295))
   ply1 = transform(rotation, ply1)
   ply2 = transform(rotation, ply2)
   ply3 = transform(rotation, ply3)

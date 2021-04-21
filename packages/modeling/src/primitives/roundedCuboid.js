@@ -20,25 +20,26 @@ const createCorners = (center, size, radius, segments, slice, positive) => {
 
   layerradius = layerradius > EPS ? layerradius : 0
 
-  const corner0 = vec3.add(center, [size[0] - radius, size[1] - radius, layeroffset])
-  const corner1 = vec3.add(center, [radius - size[0], size[1] - radius, layeroffset])
-  const corner2 = vec3.add(center, [radius - size[0], radius - size[1], layeroffset])
-  const corner3 = vec3.add(center, [size[0] - radius, radius - size[1], layeroffset])
+  const corner0 = vec3.add(vec3.create(), center, [size[0] - radius, size[1] - radius, layeroffset])
+  const corner1 = vec3.add(vec3.create(), center, [radius - size[0], size[1] - radius, layeroffset])
+  const corner2 = vec3.add(vec3.create(), center, [radius - size[0], radius - size[1], layeroffset])
+  const corner3 = vec3.add(vec3.create(), center, [size[0] - radius, radius - size[1], layeroffset])
   const corner0Points = []
   const corner1Points = []
   const corner2Points = []
   const corner3Points = []
   for (let i = 0; i <= layersegments; i++) {
     const radians = layersegments > 0 ? Math.PI / 2 * i / layersegments : 0
-    const point2d = vec2.fromAngleRadians(radians)
-    const point3d = vec3.fromVec2(vec2.scale(layerradius, point2d))
-    corner0Points.push(vec3.add(corner0, point3d))
-    vec3.rotateZ(point3d, Math.PI / 2, [0, 0, 0], point3d)
-    corner1Points.push(vec3.add(corner1, point3d))
-    vec3.rotateZ(point3d, Math.PI / 2, [0, 0, 0], point3d)
-    corner2Points.push(vec3.add(corner2, point3d))
-    vec3.rotateZ(point3d, Math.PI / 2, [0, 0, 0], point3d)
-    corner3Points.push(vec3.add(corner3, point3d))
+    const point2d = vec2.fromAngleRadians(vec2.create(), radians)
+    vec2.scale(point2d, point2d, layerradius)
+    const point3d = vec3.fromVec2(vec3.create(), point2d)
+    corner0Points.push(vec3.add(vec3.create(), corner0, point3d))
+    vec3.rotateZ(point3d, point3d, [0, 0, 0], Math.PI / 2)
+    corner1Points.push(vec3.add(vec3.create(), corner1, point3d))
+    vec3.rotateZ(point3d, point3d, [0, 0, 0], Math.PI / 2)
+    corner2Points.push(vec3.add(vec3.create(), corner2, point3d))
+    vec3.rotateZ(point3d, point3d, [0, 0, 0], Math.PI / 2)
+    corner3Points.push(vec3.add(vec3.create(), corner3, point3d))
   }
   if (!positive) {
     corner0Points.reverse()

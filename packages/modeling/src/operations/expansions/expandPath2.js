@@ -32,16 +32,20 @@ const createGeometryFromExpandedOpenPath = (paths, segments, corners, delta) => 
     // added round caps to the geometry
     const step = Math.PI / capSegments
     const eCorner = points[points.length - 1]
-    const e2iStart = vec2.angle(vec2.subtract(external[external.length - 1], eCorner))
+    const e2iStart = vec2.angle(vec2.subtract(vec2.create(), external[external.length - 1], eCorner))
     const iCorner = points[0]
-    const i2eStart = vec2.angle(vec2.subtract(internal[0], iCorner))
+    const i2eStart = vec2.angle(vec2.subtract(vec2.create(), internal[0], iCorner))
     for (let i = 1; i < capSegments; i++) {
       let radians = e2iStart + (step * i)
-      let point = vec2.add(eCorner, vec2.scale(delta, vec2.fromAngleRadians(radians)))
+      let point = vec2.fromAngleRadians(vec2.create(), radians)
+      vec2.scale(point, point, delta)
+      vec2.add(point, point, eCorner)
       e2iCap.push(point)
 
       radians = i2eStart + (step * i)
-      point = vec2.add(iCorner, vec2.scale(delta, vec2.fromAngleRadians(radians)))
+      point = vec2.fromAngleRadians(vec2.create(), radians)
+      vec2.scale(point, point, delta)
+      vec2.add(point, point, iCorner)
       i2eCap.push(point)
     }
   }

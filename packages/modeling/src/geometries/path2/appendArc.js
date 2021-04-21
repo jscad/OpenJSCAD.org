@@ -36,7 +36,7 @@ const appendArc = (options, geometry) => {
   // validate the given options
   if (!Array.isArray(endpoint)) throw new Error('endpoint must be an array of X and Y values')
   if (endpoint.length < 2) throw new Error('endpoint must contain X and Y values')
-  endpoint = vec2.fromArray(endpoint)
+  endpoint = vec2.clone(endpoint)
 
   if (!Array.isArray(radius)) throw new Error('radius must be an array of X and Y values')
   if (radius.length < 2) throw new Error('radius must contain X and Y values')
@@ -78,7 +78,8 @@ const appendArc = (options, geometry) => {
     const phi = xaxisrotation
     const cosphi = Math.cos(phi)
     const sinphi = Math.sin(phi)
-    const minushalfdistance = vec2.scale(0.5, vec2.subtract(startpoint, endpoint))
+    const minushalfdistance = vec2.subtract(vec2.create(), startpoint, endpoint)
+    vec2.scale(minushalfdistance, minushalfdistance, 0.5)
     // F.6.5.1:
     // round to precision in order to have determinate calculations
     const x = Math.round((cosphi * minushalfdistance[0] + sinphi * minushalfdistance[1]) * decimals) / decimals
@@ -98,11 +99,11 @@ const appendArc = (options, geometry) => {
     // F.6.5.2:
     let multiplier1 = Math.sqrt((xradius * xradius * yradius * yradius - xradius * xradius * startTranslated[1] * startTranslated[1] - yradius * yradius * startTranslated[0] * startTranslated[0]) / (xradius * xradius * startTranslated[1] * startTranslated[1] + yradius * yradius * startTranslated[0] * startTranslated[0]))
     if (sweepFlag === large) multiplier1 = -multiplier1
-    let centerTranslated = vec2.fromValues(xradius * startTranslated[1] / yradius, -yradius * startTranslated[0] / xradius)
-    centerTranslated = vec2.scale(multiplier1, centerTranslated)
+    const centerTranslated = vec2.fromValues(xradius * startTranslated[1] / yradius, -yradius * startTranslated[0] / xradius)
+    vec2.scale(centerTranslated, centerTranslated, multiplier1)
     // F.6.5.3:
     let center = vec2.fromValues(cosphi * centerTranslated[0] - sinphi * centerTranslated[1], sinphi * centerTranslated[0] + cosphi * centerTranslated[1])
-    center = vec2.add(center, vec2.scale(0.5, vec2.add(startpoint, endpoint)))
+    center = vec2.add(center, center, vec2.scale(vec2.create(), vec2.add(vec2.create(), startpoint, endpoint), 0.5))
 
     // F.6.5.5:
     const vector1 = vec2.fromValues((startTranslated[0] - centerTranslated[0]) / xradius, (startTranslated[1] - centerTranslated[1]) / yradius)
@@ -125,8 +126,8 @@ const appendArc = (options, geometry) => {
       const costheta = Math.cos(theta)
       const sintheta = Math.sin(theta)
       // F.6.3.1:
-      let point = vec2.fromValues(cosphi * xradius * costheta - sinphi * yradius * sintheta, sinphi * xradius * costheta + cosphi * yradius * sintheta)
-      point = vec2.add(point, center)
+      const point = vec2.fromValues(cosphi * xradius * costheta - sinphi * yradius * sintheta, sinphi * xradius * costheta + cosphi * yradius * sintheta)
+      vec2.add(point, point, center)
       newpoints.push(point)
     }
   }
