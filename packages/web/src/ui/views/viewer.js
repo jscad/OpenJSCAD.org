@@ -20,6 +20,11 @@ let controls = orbitControls.defaults
 let rotateDelta = [0, 0]
 let panDelta = [0, 0]
 let zoomDelta = 0
+let renderUntil = 0
+
+// set a time to stop rendering with a small time buffer just in case.
+// rotation has some elasticity in movement so this way we let it finish for sure
+const moveRender = ()=>renderUntil = Date.now()+1000
 
 const grid = { // grid data
   // the choice of what draw command to use is also data based
@@ -86,10 +91,14 @@ const viewer = (state, i18n) => {
       })
 
     const doRotatePanZoom = () => {
+      
+      let changed = false
+
       if (rotateDelta[0] || rotateDelta[1]) {
         const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, rotateDelta)
         rotateDelta = [0, 0]
         controls = { ...controls, ...updated.controls }
+        changed = true
       }
 
       if (panDelta[0] || panDelta[1]) {
@@ -97,26 +106,49 @@ const viewer = (state, i18n) => {
         panDelta = [0, 0]
         camera.position = updated.camera.position
         camera.target = updated.camera.target
+        changed = true
       }
 
       if (zoomDelta) {
         const updated = orbitControls.zoom({ controls, camera, speed: zoomSpeed }, zoomDelta)
         controls = { ...controls, ...updated.controls }
         zoomDelta = 0
+        changed = true
       }
+      return changed
     }
 
     // the heart of rendering, as themes, controls, etc change
     const updateAndRender = (timestamp) => {
-      doRotatePanZoom()
+      if(doRotatePanZoom() || controls.autoRotate.enabled){
+        moveRender()
+        const updated = orbitControls.update({ controls, camera })
+        controls = { ...controls, ...updated.controls }
+        camera.position = updated.camera.position
+        perspectiveCamera.update(camera)
+      }
 
-      const updated = orbitControls.update({ controls, camera })
-      controls = { ...controls, ...updated.controls }
-      camera.position = updated.camera.position
-      perspectiveCamera.update(camera)
+      // TODO renderIndicator will be removed after PR is tested and approved
+      var renderIndicator = document.body.renderIndicator
+      if(!renderIndicator){
+        renderIndicator = document.createElement('DIV')
+        renderIndicator.innerHTML = 'R'
+        let style = renderIndicator.style
+        style.position = 'absolute'
+        style.bottom = '10px'
+        style.right = '10px'
+        document.body.renderIndicator = renderIndicator
+        document.body.appendChild(renderIndicator)
+      }
 
-      resize(el)
-      render(viewerOptions)
+      if(!renderUntil || renderUntil > Date.now()) {
+        resize(el)
+        render(viewerOptions)
+        renderIndicator.style.display = 'initial'
+      }else{
+        renderIndicator.style.display = 'none'
+      }
+
       window.requestAnimationFrame(updateAndRender)
     }
     window.requestAnimationFrame(updateAndRender)
@@ -124,6 +156,7 @@ const viewer = (state, i18n) => {
     // only generate entities when the solids change
     // themes, options, etc also change the viewer state
     const solids = state.design.solids
+    moveRender()
     if (prevSolids) {
       const theme = state.themes.themeSettings.viewer
       const color = theme.rendering.meshColor
