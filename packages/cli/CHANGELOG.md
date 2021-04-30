@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.1.1...@jscad/cli@2.2.0) (2021-04-20)
+
+
+### Features
+
+* **cli:** added array-utils to dependencies, enhanced test suite ([d631fc5](https://github.com/jscad/OpenJSCAD.org/commit/d631fc5842653b21fa94de3c6afd9ad8daaa951a))
+
+
+
+
+
+## [2.1.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.1.0...@jscad/cli@2.1.1) (2021-04-17)
+
+**Note:** Version bump only for package @jscad/cli
+
+
+
+
+
+# [2.1.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.0.0-alpha.0...@jscad/cli@2.1.0) (2021-04-15)
+
+
+### Bug Fixes
+
+* **all:** fix json import ([#675](https://github.com/jscad/OpenJSCAD.org/issues/675)) ([05caf60](https://github.com/jscad/OpenJSCAD.org/commit/05caf60efc3f090313b3e0bddcc0b4f94de67c78))
+* **all:** V2 : several fixes for modeling ([#705](https://github.com/jscad/OpenJSCAD.org/issues/705)) ([62017a4](https://github.com/jscad/OpenJSCAD.org/commit/62017a41214169d6e000f1e0c11aaefdd68e1097))
+
+
+### Features
+
+* **core:** V2 : Fix core packaging ([#720](https://github.com/jscad/OpenJSCAD.org/issues/720)) ([e19c10c](https://github.com/jscad/OpenJSCAD.org/commit/e19c10c6d1a8f2b4f15a0b81144be8439095e02f))
+
+
+
+
+
+# [2.0.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.0.0-alpha.14...@jscad/cli@2.0.0) (2021-04-12)
+
+**Note:** Version bump only for package @jscad/cli
+
+
+
+
+
+# [2.0.0-alpha.14](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.0.0-alpha.13...@jscad/cli@2.0.0-alpha.14) (2021-03-07)
+
+**Note:** Version bump only for package @jscad/cli
+
+
+
+
+
 # [2.0.0-alpha.13](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.0.0-alpha.12...@jscad/cli@2.0.0-alpha.13) (2021-02-07)
 
 **Note:** Version bump only for package @jscad/cli

@@ -26,8 +26,8 @@ Install this package if you need access to the various examples.
 
 ## Documentation
 
-- [JSCAD User Guide](https://www.jscad.xyz/dokuwiki/doku.php)
-- [JSCAD Quick Reference](https://www.jscad.xyz/dokuwiki/doku.php?id=jscad_quick_reference)
+- [JSCAD User Guide](https://www.openjscad.xyz/guide.html)
+- [JSCAD API Reference](https://www.openjscad.xyz/docs)
 
 ## Contributing
 
@@ -40,18 +40,16 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://jscad.xyz/forum). You might find the answer in the [JSCAD User Guide](https://www.jscad.xyz/dokuwiki/doku.php).
+* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://openjscad.xyz/forum.html). You might find the answer in the [JSCAD User Guide](https://www.openjscad.xyz/guide.html).
 
-* If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
+* If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://openjscad.xyz/forum.html) and start contributing changes.
 
 Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## Community
 
 See for more details
-* [JSCAD Forum Announcements](https://jscad.xyz/forum/category/1/announcements)
-* [JSCAD Forum Community](https://jscad.xyz/forum)
-to discuss with other user and developers.
+* [JSCAD User Group](https://openjscad.xyz/forum.html)
 
 ## License
 

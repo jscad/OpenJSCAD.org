@@ -56,9 +56,9 @@ Thank you to all the people who have already contributed to this project:
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use this package, then please start a conversation at the [OpenJSCAD.org User Group](https://jscad.xyz/forum). You might find the answer in the [OpenJSCAD.org User Guide](https://www.jscad.xyz/dokuwiki/doku.php).
+* If you have a question about how to use this package, then please start a conversation at the [OpenJSCAD.org User Group](https://openjscad.xyz/forum.html). You might find the answer in the [OpenJSCAD.org User Guide](https://www.openjscad.xyz/guide.html).
 
-* If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://jscad.xyz/forum) and start contributing changes.
+* If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://openjscad.xyz/forum.html) and start contributing changes.
 
 Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 

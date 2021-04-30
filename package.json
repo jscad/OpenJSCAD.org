@@ -1,6 +1,6 @@
 {
   "name": "@jscad/openjscad",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0",
   "description": "",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
@@ -18,8 +18,8 @@
     "web": "npm run bootstrap && cd ./packages/web && npm run dev",
     "desktop": "npm run bootstrap && cd ./packages/desktop && npm run dev",
     "preversion": "npm run test && npm run docs",
-    "publish": "lerna publish --no-private --no-push --conventional-prerelease --dist-tag alpha --pre-dist-tag alpha",
-    "publish-dryrun": "lerna version --no-private --no-push --conventional-prerelease"
+    "publish": "lerna publish --include-merged-tags --no-private --no-push --conventional-commits",
+    "publish-dryrun": "lerna version --include-merged-tags --no-private --no-push --conventional-commits"
   },
   "contributors": [
     {

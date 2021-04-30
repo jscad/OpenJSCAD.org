@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/stl-serializer@2.0.2...@jscad/stl-serializer@2.0.3) (2021-04-20)
+
+**Note:** Version bump only for package @jscad/stl-serializer
+
+
+
+
+
+## [2.0.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/stl-serializer@2.0.0-alpha.0...@jscad/stl-serializer@2.0.2) (2021-04-17)
+
+
+### Bug Fixes
+
+* **all:** V2 : several fixes for modeling ([#705](https://github.com/jscad/OpenJSCAD.org/issues/705)) ([62017a4](https://github.com/jscad/OpenJSCAD.org/commit/62017a41214169d6e000f1e0c11aaefdd68e1097))
+* **modeling:** V2 revisit modifiers ([#773](https://github.com/jscad/OpenJSCAD.org/issues/773)) ([1e28120](https://github.com/jscad/OpenJSCAD.org/commit/1e28120d2b8505dc1882cf3d607296d6fcd5526d))
+
+
+
+
+
+## [2.0.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/stl-serializer@2.0.0-alpha.0...@jscad/stl-serializer@2.0.1) (2021-04-15)
+
+
+### Bug Fixes
+
+* **all:** V2 : several fixes for modeling ([#705](https://github.com/jscad/OpenJSCAD.org/issues/705)) ([62017a4](https://github.com/jscad/OpenJSCAD.org/commit/62017a41214169d6e000f1e0c11aaefdd68e1097))
+* **modeling:** V2 revisit modifiers ([#773](https://github.com/jscad/OpenJSCAD.org/issues/773)) ([1e28120](https://github.com/jscad/OpenJSCAD.org/commit/1e28120d2b8505dc1882cf3d607296d6fcd5526d))
+
+
+
+
+
+# [2.0.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/stl-serializer@2.0.0-alpha.11...@jscad/stl-serializer@2.0.0) (2021-04-12)
+
+**Note:** Version bump only for package @jscad/stl-serializer
+
+
+
+
+
+# [2.0.0-alpha.11](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/stl-serializer@2.0.0-alpha.10...@jscad/stl-serializer@2.0.0-alpha.11) (2021-03-07)
+
+
+### Bug Fixes
+
+* **modeling:** V2 revisit modifiers ([#773](https://github.com/jscad/OpenJSCAD.org/issues/773)) ([1e28120](https://github.com/jscad/OpenJSCAD.org/commit/1e28120d2b8505dc1882cf3d607296d6fcd5526d))
+
+
+
+
+
 # [2.0.0-alpha.10](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/stl-serializer@2.0.0-alpha.9...@jscad/stl-serializer@2.0.0-alpha.10) (2021-02-07)
 
 **Note:** Version bump only for package @jscad/stl-serializer
