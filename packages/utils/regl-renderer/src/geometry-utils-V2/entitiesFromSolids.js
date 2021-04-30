@@ -1,70 +1,66 @@
 const { flatten, toArray } = require('@jscad/array-utils')
-const computeBounds = require('../bound-utils/computeBounds')
+
 const { meshColor } = require('../rendering/renderDefaults')
 
 const geom2ToGeometries = require('./geom2ToGeometries')
 const geom3ToGeometries = require('./geom3ToGeometries')
 const path2ToGeometries = require('./path2ToGeometries')
 
-const entitiesFromSolids = (params, solids) => {
+/*
+ * Assemble a set of renderable entities from the given geometries.
+ */
+const assembleEntities = (geometries) => {
+  const entities = geometries.map((geometry) => {
+    const visuals = {
+      drawCmd: 'drawMesh',
+      show: true,
+      transparent: geometry.isTransparent,
+      useVertexColors: true
+    }
+    const entity = {
+      geometry,
+      visuals
+    }
+    return entity
+  })
+  return entities
+}
+
+/**
+ * Convert the given solids into renderable entities.
+ * Each 'solid' (V2 geometry) is converted to a WEBGL renderable 'geometry'.
+ * The resulting entities are passed as properities to the render.
+ * @param {Object} options - options for construction
+ * @param {Array} [options.color] - color for rendering, if the solid does not provide a color
+ * @param {Boolean} [options.smoothNormals=true] - smooth the normals of 3d solids, rendering a smooth surface
+ * @returns {Array} an array of renderable entities
+ */
+const entitiesFromSolids = (options, ...solids) => {
   const defaults = {
     color: meshColor,
     smoothNormals: true
   }
-  const { color, smoothNormals } = Object.assign({}, defaults, params)
+  const { color, smoothNormals } = Object.assign({}, defaults, options)
 
-  solids = toArray(solids)
-  const entities = solids.map((solid) => {
-    let geometries
-    let type
-    if (!solid) {
-      return null
-    } else if (!(solid instanceof Object)) {
-      return null
-    } else if ('sides' in solid) {
-      type = '2d'
+  solids = flatten(toArray(solids))
+  solids = solids.filter((solid) => solid && (solid instanceof Object))
+
+  const entities = []
+  solids.forEach((solid) => {
+    let geometries = []
+    if ('sides' in solid) {
       geometries = geom2ToGeometries({ color }, solid)
     } else if ('points' in solid) {
-      type = '2d'
       geometries = path2ToGeometries({ color }, solid)
     } else if ('polygons' in solid) {
-      type = '3d'
       geometries = geom3ToGeometries({
         smoothLighting: smoothNormals,
         normalThreshold: 0.3,
         color
       }, solid)
-    } else {
-      return null
     }
-
-    // FIXME handle multiple geometries, i.e. when positions count is > 65535
-    const geometry = flatten(geometries)[0]
-    if (!geometry) return null
-
-    // bounds
-    const bounds = computeBounds(geometry) // FIXME : ACTUALLY deal with arrays as inputs see above
-    if (bounds.dia <= 0.0) return null
-
-    const transforms = { matrix: geometry.transforms }
-
-    const visuals = {
-      drawCmd: 'drawMesh',
-      show: true,
-      // color: meshColor, // overrides colors in geometries
-      transparent: geometry.isTransparent,
-      useVertexColors: true
-    }
-
-    const entity = {
-      type,
-      geometry,
-      transforms,
-      bounds,
-      visuals
-    }
-    return entity
-  }).filter((entity) => entity !== null)
+    entities.push(...assembleEntities(geometries))
+  })
   return entities
 }
 
