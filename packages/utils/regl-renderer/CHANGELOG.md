@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.0.3...@jscad/regl-renderer@2.1.0) (2021-04-30)
+
+
+### Features
+
+* **regl-renderer:** refactored and corrected conversions of solids to entities, supporting HUGE solids ([#797](https://github.com/jscad/OpenJSCAD.org/issues/797)) ([f8baa22](https://github.com/jscad/OpenJSCAD.org/commit/f8baa222e89ac9357c795620b7f21341e202ad74))
+
+
+
+
+
 ## [2.0.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.0.2...@jscad/regl-renderer@2.0.3) (2021-04-20)
 
 **Note:** Version bump only for package @jscad/regl-renderer

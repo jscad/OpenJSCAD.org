@@ -1,6 +1,6 @@
 {
   "name": "@jscad/web",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Web Application for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
@@ -38,7 +38,7 @@
     "@jscad/examples": "2.1.0",
     "@jscad/io": "2.0.3",
     "@jscad/modeling": "2.2.0",
-    "@jscad/regl-renderer": "2.0.3",
+    "@jscad/regl-renderer": "2.1.0",
     "@jscad/vtree": "2.0.3",
     "brace": "0.11.1",
     "codemirror": "5.57.0",
