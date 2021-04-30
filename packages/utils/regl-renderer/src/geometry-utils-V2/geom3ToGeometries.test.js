@@ -68,7 +68,8 @@ test('geom3ToGeometries (solid with polygons)', (t) => {
       Float32Array.from([0, 1, 0]), Float32Array.from([0, 1, 0]), Float32Array.from([0, 1, 0]), Float32Array.from([0, 1, 0]),
       Float32Array.from([0, 0, -1]), Float32Array.from([0, 0, -1]), Float32Array.from([0, 0, -1]), Float32Array.from([0, 0, -1]),
       Float32Array.from([0, 0, 1]), Float32Array.from([0, 0, 1]), Float32Array.from([0, 0, 1]), Float32Array.from([0, 0, 1])
-    ]
+    ],
+    type: '3d'
   }]
   const options = {
     color: [1, 2, 3, 4],
@@ -87,7 +88,7 @@ test('geom3ToGeometries (solid with polygons)', (t) => {
 
   // with color
   solid.color = [0, 0, 1, 1]
-  expected[0].isTransparent = false
+  expected[0].isTransparent = true
   expected[0].colors = [
     [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1],
     [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1],
@@ -106,14 +107,24 @@ test('geom3ToGeometries (solid with polygons)', (t) => {
     0, 0, 3, 0,
     0, 0, 0, 2
   ]
-  expected[0].transforms = [
-    5, 0, 0, 0,
-    0, 4, 0, 0,
-    0, 0, 3, 0,
-    0, 0, 0, 2
-  ]
+  expected[0].transforms = Float32Array.from(solid.transforms)
   geometries = geom3ToGeometries(options, solid)
   t.deepEqual(geometries, expected)
 })
 
-// TODO: test SUPER LARGE solid with > 65000 points
+test('geom3ToGeometries (solid with > 65000 polygons)', (t) => {
+  const solid = { polygons: [] }
+  for (let i = 0; i < 70000; i++) {
+    solid.polygons.push(
+      { vertices: [[i, i, 0], [i + 1, i + 1, 0], [i + 1, i + 1, 1], [i, i, 1]] }
+    )
+  }
+
+  const options = {
+    color: [1, 2, 3, 4],
+    normalThreshold: 0.3,
+    smoothLighting: false
+  }
+  const geometries = geom3ToGeometries(options, solid)
+  t.is(geometries.length, 5)
+})

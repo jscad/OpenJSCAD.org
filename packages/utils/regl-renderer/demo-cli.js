@@ -37,7 +37,7 @@ const { width, height } = params
 const gl = require('gl')(width, height)
 
 // process entities and inject extras
-const solids = entitiesFromSolids({}, demoSolids({ scale: 1 }))
+const entities = entitiesFromSolids({}, demoSolids({ scale: 1 }))
 
 // prepare the camera
 const perspectiveCamera = cameras.perspective
@@ -65,7 +65,7 @@ const options = {
     specularLightAmount: 0.16,
     materialShininess: 8.0
   },
-  // next few are for solids / csg/ cags specifically
+  // next few are for solids / csg / cags specifically
   overrideOriginalColors: false, // for csg/cag conversion: do not use the original (csg) color, use meshColor instead
   smoothNormals: true,
 
@@ -90,7 +90,7 @@ const options = {
         show: true
       }
     },
-    ...solids
+    ...entities
   ]
 }
 

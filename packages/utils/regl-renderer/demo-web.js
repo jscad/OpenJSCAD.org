@@ -28,7 +28,7 @@ const width = window.innerWidth
 const height = window.innerHeight
 
 // process entities and inject extras
-const solids = entitiesFromSolids({}, demoSolids({ scale: 1 }))
+const entities = entitiesFromSolids({}, demoSolids({ scale: 1 }))
 
 // prepare the camera
 const perspectiveCamera = cameras.perspective
@@ -66,7 +66,7 @@ const options = {
         show: true
       }
     },
-    ...solids
+    ...entities
   ]
 }
 // prepare
@@ -88,8 +88,8 @@ const updateAndRender = () => {
   // updateCounter += 1
 
   if (updateCounter > 360) {
-    const solidsDynamic = entitiesFromSolids({}, demoSolids({ scale: Math.random() }))
-    options.entities = solidsDynamic
+    const entitiesDynamic = entitiesFromSolids({}, demoSolids({ scale: Math.random() }))
+    options.entities = entitiesDynamic
     updateCounter = 0
   }
 
