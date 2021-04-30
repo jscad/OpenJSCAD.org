@@ -24,7 +24,7 @@ let renderUntil = 0
 
 // set a time to stop rendering with a small time buffer just in case.
 // rotation has some elasticity in movement so this way we let it finish for sure
-const moveRender = ()=>renderUntil = Date.now()+1000
+const moveRender = () => { renderUntil = Date.now() + 1000 }
 
 const grid = { // grid data
   // the choice of what draw command to use is also data based
@@ -91,7 +91,6 @@ const viewer = (state, i18n) => {
       })
 
     const doRotatePanZoom = () => {
-      
       let changed = false
 
       if (rotateDelta[0] || rotateDelta[1]) {
@@ -120,7 +119,7 @@ const viewer = (state, i18n) => {
 
     // the heart of rendering, as themes, controls, etc change
     const updateAndRender = (timestamp) => {
-      if(doRotatePanZoom() || controls.autoRotate.enabled){
+      if (doRotatePanZoom() || controls.autoRotate.enabled) {
         moveRender()
         const updated = orbitControls.update({ controls, camera })
         controls = { ...controls, ...updated.controls }
@@ -129,11 +128,11 @@ const viewer = (state, i18n) => {
       }
 
       // TODO renderIndicator will be removed after PR is tested and approved
-      var renderIndicator = document.body.renderIndicator
-      if(!renderIndicator){
+      let renderIndicator = document.body.renderIndicator
+      if (!renderIndicator) {
         renderIndicator = document.createElement('DIV')
         renderIndicator.innerHTML = 'R'
-        let style = renderIndicator.style
+        const style = renderIndicator.style
         style.position = 'absolute'
         style.bottom = '10px'
         style.right = '10px'
@@ -141,11 +140,11 @@ const viewer = (state, i18n) => {
         document.body.appendChild(renderIndicator)
       }
 
-      if(!renderUntil || renderUntil > Date.now()) {
+      if (!renderUntil || renderUntil > Date.now()) {
         resize(el)
         render(viewerOptions)
         renderIndicator.style.display = 'initial'
-      }else{
+      } else {
         renderIndicator.style.display = 'none'
       }
 
