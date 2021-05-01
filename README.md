@@ -2,8 +2,6 @@
 
 >*JSCAD* is a set of modular, browser and command line tools for creating parametric 2D and 3D designs with JavaScript code.
 
-<img src="docs/logo.png" width="140" align="right" alt="JSCAD">
-
 There are many ways to use JSCAD:
 
 An [online version](https://www.openjscad.xyz/), [self hosteable web based ui](./packages/web), as [CLI](./packages/cli) (command-line interface) for server-side computations with Node.js, as well as an experimental [desktop app](./packages/desktop) or [individual Node.js packages](./packages/README.md)!!
