@@ -21,7 +21,7 @@ Here you can find the full list of packages of the JSCAD organization
 |--------|-------|------------|
 | [`@jscad/core`](/packages/core) | [![npm](https://img.shields.io/npm/v/@jscad/core.svg)](https://www.npmjs.com/package/@jscad/core) | [![Dependency Status](https://david-dm.org/jscad/OpenJSCAD.org.svg?path=packages/core)](https://david-dm.org/jscad/OpenJSCAD.org?path=packages/core) |
 | [`@jscad/modeling`](/pacakges/modeling) | [![npm](https://img.shields.io/npm/v/@jscad/modeling.svg)](https://www.npmjs.com/package/@jscad/modeling) | [![Dependency Status](https://david-dm.org/jscad/OpenJSCAD.org.svg?path=packages/modeling)](https://david-dm.org/jscad/OpenJSCAD.org?path=packages/modeling) |
-| [`@jscad/regl-renderer`](/pacakges/utils/regl-renderer) | [![npm](https://img.shields.io/npm/v/@jscad/regl-renderer.svg)](https://www.npmjs.com/package/@jscad/regl-renderer) | [![Dependency Status](https://david-dm.org/jscad/OpenJSCAD.org.svg?path=packages/utils/regl-rendering)](https://david-dm.org/jscad/OpenJSCAD.org?path=packages/utils/regl-renderer) |
+| [`@jscad/regl-renderer`](/pacakges/utils/regl-renderer) | [![npm](https://img.shields.io/npm/v/@jscad/regl-renderer.svg)](https://www.npmjs.com/package/@jscad/regl-renderer) | [![Dependency Status](https://david-dm.org/jscad/OpenJSCAD.org.svg?path=packages/utils/regl-renderer)](https://david-dm.org/jscad/OpenJSCAD.org?path=packages/utils/regl-renderer) |
 
 ### IO Packages
 
