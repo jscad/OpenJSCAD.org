@@ -149,9 +149,6 @@ Your logo will show up here with a link to your website.
 
 - [OpenJsCAD](http://joostn.github.com/OpenJsCad/), starting point of JSCAD
 - [OpenSCAD.net](http://garyhodgson.github.com/openscad.net/), another place of inspiration, where the OpenSCAD translator was adapted from
-- [CoffeeSCad](http://kaosat-dev.github.com/CoffeeSCad/), JavaScript simplified (no more {}) (defunct)
-- [stl2pov](http://rsmith.home.xs4all.nl/software/py-stl-stl2pov.htmltool) to convert .stl to .pov, and then render via [PovRay.org](http://povray.org)
-- [P3D](https://github.com/D1plo1d/p3d) STL/AMF/OBJ viewer
 
 That's all for now,
 
