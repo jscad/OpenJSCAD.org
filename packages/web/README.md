@@ -23,8 +23,9 @@ This is the Web based UI for JSCAD, either to host yourself, or use directly at 
 - [Known issues](#known-issues)
 - [Contributing](#contributing)
 - [Community](#community)
+- [Backers](#backers)
+- [Sponsors](#sponsors)
 - [License](#license)
-- [See also](#see-also)
 
 ## Usage
 
