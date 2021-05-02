@@ -1,6 +1,6 @@
 ## @jscad/io-utils
 
-> input/output handling utilities
+> Input/Output handling utilities
 
 [![NPM version](https://badge.fury.io/js/%40jscad%2Fio-utils.svg)](https://www.npmjs.com/package/@jscad/io-utils)
 [![NPM downloads](https://img.shields.io/npm/dw/@jscad/io-utils)](https://www.npmjs.com/package/@jscad/io-utils)

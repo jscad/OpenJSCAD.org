@@ -1,6 +1,6 @@
 ## @jscad/io
 
-Input/Output format handling for the JSCAD project.
+> Input/Output format handling for the JSCAD project.
 
 [![NPM version](https://badge.fury.io/js/%40jscad%2Fio.svg)](https://www.npmjs.com/package/@jscad/io)
 [![NPM downloads](https://img.shields.io/npm/dw/@jscad/io)](https://www.npmjs.com/package/@jscad/io)

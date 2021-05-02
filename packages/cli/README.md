@@ -1,6 +1,6 @@
 # @jscad/cli : JSCAD Command Line Interface (CLI)
 
-This is the Command Line Interface (CLI) package for creating designs using [Node.js](https://nodejs.org).
+> This is the Command Line Interface (CLI) application for creating designs using [Node.js](https://nodejs.org).
 
 [![NPM version](https://badge.fury.io/js/%40jscad%2Fcli.svg)](https://www.npmjs.com/package/@jscad/cli)
 [![NPM downloads](https://img.shields.io/npm/dw/@jscad/cli)](https://www.npmjs.com/package/@jscad/cli)
