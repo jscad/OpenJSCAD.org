@@ -3,7 +3,7 @@
 > input/output handling utilities
 
 [![NPM version](https://badge.fury.io/js/%40jscad%2Fio-utils.svg)](https://www.npmjs.com/package/@jscad/io-utils)
-[![NPM downloads](https://img.shields.io/npm/dw/@jscad/cli)](https://www.npmjs.com/package/@jscad/cli)
+[![NPM downloads](https://img.shields.io/npm/dw/@jscad/io-utils)](https://www.npmjs.com/package/@jscad/io-utils)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
 [![Stability](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
 [![License](https://img.shields.io/github/license/jscad/OpenJSCAD.org)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
