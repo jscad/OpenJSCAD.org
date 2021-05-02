@@ -18,7 +18,20 @@
 
 ## Overview
 
-This deserializer converts raw AMF formatted data (files) to JSCAD scripts or geometries.
+This deserializer converts raw AMF formatted data (XML) to JSCAD scripts or geometries.
+
+**NOTE: At this time, only XML files are supported, so unzip the original AMF file before proceeding.**
+
+This deserializer converts only what is supported by JSCAD libraries.
+Full document conversion is NOT supported, so don't even try.
+However, conversion of AMF objects and materials are possible:
+
+| AMF Entity      | JSCAD Geometry | Notes |
+| --------------- | ------------ | ------ |
+| mesh            | to geom3     | conversion of vertices and volumes |
+| color           | color of polygons | currently only colors per triangle are converted |
+
+Also, if the 'USEMTL' (material) matches the name of a CSS3 color then the color is applied to the geometry.
 
 ## Table of Contents
 

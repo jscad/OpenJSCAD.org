@@ -22,7 +22,9 @@ This deserializer converts raw OBJ formatted data (files) to JSCAD scripts or ge
 
 **NOTE: At this time, only ASCII OBJ files are supported. BINARY OBJ files are not supported.**
 
-This deserializer converts only what is supported by JSCAD libraries. Full document conversion is NOT supported, so don't even try. However, conversion of the following OBJ commands are possible:
+This deserializer converts only what is supported by JSCAD libraries.
+Full document conversion is NOT supported, so don't even try.
+However, conversion of the following OBJ commands are possible:
 
 | OBJ Command     | JSCAD Geometry | Notes |
 | --------------- | ------------ | ------ |
