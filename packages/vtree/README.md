@@ -1,6 +1,20 @@
 # jscad-tree-experiments
 
-Tree (& caching & more ) experiments to speed up significantly design computation time for JSCAD
+> Tree (& caching & more ) experiments to speed up significantly design computation time for JSCAD
+
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fvtree.svg)](https://www.npmjs.com/package/@jscad/vtree)
+[![NPM downloads](https://img.shields.io/npm/dw/@jscad/vtree)](https://www.npmjs.com/package/@jscad/vtree)
+[![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
+[![Stability](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
+[![License](https://img.shields.io/github/license/jscad/OpenJSCAD.org)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
+
+[![Lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
+[![Backers](https://img.shields.io/opencollective/backers/openjscad)](https://opencollective.com/openjscad)
+[![Sponsors](https://img.shields.io/opencollective/sponsors/openjscad)](https://opencollective.com/openjscad)
+
+<a href="https://opencollective.com/openjscad"><img src="https://opencollective.com/openjscad/donate/button.png?color=blue" alt="Open Collective"></a>
 
 ## Foreword
 
