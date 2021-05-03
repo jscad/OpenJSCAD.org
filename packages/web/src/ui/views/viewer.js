@@ -53,6 +53,7 @@ let prevColor = []
 
 const viewer = (state, i18n) => {
   const el = html`<canvas id='renderTarget'> </canvas>`
+  window.addEventListener('resize', moveRender)
 
   if (!render) {
     const options = setup(el)
