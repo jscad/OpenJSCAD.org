@@ -127,25 +127,9 @@ const viewer = (state, i18n) => {
         perspectiveCamera.update(camera)
       }
 
-      // TODO renderIndicator will be removed after PR is tested and approved
-      let renderIndicator = document.body.renderIndicator
-      if (!renderIndicator) {
-        renderIndicator = document.createElement('DIV')
-        renderIndicator.innerHTML = 'R'
-        const style = renderIndicator.style
-        style.position = 'absolute'
-        style.bottom = '10px'
-        style.right = '10px'
-        document.body.renderIndicator = renderIndicator
-        document.body.appendChild(renderIndicator)
-      }
-
       if (!renderUntil || renderUntil > Date.now()) {
         resize(el)
         render(viewerOptions)
-        renderIndicator.style.display = 'initial'
-      } else {
-        renderIndicator.style.display = 'none'
       }
 
       window.requestAnimationFrame(updateAndRender)
