@@ -14,6 +14,7 @@ This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-th
 
 [![Lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![User Group](https://img.shields.io/badge/maintained%20by-user%20group-blue)](https://openjscad.nodebb.com/)
 
 [![Backers](https://img.shields.io/opencollective/backers/openjscad)](https://opencollective.com/openjscad)
 [![Sponsors](https://img.shields.io/opencollective/sponsors/openjscad)](https://opencollective.com/openjscad)
