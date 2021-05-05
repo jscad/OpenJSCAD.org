@@ -68,12 +68,15 @@ const expandShell = (options, geometry) => {
   const vertices2planes = [] // contents: [vertex, [plane, ...]]
   const edges2planes = [] // contents: [[vertex, vertex], [plane, ...]]
 
+  const v1 = vec3.create()
+  const v2 = vec3.create()
+
   // loop through the polygons
   // - extruded the polygon, and add to the composite result
   // - add the plane to the unique vertice map
   // - add the plane to the unique edge map
   const polygons = geom3.toPolygons(geometry)
-  polygons.forEach((polygon) => {
+  polygons.forEach((polygon, index) => {
     const extrudevector = vec3.scale(vec3.create(), poly3.plane(polygon), 2 * delta)
     const translatedpolygon = poly3.transform(mat4.fromTranslation(mat4.create(), vec3.scale(vec3.create(), extrudevector, -0.5)), polygon)
     const extrudedface = extrudePolygon(extrudevector, translatedpolygon)
@@ -137,8 +140,6 @@ const expandShell = (options, geometry) => {
     const startfacevertices = []
     const endfacevertices = []
     const polygons = []
-    const v1 = vec3.create()
-    const v2 = vec3.create()
     for (let i = -1; i < numangles; i++) {
       const angle = angles[(i < 0) ? (i + numangles) : i]
       const si = Math.sin(angle)
@@ -187,9 +188,9 @@ const expandShell = (options, geometry) => {
     let bestzaxisorthogonality = 0
     for (let i = 1; i < planes.length; i++) {
       const normal = planes[i]
-      const cross = vec3.cross(vec3.create(), xaxis, normal)
+      const cross = vec3.cross(v1, xaxis, normal)
       const crosslength = vec3.length(cross)
-      if (crosslength > 0.05) {
+      if (crosslength > 0.05) { // FIXME why 0.05?
         if (crosslength > bestzaxisorthogonality) {
           bestzaxisorthogonality = crosslength
           bestzaxis = normal
@@ -197,11 +198,11 @@ const expandShell = (options, geometry) => {
       }
     }
     if (!bestzaxis) {
-      bestzaxis = vec3.orthogonal(xaxis)
+      bestzaxis = vec3.orthogonal(v1, xaxis)
     }
-    const yaxis = vec3.cross(vec3.create(), xaxis, bestzaxis)
+    const yaxis = vec3.cross(v1, xaxis, bestzaxis)
     vec3.unit(yaxis, yaxis)
-    const zaxis = vec3.cross(vec3.create(), yaxis, xaxis)
+    const zaxis = vec3.cross(v2, yaxis, xaxis)
     const corner = sphere({
       center: [vertex[0], vertex[1], vertex[2]],
       radius: delta,

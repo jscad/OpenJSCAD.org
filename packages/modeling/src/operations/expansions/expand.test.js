@@ -4,6 +4,8 @@ const { comparePoints, nearlyEqual } = require('../../../test/helpers')
 const { geom2, geom3, path2 } = require('../../geometries')
 const measureBoundingBox = require('../../measurements/measureBoundingBox')
 const area = require('../../maths/utils/area')
+const sphere = require('../../primitives/sphere')
+
 const { expand } = require('./index')
 
 test('expand: edge-expanding a straight line produces rectangle', (t) => {
@@ -114,6 +116,11 @@ test('expand: expanding of a geom3 produces expected changes to polygons', (t) =
   t.is(pts.length, 62)
   t.true(comparePoints(pts[0], exp0))
   t.true(comparePoints(pts[61], exp61))
+
+  const geometry2 = sphere({radius: 5, segments: 8})
+  const obs2 = expand({delta: 5}, geometry2)
+  const pts2 = geom3.toPoints(obs2)
+  t.is(pts2.length, 2102)
 })
 
 test('expand (options): offsetting of a complex geom2 produces expected offset geom2', (t) => {
