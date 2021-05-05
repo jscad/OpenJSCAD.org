@@ -93,9 +93,9 @@ There are a few known issues, please be sure to check this out before submitting
 The various JSCAD packages and all source code are part of the JSCAD Organization, and maintained by a group of volunteers.
 We welcome and encourage anyone to pitch in but please take a moment to read the following guidelines.
 
-* If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.xyz/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.xyz/issues/) via GitHub.
+* If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
 
-* If you want to submit a change or a patch, please read the [Contributing Guide](../../CONTRIBUTING.md) . New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.xyz/pulls/) via GithHub.
+* If you want to submit a change or a patch, please read the [Contributing Guide](../../CONTRIBUTING.md) . New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
 
 * We only accept bug reports and pull requests on **GitHub**.
 
