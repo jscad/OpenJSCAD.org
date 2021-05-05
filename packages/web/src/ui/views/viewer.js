@@ -20,7 +20,7 @@ let controls = orbitControls.defaults
 let rotateDelta = [0, 0]
 let panDelta = [0, 0]
 let zoomDelta = 0
-let renderUntil = 0
+let renderUntil = Number.MAX_VALUE
 
 // set a time to stop rendering with a small time buffer just in case.
 // rotation has some elasticity in movement so this way we let it finish for sure
@@ -125,7 +125,7 @@ const viewer = (state, i18n) => {
         moveRender()
       }
 
-      if (!renderUntil || renderUntil > Date.now()) {
+      if (renderUntil > Date.now()) {
         const updated = orbitControls.update({ controls, camera })
         controls = { ...controls, ...updated.controls }
         camera.position = updated.camera.position
