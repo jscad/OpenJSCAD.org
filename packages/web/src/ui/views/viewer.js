@@ -89,6 +89,7 @@ const viewer = (state, i18n) => {
       .forEach((x) => {
         const updated = orbitControls.zoomToFit({ controls, camera, entities: prevEntities })
         controls = { ...controls, ...updated.controls }
+        moveRender()
       })
 
     const doRotatePanZoom = () => {
@@ -122,13 +123,14 @@ const viewer = (state, i18n) => {
     const updateAndRender = (timestamp) => {
       if (doRotatePanZoom() || controls.autoRotate.enabled) {
         moveRender()
+      }
+
+      if (!renderUntil || renderUntil > Date.now()) {
         const updated = orbitControls.update({ controls, camera })
         controls = { ...controls, ...updated.controls }
         camera.position = updated.camera.position
         perspectiveCamera.update(camera)
-      }
 
-      if (!renderUntil || renderUntil > Date.now()) {
         resize(el)
         render(viewerOptions)
       }
