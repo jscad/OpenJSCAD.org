@@ -13,8 +13,8 @@ This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-th
 [![All Dependencies](https://img.shields.io/librariesio/github/jscad/OpenJSCAD.org)](https://github.com/jscad/OpenJSCAD.org)
 
 [![User Group](https://img.shields.io/badge/maintained%20by-user%20group-blue)](https://openjscad.nodebb.com/)
-[![Lerna](https://img.shields.io/badge/maintained%20with-lerna-yellow)](https://lernajs.io/)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-green)](https://standardjs.com)
+[![Lerna](https://img.shields.io/badge/maintained%20with-lerna-blue)](https://lernajs.io/)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-blue)](https://standardjs.com)
 
 [![Backers](https://img.shields.io/opencollective/backers/openjscad)](https://opencollective.com/openjscad)
 [![Sponsors](https://img.shields.io/opencollective/sponsors/openjscad)](https://opencollective.com/openjscad)
