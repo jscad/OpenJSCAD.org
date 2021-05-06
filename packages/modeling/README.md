@@ -1,11 +1,21 @@
 # @jscad/modeling
 
-## Modeling Library for JSCAD
-
-[![GitHub version](https://badge.fury.io/gh/jscad%2Fmodeling.js.svg)](https://badge.fury.io/gh/jscad%2Fmodeling.js)
-[![Build Status](https://travis-ci.org/jscad/modeling.js.svg)](https://travis-ci.org/jscad/modeling.js)
-
 > Solid Modelling Library for 2D and 3D Geometries
+
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fmodeling.svg)](https://www.npmjs.com/package/@jscad/modeling)
+[![NPM downloads](https://img.shields.io/npm/dw/@jscad/modeling)](https://www.npmjs.com/package/@jscad/modeling)
+[![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
+[![Stability](https://img.shields.io/badge/stability-stable-success)](https://github.com/emersion/stability-badges#stable)
+[![License](https://img.shields.io/github/license/jscad/OpenJSCAD.org)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
+
+[![User Group](https://img.shields.io/badge/maintained%20by-user%20group-blue)](https://openjscad.nodebb.com/)
+[![Lerna](https://img.shields.io/badge/maintained%20with-lerna-blue)](https://lernajs.io/)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-blue)](https://standardjs.com)
+
+[![Backers](https://img.shields.io/opencollective/backers/openjscad)](https://opencollective.com/openjscad)
+[![Sponsors](https://img.shields.io/opencollective/sponsors/openjscad)](https://opencollective.com/openjscad)
+
+<a href="https://opencollective.com/openjscad"><img src="https://opencollective.com/openjscad/donate/button.png?color=blue" alt="Open Collective"></a>
 
 ## Overview
 
@@ -38,8 +48,7 @@ const {booleans, expansions, extrusions, hulls, measurements, transforms} = requ
 
 ## Documentation
 
-The API Reference can be found [here](https://www.openjscad.xyz/docs).
-
+- [API Reference](https://www.openjscad.xyz/docs).
 - [JSCAD User Guide](https://www.openjscad.xyz/guide.html)
 
 ## Contributing
@@ -49,7 +58,7 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
 
-* If you want to submit a change or a patch, please read the [Contributing Guide](../../CONTRIBUTING.md) . New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
+* If you want to submit a change or a patch, please read the [Contributing Guide](../../CONTRIBUTING.md). New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
 
 * We only accept bug reports and pull requests on **GitHub**.
 

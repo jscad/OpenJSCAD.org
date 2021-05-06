@@ -1,16 +1,19 @@
 # @jscad/web: JSCAD Web UI
 
-This is the Web based UI for [JSCAD](https://github.com/jscad/OpenJSCAD.org), either to host yourself, or use directly at https://www.openjscad.xyz/.
+This is the Web based UI for JSCAD, either to host yourself, or use directly at https://www.openjscad.xyz/.
 
-<img src="https://github.com/jscad/OpenJSCAD.org/raw/master/docs/logo.png" width="140" align="right" alt="JSCAD">
-
-[![NPM version](https://badge.fury.io/js/%40jscad%2Fweb.svg)](https://badge.fury.io/js/%40jscad%2Fweb)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fweb.svg)](https://www.npmjs.com/package/@jscad/web)
+[![NPM downloads](https://img.shields.io/npm/dw/@jscad/web)](https://www.npmjs.com/package/@jscad/web)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
-[![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
+[![Stability](https://img.shields.io/badge/stability-stable-success)](https://github.com/emersion/stability-badges#stable)
+[![License](https://img.shields.io/github/license/jscad/OpenJSCAD.org)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 
-[![Dependency Status](https://david-dm.org/jscad/OpenJSCAD.org.svg)](https://david-dm.org/jscad/OpenJSCAD.org)
-[![devDependency Status](https://david-dm.org/jscad/OpenJSCAD.org/dev-status.svg)](https://david-dm.org/jscad/OpenJSCAD.org#info=devDependencies)
-[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
+[![User Group](https://img.shields.io/badge/maintained%20by-user%20group-blue)](https://openjscad.nodebb.com/)
+[![Lerna](https://img.shields.io/badge/maintained%20with-lerna-blue)](https://lernajs.io/)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-blue)](https://standardjs.com)
+
+[![Backers](https://img.shields.io/opencollective/backers/openjscad)](https://opencollective.com/openjscad)
+[![Sponsors](https://img.shields.io/opencollective/sponsors/openjscad)](https://opencollective.com/openjscad)
 
 <a href="https://opencollective.com/openjscad"><img src="https://opencollective.com/openjscad/donate/button.png?color=blue" alt="Open Collective"></a>
 
@@ -21,8 +24,9 @@ This is the Web based UI for [JSCAD](https://github.com/jscad/OpenJSCAD.org), ei
 - [Known issues](#known-issues)
 - [Contributing](#contributing)
 - [Community](#community)
+- [Backers](#backers)
+- [Sponsors](#sponsors)
 - [License](#license)
-- [See also](#see-also)
 
 ## Usage
 
@@ -64,11 +68,12 @@ use and path of the proxy can be set by:
  rebuild your main file (See [Contributing](#contributing))
 
 then you can use it like so:
-https://<YOURSITE>/?uri=http://www.thingiverse.com/download:164128
-or
-https://<YOURSITE>/#http://www.thingiverse.com/download:164128
 
-> Note: a PR with a node.js based proxy would be a welcome addition :)
+https://YOURSITE/?uri=http://www.thingiverse.com/download:164128
+
+or
+
+https://YOURSITE/#http://www.thingiverse.com/download:164128
 
 ## Documentation
 
@@ -78,9 +83,6 @@ https://<YOURSITE>/#http://www.thingiverse.com/download:164128
 ## Known Issues
 
 There are a few known issues, please be sure to check this out before submitting additional bug reports/issues.
-
-- Q: issues running certain npm commands like ```npm run build``` with [cnpm](https://github.com/cnpm/cnpm)
-- A: this is a [know issue in cnpm](https://github.com/cnpm/cnpm/issues/214) , see [issue #283](https://github.com/jscad/OpenJSCAD.org/issues/283) for more information
 
 - Q: Attempting to use JSCAD from file:// in Chrome results in errors like
 "File Error: [EncodingError] Please check permissions error."

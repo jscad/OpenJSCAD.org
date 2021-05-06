@@ -1,8 +1,6 @@
 # io
 
-## Input Output format handling for the JSCAD projects
-
-[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
+> Input/Output format handling for the JSCAD projects
 
 ## Overview
 
