@@ -20,6 +20,11 @@ let controls = orbitControls.defaults
 let rotateDelta = [0, 0]
 let panDelta = [0, 0]
 let zoomDelta = 0
+let renderUntil = Number.MAX_VALUE
+
+// set a time to stop rendering with a small time buffer just in case.
+// rotation has some elasticity in movement so this way we let it finish for sure
+const moveRender = () => { renderUntil = Date.now() + 1000 }
 
 const grid = { // grid data
   // the choice of what draw command to use is also data based
@@ -48,6 +53,7 @@ let prevColor = []
 
 const viewer = (state, i18n) => {
   const el = html`<canvas id='renderTarget'> </canvas>`
+  window.addEventListener('resize', moveRender)
 
   if (!render) {
     const options = setup(el)
@@ -83,13 +89,17 @@ const viewer = (state, i18n) => {
       .forEach((x) => {
         const updated = orbitControls.zoomToFit({ controls, camera, entities: prevEntities })
         controls = { ...controls, ...updated.controls }
+        moveRender()
       })
 
     const doRotatePanZoom = () => {
+      let changed = false
+
       if (rotateDelta[0] || rotateDelta[1]) {
         const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, rotateDelta)
         rotateDelta = [0, 0]
         controls = { ...controls, ...updated.controls }
+        changed = true
       }
 
       if (panDelta[0] || panDelta[1]) {
@@ -97,26 +107,34 @@ const viewer = (state, i18n) => {
         panDelta = [0, 0]
         camera.position = updated.camera.position
         camera.target = updated.camera.target
+        changed = true
       }
 
       if (zoomDelta) {
         const updated = orbitControls.zoom({ controls, camera, speed: zoomSpeed }, zoomDelta)
         controls = { ...controls, ...updated.controls }
         zoomDelta = 0
+        changed = true
       }
+      return changed
     }
 
     // the heart of rendering, as themes, controls, etc change
     const updateAndRender = (timestamp) => {
-      doRotatePanZoom()
+      if (doRotatePanZoom() || controls.autoRotate.enabled) {
+        moveRender()
+      }
 
-      const updated = orbitControls.update({ controls, camera })
-      controls = { ...controls, ...updated.controls }
-      camera.position = updated.camera.position
-      perspectiveCamera.update(camera)
+      if (renderUntil > Date.now()) {
+        const updated = orbitControls.update({ controls, camera })
+        controls = { ...controls, ...updated.controls }
+        camera.position = updated.camera.position
+        perspectiveCamera.update(camera)
 
-      resize(el)
-      render(viewerOptions)
+        resize(el)
+        render(viewerOptions)
+      }
+
       window.requestAnimationFrame(updateAndRender)
     }
     window.requestAnimationFrame(updateAndRender)
@@ -124,6 +142,7 @@ const viewer = (state, i18n) => {
     // only generate entities when the solids change
     // themes, options, etc also change the viewer state
     const solids = state.design.solids
+    moveRender()
     if (prevSolids) {
       const theme = state.themes.themeSettings.viewer
       const color = theme.rendering.meshColor
