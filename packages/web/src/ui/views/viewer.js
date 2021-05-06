@@ -20,14 +20,14 @@ let controls = orbitControls.defaults
 let rotateDelta = [0, 0]
 let panDelta = [0, 0]
 let zoomDelta = 0
+let zoomToFit = false
 let renderUntil = Number.MAX_VALUE
 
 // set a time to stop rendering with a small time buffer just in case.
 // rotation has some elasticity in movement so this way we let it finish for sure
 const moveRender = () => { renderUntil = Date.now() + 1000 }
 
-const grid = { // grid data
-  // the choice of what draw command to use is also data based
+const grid = { // command to draw the grid
   visuals: {
     drawCmd: 'drawGrid',
     show: true,
@@ -40,7 +40,7 @@ const grid = { // grid data
   ticks: [10, 1]
 }
 
-const axes = {
+const axes = { // command to draw the axes
   visuals: {
     drawCmd: 'drawAxis',
     show: true
@@ -87,9 +87,7 @@ const viewer = (state, i18n) => {
     gestures.taps
       .filter((taps) => taps.nb === 2)
       .forEach((x) => {
-        const updated = orbitControls.zoomToFit({ controls, camera, entities: prevEntities })
-        controls = { ...controls, ...updated.controls }
-        moveRender()
+        zoomToFit = true
       })
 
     const doRotatePanZoom = () => {
@@ -116,6 +114,13 @@ const viewer = (state, i18n) => {
         zoomDelta = 0
         changed = true
       }
+
+      if (zoomToFit) {
+        const updated = orbitControls.zoomToFit({ controls, camera, entities: prevEntities })
+        controls = { ...controls, ...updated.controls }
+        zoomToFit = false
+        changed = true
+      }
       return changed
     }
 
@@ -139,10 +144,11 @@ const viewer = (state, i18n) => {
     }
     window.requestAnimationFrame(updateAndRender)
   } else {
+    moveRender()
+
     // only generate entities when the solids change
     // themes, options, etc also change the viewer state
     const solids = state.design.solids
-    moveRender()
     if (prevSolids) {
       const theme = state.themes.themeSettings.viewer
       const color = theme.rendering.meshColor
@@ -152,6 +158,8 @@ const viewer = (state, i18n) => {
       if (!(sameSolids && sameColor)) {
         prevEntities = entitiesFromSolids({ color }, solids)
         prevColor = color
+
+        zoomToFit = state.viewer.rendering.autoZoom
       }
     }
     prevSolids = solids

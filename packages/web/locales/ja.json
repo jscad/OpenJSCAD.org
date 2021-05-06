@@ -13,10 +13,6 @@
   "enable geometry caching":"experimental geometry caching",
   "timeout for generation":"timeout for solids generation",
 
-  "Viewer":"ビューアー",
-  "enable zoom on new parameters":"zoom to fit on new parameters",
-  "enable zoom on reload":"zoom to fit on design load",
-
   "Storage": "ストレージ",
   "settings storage path":"ストレージ パス",
 
@@ -37,6 +33,7 @@
   "axes":"アクシス",
   "auto rotate": "自動回転",
   "auto reload": "自動リロード",
+  "auto zoom": "自動ズーム",
   "export":"エクスポート",
   "load project":"JSCADプロジェクトロード",
 
