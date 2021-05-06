@@ -42,16 +42,6 @@ const options = (state, i18n) => {
   </fieldset>
 
   <fieldset>
-    <legend> <h3> ${i18n`Viewer`} </h3> </legend>
-    <label>${i18n`enable zoom on new parameters`}
-      <input type='checkbox' checked=false id='viewer-zoomtofitonparamschange' disabled />
-    </label>
-    <label>${i18n`enable zoom on reload`}
-      <input type='checkbox' checked=false id='viewer-zoomtofitonload' disabled />
-    </label>
-  </fieldset>
-
-  <fieldset>
     <legend> <h3> ${i18n`Storage`} </h3> </legend>
     <label>${i18n`settings storage path`} ${i18n`not settable`}
       <input type='text' disabled value='${state.storage.path}' disabled />

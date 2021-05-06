@@ -14,10 +14,6 @@
   "enable geometry caching":"Enable Experimental Geometry Caching, ",
   "timeout for generation":"Timeout for Solid Generation (ms)",
 
-  "Viewer":"Viewer",
-  "enable zoom on new parameters":"Enable zoom to fit on parameter changes",
-  "enable zoom on reload":"Enable zoom to fit on design reload",
-
   "Storage": "Storage",
   "settings storage path":"Storage path of settings",
 
@@ -38,6 +34,7 @@
   "axes":"Show Axis",
   "auto rotate": "Enable Auto-rotate",
   "auto reload": "Enable Auto-reload",
+  "auto zoom": "Enable Auto-zoom",
   "export":"Export",
   "load project":"Load a JSCAD project",
 

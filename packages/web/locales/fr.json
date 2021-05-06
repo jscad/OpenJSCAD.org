@@ -14,10 +14,6 @@
   "enable geometry caching":"Systeme de cache experimental de la geometrie",
   "timeout for generation": "Timeout génération de solides (ms)",
 
-  "Viewer": "Visualisation 3d",
-  "enable zoom on new parameters":"Zoom adapté lors de nouveaux paramètres",
-  "enable zoom on reload":"Zoom adapté lors de chargement de design",
-
   "Storage":"Stockage",
   "settings storage path":"Chemin de stockage des paramètres",
 
@@ -38,6 +34,7 @@
   "axes":"Axes",
   "auto rotate": "Auto rotation",
   "auto reload": "Auto chargement",
+  "auto zoom": "Auto zoom",
   "export":"Exporter",
   "load project":"Charger projet jscad",
 
