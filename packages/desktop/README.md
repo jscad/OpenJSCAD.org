@@ -133,6 +133,7 @@ This version of Jscad has support for multiple languages (as in text for the UI,
 - English
 - German
 - French
+- Croatian
 
 you can find the language files in the **locales** folder 
 * Language will default to your system's locale
