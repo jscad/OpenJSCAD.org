@@ -52,7 +52,8 @@ const makeJscad = async (targetElement, options) => {
       en: require('../locales/en.json'),
       fr: require('../locales/fr.json'),
       de: require('../locales/de.json'),
-      ja: require('../locales/ja.json')
+      ja: require('../locales/ja.json'),
+      hr: require('../locales/hr.json')
     },
     logging
   })
