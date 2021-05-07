@@ -5,6 +5,7 @@
   "german":"Deutsch",
   "french":"Französich",
   "japanese":"Japanisch",
+  "croatian":"Kroatisch",
 
   "Languages":"Sprache",
   "Themes":"Thema",
@@ -12,10 +13,6 @@
   "Generation":"Generieren von Geometrie",
   "enable geometry caching":"Experimenteles caching von Geometrie,",
   "timeout for generation":"Abfallzeit für generieren von Soliden (ms)",
-
-  "Viewer":"3d Viewer",
-  "enable zoom on new parameters":"Alles Zoom bei neue Parameter",
-  "enable zoom on reload":"Alles Zoom beim laden von Designs",
 
   "Storage":"Speicher",
   "settings storage path":"Dateipfad für Einstellungen",
@@ -37,6 +34,7 @@
   "axes":"Achsen",
   "auto rotate": "Auto Drehung",
   "auto reload": "Auto Laden",
+  "auto zoom": "Auto Zoom",
   "export":"Exportieren",
   "load project":"JSCAD Projekt Laden",
 
