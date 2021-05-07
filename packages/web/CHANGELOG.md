@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.2.2...@jscad/web@2.3.0) (2021-05-07)
+
+
+### Bug Fixes
+
+* **regl-renderer:** improved performance of viewer ([4681202](https://github.com/jscad/OpenJSCAD.org/commit/4681202e7a96ec8a1739c724b8ed1b4421d1916e)), closes [#813](https://github.com/jscad/OpenJSCAD.org/issues/813)
+
+
+### Features
+
+* **web:** enhanced to support auto zoom control ([#825](https://github.com/jscad/OpenJSCAD.org/issues/825)) ([1c9908e](https://github.com/jscad/OpenJSCAD.org/commit/1c9908e74b6b5eeefc0ccbbdfd306d473334d69d))
+
+
+
+
+
 ## [2.2.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.2.1...@jscad/web@2.2.2) (2021-04-30)
 
 **Note:** Version bump only for package @jscad/web
