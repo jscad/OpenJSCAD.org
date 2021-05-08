@@ -1,5 +1,7 @@
-const callBackToStream = require('../../observable-utils/callbackToObservable')
 const isElectron = require('is-electron')
+
+const callBackToStream = require('../../most-utils/callbackToObservable')
+
 const longNames = {
   en: 'english',
   de: 'german',

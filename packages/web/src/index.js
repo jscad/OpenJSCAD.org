@@ -1,6 +1,8 @@
 const html = require('nanohtml')
 
-const { evaluation, sideEffects, observableUtils } = require('@jscad/core')
+const { evaluation, sideEffects } = require('@jscad/core')
+
+const callbackToObservable = require('./most-utils/callbackToObservable')
 
 const packageMetadata = require('../package.json')
 const keyBindings = require('../data/keybindings.json')
@@ -29,13 +31,13 @@ const makeJscad = async (targetElement, options) => {
   // (local) storage
   const storage = require('./sideEffects/localStorage')({ name, logging })
   // title bar side effect
-  const titleBar = sideEffects.titleBar({ logging })
+  const titleBar = require('./sideEffects/titleBar')({ logging })
   // drag & drop side effect // FIXME: unify with the one in core
   const dragDrop = require('./sideEffects/dragDrop')({ targetEl: jscadEl, logging })
   // fileDialog side effect
   const fileDialog = require('./sideEffects/fileDialog')({ targetEl: jscadEl, logging })
   // dom side effect
-  const dom = sideEffects.dom({ targetEl: jscadEl }, logging)
+  const dom = require('./sideEffects/dom')({ targetEl: jscadEl }, logging)
   // state (pseudo) side effect
   const state = require('./sideEffects/state/index')({ logging, packageMetadata, keyBindings })
 
@@ -47,7 +49,7 @@ const makeJscad = async (targetElement, options) => {
   const dat = await require('./sideEffects/dat')({ logging })
 
   // internationalization side effect, loaded up with preset translations
-  const i18n = sideEffects.i18n({
+  const i18n = require('./sideEffects/i18n')({
     translations: {
       en: require('../locales/en.json'),
       fr: require('../locales/fr.json'),
@@ -59,11 +61,11 @@ const makeJscad = async (targetElement, options) => {
   })
 
   // web workers
-  const solidWorker = sideEffects.worker(evaluation.rebuildGeometryWorker)
+  const solidWorker = require('./sideEffects/worker')(evaluation.rebuildGeometryWorker)
   // generic design parameter handling
-  const paramsCallbacktoStream = observableUtils.callbackToObservable()
+  const paramsCallbacktoStream = callbackToObservable()
   // generic editor events handling
-  const editorCallbackToStream = observableUtils.callbackToObservable()
+  const editorCallbackToStream = callbackToObservable()
 
   // all the sources of data
   const sources = {
@@ -111,7 +113,7 @@ const makeJscad = async (targetElement, options) => {
   setTimeout(() => { document.getElementById('toggleAxes').click() }, 200)
 
   // we return a function to allow setting/modifying params
-  const mainParams = observableUtils.callbackToObservable()
+  const mainParams = callbackToObservable()
   // mainParams.stream.forEach(x => console.log('setting params', x))
   return (params) => {
     mainParams.callback(params)

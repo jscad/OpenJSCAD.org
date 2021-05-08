@@ -1,6 +1,6 @@
 const { walkFileTree } = require('@jscad/core').web
-const { callbackToObservable } = require('@jscad/core').observableUtils
 
+const callbackToObservable = require('../../most-utils/callbackToObservable')
 const { changedFiles, flattenFiles } = require('./utils')
 
 const localFsOptions = require('../../../data/localFsOptions.json')
