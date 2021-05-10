@@ -1,6 +1,6 @@
 const most = require('most')
 
-const { withLatestFrom } = require('@jscad/core').observableUtils
+const { withLatestFrom } = require('../../most-utils')
 
 const reducers = {
   setErrors: (state, errorPayload) => {

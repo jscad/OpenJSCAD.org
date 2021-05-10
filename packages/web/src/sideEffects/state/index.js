@@ -1,6 +1,6 @@
 const most = require('most')
 
-const { callbackToObservable } = require('@jscad/core').observableUtils
+const callbackToObservable = require('../../most-utils/callbackToObservable')
 
 const makeState = (params) => {
   // const defaults = {

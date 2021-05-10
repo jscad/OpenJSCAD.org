@@ -1,7 +1,7 @@
 const path = require('path')
 const most = require('most')
 
-const { delayFromObservable, holdUntil, withLatestFrom } = require('@jscad/core').observableUtils
+const { delayFromObservable, holdUntil, withLatestFrom } = require('../../most-utils')
 
 const { applyParameterDefinitions, getParameterValuesFromUIControls } = require('@jscad/core').parameters
 const { getDesignEntryPoint, getDesignName } = require('@jscad/core').loading.requireDesignUtilsFs

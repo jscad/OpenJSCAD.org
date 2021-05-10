@@ -1,10 +1,10 @@
 const path = require('path')
 
-const { callbackToObservable } = require('@jscad/core').observableUtils
 const { getFileExtensionFromString } = require('@jscad/core').utils
 
 const { formats } = require('@jscad/io/formats')
 
+const callbackToObservable = require('../../most-utils/callbackToObservable')
 const makeLogger = require('../../utils/logger')
 
 // const proxyUrl = './remote.php?url='

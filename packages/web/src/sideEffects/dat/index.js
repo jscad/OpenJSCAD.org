@@ -1,6 +1,6 @@
-const { callbackToObservable } = require('@jscad/core').observableUtils
 const { getFileExtensionFromString } = require('@jscad/core').utils
 
+const callbackToObservable = require('../../most-utils/callbackToObservable')
 const makeLogger = require('../../utils/logger')
 
 const makeDatSideEffect = async (params) => {

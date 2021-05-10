@@ -1,6 +1,6 @@
 const most = require('most')
 
-const { holdUntil, withLatestFrom } = require('@jscad/core').observableUtils
+const { holdUntil, withLatestFrom } = require('../../most-utils')
 
 const reducers = {
   initialize: (state) => {
