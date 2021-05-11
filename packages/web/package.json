@@ -48,7 +48,6 @@
     "morphdom": "2.6.1",
     "most": "1.8.0",
     "@most/create": "2.0.1",
-    "most-gestures": "0.4.2",
     "most-proxy": "3.3.0",
     "nanohtml": "1.9.1",
     "webworkify": "1.5.0"

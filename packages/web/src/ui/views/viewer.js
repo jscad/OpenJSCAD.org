@@ -3,6 +3,7 @@ const html = require('nanohtml')
 // viewer data
 const rendererStuff = require('@jscad/regl-renderer')
 
+const { pointerGestures } = require('../../most-gestures')
 const { prepareRender, drawCommands, cameras, entitiesFromSolids } = rendererStuff
 const perspectiveCamera = cameras.perspective
 const orbitControls = rendererStuff.controls.orbit
@@ -60,7 +61,7 @@ const viewer = (state, i18n) => {
     viewerOptions = options.viewerOptions
     camera = options.camera
     render = prepareRender(viewerOptions)
-    const gestures = require('most-gestures').pointerGestures(el)
+    const gestures = pointerGestures(el)
 
     // rotate & pan
     gestures.drags

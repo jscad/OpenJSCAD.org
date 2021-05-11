@@ -1,26 +1,19 @@
-const { just, merge, empty } = require('most')
-const { exists, isMoving } = require('./utils')
-/* alternative "clicks" (ie mouseDown -> mouseUp ) implementation, with more fine
-grained control
-*/
-function basePresses ({mouseDowns$, mouseUps$, mouseMoves$, touchStarts$, touchEnds$, touchMoves$}, settings) {
-  touchMoves$ = touchMoves$.filter(t => t.touches.length === 1)
+const { just, merge } = require('most')
+const { exists } = require('./utils')
+
+/* alternative "clicks" (ie mouseDown -> mouseUp ) implementation, with more fine grained control */
+const basePresses = ({ mouseDowns$, mouseUps$, mouseMoves$, touchStarts$, touchEnds$, touchMoves$ }, settings) => {
+  touchMoves$ = touchMoves$.filter((t) => t.touches.length === 1)
 
   const starts$ = merge(mouseDowns$, touchStarts$) // mouse & touch interactions starts
   const ends$ = merge(mouseUps$, touchEnds$) // mouse & touch interactions ends
-  const moves$ = merge(mouseMoves$, touchMoves$)
+  // const moves$ = merge(mouseMoves$, touchMoves$)
   // only doing any "clicks if the time between mDOWN and mUP is below longpressDelay"
   // any small mouseMove is ignored (shaky hands)
 
   return starts$.timestamp()
-    .flatMap(function (downEvent) {
-      return merge(
-        just(downEvent),
-        // moves$.take(1).flatMap(x => empty()).timestamp(), // Skip if we get a movement before a mouse up
-        ends$.take(1).timestamp()
-      )
-    })
-    .loop(function (acc, current) {
+    .flatMap((downEvent) => merge(just(downEvent), ends$.take(1).timestamp()))
+    .loop((acc, current) => {
       let result
       if (acc.length === 1) {
         const timeDelta = current.time - acc[0].time
@@ -33,25 +26,25 @@ function basePresses ({mouseDowns$, mouseUps$, mouseMoves$, touchStarts$, touchE
 
         let delta = [curX - prevX, curY - prevY] // FIXME: duplicate of mouseDrags !
         delta = delta[0] * delta[0] + delta[1] * delta[1] // squared distance
-        let moveDelta = {
+        const moveDelta = {
           x: prevX - curX,
           y: curY - prevY,
           sqrd: delta
         }
 
-        result = {value: current.value, originalEvent: current.value, timeDelta, moveDelta, x: curX, y: curY}
+        result = { value: current.value, originalEvent: current.value, timeDelta, moveDelta, x: curX, y: curY }
         acc = []
       } else {
         acc.push(current)
       }
-      return {seed: acc, value: result}
+      return { seed: acc, value: result }
     }, [])
     .filter(exists)
-    .filter(x => x.value !== undefined)
+    .filter((x) => x.value !== undefined)
     .multicast()
 }
 
-function presses (baseInteractions, settings) {
+const presses = (baseInteractions, settings) => {
   const presses$ = basePresses(baseInteractions, settings)
 
   /*
@@ -87,4 +80,4 @@ function presses (baseInteractions, settings) {
   return presses$
 }
 
-module.exports = {presses}
+module.exports = { presses }
