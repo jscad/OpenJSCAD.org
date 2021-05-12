@@ -195,6 +195,7 @@ const viewer = (state, i18n) => {
     }
   }
 
+  moveRender() // possible fix for huge designs
   return el
 }
 
