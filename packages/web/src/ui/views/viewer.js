@@ -25,8 +25,8 @@ let renderUntil = Number.MAX_VALUE
 
 // set a time to stop rendering with a small time buffer just in case.
 // rotation has some elasticity in movement so this way we let it finish for sure
-const moveRender = (move=100) => { renderUntil = Date.now() + move }
-moveRender()
+const moveRender = (move=100) => { renderUntil = Date.now() + move}
+
 
 const grid = { // command to draw the grid
   visuals: {
@@ -53,6 +53,7 @@ let prevSolids
 let prevColor = []
 
 const viewer = (state, i18n) => {
+  moveRender(1)
   const el = html`<canvas id='renderTarget'> </canvas>`
   window.addEventListener('resize', moveRender)
 
@@ -137,7 +138,7 @@ const viewer = (state, i18n) => {
         controls = { ...controls, ...updated.controls }
         camera.position = updated.camera.position
         perspectiveCamera.update(camera)
-        console.log('update render');
+
         resize(el)
         render(viewerOptions)
       }
@@ -193,9 +194,9 @@ const viewer = (state, i18n) => {
     if (state.viewer.rendering) {
       controls.autoRotate.enabled = state.viewer.rendering.autoRotate
     }
+    moveRender(1000) // possible fix for huge designs
   }
 
-  moveRender() // possible fix for huge designs
   return el
 }
 
