@@ -145,7 +145,6 @@ const viewer = (state, i18n) => {
     }
     window.requestAnimationFrame(updateAndRender)
   } else {
-    moveRender()
 
     // only generate entities when the solids change
     // themes, options, etc also change the viewer state
