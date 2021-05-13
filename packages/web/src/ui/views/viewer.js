@@ -25,7 +25,8 @@ let renderUntil = Number.MAX_VALUE
 
 // set a time to stop rendering with a small time buffer just in case.
 // rotation has some elasticity in movement so this way we let it finish for sure
-const moveRender = () => { renderUntil = Date.now() + 1000 }
+const moveRender = (move=100) => { renderUntil = Date.now() + move }
+moveRender()
 
 const grid = { // command to draw the grid
   visuals: {
@@ -128,7 +129,7 @@ const viewer = (state, i18n) => {
     // the heart of rendering, as themes, controls, etc change
     const updateAndRender = (timestamp) => {
       if (doRotatePanZoom() || controls.autoRotate.enabled) {
-        moveRender()
+        moveRender(1000)
       }
 
       if (renderUntil > Date.now()) {
@@ -136,7 +137,7 @@ const viewer = (state, i18n) => {
         controls = { ...controls, ...updated.controls }
         camera.position = updated.camera.position
         perspectiveCamera.update(camera)
-
+        console.log('update render');
         resize(el)
         render(viewerOptions)
       }
