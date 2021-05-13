@@ -82,21 +82,24 @@ const renderer = prepareRender(setupOptions)
 const gridOptions = {
   visuals: {
     drawCmd: 'drawGrid',
-    show: true,
-    color: [0, 0, 0, 1],
-    subColor: [0, 0, 1, 0.5],
-    fadeOut: false,
-    transparent: true
+    show: true
   },
   size: [500, 500],
-  ticks: [100, 10]
+  ticks: [25, 5],
+  // color: [0, 0, 1, 1],
+  // subColor: [0, 0, 1, 0.5]
 }
 
 const axisOptions = {
   visuals: {
     drawCmd: 'drawAxis',
     show: true
-  }
+  },
+  size: 300,
+  // alwaysVisible: false,
+  // xColor: [0, 0, 1, 1],
+  // yColor: [1, 0, 1, 1],
+  // zColor: [0, 0, 0, 1]
 }
 
 const entities = entitiesFromSolids({}, demo({ scale: 1 }))

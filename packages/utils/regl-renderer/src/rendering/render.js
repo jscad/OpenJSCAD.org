@@ -48,7 +48,8 @@ const prepareRender = (params) => {
           })
           .forEach((entity) => {
             const { visuals } = entity
-            if (visuals.drawCmd && visuals.show && props.drawCommands[visuals.drawCmd]) {
+            const show = ('show' in visuals) ? visuals.show : true
+            if (show && visuals.drawCmd && props.drawCommands[visuals.drawCmd]) {
               let drawCmd
               if (visuals.cacheId) {
                 drawCmd = drawCache2.get(visuals.cacheId)
