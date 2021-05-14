@@ -22,11 +22,7 @@ let rotateDelta = [0, 0]
 let panDelta = [0, 0]
 let zoomDelta = 0
 let zoomToFit = false
-let renderUntil = Number.MAX_VALUE
-
-// set a time to stop rendering with a small time buffer just in case.
-// rotation has some elasticity in movement so this way we let it finish for sure
-const moveRender = () => { renderUntil = Date.now() + 1000 }
+let updateView = true
 
 const grid = { // command to draw the grid
   visuals: {
@@ -54,7 +50,6 @@ let prevColor = []
 
 const viewer = (state, i18n) => {
   const el = html`<canvas id='renderTarget'> </canvas>`
-  window.addEventListener('resize', moveRender)
 
   if (!render) {
     const options = setup(el)
@@ -92,13 +87,11 @@ const viewer = (state, i18n) => {
       })
 
     const doRotatePanZoom = () => {
-      let changed = false
-
       if (rotateDelta[0] || rotateDelta[1]) {
         const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, rotateDelta)
         rotateDelta = [0, 0]
         controls = { ...controls, ...updated.controls }
-        changed = true
+        updateView = true
       }
 
       if (panDelta[0] || panDelta[1]) {
@@ -106,35 +99,34 @@ const viewer = (state, i18n) => {
         panDelta = [0, 0]
         camera.position = updated.camera.position
         camera.target = updated.camera.target
-        changed = true
+        updateView = true
       }
 
       if (zoomDelta) {
         const updated = orbitControls.zoom({ controls, camera, speed: zoomSpeed }, zoomDelta)
         controls = { ...controls, ...updated.controls }
         zoomDelta = 0
-        changed = true
+        updateView = true
       }
 
       if (zoomToFit) {
-        controls.zoomToFit.tightness = 1.3
+        controls.zoomToFit.tightness = 1.5
         const updated = orbitControls.zoomToFit({ controls, camera, entities: prevEntities })
         controls = { ...controls, ...updated.controls }
         zoomToFit = false
-        changed = true
+        updateView = true
       }
-      return changed
     }
 
     // the heart of rendering, as themes, controls, etc change
     const updateAndRender = (timestamp) => {
-      if (doRotatePanZoom() || controls.autoRotate.enabled) {
-        moveRender()
-      }
+      doRotatePanZoom()
 
-      if (renderUntil > Date.now()) {
+      if (updateView) {
         const updated = orbitControls.update({ controls, camera })
         controls = { ...controls, ...updated.controls }
+        updateView = controls.changed // for elasticity in rotate / zoom
+
         camera.position = updated.camera.position
         perspectiveCamera.update(camera)
 
@@ -146,8 +138,6 @@ const viewer = (state, i18n) => {
     }
     window.requestAnimationFrame(updateAndRender)
   } else {
-    moveRender()
-
     // only generate entities when the solids change
     // themes, options, etc also change the viewer state
     const solids = state.design.solids
@@ -174,6 +164,7 @@ const viewer = (state, i18n) => {
       if (viewerOptions.rendering) {
         viewerOptions.rendering.background = theme.rendering.background
         viewerOptions.rendering.meshColor = theme.rendering.meshColor
+        updateView = true
       }
     }
 

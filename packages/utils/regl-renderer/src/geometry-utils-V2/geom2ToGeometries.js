@@ -12,10 +12,11 @@ const maxIndex = Math.floor(65535 / 2) // two vertices per segment
 const geom2ToGeometries = (options, solid) => {
   let { color } = options
 
+  const sides = solid.sides
+  if (sides.length === 0) return []
+
   if ('color' in solid) color = solid.color
   const isTransparent = (color[3] < 1.0)
-
-  const sides = solid.sides
 
   const numgeometries = Math.floor(sides.length / (maxIndex)) + 1
 
