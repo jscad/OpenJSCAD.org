@@ -121,7 +121,7 @@ const update = ({ controls, camera }, output) => {
   const newView = mat4.lookAt(mat4.create(), newPosition, target, up)
 
   const dragEffect = 1 - max(min(drag, 1.0), 0.01)
-  const positionChanged = vec3.distance(position, newPosition) > 0 // TODO optimise
+  const positionChanged = vec3.distance(position, newPosition) > 0.001
 
   /* let newMatrix = mat4.create()
   newMatrix = mat4.lookAt(newMatrix, newPosition, target, up)
