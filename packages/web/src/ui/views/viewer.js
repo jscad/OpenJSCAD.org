@@ -121,7 +121,7 @@ const viewer = (state, i18n) => {
     const updateAndRender = (timestamp) => {
       doRotatePanZoom()
 
-      if (updateView || controls.autoRotate.enabled) {
+      if (updateView) {
         const updated = orbitControls.update({ controls, camera })
         controls = { ...controls, ...updated.controls }
         updateView = controls.changed // for elasticity in rotate / zoom
