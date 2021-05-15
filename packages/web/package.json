@@ -7,9 +7,10 @@
   "unpkg": "dist/jscad-web.min.js",
   "scripts": {
     "build": "browserify src/index.js -o dist/jscad-web.min.js -g uglifyify --standalone jscadWeb",
-    "version": "npm run build && git add dist",
     "dev": "budo demo.js --port=8081 --css ./css/demo.css --live -- -b",
-    "postinstall": "node postInstall.js && node -e \"console.log('\\u001b[35m\\u001b[1mLove JSCAD? You can now donate to our open collective:\\u001b[22m\\u001b[39m\\n > \\u001b[34mhttps://opencollective.com/openjscad/donate\\u001b[0m')\""
+    "postinstall": "node postInstall.js && node -e \"console.log('\\u001b[35m\\u001b[1mLove JSCAD? You can now donate to our open collective:\\u001b[22m\\u001b[39m\\n > \\u001b[34mhttps://opencollective.com/openjscad/donate\\u001b[0m')\"",
+    "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
+    "version": "npm run build && git add dist"
   },
   "contributors": [
     {
@@ -48,7 +49,6 @@
     "morphdom": "2.6.1",
     "most": "1.8.0",
     "@most/create": "2.0.1",
-    "most-gestures": "0.4.2",
     "most-proxy": "3.3.0",
     "nanohtml": "1.9.1",
     "webworkify": "1.5.0"
@@ -56,6 +56,7 @@
   "devDependencies": {
     "ava": "3.15.0",
     "browserify": "16.5.1",
+    "browser-env": "^3.2.1",
     "budo": "11.6.4",
     "copy-dir": "1.3.0",
     "docblock": "0.4.4",

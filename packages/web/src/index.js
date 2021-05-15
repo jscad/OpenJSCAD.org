@@ -1,6 +1,6 @@
 const html = require('nanohtml')
 
-const { evaluation, sideEffects } = require('@jscad/core')
+const { evaluation } = require('@jscad/core')
 
 const callbackToObservable = require('./most-utils/callbackToObservable')
 
