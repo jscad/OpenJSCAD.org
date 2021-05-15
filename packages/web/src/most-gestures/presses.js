@@ -7,7 +7,6 @@ const basePresses = ({ mouseDowns$, mouseUps$, mouseMoves$, touchStarts$, touchE
 
   const starts$ = merge(mouseDowns$, touchStarts$) // mouse & touch interactions starts
   const ends$ = merge(mouseUps$, touchEnds$) // mouse & touch interactions ends
-  // const moves$ = merge(mouseMoves$, touchMoves$)
   // only doing any "clicks if the time between mDOWN and mUP is below longpressDelay"
   // any small mouseMove is ignored (shaky hands)
 
