@@ -145,8 +145,7 @@ const viewer = (state, i18n) => {
       const theme = state.themes.themeSettings.viewer
       const color = theme.rendering.meshColor
       const sameColor = prevColor === color
-      // FIXME inefficient, replace
-      const sameSolids = solids.length === prevSolids.length && JSON.stringify(solids) === JSON.stringify(prevSolids)
+      const sameSolids = compareSolids(solids, prevSolids)
       if (!(sameSolids && sameColor)) {
         prevEntities = entitiesFromSolids({ color }, solids)
         prevColor = color
@@ -227,6 +226,19 @@ const resize = (viewerElement) => {
     perspectiveCamera.setProjection(camera, camera, { width, height })
     perspectiveCamera.update(camera, camera)
   }
+}
+
+let idCounter = Date.now()
+const compareSolids = (current, previous) => {
+  // add an id to each solid if not already
+  current = current.map((s) => {
+    if (!s.id) s.id = ++idCounter
+    return s
+  })
+  // check if the solids are the same
+  if (!previous) return false
+  if (current.length !== previous.length) return false
+  return current.reduce((acc, id, i) => acc && current[i].id === previous[i].id, true)
 }
 
 module.exports = viewer
