@@ -1,12 +1,11 @@
-import { DrawConfig, InitializationOptions } from 'regl'
+import { DefaultContext, DrawCommand, InitializationOptions, Regl } from 'regl'
+import { Geom2, Geom3, Geometry } from '@jscad/modeling/src/geometries/types'
 
 export const prepareRender: (params: {  glOptions: InitializationOptions}) => (data: any) => void;
 export namespace drawCommands {
-    const drawGrid: (regl: DrawConfig, params: any) => (props: any) => void;
-    const drawAxis: (regl: DrawConfig, params: any) => (props: any) => any;
-    const drawMesh: (regl: DrawConfig, params?: {
-        extras: {};
-    }) => any;
+    const drawGrid: (regl: Regl, params: any) => (props: any) => DrawCommand<DefaultContext, {}>;
+    const drawAxis: (regl: Regl, params: any) => (props: any) => DrawCommand<DefaultContext, {}>;
+    const drawMesh: (regl: Regl, params?: { extras: any }) => DrawCommand<DefaultContext, {}>;
 }
 export namespace cameras {
     const camera: typeof import("./cameras/camera");
@@ -16,4 +15,4 @@ export namespace cameras {
 export namespace controls {
     const orbit: typeof import("./controls/orbitControls");
 }
-export const entitiesFromSolids: (params: any, solids: any) => any;
+export const entitiesFromSolids: (params: { color?: number[]; smoothNormals?: boolean }, solids: Geom2[] | Geom3[]) => Geometry[];

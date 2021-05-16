@@ -1,17 +1,17 @@
 export function toPerspectiveView({ camera }: {
-    camera: any;
+    camera: typeof import("./perspectiveCamera").cameraState;
 }): {
     view: any;
-    position: any[];
+    position: number[];
 };
 /**
  * Calculate the camera view and position for acheiving the given preset view.
  */
-export function toPresetView(viewName: any, { camera }: {
-    camera: any;
+export function toPresetView(viewName: string, { camera }: {
+    camera: typeof import("./orthographicCamera").cameraState | typeof import("./perspectiveCamera").cameraState;
 }): {
-    view: any;
-    position: any;
+    view: string;
+    position: number[];
 };
-export function fromOrthographicToPerspective(orthographicCamera: any): any;
-export function fromPerspectiveToOrthographic(perspectiveCamera: any): any;
+export function fromOrthographicToPerspective(orthographicCamera: typeof import("./orthographicCamera").cameraState): typeof import("./perspectiveCamera").cameraState;
+export function fromPerspectiveToOrthographic(perspectiveCamera: typeof import("./perspectiveCamera").cameraState): typeof import("./orthographicCamera").cameraState;
