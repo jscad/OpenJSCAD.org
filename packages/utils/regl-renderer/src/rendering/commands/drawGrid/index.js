@@ -4,7 +4,7 @@ const makeDrawGrid = (regl, params = {}) => {
   const positions = []
   const defaults = {
     visuals: {
-      color: [1, 1, 1, 1],
+      color: [0, 0, 1, 1],
       fadeOut: false
     },
     ticks: 1,

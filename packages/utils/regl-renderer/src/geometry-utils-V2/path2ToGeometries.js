@@ -14,10 +14,11 @@ const maxIndex = Math.floor(65535 / 2) - 2 // two vertices per segment, less clo
 const path2ToGeometries = (options, solid) => {
   let { color } = options
 
+  const points = solid.points
+  if (points.length === 0) return []
+
   if ('color' in solid) color = solid.color
   const isTransparent = (color[3] < 1.0)
-
-  const points = solid.points
 
   const numgeometries = Math.floor(points.length / (maxIndex)) + 1
 

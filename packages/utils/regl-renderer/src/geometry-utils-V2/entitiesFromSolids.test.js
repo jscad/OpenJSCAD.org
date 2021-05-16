@@ -17,7 +17,10 @@ test('entitiesFromSolids (various solids)', (t) => {
         { vertices: [[0, 2, 10], [6, 2, 10], [6, 8, 10], [0, 8, 10]] }
       ]
     },
-    'hi'
+    'hi',
+    { sides: [] },
+    { points: [] },
+    { polygons: [] }
   ]
   const options = {
   }

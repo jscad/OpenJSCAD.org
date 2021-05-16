@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.1.0...@jscad/regl-renderer@2.1.1) (2021-05-16)
+
+
+### Bug Fixes
+
+* **regl-renderer:** added reasonable defaults for drawGrid ([d64e062](https://github.com/jscad/OpenJSCAD.org/commit/d64e06228f8a92e014df3e22ea9ee48e11825420))
+* **regl-renderer:** corrected conversion of empty solids to entities, updated tests ([967fe82](https://github.com/jscad/OpenJSCAD.org/commit/967fe82ea429af14fe23a51d19099b1752ceead3))
+* **regl-renderer:** corrected determination of camera position change in orbitControls ([4f467c5](https://github.com/jscad/OpenJSCAD.org/commit/4f467c5d92132dc140db6799766f3a98716e5d68))
+
+
+
+
+
 # [2.1.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.0.3...@jscad/regl-renderer@2.1.0) (2021-04-30)
 
 

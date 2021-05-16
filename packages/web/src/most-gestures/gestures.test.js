@@ -3,20 +3,17 @@ const { baseInteractionsFromEvents, pointerGestures } = require('./index')
 const browserEnv = require('browser-env')
 browserEnv()
 
-const { fromEvent, merge } = require('most')
-
-
 // NOTE : use   // --inspect --debug-brk to debug node commands in chrome
-test.afterEach.always(t => {
+test.afterEach.always((t) => {
 })
 
-test.beforeEach(t => {
+test.beforeEach((t) => {
   const div = document.createElement('div')
   const baseStreams = baseInteractionsFromEvents(div)
-  t.context = {baseStreams, div}
+  t.context = { baseStreams, div }
 })
 
-test.cb('presses', t => {
+test.cb('presses', (t) => {
   const press = pointerGestures(t.context.baseStreams).press
   const div = t.context.div
   const mousedown = new window.Event('mousedown')
@@ -29,12 +26,12 @@ test.cb('presses', t => {
 
   press
     .forEach(() => {
-      //TODO: 'the test is not implemented correctly yet !')// pass()
+      // TODO: 'the test is not implemented correctly yet !')// pass()
       t.end()
     })
 })
 
-test.cb('presses (direct element)', t => {
+test.cb('presses (direct element)', (t) => {
   const div = t.context.div
 
   const press = pointerGestures(div).press
@@ -48,17 +45,17 @@ test.cb('presses (direct element)', t => {
 
   press
     .forEach(() => {
-      //TODO: 'the test is not implemented correctly yet !')// pass()
+      // TODO: 'the test is not implemented correctly yet !')// pass()
       t.end()
     })
 })
 
-test.cb('taps (2 taps)', t => {
+test.cb('taps (2 taps)', (t) => {
   const taps = pointerGestures(t.context.baseStreams).taps
 
   const div = t.context.div
-  let mousedown = new window.Event('mousedown')
-  let mouseup = new window.Event('mouseup')
+  const mousedown = new window.Event('mousedown')
+  const mouseup = new window.Event('mouseup')
 
   setTimeout(() => {
     mousedown.pageX = 3
@@ -79,19 +76,19 @@ test.cb('taps (2 taps)', t => {
   }, 100)
 
   taps
-    .forEach(function (e) {
+    .forEach((e) => {
       t.deepEqual(e.nb, 2)
       t.deepEqual(e.list.length, 2)
       t.end()
     })
 })
 
-test.cb('taps (2 taps) direct element', t => {
+test.cb('taps (2 taps) direct element', (t) => {
   const div = t.context.div
   const taps = pointerGestures(div).taps
 
-  let mousedown = new window.Event('mousedown')
-  let mouseup = new window.Event('mouseup')
+  const mousedown = new window.Event('mousedown')
+  const mouseup = new window.Event('mouseup')
 
   setTimeout(() => {
     mousedown.pageX = 3
@@ -112,20 +109,19 @@ test.cb('taps (2 taps) direct element', t => {
   }, 100)
 
   taps
-    .forEach(function (e) {
+    .forEach((e) => {
       t.deepEqual(e.nb, 2)
       t.deepEqual(e.list.length, 2)
       t.end()
     })
 })
 
-
-test.cb('taps (3 taps)', t => {
+test.cb('taps (3 taps)', (t) => {
   const taps = pointerGestures(t.context.baseStreams).taps
 
   const div = t.context.div
-  let mousedown = new window.Event('mousedown')
-  let mouseup = new window.Event('mouseup')
+  const mousedown = new window.Event('mousedown')
+  const mouseup = new window.Event('mouseup')
 
   setTimeout(() => {
     mousedown.pageX = 3
@@ -159,19 +155,19 @@ test.cb('taps (3 taps)', t => {
   }, 300)
 
   taps
-    .forEach(function (e) {
+    .forEach((e) => {
       t.deepEqual(e.nb, 3)
       t.deepEqual(e.list.length, 3)
       t.end()
     })
 })
 
-test.cb('taps (3 taps) direct element', t => {
+test.cb('taps (3 taps) direct element', (t) => {
   const div = t.context.div
   const taps = pointerGestures(div).taps
 
-  let mousedown = new window.Event('mousedown')
-  let mouseup = new window.Event('mouseup')
+  const mousedown = new window.Event('mousedown')
+  const mouseup = new window.Event('mouseup')
 
   setTimeout(() => {
     mousedown.pageX = 3
@@ -205,14 +201,14 @@ test.cb('taps (3 taps) direct element', t => {
   }, 300)
 
   taps
-    .forEach(function (e) {
+    .forEach((e) => {
       t.deepEqual(e.nb, 3)
       t.deepEqual(e.list.length, 3)
       t.end()
     })
 })
 
-test.cb('zooms (from wheel event)', t => {
+test.cb('zooms (from wheel event)', (t) => {
   const zooms = pointerGestures(t.context.baseStreams).zooms
 
   const div = t.context.div
@@ -222,13 +218,13 @@ test.cb('zooms (from wheel event)', t => {
   }, 100)
 
   zooms
-    .forEach(function (e) {
+    .forEach((e) => {
       t.deepEqual(e, -200)
       t.end()
     })
 })
 
-test.cb('zooms (from mousewheel event), direct element', t => {
+test.cb('zooms (from mousewheel event), direct element', (t) => {
   const div = t.context.div
   const zooms = pointerGestures(div).zooms
 
@@ -238,14 +234,13 @@ test.cb('zooms (from mousewheel event), direct element', t => {
   }, 100)
 
   zooms
-    .forEach(function (e) {
+    .forEach((e) => {
       t.deepEqual(e, -200)
       t.end()
     })
 })
 
-
-test.cb('zooms (from mousewheel event)', t => {
+test.cb('zooms (from mousewheel event)', (t) => {
   const zooms = pointerGestures(t.context.baseStreams).zooms
 
   const div = t.context.div
@@ -255,13 +250,13 @@ test.cb('zooms (from mousewheel event)', t => {
   }, 100)
 
   zooms
-    .forEach(function (e) {
+    .forEach((e) => {
       t.deepEqual(e, -200)
       t.end()
     })
 })
 
-test.cb('zooms (from mousewheel event) direct element', t => {
+test.cb('zooms (from mousewheel event) direct element', (t) => {
   const div = t.context.div
   const zooms = pointerGestures(div).zooms
 
@@ -271,13 +266,13 @@ test.cb('zooms (from mousewheel event) direct element', t => {
   }, 100)
 
   zooms
-    .forEach(function (e) {
+    .forEach((e) => {
       t.deepEqual(e, -200)
       t.end()
     })
 })
 
-test.cb('zooms (from pinch)', t => {
+test.cb('zooms (from pinch)', (t) => {
   const zooms = pointerGestures(t.context.baseStreams).zooms
 
   const div = t.context.div
@@ -286,22 +281,22 @@ test.cb('zooms (from pinch)', t => {
   const touchend = new window.Event('touchend')
 
   setTimeout(() => {
-    touchstart.touches = [{pageX: 3, pageY: -10}, {pageX: 43, pageY: 0}]
-    touchmove.touches = [{pageX: 44, pageY: -2}, {pageX: 244, pageY: 122}]
-    touchend.touches = [{pageX: 144, pageY: -22}, {pageX: 644, pageY: 757}]
+    touchstart.touches = [{ pageX: 3, pageY: -10 }, { pageX: 43, pageY: 0 }]
+    touchmove.touches = [{ pageX: 44, pageY: -2 }, { pageX: 244, pageY: 122 }]
+    touchend.touches = [{ pageX: 144, pageY: -22 }, { pageX: 644, pageY: 757 }]
     div.dispatchEvent(touchstart)
     div.dispatchEvent(touchmove)
     div.dispatchEvent(touchend)
   }, 100)
 
   zooms
-    .forEach(function (e) {
+    .forEach((e) => {
       t.deepEqual(e, 32.205600000000004)
       t.end()
     })
 })
 
-test.cb('zooms (from pinch) direct element', t => {
+test.cb('zooms (from pinch) direct element', (t) => {
   const div = t.context.div
   const zooms = pointerGestures(div).zooms
 
@@ -310,22 +305,22 @@ test.cb('zooms (from pinch) direct element', t => {
   const touchend = new window.Event('touchend')
 
   setTimeout(() => {
-    touchstart.touches = [{pageX: 3, pageY: -10}, {pageX: 43, pageY: 0}]
-    touchmove.touches = [{pageX: 44, pageY: -2}, {pageX: 244, pageY: 122}]
-    touchend.touches = [{pageX: 144, pageY: -22}, {pageX: 644, pageY: 757}]
+    touchstart.touches = [{ pageX: 3, pageY: -10 }, { pageX: 43, pageY: 0 }]
+    touchmove.touches = [{ pageX: 44, pageY: -2 }, { pageX: 244, pageY: 122 }]
+    touchend.touches = [{ pageX: 144, pageY: -22 }, { pageX: 644, pageY: 757 }]
     div.dispatchEvent(touchstart)
     div.dispatchEvent(touchmove)
     div.dispatchEvent(touchend)
   }, 100)
 
   zooms
-    .forEach(function (e) {
+    .forEach((e) => {
       t.deepEqual(e, 32.205600000000004)
       t.end()
     })
 })
 
-test.cb('drags (mouse)', t => {
+test.cb('drags (mouse)', (t) => {
   const drags = pointerGestures(t.context.baseStreams).drags
 
   const div = t.context.div
@@ -361,9 +356,9 @@ test.cb('drags (mouse)', t => {
   }, 100)
 
   drags
-    .forEach(function (e) {
+    .forEach((e) => {
       const expEvent = {
-        originalEvents: [{isTrusted: false}],
+        originalEvents: [{ isTrusted: false }],
         delta: { left: 41, top: 8, x: -41, y: 8 },
         normalized: { x: 44, y: -2 },
         type: 'mouse'
@@ -375,7 +370,7 @@ test.cb('drags (mouse)', t => {
     })
 })
 
-test.cb('drags (mouse) direct element', t => {
+test.cb('drags (mouse) direct element', (t) => {
   const div = t.context.div
   const drags = pointerGestures(div).drags
 
@@ -411,9 +406,9 @@ test.cb('drags (mouse) direct element', t => {
   }, 100)
 
   drags
-    .forEach(function (e) {
+    .forEach((e) => {
       const expEvent = {
-        originalEvents: [{isTrusted: false}],
+        originalEvents: [{ isTrusted: false }],
         delta: { left: 41, top: 8, x: -41, y: 8 },
         normalized: { x: 44, y: -2 },
         type: 'mouse'
@@ -425,7 +420,7 @@ test.cb('drags (mouse) direct element', t => {
     })
 })
 
-test.cb('drags (touch)', t => {
+test.cb('drags (touch)', (t) => {
   const drags = pointerGestures(t.context.baseStreams).drags
 
   const div = t.context.div
@@ -434,18 +429,18 @@ test.cb('drags (touch)', t => {
   const touchend = new window.Event('touchend')
 
   setTimeout(() => {
-    touchstart.touches = [{pageX: 3, pageY: -10}]
-    touchmove.touches = [{pageX: 44, pageY: -2}]
-    touchend.touches = [{pageX: 144, pageY: -22}]
+    touchstart.touches = [{ pageX: 3, pageY: -10 }]
+    touchmove.touches = [{ pageX: 44, pageY: -2 }]
+    touchend.touches = [{ pageX: 144, pageY: -22 }]
     div.dispatchEvent(touchstart)
     div.dispatchEvent(touchmove)
     div.dispatchEvent(touchend)
   }, 100)
 
   drags
-    .forEach(function (e) {
+    .forEach((e) => {
       const expEvent = {
-        originalEvents: [{isTrusted: false}],
+        originalEvents: [{ isTrusted: false }],
         delta: { left: 41, top: 8, x: -41, y: 8 },
         normalized: { x: 44, y: -2 },
         type: 'touch'
@@ -457,7 +452,7 @@ test.cb('drags (touch)', t => {
     })
 })
 
-test.cb('drags (touch) direct element', t => {
+test.cb('drags (touch) direct element', (t) => {
   const div = t.context.div
   const drags = pointerGestures(div).drags
 
@@ -466,18 +461,18 @@ test.cb('drags (touch) direct element', t => {
   const touchend = new window.Event('touchend')
 
   setTimeout(() => {
-    touchstart.touches = [{pageX: 3, pageY: -10}]
-    touchmove.touches = [{pageX: 44, pageY: -2}]
-    touchend.touches = [{pageX: 144, pageY: -22}]
+    touchstart.touches = [{ pageX: 3, pageY: -10 }]
+    touchmove.touches = [{ pageX: 44, pageY: -2 }]
+    touchend.touches = [{ pageX: 144, pageY: -22 }]
     div.dispatchEvent(touchstart)
     div.dispatchEvent(touchmove)
     div.dispatchEvent(touchend)
   }, 100)
 
   drags
-    .forEach(function (e) {
+    .forEach((e) => {
       const expEvent = {
-        originalEvents: [{isTrusted: false}],
+        originalEvents: [{ isTrusted: false }],
         delta: { left: 41, top: 8, x: -41, y: 8 },
         normalized: { x: 44, y: -2 },
         type: 'touch'

@@ -24,8 +24,7 @@
     "packages/modeling",
     "packages/utils/*",
     "packages/vtree",
-    "packages/web",
-    "packages/most-gestures"
+    "packages/web"
   ],
   "ignoreChanges": [
     "**/*.md"

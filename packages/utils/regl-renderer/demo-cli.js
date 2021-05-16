@@ -75,20 +75,23 @@ const options = {
       // the choice of what draw command to use is also data based
       visuals: {
         drawCmd: 'drawGrid',
-        show: true,
-        color: [0, 0, 0, 0.1],
-        subColor: [0, 0, 1, 0.1],
-        fadeOut: true,
-        transparent: true
+        show: true
       },
       size: [500, 500],
-      ticks: [10, 1]
+      ticks: [25, 5],
+      // color: [0, 0, 1, 1],
+      // subColor: [0, 0, 1, 0.5]
     },
     {
       visuals: {
         drawCmd: 'drawAxis',
         show: true
-      }
+      },
+      size: 300,
+      // alwaysVisible: false,
+      // xColor: [0, 0, 1, 1],
+      // yColor: [1, 0, 1, 1],
+      // zColor: [0, 0, 0, 1]
     },
     ...entities
   ]

@@ -13,29 +13,12 @@ test('geom2ToGeometries (empty solid)', (t) => {
   const solid = {
     sides: []
   }
-  let expected = [{
-    color: [1, 2, 3, 4],
-    indices: [],
-    normals: [],
-    positions: [],
-    transforms: defaultTransforms,
-    isTransparent: false,
-    type: '2d'
-  }]
+  let expected = []
   let geometries = geom2ToGeometries({ color: [1, 2, 3, 4] }, solid)
   t.deepEqual(geometries, expected)
 
   // with color
   solid.color = [4, 3, 2, 1]
-  expected = [{
-    color: [4, 3, 2, 1],
-    indices: [],
-    normals: [],
-    positions: [],
-    transforms: defaultTransforms,
-    isTransparent: false,
-    type: '2d'
-  }]
   geometries = geom2ToGeometries({ color: [1, 2, 3, 4] }, solid)
   t.deepEqual(geometries, expected)
 
@@ -46,15 +29,6 @@ test('geom2ToGeometries (empty solid)', (t) => {
     0, 0, 3, 0,
     0, 0, 0, 2
   ]
-  expected = [{
-    color: [4, 3, 2, 1],
-    indices: [],
-    normals: [],
-    positions: [],
-    transforms: Float32Array.from(solid.transforms),
-    isTransparent: false,
-    type: '2d'
-  }]
   geometries = geom2ToGeometries({ color: [1, 2, 3, 4] }, solid)
   t.deepEqual(geometries, expected)
 })
