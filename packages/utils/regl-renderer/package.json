@@ -12,8 +12,7 @@
     "demo-cli": "node ./demo-cli.js",
     "demo-web": "budo ./demo-web.js --title regl-renderer --live",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
-    "coverage": "nyc --all --reporter=html --reporter=text npm test",
-    "types": "tsc src/*.js src/**/*.js --declaration --allowJs --emitDeclarationOnly --outDir types"
+    "coverage": "nyc --all --reporter=html --reporter=text npm test"
   },
   "author": "Mark 'kaosat-dev' Moissette",
   "keywords": [
