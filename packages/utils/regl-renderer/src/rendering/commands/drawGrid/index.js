@@ -4,7 +4,7 @@ const makeDrawGrid = (regl, params = {}) => {
   const positions = []
   const defaults = {
     visuals: {
-      color: [1, 1, 1, 1],
+      color: [0, 0, 1, 1],
       fadeOut: false
     },
     ticks: 1,
@@ -110,7 +110,8 @@ const makeDrawGrid = (regl, params = {}) => {
     uniforms: {
       model: (context, props) => props && props.model ? props.model : mat4.identity([]),
       color: (context, props) => props && props.color ? props.color : color,
-      fogColor: (context, props) => props && props.color ? [props.color[0], props.color[1], props.color[2], 0]
+      fogColor: (context, props) => props && props.color
+        ? [props.color[0], props.color[1], props.color[2], 0]
         : [color[0], color[1], color[2], 0.0],
       fadeOut: (context, props) => props && props.fadeOut !== undefined ? props.fadeOut : fadeOut
     },

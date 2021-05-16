@@ -1,14 +1,15 @@
 const most = require('most')
 
-const { withLatestFrom } = require('@jscad/core').observableUtils
+const { withLatestFrom } = require('../../most-utils')
 
 const reducers = {
   initialize: (state) => {
-    const viewer = { // ridiculous shadowing of viewer state ?? or actually logical
+    const viewer = {
       rendering: {
         background: [1, 1, 1, 1],
         meshColor: [0, 0.6, 1, 1],
-        autoRotate: false
+        autoRotate: false,
+        autoZoom: false
       },
       grid: {
         show: false,
@@ -23,26 +24,37 @@ const reducers = {
     }
     return { viewer }
   },
+
   toggleAutoRotate: (state, autoRotate) => {
     const rendering = Object.assign({}, state.viewer.rendering, { autoRotate })
     const viewer = Object.assign({}, state.viewer, { rendering })
     return { viewer }
   },
+
+  toggleAutoZoom: (state, autoZoom) => {
+    const rendering = Object.assign({}, state.viewer.rendering, { autoZoom })
+    const viewer = Object.assign({}, state.viewer, { rendering })
+    return { viewer }
+  },
+
   toggleGrid: (state, show) => {
     const grid = Object.assign({}, state.viewer.grid, { show })
     const viewer = Object.assign({}, state.viewer, { grid })
     return { viewer }
   },
+
   toggleAxes: (state, show) => {
     const axes = Object.assign({}, state.viewer.axes, { show })
     const viewer = Object.assign({}, state.viewer, { axes })
     return { viewer }
   },
+
   toPresetView: (state, position) => {
     const camera = Object.assign({}, state.viewer.camera, { position })
     const viewer = Object.assign({}, state.viewer, { camera })
     return { viewer }
   },
+
   setProjectionType: (state, projectionType) => {
     const viewer = Object.assign({}, state.viewer, { camera: { projectionType } })
     return { viewer }
@@ -78,10 +90,16 @@ const actions = ({ sources }) => {
   const toggleAutoRotate$ = most.mergeArray([
     sources.dom.select('#toggleAutoRotate').events('click')
       .map((e) => e.target.checked)
-    // sources.store.map(data => data.viewer.grid.show)
   ])
     .thru(withLatestFrom(reducers.toggleAutoRotate, sources.state))
     .map((data) => ({ type: 'toggleAutoRotate', state: data, sink: 'state' }))
+
+  const toggleAutoZoom$ = most.mergeArray([
+    sources.dom.select('#toggleAutoZoom').events('click')
+      .map((e) => e.target.checked)
+  ])
+    .thru(withLatestFrom(reducers.toggleAutoZoom, sources.state))
+    .map((data) => ({ type: 'toggleAutoZoom', state: data, sink: 'state' }))
 
   // all other viewer actions, triggered from elsewhere
   const otherActions = ['toPresetView']
@@ -96,6 +114,7 @@ const actions = ({ sources }) => {
     toggleGrid$,
     toggleAxes$,
     toggleAutoRotate$,
+    toggleAutoZoom$,
     otherViewerActions$
   }
 }

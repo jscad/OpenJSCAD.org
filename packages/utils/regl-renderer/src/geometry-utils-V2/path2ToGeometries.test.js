@@ -13,13 +13,12 @@ test('path2ToGeometries (empty solid)', (t) => {
   const solid = {
     points: []
   }
-  let expected = [{ color: [1, 2, 3, 4], indices: [], normals: [], positions: [], transforms: defaultTransforms, isTransparent: false }]
+  let expected = []
   let geometries = path2ToGeometries({ color: [1, 2, 3, 4] }, solid)
   t.deepEqual(geometries, expected)
 
   // with color
   solid.color = [4, 3, 2, 1]
-  expected = [{ color: [4, 3, 2, 1], indices: [], normals: [], positions: [], transforms: defaultTransforms, isTransparent: false }]
   geometries = path2ToGeometries({ color: [1, 2, 3, 4] }, solid)
   t.deepEqual(geometries, expected)
 
@@ -30,14 +29,6 @@ test('path2ToGeometries (empty solid)', (t) => {
     0, 0, 3, 0,
     0, 0, 0, 2
   ]
-  expected = [{
-    color: [4, 3, 2, 1],
-    indices: [],
-    normals: [],
-    positions: [],
-    transforms: Float32Array.from(solid.transforms),
-    isTransparent: false
-  }]
   geometries = path2ToGeometries({ color: [1, 2, 3, 4] }, solid)
   t.deepEqual(geometries, expected)
 })
@@ -52,10 +43,19 @@ test('path2ToGeometries (solid with points)', (t) => {
     normals: [[0, 0, -1], [0, 0, -1], [0, 0, -1], [0, 0, -1]],
     positions: [[0, 0, 0], [1, 0, 0], [1, 0, 0], [1, 1, 0]],
     transforms: defaultTransforms,
-    isTransparent: true
+    isTransparent: true,
+    type: '2d'
   }]
   const geometries = path2ToGeometries({ color: [1, 2, 3, 0.8] }, solid)
   t.deepEqual(geometries, expected)
 })
 
-// TODO: test SUPER LARGE solid with > 65000 points
+test('path2ToGeometries (solid with > 65000 points)', (t) => {
+  const solid = { points: [] }
+  for (let i = 0; i < 70000; i++) {
+    solid.points.push([i, i])
+  }
+
+  const geometries = path2ToGeometries({ color: [1, 2, 3, 0.8] }, solid)
+  t.is(geometries.length, 3)
+})

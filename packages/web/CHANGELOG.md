@@ -3,6 +3,51 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.3.0...@jscad/web@2.3.1) (2021-05-16)
+
+
+### Bug Fixes
+
+* **web:** another attempt to fix performance / elasticity issues of viewer ([5685c67](https://github.com/jscad/OpenJSCAD.org/commit/5685c678f94d6244b0ba4e1a4e58a38bd9fe1ee2))
+* **web:** replaced JSON comparisons with ID comparisons in viewer ([#839](https://github.com/jscad/OpenJSCAD.org/issues/839)) ([87cc7d2](https://github.com/jscad/OpenJSCAD.org/commit/87cc7d26a068243d03a2f5474322675f22bcbff4))
+* **web:** small tweak to the rendering loop ([f363f24](https://github.com/jscad/OpenJSCAD.org/commit/f363f2455b7fbeac70b48646f62d42a39573b5ab))
+
+
+
+
+
+# [2.3.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.2.2...@jscad/web@2.3.0) (2021-05-07)
+
+
+### Bug Fixes
+
+* **regl-renderer:** improved performance of viewer ([4681202](https://github.com/jscad/OpenJSCAD.org/commit/4681202e7a96ec8a1739c724b8ed1b4421d1916e)), closes [#813](https://github.com/jscad/OpenJSCAD.org/issues/813)
+
+
+### Features
+
+* **web:** enhanced to support auto zoom control ([#825](https://github.com/jscad/OpenJSCAD.org/issues/825)) ([1c9908e](https://github.com/jscad/OpenJSCAD.org/commit/1c9908e74b6b5eeefc0ccbbdfd306d473334d69d))
+
+
+
+
+
+## [2.2.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.2.1...@jscad/web@2.2.2) (2021-04-30)
+
+**Note:** Version bump only for package @jscad/web
+
+
+
+
+
+## [2.2.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.2.0...@jscad/web@2.2.1) (2021-04-20)
+
+**Note:** Version bump only for package @jscad/web
+
+
+
+
+
 # [2.2.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.0.0-alpha.0...@jscad/web@2.2.0) (2021-04-17)
 
 

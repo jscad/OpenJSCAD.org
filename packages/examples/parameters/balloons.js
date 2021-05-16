@@ -9,15 +9,20 @@
  */
 
 const jscad = require('@jscad/modeling')
-const { ellipsoid, line } = jscad.primitives
-const { translate, scale, rotateX, center } = jscad.transforms
-const { vectorText } = jscad.text
-const { extrudeLinear } = jscad.extrusions
-const { union } = jscad.booleans
-const { colorize, hexToRgb } = jscad.colors
-const { expand } = require('@jscad/modeling').expansions
 
-const options = { resolution: 32 }
+const { subtract, union } = jscad.booleans
+const { colorize, hexToRgb } = jscad.colors
+const { expand } = jscad.expansions
+const { extrudeFromSlices, extrudeLinear, slice } = jscad.extrusions
+const { geom2 } = jscad.geometries
+const { hullChain } = jscad.hulls
+const { mat4 } = jscad.maths
+const { measureBoundingBox } = jscad.measurements
+const { circle, ellipsoid, line } = jscad.primitives
+const { vectorText } = jscad.text
+const { translate, scale, rotateX, center } = jscad.transforms
+
+const options = { segments: 32 }
 
 const getParameterDefinitions = () => {
   return [
@@ -39,46 +44,78 @@ const initializeOptions = (params) => {
   options.b_color = hexToRgb(params.color)
 }
 
+// Build text by creating the font strokes (2D), then extruding up (3D).
 const text = (message, extrusionHeight, characterLineWidth) => {
   if (message === undefined || message.length === 0) return []
-  const lineSegments3D = []
+
+  const lineRadius = characterLineWidth / 2
+  const lineCorner = circle({ radius: lineRadius })
+
   const lineSegmentPointArrays = vectorText({ x: 0, y: 0, input: message }) // line segments for each character
+  const lineSegments = []
   lineSegmentPointArrays.forEach((segmentPoints) => { // process the line segment
-    const segmentShape = extrudeLinear(
-      { height: extrusionHeight },
-      expand({ delta: characterLineWidth, corners: 'round', segments: 16 }, line(segmentPoints))
-    )
-    lineSegments3D.push(segmentShape)
+    const corners = segmentPoints.map((point) => translate(point, lineCorner))
+    lineSegments.push(hullChain(corners))
   })
-  return center({ axes: [true, true, false] }, union(lineSegments3D))
+  const message2D = union(lineSegments)
+  const message3D = extrudeLinear({ height: extrusionHeight }, message2D)
+  return center({ axes: [true, true, false] }, message3D)
 }
 
-function createSingleBalloon () {
-  return ellipsoid({
-    radius: [options.b_radius, options.b_radius, 1.4 * options.b_radius],
-    segments: options.resolution
+const createSingleBalloon = (params) => {
+  let t = rotateX(Math.PI / 2, text(params.age.toString(), 2, 2))
+  let m = measureBoundingBox(t)
+  let x = (options.b_radius * 0.70) / Math.max(m[1][0], m[1][2])
+  let y = options.b_radius * 3
+  let z = x
+  t = translate([0, y / 2, 0], scale([x, y, z], t))
+
+  const b = ellipsoid({
+    radius: [options.b_radius, options.b_radius, options.b_radius],
+    segments: options.segments
   })
+  return subtract(b, t)
+}
+
+const createRope = (to) => {
+  const base = slice.fromSides(geom2.toSides(circle({ radius: 0.25 })))
+  const rope = extrudeFromSlices({
+    callback: (p, i, b) => {
+      if (i === 1) {
+        const matrix = mat4.fromTranslation(to)
+        b = slice.transform(matrix, b)
+      }
+      return b
+    }
+  }, base)
+  return colorize([0, 0, 0], rope)
 }
 
 const createBalloons = (params) => {
-  const balloon = createSingleBalloon()
+  const balloon = createSingleBalloon(params)
   const out = []
   const startingAngle = 360 * Math.random()
   const angleSpread = 360 / params.count
 
+  const ropeOffset = options.b_radius - 1
   for (let i = 0; i < params.count; i++) {
     const angle = Math.floor(startingAngle + (angleSpread * i)) % 360
     const x = Math.cos(angle * Math.PI / 180) * 2 * options.b_radius
     const y = Math.sin(angle * Math.PI / 180) * 2 * options.b_radius
     const z = options.b_radius * 4 + (50 * Math.random())
-    const aBalloon = translate([x, y, z], balloon)
-    out.push(aBalloon)
+    const aBalloon = colorize(options.b_color, translate([x, y, z], balloon))
+    const aRope = createRope([x, y, z - ropeOffset])
+    out.push(aBalloon, aRope)
   }
-  return colorize(options.b_color, union(out))
+  return out
 }
 
 const createSalutation = (name) => {
-  return text(name, 2, 2)
+  let salutation = 'Happy Birthday!'
+  if (name.length > 0) {
+    salutation = `Happy Birthday, ${name}!`
+  }
+  return translate([0, -10, 0], scale([0.5, 0.5, 0.5], text(salutation, 2, 2)))
 }
 
 const createAge = (age) => {
@@ -102,11 +139,11 @@ const createBirthDate = (birthDate) => {
 
 const main = (params) => {
   initializeOptions(params)
+
   const balloonScene = []
 
   balloonScene.push(createBalloons(params))
   balloonScene.push(createSalutation(params.name))
-  balloonScene.push(createAge(params.age))
   balloonScene.push(createBirthDate(params.birthdate))
 
   return balloonScene

@@ -2,7 +2,7 @@ const most = require('most')
 
 const { solidsAsBlob } = require('@jscad/io')
 
-const { withLatestFrom } = require('@jscad/core').observableUtils
+const { withLatestFrom } = require('../../most-utils')
 
 const { exportFilePathFromFormatAndDesign } = require('../../core/io/exportUtils')
 

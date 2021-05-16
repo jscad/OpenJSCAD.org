@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.3.1...@jscad/core@2.3.2) (2021-05-16)
+
+**Note:** Version bump only for package @jscad/core
+
+
+
+
+
+## [2.3.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.3.0...@jscad/core@2.3.1) (2021-05-07)
+
+**Note:** Version bump only for package @jscad/core
+
+
+
+
+
+# [2.3.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.2.0...@jscad/core@2.3.0) (2021-04-20)
+
+
+### Features
+
+* **core:** added @jscad/array-utils to list of core modules ([79ddf31](https://github.com/jscad/OpenJSCAD.org/commit/79ddf31bd10b5250953545e110e59d736109c6b8))
+
+
+
+
+
 # [2.2.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.0.0-alpha.0...@jscad/core@2.2.0) (2021-04-17)
 
 

@@ -3,6 +3,7 @@ const html = require('nanohtml')
 // viewer data
 const rendererStuff = require('@jscad/regl-renderer')
 
+const { pointerGestures } = require('../../most-gestures')
 const { prepareRender, drawCommands, cameras, entitiesFromSolids } = rendererStuff
 const perspectiveCamera = cameras.perspective
 const orbitControls = rendererStuff.controls.orbit
@@ -20,9 +21,10 @@ let controls = orbitControls.defaults
 let rotateDelta = [0, 0]
 let panDelta = [0, 0]
 let zoomDelta = 0
+let zoomToFit = false
+let updateView = true
 
-const grid = { // grid data
-  // the choice of what draw command to use is also data based
+const grid = { // command to draw the grid
   visuals: {
     drawCmd: 'drawGrid',
     show: true,
@@ -35,7 +37,7 @@ const grid = { // grid data
   ticks: [10, 1]
 }
 
-const axes = {
+const axes = { // command to draw the axes
   visuals: {
     drawCmd: 'drawAxis',
     show: true
@@ -54,7 +56,7 @@ const viewer = (state, i18n) => {
     viewerOptions = options.viewerOptions
     camera = options.camera
     render = prepareRender(viewerOptions)
-    const gestures = require('most-gestures').pointerGestures(el)
+    const gestures = pointerGestures(el)
 
     // rotate & pan
     gestures.drags
@@ -81,8 +83,7 @@ const viewer = (state, i18n) => {
     gestures.taps
       .filter((taps) => taps.nb === 2)
       .forEach((x) => {
-        const updated = orbitControls.zoomToFit({ controls, camera, entities: prevEntities })
-        controls = { ...controls, ...updated.controls }
+        zoomToFit = true
       })
 
     const doRotatePanZoom = () => {
@@ -90,6 +91,7 @@ const viewer = (state, i18n) => {
         const updated = orbitControls.rotate({ controls, camera, speed: rotateSpeed }, rotateDelta)
         rotateDelta = [0, 0]
         controls = { ...controls, ...updated.controls }
+        updateView = true
       }
 
       if (panDelta[0] || panDelta[1]) {
@@ -97,12 +99,22 @@ const viewer = (state, i18n) => {
         panDelta = [0, 0]
         camera.position = updated.camera.position
         camera.target = updated.camera.target
+        updateView = true
       }
 
       if (zoomDelta) {
         const updated = orbitControls.zoom({ controls, camera, speed: zoomSpeed }, zoomDelta)
         controls = { ...controls, ...updated.controls }
         zoomDelta = 0
+        updateView = true
+      }
+
+      if (zoomToFit) {
+        controls.zoomToFit.tightness = 1.5
+        const updated = orbitControls.zoomToFit({ controls, camera, entities: prevEntities })
+        controls = { ...controls, ...updated.controls }
+        zoomToFit = false
+        updateView = true
       }
     }
 
@@ -110,13 +122,18 @@ const viewer = (state, i18n) => {
     const updateAndRender = (timestamp) => {
       doRotatePanZoom()
 
-      const updated = orbitControls.update({ controls, camera })
-      controls = { ...controls, ...updated.controls }
-      camera.position = updated.camera.position
-      perspectiveCamera.update(camera)
+      if (updateView) {
+        const updated = orbitControls.update({ controls, camera })
+        controls = { ...controls, ...updated.controls }
+        updateView = controls.changed // for elasticity in rotate / zoom
 
-      resize(el)
-      render(viewerOptions)
+        camera.position = updated.camera.position
+        perspectiveCamera.update(camera)
+
+        resize(el)
+        render(viewerOptions)
+      }
+
       window.requestAnimationFrame(updateAndRender)
     }
     window.requestAnimationFrame(updateAndRender)
@@ -128,11 +145,12 @@ const viewer = (state, i18n) => {
       const theme = state.themes.themeSettings.viewer
       const color = theme.rendering.meshColor
       const sameColor = prevColor === color
-      // FIXME inefficient, replace
-      const sameSolids = solids.length === prevSolids.length && JSON.stringify(solids) === JSON.stringify(prevSolids)
+      const sameSolids = compareSolids(solids, prevSolids)
       if (!(sameSolids && sameColor)) {
         prevEntities = entitiesFromSolids({ color }, solids)
         prevColor = color
+
+        zoomToFit = state.viewer.rendering.autoZoom
       }
     }
     prevSolids = solids
@@ -145,6 +163,7 @@ const viewer = (state, i18n) => {
       if (viewerOptions.rendering) {
         viewerOptions.rendering.background = theme.rendering.background
         viewerOptions.rendering.meshColor = theme.rendering.meshColor
+        updateView = true
       }
     }
 
@@ -207,6 +226,19 @@ const resize = (viewerElement) => {
     perspectiveCamera.setProjection(camera, camera, { width, height })
     perspectiveCamera.update(camera, camera)
   }
+}
+
+let idCounter = Date.now()
+const compareSolids = (current, previous) => {
+  // add an id to each solid if not already
+  current = current.map((s) => {
+    if (!s.id) s.id = ++idCounter
+    return s
+  })
+  // check if the solids are the same
+  if (!previous) return false
+  if (current.length !== previous.length) return false
+  return current.reduce((acc, id, i) => acc && current[i].id === previous[i].id, true)
 }
 
 module.exports = viewer

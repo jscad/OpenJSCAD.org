@@ -2,24 +2,22 @@ const plane = require('../../../maths/plane')
 const poly3 = require('../../../geometries/poly3')
 
 // # class Node
-// Holds a node in a BSP tree. A BSP tree is built from a collection of polygons
-// by picking a polygon to split along.
-// Polygons are not stored directly in the tree, but in PolygonTreeNodes, stored in
-// this.polygontreenodes. Those PolygonTreeNodes are children of the owning
-// Tree.polygonTree
-// This is not a leafy BSP tree since there is
-// no distinction between internal and leaf nodes.
-const Node = function (parent) {
-  this.plane = null
-  this.front = null
-  this.back = null
-  this.polygontreenodes = []
-  this.parent = parent
-}
+// Holds a node in a BSP tree.
+// A BSP tree is built from a collection of polygons by picking a polygon to split along.
+// Polygons are not stored directly in the tree, but in PolygonTreeNodes, stored in this.polygontreenodes.
+// Those PolygonTreeNodes are children of the owning Tree.polygonTree.
+// This is not a leafy BSP tree since there is no distinction between internal and leaf nodes.
+class Node {
+  constructor (parent) {
+    this.plane = null
+    this.front = null
+    this.back = null
+    this.polygontreenodes = []
+    this.parent = parent
+  }
 
-Node.prototype = {
   // Convert solid space to empty space and empty space to solid space.
-  invert: function () {
+  invert () {
     const queue = [this]
     let node
     for (let i = 0; i < queue.length; i++) {
@@ -31,11 +29,11 @@ Node.prototype = {
       node.front = node.back
       node.back = temp
     }
-  },
+  }
 
   // clip polygontreenodes to our plane
   // calls remove() for all clipped PolygonTreeNodes
-  clipPolygons: function (polygontreenodes, alsoRemovecoplanarFront) {
+  clipPolygons (polygontreenodes, alsoRemovecoplanarFront) {
     let current = { node: this, polygontreenodes: polygontreenodes }
     let node
     const stack = []
@@ -73,11 +71,11 @@ Node.prototype = {
       }
       current = stack.pop()
     } while (current !== undefined)
-  },
+  }
 
   // Remove all polygons in this BSP tree that are inside the other BSP tree
   // `tree`.
-  clipTo: function (tree, alsoRemovecoplanarFront) {
+  clipTo (tree, alsoRemovecoplanarFront) {
     let node = this
     const stack = []
     do {
@@ -88,9 +86,9 @@ Node.prototype = {
       if (node.back) stack.push(node.back)
       node = stack.pop()
     } while (node !== undefined)
-  },
+  }
 
-  addPolygonTreeNodes: function (newpolygontreenodes) {
+  addPolygonTreeNodes (newpolygontreenodes) {
     let current = { node: this, polygontreenodes: newpolygontreenodes }
     const stack = []
     do {
@@ -127,10 +125,10 @@ Node.prototype = {
 
       current = stack.pop()
     } while (current !== undefined)
-  },
+  }
 
   // TODO is this still used?
-  getParentPlaneNormals: function (normals, maxdepth) {
+  getParentPlaneNormals (normals, maxdepth) {
     if (maxdepth > 0) {
       if (this.parent) {
         normals.push(this.parent.plane.normal)

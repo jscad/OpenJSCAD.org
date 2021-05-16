@@ -1,4 +1,4 @@
-const { callbackToObservable } = require('@jscad/core').observableUtils
+const callbackToObservable = require('../../most-utils/callbackToObservable')
 
 const makeStorageSideEffect = ({ name }) => {
   const reply = callbackToObservable()

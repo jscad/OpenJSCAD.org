@@ -37,7 +37,7 @@ const { width, height } = params
 const gl = require('gl')(width, height)
 
 // process entities and inject extras
-const solids = entitiesFromSolids({}, demoSolids({ scale: 1 }))
+const entities = entitiesFromSolids({}, demoSolids({ scale: 1 }))
 
 // prepare the camera
 const perspectiveCamera = cameras.perspective
@@ -65,7 +65,7 @@ const options = {
     specularLightAmount: 0.16,
     materialShininess: 8.0
   },
-  // next few are for solids / csg/ cags specifically
+  // next few are for solids / csg / cags specifically
   overrideOriginalColors: false, // for csg/cag conversion: do not use the original (csg) color, use meshColor instead
   smoothNormals: true,
 
@@ -75,22 +75,25 @@ const options = {
       // the choice of what draw command to use is also data based
       visuals: {
         drawCmd: 'drawGrid',
-        show: true,
-        color: [0, 0, 0, 0.1],
-        subColor: [0, 0, 1, 0.1],
-        fadeOut: true,
-        transparent: true
+        show: true
       },
       size: [500, 500],
-      ticks: [10, 1]
+      ticks: [25, 5],
+      // color: [0, 0, 1, 1],
+      // subColor: [0, 0, 1, 0.5]
     },
     {
       visuals: {
         drawCmd: 'drawAxis',
         show: true
-      }
+      },
+      size: 300,
+      // alwaysVisible: false,
+      // xColor: [0, 0, 1, 1],
+      // yColor: [1, 0, 1, 1],
+      // zColor: [0, 0, 0, 1]
     },
-    ...solids
+    ...entities
   ]
 }
 

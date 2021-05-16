@@ -1,36 +1,57 @@
 # @jscad-regl-renderer
 
-## 3D Renderer for JSCAD
+> Renderer for JSCAD geometries, both 2D and 3D
 
-[![GitHub version](https://badge.fury.io/gh/jscad%2Fregl-renderer.svg)](https://badge.fury.io/gh/jscad%2Fregl-renderer)
-[![Build Status](https://travis-ci.org/jscad/regl-renderer.svg)](https://travis-ci.org/jscad/regl-renderer)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fregl-renderer.svg)](https://www.npmjs.com/package/@jscad/regl-renderer)
+[![NPM downloads](https://img.shields.io/npm/dw/@jscad/regl-renderer)](https://www.npmjs.com/package/@jscad/regl-renderer)
+[![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
+[![Stability](https://img.shields.io/badge/stability-stable-success)](https://github.com/emersion/stability-badges#stable)
+[![License](https://img.shields.io/github/license/jscad/OpenJSCAD.org)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 
-> 3D renderer for JSCAD geometries : small, fast
+[![User Group](https://img.shields.io/badge/maintained%20by-user%20group-blue)](https://openjscad.nodebb.com/)
+[![Lerna](https://img.shields.io/badge/maintained%20with-lerna-blue)](https://lernajs.io/)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-blue)](https://standardjs.com)
 
-This is a early version of this viewer ! Expect changes !
+[![Backers](https://img.shields.io/opencollective/backers/openjscad)](https://opencollective.com/openjscad)
+[![Sponsors](https://img.shields.io/opencollective/sponsors/openjscad)](https://opencollective.com/openjscad)
 
-## What ?
+<a href="https://opencollective.com/openjscad"><img src="https://opencollective.com/openjscad/donate/button.png?color=blue" alt="Open Collective"></a>
+
+## What is it?
 - webgl renderer (barebones, uses regl)
-- works in the browser
-- work in node (headless, see below for more details)
+- small, compact, and fast
+- works in all browsers
+- works in Node.js projects (headless rendering to PNG images)
 
 ## Usage
 
 ### Node.js (headless)
 
-Install the following packages manually. NOTE: There are issues with CI, so these are not installed as dev dependencies.
+Install the following packages manually.
+
+NOTE: There are issues with continous integration testing, so 'gl' is not installed initially.
 
 ```
  npm install gl
 ```
 
 Try the demo by running ```npm run demo-cli```.
-If all goes well you should end up with an image (test.png) rendering of the demo design (a few solids).
 
-### Web
+If all goes well you should end up with an image (test.png) that renders the demo design.
 
-Try the demo by running ```npm run demo-web``` and open the URL shown.
+The demo code can be found in 'demo-cli.js'
+
+### Browsers
+
+From a browser, try opening the file 'demo.html'. This should show the demo design.
+
+### Developers
+
+Run the development web server using ```npm run dev```, then open the URL shown.
+
 If all goes well you should end up with a web page with a rotating camera (no mouse controls) that displays the demo design (a few solids).
+
+After making changes, all tests must pass. Run ```npm test```
 
 ## License
 

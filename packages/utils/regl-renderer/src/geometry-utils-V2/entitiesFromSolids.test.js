@@ -17,7 +17,10 @@ test('entitiesFromSolids (various solids)', (t) => {
         { vertices: [[0, 2, 10], [6, 2, 10], [6, 8, 10], [0, 8, 10]] }
       ]
     },
-    'hi'
+    'hi',
+    { sides: [] },
+    { points: [] },
+    { polygons: [] }
   ]
   const options = {
   }
@@ -25,17 +28,6 @@ test('entitiesFromSolids (various solids)', (t) => {
   t.is(entities.length, 3)
 
   // geom2
-  t.is(entities[0].type, '2d')
-  t.deepEqual(entities[0].transforms, {
-    matrix: Float32Array.from([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
-  })
-  t.deepEqual(entities[0].bounds, {
-    dia: 0.7071067811865476,
-    center: [0.5, 0.5, 0],
-    min: [0, 0, 0],
-    max: [1, 1, 0],
-    size: [1, 1, 0]
-  })
   t.deepEqual(entities[0].visuals, {
     drawCmd: 'drawMesh',
     show: true,
@@ -44,17 +36,6 @@ test('entitiesFromSolids (various solids)', (t) => {
   })
 
   // path2
-  t.is(entities[1].type, '2d')
-  t.deepEqual(entities[1].transforms, {
-    matrix: Float32Array.from([5, 0, 0, 0, 0, 4, 0, 0, 0, 0, 3, 0, 0, 0, 0, 2])
-  })
-  t.deepEqual(entities[1].bounds, {
-    dia: 1.6007810593582121,
-    center: [1.25, 1, 0],
-    min: [0, 0, 0],
-    max: [2.5, 2, 0],
-    size: [2.5, 2, 0]
-  })
   t.deepEqual(entities[1].visuals, {
     drawCmd: 'drawMesh',
     show: true,
@@ -63,17 +44,6 @@ test('entitiesFromSolids (various solids)', (t) => {
   })
 
   // geom3
-  t.is(entities[2].type, '3d')
-  t.deepEqual(entities[2].transforms, {
-    matrix: Float32Array.from([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
-  })
-  t.deepEqual(entities[2].bounds, {
-    dia: 5.196152422706632,
-    center: [3, 5, 7],
-    min: [0, 2, 4],
-    max: [6, 8, 10],
-    size: [6, 6, 6]
-  })
   t.deepEqual(entities[1].visuals, {
     drawCmd: 'drawMesh',
     show: true,

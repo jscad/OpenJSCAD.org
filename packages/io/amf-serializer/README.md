@@ -2,8 +2,20 @@
 
 > Serializer of JSCAD geometries to AMF shapes
 
-[![NPM version](https://badge.fury.io/js/%40jscad%2Famf-serializer.svg)](https://badge.fury.io/js/%40jscad%2Famf-serializer)
-[![Build Status](https://travis-ci.org/jscad/io.svg)](https://travis-ci.org/jscad/amf-serializer)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Famf-serializer.svg)](https://www.npmjs.com/package/@jscad/amf-serializer)
+[![NPM downloads](https://img.shields.io/npm/dw/@jscad/amf-serializer)](https://www.npmjs.com/package/@jscad/amf-serializer)
+[![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
+[![Stability](https://img.shields.io/badge/stability-stable-success)](https://github.com/emersion/stability-badges#stable)
+[![License](https://img.shields.io/github/license/jscad/OpenJSCAD.org)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
+
+[![User Group](https://img.shields.io/badge/maintained%20by-user%20group-blue)](https://openjscad.nodebb.com/)
+[![Lerna](https://img.shields.io/badge/maintained%20with-lerna-blue)](https://lernajs.io/)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-blue)](https://standardjs.com)
+
+[![Backers](https://img.shields.io/opencollective/backers/openjscad)](https://opencollective.com/openjscad)
+[![Sponsors](https://img.shields.io/opencollective/sponsors/openjscad)](https://opencollective.com/openjscad)
+
+<a href="https://opencollective.com/openjscad"><img src="https://opencollective.com/openjscad/donate/button.png?color=blue" alt="Open Collective"></a>
 
 ## Overview
 
@@ -49,7 +61,7 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://openjscad.xyz/forum.html). You might find the answer in the [JSCAD.org User Guide](https://www.openjscad.xyz/guide.html).
+* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://openjscad.xyz/forum.html). You might find the answer in the [JSCAD User Guide](https://www.openjscad.xyz/guide.html).
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://openjscad.xyz/forum.html) and start contributing changes.
 

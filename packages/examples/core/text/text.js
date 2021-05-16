@@ -9,71 +9,81 @@
  */
 
 const jscad = require('@jscad/modeling')
-const { sphere, line, cylinder } = jscad.primitives
-const { translate, rotateX, rotateZ, center } = jscad.transforms
-const { vectorText } = jscad.text
-const { extrudeLinear } = jscad.extrusions
 const { union } = jscad.booleans
-const { expand } = jscad.expansions
+const { extrudeLinear } = jscad.extrusions
+const { hullChain } = jscad.hulls
+const { circle, sphere } = jscad.primitives
+const { vectorText } = jscad.text
+const { translate } = jscad.transforms
 
 const getParameterDefinitions = () => {
   return [
+    { name: 'outline_string', initial: 'Outline', type: 'text', caption: 'Outline Text', size: 30 },
     { name: 'flat_string', initial: 'Flat', type: 'text', caption: 'Flat Text', size: 30 },
     { name: 'round_string', initial: 'Round', type: 'text', caption: 'Round Text', size: 30 }
   ]
 }
 
 const main = (params) => {
-  const flatText = buildFlatText(params.flat_string, 4, 2)
-  const roundText = buildRoundText(params.round_string, 3)
+  const outlineText = buildOutlineText(params.outline_string, 2)
+  const flatText = buildFlatText(params.flat_string, 2, 2)
+  const roundText = buildRoundText(params.round_string, 2)
 
-  return [flatText, roundText]
+  return [outlineText, flatText, roundText]
 }
 
-// Build text by expanding the font strokes, then extruding up.
+// Build text by creating the font strokes (2D).
+const buildOutlineText = (message, characterLineWidth) => {
+  if (message === undefined || message.length === 0) return []
+
+  const lineRadius = characterLineWidth / 2
+  const lineCorner = circle({ radius: lineRadius })
+
+  const lineSegments3D = []
+  const lineSegmentPointArrays = vectorText({ x: 0, y: 0, input: message }) // line segments for each character
+
+  const lineSegments = []
+  lineSegmentPointArrays.forEach((segmentPoints) => { // process the line segment
+    const corners = segmentPoints.map((point) => translate(point, lineCorner))
+    lineSegments.push(hullChain(corners))
+  })
+  const message2D = union(lineSegments)
+  return translate([0, 35, 0], message2D)
+}
+
+// Build text by creating the font strokes (2D), then extruding up (3D).
 const buildFlatText = (message, extrusionHeight, characterLineWidth) => {
   if (message === undefined || message.length === 0) return []
-  const lineSegments3D = []
-  const lineSegmentPointArrays = vectorText({ x: 0, y: 0, input: message }) // line segments for each character
-  lineSegmentPointArrays.forEach((segmentPoints) => { // process the line segment
-    const segmentShape = extrudeLinear(
-      { height: extrusionHeight },
-      expand({ delta: characterLineWidth, corners: 'round', segments: 16 }, line(segmentPoints))
-    )
-    lineSegments3D.push(segmentShape)
-  })
 
-  const messageObject = center([true, true, false], union(lineSegments3D))
-  return translate([0, 15, 0], messageObject)
+  const lineRadius = characterLineWidth / 2
+  const lineCorner = circle({ radius: lineRadius })
+
+  const lineSegmentPointArrays = vectorText({ x: 0, y: 0, input: message }) // line segments for each character
+  const lineSegments = []
+  lineSegmentPointArrays.forEach((segmentPoints) => { // process the line segment
+    const corners = segmentPoints.map((point) => translate(point, lineCorner))
+    lineSegments.push(hullChain(corners))
+  })
+  const message2D = union(lineSegments)
+  const message3D = extrudeLinear({ height: extrusionHeight }, message2D)
+  return translate([0, 0, 0], message3D)
 }
 
-// -- simplistic circularExtrude done with cylinders between points and spheres at each point.
+// Build text by creating the font strokes (3D).
 const buildRoundText = (message, p) => {
-  const baseSphere = sphere({ radius: p })
   if (message === undefined || message.length === 0) return []
-  const lineSegments3D = []
-  const lineJoints3D = []
+
+  const lineRadius = p / 2
+  const lineCorner = sphere({ radius: lineRadius, center: [0, 0, lineRadius], segments: 16 })
+
   const lineSegmentPointArrays = vectorText({ x: 0, y: 0, input: message }) // line segments for each character
+  const lineSegments = []
   lineSegmentPointArrays.forEach((segmentPoints) => { // process the line segment
-    for (let i = 0; i < segmentPoints.length; i++) {
-      lineJoints3D.push(translate([segmentPoints[i][0], segmentPoints[i][1], 0], baseSphere))
-      if (i) lineSegments3D.push(cylinderBetweenPoints(segmentPoints[i - 1], segmentPoints[i], p))
-    }
+    const corners = segmentPoints.map((point) => translate(point, lineCorner))
+    lineSegments.push(hullChain(corners))
   })
-
-  const messageObject = center([true, true, false], union(lineJoints3D, lineSegments3D))
-  return translate([0, -15, 0], messageObject)
-}
-
-const cylinderBetweenPoints = (point1, point2, radius) => {
-  const length = Math.sqrt(Math.pow(point1[0] - point2[0], 2) + Math.pow(point1[1] - point2[1], 2))
-  let cyl = translate([0, 0, length / 2], cylinder({ height: length, radius: radius }))
-  cyl = rotateX(Math.PI / 2, cyl)
-  let angle = Math.atan((point1[0] - point2[0]) / (point1[1] - point2[1]))
-  if (point1[1] < point2[1]) angle += Math.PI
-  cyl = rotateZ(-angle, cyl)
-  cyl = translate([point1[0], point1[1], 0], cyl)
-  return cyl
+  const message3D = union(lineSegments)
+  return translate([0, -35, 0], message3D)
 }
 
 module.exports = { main, getParameterDefinitions }

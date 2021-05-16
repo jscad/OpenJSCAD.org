@@ -1,6 +1,8 @@
 const vec3 = require('gl-vec3')
 const mat4 = require('gl-mat4')
 
+const maxIndex = 65535
+
 /*
  * Convert the given solid into one or more geometries for rendering.
  * @param {Object} options - options for conversion
@@ -12,58 +14,109 @@ const mat4 = require('gl-mat4')
  * @return {Array} list of new geometries
  */
 const geom3ToGeometries = (options, solid) => {
-  const { smoothLighting, normalThreshold, color } = options
-
-  return convert({ color, smoothLighting, normalThreshold }, solid)
-}
-
-/*
- * Convert the given geometry using the given options (see above for options)
- * @returns {Object} [{indices, positions, normals, colors}, ...]
- */
-const convert = (options, geometry) => {
   let { color, smoothLighting, normalThreshold } = options
+
+  if ('color' in solid) color = solid.color
+
+  const polygons = solid.polygons
+  const transforms = solid.transforms ? mat4.clone(solid.transforms) : mat4.create()
 
   const geometries = []
 
+  let setstart = 0
+  while (setstart < polygons.length) {
+    // calculate end of this set
+    let vcount = 0
+    let setend = setstart
+    for (let i = setstart; i < polygons.length; i++) {
+      vcount += polygons[i].vertices.length
+      if (vcount > maxIndex) break
+      setend++
+    }
+    // temporary storage
+    // create attributes of geometry
+    const positions = []
+    const normals = []
+    const indices = []
+    const colors = []
+    const isTransparent = true
+
+    for (let i = setstart; i < setend; i++) {
+      const polygon = polygons[i]
+      const vertices = polygon.vertices
+
+      const normal = calculateNormal(polygon)
+      const faceColor = polygonColor(polygon, color)
+
+      const polygonIndices = []
+      for (let j = 0; j < vertices.length; j++) {
+        const vertex = vertices[j]
+
+        const position = [vertex[0], vertex[1], vertex[2]]
+        positions.push(position)
+        normals.push(normal)
+        colors.push(faceColor)
+
+        const index = positions.length - 1
+        polygonIndices.push(index)
+      }
+      // add indices to list
+      for (let j = 2; j < polygonIndices.length; j++) {
+        indices.push([polygonIndices[0], polygonIndices[j - 1], polygonIndices[j]])
+      }
+    }
+    // FIXME positions should be Float32Array buffers to eliminate another conversion
+    // FIXME normals should be Float32Array buffers to eliminate another conversion
+    // FIXME indices should be Uint16Array buffers to eliminate another conversion
+    // FIXME colors should be Float32Array buffers to eliminate another conversion
+    // assemble the geometry
+    const geometry = {
+      type: '3d',
+      positions,
+      normals,
+      indices,
+      colors,
+      transforms,
+      isTransparent
+    }
+    geometries.push(geometry)
+
+    // continue on
+    setstart = setend
+  }
+  return geometries
+}
+
+/*
+ * TODO
+ * TODO Implement smoothing
+ * TODO
+ */
+const smoothing = () => {
+  const polygons = []
+  const color = []
+  let isTransparent = true
+  const smoothLighting = true
+  const normalThreshold = 0.5
   const positions = []
-  const colors = []
   const normals = []
   const indices = []
-
-  if ('color' in geometry) color = geometry.color
-
-  // flag for transparency
-  let isTransparent = false
-
-  const polygons = geometry.polygons
-  const transforms = geometry.transforms ? geometry.transforms : mat4.create()
-
-  let normalPositionLookup = []
-  normalPositionLookup = {}
+  const colors = []
+  const normalPositionLookup = []
   let tupplesIndex = 0
-
-  // FIXME this isn't going to work if the polygons are > 65000 (see below)
-
   for (let i = 0; i < polygons.length; i++) {
     const polygon = polygons[i]
-
+    const vertices = polygon.vertices
     const faceColor = polygonColor(polygon, color)
-    const normal = calculateNormal(polygon.vertices)
-
-    if (faceColor && faceColor[3] !== 1) {
-      isTransparent = true
-    }
-
+    const normal = calculateNormal(polygon)
+    if (faceColor && faceColor[3] !== 1) isTransparent = true
     const polygonIndices = []
     // we need unique tupples of normal + position , that gives us a specific index (indices)
     // if the angle between a given normal and another normal is less than X they are considered the same
-    for (let j = 0; j < polygon.vertices.length; j++) {
+    for (let j = 0; j < vertices.length; j++) {
       let index
-
-      const vertex = polygon.vertices[j]
+      const vertex = vertices[j]
       const position = [vertex[0], vertex[1], vertex[2]]
-
       if (smoothLighting) {
         const candidateTupple = { normal, position }
         const existingTupple = fuzyNormalAndPositionLookup(normalPositionLookup, candidateTupple, normalThreshold)
@@ -77,8 +130,6 @@ const convert = (options, geometry) => {
               .concat(itemToAdd)
           }
           index = tupplesIndex
-          // normalPositionLookup.push(candidateTupple)
-          // index = normalPositionLookup.length - 1
           if (faceColor) {
             colors.push(faceColor)
           }
@@ -96,39 +147,12 @@ const convert = (options, geometry) => {
         positions.push(position)
         index = positions.length - 1
       }
-
       polygonIndices.push(index)
     }
-
     for (let j = 2; j < polygonIndices.length; j++) {
       indices.push([polygonIndices[0], polygonIndices[j - 1], polygonIndices[j]])
     }
-
-    // if too many vertices or we are at the end, start a new geometry
-    if (positions.length > 65000 || i === polygons.length - 1) {
-      // special case to deal with face color SPECICIALLY SET TO UNDEFINED
-      if (faceColor === undefined) {
-        geometries.push({
-          indices,
-          positions,
-          transforms,
-          normals,
-          color,
-          isTransparent
-        })
-      } else {
-        geometries.push({
-          indices,
-          positions,
-          transforms,
-          normals,
-          colors,
-          isTransparent
-        })
-      }
-    }
   }
-  return geometries
 }
 
 /**
@@ -150,14 +174,13 @@ const polygonColor = (polygon, color) => {
   return faceColor
 }
 
-/**
- * determine if the two given normals are 'similar' ie if the distance/angle between the
- * two is less than the given threshold
- * @param {Array} normal a 3 component array normal
- * @param {Array} otherNormal another 3 component array normal
- * @returns {Boolean} true if the two normals are similar
+/*
+ * Calculate the normal of the given polygon
  */
-const calculateNormal = (vertices) => {
+const calculateNormal = (polygon) => {
+  if (polygon.plane) return vec3.clone(polygon.plane)
+
+  const vertices = polygon.vertices
   const ba = vec3.create()
   vec3.subtract(ba, vertices[1], vertices[0])
   const ca = vec3.create()
@@ -168,6 +191,13 @@ const calculateNormal = (vertices) => {
   return normal
 }
 
+/*
+ * determine if the two given normals are 'similar' ie if the distance/angle between the
+ * two is less than the given threshold
+ * @param {Array} normal a 3 component array normal
+ * @param {Array} otherNormal another 3 component array normal
+ * @returns {Boolean} true if the two normals are similar
+ */
 const areNormalsSimilar = (normal, otherNormal, threshold) => (vec3.distance(normal, otherNormal) <= threshold)
 
 const fuzyNormalAndPositionLookup = (normalPositionLookup, toCompare, normalThreshold) => {

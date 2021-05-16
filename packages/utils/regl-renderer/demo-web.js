@@ -28,7 +28,7 @@ const width = window.innerWidth
 const height = window.innerHeight
 
 // process entities and inject extras
-const solids = entitiesFromSolids({}, demoSolids({ scale: 1 }))
+const entities = entitiesFromSolids({}, demoSolids({ scale: 1 }))
 
 // prepare the camera
 const perspectiveCamera = cameras.perspective
@@ -51,22 +51,25 @@ const options = {
       // the choice of what draw command to use is also data based
       visuals: {
         drawCmd: 'drawGrid',
-        show: true,
-        color: [0, 0, 0, 1],
-        subColor: [0, 0, 1, 0.5],
-        fadeOut: false,
-        transparent: true
+        show: true
       },
       size: [500, 500],
-      ticks: [10, 1]
+      ticks: [25, 5],
+      // color: [0, 0, 1, 1],
+      // subColor: [0, 0, 1, 0.5]
     },
     {
       visuals: {
         drawCmd: 'drawAxis',
         show: true
-      }
+      },
+      size: 300,
+      // alwaysVisible: false,
+      // xColor: [0, 0, 1, 1],
+      // yColor: [1, 0, 1, 1],
+      // zColor: [0, 0, 0, 1]
     },
-    ...solids
+    ...entities
   ]
 }
 // prepare
@@ -88,8 +91,8 @@ const updateAndRender = () => {
   // updateCounter += 1
 
   if (updateCounter > 360) {
-    const solidsDynamic = entitiesFromSolids({}, demoSolids({ scale: Math.random() }))
-    options.entities = solidsDynamic
+    const entitiesDynamic = entitiesFromSolids({}, demoSolids({ scale: Math.random() }))
+    options.entities = entitiesDynamic
     updateCounter = 0
   }
 
