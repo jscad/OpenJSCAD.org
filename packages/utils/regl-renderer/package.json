@@ -1,6 +1,6 @@
 {
   "name": "@jscad/regl-renderer",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Renderer for JSCAD Geometries",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
