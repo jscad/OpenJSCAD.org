@@ -1,4 +1,5 @@
 export { default as clone } from './clone'
+export { default as copy } from './copy'
 export { default as create } from './create'
 export { default as equals } from './equals'
 export { default as flip } from './flip'

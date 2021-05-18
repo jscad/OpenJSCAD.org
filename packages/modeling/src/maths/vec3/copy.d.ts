@@ -1,5 +1,5 @@
 import Vec3 from './type'
 
-export default clone
+export default copy
 
-declare function clone(out: Vec3, vector: Vec3): Vec3
+declare function copy(out: Vec3, vector: Vec3): Vec3

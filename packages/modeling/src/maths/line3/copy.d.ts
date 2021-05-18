@@ -1,5 +1,5 @@
 import Line3 from './type'
 
-export default clone
+export default copy
 
-declare function clone(out: Line3, line: Line3): Line3
+declare function copy(out: Line3, line: Line3): Line3
