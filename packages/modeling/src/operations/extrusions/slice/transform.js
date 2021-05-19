@@ -14,7 +14,7 @@ const create = require('./create')
  * let newslice = transform(matrix, oldslice)
  */
 const transform = (matrix, slice) => {
-  const edges = slice.edges.map((edge) => [vec3.transform(matrix, edge[0]), vec3.transform(matrix, edge[1])])
+  const edges = slice.edges.map((edge) => [vec3.transform(vec3.create(), edge[0], matrix), vec3.transform(vec3.create(), edge[1], matrix)])
   return create(edges)
 }
 

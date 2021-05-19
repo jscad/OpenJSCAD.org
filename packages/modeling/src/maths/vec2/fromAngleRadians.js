@@ -1,11 +1,15 @@
-const fromValues = require('./fromValues')
-
 /**
  * Create a new vector in the direction of the given angle.
- * @param {Number} angle - angle in radians
- * @returns {vec2} a new vector
+ *
+ * @param {vec2} out - the receiving vector
+ * @param {Number} radians - angle in radians
+ * @returns {vec2} out
  * @alias module:modeling/maths/vec2.fromAngleRadians
  */
-const fromAngleRadians = (radians) => fromValues(Math.cos(radians), Math.sin(radians))
+const fromAngleRadians = (out, radians) => {
+  out[0] = Math.cos(radians)
+  out[1] = Math.sin(radians)
+  return out
+}
 
 module.exports = fromAngleRadians

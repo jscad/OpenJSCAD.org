@@ -68,14 +68,17 @@ const expandShell = (options, geometry) => {
   const vertices2planes = [] // contents: [vertex, [plane, ...]]
   const edges2planes = [] // contents: [[vertex, vertex], [plane, ...]]
 
+  const v1 = vec3.create()
+  const v2 = vec3.create()
+
   // loop through the polygons
   // - extruded the polygon, and add to the composite result
   // - add the plane to the unique vertice map
   // - add the plane to the unique edge map
   const polygons = geom3.toPolygons(geometry)
-  polygons.forEach((polygon) => {
-    const extrudevector = vec3.scale(2 * delta, poly3.plane(polygon))
-    const translatedpolygon = poly3.transform(mat4.fromTranslation(vec3.scale(-0.5, extrudevector)), polygon)
+  polygons.forEach((polygon, index) => {
+    const extrudevector = vec3.scale(vec3.create(), poly3.plane(polygon), 2 * delta)
+    const translatedpolygon = poly3.transform(mat4.fromTranslation(mat4.create(), vec3.scale(vec3.create(), extrudevector, -0.5)), polygon)
     const extrudedface = extrudePolygon(extrudevector, translatedpolygon)
     result = unionGeom3Sub(result, extrudedface)
 
@@ -100,9 +103,10 @@ const expandShell = (options, geometry) => {
     const endpoint = edge[1]
 
     // our x,y and z vectors:
-    const zbase = vec3.unit(vec3.subtract(endpoint, startpoint))
+    const zbase = vec3.subtract(vec3.create(), endpoint, startpoint)
+    vec3.unit(zbase, zbase)
     const xbase = planes[0]
-    const ybase = vec3.cross(xbase, zbase)
+    const ybase = vec3.cross(vec3.create(), xbase, zbase)
 
     // make a list of angles that the cylinder should traverse:
     let angles = []
@@ -140,9 +144,11 @@ const expandShell = (options, geometry) => {
       const angle = angles[(i < 0) ? (i + numangles) : i]
       const si = Math.sin(angle)
       const co = Math.cos(angle)
-      const p = vec3.add(vec3.scale(co * delta, xbase), vec3.scale(si * delta, ybase))
-      const p1 = vec3.add(startpoint, p)
-      const p2 = vec3.add(endpoint, p)
+      vec3.scale(v1, xbase, co * delta)
+      vec3.scale(v2, ybase, si * delta)
+      vec3.add(v1, v1, v2)
+      const p1 = vec3.add(vec3.create(), startpoint, v1)
+      const p2 = vec3.add(vec3.create(), endpoint, v1)
       let skip = false
       if (i >= 0) {
         if (vec3.distance(p1, prevp1) < EPS) {
@@ -182,9 +188,9 @@ const expandShell = (options, geometry) => {
     let bestzaxisorthogonality = 0
     for (let i = 1; i < planes.length; i++) {
       const normal = planes[i]
-      const cross = vec3.cross(xaxis, normal)
+      const cross = vec3.cross(v1, xaxis, normal)
       const crosslength = vec3.length(cross)
-      if (crosslength > 0.05) {
+      if (crosslength > 0.05) { // FIXME why 0.05?
         if (crosslength > bestzaxisorthogonality) {
           bestzaxisorthogonality = crosslength
           bestzaxis = normal
@@ -192,10 +198,11 @@ const expandShell = (options, geometry) => {
       }
     }
     if (!bestzaxis) {
-      bestzaxis = vec3.orthogonal(xaxis)
+      bestzaxis = vec3.orthogonal(v1, xaxis)
     }
-    const yaxis = vec3.unit(vec3.cross(xaxis, bestzaxis))
-    const zaxis = vec3.cross(yaxis, xaxis)
+    const yaxis = vec3.cross(v1, xaxis, bestzaxis)
+    vec3.unit(yaxis, yaxis)
+    const zaxis = vec3.cross(v2, yaxis, xaxis)
     const corner = sphere({
       center: [vertex[0], vertex[1], vertex[2]],
       radius: delta,

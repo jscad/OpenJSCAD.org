@@ -8,7 +8,7 @@ const vec2 = require('../vec2')
  * @alias module:modeling/maths/line2.direction
  */
 const direction = (line) => {
-  const vector = vec2.normal(line)
+  const vector = vec2.normal(vec2.create(), line)
   vec2.negate(vector, vector)
   return vector
 }

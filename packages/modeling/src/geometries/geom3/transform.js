@@ -18,7 +18,7 @@ const transform = (matrix, geometry) => {
   const newgeometry = create(geometry.polygons) // reuse the polygons
   newgeometry.isRetesselated = geometry.isRetesselated
 
-  newgeometry.transforms = mat4.multiply(matrix, geometry.transforms)
+  mat4.multiply(newgeometry.transforms, matrix, geometry.transforms)
   return newgeometry
 }
 

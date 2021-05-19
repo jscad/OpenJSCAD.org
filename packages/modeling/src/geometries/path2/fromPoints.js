@@ -23,7 +23,7 @@ const fromPoints = (options, points) => {
   let { closed } = Object.assign({}, defaults, options)
 
   let created = create()
-  created.points = points.map((point) => vec2.fromArray(point))
+  created.points = points.map((point) => vec2.clone(point))
 
   // check if first and last points are equal
   if (created.points.length > 1) {

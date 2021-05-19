@@ -13,7 +13,7 @@ const defaultCallback = (progress, index, base) => {
   if (geom2.isA(base)) baseSlice = slice.fromSides(geom2.toSides(base))
   if (poly3.isA(base)) baseSlice = slice.fromPoints(poly3.toPoints(base))
 
-  return progress === 0 || progress === 1 ? slice.transform(mat4.fromTranslation([0, 0, progress]), baseSlice) : null
+  return progress === 0 || progress === 1 ? slice.transform(mat4.fromTranslation(mat4.create(), [0, 0, progress]), baseSlice) : null
 }
 
 /**

@@ -3,4 +3,4 @@ import Plane from '../plane/type'
 
 export default fromPlanes
 
-declare function fromPlanes(a: Plane, b: Plane): Line3
+declare function fromPlanes(out: Line3, a: Plane, b: Plane): Line3

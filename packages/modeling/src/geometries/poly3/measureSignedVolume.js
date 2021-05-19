@@ -13,8 +13,9 @@ const measureSignedVolume = (poly3) => {
   let signedVolume = 0
   const vertices = poly3.vertices
   // calculate based on triangluar polygons
+  const cross = vec3.create()
   for (let i = 0; i < vertices.length - 2; i++) {
-    const cross = vec3.cross(vertices[i + 1], vertices[i + 2])
+    vec3.cross(cross, vertices[i + 1], vertices[i + 2])
     signedVolume += vec3.dot(vertices[0], cross)
   }
   signedVolume /= 6

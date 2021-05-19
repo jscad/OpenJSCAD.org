@@ -13,7 +13,7 @@ const areVerticesConvex = (vertices) => {
   const numvertices = vertices.length
   if (numvertices > 2) {
     // note: plane ~= normal point
-    const normal = plane.fromPoints(vertices[0], vertices[1], vertices[2])
+    const normal = plane.fromPoints(plane.create(), vertices[0], vertices[1], vertices[2])
     let prevprevpos = vertices[numvertices - 2]
     let prevpos = vertices[numvertices - 1]
     for (let i = 0; i < numvertices; i++) {
@@ -33,8 +33,9 @@ const areVerticesConvex = (vertices) => {
 //  normal: the normal vector of the plane
 const isConvexPoint = (prevpoint, point, nextpoint, normal) => {
   const crossproduct = vec3.cross(
-    vec3.subtract(point, prevpoint),
-    vec3.subtract(nextpoint, point)
+    vec3.create(),
+    vec3.subtract(vec3.create(), point, prevpoint),
+    vec3.subtract(vec3.create(), nextpoint, point)
   )
   const crossdotnormal = vec3.dot(crossproduct, normal)
   return crossdotnormal >= 0

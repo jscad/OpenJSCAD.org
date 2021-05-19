@@ -12,7 +12,7 @@ const isValidPoly3 = (epsilon, polygon) => {
  */
 const snapPolygons = (epsilon, polygons) => {
   let newpolygons = polygons.map((polygon) => {
-    const snapvertices = polygon.vertices.map((vertice) => vec3.snap(vec3.create(), epsilon, vertice))
+    const snapvertices = polygon.vertices.map((vertice) => vec3.snap(vec3.create(), vertice, epsilon))
     // only retain unique vertices
     const newvertices = []
     for (let i = 0; i < snapvertices.length; i++) {

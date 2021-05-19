@@ -17,8 +17,8 @@ const getPoints = (vertices, radius, startAngle, center) => {
 
   const points = []
   for (let i = 0; i < vertices; i++) {
-    const point = vec2.fromAngleRadians(a * i + startAngle)
-    vec2.scale(point, radius, point)
+    const point = vec2.fromAngleRadians(vec2.create(), a * i + startAngle)
+    vec2.scale(point, point, radius)
     vec2.add(point, center, point)
     points.push(point)
   }
@@ -70,7 +70,7 @@ const star = (options) => {
     innerRadius = outerRadius * getRadiusRatio(vertices, density)
   }
 
-  const centerv = vec2.fromArray(center)
+  const centerv = vec2.clone(center)
 
   const outerPoints = getPoints(vertices, outerRadius, startAngle, centerv)
   const innerPoints = getPoints(vertices, innerRadius, startAngle + Math.PI / vertices, centerv)

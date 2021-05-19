@@ -19,7 +19,7 @@ const fromSides = (sides) => {
   // create a list of edges from the sides
   const edges = []
   sides.forEach((side) => {
-    edges.push([vec3.fromVec2(side[0]), vec3.fromVec2(side[1])])
+    edges.push([vec3.fromVec2(vec3.create(), side[0]), vec3.fromVec2(vec3.create(), side[1])])
   })
   return create(edges)
 }

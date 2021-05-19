@@ -46,7 +46,7 @@ test('poly3: measureBoundingBox() should return correct values', (t) => {
   t.true(compareVectors(ret4[1], exp4[1]))
 
   // rotated to various angles
-  const rotation = mat4.fromZRotation((45 * 0.017453292519943295))
+  const rotation = mat4.fromZRotation(mat4.create(), (45 * 0.017453292519943295))
   ply1 = transform(rotation, ply1)
   ply2 = transform(rotation, ply2)
   ply3 = transform(rotation, ply3)

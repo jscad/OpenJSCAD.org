@@ -233,8 +233,8 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
         topright: topright,
         bottomleft: bottomleft,
         bottomright: bottomright,
-        leftline: line2.fromPoints(topleft, bottomleft),
-        rightline: line2.fromPoints(bottomright, topright)
+        leftline: line2.fromPoints(line2.create(), topleft, bottomleft),
+        rightline: line2.fromPoints(line2.create(), bottomright, topright)
       }
       if (newoutpolygonrow.length > 0) {
         const prevoutpolygon = newoutpolygonrow[newoutpolygonrow.length - 1]

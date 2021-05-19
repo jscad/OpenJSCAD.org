@@ -6,6 +6,7 @@
 module.exports = {
   clone: require('./clone'),
   closestPoint: require('./closestPoint'),
+  copy: require('./copy'),
   create: require('./create'),
   direction: require('./direction'),
   distanceToPoint: require('./distanceToPoint'),

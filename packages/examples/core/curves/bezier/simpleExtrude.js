@@ -30,8 +30,8 @@ function extrudeWobble (height) {
     capStart: true,
     capEnd: true,
     callback: function (progress, count, base) {
-      let newslice = slice.transform(maths.mat4.fromTranslation([0, 0, height * progress]), base)
-      newslice = slice.transform(maths.mat4.fromScaling([
+      let newslice = slice.transform(maths.mat4.fromTranslation(maths.mat4.create(), [0, 0, height * progress]), base)
+      newslice = slice.transform(maths.mat4.fromScaling(maths.mat4.create(), [
         bezier.valueAt(progress, xCurve),
         bezier.valueAt(progress, yCurve),
         1

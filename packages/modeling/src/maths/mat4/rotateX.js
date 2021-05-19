@@ -1,30 +1,15 @@
-const create = require('./create')
-
 /**
  * Rotates a matrix by the given angle around the X axis.
  *
- * @param {mat4} [out] - the receiving matrix
- * @param {Number} angle - the angle to rotate the matrix by (in radian)
+ * @param {mat4} out - the receiving matrix
  * @param {mat4} matrix - the matrix to rotate
- * @returns {mat4} a new matrix
+ * @param {Number} radians - the angle to rotate the matrix by
+ * @returns {mat4} out
  * @alias module:modeling/maths/mat4.rotateX
  */
-const rotateX = (...params) => {
-  let out
-  let angle
-  let matrix
-  if (params.length === 2) {
-    out = create()
-    angle = params[0]
-    matrix = params[1]
-  } else {
-    out = params[0]
-    angle = params[1]
-    matrix = params[2]
-  }
-
-  const s = Math.sin(angle)
-  const c = Math.cos(angle)
+const rotateX = (out, matrix, radians) => {
+  const s = Math.sin(radians)
+  const c = Math.cos(radians)
   const a10 = matrix[4]
   const a11 = matrix[5]
   const a12 = matrix[6]

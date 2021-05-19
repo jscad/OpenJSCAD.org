@@ -54,15 +54,15 @@ const createSingleToothPolygon = (maxAngle, baseRadius, angularToothWidthAtBase)
     // first side of the tooth:
     const angle = maxAngle * i / toothCurveResolution
     const tanLength = angle * baseRadius
-    let radiantVector = vec2.fromAngle(angle)
-    let tangentVector = vec2.scale(-tanLength, vec2.normal(radiantVector))
-    radiantVector = vec2.scale(baseRadius, radiantVector)
+    let radiantVector = vec2.fromAngleRadians(vec2.create(), angle)
+    let tangentVector = vec2.scale(vec2.create(), vec2.normal(vec2.create(), radiantVector), -tanLength)
+    radiantVector = vec2.scale(vec2.create(), radiantVector, baseRadius)
     points[i + 1] = [radiantVector[0] + tangentVector[0], radiantVector[1] + tangentVector[1]]
 
     // opposite side of the tooth:
-    radiantVector = vec2.fromAngle(angularToothWidthAtBase - angle)
-    tangentVector = vec2.scale(tanLength, vec2.normal(radiantVector))
-    radiantVector = vec2.scale(baseRadius, radiantVector)
+    radiantVector = vec2.fromAngleRadians(vec2.create(), angularToothWidthAtBase - angle)
+    tangentVector = vec2.scale(vec2.create(), vec2.normal(vec2.create(), radiantVector), tanLength)
+    radiantVector = vec2.scale(vec2.create(), radiantVector, baseRadius)
     points[(2 * toothCurveResolution) + 2 - i] = [radiantVector[0] + tangentVector[0], radiantVector[1] + tangentVector[1]]
   }
   return polygon({ points, closed: true })
@@ -74,7 +74,7 @@ const createBaseCirclePolygon = (numTeeth, angularToothWidthAtBase, rootRadius) 
   const toothCenterAngle = 0.5 * angularToothWidthAtBase
   for (let k = 0; k < numTeeth; k++) {
     const currentAngle = toothCenterAngle + k * toothAngle
-    var p1 = vec2.scale(rootRadius, vec2.fromAngle(currentAngle))
+    var p1 = vec2.scale(vec2.create(), vec2.fromAngleRadians(vec2.create(), currentAngle), rootRadius)
     points.push([p1[0], p1[1]])
   }
   return polygon({ points, closed: true })

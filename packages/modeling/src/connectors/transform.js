@@ -10,13 +10,16 @@ const fromPointAxisNormal = require('./fromPointAxisNormal')
  * @alias module:modeling/connectors.transform
  */
 const transform = (matrix, connector) => {
-  const newpoint = vec3.transform(matrix, connector.point)
+  // OPTIMIZE
+  const newpoint = vec3.transform(vec3.create(), connector.point, matrix)
   const newaxis = vec3.subtract(
-    vec3.transform(matrix, vec3.add(connector.point, connector.axis)),
+    vec3.create(),
+    vec3.transform(vec3.create(), vec3.add(vec3.create(), connector.point, connector.axis), matrix),
     newpoint
   )
   const newnormal = vec3.subtract(
-    vec3.transform(matrix, vec3.add(connector.point, connector.normal)),
+    vec3.create(),
+    vec3.transform(vec3.create(), vec3.add(vec3.create(), connector.point, connector.normal), matrix),
     newpoint
   )
   return fromPointAxisNormal(newpoint, newaxis, newnormal)

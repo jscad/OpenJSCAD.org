@@ -11,11 +11,20 @@ module.exports = {
    */
   clone: require('../vec4/clone'),
   /**
+   * @see [vec4.copy()]{@link module:modeling/maths/vec4.copy}
+   * @function copy
+   */
+  copy: require('../vec4/copy'),
+  /**
    * @see [vec4.create()]{@link module:modeling/maths/vec4.create}
    * @function create
    */
   create: require('../vec4/create'),
-  equals: require('./equals'),
+  /**
+   * @see [vec4.equals()]{@link module:modeling/maths/vec4.equals}
+   * @function equals
+   */
+  equals: require('../vec4/equals'),
   flip: require('./flip'),
   fromNormalAndPoint: require('./fromNormalAndPoint'),
   /**

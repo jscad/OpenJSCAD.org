@@ -28,7 +28,7 @@ const scale = (factors, ...objects) => {
 
   if (factors[0] <= 0 || factors[1] <= 0 || factors[2] <= 0) throw new Error('factors must be positive')
 
-  const matrix = mat4.fromScaling(factors)
+  const matrix = mat4.fromScaling(mat4.create(), factors)
 
   const results = objects.map((object) => {
     if (path2.isA(object)) return path2.transform(matrix, object)

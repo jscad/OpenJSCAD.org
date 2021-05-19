@@ -39,7 +39,7 @@ test('poly3: measureSignedVolume() should return correct values', (t) => {
   nearlyEqual(t, ret4, -325.00000, Number.EPSILON)
 
   // rotated to various angles
-  const rotation = mat4.fromZRotation((45 * 0.017453292519943295))
+  const rotation = mat4.fromZRotation(mat4.create(), (45 * 0.017453292519943295))
   ply1 = transform(rotation, ply1)
   ply2 = transform(rotation, ply2)
   ply3 = transform(rotation, ply3)

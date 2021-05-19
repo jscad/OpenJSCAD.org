@@ -1,31 +1,20 @@
-const create = require('./create')
-
 /**
  * Creates a matrix from the given angle around the X axis.
  * This is equivalent to (but much faster than):
  *
  *     mat4.identity(dest);
- *     mat4.rotateX(dest, dest, rad);
+ *     mat4.rotateX(dest, dest, radians);
  *
- * @param {mat4} [out] - mat4 receiving operation result
- * @param {Number} rad - the angle to rotate the matrix by
- * @returns {mat4} a new matrix
+ * @param {mat4} out - the receiving matrix
+ * @param {Number} radians - the angle to rotate the matrix by
+ * @returns {mat4} out
  * @alias module:modeling/maths/mat4.fromXRotation
  * @example
- * let matrix = fromXRotation(Math.PI / 2)
+ * let matrix = fromXRotation(create(), Math.PI / 2)
  */
-const fromXRotation = (...params) => {
-  let out
-  let rad
-  if (params.length === 1) {
-    out = create()
-    rad = params[0]
-  } else {
-    out = params[0]
-    rad = params[1]
-  }
-  const s = Math.sin(rad)
-  const c = Math.cos(rad)
+const fromXRotation = (out, radians) => {
+  const s = Math.sin(radians)
+  const c = Math.cos(radians)
 
   // Perform axis-specific matrix multiplication
   out[0] = 1

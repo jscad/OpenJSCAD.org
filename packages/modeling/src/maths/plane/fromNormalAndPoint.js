@@ -1,5 +1,4 @@
 const vec3 = require('../vec3')
-const fromValues = require('../vec4/fromValues')
 
 /**
  * Represents a plane in 3D coordinate space as determined by a normal (perpendicular to the plane)
@@ -11,16 +10,22 @@ const fromValues = require('../vec4/fromValues')
 
 /**
  * Create a new plane from the given normal and point values.
+ *
+ * @param {plane} out - the receiving plane
  * @param {vec3} normal - directional vector
  * @param {vec3} point - origin of plane
- * @returns {plane} a new plane
+ * @returns {plane} out
  * @alias module:modeling/maths/plane.fromNormalAndPoint
  */
-const fromNormalAndPoint = (normal, point) => {
-  const u = vec3.unit(normal)
+const fromNormalAndPoint = (out, normal, point) => {
+  const u = vec3.unit(vec3.create(), normal)
   const w = vec3.dot(point, u)
 
-  return fromValues(u[0], u[1], u[2], w)
+  out[0] = u[0]
+  out[1] = u[1]
+  out[2] = u[2]
+  out[3] = w
+  return out
 }
 
 module.exports = fromNormalAndPoint

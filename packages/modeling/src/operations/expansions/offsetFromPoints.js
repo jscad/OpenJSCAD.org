@@ -36,19 +36,21 @@ const offsetFromPoints = (options, points) => {
   let previousSegment = null
   const newPoints = []
   const newCorners = []
+  const of = vec2.create()
   const n = points.length
   for (let i = 0; i < n; i++) {
     const j = (i + 1) % n
     const p0 = points[i]
     const p1 = points[j]
     // calculate the unit normal
-    const of = orientation ? vec2.normal(vec2.subtract(p0, p1)) : vec2.normal(vec2.subtract(p1, p0))
+    orientation ? vec2.subtract(of, p0, p1) : vec2.subtract(of, p1, p0)
+    vec2.normal(of, of)
     vec2.normalize(of, of)
     // calculate the offset vector
-    vec2.scale(of, delta, of)
+    vec2.scale(of, of, delta)
     // calculate the new points (edge)
-    const n0 = vec2.add(p0, of)
-    const n1 = vec2.add(p1, of)
+    const n0 = vec2.add(vec2.create(), p0, of)
+    const n1 = vec2.add(vec2.create(), p1, of)
 
     const currentSegment = [n0, n1]
     if (previousSegment != null) {
@@ -93,9 +95,11 @@ const offsetFromPoints = (options, points) => {
 
   if (corners === 'edge') {
     // create edge corners
+    const line0 = line2.create()
+    const line1 = line2.create()
     newCorners.forEach((corner) => {
-      const line0 = line2.fromPoints(corner.s0[0], corner.s0[1])
-      const line1 = line2.fromPoints(corner.s1[0], corner.s1[1])
+      line2.fromPoints(line0, corner.s0[0], corner.s0[1])
+      line2.fromPoints(line1, corner.s1[0], corner.s1[1])
       const ip = line2.intersectPointOfLines(line0, line1)
       if (Number.isFinite(ip[0]) && Number.isFinite(ip[1])) {
         const p0 = corner.s0[1]
@@ -114,10 +118,11 @@ const offsetFromPoints = (options, points) => {
   if (corners === 'round') {
     // create rounded corners
     let cornersegments = Math.floor(segments / 4)
+    const v0 = vec2.create()
     newCorners.forEach((corner) => {
       // calculate angle of rotation
-      let rotation = vec2.angle(vec2.subtract(corner.s1[0], corner.c))
-      rotation -= vec2.angle(vec2.subtract(corner.s0[1], corner.c))
+      let rotation = vec2.angle(vec2.subtract(v0, corner.s1[0], corner.c))
+      rotation -= vec2.angle(vec2.subtract(v0, corner.s0[1], corner.c))
       if (orientation && rotation < 0) {
         rotation = rotation + Math.PI
         if (rotation < 0) rotation = rotation + Math.PI
@@ -131,11 +136,13 @@ const offsetFromPoints = (options, points) => {
         // generate the segments
         cornersegments = Math.floor(segments * (Math.abs(rotation) / (2 * Math.PI)))
         const step = rotation / cornersegments
-        const start = vec2.angle(vec2.subtract(corner.s0[1], corner.c))
+        const start = vec2.angle(vec2.subtract(v0, corner.s0[1], corner.c))
         const cornerpoints = []
         for (let i = 1; i < cornersegments; i++) {
           const radians = start + (step * i)
-          const point = vec2.add(corner.c, vec2.scale(delta, vec2.fromAngleRadians(radians)))
+          const point = vec2.fromAngleRadians(vec2.create(), radians)
+          vec2.scale(point, point, delta)
+          vec2.add(point, point, corner.c)
           cornerpoints.push(point)
         }
         if (cornerpoints.length > 0) {

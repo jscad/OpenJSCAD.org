@@ -5,13 +5,12 @@ const origin = require('./origin')
  *
  * The X coordinate will be Infinity if the line is parallel to the X axis.
  *
- * @param {Number} y the Y coordinate on the line
- * @param {line2} line the 2D line of reference
+ * @param {line2} line - the 2D line of reference
+ * @param {Number} y - the Y coordinate on the line
  * @return {Number} the X coordinate on the line
  * @alias module:modeling/maths/line2.xAtY
  */
-const xAtY = (y, line) => {
-  // px = (distance - normal.y * y) / normal.x
+const xAtY = (line, y) => {
   let x = (line[2] - (line[1] * y)) / line[0]
   if (Number.isNaN(x)) {
     const org = origin(line)

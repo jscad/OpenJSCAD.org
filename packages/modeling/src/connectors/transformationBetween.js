@@ -27,10 +27,10 @@ const transformationBetween = (options, from, to) => {
   const { mirror, normalRotation } = Object.assign({}, defaults, options)
 
   // shift to the 0,0 origin
-  let matrix = mat4.fromTranslation(vec3.negate(from.point))
+  const matrix = mat4.fromTranslation(mat4.create(), vec3.negate(vec3.create(), from.point))
 
   // align the axis
-  const axesplane = plane.fromPointsRandom(vec3.create(), from.axis, to.axis)
+  const axesplane = plane.fromPointsRandom(plane.create(), vec3.create(), from.axis, to.axis)
   const axesbasis = new OrthoNormalBasis(axesplane)
 
   let angle1 = vec2.angleRadians(axesbasis.to2D(from.axis))
@@ -40,14 +40,14 @@ const transformationBetween = (options, from, to) => {
   if (mirror) rotation += Math.PI // 180 degrees
 
   // TODO: understand and explain this
-  matrix = mat4.multiply(matrix, axesbasis.getProjectionMatrix())
-  matrix = mat4.multiply(matrix, mat4.fromZRotation(rotation))
-  matrix = mat4.multiply(matrix, axesbasis.getInverseProjectionMatrix())
+  mat4.multiply(matrix, matrix, axesbasis.getProjectionMatrix())
+  mat4.multiply(matrix, matrix, mat4.fromZRotation(mat4.create(), rotation))
+  mat4.multiply(matrix, matrix, axesbasis.getInverseProjectionMatrix())
   const usAxesAligned = transform(matrix, from)
   // Now we have done the transformation for aligning the axes.
 
   // align the normals
-  const normalsplane = plane.fromNormalAndPoint(to.axis, vec3.create())
+  const normalsplane = plane.fromNormalAndPoint(plane.create(), to.axis, vec3.create())
   const normalsbasis = new OrthoNormalBasis(normalsplane)
 
   angle1 = vec2.angleRadians(normalsbasis.to2D(usAxesAligned.normal))
@@ -55,12 +55,12 @@ const transformationBetween = (options, from, to) => {
 
   rotation = angle2 - angle1 + normalRotation
 
-  matrix = mat4.multiply(matrix, normalsbasis.getProjectionMatrix())
-  matrix = mat4.multiply(matrix, mat4.fromZRotation(rotation))
-  matrix = mat4.multiply(matrix, normalsbasis.getInverseProjectionMatrix())
+  mat4.multiply(matrix, matrix, normalsbasis.getProjectionMatrix())
+  mat4.multiply(matrix, matrix, mat4.fromZRotation(mat4.create(), rotation))
+  mat4.multiply(matrix, matrix, normalsbasis.getInverseProjectionMatrix())
 
   // translate to the destination point
-  matrix = mat4.multiply(matrix, mat4.fromTranslation(to.point))
+  mat4.multiply(matrix, matrix, mat4.fromTranslation(mat4.create(), to.point))
 
   return matrix
 }
