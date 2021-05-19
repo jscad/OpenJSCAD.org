@@ -82,7 +82,7 @@ const createRope = (to) => {
   const rope = extrudeFromSlices({
     callback: (p, i, b) => {
       if (i === 1) {
-        const matrix = mat4.fromTranslation(to)
+        const matrix = mat4.fromTranslation(mat4.create(), to)
         b = slice.transform(matrix, b)
       }
       return b
