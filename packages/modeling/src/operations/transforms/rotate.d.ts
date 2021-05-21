@@ -1,14 +1,17 @@
 import { Geometry } from '../../geometries/types'
+import { Vec1, Vec2, Vec3 } from '../../maths/types'
 import RecursiveArray from '../../utils/recursiveArray'
 
-export function rotate(angles: [number, number, number], geometry: Geometry): Geometry
-export function rotate(angles: [number, number, number], ...geometries: RecursiveArray<Geometry>): Array<Geometry>
+type Vec = Vec1 | Vec2 | Vec3
 
-export function rotateX(angle: number, geometry: Geometry): Geometry
-export function rotateX(angle: number, ...geometries: RecursiveArray<Geometry>): Array<Geometry>
+export function rotate<T extends Geometry>(angles: Vec, geometry: T): T
+export function rotate<T extends RecursiveArray<Geometry>>(angles: Vec, ...geometries: T): T
 
-export function rotateY(angle: number, geometry: Geometry): Geometry
-export function rotateY(angle: number, ...geometries: RecursiveArray<Geometry>): Array<Geometry>
+export function rotateX<T extends Geometry>(angle: number, geometry: T): T
+export function rotateX<T extends RecursiveArray<Geometry>>(angle: number, ...geometries: T): T
 
-export function rotateZ(angle: number, geometry: Geometry): Geometry
-export function rotateZ(angle: number, ...geometries: RecursiveArray<Geometry>): Array<Geometry>
+export function rotateY<T extends Geometry>(angle: number, geometry: T): T
+export function rotateY<T extends RecursiveArray<Geometry>>(angle: number, ...geometries: T): T
+
+export function rotateZ<T extends Geometry>(angle: number, geometry: T): T
+export function rotateZ<T extends RecursiveArray<Geometry>>(angle: number, ...geometries: T): T

@@ -4,7 +4,7 @@ import Geom2 from '../geometries/geom2/type'
 export default polygon
 
 export interface PolygonOptions {
-  points: Array<Vec2>
+  points: Array<Vec2> | Array<Array<Vec2>>
   paths?: Array<number> | Array<Array<number>>
 }
 

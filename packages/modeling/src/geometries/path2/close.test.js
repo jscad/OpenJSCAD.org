@@ -21,22 +21,22 @@ test('close: closes various paths', (t) => {
   t.true(p1.isClosed)
   t.is(0, p1.points.length)
 
-  let p2 = fromPoints({ close: false }, [])
+  let p2 = fromPoints({ closed: false }, [])
   p2 = close(p2)
   t.true(p2.isClosed)
   t.is(0, p2.points.length)
 
-  let p3 = fromPoints({ close: true }, [[0, 0]])
+  let p3 = fromPoints({ closed: true }, [[0, 0]])
   p3 = close(p3)
   t.true(p3.isClosed)
   t.is(1, p3.points.length)
 
-  let p4 = fromPoints({ close: true }, [[0, 0], [0, 0]])
+  let p4 = fromPoints({ closed: true }, [[0, 0], [0, 0]])
   p4 = close(p4)
   t.true(p4.isClosed)
   t.is(1, p4.points.length) // the last point is removed
 
-  let p5 = fromPoints({ close: true }, [[0, 0], [1, 1], [0, 0]])
+  let p5 = fromPoints({ closed: true }, [[0, 0], [1, 1], [0, 0]])
   p5 = close(p5)
   t.true(p5.isClosed)
   t.is(2, p5.points.length) // the last point is removed

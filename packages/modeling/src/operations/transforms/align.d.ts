@@ -1,14 +1,14 @@
 import { Geometry } from '../../geometries/types'
-import Vec3 from '../../maths/vec3/type'
+import { Vec1, Vec2, Vec3 } from '../../maths/types'
 import RecursiveArray from '../../utils/recursiveArray'
 
 export default align
 
 export interface AlignOptions {
   modes?: Array<'center' | 'max' | 'min' | 'none'>
-  relativeTo?: Vec3
+  relativeTo?: Vec1 | Vec2 | Vec3
   grouped?: boolean
 }
 
-declare function align(options: AlignOptions, geometry: Geometry): Geometry
-declare function align(options: AlignOptions, ...geometries: RecursiveArray<Geometry>): Array<Geometry>
+declare function align<T extends Geometry>(options: AlignOptions, geometry: T): T
+declare function align<T extends RecursiveArray<Geometry>>(options: AlignOptions, ...geometries: T): T

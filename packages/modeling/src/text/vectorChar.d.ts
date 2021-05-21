@@ -5,7 +5,7 @@ export default vectorChar
 export interface VectorChar {
   width: number
   height: number
-  segments: Array<Vec2>
+  segments: Array<Array<Vec2>>
 }
 
 export interface VectorCharOptions {
