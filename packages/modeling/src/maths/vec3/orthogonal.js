@@ -1,4 +1,6 @@
 const abs = require('./abs')
+const create = require('./create')
+const cross = require('./cross')
 
 /**
  * Create a vector that is somewhat orthogonal to the given vector.
@@ -8,21 +10,12 @@ const abs = require('./abs')
  * @alias module:modeling/maths/vec3.orthogonal
  */
 const orthogonal = (out, vector) => {
-  abs(out, vector)
-  if ((out[0] <= out[1]) && (out[0] <= out[2])) {
-    out[0] = 1
-    out[1] = 0
-    out[2] = 0
-  } else if ((out[1] <= out[0]) && (out[1] <= out[2])) {
-    out[0] = 0
-    out[1] = 1
-    out[2] = 0
-  } else {
-    out[0] = 0
-    out[1] = 0
-    out[2] = 1
-  }
-  return out
+  const bV = abs(create(), vector)
+  const b0 = 0 + ((bV[0] < bV[1]) && (bV[0] < bV[2]))
+  const b1 = 0 + ((bV[1] <= bV[0]) && (bV[1] < bV[2]))
+  const b2 = 0 + ((bV[2] <= bV[0]) && (bV[2] <= bV[1]))
+
+  return cross(out, vector, [b0, b1, b2])
 }
 
 module.exports = orthogonal

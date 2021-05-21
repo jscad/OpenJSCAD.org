@@ -67,9 +67,8 @@ const cylinderElliptic = (options) => {
   const end = vec3.fromValues(0, 0, height / 2)
   const ray = vec3.subtract(vec3.create(), end, start)
 
-  const axisZ = vec3.unit(vec3.create(), ray)
-  const axisX = vec3.unit(vec3.create(), vec3.orthogonal(vec3.create(), axisZ))
-  const axisY = vec3.unit(vec3.create(), vec3.cross(vec3.create(), axisZ, axisX))
+  const axisX = vec3.fromValues(1, 0, 0)
+  const axisY = vec3.fromValues(0, 1, 0)
 
   const v1 = vec3.create()
   const v2 = vec3.create()
