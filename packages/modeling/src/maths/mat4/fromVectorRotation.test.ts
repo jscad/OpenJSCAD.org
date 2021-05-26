@@ -1,11 +1,11 @@
-const test = require('ava')
+import test from 'ava'
 
-const vec3 = require('../vec3')
+import vec3 from '../vec3'
 
-const create = require('./create')
-const fromVectorRotation = require('./fromVectorRotation')
+import create from './create'
+import fromVectorRotation from './fromVectorRotation'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { compareVectors } from '../../../test/helpers/index'
 
 test('mat4: fromVectorRotation() called with out parameter should return a mat4 with correct values', (t) => {
   // unit vectors, same directions

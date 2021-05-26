@@ -119,10 +119,10 @@ test('expand: expanding of a geom3 produces expected changes to polygons', (t) =
   t.true(comparePoints(pts[0], exp0))
   t.true(comparePoints(pts[61], exp61))
 
-  const geometry2 = sphere({radius: 5, segments: 8})
-  const obs2 = expand({delta: 5}, geometry2)
+  const geometry2 = sphere({ radius: 5, segments: 8 })
+  const obs2 = expand({ delta: 5 }, geometry2)
   const pts2 = geom3.toPoints(obs2)
-  t.is(pts2.length, 2102)
+  t.is(pts2.length, 2061)
 })
 
 test('expand (options): offsetting of a complex geom2 produces expected offset geom2', (t) => {
