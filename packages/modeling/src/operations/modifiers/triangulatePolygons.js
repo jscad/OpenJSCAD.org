@@ -8,7 +8,7 @@ const triangulatePolygon = (epsilon, polygon, triangles) => {
       // split the polygon using a midpoint
       const midpoint = [0, 0, 0]
       polygon.vertices.forEach((vertice) => vec3.add(midpoint, midpoint, vertice))
-      vec3.snap(midpoint, epsilon, vec3.divide(midpoint, midpoint, [nv, nv, nv]))
+      vec3.snap(midpoint, vec3.divide(midpoint, midpoint, [nv, nv, nv]), epsilon)
       for (let i = 0; i < nv; i++) {
         triangles.push(poly3.fromPoints([midpoint, polygon.vertices[i], polygon.vertices[(i + 1) % nv]]))
       }

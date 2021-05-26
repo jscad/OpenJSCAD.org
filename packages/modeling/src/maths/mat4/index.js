@@ -14,6 +14,7 @@ module.exports = {
   fromTaitBryanRotation: require('./fromTaitBryanRotation'),
   fromTranslation: require('./fromTranslation'),
   fromValues: require('./fromValues'),
+  fromVectorRotation: require('./fromVectorRotation'),
   fromXRotation: require('./fromXRotation'),
   fromYRotation: require('./fromYRotation'),
   fromZRotation: require('./fromZRotation'),

@@ -34,6 +34,7 @@ module.exports = {
   fromValues: require('../vec4/fromValues'),
   fromPoints: require('./fromPoints'),
   fromPointsRandom: require('./fromPointsRandom'),
+  projectionOfPoint: require('./projectionOfPoint'),
   signedDistanceToPoint: require('./signedDistanceToPoint'),
   /**
    * @see [vec4.toString()]{@link module:modeling/maths/vec4.toString}
