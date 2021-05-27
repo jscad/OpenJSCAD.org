@@ -6,13 +6,13 @@ const geom3 = require('../../geometries/geom3')
 // returns array numerically sorted and duplicates removed
 const sortNb = (array) => array.sort((a, b) => a - b).filter((item, pos, ary) => !pos || item !== ary[pos - 1])
 
-const insertMapping = (map, point, polygonIndex) => {
+const insertMapping = (map, point, index) => {
   const key = `${point}`
   const mapping = map.get(key)
   if (mapping === undefined) {
-    map.set(key, [polygonIndex])
+    map.set(key, [index])
   } else {
-    mapping.push(polygonIndex)
+    mapping.push(index)
   }
 }
 
@@ -28,30 +28,31 @@ const scissionGeom3 = (geometry) => {
   const polygons = geom3.toPolygons(geometry)
   const pl = polygons.length
 
-  const polygonIndexesPerPoint = new Map()
+  const indexesPerPoint = new Map()
   const temp = vec3.create()
-  polygons.forEach((polygon, polygonIndex) => {
+  polygons.forEach((polygon, index) => {
     polygon.vertices.forEach((point) => {
-      insertMapping(polygonIndexesPerPoint, vec3.snap(temp, point, eps), polygonIndex)
+      insertMapping(indexesPerPoint, vec3.snap(temp, point, eps), index)
     })
   })
 
-  const zz = polygons.map((polygon, polygonIndex) => {
-    const indexes = []
+  const indexesPerPolygon = polygons.map((polygon) => {
+    let indexes = []
     polygon.vertices.forEach((point) => {
-      indexes.push(...findMapping(polygonIndexesPerPoint, vec3.snap(temp, point, eps)))
+      indexes = indexes.concat(findMapping(indexesPerPoint, vec3.snap(temp, point, eps)))
     })
     return { e: 1, d: sortNb(indexes) } // for each polygon, push the list of indexes
   })
 
-  polygonIndexesPerPoint.clear()
+  indexesPerPoint.clear()
 
   // regroupe les correspondances des polygones se touchant
   // boucle ne s'arrêtant que quand deux passages retournent le même nb de polygones
   // merge lookup data from linked polygons as long as possible
   let merges = 0
-  for (let i = 0; i < zz.length; i++) {
-    const mapi = zz[i]
+  const ippl = indexesPerPolygon.length
+  for (let i = 0; i < ippl; i++) {
+    const mapi = indexesPerPolygon[i]
     // merge mappings if necessary
     if (mapi.e > 0) {
       const indexes = new Array(pl)
@@ -60,7 +61,7 @@ const scissionGeom3 = (geometry) => {
         merges = 0
         // loop through the known indexes
         indexes.forEach((e, j) => {
-          const mapj = zz[j]
+          const mapj = indexesPerPolygon[j]
           // merge this mapping if necessary
           if (mapj.e > 0) {
             mapj.e = -1 // merged
@@ -78,11 +79,10 @@ const scissionGeom3 = (geometry) => {
   // construit le tableau des geometry à retourner
   // build array of geometry to return
   const newgeometries = []
-  const zzl = zz.length
-  for (let i = 0; i < zzl; i++) {
-    if (zz[i].indexes) {
+  for (let i = 0; i < ippl; i++) {
+    if (indexesPerPolygon[i].indexes) {
       const newpolygons = []
-      zz[i].indexes.forEach((e, p) => newpolygons.push(polygons[p]))
+      indexesPerPolygon[i].indexes.forEach((e, p) => newpolygons.push(polygons[p]))
       newgeometries.push(geom3.create(newpolygons))
     }
   }
