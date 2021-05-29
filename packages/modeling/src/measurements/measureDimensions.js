@@ -13,7 +13,6 @@ const measureBoundingBox = require('./measureBoundingBox')
  */
 const measureDimensions = (...geometries) => {
   geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('wrong number of arguments')
 
   const results = geometries.map((geometry) => {
     const boundingBox = measureBoundingBox(geometry)
