@@ -4,7 +4,7 @@ import RecursiveArray from '../../utils/recursiveArray'
 
 export interface MirrorOptions {
   origin?: Vec3
-  normal: Vec3
+  normal?: Vec3
 }
 
 export function mirror<T extends Geometry>(options: MirrorOptions, geometry: T): T
