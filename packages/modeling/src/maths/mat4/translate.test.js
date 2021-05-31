@@ -17,7 +17,7 @@ test('mat4: translate() called with three paramerters should update a mat4 with 
   t.true(compareVectors(ret1, [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]))
   t.is(obs1, ret1)
 
-  const obs2 = create(0, 0, 0, 0)
+  const obs2 = create()
   const ret2 = translate(obs2, identityMatrix, [2, 3, 6])
   t.true(compareVectors(obs2, [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 3, 6, 1]))
   t.true(compareVectors(ret2, [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 3, 6, 1]))

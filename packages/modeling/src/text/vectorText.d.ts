@@ -2,11 +2,7 @@ import Vec2 from '../maths/vec2/type'
 
 export default vectorText
 
-export interface VectorText {
-  width: number
-  height: number
-  segments: Array<Vec2>
-}
+export interface VectorText extends Array<Array<Vec2>> {}
 
 export interface VectorTextOptions {
   xOffset?: number

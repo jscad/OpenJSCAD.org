@@ -1,5 +1,4 @@
 import Geom3 from '../../geometries/geom3/type'
-import RecursiveArray from '../../utils/recursiveArray'
 
 import Slice from './slice/type'
 
