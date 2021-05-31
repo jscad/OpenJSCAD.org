@@ -5,4 +5,5 @@ import RecursiveArray from '../../utils/recursiveArray'
 export default transform
 
 declare function transform<T extends Geometry>(matrix: Mat4, geometry: T): T
-declare function transform<T extends RecursiveArray<Geometry>>(matrix: Mat4, ...geometries: T): T
+declare function transform<T extends Geometry>(matrix: Mat4, ...geometries: RecursiveArray<T>): Array<T>
+declare function transform(matrix: Mat4, ...geometries: RecursiveArray<Geometry>): Array<Geometry>
