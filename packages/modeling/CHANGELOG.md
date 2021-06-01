@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.2.0...@jscad/modeling@2.3.0) (2021-06-01)
+
+
+### Bug Fixes
+
+* **modeling:** fixed use of vec3.snap in triangulatePolygons ([c0b82a0](https://github.com/jscad/OpenJSCAD.org/commit/c0b82a0fce4dc69eb152b184a7c36a587fbe4a97))
+* **modeling:** rewrote vec3 orthogonal() to do the correct thing, and adjusted test suites ([f5cb4a3](https://github.com/jscad/OpenJSCAD.org/commit/f5cb4a31bfc331123cf0da95c012b02b7baafcc8))
+* **modeling:** update and correct TypeScript type definitions ([#849](https://github.com/jscad/OpenJSCAD.org/issues/849)) ([6036be7](https://github.com/jscad/OpenJSCAD.org/commit/6036be7586a3f2808f34764baa4195c5edbc6165))
+
+
+### Features
+
+* **modeling:** added aboutEqualNormals() to math utils ([986d402](https://github.com/jscad/OpenJSCAD.org/commit/986d402cff0f857c77ac77995090fbb0da7ecdaf))
+* **modeling:** added fromVectorRotation() to mat4 ([9e3acae](https://github.com/jscad/OpenJSCAD.org/commit/9e3acaee31b4792bdde3ff52b3d6931fc4898414))
+* **modeling:** added projectionOfPoint() to plane ([5ea7bfd](https://github.com/jscad/OpenJSCAD.org/commit/5ea7bfd384bd72ea3d05937d6e935f50109973bc))
+* **modeling:** new project() function added to extrusions ([#844](https://github.com/jscad/OpenJSCAD.org/issues/844)) ([065469c](https://github.com/jscad/OpenJSCAD.org/commit/065469c9698f429fd5352d705261a96b4d90c836))
+* **modeling:** new scission() function added to booleans ([#846](https://github.com/jscad/OpenJSCAD.org/issues/846)) ([b8b3bae](https://github.com/jscad/OpenJSCAD.org/commit/b8b3bae0f45301a8c4b80a757331f89e962f86fc))
+* **modeling:** rework math objects to conform with gl-matrix ([#804](https://github.com/jscad/OpenJSCAD.org/issues/804)) ([2e52f10](https://github.com/jscad/OpenJSCAD.org/commit/2e52f104e569f2bb7dd9e1be3d238f471f4d3dfa))
+
+
+
+
+
 # [2.2.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.0.0-alpha.0...@jscad/modeling@2.2.0) (2021-04-20)
 
 
