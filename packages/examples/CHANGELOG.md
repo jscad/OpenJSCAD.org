@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.2.0...@jscad/examples@2.3.0) (2021-06-01)
+
+
+### Features
+
+* **modeling:** rework math objects to conform with gl-matrix ([#804](https://github.com/jscad/OpenJSCAD.org/issues/804)) ([2e52f10](https://github.com/jscad/OpenJSCAD.org/commit/2e52f104e569f2bb7dd9e1be3d238f471f4d3dfa))
+
+
+
+
+
 # [2.2.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.0.0-alpha.0...@jscad/examples@2.2.0) (2021-05-16)
 
 

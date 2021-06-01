@@ -1,6 +1,6 @@
 {
   "name": "@jscad/amf-serializer",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "AMF Serializer for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
@@ -32,7 +32,7 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/array-utils": "2.1.0",
-    "@jscad/modeling": "2.2.0",
+    "@jscad/modeling": "2.3.0",
     "onml": "1.2.0"
   },
   "devDependencies": {
