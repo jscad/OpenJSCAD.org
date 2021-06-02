@@ -7,7 +7,7 @@ const { geometries } = require('@jscad/modeling')
  */
 const deserializeSolids = (solids) => solids.map((solid) => {
   if (!solid) return solid // handle passing of null / undefined
-  return JSON.parse(solid)
+  return typeof solid == 'string' ? JSON.parse(solid):solid
 })
 
 

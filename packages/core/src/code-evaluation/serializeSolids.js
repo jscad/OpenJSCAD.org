@@ -14,7 +14,7 @@ const serializeSolids = (solids) => {
     if (geom2.isA(object)) geom2.toSides(object)
     if (geom3.isA(object)) geom3.toPolygons(object)
     if (path2.isA(object)) path2.toPoints(object)
-    return JSON.stringify(object)
+    return object
   })
   return solids
 }
