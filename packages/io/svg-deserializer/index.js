@@ -17,7 +17,7 @@ const { toArray } = require('@jscad/array-utils')
 
 const version = require('./package.json').version
 
-const { cagLengthX, cagLengthY } = require('./helpers')
+const { cagLengthX, cagLengthY, svgColorForTarget } = require('./helpers')
 const { svgSvg, svgRect, svgCircle, svgGroup, svgLine, svgPath, svgEllipse, svgPolygon, svgPolyline, svgUse } = require('./svgElementHelpers')
 const shapesMapGeometry = require('./shapesMapGeometry')
 const shapesMapJscad = require('./shapesMapJscad')
@@ -32,24 +32,26 @@ const shapesMapJscad = require('./shapesMapJscad')
 /**
  * Parse the given SVG data and return either a JSCAD script or a set of geometries
  * @param {Object} options - options used during deserializing, REQUIRED
- * @param {string} [options.filename='svg'] - filename of original SVG source
- * @param {string} [options.version='0.0.0'] - version number to add to the metadata
  * @param {boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script
+ * @param {string} [options.filename='svg'] - filename of original SVG source
  * @param {string} [options.output='script'] - either 'script' or 'geometry' to set desired output
  * @param {float} [options.pxPmm] - custom pixels per mm unit
+ * @param {integer} [options.segments] - number of segments for rounded shapes
+ * @param {string} [options.target] - target 2D geometry; geom2 or path2
+ * @param {string} [options.version='0.0.0'] - version number to add to the metadata
  * @param {string} input - SVG data
  * @return {string|[object]} either a string (script) or a set of objects (geometry)
  * @alias module:io/svg-deserializer.deserialize
  */
 const deserialize = (options, input) => {
   const defaults = {
-    filename: 'svg',
     addMetaData: true,
+    filename: 'svg',
     output: 'script',
     pxPmm: require('./constants').pxPmm,
+    segments: 32,
     target: 'path', // target - 'geom2' or 'path'
-    version,
-    segments: 32
+    version
   }
   options = Object.assign({}, defaults, options)
   return options.output === 'script' ? translate(input, options) : instantiate(input, options)
@@ -204,12 +206,8 @@ const objectify = (options, group) => {
           shape = transforms.translate([x, y, 0], shape)
         }
       }
-      if (target === 'path' && obj.stroke) {
-        shape = colors.colorize([obj.stroke[0], obj.stroke[1], obj.stroke[2], 1], shape)
-      }
-      if (target === 'geom2' && obj.fill) {
-        shape = colors.colorize([obj.fill[0], obj.fill[1], obj.fill[2], 1], shape)
-      }
+      const color = svgColorForTarget(target, obj)
+      if (color) shape = colors.colorize(color, shape)
       return shape
     })
     geometries = geometries.concat(shapes)
@@ -303,13 +301,9 @@ const codify = (options, group) => {
         code += `${indent}${on} = transforms.translate([${x}, ${y}, 0], ${on})\n`
       }
     }
-    if (target === 'path' && obj.stroke) {
-      // for path, only use the supplied SVG stroke color
-      code += `${indent}${on} = colors.colorize([${obj.stroke[0]}, ${obj.stroke[1]}, ${obj.stroke[2]}, 1], ${on})\n`
-    }
-    if (target === 'geom2' && obj.fill) {
-      // for geom2, only use the supplied SVG fill color
-      code += `${indent}${on} = colors.colorize([${obj.fill[0]}, ${obj.fill[1]}, ${obj.fill[2]}, 1], ${on})\n`
+    const color = svgColorForTarget(target, obj)
+    if (color) {
+      code += `${indent}${on} = colors.colorize([${color}], ${on})\n`
     }
     code += `${indent}${ln} = ${ln}.concat(${on})\n\n`
   }

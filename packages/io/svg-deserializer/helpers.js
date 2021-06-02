@@ -162,6 +162,29 @@ const groupValue = (svgGroups, name) => {
   return undefined
 }
 
+const svgColorForTarget = (target, svgObject) => {
+  let color = null
+  if (target === 'path') {
+    if (svgObject.stroke) {
+      color = [svgObject.stroke[0], svgObject.stroke[1], svgObject.stroke[2], 1]
+    } else {
+      if (svgObject.fill) {
+        color = [svgObject.fill[0], svgObject.fill[1], svgObject.fill[2], 1]
+      }
+    }
+  } else {
+    // target is geom2
+    if (svgObject.fill) {
+      color = [svgObject.fill[0], svgObject.fill[1], svgObject.fill[2], 1]
+    } else {
+      if (svgObject.stroke) {
+        color = [svgObject.stroke[0], svgObject.stroke[1], svgObject.stroke[2], 1]
+      }
+    }
+  }
+  return color
+}
+
 module.exports = {
   svg2cagX,
   svg2cagY,
@@ -172,5 +195,6 @@ module.exports = {
   cagColor,
   cssStyle,
   reflect,
-  groupValue
+  groupValue,
+  svgColorForTarget
 }
