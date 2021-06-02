@@ -361,9 +361,10 @@ const translateMesh = (obj, layers, options) => {
         fi++
       }
     } else {
+      console.warn('invalid mesh: faces')
     }
   } else {
-  // invalid vlen
+    console.warn('invalid mesh: vertices')
   }
   // convert the polygons into a script
   const name = obj.name

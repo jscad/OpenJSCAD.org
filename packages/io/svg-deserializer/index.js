@@ -108,12 +108,14 @@ const translate = (src, options) => {
   }
 
   // convert the internal objects to JSCAD code
-  let code = addMetaData ? `//
+  let code = addMetaData
+    ? `//
   // producer: JSCAD SVG Deserializer ${version}
   // date: ${new Date()}
   // source: ${filename}
   //
-` : ''
+`
+    : ''
   code += 'const { colors, geometries, primitives, transforms } = require(\'@jscad/modeling\')\n\n'
 
   options && options.statusCallback && options.statusCallback({ progress: 50 })

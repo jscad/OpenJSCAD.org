@@ -115,7 +115,8 @@ const createObject = (obj, index, data, options) => {
   // const output =
   if (options.instantiate === true) {
     const scale = options.amf.scale
-    const vertex = scale !== 1.0 ? ([x, y, z]) => maths.vec3.fromValues(x * scale, y * scale, z * scale)
+    const vertex = scale !== 1.0
+      ? ([x, y, z]) => maths.vec3.fromValues(x * scale, y * scale, z * scale)
       : (v) => maths.vec3.clone(v)
 
     obj.objects.forEach(addMesh)

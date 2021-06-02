@@ -37,7 +37,7 @@ const mimeType = 'application/amf+xml'
 /**
  * Serialize the give objects to AMF elements.
  * @param {Object} options - options for serialization
- * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer 
+ * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
  * @param {...Object} objects - objects to serialize as AMF
  * @returns {Array} serialized contents with one AMF structure (XML string)
@@ -62,7 +62,7 @@ const serialize = (options, ...objects) => {
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to AMF')
 
   // covert to triangles
-  objects3d = toArray(modifiers.generalize({snap: true, triangulate: true}, objects3d))
+  objects3d = toArray(modifiers.generalize({ snap: true, triangulate: true }, objects3d))
 
   options.statusCallback && options.statusCallback({ progress: 0 })
 
@@ -183,7 +183,7 @@ const convertToColor = (polygon, options) => {
 }
 
 const convertToTriangles = (polygon, index, options) => {
-  let polycolor = convertToColor(polygon, options)
+  const polycolor = convertToColor(polygon, options)
 
   // making sure they are all triangles (triangular polygons)
   const contents = []
