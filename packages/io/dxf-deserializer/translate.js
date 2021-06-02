@@ -556,7 +556,6 @@ const instantiatePolyFaces = (meshM, meshN, parts, color, options) => {
         vertices = vertices.reverse()
       }
       const polygon = geometries.poly3.create(vertices)
-      if (color) polygon.color = color
       faces.push(polygon)
     }
     i++
@@ -600,7 +599,11 @@ const translateCurrent = (obj, layers, parts, options) => {
   // console.log('***** translateCurrent',obj.type)
 
   const type = obj.type
+  const cn = getColorNumber(obj, layers)
+  const color = getColor(cn, options.colorindex)
+
   // console.log('##### translating Current as '+type)
+
   if (type === '2dline') {
     return translateAs2Dline(obj, layers, parts, options)
   }
@@ -614,8 +617,6 @@ const translateCurrent = (obj, layers, parts, options) => {
     const m = obj.fvia
     const n = obj.fvib
     // console.log('##### m: '+m+' n: '+n)
-    const cn = getColorNumber(obj, layers)
-    const color = getColor(cn, options.colorindex)
     const facets = instantiateFacets(m, n, parts, color, options)
     parts = facets
     // fall through, translating the parts (polygons)
@@ -625,8 +626,6 @@ const translateCurrent = (obj, layers, parts, options) => {
     if ('fvia' in obj) {
       const m = obj.fvia
       const n = obj.fvib
-      const cn = getColorNumber(obj, layers)
-      const color = getColor(cn, options.colorindex)
       const faces = instantiatePolyFaces(m, n, parts, color, options)
       parts = faces
       // fall through, translating the parts (polygons)
@@ -642,6 +641,10 @@ const translateCurrent = (obj, layers, parts, options) => {
   script += `  ]
   let ${name} = geometries.geom3.create(${name}_polygons)
 `
+  if (color) {
+    script += `  ${name}.color = [${color}]
+`
+  }
   obj.script = script
   addToLayer(obj, layers)
   return null
@@ -762,8 +765,8 @@ const translateAsciiDxf = (reader, options) => {
       case 'circle':
         // console.log('##### circle')
         current = translateCurrent(current, layers, parts, options)
-        translateCircle(obj, layers, options)
         parts = []
+        translateCircle(obj, layers, options)
         break
       case 'ellipse':
         // console.log('##### ellipse')
@@ -780,6 +783,7 @@ const translateAsciiDxf = (reader, options) => {
       case 'polyline':
         // console.log('##### polyline')
         current = translateCurrent(current, layers, parts, options)
+        parts = []
         if (current === null) {
           // console.log('##### start of polyline')
           current = getPolyType(obj)
