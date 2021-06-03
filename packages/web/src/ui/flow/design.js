@@ -5,7 +5,6 @@ const { delayFromObservable, holdUntil, withLatestFrom } = require('../../most-u
 
 const { applyParameterDefinitions, getParameterValuesFromUIControls } = require('@jscad/core').parameters
 const { getDesignEntryPoint, getDesignName } = require('@jscad/core').loading.requireDesignUtilsFs
-const { deserializeSolids } = require('@jscad/core').evaluation
 const { makeFakeFs } = require('@jscad/core').loading
 
 const { keep } = require('../../utils/object')
@@ -478,21 +477,6 @@ const actions = ({ sources }) => {
   const setDesignSolids$ = most.mergeArray([
     sources.solidWorker
       .filter((event) => !('error' in event) && event.data instanceof Object && event.data.type === 'solids')
-      .map((event) => {
-        try {
-          const start = new Date().getTime()
-
-          const solids = deserializeSolids(event.data.solids)
-
-          const end = new Date().getTime()
-          console.warn(`elapse for solid generation: ${end - start}`)
-
-          const { lookupCounts, lookup } = event.data
-          return { solids, lookup, lookupCounts }
-        } catch (error) {
-          return { error }
-        }
-      })
       .multicast(),
     sources.fs
       .filter((res) => res.type === 'read' && res.id === 'loadCachedGeometry' && res.data)
