@@ -183,12 +183,14 @@ ${translateColors(colors)}
 const stringify = (positions, groups, options) => {
   const { filename, addMetaData, version } = options
 
-  let code = addMetaData ? `//
+  let code = addMetaData
+    ? `//
 // Produced by JSCAD IO Library : OBJ Deserializer (${version})
 // date: ${new Date()}
 // source: ${filename}
 //
-  ` : ''
+  `
+    : ''
 
   // create the main function, with a list of points and translated groups
   code += `const {primitives} = require('@jscad/modeling')
