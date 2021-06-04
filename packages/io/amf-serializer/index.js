@@ -21,6 +21,13 @@ TBD
 
 /**
  * Serializer of JSCAD geometries to AMF elements.
+ *
+ * The serialization of the following geometries are possible.
+ * - serialization of 3D geometry (geom3) to AMF object (a unique mesh containing both vertices and volumes)
+ *
+ * Colors are added to volumes when found on the 3D geometry.
+ * Colors are added to triangles when found on individual polygons.
+ *
  * @module io/amf-serializer
  * @example
  * const { serializer, mimeType } = require('@jscad/amf-serializer')
