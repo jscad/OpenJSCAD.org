@@ -1,8 +1,6 @@
 import { Path2, Geom2, Geom3 } from '../../geometries/types'
 import RecursiveArray from '../../utils/recursiveArray'
 
-import Slice from './slice/type'
-
 export default extrudeLinear
 
 export interface ExtrudeLinearOptions {

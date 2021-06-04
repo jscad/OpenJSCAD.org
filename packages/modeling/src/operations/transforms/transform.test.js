@@ -10,7 +10,7 @@ const { transform } = require('./index')
 
 test('transform: transforming of a path2 produces expected changes to points', (t) => {
   const matrix = mat4.fromTranslation(mat4.create(), [2, 2, 0])
-  let geometry = path2.fromPoints({}, [[0, 0, 0], [1, 0, 0]])
+  let geometry = path2.fromPoints({}, [[0, 0], [1, 0]])
 
   geometry = transform(matrix, geometry)
   const obs = path2.toPoints(geometry)

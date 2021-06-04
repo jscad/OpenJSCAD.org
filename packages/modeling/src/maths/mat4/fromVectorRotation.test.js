@@ -113,15 +113,15 @@ test('mat4: fromVectorRotation() called with out parameter should return a mat4 
   ret = fromVectorRotation(out, [0.5, 0.5, 0.5], [-0.5, 0.5, 0.5])
   t.is(ret, out)
   t.true(compareVectors(out, [0.3333333333333334, 0.6666666666666669, 0.6666666666666669, 0, -0.6666666666666669, 0.666666666666667, -0.3333333333333335, 0, -0.6666666666666669, -0.3333333333333335, 0.666666666666667, 0, 0, 0, 0, 1]))
-  t.true(compareVectors([-0.5, 0.5, 0.5], vec3.transform(vec3.create(), ret, [0.5, 0.5, 0.5])))
+  t.true(compareVectors([-0.5, 0.5, 0.5], vec3.transform(vec3.create(), [0.5, 0.5, 0.5], ret)))
 
   ret = fromVectorRotation(out, [5, 5, 5], [5, 5, -5])
   t.is(ret, out)
   t.true(compareVectors(out, [0.6666666666666666, -0.3333333333333333, -0.6666666666666666, 0, -0.3333333333333333, 0.6666666666666666, -0.6666666666666666, 0, 0.6666666666666666, 0.6666666666666666, 0.3333333333333333, 0, 0, 0, 0, 1]))
-  t.true(compareVectors([5, 5, -5], vec3.transform(vec3.create(), ret, [5, 5, 5])))
+  t.true(compareVectors([5, 5, -5], vec3.transform(vec3.create(), [5, 5, 5], ret)))
 
   ret = fromVectorRotation(out, [5, 5, 5], [-5, -5, -5])
   t.is(ret, out)
   t.true(compareVectors(out, [0, -1, 0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1]))
-  t.true(compareVectors([-5, -5, -5], vec3.transform(vec3.create(), ret, [5, 5, 5])))
+  t.true(compareVectors([-5, -5, -5], vec3.transform(vec3.create(), [5, 5, 5], ret)))
 })

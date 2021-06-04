@@ -1,18 +1,10 @@
 const test = require('ava')
 
+const countOf = require('../../test/helpers/countOf')
+
 const deserializer = require('../index.js')
 
 // deserializer
-
-const countOf = (search, string) => {
-  let count = 0
-  let index = string.indexOf(search)
-  while (index !== -1) {
-    count++
-    index = string.indexOf(search, index + 1)
-  }
-  return count
-}
 
 test('deserialize : translate svg produced by inkscape to script', (t) => {
   const sourceSvg = `
@@ -61,11 +53,14 @@ test('deserialize : translate svg produced by inkscape to script', (t) => {
 </svg>
 `
 
-  let obs = deserializer.deserialize({ filename: 'inkscape', output: 'script', addMetaData: false }, sourceSvg)
+  let obs = deserializer.deserialize({ filename: 'inkscape', output: 'script', target: 'path', addMetaData: false }, sourceSvg)
   t.is(typeof obs, 'string')
   t.is(countOf('path2.fromPoints', obs), 2)
   t.is(countOf('path2.close', obs), 2)
-  t.is(countOf('color', obs), 1) // no colors, but color is part of require
+  t.is(countOf('color', obs), 5)
 
-  obs = deserializer.deserialize({ output: 'script', target: 'path', addMetaData: false }, sourceSvg)
+  obs = deserializer.deserialize({ filename: 'inkscape', output: 'script', target: 'geom2', addMetaData: false }, sourceSvg)
+  t.is(countOf('path2.fromPoints', obs), 2)
+  t.is(countOf('path2.close', obs), 2)
+  t.is(countOf('color', obs), 5)
 })

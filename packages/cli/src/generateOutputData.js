@@ -47,7 +47,8 @@ const generateOutputData = (source, params, options) => {
 
     // convert any inputs
     const prevsource = source
-    source = conversionTable[inputFormat]({ source, params, options })
+    const deserializerOptions = Object.assign({}, params, options)
+    source = conversionTable[inputFormat]({ source, options: deserializerOptions })
     const useFakeFs = (source !== prevsource) // conversion, so use a fake file system when rebuilding
 
     if (outputFormat === 'jscad' || outputFormat === 'js') {
@@ -64,7 +65,8 @@ const generateOutputData = (source, params, options) => {
     }
   })
     .then(solids => {
-      return solidsAsBlob(solids, { format: outputFormat })
+      const serializerOptions = Object.assign({ format: outputFormat }, params)
+      return solidsAsBlob(solids, serializerOptions)
     })
 }
 

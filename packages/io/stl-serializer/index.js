@@ -60,7 +60,7 @@ const serialize = (options, ...objects) => {
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to STL')
 
   // covert to triangles
-  objects3d = toArray(modifiers.generalize({snap: true, triangulate: true}, objects3d))
+  objects3d = toArray(modifiers.generalize({ snap: true, triangulate: true }, objects3d))
 
   return options.binary ? serializeBinary(objects3d, options) : serializeText(objects3d, options)
 }
