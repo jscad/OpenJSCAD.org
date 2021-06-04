@@ -59,12 +59,14 @@ const deserialize = (options, input) => {
 const translate = (options, objects) => {
   const { addMetaData, filename, version } = options
 
-  let script = addMetaData ? `//
+  let script = addMetaData
+    ? `//
 // Produced by JSCAD IO Library : JSON Deserializer (${version})
 // date: ${new Date()}
 // source: ${filename}
 //
-` : ''
+`
+    : ''
 
   script +=
 `

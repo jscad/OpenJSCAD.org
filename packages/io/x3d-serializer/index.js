@@ -41,7 +41,7 @@ const mimeType = 'model/x3d+xml'
 /**
  * Serialize the give objects to X3D elements (XML).
  * @param {Object} options - options for serialization, REQUIRED
- * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer 
+ * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
  * @param {Object|Array} objects - objects to serialize as X3D
  * @returns {Array} serialized contents, X3D format (XML)
@@ -68,7 +68,7 @@ const serialize = (options, ...objects) => {
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to X3D')
 
   // covert to triangles
-  objects3d = toArray(modifiers.generalize({snap: true, triangulate: true}, objects3d))
+  objects3d = toArray(modifiers.generalize({ snap: true, triangulate: true }, objects3d))
 
   options.statusCallback && options.statusCallback({ progress: 0 })
 
@@ -177,7 +177,7 @@ const polygons2coordinates = (polygons, options) => {
   const colorList = []
 
   const vertexTagToCoordIndexMap = new Map()
-  polygons.map((polygon) => {
+  polygons.forEach((polygon) => {
     const polygonVertexIndices = []
     const numvertices = polygon.vertices.length
     for (let i = 0; i < numvertices; i++) {

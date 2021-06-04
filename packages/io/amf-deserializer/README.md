@@ -30,7 +30,7 @@ However, conversion of AMF objects and materials are possible:
 | AMF Entity      | JSCAD Geometry | Notes |
 | --------------- | ------------ | ------ |
 | mesh            | to geom3     | conversion of vertices and volumes |
-| color           | color of polygons | currently only colors per triangle are converted |
+| color           | color | color found at object, volume, and triangle are converted |
 
 Also, if the 'USEMTL' (material) matches the name of a CSS3 color then the color is applied to the geometry.
 

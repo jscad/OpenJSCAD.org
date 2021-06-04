@@ -1,20 +1,13 @@
 const fs = require('fs')
 const path = require('path')
+
 const test = require('ava')
+
+const countOf = require('../../test/helpers/countOf')
 
 const deserializer = require('../index.js')
 
 const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
-
-const countOf = (search, string) => {
-  let count = 0
-  let index = string.indexOf(search)
-  while (index !== -1) {
-    count++
-    index = string.indexOf(search, index + 1)
-  }
-  return count
-}
 
 test('deserialize simple amf file to jscad script', (t) => {
   const inputPath = path.resolve(samplesPath, 'amf/Amf_Cube.amf')

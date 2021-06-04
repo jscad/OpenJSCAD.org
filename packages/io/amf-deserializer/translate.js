@@ -14,12 +14,14 @@ const translate = (options, src) => {
   const { amfObj, amfMaterials, amfTextures, amfConstels } = parse(src, pxPmm)
 
   // convert the internal objects to JSCAD code
-  let code = addMetaData ? `//
+  let code = addMetaData
+    ? `//
 // Produced by JSCAD IO Library : AMF Deserializer (${version})
 // date: ${new Date()}
 // source: ${filename}
 //
-` : ''
+`
+    : ''
 
   if (!amfObj) {
     throw new Error('AMF parsing failed, no valid AMF data retrieved')

@@ -19,7 +19,9 @@ const snapPolygons = (epsilon, polygons) => {
       const j = (i + 1) % snapvertices.length
       if (! vec3.equals(snapvertices[i], snapvertices[j])) newvertices.push(snapvertices[i])
     }
-    return poly3.create(newvertices)
+    const newpolygon = poly3.create(newvertices)
+    if (polygon.color) newpolygon.color = polygon.color
+    return newpolygon
   })
   // snap can produce polygons with zero (0) area, remove those
   const epsilonArea = (epsilon * epsilon * Math.sqrt(3) / 4)
