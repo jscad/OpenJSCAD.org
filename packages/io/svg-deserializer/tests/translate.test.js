@@ -1,18 +1,10 @@
 const test = require('ava')
 
+const countOf = require('../../test/helpers/countOf')
+
 const deserializer = require('../index.js')
 
 // deserializer
-
-const countOf = (search, string) => {
-  let count = 0
-  let index = string.indexOf(search)
-  while (index !== -1) {
-    count++
-    index = string.indexOf(search, index + 1)
-  }
-  return count
-}
 
 // ################################
 
@@ -172,7 +164,7 @@ test('deserialize : translate svg (path: simple) to script', (t) => {
   t.is(countOf('path2.fromPoints', obs), 1)
   t.is(countOf('path2.appendPoints', obs), 2)
   t.is(countOf('path2.close', obs), 1)
-  t.is(countOf('colors.colorize', obs), 0) // no fill
+  t.is(countOf('colors.colorize', obs), 1)
   t.is(countOf('geom2.fromPoints', obs), 1)
 
   // test getting stroke width from group
@@ -362,7 +354,7 @@ test('deserialize : translate shape with a hole to script', (t) => {
   t.is(countOf('path2.appendArc', obs), 8)
   t.is(countOf('path2.close', obs), 2)
   t.is(countOf('geom2.fromPoints', obs), 2)
-  t.is(countOf('colors.colorize', obs), 0) // no fill
+  t.is(countOf('colors.colorize', obs), 1) // stroke
 })
 
 test('deserialize : translate shape with a nested hole to script', (t) => {

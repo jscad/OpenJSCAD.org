@@ -10,13 +10,20 @@ const triangulatePolygon = (epsilon, polygon, triangles) => {
       polygon.vertices.forEach((vertice) => vec3.add(midpoint, midpoint, vertice))
       vec3.snap(midpoint, vec3.divide(midpoint, midpoint, [nv, nv, nv]), epsilon)
       for (let i = 0; i < nv; i++) {
-        triangles.push(poly3.fromPoints([midpoint, polygon.vertices[i], polygon.vertices[(i + 1) % nv]]))
+        const poly = poly3.fromPoints([midpoint, polygon.vertices[i], polygon.vertices[(i + 1) % nv]])
+        if (polygon.color) poly.color = polygon.color
+        triangles.push(poly)
       }
       return
     }
     // exactly 4 vertices, use simple triangulation
-    triangles.push(poly3.fromPoints([polygon.vertices[0], polygon.vertices[1], polygon.vertices[2]]))
-    triangles.push(poly3.fromPoints([polygon.vertices[0], polygon.vertices[2], polygon.vertices[3]]))
+    const poly0 = poly3.fromPoints([polygon.vertices[0], polygon.vertices[1], polygon.vertices[2]])
+    const poly1 = poly3.fromPoints([polygon.vertices[0], polygon.vertices[2], polygon.vertices[3]])
+    if (polygon.color) {
+      poly0.color = polygon.color
+      poly1.color = polygon.color
+    }
+    triangles.push(poly0, poly1)
     return
   }
   // exactly 3 vertices, so return the original
