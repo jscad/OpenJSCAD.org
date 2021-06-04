@@ -58,6 +58,8 @@ const viewer = (state, i18n) => {
     render = prepareRender(viewerOptions)
     const gestures = pointerGestures(el)
 
+    window.addEventListener('resize', (evt) => { updateView = true })
+
     // rotate & pan
     gestures.drags
       .forEach((data) => {
