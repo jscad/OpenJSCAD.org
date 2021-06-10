@@ -32,23 +32,19 @@ const generateOutputData = (source, params, options) => {
   registerAllExtensions(fs, require)
 
   return new Promise((resolve, reject) => {
-    // FIXME this table should come from core
-    const conversionTable = {
-      amf: data => deserializers.amf(data.options, data.source),
-      obj: data => deserializers.obj(data.options, data.source),
-      stl: data => deserializers.stl(data.options, data.source),
-      svg: data => deserializers.svg(data.options, data.source),
-      dxf: data => deserializers.dxf(data.options, data.source),
-      json: data => deserializers.json(data.options, data.source),
-      jscad: data => data.source,
-      js: data => data.source,
-      undefined: data => reject(new Error(`unsuported input format ${inputFormat}`))
+    let deserializer = deserializers[inputFormat]
+    if (!deserializer) {
+      if (inputFormat === 'jscad' || inputFormat === 'js') {
+        deserializer = (options, source) => source
+      } else {
+        reject(new Error(`unsuported input format ${inputFormat}`))
+      }
     }
 
     // convert any inputs
     const prevsource = source
     const deserializerOptions = Object.assign({}, params, options)
-    source = conversionTable[inputFormat]({ source, options: deserializerOptions })
+    source = deserializer(deserializerOptions, source)
     const useFakeFs = (source !== prevsource) // conversion, so use a fake file system when rebuilding
 
     if (outputFormat === 'jscad' || outputFormat === 'js') {
