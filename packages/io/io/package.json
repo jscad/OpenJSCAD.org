@@ -12,7 +12,7 @@
     },
     {
       "name": "z3dev",
-      "url": "http://www.z3d.jp"
+      "url": "https://github.com/z3dev"
     },
     {
       "name": "Mark 'kaosat-dev' Moissette",
@@ -43,6 +43,7 @@
     "@jscad/stl-serializer": "2.0.4",
     "@jscad/svg-deserializer": "2.2.2",
     "@jscad/svg-serializer": "2.2.1",
+    "@jscad/x3d-deserializer": "2.0.0",
     "@jscad/x3d-serializer": "2.2.2"
   }
 }

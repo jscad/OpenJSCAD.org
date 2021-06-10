@@ -26,24 +26,25 @@ This package is a metapackage and includes all the input/output format handling 
 ie: file data => JSCAD code or JSCAD geometry
 
 Following formats are supported as inputs
- - [AMF](../amf-deserializer)
- - [DXF](../dxf-deserializer)
- - [JSON](../json-deserializer)
- - [OBJ](../obj-deserializer)
- - [STL (binary, ASCII)](../stl-deserializer)
- - [SVG](../svg-deserializer)
+- [AMF](../amf-deserializer)
+- [DXF](../dxf-deserializer)
+- [JSON](../json-deserializer)
+- [OBJ](../obj-deserializer)
+- [STL (binary, ASCII)](../stl-deserializer)
+- [SVG](../svg-deserializer)
+- [X3D](../x3d-deserializer)
 
 ### Outputs/ Serializers
 
 ie: geometry => blob
 
 Following formats are supported as outputs
-  - [AMF](../amf-serializer)
-  - [DXF](../dxf-serializer)
-  - [JSON](../json-serializer)
-  - [STL (binary, ASCII)](../stl-serializer)
-  - [SVG](../svg-serializer)
-  - [X3D](../x3d-serializer)
+- [AMF](../amf-serializer)
+- [DXF](../dxf-serializer)
+- [JSON](../json-serializer)
+- [STL (binary, ASCII)](../stl-serializer)
+- [SVG](../svg-serializer)
+- [X3D](../x3d-serializer)
 
 ## Table of Contents
 
@@ -60,7 +61,7 @@ npm install @jscad/io
 
 ## Usage
 
-- as Node module :
+- As a Node module :
 
 ```
 const io = require('@jscad/io')
