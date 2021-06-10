@@ -477,7 +477,11 @@ const actions = ({ sources }) => {
   const setDesignSolids$ = most.mergeArray([
     sources.solidWorker
       .filter((event) => !('error' in event) && event.data instanceof Object && event.data.type === 'solids')
-      .multicast(),
+      .map((event) => {
+          const { lookupCounts, lookup, solids } = event.data
+          return { solids, lookup, lookupCounts }
+      })
+    .multicast(),
     sources.fs
       .filter((res) => res.type === 'read' && res.id === 'loadCachedGeometry' && res.data)
       .map((raw) => {
