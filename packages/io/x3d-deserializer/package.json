@@ -1,0 +1,37 @@
+{
+  "name": "@jscad/x3d-deserializer",
+  "version": "2.0.0",
+  "description": "X3D Deserializer for JSCAD",
+  "repository": "https://github.com/jscad/OpenJSCAD.org/",
+  "main": "src/index.js",
+  "scripts": {
+    "coverage": "nyc --all --reporter=html --reporter=text npm test",
+    "test": "ava --verbose --timeout 2m 'tests/**/*.test.js'"
+  },
+  "contributors": [
+    {
+      "name": "z3dev",
+      "url": "https://github.com/z3dev"
+    }
+  ],
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "import",
+    "deserializer",
+    "x3d"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@jscad/array-utils": "2.1.0",
+    "@jscad/modeling": "2.3.0",
+    "saxes": "5.0.1"
+  },
+  "devDependencies": {
+    "ava": "3.15.0",
+    "nyc": "15.1.0"
+  }
+}
