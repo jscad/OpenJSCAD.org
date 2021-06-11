@@ -8,6 +8,7 @@ module.exports = {
   clone: require('./clone'),
   copy: require('./copy'),
   create: require('./create'),
+  invert: require('./invert'),
   equals: require('./equals'),
   fromRotation: require('./fromRotation'),
   fromScaling: require('./fromScaling'),

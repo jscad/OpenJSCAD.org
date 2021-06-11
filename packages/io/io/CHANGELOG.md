@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io@2.0.4...@jscad/io@2.0.5) (2021-06-11)
+
+
+### Bug Fixes
+
+* **io:** corrected assembly of serialization options in generateOutputData ([c57d8da](https://github.com/jscad/OpenJSCAD.org/commit/c57d8daa23db27992bc0c09137d1df51c2f039e8))
+
+
+
+
+
 ## [2.0.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io@2.0.3...@jscad/io@2.0.4) (2021-06-01)
 
 **Note:** Version bump only for package @jscad/io

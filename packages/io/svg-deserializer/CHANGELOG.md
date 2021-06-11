@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.2.2...@jscad/svg-deserializer@2.2.3) (2021-06-11)
+
+
+### Bug Fixes
+
+* **svg-deserializer:** corrected conversion of stroke/fill to geometry color ([73f4d50](https://github.com/jscad/OpenJSCAD.org/commit/73f4d50e2622a9ba86fd5abc747778795391382b))
+
+
+
+
+
 ## [2.2.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.2.1...@jscad/svg-deserializer@2.2.2) (2021-06-01)
 
 **Note:** Version bump only for package @jscad/svg-deserializer
