@@ -1,8 +1,8 @@
 /**
  * Create a copy of the given vector.
  *
- * @param {vec3} out - the receiving vector
- * @param {vec3} vector - the vector to copy
+ * @param {vec3} out - receiving vector
+ * @param {vec3} vector - vector to copy
  * @returns {vec3} out
  * @alias module:modeling/maths/vec3.copy
  */

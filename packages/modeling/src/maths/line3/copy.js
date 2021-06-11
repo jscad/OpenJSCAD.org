@@ -1,10 +1,10 @@
 const vec3 = require('../vec3')
 
 /**
- * Create a copy of the given 3D line.
+ * Copy the given line into the receiving line.
  *
- * @param {line3} out - the receiving line
- * @param {line3} line - the line to copy
+ * @param {line3} out - receiving line
+ * @param {line3} line - line to copy
  * @returns {line3} out
  * @alias module:modeling/maths/line3.copy
  */

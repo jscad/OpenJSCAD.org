@@ -6,11 +6,11 @@ const { EPS } = require('../constants')
 const fromPointAndDirection = require('./fromPointAndDirection')
 
 /**
- * Create a line in 3D space from the intersection of the given planes.
+ * Create a line the intersection of the given planes.
  *
- * @param {line3} out - the receiving line
- * @param {plane} plane1 - the first plane of reference
- * @param {plane} plane2 - the second plane of reference
+ * @param {line3} out - receiving line
+ * @param {plane} plane1 - first plane of reference
+ * @param {plane} plane2 - second plane of reference
  * @returns {line3} out
  * @alias module:modeling/maths/line3.fromPlanes
  */

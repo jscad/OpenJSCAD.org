@@ -6,12 +6,12 @@ const { EPSILON } = require('./constants')
  * Creates a matrix from a given angle around a given axis
  * This is equivalent to (but much faster than):
  *
- *     mat4.identity(dest);
- *     mat4.rotate(dest, dest, rad, axis);
+ *     mat4.identity(dest)
+ *     mat4.rotate(dest, dest, rad, axis)
  *
- * @param {mat4} out - the receiving matrix
- * @param {Number} rad - the angle to rotate the matrix by
- * @param {vec3} axis - the axis of which to rotate around
+ * @param {mat4} out - receiving matrix
+ * @param {Number} rad - angle to rotate the matrix by
+ * @param {vec3} axis - axis of which to rotate around
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.fromRotation
  * @example

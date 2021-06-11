@@ -1,8 +1,8 @@
 /**
  * Compare the given lines for equality.
  *
- * @param {line2} a - the first line to compare
- * @param {line2} b - the second line to compare
+ * @param {line2} a - first line to compare
+ * @param {line2} b - second line to compare
  * @return {Boolean} true if lines are equal
  * @alias module:modeling/maths/line2.equals
  */

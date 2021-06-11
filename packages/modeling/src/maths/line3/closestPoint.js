@@ -3,8 +3,8 @@ const vec3 = require('../vec3')
 /**
  * Determine the closest point on the given line to the given point.
  *
- * @param {line3} line - the line of reference
- * @param {vec3} point - the point of reference
+ * @param {line3} line - line of reference
+ * @param {vec3} point - point of reference
  * @returns {vec3} a point
  * @alias module:modeling/maths/line3.closestPoint
  */
