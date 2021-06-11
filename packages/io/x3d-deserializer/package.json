@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@jscad/array-utils": "2.1.0",
-    "@jscad/modeling": "2.3.0",
+    "@jscad/modeling": "2.4.0",
     "saxes": "5.0.1"
   },
   "devDependencies": {
