@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/amf-deserializer@2.1.0...@jscad/amf-deserializer@2.1.1) (2021-06-11)
+
+
+### Bug Fixes
+
+* **amf-deserializer:** corrected conversion of color specifications found on object elements ([f1eca2b](https://github.com/jscad/OpenJSCAD.org/commit/f1eca2b1401e5b12289f85c94e144d3c220949da))
+
+
+
+
+
 # [2.1.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/amf-deserializer@2.0.2...@jscad/amf-deserializer@2.1.0) (2021-06-01)
 
 
