@@ -163,8 +163,8 @@ const enterHandler = (ev) => {
 }
 
 const moveHandler = (ev) => {
-  rotateDelta[0] = ev.pageX - lastX
-  rotateDelta[1] = lastY - ev.pageY
+  rotateDelta[0] += ev.pageX - lastX
+  rotateDelta[1] += lastY - ev.pageY
 
   lastX = ev.pageX
   lastY = ev.pageY
