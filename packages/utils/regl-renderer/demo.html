@@ -56,8 +56,6 @@ const { prepareRender, drawCommands, cameras, controls, entitiesFromSolids } = j
 const perspectiveCamera = cameras.perspective
 const orbitControls = controls.orbit
 
-const renderRate = 10 // number of renders per second
-
 const containerElement = document.getElementById("jscad")
 
 const width = containerElement.clientWidth
@@ -108,8 +106,9 @@ const entities = entitiesFromSolids({}, demo({ scale: 1 }))
 const renderOptions = {
   camera: state.camera,
   drawCommands: {
-    drawGrid: drawCommands.drawGrid,
     drawAxis: drawCommands.drawAxis,
+    drawGrid: drawCommands.drawGrid,
+    drawLines: drawCommands.drawLines,
     drawMesh: drawCommands.drawMesh
   },
   // define the visual content
@@ -121,14 +120,25 @@ const renderOptions = {
 }
 
 // the heart of rendering, as themes, controls, etc change
-prevTimestamp = 0
-const updateAndRender = (timestamp) => {
-  const elaspe = timestamp - prevTimestamp
-  if (elaspe > (1000 / renderRate)) {
-    prevTimestamp = timestamp
+let updateView = true
 
+const doRotatePanZoom = () => {
+  if (rotateDelta[0] || rotateDelta[1]) {
+    const updated = orbitControls.rotate({ controls: state.controls, camera: state.camera, speed: rotateSpeed }, rotateDelta)
+    state.controls = { ...state.controls, ...updated.controls }
+    updateView = true
+    rotateDelta = [0, 0]
+  }
+}
+
+const updateAndRender = (timestamp) => {
+  doRotatePanZoom()
+
+  if (updateView) {
     const updates = orbitControls.update({ controls: state.controls, camera: state.camera })
     state.controls = { ...state.controls, ...updates.controls }
+    updateView = state.controls.changed // for elasticity in rotate / zoom
+
     state.camera.position = updates.camera.position
     perspectiveCamera.update(state.camera)
 
@@ -137,6 +147,34 @@ const updateAndRender = (timestamp) => {
   window.requestAnimationFrame(updateAndRender)
 }
 window.requestAnimationFrame(updateAndRender)
+
+// convert HTML events (mouse movement) to viewer changes
+let lastX = 0
+let lastY = 0
+
+const rotateSpeed = 0.002
+let rotateDelta = [0, 0]
+
+const enterHandler = (ev) => {
+  lastX = ev.pageX
+  lastY = ev.pageY
+
+  ev.preventDefault()
+}
+
+const moveHandler = (ev) => {
+  rotateDelta[0] = ev.pageX - lastX
+  rotateDelta[1] = lastY - ev.pageY
+
+  lastX = ev.pageX
+  lastY = ev.pageY
+
+  ev.preventDefault()
+}
+
+containerElement.onpointerenter = enterHandler
+containerElement.onpointermove = moveHandler
+
   </script>
 </body>
 </html>
