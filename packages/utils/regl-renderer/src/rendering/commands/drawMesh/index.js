@@ -3,15 +3,13 @@ const mat4 = require('gl-mat4')
 const { meshColor } = require('../../renderDefaults')
 
 const drawMesh = (regl, params = { extras: {} }) => {
-  const { buffer } = regl
   const defaults = {
     useVertexColors: true,
     dynamicCulling: false,
     geometry: undefined,
-    primitive: 'triangles',
     color: meshColor
   }
-  let { geometry, dynamicCulling, useVertexColors, primitive, color } = Object.assign({}, defaults, params)
+  let { geometry, dynamicCulling, useVertexColors, color } = Object.assign({}, defaults, params)
 
   // let ambientOcclusion = vao(geometry.indices, geometry.positions, 64, 64)
   const ambientOcclusion = regl.buffer([])
@@ -30,14 +28,10 @@ const drawMesh = (regl, params = { extras: {} }) => {
   const vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
   let frag = hasVertexColors ? require('./vColorShaders').frag : require('./meshShaders').frag
 
-  if (geometry.type === '2d') {
-    primitive = 'lines'
-    if ('color' in geometry) color = geometry.color
-    frag = require('./colorOnlyShaders').frag
-  }
-  // console.log('type', geometry.type, 'primitive', primitive, 'color', color, hasVertexColors)
+  // console.log('type', geometry.type, 'color', color, hasVertexColors)
 
   let commandParams = {
+    primitive: 'triangles',
     vert,
     frag,
 
@@ -57,7 +51,7 @@ const drawMesh = (regl, params = { extras: {} }) => {
       }
     },
     attributes: {
-      position: buffer({ usage: 'static', type: 'float', data: geometry.positions }),
+      position: regl.buffer({ usage: 'static', type: 'float', data: geometry.positions }),
       ao: ambientOcclusion
     },
     cull: {
@@ -71,8 +65,7 @@ const drawMesh = (regl, params = { extras: {} }) => {
       enable: true,
 
       func: { src: 'src alpha', dst: 'one minus src alpha' }
-    },
-    primitive: (context, props) => props && props.primitive ? props.primitive : primitive
+    }
   }
 
   if (geometry.cells) {
@@ -86,10 +79,10 @@ const drawMesh = (regl, params = { extras: {} }) => {
   }
 
   if (hasNormals) {
-    commandParams.attributes.normal = buffer({ usage: 'static', type: 'float', data: geometry.normals })
+    commandParams.attributes.normal = regl.buffer({ usage: 'static', type: 'float', data: geometry.normals })
   }
   if (hasVertexColors) {
-    commandParams.attributes.color = buffer({ usage: 'static', type: 'float', data: geometry.colors })
+    commandParams.attributes.color = regl.buffer({ usage: 'static', type: 'float', data: geometry.colors })
   }
 
   // Splice in any extra params
