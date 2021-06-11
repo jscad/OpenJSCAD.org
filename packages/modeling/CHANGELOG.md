@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.3.0...@jscad/modeling@2.4.0) (2021-06-11)
+
+
+### Bug Fixes
+
+* **modeling:** corrected snapPolygons to maintain color attributes ([eba8ebc](https://github.com/jscad/OpenJSCAD.org/commit/eba8ebc5b910b7c6d3b8021a26bcc92a73672247))
+* **modeling:** corrected triangulatePolygons to maintain color attributes ([f59958a](https://github.com/jscad/OpenJSCAD.org/commit/f59958a9640c3c81c8f081fab9ec64a592adef44))
+
+
+### Features
+
+* **modeling:** added mat4.invert ([#860](https://github.com/jscad/OpenJSCAD.org/issues/860)) ([3eedab3](https://github.com/jscad/OpenJSCAD.org/commit/3eedab3ba1f8a8f3e909eeeb74dca230af8ac435))
+
+
+
+
+
 # [2.3.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.2.0...@jscad/modeling@2.3.0) (2021-06-01)
 
 
