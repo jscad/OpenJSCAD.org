@@ -11,5 +11,4 @@ test('applyTransforms: returns transformed sides of a geometry', (t) => {
   const geometry = fromPoints(points)
   const updatedSides = applyTransforms(geometry)
   t.deepEqual(updatedSides, expected)
-
 })
