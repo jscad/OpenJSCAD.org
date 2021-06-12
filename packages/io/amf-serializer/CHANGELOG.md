@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/amf-serializer@2.0.4...@jscad/amf-serializer@2.0.5) (2021-06-11)
+
+
+### Bug Fixes
+
+* **amf-serializer:** corrected conversion of colors found on geometries and polygons ([ac36c96](https://github.com/jscad/OpenJSCAD.org/commit/ac36c96a359c60d87e5272055e47c7136983e966))
+
+
+
+
+
 ## [2.0.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/amf-serializer@2.0.3...@jscad/amf-serializer@2.0.4) (2021-06-01)
 
 **Note:** Version bump only for package @jscad/amf-serializer
