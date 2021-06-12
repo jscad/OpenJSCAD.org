@@ -13,6 +13,7 @@ module.exports = {
   create: require('./create'),
   eachPoint: require('./eachPoint'),
   equals: require('./equals'),
+  isNoOp: require('./isNoOp'),
   fromPoints: require('./fromPoints'),
   fromCompactBinary: require('./fromCompactBinary'),
   isA: require('./isA'),
