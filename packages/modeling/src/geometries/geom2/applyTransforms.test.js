@@ -4,18 +4,12 @@ const { fromPoints } = require('./index')
 
 const applyTransforms = require('./applyTransforms')
 
-test('applyTransforms: Updates a populated geom2 with transformed sides', (t) => {
+test('applyTransforms: returns transformed sides of a geometry', (t) => {
   const points = [[0, 0], [1, 0], [0, 1]]
-  const expected = {
-    sides: [[[0, 1], [0, 0]], [[0, 0], [1, 0]], [[1, 0], [0, 1]]],
-    transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
-  }
-  const geometry = fromPoints(points)
-  const updated = applyTransforms(geometry)
-  t.is(geometry, updated)
-  t.deepEqual(updated, expected)
+  const expected = [[[0, 1], [0, 0]], [[0, 0], [1, 0]], [[1, 0], [0, 1]]]
 
-  const updated2 = applyTransforms(updated)
-  t.is(updated, updated2)
-  t.deepEqual(updated, expected)
+  const geometry = fromPoints(points)
+  const updatedSides = applyTransforms(geometry)
+  t.deepEqual(updatedSides, expected)
+
 })
