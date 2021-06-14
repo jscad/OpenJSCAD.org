@@ -1,8 +1,8 @@
 /**
  * Create a copy of the given vector.
  *
- * @param {vec4} out - the receiving vector
- * @param {vec4} vector - the source vector
+ * @param {vec4} out - receiving vector
+ * @param {vec4} vector - source vector
  * @returns {vec4} out
  * @alias module:modeling/maths/vec4.copy
  */

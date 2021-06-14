@@ -1,7 +1,7 @@
 /**
  * Create a new vector in the direction of the given angle.
  *
- * @param {vec2} out - the receiving vector
+ * @param {vec2} out - receiving vector
  * @param {Number} radians - angle in radians
  * @returns {vec2} out
  * @alias module:modeling/maths/vec2.fromAngleRadians

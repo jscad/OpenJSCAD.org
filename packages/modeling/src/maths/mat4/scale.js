@@ -1,9 +1,9 @@
 /**
  * Scales the matrix by the given dimensions.
  *
- * @param {mat4} out - the receiving matrix
- * @param {mat4} matrix - the matrix to scale
- * @param {vec3} dimensions - the dimensions to scale the matrix by
+ * @param {mat4} out - receiving matrix
+ * @param {mat4} matrix - matrix to scale
+ * @param {vec3} dimensions - dimensions to scale the matrix by
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.scale
  */

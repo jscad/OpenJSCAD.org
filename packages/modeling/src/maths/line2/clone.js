@@ -1,7 +1,7 @@
 const create = require('./create')
 
 /**
- * Create a clone of the given 2D line.
+ * Create a clone of the given line.
  *
  * @param {line2} line - line to clone
  * @returns {line2} a new unbounded line

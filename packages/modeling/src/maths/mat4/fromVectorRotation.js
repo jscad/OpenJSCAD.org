@@ -4,11 +4,12 @@ const fromRotation = require('./fromRotation')
 
 /**
  * Create a matrix that rotates the given source to the given target vector.
+ *
  * Each vector must be a directional vector with a length greater then zero.
  * @see https://gist.github.com/kevinmoran/b45980723e53edeb8a5a43c49f134724
  * @param {mat4} out - receiving matrix
- * @param {vec3} source - the source vector
- * @param {vec3} target - the target vector
+ * @param {vec3} source - source vector
+ * @param {vec3} target - target vector
  * @returns {mat4} a new matrix
  * @alias module:modeling/maths/mat4.fromVectorRotation
  * @example
