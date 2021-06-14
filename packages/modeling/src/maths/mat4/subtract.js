@@ -1,9 +1,9 @@
 /**
  * Subtracts matrix b from matrix a. (A-B)
  *
- * @param {mat4} out - the receiving matrix
- * @param {mat4} a - the first operand
- * @param {mat4} b - the second operand
+ * @param {mat4} out - receiving matrix
+ * @param {mat4} a - first operand
+ * @param {mat4} b - second operand
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.subtract
  */

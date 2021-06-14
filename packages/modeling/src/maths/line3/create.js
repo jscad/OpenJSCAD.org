@@ -9,7 +9,7 @@ const vec3 = require('../vec3')
  */
 
 /**
- * Create an unbounded 3D line, positioned at 0,0,0 and lying on the X axis.
+ * Create a line, positioned at 0,0,0 and lying on the X axis.
  *
  * @returns {line3} a new unbounded line
  * @alias module:modeling/maths/line3.create

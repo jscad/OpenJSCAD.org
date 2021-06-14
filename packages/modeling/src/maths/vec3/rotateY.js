@@ -1,9 +1,10 @@
 /**
  * Rotate the given vector around the given origin, Y axis only.
- * @param {vec3} out - the receiving vector
- * @param {vec3} vector - the vector to rotate
- * @param {vec3} origin - the origin of the rotation
- * @param {Number} radians - the angle of rotation
+ *
+ * @param {vec3} out - receiving vector
+ * @param {vec3} vector - vector to rotate
+ * @param {vec3} origin - origin of the rotation
+ * @param {Number} radians - angle of rotation
  * @returns {vec3} out
  * @alias module:modeling/maths/vec3.rotateY
  */

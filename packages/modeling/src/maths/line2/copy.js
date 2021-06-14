@@ -1,8 +1,8 @@
 /**
- * Create a copy of the given 2D line.
+ * Copy the given line to the receiving line.
  *
- * @param {line2} out - the receiving line
- * @param {line2} line - the line to copy
+ * @param {line2} out - receiving line
+ * @param {line2} line - line to copy
  * @returns {line2} out
  * @alias module:modeling/maths/line2.copy
  */
