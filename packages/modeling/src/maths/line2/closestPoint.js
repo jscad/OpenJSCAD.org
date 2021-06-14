@@ -6,8 +6,8 @@ const origin = require('./origin')
 /**
  * Determine the closest point on the given line to the given point.
  *
- * @param {line2} line the 2D line for calculations
- * @param {vec2} point the point of reference
+ * @param {line2} line - line of reference
+ * @param {vec2} point - point of reference
  * @returns {vec2} closest point
  * @alias module:modeling/maths/line2.closestPoint
  */

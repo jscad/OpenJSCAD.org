@@ -5,10 +5,10 @@ const origin = require('./origin')
 const direction = require('./direction')
 
 /**
- * Transforms the given 2D line using the given matrix.
+ * Transforms the given line using the given matrix.
  *
  * @param {line2} out - receiving line
- * @param {line2} line - the 2D line to transform
+ * @param {line2} line - line to transform
  * @param {mat4} matrix - matrix to transform with
  * @returns {line2} out
  * @alias module:modeling/maths/line2.transform

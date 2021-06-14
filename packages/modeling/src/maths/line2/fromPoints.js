@@ -3,9 +3,9 @@ const vec2 = require('../vec2')
 /**
  * Create a new line that passes through the given points.
  *
- * @param {line2} out - the receiving line
- * @param {vec2} point1 start point of the 2D line
- * @param {vec2} point2 end point of the 2D line
+ * @param {line2} out - receiving line
+ * @param {vec2} point1 - start point of the line
+ * @param {vec2} point2 - end point of the line
  * @returns {line2} a new unbounded line
  * @alias module:modeling/maths/line2.fromPoints
  */
