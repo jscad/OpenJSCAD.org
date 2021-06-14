@@ -10,7 +10,7 @@ const vec2 = require('../../maths/vec2')
  * geometry = applyTransforms(geometry)
  */
 const applyTransforms = (geometry) => {
-  if (mat4.isNoOp(geometry.transforms)) return geometry
+  if (mat4.isIdentity(geometry.transforms)) return geometry
 
   geometry.points = geometry.points.map((point) => vec2.transform(vec2.create(), point, geometry.transforms))
   mat4.identity(geometry.transforms)

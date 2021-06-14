@@ -6,7 +6,6 @@
 module.exports = {
   add: require('./add'),
   clone: require('./clone'),
-  isNoOp: require('./isNoOp'),
   copy: require('./copy'),
   create: require('./create'),
   invert: require('./invert'),
