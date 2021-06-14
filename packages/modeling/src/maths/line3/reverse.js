@@ -3,10 +3,10 @@ const vec3 = require('../vec3')
 const fromPointAndDirection = require('./fromPointAndDirection')
 
 /**
- * Create a new line in the opposite direction as the given.
+ * Create a line in the opposite direction as the given.
  *
  * @param {line3} out - receiving line
- * @param {line3} line - the line to reverse
+ * @param {line3} line - line to reverse
  * @returns {line3} out
  * @alias module:modeling/maths/line3.reverse
  */

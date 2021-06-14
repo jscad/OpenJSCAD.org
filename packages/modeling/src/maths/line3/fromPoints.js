@@ -3,9 +3,9 @@ const vec3 = require('../vec3')
 const fromPointAndDirection = require('./fromPointAndDirection')
 
 /**
- * Creates a new 3D line that passes through the given points.
+ * Create a line that passes through the given points.
  *
- * @param {line3} out - the receiving line
+ * @param {line3} out - receiving line
  * @param {vec3} point1 - start point of the line segment
  * @param {vec3} point2 - end point of the line segment
  * @returns {line3} out

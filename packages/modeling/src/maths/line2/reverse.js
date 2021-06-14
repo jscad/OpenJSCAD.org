@@ -6,8 +6,8 @@ const fromValues = require('./fromValues')
 /**
  * Create a new line in the opposite direction as the given.
  *
- * @param {line2} out - the receiving line
- * @param {line2} line - the line to reverse
+ * @param {line2} out - receiving line
+ * @param {line2} line - line to reverse
  * @returns {line2} out
  * @alias module:modeling/maths/line2.reverse
  */

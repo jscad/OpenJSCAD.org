@@ -5,7 +5,7 @@
  */
 
 /**
- * Creates a new identity matrix
+ * Creates a new identity matrix.
  *
  * @returns {mat4} a new matrix
  * @alias module:modeling/maths/mat4.create

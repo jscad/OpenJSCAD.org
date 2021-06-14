@@ -3,7 +3,7 @@ const vec3 = require('../vec3')
 const create = require('./create')
 
 /**
- * Create a clone of the given 3D line.
+ * Create a clone of the given line.
  *
  * @param {line3} line - line to clone
  * @returns {line3} a new unbounded line

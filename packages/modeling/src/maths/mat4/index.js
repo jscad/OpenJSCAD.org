@@ -20,6 +20,7 @@ module.exports = {
   fromYRotation: require('./fromYRotation'),
   fromZRotation: require('./fromZRotation'),
   identity: require('./identity'),
+  isIdentity: require('./isIdentity'),
   isMirroring: require('./isMirroring'),
   mirrorByPlane: require('./mirrorByPlane'),
   multiply: require('./multiply'),

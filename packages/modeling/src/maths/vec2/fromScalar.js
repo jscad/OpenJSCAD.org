@@ -1,7 +1,7 @@
 /**
  * Create a vector from a single scalar value.
  *
- * @param {vec2} out - the receiving vector
+ * @param {vec2} out - receiving vector
  * @param {Number} scalar - the scalar value
  * @returns {Vec2} out
  * @alias module:modeling/maths/vec2.fromScalar

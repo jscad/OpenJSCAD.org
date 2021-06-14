@@ -1,9 +1,9 @@
 /**
  * Subtracts the coordinates of two vectors (A-B).
  *
- * @param {vec2} out - the receiving vector
- * @param {vec2} a - the first operand
- * @param {vec2} b - the second operand
+ * @param {vec2} out - receiving vector
+ * @param {vec2} a - first operand
+ * @param {vec2} b - second operand
  * @returns {vec2} out
  * @alias module:modeling/maths/vec2.subtract
  */

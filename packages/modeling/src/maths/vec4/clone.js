@@ -3,7 +3,7 @@ const create = require('./create')
 /**
  * Create a clone of the given vector.
  *
- * @param {vec4} vector - a source vector
+ * @param {vec4} vector - source vector
  * @returns {vec4} a new vector
  * @alias module:modeling/maths/vec4.clone
  */
