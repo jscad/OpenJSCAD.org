@@ -1,10 +1,10 @@
 /**
  * Rotates the given vector by the given angle.
  *
- * @param {vec2} out - the receiving vector
- * @param {vec2} vector - the vector to rotate
- * @param {vec2} origin - the origin of the rotation
- * @param {Number} radians - the angle of rotation (radians)
+ * @param {vec2} out - receiving vector
+ * @param {vec2} vector - vector to rotate
+ * @param {vec2} origin - origin of the rotation
+ * @param {Number} radians - angle of rotation (radians)
  * @returns {vec2} out
  * @alias module:modeling/maths/vec2.rotate
  */

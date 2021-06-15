@@ -1,8 +1,8 @@
 /**
  * Calculates the distance between two vectors.
  *
- * @param {vec2} a - the first operand
- * @param {vec2} b - the second operand
+ * @param {vec2} a - first operand
+ * @param {vec2} b - second operand
  * @returns {Number} distance
  * @alias module:modeling/maths/vec2.distance
  */

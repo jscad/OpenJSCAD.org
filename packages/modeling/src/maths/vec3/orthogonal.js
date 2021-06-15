@@ -3,8 +3,9 @@ const create = require('./create')
 const cross = require('./cross')
 
 /**
- * Create a vector that is somewhat orthogonal to the given vector.
- * @param {vec3} out - the receiving vector
+ * Create a new vector that is orthogonal to the given vector.
+ *
+ * @param {vec3} out - receiving vector
  * @param {vec3} vector - vector of reference
  * @returns {vec3} out
  * @alias module:modeling/maths/vec3.orthogonal

@@ -1,9 +1,9 @@
 /**
  * Computes the cross product (3D) of two vectors.
  *
- * @param {vec3} out - the receiving vector (3D)
- * @param {vec2} a - the first operand
- * @param {vec2} b - the second operand
+ * @param {vec3} out - receiving vector (3D)
+ * @param {vec2} a - first operand
+ * @param {vec2} b - second operand
  * @returns {vec3} out
  * @alias module:modeling/maths/vec2.cross
  */

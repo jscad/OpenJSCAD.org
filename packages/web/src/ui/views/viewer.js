@@ -201,8 +201,9 @@ const setup = (element) => {
     camera,
     drawCommands: {
       // draw commands bootstrap themselves the first time they are run
-      drawGrid: drawCommands.drawGrid,
       drawAxis: drawCommands.drawAxis,
+      drawGrid: drawCommands.drawGrid,
+      drawLines: drawCommands.drawLines,
       drawMesh: drawCommands.drawMesh
     },
     // data

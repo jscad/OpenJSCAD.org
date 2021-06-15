@@ -1,4 +1,4 @@
-const { prepareRender, drawCommands, cameras, entitiesFromSolids } = require('./src') // replace this with the correct import
+const { prepareRender, drawCommands, cameras, entitiesFromSolids } = require('./src')
 
 // setup demo solids data
 const demoSolids = (parameters) => {
@@ -41,9 +41,10 @@ const options = {
   camera,
   drawCommands: {
     // draw commands bootstrap themselves the first time they are run
-    drawGrid: drawCommands.drawGrid, // require('./src/rendering/drawGrid/index.js'),
-    drawAxis: drawCommands.drawAxis, // require('./src/rendering/drawAxis'),
-    drawMesh: drawCommands.drawMesh // require('./src/rendering/drawMesh/index.js')
+    drawAxis: drawCommands.drawAxis,
+    drawGrid: drawCommands.drawGrid,
+    drawLines: drawCommands.drawLines,
+    drawMesh: drawCommands.drawMesh
   },
   // data
   entities: [

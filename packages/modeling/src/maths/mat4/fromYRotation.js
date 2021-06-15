@@ -2,11 +2,11 @@
  * Creates a matrix from the given angle around the Y axis.
  * This is equivalent to (but much faster than):
  *
- *     mat4.identity(dest);
- *     mat4.rotateY(dest, dest, radians);
+ *     mat4.identity(dest)
+ *     mat4.rotateY(dest, dest, radians)
  *
- * @param {mat4} out - the receiving matrix
- * @param {Number} radians - the angle to rotate the matrix by
+ * @param {mat4} out - receiving matrix
+ * @param {Number} radians - angle to rotate the matrix by
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.fromYRotation
  * @example
