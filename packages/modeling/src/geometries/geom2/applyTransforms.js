@@ -20,7 +20,7 @@ const applyTransforms = (geometry) => {
     const p1 = vec2.transform(vec2.create(), side[1], transforms)
     return [p0, p1]
   })
-  newGeometry.transforms = mat4.identity(mat4.create())
+  newGeometry.transforms = mat4.create()
   return newGeometry
 }
 

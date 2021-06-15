@@ -1,7 +1,5 @@
 const mat4 = require('../../maths/mat4')
 
-const create = require('./create')
-
 /**
  * Transform the given geometry using the given matrix.
  * This is a lazy transform of the polygons, as this function only adjusts the transforms.
@@ -15,10 +13,9 @@ const create = require('./create')
  * let newgeometry = transform(fromXRotation(degToRad(90)), geometry)
  */
 const transform = (matrix, geometry) => {
-  const newgeometry = create(geometry.polygons) // reuse the polygons
-  newgeometry.isRetesselated = geometry.isRetesselated
+  const newgeometry = Object.assign({}, geometry)
 
-  mat4.multiply(newgeometry.transforms, matrix, geometry.transforms)
+  newgeometry.transforms = mat4.multiply(mat4.create(), matrix, geometry.transforms)
   return newgeometry
 }
 
