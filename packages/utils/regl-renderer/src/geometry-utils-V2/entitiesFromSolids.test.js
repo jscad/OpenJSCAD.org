@@ -29,7 +29,7 @@ test('entitiesFromSolids (various solids)', (t) => {
 
   // geom2
   t.deepEqual(entities[0].visuals, {
-    drawCmd: 'drawMesh',
+    drawCmd: 'drawLines',
     show: true,
     transparent: true,
     useVertexColors: true
@@ -37,17 +37,17 @@ test('entitiesFromSolids (various solids)', (t) => {
 
   // path2
   t.deepEqual(entities[1].visuals, {
-    drawCmd: 'drawMesh',
+    drawCmd: 'drawLines',
     show: true,
     transparent: false,
     useVertexColors: true
   })
 
   // geom3
-  t.deepEqual(entities[1].visuals, {
+  t.deepEqual(entities[2].visuals, {
     drawCmd: 'drawMesh',
     show: true,
-    transparent: false,
+    transparent: true,
     useVertexColors: true
   })
 })

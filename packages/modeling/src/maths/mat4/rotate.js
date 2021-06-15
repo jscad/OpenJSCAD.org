@@ -3,10 +3,10 @@ const copy = require('./copy')
 /**
  * Rotates a matrix by the given angle about the given axis.
  *
- * @param {mat4} out - the receiving matrix
- * @param {mat4} matrix - the matrix to rotate
- * @param {Number} radians - the angle to rotate the matrix by
- * @param {vec3} axis - the axis to rotate around
+ * @param {mat4} out - receiving matrix
+ * @param {mat4} matrix - matrix to rotate
+ * @param {Number} radians - angle to rotate the matrix by
+ * @param {vec3} axis - axis to rotate around
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.rotate
  */

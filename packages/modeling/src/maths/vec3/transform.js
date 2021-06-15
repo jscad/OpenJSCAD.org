@@ -1,8 +1,9 @@
 /**
  * Transforms the given vector using the given matrix.
- * @param {vec3} out - the receiving vector
- * @param {vec3} vector - the vector to transform
- * @param {mat4} matrix - the transform matrix
+ *
+ * @param {vec3} out - receiving vector
+ * @param {vec3} vector - vector to transform
+ * @param {mat4} matrix - transform matrix
  * @returns {vec3} out
  * @alias module:modeling/maths/vec3.transform
  */

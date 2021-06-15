@@ -1,8 +1,8 @@
 /**
  * Scales the coordinates of the given vector by a scalar number.
  *
- * @param {vec3} out - the receiving vector
- * @param {vec3} vector - the vector to scale
+ * @param {vec3} out - receiving vector
+ * @param {vec3} vector - vector to scale
  * @param {Number} amount - amount to scale the vector by
  * @returns {vec3} out
  * @alias module:modeling/maths/vec3.scale

@@ -12,7 +12,7 @@ const path2ToGeometries = require('./path2ToGeometries')
 const assembleEntities = (geometries) => {
   const entities = geometries.map((geometry) => {
     const visuals = {
-      drawCmd: 'drawMesh',
+      drawCmd: geometry.type === '2d' ? 'drawLines' : 'drawMesh',
       show: true,
       transparent: geometry.isTransparent,
       useVertexColors: true

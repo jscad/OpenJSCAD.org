@@ -6,9 +6,10 @@ const flip = require('./flip')
 
 /**
  * Transform the given plane using the given matrix
- * @param {plane} out - the receiving plane
- * @param {plane} plane - the plane to transform
- * @param {mat4} matrix - the matrix to transform with
+ *
+ * @param {plane} out - receiving plane
+ * @param {plane} plane - plane to transform
+ * @param {mat4} matrix - matrix to transform with
  * @return {plane} out
  * @alias module:modeling/maths/plane.transform
  */

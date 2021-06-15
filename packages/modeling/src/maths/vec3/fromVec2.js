@@ -1,8 +1,8 @@
 /**
  * Create a new vector by extending a 2D vector with a Z value.
  *
- * @param {vec3} out - the receiving vector
- * @param {Array} vector - the 2D vector of values
+ * @param {vec3} out - receiving vector
+ * @param {Array} vector - 2D vector of values
  * @param {Number} [z=0] - Z value
  * @returns {vec3} out
  * @alias module:modeling/maths/vec3.fromVec2

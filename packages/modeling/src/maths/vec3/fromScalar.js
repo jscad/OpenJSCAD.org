@@ -2,8 +2,8 @@
  * Creates a vector from a single scalar value.
  * All components of the resulting vector have the given value.
  *
- * @param {vec3} out - the receiving vector
- * @param {Float} scalar
+ * @param {vec3} out - receiving vector
+ * @param {Number} scalar
  * @returns {Vec3} out
  * @alias module:modeling/maths/vec3.fromScalar
  */
