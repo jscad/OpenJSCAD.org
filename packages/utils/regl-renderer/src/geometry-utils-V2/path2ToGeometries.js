@@ -44,7 +44,7 @@ const path2ToGeometries = (options, solid) => {
     }
     // assemble the geometry
     const normals = positions.map((x) => [0, 0, -1])
-    const indices = positions.map((x, i) => i) // FIXME: temporary, not really needed, need to change drawMesh
+    const indices = positions.map((x, i) => i) // FIXME: temporary, not really needed, need to change drawLines
     const transforms = solid.transforms ? mat4.clone(solid.transforms) : mat4.create()
 
     // FIXME positions should be Float32Array buffers to eliminate another conversion
