@@ -12,12 +12,15 @@ const vec2 = require('../../maths/vec2')
 const applyTransforms = (geometry) => {
   if (mat4.isIdentity(geometry.transforms)) return geometry
 
+  const newGeometry = { ...geometry }
+  const transforms = geometry.transforms
   // apply transforms to each side
-  return geometry.sides.map((side) => {
-    const p0 = vec2.transform(vec2.create(), side[0], geometry.transforms)
-    const p1 = vec2.transform(vec2.create(), side[1], geometry.transforms)
+  newGeometry.sides = geometry.sides.map((side) => {
+    const p0 = vec2.transform(vec2.create(), side[0], transforms)
+    const p1 = vec2.transform(vec2.create(), side[1], transforms)
     return [p0, p1]
   })
+  return newGeometry
 }
 
 module.exports = applyTransforms

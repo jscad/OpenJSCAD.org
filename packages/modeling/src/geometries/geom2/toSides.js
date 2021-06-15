@@ -10,6 +10,6 @@ const applyTransforms = require('./applyTransforms')
  * @example
  * let sharedsides = toSides(geometry)
  */
-const toSides = (geometry) => applyTransforms(geometry)
+const toSides = (geometry) => applyTransforms(geometry).sides
 
 module.exports = toSides

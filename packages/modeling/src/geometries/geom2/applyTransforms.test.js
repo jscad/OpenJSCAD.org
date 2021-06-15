@@ -9,6 +9,6 @@ test('applyTransforms: returns transformed sides of a geometry', (t) => {
   const expected = [[[0, 1], [0, 0]], [[0, 0], [1, 0]], [[1, 0], [0, 1]]]
 
   const geometry = fromPoints(points)
-  const updatedSides = applyTransforms(geometry)
+  const updatedSides = applyTransforms(geometry).sides
   t.deepEqual(updatedSides, expected)
 })
