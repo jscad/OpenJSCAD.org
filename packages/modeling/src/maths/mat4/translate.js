@@ -1,8 +1,8 @@
 /**
  * Translate the matrix by the given offset vector.
  *
- * @param {mat4} out - the receiving matrix
- * @param {mat4} matrix - the matrix to translate
+ * @param {mat4} out - receiving matrix
+ * @param {mat4} matrix - matrix to translate
  * @param {vec3} offsets - offset vector to translate by
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.translate

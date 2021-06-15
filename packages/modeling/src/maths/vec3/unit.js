@@ -3,8 +3,8 @@ const length = require('./length')
 /**
  * Calculates the unit vector of the given vector.
  *
- * @param {vec3} out - the receiving vector
- * @param {vec3} vector - the vector for calculations
+ * @param {vec3} out - receiving vector
+ * @param {vec3} vector - vector for calculations
  * @returns {vec3} out
  * @alias module:modeling/maths/vec3.unit
  */

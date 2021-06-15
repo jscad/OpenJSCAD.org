@@ -11,7 +11,7 @@ const poly3 = require('../poly3')
  * geometry = applyTransforms(geometry)
  */
 const applyTransforms = (geometry) => {
-  if (mat4.equals(geometry.transforms, mat4.create())) return geometry
+  if (mat4.isIdentity(geometry.transforms)) return geometry
 
   // apply transforms to each polygon
   // const isMirror = mat4.isMirroring(geometry.transforms)

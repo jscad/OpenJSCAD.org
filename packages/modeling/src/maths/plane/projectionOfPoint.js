@@ -2,6 +2,7 @@ const vec3 = require('../vec3')
 
 /**
  * Project the given point on to the given plane.
+ *
  * @param {plane} plane - plane of reference
  * @param {vec3} point - point of reference
  * @return {vec3} projected point on plane

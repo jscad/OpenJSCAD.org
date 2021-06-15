@@ -1,11 +1,11 @@
 /**
- * Creates a matrix from a vector translation
+ * Creates a matrix from a vector translation.
  * This is equivalent to (but much faster than):
  *
- *     mat4.identity(dest);
- *     mat4.translate(dest, dest, vec);
+ *     mat4.identity(dest)
+ *     mat4.translate(dest, dest, vec)
  *
- * @param {mat4} out - the receiving matrix
+ * @param {mat4} out - receiving matrix
  * @param {vec3} vector - offset (vector) of translation
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.fromTranslation

@@ -1,7 +1,7 @@
 /**
- * Set a matrix to the identity matrix.
+ * Set a matrix to the identity transform.
  *
- * @param {mat4} out - the receiving matrix
+ * @param {mat4} out - receiving matrix
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.identity
  */

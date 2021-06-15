@@ -1,8 +1,8 @@
 /**
  * Transform the given vector using the given matrix.
  *
- * @param {vec4} out - the receiving vector
- * @param {vec4} vector - the vector to transform
+ * @param {vec4} out - receiving vector
+ * @param {vec4} vector - vector to transform
  * @param {mat4} matrix - matrix to transform with
  * @returns {vec4} out
  * @alias module:modeling/maths/vec4.transform

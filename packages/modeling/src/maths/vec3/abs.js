@@ -1,8 +1,8 @@
 /**
  * Calculates the absolute coordinates of the give vector.
  *
- * @param {vec3} out - the receiving vector
- * @param {vec3} vector - the vector of reference
+ * @param {vec3} out - receiving vector
+ * @param {vec3} vector - vector of reference
  * @returns {vec3} out
  * @alias module:modeling/maths/vec3.abs
  */
