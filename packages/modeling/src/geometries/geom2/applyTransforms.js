@@ -10,7 +10,7 @@ const vec2 = require('../../maths/vec2')
  * geometry = applyTransforms(geometry)
  */
 const applyTransforms = (geometry) => {
-  if (mat4.equals(geometry.transforms, mat4.create())) return geometry.sides
+  if (mat4.isIdentity(geometry.transforms)) return geometry
 
   // apply transforms to each side
   return geometry.sides.map((side) => {
