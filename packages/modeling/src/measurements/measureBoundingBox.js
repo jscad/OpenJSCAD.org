@@ -9,7 +9,7 @@ const path2 = require('../geometries/path2')
 const poly3 = require('../geometries/poly3')
 
 // create a cached bounding box that will not be copied when object is transformed
-const setBoundingBox = (geometry,value)=> Object.defineProperty(geometry, "boundingBox", {value, enumerable: false, writable: false})
+const setBoundingBox = (geometry, value) => Object.defineProperty(geometry, 'boundingBox', { value, enumerable: false, writable: false })
 
 /*
  * Measure the min and max bounds of the given (path2) geometry.
