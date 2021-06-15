@@ -14,7 +14,7 @@ const fromPoints = (out, a, b, c) => {
   const ba = vec3.subtract(vec3.create(), b, a)
   const ca = vec3.subtract(vec3.create(), c, a)
   vec3.cross(ba, ba, ca)
-  vec3.unit(ba, ba) // normal part
+  vec3.normalize(ba, ba) // normal part
   const w = vec3.dot(ba, a)
 
   out[0] = ba[0]

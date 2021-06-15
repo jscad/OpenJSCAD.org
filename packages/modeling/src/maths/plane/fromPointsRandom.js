@@ -29,7 +29,7 @@ const fromPointsRandom = (out, a, b, c) => {
     ca = vec3.orthogonal(ca, ba)
     normal = vec3.cross(normal, ba, ca)
   }
-  normal = vec3.unit(normal, normal)
+  normal = vec3.normalize(normal, normal)
   const w = vec3.dot(normal, a)
 
   out[0] = normal[0]
