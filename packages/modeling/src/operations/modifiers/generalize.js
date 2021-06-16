@@ -59,12 +59,10 @@ const generalizeGeom3 = (options, geometry) => {
     // TODO fill holes
   }
 
-  // FIXME replace with geom3.cloneShallow() when available
-  const clone = Object.assign({}, geometry)
-  clone.polygons = polygons
   // toPolygons called above will convert old polygons (apply transform and return the new polygons array)
   // we must reset transforms to identity, otherwise the transform will be applied again in some other operation
-  clone.transforms = mat4.create()
+  // FIXME replace with geom3.cloneShallow() when available
+  const clone = Object.assign({}, geometry, { polygons, transforms: mat4.create() })
 
   return clone
 }
