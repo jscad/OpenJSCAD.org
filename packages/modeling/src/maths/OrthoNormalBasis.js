@@ -15,7 +15,7 @@ const OrthoNormalBasis = function (plane, rightvector) {
     // choose an arbitrary right hand vector, making sure it is somewhat orthogonal to the plane normal:
     rightvector = vec3.orthogonal(vec3.create(), plane)
   }
-  this.v = vec3.unit(vec3.create(), vec3.cross(vec3.create(), plane, rightvector))
+  this.v = vec3.normalize(vec3.create(), vec3.cross(vec3.create(), plane, rightvector))
   this.u = vec3.cross(vec3.create(), this.v, plane)
   this.plane = plane
   this.planeorigin = vec3.scale(vec3.create(), plane, plane[3])

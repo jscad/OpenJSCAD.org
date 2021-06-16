@@ -8,7 +8,7 @@ const fromPointAxisNormal = require('./fromPointAxisNormal')
  * @returns {connector} a normalized connector
  */
 const extend = (distance, connector) => {
-  const newpoint = vec3.add(connector.point, vec3.scale(distance, vec3.unit(connector.axis)))
+  const newpoint = vec3.add(connector.point, vec3.scale(distance, vec3.normalize(connector.axis)))
   return fromPointAxisNormal(newpoint, connector.axis, connector.normal)
 }
 
