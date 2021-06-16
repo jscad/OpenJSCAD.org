@@ -52,9 +52,9 @@ const roundedCylinder = (options) => {
     defaultnormal = vec3.fromValues(1, 0, 0)
   }
 
-  const zvector = vec3.scale(vec3.create(), vec3.unit(vec3.create(), direction), roundRadius)
-  const xvector = vec3.scale(vec3.create(), vec3.unit(vec3.create(), vec3.cross(vec3.create(), zvector, defaultnormal)), radius)
-  const yvector = vec3.scale(vec3.create(), vec3.unit(vec3.create(), vec3.cross(vec3.create(), xvector, zvector)), radius)
+  const zvector = vec3.scale(vec3.create(), vec3.normalize(vec3.create(), direction), roundRadius)
+  const xvector = vec3.scale(vec3.create(), vec3.normalize(vec3.create(), vec3.cross(vec3.create(), zvector, defaultnormal)), radius)
+  const yvector = vec3.scale(vec3.create(), vec3.normalize(vec3.create(), vec3.cross(vec3.create(), xvector, zvector)), radius)
 
   vec3.add(start, start, zvector)
   vec3.subtract(end, end, zvector)

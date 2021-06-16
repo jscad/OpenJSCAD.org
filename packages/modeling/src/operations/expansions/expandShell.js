@@ -104,7 +104,7 @@ const expandShell = (options, geometry) => {
 
     // our x,y and z vectors:
     const zbase = vec3.subtract(vec3.create(), endpoint, startpoint)
-    vec3.unit(zbase, zbase)
+    vec3.normalize(zbase, zbase)
     const xbase = planes[0]
     const ybase = vec3.cross(vec3.create(), xbase, zbase)
 
@@ -201,7 +201,7 @@ const expandShell = (options, geometry) => {
       bestzaxis = vec3.orthogonal(v1, xaxis)
     }
     const yaxis = vec3.cross(v1, xaxis, bestzaxis)
-    vec3.unit(yaxis, yaxis)
+    vec3.normalize(yaxis, yaxis)
     const zaxis = vec3.cross(v2, yaxis, xaxis)
     const corner = sphere({
       center: [vertex[0], vertex[1], vertex[2]],
