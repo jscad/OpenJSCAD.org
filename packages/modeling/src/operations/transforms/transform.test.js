@@ -3,6 +3,7 @@ const test = require('ava')
 const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
 
 const mat4 = require('../../maths/mat4')
+const { colorize } = require('../../colors')
 
 const { geom2, geom3, path2 } = require('../../geometries')
 
@@ -68,4 +69,36 @@ test('transform: transforming of multiple objects produces expected changes', (t
   obs = geom2.toPoints(transformed[2])
   exp = [[-3, -3], [2, 7], [12, -3]]
   t.true(comparePoints(obs, exp))
+})
+
+test('transform: transforming retains color', (t) => {
+  let geometry, newGeometry
+  const testColor = [1, 1, 0.5, 1]
+  const matrix = mat4.fromTranslation(mat4.create(), [2, 2, 0])
+
+  // path2
+  geometry = path2.fromPoints({}, [[0, 0], [1, 0]])
+  geometry = colorize(testColor, geometry)
+  newGeometry = transform(matrix, geometry)
+  t.deepEqual(newGeometry.color, testColor)
+
+  // geom2
+  geometry = geom2.fromPoints([[0, 0], [1, 0], [0, 1]])
+  geometry = colorize(testColor, geometry)
+  newGeometry = transform(matrix, geometry)
+  t.deepEqual(newGeometry.color, testColor)
+
+  // geom3
+  const points = [
+    [[-2, -7, -12], [-2, -7, 18], [-2, 13, 18], [-2, 13, -12]],
+    [[8, -7, -12], [8, 13, -12], [8, 13, 18], [8, -7, 18]],
+    [[-2, -7, -12], [8, -7, -12], [8, -7, 18], [-2, -7, 18]],
+    [[-2, 13, -12], [-2, 13, 18], [8, 13, 18], [8, 13, -12]],
+    [[-2, -7, -12], [-2, 13, -12], [8, 13, -12], [8, -7, -12]],
+    [[-2, -7, 18], [8, -7, 18], [8, 13, 18], [-2, 13, 18]]
+  ]
+  geometry = geom3.fromPoints(points)
+  geometry = colorize(testColor, geometry)
+  newGeometry = transform(matrix, geometry)
+  t.deepEqual(newGeometry.color, testColor)
 })
