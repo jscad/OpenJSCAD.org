@@ -217,7 +217,7 @@ SEQEND
 ENDSEC`
   const src3 = deserialize({ filename: 'dxf3-test', output: 'script' }, dxf3)
   t.is(countOf('main', src3), 2)
-  t.is(countOf('createPolygon', src3), 7)
+  t.is(countOf('createPolygon', src3), 11)
   t.is(countOf('geom3.create', src3), 1)
   t.is(countOf('color', src3), 6)
 
