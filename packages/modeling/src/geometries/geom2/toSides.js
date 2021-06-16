@@ -1,7 +1,8 @@
 const applyTransforms = require('./applyTransforms')
 
 /**
- * Produces a new array of sides from the given geometry.
+ * If the transforms matrix is identity returns the original sides.
+ * Otherwise produces a new array of sides with transforms applied.
  * NOTE: The sides returned do NOT define an order. Use toOutlines() for ordered points.
  * @param {geom2} geometry - the geometry
  * @returns {Array} an array of sides
