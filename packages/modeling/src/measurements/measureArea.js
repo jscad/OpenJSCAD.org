@@ -9,7 +9,6 @@ const cache = new WeakMap()
 
 /*
  * Measure the area of the given geometry.
- *
  * NOTE: paths are infinitely narrow and do not have an area
  *
  * @param {path2} geometry - geometry to measure
