@@ -19,7 +19,7 @@
 
 ## Overview
 
-This deserializer converts X3D (XML Encoded) formatted data (files) to JSCAD scripts or geometries.
+This deserializer converts X3D (XML encoded) formatted data (files) to JSCAD scripts or geometries.
 
 ### X3D Implementation Notes
 
