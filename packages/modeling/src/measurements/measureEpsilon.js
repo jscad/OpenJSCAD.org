@@ -1,6 +1,7 @@
 const flatten = require('../utils/flatten')
-const calculateEpsilonFromBounds = require('./calculateEpsilonFromBounds')
 const { geom2, geom3, path2 } = require('../geometries')
+
+const calculateEpsilonFromBounds = require('./calculateEpsilonFromBounds')
 const measureBoundingBox = require('./measureBoundingBox')
 
 /*
@@ -8,10 +9,7 @@ const measureBoundingBox = require('./measureBoundingBox')
  * @return {Number} the epsilon (precision) of the geometry
  */
 const measureEpsilonOfPath2 = (geometry) => {
-  if (geometry.epsilon) return geometry.epsilon
-
-  geometry.epsilon = calculateEpsilonFromBounds(measureBoundingBox(geometry), 2)
-  return geometry.epsilon
+  return calculateEpsilonFromBounds(measureBoundingBox(geometry), 2)
 }
 
 /*
@@ -19,10 +17,7 @@ const measureEpsilonOfPath2 = (geometry) => {
  * @return {Number} the epsilon (precision) of the geometry
  */
 const measureEpsilonOfGeom2 = (geometry) => {
-  if (geometry.epsilon) return geometry.epsilon
-
-  geometry.epsilon = calculateEpsilonFromBounds(measureBoundingBox(geometry), 2)
-  return geometry.epsilon
+  return calculateEpsilonFromBounds(measureBoundingBox(geometry), 2)
 }
 
 /*
@@ -30,10 +25,7 @@ const measureEpsilonOfGeom2 = (geometry) => {
  * @return {Float} the epsilon (precision) of the geometry
  */
 const measureEpsilonOfGeom3 = (geometry) => {
-  if (geometry.epsilon) return geometry.epsilon
-
-  geometry.epsilon = calculateEpsilonFromBounds(measureBoundingBox(geometry), 3)
-  return geometry.epsilon
+  return calculateEpsilonFromBounds(measureBoundingBox(geometry), 3)
 }
 
 /**
