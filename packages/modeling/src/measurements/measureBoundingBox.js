@@ -2,6 +2,7 @@ const flatten = require('../utils/flatten')
 
 const vec2 = require('../maths/vec2')
 const vec3 = require('../maths/vec3')
+const mat4 = require('../maths/mat4')
 
 const geom2 = require('../geometries/geom2')
 const geom3 = require('../geometries/geom3')
@@ -18,24 +19,32 @@ const measureBoundingBoxOfPath2 = (geometry) => {
   let boundingBox = cache.get(geometry)
   if (boundingBox) return boundingBox
 
-  const points = path2.toPoints(geometry)
+  const points = geometry.points
+  const transforms = geometry.transforms
 
-  let minpoint
-  if (points.length === 0) {
-    minpoint = vec2.create()
-  } else {
-    minpoint = vec2.clone(points[0])
+  boundingBox = cache.get(points)
+
+  if (!boundingBox) {
+    let minpoint
+    if (points.length === 0) {
+      minpoint = vec2.create()
+    } else {
+      minpoint = vec2.clone(points[0])
+    }
+    const maxpoint = vec2.clone(minpoint)
+
+    points.forEach((point) => {
+      vec2.min(minpoint, minpoint, point)
+      vec2.max(maxpoint, maxpoint, point)
+    })
+
+    boundingBox = [[minpoint[0], minpoint[1], 0], [maxpoint[0], maxpoint[1], 0]]
+    cache.set(points, boundingBox)
   }
-  let maxpoint = vec2.clone(minpoint)
 
-  points.forEach((point) => {
-    vec2.min(minpoint, minpoint, point)
-    vec2.max(maxpoint, maxpoint, point)
-  })
-  minpoint = [minpoint[0], minpoint[1], 0]
-  maxpoint = [maxpoint[0], maxpoint[1], 0]
-
-  boundingBox = [minpoint, maxpoint]
+  if (!mat4.isIdentity(transforms)) {
+    boundingBox = [vec3.transform(boundingBox[0], boundingBox[0], transforms), vec3.transform(boundingBox[1], boundingBox[1], transforms)]
+  }
 
   cache.set(geometry, boundingBox)
 
@@ -50,25 +59,51 @@ const measureBoundingBoxOfGeom2 = (geometry) => {
   let boundingBox = cache.get(geometry)
   if (boundingBox) return boundingBox
 
-  const points = geom2.toPoints(geometry)
+  const points = geometry.points
+  const transforms = geometry.transforms
+  let minpoint, maxpoint
+  const cacheKey = points || geometry.sides
 
-  let minpoint
-  if (points.length === 0) {
-    minpoint = vec2.create()
-  } else {
-    minpoint = vec2.clone(points[0])
+  // check cache for identity boundingBox
+  boundingBox = cache.get(cacheKey)
+
+  if (!boundingBox) {
+    if (points) {
+      if (points.length === 0) {
+        minpoint = vec2.create()
+      } else {
+        minpoint = vec2.clone(points[0])
+      }
+      maxpoint = vec2.clone(minpoint)
+
+      points.forEach((point) => {
+        vec2.min(minpoint, minpoint, point)
+        vec2.max(maxpoint, maxpoint, point)
+      })
+    } else { // sides
+      // to avoid calling costly toPoints, we take advantage of the knowlege how the toPoints works
+      const sides = geometry.sides
+      if (sides.length === 0) {
+        minpoint = vec2.create()
+      } else {
+        minpoint = vec2.clone(sides[0][0])
+      }
+      maxpoint = vec2.clone(minpoint)
+
+      sides.forEach((side) => {
+        vec2.min(minpoint, minpoint, side[0])
+        vec2.max(maxpoint, maxpoint, side[0])
+      })
+    }
+
+    boundingBox = [[minpoint[0], minpoint[1], 0], [maxpoint[0], maxpoint[1], 0]]
+    // cache identity boundingBox
+    cache.set(cacheKey, boundingBox)
   }
-  let maxpoint = vec2.clone(minpoint)
 
-  points.forEach((point) => {
-    vec2.min(minpoint, minpoint, point)
-    vec2.max(maxpoint, maxpoint, point)
-  })
-
-  minpoint = [minpoint[0], minpoint[1], 0]
-  maxpoint = [maxpoint[0], maxpoint[1], 0]
-
-  boundingBox = [minpoint, maxpoint]
+  if (!mat4.isIdentity(transforms)) {
+    boundingBox = [vec3.transform(boundingBox[0], boundingBox[0], transforms), vec3.transform(boundingBox[1], boundingBox[1], transforms)]
+  }
 
   cache.set(geometry, boundingBox)
 

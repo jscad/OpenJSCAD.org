@@ -249,6 +249,7 @@ test('deserialize : instantiate svg (path: arc) to objects', (t) => {
   t.is(shape.points.length, 15) // segments double on a 3/4 circle
   t.deepEqual(measurements.measureBoundingBox(shape), [[64.91110599999999, -77.611103, 0], [90.21850570104527, -52.30370029895471, 0]])
   shape = observed[1]
+  console.log('shape',shape)
   t.is(shape.points.length, 15) // segments double on a 3/4 circle
   t.deepEqual(measurements.measureBoundingBox(shape), [[50.79999599999999, -136.03302387090216, 0], [72.27222493929787, -110.6793647936299, 0]])
 })
