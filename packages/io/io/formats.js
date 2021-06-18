@@ -98,7 +98,7 @@ const formats = {
     description: 'X3D File Format',
     extension: 'x3d',
     mimetype: 'model/x3d+xml',
-    deserializable: false,
+    deserializable: true,
     convertGeom3: true,
     convertGeom2: false
   }

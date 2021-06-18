@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "https://www.web3d.org/specifications/x3d-3.3.dtd">
+<X3D profile='Immersive' version='3.3' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-3.3.xsd'>
+  <head>
+    <meta content='LineSetComparison.x3d' name='title'/>
+    <meta content='Don Brutzman' name='creator'/>
+    <meta content='2 September 2008' name='created'/>
+    <meta content='20 October 2019' name='modified'/>
+    <meta content='A simple wireframe cube, comparing two functionally equivalent nodes: IndexedLineSet (per-vertex coloring) with LineSet (per-segment coloring). Keeping track of how each node "connects the dots" is simply a book-keeping problem.' name='description'/>
+    <meta content='http://X3dGraphics.com/examples/X3dForWebAuthors/Chapter06GeometryPointsLinesPolygons/LineSetComparison.x3d' name='identifier'/>
+    <meta content='https://www.web3d.org/x3d/content/examples/Vrml2Sourcebook/Chapter13PointsLinesFaces/Figure13.11IndexedLineSetBoxWireframe.x3d' name='reference'/>
+    <meta content='X3D-Edit 3.3, https://savage.nps.edu/X3D-Edit' name='generator'/>
+    <meta content='../license.html' name='license'/>
+  </head>
+  <Scene>
+    <WorldInfo title='LineSetComparison.x3d'/>
+    <Viewpoint description='8m away - note linewidth is unchanged and perspective is ambiguous' position='0 0 8'/>
+    <Viewpoint description='15m away - note linewidth is unchanged and perspective is ambiguous' position='0 0 15'/>
+    <Transform translation='-3 0 0'>
+      <!-- Rotating a single cube can help show near/far ambiguity, i.e. the optical illusion for constant-pixel-width line structures -->
+      <Viewpoint description='IndexedLineSet cube close up' position='0 0 5'/>
+      <Shape>
+        <!-- The IndexedLineSet builds the same cube as the LineSet,but simply uses a different approach to connect the vertices. -->
+        <IndexedLineSet colorPerVertex='false' coordIndex='0 1 2 3 0 -1 4 5 6 7 4 -1 0 4 -1 1 5 -1 2 6 -1 3 7 -1'>
+          <Coordinate point='-1 1 1 1 1 1 1 1 -1 -1 1 -1 -1 -1 1 1 -1 1 1 -1 -1 -1 -1 -1'/>
+          <Color color='1 0.058824 0.117647 0.878431 0.447059 0 1 0.992157 0.141176 0.101961 0.721569 0 0.12549 0 0.901961 0.878431 0 0.843137 0.294118 0 0.341176 1 0.980392 0.992157 1 1 1'/>
+        </IndexedLineSet>
+      </Shape>
+    </Transform>
+    <Transform translation='3 0 0'>
+      <Viewpoint description='LineSet cube close up' position='0 0 5'/>
+      <Shape>
+        <!-- Coordinate sequence for the vertexCount='5 5 2 2 2 2' array: 0 1 2 3 0, 4 5 6 7 4, 0 4, 1 5, 2 6, 3 7. This corresponds to the IndexedLineSet coordIndex actually. -->
+        <LineSet vertexCount='5 5 2 2 2 2'>
+          <Coordinate point='-1 1 1 1 1 1 1 1 -1 -1 1 -1 -1 1 1 -1 -1 1 1 -1 1 1 -1 -1 -1 -1 -1 -1 -1 1 -1 1 1 -1 -1 1 1 1 1 1 -1 1 1 1 -1 1 -1 -1 -1 1 -1 -1 -1 -1'/>
+          <Color color='1 0 0 1 0.5 0 1 1 0 0 1 0 1 0 0 0 0 1 0.8 0 0.8 0.3 0 0.3 1 1 1 0 0 1 1 0 0 0 0 1 1 0.5 0 0.8 0 0.8 1 1 0 0.3 0 0.3 0 1 0 1 1 1'/>
+        </LineSet>
+      </Shape>
+    </Transform>
+    <Transform translation='-3 2 0'>
+      <Shape>
+        <Text string='"IndexedLineSet"'>
+          <FontStyle justify='"MIDDLE" "MIDDLE"' size='0.5'/>
+        </Text>
+        <Appearance DEF='TextAppearance'>
+          <Material ambientIntensity='0' diffuseColor='0 0 0' emissiveColor='0 0.398733 1' shininess='0.05' specularColor='0.622449 0.622449 0.622449'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='3 2 0'>
+      <Shape>
+        <Text string='"LineSet"'>
+          <FontStyle justify='"MIDDLE" "MIDDLE"' size='0.5'/>
+        </Text>
+        <Appearance USE='TextAppearance'/>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

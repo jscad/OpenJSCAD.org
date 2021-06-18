@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.2//EN" "../../schemas/x3d-3.2.dtd">
+<X3D profile='Interchange' version='3.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.1.xsd'>
+  <head>
+    <meta content='house.x3d' name='title'/>
+    <meta content='Example for Group node' name='description'/>
+  </head>
+  <Scene>
+    <!-- create an almost white background for printing -->
+    <Background skyColor='0.9 0.9 0.9'/>
+
+    <!-- define a house as a cube with a cone on top -->
+    <Group DEF='House'>
+
+      <Transform translation="0 1 0">
+	      <Shape>
+	        <Appearance>
+	          <Material diffuseColor='1 1 0'/>
+	        </Appearance>
+	        <Box/>
+	      </Shape>
+      </Transform>
+
+      <Transform translation="0 2.5 0">
+	      <Shape DEF='Roof'>
+	        <Appearance DEF='Red'>
+	          <Material diffuseColor='1 0 0'/>
+	        </Appearance>
+	        <Cone bottomRadius="2" height="1">
+	        </Cone>
+	      </Shape>
+      </Transform>
+
+    </Group>
+
+    <!-- reuse, make smaller and put on top of the house -->
+    <Transform translation="0 2.5 0" scale="0.5 0.5 0.5">    
+      <Group USE="House"/>
+    </Transform>
+
+    <!-- reuse, squeeze and put aside -->
+    <Transform translation="3.5 0 0" scale="1.0 0.5 0.5">    
+      <Group USE="House"/>
+    </Transform>
+
+    <Transform translation="0 -0.05 0">
+      <Shape DEF="floor">
+	      <Appearance USE='Red'/>
+	      <Cylinder height="0.1" radius="5"/>
+      </Shape>
+    </Transform>
+
+  </Scene>
+</X3D>
